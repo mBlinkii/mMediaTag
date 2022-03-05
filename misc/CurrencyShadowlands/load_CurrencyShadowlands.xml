@@ -1,0 +1,14 @@
+<Ui xmlns="http://www.blizzard.com/wow/ui/">
+	<Script file="mOptionsCurrencys.lua"/>	
+	<Script file="mAnima.lua"/>
+	<Script file="mGratefulOffering.lua"/>
+	<Script file="mInfusedRuby.lua"/>
+	<Script file="mSoulAsh.lua"/>
+	<Script file="mStygia.lua"/>
+	<Script file="mValor.lua"/>
+	<Script file="mCatalogedResearch.lua"/>
+	<Script file="mSoulCinders.lua"/>
+	<Script file="mStygianEmber.lua"/>
+	<Script file="mTowerKnowledge.lua"/>
+	<Script file="mCosmicFlux.lua"/>
+</Ui>

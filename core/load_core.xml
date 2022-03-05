@@ -1,0 +1,9 @@
+<Ui xmlns="http://www.blizzard.com/wow/ui/">
+	<Script file="init.lua"/>
+	<Script file="mSettings.lua"/>
+	<Script file="mOptions.lua"/>
+	<Script file="mProfileImportExport.lua"/>
+	<Script file="mChangelog.lua"/>
+    <Script file="mDropdown.lua"/>
+	<Script file="mFunctions.lua"/>
+</Ui>
