@@ -1,0 +1,13 @@
+## Interface: 90200
+## Title: |cff1784d1ElvUI|r |CFF8E44ADm|r|CFF2ECC71Media|r|CFF3498DBTag|r
+## Author: Blinkii
+## Version: 2.75
+## Notes: ElvUI Plugin from Blinkii@Eu-Arygos | Support: mMediaTag@gmx.de
+## RequiredDeps: ElvUI
+## DefaultState: Enabled
+
+core\mretail.lua
+locales\load_locales.xml
+core\load_core.xml
+media\load_media.xml
+misc\load_misc.xml
