@@ -1,0 +1,21 @@
+<Ui xmlns="http://www.blizzard.com/wow/ui/">
+	<Script file="mOptionsBagrounds.lua"/>	
+	<Script file="mOptionsMisc.lua"/>
+	<Script file="mOptionsTags.lua"/>
+	<Script file="mCombatTime.lua"/>
+	<Script file="mCoordinatesX.lua"/>
+	<Script file="mCoordinatesY.lua"/>
+	<Script file="mDungeon.lua"/>
+	<Script file="mFunctionsMisc.lua"/>
+	<Script file="mFunctionsRetail.lua"/>
+	<Script file="mKeystoneToChat.lua"/>
+	<Script file="mObjectiveTracker.lua"/>
+	<Script file="mProfessionMenu.lua"/>
+	<Script file="mSystemMenu.lua"/>
+	<Script file="mTags.lua"/>
+	<Script file="mTipIcon.lua"/>
+	<Script file="mTools.lua"/>
+	<Script file="mVolumeDisplay.lua"/>
+	<Include file="CurrencyShadowlands\load_CurrencyShadowlands.xml"/>
+	<Include file="Dock\load_dock.xml"/>
+</Ui>
