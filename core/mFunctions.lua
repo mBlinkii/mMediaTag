@@ -100,6 +100,11 @@ function mMT:mMisc()
 		
 		mMT:InitializemOBT()
 	end
+
+	local mCosmeticsEnable = true
+	if mCosmeticsEnable then
+		mMT:mStartCosmetics()
+	end
 end
 
 function mMT:mBackupNameplateSettings()

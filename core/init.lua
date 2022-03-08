@@ -4,7 +4,6 @@ local mMT = E:NewModule(mPlugin, "AceHook-3.0", "AceEvent-3.0", "AceTimer-3.0");
 local EP = LibStub("LibElvUIPlugin-1.0")
 local addon, ns = ...
 local Version = GetAddOnMetadata(addon, "Version")
-local LSM = E.Libs.LSM
 
 --Variables
 ns.mName 			= "|CFF8E44ADm|r|CFF2ECC71Media|r|CFF3498DBTag|r"
@@ -26,10 +25,6 @@ ns.RightButtonIcon 	= format("|T%s:16:16:0:0:32:32|t", "Interface\\AddOns\\ElvUI
 ns.MiddleButtonIcon = format("|T%s:16:16:0:0:32:32|t", "Interface\\AddOns\\ElvUI_mMediaTag\\media\\misc\\mouse_m.tga")
 ns.Config			= {}
 
-local _, unitClass = UnitClass('player')
-local class = ElvUF.colors.class[unitClass]
-local DT = E:GetModule('DataTexts')
-
 function mMT:AddOptions()
 	for _, func in pairs(ns.Config) do
 		func()
@@ -39,44 +34,9 @@ end
 function mMT:Initialize()
 	-- WoW Version Check
 	mMT:mVersionCheck()
-	
+
 	-- Load Miscs
 	mMT:mMisc()
-	
-	local LeftChatPanel = _G.LeftChatPanel
-	local RightChatPanel = _G.RightChatPanel
-
-	LeftChatPanel.mBar = CreateFrame("StatusBar", nil, LeftChatPanel)
-	LeftChatPanel.mBar:SetFrameStrata("BACKGROUND")
-	LeftChatPanel.mBar:SetSize(LeftChatPanel:GetWidth()-2, 12)
-	LeftChatPanel.mBar:SetPoint("TOP", LeftChatPanel, "BOTTOM", 0, -2)
-	LeftChatPanel.mBar:SetStatusBarTexture(LSM:Fetch("statusbar", "mMediaTag H1"))
-	LeftChatPanel.mBar:SetStatusBarColor(class[1], class[2], class[3], .50)
-	LeftChatPanel.mBar:CreateBackdrop()
-	LeftChatPanel.mBar.backdrop:SetBackdropColor(class[1], class[2], class[3], .50)
-
-
-	RightChatPanel.mBar = CreateFrame("StatusBar", nil, RightChatPanel)
-	RightChatPanel.mBar:SetFrameStrata("BACKGROUND")
-	RightChatPanel.mBar:SetSize(RightChatPanel:GetWidth()-2, 12)
-	RightChatPanel.mBar:SetPoint("TOP", RightChatPanel, "BOTTOM", 0, -2)
-	RightChatPanel.mBar:SetStatusBarTexture(LSM:Fetch("statusbar", "mMediaTag H1"))
-	RightChatPanel.mBar:SetStatusBarColor(class[1], class[2], class[3], .50)
-	RightChatPanel.mBar:CreateBackdrop()
-	RightChatPanel.mBar.backdrop:SetBackdropColor(class[1], class[2], class[3], .50)
-
-	-- count = DT.PanelPool.Count
-	--local name = 'ElvUI_DTPanel' .. 8
-
-	local DTPanel = DT:FetchFrame("mActionbarBackground")
-	DTPanel.mBar = CreateFrame("StatusBar", nil, DTPanel)
-	DTPanel.mBar:SetFrameStrata("BACKGROUND")
-	DTPanel.mBar:SetSize(DTPanel:GetWidth()-2, 12)
-	DTPanel.mBar:SetPoint("TOP", DTPanel, "BOTTOM", 0, -2)
-	DTPanel.mBar:SetStatusBarTexture(LSM:Fetch("statusbar", "mMediaTag H1"))
-	DTPanel.mBar:SetStatusBarColor(class[1], class[2], class[3], .50)
-	DTPanel.mBar:CreateBackdrop()
-	DTPanel.mBar.backdrop:SetBackdropColor(class[1], class[2], class[3], .50)
 
 	EP:RegisterPlugin(addon, mMT:AddOptions())
 end

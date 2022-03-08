@@ -5,6 +5,7 @@
 	<Script file="mCombatTime.lua"/>
 	<Script file="mCoordinatesX.lua"/>
 	<Script file="mCoordinatesY.lua"/>
+	<Script file="mCosmetics.lua"/>
 	<Script file="mDungeon.lua"/>
 	<Script file="mFunctionsMisc.lua"/>
 	<Script file="mFunctionsRetail.lua"/>
