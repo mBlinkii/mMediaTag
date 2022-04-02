@@ -17,6 +17,10 @@
 	<Script file="mTipIcon.lua"/>
 	<Script file="mTools.lua"/>
 	<Script file="mVolumeDisplay.lua"/>
+	<Script file="mRoleSymbols.lua"/>
 	<Include file="CurrencyShadowlands\load_CurrencyShadowlands.xml"/>
+	<Include file="CurrencyPvP\load_CurrencyPvP.xml"/>
+	<Include file="CurrencyDungeon\load_CurrencyDungeon.xml"/>
 	<Include file="Dock\load_dock.xml"/>
+	
 </Ui>

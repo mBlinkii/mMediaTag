@@ -43,4 +43,45 @@ end
 
 function mMT:mStartCosmetics()
     mCreatCosmetics()
+
+	local mTank = 'Interface\\AddOns\\ElvUI_mMediaTag\\media\\icons\\tank4.tga'
+	local mDD = 'Interface\\AddOns\\ElvUI_mMediaTag\\media\\icons\\cookie3.tga'
+	local mHeal = 'Interface\\AddOns\\ElvUI_mMediaTag\\media\\icons\\heal2.tga'
+
+	E.Media.Textures.Tank = mTank
+	E.Media.Textures.Healer = mHeal
+	E.Media.Textures.DPS = mDD
+
+	local sizeString = ":12:12"
+
+	_G.INLINE_TANK_ICON = E:TextureString(mTank, sizeString)
+	_G.INLINE_HEALER_ICON = E:TextureString(mHeal, sizeString)
+	_G.INLINE_DAMAGER_ICON = E:TextureString(mDD, sizeString)
+
+	local CH = E:GetModule('Chat')
+	CH.RoleIcons = {
+		TANK = E:TextureString(mTank, sizeString),
+		HEALER = E:TextureString(mHeal, sizeString),
+		DAMAGER = E:TextureString(mDD, sizeString),
+	}
+
+	local UF = E:GetModule('UnitFrames')
+	UF.RoleIconTextures = {
+		TANK = mTank,
+		HEALER = mHeal,
+		DAMAGER = mDD
+}
+	-- hooksecurefunc(DT, "UpdatePanelInfo", function(DT, panelName, panel)
+	-- 	if not panel then return end
+	-- 	local db = E.global.datatexts.customPanels[panelName]
+	-- 	if not db then return end
+	-- 	print(panelName)
+	-- 	-- Need to find a way to hide my styling if changing the option from a panel
+	-- 	if panel and not panel.mstyled then
+	-- 		if db.backdrop then
+	-- 			panel:SetBackdropColor(class[1], class[2], class[3], .50)
+	-- 		end
+	-- 		panel.mstyled = true
+	-- 	end
+	-- end)
 end

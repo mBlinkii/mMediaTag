@@ -101,6 +101,10 @@ function mMT:mMisc()
 		mMT:InitializemOBT()
 	end
 
+	if E.db[mPlugin].mRoleSymbols.enable then
+		mMT:mStartRoleSmbols()
+	end
+
 	local mCosmeticsEnable = true
 	if mCosmeticsEnable then
 		mMT:mStartCosmetics()
