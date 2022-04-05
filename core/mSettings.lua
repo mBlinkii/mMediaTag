@@ -217,8 +217,6 @@ P[mPlugin] = {
 					["skullname"] = "SKULL2", ["skullpath"] = "Interface\\AddOns\\ElvUI_mMediaTag\\media\\misc\\skull2.tga",
 					["ghostname"] = "SKULL10", ["ghostpath"] = "Interface\\AddOns\\ElvUI_mMediaTag\\media\\misc\\skull10.tga",
 				},
-	["mRoleSymbols"] = {["enable"] = false, ["tank"] = {["path"] = "Interface\\AddOns\\ElvUI_mMediaTag\\media\\icons\\tank4.tga", ["name"] = "tank4",},
-						["heal"] = {["path"] = "Interface\\AddOns\\ElvUI_mMediaTag\\media\\icons\\heal2.tga", ["name"] = "heal2",},
-						["dd"] = {["path"] = "Interface\\AddOns\\ElvUI_mMediaTag\\media\\icons\\cookie3.tga", ["name"] = "cookie3",},
+	["mRoleSymbols"] = {["enable"] = false, ["tank"] = "tank14", ["heal"] = "heal9", ["dd"] = "dd7",
 					}
 }

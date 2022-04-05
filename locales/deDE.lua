@@ -178,16 +178,23 @@ L["mHealth wit Statustimer for Dead and AFK, with short numbers."] = "mHealth mi
 L["mHealth wit Statustimer for Dead, without AFK, with short numbers."] = "mHealth mit Zeitanzeige für Tot ohne AFK, mit abgekürzten Zahlen."
 L["Shows the Abbrev Target Name."] = "Zeigt den abgekürzten Zielnamen an."
 
-L["Coloured Statustext."] = "Farbiger Satustext"
-L["Coloured Statustext, with timer for Dead and AFK."] = "Farbiger Satustext mit Zeitanzeige für Tot und AFK"
+L["Coloured Statustext."] = "Farbiger Statustext"
+L["Coloured Statustext, with timer for Dead and AFK."] = "Farbiger Statustext mit Zeitanzeige für Tot und AFK"
 L["Coloured AFK text."] = "farbiger AFK Text"
 
 L["ERROR: Import string is not OK!"] = "ERROR: Import Zeichenfolge ist nicht OK!"
 L["It is all right, profile Import or Copy the string."] = "Es ist alles in Ordnung, Profil Importieren oder Kopiere die Zeichenfolge."
 L["Here you can export and share or import the settings of mMediaTag."] = "Hier kannst du die Einstellungen von mMediaTag Exportieren und Teilen oder Importieren."
 
+L["Timewarped Badge"] = "Zeitverzerrtes Abzeichen"
+L["Conquest"] = "Eroberung"
+L["Cyphers of the First Ones"] = "Chiffren der Ersten"
+L["Cosmic Flux"] = "Kosmischer Flux"
+L["Enable the custom role icons"] = "Aktiviert die Rollensymbole"
+L['Cosmetic'] = "Kosmetisch"
+
 L["Death icons."] = "Symbole für den Tod."
-L["Status icons."] = "Symbole für den Satus."
+L["Status icons."] = "Symbole für den Status."
 L["Health changes between Max Health and Percent in fight, with short numbers and status icons."] = "Die Gesundheit wechselt zwischen Max. Gesundheit und Prozentanzeige, im Kampf, mit abgekürzten Zahlen und Status Symbolen."
 L["Health changes between Max Health and Percent in fight and status icons."] = "Die Gesundheit wechselt zwischen Max. Gesundheit, Prozentanzeige, im Kampf und Status Smybolen."
 L["%sActual reward:|r"] = "%sAktuelle Belohnung:|r"

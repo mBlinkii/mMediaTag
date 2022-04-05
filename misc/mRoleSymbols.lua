@@ -16,51 +16,57 @@ local function mSetupIcons()
         mIcons = {}
 
         --tank
-        for i=1, 15, 1 do
+        for i=1, 14, 1 do
             path = format("Interface\\AddOns\\ElvUI_mMediaTag\\media\\icons\\tank%s.tga", i)
-            mIcons["tank" .. i] = {["file"] = path, ["icon"] = E:TextureString(path, sizeString)}
+            mIcons["tank" .. i] = {["file"] = path, ["icon"] = E:TextureString(path, sizeString) .. "tank" .. i}
         end
 
-        --dd
+        --thermostat
         for i=1, 10, 1 do
-            path = format("Interface\\AddOns\\ElvUI_mMediaTag\\media\\icons\\dd%s.tga", i)
-            mIcons["dd" .. i] = {["file"] = path, ["icon"] = E:TextureString(path, sizeString)}
+            path = format("Interface\\AddOns\\ElvUI_mMediaTag\\media\\icons\\thermostat%s.tga", i)
+            mIcons["thermostat" .. i] = {["file"] = path, ["icon"] = E:TextureString(path, sizeString) .. "thermostat" .. i}
         end
 
         --cookie
-        for i=1, 5, 1 do
+        for i=1, 14, 1 do
             path = format("Interface\\AddOns\\ElvUI_mMediaTag\\media\\icons\\cookie%s.tga", i)
-            mIcons["cookie" .. i] = {["file"] = path, ["icon"] = E:TextureString(path, sizeString)}
+            mIcons["cookie" .. i] = {["file"] = path, ["icon"] = E:TextureString(path, sizeString) .. "cookie" .. i}
         end
 
         --heal
-        for i=1, 8, 1 do
+        for i=1, 10, 1 do
             path = format("Interface\\AddOns\\ElvUI_mMediaTag\\media\\icons\\heal%s.tga", i)
-            mIcons["heal" .. i] = {["file"] = path, ["icon"] = E:TextureString(path, sizeString)}
+            mIcons["heal" .. i] = {["file"] = path, ["icon"] = E:TextureString(path, sizeString) .. "heal" .. i}
         end
 
-        --tsunami
-        for i=1, 7, 1 do
-            path = format("Interface\\AddOns\\ElvUI_mMediaTag\\media\\icons\\tsunami%s.tga", i)
-            mIcons["tsunami" .. i] = {["file"] = path, ["icon"] = E:TextureString(path, sizeString)}
+        --star
+        for i=1, 10, 1 do
+            path = format("Interface\\AddOns\\ElvUI_mMediaTag\\media\\icons\\star%s.tga", i)
+            mIcons["star" .. i] = {["file"] = path, ["icon"] = E:TextureString(path, sizeString) .. "star" .. i}
         end
 
         --waterdrop
-        for i=1, 13, 1 do
+        for i=1, 12, 1 do
             path = format("Interface\\AddOns\\ElvUI_mMediaTag\\media\\icons\\waterdrop%s.tga", i)
-            mIcons["waterdrop" .. i] = {["file"] = path, ["icon"] = E:TextureString(path, sizeString)}
+            mIcons["waterdrop" .. i] = {["file"] = path, ["icon"] = E:TextureString(path, sizeString) .. "waterdrop" .. i}
         end
 
-        --heartborder
-        for i=1, 10, 1 do
-            path = format("Interface\\AddOns\\ElvUI_mMediaTag\\media\\icons\\heartborder%s.tga", i)
-            mIcons["heartborder" .. i] = {["file"] = path, ["icon"] = E:TextureString(path, sizeString)}
+        --fire
+        for i=1, 6, 1 do
+            path = format("Interface\\AddOns\\ElvUI_mMediaTag\\media\\icons\\fire%s.tga", i)
+            mIcons["fire" .. i] = {["file"] = path, ["icon"] = E:TextureString(path, sizeString) .. "fire" .. i}
         end
 
         --heart
-        for i=1, 16, 1 do
+        for i=1, 12, 1 do
             path = format("Interface\\AddOns\\ElvUI_mMediaTag\\media\\icons\\heart%s.tga", i)
-            mIcons["heart" .. i] = {["file"] = path, ["icon"] = E:TextureString(path, sizeString)}
+            mIcons["heart" .. i] = {["file"] = path, ["icon"] = E:TextureString(path, sizeString) .. "heart" .. i}
+        end
+
+        --dd
+        for i=1, 8, 1 do
+            path = format("Interface\\AddOns\\ElvUI_mMediaTag\\media\\icons\\dd%s.tga", i)
+            mIcons["dd" .. i] = {["file"] = path, ["icon"] = E:TextureString(path, sizeString) .. "dd" .. i}
         end
 
         if not mIconsList then
@@ -73,28 +79,25 @@ local function mSetupIcons()
 end
 
 function mMT:mStartRoleSmbols()
-	local mTank = E.db[mPlugin].mRoleSymbols.tank.path
-	local mDD = E.db[mPlugin].mRoleSymbols.dd.path
-	local mHeal = E.db[mPlugin].mRoleSymbols.heal.path
+    local path = "Interface\\AddOns\\ElvUI_mMediaTag\\media\\icons\\%s.tga"
+	local mTank = E:TextureString(format(path, E.db[mPlugin].mRoleSymbols.tank), sizeString)
+	local mHeal = E:TextureString(format(path, E.db[mPlugin].mRoleSymbols.heal), sizeString)
+	local mDD = E:TextureString(format(path, E.db[mPlugin].mRoleSymbols.dd), sizeString)
 
-	E.Media.Textures.Tank = mTank
-	E.Media.Textures.Healer = mHeal
-	E.Media.Textures.DPS = mDD
-
-	_G.INLINE_TANK_ICON = E:TextureString(mTank, sizeString)
-	_G.INLINE_HEALER_ICON = E:TextureString(mHeal, sizeString)
-	_G.INLINE_DAMAGER_ICON = E:TextureString(mDD, sizeString)
+	_G.INLINE_TANK_ICON = mTank
+	_G.INLINE_HEALER_ICON = mHeal
+	_G.INLINE_DAMAGER_ICON = mDD
 
 	CH.RoleIcons = {
-		TANK = E:TextureString(mTank, sizeString),
-		HEALER = E:TextureString(mHeal, sizeString),
-		DAMAGER = E:TextureString(mDD, sizeString),
+		TANK = mTank,
+		HEALER = mHeal,
+		DAMAGER = mDD,
 	}
 
 	UF.RoleIconTextures = {
-		TANK = mTank,
-		HEALER = mHeal,
-		DAMAGER = mDD
+		TANK = format(path, E.db[mPlugin].mRoleSymbols.tank),
+		HEALER = format(path, E.db[mPlugin].mRoleSymbols.heal),
+		DAMAGER = format(path, E.db[mPlugin].mRoleSymbols.dd)
     }
 end
 
@@ -112,6 +115,7 @@ local function mRoleSmbolsOptions()
 			end,
 			set = function(info, value)
 				E.db[mPlugin].mRoleSymbols.enable = value
+                E:StaticPopup_Show("CONFIG_RL")
 			end,
 		},
         spacer = {
@@ -124,10 +128,9 @@ local function mRoleSmbolsOptions()
             type = 'select',
             name = L["Tank"],
             disabled = function() return not E.db[mPlugin].mRoleSymbols.enable end,
-            get = function(info) return E.db[mPlugin].mRoleSymbols.tank.name end,
+            get = function(info) return E.db[mPlugin].mRoleSymbols.tank end,
             set = function(info, value)
-                E.db[mPlugin].mRoleSymbols.tank.name = value
-                E.db[mPlugin].mRoleSymbols.tank.path = mIcons[value].file
+                E.db[mPlugin].mRoleSymbols.tank = value
                 mMT:mStartRoleSmbols()
             end,
             values = mIconsList,
@@ -137,10 +140,9 @@ local function mRoleSmbolsOptions()
             type = 'select',
             name = L["Heal"],
             disabled = function() return not E.db[mPlugin].mRoleSymbols.enable end,
-            get = function(info) return E.db[mPlugin].mRoleSymbols.heal.name end,
+            get = function(info) return E.db[mPlugin].mRoleSymbols.heal end,
             set = function(info, value)
-                E.db[mPlugin].mRoleSymbols.heal.name = value
-                E.db[mPlugin].mRoleSymbols.heal.path = mIcons[value].file
+                E.db[mPlugin].mRoleSymbols.heal = value
                 mMT:mStartRoleSmbols()
             end,
             values = mIconsList,
@@ -150,10 +152,9 @@ local function mRoleSmbolsOptions()
             type = 'select',
             name = L["DD"],
             disabled = function() return not E.db[mPlugin].mRoleSymbols.enable end,
-            get = function(info) return E.db[mPlugin].mRoleSymbols.dd.name end,
+            get = function(info) return E.db[mPlugin].mRoleSymbols.dd end,
             set = function(info, value)
-                E.db[mPlugin].mRoleSymbols.dd.name = value
-                E.db[mPlugin].mRoleSymbols.dd.path = mIcons[value].file
+                E.db[mPlugin].mRoleSymbols.dd = value
                 mMT:mStartRoleSmbols()
             end,
             values = mIconsList,

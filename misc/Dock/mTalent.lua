@@ -45,11 +45,6 @@ local specList = {
 }
 
 
-local specList = {
-	{ text = _G.SPECIALIZATION, isTitle = true, notCheckable = true },
-}
-
-
 local function mDockCheckFrame()
 	return ( PlayerTalentFrame and PlayerTalentFrame:IsShown() )
 end
@@ -61,7 +56,7 @@ end
 
 local function OnEnter(self)
 	if E.db[mPlugin].mDock.tip.enable then
-		local nhc, hc, myth, mythp, other, titel, tip = mMT:mColorDatatext()
+		local _, _, _, _, other, titel, tip = mMT:mColorDatatext()
 		local specialization = GetLootSpecialization()
 		local sameSpec = specialization == 0 and GetSpecialization()
 		local specIndex = DT.SPECIALIZATION_CACHE[sameSpec or specialization]
@@ -98,6 +93,13 @@ local function OnEvent(self, event, ...)
 
 	mMT:DockInitialisation(self)
 
+	if E.db[mPlugin].mRoleSymbols.enable then
+		local path = "Interface\\AddOns\\ElvUI_mMediaTag\\media\\icons\\%s.tga"
+		TANK_ICON = E:TextureString(format(path, E.db[mPlugin].mRoleSymbols.tank), ':14:14')
+		HEALER_ICON = E:TextureString(format(path, E.db[mPlugin].mRoleSymbols.heal), ':14:14')
+		DPS_ICON = E:TextureString(format(path, E.db[mPlugin].mRoleSymbols.dd), ':14:14')
+	end
+	
 	if #menuList == 2 then
 		for index = 1, GetNumSpecializations() do
 			local id, name, _, icon = GetSpecializationInfo(index)

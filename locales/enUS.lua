@@ -186,6 +186,13 @@ L["Coloured Statustext."] = true
 L["Coloured Statustext, with timer for Dead and AFK."] = true
 L["Coloured AFK text."] = true
 
+L["Timewarped Badge"] = true
+L["Conquest"] = true
+L["Cyphers of the First Ones"] = true
+L["Cosmic Flux"] = true
+L["Enable the custom role icons"] = true
+L['Cosmetic'] = true
+
 L["Tank and Heal Role written."] = true
 L['Role Icon.'] = true
 L['Target role Icon.'] = true

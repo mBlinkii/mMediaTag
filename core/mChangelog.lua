@@ -8,8 +8,8 @@ local addon, ns = ...
 local format = format
 
 --Variables
-local ChangelogDate = "21.02.2022"
-local ChangelogText = "## [ver. 2.75] - 23.02.2022\n### Update\n- some Bugfixes and Locals\n- Toc Update\n\n## [ver. 2.74] - 02.01.2022\n### Update\n- Bugfix - Affixs in the Tooltip\n### Added\n- New Datatext, Combattime, CoordinatesX and Y"
+local ChangelogDate = "05.04.2022"
+local ChangelogText = "## [ver. 2.76] - 05.04.2022\n### Update\n- Locals\n- LFD and Talent Rolicons update\n### Added\n- New Currency, Cosmic Flux, Timewarped Badge, Cyphers of the First Ones, Conquest\n- New Role Symbols\n\n## [ver. 2.75] - 23.02.2022\n### Update\n- some Bugfixes and Locals\n- Toc Update"
 
 function mMT:Changelog(opt)
 	local Frame = CreateFrame("Frame", "mMediaTagChangelog", E.UIParent, 'BackdropTemplate')

@@ -6,7 +6,6 @@ local addon, ns = ...
 
 --Lua functions
 local format = format
-local strjoin = strjoin
 
 --WoW API / Variables
 local IsInInstance = IsInInstance
@@ -21,6 +20,13 @@ local DPS_ICON = E:TextureString(E.Media.Textures.DPS, ':14:14')
 local lastPanel = nil
 
 local function MakeIconString(tank, healer, damage)
+	if E.db[mPlugin].mRoleSymbols.enable then
+		local path = "Interface\\AddOns\\ElvUI_mMediaTag\\media\\icons\\%s.tga"
+		TANK_ICON = E:TextureString(format(path, E.db[mPlugin].mRoleSymbols.tank), ':14:14')
+		HEALER_ICON = E:TextureString(format(path, E.db[mPlugin].mRoleSymbols.heal), ':14:14')
+		DPS_ICON = E:TextureString(format(path, E.db[mPlugin].mRoleSymbols.dd), ':14:14')
+	end
+
 	local str = ''
 	if tank then
 		str = str..TANK_ICON
