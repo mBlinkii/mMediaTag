@@ -104,6 +104,9 @@ P[mPlugin] = {
 	["mStygianEmber"]		= {["icon"] = true, ["short"] = true, ["name"] = false, ["style"] = "auto", ["hide"] = false},
 	["mTowerKnowledge"]		= {["icon"] = true, ["short"] = true, ["name"] = false, ["style"] = "auto", ["hide"] = false},
 	["mCosmicFlux"]			= {["icon"] = true, ["short"] = true, ["name"] = false, ["style"] = "auto", ["hide"] = false},
+	["mCyphersFirstOnes"]	= {["icon"] = true, ["short"] = true, ["name"] = false, ["style"] = "auto", ["hide"] = false},
+	["mTimewarpedBadge"]		= {["icon"] = true, ["short"] = true, ["name"] = false, ["style"] = "auto", ["hide"] = false},
+	["mConquest"]			= {["icon"] = true, ["short"] = true, ["name"] = false, ["style"] = "auto", ["hide"] = false}, ["showmax"] = false,
 	["mDataText"]			=
 		{	["colorhc"] = {
 			["b"] = 0.86666666666667,
@@ -214,4 +217,6 @@ P[mPlugin] = {
 					["skullname"] = "SKULL2", ["skullpath"] = "Interface\\AddOns\\ElvUI_mMediaTag\\media\\misc\\skull2.tga",
 					["ghostname"] = "SKULL10", ["ghostpath"] = "Interface\\AddOns\\ElvUI_mMediaTag\\media\\misc\\skull10.tga",
 				},
+	["mRoleSymbols"] = {["enable"] = false, ["tank"] = "tank14", ["heal"] = "heal9", ["dd"] = "dd7",
+					}
 }

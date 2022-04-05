@@ -932,6 +932,247 @@ local function OptionsCurrencys()
 				DT:ForceUpdate_DataText("mCosmicFlux")
 			end,
 		},
+		spacerCosmicFluxCyphersFirstOnes = {
+			order = 1700,
+			type = "description",
+			name = "\n\n",
+		},
+		headerCyphersFirstOnes = {
+			order = 1710,
+			type = "header",
+			name = format("|CFFAED0E1%s|r", L["Cyphers of the First Ones"]),
+		},
+		colorCyphersFirstOnes = {
+			order = 1720,
+			type = 'select',
+			name = L["Stygian Ember Color Style"],
+			get = function(info) return E.db[mPlugin].mCyphersFirstOnes.style end,
+			set = function(info, value)
+				E.db[mPlugin].mCyphersFirstOnes.style = value
+				DT:ForceUpdate_DataText("mCyphersFirstOnes")
+			end,
+			values = {
+				auto = L["Auto"],
+				color = L["Color"],
+				white = L["White"],
+			},
+		},
+		iconCyphersFirstOnes = {
+			order = 1730,
+			type = 'toggle',
+			name = L["Icon"],
+			desc = L["Show Icon"],
+			get = function(info)
+				return E.db[mPlugin].mCyphersFirstOnes.icon
+			end,
+			set = function(info, value)
+				E.db[mPlugin].mCyphersFirstOnes.icon = value
+				DT:ForceUpdate_DataText("mCyphersFirstOnes")
+			end,
+		},
+		numberCyphersFirstOnes = {
+			order = 1740,
+			type = 'toggle',
+			name = L["Short Number"],
+			desc = L["Short Number"],
+			get = function(info)
+				return E.db[mPlugin].mCyphersFirstOnes.short
+			end,
+			set = function(info, value)
+				E.db[mPlugin].mCyphersFirstOnes.short = value
+				DT:ForceUpdate_DataText("mCyphersFirstOnes")
+			end,
+		},
+		nameCyphersFirstOnes = {
+			order = 1750,
+			type = 'toggle',
+			name = L["Name"],
+			desc = L["Shows Name"],
+			get = function(info)
+				return E.db[mPlugin].mCyphersFirstOnes.name
+			end,
+			set = function(info, value)
+				E.db[mPlugin].mCyphersFirstOnes.name = value
+				DT:ForceUpdate_DataText("mCyphersFirstOnes")
+			end,
+		},
+		hideCyphersFirstOnes = {
+			order = 1760,
+			type = 'toggle',
+			name = L["Hide if Zero"],
+			get = function(info)
+				return E.db[mPlugin].mCyphersFirstOnes.hide
+			end,
+			set = function(info, value)
+				E.db[mPlugin].mCyphersFirstOnes.hide = value
+				DT:ForceUpdate_DataText("mCyphersFirstOnes")
+			end,
+		},
+		spacerTimewarpedBadgeTimewarpedBadge = {
+			order = 1800,
+			type = "description",
+			name = "\n\n",
+		},
+		headerTimewarpedBadge = {
+			order = 1810,
+			type = "header",
+			name = format("|CFF0873B9%s|r", L["Timewarped Badge"]),
+		},
+		colorTimewarpedBadge = {
+			order = 1820,
+			type = 'select',
+			name = L["Stygian Ember Color Style"],
+			get = function(info) return E.db[mPlugin].mTimewarpedBadge.style end,
+			set = function(info, value)
+				E.db[mPlugin].mTimewarpedBadge.style = value
+				DT:ForceUpdate_DataText("mTimewarpedBadge")
+			end,
+			values = {
+				auto = L["Auto"],
+				color = L["Color"],
+				white = L["White"],
+			},
+		},
+		iconTimewarpedBadge = {
+			order = 1830,
+			type = 'toggle',
+			name = L["Icon"],
+			desc = L["Show Icon"],
+			get = function(info)
+				return E.db[mPlugin].mTimewarpedBadge.icon
+			end,
+			set = function(info, value)
+				E.db[mPlugin].mTimewarpedBadge.icon = value
+				DT:ForceUpdate_DataText("mTimewarpedBadge")
+			end,
+		},
+		numberTimewarpedBadge = {
+			order = 1840,
+			type = 'toggle',
+			name = L["Short Number"],
+			desc = L["Short Number"],
+			get = function(info)
+				return E.db[mPlugin].mTimewarpedBadge.short
+			end,
+			set = function(info, value)
+				E.db[mPlugin].mTimewarpedBadge.short = value
+				DT:ForceUpdate_DataText("mTimewarpedBadge")
+			end,
+		},
+		nameTimewarpedBadge = {
+			order = 1850,
+			type = 'toggle',
+			name = L["Name"],
+			desc = L["Shows Name"],
+			get = function(info)
+				return E.db[mPlugin].mTimewarpedBadge.name
+			end,
+			set = function(info, value)
+				E.db[mPlugin].mTimewarpedBadge.name = value
+				DT:ForceUpdate_DataText("mTimewarpedBadge")
+			end,
+		},
+		hideTimewarpedBadge = {
+			order = 1860,
+			type = 'toggle',
+			name = L["Hide if Zero"],
+			get = function(info)
+				return E.db[mPlugin].mTimewarpedBadge.hide
+			end,
+			set = function(info, value)
+				E.db[mPlugin].mTimewarpedBadge.hide = value
+				DT:ForceUpdate_DataText("mTimewarpedBadge")
+			end,
+		},
+		spacerConquestConquest = {
+			order = 1900,
+			type = "description",
+			name = "\n\n",
+		},
+		headerConquest = {
+			order = 1910,
+			type = "header",
+			name = format("|CFFC9913C%s|r", L["Conquest"]),
+		},
+		colorConquest = {
+			order = 1920,
+			type = 'select',
+			name = L["Color Style"],
+			get = function(info) return E.db[mPlugin].mConquest.style end,
+			set = function(info, value)
+				E.db[mPlugin].mConquest.style = value
+				DT:ForceUpdate_DataText("mConquest")
+			end,
+			values = {
+				auto = L["Auto"],
+				color = L["Color"],
+				white = L["White"],
+			},
+		},
+		iconConquest = {
+			order = 1930,
+			type = 'toggle',
+			name = L["Icon"],
+			desc = L["Show Icon"],
+			get = function(info)
+				return E.db[mPlugin].mConquest.icon
+			end,
+			set = function(info, value)
+				E.db[mPlugin].mConquest.icon = value
+				DT:ForceUpdate_DataText("mConquest")
+			end,
+		},
+		numberConquest = {
+			order = 1940,
+			type = 'toggle',
+			name = L["Short Number"],
+			desc = L["Short Number"],
+			get = function(info)
+				return E.db[mPlugin].mConquest.short
+			end,
+			set = function(info, value)
+				E.db[mPlugin].mConquest.short = value
+				DT:ForceUpdate_DataText("mConquest")
+			end,
+		},
+		showmaxConquest  = {
+			order = 1941,
+			type = 'toggle',
+			name = L["Show Max Value"],
+			desc = L["Show Max Value"],
+			get = function(info)
+				return E.db[mPlugin].mConquest .showmax
+			end,
+			set = function(info, value)
+				E.db[mPlugin].mConquest .showmax = value
+				DT:ForceUpdate_DataText("mConquest ")
+			end,
+		},
+		nameConquest = {
+			order = 1950,
+			type = 'toggle',
+			name = L["Name"],
+			desc = L["Shows Name"],
+			get = function(info)
+				return E.db[mPlugin].mConquest.name
+			end,
+			set = function(info, value)
+				E.db[mPlugin].mConquest.name = value
+				DT:ForceUpdate_DataText("mConquest")
+			end,
+		},
+		hideConquest = {
+			order = 1960,
+			type = 'toggle',
+			name = L["Hide if Zero"],
+			get = function(info)
+				return E.db[mPlugin].mConquest.hide
+			end,
+			set = function(info, value)
+				E.db[mPlugin].mConquest.hide = value
+				DT:ForceUpdate_DataText("mConquest")
+			end,
+		},
 	}
 end
 mInsert(ns.Config, OptionsCurrencys)

@@ -100,7 +100,22 @@ function mMT:mMisc()
 		
 		mMT:InitializemOBT()
 	end
+
+	--local mCosmeticsEnable = true
+	--if mCosmeticsEnable then
+	--	mMT:mStartCosmetics()
+	--end
+
 end
+
+local mMediaTagLoader = CreateFrame('Frame')
+--mMediaTagLoader:RegisterEvent('ADDON_LOADED')
+mMediaTagLoader:RegisterEvent('PLAYER_ENTERING_WORLD')
+mMediaTagLoader:SetScript('OnEvent', function(self, event)
+	if E.db[mPlugin].mRoleSymbols.enable then
+		mMT:mStartRoleSmbols()
+	end
+end)
 
 function mMT:mBackupNameplateSettings()
 	if not E.db[mPlugin].mBackup then

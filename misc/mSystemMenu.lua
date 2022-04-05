@@ -5,10 +5,7 @@ local DT = E:GetModule("DataTexts");
 local addon, ns = ...
 
 --Lua functions
-local tinsert = tinsert
 local format = format
-local strjoin = strjoin
-local wipe = wipe
 
 --WoW API / Variables
 local _G = _G

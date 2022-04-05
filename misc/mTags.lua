@@ -402,7 +402,6 @@ local FramemDeathReset = CreateFrame('Frame')
 FramemDeathReset:RegisterEvent('UPDATE_INSTANCE_INFO')
 FramemDeathReset:RegisterEvent('PLAYER_ENTERING_WORLD')
 FramemDeathReset:SetScript('OnEvent', function(self, event)
-	local inInstance, _ = IsInInstance()
 	local iniId = tostring(({GetInstanceInfo()})[8])
 	if mDeathReset == false and iniId ~= mID then
 		mID = iniId

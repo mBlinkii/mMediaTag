@@ -383,6 +383,20 @@ local function OptionsCore()
 				args = {
 				},
 			},
+			cosmetic = {
+				order = 60,
+				type = "group",
+				name = L['Cosmetic'],
+				args = {
+					rolesymbols = {
+						order = 1,
+						type = "group",
+						name = L['Role Symbols'],
+						args = {
+						},
+					},
+				},
+			},
 			profile = {
 				order = 70,
 				type = "group",
