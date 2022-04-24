@@ -101,11 +101,9 @@ function mMT:mMisc()
 		mMT:InitializemOBT()
 	end
 
-	--local mCosmeticsEnable = true
-	--if mCosmeticsEnable then
-	--	mMT:mStartCosmetics()
-	--end
-
+	if E.db[mPlugin].mCastbar.enable then
+		mMT:mSetupCastbar()
+	end
 end
 
 local mMediaTagLoader = CreateFrame('Frame')

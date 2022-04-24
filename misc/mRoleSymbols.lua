@@ -69,6 +69,42 @@ local function mSetupIcons()
             mIcons["dd" .. i] = {["file"] = path, ["icon"] = E:TextureString(path, sizeString) .. "dd" .. i}
         end
 
+        --beer
+        for i=1, 8, 1 do
+            path = format("Interface\\AddOns\\ElvUI_mMediaTag\\media\\icons\\beer%s.tga", i)
+            mIcons["beer" .. i] = {["file"] = path, ["icon"] = E:TextureString(path, sizeString) .. "beer" .. i}
+        end
+
+         --egg
+         for i=1, 8, 1 do
+            path = format("Interface\\AddOns\\ElvUI_mMediaTag\\media\\icons\\egg%s.tga", i)
+            mIcons["egg" .. i] = {["file"] = path, ["icon"] = E:TextureString(path, sizeString) .. "egg" .. i}
+        end
+
+        --lightning
+        for i=1, 10, 1 do
+            path = format("Interface\\AddOns\\ElvUI_mMediaTag\\media\\icons\\lightning%s.tga", i)
+            mIcons["lightning" .. i] = {["file"] = path, ["icon"] = E:TextureString(path, sizeString) .. "lightning" .. i}
+        end
+
+         --firenew
+         for i=1, 10, 1 do
+            path = format("Interface\\AddOns\\ElvUI_mMediaTag\\media\\icons\\firenew%s.tga", i)
+            mIcons["firenew" .. i] = {["file"] = path, ["icon"] = E:TextureString(path, sizeString) .. "firenew" .. i}
+        end
+
+         --emergency
+         for i=1, 12, 1 do
+            path = format("Interface\\AddOns\\ElvUI_mMediaTag\\media\\icons\\emergency%s.tga", i)
+            mIcons["emergency" .. i] = {["file"] = path, ["icon"] = E:TextureString(path, sizeString) .. "emergency" .. i}
+        end
+
+         --moon
+         for i=1, 12, 1 do
+            path = format("Interface\\AddOns\\ElvUI_mMediaTag\\media\\icons\\moon%s.tga", i)
+            mIcons["moon" .. i] = {["file"] = path, ["icon"] = E:TextureString(path, sizeString) .. "moon" .. i}
+        end
+
         if not mIconsList then
             mIconsList = {}
             for i in pairs(mIcons) do
