@@ -395,6 +395,13 @@ local function OptionsCore()
 						args = {
 						},
 					},
+					castbar = {
+						order = 2,
+						type = "group",
+						name = L['Castbar'],
+						args = {
+						},
+					},
 				},
 			},
 			profile = {

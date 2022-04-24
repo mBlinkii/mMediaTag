@@ -192,7 +192,7 @@ P[mPlugin] = {
 	["VolumeDisplay"]		= {["enable"] = true,},
 	["Dungeon"]	= {["score"] = true, ["showicon"] = true,},
 	["ProfessionMenu"] = {["showicon"] = true,},
-	["mMythicPlusTools"]	= {["keys"] = true,},
+	["mMythicPlusTools"]	= {["keys"] = true, ["cov"] = true},
 	["mObjectiveTracker"]	= {	["enable"] = false, ["font"] = "PT Sans Narrow", ["fontflag"] = "NONE",
 								["header"] = {	["fontsize"] = 13, ["fontcolorstyle"] = "custom", 
 												["fontcolor"] = {["r"] = 1, ["g"] = 0.7843137254902, ["b"] = 0,},
@@ -217,6 +217,7 @@ P[mPlugin] = {
 					["skullname"] = "SKULL2", ["skullpath"] = "Interface\\AddOns\\ElvUI_mMediaTag\\media\\misc\\skull2.tga",
 					["ghostname"] = "SKULL10", ["ghostpath"] = "Interface\\AddOns\\ElvUI_mMediaTag\\media\\misc\\skull10.tga",
 				},
-	["mRoleSymbols"] = {["enable"] = false, ["tank"] = "tank14", ["heal"] = "heal9", ["dd"] = "dd7",
-					}
+	["mRoleSymbols"] = {["enable"] = true, ["tank"] = "tank14", ["heal"] = "heal9", ["dd"] = "dd7",
+					},
+	["mCastbar"] = {["enable"] = true, kickcd = {["r"]=0.545098, ["g"]=0, ["b"]=0.545098}, kickintime = {["r"]=0, ["g"]=0.74902, ["b"]=1},}
 }

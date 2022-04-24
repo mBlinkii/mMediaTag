@@ -40,15 +40,17 @@ local function Covenant()
 end
 
 local function mGetKey()
+	local mKeys = {}
 	for bag = 0, NUM_BAG_SLOTS do
 		local bSlots = GetContainerNumSlots(bag)
 		for slot = 1, bSlots do
 			local itemLink, _, _, itemID = select(7, GetContainerItemInfo(bag, slot))
-			if itemID == 180653 then
-				return itemLink
+			if itemID == 180653 or itemID == 187786 then
+				mKeys[itemID] = itemLink
 			end
 		end
 	end
+	return mKeys
 end
 
 local function mMediaTagKeys(event, text, channelIndex)
@@ -65,16 +67,29 @@ local function mMediaTagKeys(event, text, channelIndex)
 			chat = "CHANNEL"
 		end
 
-		local key, covenant = mGetKey(), Covenant()
+		local myKeys, covenant = mGetKey(), Covenant()
+		local sendCov = E.db[mPlugin].mMythicPlusTools.cov
 		if isKeyword == "!key" or isKeyword == "!keys" then
-			if key then
-				if covenant then
-					link = covenant .. ' - ' .. key
+			if myKeys then
+				if sendCov and covenant and myKeys[180653] and myKeys[187786] then
+					link = covenant .. ' - ' .. myKeys[180653] .. " & " .. myKeys[187786]
+				elseif sendCov and covenant and myKeys[180653] or myKeys[187786] then
+					if myKeys[180653] then
+						link = covenant .. ' - ' .. myKeys[180653]
+					else
+						link = covenant .. ' - ' .. myKeys[187786]
+					end
 				else
-					link = key
+					if myKeys[180653] and myKeys[187786] then
+						link = myKeys[180653] .. " & " .. myKeys[187786]
+					elseif myKeys[180653] then
+						link = myKeys[180653]
+					else
+						link = myKeys[187786]
+					end
 				end
 			end
-		else
+		elseif sendCov then
 			if covenant then
 				link = covenant
 			else
@@ -82,7 +97,6 @@ local function mMediaTagKeys(event, text, channelIndex)
 			end
 		end
 
-	
 		if chat then
 			if channelIndex then
 				SendChatMessage(link, chat, nil, channelIndex)
@@ -116,6 +130,18 @@ local function mKeystoneToChatOptions()
 			end,
 			set = function(info, value)
 				E.db[mPlugin].mMythicPlusTools.keys = value
+			end,
+		},
+		covtochat = {
+			order = 20,
+			type = 'toggle',
+			name = L["Send Covenant to Chat"],
+			desc = L["Sends your Covenant to Chat, wen ther ist The Keyword !key or !keys or !cov"],
+			get = function(info)
+				return E.db[mPlugin].mMythicPlusTools.cov
+			end,
+			set = function(info, value)
+				E.db[mPlugin].mMythicPlusTools.kcoveys = value
 			end,
 		},
 	}
