@@ -33,7 +33,7 @@ local function mBagCheck()
 		[336456] = 250,
 	}
 
-	for bagID=BACKPACK_CONTAINER, NUM_BAG_SLOTS do
+	for bagID = BACKPACK_CONTAINER, NUM_BAG_SLOTS do
 		local slots = GetContainerNumSlots(bagID)
 		for slot=1, slots do
 			local itemID = select(10,GetContainerItemInfo(bagID,slot))
