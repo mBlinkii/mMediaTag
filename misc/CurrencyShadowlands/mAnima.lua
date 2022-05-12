@@ -146,5 +146,5 @@ local function ValueColorUpdate(hex)
 end
 
 E.valueColorUpdateFuncs[ValueColorUpdate] = true
-
-DT:RegisterDatatext(mTextName, _G.CURRENCY, {'CHAT_MSG_CURRENCY', 'CURRENCY_DISPLAY_UPDATE', 'ITEM_PUSH', 'BAG_UPDATE', 'ANIMA_DIVERSION_CLOSE'}, OnEvent, nil, nil, OnEnter, OnLeave, mText, ValueColorUpdate)
+--'ITEM_PUSH', 'BAG_UPDATE'
+DT:RegisterDatatext(mTextName, _G.CURRENCY, {'CHAT_MSG_CURRENCY', 'CURRENCY_DISPLAY_UPDATE', 'ANIMA_DIVERSION_CLOSE'}, OnEvent, nil, nil, OnEnter, OnLeave, mText, ValueColorUpdate)

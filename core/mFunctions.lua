@@ -64,41 +64,42 @@ function mMT:mMisc()
 	if E.db[mPlugin].mTIcon then
 		mMT:TipIconSetup()
 	end
-	
-	if E.db[mPlugin].mMythicPlusTools.keys and MediaTagGameVersion.retail then
-		mMT:mStartKeysToChatt()
-	end
 
 	mMT:mLoadTools()
 
 	if E.db[mPlugin].VolumeDisplay.enable then
 		mMT:mVolumeDisplay()
 	end
-	
-	if E.db[mPlugin].mObjectiveTracker.enable and E.private.skins.blizzard.enable == true and not IsAddOnLoaded('!KalielsTracker') and MediaTagGameVersion.retail then
-		if E.private.skins.blizzard.objectiveTracker == false then
-			StaticPopupDialogs["mErrorSkin"] = {
-				text = L["ElvUI skin must be enabled to activate mMediaTag Quest skins! Should it be activated?"],
-				button1 = L["Yes"],
-				button2 = L["No"],
-				timeout = 120,
-				whileDead = true,
-				hideOnEscape = false,
-				preferredIndex = 3,
-				OnAccept = function()
-					E.private.skins.blizzard.objectiveTracker = true
-					C_UI.Reload()
-				end,
-				OnCancel = function()
-					E.db[mPlugin].mObjectiveTracker.enable = false
-					C_UI.Reload()
-				end,
-			}
-			
-			StaticPopup_Show ("mErrorSkin")
+	if MediaTagGameVersion.retail then
+		if E.db[mPlugin].mMythicPlusTools.keys then
+			mMT:mStartKeysToChatt()
 		end
-		
-		mMT:InitializemOBT()
+
+		if E.db[mPlugin].mObjectiveTracker.enable and E.private.skins.blizzard.enable == true and not IsAddOnLoaded('!KalielsTracker') then
+			if E.private.skins.blizzard.objectiveTracker == false then
+				StaticPopupDialogs["mErrorSkin"] = {
+					text = L["ElvUI skin must be enabled to activate mMediaTag Quest skins! Should it be activated?"],
+					button1 = L["Yes"],
+					button2 = L["No"],
+					timeout = 120,
+					whileDead = true,
+					hideOnEscape = false,
+					preferredIndex = 3,
+					OnAccept = function()
+						E.private.skins.blizzard.objectiveTracker = true
+						C_UI.Reload()
+					end,
+					OnCancel = function()
+						E.db[mPlugin].mObjectiveTracker.enable = false
+						C_UI.Reload()
+					end,
+				}
+				
+				StaticPopup_Show ("mErrorSkin")
+			end
+			
+			mMT:InitializemOBT()
+		end
 	end
 
 	if E.db[mPlugin].mCastbar.enable then
@@ -110,8 +111,10 @@ local mMediaTagLoader = CreateFrame('Frame')
 --mMediaTagLoader:RegisterEvent('ADDON_LOADED')
 mMediaTagLoader:RegisterEvent('PLAYER_ENTERING_WORLD')
 mMediaTagLoader:SetScript('OnEvent', function(self, event)
-	if E.db[mPlugin].mRoleSymbols.enable then
-		mMT:mStartRoleSmbols()
+	if MediaTagGameVersion.retail then
+		if E.db[mPlugin].mRoleSymbols.enable then
+			mMT:mStartRoleSmbols()
+		end
 	end
 end)
 
