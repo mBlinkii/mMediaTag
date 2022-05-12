@@ -33,7 +33,7 @@ local function mBagCheck()
 		[336456] = 250,
 	}
 
-	for bagID=BACKPACK_CONTAINER, NUM_BAG_SLOTS do
+	for bagID = BACKPACK_CONTAINER, NUM_BAG_SLOTS do
 		local slots = GetContainerNumSlots(bagID)
 		for slot=1, slots do
 			local itemID = select(10,GetContainerItemInfo(bagID,slot))
@@ -146,5 +146,5 @@ local function ValueColorUpdate(hex)
 end
 
 E.valueColorUpdateFuncs[ValueColorUpdate] = true
-
-DT:RegisterDatatext(mTextName, _G.CURRENCY, {'CHAT_MSG_CURRENCY', 'CURRENCY_DISPLAY_UPDATE', 'ITEM_PUSH', 'BAG_UPDATE', 'ANIMA_DIVERSION_CLOSE'}, OnEvent, nil, nil, OnEnter, OnLeave, mText, ValueColorUpdate)
+--'ITEM_PUSH', 'BAG_UPDATE'
+DT:RegisterDatatext(mTextName, _G.CURRENCY, {'CHAT_MSG_CURRENCY', 'CURRENCY_DISPLAY_UPDATE', 'ANIMA_DIVERSION_CLOSE'}, OnEvent, nil, nil, OnEnter, OnLeave, mText, ValueColorUpdate)

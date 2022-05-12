@@ -1,0 +1,25 @@
+{
+    "Lua.diagnostics.globals": [
+        "_G",
+        "LibStub",
+        "_TAGS",
+        "NUM_BAG_SLOTS",
+        "ElvUI",
+        "DUNGEON_SCORE",
+        "ToggleLFDParentFrame",
+        "DUNGEON_DIFFICULTY",
+        "RAID_DIFFICULTY",
+        "ToggleSpellBook",
+        "ToggleFrame",
+        "ElvUF",
+        "GameFontHighlightSmall",
+        "StaticPopupDialogs",
+        "CLOSE",
+        "StaticPopup_Show",
+        "GameTooltip_Hide",
+        "ACHIEVEMENT_BUTTON",
+        "AchievementFrame",
+        "ToggleAchievementFrame",
+        "BACKPACK_CONTAINER"
+    ]
+}
