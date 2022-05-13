@@ -277,6 +277,7 @@ mAddStatusbar("mMediaTag O9", "o9.tga")
 mAddStatusbar("mMediaTag O10", "o10.tga")
 mAddStatusbar("mMediaTag O11", "o11.tga")
 mAddStatusbar("mMediaTag O12", "o12.tga")
+mAddStatusbar("mMediaTag O13", "o13.tga")
 
 -- Backgrounds
 mAddBackground("mMediaTag BG1", "bg1.tga")

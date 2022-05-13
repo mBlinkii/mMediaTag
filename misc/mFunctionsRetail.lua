@@ -105,6 +105,7 @@ end
 
 --Affixes Functions
 function mMT:WeeklyAffixes()
+	local keyStoneLevel = C_MythicPlus.GetOwnedKeystoneLevel()
 	local WeeklyAffixesText, affixes = {}, {}
 	local nhc, hc, myth, _, other, titel = mMT:mColorDatatext()
 	local AffixText = nil

@@ -100,10 +100,10 @@ function mMT:mMisc()
 			
 			mMT:InitializemOBT()
 		end
-	end
 
-	if E.db[mPlugin].mCastbar.enable then
-		mMT:mSetupCastbar()
+		if E.db[mPlugin].mCastbar.enable then
+			mMT:mSetupCastbar()
+		end
 	end
 end
 
