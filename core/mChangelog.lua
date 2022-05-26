@@ -8,8 +8,8 @@ local addon, ns = ...
 local format = format
 
 --Variables
-local ChangelogDate = "24.04.2022"
-local ChangelogText = "## [ver. 2.77] - 24.04.2022\n### Update\n- more Role Symbols\n- link legion Keystons to Chat\n- Option to Enable/Disable Convanent to Chat\n- more Textures\n### Added\n- New Castbar Kick on CD Colors\n- New Datatext FPS/MS\n\n## [ver. 2.76] - 05.04.2022\n### Update\n- Locals\n- LFD and Talent Rolicons update\n### Added\n- New Currency, Cosmic Flux, Timewarped Badge, Cyphers of the First Ones, Conquest\n- New Role Symbols"
+local ChangelogDate = "26.05.2022"
+local ChangelogText = "## [ver. 2.79] - 26.05.2022\n### Update\n- Bugfix Castbar Interrupr Color\n- Code update\n- Combattimer fix out of combat\n### Added\n- New Texture\n- New Tags mTargetingPlayers, :raid :party :icons:party"
 
 function mMT:Changelog(opt)
 	local Frame = CreateFrame("Frame", "mMediaTagChangelog", E.UIParent, 'BackdropTemplate')
