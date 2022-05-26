@@ -104,6 +104,8 @@ function mMT:mMisc()
 		if E.db[mPlugin].mCastbar.enable then
 			mMT:mSetupCastbar()
 		end
+
+		--mMT:UpdateMarkers()
 	end
 end
 

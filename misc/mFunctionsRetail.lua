@@ -105,11 +105,12 @@ end
 
 --Affixes Functions
 function mMT:WeeklyAffixes()
-	local keyStoneLevel = C_MythicPlus.GetOwnedKeystoneLevel()
 	local WeeklyAffixesText, affixes = {}, {}
-	local nhc, hc, myth, _, other, titel = mMT:mColorDatatext()
+	local _, _, _, _, other, titel = mMT:mColorDatatext()
 	local AffixText = nil
 	local savedYear = E.db[mPlugin].mSavedAffixes.year
+	
+	affixes = C_MythicPlus.GetCurrentAffixes()
 
 	if (date("%u") == "2") or (date("%u") == "3" or date("%y") ~= savedYear) and not E.db[mPlugin].mSavedAffixes.reset then
 		E.db[mPlugin].mSavedAffixes.affixes = nil
@@ -119,7 +120,7 @@ function mMT:WeeklyAffixes()
 		E.db[mPlugin].mSavedAffixes.reset = false
 	end
 	
-	if (date("%u") ~= "2") and (date("%u") ~= "3") then
+	if not affixes and (date("%u") ~= "2") and (date("%u") ~= "3") then
 		affixes = E.db[mPlugin].mSavedAffixes.affixes
 		if (affixes) == nil then
 			affixes = C_MythicPlus.GetCurrentAffixes()
