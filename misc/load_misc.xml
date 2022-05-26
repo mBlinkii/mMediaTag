@@ -10,6 +10,7 @@
 	<Script file="mFPSMS.lua"/>
 	<Script file="mFunctionsMisc.lua"/>
 	<Script file="mFunctionsRetail.lua"/>
+	<Script file="mHealthMarkers.lua"/>
 	<Script file="mKeystoneToChat.lua"/>
 	<Script file="mObjectiveTracker.lua"/>
 	<Script file="mProfessionMenu.lua"/>

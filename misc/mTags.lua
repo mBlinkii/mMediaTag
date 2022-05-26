@@ -278,36 +278,6 @@ local function mGetClassStatusTexture(class)
 	end
 end
 
-local function mGetClassDeathTexture(class)
-	if class == 'PRIEST' then
-		return 5
-	elseif class == 'DEATHKNIGHT' then
-		return 6
-	elseif class == 'DEMONHUNTER' then
-		return 7
-	elseif class == 'DRUID' then
-		return 8
-	elseif class == 'HUNTER' then
-		return 9
-	elseif class == 'MAGE' then
-		return 10
-	elseif class == 'MONK' then
-		return 11
-	elseif class == 'PALADIN' then
-		return 12
-	elseif class == 'ROGUE' then
-		return 13
-	elseif class == 'SHAMAN' then
-		return 14
-	elseif class == 'WARLOCK' then
-		return 15
-	elseif class == 'WARRIOR' then
-		return 16
-	else
-		return 1
-	end
-end
-
 E:AddTag('mStatus:icon:class', 'UNIT_HEALTH UNIT_CONNECTION PLAYER_FLAGS_CHANGED', function(unit)
 	local _, unitClass = UnitClass(unit)
 	if UnitIsAFK(unit) then
@@ -962,6 +932,102 @@ E:AddTag('mQuestIcon', 'QUEST_LOG_UPDATE', function(unit)
 	if isQuest then
 		return format(IconPath, "quest")
 	end
+end)
+
+local function GetPartyTargets(unit)
+	local amount = 0
+	for i = 1, GetNumGroupMembers() - 1 do
+		local partytarget = "party" .. i .. "target"
+		if (UnitGUID(partytarget) == UnitGUID(unit)) then
+			amount = amount + 1
+		end
+	end
+
+	if (UnitGUID("playertarget") == UnitGUID(unit)) then
+		amount = amount + 1
+	end
+
+	if amount ~= 0 then
+		return amount
+	end
+end
+
+local function GetRaidTargets(unit)
+	local amount = 0
+	for i = 1, GetNumGroupMembers() do
+		local raidtarget = "raid" .. i .. "target"
+		if (UnitGUID(raidtarget) == UnitGUID(unit)) then
+			amount = amount + 1
+		end
+	end
+
+	if amount ~= 0 then
+		return amount
+	end
+end
+
+local TargetColorTable = {
+	[0] = "|TInterface\\AddOns\\ElvUI_mMediaTag\\media\\misc\\d0.tga:0|t",
+	[1] = "|TInterface\\AddOns\\ElvUI_mMediaTag\\media\\misc\\d1.tga:0|t",
+	[2] = "|TInterface\\AddOns\\ElvUI_mMediaTag\\media\\misc\\d2.tga:0|t",
+	[3] = "|TInterface\\AddOns\\ElvUI_mMediaTag\\media\\misc\\d3.tga:0|t",
+	[4] = "|TInterface\\AddOns\\ElvUI_mMediaTag\\media\\misc\\d4.tga:0|t",
+	[5] = "|TInterface\\AddOns\\ElvUI_mMediaTag\\media\\misc\\d5.tga:0|t",
+	[6] = "|TInterface\\AddOns\\ElvUI_mMediaTag\\media\\misc\\d6.tga:0|t",
+	[7] = "|TInterface\\AddOns\\ElvUI_mMediaTag\\media\\misc\\d7.tga:0|t",
+	[8] = "|TInterface\\AddOns\\ElvUI_mMediaTag\\media\\misc\\d8.tga:0|t",
+	[9] = "|TInterface\\AddOns\\ElvUI_mMediaTag\\media\\misc\\d9.tga:0|t",
+	[10] = "|TInterface\\AddOns\\ElvUI_mMediaTag\\media\\misc\\d10.tga:0|t",
+	[11] = "|TInterface\\AddOns\\ElvUI_mMediaTag\\media\\misc\\d11.tga:0|t",
+	[12] = "|TInterface\\AddOns\\ElvUI_mMediaTag\\media\\misc\\d12.tga:0|t",
+}
+
+local function GetPartyTargetsIcons(unit)
+	local ClassString = ""
+	for i = 1, GetNumGroupMembers() - 1 do
+		local partytarget = "party" .. i .. "target"
+		if (UnitGUID(partytarget) == UnitGUID(unit)) then
+			local _, _, classIndex = UnitClass("party" .. i)
+			ClassString = TargetColorTable[classIndex] .. ClassString
+		end
+	end
+
+	if (UnitGUID("playertarget") == UnitGUID(unit)) then
+		local _, _, classIndex = UnitClass("player")
+		ClassString = TargetColorTable[classIndex] .. ClassString
+	end
+
+	if ClassString ~= "" then
+		return ClassString
+	end
+end
+
+E:AddTag('mTargetingPlayers', 2, function(unit)
+    if (InCombatLockdown()) and UnitAffectingCombat(unit) then
+		if (IsInRaid()) then
+			return GetRaidTargets(unit)
+		elseif (IsInGroup()) then
+			return GetPartyTargets(unit)
+		end
+	end
+end)
+
+E:AddTag('mTargetingPlayers:raid', 2, function(unit)
+    if (InCombatLockdown()) and UnitAffectingCombat(unit) and (IsInRaid()) then
+		return GetRaidTargets(unit)
+    end
+end)
+
+E:AddTag('mTargetingPlayers:party', 2, function(unit)
+    if (InCombatLockdown()) and UnitAffectingCombat(unit) and (IsInGroup())  then
+		return GetPartyTargets(unit)
+    end
+end)
+
+E:AddTag('mTargetingPlayers:icons:party', 2, function(unit)
+    if (InCombatLockdown()) and UnitAffectingCombat(unit) and (IsInGroup()) then
+		return GetPartyTargetsIcons(unit)
+    end
 end)
 
 E:AddTagInfo('mClass', ns.mName, L['Classes are fully written.'])

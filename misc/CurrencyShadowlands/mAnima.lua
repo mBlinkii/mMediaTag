@@ -147,4 +147,4 @@ end
 
 E.valueColorUpdateFuncs[ValueColorUpdate] = true
 --'ITEM_PUSH', 'BAG_UPDATE'
-DT:RegisterDatatext(mTextName, _G.CURRENCY, {'CHAT_MSG_CURRENCY', 'CURRENCY_DISPLAY_UPDATE', 'ANIMA_DIVERSION_CLOSE'}, OnEvent, nil, nil, OnEnter, OnLeave, mText, ValueColorUpdate)
+DT:RegisterDatatext(mTextName, _G.CURRENCY, {'CHAT_MSG_CURRENCY', 'CURRENCY_DISPLAY_UPDATE', 'BAG_UPDATE_DELAYED', 'ANIMA_DIVERSION_CLOSE'}, OnEvent, nil, nil, OnEnter, OnLeave, mText, ValueColorUpdate)

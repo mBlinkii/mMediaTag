@@ -13,6 +13,8 @@ local mText = L["mCombatTime"]
 local hexColor, lastPanel = '', nil
 local timer, startTime, inEncounter = 0, 0, nil
 local mCombatIcon = format("|T%s:16:16:0:0:32:32|t", "Interface\\AddOns\\ElvUI_mMediaTag\\media\\misc\\combaticon.tga")
+local mCombatLeaveIcon = format("|T%s:16:16:0:0:32:32|t", "Interface\\AddOns\\ElvUI_mMediaTag\\media\\misc\\outofcombaticon.tga")
+local mIconUpdate = mCombatIcon
 local clear = false
 
 local function UpdateText()
@@ -21,7 +23,7 @@ end
 
 local function OnUpdate(self)
 	timer = GetTime() - startTime
-	self.text:SetText(mCombatIcon .. UpdateText())
+	self.text:SetText(mIconUpdate .. UpdateText())
 end
 
 function mMT:mCleartText(self)
@@ -42,19 +44,23 @@ local function OnEvent(self, event, _, timeSeconds)
 	local inArena, started, ended = instanceType == 'arena', event == 'ENCOUNTER_START', event == 'ENCOUNTER_END'
 
 	if inArena and event == 'START_TIMER' then
+		mIconUpdate = mCombatIcon
 		clear = false
         mMT:CancelAllTimers(self.mTimer)
 		timer, startTime = 0, timeSeconds
 		self.text:SetText('00:00')
 		self:SetScript('OnUpdate', DelayOnUpdate)
 	elseif not inArena and ((not inEncounter and event == 'PLAYER_REGEN_ENABLED') or ended) then
+		mIconUpdate = mCombatLeaveIcon
 		clear = false
+		self.text:SetText(mIconUpdate .. UpdateText())
 		self:SetScript('OnUpdate', nil)
 		if ended then inEncounter = nil end
         if clear == false then
             self.mTimer = mMT:ScheduleTimer("mCleartText", 30, self)
         end
 	elseif not inArena and (event == 'PLAYER_REGEN_DISABLED' or started) then
+		mIconUpdate = mCombatIcon
 		clear = false
         mMT:CancelAllTimers(self.mTimer)
 		timer, startTime = 0, GetTime()

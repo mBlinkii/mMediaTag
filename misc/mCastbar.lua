@@ -70,7 +70,8 @@ function mMT:mSetupCastbar()
 		hooksecurefunc(NP, "Castbar_CheckInterrupt", function(unit)
 			if unit.unit == 'vehicle' or unit.unit == 'player' then return end
 
-			local interruptCD = 0
+			local interruptCD = nil
+			local interruptReadyInTime = false
 
 			if interruptSpellId then
 				local cdStart, cdDur =  GetSpellCooldown(interruptSpellId)
@@ -78,8 +79,15 @@ function mMT:mSetupCastbar()
 				local value = unit:GetValue()
 				interruptCD = (cdStart > 0 and  cdDur - (GetTime() - cdStart)) or 0
 
+				if unit.channeling then
+                    interruptReadyInTime = (interruptCD + 0.5) < value
+                else
+                    interruptReadyInTime = (interruptCD + 0.5) < (statusMax - value)
+                end
+
+
 				if (not unit.notInterruptible) then
-					if interruptCD > 0 and  (interruptCD + 0.5) < (statusMax - value) then
+					if interruptCD > 0 and interruptReadyInTime then
 						unit:SetStatusBarColor(colorKickinTime.r, colorKickinTime.g, colorKickinTime.b)
 					elseif interruptCD > 0 then
 						unit:SetStatusBarColor(colorKickonCD.r, colorKickonCD.g, colorKickonCD.b)

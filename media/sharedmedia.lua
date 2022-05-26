@@ -279,6 +279,8 @@ mAddStatusbar("mMediaTag O11", "o11.tga")
 mAddStatusbar("mMediaTag O12", "o12.tga")
 mAddStatusbar("mMediaTag O13", "o13.tga")
 
+mAddStatusbar("MaUIv3", "MaUIv3.tga")
+
 -- Backgrounds
 mAddBackground("mMediaTag BG1", "bg1.tga")
 mAddBackground("mMediaTag BG2", "bg2.tga")
