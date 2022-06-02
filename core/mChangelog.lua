@@ -8,8 +8,8 @@ local addon, ns = ...
 local format = format
 
 --Variables
-local ChangelogDate = "26.05.2022"
-local ChangelogText = "## [ver. 2.79] - 26.05.2022\n### Update\n- Bugfix Castbar Interrupr Color\n- Code update\n- Combattimer fix out of combat\n### Added\n- New Texture\n- New Tags mTargetingPlayers, :raid :party :icons:party"
+local ChangelogDate = "02.06.2022"
+local ChangelogText = "## [ver. 2.80] - 02.06.2022\n### Update\n- Toc update\n### Added\n- New Tags mFaction:text, :icon\n\n## [ver. 2.79] - 26.05.2022\n### Update\n- Bugfix Castbar Interrupr Color\n- Code update\n- Combattimer fix out of combat\n### Added\n- New Texture\n- New Tags mTargetingPlayers, :raid :party :icons:party"
 
 function mMT:Changelog(opt)
 	local Frame = CreateFrame("Frame", "mMediaTagChangelog", E.UIParent, 'BackdropTemplate')
