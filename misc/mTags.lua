@@ -709,31 +709,39 @@ E:AddTag('mGroup:short', 'GROUP_ROSTER_UPDATE', function(unit)
 	end
 end)
 
-E:AddTag('mPvP:left', 'UNIT_FACTION', function(unit)
-	local factionGroup = UnitFactionGroup(unit)
-	if(UnitIsPVP(unit)) then
-		if (factionGroup == 'Horde' or factionGroup == 'Alliance') then
-			return CreateTextureMarkup('Interface\\FriendsFrame\\PlusManz-'..factionGroup, 16, 16, 16, 16, 0, 1, 0, 1, 0, 0) .. ' PvP'
-		else
-			return 'PvP'
-		end
-	end
-end)
-
-E:AddTag('mPvP:right', 'UNIT_FACTION', function(unit)
-	local factionGroup = UnitFactionGroup(unit)
-	if(UnitIsPVP(unit)) then
-		if (factionGroup == 'Horde' or factionGroup == 'Alliance') then
-			return 'PvP ' .. CreateTextureMarkup('Interface\\FriendsFrame\\PlusManz-'..factionGroup, 16, 16, 16, 16, 0, 1, 0, 1, 0, 0)
-		else
-			return 'PvP'
-		end
-	end
-end)
-
 E:AddTag('mPvP:icon', 'UNIT_FACTION', function(unit)
 	local factionGroup = UnitFactionGroup(unit)
 	if(UnitIsPVP(unit)) and (factionGroup == 'Horde' or factionGroup == 'Alliance') then
+		return CreateTextureMarkup('Interface\\FriendsFrame\\PlusManz-'..factionGroup, 16, 16, 16, 16, 0, 1, 0, 1, 0, 0)
+	end
+end)
+
+E:AddTag('mFaction:icon', 'UNIT_FACTION', function(unit)
+	local factionGroup = UnitFactionGroup(unit)
+	if (factionGroup == 'Horde' or factionGroup == 'Alliance') then
+		return CreateTextureMarkup('Interface\\FriendsFrame\\PlusManz-'..factionGroup, 16, 16, 16, 16, 0, 1, 0, 1, 0, 0)
+	end
+end)
+
+E:AddTag('mFaction:text', 'UNIT_FACTION', function(unit)
+	local factionGroup = UnitFactionGroup(unit)
+	if (factionGroup == 'Horde' or factionGroup == 'Alliance') then
+		return factionGroup
+	end
+end)
+
+E:AddTag('mFaction:text:opposite', 'UNIT_FACTION', function(unit)
+	local factionGroup = UnitFactionGroup(unit)
+	local factionPlayer = UnitFactionGroup("Player")
+	if (factionGroup == 'Horde' or factionGroup == 'Alliance') and (factionGroup ~= factionPlayer) then
+		return factionGroup
+	end
+end)
+
+E:AddTag('mFaction:icon:opposite', 'UNIT_FACTION', function(unit)
+	local factionGroup = UnitFactionGroup(unit)
+	local factionPlayer = UnitFactionGroup("Player")
+	if (factionGroup == 'Horde' or factionGroup == 'Alliance') and (factionGroup ~= factionPlayer) then
 		return CreateTextureMarkup('Interface\\FriendsFrame\\PlusManz-'..factionGroup, 16, 16, 16, 16, 0, 1, 0, 1, 0, 0)
 	end
 end)
@@ -1072,8 +1080,6 @@ E:AddTagInfo('mLevelSmart', ns.mName, L['Same as mLevel (hides Level if it is eq
 E:AddTagInfo('mGroup', ns.mName, L['Group number with full text (Group 3).'])
 E:AddTagInfo('mGroup:short', ns.mName, L['Group number with abbreviated text (Grp. 3).'])
 
-E:AddTagInfo('mPvP:left', ns.mName, L['PvP text with symbol left.'])
-E:AddTagInfo('mPvP:right', ns.mName, L['PvP text with symbol right.'])
 E:AddTagInfo('mPvP:icon', ns.mName, L['Shows the faction icon when PvP is active.'])
 
 E:AddTagInfo('mTargetAbbrev', ns.mName, L['Shows the Abbrev Target Name.'])
@@ -1106,4 +1112,12 @@ E:AddTagInfo('mTargetMarkOne', ns.mName, L['Targetmark left side'])
 E:AddTagInfo('mTargetMarkTwo', ns.mName, L['Targetmark right side'])
 
 E:AddTagInfo('mQuestIcon', ns.mName, L['Shows a icon if the NPC is a Unit for a Quest.'])
-E:AddTagInfo('mQuestIcon:elvui', ns.mName, L['Same as mQuestIcon, hides if ElvUI Quest Icon is showen.'])
+--E:AddTagInfo('mQuestIcon:elvui', ns.mName, L['Same as mQuestIcon, hides if ElvUI Quest Icon is showen.'])
+
+E:AddTagInfo('mTargetingPlayers', ns.mName, L['Shows the number of targeting Players a unit'])
+E:AddTagInfo('mTargetingPlayers:raid', ns.mName, L['Shows the number of targeting Players a unit only in a Raid'])
+E:AddTagInfo('mTargetingPlayers:party', ns.mName, L['Shows the number of targeting Players a unit only in a Party'])
+E:AddTagInfo('mTargetingPlayers:icons:party', ns.mName, L['Shows the number of targeting Players a unit in a Party as Icons'])
+
+E:AddTagInfo('mFaction:text', ns.mName, L['Shows the unit faction as a text'])
+E:AddTagInfo('mFaction:icon', ns.mName, L['Shows the unit faction as a icon'])
