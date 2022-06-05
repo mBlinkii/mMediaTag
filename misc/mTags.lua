@@ -44,6 +44,7 @@ local mTextureOffline = format(IconPath, 'offline')
 local TANK_ICON = E:TextureString(E.Media.Textures.Tank, ':16:16')
 local HEALER_ICON = E:TextureString(E.Media.Textures.Healer, ':16:16')
 local DPS_ICON = E:TextureString(E.Media.Textures.DPS, ':16:16')
+local UnitFaction = {}
 
 E:AddTag('mClass', 'UNIT_CLASSIFICATION_CHANGED', function(unit)
 	local c = UnitClassification(unit)
@@ -366,20 +367,29 @@ E:AddTag('mStatustimer', 1, function(unit)
 	end
 end)
 
-local mDeathReset = false
+local UnitmDeathCount = {}
 local mID = 0
+local mTyp = "none"
 local FramemDeathReset = CreateFrame('Frame')
 FramemDeathReset:RegisterEvent('UPDATE_INSTANCE_INFO')
 FramemDeathReset:RegisterEvent('PLAYER_ENTERING_WORLD')
 FramemDeathReset:SetScript('OnEvent', function(self, event)
-	local iniId = tostring(({GetInstanceInfo()})[8])
-	if mDeathReset == false and iniId ~= mID then
+	local iniId, typ = tostring(({GetInstanceInfo()})[8]), tostring(({GetInstanceInfo()})[2])
+
+	if typ ~= "none" and mTyp == "none" then
+		mTyp = typ
+	end
+
+	if mTyp ~= "none" and typ == "none" and UnitFaction then
+		UnitFaction = {}
+	end
+
+	if iniId ~= mID then
 		mID = iniId
-		mDeathReset = true
+		UnitmDeathCount = {}
 	end
 end)
 
-local UnitmDeathCount = {}
 E:AddTag('mDeathCount', 'UNIT_HEALTH', function(unit)
 	if not UnitIsPlayer(unit) then return end
 
@@ -397,11 +407,6 @@ E:AddTag('mDeathCount', 'UNIT_HEALTH', function(unit)
 			if (UnitmDeathCount[guid] ~= nil) then
 				UnitmDeathCount[guid][1] = false
 			end
-		end
-
-		if mDeathReset == true then
-			UnitmDeathCount = {}
-			mDeathReset = false
 		end
 	end
 
@@ -717,32 +722,74 @@ E:AddTag('mPvP:icon', 'UNIT_FACTION', function(unit)
 end)
 
 E:AddTag('mFaction:icon', 'UNIT_FACTION', function(unit)
-	local factionGroup = UnitFactionGroup(unit)
-	if (factionGroup == 'Horde' or factionGroup == 'Alliance') then
-		return CreateTextureMarkup('Interface\\FriendsFrame\\PlusManz-'..factionGroup, 16, 16, 16, 16, 0, 1, 0, 1, 0, 0)
+	if not UnitIsPlayer(unit) then return end
+	local guid = UnitGUID(unit)
+
+	if (not UnitFaction[guid]) then
+		local factionGroup = UnitFactionGroup(unit)
+		if factionGroup then
+			UnitFaction[guid] = {CreateTextureMarkup('Interface\\FriendsFrame\\PlusManz-'..factionGroup, 16, 16, 16, 16, 0, 1, 0, 1, 0, 0), factionGroup}
+		end
+	end
+
+	if UnitFaction[guid][1] then
+		return UnitFaction[guid][1]
 	end
 end)
 
 E:AddTag('mFaction:text', 'UNIT_FACTION', function(unit)
-	local factionGroup = UnitFactionGroup(unit)
-	if (factionGroup == 'Horde' or factionGroup == 'Alliance') then
-		return factionGroup
+	if not UnitIsPlayer(unit) then return end
+	local guid = UnitGUID(unit)
+
+	if (not UnitFaction[guid]) then
+		local factionGroup = UnitFactionGroup(unit)
+		if factionGroup then
+			UnitFaction[guid] = {CreateTextureMarkup('Interface\\FriendsFrame\\PlusManz-'..factionGroup, 16, 16, 16, 16, 0, 1, 0, 1, 0, 0), factionGroup}
+		end
+	end
+
+	if UnitFaction[guid][2] then
+		if (UnitFaction[guid][2] == 'Horde' or UnitFaction[guid][2] == 'Alliance') then
+			return UnitFaction[guid][2]
+		end
 	end
 end)
 
 E:AddTag('mFaction:text:opposite', 'UNIT_FACTION', function(unit)
-	local factionGroup = UnitFactionGroup(unit)
-	local factionPlayer = UnitFactionGroup("Player")
-	if (factionGroup == 'Horde' or factionGroup == 'Alliance') and (factionGroup ~= factionPlayer) then
-		return factionGroup
+	if not UnitIsPlayer(unit) then return end
+	local guid = UnitGUID(unit)
+
+	if (not UnitFaction[guid]) then
+		local factionGroup = UnitFactionGroup(unit)
+		if factionGroup then
+			UnitFaction[guid] = {CreateTextureMarkup('Interface\\FriendsFrame\\PlusManz-'..factionGroup, 16, 16, 16, 16, 0, 1, 0, 1, 0, 0), factionGroup}
+		end
+	end
+
+	if UnitFaction[guid][2] then
+		local factionPlayer = UnitFactionGroup("Player")
+		if (UnitFaction[guid][2] == 'Horde' or UnitFaction[guid][2] == 'Alliance') and (UnitFaction[guid][2] ~= factionPlayer) then
+			return UnitFaction[guid][2]
+		end
 	end
 end)
 
 E:AddTag('mFaction:icon:opposite', 'UNIT_FACTION', function(unit)
-	local factionGroup = UnitFactionGroup(unit)
-	local factionPlayer = UnitFactionGroup("Player")
-	if (factionGroup == 'Horde' or factionGroup == 'Alliance') and (factionGroup ~= factionPlayer) then
-		return CreateTextureMarkup('Interface\\FriendsFrame\\PlusManz-'..factionGroup, 16, 16, 16, 16, 0, 1, 0, 1, 0, 0)
+	if not UnitIsPlayer(unit) then return end
+	local guid = UnitGUID(unit)
+
+	if (not UnitFaction[guid]) then
+		local factionGroup = UnitFactionGroup(unit)
+		if factionGroup then
+			UnitFaction[guid] = {CreateTextureMarkup('Interface\\FriendsFrame\\PlusManz-'..factionGroup, 16, 16, 16, 16, 0, 1, 0, 1, 0, 0), factionGroup}
+		end
+	end
+
+	if UnitFaction[guid][1] then
+		local factionPlayer = UnitFactionGroup("Player")
+		if (UnitFaction[guid][2] == 'Horde' or UnitFaction[guid][2] == 'Alliance') and (UnitFaction[guid][2] ~= factionPlayer) then
+			return UnitFaction[guid][1]
+		end
 	end
 end)
 
