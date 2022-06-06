@@ -1,4 +1,6 @@
 local E, L, V, P, G = unpack(ElvUI);
+local mPlugin = "mMediaTag"
+local mMT = E:GetModule(mPlugin);
 local addon, ns = ...
 
 local format, floor, tostring = format, floor, tostring
@@ -45,6 +47,15 @@ local TANK_ICON = E:TextureString(E.Media.Textures.Tank, ':16:16')
 local HEALER_ICON = E:TextureString(E.Media.Textures.Healer, ':16:16')
 local DPS_ICON = E:TextureString(E.Media.Textures.DPS, ':16:16')
 local UnitFaction = {}
+
+function mMT:LoadTagSettings()
+	if E.db[mPlugin].mRoleSymbols.enable then
+		local path = "Interface\\AddOns\\ElvUI_mMediaTag\\media\\icons\\%s.tga"
+		TANK_ICON = E:TextureString(format(path, E.db[mPlugin].mRoleSymbols.tank), ':14:14')
+		HEALER_ICON = E:TextureString(format(path, E.db[mPlugin].mRoleSymbols.heal), ':14:14')
+		DPS_ICON = E:TextureString(format(path, E.db[mPlugin].mRoleSymbols.dd), ':14:14')
+	end
+end
 
 E:AddTag('mClass', 'UNIT_CLASSIFICATION_CHANGED', function(unit)
 	local c = UnitClassification(unit)
@@ -732,8 +743,10 @@ E:AddTag('mFaction:icon', 'UNIT_FACTION', function(unit)
 		end
 	end
 
-	if UnitFaction[guid][1] then
-		return UnitFaction[guid][1]
+	if UnitFaction[guid] then
+		if UnitFaction[guid][1] then
+			return UnitFaction[guid][1]
+		end
 	end
 end)
 
@@ -748,9 +761,11 @@ E:AddTag('mFaction:text', 'UNIT_FACTION', function(unit)
 		end
 	end
 
-	if UnitFaction[guid][2] then
-		if (UnitFaction[guid][2] == 'Horde' or UnitFaction[guid][2] == 'Alliance') then
-			return UnitFaction[guid][2]
+	if UnitFaction[guid] then
+		if UnitFaction[guid][2] then
+			if (UnitFaction[guid][2] == 'Horde' or UnitFaction[guid][2] == 'Alliance') then
+				return UnitFaction[guid][2]
+			end
 		end
 	end
 end)
@@ -766,10 +781,12 @@ E:AddTag('mFaction:text:opposite', 'UNIT_FACTION', function(unit)
 		end
 	end
 
-	if UnitFaction[guid][2] then
-		local factionPlayer = UnitFactionGroup("Player")
-		if (UnitFaction[guid][2] == 'Horde' or UnitFaction[guid][2] == 'Alliance') and (UnitFaction[guid][2] ~= factionPlayer) then
-			return UnitFaction[guid][2]
+	if UnitFaction[guid] then
+		if UnitFaction[guid][2] then
+			local factionPlayer = UnitFactionGroup("Player")
+			if (UnitFaction[guid][2] == 'Horde' or UnitFaction[guid][2] == 'Alliance') and (UnitFaction[guid][2] ~= factionPlayer) then
+				return UnitFaction[guid][2]
+			end
 		end
 	end
 end)
@@ -785,10 +802,12 @@ E:AddTag('mFaction:icon:opposite', 'UNIT_FACTION', function(unit)
 		end
 	end
 
-	if UnitFaction[guid][1] then
-		local factionPlayer = UnitFactionGroup("Player")
-		if (UnitFaction[guid][2] == 'Horde' or UnitFaction[guid][2] == 'Alliance') and (UnitFaction[guid][2] ~= factionPlayer) then
-			return UnitFaction[guid][1]
+	if UnitFaction[guid] then
+		if UnitFaction[guid][1] then
+			local factionPlayer = UnitFactionGroup("Player")
+			if (UnitFaction[guid][2] == 'Horde' or UnitFaction[guid][2] == 'Alliance') and (UnitFaction[guid][2] ~= factionPlayer) then
+				return UnitFaction[guid][1]
+			end
 		end
 	end
 end)

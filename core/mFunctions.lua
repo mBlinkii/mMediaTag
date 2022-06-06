@@ -70,6 +70,7 @@ function mMT:mMisc()
 	if E.db[mPlugin].VolumeDisplay.enable then
 		mMT:mVolumeDisplay()
 	end
+
 	if MediaTagGameVersion.retail then
 		if E.db[mPlugin].mMythicPlusTools.keys then
 			mMT:mStartKeysToChatt()
@@ -104,9 +105,9 @@ function mMT:mMisc()
 		if E.db[mPlugin].mCastbar.enable then
 			mMT:mSetupCastbar()
 		end
-
-		--mMT:UpdateMarkers()
 	end
+	
+	mMT:LoadTagSettings()
 end
 
 local mMediaTagLoader = CreateFrame('Frame')
