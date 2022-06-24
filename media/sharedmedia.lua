@@ -193,6 +193,9 @@ mAddStatusbar("mMediaTag K24", "k24.tga")
 mAddStatusbar("mMediaTag K25", "k25.tga")
 mAddStatusbar("mMediaTag K26", "k26.tga")
 mAddStatusbar("mMediaTag K27", "k27.tga")
+mAddStatusbar("mMediaTag K28", "k28.tga")
+mAddStatusbar("mMediaTag K29", "k29.tga")
+mAddStatusbar("mMediaTag K30", "k30.tga")
 
 mAddStatusbar("mMediaTag L1", "l1.tga")
 mAddStatusbar("mMediaTag L2", "l2.tga")
@@ -278,6 +281,8 @@ mAddStatusbar("mMediaTag O10", "o10.tga")
 mAddStatusbar("mMediaTag O11", "o11.tga")
 mAddStatusbar("mMediaTag O12", "o12.tga")
 mAddStatusbar("mMediaTag O13", "o13.tga")
+mAddStatusbar("mMediaTag O14", "o14.tga")
+mAddStatusbar("mMediaTag O15", "o15.tga")
 
 mAddStatusbar("MaUIv3", "MaUIv3.tga")
 

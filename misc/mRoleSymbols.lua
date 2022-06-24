@@ -64,7 +64,7 @@ local function mSetupIcons()
         end
 
         --dd
-        for i=1, 8, 1 do
+        for i=1, 12, 1 do
             path = format("Interface\\AddOns\\ElvUI_mMediaTag\\media\\icons\\dd%s.tga", i)
             mIcons["dd" .. i] = {["file"] = path, ["icon"] = E:TextureString(path, sizeString) .. "dd" .. i}
         end

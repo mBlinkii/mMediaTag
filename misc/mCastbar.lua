@@ -9,6 +9,7 @@ local mInsert = table.insert
 local GetSpecializationInfo = GetSpecializationInfo
 local GetActiveSpecGroup = GetActiveSpecGroup
 local GetSpellCooldown = GetSpellCooldown
+local interruptSpellId = nil
 
 local interruptSpellList = {
     -- warrior
@@ -61,8 +62,12 @@ local interruptSpellList = {
     [581]= 183752,
 }
 
+function mMT:mUpdateKick()
+	interruptSpellId = interruptSpellList[select(1, GetSpecializationInfo(GetSpecialization()))]
+end
+
 function mMT:mSetupCastbar()
-	local interruptSpellId = interruptSpellList[GetSpecializationInfo(GetActiveSpecGroup())]
+	interruptSpellId = interruptSpellList[select(1, GetSpecializationInfo(GetSpecialization()))]
 	local colorKickonCD = E.db[mPlugin].mCastbar.kickcd
 	local colorKickinTime = E.db[mPlugin].mCastbar.kickintime
 
