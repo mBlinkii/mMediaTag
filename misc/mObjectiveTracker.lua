@@ -17,7 +17,7 @@ local BONUS_OBJECTIVE_TRACKER_MODULE = _G.BONUS_OBJECTIVE_TRACKER_MODULE
 local maxNumQuestsCanAccept = C_QuestLog.GetMaxNumQuestsCanAccept()
 local HeaderTitel = ObjectiveTrackerBlocksFrame.QuestHeader.Text:GetText()
 local width = _G.ObjectiveTrackerFrame:GetWidth()
-
+--local hight = _G.ObjectiveTrackerFrame:GetHight()
 
 
 

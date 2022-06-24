@@ -147,4 +147,4 @@ local function OnClick(self)
 	end
 end
 
-DT:RegisterDatatext(mTextName, "mDock", {'UPDATE_INVENTORY_DURABILITY', 'MERCHANT_SHOW'}, OnEvent, nil, OnClick, OnEnter, OnLeave, mText, nil, nil)
+DT:RegisterDatatext(mTextName, "mDock", {'UPDATE_INVENTORY_DURABILITY'}, OnEvent, nil, OnClick, OnEnter, OnLeave, mText, nil, nil)

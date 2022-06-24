@@ -2,9 +2,16 @@
 [Eng] - All changes to this project will be documented in this file. The latest changes are at the top.
 [Ger] - Alle Änderungen an diesem Projekt werden in dieser Datei dokumentiert. Die neuesten Änderungen stehen ganz oben.
 
+## [ver. 2.82] - 24.06.2022
+### Update
+- Update DD Roleicon
+- Fixed castbar interrupt colo
+### Added
+- New Texture
+
 ## [ver. 2.81] - 04.06.2022
 ### Update
-- - Code change of mFaction:text, :icon tags so ypu can see the originla faction in dungeons
+- Code change of mFaction:text, :icon tags so ypu can see the originla faction in dungeons
 
 ## [ver. 2.80] - 02.06.2022
 ### Update

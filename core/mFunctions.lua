@@ -70,6 +70,7 @@ function mMT:mMisc()
 	if E.db[mPlugin].VolumeDisplay.enable then
 		mMT:mVolumeDisplay()
 	end
+
 	if MediaTagGameVersion.retail then
 		if E.db[mPlugin].mMythicPlusTools.keys then
 			mMT:mStartKeysToChatt()
@@ -104,18 +105,23 @@ function mMT:mMisc()
 		if E.db[mPlugin].mCastbar.enable then
 			mMT:mSetupCastbar()
 		end
-
-		--mMT:UpdateMarkers()
 	end
+	
+	mMT:LoadTagSettings()
 end
 
 local mMediaTagLoader = CreateFrame('Frame')
 --mMediaTagLoader:RegisterEvent('ADDON_LOADED')
 mMediaTagLoader:RegisterEvent('PLAYER_ENTERING_WORLD')
+mMediaTagLoader:RegisterEvent('ACTIVE_TALENT_GROUP_CHANGED')
 mMediaTagLoader:SetScript('OnEvent', function(self, event)
 	if MediaTagGameVersion.retail then
 		if E.db[mPlugin].mRoleSymbols.enable then
 			mMT:mStartRoleSmbols()
+		end
+
+		if event == "ACTIVE_TALENT_GROUP_CHANGED" then
+			mMT:mUpdateKick()
 		end
 	end
 end)
