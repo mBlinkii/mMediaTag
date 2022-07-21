@@ -61,11 +61,6 @@ local function OptionsCore()
 								end,
 								set = function(info, value)
 									E.db[mPlugin].mClassNameplate = value
-									if value == false then
-										mMT:mRestoreNameplateSettings()
-									else
-										mMT:mBackupNameplateSettings()
-									end
 									E:StaticPopup_Show("CONFIG_RL")
 								end,
 							},
