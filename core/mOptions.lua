@@ -172,14 +172,6 @@ local function OptionsCore()
 						args = {
 						},
 					},
-					objectivetracker = {
-						order = 50,
-						type = "group",
-						name = L["ObjectiveTracker Skin"],
-						childGroups = 'tab',
-						args = {
-						},
-					},
 					tools = {
 						order = 60,
 						type = "group",
@@ -399,6 +391,14 @@ local function OptionsCore()
 						order = 2,
 						type = "group",
 						name = L['Castbar'],
+						args = {
+						},
+					},
+					objectivetracker = {
+						order = 50,
+						type = "group",
+						name = L["ObjectiveTracker Skin"],
+						childGroups = 'tab',
 						args = {
 						},
 					},

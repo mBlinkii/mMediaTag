@@ -210,6 +210,16 @@ L["Shows the faction icon when PvP is active."] = true
 L["Group "] = true
 L["Grp. "] = true
 
+L["One big"] = true
+L["Two big"] = true
+L["Clean Text"] = true
+L["Shows the Text without []"] = true
+L["Bar Gardient"] = true
+L["Bar Gardient reverse"] = true
+L["Menu item icons"] = true
+L["Bar Gardient EltreumUI custom colors"] = true
+L["dark Bar"] = true
+
 L["Tooltip Instanceinfo"] = true
 L["Shows Inctance Info and Mythic Plus key tone in tooltip."] = true
 L["Text to Instance Name"] = true

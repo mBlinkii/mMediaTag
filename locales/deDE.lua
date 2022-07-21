@@ -117,6 +117,16 @@ L["Disable All"] = "Alle Deaktivieren"
 L["Dock on Top"] = "Dock Oben"
 L["Creat mDock"] = "mDock Erstellen"
 
+L["One big"] = "Eins dick"
+L["Two big"] = "Zwei dick"
+L["Clean Text"] = "Sauberer Text"
+L["Shows the Text without []"] = "Text ohne die []"
+L["Bar Gardient"] = "Leisten Farbverlauf"
+L["Bar Gardient reverse"] = "Leisten Farbverlauf rückwärts"
+L["Menu item icons"] = "Symbole für Menüeinträge"
+L["Bar Gardient EltreumUI custom colors"] = "EltreumUI Farbverlaufs Farben verwenden"
+L["dark Bar"] = "Dunklere Leiste"
+
 L["Click left to open the main menu."] = "Links klicken um das Hauptmenü zu öffnen."
 L["Right click to open the ElvUI settings."] = "Rechts klicken um die ElvUI Einstellungen zu öffnen."
 

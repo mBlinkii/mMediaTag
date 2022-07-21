@@ -40,34 +40,7 @@ local function mSetup(self)
 		DT.tooltip:AddLine(infoMythicPlus[1] or "-")
 		DT.tooltip:AddLine(infoMythicPlus[2] or "-")
 	end
-	
-	if E.db[mPlugin].DArchievement0 then
-		DT.tooltip:AddLine(" ")
-		local infoAchievement0 = mMT:Achievement(0)
-		DT.tooltip:AddLine(infoAchievement0[0])
-		--for i=1,8 do
-			DT.tooltip:AddDoubleLine(infoAchievement0[1][1] or "-", infoAchievement0[1][2] or "-")
-		--end
-	end
-	
-	if E.db[mPlugin].DAchievement10 then
-		DT.tooltip:AddLine(" ")
-		local infoAchievement10 = mMT:Achievement(10)
-		DT.tooltip:AddLine(infoAchievement10[0])
-		--for i=1,8 do
-			DT.tooltip:AddDoubleLine(infoAchievement10[1][1] or "-", infoAchievement10[1][2] or "-")
-		--end
-	end
-	
-	if E.db[mPlugin].DAchievement15 then
-		DT.tooltip:AddLine(" ")
-		local infoAchievement15 = mMT:Achievement(15)
-		DT.tooltip:AddLine(infoAchievement15[0])
-		--for i=1,8 do
-			DT.tooltip:AddDoubleLine(infoAchievement15[1][1] or "-", infoAchievement15[1][2] or "-")
-		--end
-	end
-	
+
 	if E.db[mPlugin].DKeystone then
 		local key = mMT:OwenKeystone()
 		if key then

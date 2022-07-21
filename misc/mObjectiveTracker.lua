@@ -91,6 +91,16 @@ local function mGetFont()
 	mOTFontFlag = E.db[mPlugin].mObjectiveTracker.fontflag
 end
 
+local function mSetGradient(obj, revers, orientation, minR, minG, minB, maxR, maxG, maxB)
+	if obj then
+		if revers then
+			obj:GetStatusBarTexture():SetGradient(orientation, maxR, maxG, maxB, minR, minG, minB)
+		else
+			obj:GetStatusBarTexture():SetGradient(orientation, minR, minG, minB, maxR, maxG, maxB)
+		end
+	end
+end
+
 local function mSetupHeaderFont(headdertext)
 	if headdertext then
 		local QuestCount = E.db[mPlugin].mObjectiveTracker.header.questcount
@@ -202,38 +212,70 @@ local function mSetupQuestFont(linetext)
 end
 
 local function mCreatBar(modul)
-	local BarStyle, BarColorStyle, BarColor, BarShadow = "none", "class", {r =1, g = 1, b = 1}, true
+	local BarStyle, BarColorStyle, BarColor, BarShadow, BarGardient, BarGardientReverse, mEltreumUI= "none", "class", {r =1, g = 1, b = 1}, true, true, false, false
 	BarStyle = E.db[mPlugin].mObjectiveTracker.header.barstyle
 	BarColor = E.db[mPlugin].mObjectiveTracker.header.barcolor
 	BarColorStyle = E.db[mPlugin].mObjectiveTracker.header.barcolorstyle
 	BarShadow = E.db[mPlugin].mObjectiveTracker.header.barshadow
+	BarGardient = E.db[mPlugin].mObjectiveTracker.header.gradient
+	BarGardientReverse = E.db[mPlugin].mObjectiveTracker.header.reverse
+	mEltreumUI = E.db[mPlugin].mObjectiveTracker.header.eltreumui
 
-	if (BarStyle == "one") or (BarStyle == "two") then
+	if (BarStyle == "one") or (BarStyle == "two") or (BarStyle == "onebig") or (BarStyle == "twobig") then
 		if BarColorStyle == "class" then
 			BarColor = {r = mClassColor[1], g = mClassColor[2], b = mClassColor[3]}
+		end
+		local BarTexture = LSM:Fetch("statusbar", "Solid")
+
+		if E.db[mPlugin].mObjectiveTracker.header.dark then
+			BarTexture = LSM:Fetch("statusbar", "mMediaTag A2")
+		elseif ns.eltreumui and mEltreumUI then
+			BarTexture = LSM:Fetch("statusbar", E.db.ElvUI_EltreumUI.gradientmode.texture)
 		end
 
 		local mBarOne = CreateFrame("StatusBar", nil, modul)
 		mBarOne:SetFrameStrata("BACKGROUND")
-		mBarOne:SetSize(width, 1)
+		if (BarStyle == "onebig") or (BarStyle == "twobig") then
+			mBarOne:SetSize(width, 5)
+		else
+			mBarOne:SetSize(width, 1)
+		end
 		mBarOne:SetPoint("BOTTOM", 0, 0)
-		mBarOne:SetStatusBarTexture(LSM:Fetch("statusbar", "Solid"))
+		mBarOne:SetStatusBarTexture(BarTexture)
 		mBarOne:SetStatusBarColor(BarColor.r, BarColor.g, BarColor.b)
 		mBarOne:CreateBackdrop()
+
+		if BarGardient then
+			if ns.eltreumui and mEltreumUI then
+				mSetGradient(mBarOne, BarGardientReverse, "HORIZONTAL", ns.unitframecustomgradients[E.myclass]["r1"], ns.unitframecustomgradients[E.myclass]["g1"], ns.unitframecustomgradients[E.myclass]["b1"], ns.unitframecustomgradients[E.myclass]["r2"], ns.unitframecustomgradients[E.myclass]["g2"], ns.unitframecustomgradients[E.myclass]["b2"])
+			else
+				mSetGradient(mBarOne, BarGardientReverse, "HORIZONTAL", BarColor.r-0.5, BarColor.g-0.5, BarColor.b-0.5, BarColor.r, BarColor.g, BarColor.b)
+			end
+		end
 
 		if BarShadow then
 			mBarOne:CreateShadow()
 		end
 
-		if (BarStyle == "two") then
+		if (BarStyle == "two") or (BarStyle == "twobig") then
 			local mBarTwo = CreateFrame("StatusBar", nil, modul)
 			mBarTwo:SetFrameStrata("BACKGROUND")
-			mBarTwo:SetSize(width, 1)
+			if BarStyle == "twobig" then
+				mBarTwo:SetSize(width, 5)
+			else
+				mBarTwo:SetSize(width, 1)
+			end
 			mBarTwo:SetPoint("TOP", 0, 0)
-			mBarTwo:SetStatusBarTexture(LSM:Fetch("statusbar", "Solid"))
+			mBarTwo:SetStatusBarTexture(BarTexture)
 			mBarTwo:SetStatusBarColor(BarColor.r, BarColor.g, BarColor.b)
 			mBarTwo:CreateBackdrop()
-	
+			
+			if ns.eltreumui and mEltreumUI then
+				mSetGradient(mBarTwo, BarGardientReverse, "HORIZONTAL", ns.unitframecustomgradients[E.myclass]["r1"], ns.unitframecustomgradients[E.myclass]["g1"], ns.unitframecustomgradients[E.myclass]["b1"], ns.unitframecustomgradients[E.myclass]["r2"], ns.unitframecustomgradients[E.myclass]["g2"], ns.unitframecustomgradients[E.myclass]["b2"])
+			else
+				mSetGradient(mBarTwo, BarGardientReverse, "HORIZONTAL", BarColor.r-0.5, BarColor.g-0.5, BarColor.b-0.5, BarColor.r, BarColor.g, BarColor.b)
+			end
+
 			if BarShadow then
 				mBarTwo:CreateShadow()
 			end
@@ -288,15 +330,31 @@ local function SkinQuestText(text)
 
 			
 			if E.db[mPlugin].mObjectiveTracker.text.progresscolor and E.db[mPlugin].mObjectiveTracker.text.progrespercent and (tonumber(required) >= 2) then
-				return format("[%s%s/%s|r] - %s%s|r %s", ColorString, current, required, ColorString, tmpPercent .. "%", details)
+				if E.db[mPlugin].mObjectiveTracker.text.cleantext then
+					return format("%s%s/%s|r - %s%s|r %s", ColorString, current, required, ColorString, tmpPercent .. "%", details)
+				else
+					return format("%s%s/%s|r - %s%s|r %s", ColorString, current, required, ColorString, tmpPercent .. "%", details)
+				end
 			else
-				return format("[%s%s/%s|r] %s", ColorString, current, required, details)
+				if E.db[mPlugin].mObjectiveTracker.text.cleantext then
+					return format("%s%s/%s|r %s", ColorString, current, required, details)
+				else
+					return format("[%s%s/%s|r] %s", ColorString, current, required, details)
+				end
 			end
 		else
 			if E.db[mPlugin].mObjectiveTracker.text.progrespercent and (tonumber(required) >= 2) then
-				return format("[%s/%s] - %s %s", current, required, tmpPercent .. "%", details)
+				if E.db[mPlugin].mObjectiveTracker.text.cleantext then
+					return format("%s/%s - %s %s", current, required, tmpPercent .. "%", details)
+				else
+					return format("[%s/%s] - %s %s", current, required, tmpPercent .. "%", details)
+				end
 			else
-				return format("[%s/%s] %s", current, required, details)
+				if E.db[mPlugin].mObjectiveTracker.text.cleantext then
+					return format("%s/%s %s", current, required, details)
+				else
+					return format("[%s/%s] %s", current, required, details)
+				end
 			end
 		end
 	else
@@ -475,7 +533,7 @@ local function mOBTFontColors()
 end
 
 local function mObjectiveTrackerOptions()
-	E.Options.args.mMediaTag.args.general.args.objectivetracker.args = {
+	E.Options.args.mMediaTag.args.cosmetic.args.objectivetracker.args = {
 		objectivetrackerenable = {
 			order = 1,
 			type = 'toggle',
@@ -590,6 +648,8 @@ local function mObjectiveTrackerOptions()
 					values = {
 						one = L["One"],
 						two = L["Two"],
+						onebig = L["One big"],
+						twobig = L["Two big"],
 						none = L["None"],
 					},
 				},
@@ -636,13 +696,65 @@ local function mObjectiveTrackerOptions()
 						E:StaticPopup_Show("CONFIG_RL")
 					end,
 				},
-				headerheader2 = {
+				headerbargardient = {
 					order = 10,
+					type = 'toggle',
+					name = L["Bar Gardient"],
+					disabled = function() return (E.db[mPlugin].mObjectiveTracker.header.barstyle == "none") end,
+					get = function(info)
+						return E.db[mPlugin].mObjectiveTracker.header.gradient
+					end,
+					set = function(info, value)
+						E.db[mPlugin].mObjectiveTracker.header.gradient = value
+						E:StaticPopup_Show("CONFIG_RL")
+					end,
+				},
+				headerbargardientreverse = {
+					order = 11,
+					type = 'toggle',
+					name = L["Bar Gardient reverse"],
+					disabled = function() return (E.db[mPlugin].mObjectiveTracker.header.barstyle == "none") end,
+					get = function(info)
+						return E.db[mPlugin].mObjectiveTracker.header.reverse
+					end,
+					set = function(info, value)
+						E.db[mPlugin].mObjectiveTracker.header.reverse = value
+						E:StaticPopup_Show("CONFIG_RL")
+					end,
+				},
+				headerbargardienteltreumui = {
+					order = 12,
+					type = 'toggle',
+					name = L["Bar Gardient EltreumUI custom colors"],
+					disabled = function() return (E.db[mPlugin].mObjectiveTracker.header.barstyle == "none") end,
+					get = function(info)
+						return E.db[mPlugin].mObjectiveTracker.header.eltreumui
+					end,
+					set = function(info, value)
+						E.db[mPlugin].mObjectiveTracker.header.eltreumui = value
+						E:StaticPopup_Show("CONFIG_RL")
+					end,
+				},
+				headerbardark = {
+					order = 13,
+					type = 'toggle',
+					name = L["dark Bar"],
+					disabled = function() return (E.db[mPlugin].mObjectiveTracker.header.barstyle == "none") end,
+					get = function(info)
+						return E.db[mPlugin].mObjectiveTracker.header.dark
+					end,
+					set = function(info, value)
+						E.db[mPlugin].mObjectiveTracker.header.dark = value
+						E:StaticPopup_Show("CONFIG_RL")
+					end,
+				},
+				headerheader2 = {
+					order = 14,
 					type = "header",
 					name = L[""],
 				},
 				headerquestamount = {
-					order = 11,
+					order = 15,
 					type = 'select',
 					name = L["Show Quest Amount"],
 					get = function(info)
@@ -892,6 +1004,19 @@ local function mObjectiveTrackerOptions()
 						E:StaticPopup_Show("CONFIG_RL")
 					end,
 				},
+				textonlyprogresstext = {
+					order = 14,
+					type = 'toggle',
+					name = L["Clean Text"],
+					desc = L["Shows the Text without []"],
+					get = function(info)
+						return E.db[mPlugin].mObjectiveTracker.text.cleantext
+					end,
+					set = function(info, value)
+						E.db[mPlugin].mObjectiveTracker.text.cleantext = value
+						E:StaticPopup_Show("CONFIG_RL")
+					end,
+				},
 			},
 		},
 
@@ -924,8 +1049,8 @@ local function mObjectiveTrackerOptions()
 					disabled = function() return not (E.db[mPlugin].mObjectiveTracker.dash.style == "icon") end,
 					get = function(info) return E.db[mPlugin].mObjectiveTracker.dash.texture end,
 					set = function(info, value)
-						E.db[mPlugin].E.db[mPlugin].mObjectiveTracker.dash.texture = value
-							E:StaticPopup_Show("CONFIG_RL")
+						E.db[mPlugin].mObjectiveTracker.dash.texture = value
+						E:StaticPopup_Show("CONFIG_RL")
 					end,
 					values = mTextureList(),
 				},
@@ -939,7 +1064,7 @@ local function mObjectiveTrackerOptions()
 					get = function() return E.db[mPlugin].mObjectiveTracker.dash.customstring end,
 					set = function(info, value)
 						E.db[mPlugin].mObjectiveTracker.dash.customstring = value
-							E:StaticPopup_Show("CONFIG_RL")
+						E:StaticPopup_Show("CONFIG_RL")
 					end,
 				},
 			},

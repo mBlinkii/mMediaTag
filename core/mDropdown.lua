@@ -85,7 +85,7 @@ function mMT:mDropDown(list, frame, self, ButtonWidth, HideDelay)
 
 					local _, unitClass = UnitClass('player')
 					local class = ElvUF.colors.class[unitClass]
-					frame.buttons[i].hoverTex:SetVertexColor(class[1], class[2], class[3], 0.75)
+					frame.buttons[i].hoverTex:SetVertexColor(class[1], class[2], class[3], 0.5)
 				else
 					frame.buttons[i].hoverTex:SetVertexColor(0.94, 0.76, 0.05, 0.5)
 				end
