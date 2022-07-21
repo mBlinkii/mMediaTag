@@ -8,8 +8,8 @@ local addon, ns = ...
 local format = format
 
 --Variables
-local ChangelogDate = "02.06.2022"
-local ChangelogText = "## [ver. 2.80] - 02.06.2022\n### Update\n- Toc update\n### Added\n- New Tags mFaction:text, :icon\n\n## [ver. 2.79] - 26.05.2022\n### Update\n- Bugfix Castbar Interrupr Color\n- Code update\n- Combattimer fix out of combat\n### Added\n- New Texture\n- New Tags mTargetingPlayers, :raid :party :icons:party"
+local ChangelogDate = "21.07.2022"
+local ChangelogText = "## [ver. 2.83] - 21.07.2022\n### Update\n- Update Roleicons\n- removed Season 2 Archivment information from Tooltip\n- Bugfix Roleicons\n### Added\n- New System Menu Icons\n- New Border Texture\n- New Textures\n- New Textures N38v2 and v3 Thx to Vxt\n- Objective Tracker, fixed bug in Custom Dash icon, add Gardient mode for the Headerbar and biger Bar settings, add support for EltreumUI gardientmode custom colors"
 
 function mMT:Changelog(opt)
 	local Frame = CreateFrame("Frame", "mMediaTagChangelog", E.UIParent, 'BackdropTemplate')

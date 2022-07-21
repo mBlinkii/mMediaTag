@@ -23,7 +23,12 @@ ns.Mythic 			= "|CFFBB8FCE"	-- Mythic
 ns.LeftButtonIcon 	= format("|T%s:16:16:0:0:32:32|t", "Interface\\AddOns\\ElvUI_mMediaTag\\media\\misc\\mouse_l.tga")
 ns.RightButtonIcon 	= format("|T%s:16:16:0:0:32:32|t", "Interface\\AddOns\\ElvUI_mMediaTag\\media\\misc\\mouse_r.tga")
 ns.MiddleButtonIcon = format("|T%s:16:16:0:0:32:32|t", "Interface\\AddOns\\ElvUI_mMediaTag\\media\\misc\\mouse_m.tga")
+ns.eltreumui		= false
 ns.Config			= {}
+
+--E.Media.Textures.RolesHQ = "Interface\\AddOns\\ElvUI_mMediaTag\\media\\icons\\RolesHQ.tga"
+--E.Media.Textures.RoleIcons = "Interface\\AddOns\\ElvUI_mMediaTag\\media\\icons\\RoleIcons.tga"
+--E.Media.Textures.LeaderHQ = "Interface\\AddOns\\ElvUI_mMediaTag\\media\\icons\\LeaderHQ.tga"
 
 function mMT:AddOptions()
 	for _, func in pairs(ns.Config) do
@@ -35,10 +40,32 @@ function mMT:Initialize()
 	-- WoW Version Check
 	mMT:mVersionCheck()
 
-	-- Load Miscs
-	mMT:mMisc()
+		-- Load Miscs
+		mMT:mMisc()
 
 	EP:RegisterPlugin(addon, mMT:AddOptions())
+
+	mMT:RegisterEvent('PLAYER_ENTERING_WORLD')
+	mMT:RegisterEvent('ACTIVE_TALENT_GROUP_CHANGED')
+end
+
+function mMT:PLAYER_ENTERING_WORLD()
+	if MediaTagGameVersion.retail then
+		E.Media.Textures.RolesHQ = "Interface\\AddOns\\ElvUI_mMediaTag\\media\\icons\\RolesHQ.tga"
+		E.Media.Textures.RoleIcons = "Interface\\AddOns\\ElvUI_mMediaTag\\media\\icons\\RoleIcons.tga"
+		E.Media.Textures.LeaderHQ = "Interface\\AddOns\\ElvUI_mMediaTag\\media\\icons\\LeaderHQ.tga"
+		if E.db[mPlugin] then
+			if E.db[mPlugin].mRoleSymbols.enable then
+				mMT:mStartRoleSmbols()
+			end
+		end
+	end
+end
+
+function mMT:ACTIVE_TALENT_GROUP_CHANGED()
+	if MediaTagGameVersion.retail then
+		mMT:mUpdateKick()
+	end
 end
 
 E:RegisterModule(mMT:GetName())

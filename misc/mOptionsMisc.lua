@@ -89,6 +89,17 @@ local function OptionsSystemMenu()
 				E.db[mPlugin].InstancInfoToolTip = value
 			end,
 		},
+		systemmmenuicons = {
+			order = 6,
+			type = 'toggle',
+			name = L["Menu item icons"],
+			get = function(info)
+				return E.db[mPlugin].SystemMenu.icons
+			end,
+			set = function(info, value)
+				E.db[mPlugin].SystemMenu.icons = value
+			end,
+		},
 		spacersystemmmenu = {
 			order = 6,
 			type = "description",
@@ -156,52 +167,6 @@ local function OptionsSystemMenu()
 			end,
 			set = function(info, value)
 				E.db[mPlugin].SystemMenu.score = value
-			end,
-		},
-		spacersystemmmenu2 = {
-			order = 13,
-			type = "description",
-			name = "\n\n",
-		},
-		headersystemmmenu3 = {
-			order = 14,
-			type = "header",
-			name = L["Tooltip Achievement"],
-		},
-		systemmmenum10 = {
-			order = 15,
-			type = 'toggle',
-			name = L["Mythicscore 1500 Achievement"],
-			desc = L["Display the Achievement for Mythic Dungeons."],
-			get = function(info)
-				return E.db[mPlugin].SAchievement10
-			end,
-			set = function(info, value)
-				E.db[mPlugin].SAchievement10 = value
-			end,
-		},
-		systemmmenum15 = {
-			order = 16,
-			type = 'toggle',
-			name = L["Mythicscore 2000 Achievement"],
-			desc = L["Display the Achievement for Mythic Dungeons."],
-			get = function(info)
-				return E.db[mPlugin].SAchievement15
-			end,
-			set = function(info, value)
-				E.db[mPlugin].SAchievement15 = value
-			end,
-		},
-		systemmmenud = {
-			order = 17,
-			type = 'toggle',
-			name = L["Mythicscore 750 Achievement"],
-			desc = L["Display the Achievement for Mythic Dungeons."],
-			get = function(info)
-				return E.db[mPlugin].SAchievement0
-			end,
-			set = function(info, value)
-				E.db[mPlugin].SAchievement0 = value
 			end,
 		},
 	}
@@ -276,47 +241,6 @@ local function OptionsDungeon()
 			order = 8,
 			type = "description",
 			name = "\n\n",
-		},
-		headerdungeon2 = {
-			order = 9,
-			type = "header",
-			name = L["Tooltip Achievement"],
-		},
-		dungeonm10 = {
-			order = 10,
-			type = 'toggle',
-			name = L["Mythicscore 1500 Achievement"],
-			desc = L["Display the Achievement for Mythic Dungeons."],
-			get = function(info)
-				return E.db[mPlugin].DAchievement10
-			end,
-			set = function(info, value)
-				E.db[mPlugin].DAchievement10 = value
-			end,
-		},
-		dungeonm15 = {
-			order = 11,
-			type = 'toggle',
-			name = L["Mythicscore 2000 Achievement"],
-			desc = L["Display the Achievement for Mythic Dungeons."],
-			get = function(info)
-				return E.db[mPlugin].DAchievement15
-			end,
-			set = function(info, value)
-				E.db[mPlugin].DAchievement15 = value
-			end,
-		},
-		dungeond = {
-			order = 12,
-			type = 'toggle',
-			name = L["Mythicscore 750 Achievement"],
-			desc = L["Display the Achievement for Mythic Dungeons."],
-			get = function(info)
-				return E.db[mPlugin].DAchievement0
-			end,
-			set = function(info, value)
-				E.db[mPlugin].DAchievement0 = value
-			end,
 		},
 		dungeonscore = {
 			order = 13,

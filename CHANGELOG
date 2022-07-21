@@ -2,6 +2,18 @@
 [Eng] - All changes to this project will be documented in this file. The latest changes are at the top.
 [Ger] - Alle Änderungen an diesem Projekt werden in dieser Datei dokumentiert. Die neuesten Änderungen stehen ganz oben.
 
+## [ver. 2.83] - 21.07.2022
+### Update
+- Update Roleicons
+- removed Season 2 Archivment information from Tooltip
+- Bugfix Roleicons
+### Added
+- New System Menu Icons
+- New Border Texture
+- New Textures
+- New Textures N38v2 and v3 Thx to Vxt
+- Objective Tracker, fixed bug in Custom Dash icon, add Gardient mode for the Headerbar and biger Bar settings, add support for EltreumUI gardientmode custom colors
+
 ## [ver. 2.82] - 24.06.2022
 ### Update
 - Update DD Roleicon

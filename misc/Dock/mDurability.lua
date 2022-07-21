@@ -113,7 +113,7 @@ local function OnEvent(self, event, ...)
 		E:StopFlash(self)
 		mMT:DockNormalColor(self)
 	end
-
+	
 	if self.mSettings.OnlyText then
 		self.text:SetFormattedText(TextColor, mMT:round(totalDurability or 0) .. "%")
 	else

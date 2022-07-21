@@ -19,10 +19,29 @@ local IsAddOnLoaded = IsAddOnLoaded
 local mText = L["Game Menu"]
 local menuList = {}
 local menuFrame = CreateFrame('Frame', 'mSystemMenu', E.UIParent, 'BackdropTemplate')
+local mIconPath = "Interface\\AddOns\\ElvUI_mMediaTag\\media\\icons\\%s.tga"
+local sizeString = ":16:16:0:0:64:64:4:60:4:60"
+local mIconCHARACTER = E:TextureString(format(mIconPath, "character"), sizeString)
+local mIconSPELLBOOK = E:TextureString(format(mIconPath, "book"), sizeString)
+local mIconTALENTS = E:TextureString(format(mIconPath, "talent"), sizeString)
+local mIconACHIEVEMENT = E:TextureString(format(mIconPath, "achivment"), sizeString)
+local mIconGARRISON = E:TextureString(format(mIconPath, "home"), sizeString)
+local mIconCOLLECTIONS = E:TextureString(format(mIconPath, "collaction"), sizeString)
+local mIconCALENDAR = E:TextureString(format(mIconPath, "calendar"), sizeString)
+local mIconTIME = E:TextureString(format(mIconPath, "clock"), sizeString)
+local mIconGUILD = E:TextureString(format(mIconPath, "guild"), sizeString)
+local mIconSOCIAL = E:TextureString(format(mIconPath, "contact"), sizeString)
+local mIconLFG = E:TextureString(format(mIconPath, "dungeonbrowser"), sizeString)
+local mIconJOURNAL = E:TextureString(format(mIconPath, "compendium"), sizeString)
+local mIconElvUI = E:TextureString(format(mIconPath, "elvui"), sizeString)
+local mIconMAINMENU = E:TextureString(format(mIconPath, "settings2"), sizeString)
+local mIconSTORE = E:TextureString(format(mIconPath, "shop"), sizeString)
+local mIconHELP = E:TextureString(format(mIconPath, "help"), sizeString)
+
 menuFrame:SetTemplate("Transparent", true)
 
 local function mColor(color)
-	local mSetting = E.db[mPlugin].mMenuColor 
+	local mSetting = E.db[mPlugin].mMenuColor
 	if mSetting then
 		if color == 1 then
 			return ns.mColor1
@@ -67,16 +86,24 @@ local function OnEvent(self)
 	end
 end
 
+local function mMenuIcons(icon)
+	if E.db[mPlugin].SystemMenu.icons then
+		return icon
+	else
+		return ""
+	end
+end
+
 local function OnClick(self, button)
 	DT.tooltip:Hide()
 	if button == "LeftButton" then
 		if MediaTagGameVersion.retail then
 			menuList = {
-				{lefttext = format("%s%s|r", mColor(2), CHARACTER_BUTTON), isTitle = false,
+				{lefttext = format("%s %s%s|r", mMenuIcons(mIconCHARACTER), mColor(2), CHARACTER_BUTTON), isTitle = false,
 				func = function() ToggleCharacter("PaperDollFrame") end},
-				{lefttext = format("%s%s|r", mColor(2), SPELLBOOK_ABILITIES_BUTTON), isTitle = false,
+				{lefttext = format("%s %s%s|r", mMenuIcons(mIconSPELLBOOK), mColor(2), SPELLBOOK_ABILITIES_BUTTON), isTitle = false,
 				func = function() if not SpellBookFrame:IsShown() then ShowUIPanel(SpellBookFrame) else HideUIPanel(SpellBookFrame) end end},
-				{lefttext = format("%s%s|r", mColor(2), TALENTS_BUTTON), isTitle = false,
+				{lefttext = format("%s %s%s|r", mMenuIcons(mIconTALENTS), mColor(2), TALENTS_BUTTON), isTitle = false,
 					func = function()
 						if not PlayerTalentFrame then
 							TalentFrame_LoadUI()
@@ -88,43 +115,43 @@ local function OnClick(self, button)
 							HideUIPanel(PlayerTalentFrame)
 						end
 				end},
-				{lefttext = format("%s%s|r", mColor(2), ACHIEVEMENT_BUTTON), isTitle = false,
+				{lefttext = format("%s %s%s|r", mMenuIcons(mIconACHIEVEMENT), mColor(2), ACHIEVEMENT_BUTTON), isTitle = false,
 				func = function() ToggleAchievementFrame() end},
 				
 				{lefttext = "", isTitle = true, func = function() end},
 				
-				{lefttext = format("%s%s|r", mColor(7), GARRISON_LANDING_PAGE_TITLE), isTitle = false,
+				{lefttext = format("%s %s%s|r", mMenuIcons(mIconGARRISON), mColor(7), GARRISON_LANDING_PAGE_TITLE), isTitle = false,
 				func = function() GarrisonLandingPageMinimapButton_OnClick() end},
-				{lefttext = format("%s%s|r", mColor(7), COLLECTIONS), isTitle = false,
+				{lefttext = format("%s %s%s|r", mMenuIcons(mIconCOLLECTIONS), mColor(7), COLLECTIONS), isTitle = false,
 					func = function()
 						ToggleCollectionsJournal()
 				end},
 				
 				{lefttext = "", isTitle = true, func = function() end},
 				
-				{lefttext = format("%s%s|r", mColor(1), TIMEMANAGER_TITLE), isTitle = false,
+				{lefttext = format("%s %s%s|r", mMenuIcons(mIconTIME), mColor(1), TIMEMANAGER_TITLE), isTitle = false,
 				func = function() ToggleFrame(TimeManagerFrame) end},
-				{lefttext = format("%s%s|r", mColor(1), L["Calendar"]), isTitle = false,
+				{lefttext = format("%s %s%s|r", mMenuIcons(mIconCALENDAR), mColor(1), L["Calendar"]), isTitle = false,
 				func = function() GameTimeFrame:Click() end},
 				
 				{lefttext = "", isTitle = true, func = function() end},
 				
-				{lefttext = format("%s%s|r", mColor(6), SOCIAL_BUTTON), isTitle = false,
+				{lefttext = format("%s %s%s|r", mMenuIcons(mIconSOCIAL), mColor(6), SOCIAL_BUTTON), isTitle = false,
 				func = function() ToggleFriendsFrame() end},
-				{lefttext = format("%s%s|r", mColor(6), ACHIEVEMENTS_GUILD_TAB), isTitle = false,
+				{lefttext = format("%s %s%s|r", mMenuIcons(mIconGUILD), mColor(6), ACHIEVEMENTS_GUILD_TAB), isTitle = false,
 				func = function() ToggleGuildFrame() end},
 				
 				{lefttext = "", isTitle = true, func = function() end},
 				
-				{lefttext = format("%s%s|r", mColor(7), LFG_TITLE), isTitle = false,
+				{lefttext = format("%s %s%s|r", mMenuIcons(mIconLFG), mColor(7), LFG_TITLE), isTitle = false,
 				func = function() ToggleLFDParentFrame(); end},
-				{lefttext = format("%s%s|r", mColor(7), ENCOUNTER_JOURNAL), isTitle = false,
+				{lefttext = format("%s %s%s|r", mMenuIcons(mIconJOURNAL), mColor(7), ENCOUNTER_JOURNAL), isTitle = false,
 				func = function() if not IsAddOnLoaded("Blizzard_EncounterJournal") then EncounterJournal_LoadUI(); end ToggleFrame(EncounterJournal) end},
 				
 				{lefttext = "", isTitle = true, func = function() end},
 				
 				
-				{lefttext = format("%s%s|r", mColor(4), "ElvUI"), isTitle = false,
+				{lefttext = format("%s %s%s|r", mMenuIcons(mIconElvUI), mColor(4), "ElvUI"), isTitle = false,
 					func = function() 
 						if InCombatLockdown() then _G.UIErrorsFrame:AddMessage(E.InfoColor.._G.ERR_NOT_IN_COMBAT) return end
 						E:ToggleOptionsUI()
@@ -132,7 +159,7 @@ local function OnClick(self, button)
 				
 				{lefttext = "", isTitle = true, func = function() end},
 				
-				{lefttext = format("%s%s|r", mColor(1), MAINMENU_BUTTON), isTitle = false,
+				{lefttext = format("%s %s%s|r", mMenuIcons(mIconMAINMENU), mColor(1), MAINMENU_BUTTON), isTitle = false,
 					func = function()
 						if ( not GameMenuFrame:IsShown() ) then
 							if ( VideoOptionsFrame:IsShown() ) then
@@ -153,8 +180,8 @@ local function OnClick(self, button)
 				
 				{lefttext = "", isTitle = true, func = function() end},
 				
-				{lefttext = format("%s%s|r", mColor(5), BLIZZARD_STORE), isTitle = false, func = function() StoreMicroButton:Click() end},
-				{lefttext = format("%s%s|r", mColor(5), HELP_BUTTON), isTitle = false, func = function() ToggleHelpFrame() end}
+				{lefttext = format("%s %s%s|r", mMenuIcons(mIconSTORE), mColor(5), BLIZZARD_STORE), isTitle = false, func = function() StoreMicroButton:Click() end},
+				{lefttext = format("%s %s%s|r", mMenuIcons(mIconHELP), mColor(5), HELP_BUTTON), isTitle = false, func = function() ToggleHelpFrame() end}
 			}
 		else
 			menuList = {
@@ -259,59 +286,32 @@ local function OnEnter(self)
 			DT.tooltip:AddLine(infoMythicPlus[1] or "-")
 			DT.tooltip:AddLine(infoMythicPlus[2] or "-")
 		end
-		
-		if MediaTagGameVersion.retail and E.db[mPlugin].SAchievement0 then
-			DT.tooltip:AddLine(" ")
-			local infoAchievement0 = mMT:Achievement(0)
-			DT.tooltip:AddLine(infoAchievement0[0])
-			--for i=1,8 do
-				DT.tooltip:AddDoubleLine(infoAchievement0[1][1] or "-", infoAchievement0[1][2] or "-")
-			--end
-		end
-		
-		if MediaTagGameVersion.retail and E.db[mPlugin].SAchievement10 then
-			DT.tooltip:AddLine(" ")
-			local infoAchievement10 = mMT:Achievement(10)
-			DT.tooltip:AddLine(infoAchievement10[0])
-			--for i=1,8 do
-				DT.tooltip:AddDoubleLine(infoAchievement10[1][1] or "-", infoAchievement10[1][2] or "-")
-			--end
-		end
-		
-		if MediaTagGameVersion.retail and E.db[mPlugin].SAchievement15 then
-			DT.tooltip:AddLine(" ")
-			local infoAchievement15 = mMT:Achievement(15)
-			DT.tooltip:AddLine(infoAchievement15[0])
-			--for i=1,8 do
-				DT.tooltip:AddDoubleLine(infoAchievement15[1][1] or "-", infoAchievement15[1][2] or "-")
-			--end
-		end
-		
-		if MediaTagGameVersion.retail and E.db[mPlugin].SKeystone then
-			local key = mMT:OwenKeystone()
-			if key then
-				DT.tooltip:AddLine(" ")
-				DT.tooltip:AddLine(key[1] or "-")
-				DT.tooltip:AddLine(key[2] or "-")
-			end 
-			
-		end
+	end
 
-		if MediaTagGameVersion.retail and E.db[mPlugin].SystemMenu.score then
+	if MediaTagGameVersion.retail and E.db[mPlugin].SKeystone then
+		local key = mMT:OwenKeystone()
+		if key then
 			DT.tooltip:AddLine(" ")
-			DT.tooltip:AddDoubleLine(DUNGEON_SCORE, mMT:GetDungeonScore())
-		end
+			DT.tooltip:AddLine(key[1] or "-")
+			DT.tooltip:AddLine(key[2] or "-")
+		end 
 		
-		if MediaTagGameVersion.retail and E.db[mPlugin].SAffix then
-			local mAffixes = mMT:WeeklyAffixes()
-			if mAffixes then
-				DT.tooltip:AddLine(" ")
-				if mAffixes[3] then
-					DT.tooltip:AddLine(mAffixes[3])
-				else
-					DT.tooltip:AddLine(mAffixes[1])
-					DT.tooltip:AddLine(mAffixes[2])
-				end
+	end
+
+	if MediaTagGameVersion.retail and E.db[mPlugin].SystemMenu.score then
+		DT.tooltip:AddLine(" ")
+		DT.tooltip:AddDoubleLine(DUNGEON_SCORE, mMT:GetDungeonScore())
+	end
+	
+	if MediaTagGameVersion.retail and E.db[mPlugin].SAffix then
+		local mAffixes = mMT:WeeklyAffixes()
+		if mAffixes then
+			DT.tooltip:AddLine(" ")
+			if mAffixes[3] then
+				DT.tooltip:AddLine(mAffixes[3])
+			else
+				DT.tooltip:AddLine(mAffixes[1])
+				DT.tooltip:AddLine(mAffixes[2])
 			end
 		end
 	end

@@ -187,55 +187,6 @@ function mMT:MythicPlusDungeon()
 	return MythicPlusDungeonText
 end
 
---Achievements
-local function mAchievementInfo(mID)
-	local mAchievementInfoText = {}
-	local id, name, points, completed, month, day, year, description, flags, icon, rewardText, isGuild, wasEarnedByMe, earnedBy = GetAchievementInfo(mID)
-	mAchievementInfoText = {name = name, icon = mMT:mIcon(icon)}
-	return mAchievementInfoText
-end
-
-function mMT:Achievement(option)
-	local AchievementText = {}
-	local _, _, _, _, other, titel, tip = mMT:mColorDatatext()
-	local colorCompletStatus = tip
-	if option == 15 then 
-		-- Score 2000
-		local info0 = mAchievementInfo(15078)
-		local a, _, c, d, e = GetAchievementCriteriaInfo(15078, 1)
-		if d == e then
-			colorCompletStatus = "|CFF58D68D"
-		else
-			colorCompletStatus = tip
-		end
-		mInsert(AchievementText, 0, format("%s%s|r %s", titel, info0.name, info0.icon))
-		mInsert(AchievementText, 1, {format("%s%s|r %s(%s/%s)|r", other, a, colorCompletStatus, d, e), string.format("[%s]", c and format("%s%s|r", ns.mColor6, L["True"]) or format("%s%s|r", ns.mColor5, L["False"]))})
-	elseif option == 10 then
-		-- Score 1500
-		local info0 = mAchievementInfo(15077)
-		local a, _, c, d, e = GetAchievementCriteriaInfo(15077, 1)
-		if d == e then
-			colorCompletStatus = "|CFF58D68D"
-		else
-			colorCompletStatus = tip
-		end
-		mInsert(AchievementText, 0, format("%s%s|r %s", titel, info0.name, info0.icon))
-		mInsert(AchievementText, 1, {format("%s%s|r %s(%s/%s)|r", other, a, colorCompletStatus, d, e), string.format("[%s]", c and format("%s%s|r", ns.mColor6, L["True"]) or format("%s%s|r", ns.mColor5, L["False"]))})
-	elseif option == 0 then
-		local info0 = mAchievementInfo(15073)
-		-- Score 750
-		local a, _, c, d, e = GetAchievementCriteriaInfo(15073, 1)
-		if d == e then
-			colorCompletStatus = "|CFF58D68D"
-		else
-			colorCompletStatus = tip
-		end
-		mInsert(AchievementText, 0, format("%s%s|r %s", titel, info0.name, info0.icon))
-		mInsert(AchievementText, 1, {format("%s%s|r %s(%s/%s)|r", other, a, colorCompletStatus, d, e), string.format("[%s]", c and format("%s%s|r", ns.mColor6, L["True"]) or format("%s%s|r", ns.mColor5, L["False"]))})
-	end
-	return AchievementText
-end
-
 function mMT:GetDungeonScore()
 	local data = C_PlayerInfo_GetPlayerMythicPlusRatingSummary("PLAYER")
 	local seasonScore = data and data.currentSeasonScore
