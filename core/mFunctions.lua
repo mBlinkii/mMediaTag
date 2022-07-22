@@ -136,31 +136,6 @@ function mMT:mMisc()
 	mMT:LoadTagSettings()
 end
 
-function mMT:mBackupNameplateSettings()
-	if not E.db[mPlugin].mBackup then
-		E.db[mPlugin].mBackupHover.cb = E.db["nameplates"]["colors"]["glowColor"]["b"]
-		E.db[mPlugin].mBackupHover.cg = E.db["nameplates"]["colors"]["glowColor"]["r"]
-		E.db[mPlugin].mBackupHover.cr = E.db["nameplates"]["colors"]["glowColor"]["g"]
-		E.db[mPlugin].mBackupHover.bb = E.global["nameplates"]["filters"]["ElvUI_Target"]["actions"]["color"]["borderColor"]["b"]
-		E.db[mPlugin].mBackupHover.bg = E.global["nameplates"]["filters"]["ElvUI_Target"]["actions"]["color"]["borderColor"]["g"]
-		E.db[mPlugin].mBackupHover.br = E.global["nameplates"]["filters"]["ElvUI_Target"]["actions"]["color"]["borderColor"]["r"]
-		E.db[mPlugin].mBackupHoverBorder = E.global["nameplates"]["filters"]["ElvUI_Target"]["actions"]["color"]["border"]
-		E.db[mPlugin].mBackup = true
-	end
-end
-
-function mMT:mRestoreNameplateSettings()
-	if E.db[mPlugin].mBackup then
-		E.db["nameplates"]["colors"]["glowColor"]["b"] = E.db[mPlugin].mBackupHover.cb
-		E.db["nameplates"]["colors"]["glowColor"]["r"] = E.db[mPlugin].mBackupHover.cg
-		E.db["nameplates"]["colors"]["glowColor"]["g"] = E.db[mPlugin].mBackupHover.cr
-		E.global["nameplates"]["filters"]["ElvUI_Target"]["actions"]["color"]["borderColor"]["b"] = E.db[mPlugin].mBackupHover.bb
-		E.global["nameplates"]["filters"]["ElvUI_Target"]["actions"]["color"]["borderColor"]["g"] = E.db[mPlugin].mBackupHover.bg
-		E.global["nameplates"]["filters"]["ElvUI_Target"]["actions"]["color"]["borderColor"]["r"] = E.db[mPlugin].mBackupHover.br
-		E.global["nameplates"]["filters"]["ElvUI_Target"]["actions"]["color"]["border"] = E.db[mPlugin].mBackupHoverBorder
-	end
-end
-
 function mMT:mNamePlateBorderColor()
 	local classColor
 	classColor = E:ClassColor(E.myclass, true)

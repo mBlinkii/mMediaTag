@@ -14,16 +14,7 @@ P[mPlugin] = {
 	["mHoverTexture"] 		= "mMediaTag B2",
 	["mPluginVersion"] 		= 0,
 	["mClassNameplate"] 	= false,
-	["mBackup"] 			= false,
-	["mBackupHover"] 		= {
-		["cr"] = 0, 
-		["cg"] = 0, 
-		["cb"] = 0, 
-		["br"] = 0, 
-		["bg"] = 0, 
-		["bb"] = 0
-	},
-	["mBackupHoverBorder"] 	= nil,
+
 	["InstancInfoToolTip"]	= true,
 	["InstancInfoName"]		= true,
 	["SAchievement10"]		= false,

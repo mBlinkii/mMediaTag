@@ -2,11 +2,17 @@
 [Eng] - All changes to this project will be documented in this file. The latest changes are at the top.
 [Ger] - Alle Änderungen an diesem Projekt werden in dieser Datei dokumentiert. Die neuesten Änderungen stehen ganz oben.
 
+## [ver. 2.83.1] - 22.07.2022
+### Update
+- Update Code
+- Fix for Classic
+
+
 ## [ver. 2.83] - 21.07.2022
 ### Update
 - Update Roleicons
 - removed Season 2 Archivment information from Tooltip
-- Bugfix Roleicons
+- Bugfix Roleicons, mDockIcon
 ### Added
 - New System Menu Icons
 - New Border Texture

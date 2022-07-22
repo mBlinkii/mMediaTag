@@ -114,7 +114,7 @@ local function OnEvent(self, event, ...)
 		mMT:DockNormalColor(self)
 	end
 	
-	if self.mSettings.OnlyText then
+	if self.mSettings.OnlyText and totalDurability then
 		self.text:SetFormattedText(TextColor, mMT:round(totalDurability or 0) .. "%")
 	else
 		if self.text ~= "" then

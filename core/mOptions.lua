@@ -61,11 +61,6 @@ local function OptionsCore()
 								end,
 								set = function(info, value)
 									E.db[mPlugin].mClassNameplate = value
-									if value == false then
-										mMT:mRestoreNameplateSettings()
-									else
-										mMT:mBackupNameplateSettings()
-									end
 									E:StaticPopup_Show("CONFIG_RL")
 								end,
 							},
@@ -73,18 +68,6 @@ local function OptionsCore()
 								order = 2,
 								type = "description",
 								name = "\n\n\n",
-							},
-							namplaterset = {
-								order = 3,
-								type = "execute",
-								name = L["Reset Backup"],
-								desc = L["Resets Namplate Backups"],
-								func = function()
-									mMT:mRestoreNameplateSettings()
-									E.db[mPlugin].mClassNameplate = false
-									E.db[mPlugin].mBackup = false
-									E:StaticPopup_Show("CONFIG_RL")
-								end,
 							},
 						},
 					},
