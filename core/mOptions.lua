@@ -69,18 +69,6 @@ local function OptionsCore()
 								type = "description",
 								name = "\n\n\n",
 							},
-							namplaterset = {
-								order = 3,
-								type = "execute",
-								name = L["Reset Backup"],
-								desc = L["Resets Namplate Backups"],
-								func = function()
-									mMT:mRestoreNameplateSettings()
-									E.db[mPlugin].mClassNameplate = false
-									E.db[mPlugin].mBackup = false
-									E:StaticPopup_Show("CONFIG_RL")
-								end,
-							},
 						},
 					},
 					tooltipsettings = {

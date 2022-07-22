@@ -45,12 +45,14 @@ function mMT:Initialize()
 
 	EP:RegisterPlugin(addon, mMT:AddOptions()) -- einstellungen in elvui eintragen
 
-	mMT:RegisterEvent('PLAYER_ENTERING_WORLD') -- events registrieren
-	mMT:RegisterEvent('ACTIVE_TALENT_GROUP_CHANGED') -- events registrieren
+	if MediaTagGameVersion.retail and E.Retail then
+		mMT:RegisterEvent('PLAYER_ENTERING_WORLD') -- events registrieren
+		mMT:RegisterEvent('ACTIVE_TALENT_GROUP_CHANGED') -- events registrieren
+	end
 end
 
 function mMT:PLAYER_ENTERING_WORLD()
-	if MediaTagGameVersion.retail then
+	if MediaTagGameVersion.retail and E.Retail then
 		if E.db[mPlugin] then
 			if E.db[mPlugin].mRoleSymbols.enable then
 				mMT:mStartRoleSmbols() -- rolensymbole ändern
@@ -60,7 +62,7 @@ function mMT:PLAYER_ENTERING_WORLD()
 end
 
 function mMT:ACTIVE_TALENT_GROUP_CHANGED()
-	if MediaTagGameVersion.retail then
+	if MediaTagGameVersion.retail and E.Retail then
 		mMT:mUpdateKick() -- castbar kick/ kick auf cd
 	end
 end
