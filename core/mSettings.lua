@@ -14,7 +14,6 @@ P[mPlugin] = {
 	["mHoverTexture"] 		= "mMediaTag B2",
 	["mPluginVersion"] 		= 0,
 	["mClassNameplate"] 	= false,
-
 	["InstancInfoToolTip"]	= true,
 	["InstancInfoName"]		= true,
 	["SAchievement10"]		= false,
@@ -202,7 +201,7 @@ P[mPlugin] = {
 												["progresscolortransit"] = {["r"] = 1, ["g"] = .78, ["b"] = 0,}, 
 												["progrespercent"] = true,
 												["cleantext"] = true,
-												["progresscolor"] = true,},
+												["progresscolor"] = true, ["reverse"] = false, ["gradient"] = true,},
 								["dash"] = {["style"] = "blizzard", ["texture"] = 1, ["customstring"] = ">",},
 										},
 	["mTags"] = {	["dndname"] = "DND1", ["dndpath"] = "Interface\\AddOns\\ElvUI_mMediaTag\\media\\misc\\dnd1.tga", 

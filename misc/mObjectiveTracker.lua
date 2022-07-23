@@ -409,9 +409,17 @@ local function SkinOBTText(_, line)
 					line.currentLine.Check:SetTexture(CheckTexture)
 					line.currentLine.Check:SetVertexColor(CheckColor.r, CheckColor.g, CheckColor.b, 1)
 				end
-				
-				-- if line.ScrollContents then
-				-- end
+
+				if line.currentLine.ProgressBar and E.db[mPlugin].mObjectiveTracker.text.gradient then
+					local lineBar = line.currentLine.ProgressBar.Bar
+					if lineBar then
+						local value = lineBar:GetValue()
+						local current = (not 100 and value) or (value and 100 and 100 ~= 0 and value/100)
+						if not current then return end
+						local r, g, b = E:ColorGradient(current, 0.8,0,0, 0.8,0.8,0, 0,0.8,0)
+						mSetGradient(lineBar, E.db[mPlugin].mObjectiveTracker.text.reverse, "HORIZONTAL", r, g, b, r-0.4, g-0.4, b-0.4)
+					end
+				end
 
 				if line.currentLine.Text then
 					local LineText = line.currentLine.Text:GetText()
@@ -1014,6 +1022,30 @@ local function mObjectiveTrackerOptions()
 					end,
 					set = function(info, value)
 						E.db[mPlugin].mObjectiveTracker.text.cleantext = value
+						E:StaticPopup_Show("CONFIG_RL")
+					end,
+				},
+				textbargardient = {
+					order = 15,
+					type = 'toggle',
+					name = L["Bar Gardient"],
+					get = function(info)
+						return E.db[mPlugin].mObjectiveTracker.text.gradient
+					end,
+					set = function(info, value)
+						E.db[mPlugin].mObjectiveTracker.text.gradient = value
+						E:StaticPopup_Show("CONFIG_RL")
+					end,
+				},
+				textbargardientreverse = {
+					order = 16,
+					type = 'toggle',
+					name = L["Bar Gardient reverse"],
+					get = function(info)
+						return E.db[mPlugin].mObjectiveTracker.text.reverse
+					end,
+					set = function(info, value)
+						E.db[mPlugin].mObjectiveTracker.text.reverse = value
 						E:StaticPopup_Show("CONFIG_RL")
 					end,
 				},
