@@ -1,7 +1,7 @@
-local E, L, V, P, G = unpack(ElvUI);
+local E, L, V, P, G = unpack(ElvUI)
 local mPlugin = "mMediaTag"
-local mMT = E:GetModule(mPlugin);
-local DT = E:GetModule("DataTexts");
+local mMT = E:GetModule(mPlugin)
+local DT = E:GetModule("DataTexts")
 local addon, ns = ...
 
 --Lua functions
@@ -16,14 +16,14 @@ local mText = format("Dock %s", MAINMENU_BUTTON)
 local mTextName = "mMainMenu"
 local TextColor = mMT:mClassColorString()
 local statusColors = {
-	'|cff0CD809',
-	'|cffE8DA0F',
-	'|cffFF9000',
-	'|cffD80909'
+	"|cff0CD809",
+	"|cffE8DA0F",
+	"|cffFF9000",
+	"|cffD80909",
 }
 
 local function mDockCheckFrame()
-	return ( GameMenuFrame and GameMenuFrame:IsShown() )
+	return (GameMenuFrame and GameMenuFrame:IsShown())
 end
 
 function mMT:CheckFrameMainMenu(self)
@@ -35,30 +35,48 @@ local function mTip()
 	if E.db[mPlugin].mDock.tip.enable then
 		local _, _, _, _, other, titel, tip = mMT:mColorDatatext()
 		DT.tooltip:ClearLines()
-		
+
 		local framerate = GetFramerate()
 		local _, _, latencyHome, latencyWorld = GetNetStats()
-		local fps = framerate >= 30 and 1 or (framerate >= 20 and framerate < 30) and 2 or (framerate >= 10 and framerate < 20) and 3 or 4
-		local pingHome = latencyHome < 150 and 1 or (latencyHome >= 150 and latencyHome < 300) and 2 or (latencyHome >= 300 and latencyHome < 500) and 3 or 4
-		local pingWorld = latencyWorld < 150 and 1 or (latencyWorld >= 150 and latencyWorld < 300) and 2 or (latencyWorld >= 300 and latencyWorld < 500) and 3 or 4
+		local fps = framerate >= 30 and 1
+			or (framerate >= 20 and framerate < 30) and 2
+			or (framerate >= 10 and framerate < 20) and 3
+			or 4
+		local pingHome = latencyHome < 150 and 1
+			or (latencyHome >= 150 and latencyHome < 300) and 2
+			or (latencyHome >= 300 and latencyHome < 500) and 3
+			or 4
+		local pingWorld = latencyWorld < 150 and 1
+			or (latencyWorld >= 150 and latencyWorld < 300) and 2
+			or (latencyWorld >= 300 and latencyWorld < 500) and 3
+			or 4
 		local bandwidthIn, bandwidthOut, latencyHome, latencyWorld = GetNetStats()
-		DT.tooltip:AddDoubleLine(format("%s%s|r", L["FPS:"], titel), format("%s%d|r %sFPS", statusColors[fps], framerate, other))
-		DT.tooltip:AddDoubleLine(format("%s%s|r", L["Home Latency:"], titel), format("%s%d|r %sms", statusColors[pingHome], latencyHome, other))
-		DT.tooltip:AddDoubleLine(format("%s%s|r", L["World Latency:"], titel), format("%s%d|r %sms", statusColors[pingWorld], latencyWorld, other))
+		DT.tooltip:AddDoubleLine(
+			format("%s%s|r", L["FPS:"], titel),
+			format("%s%d|r %sFPS", statusColors[fps], framerate, other)
+		)
+		DT.tooltip:AddDoubleLine(
+			format("%s%s|r", L["Home Latency:"], titel),
+			format("%s%d|r %sms", statusColors[pingHome], latencyHome, other)
+		)
+		DT.tooltip:AddDoubleLine(
+			format("%s%s|r", L["World Latency:"], titel),
+			format("%s%d|r %sms", statusColors[pingWorld], latencyWorld, other)
+		)
 		DT.tooltip:AddLine(" ")
 		if E.db[mPlugin].mDock.mainmenu.sound then
 			local VolumeInfo = mMT:VolumeToolTip()
 			DT.tooltip:AddDoubleLine(VolumeInfo.name, VolumeInfo.level)
 			DT.tooltip:AddLine(" ")
 		end
-		DT.tooltip:AddDoubleLine(ns.mName, format("%sVer.|r %s%s|r" , titel, other, ns.mVersion))
+		DT.tooltip:AddDoubleLine(ns.mName, format("%sVer.|r %s%s|r", titel, other, ns.mVersion))
 		DT.tooltip:AddLine(" ")
 		DT.tooltip:AddLine(format("%s %s%s|r", ns.LeftButtonIcon, tip, L["Click left to open the main menu."]))
 		DT.tooltip:AddLine(format("%s %s%s|r", ns.RightButtonIcon, tip, L["Right click to open the ElvUI settings."]))
 		if E.db[mPlugin].mDock.mainmenu.sound then
 			DT.tooltip:AddLine(format("%s %s%s|r", ns.MiddleButtonIcon, tip, L["Change volume with the mouse wheel"]))
 		end
-		
+
 		DT.tooltip:Show()
 	end
 end
@@ -77,10 +95,8 @@ local function onMouseWheel(_, delta)
 	end
 end
 
-
 local wait, count = 20, 0 -- initial delay for update (let the ui load)
 local function OnUpdate(self, elapsed)
-
 	wait = wait - elapsed
 
 	if wait < 0 then
@@ -90,13 +106,19 @@ local function OnUpdate(self, elapsed)
 		local framerate = floor(GetFramerate())
 		local _, _, _, latency = GetNetStats()
 
-		local fps = framerate >= 30 and 1 or (framerate >= 20 and framerate < 30) and 2 or (framerate >= 10 and framerate < 20) and 3 or 4
-		local ping = latency < 150 and 1 or (latency >= 150 and latency < 300) and 2 or (latency >= 300 and latency < 500) and 3 or 4
+		local fps = framerate >= 30 and 1
+			or (framerate >= 20 and framerate < 30) and 2
+			or (framerate >= 10 and framerate < 20) and 3
+			or 4
+		local ping = latency < 150 and 1
+			or (latency >= 150 and latency < 300) and 2
+			or (latency >= 300 and latency < 500) and 3
+			or 4
 
-        if self.mIcon.TextA and self.mIcon.TextB then
+		if self.mIcon.TextA and self.mIcon.TextB then
 			local Color = E.db[mPlugin].mDock.mainmenu.color
 			if Option ~= "none" then
-				if  Color == "default" then
+				if Color == "default" then
 					if Option == "fps" then
 						self.mIcon.TextA:SetText(format("%s%d|r", statusColors[fps], framerate))
 					else
@@ -111,15 +133,17 @@ local function OnUpdate(self, elapsed)
 				end
 				self.mIcon.TextB:SetText(E.db[mPlugin].mDock.mainmenu.text)
 			end
-        end
+		end
 
-		if Option == "none" then 
+		if Option == "none" then
 			self.mIcon.TextA:SetText("")
 			self.mIcon.TextB:SetText("")
 			self:SetScript("OnUpdate", nil)
 		end
 
-		if not enteredFrame then return end
+		if not enteredFrame then
+			return
+		end
 
 		if InCombatLockdown() then
 			if count > 3 then
@@ -148,7 +172,7 @@ local function OnEvent(self, event, ...)
 
 	if E.db[mPlugin].mDock.mainmenu.sound then
 		self:EnableMouseWheel(true)
-		self:SetScript('OnMouseWheel', onMouseWheel)
+		self:SetScript("OnMouseWheel", onMouseWheel)
 	else
 		self:EnableMouseWheel(false)
 	end
@@ -167,19 +191,19 @@ local function OnClick(self, button)
 	if mMT:CheckCombatLockdown() then
 		if button == "LeftButton" then
 			mMT:mOnClick(self, "CheckFrameMainMenu")
-			if ( not GameMenuFrame:IsShown() ) then
-				if ( VideoOptionsFrame:IsShown() ) then
-					VideoOptionsFrameCancel:Click();
-				elseif ( AudioOptionsFrame:IsShown() ) then
-					AudioOptionsFrameCancel:Click();
-				elseif ( InterfaceOptionsFrame:IsShown() ) then
-					InterfaceOptionsFrameCancel:Click();
+			if not GameMenuFrame:IsShown() then
+				if VideoOptionsFrame:IsShown() then
+					VideoOptionsFrameCancel:Click()
+				elseif AudioOptionsFrame:IsShown() then
+					AudioOptionsFrameCancel:Click()
+				elseif InterfaceOptionsFrame:IsShown() then
+					InterfaceOptionsFrameCancel:Click()
 				end
-				CloseMenus();
+				CloseMenus()
 				CloseAllWindows()
-				ShowUIPanel(GameMenuFrame);
+				ShowUIPanel(GameMenuFrame)
 			else
-				HideUIPanel(GameMenuFrame);
+				HideUIPanel(GameMenuFrame)
 			end
 		elseif button == "MiddleButton" and E.db[mPlugin].mDock.mainmenu.sound then
 			mMT:MuteVolume()

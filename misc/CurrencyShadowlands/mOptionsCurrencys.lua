@@ -1,7 +1,7 @@
-local E, L, V, P, G = unpack(ElvUI);
+local E, L, V, P, G = unpack(ElvUI)
 local mPlugin = "mMediaTag"
-local mMT = E:GetModule(mPlugin);
-local DT = E:GetModule("DataTexts");
+local mMT = E:GetModule(mPlugin)
+local DT = E:GetModule("DataTexts")
 local addon, ns = ...
 
 --Lua functions
@@ -17,9 +17,11 @@ local function OptionsCurrencys()
 		},
 		colorAnima = {
 			order = 110,
-			type = 'select',
+			type = "select",
 			name = L["Anima Color Style"],
-			get = function(info) return E.db[mPlugin].mAnima.style end,
+			get = function(info)
+				return E.db[mPlugin].mAnima.style
+			end,
 			set = function(info, value)
 				E.db[mPlugin].mAnima.style = value
 				DT:ForceUpdate_DataText("mAnima")
@@ -32,7 +34,7 @@ local function OptionsCurrencys()
 		},
 		iconAnima = {
 			order = 120,
-			type = 'toggle',
+			type = "toggle",
 			name = L["Icon"],
 			desc = L["Show Icon"],
 			get = function(info)
@@ -45,7 +47,7 @@ local function OptionsCurrencys()
 		},
 		numberAnima = {
 			order = 130,
-			type = 'toggle',
+			type = "toggle",
 			name = L["Short Number"],
 			desc = L["Short Number"],
 			get = function(info)
@@ -58,7 +60,7 @@ local function OptionsCurrencys()
 		},
 		showmaxAnima = {
 			order = 131,
-			type = 'toggle',
+			type = "toggle",
 			name = L["Show Max Value"],
 			desc = L["Show Max Value"],
 			get = function(info)
@@ -71,7 +73,7 @@ local function OptionsCurrencys()
 		},
 		nameAnima = {
 			order = 140,
-			type = 'toggle',
+			type = "toggle",
 			name = L["Name"],
 			desc = L["Shows Name"],
 			get = function(info)
@@ -84,7 +86,7 @@ local function OptionsCurrencys()
 		},
 		bagAnima = {
 			order = 150,
-			type = 'toggle',
+			type = "toggle",
 			name = L["Show Anima in Bags"],
 			desc = L["Shows Anima in your Bags"],
 			get = function(info)
@@ -97,7 +99,7 @@ local function OptionsCurrencys()
 		},
 		hideAnima = {
 			order = 160,
-			type = 'toggle',
+			type = "toggle",
 			name = L["Hide if Zero"],
 			get = function(info)
 				return E.db[mPlugin].mAnima.hide
@@ -119,9 +121,11 @@ local function OptionsCurrencys()
 		},
 		colorStygia = {
 			order = 310,
-			type = 'select',
+			type = "select",
 			name = L["Stygia Color Style"],
-			get = function(info) return E.db[mPlugin].mStygia.style end,
+			get = function(info)
+				return E.db[mPlugin].mStygia.style
+			end,
 			set = function(info, value)
 				E.db[mPlugin].mStygia.style = value
 				DT:ForceUpdate_DataText("mStygia")
@@ -134,7 +138,7 @@ local function OptionsCurrencys()
 		},
 		iconStygia = {
 			order = 320,
-			type = 'toggle',
+			type = "toggle",
 			name = L["Icon"],
 			desc = L["Show Icon"],
 			get = function(info)
@@ -147,7 +151,7 @@ local function OptionsCurrencys()
 		},
 		numberStygia = {
 			order = 320,
-			type = 'toggle',
+			type = "toggle",
 			name = L["Short Number"],
 			desc = L["Short Number"],
 			get = function(info)
@@ -160,7 +164,7 @@ local function OptionsCurrencys()
 		},
 		nameStygia = {
 			order = 330,
-			type = 'toggle',
+			type = "toggle",
 			name = L["Name"],
 			desc = L["Shows Name"],
 			get = function(info)
@@ -173,7 +177,7 @@ local function OptionsCurrencys()
 		},
 		hideStygia = {
 			order = 340,
-			type = 'toggle',
+			type = "toggle",
 			name = L["Hide if Zero"],
 			get = function(info)
 				return E.db[mPlugin].mStygia.hide
@@ -195,9 +199,11 @@ local function OptionsCurrencys()
 		},
 		colorSoulAsh = {
 			order = 510,
-			type = 'select',
+			type = "select",
 			name = L["Soul Ash Color Style"],
-			get = function(info) return E.db[mPlugin].mSoulAsh.style end,
+			get = function(info)
+				return E.db[mPlugin].mSoulAsh.style
+			end,
 			set = function(info, value)
 				E.db[mPlugin].mSoulAsh.style = value
 				DT:ForceUpdate_DataText("mSoulAsh")
@@ -210,7 +216,7 @@ local function OptionsCurrencys()
 		},
 		iconSoulAsh = {
 			order = 520,
-			type = 'toggle',
+			type = "toggle",
 			name = L["Icon"],
 			desc = L["Show Icon"],
 			get = function(info)
@@ -223,7 +229,7 @@ local function OptionsCurrencys()
 		},
 		numberSoulAsh = {
 			order = 530,
-			type = 'toggle',
+			type = "toggle",
 			name = L["Short Number"],
 			desc = L["Short Number"],
 			get = function(info)
@@ -236,7 +242,7 @@ local function OptionsCurrencys()
 		},
 		showmaxSoulAsh = {
 			order = 531,
-			type = 'toggle',
+			type = "toggle",
 			name = L["Show Max Value"],
 			desc = L["Show Max Value"],
 			get = function(info)
@@ -249,7 +255,7 @@ local function OptionsCurrencys()
 		},
 		nameSoulAsh = {
 			order = 540,
-			type = 'toggle',
+			type = "toggle",
 			name = L["Name"],
 			desc = L["Shows Name"],
 			get = function(info)
@@ -262,7 +268,7 @@ local function OptionsCurrencys()
 		},
 		hideSoulAsh = {
 			order = 560,
-			type = 'toggle',
+			type = "toggle",
 			name = L["Hide if Zero"],
 			get = function(info)
 				return E.db[mPlugin].mSoulAsh.hide
@@ -284,9 +290,11 @@ local function OptionsCurrencys()
 		},
 		colorInfusedRub = {
 			order = 710,
-			type = 'select',
+			type = "select",
 			name = L["Infused Ruby Color Style"],
-			get = function(info) return E.db[mPlugin].mInfusedRuby.style end,
+			get = function(info)
+				return E.db[mPlugin].mInfusedRuby.style
+			end,
 			set = function(info, value)
 				E.db[mPlugin].mInfusedRuby.style = value
 				DT:ForceUpdate_DataText("mInfusedRuby")
@@ -299,7 +307,7 @@ local function OptionsCurrencys()
 		},
 		iconInfusedRub = {
 			order = 720,
-			type = 'toggle',
+			type = "toggle",
 			name = L["Icon"],
 			desc = L["Show Icon"],
 			get = function(info)
@@ -312,7 +320,7 @@ local function OptionsCurrencys()
 		},
 		numberInfusedRub = {
 			order = 730,
-			type = 'toggle',
+			type = "toggle",
 			name = L["Short Number"],
 			desc = L["Short Number"],
 			get = function(info)
@@ -325,7 +333,7 @@ local function OptionsCurrencys()
 		},
 		showmaxInfusedRuby = {
 			order = 731,
-			type = 'toggle',
+			type = "toggle",
 			name = L["Show Max Value"],
 			desc = L["Show Max Value"],
 			get = function(info)
@@ -338,7 +346,7 @@ local function OptionsCurrencys()
 		},
 		nameInfusedRub = {
 			order = 740,
-			type = 'toggle',
+			type = "toggle",
 			name = L["Name"],
 			desc = L["Shows Name"],
 			get = function(info)
@@ -351,7 +359,7 @@ local function OptionsCurrencys()
 		},
 		hideInfusedRub = {
 			order = 750,
-			type = 'toggle',
+			type = "toggle",
 			name = L["Hide if Zero"],
 			get = function(info)
 				return E.db[mPlugin].mInfusedRuby.hide
@@ -373,9 +381,11 @@ local function OptionsCurrencys()
 		},
 		colorGratefulOffering = {
 			order = 910,
-			type = 'select',
+			type = "select",
 			name = L["Grateful Offering Color Style"],
-			get = function(info) return E.db[mPlugin].mGratefulOffering.style end,
+			get = function(info)
+				return E.db[mPlugin].mGratefulOffering.style
+			end,
 			set = function(info, value)
 				E.db[mPlugin].mGratefulOffering.style = value
 				DT:ForceUpdate_DataText("mGratefulOffering")
@@ -388,7 +398,7 @@ local function OptionsCurrencys()
 		},
 		iconGratefulOffering = {
 			order = 920,
-			type = 'toggle',
+			type = "toggle",
 			name = L["Icon"],
 			desc = L["Show Icon"],
 			get = function(info)
@@ -401,7 +411,7 @@ local function OptionsCurrencys()
 		},
 		numberGratefulOffering = {
 			order = 930,
-			type = 'toggle',
+			type = "toggle",
 			name = L["Short Number"],
 			desc = L["Short Number"],
 			get = function(info)
@@ -414,7 +424,7 @@ local function OptionsCurrencys()
 		},
 		nameGratefulOffering = {
 			order = 940,
-			type = 'toggle',
+			type = "toggle",
 			name = L["Name"],
 			desc = L["Shows Name"],
 			get = function(info)
@@ -427,7 +437,7 @@ local function OptionsCurrencys()
 		},
 		hideGratefulOffering = {
 			order = 950,
-			type = 'toggle',
+			type = "toggle",
 			name = L["Hide if Zero"],
 			get = function(info)
 				return E.db[mPlugin].mGratefulOffering.hide
@@ -449,9 +459,11 @@ local function OptionsCurrencys()
 		},
 		colorValor = {
 			order = 1110,
-			type = 'select',
+			type = "select",
 			name = L["Valor Color Style"],
-			get = function(info) return E.db[mPlugin].mValor.style end,
+			get = function(info)
+				return E.db[mPlugin].mValor.style
+			end,
 			set = function(info, value)
 				E.db[mPlugin].mValor.style = value
 				DT:ForceUpdate_DataText("mValor")
@@ -464,7 +476,7 @@ local function OptionsCurrencys()
 		},
 		iconValorh = {
 			order = 1120,
-			type = 'toggle',
+			type = "toggle",
 			name = L["Icon"],
 			desc = L["Show Icon"],
 			get = function(info)
@@ -477,7 +489,7 @@ local function OptionsCurrencys()
 		},
 		numberValor = {
 			order = 1130,
-			type = 'toggle',
+			type = "toggle",
 			name = L["Short Number"],
 			desc = L["Short Number"],
 			get = function(info)
@@ -490,7 +502,7 @@ local function OptionsCurrencys()
 		},
 		showmaxValor = {
 			order = 1131,
-			type = 'toggle',
+			type = "toggle",
 			name = L["Show Max Value"],
 			desc = L["Show Max Value"],
 			get = function(info)
@@ -503,7 +515,7 @@ local function OptionsCurrencys()
 		},
 		nameValor = {
 			order = 1140,
-			type = 'toggle',
+			type = "toggle",
 			name = L["Name"],
 			desc = L["Shows Name"],
 			get = function(info)
@@ -516,7 +528,7 @@ local function OptionsCurrencys()
 		},
 		hideValor = {
 			order = 1150,
-			type = 'toggle',
+			type = "toggle",
 			name = L["Hide if Zero"],
 			get = function(info)
 				return E.db[mPlugin].mValor.hide
@@ -538,9 +550,11 @@ local function OptionsCurrencys()
 		},
 		colorCatalogedResearch = {
 			order = 1210,
-			type = 'select',
+			type = "select",
 			name = L["Cataloged Research Color Style"],
-			get = function(info) return E.db[mPlugin].mCatalogedResearch.style end,
+			get = function(info)
+				return E.db[mPlugin].mCatalogedResearch.style
+			end,
 			set = function(info, value)
 				E.db[mPlugin].mCatalogedResearch.style = value
 				DT:ForceUpdate_DataText("mCatalogedResearch")
@@ -553,7 +567,7 @@ local function OptionsCurrencys()
 		},
 		iconCatalogedResearch = {
 			order = 1220,
-			type = 'toggle',
+			type = "toggle",
 			name = L["Icon"],
 			desc = L["Show Icon"],
 			get = function(info)
@@ -566,7 +580,7 @@ local function OptionsCurrencys()
 		},
 		numberCatalogedResearch = {
 			order = 1230,
-			type = 'toggle',
+			type = "toggle",
 			name = L["Short Number"],
 			desc = L["Short Number"],
 			get = function(info)
@@ -579,7 +593,7 @@ local function OptionsCurrencys()
 		},
 		showmaxCatalogedResearch = {
 			order = 1231,
-			type = 'toggle',
+			type = "toggle",
 			name = L["Show Max Value"],
 			desc = L["Show Max Value"],
 			get = function(info)
@@ -592,7 +606,7 @@ local function OptionsCurrencys()
 		},
 		nameCatalogedResearch = {
 			order = 1240,
-			type = 'toggle',
+			type = "toggle",
 			name = L["Name"],
 			desc = L["Shows Name"],
 			get = function(info)
@@ -605,7 +619,7 @@ local function OptionsCurrencys()
 		},
 		bagCatalogedResearch = {
 			order = 1250,
-			type = 'toggle',
+			type = "toggle",
 			name = L["Show Cataloged Research in Bags"],
 			desc = L["Shows Cataloged Research in your Bags"],
 			get = function(info)
@@ -618,7 +632,7 @@ local function OptionsCurrencys()
 		},
 		hideCatalogedResearch = {
 			order = 1260,
-			type = 'toggle',
+			type = "toggle",
 			name = L["Hide if Zero"],
 			get = function(info)
 				return E.db[mPlugin].mCatalogedResearch.hide
@@ -633,16 +647,18 @@ local function OptionsCurrencys()
 			type = "description",
 			name = "\n\n",
 		},
-		headerSoulCinders= {
+		headerSoulCinders = {
 			order = 1300,
 			type = "header",
 			name = format("|CFFFF5500%s|r", L["Soul Cinders"]),
 		},
 		colorSoulCinders = {
 			order = 1310,
-			type = 'select',
+			type = "select",
 			name = L["Soul Cinders Color Style"],
-			get = function(info) return E.db[mPlugin].mSoulCinders.style end,
+			get = function(info)
+				return E.db[mPlugin].mSoulCinders.style
+			end,
 			set = function(info, value)
 				E.db[mPlugin].mSoulCinders.style = value
 				DT:ForceUpdate_DataText("mSoulCinders")
@@ -655,7 +671,7 @@ local function OptionsCurrencys()
 		},
 		iconSoulCinders = {
 			order = 1320,
-			type = 'toggle',
+			type = "toggle",
 			name = L["Icon"],
 			desc = L["Show Icon"],
 			get = function(info)
@@ -668,7 +684,7 @@ local function OptionsCurrencys()
 		},
 		numberSoulCinders = {
 			order = 1330,
-			type = 'toggle',
+			type = "toggle",
 			name = L["Short Number"],
 			desc = L["Short Number"],
 			get = function(info)
@@ -681,7 +697,7 @@ local function OptionsCurrencys()
 		},
 		nameSoulCinders = {
 			order = 1340,
-			type = 'toggle',
+			type = "toggle",
 			name = L["Name"],
 			desc = L["Shows Name"],
 			get = function(info)
@@ -694,7 +710,7 @@ local function OptionsCurrencys()
 		},
 		hideSoulCinders = {
 			order = 1350,
-			type = 'toggle',
+			type = "toggle",
 			name = L["Hide if Zero"],
 			get = function(info)
 				return E.db[mPlugin].mSoulCinders.hide
@@ -716,9 +732,11 @@ local function OptionsCurrencys()
 		},
 		colorStygianEmber = {
 			order = 1410,
-			type = 'select',
+			type = "select",
 			name = L["Stygian Ember Color Style"],
-			get = function(info) return E.db[mPlugin].mStygianEmber.style end,
+			get = function(info)
+				return E.db[mPlugin].mStygianEmber.style
+			end,
 			set = function(info, value)
 				E.db[mPlugin].mStygianEmber.style = value
 				DT:ForceUpdate_DataText("mStygianEmber")
@@ -731,7 +749,7 @@ local function OptionsCurrencys()
 		},
 		iconStygianEmber = {
 			order = 1420,
-			type = 'toggle',
+			type = "toggle",
 			name = L["Icon"],
 			desc = L["Show Icon"],
 			get = function(info)
@@ -744,7 +762,7 @@ local function OptionsCurrencys()
 		},
 		numberStygianEmber = {
 			order = 1430,
-			type = 'toggle',
+			type = "toggle",
 			name = L["Short Number"],
 			desc = L["Short Number"],
 			get = function(info)
@@ -757,7 +775,7 @@ local function OptionsCurrencys()
 		},
 		nameStygianEmber = {
 			order = 1440,
-			type = 'toggle',
+			type = "toggle",
 			name = L["Name"],
 			desc = L["Shows Name"],
 			get = function(info)
@@ -770,7 +788,7 @@ local function OptionsCurrencys()
 		},
 		hideStygianEmber = {
 			order = 1450,
-			type = 'toggle',
+			type = "toggle",
 			name = L["Hide if Zero"],
 			get = function(info)
 				return E.db[mPlugin].mStygianEmber.hide
@@ -792,9 +810,11 @@ local function OptionsCurrencys()
 		},
 		colorTowerKnowledge = {
 			order = 1510,
-			type = 'select',
+			type = "select",
 			name = L["Tower Knowledge Color Style"],
-			get = function(info) return E.db[mPlugin].mTowerKnowledge.style end,
+			get = function(info)
+				return E.db[mPlugin].mTowerKnowledge.style
+			end,
 			set = function(info, value)
 				E.db[mPlugin].mTowerKnowledge.style = value
 				DT:ForceUpdate_DataText("mTowerKnowledge")
@@ -807,7 +827,7 @@ local function OptionsCurrencys()
 		},
 		iconTowerKnowledge = {
 			order = 1520,
-			type = 'toggle',
+			type = "toggle",
 			name = L["Icon"],
 			desc = L["Show Icon"],
 			get = function(info)
@@ -820,7 +840,7 @@ local function OptionsCurrencys()
 		},
 		numberTowerKnowledge = {
 			order = 1530,
-			type = 'toggle',
+			type = "toggle",
 			name = L["Short Number"],
 			desc = L["Short Number"],
 			get = function(info)
@@ -833,7 +853,7 @@ local function OptionsCurrencys()
 		},
 		nameTowerKnowledge = {
 			order = 1540,
-			type = 'toggle',
+			type = "toggle",
 			name = L["Name"],
 			desc = L["Shows Name"],
 			get = function(info)
@@ -846,7 +866,7 @@ local function OptionsCurrencys()
 		},
 		hideTowerKnowledge = {
 			order = 1550,
-			type = 'toggle',
+			type = "toggle",
 			name = L["Hide if Zero"],
 			get = function(info)
 				return E.db[mPlugin].mTowerKnowledge.hide
@@ -868,9 +888,11 @@ local function OptionsCurrencys()
 		},
 		colorCosmicFlux = {
 			order = 1620,
-			type = 'select',
+			type = "select",
 			name = L["Stygian Ember Color Style"],
-			get = function(info) return E.db[mPlugin].mCosmicFlux.style end,
+			get = function(info)
+				return E.db[mPlugin].mCosmicFlux.style
+			end,
 			set = function(info, value)
 				E.db[mPlugin].mCosmicFlux.style = value
 				DT:ForceUpdate_DataText("mCosmicFlux")
@@ -883,7 +905,7 @@ local function OptionsCurrencys()
 		},
 		iconCosmicFlux = {
 			order = 1630,
-			type = 'toggle',
+			type = "toggle",
 			name = L["Icon"],
 			desc = L["Show Icon"],
 			get = function(info)
@@ -896,7 +918,7 @@ local function OptionsCurrencys()
 		},
 		numberCosmicFlux = {
 			order = 1640,
-			type = 'toggle',
+			type = "toggle",
 			name = L["Short Number"],
 			desc = L["Short Number"],
 			get = function(info)
@@ -909,7 +931,7 @@ local function OptionsCurrencys()
 		},
 		nameCosmicFlux = {
 			order = 1650,
-			type = 'toggle',
+			type = "toggle",
 			name = L["Name"],
 			desc = L["Shows Name"],
 			get = function(info)
@@ -922,7 +944,7 @@ local function OptionsCurrencys()
 		},
 		hideCosmicFlux = {
 			order = 1660,
-			type = 'toggle',
+			type = "toggle",
 			name = L["Hide if Zero"],
 			get = function(info)
 				return E.db[mPlugin].mCosmicFlux.hide
@@ -944,9 +966,11 @@ local function OptionsCurrencys()
 		},
 		colorCyphersFirstOnes = {
 			order = 1720,
-			type = 'select',
+			type = "select",
 			name = L["Stygian Ember Color Style"],
-			get = function(info) return E.db[mPlugin].mCyphersFirstOnes.style end,
+			get = function(info)
+				return E.db[mPlugin].mCyphersFirstOnes.style
+			end,
 			set = function(info, value)
 				E.db[mPlugin].mCyphersFirstOnes.style = value
 				DT:ForceUpdate_DataText("mCyphersFirstOnes")
@@ -959,7 +983,7 @@ local function OptionsCurrencys()
 		},
 		iconCyphersFirstOnes = {
 			order = 1730,
-			type = 'toggle',
+			type = "toggle",
 			name = L["Icon"],
 			desc = L["Show Icon"],
 			get = function(info)
@@ -972,7 +996,7 @@ local function OptionsCurrencys()
 		},
 		numberCyphersFirstOnes = {
 			order = 1740,
-			type = 'toggle',
+			type = "toggle",
 			name = L["Short Number"],
 			desc = L["Short Number"],
 			get = function(info)
@@ -985,7 +1009,7 @@ local function OptionsCurrencys()
 		},
 		nameCyphersFirstOnes = {
 			order = 1750,
-			type = 'toggle',
+			type = "toggle",
 			name = L["Name"],
 			desc = L["Shows Name"],
 			get = function(info)
@@ -998,7 +1022,7 @@ local function OptionsCurrencys()
 		},
 		hideCyphersFirstOnes = {
 			order = 1760,
-			type = 'toggle',
+			type = "toggle",
 			name = L["Hide if Zero"],
 			get = function(info)
 				return E.db[mPlugin].mCyphersFirstOnes.hide
@@ -1020,9 +1044,11 @@ local function OptionsCurrencys()
 		},
 		colorTimewarpedBadge = {
 			order = 1820,
-			type = 'select',
+			type = "select",
 			name = L["Stygian Ember Color Style"],
-			get = function(info) return E.db[mPlugin].mTimewarpedBadge.style end,
+			get = function(info)
+				return E.db[mPlugin].mTimewarpedBadge.style
+			end,
 			set = function(info, value)
 				E.db[mPlugin].mTimewarpedBadge.style = value
 				DT:ForceUpdate_DataText("mTimewarpedBadge")
@@ -1035,7 +1061,7 @@ local function OptionsCurrencys()
 		},
 		iconTimewarpedBadge = {
 			order = 1830,
-			type = 'toggle',
+			type = "toggle",
 			name = L["Icon"],
 			desc = L["Show Icon"],
 			get = function(info)
@@ -1048,7 +1074,7 @@ local function OptionsCurrencys()
 		},
 		numberTimewarpedBadge = {
 			order = 1840,
-			type = 'toggle',
+			type = "toggle",
 			name = L["Short Number"],
 			desc = L["Short Number"],
 			get = function(info)
@@ -1061,7 +1087,7 @@ local function OptionsCurrencys()
 		},
 		nameTimewarpedBadge = {
 			order = 1850,
-			type = 'toggle',
+			type = "toggle",
 			name = L["Name"],
 			desc = L["Shows Name"],
 			get = function(info)
@@ -1074,7 +1100,7 @@ local function OptionsCurrencys()
 		},
 		hideTimewarpedBadge = {
 			order = 1860,
-			type = 'toggle',
+			type = "toggle",
 			name = L["Hide if Zero"],
 			get = function(info)
 				return E.db[mPlugin].mTimewarpedBadge.hide
@@ -1096,9 +1122,11 @@ local function OptionsCurrencys()
 		},
 		colorConquest = {
 			order = 1920,
-			type = 'select',
+			type = "select",
 			name = L["Color Style"],
-			get = function(info) return E.db[mPlugin].mConquest.style end,
+			get = function(info)
+				return E.db[mPlugin].mConquest.style
+			end,
 			set = function(info, value)
 				E.db[mPlugin].mConquest.style = value
 				DT:ForceUpdate_DataText("mConquest")
@@ -1111,7 +1139,7 @@ local function OptionsCurrencys()
 		},
 		iconConquest = {
 			order = 1930,
-			type = 'toggle',
+			type = "toggle",
 			name = L["Icon"],
 			desc = L["Show Icon"],
 			get = function(info)
@@ -1124,7 +1152,7 @@ local function OptionsCurrencys()
 		},
 		numberConquest = {
 			order = 1940,
-			type = 'toggle',
+			type = "toggle",
 			name = L["Short Number"],
 			desc = L["Short Number"],
 			get = function(info)
@@ -1135,22 +1163,22 @@ local function OptionsCurrencys()
 				DT:ForceUpdate_DataText("mConquest")
 			end,
 		},
-		showmaxConquest  = {
+		showmaxConquest = {
 			order = 1941,
-			type = 'toggle',
+			type = "toggle",
 			name = L["Show Max Value"],
 			desc = L["Show Max Value"],
 			get = function(info)
-				return E.db[mPlugin].mConquest .showmax
+				return E.db[mPlugin].mConquest.showmax
 			end,
 			set = function(info, value)
-				E.db[mPlugin].mConquest .showmax = value
+				E.db[mPlugin].mConquest.showmax = value
 				DT:ForceUpdate_DataText("mConquest ")
 			end,
 		},
 		nameConquest = {
 			order = 1950,
-			type = 'toggle',
+			type = "toggle",
 			name = L["Name"],
 			desc = L["Shows Name"],
 			get = function(info)
@@ -1163,7 +1191,7 @@ local function OptionsCurrencys()
 		},
 		hideConquest = {
 			order = 1960,
-			type = 'toggle',
+			type = "toggle",
 			name = L["Hide if Zero"],
 			get = function(info)
 				return E.db[mPlugin].mConquest.hide

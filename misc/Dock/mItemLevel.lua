@@ -1,7 +1,7 @@
-local E, L, V, P, G = unpack(ElvUI);
+local E, L, V, P, G = unpack(ElvUI)
 local mPlugin = "mMediaTag"
-local mMT = E:GetModule(mPlugin);
-local DT = E:GetModule("DataTexts");
+local mMT = E:GetModule(mPlugin)
+local DT = E:GetModule("DataTexts")
 local addon, ns = ...
 
 --Lua functions
@@ -15,14 +15,14 @@ local r, g, b = 1, 1, 1
 
 local function colorize(num)
 	if num >= 0 then
-		return .1, 1, .1
+		return 0.1, 1, 0.1
 	else
-		return E:ColorGradient(-(pi/num), 1, .1, .1, 1, 1, .1, .1, 1, .1)
+		return E:ColorGradient(-(pi / num), 1, 0.1, 0.1, 1, 1, 0.1, 0.1, 1, 0.1)
 	end
 end
 
 local function mDockCheckFrame()
-	return ( CharacterFrame and CharacterFrame:IsShown() )
+	return (CharacterFrame and CharacterFrame:IsShown())
 end
 
 function mMT:CheckFrameItemlevel(self)
@@ -35,11 +35,18 @@ local function OnEnter(self)
 	mMT:mOnEnter(self, "CheckFrameItemlevel")
 
 	if E.db[mPlugin].mDock.tip.enable then
-        DT.tooltip:ClearLines()
+		DT.tooltip:ClearLines()
 		local avg, avgEquipped, avgPvp = GetAverageItemLevel()
-		DT.tooltip:AddDoubleLine(STAT_AVERAGE_ITEM_LEVEL, format('%0.2f', avg), 1, 1, 1, .1, 1, .1)
-		DT.tooltip:AddDoubleLine(GMSURVEYRATING3, format('%0.2f', avgEquipped), 1, 1, 1, colorize(avgEquipped - avg))
-		DT.tooltip:AddDoubleLine(LFG_LIST_ITEM_LEVEL_INSTR_PVP_SHORT, format('%0.2f', avgPvp), 1, 1, 1, colorize(avgPvp - avg))
+		DT.tooltip:AddDoubleLine(STAT_AVERAGE_ITEM_LEVEL, format("%0.2f", avg), 1, 1, 1, 0.1, 1, 0.1)
+		DT.tooltip:AddDoubleLine(GMSURVEYRATING3, format("%0.2f", avgEquipped), 1, 1, 1, colorize(avgEquipped - avg))
+		DT.tooltip:AddDoubleLine(
+			LFG_LIST_ITEM_LEVEL_INSTR_PVP_SHORT,
+			format("%0.2f", avgPvp),
+			1,
+			1,
+			1,
+			colorize(avgPvp - avg)
+		)
 
 		DT.tooltip:Show()
 	end
@@ -61,17 +68,20 @@ local function OnEvent(self, event, ...)
 	local Color = E.db[mPlugin].mDock.itemlevel.color
 	local TextColor = mMT:mClassColorString()
 
-    local avg, avgEquipped = GetAverageItemLevel()
-    if Color == "default" then
-        local r, g, b = E:ColorGradient(mMT:round((avgEquipped/260)*100 or 0) * .01, 0, 1, .11, 0, .4, .8, .63, .18, .78)
+	local avg, avgEquipped = GetAverageItemLevel()
+	if Color == "default" then
+		local r, g, b =
+			E:ColorGradient(mMT:round((avgEquipped / 260) * 100 or 0) * 0.01, 0, 1, 0.11, 0, 0.4, 0.8, 0.63, 0.18, 0.78)
 		TextColor = strjoin("", E:RGBToHex(r, g, b), "%s|r")
-    elseif Color == "custom" then
+	elseif Color == "custom" then
 		r, g, b = E.db[mPlugin].mDock.fontcolor.r, E.db[mPlugin].mDock.fontcolor.g, E.db[mPlugin].mDock.fontcolor.b
 		TextColor = strjoin("", E:RGBToHex(r, g, b), "%s|r")
 	end
 
 	if self.mSettings.OnlyText then
-		self.text:SetText(format("%s%s", E.db[mPlugin].mDock.itemlevel.text, format(TextColor, mMT:round(avgEquipped or 0))))
+		self.text:SetText(
+			format("%s%s", E.db[mPlugin].mDock.itemlevel.text, format(TextColor, mMT:round(avgEquipped or 0)))
+		)
 	else
 		if self.text ~= "" then
 			self.text:SetText("")
@@ -97,4 +107,16 @@ local function OnClick(self)
 	end
 end
 
-DT:RegisterDatatext(mTextName, "mDock", {'UPDATE_INVENTORY_DURABILITY'}, OnEvent, nil, OnClick, OnEnter, OnLeave, mText, nil, nil)
+DT:RegisterDatatext(
+	mTextName,
+	"mDock",
+	{ "UPDATE_INVENTORY_DURABILITY" },
+	OnEvent,
+	nil,
+	OnClick,
+	OnEnter,
+	OnLeave,
+	mText,
+	nil,
+	nil
+)

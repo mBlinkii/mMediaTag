@@ -1,10 +1,13 @@
 local L = ElvUI[1].Libs.ACL:NewLocale("ElvUI", "enUS")
 
-L["%sIt seems you are using|r %s Retail %sunder WoW Classic!|r|n|nPlease use %s under WoW Classic to avoid problems."] = true
-L["%sYour ElvUI (Ver. %s) version is no longer up to date, please update it to Ver.|r %s%s|r, %sto avoid problems with|r %s|r%s.|r"] = true
+L["%sIt seems you are using|r %s Retail %sunder WoW Classic!|r|n|nPlease use %s under WoW Classic to avoid problems."] =
+	true
+L["%sYour ElvUI (Ver. %s) version is no longer up to date, please update it to Ver.|r %s%s|r, %sto avoid problems with|r %s|r%s.|r"] =
+	true
 L["%sERROR! Versioncheck Faild!|r"] = true
 L["Welcome to %s version |CFF8E44AD%q|r, for |cff1784d1ElvUI|r!"] = true
-L[" is an addon for ElvUI with additional Statusbar textures, Tags, a game menu and professional menu for the datatext bars."] = true
+L[" is an addon for ElvUI with additional Statusbar textures, Tags, a game menu and professional menu for the datatext bars."] =
+	true
 L["Configuration"] = true
 L["General"] = true
 L["Greeting text at start"] = true
@@ -51,13 +54,14 @@ L["Here you can install addon profiles and more for my ElvUI profile MaUI v.3 an
 L["Copy this text with for example CTRL + C and paste it into the Profile Import window of ElvUI."] = true
 L["Here you can display the Profile Import texts for importing."] = true
 L["Last Update:"] = true
-L["These are just examples of how to create your own dock with ElvUI's custom bars.\n\nTo delete the examples completely, you have to delete the bars in the ElvUI settings. (ElvUI>Datatext>Bars> click on the bar you want to delete, scroll down and click delete).\n\n\nTo create your own bar you have to go to ElvUI under ElvUI>Datatext>Bars Steps 1. enter name press OK and click Add, set the width of the bar depends on how many icons you want to display, the height of the bar is also the size of the icons. Set the number of data text and now you only need to assign the icons to the places, for example 1 = Dock FPS, 2 = Dock Profession and so on.\n\n"] = true
-L['Shows a icon if the NPC is a Unit for a Quest.'] = true
-L['Same as mQuestIcon, hides if ElvUI Quest Icon is showen.'] = true
-L['Shows Power/Mana, with low healer warning.'] = true
-L['Same as mPowerPercent, shows only Healer Power/Mana.'] = true
-L['Same as mPowerPercent, hides on full Power/Mana.'] = true
-L['Same as mPowerPercent:heal, hides on full Power/Mana.'] = true
+L["These are just examples of how to create your own dock with ElvUI's custom bars.\n\nTo delete the examples completely, you have to delete the bars in the ElvUI settings. (ElvUI>Datatext>Bars> click on the bar you want to delete, scroll down and click delete).\n\n\nTo create your own bar you have to go to ElvUI under ElvUI>Datatext>Bars Steps 1. enter name press OK and click Add, set the width of the bar depends on how many icons you want to display, the height of the bar is also the size of the icons. Set the number of data text and now you only need to assign the icons to the places, for example 1 = Dock FPS, 2 = Dock Profession and so on.\n\n"] =
+	true
+L["Shows a icon if the NPC is a Unit for a Quest."] = true
+L["Same as mQuestIcon, hides if ElvUI Quest Icon is showen."] = true
+L["Shows Power/Mana, with low healer warning."] = true
+L["Same as mPowerPercent, shows only Healer Power/Mana."] = true
+L["Same as mPowerPercent, hides on full Power/Mana."] = true
+L["Same as mPowerPercent:heal, hides on full Power/Mana."] = true
 
 -- Changelog
 L["Changelog:"] = true
@@ -76,16 +80,17 @@ L["Right click to open the ElvUI settings."] = true
 L["Game Menu"] = true
 L["%sright click to open LFD Tool|r"] = true
 
-L['Chatbaground'] = true
+L["Chatbaground"] = true
 L["Chath backgrounds, copy the path from the input fields to the chat settings to use the backgrounds."] = true
 
-L['Addons'] = true
+L["Addons"] = true
 L[" Here you can install addon profiles for my ElvUI profile."] = true
 --L["Install"]
 --L["Run the installation process."]
 
 L["Welcome to the installation for %s."] = true
-L["Please press the continue button if you wish to go through the installation process, otherwise click the 'Skip Process' button."] = true
+L["Please press the continue button if you wish to go through the installation process, otherwise click the 'Skip Process' button."] =
+	true
 --L["Skip Process"]
 L["Addon Layouts"] = true
 L["Profiles are available for these Addons:"] = true
@@ -162,12 +167,14 @@ L["mHealth wit Statustimer for Dead and AFK, with short numbers."] = true
 L["mHealth wit Statustimer for Dead, without AFK, with short numbers."] = true
 L["Shows the Abbrev Target Name."] = true
 L["Here you can export and share or import the settings of mMediaTag."] = true
-L["Deaths"] = true 
+L["Deaths"] = true
 
 L["Replace the name of the unit with Status if applicable"] = true
-L["Replace the name of the unit with Status if applicable (limited to veryshort = 5, short = 10, medium = 15, long = 20 letters)"] = true
+L["Replace the name of the unit with Status if applicable (limited to veryshort = 5, short = 10, medium = 15, long = 20 letters)"] =
+	true
 L["Replace the name of the unit with Statusicon if applicable"] = true
-L["Replace the name of the unit with Statusicon if applicable (limited to veryshort = 5, short = 10, medium = 15, long = 20 letters)"] = true
+L["Replace the name of the unit with Statusicon if applicable (limited to veryshort = 5, short = 10, medium = 15, long = 20 letters)"] =
+	true
 
 L["Death icons."] = true
 L["Status icons."] = true
@@ -191,11 +198,11 @@ L["Conquest"] = true
 L["Cyphers of the First Ones"] = true
 L["Cosmic Flux"] = true
 L["Enable the custom role icons"] = true
-L['Cosmetic'] = true
+L["Cosmetic"] = true
 
 L["Tank and Heal Role written."] = true
-L['Role Icon.'] = true
-L['Target role Icon.'] = true
+L["Role Icon."] = true
+L["Target role Icon."] = true
 
 L["Level changes to resting in the City."] = true
 L["Same as mLevel (hides Level if it is equal)."] = true
@@ -246,7 +253,7 @@ L["Fontcolor Style"] = true
 L["Fontcolor"] = true
 L["Bar Style"] = true
 L["Barcolor Style"] = true
-L['Header'] = true
+L["Header"] = true
 L["Bar Shadow"] = true
 L["left"] = true
 L["right"] = true
@@ -306,7 +313,7 @@ L["Call To Arms"] = true
 
 L["Here you can display the Weakaura Import texts for importing."] = true
 
-L['Currencys'] = true
+L["Currencys"] = true
 L["Mythic plus Tools"] = true
 L["Send Keyston to Chat"] = true
 L["Sends your Keyston to Chat, wen ther ist The Keyword !key or !keys"] = true
@@ -319,7 +326,7 @@ L["Color other"] = true
 L["Color Titel"] = true
 L["Color Tip"] = true
 L["Custom color for Datatext Tip"] = true
-L['Dock'] = true
+L["Dock"] = true
 L["Custom"] = true
 L["Normal Color Style"] = true
 L["Custom Icon Color"] = true
@@ -354,7 +361,7 @@ L["License"] = true
 L["left click to open LFD Window"] = true
 L["right click to open Great Vault Window"] = true
 L["Enable ObjectiveTracker (Questwatch) Skin."] = true
-L['ObjectiveTracker Header'] = true
+L["ObjectiveTracker Header"] = true
 L["Title Bar"] = true
 L["Enable Title Bar"] = true
 L["Enable ObjectiveTracker Title Bar"] = true
@@ -371,12 +378,12 @@ L["Title Bar Shadow"] = true
 L["Title Font"] = true
 L["Font Color Style"] = true
 L["Font Color"] = true
-L['ObjectiveTracker Quests'] = true
+L["ObjectiveTracker Quests"] = true
 L["Quests Title Font"] = true
 L["Quests Font"] = true
 L["Complete Font Color"] = true
 L["Failed Font Color"] = true
-L['ObjectiveTracker Progress'] = true
+L["ObjectiveTracker Progress"] = true
 L["Dash Style"] = true
 L["Dot Texture"] = true
 L["Custom Dash Symbol, enter any character you want."] = true
@@ -395,5 +402,7 @@ L["Itemlevel"] = true
 L["Durability"] = true
 L["FPS / MS"] = true
 L["Default"] = true
-L["|CFF8E44ADm|r|CFF2ECC71Media|r|CFF3498DBTag|r is a plugin for ElvUI with additional Textures, Chatbackgrounds, Tags for the Unitframes, Profession and System menu extensions for the Datatext bars.ac\n\n\n\n|CFF2ECC71Special features|r\n\n|CFF3498DB -|r 50 Statusbar Texturs\n|CFF3498DB -|r 15 Chatbackgrounds\n|CFF3498DB -|r Datatext Game Menu\n|CFF3498DB -|r Datatext Professions Menu\n|CFF3498DB -|r Datatext Dock Icons to buld your owen Dockbar\n|CFF3498DB -|r Datatext Dungeon Info, Dungeon Name, Affix, Keystone, and Achievements\n|CFF3498DB -|r Tooltip Icon\n|CFF3498DB -|r Automatically display the Namplat boarder and hover effects in the class colors\n|CFF3498DB -|r 25 Tags for ElvUI\n\n\n\n|CFF3498DB©|r |CFF8E44ADCopyright|r |CFF2ECC712021|r |CFF3498DB©|r |CFF2ECC71by|r |CFF3498DBBlinkii|r"] = true
-L["%sAddon:|r\n\nAll contents of this AddOn - ElvUI_mMediaTag especially texts, photographs and graphics, are protected by copyright.\n\n\n%sDock Icons:|r\n\nIcons are from Google - Material Design Icons are available under material.io. The symbols are available under the APACHE LICENSE, VERSION 2.0.\nIcons were resized to 64x64 pixel and the color was changed from black to white."] = true
+L["|CFF8E44ADm|r|CFF2ECC71Media|r|CFF3498DBTag|r is a plugin for ElvUI with additional Textures, Chatbackgrounds, Tags for the Unitframes, Profession and System menu extensions for the Datatext bars.ac\n\n\n\n|CFF2ECC71Special features|r\n\n|CFF3498DB -|r 50 Statusbar Texturs\n|CFF3498DB -|r 15 Chatbackgrounds\n|CFF3498DB -|r Datatext Game Menu\n|CFF3498DB -|r Datatext Professions Menu\n|CFF3498DB -|r Datatext Dock Icons to buld your owen Dockbar\n|CFF3498DB -|r Datatext Dungeon Info, Dungeon Name, Affix, Keystone, and Achievements\n|CFF3498DB -|r Tooltip Icon\n|CFF3498DB -|r Automatically display the Namplat boarder and hover effects in the class colors\n|CFF3498DB -|r 25 Tags for ElvUI\n\n\n\n|CFF3498DB©|r |CFF8E44ADCopyright|r |CFF2ECC712021|r |CFF3498DB©|r |CFF2ECC71by|r |CFF3498DBBlinkii|r"] =
+	true
+L["%sAddon:|r\n\nAll contents of this AddOn - ElvUI_mMediaTag especially texts, photographs and graphics, are protected by copyright.\n\n\n%sDock Icons:|r\n\nIcons are from Google - Material Design Icons are available under material.io. The symbols are available under the APACHE LICENSE, VERSION 2.0.\nIcons were resized to 64x64 pixel and the color was changed from black to white."] =
+	true

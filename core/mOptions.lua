@@ -1,6 +1,6 @@
-local E, L, V, P, G = unpack(ElvUI);
+local E, L, V, P, G = unpack(ElvUI)
 local mPlugin = "mMediaTag"
-local mMT = E:GetModule(mPlugin);
+local mMT = E:GetModule(mPlugin)
 local addon, ns = ...
 local LSM = LibStub("LibSharedMedia-3.0")
 
@@ -12,15 +12,17 @@ local function OptionsCore()
 	E.Options.args.mMediaTag = {
 		order = 10,
 		type = "group",
-		childGroups = 'tab',
+		childGroups = "tab",
 		name = ns.mName,
 		args = {
 			logo = {
 				order = 1,
-				type = 'description',
+				type = "description",
 				name = "",
-				fontSize = 'medium',
-				image = function() return 'Interface\\AddOns\\ElvUI_mMediaTag\\media\\misc\\logo.tga', 512, 128 end,
+				fontSize = "medium",
+				image = function()
+					return "Interface\\AddOns\\ElvUI_mMediaTag\\media\\misc\\logo.tga", 512, 128
+				end,
 			},
 			general = {
 				order = 10,
@@ -34,7 +36,7 @@ local function OptionsCore()
 						args = {
 							greetingtext = {
 								order = 1,
-								type = 'toggle',
+								type = "toggle",
 								name = L["Greeting text at start"],
 								desc = L["Enables or disables the welcome text, at startup."],
 								get = function(info)
@@ -53,7 +55,7 @@ local function OptionsCore()
 						args = {
 							colorednamplates = {
 								order = 1,
-								type = 'toggle',
+								type = "toggle",
 								name = L["Class colored Namplates"],
 								desc = L["Class colored Namplates Hover and Boarder color."],
 								get = function(info)
@@ -78,7 +80,7 @@ local function OptionsCore()
 						args = {
 							tooltipicon = {
 								order = 1,
-								type = 'toggle',
+								type = "toggle",
 								name = L["Tooltip Icon"],
 								desc = L["Enables or disables Tooltip Icon"],
 								get = function(info)
@@ -99,7 +101,9 @@ local function OptionsCore()
 								name = L["Icon size"],
 								desc = L["Tooltip Icon size."],
 								type = "range",
-								min = 16, max = 128, step = 2,
+								min = 16,
+								max = 128,
+								step = 2,
 								get = function(info)
 									return E.db[mPlugin].mTIconSize
 								end,
@@ -116,7 +120,7 @@ local function OptionsCore()
 						args = {
 							menucolorsetting = {
 								order = 1,
-								type = 'toggle',
+								type = "toggle",
 								name = L["Class colered hover texture"],
 								desc = L["Enables or disables Class colered hover texture."],
 								get = function(info)
@@ -135,14 +139,14 @@ local function OptionsCore()
 							menutexture = {
 								order = 3,
 								type = "select",
-								dialogControl = 'LSM30_Statusbar',
+								dialogControl = "LSM30_Statusbar",
 								name = L["Menu Hover Texture"],
-								values = LSM:HashTable('statusbar'),
+								values = LSM:HashTable("statusbar"),
 								get = function(info)
 									return E.db[mPlugin].mHoverTexture
 								end,
 								set = function(info, value)
-									E.db[mPlugin].mHoverTexture = value;
+									E.db[mPlugin].mHoverTexture = value
 									E:StaticPopup_Show("CONFIG_RL")
 								end,
 							},
@@ -152,8 +156,7 @@ local function OptionsCore()
 						order = 40,
 						type = "group",
 						name = L["Mythic plus Tools"],
-						args = {
-						},
+						args = {},
 					},
 					tools = {
 						order = 60,
@@ -164,22 +167,19 @@ local function OptionsCore()
 								order = 10,
 								type = "group",
 								name = L["mRoll"],
-								args = {
-								},
+								args = {},
 							},
 							mchatmenu = {
 								order = 20,
 								type = "group",
 								name = L["mChatMenu"],
-								args = {
-								},
+								args = {},
 							},
 							mvolumedisplay = {
 								order = 30,
 								type = "group",
 								name = L["mVolumeDisplay"],
-								args = {
-								},
+								args = {},
 							},
 						},
 					},
@@ -195,13 +195,13 @@ local function OptionsCore()
 						type = "group",
 						name = L["General"],
 						args = {
-							datatextgeneralheader= {
+							datatextgeneralheader = {
 								order = 0,
 								type = "header",
 								name = L["Datatext Options Color (Tooltip)"],
 							},
 							datatextgeneralcolornhc = {
-								type = 'color',
+								type = "color",
 								order = 1,
 								name = L["Color NHC"],
 								desc = L["Custom color for Datatext Tip"],
@@ -216,7 +216,7 @@ local function OptionsCore()
 								end,
 							},
 							datatextgeneralcolorhc = {
-								type = 'color',
+								type = "color",
 								order = 2,
 								name = L["Color HC"],
 								desc = L["Custom color for Datatext Tip"],
@@ -231,7 +231,7 @@ local function OptionsCore()
 								end,
 							},
 							datatextgeneralcolornm = {
-								type = 'color',
+								type = "color",
 								order = 3,
 								name = L["Color Mythic"],
 								desc = L["Custom color for Datatext Tip"],
@@ -246,7 +246,7 @@ local function OptionsCore()
 								end,
 							},
 							datatextgeneralcolornmp = {
-								type = 'color',
+								type = "color",
 								order = 3,
 								name = L["Color Mythic+"],
 								desc = L["Custom color for Datatext Tip"],
@@ -261,7 +261,7 @@ local function OptionsCore()
 								end,
 							},
 							datatextgeneralcolorother = {
-								type = 'color',
+								type = "color",
 								order = 4,
 								name = L["Color other"],
 								desc = L["Custom color for Datatext Tip"],
@@ -276,7 +276,7 @@ local function OptionsCore()
 								end,
 							},
 							datatextgeneralcolortitel = {
-								type = 'color',
+								type = "color",
 								order = 5,
 								name = L["Color Titel"],
 								desc = L["Custom color for Datatext Tip"],
@@ -291,7 +291,7 @@ local function OptionsCore()
 								end,
 							},
 							datatextgeneralcolortip = {
-								type = 'color',
+								type = "color",
 								order = 7,
 								name = L["Color Tip"],
 								desc = L["Custom color for Datatext Tip"],
@@ -311,29 +311,25 @@ local function OptionsCore()
 						order = 10,
 						type = "group",
 						name = L["Profession Menu"],
-						args = {
-						},
+						args = {},
 					},
 					systemmenusettings = {
 						order = 20,
 						type = "group",
-						name = L['System Menu'],
-						args = {
-						},
+						name = L["System Menu"],
+						args = {},
 					},
 					dungeonsetting = {
 						order = 30,
 						type = "group",
-						name = L['Dungeon'],
-						args = {
-						},
+						name = L["Dungeon"],
+						args = {},
 					},
 					currencys = {
 						order = 40,
 						type = "group",
-						name = L['Currencys'],
-						args = {
-						},
+						name = L["Currencys"],
+						args = {},
 					},
 				},
 			},
@@ -341,58 +337,51 @@ local function OptionsCore()
 				order = 30,
 				type = "group",
 				name = L["mDock"],
-				args = {
-				},
+				args = {},
 			},
 			tags = {
 				order = 40,
 				type = "group",
 				name = L["Tags"],
-				args = {
-				},
+				args = {},
 			},
 			chatbaground = {
 				order = 50,
 				type = "group",
-				name = L['Chatbaground'],
-				args = {
-				},
+				name = L["Chatbaground"],
+				args = {},
 			},
 			cosmetic = {
 				order = 60,
 				type = "group",
-				name = L['Cosmetic'],
+				name = L["Cosmetic"],
 				args = {
 					rolesymbols = {
 						order = 1,
 						type = "group",
-						name = L['Role Symbols'],
-						args = {
-						},
+						name = L["Role Symbols"],
+						args = {},
 					},
 					castbar = {
 						order = 2,
 						type = "group",
-						name = L['Castbar'],
-						args = {
-						},
+						name = L["Castbar"],
+						args = {},
 					},
 					objectivetracker = {
 						order = 50,
 						type = "group",
 						name = L["ObjectiveTracker Skin"],
-						childGroups = 'tab',
-						args = {
-						},
+						childGroups = "tab",
+						args = {},
 					},
 				},
 			},
 			profile = {
 				order = 70,
 				type = "group",
-				name = L['Profile'],
-				args = {
-				},
+				name = L["Profile"],
+				args = {},
 			},
 			about = {
 				order = 80,
@@ -422,7 +411,11 @@ local function OptionsCore()
 					licenseabout = {
 						order = 5,
 						type = "description",
-						name = format(L["%sAddon:|r\n\nAll contents of this AddOn - ElvUI_mMediaTag especially texts, photographs and graphics, are protected by copyright.\n\n\n%sDock Icons:|r\n\nIcons are from Google - Material Design Icons are available under material.io. The symbols are available under the APACHE LICENSE, VERSION 2.0.\nIcons were resized to 64x64 pixel and the color was changed from black to white."], ns.mColor2, ns.mColor2),
+						name = format(
+							L["%sAddon:|r\n\nAll contents of this AddOn - ElvUI_mMediaTag especially texts, photographs and graphics, are protected by copyright.\n\n\n%sDock Icons:|r\n\nIcons are from Google - Material Design Icons are available under material.io. The symbols are available under the APACHE LICENSE, VERSION 2.0.\nIcons were resized to 64x64 pixel and the color was changed from black to white."],
+							ns.mColor2,
+							ns.mColor2
+						),
 					},
 					spacerabout2 = {
 						order = 6,
@@ -453,19 +446,25 @@ local function OptionsCore()
 						order = 11,
 						type = "execute",
 						name = L["Contact"],
-						func = function() E:StaticPopup_Show('ELVUI_EDITBOX', nil, nil, 'mmediatag@gmx.de') end,
+						func = function()
+							E:StaticPopup_Show("ELVUI_EDITBOX", nil, nil, "mmediatag@gmx.de")
+						end,
 					},
 					aboutgit = {
 						order = 12,
 						type = "execute",
 						name = L["Git"],
-						func = function() E:StaticPopup_Show('ELVUI_EDITBOX', nil, nil, 'https://git.tukui.org/Blinkii/mmediatag') end,
+						func = function()
+							E:StaticPopup_Show("ELVUI_EDITBOX", nil, nil, "https://git.tukui.org/Blinkii/mmediatag")
+						end,
 					},
 					aboutchangelog = {
 						order = 13,
 						type = "execute",
 						name = L["Changelog"],
-						func = function() mMT:Changelog(true) end,
+						func = function()
+							mMT:Changelog(true)
+						end,
 					},
 				},
 			},
@@ -477,15 +476,17 @@ local function OptionsCoreClassic()
 	E.Options.args.mMediaTag = {
 		order = 10,
 		type = "group",
-		childGroups = 'tab',
+		childGroups = "tab",
 		name = ns.mName,
 		args = {
 			logo = {
 				order = 1,
-				type = 'description',
+				type = "description",
 				name = "",
-				fontSize = 'medium',
-				image = function() return 'Interface\\AddOns\\ElvUI_mMediaTag\\media\\misc\\logo.tga', 512, 128 end,
+				fontSize = "medium",
+				image = function()
+					return "Interface\\AddOns\\ElvUI_mMediaTag\\media\\misc\\logo.tga", 512, 128
+				end,
 			},
 			general = {
 				order = 10,
@@ -499,7 +500,7 @@ local function OptionsCoreClassic()
 						args = {
 							greetingtext = {
 								order = 1,
-								type = 'toggle',
+								type = "toggle",
 								name = L["Greeting text at start"],
 								desc = L["Enables or disables the welcome text, at startup."],
 								get = function(info)
@@ -518,7 +519,7 @@ local function OptionsCoreClassic()
 						args = {
 							colorednamplates = {
 								order = 1,
-								type = 'toggle',
+								type = "toggle",
 								name = L["Class colored Namplates"],
 								desc = L["Class colored Namplates Hover and Boarder color."],
 								get = function(info)
@@ -560,7 +561,7 @@ local function OptionsCoreClassic()
 						args = {
 							tooltipicon = {
 								order = 1,
-								type = 'toggle',
+								type = "toggle",
 								name = L["Tooltip Icon"],
 								desc = L["Enables or disables Tooltip Icon"],
 								get = function(info)
@@ -581,7 +582,9 @@ local function OptionsCoreClassic()
 								name = L["Icon size"],
 								desc = L["Tooltip Icon size."],
 								type = "range",
-								min = 16, max = 128, step = 2,
+								min = 16,
+								max = 128,
+								step = 2,
 								get = function(info)
 									return E.db[mPlugin].mTIconSize
 								end,
@@ -598,7 +601,7 @@ local function OptionsCoreClassic()
 						args = {
 							menucolorsetting = {
 								order = 1,
-								type = 'toggle',
+								type = "toggle",
 								name = L["Class colered hover texture"],
 								desc = L["Enables or disables Class colered hover texture."],
 								get = function(info)
@@ -617,14 +620,14 @@ local function OptionsCoreClassic()
 							menutexture = {
 								order = 3,
 								type = "select",
-								dialogControl = 'LSM30_Statusbar',
+								dialogControl = "LSM30_Statusbar",
 								name = L["Menu Hover Texture"],
-								values = LSM:HashTable('statusbar'),
+								values = LSM:HashTable("statusbar"),
 								get = function(info)
 									return E.db[mPlugin].mHoverTexture
 								end,
 								set = function(info, value)
-									E.db[mPlugin].mHoverTexture = value;
+									E.db[mPlugin].mHoverTexture = value
 									E:StaticPopup_Show("CONFIG_RL")
 								end,
 							},
@@ -639,22 +642,19 @@ local function OptionsCoreClassic()
 								order = 10,
 								type = "group",
 								name = L["mRoll"],
-								args = {
-								},
+								args = {},
 							},
 							mchatmenu = {
 								order = 20,
 								type = "group",
 								name = L["mChatMenu"],
-								args = {
-								},
+								args = {},
 							},
 							mvolumedisplay = {
 								order = 30,
 								type = "group",
 								name = L["mVolumeDisplay"],
-								args = {
-								},
+								args = {},
 							},
 						},
 					},
@@ -670,13 +670,13 @@ local function OptionsCoreClassic()
 						type = "group",
 						name = L["General"],
 						args = {
-							datatextgeneralheader= {
+							datatextgeneralheader = {
 								order = 0,
 								type = "header",
 								name = L["Datatext Options Color (Tooltip)"],
 							},
 							datatextgeneralcolornhc = {
-								type = 'color',
+								type = "color",
 								order = 1,
 								name = L["Color NHC"],
 								desc = L["Custom color for Datatext Tip"],
@@ -691,7 +691,7 @@ local function OptionsCoreClassic()
 								end,
 							},
 							datatextgeneralcolorhc = {
-								type = 'color',
+								type = "color",
 								order = 2,
 								name = L["Color HC"],
 								desc = L["Custom color for Datatext Tip"],
@@ -706,7 +706,7 @@ local function OptionsCoreClassic()
 								end,
 							},
 							datatextgeneralcolornm = {
-								type = 'color',
+								type = "color",
 								order = 3,
 								name = L["Color Mythic"],
 								desc = L["Custom color for Datatext Tip"],
@@ -721,7 +721,7 @@ local function OptionsCoreClassic()
 								end,
 							},
 							datatextgeneralcolornmp = {
-								type = 'color',
+								type = "color",
 								order = 3,
 								name = L["Color Mythic+"],
 								desc = L["Custom color for Datatext Tip"],
@@ -736,7 +736,7 @@ local function OptionsCoreClassic()
 								end,
 							},
 							datatextgeneralcolorother = {
-								type = 'color',
+								type = "color",
 								order = 4,
 								name = L["Color other"],
 								desc = L["Custom color for Datatext Tip"],
@@ -751,7 +751,7 @@ local function OptionsCoreClassic()
 								end,
 							},
 							datatextgeneralcolortitel = {
-								type = 'color',
+								type = "color",
 								order = 5,
 								name = L["Color Titel"],
 								desc = L["Custom color for Datatext Tip"],
@@ -766,7 +766,7 @@ local function OptionsCoreClassic()
 								end,
 							},
 							datatextgeneralcolortip = {
-								type = 'color',
+								type = "color",
 								order = 7,
 								name = L["Color Tip"],
 								desc = L["Custom color for Datatext Tip"],
@@ -785,9 +785,8 @@ local function OptionsCoreClassic()
 					systemmenusettings = {
 						order = 20,
 						type = "group",
-						name = L['System Menu'],
-						args = {
-						},
+						name = L["System Menu"],
+						args = {},
 					},
 				},
 			},
@@ -795,29 +794,25 @@ local function OptionsCoreClassic()
 				order = 30,
 				type = "group",
 				name = L["mDock"],
-				args = {
-				},
+				args = {},
 			},
 			tags = {
 				order = 40,
 				type = "group",
 				name = L["Tags"],
-				args = {
-				},
+				args = {},
 			},
 			chatbaground = {
 				order = 50,
 				type = "group",
-				name = L['Chatbaground'],
-				args = {
-				},
+				name = L["Chatbaground"],
+				args = {},
 			},
 			profile = {
 				order = 70,
 				type = "group",
-				name = L['Profile'],
-				args = {
-				},
+				name = L["Profile"],
+				args = {},
 			},
 			about = {
 				order = 80,
@@ -847,7 +842,11 @@ local function OptionsCoreClassic()
 					licenseabout = {
 						order = 5,
 						type = "description",
-						name = format(L["%sAddon:|r\n\nAll contents of this AddOn - ElvUI_mMediaTag especially texts, photographs and graphics, are protected by copyright.\n\n\n%sDock Icons:|r\n\nIcons are from Google - Material Design Icons are available under material.io. The symbols are available under the APACHE LICENSE, VERSION 2.0.\nIcons were resized to 64x64 pixel and the color was changed from black to white."], ns.mColor2, ns.mColor2),
+						name = format(
+							L["%sAddon:|r\n\nAll contents of this AddOn - ElvUI_mMediaTag especially texts, photographs and graphics, are protected by copyright.\n\n\n%sDock Icons:|r\n\nIcons are from Google - Material Design Icons are available under material.io. The symbols are available under the APACHE LICENSE, VERSION 2.0.\nIcons were resized to 64x64 pixel and the color was changed from black to white."],
+							ns.mColor2,
+							ns.mColor2
+						),
 					},
 					spacerabout2 = {
 						order = 6,
@@ -878,19 +877,25 @@ local function OptionsCoreClassic()
 						order = 11,
 						type = "execute",
 						name = L["Contact"],
-						func = function() E:StaticPopup_Show('ELVUI_EDITBOX', nil, nil, 'mmediatag@gmx.de') end,
+						func = function()
+							E:StaticPopup_Show("ELVUI_EDITBOX", nil, nil, "mmediatag@gmx.de")
+						end,
 					},
 					aboutgit = {
 						order = 12,
 						type = "execute",
 						name = L["Git"],
-						func = function() E:StaticPopup_Show('ELVUI_EDITBOX', nil, nil, 'https://git.tukui.org/Blinkii/mmediatag') end,
+						func = function()
+							E:StaticPopup_Show("ELVUI_EDITBOX", nil, nil, "https://git.tukui.org/Blinkii/mmediatag")
+						end,
 					},
 					aboutchangelog = {
 						order = 13,
 						type = "execute",
 						name = L["Changelog"],
-						func = function() mMT:Changelog(true) end,
+						func = function()
+							mMT:Changelog(true)
+						end,
 					},
 				},
 			},

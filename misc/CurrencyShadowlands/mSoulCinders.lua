@@ -1,7 +1,7 @@
-local E, L, V, P, G = unpack(ElvUI);
+local E, L, V, P, G = unpack(ElvUI)
 local mPlugin = "mMediaTag"
-local mMT = E:GetModule(mPlugin);
-local DT = E:GetModule("DataTexts");
+local mMT = E:GetModule(mPlugin)
+local DT = E:GetModule("DataTexts")
 local addon, ns = ...
 
 --Lua functions
@@ -33,7 +33,7 @@ local function OnEvent(self, event, ...)
 	if info then
 		local name = ""
 		local CurrencValue = info.quantity
-		
+
 		if E.db[mPlugin].mSoulCinders.hide and CurrencValue == 0 then
 			hideCurrency = true
 		else
@@ -42,13 +42,13 @@ local function OnEvent(self, event, ...)
 
 		if not hideCurrency then
 			if E.db[mPlugin].mSoulCinders.name then
-				if TextJustify == "RIGHT" then 
+				if TextJustify == "RIGHT" then
 					name = " " .. info.name
 				else
 					name = info.name .. " "
 				end
 			end
-			
+
 			if E.db[mPlugin].mSoulCinders.icon then
 				if TextJustify == "RIGHT" then
 					name = format("%s %s", name, mMT:mIcon(info.iconFileID))
@@ -56,7 +56,7 @@ local function OnEvent(self, event, ...)
 					name = format("%s %s", mMT:mIcon(info.iconFileID), name)
 				end
 			end
-			
+
 			if E.db[mPlugin].mSoulCinders.short then
 				CurrencValue = E:ShortValue(info.quantity, 2)
 			end
@@ -72,7 +72,7 @@ local function OnEvent(self, event, ...)
 			elseif E.db[mPlugin].mSoulCinders.style == "white" then
 				CurrencyTextSring = "|CFFFFFFFF%s%s|r"
 			end
-			
+
 			if TextJustify == "RIGHT" then
 				self.text:SetFormattedText(CurrencyTextSring, CurrencValue, name ~= "" and name)
 			else
@@ -82,7 +82,7 @@ local function OnEvent(self, event, ...)
 	else
 		self.text:SetText("|CFFE74C3CERROR!|r")
 	end
-	
+
 	lastPanel = self
 end
 
@@ -91,8 +91,8 @@ local function OnLeave(self)
 end
 
 local function ValueColorUpdate(hex)
-	displayString = strjoin('', '%s', hex, '%s|r')
-	
+	displayString = strjoin("", "%s", hex, "%s|r")
+
 	if lastPanel ~= nil then
 		OnEvent(lastPanel, "ELVUI_COLOR_UPDATE")
 	end
@@ -100,4 +100,15 @@ end
 
 E.valueColorUpdateFuncs[ValueColorUpdate] = true
 
-DT:RegisterDatatext(mTextName, _G.CURRENCY, {'CHAT_MSG_CURRENCY', 'CURRENCY_DISPLAY_UPDATE'}, OnEvent, nil, nil, OnEnter, OnLeave, mText, ValueColorUpdate)
+DT:RegisterDatatext(
+	mTextName,
+	_G.CURRENCY,
+	{ "CHAT_MSG_CURRENCY", "CURRENCY_DISPLAY_UPDATE" },
+	OnEvent,
+	nil,
+	nil,
+	OnEnter,
+	OnLeave,
+	mText,
+	ValueColorUpdate
+)

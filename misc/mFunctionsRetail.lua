@@ -24,19 +24,19 @@ local C_MythicPlus = C_MythicPlus
 local GetDetailedItemLevelInfo = GetDetailedItemLevelInfo
 local C_PlayerInfo_GetPlayerMythicPlusRatingSummary = C_PlayerInfo.GetPlayerMythicPlusRatingSummary
 local C_ChallengeMode_GetOverallDungeonScore = C_ChallengeMode.GetOverallDungeonScore
-local C_ChallengeMode_GetDungeonScoreRarityColor  = C_ChallengeMode.GetDungeonScoreRarityColor
+local C_ChallengeMode_GetDungeonScoreRarityColor = C_ChallengeMode.GetDungeonScoreRarityColor
 
 --Great Vault Functions
 local function mColorGardient(level)
-	local r, g, b = E:ColorGradient(level * 0.04 , 0, .43, .86, .63, .2, .93, .89, .16, .31)
+	local r, g, b = E:ColorGradient(level * 0.04, 0, 0.43, 0.86, 0.63, 0.2, 0.93, 0.89, 0.16, 0.31)
 	return E:RGBToHex(r, g, b)
 end
 
 function mMT:mGetVaultInfo()
-    local vaultinfo = {}
-    local vaultinforaid, vaultinfomplus, vaultinfopvp, vaultinfohighest, ok = {}, {}, {}, nil, nil
+	local vaultinfo = {}
+	local vaultinforaid, vaultinfomplus, vaultinfopvp, vaultinfohighest, ok = {}, {}, {}, nil, nil
 	vaultinfo = C_WeeklyRewards.GetActivities()
-	if not vaultinfo then 
+	if not vaultinfo then
 		return {}, {}, {}, nil, false
 	else
 		local vaultinfohighest, ok = 0, false
@@ -46,7 +46,9 @@ function mMT:mGetVaultInfo()
 			if itemLink then
 				local ItemLevelInfo = GetDetailedItemLevelInfo(itemLink)
 				if ItemLevelInfo then
-					vaultinfohighest = (vaultinfohighest and (vaultinfohighest < ItemLevelInfo) and ItemLevelInfo or vaultinfohighest) or (not vaultinfohighest and ItemLevelInfo)
+					vaultinfohighest = (
+						vaultinfohighest and (vaultinfohighest < ItemLevelInfo) and ItemLevelInfo or vaultinfohighest
+					) or (not vaultinfohighest and ItemLevelInfo)
 					if i < 4 then
 						mInsert(vaultinfomplus, format("%s%s|r", mColorGardient(ItemLevelInfo), ItemLevelInfo))
 					elseif i < 7 then
@@ -64,13 +66,18 @@ function mMT:mGetVaultInfo()
 end
 
 function mMT:MythPlusDifficultyShort()
-	local name, instanceType, instanceDifficultyID, difficultyName, maxPlayers, dynamicDifficulty, isDynamicInstance = GetInstanceInfo()
+	local name, instanceType, instanceDifficultyID, difficultyName, maxPlayers, dynamicDifficulty, isDynamicInstance =
+		GetInstanceInfo()
 	local nhc, hc, myth, mythp, other, titel = mMT:mColorDatatext()
-	
+
 	if instanceDifficultyID == 8 then
 		local keyStoneLevel, _ = C_ChallengeMode.GetActiveKeystoneInfo()
-		local r, g, b = E:ColorGradient(keyStoneLevel * 0.06 , .1, 1, .1, 1, 1, .1, 1, .1, .1)
-		if keyStoneLevel ~= nil and C_MythicPlus.IsMythicPlusActive() and (C_ChallengeMode.GetActiveChallengeMapID() ~= nil) then
+		local r, g, b = E:ColorGradient(keyStoneLevel * 0.06, 0.1, 1, 0.1, 1, 1, 0.1, 1, 0.1, 0.1)
+		if
+			keyStoneLevel ~= nil
+			and C_MythicPlus.IsMythicPlusActive()
+			and (C_ChallengeMode.GetActiveChallengeMapID() ~= nil)
+		then
 			return format("%s%s|r", E:RGBToHex(r, g, b), keyStoneLevel)
 		else
 			return format("%s%s|r", mythp, L["M+"])
@@ -84,18 +91,22 @@ end
 function mMT:OwenKeystone()
 	local OwenKeystoneText = {}
 	local keyStoneLevel, keyStoneLevelMax = C_MythicPlus.GetOwnedKeystoneLevel(), 20
-	
+
 	if keyStoneLevel then
 		local challengeMapID = C_MythicPlus.GetOwnedKeystoneChallengeMapID()
 		local name, id, timeLimit, texture, backgroundTexture = C_ChallengeMode.GetMapUIInfo(challengeMapID)
-		local r, g, b = E:ColorGradient(keyStoneLevel * 0.06 , .1, 1, .1, 1, 1, .1, 1, .1, .1) 
+		local r, g, b = E:ColorGradient(keyStoneLevel * 0.06, 0.1, 1, 0.1, 1, 1, 0.1, 1, 0.1, 0.1)
 		local nhc, hc, myth, _, other, titel = mMT:mColorDatatext()
-		
+
 		mInsert(OwenKeystoneText, 1, format("%s%s|r", titel, L["Mythic Plus Keystone"]))
-		mInsert(OwenKeystoneText, 2, format("%s%s: |r %s%s|r%s +%s|r", other, L["Keystone"], myth, name, E:RGBToHex(r, g, b), keyStoneLevel))
-		
+		mInsert(
+			OwenKeystoneText,
+			2,
+			format("%s%s: |r %s%s|r%s +%s|r", other, L["Keystone"], myth, name, E:RGBToHex(r, g, b), keyStoneLevel)
+		)
+
 		--if E.db[mPlugin].mLogKeystone then
-		--	--E.db[mPlugin].mKeystoneDB = 
+		--	--E.db[mPlugin].mKeystoneDB =
 		--	mInsert(E.db[mPlugin].mKeystoneDB, "name", "key")
 		--end
 
@@ -109,20 +120,23 @@ function mMT:WeeklyAffixes()
 	local _, _, _, _, other, titel = mMT:mColorDatatext()
 	local AffixText = nil
 	local savedYear = E.db[mPlugin].mSavedAffixes.year
-	
+
 	affixes = C_MythicPlus.GetCurrentAffixes()
 
-	if (date("%u") == "2") or (date("%u") == "3" or date("%y") ~= savedYear) and not E.db[mPlugin].mSavedAffixes.reset then
+	if
+		(date("%u") == "2")
+		or (date("%u") == "3" or date("%y") ~= savedYear) and not E.db[mPlugin].mSavedAffixes.reset
+	then
 		E.db[mPlugin].mSavedAffixes.affixes = nil
 		E.db[mPlugin].mSavedAffixes.reset = true
 		E.db[mPlugin].mSavedAffixes.year = date("%y")
 	elseif (date("%u") ~= "2") and (date("%u") ~= "3") then
 		E.db[mPlugin].mSavedAffixes.reset = false
 	end
-	
+
 	if not affixes and (date("%u") ~= "2") and (date("%u") ~= "3") then
 		affixes = E.db[mPlugin].mSavedAffixes.affixes
-		if (affixes) == nil then
+		if affixes == nil then
 			affixes = C_MythicPlus.GetCurrentAffixes()
 			if affixes ~= nil then
 				E.db[mPlugin].mSavedAffixes.affixes = affixes
@@ -133,8 +147,8 @@ function mMT:WeeklyAffixes()
 		E.db[mPlugin].mSavedAffixes.affixes = affixes
 		E.db[mPlugin].mSavedAffixes.year = date("%y")
 	end
-	
-	if (affixes) then
+
+	if affixes then
 		for i, affix in ipairs(affixes) do
 			local name, _, _ = C_ChallengeMode.GetAffixInfo(affix.id)
 			if AffixText == nil then
@@ -145,30 +159,43 @@ function mMT:WeeklyAffixes()
 		end
 	else
 		affixes = C_MythicPlus.GetCurrentAffixes()
-		if not (affixes) == nil then
+		if not affixes == nil then
 			E.db[mPlugin].mSavedAffixes.affixes = affixes
 		end
 	end
-	
+
 	if AffixText ~= nil then
 		local seasonID = C_MythicPlus.GetCurrentSeason()
 		if seasonID <= 0 then
 			seasonID = E.db[mPlugin].mSavedAffixes.season
 		end
-		
+
 		if seasonID >= 1 then
 			E.db[mPlugin].mSavedAffixes.season = seasonID
-			
+
 			mInsert(WeeklyAffixesText, 1, format("%s%s|r", titel, L["This Week Affix"]))
 			mInsert(WeeklyAffixesText, 2, format("%s%s|r", other, AffixText))
-			
+
 			return WeeklyAffixesText
 		else
-			mInsert(WeeklyAffixesText, 3, format("%s%s|n%s|r", ns.mColor5, L["Saisson has not started yet."], L["%sERROR! Please open the Mythic+ window, LFG Tool or Reload UI!|r"]))
+			mInsert(
+				WeeklyAffixesText,
+				3,
+				format(
+					"%s%s|n%s|r",
+					ns.mColor5,
+					L["Saisson has not started yet."],
+					L["%sERROR! Please open the Mythic+ window, LFG Tool or Reload UI!|r"]
+				)
+			)
 			return WeeklyAffixesText
 		end
 	else
-		mInsert(WeeklyAffixesText, 3, format(L["%sERROR! Please open the Mythic+ window, LFG Tool or Reload UI!|r"], ns.mColor5))
+		mInsert(
+			WeeklyAffixesText,
+			3,
+			format(L["%sERROR! Please open the Mythic+ window, LFG Tool or Reload UI!|r"], ns.mColor5)
+		)
 		return WeeklyAffixesText
 	end
 end
@@ -177,20 +204,25 @@ end
 function mMT:MythicPlusDungeon()
 	local MythicPlusDungeonText = {}
 	local keyStoneLevel, _ = C_ChallengeMode.GetActiveKeystoneInfo()
-	local name, instanceType, instanceDifficultyID, difficultyName, maxPlayers, dynamicDifficulty, isDynamicInstance = GetInstanceInfo()
+	local name, instanceType, instanceDifficultyID, difficultyName, maxPlayers, dynamicDifficulty, isDynamicInstance =
+		GetInstanceInfo()
 	local nhc, hc, myth, mythp, other, titel, tip = mMT:mColorDatatext()
-	local r, g, b = E:ColorGradient(keyStoneLevel * 0.06 , .1, 1, .1, 1, 1, .1, 1, .1, .1)
-	
+	local r, g, b = E:ColorGradient(keyStoneLevel * 0.06, 0.1, 1, 0.1, 1, 1, 0.1, 1, 0.1, 0.1)
+
 	mInsert(MythicPlusDungeonText, 1, format("%s%s|r", titel, L["Mythic Plus"]))
-	mInsert(MythicPlusDungeonText, 2, format("%s%s: |r %s%s|r%s +%s|r", other, L["Keystone"], myth, name, E:RGBToHex(r, g, b), keyStoneLevel))
-	
+	mInsert(
+		MythicPlusDungeonText,
+		2,
+		format("%s%s: |r %s%s|r%s +%s|r", other, L["Keystone"], myth, name, E:RGBToHex(r, g, b), keyStoneLevel)
+	)
+
 	return MythicPlusDungeonText
 end
 
 function mMT:GetDungeonScore()
 	local data = C_PlayerInfo_GetPlayerMythicPlusRatingSummary("PLAYER")
 	local seasonScore = data and data.currentSeasonScore
-	local color = C_ChallengeMode_GetDungeonScoreRarityColor(seasonScore) 
+	local color = C_ChallengeMode_GetDungeonScoreRarityColor(seasonScore)
 	local colorString = E:RGBToHex(color.r, color.g, color.b)
 	return colorString .. seasonScore .. "|r"
 end

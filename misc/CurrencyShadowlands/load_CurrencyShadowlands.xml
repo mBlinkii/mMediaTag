@@ -1,5 +1,5 @@
 <Ui xmlns="http://www.blizzard.com/wow/ui/">
-	<Script file="mOptionsCurrencys.lua"/>	
+	<Script file="mOptionsCurrencys.lua"/>
 	<Script file="mAnima.lua"/>
 	<Script file="mGratefulOffering.lua"/>
 	<Script file="mInfusedRuby.lua"/>

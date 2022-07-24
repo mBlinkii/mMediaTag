@@ -21,5 +21,11 @@
         "AchievementFrame",
         "ToggleAchievementFrame",
         "BACKPACK_CONTAINER"
+    ],
+    "Lua.diagnostics.disable": [
+        "redundant-parameter",
+        "unbalanced-assignments",
+        "undefined-field",
+        "unused-local"
     ]
 }

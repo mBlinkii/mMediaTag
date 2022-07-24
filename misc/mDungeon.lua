@@ -24,7 +24,7 @@ local function mSetup(self)
 		DT.tooltip:AddLine(mInctanceInfo[2] or "-")
 		DT.tooltip:AddLine(mInctanceInfo[3] or "-")
 	end
-	
+
 	local inInstance, _ = IsInInstance()
 	if inInstance then
 		local infoinInstance = mMT:DungeonInfo()
@@ -33,7 +33,7 @@ local function mSetup(self)
 		DT.tooltip:AddLine(infoinInstance[2] or "-")
 		DT.tooltip:AddLine(infoinInstance[3] or "-")
 	end
-	
+
 	if C_MythicPlus.IsMythicPlusActive() and (C_ChallengeMode.GetActiveChallengeMapID() ~= nil) then
 		local infoMythicPlus = mMT:MythicPlusDungeon()
 		DT.tooltip:AddLine(" ")
@@ -47,15 +47,14 @@ local function mSetup(self)
 			DT.tooltip:AddLine(" ")
 			DT.tooltip:AddLine(key[1] or "-")
 			DT.tooltip:AddLine(key[2] or "-")
-		end 
-		
+		end
 	end
 
 	if E.db[mPlugin].Dungeon.score then
 		DT.tooltip:AddLine(" ")
 		DT.tooltip:AddDoubleLine(DUNGEON_SCORE, mMT:GetDungeonScore())
 	end
-	
+
 	if E.db[mPlugin].DAffix then
 		local mAffixes = mMT:WeeklyAffixes()
 		if mAffixes then
@@ -82,11 +81,15 @@ end
 
 local function OnEvent(self, event, unit)
 	local TextString = mText
-	if E.db[mPlugin].Dungeon.showicon then 
-		TextString = format("|T%s:16:16:0:0:128:128|t %s", "Interface\\AddOns\\ElvUI_mMediaTag\\media\\icons\\dungeon.tga", mText)
+	if E.db[mPlugin].Dungeon.showicon then
+		TextString = format(
+			"|T%s:16:16:0:0:128:128|t %s",
+			"Interface\\AddOns\\ElvUI_mMediaTag\\media\\icons\\dungeon.tga",
+			mText
+		)
 	end
 
-	if E.db[mPlugin].DInstancInfoName then 
+	if E.db[mPlugin].DInstancInfoName then
 		local inInstance, _ = IsInInstance()
 		if inInstance then
 			if C_MythicPlus.IsMythicPlusActive() and (C_ChallengeMode.GetActiveChallengeMapID() ~= nil) then
@@ -106,4 +109,16 @@ local function OnLeave(self)
 	DT.tooltip:Hide()
 end
 
-DT:RegisterDatatext("mDungeon", "mMediaTag", {"CHALLENGE_MODE_START", "CHALLENGE_MODE_COMPLETED", "PLAYER_ENTERING_WORLD", "UPDATE_INSTANCE_INFO"}, OnEvent, nil, OnClick, OnEnter, OnLeave, mText, nil, nil)
+DT:RegisterDatatext(
+	"mDungeon",
+	"mMediaTag",
+	{ "CHALLENGE_MODE_START", "CHALLENGE_MODE_COMPLETED", "PLAYER_ENTERING_WORLD", "UPDATE_INSTANCE_INFO" },
+	OnEvent,
+	nil,
+	OnClick,
+	OnEnter,
+	OnLeave,
+	mText,
+	nil,
+	nil
+)

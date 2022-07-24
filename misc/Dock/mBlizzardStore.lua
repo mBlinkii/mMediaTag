@@ -1,7 +1,7 @@
-local E, L, V, P, G = unpack(ElvUI);
+local E, L, V, P, G = unpack(ElvUI)
 local mPlugin = "mMediaTag"
-local mMT = E:GetModule(mPlugin);
-local DT = E:GetModule("DataTexts");
+local mMT = E:GetModule(mPlugin)
+local DT = E:GetModule("DataTexts")
 local addon, ns = ...
 
 --Lua functions
@@ -12,7 +12,7 @@ local mText = format("Dock %s", BLIZZARD_STORE)
 local mTextName = "mBlizzardStore"
 
 local function mDockCheckFrame()
-	return ( StoreFrame and StoreFrame_IsShown() )
+	return (StoreFrame and StoreFrame_IsShown())
 end
 
 function mMT:CheckFrameBlizzardStore(self)
@@ -23,7 +23,7 @@ end
 local function OnEnter(self)
 	self.mIcon.isClicked = mDockCheckFrame()
 	mMT:mOnEnter(self, "CheckFrameBlizzardStore")
-	
+
 	if E.db[mPlugin].mDock.tip.enable then
 		DT.tooltip:AddLine(BLIZZARD_STORE)
 		DT.tooltip:Show()

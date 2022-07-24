@@ -1,7 +1,7 @@
-local E, L, V, P, G = unpack(ElvUI);
+local E, L, V, P, G = unpack(ElvUI)
 local mPlugin = "mMediaTag"
-local mMT = E:GetModule(mPlugin);
-local DT = E:GetModule("DataTexts");
+local mMT = E:GetModule(mPlugin)
+local DT = E:GetModule("DataTexts")
 local addon, ns = ...
 
 --Lua functions
@@ -13,38 +13,38 @@ local IsInInstance = IsInInstance
 --Variables
 local mText = format("Dock %s", DUNGEONS_BUTTON)
 local mTextName = "mLFDTool"
-local mInctanceInfoText, keyText, mAffixesText, vaultinforaidText, vaultinfomplusText, vaultinfopvpText = {}, {}, {}, {}, {}, {}
-local TANK_ICON = E:TextureString(E.Media.Textures.Tank, ':14:14')
-local HEALER_ICON = E:TextureString(E.Media.Textures.Healer, ':14:14')
-local DPS_ICON = E:TextureString(E.Media.Textures.DPS, ':14:14')
+local mInctanceInfoText, keyText, mAffixesText, vaultinforaidText, vaultinfomplusText, vaultinfopvpText =
+	{}, {}, {}, {}, {}, {}
+local TANK_ICON = E:TextureString(E.Media.Textures.Tank, ":14:14")
+local HEALER_ICON = E:TextureString(E.Media.Textures.Healer, ":14:14")
+local DPS_ICON = E:TextureString(E.Media.Textures.DPS, ":14:14")
 local lastPanel = nil
 
 local function MakeIconString(tank, healer, damage)
 	if E.db[mPlugin].mRoleSymbols.enable then
 		local path = "Interface\\AddOns\\ElvUI_mMediaTag\\media\\icons\\%s.tga"
-		TANK_ICON = E:TextureString(format(path, E.db[mPlugin].mRoleSymbols.tank), ':14:14')
-		HEALER_ICON = E:TextureString(format(path, E.db[mPlugin].mRoleSymbols.heal), ':14:14')
-		DPS_ICON = E:TextureString(format(path, E.db[mPlugin].mRoleSymbols.dd), ':14:14')
+		TANK_ICON = E:TextureString(format(path, E.db[mPlugin].mRoleSymbols.tank), ":14:14")
+		HEALER_ICON = E:TextureString(format(path, E.db[mPlugin].mRoleSymbols.heal), ":14:14")
+		DPS_ICON = E:TextureString(format(path, E.db[mPlugin].mRoleSymbols.dd), ":14:14")
 	end
 
-	local str = ''
+	local str = ""
 	if tank then
-		str = str..TANK_ICON
+		str = str .. TANK_ICON
 	end
 	if healer then
-		str = str..HEALER_ICON
+		str = str .. HEALER_ICON
 	end
 	if damage then
-		str = str..DPS_ICON
+		str = str .. DPS_ICON
 	end
 
 	return str
 end
 
-
 local function mLFDTooltip()
 	local _, hc, myth, mythp, other, titel, tip = mMT:mColorDatatext()
-	
+
 	mInctanceInfoText = mMT:InctanceInfo()
 	if mInctanceInfoText then
 		DT.tooltip:AddLine(" ")
@@ -52,22 +52,21 @@ local function mLFDTooltip()
 		DT.tooltip:AddLine(mInctanceInfoText[2])
 		DT.tooltip:AddLine(mInctanceInfoText[3])
 	end
-	
+
 	if E.db[mPlugin].mDock.lfd.keystone then
 		keyText = mMT:OwenKeystone()
 		if keyText then
 			DT.tooltip:AddLine(" ")
 			DT.tooltip:AddLine(keyText[1])
 			DT.tooltip:AddLine(keyText[2])
-		end 
-		
+		end
 	end
 
 	if E.db[mPlugin].mDock.lfd.score then
 		DT.tooltip:AddLine(" ")
 		DT.tooltip:AddDoubleLine(DUNGEON_SCORE, mMT:GetDungeonScore())
 	end
-	
+
 	if E.db[mPlugin].mDock.lfd.affix then
 		mAffixesText = mMT:WeeklyAffixes()
 		if mAffixesText then
@@ -80,36 +79,60 @@ local function mLFDTooltip()
 			end
 		end
 	end
-	
+
 	if E.db[mPlugin].mDock.lfd.greatvault then
 		local vaultinfohighest, ok = 0, false
 		vaultinforaidText, vaultinfomplusText, vaultinfopvpText, vaultinfohighest, ok = mMT:mGetVaultInfo()
 		if ok then
 			DT.tooltip:AddLine(" ")
 			DT.tooltip:AddLine(format("%s%s|r", titel, GREAT_VAULT_REWARDS))
-			
+
 			if vaultinfohighest then
 				DT.tooltip:AddDoubleLine(format(L["%sActual reward:|r"], other), vaultinfohighest or "-")
 			end
-			
+
 			if vaultinforaidText[1] then
-				DT.tooltip:AddDoubleLine(format("%sRaid|r", myth), format("%s, %s, %s", vaultinforaidText[1] or "-", vaultinforaidText[2] or "-", vaultinforaidText[3] or "-"))
+				DT.tooltip:AddDoubleLine(
+					format("%sRaid|r", myth),
+					format(
+						"%s, %s, %s",
+						vaultinforaidText[1] or "-",
+						vaultinforaidText[2] or "-",
+						vaultinforaidText[3] or "-"
+					)
+				)
 			end
-			
+
 			if vaultinfomplusText[1] then
-				DT.tooltip:AddDoubleLine(format("%sMyth+|r", mythp), format("%s, %s, %s", vaultinfomplusText[1] or "-", vaultinfomplusText[2] or "-", vaultinfomplusText[3] or "-"))
+				DT.tooltip:AddDoubleLine(
+					format("%sMyth+|r", mythp),
+					format(
+						"%s, %s, %s",
+						vaultinfomplusText[1] or "-",
+						vaultinfomplusText[2] or "-",
+						vaultinfomplusText[3] or "-"
+					)
+				)
 			end
-			
+
 			if vaultinfopvpText[1] then
-				DT.tooltip:AddDoubleLine(format("%sPvP|r", hc), format("%s, %s, %s", vaultinfopvpText[1] or "-", vaultinfopvpText[2] or "-", vaultinfopvpText[3] or "-"))
-			end 
+				DT.tooltip:AddDoubleLine(
+					format("%sPvP|r", hc),
+					format(
+						"%s, %s, %s",
+						vaultinfopvpText[1] or "-",
+						vaultinfopvpText[2] or "-",
+						vaultinfopvpText[3] or "-"
+					)
+				)
+			end
 		end
 		if C_WeeklyRewards.HasAvailableRewards() then
 			DT.tooltip:AddLine(" ")
 			DT.tooltip:AddLine(format("%s%s|r", titel, GREAT_VAULT_REWARDS_WAITING))
 		end
 	end
-	
+
 	DT.tooltip:AddLine(" ")
 	DT.tooltip:AddLine(format("%s %s%s|r", ns.LeftButtonIcon, tip, L["left click to open LFD Window"]))
 	if E.db[mPlugin].mDock.lfd.greatvault then
@@ -118,7 +141,7 @@ local function mLFDTooltip()
 end
 
 local function mDockCheckFrame()
-	return ( PVEFrame and PVEFrame:IsShown() )
+	return (PVEFrame and PVEFrame:IsShown())
 end
 
 function mMT:CheckFrameLFDTool(self)
@@ -164,9 +187,18 @@ local function OnEvent(self, event)
 			local id = GetLFGRandomDungeonInfo(i)
 			for x = 1, LFG_ROLE_NUM_SHORTAGE_TYPES do
 				local eligible, forTank, forHealer, forDamage, itemCount = GetLFGRoleShortageRewards(id, x)
-				if eligible and forTank and itemCount > 0 then tankReward = true; unavailable = false end
-				if eligible and forHealer and itemCount > 0 then healerReward = true; unavailable = false end
-				if eligible and forDamage and itemCount > 0 then dpsReward = true; unavailable = false end
+				if eligible and forTank and itemCount > 0 then
+					tankReward = true
+					unavailable = false
+				end
+				if eligible and forHealer and itemCount > 0 then
+					healerReward = true
+					unavailable = false
+				end
+				if eligible and forDamage and itemCount > 0 then
+					dpsReward = true
+					unavailable = false
+				end
 			end
 		end
 
@@ -175,9 +207,18 @@ local function OnEvent(self, event)
 			local id = GetRFDungeonInfo(i)
 			for x = 1, LFG_ROLE_NUM_SHORTAGE_TYPES do
 				local eligible, forTank, forHealer, forDamage, itemCount = GetLFGRoleShortageRewards(id, x)
-				if eligible and forTank and itemCount > 0 then tankReward = true; unavailable = false end
-				if eligible and forHealer and itemCount > 0 then healerReward = true; unavailable = false end
-				if eligible and forDamage and itemCount > 0 then dpsReward = true; unavailable = false end
+				if eligible and forTank and itemCount > 0 then
+					tankReward = true
+					unavailable = false
+				end
+				if eligible and forHealer and itemCount > 0 then
+					healerReward = true
+					unavailable = false
+				end
+				if eligible and forDamage and itemCount > 0 then
+					dpsReward = true
+					unavailable = false
+				end
 			end
 		end
 
@@ -190,7 +231,11 @@ local function OnEvent(self, event)
 
 	mMT:DockInitialisation(self)
 
-	mMT:ShowHideNotification(self, (E.db[mPlugin].mDock.lfd.greatvault and C_WeeklyRewards.HasAvailableRewards()), "LFDToolGreatVault")
+	mMT:ShowHideNotification(
+		self,
+		(E.db[mPlugin].mDock.lfd.greatvault and C_WeeklyRewards.HasAvailableRewards()),
+		"LFDToolGreatVault"
+	)
 
 	local inInstance, _ = IsInInstance()
 	local isGroup = IsInGroup()
@@ -242,4 +287,22 @@ local function OnClick(self, button)
 	end
 end
 
-DT:RegisterDatatext(mTextName, "mDock", {"LFG_UPDATE_RANDOM_INFO", "CHALLENGE_MODE_START", "CHALLENGE_MODE_COMPLETED", "PLAYER_ENTERING_WORLD", "UPDATE_INSTANCE_INFO"}, OnEvent, nil, OnClick, OnEnter, OnLeave, mText, nil, nil)
+DT:RegisterDatatext(
+	mTextName,
+	"mDock",
+	{
+		"LFG_UPDATE_RANDOM_INFO",
+		"CHALLENGE_MODE_START",
+		"CHALLENGE_MODE_COMPLETED",
+		"PLAYER_ENTERING_WORLD",
+		"UPDATE_INSTANCE_INFO",
+	},
+	OnEvent,
+	nil,
+	OnClick,
+	OnEnter,
+	OnLeave,
+	mText,
+	nil,
+	nil
+)

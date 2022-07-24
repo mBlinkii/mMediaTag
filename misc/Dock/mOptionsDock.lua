@@ -1,7 +1,7 @@
-local E, L, V, P, G = unpack(ElvUI);
+local E, L, V, P, G = unpack(ElvUI)
 local mPlugin = "mMediaTag"
-local mMT = E:GetModule(mPlugin);
-local DT = E:GetModule("DataTexts");
+local mMT = E:GetModule(mPlugin)
+local DT = E:GetModule("DataTexts")
 local addon, ns = ...
 
 --Lua functions
@@ -17,14 +17,14 @@ local LSM = LibStub("LibSharedMedia-3.0")
 local TextureList, mIconsList = nil, nil
 local mFontFlags = {
 	NONE = L["NONE"],
-	OUTLINE = 'Outline',
-	THICKOUTLINE = 'Thick',
-	MONOCHROME = '|cffaaaaaaMono|r',
-	MONOCHROMEOUTLINE = '|cffaaaaaaMono|r Outline',
-	MONOCHROMETHICKOUTLINE = '|cffaaaaaaMono|r Thick',
+	OUTLINE = "Outline",
+	THICKOUTLINE = "Thick",
+	MONOCHROME = "|cffaaaaaaMono|r",
+	MONOCHROMEOUTLINE = "|cffaaaaaaMono|r Outline",
+	MONOCHROMETHICKOUTLINE = "|cffaaaaaaMono|r Thick",
 }
-local ExampleDockSettings = {top = false,}
-local mGuild =  L["Guild"]
+local ExampleDockSettings = { top = false }
+local mGuild = L["Guild"]
 
 if MediaTagGameVersion.retail then
 	mGuild = GUILD_AND_COMMUNITIES
@@ -32,12 +32,12 @@ end
 
 local function mTextureList()
 	if not TextureList then
-        local tmpTexture = {}
-        for i in pairs(mIconsList) do
-            tmpTexture[i] = mIconsList[i].icon
-        end
-        TextureList = tmpTexture
-    end
+		local tmpTexture = {}
+		for i in pairs(mIconsList) do
+			tmpTexture[i] = mIconsList[i].icon
+		end
+		TextureList = tmpTexture
+	end
 	return TextureList
 end
 
@@ -47,87 +47,88 @@ end
 
 local function SetupDockIconList()
 	if not mIconsList then
-        local tmpIcon = {}
+		local tmpIcon = {}
 		local tIndex = 1
 
 		-- Collection
-        for i=1, 19, 1 do
-            local path = format("Interface\\AddOns\\ElvUI_mMediaTag\\media\\dock\\collection\\collection%s.tga", i)
-            tmpIcon["Collection" .. i] = {["file"] = path, ["icon"] = mTGAtoIcon(path, "Collection", i)}
-        end
+		for i = 1, 19, 1 do
+			local path = format("Interface\\AddOns\\ElvUI_mMediaTag\\media\\dock\\collection\\collection%s.tga", i)
+			tmpIcon["Collection" .. i] = { ["file"] = path, ["icon"] = mTGAtoIcon(path, "Collection", i) }
+		end
 
 		-- Other
-        for i=1, 34, 1 do
-            local path = format("Interface\\AddOns\\ElvUI_mMediaTag\\media\\dock\\other\\other%s.tga", i)
-            tmpIcon["Other" .. i] = {["file"] = path, ["icon"] = mTGAtoIcon(path, "Other", i)}
-        end
+		for i = 1, 34, 1 do
+			local path = format("Interface\\AddOns\\ElvUI_mMediaTag\\media\\dock\\other\\other%s.tga", i)
+			tmpIcon["Other" .. i] = { ["file"] = path, ["icon"] = mTGAtoIcon(path, "Other", i) }
+		end
 
 		-- Quest
-        for i=1, 19, 1 do
-            local path = format("Interface\\AddOns\\ElvUI_mMediaTag\\media\\dock\\quest\\quest%s.tga", i)
-            tmpIcon["Quest" .. i] = {["file"] = path, ["icon"] = mTGAtoIcon(path, "Quest", i)}
-        end
+		for i = 1, 19, 1 do
+			local path = format("Interface\\AddOns\\ElvUI_mMediaTag\\media\\dock\\quest\\quest%s.tga", i)
+			tmpIcon["Quest" .. i] = { ["file"] = path, ["icon"] = mTGAtoIcon(path, "Quest", i) }
+		end
 
 		-- Shop
-        for i=1, 7, 1 do
-            local path = format("Interface\\AddOns\\ElvUI_mMediaTag\\media\\dock\\shop\\shop%s.tga", i)
-            tmpIcon["Shop" .. i] = {["file"] = path, ["icon"] = mTGAtoIcon(path, "Shop", i)}
-        end
+		for i = 1, 7, 1 do
+			local path = format("Interface\\AddOns\\ElvUI_mMediaTag\\media\\dock\\shop\\shop%s.tga", i)
+			tmpIcon["Shop" .. i] = { ["file"] = path, ["icon"] = mTGAtoIcon(path, "Shop", i) }
+		end
 
 		-- Social
-        for i=1, 19, 1 do
-            local path = format("Interface\\AddOns\\ElvUI_mMediaTag\\media\\dock\\social\\social%s.tga", i)
-            tmpIcon["Social" .. i] = {["file"] = path, ["icon"] = mTGAtoIcon(path, "Social", i)}
-        end
+		for i = 1, 19, 1 do
+			local path = format("Interface\\AddOns\\ElvUI_mMediaTag\\media\\dock\\social\\social%s.tga", i)
+			tmpIcon["Social" .. i] = { ["file"] = path, ["icon"] = mTGAtoIcon(path, "Social", i) }
+		end
 
 		-- FPS
-        for i=1, 3, 1 do
-            local path = format("Interface\\AddOns\\ElvUI_mMediaTag\\media\\dock\\system\\fps%s.tga", i)
-            tmpIcon["FPS" .. i] = {["file"] = path, ["icon"] = mTGAtoIcon(path, "FPS", i)}
-        end
+		for i = 1, 3, 1 do
+			local path = format("Interface\\AddOns\\ElvUI_mMediaTag\\media\\dock\\system\\fps%s.tga", i)
+			tmpIcon["FPS" .. i] = { ["file"] = path, ["icon"] = mTGAtoIcon(path, "FPS", i) }
+		end
 
 		-- MS
-        for i=1, 3, 1 do
-            local path = format("Interface\\AddOns\\ElvUI_mMediaTag\\media\\dock\\system\\ms%s.tga", i)
-            tmpIcon["MS" .. i] = {["file"] = path, ["icon"] = mTGAtoIcon(path, "MS", i)}
-
-        end
+		for i = 1, 3, 1 do
+			local path = format("Interface\\AddOns\\ElvUI_mMediaTag\\media\\dock\\system\\ms%s.tga", i)
+			tmpIcon["MS" .. i] = { ["file"] = path, ["icon"] = mTGAtoIcon(path, "MS", i) }
+		end
 
 		-- System
-        for i=1, 45, 1 do
-            local path = format("Interface\\AddOns\\ElvUI_mMediaTag\\media\\dock\\system\\system%s.tga", i)
-            tmpIcon["System" .. i] = {["file"] = path, ["icon"] = mTGAtoIcon(path, "System", i)}
-        end
+		for i = 1, 45, 1 do
+			local path = format("Interface\\AddOns\\ElvUI_mMediaTag\\media\\dock\\system\\system%s.tga", i)
+			tmpIcon["System" .. i] = { ["file"] = path, ["icon"] = mTGAtoIcon(path, "System", i) }
+		end
 
 		-- Toy
-        for i=1, 25, 1 do
-            local path = format("Interface\\AddOns\\ElvUI_mMediaTag\\media\\dock\\toy\\toy%s.tga", i)
-            tmpIcon["Toy" .. i] = {["file"] = path, ["icon"] = mTGAtoIcon(path, "Toy", i)}
-        end
-		
-        mIconsList = tmpIcon
-    end
+		for i = 1, 25, 1 do
+			local path = format("Interface\\AddOns\\ElvUI_mMediaTag\\media\\dock\\toy\\toy%s.tga", i)
+			tmpIcon["Toy" .. i] = { ["file"] = path, ["icon"] = mTGAtoIcon(path, "Toy", i) }
+		end
+
+		mIconsList = tmpIcon
+	end
 end
 
 local function OptionsDock()
 	SetupDockIconList()
-	
+
 	E.Options.args.mMediaTag.args.mdock.args = {
 		dockgeneral = {
 			order = 10,
 			type = "group",
-			name = L['General'],
+			name = L["General"],
 			args = {
-				headerdockgeneralcolor= {
+				headerdockgeneralcolor = {
 					order = 0,
 					type = "header",
 					name = L["Color"],
 				},
 				docknormalstyle = {
 					order = 10,
-					type = 'select',
+					type = "select",
 					name = L["Normal Color Style"],
-					get = function(info) return E.db[mPlugin].mDock.normal.style end,
+					get = function(info)
+						return E.db[mPlugin].mDock.normal.style
+					end,
 					set = function(info, value)
 						E.db[mPlugin].mDock.normal.style = value
 						DT:LoadDataTexts()
@@ -138,7 +139,7 @@ local function OptionsDock()
 					},
 				},
 				docknormalcolor = {
-					type = 'color',
+					type = "color",
 					order = 11,
 					name = L["Custom Icon Color"],
 					hasAlpha = true,
@@ -159,9 +160,11 @@ local function OptionsDock()
 				},
 				dockhoverstyle = {
 					order = 20,
-					type = 'select',
+					type = "select",
 					name = L["Hover Color Style"],
-					get = function(info) return E.db[mPlugin].mDock.hover.style end,
+					get = function(info)
+						return E.db[mPlugin].mDock.hover.style
+					end,
 					set = function(info, value)
 						E.db[mPlugin].mDock.hover.style = value
 						DT:LoadDataTexts()
@@ -172,7 +175,7 @@ local function OptionsDock()
 					},
 				},
 				dockhovercolor = {
-					type = 'color',
+					type = "color",
 					order = 21,
 					name = L["Custom hover Color"],
 					hasAlpha = true,
@@ -193,9 +196,11 @@ local function OptionsDock()
 				},
 				dockclickstyle = {
 					order = 30,
-					type = 'select',
+					type = "select",
 					name = L["Click Color Style"],
-					get = function(info) return E.db[mPlugin].mDock.click.style end,
+					get = function(info)
+						return E.db[mPlugin].mDock.click.style
+					end,
 					set = function(info, value)
 						E.db[mPlugin].mDock.click.style = value
 						DT:LoadDataTexts()
@@ -206,7 +211,7 @@ local function OptionsDock()
 					},
 				},
 				dockclickcolor = {
-					type = 'color',
+					type = "color",
 					order = 31,
 					name = L["Custom click Color"],
 					hasAlpha = true,
@@ -227,9 +232,11 @@ local function OptionsDock()
 				},
 				docknotificationstyle = {
 					order = 40,
-					type = 'select',
+					type = "select",
 					name = L["Nottification Color Style"],
-					get = function(info) return E.db[mPlugin].mDock.nottification.style end,
+					get = function(info)
+						return E.db[mPlugin].mDock.nottification.style
+					end,
 					set = function(info, value)
 						E.db[mPlugin].mDock.nottification.style = value
 						DT:LoadDataTexts()
@@ -240,7 +247,7 @@ local function OptionsDock()
 					},
 				},
 				docknotificationcolor = {
-					type = 'color',
+					type = "color",
 					order = 42,
 					name = L["Custom nottification Color"],
 					hasAlpha = true,
@@ -254,84 +261,126 @@ local function OptionsDock()
 						DT:LoadDataTexts()
 					end,
 				},
-				headerdockgeneralsettings= {
+				headerdockgeneralsettings = {
 					order = 50,
 					type = "header",
 					name = L["Settings"],
 				},
-				
+
 				dockgeneraltip = {
 					order = 56,
-					type = 'toggle',
+					type = "toggle",
 					name = L["Tooltip"],
-					get = function(info) return E.db[mPlugin].mDock.tip.enable end,
+					get = function(info)
+						return E.db[mPlugin].mDock.tip.enable
+					end,
 					set = function(info, value)
 						E.db[mPlugin].mDock.tip.enable = value
 					end,
 				},
 				dockgeneralautogrow = {
 					order = 57,
-					type = 'toggle',
+					type = "toggle",
 					name = L["Auto Hover growsize"],
-					get = function(info) return E.db[mPlugin].mDock.autogrow end,
+					get = function(info)
+						return E.db[mPlugin].mDock.autogrow
+					end,
 					set = function(info, value)
-						E.db[mPlugin].mDock.autogrow = value; DT:LoadDataTexts(); end,
+						E.db[mPlugin].mDock.autogrow = value
+						DT:LoadDataTexts()
+					end,
 				},
 				dockgeneralgrowsize = {
 					order = 58,
 					name = L["Hover growsize"],
-					type = 'range',
-					min = 2, max = 128, step = 2,
-					softMin = 2, softMax = 128,
-					get = function(info) return E.db[mPlugin].mDock.growsize end,
-					set = function(info, value) E.db[mPlugin].mDock.growsize = value; DT:LoadDataTexts();  end,
-					disabled = function() return E.db[mPlugin].mDock.autogrow end,
+					type = "range",
+					min = 2,
+					max = 128,
+					step = 2,
+					softMin = 2,
+					softMax = 128,
+					get = function(info)
+						return E.db[mPlugin].mDock.growsize
+					end,
+					set = function(info, value)
+						E.db[mPlugin].mDock.growsize = value
+						DT:LoadDataTexts()
+					end,
+					disabled = function()
+						return E.db[mPlugin].mDock.autogrow
+					end,
 				},
 				dockgeneralspacer6 = {
 					order = 59,
 					type = "description",
 					name = "\n",
 				},
-				headerdockgeneralfont= {
+				headerdockgeneralfont = {
 					order = 60,
 					type = "header",
 					name = L["Font"],
 				},
 				dockgeneralfont = {
-					type = 'select', dialogControl = 'LSM30_Font',
+					type = "select",
+					dialogControl = "LSM30_Font",
 					order = 61,
 					name = L["Default Font"],
-					values = LSM:HashTable('font'),
-					get = function(info) return E.db[mPlugin].mDock.font end,
-					set = function(info, value) E.db[mPlugin].mDock.font = value; DT:LoadDataTexts(); end,
+					values = LSM:HashTable("font"),
+					get = function(info)
+						return E.db[mPlugin].mDock.font
+					end,
+					set = function(info, value)
+						E.db[mPlugin].mDock.font = value
+						DT:LoadDataTexts()
+					end,
 				},
 				dockgeneralfontStyle = {
-					type = 'select',
+					type = "select",
 					order = 62,
 					name = L["Font contour"],
 					values = mFontFlags,
-					get = function(info) return E.db[mPlugin].mDock.fontflag end,
-					set = function(info, value) E.db[mPlugin].mDock.fontflag = value; DT:LoadDataTexts(); end,
+					get = function(info)
+						return E.db[mPlugin].mDock.fontflag
+					end,
+					set = function(info, value)
+						E.db[mPlugin].mDock.fontflag = value
+						DT:LoadDataTexts()
+					end,
 				},
 				dockgeneralcustomfontSize = {
 					order = 63,
 					name = L["Custom Font Size"],
-					type = 'toggle',
-					get = function(info) return E.db[mPlugin].mDock.customfontzise end,
-					set = function(info, value) E.db[mPlugin].mDock.customfontzise = value; DT:LoadDataTexts(); end,
+					type = "toggle",
+					get = function(info)
+						return E.db[mPlugin].mDock.customfontzise
+					end,
+					set = function(info, value)
+						E.db[mPlugin].mDock.customfontzise = value
+						DT:LoadDataTexts()
+					end,
 				},
 				dockgeneralfontSize = {
 					order = 64,
 					name = L["Font Size"],
-					type = 'range',
-					min = 6, max = 64, step = 1,
-					softMin = 8, softMax = 32,
-					get = function(info) return E.db[mPlugin].mDock.fontSize end,
-					set = function(info, value) E.db[mPlugin].mDock.fontSize = value; DT:LoadDataTexts(); end,
-					disabled = function() return not E.db[mPlugin].mDock.customfontzise end,
+					type = "range",
+					min = 6,
+					max = 64,
+					step = 1,
+					softMin = 8,
+					softMax = 32,
+					get = function(info)
+						return E.db[mPlugin].mDock.fontSize
+					end,
+					set = function(info, value)
+						E.db[mPlugin].mDock.fontSize = value
+						DT:LoadDataTexts()
+					end,
+					disabled = function()
+						return not E.db[mPlugin].mDock.customfontzise
+					end,
 				},
 				dockgeneralfontcolor = {
-					type = 'color',
+					type = "color",
 					order = 65,
 					name = L["Custom Font Color"],
 					hasAlpha = false,
@@ -341,7 +390,7 @@ local function OptionsDock()
 					end,
 					set = function(info, r, g, b)
 						local t = E.db[mPlugin].mDock.fontcolor
-						t.r, t.g, t.b  = r, g, b
+						t.r, t.g, t.b = r, g, b
 						DT:LoadDataTexts()
 					end,
 				},
@@ -354,9 +403,11 @@ local function OptionsDock()
 			args = {
 				dockachievmenticon = {
 					order = 1,
-					type = 'select',
+					type = "select",
 					name = L["Icon"],
-					get = function(info) return E.db[mPlugin].mDock.achievement.name end,
+					get = function(info)
+						return E.db[mPlugin].mDock.achievement.name
+					end,
 					set = function(info, value)
 						E.db[mPlugin].mDock.achievement.name = value
 						E.db[mPlugin].mDock.achievement.path = mIconsList[value].file
@@ -373,9 +424,11 @@ local function OptionsDock()
 			args = {
 				dockblizzardstoreicon = {
 					order = 1,
-					type = 'select',
+					type = "select",
 					name = L["Icon"],
-					get = function(info) return E.db[mPlugin].mDock.blizzardstore.name end,
+					get = function(info)
+						return E.db[mPlugin].mDock.blizzardstore.name
+					end,
 					set = function(info, value)
 						E.db[mPlugin].mDock.blizzardstore.name = value
 						E.db[mPlugin].mDock.blizzardstore.path = mIconsList[value].file
@@ -392,9 +445,11 @@ local function OptionsDock()
 			args = {
 				dockcharctericon = {
 					order = 1,
-					type = 'select',
+					type = "select",
 					name = L["Icon"],
-					get = function(info) return E.db[mPlugin].mDock.character.name end,
+					get = function(info)
+						return E.db[mPlugin].mDock.character.name
+					end,
 					set = function(info, value)
 						E.db[mPlugin].mDock.character.name = value
 						E.db[mPlugin].mDock.character.path = mIconsList[value].file
@@ -404,9 +459,11 @@ local function OptionsDock()
 				},
 				dockcharcteroptioncolor = {
 					order = 2,
-					type = 'select',
+					type = "select",
 					name = L["Text Color Styl"],
-					get = function(info) return E.db[mPlugin].mDock.character.color end,
+					get = function(info)
+						return E.db[mPlugin].mDock.character.color
+					end,
 					set = function(info, value)
 						E.db[mPlugin].mDock.character.color = value
 						DT:ForceUpdate_DataText("mCharacter")
@@ -418,9 +475,11 @@ local function OptionsDock()
 				},
 				dockcharcteroption = {
 					order = 3,
-					type = 'select',
+					type = "select",
 					name = L["Show Text on Icon"],
-					get = function(info) return E.db[mPlugin].mDock.character.option end,
+					get = function(info)
+						return E.db[mPlugin].mDock.character.option
+					end,
 					set = function(info, value)
 						E.db[mPlugin].mDock.character.option = value
 						DT:ForceUpdate_DataText("mCharacter")
@@ -440,9 +499,11 @@ local function OptionsDock()
 			args = {
 				dockcollectionicon = {
 					order = 1,
-					type = 'select',
+					type = "select",
 					name = L["Icon"],
-					get = function(info) return E.db[mPlugin].mDock.collection.name end,
+					get = function(info)
+						return E.db[mPlugin].mDock.collection.name
+					end,
 					set = function(info, value)
 						E.db[mPlugin].mDock.collection.name = value
 						E.db[mPlugin].mDock.collection.path = mIconsList[value].file
@@ -459,9 +520,11 @@ local function OptionsDock()
 			args = {
 				dockencountericon = {
 					order = 1,
-					type = 'select',
+					type = "select",
 					name = L["Icon"],
-					get = function(info) return E.db[mPlugin].mDock.encounter.name end,
+					get = function(info)
+						return E.db[mPlugin].mDock.encounter.name
+					end,
 					set = function(info, value)
 						E.db[mPlugin].mDock.encounter.name = value
 						E.db[mPlugin].mDock.encounter.path = mIconsList[value].file
@@ -478,9 +541,11 @@ local function OptionsDock()
 			args = {
 				dockguildicon = {
 					order = 1,
-					type = 'select',
+					type = "select",
 					name = L["Icon"],
-					get = function(info) return E.db[mPlugin].mDock.guild.name end,
+					get = function(info)
+						return E.db[mPlugin].mDock.guild.name
+					end,
 					set = function(info, value)
 						E.db[mPlugin].mDock.guild.name = value
 						E.db[mPlugin].mDock.guild.path = mIconsList[value].file
@@ -490,9 +555,11 @@ local function OptionsDock()
 				},
 				dockguildcolor = {
 					order = 2,
-					type = 'select',
+					type = "select",
 					name = L["Text Color Styl"],
-					get = function(info) return E.db[mPlugin].mDock.guild.color end,
+					get = function(info)
+						return E.db[mPlugin].mDock.guild.color
+					end,
 					set = function(info, value)
 						E.db[mPlugin].mDock.guild.color = value
 						DT:ForceUpdate_DataText("mGuild")
@@ -511,9 +578,11 @@ local function OptionsDock()
 			args = {
 				docklfdicon = {
 					order = 10,
-					type = 'select',
+					type = "select",
 					name = L["Icon"],
-					get = function(info) return E.db[mPlugin].mDock.lfd.name end,
+					get = function(info)
+						return E.db[mPlugin].mDock.lfd.name
+					end,
 					set = function(info, value)
 						E.db[mPlugin].mDock.lfd.name = value
 						E.db[mPlugin].mDock.lfd.path = mIconsList[value].file
@@ -523,7 +592,7 @@ local function OptionsDock()
 				},
 				docklfdgreatvault = {
 					order = 20,
-					type = 'toggle',
+					type = "toggle",
 					name = L["Great Vault"],
 					desc = L["Show Greaut Vault infos in the Tooltip and opens the Great Vault"],
 					get = function(info)
@@ -535,7 +604,7 @@ local function OptionsDock()
 				},
 				docklfdaffixes = {
 					order = 40,
-					type = 'toggle',
+					type = "toggle",
 					name = L["Weekly Affixes"],
 					desc = L["Shows the Weekly Affixes."],
 					get = function(info)
@@ -547,7 +616,7 @@ local function OptionsDock()
 				},
 				docklfdkeystone = {
 					order = 50,
-					type = 'toggle',
+					type = "toggle",
 					name = L["Tooltip Keystone"],
 					desc = L["Shows your Keystone in the tooltip."],
 					get = function(info)
@@ -559,7 +628,7 @@ local function OptionsDock()
 				},
 				docklfddifficulty = {
 					order = 60,
-					type = 'toggle',
+					type = "toggle",
 					name = L["Difficulty Text"],
 					get = function(info)
 						return E.db[mPlugin].mDock.lfd.difficulty
@@ -571,7 +640,7 @@ local function OptionsDock()
 				},
 				docklfdcta = {
 					order = 60,
-					type = 'toggle',
+					type = "toggle",
 					name = L["Call To Arms"],
 					get = function(info)
 						return E.db[mPlugin].mDock.lfd.cta
@@ -583,7 +652,7 @@ local function OptionsDock()
 				},
 				docklfdscore = {
 					order = 61,
-					type = 'toggle',
+					type = "toggle",
 					name = L["Mythic+ Score"],
 					get = function(info)
 						return E.db[mPlugin].mDock.lfd.score
@@ -602,9 +671,11 @@ local function OptionsDock()
 			args = {
 				dockmainmenuicon = {
 					order = 1,
-					type = 'select',
+					type = "select",
 					name = L["Icon"],
-					get = function(info) return E.db[mPlugin].mDock.mainmenu.name end,
+					get = function(info)
+						return E.db[mPlugin].mDock.mainmenu.name
+					end,
 					set = function(info, value)
 						E.db[mPlugin].mDock.mainmenu.name = value
 						E.db[mPlugin].mDock.mainmenu.path = mIconsList[value].file
@@ -614,9 +685,11 @@ local function OptionsDock()
 				},
 				dockmainmenucolor = {
 					order = 2,
-					type = 'select',
+					type = "select",
 					name = L["Text Color Styl"],
-					get = function(info) return E.db[mPlugin].mDock.mainmenu.color end,
+					get = function(info)
+						return E.db[mPlugin].mDock.mainmenu.color
+					end,
 					set = function(info, value)
 						E.db[mPlugin].mDock.mainmenu.color = value
 						DT:ForceUpdate_DataText("mMainMenu")
@@ -628,9 +701,11 @@ local function OptionsDock()
 				},
 				dockmainmenuoption = {
 					order = 3,
-					type = 'select',
+					type = "select",
 					name = L["Show Text on Icon"],
-					get = function(info) return E.db[mPlugin].mDock.mainmenu.option end,
+					get = function(info)
+						return E.db[mPlugin].mDock.mainmenu.option
+					end,
 					set = function(info, value)
 						E.db[mPlugin].mDock.mainmenu.option = value
 						if value == "fps" then
@@ -649,9 +724,11 @@ local function OptionsDock()
 				dockmainmenutext = {
 					order = 4,
 					name = L["Text"],
-					type = 'input',
-					width = 'smal',
-					get = function() return E.db[mPlugin].mDock.mainmenu.text end,
+					type = "input",
+					width = "smal",
+					get = function()
+						return E.db[mPlugin].mDock.mainmenu.text
+					end,
 					set = function(info, value)
 						E.db[mPlugin].mDock.mainmenu.text = value
 						DT:ForceUpdate_DataText("mMainMenu")
@@ -659,9 +736,11 @@ local function OptionsDock()
 				},
 				dockmainmenusound = {
 					order = 5,
-					type = 'toggle',
+					type = "toggle",
 					name = L["Volume Control"],
-					get = function(info) return E.db[mPlugin].mDock.mainmenu.sound end,
+					get = function(info)
+						return E.db[mPlugin].mDock.mainmenu.sound
+					end,
 					set = function(info, value)
 						E.db[mPlugin].mDock.mainmenu.sound = value
 						DT:ForceUpdate_DataText("mMainMenu")
@@ -676,9 +755,11 @@ local function OptionsDock()
 			args = {
 				dockquesticon = {
 					order = 1,
-					type = 'select',
+					type = "select",
 					name = L["Icon"],
-					get = function(info) return E.db[mPlugin].mDock.quest.name end,
+					get = function(info)
+						return E.db[mPlugin].mDock.quest.name
+					end,
 					set = function(info, value)
 						E.db[mPlugin].mDock.quest.name = value
 						E.db[mPlugin].mDock.quest.path = mIconsList[value].file
@@ -695,9 +776,11 @@ local function OptionsDock()
 			args = {
 				dockspellbookicon = {
 					order = 1,
-					type = 'select',
+					type = "select",
 					name = L["Icon"],
-					get = function(info) return E.db[mPlugin].mDock.spellbook.name end,
+					get = function(info)
+						return E.db[mPlugin].mDock.spellbook.name
+					end,
 					set = function(info, value)
 						E.db[mPlugin].mDock.spellbook.name = value
 						E.db[mPlugin].mDock.spellbook.path = mIconsList[value].file
@@ -714,9 +797,11 @@ local function OptionsDock()
 			args = {
 				docktalenticon = {
 					order = 1,
-					type = 'select',
+					type = "select",
 					name = L["Icon"],
-					get = function(info) return E.db[mPlugin].mDock.talent.name end,
+					get = function(info)
+						return E.db[mPlugin].mDock.talent.name
+					end,
 					set = function(info, value)
 						E.db[mPlugin].mDock.talent.name = value
 						E.db[mPlugin].mDock.talent.path = mIconsList[value].file
@@ -726,9 +811,11 @@ local function OptionsDock()
 				},
 				docktalentrole = {
 					order = 2,
-					type = 'toggle',
+					type = "toggle",
 					name = L["Show Role if in Group"],
-					get = function(info) return E.db[mPlugin].mDock.talent.showrole end,
+					get = function(info)
+						return E.db[mPlugin].mDock.talent.showrole
+					end,
 					set = function(info, value)
 						E.db[mPlugin].mDock.talent.showrole = value
 					end,
@@ -742,9 +829,11 @@ local function OptionsDock()
 			args = {
 				dockitemlevelicon = {
 					order = 1,
-					type = 'select',
+					type = "select",
 					name = L["Icon"],
-					get = function(info) return E.db[mPlugin].mDock.itemlevel.name end,
+					get = function(info)
+						return E.db[mPlugin].mDock.itemlevel.name
+					end,
 					set = function(info, value)
 						E.db[mPlugin].mDock.itemlevel.name = value
 						E.db[mPlugin].mDock.itemlevel.path = mIconsList[value].file
@@ -755,9 +844,11 @@ local function OptionsDock()
 				dockitemleveltext = {
 					order = 2,
 					name = L["Text"],
-					type = 'input',
-					width = 'smal',
-					get = function() return E.db[mPlugin].mDock.itemlevel.text end,
+					type = "input",
+					width = "smal",
+					get = function()
+						return E.db[mPlugin].mDock.itemlevel.text
+					end,
 					set = function(info, value)
 						E.db[mPlugin].mDock.itemlevel.text = value
 						DT:ForceUpdate_DataText("mItemLevel")
@@ -765,9 +856,11 @@ local function OptionsDock()
 				},
 				dockitemlevelcolor = {
 					order = 3,
-					type = 'select',
+					type = "select",
 					name = L["Text Color Styl"],
-					get = function(info) return E.db[mPlugin].mDock.itemlevel.color end,
+					get = function(info)
+						return E.db[mPlugin].mDock.itemlevel.color
+					end,
 					set = function(info, value)
 						E.db[mPlugin].mDock.itemlevel.color = value
 						DT:ForceUpdate_DataText("mItemLevel")
@@ -780,9 +873,11 @@ local function OptionsDock()
 				},
 				dockitemlevelonlytext = {
 					order = 4,
-					type = 'toggle',
+					type = "toggle",
 					name = L["Show only Text"],
-					get = function(info) return E.db[mPlugin].mDock.itemlevel.onlytext end,
+					get = function(info)
+						return E.db[mPlugin].mDock.itemlevel.onlytext
+					end,
 					set = function(info, value)
 						E.db[mPlugin].mDock.itemlevel.onlytext = value
 						DT:ForceUpdate_DataText("mItemLevel")
@@ -797,9 +892,11 @@ local function OptionsDock()
 			args = {
 				dockfriendsicon = {
 					order = 1,
-					type = 'select',
+					type = "select",
 					name = L["Icon"],
-					get = function(info) return E.db[mPlugin].mDock.friends.name end,
+					get = function(info)
+						return E.db[mPlugin].mDock.friends.name
+					end,
 					set = function(info, value)
 						E.db[mPlugin].mDock.friends.name = value
 						E.db[mPlugin].mDock.friends.path = mIconsList[value].file
@@ -809,9 +906,11 @@ local function OptionsDock()
 				},
 				dockfriendcolor = {
 					order = 2,
-					type = 'select',
+					type = "select",
 					name = L["Text Color Styl"],
-					get = function(info) return E.db[mPlugin].mDock.friends.color end,
+					get = function(info)
+						return E.db[mPlugin].mDock.friends.color
+					end,
 					set = function(info, value)
 						E.db[mPlugin].mDock.friends.color = value
 						DT:ForceUpdate_DataText("mFriends")
@@ -830,9 +929,11 @@ local function OptionsDock()
 			args = {
 				dockdurabilityicon = {
 					order = 1,
-					type = 'select',
+					type = "select",
 					name = L["Icon"],
-					get = function(info) return E.db[mPlugin].mDock.durability.name end,
+					get = function(info)
+						return E.db[mPlugin].mDock.durability.name
+					end,
 					set = function(info, value)
 						E.db[mPlugin].mDock.durability.name = value
 						E.db[mPlugin].mDock.durability.path = mIconsList[value].file
@@ -842,9 +943,11 @@ local function OptionsDock()
 				},
 				dockdurabilitycolor = {
 					order = 2,
-					type = 'select',
+					type = "select",
 					name = L["Text Color Styl"],
-					get = function(info) return E.db[mPlugin].mDock.durability.color end,
+					get = function(info)
+						return E.db[mPlugin].mDock.durability.color
+					end,
 					set = function(info, value)
 						E.db[mPlugin].mDock.durability.color = value
 						DT:ForceUpdate_DataText("mDurability")
@@ -857,9 +960,11 @@ local function OptionsDock()
 				},
 				dockdurabilitytext = {
 					order = 3,
-					type = 'toggle',
+					type = "toggle",
 					name = L["Show only Text"],
-					get = function(info) return E.db[mPlugin].mDock.durability.onlytext end,
+					get = function(info)
+						return E.db[mPlugin].mDock.durability.onlytext
+					end,
 					set = function(info, value)
 						E.db[mPlugin].mDock.durability.onlytext = value
 						DT:ForceUpdate_DataText("mDurability")
@@ -874,9 +979,11 @@ local function OptionsDock()
 			args = {
 				dockfpsmsicon = {
 					order = 1,
-					type = 'select',
+					type = "select",
 					name = L["Icon"],
-					get = function(info) return E.db[mPlugin].mDock.fpsms.name end,
+					get = function(info)
+						return E.db[mPlugin].mDock.fpsms.name
+					end,
 					set = function(info, value)
 						E.db[mPlugin].mDock.fpsms.name = value
 						E.db[mPlugin].mDock.fpsms.path = mIconsList[value].file
@@ -886,9 +993,11 @@ local function OptionsDock()
 				},
 				dockfpsmscolor = {
 					order = 2,
-					type = 'select',
+					type = "select",
 					name = L["Text Color Styl"],
-					get = function(info) return E.db[mPlugin].mDock.fpsms.color end,
+					get = function(info)
+						return E.db[mPlugin].mDock.fpsms.color
+					end,
 					set = function(info, value)
 						E.db[mPlugin].mDock.fpsms.color = value
 						DT:ForceUpdate_DataText("mFPSMS")
@@ -900,9 +1009,11 @@ local function OptionsDock()
 				},
 				dockfpsmsoption = {
 					order = 3,
-					type = 'select',
+					type = "select",
 					name = L["Show Text on Icon"],
-					get = function(info) return E.db[mPlugin].mDock.fpsms.option end,
+					get = function(info)
+						return E.db[mPlugin].mDock.fpsms.option
+					end,
 					set = function(info, value)
 						E.db[mPlugin].mDock.fpsms.option = value
 						if value == "fps" then
@@ -920,9 +1031,11 @@ local function OptionsDock()
 				dockfpsmstext = {
 					order = 4,
 					name = L["Text"],
-					type = 'input',
-					width = 'smal',
-					get = function() return E.db[mPlugin].mDock.fpsms.text end,
+					type = "input",
+					width = "smal",
+					get = function()
+						return E.db[mPlugin].mDock.fpsms.text
+					end,
 					set = function(info, value)
 						E.db[mPlugin].mDock.fpsms.text = value
 						DT:ForceUpdate_DataText("mFPSMS")
@@ -937,9 +1050,11 @@ local function OptionsDock()
 			args = {
 				dockprofessionicon = {
 					order = 1,
-					type = 'select',
+					type = "select",
 					name = L["Icon"],
-					get = function(info) return E.db[mPlugin].mDock.profession.name end,
+					get = function(info)
+						return E.db[mPlugin].mDock.profession.name
+					end,
 					set = function(info, value)
 						E.db[mPlugin].mDock.profession.name = value
 						E.db[mPlugin].mDock.profession.path = mIconsList[value].file
@@ -956,9 +1071,11 @@ local function OptionsDock()
 			args = {
 				dockcalendaricon = {
 					order = 1,
-					type = 'select',
+					type = "select",
 					name = L["Icon"],
-					get = function(info) return E.db[mPlugin].mDock.calendar.name end,
+					get = function(info)
+						return E.db[mPlugin].mDock.calendar.name
+					end,
 					set = function(info, value)
 						E.db[mPlugin].mDock.calendar.name = value
 						E.db[mPlugin].mDock.calendar.path = mIconsList[value].file
@@ -968,9 +1085,11 @@ local function OptionsDock()
 				},
 				dockcalendaroption = {
 					order = 2,
-					type = 'select',
+					type = "select",
 					name = L["Date Style"],
-					get = function(info) return E.db[mPlugin].mDock.calendar.option end,
+					get = function(info)
+						return E.db[mPlugin].mDock.calendar.option
+					end,
 					set = function(info, value)
 						E.db[mPlugin].mDock.calendar.option = value
 						DT:ForceUpdate_DataText("mCalendar")
@@ -984,7 +1103,7 @@ local function OptionsDock()
 				},
 				dockcalendarshowyear = {
 					order = 3,
-					type = 'toggle',
+					type = "toggle",
 					name = L["Show Year"],
 					get = function(info)
 						return E.db[mPlugin].mDock.calendar.showyear
@@ -1003,9 +1122,11 @@ local function OptionsDock()
 			args = {
 				dockvolumeicon = {
 					order = 1,
-					type = 'select',
+					type = "select",
 					name = L["Icon"],
-					get = function(info) return E.db[mPlugin].mDock.volume.name end,
+					get = function(info)
+						return E.db[mPlugin].mDock.volume.name
+					end,
 					set = function(info, value)
 						E.db[mPlugin].mDock.volume.name = value
 						E.db[mPlugin].mDock.volume.path = mIconsList[value].file
@@ -1015,7 +1136,7 @@ local function OptionsDock()
 				},
 				dockvolumetext = {
 					order = 2,
-					type = 'toggle',
+					type = "toggle",
 					name = L["Show Text"],
 					get = function(info)
 						return E.db[mPlugin].mDock.volume.showtext
@@ -1034,9 +1155,11 @@ local function OptionsDock()
 			args = {
 				docknottificationicon = {
 					order = 1,
-					type = 'select',
+					type = "select",
 					name = L["Icon"],
-					get = function(info) return E.db[mPlugin].mDock.nottification.name end,
+					get = function(info)
+						return E.db[mPlugin].mDock.nottification.name
+					end,
 					set = function(info, value)
 						E.db[mPlugin].mDock.nottification.name = value
 						E.db[mPlugin].mDock.nottification.path = mIconsList[value].file
@@ -1048,7 +1171,9 @@ local function OptionsDock()
 					order = 2,
 					name = L["Icon size"],
 					type = "range",
-					min = 16, max = 128, step = 2,
+					min = 16,
+					max = 128,
+					step = 2,
 					get = function(info)
 						return E.db[mPlugin].mDock.nottification.size
 					end,
@@ -1064,7 +1189,7 @@ local function OptionsDock()
 				},
 				docknottificationiconflash = {
 					order = 4,
-					type = 'toggle',
+					type = "toggle",
 					name = L["Icon flash"],
 					get = function(info)
 						return E.db[mPlugin].mDock.nottification.flash
@@ -1092,7 +1217,7 @@ local function OptionsDock()
 				},
 				exampletop = {
 					order = 3,
-					type = 'toggle',
+					type = "toggle",
 					name = L["Dock on Top"],
 					get = function(info)
 						return ExampleDockSettings.top
@@ -1110,8 +1235,8 @@ local function OptionsDock()
 					order = 11,
 					type = "execute",
 					name = L["Dockbar mDock Full"],
-					func = function() 
-						mMT:mDockFull(ExampleDockSettings.top, true) 
+					func = function()
+						mMT:mDockFull(ExampleDockSettings.top, true)
 						E:StaticPopup_Show("CONFIG_RL")
 					end,
 				},
@@ -1119,8 +1244,8 @@ local function OptionsDock()
 					order = 21,
 					type = "execute",
 					name = L["Dockbar mDockMicroBar"],
-					func = function() 
-						mMT:mDockMicroBar(ExampleDockSettings.top, true) 
+					func = function()
+						mMT:mDockMicroBar(ExampleDockSettings.top, true)
 						E:StaticPopup_Show("CONFIG_RL")
 					end,
 				},
@@ -1128,8 +1253,8 @@ local function OptionsDock()
 					order = 31,
 					type = "execute",
 					name = L["Dockbar mDock Spezial"],
-					func = function() 
-						mMT:mDockSpezial(ExampleDockSettings.top, true) 
+					func = function()
+						mMT:mDockSpezial(ExampleDockSettings.top, true)
 						E:StaticPopup_Show("CONFIG_RL")
 					end,
 				},

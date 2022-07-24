@@ -1,12 +1,13 @@
-local E, L, V, P, G = unpack(ElvUI);
+local E, L, V, P, G = unpack(ElvUI)
 local mPlugin = "mMediaTag"
-local mMT = E:GetModule(mPlugin);
+local mMT = E:GetModule(mPlugin)
 local addon, ns = ...
 
 --Lua functions
 local mInsert = table.insert
 
-local name, mListDNDIcons, mListDNDPath, mListAFKIcon, mListAFKPath, mListSkullIcon, mListSkullPath = nil, nil, nil, nil, nil, nil, nil
+local name, mListDNDIcons, mListDNDPath, mListAFKIcon, mListAFKPath, mListSkullIcon, mListSkullPath =
+	nil, nil, nil, nil, nil, nil, nil
 
 local function mReturnTagIconName(name)
 	return format("|TInterface\\AddOns\\ElvUI_mMediaTag\\media\\misc\\%s.tga:16:16:0:0:32:32|t", name)
@@ -24,21 +25,21 @@ local function mSetupTagIcons()
 	mListSkullIcon = {}
 	mListSkullPath = {}
 	--DND
-	for i=1, 16, 1 do
+	for i = 1, 16, 1 do
 		name = "dnd" .. i
 		mListDNDIcons["DND" .. i] = mReturnTagIconName(name)
 		mListDNDPath["DND" .. i] = mReturnTagIconPath(name)
-	end 
+	end
 
 	--AFK
-	for i=1, 16, 1 do
+	for i = 1, 16, 1 do
 		name = "afk" .. i
 		mListAFKIcon["AFK" .. i] = mReturnTagIconName(name)
 		mListAFKPath["AFK" .. i] = mReturnTagIconPath(name)
 	end
 
 	--SKULL
-	for i=1, 10, 1 do
+	for i = 1, 10, 1 do
 		name = "skull" .. i
 		mListSkullIcon["SKULL" .. i] = mReturnTagIconName(name)
 		mListSkullPath["SKULL" .. i] = mReturnTagIconPath(name)
@@ -59,7 +60,7 @@ local function OptionsTags()
 					name = L["Class"],
 				},
 				colorrare = {
-					type = 'color',
+					type = "color",
 					order = 2,
 					name = "Rare",
 					desc = L["Class Colors"],
@@ -74,7 +75,7 @@ local function OptionsTags()
 					end,
 				},
 				colorrarelite = {
-					type = 'color',
+					type = "color",
 					order = 3,
 					name = "Rare Elite",
 					desc = L["Class Colors"],
@@ -89,7 +90,7 @@ local function OptionsTags()
 					end,
 				},
 				colorelite = {
-					type = 'color',
+					type = "color",
 					order = 4,
 					name = "Elite",
 					desc = L["Class Colors"],
@@ -104,7 +105,7 @@ local function OptionsTags()
 					end,
 				},
 				colorboss = {
-					type = 'color',
+					type = "color",
 					order = 4,
 					name = "Boss",
 					desc = L["Class Colors"],
@@ -124,7 +125,7 @@ local function OptionsTags()
 					name = L["General"],
 				},
 				colorafk = {
-					type = 'color',
+					type = "color",
 					order = 6,
 					name = "AFK",
 					desc = L["AFK Color"],
@@ -139,7 +140,7 @@ local function OptionsTags()
 					end,
 				},
 				colortank = {
-					type = 'color',
+					type = "color",
 					order = 7,
 					name = "Tank",
 					desc = L["Tank Color"],
@@ -154,7 +155,7 @@ local function OptionsTags()
 					end,
 				},
 				colorheal = {
-					type = 'color',
+					type = "color",
 					order = 8,
 					name = "Heal",
 					desc = L["Heal Color"],
@@ -169,7 +170,7 @@ local function OptionsTags()
 					end,
 				},
 				colorzzz = {
-					type = 'color',
+					type = "color",
 					order = 9,
 					name = "Zzz",
 					desc = L["Resting Zzz Color"],
@@ -184,7 +185,7 @@ local function OptionsTags()
 					end,
 				},
 				colorlevel = {
-					type = 'color',
+					type = "color",
 					order = 10,
 					name = "Level ??",
 					desc = L["Boss Level ?? Color"],
@@ -205,14 +206,16 @@ local function OptionsTags()
 				},
 				afkicon = {
 					order = 21,
-					type = 'select',
+					type = "select",
 					name = L["AFK Icon"],
-					get = function(info) return E.db[mPlugin].mTags.afkname end,
+					get = function(info)
+						return E.db[mPlugin].mTags.afkname
+					end,
 					set = function(info, value)
 						E.db[mPlugin].mTags.afkname = value
 						E.db[mPlugin].mTags.afkpath = mListAFKPath[value]
 					end,
-					values = mListAFKIcon
+					values = mListAFKIcon,
 				},
 				headertagcolor4 = {
 					order = 30,
@@ -221,14 +224,16 @@ local function OptionsTags()
 				},
 				dndicon = {
 					order = 31,
-					type = 'select',
+					type = "select",
 					name = L["DND Icon"],
-					get = function(info) return E.db[mPlugin].mTags.dndname end,
+					get = function(info)
+						return E.db[mPlugin].mTags.dndname
+					end,
 					set = function(info, value)
 						E.db[mPlugin].mTags.dndname = value
 						E.db[mPlugin].mTags.dndpath = mListDNDPath[value]
 					end,
-					values = mListDNDIcons
+					values = mListDNDIcons,
 				},
 				headertagcolor5 = {
 					order = 40,
@@ -237,25 +242,29 @@ local function OptionsTags()
 				},
 				skullicon = {
 					order = 41,
-					type = 'select',
+					type = "select",
 					name = L["Dead Icon"],
-					get = function(info) return E.db[mPlugin].mTags.skullname end,
+					get = function(info)
+						return E.db[mPlugin].mTags.skullname
+					end,
 					set = function(info, value)
 						E.db[mPlugin].mTags.skullname = value
 						E.db[mPlugin].mTags.skullpath = mListSkullPath[value]
 					end,
-					values = mListSkullIcon
+					values = mListSkullIcon,
 				},
 				ghosticon = {
 					order = 42,
-					type = 'select',
+					type = "select",
 					name = L["Ghost Icon"],
-					get = function(info) return E.db[mPlugin].mTags.ghostname end,
+					get = function(info)
+						return E.db[mPlugin].mTags.ghostname
+					end,
 					set = function(info, value)
 						E.db[mPlugin].mTags.ghostname = value
 						E.db[mPlugin].mTags.ghostpath = mListSkullPath[value]
 					end,
-					values = mListSkullIcon
+					values = mListSkullIcon,
 				},
 			},
 		},
