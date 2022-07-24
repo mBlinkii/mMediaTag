@@ -1288,7 +1288,7 @@ function mMT:InitializemOBT()
 	if E.db[mPlugin].mObjectiveTracker.enable == true then
 		mOBTFontColors()
 
-		hooksecurefunc(QUEST_TRACKER_MODULE, "SetBlockHeader", SkinOBT)
+		hooksecurefunc(_G.QUEST_TRACKER_MODULE, "SetBlockHeader", SkinOBT)
 		hooksecurefunc("ObjectiveTracker_Update", SkinOBT)
 		hooksecurefunc(_G.SCENARIO_CONTENT_TRACKER_MODULE, "UpdateCriteria", SkinOBTScenario)
 

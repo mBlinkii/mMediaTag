@@ -386,6 +386,11 @@ E:AddTag("mStatustimer", 1, function(unit)
 	end
 
 	local guid = UnitGUID(unit)
+
+	if not guid then
+		return
+	end
+
 	local status = unitStatus[guid]
 
 	if UnitIsAFK(unit) then
@@ -449,6 +454,11 @@ E:AddTag("mDeathCount", "UNIT_HEALTH", function(unit)
 	end
 
 	local guid = UnitGUID(unit)
+
+	if not guid then
+		return
+	end
+
 	if (UnitIsDead(unit)) or (UnitIsGhost(unit)) then
 		if not UnitmDeathCount[guid] then
 			UnitmDeathCount[guid] = { true, 1 }
@@ -463,6 +473,10 @@ E:AddTag("mDeathCount", "UNIT_HEALTH", function(unit)
 				UnitmDeathCount[guid][1] = false
 			end
 		end
+	end
+
+	if not UnitmDeathCount then
+		return
 	end
 
 	if UnitmDeathCount[guid] and (UnitmDeathCount[guid][2] >= 1) then
@@ -490,7 +504,7 @@ E:AddTag("mDeathCount:color", "UNIT_HEALTH", function(unit)
 
 	if UnitmDeathCount[guid] then
 		local r, g, b = E:ColorGradient(UnitmDeathCount[guid][2] * 0.20, 0, 1, 0, 1, 1, 0, 1, 0, 0)
-		return Hex(r, g, b)
+		return E:RGBToHex(r, g, b)
 	end
 end)
 
@@ -856,7 +870,12 @@ E:AddTag("mFaction:icon", "UNIT_FACTION", function(unit)
 	if not UnitIsPlayer(unit) then
 		return
 	end
+
 	local guid = UnitGUID(unit)
+
+	if not guid then
+		return
+	end
 
 	if not UnitFaction[guid] then
 		local factionGroup = UnitFactionGroup(unit)
@@ -891,7 +910,12 @@ E:AddTag("mFaction:text", "UNIT_FACTION", function(unit)
 	if not UnitIsPlayer(unit) then
 		return
 	end
+
 	local guid = UnitGUID(unit)
+
+	if not guid then
+		return
+	end
 
 	if not UnitFaction[guid] then
 		local factionGroup = UnitFactionGroup(unit)
@@ -928,7 +952,12 @@ E:AddTag("mFaction:text:opposite", "UNIT_FACTION", function(unit)
 	if not UnitIsPlayer(unit) then
 		return
 	end
+
 	local guid = UnitGUID(unit)
+
+	if not guid then
+		return
+	end
 
 	if not UnitFaction[guid] then
 		local factionGroup = UnitFactionGroup(unit)
@@ -969,7 +998,12 @@ E:AddTag("mFaction:icon:opposite", "UNIT_FACTION", function(unit)
 	if not UnitIsPlayer(unit) then
 		return
 	end
+
 	local guid = UnitGUID(unit)
+
+	if not guid then
+		return
+	end
 
 	if not UnitFaction[guid] then
 		local factionGroup = UnitFactionGroup(unit)
