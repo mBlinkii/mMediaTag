@@ -312,6 +312,9 @@ mAddStatusbar("mMediaTag P18", "p18.tga")
 
 mAddStatusbar("mMediaTag Q1", "q1.tga")
 mAddStatusbar("mMediaTag Q2", "q2.tga")
+mAddStatusbar("mMediaTag Q3", "q3.tga")
+
+mAddStatusbar("mMediaTag Wglass", "Wglass.tga")
 
 mAddStatusbar("MaUIv3", "MaUIv3.tga")
 
@@ -335,3 +338,7 @@ mAddBackground("mMediaTag Chat5", "chat5.tga")
 mAddBackground("mMediaTag Chat6", "chat6.tga")
 
 mAddBorder("mMediaTag Border1", "mborder1.tga")
+mAddBorder("mMediaTag yborder", "yborder.tga")
+mAddBorder("mMediaTag yborder2", "yborder2.tga")
+mAddBorder("mMediaTag YuluBorderSwitch", "YuluBorderSwitch.tga")
+mAddBorder("mMediaTag YuluBorderXI", "YuluBorderXI.tga")

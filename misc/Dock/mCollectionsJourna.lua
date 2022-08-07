@@ -1,7 +1,7 @@
-local E, L, V, P, G = unpack(ElvUI);
+local E, L, V, P, G = unpack(ElvUI)
 local mPlugin = "mMediaTag"
-local mMT = E:GetModule(mPlugin);
-local DT = E:GetModule("DataTexts");
+local mMT = E:GetModule(mPlugin)
+local DT = E:GetModule("DataTexts")
 local addon, ns = ...
 
 --Lua functions
@@ -12,7 +12,7 @@ local mText = format("Dock %s", COLLECTIONS)
 local mTextName = "mCollectionsJourna"
 
 local function mDockCheckFrame()
-	return ( CollectionsJournal and CollectionsJournal:IsShown() )
+	return (CollectionsJournal and CollectionsJournal:IsShown())
 end
 
 function mMT:CheckFrameCollectionsJourna(self)
@@ -23,7 +23,7 @@ end
 local function OnEnter(self)
 	self.mIcon.isClicked = mDockCheckFrame()
 	mMT:mOnEnter(self, "CheckFrameCollectionsJourna")
-	
+
 	if E.db[mPlugin].mDock.tip.enable then
 		DT.tooltip:AddLine(COLLECTIONS)
 		DT.tooltip:Show()

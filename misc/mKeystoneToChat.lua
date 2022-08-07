@@ -1,6 +1,6 @@
-local E, L, V, P, G = unpack(ElvUI);
+local E, L, V, P, G = unpack(ElvUI)
 local mPlugin = "mMediaTag"
-local mMT = E:GetModule(mPlugin);
+local mMT = E:GetModule(mPlugin)
 local addon, ns = ...
 
 --Lua functions
@@ -22,7 +22,7 @@ local mKeystoneToChat = nil
 
 local function mCheckText(text)
 	local word = strlower(text)
-	for index, value in ipairs({"!key", "!keys", "!cov", "!covenant"}) do
+	for index, value in ipairs({ "!key", "!keys", "!cov", "!covenant" }) do
 		if word == value then
 			return value
 		end
@@ -72,12 +72,12 @@ local function mMediaTagKeys(event, text, channelIndex)
 		if isKeyword == "!key" or isKeyword == "!keys" then
 			if myKeys then
 				if sendCov and covenant and myKeys[180653] and myKeys[187786] then
-					link = covenant .. ' - ' .. myKeys[180653] .. " & " .. myKeys[187786]
+					link = covenant .. " - " .. myKeys[180653] .. " & " .. myKeys[187786]
 				elseif sendCov and covenant and myKeys[180653] or myKeys[187786] then
 					if myKeys[180653] then
-						link = covenant .. ' - ' .. myKeys[180653]
+						link = covenant .. " - " .. myKeys[180653]
 					else
-						link = covenant .. ' - ' .. myKeys[187786]
+						link = covenant .. " - " .. myKeys[187786]
 					end
 				else
 					if myKeys[180653] and myKeys[187786] then
@@ -110,7 +110,7 @@ end
 local function OnEvent(self, event, ...)
 	local key = C_MythicPlus.GetOwnedKeystoneLevel() or false
 	if key and E.db[mPlugin].mMythicPlusTools.keys and not InCombatLockdown then
-		local text , _, _, _, _, _, _, channelIndex = ...
+		local text, _, _, _, _, _, _, channelIndex = ...
 		if text then
 			text = string.lower(text)
 			mMediaTagKeys(event, text, channelIndex)
@@ -122,7 +122,7 @@ local function mKeystoneToChatOptions()
 	E.Options.args.mMediaTag.args.general.args.myticplustools.args = {
 		keystontochat = {
 			order = 10,
-			type = 'toggle',
+			type = "toggle",
 			name = L["Send Keyston to Chat"],
 			desc = L["Sends your Keyston to Chat, wen ther ist The Keyword !key or !keys"],
 			get = function(info)
@@ -134,7 +134,7 @@ local function mKeystoneToChatOptions()
 		},
 		covtochat = {
 			order = 20,
-			type = 'toggle',
+			type = "toggle",
 			name = L["Send Covenant to Chat"],
 			desc = L["Sends your Covenant to Chat, wen ther ist The Keyword !key or !keys or !cov"],
 			get = function(info)

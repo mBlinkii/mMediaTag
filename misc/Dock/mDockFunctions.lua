@@ -1,7 +1,7 @@
-local E, L, V, P, G = unpack(ElvUI);
+local E, L, V, P, G = unpack(ElvUI)
 local mPlugin = "mMediaTag"
-local mMT = E:GetModule(mPlugin);
-local DT = E:GetModule("DataTexts");
+local mMT = E:GetModule(mPlugin)
+local DT = E:GetModule("DataTexts")
 local addon, ns = ...
 
 --Lua functions
@@ -14,7 +14,7 @@ local InCombatLockdown = InCombatLockdown
 
 --Variables
 local LSM = E.Libs.LSM
-local _, unitClass = UnitClass('player')
+local _, unitClass = UnitClass("player")
 local class = ElvUF.colors.class[unitClass]
 
 function mMT:CheckCombatLockdown()
@@ -30,12 +30,16 @@ function mMT:mClassColorString()
 end
 
 local function mDockCreatIcon(self)
-	local Nr, Ng, Nb, Na = E.db[mPlugin].mDock.normal.r, E.db[mPlugin].mDock.normal.g, E.db[mPlugin].mDock.normal.b, E.db[mPlugin].mDock.normal.a
+	local Nr, Ng, Nb, Na =
+		E.db[mPlugin].mDock.normal.r,
+		E.db[mPlugin].mDock.normal.g,
+		E.db[mPlugin].mDock.normal.b,
+		E.db[mPlugin].mDock.normal.a
 
 	if E.db[mPlugin].mDock.normal.style == "class" then
 		Nr, Ng, Nb = class[1], class[2], class[3]
 	end
-	
+
 	if not self.mIcon then
 		self.mIcon = self:CreateTexture(nil, "ARTWORK")
 	end
@@ -45,7 +49,7 @@ local function mDockCreatIcon(self)
 	else
 		self.mIcon:SetTexture(self.mSettings.IconTexture)
 	end
-	
+
 	self.mIcon:ClearAllPoints()
 	self.mIcon:Point("CENTER")
 	self.mIcon:Size(self.XY, self.XY)
@@ -54,14 +58,18 @@ end
 
 local function mDockCreatmNotifications(self)
 	local XY = E.db[mPlugin].mDock.nottification.size
-	local r, g, b, a = E.db[mPlugin].mDock.nottification.r, E.db[mPlugin].mDock.nottification.g, E.db[mPlugin].mDock.nottification.b, E.db[mPlugin].mDock.nottification.a
+	local r, g, b, a =
+		E.db[mPlugin].mDock.nottification.r,
+		E.db[mPlugin].mDock.nottification.g,
+		E.db[mPlugin].mDock.nottification.b,
+		E.db[mPlugin].mDock.nottification.a
 
 	if E.db[mPlugin].mDock.nottification.style == "class" then
 		r, g, b, a = class[1], class[2], class[3], E.db[mPlugin].mDock.nottification.a
 	end
-	
+
 	if not self.mNotifications then
-		self.mNotifications	= self:CreateTexture(nil, "ARTWORK")
+		self.mNotifications = self:CreateTexture(nil, "ARTWORK")
 	end
 
 	self.mNotifications:SetTexture(E.db[mPlugin].mDock.nottification.path)
@@ -77,27 +85,27 @@ local function mDockCreatText(self)
 	if E.db[mPlugin].mDock.customfontzise then
 		FontSize = E.db[mPlugin].mDock.fontSize
 	else
-		FontSize = self.XY/3
+		FontSize = self.XY / 3
 	end
-	
+
 	if not self.mIcon.TextA then
 		self.mIcon.TextA = self:CreateFontString(self.mIcon, "OVERLAY", "GameTooltipText")
 	end
-	self.mIcon.TextA:SetFont(LSM:Fetch('font', E.db[mPlugin].mDock.font), FontSize, E.db[mPlugin].mDock.fontflag)
+	self.mIcon.TextA:SetFont(LSM:Fetch("font", E.db[mPlugin].mDock.font), FontSize, E.db[mPlugin].mDock.fontflag)
 	self.mIcon.TextA:ClearAllPoints()
 
 	if not self.mIcon.TextB then
 		self.mIcon.TextB = self:CreateFontString(self.mIcon, "OVERLAY", "GameTooltipText")
 	end
-	self.mIcon.TextB:SetFont(LSM:Fetch('font', E.db[mPlugin].mDock.font), FontSize, E.db[mPlugin].mDock.fontflag)
+	self.mIcon.TextB:SetFont(LSM:Fetch("font", E.db[mPlugin].mDock.font), FontSize, E.db[mPlugin].mDock.fontflag)
 	self.mIcon.TextB:ClearAllPoints()
 
 	if self.mSettings.Spezial then
 		self.mIcon.TextB:SetPoint("TOP", self.mIcon, "TOP", 0, 0)
 		if self.mSettings.Center then
-			self.mIcon.TextA:SetPoint("CENTER", self.mIcon, "CENTER" , 0 , 0)
+			self.mIcon.TextA:SetPoint("CENTER", self.mIcon, "CENTER", 0, 0)
 		else
-			self.mIcon.TextA:SetPoint("BOTTOM", self.mIcon, "BOTTOM" , 0 , 0)
+			self.mIcon.TextA:SetPoint("BOTTOM", self.mIcon, "BOTTOM", 0, 0)
 		end
 	else
 		self.mIcon.TextA:SetPoint("BOTTOMRIGHT", self.mIcon, "BOTTOMRIGHT", 0, 0)
@@ -116,17 +124,21 @@ function mMT:mOnEnter(self, timer)
 
 	if self.mSettings.Text and mMT:CheckCombatLockdown() then
 		if self.mIcon.TextA then
-			E:UIFrameFadeOut(self.mIcon.TextA, .25, 1, 0)
+			E:UIFrameFadeOut(self.mIcon.TextA, 0.25, 1, 0)
 		end
 
 		if self.mIcon.TextB then
-			E:UIFrameFadeOut(self.mIcon.TextB, .25, 1, 0)
+			E:UIFrameFadeOut(self.mIcon.TextB, 0.25, 1, 0)
 		end
 		self.isFaded = true
 	end
 
 	if mDock.isClicked then
-		local Cr, Cg, Cb, Ca = E.db[mPlugin].mDock.click.r, E.db[mPlugin].mDock.click.g, E.db[mPlugin].mDock.click.b, E.db[mPlugin].mDock.click.a
+		local Cr, Cg, Cb, Ca =
+			E.db[mPlugin].mDock.click.r,
+			E.db[mPlugin].mDock.click.g,
+			E.db[mPlugin].mDock.click.b,
+			E.db[mPlugin].mDock.click.a
 
 		if E.db[mPlugin].mDock.click.style == "class" then
 			Cr, Cg, Cb = class[1], class[2], class[3]
@@ -139,7 +151,11 @@ function mMT:mOnEnter(self, timer)
 			self.mIcon.isStarted = true
 		end
 	else
-		local Hr, Hg, Hb, Ha = E.db[mPlugin].mDock.hover.r, E.db[mPlugin].mDock.hover.g, E.db[mPlugin].mDock.hover.b, E.db[mPlugin].mDock.hover.a
+		local Hr, Hg, Hb, Ha =
+			E.db[mPlugin].mDock.hover.r,
+			E.db[mPlugin].mDock.hover.g,
+			E.db[mPlugin].mDock.hover.b,
+			E.db[mPlugin].mDock.hover.a
 
 		if E.db[mPlugin].mDock.hover.style == "class" then
 			Hr, Hg, Hb = class[1], class[2], class[3]
@@ -190,19 +206,23 @@ function mMT:mOnLeave(self)
 	local mDock = self.mIcon
 	mDock:Size(self.XY, self.XY)
 
-	if self.mSettings.Text  and self.isFaded then
+	if self.mSettings.Text and self.isFaded then
 		if self.mIcon.TextA then
-			E:UIFrameFadeIn(self.mIcon.TextA, .75, 0, 1)
+			E:UIFrameFadeIn(self.mIcon.TextA, 0.75, 0, 1)
 		end
 
 		if self.mIcon.TextB then
-			E:UIFrameFadeIn(self.mIcon.TextB, .75, 0, 1)
+			E:UIFrameFadeIn(self.mIcon.TextB, 0.75, 0, 1)
 		end
 		self.isFaded = false
 	end
 
 	if mDock.isClicked then
-		local Cr, Cg, Cb, Ca = E.db[mPlugin].mDock.click.r, E.db[mPlugin].mDock.click.g, E.db[mPlugin].mDock.click.b, E.db[mPlugin].mDock.click.a
+		local Cr, Cg, Cb, Ca =
+			E.db[mPlugin].mDock.click.r,
+			E.db[mPlugin].mDock.click.g,
+			E.db[mPlugin].mDock.click.b,
+			E.db[mPlugin].mDock.click.a
 
 		if E.db[mPlugin].mDock.click.style == "class" then
 			Cr, Cg, Cb = class[1], class[2], class[3]
@@ -210,13 +230,16 @@ function mMT:mOnLeave(self)
 
 		mDock:SetVertexColor(Cr, Cg, Cb, Ca)
 	else
-		local Nr, Ng, Nb, Na = E.db[mPlugin].mDock.normal.r, E.db[mPlugin].mDock.normal.g, E.db[mPlugin].mDock.normal.b, E.db[mPlugin].mDock.normal.a
+		local Nr, Ng, Nb, Na =
+			E.db[mPlugin].mDock.normal.r,
+			E.db[mPlugin].mDock.normal.g,
+			E.db[mPlugin].mDock.normal.b,
+			E.db[mPlugin].mDock.normal.a
 
 		if E.db[mPlugin].mDock.normal.style == "class" then
 			Nr, Ng, Nb = class[1], class[2], class[3]
 		end
 
-		
 		mDock:SetVertexColor(Nr, Ng, Nb, Na)
 	end
 
@@ -227,7 +250,11 @@ function mMT:mOnClick(self, timer)
 	local mDock = self.mIcon
 	if mDock.isClicked then
 		if mDock.isHover then
-			local Hr, Hg, Hb, Ha = E.db[mPlugin].mDock.hover.r, E.db[mPlugin].mDock.hover.g, E.db[mPlugin].mDock.hover.b, E.db[mPlugin].mDock.hover.a
+			local Hr, Hg, Hb, Ha =
+				E.db[mPlugin].mDock.hover.r,
+				E.db[mPlugin].mDock.hover.g,
+				E.db[mPlugin].mDock.hover.b,
+				E.db[mPlugin].mDock.hover.a
 
 			if E.db[mPlugin].mDock.hover.style == "class" then
 				Hr, Hg, Hb = class[1], class[2], class[3]
@@ -240,13 +267,17 @@ function mMT:mOnClick(self, timer)
 			self.mIcon.isStarted = false
 		end
 	else
-		local Cr, Cg, Cb, Ca = E.db[mPlugin].mDock.click.r, E.db[mPlugin].mDock.click.g, E.db[mPlugin].mDock.click.b, E.db[mPlugin].mDock.click.a
+		local Cr, Cg, Cb, Ca =
+			E.db[mPlugin].mDock.click.r,
+			E.db[mPlugin].mDock.click.g,
+			E.db[mPlugin].mDock.click.b,
+			E.db[mPlugin].mDock.click.a
 
 		if E.db[mPlugin].mDock.click.style == "class" then
 			Cr, Cg, Cb = class[1], class[2], class[3]
 		end
 
-		mDock.isClicked	= true
+		mDock.isClicked = true
 		mDock:SetVertexColor(Cr, Cg, Cb, Ca)
 		if timer then
 			if not self.mIcon.isStarted then
@@ -261,7 +292,11 @@ function mMT:DockTimer(self)
 	local mDock = self.mIcon
 
 	if mDock.isClicked then
-		local Cr, Cg, Cb, Ca = E.db[mPlugin].mDock.click.r, E.db[mPlugin].mDock.click.g, E.db[mPlugin].mDock.click.b, E.db[mPlugin].mDock.click.a
+		local Cr, Cg, Cb, Ca =
+			E.db[mPlugin].mDock.click.r,
+			E.db[mPlugin].mDock.click.g,
+			E.db[mPlugin].mDock.click.b,
+			E.db[mPlugin].mDock.click.a
 
 		if E.db[mPlugin].mDock.click.style == "class" then
 			Cr, Cg, Cb = class[1], class[2], class[3]
@@ -269,12 +304,16 @@ function mMT:DockTimer(self)
 
 		mDock:SetVertexColor(Cr, Cg, Cb, Ca)
 	else
-		local Nr, Ng, Nb, Na = E.db[mPlugin].mDock.normal.r, E.db[mPlugin].mDock.normal.g, E.db[mPlugin].mDock.normal.b, E.db[mPlugin].mDock.normal.a
+		local Nr, Ng, Nb, Na =
+			E.db[mPlugin].mDock.normal.r,
+			E.db[mPlugin].mDock.normal.g,
+			E.db[mPlugin].mDock.normal.b,
+			E.db[mPlugin].mDock.normal.a
 
 		if E.db[mPlugin].mDock.normal.style == "class" then
 			Nr, Ng, Nb = class[1], class[2], class[3]
 		end
-		
+
 		mDock:SetVertexColor(Nr, Ng, Nb, Na)
 		mMT:CancelTimer(self.CheckTimer)
 		mDock.isClicked = false
@@ -283,7 +322,11 @@ function mMT:DockTimer(self)
 end
 
 function mMT:DockNormalColor(self)
-	local Nr, Ng, Nb, Na = E.db[mPlugin].mDock.normal.r, E.db[mPlugin].mDock.normal.g, E.db[mPlugin].mDock.normal.b, E.db[mPlugin].mDock.normal.a
+	local Nr, Ng, Nb, Na =
+		E.db[mPlugin].mDock.normal.r,
+		E.db[mPlugin].mDock.normal.g,
+		E.db[mPlugin].mDock.normal.b,
+		E.db[mPlugin].mDock.normal.a
 	if E.db[mPlugin].mDock.normal.style == "class" then
 		Nr, Ng, Nb = class[1], class[2], class[3]
 	end
@@ -306,19 +349,19 @@ function mMT:DockInitialisation(self)
 		end
 	end
 
-	self.XY = self:GetHeight()+4
+	self.XY = self:GetHeight() + 4
 	if E.db[mPlugin].mDock.autogrow then
-		self.GrowXY = self.XY/2 + self.XY
+		self.GrowXY = self.XY / 2 + self.XY
 	else
 		self.GrowXY = E.db[mPlugin].mDock.growsize + self.XY
 	end
-	
+
 	mDockCreatIcon(self)
 
 	if self.mSettings.Notifications then
 		mDockCreatmNotifications(self)
 	end
-	
+
 	if self.mSettings.Text then
 		mDockCreatText(self)
 	end

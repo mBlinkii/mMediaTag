@@ -1,7 +1,7 @@
-local E, L, V, P, G = unpack(ElvUI);
+local E, L, V, P, G = unpack(ElvUI)
 local mPlugin = "mMediaTag"
-local mMT = E:GetModule(mPlugin);
-local DT = E:GetModule("DataTexts");
+local mMT = E:GetModule(mPlugin)
+local DT = E:GetModule("DataTexts")
 local addon, ns = ...
 
 --Lua functions
@@ -12,7 +12,7 @@ local mText = format("Dock %s", SPELLBOOK_ABILITIES_BUTTON)
 local mTextName = "mSpellBook"
 
 local function mDockCheckFrame()
-	return ( SpellBookFrame and SpellBookFrame:IsShown() )
+	return (SpellBookFrame and SpellBookFrame:IsShown())
 end
 
 function mMT:CheckFrameSpellBook(self)
@@ -51,12 +51,12 @@ local function OnLeave(self)
 end
 
 local function OnClick(self)
-	if mMT:CheckCombatLockdown()then
+	if mMT:CheckCombatLockdown() then
 		mMT:mOnClick(self, "CheckFrameSpellBook")
-		if not SpellBookFrame:IsShown() then 
-			ShowUIPanel(SpellBookFrame) 
-		else 
-			HideUIPanel(SpellBookFrame) 
+		if not SpellBookFrame:IsShown() then
+			ShowUIPanel(SpellBookFrame)
+		else
+			HideUIPanel(SpellBookFrame)
 		end
 	end
 end

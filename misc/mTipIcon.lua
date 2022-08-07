@@ -25,11 +25,11 @@ local function hookTip(tip)
 			local icon = link and GetItemIcon(link)
 			AddTooltipIcon(self, icon)
 		end)
-		
+
 		tip:HookScript("OnTooltipSetSpell", function(self, ...)
 			if self:GetSpell() then
 				local _, spellID = self:GetSpell()
-				local _, _, icon = GetSpellInfo(spellID) 
+				local _, _, icon = GetSpellInfo(spellID)
 				AddTooltipIcon(self, icon)
 			end
 		end)
@@ -38,8 +38,8 @@ end
 
 function mMT:TipIconSetup()
 	hookTip(_G["GameTooltip"])
-	hookTip(_G["ItemRefTooltip"])	
+	hookTip(_G["ItemRefTooltip"])
 	hookTip(_G["ShoppingTooltip1"])
-	hookTip(_G["ShoppingTooltip2"])	
+	hookTip(_G["ShoppingTooltip2"])
 	hookTip(_G["ShoppingTooltip3"])
 end

@@ -1,7 +1,7 @@
-local E, L, V, P, G = unpack(ElvUI);
+local E, L, V, P, G = unpack(ElvUI)
 local mPlugin = "mMediaTag"
-local mMT = E:GetModule(mPlugin);
-local DT = E:GetModule("DataTexts");
+local mMT = E:GetModule(mPlugin)
+local DT = E:GetModule("DataTexts")
 local addon, ns = ...
 
 --Lua functions
@@ -12,7 +12,7 @@ local mText = format("Dock %s", ACHIEVEMENT_BUTTON)
 local mTextName = "mAchievement"
 
 local function mDockCheckFrame()
-	return ( AchievementFrame and AchievementFrame:IsShown() )
+	return (AchievementFrame and AchievementFrame:IsShown())
 end
 
 function mMT:CheckFrameAchievement(self)

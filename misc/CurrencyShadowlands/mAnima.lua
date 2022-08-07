@@ -1,7 +1,7 @@
-local E, L, V, P, G = unpack(ElvUI);
+local E, L, V, P, G = unpack(ElvUI)
 local mPlugin = "mMediaTag"
-local mMT = E:GetModule(mPlugin);
-local DT = E:GetModule("DataTexts");
+local mMT = E:GetModule(mPlugin)
+local DT = E:GetModule("DataTexts")
 local addon, ns = ...
 
 --Lua functions
@@ -35,16 +35,16 @@ local function mBagCheck()
 
 	for bagID = BACKPACK_CONTAINER, NUM_BAG_SLOTS do
 		local slots = GetContainerNumSlots(bagID)
-		for slot=1, slots do
-			local itemID = select(10,GetContainerItemInfo(bagID,slot))
-			local itemCount = select(2,GetContainerItemInfo(bagID,slot))
-			local _,spellID = GetItemSpell(itemID)
+		for slot = 1, slots do
+			local itemID = select(10, GetContainerItemInfo(bagID, slot))
+			local itemCount = select(2, GetContainerItemInfo(bagID, slot))
+			local _, spellID = GetItemSpell(itemID)
 			if spellID and Animas[spellID] then
-				mAmount = mAmount + (Animas[spellID]*itemCount)
+				mAmount = mAmount + (Animas[spellID] * itemCount)
 			end
 		end
 	end
-	
+
 	return mAmount
 end
 
@@ -62,7 +62,7 @@ local function OnEvent(self, event, ...)
 	if info then
 		local name = ""
 		local CurrencValue, maxValue = info.quantity, info.maxQuantity
-		
+
 		if E.db[mPlugin].mAnima.hide and CurrencValue == 0 then
 			hideCurrency = true
 		else
@@ -71,13 +71,13 @@ local function OnEvent(self, event, ...)
 
 		if not hideCurrency then
 			if E.db[mPlugin].mAnima.name then
-				if TextJustify == "RIGHT" then 
+				if TextJustify == "RIGHT" then
 					name = " " .. info.name
 				else
 					name = info.name .. " "
 				end
 			end
-		
+
 			if E.db[mPlugin].mAnima.icon then
 				if TextJustify == "RIGHT" then
 					name = format("%s %s", name, mMT:mIcon(info.iconFileID))
@@ -85,16 +85,16 @@ local function OnEvent(self, event, ...)
 					name = format("%s %s", mMT:mIcon(info.iconFileID), name)
 				end
 			end
-		
+
 			if E.db[mPlugin].mAnima.short then
 				CurrencValue = E:ShortValue(info.quantity, 2)
 				maxValue = E:ShortValue(info.maxQuantity, 2)
 			end
-		
+
 			if E.db[mPlugin].mAnima.showmax then
 				CurrencValue = CurrencValue .. " / " .. maxValue
 			end
-		
+
 			if E.db[mPlugin].mAnima.bag then
 				local AnmimBag = mBagCheck()
 				if AnmimBag then
@@ -107,7 +107,7 @@ local function OnEvent(self, event, ...)
 					end
 				end
 			end
-		
+
 			local CurrencyTextSring = displayString
 
 			if E.db[mPlugin].mAnima.style == "color" then
@@ -119,7 +119,7 @@ local function OnEvent(self, event, ...)
 			elseif E.db[mPlugin].mAnima.style == "white" then
 				CurrencyTextSring = "|CFFFFFFFF%s%s|r"
 			end
-		
+
 			if TextJustify == "RIGHT" then
 				self.text:SetFormattedText(CurrencyTextSring, CurrencValue, name ~= "" and name)
 			else
@@ -129,7 +129,7 @@ local function OnEvent(self, event, ...)
 	else
 		self.text:SetText("|CFFE74C3CERROR!|r")
 	end
-	
+
 	lastPanel = self
 end
 
@@ -138,8 +138,8 @@ local function OnLeave(self)
 end
 
 local function ValueColorUpdate(hex)
-	displayString = strjoin('', '%s', hex, '%s|r')
-	
+	displayString = strjoin("", "%s", hex, "%s|r")
+
 	if lastPanel ~= nil then
 		OnEvent(lastPanel, "ELVUI_COLOR_UPDATE")
 	end
@@ -147,4 +147,15 @@ end
 
 E.valueColorUpdateFuncs[ValueColorUpdate] = true
 --'ITEM_PUSH', 'BAG_UPDATE'
-DT:RegisterDatatext(mTextName, _G.CURRENCY, {'CHAT_MSG_CURRENCY', 'CURRENCY_DISPLAY_UPDATE', 'BAG_UPDATE_DELAYED', 'ANIMA_DIVERSION_CLOSE'}, OnEvent, nil, nil, OnEnter, OnLeave, mText, ValueColorUpdate)
+DT:RegisterDatatext(
+	mTextName,
+	_G.CURRENCY,
+	{ "CHAT_MSG_CURRENCY", "CURRENCY_DISPLAY_UPDATE", "BAG_UPDATE_DELAYED", "ANIMA_DIVERSION_CLOSE" },
+	OnEvent,
+	nil,
+	nil,
+	OnEnter,
+	OnLeave,
+	mText,
+	ValueColorUpdate
+)

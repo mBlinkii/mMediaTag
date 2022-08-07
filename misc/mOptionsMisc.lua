@@ -1,7 +1,7 @@
-local E, L, V, P, G = unpack(ElvUI);
+local E, L, V, P, G = unpack(ElvUI)
 local mPlugin = "mMediaTag"
-local mMT = E:GetModule(mPlugin);
-local DT = E:GetModule("DataTexts");
+local mMT = E:GetModule(mPlugin)
+local DT = E:GetModule("DataTexts")
 local addon, ns = ...
 
 --Lua functions
@@ -21,7 +21,7 @@ local function OptionsProfession()
 		},
 		professionshowicon = {
 			order = 3,
-			type = 'toggle',
+			type = "toggle",
 			name = L["Show Datatext Icon"],
 			get = function(info)
 				return E.db[mPlugin].ProfessionMenu.showicon
@@ -33,7 +33,7 @@ local function OptionsProfession()
 		},
 		professionicon = {
 			order = 4,
-			type = 'toggle',
+			type = "toggle",
 			name = L["Icon"],
 			desc = L["Displays the icons for the professions in the menu."],
 			get = function(info)
@@ -55,7 +55,7 @@ local function OptionsSystemMenu()
 		},
 		systemmmenucolor = {
 			order = 3,
-			type = 'toggle',
+			type = "toggle",
 			name = L["Colored System Menu"],
 			desc = L["Activates a colored system menu."],
 			get = function(info)
@@ -67,7 +67,7 @@ local function OptionsSystemMenu()
 		},
 		systemmmenushowicon = {
 			order = 4,
-			type = 'toggle',
+			type = "toggle",
 			name = L["Show Datatext Icon"],
 			get = function(info)
 				return E.db[mPlugin].SystemMenu.showicon
@@ -79,7 +79,7 @@ local function OptionsSystemMenu()
 		},
 		systemmmenutipinstance = {
 			order = 5,
-			type = 'toggle',
+			type = "toggle",
 			name = L["Tooltip Instanceinfo"],
 			desc = L["Shows Inctance Info and Mythic Plus key tone in tooltip."],
 			get = function(info)
@@ -91,7 +91,7 @@ local function OptionsSystemMenu()
 		},
 		systemmmenuicons = {
 			order = 6,
-			type = 'toggle',
+			type = "toggle",
 			name = L["Menu item icons"],
 			get = function(info)
 				return E.db[mPlugin].SystemMenu.icons
@@ -112,7 +112,7 @@ local function OptionsSystemMenu()
 		},
 		systemmmenuinstancename = {
 			order = 8,
-			type = 'toggle',
+			type = "toggle",
 			name = L["Text to Instance Name"],
 			desc = L["Display the instance name instead of System Menu."],
 			get = function(info)
@@ -124,7 +124,7 @@ local function OptionsSystemMenu()
 		},
 		systemmmenuaffix = {
 			order = 9,
-			type = 'toggle',
+			type = "toggle",
 			name = L["Weekly Affixes"],
 			desc = L["Shows the Weekly Affixes."],
 			get = function(info)
@@ -136,7 +136,7 @@ local function OptionsSystemMenu()
 		},
 		systemmmenukeystone = {
 			order = 10,
-			type = 'toggle',
+			type = "toggle",
 			name = L["Tooltip Keystone"],
 			desc = L["Shows your Keystone in the tooltip."],
 			get = function(info)
@@ -148,7 +148,7 @@ local function OptionsSystemMenu()
 		},
 		systemmmenugreatvault = {
 			order = 11,
-			type = 'toggle',
+			type = "toggle",
 			name = L["Great Vault"],
 			desc = L["Show Greaut Vault infos in the Tooltip and opens the Great Vault"],
 			get = function(info)
@@ -160,7 +160,7 @@ local function OptionsSystemMenu()
 		},
 		systemmenuscore = {
 			order = 12,
-			type = 'toggle',
+			type = "toggle",
 			name = L["Mythic+ Score"],
 			get = function(info)
 				return E.db[mPlugin].SystemMenu.score
@@ -181,7 +181,7 @@ local function OptionsDungeon()
 		},
 		dungeonshowicon = {
 			order = 2,
-			type = 'toggle',
+			type = "toggle",
 			name = L["Show Datatext Icon"],
 			get = function(info)
 				return E.db[mPlugin].Dungeon.showicon
@@ -193,7 +193,7 @@ local function OptionsDungeon()
 		},
 		dungeontext = {
 			order = 3,
-			type = 'toggle',
+			type = "toggle",
 			name = L["Text to Instance Name"],
 			desc = L["Display the instance name instead of System Menu."],
 			get = function(info)
@@ -215,7 +215,7 @@ local function OptionsDungeon()
 		},
 		dungeonaffix = {
 			order = 6,
-			type = 'toggle',
+			type = "toggle",
 			name = L["Weekly Affixes"],
 			desc = L["Shows the Weekly Affixes."],
 			get = function(info)
@@ -227,7 +227,7 @@ local function OptionsDungeon()
 		},
 		dungeonkeaystone = {
 			order = 7,
-			type = 'toggle',
+			type = "toggle",
 			name = L["Tooltip Keystone"],
 			desc = L["Shows your Keystone in the tooltip."],
 			get = function(info)
@@ -244,7 +244,7 @@ local function OptionsDungeon()
 		},
 		dungeonscore = {
 			order = 13,
-			type = 'toggle',
+			type = "toggle",
 			name = L["Mythic+ Score"],
 			get = function(info)
 				return E.db[mPlugin].Dungeon.score

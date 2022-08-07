@@ -1,7 +1,7 @@
-local E, L, V, P, G = unpack(ElvUI);
+local E, L, V, P, G = unpack(ElvUI)
 local mPlugin = "mMediaTag"
-local mMT = E:GetModule(mPlugin);
-local DT = E:GetModule("DataTexts");
+local mMT = E:GetModule(mPlugin)
+local DT = E:GetModule("DataTexts")
 local addon, ns = ...
 
 --Lua functions
@@ -12,7 +12,7 @@ local mText = format("Dock %s", ENCOUNTER_JOURNAL)
 local mTextName = "mEncounterJournal"
 
 local function mDockCheckFrame()
-	return ( EncounterJournal and EncounterJournal:IsShown() )
+	return (EncounterJournal and EncounterJournal:IsShown())
 end
 
 function mMT:CheckFrameEncounterJournal(self)

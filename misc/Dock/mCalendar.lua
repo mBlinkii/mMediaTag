@@ -1,7 +1,7 @@
-local E, L, V, P, G = unpack(ElvUI);
+local E, L, V, P, G = unpack(ElvUI)
 local mPlugin = "mMediaTag"
-local mMT = E:GetModule(mPlugin);
-local DT = E:GetModule("DataTexts");
+local mMT = E:GetModule(mPlugin)
+local DT = E:GetModule("DataTexts")
 local addon, ns = ...
 
 --Lua functions
@@ -12,7 +12,7 @@ local mText = format("Dock %s", L["Calendar"])
 local mTextName = "mCalendar"
 
 local function mDockCheckFrame()
-	return ( CalendarFrame and CalendarFrame:IsShown() )
+	return (CalendarFrame and CalendarFrame:IsShown())
 end
 
 function mMT:CheckFrameCalendar(self)
@@ -47,7 +47,7 @@ local function OnEvent(self, event, ...)
 
 	mMT:DockInitialisation(self)
 
-	if EnableText then 
+	if EnableText then
 		local DateText = ""
 		local day, month, year = date("%d"), date("%m"), date("%y")
 		if E.db[mPlugin].mDock.calendar.showyear then
