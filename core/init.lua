@@ -25,11 +25,6 @@ ns.MiddleButtonIcon = format("|T%s:16:16:0:0:32:32|t", "Interface\\AddOns\\ElvUI
 ns.eltreumui = false -- check auf eltreumui
 ns.Config = {} -- addon einstellung werden hier gesammelt
 
--- rolen texturen ersetzen
-E.Media.Textures.RolesHQ = "Interface\\AddOns\\ElvUI_mMediaTag\\media\\icons\\RolesHQ.tga"
-E.Media.Textures.RoleIcons = "Interface\\AddOns\\ElvUI_mMediaTag\\media\\icons\\RoleIcons.tga"
-E.Media.Textures.LeaderHQ = "Interface\\AddOns\\ElvUI_mMediaTag\\media\\icons\\LeaderHQ.tga"
-
 -- einstellungen in elvui eintragen
 function mMT:AddOptions()
 	for _, func in pairs(ns.Config) do
@@ -44,6 +39,7 @@ function mMT:Initialize()
 	mMT:mMisc() -- module laden
 
 	EP:RegisterPlugin(addon, mMT:AddOptions()) -- einstellungen in elvui eintragen
+	ns.Config = {} -- tabele löschen
 
 	if _G.MediaTagGameVersion.retail and E.Retail then
 		mMT:RegisterEvent("PLAYER_ENTERING_WORLD") -- events registrieren

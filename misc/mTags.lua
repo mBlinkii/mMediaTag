@@ -1042,13 +1042,11 @@ end)
 
 local function mGetTargetTexture(second)
 	local _, unitClass = UnitClass("player")
-	local mTargetStringOne = "|TInterface\\AddOns\\ElvUI_mMediaTag\\media\\misc\\target%s.tga:16:16:0:0:32:32|t"
-	local mTargetStringTwo = "|TInterface\\AddOns\\ElvUI_mMediaTag\\media\\misc\\target%s2.tga:16:16:0:0:32:32|t"
 
 	if second then
-		return format(mTargetStringTwo, unitClass)
+		return format("|TInterface\\AddOns\\ElvUI_mMediaTag\\media\\misc\\target%s2.tga:16:16:0:0:32:32|t", unitClass)
 	else
-		return format(mTargetStringOne, unitClass)
+		return format("|TInterface\\AddOns\\ElvUI_mMediaTag\\media\\misc\\target%s.tga:16:16:0:0:32:32|t", unitClass)
 	end
 end
 

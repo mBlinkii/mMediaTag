@@ -313,6 +313,7 @@ mAddStatusbar("mMediaTag P18", "p18.tga")
 mAddStatusbar("mMediaTag Q1", "q1.tga")
 mAddStatusbar("mMediaTag Q2", "q2.tga")
 mAddStatusbar("mMediaTag Q3", "q3.tga")
+mAddStatusbar("mMediaTag Q4", "q4.tga")
 
 mAddStatusbar("mMediaTag Wglass", "Wglass.tga")
 

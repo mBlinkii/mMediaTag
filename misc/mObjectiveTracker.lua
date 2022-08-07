@@ -108,6 +108,7 @@ local function mGardientProgressBars(self, value)
 		return
 	end
 	local r, g, b = E:ColorGradient(current, 0.8, 0, 0, 0.8, 0.8, 0, 0, 0.8, 0)
+	self.Bar.backdrop:SetBackdropColor(E.db.general.backdropfadecolor.r, E.db.general.backdropfadecolor.g, E.db.general.backdropfadecolor.b, E.db.general.backdropfadecolor.a)
 	mSetGradient(
 		self.Bar,
 		E.db[mPlugin].mObjectiveTracker.text.reverse,
