@@ -393,7 +393,7 @@ P[mPlugin] = {
 		["ghostname"] = "SKULL10",
 		["ghostpath"] = "Interface\\AddOns\\ElvUI_mMediaTag\\media\\misc\\skull10.tga",
 	},
-	["mRoleSymbols"] = { ["enable"] = true, ["tank"] = "tank14", ["heal"] = "heal9", ["dd"] = "dd7" },
+	["mRoleSymbols"] = { ["enable"] = true, ["tank"] = "shield6", ["heal"] = "cross18", ["dd"] = "bigsword1" },
 	["mCastbar"] = {
 		["enable"] = true,
 		kickcd = { ["r"] = 0.545098, ["g"] = 0, ["b"] = 0.545098 },

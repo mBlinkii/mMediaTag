@@ -15,10 +15,10 @@ local function mSetupIcons()
 		local path = ""
 		mIcons = {}
 
-		--tank
+		--shield
 		for i = 1, 26, 1 do
-			path = format("Interface\\AddOns\\ElvUI_mMediaTag\\media\\icons\\tank%s.tga", i)
-			mIcons["tank" .. i] = { ["file"] = path, ["icon"] = E:TextureString(path, sizeString) .. "tank" .. i }
+			path = format("Interface\\AddOns\\ElvUI_mMediaTag\\media\\icons\\shield%s.tga", i)
+			mIcons["shield" .. i] = { ["file"] = path, ["icon"] = E:TextureString(path, sizeString) .. "shield" .. i }
 		end
 
 		--thermostat
@@ -34,10 +34,10 @@ local function mSetupIcons()
 			mIcons["cookie" .. i] = { ["file"] = path, ["icon"] = E:TextureString(path, sizeString) .. "cookie" .. i }
 		end
 
-		--heal
-		for i = 1, 10, 1 do
-			path = format("Interface\\AddOns\\ElvUI_mMediaTag\\media\\icons\\heal%s.tga", i)
-			mIcons["heal" .. i] = { ["file"] = path, ["icon"] = E:TextureString(path, sizeString) .. "heal" .. i }
+		--cross
+		for i = 1, 18, 1 do
+			path = format("Interface\\AddOns\\ElvUI_mMediaTag\\media\\icons\\cross%s.tga", i)
+			mIcons["cross" .. i] = { ["file"] = path, ["icon"] = E:TextureString(path, sizeString) .. "cross" .. i }
 		end
 
 		--star
@@ -65,10 +65,16 @@ local function mSetupIcons()
 			mIcons["heart" .. i] = { ["file"] = path, ["icon"] = E:TextureString(path, sizeString) .. "heart" .. i }
 		end
 
-		--dd
-		for i = 1, 16, 1 do
-			path = format("Interface\\AddOns\\ElvUI_mMediaTag\\media\\icons\\dd%s.tga", i)
-			mIcons["dd" .. i] = { ["file"] = path, ["icon"] = E:TextureString(path, sizeString) .. "dd" .. i }
+		--sword
+		for i = 1, 12, 1 do
+			path = format("Interface\\AddOns\\ElvUI_mMediaTag\\media\\icons\\sword%s.tga", i)
+			mIcons["sword" .. i] = { ["file"] = path, ["icon"] = E:TextureString(path, sizeString) .. "sword" .. i }
+		end
+
+		--bigsword
+		for i = 1, 12, 1 do
+			path = format("Interface\\AddOns\\ElvUI_mMediaTag\\media\\icons\\bigsword%s.tga", i)
+			mIcons["bigsword" .. i] = { ["file"] = path, ["icon"] = E:TextureString(path, sizeString) .. "bigsword" .. i }
 		end
 
 		--beer
@@ -109,12 +115,19 @@ local function mSetupIcons()
 			mIcons["moon" .. i] = { ["file"] = path, ["icon"] = E:TextureString(path, sizeString) .. "moon" .. i }
 		end
 
+		--crown
+		for i = 1, 3, 1 do
+			path = format("Interface\\AddOns\\ElvUI_mMediaTag\\media\\icons\\crown%s.tga", i)
+			mIcons["crown" .. i] = { ["file"] = path, ["icon"] = E:TextureString(path, sizeString) .. "crown" .. i }
+		end
+
 		if not mIconsList then
 			mIconsList = {}
 			for i in pairs(mIcons) do
 				mIconsList[i] = mIcons[i].icon
 			end
 		end
+		mIcons = nil
 	end
 end
 
