@@ -2,6 +2,10 @@
 [Eng] - All changes to this project will be documented in this file. The latest changes are at the top.
 [Ger] - Alle Änderungen an diesem Projekt werden in dieser Datei dokumentiert. Die neuesten Änderungen stehen ganz oben.
 
+## [ver. 2.84.1] - 12.08.2022
+### Added
+- Interrupt on CD API - _G.mMediaTag_interruptinTime or _G.mMediaTag_interruptOnCD
+
 ## [ver. 2.84] - 08.08.2022
 ### Update
 - Bugfix Roleicons wrong Icons
