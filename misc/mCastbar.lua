@@ -11,6 +11,12 @@ local GetActiveSpecGroup = GetActiveSpecGroup
 local GetSpellCooldown = GetSpellCooldown
 local interruptSpellId = nil
 
+_G.mMediaTag_interruptOnCD = false
+_G.mMediaTag_interruptinTime = false
+
+local interruptOnCD = _G.mMediaTag_interruptOnCD
+local interruptinTime = _G.mMediaTag_interruptinTime
+
 local interruptSpellList = {
 	-- warrior
 	[71] = 6552,
@@ -125,10 +131,15 @@ function mMT:mSetupCastbar()
 				if not unit.notInterruptible then
 					if interruptCD > 0 and (interruptCD + 0.5) < (statusMax - value) then
 						unit:SetStatusBarColor(colorKickinTime.r, colorKickinTime.g, colorKickinTime.b)
+						interruptOnCD = true
 					elseif interruptCD > 0 then
 						unit:SetStatusBarColor(colorKickonCD.r, colorKickonCD.g, colorKickonCD.b)
+						interruptinTime = true
 						--else
 						--	unit:SetStatusBarColor(NP.db.colors.castColor.r, NP.db.colors.castColor.g, NP.db.colors.castColor.b)
+					else
+						interruptinTime = false
+						interruptOnCD = false
 					end
 				end
 			end
