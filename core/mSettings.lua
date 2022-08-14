@@ -395,8 +395,8 @@ P[mPlugin] = {
 	},
 	["mRoleSymbols"] = { ["enable"] = true, ["tank"] = "shield6", ["heal"] = "cross18", ["dd"] = "bigsword1" },
 	["mCastbar"] = {
-		["enable"] = true,
-		kickcd = { ["r"] = 0.545098, ["g"] = 0, ["b"] = 0.545098 },
-		kickintime = { ["r"] = 0, ["g"] = 0.74902, ["b"] = 1 },
+		["enable"] = true, ["gardient"] = false,
+		["kickcd"] = { ["r"] = 0.545098, ["g"] = 0, ["b"] = 0.545098, ["r2"] = 0.545098, ["g2"] = 0, ["b2"] = 0.545098 },
+		["kickintime"] = { ["r"] = 0, ["g"] = 0.74902, ["b"] = 1, ["r2"] = 0, ["g2"] = 0.74902, ["b2"] = 1 },
 	},
 }
