@@ -2,6 +2,14 @@
 [Eng] - All changes to this project will be documented in this file. The latest changes are at the top.
 [Ger] - Alle Änderungen an diesem Projekt werden in dieser Datei dokumentiert. Die neuesten Änderungen stehen ganz oben.
 
+## [ver. 2.85] - 17.08.2022
+### Update
+- Toc update
+### Added
+- New Caith UI Textures and Borders thx to Caith
+- New PVP Icon
+- New Support for Castbar Gardient mode
+
 ## [ver. 2.84.1] - 12.08.2022
 ### Added
 - Interrupt on CD API - _G.mMediaTag_interruptinTime or _G.mMediaTag_interruptOnCD

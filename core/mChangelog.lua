@@ -10,7 +10,7 @@ local format = format
 --Variables
 local ChangelogDate = "21.07.2022"
 local ChangelogText =
-	"## [ver. 2.83] - 21.07.2022\n### Update\n- Update Roleicons\n- removed Season 2 Archivment information from Tooltip\n- Bugfix Roleicons\n### Added\n- New System Menu Icons\n- New Border Texture\n- New Textures\n- New Textures N38v2 and v3 Thx to Vxt\n- Objective Tracker, fixed bug in Custom Dash icon, add Gardient mode for the Headerbar and biger Bar settings, add support for EltreumUI gardientmode custom colors"
+	"## [ver. 2.85] - 17.08.2022\n### Update\n- Toc update\n### Added\n- New Caith UI Textures and Borders thx to Caith\n- New PVP Icon\n- New Support for Castbar Gardient mode"
 
 function mMT:Changelog(opt)
 	local Frame = CreateFrame("Frame", "mMediaTagChangelog", E.UIParent, "BackdropTemplate")
