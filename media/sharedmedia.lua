@@ -315,7 +315,8 @@ mAddStatusbar("mMediaTag Q2", "q2.tga")
 mAddStatusbar("mMediaTag Q3", "q3.tga")
 mAddStatusbar("mMediaTag Q4", "q4.tga")
 
-mAddStatusbar("mMediaTag Wglass", "Wglass.tga")
+mAddStatusbar("mMediaTag Caith UI 1", "Wglass.tga")
+mAddStatusbar("mMediaTag Caith UI 2", "Wisps.tga")
 
 mAddStatusbar("MaUIv3", "MaUIv3.tga")
 

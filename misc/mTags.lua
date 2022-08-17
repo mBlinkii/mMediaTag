@@ -850,19 +850,7 @@ end)
 E:AddTag("mPvP:icon", "UNIT_FACTION", function(unit)
 	local factionGroup = UnitFactionGroup(unit)
 	if (UnitIsPVP(unit)) and (factionGroup == "Horde" or factionGroup == "Alliance") then
-		return CreateTextureMarkup(
-			"Interface\\FriendsFrame\\PlusManz-" .. factionGroup,
-			16,
-			16,
-			16,
-			16,
-			0,
-			1,
-			0,
-			1,
-			0,
-			0
-		)
+		return "|TInterface\\AddOns\\ElvUI_mMediaTag\\media\\icons\\pvp.tga:16:16:0:0:64:64|t"
 	end
 end)
 

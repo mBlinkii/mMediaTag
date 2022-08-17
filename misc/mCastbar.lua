@@ -100,12 +100,24 @@ function mMT:mSetupCastbar()
 
 				if not unit.notInterruptible then
 					if interruptCD > 0 and interruptReadyInTime then
-						unit:SetStatusBarColor(colorKickinTime.r, colorKickinTime.g, colorKickinTime.b)
+						if E.db[mPlugin].mCastbar.gardient then
+							unit:GetStatusBarTexture():SetGradient("HORIZONTAL", colorKickinTime.r, colorKickinTime.g, colorKickinTime.b, colorKickinTime.r2, colorKickinTime.g2, colorKickinTime.b2)
+						else
+							unit:SetStatusBarColor(colorKickinTime.r, colorKickinTime.g, colorKickinTime.b)
+						end
+						--unit:SetStatusBarColor(colorKickinTime.r, colorKickinTime.g, colorKickinTime.b)
 					elseif interruptCD > 0 then
-						unit:SetStatusBarColor(colorKickonCD.r, colorKickonCD.g, colorKickonCD.b)
+						if E.db[mPlugin].mCastbar.gardient then
+							unit:GetStatusBarTexture():SetGradient("HORIZONTAL", colorKickonCD.r, colorKickonCD.g, colorKickonCD.b, colorKickonCD.r2, colorKickonCD.g2, colorKickonCD.b2)
+						else
+							unit:SetStatusBarColor(colorKickonCD.r, colorKickonCD.g, colorKickonCD.b)
+						end
+						--unit:SetStatusBarColor(colorKickonCD.r, colorKickonCD.g, colorKickonCD.b)
 						--else
 						--	unit:SetStatusBarColor(NP.db.colors.castColor.r, NP.db.colors.castColor.g, NP.db.colors.castColor.b)
 					end
+
+
 				end
 			end
 		end)
@@ -121,6 +133,7 @@ function mMT:mSetupCastbar()
 			end
 
 			local interruptCD = 0
+			local interruptReadyInTime = false
 
 			if interruptSpellId then
 				local cdStart, cdDur = GetSpellCooldown(interruptSpellId)
@@ -128,12 +141,28 @@ function mMT:mSetupCastbar()
 				local value = unit:GetValue()
 				interruptCD = (cdStart > 0 and cdDur - (GetTime() - cdStart)) or 0
 
+				if unit.channeling then
+					interruptReadyInTime = (interruptCD + 0.5) < value
+				else
+					interruptReadyInTime = (interruptCD + 0.5) < (statusMax - value)
+				end
+
 				if not unit.notInterruptible then
-					if interruptCD > 0 and (interruptCD + 0.5) < (statusMax - value) then
-						unit:SetStatusBarColor(colorKickinTime.r, colorKickinTime.g, colorKickinTime.b)
+					if interruptCD > 0 and interruptReadyInTime then
+						if E.db[mPlugin].mCastbar.gardient then
+							unit:GetStatusBarTexture():SetGradient("HORIZONTAL", colorKickinTime.r, colorKickinTime.g, colorKickinTime.b, colorKickinTime.r2, colorKickinTime.g2, colorKickinTime.b2)
+						else
+							unit:SetStatusBarColor(colorKickinTime.r, colorKickinTime.g, colorKickinTime.b)
+						end
+						--unit:SetStatusBarColor(colorKickinTime.r, colorKickinTime.g, colorKickinTime.b)
 						interruptOnCD = true
 					elseif interruptCD > 0 then
-						unit:SetStatusBarColor(colorKickonCD.r, colorKickonCD.g, colorKickonCD.b)
+						if E.db[mPlugin].mCastbar.gardient then
+							unit:GetStatusBarTexture():SetGradient("HORIZONTAL", colorKickonCD.r, colorKickonCD.g, colorKickonCD.b, colorKickonCD.r2, colorKickonCD.g2, colorKickonCD.b2)
+						else
+							unit:SetStatusBarColor(colorKickonCD.r, colorKickonCD.g, colorKickonCD.b)
+						end
+						--unit:SetStatusBarColor(colorKickonCD.r, colorKickonCD.g, colorKickonCD.b)
 						interruptinTime = true
 						--else
 						--	unit:SetStatusBarColor(NP.db.colors.castColor.r, NP.db.colors.castColor.g, NP.db.colors.castColor.b)
@@ -177,6 +206,18 @@ local function mCastbarOptions()
 			type = "description",
 			name = "\n\n",
 		},
+		gardient = {
+			order = 1,
+			type = "toggle",
+			name = L["Enable gardient mode"],
+			desc = L["Enable gardient mode"],
+			get = function(info)
+				return E.db[mPlugin].mCastbar.gardient
+			end,
+			set = function(info, value)
+				E.db[mPlugin].mCastbar.gardient = value
+			end,
+		},
 		colorkickcd = {
 			type = "color",
 			order = 11,
@@ -191,9 +232,31 @@ local function mCastbarOptions()
 				t.r, t.g, t.b = r, g, b
 			end,
 		},
-		colorkickintime = {
+		colorkickcd2 = {
 			type = "color",
 			order = 12,
+			name = L["Kick on CD"],
+			hasAlpha = false,
+			disabled = function()
+				return not E.db[mPlugin].mCastbar.gardient
+			end,
+			get = function(info)
+				local t = E.db[mPlugin].mCastbar.kickcd
+				return t.r2, t.g2, t.b2
+			end,
+			set = function(info, r, g, b)
+				local t = E.db[mPlugin].mCastbar.kickcd
+				t.r2, t.g2, t.b2 = r, g, b
+			end,
+		},
+		spacer3 = {
+			order = 13,
+			type = "description",
+			name = "\n\n",
+		},
+		colorkickintime = {
+			type = "color",
+			order = 14,
 			name = L["Kick ready in Time"],
 			hasAlpha = false,
 			get = function(info)
@@ -203,6 +266,23 @@ local function mCastbarOptions()
 			set = function(info, r, g, b)
 				local t = E.db[mPlugin].mCastbar.kickintime
 				t.r, t.g, t.b = r, g, b
+			end,
+		},
+		colorkickintime2 = {
+			type = "color",
+			order = 15,
+			name = L["Kick ready in Time"],
+			hasAlpha = false,
+			disabled = function()
+				return not E.db[mPlugin].mCastbar.gardient
+			end,
+			get = function(info)
+				local t = E.db[mPlugin].mCastbar.kickintime
+				return t.r2, t.g2, t.b2
+			end,
+			set = function(info, r, g, b)
+				local t = E.db[mPlugin].mCastbar.kickintime
+				t.r2, t.g2, t.b2 = r, g, b
 			end,
 		},
 	}
