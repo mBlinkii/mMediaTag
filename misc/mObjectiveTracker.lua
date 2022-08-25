@@ -245,19 +245,12 @@ local function mCreatBar(modul)
 	BarShadow = E.db[mPlugin].mObjectiveTracker.header.barshadow
 	BarGardient = E.db[mPlugin].mObjectiveTracker.header.gradient
 	BarGardientReverse = E.db[mPlugin].mObjectiveTracker.header.reverse
-	mEltreumUI = E.db[mPlugin].mObjectiveTracker.header.eltreumui
 
 	if (BarStyle == "one") or (BarStyle == "two") or (BarStyle == "onebig") or (BarStyle == "twobig") then
 		if BarColorStyle == "class" then
 			BarColor = { r = mClassColor[1], g = mClassColor[2], b = mClassColor[3] }
 		end
-		local BarTexture = LSM:Fetch("statusbar", "Solid")
-
-		if E.db[mPlugin].mObjectiveTracker.header.dark then
-			BarTexture = LSM:Fetch("statusbar", "mMediaTag A2")
-		elseif ns.eltreumui and mEltreumUI then
-			BarTexture = LSM:Fetch("statusbar", E.db.ElvUI_EltreumUI.gradientmode.texture)
-		end
+		local BarTexture = LSM:Fetch("statusbar", E.db[mPlugin].mObjectiveTracker.header.texture)
 
 		local mBarOne = CreateFrame("StatusBar", nil, modul)
 		mBarOne:SetFrameStrata("BACKGROUND")
@@ -272,31 +265,17 @@ local function mCreatBar(modul)
 		mBarOne:CreateBackdrop()
 
 		if BarGardient then
-			if ns.eltreumui and mEltreumUI then
-				mSetGradient(
-					mBarOne,
-					BarGardientReverse,
-					"HORIZONTAL",
-					ns.unitframecustomgradients[E.myclass]["r1"],
-					ns.unitframecustomgradients[E.myclass]["g1"],
-					ns.unitframecustomgradients[E.myclass]["b1"],
-					ns.unitframecustomgradients[E.myclass]["r2"],
-					ns.unitframecustomgradients[E.myclass]["g2"],
-					ns.unitframecustomgradients[E.myclass]["b2"]
-				)
-			else
-				mSetGradient(
-					mBarOne,
-					BarGardientReverse,
-					"HORIZONTAL",
-					BarColor.r - 0.5,
-					BarColor.g - 0.5,
-					BarColor.b - 0.5,
-					BarColor.r,
-					BarColor.g,
-					BarColor.b
-				)
-			end
+			mSetGradient(
+				mBarOne,
+				BarGardientReverse,
+				"HORIZONTAL",
+				BarColor.r - 0.2,
+				BarColor.g - 0.2,
+				BarColor.b - 0.2,
+				BarColor.r,
+				BarColor.g,
+				BarColor.b
+			)
 		end
 
 		if BarShadow then
@@ -316,26 +295,14 @@ local function mCreatBar(modul)
 			mBarTwo:SetStatusBarColor(BarColor.r, BarColor.g, BarColor.b)
 			mBarTwo:CreateBackdrop()
 
-			if ns.eltreumui and mEltreumUI then
+			if BarGardient then
 				mSetGradient(
 					mBarTwo,
 					BarGardientReverse,
 					"HORIZONTAL",
-					ns.unitframecustomgradients[E.myclass]["r1"],
-					ns.unitframecustomgradients[E.myclass]["g1"],
-					ns.unitframecustomgradients[E.myclass]["b1"],
-					ns.unitframecustomgradients[E.myclass]["r2"],
-					ns.unitframecustomgradients[E.myclass]["g2"],
-					ns.unitframecustomgradients[E.myclass]["b2"]
-				)
-			else
-				mSetGradient(
-					mBarTwo,
-					BarGardientReverse,
-					"HORIZONTAL",
-					BarColor.r - 0.5,
-					BarColor.g - 0.5,
-					BarColor.b - 0.5,
+					BarColor.r - 0.2,
+					BarColor.g - 0.2,
+					BarColor.b - 0.2,
 					BarColor.r,
 					BarColor.g,
 					BarColor.b
@@ -861,33 +828,17 @@ local function mObjectiveTrackerOptions()
 						E:StaticPopup_Show("CONFIG_RL")
 					end,
 				},
-				headerbargardienteltreumui = {
+				headerbartexture = {
 					order = 12,
-					type = "toggle",
-					name = L["Bar Gardient EltreumUI custom colors"],
-					disabled = function()
-						return (E.db[mPlugin].mObjectiveTracker.header.barstyle == "none")
-					end,
+					type = "select",
+					dialogControl = "LSM30_Statusbar",
+					name = L["Bar Texture"],
+					values = LSM:HashTable("statusbar"),
 					get = function(info)
-						return E.db[mPlugin].mObjectiveTracker.header.eltreumui
+						return E.db[mPlugin].mObjectiveTracker.header.texture
 					end,
 					set = function(info, value)
-						E.db[mPlugin].mObjectiveTracker.header.eltreumui = value
-						E:StaticPopup_Show("CONFIG_RL")
-					end,
-				},
-				headerbardark = {
-					order = 13,
-					type = "toggle",
-					name = L["dark Bar"],
-					disabled = function()
-						return (E.db[mPlugin].mObjectiveTracker.header.barstyle == "none")
-					end,
-					get = function(info)
-						return E.db[mPlugin].mObjectiveTracker.header.dark
-					end,
-					set = function(info, value)
-						E.db[mPlugin].mObjectiveTracker.header.dark = value
+						E.db[mPlugin].mObjectiveTracker.header.texture = value
 						E:StaticPopup_Show("CONFIG_RL")
 					end,
 				},

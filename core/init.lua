@@ -22,7 +22,6 @@ ns.mVersion = GetAddOnMetadata(addon, "Version") -- addon version
 ns.LeftButtonIcon = format("|T%s:16:16:0:0:32:32|t", "Interface\\AddOns\\ElvUI_mMediaTag\\media\\misc\\mouse_l.tga") -- maus icon für ttip
 ns.RightButtonIcon = format("|T%s:16:16:0:0:32:32|t", "Interface\\AddOns\\ElvUI_mMediaTag\\media\\misc\\mouse_r.tga") -- maus icon für ttip
 ns.MiddleButtonIcon = format("|T%s:16:16:0:0:32:32|t", "Interface\\AddOns\\ElvUI_mMediaTag\\media\\misc\\mouse_m.tga") -- maus icon für ttip
-ns.eltreumui = false -- check auf eltreumui
 ns.Config = {} -- addon einstellung werden hier gesammelt
 
 -- einstellungen in elvui eintragen
@@ -38,13 +37,16 @@ function mMT:Initialize()
 
 	mMT:mMisc() -- module laden
 
-	EP:RegisterPlugin(addon, mMT:AddOptions()) -- einstellungen in elvui eintragen
-	ns.Config = {} -- tabele löschen
-
 	if _G.MediaTagGameVersion.retail and E.Retail then
+		if E.db[mPlugin].mHealthmarker.enabl or E.db[mPlugin].mExecutemarker.enable then
+			mMT:StartNameplateTools()
+		end
 		mMT:RegisterEvent("PLAYER_ENTERING_WORLD") -- events registrieren
 		mMT:RegisterEvent("ACTIVE_TALENT_GROUP_CHANGED") -- events registrieren
 	end
+
+	EP:RegisterPlugin(addon, mMT:AddOptions()) -- einstellungen in elvui eintragen
+	ns.Config = {} -- tabele löschen
 end
 
 function mMT:PLAYER_ENTERING_WORLD()

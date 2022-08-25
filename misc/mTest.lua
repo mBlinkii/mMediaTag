@@ -2,8 +2,9 @@ local E, L, V, P, G = unpack(ElvUI)
 local mPlugin = "mMediaTag"
 local mMT = E:GetModule(mPlugin)
 
--- local NP = E:GetModule('NamePlates')
-local UF = E:GetModule('UnitFrames')
+local NP = E:GetModule("NamePlates")
+local UF = E:GetModule("UnitFrames")
+local LSM = LibStub("LibSharedMedia-3.0")
 -- local LSM = E.Libs.LSM
 
 -- local ipairs = ipairs
@@ -17,26 +18,26 @@ local UF = E:GetModule('UnitFrames')
 local addon, ns = ...
 
 local function mPrint(text)
-	print(ns.name .. "  " .. text)
+	print("|CFF8E44ADm|r|CFF2ECC71Media|r|CFF3498DBTag|r" .. "  " .. text)
 end
+
+local mInsert = table.insert
 
 local function CustomBackdrop(table, frame, r, g, b)
 	-- print("--------------> Start")
 	-- for k, v in pairs(table.backdrop) do
 	-- 	print(k, v)
 	-- end
-if not table.backdrop.mTexture then
 	--table.backdrop:SetTexture("Interface\\AddOns\\ElvUI_mMediaTag\\media\\textures\\a4.tga")
-	table.bg:SetTexture("Interface\\AddOns\\ElvUI_mMediaTag\\media\\textures\\p6.tga")
-	--table.bg.multiplier = 1
-	--table.backdrop.mTexture:SetTexture("Interface\\AddOns\\ElvUI_mMediaTag\\media\\textures\\a4.tga")
+	if table.bg then
+		table.bg:SetTexture("Interface\\AddOns\\ElvUI_mMediaTag\\media\\textures\\p6.tga")
+	end
+end
 
-	--table.backdrop.mTexture:ClearAllPoints()
-	--table.backdrop.mTexture:Point("CENTER")
-	--table.backdrop.mTexture:Size(self.XY, self.XY)
-	--table.backdrop.mTexture:SetVertexColor(Nr, Ng, Nb, Na)
+local function mhealtmarkerOptions()
+
 end
-	
-end
+
+--mInsert(ns.Config, mhealtmarkerOptions)
 
 hooksecurefunc(UF, "PostUpdateHealthColor", CustomBackdrop)

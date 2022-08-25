@@ -158,6 +158,12 @@ local function OptionsCore()
 						name = L["Mythic plus Tools"],
 						args = {},
 					},
+					healtmarker = {
+						order = 50,
+						type = "group",
+						name = L["Nameplate Healthmarkers"],
+						args = {},
+					},
 					tools = {
 						order = 60,
 						type = "group",
