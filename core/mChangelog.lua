@@ -8,9 +8,9 @@ local addon, ns = ...
 local format = format
 
 --Variables
-local ChangelogDate = "21.07.2022"
+local ChangelogDate = "25.08.2022"
 local ChangelogText =
-	"## [ver. 2.85] - 17.08.2022\n### Update\n- Toc update\n### Added\n- New Caith UI Textures and Borders thx to Caith\n- New PVP Icon\n- New Support for Castbar Gardient mode"
+	"## [ver. 2.86] - 25.08.2022\n### Update\n- Bugfix Objective Tracker skin\n- Objective Tracker Texture for Bar\n### Added\n- New Nameplate Healthmarkers for NPC\n- New Nameplate Execute Marker"
 
 function mMT:Changelog(opt)
 	local Frame = CreateFrame("Frame", "mMediaTagChangelog", E.UIParent, "BackdropTemplate")
