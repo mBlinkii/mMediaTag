@@ -38,7 +38,7 @@ function mMT:Initialize()
 	mMT:mMisc() -- module laden
 
 	if _G.MediaTagGameVersion.retail and E.Retail then
-		if E.db[mPlugin].mHealthmarker.enabl or E.db[mPlugin].mExecutemarker.enable then
+		if E.db[mPlugin].mHealthmarker.enable or E.db[mPlugin].mExecutemarker.enable then
 			mMT:StartNameplateTools()
 		end
 		mMT:RegisterEvent("PLAYER_ENTERING_WORLD") -- events registrieren
