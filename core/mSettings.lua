@@ -355,9 +355,8 @@ P[mPlugin] = {
 			["barshadow"] = true,
 			["questcount"] = "right",
 			["gradient"] = true,
-			["eltreumui"] = false,
+			["texture"] = "Solid",
 			["reverse"] = false,
-			["dark"] = false,
 		},
 		["title"] = {
 			["fontsize"] = 13,
@@ -395,8 +394,29 @@ P[mPlugin] = {
 	},
 	["mRoleSymbols"] = { ["enable"] = true, ["tank"] = "shield6", ["heal"] = "cross18", ["dd"] = "bigsword1" },
 	["mCastbar"] = {
-		["enable"] = true, ["gardient"] = false,
-		["kickcd"] = { ["r"] = 0.545098, ["g"] = 0, ["b"] = 0.545098, ["r2"] = 0.545098, ["g2"] = 0, ["b2"] = 0.545098 },
+		["enable"] = true,
+		["gardient"] = false,
+		["kickcd"] = {
+			["r"] = 0.545098,
+			["g"] = 0,
+			["b"] = 0.545098,
+			["r2"] = 0.545098,
+			["g2"] = 0,
+			["b2"] = 0.545098,
+		},
 		["kickintime"] = { ["r"] = 0, ["g"] = 0.74902, ["b"] = 1, ["r2"] = 0, ["g2"] = 0.74902, ["b2"] = 1 },
+	},
+	["mHealthmarker"] = {
+		["enable"] = false,
+		["indicator"] = { ["r"] = 1, ["g"] = 0, ["b"] = 0.61},
+		["overlay"] = { ["r"] = 0.21, ["g"] = 0.33, ["b"] = 0.34, ["a"] = 0.85 },
+		["NPCs"] = {},
+		["overlaytexture"] = "mMediaTag P6",
+		["useDefaults"] = true,
+	},
+	["mExecutemarker"] = {
+		["enable"] = false,
+		["indicator"] = { ["r"] = 1, ["g"] = 0.2, ["b"] = 0.2 },
+		["range"] = 20,
 	},
 }
