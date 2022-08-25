@@ -570,7 +570,7 @@ local function mOBTFontColors()
 		mTitelFontColor = { r = mClassColor[1], g = mClassColor[2], b = mClassColor[3] }
 	end
 
-	_G.OBJECTIVE_TRACKER_COLOR = {
+	OBJECTIVE_TRACKER_COLOR = {
 		["Normal"] = { r = mQuestFontColor.r, g = mQuestFontColor.g, b = mQuestFontColor.b },
 		["NormalHighlight"] = { r = mQuestFontColor.r + 0.2, g = mQuestFontColor.g + 0.2, b = mQuestFontColor.b + 0.2 },
 		["Failed"] = { r = mQuestFailedFontColor.r, g = mQuestFailedFontColor.g, b = mQuestFailedFontColor.b },
@@ -1267,89 +1267,6 @@ function mMT:InitializemOBT()
 		hooksecurefunc("BonusObjectiveTrackerProgressBar_SetValue", mGardientProgressBars) --[Color]: Bonus Objective Progress Bar
 		hooksecurefunc("ObjectiveTrackerProgressBar_SetValue", mGardientProgressBars) --[Color]: Quest Progress Bar
 		hooksecurefunc("ScenarioTrackerProgressBar_SetValue", mGardientProgressBars)
-	end
-end
-
-function mMT:mStartObjectiveTracker()
-	if E.db[mPlugin].mObjectiveTracker.enable == true then
-		local mFontStyle = E.db[mPlugin].mObjectiveTracker.titel.fontstyle
-		local HeaderFontColor = {
-			r = E.db[mPlugin].mObjectiveTracker.titel.fontcolor.r,
-			g = E.db[mPlugin].mObjectiveTracker.titel.fontcolor.g,
-			b = E.db[mPlugin].mObjectiveTracker.titel.fontcolor.b,
-		}
-		if mFontStyle == "class" then
-			HeaderFontColor = { r = mClassColor[1], g = mClassColor[2], b = mClassColor[3] }
-		end
-
-		local mTitelEnable = E.db[mPlugin].mObjectiveTracker.quests.titel.enable
-		local mTitelFontColor = {
-			r = E.db[mPlugin].mObjectiveTracker.quests.titel.fontcolor.r,
-			g = E.db[mPlugin].mObjectiveTracker.quests.titel.fontcolor.g,
-			b = E.db[mPlugin].mObjectiveTracker.quests.titel.fontcolor.b,
-		}
-		if E.db[mPlugin].mObjectiveTracker.quests.titel.fontstyle == "class" then
-			mTitelFontColor = { r = mClassColor[1], g = mClassColor[2], b = mClassColor[3] }
-		end
-
-		local mQuestEnable = E.db[mPlugin].mObjectiveTracker.quests.other.enable
-		local mQuestFontColor = {
-			r = E.db[mPlugin].mObjectiveTracker.quests.other.fontcolor.r,
-			g = E.db[mPlugin].mObjectiveTracker.quests.other.fontcolor.g,
-			b = E.db[mPlugin].mObjectiveTracker.quests.other.fontcolor.b,
-		}
-		local mQuestCompleteFontColor = {
-			r = E.db[mPlugin].mObjectiveTracker.quests.other.completefontcolor.r,
-			g = E.db[mPlugin].mObjectiveTracker.quests.other.completefontcolor.g,
-			b = E.db[mPlugin].mObjectiveTracker.quests.other.completefontcolor.b,
-		}
-		local mQuestFailedFontColor = {
-			r = E.db[mPlugin].mObjectiveTracker.quests.other.failedfontcolor.r,
-			g = E.db[mPlugin].mObjectiveTracker.quests.other.failedfontcolor.g,
-			b = E.db[mPlugin].mObjectiveTracker.quests.other.failedfontcolor.b,
-		}
-		if E.db[mPlugin].mObjectiveTracker.quests.other.fontstyle == "class" then
-			mQuestFontColor = { r = mClassColor[1], g = mClassColor[2], b = mClassColor[3] }
-		end
-
-		OBJECTIVE_TRACKER_COLOR = {
-			["Normal"] = { r = mQuestFontColor.r, g = mQuestFontColor.g, b = mQuestFontColor.b },
-			["NormalHighlight"] = { r = mQuestFontColor.r + 0.2, g = mQuestFontColor.g + 0.2, b = mQuestFontColor.b
-				+ 0.2 },
-			["Failed"] = { r = mQuestFailedFontColor.r, g = mQuestFailedFontColor.g, b = mQuestFailedFontColor.b },
-			["FailedHighlight"] = {
-				r = mQuestFailedFontColor.r + 0.2,
-				g = mQuestFailedFontColor.g + 0.2,
-				b = mQuestFailedFontColor.b + 0.2,
-			},
-			["Header"] = { r = mTitelFontColor.r, g = mTitelFontColor.g, b = mTitelFontColor.b },
-			["HeaderHighlight"] = { r = mTitelFontColor.r + 0.2, g = mTitelFontColor.g + 0.2, b = mTitelFontColor.b
-				+ 0.2 },
-			["Complete"] = {
-				r = mQuestCompleteFontColor.r,
-				g = mQuestCompleteFontColor.g,
-				b = mQuestCompleteFontColor.b,
-			},
-			["TimeLeft"] = { r = DIM_RED_FONT_COLOR.r, g = DIM_RED_FONT_COLOR.g, b = DIM_RED_FONT_COLOR.b },
-			["TimeLeftHighlight"] = { r = RED_FONT_COLOR.r, g = RED_FONT_COLOR.g, b = RED_FONT_COLOR.b },
-		}
-
-		OBJECTIVE_TRACKER_COLOR["Normal"].reverse = OBJECTIVE_TRACKER_COLOR["NormalHighlight"]
-		OBJECTIVE_TRACKER_COLOR["NormalHighlight"].reverse = OBJECTIVE_TRACKER_COLOR["Normal"]
-		OBJECTIVE_TRACKER_COLOR["Failed"].reverse = OBJECTIVE_TRACKER_COLOR["FailedHighlight"]
-		OBJECTIVE_TRACKER_COLOR["FailedHighlight"].reverse = OBJECTIVE_TRACKER_COLOR["Failed"]
-		OBJECTIVE_TRACKER_COLOR["Header"].reverse = OBJECTIVE_TRACKER_COLOR["HeaderHighlight"]
-		OBJECTIVE_TRACKER_COLOR["HeaderHighlight"].reverse = OBJECTIVE_TRACKER_COLOR["Header"]
-		OBJECTIVE_TRACKER_COLOR["TimeLeft"].reverse = OBJECTIVE_TRACKER_COLOR["TimeLeftHighlight"]
-		OBJECTIVE_TRACKER_COLOR["TimeLeftHighlight"].reverse = OBJECTIVE_TRACKER_COLOR["TimeLeft"]
-		OBJECTIVE_TRACKER_COLOR["Complete"] = OBJECTIVE_TRACKER_COLOR["Complete"]
-		OBJECTIVE_TRACKER_COLOR["CompleteHighlight"] = OBJECTIVE_TRACKER_COLOR["Complete"]
-
-		--hooksecurefunc(QUEST_TRACKER_MODULE, "SetBlockHeader", mSkinObjectiveTrackerFrame)
-		--hooksecurefunc(WORLD_QUEST_TRACKER_MODULE, "AddObjective", mSkinObjectiveTrackerFrame)
-		--hooksecurefunc(CAMPAIGN_QUEST_TRACKER_MODULE, "AddObjective", mSkinObjectiveTrackerFrame)
-		--hooksecurefunc("ObjectiveTracker_Update", mSkinObjectiveTrackerFrame)
-		hooksecurefunc(_G.SCENARIO_CONTENT_TRACKER_MODULE, "UpdateCriteria", mSenario)
 	end
 end
 
