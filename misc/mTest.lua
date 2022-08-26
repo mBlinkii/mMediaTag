@@ -39,5 +39,5 @@ local function mhealtmarkerOptions()
 end
 
 --mInsert(ns.Config, mhealtmarkerOptions)
-
 hooksecurefunc(UF, "PostUpdateHealthColor", CustomBackdrop)
+

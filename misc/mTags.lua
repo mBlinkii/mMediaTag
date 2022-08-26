@@ -1343,13 +1343,12 @@ end)
 local function GetPartyTargets(unit)
 	local amount = 0
 	for i = 1, GetNumGroupMembers() - 1 do
-		local partytarget = "party" .. i .. "target"
-		if UnitGUID(partytarget) == UnitGUID(unit) then
+		if UnitIsUnit("party" .. i .. "target", unit) then
 			amount = amount + 1
 		end
 	end
 
-	if UnitGUID("playertarget") == UnitGUID(unit) then
+	if UnitIsUnit("playertarget", unit) then
 		amount = amount + 1
 	end
 
@@ -1361,8 +1360,7 @@ end
 local function GetRaidTargets(unit)
 	local amount = 0
 	for i = 1, GetNumGroupMembers() do
-		local raidtarget = "raid" .. i .. "target"
-		if UnitGUID(raidtarget) == UnitGUID(unit) then
+		if UnitIsUnit("raid" .. i .. "target", unit) then
 			amount = amount + 1
 		end
 	end
@@ -1391,14 +1389,13 @@ local TargetColorTable = {
 local function GetPartyTargetsIcons(unit)
 	local ClassString = ""
 	for i = 1, GetNumGroupMembers() - 1 do
-		local partytarget = "party" .. i .. "target"
-		if UnitGUID(partytarget) == UnitGUID(unit) then
+		if UnitIsUnit("party" .. i .. "target", unit) then
 			local _, _, classIndex = UnitClass("party" .. i)
 			ClassString = TargetColorTable[classIndex] .. ClassString
 		end
 	end
 
-	if UnitGUID("playertarget") == UnitGUID(unit) then
+	if UnitIsUnit("playertarget", unit) then
 		local _, _, classIndex = UnitClass("player")
 		ClassString = TargetColorTable[classIndex] .. ClassString
 	end

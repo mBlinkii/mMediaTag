@@ -417,6 +417,7 @@ P[mPlugin] = {
 	["mExecutemarker"] = {
 		["enable"] = false,
 		["indicator"] = { ["r"] = 1, ["g"] = 0.2, ["b"] = 0.2 },
+		["auto"] = true,
 		["range"] = 20,
 	},
 }

@@ -66,6 +66,57 @@ local SL_NPCs = {
 	[183671] = { 35.5 },
 }
 
+local executeRange = {
+	-- warrior
+	[71] = 20,
+	[72] = 20,
+	--[73] = 0,
+	-- paladin
+	[65] = 20,
+	[66] = 20,
+	[70] = 20,
+	--HUNTER
+	[253] = 35,
+	[254] = 20,
+	[255] = 20,
+	--ROGUE"
+	[259] = 35,
+	--[260] = 0,
+	--[261] = 0,
+	--PRIEST
+	--[256] = 0,
+	--[257] = 0,
+	[258] = 35,
+	--DEATHKNIGHT
+	--[250] = 0,
+	--[251] = 0,
+	[252] = 35,
+	--SHAMAN
+	--[262] = 0,
+	--[263] = 0,
+	--[264] = 0,
+	--MAGE
+	--[62] = 0,
+	--[63] = 0,
+	--[64] = 0,
+	--"WARLOCK
+	[265] = 20,
+	--[266] = 0,
+	--[267] = 0,
+	--MONK
+	[268] = 15,
+	--[270] = 0,
+	[269] = 15,
+	--DRUID
+	--[102] = 0,
+	--[103] = 0,
+	--[104] = 0,
+	--[105] = 0,
+	--DEMONHUNTER
+	--[577] = 0,
+	--[581] = 0,
+}
+
 local function executeMarker(unit)
 	local health = unit.Health
 	local db = E.db[mPlugin].mExecutemarker
@@ -76,13 +127,23 @@ local function executeMarker(unit)
 	end
 
 	local percent = math.floor((health.cur or 100) / health.max * 100 + 0.5)
+	local range = 20
+	if db.auto then
+		range = executeRange[select(1, GetSpecializationInfo(GetSpecialization()))]
+	else
+		range = db.range
+	end
 
-	if percent > db.range then
-		local overlaySize = health:GetWidth() * db.range / 100
-		health.executeMarker:Show()
-		health.executeMarker:SetSize(2, health:GetHeight())
-		health.executeMarker:SetPoint("left", health, "left", overlaySize, 0)
-		health.executeMarker:SetVertexColor(db.indicator.r, db.indicator.g, db.indicator.b)
+	if range then
+		if percent > range then
+			local overlaySize = health:GetWidth() * range / 100
+			health.executeMarker:Show()
+			health.executeMarker:SetSize(2, health:GetHeight())
+			health.executeMarker:SetPoint("left", health, "left", overlaySize, 0)
+			health.executeMarker:SetVertexColor(db.indicator.r, db.indicator.g, db.indicator.b)
+		else
+			health.executeMarker:Hide()
+		end
 	else
 		health.executeMarker:Hide()
 	end
@@ -169,7 +230,6 @@ end
 local selectedID = nil
 local selected = nil
 local filterTabel = {}
-local ids = E.db[mPlugin].mHealthmarker.NPCs
 
 local function updateFilterTabel()
 	filterTabel = {}
@@ -179,6 +239,7 @@ local function updateFilterTabel()
 end
 
 local function mhealtmarkerOptions()
+	local ids = E.db[mPlugin].mHealthmarker.NPCs
 	updateFilterTabel()
 
 	E.Options.args.mMediaTag.args.general.args.healtmarker.args = {
@@ -519,9 +580,21 @@ local function mhealtmarkerOptions()
 				E:StaticPopup_Show("CONFIG_RL")
 			end,
 		},
+		autorange = {
+			order = 62,
+			type = "toggle",
+			name = L["Auto range"],
+			desc = L["Execute range based on your Class"],
+			get = function(info)
+				return E.db[mPlugin].mHealthmarker.auto
+			end,
+			set = function(info, value)
+				E.db[mPlugin].mHealthmarker.auto = value
+			end,
+		},
         executeindicator = {
 			type = "color",
-			order = 62,
+			order = 63,
 			name = L["Indicator Color"],
 			hasAlpha = false,
 			get = function(info)
@@ -534,7 +607,7 @@ local function mhealtmarkerOptions()
 			end,
 		},
         executerange = {
-            order = 63,
+            order = 64,
             name = L["Execute Range HP%"],
             type = "range",
             min = 5,
