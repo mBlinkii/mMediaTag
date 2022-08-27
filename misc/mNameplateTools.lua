@@ -331,13 +331,12 @@ local function mhealtmarkerOptions()
 			type = "input",
 			width = "smal",
 			set = function(info, value)
-				ids = E.db[mPlugin].mHealthmarker.NPCs
-				if ids[tonumber(value)] then
+				if E.db[mPlugin].mHealthmarker.NPCs[tonumber(value)] then
 					selectedID = tonumber(value)
 				else
 					selected = nil
 					selectedID = nil
-					mInsert(ids, value, { 0, 0, 0, 0 })
+					mInsert(E.db[mPlugin].mHealthmarker.NPCs, value, { 0, 0, 0, 0 })
 				end
 				updateFilterTabel()
 			end,
@@ -365,8 +364,7 @@ local function mhealtmarkerOptions()
 			type = "input",
 			width = "smal",
 			set = function(info, value)
-				ids = E.db[mPlugin].mHealthmarker.NPCs
-				if ids[tonumber(value)] then
+				if E.db[mPlugin].mHealthmarker.NPCs[tonumber(value)] then
 					E.db[mPlugin].mHealthmarker.NPCs[tonumber(value)] = nil
 					selectedID = 0
 					selected = nil
@@ -400,20 +398,17 @@ local function mhealtmarkerOptions()
 				return not E.db[mPlugin].mHealthmarker.NPCs[selectedID]
 			end,
 			get = function()
-				ids = E.db[mPlugin].mHealthmarker.NPCs
-				if ids[selectedID] then
-					return ids[selectedID][1]
+				if E.db[mPlugin].mHealthmarker.NPCs[selectedID] then
+					return E.db[mPlugin].mHealthmarker.NPCs[selectedID][1]
 				end
 			end,
 			set = function(info, value)
-				ids = E.db[mPlugin].mHealthmarker.NPCs
-				if ids[selectedID] then
-					ids[selectedID][1] = value
+				if E.db[mPlugin].mHealthmarker.NPCs[selectedID] then
+					E.db[mPlugin].mHealthmarker.NPCs[selectedID][1] = value
 					if value == 0 or value == 100 then
-						ids = E.db[mPlugin].mHealthmarker.NPCs[selectedID]
-						ids[2] = 0
-						ids[3] = 0
-						ids[4] = 0
+						E.db[mPlugin].mHealthmarker.NPCs[selectedID][2] = 0
+						E.db[mPlugin].mHealthmarker.NPCs[selectedID][3] = 0
+						E.db[mPlugin].mHealthmarker.NPCs[selectedID][4] = 0
 					end
 				end
 			end,
@@ -433,10 +428,9 @@ local function mhealtmarkerOptions()
 							E.db[mPlugin].mHealthmarker.NPCs[selectedID][1] == 0
 							or E.db[mPlugin].mHealthmarker.NPCs[selectedID][1] == 100
 						then
-							ids = E.db[mPlugin].mHealthmarker.NPCs[selectedID]
-							ids[2] = 0
-							ids[3] = 0
-							ids[4] = 0
+							E.db[mPlugin].mHealthmarker.NPCs[selectedID][2] = 0
+							E.db[mPlugin].mHealthmarker.NPCs[selectedID][3] = 0
+							E.db[mPlugin].mHealthmarker.NPCs[selectedID][4] = 0
 							return true
 						else
 							return false
@@ -449,22 +443,18 @@ local function mhealtmarkerOptions()
 				end
 			end,
 			get = function()
-				ids = E.db[mPlugin].mHealthmarker.NPCs
-				if ids[selectedID] then
-					return ids[selectedID][2]
+				if E.db[mPlugin].mHealthmarker.NPCs[selectedID] then
+					return E.db[mPlugin].mHealthmarker.NPCs[selectedID][2]
 				end
 			end,
 			set = function(info, value)
-				ids = E.db[mPlugin].mHealthmarker.NPCs
-				if ids[selectedID] then
-					if value > ids[selectedID][1] then
-						value = ids[selectedID][1] - 0.5
+				if E.db[mPlugin].mHealthmarker.NPCs[selectedID] then
+					if value > E.db[mPlugin].mHealthmarker.NPCs[selectedID][1] then
+						value = E.db[mPlugin].mHealthmarker.NPCs[selectedID][1] - 0.5
 					end
-					ids[selectedID][2] = value
 					if value == 0 or value == 100 then
-						ids = E.db[mPlugin].mHealthmarker.NPCs[selectedID]
-						ids[3] = 0
-						ids[4] = 0
+						E.db[mPlugin].mHealthmarker.NPCs[3] = 0
+						E.db[mPlugin].mHealthmarker.NPCs[4] = 0
 					end
 				end
 			end,
@@ -484,9 +474,8 @@ local function mhealtmarkerOptions()
 							E.db[mPlugin].mHealthmarker.NPCs[selectedID][2] == 0
 							or E.db[mPlugin].mHealthmarker.NPCs[selectedID][2] == 100
 						then
-							ids = E.db[mPlugin].mHealthmarker.NPCs[selectedID]
-							ids[3] = 0
-							ids[4] = 0
+							E.db[mPlugin].mHealthmarker.NPCs[selectedID][3] = 0
+							E.db[mPlugin].mHealthmarker.NPCs[selectedID][4] = 0
 							return true
 						else
 							return false
@@ -499,21 +488,18 @@ local function mhealtmarkerOptions()
 				end
 			end,
 			get = function()
-				ids = E.db[mPlugin].mHealthmarker.NPCs
-				if ids[selectedID] then
-					return ids[selectedID][3]
+				if E.db[mPlugin].mHealthmarker.NPCs[selectedID] then
+					return E.db[mPlugin].mHealthmarker.NPCs[selectedID][3]
 				end
 			end,
 			set = function(info, value)
-				ids = E.db[mPlugin].mHealthmarker.NPCs
-				if ids[selectedID] then
-					if value > ids[selectedID][2] then
-						value = ids[selectedID][2] - 0.5
+				if E.db[mPlugin].mHealthmarker.NPCs[selectedID] then
+					if value > E.db[mPlugin].mHealthmarker.NPCs[selectedID][2] then
+						value = E.db[mPlugin].mHealthmarker.NPCs[selectedID][2] - 0.5
 					end
-					ids[selectedID][3] = value
+					E.db[mPlugin].mHealthmarker.NPCs[selectedID][3] = value
 					if value == 0 or value == 100 then
-						local ids = E.db[mPlugin].mHealthmarker.NPCs[selectedID]
-						ids[4] = 0
+						E.db[mPlugin].mHealthmarker.NPCs[selectedID][4] = 0
 					end
 				end
 			end,
@@ -533,8 +519,7 @@ local function mhealtmarkerOptions()
 							E.db[mPlugin].mHealthmarker.NPCs[selectedID][3] == 0
 							or E.db[mPlugin].mHealthmarker.NPCs[selectedID][3] == 100
 						then
-							local ids = E.db[mPlugin].mHealthmarker.NPCs[selectedID]
-							ids[4] = 0
+							E.db[mPlugin].mHealthmarker.NPCs[selectedID][4] = 0
 							return true
 						else
 							return false
@@ -547,18 +532,16 @@ local function mhealtmarkerOptions()
 				end
 			end,
 			get = function()
-				ids = E.db[mPlugin].mHealthmarker.NPCs
-				if ids[selectedID] then
-					return ids[selectedID][4]
+				if E.db[mPlugin].mHealthmarker.NPCs[selectedID] then
+					return E.db[mPlugin].mHealthmarker.NPCs[selectedID][4]
 				end
 			end,
 			set = function(info, value)
-				ids = E.db[mPlugin].mHealthmarker.NPCs
-				if ids[selectedID] then
-					if value > ids[selectedID][3] then
-						value = ids[selectedID][3] - 0.5
+				if E.db[mPlugin].mHealthmarker.NPCs[selectedID] then
+					if value > E.db[mPlugin].mHealthmarker.NPCs[selectedID][3] then
+						value = E.db[mPlugin].mHealthmarker.NPCs[selectedID][3] - 0.5
 					end
-					ids[selectedID][4] = value
+					E.db[mPlugin].mHealthmarker.NPCs[selectedID][4] = value
 				end
 			end,
 		},
