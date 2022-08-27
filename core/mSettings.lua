@@ -413,6 +413,7 @@ P[mPlugin] = {
 		["NPCs"] = {},
 		["overlaytexture"] = "mMediaTag P6",
 		["useDefaults"] = true,
+		["inInstance"] = false,
 	},
 	["mExecutemarker"] = {
 		["enable"] = false,

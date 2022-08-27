@@ -16,54 +16,54 @@ local CreateFrame = CreateFrame
 local addon, ns = ...
 
 local SL_NPCs = {
-	[179526] = { 66, 33 },
-	[176578] = { 66, 33 },
-	[176555] = { 40 },
-	[176556] = { 40 },
-	[175806] = { 70, 40 },
-	[114262] = { 20 },
-	[114312] = { 60 },
-	[115388] = { 30 },
-	[114790] = { 66.5, 33.5 },
-	[81297] = { 50 },
-	[77803] = { 20 },
-	[79545] = { 60 },
-	[83392] = { 50 },
-	[114714] = { 50 },
-	[114783] = { 50 },
-	[114792] = { 50 },
-	[114796] = { 50 },
-	[183423] = { 50 },
-	[183424] = { 50 },
-	[183425] = { 50 },
-	[180015] = { 50 },
-	[180432] = { 40 },
-	[178139] = { 50, 15 },
-	[178133] = { 15 },
-	[178141] = { 15 },
-	[178142] = { 15 },
-	[166969] = { 50 },
-	[166970] = { 50 },
-	[166971] = { 50 },
-	[168112] = { 50 },
-	[168113] = { 50 },
-	[174335] = { 30 },
-	[172858] = { 30 },
-	[169601] = { 20 },
-	[175611] = { 10 },
-	[175725] = { 66, 33 },
-	[175729] = { 80, 60, 30 },
-	[176523] = { 70, 40 },
-	[175730] = { 70, 40 },
-	[176929] = { 60, 20 },
-	[180773] = { 15.5 },
-	[183501] = { 75.5, 50.5, 30.5 },
-	[181548] = { 40.5 },
-	[181551] = { 40.5 },
-	[181546] = { 40.5 },
-	[181549] = { 40.5 },
-	[180906] = { 78.5, 45.5 },
-	[183671] = { 35.5 },
+	[179526] = {66, 33},
+	[176578] = {66, 33},
+	[176555] = {40},
+	[176556] = {40},
+	[175806] = {70, 40},
+	[114262] = {20},
+	[114312] = {60},
+	[115388] = {30},
+	[114790] = {66.5, 33.5},
+	[81297] = {50},
+	[77803] = {20},
+	[79545] = {60},
+	[83392] = {50},
+	[114714] = {50},
+	[114783] = {50},
+	[114792] = {50},
+	[114796] = {50},
+	[183423] = {50},
+	[183424] = {50},
+	[183425] = {50},
+	[180015] = {50},
+	[180432] = {40},
+	[178139] = {50, 15},
+	[178133] = {15},
+	[178141] = {15},
+	[178142] = {15},
+	[166969] = {50},
+	[166970] = {50},
+	[166971] = {50},
+	[168112] = {50},
+	[168113] = {50},
+	[174335] = {30},
+	[172858] = {30},
+	[169601] = {20},
+	[175611] = {10},
+	[175725] = {66, 33},
+	[175729] = {80, 60, 30},
+	[176523] = {70, 40},
+	[175730] = {70, 40},
+	[176929] = {60, 20},
+	[180773] = {15.5},
+	[183501] = {75.5, 50.5, 30.5},
+	[181548] = {40.5},
+	[181551] = {40.5},
+	[181546] = {40.5},
+	[181549] = {40.5},
+	[180906] = {78.5, 45.5},
+	[183671] = {35.5}
 }
 
 local executeRange = {
@@ -106,7 +106,7 @@ local executeRange = {
 	--MONK
 	[268] = 15,
 	--[270] = 0,
-	[269] = 15,
+	[269] = 15
 	--DRUID
 	--[102] = 0,
 	--[103] = 0,
@@ -150,8 +150,17 @@ local function executeMarker(unit)
 end
 
 local function healthMarkers(unit)
-	local npcID = tonumber(unit.npcID)
+	local inInstance, instanceType = IsInInstance()
 	local health = unit.Health
+	if E.db[mPlugin].mHealthmarker.inInstance and not (inInstance and instanceType == "party" or instanceType == "raid") then
+		if health.healthMarker then
+			health.healthMarker:Hide()
+			health.healthOverlay:Hide()
+		end
+		return
+	end
+
+	local npcID = tonumber(unit.npcID)
 
 	local db = E.db[mPlugin].mHealthmarker
 	if not npcID then
@@ -172,8 +181,9 @@ local function healthMarkers(unit)
 		if markersTable then
 			for _, p in ipairs(markersTable) do
 				local percent = math.floor((health.cur or 100) / health.max * 100 + 0.5)
-
-				if percent > p then
+				print(percent)
+				print(p)
+				if percent > p and p > 0 and p < 100 then
 					local overlaySize = health:GetWidth() * p / 100
 
 					if not health.healthMarker then
@@ -239,7 +249,6 @@ local function updateFilterTabel()
 end
 
 local function mhealtmarkerOptions()
-	local ids = E.db[mPlugin].mHealthmarker.NPCs
 	updateFilterTabel()
 
 	E.Options.args.mMediaTag.args.general.args.healtmarker.args = {
@@ -254,17 +263,17 @@ local function mhealtmarkerOptions()
 			set = function(info, value)
 				E.db[mPlugin].mHealthmarker.enable = value
 				E:StaticPopup_Show("CONFIG_RL")
-			end,
+			end
 		},
 		spacer = {
 			order = 2,
 			type = "description",
-			name = "\n\n",
+			name = "\n\n"
 		},
 		header1 = {
 			order = 3,
 			type = "header",
-			name = "",
+			name = ""
 		},
 		colorindicator = {
 			type = "color",
@@ -278,7 +287,7 @@ local function mhealtmarkerOptions()
 			set = function(info, r, g, b)
 				local t = E.db[mPlugin].mHealthmarker.indicator
 				t.r, t.g, t.b = r, g, b
-			end,
+			end
 		},
 		coloroverlay = {
 			type = "color",
@@ -292,9 +301,9 @@ local function mhealtmarkerOptions()
 			set = function(info, r, g, b, a)
 				local t = E.db[mPlugin].mHealthmarker.overlay
 				t.r, t.g, t.b, t.a = r, g, b, a
-			end,
+			end
 		},
-        useDefaults = {
+		useDefaults = {
 			order = 13,
 			type = "toggle",
 			name = L["Use Default SL NPC IDs"],
@@ -304,7 +313,19 @@ local function mhealtmarkerOptions()
 			end,
 			set = function(info, value)
 				E.db[mPlugin].mHealthmarker.useDefaults = value
+			end
+		},
+		inInstance = {
+			order = 14,
+			type = "toggle",
+			name = L["Load only in Instance"],
+			desc = L["Shows the Healthmarkers only in a Instance"],
+			get = function(info)
+				return E.db[mPlugin].mHealthmarker.inInstance
 			end,
+			set = function(info, value)
+				E.db[mPlugin].mHealthmarker.inInstance = value
+			end
 		},
 		overlaytexture = {
 			order = 14,
@@ -317,12 +338,12 @@ local function mhealtmarkerOptions()
 			end,
 			set = function(info, value)
 				E.db[mPlugin].mHealthmarker.overlaytexture = value
-			end,
+			end
 		},
 		header2 = {
 			order = 15,
 			type = "header",
-			name = "",
+			name = ""
 		},
 		customid = {
 			order = 21,
@@ -336,10 +357,10 @@ local function mhealtmarkerOptions()
 				else
 					selected = nil
 					selectedID = nil
-					mInsert(E.db[mPlugin].mHealthmarker.NPCs, value, { 0, 0, 0, 0 })
+					mInsert(E.db[mPlugin].mHealthmarker.NPCs, value, {0, 0, 0, 0})
 				end
 				updateFilterTabel()
-			end,
+			end
 		},
 		idtable = {
 			type = "select",
@@ -356,7 +377,7 @@ local function mhealtmarkerOptions()
 			set = function(info, value)
 				selected = value
 				selectedID = tonumber(filterTabel[value])
-			end,
+			end
 		},
 		deleteid = {
 			order = 22,
@@ -370,7 +391,7 @@ local function mhealtmarkerOptions()
 					selected = nil
 					updateFilterTabel()
 				end
-			end,
+			end
 		},
 		deleteall = {
 			order = 23,
@@ -379,12 +400,12 @@ local function mhealtmarkerOptions()
 			func = function()
 				E.db[mPlugin].mHealthmarker.NPCs = {}
 				filterTabel = {}
-			end,
+			end
 		},
 		header3 = {
 			order = 30,
 			type = "header",
-			name = "",
+			name = ""
 		},
 		mark1 = {
 			order = 31,
@@ -411,7 +432,7 @@ local function mhealtmarkerOptions()
 						E.db[mPlugin].mHealthmarker.NPCs[selectedID][4] = 0
 					end
 				end
-			end,
+			end
 		},
 		mark2 = {
 			order = 32,
@@ -424,10 +445,7 @@ local function mhealtmarkerOptions()
 			disabled = function()
 				if E.db[mPlugin].mHealthmarker.NPCs[selectedID] then
 					if E.db[mPlugin].mHealthmarker.NPCs[selectedID][1] then
-						if
-							E.db[mPlugin].mHealthmarker.NPCs[selectedID][1] == 0
-							or E.db[mPlugin].mHealthmarker.NPCs[selectedID][1] == 100
-						then
+						if E.db[mPlugin].mHealthmarker.NPCs[selectedID][1] == 0 or E.db[mPlugin].mHealthmarker.NPCs[selectedID][1] == 100 then
 							E.db[mPlugin].mHealthmarker.NPCs[selectedID][2] = 0
 							E.db[mPlugin].mHealthmarker.NPCs[selectedID][3] = 0
 							E.db[mPlugin].mHealthmarker.NPCs[selectedID][4] = 0
@@ -457,7 +475,7 @@ local function mhealtmarkerOptions()
 						E.db[mPlugin].mHealthmarker.NPCs[4] = 0
 					end
 				end
-			end,
+			end
 		},
 		mark3 = {
 			order = 33,
@@ -470,10 +488,7 @@ local function mhealtmarkerOptions()
 			disabled = function()
 				if E.db[mPlugin].mHealthmarker.NPCs[selectedID] then
 					if E.db[mPlugin].mHealthmarker.NPCs[selectedID][2] then
-						if
-							E.db[mPlugin].mHealthmarker.NPCs[selectedID][2] == 0
-							or E.db[mPlugin].mHealthmarker.NPCs[selectedID][2] == 100
-						then
+						if E.db[mPlugin].mHealthmarker.NPCs[selectedID][2] == 0 or E.db[mPlugin].mHealthmarker.NPCs[selectedID][2] == 100 then
 							E.db[mPlugin].mHealthmarker.NPCs[selectedID][3] = 0
 							E.db[mPlugin].mHealthmarker.NPCs[selectedID][4] = 0
 							return true
@@ -502,7 +517,7 @@ local function mhealtmarkerOptions()
 						E.db[mPlugin].mHealthmarker.NPCs[selectedID][4] = 0
 					end
 				end
-			end,
+			end
 		},
 		mark4 = {
 			order = 34,
@@ -515,10 +530,7 @@ local function mhealtmarkerOptions()
 			disabled = function()
 				if E.db[mPlugin].mHealthmarker.NPCs[selectedID] then
 					if E.db[mPlugin].mHealthmarker.NPCs[selectedID][3] then
-						if
-							E.db[mPlugin].mHealthmarker.NPCs[selectedID][3] == 0
-							or E.db[mPlugin].mHealthmarker.NPCs[selectedID][3] == 100
-						then
+						if E.db[mPlugin].mHealthmarker.NPCs[selectedID][3] == 0 or E.db[mPlugin].mHealthmarker.NPCs[selectedID][3] == 100 then
 							E.db[mPlugin].mHealthmarker.NPCs[selectedID][4] = 0
 							return true
 						else
@@ -543,14 +555,14 @@ local function mhealtmarkerOptions()
 					end
 					E.db[mPlugin].mHealthmarker.NPCs[selectedID][4] = value
 				end
-			end,
+			end
 		},
-        header4 = {
+		header4 = {
 			order = 60,
 			type = "header",
-			name = L["Execute indicator"],
+			name = L["Execute indicator"]
 		},
-        executemarkers = {
+		executemarkers = {
 			order = 61,
 			type = "toggle",
 			name = L["Enable"],
@@ -561,7 +573,7 @@ local function mhealtmarkerOptions()
 			set = function(info, value)
 				E.db[mPlugin].mExecutemarker.enable = value
 				E:StaticPopup_Show("CONFIG_RL")
-			end,
+			end
 		},
 		autorange = {
 			order = 62,
@@ -573,9 +585,9 @@ local function mhealtmarkerOptions()
 			end,
 			set = function(info, value)
 				E.db[mPlugin].mHealthmarker.auto = value
-			end,
+			end
 		},
-        executeindicator = {
+		executeindicator = {
 			type = "color",
 			order = 63,
 			name = L["Indicator Color"],
@@ -587,22 +599,22 @@ local function mhealtmarkerOptions()
 			set = function(info, r, g, b)
 				local t = E.db[mPlugin].mExecutemarker.indicator
 				t.r, t.g, t.b = r, g, b
-			end,
+			end
 		},
-        executerange = {
-            order = 64,
-            name = L["Execute Range HP%"],
-            type = "range",
-            min = 5,
-            max = 95,
-            step = 1,
-            get = function(info)
-                return E.db[mPlugin].mExecutemarker.range
-            end,
-            set = function(info, value)
-                E.db[mPlugin].mExecutemarker.range = value
-            end,
-        },
+		executerange = {
+			order = 64,
+			name = L["Execute Range HP%"],
+			type = "range",
+			min = 5,
+			max = 95,
+			step = 1,
+			get = function(info)
+				return E.db[mPlugin].mExecutemarker.range
+			end,
+			set = function(info, value)
+				E.db[mPlugin].mExecutemarker.range = value
+			end
+		}
 	}
 end
 
