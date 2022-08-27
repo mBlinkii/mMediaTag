@@ -209,15 +209,18 @@ local function mSetupTitleFont(titletext)
 	end
 end
 
-local function mSetupQuestFont(linetext)
+local function mSetupQuestFont(linetext, state)
 	if linetext then
 		mGetFont()
 		if E.db[mPlugin].mObjectiveTracker.text.fontcolorstyle == "class" then
 			c = { r = mClassColor[1], g = mClassColor[2], b = mClassColor[3] }
+		elseif state == "COMPLETED" then
+			c = E.db[mPlugin].mObjectiveTracker.text.completecolor
 		else
 			c = E.db[mPlugin].mObjectiveTracker.text.fontcolor
 		end
 		linetext:SetFont(mOTFont, E.db[mPlugin].mObjectiveTracker.text.fontsize, mOTFontFlag)
+
 		linetext:SetTextColor(c.r, c.g, c.b)
 
 		if E.db[mPlugin].mObjectiveTracker.text.textshadow then
@@ -477,11 +480,7 @@ local function SkinOBTText(_, line)
 							line.currentLine.Text:SetText(LineText)
 						end
 					end
-					mSetupQuestFont(line.currentLine.Text)
-				end
-
-				if line.currentLine.state == "COMPLETED" then
-					line.currentLine.Text:SetTextColor(OBJECTIVE_TRACKER_COLOR["Complete"].r, OBJECTIVE_TRACKER_COLOR["Complete"].g, OBJECTIVE_TRACKER_COLOR["Complete"].b)
+					mSetupQuestFont(line.currentLine.Text, line.currentLine.state)
 				end
 			end
 		end

@@ -2,13 +2,15 @@
 [Eng] - All changes to this project will be documented in this file. The latest changes are at the top.
 [Ger] - Alle Änderungen an diesem Projekt werden in dieser Datei dokumentiert. Die neuesten Änderungen stehen ganz oben.
 
-## [ver. 2.87] - xx.08.2022
+## [ver. 2.86.2] - 27.08.2022
 ### Update
 - Bugfix Objective Tracker Colors
-- Update Tags
+- Bugfix Healthmarkers
+- Update Tags code
 ### Added
 - New withe Roleicons for Tank, DD, Heal
 - New Auto Execute range
+- New Show Healthmarkers only in Instance
 
 ## [ver. 2.86] - 25.08.2022
 ### Update

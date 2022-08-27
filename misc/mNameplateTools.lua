@@ -181,8 +181,6 @@ local function healthMarkers(unit)
 		if markersTable then
 			for _, p in ipairs(markersTable) do
 				local percent = math.floor((health.cur or 100) / health.max * 100 + 0.5)
-				print(percent)
-				print(p)
 				if percent > p and p > 0 and p < 100 then
 					local overlaySize = health:GetWidth() * p / 100
 
