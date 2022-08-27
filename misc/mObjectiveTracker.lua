@@ -209,15 +209,18 @@ local function mSetupTitleFont(titletext)
 	end
 end
 
-local function mSetupQuestFont(linetext)
+local function mSetupQuestFont(linetext, state)
 	if linetext then
 		mGetFont()
 		if E.db[mPlugin].mObjectiveTracker.text.fontcolorstyle == "class" then
 			c = { r = mClassColor[1], g = mClassColor[2], b = mClassColor[3] }
+		elseif state == "COMPLETED" then
+			c = E.db[mPlugin].mObjectiveTracker.text.completecolor
 		else
 			c = E.db[mPlugin].mObjectiveTracker.text.fontcolor
 		end
 		linetext:SetFont(mOTFont, E.db[mPlugin].mObjectiveTracker.text.fontsize, mOTFontFlag)
+
 		linetext:SetTextColor(c.r, c.g, c.b)
 
 		if E.db[mPlugin].mObjectiveTracker.text.textshadow then
@@ -477,7 +480,7 @@ local function SkinOBTText(_, line)
 							line.currentLine.Text:SetText(LineText)
 						end
 					end
-					mSetupQuestFont(line.currentLine.Text)
+					mSetupQuestFont(line.currentLine.Text, line.currentLine.state)
 				end
 			end
 		end
@@ -498,59 +501,6 @@ local function SkinOBT()
 					hooksecurefunc(Modules, "AddObjective", SkinOBTText)
 					Modules.IsSkinned = true
 				end
-			end
-		end
-	end
-end
-
-local function mSenario()
-	local mTitelEnable = E.db[mPlugin].mObjectiveTracker.quests.titel.enable
-	local mTitelFontColor = {
-		r = E.db[mPlugin].mObjectiveTracker.quests.titel.fontcolor.r,
-		g = E.db[mPlugin].mObjectiveTracker.quests.titel.fontcolor.g,
-		b = E.db[mPlugin].mObjectiveTracker.quests.titel.fontcolor.b,
-	}
-	local QuestDotIcon = mDashIcon(E.db[mPlugin].mObjectiveTracker.quests.questtext.dashdottexture)
-	if E.db[mPlugin].mObjectiveTracker.quests.titel.fontstyle == "class" then
-		mTitelFontColor = { r = mClassColor[1], g = mClassColor[2], b = mClassColor[3] }
-	end
-
-	local mQuestEnable = E.db[mPlugin].mObjectiveTracker.quests.other.enable
-	if E.db[mPlugin].mObjectiveTracker.quests.other.fontstyle == "class" then
-		local mQuestFontColor = {
-			r = E.db[mPlugin].mObjectiveTracker.quests.other.fontcolor.r,
-			g = E.db[mPlugin].mObjectiveTracker.quests.other.fontcolor.g,
-			b = E.db[mPlugin].mObjectiveTracker.quests.other.fontcolor.b,
-		}
-		mQuestFontColor = { r = mClassColor[1], g = mClassColor[2], b = mClassColor[3] }
-	end
-
-	local DashStyle = E.db[mPlugin].mObjectiveTracker.quests.questtext.dashstyle
-	local DashCustom = E.db[mPlugin].mObjectiveTracker.quests.questtext.dashcustom
-
-	if _G.ScenarioObjectiveBlock then
-		local childs = { _G.ScenarioObjectiveBlock:GetChildren() }
-		for _, child in pairs(childs) do
-			if child.Text then
-				mSetupTitleFont(child.Text)
-
-				if child.Check then
-					child.Check:SetTexture("Interface\\AddOns\\ElvUI_mMediaTag\\media\\misc\\check.tga")
-					child.Check:SetVertexColor(0, 1, 0, 1)
-				end
-
-				if child.Icon and DashStyle ~= "blizzard" and DashStyle ~= "none" then
-					if DashStyle == "dot" then
-						child.Icon:SetText(QuestDotIcon)
-					elseif DashStyle == "custom" then
-						child.Icon:SetText(DashCustom)
-					end
-				elseif DashStyle == "none" then
-					child.Icon:Hide()
-					child.Text:ClearAllPoints()
-					child.Text:Point("TOPLEFT", child.Icon, "TOPLEFT", 0, 0)
-				end
-				child:SetHeight(child:GetHeight())
 			end
 		end
 	end

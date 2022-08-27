@@ -413,10 +413,12 @@ P[mPlugin] = {
 		["NPCs"] = {},
 		["overlaytexture"] = "mMediaTag P6",
 		["useDefaults"] = true,
+		["inInstance"] = false,
 	},
 	["mExecutemarker"] = {
 		["enable"] = false,
 		["indicator"] = { ["r"] = 1, ["g"] = 0.2, ["b"] = 0.2 },
+		["auto"] = true,
 		["range"] = 20,
 	},
 }
