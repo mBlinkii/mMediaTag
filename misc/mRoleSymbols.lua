@@ -188,6 +188,9 @@ local function mRoleSmbolsOptions()
 			end,
 			set = function(info, value)
 				E.db[mPlugin].mRoleSymbols.tank = value
+				UF:CreateAndUpdateUF("party")
+				UF:CreateAndUpdateUF("raid")
+				UF:CreateAndUpdateUF("raid40")
 				mMT:mStartRoleSmbols()
 			end,
 			values = mIconsList,
@@ -204,6 +207,9 @@ local function mRoleSmbolsOptions()
 			end,
 			set = function(info, value)
 				E.db[mPlugin].mRoleSymbols.heal = value
+				UF:CreateAndUpdateUF("party")
+				UF:CreateAndUpdateUF("raid")
+				UF:CreateAndUpdateUF("raid40")
 				mMT:mStartRoleSmbols()
 			end,
 			values = mIconsList,

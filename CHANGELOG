@@ -2,6 +2,15 @@
 [Eng] - All changes to this project will be documented in this file. The latest changes are at the top.
 [Ger] - Alle Änderungen an diesem Projekt werden in dieser Datei dokumentiert. Die neuesten Änderungen stehen ganz oben.
 
+## [ver. 2.87] - 03.09.2022
+### Update
+- Code Update
+- Update Settings for Classic
+- Enabled some more functions for Classic
+### Added
+- New Custom Backdrop (default is disabled)
+- New Custom Combat Icons (default is disabled)
+
 ## [ver. 2.86.2] - 27.08.2022
 ### Update
 - Bugfix Objective Tracker Colors

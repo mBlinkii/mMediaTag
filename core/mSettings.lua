@@ -423,7 +423,8 @@ P[mPlugin] = {
 	},
 	["mCustomBackdrop"] = {
 			["health"] ={["enable"] = false, ["texture"] = "mMediaTag P6"},
-			["power"] = {["enable"] = false, ["texture"] = "mMediaTag P6"},
-			["castbar"] = {["enable"] = false, ["texture"] = "mMediaTag P6"},
+			["power"] = {["enable"] = false, ["texture"] = "mMediaTag M1"},
+			["castbar"] = {["enable"] = false, ["texture"] = "mMediaTag P4"},
 		},
+	["mCustomCombatIcons"] = 1,
 }
