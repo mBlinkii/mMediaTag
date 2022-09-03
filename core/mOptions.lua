@@ -828,6 +828,20 @@ local function OptionsCoreClassic()
 				name = L["Chatbaground"],
 				args = {},
 			},
+			cosmetic = {
+				order = 60,
+				type = "group",
+				name = L["Cosmetic"],
+				args = {
+					customcombaticon = {
+						order = 5,
+						type = "group",
+						name = L["Custom Combaticons"],
+						childGroups = "tab",
+						args = {},
+					},
+				},
+			},
 			profile = {
 				order = 70,
 				type = "group",

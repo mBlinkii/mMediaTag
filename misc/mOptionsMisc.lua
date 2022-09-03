@@ -256,6 +256,8 @@ local function OptionsDungeon()
 	}
 end
 
+if E.retail then
 mInsert(ns.Config, OptionsProfession)
 mInsert(ns.Config, OptionsDungeon)
+end
 mInsert(ns.Config, OptionsSystemMenu)

@@ -8,9 +8,9 @@ local addon, ns = ...
 local format = format
 
 --Variables
-local ChangelogDate = "27.08.2022"
+local ChangelogDate = "23.09.2022"
 local ChangelogText =
-	"## [ver. 2.86.2] - 27.08.2022\n### Update\n- Bugfix Objective Tracker Colors\n- Bugfix Healthmarkers\n- Update Tags code\n### Added\n- New withe Roleicons for Tank, DD, Heal\n- New Auto Execute range\n- New Show Healthmarkers only in Instance\n\n## [ver. 2.86] - 25.08.2022\n### Update\n- Bugfix Objective Tracker skin\n- Objective Tracker Texture for Bar\n### Added\n- New Nameplate Healthmarkers for NPC\n- New Nameplate Execute Marker"
+	"## [ver. 2.87] - 03.09.2022\n### Update\n- Code Update\n- Update Settings for Classic\n- Enabled some more functions for Classic\n### Added\n- New Custom Backdrop (default is disabled)\n- New Custom Combat Icons (default is disabled)"
 
 function mMT:Changelog(opt)
 	local Frame = CreateFrame("Frame", "mMediaTagChangelog", E.UIParent, "BackdropTemplate")
