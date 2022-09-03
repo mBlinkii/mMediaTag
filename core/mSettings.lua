@@ -421,4 +421,9 @@ P[mPlugin] = {
 		["auto"] = true,
 		["range"] = 20,
 	},
+	["mCustomBackdrop"] = {
+			["health"] ={["enable"] = false, ["texture"] = "mMediaTag P6"},
+			["power"] = {["enable"] = false, ["texture"] = "mMediaTag P6"},
+			["castbar"] = {["enable"] = false, ["texture"] = "mMediaTag P6"},
+		},
 }

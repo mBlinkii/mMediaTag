@@ -5,7 +5,9 @@
 	<Script file="mCombatTime.lua"/>
 	<Script file="mCoordinatesX.lua"/>
 	<Script file="mCoordinatesY.lua"/>
+	<Script file="mBGTexture.lua"/>
 	<Script file="mCastbar.lua"/>
+	<Script file="mCombatIcon.lua"/>
 	<Script file="mDungeon.lua"/>
 	<Script file="mFPSMS.lua"/>
 	<Script file="mFunctionsMisc.lua"/>
@@ -20,7 +22,7 @@
 	<Script file="mTools.lua"/>
 	<Script file="mVolumeDisplay.lua"/>
 	<Script file="mRoleSymbols.lua"/>
-	<Script file="mTest.lua"/>
+	<!-- <Script file="mTest.lua"/> -->
 	<Include file="CurrencyShadowlands\load_CurrencyShadowlands.xml"/>
 	<Include file="CurrencyPvP\load_CurrencyPvP.xml"/>
 	<Include file="CurrencyDungeon\load_CurrencyDungeon.xml"/>

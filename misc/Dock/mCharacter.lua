@@ -76,7 +76,7 @@ local function OnEnter(self)
 	mMT:mOnEnter(self, "CheckFrameCharacter")
 
 	if E.db[mPlugin].mDock.tip.enable then
-		if MediaTagGameVersion.retail then
+		if E.Retail then
 			local avg, avgEquipped, avgPvp = GetAverageItemLevel()
 			DT.tooltip:AddLine(format("%s%s|r", titel, STAT_AVERAGE_ITEM_LEVEL))
 			DT.tooltip:AddDoubleLine(STAT_AVERAGE_ITEM_LEVEL, format("%0.2f", avg), 1, 1, 1, 0.1, 1, 0.1)

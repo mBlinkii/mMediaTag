@@ -375,9 +375,23 @@ local function OptionsCore()
 						args = {},
 					},
 					objectivetracker = {
-						order = 50,
+						order = 3,
 						type = "group",
 						name = L["ObjectiveTracker Skin"],
+						childGroups = "tab",
+						args = {},
+					},
+					custombackdrop = {
+						order = 4,
+						type = "group",
+						name = L["Custom Backdrop Textures"],
+						childGroups = "tab",
+						args = {},
+					},
+					customcombaticon = {
+						order = 5,
+						type = "group",
+						name = L["Custom Combaticons"],
 						childGroups = "tab",
 						args = {},
 					},
@@ -909,7 +923,7 @@ local function OptionsCoreClassic()
 	}
 end
 
-if MediaTagGameVersion.retail then
+if E.Retail then
 	mInsert(ns.Config, OptionsCore)
 else
 	mInsert(ns.Config, OptionsCoreClassic)

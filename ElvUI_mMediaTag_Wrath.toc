@@ -6,7 +6,6 @@
 ## RequiredDeps: ElvUI
 ## DefaultState: Enabled
 
-core\mwotlk.lua
 locales\load_locales.xml
 core\load_core.xml
 media\load_media.xml

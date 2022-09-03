@@ -218,28 +218,6 @@ local function healthMarkers(unit)
 		end
 	end
 end
-local function mNameplateTargetOverlay(unit)
-	local health = unit.Health
-	print(UnitIsUnit(unit.unit, "target"))
-	if UnitIsUnit(unit.unit, "target") then
-		if not health.TargetOverlay then
-			health.TargetOverlay = health:CreateTexture(LSM:Fetch("statusbar", "mMediaTag P6"), "overlay")
-			health.TargetOverlay:SetColorTexture(1, 1, 1)
-		end
-
-		health.TargetOverlay:Show()
-		health.TargetOverlay:SetSize(health:GetWidth(), health:GetHeight())
-		health.TargetOverlay:SetPoint("right", health, "right", 0, 0)
-		health.TargetOverlay:SetTexture(LSM:Fetch("statusbar", "mMediaTag K9"))
-		--health.TargetOverlay:SetVertexColor(1, 0, 0)
-		health.TargetOverlay:SetAlpha(0.4)
-
-	else
-		if health.TargetOverlay then
-			health.TargetOverlay:Hide()
-		end
-	end
-end
 
 local function mNameplateTools(table, event, frame)
 	if table.isNamePlate then

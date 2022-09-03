@@ -26,7 +26,7 @@ local mFontFlags = {
 local ExampleDockSettings = { top = false }
 local mGuild = L["Guild"]
 
-if MediaTagGameVersion.retail then
+if E.Retail then
 	mGuild = GUILD_AND_COMMUNITIES
 end
 

@@ -97,7 +97,7 @@ end
 local function OnClick(self, button)
 	DT.tooltip:Hide()
 	if button == "LeftButton" then
-		if MediaTagGameVersion.retail then
+		if E.Retail then
 			menuList = {
 				{
 					lefttext = format("%s %s%s|r", mMenuIcons(mIconCHARACTER), mColor(2), CHARACTER_BUTTON),
@@ -380,7 +380,7 @@ local function OnClick(self, button)
 		end
 
 		mMT:mDropDown(menuList, menuFrame, self, 160, 2)
-	elseif MediaTagGameVersion.retail then
+	elseif E.Retail then
 		ToggleLFDParentFrame()
 	end
 end
@@ -390,7 +390,7 @@ local function OnEnter(self)
 
 	DT.tooltip:AddLine(mText)
 	if E.db[mPlugin].InstancInfoToolTip then
-		if MediaTagGameVersion.tbc or MediaTagGameVersion.retail then
+		if E.Retail then
 			local mInctanceInfo = mMT:InctanceInfo()
 			if mInctanceInfo then
 				DT.tooltip:AddLine(" ")
@@ -410,7 +410,7 @@ local function OnEnter(self)
 		end
 
 		if
-			MediaTagGameVersion.retail
+			E.Retail
 			and C_MythicPlus.IsMythicPlusActive()
 			and (C_ChallengeMode.GetActiveChallengeMapID() ~= nil)
 		then
@@ -421,7 +421,7 @@ local function OnEnter(self)
 		end
 	end
 
-	if MediaTagGameVersion.retail and E.db[mPlugin].SKeystone then
+	if E.Retail and E.db[mPlugin].SKeystone then
 		local key = mMT:OwenKeystone()
 		if key then
 			DT.tooltip:AddLine(" ")
@@ -430,12 +430,12 @@ local function OnEnter(self)
 		end
 	end
 
-	if MediaTagGameVersion.retail and E.db[mPlugin].SystemMenu.score then
+	if E.Retail and E.db[mPlugin].SystemMenu.score then
 		DT.tooltip:AddLine(" ")
 		DT.tooltip:AddDoubleLine(DUNGEON_SCORE, mMT:GetDungeonScore())
 	end
 
-	if MediaTagGameVersion.retail and E.db[mPlugin].SAffix then
+	if E.Retail and E.db[mPlugin].SAffix then
 		local mAffixes = mMT:WeeklyAffixes()
 		if mAffixes then
 			DT.tooltip:AddLine(" ")
@@ -448,7 +448,7 @@ local function OnEnter(self)
 		end
 	end
 
-	if MediaTagGameVersion.retail and E.db[mPlugin].mSystemMenu.greatvault then
+	if E.Retail and E.db[mPlugin].mSystemMenu.greatvault then
 		local vaultinfohighest, ok = 0, false
 		local vaultinforaidText, vaultinfomplusText, vaultinfopvpText, vaultinfohighest, ok = mMT:mGetVaultInfo()
 		if ok then
@@ -505,7 +505,7 @@ local function OnEnter(self)
 	DT.tooltip:AddDoubleLine(ns.mName, format("%sVer.|r %s%s|r", titel, other, ns.mVersion))
 	DT.tooltip:AddLine(" ")
 	DT.tooltip:AddLine(format("%s %s%s|r", ns.LeftButtonIcon, tip, L["Click left to open the main menu."]))
-	if MediaTagGameVersion.retail then
+	if E.Retail then
 		DT.tooltip:AddLine(format("%s %s%s|r", ns.RightButtonIcon, tip, L["right click to open LFD Window"]))
 	end
 	DT.tooltip:Show()

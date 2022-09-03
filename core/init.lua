@@ -33,11 +33,9 @@ end
 
 -- addon laden
 function mMT:Initialize()
-	mMT:mVersionCheck() -- wow versions check
-
 	mMT:mMisc() -- module laden
 
-	if _G.MediaTagGameVersion.retail and E.Retail then
+	if E.Retail then
 		if E.db[mPlugin].mHealthmarker.enable or E.db[mPlugin].mExecutemarker.enable then
 			mMT:StartNameplateTools()
 		end
@@ -50,7 +48,7 @@ function mMT:Initialize()
 end
 
 function mMT:PLAYER_ENTERING_WORLD()
-	if MediaTagGameVersion.retail and E.Retail then
+	if E.Retail then
 		if E.db[mPlugin] then
 			if E.db[mPlugin].mRoleSymbols.enable then
 				mMT:mStartRoleSmbols() -- rolensymbole ändern
@@ -60,7 +58,7 @@ function mMT:PLAYER_ENTERING_WORLD()
 end
 
 function mMT:ACTIVE_TALENT_GROUP_CHANGED()
-	if MediaTagGameVersion.retail and E.Retail then
+	if E.Retail then
 		mMT:mUpdateKick() -- castbar kick/ kick auf cd
 	end
 end

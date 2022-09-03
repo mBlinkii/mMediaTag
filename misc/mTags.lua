@@ -729,7 +729,7 @@ E:AddTag(
 E:AddTag("mRole", "PLAYER_ROLES_ASSIGNED GROUP_ROSTER_UPDATE", function(unit)
 	local Role = ""
 
-	if MediaTagGameVersion.retail then
+	if E.Retail then
 		Role = UnitGroupRolesAssigned(unit)
 	end
 
@@ -743,7 +743,7 @@ end)
 E:AddTag("mRoleIcon", "PLAYER_ROLES_ASSIGNED GROUP_ROSTER_UPDATE", function(unit)
 	local Role = ""
 
-	if MediaTagGameVersion.retail then
+	if E.Retail then
 		Role = UnitGroupRolesAssigned(unit)
 	end
 
@@ -759,7 +759,7 @@ end)
 E:AddTag("mRoleIcon:target", "UNIT_TARGET UNIT_COMBAT", function(unit)
 	local Role = ""
 
-	if MediaTagGameVersion.retail then
+	if E.Retail then
 		Role = UnitGroupRolesAssigned(unit .. "target")
 	end
 
@@ -777,7 +777,7 @@ E:AddTag("mLevel", "UNIT_LEVEL PLAYER_LEVEL_UP PLAYER_UPDATE_RESTING", function(
 		return format("%sZzz|r", E.db.mMediaTag.cGeneralZzz.color)
 	else
 		local level = UnitLevel(unit)
-		if MediaTagGameVersion.retail then
+		if E.Retail then
 			if UnitIsWildBattlePet(unit) or UnitIsBattlePetCompanion(unit) then
 				return UnitBattlePetLevel(unit)
 			elseif level > 0 then
@@ -799,7 +799,7 @@ E:AddTag("mLevelSmart", "UNIT_LEVEL PLAYER_LEVEL_UP PLAYER_UPDATE_RESTING", func
 		return format("%sZzz|r", E.db.mMediaTag.cGeneralZzz.color)
 	else
 		local level = UnitLevel(unit)
-		if MediaTagGameVersion.retail then
+		if E.Retail then
 			if UnitIsWildBattlePet(unit) or UnitIsBattlePetCompanion(unit) then
 				return UnitBattlePetLevel(unit)
 			elseif level > 0 then
@@ -1261,7 +1261,7 @@ E:AddTag(
 		if min ~= 0 then
 			local Role = ""
 
-			if MediaTagGameVersion.retail then
+			if E.Retail then
 				Role = UnitGroupRolesAssigned(unit)
 			end
 
@@ -1291,7 +1291,7 @@ E:AddTag(
 	function(unit)
 		local Role = "HEALER"
 
-		if MediaTagGameVersion.retail then
+		if E.Retail then
 			Role = UnitGroupRolesAssigned(unit)
 		end
 
@@ -1320,7 +1320,7 @@ E:AddTag(
 	function(unit)
 		local Role = "HEALER"
 
-		if MediaTagGameVersion.retail then
+		if E.Retail then
 			Role = UnitGroupRolesAssigned(unit)
 		end
 

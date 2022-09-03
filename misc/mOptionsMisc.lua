@@ -256,8 +256,6 @@ local function OptionsDungeon()
 	}
 end
 
-if MediaTagGameVersion.retail then
-	mInsert(ns.Config, OptionsProfession)
-	mInsert(ns.Config, OptionsDungeon)
-end
+mInsert(ns.Config, OptionsProfession)
+mInsert(ns.Config, OptionsDungeon)
 mInsert(ns.Config, OptionsSystemMenu)
