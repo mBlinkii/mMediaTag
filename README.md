@@ -17,6 +17,7 @@ mMediaTag is a plugin for ElvUI with additional Textures, Chatbackgrounds, Tags 
 - Custom Backdrop for Health, Power and Castbars
 - Custom Combat Icons
 - Roll and Chatmenu Icons
+- many Custom Roleicons
 
 # Datatexts:
 - Systemmenu: opens a colorful Systemmenu and Extra featuers
