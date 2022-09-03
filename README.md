@@ -2,15 +2,21 @@
 mMediaTag is a plugin for ElvUI with additional Textures, Chatbackgrounds, Tags for the Unitframes, Datatext and more.
 
 # Special features:
-- 214 Statusbar Texturs
-- 6 Chatbackgrounds
-- 10 Backgrounds
-- 61 Tags for ElvUI
+- 238 Statusbar Texturs
+- Border Textures
+- 6 Chatbagrounds
+- many Tags for ElvUI with Status Icons and so on
 - Tooltip Icons
-- Links your Keystone to Chat, if someone write !key or !keys in Chat
+- Links your Keystone if someone write !key or !keys in Chat
 - Automatic Class color for Target Nameplate Border and hover effect
-- Dock Icons, LFD Tool shows Great Vault Infos
-- Objectiv Tracker Skin, (Questwatch)
+- Dock Icon, to create a custom dockbar with ElvUi's own databars
+- different Datatext with Systemmenu, Profession, Combattime, Coordinates, Gratevault and so on
+- Objectiv Tracker Skin, (Questwatch
+- Kick on CD display for Castbars
+- Healthmarkers for Nameplates for M+
+- Custom Backdrop for Health, Power and Castbars
+- Custom Combat Icons
+- Roll and Chatmenu Icons
 
 # Datatexts:
 - Systemmenu: opens a colorful Systemmenu and Extra featuers
