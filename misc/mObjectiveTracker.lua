@@ -89,18 +89,39 @@ local function mGetFont()
 	mOTFontFlag = E.db[mPlugin].mObjectiveTracker.fontflag
 end
 
+local function mcg(color)
+	local shift = 0.5
+	local colorA = { color[1] - 0.3, color[2] - 0.3, color[3] - 0.3 }
+	if color[1] > color[2] and color[1] > color[3] then
+		colorA = { 1, color[2] - 0.3, color[3] - 0.3 }
+	elseif color[2] > color[1] and color[2] > color[3] then
+		colorA = { color[1] - 0.3, 1, color[3] - 0.3 }
+	elseif color[3] > color[1] and color[3] > color[2] then
+		colorA = { color[1] - 0.3, color[2] - 0.3, 1 }
+	end
+
+	local colorB = color
+	local gardientColor = {}
+	gardientColor[1] = colorA[1] + shift * (colorB[1] - colorA[1])
+	gardientColor[2] = colorA[2] + shift * (colorB[2] - colorA[2])
+	gardientColor[3] = colorA[3] + shift * (colorB[3] - colorA[3])
+
+	return gardientColor
+end
+
 local function mSetGradient(obj, revers, orientation, minR, minG, minB, maxR, maxG, maxB)
 	if obj then
+		local c = mcg({ minR, minG, minB })
 		if revers then
-			obj:GetStatusBarTexture():SetGradient(orientation, maxR, maxG, maxB, minR, minG, minB)
+			obj:GetStatusBarTexture():SetGradient(orientation, c[1], c[2], c[3], minR, minG, minB)
 		else
-			obj:GetStatusBarTexture():SetGradient(orientation, minR, minG, minB, maxR, maxG, maxB)
+			obj:GetStatusBarTexture():SetGradient(orientation, minR, minG, minB, c[1], c[2], c[3])
 		end
 	end
 end
 
 local function mGardientProgressBars(self, value)
-	if not (self.Bar and self.isSkinned and value and E.db[mPlugin].mObjectiveTracker.text.gradient) then
+	if not (self.Bar and self.isSkinned and value) then
 		return
 	end
 	local current = (not 100 and value) or (value and 100 and 100 ~= 0 and value / 100)
@@ -108,7 +129,12 @@ local function mGardientProgressBars(self, value)
 		return
 	end
 	local r, g, b = E:ColorGradient(current, 0.8, 0, 0, 0.8, 0.8, 0, 0, 0.8, 0)
-	self.Bar.backdrop:SetBackdropColor(E.db.general.backdropfadecolor.r, E.db.general.backdropfadecolor.g, E.db.general.backdropfadecolor.b, E.db.general.backdropfadecolor.a)
+	self.Bar.backdrop:SetBackdropColor(
+		E.db.general.backdropfadecolor.r,
+		E.db.general.backdropfadecolor.g,
+		E.db.general.backdropfadecolor.b,
+		E.db.general.backdropfadecolor.a
+	)
 	mSetGradient(
 		self.Bar,
 		E.db[mPlugin].mObjectiveTracker.text.reverse,
@@ -272,9 +298,9 @@ local function mCreatBar(modul)
 				mBarOne,
 				BarGardientReverse,
 				"HORIZONTAL",
-				BarColor.r - 0.2,
-				BarColor.g - 0.2,
-				BarColor.b - 0.2,
+				BarColor.r,
+				BarColor.g,
+				BarColor.b,
 				BarColor.r,
 				BarColor.g,
 				BarColor.b
@@ -303,9 +329,9 @@ local function mCreatBar(modul)
 					mBarTwo,
 					BarGardientReverse,
 					"HORIZONTAL",
-					BarColor.r - 0.2,
-					BarColor.g - 0.2,
-					BarColor.b - 0.2,
+					BarColor.r,
+					BarColor.g,
+					BarColor.b,
 					BarColor.r,
 					BarColor.g,
 					BarColor.b
@@ -1213,10 +1239,11 @@ function mMT:InitializemOBT()
 		-- hooksecurefunc(_G.QUEST_TRACKER_MODULE,'AddTimerBar',SkinTimerBars)						--[Skin]: Quest Timer Bar
 		-- hooksecurefunc(_G.SCENARIO_TRACKER_MODULE,'AddTimerBar',SkinTimerBars)					--[Skin]: Scenario Timer Bar
 		-- hooksecurefunc(_G.ACHIEVEMENT_TRACKER_MODULE,'AddTimerBar',SkinTimerBars)				--[Skin]: Achievement Timer Bar
-
-		hooksecurefunc("BonusObjectiveTrackerProgressBar_SetValue", mGardientProgressBars) --[Color]: Bonus Objective Progress Bar
-		hooksecurefunc("ObjectiveTrackerProgressBar_SetValue", mGardientProgressBars) --[Color]: Quest Progress Bar
-		hooksecurefunc("ScenarioTrackerProgressBar_SetValue", mGardientProgressBars)
+		if E.db[mPlugin].mObjectiveTracker.text.gradient then
+			hooksecurefunc("BonusObjectiveTrackerProgressBar_SetValue", mGardientProgressBars) --[Color]: Bonus Objective Progress Bar
+			hooksecurefunc("ObjectiveTrackerProgressBar_SetValue", mGardientProgressBars) --[Color]: Quest Progress Bar
+			hooksecurefunc("ScenarioTrackerProgressBar_SetValue", mGardientProgressBars)
+		end
 	end
 end
 

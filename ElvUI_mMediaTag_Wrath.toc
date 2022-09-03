@@ -1,4 +1,4 @@
-## Interface: 20504
+## Interface: 30400
 ## Title: |cff1784d1ElvUI|r |CFF8E44ADm|r|CFF2ECC71Media|r|CFF3498DBTag|r
 ## Author: Blinkii
 ## Version: 2.86.2
@@ -6,7 +6,6 @@
 ## RequiredDeps: ElvUI
 ## DefaultState: Enabled
 
-core\mtbc.lua
 locales\load_locales.xml
 core\load_core.xml
 media\load_media.xml

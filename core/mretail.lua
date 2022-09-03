@@ -1,1 +1,0 @@
-_G.MediaTagGameVersion = { classic = false, tbc = false, retail = true, elvui = 12.65 }

@@ -219,7 +219,7 @@ local function healthMarkers(unit)
 	end
 end
 
-local function mNameplateTools(table, frame, r, g, b)
+local function mNameplateTools(table, event, frame)
 	if table.isNamePlate then
 		if table.Health and E.db[mPlugin].mHealthmarker.enable then
 			healthMarkers(table)

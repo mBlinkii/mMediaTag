@@ -434,7 +434,7 @@ local function OnEvent(self, event, ...)
 		self.mIcon.TextA:SetText("")
 	end
 
-	if MediaTagGameVersion.retail then
+	if E.Retail then
 		mMT:ShowHideNotification(
 			self,
 			(GuildMicroButtonMixin:HasUnseenInvitations() or CommunitiesUtil.DoesAnyCommunityHaveUnreadMessages())

@@ -82,7 +82,7 @@ local function OnLeave(self)
 end
 
 local function OnClick(self)
-	if mMT:CheckCombatLockdown() and MediaTagGameVersion.retail then
+	if mMT:CheckCombatLockdown() and E.Retail then
 		mMT:mOnClick(self, "CheckFrameCalendar")
 		GameTimeFrame:Click()
 	end

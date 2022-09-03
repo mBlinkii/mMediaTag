@@ -22,22 +22,3 @@ local function mPrint(text)
 end
 
 local mInsert = table.insert
-
-local function CustomBackdrop(table, frame, r, g, b)
-	-- print("--------------> Start")
-	-- for k, v in pairs(table.backdrop) do
-	-- 	print(k, v)
-	-- end
-	--table.backdrop:SetTexture("Interface\\AddOns\\ElvUI_mMediaTag\\media\\textures\\a4.tga")
-	if table.bg then
-		table.bg:SetTexture("Interface\\AddOns\\ElvUI_mMediaTag\\media\\textures\\p6.tga")
-	end
-end
-
-local function mhealtmarkerOptions()
-
-end
-
---mInsert(ns.Config, mhealtmarkerOptions)
-hooksecurefunc(UF, "PostUpdateHealthColor", CustomBackdrop)
-

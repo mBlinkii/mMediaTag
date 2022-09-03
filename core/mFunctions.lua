@@ -11,52 +11,6 @@ local tonumber = tonumber
 --WoW API / Variables
 local _G = _G
 
-function mMT:mVersionCheck()
-	local mElvVer = tonumber(E.version)
-	local mMinVer = MediaTagGameVersion.elvui
-
-	if mElvVer ~= nil then
-		if mElvVer < mMinVer then
-			local mErrorText = format(
-				L["%sYour ElvUI (Ver. %s) version is no longer up to date, please update it to Ver.|r %s%s|r, %sto avoid problems with|r %s|r%s.|r"],
-				ns.mColor5,
-				mElvVer,
-				ns.mColor6,
-				mMinVer,
-				ns.mColor5,
-				ns.mName,
-				ns.mColor5
-			)
-			print(mErrorText)
-
-			StaticPopupDialogs["mERROR"] = {
-				text = mErrorText,
-				button1 = "OK",
-				timeout = 120,
-				whileDead = true,
-				hideOnEscape = true,
-				preferredIndex = 3,
-			}
-
-			StaticPopup_Show("mERROR")
-		end
-	else
-		local mErrorText = format(L["%sERROR! Versioncheck Faild!|r"], ns.mColor5)
-		print(mErrorText)
-
-		StaticPopupDialogs["mERROR"] = {
-			text = mErrorText,
-			button1 = "OK",
-			timeout = 120,
-			whileDead = true,
-			hideOnEscape = true,
-			preferredIndex = 3,
-		}
-
-		StaticPopup_Show("mERROR")
-	end
-end
-
 function mMT:mMisc()
 	if E.db[mPlugin].mMsg then
 		print(format(L["Welcome to %s version |CFF8E44AD%q|r, for |cff1784d1ElvUI|r!"], ns.mName, ns.mVersion))
@@ -80,7 +34,7 @@ function mMT:mMisc()
 		mMT:mVolumeDisplay()
 	end
 
-	if MediaTagGameVersion.retail then
+	if E.Retail then
 		if E.db[mPlugin].mMythicPlusTools.keys then
 			mMT:mStartKeysToChatt()
 		end
@@ -117,6 +71,10 @@ function mMT:mMisc()
 
 		if E.db[mPlugin].mCastbar.enable then
 			mMT:mSetupCastbar()
+		end
+
+		if E.db[mPlugin].mCustomBackdrop.health.enable or E.db[mPlugin].mCustomBackdrop.power.enable or E.db[mPlugin].mCustomBackdrop.castbar.enable then
+			mMT:StartCustomBackdrop()
 		end
 	end
 
