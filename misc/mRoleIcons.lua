@@ -74,7 +74,8 @@ local function mSetupIcons()
 		--bigsword
 		for i = 1, 14, 1 do
 			path = format("Interface\\AddOns\\ElvUI_mMediaTag\\media\\icons\\bigsword%s.tga", i)
-			mIcons["bigsword" .. i] = { ["file"] = path, ["icon"] = E:TextureString(path, sizeString) .. "bigsword" .. i }
+			mIcons["bigsword" .. i] =
+				{ ["file"] = path, ["icon"] = E:TextureString(path, sizeString) .. "bigsword" .. i }
 		end
 
 		--beer
@@ -132,26 +133,55 @@ local function mSetupIcons()
 end
 
 function mMT:mStartRoleSmbols()
-	local path = "Interface\\AddOns\\ElvUI_mMediaTag\\media\\icons\\%s.tga"
-	local mTank = E:TextureString(format(path, E.db[mPlugin].mRoleSymbols.tank), sizeString)
-	local mHeal = E:TextureString(format(path, E.db[mPlugin].mRoleSymbols.heal), sizeString)
-	local mDD = E:TextureString(format(path, E.db[mPlugin].mRoleSymbols.dd), sizeString)
+	local mTank = nil
+	local mHeal = nil
+	local mDD = nil
 
-	_G.INLINE_TANK_ICON = mTank
-	_G.INLINE_HEALER_ICON = mHeal
-	_G.INLINE_DAMAGER_ICON = mDD
+	if E.db[mPlugin].mRoleSymbols.customtexture then
+		mTank = {
+			icon = E:TextureString(format(E.db[mPlugin].mRoleSymbols.customtank), sizeString),
+			path = E.db[mPlugin].mRoleSymbols.customtank,
+		}
+		mHeal = {
+			icon = E:TextureString(format(E.db[mPlugin].mRoleSymbols.customheal), sizeString),
+			path = E.db[mPlugin].mRoleSymbols.customtheal,
+		}
+		mDD = {
+			icon = E:TextureString(format(E.db[mPlugin].mRoleSymbols.customdd), sizeString),
+			path = E.db[mPlugin].mRoleSymbols.customdd,
+		}
+	else
+		mTank = {
+			icon = E:TextureString(format("Interface\\AddOns\\ElvUI_mMediaTag\\media\\icons\\%s.tga", E.db[mPlugin].mRoleSymbols.tank), sizeString),
+			path = format("Interface\\AddOns\\ElvUI_mMediaTag\\media\\icons\\%s.tga", E.db[mPlugin].mRoleSymbols.tank),
+		}
+		mHeal = {
+			icon = E:TextureString(format("Interface\\AddOns\\ElvUI_mMediaTag\\media\\icons\\%s.tga", E.db[mPlugin].mRoleSymbols.heal), sizeString),
+			path = format("Interface\\AddOns\\ElvUI_mMediaTag\\media\\icons\\%s.tga", E.db[mPlugin].mRoleSymbols.heal),
+		}
+		mDD = {
+			icon = E:TextureString(format("Interface\\AddOns\\ElvUI_mMediaTag\\media\\icons\\%s.tga", E.db[mPlugin].mRoleSymbols.dd), sizeString),
+			path = format("Interface\\AddOns\\ElvUI_mMediaTag\\media\\icons\\%s.tga", E.db[mPlugin].mRoleSymbols.dd),
+		}
+	end
 
-	CH.RoleIcons = {
-		TANK = mTank,
-		HEALER = mHeal,
-		DAMAGER = mDD,
-	}
+	if mTank and mHeal and mDD then
+		_G.INLINE_TANK_ICON = mTank.icon
+		_G.INLINE_HEALER_ICON = mHeal.icon
+		_G.INLINE_DAMAGER_ICON = mDD.icon
 
-	UF.RoleIconTextures = {
-		TANK = format(path, E.db[mPlugin].mRoleSymbols.tank),
-		HEALER = format(path, E.db[mPlugin].mRoleSymbols.heal),
-		DAMAGER = format(path, E.db[mPlugin].mRoleSymbols.dd),
-	}
+		CH.RoleIcons = {
+			TANK = mTank.icon,
+			HEALER = mHeal.icon,
+			DAMAGER = mDD.icon,
+		}
+
+		UF.RoleIconTextures = {
+			TANK = mTank.path,
+			HEALER = mHeal.path,
+			DAMAGER = mDD.path,
+		}
+	end
 end
 
 local function mRoleSmbolsOptions()
@@ -229,6 +259,110 @@ local function mRoleSmbolsOptions()
 				mMT:mStartRoleSmbols()
 			end,
 			values = mIconsList,
+		},
+		headercustomicons = {
+			order = 20,
+			type = "header",
+			name = L["Custom Textures"],
+		},
+		customtexture = {
+			order = 21,
+			type = "toggle",
+			name = L["Enable"],
+			desc = L["Enable the custom textures"],
+			get = function(info)
+				return E.db[mPlugin].mRoleSymbols.customtexture
+			end,
+			set = function(info, value)
+				E.db[mPlugin].mRoleSymbols.customtexture = value
+			end,
+		},
+		spacertexture1 = {
+			order = 22,
+			type = "description",
+			name = "\n\n",
+		},
+		customtexturetank = {
+			order = 23,
+			name = function()
+				if E.db[mPlugin].mRoleSymbols.customtank then
+					return L["Custom Texture Tank"]
+						.. "  "
+						.. E:TextureString(E.db[mPlugin].mRoleSymbols.customtank, sizeString)
+				else
+					return L["Custom Texture Tank"]
+				end
+			end,
+			type = "input",
+			width = "smal",
+			disabled = function()
+				return not E.db[mPlugin].mRoleSymbols.customtexture and E.db[mPlugin].mRoleSymbols.enable
+			end,
+			get = function(info)
+				return E.db[mPlugin].mRoleSymbols.customtank
+			end,
+			set = function(info, value)
+				E.db[mPlugin].mRoleSymbols.customtank = value
+				E:StaticPopup_Show("CONFIG_RL")
+			end,
+		},
+		customtextureheal = {
+			order = 24,
+			name = function()
+				if E.db[mPlugin].mRoleSymbols.customheal then
+					return L["Custom Texture Heal"]
+						.. "  "
+						.. E:TextureString(E.db[mPlugin].mRoleSymbols.customheal, sizeString)
+				else
+					return L["Custom Texture Heal"]
+				end
+			end,
+			type = "input",
+			width = "smal",
+			disabled = function()
+				return not E.db[mPlugin].mRoleSymbols.customtexture and E.db[mPlugin].mRoleSymbols.enable
+			end,
+			get = function(info)
+				return E.db[mPlugin].mRoleSymbols.customheal
+			end,
+			set = function(info, value)
+				E.db[mPlugin].mRoleSymbols.customheal = value
+				E:StaticPopup_Show("CONFIG_RL")
+			end,
+		},
+		customtexturedd = {
+			order = 25,
+			name = function()
+				if E.db[mPlugin].mRoleSymbols.customdd then
+					return L["Custom Texture DD"]
+						.. "  "
+						.. E:TextureString(E.db[mPlugin].mRoleSymbols.customdd, sizeString)
+				else
+					return L["Custom Texture DD"]
+				end
+			end,
+			type = "input",
+			width = "smal",
+			disabled = function()
+				return not E.db[mPlugin].mRoleSymbols.customtexture and E.db[mPlugin].mRoleSymbols.enable
+			end,
+			get = function(info)
+				return E.db[mPlugin].mRoleSymbols.customdd
+			end,
+			set = function(info, value)
+				E.db[mPlugin].mRoleSymbols.customdd = value
+				E:StaticPopup_Show("CONFIG_RL")
+			end,
+		},
+		spacertexture2 = {
+			order = 26,
+			type = "description",
+			name = "\n\n",
+		},
+		explanation = {
+			order = 27,
+			type = "description",
+			name = L["Attention! The path of the custom texture must comply with WoW standards. Example: Interface\\MYFOLDER\\MYFILE.tga. If you see only a green box, the path is not correct or there is a typo."],
 		},
 	}
 end

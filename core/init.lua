@@ -63,4 +63,4 @@ function mMT:ACTIVE_TALENT_GROUP_CHANGED()
 	end
 end
 
-E:RegisterModule(mMT:GetName()) -- addin in elvui registrieren
+E:RegisterModule(mMT:GetName()) -- addon in elvui registrieren
