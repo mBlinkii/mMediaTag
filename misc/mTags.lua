@@ -1028,32 +1028,6 @@ E:AddTag("mFaction:icon:opposite", "UNIT_FACTION", function(unit)
 	end
 end)
 
-local function mGetTargetTexture(second)
-	local _, unitClass = UnitClass("player")
-
-	if second then
-		return format("|TInterface\\AddOns\\ElvUI_mMediaTag\\media\\misc\\target%s2.tga:16:16:0:0:32:32|t", unitClass)
-	else
-		return format("|TInterface\\AddOns\\ElvUI_mMediaTag\\media\\misc\\target%s.tga:16:16:0:0:32:32|t", unitClass)
-	end
-end
-
-E:AddTag("mTargetMarkOne", "PLAYER_TARGET_CHANGED", function(unit)
-	if UnitIsUnit("target", unit) then
-		return mGetTargetTexture(false)
-	else
-		return ""
-	end
-end)
-
-E:AddTag("mTargetMarkTwo", "PLAYER_TARGET_CHANGED", function(unit)
-	if UnitIsUnit("target", unit) then
-		return mGetTargetTexture(true)
-	else
-		return ""
-	end
-end)
-
 E:AddTag("mTargetAbbrev", "UNIT_TARGET", function(unit)
 	local targetName = UnitName(unit .. "target")
 	if targetName then
@@ -1370,34 +1344,18 @@ local function GetRaidTargets(unit)
 	end
 end
 
-local TargetColorTable = {
-	[0] = "|TInterface\\AddOns\\ElvUI_mMediaTag\\media\\misc\\d0.tga:0|t",
-	[1] = "|TInterface\\AddOns\\ElvUI_mMediaTag\\media\\misc\\d1.tga:0|t",
-	[2] = "|TInterface\\AddOns\\ElvUI_mMediaTag\\media\\misc\\d2.tga:0|t",
-	[3] = "|TInterface\\AddOns\\ElvUI_mMediaTag\\media\\misc\\d3.tga:0|t",
-	[4] = "|TInterface\\AddOns\\ElvUI_mMediaTag\\media\\misc\\d4.tga:0|t",
-	[5] = "|TInterface\\AddOns\\ElvUI_mMediaTag\\media\\misc\\d5.tga:0|t",
-	[6] = "|TInterface\\AddOns\\ElvUI_mMediaTag\\media\\misc\\d6.tga:0|t",
-	[7] = "|TInterface\\AddOns\\ElvUI_mMediaTag\\media\\misc\\d7.tga:0|t",
-	[8] = "|TInterface\\AddOns\\ElvUI_mMediaTag\\media\\misc\\d8.tga:0|t",
-	[9] = "|TInterface\\AddOns\\ElvUI_mMediaTag\\media\\misc\\d9.tga:0|t",
-	[10] = "|TInterface\\AddOns\\ElvUI_mMediaTag\\media\\misc\\d10.tga:0|t",
-	[11] = "|TInterface\\AddOns\\ElvUI_mMediaTag\\media\\misc\\d11.tga:0|t",
-	[12] = "|TInterface\\AddOns\\ElvUI_mMediaTag\\media\\misc\\d12.tga:0|t",
-}
-
-local function GetPartyTargetsIcons(unit)
+local function GetPartyTargetsIcons(unit, style)
 	local ClassString = ""
 	for i = 1, GetNumGroupMembers() - 1 do
 		if UnitIsUnit("party" .. i .. "target", unit) then
-			local _, _, classIndex = UnitClass("party" .. i)
-			ClassString = TargetColorTable[classIndex] .. ClassString
+			local _, unitClass = UnitClass("party" .. i)
+			ClassString = format("|TInterface\\AddOns\\ElvUI_mMediaTag\\media\\misc\\%s%s.tga:0|t", unitClass, style) .. ClassString
 		end
 	end
 
 	if UnitIsUnit("playertarget", unit) then
-		local _, _, classIndex = UnitClass("player")
-		ClassString = TargetColorTable[classIndex] .. ClassString
+		local _, unitClass = UnitClass("player")
+		ClassString = format("|TInterface\\AddOns\\ElvUI_mMediaTag\\media\\misc\\%s%s.tga:0|t", unitClass, style) .. ClassString
 	end
 
 	if ClassString ~= "" then
@@ -1429,7 +1387,8 @@ end)
 
 E:AddTag("mTargetingPlayers:icons:party", 2, function(unit)
 	if (InCombatLockdown()) and UnitAffectingCombat(unit) and (IsInGroup()) then
-		return GetPartyTargetsIcons(unit)
+		--return GetPartyTargetsIcons(unit, "_GLAS")
+		return GetPartyTargetsIcons(unit, "_FLAT")
 	end
 end)
 
@@ -1579,8 +1538,6 @@ E:AddTagInfo(
 )
 
 E:AddTagInfo("mStatus:icon:class", ns.mName, L["Statusiocons in Classcolor"])
-E:AddTagInfo("mTargetMarkOne", ns.mName, L["Targetmark left side"])
-E:AddTagInfo("mTargetMarkTwo", ns.mName, L["Targetmark right side"])
 
 E:AddTagInfo("mQuestIcon", ns.mName, L["Shows a icon if the NPC is a Unit for a Quest."])
 --E:AddTagInfo('mQuestIcon:elvui', ns.mName, L['Same as mQuestIcon, hides if ElvUI Quest Icon is showen.'])
