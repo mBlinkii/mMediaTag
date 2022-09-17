@@ -28,6 +28,7 @@ local function setIcons()
     }
     E.db.unitframe.units.player.CombatIcon.customTexture = icons[E.db[mPlugin].mCustomCombatIcons]
 	E.db.unitframe.units.target.CombatIcon.customTexture = icons[E.db[mPlugin].mCustomCombatIcons]
+	E.db.unitframe.units.party.CombatIcon.customTexture = icons[E.db[mPlugin].mCustomCombatIcons]
     UF:CreateAndUpdateUF("player")
     UF:CreateAndUpdateUF("target")
     UF:TestingDisplay_CombatIndicator(UF["player"])
@@ -49,16 +50,18 @@ local function CustomCombatiocn()
 			get = function(info)
 				return (
 					E.db.unitframe.units.player.CombatIcon.texture == "CUSTOM"
-					and E.db.unitframe.units.target.CombatIcon.texture == "CUSTOM"
+					and E.db.unitframe.units.target.CombatIcon.texture == "CUSTOM" and E.db.unitframe.units.party.CombatIcon.texture == "CUSTOM"
 				)
 			end,
 			set = function(info, value)
 				if value then
 					E.db.unitframe.units.player.CombatIcon.texture = "CUSTOM"
 					E.db.unitframe.units.target.CombatIcon.texture = "CUSTOM"
+					E.db.unitframe.units.party.CombatIcon.texture = "CUSTOM"
 				else
 					E.db.unitframe.units.player.CombatIcon.texture = "DEFAULT"
 					E.db.unitframe.units.target.CombatIcon.texture = "DEFAULT"
+					E.db.unitframe.units.party.CombatIcon.texture = "DEFAULT"
 				end
 			end,
 		},
@@ -72,7 +75,7 @@ local function CustomCombatiocn()
 			disabled = function()
 				return not (
 					E.db.unitframe.units.player.CombatIcon.texture == "CUSTOM"
-					and E.db.unitframe.units.target.CombatIcon.texture == "CUSTOM"
+					and E.db.unitframe.units.target.CombatIcon.texture == "CUSTOM" and E.db.unitframe.units.party.CombatIcon.texture == "CUSTOM"
 				)
 			end,
 			get = function(info)

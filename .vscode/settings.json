@@ -103,7 +103,10 @@
         "SOCIAL_BUTTON",
         "EncounterJournal_LoadUI",
         "TANK",
-        "HEALER"
+        "HEALER",
+        "Calendar_LoadUI",
+        "Calendar_Show",
+        "ToggleCalendar"
     ],
     "Lua.diagnostics.disable": [
         "redundant-parameter",
