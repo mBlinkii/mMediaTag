@@ -1373,22 +1373,10 @@ E:AddTag("mTargetingPlayers", 2, function(unit)
 	end
 end)
 
-E:AddTag("mTargetingPlayers:raid", 2, function(unit)
-	if (InCombatLockdown()) and UnitAffectingCombat(unit) and (IsInRaid()) then
-		return GetRaidTargets(unit)
-	end
-end)
-
-E:AddTag("mTargetingPlayers:party", 2, function(unit)
-	if (InCombatLockdown()) and UnitAffectingCombat(unit) and (IsInGroup()) then
-		return GetPartyTargets(unit)
-	end
-end)
-
-E:AddTag("mTargetingPlayers:icons:party", 2, function(unit)
+E:AddTag("mTargetingPlayers:icons", 2, function(unit)
 	if (InCombatLockdown()) and UnitAffectingCombat(unit) and (IsInGroup()) then
 		--return GetPartyTargetsIcons(unit, "_GLAS")
-		return GetPartyTargetsIcons(unit, "_FLAT")
+		return GetPartyTargetsIcons(unit, "_SQ")
 	end
 end)
 
@@ -1543,8 +1531,6 @@ E:AddTagInfo("mQuestIcon", ns.mName, L["Shows a icon if the NPC is a Unit for a 
 --E:AddTagInfo('mQuestIcon:elvui', ns.mName, L['Same as mQuestIcon, hides if ElvUI Quest Icon is showen.'])
 
 E:AddTagInfo("mTargetingPlayers", ns.mName, L["Shows the number of targeting Players a unit"])
-E:AddTagInfo("mTargetingPlayers:raid", ns.mName, L["Shows the number of targeting Players a unit only in a Raid"])
-E:AddTagInfo("mTargetingPlayers:party", ns.mName, L["Shows the number of targeting Players a unit only in a Party"])
 E:AddTagInfo(
 	"mTargetingPlayers:icons:party",
 	ns.mName,
