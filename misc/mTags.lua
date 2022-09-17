@@ -1380,6 +1380,18 @@ E:AddTag("mTargetingPlayers:icons", 2, function(unit)
 	end
 end)
 
+E:AddTag("mTargetingPlayers:icons:Glas", 2, function(unit)
+	if (InCombatLockdown()) and UnitAffectingCombat(unit) and (IsInGroup()) then
+		return GetPartyTargetsIcons(unit, "_GLAS")
+	end
+end)
+
+E:AddTag("mTargetingPlayers:icons:SQ", 2, function(unit)
+	if (InCombatLockdown()) and UnitAffectingCombat(unit) and (IsInGroup()) then
+		return GetPartyTargetsIcons(unit, "_SQ")
+	end
+end)
+
 E:AddTagInfo("mClass", ns.mName, L["Classes are fully written."])
 E:AddTagInfo("mClass:short", ns.mName, L["Classes are short written."])
 
@@ -1532,9 +1544,21 @@ E:AddTagInfo("mQuestIcon", ns.mName, L["Shows a icon if the NPC is a Unit for a 
 
 E:AddTagInfo("mTargetingPlayers", ns.mName, L["Shows the number of targeting Players a unit"])
 E:AddTagInfo(
-	"mTargetingPlayers:icons:party",
+	"mTargetingPlayers:icons",
 	ns.mName,
 	L["Shows the number of targeting Players a unit in a Party as Icons"]
+)
+
+E:AddTagInfo(
+	"mTargetingPlayers:icons:Glas",
+	ns.mName,
+	L["Shows the number of targeting Players a unit in a Party as Glas Icons"]
+)
+
+E:AddTagInfo(
+	"mTargetingPlayers:icons:SQ",
+	ns.mName,
+	L["Shows the number of targeting Players a unit in a Party as Square Icons"]
 )
 
 E:AddTagInfo("mFaction:text", ns.mName, L["Shows the unit faction as a text"])
