@@ -82,9 +82,14 @@ local function OnLeave(self)
 end
 
 local function OnClick(self)
-	if mMT:CheckCombatLockdown() and E.Retail then
+	if mMT:CheckCombatLockdown() then
 		mMT:mOnClick(self, "CheckFrameCalendar")
-		GameTimeFrame:Click()
+		if E.Retail then
+			GameTimeFrame:Click()
+		else
+			Calendar_LoadUI()
+			ToggleCalendar()
+		end
 	end
 end
 
