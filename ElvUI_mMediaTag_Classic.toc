@@ -1,7 +1,7 @@
 ## Interface: 11403
 ## Title: |cff1784d1ElvUI|r |CFF8E44ADm|r|CFF2ECC71Media|r|CFF3498DBTag|r
 ## Author: Blinkii
-## Version: 2.87
+## Version: 2.88.1
 ## Notes: ElvUI Plugin from Blinkii@Eu-Arygos | Support: mMediaTag@gmx.de
 ## RequiredDeps: ElvUI
 ## DefaultState: Enabled

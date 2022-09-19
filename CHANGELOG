@@ -2,13 +2,20 @@
 [Eng] - All changes to this project will be documented in this file. The latest changes are at the top.
 [Ger] - Alle Änderungen an diesem Projekt werden in dieser Datei dokumentiert. Die neuesten Änderungen stehen ganz oben.
 
+## [ver. 2.88.1] - 19.09.2022
+### Update
+- FIX for WOTLK
+
 ## [ver. 2.88] - 17.09.2022
 ### Update
 - FIX for Profession and Dungeon Datatext Settings
 - FIX for Dock Calendar Icon for WOTLK
+- UPDATE Tags Target Counter mTargetingPlayers:icons:Party to mTargetingPlayers:icons
+- REMOVED Tags mTargetMarkOne, mTargetMarkTwo, mTargetingPlayers:icons:party
+- UPDATE Combaticons for Party
 ### Added
-- New Custom Backdrop (default is disabled)
-- New Custom Combat Icons (default is disabled)
+- NEW Tags for Target Counter mTargetingPlayers:icons:SQ and mTargetingPlayers:icons:Glas
+- NEW custom Combat Icons settings for custom texture
 
 ## [ver. 2.87] - 03.09.2022
 ### Update
@@ -16,7 +23,8 @@
 - Update Settings for Classic
 - Enabled some more functions for Classic
 ### Added
-- NEW Tags for Target Counter
+- New Custom Backdrop (default is disabled)
+- New Custom Combat Icons (default is disabled)
 
 ## [ver. 2.86.2] - 27.08.2022
 ### Update

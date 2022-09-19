@@ -8,9 +8,9 @@ local addon, ns = ...
 local format = format
 
 --Variables
-local ChangelogDate = "23.09.2022"
+local ChangelogDate = "17.09.2022"
 local ChangelogText =
-	"## [ver. 2.87] - 03.09.2022\n### Update\n- Code Update\n- Update Settings for Classic\n- Enabled some more functions for Classic\n### Added\n- New Custom Backdrop (default is disabled)\n- New Custom Combat Icons (default is disabled)"
+	"## [ver. 2.88] - 17.09.2022\n\n### Update\n- |CFFFE7B2CFIX|r for Profession and Dungeon Datatext Settings\n- |CFFFE7B2CFIX|r for Dock Calendar Icon for WOTLK\n- |CFF58D68DUPDATE|r Tags Target Counter mTargetingPlayers:icons:Party to mTargetingPlayers:icons\n- |CFFE74C3CREMOVED|r Tags mTargetMarkOne, mTargetMarkTwo, mTargetingPlayers:icons:party\n- |CFF58D68DUPDATE|r Combaticons for Party\n\n### Added\n- |CFF3498DBNEW|r Tags for Target Counter mTargetingPlayers:icons:SQ and mTargetingPlayers:icons:Glas\n- |CFF3498DBNEW|r custom Combat Icons settings for custom texture"
 
 function mMT:Changelog(opt)
 	local Frame = CreateFrame("Frame", "mMediaTagChangelog", E.UIParent, "BackdropTemplate")
