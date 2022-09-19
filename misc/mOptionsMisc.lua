@@ -8,6 +8,7 @@ local addon, ns = ...
 local mInsert = table.insert
 
 local function OptionsProfession()
+	if not E.Retail then return end
 	E.Options.args.mMediaTag.args.datatext.args.professionsmenusettings.args = {
 		headerprofessions = {
 			order = 1,
@@ -173,6 +174,7 @@ local function OptionsSystemMenu()
 end
 
 local function OptionsDungeon()
+	if not E.Retail then return end
 	E.Options.args.mMediaTag.args.datatext.args.dungeonsetting.args = {
 		headerdungeon = {
 			order = 1,

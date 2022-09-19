@@ -2,6 +2,10 @@
 [Eng] - All changes to this project will be documented in this file. The latest changes are at the top.
 [Ger] - Alle Änderungen an diesem Projekt werden in dieser Datei dokumentiert. Die neuesten Änderungen stehen ganz oben.
 
+## [ver. 2.88.1] - 19.09.2022
+### Update
+- FIX for WOTLK
+
 ## [ver. 2.88] - 17.09.2022
 ### Update
 - FIX for Profession and Dungeon Datatext Settings
@@ -11,7 +15,7 @@
 - UPDATE Combaticons for Party
 ### Added
 - NEW Tags for Target Counter mTargetingPlayers:icons:SQ and mTargetingPlayers:icons:Glas
-- NEW custom Combat Icons settings for custom texture 
+- NEW custom Combat Icons settings for custom texture
 
 ## [ver. 2.87] - 03.09.2022
 ### Update
