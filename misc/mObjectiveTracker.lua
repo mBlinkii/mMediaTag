@@ -266,8 +266,8 @@ local function mSetupQuestFont(linetext, state)
 end
 
 local function mCreatBar(modul)
-	local BarStyle, BarColorStyle, BarColor, BarShadow, BarGardient, BarGardientReverse, mEltreumUI =
-		"none", "class", { r = 1, g = 1, b = 1 }, true, true, false, false
+	local BarStyle, BarColorStyle, BarColor, BarShadow, BarGardient, BarGardientReverse =
+		"none", "class", { r = 1, g = 1, b = 1 }, true, true, false
 	BarStyle = E.db[mPlugin].mObjectiveTracker.header.barstyle
 	BarColor = E.db[mPlugin].mObjectiveTracker.header.barcolor
 	BarColorStyle = E.db[mPlugin].mObjectiveTracker.header.barcolorstyle

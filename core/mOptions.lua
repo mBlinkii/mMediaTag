@@ -840,6 +840,19 @@ local function OptionsCoreClassic()
 						childGroups = "tab",
 						args = {},
 					},
+					rolesymbols = {
+						order = 1,
+						type = "group",
+						name = L["Role Symbols"],
+						args = {},
+					},
+					custombackdrop = {
+						order = 4,
+						type = "group",
+						name = L["Custom Backdrop Textures"],
+						childGroups = "tab",
+						args = {},
+					},
 				},
 			},
 			profile = {

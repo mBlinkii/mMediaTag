@@ -70,7 +70,7 @@ local function OnEvent(self)
 			format("|T%s:16:16:0:0:128:128|t %s", "Interface\\AddOns\\ElvUI_mMediaTag\\media\\icons\\system.tga", mText)
 	end
 
-	if E.db[mPlugin].InstancInfoName then
+	if E.db[mPlugin].InstancInfoName and E.Retail then
 		local inInstance, _ = IsInInstance()
 		if inInstance then
 			if C_MythicPlus.IsMythicPlusActive() and (C_ChallengeMode.GetActiveChallengeMapID() ~= nil) then

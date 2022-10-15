@@ -16,4 +16,5 @@
 	<Script file="mCombatIcon.lua"/>
 	<Script file="mFPSMS.lua"/>
 	<Include file="Dock\load_dock_classic.xml"/>
+	<Script file="mBGTexture.lua"/>
 </Ui>

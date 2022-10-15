@@ -78,6 +78,10 @@ function mMT:mMisc()
 		end
 	end
 
+	if E.db[mPlugin].mCustomBackdrop.health.enable or E.db[mPlugin].mCustomBackdrop.power.enable or E.db[mPlugin].mCustomBackdrop.castbar.enable then
+		mMT:StartCustomBackdrop()
+	end
+
 	mMT:LoadTagSettings()
 end
 
