@@ -206,7 +206,7 @@ P[mPlugin] = {
 		["fontflag"] = "OUTLINE",
 		["fontcolor"] = {["r"] = 1, ["g"] = 1, ["b"] = 1},
 		["normal"] = {["r"] = 1, ["g"] = 1, ["b"] = 1, ["a"] = 0.75, ["style"] = "custom"},
-		["hover"] = {["r"] = 0.1, ["g"] = 0.94, ["b"] = 1, ["a"] = 100, ["style"] = "class"},
+		["hover"] = {["r"] = 0.1, ["g"] = 0.94, ["b"] = 1, ["a"] = 1, ["style"] = "class"},
 		["click"] = {["r"] = 0.4, ["g"] = 0.4, ["b"] = 0.4, ["a"] = 0.75, ["style"] = "custom"},
 		["tip"] = {["enable"] = true},
 		["achievement"] = {
@@ -354,9 +354,7 @@ P[mPlugin] = {
 			["barcolor"] = {["r"] = 1, ["g"] = 0.7843137254902, ["b"] = 0},
 			["barshadow"] = true,
 			["questcount"] = "right",
-			["gradient"] = true,
 			["texture"] = "Solid",
-			["reverse"] = false
 		},
 		["title"] = {
 			["fontsize"] = 13,
@@ -377,8 +375,7 @@ P[mPlugin] = {
 			["progrespercent"] = true,
 			["cleantext"] = true,
 			["progresscolor"] = true,
-			["reverse"] = false,
-			["gradient"] = true
+			["backdrop"] = true
 		},
 		["dash"] = {["style"] = "blizzard", ["texture"] = 1, ["customstring"] = ">"}
 	},
@@ -404,16 +401,16 @@ P[mPlugin] = {
 	},
 	["mCastbar"] = {
 		["enable"] = true,
-		["gardient"] = false,
 		["kickcd"] = {
 			["r"] = 0.545098,
 			["g"] = 0,
-			["b"] = 0.545098,
-			["r2"] = 0.545098,
-			["g2"] = 0,
-			["b2"] = 0.545098
+			["b"] = 0.545098
 		},
-		["kickintime"] = {["r"] = 0, ["g"] = 0.74902, ["b"] = 1, ["r2"] = 0, ["g2"] = 0.74902, ["b2"] = 1}
+		["kickintime"] = {
+			["r"] = 0,
+			["g"] = 0.74902,
+			["b"] = 1
+		}
 	},
 	["mHealthmarker"] = {
 		["enable"] = false,

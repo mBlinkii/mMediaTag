@@ -8,9 +8,8 @@ local addon, ns = ...
 local format = format
 
 --Variables
-local ChangelogDate = "17.09.2022"
 local ChangelogText =
-	"## [ver. 2.88] - 17.09.2022\n\n### Update\n- |CFFFE7B2CFIX|r for Profession and Dungeon Datatext Settings\n- |CFFFE7B2CFIX|r for Dock Calendar Icon for WOTLK\n- |CFF58D68DUPDATE|r Tags Target Counter mTargetingPlayers:icons:Party to mTargetingPlayers:icons\n- |CFFE74C3CREMOVED|r Tags mTargetMarkOne, mTargetMarkTwo, mTargetingPlayers:icons:party\n- |CFF58D68DUPDATE|r Combaticons for Party\n\n### Added\n- |CFF3498DBNEW|r Tags for Target Counter mTargetingPlayers:icons:SQ and mTargetingPlayers:icons:Glas\n- |CFF3498DBNEW|r custom Combat Icons settings for custom texture"
+	"#### [ver. 2.88.4] - 31.10.2022\n\n### Update\n- |CFFFE7B2CFIX|r for WOW DF\n\n\n\nSorry for the late bugfix, I don't have much time to play and test the addon at the moment. hope that now everything should work."
 
 function mMT:Changelog(opt)
 	local Frame = CreateFrame("Frame", "mMediaTagChangelog", E.UIParent, "BackdropTemplate")
@@ -27,26 +26,25 @@ function mMT:Changelog(opt)
 	Frame.mLogo:Point("TOPLEFT", 72, -2)
 	Frame.mLogo:Point("BOTTOMRIGHT", -72, 434)
 	Frame.mLogo:SetTexture("Interface\\AddOns\\ElvUI_mMediaTag\\media\\misc\\logo.tga")
+	Frame.UpperBar = Frame:CreateTexture(nil, "ARTWORK")
+	Frame.UpperBar:Point("TOPLEFT", 72, -2)
+	Frame.UpperBar:Point("BOTTOMRIGHT", -72, 434)
+	Frame.UpperBar:SetTexture("Interface\\AddOns\\ElvUI_mMediaTag\\media\\misc\\logo.tga")
 
 	local Font = GameFontHighlightSmall:GetFont()
 
-	local Label1 = Frame:CreateFontString(Frame, "OVERLAY", "GameTooltipText")
-	Label1:SetFont(Font, 18)
-	Label1:SetPoint("TOPRIGHT", -20, -70)
-	Label1:SetText(ChangelogDate)
+	local Label1 = Frame:CreateFontString("ChangelogTitel", "OVERLAY", "GameTooltipText")
+	Label1:SetFont(Font, 24)
+	Label1:SetPoint("TOPLEFT", 20, -70)
+	Label1:SetText(format("|CFF58D68D%s|r", L["Changelog:"]))
 
-	local Label2 = Frame:CreateFontString(Frame, "OVERLAY", "GameTooltipText")
-	Label2:SetFont(Font, 18)
-	Label2:SetPoint("TOPLEFT", 20, -70)
-	Label2:SetText(format("%s%s|r", ns.mColor6, L["Changelog:"]))
+	local Label2 = Frame:CreateFontString("ChangelogText", "OVERLAY", "GameTooltipText")
+	Label2:SetFont(Font, 14)
+	Label2:SetPoint("TOPLEFT", 20, -120)
+	Label2:SetWidth(360)
+	Label2:SetText(ChangelogText)
 
-	local Label3 = Frame:CreateFontString(Frame, "OVERLAY", "GameTooltipText")
-	Label3:SetFont(Font, 14)
-	Label3:SetPoint("TOPLEFT", 20, -100)
-	Label3:SetWidth(360)
-	Label3:SetText(ChangelogText)
-
-	local Close = CreateFrame("Button", "CloseButton", Frame, "OptionsButtonTemplate, BackdropTemplate")
+	local Close = CreateFrame("Button", "CloseButton", Frame, BackdropTemplateMixin and "BackdropTemplate")
 	Close:Point("BOTTOM", Frame, "BOTTOM", 0, 10)
 	Close:SetText(CLOSE)
 	Close:Size(80, 20)
@@ -58,6 +56,11 @@ function mMT:Changelog(opt)
 			E:ToggleOptionsUI()
 		end
 	end)
+
+	local CloseButtonText = Close:CreateFontString("ChangelogText", "OVERLAY", "GameTooltipText")
+	CloseButtonText:SetFont(Font, 14)
+	CloseButtonText:SetPoint("CENTER")
+	CloseButtonText:SetText("|CFFE74C3CClose|r")
 
 	mSkin:HandleButton(Close)
 

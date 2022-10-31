@@ -19,7 +19,7 @@ local statusColors = {
 	"|cff0CD809",
 	"|cffE8DA0F",
 	"|cffFF9000",
-	"|cffD80909",
+	"|cffD80909"
 }
 
 local function mDockCheckFrame()
@@ -38,18 +38,17 @@ local function mTip()
 
 		local framerate = GetFramerate()
 		local _, _, latencyHome, latencyWorld = GetNetStats()
-		local fps = framerate >= 30 and 1
-			or (framerate >= 20 and framerate < 30) and 2
-			or (framerate >= 10 and framerate < 20) and 3
-			or 4
-		local pingHome = latencyHome < 150 and 1
-			or (latencyHome >= 150 and latencyHome < 300) and 2
-			or (latencyHome >= 300 and latencyHome < 500) and 3
-			or 4
-		local pingWorld = latencyWorld < 150 and 1
-			or (latencyWorld >= 150 and latencyWorld < 300) and 2
-			or (latencyWorld >= 300 and latencyWorld < 500) and 3
-			or 4
+		local fps =
+			framerate >= 30 and 1 or (framerate >= 20 and framerate < 30) and 2 or (framerate >= 10 and framerate < 20) and 3 or
+			4
+		local pingHome =
+			latencyHome < 150 and 1 or (latencyHome >= 150 and latencyHome < 300) and 2 or
+			(latencyHome >= 300 and latencyHome < 500) and 3 or
+			4
+		local pingWorld =
+			latencyWorld < 150 and 1 or (latencyWorld >= 150 and latencyWorld < 300) and 2 or
+			(latencyWorld >= 300 and latencyWorld < 500) and 3 or
+			4
 		local bandwidthIn, bandwidthOut, latencyHome, latencyWorld = GetNetStats()
 		DT.tooltip:AddDoubleLine(
 			format("%s%s|r", L["FPS:"], titel),
@@ -106,14 +105,11 @@ local function OnUpdate(self, elapsed)
 		local framerate = floor(GetFramerate())
 		local _, _, _, latency = GetNetStats()
 
-		local fps = framerate >= 30 and 1
-			or (framerate >= 20 and framerate < 30) and 2
-			or (framerate >= 10 and framerate < 20) and 3
-			or 4
-		local ping = latency < 150 and 1
-			or (latency >= 150 and latency < 300) and 2
-			or (latency >= 300 and latency < 500) and 3
-			or 4
+		local fps =
+			framerate >= 30 and 1 or (framerate >= 20 and framerate < 30) and 2 or (framerate >= 10 and framerate < 20) and 3 or
+			4
+		local ping =
+			latency < 150 and 1 or (latency >= 150 and latency < 300) and 2 or (latency >= 300 and latency < 500) and 3 or 4
 
 		if self.mIcon.TextA and self.mIcon.TextB then
 			local Color = E.db[mPlugin].mDock.mainmenu.color
@@ -165,7 +161,7 @@ local function OnEvent(self, event, ...)
 		IconTexture = E.db[mPlugin].mDock.mainmenu.path,
 		Notifications = false,
 		Text = true,
-		Spezial = true,
+		Spezial = true
 	}
 
 	mMT:DockInitialisation(self)
@@ -191,19 +187,30 @@ local function OnClick(self, button)
 	if mMT:CheckCombatLockdown() then
 		if button == "LeftButton" then
 			mMT:mOnClick(self, "CheckFrameMainMenu")
-			if not GameMenuFrame:IsShown() then
-				if VideoOptionsFrame:IsShown() then
-					VideoOptionsFrameCancel:Click()
-				elseif AudioOptionsFrame:IsShown() then
-					AudioOptionsFrameCancel:Click()
-				elseif InterfaceOptionsFrame:IsShown() then
-					InterfaceOptionsFrameCancel:Click()
+			if not _G.GameMenuFrame:IsShown() then
+				if not E.Retail then
+					if _G.VideoOptionsFrame:IsShown() then
+						_G.VideoOptionsFrameCancel:Click()
+					elseif _G.AudioOptionsFrame:IsShown() then
+						_G.AudioOptionsFrameCancel:Click()
+					elseif _G.InterfaceOptionsFrame:IsShown() then
+						_G.InterfaceOptionsFrameCancel:Click()
+					end
 				end
+
 				CloseMenus()
 				CloseAllWindows()
-				ShowUIPanel(GameMenuFrame)
+				PlaySound(850) --IG_MAINMENU_OPEN
+				ShowUIPanel(_G.GameMenuFrame)
 			else
-				HideUIPanel(GameMenuFrame)
+				PlaySound(854) --IG_MAINMENU_QUIT
+				HideUIPanel(_G.GameMenuFrame)
+
+				if E.Retail then
+					MainMenuMicroButton:SetButtonState("NORMAL")
+				else
+					MainMenuMicroButton_SetNormal()
+				end
 			end
 		elseif button == "MiddleButton" and E.db[mPlugin].mDock.mainmenu.sound then
 			mMT:MuteVolume()

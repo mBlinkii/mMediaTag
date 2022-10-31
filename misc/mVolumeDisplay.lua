@@ -150,7 +150,7 @@ function mMT:mVolumeDisplay()
 	VolumeFrame.bar:SetVertexColor(class[1], class[2], class[3], 1)
 	VolumeFrame.bar:Show()
 
-	VolumeText = VolumeFrame:CreateFontString(VolumeFrame, "OVERLAY", "GameTooltipText")
+	VolumeText = VolumeFrame:CreateFontString(nil, "OVERLAY", "GameTooltipText")
 	VolumeText:SetFont(Font, 18)
 	VolumeText:SetPoint("RIGHT", 0, 0)
 	VolumeText:SetText(format("|cFF%s%.f%%|r", color, level))

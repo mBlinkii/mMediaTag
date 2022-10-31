@@ -88,63 +88,23 @@ local function mGetFont()
 	mOTFont = LSM:Fetch("font", E.db[mPlugin].mObjectiveTracker.font)
 	mOTFontFlag = E.db[mPlugin].mObjectiveTracker.fontflag
 end
-
-local function mcg(color)
-	local shift = 0.5
-	local colorA = { color[1] - 0.3, color[2] - 0.3, color[3] - 0.3 }
-	if color[1] > color[2] and color[1] > color[3] then
-		colorA = { 1, color[2] - 0.3, color[3] - 0.3 }
-	elseif color[2] > color[1] and color[2] > color[3] then
-		colorA = { color[1] - 0.3, 1, color[3] - 0.3 }
-	elseif color[3] > color[1] and color[3] > color[2] then
-		colorA = { color[1] - 0.3, color[2] - 0.3, 1 }
-	end
-
-	local colorB = color
-	local gardientColor = {}
-	gardientColor[1] = colorA[1] + shift * (colorB[1] - colorA[1])
-	gardientColor[2] = colorA[2] + shift * (colorB[2] - colorA[2])
-	gardientColor[3] = colorA[3] + shift * (colorB[3] - colorA[3])
-
-	return gardientColor
-end
-
-local function mSetGradient(obj, revers, orientation, minR, minG, minB, maxR, maxG, maxB)
-	if obj then
-		local c = mcg({ minR, minG, minB })
-		if revers then
-			obj:GetStatusBarTexture():SetGradient(orientation, c[1], c[2], c[3], minR, minG, minB)
-		else
-			obj:GetStatusBarTexture():SetGradient(orientation, minR, minG, minB, c[1], c[2], c[3])
-		end
+local function mCheckColorNumber(colorNumber)
+	if colorNumber <= 0 then
+		return 0
+	elseif colorNumber >= 1 then
+		return 1
 	end
 end
 
-local function mGardientProgressBars(self, value)
+local function mBackdropBars(self, value)
 	if not (self.Bar and self.isSkinned and value) then
 		return
 	end
-	local current = (not 100 and value) or (value and 100 and 100 ~= 0 and value / 100)
-	if not current then
-		return
-	end
-	local r, g, b = E:ColorGradient(current, 0.8, 0, 0, 0.8, 0.8, 0, 0, 0.8, 0)
 	self.Bar.backdrop:SetBackdropColor(
 		E.db.general.backdropfadecolor.r,
 		E.db.general.backdropfadecolor.g,
 		E.db.general.backdropfadecolor.b,
 		E.db.general.backdropfadecolor.a
-	)
-	mSetGradient(
-		self.Bar,
-		E.db[mPlugin].mObjectiveTracker.text.reverse,
-		"HORIZONTAL",
-		r,
-		g,
-		b,
-		r - 0.4,
-		g - 0.4,
-		b - 0.4
 	)
 end
 
@@ -266,14 +226,11 @@ local function mSetupQuestFont(linetext, state)
 end
 
 local function mCreatBar(modul)
-	local BarStyle, BarColorStyle, BarColor, BarShadow, BarGardient, BarGardientReverse =
-		"none", "class", { r = 1, g = 1, b = 1 }, true, true, false
+	local BarStyle, BarColorStyle, BarColor, BarShadow = "none", "class", { r = 1, g = 1, b = 1 }, true
 	BarStyle = E.db[mPlugin].mObjectiveTracker.header.barstyle
 	BarColor = E.db[mPlugin].mObjectiveTracker.header.barcolor
 	BarColorStyle = E.db[mPlugin].mObjectiveTracker.header.barcolorstyle
 	BarShadow = E.db[mPlugin].mObjectiveTracker.header.barshadow
-	BarGardient = E.db[mPlugin].mObjectiveTracker.header.gradient
-	BarGardientReverse = E.db[mPlugin].mObjectiveTracker.header.reverse
 
 	if (BarStyle == "one") or (BarStyle == "two") or (BarStyle == "onebig") or (BarStyle == "twobig") then
 		if BarColorStyle == "class" then
@@ -293,20 +250,6 @@ local function mCreatBar(modul)
 		mBarOne:SetStatusBarColor(BarColor.r, BarColor.g, BarColor.b)
 		mBarOne:CreateBackdrop()
 
-		if BarGardient then
-			mSetGradient(
-				mBarOne,
-				BarGardientReverse,
-				"HORIZONTAL",
-				BarColor.r,
-				BarColor.g,
-				BarColor.b,
-				BarColor.r,
-				BarColor.g,
-				BarColor.b
-			)
-		end
-
 		if BarShadow then
 			mBarOne:CreateShadow()
 		end
@@ -323,20 +266,6 @@ local function mCreatBar(modul)
 			mBarTwo:SetStatusBarTexture(BarTexture)
 			mBarTwo:SetStatusBarColor(BarColor.r, BarColor.g, BarColor.b)
 			mBarTwo:CreateBackdrop()
-
-			if BarGardient then
-				mSetGradient(
-					mBarTwo,
-					BarGardientReverse,
-					"HORIZONTAL",
-					BarColor.r,
-					BarColor.g,
-					BarColor.b,
-					BarColor.r,
-					BarColor.g,
-					BarColor.b
-				)
-			end
 
 			if BarShadow then
 				mBarTwo:CreateShadow()
@@ -774,36 +703,6 @@ local function mObjectiveTrackerOptions()
 						E:StaticPopup_Show("CONFIG_RL")
 					end,
 				},
-				headerbargardient = {
-					order = 10,
-					type = "toggle",
-					name = L["Bar Gardient"],
-					disabled = function()
-						return (E.db[mPlugin].mObjectiveTracker.header.barstyle == "none")
-					end,
-					get = function(info)
-						return E.db[mPlugin].mObjectiveTracker.header.gradient
-					end,
-					set = function(info, value)
-						E.db[mPlugin].mObjectiveTracker.header.gradient = value
-						E:StaticPopup_Show("CONFIG_RL")
-					end,
-				},
-				headerbargardientreverse = {
-					order = 11,
-					type = "toggle",
-					name = L["Bar Gardient reverse"],
-					disabled = function()
-						return (E.db[mPlugin].mObjectiveTracker.header.barstyle == "none")
-					end,
-					get = function(info)
-						return E.db[mPlugin].mObjectiveTracker.header.reverse
-					end,
-					set = function(info, value)
-						E.db[mPlugin].mObjectiveTracker.header.reverse = value
-						E:StaticPopup_Show("CONFIG_RL")
-					end,
-				},
 				headerbartexture = {
 					order = 12,
 					type = "select",
@@ -1121,30 +1020,19 @@ local function mObjectiveTrackerOptions()
 						E:StaticPopup_Show("CONFIG_RL")
 					end,
 				},
-				textbargardient = {
+				textbarbackdrop = {
 					order = 15,
 					type = "toggle",
-					name = L["Bar Gardient"],
+					name = L["Skin Bar backdrop"],
 					get = function(info)
-						return E.db[mPlugin].mObjectiveTracker.text.gradient
+						return E.db[mPlugin].mObjectiveTracker.text.backdrop
 					end,
 					set = function(info, value)
-						E.db[mPlugin].mObjectiveTracker.text.gradient = value
+						E.db[mPlugin].mObjectiveTracker.text.backdrop = value
 						E:StaticPopup_Show("CONFIG_RL")
 					end,
 				},
-				textbargardientreverse = {
-					order = 16,
-					type = "toggle",
-					name = L["Bar Gardient reverse"],
-					get = function(info)
-						return E.db[mPlugin].mObjectiveTracker.text.reverse
-					end,
-					set = function(info, value)
-						E.db[mPlugin].mObjectiveTracker.text.reverse = value
-						E:StaticPopup_Show("CONFIG_RL")
-					end,
-				},
+
 			},
 		},
 
@@ -1239,10 +1127,10 @@ function mMT:InitializemOBT()
 		-- hooksecurefunc(_G.QUEST_TRACKER_MODULE,'AddTimerBar',SkinTimerBars)						--[Skin]: Quest Timer Bar
 		-- hooksecurefunc(_G.SCENARIO_TRACKER_MODULE,'AddTimerBar',SkinTimerBars)					--[Skin]: Scenario Timer Bar
 		-- hooksecurefunc(_G.ACHIEVEMENT_TRACKER_MODULE,'AddTimerBar',SkinTimerBars)				--[Skin]: Achievement Timer Bar
-		if E.db[mPlugin].mObjectiveTracker.text.gradient then
-			hooksecurefunc("BonusObjectiveTrackerProgressBar_SetValue", mGardientProgressBars) --[Color]: Bonus Objective Progress Bar
-			hooksecurefunc("ObjectiveTrackerProgressBar_SetValue", mGardientProgressBars) --[Color]: Quest Progress Bar
-			hooksecurefunc("ScenarioTrackerProgressBar_SetValue", mGardientProgressBars)
+		if E.db[mPlugin].mObjectiveTracker.text.backdrop then
+			hooksecurefunc("BonusObjectiveTrackerProgressBar_SetValue", mBackdropBars) --[Color]: Bonus Objective Progress Bar
+			hooksecurefunc("ObjectiveTrackerProgressBar_SetValue", mBackdropBars) --[Color]: Quest Progress Bar
+			hooksecurefunc("ScenarioTrackerProgressBar_SetValue", mBackdropBars)
 		end
 	end
 end

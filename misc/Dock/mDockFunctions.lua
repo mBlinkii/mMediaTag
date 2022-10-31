@@ -89,13 +89,13 @@ local function mDockCreatText(self)
 	end
 
 	if not self.mIcon.TextA then
-		self.mIcon.TextA = self:CreateFontString(self.mIcon, "OVERLAY", "GameTooltipText")
+		self.mIcon.TextA = self:CreateFontString(nil, "OVERLAY", "GameTooltipText")
 	end
 	self.mIcon.TextA:SetFont(LSM:Fetch("font", E.db[mPlugin].mDock.font), FontSize, E.db[mPlugin].mDock.fontflag)
 	self.mIcon.TextA:ClearAllPoints()
 
 	if not self.mIcon.TextB then
-		self.mIcon.TextB = self:CreateFontString(self.mIcon, "OVERLAY", "GameTooltipText")
+		self.mIcon.TextB = self:CreateFontString(nil, "OVERLAY", "GameTooltipText")
 	end
 	self.mIcon.TextB:SetFont(LSM:Fetch("font", E.db[mPlugin].mDock.font), FontSize, E.db[mPlugin].mDock.fontflag)
 	self.mIcon.TextB:ClearAllPoints()
@@ -160,8 +160,7 @@ function mMT:mOnEnter(self, timer)
 		if E.db[mPlugin].mDock.hover.style == "class" then
 			Hr, Hg, Hb = class[1], class[2], class[3]
 		end
-
-		mDock:SetVertexColor(Hr, Hg, Hb, Ha)
+		mDock:SetVertexColor(Hr, Hg, Hb,  Ha)
 	end
 
 	mDock.isHover = true
