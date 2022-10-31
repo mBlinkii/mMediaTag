@@ -106,7 +106,8 @@
         "HEALER",
         "Calendar_LoadUI",
         "Calendar_Show",
-        "ToggleCalendar"
+        "ToggleCalendar",
+        "MainMenuMicroButton"
     ],
     "Lua.diagnostics.disable": [
         "redundant-parameter",
