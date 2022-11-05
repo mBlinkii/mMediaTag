@@ -64,7 +64,24 @@ function mMT:mDropDown(list, frame, self, ButtonWidth, HideDelay)
 
 	for i = 1, #list do
 		if not frame.buttons[i] then
-			frame.buttons[i] = CreateFrame("Button", nil, frame)
+			if list[i].macro then
+				if InCombatLockdown() then
+					_G.UIErrorsFrame:AddMessage(format("|CFFE74C3C%s|r", _G.ERR_NOT_IN_COMBAT))
+					print(format("|CFFE74C3C%s|r", _G.ERR_NOT_IN_COMBAT))
+				else
+					frame.buttons[i] = CreateFrame("Button", "myButton", frame, "SecureActionButtonTemplate")
+					frame.buttons[i]:SetAttribute("*type1", "macro")
+					frame.buttons[i]:RegisterForClicks("LeftButtonUp","RightButtonUp")
+					if list[i].macro.typ == "item" then
+						frame.buttons[i]:SetAttribute("macrotext1", "/use " .. list[i].macro.text)
+					elseif list[i].macro.typ == "spell" then
+						frame.buttons[i]:SetAttribute("macrotext1", "/cast " .. list[i].macro.text)
+					end
+				end
+			else
+				frame.buttons[i] = CreateFrame("Button", nil, frame)
+			end
+
 			local texture = LSM:Fetch("statusbar", E.db[mPlugin].mHoverTexture)
 			if texture == nil then
 				texture = [[Interface\QuestFrame\UI-QuestTitleHighlight]]
@@ -114,8 +131,10 @@ function mMT:mDropDown(list, frame, self, ButtonWidth, HideDelay)
 		frame.buttons[i].LeftText:SetText(list[i].lefttext or "")
 		frame.buttons[i].RightText:SetText(list[i].righttext or "")
 
-		frame.buttons[i].func = list[i].func
-		frame.buttons[i]:SetScript("OnClick", OnClick)
+		if not list[i].macro and list[i].func then
+			frame.buttons[i].func = list[i].func
+			frame.buttons[i]:SetScript("OnClick", OnClick)
+		end
 
 		if i == 1 then
 			frame.buttons[i]:Point("TOPLEFT", frame, "TOPLEFT", PADDING, -PADDING)
@@ -147,8 +166,8 @@ function mMT:mDropDown(list, frame, self, ButtonWidth, HideDelay)
 	mFrame = frame
 
 	if InCombatLockdown() then
-		_G.UIErrorsFrame:AddMessage(format("%s%s|r", ns.mColor5, _G.ERR_NOT_IN_COMBAT))
-		print(format("%s%s|r", ns.mColor5, _G.ERR_NOT_IN_COMBAT))
+		_G.UIErrorsFrame:AddMessage(format("|CFFE74C3C%s|r", _G.ERR_NOT_IN_COMBAT))
+		print(format("|CFFE74C3C%s|r", _G.ERR_NOT_IN_COMBAT))
 	else
 		mFrame.mTimer = mMT:ScheduleTimer("DropdownTimer", autoHideDelay)
 		ToggleFrame(frame)

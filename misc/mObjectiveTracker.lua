@@ -88,13 +88,6 @@ local function mGetFont()
 	mOTFont = LSM:Fetch("font", E.db[mPlugin].mObjectiveTracker.font)
 	mOTFontFlag = E.db[mPlugin].mObjectiveTracker.fontflag
 end
-local function mCheckColorNumber(colorNumber)
-	if colorNumber <= 0 then
-		return 0
-	elseif colorNumber >= 1 then
-		return 1
-	end
-end
 
 local function mBackdropBars(self, value)
 	if not (self.Bar and self.isSkinned and value) then
