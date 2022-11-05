@@ -72,9 +72,9 @@ function mMT:mDropDown(list, frame, self, ButtonWidth, HideDelay)
 					frame.buttons[i] = CreateFrame("Button", "myButton", frame, "SecureActionButtonTemplate")
 					frame.buttons[i]:SetAttribute("*type1", "macro")
 					frame.buttons[i]:RegisterForClicks("LeftButtonUp","RightButtonUp")
-					if list[i].macro.typ == "item" then
+					if list[i].macro.type == "item" then
 						frame.buttons[i]:SetAttribute("macrotext1", "/use " .. list[i].macro.text)
-					elseif list[i].macro.typ == "spell" then
+					elseif list[i].macro.type == "spell" then
 						frame.buttons[i]:SetAttribute("macrotext1", "/cast " .. list[i].macro.text)
 					end
 				end

@@ -227,7 +227,7 @@ local function mLoadTooltip()
 		end
 	end
 
-	DT.tooltip:AddLine(L[" "])
+	DT.tooltip:AddLine(" ")
 	DT.tooltip:AddLine(format("%s %s%s|r", ns.RightButtonIcon, tip, L["left click to open the menu."]))
 	DT.tooltip:AddLine(format("%s %s%s|r", ns.RightButtonIcon, tip, L["right click to open the profession window."]))
 end

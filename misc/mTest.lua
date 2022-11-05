@@ -19,6 +19,37 @@ local mText = L["Teleports"]
 local menuFrame = CreateFrame("Frame", "mMediaTag_Teleports_Menu", E.UIParent, "BackdropTemplate")
 
 menuFrame:SetTemplate("Transparent", true)
+local TeleportsToys = {
+	193588, --Timewalker's Hearthstone
+	163045, --headless-horsemans-hearthstone
+	119211, --golden-hearthstone-card-lord-jaraxxus
+	188952, --dominated-hearthstone
+	168907, --holographic-digitalization-hearthstone
+	172179, --eternal-travelers-hearthstone
+	184353, --kyrian-hearthstone
+	180290, --night-fae-hearthstone
+	182773, --necrolord-hearthstone
+	165670, --peddlefeets-lovely-hearthstone
+	162973, --greatfather-winters-hearthstone
+	166746, --fire-eaters-hearthstone
+	200630, --ohnir-windsages-hearthstone
+	119210, --hearthstone-board
+	165669, --lunar-elders-hearthstone
+	166747, --brewfest-revelers-hearthstone
+	165802, --noble-gardeners-hearthstone
+	118427, --autographed-hearthstone-card
+	190196, --enlightened-hearthstone
+}
+
+local TeleportsEngineering = {
+	48933, --wormhole-generator-northrend
+	87215, --wormhole-generator-pandaria
+	112059, --wormhole-centrifuge
+	151652, --wormhole-generator-argus
+	168807,--wormhole-generator-kultiras
+	168808,--wormhole-generator-zandalar
+	172924, --wormhole-generator-shadowlands
+}
 
 local TeleportsItems = {
 	6948, --hearthstone
@@ -37,13 +68,6 @@ local TeleportsItems = {
 	18986, --ultrasafe-transporter-gadgetzan
 	30542, --dimensional-ripper-area-52
 	30544, --ultrasafe-transporter-toshleys-station
-	48933, --wormhole-generator-northrend
-	87215, --wormhole-generator-pandaria
-	112059, --wormhole-centrifuge
-	151652, --wormhole-generator-argus
-	168807,--wormhole-generator-kultiras
-	168808,--wormhole-generator-zandalar
-	172924, --wormhole-generator-shadowlands
 	32757, --blessed-medallion-of-karabor
 	40585, --signet-of-the-kirin-tor
 	40586, --band-of-the-kirin-tor
@@ -124,7 +148,6 @@ local TeleportsItems = {
 	17907, --frostwolf-insignia-rank-4
 	17908, --frostwolf-insignia-rank-5
 	17909, --frostwolf-insignia-rank-6
-	188952, --toy
 }
 local TeleportsSpells = {
 	556, --astral-recall
@@ -176,32 +199,193 @@ local TeleportsSpells = {
 
 local mTP_List = {}
 
-local function mUseItem(id)
-	local ItemnName = GetItemInfo(id)
-	UseItemByName(ItemnName)
+local function mMenuAdd(index, type, text, time, name)
+	tinsert(mTP_List, index, { lefttext = text, righttext = time, isTitle = false, macro = {type = type, text = name},})
 end
 
-local function mUseSpell(id)
-	local SpellName = GetSpellInfo(109259)
+
+local function mUpdateTPList()
+	local _, _, _, _, _, titel = mMT:mColorDatatext()
+	mTP_List = {}
+	local index = 1
+	tinsert(mTP_List, index, { lefttext = format("%s%s|r", titel, L["Toys"]), isTitle = true,})
+	index = index + 1
+
+	for i,v in pairs(TeleportsToys) do
+		local texture = GetItemIcon(v)
+		local name = GetItemInfo(v)
+		local hasItem = GetItemCount(v)
+		if texture and name and (hasItem > 0 or (E.Retail and PlayerHasToy(v) and C_ToyBox.IsToyUsable(v)) ) then
+			local start, duration = GetItemCooldown(v)
+			local cooldown = start + duration - GetTime()
+			if cooldown >= 2 then
+				local hours = math.floor(cooldown /3600)
+				local minutes = math.floor(cooldown / 60)
+				local seconds = string.format("%02.f", math.floor(cooldown - minutes * 60))
+				if hours >= 1 then
+					minutes = math.floor(mod(cooldown,3600)/60)
+					mMenuAdd(index, "item", "|T"..texture..":14:14:0:0:64:64:5:59:5:59|t |cffdb3030"..name.. "|r", "|cffdb3030"..hours.."h "..minutes.."m|r", name)
+					index = index + 1
+				else
+					mMenuAdd(index, "item", "|T"..texture..":14:14:0:0:64:64:5:59:5:59|t |cffdb3030"..name.. "|r", "|cffdb3030"..minutes.."m "..seconds.."s|r", name)
+					index = index + 1
+				end
+			elseif cooldown <= 0 then
+				mMenuAdd(index, "item", "|T"..texture..":14:14:0:0:64:64:5:59:5:59|t "..name, "|cff00FF00"..L["Ready"].."|r", name)
+				index = index + 1
+			end
+		end
+	end
+
+	tinsert(mTP_List, index, { lefttext =  "", isTitle = true,})
+	index = index + 1
+	tinsert(mTP_List, index, { lefttext =  format("%s%s|r", titel, L["Engineering"]), isTitle = true,})
+	index = index + 1
+
+	for i,v in pairs(TeleportsEngineering) do
+		local texture = GetItemIcon(v)
+		local name = GetItemInfo(v)
+		local hasItem = GetItemCount(v)
+		if texture and name and (hasItem > 0 or (E.Retail and PlayerHasToy(v) and C_ToyBox.IsToyUsable(v)) ) then
+			local start, duration = GetItemCooldown(v)
+			local cooldown = start + duration - GetTime()
+			if cooldown >= 2 then
+				local hours = math.floor(cooldown /3600)
+				local minutes = math.floor(cooldown / 60)
+				local seconds = string.format("%02.f", math.floor(cooldown - minutes * 60))
+				if hours >= 1 then
+					minutes = math.floor(mod(cooldown,3600)/60)
+					mMenuAdd(index, "item", "|T"..texture..":14:14:0:0:64:64:5:59:5:59|t |cffdb3030"..name.. "|r", "|cffdb3030"..hours.."h "..minutes.."m|r", name)
+					index = index + 1
+				else
+					mMenuAdd(index, "item", "|T"..texture..":14:14:0:0:64:64:5:59:5:59|t |cffdb3030"..name.. "|r", "|cffdb3030"..minutes.."m "..seconds.."s|r", name)
+					index = index + 1
+				end
+			elseif cooldown <= 0 then
+				mMenuAdd(index, "item", "|T"..texture..":14:14:0:0:64:64:5:59:5:59|t "..name, "|cff00FF00"..L["Ready"].."|r", name)
+				index = index + 1
+			end
+		end
+	end
+
+	tinsert(mTP_List, index, { lefttext =  "", isTitle = true,})
+	index = index + 1
+	tinsert(mTP_List, index, { lefttext = format("%s%s|r", titel, L["Other"]), isTitle = true,})
+	index = index + 1
+
+	for i,v in pairs(TeleportsItems) do
+		local texture = GetItemIcon(v)
+		local name = GetItemInfo(v)
+		local hasItem = GetItemCount(v)
+		if texture and name and (hasItem > 0 or (E.Retail and PlayerHasToy(v) and C_ToyBox.IsToyUsable(v)) ) then
+			local start, duration = GetItemCooldown(v)
+			local cooldown = start + duration - GetTime()
+			if cooldown >= 2 then
+				local hours = math.floor(cooldown /3600)
+				local minutes = math.floor(cooldown / 60)
+				local seconds = string.format("%02.f", math.floor(cooldown - minutes * 60))
+				if hours >= 1 then
+					minutes = math.floor(mod(cooldown,3600)/60)
+					mMenuAdd(index, "item", "|T"..texture..":14:14:0:0:64:64:5:59:5:59|t |cffdb3030"..name.. "|r", "|cffdb3030"..hours.."h "..minutes.."m|r", name)
+					index = index + 1
+				else
+					mMenuAdd(index, "item", "|T"..texture..":14:14:0:0:64:64:5:59:5:59|t |cffdb3030"..name.. "|r", "|cffdb3030"..minutes.."m "..seconds.."s|r", name)
+					index = index + 1
+				end
+			elseif cooldown <= 0 then
+				mMenuAdd(index, "item", "|T"..texture..":14:14:0:0:64:64:5:59:5:59|t "..name, "|cff00FF00"..L["Ready"].."|r", name)
+				index = index + 1
+			end
+		end
+	end
+
+	for i,v in pairs(TeleportsSpells) do
+		local texture = GetSpellTexture(v)
+		local name = GetSpellInfo(v)
+		local hasSpell = IsSpellKnown(v)
+		if texture and name and hasSpell then
+			local start, duration = GetSpellCooldown(v)
+			local cooldown = start + duration - GetTime()
+			if cooldown >= 2 then
+				local hours = math.floor(cooldown /3600)
+				local minutes = math.floor(cooldown / 60)
+				local seconds = string.format("%02.f", math.floor(cooldown - minutes * 60))
+				if hours >= 1 then
+					minutes = math.floor(mod(cooldown,3600)/60)
+					mMenuAdd(index, "spell", "|T"..texture..":14:14:0:0:64:64:5:59:5:59|t |cffdb3030" ..name.. "|r", "|cffdb3030"..hours.."h "..minutes.."m|r", name)
+					index = index + 1
+				else
+					mMenuAdd(index, "spell", "|T"..texture..":14:14:0:0:64:64:5:59:5:59|t |cffdb3030" ..name.. "|r", "|cffdb3030"..minutes.."m "..seconds.."s|r", name)
+					index = index + 1
+				end
+			elseif cooldown <= 0 then
+				mMenuAdd(index, "spell", "|T"..texture..":14:14:0:0:64:64:5:59:5:59|t " ..name, "|cff00FF00"..L["Ready"].."|r", name)
+				index = index + 1
+			end
+		end
+	end
 end
 
 local function OnClick(self, button)
-	local ItemnName = GetItemInfo(188952)
-	local SpellName = GetSpellInfo(354462)
-	mTP_List = {}
-	tinsert(mTP_List, 1, { lefttext = ItemnName, isTitle = false, macro = {typ = "item", text = ItemnName},})
-	tinsert(mTP_List, 1, { lefttext = SpellName, isTitle = false, macro = {typ = "spell", text = SpellName},})
-
-	tinsert(mTP_List, 2, { lefttext = "TEST LINKS 1", righttext = "TEST RECHTS 1", isTitle = true, func = nil, macro = false })
-
-	tinsert(mTP_List, 2, { lefttext = "TEST LINKS 2", righttext = "TEST RECHTS 2", isTitle = false, func = function() print("HI") end, macro = false })
+	mUpdateTPList()
 
 	mMT:mDropDown(mTP_List, menuFrame, self, 200, 2)
-	--self:SetAttribute("type1", "/use " .. 140192)
-	--mUseItem(140192)
 end
 
-local function mTPItems()
+local function mDTAdd()
+	DT.tooltip:AddLine(L["Toys"])
+	for i,v in pairs(TeleportsToys) do
+		local texture = GetItemIcon(v)
+		local name = GetItemInfo(v)
+		local hasItem = GetItemCount(v)
+		if texture and name and (hasItem > 0 or (E.Retail and PlayerHasToy(v) and C_ToyBox.IsToyUsable(v)) ) then
+			local start, duration = GetItemCooldown(v)
+			local cooldown = start + duration - GetTime()
+			if cooldown >= 2 then
+				local hours = math.floor(cooldown /3600)
+				local minutes = math.floor(cooldown / 60)
+				local seconds = string.format("%02.f", math.floor(cooldown - minutes * 60))
+				if hours >= 1 then
+					minutes = math.floor(mod(cooldown,3600)/60)
+					DT.tooltip:AddDoubleLine("|T"..texture..":14:14:0:0:64:64:5:59:5:59|t |cffdb3030"..name.."|r", ("|cffdb3030"..hours.."h "..minutes.."m|r"))
+				else
+					DT.tooltip:AddDoubleLine("|T"..texture..":14:14:0:0:64:64:5:59:5:59|t |cffdb3030"..name.."|r", ("|cffdb3030"..minutes.."m "..seconds.."s|r"))
+				end
+			elseif cooldown <= 0 then
+				DT.tooltip:AddDoubleLine("|T"..texture..":14:14:0:0:64:64:5:59:5:59|t |cffFFFFFF"..name.."|r", "|cff00FF00"..L["Ready"].."|r")
+			end
+		end
+	end
+
+	DT.tooltip:AddLine(" ")
+	DT.tooltip:AddLine(L["Engineering"])
+
+	for i,v in pairs(TeleportsEngineering) do
+		local texture = GetItemIcon(v)
+		local name = GetItemInfo(v)
+		local hasItem = GetItemCount(v)
+		if texture and name and (hasItem > 0 or (E.Retail and PlayerHasToy(v) and C_ToyBox.IsToyUsable(v)) ) then
+			local start, duration = GetItemCooldown(v)
+			local cooldown = start + duration - GetTime()
+			if cooldown >= 2 then
+				local hours = math.floor(cooldown /3600)
+				local minutes = math.floor(cooldown / 60)
+				local seconds = string.format("%02.f", math.floor(cooldown - minutes * 60))
+				if hours >= 1 then
+					minutes = math.floor(mod(cooldown,3600)/60)
+					DT.tooltip:AddDoubleLine("|T"..texture..":14:14:0:0:64:64:5:59:5:59|t |cffdb3030"..name.."|r", ("|cffdb3030"..hours.."h "..minutes.."m|r"))
+				else
+					DT.tooltip:AddDoubleLine("|T"..texture..":14:14:0:0:64:64:5:59:5:59|t |cffdb3030"..name.."|r", ("|cffdb3030"..minutes.."m "..seconds.."s|r"))
+				end
+			elseif cooldown <= 0 then
+				DT.tooltip:AddDoubleLine("|T"..texture..":14:14:0:0:64:64:5:59:5:59|t |cffFFFFFF"..name.."|r", "|cff00FF00"..L["Ready"].."|r")
+			end
+		end
+	end
+
+	DT.tooltip:AddLine(" ")
+	DT.tooltip:AddLine(L["Items"])
+
 	for i,v in pairs(TeleportsItems) do
 		local texture = GetItemIcon(v)
 		local name = GetItemInfo(v)
@@ -224,9 +408,10 @@ local function mTPItems()
 			end
 		end
 	end
-end
 
-local function mTPSpells()
+	DT.tooltip:AddLine(" ")
+	DT.tooltip:AddLine(L["Spells"])
+
 	for i,v in pairs(TeleportsSpells) do
 		local texture = GetSpellTexture(v)
 		local name = GetSpellInfo(v)
@@ -253,10 +438,7 @@ end
 
 local function OnEnter(self)
 	DT.tooltip:ClearLines()
-	DT.tooltip:AddLine(L["Teleports"])
-	mTPItems()
-	mTPSpells()
-
+	mDTAdd()
 	DT.tooltip:Show()
 end
 
@@ -264,7 +446,6 @@ local function OnEvent(self, event, unit)
 	local TextString = mText
 
 	self.text:SetFormattedText(mMT:mClassColorString(), TextString)
-
 end
 
 local function OnLeave(self)
