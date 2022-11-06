@@ -22,19 +22,9 @@ local mKeystoneToChat = nil
 
 local function mCheckText(text)
 	local word = strlower(text)
-	for index, value in ipairs({ "!key", "!keys", "!cov", "!covenant" }) do
+	for index, value in ipairs({"!key", "!keys"}) do
 		if word == value then
 			return value
-		end
-	end
-end
-
-local function Covenant()
-	local covenantID = C_Covenants.GetActiveCovenantID()
-	if covenantID then
-		local data = C_Covenants.GetCovenantData(covenantID)
-		if data then
-			return data.name
 		end
 	end
 end
@@ -45,6 +35,7 @@ local function mGetKey()
 		local bSlots = GetContainerNumSlots(bag)
 		for slot = 1, bSlots do
 			local itemLink, _, _, itemID = select(7, GetContainerItemInfo(bag, slot))
+			-- 180653 = SL/ 187786 = Legion
 			if itemID == 180653 or itemID == 187786 then
 				mKeys[itemID] = itemLink
 			end
@@ -53,67 +44,35 @@ local function mGetKey()
 	return mKeys
 end
 
-local function mMediaTagKeys(event, text, channelIndex)
-	local isKeyword = mCheckText(text) or false
-	if isKeyword then
-		local chat, link = "PARTY", nil
-		if event == "CHAT_MSG_GUILD" then
-			chat = "GUILD"
-		elseif event == "CHAT_MSG_PARTY" or event == "CHAT_MSG_PARTY_LEADER" then
-			chat = "PARTY"
-		elseif event == "CHAT_MSG_RAID" or event == "CHAT_MSG_RAID_LEADER" then
-			chat = "RAID"
-		elseif event == "CHAT_MSG_COMMUNITIES_CHANNEL" then
-			chat = "CHANNEL"
-		end
+local function OnEvent(self, event, ...)
+	local text, _, _, _, _, _, _, _ = ...
+	if text and mCheckText(string.lower(text)) or false then
+		if C_MythicPlus.GetOwnedKeystoneLevel() or false and E.db[mPlugin].mMythicPlusTools.keys and not InCombatLockdown then
+			local channel = nil
+			if event == "CHAT_MSG_GUILD" then
+				channel = "GUILD"
+			elseif event == "CHAT_MSG_PARTY" or event == "CHAT_MSG_PARTY_LEADER" then
+				channel = "PARTY"
+			elseif event == "CHAT_MSG_RAID" or event == "CHAT_MSG_RAID_LEADER" then
+				channel = "RAID"
+			end
 
-		local myKeys, covenant = mGetKey(), Covenant()
-		local sendCov = E.db[mPlugin].mMythicPlusTools.cov
-		if isKeyword == "!key" or isKeyword == "!keys" then
+			local myKeys = mGetKey()
 			if myKeys then
-				if sendCov and covenant and myKeys[180653] and myKeys[187786] then
-					link = covenant .. " - " .. myKeys[180653] .. " & " .. myKeys[187786]
-				elseif sendCov and covenant and myKeys[180653] or myKeys[187786] then
-					if myKeys[180653] then
-						link = covenant .. " - " .. myKeys[180653]
-					else
-						link = covenant .. " - " .. myKeys[187786]
-					end
+				local link = nil
+				-- 180653 = SL/ 187786 = Legion
+				if myKeys[180653] and myKeys[187786] then
+					link = myKeys[180653] .. " & " .. myKeys[187786]
+				elseif myKeys[180653] then
+					link = myKeys[180653]
 				else
-					if myKeys[180653] and myKeys[187786] then
-						link = myKeys[180653] .. " & " .. myKeys[187786]
-					elseif myKeys[180653] then
-						link = myKeys[180653]
-					else
-						link = myKeys[187786]
-					end
+					link = myKeys[187786]
+				end
+				if link and channel then
+					print(link, channel)
+					SendChatMessage(link, channel)
 				end
 			end
-		elseif sendCov then
-			if covenant then
-				link = covenant
-			else
-				link = L["No Covenant"]
-			end
-		end
-
-		if chat then
-			if channelIndex then
-				SendChatMessage(link, chat, nil, channelIndex)
-			else
-				SendChatMessage(link, chat)
-			end
-		end
-	end
-end
-
-local function OnEvent(self, event, ...)
-	local key = C_MythicPlus.GetOwnedKeystoneLevel() or false
-	if key and E.db[mPlugin].mMythicPlusTools.keys and not InCombatLockdown then
-		local text, _, _, _, _, _, _, channelIndex = ...
-		if text then
-			text = string.lower(text)
-			mMediaTagKeys(event, text, channelIndex)
 		end
 	end
 end
@@ -132,18 +91,6 @@ local function mKeystoneToChatOptions()
 				E.db[mPlugin].mMythicPlusTools.keys = value
 			end,
 		},
-		covtochat = {
-			order = 20,
-			type = "toggle",
-			name = L["Send Covenant to Chat"],
-			desc = L["Sends your Covenant to Chat, wen ther ist The Keyword !key or !keys or !cov"],
-			get = function(info)
-				return E.db[mPlugin].mMythicPlusTools.cov
-			end,
-			set = function(info, value)
-				E.db[mPlugin].mMythicPlusTools.kcoveys = value
-			end,
-		},
 	}
 end
 
@@ -154,9 +101,7 @@ function mMT:mStartKeysToChatt()
 	mKeystoneToChat:RegisterEvent("CHAT_MSG_RAID")
 	mKeystoneToChat:RegisterEvent("CHAT_MSG_RAID_LEADER")
 	mKeystoneToChat:RegisterEvent("CHAT_MSG_GUILD")
-	mKeystoneToChat:RegisterEvent("CHAT_MSG_COMMUNITIES_CHANNEL")
 	mKeystoneToChat:SetScript("OnEvent", OnEvent)
-	--mKeystoneToChat:Show()
 end
 
 mInsert(ns.Config, mKeystoneToChatOptions)

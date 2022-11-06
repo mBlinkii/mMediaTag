@@ -339,7 +339,7 @@ P[mPlugin] = {
 	["VolumeDisplay"] = {["enable"] = true},
 	["Dungeon"] = {["score"] = true, ["showicon"] = true},
 	["ProfessionMenu"] = {["showicon"] = true},
-	["mMythicPlusTools"] = {["keys"] = true, ["cov"] = true},
+	["mMythicPlusTools"] = {["keys"] = true},
 	["mObjectiveTracker"] = {
 		["enable"] = false,
 		["font"] = "PT Sans Narrow",

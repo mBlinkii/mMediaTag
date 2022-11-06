@@ -136,6 +136,23 @@ function mMT:mDropDown(list, frame, self, ButtonWidth, HideDelay)
 			frame.buttons[i]:SetScript("OnClick", OnClick)
 		end
 
+		if list[i].tooltip then
+			frame.buttons[i]:SetScript("OnEnter",
+				function()
+					GameTooltip:SetOwner(self, "ANCHOR_CURSOR")
+					GameTooltip:ClearLines()
+					GameTooltip:SetItemByID(list[i].tooltip)
+					GameTooltip:Show()
+				end
+			)
+
+			frame.buttons[i]:SetScript("OnLeave",
+				function()
+					GameTooltip:Hide()
+				end
+			)
+		end
+
 		if i == 1 then
 			frame.buttons[i]:Point("TOPLEFT", frame, "TOPLEFT", PADDING, -PADDING)
 		else
