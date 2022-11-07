@@ -35,11 +35,20 @@ end
 
 local function OnEnter(btn)
 	btn.hoverTex:Show()
+	if btn.tooltip then
+		GameTooltip:SetOwner(btn, "ANCHOR_CURSOR")
+		GameTooltip:ClearLines()
+		GameTooltip:SetItemByID(btn.tooltip)
+		GameTooltip:Show()
+	end
 	mMT:CancelAllTimers(mFrame.mTimer)
 end
 
 local function OnLeave(btn)
 	btn.hoverTex:Hide()
+	if btn.tooltip then
+		GameTooltip:Hide()
+	end
 	mFrame.mTimer = mMT:ScheduleTimer("DropdownTimer", autoHideDelay)
 end
 
@@ -136,22 +145,7 @@ function mMT:mDropDown(list, frame, self, ButtonWidth, HideDelay)
 			frame.buttons[i]:SetScript("OnClick", OnClick)
 		end
 
-		if list[i].tooltip then
-			frame.buttons[i]:SetScript("OnEnter",
-				function()
-					GameTooltip:SetOwner(self, "ANCHOR_CURSOR")
-					GameTooltip:ClearLines()
-					GameTooltip:SetItemByID(list[i].tooltip)
-					GameTooltip:Show()
-				end
-			)
-
-			frame.buttons[i]:SetScript("OnLeave",
-				function()
-					GameTooltip:Hide()
-				end
-			)
-		end
+		frame.buttons[i].tooltip =  list[i].tooltip
 
 		if i == 1 then
 			frame.buttons[i]:Point("TOPLEFT", frame, "TOPLEFT", PADDING, -PADDING)
