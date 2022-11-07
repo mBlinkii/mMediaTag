@@ -38,7 +38,11 @@ local function OnEnter(btn)
 	if btn.tooltip then
 		GameTooltip:SetOwner(btn, "ANCHOR_CURSOR")
 		GameTooltip:ClearLines()
-		GameTooltip:SetItemByID(btn.tooltip)
+		if btn.tooltip.type == "spell" then
+			GameTooltip:SetSpellByID(btn.tooltip.id)
+		else
+			GameTooltip:SetItemByID(btn.tooltip.id)
+		end
 		GameTooltip:Show()
 	end
 	mMT:CancelAllTimers(mFrame.mTimer)

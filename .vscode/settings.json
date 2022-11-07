@@ -107,7 +107,8 @@
         "Calendar_LoadUI",
         "Calendar_Show",
         "ToggleCalendar",
-        "MainMenuMicroButton"
+        "MainMenuMicroButton",
+        "GameTooltip"
     ],
     "Lua.diagnostics.disable": [
         "redundant-parameter",

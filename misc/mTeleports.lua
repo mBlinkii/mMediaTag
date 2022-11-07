@@ -235,7 +235,8 @@ local function mUpdateTPList()
 						"item",
 						"|T" .. texture .. ":14:14:0:0:64:64:5:59:5:59|t |cffdb3030" .. name .. "|r",
 						"|cffdb3030" .. hours .. "h " .. minutes .. "m|r",
-						name
+						name,
+						{id = v, type = "item"}
 					)
 					index = index + 1
 				else
@@ -244,7 +245,8 @@ local function mUpdateTPList()
 						"item",
 						"|T" .. texture .. ":14:14:0:0:64:64:5:59:5:59|t |cffdb3030" .. name .. "|r",
 						"|cffdb3030" .. minutes .. "m " .. seconds .. "s|r",
-						name
+						name,
+						{id = v, type = "item"}
 					)
 					index = index + 1
 				end
@@ -254,7 +256,8 @@ local function mUpdateTPList()
 					"item",
 					"|T" .. texture .. ":14:14:0:0:64:64:5:59:5:59|t " .. name,
 					"|cff00FF00" .. L["Ready"] .. "|r",
-					name
+					name,
+					{id = v, type = "item"}
 				)
 				index = index + 1
 			end
@@ -284,7 +287,8 @@ local function mUpdateTPList()
 						"item",
 						"|T" .. texture .. ":14:14:0:0:64:64:5:59:5:59|t |cffdb3030" .. name .. "|r",
 						"|cffdb3030" .. hours .. "h " .. minutes .. "m|r",
-						name
+						name,
+						{id = v, type = "item"}
 					)
 					index = index + 1
 				else
@@ -293,7 +297,8 @@ local function mUpdateTPList()
 						"item",
 						"|T" .. texture .. ":14:14:0:0:64:64:5:59:5:59|t |cffdb3030" .. name .. "|r",
 						"|cffdb3030" .. minutes .. "m " .. seconds .. "s|r",
-						name
+						name,
+						{id = v, type = "item"}
 					)
 					index = index + 1
 				end
@@ -303,7 +308,8 @@ local function mUpdateTPList()
 					"item",
 					"|T" .. texture .. ":14:14:0:0:64:64:5:59:5:59|t " .. name,
 					"|cff00FF00" .. L["Ready"] .. "|r",
-					name
+					name,
+					{id = v, type = "item"}
 				)
 				index = index + 1
 			end
@@ -333,7 +339,8 @@ local function mUpdateTPList()
 						"item",
 						"|T" .. texture .. ":14:14:0:0:64:64:5:59:5:59|t |cffdb3030" .. name .. "|r",
 						"|cffdb3030" .. hours .. "h " .. minutes .. "m|r",
-						name
+						name,
+						{id = v, type = "item"}
 					)
 					index = index + 1
 				else
@@ -342,7 +349,8 @@ local function mUpdateTPList()
 						"item",
 						"|T" .. texture .. ":14:14:0:0:64:64:5:59:5:59|t |cffdb3030" .. name .. "|r",
 						"|cffdb3030" .. minutes .. "m " .. seconds .. "s|r",
-						name
+						name,
+						{id = v, type = "item"}
 					)
 					index = index + 1
 				end
@@ -352,7 +360,8 @@ local function mUpdateTPList()
 					"item",
 					"|T" .. texture .. ":14:14:0:0:64:64:5:59:5:59|t " .. name,
 					"|cff00FF00" .. L["Ready"] .. "|r",
-					name
+					name,
+					{id = v, type = "item"}
 				)
 				index = index + 1
 			end
@@ -378,7 +387,7 @@ local function mUpdateTPList()
 						"|T" .. texture .. ":14:14:0:0:64:64:5:59:5:59|t |cffdb3030" .. name .. "|r",
 						"|cffdb3030" .. hours .. "h " .. minutes .. "m|r",
 						name,
-						v
+						{id = v, type = "spell"}
 					)
 					index = index + 1
 				else
@@ -388,7 +397,7 @@ local function mUpdateTPList()
 						"|T" .. texture .. ":14:14:0:0:64:64:5:59:5:59|t |cffdb3030" .. name .. "|r",
 						"|cffdb3030" .. minutes .. "m " .. seconds .. "s|r",
 						name,
-						v
+						{id = v, type = "spell"}
 					)
 					index = index + 1
 				end
@@ -399,7 +408,7 @@ local function mUpdateTPList()
 					"|T" .. texture .. ":14:14:0:0:64:64:5:59:5:59|t " .. name,
 					"|cff00FF00" .. L["Ready"] .. "|r",
 					name,
-					v
+					{id = v, type = "spell"}
 				)
 				index = index + 1
 			end
