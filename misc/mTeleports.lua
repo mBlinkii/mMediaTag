@@ -242,7 +242,7 @@ end
 
 local function mGetInfos(TeleportsTable, spell, ttip)
 	for i, v in pairs(TeleportsTable) do
-		local texture, name, hasSpell, hasItem  = false, false, false, 0
+		local texture, name, nametext, hasSpell, hasItem  = false, nil, nil, false, 0
 		if spell then
 			texture = GetSpellTexture(v)
 			name = GetSpellInfo(v)
@@ -254,6 +254,7 @@ local function mGetInfos(TeleportsTable, spell, ttip)
 		end
 
 		if name and not ttip then
+			nametext = name
 			name = mMT:mAbbrev(name)
 		end
 
@@ -286,7 +287,7 @@ local function mGetInfos(TeleportsTable, spell, ttip)
 			if ttip and text1 and text2 then
 				DT.tooltip:AddDoubleLine(text1,text2)
 			elseif spell and text1 and text2 then
-				mMenuAdd(index, "spell", text1, text2, name, v, function(btn)
+				mMenuAdd(index, "spell", text1, text2, nametext, v, function(btn)
 					mOnEnterSpell(btn)
 				end)
 				index = index + 1
