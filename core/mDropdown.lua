@@ -28,30 +28,25 @@ function mMT:DropdownTimer()
 end
 
 local function OnClick(btn)
-	btn.func()
+	if btn.func then
+		btn.func()
+	end
 	btn:GetParent():Hide()
 	mMT:CancelAllTimers(mFrame.mTimer)
 end
 
 local function OnEnter(btn)
 	btn.hoverTex:Show()
-	if btn.tooltip then
-		GameTooltip:SetOwner(btn, "ANCHOR_CURSOR")
-		GameTooltip:ClearLines()
-		if btn.tooltip.type == "spell" then
-			GameTooltip:SetSpellByID(btn.tooltip.id)
-		else
-			GameTooltip:SetItemByID(btn.tooltip.id)
-		end
-		GameTooltip:Show()
+	if btn.enterfunc then
+		btn.enterfunc(btn)
 	end
 	mMT:CancelAllTimers(mFrame.mTimer)
 end
 
 local function OnLeave(btn)
 	btn.hoverTex:Hide()
-	if btn.tooltip then
-		GameTooltip:Hide()
+	if btn.leavefunc then
+		btn.leavefunc(btn)
 	end
 	mFrame.mTimer = mMT:ScheduleTimer("DropdownTimer", autoHideDelay)
 end
@@ -127,11 +122,13 @@ function mMT:mDropDown(list, frame, self, ButtonWidth, HideDelay)
 			frame.buttons[i].LeftText:SetAllPoints()
 			frame.buttons[i].LeftText:FontTemplate(nil, nil, "")
 			frame.buttons[i].LeftText:SetJustifyH("LEFT")
+			frame.buttons[i].LeftText:SetWidth(ButtonWidth-4)
 
 			frame.buttons[i].RightText = frame.buttons[i]:CreateFontString(nil, "BORDER")
 			frame.buttons[i].RightText:SetAllPoints()
 			frame.buttons[i].RightText:FontTemplate(nil, nil, "")
 			frame.buttons[i].RightText:SetJustifyH("RIGHT")
+			frame.buttons[i].RightText:SetWidth(ButtonWidth-4)
 
 			frame.buttons[i]:SetScript("OnEnter", OnEnter)
 			frame.buttons[i]:SetScript("OnLeave", OnLeave)
@@ -147,6 +144,14 @@ function mMT:mDropDown(list, frame, self, ButtonWidth, HideDelay)
 		if not list[i].macro and list[i].func then
 			frame.buttons[i].func = list[i].func
 			frame.buttons[i]:SetScript("OnClick", OnClick)
+		end
+
+		if list[i].enter then
+			frame.buttons[i].enterfunc = list[i].enter
+		end
+
+		if list[i].leave then
+			frame.buttons[i].leavefunc = list[i].leave
 		end
 
 		frame.buttons[i].tooltip =  list[i].tooltip

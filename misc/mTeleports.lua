@@ -16,8 +16,8 @@ local _G = _G
 local mText = L["Teleports"]
 
 local menuFrame = CreateFrame("Frame", "mMediaTag_Teleports_Menu", E.UIParent, "BackdropTemplate")
-
 menuFrame:SetTemplate("Transparent", true)
+
 local TeleportsToys = {
 	193588, --Timewalker's Hearthstone
 	163045, --headless-horsemans-hearthstone
@@ -206,8 +206,26 @@ local TeleportsSpells = {
 
 local mTP_List = {}
 
-local function mMenuAdd(index, type, text, time, name, tooltip)
-	tinsert(mTP_List, index, {lefttext = text, righttext = time, isTitle = false, macro = {type = type, text = name}, tooltip = tooltip})
+local function SpellEnterFunc(btn)
+	GameTooltip:SetOwner(btn, "ANCHOR_CURSOR")
+	GameTooltip:ClearLines()
+	GameTooltip:SetSpellByID(btn.tooltip)
+	GameTooltip:Show()
+end
+
+local function ItemEnterFunc(btn)
+	GameTooltip:SetOwner(btn, "ANCHOR_CURSOR")
+	GameTooltip:ClearLines()
+	GameTooltip:SetItemByID(btn.tooltip)
+	GameTooltip:Show()
+end
+
+local function LeaveFunc(btn)
+	GameTooltip:Hide()
+end
+
+local function mMenuAdd(index, type, text, time, name, tooltip, func, enterfunc)
+	tinsert(mTP_List, index, {lefttext = text, righttext = time, isTitle = false, macro = {type = type, text = name}, tooltip = tooltip, enter = enterfunc, leave = LeaveFunc})
 end
 
 local function mUpdateTPList()
@@ -236,7 +254,14 @@ local function mUpdateTPList()
 						"|T" .. texture .. ":14:14:0:0:64:64:5:59:5:59|t |cffdb3030" .. name .. "|r",
 						"|cffdb3030" .. hours .. "h " .. minutes .. "m|r",
 						name,
-						{id = v, type = "item"}
+						v,
+						nil,
+						function(btn)
+							GameTooltip:SetOwner(btn, "ANCHOR_CURSOR")
+							GameTooltip:ClearLines()
+							GameTooltip:SetItemByID(btn.tooltip)
+							GameTooltip:Show()
+						end
 					)
 					index = index + 1
 				else
@@ -246,7 +271,14 @@ local function mUpdateTPList()
 						"|T" .. texture .. ":14:14:0:0:64:64:5:59:5:59|t |cffdb3030" .. name .. "|r",
 						"|cffdb3030" .. minutes .. "m " .. seconds .. "s|r",
 						name,
-						{id = v, type = "item"}
+						v,
+						nil,
+						function(btn)
+							GameTooltip:SetOwner(btn, "ANCHOR_CURSOR")
+							GameTooltip:ClearLines()
+							GameTooltip:SetItemByID(btn.tooltip)
+							GameTooltip:Show()
+						end
 					)
 					index = index + 1
 				end
@@ -257,7 +289,14 @@ local function mUpdateTPList()
 					"|T" .. texture .. ":14:14:0:0:64:64:5:59:5:59|t " .. name,
 					"|cff00FF00" .. L["Ready"] .. "|r",
 					name,
-					{id = v, type = "item"}
+					v,
+					nil,
+					function(btn)
+						GameTooltip:SetOwner(btn, "ANCHOR_CURSOR")
+						GameTooltip:ClearLines()
+						GameTooltip:SetItemByID(btn.tooltip)
+						GameTooltip:Show()
+					end
 				)
 				index = index + 1
 			end
@@ -288,7 +327,14 @@ local function mUpdateTPList()
 						"|T" .. texture .. ":14:14:0:0:64:64:5:59:5:59|t |cffdb3030" .. name .. "|r",
 						"|cffdb3030" .. hours .. "h " .. minutes .. "m|r",
 						name,
-						{id = v, type = "item"}
+						v,
+						nil,
+						function(btn)
+							GameTooltip:SetOwner(btn, "ANCHOR_CURSOR")
+							GameTooltip:ClearLines()
+							GameTooltip:SetItemByID(btn.tooltip)
+							GameTooltip:Show()
+						end
 					)
 					index = index + 1
 				else
@@ -298,7 +344,14 @@ local function mUpdateTPList()
 						"|T" .. texture .. ":14:14:0:0:64:64:5:59:5:59|t |cffdb3030" .. name .. "|r",
 						"|cffdb3030" .. minutes .. "m " .. seconds .. "s|r",
 						name,
-						{id = v, type = "item"}
+						v,
+						nil,
+						function(btn)
+							GameTooltip:SetOwner(btn, "ANCHOR_CURSOR")
+							GameTooltip:ClearLines()
+							GameTooltip:SetItemByID(btn.tooltip)
+							GameTooltip:Show()
+						end
 					)
 					index = index + 1
 				end
@@ -309,7 +362,14 @@ local function mUpdateTPList()
 					"|T" .. texture .. ":14:14:0:0:64:64:5:59:5:59|t " .. name,
 					"|cff00FF00" .. L["Ready"] .. "|r",
 					name,
-					{id = v, type = "item"}
+					v,
+					nil,
+					function(btn)
+						GameTooltip:SetOwner(btn, "ANCHOR_CURSOR")
+						GameTooltip:ClearLines()
+						GameTooltip:SetItemByID(btn.tooltip)
+						GameTooltip:Show()
+					end
 				)
 				index = index + 1
 			end
@@ -340,7 +400,14 @@ local function mUpdateTPList()
 						"|T" .. texture .. ":14:14:0:0:64:64:5:59:5:59|t |cffdb3030" .. name .. "|r",
 						"|cffdb3030" .. hours .. "h " .. minutes .. "m|r",
 						name,
-						{id = v, type = "item"}
+						v,
+						nil,
+						function(btn)
+							GameTooltip:SetOwner(btn, "ANCHOR_CURSOR")
+							GameTooltip:ClearLines()
+							GameTooltip:SetItemByID(btn.tooltip)
+							GameTooltip:Show()
+						end
 					)
 					index = index + 1
 				else
@@ -350,7 +417,14 @@ local function mUpdateTPList()
 						"|T" .. texture .. ":14:14:0:0:64:64:5:59:5:59|t |cffdb3030" .. name .. "|r",
 						"|cffdb3030" .. minutes .. "m " .. seconds .. "s|r",
 						name,
-						{id = v, type = "item"}
+						v,
+						nil,
+						function(btn)
+							GameTooltip:SetOwner(btn, "ANCHOR_CURSOR")
+							GameTooltip:ClearLines()
+							GameTooltip:SetItemByID(btn.tooltip)
+							GameTooltip:Show()
+						end
 					)
 					index = index + 1
 				end
@@ -361,7 +435,14 @@ local function mUpdateTPList()
 					"|T" .. texture .. ":14:14:0:0:64:64:5:59:5:59|t " .. name,
 					"|cff00FF00" .. L["Ready"] .. "|r",
 					name,
-					{id = v, type = "item"}
+					v,
+					nil,
+					function(btn)
+						GameTooltip:SetOwner(btn, "ANCHOR_CURSOR")
+						GameTooltip:ClearLines()
+						GameTooltip:SetItemByID(btn.tooltip)
+						GameTooltip:Show()
+					end
 				)
 				index = index + 1
 			end
@@ -387,7 +468,14 @@ local function mUpdateTPList()
 						"|T" .. texture .. ":14:14:0:0:64:64:5:59:5:59|t |cffdb3030" .. name .. "|r",
 						"|cffdb3030" .. hours .. "h " .. minutes .. "m|r",
 						name,
-						{id = v, type = "spell"}
+						v,
+						nil,
+						function(btn)
+							GameTooltip:SetOwner(btn, "ANCHOR_CURSOR")
+							GameTooltip:ClearLines()
+							GameTooltip:SetSpellByID(btn.tooltip)
+							GameTooltip:Show()
+						end
 					)
 					index = index + 1
 				else
@@ -397,7 +485,14 @@ local function mUpdateTPList()
 						"|T" .. texture .. ":14:14:0:0:64:64:5:59:5:59|t |cffdb3030" .. name .. "|r",
 						"|cffdb3030" .. minutes .. "m " .. seconds .. "s|r",
 						name,
-						{id = v, type = "spell"}
+						v,
+						nil,
+						function(btn)
+							GameTooltip:SetOwner(btn, "ANCHOR_CURSOR")
+							GameTooltip:ClearLines()
+							GameTooltip:SetSpellByID(btn.tooltip)
+							GameTooltip:Show()
+						end
 					)
 					index = index + 1
 				end
@@ -408,7 +503,14 @@ local function mUpdateTPList()
 					"|T" .. texture .. ":14:14:0:0:64:64:5:59:5:59|t " .. name,
 					"|cff00FF00" .. L["Ready"] .. "|r",
 					name,
-					{id = v, type = "spell"}
+					v,
+					nil,
+					function(btn)
+						GameTooltip:SetOwner(btn, "ANCHOR_CURSOR")
+						GameTooltip:ClearLines()
+						GameTooltip:SetSpellByID(btn.tooltip)
+						GameTooltip:Show()
+					end
 				)
 				index = index + 1
 			end

@@ -69,7 +69,6 @@ local function OnEvent(self, event, ...)
 					link = myKeys[187786]
 				end
 				if link and channel then
-					print(link, channel)
 					SendChatMessage(link, channel)
 				end
 			end
