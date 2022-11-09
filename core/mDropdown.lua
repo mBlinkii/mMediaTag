@@ -122,13 +122,11 @@ function mMT:mDropDown(list, frame, self, ButtonWidth, HideDelay)
 			frame.buttons[i].LeftText:SetAllPoints()
 			frame.buttons[i].LeftText:FontTemplate(nil, nil, "")
 			frame.buttons[i].LeftText:SetJustifyH("LEFT")
-			frame.buttons[i].LeftText:SetWidth(ButtonWidth-4)
 
 			frame.buttons[i].RightText = frame.buttons[i]:CreateFontString(nil, "BORDER")
 			frame.buttons[i].RightText:SetAllPoints()
 			frame.buttons[i].RightText:FontTemplate(nil, nil, "")
 			frame.buttons[i].RightText:SetJustifyH("RIGHT")
-			frame.buttons[i].RightText:SetWidth(ButtonWidth-4)
 
 			frame.buttons[i]:SetScript("OnEnter", OnEnter)
 			frame.buttons[i]:SetScript("OnLeave", OnLeave)

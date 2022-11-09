@@ -252,6 +252,11 @@ local function mGetInfos(TeleportsTable, spell, ttip)
 			name = GetItemInfo(v)
 			hasItem = GetItemCount(v)
 		end
+
+		if name and not ttip then
+			name = mMT:mAbbrev(name)
+		end
+
 		local text1, text2 = nil, nil
 		if (texture and name and (hasItem > 0 or (E.Retail and PlayerHasToy(v) and C_ToyBox.IsToyUsable(v)))) or (texture and name and hasSpell) then
 			local start, duration = nil, nil
@@ -295,6 +300,14 @@ local function mGetInfos(TeleportsTable, spell, ttip)
 	end
 end
 
+local function EngineeringCheck()
+	local prof1, prof2 = GetProfessions()
+	prof1 = select(7, GetProfessionInfo(prof1))
+	prof2 = select(7, GetProfessionInfo(prof2))
+
+	return prof1 == 202 or prof2 == 202
+end
+
 local function mUpdateTPList()
 	local _, _, _, _, _, titel = mMT:mColorDatatext()
 	mTP_List = {}
@@ -306,10 +319,12 @@ local function mUpdateTPList()
 
 	tinsert(mTP_List, index, { lefttext = "", isTitle = true })
 	index = index + 1
-	tinsert(mTP_List, index, { lefttext = format("%s%s|r", titel, L["Engineering"]), isTitle = true })
-	index = index + 1
 
-	mGetInfos(TeleportsEngineering, false, false)
+	if EngineeringCheck() then
+		tinsert(mTP_List, index, { lefttext = format("%s%s|r", titel, L["Engineering"]), isTitle = true })
+		index = index + 1
+		mGetInfos(TeleportsEngineering, false, false)
+	end
 
 	tinsert(mTP_List, index, { lefttext = "", isTitle = true })
 	index = index + 1
@@ -330,9 +345,11 @@ local function mDTAdd()
 	DT.tooltip:AddLine(L["Toys"])
 	mGetInfos(TeleportsToys, false, true)
 
-	DT.tooltip:AddLine(" ")
-	DT.tooltip:AddLine(L["Engineering"])
-	mGetInfos(TeleportsEngineering, false, true)
+	if EngineeringCheck() then
+		DT.tooltip:AddLine(" ")
+		DT.tooltip:AddLine(L["Engineering"])
+		mGetInfos(TeleportsEngineering, false, true)
+	end
 
 	DT.tooltip:AddLine(" ")
 	DT.tooltip:AddLine(L["Other"])
