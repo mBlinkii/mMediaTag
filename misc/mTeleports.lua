@@ -14,7 +14,7 @@ local _G = _G
 
 --Variables
 local mText = L["Teleports"]
-
+local index = 1
 local menuFrame = CreateFrame("Frame", "mMediaTag_Teleports_Menu", E.UIParent, "BackdropTemplate")
 menuFrame:SetTemplate("Transparent", true)
 
@@ -37,7 +37,7 @@ local TeleportsToys = {
 	166747, --brewfest-revelers-hearthstone
 	165802, --noble-gardeners-hearthstone
 	118427, --autographed-hearthstone-card
-	190196 --enlightened-hearthstone
+	190196, --enlightened-hearthstone
 }
 
 local TeleportsEngineering = {
@@ -46,10 +46,10 @@ local TeleportsEngineering = {
 	112059, --wormhole-centrifuge
 	151652, --wormhole-generator-argus
 	168807,
-	 --wormhole-generator-kultiras
+	--wormhole-generator-kultiras
 	168808,
-	 --wormhole-generator-zandalar
-	172924 --wormhole-generator-shadowlands
+	--wormhole-generator-zandalar
+	172924, --wormhole-generator-shadowlands
 }
 
 local TeleportsItems = {
@@ -65,7 +65,7 @@ local TeleportsItems = {
 	140192, --dalaran-hearthstone
 	141605, --flight-masters-whistle
 	128353,
-	 --admirals-compass
+	--admirals-compass
 	18984, --dimensional-ripper-everlook
 	18986, --ultrasafe-transporter-gadgetzan
 	30542, --dimensional-ripper-area-52
@@ -101,7 +101,7 @@ local TeleportsItems = {
 	32757, --blessed-medallion-of-karabor
 	37863, --direbrews-remote
 	43824,
-	 --the-schools-of-arcane-magic-mastery
+	--the-schools-of-arcane-magic-mastery
 	50287, --boots-of-the-bay
 	52251, --jainas-locket
 	64457, --the-last-relic-of-argus
@@ -109,15 +109,15 @@ local TeleportsItems = {
 	95051, --the-brassiest-knuckle
 	103678, --time-lost-artifact
 	118663,
-	 --relic-of-karabor
+	--relic-of-karabor
 	118907, --pit-fighters-punching-ring
 	118908, --pit-fighters-punching-ring
 	129276,
-	 --beginners-guide-to-dimensional-rifting
+	--beginners-guide-to-dimensional-rifting
 	128502,
-	 --hunters-seeking-crystal
+	--hunters-seeking-crystal
 	138448,
-	 --emblem-of-margoss
+	--emblem-of-margoss
 	142298, --astonishingly-scarlet-slippers
 	142469, --violet-seal-of-the-grand-magus
 	144391, --pugilists-powerful-punching-ring
@@ -154,7 +154,7 @@ local TeleportsItems = {
 	17906, --frostwolf-insignia-rank-3
 	17907, --frostwolf-insignia-rank-4
 	17908, --frostwolf-insignia-rank-5
-	17909 --frostwolf-insignia-rank-6
+	17909, --frostwolf-insignia-rank-6
 }
 local TeleportsSpells = {
 	556, --astral-recall
@@ -201,321 +201,123 @@ local TeleportsSpells = {
 	393279, --path-of-arcane-secrets
 	393764, --path-of-proven-worth
 	393766, --path-of-the-grand-magistrix
-	393267 --path-of-the-rotting-woods
+	393267, --path-of-the-rotting-woods
 }
 
 local mTP_List = {}
 
-local function SpellEnterFunc(btn)
-	GameTooltip:SetOwner(btn, "ANCHOR_CURSOR")
-	GameTooltip:ClearLines()
-	GameTooltip:SetSpellByID(btn.tooltip)
-	GameTooltip:Show()
+local function LeaveFunc(btn)
+	GameTooltip:Hide()
 end
 
-local function ItemEnterFunc(btn)
+local function mMenuAdd(index, type, text, time, name, tooltip, enterfunc)
+	tinsert(
+		mTP_List,
+		index,
+		{
+			lefttext = text,
+			righttext = time,
+			isTitle = false,
+			macro = { type = type, text = name },
+			tooltip = tooltip,
+			enter = enterfunc,
+			leave = LeaveFunc,
+		}
+	)
+end
+
+local function mOnEnterItem(btn)
 	GameTooltip:SetOwner(btn, "ANCHOR_CURSOR")
 	GameTooltip:ClearLines()
 	GameTooltip:SetItemByID(btn.tooltip)
 	GameTooltip:Show()
 end
 
-local function LeaveFunc(btn)
-	GameTooltip:Hide()
+local function mOnEnterSpell(btn)
+	GameTooltip:SetOwner(btn, "ANCHOR_CURSOR")
+	GameTooltip:ClearLines()
+	GameTooltip:SetSpellByID(btn.tooltip)
+	GameTooltip:Show()
 end
 
-local function mMenuAdd(index, type, text, time, name, tooltip, func, enterfunc)
-	tinsert(mTP_List, index, {lefttext = text, righttext = time, isTitle = false, macro = {type = type, text = name}, tooltip = tooltip, enter = enterfunc, leave = LeaveFunc})
+local function mGetInfos(TeleportsTable, spell, ttip)
+	for i, v in pairs(TeleportsTable) do
+		local texture, name, hasSpell, hasItem  = false, false, false, 0
+		if spell then
+			texture = GetSpellTexture(v)
+			name = GetSpellInfo(v)
+			hasSpell = IsSpellKnown(v)
+		else
+			texture = GetItemIcon(v)
+			name = GetItemInfo(v)
+			hasItem = GetItemCount(v)
+		end
+		local text1, text2 = nil, nil
+		if (texture and name and (hasItem > 0 or (E.Retail and PlayerHasToy(v) and C_ToyBox.IsToyUsable(v)))) or (texture and name and hasSpell) then
+			local start, duration = nil, nil
+			if spell then
+				start, duration = GetSpellCooldown(v)
+			else
+				start, duration = GetItemCooldown(v)
+			end
+			local cooldown = start + duration - GetTime()
+			if cooldown >= 2 then
+				local hours = math.floor(cooldown / 3600)
+				local minutes = math.floor(cooldown / 60)
+				local seconds = string.format("%02.f", math.floor(cooldown - minutes * 60))
+				if hours >= 1 then
+					minutes = math.floor(mod(cooldown, 3600) / 60)
+					text1 = "|T" .. texture .. ":14:14:0:0:64:64:5:59:5:59|t |cffdb3030" .. name .. "|r"
+					text2 = "|cffdb3030" .. hours .. "h " .. minutes .. "m|r"
+				else
+					text1 = "|T" .. texture .. ":14:14:0:0:64:64:5:59:5:59|t |cffdb3030" .. name .. "|r"
+					text2 = "|cffdb3030" .. minutes .. "m " .. seconds .. "s|r"
+				end
+			elseif cooldown <= 0 then
+				text1 = "|T" .. texture .. ":14:14:0:0:64:64:5:59:5:59|t |cffffffff" .. name .. "|r"
+				text2 = "|cff00FF00" .. L["Ready"] .. "|r"
+			end
+
+			if ttip and text1 and text2 then
+				DT.tooltip:AddDoubleLine(text1,text2)
+			elseif spell and text1 and text2 then
+				mMenuAdd(index, "spell", text1, text2, name, v, function(btn)
+					mOnEnterSpell(btn)
+				end)
+				index = index + 1
+			elseif text1 and text2 then
+				mMenuAdd(index, "item", text1, text2, name, v, function(btn)
+					mOnEnterItem(btn)
+				end)
+				index = index + 1
+			end
+		end
+	end
 end
 
 local function mUpdateTPList()
 	local _, _, _, _, _, titel = mMT:mColorDatatext()
 	mTP_List = {}
-	local index = 1
-	tinsert(mTP_List, index, {lefttext = format("%s%s|r", titel, L["Toys"]), isTitle = true})
+	index = 1
+	tinsert(mTP_List, index, { lefttext = format("%s%s|r", titel, L["Toys"]), isTitle = true })
 	index = index + 1
 
-	for i, v in pairs(TeleportsToys) do
-		local texture = GetItemIcon(v)
-		local name = GetItemInfo(v)
-		local hasItem = GetItemCount(v)
-		if texture and name and (hasItem > 0 or (E.Retail and PlayerHasToy(v) and C_ToyBox.IsToyUsable(v))) then
-			local start, duration = GetItemCooldown(v)
-			local cooldown = start + duration - GetTime()
-			if cooldown >= 2 then
-				local hours = math.floor(cooldown / 3600)
-				local minutes = math.floor(cooldown / 60)
-				local seconds = string.format("%02.f", math.floor(cooldown - minutes * 60))
-				if hours >= 1 then
-					minutes = math.floor(mod(cooldown, 3600) / 60)
-					mMenuAdd(
-						index,
-						"item",
-						"|T" .. texture .. ":14:14:0:0:64:64:5:59:5:59|t |cffdb3030" .. name .. "|r",
-						"|cffdb3030" .. hours .. "h " .. minutes .. "m|r",
-						name,
-						v,
-						nil,
-						function(btn)
-							GameTooltip:SetOwner(btn, "ANCHOR_CURSOR")
-							GameTooltip:ClearLines()
-							GameTooltip:SetItemByID(btn.tooltip)
-							GameTooltip:Show()
-						end
-					)
-					index = index + 1
-				else
-					mMenuAdd(
-						index,
-						"item",
-						"|T" .. texture .. ":14:14:0:0:64:64:5:59:5:59|t |cffdb3030" .. name .. "|r",
-						"|cffdb3030" .. minutes .. "m " .. seconds .. "s|r",
-						name,
-						v,
-						nil,
-						function(btn)
-							GameTooltip:SetOwner(btn, "ANCHOR_CURSOR")
-							GameTooltip:ClearLines()
-							GameTooltip:SetItemByID(btn.tooltip)
-							GameTooltip:Show()
-						end
-					)
-					index = index + 1
-				end
-			elseif cooldown <= 0 then
-				mMenuAdd(
-					index,
-					"item",
-					"|T" .. texture .. ":14:14:0:0:64:64:5:59:5:59|t " .. name,
-					"|cff00FF00" .. L["Ready"] .. "|r",
-					name,
-					v,
-					nil,
-					function(btn)
-						GameTooltip:SetOwner(btn, "ANCHOR_CURSOR")
-						GameTooltip:ClearLines()
-						GameTooltip:SetItemByID(btn.tooltip)
-						GameTooltip:Show()
-					end
-				)
-				index = index + 1
-			end
-		end
-	end
+	mGetInfos(TeleportsToys, false, false)
 
-	tinsert(mTP_List, index, {lefttext = "", isTitle = true})
+	tinsert(mTP_List, index, { lefttext = "", isTitle = true })
 	index = index + 1
-	tinsert(mTP_List, index, {lefttext = format("%s%s|r", titel, L["Engineering"]), isTitle = true})
+	tinsert(mTP_List, index, { lefttext = format("%s%s|r", titel, L["Engineering"]), isTitle = true })
 	index = index + 1
 
-	for i, v in pairs(TeleportsEngineering) do
-		local texture = GetItemIcon(v)
-		local name = GetItemInfo(v)
-		local hasItem = GetItemCount(v)
-		if texture and name and (hasItem > 0 or (E.Retail and PlayerHasToy(v) and C_ToyBox.IsToyUsable(v))) then
-			local start, duration = GetItemCooldown(v)
-			local cooldown = start + duration - GetTime()
-			if cooldown >= 2 then
-				local hours = math.floor(cooldown / 3600)
-				local minutes = math.floor(cooldown / 60)
-				local seconds = string.format("%02.f", math.floor(cooldown - minutes * 60))
-				if hours >= 1 then
-					minutes = math.floor(mod(cooldown, 3600) / 60)
-					mMenuAdd(
-						index,
-						"item",
-						"|T" .. texture .. ":14:14:0:0:64:64:5:59:5:59|t |cffdb3030" .. name .. "|r",
-						"|cffdb3030" .. hours .. "h " .. minutes .. "m|r",
-						name,
-						v,
-						nil,
-						function(btn)
-							GameTooltip:SetOwner(btn, "ANCHOR_CURSOR")
-							GameTooltip:ClearLines()
-							GameTooltip:SetItemByID(btn.tooltip)
-							GameTooltip:Show()
-						end
-					)
-					index = index + 1
-				else
-					mMenuAdd(
-						index,
-						"item",
-						"|T" .. texture .. ":14:14:0:0:64:64:5:59:5:59|t |cffdb3030" .. name .. "|r",
-						"|cffdb3030" .. minutes .. "m " .. seconds .. "s|r",
-						name,
-						v,
-						nil,
-						function(btn)
-							GameTooltip:SetOwner(btn, "ANCHOR_CURSOR")
-							GameTooltip:ClearLines()
-							GameTooltip:SetItemByID(btn.tooltip)
-							GameTooltip:Show()
-						end
-					)
-					index = index + 1
-				end
-			elseif cooldown <= 0 then
-				mMenuAdd(
-					index,
-					"item",
-					"|T" .. texture .. ":14:14:0:0:64:64:5:59:5:59|t " .. name,
-					"|cff00FF00" .. L["Ready"] .. "|r",
-					name,
-					v,
-					nil,
-					function(btn)
-						GameTooltip:SetOwner(btn, "ANCHOR_CURSOR")
-						GameTooltip:ClearLines()
-						GameTooltip:SetItemByID(btn.tooltip)
-						GameTooltip:Show()
-					end
-				)
-				index = index + 1
-			end
-		end
-	end
+	mGetInfos(TeleportsEngineering, false, false)
 
-	tinsert(mTP_List, index, {lefttext = "", isTitle = true})
+	tinsert(mTP_List, index, { lefttext = "", isTitle = true })
 	index = index + 1
-	tinsert(mTP_List, index, {lefttext = format("%s%s|r", titel, L["Other"]), isTitle = true})
+	tinsert(mTP_List, index, { lefttext = format("%s%s|r", titel, L["Other"]), isTitle = true })
 	index = index + 1
 
-	for i, v in pairs(TeleportsItems) do
-		local texture = GetItemIcon(v)
-		local name = GetItemInfo(v)
-		local hasItem = GetItemCount(v)
-		if texture and name and (hasItem > 0 or (E.Retail and PlayerHasToy(v) and C_ToyBox.IsToyUsable(v))) then
-			local start, duration = GetItemCooldown(v)
-			local cooldown = start + duration - GetTime()
-			if cooldown >= 2 then
-				local hours = math.floor(cooldown / 3600)
-				local minutes = math.floor(cooldown / 60)
-				local seconds = string.format("%02.f", math.floor(cooldown - minutes * 60))
-				if hours >= 1 then
-					minutes = math.floor(mod(cooldown, 3600) / 60)
-					mMenuAdd(
-						index,
-						"item",
-						"|T" .. texture .. ":14:14:0:0:64:64:5:59:5:59|t |cffdb3030" .. name .. "|r",
-						"|cffdb3030" .. hours .. "h " .. minutes .. "m|r",
-						name,
-						v,
-						nil,
-						function(btn)
-							GameTooltip:SetOwner(btn, "ANCHOR_CURSOR")
-							GameTooltip:ClearLines()
-							GameTooltip:SetItemByID(btn.tooltip)
-							GameTooltip:Show()
-						end
-					)
-					index = index + 1
-				else
-					mMenuAdd(
-						index,
-						"item",
-						"|T" .. texture .. ":14:14:0:0:64:64:5:59:5:59|t |cffdb3030" .. name .. "|r",
-						"|cffdb3030" .. minutes .. "m " .. seconds .. "s|r",
-						name,
-						v,
-						nil,
-						function(btn)
-							GameTooltip:SetOwner(btn, "ANCHOR_CURSOR")
-							GameTooltip:ClearLines()
-							GameTooltip:SetItemByID(btn.tooltip)
-							GameTooltip:Show()
-						end
-					)
-					index = index + 1
-				end
-			elseif cooldown <= 0 then
-				mMenuAdd(
-					index,
-					"item",
-					"|T" .. texture .. ":14:14:0:0:64:64:5:59:5:59|t " .. name,
-					"|cff00FF00" .. L["Ready"] .. "|r",
-					name,
-					v,
-					nil,
-					function(btn)
-						GameTooltip:SetOwner(btn, "ANCHOR_CURSOR")
-						GameTooltip:ClearLines()
-						GameTooltip:SetItemByID(btn.tooltip)
-						GameTooltip:Show()
-					end
-				)
-				index = index + 1
-			end
-		end
-	end
-
-	for i, v in pairs(TeleportsSpells) do
-		local texture = GetSpellTexture(v)
-		local name = GetSpellInfo(v)
-		local hasSpell = IsSpellKnown(v)
-		if texture and name and hasSpell then
-			local start, duration = GetSpellCooldown(v)
-			local cooldown = start + duration - GetTime()
-			if cooldown >= 2 then
-				local hours = math.floor(cooldown / 3600)
-				local minutes = math.floor(cooldown / 60)
-				local seconds = string.format("%02.f", math.floor(cooldown - minutes * 60))
-				if hours >= 1 then
-					minutes = math.floor(mod(cooldown, 3600) / 60)
-					mMenuAdd(
-						index,
-						"spell",
-						"|T" .. texture .. ":14:14:0:0:64:64:5:59:5:59|t |cffdb3030" .. name .. "|r",
-						"|cffdb3030" .. hours .. "h " .. minutes .. "m|r",
-						name,
-						v,
-						nil,
-						function(btn)
-							GameTooltip:SetOwner(btn, "ANCHOR_CURSOR")
-							GameTooltip:ClearLines()
-							GameTooltip:SetSpellByID(btn.tooltip)
-							GameTooltip:Show()
-						end
-					)
-					index = index + 1
-				else
-					mMenuAdd(
-						index,
-						"spell",
-						"|T" .. texture .. ":14:14:0:0:64:64:5:59:5:59|t |cffdb3030" .. name .. "|r",
-						"|cffdb3030" .. minutes .. "m " .. seconds .. "s|r",
-						name,
-						v,
-						nil,
-						function(btn)
-							GameTooltip:SetOwner(btn, "ANCHOR_CURSOR")
-							GameTooltip:ClearLines()
-							GameTooltip:SetSpellByID(btn.tooltip)
-							GameTooltip:Show()
-						end
-					)
-					index = index + 1
-				end
-			elseif cooldown <= 0 then
-				mMenuAdd(
-					index,
-					"spell",
-					"|T" .. texture .. ":14:14:0:0:64:64:5:59:5:59|t " .. name,
-					"|cff00FF00" .. L["Ready"] .. "|r",
-					name,
-					v,
-					nil,
-					function(btn)
-						GameTooltip:SetOwner(btn, "ANCHOR_CURSOR")
-						GameTooltip:ClearLines()
-						GameTooltip:SetSpellByID(btn.tooltip)
-						GameTooltip:Show()
-					end
-				)
-				index = index + 1
-			end
-		end
-	end
+	mGetInfos(TeleportsItems, false, false)
+	mGetInfos(TeleportsSpells, true, false)
 end
 
 local function OnClick(self, button)
@@ -526,139 +328,16 @@ end
 
 local function mDTAdd()
 	DT.tooltip:AddLine(L["Toys"])
-	for i, v in pairs(TeleportsToys) do
-		local texture = GetItemIcon(v)
-		local name = GetItemInfo(v)
-		local hasItem = GetItemCount(v)
-		if texture and name and (hasItem > 0 or (E.Retail and PlayerHasToy(v) and C_ToyBox.IsToyUsable(v))) then
-			local start, duration = GetItemCooldown(v)
-			local cooldown = start + duration - GetTime()
-			if cooldown >= 2 then
-				local hours = math.floor(cooldown / 3600)
-				local minutes = math.floor(cooldown / 60)
-				local seconds = string.format("%02.f", math.floor(cooldown - minutes * 60))
-				if hours >= 1 then
-					minutes = math.floor(mod(cooldown, 3600) / 60)
-					DT.tooltip:AddDoubleLine(
-						"|T" .. texture .. ":14:14:0:0:64:64:5:59:5:59|t |cffdb3030" .. name .. "|r",
-						("|cffdb3030" .. hours .. "h " .. minutes .. "m|r")
-					)
-				else
-					DT.tooltip:AddDoubleLine(
-						"|T" .. texture .. ":14:14:0:0:64:64:5:59:5:59|t |cffdb3030" .. name .. "|r",
-						("|cffdb3030" .. minutes .. "m " .. seconds .. "s|r")
-					)
-				end
-			elseif cooldown <= 0 then
-				DT.tooltip:AddDoubleLine(
-					"|T" .. texture .. ":14:14:0:0:64:64:5:59:5:59|t |cffFFFFFF" .. name .. "|r",
-					"|cff00FF00" .. L["Ready"] .. "|r"
-				)
-			end
-		end
-	end
+	mGetInfos(TeleportsToys, false, true)
 
 	DT.tooltip:AddLine(" ")
 	DT.tooltip:AddLine(L["Engineering"])
-
-	for i, v in pairs(TeleportsEngineering) do
-		local texture = GetItemIcon(v)
-		local name = GetItemInfo(v)
-		local hasItem = GetItemCount(v)
-		if texture and name and (hasItem > 0 or (E.Retail and PlayerHasToy(v) and C_ToyBox.IsToyUsable(v))) then
-			local start, duration = GetItemCooldown(v)
-			local cooldown = start + duration - GetTime()
-			if cooldown >= 2 then
-				local hours = math.floor(cooldown / 3600)
-				local minutes = math.floor(cooldown / 60)
-				local seconds = string.format("%02.f", math.floor(cooldown - minutes * 60))
-				if hours >= 1 then
-					minutes = math.floor(mod(cooldown, 3600) / 60)
-					DT.tooltip:AddDoubleLine(
-						"|T" .. texture .. ":14:14:0:0:64:64:5:59:5:59|t |cffdb3030" .. name .. "|r",
-						("|cffdb3030" .. hours .. "h " .. minutes .. "m|r")
-					)
-				else
-					DT.tooltip:AddDoubleLine(
-						"|T" .. texture .. ":14:14:0:0:64:64:5:59:5:59|t |cffdb3030" .. name .. "|r",
-						("|cffdb3030" .. minutes .. "m " .. seconds .. "s|r")
-					)
-				end
-			elseif cooldown <= 0 then
-				DT.tooltip:AddDoubleLine(
-					"|T" .. texture .. ":14:14:0:0:64:64:5:59:5:59|t |cffFFFFFF" .. name .. "|r",
-					"|cff00FF00" .. L["Ready"] .. "|r"
-				)
-			end
-		end
-	end
+	mGetInfos(TeleportsEngineering, false, true)
 
 	DT.tooltip:AddLine(" ")
 	DT.tooltip:AddLine(L["Other"])
-
-	for i, v in pairs(TeleportsItems) do
-		local texture = GetItemIcon(v)
-		local name = GetItemInfo(v)
-		local hasItem = GetItemCount(v)
-		if texture and name and (hasItem > 0 or (E.Retail and PlayerHasToy(v) and C_ToyBox.IsToyUsable(v))) then
-			local start, duration = GetItemCooldown(v)
-			local cooldown = start + duration - GetTime()
-			if cooldown >= 2 then
-				local hours = math.floor(cooldown / 3600)
-				local minutes = math.floor(cooldown / 60)
-				local seconds = string.format("%02.f", math.floor(cooldown - minutes * 60))
-				if hours >= 1 then
-					minutes = math.floor(mod(cooldown, 3600) / 60)
-					DT.tooltip:AddDoubleLine(
-						"|T" .. texture .. ":14:14:0:0:64:64:5:59:5:59|t |cffdb3030" .. name .. "|r",
-						("|cffdb3030" .. hours .. "h " .. minutes .. "m|r")
-					)
-				else
-					DT.tooltip:AddDoubleLine(
-						"|T" .. texture .. ":14:14:0:0:64:64:5:59:5:59|t |cffdb3030" .. name .. "|r",
-						("|cffdb3030" .. minutes .. "m " .. seconds .. "s|r")
-					)
-				end
-			elseif cooldown <= 0 then
-				DT.tooltip:AddDoubleLine(
-					"|T" .. texture .. ":14:14:0:0:64:64:5:59:5:59|t |cffFFFFFF" .. name .. "|r",
-					"|cff00FF00" .. L["Ready"] .. "|r"
-				)
-			end
-		end
-	end
-
-	for i, v in pairs(TeleportsSpells) do
-		local texture = GetSpellTexture(v)
-		local name = GetSpellInfo(v)
-		local hasSpell = IsSpellKnown(v)
-		if texture and name and hasSpell then
-			local start, duration = GetSpellCooldown(v)
-			local cooldown = start + duration - GetTime()
-			if cooldown >= 2 then
-				local hours = math.floor(cooldown / 3600)
-				local minutes = math.floor(cooldown / 60)
-				local seconds = string.format("%02.f", math.floor(cooldown - minutes * 60))
-				if hours >= 1 then
-					minutes = math.floor(mod(cooldown, 3600) / 60)
-					DT.tooltip:AddDoubleLine(
-						"|T" .. texture .. ":14:14:0:0:64:64:5:59:5:59|t |cffdb3030" .. name .. "|r",
-						("|cffdb3030" .. hours .. "h " .. minutes .. "m|r")
-					)
-				else
-					DT.tooltip:AddDoubleLine(
-						"|T" .. texture .. ":14:14:0:0:64:64:5:59:5:59|t |cffdb3030" .. name .. "|r",
-						("|cffdb3030" .. minutes .. "m " .. seconds .. "s|r")
-					)
-				end
-			elseif cooldown <= 0 then
-				DT.tooltip:AddDoubleLine(
-					"|T" .. texture .. ":14:14:0:0:64:64:5:59:5:59|t |cffFFFFFF" .. name .. "|r",
-					"|cff00FF00" .. L["Ready"] .. "|r"
-				)
-			end
-		end
-	end
+	mGetInfos(TeleportsItems, false, true)
+	mGetInfos(TeleportsSpells, true, true)
 end
 
 local function OnEnter(self)
