@@ -333,23 +333,23 @@ local function mUpdateTPList()
 	local _, _, _, _, _, titel = mMT:mColorDatatext()
 	mTP_List = {}
 	index = 1
-	tinsert(mTP_List, index, { lefttext = format("%s%s|r", titel, L["Toys"]), isTitle = true })
+	tinsert(mTP_List, index, { text = format("%s%s|r", titel, L["Toys"]), isTitle = true, notClickable = true })
 	index = index + 1
 
 	mGetInfos(TeleportsToys, false, false)
 
-	tinsert(mTP_List, index, { lefttext = "", isTitle = true })
+	tinsert(mTP_List, index, { text = "", isTitle = true, notClickable = true })
 	index = index + 1
 
 	if EngineeringCheck() then
-		tinsert(mTP_List, index, { lefttext = format("%s%s|r", titel, L["Engineering"]), isTitle = true })
+		tinsert(mTP_List, index, { text = format("%s%s|r", titel, L["Engineering"]), isTitle = true, notClickable = true })
 		index = index + 1
 		mGetInfos(TeleportsEngineering, false, false)
 	end
 
-	tinsert(mTP_List, index, { lefttext = "", isTitle = true })
+	tinsert(mTP_List, index, { text = "", isTitle = true, notClickable = true })
 	index = index + 1
-	tinsert(mTP_List, index, { lefttext = format("%s%s|r", titel, L["Other"]), isTitle = true })
+	tinsert(mTP_List, index, { text = format("%s%s|r", titel, L["Other"]), isTitle = true, notClickable = true })
 	index = index + 1
 
 	mGetInfos(TeleportsItems, false, false)

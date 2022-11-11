@@ -55,8 +55,8 @@ local function OnLeave(btn)
 end
 
 -- list = tbl see below
--- text, Secondtext, icon, func, funcOnEnter, funcOnLeave, isTitle, macro, tooltip
-
+-- text = string, Secondtext = string, icon = texture, func = function, funcOnEnter = function,
+--funcOnLeave = function, isTitle = bolean, macro = macrotext, tooltip = id or var you can use for the functions, notClickable = bolean
 function mMT:mDropDown(list, frame, menuparent, ButtonWidth, HideDelay)
 	autoHideDelay = HideDelay or 2
 
@@ -83,20 +83,17 @@ function mMT:mDropDown(list, frame, menuparent, ButtonWidth, HideDelay)
 				frame.buttons[i]:SetAttribute("macrotext1", list[i].macro)
 			else
 				frame.buttons[i] = CreateFrame("Button", nil, frame)
-				frame.buttons[i].func = list[i].func
-				frame.buttons[i]:SetScript("OnClick", OnClick)
+
+				if not list[i].notClickable then
+					frame.buttons[i].func = list[i].func
+					frame.buttons[i]:SetScript("OnClick", OnClick)
+				end
 			end
 
 			local texture = LSM:Fetch("statusbar", E.db[mPlugin].mHoverTexture)
 				or [[Interface\QuestFrame\UI-QuestTitleHighlight]]
 
-			if list[i].isTitle then
-				frame.buttons[i].hoverTex = frame.buttons[i]:CreateTexture(nil, "OVERLAY")
-				frame.buttons[i].hoverTex:SetAllPoints()
-				frame.buttons[i].hoverTex:SetTexture(nil)
-				frame.buttons[i].hoverTex:SetBlendMode("ADD")
-				frame.buttons[i].hoverTex:Hide()
-			else
+			if not list[i].isTitle then
 				frame.buttons[i].hoverTex = frame.buttons[i]:CreateTexture(nil, "OVERLAY")
 				frame.buttons[i].hoverTex:SetAllPoints()
 				frame.buttons[i].hoverTex:SetTexture(texture)
