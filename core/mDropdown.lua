@@ -55,7 +55,7 @@ local function OnLeave(btn)
 end
 
 -- list = tbl see below
--- text, Secondtext, icon, func, funcOnEnter, funcOnLeave, isTitle, macro
+-- text, Secondtext, icon, func, funcOnEnter, funcOnLeave, isTitle, macro, tooltip
 
 function mMT:mDropDown(list, frame, menuparent, ButtonWidth, HideDelay)
 	autoHideDelay = HideDelay or 2
@@ -134,6 +134,10 @@ function mMT:mDropDown(list, frame, menuparent, ButtonWidth, HideDelay)
 				frame.buttons[i].Secondtext:FontTemplate(nil, nil, "")
 				frame.buttons[i].Secondtext:SetJustifyH("RIGHT")
 				frame.buttons[i].Secondtext:SetText(list[i].Secondtext or "")
+			end
+
+			if list[i].tooltip then
+				frame.buttons[i].tooltip = list[i].tooltip
 			end
 
 			frame.buttons[i]:SetScript("OnEnter", OnEnter)

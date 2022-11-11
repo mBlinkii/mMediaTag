@@ -224,22 +224,19 @@ local function LeaveFunc(btn)
 	GameTooltip:Hide()
 end
 
-local function mMenuAdd(ind, type, text, time, name, tooltip, enterfunc, tbl)
-	if not tbl then
-		tbl = mTP_List
-	end
-
+local function mMenuAdd(tbl, ind, text, time, macro, icon, tooltip, funcOnEnter)
 	tinsert(
 		tbl,
 		ind,
 		{
-			lefttext = text,
-			righttext = time,
+			text = text,
+			Secondtext = time,
+			icon = icon,
 			isTitle = false,
-			macro = { type = type, text = name },
 			tooltip = tooltip,
-			enter = enterfunc,
-			leave = LeaveFunc,
+			macro = macro,
+			funcOnEnter = funcOnEnter,
+			funcOnLeave = LeaveFunc,
 		}
 	)
 end
@@ -291,29 +288,31 @@ local function mGetInfos(TeleportsTable, spell, ttip)
 				local seconds = string.format("%02.f", math.floor(cooldown - minutes * 60))
 				if hours >= 1 then
 					minutes = math.floor(mod(cooldown, 3600) / 60)
-					text1 = "|T" .. texture .. ":14:14:0:0:64:64:5:59:5:59|t |cffdb3030" .. name .. "|r"
+					text1 = "|cffdb3030" .. name .. "|r"
 					text2 = "|cffdb3030" .. hours .. "h " .. minutes .. "m|r"
 				else
-					text1 = "|T" .. texture .. ":14:14:0:0:64:64:5:59:5:59|t |cffdb3030" .. name .. "|r"
+					text1 = "|cffdb3030" .. name .. "|r"
 					text2 = "|cffdb3030" .. minutes .. "m " .. seconds .. "s|r"
 				end
 			elseif cooldown <= 0 then
-				text1 = "|T" .. texture .. ":14:14:0:0:64:64:5:59:5:59|t |cffffffff" .. name .. "|r"
+				text1 = "|cffffffff" .. name .. "|r"
 				text2 = "|cff00FF00" .. L["Ready"] .. "|r"
 			end
 
-			if ttip and text1 and text2 then
-				DT.tooltip:AddDoubleLine(text1,text2)
-			elseif spell and text1 and text2 then
-				mMenuAdd(index, "spell", text1, text2, nametext, v, function(btn)
-					mOnEnterSpell(btn)
-				end)
-				index = index + 1
-			elseif text1 and text2 then
-				mMenuAdd(index, "item", text1, text2, name, v, function(btn)
-					mOnEnterItem(btn)
-				end)
-				index = index + 1
+			if text1 and text2 then
+				if ttip then
+					DT.tooltip:AddDoubleLine(text1,text2)
+				elseif spell then
+					mMenuAdd(mTP_List, index, text1, text2, "macrotext1", "/cast " .. name, v, function(btn)
+						mOnEnterSpell(btn)
+					end)
+					index = index + 1
+				else
+					mMenuAdd(mTP_List, index, text1, text2, "macrotext1", "/use " .. name, v, function(btn)
+						mOnEnterItem(btn)
+					end)
+					index = index + 1
+				end
 			end
 		end
 	end
@@ -394,11 +393,6 @@ end
 
 local function OnEvent(self, event, unit)
 	local TextString = mText
-	if list[i].macro.type == "item" then
-		frame.buttons[i]:SetAttribute("macrotext1", "/use " .. list[i].macro.text)
-	elseif list[i].macro.type == "spell" then
-		frame.buttons[i]:SetAttribute("macrotext1", "/cast " .. list[i].macro.text)
-	end
 	self.text:SetFormattedText(mMT:mClassColorString(), TextString)
 end
 
