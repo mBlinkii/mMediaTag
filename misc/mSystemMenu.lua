@@ -140,7 +140,7 @@ local function OnClick(self, button)
 					end,
 				},
 
-				{ text = "", isTitle = true, func = function() end },
+				{ text = "", isTitle = true, notClickable = true, func = function() end },
 
 				{
 					text = format("%s %s%s|r", mMenuIcons(mIconGARRISON), mColor(7), GARRISON_LANDING_PAGE_TITLE),
@@ -157,7 +157,7 @@ local function OnClick(self, button)
 					end,
 				},
 
-				{ text = "", isTitle = true, func = function() end },
+				{ text = "", isTitle = true, notClickable = true, func = function() end },
 
 				{
 					text = format("%s %s%s|r", mMenuIcons(mIconTIME), mColor(1), TIMEMANAGER_TITLE),
@@ -174,7 +174,7 @@ local function OnClick(self, button)
 					end,
 				},
 
-				{ text = "", isTitle = true, func = function() end },
+				{ text = "", isTitle = true, notClickable = true, func = function() end },
 
 				{
 					text = format("%s %s%s|r", mMenuIcons(mIconSOCIAL), mColor(6), SOCIAL_BUTTON),
@@ -191,7 +191,7 @@ local function OnClick(self, button)
 					end,
 				},
 
-				{ text = "", isTitle = true, func = function() end },
+				{ text = "", isTitle = true, notClickable = true, func = function() end },
 
 				{
 					text = format("%s %s%s|r", mMenuIcons(mIconLFG), mColor(7), LFG_TITLE),
@@ -211,7 +211,7 @@ local function OnClick(self, button)
 					end,
 				},
 
-				{ text = "", isTitle = true, func = function() end },
+				{ text = "", isTitle = true, notClickable = true, func = function() end },
 
 				{
 					text = format("%s %s%s|r", mMenuIcons(mIconElvUI), mColor(4), "ElvUI"),
@@ -225,7 +225,7 @@ local function OnClick(self, button)
 					end,
 				},
 
-				{ text = "", isTitle = true, func = function() end },
+				{ text = "", isTitle = true, notClickable = true, func = function() end },
 
 				{
 					text = format("%s %s%s|r", mMenuIcons(mIconMAINMENU), mColor(1), MAINMENU_BUTTON),
@@ -259,7 +259,7 @@ local function OnClick(self, button)
 					end,
 				},
 
-				{ text = "", isTitle = true, func = function() end },
+				{ text = "", isTitle = true, notClickable = true, func = function() end },
 
 				{
 					text = format("%s %s%s|r", mMenuIcons(mIconSTORE), mColor(5), BLIZZARD_STORE),
@@ -312,7 +312,7 @@ local function OnClick(self, button)
 					end,
 				},
 
-				{ text = "", isTitle = true, func = function() end },
+				{ text = "", isTitle = true, notClickable = true, func = function() end },
 
 				{
 					text = format("%s%s|r", mColor(1), TIMEMANAGER_TITLE),
@@ -339,7 +339,7 @@ local function OnClick(self, button)
 					end,
 				},
 
-				{ text = "", isTitle = true, func = function() end },
+				{ text = "", isTitle = true, notClickable = true, func = function() end },
 
 				{
 					text = format("%s%s|r", mColor(4), "ElvUI"),
@@ -353,7 +353,7 @@ local function OnClick(self, button)
 					end,
 				},
 
-				{ text = "", isTitle = true, func = function() end },
+				{ text = "", isTitle = true, notClickable = true, func = function() end },
 
 				{
 					text = format("%s%s|r", mColor(1), MAINMENU_BUTTON),
@@ -377,7 +377,7 @@ local function OnClick(self, button)
 					end,
 				},
 
-				{ text = "", isTitle = true, func = function() end },
+				{ text = "", isTitle = true, notClickable = true, func = function() end },
 
 				{
 					text = format("%s%s|r", mColor(5), HELP_BUTTON),
