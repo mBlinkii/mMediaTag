@@ -101,12 +101,12 @@ local function InsertList(index, textA, textB, title, spell)
 		tinsert(
 			ProfessionsList.List,
 			index,
-			{ lefttext = textA, righttext = textB, isTitle = title, func = function() end }
+			{ text = textA, Secondtext = textB, isTitle = title, func = function() end }
 		)
 	else
 		tinsert(ProfessionsList.List, index, {
-			lefttext = textA,
-			righttext = textB,
+			text = textA,
+			Secondtext = textB,
 			isTitle = title,
 			func = function()
 				castProf(spell)
