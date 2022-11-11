@@ -174,9 +174,7 @@ local TeleportsSpells = {
 	159895, --path-of-the-bloodmaul
 	159896, --path-of-the-iron-prow
 	159897, --path-of-the-vigilant
-	159898, --path-of-the-skies
 	159899, --path-of-the-crescent-moon
-	159900, --path-of-the-dark-rail
 	159901, --path-of-the-verdant
 	159902, --path-of-the-burning-mountain
 	354462, --path-of-the-courageous
@@ -186,9 +184,6 @@ local TeleportsSpells = {
 	354467, --path-of-the-undefeated
 	354468, --path-of-the-scheming-loa
 	354469, --path-of-the-stone-warden
-	367416, --path-of-the-streetwise-merchant
-	373262, --path-of-the-fallen-guardian
-	373274, --path-of-the-scrappy-prince
 	373190, --path-of-the-sire
 	373191, --path-of-the-tormented-soul
 	373192, --path-of-the-first-ones
@@ -204,16 +199,39 @@ local TeleportsSpells = {
 	393267, --path-of-the-rotting-woods
 }
 
+local Season_List = {
+	367416, --path-of-the-streetwise-merchant
+	159900, --path-of-the-dark-rail
+	159898, --path-of-the-skies
+	373274, --path-of-the-scrappy-prince
+	373262, --path-of-the-fallen-guardian
+}
+
+local SLDungeons_List = {
+	354462, --path-of-the-courageous
+	354463, --path-of-the-plagued
+	354464, --path-of-the-misty-forest
+	354465, --path-of-the-sinful-soul
+	354467, --path-of-the-undefeated
+	354468, --path-of-the-scheming-loa
+	354469, --path-of-the-stone-warden
+	367416, --path-of-the-streetwise-merchant
+}
+
 local mTP_List = {}
 
 local function LeaveFunc(btn)
 	GameTooltip:Hide()
 end
 
-local function mMenuAdd(index, type, text, time, name, tooltip, enterfunc)
+local function mMenuAdd(ind, type, text, time, name, tooltip, enterfunc, tbl)
+	if not tbl then
+		tbl = mTP_List
+	end
+
 	tinsert(
-		mTP_List,
-		index,
+		tbl,
+		ind,
 		{
 			lefttext = text,
 			righttext = time,
@@ -309,6 +327,9 @@ local function EngineeringCheck()
 	return prof1 == 202 or prof2 == 202
 end
 
+local menuFrame_Season = CreateFrame("Frame", "mMediaTag_Teleports_Menu_Season", menuFrame, "BackdropTemplate")
+menuFrame:SetTemplate("Transparent", true)
+
 local function mUpdateTPList()
 	local _, _, _, _, _, titel = mMT:mColorDatatext()
 	mTP_List = {}
@@ -338,11 +359,10 @@ end
 
 local function OnClick(self, button)
 	mUpdateTPList()
-
 	mMT:mDropDown(mTP_List, menuFrame, self, 200, 2)
 end
 
-local function mDTAdd()
+local function mTPTooltip()
 	DT.tooltip:AddLine(L["Toys"])
 	mGetInfos(TeleportsToys, false, true)
 
@@ -353,6 +373,14 @@ local function mDTAdd()
 	end
 
 	DT.tooltip:AddLine(" ")
+	DT.tooltip:AddLine(L["M+ Season"])
+	mGetInfos(Season_List, true, true)
+
+	DT.tooltip:AddLine(" ")
+	DT.tooltip:AddLine(L["SL Dungeons"])
+	mGetInfos(SLDungeons_List, true, true)
+
+	DT.tooltip:AddLine(" ")
 	DT.tooltip:AddLine(L["Other"])
 	mGetInfos(TeleportsItems, false, true)
 	mGetInfos(TeleportsSpells, true, true)
@@ -360,13 +388,17 @@ end
 
 local function OnEnter(self)
 	DT.tooltip:ClearLines()
-	mDTAdd()
+	mTPTooltip()
 	DT.tooltip:Show()
 end
 
 local function OnEvent(self, event, unit)
 	local TextString = mText
-
+	if list[i].macro.type == "item" then
+		frame.buttons[i]:SetAttribute("macrotext1", "/use " .. list[i].macro.text)
+	elseif list[i].macro.type == "spell" then
+		frame.buttons[i]:SetAttribute("macrotext1", "/cast " .. list[i].macro.text)
+	end
 	self.text:SetFormattedText(mMT:mClassColorString(), TextString)
 end
 
