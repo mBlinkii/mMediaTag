@@ -301,14 +301,14 @@ local function mGetInfos(TeleportsTable, spell, ttip)
 
 			if text1 and text2 then
 				if ttip then
-					DT.tooltip:AddDoubleLine(text1,text2)
+					DT.tooltip:AddDoubleLine(format("|T%s:14:14:0:0:64:64:5:59:5:59|t %s", texture, text1),text2)
 				elseif spell then
-					mMenuAdd(mTP_List, index, text1, text2, "macrotext1", "/cast " .. name, v, function(btn)
+					mMenuAdd(mTP_List, index, text1, text2, "/cast " .. nametext, texture, v, function(btn)
 						mOnEnterSpell(btn)
 					end)
 					index = index + 1
 				else
-					mMenuAdd(mTP_List, index, text1, text2, "macrotext1", "/use " .. name, v, function(btn)
+					mMenuAdd(mTP_List, index, text1, text2, "/use " .. nametext, texture, v, function(btn)
 						mOnEnterItem(btn)
 					end)
 					index = index + 1
