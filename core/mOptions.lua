@@ -397,12 +397,6 @@ local function OptionsCore()
 					},
 				},
 			},
-			profile = {
-				order = 70,
-				type = "group",
-				name = L["Profile"],
-				args = {},
-			},
 			about = {
 				order = 80,
 				type = "group",
@@ -854,12 +848,6 @@ local function OptionsCoreClassic()
 						args = {},
 					},
 				},
-			},
-			profile = {
-				order = 70,
-				type = "group",
-				name = L["Profile"],
-				args = {},
 			},
 			about = {
 				order = 80,

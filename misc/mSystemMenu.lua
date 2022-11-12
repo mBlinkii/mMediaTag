@@ -100,14 +100,14 @@ local function OnClick(self, button)
 		if E.Retail then
 			menuList = {
 				{
-					lefttext = format("%s %s%s|r", mMenuIcons(mIconCHARACTER), mColor(2), CHARACTER_BUTTON),
+					text = format("%s %s%s|r", mMenuIcons(mIconCHARACTER), mColor(2), CHARACTER_BUTTON),
 					isTitle = false,
 					func = function()
 						ToggleCharacter("PaperDollFrame")
 					end,
 				},
 				{
-					lefttext = format("%s %s%s|r", mMenuIcons(mIconSPELLBOOK), mColor(2), SPELLBOOK_ABILITIES_BUTTON),
+					text = format("%s %s%s|r", mMenuIcons(mIconSPELLBOOK), mColor(2), SPELLBOOK_ABILITIES_BUTTON),
 					isTitle = false,
 					func = function()
 						if not SpellBookFrame:IsShown() then
@@ -118,7 +118,7 @@ local function OnClick(self, button)
 					end,
 				},
 				{
-					lefttext = format("%s %s%s|r", mMenuIcons(mIconTALENTS), mColor(2), TALENTS_BUTTON),
+					text = format("%s %s%s|r", mMenuIcons(mIconTALENTS), mColor(2), TALENTS_BUTTON),
 					isTitle = false,
 					func = function()
 						if not PlayerTalentFrame then
@@ -133,75 +133,75 @@ local function OnClick(self, button)
 					end,
 				},
 				{
-					lefttext = format("%s %s%s|r", mMenuIcons(mIconACHIEVEMENT), mColor(2), ACHIEVEMENT_BUTTON),
+					text = format("%s %s%s|r", mMenuIcons(mIconACHIEVEMENT), mColor(2), ACHIEVEMENT_BUTTON),
 					isTitle = false,
 					func = function()
 						ToggleAchievementFrame()
 					end,
 				},
 
-				{ lefttext = "", isTitle = true, func = function() end },
+				{ text = "", isTitle = true, notClickable = true, func = function() end },
 
 				{
-					lefttext = format("%s %s%s|r", mMenuIcons(mIconGARRISON), mColor(7), GARRISON_LANDING_PAGE_TITLE),
+					text = format("%s %s%s|r", mMenuIcons(mIconGARRISON), mColor(7), GARRISON_LANDING_PAGE_TITLE),
 					isTitle = false,
 					func = function()
 						GarrisonLandingPageMinimapButton_OnClick()
 					end,
 				},
 				{
-					lefttext = format("%s %s%s|r", mMenuIcons(mIconCOLLECTIONS), mColor(7), COLLECTIONS),
+					text = format("%s %s%s|r", mMenuIcons(mIconCOLLECTIONS), mColor(7), COLLECTIONS),
 					isTitle = false,
 					func = function()
 						ToggleCollectionsJournal()
 					end,
 				},
 
-				{ lefttext = "", isTitle = true, func = function() end },
+				{ text = "", isTitle = true, notClickable = true, func = function() end },
 
 				{
-					lefttext = format("%s %s%s|r", mMenuIcons(mIconTIME), mColor(1), TIMEMANAGER_TITLE),
+					text = format("%s %s%s|r", mMenuIcons(mIconTIME), mColor(1), TIMEMANAGER_TITLE),
 					isTitle = false,
 					func = function()
 						ToggleFrame(TimeManagerFrame)
 					end,
 				},
 				{
-					lefttext = format("%s %s%s|r", mMenuIcons(mIconCALENDAR), mColor(1), L["Calendar"]),
+					text = format("%s %s%s|r", mMenuIcons(mIconCALENDAR), mColor(1), L["Calendar"]),
 					isTitle = false,
 					func = function()
 						GameTimeFrame:Click()
 					end,
 				},
 
-				{ lefttext = "", isTitle = true, func = function() end },
+				{ text = "", isTitle = true, notClickable = true, func = function() end },
 
 				{
-					lefttext = format("%s %s%s|r", mMenuIcons(mIconSOCIAL), mColor(6), SOCIAL_BUTTON),
+					text = format("%s %s%s|r", mMenuIcons(mIconSOCIAL), mColor(6), SOCIAL_BUTTON),
 					isTitle = false,
 					func = function()
 						ToggleFriendsFrame()
 					end,
 				},
 				{
-					lefttext = format("%s %s%s|r", mMenuIcons(mIconGUILD), mColor(6), ACHIEVEMENTS_GUILD_TAB),
+					text = format("%s %s%s|r", mMenuIcons(mIconGUILD), mColor(6), ACHIEVEMENTS_GUILD_TAB),
 					isTitle = false,
 					func = function()
 						ToggleGuildFrame()
 					end,
 				},
 
-				{ lefttext = "", isTitle = true, func = function() end },
+				{ text = "", isTitle = true, notClickable = true, func = function() end },
 
 				{
-					lefttext = format("%s %s%s|r", mMenuIcons(mIconLFG), mColor(7), LFG_TITLE),
+					text = format("%s %s%s|r", mMenuIcons(mIconLFG), mColor(7), LFG_TITLE),
 					isTitle = false,
 					func = function()
 						ToggleLFDParentFrame()
 					end,
 				},
 				{
-					lefttext = format("%s %s%s|r", mMenuIcons(mIconJOURNAL), mColor(7), ENCOUNTER_JOURNAL),
+					text = format("%s %s%s|r", mMenuIcons(mIconJOURNAL), mColor(7), ENCOUNTER_JOURNAL),
 					isTitle = false,
 					func = function()
 						if not IsAddOnLoaded("Blizzard_EncounterJournal") then
@@ -211,10 +211,10 @@ local function OnClick(self, button)
 					end,
 				},
 
-				{ lefttext = "", isTitle = true, func = function() end },
+				{ text = "", isTitle = true, notClickable = true, func = function() end },
 
 				{
-					lefttext = format("%s %s%s|r", mMenuIcons(mIconElvUI), mColor(4), "ElvUI"),
+					text = format("%s %s%s|r", mMenuIcons(mIconElvUI), mColor(4), "ElvUI"),
 					isTitle = false,
 					func = function()
 						if InCombatLockdown() then
@@ -225,10 +225,10 @@ local function OnClick(self, button)
 					end,
 				},
 
-				{ lefttext = "", isTitle = true, func = function() end },
+				{ text = "", isTitle = true, notClickable = true, func = function() end },
 
 				{
-					lefttext = format("%s %s%s|r", mMenuIcons(mIconMAINMENU), mColor(1), MAINMENU_BUTTON),
+					text = format("%s %s%s|r", mMenuIcons(mIconMAINMENU), mColor(1), MAINMENU_BUTTON),
 					isTitle = false,
 					func = function()
 						if not _G.GameMenuFrame:IsShown() then
@@ -259,17 +259,17 @@ local function OnClick(self, button)
 					end,
 				},
 
-				{ lefttext = "", isTitle = true, func = function() end },
+				{ text = "", isTitle = true, notClickable = true, func = function() end },
 
 				{
-					lefttext = format("%s %s%s|r", mMenuIcons(mIconSTORE), mColor(5), BLIZZARD_STORE),
+					text = format("%s %s%s|r", mMenuIcons(mIconSTORE), mColor(5), BLIZZARD_STORE),
 					isTitle = false,
 					func = function()
 						StoreMicroButton:Click()
 					end,
 				},
 				{
-					lefttext = format("%s %s%s|r", mMenuIcons(mIconHELP), mColor(5), HELP_BUTTON),
+					text = format("%s %s%s|r", mMenuIcons(mIconHELP), mColor(5), HELP_BUTTON),
 					isTitle = false,
 					func = function()
 						ToggleHelpFrame()
@@ -279,14 +279,14 @@ local function OnClick(self, button)
 		else
 			menuList = {
 				{
-					lefttext = format("%s%s|r", mColor(2), CHARACTER_BUTTON),
+					text = format("%s%s|r", mColor(2), CHARACTER_BUTTON),
 					isTitle = false,
 					func = function()
 						ToggleCharacter("PaperDollFrame")
 					end,
 				},
 				{
-					lefttext = format("%s%s|r", mColor(2), SPELLBOOK_ABILITIES_BUTTON),
+					text = format("%s%s|r", mColor(2), SPELLBOOK_ABILITIES_BUTTON),
 					isTitle = false,
 					func = function()
 						if not SpellBookFrame:IsShown() then
@@ -297,7 +297,7 @@ local function OnClick(self, button)
 					end,
 				},
 				{
-					lefttext = format("%s%s|r", mColor(2), TALENTS_BUTTON),
+					text = format("%s%s|r", mColor(2), TALENTS_BUTTON),
 					isTitle = false,
 					func = function()
 						if not PlayerTalentFrame then
@@ -312,37 +312,37 @@ local function OnClick(self, button)
 					end,
 				},
 
-				{ lefttext = "", isTitle = true, func = function() end },
+				{ text = "", isTitle = true, notClickable = true, func = function() end },
 
 				{
-					lefttext = format("%s%s|r", mColor(1), TIMEMANAGER_TITLE),
+					text = format("%s%s|r", mColor(1), TIMEMANAGER_TITLE),
 					isTitle = false,
 					func = function()
 						ToggleFrame(TimeManagerFrame)
 					end,
 				},
 
-				{ lefttext = "", isTitle = true, func = function() end },
+				{ text = "", isTitle = true, func = function() end },
 
 				{
-					lefttext = format("%s%s|r", mColor(6), SOCIAL_BUTTON),
+					text = format("%s%s|r", mColor(6), SOCIAL_BUTTON),
 					isTitle = false,
 					func = function()
 						ToggleFriendsFrame()
 					end,
 				},
 				{
-					lefttext = format("%s%s|r", mColor(6), ACHIEVEMENTS_GUILD_TAB),
+					text = format("%s%s|r", mColor(6), ACHIEVEMENTS_GUILD_TAB),
 					isTitle = false,
 					func = function()
 						ToggleGuildFrame()
 					end,
 				},
 
-				{ lefttext = "", isTitle = true, func = function() end },
+				{ text = "", isTitle = true, notClickable = true, func = function() end },
 
 				{
-					lefttext = format("%s%s|r", mColor(4), "ElvUI"),
+					text = format("%s%s|r", mColor(4), "ElvUI"),
 					isTitle = false,
 					func = function()
 						if InCombatLockdown() then
@@ -353,10 +353,10 @@ local function OnClick(self, button)
 					end,
 				},
 
-				{ lefttext = "", isTitle = true, func = function() end },
+				{ text = "", isTitle = true, notClickable = true, func = function() end },
 
 				{
-					lefttext = format("%s%s|r", mColor(1), MAINMENU_BUTTON),
+					text = format("%s%s|r", mColor(1), MAINMENU_BUTTON),
 					isTitle = false,
 					func = function()
 						if not GameMenuFrame:IsShown() then
@@ -377,10 +377,10 @@ local function OnClick(self, button)
 					end,
 				},
 
-				{ lefttext = "", isTitle = true, func = function() end },
+				{ text = "", isTitle = true, notClickable = true, func = function() end },
 
 				{
-					lefttext = format("%s%s|r", mColor(5), HELP_BUTTON),
+					text = format("%s%s|r", mColor(5), HELP_BUTTON),
 					isTitle = false,
 					func = function()
 						ToggleHelpFrame()

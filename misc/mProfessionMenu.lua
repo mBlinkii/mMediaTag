@@ -101,13 +101,14 @@ local function InsertList(index, textA, textB, title, spell)
 		tinsert(
 			ProfessionsList.List,
 			index,
-			{ lefttext = textA, righttext = textB, isTitle = title, func = function() end }
+			{ text = textA, Secondtext = textB, isTitle = title, notClickable = title, func = function() end }
 		)
 	else
 		tinsert(ProfessionsList.List, index, {
-			lefttext = textA,
-			righttext = textB,
+			text = textA,
+			Secondtext = textB,
 			isTitle = title,
+			notClickable = title,
 			func = function()
 				castProf(spell)
 			end,
@@ -227,7 +228,7 @@ local function mLoadTooltip()
 		end
 	end
 
-	DT.tooltip:AddLine(L[" "])
+	DT.tooltip:AddLine(" ")
 	DT.tooltip:AddLine(format("%s %s%s|r", ns.RightButtonIcon, tip, L["left click to open the menu."]))
 	DT.tooltip:AddLine(format("%s %s%s|r", ns.RightButtonIcon, tip, L["right click to open the profession window."]))
 end

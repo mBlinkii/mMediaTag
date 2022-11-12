@@ -21,6 +21,10 @@ local GetRaidDifficultyID = GetRaidDifficultyID
 local GetDungeonDifficultyID = GetDungeonDifficultyID
 local GetDetailedItemLevelInfo = GetDetailedItemLevelInfo
 
+function mMT:Print(text)
+	print("|CFF8E44ADm|r|CFF2ECC71Media|r|CFF3498DBTag|r - " .. text)
+end
+
 function mMT:mAbbrev(text)
 	local letters, lastWord = "", strmatch(text, ".+%s(.+)$")
 	if lastWord then

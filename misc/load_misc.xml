@@ -22,7 +22,8 @@
 	<Script file="mTools.lua"/>
 	<Script file="mVolumeDisplay.lua"/>
 	<Script file="mRoleIcons.lua"/>
-	<!-- <Script file="mTest.lua"/> -->
+	<Script file="mTeleports.lua"/>
+	<Script file="mTest.lua"/>
 	<Include file="CurrencyShadowlands\load_CurrencyShadowlands.xml"/>
 	<Include file="CurrencyPvP\load_CurrencyPvP.xml"/>
 	<Include file="CurrencyDungeon\load_CurrencyDungeon.xml"/>
