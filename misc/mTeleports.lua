@@ -39,6 +39,7 @@ menuFrame:SetTemplate("Transparent", true)
 
 local Teleports = {
 	toys = {
+		available = false,
 		193588, --Timewalker's Hearthstone
 		163045, --headless-horsemans-hearthstone
 		119211, --golden-hearthstone-card-lord-jaraxxus
@@ -60,6 +61,7 @@ local Teleports = {
 		190196, --enlightened-hearthstone
 	},
 	engineering = {
+		available = false,
 		48933, --wormhole-generator-northrend
 		87215, --wormhole-generator-pandaria
 		112059, --wormhole-centrifuge
@@ -71,6 +73,7 @@ local Teleports = {
 		172924, --wormhole-generator-shadowlands
 	},
 	items = {
+		available = false,
 		6948, --hearthstone
 		22630, --atiesh-greatstaff-of-the-guardian
 		22631, --atiesh-greatstaff-of-the-guardian
@@ -169,6 +172,7 @@ local Teleports = {
 		17909, --frostwolf-insignia-rank-6
 	},
 	spells = {
+		available = false,
 		556, --astral-recall
 		50977, --death-gate
 		126892, --zen-pilgrimage
@@ -211,6 +215,7 @@ local Teleports = {
 		393267, --path-of-the-rotting-woods
 	},
 	season = {
+		available = false,
 		367416, --path-of-the-streetwise-merchant
 		159900, --path-of-the-dark-rail
 		159898, --path-of-the-skies
@@ -218,6 +223,7 @@ local Teleports = {
 		373262, --path-of-the-fallen-guardian
 	},
 	sl = {
+		available = false,
 		354462, --path-of-the-courageous
 		354463, --path-of-the-plagued
 		354464, --path-of-the-misty-forest
@@ -228,6 +234,7 @@ local Teleports = {
 		367416, --path-of-the-streetwise-merchant
 	},
 	df = {
+		available = false,
 	},
 	menu = {
 	}
@@ -268,63 +275,64 @@ local function mOnEnterSpell(btn)
 	GameTooltip:Show()
 end
 
-local function mGetInfos(TeleportsTable, spell, ttip)
+local function mGetInfos(TeleportsTable, spell, ttip, check)
 	for i, v in pairs(TeleportsTable) do
-		local texture, name, nametext, hasSpell, hasItem  = false, nil, nil, false, 0
-		if spell then
-			texture = GetSpellTexture(v)
-			name = GetSpellInfo(v)
-			hasSpell = IsSpellKnown(v)
-		else
-			texture = GetItemIcon(v)
-			name = GetItemInfo(v)
-			hasItem = GetItemCount(v)
-		end
-
-		if name and not ttip then
-			nametext = name
-			name = mMT:mAbbrev(name)
-		end
-
-		local text1, text2 = nil, nil
-		if (texture and name and (hasItem > 0 or (E.Retail and PlayerHasToy(v) and C_ToyBox.IsToyUsable(v)))) or (texture and name and hasSpell) then
-			local start, duration = nil, nil
+		if type(v) == "number" then
+			local texture, name, hasSpell, hasItem  = nil, nil, false, 0
 			if spell then
-				start, duration = GetSpellCooldown(v)
+				texture = GetSpellTexture(v)
+				name = GetSpellInfo(v)
+				hasSpell = IsSpellKnown(v)
 			else
-				start, duration = GetItemCooldown(v)
-			end
-			local cooldown = start + duration - GetTime()
-			if cooldown >= 2 then
-				local hours = math.floor(cooldown / 3600)
-				local minutes = math.floor(cooldown / 60)
-				local seconds = string.format("%02.f", math.floor(cooldown - minutes * 60))
-				if hours >= 1 then
-					minutes = math.floor(mod(cooldown, 3600) / 60)
-					text1 = "|cffdb3030" .. name .. "|r"
-					text2 = "|cffdb3030" .. hours .. "h " .. minutes .. "m|r"
-				else
-					text1 = "|cffdb3030" .. name .. "|r"
-					text2 = "|cffdb3030" .. minutes .. "m " .. seconds .. "s|r"
-				end
-			elseif cooldown <= 0 then
-				text1 = "|cffffffff" .. name .. "|r"
-				text2 = "|cff00FF00" .. L["Ready"] .. "|r"
+				texture = GetItemIcon(v)
+				name = GetItemInfo(v)
+				hasItem = GetItemCount(v)
 			end
 
-			if text1 and text2 then
-				if ttip then
-					DT.tooltip:AddDoubleLine(format("|T%s:14:14:0:0:64:64:5:59:5:59|t %s", texture, text1),text2)
-				elseif spell then
-					mMenuAdd(Teleports.menu, index, text1, text2, "/cast " .. nametext, texture, v, function(btn)
-						mOnEnterSpell(btn)
-					end)
-					index = index + 1
+			local text1, text2 = nil, nil
+			if (texture and name and (hasItem > 0 or (E.Retail and PlayerHasToy(v) and C_ToyBox.IsToyUsable(v)))) or (texture and name and hasSpell) then
+				if check then
+					TeleportsTable.available = true
 				else
-					mMenuAdd(Teleports.menu, index, text1, text2, "/use " .. nametext, texture, v, function(btn)
-						mOnEnterItem(btn)
-					end)
-					index = index + 1
+					local start, duration = nil, nil
+					if spell then
+						start, duration = GetSpellCooldown(v)
+					else
+						start, duration = GetItemCooldown(v)
+					end
+					local cooldown = start + duration - GetTime()
+					if cooldown >= 2 then
+						local hours = math.floor(cooldown / 3600)
+						local minutes = math.floor(cooldown / 60)
+						local seconds = string.format("%02.f", math.floor(cooldown - minutes * 60))
+						if hours >= 1 then
+							minutes = math.floor(mod(cooldown, 3600) / 60)
+							text1 = "|cffdb3030" .. name .. "|r"
+							text2 = "|cffdb3030" .. hours .. "h " .. minutes .. "m|r"
+						else
+							text1 = "|cffdb3030" .. name .. "|r"
+							text2 = "|cffdb3030" .. minutes .. "m " .. seconds .. "s|r"
+						end
+					elseif cooldown <= 0 then
+						text1 = "|cffffffff" .. name .. "|r"
+						text2 = "|cff00FF00" .. L["Ready"] .. "|r"
+					end
+
+					if text1 and text2 then
+						if ttip then
+							DT.tooltip:AddDoubleLine(format("|T%s:14:14:0:0:64:64:5:59:5:59|t %s", texture, text1),text2)
+						elseif spell then
+							mMenuAdd(Teleports.menu, index, text1, text2, "/cast " .. name, texture, v, function(btn)
+								mOnEnterSpell(btn)
+							end)
+							index = index + 1
+						else
+							mMenuAdd(Teleports.menu, index, text1, text2, "/use " .. name, texture, v, function(btn)
+								mOnEnterItem(btn)
+							end)
+							index = index + 1
+						end
+					end
 				end
 			end
 		end
@@ -339,74 +347,112 @@ local function EngineeringCheck()
 	return prof1 == 202 or prof2 == 202
 end
 
-local menuFrame_Season = CreateFrame("Frame", "mMediaTag_Teleports_Menu_Season", menuFrame, "BackdropTemplate")
-menuFrame:SetTemplate("Transparent", true)
+local function CheckIfAvailable()
+	mGetInfos(Teleports.toys, false, true, true)
+	mGetInfos(Teleports.engineering, false, true, true)
+	mGetInfos(Teleports.season, true, true, true)
+	mGetInfos(Teleports.sl, true, true, true)
+	mGetInfos(Teleports.items, false, true, true)
+	mGetInfos(Teleports.spells, true, true, true)
+end
 
-local function mUpdateTPList()
+local function mUpdateTPList(button)
+	CheckIfAvailable()
 	local _, _, _, _, _, titel = mMT:mColorDatatext()
 	Teleports.menu = {}
 	index = 1
-	tinsert(Teleports.menu, index, { text = format("%s%s|r", titel, L["Toys"]), isTitle = true, notClickable = true })
-	index = index + 1
 
-	mGetInfos(Teleports.toys, false, false)
-
-	tinsert(Teleports.menu, index, { text = "", isTitle = true, notClickable = true })
-	index = index + 1
-
-	if EngineeringCheck() then
-		tinsert(Teleports.menu, index, { text = format("%s%s|r", titel, L["Engineering"]), isTitle = true, notClickable = true })
+	if Teleports.toys.available then
+		tinsert(Teleports.menu, index, { text = format("%s%s|r", titel, L["Toys"]), isTitle = true, notClickable = true })
 		index = index + 1
-		mGetInfos(Teleports.engineering, false, false)
+		mGetInfos(Teleports.toys, false, false, false)
+		tinsert(Teleports.menu, index, { text = "", isTitle = true, notClickable = true })
+		index = index + 1
 	end
 
-	tinsert(Teleports.menu, index, { text = "", isTitle = true, notClickable = true })
-	index = index + 1
-	tinsert(Teleports.menu, index, { text = format("%s%s|r", titel, L["Other"]), isTitle = true, notClickable = true })
-	index = index + 1
+	if EngineeringCheck() and Teleports.engineering.available then
+		tinsert(Teleports.menu, index, { text = format("%s%s|r", titel, L["Engineering"]), isTitle = true, notClickable = true })
+		index = index + 1
+		mGetInfos(Teleports.engineering, false, false, false)
+		tinsert(Teleports.menu, index, { text = "", isTitle = true, notClickable = true })
+		index = index + 1
+	end
 
-	mGetInfos(Teleports.items, false, false)
-	mGetInfos(Teleports.spells, true, false)
+	if Teleports.season.available then
+		tinsert(Teleports.menu, index, { text = format("%s%s|r", titel, L["M+ Season"]), isTitle = true, notClickable = true })
+		index = index + 1
+		mGetInfos(Teleports.season, true, false, false)
+		tinsert(Teleports.menu, index, { text = "", isTitle = true, notClickable = true })
+		index = index + 1
+	end
+
+	if Teleports.sl.available then
+		tinsert(Teleports.menu, index, { text = format("%s%s|r", titel, L["SL Dungeons"]), isTitle = true, notClickable = true })
+		index = index + 1
+		mGetInfos(Teleports.sl, true, false, false)
+		tinsert(Teleports.menu, index, { text = "", isTitle = true, notClickable = true })
+		index = index + 1
+	end
+
+	if (Teleports.items.available or Teleports.spells.available) and button == "RightButton" then
+		tinsert(Teleports.menu, index, { text = format("%s%s|r", titel, L["Other"]), isTitle = true, notClickable = true })
+		index = index + 1
+		mGetInfos(Teleports.items, false, false, false)
+		mGetInfos(Teleports.spells, true, false, false)
+	end
 end
 
 local function OnClick(self, button)
-	mUpdateTPList()
-	mMT:mDropDown(Teleports.menu, menuFrame, self, 200, 2)
+	mUpdateTPList(button)
+	mMT:mDropDown(Teleports.menu, menuFrame, self, 260, 2)
 end
 
 local function mTPTooltip()
-	DT.tooltip:AddLine(L["Toys"])
-	mGetInfos(Teleports.toys, false, true)
-
-	if EngineeringCheck() then
-		DT.tooltip:AddLine(" ")
-		DT.tooltip:AddLine(L["Engineering"])
-		mGetInfos(Teleports.engineering, false, true)
+	CheckIfAvailable()
+	if Teleports.toys.available then
+		DT.tooltip:AddLine(L["Toys"])
+		mGetInfos(Teleports.toys, false, true, false)
 	end
 
-	DT.tooltip:AddLine(" ")
-	DT.tooltip:AddLine(L["M+ Season"])
-	mGetInfos(Teleports.season, true, true)
+	if EngineeringCheck() and Teleports.engineering.available then
+		DT.tooltip:AddLine(" ")
+		DT.tooltip:AddLine(L["Engineering"])
+		mGetInfos(Teleports.engineering, false, true, false)
+	end
 
-	DT.tooltip:AddLine(" ")
-	DT.tooltip:AddLine(L["SL Dungeons"])
-	mGetInfos(Teleports.sl, true, true)
+	if Teleports.season.available then
+		DT.tooltip:AddLine(" ")
+		DT.tooltip:AddLine(L["M+ Season"])
+		mGetInfos(Teleports.season, true, true, false)
+	end
 
-	DT.tooltip:AddLine(" ")
-	DT.tooltip:AddLine(L["Other"])
-	mGetInfos(Teleports.items, false, true)
-	mGetInfos(Teleports.spells, true, true)
+	if Teleports.sl.available then
+		DT.tooltip:AddLine(" ")
+		DT.tooltip:AddLine(L["SL Dungeons"])
+		mGetInfos(Teleports.sl, true, true, false)
+	end
+
+	if Teleports.items.available or Teleports.spells.available then
+		DT.tooltip:AddLine(" ")
+		DT.tooltip:AddLine(L["Other"])
+		mGetInfos(Teleports.items, false, true, false)
+		mGetInfos(Teleports.spells, true, true, false)
+	end
 end
 
 local function OnEnter(self)
+	local nhc, hc, myth, mythp, other, titel, tip = mMT:mColorDatatext()
 	DT.tooltip:ClearLines()
 	mTPTooltip()
+	DT.tooltip:AddLine(" ")
+	DT.tooltip:AddLine(format("%s %s%s|r", ns.LeftButtonIcon, tip, L["left click to open the small menu."]))
+	DT.tooltip:AddLine(format("%s %s%s|r", ns.RightButtonIcon, tip, L["right click to open the full menu."]))
 	DT.tooltip:Show()
 end
 
 local function OnEvent(self, event, unit)
-	local TextString = mText
-	self.text:SetFormattedText(mMT:mClassColorString(), TextString)
+	CheckIfAvailable()
+	self.text:SetFormattedText(mMT:mClassColorString(), mText)
 end
 
 local function OnLeave(self)

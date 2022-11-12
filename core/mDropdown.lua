@@ -137,10 +137,12 @@ function mMT:mDropDown(list, frame, menuparent, ButtonWidth, HideDelay)
 				frame.buttons[i].tooltip = list[i].tooltip
 			end
 
-			frame.buttons[i]:SetScript("OnEnter", OnEnter)
-			frame.buttons[i].funcOnEnter = list[i].funcOnEnter
-			frame.buttons[i]:SetScript("OnLeave", OnLeave)
-			frame.buttons[i].funcOnLeave = list[i].funcOnLeave
+			if not list[i].isTitle then
+				frame.buttons[i]:SetScript("OnEnter", OnEnter)
+				frame.buttons[i].funcOnEnter = list[i].funcOnEnter
+				frame.buttons[i]:SetScript("OnLeave", OnLeave)
+				frame.buttons[i].funcOnLeave = list[i].funcOnLeave
+			end
 		end
 
 		frame.buttons[i]:Show()

@@ -9,7 +9,7 @@ local format = format
 
 --Variables
 local ChangelogText =
-	"#### [ver. 2.88.4] - 31.10.2022\n\n### Update\n- |CFFFE7B2CFIX|r for WOW DF\n\n\n\nSorry for the late bugfix, I don't have much time to play and test the addon at the moment. hope that now everything should work."
+	"## [ver. 2.89] - 12.11.2022\n\n### Update\n- |CFFE74C3CREMOVED|r Import/Export function not realy needed\n- |CFF58D68DUPDATE|r Code adjustments for DropDown Menu\n- |CFFFE7B2CFIX|r minor bug fixes\n\n### Added\n- |CFF3498DBNEW|r Datattext Teleports with clickable menu"
 
 function mMT:Changelog(opt)
 	local Frame = CreateFrame("Frame", "mMediaTagChangelog", E.UIParent, "BackdropTemplate")
