@@ -200,6 +200,7 @@ mAddStatusbar("mMediaTag K27", "k27.tga")
 mAddStatusbar("mMediaTag K28", "k28.tga")
 mAddStatusbar("mMediaTag K29", "k29.tga")
 mAddStatusbar("mMediaTag K30", "k30.tga")
+mAddStatusbar("mMediaTag K31", "k31.tga")
 
 mAddStatusbar("mMediaTag L1", "l1.tga")
 mAddStatusbar("mMediaTag L2", "l2.tga")

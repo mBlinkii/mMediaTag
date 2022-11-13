@@ -11,6 +11,22 @@ local tonumber = tonumber
 --WoW API / Variables
 local _G = _G
 
+function mMT:DebugPrintTable(tbl)
+	for k, v in pairs(tbl) do
+		print(k, v)
+	end
+end
+
+function mMT:ColorCheck(value)
+	if value >= 1 then
+		return 1
+	elseif value <= 1 then
+		return 0
+	else
+		return value
+	end
+end
+
 function mMT:mMisc()
 	if E.db[mPlugin].mMsg then
 		print(format(L["Welcome to %s version |CFF8E44AD%q|r, for |cff1784d1ElvUI|r!"], ns.mName, ns.mVersion))

@@ -219,6 +219,7 @@ local Teleports = {
 		367416, --path-of-the-streetwise-merchant
 		159900, --path-of-the-dark-rail
 		159898, --path-of-the-skies
+		159896, --Path of the Iron Prow
 		373274, --path-of-the-scrappy-prince
 		373262, --path-of-the-fallen-guardian
 	},

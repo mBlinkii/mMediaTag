@@ -101,7 +101,7 @@ function mMT:mDropDown(list, frame, menuparent, ButtonWidth, HideDelay)
 				if E.db[mPlugin].mClassColorHover then
 					local _, unitClass = UnitClass("player")
 					local class = ElvUF.colors.class[unitClass]
-					frame.buttons[i].hoverTex:SetColorTexture(class[1], class[2], class[3], 0.5)
+					frame.buttons[i].hoverTex:SetGradient("HORIZONTAL", CreateColor(class[1], class[2], class[3], 0.75), CreateColor(mMT:ColorCheck(class[1]+0.4), mMT:ColorCheck(class[2]+0.4), mMT:ColorCheck(class[3]+0.4), 0.75))
 				else
 					frame.buttons[i].hoverTex:SetColorTexture(0.94, 0.76, 0.05, 0.5)
 				end
