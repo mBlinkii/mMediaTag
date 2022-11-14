@@ -391,11 +391,11 @@ local function mUpdateTPList(button)
 		tinsert(Teleports.menu, index, { text = format("%s%s|r", titel, L["SL Dungeons"]), isTitle = true, notClickable = true })
 		index = index + 1
 		mGetInfos(Teleports.sl, true, false, false)
-		tinsert(Teleports.menu, index, { text = "", isTitle = true, notClickable = true })
-		index = index + 1
 	end
 
 	if (Teleports.items.available or Teleports.spells.available) and button == "RightButton" then
+		tinsert(Teleports.menu, index, { text = "", isTitle = true, notClickable = true })
+		index = index + 1
 		tinsert(Teleports.menu, index, { text = format("%s%s|r", titel, L["Other"]), isTitle = true, notClickable = true })
 		index = index + 1
 		mGetInfos(Teleports.items, false, false, false)

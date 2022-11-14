@@ -101,8 +101,8 @@ function mMT:mDropDown(list, frame, menuparent, ButtonWidth, HideDelay)
 				if E.db[mPlugin].mClassColorHover then
 					local _, unitClass = UnitClass("player")
 					local class = ElvUF.colors.class[unitClass]
-					frame.buttons[i].hoverTex:SetGradient("HORIZONTAL", CreateColor(class[1], class[2], class[3], 0.75),
-						CreateColor(mMT:ColorCheck(class[1] + 0.4), mMT:ColorCheck(class[2] + 0.4), mMT:ColorCheck(class[3] + 0.4), 0.75))
+					frame.buttons[i].hoverTex:SetGradient("HORIZONTAL", {r = class[1], g = class[2], b = class[3], a = 0.75},
+						{r = mMT:ColorCheck(class[1] + 0.4), g = mMT:ColorCheck(class[2] + 0.4), b = mMT:ColorCheck(class[3] + 0.4), a = 0.75})
 				else
 					frame.buttons[i].hoverTex:SetColorTexture(0.94, 0.76, 0.05, 0.5)
 				end
@@ -144,6 +144,20 @@ function mMT:mDropDown(list, frame, menuparent, ButtonWidth, HideDelay)
 				frame.buttons[i]:SetScript("OnLeave", OnLeave)
 				frame.buttons[i].funcOnLeave = list[i].funcOnLeave
 			end
+		end
+
+		if list[i].text and frame.buttons[i].text then
+			if list[i].icon then
+				frame.buttons[i].text:SetText(
+					format("|T%s:14:14:0:0:64:64:5:59:5:59|t %s", list[i].icon, list[i].text) or ""
+				)
+			else
+				frame.buttons[i].text:SetText(list[i].text or "")
+			end
+		end
+
+		if list[i].Secondtext and frame.buttons[i].Secondtext then
+			frame.buttons[i].Secondtext:SetText(list[i].Secondtext or "")
 		end
 
 		frame.buttons[i]:Show()
