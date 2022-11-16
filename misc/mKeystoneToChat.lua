@@ -12,8 +12,8 @@ local mInsert = table.insert
 
 --WoW API / Variables
 local _G = _G
-local GetContainerNumSlots = GetContainerNumSlots
-local GetContainerItemInfo = GetContainerItemInfo
+local GetContainerNumSlots = C_Container.GetContainerNumSlots
+local GetContainerItemInfo = C_Container.GetContainerItemInfo
 local C_MythicPlus = C_MythicPlus
 local InCombatLockdown = InCombatLockdown()
 
