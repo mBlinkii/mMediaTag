@@ -110,7 +110,8 @@
         "MainMenuMicroButton",
         "GameTooltip",
         "GetContainerItemInfo",
-        "GetContainerNumSlots"
+        "GetContainerNumSlots",
+        "GetCursorPosition"
     ],
     "Lua.diagnostics.disable": [
         "redundant-parameter",
