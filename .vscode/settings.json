@@ -108,7 +108,10 @@
         "Calendar_Show",
         "ToggleCalendar",
         "MainMenuMicroButton",
-        "GameTooltip"
+        "GameTooltip",
+        "GetContainerItemInfo",
+        "GetContainerNumSlots",
+        "GetCursorPosition"
     ],
     "Lua.diagnostics.disable": [
         "redundant-parameter",

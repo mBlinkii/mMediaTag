@@ -606,6 +606,7 @@ local function mhealtmarkerOptions()
 			min = 5,
 			max = 95,
 			step = 1,
+			disabled = function() return E.db[mPlugin].mHealthmarker.auto end,
 			get = function(info)
 				return E.db[mPlugin].mExecutemarker.range
 			end,

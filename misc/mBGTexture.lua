@@ -13,14 +13,12 @@ local mInsert = table.insert
 local function CustomHealthBackdrop(unitframe, frame, r, g, b)
 	if unitframe.bg then
 		unitframe.bg:SetTexture(LSM:Fetch("statusbar", E.db[mPlugin].mCustomBackdrop.health.texture))
-		unitframe.bg.mstyle = true
 	end
 end
 
 local function CustomPowerBackdrop(powerframe)
 	if powerframe.BG then
 		powerframe.BG:SetTexture(LSM:Fetch("statusbar", E.db[mPlugin].mCustomBackdrop.power.texture))
-		powerframe.BG.mstyle = true
 	end
 end
 

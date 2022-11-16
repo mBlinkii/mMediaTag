@@ -26,31 +26,35 @@ local PADDING = 10
 local BUTTON_HEIGHT = 16
 local mDropDownFrame = {}
 
+-- frame hide functon for the timer
 function mMT:DropDownTimer()
 	mDropDownFrame:Hide()
 end
 
+-- on click function
 local function OnClick(btn)
-	mMT:CancelAllTimers(mDropDownFrame.mTimer)
-	btn:GetParent():Hide()
-	if btn.func then
+	mMT:CancelAllTimers(mDropDownFrame.mTimer) -- cancel timer
+	btn:GetParent():Hide() -- hide frame
+	if btn.func then -- custom click function
 		btn.func()
 	end
 end
 
+-- on enter function
 local function OnEnter(btn)
 	mMT:CancelAllTimers(mDropDownFrame.mTimer)
 	btn.hoverTex:Show()
 	if btn.funcOnEnter then
-		btn.funcOnEnter(btn)
+		btn.funcOnEnter(btn) -- custom on enter function
 	end
 end
 
+-- on leave function
 local function OnLeave(btn)
-	mDropDownFrame.mTimer = mMT:ScheduleTimer("DropDownTimer", autoHideDelay)
+	mDropDownFrame.mTimer = mMT:ScheduleTimer("DropDownTimer", autoHideDelay) -- start the timer/ autohide delay
 	btn.hoverTex:Hide()
 	if btn.funcOnLeave then
-		btn.funcOnLeave(btn)
+		btn.funcOnLeave(btn) -- custom on leave function
 	end
 end
 
@@ -77,9 +81,9 @@ function mMT:mDropDown(list, frame, menuparent, ButtonWidth, HideDelay)
 	for i = 1, #list do
 		if not frame.buttons[i] then
 			if list[i].macro then
-				frame.buttons[i] = CreateFrame("Button", "myButton", frame, "SecureActionButtonTemplate")
-				frame.buttons[i]:SetAttribute("*type1", "macro")
-				frame.buttons[i]:RegisterForClicks("LeftButtonUp", "RightButtonUp")
+				frame.buttons[i] = CreateFrame("Button", "MacroButton", frame, "SecureActionButtonTemplate")
+				frame.buttons[i]:SetAttribute("type*", "macro")
+				--frame.buttons[i]:RegisterForClicks("LeftButtonUp", "RightButtonUp")
 				frame.buttons[i]:SetAttribute("macrotext1", list[i].macro)
 			else
 				frame.buttons[i] = CreateFrame("Button", nil, frame)
@@ -101,7 +105,8 @@ function mMT:mDropDown(list, frame, menuparent, ButtonWidth, HideDelay)
 				if E.db[mPlugin].mClassColorHover then
 					local _, unitClass = UnitClass("player")
 					local class = ElvUF.colors.class[unitClass]
-					frame.buttons[i].hoverTex:SetColorTexture(class[1], class[2], class[3], 0.5)
+					frame.buttons[i].hoverTex:SetGradient("HORIZONTAL", {r = class[1], g = class[2], b = class[3], a = 0.75},
+						{r = mMT:ColorCheck(class[1] + 0.4), g = mMT:ColorCheck(class[2] + 0.4), b = mMT:ColorCheck(class[3] + 0.4), a = 0.75})
 				else
 					frame.buttons[i].hoverTex:SetColorTexture(0.94, 0.76, 0.05, 0.5)
 				end
@@ -115,14 +120,6 @@ function mMT:mDropDown(list, frame, menuparent, ButtonWidth, HideDelay)
 				frame.buttons[i].text:SetAllPoints()
 				frame.buttons[i].text:FontTemplate(nil, nil, "")
 				frame.buttons[i].text:SetJustifyH("LEFT")
-
-				if list[i].icon then
-					frame.buttons[i].text:SetText(
-						format("|T%s:14:14:0:0:64:64:5:59:5:59|t %s", list[i].icon, list[i].text) or ""
-					)
-				else
-					frame.buttons[i].text:SetText(list[i].text or "")
-				end
 			end
 
 			if list[i].Secondtext then
@@ -130,7 +127,6 @@ function mMT:mDropDown(list, frame, menuparent, ButtonWidth, HideDelay)
 				frame.buttons[i].Secondtext:SetAllPoints()
 				frame.buttons[i].Secondtext:FontTemplate(nil, nil, "")
 				frame.buttons[i].Secondtext:SetJustifyH("RIGHT")
-				frame.buttons[i].Secondtext:SetText(list[i].Secondtext or "")
 			end
 
 			if list[i].tooltip then
@@ -143,6 +139,20 @@ function mMT:mDropDown(list, frame, menuparent, ButtonWidth, HideDelay)
 				frame.buttons[i]:SetScript("OnLeave", OnLeave)
 				frame.buttons[i].funcOnLeave = list[i].funcOnLeave
 			end
+		end
+
+		if list[i].text and frame.buttons[i].text then
+			if list[i].icon then
+				frame.buttons[i].text:SetText(
+					format("|T%s:14:14:0:0:64:64:5:59:5:59|t %s", list[i].icon, list[i].text) or ""
+				)
+			else
+				frame.buttons[i].text:SetText(list[i].text or "")
+			end
+		end
+
+		if list[i].Secondtext and frame.buttons[i].Secondtext then
+			frame.buttons[i].Secondtext:SetText(list[i].Secondtext or "")
 		end
 
 		frame.buttons[i]:Show()

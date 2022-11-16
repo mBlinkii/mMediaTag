@@ -9,7 +9,7 @@ local format = format
 
 --Variables
 local ChangelogText =
-	"## [ver. 2.89] - 12.11.2022\n\n### Update\n- |CFFE74C3CREMOVED|r Import/Export function not realy needed\n- |CFF58D68DUPDATE|r Code adjustments for DropDown Menu\n- |CFFFE7B2CFIX|r minor bug fixes\n\n### Added\n- |CFF3498DBNEW|r Datattext Teleports with clickable menu"
+	"#### [ver. 2.89.1] - 16.11.2022\n\n### Update\n- |CFFFE7B2CFIX|r Tooltips and Datatext\n- |CFF58D68DUPDATE|r Dropdpwn Text Update Bugfix\n- |CFF58D68DUPDATE|r Temporary disabled the tooltip icons for Retail\n\n### Added\n- |CFF3498DBNEW|r Statusbar Texture K31"
 
 function mMT:Changelog(opt)
 	local Frame = CreateFrame("Frame", "mMediaTagChangelog", E.UIParent, "BackdropTemplate")

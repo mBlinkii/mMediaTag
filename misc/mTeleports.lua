@@ -219,6 +219,7 @@ local Teleports = {
 		367416, --path-of-the-streetwise-merchant
 		159900, --path-of-the-dark-rail
 		159898, --path-of-the-skies
+		159896, --Path of the Iron Prow
 		373274, --path-of-the-scrappy-prince
 		373262, --path-of-the-fallen-guardian
 	},
@@ -390,11 +391,11 @@ local function mUpdateTPList(button)
 		tinsert(Teleports.menu, index, { text = format("%s%s|r", titel, L["SL Dungeons"]), isTitle = true, notClickable = true })
 		index = index + 1
 		mGetInfos(Teleports.sl, true, false, false)
-		tinsert(Teleports.menu, index, { text = "", isTitle = true, notClickable = true })
-		index = index + 1
 	end
 
 	if (Teleports.items.available or Teleports.spells.available) and button == "RightButton" then
+		tinsert(Teleports.menu, index, { text = "", isTitle = true, notClickable = true })
+		index = index + 1
 		tinsert(Teleports.menu, index, { text = format("%s%s|r", titel, L["Other"]), isTitle = true, notClickable = true })
 		index = index + 1
 		mGetInfos(Teleports.items, false, false, false)

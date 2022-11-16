@@ -2,6 +2,15 @@
 [Eng] - All changes to this project will be documented in this file. The latest changes are at the top.
 [Ger] - Alle Änderungen an diesem Projekt werden in dieser Datei dokumentiert. Die neuesten Änderungen stehen ganz oben.
 
+## [ver. 2.89.1] - 16.11.2022
+### Update
+- FIX Tooltips and Datatext
+- UPDATE Dropdpwn Text Update Bugfix
+- UPDATE Temporary disabled the tooltip icons for Retail
+- FIX Healthmarker Option, custom raneg is disabeld if Auto range is enabled
+### Added
+- NEW Statusbar Texture K31
+
 ## [ver. 2.89] - 12.11.2022
 ### Update
 - REMOVED Import/Export function not realy needed

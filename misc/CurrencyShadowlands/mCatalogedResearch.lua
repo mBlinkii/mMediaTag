@@ -11,8 +11,8 @@ local strjoin = strjoin
 
 --WoW API / Variables
 local _G = _G
-local GetContainerNumSlots = GetContainerNumSlots
-local GetContainerItemInfo = GetContainerItemInfo
+local GetContainerNumSlots = C_Container.GetContainerNumSlots
+local GetContainerItemInfo = C_Container.GetContainerItemInfo
 local GetItemSpell = GetItemSpell
 local C_CurrencyInfo = C_CurrencyInfo
 local IsAddOnLoaded = IsAddOnLoaded
