@@ -40,7 +40,7 @@ function mMT:mMisc()
 		mMT:mNamePlateBorderColor()
 	end
 
-	if E.db[mPlugin].mTIcon and not E.Retail then
+	if E.db[mPlugin].mTIcon then
 		mMT:TipIconSetup()
 	end
 

@@ -18,7 +18,7 @@
 	<Script file="mProfessionMenu.lua"/>
 	<Script file="mSystemMenu.lua"/>
 	<Script file="mTags.lua"/>
-	<!-- <Script file="mTipIcon.lua"/> -->
+	<Script file="mTipIcon.lua"/>
 	<Script file="mTools.lua"/>
 	<Script file="mVolumeDisplay.lua"/>
 	<Script file="mRoleIcons.lua"/>
