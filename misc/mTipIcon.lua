@@ -19,7 +19,9 @@ local function AddTooltipIcon(self, icon)
 end
 
 local function hookTip(tip)
-	if tip then
+	if tip and E.Retail then
+		--TooltipDataProcessor.AddTooltipPostCall(Enum.TooltipDataType.Item, OnTooltipSetItem)
+	else
 		tip:HookScript("OnTooltipSetItem", function(self, ...)
 			local _, link = self:GetItem()
 			local icon = link and GetItemIcon(link)

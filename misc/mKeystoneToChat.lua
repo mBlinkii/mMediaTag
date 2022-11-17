@@ -29,15 +29,17 @@ local function mCheckText(text)
 	end
 end
 
-local function mGetKey()
+local function mGetKeyLink()
 	local mKeys = {}
 	for bag = 0, NUM_BAG_SLOTS do
 		local bSlots = GetContainerNumSlots(bag)
 		for slot = 1, bSlots do
-			local itemLink, _, _, itemID = select(7, GetContainerItemInfo(bag, slot))
-			-- 180653 = SL/ 187786 = Legion
-			if itemID == 180653 or itemID == 187786 then
-				mKeys[itemID] = itemLink
+			local containerInfo = GetContainerItemInfo(bag, slot)
+			if containerInfo then
+				-- 180653 = SL/ 187786 = Legion
+				if containerInfo.itemID == 180653 or containerInfo.itemID == 187786 then
+					mKeys[containerInfo.itemID] = containerInfo.hyperlink
+				end
 			end
 		end
 	end
@@ -57,7 +59,7 @@ local function OnEvent(self, event, ...)
 				channel = "RAID"
 			end
 
-			local myKeys = mGetKey()
+			local myKeys = mGetKeyLink()
 			if myKeys then
 				local link = nil
 				-- 180653 = SL/ 187786 = Legion
@@ -68,6 +70,7 @@ local function OnEvent(self, event, ...)
 				else
 					link = myKeys[187786]
 				end
+
 				if link and channel then
 					SendChatMessage(link, channel)
 				end
