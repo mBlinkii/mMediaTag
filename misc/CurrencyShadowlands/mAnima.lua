@@ -36,11 +36,12 @@ local function mBagCheck()
 	for bagID = BACKPACK_CONTAINER, NUM_BAG_SLOTS do
 		local slots = GetContainerNumSlots(bagID)
 		for slot = 1, slots do
-			local itemID = select(10, GetContainerItemInfo(bagID, slot))
-			local itemCount = select(2, GetContainerItemInfo(bagID, slot))
-			local _, spellID = GetItemSpell(itemID)
-			if spellID and Animas[spellID] then
-				mAmount = mAmount + (Animas[spellID] * itemCount)
+			local containerInfo = GetContainerItemInfo(bagID, slot)
+			if containerInfo then
+				local _, spellID = GetItemSpell(containerInfo.itemID)
+				if spellID and Animas[spellID] then
+					mAmount = mAmount + (Animas[spellID] * containerInfo.stackCount)
+				end
 			end
 		end
 	end
