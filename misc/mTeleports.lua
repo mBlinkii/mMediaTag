@@ -57,7 +57,6 @@ local Teleports = {
 		165669, --lunar-elders-hearthstone
 		166747, --brewfest-revelers-hearthstone
 		165802, --noble-gardeners-hearthstone
-		118427, --autographed-hearthstone-card
 		190196, --enlightened-hearthstone
 	},
 	engineering = {
