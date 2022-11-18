@@ -53,7 +53,7 @@ function mMT:Changelog(opt)
 		Frame:Hide()
 
 		if opt then
-			E:ToggleOptionsUI()
+			E:ToggleOptions()
 		end
 	end)
 
@@ -65,6 +65,6 @@ function mMT:Changelog(opt)
 	mSkin:HandleButton(Close)
 
 	if opt then
-		E:ToggleOptionsUI()
+		E:ToggleOptions()
 	end
 end

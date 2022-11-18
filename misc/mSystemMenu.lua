@@ -221,7 +221,7 @@ local function OnClick(self, button)
 							_G.UIErrorsFrame:AddMessage(E.InfoColor .. _G.ERR_NOT_IN_COMBAT)
 							return
 						end
-						E:ToggleOptionsUI()
+						E:ToggleOptions()
 					end,
 				},
 
@@ -349,7 +349,7 @@ local function OnClick(self, button)
 							_G.UIErrorsFrame:AddMessage(E.InfoColor .. _G.ERR_NOT_IN_COMBAT)
 							return
 						end
-						E:ToggleOptionsUI()
+						E:ToggleOptions()
 					end,
 				},
 

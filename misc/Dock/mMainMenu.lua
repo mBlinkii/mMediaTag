@@ -216,7 +216,7 @@ local function OnClick(self, button)
 			mMT:MuteVolume()
 		else
 			mMT:mOnClick(self, "CheckFrameMainMenu")
-			E:ToggleOptionsUI()
+			E:ToggleOptions()
 		end
 	end
 end
