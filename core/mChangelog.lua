@@ -9,7 +9,7 @@ local format = format
 
 --Variables
 local ChangelogText =
-	"#### [ver. 2.89.1] - 16.11.2022\n\n### Update\n- |CFFFE7B2CFIX|r Tooltips and Datatext\n- |CFF58D68DUPDATE|r Dropdpwn Text Update Bugfix\n- |CFF58D68DUPDATE|r Temporary disabled the tooltip icons for Retail\n\n### Added\n- |CFF3498DBNEW|r Statusbar Texture K31"
+	"## [ver. 2.90] - 20.11.2022\n\n\n### Update\n\n- |CFFFE7B2CFIX|r mDock Talent Icon\n- |CFFFE7B2CFIX|r Teleports menu if no Profession is learned\n- |CFFFE7B2CFIX|r Datatext Systemmenu - fix menu entry for ElvUI options frame\n- |CFFFE7B2CFIX|r Tooltip Icons for Retail\n- |CFFFE7B2CFIX|r for !keys (post your M+ Key to Chat)\n- |CFFFE7B2CFIX|r Currencys Anima and Cataloged Research\n- |CFF58D68DADD|r Evoker Interrupt Spell for Interrupt Check on Castbars\n- |CFF58D68DUPDATE|r removed Autographed Hearthstone Card from Teleports menu\n\n### Added\n\n- |CFF3498DBNEW|r Custom Class Colors (default is disabled)"
 
 function mMT:Changelog(opt)
 	local Frame = CreateFrame("Frame", "mMediaTagChangelog", E.UIParent, "BackdropTemplate")
