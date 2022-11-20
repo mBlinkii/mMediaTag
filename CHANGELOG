@@ -2,12 +2,26 @@
 [Eng] - All changes to this project will be documented in this file. The latest changes are at the top.
 [Ger] - Alle Änderungen an diesem Projekt werden in dieser Datei dokumentiert. Die neuesten Änderungen stehen ganz oben.
 
+## [ver. 2.90] - 20.11.2022
+### Update
+- FIX mDock Talent Icon
+- FIX Teleports menu if no Profession is learned
+- FIX Datatext Systemmenu - fix menu entry for ElvUI options frame
+- FIX Tooltip Icons for Retail
+- FIX for !keys (post your M+ Key to Chat)
+- FIX Currencys Anima and Cataloged Research
+- ADD Evoker Interrupt Spell for Interrupt Check on Castbars
+- UPDATE removed Autographed Hearthstone Card from Teleports menu
+### Added
+- NEW Custom Class Colors (default is disabled)
+
 ## [ver. 2.89.1] - 16.11.2022
 ### Update
 - FIX Tooltips and Datatext
 - UPDATE Dropdpwn Text Update Bugfix
 - UPDATE Temporary disabled the tooltip icons for Retail
 - FIX Healthmarker Option, custom raneg is disabeld if Auto range is enabled
+- FIX for Dropdown Macro Buttons
 ### Added
 - NEW Statusbar Texture K31
 

@@ -11,11 +11,7 @@ local strjoin = strjoin
 
 --WoW API / Variables
 local _G = _G
-local GetContainerNumSlots = C_Container.GetContainerNumSlots
-local GetContainerItemInfo = C_Container.GetContainerItemInfo
-local GetItemSpell = GetItemSpell
 local C_CurrencyInfo = C_CurrencyInfo
-local IsAddOnLoaded = IsAddOnLoaded
 
 --Variables
 local displayString, lastPanel = "", nil
@@ -24,9 +20,7 @@ local mTextName = "mCatalogedResearch"
 local mCurrencyID = 1931
 local hideCurrency = false
 
-local function mBagCheck()
-	local mAmount = 0
-	local mResearch = {
+local mResearch = {
 		[186685] = 1,
 		[187322] = 8,
 		[187457] = 8,
@@ -56,7 +50,10 @@ local function mBagCheck()
 		[187350] = 300,
 		[187335] = 300,
 	}
+
+local function mBagCheck()
 	local mAmount = 0
+
 	for itemID, mValue in pairs(mResearch) do
 		local mCount = GetItemCount(itemID, true)
 		mAmount = mAmount + mCount * mValue

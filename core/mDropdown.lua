@@ -82,8 +82,8 @@ function mMT:mDropDown(list, frame, menuparent, ButtonWidth, HideDelay)
 		if not frame.buttons[i] then
 			if list[i].macro then
 				frame.buttons[i] = CreateFrame("Button", "MacroButton", frame, "SecureActionButtonTemplate")
-				frame.buttons[i]:SetAttribute("type*", "macro")
-				--frame.buttons[i]:RegisterForClicks("LeftButtonUp", "RightButtonUp")
+				frame.buttons[i]:SetAttribute("type", "macro")
+				frame.buttons[i]:RegisterForClicks("LeftButtonUp", "LeftButtonDown")
 				frame.buttons[i]:SetAttribute("macrotext1", list[i].macro)
 			else
 				frame.buttons[i] = CreateFrame("Button", nil, frame)

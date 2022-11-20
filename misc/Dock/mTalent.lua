@@ -190,23 +190,26 @@ local function OnClick(self, button)
 		end
 
 		if button == "LeftButton" then
-			if not _G.PlayerTalentFrame then
-				_G.LoadAddOn("Blizzard_TalentUI")
+			local frame = _G.ClassTalentFrame
+			if not frame then
+				LoadAddOn('Blizzard_ClassTalentUI')
+				frame = _G.ClassTalentFrame
 			end
-			if not _G.PlayerTalentFrame:IsShown() then
-				ShowUIPanel(_G.PlayerTalentFrame)
+
+			if frame:IsShown() then
+				HideUIPanel(frame)
 			else
-				HideUIPanel(_G.PlayerTalentFrame)
+				ShowUIPanel(frame)
 			end
 		elseif button == "MiddleButton" then
-			DT:SetEasyMenuAnchor(DT.EasyMenu, self)
-			_G.EasyMenu(specList, DT.EasyMenu, nil, nil, nil, "MENU")
+			E:SetEasyMenuAnchor(E.EasyMenu, self)
+			_G.EasyMenu(specList, E.EasyMenu, nil, nil, nil, "MENU")
 		else
 			local _, specName = GetSpecializationInfo(specIndex)
 			menuList[2].text = format(LOOT_SPECIALIZATION_DEFAULT, specName)
 
-			DT:SetEasyMenuAnchor(DT.EasyMenu, self)
-			_G.EasyMenu(menuList, DT.EasyMenu, nil, nil, nil, "MENU")
+			E:SetEasyMenuAnchor(E.EasyMenu, self)
+			_G.EasyMenu(menuList, E.EasyMenu, nil, nil, nil, "MENU")
 		end
 	end
 end

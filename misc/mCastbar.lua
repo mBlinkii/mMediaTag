@@ -66,6 +66,9 @@ local interruptSpellList = {
 	--DEMONHUNTER
 	[577] = 183752,
 	[581] = 183752,
+	--EVOKER
+	[1467] = 351338,
+	[1468] = 351338,
 }
 
 function mMT:mUpdateKick()

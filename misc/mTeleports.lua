@@ -57,7 +57,6 @@ local Teleports = {
 		165669, --lunar-elders-hearthstone
 		166747, --brewfest-revelers-hearthstone
 		165802, --noble-gardeners-hearthstone
-		118427, --autographed-hearthstone-card
 		190196, --enlightened-hearthstone
 	},
 	engineering = {
@@ -342,8 +341,13 @@ end
 
 local function EngineeringCheck()
 	local prof1, prof2 = GetProfessions()
-	prof1 = select(7, GetProfessionInfo(prof1))
-	prof2 = select(7, GetProfessionInfo(prof2))
+	if prof1 then
+		prof1 = select(7, GetProfessionInfo(prof1))
+	end
+	
+	if prof2 then
+		prof2 = select(7, GetProfessionInfo(prof2))
+	end
 
 	return prof1 == 202 or prof2 == 202
 end

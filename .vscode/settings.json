@@ -111,7 +111,8 @@
         "GameTooltip",
         "GetContainerItemInfo",
         "GetContainerNumSlots",
-        "GetCursorPosition"
+        "GetCursorPosition",
+        "TooltipDataProcessor"
     ],
     "Lua.diagnostics.disable": [
         "redundant-parameter",

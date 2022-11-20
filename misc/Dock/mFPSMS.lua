@@ -169,7 +169,7 @@ local function OnClick(self, button)
 				HideUIPanel(GameMenuFrame)
 			end
 		else
-			E:ToggleOptionsUI()
+			E:ToggleOptions()
 		end
 	end
 end
