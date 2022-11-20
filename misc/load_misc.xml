@@ -5,6 +5,7 @@
 	<Script file="mCombatTime.lua"/>
 	<Script file="mCoordinatesX.lua"/>
 	<Script file="mCoordinatesY.lua"/>
+	<Script file="mCustomClassColors.lua"/>
 	<Script file="mBGTexture.lua"/>
 	<Script file="mCastbar.lua"/>
 	<Script file="mCombatIcon.lua"/>

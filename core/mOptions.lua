@@ -395,6 +395,13 @@ local function OptionsCore()
 						childGroups = "tab",
 						args = {},
 					},
+					customclasscolors = {
+						order = 6,
+						type = "group",
+						name = L["Custom Class colors"],
+						childGroups = "tab",
+						args = {},
+					},
 				},
 			},
 			about = {
@@ -844,6 +851,13 @@ local function OptionsCoreClassic()
 						order = 4,
 						type = "group",
 						name = L["Custom Backdrop Textures"],
+						childGroups = "tab",
+						args = {},
+					},
+					customclasscolors = {
+						order = 5,
+						type = "group",
+						name = L["Custom Class colors"],
 						childGroups = "tab",
 						args = {},
 					},
