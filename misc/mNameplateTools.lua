@@ -120,7 +120,8 @@ local function executeMarker(unit, percent)
 		health.executeMarker:SetColorTexture(1, 1, 1)
 	end
 
-	local range = 20
+	local range = nil
+
 	if db.auto then
 		range = executeRange[select(1, GetSpecializationInfo(GetSpecialization()))]
 	else
@@ -130,10 +131,10 @@ local function executeMarker(unit, percent)
 	if range then
 		if percent > range then
 			local overlaySize = health:GetWidth() * range / 100
-			health.executeMarker:Show()
 			health.executeMarker:SetSize(2, health:GetHeight())
 			health.executeMarker:SetPoint("left", health, "left", overlaySize, 0)
 			health.executeMarker:SetVertexColor(db.indicator.r, db.indicator.g, db.indicator.b)
+			health.executeMarker:Show()
 		else
 			health.executeMarker:Hide()
 		end
@@ -215,7 +216,6 @@ local function mNameplateTools(table, event, frame)
 	if table.isNamePlate then
 		if table.Health and E.db[mPlugin].mHealthmarker.enable or E.db[mPlugin].mExecutemarker.enable then
 			local percent = math.floor((table.Health.cur or 100) / table.Health.max * 100 + 0.5)
-			mMT:Print(percent)
 			if E.db[mPlugin].mHealthmarker.enable then
 				healthMarkers(table, percent)
 			end
@@ -456,7 +456,7 @@ local function mhealtmarkerOptions()
 			end,
 			get = function()
 				if E.db[mPlugin].mHealthmarker.NPCs[selectedID] then
-					return E.db[mPlugin].mHealthmarker.NPCs[selectedID][2]
+					return E.db[mPlugin].mHealthmarker.NPCs[selectedID][2] or 0
 				end
 			end,
 			set = function(info, value)
@@ -464,6 +464,7 @@ local function mhealtmarkerOptions()
 					if value > E.db[mPlugin].mHealthmarker.NPCs[selectedID][1] then
 						value = E.db[mPlugin].mHealthmarker.NPCs[selectedID][1] - 0.5
 					end
+					E.db[mPlugin].mHealthmarker.NPCs[selectedID][2] = value
 					if value == 0 or value == 100 then
 						E.db[mPlugin].mHealthmarker.NPCs[3] = 0
 						E.db[mPlugin].mHealthmarker.NPCs[4] = 0
@@ -498,7 +499,7 @@ local function mhealtmarkerOptions()
 			end,
 			get = function()
 				if E.db[mPlugin].mHealthmarker.NPCs[selectedID] then
-					return E.db[mPlugin].mHealthmarker.NPCs[selectedID][3]
+					return E.db[mPlugin].mHealthmarker.NPCs[selectedID][3] or 0
 				end
 			end,
 			set = function(info, value)
@@ -539,7 +540,7 @@ local function mhealtmarkerOptions()
 			end,
 			get = function()
 				if E.db[mPlugin].mHealthmarker.NPCs[selectedID] then
-					return E.db[mPlugin].mHealthmarker.NPCs[selectedID][4]
+					return E.db[mPlugin].mHealthmarker.NPCs[selectedID][4] or 0
 				end
 			end,
 			set = function(info, value)
@@ -575,10 +576,10 @@ local function mhealtmarkerOptions()
 			name = L["Auto range"],
 			desc = L["Execute range based on your Class"],
 			get = function(info)
-				return E.db[mPlugin].mHealthmarker.auto
+				return E.db[mPlugin].mExecutemarker.auto
 			end,
 			set = function(info, value)
-				E.db[mPlugin].mHealthmarker.auto = value
+				E.db[mPlugin].mExecutemarker.auto = value
 			end
 		},
 		executeindicator = {
