@@ -6,12 +6,6 @@ local NP = E:GetModule("NamePlates")
 local LSM = LibStub("LibSharedMedia-3.0")
 
 local mInsert = table.insert
--- local unpack = unpack
--- local UnitPlayerControlled = UnitPlayerControlled
--- local UnitIsTapDenied = UnitIsTapDenied
--- local UnitClass = UnitClass
--- local UnitReaction = UnitReaction
--- local UnitIsConnected = UnitIsConnected
 local CreateFrame = CreateFrame
 local addon, ns = ...
 
@@ -117,7 +111,7 @@ local executeRange = {
 	--[581] = 0,
 }
 
-local function executeMarker(unit)
+local function executeMarker(unit, percent)
 	local health = unit.Health
 	local db = E.db[mPlugin].mExecutemarker
 
@@ -126,7 +120,6 @@ local function executeMarker(unit)
 		health.executeMarker:SetColorTexture(1, 1, 1)
 	end
 
-	local percent = math.floor((health.cur or 100) / health.max * 100 + 0.5)
 	local range = 20
 	if db.auto then
 		range = executeRange[select(1, GetSpecializationInfo(GetSpecialization()))]
@@ -149,7 +142,7 @@ local function executeMarker(unit)
 	end
 end
 
-local function healthMarkers(unit)
+local function healthMarkers(unit, percent)
 	local inInstance, instanceType = IsInInstance()
 	local health = unit.Health
 	if E.db[mPlugin].mHealthmarker.inInstance and not (inInstance and instanceType == "party" or instanceType == "raid") then
@@ -180,7 +173,6 @@ local function healthMarkers(unit)
 
 		if markersTable then
 			for _, p in ipairs(markersTable) do
-				local percent = math.floor((health.cur or 100) / health.max * 100 + 0.5)
 				if percent > p and p > 0 and p < 100 then
 					local overlaySize = health:GetWidth() * p / 100
 
@@ -221,12 +213,16 @@ end
 
 local function mNameplateTools(table, event, frame)
 	if table.isNamePlate then
-		if table.Health and E.db[mPlugin].mHealthmarker.enable then
-			healthMarkers(table)
-		end
+		if table.Health and E.db[mPlugin].mHealthmarker.enable or E.db[mPlugin].mExecutemarker.enable then
+			local percent = math.floor((table.Health.cur or 100) / table.Health.max * 100 + 0.5)
+			mMT:Print(percent)
+			if E.db[mPlugin].mHealthmarker.enable then
+				healthMarkers(table, percent)
+			end
 
-		if table.Health and E.db[mPlugin].mExecutemarker.enable then
-			executeMarker(table)
+			if E.db[mPlugin].mExecutemarker.enable then
+				executeMarker(table, percent)
+			end
 		end
 	end
 end
