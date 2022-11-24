@@ -5,6 +5,7 @@ local EP = _G.LibStub("LibElvUIPlugin-1.0")
 local addon, ns = ...
 
 --Variables
+local wipe = table.wipe
 ns.mName = "|CFF8E44ADm|r|CFF2ECC71Media|r|CFF3498DBTag|r"
 ns.mNameClassic = "|CFF8E44ADm|r|CFF2ECC71Media|r|CFF3498DBTag|r |cffff0066Classic|r"
 ns.mColor1 = "|CFFFFFFFF" -- white
@@ -67,7 +68,7 @@ function mMT:Initialize()
 	end
 
 	EP:RegisterPlugin(addon, mMT:AddOptions()) -- einstellungen in elvui eintragen
-	ns.Config = {} -- tabele löschen
+	ns.Config = wipe(ns.Config) -- tabele löschen
 end
 
 function mMT:PLAYER_ENTERING_WORLD()

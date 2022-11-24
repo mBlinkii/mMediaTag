@@ -5,7 +5,7 @@ local CH = E:GetModule("Chat")
 local UF = E:GetModule("UnitFrames")
 local addon, ns = ...
 
-local mIcons, mIconsList = nil, nil
+local mIcons, mIconsList = {}, {}
 local sizeString = ":16:16:0:0:64:64:4:60:4:60"
 local mInsert = table.insert
 local pairs = pairs
@@ -13,7 +13,7 @@ local pairs = pairs
 local function mSetupIcons()
 	if not mIcons then
 		local path = ""
-		mIcons = {}
+		mIcons = wipe(mIcons)
 
 		--shield
 		for i = 1, 28, 1 do
@@ -123,12 +123,12 @@ local function mSetupIcons()
 		end
 
 		if not mIconsList then
-			mIconsList = {}
+			mIconsList = wipe(mIconsList)
 			for i in pairs(mIcons) do
 				mIconsList[i] = mIcons[i].icon
 			end
 		end
-		mIcons = nil
+		mIcons = wipe(mIcons)
 	end
 end
 
@@ -182,6 +182,9 @@ function mMT:mStartRoleSmbols()
 			DAMAGER = mDD.path,
 		}
 	end
+	mTank = wipe(mTank)
+	mHeal = wipe(mHeal)
+	mDD = wipe(mDD)
 end
 
 local function mRoleSmbolsOptions()

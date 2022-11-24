@@ -123,7 +123,7 @@ function mMT:mVolumeDisplay()
 	VolumeIcon:SetPoint("LEFT", 0, 0)
 	VolumeIcon:SetTexture(VolumeTexture)
 	VolumeIcon:SetVertexColor(class[1], class[2], class[3], 1)
-
+	VolumeLevel = wipe(VolumeLevel)
 	for i = 1, 20, 1 do
 		VolumeLevel[i] = VolumeFrame:CreateTexture(nil, "ARTWORK")
 		if i == 1 then

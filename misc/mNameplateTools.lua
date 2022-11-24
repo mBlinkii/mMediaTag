@@ -236,7 +236,7 @@ local selected = nil
 local filterTabel = {}
 
 local function updateFilterTabel()
-	filterTabel = {}
+	filterTabel = wipe(filterTabel)
 	for k, v in pairs(E.db[mPlugin].mHealthmarker.NPCs) do
 		mInsert(filterTabel, k)
 	end
@@ -392,8 +392,8 @@ local function mhealtmarkerOptions()
 			type = "execute",
 			name = L["Delete all"],
 			func = function()
-				E.db[mPlugin].mHealthmarker.NPCs = {}
-				filterTabel = {}
+				E.db[mPlugin].mHealthmarker.NPCs = wipe(E.db[mPlugin].mHealthmarker.NPCs)
+				filterTabel = wipe(filterTabel)
 			end
 		},
 		header3 = {

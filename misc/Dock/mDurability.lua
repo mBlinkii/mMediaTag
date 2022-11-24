@@ -63,6 +63,8 @@ local function OnEnter(self)
 			)
 		end
 
+		invDurability = wipe(invDurability)
+		
 		if totalRepairCost > 0 then
 			DT.tooltip:AddLine(" ")
 			DT.tooltip:AddDoubleLine(REPAIR_COST, GetMoneyString(totalRepairCost), 0.6, 0.8, 1, 1, 1, 1)
@@ -93,7 +95,7 @@ local function OnEvent(self, event, ...)
 	totalRepairCost = 0
 	local TextColor = mMT:mClassColorString()
 
-	wipe(invDurability)
+	invDurability = wipe(invDurability)
 
 	for index in pairs(slots) do
 		local currentDura, maxDura = GetInventoryItemDurability(index)

@@ -7,6 +7,7 @@ local addon, ns = ...
 --Lua functions
 local format = format
 local strjoin = strjoin
+local wipe = table.wipe
 
 --WoW API / Variables
 local IsInInstance = IsInInstance
@@ -66,6 +67,7 @@ local function mSetup(self)
 				DT.tooltip:AddLine(mAffixes[2] or "-")
 			end
 		end
+		mAffixes = wipe(mAffixes)
 	end
 end
 

@@ -409,6 +409,7 @@ end
 local function OnClick(self, button)
 	mUpdateTPList(button)
 	mMT:mDropDown(Teleports.menu, menuFrame, self, 260, 2)
+	Teleports.menu = wipe(Teleports.menu)
 end
 
 local function mTPTooltip()

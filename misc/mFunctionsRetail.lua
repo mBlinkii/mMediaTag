@@ -34,7 +34,11 @@ end
 
 function mMT:mGetVaultInfo()
 	local vaultinfo = {}
+	vaultinfo = wipe(vaultinfo)
 	local vaultinforaid, vaultinfomplus, vaultinfopvp, vaultinfohighest, ok = {}, {}, {}, nil, nil
+	vaultinforaid = wipe(vaultinforaid)
+	vaultinfomplus = wipe(vaultinfomplus)
+	vaultinfopvp = wipe(vaultinfopvp)
 	vaultinfo = C_WeeklyRewards.GetActivities()
 	if not vaultinfo then
 		return {}, {}, {}, nil, false
@@ -90,6 +94,7 @@ end
 --Keystone Functions
 function mMT:OwenKeystone()
 	local OwenKeystoneText = {}
+	OwenKeystoneText = wipe(OwenKeystoneText)
 	local keyStoneLevel, keyStoneLevelMax = C_MythicPlus.GetOwnedKeystoneLevel(), 20
 
 	if keyStoneLevel then
@@ -117,6 +122,8 @@ end
 --Affixes Functions
 function mMT:WeeklyAffixes()
 	local WeeklyAffixesText, affixes = {}, {}
+	WeeklyAffixesText = wipe(WeeklyAffixesText)
+	affixes = wipe(affixes)
 	local _, _, _, _, other, titel = mMT:mColorDatatext()
 	local AffixText = nil
 	local savedYear = E.db[mPlugin].mSavedAffixes.year
@@ -203,6 +210,7 @@ end
 --Instance Informations Myth+
 function mMT:MythicPlusDungeon()
 	local MythicPlusDungeonText = {}
+	MythicPlusDungeonText = wipe(MythicPlusDungeonText)
 	local keyStoneLevel, _ = C_ChallengeMode.GetActiveKeystoneInfo()
 	local name, instanceType, instanceDifficultyID, difficultyName, maxPlayers, dynamicDifficulty, isDynamicInstance =
 		GetInstanceInfo()
