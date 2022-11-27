@@ -37,6 +37,8 @@ local function OnEvent(self, event, ...)
 		Notifications = false,
 		Text = false,
 		Spezial = false,
+		IconColor = E.db[mPlugin].mDock.collection.iconcolor,
+		CustomColor = E.db[mPlugin].mDock.collection.customcolor,
 	}
 
 	mMT:DockInitialisation(self)

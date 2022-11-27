@@ -87,6 +87,8 @@ local function OnEvent(self, event, ...)
 		Center = false,
 		Spezial = true,
 		OnlyText = E.db[mPlugin].mDock.durability.onlytext,
+		IconColor = E.db[mPlugin].mDock.durability.iconcolor,
+		CustomColor = E.db[mPlugin].mDock.durability.customcolor,
 	}
 
 	mMT:DockInitialisation(self)

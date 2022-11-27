@@ -113,6 +113,8 @@ local function OnEvent(self, event, ...)
 		Notifications = false,
 		Text = E.db[mPlugin].mDock.talent.showrole,
 		Spezial = false,
+		IconColor = E.db[mPlugin].mDock.talent.iconcolor,
+		CustomColor = E.db[mPlugin].mDock.talent.customcolor,
 	}
 
 	mMT:DockInitialisation(self)

@@ -37,6 +37,8 @@ local function OnEvent(self, event, ...)
 		Notifications = false,
 		Text = false,
 		Spezial = false,
+		IconColor = E.db[mPlugin].mDock.blizzardstore.iconcolor,
+		CustomColor = E.db[mPlugin].mDock.blizzardstore.customcolor,
 	}
 
 	mMT:DockInitialisation(self)

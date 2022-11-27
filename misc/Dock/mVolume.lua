@@ -45,6 +45,8 @@ local function OnEvent(self, event, ...)
 		Notifications = false,
 		Text = E.db[mPlugin].mDock.volume.showtext,
 		Spezial = E.db[mPlugin].mDock.volume.showtext,
+		IconColor = E.db[mPlugin].mDock.volume.iconcolor,
+		CustomColor = E.db[mPlugin].mDock.volume.customcolor,
 	}
 
 	local level = GetCVar(stream.Volume) * 100

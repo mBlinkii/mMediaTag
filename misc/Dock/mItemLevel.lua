@@ -61,6 +61,8 @@ local function OnEvent(self, event, ...)
 		Center = false,
 		Spezial = true,
 		OnlyText = E.db[mPlugin].mDock.itemlevel.onlytext,
+		IconColor = E.db[mPlugin].mDock.itemlevel.iconcolor,
+		CustomColor = E.db[mPlugin].mDock.itemlevel.customcolor,
 	}
 
 	mMT:DockInitialisation(self)

@@ -1,21 +1,23 @@
 local LSM = LibStub("LibSharedMedia-3.0")
 
-if LSM == nil then return end
+if LSM == nil then
+	return
+end
 
 local function mAddStatusbar(name, file)
-    LSM:Register("statusbar", name, "Interface\\AddOns\\ElvUI_mMediaTag\\media\\textures\\" .. file)
+	LSM:Register("statusbar", name, "Interface\\AddOns\\ElvUI_mMediaTag\\media\\textures\\" .. file)
 end
 
 local function mAddBackground(name, file)
-    LSM:Register("background", name, "Interface\\AddOns\\ElvUI_mMediaTag\\media\\backgrounds\\" .. file)
+	LSM:Register("background", name, "Interface\\AddOns\\ElvUI_mMediaTag\\media\\backgrounds\\" .. file)
 end
 
 local function mAddFont(name, file)
-    LSM:Register("font", name, "Interface\\AddOns\\ElvUI_mMediaTag\\media\\fonts\\" .. file)
+	LSM:Register("font", name, "Interface\\AddOns\\ElvUI_mMediaTag\\media\\fonts\\" .. file)
 end
 
 local function mAddBorder(name, file)
-    LSM:Register("border", name, "Interface\\AddOns\\ElvUI_mMediaTag\\media\\border\\" .. file)
+	LSM:Register("border", name, "Interface\\AddOns\\ElvUI_mMediaTag\\media\\border\\" .. file)
 end
 
 mAddStatusbar("mMediaTag A1", "a1.tga")
@@ -315,7 +317,6 @@ mAddStatusbar("mMediaTag Q1", "q1.tga")
 mAddStatusbar("mMediaTag Q2", "q2.tga")
 mAddStatusbar("mMediaTag Q3", "q3.tga")
 mAddStatusbar("mMediaTag Q4", "q4.tga")
-mAddStatusbar("mMediaTag Q5", "q5.tga")
 
 mAddStatusbar("mMediaTag R1", "r1.tga")
 mAddStatusbar("mMediaTag R2", "r2.tga")
@@ -339,6 +340,9 @@ mAddStatusbar("mMediaTag R19", "r19.tga")
 mAddStatusbar("mMediaTag R20", "r20.tga")
 mAddStatusbar("mMediaTag R21", "r21.tga")
 mAddStatusbar("mMediaTag R22", "r22.tga")
+mAddStatusbar("mMediaTag R23", "r23.tga")
+
+mAddStatusbar("mMediaTag S1", "s1.tga")
 
 mAddStatusbar("mMediaTag Caith UI 1", "Wglass.tga")
 mAddStatusbar("mMediaTag Caith UI 2", "Wisps.tga")
@@ -369,3 +373,18 @@ mAddBorder("mMediaTag yborder", "yborder.tga")
 mAddBorder("mMediaTag yborder2", "yborder2.tga")
 mAddBorder("mMediaTag YuluBorderSwitch", "YuluBorderSwitch.tga")
 mAddBorder("mMediaTag YuluBorderXI", "YuluBorderXI.tga")
+
+mAddFont("Inter-Black", "Inter-Black.ttf") 
+mAddFont("Inter-Bold", "Inter-Bold.ttf") 
+mAddFont("Inter-ExtraBold", "Inter-ExtraBold.ttf") 
+mAddFont("Inter-Regular", "Inter-Regular.ttf") 
+mAddFont("Inter-SemiBold", "Inter-SemiBold.ttf") 
+mAddFont("Lemon-Regular", "Lemon-Regular.ttf") 
+mAddFont("Oregano-Regular", "Oregano-Regular.ttf") 
+mAddFont("Oswald-Bold", "Oswald-Bold.ttf") 
+mAddFont("Oswald-Light", "Oswald-Light.ttf") 
+mAddFont("Oswald-Regular", "Oswald-Regular.ttf") 
+mAddFont("Ubuntu-Bold", "Ubuntu-Bold.ttf") 
+mAddFont("Ubuntu-Light", "Ubuntu-Light.ttf") 
+mAddFont("Ubuntu-Medium", "Ubuntu-Medium.ttf") 
+mAddFont("Ubuntu-Regular", "Ubuntu-Regular.ttf") 

@@ -916,6 +916,8 @@ local function OnEvent(self, event, message)
 		Text = true,
 		DontClearText = true,
 		Spezial = false,
+		IconColor = E.db[mPlugin].mDock.friends.iconcolor,
+		CustomColor = E.db[mPlugin].mDock.friends.customcolor,
 	}
 
 	mMT:DockInitialisation(self)

@@ -409,6 +409,8 @@ local function OnEvent(self, event, ...)
 		Notifications = true,
 		Text = true,
 		Spezial = false,
+		IconColor = E.db[mPlugin].mDock.guild.iconcolor,
+		CustomColor = E.db[mPlugin].mDock.guild.customcolor,
 	}
 
 	mMT:DockInitialisation(self)

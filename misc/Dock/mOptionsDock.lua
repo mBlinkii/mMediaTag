@@ -415,6 +415,36 @@ local function OptionsDock()
 					end,
 					values = mTextureList(),
 				},
+				achievmenttoggle = {
+					order = 2,
+					name = L["Custom color"],
+					type = "toggle",
+					get = function(info)
+						return E.db[mPlugin].mDock.achievement.customcolor
+					end,
+					set = function(info, value)
+						E.db[mPlugin].mDock.achievement.customcolor = value
+						DT:ForceUpdate_DataText("mAchievement")
+					end,
+				},
+				achievmentcolor = {
+					type = "color",
+					order = 3,
+					name = L["Custom Icon Color"],
+					hasAlpha = true,
+					disabled = function()
+						return not E.db[mPlugin].mDock.achievement.customcolor
+					end,
+					get = function(info)
+						local t = E.db[mPlugin].mDock.achievement.iconcolor
+						return t.r, t.g, t.b, t.a
+					end,
+					set = function(info, r, g, b, a)
+						local t = E.db[mPlugin].mDock.achievement.iconcolor
+						t.r, t.g, t.b, t.a = r, g, b, a
+						DT:ForceUpdate_DataText("mAchievement")
+					end,
+				},
 			},
 		},
 		dockblizzardstore = {
@@ -435,6 +465,36 @@ local function OptionsDock()
 						DT:ForceUpdate_DataText("mBlizzardStore")
 					end,
 					values = mTextureList(),
+				},
+				blizzardstoretoggle = {
+					order = 2,
+					name = L["Custom color"],
+					type = "toggle",
+					get = function(info)
+						return E.db[mPlugin].mDock.blizzardstore.customcolor
+					end,
+					set = function(info, value)
+						E.db[mPlugin].mDock.blizzardstore.customcolor = value
+						DT:ForceUpdate_DataText("mBlizzardStore")
+					end,
+				},
+				blizzardstorecolor = {
+					type = "color",
+					order = 3,
+					name = L["Custom Icon Color"],
+					hasAlpha = true,
+					disabled = function()
+						return not E.db[mPlugin].mDock.blizzardstore.customcolor
+					end,
+					get = function(info)
+						local t = E.db[mPlugin].mDock.blizzardstore.iconcolor
+						return t.r, t.g, t.b, t.a
+					end,
+					set = function(info, r, g, b, a)
+						local t = E.db[mPlugin].mDock.blizzardstore.iconcolor
+						t.r, t.g, t.b, t.a = r, g, b, a
+						DT:ForceUpdate_DataText("mBlizzardStore")
+					end,
 				},
 			},
 		},
@@ -490,6 +550,36 @@ local function OptionsDock()
 						ilvl = L["Itemlevel"],
 					},
 				},
+				charactertoggle = {
+					order = 4,
+					name = L["Custom color"],
+					type = "toggle",
+					get = function(info)
+						return E.db[mPlugin].mDock.character.customcolor
+					end,
+					set = function(info, value)
+						E.db[mPlugin].mDock.character.customcolor = value
+						DT:ForceUpdate_DataText("mCharacter")
+					end,
+				},
+				charactercolor = {
+					type = "color",
+					order = 5,
+					name = L["Custom Icon Color"],
+					hasAlpha = true,
+					disabled = function()
+						return not E.db[mPlugin].mDock.character.customcolor
+					end,
+					get = function(info)
+						local t = E.db[mPlugin].mDock.character.iconcolor
+						return t.r, t.g, t.b, t.a
+					end,
+					set = function(info, r, g, b, a)
+						local t = E.db[mPlugin].mDock.character.iconcolor
+						t.r, t.g, t.b, t.a = r, g, b, a
+						DT:ForceUpdate_DataText("mCharacter")
+					end,
+				},
 			},
 		},
 		dockcollection = {
@@ -511,6 +601,36 @@ local function OptionsDock()
 					end,
 					values = mTextureList(),
 				},
+				collectiontoggle = {
+					order = 2,
+					name = L["Custom color"],
+					type = "toggle",
+					get = function(info)
+						return E.db[mPlugin].mDock.collection.customcolor
+					end,
+					set = function(info, value)
+						E.db[mPlugin].mDock.collection.customcolor = value
+						DT:ForceUpdate_DataText("mCollectionsJourna")
+					end,
+				},
+				collectioncolor = {
+					type = "color",
+					order = 3,
+					name = L["Custom Icon Color"],
+					hasAlpha = true,
+					disabled = function()
+						return not E.db[mPlugin].mDock.collection.customcolor
+					end,
+					get = function(info)
+						local t = E.db[mPlugin].mDock.collection.iconcolor
+						return t.r, t.g, t.b, t.a
+					end,
+					set = function(info, r, g, b, a)
+						local t = E.db[mPlugin].mDock.collection.iconcolor
+						t.r, t.g, t.b, t.a = r, g, b, a
+						DT:ForceUpdate_DataText("mCollectionsJourna")
+					end,
+				},
 			},
 		},
 		dockencounter = {
@@ -531,6 +651,36 @@ local function OptionsDock()
 						DT:ForceUpdate_DataText("mEncounterJournal")
 					end,
 					values = mTextureList(),
+				},
+				encountertoggle = {
+					order = 2,
+					name = L["Custom color"],
+					type = "toggle",
+					get = function(info)
+						return E.db[mPlugin].mDock.encounter.customcolor
+					end,
+					set = function(info, value)
+						E.db[mPlugin].mDock.encounter.customcolor = value
+						DT:ForceUpdate_DataText("mEncounterJournal")
+					end,
+				},
+				encountercolor = {
+					type = "color",
+					order = 3,
+					name = L["Custom Icon Color"],
+					hasAlpha = true,
+					disabled = function()
+						return not E.db[mPlugin].mDock.encounter.customcolor
+					end,
+					get = function(info)
+						local t = E.db[mPlugin].mDock.encounter.iconcolor
+						return t.r, t.g, t.b, t.a
+					end,
+					set = function(info, r, g, b, a)
+						local t = E.db[mPlugin].mDock.encounter.iconcolor
+						t.r, t.g, t.b, t.a = r, g, b, a
+						DT:ForceUpdate_DataText("mEncounterJournal")
+					end,
 				},
 			},
 		},
@@ -568,6 +718,36 @@ local function OptionsDock()
 						custom = L["Custom"],
 						class = L["Class"],
 					},
+				},
+				guildtoggle = {
+					order = 3,
+					name = L["Custom color"],
+					type = "toggle",
+					get = function(info)
+						return E.db[mPlugin].mDock.guild.customcolor
+					end,
+					set = function(info, value)
+						E.db[mPlugin].mDock.guild.customcolor = value
+						DT:ForceUpdate_DataText("mGuild")
+					end,
+				},
+				guildcolor = {
+					type = "color",
+					order = 4,
+					name = L["Custom Icon Color"],
+					hasAlpha = true,
+					disabled = function()
+						return not E.db[mPlugin].mDock.guild.customcolor
+					end,
+					get = function(info)
+						local t = E.db[mPlugin].mDock.guild.iconcolor
+						return t.r, t.g, t.b, t.a
+					end,
+					set = function(info, r, g, b, a)
+						local t = E.db[mPlugin].mDock.guild.iconcolor
+						t.r, t.g, t.b, t.a = r, g, b, a
+						DT:ForceUpdate_DataText("mGuild")
+					end,
 				},
 			},
 		},
@@ -662,6 +842,36 @@ local function OptionsDock()
 						DT:ForceUpdate_DataText("mLFDTool")
 					end,
 				},
+				lfdtoggle = {
+					order = 61,
+					name = L["Custom color"],
+					type = "toggle",
+					get = function(info)
+						return E.db[mPlugin].mDock.lfd.customcolor
+					end,
+					set = function(info, value)
+						E.db[mPlugin].mDock.lfd.customcolor = value
+						DT:ForceUpdate_DataText("mLFDTool")
+					end,
+				},
+				lfdcolor = {
+					type = "color",
+					order = 62,
+					name = L["Custom Icon Color"],
+					hasAlpha = true,
+					disabled = function()
+						return not E.db[mPlugin].mDock.lfd.customcolor
+					end,
+					get = function(info)
+						local t = E.db[mPlugin].mDock.lfd.iconcolor
+						return t.r, t.g, t.b, t.a
+					end,
+					set = function(info, r, g, b, a)
+						local t = E.db[mPlugin].mDock.lfd.iconcolor
+						t.r, t.g, t.b, t.a = r, g, b, a
+						DT:ForceUpdate_DataText("mLFDTool")
+					end,
+				},
 			},
 		},
 		dockmainmenu = {
@@ -746,6 +956,36 @@ local function OptionsDock()
 						DT:ForceUpdate_DataText("mMainMenu")
 					end,
 				},
+				mainmenutoggle = {
+					order = 6,
+					name = L["Custom color"],
+					type = "toggle",
+					get = function(info)
+						return E.db[mPlugin].mDock.mainmenu.customcolor
+					end,
+					set = function(info, value)
+						E.db[mPlugin].mDock.mainmenu.customcolor = value
+						DT:ForceUpdate_DataText("mMainMenu")
+					end,
+				},
+				mainmenucolor = {
+					type = "color",
+					order = 7,
+					name = L["Custom Icon Color"],
+					hasAlpha = true,
+					disabled = function()
+						return not E.db[mPlugin].mDock.mainmenu.customcolor
+					end,
+					get = function(info)
+						local t = E.db[mPlugin].mDock.mainmenu.iconcolor
+						return t.r, t.g, t.b, t.a
+					end,
+					set = function(info, r, g, b, a)
+						local t = E.db[mPlugin].mDock.mainmenu.iconcolor
+						t.r, t.g, t.b, t.a = r, g, b, a
+						DT:ForceUpdate_DataText("mMainMenu")
+					end,
+				},
 			},
 		},
 		dockquest = {
@@ -767,6 +1007,36 @@ local function OptionsDock()
 					end,
 					values = mTextureList(),
 				},
+				questtoggle = {
+					order = 2,
+					name = L["Custom color"],
+					type = "toggle",
+					get = function(info)
+						return E.db[mPlugin].mDock.quest.customcolor
+					end,
+					set = function(info, value)
+						E.db[mPlugin].mDock.quest.customcolor = value
+						DT:ForceUpdate_DataText("mQuest")
+					end,
+				},
+				questcolor = {
+					type = "color",
+					order = 3,
+					name = L["Custom Icon Color"],
+					hasAlpha = true,
+					disabled = function()
+						return not E.db[mPlugin].mDock.quest.customcolor
+					end,
+					get = function(info)
+						local t = E.db[mPlugin].mDock.quest.iconcolor
+						return t.r, t.g, t.b, t.a
+					end,
+					set = function(info, r, g, b, a)
+						local t = E.db[mPlugin].mDock.quest.iconcolor
+						t.r, t.g, t.b, t.a = r, g, b, a
+						DT:ForceUpdate_DataText("mQuest")
+					end,
+				},
 			},
 		},
 		dockspellbook = {
@@ -787,6 +1057,36 @@ local function OptionsDock()
 						DT:ForceUpdate_DataText("mSpellBook")
 					end,
 					values = mTextureList(),
+				},
+				spellbooktoggle = {
+					order = 2,
+					name = L["Custom color"],
+					type = "toggle",
+					get = function(info)
+						return E.db[mPlugin].mDock.spellbook.customcolor
+					end,
+					set = function(info, value)
+						E.db[mPlugin].mDock.spellbook.customcolor = value
+						DT:ForceUpdate_DataText("mSpellBook")
+					end,
+				},
+				spellbookcolor = {
+					type = "color",
+					order = 3,
+					name = L["Custom Icon Color"],
+					hasAlpha = true,
+					disabled = function()
+						return not E.db[mPlugin].mDock.spellbook.customcolor
+					end,
+					get = function(info)
+						local t = E.db[mPlugin].mDock.spellbook.iconcolor
+						return t.r, t.g, t.b, t.a
+					end,
+					set = function(info, r, g, b, a)
+						local t = E.db[mPlugin].mDock.spellbook.iconcolor
+						t.r, t.g, t.b, t.a = r, g, b, a
+						DT:ForceUpdate_DataText("mSpellBook")
+					end,
 				},
 			},
 		},
@@ -818,6 +1118,36 @@ local function OptionsDock()
 					end,
 					set = function(info, value)
 						E.db[mPlugin].mDock.talent.showrole = value
+					end,
+				},
+				talenttoggle = {
+					order = 3,
+					name = L["Custom color"],
+					type = "toggle",
+					get = function(info)
+						return E.db[mPlugin].mDock.talent.customcolor
+					end,
+					set = function(info, value)
+						E.db[mPlugin].mDock.talent.customcolor = value
+						DT:ForceUpdate_DataText("mTalent")
+					end,
+				},
+				talentcolor = {
+					type = "color",
+					order = 4,
+					name = L["Custom Icon Color"],
+					hasAlpha = true,
+					disabled = function()
+						return not E.db[mPlugin].mDock.talent.customcolor
+					end,
+					get = function(info)
+						local t = E.db[mPlugin].mDock.talent.iconcolor
+						return t.r, t.g, t.b, t.a
+					end,
+					set = function(info, r, g, b, a)
+						local t = E.db[mPlugin].mDock.talent.iconcolor
+						t.r, t.g, t.b, t.a = r, g, b, a
+						DT:ForceUpdate_DataText("mTalent")
 					end,
 				},
 			},
@@ -883,6 +1213,36 @@ local function OptionsDock()
 						DT:ForceUpdate_DataText("mItemLevel")
 					end,
 				},
+				itemleveltoggle = {
+					order = 4,
+					name = L["Custom color"],
+					type = "toggle",
+					get = function(info)
+						return E.db[mPlugin].mDock.itemlevel.customcolor
+					end,
+					set = function(info, value)
+						E.db[mPlugin].mDock.itemlevel.customcolor = value
+						DT:ForceUpdate_DataText("mItemLevel")
+					end,
+				},
+				itemlevelcolor = {
+					type = "color",
+					order = 5,
+					name = L["Custom Icon Color"],
+					hasAlpha = true,
+					disabled = function()
+						return not E.db[mPlugin].mDock.itemlevel.customcolor
+					end,
+					get = function(info)
+						local t = E.db[mPlugin].mDock.itemlevel.iconcolor
+						return t.r, t.g, t.b, t.a
+					end,
+					set = function(info, r, g, b, a)
+						local t = E.db[mPlugin].mDock.itemlevel.iconcolor
+						t.r, t.g, t.b, t.a = r, g, b, a
+						DT:ForceUpdate_DataText("mItemLevel")
+					end,
+				},
 			},
 		},
 		dockfriends = {
@@ -919,6 +1279,36 @@ local function OptionsDock()
 						custom = L["Custom"],
 						class = L["Class"],
 					},
+				},
+				friendstoggle = {
+					order = 4,
+					name = L["Custom color"],
+					type = "toggle",
+					get = function(info)
+						return E.db[mPlugin].mDock.friends.customcolor
+					end,
+					set = function(info, value)
+						E.db[mPlugin].mDock.friends.customcolor = value
+						DT:ForceUpdate_DataText("mFriends")
+					end,
+				},
+				friendslcolor = {
+					type = "color",
+					order = 5,
+					name = L["Custom Icon Color"],
+					hasAlpha = true,
+					disabled = function()
+						return not E.db[mPlugin].mDock.friends.customcolor
+					end,
+					get = function(info)
+						local t = E.db[mPlugin].mDock.friends.iconcolor
+						return t.r, t.g, t.b, t.a
+					end,
+					set = function(info, r, g, b, a)
+						local t = E.db[mPlugin].mDock.friends.iconcolor
+						t.r, t.g, t.b, t.a = r, g, b, a
+						DT:ForceUpdate_DataText("mFriends")
+					end,
 				},
 			},
 		},
@@ -967,6 +1357,36 @@ local function OptionsDock()
 					end,
 					set = function(info, value)
 						E.db[mPlugin].mDock.durability.onlytext = value
+						DT:ForceUpdate_DataText("mDurability")
+					end,
+				},
+				durabilitytoggle = {
+					order = 4,
+					name = L["Custom color"],
+					type = "toggle",
+					get = function(info)
+						return E.db[mPlugin].mDock.durability.customcolor
+					end,
+					set = function(info, value)
+						E.db[mPlugin].mDock.durability.customcolor = value
+						DT:ForceUpdate_DataText("mDurability")
+					end,
+				},
+				durabilitycolor = {
+					type = "color",
+					order = 5,
+					name = L["Custom Icon Color"],
+					hasAlpha = true,
+					disabled = function()
+						return not E.db[mPlugin].mDock.durability.customcolor
+					end,
+					get = function(info)
+						local t = E.db[mPlugin].mDock.durability.iconcolor
+						return t.r, t.g, t.b, t.a
+					end,
+					set = function(info, r, g, b, a)
+						local t = E.db[mPlugin].mDock.durability.iconcolor
+						t.r, t.g, t.b, t.a = r, g, b, a
 						DT:ForceUpdate_DataText("mDurability")
 					end,
 				},
@@ -1041,6 +1461,36 @@ local function OptionsDock()
 						DT:ForceUpdate_DataText("mFPSMS")
 					end,
 				},
+				fpsmstoggle = {
+					order = 5,
+					name = L["Custom color"],
+					type = "toggle",
+					get = function(info)
+						return E.db[mPlugin].mDock.fpsms.customcolor
+					end,
+					set = function(info, value)
+						E.db[mPlugin].mDock.fpsms.customcolor = value
+						DT:ForceUpdate_DataText("mFPSMS")
+					end,
+				},
+				fpsmscolor = {
+					type = "color",
+					order = 6,
+					name = L["Custom Icon Color"],
+					hasAlpha = true,
+					disabled = function()
+						return not E.db[mPlugin].mDock.fpsms.customcolor
+					end,
+					get = function(info)
+						local t = E.db[mPlugin].mDock.fpsms.iconcolor
+						return t.r, t.g, t.b, t.a
+					end,
+					set = function(info, r, g, b, a)
+						local t = E.db[mPlugin].mDock.fpsms.iconcolor
+						t.r, t.g, t.b, t.a = r, g, b, a
+						DT:ForceUpdate_DataText("mFPSMS")
+					end,
+				},
 			},
 		},
 		dockprofession = {
@@ -1061,6 +1511,36 @@ local function OptionsDock()
 						DT:ForceUpdate_DataText("mProfession")
 					end,
 					values = mTextureList(),
+				},
+				professiontoggle = {
+					order = 5,
+					name = L["Custom color"],
+					type = "toggle",
+					get = function(info)
+						return E.db[mPlugin].mDock.profession.customcolor
+					end,
+					set = function(info, value)
+						E.db[mPlugin].mDock.profession.customcolor = value
+						DT:ForceUpdate_DataText("mProfession")
+					end,
+				},
+				professioncolor = {
+					type = "color",
+					order = 6,
+					name = L["Custom Icon Color"],
+					hasAlpha = true,
+					disabled = function()
+						return not E.db[mPlugin].mDock.profession.customcolor
+					end,
+					get = function(info)
+						local t = E.db[mPlugin].mDock.profession.iconcolor
+						return t.r, t.g, t.b, t.a
+					end,
+					set = function(info, r, g, b, a)
+						local t = E.db[mPlugin].mDock.profession.iconcolor
+						t.r, t.g, t.b, t.a = r, g, b, a
+						DT:ForceUpdate_DataText("mProfession")
+					end,
 				},
 			},
 		},
@@ -1113,6 +1593,36 @@ local function OptionsDock()
 						DT:ForceUpdate_DataText("mCalendar")
 					end,
 				},
+				calendartoggle = {
+					order = 5,
+					name = L["Custom color"],
+					type = "toggle",
+					get = function(info)
+						return E.db[mPlugin].mDock.calendar.customcolor
+					end,
+					set = function(info, value)
+						E.db[mPlugin].mDock.calendar.customcolor = value
+						DT:ForceUpdate_DataText("mCalendar")
+					end,
+				},
+				calendarcolor = {
+					type = "color",
+					order = 6,
+					name = L["Custom Icon Color"],
+					hasAlpha = true,
+					disabled = function()
+						return not E.db[mPlugin].mDock.calendar.customcolor
+					end,
+					get = function(info)
+						local t = E.db[mPlugin].mDock.calendar.iconcolor
+						return t.r, t.g, t.b, t.a
+					end,
+					set = function(info, r, g, b, a)
+						local t = E.db[mPlugin].mDock.calendar.iconcolor
+						t.r, t.g, t.b, t.a = r, g, b, a
+						DT:ForceUpdate_DataText("mCalendar")
+					end,
+				},
 			},
 		},
 		dockvolume = {
@@ -1143,6 +1653,36 @@ local function OptionsDock()
 					end,
 					set = function(info, value)
 						E.db[mPlugin].mDock.volume.showtext = value
+						DT:ForceUpdate_DataText("mVolume")
+					end,
+				},
+				volumetoggle = {
+					order = 5,
+					name = L["Custom color"],
+					type = "toggle",
+					get = function(info)
+						return E.db[mPlugin].mDock.volume.customcolor
+					end,
+					set = function(info, value)
+						E.db[mPlugin].mDock.volume.customcolor = value
+						DT:ForceUpdate_DataText("mVolume")
+					end,
+				},
+				volumecolor = {
+					type = "color",
+					order = 6,
+					name = L["Custom Icon Color"],
+					hasAlpha = true,
+					disabled = function()
+						return not E.db[mPlugin].mDock.volume.customcolor
+					end,
+					get = function(info)
+						local t = E.db[mPlugin].mDock.volume.iconcolor
+						return t.r, t.g, t.b, t.a
+					end,
+					set = function(info, r, g, b, a)
+						local t = E.db[mPlugin].mDock.volume.iconcolor
+						t.r, t.g, t.b, t.a = r, g, b, a
 						DT:ForceUpdate_DataText("mVolume")
 					end,
 				},
