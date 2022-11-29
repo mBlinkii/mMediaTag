@@ -13,7 +13,9 @@ local function AddToolTipIconItem(tooltip, data)
 		if data.id and tooltip:GetName() then
 			local title = _G[tooltip:GetName() .. "TextLeft1"]
 			local icon = GetItemIcon(data.id)
-			title:SetFormattedText("|T%s:%d|t %s", icon, E.db[mPlugin].mTIconSize, title:GetText())
+			if icon then
+				title:SetFormattedText("|T%s:%d|t %s", icon, E.db[mPlugin].mTIconSize, title:GetText())
+			end
 		end
 	end
 end
@@ -23,7 +25,9 @@ local function AddToolTipIconSpell(tooltip, data)
 		if data.id and tooltip:GetName() then
 			local title = _G[tooltip:GetName() .. "TextLeft1"]
 			local icon = GetSpellTexture(data.id)
-			title:SetFormattedText("|T%s:%d|t %s", icon, E.db[mPlugin].mTIconSize, title:GetText())
+			if icon then
+				title:SetFormattedText("|T%s:%d|t %s", icon, E.db[mPlugin].mTIconSize, title:GetText())
+			end
 		end
 	end
 end
@@ -43,14 +47,18 @@ local function hookTip(tip)
 		tip:HookScript("OnTooltipSetItem", function(self, ...)
 			local _, link = self:GetItem()
 			local icon = link and GetItemIcon(link)
-			AddTooltipIcon(self, icon)
+			if icon then
+				AddTooltipIcon(self, icon)
+			end
 		end)
 
 		tip:HookScript("OnTooltipSetSpell", function(self, ...)
 			if self:GetSpell() then
 				local _, spellID = self:GetSpell()
 				local _, _, icon = GetSpellInfo(spellID)
-				AddTooltipIcon(self, icon)
+				if icon then
+					AddTooltipIcon(self, icon)
+				end
 			end
 		end)
 	end
