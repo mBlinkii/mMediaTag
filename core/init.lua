@@ -48,7 +48,7 @@ function mMT:Initialize()
 			elseif strlen(color.colorStr) == 6 then
 				color.colorStr = 'ff'..color.colorStr
 			end
-		
+
 			if usePriestColor and class == 'PRIEST' and tonumber(color.colorStr, 16) > tonumber(E.PriestColors.colorStr, 16) then
 				return E.PriestColors
 			else
