@@ -151,6 +151,20 @@ P[mPlugin] = {
 		["style"] = "auto",
 		["hide"] = false
 	},
+	["mCobaltAssembly"] = {
+		["icon"] = true,
+		["short"] = true,
+		["name"] = false,
+		["style"] = "auto",
+		["hide"] = false
+	},
+	["mDragonGlyphEmbers"] = {
+		["icon"] = true,
+		["short"] = true,
+		["name"] = false,
+		["style"] = "auto",
+		["hide"] = false
+	},
 	["mConquest"] = {["icon"] = true, ["short"] = true, ["name"] = false, ["style"] = "auto", ["hide"] = false},
 	["showmax"] = false,
 	["mDataText"] = {

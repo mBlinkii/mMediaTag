@@ -36,25 +36,6 @@ end
 function mMT:Initialize()
 	if E.db[mPlugin].mCustomClassColors.enable then
 		mMT:SetCustomColors()
-
-		function E:ClassColor(class, usePriestColor)
-			if not class then return end
-		
-			local color = (E.db[mPlugin].mCustomClassColors.colors and E.db[mPlugin].mCustomClassColors.colors[class]) or (_G.CUSTOM_CLASS_COLORS and _G.CUSTOM_CLASS_COLORS[class]) or _G.RAID_CLASS_COLORS[class]
-			if type(color) ~= 'table' then return end
-		
-			if not color.colorStr then
-				color.colorStr = E:RGBToHex(color.r, color.g, color.b, 'ff')
-			elseif strlen(color.colorStr) == 6 then
-				color.colorStr = 'ff'..color.colorStr
-			end
-
-			if usePriestColor and class == 'PRIEST' and tonumber(color.colorStr, 16) > tonumber(E.PriestColors.colorStr, 16) then
-				return E.PriestColors
-			else
-				return color
-			end
-		end
 	end
 
 	mMT:mMisc() -- module laden

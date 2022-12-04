@@ -14,9 +14,6 @@ local interruptSpellId = nil
 _G.mMediaTag_interruptOnCD = false
 _G.mMediaTag_interruptinTime = false
 
-local interruptOnCD = _G.mMediaTag_interruptOnCD
-local interruptinTime = _G.mMediaTag_interruptinTime
-
 local interruptSpellList = {
 	-- warrior
 	[71] = 6552,
@@ -70,6 +67,18 @@ local interruptSpellList = {
 	[1467] = 351338,
 	[1468] = 351338,
 }
+
+_G.mMediaTag_interruptOnCD = function()
+	interruptSpellId = interruptSpellList[select(1, GetSpecializationInfo(GetSpecialization()))]
+	if interruptSpellId then
+		local cdStart = GetSpellCooldown(interruptSpellId)
+		if cdStart then
+			return true
+		else
+			return false
+		end
+	end
+end
 
 function mMT:mUpdateKick()
 	interruptSpellId = interruptSpellList[select(1, GetSpecializationInfo(GetSpecialization()))]
@@ -139,13 +148,8 @@ function mMT:mSetupCastbar()
 				if not unit.notInterruptible then
 					if interruptCD > 0 and interruptReadyInTime then
 						unit:SetStatusBarColor(colorKickinTime.r, colorKickinTime.g, colorKickinTime.b)
-						interruptOnCD = true
 					elseif interruptCD > 0 then
 						unit:SetStatusBarColor(colorKickonCD.r, colorKickonCD.g, colorKickonCD.b)
-						interruptinTime = true
-					else
-						interruptinTime = false
-						interruptOnCD = false
 					end
 				end
 			end
