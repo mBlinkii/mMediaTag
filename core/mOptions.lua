@@ -329,7 +329,21 @@ local function OptionsCore()
 						order = 40,
 						type = "group",
 						name = L["Currencys"],
-						args = {},
+						childGroups = "tab",
+						args = {
+							DragonIslesSupplies = {
+							order = 1,
+							type = "group",
+							name = L["DragonIsles Supplies"],
+							args = {},
+							},
+							ElementalOverflow = {
+							order = 2,
+							type = "group",
+							name = L["Elemental Overflow"],
+							args = {},
+							},
+						},
 					},
 				},
 			},

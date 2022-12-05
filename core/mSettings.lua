@@ -99,14 +99,14 @@ P[mPlugin] = {
 		["hide"] = false
 	},
 	["mConquest"] = {["icon"] = true, ["short"] = true, ["name"] = false, ["style"] = "auto", ["hide"] = false},
-	["mCobaltAssembly"] = {
+	["mElementalOverflow"] = {
 		["icon"] = true,
 		["short"] = true,
 		["name"] = false,
 		["style"] = "auto",
 		["hide"] = false
 	},
-	["mDragonGlyphEmbers"] = {
+	["mDragonIslesSupplies"] = {
 		["icon"] = true,
 		["short"] = true,
 		["name"] = false,
