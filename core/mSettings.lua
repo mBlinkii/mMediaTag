@@ -83,65 +83,12 @@ P[mPlugin] = {
 	},
 	["mSystemMenu"] = {["greatvault"] = true},
 	["mSavedAffixes"] = {["year"] = 0, ["affixes"] = nil, ["season"] = nil, ["reset"] = false},
-	["mAnima"] = {
-		["icon"] = true,
-		["short"] = true,
-		["name"] = false,
-		["bag"] = true,
-		["style"] = "auto",
-		["showmax"] = false,
-		["hide"] = false
-	},
-	["mStygia"] = {["icon"] = true, ["short"] = true, ["name"] = false, ["style"] = "auto", ["hide"] = false},
-	["mSoulAsh"] = {
-		["icon"] = true,
-		["short"] = true,
-		["name"] = false,
-		["style"] = "auto",
-		["showmax"] = false,
-		["hide"] = false
-	},
-	["mInfusedRuby"] = {
-		["icon"] = true,
-		["short"] = true,
-		["name"] = false,
-		["style"] = "auto",
-		["showmax"] = false,
-		["hide"] = false
-	},
-	["mGratefulOffering"] = {
-		["icon"] = true,
-		["short"] = true,
-		["name"] = false,
-		["style"] = "auto",
-		["hide"] = false
-	},
 	["mValor"] = {
 		["icon"] = true,
 		["short"] = true,
 		["name"] = false,
 		["style"] = "auto",
 		["showmax"] = false,
-		["hide"] = false
-	},
-	["mCatalogedResearch"] = {
-		["icon"] = true,
-		["short"] = true,
-		["name"] = false,
-		["bag"] = true,
-		["style"] = "auto",
-		["showmax"] = false,
-		["hide"] = false
-	},
-	["mSoulCinders"] = {["icon"] = true, ["short"] = true, ["name"] = false, ["style"] = "auto", ["hide"] = false},
-	["mStygianEmber"] = {["icon"] = true, ["short"] = true, ["name"] = false, ["style"] = "auto", ["hide"] = false},
-	["mTowerKnowledge"] = {["icon"] = true, ["short"] = true, ["name"] = false, ["style"] = "auto", ["hide"] = false},
-	["mCosmicFlux"] = {["icon"] = true, ["short"] = true, ["name"] = false, ["style"] = "auto", ["hide"] = false},
-	["mCyphersFirstOnes"] = {
-		["icon"] = true,
-		["short"] = true,
-		["name"] = false,
-		["style"] = "auto",
 		["hide"] = false
 	},
 	["mTimewarpedBadge"] = {
@@ -151,6 +98,7 @@ P[mPlugin] = {
 		["style"] = "auto",
 		["hide"] = false
 	},
+	["mConquest"] = {["icon"] = true, ["short"] = true, ["name"] = false, ["style"] = "auto", ["hide"] = false},
 	["mCobaltAssembly"] = {
 		["icon"] = true,
 		["short"] = true,
@@ -165,7 +113,6 @@ P[mPlugin] = {
 		["style"] = "auto",
 		["hide"] = false
 	},
-	["mConquest"] = {["icon"] = true, ["short"] = true, ["name"] = false, ["style"] = "auto", ["hide"] = false},
 	["showmax"] = false,
 	["mDataText"] = {
 		["colorhc"] = {
