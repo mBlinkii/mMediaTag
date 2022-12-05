@@ -386,7 +386,6 @@ P[mPlugin] = {
 		["size"] = 16
 	},
 	["SystemMenu"] = {["score"] = true, ["showicon"] = true, ["icons"] = true},
-	["VolumeDisplay"] = {["enable"] = true},
 	["Dungeon"] = {["score"] = true, ["showicon"] = true},
 	["ProfessionMenu"] = {["showicon"] = true},
 	["mMythicPlusTools"] = {["keys"] = true},

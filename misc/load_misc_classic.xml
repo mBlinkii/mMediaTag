@@ -11,7 +11,6 @@
 	<Script file="mTags.lua"/>
 	<Script file="mTipIcon.lua"/>
 	<Script file="mTools.lua"/>
-	<Script file="mVolumeDisplay.lua"/>
 	<Script file="mCoordinatesX.lua"/>
 	<Script file="mCoordinatesY.lua"/>
 	<Script file="mCombatIcon.lua"/>

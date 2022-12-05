@@ -46,10 +46,6 @@ function mMT:mMisc()
 
 	mMT:mLoadTools()
 
-	if E.db[mPlugin].VolumeDisplay.enable then
-		mMT:mVolumeDisplay()
-	end
-
 	if E.Retail then
 		if E.db[mPlugin].mMythicPlusTools.keys then
 			mMT:mStartKeysToChatt()
