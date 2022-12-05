@@ -12,10 +12,36 @@ local stream = { Name = _G.MASTER, Volume = "Sound_MasterVolume", Enabled = "Sou
 local mText = format("Dock %s", L["Volume"])
 local mTextName = "mVolume"
 
+local function VolumeToolTip()
+	local color = GetCVarBool(stream.Enabled) and GetCVarBool(stream.Enabled) and "00FF00" or "FF3333"
+	local level = GetCVar(stream.Volume) * 100
+
+	return { name = stream.Name, level = format("|cFF%s%.f%%|r", color, level) }
+end
+
+function SetVolume(delta)
+	local vol = GetCVar("Sound_MasterVolume")
+	local scale = 100
+
+	if IsShiftKeyDown() then
+		scale = 10
+	end
+
+	vol = vol + (delta / scale)
+
+	if vol >= 1 then
+		vol = 1
+	elseif vol <= 0 then
+		vol = 0
+	end
+
+	SetCVar("Sound_MasterVolume", vol)
+end
+
 local function mTip()
 	if E.db[mPlugin].mDock.tip.enable then
 		local _, _, _, _, _, _, tip = mMT:mColorDatatext()
-		local VolumeInfo = mMT:VolumeToolTip()
+		local VolumeInfo = VolumeToolTip()
 		DT.tooltip:ClearLines()
 		DT.tooltip:AddDoubleLine(VolumeInfo.name, VolumeInfo.level)
 		DT.tooltip:AddLine(" ")
@@ -25,10 +51,10 @@ local function mTip()
 end
 
 local function OnMouseWheel(self, delta)
-	mMT:SetVolume(delta)
+	SetVolume(delta)
 	mTip()
 	if E.db[mPlugin].mDock.volume.showtext then
-		local VolumeInfo = mMT:VolumeToolTip()
+		local VolumeInfo = VolumeToolTip()
 		self.mIcon.TextA:SetFormattedText(mMT:mClassColorString(), VolumeInfo.level)
 	end
 end
@@ -56,7 +82,7 @@ local function OnEvent(self, event, ...)
 	end
 
 	mMT:DockInitialisation(self)
-	local VolumeInfo = mMT:VolumeToolTip()
+	local VolumeInfo = VolumeToolTip()
 	if E.db[mPlugin].mDock.volume.showtext then
 		self.mIcon.TextA:SetFormattedText(mMT:mClassColorString(), VolumeInfo.level)
 	end
@@ -83,10 +109,10 @@ local function OnClick(self)
 		end
 
 		mMT:DockInitialisation(self)
-		mMT:MuteVolume()
+		SetCVar(stream.Enabled, GetCVarBool(stream.Enabled) and 0 or 1)
 
 		if E.db[mPlugin].mDock.volume.showtext then
-			local VolumeInfo = mMT:VolumeToolTip()
+			local VolumeInfo = VolumeToolTip()
 			self.mIcon.TextA:SetFormattedText(mMT:mClassColorString(), VolumeInfo.level)
 		end
 	end

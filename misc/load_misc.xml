@@ -25,7 +25,6 @@
 	<Script file="mTeleports.lua"/>
 	<Script file="mTest.lua"/>
 	<Include file="CurrencyDF\load_CurrencyDF.xml"/>
-	<Include file="CurrencyShadowlands\load_CurrencyShadowlands.xml"/>
 	<Include file="CurrencyPvP\load_CurrencyPvP.xml"/>
 	<Include file="CurrencyDungeon\load_CurrencyDungeon.xml"/>
 	<Include file="Dock\load_dock.xml"/>
