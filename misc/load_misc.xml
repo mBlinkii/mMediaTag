@@ -23,7 +23,7 @@
 	<Script file="mTools.lua"/>
 	<Script file="mRoleIcons.lua"/>
 	<Script file="mTeleports.lua"/>
-	<Script file="mTest.lua"/>
+	<!-- <Script file="mTest.lua"/> -->
 	<Include file="CurrencyDF\load_CurrencyDF.xml"/>
 	<Include file="CurrencyPvP\load_CurrencyPvP.xml"/>
 	<Include file="CurrencyDungeon\load_CurrencyDungeon.xml"/>
