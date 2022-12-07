@@ -9,25 +9,23 @@ local GetItemIcon = GetItemIcon
 local GetSpellInfo = GetSpellInfo
 
 local function AddToolTipIconItem(tooltip, data)
-	if data  then
-		if data.id and tooltip:GetName() then
-			local title = _G[tooltip:GetName() .. "TextLeft1"]
-			local icon = GetItemIcon(data.id)
-			if icon then
-				title:SetFormattedText("|T%s:%d|t %s", icon, E.db[mPlugin].mTIconSize, title:GetText())
-			end
+	print("STAGFSFDG")
+	mMT:DebugPrintTable(data.args[1])
+	if data and tooltip then
+		local icon = GetItemIcon(data.id)
+		local title = data.lines and data.lines[1] and data.lines[1].leftText or _G[tooltip:GetName() .. "TextLeft1"]
+		if icon and title then
+			_G[tooltip:GetName() .. "TextLeft1"]:SetFormattedText("|T%s:%d|t %s", icon, E.db[mPlugin].mTIconSize, title)
 		end
 	end
 end
 
 local function AddToolTipIconSpell(tooltip, data)
-	if data  then
-		if data.id and tooltip:GetName() then
-			local title = _G[tooltip:GetName() .. "TextLeft1"]
-			local icon = GetSpellTexture(data.id)
-			if icon then
-				title:SetFormattedText("|T%s:%d|t %s", icon, E.db[mPlugin].mTIconSize, title:GetText())
-			end
+	if data and tooltip then
+		local icon = GetSpellTexture(data.id)
+		local title = data.lines and data.lines[1] and data.lines[1].leftText or _G[tooltip:GetName() .. "TextLeft1"]
+		if icon and title then
+			_G[tooltip:GetName() .. "TextLeft1"]:SetFormattedText("|T%s:%d|t %s", icon, E.db[mPlugin].mTIconSize, title)
 		end
 	end
 end
