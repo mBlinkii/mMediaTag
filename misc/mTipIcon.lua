@@ -9,8 +9,6 @@ local GetItemIcon = GetItemIcon
 local GetSpellInfo = GetSpellInfo
 
 local function AddToolTipIconItem(tooltip, data)
-	print("STAGFSFDG")
-	mMT:DebugPrintTable(data.args[1])
 	if data and tooltip then
 		local icon = GetItemIcon(data.id)
 		local title = data.lines and data.lines[1] and data.lines[1].leftText or _G[tooltip:GetName() .. "TextLeft1"]
