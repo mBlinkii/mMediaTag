@@ -8,23 +8,28 @@ local _G = _G
 local GetItemIcon = GetItemIcon
 local GetSpellInfo = GetSpellInfo
 
+local function SetTooltipIcon(tooltip, icon,title)
+	if icon and title then
+		_G[tooltip:GetName() .. "TextLeft1"]:SetFormattedText("|T%s:%d|t %s", icon, E.db[mPlugin].mTIconSize, title)
+	end
+end
+
+local function AddToolTipIconMount(tooltip, data)
+	if data and tooltip then
+		local icon = select(3, C_MountJournal.GetMountInfoByID(data.id))
+		SetTooltipIcon(tooltip, icon, data.lines and data.lines[2] and data.lines[2].leftText)
+	end
+end
+
 local function AddToolTipIconItem(tooltip, data)
 	if data and tooltip then
-		local icon = GetItemIcon(data.id)
-		local title = data.lines and data.lines[1] and data.lines[1].leftText or _G[tooltip:GetName() .. "TextLeft1"]
-		if icon and title then
-			_G[tooltip:GetName() .. "TextLeft1"]:SetFormattedText("|T%s:%d|t %s", icon, E.db[mPlugin].mTIconSize, title)
-		end
+		SetTooltipIcon(tooltip, GetItemIcon(data.id), data.lines and data.lines[1] and data.lines[1].leftText)
 	end
 end
 
 local function AddToolTipIconSpell(tooltip, data)
 	if data and tooltip then
-		local icon = GetSpellTexture(data.id)
-		local title = data.lines and data.lines[1] and data.lines[1].leftText or _G[tooltip:GetName() .. "TextLeft1"]
-		if icon and title then
-			_G[tooltip:GetName() .. "TextLeft1"]:SetFormattedText("|T%s:%d|t %s", icon, E.db[mPlugin].mTIconSize, title)
-		end
+		SetTooltipIcon(tooltip, GetSpellTexture(data.id), data.lines and data.lines[1] and data.lines[1].leftText)
 	end
 end
 
@@ -64,6 +69,8 @@ function mMT:TipIconSetup()
 	if E.Retail then
 		TooltipDataProcessor.AddTooltipPostCall(Enum.TooltipDataType.Item, AddToolTipIconItem)
 		TooltipDataProcessor.AddTooltipPostCall(Enum.TooltipDataType.Spell, AddToolTipIconSpell)
+		TooltipDataProcessor.AddTooltipPostCall(Enum.TooltipDataType.Toy, AddToolTipIconItem)
+		TooltipDataProcessor.AddTooltipPostCall(Enum.TooltipDataType.Mount, AddToolTipIconMount)
 	else
 		hookTip(_G["GameTooltip"])
 		hookTip(_G["ItemRefTooltip"])
