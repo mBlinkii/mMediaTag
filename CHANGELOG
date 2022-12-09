@@ -2,6 +2,23 @@
 [Eng] - All changes to this project will be documented in this file. The latest changes are at the top.
 [Ger] - Alle Änderungen an diesem Projekt werden in dieser Datei dokumentiert. Die neuesten Änderungen stehen ganz oben.
 
+## [ver. 2.91] - xx.12.2022
+### Update
+- FIX NP-Healtmarker Auto range toggel not working
+- FIX Custom Unitframe BG Textures
+- FIX Profession Datatext Tooltip
+- FIX Nil error in tooltip icons
+- FIX Custom custom class color
+- UPDATE Api change for intterupt on cd
+- REMOVE VolumeDisplay
+- REMOVE SL Currencys
+### Added
+- NEW Statusbar Textures R - Series
+- NEW DF Currencys, Dragon Isles Supplies, Elemental Overflow
+- NEW Fonts Inter, Lemon, Oregano, Oswald, Ubuntu
+- NEW Custom color for each Dock Icon
+- NEW Tooltip icon for mounts and toys in retail
+
 ## [ver. 2.90] - 20.11.2022
 ### Update
 - FIX mDock Talent Icon
