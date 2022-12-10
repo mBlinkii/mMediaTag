@@ -781,25 +781,13 @@ E:AddTag("mLevel", "UNIT_LEVEL PLAYER_LEVEL_UP PLAYER_UPDATE_RESTING", function(
 			if UnitIsWildBattlePet(unit) or UnitIsBattlePetCompanion(unit) then
 				return UnitBattlePetLevel(unit)
 			elseif level > 0 then
-				if unit == "player" then
-					if not E:XPIsLevelMax() then
-						return level
-					end
-				else
-					return level
-				end
+				return level
 			else
 				return format("%s??|r", E.db.mMediaTag.cGeneralLevel.color)
 			end
 		end
 		if level > 0 then
-			if unit == "player" then
-				if not E:XPIsLevelMax() then
-					return level
-				end
-			else
-				return level
-			end
+			return level
 		else
 			return format("%s??|r", E.db.mMediaTag.cGeneralLevel.color)
 		end
