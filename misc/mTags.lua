@@ -1556,7 +1556,9 @@ E:AddTagInfo("mRoleIcon", ns.mName, L["Role Icon."])
 E:AddTagInfo("mRoleIcon:target", ns.mName, L["Target role Icon."])
 
 E:AddTagInfo("mLevel", ns.mName, L["Level changes to resting in the City."])
+E:AddTagInfo("mLevel:hideMax", ns.mName, L["Level changes to resting in the City. Hides Player level if Player is max level."])
 E:AddTagInfo("mLevelSmart", ns.mName, L["Same as mLevel (hides Level if it is equal)."])
+E:AddTagInfo("mLevelSmart:hideMax", ns.mName, L["Same as mLevel (hides Level if it is equal). Hides Player level if Player is max level."])
 
 E:AddTagInfo("mGroup", ns.mName, L["Group number with full text (Group 3)."])
 E:AddTagInfo("mGroup:short", ns.mName, L["Group number with abbreviated text (Grp. 3)."])
