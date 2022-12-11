@@ -5,11 +5,12 @@ local DT = E:GetModule("DataTexts")
 local CH = E:GetModule("Chat")
 local addon, ns = ...
 
-local _G = _G
+--Lua functions
 local type, ipairs, pairs, select = type, ipairs, pairs, select
 local sort, next, wipe, tremove, tinsert = sort, next, wipe, tremove, tinsert
 local format, gsub, strfind, strjoin, strmatch = format, gsub, strfind, strjoin, strmatch
 
+--WoW API / Variables
 local BNet_GetValidatedCharacterName = BNet_GetValidatedCharacterName
 local GetMouseFocus = GetMouseFocus
 local BNGetInfo = BNGetInfo
@@ -34,14 +35,13 @@ local C_FriendList_GetFriendInfoByIndex = C_FriendList.GetFriendInfoByIndex
 local ChatFrame_SendBNetTell = ChatFrame_SendBNetTell
 local InCombatLockdown = InCombatLockdown
 local C_PartyInfo_RequestInviteFromUnit = C_PartyInfo.RequestInviteFromUnit
-local C_PartyInfo_InviteUnit = C_PartyInfo.InviteUnit
+local InviteUnit = C_PartyInfo.InviteUnit or InviteUnit
 local PRIEST_COLOR = RAID_CLASS_COLORS.PRIEST
 
 --Variables
 local mText = format("Dock %s", L["Friends"])
 local mTextName = "mFriends"
 local TextColor = mMT:mClassColorString()
-local lastPanel = nil
 
 -- create a popup
 E.PopupDialogs.SET_BN_BROADCAST = {
@@ -123,7 +123,7 @@ local menuList = {
 }
 
 local function inviteClick(_, name, guid)
-	DT.EasyMenu:Hide()
+	E.EasyMenu:Hide()
 
 	if not (name and name ~= "") then
 		return
@@ -136,12 +136,12 @@ local function inviteClick(_, name, guid)
 			if isBNet then
 				BNInviteFriend(name)
 			else
-				C_PartyInfo_InviteUnit(name)
+				InviteUnit(name)
 			end
 		elseif inviteType == "REQUEST_INVITE" then
 			if isBNet then
 				BNRequestInviteFriend(name)
-			else
+			elseif E.Retail then
 				C_PartyInfo_RequestInviteFromUnit(name)
 			end
 		end
@@ -151,13 +151,13 @@ local function inviteClick(_, name, guid)
 		if isBNet then
 			BNInviteFriend(name)
 		else
-			C_PartyInfo_InviteUnit(name)
+			InviteUnit(name)
 		end
 	end
 end
 
 local function whisperClick(_, name, battleNet)
-	DT.EasyMenu:Hide()
+	E.EasyMenu:Hide()
 
 	if battleNet then
 		ChatFrame_SendBNetTell(name)
@@ -178,9 +178,9 @@ local friendTable, BNTable, tableList = {}, {}, {}
 local friendOnline, friendOffline =
 	gsub(_G.ERR_FRIEND_ONLINE_SS, "|Hplayer:%%s|h%[%%s%]|h", ""), gsub(_G.ERR_FRIEND_OFFLINE_S, "%%s", "")
 local wowString = _G.BNET_CLIENT_WOW
-local retailID = _G.WOW_PROJECT_ID
-local WOW_CLASSIC = _G.BNET_FRIEND_TOOLTIP_WOW_CLASSIC
-local dataValid, lastPanel = false, nil
+local retailID, classicID, tbcID =
+	_G.WOW_PROJECT_MAINLINE, _G.WOW_PROJECT_CLASSIC, _G.WOW_PROJECT_BURNING_CRUSADE_CLASSIC or 5
+local dataValid, lastPanel = false
 local statusTable = {
 	AFK = " |cffFFFFFF[|r|cffFF9900" .. L["AFK"] .. "|r|cffFFFFFF]|r",
 	DND = " |cffFFFFFF[|r|cffFF3333" .. L["DND"] .. "|r|cffFFFFFF]|r",
@@ -195,18 +195,21 @@ local clientList = {
 	Pro = { index = 4, tag = "OW", name = "Overwatch" },
 	OSI = { index = 5, tag = "D2", name = "Diablo 2: Resurrected" },
 	D3 = { index = 6, tag = "D3", name = "Diablo 3" },
-	S1 = { index = 7, tag = "SC", name = "Starcraft" },
-	S2 = { index = 8, tag = "SC2", name = "Starcraft 2" },
-	W3 = { index = 9, tag = "WC3", name = "Warcraft 3: Reforged" },
-	RTRO = { index = 10, tag = "AC", name = "Arcade Collection" },
-	WLBY = { index = 11, tag = "CB4", name = "Crash Bandicoot 4" },
-	VIPR = { index = 12, tag = "BO4", name = "COD: Black Ops 4" },
-	ODIN = { index = 13, tag = "MW", name = "COD: Modern Warfare" },
-	LAZR = { index = 14, tag = "MW2", name = "COD: Modern Warfare 2" },
-	ZEUS = { index = 15, tag = "CW", name = "COD: Cold War" },
-	FORE = { index = 16, tag = "VG", name = "COD: Vanguard" },
-	App = { index = 17, tag = "App", name = "App" },
-	BSAp = { index = 18, tag = L["Mobile"], name = L["Mobile"] },
+	ANBS = { index = 7, tag = "DI", name = "Diablo Immortal" },
+	S1 = { index = 8, tag = "SC", name = "Starcraft" },
+	S2 = { index = 9, tag = "SC2", name = "Starcraft 2" },
+	W3 = { index = 10, tag = "WC3", name = "Warcraft 3: Reforged" },
+	RTRO = { index = 11, tag = "AC", name = "Arcade Collection" },
+	WLBY = { index = 12, tag = "CB4", name = "Crash Bandicoot 4" },
+	VIPR = { index = 13, tag = "BO4", name = "COD: Black Ops 4" },
+	ODIN = { index = 14, tag = "WZ", name = "COD: Warzone" },
+	AUKS = { index = 15, tag = "WZ2", name = "COD: Warzone 2" },
+	LAZR = { index = 16, tag = "MW2", name = "COD: Modern Warfare 2" },
+	ZEUS = { index = 17, tag = "CW", name = "COD: Cold War" },
+	FORE = { index = 18, tag = "VG", name = "COD: Vanguard" },
+	GRY = { index = 19, tag = "AR", name = "Warcraft Arclight Rumble" },
+	App = { index = 20, tag = "App", name = "App" },
+	BSAp = { index = 21, tag = L["Mobile"], name = L["Mobile"] },
 }
 
 DT.clientFullName = {}
@@ -243,7 +246,7 @@ local function BuildFriendTable(total)
 				online = info.connected, --5
 				status = status, --6
 				notes = info.notes, --7
-				guid = info.guid,			--8
+				guid = info.guid, --8
 			}
 		end
 	end
@@ -327,10 +330,10 @@ local function AddToBNTable(
 		zoneName = zoneName, --16
 		level = level, --17
 		guid = guid, --18
-		gameText = gameText,				--19
+		gameText = gameText, --19
 	}
 
-	if strmatch(gameText, WOW_CLASSIC) then
+	if wowProjectID == classicID or wowProjectID == tbcID then
 		obj.classicText, obj.realmName = strmatch(gameText, "(.-)%s%-%s(.+)")
 	end
 
@@ -550,23 +553,80 @@ local function Click(self, btn)
 		menuList[2].menuList = {}
 		menuList[3].menuList = {}
 
-		if not E.global.datatexts.settings.Friends.hideWoW then
-			for _, info in ipairs(friendTable) do
-				if info.online then
-					local shouldSkip = false
-					if (info.status == statusTable.AFK) and E.global.datatexts.settings.Friends.hideAFK then
-						shouldSkip = true
-					elseif (info.status == statusTable.DND) and E.global.datatexts.settings.Friends.hideDND then
-						shouldSkip = true
-					end
-					if not shouldSkip then
-						local classc, levelc = E:ClassColor(info.class), GetQuestDifficultyColor(info.level)
-						if not classc then
-							classc = levelc
-						end
+		for _, info in ipairs(friendTable) do
+			if info.online then
+				local classc, levelc = E:ClassColor(info.class), GetQuestDifficultyColor(info.level)
+				if not classc then
+					classc = levelc
+				end
 
-						menuCountWhispers = menuCountWhispers + 1
-						menuList[3].menuList[menuCountWhispers] = {
+				menuCountWhispers = menuCountWhispers + 1
+				menuList[3].menuList[menuCountWhispers] = {
+					text = format(
+						levelNameString,
+						levelc.r * 255,
+						levelc.g * 255,
+						levelc.b * 255,
+						info.level,
+						classc.r * 255,
+						classc.g * 255,
+						classc.b * 255,
+						info.name
+					),
+					arg1 = info.name,
+					notCheckable = true,
+					func = whisperClick,
+				}
+
+				if inGroup(info.name) == "" then
+					menuCountInvites = menuCountInvites + 1
+					menuList[2].menuList[menuCountInvites] = {
+						text = format(
+							levelNameString,
+							levelc.r * 255,
+							levelc.g * 255,
+							levelc.b * 255,
+							info.level,
+							classc.r * 255,
+							classc.g * 255,
+							classc.b * 255,
+							info.name
+						),
+						arg1 = info.name,
+						arg2 = info.guid,
+						notCheckable = true,
+						func = inviteClick,
+					}
+				end
+			end
+		end
+
+		for _, info in ipairs(BNTable) do
+			if info.isOnline then
+				local realID, hasBnet = info.accountName, false
+
+				for _, z in ipairs(menuList[3].menuList) do
+					if z and z.text and (z.text == realID) then
+						hasBnet = true
+						break
+					end
+				end
+
+				if not hasBnet then -- hasBnet will make sure only one is added to whispers but still allow us to add multiple into invites
+					menuCountWhispers = menuCountWhispers + 1
+					menuList[3].menuList[menuCountWhispers] =
+						{ text = realID, arg1 = realID, arg2 = true, notCheckable = true, func = whisperClick }
+				end
+
+				if (info.client and info.client == wowString) and inGroup(info.characterName, info.realmName) == "" then
+					local classc, levelc = E:ClassColor(info.className), GetQuestDifficultyColor(info.level)
+					if not classc then
+						classc = levelc
+					end
+
+					if info.wowProjectID == retailID then
+						menuCountInvites = menuCountInvites + 1
+						menuList[2].menuList[menuCountInvites] = {
 							text = format(
 								levelNameString,
 								levelc.r * 255,
@@ -576,102 +636,20 @@ local function Click(self, btn)
 								classc.r * 255,
 								classc.g * 255,
 								classc.b * 255,
-								info.name
+								info.characterName
 							),
-							arg1 = info.name,
+							arg1 = info.gameID,
+							arg2 = info.guid,
 							notCheckable = true,
-							func = whisperClick,
+							func = inviteClick,
 						}
-
-						if inGroup(info.name) == "" then
-							menuCountInvites = menuCountInvites + 1
-							menuList[2].menuList[menuCountInvites] = {
-								text = format(
-									levelNameString,
-									levelc.r * 255,
-									levelc.g * 255,
-									levelc.b * 255,
-									info.level,
-									classc.r * 255,
-									classc.g * 255,
-									classc.b * 255,
-									info.name
-								),
-								arg1 = info.name,
-								arg2 = info.guid,
-								notCheckable = true,
-								func = inviteClick,
-							}
-						end
 					end
 				end
 			end
 		end
 
-		for _, info in ipairs(BNTable) do
-			if info.isOnline then
-				local shouldSkip = false
-				if (info.isBnetAFK == true) and E.global.datatexts.settings.Friends.hideAFK then
-					shouldSkip = true
-				elseif (info.isBnetDND == true) and E.global.datatexts.settings.Friends.hideDND then
-					shouldSkip = true
-				end
-				if info.client and E.global.datatexts.settings.Friends["hide" .. info.client] then
-					shouldSkip = true
-				end
-				if not shouldSkip then
-					local realID, hasBnet = info.accountName, false
-
-					for _, z in ipairs(menuList[3].menuList) do
-						if z and z.text and (z.text == realID) then
-							hasBnet = true
-							break
-						end
-					end
-
-					if not hasBnet then -- hasBnet will make sure only one is added to whispers but still allow us to add multiple into invites
-						menuCountWhispers = menuCountWhispers + 1
-						menuList[3].menuList[menuCountWhispers] =
-							{ text = realID, arg1 = realID, arg2 = true, notCheckable = true, func = whisperClick }
-					end
-
-					if
-						(info.client and info.client == wowString)
-						and (E.myfaction == info.faction)
-						and inGroup(info.characterName, info.realmName) == ""
-					then
-						local classc, levelc = E:ClassColor(info.className), GetQuestDifficultyColor(info.level)
-						if not classc then
-							classc = levelc
-						end
-
-						if info.wowProjectID == retailID then
-							menuCountInvites = menuCountInvites + 1
-							menuList[2].menuList[menuCountInvites] = {
-								text = format(
-									levelNameString,
-									levelc.r * 255,
-									levelc.g * 255,
-									levelc.b * 255,
-									info.level,
-									classc.r * 255,
-									classc.g * 255,
-									classc.b * 255,
-									info.characterName
-								),
-								arg1 = info.gameID,
-								arg2 = info.guid,
-								notCheckable = true,
-								func = inviteClick,
-							}
-						end
-					end
-				end
-			end
-		end
-
-		DT:SetEasyMenuAnchor(DT.EasyMenu, self)
-		_G.EasyMenu(menuList, DT.EasyMenu, nil, nil, nil, "MENU")
+		E:SetEasyMenuAnchor(E.EasyMenu, self)
+		_G.EasyMenu(menuList, E.EasyMenu, nil, nil, nil, "MENU")
 	elseif InCombatLockdown() then
 		_G.UIErrorsFrame:AddMessage(E.InfoColor .. _G.ERR_NOT_IN_COMBAT)
 	else
@@ -904,6 +882,7 @@ local function OnEnter(self)
 				end
 			end
 		end
+
 		DT.tooltip:Show()
 	end
 end
@@ -933,23 +912,28 @@ local function OnEvent(self, event, message)
 			return
 		end
 	end
-
 	-- force update when showing tooltip
 	dataValid = false
 
 	if not IsAltKeyDown() and event == "MODIFIER_STATE_CHANGED" and GetMouseFocus() == self then
 		OnEnter(self)
 	end
-
-	if E.db[mPlugin].mDock.friends.color == "custom" then
-		local r, g, b =
-			E.db[mPlugin].mDock.fontcolor.r, E.db[mPlugin].mDock.fontcolor.g, E.db[mPlugin].mDock.fontcolor.b
-		TextColor = strjoin("", E:RGBToHex(r, g, b), "%s|r")
+	if E.db[mPlugin].mDock.friends.color == "default" then
+		self.mIcon.TextA:SetFormattedText(mMT:mClassColorString(), onlineFriends + numBNetOnline)
+	else
+		self.mIcon.TextA:SetFormattedText(
+			strjoin(
+				"",
+				E:RGBToHex(
+					E.db[mPlugin].mDock.fontcolor.r,
+					E.db[mPlugin].mDock.fontcolor.g,
+					E.db[mPlugin].mDock.fontcolor.b
+				),
+				"%s|r"
+			),
+			onlineFriends + numBNetOnline
+		)
 	end
-
-	self.mIcon.TextA:SetFormattedText(TextColor, onlineFriends + numBNetOnline)
-
-	lastPanel = self
 end
 
 local function OnLeave(self)

@@ -530,6 +530,7 @@ local function OptionsDock()
 					end,
 					values = {
 						default = L["Default"],
+						custom = L["Custom"],
 						elvui = L["ElvUI"],
 					},
 				},
@@ -1277,7 +1278,7 @@ local function OptionsDock()
 					end,
 					values = {
 						custom = L["Custom"],
-						class = L["Class"],
+						default = L["Default"],
 					},
 				},
 				friendstoggle = {
@@ -1344,6 +1345,7 @@ local function OptionsDock()
 					end,
 					values = {
 						default = L["Default"],
+						custom = L["Custom"],
 						class = L["Class"],
 					},
 				},

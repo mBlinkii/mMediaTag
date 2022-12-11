@@ -178,6 +178,19 @@ local function OnEvent(self, event, ...)
 	if Option == "durability" then
 		if Color == "default" then
 			self.mIcon.TextA:SetFormattedText("%s%d%%|r", hex, totalDurability)
+		elseif Color == "custom" then
+			self.mIcon.TextA:SetFormattedText(
+				strjoin(
+					"",
+					E:RGBToHex(
+						E.db[mPlugin].mDock.fontcolor.r,
+						E.db[mPlugin].mDock.fontcolor.g,
+						E.db[mPlugin].mDock.fontcolor.b
+					),
+					"%s|r"
+				),
+				format("%d%%|r", totalDurability)
+			)
 		else
 			self.mIcon.TextA:SetFormattedText(mMT:mClassColorString(), format("%d%%|r", totalDurability))
 		end
