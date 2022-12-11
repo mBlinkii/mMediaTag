@@ -10,6 +10,7 @@ local format = format
 local wipe = wipe
 local select = select
 local strjoin = strjoin
+local pi = math.pi
 
 --WoW API / Variables
 local _G = _G
@@ -44,7 +45,6 @@ local slots = {
 	[18] = _G.INVTYPE_RANGED,
 }
 
-
 local function colorize(num)
 	if num >= 0 then
 		return 0.1, 1, 0.1
@@ -52,6 +52,7 @@ local function colorize(num)
 		return E:ColorGradient(-(pi / num), 1, 0.1, 0.1, 1, 1, 0.1, 0.1, 1, 0.1)
 	end
 end
+
 
 local function mCheckDurability()
 	if totalDurability <= 35 then
@@ -78,9 +79,9 @@ local function OnEnter(self)
 	mMT:mOnEnter(self, "CheckFrameCharacter")
 
 	if E.db[mPlugin].mDock.tip.enable then
+		DT.tooltip:ClearLines()
 		if E.Retail then
 			local avg, avgEquipped, avgPvp = GetAverageItemLevel()
-			DT.tooltip:AddLine(format("%s%s|r", titel, STAT_AVERAGE_ITEM_LEVEL))
 			DT.tooltip:AddDoubleLine(STAT_AVERAGE_ITEM_LEVEL, format("%0.2f", avg), 1, 1, 1, 0.1, 1, 0.1)
 			DT.tooltip:AddDoubleLine(
 				GMSURVEYRATING3,
@@ -116,7 +117,7 @@ local function OnEnter(self)
 				E:ColorGradient(durability * 0.01, 1, 0.1, 0.1, 1, 1, 0.1, 0.1, 1, 0.1)
 			)
 		end
-		invDurability = wipe(invDurability)
+
 		if totalRepairCost > 0 then
 			DT.tooltip:AddLine(" ")
 			DT.tooltip:AddDoubleLine(REPAIR_COST, GetMoneyString(totalRepairCost), 0.6, 0.8, 1, 1, 1, 1)

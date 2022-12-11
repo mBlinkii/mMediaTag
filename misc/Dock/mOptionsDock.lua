@@ -1344,7 +1344,6 @@ local function OptionsDock()
 					end,
 					values = {
 						default = L["Default"],
-						custom = L["Custom"],
 						class = L["Class"],
 					},
 				},

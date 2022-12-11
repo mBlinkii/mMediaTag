@@ -5,7 +5,13 @@ local DT = E:GetModule("DataTexts")
 local addon, ns = ...
 
 --Lua functions
-local format = format
+local _G = _G
+local GetInventoryItemDurability = GetInventoryItemDurability
+local ToggleCharacter = ToggleCharacter
+local InCombatLockdown = InCombatLockdown
+local GetInventoryItemTexture = GetInventoryItemTexture
+local GetInventoryItemLink = GetInventoryItemLink
+local GetMoneyString = GetMoneyString
 
 --Variables
 local mText = format("Dock %s", L["Durability"])
@@ -16,7 +22,7 @@ local tooltipString = "%d%%"
 local totalDurability = 0
 local invDurability = {}
 local totalRepairCost
-local r, g, b = nil, nil, nil
+
 local slots = {
 	[1] = _G.INVTYPE_HEAD,
 	[3] = _G.INVTYPE_SHOULDER,
@@ -32,8 +38,8 @@ local slots = {
 }
 
 local function mCheckDurability()
-	if totalDurability <= E.global.datatexts.settings.Durability.percThreshold then
-		r, g, b = E:ColorGradient(totalDurability * 0.01, 1, 0.1, 0.1, 1, 1, 0.1, 0.1, 1, 0.1)
+	if totalDurability <= 35 then
+		local r, g, b = E:ColorGradient(totalDurability * 0.01, 1, 0.1, 0.1, 1, 1, 0.1, 0.1, 1, 0.1)
 		return r, g, b, 1
 	end
 end
@@ -49,6 +55,8 @@ end
 
 local function OnEnter(self)
 	if E.db[mPlugin].mDock.tip.enable then
+		DT.tooltip:ClearLines()
+
 		for slot, durability in pairs(invDurability) do
 			DT.tooltip:AddDoubleLine(
 				format(
@@ -64,8 +72,6 @@ local function OnEnter(self)
 			)
 		end
 
-		invDurability = wipe(invDurability)
-		
 		if totalRepairCost > 0 then
 			DT.tooltip:AddLine(" ")
 			DT.tooltip:AddDoubleLine(REPAIR_COST, GetMoneyString(totalRepairCost), 0.6, 0.8, 1, 1, 1, 1)
@@ -96,31 +102,50 @@ local function OnEvent(self, event, ...)
 
 	totalDurability = 100
 	totalRepairCost = 0
-	local TextColor = mMT:mClassColorString()
 
-	invDurability = wipe(invDurability)
+	wipe(invDurability)
 
 	for index in pairs(slots) do
 		local currentDura, maxDura = GetInventoryItemDurability(index)
 		if currentDura and maxDura > 0 then
-			local perc = (currentDura / maxDura) * 100
+			local perc, repairCost = (currentDura / maxDura) * 100
 			invDurability[index] = perc
 
 			if perc < totalDurability then
 				totalDurability = perc
 			end
 
-			totalRepairCost = totalRepairCost + select(3, E.ScanTooltip:SetInventoryItem("player", index))
+			if E.Retail and E.ScanTooltip.GetTooltipData then
+				E.ScanTooltip:SetInventoryItem("player", index)
+				E.ScanTooltip:Show()
+
+				local data = E.ScanTooltip:GetTooltipData()
+				repairCost = data and data.repairCost
+			else
+				repairCost = select(3, E.ScanTooltip:SetInventoryItem("player", index))
+			end
+
+			totalRepairCost = totalRepairCost + (repairCost or 0)
 		end
 	end
 
-	if Color == "default" then
-		r, g, b = E:ColorGradient(totalDurability * 0.01, 1, 0.1, 0.1, 1, 1, 0.1, 0.1, 1, 0.1)
-		TextColor = strjoin("", E:RGBToHex(r, g, b), "%s|r")
-	elseif Color == "custom" then
-		r, g, b = E.db[mPlugin].mDock.fontcolor.r, E.db[mPlugin].mDock.fontcolor.g, E.db[mPlugin].mDock.fontcolor.b
-		TextColor = strjoin("", E:RGBToHex(r, g, b), "%s|r")
+	local r, g, b = E:ColorGradient(totalDurability * 0.01, 1, 0.1, 0.1, 1, 1, 0.1, 0.1, 1, 0.1)
+	local hex = E:RGBToHex(r, g, b)
+
+	if self.mSettings.OnlyText and totalDurability then
+		self.text:SetFormattedText("%s%d%%|r", hex, totalDurability)
+	else
+		if self.text ~= "" then
+			self.text:SetText("")
+		end
+
+		if Color == "default" then
+			self.mIcon.TextA:SetFormattedText("%s%d%%|r", hex, totalDurability)
+		else
+			self.mIcon.TextA:SetFormattedText(mMT:mClassColorString(), format("%d%%|r", totalDurability))
+		end
 	end
+
 
 	if mCheckDurability() then
 		E:Flash(self, 0.5, true)
@@ -128,15 +153,6 @@ local function OnEvent(self, event, ...)
 	else
 		E:StopFlash(self)
 		mMT:DockNormalColor(self)
-	end
-
-	if self.mSettings.OnlyText and totalDurability then
-		self.text:SetFormattedText(TextColor, mMT:round(totalDurability or 0) .. "%")
-	else
-		if self.text ~= "" then
-			self.text:SetText("")
-		end
-		self.mIcon.TextA:SetFormattedText(TextColor, mMT:round(totalDurability or 0) .. "%")
 	end
 end
 
