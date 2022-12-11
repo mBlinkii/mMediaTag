@@ -197,7 +197,7 @@ local function OnEvent(self, event, ...)
 				0.78
 			)
 			hex = E:RGBToHex(r, g, b)
-			
+
 			TextColor = strjoin("", E:RGBToHex(r, g, b), "%s|r")
 			self.mIcon.TextA:SetFormattedText("%s%d|r", hex, avgEquipped)
 		else
