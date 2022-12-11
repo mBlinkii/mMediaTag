@@ -717,7 +717,7 @@ local function OptionsDock()
 					end,
 					values = {
 						custom = L["Custom"],
-						class = L["Class"],
+						default = L["Default"],
 					},
 				},
 				guildtoggle = {

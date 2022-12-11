@@ -112,7 +112,8 @@
         "GetContainerItemInfo",
         "GetContainerNumSlots",
         "GetCursorPosition",
-        "TooltipDataProcessor"
+        "TooltipDataProcessor",
+        "InviteUnit"
     ],
     "Lua.diagnostics.disable": [
         "redundant-parameter",
