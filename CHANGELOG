@@ -9,15 +9,18 @@
 - FIX Profession Datatext Tooltip
 - FIX Nil error in tooltip icons
 - FIX Custom custom class color
+- FIX Dock Icons Guild, Friends and Durability
 - UPDATE Api change for intterupt on cd
 - REMOVE VolumeDisplay
 - REMOVE SL Currencys
 ### Added
 - NEW Statusbar Textures R - Series
 - NEW DF Currencys, Dragon Isles Supplies, Elemental Overflow
-- NEW Fonts Inter, Lemon, Oregano, Oswald, Ubuntu
+- NEW Fonts Inter, Lemon, Oregano, Oswald, Ubuntu, Noto Sans
 - NEW Custom color for each Dock Icon
 - NEW Tooltip icon for mounts and toys in retail
+- NEW Add mor Tooltip infos for Dock Collection, Achievement
+- NEW Tag mLevelSmart:hideMax and mLevel:hideMax hides Player level on max level
 
 ## [ver. 2.90] - 20.11.2022
 ### Update
