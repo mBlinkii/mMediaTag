@@ -22,10 +22,13 @@ end
 
 local function OnEnter(self)
 	if E.db[mPlugin].mDock.tip.enable then
-		DT.tooltip:AddDoubleLine(ACHIEVEMENT_BUTTON, format("|CFFFFFFFF%s|r",L["Points"]))
+		DT.tooltip:AddDoubleLine(ACHIEVEMENT_BUTTON, format("|CFFFFFFFF%s|r", L["Points"]))
 		DT.tooltip:AddLine(" ")
-		DT.tooltip:AddDoubleLine(format(mMT:mClassColorString(), UnitName("player")), format("|CFF6495ED%s|r", GetTotalAchievementPoints()))
-		
+		DT.tooltip:AddDoubleLine(
+			format(mMT:mClassColorString(), UnitName("player")),
+			format("|CFF6495ED%s|r", GetTotalAchievementPoints())
+		)
+
 		ID1, ID2 = GetTrackedAchievements()
 		if ID1 or ID2 then
 			DT.tooltip:AddLine(" ")
@@ -35,10 +38,14 @@ local function OnEnter(self)
 				GetAchievementInfo(ID1)
 
 			if ID1 and Name and RewardText then
-				IDNumber, Name, Points, Completed, Month, Day, Year, Description, Flags, Image, RewardText, isGuildAch = GetAchievementInfo(ID1)
+				IDNumber, Name, Points, Completed, Month, Day, Year, Description, Flags, Image, RewardText, isGuildAch =
+					GetAchievementInfo(ID1)
 
 				DT.tooltip:AddLine(" ")
-				DT.tooltip:AddDoubleLine(format("|CFF40E0D0%s|r", Name), Completed and "|CFF88FF88completed|r" or "|CFFFF8888missing|r")
+				DT.tooltip:AddDoubleLine(
+					format("|CFF40E0D0%s|r", Name),
+					Completed and "|CFF88FF88completed|r" or "|CFFFF8888missing|r"
+				)
 				if not Completed and Description then
 					DT.tooltip:AddLine(format("|CFFFFFFFF%s|r", Description))
 				end
@@ -49,7 +56,10 @@ local function OnEnter(self)
 					GetAchievementInfo(ID2)
 
 				DT.tooltip:AddLine(" ")
-				DT.tooltip:AddDoubleLine(format("|CFF40E0D0%s|r", Name), Completed and "|CFF88FF88completed|r" or "|CFFFF8888missing|r")
+				DT.tooltip:AddDoubleLine(
+					format("|CFF40E0D0%s|r", Name),
+					Completed and "|CFF88FF88completed|r" or "|CFFFF8888missing|r"
+				)
 				if not Completed and Description then
 					DT.tooltip:AddLine(format("|CFFFFFFFF%s|r", Description))
 				end
