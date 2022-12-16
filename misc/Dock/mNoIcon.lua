@@ -13,7 +13,6 @@ local mTextName = "mNoIcon"
 
 local function OnEvent(self, event, ...)
 	if self.mIcon then
-		print("CLEAN MDOCK")
 		if self.mIcon.TextA and self.mIcon.TextB then
 			self.mIcon.TextA:SetText("")
 			self.mIcon.TextB:SetText("")
@@ -25,9 +24,8 @@ local function OnEvent(self, event, ...)
 
 		self.mIcon:SetTexture(nil)
 
-		self.mIcon = nil
-
-		self.mSettings = nil
+		wipe(self.mIcon)
+		wipe(self.mSettings)
 	end
 end
 

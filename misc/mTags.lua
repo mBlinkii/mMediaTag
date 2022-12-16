@@ -794,6 +794,77 @@ E:AddTag("mLevel", "UNIT_LEVEL PLAYER_LEVEL_UP PLAYER_UPDATE_RESTING", function(
 	end
 end)
 
+E:AddTag("mLevel:hideMax", "UNIT_LEVEL PLAYER_LEVEL_UP PLAYER_UPDATE_RESTING", function(unit)
+	if unit == "player" and IsResting() then
+		return format("%sZzz|r", E.db.mMediaTag.cGeneralZzz.color)
+	else
+		local level = UnitLevel(unit)
+		if E.Retail then
+			if UnitIsWildBattlePet(unit) or UnitIsBattlePetCompanion(unit) then
+				return UnitBattlePetLevel(unit)
+			elseif level > 0 then
+				if unit == "player" then
+					if not E:XPIsLevelMax() then
+						return level
+					end
+				else
+					return level
+				end
+			else
+				return format("%s??|r", E.db.mMediaTag.cGeneralLevel.color)
+			end
+		end
+		if level > 0 then
+			if unit == "player" then
+				if not E:XPIsLevelMax() then
+					return level
+				end
+			else
+				return level
+			end
+		else
+			return format("%s??|r", E.db.mMediaTag.cGeneralLevel.color)
+		end
+	end
+end)
+
+E:AddTag("mLevelSmart:hideMax", "UNIT_LEVEL PLAYER_LEVEL_UP PLAYER_UPDATE_RESTING", function(unit)
+	if unit == "player" and IsResting() then
+		return format("%sZzz|r", E.db.mMediaTag.cGeneralZzz.color)
+	else
+		local level = UnitLevel(unit)
+		if E.Retail then
+			if UnitIsWildBattlePet(unit) or UnitIsBattlePetCompanion(unit) then
+				return UnitBattlePetLevel(unit)
+			elseif level > 0 then
+				if unit == "player" then
+					if not E:XPIsLevelMax() then
+						return level
+					end
+				else
+					return level
+				end
+			else
+				return format("%s??|r", E.db.mMediaTag.cGeneralLevel.color)
+			end
+		end
+
+		if level == UnitLevel("player") then
+			return ""
+		elseif level > 0 then
+			if unit == "player" then
+				if not E:XPIsLevelMax() then
+					return level
+				end
+			else
+				return level
+			end
+		else
+			return format("%s??|r", E.db.mMediaTag.cGeneralLevel.color)
+		end
+	end
+end)
+
 E:AddTag("mLevelSmart", "UNIT_LEVEL PLAYER_LEVEL_UP PLAYER_UPDATE_RESTING", function(unit)
 	if unit == "player" and IsResting() then
 		return format("%sZzz|r", E.db.mMediaTag.cGeneralZzz.color)
@@ -1473,7 +1544,9 @@ E:AddTagInfo("mRoleIcon", ns.mName, L["Role Icon."])
 E:AddTagInfo("mRoleIcon:target", ns.mName, L["Target role Icon."])
 
 E:AddTagInfo("mLevel", ns.mName, L["Level changes to resting in the City."])
+E:AddTagInfo("mLevel:hideMax", ns.mName, L["Level changes to resting in the City. Hides Player level if Player is max level."])
 E:AddTagInfo("mLevelSmart", ns.mName, L["Same as mLevel (hides Level if it is equal)."])
+E:AddTagInfo("mLevelSmart:hideMax", ns.mName, L["Same as mLevel (hides Level if it is equal). Hides Player level if Player is max level."])
 
 E:AddTagInfo("mGroup", ns.mName, L["Group number with full text (Group 3)."])
 E:AddTagInfo("mGroup:short", ns.mName, L["Group number with abbreviated text (Grp. 3)."])

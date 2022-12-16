@@ -83,65 +83,12 @@ P[mPlugin] = {
 	},
 	["mSystemMenu"] = {["greatvault"] = true},
 	["mSavedAffixes"] = {["year"] = 0, ["affixes"] = nil, ["season"] = nil, ["reset"] = false},
-	["mAnima"] = {
-		["icon"] = true,
-		["short"] = true,
-		["name"] = false,
-		["bag"] = true,
-		["style"] = "auto",
-		["showmax"] = false,
-		["hide"] = false
-	},
-	["mStygia"] = {["icon"] = true, ["short"] = true, ["name"] = false, ["style"] = "auto", ["hide"] = false},
-	["mSoulAsh"] = {
-		["icon"] = true,
-		["short"] = true,
-		["name"] = false,
-		["style"] = "auto",
-		["showmax"] = false,
-		["hide"] = false
-	},
-	["mInfusedRuby"] = {
-		["icon"] = true,
-		["short"] = true,
-		["name"] = false,
-		["style"] = "auto",
-		["showmax"] = false,
-		["hide"] = false
-	},
-	["mGratefulOffering"] = {
-		["icon"] = true,
-		["short"] = true,
-		["name"] = false,
-		["style"] = "auto",
-		["hide"] = false
-	},
 	["mValor"] = {
 		["icon"] = true,
 		["short"] = true,
 		["name"] = false,
 		["style"] = "auto",
 		["showmax"] = false,
-		["hide"] = false
-	},
-	["mCatalogedResearch"] = {
-		["icon"] = true,
-		["short"] = true,
-		["name"] = false,
-		["bag"] = true,
-		["style"] = "auto",
-		["showmax"] = false,
-		["hide"] = false
-	},
-	["mSoulCinders"] = {["icon"] = true, ["short"] = true, ["name"] = false, ["style"] = "auto", ["hide"] = false},
-	["mStygianEmber"] = {["icon"] = true, ["short"] = true, ["name"] = false, ["style"] = "auto", ["hide"] = false},
-	["mTowerKnowledge"] = {["icon"] = true, ["short"] = true, ["name"] = false, ["style"] = "auto", ["hide"] = false},
-	["mCosmicFlux"] = {["icon"] = true, ["short"] = true, ["name"] = false, ["style"] = "auto", ["hide"] = false},
-	["mCyphersFirstOnes"] = {
-		["icon"] = true,
-		["short"] = true,
-		["name"] = false,
-		["style"] = "auto",
 		["hide"] = false
 	},
 	["mTimewarpedBadge"] = {
@@ -152,6 +99,20 @@ P[mPlugin] = {
 		["hide"] = false
 	},
 	["mConquest"] = {["icon"] = true, ["short"] = true, ["name"] = false, ["style"] = "auto", ["hide"] = false},
+	["mElementalOverflow"] = {
+		["icon"] = true,
+		["short"] = true,
+		["name"] = false,
+		["style"] = "auto",
+		["hide"] = false
+	},
+	["mDragonIslesSupplies"] = {
+		["icon"] = true,
+		["short"] = true,
+		["name"] = false,
+		["style"] = "auto",
+		["hide"] = false
+	},
 	["showmax"] = false,
 	["mDataText"] = {
 		["colorhc"] = {
@@ -211,30 +172,42 @@ P[mPlugin] = {
 		["tip"] = {["enable"] = true},
 		["achievement"] = {
 			["path"] = "Interface\\AddOns\\ElvUI_mMediaTag\\media\\dock\\toy\\toy4.tga",
-			["name"] = "Toy4"
+			["name"] = "Toy4",
+			["iconcolor"] = {["r"] = 1, ["g"] = 1, ["b"] = 1, ["a"] = 0.75,},
+			["customcolor"] = false
 		},
 		["blizzardstore"] = {
 			["path"] = "Interface\\AddOns\\ElvUI_mMediaTag\\media\\dock\\shop\\shop7.tga",
-			["name"] = "Shop7"
+			["name"] = "Shop7",
+			["iconcolor"] = {["r"] = 1, ["g"] = 1, ["b"] = 1, ["a"] = 0.75,},
+			["customcolor"] = false
 		},
 		["character"] = {
 			["color"] = "default",
 			["option"] = "none",
 			["path"] = "Interface\\AddOns\\ElvUI_mMediaTag\\media\\dock\\social\\social9.tga",
-			["name"] = "Social9"
+			["name"] = "Social9",
+			["iconcolor"] = {["r"] = 1, ["g"] = 1, ["b"] = 1, ["a"] = 0.75,},
+			["customcolor"] = false
 		},
 		["collection"] = {
 			["path"] = "Interface\\AddOns\\ElvUI_mMediaTag\\media\\dock\\collection\\collection18.tga",
-			["name"] = "Collection18"
+			["name"] = "Collection18",
+			["iconcolor"] = {["r"] = 1, ["g"] = 1, ["b"] = 1, ["a"] = 0.75,},
+			["customcolor"] = false
 		},
 		["encounter"] = {
 			["path"] = "Interface\\AddOns\\ElvUI_mMediaTag\\media\\dock\\quest\\quest2.tga",
-			["name"] = "Quest2"
+			["name"] = "Quest2",
+			["iconcolor"] = {["r"] = 1, ["g"] = 1, ["b"] = 1, ["a"] = 0.75,},
+			["customcolor"] = false
 		},
 		["guild"] = {
 			["color"] = "class",
 			["path"] = "Interface\\AddOns\\ElvUI_mMediaTag\\media\\dock\\social\\social13.tga",
-			["name"] = "Social13"
+			["name"] = "Social13",
+			["iconcolor"] = {["r"] = 1, ["g"] = 1, ["b"] = 1, ["a"] = 0.75,},
+			["customcolor"] = false
 		},
 		["lfd"] = {
 			["score"] = true,
@@ -244,7 +217,9 @@ P[mPlugin] = {
 			["greatvault"] = true,
 			["affix"] = true,
 			["keystone"] = true,
-			["difficulty"] = true
+			["difficulty"] = true,
+			["iconcolor"] = {["r"] = 1, ["g"] = 1, ["b"] = 1, ["a"] = 0.75,},
+			["customcolor"] = false
 		},
 		["mainmenu"] = {
 			["sound"] = true,
@@ -252,45 +227,61 @@ P[mPlugin] = {
 			["color"] = "default",
 			["option"] = "none",
 			["path"] = "Interface\\AddOns\\ElvUI_mMediaTag\\media\\dock\\system\\system30.tga",
-			["name"] = "System30"
+			["name"] = "System30",
+			["iconcolor"] = {["r"] = 1, ["g"] = 1, ["b"] = 1, ["a"] = 0.75,},
+			["customcolor"] = false
 		},
 		["quest"] = {
 			["path"] = "Interface\\AddOns\\ElvUI_mMediaTag\\media\\dock\\quest\\quest1.tga",
-			["name"] = "Quest1"
+			["name"] = "Quest1",
+			["iconcolor"] = {["r"] = 1, ["g"] = 1, ["b"] = 1, ["a"] = 0.75,},
+			["customcolor"] = false
 		},
 		["spellbook"] = {
 			["path"] = "Interface\\AddOns\\ElvUI_mMediaTag\\media\\dock\\other\\other1.tga",
-			["name"] = "Other1"
+			["name"] = "Other1",
+			["iconcolor"] = {["r"] = 1, ["g"] = 1, ["b"] = 1, ["a"] = 0.75,},
+			["customcolor"] = false
 		},
 		["talent"] = {
 			["showrole"] = true,
 			["path"] = "Interface\\AddOns\\ElvUI_mMediaTag\\media\\dock\\collection\\collection5.tga",
-			["name"] = "Collection5"
+			["name"] = "Collection5",
+			["iconcolor"] = {["r"] = 1, ["g"] = 1, ["b"] = 1, ["a"] = 0.75,},
+			["customcolor"] = false
 		},
 		["friends"] = {
 			["color"] = "class",
 			["path"] = "Interface\\AddOns\\ElvUI_mMediaTag\\media\\dock\\social\\social16.tga",
-			["name"] = "Social16"
+			["name"] = "Social16",
+			["iconcolor"] = {["r"] = 1, ["g"] = 1, ["b"] = 1, ["a"] = 0.75,},
+			["customcolor"] = false
 		},
 		["fpsms"] = {
 			["text"] = "FPS",
 			["color"] = "default",
 			["option"] = "fps",
 			["path"] = "Interface\\AddOns\\ElvUI_mMediaTag\\media\\dock\\system\\system26.tga",
-			["name"] = "System26"
+			["name"] = "System26",
+			["iconcolor"] = {["r"] = 1, ["g"] = 1, ["b"] = 1, ["a"] = 0.75,},
+			["customcolor"] = false
 		},
 		["durability"] = {
 			["onlytext"] = false,
 			["color"] = "default",
 			["path"] = "Interface\\AddOns\\ElvUI_mMediaTag\\media\\dock\\system\\system28.tga",
-			["name"] = "System28"
+			["name"] = "System28",
+			["iconcolor"] = {["r"] = 1, ["g"] = 1, ["b"] = 1, ["a"] = 0.75,},
+			["customcolor"] = false
 		},
 		["itemlevel"] = {
 			["onlytext"] = false,
 			["text"] = "Ilvl",
 			["color"] = "default",
 			["path"] = "Interface\\AddOns\\ElvUI_mMediaTag\\media\\dock\\system\\system31.tga",
-			["name"] = "System31"
+			["name"] = "System31",
+			["iconcolor"] = {["r"] = 1, ["g"] = 1, ["b"] = 1, ["a"] = 0.75,},
+			["customcolor"] = false
 		},
 		["nottification"] = {
 			["path"] = "Interface\\AddOns\\ElvUI_mMediaTag\\media\\dock\\system\\system25.tga",
@@ -305,18 +296,24 @@ P[mPlugin] = {
 		},
 		["profession"] = {
 			["path"] = "Interface\\AddOns\\ElvUI_mMediaTag\\media\\dock\\other\\other25.tga",
-			["name"] = "Other25"
+			["name"] = "Other25",
+			["iconcolor"] = {["r"] = 1, ["g"] = 1, ["b"] = 1, ["a"] = 0.75,},
+			["customcolor"] = false
 		},
 		["volume"] = {
 			["showtext"] = true,
 			["path"] = "Interface\\AddOns\\ElvUI_mMediaTag\\media\\dock\\system\\system43.tga",
-			["name"] = "System43"
+			["name"] = "System43",
+			["iconcolor"] = {["r"] = 1, ["g"] = 1, ["b"] = 1, ["a"] = 0.75,},
+			["customcolor"] = false
 		},
 		["calendar"] = {
 			["option"] = "us",
 			["showyear"] = false,
 			["path"] = "Interface\\AddOns\\ElvUI_mMediaTag\\media\\dock\\other\\other34.tga",
-			["name"] = "Other34"
+			["name"] = "Other34",
+			["iconcolor"] = {["r"] = 1, ["g"] = 1, ["b"] = 1, ["a"] = 0.75,},
+			["customcolor"] = false
 		}
 	},
 	["mRoll"] = {
@@ -336,7 +333,6 @@ P[mPlugin] = {
 		["size"] = 16
 	},
 	["SystemMenu"] = {["score"] = true, ["showicon"] = true, ["icons"] = true},
-	["VolumeDisplay"] = {["enable"] = true},
 	["Dungeon"] = {["score"] = true, ["showicon"] = true},
 	["ProfessionMenu"] = {["showicon"] = true},
 	["mMythicPlusTools"] = {["keys"] = true},
@@ -425,7 +421,22 @@ P[mPlugin] = {
 		["enable"] = false,
 		["indicator"] = {["r"] = 1, ["g"] = 0.2, ["b"] = 0.2},
 		["auto"] = true,
-		["range"] = 20
+		["range"] = 20,
+		["autorange"] = {
+			["HUNTER"] = 35,
+			["WARLOCK"] = 20,
+			["PRIEST"] = 30,
+			["PALADIN"] = 30,
+			["MAGE"] = 30,
+			["ROGUE"] = 35,
+			["DRUID"] = 30,
+			["SHAMAN"] = 20,
+			["WARRIOR"] = 35,
+			["DEATHKNIGHT"] = 20,
+			["MONK"] = 30,
+			["DEMONHUNTER"] = 20,
+			["EVOKER"] = 20,
+		}
 	},
 	["mCustomBackdrop"] = {
 		["health"] = {["enable"] = false, ["texture"] = "mMediaTag P6"},

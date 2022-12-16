@@ -390,6 +390,7 @@ local function OnClick(self, button)
 		end
 
 		mMT:mDropDown(menuList, menuFrame, self, 160, 2)
+		menuList = wipe(menuList)
 	elseif E.Retail then
 		ToggleLFDParentFrame()
 	end

@@ -36,7 +36,13 @@ local function mDockCreatIcon(self)
 		E.db[mPlugin].mDock.normal.b,
 		E.db[mPlugin].mDock.normal.a
 
-	if E.db[mPlugin].mDock.normal.style == "class" then
+
+	if self.mSettings.CustomColor then
+		Nr = self.mSettings.IconColor.r
+		Ng = self.mSettings.IconColor.g
+		Nb = self.mSettings.IconColor.b
+		Na = self.mSettings.IconColor.a
+	elseif E.db[mPlugin].mDock.normal.style == "class" then
 		Nr, Ng, Nb = class[1], class[2], class[3]
 	end
 
@@ -235,7 +241,12 @@ function mMT:mOnLeave(self)
 			E.db[mPlugin].mDock.normal.b,
 			E.db[mPlugin].mDock.normal.a
 
-		if E.db[mPlugin].mDock.normal.style == "class" then
+		if self.mSettings.CustomColor then
+			Nr = self.mSettings.IconColor.r
+			Ng = self.mSettings.IconColor.g
+			Nb = self.mSettings.IconColor.b
+			Na = self.mSettings.IconColor.a
+		elseif E.db[mPlugin].mDock.normal.style == "class" then
 			Nr, Ng, Nb = class[1], class[2], class[3]
 		end
 
@@ -309,7 +320,12 @@ function mMT:DockTimer(self)
 			E.db[mPlugin].mDock.normal.b,
 			E.db[mPlugin].mDock.normal.a
 
-		if E.db[mPlugin].mDock.normal.style == "class" then
+		if self.mSettings.CustomColor then
+			Nr = self.mSettings.IconColor.r
+			Ng = self.mSettings.IconColor.g
+			Nb = self.mSettings.IconColor.b
+			Na = self.mSettings.IconColor.a
+		elseif E.db[mPlugin].mDock.normal.style == "class" then
 			Nr, Ng, Nb = class[1], class[2], class[3]
 		end
 
@@ -326,7 +342,13 @@ function mMT:DockNormalColor(self)
 		E.db[mPlugin].mDock.normal.g,
 		E.db[mPlugin].mDock.normal.b,
 		E.db[mPlugin].mDock.normal.a
-	if E.db[mPlugin].mDock.normal.style == "class" then
+		
+	if self.mSettings.CustomColor then
+		Nr = self.mSettings.IconColor.r
+		Ng = self.mSettings.IconColor.g
+		Nb = self.mSettings.IconColor.b
+		Na = self.mSettings.IconColor.a
+	elseif E.db[mPlugin].mDock.normal.style == "class" then
 		Nr, Ng, Nb = class[1], class[2], class[3]
 	end
 	self.mIcon:SetVertexColor(Nr, Ng, Nb, Na)

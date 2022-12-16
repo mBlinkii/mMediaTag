@@ -46,8 +46,32 @@ local function SetElvUIMediaColor()
 	E.db.general.valuecolor["a"] = 1
 end
 
+local function mClassColor(elv, class)
+	if not class then
+		return
+	end
+
+	local color = (E.db[mPlugin].mCustomClassColors.colors and E.db[mPlugin].mCustomClassColors.colors[class])
+		or (_G.CUSTOM_CLASS_COLORS and _G.CUSTOM_CLASS_COLORS[class])
+		or _G.RAID_CLASS_COLORS[class]
+	if type(color) ~= "table" then
+		return
+	end
+
+	if not color.colorStr then
+		color.colorStr = E:RGBToHex(color.r, color.g, color.b, "ff")
+	elseif strlen(color.colorStr) == 6 then
+		color.colorStr = "ff" .. color.colorStr
+	end
+
+	return color
+end
+
+
+
 function mMT:SetCustomColors()
 	UpdateColors()
+	hooksecurefunc(E, "ClassColor", mClassColor)
 	if E.db[mPlugin].mCustomClassColors.emediaenable then
 		SetElvUIMediaColor()
 	end

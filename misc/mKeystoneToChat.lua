@@ -31,6 +31,7 @@ end
 
 local function mGetKeyLink()
 	local mKeys = {}
+	mKeys = wipe(mKeys)
 	for bag = 0, NUM_BAG_SLOTS do
 		local bSlots = GetContainerNumSlots(bag)
 		for slot = 1, bSlots do

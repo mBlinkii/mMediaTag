@@ -10,21 +10,57 @@ local addon, ns = ...
 
 local mInsert = table.insert
 
-local function CustomHealthBackdrop(unitframe, frame, r, g, b)
-	if unitframe.bg then
-		unitframe.bg:SetTexture(LSM:Fetch("statusbar", E.db[mPlugin].mCustomBackdrop.health.texture))
+local function CustomHealthBackdrop(unitframe, framename, r, g, b)
+	if unitframe.backdropTex then
+		unitframe.backdropTex:SetTexture(LSM:Fetch("statusbar", E.db[mPlugin].mCustomBackdrop.health.texture))
+		unitframe.backdropTex:ClearAllPoints()
+		local statusBarOrientation = unitframe:GetOrientation()
+		if statusBarOrientation == 'VERTICAL' then
+			unitframe.backdropTex:Point('TOPLEFT')
+			unitframe.backdropTex:Point('BOTTOMLEFT')
+			unitframe.backdropTex:Point('BOTTOMRIGHT')
+
+		else
+			unitframe.backdropTex:Point('TOPLEFT')
+			unitframe.backdropTex:Point('BOTTOMLEFT')
+			unitframe.backdropTex:Point('BOTTOMRIGHT')
+		end
 	end
 end
 
 local function CustomPowerBackdrop(powerframe)
-	if powerframe.BG then
-		powerframe.BG:SetTexture(LSM:Fetch("statusbar", E.db[mPlugin].mCustomBackdrop.power.texture))
+	if powerframe.backdropTex then
+		powerframe.backdropTex:SetTexture(LSM:Fetch("statusbar", E.db[mPlugin].mCustomBackdrop.power.texture))
+		powerframe.backdropTex:ClearAllPoints()
+		local statusBarOrientation = powerframe:GetOrientation()
+		if statusBarOrientation == 'VERTICAL' then
+			powerframe.backdropTex:Point('TOPLEFT')
+			powerframe.backdropTex:Point('BOTTOMLEFT')
+			powerframe.backdropTex:Point('BOTTOMRIGHT')
+
+		else
+			powerframe.backdropTex:Point('TOPLEFT')
+			powerframe.backdropTex:Point('BOTTOMLEFT')
+			powerframe.backdropTex:Point('BOTTOMRIGHT')
+		end
 	end
 end
 
 local function CustomCastbarBackdrop(castbarframe, frame, r, g, b)
-	if castbarframe.bg then
-		castbarframe.bg:SetTexture(LSM:Fetch("statusbar", E.db[mPlugin].mCustomBackdrop.castbar.texture))
+	if castbarframe.backdropTex then
+		castbarframe.backdropTex:SetTexture(LSM:Fetch("statusbar", E.db[mPlugin].mCustomBackdrop.castbar.texture))
+		castbarframe.backdropTex:ClearAllPoints()
+		local statusBarOrientation = castbarframe:GetOrientation()
+		if statusBarOrientation == 'VERTICAL' then
+			castbarframe.backdropTex:Point('TOPLEFT')
+			castbarframe.backdropTex:Point('BOTTOMLEFT')
+			castbarframe.backdropTex:Point('BOTTOMRIGHT')
+
+		else
+			castbarframe.backdropTex:Point('TOPLEFT')
+			castbarframe.backdropTex:Point('BOTTOMLEFT')
+			castbarframe.backdropTex:Point('BOTTOMRIGHT')
+		end
 	end
 end
 

@@ -6,64 +6,108 @@ local NP = E:GetModule("NamePlates")
 local LSM = LibStub("LibSharedMedia-3.0")
 
 local mInsert = table.insert
--- local unpack = unpack
--- local UnitPlayerControlled = UnitPlayerControlled
--- local UnitIsTapDenied = UnitIsTapDenied
--- local UnitClass = UnitClass
--- local UnitReaction = UnitReaction
--- local UnitIsConnected = UnitIsConnected
 local CreateFrame = CreateFrame
 local addon, ns = ...
 
-local SL_NPCs = {
-	[179526] = {66, 33},
-	[176578] = {66, 33},
-	[176555] = {40},
-	[176556] = {40},
-	[175806] = {70, 40},
-	[114262] = {20},
-	[114312] = {60},
-	[115388] = {30},
-	[114790] = {66.5, 33.5},
-	[81297] = {50},
-	[77803] = {20},
-	[79545] = {60},
-	[83392] = {50},
-	[114714] = {50},
-	[114783] = {50},
-	[114792] = {50},
-	[114796] = {50},
-	[183423] = {50},
-	[183424] = {50},
-	[183425] = {50},
-	[180015] = {50},
-	[180432] = {40},
-	[178139] = {50, 15},
-	[178133] = {15},
-	[178141] = {15},
-	[178142] = {15},
-	[166969] = {50},
-	[166970] = {50},
-	[166971] = {50},
-	[168112] = {50},
-	[168113] = {50},
-	[174335] = {30},
-	[172858] = {30},
-	[169601] = {20},
-	[175611] = {10},
-	[175725] = {66, 33},
-	[175729] = {80, 60, 30},
-	[176523] = {70, 40},
-	[175730] = {70, 40},
-	[176929] = {60, 20},
-	[180773] = {15.5},
-	[183501] = {75.5, 50.5, 30.5},
-	[181548] = {40.5},
-	[181551] = {40.5},
-	[181546] = {40.5},
-	[181549] = {40.5},
-	[180906] = {78.5, 45.5},
-	[183671] = {35.5}
+local HM_NPCs = {
+	-- DF Dungeons
+	[190485] = { 50 }, --Stormvein - Ruby Life pools
+	[193435] = { 50 }, --Kyrakka - Ruby Life pools
+	[188252] = { 66, 33 }, --Melidrussa Chillworn - Ruby Life pools
+	[197697] = { 50 }, -- Flamegullet - Ruby Life Pools
+	[186738] = { 75, 50, 25 }, --Umbrelskul - The Azure Vault
+	[186125] = { 30 }, --Tricktotem - Brackenhide Hollow
+	[186122] = { 30 }, --Rira Hackclaw - Brackenhide Hollow
+	[186124] = { 30 }, --Gashtooth - Brackenhide Hollow
+	[185534] = { 10 }, --Bonebolt Hunter - Brackenhide Hollow
+	[186121] = { 4 }, -- Decatriarch Wratheye - Brackenhide Hollow
+	[194816] = { 10 }, -- Forgewrought Monstrosity - Neltharus
+	[189719] = { 15 }, --Watcher Irideus - Halls of Infusion
+	[190407] = { 20 }, --Aqua Rager - Halls of Infusion
+	[186151] = { 60 }, --Balakar Khan - The Nokhud Offensive
+	[184020] = { 40 }, -- Hulking Berserker-  Uldaman: Legacy of Tyr
+	[184580] = { 10 }, -- Olaf -  Uldaman: Legacy of Tyr
+	[184581] = { 10 }, -- Baelog -  Uldaman: Legacy of Tyr
+	[184582] = { 10 }, -- Eric "The Swift" -  Uldaman: Legacy of Tyr
+	[184422] = { 70, 30 }, --Emberon - Uldaman: Legacy of Tyr
+
+	-- SL Dungeons
+	[164451] = { 40 }, --dessia the decapirator - theater of pain
+	[164463] = { 40 }, --Paceran the Virulent - theater of pain
+	[164461] = { 40 }, --Sathel the Accursed - theater of pain
+	[165946] = { 50 }, -- ~mordretha - thather of pain
+	[164501] = { 70, 40, 10 }, --mistcaller -mists of  tina
+	[164926] = { 50 }, --Drust Boughbreaker - mists of tina
+	[164804] = { 22 }, -- Droman Oulfarran - mists of tina
+	[164267] = { 66, 33 }, --Magrave Stradama - Plaguefall
+	[164967] = { 66, 33 }, --Doctor ickus - Plaguefall
+	[169861] = { 66, 33 }, -- Ickor Bileflesh - Plaguefall
+	[164218] = { 70, 40 }, --Lord Chamberlain - Halls of Atonemen
+	[162099] = { 50 }, --General Kaal Boss fight- Sanguine Depths
+	[162061] = { 70, 30 }, --Devos - Spires of Ascension
+	[163121] = { 70 }, -- Stitched vanguard - Necrotic Wake
+	[164558] = { 80, 60, 40, 20 }, --Hakkar the Soulflayer - De Other Side
+	[177269] = { 40 }, --So'leah - Tazavesh: Gambit
+	[175806] = { 66, 33 }, --So'azmi - Tazavesh: Streets
+
+	-- BFA Dungeons
+	[133345] = { 20 }, --Feckless Assistant - The MOTHERLODE!!
+	[150276] = { 50 }, --Heavy Scrapbots - Mechagon: Junk
+	[152009] = { 30 }, --Malfunctioning Scrapbots - Mechagon: Jun
+	[144298] = { 30 }, --Defense Bot Mk III (casts a shield) -Mechagon: Work
+
+	-- Draenor Dungeons
+	[81236] = { 50 }, --Grimrail Technician - Grimrail Depot
+	[79545] = { 60 }, --Nitrogg Thundertower - Grimrail Depot
+	[77803] = { 20 }, --Railmaster Rocketspark - Grimrail Depot
+	[81297] = { 50 }, --Dreadfang -> Fleshrender Nok'gar - Iron Docks
+
+	-- Legion Dungeons
+	[114790] = { 66, 33 }, -- Viz'aduum - Kara: Upper
+	[114261] = { 50 }, --Toe Knee - Kara: Lower
+	[114260] = { 50 }, -- Mrrgria - Kara: Lower
+	[114265] = { 50 }, --Gang Ruffian - Kara: Lower
+	[114783] = { 50 }, --Reformed Maiden - Kara: Lower
+	[114312] = { 60 }, -- Moroes - Kara: Lower
+	[96574] = { 30 }, --Stormforged Sentinel - Halls of Valor
+	[99868] = { 60 }, --Fenryr - Halls of Valor
+	[95676] = { 80 }, --Odyn - Halls of Valor
+
+	-- Pandaria Dungeons
+	[59544] = { 50 }, --The Nodding Tiger
+
+	--                                                                             ***RAID***
+	-- DF Raid
+	[181378] = { 66, 33 }, --Kurog Grimtotem, Vault of the Incarnates
+	[194990] = { 50 }, -- Stormseeker Acolyte, Vault of the Incarnates
+
+	--SL Raid
+	[181548] = { 40 }, --Absolution: Prototype Pantheon, Sepulcher of the First Ones
+	[181551] = { 40 }, --Duty: Prototype Pantheon, Sepulcher of the First Ones
+	[181546] = { 40 }, --Renewal: Prototype Pantheon, Sepulcher of the First Ones
+	[181549] = { 40 }, --War: Prototype Pantheon, Sepulcher of the First Ones
+	[183501] = { 75, 50 }, --Xymox, Sepulcher of the First Ones
+	[180906] = { 78, 45 }, --Halondrus, Sepulcher of the First Ones
+	[183671] = { 40 }, --Monstrous Soul - Anduin, Sepulcher of the First Ones
+	[185421] = { 15 }, --The Jailer, Sepulcher of the First Ones
+	[175730] = { 70, 40 }, --Fatescribe Roh-Kalo, Sanctum of domination
+	[176523] = { 70, 40 }, --Painsmith, Sanctum of domination
+	[175725] = { 66, 33 }, --Eye of the Jailer, Sanctum of domination
+	[176929] = { 60, 20 }, --Remnant of Kel'Thuzad, Sanctum of domination
+	[175732] = { 83, 50 }, -- Sylvanas Windrunner, Sanctum of Domination
+	[166969] = { 50 }, --Council of Blood - Frieda, Castle Nathria
+	[166970] = { 50 }, --Council of Blood - Stavros, Castle Nathria
+	[166971] = { 50 }, --Council of Blood - Niklaus, Castle Nathria
+	[167406] = { 70.5, 37.5 }, --Sire Denathrius, Castle Nathria
+	[173162] = { 66, 33 }, --Lord Evershade, Castle Nathria
+
+	--                                                                             ***OPEN WORD***
+	[180013] = { 20 }, --Escaped Wilderling, Shadowlands - Korthia
+	[179931] = { 80, 60 }, --Relic Breaker krelva, Shadowlands - Korthia
+	[193532] = { 40 }, --Bazual, The Dreaded Flame, Dhragonflight
+
+	--Mage Tower
+	[116410] = { 33 }, -- Karam Magespear
 }
 
 local executeRange = {
@@ -106,7 +150,7 @@ local executeRange = {
 	--MONK
 	[268] = 15,
 	--[270] = 0,
-	[269] = 15
+	[269] = 15,
 	--DRUID
 	--[102] = 0,
 	--[103] = 0,
@@ -117,7 +161,7 @@ local executeRange = {
 	--[581] = 0,
 }
 
-local function executeMarker(unit)
+local function executeMarker(unit, percent)
 	local health = unit.Health
 	local db = E.db[mPlugin].mExecutemarker
 
@@ -126,8 +170,8 @@ local function executeMarker(unit)
 		health.executeMarker:SetColorTexture(1, 1, 1)
 	end
 
-	local percent = math.floor((health.cur or 100) / health.max * 100 + 0.5)
-	local range = 20
+	local range = nil
+
 	if db.auto then
 		range = executeRange[select(1, GetSpecializationInfo(GetSpecialization()))]
 	else
@@ -137,10 +181,10 @@ local function executeMarker(unit)
 	if range then
 		if percent > range then
 			local overlaySize = health:GetWidth() * range / 100
-			health.executeMarker:Show()
 			health.executeMarker:SetSize(2, health:GetHeight())
 			health.executeMarker:SetPoint("left", health, "left", overlaySize, 0)
 			health.executeMarker:SetVertexColor(db.indicator.r, db.indicator.g, db.indicator.b)
+			health.executeMarker:Show()
 		else
 			health.executeMarker:Hide()
 		end
@@ -149,10 +193,13 @@ local function executeMarker(unit)
 	end
 end
 
-local function healthMarkers(unit)
+local function healthMarkers(unit, percent)
 	local inInstance, instanceType = IsInInstance()
 	local health = unit.Health
-	if E.db[mPlugin].mHealthmarker.inInstance and not (inInstance and instanceType == "party" or instanceType == "raid") then
+	if
+		E.db[mPlugin].mHealthmarker.inInstance
+		and not (inInstance and instanceType == "party" or instanceType == "raid")
+	then
 		if health.healthMarker then
 			health.healthMarker:Hide()
 			health.healthOverlay:Hide()
@@ -171,7 +218,7 @@ local function healthMarkers(unit)
 	else
 		local markersTable = nil
 		if db.useDefaults then
-			markersTable = db.NPCs[npcID] or SL_NPCs[npcID]
+			markersTable = db.NPCs[npcID] or HM_NPCs[npcID]
 		else
 			markersTable = db.NPCs[npcID]
 		end
@@ -180,7 +227,6 @@ local function healthMarkers(unit)
 
 		if markersTable then
 			for _, p in ipairs(markersTable) do
-				local percent = math.floor((health.cur or 100) / health.max * 100 + 0.5)
 				if percent > p and p > 0 and p < 100 then
 					local overlaySize = health:GetWidth() * p / 100
 
@@ -221,12 +267,15 @@ end
 
 local function mNameplateTools(table, event, frame)
 	if table.isNamePlate then
-		if table.Health and E.db[mPlugin].mHealthmarker.enable then
-			healthMarkers(table)
-		end
+		if table.Health and E.db[mPlugin].mHealthmarker.enable or E.db[mPlugin].mExecutemarker.enable then
+			local percent = math.floor((table.Health.cur or 100) / table.Health.max * 100 + 0.5)
+			if E.db[mPlugin].mHealthmarker.enable then
+				healthMarkers(table, percent)
+			end
 
-		if table.Health and E.db[mPlugin].mExecutemarker.enable then
-			executeMarker(table)
+			if E.db[mPlugin].mExecutemarker.enable then
+				executeMarker(table, percent)
+			end
 		end
 	end
 end
@@ -240,7 +289,7 @@ local selected = nil
 local filterTabel = {}
 
 local function updateFilterTabel()
-	filterTabel = {}
+	filterTabel = wipe(filterTabel)
 	for k, v in pairs(E.db[mPlugin].mHealthmarker.NPCs) do
 		mInsert(filterTabel, k)
 	end
@@ -261,17 +310,17 @@ local function mhealtmarkerOptions()
 			set = function(info, value)
 				E.db[mPlugin].mHealthmarker.enable = value
 				E:StaticPopup_Show("CONFIG_RL")
-			end
+			end,
 		},
 		spacer = {
 			order = 2,
 			type = "description",
-			name = "\n\n"
+			name = "\n\n",
 		},
 		header1 = {
 			order = 3,
 			type = "header",
-			name = ""
+			name = "",
 		},
 		colorindicator = {
 			type = "color",
@@ -285,7 +334,7 @@ local function mhealtmarkerOptions()
 			set = function(info, r, g, b)
 				local t = E.db[mPlugin].mHealthmarker.indicator
 				t.r, t.g, t.b = r, g, b
-			end
+			end,
 		},
 		coloroverlay = {
 			type = "color",
@@ -299,19 +348,19 @@ local function mhealtmarkerOptions()
 			set = function(info, r, g, b, a)
 				local t = E.db[mPlugin].mHealthmarker.overlay
 				t.r, t.g, t.b, t.a = r, g, b, a
-			end
+			end,
 		},
 		useDefaults = {
 			order = 13,
 			type = "toggle",
-			name = L["Use Default SL NPC IDs"],
+			name = L["Use Default NPC IDs"],
 			desc = L["Uses Custom and default NPC IDs"],
 			get = function(info)
 				return E.db[mPlugin].mHealthmarker.useDefaults
 			end,
 			set = function(info, value)
 				E.db[mPlugin].mHealthmarker.useDefaults = value
-			end
+			end,
 		},
 		inInstance = {
 			order = 14,
@@ -323,7 +372,7 @@ local function mhealtmarkerOptions()
 			end,
 			set = function(info, value)
 				E.db[mPlugin].mHealthmarker.inInstance = value
-			end
+			end,
 		},
 		overlaytexture = {
 			order = 14,
@@ -336,12 +385,12 @@ local function mhealtmarkerOptions()
 			end,
 			set = function(info, value)
 				E.db[mPlugin].mHealthmarker.overlaytexture = value
-			end
+			end,
 		},
 		header2 = {
 			order = 15,
 			type = "header",
-			name = ""
+			name = "",
 		},
 		customid = {
 			order = 21,
@@ -355,10 +404,10 @@ local function mhealtmarkerOptions()
 				else
 					selected = nil
 					selectedID = nil
-					mInsert(E.db[mPlugin].mHealthmarker.NPCs, value, {0, 0, 0, 0})
+					mInsert(E.db[mPlugin].mHealthmarker.NPCs, value, { 0, 0, 0, 0 })
 				end
 				updateFilterTabel()
-			end
+			end,
 		},
 		idtable = {
 			type = "select",
@@ -375,7 +424,7 @@ local function mhealtmarkerOptions()
 			set = function(info, value)
 				selected = value
 				selectedID = tonumber(filterTabel[value])
-			end
+			end,
 		},
 		deleteid = {
 			order = 22,
@@ -389,21 +438,21 @@ local function mhealtmarkerOptions()
 					selected = nil
 					updateFilterTabel()
 				end
-			end
+			end,
 		},
 		deleteall = {
 			order = 23,
 			type = "execute",
 			name = L["Delete all"],
 			func = function()
-				E.db[mPlugin].mHealthmarker.NPCs = {}
-				filterTabel = {}
-			end
+				E.db[mPlugin].mHealthmarker.NPCs = wipe(E.db[mPlugin].mHealthmarker.NPCs)
+				filterTabel = wipe(filterTabel)
+			end,
 		},
 		header3 = {
 			order = 30,
 			type = "header",
-			name = ""
+			name = "",
 		},
 		mark1 = {
 			order = 31,
@@ -430,7 +479,7 @@ local function mhealtmarkerOptions()
 						E.db[mPlugin].mHealthmarker.NPCs[selectedID][4] = 0
 					end
 				end
-			end
+			end,
 		},
 		mark2 = {
 			order = 32,
@@ -443,7 +492,10 @@ local function mhealtmarkerOptions()
 			disabled = function()
 				if E.db[mPlugin].mHealthmarker.NPCs[selectedID] then
 					if E.db[mPlugin].mHealthmarker.NPCs[selectedID][1] then
-						if E.db[mPlugin].mHealthmarker.NPCs[selectedID][1] == 0 or E.db[mPlugin].mHealthmarker.NPCs[selectedID][1] == 100 then
+						if
+							E.db[mPlugin].mHealthmarker.NPCs[selectedID][1] == 0
+							or E.db[mPlugin].mHealthmarker.NPCs[selectedID][1] == 100
+						then
 							E.db[mPlugin].mHealthmarker.NPCs[selectedID][2] = 0
 							E.db[mPlugin].mHealthmarker.NPCs[selectedID][3] = 0
 							E.db[mPlugin].mHealthmarker.NPCs[selectedID][4] = 0
@@ -460,7 +512,7 @@ local function mhealtmarkerOptions()
 			end,
 			get = function()
 				if E.db[mPlugin].mHealthmarker.NPCs[selectedID] then
-					return E.db[mPlugin].mHealthmarker.NPCs[selectedID][2]
+					return E.db[mPlugin].mHealthmarker.NPCs[selectedID][2] or 0
 				end
 			end,
 			set = function(info, value)
@@ -468,12 +520,13 @@ local function mhealtmarkerOptions()
 					if value > E.db[mPlugin].mHealthmarker.NPCs[selectedID][1] then
 						value = E.db[mPlugin].mHealthmarker.NPCs[selectedID][1] - 0.5
 					end
+					E.db[mPlugin].mHealthmarker.NPCs[selectedID][2] = value
 					if value == 0 or value == 100 then
 						E.db[mPlugin].mHealthmarker.NPCs[3] = 0
 						E.db[mPlugin].mHealthmarker.NPCs[4] = 0
 					end
 				end
-			end
+			end,
 		},
 		mark3 = {
 			order = 33,
@@ -486,7 +539,10 @@ local function mhealtmarkerOptions()
 			disabled = function()
 				if E.db[mPlugin].mHealthmarker.NPCs[selectedID] then
 					if E.db[mPlugin].mHealthmarker.NPCs[selectedID][2] then
-						if E.db[mPlugin].mHealthmarker.NPCs[selectedID][2] == 0 or E.db[mPlugin].mHealthmarker.NPCs[selectedID][2] == 100 then
+						if
+							E.db[mPlugin].mHealthmarker.NPCs[selectedID][2] == 0
+							or E.db[mPlugin].mHealthmarker.NPCs[selectedID][2] == 100
+						then
 							E.db[mPlugin].mHealthmarker.NPCs[selectedID][3] = 0
 							E.db[mPlugin].mHealthmarker.NPCs[selectedID][4] = 0
 							return true
@@ -502,7 +558,7 @@ local function mhealtmarkerOptions()
 			end,
 			get = function()
 				if E.db[mPlugin].mHealthmarker.NPCs[selectedID] then
-					return E.db[mPlugin].mHealthmarker.NPCs[selectedID][3]
+					return E.db[mPlugin].mHealthmarker.NPCs[selectedID][3] or 0
 				end
 			end,
 			set = function(info, value)
@@ -515,7 +571,7 @@ local function mhealtmarkerOptions()
 						E.db[mPlugin].mHealthmarker.NPCs[selectedID][4] = 0
 					end
 				end
-			end
+			end,
 		},
 		mark4 = {
 			order = 34,
@@ -528,7 +584,10 @@ local function mhealtmarkerOptions()
 			disabled = function()
 				if E.db[mPlugin].mHealthmarker.NPCs[selectedID] then
 					if E.db[mPlugin].mHealthmarker.NPCs[selectedID][3] then
-						if E.db[mPlugin].mHealthmarker.NPCs[selectedID][3] == 0 or E.db[mPlugin].mHealthmarker.NPCs[selectedID][3] == 100 then
+						if
+							E.db[mPlugin].mHealthmarker.NPCs[selectedID][3] == 0
+							or E.db[mPlugin].mHealthmarker.NPCs[selectedID][3] == 100
+						then
 							E.db[mPlugin].mHealthmarker.NPCs[selectedID][4] = 0
 							return true
 						else
@@ -543,7 +602,7 @@ local function mhealtmarkerOptions()
 			end,
 			get = function()
 				if E.db[mPlugin].mHealthmarker.NPCs[selectedID] then
-					return E.db[mPlugin].mHealthmarker.NPCs[selectedID][4]
+					return E.db[mPlugin].mHealthmarker.NPCs[selectedID][4] or 0
 				end
 			end,
 			set = function(info, value)
@@ -553,12 +612,12 @@ local function mhealtmarkerOptions()
 					end
 					E.db[mPlugin].mHealthmarker.NPCs[selectedID][4] = value
 				end
-			end
+			end,
 		},
 		header4 = {
 			order = 60,
 			type = "header",
-			name = L["Execute indicator"]
+			name = L["Execute indicator"],
 		},
 		executemarkers = {
 			order = 61,
@@ -571,7 +630,7 @@ local function mhealtmarkerOptions()
 			set = function(info, value)
 				E.db[mPlugin].mExecutemarker.enable = value
 				E:StaticPopup_Show("CONFIG_RL")
-			end
+			end,
 		},
 		autorange = {
 			order = 62,
@@ -579,11 +638,11 @@ local function mhealtmarkerOptions()
 			name = L["Auto range"],
 			desc = L["Execute range based on your Class"],
 			get = function(info)
-				return E.db[mPlugin].mHealthmarker.auto
+				return E.db[mPlugin].mExecutemarker.auto
 			end,
 			set = function(info, value)
-				E.db[mPlugin].mHealthmarker.auto = value
-			end
+				E.db[mPlugin].mExecutemarker.auto = value
+			end,
 		},
 		executeindicator = {
 			type = "color",
@@ -597,7 +656,7 @@ local function mhealtmarkerOptions()
 			set = function(info, r, g, b)
 				local t = E.db[mPlugin].mExecutemarker.indicator
 				t.r, t.g, t.b = r, g, b
-			end
+			end,
 		},
 		executerange = {
 			order = 64,
@@ -606,14 +665,16 @@ local function mhealtmarkerOptions()
 			min = 5,
 			max = 95,
 			step = 1,
-			disabled = function() return E.db[mPlugin].mHealthmarker.auto end,
+			disabled = function()
+				return E.db[mPlugin].mHealthmarker.auto
+			end,
 			get = function(info)
 				return E.db[mPlugin].mExecutemarker.range
 			end,
 			set = function(info, value)
 				E.db[mPlugin].mExecutemarker.range = value
-			end
-		}
+			end,
+		},
 	}
 end
 

@@ -14,10 +14,12 @@ local pi = math.pi
 
 --WoW API / Variables
 local _G = _G
+local GetInventoryItemDurability = GetInventoryItemDurability
+local ToggleCharacter = ToggleCharacter
+local InCombatLockdown = InCombatLockdown
 local GetInventoryItemTexture = GetInventoryItemTexture
 local GetInventoryItemLink = GetInventoryItemLink
 local GetMoneyString = GetMoneyString
-local GetInventoryItemDurability = GetInventoryItemDurability
 
 --Variables
 local mText = format("Dock %s", CHARACTER_BUTTON)
@@ -28,7 +30,7 @@ local tooltipString = "%d%%"
 local totalDurability = 0
 local invDurability = {}
 local totalRepairCost
-local r, g, b = nil, nil, nil
+
 local slots = {
 	[1] = _G.INVTYPE_HEAD,
 	[3] = _G.INVTYPE_SHOULDER,
@@ -40,6 +42,7 @@ local slots = {
 	[10] = _G.INVTYPE_HAND,
 	[16] = _G.INVTYPE_WEAPONMAINHAND,
 	[17] = _G.INVTYPE_WEAPONOFFHAND,
+	[18] = _G.INVTYPE_RANGED,
 }
 
 local function colorize(num)
@@ -50,9 +53,10 @@ local function colorize(num)
 	end
 end
 
+
 local function mCheckDurability()
-	if totalDurability <= E.global.datatexts.settings.Durability.percThreshold then
-		r, g, b = E:ColorGradient(totalDurability * 0.01, 1, 0.1, 0.1, 1, 1, 0.1, 0.1, 1, 0.1)
+	if totalDurability <= 35 then
+		local r, g, b = E:ColorGradient(totalDurability * 0.01, 1, 0.1, 0.1, 1, 1, 0.1, 0.1, 1, 0.1)
 		return r, g, b, 1
 	end
 end
@@ -66,7 +70,6 @@ function mMT:CheckFrameCharacter(self)
 	mMT:DockTimer(self)
 	if mCheckDurability() then
 		mMT:DockCustomColor(self, mCheckDurability())
-		--self.mIcon:SetVertexColor(mCheckDurability())
 	end
 end
 
@@ -76,9 +79,9 @@ local function OnEnter(self)
 	mMT:mOnEnter(self, "CheckFrameCharacter")
 
 	if E.db[mPlugin].mDock.tip.enable then
+		DT.tooltip:ClearLines()
 		if E.Retail then
 			local avg, avgEquipped, avgPvp = GetAverageItemLevel()
-			DT.tooltip:AddLine(format("%s%s|r", titel, STAT_AVERAGE_ITEM_LEVEL))
 			DT.tooltip:AddDoubleLine(STAT_AVERAGE_ITEM_LEVEL, format("%0.2f", avg), 1, 1, 1, 0.1, 1, 0.1)
 			DT.tooltip:AddDoubleLine(
 				GMSURVEYRATING3,
@@ -127,8 +130,6 @@ end
 local function OnEvent(self, event, ...)
 	local Option = E.db[mPlugin].mDock.character.option
 	local Color = E.db[mPlugin].mDock.character.color
-	local IconText = nil
-	local TextColor = mMT:mClassColorString()
 
 	self.mSettings = {
 		Name = mTextName,
@@ -136,6 +137,8 @@ local function OnEvent(self, event, ...)
 		Notifications = false,
 		Text = true,
 		Spezial = false,
+		IconColor = E.db[mPlugin].mDock.character.iconcolor,
+		CustomColor = E.db[mPlugin].mDock.character.customcolor,
 	}
 
 	mMT:DockInitialisation(self)
@@ -148,7 +151,7 @@ local function OnEvent(self, event, ...)
 	for index in pairs(slots) do
 		local currentDura, maxDura = GetInventoryItemDurability(index)
 		if currentDura and maxDura > 0 then
-			local perc, repairCost = (currentDura/maxDura)*100
+			local perc, repairCost = (currentDura / maxDura) * 100
 			invDurability[index] = perc
 
 			if perc < totalDurability then
@@ -156,26 +159,43 @@ local function OnEvent(self, event, ...)
 			end
 
 			if E.Retail and E.ScanTooltip.GetTooltipData then
-				E.ScanTooltip:SetInventoryItem('player', index)
+				E.ScanTooltip:SetInventoryItem("player", index)
 				E.ScanTooltip:Show()
 
 				local data = E.ScanTooltip:GetTooltipData()
 				repairCost = data and data.repairCost
 			else
-				repairCost = select(3, E.ScanTooltip:SetInventoryItem('player', index))
+				repairCost = select(3, E.ScanTooltip:SetInventoryItem("player", index))
 			end
 
 			totalRepairCost = totalRepairCost + (repairCost or 0)
 		end
 	end
 
+	local r, g, b = E:ColorGradient(totalDurability * 0.01, 1, 0.1, 0.1, 1, 1, 0.1, 0.1, 1, 0.1)
+	local hex = E:RGBToHex(r, g, b)
+
 	if Option == "durability" then
 		if Color == "default" then
-			r, g, b = E:ColorGradient(totalDurability * 0.01, 1, 0.1, 0.1, 1, 1, 0.1, 0.1, 1, 0.1)
-			TextColor = strjoin("", E:RGBToHex(r, g, b), "%s|r")
+			self.mIcon.TextA:SetFormattedText("%s%d%%|r", hex, totalDurability)
+		elseif Color == "custom" then
+			self.mIcon.TextA:SetFormattedText(
+				strjoin(
+					"",
+					E:RGBToHex(
+						E.db[mPlugin].mDock.fontcolor.r,
+						E.db[mPlugin].mDock.fontcolor.g,
+						E.db[mPlugin].mDock.fontcolor.b
+					),
+					"%s|r"
+				),
+				format("%d%%|r", totalDurability)
+			)
+		else
+			self.mIcon.TextA:SetFormattedText(mMT:mClassColorString(), format("%d%%|r", totalDurability))
 		end
-		IconText = mMT:round(totalDurability or 0) .. "%"
 	elseif Option == "ilvl" then
+
 		local avg, avgEquipped = GetAverageItemLevel()
 		if Color == "default" then
 			r, g, b = E:ColorGradient(
@@ -190,11 +210,15 @@ local function OnEvent(self, event, ...)
 				0.18,
 				0.78
 			)
+			hex = E:RGBToHex(r, g, b)
+
 			TextColor = strjoin("", E:RGBToHex(r, g, b), "%s|r")
+			self.mIcon.TextA:SetFormattedText("%s%d|r", hex, avgEquipped)
+		else
+			self.mIcon.TextA:SetFormattedText(mMT:mClassColorString(), avgEquipped)
 		end
-		IconText = mMT:round(avgEquipped)
 	else
-		IconText = ""
+		self.mIcon.TextA:SetText("")
 	end
 
 	if mCheckDurability() then
@@ -204,8 +228,6 @@ local function OnEvent(self, event, ...)
 		E:StopFlash(self)
 		mMT:DockNormalColor(self)
 	end
-
-	self.mIcon.TextA:SetFormattedText(TextColor, IconText)
 end
 
 local function OnLeave(self)

@@ -161,7 +161,9 @@ local function OnEvent(self, event, ...)
 		IconTexture = E.db[mPlugin].mDock.mainmenu.path,
 		Notifications = false,
 		Text = true,
-		Spezial = true
+		Spezial = true,
+		IconColor = E.db[mPlugin].mDock.mainmenu.iconcolor,
+		CustomColor = E.db[mPlugin].mDock.mainmenu.customcolor,
 	}
 
 	mMT:DockInitialisation(self)

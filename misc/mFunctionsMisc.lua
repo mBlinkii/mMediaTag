@@ -100,6 +100,7 @@ end
 --Instance Settings Player
 function mMT:InctanceInfo()
 	local InctanceInfoText = {}
+	InctanceInfoText = wipe(InctanceInfoText)
 	local DungeonID = GetDungeonDifficultyID()
 	local RaidID = GetRaidDifficultyID()
 	local DungeonName, _, _, _, _, _, _ = GetDifficultyInfo(DungeonID)
@@ -174,6 +175,7 @@ end
 --Instance Informations Dungeon
 function mMT:DungeonInfo()
 	local DungeonInfoText = {}
+	DungeonInfoText = wipe(DungeonInfoText)
 	local nhc, hc, myth, mythp, other, titel, tip = mMT:mColorDatatext()
 	local name, instanceType, instanceDifficultyID, difficultyName, maxPlayers, dynamicDifficulty, isDynamicInstance =
 		GetInstanceInfo()

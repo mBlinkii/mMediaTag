@@ -223,7 +223,7 @@ local function mLoadTooltip()
 	else
 		for i = 1, ProfessionsList.Index, 1 do
 			if not ProfessionsList.List[i].isTitle then
-				DT.tooltip:AddDoubleLine(ProfessionsList.List[i].lefttext, ProfessionsList.List[i].righttext)
+				DT.tooltip:AddDoubleLine(ProfessionsList.List[i].text, ProfessionsList.List[i].Secondtext)
 			end
 		end
 	end
@@ -252,6 +252,7 @@ local function OnClick(self, button)
 			end
 		end
 	end
+	ProfessionsList = wipe(ProfessionsList)
 end
 
 local function OnEnter(self)

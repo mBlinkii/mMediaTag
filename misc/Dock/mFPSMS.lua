@@ -136,6 +136,8 @@ local function OnEvent(self, event, ...)
 		Notifications = false,
 		Text = true,
 		Spezial = true,
+		IconColor = E.db[mPlugin].mDock.fpsms.iconcolor,
+		CustomColor = E.db[mPlugin].mDock.fpsms.customcolor,
 	}
 
 	mMT:DockInitialisation(self)

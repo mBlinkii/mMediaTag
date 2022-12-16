@@ -43,6 +43,8 @@ local function OnEvent(self, event, ...)
 		Notifications = false,
 		Text = EnableText,
 		Spezial = EnableText,
+		IconColor = E.db[mPlugin].mDock.calendar.iconcolor,
+		CustomColor = E.db[mPlugin].mDock.calendar.customcolor,
 	}
 
 	mMT:DockInitialisation(self)

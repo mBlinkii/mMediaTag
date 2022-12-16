@@ -7,7 +7,7 @@ local addon, ns = ...
 local mInsert = table.insert
 
 local name, mListDNDIcons, mListDNDPath, mListAFKIcon, mListAFKPath, mListSkullIcon, mListSkullPath =
-	nil, nil, nil, nil, nil, nil, nil
+	{}, {}, {}, {}, {}, {}, {}
 
 local function mReturnTagIconName(name)
 	return format("|TInterface\\AddOns\\ElvUI_mMediaTag\\media\\misc\\%s.tga:16:16:0:0:32:32|t", name)
@@ -18,12 +18,12 @@ local function mReturnTagIconPath(name)
 end
 
 local function mSetupTagIcons()
-	mListDNDIcons = {}
-	mListDNDPath = {}
-	mListAFKIcon = {}
-	mListAFKPath = {}
-	mListSkullIcon = {}
-	mListSkullPath = {}
+	mListDNDIcons = wipe(mListDNDIcons)
+	mListDNDPath = wipe(mListDNDPath)
+	mListAFKIcon = wipe(mListAFKIcon)
+	mListAFKPath = wipe(mListAFKPath)
+	mListSkullIcon = wipe(mListSkullIcon)
+	mListSkullPath = wipe(mListSkullPath)
 	--DND
 	for i = 1, 16, 1 do
 		name = "dnd" .. i

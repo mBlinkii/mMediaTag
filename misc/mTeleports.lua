@@ -53,7 +53,6 @@ local Teleports = {
 		162973, --greatfather-winters-hearthstone
 		166746, --fire-eaters-hearthstone
 		200630, --ohnir-windsages-hearthstone
-		119210, --hearthstone-board
 		165669, --lunar-elders-hearthstone
 		166747, --brewfest-revelers-hearthstone
 		165802, --noble-gardeners-hearthstone
@@ -410,6 +409,7 @@ end
 local function OnClick(self, button)
 	mUpdateTPList(button)
 	mMT:mDropDown(Teleports.menu, menuFrame, self, 260, 2)
+	Teleports.menu = wipe(Teleports.menu)
 end
 
 local function mTPTooltip()

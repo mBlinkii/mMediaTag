@@ -4,10 +4,12 @@ local mMT = E:GetModule(mPlugin)
 local DT = E:GetModule("DataTexts")
 local addon, ns = ...
 
-local _G = _G
+--Lua functions
 local ipairs, select, sort, unpack, wipe, ceil = ipairs, select, sort, unpack, wipe, ceil
 local format, strfind, strjoin, strsplit, strmatch = format, strfind, strjoin, strsplit, strmatch
 
+--WoW API / Variables
+local _G = _G
 local GetDisplayedInviteType = GetDisplayedInviteType
 local GetGuildFactionInfo = GetGuildFactionInfo
 local GetGuildInfo = GetGuildInfo
@@ -28,7 +30,7 @@ local UnitInRaid = UnitInRaid
 local InCombatLockdown = InCombatLockdown
 local IsAltKeyDown = IsAltKeyDown
 
-local C_PartyInfo_InviteUnit = C_PartyInfo.InviteUnit
+local InviteUnit = C_PartyInfo.InviteUnit or InviteUnit
 local C_PartyInfo_RequestInviteFromUnit = C_PartyInfo.RequestInviteFromUnit
 
 local COMBAT_FACTION_CHANGE = COMBAT_FACTION_CHANGE
@@ -36,6 +38,9 @@ local REMOTE_CHAT = REMOTE_CHAT
 local GUILD_MOTD = GUILD_MOTD
 local GUILD = GUILD
 
+--Variables
+local mText = format("Dock %s", L["Guild"])
+local mTextName = "mGuild"
 local tthead, ttsubh, ttoff = { r = 0.4, g = 0.78, b = 1 }, { r = 0.75, g = 0.9, b = 1 }, { r = 0.3, g = 1, b = 0.3 }
 local activezone, inactivezone = { r = 0.3, g = 1.0, b = 0.3 }, { r = 0.65, g = 0.65, b = 0.65 }
 local displayString = ""
@@ -50,14 +55,7 @@ local standingString = E:RGBToHex(ttsubh.r, ttsubh.g, ttsubh.b) .. "%s:|r |cFFFF
 local moreMembersOnlineString = strjoin("", "+ %d ", _G.FRIENDS_LIST_ONLINE, "...")
 local noteString = strjoin("", "|cff999999   ", _G.LABEL_NOTE, ":|r %s")
 local officerNoteString = strjoin("", "|cff999999   ", _G.GUILD_RANK1_DESC, ":|r %s")
-local guildTable, guildMotD, lastPanel = {}, "", nil
-local InviteToGroup = InviteToGroup
-local RequestInviteFromUnit = RequestInviteFromUnit
-
---Variables
-local mText = format("Dock %s", L["Guild"])
-local mTextName = "mGuild"
-local TextColor = mMT:mClassColorString()
+local guildTable, guildMotD, lastPanel = {}, ""
 
 local function sortByRank(a, b)
 	if a and b then
@@ -82,11 +80,10 @@ local function SortGuildTable(shift)
 	end
 end
 
-local onlinestatusstring = "|cffFFFFFF[|r|cffFF0000%s|r|cffFFFFFF]|r"
 local onlinestatus = {
 	[0] = "",
-	[1] = format(onlinestatusstring, L["AFK"]),
-	[2] = format(onlinestatusstring, L["DND"]),
+	[1] = format("|cffFFFFFF[|r|cffFF9900%s|r|cffFFFFFF]|r", L["AFK"]),
+	[2] = format("|cffFFFFFF[|r|cffFF3333%s|r|cffFFFFFF]|r", L["DND"]),
 }
 local mobilestatus = {
 	[0] = [[|TInterface\ChatFrame\UI-ChatIcon-ArmoryChat:14:14:0:0:16:16:0:16:0:16:73:177:73|t]],
@@ -125,7 +122,7 @@ local function BuildGuildTable()
 				class = className, --9
 				rankIndex = rankIndex, --10
 				isMobile = isMobile, --11
-				guid = guid,						--12
+				guid = guid, --12
 			}
 		end
 	end
@@ -178,7 +175,7 @@ local menuList = {
 }
 
 local function inviteClick(_, name, guid)
-	DT.EasyMenu:Hide()
+	E.EasyMenu:Hide()
 
 	if not (name and name ~= "") then
 		return
@@ -187,27 +184,19 @@ local function inviteClick(_, name, guid)
 	if guid then
 		local inviteType = GetDisplayedInviteType(guid)
 		if inviteType == "INVITE" or inviteType == "SUGGEST_INVITE" then
-			if E.Retail then
-				C_PartyInfo_InviteUnit(name)
-			else
-				InviteToGroup(name)
-			end
-		elseif inviteType == "REQUEST_INVITE" then
-			if E.Retail then
-				C_PartyInfo_RequestInviteFromUnit(name)
-			else
-				RequestInviteFromUnit(name)
-			end
+			InviteUnit(name)
+		elseif inviteType == "REQUEST_INVITE" and E.Retail then
+			C_PartyInfo_RequestInviteFromUnit(name)
 		end
 	else
 		-- if for some reason guid isnt here fallback and just try to invite them
 		-- this is unlikely but having a fallback doesnt hurt
-		C_PartyInfo_InviteUnit(name)
+		InviteUnit(name)
 	end
 end
 
 local function whisperClick(_, playerName)
-	DT.EasyMenu:Hide()
+	E.EasyMenu:Hide()
 	SetItemRef("player:" .. playerName, format("|Hplayer:%1$s|h[%1$s]|h", playerName), "LeftButton")
 end
 
@@ -264,8 +253,8 @@ local function OnClick(self, btn)
 			end
 		end
 
-		DT:SetEasyMenuAnchor(DT.EasyMenu, self)
-		_G.EasyMenu(menuList, DT.EasyMenu, nil, nil, nil, "MENU")
+		E:SetEasyMenuAnchor(E.EasyMenu, self)
+		_G.EasyMenu(menuList, E.EasyMenu, nil, nil, nil, "MENU")
 	elseif InCombatLockdown() then
 		_G.UIErrorsFrame:AddMessage(E.InfoColor .. _G.ERR_NOT_IN_COMBAT)
 	elseif E.Retail then
@@ -277,7 +266,7 @@ local function OnClick(self, btn)
 	mMT:ShowHideNotification(self, false)
 end
 
-local function OnEnter(self)
+local function OnEnter(self, _, noUpdate)
 	self.mIcon.isClicked = mDockCheckFrame()
 	mMT:mOnEnter(self, "CheckFrameGuild")
 
@@ -398,6 +387,7 @@ local function OnEnter(self)
 		if not noUpdate then
 			C_GuildInfo_GuildRoster()
 		end
+
 		DT.tooltip:Show()
 	end
 end
@@ -409,6 +399,8 @@ local function OnEvent(self, event, ...)
 		Notifications = true,
 		Text = true,
 		Spezial = false,
+		IconColor = E.db[mPlugin].mDock.guild.iconcolor,
+		CustomColor = E.db[mPlugin].mDock.guild.customcolor,
 	}
 
 	mMT:DockInitialisation(self)
@@ -429,7 +421,22 @@ local function OnEvent(self, event, ...)
 			OnEnter(self)
 		end
 
-		self.mIcon.TextA:SetFormattedText(TextColor, #guildTable)
+		if E.db[mPlugin].mDock.guild.color == "default" then
+			self.mIcon.TextA:SetFormattedText(mMT:mClassColorString(), #guildTable)
+		else
+			self.mIcon.TextA:SetFormattedText(
+				strjoin(
+					"",
+					E:RGBToHex(
+						E.db[mPlugin].mDock.fontcolor.r,
+						E.db[mPlugin].mDock.fontcolor.g,
+						E.db[mPlugin].mDock.fontcolor.b
+					),
+					"%s|r"
+				),
+				#guildTable
+			)
+		end
 	else
 		self.mIcon.TextA:SetText("")
 	end
@@ -456,7 +463,7 @@ end
 DT:RegisterDatatext(
 	mTextName,
 	"mDock",
-	{ "CHAT_MSG_SYSTEM", "GUILD_ROSTER_UPDATE", "PLAYER_GUILD_UPDATE", "GUILD_MOTD", "MODIFIER_STATE_CHANGED" },
+	{'CHAT_MSG_SYSTEM', 'GUILD_ROSTER_UPDATE', 'PLAYER_GUILD_UPDATE', 'GUILD_MOTD', 'MODIFIER_STATE_CHANGED'},
 	OnEvent,
 	nil,
 	OnClick,

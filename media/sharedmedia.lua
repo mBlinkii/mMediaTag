@@ -1,21 +1,23 @@
 local LSM = LibStub("LibSharedMedia-3.0")
 
-if LSM == nil then return end
+if LSM == nil then
+	return
+end
 
 local function mAddStatusbar(name, file)
-    LSM:Register("statusbar", name, "Interface\\AddOns\\ElvUI_mMediaTag\\media\\textures\\" .. file)
+	LSM:Register("statusbar", name, "Interface\\AddOns\\ElvUI_mMediaTag\\media\\textures\\" .. file)
 end
 
 local function mAddBackground(name, file)
-    LSM:Register("background", name, "Interface\\AddOns\\ElvUI_mMediaTag\\media\\backgrounds\\" .. file)
+	LSM:Register("background", name, "Interface\\AddOns\\ElvUI_mMediaTag\\media\\backgrounds\\" .. file)
 end
 
 local function mAddFont(name, file)
-    LSM:Register("font", name, "Interface\\AddOns\\ElvUI_mMediaTag\\media\\fonts\\" .. file)
+	LSM:Register("font", name, "Interface\\AddOns\\ElvUI_mMediaTag\\media\\fonts\\" .. file)
 end
 
 local function mAddBorder(name, file)
-    LSM:Register("border", name, "Interface\\AddOns\\ElvUI_mMediaTag\\media\\border\\" .. file)
+	LSM:Register("border", name, "Interface\\AddOns\\ElvUI_mMediaTag\\media\\border\\" .. file)
 end
 
 mAddStatusbar("mMediaTag A1", "a1.tga")
@@ -316,6 +318,35 @@ mAddStatusbar("mMediaTag Q2", "q2.tga")
 mAddStatusbar("mMediaTag Q3", "q3.tga")
 mAddStatusbar("mMediaTag Q4", "q4.tga")
 
+mAddStatusbar("mMediaTag R1", "r1.tga")
+mAddStatusbar("mMediaTag R2", "r2.tga")
+mAddStatusbar("mMediaTag R3", "r3.tga")
+mAddStatusbar("mMediaTag R4", "r4.tga")
+mAddStatusbar("mMediaTag R5", "r5.tga")
+mAddStatusbar("mMediaTag R6", "r6.tga")
+mAddStatusbar("mMediaTag R7", "r7.tga")
+mAddStatusbar("mMediaTag R8", "r8.tga")
+mAddStatusbar("mMediaTag R9", "r9.tga")
+mAddStatusbar("mMediaTag R10", "r10.tga")
+mAddStatusbar("mMediaTag R11", "r11.tga")
+mAddStatusbar("mMediaTag R12", "r12.tga")
+mAddStatusbar("mMediaTag R13", "r13.tga")
+mAddStatusbar("mMediaTag R14", "r14.tga")
+mAddStatusbar("mMediaTag R15", "r15.tga")
+mAddStatusbar("mMediaTag R16", "r16.tga")
+mAddStatusbar("mMediaTag R17", "r17.tga")
+mAddStatusbar("mMediaTag R18", "r18.tga")
+mAddStatusbar("mMediaTag R19", "r19.tga")
+mAddStatusbar("mMediaTag R20", "r20.tga")
+mAddStatusbar("mMediaTag R21", "r21.tga")
+mAddStatusbar("mMediaTag R22", "r22.tga")
+mAddStatusbar("mMediaTag R23", "r23.tga")
+mAddStatusbar("mMediaTag R24", "r24.tga")
+mAddStatusbar("mMediaTag R25", "r25.tga")
+mAddStatusbar("mMediaTag R26", "r26.tga")
+mAddStatusbar("mMediaTag R27", "r27.tga")
+mAddStatusbar("mMediaTag R28", "r28.tga")
+
 mAddStatusbar("mMediaTag Caith UI 1", "Wglass.tga")
 mAddStatusbar("mMediaTag Caith UI 2", "Wisps.tga")
 
@@ -345,3 +376,23 @@ mAddBorder("mMediaTag yborder", "yborder.tga")
 mAddBorder("mMediaTag yborder2", "yborder2.tga")
 mAddBorder("mMediaTag YuluBorderSwitch", "YuluBorderSwitch.tga")
 mAddBorder("mMediaTag YuluBorderXI", "YuluBorderXI.tga")
+
+mAddFont("Inter-Black", "Inter-Black.ttf")
+mAddFont("Inter-Bold", "Inter-Bold.ttf")
+mAddFont("Inter-ExtraBold", "Inter-ExtraBold.ttf")
+mAddFont("Inter-Regular", "Inter-Regular.ttf")
+mAddFont("Inter-SemiBold", "Inter-SemiBold.ttf")
+mAddFont("Lemon-Regular", "Lemon-Regular.ttf")
+mAddFont("Oregano-Regular", "Oregano-Regular.ttf")
+mAddFont("Oswald-Bold", "Oswald-Bold.ttf")
+mAddFont("Oswald-Light", "Oswald-Light.ttf")
+mAddFont("Oswald-Regular", "Oswald-Regular.ttf")
+mAddFont("Ubuntu-Bold", "Ubuntu-Bold.ttf")
+mAddFont("Ubuntu-Light", "Ubuntu-Light.ttf")
+mAddFont("Ubuntu-Medium", "Ubuntu-Medium.ttf")
+mAddFont("Ubuntu-Regular", "Ubuntu-Regular.ttf")
+mAddFont("NotoSans-Bold", "NotoSans-Bold.ttf")
+mAddFont("NotoSans-ExtraBold", "NotoSans-ExtraBold.ttf")
+mAddFont("NotoSans-Medium", "NotoSans-Medium.ttf")
+mAddFont("NotoSans-Regular", "NotoSans-Regular.ttf")
+mAddFont("NotoSans-SemiBold", "NotoSans-SemiBold.ttf")

@@ -24,8 +24,21 @@ local function OnEnter(self)
 	self.mIcon.isClicked = mDockCheckFrame()
 	mMT:mOnEnter(self, "CheckFrameCollectionsJourna")
 
+	local numOwned = 0
+	local mountIDs = C_MountJournal.GetMountIDs()
+	for i, mountID in ipairs(mountIDs) do
+		local _, _, _, _, _, _, _, _, _, hideOnChar, isCollected = C_MountJournal.GetMountInfoByID(mountID)
+		if isCollected and hideOnChar ~= true then
+			numOwned = numOwned + 1
+		end
+	end
+
 	if E.db[mPlugin].mDock.tip.enable then
 		DT.tooltip:AddLine(COLLECTIONS)
+		DT.tooltip:AddLine(" ")
+		DT.tooltip:AddLine(L["Collected"])
+		DT.tooltip:AddDoubleLine(format("|CFF40E0D0%s|r", L["Mounts"]), format("|CFF6495ED%s|r", numOwned))
+		DT.tooltip:AddDoubleLine(format("|CFFDE3163%s|r", L["Pets"]), format("|CFF6495ED%s|r", select(2,C_PetJournal.GetNumPets())))
 		DT.tooltip:Show()
 	end
 end
@@ -37,6 +50,8 @@ local function OnEvent(self, event, ...)
 		Notifications = false,
 		Text = false,
 		Spezial = false,
+		IconColor = E.db[mPlugin].mDock.collection.iconcolor,
+		CustomColor = E.db[mPlugin].mDock.collection.customcolor,
 	}
 
 	mMT:DockInitialisation(self)
