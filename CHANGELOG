@@ -2,7 +2,7 @@
 [Eng] - All changes to this project will be documented in this file. The latest changes are at the top.
 [Ger] - Alle Änderungen an diesem Projekt werden in dieser Datei dokumentiert. Die neuesten Änderungen stehen ganz oben.
 
-## [ver. 2.91] - 16.12.2022
+## [ver. 2.91] - 18.12.2022
 ### Update
 - FIX NP-Healtmarker Auto range toggel not working
 - FIX Custom Unitframe BG Textures
@@ -20,9 +20,12 @@
 - NEW DF Currencys, Dragon Isles Supplies, Elemental Overflow
 - NEW Fonts Inter, Lemon, Oregano, Oswald, Ubuntu, Noto Sans
 - NEW Custom color for each Dock Icon
-- NEW Tooltip icon for mounts and toys in Retail
+- NEW Tooltip icon for macros, mounts and toys in Retail
 - NEW Add more Tooltip infos for Dock Collection, Achievement
 - NEW Tag mLevelSmart:hideMax and mLevel:hideMax hides Player level on max level
+### BUGFIX
+- FIX Tooltip Spell Icons wrong Title
+
 
 ## [ver. 2.90] - 20.11.2022
 ### Update
