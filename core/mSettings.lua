@@ -462,4 +462,6 @@ P[mPlugin] = {
 			["EVOKER"] = {["r"] = 0.20, ["g"] = 0.58, ["b"] = 0.50},
 		}
 	},
+	["mMicroBarSkin"] = {["enable"] = false, ["skin"] = 1,
+	},
 }

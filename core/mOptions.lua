@@ -410,6 +410,13 @@ local function OptionsCore()
 						childGroups = "tab",
 						args = {},
 					},
+					microbarskin = {
+						order = 7,
+						type = "group",
+						name = L["Microbar Skin"],
+						childGroups = "tab",
+						args = {},
+					},
 				},
 			},
 			about = {
