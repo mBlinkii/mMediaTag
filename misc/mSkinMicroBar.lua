@@ -9,7 +9,7 @@ local AB = E:GetModule("ActionBars")
 local texture = "Interface\\AddOns\\ElvUI_mMediaTag\\media\\misc\\MicroBar.tga"
 
 function HandleMicroTextures(elv, button, name)
-    if not E.db[mPlugin].mMicroBarSkin.enable then return end
+    if not E.db[mPlugin].mMicroBarSkin.enable and not E.db.actionbar.microbar.enable then return end
 
 	local normal = button:GetNormalTexture()
 	local pushed = button:GetPushedTexture()
