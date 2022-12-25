@@ -70,8 +70,9 @@ local HM_NPCs = {
 	[114783] = { 50 }, --Reformed Maiden - Kara: Lower
 	[114312] = { 60 }, -- Moroes - Kara: Lower
 	[96574] = { 30 }, --Stormforged Sentinel - Halls of Valor
-	[99868] = { 60 }, --Fenryr - Halls of Valor
 	[95676] = { 80 }, --Odyn - Halls of Valor
+	[94960] = { 10 }, -- Hymdall - Halls of Valor
+	[95674] = { 60 }, -- Fenryr - Halls of Valor
 
 	-- Pandaria Dungeons
 	[59544] = { 50 }, --The Nodding Tiger
