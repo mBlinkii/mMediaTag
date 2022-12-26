@@ -205,7 +205,6 @@ local function healthMarkers(unit, percent)
 			health.healthMarker:Hide()
 			health.healthOverlay:Hide()
 		end
-		return
 	end
 
 	local npcID = tonumber(unit.npcID)
@@ -249,7 +248,6 @@ local function healthMarkers(unit, percent)
 					health.healthOverlay:SetTexture(texture)
 					health.healthOverlay:SetVertexColor(db.overlay.r, db.overlay.g, db.overlay.b)
 					health.healthOverlay:SetAlpha(db.overlay.a)
-					return
 				end
 			end
 
@@ -299,7 +297,7 @@ end
 local function mhealtmarkerOptions()
 	updateFilterTabel()
 
-	E.Options.args.mMediaTag.args.general.args.healtmarker.args = {
+	E.Options.args.mMediaTag.args.general.args.nameplatetools.args.nameplatehealtmarkers.args = {
 		markers = {
 			order = 1,
 			type = "toggle",

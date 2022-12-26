@@ -48,31 +48,6 @@ local function OptionsCore()
 							},
 						},
 					},
-					nameplatesetting = {
-						order = 20,
-						type = "group",
-						name = L["Nameplate Settings"],
-						args = {
-							colorednamplates = {
-								order = 1,
-								type = "toggle",
-								name = L["Class colored Namplates"],
-								desc = L["Class colored Namplates Hover and Boarder color."],
-								get = function(info)
-									return E.db[mPlugin].mClassNameplate
-								end,
-								set = function(info, value)
-									E.db[mPlugin].mClassNameplate = value
-									E:StaticPopup_Show("CONFIG_RL")
-								end,
-							},
-							spacernameplate = {
-								order = 2,
-								type = "description",
-								name = "\n\n\n",
-							},
-						},
-					},
 					tooltipsettings = {
 						order = 30,
 						type = "group",
@@ -158,11 +133,38 @@ local function OptionsCore()
 						name = L["Mythic plus Tools"],
 						args = {},
 					},
-					healtmarker = {
+					nameplatetools = {
 						order = 50,
 						type = "group",
-						name = L["Nameplate Healthmarkers"],
-						args = {},
+						name = L["Nameplate Tools"],
+						args = {
+							nameplatesetting = {
+								order = 1,
+								type = "group",
+								name = L["Nameplate Settings"],
+								args = {
+									colorednamplates = {
+										order = 1,
+										type = "toggle",
+										name = L["Class colored Namplates"],
+										desc = L["Class colored Namplates Hover and Boarder color."],
+										get = function(info)
+											return E.db[mPlugin].mClassNameplate
+										end,
+										set = function(info, value)
+											E.db[mPlugin].mClassNameplate = value
+											E:StaticPopup_Show("CONFIG_RL")
+										end,
+									},
+								},
+							},
+							nameplatehealtmarkers = {
+								order = 2,
+								type = "group",
+								name = L["Nameplate Healthmarkers"],
+								args = {},
+							},
+						},
 					},
 					tools = {
 						order = 60,
@@ -332,16 +334,16 @@ local function OptionsCore()
 						childGroups = "tab",
 						args = {
 							DragonIslesSupplies = {
-							order = 1,
-							type = "group",
-							name = L["DragonIsles Supplies"],
-							args = {},
+								order = 1,
+								type = "group",
+								name = L["DragonIsles Supplies"],
+								args = {},
 							},
 							ElementalOverflow = {
-							order = 2,
-							type = "group",
-							name = L["Elemental Overflow"],
-							args = {},
+								order = 2,
+								type = "group",
+								name = L["Elemental Overflow"],
+								args = {},
 							},
 						},
 					},
