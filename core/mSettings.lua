@@ -417,11 +417,6 @@ P[mPlugin] = {
 		["useDefaults"] = true,
 		["inInstance"] = false
 	},
-	["mTargetmarker"] = {
-		["enable"] = false,
-		["overlaytexture"] = "mMediaTag P6",
-		["overlay"] = {["r"] = 0.21, ["g"] = 0.33, ["b"] = 0.34, ["a"] = 0.85},
-	},
 	["mExecutemarker"] = {
 		["enable"] = false,
 		["indicator"] = {["r"] = 1, ["g"] = 0.2, ["b"] = 0.2},

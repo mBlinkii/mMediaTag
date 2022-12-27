@@ -210,11 +210,9 @@ local function healthMarkers(unit, percent)
 	local npcID = tonumber(unit.npcID)
 
 	local db = E.db[mPlugin].mHealthmarker
-	if not npcID then
-		if health.healthMarker then
-			health.healthMarker:Hide()
-			health.healthOverlay:Hide()
-		end
+	if not npcID and health.healthMarker then
+		health.healthMarker:Hide()
+		health.healthOverlay:Hide()
 	else
 		local markersTable = nil
 		if db.useDefaults then
@@ -248,18 +246,17 @@ local function healthMarkers(unit, percent)
 					health.healthOverlay:SetTexture(texture)
 					health.healthOverlay:SetVertexColor(db.overlay.r, db.overlay.g, db.overlay.b)
 					health.healthOverlay:SetAlpha(db.overlay.a)
+					return
+				end
+				if health.healthMarker then
+					health.healthMarker:Hide()
+					health.healthOverlay:Hide()
 				end
 			end
 
-			if health.healthMarker then
-				health.healthMarker:Hide()
-				health.healthOverlay:Hide()
-			end
-		else
-			if health.healthMarker then
-				health.healthMarker:Hide()
-				health.healthOverlay:Hide()
-			end
+		elseif health.healthMarker then
+			health.healthMarker:Hide()
+			health.healthOverlay:Hide()
 		end
 	end
 end
