@@ -218,7 +218,6 @@ local Teleports = {
 	},
 	season = {
 		available = false,
-		354462, --path-of-the-courageous
 		393262, --path-of-the-windswept-plains
 		393273, --path-of-the-draconic-diploma
 		393279, --pfad-der-arkanen-geheimnisse
@@ -230,6 +229,7 @@ local Teleports = {
 	},
 	sl = {
 		available = false,
+		354462, --path-of-the-courageous
 		354463, --path-of-the-plagued
 		354464, --path-of-the-misty-forest
 		354465, --path-of-the-sinful-soul
