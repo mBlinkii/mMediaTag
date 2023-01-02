@@ -180,7 +180,7 @@ local function OptionsCore()
 							mchatmenu = {
 								order = 20,
 								type = "group",
-								name = L["mChatMenu"],
+								name = L["ChatMenu"],
 								args = {},
 							},
 						},
@@ -343,6 +343,18 @@ local function OptionsCore()
 								order = 2,
 								type = "group",
 								name = L["Elemental Overflow"],
+								args = {},
+							},
+							TimewarpedBadge = {
+								order = 3,
+								type = "group",
+								name = L["Timewarped Badge"],
+								args = {},
+							},
+							Valor = {
+								order = 4,
+								type = "group",
+								name = L["Valor"],
 								args = {},
 							},
 						},
@@ -570,23 +582,6 @@ local function OptionsCoreClassic()
 									else
 										mMT:mBackupNameplateSettings()
 									end
-									E:StaticPopup_Show("CONFIG_RL")
-								end,
-							},
-							spacernameplate = {
-								order = 2,
-								type = "description",
-								name = "\n\n\n",
-							},
-							namplaterset = {
-								order = 3,
-								type = "execute",
-								name = L["Reset Backup"],
-								desc = L["Resets Namplate Backups"],
-								func = function()
-									mMT:mRestoreNameplateSettings()
-									E.db[mPlugin].mClassNameplate = false
-									E.db[mPlugin].mBackup = false
 									E:StaticPopup_Show("CONFIG_RL")
 								end,
 							},

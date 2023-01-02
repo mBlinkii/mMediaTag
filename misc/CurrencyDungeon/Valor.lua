@@ -7,6 +7,7 @@ local addon, ns = ...
 --Lua functions
 local format = format
 local strjoin = strjoin
+local mInsert = table.insert
 
 --WoW API / Variables
 local _G = _G
@@ -14,9 +15,10 @@ local C_CurrencyInfo = C_CurrencyInfo
 
 --Variables
 local displayString, lastPanel = "", nil
-local mText = format("mMediaTag %s", L["Valor"])
 local mTextName = "mValor"
 local mCurrencyID = 1191
+local info = C_CurrencyInfo.GetCurrencyInfo(mCurrencyID)
+local mText = format("mMediaTag %s", info.name)
 local hideCurrency = false
 
 local function OnEnter(self)
@@ -104,6 +106,86 @@ local function ValueColorUpdate(hex)
 end
 
 E.valueColorUpdateFuncs[ValueColorUpdate] = true
+
+local function OptionsCurrencys()
+	E.Options.args.mMediaTag.args.datatext.args.currencys.args.Valor.args = {
+		Valor_Header = {
+			order = 100,
+			type = "header",
+			name = format("|CFFA569BD%s|r", info.name),
+		},
+		Valor_Color = {
+			order = 110,
+			type = "select",
+			name = L["Color Style"],
+			get = function(info)
+				return E.db[mPlugin].mValor.style
+			end,
+			set = function(info, value)
+				E.db[mPlugin].mValor.style = value
+				DT:ForceUpdate_DataText("mValor")
+			end,
+			values = {
+				auto = L["Auto"],
+				color = L["Color"],
+				white = L["White"],
+			},
+		},
+		Valor_Icon = {
+			order = 120,
+			type = "toggle",
+			name = L["Icon"],
+			desc = L["Show Icon"],
+			get = function(info)
+				return E.db[mPlugin].mValor.icon
+			end,
+			set = function(info, value)
+				E.db[mPlugin].mValor.icon = value
+				DT:ForceUpdate_DataText("mValor")
+			end,
+		},
+		Valor_ShortNumber = {
+			order = 130,
+			type = "toggle",
+			name = L["Short Number"],
+			desc = L["Short Number"],
+			get = function(info)
+				return E.db[mPlugin].mValor.short
+			end,
+			set = function(info, value)
+				E.db[mPlugin].mValor.short = value
+				DT:ForceUpdate_DataText("mValor")
+			end,
+		},
+		Valor_Name = {
+			order = 140,
+			type = "toggle",
+			name = L["Name"],
+			desc = L["Shows Name"],
+			get = function(info)
+				return E.db[mPlugin].mValor.name
+			end,
+			set = function(info, value)
+				E.db[mPlugin].mValor.name = value
+				DT:ForceUpdate_DataText("mValor")
+			end,
+		},
+		Valor_Hide = {
+			order = 160,
+			type = "toggle",
+			name = L["Hide if Zero"],
+			get = function(info)
+				return E.db[mPlugin].mValor.hide
+			end,
+			set = function(info, value)
+				E.db[mPlugin].mValor.hide = value
+				DT:ForceUpdate_DataText("mValor")
+			end,
+		},
+	}
+end
+
+mInsert(ns.Config, OptionsCurrencys)
 
 DT:RegisterDatatext(
 	mTextName,

@@ -920,7 +920,7 @@ local function mObjectiveTrackerOptions()
 				textprogresscolorgood = {
 					type = "color",
 					order = 8,
-					name = L["God color"],
+					name = L["Good color"],
 					hasAlpha = false,
 					disabled = function()
 						return not E.db[mPlugin].mObjectiveTracker.text.progresscolor
