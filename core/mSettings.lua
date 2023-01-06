@@ -422,21 +422,6 @@ P[mPlugin] = {
 		["indicator"] = {["r"] = 1, ["g"] = 0.2, ["b"] = 0.2},
 		["auto"] = true,
 		["range"] = 20,
-		["autorange"] = {
-			["HUNTER"] = 35,
-			["WARLOCK"] = 20,
-			["PRIEST"] = 30,
-			["PALADIN"] = 30,
-			["MAGE"] = 30,
-			["ROGUE"] = 35,
-			["DRUID"] = 30,
-			["SHAMAN"] = 20,
-			["WARRIOR"] = 35,
-			["DEATHKNIGHT"] = 20,
-			["MONK"] = 30,
-			["DEMONHUNTER"] = 20,
-			["EVOKER"] = 20,
-		}
 	},
 	["mCustomBackdrop"] = {
 		["health"] = {["enable"] = false, ["texture"] = "mMediaTag P6"},

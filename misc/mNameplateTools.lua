@@ -111,56 +111,92 @@ local HM_NPCs = {
 	[116410] = { 33 }, -- Karam Magespear
 }
 
-local executeRange = {
-	-- warrior
-	[71] = 20,
-	[72] = 20,
-	--[73] = 0,
-	-- paladin
-	[65] = 20,
-	[66] = 20,
-	[70] = 20,
-	--HUNTER
-	[253] = 35,
-	[254] = 20,
-	[255] = 20,
-	--ROGUE"
-	[259] = 35,
-	--[260] = 0,
-	--[261] = 0,
-	--PRIEST
-	--[256] = 0,
-	--[257] = 0,
-	[258] = 35,
-	--DEATHKNIGHT
-	--[250] = 0,
-	--[251] = 0,
-	[252] = 35,
-	--SHAMAN
-	--[262] = 0,
-	--[263] = 0,
-	--[264] = 0,
-	--MAGE
-	--[62] = 0,
-	--[63] = 0,
-	--[64] = 0,
-	--"WARLOCK
-	[265] = 20,
-	--[266] = 0,
-	--[267] = 0,
-	--MONK
-	[268] = 15,
-	--[270] = 0,
-	[269] = 15,
-	--DRUID
-	--[102] = 0,
-	--[103] = 0,
-	--[104] = 0,
-	--[105] = 0,
-	--DEMONHUNTER
-	--[577] = 0,
-	--[581] = 0,
-}
+local executeAutoRange = {enabel = false, range = 30}
+
+function mMT:updateAutoRange()
+	executeAutoRange.enabel = false
+	executeAutoRange.range = 0
+
+	local _, class = UnitClass("player")
+	local spec = GetSpecialization()
+	local specID = GetSpecializationInfo(spec) or 0
+	if not (spec or class or specID) or specID == 0 then
+		return
+	end
+
+	if class == "MAGE" then
+		if specID == 62 then
+			if IsPlayerSpell(384581) then -- Arcane pressure
+				executeAutoRange.enabel = true
+				executeAutoRange.range = 35
+			end
+		elseif specID == 63 then
+			if IsPlayerSpell(269644) then -- Touch
+				executeAutoRange.enabel = true
+				executeAutoRange.range = 30
+			end
+		end
+	elseif class == "WARLOCK" then
+		if specID == 265 then
+			if IsPlayerSpell(198590) then -- Souldrain
+				executeAutoRange.enabel = true
+				executeAutoRange.range = 20
+			end
+		elseif specID == 267 then
+			if IsPlayerSpell(17877) then -- Shadowburn
+				executeAutoRange.enabel = true
+				executeAutoRange.range = 20
+			end
+		end
+	elseif class == "PRIEST" then
+		if IsPlayerSpell(309072) or IsPlayerSpell(32379) then -- ToF or SW:Death
+			executeAutoRange.enabel = true
+			executeAutoRange.range = IsPlayerSpell(309072) and 35 or 20
+		end
+	elseif class == "WARRIOR" then
+		local execute_Id = (specID == 72) and 280735 or 163201
+		local massacre_Id = (specID == 72) and 206315 or 281001
+		if IsPlayerSpell(execute_Id) or IsPlayerSpell(massacre_Id) then -- Execute or Massacre
+			executeAutoRange.enabel = true
+			executeAutoRange.range = IsPlayerSpell(massacre_Id) and 35 or 20
+		end
+	elseif class == "HUNTER" then
+		if IsPlayerSpell(273887) or ((specID == 255) and IsPlayerSpell(385718)) then
+			-- Killer Instinct or Ruthless marauder
+			executeAutoRange.enabel = true
+			executeAutoRange.range = 35
+		else
+			-- Since Survival has it's own spellId for kill shot
+			local killShot_Id = (specID == 255) and 320976 or 53351
+			if IsPlayerSpell(killShot_Id) then -- Kill shot
+				executeAutoRange.enabel = true
+				executeAutoRange.range = 20
+			end
+		end
+	elseif class == "ROGUE" then
+		if specID == 259 then
+			if IsPlayerSpell(328085) or IsPlayerSpell(381798) then -- Blindside or Zoldyck
+				executeAutoRange.enabel = true
+				executeAutoRange.range = 35
+			end
+		end
+	elseif class == "PALADIN" then
+		if IsPlayerSpell(24275) then -- Hammer of Wrath
+			executeAutoRange.enabel = true
+			executeAutoRange.range = 20
+		end
+	elseif class == "MONK" then
+		if IsPlayerSpell(322109) and IsPlayerSpell(322113) then -- ToD
+			executeAutoRange.enabel = true
+			executeAutoRange.range = 15
+		end
+	elseif class == "DEATHKNIGHT" then
+		if IsPlayerSpell(343294) then -- Soulreaper
+			executeAutoRange.enabel = true
+			executeAutoRange.range = 35
+		end
+	end
+end
 
 local function executeMarker(unit, percent)
 	local health = unit.Health
@@ -173,8 +209,8 @@ local function executeMarker(unit, percent)
 
 	local range = nil
 
-	if db.auto then
-		range = executeRange[select(1, GetSpecializationInfo(GetSpecialization()))]
+	if db.auto and executeAutoRange.enabel then
+		range = executeAutoRange.range
 	else
 		range = db.range
 	end
@@ -253,7 +289,6 @@ local function healthMarkers(unit, percent)
 					health.healthOverlay:Hide()
 				end
 			end
-
 		elseif health.healthMarker then
 			health.healthMarker:Hide()
 			health.healthOverlay:Hide()
@@ -270,6 +305,7 @@ local function mNameplateTools(table, event, frame)
 			end
 
 			if E.db[mPlugin].mExecutemarker.enable then
+				mMT:updateAutoRange()
 				executeMarker(table, percent)
 			end
 		end
@@ -638,6 +674,7 @@ local function mhealtmarkerOptions()
 			end,
 			set = function(info, value)
 				E.db[mPlugin].mExecutemarker.auto = value
+				E:StaticPopup_Show("CONFIG_RL")
 			end,
 		},
 		executeindicator = {
