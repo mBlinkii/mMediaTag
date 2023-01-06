@@ -211,7 +211,7 @@ local function executeMarker(unit, percent)
 
 	if db.auto and executeAutoRange.enabel then
 		range = executeAutoRange.range
-	else
+	elseif not db.auto then
 		range = db.range
 	end
 
@@ -304,7 +304,7 @@ local function mNameplateTools(table, event, frame)
 				healthMarkers(table, percent)
 			end
 
-			if E.db[mPlugin].mExecutemarker.enable then
+			if E.db[mPlugin].mExecutemarker.enable and (E.db[mPlugin].mExecutemarker.auto and not executeAutoRange.enabel) then
 				executeMarker(table, percent)
 			end
 		end
