@@ -59,24 +59,20 @@ function mMT:Initialize()
 end
 
 function mMT:PLAYER_ENTERING_WORLD()
-	if E.Retail then
-		if E.db[mPlugin] then
-			if E.db[mPlugin].mRoleSymbols.enable then
-				mMT:mStartRoleSmbols() -- rolensymbole ändern
-			end
+	if E.db[mPlugin] then
+		if E.db[mPlugin].mRoleSymbols.enable then
+			mMT:mStartRoleSmbols() -- rolensymbole ändern
 		end
 	end
 end
 
 function mMT:ACTIVE_TALENT_GROUP_CHANGED()
-	if E.Retail then
-		if E.db[mPlugin].mCastbar.enable then
-			mMT:mUpdateKick() -- castbar kick/ kick auf cd
-		end
+	if E.db[mPlugin].mCastbar.enable then
+		mMT:mUpdateKick() -- castbar kick/ kick auf cd
+	end
 
-		if E.db[mPlugin].mExecutemarker.auto then
-			mMT:updateAutoRange()
-		end
+	if E.db[mPlugin].mExecutemarker.auto then
+		mMT:updateAutoRange()
 	end
 end
 
