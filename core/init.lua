@@ -49,7 +49,7 @@ function mMT:Initialize()
 			mMT:RegisterEvent("PLAYER_ENTERING_WORLD") -- events registrieren
 		end
 
-		if E.db[mPlugin].mExecutemarker.auto then
+		if E.db[mPlugin].mExecutemarker.auto or E.db[mPlugin].mCastbar.enable then
 			mMT:RegisterEvent("ACTIVE_TALENT_GROUP_CHANGED") -- events registrieren
 		end
 	end
@@ -70,7 +70,13 @@ end
 
 function mMT:ACTIVE_TALENT_GROUP_CHANGED()
 	if E.Retail then
-		mMT:mUpdateKick() -- castbar kick/ kick auf cd
+		if E.db[mPlugin].mCastbar.enable then
+			mMT:mUpdateKick() -- castbar kick/ kick auf cd
+		end
+
+		if E.db[mPlugin].mExecutemarker.auto then
+			mMT:updateAutoRange()
+		end
 	end
 end
 

@@ -305,14 +305,14 @@ local function mNameplateTools(table, event, frame)
 			end
 
 			if E.db[mPlugin].mExecutemarker.enable then
-				mMT:updateAutoRange()
+				executeMarker(table, percent)
 			end
 		end
 	end
 end
 
 function mMT:StartNameplateTools()
-	if E.db[mPlugin].mHealthmarker.auto then
+	if E.db[mPlugin].mExecutemarker.auto then
 		mMT:updateAutoRange()
 	end
 	hooksecurefunc(NP, "Health_UpdateColor", mNameplateTools)
@@ -701,7 +701,7 @@ local function mhealtmarkerOptions()
 			max = 95,
 			step = 1,
 			disabled = function()
-				return E.db[mPlugin].mHealthmarker.auto
+				return E.db[mPlugin].mExecutemarker.auto
 			end,
 			get = function(info)
 				return E.db[mPlugin].mExecutemarker.range
