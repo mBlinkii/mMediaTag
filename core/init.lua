@@ -49,7 +49,7 @@ function mMT:Initialize()
 			mMT:RegisterEvent("PLAYER_ENTERING_WORLD") -- events registrieren
 		end
 
-		if E.db[mPlugin].mExecutemarker.auto or  E.db[mPlugin].mExecutemarker.enable then
+		if E.db[mPlugin].mExecutemarker.auto then
 			mMT:RegisterEvent("ACTIVE_TALENT_GROUP_CHANGED") -- events registrieren
 		end
 	end
