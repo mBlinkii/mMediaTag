@@ -60,7 +60,6 @@ local function SetupDotIconList()
 			tmpIcon[i] = { ["file"] = path, ["icon"] = mTGAtoIcon(path, i) }
 		end
 		mIconsList = tmpIcon
-		tmpIcon = wipe(tmpIcon)
 	end
 end
 
@@ -68,8 +67,6 @@ local function mTextureList()
 	if not TextureList then
 		SetupDotIconList()
 		local tmpTexture = {}
-		tmpTexture = wipe(tmpTexture)
-		local i = 0
 		for i in pairs(mIconsList) do
 			tmpTexture[i] = mIconsList[i].icon
 		end
