@@ -44,10 +44,6 @@ function mMT:mMisc()
 		mMT:TipIconSetup()
 	end
 
-	if E.db[mPlugin].mMicroBarSkin.enable and E.db.actionbar.microbar.enable then
-		mMT:SetupMicroBarSkin()
-	end
-
 	mMT:mLoadTools()
 
 	if E.Retail then

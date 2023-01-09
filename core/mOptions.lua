@@ -424,10 +424,10 @@ local function OptionsCore()
 						childGroups = "tab",
 						args = {},
 					},
-					microbarskin = {
+					instancedifficulty = {
 						order = 7,
 						type = "group",
-						name = L["Microbar Skin"],
+						name = L["Instance Difficulty"],
 						childGroups = "tab",
 						args = {},
 					},

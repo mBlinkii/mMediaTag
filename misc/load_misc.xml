@@ -13,6 +13,7 @@
 	<Script file="mFPSMS.lua"/>
 	<Script file="mFunctionsMisc.lua"/>
 	<Script file="mFunctionsRetail.lua"/>
+	<Script file="mInstanceDifficulty.lua"/>
 	<Script file="mKeystoneToChat.lua"/>
 	<Script file="mNameplateTools.lua"/>
 	<Script file="mObjectiveTracker.lua"/>
@@ -22,7 +23,6 @@
 	<Script file="mTipIcon.lua"/>
 	<Script file="mTools.lua"/>
 	<Script file="mRoleIcons.lua"/>
-	<Script file="mSkinMicroBar.lua"/>
 	<Script file="mTeleports.lua"/>
 	<Script file="mTest.lua"/>
 	<Include file="CurrencyDF\load_CurrencyDF.xml"/>
