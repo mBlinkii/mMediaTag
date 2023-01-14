@@ -1,6 +1,7 @@
 local E, L, V, P, G = unpack(ElvUI)
 local mPlugin = "mMediaTag"
 local mMT = E:GetModule(mPlugin)
+local LSM = E.Libs.LSM
 local addon, ns = ...
 
 --Lua functions
@@ -224,7 +225,7 @@ function UpdateDifficulty()
 
 	local name, instanceType, difficultyID, difficultyName, maxPlayers, dynamicDifficulty, isDynamic, instanceID, instanceGroupSize, LfgDungeonID =
 		GetInstanceInfo()
-	local inInstance, _ = IsInInstance()
+	local inInstance, InstanceType = IsInInstance()
 
 	if inInstance and name then
 		name = shortNames[instanceID] or E:ShortenString(name, 4)
@@ -257,6 +258,30 @@ function UpdateDifficulty()
 						difficultyColor,
 						difficultyShort,
 						GetKeystoneLevelandColor()
+					)
+				)
+			end
+		elseif InstanceType == "pvp" or InstanceType == "arena" then
+			difficultyColor = instanceDifficulty[34] and instanceDifficulty[34].c or "|CFFFFFFFF"
+			difficultyShort = instanceDifficulty[34] and instanceDifficulty[34].d or ""
+			if isGuildParty then
+				mIDF.Text:SetText(
+					format(
+						"%s%s|r\n%s%s|r",
+						colors.guild.color,
+						name,
+						difficultyColor,
+						difficultyShort
+					)
+				)
+			else
+				mIDF.Text:SetText(
+					format(
+						"%s%s|r\n%s%s|r",
+						colors.name.color,
+						name,
+						difficultyColor,
+						difficultyShort
 					)
 				)
 			end
@@ -298,14 +323,14 @@ end
 
 function mMT:SetupInstanceDifficulty()
 	local position, xOffset, yOffset = GetIconSettings("difficulty")
-	local Font = GameFontHighlightSmall:GetFont()
+	local Font =  LSM:Fetch("font", E.db.general.font)
 
 	mIDF = CreateFrame("Frame", "m_MinimapInstanceDifficulty", Minimap)
 	mIDF:Size(32, 32)
 	mIDF:SetPoint(position, Minimap, xOffset, yOffset)
 	mIDF.Text = mIDF:CreateFontString("mIDF_Text", "OVERLAY", "GameTooltipText")
 	mIDF.Text:SetPoint("CENTER", mIDF, "CENTER")
-	mIDF.Text:SetFont(Font, 12)
+	mIDF.Text:SetFont(Font, E.db.general.fontSize or 12)
 	mIDF:Hide()
 
 	UodateColors()
