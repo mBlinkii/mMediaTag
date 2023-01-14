@@ -440,3 +440,9 @@ L["|CFF8E44ADm|r|CFF2ECC71Media|r|CFF3498DBTag|r is a plugin for ElvUI with addi
 	"|CFF8E44ADm|r|CFF2ECC71Media|r|CFF3498DBTag|r ist ein Plugin für ElvUI mit zusätzlichen Texturen, Chathintergründe, Tags für die Unitframes, Berufs- und Systemmenüerweiterungen für die Infotexte\n\n\n\n|CFF2ECC71Besondere Merkmale|r\n\n|CFF3498DB -|r 50 Statusbar Texturen\n|CFF3498DB -|r 15 Chathintergründe\n|CFF3498DB -|r Infotext Systemmenü\n|CFF3498DB -|r Infotext Berufsmenü\n|CFF3498DB -|r Infotext Dock-Symbole zum Erstellen einer eigenen Dockbar\n|CFF3498DB -|r Infotext Dungeon Info, Dungeon Name, Affix, Schlüsselstein und Erfolge\n|CFF3498DB -|r Tooltip Symbole\n|CFF3498DB -|r Automatische ändern der Namensplaketten Rand- und Hoverfarbe in die Klassenfarben\n|CFF3498DB -|r 25 Tags für ElvUI\n\n\n\n|CFF3498DB©|r |CFF8E44ADCopyright|r |CFF2ECC712021|r |CFF3498DB©|r |CFF2ECC71by|r |CFF3498DBBlinkii|r"
 L["%sAddon:|r\n\nAll contents of this AddOn - ElvUI_mMediaTag especially texts, photographs and graphics, are protected by copyright.\n\n\n%sDock Icons:|r\n\nIcons are from Google - Material Design Icons are available under material.io. The symbols are available under the APACHE LICENSE, VERSION 2.0.\nIcons were resized to 64x64 pixel and the color was changed from black to white."] =
 	"%sAddon:|r\n\nAlle Inhalte dieses AddOn - ElvUI_mMediaTag, insbesondere Texte, Fotos und Grafiken, sind urheberrechtlich geschützt.\n\n\n%sDock Symbole:|r\n\nDie Symbole sind von Google - Material Design Icons und sind unter material.io verfügbar. Die Symbole sind unter der APACHE LICENSE, VERSION 2.0.\nDie Symbole wurden auf 64x64 Pixel verkleinert und die Farbe wurde von schwarz auf weiß geändert."
+L["Difficultys Colors"] = "Schwierigkeits Farben"
+L["Other Colors"] = "Sonstige Farben"
+L["Instance Name"] = "Instanznamen"
+L["Guild Group"] = "Gilden Gruppe"
+L["M+ Keystone Level"] = "M+ Schlüsselstein Stufe"
+L["Instance Difficulty"] = "Instanz Schwierigkeit"
