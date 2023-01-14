@@ -191,7 +191,7 @@ function mMT:WeeklyAffixes()
 				format(
 					"%s%s|n%s|r",
 					ns.mColor5,
-					L["Saisson has not started yet."],
+					L["Season has not started yet."],
 					L["%sERROR! Please open the Mythic+ window, LFG Tool or Reload UI!|r"]
 				)
 			)

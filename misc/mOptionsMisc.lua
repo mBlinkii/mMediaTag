@@ -82,7 +82,7 @@ local function OptionsSystemMenu()
 			order = 5,
 			type = "toggle",
 			name = L["Tooltip Instanceinfo"],
-			desc = L["Shows Inctance Info and Mythic Plus key tone in tooltip."],
+			desc = L["Displays the instance info and keystone in the tooltip."],
 			get = function(info)
 				return E.db[mPlugin].InstancInfoToolTip
 			end,

@@ -132,7 +132,7 @@ local function mRollOptions()
 		colornormal = {
 			type = "color",
 			order = 31,
-			name = L["Custom Color"],
+			name = L["Custom color"],
 			hasAlpha = true,
 			get = function(info)
 				local t = E.db[mPlugin].mRoll.colornormal
@@ -310,7 +310,7 @@ local function mChatMenuOptions()
 		colornormal = {
 			type = "color",
 			order = 31,
-			name = L["Custom Color"],
+			name = L["Custom color"],
 			hasAlpha = true,
 			get = function(info)
 				local t = E.db[mPlugin].mChatMenu.colornormal

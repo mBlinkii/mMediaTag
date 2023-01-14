@@ -14,7 +14,7 @@ local ObjectiveTrackerFrame = _G.ObjectiveTrackerFrame
 local ObjectiveTrackerBlocksFrame = _G.ObjectiveTrackerBlocksFrame
 --local WORLD_QUEST_TRACKER_MODULE = _G.WORLD_QUEST_TRACKER_MODULE
 --local BONUS_OBJECTIVE_TRACKER_MODULE = _G.BONUS_OBJECTIVE_TRACKER_MODULE
-local maxNumQuestsCanAccept = C_QuestLog.GetMaxNumQuestsCanAccept()
+local maxNumQuestsCanAccept = 35
 local HeaderTitel = ObjectiveTrackerBlocksFrame.QuestHeader.Text:GetText()
 local width = _G.ObjectiveTrackerFrame:GetWidth()
 --local hight = _G.ObjectiveTrackerFrame:GetHight()
@@ -60,7 +60,6 @@ local function SetupDotIconList()
 			tmpIcon[i] = { ["file"] = path, ["icon"] = mTGAtoIcon(path, i) }
 		end
 		mIconsList = tmpIcon
-		tmpIcon = wipe(tmpIcon)
 	end
 end
 
@@ -68,8 +67,6 @@ local function mTextureList()
 	if not TextureList then
 		SetupDotIconList()
 		local tmpTexture = {}
-		tmpTexture = wipe(tmpTexture)
-		local i = 0
 		for i in pairs(mIconsList) do
 			tmpTexture[i] = mIconsList[i].icon
 		end
@@ -920,7 +917,7 @@ local function mObjectiveTrackerOptions()
 				textprogresscolorgood = {
 					type = "color",
 					order = 8,
-					name = L["God color"],
+					name = L["Good color"],
 					hasAlpha = false,
 					disabled = function()
 						return not E.db[mPlugin].mObjectiveTracker.text.progresscolor

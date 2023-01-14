@@ -211,15 +211,21 @@ local Teleports = {
 		393764, --path-of-proven-worth
 		393766, --path-of-the-grand-magistrix
 		393267, --path-of-the-rotting-woods
+		159900, --path-of-the-dark-rail
+		159898, --path-of-the-skies
+		373274, --path-of-the-scrappy-prince
+		373262, --path-of-the-fallen-guardian
 	},
 	season = {
 		available = false,
-		367416, --path-of-the-streetwise-merchant
-		159900, --path-of-the-dark-rail
-		159898, --path-of-the-skies
-		159896, --Path of the Iron Prow
-		373274, --path-of-the-scrappy-prince
-		373262, --path-of-the-fallen-guardian
+		393262, --path-of-the-windswept-plains
+		393273, --path-of-the-draconic-diploma
+		393279, --pfad-der-arkanen-geheimnisse
+		393256, --pfad-des-nestverteidigers
+		393766, --path-of-the-grand-magistrix
+		131204, --path-of-the-jade-serpent
+		393764, --path-of-proven-worth
+		159899, --path-of-the-crescent-moon
 	},
 	sl = {
 		available = false,
@@ -234,6 +240,14 @@ local Teleports = {
 	},
 	df = {
 		available = false,
+		393262, --path-of-the-windswept-plains
+		393273, --path-of-the-draconic-diploma
+		393279, --pfad-der-arkanen-geheimnisse
+		393256, --pfad-des-nestverteidigers
+		393276, --pfad-des-obsidianschatzes
+		393283, --path-of-the-titanic-reservoir
+		393267, --path-of-the-rotting-woods
+		393222, --path-of-the-watchers-legacy
 	},
 	menu = {
 	}
@@ -355,6 +369,7 @@ local function CheckIfAvailable()
 	mGetInfos(Teleports.toys, false, true, true)
 	mGetInfos(Teleports.engineering, false, true, true)
 	mGetInfos(Teleports.season, true, true, true)
+	mGetInfos(Teleports.df, true, true, true)
 	mGetInfos(Teleports.sl, true, true, true)
 	mGetInfos(Teleports.items, false, true, true)
 	mGetInfos(Teleports.spells, true, true, true)
@@ -386,6 +401,14 @@ local function mUpdateTPList(button)
 		tinsert(Teleports.menu, index, { text = format("%s%s|r", titel, L["M+ Season"]), isTitle = true, notClickable = true })
 		index = index + 1
 		mGetInfos(Teleports.season, true, false, false)
+		tinsert(Teleports.menu, index, { text = "", isTitle = true, notClickable = true })
+		index = index + 1
+	end
+
+	if Teleports.df.available then
+		tinsert(Teleports.menu, index, { text = format("%s%s|r", titel, L["DF Dungeons"]), isTitle = true, notClickable = true })
+		index = index + 1
+		mGetInfos(Teleports.df, true, false, false)
 		tinsert(Teleports.menu, index, { text = "", isTitle = true, notClickable = true })
 		index = index + 1
 	end
@@ -431,10 +454,10 @@ local function mTPTooltip()
 		mGetInfos(Teleports.season, true, true, false)
 	end
 
-	if Teleports.sl.available then
+	if Teleports.df.available then
 		DT.tooltip:AddLine(" ")
-		DT.tooltip:AddLine(L["SL Dungeons"])
-		mGetInfos(Teleports.sl, true, true, false)
+		DT.tooltip:AddLine(L["DF Dungeons"])
+		mGetInfos(Teleports.df, true, true, false)
 	end
 
 	if Teleports.items.available or Teleports.spells.available then

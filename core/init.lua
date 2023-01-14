@@ -44,8 +44,20 @@ function mMT:Initialize()
 		if E.db[mPlugin].mHealthmarker.enable or E.db[mPlugin].mExecutemarker.enable then
 			mMT:StartNameplateTools()
 		end
-		mMT:RegisterEvent("PLAYER_ENTERING_WORLD") -- events registrieren
-		mMT:RegisterEvent("ACTIVE_TALENT_GROUP_CHANGED") -- events registrieren
+
+		if E.db[mPlugin].mRoleSymbols.enable then
+			mMT:RegisterEvent("PLAYER_ENTERING_WORLD") -- events registrieren
+		end
+
+		if E.db[mPlugin].mExecutemarker.auto or E.db[mPlugin].mCastbar.enable then
+			mMT:RegisterEvent("ACTIVE_TALENT_GROUP_CHANGED") -- events registrieren
+		end
+
+		if E.db[mPlugin].mInstanceDifficulty.enable then
+			mMT:RegisterEvent("UPDATE_INSTANCE_INFO")
+			mMT:RegisterEvent("CHALLENGE_MODE_START")
+			mMT:SetupInstanceDifficulty()
+		end
 	end
 
 	EP:RegisterPlugin(addon, mMT:AddOptions()) -- einstellungen in elvui eintragen
@@ -53,19 +65,29 @@ function mMT:Initialize()
 end
 
 function mMT:PLAYER_ENTERING_WORLD()
-	if E.Retail then
-		if E.db[mPlugin] then
-			if E.db[mPlugin].mRoleSymbols.enable then
-				mMT:mStartRoleSmbols() -- rolensymbole ändern
-			end
+	if E.db[mPlugin] then
+		if E.db[mPlugin].mRoleSymbols.enable then
+			mMT:mStartRoleSmbols() -- rolensymbole ändern
 		end
 	end
 end
 
 function mMT:ACTIVE_TALENT_GROUP_CHANGED()
-	if E.Retail then
+	if E.db[mPlugin].mCastbar.enable then
 		mMT:mUpdateKick() -- castbar kick/ kick auf cd
 	end
+
+	if E.db[mPlugin].mExecutemarker.auto then
+		mMT:updateAutoRange()
+	end
+end
+
+function mMT:UPDATE_INSTANCE_INFO()
+	mMT:UpdateText()
+end
+
+function mMT:CHALLENGE_MODE_START()
+	mMT:UpdateText()
 end
 
 E:RegisterModule(mMT:GetName()) -- addon in elvui registrieren

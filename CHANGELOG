@@ -2,6 +2,20 @@
 [Eng] - All changes to this project will be documented in this file. The latest changes are at the top.
 [Ger] - Alle Änderungen an diesem Projekt werden in dieser Datei dokumentiert. Die neuesten Änderungen stehen ganz oben.
 
+## [ver. 2.92] - 14.01.2023
+### Update
+- FIX Max Quests Number in Objectivetracker Skin
+- FIX Objectivetracker Skin Dash Settings
+- FIX Roleicon Settings
+- FIX Missing Settings for Currencys
+- UPDATE Healthmarkers
+- UPDATE NP Skin Settings
+- UPDATE Teleports Datatext for DF S1
+- UPDATE Local DE
+- UPDATE Auto Execute Code
+### Added
+- NEW Instance difficulty for Minimap
+
 ## [ver. 2.91] - 18.12.2022
 ### Update
 - FIX NP-Healtmarker Auto range toggel not working

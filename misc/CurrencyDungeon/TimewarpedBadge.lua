@@ -7,6 +7,7 @@ local addon, ns = ...
 --Lua functions
 local format = format
 local strjoin = strjoin
+local mInsert = table.insert
 
 --WoW API / Variables
 local _G = _G
@@ -14,9 +15,10 @@ local C_CurrencyInfo = C_CurrencyInfo
 
 --Variables
 local displayString, lastPanel = "", nil
-local mText = format("mMediaTag %s", L["Timewarped Badge"])
 local mTextName = "mTimewarpedBadge"
 local mCurrencyID = 1166
+local info = C_CurrencyInfo.GetCurrencyInfo(mCurrencyID)
+local mText = format("mMediaTag %s", info.name)
 local hideCurrency = false
 
 local function OnEnter(self)
@@ -99,6 +101,86 @@ local function ValueColorUpdate(hex)
 end
 
 E.valueColorUpdateFuncs[ValueColorUpdate] = true
+
+local function OptionsCurrencys()
+	E.Options.args.mMediaTag.args.datatext.args.currencys.args.TimewarpedBadge.args = {
+		TimewarpedBadge_Header = {
+			order = 100,
+			type = "header",
+			name = format("|CFF0873B9%s|r", info.name),
+		},
+		TimewarpedBadge_Color = {
+			order = 110,
+			type = "select",
+			name = L["Color Style"],
+			get = function(info)
+				return E.db[mPlugin].mTimewarpedBadge.style
+			end,
+			set = function(info, value)
+				E.db[mPlugin].mTimewarpedBadge.style = value
+				DT:ForceUpdate_DataText("mTimewarpedBadge")
+			end,
+			values = {
+				auto = L["Auto"],
+				color = L["Color"],
+				white = L["White"],
+			},
+		},
+		TimewarpedBadge_Icon = {
+			order = 120,
+			type = "toggle",
+			name = L["Icon"],
+			desc = L["Show Icon"],
+			get = function(info)
+				return E.db[mPlugin].mTimewarpedBadge.icon
+			end,
+			set = function(info, value)
+				E.db[mPlugin].mTimewarpedBadge.icon = value
+				DT:ForceUpdate_DataText("mTimewarpedBadge")
+			end,
+		},
+		TimewarpedBadge_ShortNumber = {
+			order = 130,
+			type = "toggle",
+			name = L["Short Number"],
+			desc = L["Short Number"],
+			get = function(info)
+				return E.db[mPlugin].mTimewarpedBadge.short
+			end,
+			set = function(info, value)
+				E.db[mPlugin].mTimewarpedBadge.short = value
+				DT:ForceUpdate_DataText("mTimewarpedBadge")
+			end,
+		},
+		TimewarpedBadge_Name = {
+			order = 140,
+			type = "toggle",
+			name = L["Name"],
+			desc = L["Shows Name"],
+			get = function(info)
+				return E.db[mPlugin].mTimewarpedBadge.name
+			end,
+			set = function(info, value)
+				E.db[mPlugin].mTimewarpedBadge.name = value
+				DT:ForceUpdate_DataText("mTimewarpedBadge")
+			end,
+		},
+		TimewarpedBadge_Hide = {
+			order = 160,
+			type = "toggle",
+			name = L["Hide if Zero"],
+			get = function(info)
+				return E.db[mPlugin].mTimewarpedBadge.hide
+			end,
+			set = function(info, value)
+				E.db[mPlugin].mTimewarpedBadge.hide = value
+				DT:ForceUpdate_DataText("mTimewarpedBadge")
+			end,
+		},
+	}
+end
+
+mInsert(ns.Config, OptionsCurrencys)
 
 DT:RegisterDatatext(
 	mTextName,

@@ -13,6 +13,7 @@
 	<Script file="mFPSMS.lua"/>
 	<Script file="mFunctionsMisc.lua"/>
 	<Script file="mFunctionsRetail.lua"/>
+	<Script file="mInstanceDifficulty.lua"/>
 	<Script file="mKeystoneToChat.lua"/>
 	<Script file="mNameplateTools.lua"/>
 	<Script file="mObjectiveTracker.lua"/>

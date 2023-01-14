@@ -1793,7 +1793,7 @@ local function OptionsDock()
 				dockbar3 = {
 					order = 31,
 					type = "execute",
-					name = L["Dockbar mDock Spezial"],
+					name = L["Dockbar mDock Special"],
 					func = function()
 						mMT:mDockSpezial(ExampleDockSettings.top, true)
 						E:StaticPopup_Show("CONFIG_RL")

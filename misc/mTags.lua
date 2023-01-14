@@ -1496,7 +1496,7 @@ E:AddTagInfo("mHealth:NoAFK", ns.mName, L["Health changes between Max Health and
 E:AddTagInfo(
 	"mHealth:short-NoAFK",
 	ns.mName,
-	L["Health changes between Max Health and Percent in fight, without AFK, with short numbers."]
+	L["Health points alternate between Max Health and Percent in combat, without AFK, with short numbers."]
 )
 E:AddTagInfo(
 	"mHealth:current-percent",
@@ -1570,22 +1570,22 @@ E:AddTagInfo("mName:status", ns.mName, L["Replace the name of the unit with Stat
 E:AddTagInfo(
 	"mName:veryshort:status",
 	ns.mName,
-	L["Replace the name of the unit with Status if applicable (limited to veryshort = 5, short = 10, medium = 15, long = 20 letters)"]
+	L["Replaces the name of the unit with the status (limited to veryshort = 5, short = 10, medium = 15, long = 20 letters)."]
 )
 E:AddTagInfo(
 	"mName:short:status",
 	ns.mName,
-	L["Replace the name of the unit with Status if applicable (limited to veryshort = 5, short = 10, medium = 15, long = 20 letters)"]
+	L["Replaces the name of the unit with the status (limited to veryshort = 5, short = 10, medium = 15, long = 20 letters)."]
 )
 E:AddTagInfo(
 	"mName:medium:status",
 	ns.mName,
-	L["Replace the name of the unit with Status if applicable (limited to veryshort = 5, short = 10, medium = 15, long = 20 letters)"]
+	L["Replaces the name of the unit with the status (limited to veryshort = 5, short = 10, medium = 15, long = 20 letters)."]
 )
 E:AddTagInfo(
 	"mName:long:status",
 	ns.mName,
-	L["Replace the name of the unit with Status if applicable (limited to veryshort = 5, short = 10, medium = 15, long = 20 letters)"]
+	L["Replaces the name of the unit with the status (limited to veryshort = 5, short = 10, medium = 15, long = 20 letters)."]
 )
 
 E:AddTagInfo("mName:statusicon", ns.mName, L["Replace the name of the unit with Statusicon if applicable"])
@@ -1610,7 +1610,7 @@ E:AddTagInfo(
 	L["Replace the name of the unit with Statusicon if applicable (limited to veryshort = 5, short = 10, medium = 15, long = 20 letters)"]
 )
 
-E:AddTagInfo("mStatus:icon:class", ns.mName, L["Statusiocons in Classcolor"])
+E:AddTagInfo("mStatus:icon:class", ns.mName, L["Statusicons in Classcolor"])
 
 E:AddTagInfo("mQuestIcon", ns.mName, L["Shows a icon if the NPC is a Unit for a Quest."])
 --E:AddTagInfo('mQuestIcon:elvui', ns.mName, L['Same as mQuestIcon, hides if ElvUI Quest Icon is showen.'])

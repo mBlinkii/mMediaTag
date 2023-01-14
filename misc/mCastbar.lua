@@ -190,7 +190,7 @@ local function mCastbarOptions()
 		colorkickcd = {
 			type = "color",
 			order = 11,
-			name = L["Kick on CD"],
+			name = L["Interrupt on CD"],
 			hasAlpha = false,
 			get = function(info)
 				local t = E.db[mPlugin].mCastbar.kickcd
