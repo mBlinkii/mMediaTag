@@ -170,51 +170,15 @@ end
 local function GetKeystoneLevelandColor()
 	local keyStoneLevel, _ = C_ChallengeMode.GetActiveKeystoneInfo()
 	if keyStoneLevel == 2 then
-		return format("%s%s", colors.mpa.color, keyStoneLevel)
+		return format("%s%s|r", colors.mpa.color, keyStoneLevel)
 	elseif keyStoneLevel >= 10 then
-		local r, g, b = E:ColorGradient(
-			keyStoneLevel * 0.1,
-			colors.mpa.r,
-			colors.mpa.g,
-			colors.mpa.b,
-			colors.mpb.r,
-			colors.mpb.g,
-			colors.mpb.b
-		)
-		return format("%s%s", E:RGBToHex(r, g, b), keyStoneLevel)
+		return format("%s%s|r", colors.mpb.color, keyStoneLevel)
 	elseif keyStoneLevel >= 15 then
-		local r, g, b = E:ColorGradient(
-			keyStoneLevel * 0.15,
-			colors.mpb.r,
-			colors.mpb.g,
-			colors.mpb.b,
-			colors.mpc.r,
-			colors.mpc.g,
-			colors.mpc.b
-		)
-		return format("%s%s", E:RGBToHex(r, g, b), keyStoneLevel)
+		return format("%s%s|r", colors.mpc.color, keyStoneLevel)
 	elseif keyStoneLevel >= 20 then
-		local r, g, b = E:ColorGradient(
-			keyStoneLevel * 0.2,
-			colors.mpc.r,
-			colors.mpc.g,
-			colors.mpc.b,
-			colors.mpd.r,
-			colors.mpd.g,
-			colors.mpd.b
-		)
-		return format("%s%s", E:RGBToHex(r, g, b), keyStoneLevel)
+		return format("%s%s|r", colors.mpd.color, keyStoneLevel)
 	else
-		local r, g, b = E:ColorGradient(
-			keyStoneLevel * 0.3,
-			colors.mpd.r,
-			colors.mpd.g,
-			colors.mpd.b,
-			colors.mpe.r,
-			colors.mpe.g,
-			colors.mpe.b
-		)
-		return format("%s%s", E:RGBToHex(r, g, b), keyStoneLevel)
+		return format("%s%s|r", colors.mpe.color, keyStoneLevel)
 	end
 end
 
