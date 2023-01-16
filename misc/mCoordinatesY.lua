@@ -7,7 +7,7 @@ local InCombatLockdown = InCombatLockdown
 
 --Variables
 local mText = format("%s Y", L["Coords"])
-local hexColor = ""
+local hexColor = E:RGBToHex(E.db.general.valuecolor.r, E.db.general.valuecolor.g, E.db.general.valuecolor.b)
 local inRestrictedArea = false
 local mapInfo = E.MapInfo
 
@@ -42,11 +42,6 @@ local function Click()
 	_G.ToggleFrame(_G.WorldMapFrame)
 end
 
-local function ValueColorUpdate(hex)
-	hexColor = hex
-end
-E.valueColorUpdateFuncs[ValueColorUpdate] = true
-
 DT:RegisterDatatext(
 	"mCoordsY",
 	"mMediaTag",
@@ -58,5 +53,5 @@ DT:RegisterDatatext(
 	nil,
 	mText,
 	mapInfo,
-	ValueColorUpdate
+	nil
 )

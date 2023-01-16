@@ -55,7 +55,7 @@ local standingString = E:RGBToHex(ttsubh.r, ttsubh.g, ttsubh.b) .. "%s:|r |cFFFF
 local moreMembersOnlineString = strjoin("", "+ %d ", _G.FRIENDS_LIST_ONLINE, "...")
 local noteString = strjoin("", "|cff999999   ", _G.LABEL_NOTE, ":|r %s")
 local officerNoteString = strjoin("", "|cff999999   ", _G.GUILD_RANK1_DESC, ":|r %s")
-local guildTable, guildMotD, lastPanel = {}, ""
+local guildTable, guildMotD = {}, ""
 
 local function sortByRank(a, b)
 	if a and b then
@@ -447,8 +447,6 @@ local function OnEvent(self, event, ...)
 			(GuildMicroButtonMixin:HasUnseenInvitations() or CommunitiesUtil.DoesAnyCommunityHaveUnreadMessages())
 		)
 	end
-
-	lastPanel = self
 end
 
 local function OnLeave(self)

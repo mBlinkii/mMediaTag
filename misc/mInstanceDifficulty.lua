@@ -159,6 +159,20 @@ local function UodateColors()
 	}
 end
 
+local function ShortName(name)
+	local WordA, WordB, WordC, WordD, WordE, WordF, WordG = strsplit(" ", name, 6)
+
+	WordA = WordA and E:ShortenString(WordA, 1) or ""
+	WordB = WordB and E:ShortenString(WordB, 1) or ""
+	WordC = WordC and E:ShortenString(WordC, 1) or ""
+	WordD = WordD and E:ShortenString(WordD, 1) or ""
+	WordE = WordE and E:ShortenString(WordE, 1) or ""
+	WordF = WordF and E:ShortenString(WordF, 1) or ""
+	WordG = WordG and E:ShortenString(WordG, 1) or ""
+
+	return WordA .. WordB .. WordC .. WordD .. WordE .. WordF .. WordG
+end
+
 local function GetIconSettings(button)
 	local defaults = P.general.minimap.icons[button]
 	local profile = E.db.general.minimap.icons[button]
@@ -192,7 +206,7 @@ function UpdateDifficulty()
 	local inInstance, InstanceType = IsInInstance()
 
 	if inInstance and name then
-		name = shortNames[instanceID] or E:ShortenString(name, 4)
+		name = shortNames[instanceID] or ShortName(name)
 
 		local difficultyColor = instanceDifficulty[difficultyID] and instanceDifficulty[difficultyID].c or "|CFFFFFFFF"
 		local difficultyShort = instanceDifficulty[difficultyID] and instanceDifficulty[difficultyID].d or ""

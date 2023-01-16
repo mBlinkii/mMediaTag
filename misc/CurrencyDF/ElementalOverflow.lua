@@ -14,7 +14,7 @@ local _G = _G
 local C_CurrencyInfo = C_CurrencyInfo
 
 --Variables
-local displayString, lastPanel = "", nil
+local displayString = strjoin("", "%s", E:RGBToHex(E.db.general.valuecolor.r, E.db.general.valuecolor.g, E.db.general.valuecolor.b), "%s|r")
 local mTextName = "mElementalOverflow"
 local mCurrencyID = 2118
 local info = C_CurrencyInfo.GetCurrencyInfo(mCurrencyID)
@@ -84,20 +84,10 @@ local function OnEvent(self, event, ...)
 	else
 		self.text:SetText("|CFFE74C3CERROR!|r")
 	end
-
-	lastPanel = self
 end
 
 local function OnLeave(self)
 	DT.tooltip:Hide()
-end
-
-local function ValueColorUpdate(hex)
-	displayString = strjoin("", "%s", hex, "%s|r")
-
-	if lastPanel ~= nil then
-		OnEvent(lastPanel, "ELVUI_COLOR_UPDATE")
-	end
 end
 
 local function OptionsCurrencys()
@@ -180,8 +170,6 @@ end
 
 mInsert(ns.Config, OptionsCurrencys)
 
-E.valueColorUpdateFuncs[ValueColorUpdate] = true
-
 DT:RegisterDatatext(
 	mTextName,
 	_G.CURRENCY,
@@ -192,5 +180,5 @@ DT:RegisterDatatext(
 	OnEnter,
 	OnLeave,
 	mText,
-	ValueColorUpdate
+	nil
 )

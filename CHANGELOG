@@ -2,6 +2,15 @@
 [Eng] - All changes to this project will be documented in this file. The latest changes are at the top.
 [Ger] - Alle Änderungen an diesem Projekt werden in dieser Datei dokumentiert. Die neuesten Änderungen stehen ganz oben.
 
+## [ver. 2.92.1] - 16.01.2023
+### Update
+- UPDATE Datatex for the new ElvUI update
+- UPDATE Removed some Fonts
+- UPDATE Instance difficulty for Minimap update Shortname function
+- UPDATE Instance difficulty for Minimap update HC color
+### Added
+- NEW Tag mName:last & mName:last:onlyininstance
+
 ## [ver. 2.92] - 14.01.2023
 ### Update
 - FIX Max Quests Number in Objectivetracker Skin

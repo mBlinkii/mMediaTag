@@ -9,7 +9,7 @@ local format = format
 
 --Variables
 local ChangelogText =
-	"## [ver. 2.92] - 14.01.2023\n\n### Update\n- |CFFDFFF00FIX|r Max Quests Number in Objectivetracker Skin\n- |CFFDFFF00FIX|r Objectivetracker Skin Dash Settings\n- |CFFDFFF00FIX|r Roleicon Settings\n- |CFFDFFF00FIX|r Missing Settings for Currencys\n- |CFFFF7F50### Update|r Healthmarkers\n- |CFFFF7F50### Update|r NP Skin Settings\n- |CFFFF7F50### Update|r Teleports Datatext for DF S1\n- |CFFFF7F50### Update|r Local DE\n- |CFFFF7F50### Update|r Auto Execute Code\n\n### Added\n- |CFF6495EDNEW|r Instance difficulty for Minimap"
+	"## [ver. 2.92.1] - 16.01.2023\n\n### Update\n- |CFFFF7F50###Update|r Datatex for the new ElvUI update\n- |CFFFF7F50###Update|r Removed some Fonts\n- |CFFFF7F50###Update|r Instance difficulty for Minimap update Shortname function\n- |CFFFF7F50###Update|r Instance difficulty for Minimap update HC color\n\n### Added\n- |CFF6495EDNEW|r Tag mName:last & mName:last:onlyininstance"
 
 function mMT:Changelog(opt)
 	local Frame = CreateFrame("Frame", "mMediaTagChangelog", E.UIParent, "BackdropTemplate")

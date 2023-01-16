@@ -18,7 +18,6 @@ local mInctanceInfoText, keyText, mAffixesText, vaultinforaidText, vaultinfomplu
 local TANK_ICON = E:TextureString(E.Media.Textures.Tank, ":14:14")
 local HEALER_ICON = E:TextureString(E.Media.Textures.Healer, ":14:14")
 local DPS_ICON = E:TextureString(E.Media.Textures.DPS, ":14:14")
-local lastPanel = nil
 
 local function MakeIconString(tank, healer, damage)
 	if E.db[mPlugin].mRoleSymbols.enable then
@@ -254,8 +253,6 @@ local function OnEvent(self, event)
 	else
 		self.mIcon.TextA:SetText(mTextString)
 	end
-
-	lastPanel = self
 end
 
 local function OnLeave(self)
