@@ -1301,9 +1301,9 @@ local function ShortName(name)
 end
 
 for textFormat, length in pairs({ veryshort = 5, short = 10, medium = 15, long = 20 }) do
-	E:AddTag(format('mName:last:%s', textFormat), 'UNIT_NAME_UPDATE INSTANCE_ENCOUNTER_ENGAGE_UNIT', function(unit)
+	E:AddTag(format("mName:last:%s", textFormat), "UNIT_NAME_UPDATE INSTANCE_ENCOUNTER_ENGAGE_UNIT", function(unit)
 		local name = UnitName(unit)
-		if name and strfind(name, '%s') then
+		if name and strfind(name, "%s") then
 			name = ShortName(name)
 		end
 
@@ -1312,17 +1312,21 @@ for textFormat, length in pairs({ veryshort = 5, short = 10, medium = 15, long =
 		end
 	end)
 
-	E:AddTag(format("mName:last:onlyininstance:%s", textFormat), "UNIT_NAME_UPDATE INSTANCE_ENCOUNTER_ENGAGE_UNIT", function(unit)
-		local name = UnitName(unit)
-		local inInstance, InstanceType = IsInInstance()
-		if name and strfind(name, "%s") then
-			name = inInstance and ShortName(name) or  E.TagFunctions.Abbrev(name)
-		end
+	E:AddTag(
+		format("mName:last:onlyininstance:%s", textFormat),
+		"UNIT_NAME_UPDATE INSTANCE_ENCOUNTER_ENGAGE_UNIT",
+		function(unit)
+			local name = UnitName(unit)
+			local inInstance, InstanceType = IsInInstance()
+			if name and strfind(name, "%s") then
+				name = inInstance and ShortName(name) or E.TagFunctions.Abbrev(name)
+			end
 
-		if name then
-			return E:ShortenString(name, length)
+			if name then
+				return E:ShortenString(name, length)
+			end
 		end
-	end)
+	)
 end
 
 E:AddTag(
@@ -1449,13 +1453,15 @@ local function GetPartyTargetsIcons(unit, style)
 	for i = 1, GetNumGroupMembers() - 1 do
 		if UnitIsUnit("party" .. i .. "target", unit) then
 			local _, unitClass = UnitClass("party" .. i)
-			ClassString = format("|TInterface\\AddOns\\ElvUI_mMediaTag\\media\\misc\\%s%s.tga:0|t", unitClass, style) .. ClassString
+			ClassString = format("|TInterface\\AddOns\\ElvUI_mMediaTag\\media\\misc\\%s%s.tga:0|t", unitClass, style)
+				.. ClassString
 		end
 	end
 
 	if UnitIsUnit("playertarget", unit) then
 		local _, unitClass = UnitClass("player")
-		ClassString = format("|TInterface\\AddOns\\ElvUI_mMediaTag\\media\\misc\\%s%s.tga:0|t", unitClass, style) .. ClassString
+		ClassString = format("|TInterface\\AddOns\\ElvUI_mMediaTag\\media\\misc\\%s%s.tga:0|t", unitClass, style)
+			.. ClassString
 	end
 
 	if ClassString ~= "" then
@@ -1573,9 +1579,17 @@ E:AddTagInfo("mRoleIcon", ns.mName, L["Role Icon."])
 E:AddTagInfo("mRoleIcon:target", ns.mName, L["Target role Icon."])
 
 E:AddTagInfo("mLevel", ns.mName, L["Level changes to resting in the City."])
-E:AddTagInfo("mLevel:hideMax", ns.mName, L["Level changes to resting in the City. Hides Player level if Player is max level."])
+E:AddTagInfo(
+	"mLevel:hideMax",
+	ns.mName,
+	L["Level changes to resting in the City. Hides Player level if Player is max level."]
+)
 E:AddTagInfo("mLevelSmart", ns.mName, L["Same as mLevel (hides Level if it is equal)."])
-E:AddTagInfo("mLevelSmart:hideMax", ns.mName, L["Same as mLevel (hides Level if it is equal). Hides Player level if Player is max level."])
+E:AddTagInfo(
+	"mLevelSmart:hideMax",
+	ns.mName,
+	L["Same as mLevel (hides Level if it is equal). Hides Player level if Player is max level."]
+)
 
 E:AddTagInfo("mGroup", ns.mName, L["Group number with full text (Group 3)."])
 E:AddTagInfo("mGroup:short", ns.mName, L["Group number with abbreviated text (Grp. 3)."])
@@ -1638,6 +1652,36 @@ E:AddTagInfo(
 	ns.mName,
 	L["Replace the name of the unit with Statusicon if applicable (limited to veryshort = 5, short = 10, medium = 15, long = 20 letters)"]
 )
+E:AddTagInfo("mName:last", ns.mName, L["Shows the last word of the Unit name."])
+E:AddTagInfo("mName:last:veryshort", ns.mName, L["Shows the last word of the Unit name."])
+E:AddTagInfo("mName:last:short", ns.mName, L["Shows the last word of the Unit name."])
+E:AddTagInfo("mName:last:medium", ns.mName, L["Shows the last word of the Unit name."])
+E:AddTagInfo("mName:last:long", ns.mName, L["Shows the last word of the Unit name."])
+E:AddTagInfo(
+	"mName:last:onlyininstance",
+	ns.mName,
+	L["Shows the last word of the Unit name only in a Instance else the Abbrev name."]
+)
+E:AddTagInfo(
+	"mName:last:onlyininstance:veryshort",
+	ns.mName,
+	L["Shows the last word of the Unit name only in a Instance else the Abbrev name."]
+)
+E:AddTagInfo(
+	"mName:last:onlyininstance:short",
+	ns.mName,
+	L["Shows the last word of the Unit name only in a Instance else the Abbrev name."]
+)
+E:AddTagInfo(
+	"mName:last:onlyininstance:medium",
+	ns.mName,
+	L["Shows the last word of the Unit name only in a Instance else the Abbrev name."]
+)
+E:AddTagInfo(
+	"mName:last:onlyininstance:long",
+	ns.mName,
+	L["Shows the last word of the Unit name only in a Instance else the Abbrev name."]
+)
 
 E:AddTagInfo("mStatus:icon:class", ns.mName, L["Statusicons in Classcolor"])
 
@@ -1645,11 +1689,7 @@ E:AddTagInfo("mQuestIcon", ns.mName, L["Shows a icon if the NPC is a Unit for a 
 --E:AddTagInfo('mQuestIcon:elvui', ns.mName, L['Same as mQuestIcon, hides if ElvUI Quest Icon is showen.'])
 
 E:AddTagInfo("mTargetingPlayers", ns.mName, L["Shows the number of targeting Players a unit"])
-E:AddTagInfo(
-	"mTargetingPlayers:icons",
-	ns.mName,
-	L["Shows the number of targeting Players a unit in a Party as Icons"]
-)
+E:AddTagInfo("mTargetingPlayers:icons", ns.mName, L["Shows the number of targeting Players a unit in a Party as Icons"])
 
 E:AddTagInfo(
 	"mTargetingPlayers:icons:Glas",
