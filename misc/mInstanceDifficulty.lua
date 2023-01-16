@@ -303,7 +303,7 @@ function mMT:SetupInstanceDifficulty()
 	local position, xOffset, yOffset = GetIconSettings("difficulty")
 	local Font =  LSM:Fetch("font", E.db.general.font)
 
-	mIDF = CreateFrame("Frame", "m_MinimapInstanceDifficulty", Minimap)
+	mIDF = CreateFrame("Frame", "m_MinimapInstanceDifficulty", E.UIParent)
 	mIDF:Size(32, 32)
 	mIDF:SetPoint(position, Minimap, xOffset, yOffset)
 	mIDF.Text = mIDF:CreateFontString("mIDF_Text", "OVERLAY", "GameTooltipText")
