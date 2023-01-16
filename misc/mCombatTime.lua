@@ -10,7 +10,7 @@ local GetTime = GetTime
 
 --Variables
 local mText = L["mCombatTime"]
-local hexColor, lastPanel = "", nil
+local hexColor = E:RGBToHex(E.db.general.valuecolor.r, E.db.general.valuecolor.g, E.db.general.valuecolor.b)
 local timer, startTime, inEncounter = 0, 0, nil
 local mCombatIcon = format("|T%s:16:16:0:0:32:32|t", "Interface\\AddOns\\ElvUI_mMediaTag\\media\\misc\\combaticon.tga")
 local mCombatLeaveIcon =
@@ -77,18 +77,7 @@ local function OnEvent(self, event, _, timeSeconds)
 			self.mTimer = mMT:ScheduleTimer("mCleartText", 30, self)
 		end
 	end
-
-	lastPanel = self
 end
-
-local function ValueColorUpdate(hex)
-	hexColor = hex
-
-	if lastPanel then
-		OnEvent(lastPanel)
-	end
-end
-E.valueColorUpdateFuncs[ValueColorUpdate] = true
 
 DT:RegisterDatatext(
 	"mCombatTime",
@@ -101,5 +90,5 @@ DT:RegisterDatatext(
 	nil,
 	mText,
 	nil,
-	ValueColorUpdate
+	nil
 )

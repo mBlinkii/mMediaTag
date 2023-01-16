@@ -1295,6 +1295,35 @@ E:AddTag(
 		end
 	end
 )
+local function ShortName(name)
+	local WordA, WordB, WordC, WordD, WordE, WordF, WordG = strsplit(" ", name, 6)
+	return WordG or WordF or WordE or WordD or WordC or WordB or WordA or name
+end
+
+for textFormat, length in pairs({ veryshort = 5, short = 10, medium = 15, long = 20 }) do
+	E:AddTag(format('mName:last:%s', textFormat), 'UNIT_NAME_UPDATE INSTANCE_ENCOUNTER_ENGAGE_UNIT', function(unit)
+		local name = UnitName(unit)
+		if name and strfind(name, '%s') then
+			name = ShortName(name)
+		end
+
+		if name then
+			return E:ShortenString(name, length)
+		end
+	end)
+
+	E:AddTag(format("mName:last:onlyininstance:%s", textFormat), "UNIT_NAME_UPDATE INSTANCE_ENCOUNTER_ENGAGE_UNIT", function(unit)
+		local name = UnitName(unit)
+		local inInstance, InstanceType = IsInInstance()
+		if name and strfind(name, "%s") then
+			name = inInstance and ShortName(name) or  E.TagFunctions.Abbrev(name)
+		end
+
+		if name then
+			return E:ShortenString(name, length)
+		end
+	end)
+end
 
 E:AddTag(
 	"mPowerPercent",
