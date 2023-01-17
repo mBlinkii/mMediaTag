@@ -27,6 +27,15 @@ function mMT:ColorCheck(value)
 	end
 end
 
+function mMT:ColorFade(colorA, colorB, percent)
+	local color = {}
+	color.r = colorA.r - (colorA.r - colorB.r) * percent
+	color.g = colorA.g - (colorA.g - colorB.g) * percent
+	color.b = colorA.b - (colorA.b - colorB.b) * percent
+	color.color  = E:RGBToHex(color.r, color.g, color.b)
+	return color
+end
+
 function mMT:mMisc()
 	if E.db[mPlugin].mMsg then
 		print(format(L["Welcome to %s version |CFF8E44AD%q|r, for |cff1784d1ElvUI|r!"], ns.mName, ns.mVersion))

@@ -182,16 +182,20 @@ local function GetIconSettings(button)
 		profile.yOffset or defaults.yOffset
 end
 local function GetKeystoneLevelandColor()
+	local color = {}
 	local keyStoneLevel, _ = C_ChallengeMode.GetActiveKeystoneInfo()
 	if keyStoneLevel == 2 then
 		return format("%s%s|r", colors.mpa.color, keyStoneLevel)
 	elseif keyStoneLevel >= 10 then
-		return format("%s%s|r", colors.mpb.color, keyStoneLevel)
+		color = mMT:ColorFade(colors.mpa, colors.mpb, 0.083)
+		return format("%s%s|r", color.color, keyStoneLevel)
 	elseif keyStoneLevel >= 15 then
-		return format("%s%s|r", colors.mpc.color, keyStoneLevel)
+		color = mMT:ColorFade(colors.mpb, colors.mpc, 0.25)
+		return format("%s%s|r", color.color, keyStoneLevel)
 	elseif keyStoneLevel >= 20 then
-		return format("%s%s|r", colors.mpd.color, keyStoneLevel)
-	else
+		color = mMT:ColorFade(colors.mpc, colors.mpd, 0.041)
+		return format("%s%s|r", color.color, keyStoneLevel)
+	elseif keyStoneLevel >= 27 then
 		return format("%s%s|r", colors.mpe.color, keyStoneLevel)
 	end
 end
@@ -574,6 +578,19 @@ local function mInstanceDifficultyOptions()
 				t.r, t.g, t.b, t.color = r, g, b, E:RGBToHex(r, g, b)
 				UodateColors()
 			end,
+		},
+		ID_Header_TEST = {
+			order = 3,
+			type = "header",
+			name = function()
+				local tmpText = "START - "
+				for i = 0, 1, 0.1 do
+					local color = ColorFade(E.db[mPlugin].mInstanceDifficulty.mpa, E.db[mPlugin].mInstanceDifficulty.mpb, i)
+					color = E:RGBToHex(color.r, color.g, color.b)
+					tmpText = tmpText .. color .. "XX - " .. tostring(i) .. " |r"
+				end
+				return tmpText
+			 end,
 		},
 	}
 end
