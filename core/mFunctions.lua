@@ -29,11 +29,18 @@ end
 
 function mMT:ColorFade(colorA, colorB, percent)
 	local color = {}
-	color.r = colorA.r - (colorA.r - colorB.r) * percent
-	color.g = colorA.g - (colorA.g - colorB.g) * percent
-	color.b = colorA.b - (colorA.b - colorB.b) * percent
-	color.color  = E:RGBToHex(color.r, color.g, color.b)
-	return color
+	if colorA and colorA.r and colorA.g and colorA.b and colorB and colorB.r and colorB.g and colorB.b and percent then
+		color.r = colorA.r - (colorA.r - colorB.r) * percent
+		color.g = colorA.g - (colorA.g - colorB.g) * percent
+		color.b = colorA.b - (colorA.b - colorB.b) * percent
+		color.color  = E:RGBToHex(color.r, color.g, color.b)
+		return color
+	elseif colorA and colorA.r and colorA.g and colorA.b then
+		return colorA
+	else
+		print("|CFFE74C3CERROR - mMediaTag - COLORFADE|r")
+		return nil
+	end
 end
 
 function mMT:mMisc()

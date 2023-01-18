@@ -21,6 +21,37 @@ local challenge = difficulty and difficulty.ChallengeMode or _G.MiniMapChallenge
 
 --Variables
 local mIDF = nil
+
+local percentValue = {
+	[2] = 0,
+	[3] = 0.14,
+	[4] = 0.28,
+	[5] = 0.42,
+	[6] = 0.56,
+	[7] = 0.71,
+	[8] = 0.85,
+	[9] = 1,
+	[10] = 0.2,
+	[11] = 0.4,
+	[12] = 0.6,
+	[13] = 0.8,
+	[14] = 1,
+	[15] = 0.2,
+	[16] = 0.4,
+	[17] = 0.6,
+	[18] = 0.8,
+	[19] = 1,
+	[20] = 0.2,
+	[21] = 0.4,
+	[22] = 0.6,
+	[23] = 0.8,
+	[24] = 1,
+	[25] = 0.2,
+	[26] = 0.4,
+	[27] = 0.6,
+	[28] = 0.8,
+	[29] = 1,
+}
 local instanceDifficulty = {
 	[1] = { c = "|CFF00FC00", d = "N" },
 	[2] = { c = "|CFF005AFC", d = "H" },
@@ -97,6 +128,7 @@ local shortNames = {
 
 local colors = {
 	["mpe"] = { ["color"] = "|cffff003e", ["r"] = 1, ["g"] = 0, ["b"] = 0.24, },
+	["mpf"] = { ["color"] = "|cffff003e", ["r"] = 1, ["g"] = 0, ["b"] = 0.24, },
 	["hc"] = { ["color"] = "|cff004dff", ["b"] = 1, ["g"] = 0.30, ["r"] = 0, },
 	["guild"] = { ["color"] = "|cff94ff00", ["r"] = 0.58, ["g"] = 1, ["b"] = 0, },
 	["tw"] = { ["color"] = "|cff00c0ff", ["r"] = 0, ["g"] = 0.75, ["b"] = 1, },
@@ -156,6 +188,7 @@ local function UodateColors()
 		["mpc"] = db.mpc,
 		["mpd"] = db.mpd,
 		["mpe"] = db.mpe,
+		["mpf"] = db.mpf,
 	}
 end
 
@@ -186,17 +219,23 @@ local function GetKeystoneLevelandColor()
 	local keyStoneLevel, _ = C_ChallengeMode.GetActiveKeystoneInfo()
 	if keyStoneLevel == 2 then
 		return format("%s%s|r", colors.mpa.color, keyStoneLevel)
-	elseif keyStoneLevel >= 10 then
-		color = mMT:ColorFade(colors.mpa, colors.mpb, 0.083)
+	elseif keyStoneLevel <= 9 then
+		color = mMT:ColorFade(E.db[mPlugin].mInstanceDifficulty.mpa, E.db[mPlugin].mInstanceDifficulty.mpb, percentValue[keyStoneLevel])
 		return format("%s%s|r", color.color, keyStoneLevel)
-	elseif keyStoneLevel >= 15 then
-		color = mMT:ColorFade(colors.mpb, colors.mpc, 0.25)
+	elseif keyStoneLevel <=14 then
+		color = mMT:ColorFade(E.db[mPlugin].mInstanceDifficulty.mpb, E.db[mPlugin].mInstanceDifficulty.mpc, percentValue[keyStoneLevel])
 		return format("%s%s|r", color.color, keyStoneLevel)
-	elseif keyStoneLevel >= 20 then
-		color = mMT:ColorFade(colors.mpc, colors.mpd, 0.041)
+	elseif keyStoneLevel <= 19 then
+		color = mMT:ColorFade(E.db[mPlugin].mInstanceDifficulty.mpc, E.db[mPlugin].mInstanceDifficulty.mpd, percentValue[keyStoneLevel])
 		return format("%s%s|r", color.color, keyStoneLevel)
-	elseif keyStoneLevel >= 27 then
-		return format("%s%s|r", colors.mpe.color, keyStoneLevel)
+	elseif keyStoneLevel >= 24 then
+		color = mMT:ColorFade(E.db[mPlugin].mInstanceDifficulty.mpd, E.db[mPlugin].mInstanceDifficulty.mpe, percentValue[keyStoneLevel])
+		return format("%s%s|r", color.color, keyStoneLevel)
+	elseif keyStoneLevel >= 29 then
+		color = mMT:ColorFade(E.db[mPlugin].mInstanceDifficulty.mpe, E.db[mPlugin].mInstanceDifficulty.mpf, percentValue[keyStoneLevel])
+		return format("%s%s|r", color.color, keyStoneLevel)
+	else
+		return format("%s%s|r", colors.mpf.color, keyStoneLevel)
 	end
 end
 
@@ -346,7 +385,7 @@ local function mInstanceDifficultyOptions()
 		},
 		ID_Color_NHC = {
 			type = "color",
-			order = 3,
+			order = 4,
 			name = "NHC",
 			hasAlpha = false,
 			get = function(info)
@@ -361,7 +400,7 @@ local function mInstanceDifficultyOptions()
 		},
 		ID_Color_HC = {
 			type = "color",
-			order = 4,
+			order = 5,
 			name = "HC",
 			hasAlpha = false,
 			get = function(info)
@@ -376,7 +415,7 @@ local function mInstanceDifficultyOptions()
 		},
 		ID_Color_M = {
 			type = "color",
-			order = 5,
+			order = 6,
 			name = "M",
 			hasAlpha = false,
 			get = function(info)
@@ -391,7 +430,7 @@ local function mInstanceDifficultyOptions()
 		},
 		ID_Color_MP = {
 			type = "color",
-			order = 6,
+			order = 7,
 			name = "M+",
 			hasAlpha = false,
 			get = function(info)
@@ -406,7 +445,7 @@ local function mInstanceDifficultyOptions()
 		},
 		ID_Color_LFR = {
 			type = "color",
-			order = 7,
+			order = 8,
 			name = "LFR",
 			hasAlpha = false,
 			get = function(info)
@@ -421,7 +460,7 @@ local function mInstanceDifficultyOptions()
 		},
 		ID_Color_PVP = {
 			type = "color",
-			order = 8,
+			order = 9,
 			name = "PVP",
 			hasAlpha = false,
 			get = function(info)
@@ -436,7 +475,7 @@ local function mInstanceDifficultyOptions()
 		},
 		ID_Color_TW = {
 			type = "color",
-			order = 9,
+			order = 10,
 			name = "TW",
 			hasAlpha = false,
 			get = function(info)
@@ -451,7 +490,7 @@ local function mInstanceDifficultyOptions()
 		},
 		ID_Color_TG = {
 			type = "color",
-			order = 10,
+			order = 11,
 			name = "TG",
 			hasAlpha = false,
 			get = function(info)
@@ -465,13 +504,13 @@ local function mInstanceDifficultyOptions()
 			end,
 		},
 		ID_Header_Other = {
-			order = 11,
+			order = 12,
 			type = "header",
 			name = L["Other Colors"],
 		},
 		ID_Color_Name = {
 			type = "color",
-			order = 12,
+			order = 13,
 			name = L["Instance Name"],
 			hasAlpha = false,
 			get = function(info)
@@ -486,7 +525,7 @@ local function mInstanceDifficultyOptions()
 		},
 		ID_Color_Guild = {
 			type = "color",
-			order = 13,
+			order = 14,
 			name = L["Guild Group"],
 			hasAlpha = false,
 			get = function(info)
@@ -500,13 +539,13 @@ local function mInstanceDifficultyOptions()
 			end,
 		},
 		ID_Header_Keylevel = {
-			order = 14,
+			order = 15,
 			type = "header",
 			name = L["M+ Keystone Level"],
 		},
 		ID_Color_MA = {
 			type = "color",
-			order = 15,
+			order = 16,
 			name = "+2",
 			hasAlpha = false,
 			get = function(info)
@@ -521,8 +560,8 @@ local function mInstanceDifficultyOptions()
 		},
 		ID_Color_MB = {
 			type = "color",
-			order = 16,
-			name = ">=10",
+			order = 17,
+			name = "<=9",
 			hasAlpha = false,
 			get = function(info)
 				local t = E.db[mPlugin].mInstanceDifficulty.mpb
@@ -536,8 +575,8 @@ local function mInstanceDifficultyOptions()
 		},
 		ID_Color_MC = {
 			type = "color",
-			order = 17,
-			name = ">=15",
+			order = 18,
+			name = "<=14",
 			hasAlpha = false,
 			get = function(info)
 				local t = E.db[mPlugin].mInstanceDifficulty.mpc
@@ -551,8 +590,8 @@ local function mInstanceDifficultyOptions()
 		},
 		ID_Color_MD = {
 			type = "color",
-			order = 18,
-			name = ">=20",
+			order = 19,
+			name = "<=19",
 			hasAlpha = false,
 			get = function(info)
 				local t = E.db[mPlugin].mInstanceDifficulty.mpd
@@ -566,8 +605,8 @@ local function mInstanceDifficultyOptions()
 		},
 		ID_Color_ME = {
 			type = "color",
-			order = 19,
-			name = "<=21",
+			order = 20,
+			name = "<=14",
 			hasAlpha = false,
 			get = function(info)
 				local t = E.db[mPlugin].mInstanceDifficulty.mpe
@@ -579,16 +618,56 @@ local function mInstanceDifficultyOptions()
 				UodateColors()
 			end,
 		},
-		ID_Header_TEST = {
-			order = 3,
+		ID_Color_MF = {
+			type = "color",
+			order = 21,
+			name = "<=29",
+			hasAlpha = false,
+			get = function(info)
+				local t = E.db[mPlugin].mInstanceDifficulty.mpf
+				return t.r, t.g, t.b
+			end,
+			set = function(info, r, g, b)
+				local t = E.db[mPlugin].mInstanceDifficulty.mpf
+				t.r, t.g, t.b, t.color = r, g, b, E:RGBToHex(r, g, b)
+				UodateColors()
+			end,
+		},
+		ID_Header_Example = {
+			order = 30,
 			type = "header",
+			name = L["Example"],
+		},
+		ID_Header_Test = {
+			order = 31,
+			type = "description",
 			name = function()
-				local tmpText = "START - "
-				for i = 0, 1, 0.1 do
-					local color = ColorFade(E.db[mPlugin].mInstanceDifficulty.mpa, E.db[mPlugin].mInstanceDifficulty.mpb, i)
+				local tmpText = ""
+				tmpText = "[DIFFICULTY] = " .. colors.nhc.color .. "N |r" .. " - " .. colors.hc.color .. "H |r" .. " - " .. colors.m.color .. "M |r "
+				tmpText = tmpText .. colors.lfr.color .. "LFR |r" .. " - " .. colors.tw.color .. "TW |r" .. " - " .. colors.tg.color .. "TG |r "
+				tmpText = tmpText .. colors.pvp.color .. "PVP |r" .. " - " .. colors.mp.color .. "M+ |r\n"
+				tmpText = tmpText .. "[OTHERS] = " .. colors.name.color .. "NAME |r" .. " - " .. colors.guild.color .. "GUILD |r\n\n"
+				tmpText = tmpText .. "[KEYLEVELS]\n"
+				local color = {}
+				for i = 2, 29, 1 do
+					print(percentValue[i])
+					if i <= 9 then
+						color = mMT:ColorFade(E.db[mPlugin].mInstanceDifficulty.mpa, E.db[mPlugin].mInstanceDifficulty.mpb, percentValue[i])
+					elseif i <= 14 then
+						color = mMT:ColorFade(E.db[mPlugin].mInstanceDifficulty.mpb, E.db[mPlugin].mInstanceDifficulty.mpc, percentValue[i])
+					elseif i <= 19 then
+						color = mMT:ColorFade(E.db[mPlugin].mInstanceDifficulty.mpc, E.db[mPlugin].mInstanceDifficulty.mpd, percentValue[i])
+					elseif i <= 24 then
+						color = mMT:ColorFade(E.db[mPlugin].mInstanceDifficulty.mpd, E.db[mPlugin].mInstanceDifficulty.mpe, percentValue[i])
+					elseif i <= 29 then
+						color = mMT:ColorFade(E.db[mPlugin].mInstanceDifficulty.mpe, E.db[mPlugin].mInstanceDifficulty.mpf, percentValue[i])
+					end
 					color = E:RGBToHex(color.r, color.g, color.b)
-					tmpText = tmpText .. color .. "XX - " .. tostring(i) .. " |r"
+					tmpText = tmpText .. color .. tostring(i) .. "|r "
 				end
+
+				tmpText = tmpText .. "\n\n\n[DEMO]\n" .. colors.name.color .. "HOV |r\n" .. colors.m.color .. "M|r |CFFF7DC6F5|r"
+
 				return tmpText
 			 end,
 		},
