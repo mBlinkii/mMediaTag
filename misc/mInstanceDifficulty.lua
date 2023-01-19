@@ -136,7 +136,7 @@ local colors = {
 	["nhc"] = { ["color"] = "|cff52ff76", ["b"] = 0.46, ["g"] = 1, ["r"] = 0.32, },
 	["mpa"] = { ["color"] = "|cff97ffbd", ["r"] = 0.59, ["g"] = 1, ["b"] = 0.74, },
 	["mpd"] = { ["color"] = "|cffff8b00", ["r"] = 1, ["g"] = 0.54, ["b"] = 0, },
-	["m"] = { ["color"] = "|cffaf00ff", ["g"] = 0, ["r"] = 0.68, ["b"] = 1.00,},
+	["m"] = { ["color"] = "|cffaf00ff", ["g"] = 0, ["r"] = 0.68, ["b"] = 1.00, },
 	["name"] = { ["color"] = "|cffffffff", ["r"] = 1, ["g"] = 1, ["b"] = 1, },
 	["mp"] = { ["color"] = "|cffff8f00", ["b"] = 0, ["g"] = 0.56, ["r"] = 1, },
 	["mpb"] = { ["color"] = "|cff27ff59", ["r"] = 0.15, ["g"] = 1, ["b"] = 0.34, },
@@ -214,25 +214,31 @@ local function GetIconSettings(button)
 		profile.xOffset or defaults.xOffset,
 		profile.yOffset or defaults.yOffset
 end
+
 local function GetKeystoneLevelandColor()
 	local color = {}
 	local keyStoneLevel, _ = C_ChallengeMode.GetActiveKeystoneInfo()
 	if keyStoneLevel == 2 then
 		return format("%s%s|r", colors.mpa.color, keyStoneLevel)
 	elseif keyStoneLevel <= 9 then
-		color = mMT:ColorFade(E.db[mPlugin].mInstanceDifficulty.mpa, E.db[mPlugin].mInstanceDifficulty.mpb, percentValue[keyStoneLevel])
+		color = mMT:ColorFade(E.db[mPlugin].mInstanceDifficulty.mpa, E.db[mPlugin].mInstanceDifficulty.mpb,
+			percentValue[keyStoneLevel])
 		return format("%s%s|r", color.color, keyStoneLevel)
-	elseif keyStoneLevel <=14 then
-		color = mMT:ColorFade(E.db[mPlugin].mInstanceDifficulty.mpb, E.db[mPlugin].mInstanceDifficulty.mpc, percentValue[keyStoneLevel])
+	elseif keyStoneLevel <= 14 then
+		color = mMT:ColorFade(E.db[mPlugin].mInstanceDifficulty.mpb, E.db[mPlugin].mInstanceDifficulty.mpc,
+			percentValue[keyStoneLevel])
 		return format("%s%s|r", color.color, keyStoneLevel)
 	elseif keyStoneLevel <= 19 then
-		color = mMT:ColorFade(E.db[mPlugin].mInstanceDifficulty.mpc, E.db[mPlugin].mInstanceDifficulty.mpd, percentValue[keyStoneLevel])
+		color = mMT:ColorFade(E.db[mPlugin].mInstanceDifficulty.mpc, E.db[mPlugin].mInstanceDifficulty.mpd,
+			percentValue[keyStoneLevel])
 		return format("%s%s|r", color.color, keyStoneLevel)
 	elseif keyStoneLevel >= 24 then
-		color = mMT:ColorFade(E.db[mPlugin].mInstanceDifficulty.mpd, E.db[mPlugin].mInstanceDifficulty.mpe, percentValue[keyStoneLevel])
+		color = mMT:ColorFade(E.db[mPlugin].mInstanceDifficulty.mpd, E.db[mPlugin].mInstanceDifficulty.mpe,
+			percentValue[keyStoneLevel])
 		return format("%s%s|r", color.color, keyStoneLevel)
 	elseif keyStoneLevel >= 29 then
-		color = mMT:ColorFade(E.db[mPlugin].mInstanceDifficulty.mpe, E.db[mPlugin].mInstanceDifficulty.mpf, percentValue[keyStoneLevel])
+		color = mMT:ColorFade(E.db[mPlugin].mInstanceDifficulty.mpe, E.db[mPlugin].mInstanceDifficulty.mpf,
+			percentValue[keyStoneLevel])
 		return format("%s%s|r", color.color, keyStoneLevel)
 	else
 		return format("%s%s|r", colors.mpf.color, keyStoneLevel)
@@ -245,7 +251,7 @@ function UpdateDifficulty()
 	challenge:Hide()
 
 	local name, instanceType, difficultyID, difficultyName, maxPlayers, dynamicDifficulty, isDynamic, instanceID, instanceGroupSize, LfgDungeonID =
-		GetInstanceInfo()
+	GetInstanceInfo()
 	local inInstance, InstanceType = IsInInstance()
 
 	if inInstance and name then
@@ -254,8 +260,7 @@ function UpdateDifficulty()
 		local difficultyColor = instanceDifficulty[difficultyID] and instanceDifficulty[difficultyID].c or "|CFFFFFFFF"
 		local difficultyShort = instanceDifficulty[difficultyID] and instanceDifficulty[difficultyID].d or ""
 		local isGuildParty = InGuildParty()
-		if
-			difficultyID == 8
+		if difficultyID == 8
 			and C_MythicPlus.IsMythicPlusActive()
 			and (C_ChallengeMode.GetActiveChallengeMapID() ~= nil)
 		then
@@ -344,7 +349,7 @@ end
 
 function mMT:SetupInstanceDifficulty()
 	local position, xOffset, yOffset = GetIconSettings("difficulty")
-	local Font =  LSM:Fetch("font", E.db.general.font)
+	local Font = LSM:Fetch("font", E.db.general.font)
 
 	mIDF = CreateFrame("Frame", "m_MinimapInstanceDifficulty", E.UIParent)
 	mIDF:Size(32, 32)
@@ -643,24 +648,30 @@ local function mInstanceDifficultyOptions()
 			type = "description",
 			name = function()
 				local tmpText = ""
-				tmpText = "[DIFFICULTY] = " .. colors.nhc.color .. "N |r" .. " - " .. colors.hc.color .. "H |r" .. " - " .. colors.m.color .. "M |r "
-				tmpText = tmpText .. colors.lfr.color .. "LFR |r" .. " - " .. colors.tw.color .. "TW |r" .. " - " .. colors.tg.color .. "TG |r "
+				tmpText = "[DIFFICULTY] = " ..
+					colors.nhc.color .. "N |r" .. " - " .. colors.hc.color .. "H |r" .. " - " .. colors.m.color .. "M |r "
+				tmpText = tmpText ..
+					colors.lfr.color .. "LFR |r" .. " - " .. colors.tw.color .. "TW |r" .. " - " .. colors.tg.color .. "TG |r "
 				tmpText = tmpText .. colors.pvp.color .. "PVP |r" .. " - " .. colors.mp.color .. "M+ |r\n"
 				tmpText = tmpText .. "[OTHERS] = " .. colors.name.color .. "NAME |r" .. " - " .. colors.guild.color .. "GUILD |r\n\n"
 				tmpText = tmpText .. "[KEYLEVELS]\n"
 				local color = {}
 				for i = 2, 29, 1 do
-					print(percentValue[i])
 					if i <= 9 then
-						color = mMT:ColorFade(E.db[mPlugin].mInstanceDifficulty.mpa, E.db[mPlugin].mInstanceDifficulty.mpb, percentValue[i])
+						color = mMT:ColorFade(E.db[mPlugin].mInstanceDifficulty.mpa, E.db[mPlugin].mInstanceDifficulty.mpb, percentValue[i
+							])
 					elseif i <= 14 then
-						color = mMT:ColorFade(E.db[mPlugin].mInstanceDifficulty.mpb, E.db[mPlugin].mInstanceDifficulty.mpc, percentValue[i])
+						color = mMT:ColorFade(E.db[mPlugin].mInstanceDifficulty.mpb, E.db[mPlugin].mInstanceDifficulty.mpc, percentValue[i
+							])
 					elseif i <= 19 then
-						color = mMT:ColorFade(E.db[mPlugin].mInstanceDifficulty.mpc, E.db[mPlugin].mInstanceDifficulty.mpd, percentValue[i])
+						color = mMT:ColorFade(E.db[mPlugin].mInstanceDifficulty.mpc, E.db[mPlugin].mInstanceDifficulty.mpd, percentValue[i
+							])
 					elseif i <= 24 then
-						color = mMT:ColorFade(E.db[mPlugin].mInstanceDifficulty.mpd, E.db[mPlugin].mInstanceDifficulty.mpe, percentValue[i])
+						color = mMT:ColorFade(E.db[mPlugin].mInstanceDifficulty.mpd, E.db[mPlugin].mInstanceDifficulty.mpe, percentValue[i
+							])
 					elseif i <= 29 then
-						color = mMT:ColorFade(E.db[mPlugin].mInstanceDifficulty.mpe, E.db[mPlugin].mInstanceDifficulty.mpf, percentValue[i])
+						color = mMT:ColorFade(E.db[mPlugin].mInstanceDifficulty.mpe, E.db[mPlugin].mInstanceDifficulty.mpf, percentValue[i
+							])
 					end
 					color = E:RGBToHex(color.r, color.g, color.b)
 					tmpText = tmpText .. color .. tostring(i) .. "|r "
@@ -669,7 +680,7 @@ local function mInstanceDifficultyOptions()
 				tmpText = tmpText .. "\n\n\n[DEMO]\n" .. colors.name.color .. "HOV |r\n" .. colors.m.color .. "M|r |CFFF7DC6F5|r"
 
 				return tmpText
-			 end,
+			end,
 		},
 	}
 end

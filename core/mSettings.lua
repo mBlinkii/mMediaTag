@@ -451,7 +451,7 @@ P[mPlugin] = {
 	["mInstanceDifficulty"] = {
 		["enable"] = false,
 		["mpe"] = { ["color"] = "|cffff8f00", ["r"] = 1, ["g"] = 0, ["b"] = 0, },
-		["mpf"] = { ["color"] = "|cffff0047", ["r"] = 1, ["g"] = 0.56, ["b"] = 0.27, },
+		["mpf"] = { ["color"] = "|cffff0056", ["r"] = 1, ["g"] = 0, ["b"] = 0.33, },
 		["hc"] = { ["color"] = "|cff0595ff", ["b"] = 1, ["g"] = 0.58, ["r"] = 0.01, },
 		["guild"] = { ["color"] = "|cff94ff00", ["r"] = 0.58, ["g"] = 1, ["b"] = 0, },
 		["tw"] = { ["color"] = "|cff00c0ff", ["r"] = 0, ["g"] = 0.44, ["b"] = 1, },
