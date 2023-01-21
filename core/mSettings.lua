@@ -3,8 +3,6 @@ local mPlugin = "mMediaTag"
 local addon, ns = ...
 
 P[mPlugin] = {
-	["mKeystoneDB"] = {},
-	["mLogKeystone"] = true,
 	["mMsg"] = true,
 	["mTIcon"] = true,
 	["mTIconSize"] = 32,

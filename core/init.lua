@@ -31,11 +31,16 @@ function mMT:AddOptions()
 		func()
 	end
 end
-
+local function mAutoValueColor()
+end
 -- addon laden
 function mMT:Initialize()
 	if E.db[mPlugin].mCustomClassColors.enable then
 		mMT:SetCustomColors()
+	end
+
+	if E.db[mPlugin].mCustomClassColors.emediaenable then
+		mMT:SetElvUIMediaColor()
 	end
 
 	mMT:mMisc() -- module laden
