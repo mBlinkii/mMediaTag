@@ -31,11 +31,14 @@ function mMT:AddOptions()
 		func()
 	end
 end
-local function mAutoValueColor()
+
+function mMT:Check_ElvUI_EltreumUI()
+	return (IsAddOnLoaded("ElvUI_EltreumUI") and E.db.ElvUI_EltreumUI.unitframes.gradientmode.enable)
 end
+
 -- addon laden
 function mMT:Initialize()
-	if E.db[mPlugin].mCustomClassColors.enable then
+	if E.db[mPlugin].mCustomClassColors.enable and not mMT:Check_ElvUI_EltreumUI() then
 		mMT:SetCustomColors()
 	end
 

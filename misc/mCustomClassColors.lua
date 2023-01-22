@@ -39,7 +39,7 @@ end
 
 function mMT:SetElvUIMediaColor()
 	local _, unitClass = UnitClass("PLAYER")
-	local colorDB = E.db[mPlugin].mCustomClassColors.enable and E.db[mPlugin].mCustomClassColors.colors[unitClass] or E:ClassColor(E.myclass, true)
+	local colorDB = (E.db[mPlugin].mCustomClassColors.enable and not mMT:Check_ElvUI_EltreumUI()) and E.db[mPlugin].mCustomClassColors.colors[unitClass] or E:ClassColor(E.myclass, true)
 	E.db.general.valuecolor["r"] = colorDB.r
 	E.db.general.valuecolor["g"] = colorDB.g
 	E.db.general.valuecolor["b"] = colorDB.b
