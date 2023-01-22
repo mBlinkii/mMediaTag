@@ -32,10 +32,18 @@ function mMT:AddOptions()
 	end
 end
 
+function mMT:Check_ElvUI_EltreumUI()
+	return (IsAddOnLoaded("ElvUI_EltreumUI") and E.db.ElvUI_EltreumUI.unitframes.gradientmode.enable)
+end
+
 -- addon laden
 function mMT:Initialize()
-	if E.db[mPlugin].mCustomClassColors.enable then
+	if E.db[mPlugin].mCustomClassColors.enable and not mMT:Check_ElvUI_EltreumUI() then
 		mMT:SetCustomColors()
+	end
+
+	if E.db[mPlugin].mCustomClassColors.emediaenable then
+		mMT:SetElvUIMediaColor()
 	end
 
 	mMT:mMisc() -- module laden

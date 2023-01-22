@@ -109,12 +109,6 @@ function mMT:OwenKeystone()
 			2,
 			format("%s%s: |r %s%s|r%s +%s|r", other, L["Keystone"], myth, name, E:RGBToHex(r, g, b), keyStoneLevel)
 		)
-
-		--if E.db[mPlugin].mLogKeystone then
-		--	--E.db[mPlugin].mKeystoneDB =
-		--	mInsert(E.db[mPlugin].mKeystoneDB, "name", "key")
-		--end
-
 		return OwenKeystoneText
 	end
 end

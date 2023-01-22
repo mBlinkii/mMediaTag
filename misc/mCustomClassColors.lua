@@ -37,9 +37,9 @@ local function ResetColors()
 	UF:Update_AllFrames()
 end
 
-local function SetElvUIMediaColor()
+function mMT:SetElvUIMediaColor()
 	local _, unitClass = UnitClass("PLAYER")
-	local colorDB = E.db[mPlugin].mCustomClassColors.colors[unitClass]
+	local colorDB = (E.db[mPlugin].mCustomClassColors.enable and not mMT:Check_ElvUI_EltreumUI()) and E.db[mPlugin].mCustomClassColors.colors[unitClass] or E:ClassColor(E.myclass, true)
 	E.db.general.valuecolor["r"] = colorDB.r
 	E.db.general.valuecolor["g"] = colorDB.g
 	E.db.general.valuecolor["b"] = colorDB.b
@@ -72,9 +72,6 @@ end
 function mMT:SetCustomColors()
 	UpdateColors()
 	hooksecurefunc(E, "ClassColor", mClassColor)
-	if E.db[mPlugin].mCustomClassColors.emediaenable then
-		SetElvUIMediaColor()
-	end
 end
 
 local function customclasscolorsOptions()
@@ -101,13 +98,12 @@ local function customclasscolorsOptions()
 			order = 3,
 			type = "toggle",
 			name = L["Change ElvUI Media color"],
-			disabled = function() return not E.db[mPlugin].mCustomClassColors.enable end,
 			get = function(info)
 				return E.db[mPlugin].mCustomClassColors.emediaenable
 			end,
 			set = function(info, value)
 				E.db[mPlugin].mCustomClassColors.emediaenable = value
-				SetElvUIMediaColor()
+				mMT:SetElvUIMediaColor()
 				E:StaticPopup_Show('CONFIG_RL')
 			end
 		},
@@ -115,6 +111,7 @@ local function customclasscolorsOptions()
 			order = 4,
 			type = "execute",
 			name = L["Set Custom colors"],
+			desc = L["Set Custom colors"],
 			disabled = function() return not E.db[mPlugin].mCustomClassColors.enable end,
 			func = function()
 				UpdateColors()
@@ -125,6 +122,7 @@ local function customclasscolorsOptions()
 			order = 5,
 			type = "execute",
 			name = L["Reset Custom colors"],
+			desc = L["Reset Custom colors"],
 			func = function()
 				ResetColors()
 				E:StaticPopup_Show('CONFIG_RL')

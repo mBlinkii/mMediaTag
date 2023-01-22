@@ -154,11 +154,18 @@ function mMT:updateAutoRange()
 			executeAutoRange.range = IsPlayerSpell(309072) and 35 or 20
 		end
 	elseif class == "WARRIOR" then
-		local execute_Id = (specID == 72) and 280735 or 163201
-		local massacre_Id = (specID == 72) and 206315 or 281001
-		if IsPlayerSpell(execute_Id) or IsPlayerSpell(massacre_Id) then -- Execute or Massacre
-			executeAutoRange.enabel = true
-			executeAutoRange.range = IsPlayerSpell(massacre_Id) and 35 or 20
+		if specID == 72 then
+			local execute_Id = (specID == 72) and 280735 or 163201
+			local massacre_Id = (specID == 72) and 206315 or 281001
+			if IsPlayerSpell(execute_Id) or IsPlayerSpell(massacre_Id) then -- Execute or Massacre
+				executeAutoRange.enabel = true
+				executeAutoRange.range = IsPlayerSpell(massacre_Id) and 35 or 20
+			end
+		elseif specID == 73 then
+			if IsPlayerSpell(163201) then -- Execute
+				executeAutoRange.enabel = true
+				executeAutoRange.range = 20
+			end
 		end
 	elseif class == "HUNTER" then
 		if IsPlayerSpell(273887) or ((specID == 255) and IsPlayerSpell(385718)) then
@@ -304,7 +311,7 @@ local function mNameplateTools(table, event, frame)
 				healthMarkers(table, percent)
 			end
 
-			if E.db[mPlugin].mExecutemarker.enable and (E.db[mPlugin].mExecutemarker.auto and not executeAutoRange.enabel) then
+			if E.db[mPlugin].mExecutemarker.enable then
 				executeMarker(table, percent)
 			end
 		end

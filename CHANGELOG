@@ -2,6 +2,16 @@
 [Eng] - All changes to this project will be documented in this file. The latest changes are at the top.
 [Ger] - Alle Änderungen an diesem Projekt werden in dieser Datei dokumentiert. Die neuesten Änderungen stehen ganz oben.
 
+## [ver. 2.92.2] - 22.01.2023
+### Update
+- FIX Auto media Color
+- FIX Auto Execute marker
+- UPDATE Instance difficulty for Minimap add color gardient function and add gardient keys
+- UPDATE Instance difficulty for Minimap prevents being taken over by squareminimap
+- UPDATE diseable Custom class colore if EltreumUI gardient mode is on
+### Added
+- NEW Texture R28
+
 ## [ver. 2.92.1] - 16.01.2023
 ### Update
 - UPDATE Datatex for the new ElvUI update

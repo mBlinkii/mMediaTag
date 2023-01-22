@@ -3,8 +3,6 @@ local mPlugin = "mMediaTag"
 local addon, ns = ...
 
 P[mPlugin] = {
-	["mKeystoneDB"] = {},
-	["mLogKeystone"] = true,
 	["mMsg"] = true,
 	["mTIcon"] = true,
 	["mTIconSize"] = 32,
@@ -450,14 +448,15 @@ P[mPlugin] = {
 	},
 	["mInstanceDifficulty"] = {
 		["enable"] = false,
-		["mpe"] = { ["color"] = "|cffff003e", ["r"] = 1, ["g"] = 0, ["b"] = 0.24, },
+		["mpe"] = { ["color"] = "|cffff8f00", ["r"] = 1, ["g"] = 0, ["b"] = 0, },
+		["mpf"] = { ["color"] = "|cffff0056", ["r"] = 1, ["g"] = 0, ["b"] = 0.33, },
 		["hc"] = { ["color"] = "|cff0595ff", ["b"] = 1, ["g"] = 0.58, ["r"] = 0.01, },
 		["guild"] = { ["color"] = "|cff94ff00", ["r"] = 0.58, ["g"] = 1, ["b"] = 0, },
-		["tw"] = { ["color"] = "|cff00c0ff", ["r"] = 0, ["g"] = 0.75, ["b"] = 1, },
-		["mpc"] = { ["color"] = "|cfffff819", ["r"] = 1, ["g"] = 0.97, ["b"] = 0.098, },
+		["tw"] = { ["color"] = "|cff00c0ff", ["r"] = 0, ["g"] = 0.44, ["b"] = 1, },
+		["mpc"] = { ["color"] = "|cff0072ff", ["r"] = 1, ["g"] = 0.97, ["b"] = 1, },
 		["nhc"] = { ["color"] = "|cff52ff76", ["b"] = 0.46, ["g"] = 1, ["r"] = 0.32, },
 		["mpa"] = { ["color"] = "|cff97ffbd", ["r"] = 0.59, ["g"] = 1, ["b"] = 0.74, },
-		["mpd"] = { ["color"] = "|cffff8b00", ["r"] = 1, ["g"] = 0.54, ["b"] = 0, },
+		["mpd"] = { ["color"] = "|cff8800ff", ["r"] = 0.53, ["g"] = 0, ["b"] = 1, },
 		["m"] = { ["color"] = "|cffaf00ff", ["g"] = 0, ["r"] = 0.68, ["b"] = 1.00, },
 		["name"] = { ["color"] = "|cffffffff", ["r"] = 1, ["g"] = 1, ["b"] = 1, },
 		["mp"] = { ["color"] = "|cffff8f00", ["b"] = 0, ["g"] = 0.56, ["r"] = 1, },

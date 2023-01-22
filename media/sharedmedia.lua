@@ -349,6 +349,7 @@ mAddStatusbar("mMediaTag R25", "r25.tga")
 mAddStatusbar("mMediaTag R26", "r26.tga")
 mAddStatusbar("mMediaTag R27", "r27.tga")
 mAddStatusbar("mMediaTag R28", "r28.tga")
+mAddStatusbar("mMediaTag R29", "r29.tga")
 
 mAddStatusbar("mMediaTag Caith UI 1", "Wglass.tga")
 mAddStatusbar("mMediaTag Caith UI 2", "Wisps.tga")
