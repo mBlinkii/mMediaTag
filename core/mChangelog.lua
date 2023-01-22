@@ -9,7 +9,7 @@ local format = format
 
 --Variables
 local ChangelogText =
-	"## [ver. 2.92.1] - 16.01.2023\n\n### Update\n- |CFFFF7F50###Update|r Datatex for the new ElvUI update\n- |CFFFF7F50###Update|r Removed some Fonts\n- |CFFFF7F50###Update|r Instance difficulty for Minimap update Shortname function\n- |CFFFF7F50###Update|r Instance difficulty for Minimap update HC color\n\n### Added\n- |CFF6495EDNEW|r Tag mName:last & mName:last:onlyininstance"
+	"## [ver. 2.92.2] - 22.01.2023\n### Update\n- |CFFDFFF00FIX|r Auto media Color\n- |CFFDFFF00FIX|r Auto Execute marker\n- |CFFFF7F50###Update|r Instance difficulty for Minimap add color gardient function and add gardient keys\n- |CFFFF7F50###Update|r Instance difficulty for Minimap prevents being taken over by squareminimap\n- |CFFFF7F50###Update|r diseable Custom class colore if EltreumUI gardient mode is on\n### Added\n- |CFF6495EDNEW|r Texture R28\n"
 
 function mMT:Changelog(opt)
 	local Frame = CreateFrame("Frame", "mMediaTagChangelog", E.UIParent, "BackdropTemplate")
@@ -37,9 +37,9 @@ function mMT:Changelog(opt)
 	local Label2 = Frame:CreateFontString("ChangelogText", "OVERLAY", "GameTooltipText")
 	Label2:SetFont(Font, 14)
 	Label2:SetPoint("TOPLEFT", 20, -90)
+	Label2:SetText(ChangelogText)
 	Label2:SetWidth(360)
 	Label2:SetHeight(500)
-	Label2:SetText(ChangelogText)
 
 	local Close = CreateFrame("Button", "CloseButton", Frame, BackdropTemplateMixin and "BackdropTemplate")
 	Close:Point("BOTTOM", Frame, "BOTTOM", 0, 10)
