@@ -139,14 +139,16 @@ function mMT:InctanceDifficultyDungeon()
 
 	local mDifficultyText = ""
 
-	if DungeonID == 1 then
-		mDifficultyText = format("%s%s|r", nhc, E:ShortenString(DungeonName, 1))
-	elseif DungeonID == 2 then
-		mDifficultyText = format("%s%s|r", hc, E:ShortenString(DungeonName, 1))
-	elseif DungeonID == 23 then
-		mDifficultyText = format("%s%s|r", myth, E:ShortenString(DungeonName, 1))
-	else
-		mDifficultyText = format("%s%s|r", other, E:ShortenString(DungeonName, 1))
+	if DungeonName then
+		if DungeonID == 1 then
+			mDifficultyText = format("%s%s|r", nhc, E:ShortenString(DungeonName, 1))
+		elseif DungeonID == 2 then
+			mDifficultyText = format("%s%s|r", hc, E:ShortenString(DungeonName, 1))
+		elseif DungeonID == 23 then
+			mDifficultyText = format("%s%s|r", myth, E:ShortenString(DungeonName, 1))
+		else
+			mDifficultyText = format("%s%s|r", other, E:ShortenString(DungeonName, 1))
+		end
 	end
 
 	return mDifficultyText
