@@ -6,8 +6,8 @@ local addon, ns = ...
 --Lua functions
 local mInsert = table.insert
 
-local name, mListDNDIcons, mListDNDPath, mListAFKIcon, mListAFKPath, mListSkullIcon, mListSkullPath =
-	{}, {}, {}, {}, {}, {}, {}
+local name, mListDNDIcons, mListDNDPath, mListAFKIcon, mListAFKPath, mListSkullIcon, mListSkullPath, mListOfflineIcon, mListOfflinePath =
+	{}, {}, {}, {}, {}, {}, {}, {}, {}
 
 local function mReturnTagIconName(name)
 	return format("|TInterface\\AddOns\\ElvUI_mMediaTag\\media\\misc\\%s.tga:16:16:0:0:32:32|t", name)
@@ -24,25 +24,34 @@ local function mSetupTagIcons()
 	mListAFKPath = wipe(mListAFKPath)
 	mListSkullIcon = wipe(mListSkullIcon)
 	mListSkullPath = wipe(mListSkullPath)
+	mListOfflineIcon = wipe(mListOfflineIcon)
+	mListOfflinePath = wipe(mListOfflinePath)
 	--DND
-	for i = 1, 16, 1 do
+	for i = 1, 17, 1 do
 		name = "dnd" .. i
 		mListDNDIcons["DND" .. i] = mReturnTagIconName(name)
 		mListDNDPath["DND" .. i] = mReturnTagIconPath(name)
 	end
 
 	--AFK
-	for i = 1, 16, 1 do
+	for i = 1, 17, 1 do
 		name = "afk" .. i
 		mListAFKIcon["AFK" .. i] = mReturnTagIconName(name)
 		mListAFKPath["AFK" .. i] = mReturnTagIconPath(name)
 	end
 
 	--SKULL
-	for i = 1, 10, 1 do
+	for i = 1, 16, 1 do
 		name = "skull" .. i
 		mListSkullIcon["SKULL" .. i] = mReturnTagIconName(name)
 		mListSkullPath["SKULL" .. i] = mReturnTagIconPath(name)
+	end
+
+	--offline
+	for i = 1, 4, 1 do
+		name = "offline" .. i
+		mListOfflineIcon["Offline" .. i] = mReturnTagIconName(name)
+		mListOfflinePath["Offline" .. i] = mReturnTagIconPath(name)
 	end
 end
 
@@ -202,7 +211,7 @@ local function OptionsTags()
 				headertagcolor3 = {
 					order = 20,
 					type = "header",
-					name = L["mStatus:icon - AFK"],
+					name = L["mStatus:icon - AFK/ DND"],
 				},
 				afkicon = {
 					order = 21,
@@ -217,13 +226,8 @@ local function OptionsTags()
 					end,
 					values = mListAFKIcon,
 				},
-				headertagcolor4 = {
-					order = 30,
-					type = "header",
-					name = L["mStatus:icon - DND"],
-				},
 				dndicon = {
-					order = 31,
+					order = 22,
 					type = "select",
 					name = L["DND Icon"],
 					get = function(info)
@@ -234,6 +238,24 @@ local function OptionsTags()
 						E.db[mPlugin].mTags.dndpath = mListDNDPath[value]
 					end,
 					values = mListDNDIcons,
+				},
+				headertagcolor4 = {
+					order = 30,
+					type = "header",
+					name = L["mStatus:icon - Oflline"],
+				},
+				offlineicon = {
+					order = 31,
+					type = "select",
+					name = L["Offline Icon"],
+					get = function(info)
+						return E.db[mPlugin].mTags.offlinename
+					end,
+					set = function(info, value)
+						E.db[mPlugin].mTags.offlinename = value
+						E.db[mPlugin].mTags.offlinepath = mListOfflinePath[value]
+					end,
+					values = mListOfflineIcon,
 				},
 				headertagcolor5 = {
 					order = 40,

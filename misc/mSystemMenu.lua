@@ -19,24 +19,24 @@ local IsAddOnLoaded = IsAddOnLoaded
 local mText = L["Game Menu"]
 local menuList = {}
 local menuFrame = CreateFrame("Frame", "mSystemMenu", E.UIParent, "BackdropTemplate")
-local mIconPath = "Interface\\AddOns\\ElvUI_mMediaTag\\media\\icons\\%s.tga"
+local mIconPath = "Interface\\AddOns\\ElvUI_mMediaTag\\media\\dock\\colored\\%s.tga"
 local sizeString = ":16:16:0:0:64:64:4:60:4:60"
-local mIconCHARACTER = E:TextureString(format(mIconPath, "character"), sizeString)
-local mIconSPELLBOOK = E:TextureString(format(mIconPath, "book"), sizeString)
-local mIconTALENTS = E:TextureString(format(mIconPath, "talent"), sizeString)
-local mIconACHIEVEMENT = E:TextureString(format(mIconPath, "achivment"), sizeString)
-local mIconGARRISON = E:TextureString(format(mIconPath, "home"), sizeString)
-local mIconCOLLECTIONS = E:TextureString(format(mIconPath, "collaction"), sizeString)
-local mIconCALENDAR = E:TextureString(format(mIconPath, "calendar"), sizeString)
-local mIconTIME = E:TextureString(format(mIconPath, "clock"), sizeString)
-local mIconGUILD = E:TextureString(format(mIconPath, "guild"), sizeString)
-local mIconSOCIAL = E:TextureString(format(mIconPath, "contact"), sizeString)
-local mIconLFG = E:TextureString(format(mIconPath, "dungeonbrowser"), sizeString)
-local mIconJOURNAL = E:TextureString(format(mIconPath, "compendium"), sizeString)
-local mIconElvUI = E:TextureString(format(mIconPath, "elvui"), sizeString)
-local mIconMAINMENU = E:TextureString(format(mIconPath, "settings2"), sizeString)
-local mIconSTORE = E:TextureString(format(mIconPath, "shop"), sizeString)
-local mIconHELP = E:TextureString(format(mIconPath, "help"), sizeString)
+local mIconCHARACTER = E:TextureString(format(mIconPath, "colored71"), sizeString)
+local mIconSPELLBOOK = E:TextureString(format(mIconPath, "colored74"), sizeString)
+local mIconTALENTS = E:TextureString(format(mIconPath, "colored11"), sizeString)
+local mIconACHIEVEMENT = E:TextureString(format(mIconPath, "colored73"), sizeString)
+local mIconGARRISON = E:TextureString(format(mIconPath, "colored40"), sizeString)
+local mIconCOLLECTIONS = E:TextureString(format(mIconPath, "colored41"), sizeString)
+local mIconCALENDAR = E:TextureString(format(mIconPath, "colored14"), sizeString)
+local mIconTIME = E:TextureString(format(mIconPath, "colored72"), sizeString)
+local mIconGUILD = E:TextureString(format(mIconPath, "colored59"), sizeString)
+local mIconSOCIAL = E:TextureString(format(mIconPath, "colored76"), sizeString)
+local mIconLFG = E:TextureString(format(mIconPath, "colored27"), sizeString)
+local mIconJOURNAL = E:TextureString(format(mIconPath, "colored47"), sizeString)
+local mIconElvUI = E:TextureString(format("Interface\\AddOns\\ElvUI_mMediaTag\\media\\icons\\elvui.tga"), sizeString)
+local mIconMAINMENU = E:TextureString(format(mIconPath, "colored33"), sizeString)
+local mIconSTORE = E:TextureString(format(mIconPath, "colored9"), sizeString)
+local mIconHELP = E:TextureString(format(mIconPath, "colored54"), sizeString)
 
 menuFrame:SetTemplate("Transparent", true)
 
@@ -67,7 +67,7 @@ local function OnEvent(self)
 	local TextString = mText
 	if E.db[mPlugin].SystemMenu.showicon then
 		TextString =
-			format("|T%s:16:16:0:0:128:128|t %s", "Interface\\AddOns\\ElvUI_mMediaTag\\media\\icons\\system.tga", mText)
+			format("|T%s:16:16:0:0:128:128|t %s", "Interface\\AddOns\\ElvUI_mMediaTag\\media\\dock\\colored\\colored57.tga", mText)
 	end
 
 	if E.db[mPlugin].InstancInfoName and E.Retail then

@@ -42,7 +42,6 @@ local mTextureSkullGray = format(IconPath, "skull4")
 local mTextureSkullBlue = format(IconPath, "skull3")
 local mTextureSkullWith = format(IconPath, "skull1")
 local mTextureSkullRed = format(IconPath, "skull6")
-local mTextureOffline = format(IconPath, "offline")
 local TANK_ICON = E:TextureString(E.Media.Textures.Tank, ":16:16")
 local HEALER_ICON = E:TextureString(E.Media.Textures.Healer, ":16:16")
 local DPS_ICON = E:TextureString(E.Media.Textures.DPS, ":16:16")
@@ -92,7 +91,7 @@ E:AddTag("mStatus:icon", "UNIT_HEALTH UNIT_CONNECTION PLAYER_FLAGS_CHANGED", fun
 		return format(IconString, E.db.mMediaTag.mTags.dndpath)
 	else
 		if not UnitIsConnected(unit) then
-			return mTextureOffline
+			return format(IconString, E.db.mMediaTag.mTags.offlinepath)
 		elseif UnitIsDead(unit) then
 			return format(IconString, E.db.mMediaTag.mTags.skullpath)
 		elseif UnitIsGhost(unit) then
@@ -338,7 +337,7 @@ E:AddTag("mStatus:icon:class", "UNIT_HEALTH UNIT_CONNECTION PLAYER_FLAGS_CHANGED
 		return format(IconPath, "dnd" .. mGetClassStatusTexture(unitClass))
 	else
 		if not UnitIsConnected(unit) then
-			return mTextureOffline
+			return format(IconString, E.db.mMediaTag.mTags.offlinepath)
 		elseif UnitIsDead(unit) then
 			return format(IconString, E.db.mMediaTag.mTags.skullpath)
 		elseif UnitIsGhost(unit) then

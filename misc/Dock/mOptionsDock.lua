@@ -104,6 +104,12 @@ local function SetupDockIconList()
 			tmpIcon["Toy" .. i] = { ["file"] = path, ["icon"] = mTGAtoIcon(path, "Toy", i) }
 		end
 
+		-- Colored
+		for i = 1, 78, 1 do
+			local path = format("Interface\\AddOns\\ElvUI_mMediaTag\\media\\dock\\colored\\colored%s.tga", i)
+			tmpIcon["Colored" .. i] = { ["file"] = path, ["icon"] = mTGAtoIcon(path, "Colored", i) }
+		end
+
 		mIconsList = tmpIcon
 	end
 end
@@ -1594,8 +1600,20 @@ local function OptionsDock()
 						DT:ForceUpdate_DataText("mCalendar")
 					end,
 				},
-				calendartoggle = {
+				calendardateicon = {
 					order = 5,
+					name = L["Use Dateicons"],
+					type = "toggle",
+					get = function(info)
+						return E.db[mPlugin].mDock.calendar.dateicon
+					end,
+					set = function(info, value)
+						E.db[mPlugin].mDock.calendar.dateicon = value
+						DT:ForceUpdate_DataText("mCalendar")
+					end,
+				},
+				calendartoggle = {
+					order = 6,
 					name = L["Custom color"],
 					type = "toggle",
 					get = function(info)
@@ -1608,7 +1626,7 @@ local function OptionsDock()
 				},
 				calendarcolor = {
 					type = "color",
-					order = 6,
+					order = 7,
 					name = L["Custom Icon Color"],
 					hasAlpha = true,
 					disabled = function()

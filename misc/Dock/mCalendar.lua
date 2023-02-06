@@ -23,6 +23,17 @@ end
 local function OnEnter(self)
 	if E.db[mPlugin].mDock.tip.enable then
 		DT.tooltip:AddLine(L["Calendar"])
+		local DateText = ""
+		local day, month, year = date("%d"), date("%m"), date("%y")
+		local option = E.db[mPlugin].mDock.calendar.option
+		if option == "de" then
+			DateText = format("%s.%s.%s", day, month, year)
+		elseif option == "us" then
+			DateText = format("%s/%s/%s", month, day, year)
+		elseif option == "gb" then
+			DateText = format("%s/%s/%s", day, month, year)
+		end
+		DT.tooltip:AddLine(DateText)
 		DT.tooltip:Show()
 	end
 	self.mIcon.isClicked = mDockCheckFrame()
@@ -32,14 +43,20 @@ end
 local function OnEvent(self, event, ...)
 	local EnableText = false
 	local option = E.db[mPlugin].mDock.calendar.option
-
+	local texture = E.db[mPlugin].mDock.calendar.path
 	if option ~= "none" then
 		EnableText = true
 	end
 
+	if E.db[mPlugin].mDock.calendar.dateicon then
+		texture = "Interface\\AddOns\\ElvUI_mMediaTag\\media\\dock\\calendar\\c" .. date("%d") .. ".tga"
+	else
+		texture = E.db[mPlugin].mDock.calendar.path
+	end
+
 	self.mSettings = {
 		Name = mTextName,
-		IconTexture = E.db[mPlugin].mDock.calendar.path,
+		IconTexture = texture,
 		Notifications = false,
 		Text = EnableText,
 		Spezial = EnableText,
@@ -49,7 +66,7 @@ local function OnEvent(self, event, ...)
 
 	mMT:DockInitialisation(self)
 
-	if EnableText then
+	if EnableText and not E.db[mPlugin].mDock.calendar.dateicon then
 		local DateText = ""
 		local day, month, year = date("%d"), date("%m"), date("%y")
 		if E.db[mPlugin].mDock.calendar.showyear then
