@@ -121,6 +121,12 @@ local function mSetupIcons()
 		mIcons["crown" .. i] = { ["file"] = path, ["icon"] = E:TextureString(path, sizeString) .. "crown" .. i }
 	end
 
+	--colored
+	for i = 1, 13, 1 do
+		path = format("Interface\\AddOns\\ElvUI_mMediaTag\\media\\icons\\colored%s.tga", i)
+		mIcons["colored" .. i] = { ["file"] = path, ["icon"] = E:TextureString(path, sizeString) .. "colored" .. i }
+	end
+
 	wipe(mIconsList)
 	for i in pairs(mIcons) do
 		mIconsList[i] = mIcons[i].icon
@@ -217,9 +223,8 @@ local function mRoleSmbolsOptions()
 			end,
 			set = function(info, value)
 				E.db[mPlugin].mRoleSymbols.tank = value
-				UF:CreateAndUpdateUF("party")
-				UF:CreateAndUpdateUF("raid")
-				UF:CreateAndUpdateUF("raid40")
+				UF:HeaderConfig(UF.party, UF.party.forceShow ~= true or nil)
+				UF:HeaderConfig(UF.party, UF.party.forceShow ~= true or nil)
 				mMT:mStartRoleSmbols()
 			end,
 			values = mIconsList,
@@ -236,9 +241,8 @@ local function mRoleSmbolsOptions()
 			end,
 			set = function(info, value)
 				E.db[mPlugin].mRoleSymbols.heal = value
-				UF:CreateAndUpdateUF("party")
-				UF:CreateAndUpdateUF("raid")
-				UF:CreateAndUpdateUF("raid40")
+				UF:HeaderConfig(UF.party, UF.party.forceShow ~= true or nil)
+				UF:HeaderConfig(UF.party, UF.party.forceShow ~= true or nil)
 				mMT:mStartRoleSmbols()
 			end,
 			values = mIconsList,

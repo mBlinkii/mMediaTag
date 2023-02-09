@@ -115,7 +115,10 @@
         "TooltipDataProcessor",
         "InviteUnit",
         "SOUND",
-        "ShowOptionsPanel"
+        "ShowOptionsPanel",
+        "STAT_CATEGORY_ENHANCEMENTS",
+        "STAT_MASTERY",
+        "CreateBaseTooltipInfo"
     ],
     "Lua.diagnostics.disable": [
         "redundant-parameter",

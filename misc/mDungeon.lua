@@ -86,7 +86,7 @@ local function OnEvent(self, event, unit)
 	if E.db[mPlugin].Dungeon.showicon then
 		TextString = format(
 			"|T%s:16:16:0:0:128:128|t %s",
-			"Interface\\AddOns\\ElvUI_mMediaTag\\media\\icons\\dungeon.tga",
+			"Interface\\AddOns\\ElvUI_mMediaTag\\media\\dock\\colored\\colored27.tga",
 			mText
 		)
 	end

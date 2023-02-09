@@ -15,6 +15,7 @@
 	<Script file="mFunctionsRetail.lua"/>
 	<Script file="mInstanceDifficulty.lua"/>
 	<Script file="mKeystoneToChat.lua"/>
+	<Script file="mMPScore.lua"/>
 	<Script file="mNameplateTools.lua"/>
 	<Script file="mObjectiveTracker.lua"/>
 	<Script file="mProfessionMenu.lua"/>

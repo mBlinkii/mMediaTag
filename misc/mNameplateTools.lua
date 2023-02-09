@@ -73,6 +73,7 @@ local HM_NPCs = {
 	[95676] = { 80 }, --Odyn - Halls of Valor
 	[94960] = { 10 }, -- Hymdall - Halls of Valor
 	[95674] = { 60 }, -- Fenryr - Halls of Valor
+	[104215] = { 25 }, -- Patrouillenoffizier Gerdo
 
 	-- Pandaria Dungeons
 	[59544] = { 50 }, --The Nodding Tiger

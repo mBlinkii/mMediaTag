@@ -2,6 +2,14 @@
 [Eng] - All changes to this project will be documented in this file. The latest changes are at the top.
 [Ger] - Alle Änderungen an diesem Projekt werden in dieser Datei dokumentiert. Die neuesten Änderungen stehen ganz oben.
 
+## [ver. 2.93] - 09.02.2023
+### Update
+- UPDATE Healthmarker IDs
+- UPDATE LFD icon events, so the difficulty is displayed correctly
+### Added
+- NEW Datatext M+ Score
+- NEW Icons for Dock and Tags
+
 ## [ver. 2.92.2] - 22.01.2023
 ### Update
 - FIX Auto media Color

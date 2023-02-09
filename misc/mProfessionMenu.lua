@@ -266,7 +266,7 @@ local function OnEvent(self, event, unit)
 	if E.db[mPlugin].ProfessionMenu.showicon then
 		TextString = format(
 			"|T%s:16:16:0:0:128:128|t %s",
-			"Interface\\AddOns\\ElvUI_mMediaTag\\media\\icons\\profession.tga",
+			"Interface\\AddOns\\ElvUI_mMediaTag\\media\\dock\\colored\\colored24.tga",
 			mText
 		)
 	end

@@ -462,7 +462,7 @@ local function OptionsCore()
 						order = 5,
 						type = "description",
 						name = format(
-							L["%sAddon:|r\n\nAll contents of this AddOn - ElvUI_mMediaTag especially texts, photographs and graphics, are protected by copyright.\n\n\n%sDock Icons:|r\n\nIcons are from Google - Material Design Icons are available under material.io. The symbols are available under the APACHE LICENSE, VERSION 2.0.\nIcons were resized to 64x64 pixel and the color was changed from black to white."],
+							L["%sAddon:|r\n\nAll contents of this AddOn - ElvUI_mMediaTag especially texts, photographs and graphics, are protected by copyright.\n\n\n%sDock Icons:|r\n\nIcons are from Google - Material Design Icons are available under material.io. The symbols are available under the APACHE LICENSE, VERSION 2.0.\nIcons were resized to 64x64 pixel and the color was changed from black to white.\nThe colored Icons are from Icons8 - https://icons8.com/."],
 							ns.mColor2,
 							ns.mColor2
 						),
@@ -898,7 +898,7 @@ local function OptionsCoreClassic()
 						order = 5,
 						type = "description",
 						name = format(
-							L["%sAddon:|r\n\nAll contents of this AddOn - ElvUI_mMediaTag especially texts, photographs and graphics, are protected by copyright.\n\n\n%sDock Icons:|r\n\nIcons are from Google - Material Design Icons are available under material.io. The symbols are available under the APACHE LICENSE, VERSION 2.0.\nIcons were resized to 64x64 pixel and the color was changed from black to white."],
+							L["%sAddon:|r\n\nAll contents of this AddOn - ElvUI_mMediaTag especially texts, photographs and graphics, are protected by copyright.\n\n\n%sDock Icons:|r\n\nIcons are from Google - Material Design Icons are available under material.io. The symbols are available under the APACHE LICENSE, VERSION 2.0.\nIcons were resized to 64x64 pixel and the color was changed from black to white.\nThe colored Icons are from Icons8 - https://icons8.com/."],
 							ns.mColor2,
 							ns.mColor2
 						),

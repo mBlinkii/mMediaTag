@@ -307,6 +307,7 @@ P[mPlugin] = {
 		},
 		["calendar"] = {
 			["option"] = "us",
+			["dateicon"] = false,
 			["showyear"] = false,
 			["path"] = "Interface\\AddOns\\ElvUI_mMediaTag\\media\\dock\\other\\other34.tga",
 			["name"] = "Other34",
@@ -376,6 +377,8 @@ P[mPlugin] = {
 	["mTags"] = {
 		["dndname"] = "DND1",
 		["dndpath"] = "Interface\\AddOns\\ElvUI_mMediaTag\\media\\misc\\dnd1.tga",
+		["offlinename"] = "Offline1",
+		["offlinepath"] = "Interface\\AddOns\\ElvUI_mMediaTag\\media\\misc\\offline1.tga",
 		["afkname"] = "AFK1",
 		["afkpath"] = "Interface\\AddOns\\ElvUI_mMediaTag\\media\\misc\\afk1.tga",
 		["skullname"] = "SKULL2",

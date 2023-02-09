@@ -611,7 +611,7 @@ local function mInstanceDifficultyOptions()
 		ID_Color_ME = {
 			type = "color",
 			order = 20,
-			name = "<=14",
+			name = "<=24",
 			hasAlpha = false,
 			get = function(info)
 				local t = E.db[mPlugin].mInstanceDifficulty.mpe
