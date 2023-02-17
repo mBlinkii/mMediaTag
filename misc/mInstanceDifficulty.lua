@@ -268,7 +268,7 @@ function UpdateDifficulty()
 				mIDF.Text:SetText(
 					format(
 						"%s%s|r\n%s%s|r %s",
-						colors.guild.color,
+						colors.guild.color or "|cffffffff",
 						name,
 						difficultyColor,
 						difficultyShort,
@@ -279,7 +279,7 @@ function UpdateDifficulty()
 				mIDF.Text:SetText(
 					format(
 						"%s%s|r\n%s%s|r %s",
-						colors.name.color,
+						colors.name.color or "|cffffffff",
 						name,
 						difficultyColor,
 						difficultyShort,
@@ -294,7 +294,7 @@ function UpdateDifficulty()
 				mIDF.Text:SetText(
 					format(
 						"%s%s|r\n%s%s|r",
-						colors.guild.color,
+						colors.guild.color or "|cffffffff",
 						name,
 						difficultyColor,
 						difficultyShort
@@ -304,7 +304,7 @@ function UpdateDifficulty()
 				mIDF.Text:SetText(
 					format(
 						"%s%s|r\n%s%s|r",
-						colors.name.color,
+						colors.name.color or "|cffffffff",
 						name,
 						difficultyColor,
 						difficultyShort
@@ -316,7 +316,7 @@ function UpdateDifficulty()
 				mIDF.Text:SetText(
 					format(
 						"%s%s|r\n%s%s|r |CFFF7DC6F%s|r",
-						colors.guild.color,
+						colors.guild.color or "|cffffffff",
 						name,
 						difficultyColor,
 						difficultyShort,
@@ -327,7 +327,7 @@ function UpdateDifficulty()
 				mIDF.Text:SetText(
 					format(
 						"%s%s|r\n%s%s|r |CFFF7DC6F%s|r",
-						colors.name.color,
+						colors.name.color or "|cffffffff",
 						name,
 						difficultyColor,
 						difficultyShort,

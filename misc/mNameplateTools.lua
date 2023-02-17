@@ -76,6 +76,7 @@ local HM_NPCs = {
 	[104215] = { 25 }, -- Patrouillenoffizier Gerdo
 
 	-- Pandaria Dungeons
+	[56732] = { 70, 30 }, --Liu Flameheart
 	[59544] = { 50 }, --The Nodding Tiger
 
 	--                                                                             ***RAID***
