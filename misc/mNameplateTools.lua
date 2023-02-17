@@ -79,7 +79,6 @@ local HM_NPCs = {
 	[56732] = { 70, 30 }, --Liu Flameheart
 	[59544] = { 50 }, --The Nodding Tiger
 
-	--                                                                             ***RAID***
 	-- DF Raid
 	[181378] = { 66, 33 }, --Kurog Grimtotem, Vault of the Incarnates
 	[194990] = { 50 }, -- Stormseeker Acolyte, Vault of the Incarnates
@@ -104,7 +103,7 @@ local HM_NPCs = {
 	[167406] = { 70.5, 37.5 }, --Sire Denathrius, Castle Nathria
 	[173162] = { 66, 33 }, --Lord Evershade, Castle Nathria
 
-	--                                                                             ***OPEN WORD***
+	--OPEN WORD
 	[180013] = { 20 }, --Escaped Wilderling, Shadowlands - Korthia
 	[179931] = { 80, 60 }, --Relic Breaker krelva, Shadowlands - Korthia
 	[193532] = { 40 }, --Bazual, The Dreaded Flame, Dhragonflight
