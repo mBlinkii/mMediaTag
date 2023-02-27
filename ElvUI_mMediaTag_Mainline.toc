@@ -1,12 +1,17 @@
-## Interface: 100005
-## Title: |cff1784d1ElvUI|r |CFF8E44ADm|r|CFF2ECC71Media|r|CFF3498DBTag|r
+## Interface: 100002
+## Title: |cff1784d1ElvUI|r |CFF6559F1m|r|CFF7A4DEFM|r|CFF8845ECe|r|CFFA037E9d|r|CFFA435E8i|r|CFFB32DE6a|r|CFFBC26E5T|r|CFFCB1EE3a|r|CFFDD14E0g|r
 ## Author: Blinkii
 ## Version: 2.93
 ## Notes: ElvUI Plugin from Blinkii@Eu-Arygos | Support: mMediaTag@gmx.de
 ## RequiredDeps: ElvUI
 ## DefaultState: Enabled
+## X-Curse-Project-ID: 289502
+## X-Wago-ID: 9rN48AND
 
-locales\load_locales.xml
+init.lua
 core\load_core.xml
-media\load_media.xml
-misc\load_misc.xml
+
+# locales\load_locales.xml
+# core\load_core.xml
+# media\load_media.xml
+# misc\load_misc.xml

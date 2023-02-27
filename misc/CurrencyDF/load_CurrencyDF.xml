@@ -1,4 +1,0 @@
-<Ui xmlns="http://www.blizzard.com/wow/ui/">
-	<Script file="DragonIslesSupplies.lua"/>
-	<Script file="ElementalOverflow.lua"/>
-</Ui>
