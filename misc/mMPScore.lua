@@ -7,7 +7,7 @@ local addon, ns = ...
 
 local displayString = ''
 
-local function OnEnter()
+local function OnEnter(self)
 	DT.tooltip:ClearLines()
 
     local keyText = mMT:OwenKeystone()
@@ -31,6 +31,8 @@ local function OnEnter()
     DT.tooltip:AddDoubleLine(DUNGEON_SCORE, mMT:GetDungeonScore())
 
 	DT.tooltip:Show()
+
+    self.text:SetFormattedText(displayString, mMT:GetDungeonScore())
 end
 
 local function OnEvent(self)
