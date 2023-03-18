@@ -1,4 +1,6 @@
 <Ui xmlns="http://www.blizzard.com/wow/ui/">
 	<Script file="settings\defaultSettings.lua"/>
 	<Include file="options\load_options.xml"/>
+	<Script file="greeting.lua"/>
+	<Script file="cmd.lua"/>
 </Ui>

@@ -45,6 +45,14 @@ end
 function mMT:Initialize()
 	EP:RegisterPlugin(addonName, GetOptions)
 
+	-- Initialize main things
+	mMT:LoadCommands()
+
+	-- Initialize Modules
+	if E.db.mMT.general.greeting then
+		mMT:GreetingText()
+	end
+
 	if E.Retail then
 	end
 

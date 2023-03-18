@@ -118,7 +118,8 @@
         "ShowOptionsPanel",
         "STAT_CATEGORY_ENHANCEMENTS",
         "STAT_MASTERY",
-        "CreateBaseTooltipInfo"
+        "CreateBaseTooltipInfo",
+        "SlashCmdList"
     ],
     "Lua.diagnostics.disable": [
         "redundant-parameter",
