@@ -2,6 +2,14 @@
 [Eng] - All changes to this project will be documented in this file. The latest changes are at the top.
 [Ger] - Alle Änderungen an diesem Projekt werden in dieser Datei dokumentiert. Die neuesten Änderungen stehen ganz oben.
 
+## [ver. 2.94] - 22.03.2023
+### Update
+- UPDATE TOC update
+- UPDATE Update NP Healthmarker
+- UPDATE Currencys Icons to fit the text size
+
+-- IMPORTANT INFO -- With the next version of mMediaTag, the settings of mMediaTag will be reset. This is done for optimisation and because over time many corpses have accumulated in the settings.
+
 ## [ver. 2.93] - 09.02.2023
 ### Update
 - UPDATE Healthmarker IDs

@@ -1,4 +1,4 @@
-## Interface: 100005
+## Interface: 100007
 ## Title: |cff1784d1ElvUI|r |CFF6559F1m|r|CFF7A4DEFM|r|CFF8845ECe|r|CFFA037E9d|r|CFFA435E8i|r|CFFB32DE6a|r|CFFBC26E5T|r|CFFCB1EE3a|r|CFFDD14E0g|r
 ## Author: Blinkii
 ## Version: 2.93
