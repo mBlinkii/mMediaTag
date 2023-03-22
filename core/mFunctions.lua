@@ -129,8 +129,8 @@ function mMT:mNamePlateBorderColor()
 	E.db["nameplates"]["colors"]["glowColor"]["g"] = classColor.g
 end
 
-function mMT:mIcon(icon)
-	return format("|T%s:16:16:0:0:64:64:4:60:4:60|t", icon)
+function mMT:mIcon(icon, x, y)
+	return format("|T%s:%s:%s:0:0:64:64:4:60:4:60|t", icon, x or 16, y or 16)
 end
 
 function mMT:mCurrencyLink(id)

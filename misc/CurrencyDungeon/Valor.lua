@@ -53,9 +53,9 @@ local function OnEvent(self, event, ...)
 
 			if E.db[mPlugin].mValor.icon then
 				if TextJustify == "RIGHT" then
-					name = format("%s %s", name, mMT:mIcon(info.iconFileID))
+					name = format("%s %s", name, mMT:mIcon(info.iconFileID, 12, 12))
 				else
-					name = format("%s %s", mMT:mIcon(info.iconFileID), name)
+					name = format("%s %s", mMT:mIcon(info.iconFileID, 12, 12), name)
 				end
 			end
 

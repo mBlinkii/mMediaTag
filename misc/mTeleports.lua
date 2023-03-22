@@ -69,6 +69,7 @@ local Teleports = {
 		168808,
 		--wormhole-generator-zandalar
 		172924, --wormhole-generator-shadowlands
+		198156, -- Wyrmhole Generator
 	},
 	items = {
 		available = false,

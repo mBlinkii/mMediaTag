@@ -1,3 +1,25 @@
+local ElvUI_EltreumUI, E, L, V, P, G = unpack(select(2, ...))
+
+
+local E, _, V, P, G = unpack(ElvUI)
+local EP = LibStub('LibElvUIPlugin-1.0')
+local addon, Engine = ...
+local _G = _G
+local ElvUI_EltreumUI = E:NewModule(addon, 'AceHook-3.0', 'AceEvent-3.0', 'AceTimer-3.0', 'AceConsole-3.0')
+local L = E.Libs.ACL:GetLocale("ElvUI", E.global.general.locale)
+local GetAddOnMetadata = _G.GetAddOnMetadata
+
+Engine[1] = ElvUI_EltreumUI
+Engine[2] = E --ElvUI Engine
+Engine[3] = L --ElvUI Locales
+Engine[4] = V --ElvUI PrivateDB
+Engine[5] = P --ElvUI ProfileDB
+Engine[6] = G --ElvUI GlobalDB
+_G[addon] = Engine
+
+
+
+
 local E, L, V, P, G = unpack(ElvUI)
 local mPlugin = "mMediaTag"
 local mMT = E:NewModule(mPlugin, "AceHook-3.0", "AceEvent-3.0", "AceTimer-3.0")
@@ -6,8 +28,8 @@ local addon, ns = ...
 
 --Variables
 local wipe = table.wipe
-ns.mName = "|CFF6559F1m|r|CFF7A4DEFM|r|CFF8845ECe|r|CFFA037E9d|r|CFFA435E8i|r|CFFB32DE6a|r|CFFBC26E5T|r|CFFCB1EE3a|r|CFFDD14E0g|r"
-ns.mNameClassic = "|CFF6559F1m|r|CFF7A4DEFM|r|CFF8845ECe|r|CFFA037E9d|r|CFFA435E8i|r|CFFB32DE6a|r|CFFBC26E5T|r|CFFCB1EE3a|r|CFFDD14E0g|r |cffff0066Classic|r"
+ns.mName = "|CFF8E44ADm|r|CFF2ECC71Media|r|CFF3498DBTag|r"
+ns.mNameClassic = "|CFF8E44ADm|r|CFF2ECC71Media|r|CFF3498DBTag|r |cffff0066Classic|r"
 ns.mColor1 = "|CFFFFFFFF" -- white
 ns.mColor2 = "|CFFF7DC6F" -- yellow
 ns.mColor3 = "|CFF8E44AD" -- purple

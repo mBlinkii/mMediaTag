@@ -77,6 +77,7 @@ local HM_NPCs = {
 
 	-- Pandaria Dungeons
 	[59544] = { 50 }, --The Nodding Tiger
+	[56732] = { 70, 30 }, --Liu Flammenherz
 
 	--                                                                             ***RAID***
 	-- DF Raid

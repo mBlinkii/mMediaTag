@@ -9,7 +9,7 @@ local format = format
 
 --Variables
 local ChangelogText =
-	"## [ver. 2.93] - 09.02.2023\n### Update\n- |CFFFF7F50Update|r Healthmarker IDs\n- |CFFFF7F50Update|r LFD icon events, so the difficulty is displayed correctly\n### Added\n- |CFF6495EDNEW|r Datatext M+ Score\n- |CFF6495EDNEW|r Icons for Dock and Tags"
+	"## [ver. 2.94] - 22.03.2023\n\n### Update\n- |CFFFF7F50Update|r TOC update\n- |CFFFF7F50Update|r Update NP Healthmarker\n- |CFFFF7F50Update|r Currencys Icons to fit the text size\n\n\n\n\n|CFF6495EDIMPORTANT INFO -- With the next version of mMediaTag, the settings of mMediaTag will be reset. This is done for optimisation and because over time many corpses have accumulated in the settings.|r"
 
 function mMT:Changelog(opt)
 	local Frame = CreateFrame("Frame", "mMediaTagChangelog", E.UIParent, "BackdropTemplate")
