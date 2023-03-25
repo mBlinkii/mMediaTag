@@ -22,6 +22,12 @@ local function configTable()
 				name = format("|CFF6559F1%s|r", L["General"]),
 				icon = "Interface\\Addons\\ElvUI_mMediaTag\\media\\system\\general.tga",
 				args = {
+					greeting = {
+						order = 1,
+						type = "group",
+						name = L["Welcome text"],
+						args = {},
+					},
 				},
 			},
 			datatexts = {
@@ -70,6 +76,12 @@ local function configTable()
 				name = format("|CFFCB1EE3%s|r", L["Cosmetic"]),
 				icon = "Interface\\Addons\\ElvUI_mMediaTag\\media\\system\\cosmetic.tga",
 				args = {
+					tooltip = {
+						order = 1,
+						type = "group",
+						name = L["Tooltip Icon"],
+						args = {},
+					},
 				},
 			},
 			about = {

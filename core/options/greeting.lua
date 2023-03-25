@@ -2,7 +2,7 @@ local mMT, E, L, V, P, G = unpack((select(2, ...)))
 
 local  tinsert =  tinsert
 local function configTable()
-	E.Options.args.mMT.args.general.args = {
+	E.Options.args.mMT.args.general.args.greeting.args = {
         header_greeting = {
             order = 1,
             type = "header",

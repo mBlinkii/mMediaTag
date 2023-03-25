@@ -53,6 +53,10 @@ function mMT:Initialize()
 		mMT:GreetingText()
 	end
 
+	if E.db.mMT.tooltip.enable then
+		mMT:TipIcon()
+	end
+
 	if E.Retail then
 	end
 
