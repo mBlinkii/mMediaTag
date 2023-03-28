@@ -121,14 +121,16 @@ local function OnClick(self, button)
 					text = format("%s %s%s|r", mMenuIcons(mIconTALENTS), mColor(2), TALENTS_BUTTON),
 					isTitle = false,
 					func = function()
-						if not PlayerTalentFrame then
-							TalentFrame_LoadUI()
+						local frame = _G.ClassTalentFrame
+						if not frame then
+							LoadAddOn('Blizzard_ClassTalentUI')
+							frame = _G.ClassTalentFrame
 						end
 
-						if not PlayerTalentFrame:IsShown() then
-							ShowUIPanel(PlayerTalentFrame)
+						if frame:IsShown() then
+							HideUIPanel(frame)
 						else
-							HideUIPanel(PlayerTalentFrame)
+							ShowUIPanel(frame)
 						end
 					end,
 				},
@@ -300,16 +302,14 @@ local function OnClick(self, button)
 					text = format("%s%s|r", mColor(2), TALENTS_BUTTON),
 					isTitle = false,
 					func = function()
-						local frame = _G.ClassTalentFrame
-						if not frame then
-							LoadAddOn('Blizzard_ClassTalentUI')
-							frame = _G.ClassTalentFrame
+						if not PlayerTalentFrame then
+							TalentFrame_LoadUI()
 						end
-			
-						if frame:IsShown() then
-							HideUIPanel(frame)
+
+						if not PlayerTalentFrame:IsShown() then
+							ShowUIPanel(PlayerTalentFrame)
 						else
-							ShowUIPanel(frame)
+							HideUIPanel(PlayerTalentFrame)
 						end
 					end,
 				},
