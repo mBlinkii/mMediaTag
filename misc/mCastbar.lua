@@ -87,7 +87,9 @@ end
 function mMT:mSetupCastbar()
 	interruptSpellId = interruptSpellList[select(1, GetSpecializationInfo(GetSpecialization()))]
 	local colorKickonCD = E.db[mPlugin].mCastbar.kickcd
+	local colorKickonCDb= E.db[mPlugin].mCastbar.kickcdb
 	local colorKickinTime = E.db[mPlugin].mCastbar.kickintime
+	local colorKickinTimeb = E.db[mPlugin].mCastbar.kickintimeb
 
 	if interruptSpellId then
 		hooksecurefunc(NP, "Castbar_CheckInterrupt", function(unit)
@@ -111,10 +113,20 @@ function mMT:mSetupCastbar()
 				end
 
 				if not unit.notInterruptible then
-					if interruptCD > 0 and interruptReadyInTime then
-						unit:SetStatusBarColor(colorKickinTime.r, colorKickinTime.g, colorKickinTime.b)
-					elseif interruptCD > 0 then
-						unit:SetStatusBarColor(colorKickonCD.r, colorKickonCD.g, colorKickonCD.b)
+					if E.db[mPlugin].mCastbar.gardient then
+						if interruptCD > 0 and interruptReadyInTime then
+							unit:GetStatusBarTexture():SetGradient("HORIZONTAL", {r = colorKickinTime.r, g = colorKickinTime.g, b = colorKickinTime.b, a = 1},
+								{r = colorKickinTimeb.r, g = colorKickinTimeb.g, b = colorKickinTimeb.b, a = 1})
+						elseif interruptCD > 0 then
+							unit:GetStatusBarTexture():SetGradient("HORIZONTAL", {r = colorKickonCD.r, g = colorKickonCD.g, b = colorKickonCD.b, a = 1},
+								{r = colorKickonCDb.r, g = colorKickonCDb.g, b = colorKickonCDb.b, a = 1})
+						end
+					else
+						if interruptCD > 0 and interruptReadyInTime then
+							unit:SetStatusBarColor(colorKickinTime.r, colorKickinTime.g, colorKickinTime.b)
+						elseif interruptCD > 0 then
+							unit:SetStatusBarColor(colorKickonCD.r, colorKickonCD.g, colorKickonCD.b)
+						end
 					end
 				end
 			end
@@ -146,10 +158,20 @@ function mMT:mSetupCastbar()
 				end
 
 				if not unit.notInterruptible then
-					if interruptCD > 0 and interruptReadyInTime then
-						unit:SetStatusBarColor(colorKickinTime.r, colorKickinTime.g, colorKickinTime.b)
-					elseif interruptCD > 0 then
-						unit:SetStatusBarColor(colorKickonCD.r, colorKickonCD.g, colorKickonCD.b)
+					if E.db[mPlugin].mCastbar.gardient then
+						if interruptCD > 0 and interruptReadyInTime then
+							unit:GetStatusBarTexture():SetGradient("HORIZONTAL", {r = colorKickinTime.r, g = colorKickinTime.g, b = colorKickinTime.b, a = 1},
+								{r = colorKickinTimeb.r, g = colorKickinTimeb.g, b = colorKickinTimeb.b, a = 1})
+						elseif interruptCD > 0 then
+							unit:GetStatusBarTexture():SetGradient("HORIZONTAL", {r = colorKickonCD.r, g = colorKickonCD.g, b = colorKickonCD.b, a = 1},
+								{r = colorKickonCDb.r, g = colorKickonCDb.g, b = colorKickonCDb.b, a = 1})
+						end
+					else
+						if interruptCD > 0 and interruptReadyInTime then
+							unit:SetStatusBarColor(colorKickinTime.r, colorKickinTime.g, colorKickinTime.b)
+						elseif interruptCD > 0 then
+							unit:SetStatusBarColor(colorKickonCD.r, colorKickonCD.g, colorKickonCD.b)
+						end
 					end
 				end
 			end
@@ -187,6 +209,22 @@ local function mCastbarOptions()
 			type = "description",
 			name = "\n\n",
 		},
+		gardient = {
+			order = 5,
+			type = "toggle",
+			name = L["Gardient Mode"],
+			get = function(info)
+				return E.db[mPlugin].mCastbar.gardient
+			end,
+			set = function(info, value)
+				E.db[mPlugin].mCastbar.gardient = value
+			end,
+		},
+		spacer4 = {
+			order = 6,
+			type = "description",
+			name = "\n\n",
+		},
 		colorkickcd = {
 			type = "color",
 			order = 11,
@@ -201,14 +239,28 @@ local function mCastbarOptions()
 				t.r, t.g, t.b = r, g, b
 			end,
 		},
-		spacer3 = {
+		colorkickcdb = {
+			type = "color",
 			order = 13,
+			name = L["Gardient color"],
+			hasAlpha = false,
+			get = function(info)
+				local t = E.db[mPlugin].mCastbar.kickcdb
+				return t.r, t.g, t.b
+			end,
+			set = function(info, r, g, b)
+				local t = E.db[mPlugin].mCastbar.kickcdb
+				t.r, t.g, t.b = r, g, b
+			end,
+		},
+		spacer3 = {
+			order = 14,
 			type = "description",
 			name = "\n\n",
 		},
 		colorkickintime = {
 			type = "color",
-			order = 14,
+			order = 15,
 			name = L["Kick ready in Time"],
 			hasAlpha = false,
 			get = function(info)
@@ -217,6 +269,20 @@ local function mCastbarOptions()
 			end,
 			set = function(info, r, g, b)
 				local t = E.db[mPlugin].mCastbar.kickintime
+				t.r, t.g, t.b = r, g, b
+			end,
+		},
+		colorkickintimeb = {
+			type = "color",
+			order = 16,
+			name = L["Gardient color"],
+			hasAlpha = false,
+			get = function(info)
+				local t = E.db[mPlugin].mCastbar.kickintimeb
+				return t.r, t.g, t.b
+			end,
+			set = function(info, r, g, b)
+				local t = E.db[mPlugin].mCastbar.kickintimeb
 				t.r, t.g, t.b = r, g, b
 			end,
 		},
