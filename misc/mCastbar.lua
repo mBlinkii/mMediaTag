@@ -93,11 +93,15 @@ function mMT:mSetupCastbar()
 
 	if interruptSpellId then
 		hooksecurefunc(NP, "Castbar_CheckInterrupt", function(unit)
-			if not unit.notInterruptible then
-				if unit.unit == "vehicle" or unit.unit == "player" then
-					return
-				end
+			if unit.unit == "vehicle" or unit.unit == "player" then
+				return
+			end
 
+			if unit.InterruptMarker then
+				unit.InterruptMarker:Hide()
+			end
+
+			if not unit.notInterruptible then
 				local interruptCD = nil
 				local interruptReadyInTime = false
 
@@ -113,24 +117,28 @@ function mMT:mSetupCastbar()
 						interruptReadyInTime = (interruptCD + 0.5) < (statusMax - value)
 					end
 
-					if not unit.IntterruptMarker then
-						unit.IntterruptMarker = unit:CreateTexture(nil, "overlay")
-						unit.IntterruptMarker:SetColorTexture(E.db[mPlugin].mCastbar.readymarker.r, E.db[mPlugin].mCastbar.readymarker.g, E.db[mPlugin].mCastbar.readymarker.b)
+					if not unit.InterruptMarker then
+						unit.InterruptMarker = unit:CreateTexture(nil, "overlay")
+						unit.InterruptMarker:SetColorTexture(
+							E.db[mPlugin].mCastbar.readymarker.r,
+							E.db[mPlugin].mCastbar.readymarker.g,
+							E.db[mPlugin].mCastbar.readymarker.b
+						)
 					end
 
-					unit.IntterruptMarker:Hide()
+					unit.InterruptMarker:Hide()
 
 					if interruptCD > 0 and interruptReadyInTime then
 						local range = (interruptCD / statusMax)
 						if range then
 							local overlaySize = unit:GetWidth() * range
-							unit.IntterruptMarker:SetSize(2, unit:GetHeight())
-							unit.IntterruptMarker:SetPoint("left", unit, "left", overlaySize, 0)
-							unit.IntterruptMarker:SetVertexColor(1, 1, 1)
-							unit.IntterruptMarker:Show()
+							unit.InterruptMarker:SetSize(2, unit:GetHeight())
+							unit.InterruptMarker:SetPoint("left", unit, "left", overlaySize, 0)
+							unit.InterruptMarker:SetVertexColor(1, 1, 1)
+							unit.InterruptMarker:Show()
 						end
 					else
-						unit.IntterruptMarker:Hide()
+						unit.InterruptMarker:Hide()
 					end
 
 					if E.db[mPlugin].mCastbar.gardient then
@@ -163,48 +171,56 @@ function mMT:mSetupCastbar()
 				return
 			end
 
-			local db = unit:GetParent().db
-			if not db or not db.castbar then
-				return
+			if unit.InterruptMarker then
+				unit.InterruptMarker:Hide()
 			end
 
-			local interruptCD = 0
-			local interruptReadyInTime = false
-
-			if interruptSpellId then
-				local cdStart, cdDur = GetSpellCooldown(interruptSpellId)
-				local _, statusMax = unit:GetMinMaxValues()
-				local value = unit:GetValue()
-				interruptCD = (cdStart > 0 and cdDur - (GetTime() - cdStart)) or 0
-
-				if unit.channeling then
-					interruptReadyInTime = (interruptCD + 0.5) < value
-				else
-					interruptReadyInTime = (interruptCD + 0.5) < (statusMax - value)
+			if not unit.notInterruptible then
+				local db = unit:GetParent().db
+				if not db or not db.castbar then
+					return
 				end
 
-				if not unit.IntterruptMarker then
-					unit.IntterruptMarker = unit:CreateTexture(nil, "overlay")
-					unit.IntterruptMarker:SetColorTexture(E.db[mPlugin].mCastbar.readymarker.r, E.db[mPlugin].mCastbar.readymarker.g, E.db[mPlugin].mCastbar.readymarker.b)
-					unit.IntterruptMarker:SetBlendMode("ADD")
-				end
+				local interruptCD = 0
+				local interruptReadyInTime = false
 
-				unit.IntterruptMarker:Hide()
+				if interruptSpellId then
+					local cdStart, cdDur = GetSpellCooldown(interruptSpellId)
+					local _, statusMax = unit:GetMinMaxValues()
+					local value = unit:GetValue()
+					interruptCD = (cdStart > 0 and cdDur - (GetTime() - cdStart)) or 0
 
-				if interruptCD > 0 and interruptReadyInTime then
-					local range = (interruptCD / statusMax)
-					if range then
-						local overlaySize = unit:GetWidth() * range
-						unit.IntterruptMarker:SetSize(2, unit:GetHeight())
-						unit.IntterruptMarker:SetPoint("left", unit, "left", overlaySize, 0)
-						unit.IntterruptMarker:SetVertexColor(1, 1, 1)
-						unit.IntterruptMarker:Show()
+					if unit.channeling then
+						interruptReadyInTime = (interruptCD + 0.5) < value
+					else
+						interruptReadyInTime = (interruptCD + 0.5) < (statusMax - value)
 					end
-				else
-					unit.IntterruptMarker:Hide()
-				end
 
-				if not unit.notInterruptible then
+					if not unit.InterruptMarker then
+						unit.InterruptMarker = unit:CreateTexture(nil, "overlay")
+						unit.InterruptMarker:SetColorTexture(
+							E.db[mPlugin].mCastbar.readymarker.r,
+							E.db[mPlugin].mCastbar.readymarker.g,
+							E.db[mPlugin].mCastbar.readymarker.b
+						)
+						unit.InterruptMarker:SetBlendMode("ADD")
+					end
+
+					unit.InterruptMarker:Hide()
+
+					if interruptCD > 0 and interruptReadyInTime then
+						local range = (interruptCD / statusMax)
+						if range then
+							local overlaySize = unit:GetWidth() * range
+							unit.InterruptMarker:SetSize(2, unit:GetHeight())
+							unit.InterruptMarker:SetPoint("left", unit, "left", overlaySize, 0)
+							unit.InterruptMarker:SetVertexColor(1, 1, 1)
+							unit.InterruptMarker:Show()
+						end
+					else
+						unit.InterruptMarker:Hide()
+					end
+
 					if E.db[mPlugin].mCastbar.gardient then
 						if interruptCD > 0 and interruptReadyInTime then
 							unit:GetStatusBarTexture():SetGradient(
