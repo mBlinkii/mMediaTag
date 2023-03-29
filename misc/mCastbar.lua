@@ -346,7 +346,7 @@ local function mCastbarOptions()
 		},
 		marker = {
 			type = "color",
-			order = 11,
+			order = 21,
 			name = L["Readymarker"],
 			hasAlpha = false,
 			get = function(info)
