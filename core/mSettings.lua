@@ -419,6 +419,7 @@ P[mPlugin] = {
 			["g"] = 0.74902,
 			["b"] = 1,
 		},
+		["inactivetime"] = .8,
 		["kickintimeb"] = {
 			["r"] = 0,
 			["g"] = 0.74902,

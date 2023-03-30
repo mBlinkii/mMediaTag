@@ -104,7 +104,8 @@ function mMT:mSetupCastbar()
 			if not unit.notInterruptible then
 				local interruptCD = nil
 				local interruptReadyInTime = false
-
+				local overlaySize = 0
+				local inactivetime = E.db[mPlugin].mCastbar.inactivetime
 				if interruptSpellId then
 					local cdStart, cdDur = GetSpellCooldown(interruptSpellId)
 					local _, statusMax = unit:GetMinMaxValues()
@@ -124,31 +125,29 @@ function mMT:mSetupCastbar()
 							E.db[mPlugin].mCastbar.readymarker.g,
 							E.db[mPlugin].mCastbar.readymarker.b
 						)
+						unit.InterruptMarker:Hide()
 					end
-
-					unit.InterruptMarker:Hide()
-
-					if interruptCD > 0 and interruptReadyInTime then
+					if interruptCD > inactivetime and interruptReadyInTime then
 						local range = (interruptCD / statusMax)
 						if range then
-							local overlaySize = unit:GetWidth() * range
+							local width = unit:GetWidth()
+							local pos = "left"
+							overlaySize = width * range
 							unit.InterruptMarker:SetSize(2, unit:GetHeight())
-							unit.InterruptMarker:SetPoint("left", unit, "left", overlaySize, 0)
+							unit.InterruptMarker:SetPoint(pos, unit, pos, overlaySize, 0)
 							unit.InterruptMarker:SetVertexColor(1, 1, 1)
 							unit.InterruptMarker:Show()
 						end
-					else
-						unit.InterruptMarker:Hide()
 					end
 
 					if E.db[mPlugin].mCastbar.gardient then
-						if interruptCD > 0 and interruptReadyInTime then
+						if interruptCD > inactivetime and interruptReadyInTime then
 							unit:GetStatusBarTexture():SetGradient(
 								"HORIZONTAL",
 								{ r = colorKickinTime.r, g = colorKickinTime.g, b = colorKickinTime.b, a = 1 },
 								{ r = colorKickinTimeb.r, g = colorKickinTimeb.g, b = colorKickinTimeb.b, a = 1 }
 							)
-						elseif interruptCD > 0 then
+						elseif interruptCD > inactivetime then
 							unit:GetStatusBarTexture():SetGradient(
 								"HORIZONTAL",
 								{ r = colorKickonCD.r, g = colorKickonCD.g, b = colorKickonCD.b, a = 1 },
@@ -156,9 +155,9 @@ function mMT:mSetupCastbar()
 							)
 						end
 					else
-						if interruptCD > 0 and interruptReadyInTime then
+						if interruptCD > inactivetime and interruptReadyInTime then
 							unit:SetStatusBarColor(colorKickinTime.r, colorKickinTime.g, colorKickinTime.b)
-						elseif interruptCD > 0 then
+						elseif interruptCD > inactivetime then
 							unit:SetStatusBarColor(colorKickonCD.r, colorKickonCD.g, colorKickonCD.b)
 						end
 					end
@@ -183,6 +182,8 @@ function mMT:mSetupCastbar()
 
 				local interruptCD = 0
 				local interruptReadyInTime = false
+				local overlaySize = 0
+				local inactivetime = E.db[mPlugin].mCastbar.inactivetime
 
 				if interruptSpellId then
 					local cdStart, cdDur = GetSpellCooldown(interruptSpellId)
@@ -203,32 +204,30 @@ function mMT:mSetupCastbar()
 							E.db[mPlugin].mCastbar.readymarker.g,
 							E.db[mPlugin].mCastbar.readymarker.b
 						)
-						unit.InterruptMarker:SetBlendMode("ADD")
-					end
-
-					unit.InterruptMarker:Hide()
-
-					if interruptCD > 0 and interruptReadyInTime then
-						local range = (interruptCD / statusMax)
-						if range then
-							local overlaySize = unit:GetWidth() * range
-							unit.InterruptMarker:SetSize(2, unit:GetHeight())
-							unit.InterruptMarker:SetPoint("left", unit, "left", overlaySize, 0)
-							unit.InterruptMarker:SetVertexColor(1, 1, 1)
-							unit.InterruptMarker:Show()
-						end
-					else
 						unit.InterruptMarker:Hide()
 					end
 
+					if interruptCD > inactivetime and interruptReadyInTime then
+						local range = (interruptCD / statusMax)
+						if range then
+							local width = unit:GetWidth()
+							local pos = "left"
+							overlaySize = unit:GetReverseFill() and (width - (width * range)) or (width * range)
+							unit.InterruptMarker:SetSize(2, unit:GetHeight())
+							unit.InterruptMarker:SetPoint(pos, unit, pos, overlaySize, 0)
+							unit.InterruptMarker:SetVertexColor(1, 1, 1)
+							unit.InterruptMarker:Show()
+						end
+					end
+
 					if E.db[mPlugin].mCastbar.gardient then
-						if interruptCD > 0 and interruptReadyInTime then
+						if interruptCD > inactivetime and interruptReadyInTime then
 							unit:GetStatusBarTexture():SetGradient(
 								"HORIZONTAL",
 								{ r = colorKickinTime.r, g = colorKickinTime.g, b = colorKickinTime.b, a = 1 },
 								{ r = colorKickinTimeb.r, g = colorKickinTimeb.g, b = colorKickinTimeb.b, a = 1 }
 							)
-						elseif interruptCD > 0 then
+						elseif interruptCD > inactivetime then
 							unit:GetStatusBarTexture():SetGradient(
 								"HORIZONTAL",
 								{ r = colorKickonCD.r, g = colorKickonCD.g, b = colorKickonCD.b, a = 1 },
@@ -236,9 +235,9 @@ function mMT:mSetupCastbar()
 							)
 						end
 					else
-						if interruptCD > 0 and interruptReadyInTime then
+						if interruptCD > inactivetime and interruptReadyInTime then
 							unit:SetStatusBarColor(colorKickinTime.r, colorKickinTime.g, colorKickinTime.b)
-						elseif interruptCD > 0 then
+						elseif interruptCD > inactivetime then
 							unit:SetStatusBarColor(colorKickonCD.r, colorKickonCD.g, colorKickonCD.b)
 						end
 					end
@@ -281,7 +280,7 @@ local function mCastbarOptions()
 		gardient = {
 			order = 5,
 			type = "toggle",
-			name = L["Gardient Mode"],
+			name = L["Gradient  Mode"],
 			get = function(info)
 				return E.db[mPlugin].mCastbar.gardient
 			end,
@@ -289,8 +288,23 @@ local function mCastbarOptions()
 				E.db[mPlugin].mCastbar.gardient = value
 			end,
 		},
-		spacer4 = {
+		inactivetime = {
 			order = 6,
+			name = L["Inactivetime"],
+			desc = L["do not show when the interrupt cast is ready in x seconds"],
+			type = "range",
+			min = 0,
+			max = 40,
+			step = 0.1,
+			get = function(info)
+				return E.db[mPlugin].mCastbar.inactivetime
+			end,
+			set = function(info, value)
+				E.db[mPlugin].mCastbar.inactivetime = value
+			end,
+		},
+		spacer4 = {
+			order = 7,
 			type = "description",
 			name = "\n\n",
 		},
@@ -311,7 +325,7 @@ local function mCastbarOptions()
 		colorkickcdb = {
 			type = "color",
 			order = 13,
-			name = L["Gardient color"],
+			name = L["Gradient color"],
 			hasAlpha = false,
 			get = function(info)
 				local t = E.db[mPlugin].mCastbar.kickcdb
@@ -344,7 +358,7 @@ local function mCastbarOptions()
 		colorkickintimeb = {
 			type = "color",
 			order = 16,
-			name = L["Gardient color"],
+			name = L["Gradient color"],
 			hasAlpha = false,
 			get = function(info)
 				local t = E.db[mPlugin].mCastbar.kickintimeb
