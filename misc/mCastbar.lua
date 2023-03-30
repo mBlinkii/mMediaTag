@@ -294,7 +294,7 @@ local function mCastbarOptions()
 			desc = L["do not show when the interrupt cast is ready in x seconds"],
 			type = "range",
 			min = 0,
-			max = 40,
+			max = 4,
 			step = 0.1,
 			get = function(info)
 				return E.db[mPlugin].mCastbar.inactivetime
