@@ -49,7 +49,7 @@ function mMT:Initialize()
 	mMT:mMisc() -- module laden
 
 	if E.Retail then
-		if E.db[mPlugin].mHealthmarker.enable or E.db[mPlugin].mExecutemarker.enable then
+		if E.private.nameplates.enable and E.db[mPlugin].mHealthmarker.enable or E.db[mPlugin].mExecutemarker.enable then
 			mMT:StartNameplateTools()
 		end
 
