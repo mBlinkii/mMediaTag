@@ -48,6 +48,13 @@ function mMT:Initialize()
 
 	mMT:mMisc() -- module laden
 
+	E.Media.CombatIcons.mMT1 = [[Interface\AddOns\ElvUI_mMediaTag\media\icons\combat1.tga]]
+	E.Media.CombatIcons.mMT2 = [[Interface\AddOns\ElvUI_mMediaTag\media\icons\combat2.tga]]
+	E.Media.CombatIcons.mMT3 = [[Interface\AddOns\ElvUI_mMediaTag\media\icons\fire1.tga]]
+	E.Media.CombatIcons.mMT4 = [[Interface\AddOns\ElvUI_mMediaTag\media\icons\fire9.tga]]
+	E.Media.CombatIcons.mMT5 = [[Interface\AddOns\ElvUI_mMediaTag\media\icons\lightning7.tga]]
+	E.Media.CombatIcons.mMT6 = [[Interface\AddOns\ElvUI_mMediaTag\media\icons\lightning9.tga]]
+
 	if E.Retail then
 		if E.private.nameplates.enable and E.db[mPlugin].mHealthmarker.enable or E.db[mPlugin].mExecutemarker.enable then
 			mMT:StartNameplateTools()
