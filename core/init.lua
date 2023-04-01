@@ -48,8 +48,26 @@ function mMT:Initialize()
 
 	mMT:mMisc() -- module laden
 
+	E.Media.CombatIcons.mMT1 = [[Interface\AddOns\ElvUI_mMediaTag\media\icons\combat1.tga]]
+	E.Media.CombatIcons.mMT2 = [[Interface\AddOns\ElvUI_mMediaTag\media\icons\combat2.tga]]
+	E.Media.CombatIcons.mMT3 = [[Interface\AddOns\ElvUI_mMediaTag\media\icons\fire1.tga]]
+	E.Media.CombatIcons.mMT4 = [[Interface\AddOns\ElvUI_mMediaTag\media\icons\fire9.tga]]
+	E.Media.CombatIcons.mMT5 = [[Interface\AddOns\ElvUI_mMediaTag\media\icons\lightning7.tga]]
+	E.Media.CombatIcons.mMT6 = [[Interface\AddOns\ElvUI_mMediaTag\media\icons\lightning9.tga]]
+
+	E.Media.MailIcons.mMT1 = [[Interface\AddOns\ElvUI_mMediaTag\media\mail\mail1.tga]]
+	E.Media.MailIcons.mMT2 = [[Interface\AddOns\ElvUI_mMediaTag\media\mail\mail2.tga]]
+	E.Media.MailIcons.mMT3 = [[Interface\AddOns\ElvUI_mMediaTag\media\mail\mail3.tga]]
+	E.Media.MailIcons.mMT4 = [[Interface\AddOns\ElvUI_mMediaTag\media\mail\mail4.tga]]
+	E.Media.MailIcons.mMT5 = [[Interface\AddOns\ElvUI_mMediaTag\media\mail\mail5.tga]]
+	E.Media.MailIcons.mMT6 = [[Interface\AddOns\ElvUI_mMediaTag\media\mail\mail6.tga]]
+	E.Media.MailIcons.mMT7 = [[Interface\AddOns\ElvUI_mMediaTag\media\mail\mail7.tga]]
+	E.Media.MailIcons.mMT8 = [[Interface\AddOns\ElvUI_mMediaTag\media\mail\mail8.tga]]
+	E.Media.MailIcons.mMT9 = [[Interface\AddOns\ElvUI_mMediaTag\media\mail\mail9.tga]]
+	E.Media.MailIcons.mMT10 = [[Interface\AddOns\ElvUI_mMediaTag\media\mail\mail10.tga]]
+
 	if E.Retail then
-		if E.db[mPlugin].mHealthmarker.enable or E.db[mPlugin].mExecutemarker.enable then
+		if E.private.nameplates.enable and E.db[mPlugin].mHealthmarker.enable or E.db[mPlugin].mExecutemarker.enable then
 			mMT:StartNameplateTools()
 		end
 

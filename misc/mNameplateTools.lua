@@ -307,7 +307,7 @@ end
 
 local function mNameplateTools(table, event, frame)
 	if table.isNamePlate then
-		if table.Health and E.db[mPlugin].mHealthmarker.enable or E.db[mPlugin].mExecutemarker.enable then
+		if table.Health and table.Health.max and E.db[mPlugin].mHealthmarker.enable or E.db[mPlugin].mExecutemarker.enable then
 			local percent = math.floor((table.Health.cur or 100) / table.Health.max * 100 + 0.5)
 			if E.db[mPlugin].mHealthmarker.enable then
 				healthMarkers(table, percent)

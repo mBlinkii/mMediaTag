@@ -9,7 +9,7 @@ local format = format
 
 --Variables
 local ChangelogText =
-	"## [ver. 2.94] - 22.03.2023\n\n### Update\n- |CFFFF7F50Update|r TOC update\n- |CFFFF7F50Update|r Update NP Healthmarker\n- |CFFFF7F50Update|r Currencys Icons to fit the text size\n\n\n\n\n|CFF6495EDIMPORTANT INFO -- With the next version of mMediaTag, the settings of mMediaTag will be reset. This is done for optimisation and because over time many corpses have accumulated in the settings.|r"
+	"## [ver. 2.95] - 01.04.2023\n\n- FIX Healthmarker - if no Healthbar\n- FIX Game Menu - Talent button\n- UPDATE Combinations now available in the ElvUI dropdown menu\n- NEW Mail Icons\n- NEW Gradient interrupt colors\n- NEW Interrupt ready marker"
 
 function mMT:Changelog(opt)
 	local Frame = CreateFrame("Frame", "mMediaTagChangelog", E.UIParent, "BackdropTemplate")

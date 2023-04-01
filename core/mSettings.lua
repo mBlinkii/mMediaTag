@@ -398,15 +398,32 @@ P[mPlugin] = {
 	},
 	["mCastbar"] = {
 		["enable"] = true,
+		["gardient"] = true,
 		["kickcd"] = {
+			["r"] = 1,
+			["g"] = 0,
+			["b"] = 1,
+		},
+		["readymarker"] = {
 			["r"] = 0.545098,
 			["g"] = 0,
 			["b"] = 0.545098,
 		},
+		["kickcdb"] = {
+			["r"] = 0.56,
+			["g"] = 0,
+			["b"] = 0.56,
+		},
 		["kickintime"] = {
-			["r"] = 0,
-			["g"] = 0.74902,
-			["b"] = 1,
+			["r"] = 0.03,
+			["g"] = 0.93,
+			["b"] = 0.2,
+		},
+		["inactivetime"] = .8,
+		["kickintimeb"] = {
+			["r"] = 0.08,
+			["g"] = 0.5,
+			["b"] = 0.57,
 		},
 	},
 	["mHealthmarker"] = {

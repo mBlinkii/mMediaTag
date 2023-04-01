@@ -8,7 +8,6 @@
 	<Script file="mCustomClassColors.lua"/>
 	<Script file="mBGTexture.lua"/>
 	<Script file="mCastbar.lua"/>
-	<Script file="mCombatIcon.lua"/>
 	<Script file="mDungeon.lua"/>
 	<Script file="mFPSMS.lua"/>
 	<Script file="mFunctionsMisc.lua"/>

@@ -410,13 +410,6 @@ local function OptionsCore()
 						childGroups = "tab",
 						args = {},
 					},
-					customcombaticon = {
-						order = 5,
-						type = "group",
-						name = L["Custom Combaticons"],
-						childGroups = "tab",
-						args = {},
-					},
 					customclasscolors = {
 						order = 6,
 						type = "group",
@@ -840,13 +833,6 @@ local function OptionsCoreClassic()
 				type = "group",
 				name = L["Cosmetic"],
 				args = {
-					customcombaticon = {
-						order = 5,
-						type = "group",
-						name = L["Custom Combaticons"],
-						childGroups = "tab",
-						args = {},
-					},
 					rolesymbols = {
 						order = 1,
 						type = "group",
