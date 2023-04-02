@@ -4,6 +4,16 @@ local mMT = E:NewModule(mPlugin, "AceHook-3.0", "AceEvent-3.0", "AceTimer-3.0")
 local EP = _G.LibStub("LibElvUIPlugin-1.0")
 local addon, ns = ...
 
+E.Media.MailIcons.mMT1 = [[Interface\AddOns\ElvUI_mMediaTag\media\mail\mail1.tga]]
+E.Media.MailIcons.mMT2 = [[Interface\AddOns\ElvUI_mMediaTag\media\mail\mail2.tga]]
+E.Media.MailIcons.mMT3 = [[Interface\AddOns\ElvUI_mMediaTag\media\mail\mail3.tga]]
+E.Media.MailIcons.mMT4 = [[Interface\AddOns\ElvUI_mMediaTag\media\mail\mail4.tga]]
+E.Media.MailIcons.mMT5 = [[Interface\AddOns\ElvUI_mMediaTag\media\mail\mail5.tga]]
+E.Media.MailIcons.mMT6 = [[Interface\AddOns\ElvUI_mMediaTag\media\mail\mail6.tga]]
+E.Media.MailIcons.mMT7 = [[Interface\AddOns\ElvUI_mMediaTag\media\mail\mail7.tga]]
+E.Media.MailIcons.mMT8 = [[Interface\AddOns\ElvUI_mMediaTag\media\mail\mail8.tga]]
+E.Media.MailIcons.mMT9 = [[Interface\AddOns\ElvUI_mMediaTag\media\mail\mail9.tga]]
+E.Media.MailIcons.mMT10 = [[Interface\AddOns\ElvUI_mMediaTag\media\mail\mail10.tga]]
 --Variables
 local wipe = table.wipe
 ns.mName = "|CFF6559F1m|r|CFF7A4DEFM|r|CFF8845ECe|r|CFFA037E9d|r|CFFA435E8i|r|CFFB32DE6a|r|CFFBC26E5T|r|CFFCB1EE3a|r|CFFDD14E0g|r"
@@ -54,17 +64,6 @@ function mMT:Initialize()
 	E.Media.CombatIcons.mMT4 = [[Interface\AddOns\ElvUI_mMediaTag\media\icons\fire9.tga]]
 	E.Media.CombatIcons.mMT5 = [[Interface\AddOns\ElvUI_mMediaTag\media\icons\lightning7.tga]]
 	E.Media.CombatIcons.mMT6 = [[Interface\AddOns\ElvUI_mMediaTag\media\icons\lightning9.tga]]
-
-	E.Media.MailIcons.mMT1 = [[Interface\AddOns\ElvUI_mMediaTag\media\mail\mail1.tga]]
-	E.Media.MailIcons.mMT2 = [[Interface\AddOns\ElvUI_mMediaTag\media\mail\mail2.tga]]
-	E.Media.MailIcons.mMT3 = [[Interface\AddOns\ElvUI_mMediaTag\media\mail\mail3.tga]]
-	E.Media.MailIcons.mMT4 = [[Interface\AddOns\ElvUI_mMediaTag\media\mail\mail4.tga]]
-	E.Media.MailIcons.mMT5 = [[Interface\AddOns\ElvUI_mMediaTag\media\mail\mail5.tga]]
-	E.Media.MailIcons.mMT6 = [[Interface\AddOns\ElvUI_mMediaTag\media\mail\mail6.tga]]
-	E.Media.MailIcons.mMT7 = [[Interface\AddOns\ElvUI_mMediaTag\media\mail\mail7.tga]]
-	E.Media.MailIcons.mMT8 = [[Interface\AddOns\ElvUI_mMediaTag\media\mail\mail8.tga]]
-	E.Media.MailIcons.mMT9 = [[Interface\AddOns\ElvUI_mMediaTag\media\mail\mail9.tga]]
-	E.Media.MailIcons.mMT10 = [[Interface\AddOns\ElvUI_mMediaTag\media\mail\mail10.tga]]
 
 	if E.Retail then
 		if E.private.nameplates.enable and E.db[mPlugin].mHealthmarker.enable or E.db[mPlugin].mExecutemarker.enable then
