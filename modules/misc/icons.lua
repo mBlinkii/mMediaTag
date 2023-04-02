@@ -1,0 +1,57 @@
+local mMT, E, L, V, P, G = unpack((select(2, ...)))
+
+-- Combat Icons
+E.Media.CombatIcons.mMediaTag1 = [[Interface\AddOns\ElvUI_mMediaTag\media\icons\combat\combat1.tga]]
+E.Media.CombatIcons.mMediaTag2 = [[Interface\AddOns\ElvUI_mMediaTag\media\icons\combat\combat2.tga]]
+E.Media.CombatIcons.mMediaTag3 = [[Interface\AddOns\ElvUI_mMediaTag\media\icons\combat\combat3.tga]]
+E.Media.CombatIcons.mMediaTag4 = [[Interface\AddOns\ElvUI_mMediaTag\media\icons\combat\combat4.tga]]
+E.Media.CombatIcons.mMediaTag5 = [[Interface\AddOns\ElvUI_mMediaTag\media\icons\combat\combat5.tga]]
+E.Media.CombatIcons.mMediaTag6 = [[Interface\AddOns\ElvUI_mMediaTag\media\icons\combat\combat6.tga]]
+E.Media.CombatIcons.mMediaTag7 = [[Interface\AddOns\ElvUI_mMediaTag\media\icons\fire2.tga]]
+E.Media.CombatIcons.mMediaTag8 = [[Interface\AddOns\ElvUI_mMediaTag\media\icons\fire7.tga]]
+E.Media.CombatIcons.mMediaTag9 = [[Interface\AddOns\ElvUI_mMediaTag\media\icons\lightning2.tga]]
+E.Media.CombatIcons.mMediaTag10 = [[Interface\AddOns\ElvUI_mMediaTag\media\icons\lightning7.tga]]
+
+-- Mail Icons
+E.Media.MailIcons.mMediaTag1 = [[Interface\AddOns\ElvUI_mMediaTag\media\icons\mail\mail1.tga]]
+E.Media.MailIcons.mMediaTag2 = [[Interface\AddOns\ElvUI_mMediaTag\media\icons\mail\mail2.tga]]
+E.Media.MailIcons.mMediaTag3 = [[Interface\AddOns\ElvUI_mMediaTag\media\icons\mail\mail3.tga]]
+E.Media.MailIcons.mMediaTag4 = [[Interface\AddOns\ElvUI_mMediaTag\media\icons\mail\mail4.tga]]
+E.Media.MailIcons.mMediaTag5 = [[Interface\AddOns\ElvUI_mMediaTag\media\icons\mail\mail5.tga]]
+E.Media.MailIcons.mMediaTag6 = [[Interface\AddOns\ElvUI_mMediaTag\media\icons\mail\mail6.tga]]
+E.Media.MailIcons.mMediaTag7 = [[Interface\AddOns\ElvUI_mMediaTag\media\icons\mail\mail7.tga]]
+E.Media.MailIcons.mMediaTag8 = [[Interface\AddOns\ElvUI_mMediaTag\media\icons\mail\mail8.tga]]
+E.Media.MailIcons.mMediaTag9 = [[Interface\AddOns\ElvUI_mMediaTag\media\icons\mail\mail9.tga]]
+E.Media.MailIcons.mMediaTag10 = [[Interface\AddOns\ElvUI_mMediaTag\media\icons\mail\mail10.tga]]
+E.Media.MailIcons.mMediaTag11 = [[Interface\AddOns\ElvUI_mMediaTag\media\icons\mail\mail11.tga]]
+E.Media.MailIcons.mMediaTag12 = [[Interface\AddOns\ElvUI_mMediaTag\media\icons\mail\mail12.tga]]
+E.Media.MailIcons.mMediaTag13 = [[Interface\AddOns\ElvUI_mMediaTag\media\icons\mail\mail13.tga]]
+E.Media.MailIcons.mMediaTag14 = [[Interface\AddOns\ElvUI_mMediaTag\media\icons\mail\mail14.tga]]
+E.Media.MailIcons.mMediaTag15 = [[Interface\AddOns\ElvUI_mMediaTag\media\icons\mail\mail15.tga]]
+E.Media.MailIcons.mMediaTag16 = [[Interface\AddOns\ElvUI_mMediaTag\media\icons\mail\mail16.tga]]
+E.Media.MailIcons.mMediaTag17 = [[Interface\AddOns\ElvUI_mMediaTag\media\icons\mail\mail17.tga]]
+E.Media.MailIcons.mMediaTag18 = [[Interface\AddOns\ElvUI_mMediaTag\media\icons\mail\mail18.tga]]
+
+-- Resting Icons
+E.Media.RestIcons.mMediaTag1 = [[Interface\AddOns\ElvUI_mMediaTag\media\icons\resticon\resticon1.tga]]
+E.Media.RestIcons.mMediaTag2 = [[Interface\AddOns\ElvUI_mMediaTag\media\icons\resticon\resticon2.tga]]
+
+-- E.Media = {
+-- 	Fonts = {},
+-- 	Sounds = {},
+-- 	Arrows = {},
+-- 	MailIcons = {},
+-- 	RestIcons = {},
+-- 	ChatEmojis = {},
+-- 	ChatLogos = {},
+-- 	Textures = {},
+-- 	CombatIcons = {
+-- 		DEFAULT = [[Interface\CharacterFrame\UI-StateIcon]],
+-- 		PLATINUM = [[Interface\Challenges\ChallengeMode_Medal_Platinum]],
+-- 		ATTACK = [[Interface\CURSOR\Attack]],
+-- 		ALERT = [[Interface\DialogFrame\UI-Dialog-Icon-AlertNew]],
+-- 		ALERT2 = [[Interface\OptionsFrame\UI-OptionsFrame-NewFeatureIcon]],
+-- 		ARTHAS = [[Interface\LFGFRAME\UI-LFR-PORTRAIT]],
+-- 		SKULL = [[Interface\LootFrame\LootPanel-Icon]]
+-- 	}
+-- }
