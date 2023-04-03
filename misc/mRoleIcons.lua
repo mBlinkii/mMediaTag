@@ -71,7 +71,7 @@ local function mSetupIcons()
 	end
 
 	--bigsword
-	for i = 1, 14, 1 do
+	for i = 1, 15, 1 do
 		path = format("Interface\\AddOns\\ElvUI_mMediaTag\\media\\icons\\bigsword%s.tga", i)
 		mIcons["bigsword" .. i] =
 			{ ["file"] = path, ["icon"] = E:TextureString(path, sizeString) .. "bigsword" .. i }
@@ -119,12 +119,6 @@ local function mSetupIcons()
 	for i = 1, 3, 1 do
 		path = format("Interface\\AddOns\\ElvUI_mMediaTag\\media\\icons\\crown%s.tga", i)
 		mIcons["crown" .. i] = { ["file"] = path, ["icon"] = E:TextureString(path, sizeString) .. "crown" .. i }
-	end
-
-	--colored
-	for i = 1, 13, 1 do
-		path = format("Interface\\AddOns\\ElvUI_mMediaTag\\media\\icons\\colored%s.tga", i)
-		mIcons["colored" .. i] = { ["file"] = path, ["icon"] = E:TextureString(path, sizeString) .. "colored" .. i }
 	end
 
 	wipe(mIconsList)

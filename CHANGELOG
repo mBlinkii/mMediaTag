@@ -2,6 +2,12 @@
 [Eng] - All changes to this project will be documented in this file. The latest changes are at the top.
 [Ger] - Alle Änderungen an diesem Projekt werden in dieser Datei dokumentiert. Die neuesten Änderungen stehen ganz oben.
 
+## [ver. 2.95.1] - 03.04.2023
+### Update
+- FIX again Max Health Error in NP Healthmarker
+- FIX Dock NoIcon
+- UPDATE Interrupt color and code update
+
 ## [ver. 2.95] - 01.04.2023
 ### Update
 - FIX Healthmarker - if no Healthbar
