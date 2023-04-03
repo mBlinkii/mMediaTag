@@ -139,13 +139,13 @@ local function InterruptChecker(castbar)
 		local colorInterruptinTime = E.db[mPlugin].mCastbar.kickintime
 		local colorInterruptinTimeb = E.db[mPlugin].mCastbar.kickintimeb
 
-		if interruptCD and interruptCD > 0 and interruptReadyInTime then
+		if interruptCD and interruptCD > inactivetime and interruptReadyInTime then
 			if not castbar.InterruptMarker then
 				CreateMarker(castbar)
 			end
 
 			local sparkPosition = (interruptStart + interruptDur - castbar.startTime + 0.5) / castbar.max
-			if castbar.channeling then
+			if castbar.channeling or castbar:GetReverseFill() then
 				sparkPosition = 1 - sparkPosition
 			end
 
@@ -161,7 +161,7 @@ local function InterruptChecker(castbar)
 			else
 				castbar:SetStatusBarColor(colorInterruptinTime.r, colorInterruptinTime.g, colorInterruptinTime.b)
 			end
-		elseif interruptCD and interruptCD > 0 then
+		elseif interruptCD and interruptCD > inactivetime then
 			if E.db[mPlugin].mCastbar.gardient then
 				castbar:GetStatusBarTexture():SetGradient(
 					"HORIZONTAL",
