@@ -9,6 +9,8 @@ local mInsert = table.insert
 local CreateFrame = CreateFrame
 local addon, ns = ...
 
+local IsResting = IsResting
+
 local HM_NPCs = {
 	-- DF Dungeons
 	[190485] = { 50 }, --Stormvein - Ruby Life pools
@@ -113,7 +115,7 @@ local HM_NPCs = {
 	[116410] = { 33 }, -- Karam Magespear
 }
 
-local executeAutoRange = {enabel = false, range = 30}
+local executeAutoRange = { enabel = false, range = 30 }
 
 function mMT:updateAutoRange()
 	executeAutoRange.enabel = false
@@ -306,16 +308,14 @@ local function healthMarkers(unit, percent)
 end
 
 local function mNameplateTools(table, event, frame)
-	if table.isNamePlate then
-		if table.Health and table.Health.max and E.db[mPlugin].mHealthmarker.enable or E.db[mPlugin].mExecutemarker.enable then
-			local percent = math.floor((table.Health.cur or 100) / table.Health.max * 100 + 0.5)
-			if E.db[mPlugin].mHealthmarker.enable then
-				healthMarkers(table, percent)
-			end
+	if table.isNamePlate and table.Health and table.Health.max and executeAutoRange.enabel then
+		local percent = math.floor((table.Health.cur or 100) / table.Health.max * 100 + 0.5)
+		if E.db[mPlugin].mHealthmarker.enable then
+			healthMarkers(table, percent)
+		end
 
-			if E.db[mPlugin].mExecutemarker.enable then
-				executeMarker(table, percent)
-			end
+		if E.db[mPlugin].mExecutemarker.enable then
+			executeMarker(table, percent)
 		end
 	end
 end
