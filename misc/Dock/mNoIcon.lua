@@ -26,6 +26,8 @@ local function OnEvent(self, event, ...)
 
 		wipe(self.mIcon)
 		wipe(self.mSettings)
+		self.mIcon = nil
+		self.mSettings = nil
 	end
 end
 
