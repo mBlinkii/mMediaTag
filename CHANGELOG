@@ -2,6 +2,10 @@
 [Eng] - All changes to this project will be documented in this file. The latest changes are at the top.
 [Ger] - Alle Änderungen an diesem Projekt werden in dieser Datei dokumentiert. Die neuesten Änderungen stehen ganz oben.
 
+## [ver. 2.95.2] - 04.04.2023
+### Update
+- FIX Interruptracker missing fuction
+
 ## [ver. 2.95.1] - 03.04.2023
 ### Update
 - FIX again Max Health Error in NP Healthmarker
