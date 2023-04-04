@@ -63,11 +63,6 @@ local function mTip()
 			format("%s%d|r %sms", statusColors[pingWorld], latencyWorld, other)
 		)
 		DT.tooltip:AddLine(" ")
-		if E.db[mPlugin].mDock.mainmenu.sound then
-			local VolumeInfo = mMT:VolumeToolTip()
-			DT.tooltip:AddDoubleLine(VolumeInfo.name, VolumeInfo.level)
-			DT.tooltip:AddLine(" ")
-		end
 		DT.tooltip:AddDoubleLine(ns.mName, format("%sVer.|r %s%s|r", titel, other, ns.mVersion))
 		DT.tooltip:AddLine(" ")
 		DT.tooltip:AddLine(format("%s %s%s|r", ns.LeftButtonIcon, tip, L["Click left to open the main menu."]))
