@@ -67,12 +67,6 @@ local interruptSpellList = {
 	[1467] = 351338,
 	[1468] = 351338,
 }
-
-local function isTalentLearned(nodeID)
-	local talentConfig = C_ClassTalents.GetActiveConfigID()
-	local nodeInfo = talentConfig and nodeID and C_Traits.GetNodeInfo(talentConfig, nodeID)
-	return nodeInfo and nodeInfo.entryIDsWithCommittedRanks and nodeInfo.entryIDsWithCommittedRanks[1] and true or false
-end
 _G.mMediaTag_interruptOnCD = function()
 	if interruptSpellID then
 		local cdStart = GetSpellCooldown(interruptSpellID)
@@ -82,6 +76,10 @@ _G.mMediaTag_interruptOnCD = function()
 			return false
 		end
 	end
+end
+
+function mMT:UpdateInterruptSpell()
+	interruptSpellID = interruptSpellList[select(1, GetSpecializationInfo(GetSpecialization()))]
 end
 
 local function CreateMarker(castbar)
@@ -96,15 +94,6 @@ local function CreateMarker(castbar)
 	)
 	castbar.InterruptMarker:Hide()
 end
-
-local function isSpellOrTalentKnown(spellId)
-	if IsSpellKnown(spellId) then
-		return true
-	elseif isTalentLearned(spellId) then
-		return true
-	end
-end
-
 local function InterruptChecker(castbar)
 	if castbar.unit == "vehicle" or castbar.unit == "player" then
 		return

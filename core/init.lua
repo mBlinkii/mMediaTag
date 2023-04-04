@@ -99,7 +99,7 @@ end
 
 function mMT:ACTIVE_TALENT_GROUP_CHANGED()
 	if E.db[mPlugin].mCastbar.enable then
-		mMT:mUpdateKick() -- castbar kick/ kick auf cd
+		mMT:UpdateInterruptSpell() -- castbar kick/ kick auf cd
 	end
 
 	if E.db[mPlugin].mExecutemarker.auto then
