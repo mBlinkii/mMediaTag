@@ -6,21 +6,20 @@ local function configTable()
 	E.Options.args.mMT = {
 		type = "group",
 		name = mMT.Icon .. " " .. mMT.Name,
-		--childGroups = "tab",
 		order = 6,
-		--width = "full",
 		args = {
 			logo = {
 				type = "description",
 				name = "",
 				order = 1,
-				image = function() return "Interface\\Addons\\ElvUI_mMediaTag\\media\\logo\\mmt_logo.tga", 384, 96 end,
+				image = function() return "Interface\\Addons\\ElvUI_mMediaTag\\media\\logo\\mmt_logo.tga", 256, 128 end,
 			},
 			general = {
 				order = 2,
 				type = "group",
 				name = format("|CFF6559F1%s|r", L["General"]),
 				icon = "Interface\\Addons\\ElvUI_mMediaTag\\media\\system\\general.tga",
+				childGroups = "tab",
 				args = {
 					greeting = {
 						order = 1,
@@ -35,6 +34,7 @@ local function configTable()
 				type = "group",
 				name = format("|CFF8845EC%s|r", L["DatatTexts"]),
 				icon = "Interface\\Addons\\ElvUI_mMediaTag\\media\\system\\datatexts.tga",
+				childGroups = "tab",
 				args = {
 				},
 			},
@@ -43,6 +43,7 @@ local function configTable()
 				type = "group",
 				name = format("|CFFA037E9%s|r", L["Tags"]),
 				icon = "Interface\\Addons\\ElvUI_mMediaTag\\media\\system\\tags.tga",
+				childGroups = "tab",
 				args = {
 				},
 			},
@@ -51,6 +52,7 @@ local function configTable()
 				type = "group",
 				name = format("|CFFA435E8%s|r", L["Dock"]),
 				icon = "Interface\\Addons\\ElvUI_mMediaTag\\media\\system\\dock.tga",
+				childGroups = "tab",
 				args = {
 				},
 			},
@@ -59,6 +61,7 @@ local function configTable()
 				type = "group",
 				name = format("|CFFB32DE6%s|r", L["Castbar"]),
 				icon = "Interface\\Addons\\ElvUI_mMediaTag\\media\\system\\castbar.tga",
+				childGroups = "tab",
 				args = {
 				},
 			},
@@ -67,6 +70,7 @@ local function configTable()
 				type = "group",
 				name = format("|CFFBC26E5%s|r", L["Nameplates"]),
 				icon = "Interface\\Addons\\ElvUI_mMediaTag\\media\\system\\nameplates.tga",
+				childGroups = "tab",
 				args = {
 				},
 			},
@@ -75,6 +79,7 @@ local function configTable()
 				type = "group",
 				name = format("|CFFCB1EE3%s|r", L["Cosmetic"]),
 				icon = "Interface\\Addons\\ElvUI_mMediaTag\\media\\system\\cosmetic.tga",
+				childGroups = "tab",
 				args = {
 					tooltip = {
 						order = 1,
@@ -89,6 +94,7 @@ local function configTable()
 				type = "group",
 				name = format("|CFFDD14E0%s|r", L["About"]),
 				icon = "Interface\\Addons\\ElvUI_mMediaTag\\media\\system\\about.tga",
+				childGroups = "tab",
 				args = {
 				},
 			},
@@ -97,6 +103,7 @@ local function configTable()
 				type = "group",
 				name = format("|CFF0094FF%s|r", L["Setup"]),
 				icon = "Interface\\Addons\\ElvUI_mMediaTag\\media\\system\\setup.tga",
+				childGroups = "tab",
 				args = {
 				},
 			},

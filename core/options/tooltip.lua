@@ -41,6 +41,19 @@ local function configTable()
 				E.db.mMT.tooltip.iconsize = value
 			end,
 		},
+		toggle_tooltip_zoom = {
+			order = 5,
+			type = "toggle",
+			name = L["Clean Icons"],
+			desc = L["Zooms the texture so we get clean icons without borders."],
+			get = function(info)
+				return E.db.mMT.tooltip.iconzoom
+			end,
+			set = function(info, value)
+				E.db.mMT.tooltip.iconzoom = value
+
+			end,
+		},
 	}
 end
 

@@ -4,9 +4,15 @@ local mMT, E, L, V, P, G = unpack((select(2, ...)))
 local _G = _G
 local GetItemIcon = GetItemIcon
 local GetSpellInfo = GetSpellInfo
+
+--|TTexturePath:size1:size2:xoffset:yoffset:dimx:dimy:coordx1:coordx2:coordy1:coordy2|t
 local function SetTooltipIcon(tooltip, icon, title)
 	if icon and title and not strfind(title, "|T") then
-		_G[tooltip:GetName() .. "TextLeft1"]:SetFormattedText("|T%s:%d|t %s", icon, E.db.mMT.tooltip.iconsize, title)
+		if E.db.mMT.tooltip.iconzoom then
+			_G[tooltip:GetName() .. "TextLeft1"]:SetFormattedText("|T%s:%d:%d:0:0:64:64:4:60:4:60|t %s", icon, E.db.mMT.tooltip.iconsize, E.db.mMT.tooltip.iconsize, title)
+		else
+			_G[tooltip:GetName() .. "TextLeft1"]:SetFormattedText("|T%s:%d|t %s", icon, E.db.mMT.tooltip.iconsize, title)
+		end
 	end
 end
 
@@ -43,7 +49,11 @@ local function AddTooltipIcon(self, icon)
 	if icon then
 		local title = _G[self:GetName() .. "TextLeft1"]
 		if title and not title:GetText():find("|T" .. icon) then
-			title:SetFormattedText("|T%s:%d|t %s", icon, E.db.mMT.tooltip.iconsize, title:GetText())
+			if E.db.mMT.tooltip.iconzoom then
+				title:SetFormattedText("|T%s:%d:%d:0:0:64:64:4:60:4:60|t %s", icon, E.db.mMT.tooltip.iconsize, E.db.mMT.tooltip.iconsize, title:GetText())
+			else
+				title:SetFormattedText("|T%s:%d|t %s", icon, E.db.mMT.tooltip.iconsize, E.db.mMT.tooltip.iconsize, title:GetText())
+			end
 			title:Show()
 		end
 	end
