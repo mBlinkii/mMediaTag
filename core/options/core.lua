@@ -17,7 +17,7 @@ local function configTable()
 			general = {
 				order = 2,
 				type = "group",
-				name = format("|CFF6559F1%s|r", L["General"]),
+				name = L["General"],
 				icon = "Interface\\Addons\\ElvUI_mMediaTag\\media\\system\\general.tga",
 				childGroups = "tab",
 				args = {
@@ -32,7 +32,7 @@ local function configTable()
 			datatexts = {
 				order = 3,
 				type = "group",
-				name = format("|CFF8845EC%s|r", L["DatatTexts"]),
+				name = L["DatatTexts"],
 				icon = "Interface\\Addons\\ElvUI_mMediaTag\\media\\system\\datatexts.tga",
 				childGroups = "tab",
 				args = {
@@ -41,7 +41,7 @@ local function configTable()
 			tags = {
 				order = 4,
 				type = "group",
-				name = format("|CFFA037E9%s|r", L["Tags"]),
+				name = L["Tags"],
 				icon = "Interface\\Addons\\ElvUI_mMediaTag\\media\\system\\tags.tga",
 				childGroups = "tab",
 				args = {
@@ -50,7 +50,7 @@ local function configTable()
 			dock = {
 				order = 5,
 				type = "group",
-				name = format("|CFFA435E8%s|r", L["Dock"]),
+				name = L["Dock"],
 				icon = "Interface\\Addons\\ElvUI_mMediaTag\\media\\system\\dock.tga",
 				childGroups = "tab",
 				args = {
@@ -59,7 +59,7 @@ local function configTable()
 			castbar = {
 				order = 6,
 				type = "group",
-				name = format("|CFFB32DE6%s|r", L["Castbar"]),
+				name = L["Castbar"],
 				icon = "Interface\\Addons\\ElvUI_mMediaTag\\media\\system\\castbar.tga",
 				childGroups = "tab",
 				args = {
@@ -68,7 +68,7 @@ local function configTable()
 			nameplates = {
 				order = 7,
 				type = "group",
-				name = format("|CFFBC26E5%s|r", L["Nameplates"]),
+				name = L["Nameplates"],
 				icon = "Interface\\Addons\\ElvUI_mMediaTag\\media\\system\\nameplates.tga",
 				childGroups = "tab",
 				args = {
@@ -77,7 +77,7 @@ local function configTable()
 			cosmetic = {
 				order = 8,
 				type = "group",
-				name = format("|CFFCB1EE3%s|r", L["Cosmetic"]),
+				name = L["Cosmetic"],
 				icon = "Interface\\Addons\\ElvUI_mMediaTag\\media\\system\\cosmetic.tga",
 				childGroups = "tab",
 				args = {
@@ -92,7 +92,7 @@ local function configTable()
 			about = {
 				order = 9,
 				type = "group",
-				name = format("|CFFDD14E0%s|r", L["About"]),
+				name = format("|CFF05E464%s|r", L["About"]),
 				icon = "Interface\\Addons\\ElvUI_mMediaTag\\media\\system\\about.tga",
 				childGroups = "tab",
 				args = {

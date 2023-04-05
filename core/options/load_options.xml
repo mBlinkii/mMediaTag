@@ -3,4 +3,5 @@
 	<Script file="greeting.lua"/>
 	<Script file="about.lua"/>
 	<Script file="tooltip.lua"/>
+	<Script file="combaticon.lua"/>
 </Ui>
