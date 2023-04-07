@@ -91,7 +91,7 @@ function mMT:mDropDown(list, frame, menuparent, ButtonWidth, HideDelay)
 				end
 			end
 
-			local texture = q1.tga
+			local texture = [[Interface\AddOns\ElvUI_mMediaTag\media\textures\q1.tga]]
 				or [[Interface\QuestFrame\UI-QuestTitleHighlight]]
 
 			if not list[i].isTitle then
@@ -99,14 +99,10 @@ function mMT:mDropDown(list, frame, menuparent, ButtonWidth, HideDelay)
 				frame.buttons[i].hoverTex:SetAllPoints()
 				frame.buttons[i].hoverTex:SetTexture(texture)
 
-				if E.db[mPlugin].mClassColorHover then
-					local _, unitClass = UnitClass("player")
-					local class = ElvUF.colors.class[unitClass]
-					frame.buttons[i].hoverTex:SetGradient("HORIZONTAL", {r = class[1], g = class[2], b = class[3], a = 0.75},
-						{r = mMT:ColorCheck(class[1] + 0.4), g = mMT:ColorCheck(class[2] + 0.4), b = mMT:ColorCheck(class[3] + 0.4), a = 0.75})
-				else
-					frame.buttons[i].hoverTex:SetColorTexture(0.94, 0.76, 0.05, 0.5)
-				end
+				local _, unitClass = UnitClass("player")
+				local class = ElvUF.colors.class[unitClass]
+				frame.buttons[i].hoverTex:SetGradient("HORIZONTAL", {r = class[1], g = class[2], b = class[3], a = 0.75},
+					{r = mMT:ColorCheck(class[1] + 0.4), g = mMT:ColorCheck(class[2] + 0.4), b = mMT:ColorCheck(class[3] + 0.4), a = 0.75})
 
 				frame.buttons[i].hoverTex:SetBlendMode("ADD")
 				frame.buttons[i].hoverTex:Hide()

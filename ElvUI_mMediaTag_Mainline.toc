@@ -10,6 +10,7 @@
 
 init.lua
 core\load_core.xml
+media\load_media.xml
 modules\load_modules.xml
 
 # locales\load_locales.xml
