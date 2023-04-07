@@ -1,145 +1,199 @@
-local function mCastbarOptions()
-	E.Options.args.mMediaTag.args.cosmetic.args.castbar.args = {
-		cosmetics = {
-			order = 1,
+local mMT, E, L, V, P, G = unpack((select(2, ...)))
+
+local  tinsert =  tinsert
+local function configTable()
+	E.Options.args.mMT.args.castbar.args = {
+        header_interruptoncd  = {
+            order = 1,
+            type = "header",
+            name = L["Interrupt on CD"],
+        },
+		toggle_interruptoncd = {
+			order = 2,
 			type = "toggle",
 			name = L["Enable"],
 			desc = L["Enable Interrupt on CD colors for Castbars"],
 			get = function(info)
-				return E.db[mPlugin].mCastbar.enable
+				return E.db.mMT.interruptoncd.enable
 			end,
 			set = function(info, value)
-				E.db[mPlugin].mCastbar.enable = value
+				E.db.mMT.interruptoncd.enable = value
 				E:StaticPopup_Show("CONFIG_RL")
 			end,
 		},
-		spacer = {
-			order = 2,
-			type = "description",
-			name = "\n\n",
-		},
-		description = {
+        spacer1 = {
 			order = 3,
 			type = "description",
-			name = L["Here you can set the color of the castbar when the own kick is on CD."],
-		},
-		spacer2 = {
-			order = 4,
-			type = "description",
 			name = "\n\n",
 		},
-		gardient = {
-			order = 5,
+        description = {
+			order = 4,
+			type = "description",
+			name = L["Here you can set the color of the castbar when your own interrupt spell is on CD or will be ready."],
+		},
+        header_settings = {
+            order = 5,
+            type = "header",
+            name = L["Interrupt on CD Settings"],
+        },
+        gardient = {
+			order = 6,
 			type = "toggle",
 			name = L["Gradient  Mode"],
 			get = function(info)
-				return E.db[mPlugin].mCastbar.gardient
+				return E.db.mMT.interruptoncd.gradient
 			end,
 			set = function(info, value)
-				E.db[mPlugin].mCastbar.gardient = value
+				E.db.mMT.interruptoncd.gradient = value
+			end,
+		},
+        outofrange = {
+			order = 6,
+			type = "toggle",
+			name = L["Cast is out of range"],
+            desc = L["Changes the color of the castbar when the unit is out of range and interruptible."],
+			get = function(info)
+				return E.db.mMT.interruptoncd.outofrange
+			end,
+			set = function(info, value)
+				E.db.mMT.interruptoncd.outofrange = value
 			end,
 		},
 		inactivetime = {
-			order = 6,
+			order = 7,
 			name = L["Inactivetime"],
-			desc = L["do not show when the interrupt cast is ready in x seconds"],
+			desc = L["do not show when the interrupt spell is ready in X seconds."],
 			type = "range",
 			min = 0,
 			max = 4,
 			step = 0.1,
 			get = function(info)
-				return E.db[mPlugin].mCastbar.inactivetime
+				return E.db.mMT.interruptoncd.inactivetime
 			end,
 			set = function(info, value)
-				E.db[mPlugin].mCastbar.inactivetime = value
+				E.db.mMT.interruptoncd.inactivetime = value
 			end,
 		},
-		spacer4 = {
-			order = 7,
-			type = "description",
-			name = "\n\n",
-		},
-		colorkickcd = {
+        header_colorintime = {
+            order = 8,
+            type = "header",
+            name = L["Interrupt in time color"],
+        },
+        color_intimea = {
 			type = "color",
-			order = 11,
-			name = L["Interrupt on CD"],
+			order = 9,
+			name = L["Color"] .. " 1",
 			hasAlpha = false,
 			get = function(info)
-				local t = E.db[mPlugin].mCastbar.kickcd
+				local t = E.db.mMT.interruptoncd.intimecolor.colora
 				return t.r, t.g, t.b
 			end,
 			set = function(info, r, g, b)
-				local t = E.db[mPlugin].mCastbar.kickcd
+				local t = E.db.mMT.interruptoncd.intimecolor.colora
 				t.r, t.g, t.b = r, g, b
 			end,
 		},
-		colorkickcdb = {
+		color_intimeb = {
+			type = "color",
+			order = 10,
+			name = L["Color"] .. " 2",
+			hasAlpha = false,
+			get = function(info)
+				local t = E.db.mMT.interruptoncd.intimecolor.colorb
+				return t.r, t.g, t.b
+			end,
+			set = function(info, r, g, b)
+				local t = E.db.mMT.interruptoncd.intimecolor.colorb
+				t.r, t.g, t.b = r, g, b
+			end,
+		},
+        header_coloroncd = {
+            order = 11,
+            type = "header",
+            name = L["Interrupt on cd color"],
+        },
+        color_oncda = {
+			type = "color",
+			order = 12,
+			name = L["Color"] .. " 1",
+			hasAlpha = false,
+			get = function(info)
+				local t = E.db.mMT.interruptoncd.oncdcolor.colora
+				return t.r, t.g, t.b
+			end,
+			set = function(info, r, g, b)
+				local t = E.db.mMT.interruptoncd.oncdcolor.colora
+				t.r, t.g, t.b = r, g, b
+			end,
+		},
+		color_oncdb = {
 			type = "color",
 			order = 13,
-			name = L["Gradient color"],
+			name = L["Color"] .. " 2",
 			hasAlpha = false,
 			get = function(info)
-				local t = E.db[mPlugin].mCastbar.kickcdb
+				local t = E.db.mMT.interruptoncd.oncdcolor.colorb
 				return t.r, t.g, t.b
 			end,
 			set = function(info, r, g, b)
-				local t = E.db[mPlugin].mCastbar.kickcdb
+				local t = E.db.mMT.interruptoncd.oncdcolor.colorb
 				t.r, t.g, t.b = r, g, b
 			end,
 		},
-		spacer3 = {
-			order = 14,
-			type = "description",
-			name = "\n\n",
-		},
-		colorInterruptinTime = {
+        header_coloroutofrange = {
+            order = 14,
+            type = "header",
+            name = L["Interrupt out of range color"],
+        },
+        color_outofrangea = {
 			type = "color",
 			order = 15,
-			name = L["Kick ready in Time"],
+			name = L["Color"] .. " 1",
 			hasAlpha = false,
 			get = function(info)
-				local t = E.db[mPlugin].mCastbar.kickintime
+				local t = E.db.mMT.interruptoncd.outofrangecolor.colora
 				return t.r, t.g, t.b
 			end,
 			set = function(info, r, g, b)
-				local t = E.db[mPlugin].mCastbar.kickintime
+				local t = E.db.mMT.interruptoncd.outofrangecolor.colora
 				t.r, t.g, t.b = r, g, b
 			end,
 		},
-		colorInterruptinTimeb = {
+		color_outofrangeb = {
 			type = "color",
 			order = 16,
-			name = L["Gradient color"],
+			name = L["Color"] .. " 2",
 			hasAlpha = false,
 			get = function(info)
-				local t = E.db[mPlugin].mCastbar.kickintimeb
+				local t = E.db.mMT.interruptoncd.outofrangecolor.colorb
 				return t.r, t.g, t.b
 			end,
 			set = function(info, r, g, b)
-				local t = E.db[mPlugin].mCastbar.kickintimeb
+				local t = E.db.mMT.interruptoncd.outofrangecolor.colorb
 				t.r, t.g, t.b = r, g, b
 			end,
 		},
-		spacer5 = {
-			order = 20,
-			type = "description",
-			name = "\n\n",
-		},
-		marker = {
+        header_colorradymarker = {
+            order = 17,
+            type = "header",
+            name = L["Readymarker color"],
+        },
+        color_radymarker = {
 			type = "color",
-			order = 21,
-			name = L["Readymarker"],
+			order = 18,
+			name = L["Color"],
+            desc = L["Shows a marker on the castbar when the interrupt spell will be ready."],
 			hasAlpha = false,
 			get = function(info)
-				local t = E.db[mPlugin].mCastbar.readymarker
+				local t = E.db.mMT.interruptoncd.readymarkercolor
 				return t.r, t.g, t.b
 			end,
 			set = function(info, r, g, b)
-				local t = E.db[mPlugin].mCastbar.readymarker
+				local t = E.db.mMT.interruptoncd.readymarkercolor
 				t.r, t.g, t.b = r, g, b
 			end,
 		},
 	}
 end
 
---mInsert(ns.Config, mCastbarOptions)
+tinsert(mMT.Config, configTable)

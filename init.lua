@@ -59,6 +59,9 @@ function mMT:Initialize()
 	end
 
 	if E.Retail then
+		if E.db.mMT.interruptoncd.enable then
+			mMT:mSetupCastbar()
+		end
 	end
 
     E:Delay(1, collectgarbage, "collect")
@@ -69,7 +72,9 @@ function mMT:PLAYER_ENTERING_WORLD()
 end
 
 function mMT:ACTIVE_TALENT_GROUP_CHANGED()
-
+	if E.db.mMT.interruptoncd.enable then
+		mMT:UpdateInterruptSpell()
+	end
 end
 
 function mMT:UPDATE_INSTANCE_INFO()

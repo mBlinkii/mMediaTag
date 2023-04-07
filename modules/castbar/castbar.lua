@@ -6,6 +6,7 @@ local GetSpecializationInfo = GetSpecializationInfo
 local GetActiveSpecGroup = GetActiveSpecGroup
 local GetSpellCooldown = GetSpellCooldown
 local interruptSpellID = nil
+local OutOfRange = false
 
 local interruptSpellList = {
 	-- warrior
@@ -63,7 +64,7 @@ local interruptSpellList = {
 function _G.mMediaTag_interruptOnCD()
 	if interruptSpellID then
 		local cdStart, _, enabled, _ = GetSpellCooldown(interruptSpellID)
-		return enabled == 0 and true or false
+		return (enabled == 0 and true or false) or (E.db.mMT.interruptoncd.outofrange and OutOfRange)
 	end
 end
 
@@ -77,9 +78,9 @@ local function CreateMarker(castbar)
 	castbar.InterruptMarker:SetBlendMode("ADD")
 	castbar.InterruptMarker:SetSize(2, castbar:GetHeight())
 	castbar.InterruptMarker:SetColorTexture(
-		E.db[mPlugin].mCastbar.readymarker.r,
-		E.db[mPlugin].mCastbar.readymarker.g,
-		E.db[mPlugin].mCastbar.readymarker.b
+		E.db.mMT.interruptoncd.readymarkercolor.r,
+		E.db.mMT.interruptoncd.readymarkercolor.g,
+		E.db.mMT.interruptoncd.readymarkercolor.b
 	)
 	castbar.InterruptMarker:Hide()
 end
@@ -111,13 +112,29 @@ local function InterruptChecker(castbar)
 			interruptReadyInTime = (interruptCD + 0.5) < (castbar.max - value)
 		end
 
-		local inactivetime = E.db[mPlugin].mCastbar.inactivetime
-		local colorInterruptonCD = E.db[mPlugin].mCastbar.kickcd
-		local colorInterruptonCDb = E.db[mPlugin].mCastbar.kickcdb
-		local colorInterruptinTime = E.db[mPlugin].mCastbar.kickintime
-		local colorInterruptinTimeb = E.db[mPlugin].mCastbar.kickintimeb
+		local inactivetime = E.db.mMT.interruptoncd.inactivetime
+		local colorInterruptonCD = E.db.mMT.interruptoncd.oncdcolor.colora
+		local colorInterruptonCDb = E.db.mMT.interruptoncd.oncdcolor.colorb
+		local colorInterruptinTime = E.db.mMT.interruptoncd.intimecolor.colora
+		local colorInterruptinTimeb = E.db.mMT.interruptoncd.intimecolor.colorb
+		local colorOutOfRange = E.db.mMT.interruptoncd.outofrangecolor.colora
+		local colorOutOfRangeB = E.db.mMT.interruptoncd.outofrangecolor.colorb
 
-		if interruptCD and interruptCD > inactivetime and interruptReadyInTime then
+		if E.db.mMT.interruptoncd.outofrange then
+			OutOfRange = IsSpellInRange(GetSpellInfo(interruptSpellID), castbar.unit) == 0
+		end
+
+		if E.db.mMT.interruptoncd.outofrange and OutOfRange then
+			if E.db.mMT.interruptoncd.gradient then
+				castbar:GetStatusBarTexture():SetGradient(
+					"HORIZONTAL",
+					{ r = colorOutOfRange.r, g = colorOutOfRange.g, b = colorOutOfRange.b, a = 1 },
+					{ r = colorOutOfRangeB.r, g = colorOutOfRangeB.g, b = colorOutOfRangeB.b, a = 1 }
+				)
+			else
+				castbar:SetStatusBarColor(colorOutOfRange.r, colorOutOfRange.g, colorOutOfRange.b)
+			end
+		elseif interruptCD and interruptCD > inactivetime and interruptReadyInTime then
 			if not castbar.InterruptMarker then
 				CreateMarker(castbar)
 			end
@@ -130,7 +147,7 @@ local function InterruptChecker(castbar)
 			castbar.InterruptMarker:SetPoint("center", castbar, "left", sparkPosition * castbar:GetWidth(), 0)
 			castbar.InterruptMarker:Show()
 
-			if E.db[mPlugin].mCastbar.gardient then
+			if E.db.mMT.interruptoncd.gradient then
 				castbar:GetStatusBarTexture():SetGradient(
 					"HORIZONTAL",
 					{ r = colorInterruptinTime.r, g = colorInterruptinTime.g, b = colorInterruptinTime.b, a = 1 },
@@ -140,7 +157,7 @@ local function InterruptChecker(castbar)
 				castbar:SetStatusBarColor(colorInterruptinTime.r, colorInterruptinTime.g, colorInterruptinTime.b)
 			end
 		elseif interruptCD and interruptCD > inactivetime then
-			if E.db[mPlugin].mCastbar.gardient then
+			if E.db.mMT.interruptoncd.gradient then
 				castbar:GetStatusBarTexture():SetGradient(
 					"HORIZONTAL",
 					{ r = colorInterruptonCD.r, g = colorInterruptonCD.g, b = colorInterruptonCD.b, a = 1 },
