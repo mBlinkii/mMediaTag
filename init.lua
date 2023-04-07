@@ -30,6 +30,7 @@ _G[addonName] = addon
 mMT.Version = GetAddOnMetadata(addonName, 'Version')
 mMT.Name = "|CFF6559F1m|r|CFF7A4DEFM|r|CFF8845ECe|r|CFFA037E9d|r|CFFA435E8i|r|CFFB32DE6a|r|CFFBC26E5T|r|CFFCB1EE3a|r|CFFDD14E0g|r"
 mMT.Icon = "|TInterface\\Addons\\ElvUI_mMediaTag\\media\\logo\\mmt_icon_round.tga:14:14:0:0|t"
+mMT.Media = {}
 mMT.Config = {}
 
 -- Load Settings
