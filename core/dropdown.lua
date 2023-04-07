@@ -1,8 +1,5 @@
-local E, L, V, P, G = unpack(ElvUI)
-local mPlugin = "mMediaTag"
-local mMT = E:GetModule(mPlugin)
+local mMT, E, L, V, P, G = unpack((select(2, ...)))
 local LSM = E.Libs.LSM
-local addon, ns = ...
 
 --Lua functions
 local tinsert = tinsert
@@ -94,7 +91,7 @@ function mMT:mDropDown(list, frame, menuparent, ButtonWidth, HideDelay)
 				end
 			end
 
-			local texture = LSM:Fetch("statusbar", E.db[mPlugin].mHoverTexture)
+			local texture = q1.tga
 				or [[Interface\QuestFrame\UI-QuestTitleHighlight]]
 
 			if not list[i].isTitle then
