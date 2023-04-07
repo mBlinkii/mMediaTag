@@ -420,6 +420,8 @@ P[mPlugin] = {
 			["b"] = 0.93,
 		},
 		["inactivetime"] = .8,
+		outofrange = true,
+		outofrangecolor = { colora = {r = 1, g = 0.48, b = 0}, colorb = {r = 0.74, g = 0.28, b = 0}},
 		["kickintimeb"] = {
 			["r"] = 0.08,
 			["g"] = 0.5,

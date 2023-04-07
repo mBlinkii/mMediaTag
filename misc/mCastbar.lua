@@ -10,9 +10,7 @@ local GetSpecializationInfo = GetSpecializationInfo
 local GetActiveSpecGroup = GetActiveSpecGroup
 local GetSpellCooldown = GetSpellCooldown
 local interruptSpellID = nil
-
-_G.mMediaTag_interruptOnCD = false
-_G.mMediaTag_interruptinTime = false
+local OutOfRange = false
 
 local interruptSpellList = {
 	-- warrior
@@ -67,14 +65,10 @@ local interruptSpellList = {
 	[1467] = 351338,
 	[1468] = 351338,
 }
-_G.mMediaTag_interruptOnCD = function()
+function _G.mMediaTag_interruptOnCD()
 	if interruptSpellID then
-		local cdStart = GetSpellCooldown(interruptSpellID)
-		if cdStart then
-			return true
-		else
-			return false
-		end
+		local cdStart, _, enabled, _ = GetSpellCooldown(interruptSpellID)
+		return (enabled == 0 and true or false) or (E.db[mPlugin].mCastbar.outofrange and OutOfRange)
 	end
 end
 
@@ -127,8 +121,24 @@ local function InterruptChecker(castbar)
 		local colorInterruptonCDb = E.db[mPlugin].mCastbar.kickcdb
 		local colorInterruptinTime = E.db[mPlugin].mCastbar.kickintime
 		local colorInterruptinTimeb = E.db[mPlugin].mCastbar.kickintimeb
+		local colorOutOfRange = E.db[mPlugin].mCastbar.outofrangecolor.colora
+		local colorOutOfRangeB = E.db[mPlugin].mCastbar.outofrangecolor.colorb
 
-		if interruptCD and interruptCD > inactivetime and interruptReadyInTime then
+		if E.db[mPlugin].mCastbar.outofrange then
+			OutOfRange = IsSpellInRange(GetSpellInfo(interruptSpellID), castbar.unit) == 0
+		end
+
+		if E.db[mPlugin].mCastbar.outofrange and OutOfRange then
+			if E.db[mPlugin].mCastbar.gardient then
+				castbar:GetStatusBarTexture():SetGradient(
+					"HORIZONTAL",
+					{ r = colorOutOfRange.r, g = colorOutOfRange.g, b = colorOutOfRange.b, a = 1 },
+					{ r = colorOutOfRangeB.r, g = colorOutOfRangeB.g, b = colorOutOfRangeB.b, a = 1 }
+				)
+			else
+				castbar:SetStatusBarColor(colorOutOfRange.r, colorOutOfRange.g, colorOutOfRange.b)
+			end
+		elseif interruptCD and interruptCD > inactivetime and interruptReadyInTime then
 			if not castbar.InterruptMarker then
 				CreateMarker(castbar)
 			end
@@ -212,6 +222,17 @@ local function mCastbarOptions()
 				E.db[mPlugin].mCastbar.gardient = value
 			end,
 		},
+		outofrange = {
+			order = 5,
+			type = "toggle",
+			name = L["out of Range"],
+			get = function(info)
+				return E.db[mPlugin].mCastbar.outofrange
+			end,
+			set = function(info, value)
+				E.db[mPlugin].mCastbar.outofrange = value
+			end,
+		},
 		inactivetime = {
 			order = 6,
 			name = L["Inactivetime"],
@@ -290,6 +311,39 @@ local function mCastbarOptions()
 			end,
 			set = function(info, r, g, b)
 				local t = E.db[mPlugin].mCastbar.kickintimeb
+				t.r, t.g, t.b = r, g, b
+			end,
+		},
+		spacer59 = {
+			order = 17,
+			type = "description",
+			name = "\n\n",
+		},
+		coutofrangea = {
+			type = "color",
+			order = 18,
+			name = L["out of range"],
+			hasAlpha = false,
+			get = function(info)
+				local t = E.db[mPlugin].mCastbar.outofrangecolor.colora
+				return t.r, t.g, t.b
+			end,
+			set = function(info, r, g, b)
+				local t = E.db[mPlugin].mCastbar.outofrangecolor.colora
+				t.r, t.g, t.b = r, g, b
+			end,
+		},
+		coutofrangeb = {
+			type = "color",
+			order = 19,
+			name = L["Gradient color"],
+			hasAlpha = false,
+			get = function(info)
+				local t = E.db[mPlugin].mCastbar.outofrangecolor.colorb
+				return t.r, t.g, t.b
+			end,
+			set = function(info, r, g, b)
+				local t = E.db[mPlugin].mCastbar.outofrangecolor.colorb
 				t.r, t.g, t.b = r, g, b
 			end,
 		},
