@@ -3,4 +3,5 @@
 	<Script file="FPSMS.lua"/>
 	<Script file="CoordinatesX.lua"/>
 	<Script file="Coordinatesy.lua"/>
+	<Script file="score.lua"/>
 </Ui>

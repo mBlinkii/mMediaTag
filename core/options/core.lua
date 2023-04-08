@@ -36,8 +36,14 @@ local function configTable()
 				icon = "Interface\\Addons\\ElvUI_mMediaTag\\media\\system\\datatexts.tga",
 				childGroups = "tab",
 				args = {
-					combat = {
+					colors = {
 						order = 1,
+						type = "group",
+						name = mMT.Name .. " " .. L["Datatext Colors"],
+						args = {},
+					},
+					combat = {
+						order = 2,
 						type = "group",
 						name = L["Combat Icon and Time"],
 						args = {},

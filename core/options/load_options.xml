@@ -7,4 +7,5 @@
 	<Script file="castbar.lua"/>
 	<Script file="background.lua"/>
 	<Script file="customclasscolors.lua"/>
+	<Script file="datatextcolors.lua"/>
 </Ui>

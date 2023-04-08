@@ -2,6 +2,7 @@
 	<Include file="misc\load_misc.xml"/>
 	<Include file="datatexts\load_datatexts.xml"/>
 	<Include file="unitframes\load_unitframes.xml"/>
+	<Include file="retail\load_retail.xml"/>
 	<Script file="castbar\castbar.lua"/>
 	<!-- <Include file="options\load_options.xml"/>
 	<Script file="greeting.lua"/>

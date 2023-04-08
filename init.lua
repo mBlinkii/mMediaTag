@@ -80,6 +80,8 @@ end
 end
 
 function mMT:PLAYER_ENTERING_WORLD()
+	C_MythicPlus.RequestCurrentAffixes()
+	C_MythicPlus.RequestMapInfo()
 
 end
 
