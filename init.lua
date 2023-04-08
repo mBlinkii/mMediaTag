@@ -58,11 +58,23 @@ function mMT:Initialize()
 		mMT:TipIcon()
 	end
 
+	if E.db.mMT.customclasscolors.enable and not mMT:Check_ElvUI_EltreumUI() then
+		mMT:SetCustomColors()
+	end
+
+	if E.db.mMT.customclasscolors.emediaenable then
+		mMT:SetElvUIMediaColor()
+	end
+
 	if E.Retail then
 		if E.db.mMT.interruptoncd.enable then
 			mMT:mSetupCastbar()
 		end
-	end
+
+		if E.db.mMT.custombackgrounds.health.enable or E.db.mMT.custombackgrounds.power.enable or E.db.mMT.custombackgrounds.castbar.enable then
+			mMT:CustomBackdrop()
+		end
+end
 
     E:Delay(1, collectgarbage, "collect")
 end

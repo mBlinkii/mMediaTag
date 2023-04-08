@@ -1,4 +1,6 @@
 <Ui xmlns="http://www.blizzard.com/wow/ui/">
 	<Script file="CombatTime.lua"/>
 	<Script file="FPSMS.lua"/>
+	<Script file="CoordinatesX.lua"/>
+	<Script file="Coordinatesy.lua"/>
 </Ui>

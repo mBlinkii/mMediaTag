@@ -36,6 +36,12 @@ local function configTable()
 				icon = "Interface\\Addons\\ElvUI_mMediaTag\\media\\system\\datatexts.tga",
 				childGroups = "tab",
 				args = {
+					combat = {
+						order = 1,
+						type = "group",
+						name = L["Combat Icon and Time"],
+						args = {},
+					},
 				},
 			},
 			tags = {
@@ -85,6 +91,18 @@ local function configTable()
 						order = 1,
 						type = "group",
 						name = L["Tooltip Icon"],
+						args = {},
+					},
+					background = {
+						order = 2,
+						type = "group",
+						name = L["Custom Unitframe Backgrounds"],
+						args = {},
+					},
+					classcolor = {
+						order = 3,
+						type = "group",
+						name = L["Custom Class colors"],
 						args = {},
 					},
 				},

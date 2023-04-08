@@ -4,4 +4,5 @@
 	<Script file="dropdown.lua"/>
 	<Script file="greeting.lua"/>
 	<Script file="cmd.lua"/>
+	<Script file="functions.lua"/>
 </Ui>
