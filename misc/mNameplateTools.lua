@@ -308,7 +308,7 @@ local function healthMarkers(unit, percent)
 end
 
 local function mNameplateTools(table, event, frame)
-	if table.isNamePlate and (table.Health and table.Health.max and executeAutoRange.enabel) then
+	if table.isNamePlate and (table.Health and table.Health.max) then --and executeAutoRange.enabel
 		local percent = math.floor((table.Health.cur or 100) / table.Health.max * 100 + 0.5)
 		if E.db[mPlugin].mHealthmarker.enable then
 			healthMarkers(table, percent)

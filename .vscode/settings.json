@@ -125,7 +125,18 @@
         "TableAttributeDisplay",
         "ObjectiveTrackerFrame",
         "ObjectiveTracker_UpdateHeight",
-        "EditModeManagerFrame"
+        "EditModeManagerFrame",
+        "QuestFrameCompleteButton",
+        "QuestFrameCompleteQuestButton",
+        "GameTooltip_AddBlankLineToTooltip",
+        "GameTooltip_AddNormalLine",
+        "GameTooltip_AddColoredLine",
+        "HIGHLIGHT_FONT_COLOR",
+        "DUNGEON_SCORE_BEST_AFFIX",
+        "MYTHIC_PLUS_POWER_LEVEL",
+        "SECONDS_PER_HOUR",
+        "LIGHTGRAY_FONT_COLOR",
+        "DUNGEON_SCORE_OVERTIME_TIME"
     ],
     "Lua.diagnostics.disable": [
         "redundant-parameter",

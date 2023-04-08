@@ -4,45 +4,140 @@ local mMT = E:GetModule(mPlugin)
 local DT = E:GetModule("DataTexts")
 local addon, ns = ...
 
+local displayString = ""
+local function sort_dungeons(map_table)
+	-- 1) fetch score for each dungeon
+	local map_scores = {}
+	for _, mapID in ipairs(map_table) do
+		local inTimeInfo, overtimeInfo = C_MythicPlus.GetSeasonBestForMap(mapID)
+		local dungeonScore = 0
+		if inTimeInfo and overtimeInfo then
+			local inTimeScoreIsBetter = inTimeInfo.dungeonScore > overtimeInfo.dungeonScore
+			dungeonScore = inTimeScoreIsBetter and inTimeInfo.dungeonScore or overtimeInfo.dungeonScore
+		elseif inTimeInfo or overtimeInfo then
+			dungeonScore = inTimeInfo and inTimeInfo.dungeonScore or overtimeInfo and overtimeInfo.dungeonScore
+		end
+		map_scores[mapID] = dungeonScore
+	end
 
-local displayString = ''
+	-- 2) sort them!
+	table.sort(map_table, function(a, b)
+		return map_scores[a] > map_scores[b]
+	end)
+	return map_table
+end
+local function GetDungeonScores()
+	local map_table = C_ChallengeMode.GetMapTable()
+	local tyrannical = C_ChallengeMode.GetAffixInfo(9)
+	local fortified = C_ChallengeMode.GetAffixInfo(10)
+	local modes = { tyrannical, fortified }
+
+	sort_dungeons(map_table)
+
+	local map_scores = {}
+
+	for i = 1, #map_table do
+		local mapID = map_table[i]
+		local affixScores, overAllScore = C_MythicPlus.GetSeasonBestAffixScoreInfoForMap(mapID)
+		local name, _, _, icon = C_ChallengeMode.GetMapUIInfo(mapID)
+
+		local levelTyrannical = nil
+		local levelFortified = nil
+		local color = HIGHLIGHT_FONT_COLOR
+
+		for _, affixInfo in pairs(affixScores or {}) do
+			levelTyrannical = affixInfo.name == tyrannical and affixInfo.level or 0
+			levelFortified = affixInfo.name == fortified and affixInfo.level or 0
+
+			if affixInfo.overTime then
+				if affixInfo.name == tyrannical then
+					levelTyrannical = format("|CFFB2BABBs%s|r", affixInfo.level or 0)
+				end
+
+				if affixInfo.name == fortified then
+					levelFortified = format("|CFFB2BABB%s|r", affixInfo.level or 0)
+				end
+			else
+				if overAllScore then
+					color = C_ChallengeMode.GetSpecificDungeonOverallScoreRarityColor(overAllScore)
+				end
+
+				if affixInfo.name == tyrannical then
+					levelTyrannical = format("%s%s|r", E:RGBToHex(color.r, color.g, color.b), affixInfo.level)
+				end
+
+				if affixInfo.name == fortified then
+					levelFortified = format("%s%s|r", E:RGBToHex(color.r, color.g, color.b), affixInfo.level)
+				end
+			end
+		end
+
+		if overAllScore then
+			color = C_ChallengeMode.GetSpecificDungeonOverallScoreRarityColor(overAllScore)
+		end
+
+		DT.tooltip:AddDoubleLine(
+			mMT:mIcon(icon) .. " " .. name,
+			format(
+				"%s | %s | %s%s|r",
+				levelTyrannical or 0,
+				levelFortified or 0,
+				E:RGBToHex(color.r, color.g, color.b),
+				overAllScore or 0
+			)
+		)
+	end
+end
 
 local function OnEnter(self)
 	DT.tooltip:ClearLines()
 
-    local keyText = mMT:OwenKeystone()
-    if keyText then
-        DT.tooltip:AddLine(keyText[1])
-        DT.tooltip:AddLine(keyText[2])
-    end
+	local keyText = mMT:OwenKeystone()
+	if keyText then
+		DT.tooltip:AddLine(keyText[1])
+		DT.tooltip:AddLine(keyText[2])
+	end
 
-    local mAffixesText = mMT:WeeklyAffixes()
-    if mAffixesText then
-        DT.tooltip:AddLine(" ")
-        if mAffixesText[3] then
-            DT.tooltip:AddLine(mAffixesText[3])
-        else
-            DT.tooltip:AddLine(mAffixesText[1])
-            DT.tooltip:AddLine(mAffixesText[2])
-        end
-    end
+	local mAffixesText = mMT:WeeklyAffixes()
+	if mAffixesText then
+		DT.tooltip:AddLine(" ")
+		if mAffixesText[3] then
+			DT.tooltip:AddLine(mAffixesText[3])
+		else
+			DT.tooltip:AddLine(mAffixesText[1])
+			DT.tooltip:AddLine(mAffixesText[2])
+		end
+	end
 
-    DT.tooltip:AddLine(" ")
-    DT.tooltip:AddDoubleLine(DUNGEON_SCORE, mMT:GetDungeonScore())
-
+	DT.tooltip:AddLine(" ")
+	DT.tooltip:AddDoubleLine(DUNGEON_SCORE, mMT:GetDungeonScore())
+	DT.tooltip:AddLine(" ")
+	GetDungeonScores()
 	DT.tooltip:Show()
 
-    self.text:SetFormattedText(displayString, mMT:GetDungeonScore())
+	self.text:SetFormattedText(displayString, mMT:GetDungeonScore())
 end
 
 local function OnEvent(self)
-    self.text:SetFormattedText(displayString, mMT:GetDungeonScore())
+	self.text:SetFormattedText(displayString, mMT:GetDungeonScore())
 end
 
 local function ValueColorUpdate(self, hex)
-	displayString = strjoin('', hex, "%s|r")
+	displayString = strjoin("", hex, "%s|r")
 
 	OnEvent(self)
 end
 
-DT:RegisterDatatext('M+ Score', "mMediaTag", {'MASTERY_UPDATE'}, OnEvent, nil, nil, OnEnter, nil, nil, nil, ValueColorUpdate)
+DT:RegisterDatatext(
+	"M+ Score",
+	"mMediaTag",
+	{ "MASTERY_UPDATE" },
+	OnEvent,
+	nil,
+	nil,
+	OnEnter,
+	nil,
+	nil,
+	nil,
+	ValueColorUpdate
+)
