@@ -124,7 +124,8 @@
         "GameTooltip_AddColoredLine",
         "SECONDS_PER_HOUR",
         "LIGHTGRAY_FONT_COLOR",
-        "DUNGEON_SCORE_OVERTIME_TIME"
+        "DUNGEON_SCORE_OVERTIME_TIME",
+        "class"
     ],
     "Lua.diagnostics.disable": [
         "redundant-parameter",

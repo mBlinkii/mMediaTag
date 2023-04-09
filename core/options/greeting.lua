@@ -9,7 +9,6 @@ local function configTable()
 			inline = true,
 			name = L["Welcome text"],
 			args = {
-
 				toggle_greeting = {
 					order = 2,
 					type = "toggle",

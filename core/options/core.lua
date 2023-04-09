@@ -27,6 +27,12 @@ local function configTable()
 						name = L["Welcome text"],
 						args = {},
 					},
+					roll = {
+						order = 2,
+						type = "group",
+						name = L["Roll Button"],
+						args = {},
+					},
 				},
 			},
 			datatexts = {

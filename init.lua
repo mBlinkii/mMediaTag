@@ -66,6 +66,10 @@ function mMT:Initialize()
 		mMT:SetElvUIMediaColor()
 	end
 
+	if E.db.mMT.roll.enable then
+		mMT:mRoll()
+	end
+
 	if E.Retail then
 		if E.db.mMT.interruptoncd.enable then
 			mMT:mSetupCastbar()

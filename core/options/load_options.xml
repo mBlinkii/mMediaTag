@@ -8,4 +8,5 @@
 	<Script file="background.lua"/>
 	<Script file="customclasscolors.lua"/>
 	<Script file="datatextcolors.lua"/>
+	<Script file="rollbutton.lua"/>
 </Ui>

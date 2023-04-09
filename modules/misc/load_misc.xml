@@ -2,4 +2,5 @@
 	<Script file="tooltip.lua"/>
 	<Script file="icons.lua"/>
 	<Script file="functions.lua"/>
+	<Script file="rollbutton.lua"/>
 </Ui>

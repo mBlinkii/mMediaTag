@@ -3,6 +3,11 @@ local mMT, E, L, V, P, G = unpack((select(2, ...)))
 local tinsert = tinsert
 
 local function configTable()
+	local icons = {}
+
+	for key, icon in pairs(mMT.Media.CombatIcons) do
+		icons[key] = E:TextureString(icon, ":14:14")
+	end
 	E.Options.args.mMT.args.datatexts.args.combat.args = {
 		header_combaticon = {
 			order = 1,
@@ -10,7 +15,6 @@ local function configTable()
 			inline = true,
 			name = L["Combat Icon and Time"],
 			args = {
-
 				combaticon_ooc_icon = {
 					order = 2,
 					type = "select",
@@ -21,7 +25,7 @@ local function configTable()
 					set = function(info, value)
 						E.db.mMT.combattime.ooctexture = value
 					end,
-					values = mMT.Media.CombatIcons,
+					values = icons,
 				},
 				combaticon_ic_icon = {
 					order = 3,
@@ -33,7 +37,7 @@ local function configTable()
 					set = function(info, value)
 						E.db.mMT.combattime.ictexture = value
 					end,
-					values = mMT.Media.CombatIcons,
+					values = icons,
 				},
 			},
 		},

@@ -169,6 +169,15 @@ P.mMT = {
 			r = 0.58823529411765,
 		},
 	},
+	roll = {
+		enable = false,
+		colormodenormal = "custom",
+		colormodehover = "class",
+		colornormal = { r = 1, g = 1, b = 1, a = 0.75 },
+		colorhover = { r = 1, g = 1, b = 1, a = 0.75 },
+		texture = "RI1",
+		size = 16,
+	},
 }
 
 G.mMT = {
