@@ -40,6 +40,9 @@ local function configTable()
 					order = 4,
 					type = "select",
 					name = L["Icon"],
+					disabled = function()
+						return not E.db.mMT.roll.enable
+					end,
 					get = function(info)
 						return E.db.mMT.roll.texture
 					end,
