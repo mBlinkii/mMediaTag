@@ -24,6 +24,7 @@ local function sort_dungeons(map_table)
 	end)
 	return map_table
 end
+
 local function GetDungeonScores()
 	local map_table = C_ChallengeMode.GetMapTable()
 	local tyrannical = C_ChallengeMode.GetAffixInfo(9)

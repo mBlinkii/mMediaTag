@@ -45,7 +45,11 @@ function mMT:GetDungeonScore()
 	local seasonScore = data and data.currentSeasonScore
 	local color = C_ChallengeMode_GetDungeonScoreRarityColor(seasonScore)
 	local colorString = E:RGBToHex(color.r, color.g, color.b)
-	return colorString .. seasonScore .. "|r"
+	if seasonScore > 0 then
+		return colorString .. seasonScore .. "|r"
+	else
+		return L["No Score"]
+	end
 end
 
 function mMT:WeeklyAffixes()
