@@ -58,33 +58,33 @@ function mMT:WeeklyAffixes()
 	affixes = wipe(affixes)
 	local _, _, _, _, other, titel = mMT:mColorDatatext()
 	local AffixText = nil
-	local savedYear = G.mMT.mplusaffix.year
+	local savedYear = E.global.mMT.mplusaffix.year
 
 	affixes = C_MythicPlus.GetCurrentAffixes()
 
 	if
 		(date("%u") == "2")
-		or (date("%u") == "3" or date("%y") ~= savedYear) and not G.mMT.mplusaffix.reset
+		or (date("%u") == "3" or date("%y") ~= savedYear) and not E.global.mMT.mplusaffix.reset
 	then
-		G.mMT.mplusaffix.affixes = nil
-		G.mMT.mplusaffix.reset = true
-		G.mMT.mplusaffix.year = date("%y")
+		E.global.mMT.mplusaffix.affixes = nil
+		E.global.mMT.mplusaffix.reset = true
+		E.global.mMT.mplusaffix.year = date("%y")
 	elseif (date("%u") ~= "2") and (date("%u") ~= "3") then
-		G.mMT.mplusaffix.reset = false
+		E.global.mMT.mplusaffix.reset = false
 	end
 
 	if not affixes and (date("%u") ~= "2") and (date("%u") ~= "3") then
-		affixes = G.mMT.mplusaffix.affixes
+		affixes = E.global.mMT.mplusaffix.affixes
 		if affixes == nil then
 			affixes = C_MythicPlus.GetCurrentAffixes()
 			if affixes ~= nil then
-				G.mMT.mplusaffix.affixes = affixes
+				E.global.mMT.mplusaffix.affixes = affixes
 			end
 		end
 	else
 		affixes = C_MythicPlus.GetCurrentAffixes()
-		G.mMT.mplusaffix.affixes = affixes
-		G.mMT.mplusaffix.year = date("%y")
+		E.global.mMT.mplusaffix.affixes = affixes
+		E.global.mMT.mplusaffix.year = date("%y")
 	end
 
 	if affixes then
@@ -99,18 +99,18 @@ function mMT:WeeklyAffixes()
 	else
 		affixes = C_MythicPlus.GetCurrentAffixes()
 		if not affixes == nil then
-			G.mMT.mplusaffix.affixes = affixes
+			E.global.mMT.mplusaffix.affixes = affixes
 		end
 	end
 
 	if AffixText ~= nil then
 		local seasonID = C_MythicPlus.GetCurrentSeason()
 		if seasonID <= 0 then
-			seasonID = E.db.mMT.mplusaffix.season
+			seasonID = E.global.db.mMT.mplusaffix.season
 		end
 
 		if seasonID >= 1 then
-			G.mMT.mplusaffix.season = seasonID
+			E.global.mMT.mplusaffix.season = seasonID
 
 			tinsert(WeeklyAffixesText, 1, format("%s%s|r", titel, L["This Week Affix"]))
 			tinsert(WeeklyAffixesText, 2, format("%s%s|r", other, AffixText))
