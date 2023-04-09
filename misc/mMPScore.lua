@@ -35,55 +35,62 @@ local function GetDungeonScores()
 	sort_dungeons(map_table)
 
 	local map_scores = {}
+	local ScoreTable = {}
+	local color = "|CFFB2BABB"
 
 	for i = 1, #map_table do
 		local mapID = map_table[i]
 		local affixScores, overAllScore = C_MythicPlus.GetSeasonBestAffixScoreInfoForMap(mapID)
 		local name, _, _, icon = C_ChallengeMode.GetMapUIInfo(mapID)
-
-		local levelTyrannical = nil
-		local levelFortified = nil
-		local color = HIGHLIGHT_FONT_COLOR
-
-		for _, affixInfo in pairs(affixScores or {}) do
-			levelTyrannical = affixInfo.name == tyrannical and affixInfo.level or 0
-			levelFortified = affixInfo.name == fortified and affixInfo.level or 0
-
-			if affixInfo.overTime then
-				if affixInfo.name == tyrannical then
-					levelTyrannical = format("|CFFB2BABBs%s|r", affixInfo.level or 0)
-				end
-
-				if affixInfo.name == fortified then
-					levelFortified = format("|CFFB2BABB%s|r", affixInfo.level or 0)
-				end
-			else
-				if overAllScore then
-					color = C_ChallengeMode.GetSpecificDungeonOverallScoreRarityColor(overAllScore)
-				end
-
-				if affixInfo.name == tyrannical then
-					levelTyrannical = format("%s%s|r", E:RGBToHex(color.r, color.g, color.b), affixInfo.level)
-				end
-
-				if affixInfo.name == fortified then
-					levelFortified = format("%s%s|r", E:RGBToHex(color.r, color.g, color.b), affixInfo.level)
+		color = "|CFFB2BABB"
+		wipe(ScoreTable)
+		if affixScores then
+			for j = 1, 2 do
+				if affixScores[j] then
+					if affixScores[j].name == tyrannical then
+						ScoreTable.TyranScore = affixScores[j].score or 0
+						ScoreTable.TyranLevel = affixScores[j].level or 0
+						ScoreTable.TyranColor = C_ChallengeMode.GetSpecificDungeonScoreRarityColor(affixScores[j].score)
+						ScoreTable.TyranTime = affixScores[j].durationSec
+						if affixScores[j].overTime then
+							ScoreTable.TyranColor = "|CFFB2BABB"
+						else
+							ScoreTable.TyranColor =
+								E:RGBToHex(ScoreTable.TyranColor.r, ScoreTable.TyranColor.g, ScoreTable.TyranColor.b)
+						end
+					else
+						ScoreTable.FortifScore = affixScores[j].score or 0
+						ScoreTable.FortifLevel = affixScores[j].level or 0
+						ScoreTable.FortifOverTime = affixScores[j].overTime
+						ScoreTable.FortifColor =
+							C_ChallengeMode.GetSpecificDungeonScoreRarityColor(affixScores[j].score)
+						ScoreTable.FortifTime = affixScores[j].durationSec
+						if affixScores[j].overTime then
+							ScoreTable.FortifColor = "|CFFB2BABB"
+						else
+							ScoreTable.FortifColor =
+								E:RGBToHex(ScoreTable.FortifColor.r, ScoreTable.FortifColor.g, ScoreTable.FortifColor.b)
+						end
+					end
 				end
 			end
 		end
 
 		if overAllScore then
 			color = C_ChallengeMode.GetSpecificDungeonOverallScoreRarityColor(overAllScore)
+			color = E:RGBToHex(color.r, color.g, color.b)
 		end
 
 		DT.tooltip:AddDoubleLine(
 			mMT:mIcon(icon) .. " " .. name,
 			format(
-				"%s | %s | %s%s|r",
-				levelTyrannical or 0,
-				levelFortified or 0,
-				E:RGBToHex(color.r, color.g, color.b),
-				overAllScore or 0
+				"%s%s|r | %s%s|r | %s%s|r",
+				ScoreTable.TyranColor or "|CFFB2BABB",
+				ScoreTable.TyranLevel or 0,
+				ScoreTable.FortifColor or "|CFFB2BABB",
+				ScoreTable.FortifLevel or 0,
+				color,
+				(overAllScore or 0)
 			)
 		)
 	end
@@ -112,6 +119,7 @@ local function OnEnter(self)
 	DT.tooltip:AddLine(" ")
 	DT.tooltip:AddDoubleLine(DUNGEON_SCORE, mMT:GetDungeonScore())
 	DT.tooltip:AddLine(" ")
+	DT.tooltip:AddDoubleLine(L["Dungeon Name"], "Tyr | For | Sco")
 	GetDungeonScores()
 	DT.tooltip:Show()
 
