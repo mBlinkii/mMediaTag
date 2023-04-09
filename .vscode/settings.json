@@ -119,7 +119,12 @@
         "STAT_CATEGORY_ENHANCEMENTS",
         "STAT_MASTERY",
         "CreateBaseTooltipInfo",
-        "SlashCmdList"
+        "SlashCmdList",
+        "HIGHLIGHT_FONT_COLOR",
+        "GameTooltip_AddColoredLine",
+        "SECONDS_PER_HOUR",
+        "LIGHTGRAY_FONT_COLOR",
+        "DUNGEON_SCORE_OVERTIME_TIME"
     ],
     "Lua.diagnostics.disable": [
         "redundant-parameter",
