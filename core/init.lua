@@ -45,6 +45,15 @@ E.Media.Arrows.mMediaTag20 = [[Interface\AddOns\ElvUI_mMediaTag\media\npar20.tga
 E.Media.Arrows.mMediaTag21 = [[Interface\AddOns\ElvUI_mMediaTag\media\npar21.tga]]
 E.Media.Arrows.mMediaTag22 = [[Interface\AddOns\ElvUI_mMediaTag\media\npar22.tga]]
 E.Media.Arrows.mMediaTag23 = [[Interface\AddOns\ElvUI_mMediaTag\media\npar23.tga]]
+E.Media.Arrows.mMediaTag24 = [[Interface\AddOns\ElvUI_mMediaTag\media\npar24.tga]]
+E.Media.Arrows.mMediaTag25 = [[Interface\AddOns\ElvUI_mMediaTag\media\npar25.tga]]
+E.Media.Arrows.mMediaTag26 = [[Interface\AddOns\ElvUI_mMediaTag\media\npar26.tga]]
+E.Media.Arrows.mMediaTag27 = [[Interface\AddOns\ElvUI_mMediaTag\media\npar27.tga]]
+E.Media.Arrows.mMediaTag28 = [[Interface\AddOns\ElvUI_mMediaTag\media\npar28.tga]]
+E.Media.Arrows.mMediaTag29 = [[Interface\AddOns\ElvUI_mMediaTag\media\npar29.tga]]
+E.Media.Arrows.mMediaTag30 = [[Interface\AddOns\ElvUI_mMediaTag\media\npar30.tga]]
+E.Media.Arrows.mMediaTag31 = [[Interface\AddOns\ElvUI_mMediaTag\media\npar31.tga]]
+E.Media.Arrows.mMediaTag32 = [[Interface\AddOns\ElvUI_mMediaTag\media\npar32.tga]]
 --Variables
 local wipe = table.wipe
 ns.mName =
