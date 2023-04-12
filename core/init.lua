@@ -14,10 +14,43 @@ E.Media.MailIcons.mMT7 = [[Interface\AddOns\ElvUI_mMediaTag\media\mail\mail7.tga
 E.Media.MailIcons.mMT8 = [[Interface\AddOns\ElvUI_mMediaTag\media\mail\mail8.tga]]
 E.Media.MailIcons.mMT9 = [[Interface\AddOns\ElvUI_mMediaTag\media\mail\mail9.tga]]
 E.Media.MailIcons.mMT10 = [[Interface\AddOns\ElvUI_mMediaTag\media\mail\mail10.tga]]
+
+E.Media.CombatIcons.mMT1 = [[Interface\AddOns\ElvUI_mMediaTag\media\icons\combat1.tga]]
+E.Media.CombatIcons.mMT2 = [[Interface\AddOns\ElvUI_mMediaTag\media\icons\combat2.tga]]
+E.Media.CombatIcons.mMT3 = [[Interface\AddOns\ElvUI_mMediaTag\media\icons\fire1.tga]]
+E.Media.CombatIcons.mMT4 = [[Interface\AddOns\ElvUI_mMediaTag\media\icons\fire9.tga]]
+E.Media.CombatIcons.mMT5 = [[Interface\AddOns\ElvUI_mMediaTag\media\icons\lightning7.tga]]
+E.Media.CombatIcons.mMT6 = [[Interface\AddOns\ElvUI_mMediaTag\media\icons\lightning9.tga]]
+
+E.Media.Arrows.mMediaTag1 = [[Interface\AddOns\ElvUI_mMediaTag\media\npar1.tga]]
+E.Media.Arrows.mMediaTag2 = [[Interface\AddOns\ElvUI_mMediaTag\media\npar2.tga]]
+E.Media.Arrows.mMediaTag3 = [[Interface\AddOns\ElvUI_mMediaTag\media\npar3.tga]]
+E.Media.Arrows.mMediaTag4 = [[Interface\AddOns\ElvUI_mMediaTag\media\npar4.tga]]
+E.Media.Arrows.mMediaTag5 = [[Interface\AddOns\ElvUI_mMediaTag\media\npar5.tga]]
+E.Media.Arrows.mMediaTag6 = [[Interface\AddOns\ElvUI_mMediaTag\media\npar6.tga]]
+E.Media.Arrows.mMediaTag7 = [[Interface\AddOns\ElvUI_mMediaTag\media\npar7.tga]]
+E.Media.Arrows.mMediaTag8 = [[Interface\AddOns\ElvUI_mMediaTag\media\npar8.tga]]
+E.Media.Arrows.mMediaTag9 = [[Interface\AddOns\ElvUI_mMediaTag\media\npar9.tga]]
+E.Media.Arrows.mMediaTag10 = [[Interface\AddOns\ElvUI_mMediaTag\media\npar10.tga]]
+E.Media.Arrows.mMediaTag11 = [[Interface\AddOns\ElvUI_mMediaTag\media\npar11.tga]]
+E.Media.Arrows.mMediaTag12 = [[Interface\AddOns\ElvUI_mMediaTag\media\npar12.tga]]
+E.Media.Arrows.mMediaTag13 = [[Interface\AddOns\ElvUI_mMediaTag\media\npar13.tga]]
+E.Media.Arrows.mMediaTag14 = [[Interface\AddOns\ElvUI_mMediaTag\media\npar14.tga]]
+E.Media.Arrows.mMediaTag15 = [[Interface\AddOns\ElvUI_mMediaTag\media\npar15.tga]]
+E.Media.Arrows.mMediaTag16 = [[Interface\AddOns\ElvUI_mMediaTag\media\npar16.tga]]
+E.Media.Arrows.mMediaTag17 = [[Interface\AddOns\ElvUI_mMediaTag\media\npar17.tga]]
+E.Media.Arrows.mMediaTag18 = [[Interface\AddOns\ElvUI_mMediaTag\media\npar18.tga]]
+E.Media.Arrows.mMediaTag19 = [[Interface\AddOns\ElvUI_mMediaTag\media\npar19.tga]]
+E.Media.Arrows.mMediaTag20 = [[Interface\AddOns\ElvUI_mMediaTag\media\npar20.tga]]
+E.Media.Arrows.mMediaTag21 = [[Interface\AddOns\ElvUI_mMediaTag\media\npar21.tga]]
+E.Media.Arrows.mMediaTag22 = [[Interface\AddOns\ElvUI_mMediaTag\media\npar22.tga]]
+E.Media.Arrows.mMediaTag23 = [[Interface\AddOns\ElvUI_mMediaTag\media\npar23.tga]]
 --Variables
 local wipe = table.wipe
-ns.mName = "|CFF6559F1m|r|CFF7A4DEFM|r|CFF8845ECe|r|CFFA037E9d|r|CFFA435E8i|r|CFFB32DE6a|r|CFFBC26E5T|r|CFFCB1EE3a|r|CFFDD14E0g|r"
-ns.mNameClassic = "|CFF6559F1m|r|CFF7A4DEFM|r|CFF8845ECe|r|CFFA037E9d|r|CFFA435E8i|r|CFFB32DE6a|r|CFFBC26E5T|r|CFFCB1EE3a|r|CFFDD14E0g|r |cffff0066Classic|r"
+ns.mName =
+	"|CFF6559F1m|r|CFF7A4DEFM|r|CFF8845ECe|r|CFFA037E9d|r|CFFA435E8i|r|CFFB32DE6a|r|CFFBC26E5T|r|CFFCB1EE3a|r|CFFDD14E0g|r"
+ns.mNameClassic =
+	"|CFF6559F1m|r|CFF7A4DEFM|r|CFF8845ECe|r|CFFA037E9d|r|CFFA435E8i|r|CFFB32DE6a|r|CFFBC26E5T|r|CFFCB1EE3a|r|CFFDD14E0g|r |cffff0066Classic|r"
 ns.mColor1 = "|CFFFFFFFF" -- white
 ns.mColor2 = "|CFFF7DC6F" -- yellow
 ns.mColor3 = "|CFF8E44AD" -- purple
@@ -58,15 +91,10 @@ function mMT:Initialize()
 
 	mMT:mMisc() -- module laden
 
-	E.Media.CombatIcons.mMT1 = [[Interface\AddOns\ElvUI_mMediaTag\media\icons\combat1.tga]]
-	E.Media.CombatIcons.mMT2 = [[Interface\AddOns\ElvUI_mMediaTag\media\icons\combat2.tga]]
-	E.Media.CombatIcons.mMT3 = [[Interface\AddOns\ElvUI_mMediaTag\media\icons\fire1.tga]]
-	E.Media.CombatIcons.mMT4 = [[Interface\AddOns\ElvUI_mMediaTag\media\icons\fire9.tga]]
-	E.Media.CombatIcons.mMT5 = [[Interface\AddOns\ElvUI_mMediaTag\media\icons\lightning7.tga]]
-	E.Media.CombatIcons.mMT6 = [[Interface\AddOns\ElvUI_mMediaTag\media\icons\lightning9.tga]]
-
 	if E.Retail then
-		if E.private.nameplates.enable and E.db[mPlugin].mHealthmarker.enable or E.db[mPlugin].mExecutemarker.enable then
+		if
+			E.private.nameplates.enable and E.db[mPlugin].mHealthmarker.enable or E.db[mPlugin].mExecutemarker.enable
+		then
 			mMT:StartNameplateTools()
 		end
 
@@ -87,6 +115,8 @@ function mMT:Initialize()
 
 	EP:RegisterPlugin(addon, mMT:AddOptions()) -- einstellungen in elvui eintragen
 	ns.Config = wipe(ns.Config) -- tabele löschen
+
+	E:Delay(1, collectgarbage, "collect")
 end
 
 function mMT:PLAYER_ENTERING_WORLD()
