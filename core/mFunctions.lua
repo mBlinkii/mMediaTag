@@ -124,9 +124,9 @@ function mMT:mNamePlateBorderColor()
 		E.global["nameplates"]["filters"]["ElvUI_Target"]["actions"]["color"]["border"] = true
 	end
 
-	E.db["nameplates"]["colors"]["glowColor"]["b"] = classColor.b
-	E.db["nameplates"]["colors"]["glowColor"]["r"] = classColor.r
-	E.db["nameplates"]["colors"]["glowColor"]["g"] = classColor.g
+	-- E.db["nameplates"]["colors"]["glowColor"]["b"] = classColor.b
+	-- E.db["nameplates"]["colors"]["glowColor"]["r"] = classColor.r
+	-- E.db["nameplates"]["colors"]["glowColor"]["g"] = classColor.g
 end
 
 function mMT:mIcon(icon, x, y)
