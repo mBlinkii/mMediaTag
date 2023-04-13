@@ -67,9 +67,6 @@ local function mTip()
 		DT.tooltip:AddLine(" ")
 		DT.tooltip:AddLine(format("%s %s%s|r", ns.LeftButtonIcon, tip, L["Click left to open the main menu."]))
 		DT.tooltip:AddLine(format("%s %s%s|r", ns.RightButtonIcon, tip, L["Right click to open the ElvUI settings."]))
-		if E.db[mPlugin].mDock.mainmenu.sound then
-			DT.tooltip:AddLine(format("%s %s%s|r", ns.MiddleButtonIcon, tip, L["Change volume with the mouse wheel"]))
-		end
 
 		DT.tooltip:Show()
 	end
@@ -80,13 +77,6 @@ local function OnEnter(self)
 	mMT:mOnEnter(self, "CheckFrameMainMenu")
 
 	mTip()
-end
-
-local function onMouseWheel(_, delta)
-	if E.db[mPlugin].mDock.mainmenu.sound then
-		mMT:SetVolume(delta)
-		mTip()
-	end
 end
 
 local wait, count = 20, 0 -- initial delay for update (let the ui load)
@@ -162,13 +152,6 @@ local function OnEvent(self, event, ...)
 	}
 
 	mMT:DockInitialisation(self)
-
-	if E.db[mPlugin].mDock.mainmenu.sound then
-		self:EnableMouseWheel(true)
-		self:SetScript("OnMouseWheel", onMouseWheel)
-	else
-		self:EnableMouseWheel(false)
-	end
 end
 
 local function OnLeave(self)

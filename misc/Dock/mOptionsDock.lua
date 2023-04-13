@@ -951,18 +951,6 @@ local function OptionsDock()
 						DT:ForceUpdate_DataText("mMainMenu")
 					end,
 				},
-				dockmainmenusound = {
-					order = 5,
-					type = "toggle",
-					name = L["Volume Control"],
-					get = function(info)
-						return E.db[mPlugin].mDock.mainmenu.sound
-					end,
-					set = function(info, value)
-						E.db[mPlugin].mDock.mainmenu.sound = value
-						DT:ForceUpdate_DataText("mMainMenu")
-					end,
-				},
 				mainmenutoggle = {
 					order = 6,
 					name = L["Custom color"],
