@@ -9,8 +9,8 @@ local tyrannical = C_ChallengeMode.GetAffixInfo(9)
 local fortified = C_ChallengeMode.GetAffixInfo(10)
 local affixes = C_MythicPlus.GetCurrentAffixes()
 local upgrades = { [1] = nil, [2] = nil, [3] = nil }
+
 local function SortScore(map_table)
-	-- 1) fetch score for each dungeon
 	local map_scores = {}
 	for _, mapID in ipairs(map_table) do
 		local inTimeInfo, overtimeInfo = C_MythicPlus.GetSeasonBestForMap(mapID)
@@ -24,7 +24,6 @@ local function SortScore(map_table)
 		map_scores[mapID] = dungeonScore
 	end
 
-	-- 2) sort them!
 	table.sort(map_table, function(a, b)
 		return map_scores[a] > map_scores[b]
 	end)
@@ -44,9 +43,7 @@ local function SortWeekly(map_table)
 			end
 		end
 
-		-- 2) sort them!
 		table.sort(map_table, function(a, b)
-			--print(a, b, map_level[a] > map_level[b], map_level[a], map_level[b])
 			return map_level[a] > map_level[b]
 		end)
 		return map_table
@@ -227,7 +224,7 @@ end
 DT:RegisterDatatext(
 	"M+ Score",
 	"mMediaTag",
-	{ "MASTERY_UPDATE" },
+	{ "CHALLENGE_MODE_START", "CHALLENGE_MODE_COMPLETED", "PLAYER_ENTERING_WORLD", "UPDATE_INSTANCE_INFO" },
 	OnEvent,
 	nil,
 	nil,
