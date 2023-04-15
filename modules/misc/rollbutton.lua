@@ -9,7 +9,6 @@ local mInsert = table.insert
 --Variables
 local _, unitClass = UnitClass("player")
 local class = ElvUF.colors.class[unitClass]
-local ColorTitel = "|cffffc800"
 local mRollFrame = nil
 function mMT:mRollUpdateIcon()
 	if mRollFrame and mRollFrame.mSettings then
@@ -79,7 +78,7 @@ function mMT:mRoll()
 				mRollFrame.mSettings.ColorHover.a
 			)
 			_G.GameTooltip:SetOwner(mRollFrame, "ANCHOR_RIGHT")
-			_G.GameTooltip:AddLine(format("%s%s|r", ColorTitel, L["Click to roll 1-100"]))
+			_G.GameTooltip:AddLine(format("|cffffc800%s|r", L["Click to roll 1-100"]))
 			_G.GameTooltip:Show()
 		end)
 		mRollFrame:SetScript("OnLeave", function(self)

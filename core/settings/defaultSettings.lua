@@ -178,6 +178,15 @@ P.mMT = {
 		texture = "RI1",
 		size = 16,
 	},
+	chat = {
+		enable = false,
+		colormodenormal = "custom",
+		colormodehover = "class",
+		colornormal = { r = 1, g = 1, b = 1, a = 0.75 },
+		colorhover = { r = 1, g = 1, b = 1, a = 0.75 },
+		texture = "CI1",
+		size = 16,
+	},
 }
 
 G.mMT = {

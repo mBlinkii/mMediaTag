@@ -33,6 +33,12 @@ local function configTable()
 						name = L["Roll Button"],
 						args = {},
 					},
+					chat = {
+						order = 3,
+						type = "group",
+						name = L["Chat Button"],
+						args = {},
+					},
 				},
 			},
 			datatexts = {

@@ -3,4 +3,5 @@
 	<Script file="icons.lua"/>
 	<Script file="functions.lua"/>
 	<Script file="rollbutton.lua"/>
+	<Script file="chatbutton.lua"/>
 </Ui>

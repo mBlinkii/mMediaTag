@@ -70,6 +70,10 @@ function mMT:Initialize()
 		mMT:mRoll()
 	end
 
+	if E.db.mMT.chat.enable then
+		mMT:mChat()
+	end
+
 	if E.Retail then
 		if E.db.mMT.interruptoncd.enable then
 			mMT:mSetupCastbar()
