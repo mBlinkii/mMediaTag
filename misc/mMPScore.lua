@@ -8,175 +8,134 @@ local displayString = ""
 local tyrannical = C_ChallengeMode.GetAffixInfo(9)
 local fortified = C_ChallengeMode.GetAffixInfo(10)
 local affixes = C_MythicPlus.GetCurrentAffixes()
-local upgrades = { [1] = nil, [2] = nil, [3] = nil }
+local weeklyAffixID = affixes and affixes[1] and affixes[1].id
+local weehlyAffixName = weeklyAffixID and C_ChallengeMode.GetAffixInfo(weeklyAffixID)
+local KeystoneChallengeMapID = C_MythicPlus.GetOwnedKeystoneChallengeMapID()
+local map_table = C_ChallengeMode.GetMapTable()
+local tablesort = table.sort
+local tablegetn = table.getn
+local data = C_PlayerInfo.GetPlayerMythicPlusRatingSummary("PLAYER")
+local seasonScore = data and data.currentSeasonScore
 
-local function SortScore(map_table)
-	local map_scores = {}
-	for _, mapID in ipairs(map_table) do
-		local inTimeInfo, overtimeInfo = C_MythicPlus.GetSeasonBestForMap(mapID)
-		local dungeonScore = 0
-		if inTimeInfo and overtimeInfo then
-			local inTimeScoreIsBetter = inTimeInfo.dungeonScore > overtimeInfo.dungeonScore
-			dungeonScore = inTimeScoreIsBetter and inTimeInfo.dungeonScore or overtimeInfo.dungeonScore
-		elseif inTimeInfo or overtimeInfo then
-			dungeonScore = inTimeInfo and inTimeInfo.dungeonScore or overtimeInfo and overtimeInfo.dungeonScore
-		end
-		map_scores[mapID] = dungeonScore
-	end
-
-	table.sort(map_table, function(a, b)
-		return map_scores[a] > map_scores[b]
+local function SortScore(ScoreTable)
+	tablesort(map_table, function(a, b)
+		return ScoreTable[a].score > ScoreTable[b].score
 	end)
-	return map_table
 end
-local function SortWeekly(map_table)
-	local weeklyAffixID = affixes and affixes[1] and affixes[1].id
-	local weehlyAffixName = weeklyAffixID and C_ChallengeMode.GetAffixInfo(weeklyAffixID)
-	if weehlyAffixName then
-		local affixID = weehlyAffixName == tyrannical and 1 or 2
-		local map_level = {}
-		for _, mapID in ipairs(map_table) do
-			local affixScores, overAllScore = C_MythicPlus.GetSeasonBestAffixScoreInfoForMap(mapID)
-
-			if affixScores then
-				map_level[mapID] = affixScores[affixID].level or 0
-			end
-		end
-
-		table.sort(map_table, function(a, b)
-			return map_level[a] > map_level[b]
-		end)
-		return map_table
-	else
-		SortScore(map_table)
-	end
+local function SortWeekly(ScoreTable)
+	tablesort(map_table, function(a, b)
+		return ScoreTable[a][weehlyAffixName].level > ScoreTable[b][weehlyAffixName].level
+	end)
 end
 
-local function GetUpgrades(map_table)
-	local sortw = true
-	if not sortw then
-		local upgrade_tbl = map_table
-		SortWeekly(upgrade_tbl)
-		upgrades[1] = map_table[table.getn(map_table)]
-		upgrades[2] = map_table[table.getn(map_table) - 1]
-		upgrades[3] = map_table[table.getn(map_table) - 2]
-	else
-		upgrades[1] = map_table[table.getn(map_table)]
-		upgrades[2] = map_table[table.getn(map_table) - 1]
-		upgrades[3] = map_table[table.getn(map_table) - 2]
-	end
+local function addNotPlayed(ScoreTable, mapID, affix)
+	ScoreTable[mapID][affix] = {}
+	ScoreTable[mapID][affix].score = 0
+	ScoreTable[mapID][affix].level = 0
+	ScoreTable[mapID][affix].overTime = false
+	ScoreTable[mapID][affix].color = "|CFFB2BABB"
 end
 
 local function GetDungeonScores()
-	local sortw = true
+	local sortw = false
 	local showup = true
-	local map_table = C_ChallengeMode.GetMapTable()
-
-	if sortw then
-		SortWeekly(map_table)
-	else
-		SortScore(map_table)
-	end
-
-	if showup then
-		GetUpgrades(map_table)
-	end
-
 	local ScoreTable = {}
-	local color = "|CFFB2BABB"
-	local KeystoneChallengeMapID = C_MythicPlus.GetOwnedKeystoneChallengeMapID()
-	local upgrade = 0
 
 	for i = 1, #map_table do
 		local mapID = map_table[i]
 		local affixScores, overAllScore = C_MythicPlus.GetSeasonBestAffixScoreInfoForMap(mapID)
 		local name, _, _, icon = C_ChallengeMode.GetMapUIInfo(mapID)
+		local inTimeInfo, overtimeInfo = C_MythicPlus.GetSeasonBestForMap(mapID)
+		local color = "|CFFB2BABB"
 
-		color = "|CFFB2BABB"
-		wipe(ScoreTable)
-		if affixScores then
-			for j = 1, 2 do
-				if affixScores[j] then
-					if affixScores[j].name == tyrannical then
-						ScoreTable.TyranScore = affixScores[j].score or 0
-						ScoreTable.TyranLevel = affixScores[j].level or 0
-						ScoreTable.TyranColor = C_ChallengeMode.GetSpecificDungeonScoreRarityColor(affixScores[j].score)
-						ScoreTable.TyranTime = affixScores[j].durationSec
-
-						if showup then
-							ScoreTable.Upgrade = upgrades[1] == mapID
-								or upgrades[2] == mapID
-								or upgrades[3] == mapID
-								or false
-						end
-
-						if affixScores[j].overTime then
-							ScoreTable.TyranColor = "|CFFB2BABB"
-						else
-							ScoreTable.TyranColor =
-								E:RGBToHex(ScoreTable.TyranColor.r, ScoreTable.TyranColor.g, ScoreTable.TyranColor.b)
-						end
-					else
-						ScoreTable.FortifScore = affixScores[j].score or 0
-						ScoreTable.FortifLevel = affixScores[j].level or 0
-						ScoreTable.FortifOverTime = affixScores[j].overTime
-						ScoreTable.FortifColor =
-							C_ChallengeMode.GetSpecificDungeonScoreRarityColor(affixScores[j].score)
-						ScoreTable.FortifTime = affixScores[j].durationSec
-
-						if showup then
-							ScoreTable.Upgrade = upgrades[1] == mapID
-								or upgrades[2] == mapID
-								or upgrades[3] == mapID
-								or false
-						end
-
-						if affixScores[j].overTime then
-							ScoreTable.FortifColor = "|CFFB2BABB"
-						else
-							ScoreTable.FortifColor =
-								E:RGBToHex(ScoreTable.FortifColor.r, ScoreTable.FortifColor.g, ScoreTable.FortifColor.b)
-						end
-					end
-				end
-			end
-		end
+		ScoreTable[mapID] = {}
+		ScoreTable[mapID].name = name
+		ScoreTable[mapID].icon = icon
+		ScoreTable[mapID].OwnedKeystone = KeystoneChallengeMapID == mapID
+		ScoreTable[mapID].score = overAllScore or 0
 
 		if overAllScore then
 			color = C_ChallengeMode.GetSpecificDungeonOverallScoreRarityColor(overAllScore)
-			color = E:RGBToHex(color.r, color.g, color.b)
-		end
-
-		if showup and ScoreTable.Upgrade then
-			name = name .. "  " .. mMT:mIcon([[Interface\AddOns\ElvUI_mMediaTag\media\upgrade.tga]])
-		end
-
-		if KeystoneChallengeMapID == mapID then
-			DT.tooltip:AddDoubleLine(
-				mMT:mIcon(icon) .. " " .. format("|CFF58D68D%s|r", name),
-				format(
-					"%s%s|r | %s%s|r | %s%s|r",
-					ScoreTable.TyranColor or "|CFFB2BABB",
-					ScoreTable.TyranLevel or 0,
-					ScoreTable.FortifColor or "|CFFB2BABB",
-					ScoreTable.FortifLevel or 0,
-					color,
-					(overAllScore or 0)
-				)
-			)
+			ScoreTable[mapID].color = E:RGBToHex(color.r, color.g, color.b)
 		else
-			DT.tooltip:AddDoubleLine(
-				mMT:mIcon(icon) .. " " .. name,
-				format(
-					"%s%s|r | %s%s|r | %s%s|r",
-					ScoreTable.TyranColor or "|CFFB2BABB",
-					ScoreTable.TyranLevel or 0,
-					ScoreTable.FortifColor or "|CFFB2BABB",
-					ScoreTable.FortifLevel or 0,
-					color,
-					(overAllScore or 0)
-				)
+			ScoreTable[mapID].color = "|CFFB2BABB"
+		end
+
+		local tmpName = nil
+		for j = 1, 2 do
+			if affixScores and affixScores[j] then
+				tmpName = affixScores[j].name
+				ScoreTable[mapID][affixScores[j].name] = {}
+				ScoreTable[mapID][affixScores[j].name].score = affixScores and affixScores[j].score or 0
+				ScoreTable[mapID][affixScores[j].name].level = affixScores and affixScores[j].level or 0
+				ScoreTable[mapID][affixScores[j].name].overTime = affixScores and affixScores[j].overTime or false
+
+				if affixScores[j].overTime then
+					ScoreTable[mapID][affixScores[j].name].color = "|CFFB2BABB"
+				else
+					color = C_ChallengeMode.GetSpecificDungeonScoreRarityColor(affixScores[j].score)
+					ScoreTable[mapID][affixScores[j].name].color = E:RGBToHex(color.r, color.g, color.b)
+				end
+			else
+				if tmpName and tmpName == tyrannical then
+					tmpName = fortified
+					addNotPlayed(ScoreTable, mapID, tmpName)
+				elseif tmpName and tmpName == fortified then
+					tmpName = tyrannical
+					addNotPlayed(ScoreTable, mapID, tmpName)
+				else
+					tmpName = fortified
+					addNotPlayed(ScoreTable, mapID, tmpName)
+				end
+			end
+		end
+	end
+
+	if ScoreTable then
+		if sortw and weehlyAffixName then
+			SortWeekly(ScoreTable)
+			if showup then
+				ScoreTable[map_table[tablegetn(map_table)]].upgrade = true
+				ScoreTable[map_table[tablegetn(map_table) - 1]].upgrade = true
+				ScoreTable[map_table[tablegetn(map_table) - 2]].upgrade = true
+			end
+		else
+			if showup then
+				SortWeekly(ScoreTable)
+				ScoreTable[map_table[tablegetn(map_table)]].upgrade = true
+				ScoreTable[map_table[tablegetn(map_table) - 1]].upgrade = true
+				ScoreTable[map_table[tablegetn(map_table) - 2]].upgrade = true
+			end
+			SortScore(ScoreTable)
+		end
+
+		for i = 1, #map_table do
+			local mapID = map_table[i]
+
+			local nameString = L["No Dungeon"]
+			local scoreString = L["No Score"]
+
+			if ScoreTable[mapID].OwnedKeystone then
+				nameString =
+					format("%s%s %s|r", "|CFF58D68D", mMT:mIcon(ScoreTable[mapID].icon), ScoreTable[mapID].name)
+			else
+				nameString = format("%s %s", mMT:mIcon(ScoreTable[mapID].icon), ScoreTable[mapID].name)
+			end
+
+			if ScoreTable[mapID].upgrade and showup then
+				nameString = nameString .. "  " .. mMT:mIcon([[Interface\AddOns\ElvUI_mMediaTag\media\upgrade.tga]])
+			end
+
+			scoreString = format(
+				"%s%s|r | %s%s|r | %s%s|r",
+				ScoreTable[mapID][tyrannical].color,
+				ScoreTable[mapID][tyrannical].level,
+				ScoreTable[mapID][fortified].color,
+				ScoreTable[mapID][fortified].level,
+				ScoreTable[mapID].color,
+				ScoreTable[mapID].score
 			)
+			DT.tooltip:AddDoubleLine(nameString, scoreString)
 		end
 	end
 end
@@ -201,11 +160,14 @@ local function OnEnter(self)
 		end
 	end
 
-	DT.tooltip:AddLine(" ")
-	DT.tooltip:AddDoubleLine(DUNGEON_SCORE, mMT:GetDungeonScore())
-	DT.tooltip:AddLine(" ")
-	DT.tooltip:AddDoubleLine(L["Dungeon Name"], "Tyr | For | Sco")
-	GetDungeonScores()
+	if seasonScore and seasonScore > 0 then
+		DT.tooltip:AddLine(" ")
+		DT.tooltip:AddDoubleLine(DUNGEON_SCORE, mMT:GetDungeonScore())
+		DT.tooltip:AddLine(" ")
+		DT.tooltip:AddDoubleLine(L["Dungeon Name"], "Tyr | For | Sco")
+		GetDungeonScores()
+	end
+
 	DT.tooltip:Show()
 
 	self.text:SetFormattedText(displayString, mMT:GetDungeonScore())

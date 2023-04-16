@@ -21,7 +21,6 @@ local GetRaidDifficultyID = GetRaidDifficultyID
 local GetDungeonDifficultyID = GetDungeonDifficultyID
 local GetDetailedItemLevelInfo = GetDetailedItemLevelInfo
 local C_MythicPlus = C_MythicPlus
-local GetDetailedItemLevelInfo = GetDetailedItemLevelInfo
 local C_PlayerInfo_GetPlayerMythicPlusRatingSummary = C_PlayerInfo.GetPlayerMythicPlusRatingSummary
 local C_ChallengeMode_GetOverallDungeonScore = C_ChallengeMode.GetOverallDungeonScore
 local C_ChallengeMode_GetDungeonScoreRarityColor = C_ChallengeMode.GetDungeonScoreRarityColor

@@ -136,7 +136,8 @@
         "MYTHIC_PLUS_POWER_LEVEL",
         "SECONDS_PER_HOUR",
         "LIGHTGRAY_FONT_COLOR",
-        "DUNGEON_SCORE_OVERTIME_TIME"
+        "DUNGEON_SCORE_OVERTIME_TIME",
+        "NO"
     ],
     "Lua.diagnostics.disable": [
         "redundant-parameter",
