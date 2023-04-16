@@ -14,9 +14,12 @@ local KeystoneChallengeMapID = C_MythicPlus.GetOwnedKeystoneChallengeMapID()
 local map_table = C_ChallengeMode.GetMapTable()
 local tablesort = table.sort
 local tablegetn = table.getn
-local data = C_PlayerInfo.GetPlayerMythicPlusRatingSummary("PLAYER")
-local seasonScore = data and data.currentSeasonScore
+local C_PlayerInfo_GetPlayerMythicPlusRatingSummary = C_PlayerInfo.GetPlayerMythicPlusRatingSummary
 
+local function GetPlayerScore()
+	local ratingSummary  = C_PlayerInfo_GetPlayerMythicPlusRatingSummary("PLAYER")
+	return ratingSummary and ratingSummary.currentSeasonScore or 0
+end
 local function SortScore(ScoreTable)
 	tablesort(map_table, function(a, b)
 		return ScoreTable[a].score > ScoreTable[b].score
@@ -160,7 +163,7 @@ local function OnEnter(self)
 		end
 	end
 
-	if seasonScore and seasonScore > 0 then
+	if GetPlayerScore() > 0 then
 		DT.tooltip:AddLine(" ")
 		DT.tooltip:AddDoubleLine(DUNGEON_SCORE, mMT:GetDungeonScore())
 		DT.tooltip:AddLine(" ")
