@@ -25,9 +25,16 @@ local function SortScore(ScoreTable)
 		return ScoreTable[a].score > ScoreTable[b].score
 	end)
 end
-local function SortWeekly(ScoreTable)
+local function SortWeeklyLevel(ScoreTable)
 	tablesort(map_table, function(a, b)
 		return ScoreTable[a][weehlyAffixName].level > ScoreTable[b][weehlyAffixName].level
+	end)
+end
+
+local function SortWeeklyScore(ScoreTable)
+	tablesort(map_table, function(a, b)
+		--print(ScoreTable[a][weehlyAffixName].score > ScoreTable[b][weehlyAffixName].score, ScoreTable[a][weehlyAffixName].score, ScoreTable[b][weehlyAffixName].score)
+		return ScoreTable[a][weehlyAffixName].score > ScoreTable[b][weehlyAffixName].score
 	end)
 end
 
@@ -40,7 +47,8 @@ local function addNotPlayed(ScoreTable, mapID, affix)
 end
 
 local function GetDungeonScores()
-	local sortw = false
+	local sortwl = false
+	local sortws = false
 	local showup = true
 	local ScoreTable = {}
 
@@ -95,20 +103,18 @@ local function GetDungeonScores()
 	end
 
 	if ScoreTable then
-		if sortw and weehlyAffixName then
-			SortWeekly(ScoreTable)
-			if showup then
-				ScoreTable[map_table[tablegetn(map_table)]].upgrade = true
-				ScoreTable[map_table[tablegetn(map_table) - 1]].upgrade = true
-				ScoreTable[map_table[tablegetn(map_table) - 2]].upgrade = true
-			end
+		if showup then
+			SortWeeklyScore(ScoreTable)
+			ScoreTable[map_table[tablegetn(map_table)]].upgrade = true
+			ScoreTable[map_table[tablegetn(map_table) - 1]].upgrade = true
+			ScoreTable[map_table[tablegetn(map_table) - 2]].upgrade = true
+		end
+
+		if sortws and weehlyAffixName then
+			SortWeeklyScore(ScoreTable)
+		elseif sortwl and weehlyAffixName then
+			SortWeeklyLevel(ScoreTable)
 		else
-			if showup then
-				SortWeekly(ScoreTable)
-				ScoreTable[map_table[tablegetn(map_table)]].upgrade = true
-				ScoreTable[map_table[tablegetn(map_table) - 1]].upgrade = true
-				ScoreTable[map_table[tablegetn(map_table) - 2]].upgrade = true
-			end
 			SortScore(ScoreTable)
 		end
 
@@ -126,7 +132,7 @@ local function GetDungeonScores()
 			end
 
 			if ScoreTable[mapID].upgrade and showup then
-				nameString = nameString .. "  " .. mMT:mIcon([[Interface\AddOns\ElvUI_mMediaTag\media\upgrade.tga]])
+				nameString = nameString .. "  " .. mMT:mIcon([[Interface\AddOns\ElvUI_mMediaTag\media\upgrade7.tga]])
 			end
 
 			scoreString = format(
