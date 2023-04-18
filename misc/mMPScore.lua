@@ -17,7 +17,7 @@ local tablegetn = table.getn
 local C_PlayerInfo_GetPlayerMythicPlusRatingSummary = C_PlayerInfo.GetPlayerMythicPlusRatingSummary
 
 local function GetPlayerScore()
-	local ratingSummary  = C_PlayerInfo_GetPlayerMythicPlusRatingSummary("PLAYER")
+	local ratingSummary = C_PlayerInfo_GetPlayerMythicPlusRatingSummary("PLAYER")
 	return ratingSummary and ratingSummary.currentSeasonScore or 0
 end
 local function SortScore(ScoreTable)
@@ -44,6 +44,23 @@ local function addNotPlayed(ScoreTable, mapID, affix)
 	ScoreTable[mapID][affix].level = 0
 	ScoreTable[mapID][affix].overTime = false
 	ScoreTable[mapID][affix].color = "|CFFB2BABB"
+end
+
+local function GetColor(key) end
+local function SaveMyKeystone()
+	local name = UnitName("player")
+	local realmName = GetRealmName()
+	local _, unitClass = UnitClass("player")
+	local class = ElvUF.colors.class[unitClass]
+	local keyStoneLevel = C_MythicPlus.GetOwnedKeystoneLevel()
+	if keyStoneLevel then
+		local challengeMapID = C_MythicPlus.GetOwnedKeystoneChallengeMapID()
+		local keyname, id, timeLimit, texture, backgroundTexture = C_ChallengeMode.GetMapUIInfo(challengeMapID)
+		E.db[mPlugin].keys[name .. "-" .. realmName] = {
+			name = format("%s%s|r", E:RGBToHex(class[1], class[2], class[3]), name),
+			key = (format("%s%s|r", E.db[mPlugin].mDataText.colormyth.hex, keyname) .. " +" .. keyStoneLevel),
+		}
+	end
 end
 
 local function GetDungeonScores()
@@ -102,7 +119,7 @@ local function GetDungeonScores()
 		end
 	end
 
-	if ScoreTable then
+	if ScoreTable and map_table then
 		if showup then
 			SortWeeklyScore(ScoreTable)
 			ScoreTable[map_table[tablegetn(map_table)]].upgrade = true
@@ -158,6 +175,12 @@ local function OnEnter(self)
 		DT.tooltip:AddLine(keyText[2])
 	end
 
+	DT.tooltip:AddLine(" ")
+	DT.tooltip:AddLine(L["Kestons on your Account"])
+	for k, v in pairs(E.db[mPlugin].keys) do
+		DT.tooltip:AddDoubleLine(v.name, v.key)
+	end
+
 	local mAffixesText = mMT:WeeklyAffixes()
 	if mAffixesText then
 		DT.tooltip:AddLine(" ")
@@ -183,6 +206,12 @@ local function OnEnter(self)
 end
 
 local function OnEvent(self)
+	local savekey = true
+
+	if savekey then
+		SaveMyKeystone()
+	end
+
 	self.text:SetFormattedText(displayString, mMT:GetDungeonScore())
 end
 
@@ -192,16 +221,10 @@ local function ValueColorUpdate(self, hex)
 	OnEvent(self)
 end
 
-DT:RegisterDatatext(
-	"M+ Score",
-	"mMediaTag",
-	{ "CHALLENGE_MODE_START", "CHALLENGE_MODE_COMPLETED", "PLAYER_ENTERING_WORLD", "UPDATE_INSTANCE_INFO" },
-	OnEvent,
-	nil,
-	nil,
-	OnEnter,
-	nil,
-	nil,
-	nil,
-	ValueColorUpdate
-)
+DT:RegisterDatatext("M+ Score", "mMediaTag", {
+	"CHALLENGE_MODE_START",
+	"CHALLENGE_MODE_COMPLETED",
+	"PLAYER_ENTERING_WORLD",
+	"UPDATE_INSTANCE_INFO",
+	"CHALLENGE_MODE_LEADERS_UPDATE",
+}, OnEvent, nil, nil, OnEnter, nil, nil, nil, ValueColorUpdate)

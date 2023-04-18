@@ -468,6 +468,7 @@ P[mPlugin] = {
 			["EVOKER"] = { ["r"] = 0.20, ["g"] = 0.58, ["b"] = 0.50 },
 		},
 	},
+	["keys"] = {},
 	["mInstanceDifficulty"] = {
 		["enable"] = false,
 		["mpe"] = { ["color"] = "|cffff8f00", ["r"] = 1, ["g"] = 0, ["b"] = 0, },

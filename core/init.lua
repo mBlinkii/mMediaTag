@@ -124,8 +124,6 @@ function mMT:Initialize()
 
 	EP:RegisterPlugin(addon, mMT:AddOptions()) -- einstellungen in elvui eintragen
 	ns.Config = wipe(ns.Config) -- tabele löschen
-
-	E:Delay(1, collectgarbage, "collect")
 end
 
 function mMT:PLAYER_ENTERING_WORLD()
