@@ -11,9 +11,10 @@ local affixes = C_MythicPlus.GetCurrentAffixes()
 local weeklyAffixID = affixes and affixes[1] and affixes[1].id
 local weehlyAffixName = weeklyAffixID and C_ChallengeMode.GetAffixInfo(weeklyAffixID)
 local KeystoneChallengeMapID = C_MythicPlus.GetOwnedKeystoneChallengeMapID()
-local map_table = C_ChallengeMode.GetMapTable()
+local C_ChallengeMode_GetMapTable = C_ChallengeMode.GetMapTable
 local tablesort = table.sort
 local tablegetn = table.getn
+local map_table = C_ChallengeMode_GetMapTable()
 local C_PlayerInfo_GetPlayerMythicPlusRatingSummary = C_PlayerInfo.GetPlayerMythicPlusRatingSummary
 
 local function GetPlayerScore()
@@ -33,7 +34,6 @@ end
 
 local function SortWeeklyScore(ScoreTable)
 	tablesort(map_table, function(a, b)
-		--print(ScoreTable[a][weehlyAffixName].score > ScoreTable[b][weehlyAffixName].score, ScoreTable[a][weehlyAffixName].score, ScoreTable[b][weehlyAffixName].score)
 		return ScoreTable[a][weehlyAffixName].score > ScoreTable[b][weehlyAffixName].score
 	end)
 end
@@ -46,7 +46,29 @@ local function addNotPlayed(ScoreTable, mapID, affix)
 	ScoreTable[mapID][affix].color = "|CFFB2BABB"
 end
 
-local function GetColor(key) end
+local function GetColor(key)
+	if key < 5 then
+		return format("|CFFFFFFFF+%s|r", key)
+	elseif key <= 7 then
+		return format("|CFF82ffc3+%s|r", key)
+	elseif key < 10 then
+		return format("|CFF00C31E+%s|r", key)
+	elseif key == 10 then
+		return format("|CFF00F9FF+%s|r", key)
+	elseif key <= 14 then
+		return format("|CFF0080FF+%s|r", key)
+	elseif key == 15 then
+		return format("|CFF9933FF+%s|r", key)
+	elseif key <= 19 then
+		return format("|CFFD06000+%s|r", key)
+	elseif key <= 20 then
+		return format("|CFFE268A8+%s|r", key)
+	elseif key > 25 then
+		return format("|CFFE5CC80+%s|r", key)
+	else
+		return format("|CFFFFFFFF+%s|r", key)
+	end
+end
 local function SaveMyKeystone()
 	local name = UnitName("player")
 	local realmName = GetRealmName()
@@ -58,7 +80,7 @@ local function SaveMyKeystone()
 		local keyname, id, timeLimit, texture, backgroundTexture = C_ChallengeMode.GetMapUIInfo(challengeMapID)
 		E.db[mPlugin].keys[name .. "-" .. realmName] = {
 			name = format("%s%s|r", E:RGBToHex(class[1], class[2], class[3]), name),
-			key = (format("%s%s|r", E.db[mPlugin].mDataText.colormyth.hex, keyname) .. " +" .. keyStoneLevel),
+			key = (format("%s%s|r", E.db[mPlugin].mDataText.colormyth.hex, keyname) .. " " .. GetColor(keyStoneLevel)),
 		}
 	end
 end
@@ -68,6 +90,7 @@ local function GetDungeonScores()
 	local sortws = false
 	local showup = true
 	local ScoreTable = {}
+	map_table = C_ChallengeMode_GetMapTable()
 
 	for i = 1, #map_table do
 		local mapID = map_table[i]
