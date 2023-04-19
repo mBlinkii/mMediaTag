@@ -190,6 +190,7 @@ local function GetDungeonScores()
 end
 
 local function OnEnter(self)
+	SaveMyKeystone()
 	DT.tooltip:ClearLines()
 
 	local keyText = mMT:OwenKeystone()
