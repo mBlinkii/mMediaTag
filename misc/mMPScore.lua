@@ -22,17 +22,20 @@ local function GetPlayerScore()
 	return ratingSummary and ratingSummary.currentSeasonScore or 0
 end
 local function SortScore(ScoreTable)
+	map_table = C_ChallengeMode_GetMapTable()
 	tablesort(map_table, function(a, b)
 		return ScoreTable[a].score > ScoreTable[b].score
 	end)
 end
 local function SortWeeklyLevel(ScoreTable)
+	map_table = C_ChallengeMode_GetMapTable()
 	tablesort(map_table, function(a, b)
 		return ScoreTable[a][weehlyAffixName].level > ScoreTable[b][weehlyAffixName].level
 	end)
 end
 
 local function SortWeeklyScore(ScoreTable)
+	map_table = C_ChallengeMode_GetMapTable()
 	tablesort(map_table, function(a, b)
 		return ScoreTable[a][weehlyAffixName].score > ScoreTable[b][weehlyAffixName].score
 	end)
@@ -61,7 +64,7 @@ local function GetColor(key)
 		return format("|CFF9933FF+%s|r", key)
 	elseif key <= 19 then
 		return format("|CFFD06000+%s|r", key)
-	elseif key <= 20 then
+	elseif key <= 24 then
 		return format("|CFFE268A8+%s|r", key)
 	elseif key > 25 then
 		return format("|CFFE5CC80+%s|r", key)
@@ -200,7 +203,7 @@ local function OnEnter(self)
 	end
 
 	DT.tooltip:AddLine(" ")
-	DT.tooltip:AddLine(L["Kestons on your Account"])
+	DT.tooltip:AddLine(L["Keystons on your Account"])
 	for k, v in pairs(E.db[mPlugin].keys) do
 		DT.tooltip:AddDoubleLine(v.name, v.key)
 	end
