@@ -10,7 +10,7 @@ local fortified = C_ChallengeMode.GetAffixInfo(10)
 local affixes = C_MythicPlus.GetCurrentAffixes()
 local weeklyAffixID = affixes and affixes[1] and affixes[1].id
 local weehlyAffixName = weeklyAffixID and C_ChallengeMode.GetAffixInfo(weeklyAffixID)
-local KeystoneChallengeMapID = C_MythicPlus.GetOwnedKeystoneChallengeMapID()
+local C_MythicPlus_GetOwnedKeystoneChallengeMapID = C_MythicPlus.GetOwnedKeystoneChallengeMapID()
 local C_ChallengeMode_GetMapTable = C_ChallengeMode.GetMapTable
 local tablesort = table.sort
 local tablegetn = table.getn
@@ -94,8 +94,9 @@ local function GetDungeonScores()
 	local sortws = false
 	local showup = true
 	local ScoreTable = {}
+	local KeystoneChallengeMapID = C_MythicPlus_GetOwnedKeystoneChallengeMapID()
 	map_table = C_ChallengeMode_GetMapTable()
-
+	
 	for i = 1, #map_table do
 		local mapID = map_table[i]
 		local affixScores, overAllScore = C_MythicPlus.GetSeasonBestAffixScoreInfoForMap(mapID)
