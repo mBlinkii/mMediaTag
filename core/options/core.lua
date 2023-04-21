@@ -60,6 +60,12 @@ local function configTable()
 						name = L["Combat Icon and Time"],
 						args = {},
 					},
+					score = {
+						order = 3,
+						type = "group",
+						name = L["M+ Score"],
+						args = {},
+					},
 				},
 			},
 			tags = {

@@ -51,6 +51,7 @@ function mMT:mRollUpdateIcon()
 		)
 	end
 end
+
 function mMT:mRoll()
 	if not mRollFrame then
 		mRollFrame = CreateFrame("Button", "mMediaTagRoll", E.UIParent, "BackdropTemplate")
@@ -98,7 +99,7 @@ function mMT:mRoll()
 			nil,
 			nil,
 			nil,
-			"ALL",
+			"ALL,MMEDIATAG",
 			nil,
 			"mMT,general,roll",
 			nil

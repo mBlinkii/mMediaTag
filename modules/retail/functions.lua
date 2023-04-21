@@ -106,7 +106,7 @@ function mMT:WeeklyAffixes()
 	if AffixText ~= nil then
 		local seasonID = C_MythicPlus.GetCurrentSeason()
 		if seasonID <= 0 then
-			seasonID = E.global.db.mMT.mplusaffix.season
+			seasonID = E.global.mMT.mplusaffix.season
 		end
 
 		if seasonID >= 1 then

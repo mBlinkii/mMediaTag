@@ -1,6 +1,5 @@
 local mMT, E, L, V, P, G = unpack((select(2, ...)))
 local DT = E:GetModule("DataTexts")
-local addon, ns = ...
 
 local floor, format, strjoin = floor, format, strjoin
 local GetInstanceInfo = GetInstanceInfo

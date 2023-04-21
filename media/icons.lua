@@ -33,10 +33,18 @@ mMT.Media.ChatIcons ={
 }
 
 mMT.Media.UpgradeIcons ={
-	UI1 = 'Interface\\AddOns\\ElvUI_mMediaTag\\media\\data\\datatext\\upgrade1.tga',
-	UI2 = 'Interface\\AddOns\\ElvUI_mMediaTag\\media\\data\\datatext\\upgrade2.tga',
-	UI3 = 'Interface\\AddOns\\ElvUI_mMediaTag\\media\\data\\datatext\\upgrade3.tga',
-	UI4 = 'Interface\\AddOns\\ElvUI_mMediaTag\\media\\data\\datatext\\upgrade4.tga',
-	UI5 = 'Interface\\AddOns\\ElvUI_mMediaTag\\media\\data\\datatext\\upgrade5.tga',
-	UI6 = 'Interface\\AddOns\\ElvUI_mMediaTag\\media\\data\\datatext\\upgrade6.tga',
+	UI1 = 'Interface\\AddOns\\ElvUI_mMediaTag\\media\\icons\\datatext\\upgrade1.tga',
+	UI2 = 'Interface\\AddOns\\ElvUI_mMediaTag\\media\\icons\\datatext\\upgrade2.tga',
+	UI3 = 'Interface\\AddOns\\ElvUI_mMediaTag\\media\\icons\\datatext\\upgrade3.tga',
+	UI4 = 'Interface\\AddOns\\ElvUI_mMediaTag\\media\\icons\\datatext\\upgrade4.tga',
+	UI5 = 'Interface\\AddOns\\ElvUI_mMediaTag\\media\\icons\\datatext\\upgrade5.tga',
+	UI6 = 'Interface\\AddOns\\ElvUI_mMediaTag\\media\\icons\\datatext\\upgrade6.tga',
+	UI7 = 'Interface\\AddOns\\ElvUI_mMediaTag\\media\\icons\\datatext\\upgrade7.tga',
+}
+
+mMT.Media.Mous ={
+	LEFT = 'Interface\\AddOns\\ElvUI_mMediaTag\\media\\system\\mleft.tga',
+	MIDDLE = 'Interface\\AddOns\\ElvUI_mMediaTag\\media\\system\\mmiddle.tga',
+	RIGHT = 'Interface\\AddOns\\ElvUI_mMediaTag\\media\\system\\mright.tga',
+
 }

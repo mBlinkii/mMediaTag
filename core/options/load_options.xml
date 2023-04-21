@@ -10,4 +10,5 @@
 	<Script file="datatextcolors.lua"/>
 	<Script file="rollbutton.lua"/>
 	<Script file="chatbutton.lua"/>
+	<Script file="score.lua"/>
 </Ui>
