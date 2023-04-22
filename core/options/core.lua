@@ -66,6 +66,24 @@ local function configTable()
 						name = L["M+ Score"],
 						args = {},
 					},
+					teleports = {
+						order = 4,
+						type = "group",
+						name = L["Teleports"],
+						args = {},
+					},
+					profession = {
+						order = 5,
+						type = "group",
+						name = L["Professions"],
+						args = {},
+					},
+					dungeon = {
+						order = 6,
+						type = "group",
+						name = L["Dungeon"],
+						args = {},
+					},
 				},
 			},
 			tags = {

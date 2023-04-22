@@ -1,8 +1,5 @@
-local E, L, V, P, G = unpack(ElvUI)
-local mPlugin = "mMediaTag"
-local mMT = E:GetModule(mPlugin)
+local mMT, E, L, V, P, G = unpack((select(2, ...)))
 local DT = E:GetModule("DataTexts")
-local addon, ns = ...
 
 --Lua functions
 local format = format
@@ -10,6 +7,7 @@ local strjoin = strjoin
 local wipe = table.wipe
 
 --WoW API / Variables
+local _G = _G
 local IsInInstance = IsInInstance
 local C_MythicPlus = C_MythicPlus
 local C_ChallengeMode = C_ChallengeMode
@@ -42,7 +40,7 @@ local function mSetup(self)
 		DT.tooltip:AddLine(infoMythicPlus[2] or "-")
 	end
 
-	if E.db[mPlugin].DKeystone then
+	if E.db.mMT.dungeon.key then
 		local key = mMT:OwenKeystone()
 		if key then
 			DT.tooltip:AddLine(" ")
@@ -51,12 +49,12 @@ local function mSetup(self)
 		end
 	end
 
-	if E.db[mPlugin].Dungeon.score then
+	if E.db.mMT.dungeon.score then
 		DT.tooltip:AddLine(" ")
 		DT.tooltip:AddDoubleLine(DUNGEON_SCORE, mMT:GetDungeonScore())
 	end
 
-	if E.db[mPlugin].DAffix then
+	if E.db.mMT.dungeon.affix then
 		local mAffixes = mMT:WeeklyAffixes()
 		if mAffixes then
 			DT.tooltip:AddLine(" ")
@@ -72,26 +70,35 @@ local function mSetup(self)
 end
 
 local function OnClick(self, button)
-	DT.tooltip:Hide()
-	ToggleLFDParentFrame()
+	if button == "LeftButton" then
+		_G.ToggleLFDParentFrame()
+	else
+		if not _G.WeeklyRewardsFrame then
+			LoadAddOn("Blizzard_WeeklyRewards")
+		end
+		if _G.WeeklyRewardsFrame:IsVisible() then
+			_G.WeeklyRewardsFrame:Hide()
+		else
+			_G.WeeklyRewardsFrame:Show()
+		end
+	end
 end
 
 local function OnEnter(self)
 	mSetup(self)
+	DT.tooltip:AddLine(" ")
+	DT.tooltip:AddLine(format("%s  %s%s|r", mMT:mIcon(mMT.Media.Mous["LEFT"]), E.db.mMT.datatextcolors.colortip.hex, L["Click to open LFD Frame"]))
+	DT.tooltip:AddLine(format("%s  %s%s|r", mMT:mIcon(mMT.Media.Mous["RIGHT"]), E.db.mMT.datatextcolors.colortip.hex, L["Click to open Great Vault"]))
 	DT.tooltip:Show()
 end
 
 local function OnEvent(self, event, unit)
 	local TextString = mText
-	if E.db[mPlugin].Dungeon.showicon then
-		TextString = format(
-			"|T%s:16:16:0:0:128:128|t %s",
-			"Interface\\AddOns\\ElvUI_mMediaTag\\media\\dock\\colored\\colored27.tga",
-			mText
-		)
+	if E.db.mMT.dungeon.icon then
+		TextString = format("|TInterface\\AddOns\\ElvUI_mMediaTag\\media\\icons\\datatext\\dungeon.tga:16:16:0:0:64:64|t %s", mText)
 	end
 
-	if E.db[mPlugin].DInstancInfoName then
+	if E.db.mMT.dungeon.texttoname then
 		local inInstance, _ = IsInInstance()
 		if inInstance then
 			if C_MythicPlus.IsMythicPlusActive() and (C_ChallengeMode.GetActiveChallengeMapID() ~= nil) then
@@ -100,10 +107,10 @@ local function OnEvent(self, event, unit)
 				self.text:SetText(mMT:DungeonInfoName())
 			end
 		else
-			self.text:SetFormattedText(mMT:mClassColorString(), TextString)
+			self.text:SetFormattedText(mMT.ClassColor.string, TextString)
 		end
 	else
-		self.text:SetFormattedText(mMT:mClassColorString(), TextString)
+		self.text:SetFormattedText(mMT.ClassColor.string, TextString)
 	end
 end
 

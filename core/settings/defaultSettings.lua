@@ -3,7 +3,7 @@ local mMT, E, L, V, P, G = unpack((select(2, ...)))
 P.mMT = {
 	general = { greeting = true },
 	tooltip = { enable = false, iconsize = 32, iconzoom = true },
-	combattime = { ooctexture = "CI2", ictexture = "CI12" },
+	combattime = { ooctexture = "CI2", ictexture = "CI12", hide = 30 },
 	interruptoncd = {
 		enable = false,
 		gradient = false,
@@ -101,12 +101,22 @@ P.mMT = {
 		texture = "CI1",
 		size = 16,
 	},
-	mpscore = { keys = {week = 0, affix = "", }, highlight = true, sort = "AFFIX", upgrade = true, icon = "UI7", highlightcolor = {
-		b = 0,
-		g = 1,
-		hex = "|cff1eff00",
-		r = 0.11,
-	}, }
+	mpscore = {
+		keys = { week = 0, affix = "" },
+		highlight = true,
+		sort = "AFFIX",
+		upgrade = true,
+		icon = "UI7",
+		highlightcolor = {
+			b = 0,
+			g = 1,
+			hex = "|cff1eff00",
+			r = 0.11,
+		},
+	},
+	teleports = { icon = false },
+	profession = { icon = false, proficon = true },
+	dungeon = { icon = false, texttoname = true, key = true, score = true, affix = true }
 }
 
 G.mMT = {

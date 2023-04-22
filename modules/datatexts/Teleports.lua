@@ -1,8 +1,5 @@
-local E, L, V, P, G = unpack(ElvUI)
-local mPlugin = "mMediaTag"
-local mMT = E:GetModule(mPlugin)
+local mMT, E, L, V, P, G = unpack((select(2, ...)))
 local DT = E:GetModule("DataTexts")
-local addon, ns = ...
 
 --Lua functions
 local tinsert = tinsert
@@ -474,14 +471,18 @@ local function OnEnter(self)
 	DT.tooltip:ClearLines()
 	mTPTooltip()
 	DT.tooltip:AddLine(" ")
-	DT.tooltip:AddLine(format("%s %s%s|r", ns.LeftButtonIcon, tip, L["left click to open the small menu."]))
-	DT.tooltip:AddLine(format("%s %s%s|r", ns.RightButtonIcon, tip, L["right click to open the full menu."]))
+	DT.tooltip:AddLine(format("%s %s%s|r", mMT:mIcon(mMT.Media.Mous["LEFT"]), tip, L["left click to open the small menu."]))
+	DT.tooltip:AddLine(format("%s %s%s|r", mMT:mIcon(mMT.Media.Mous["RIGHT"]), tip, L["right click to open the full menu."]))
 	DT.tooltip:Show()
 end
 
 local function OnEvent(self, event, unit)
 	CheckIfAvailable()
-	self.text:SetFormattedText(mMT:mClassColorString(), mText)
+	if E.db.mMT.teleports.icon then
+		self.text:SetFormattedText(mMT.ClassColor.string, format("|TInterface\\AddOns\\ElvUI_mMediaTag\\media\\icons\\datatext\\teleports.tga:16:16:0:0:64:64|t %s", mText))
+	else
+		self.text:SetFormattedText(mMT.ClassColor.string, mText)
+	end
 end
 
 local function OnLeave(self)

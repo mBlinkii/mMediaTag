@@ -39,6 +39,21 @@ local function configTable()
 					end,
 					values = icons,
 				},
+				range_hide = {
+					order = 4,
+					name = L["Hide Timer in Seconds"],
+					desc = L["Time until the text disappears"],
+					type = "range",
+					min = 0,
+					max = 120,
+					step = 1,
+					get = function(info)
+						return E.db.mMT.combattime.hide
+					end,
+					set = function(info, value)
+						E.db.mMT.combattime.hide = value
+					end,
+				},
 			},
 		},
 	}

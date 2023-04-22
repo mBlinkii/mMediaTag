@@ -11,4 +11,7 @@
 	<Script file="rollbutton.lua"/>
 	<Script file="chatbutton.lua"/>
 	<Script file="score.lua"/>
+	<Script file="teleports.lua"/>
+	<Script file="profession.lua"/>
+	<Script file="dungeon.lua"/>
 </Ui>

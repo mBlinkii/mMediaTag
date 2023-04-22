@@ -1,8 +1,5 @@
-local E, L, V, P, G = unpack(ElvUI)
-local mPlugin = "mMediaTag"
-local mMT = E:GetModule(mPlugin)
+local mMT, E, L, V, P, G = unpack((select(2, ...)))
 local DT = E:GetModule("DataTexts")
-local addon, ns = ...
 
 --Lua functions
 local tinsert = tinsert
@@ -42,7 +39,7 @@ local function getProfName(index)
 end
 
 local function getProfIcon(index)
-	if E.db[mPlugin].mProfIcon then
+	if E.db.mMT.profession.proficon then
 		local _, icon, _, _, _, _, _, _, _, _ = GetProfessionInfo(index)
 		return mMT:mIcon(icon) .. "    "
 	else
@@ -229,16 +226,16 @@ local function mLoadTooltip()
 	end
 
 	DT.tooltip:AddLine(" ")
-	DT.tooltip:AddLine(format("%s %s%s|r", ns.RightButtonIcon, tip, L["left click to open the menu."]))
-	DT.tooltip:AddLine(format("%s %s%s|r", ns.RightButtonIcon, tip, L["right click to open the profession window."]))
+	DT.tooltip:AddLine(format("%s %s%s|r", mMT:mIcon(mMT.Media.Mous["LEFT"]), tip, L["left click to open the menu."]))
+	DT.tooltip:AddLine(format("%s %s%s|r", mMT:mIcon(mMT.Media.Mous["RIGHT"]), tip, L["right click to open the profession window."]))
 end
 
 local function OnClick(self, button)
 	DT.tooltip:Hide()
 	if button == "LeftButton" then
 		if ProfessionsList.NoProfession then
-			_G.UIErrorsFrame:AddMessage(format(L["%s: %sNo professions available!|r"], ns.mName, ns.mColor5))
-			print(format(L["%s: %sNo professions available!|r"], ns.mName, ns.mColor5))
+			_G.UIErrorsFrame:AddMessage(format(L["%s: |CFFE74C3CNo professions available!|r"], mMT.Name))
+			print(format(L["%s: |CFFE74C3CNo professions available!|r"], mMT.Name))
 		else
 			LoadProfessions()
 			mMT:mDropDown(ProfessionsList.List, menuFrame, self, 200, 2)
@@ -263,15 +260,11 @@ end
 
 local function OnEvent(self, event, unit)
 	local TextString = mText
-	if E.db[mPlugin].ProfessionMenu.showicon then
-		TextString = format(
-			"|T%s:16:16:0:0:128:128|t %s",
-			"Interface\\AddOns\\ElvUI_mMediaTag\\media\\dock\\colored\\colored24.tga",
-			mText
-		)
+	if E.db.mMT.profession.icon then
+		TextString = format("|TInterface\\AddOns\\ElvUI_mMediaTag\\media\\icons\\datatext\\profession.tga:16:16:0:0:64:64|t %s", mText)
 	end
 
-	self.text:SetFormattedText(mMT:mClassColorString(), TextString)
+	self.text:SetFormattedText(mMT.ClassColor.string, TextString)
 end
 
 local function OnLeave(self)

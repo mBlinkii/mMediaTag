@@ -3,5 +3,8 @@
 	<Script file="FPSMS.lua"/>
 	<Script file="CoordinatesX.lua"/>
 	<Script file="Coordinatesy.lua"/>
-	<Script file="score.lua"/>
+	<Script file="Score.lua"/>
+	<Script file="Teleports.lua"/>
+	<Script file="ProfessionMenu.lua"/>
+	<Script file="Dungeon.lua"/>
 </Ui>

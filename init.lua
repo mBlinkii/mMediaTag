@@ -17,6 +17,10 @@ local print = print
 local tonumber = tonumber
 
 local GetAddOnMetadata = _G.GetAddOnMetadata
+local C_MythicPlus_RequestMapInfo = C_MythicPlus.RequestMapInfo
+local C_MythicPlus_RequestCurrentAffixes = C_MythicPlus.RequestCurrentAffixes
+local _, unitClass = UnitClass("player")
+local class = ElvUF.colors.class[unitClass]
 
 addon[1] = mMT
 addon[2] = E --ElvUI Engine
@@ -30,6 +34,7 @@ _G[addonName] = addon
 mMT.Version = GetAddOnMetadata(addonName, 'Version')
 mMT.Name = "|CFF6559F1m|r|CFF7A4DEFM|r|CFF8845ECe|r|CFFA037E9d|r|CFFA435E8i|r|CFFB32DE6a|r|CFFBC26E5T|r|CFFCB1EE3a|r|CFFDD14E0g|r"
 mMT.Icon = "|TInterface\\Addons\\ElvUI_mMediaTag\\media\\logo\\mmt_icon_round.tga:14:14:0:0|t"
+mMT.ClassColor = {r = class[1], g = class[2], b = class[3], hex = E:RGBToHex(class[1], class[2], class[3]), string = strjoin("", E:RGBToHex(class[1], class[2], class[3]), "%s|r")}
 mMT.Media = {}
 mMT.Config = {}
 
@@ -88,6 +93,12 @@ end
 end
 
 function mMT:PLAYER_ENTERING_WORLD()
+	mMT.ClassColor = {r = class[1], g = class[2], b = class[3], hex = E:RGBToHex(class[1], class[2], class[3]), string = strjoin("", E:RGBToHex(class[1], class[2], class[3]), "%s|r")}
+
+	if E.Retail then
+		C_MythicPlus_RequestMapInfo()
+		C_MythicPlus_RequestCurrentAffixes()
+	end
 
 end
 
