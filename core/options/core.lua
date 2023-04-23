@@ -39,6 +39,12 @@ local function configTable()
 						name = L["Chat Button"],
 						args = {},
 					},
+					keystochat = {
+						order = 4,
+						type = "group",
+						name = L["Keyston to Chat"] .. " (!keys)",
+						args = {},
+					},
 				},
 			},
 			datatexts = {

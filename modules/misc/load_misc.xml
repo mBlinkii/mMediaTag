@@ -4,4 +4,5 @@
 	<Script file="functions.lua"/>
 	<Script file="rollbutton.lua"/>
 	<Script file="chatbutton.lua"/>
+	<Script file="KeystoneToChat.lua"/>
 </Ui>
