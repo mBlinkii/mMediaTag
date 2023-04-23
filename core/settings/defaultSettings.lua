@@ -116,7 +116,26 @@ P.mMT = {
 	},
 	teleports = { icon = false },
 	profession = { icon = false, proficon = true },
-	dungeon = { icon = false, texttoname = true, key = true, score = true, affix = true }
+	dungeon = { icon = false, texttoname = true, key = true, score = true, affix = true },
+	instancedifficulty = {
+		enable = false,
+		mpe = { color = "|cffff8f00", r = 1, g = 0.56, b = 0, },
+		mpf = { color = "|cffff0056", r = 1, g = 0, b = 0.33, },
+		hc = { color = "|cff0595ff", b = 1, g = 0.58, r = 0.01, },
+		guild = { color = "|cff94ff00", r = 0.58, g = 1, b = 0, },
+		tw = { color = "|cff00bfff", r = 0, g = 0.75, b = 1, },
+		mpc = { color = "|cff411aff", r = 0.25, g = 0.10, b = 1, },
+		nhc = { color = "|cff52ff76", b = 0.46, g = 1, r = 0.32, },
+		mpa = { color = "|cff97ffbd", r = 0.59, g = 1, b = 0.74, },
+		mpd = { color = "|cffb600ff", r = 0.71, g = 0, b = 1, },
+		m = { color = "|cffaf00ff", g = 0, r = 0.68, b = 1.00, },
+		name = { color = "|cffffffff", r = 1, g = 1, b = 1, },
+		mp = { color = "|cffff8f00", b = 0, g = 0.56, r = 1, },
+		mpb = { color = "|cff00ff46", r = 0, g = 1, b = 0.27, },
+		lfr = { color = "|cff00ffef", b = 0.93, g = 1, r = 0, },
+		tg = { color = "|cff5dffb8", r = 0.36, g = 1, b = 0.72, },
+		pvp = { color = "|cffeb0056", r = 0.92, g = 0, b = 0.33, },
+	},
 }
 
 G.mMT = {

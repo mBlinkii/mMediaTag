@@ -15,4 +15,5 @@
 	<Script file="profession.lua"/>
 	<Script file="dungeon.lua"/>
 	<Script file="keystonetochat.lua"/>
+	<Script file="instancedifficulty.lua"/>
 </Ui>

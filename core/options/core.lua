@@ -45,6 +45,12 @@ local function configTable()
 						name = L["Keyston to Chat"] .. " (!keys)",
 						args = {},
 					},
+					instancedifficulty = {
+						order = 5,
+						type = "group",
+						name = L["Instance Difficulty"],
+						args = {},
+					},
 				},
 			},
 			datatexts = {

@@ -95,12 +95,12 @@ function mMT:Initialize()
 			mMT:mSetupCastbar()
 		end
 
-		if
-			E.db.mMT.custombackgrounds.health.enable
-			or E.db.mMT.custombackgrounds.power.enable
-			or E.db.mMT.custombackgrounds.castbar.enable
-		then
+		if E.db.mMT.custombackgrounds.health.enable or E.db.mMT.custombackgrounds.power.enable or E.db.mMT.custombackgrounds.castbar.enable then
 			mMT:CustomBackdrop()
+		end
+
+		if E.db.mMT.instancedifficulty.enable then
+			mMT:SetupInstanceDifficulty()
 		end
 
 		if E.db.mMT.general.keystochat then
