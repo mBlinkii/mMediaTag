@@ -159,6 +159,12 @@ local function configTable()
 						name = L["Custom Class colors"],
 						args = {},
 					},
+					roleicons = {
+						order = 4,
+						type = "group",
+						name = L["Role Icons"],
+						args = {},
+					},
 				},
 			},
 			about = {

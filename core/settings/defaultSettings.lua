@@ -136,6 +136,16 @@ P.mMT = {
 		tg = { color = "|cff5dffb8", r = 0.36, g = 1, b = 0.72, },
 		pvp = { color = "|cffeb0056", r = 0.92, g = 0, b = 0.33, },
 	},
+	roleicons = {
+		enable = false,
+		tank = "RL151",
+		heal = "RL54",
+		dd = "RL11",
+		customtexture = false,
+		customtank = nil,
+		customheal = nil,
+		customdd = nil,
+	},
 }
 
 G.mMT = {

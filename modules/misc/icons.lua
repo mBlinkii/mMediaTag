@@ -7,10 +7,10 @@ E.Media.CombatIcons.mMediaTag3 = [[Interface\AddOns\ElvUI_mMediaTag\media\icons\
 E.Media.CombatIcons.mMediaTag4 = [[Interface\AddOns\ElvUI_mMediaTag\media\icons\combat\combat4.tga]]
 E.Media.CombatIcons.mMediaTag5 = [[Interface\AddOns\ElvUI_mMediaTag\media\icons\combat\combat5.tga]]
 E.Media.CombatIcons.mMediaTag6 = [[Interface\AddOns\ElvUI_mMediaTag\media\icons\combat\combat6.tga]]
-E.Media.CombatIcons.mMediaTag7 = [[Interface\AddOns\ElvUI_mMediaTag\media\icons\fire2.tga]]
-E.Media.CombatIcons.mMediaTag8 = [[Interface\AddOns\ElvUI_mMediaTag\media\icons\fire7.tga]]
-E.Media.CombatIcons.mMediaTag9 = [[Interface\AddOns\ElvUI_mMediaTag\media\icons\lightning2.tga]]
-E.Media.CombatIcons.mMediaTag10 = [[Interface\AddOns\ElvUI_mMediaTag\media\icons\lightning7.tga]]
+E.Media.CombatIcons.mMediaTag7 = [[Interface\AddOns\ElvUI_mMediaTag\media\icons\role\fire2.tga]]
+E.Media.CombatIcons.mMediaTag8 = [[Interface\AddOns\ElvUI_mMediaTag\media\icons\role\fire7.tga]]
+E.Media.CombatIcons.mMediaTag9 = [[Interface\AddOns\ElvUI_mMediaTag\media\icons\role\lightning2.tga]]
+E.Media.CombatIcons.mMediaTag10 = [[Interface\AddOns\ElvUI_mMediaTag\media\icons\role\lightning7.tga]]
 
 -- Mail Icons
 E.Media.MailIcons.mMediaTag1 = [[Interface\AddOns\ElvUI_mMediaTag\media\icons\mail\mail1.tga]]

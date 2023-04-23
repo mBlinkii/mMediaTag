@@ -103,6 +103,10 @@ function mMT:Initialize()
 			mMT:SetupInstanceDifficulty()
 		end
 
+		if E.db.mMT.roleicons.enable then
+			mMT:mStartRoleSmbols()
+		end
+
 		if E.db.mMT.general.keystochat then
 			mMT:RegisterEvent("CHAT_MSG_PARTY")
 			mMT:RegisterEvent("CHAT_MSG_PARTY_LEADER")
