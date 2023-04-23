@@ -185,7 +185,7 @@ function mMT:UpdateColors()
 	colors.mpf = db.mpf
 end
 
-local function ShortName(name)
+function mMT:ShortName(name)
 	local WordA, WordB, WordC, WordD, WordE, WordF, WordG = strsplit(" ", name, 6)
 
 	WordA = WordA and E:ShortenString(WordA, 1) or ""
@@ -214,42 +214,97 @@ local function GetKeystoneLevelandColor()
 	if keyStoneLevel == 2 then
 		return format("%s%s|r", colors.mpa.color, keyStoneLevel)
 	elseif keyStoneLevel <= 9 then
-		color = mMT:ColorFade(
-			E.db.mMT.instancedifficulty.mpa,
-			E.db.mMT.instancedifficulty.mpb,
-			percentValue[keyStoneLevel]
-		)
+		color =
+			mMT:ColorFade(E.db.mMT.instancedifficulty.mpa, E.db.mMT.instancedifficulty.mpb, percentValue[keyStoneLevel])
 		return format("%s%s|r", color.color, keyStoneLevel)
 	elseif keyStoneLevel <= 14 then
-		color = mMT:ColorFade(
-			E.db.mMT.instancedifficulty.mpb,
-			E.db.mMT.instancedifficulty.mpc,
-			percentValue[keyStoneLevel]
-		)
+		color =
+			mMT:ColorFade(E.db.mMT.instancedifficulty.mpb, E.db.mMT.instancedifficulty.mpc, percentValue[keyStoneLevel])
 		return format("%s%s|r", color.color, keyStoneLevel)
 	elseif keyStoneLevel <= 19 then
-		color = mMT:ColorFade(
-			E.db.mMT.instancedifficulty.mpc,
-			E.db.mMT.instancedifficulty.mpd,
-			percentValue[keyStoneLevel]
-		)
+		color =
+			mMT:ColorFade(E.db.mMT.instancedifficulty.mpc, E.db.mMT.instancedifficulty.mpd, percentValue[keyStoneLevel])
 		return format("%s%s|r", color.color, keyStoneLevel)
 	elseif keyStoneLevel >= 24 then
-		color = mMT:ColorFade(
-			E.db.mMT.instancedifficulty.mpd,
-			E.db.mMT.instancedifficulty.mpe,
-			percentValue[keyStoneLevel]
-		)
+		color =
+			mMT:ColorFade(E.db.mMT.instancedifficulty.mpd, E.db.mMT.instancedifficulty.mpe, percentValue[keyStoneLevel])
 		return format("%s%s|r", color.color, keyStoneLevel)
 	elseif keyStoneLevel >= 29 then
-		color = mMT:ColorFade(
-			E.db.mMT.instancedifficulty.mpe,
-			E.db.mMT.instancedifficulty.mpf,
-			percentValue[keyStoneLevel]
-		)
+		color =
+			mMT:ColorFade(E.db.mMT.instancedifficulty.mpe, E.db.mMT.instancedifficulty.mpf, percentValue[keyStoneLevel])
 		return format("%s%s|r", color.color, keyStoneLevel)
 	else
 		return format("%s%s|r", colors.mpf.color, keyStoneLevel)
+	end
+end
+
+function mMT:GetDungeonInfo(datatext)
+	local name, instanceType, difficultyID, difficultyName, maxPlayers, dynamicDifficulty, isDynamic, instanceID, instanceGroupSize, LfgDungeonID =
+		GetInstanceInfo()
+	local inInstance, InstanceType = IsInInstance()
+
+	name = shortNames[instanceID] or mMT:ShortName(name)
+
+	if name then
+		local text = ""
+		local difficultyColor = instanceDifficulty[difficultyID] and instanceDifficulty[difficultyID].c or "|CFFFFFFFF"
+		local difficultyShort = instanceDifficulty[difficultyID] and instanceDifficulty[difficultyID].d or ""
+		local isGuildParty = InGuildParty()
+		if
+			difficultyID == 8
+			and C_MythicPlus.IsMythicPlusActive()
+			and (C_ChallengeMode.GetActiveChallengeMapID() ~= nil)
+		then
+			if datatext then
+				text = format(
+					"%s%s|r %s%s|r %s",
+					isGuildParty and colors.guild.color or colors.name.color,
+					name,
+					difficultyColor,
+					difficultyShort,
+					GetKeystoneLevelandColor()
+				)
+			else
+				text = format(
+					"%s%s|r\n%s%s|r %s",
+					isGuildParty and colors.guild.color or colors.name.color,
+					name,
+					difficultyColor,
+					difficultyShort,
+					GetKeystoneLevelandColor()
+				)
+			end
+		elseif InstanceType == "pvp" or InstanceType == "arena" then
+			difficultyColor = instanceDifficulty[34] and instanceDifficulty[34].c or "|CFFFFFFFF"
+			difficultyShort = instanceDifficulty[34] and instanceDifficulty[34].d or ""
+			if datatext then
+				text = format("%s%s|r %s%s|r", isGuildParty and colors.guild.color or colors.name.color, name, difficultyColor, difficultyShort)
+			else
+				text = format("%s%s|r\n%s%s|r", isGuildParty and colors.guild.color or colors.name.color, name, difficultyColor, difficultyShort)
+			end
+
+		else
+			if datatext then
+				text = format(
+					"%s%s|r %s%s|r |CFFF7DC6F%s|r",
+					isGuildParty and colors.guild.color or colors.name.color,
+					name,
+					difficultyColor,
+					difficultyShort,
+					instanceGroupSize
+				)
+			else
+				text = format(
+					"%s%s|r\n%s%s|r |CFFF7DC6F%s|r",
+					isGuildParty and colors.guild.color or colors.name.color,
+					name,
+					difficultyColor,
+					difficultyShort,
+					instanceGroupSize
+				)
+			end
+		end
+		return text
 	end
 end
 
@@ -263,73 +318,7 @@ function UpdateDifficulty()
 	local inInstance, InstanceType = IsInInstance()
 
 	if inInstance and name then
-		name = shortNames[instanceID] or ShortName(name)
-
-		local difficultyColor = instanceDifficulty[difficultyID] and instanceDifficulty[difficultyID].c or "|CFFFFFFFF"
-		local difficultyShort = instanceDifficulty[difficultyID] and instanceDifficulty[difficultyID].d or ""
-		local isGuildParty = InGuildParty()
-		if
-			difficultyID == 8
-			and C_MythicPlus.IsMythicPlusActive()
-			and (C_ChallengeMode.GetActiveChallengeMapID() ~= nil)
-		then
-			if isGuildParty then
-				mIDF.Text:SetText(
-					format(
-						"%s%s|r\n%s%s|r %s",
-						colors.guild.color,
-						name,
-						difficultyColor,
-						difficultyShort,
-						GetKeystoneLevelandColor()
-					)
-				)
-			else
-				mIDF.Text:SetText(
-					format(
-						"%s%s|r\n%s%s|r %s",
-						colors.name.color,
-						name,
-						difficultyColor,
-						difficultyShort,
-						GetKeystoneLevelandColor()
-					)
-				)
-			end
-		elseif InstanceType == "pvp" or InstanceType == "arena" then
-			difficultyColor = instanceDifficulty[34] and instanceDifficulty[34].c or "|CFFFFFFFF"
-			difficultyShort = instanceDifficulty[34] and instanceDifficulty[34].d or ""
-			if isGuildParty then
-				mIDF.Text:SetText(format("%s%s|r\n%s%s|r", colors.guild.color, name, difficultyColor, difficultyShort))
-			else
-				mIDF.Text:SetText(format("%s%s|r\n%s%s|r", colors.name.color, name, difficultyColor, difficultyShort))
-			end
-		else
-			if isGuildParty then
-				mIDF.Text:SetText(
-					format(
-						"%s%s|r\n%s%s|r |CFFF7DC6F%s|r",
-						colors.guild.color,
-						name,
-						difficultyColor,
-						difficultyShort,
-						instanceGroupSize
-					)
-				)
-			else
-				mIDF.Text:SetText(
-					format(
-						"%s%s|r\n%s%s|r |CFFF7DC6F%s|r",
-						colors.name.color,
-						name,
-						difficultyColor,
-						difficultyShort,
-						instanceGroupSize
-					)
-				)
-			end
-		end
-
+		mIDF.Text:SetText(mMT:GetDungeonInfo())
 		mIDF:Show()
 	else
 		mIDF:Hide()

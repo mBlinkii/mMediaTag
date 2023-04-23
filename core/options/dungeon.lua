@@ -25,7 +25,7 @@ local function configTable()
                     order = 2,
                     type = "toggle",
                     name = L["Text to Instance Name"],
-                    desc = L["Display the instance name instead of System Menu."],
+                    desc = L["Display the instance name instead of Datatext name. Uses the same format as InstanceDifficulty."],
                     get = function(info)
                         return E.db.mMT.dungeon.texttoname
                     end,

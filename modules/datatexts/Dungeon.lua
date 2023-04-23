@@ -101,11 +101,7 @@ local function OnEvent(self, event, unit)
 	if E.db.mMT.dungeon.texttoname then
 		local inInstance, _ = IsInInstance()
 		if inInstance then
-			if C_MythicPlus.IsMythicPlusActive() and (C_ChallengeMode.GetActiveChallengeMapID() ~= nil) then
-				self.text:SetText(format("%s +%s", mMT:DungeonInfoName(), mMT:MythPlusDifficultyShort()))
-			else
-				self.text:SetText(mMT:DungeonInfoName())
-			end
+			self.text:SetText(mMT:GetDungeonInfo(true))
 		else
 			self.text:SetFormattedText(mMT.ClassColor.string, TextString)
 		end
