@@ -18,24 +18,22 @@ local GetRaidDifficultyID = GetRaidDifficultyID
 local GetDungeonDifficultyID = GetDungeonDifficultyID
 local GetDetailedItemLevelInfo = GetDetailedItemLevelInfo
 local C_MythicPlus = C_MythicPlus
-local GetDetailedItemLevelInfo = GetDetailedItemLevelInfo
 local C_PlayerInfo_GetPlayerMythicPlusRatingSummary = C_PlayerInfo.GetPlayerMythicPlusRatingSummary
 local C_ChallengeMode_GetOverallDungeonScore = C_ChallengeMode.GetOverallDungeonScore
 local C_ChallengeMode_GetDungeonScoreRarityColor = C_ChallengeMode.GetDungeonScoreRarityColor
 
 function mMT:OwenKeystone()
 	local OwenKeystoneText = {}
-	OwenKeystoneText = wipe(OwenKeystoneText)
-	local keyStoneLevel, keyStoneLevelMax = C_MythicPlus.GetOwnedKeystoneLevel(), 20
+	wipe(OwenKeystoneText)
+	local keyStoneLevel = C_MythicPlus.GetOwnedKeystoneLevel()
 
 	if keyStoneLevel then
 		local challengeMapID = C_MythicPlus.GetOwnedKeystoneChallengeMapID()
 		local name, id, timeLimit, texture, backgroundTexture = C_ChallengeMode.GetMapUIInfo(challengeMapID)
-		local r, g, b = E:ColorGradient(keyStoneLevel * 0.06, 0.1, 1, 0.1, 1, 1, 0.1, 1, 0.1, 0.1)
 		local nhc, hc, myth, _, other, titel = mMT:mColorDatatext()
 
 		tinsert(OwenKeystoneText, 1, format("%s%s|r", titel, L["Mythic Plus Keystone"]))
-		tinsert(OwenKeystoneText, 2, format("%s%s: |r %s%s|r%s +%s|r", other, L["Keystone"], myth, name, E:RGBToHex(r, g, b), keyStoneLevel))
+		tinsert(OwenKeystoneText, 2, format("%s%s:|r %s%s|r %s", other, L["Keystone"], myth, name, mMT:GetKeyColor(keyStoneLevel)))
 		return OwenKeystoneText
 	end
 end
@@ -54,8 +52,8 @@ end
 
 function mMT:WeeklyAffixes()
 	local WeeklyAffixesText, affixes = {}, {}
-	WeeklyAffixesText = wipe(WeeklyAffixesText)
-	affixes = wipe(affixes)
+	wipe(WeeklyAffixesText)
+	wipe(affixes)
 	local _, _, _, _, other, titel = mMT:mColorDatatext()
 	local AffixText = nil
 	local savedYear = E.global.mMT.mplusaffix.year

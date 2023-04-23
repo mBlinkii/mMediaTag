@@ -63,7 +63,7 @@ local function addNotPlayed(ScoreTable, mapID, affix)
 	ScoreTable[mapID][affix].color = "|CFFB2BABB"
 end
 
-local function GetColor(key)
+function mMT:GetKeyColor(key)
 	if key < 5 then
 		return format("|CFFFFFFFF+%s|r", key)
 	elseif key <= 7 then
@@ -103,7 +103,7 @@ local function SaveMyKeystone()
 			local keyname, id, timeLimit, texture, backgroundTexture = C_ChallengeMode_GetMapUIInfo(challengeMapID)
 			E.global.mMT.keys[name .. "-" .. realmName] = {
 				name = format("%s%s|r", E:RGBToHex(class[1], class[2], class[3]), name),
-				key = format("%s%s|r %s", E.db.mMT.datatextcolors.colormyth.hex, keyname, GetColor(keyStoneLevel)),
+				key = format("%s%s|r %s", E.db.mMT.datatextcolors.colormyth.hex, keyname, mMT:GetKeyColor(keyStoneLevel)),
 			}
 		end
 	else
