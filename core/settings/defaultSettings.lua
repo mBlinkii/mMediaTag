@@ -138,9 +138,9 @@ P.mMT = {
 	},
 	roleicons = {
 		enable = false,
-		tank = "RL151",
-		heal = "RL54",
-		dd = "RL11",
+		tank = "SHIELD2",
+		heal = "HEAL13",
+		dd = "BIGSW12",
 		customtexture = false,
 		customtank = nil,
 		customheal = nil,
