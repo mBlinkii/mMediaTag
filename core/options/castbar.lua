@@ -105,6 +105,9 @@ local function configTable()
 					order = 10,
 					name = L["Color"] .. " 2",
 					hasAlpha = false,
+					disabled = function()
+						return not E.db.mMT.interruptoncd.gradient
+					end,
 					get = function(info)
 						local t = E.db.mMT.interruptoncd.intimecolor.colorb
 						return t.r, t.g, t.b
@@ -142,6 +145,9 @@ local function configTable()
 					order = 13,
 					name = L["Color"] .. " 2",
 					hasAlpha = false,
+					disabled = function()
+						return not E.db.mMT.interruptoncd.gradient
+					end,
 					get = function(info)
 						local t = E.db.mMT.interruptoncd.oncdcolor.colorb
 						return t.r, t.g, t.b
@@ -179,6 +185,9 @@ local function configTable()
 					order = 16,
 					name = L["Color"] .. " 2",
 					hasAlpha = false,
+					disabled = function()
+						return not E.db.mMT.interruptoncd.gradient
+					end,
 					get = function(info)
 						local t = E.db.mMT.interruptoncd.outofrangecolor.colorb
 						return t.r, t.g, t.b

@@ -3,6 +3,7 @@
 	<Include file="datatexts\load_datatexts.xml"/>
 	<Include file="unitframes\load_unitframes.xml"/>
 	<Include file="retail\load_retail.xml"/>
+	<Include file="nameplates\load_nameplates.xml"/>
 	<Script file="castbar\castbar.lua"/>
 	<!-- <Include file="options\load_options.xml"/>
 	<Script file="greeting.lua"/>

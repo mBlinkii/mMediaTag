@@ -17,4 +17,6 @@
 	<Script file="keystonetochat.lua"/>
 	<Script file="instancedifficulty.lua"/>
 	<Script file="roleicons.lua"/>
+	<Script file="healthmarker.lua"/>
+	<Script file="executemarker.lua"/>
 </Ui>

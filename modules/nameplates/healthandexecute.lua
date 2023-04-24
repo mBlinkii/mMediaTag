@@ -1,14 +1,9 @@
-local E, L, V, P, G = unpack(ElvUI)
-local mPlugin = "mMediaTag"
-local mMT = E:GetModule(mPlugin)
+local mMT, E, L, V, P, G = unpack((select(2, ...)))
 
 local NP = E:GetModule("NamePlates")
 local LSM = LibStub("LibSharedMedia-3.0")
 
-local mInsert = table.insert
 local CreateFrame = CreateFrame
-local addon, ns = ...
-
 local IsResting = IsResting
 
 local HM_NPCs = {
@@ -81,12 +76,11 @@ local HM_NPCs = {
 	[59544] = { 50 }, --The Nodding Tiger
 	[56732] = { 70, 30 }, --Liu Flammenherz
 
-	--                                                                             ***RAID***
 	-- DF Raid
 	[181378] = { 66, 33 }, --Kurog Grimtotem, Vault of the Incarnates
 	[194990] = { 50 }, -- Stormseeker Acolyte, Vault of the Incarnates
 
-	--SL Raid
+	-- SL Raid
 	[181548] = { 40 }, --Absolution: Prototype Pantheon, Sepulcher of the First Ones
 	[181551] = { 40 }, --Duty: Prototype Pantheon, Sepulcher of the First Ones
 	[181546] = { 40 }, --Renewal: Prototype Pantheon, Sepulcher of the First Ones
@@ -106,7 +100,7 @@ local HM_NPCs = {
 	[167406] = { 70.5, 37.5 }, --Sire Denathrius, Castle Nathria
 	[173162] = { 66, 33 }, --Lord Evershade, Castle Nathria
 
-	--                                                                             ***OPEN WORD***
+	-- World
 	[180013] = { 20 }, --Escaped Wilderling, Shadowlands - Korthia
 	[179931] = { 80, 60 }, --Relic Breaker krelva, Shadowlands - Korthia
 	[193532] = { 40 }, --Bazual, The Dreaded Flame, Dhragonflight
@@ -211,10 +205,10 @@ end
 
 local function executeMarker(unit, percent)
 	local health = unit.Health
-	local db = E.db[mPlugin].mExecutemarker
+	local db = E.db.mMT.nameplate.executemarker
 
 	if not health.executeMarker then
-		health.executeMarker = health:CreateTexture(nil, "overlay")
+		health.executeMarker = health:CreateTexture(nil, "overlay", nil, 2)
 		health.executeMarker:SetColorTexture(1, 1, 1)
 	end
 
@@ -245,7 +239,7 @@ local function healthMarkers(unit, percent)
 	local inInstance, instanceType = IsInInstance()
 	local health = unit.Health
 	if
-		E.db[mPlugin].mHealthmarker.inInstance
+		E.db.mMT.nameplate.healthmarker.inInstance
 		and not (inInstance and instanceType == "party" or instanceType == "raid")
 	then
 		if health.healthMarker then
@@ -256,7 +250,7 @@ local function healthMarkers(unit, percent)
 
 	local npcID = tonumber(unit.npcID)
 
-	local db = E.db[mPlugin].mHealthmarker
+	local db = E.db.mMT.nameplate.healthmarker
 	if not npcID and health.healthMarker then
 		health.healthMarker:Hide()
 		health.healthOverlay:Hide()
@@ -276,9 +270,9 @@ local function healthMarkers(unit, percent)
 					local overlaySize = health:GetWidth() * p / 100
 
 					if not health.healthMarker then
-						health.healthMarker = health:CreateTexture(nil, "overlay")
+						health.healthMarker = health:CreateTexture(nil, "overlay", nil, 1)
 						health.healthMarker:SetColorTexture(1, 1, 1)
-						health.healthOverlay = health:CreateTexture(texture, "overlay")
+						health.healthOverlay = health:CreateTexture(texture, "overlay", nil, 1)
 						health.healthOverlay:SetColorTexture(1, 1, 1)
 					end
 
@@ -310,416 +304,21 @@ end
 local function mNameplateTools(table, event, frame)
 	if table.isNamePlate and (table.Health and table.Health.max) then --and executeAutoRange.enabel
 		local percent = math.floor((table.Health.cur or 100) / table.Health.max * 100 + 0.5)
-		if E.db[mPlugin].mHealthmarker.enable then
+
+		if E.db.mMT.nameplate.healthmarker.enable then
 			healthMarkers(table, percent)
 		end
 
-		if E.db[mPlugin].mExecutemarker.enable then
+		if E.db.mMT.nameplate.executemarker.enable then
 			executeMarker(table, percent)
 		end
 	end
 end
 
 function mMT:StartNameplateTools()
-	if E.db[mPlugin].mExecutemarker.auto then
+	if E.db.mMT.nameplate.executemarker.auto then
 		mMT:updateAutoRange()
 	end
+
 	hooksecurefunc(NP, "Health_UpdateColor", mNameplateTools)
 end
-
-local selectedID = nil
-local selected = nil
-local filterTabel = {}
-
-local function updateFilterTabel()
-	filterTabel = wipe(filterTabel)
-	for k, v in pairs(E.db[mPlugin].mHealthmarker.NPCs) do
-		mInsert(filterTabel, k)
-	end
-end
-
-local function mhealtmarkerOptions()
-	updateFilterTabel()
-
-	E.Options.args.mMediaTag.args.general.args.nameplatetools.args.nameplatehealtmarkers.args = {
-		markers = {
-			order = 1,
-			type = "toggle",
-			name = L["Enable"],
-			desc = L["Enable Nameplate Healthmarker"],
-			get = function(info)
-				return E.db[mPlugin].mHealthmarker.enable
-			end,
-			set = function(info, value)
-				E.db[mPlugin].mHealthmarker.enable = value
-				E:StaticPopup_Show("CONFIG_RL")
-			end,
-		},
-		spacer = {
-			order = 2,
-			type = "description",
-			name = "\n\n",
-		},
-		header1 = {
-			order = 3,
-			type = "header",
-			name = "",
-		},
-		colorindicator = {
-			type = "color",
-			order = 11,
-			name = L["Indicator Color"],
-			hasAlpha = false,
-			get = function(info)
-				local t = E.db[mPlugin].mHealthmarker.indicator
-				return t.r, t.g, t.b
-			end,
-			set = function(info, r, g, b)
-				local t = E.db[mPlugin].mHealthmarker.indicator
-				t.r, t.g, t.b = r, g, b
-			end,
-		},
-		coloroverlay = {
-			type = "color",
-			order = 12,
-			name = L["Overlay Color"],
-			hasAlpha = true,
-			get = function(info)
-				local t = E.db[mPlugin].mHealthmarker.overlay
-				return t.r, t.g, t.b, t.a
-			end,
-			set = function(info, r, g, b, a)
-				local t = E.db[mPlugin].mHealthmarker.overlay
-				t.r, t.g, t.b, t.a = r, g, b, a
-			end,
-		},
-		useDefaults = {
-			order = 13,
-			type = "toggle",
-			name = L["Use Default NPC IDs"],
-			desc = L["Uses Custom and default NPC IDs"],
-			get = function(info)
-				return E.db[mPlugin].mHealthmarker.useDefaults
-			end,
-			set = function(info, value)
-				E.db[mPlugin].mHealthmarker.useDefaults = value
-			end,
-		},
-		inInstance = {
-			order = 14,
-			type = "toggle",
-			name = L["Load only in Instance"],
-			desc = L["Shows the Healthmarkers only in a Instance"],
-			get = function(info)
-				return E.db[mPlugin].mHealthmarker.inInstance
-			end,
-			set = function(info, value)
-				E.db[mPlugin].mHealthmarker.inInstance = value
-			end,
-		},
-		overlaytexture = {
-			order = 14,
-			type = "select",
-			dialogControl = "LSM30_Statusbar",
-			name = L["Overlay Texture"],
-			values = LSM:HashTable("statusbar"),
-			get = function(info)
-				return E.db[mPlugin].mHealthmarker.overlaytexture
-			end,
-			set = function(info, value)
-				E.db[mPlugin].mHealthmarker.overlaytexture = value
-			end,
-		},
-		header2 = {
-			order = 15,
-			type = "header",
-			name = "",
-		},
-		customid = {
-			order = 21,
-			name = L["Custom NPCID"],
-			desc = L["Enter a NPCID"],
-			type = "input",
-			width = "smal",
-			set = function(info, value)
-				if E.db[mPlugin].mHealthmarker.NPCs[tonumber(value)] then
-					selectedID = tonumber(value)
-				else
-					selected = nil
-					selectedID = nil
-					mInsert(E.db[mPlugin].mHealthmarker.NPCs, value, { 0, 0, 0, 0 })
-				end
-				updateFilterTabel()
-			end,
-		},
-		idtable = {
-			type = "select",
-			order = 22,
-			name = L["NPC IDS"],
-			values = function()
-				updateFilterTabel()
-				return filterTabel
-			end,
-			get = function(info)
-				updateFilterTabel()
-				return selected
-			end,
-			set = function(info, value)
-				selected = value
-				selectedID = tonumber(filterTabel[value])
-			end,
-		},
-		deleteid = {
-			order = 22,
-			name = L["Delete NPCID"],
-			type = "input",
-			width = "smal",
-			set = function(info, value)
-				if E.db[mPlugin].mHealthmarker.NPCs[tonumber(value)] then
-					E.db[mPlugin].mHealthmarker.NPCs[tonumber(value)] = nil
-					selectedID = 0
-					selected = nil
-					updateFilterTabel()
-				end
-			end,
-		},
-		deleteall = {
-			order = 23,
-			type = "execute",
-			name = L["Delete all"],
-			func = function()
-				E.db[mPlugin].mHealthmarker.NPCs = wipe(E.db[mPlugin].mHealthmarker.NPCs)
-				filterTabel = wipe(filterTabel)
-			end,
-		},
-		header3 = {
-			order = 30,
-			type = "header",
-			name = "",
-		},
-		mark1 = {
-			order = 31,
-			name = L["Healthmark 1"],
-			desc = L["0 = disable"],
-			type = "range",
-			min = 0,
-			max = 100,
-			step = 0.5,
-			disabled = function()
-				return not E.db[mPlugin].mHealthmarker.NPCs[selectedID]
-			end,
-			get = function()
-				if E.db[mPlugin].mHealthmarker.NPCs[selectedID] then
-					return E.db[mPlugin].mHealthmarker.NPCs[selectedID][1]
-				end
-			end,
-			set = function(info, value)
-				if E.db[mPlugin].mHealthmarker.NPCs[selectedID] then
-					E.db[mPlugin].mHealthmarker.NPCs[selectedID][1] = value
-					if value == 0 or value == 100 then
-						E.db[mPlugin].mHealthmarker.NPCs[selectedID][2] = 0
-						E.db[mPlugin].mHealthmarker.NPCs[selectedID][3] = 0
-						E.db[mPlugin].mHealthmarker.NPCs[selectedID][4] = 0
-					end
-				end
-			end,
-		},
-		mark2 = {
-			order = 32,
-			name = L["Healthmark 2"],
-			desc = L["0 = disable"],
-			type = "range",
-			min = 0,
-			max = 100,
-			step = 0.5,
-			disabled = function()
-				if E.db[mPlugin].mHealthmarker.NPCs[selectedID] then
-					if E.db[mPlugin].mHealthmarker.NPCs[selectedID][1] then
-						if
-							E.db[mPlugin].mHealthmarker.NPCs[selectedID][1] == 0
-							or E.db[mPlugin].mHealthmarker.NPCs[selectedID][1] == 100
-						then
-							E.db[mPlugin].mHealthmarker.NPCs[selectedID][2] = 0
-							E.db[mPlugin].mHealthmarker.NPCs[selectedID][3] = 0
-							E.db[mPlugin].mHealthmarker.NPCs[selectedID][4] = 0
-							return true
-						else
-							return false
-						end
-					else
-						return true
-					end
-				else
-					return true
-				end
-			end,
-			get = function()
-				if E.db[mPlugin].mHealthmarker.NPCs[selectedID] then
-					return E.db[mPlugin].mHealthmarker.NPCs[selectedID][2] or 0
-				end
-			end,
-			set = function(info, value)
-				if E.db[mPlugin].mHealthmarker.NPCs[selectedID] then
-					if value > E.db[mPlugin].mHealthmarker.NPCs[selectedID][1] then
-						value = E.db[mPlugin].mHealthmarker.NPCs[selectedID][1] - 0.5
-					end
-					E.db[mPlugin].mHealthmarker.NPCs[selectedID][2] = value
-					if value == 0 or value == 100 then
-						E.db[mPlugin].mHealthmarker.NPCs[3] = 0
-						E.db[mPlugin].mHealthmarker.NPCs[4] = 0
-					end
-				end
-			end,
-		},
-		mark3 = {
-			order = 33,
-			name = L["Healthmark 3"],
-			desc = L["0 = disable"],
-			type = "range",
-			min = 0,
-			max = 100,
-			step = 0.5,
-			disabled = function()
-				if E.db[mPlugin].mHealthmarker.NPCs[selectedID] then
-					if E.db[mPlugin].mHealthmarker.NPCs[selectedID][2] then
-						if
-							E.db[mPlugin].mHealthmarker.NPCs[selectedID][2] == 0
-							or E.db[mPlugin].mHealthmarker.NPCs[selectedID][2] == 100
-						then
-							E.db[mPlugin].mHealthmarker.NPCs[selectedID][3] = 0
-							E.db[mPlugin].mHealthmarker.NPCs[selectedID][4] = 0
-							return true
-						else
-							return false
-						end
-					else
-						return true
-					end
-				else
-					return true
-				end
-			end,
-			get = function()
-				if E.db[mPlugin].mHealthmarker.NPCs[selectedID] then
-					return E.db[mPlugin].mHealthmarker.NPCs[selectedID][3] or 0
-				end
-			end,
-			set = function(info, value)
-				if E.db[mPlugin].mHealthmarker.NPCs[selectedID] then
-					if value > E.db[mPlugin].mHealthmarker.NPCs[selectedID][2] then
-						value = E.db[mPlugin].mHealthmarker.NPCs[selectedID][2] - 0.5
-					end
-					E.db[mPlugin].mHealthmarker.NPCs[selectedID][3] = value
-					if value == 0 or value == 100 then
-						E.db[mPlugin].mHealthmarker.NPCs[selectedID][4] = 0
-					end
-				end
-			end,
-		},
-		mark4 = {
-			order = 34,
-			name = L["Healthmark 4"],
-			desc = L["0 = disable"],
-			type = "range",
-			min = 0,
-			max = 100,
-			step = 0.5,
-			disabled = function()
-				if E.db[mPlugin].mHealthmarker.NPCs[selectedID] then
-					if E.db[mPlugin].mHealthmarker.NPCs[selectedID][3] then
-						if
-							E.db[mPlugin].mHealthmarker.NPCs[selectedID][3] == 0
-							or E.db[mPlugin].mHealthmarker.NPCs[selectedID][3] == 100
-						then
-							E.db[mPlugin].mHealthmarker.NPCs[selectedID][4] = 0
-							return true
-						else
-							return false
-						end
-					else
-						return true
-					end
-				else
-					return true
-				end
-			end,
-			get = function()
-				if E.db[mPlugin].mHealthmarker.NPCs[selectedID] then
-					return E.db[mPlugin].mHealthmarker.NPCs[selectedID][4] or 0
-				end
-			end,
-			set = function(info, value)
-				if E.db[mPlugin].mHealthmarker.NPCs[selectedID] then
-					if value > E.db[mPlugin].mHealthmarker.NPCs[selectedID][3] then
-						value = E.db[mPlugin].mHealthmarker.NPCs[selectedID][3] - 0.5
-					end
-					E.db[mPlugin].mHealthmarker.NPCs[selectedID][4] = value
-				end
-			end,
-		},
-		header4 = {
-			order = 60,
-			type = "header",
-			name = L["Execute indicator"],
-		},
-		executemarkers = {
-			order = 61,
-			type = "toggle",
-			name = L["Enable"],
-			desc = L["Enable Nameplate Executeindicator"],
-			get = function(info)
-				return E.db[mPlugin].mExecutemarker.enable
-			end,
-			set = function(info, value)
-				E.db[mPlugin].mExecutemarker.enable = value
-				E:StaticPopup_Show("CONFIG_RL")
-			end,
-		},
-		autorange = {
-			order = 62,
-			type = "toggle",
-			name = L["Auto range"],
-			desc = L["Execute range based on your Class"],
-			get = function(info)
-				return E.db[mPlugin].mExecutemarker.auto
-			end,
-			set = function(info, value)
-				E.db[mPlugin].mExecutemarker.auto = value
-				E:StaticPopup_Show("CONFIG_RL")
-			end,
-		},
-		executeindicator = {
-			type = "color",
-			order = 63,
-			name = L["Indicator Color"],
-			hasAlpha = false,
-			get = function(info)
-				local t = E.db[mPlugin].mExecutemarker.indicator
-				return t.r, t.g, t.b
-			end,
-			set = function(info, r, g, b)
-				local t = E.db[mPlugin].mExecutemarker.indicator
-				t.r, t.g, t.b = r, g, b
-			end,
-		},
-		executerange = {
-			order = 64,
-			name = L["Execute Range HP%"],
-			type = "range",
-			min = 5,
-			max = 95,
-			step = 1,
-			disabled = function()
-				return E.db[mPlugin].mExecutemarker.auto
-			end,
-			get = function(info)
-				return E.db[mPlugin].mExecutemarker.range
-			end,
-			set = function(info, value)
-				E.db[mPlugin].mExecutemarker.range = value
-			end,
-		},
-	}
-end
-
-mInsert(ns.Config, mhealtmarkerOptions)

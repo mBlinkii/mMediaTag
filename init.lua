@@ -60,7 +60,10 @@ function mMT:Initialize()
 
 	-- Register Events
 	mMT:RegisterEvent("PLAYER_ENTERING_WORLD")
-	mMT:RegisterEvent("ACTIVE_TALENT_GROUP_CHANGED")
+
+	if E.db.mMT.nameplate.executemarker.auto or E.db.mMT.interruptoncd.enable then
+		mMT:RegisterEvent("ACTIVE_TALENT_GROUP_CHANGED")
+	end
 
 	-- Initialize main things
 	mMT:LoadCommands()
@@ -99,6 +102,10 @@ function mMT:Initialize()
 			mMT:CustomBackdrop()
 		end
 
+		if E.private.nameplates.enable and E.db.mMT.nameplate.healthmarker.enable or E.db.mMT.nameplate.executemarker.enable then
+			mMT:StartNameplateTools()
+		end
+
 		if E.db.mMT.instancedifficulty.enable then
 			mMT:SetupInstanceDifficulty()
 		end
@@ -135,6 +142,10 @@ end
 function mMT:ACTIVE_TALENT_GROUP_CHANGED()
 	if E.db.mMT.interruptoncd.enable then
 		mMT:UpdateInterruptSpell()
+	end
+
+	if E.db.mMT.nameplate.executemarker.auto then
+		mMT:updateAutoRange()
 	end
 end
 

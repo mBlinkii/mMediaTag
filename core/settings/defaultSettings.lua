@@ -146,6 +146,23 @@ P.mMT = {
 		customheal = nil,
 		customdd = nil,
 	},
+	nameplate = {
+		healthmarker = {
+			enable = false,
+			indicator = { r = 1, g = 0, b = 0.61 },
+			overlay = { r = 0.21, g = 0.33, b = 0.34, a = 0.85 },
+			NPCs = {},
+			overlaytexture = "mMediaTag P6",
+			useDefaults = true,
+			inInstance = false,
+		},
+		executemarker = {
+			enable = false,
+			indicator = { r = 1, g = 0.2, b = 0.2 },
+			auto = true,
+			range = 20,
+		},
+	}
 }
 
 G.mMT = {

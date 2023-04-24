@@ -132,6 +132,18 @@ local function configTable()
 				icon = "Interface\\Addons\\ElvUI_mMediaTag\\media\\system\\nameplates.tga",
 				childGroups = "tab",
 				args = {
+					healthmarker = {
+						order = 1,
+						type = "group",
+						name = L["Health markers"],
+						args = {},
+					},
+					executemarker = {
+						order = 2,
+						type = "group",
+						name = L["Execute markers"],
+						args = {},
+					},
 				},
 			},
 			cosmetic = {
