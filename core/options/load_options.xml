@@ -19,4 +19,5 @@
 	<Script file="roleicons.lua"/>
 	<Script file="healthmarker.lua"/>
 	<Script file="executemarker.lua"/>
+	<Script file="npbordercolor.lua"/>
 </Ui>

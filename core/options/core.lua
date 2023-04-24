@@ -144,6 +144,12 @@ local function configTable()
 						name = L["Execute markers"],
 						args = {},
 					},
+					bordercolor = {
+						order = 3,
+						type = "group",
+						name = L["Border Color"],
+						args = {},
+					},
 				},
 			},
 			cosmetic = {

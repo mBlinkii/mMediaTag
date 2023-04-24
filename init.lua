@@ -62,7 +62,7 @@ function mMT:Initialize()
 	mMT:RegisterEvent("PLAYER_ENTERING_WORLD")
 
 	if E.db.mMT.nameplate.executemarker.auto or E.db.mMT.interruptoncd.enable then
-		mMT:RegisterEvent("ACTIVE_TALENT_GROUP_CHANGED")
+		mMT:RegisterEvent("PLAYER_TALENT_UPDATE")
 	end
 
 	-- Initialize main things
@@ -93,6 +93,10 @@ function mMT:Initialize()
 		mMT:mChat()
 	end
 
+	if E.db.mMT.nameplate.bordercolor.glow and E.db.mMT.nameplate.bordercolor.border then
+		mMT:mNamePlateBorderColor()
+	end
+
 	if E.Retail then
 		if E.db.mMT.interruptoncd.enable then
 			mMT:mSetupCastbar()
@@ -107,6 +111,8 @@ function mMT:Initialize()
 		end
 
 		if E.db.mMT.instancedifficulty.enable then
+			mMT:RegisterEvent("UPDATE_INSTANCE_INFO")
+			mMT:RegisterEvent("CHALLENGE_MODE_START")
 			mMT:SetupInstanceDifficulty()
 		end
 
@@ -139,7 +145,7 @@ function mMT:PLAYER_ENTERING_WORLD()
 	end
 end
 
-function mMT:ACTIVE_TALENT_GROUP_CHANGED()
+function mMT:PLAYER_TALENT_UPDATE()
 	if E.db.mMT.interruptoncd.enable then
 		mMT:UpdateInterruptSpell()
 	end
@@ -149,9 +155,13 @@ function mMT:ACTIVE_TALENT_GROUP_CHANGED()
 	end
 end
 
-function mMT:UPDATE_INSTANCE_INFO() end
+function mMT:UPDATE_INSTANCE_INFO() 
+	mMT:UpdateText()
+end
 
-function mMT:CHALLENGE_MODE_START() end
+function mMT:CHALLENGE_MODE_START() 
+	mMT:UpdateText()
+end
 
 function mMT:CHAT_MSG_PARTY(event, text)
 	mMT:GetKey("PARTY", text)
