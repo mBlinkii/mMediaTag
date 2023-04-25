@@ -35,6 +35,8 @@ E.Media.MailIcons.mMediaTag18 = [[Interface\AddOns\ElvUI_mMediaTag\media\icons\m
 -- Resting Icons
 E.Media.RestIcons.mMediaTag1 = [[Interface\AddOns\ElvUI_mMediaTag\media\icons\resticon\resticon1.tga]]
 E.Media.RestIcons.mMediaTag2 = [[Interface\AddOns\ElvUI_mMediaTag\media\icons\resticon\resticon2.tga]]
+E.Media.RestIcons.mMediaTag3 = [[Interface\AddOns\\ElvUI_mMediaTag\media\icons\role\moon4.tga]]
+E.Media.RestIcons.mMediaTag4 = [[Interface\AddOns\ElvUI_mMediaTag\media\icons\role\lightning6.tga]]
 
 -- NP Arrows
 E.Media.Arrows.mMediaTag1 = [[Interface\AddOns\ElvUI_mMediaTag\media\arrow1.tga]]
@@ -69,6 +71,8 @@ E.Media.Arrows.mMediaTag29 = [[Interface\AddOns\ElvUI_mMediaTag\media\arrow29.tg
 E.Media.Arrows.mMediaTag30 = [[Interface\AddOns\ElvUI_mMediaTag\media\arrow30.tga]]
 E.Media.Arrows.mMediaTag31 = [[Interface\AddOns\ElvUI_mMediaTag\media\arrow31.tga]]
 E.Media.Arrows.mMediaTag32 = [[Interface\AddOns\ElvUI_mMediaTag\media\arrow32.tga]]
+E.Media.Arrows.mMediaTag33 = [[Interface\AddOns\ElvUI_mMediaTag\media\arrow33.tga]]
+E.Media.Arrows.mMediaTag34 = [[Interface\AddOns\ElvUI_mMediaTag\media\arrow34.tga]]
 
 -- E.Media = {
 -- 	Fonts = {},
