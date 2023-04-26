@@ -12,7 +12,7 @@ local function configTable()
 				type = "description",
 				name = "",
 				order = 1,
-				image = function() return "Interface\\Addons\\ElvUI_mMediaTag\\media\\logo\\mmt_logo.tga", 256, 128 end,
+				image = function() return "Interface\\Addons\\ElvUI_mMediaTag\\media\\logo\\mmt_logo.tga", 256, 64 end,
 			},
 			general = {
 				order = 2,
@@ -181,6 +181,12 @@ local function configTable()
 						order = 4,
 						type = "group",
 						name = L["Role Icons"],
+						args = {},
+					},
+					textures = {
+						order = 20,
+						type = "group",
+						name = L["Textures"],
 						args = {},
 					},
 				},

@@ -35,6 +35,7 @@ mMT.Version = GetAddOnMetadata(addonName, "Version")
 mMT.Name =
 	"|CFF6559F1m|r|CFF7A4DEFM|r|CFF8845ECe|r|CFFA037E9d|r|CFFA435E8i|r|CFFB32DE6a|r|CFFBC26E5T|r|CFFCB1EE3a|r|CFFDD14E0g|r"
 mMT.Icon = "|TInterface\\Addons\\ElvUI_mMediaTag\\media\\logo\\mmt_icon_round.tga:14:14:0:0|t"
+mMT.IconSquare = "|TInterface\\Addons\\ElvUI_mMediaTag\\media\\logo\\mmt_icon.tga:14:14:0:0|t"
 mMT.ClassColor = {
 	r = class[1],
 	g = class[2],
@@ -47,19 +48,98 @@ mMT.Config = {}
 
 -- Load Settings
 local function GetOptions()
-	E.Options.name = format("%s + %s |cff99ff33%.2f|r", E.Options.name, mMT.Name, mMT.Version)
+	E.Options.name = format("%s + %s %s |cff99ff33%.2f|r", E.Options.name, mMT.IconSquare, mMT.Name, mMT.Version)
 
 	for _, func in pairs(mMT.Config) do
 		func()
 	end
 end
 
+local function LoadTextures()
+	if E.db.mMT.textures.all then
+        mMT:LoadSeriesAll()
+	end
+
+	if E.db.mMT.textures.a then
+        mMT:LoadSeriesA()
+	end
+
+	if E.db.mMT.textures.b then
+        mMT:LoadSeriesB()
+	end
+
+	if E.db.mMT.textures.c then
+        mMT:LoadSeriesC()
+	end
+
+	if E.db.mMT.textures.d then
+        mMT:LoadSeriesD()
+	end
+
+	if E.db.mMT.textures.e then
+        mMT:LoadSeriesE()
+	end
+
+	if E.db.mMT.textures.f then
+        mMT:LoadSeriesF()
+	end
+
+	if E.db.mMT.textures.g then
+        mMT:LoadSeriesG()
+	end
+
+	if E.db.mMT.textures.h then
+        mMT:LoadSeriesH()
+	end
+
+	if E.db.mMT.textures.i then
+        mMT:LoadSeriesI()
+	end
+
+	if E.db.mMT.textures.j then
+        mMT:LoadSeriesJ()
+	end
+
+	if E.db.mMT.textures.k then
+        mMT:LoadSeriesK()
+	end
+
+	if E.db.mMT.textures.l then
+        mMT:LoadSeriesL()
+	end
+
+	if E.db.mMT.textures.m then
+        mMT:LoadSeriesM()
+	end
+
+	if E.db.mMT.textures.n then
+        mMT:LoadSeriesN()
+	end
+
+	if E.db.mMT.textures.o then
+        mMT:LoadSeriesO()
+	end
+
+	if E.db.mMT.textures.p then
+        mMT:LoadSeriesP()
+	end
+
+	if E.db.mMT.textures.q then
+        mMT:LoadSeriesQ()
+	end
+
+	if E.db.mMT.textures.r then
+        mMT:LoadSeriesR()
+	end
+end
 -- Initialize Addon
 function mMT:Initialize()
 	EP:RegisterPlugin(addonName, GetOptions)
 
 	-- Register Events
 	mMT:RegisterEvent("PLAYER_ENTERING_WORLD")
+
+	LoadTextures()
 
 	if E.db.mMT.nameplate.executemarker.auto or E.db.mMT.interruptoncd.enable then
 		mMT:RegisterEvent("PLAYER_TALENT_UPDATE")

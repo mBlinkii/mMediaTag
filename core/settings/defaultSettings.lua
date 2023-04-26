@@ -164,6 +164,27 @@ P.mMT = {
 		},
 		bordercolor = { border = false, glow = false },
 	},
+	textures = {
+		all = true,
+		a = true,
+		b = true,
+		c = true,
+		d = true,
+		e = true,
+		f = true,
+		g = true,
+		h = true,
+		i = true,
+		j = true,
+		k = true,
+		l = true,
+		n = true,
+		m = true,
+		o = true,
+		p = true,
+		q = true,
+		r = true,
+	},
 }
 
 G.mMT = {
