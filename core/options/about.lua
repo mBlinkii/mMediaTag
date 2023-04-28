@@ -67,26 +67,16 @@ local function configTable()
                         E:StaticPopup_Show("ELVUI_EDITBOX", nil, nil, "mmediatag@gmx.de")
                     end,
                 },
-                spacerhelp_1 = {
-                    order = 2,
-                    type = "description",
-                    name = "\n",
-                },
                 git = {
-                    order = 3,
+                    order = 2,
                     type = "execute",
                     name = L["Git"],
                     func = function()
                         E:StaticPopup_Show("ELVUI_EDITBOX", nil, nil, "https://github.com/mBlinkii/mMediaTag/tree/main")
                     end,
                 },
-                spacerhelp_2 = {
-                    order = 4,
-                    type = "description",
-                    name = "\n",
-                },
                 changelog = {
-                    order = 5,
+                    order = 3,
                     type = "execute",
                     name = L["Changelog"],
                     func = function()
