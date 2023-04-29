@@ -137,6 +137,7 @@
         "unused-local",
         "param-type-mismatch",
         "cast-local-type",
-        "missing-parameter"
+        "missing-parameter",
+        "missing-return"
     ]
 }

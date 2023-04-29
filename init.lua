@@ -45,6 +45,12 @@ mMT.ClassColor = {
 mMT.Media = {}
 mMT.Config = {}
 
+--AddonCompartment
+function ElvUI_mMediaTag_OnAddonCompartmentClick()
+	E:ToggleOptions()
+	E.Libs.AceConfigDialog:SelectGroup("ElvUI", "mMT")
+end
+
 -- Load Settings
 local function GetOptions()
 	E.Options.name = format("%s + %s %s |cff99ff33%.2f|r", E.Options.name, mMT.IconSquare, mMT.Name, mMT.Version)
