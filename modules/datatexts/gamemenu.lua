@@ -281,10 +281,10 @@ local function OnEnter(self)
 	DT.tooltip:AddLine(" ")
 
 	DT.tooltip:AddLine(" ")
-	DT.tooltip:AddLine(format("%s %s%s|r", mMT:mIcon(mMT.Media.Mous["LEFT"]), tip, L["left click to open the menu."]))
+	DT.tooltip:AddLine(format("%s %s%s|r", mMT:mIcon(mMT.Media.Mouse["LEFT"]), tip, L["left click to open the menu."]))
 	if E.Retail or E.Wrath then
 		DT.tooltip:AddLine(
-			format("%s %s%s|r", mMT:mIcon(mMT.Media.Mous["RIGHT"]), tip, L["right click to open LFD Window"])
+			format("%s %s%s|r", mMT:mIcon(mMT.Media.Mouse["RIGHT"]), tip, L["right click to open LFD Window"])
 		)
 	end
 	DT.tooltip:Show()

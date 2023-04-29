@@ -471,8 +471,8 @@ local function OnEnter(self)
 	DT.tooltip:ClearLines()
 	mTPTooltip()
 	DT.tooltip:AddLine(" ")
-	DT.tooltip:AddLine(format("%s %s%s|r", mMT:mIcon(mMT.Media.Mous["LEFT"]), tip, L["left click to open the small menu."]))
-	DT.tooltip:AddLine(format("%s %s%s|r", mMT:mIcon(mMT.Media.Mous["RIGHT"]), tip, L["right click to open the full menu."]))
+	DT.tooltip:AddLine(format("%s %s%s|r", mMT:mIcon(mMT.Media.Mouse["LEFT"]), tip, L["left click to open the small menu."]))
+	DT.tooltip:AddLine(format("%s %s%s|r", mMT:mIcon(mMT.Media.Mouse["RIGHT"]), tip, L["right click to open the full menu."]))
 	DT.tooltip:Show()
 end
 

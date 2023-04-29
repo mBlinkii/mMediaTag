@@ -271,8 +271,8 @@ local function OnEnter(self)
 	end
 
 	DT.tooltip:AddLine(" ")
-	DT.tooltip:AddLine(format("%s  %s%s|r", mMT:mIcon(mMT.Media.Mous["LEFT"]), E.db.mMT.datatextcolors.colortip.hex, L["Click to open LFD Frame"]))
-	DT.tooltip:AddLine(format("%s  %s%s|r", mMT:mIcon(mMT.Media.Mous["RIGHT"]), E.db.mMT.datatextcolors.colortip.hex, L["Click to open Great Vault"]))
+	DT.tooltip:AddLine(format("%s  %s%s|r", mMT:mIcon(mMT.Media.Mouse["LEFT"]), E.db.mMT.datatextcolors.colortip.hex, L["Click to open LFD Frame"]))
+	DT.tooltip:AddLine(format("%s  %s%s|r", mMT:mIcon(mMT.Media.Mouse["RIGHT"]), E.db.mMT.datatextcolors.colortip.hex, L["Click to open Great Vault"]))
 
 	DT.tooltip:Show()
 

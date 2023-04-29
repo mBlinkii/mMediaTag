@@ -42,7 +42,7 @@ mMT.Media.UpgradeIcons = {
 	UI7 = "Interface\\AddOns\\ElvUI_mMediaTag\\media\\icons\\datatext\\upgrade7.tga",
 }
 
-mMT.Media.Mous = {
+mMT.Media.Mouse = {
 	LEFT = "Interface\\AddOns\\ElvUI_mMediaTag\\media\\system\\mleft.tga",
 	MIDDLE = "Interface\\AddOns\\ElvUI_mMediaTag\\media\\system\\mmiddle.tga",
 	RIGHT = "Interface\\AddOns\\ElvUI_mMediaTag\\media\\system\\mright.tga",
