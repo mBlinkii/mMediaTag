@@ -7,4 +7,5 @@
 	<Script file="Teleports.lua"/>
 	<Script file="ProfessionMenu.lua"/>
 	<Script file="Dungeon.lua"/>
+	<Script file="gamemenu.lua"/>
 </Ui>

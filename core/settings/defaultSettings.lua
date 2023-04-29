@@ -185,6 +185,7 @@ P.mMT = {
 		q = true,
 		r = true,
 	},
+	gamemenu = { icon = true, menuicons = true, color = true },
 }
 
 G.mMT = {

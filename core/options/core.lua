@@ -96,6 +96,12 @@ local function configTable()
 						name = L["Dungeon"],
 						args = {},
 					},
+					gamemenu = {
+						order = 7,
+						type = "group",
+						name = L["Game Menu"],
+						args = {},
+					},
 				},
 			},
 			tags = {

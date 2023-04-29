@@ -56,8 +56,8 @@ local function OnLeave(btn)
 end
 
 -- list = tbl see below
--- text = string, Secondtext = string, icon = texture, func = function, funcOnEnter = function,
---funcOnLeave = function, isTitle = bolean, macro = macrotext, tooltip = id or var you can use for the functions, notClickable = bolean
+-- text = string, Secondtext = string, color = color string for first text, icon = texture, func = function, funcOnEnter = function,
+-- funcOnLeave = function, isTitle = bolean, macro = macrotext, tooltip = id or var you can use for the functions, notClickable = bolean
 function mMT:mDropDown(list, frame, menuparent, ButtonWidth, HideDelay)
 	autoHideDelay = HideDelay or 2
 
@@ -135,6 +135,10 @@ function mMT:mDropDown(list, frame, menuparent, ButtonWidth, HideDelay)
 		end
 
 		if list[i].text and frame.buttons[i].text then
+			if list[i].color then
+				list[i].text = format("%s%s|r", list[i].color, list[i].text)
+			end
+
 			if list[i].icon then
 				frame.buttons[i].text:SetText(
 					format("|T%s:14:14:0:0:64:64:5:59:5:59|t %s", list[i].icon, list[i].text) or ""

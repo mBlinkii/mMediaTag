@@ -127,7 +127,8 @@
         "DUNGEON_SCORE_OVERTIME_TIME",
         "class",
         "xx",
-        "Settings"
+        "Settings",
+        "UIParentLoadAddOn"
     ],
     "Lua.diagnostics.disable": [
         "redundant-parameter",
