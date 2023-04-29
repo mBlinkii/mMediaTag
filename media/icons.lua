@@ -48,6 +48,94 @@ mMT.Media.Mouse = {
 	RIGHT = "Interface\\AddOns\\ElvUI_mMediaTag\\media\\system\\mright.tga",
 }
 
+mMT.Media.AFKIcons = {
+	AFK1 = "Interface\\AddOns\\ElvUI_mMediaTag\\media\\icons\\tags\\afk1.tga",
+	AFK2 = "Interface\\AddOns\\ElvUI_mMediaTag\\media\\icons\\tags\\afk2.tga",
+	AFK3 = "Interface\\AddOns\\ElvUI_mMediaTag\\media\\icons\\tags\\afk3.tga",
+	AFK4 = "Interface\\AddOns\\ElvUI_mMediaTag\\media\\icons\\tags\\afk4.tga",
+	AFK5 = "Interface\\AddOns\\ElvUI_mMediaTag\\media\\icons\\tags\\afk5.tga",
+	AFK6 = "Interface\\AddOns\\ElvUI_mMediaTag\\media\\icons\\tags\\afk6.tga",
+	AFK7 = "Interface\\AddOns\\ElvUI_mMediaTag\\media\\icons\\tags\\afk7.tga",
+	AFK8 = "Interface\\AddOns\\ElvUI_mMediaTag\\media\\icons\\tags\\afk8.tga",
+	AFK9 = "Interface\\AddOns\\ElvUI_mMediaTag\\media\\icons\\tags\\afk9.tga",
+	AFK10 = "Interface\\AddOns\\ElvUI_mMediaTag\\media\\icons\\tags\\afk10.tga",
+	AFK11 = "Interface\\AddOns\\ElvUI_mMediaTag\\media\\icons\\tags\\afk11.tga",
+	AFK12 = "Interface\\AddOns\\ElvUI_mMediaTag\\media\\icons\\tags\\afk12.tga",
+	AFK13 = "Interface\\AddOns\\ElvUI_mMediaTag\\media\\icons\\tags\\afk13.tga",
+	AFK14 = "Interface\\AddOns\\ElvUI_mMediaTag\\media\\icons\\tags\\afk14.tga",
+	AFK15 = "Interface\\AddOns\\ElvUI_mMediaTag\\media\\icons\\tags\\afk15.tga",
+	AFK16 = "Interface\\AddOns\\ElvUI_mMediaTag\\media\\icons\\tags\\afk16.tga",
+	AFK17 = "Interface\\AddOns\\ElvUI_mMediaTag\\media\\icons\\tags\\afk17.tga",
+}
+
+mMT.Media.DNDIcons = {
+	DND1 = "Interface\\AddOns\\ElvUI_mMediaTag\\media\\icons\\tags\\dnd1.tga",
+	DND2 = "Interface\\AddOns\\ElvUI_mMediaTag\\media\\icons\\tags\\dnd2.tga",
+	DND3 = "Interface\\AddOns\\ElvUI_mMediaTag\\media\\icons\\tags\\dnd3.tga",
+	DND4 = "Interface\\AddOns\\ElvUI_mMediaTag\\media\\icons\\tags\\dnd4.tga",
+	DND5 = "Interface\\AddOns\\ElvUI_mMediaTag\\media\\icons\\tags\\dnd5.tga",
+	DND6 = "Interface\\AddOns\\ElvUI_mMediaTag\\media\\icons\\tags\\dnd6.tga",
+	DND7 = "Interface\\AddOns\\ElvUI_mMediaTag\\media\\icons\\tags\\dnd7.tga",
+	DND8 = "Interface\\AddOns\\ElvUI_mMediaTag\\media\\icons\\tags\\dnd8.tga",
+	DND9 = "Interface\\AddOns\\ElvUI_mMediaTag\\media\\icons\\tags\\dnd9.tga",
+	DND10 = "Interface\\AddOns\\ElvUI_mMediaTag\\media\\icons\\tags\\dnd10.tga",
+	DND11 = "Interface\\AddOns\\ElvUI_mMediaTag\\media\\icons\\tags\\dnd11.tga",
+	DND12 = "Interface\\AddOns\\ElvUI_mMediaTag\\media\\icons\\tags\\dnd12.tga",
+	DND13 = "Interface\\AddOns\\ElvUI_mMediaTag\\media\\icons\\tags\\dnd13.tga",
+	DND15 = "Interface\\AddOns\\ElvUI_mMediaTag\\media\\icons\\tags\\afk16.tga",
+	DND16 = "Interface\\AddOns\\ElvUI_mMediaTag\\media\\icons\\tags\\afk17.tga",
+}
+
+mMT.Media.DCIcons = {
+	DC1 = "Interface\\AddOns\\ElvUI_mMediaTag\\media\\icons\\tags\\dc1.tga",
+	DC2 = "Interface\\AddOns\\ElvUI_mMediaTag\\media\\icons\\tags\\dc2.tga",
+	DC3 = "Interface\\AddOns\\ElvUI_mMediaTag\\media\\icons\\tags\\dc3.tga",
+	DC4 = "Interface\\AddOns\\ElvUI_mMediaTag\\media\\icons\\tags\\dc4.tga",
+	DC5 = "Interface\\AddOns\\ElvUI_mMediaTag\\media\\icons\\tags\\dc5.tga",
+	DC6 = "Interface\\AddOns\\ElvUI_mMediaTag\\media\\icons\\tags\\dc6.tga",
+	DC7 = "Interface\\AddOns\\ElvUI_mMediaTag\\media\\icons\\tags\\dc7.tga",
+	DC8 = "Interface\\AddOns\\ElvUI_mMediaTag\\media\\icons\\tags\\dc8.tga",
+	DC9 = "Interface\\AddOns\\ElvUI_mMediaTag\\media\\icons\\tags\\dc9.tga",
+	OFF1 = "Interface\\AddOns\\ElvUI_mMediaTag\\media\\icons\\tags\\off1.tga",
+	OFF2 = "Interface\\AddOns\\ElvUI_mMediaTag\\media\\icons\\tags\\off2.tga",
+	OFF3 = "Interface\\AddOns\\ElvUI_mMediaTag\\media\\icons\\tags\\off3.tga",
+	OFF4 = "Interface\\AddOns\\ElvUI_mMediaTag\\media\\icons\\tags\\off4.tga",
+	OFF5 = "Interface\\AddOns\\ElvUI_mMediaTag\\media\\icons\\tags\\off5.tga",
+	OFF6 = "Interface\\AddOns\\ElvUI_mMediaTag\\media\\icons\\tags\\off6.tga",
+	OFF7 = "Interface\\AddOns\\ElvUI_mMediaTag\\media\\icons\\tags\\off7.tga",
+	OFF8 = "Interface\\AddOns\\ElvUI_mMediaTag\\media\\icons\\tags\\off8.tga",
+}
+
+mMT.Media.DeathIcons = {
+	DEATH1 = "Interface\\AddOns\\ElvUI_mMediaTag\\media\\icons\\tags\\skull1.tga",
+	DEATH2 = "Interface\\AddOns\\ElvUI_mMediaTag\\media\\icons\\tags\\skull2.tga",
+	DEATH3 = "Interface\\AddOns\\ElvUI_mMediaTag\\media\\icons\\tags\\skull3.tga",
+	DEATH4 = "Interface\\AddOns\\ElvUI_mMediaTag\\media\\icons\\tags\\skull4.tga",
+	DEATH5 = "Interface\\AddOns\\ElvUI_mMediaTag\\media\\icons\\tags\\skull5.tga",
+	DEATH6 = "Interface\\AddOns\\ElvUI_mMediaTag\\media\\icons\\tags\\skull6.tga",
+	DEATH7 = "Interface\\AddOns\\ElvUI_mMediaTag\\media\\icons\\tags\\skull7.tga",
+	DEATH8 = "Interface\\AddOns\\ElvUI_mMediaTag\\media\\icons\\tags\\skull8.tga",
+	DEATH9 = "Interface\\AddOns\\ElvUI_mMediaTag\\media\\icons\\tags\\skull9.tga",
+	DEATH10 = "Interface\\AddOns\\ElvUI_mMediaTag\\media\\icons\\tags\\skull10.tga",
+	DEATH11 = "Interface\\AddOns\\ElvUI_mMediaTag\\media\\icons\\tags\\skull11.tga",
+	DEATH12 = "Interface\\AddOns\\ElvUI_mMediaTag\\media\\icons\\tags\\skull12.tga",
+	DEATH13 = "Interface\\AddOns\\ElvUI_mMediaTag\\media\\icons\\tags\\skull13.tga",
+	DEATH14 = "Interface\\AddOns\\ElvUI_mMediaTag\\media\\icons\\tags\\stone1.tga",
+	DEATH15 = "Interface\\AddOns\\ElvUI_mMediaTag\\media\\icons\\tags\\stone2.tga",
+	DEATH16 = "Interface\\AddOns\\ElvUI_mMediaTag\\media\\icons\\tags\\stone3.tga",
+	DEATH17 = "Interface\\AddOns\\ElvUI_mMediaTag\\media\\icons\\tags\\stone4.tga",
+}
+
+mMT.Media.GhostIcons = {
+	GHOST1 = "Interface\\AddOns\\ElvUI_mMediaTag\\media\\icons\\tags\\ghost1.tga",
+	GHOST2 = "Interface\\AddOns\\ElvUI_mMediaTag\\media\\icons\\tags\\ghost2.tga",
+	GHOST3 = "Interface\\AddOns\\ElvUI_mMediaTag\\media\\icons\\tags\\ghost3.tga",
+	GHOST4 = "Interface\\AddOns\\ElvUI_mMediaTag\\media\\icons\\tags\\ghost4.tga",
+	GHOST5 = "Interface\\AddOns\\ElvUI_mMediaTag\\media\\icons\\tags\\skull1.tga",
+	GHOST6 = "Interface\\AddOns\\ElvUI_mMediaTag\\media\\icons\\tags\\skull2.tga",
+	GHOST7 = "Interface\\AddOns\\ElvUI_mMediaTag\\media\\icons\\tags\\skull3.tga",
+}
+
 mMT.Media.Role = {
 	SHIELD1 = "Interface\\AddOns\\ElvUI_mMediaTag\\media\\icons\\role\\shield1.tga",
 	SHIELD2 = "Interface\\AddOns\\ElvUI_mMediaTag\\media\\icons\\role\\shield2.tga",

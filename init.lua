@@ -229,7 +229,7 @@ function mMT:PLAYER_ENTERING_WORLD()
 		C_MythicPlus_RequestCurrentAffixes()
 	end
 
-	mMT:UpdateTagSettings()
+	--mMT:UpdateTagSettings()
 end
 
 function mMT:PLAYER_TALENT_UPDATE()

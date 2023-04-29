@@ -2,10 +2,32 @@ local mMT, E, L, V, P, G = unpack((select(2, ...)))
 
 local tinsert = tinsert
 local function configTable()
-    local icons = {}
+	local icons = {}
+        local afk = {}
+		local dnd = {}
+		local dc = {}
+		local death = {}
+		local ghost = {}
+	--}
 
-	for key, icon in pairs(mMT.Media.CombatIcons) do
-		icons[key] = E:TextureString(icon, ":14:14") .. " " .. key
+	for key, icon in pairs(mMT.Media.AFKIcons) do
+		afk[key] = E:TextureString(icon, ":14:14") .. " " .. key
+	end
+
+	for key, icon in pairs(mMT.Media.DNDIcons) do
+		dnd[key] = E:TextureString(icon, ":14:14") .. " " .. key
+	end
+
+	for key, icon in pairs(mMT.Media.DCIcons) do
+		dc[key] = E:TextureString(icon, ":14:14") .. " " .. key
+	end
+
+	for key, icon in pairs(mMT.Media.DeathIcons) do
+		death[key] = E:TextureString(icon, ":14:14") .. " " .. key
+	end
+
+	for key, icon in pairs(mMT.Media.GhostIcons) do
+		ghost[key] = E:TextureString(icon, ":14:14") .. " " .. key
 	end
 
 	E.Options.args.mMT.args.tags.args.icon.args = {
@@ -27,7 +49,7 @@ local function configTable()
 					end,
 					values = icons,
 				},
-                icon_relite = {
+				icon_relite = {
 					order = 2,
 					type = "select",
 					name = L["Rare Elite"],
@@ -39,7 +61,7 @@ local function configTable()
 					end,
 					values = icons,
 				},
-                icon_elite = {
+				icon_elite = {
 					order = 3,
 					type = "select",
 					name = L["Elite"],
@@ -51,7 +73,7 @@ local function configTable()
 					end,
 					values = icons,
 				},
-                icon_boss = {
+				icon_boss = {
 					order = 4,
 					type = "select",
 					name = L["Boss"],
@@ -65,13 +87,13 @@ local function configTable()
 				},
 			},
 		},
-        header_status = {
+		header_status = {
 			order = 1,
 			type = "group",
 			inline = true,
 			name = L["Status Icons"],
 			args = {
-                icon_afk = {
+				icon_afk = {
 					order = 1,
 					type = "select",
 					name = L["AFK"],
@@ -81,9 +103,9 @@ local function configTable()
 					set = function(info, value)
 						E.db.mMT.tags.icons.afk = value
 					end,
-					values = icons,
+					values = afk,
 				},
-                icon_dnd = {
+				icon_dnd = {
 					order = 2,
 					type = "select",
 					name = L["DND"],
@@ -93,9 +115,9 @@ local function configTable()
 					set = function(info, value)
 						E.db.mMT.tags.icons.dnd = value
 					end,
-					values = icons,
+					values = dnd,
 				},
-                icon_offline = {
+				icon_offline = {
 					order = 3,
 					type = "select",
 					name = L["Offline"],
@@ -105,9 +127,9 @@ local function configTable()
 					set = function(info, value)
 						E.db.mMT.tags.icons.offline = value
 					end,
-					values = icons,
+					values = dc,
 				},
-                icon_death = {
+				icon_death = {
 					order = 4,
 					type = "select",
 					name = L["Death"],
@@ -117,9 +139,9 @@ local function configTable()
 					set = function(info, value)
 						E.db.mMT.tags.icons.death = value
 					end,
-					values = icons,
+					values = death,
 				},
-                icon_ghost = {
+				icon_ghost = {
 					order = 5,
 					type = "select",
 					name = L["Ghost"],
@@ -129,10 +151,10 @@ local function configTable()
 					set = function(info, value)
 						E.db.mMT.tags.icons.ghost = value
 					end,
-					values = icons,
+					values = ghost,
 				},
-            },
-        },
+			},
+		},
 	}
 end
 
