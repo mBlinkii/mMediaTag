@@ -1,7 +1,4 @@
-local E, L, V, P, G = unpack(ElvUI)
-local mPlugin = "mMediaTag"
-local mMT = E:GetModule(mPlugin)
-local addon, ns = ...
+local mMT, E, L, V, P, G = unpack((select(2, ...)))
 
 local format, floor, tostring = format, floor, tostring
 
@@ -47,14 +44,143 @@ local HEALER_ICON = E:TextureString(E.Media.Textures.Healer, ":16:16")
 local DPS_ICON = E:TextureString(E.Media.Textures.DPS, ":16:16")
 local UnitFaction = {}
 
-function mMT:LoadTagSettings()
-	if E.db[mPlugin].mRoleSymbols.enable then
-		local path = "Interface\\AddOns\\ElvUI_mMediaTag\\media\\icons\\%s.tga"
-		TANK_ICON = E:TextureString(format(path, E.db[mPlugin].mRoleSymbols.tank), ":14:14")
-		HEALER_ICON = E:TextureString(format(path, E.db[mPlugin].mRoleSymbols.heal), ":14:14")
-		DPS_ICON = E:TextureString(format(path, E.db[mPlugin].mRoleSymbols.dd), ":14:14")
-	end
+local colors = {
+	rare = "|cffffffff",
+	relite = "|cffffffff",
+	elite = "|cffffffff",
+	boss = "|cffffffff",
+	afk = "|cffffffff",
+	dnd = "|cffffffff",
+	zzz = "|cffffffff",
+	tank = "|cffffffff",
+	heal = "|cffffffff",
+	level = "|cffffffff",
+}
+
+function mMT:UpdateTagSettings()
+	colors = {
+		rare = E.db.mMT.tags.colors.rare.hex,
+		relite = E.db.mMT.tags.colors.relite.hex,
+		elite = E.db.mMT.tags.colors.elite.hex,
+		boss = E.db.mMT.tags.colors.boss.hex,
+		afk = E.db.mMT.tags.colors.afk.hex,
+		dnd = E.db.mMT.tags.colors.dnd.hex,
+		zzz = E.db.mMT.tags.colors.zzz.hex,
+		tank = E.db.mMT.tags.colors.tank.hex,
+		heal = E.db.mMT.tags.colors.heal.hex,
+		level = E.db.mMT.tags.colors.level.hex,
+	}
 end
+
+local function ShortName(name)
+	local WordA, WordB, WordC, WordD, WordE, WordF, WordG = strsplit(" ", name, 6)
+	return WordG or WordF or WordE or WordD or WordC or WordB or WordA or name
+end
+
+for textFormat, length in pairs({ veryshort = 5, short = 10, medium = 15, long = 20 }) do
+	E:AddTag(format("mName:last:%s", textFormat), "UNIT_NAME_UPDATE INSTANCE_ENCOUNTER_ENGAGE_UNIT", function(unit)
+		local name = UnitName(unit)
+		if name and strfind(name, "%s") then
+			name = ShortName(name)
+		end
+
+		if name then
+			return E:ShortenString(name, length)
+		end
+	end)
+
+	E:AddTag(
+		format("mName:last:onlyininstance:%s", textFormat),
+		"UNIT_NAME_UPDATE INSTANCE_ENCOUNTER_ENGAGE_UNIT",
+		function(unit)
+			local name = UnitName(unit)
+			local inInstance, InstanceType = IsInInstance()
+			if name and strfind(name, "%s") then
+				name = inInstance and ShortName(name) or E.TagFunctions.Abbrev(name)
+			end
+
+			if name then
+				return E:ShortenString(name, length)
+			end
+		end
+	)
+
+	E:AddTag(
+		format("mName:statusicon:%s", textFormat),
+		"UNIT_NAME_UPDATE UNIT_CONNECTION PLAYER_FLAGS_CHANGED UNIT_HEALTH INSTANCE_ENCOUNTER_ENGAGE_UNIT",
+		function(unit)
+			local name = UnitName(unit)
+			if
+				UnitIsAFK(unit)
+				or UnitIsDND(unit)
+				or (not UnitIsConnected(unit))
+				or (UnitIsDead(unit))
+				or (UnitIsGhost(unit))
+			then
+				return _TAGS["mStatus:icon"](unit)
+			elseif name then
+				return E:ShortenString(name, length)
+			end
+		end
+	)
+
+	E:AddTag(
+		format("mName:status:%s", textFormat),
+		"UNIT_NAME_UPDATE UNIT_CONNECTION PLAYER_FLAGS_CHANGED UNIT_HEALTH INSTANCE_ENCOUNTER_ENGAGE_UNIT",
+		function(unit)
+			local name = UnitName(unit)
+			if
+				UnitIsAFK(unit)
+				or UnitIsDND(unit)
+				or (not UnitIsConnected(unit))
+				or (UnitIsDead(unit))
+				or (UnitIsGhost(unit))
+			then
+				return _TAGS.mStatus(unit)
+			elseif name then
+				return E:ShortenString(name, length)
+			end
+		end
+	)
+end
+
+E:AddTag(
+	"mName:statusicon",
+	"UNIT_NAME_UPDATE UNIT_CONNECTION PLAYER_FLAGS_CHANGED UNIT_HEALTH INSTANCE_ENCOUNTER_ENGAGE_UNIT",
+	function(unit)
+		local name = UnitName(unit)
+		if
+			UnitIsAFK(unit)
+			or UnitIsDND(unit)
+			or (not UnitIsConnected(unit))
+			or (UnitIsDead(unit))
+			or (UnitIsGhost(unit))
+		then
+			return _TAGS["mStatus:icon"](unit)
+		elseif name then
+			return name
+		end
+	end
+)
+
+E:AddTag(
+	"mName:status",
+	"UNIT_NAME_UPDATE UNIT_CONNECTION PLAYER_FLAGS_CHANGED UNIT_HEALTH INSTANCE_ENCOUNTER_ENGAGE_UNIT",
+	function(unit)
+		local name = UnitName(unit)
+		if
+			UnitIsAFK(unit)
+			or UnitIsDND(unit)
+			or (not UnitIsConnected(unit))
+			or (UnitIsDead(unit))
+			or (UnitIsGhost(unit))
+		then
+			return _TAGS.mStatus(unit)
+		elseif name then
+			return name
+		end
+	end
+)
 
 E:AddTag("mClass", "UNIT_CLASSIFICATION_CHANGED", function(unit)
 	local c = UnitClassification(unit)
@@ -81,6 +207,34 @@ E:AddTag("mClass:short", "UNIT_CLASSIFICATION_CHANGED", function(unit)
 		return format("%s+|r", E.db.mMediaTag.cClassElite.color)
 	elseif c == "worldboss" then
 		return format("%sB|r", E.db.mMediaTag.cClassBoss.color)
+	end
+end)
+
+E:AddTag("mClass:icon", "UNIT_CLASSIFICATION_CHANGED", function(unit)
+	local c = UnitClassification(unit)
+
+	if c == "rare" then
+		return format("%sRare|r", E.db.mMediaTag.cClassRare.color)
+	elseif c == "rareelite" then
+		return format("%sRare Elite|r", E.db.mMediaTag.cClassRareElite.color)
+	elseif c == "elite" then
+		return format("%sElite|r", E.db.mMediaTag.cClassElite.color)
+	elseif c == "worldboss" then
+		return format("%sBoss|r", E.db.mMediaTag.cClassBoss.color)
+	end
+end)
+
+E:AddTag("mClass:icon:text", "UNIT_CLASSIFICATION_CHANGED", function(unit)
+	local c = UnitClassification(unit)
+
+	if c == "rare" then
+		return format("%sRare|r", E.db.mMediaTag.cClassRare.color)
+	elseif c == "rareelite" then
+		return format("%sRare Elite|r", E.db.mMediaTag.cClassRareElite.color)
+	elseif c == "elite" then
+		return format("%sElite|r", E.db.mMediaTag.cClassElite.color)
+	elseif c == "worldboss" then
+		return format("%sBoss|r", E.db.mMediaTag.cClassBoss.color)
 	end
 end)
 
@@ -1104,229 +1258,6 @@ E:AddTag("mTargetAbbrev", "UNIT_TARGET", function(unit)
 		return E.TagFunctions.Abbrev(targetName)
 	end
 end)
-
-E:AddTag(
-	"mName:veryshort:statusicon",
-	"UNIT_NAME_UPDATE UNIT_CONNECTION PLAYER_FLAGS_CHANGED UNIT_HEALTH INSTANCE_ENCOUNTER_ENGAGE_UNIT",
-	function(unit)
-		local name = UnitName(unit)
-		if
-			UnitIsAFK(unit)
-			or UnitIsDND(unit)
-			or (not UnitIsConnected(unit))
-			or (UnitIsDead(unit))
-			or (UnitIsGhost(unit))
-		then
-			return _TAGS["mStatus:icon"](unit)
-		elseif name then
-			return E:ShortenString(name, 5)
-		end
-	end
-)
-
-E:AddTag(
-	"mName:short:statusicon",
-	"UNIT_NAME_UPDATE UNIT_CONNECTION PLAYER_FLAGS_CHANGED UNIT_HEALTH INSTANCE_ENCOUNTER_ENGAGE_UNIT",
-	function(unit)
-		local name = UnitName(unit)
-		if
-			UnitIsAFK(unit)
-			or UnitIsDND(unit)
-			or (not UnitIsConnected(unit))
-			or (UnitIsDead(unit))
-			or (UnitIsGhost(unit))
-		then
-			return _TAGS["mStatus:icon"](unit)
-		elseif name then
-			return E:ShortenString(name, 10)
-		end
-	end
-)
-
-E:AddTag(
-	"mName:medium:statusicon",
-	"UNIT_NAME_UPDATE UNIT_CONNECTION PLAYER_FLAGS_CHANGED UNIT_HEALTH INSTANCE_ENCOUNTER_ENGAGE_UNIT",
-	function(unit)
-		local name = UnitName(unit)
-		if
-			UnitIsAFK(unit)
-			or UnitIsDND(unit)
-			or (not UnitIsConnected(unit))
-			or (UnitIsDead(unit))
-			or (UnitIsGhost(unit))
-		then
-			return _TAGS["mStatus:icon"](unit)
-		elseif name then
-			return E:ShortenString(name, 15)
-		end
-	end
-)
-
-E:AddTag(
-	"mName:long:statusicon",
-	"UNIT_NAME_UPDATE UNIT_CONNECTION PLAYER_FLAGS_CHANGED UNIT_HEALTH INSTANCE_ENCOUNTER_ENGAGE_UNIT",
-	function(unit)
-		local name = UnitName(unit)
-		if
-			UnitIsAFK(unit)
-			or UnitIsDND(unit)
-			or (not UnitIsConnected(unit))
-			or (UnitIsDead(unit))
-			or (UnitIsGhost(unit))
-		then
-			return _TAGS["mStatus:icon"](unit)
-		elseif name then
-			return E:ShortenString(name, 20)
-		end
-	end
-)
-
-E:AddTag(
-	"mName:statusicon",
-	"UNIT_NAME_UPDATE UNIT_CONNECTION PLAYER_FLAGS_CHANGED UNIT_HEALTH INSTANCE_ENCOUNTER_ENGAGE_UNIT",
-	function(unit)
-		local name = UnitName(unit)
-		if
-			UnitIsAFK(unit)
-			or UnitIsDND(unit)
-			or (not UnitIsConnected(unit))
-			or (UnitIsDead(unit))
-			or (UnitIsGhost(unit))
-		then
-			return _TAGS["mStatus:icon"](unit)
-		elseif name then
-			return name
-		end
-	end
-)
-
-E:AddTag(
-	"mName:veryshort:status",
-	"UNIT_NAME_UPDATE UNIT_CONNECTION PLAYER_FLAGS_CHANGED UNIT_HEALTH INSTANCE_ENCOUNTER_ENGAGE_UNIT",
-	function(unit)
-		local name = UnitName(unit)
-		if
-			UnitIsAFK(unit)
-			or UnitIsDND(unit)
-			or (not UnitIsConnected(unit))
-			or (UnitIsDead(unit))
-			or (UnitIsGhost(unit))
-		then
-			return _TAGS.mStatus(unit)
-		elseif name then
-			return E:ShortenString(name, 5)
-		end
-	end
-)
-
-E:AddTag(
-	"mName:short:status",
-	"UNIT_NAME_UPDATE UNIT_CONNECTION PLAYER_FLAGS_CHANGED UNIT_HEALTH INSTANCE_ENCOUNTER_ENGAGE_UNIT",
-	function(unit)
-		local name = UnitName(unit)
-		if
-			UnitIsAFK(unit)
-			or UnitIsDND(unit)
-			or (not UnitIsConnected(unit))
-			or (UnitIsDead(unit))
-			or (UnitIsGhost(unit))
-		then
-			return _TAGS.mStatus(unit)
-		elseif name then
-			return E:ShortenString(name, 10)
-		end
-	end
-)
-
-E:AddTag(
-	"mName:medium:status",
-	"UNIT_NAME_UPDATE UNIT_CONNECTION PLAYER_FLAGS_CHANGED UNIT_HEALTH INSTANCE_ENCOUNTER_ENGAGE_UNIT",
-	function(unit)
-		local name = UnitName(unit)
-		if
-			UnitIsAFK(unit)
-			or UnitIsDND(unit)
-			or (not UnitIsConnected(unit))
-			or (UnitIsDead(unit))
-			or (UnitIsGhost(unit))
-		then
-			return _TAGS.mStatus(unit)
-		elseif name then
-			return E:ShortenString(name, 15)
-		end
-	end
-)
-
-E:AddTag(
-	"mName:long:status",
-	"UNIT_NAME_UPDATE UNIT_CONNECTION PLAYER_FLAGS_CHANGED UNIT_HEALTH INSTANCE_ENCOUNTER_ENGAGE_UNIT",
-	function(unit)
-		local name = UnitName(unit)
-		if
-			UnitIsAFK(unit)
-			or UnitIsDND(unit)
-			or (not UnitIsConnected(unit))
-			or (UnitIsDead(unit))
-			or (UnitIsGhost(unit))
-		then
-			return _TAGS.mStatus(unit)
-		elseif name then
-			return E:ShortenString(name, 20)
-		end
-	end
-)
-
-E:AddTag(
-	"mName:status",
-	"UNIT_NAME_UPDATE UNIT_CONNECTION PLAYER_FLAGS_CHANGED UNIT_HEALTH INSTANCE_ENCOUNTER_ENGAGE_UNIT",
-	function(unit)
-		local name = UnitName(unit)
-		if
-			UnitIsAFK(unit)
-			or UnitIsDND(unit)
-			or (not UnitIsConnected(unit))
-			or (UnitIsDead(unit))
-			or (UnitIsGhost(unit))
-		then
-			return _TAGS.mStatus(unit)
-		elseif name then
-			return name
-		end
-	end
-)
-local function ShortName(name)
-	local WordA, WordB, WordC, WordD, WordE, WordF, WordG = strsplit(" ", name, 6)
-	return WordG or WordF or WordE or WordD or WordC or WordB or WordA or name
-end
-
-for textFormat, length in pairs({ veryshort = 5, short = 10, medium = 15, long = 20 }) do
-	E:AddTag(format("mName:last:%s", textFormat), "UNIT_NAME_UPDATE INSTANCE_ENCOUNTER_ENGAGE_UNIT", function(unit)
-		local name = UnitName(unit)
-		if name and strfind(name, "%s") then
-			name = ShortName(name)
-		end
-
-		if name then
-			return E:ShortenString(name, length)
-		end
-	end)
-
-	E:AddTag(
-		format("mName:last:onlyininstance:%s", textFormat),
-		"UNIT_NAME_UPDATE INSTANCE_ENCOUNTER_ENGAGE_UNIT",
-		function(unit)
-			local name = UnitName(unit)
-			local inInstance, InstanceType = IsInInstance()
-			if name and strfind(name, "%s") then
-				name = inInstance and ShortName(name) or E.TagFunctions.Abbrev(name)
-			end
-
-			if name then
-				return E:ShortenString(name, length)
-			end
-		end
-	)
-end
 
 E:AddTag(
 	"mPowerPercent",

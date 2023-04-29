@@ -186,6 +186,71 @@ P.mMT = {
 		r = true,
 	},
 	gamemenu = { icon = true, menuicons = true, color = true },
+	tags = {
+		icons = { dnd = "DND1", offline = "Offline1", afk = "AFK1", death = "SKULL2", ghost = "SKULL10", rare = "", relite = "", elite = "", boss = "", },
+		colors = {
+			rare = {
+				b = 0.77,
+				hex = "|cff8356c5",
+				g = 0.33,
+				r = 0.51,
+			},
+			relite = {
+				b = 0.78,
+				hex = "|cffab54c9",
+				g = 0.32,
+				r = 0.67,
+			},
+			elite = {
+				b = 0.83,
+				hex = "|cffff68d5",
+				g = 0.40,
+				r = 1,
+			},
+			boss = {
+				b = 0.31,
+				hex = "|cffe52b50",
+				g = 0.16,
+				r = 0.89,
+			},
+			afk = {
+				b = 0.19,
+				hex = "|cffff0b31",
+				g = 0.04,
+				r = 1,
+			},
+			dnd = {
+				b = 0.01,
+				hex = "|cffff6a04",
+				g = 0.41,
+				r = 1,
+			},
+			zzz = {
+				b = 0.04,
+				hex = "|cffffa30c",
+				g = 0.82,
+				r = 0.96,
+			},
+			tank = {
+				b = 1,
+				hex = "|cff009dff",
+				g = 0.63,
+				r = 1,
+			},
+			heal = {
+				b = 0.64,
+				hex = "|cff00ffa4",
+				g = 1,
+				r = 0,
+			},
+			level = {
+				b = 0.24,
+				hex = "|cffff033e",
+				g = 0.01,
+				r = 1,
+			},
+		},
+	},
 }
 
 G.mMT = {

@@ -6,7 +6,7 @@ local function configTable()
 	local icons = {}
 
 	for key, icon in pairs(mMT.Media.ChatIcons) do
-		icons[key] = E:TextureString(icon, ":14:14")
+		icons[key] = E:TextureString(icon, ":14:14") .. " " .. key
 	end
 
 	E.Options.args.mMT.args.general.args.chat.args = {

@@ -22,4 +22,6 @@
 	<Script file="npbordercolor.lua"/>
 	<Script file="textures.lua"/>
 	<Script file="gamemenu.lua"/>
+	<Script file="tagcolors.lua"/>
+	<Script file="tagicons.lua"/>
 </Ui>

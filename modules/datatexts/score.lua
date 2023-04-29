@@ -20,8 +20,6 @@ local C_MythicPlus_GetOwnedKeystoneLevel = C_MythicPlus.GetOwnedKeystoneLevel
 local C_DateAndTime_GetSecondsUntilWeeklyReset = C_DateAndTime.GetSecondsUntilWeeklyReset
 
 local tablesort = sort
-local tablegetn = getn
-
 local displayString = ""
 local tyrannical = C_ChallengeMode_GetAffixInfo(9)
 local fortified = C_ChallengeMode_GetAffixInfo(10)

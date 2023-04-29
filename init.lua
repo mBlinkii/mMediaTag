@@ -228,6 +228,8 @@ function mMT:PLAYER_ENTERING_WORLD()
 		C_MythicPlus_RequestMapInfo()
 		C_MythicPlus_RequestCurrentAffixes()
 	end
+
+	mMT:UpdateTagSettings()
 end
 
 function mMT:PLAYER_TALENT_UPDATE()
@@ -240,11 +242,11 @@ function mMT:PLAYER_TALENT_UPDATE()
 	end
 end
 
-function mMT:UPDATE_INSTANCE_INFO() 
+function mMT:UPDATE_INSTANCE_INFO()
 	mMT:UpdateText()
 end
 
-function mMT:CHALLENGE_MODE_START() 
+function mMT:CHALLENGE_MODE_START()
 	mMT:UpdateText()
 end
 

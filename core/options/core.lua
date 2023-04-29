@@ -111,6 +111,18 @@ local function configTable()
 				icon = "Interface\\Addons\\ElvUI_mMediaTag\\media\\system\\tags.tga",
 				childGroups = "tab",
 				args = {
+					color = {
+						order = 1,
+						type = "group",
+						name = L["Colors"],
+						args = {},
+					},
+					icon = {
+						order = 2,
+						type = "group",
+						name = L["Icons"],
+						args = {},
+					},
 				},
 			},
 			dock = {
