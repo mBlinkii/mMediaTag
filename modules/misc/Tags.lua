@@ -57,6 +57,19 @@ local colors = {
 	level = "|cffffffff",
 }
 
+local icons = {
+	rare = "|TInterface\\Addons\\ElvUI_mMediaTag\\media\\logo\\mmt_icon.tga:14:14|t",
+	relite = "|TInterface\\Addons\\ElvUI_mMediaTag\\media\\logo\\mmt_icon.tga:14:14|t",
+	elite = "|TInterface\\Addons\\ElvUI_mMediaTag\\media\\logo\\mmt_icon.tga:14:14|t",
+	boss = "|TInterface\\Addons\\ElvUI_mMediaTag\\media\\logo\\mmt_icon.tga:14:14|t",
+	afk = "|TInterface\\Addons\\ElvUI_mMediaTag\\media\\logo\\mmt_icon.tga:14:14|t",
+	dnd = "|TInterface\\Addons\\ElvUI_mMediaTag\\media\\logo\\mmt_icon.tga:14:14|t",
+	dc = "|TInterface\\Addons\\ElvUI_mMediaTag\\media\\logo\\mmt_icon.tga:14:14|t",
+	death = "|TInterface\\Addons\\ElvUI_mMediaTag\\media\\logo\\mmt_icon.tga:14:14|t",
+	ghost = "|TInterface\\Addons\\ElvUI_mMediaTag\\media\\logo\\mmt_icon.tga:14:14|t",
+	pvp = "|TInterface\\Addons\\ElvUI_mMediaTag\\media\\logo\\mmt_icon.tga:14:14|t",
+}
+
 function mMT:UpdateTagSettings()
 	colors = {
 		rare = E.db.mMT.tags.colors.rare.hex,
@@ -69,6 +82,19 @@ function mMT:UpdateTagSettings()
 		tank = E.db.mMT.tags.colors.tank.hex,
 		heal = E.db.mMT.tags.colors.heal.hex,
 		level = E.db.mMT.tags.colors.level.hex,
+	}
+
+	icons = {
+		rare = format("|T%s:14:14|t", mMT.Media.ClassIcons[E.db.mMT.tags.icons.rare]),
+		relite = format("|T%s:14:14|t", mMT.Media.ClassIcons[E.db.mMT.tags.icons.relite]),
+		elite = format("|T%s:14:14|t", mMT.Media.ClassIcons[E.db.mMT.tags.icons.elite]),
+		boss = format("|T%s:14:14|t", mMT.Media.ClassIcons[E.db.mMT.tags.icons.boss]),
+		afk = format("|T%s:14:14|t", mMT.Media.AFKIcons[E.db.mMT.tags.icons.afk]),
+		dnd = format("|T%s:14:14|t", mMT.Media.DNDIcons[E.db.mMT.tags.icons.dnd]),
+		dc = format("|T%s:14:14|t", mMT.Media.DCIcons[E.db.mMT.tags.icons.dc]),
+		death = format("|T%s:14:14|t", mMT.Media.DeathIcons[E.db.mMT.tags.icons.death]),
+		ghost = format("|T%s:14:14|t", mMT.Media.GhostIcons[E.db.mMT.tags.icons.ghost]),
+		pvp = format("|T%s:14:14|t", "Interface\\AddOns\\ElvUI_mMediaTag\\media\\icons\\tags\\pvp.tga"),
 	}
 end
 

@@ -2,13 +2,16 @@ local mMT, E, L, V, P, G = unpack((select(2, ...)))
 
 local tinsert = tinsert
 local function configTable()
-	local icons = {}
-        local afk = {}
-		local dnd = {}
-		local dc = {}
-		local death = {}
-		local ghost = {}
-	--}
+	local class = {}
+	local afk = {}
+	local dnd = {}
+	local dc = {}
+	local death = {}
+	local ghost = {}
+
+    for key, icon in pairs(mMT.Media.ClassIcons) do
+		class[key] = E:TextureString(icon, ":14:14") .. " " .. key
+	end
 
 	for key, icon in pairs(mMT.Media.AFKIcons) do
 		afk[key] = E:TextureString(icon, ":14:14") .. " " .. key
@@ -47,7 +50,7 @@ local function configTable()
 					set = function(info, value)
 						E.db.mMT.tags.icons.rare = value
 					end,
-					values = icons,
+					values = class,
 				},
 				icon_relite = {
 					order = 2,
@@ -59,7 +62,7 @@ local function configTable()
 					set = function(info, value)
 						E.db.mMT.tags.icons.relite = value
 					end,
-					values = icons,
+					values = class,
 				},
 				icon_elite = {
 					order = 3,
@@ -71,7 +74,7 @@ local function configTable()
 					set = function(info, value)
 						E.db.mMT.tags.icons.elite = value
 					end,
-					values = icons,
+					values = class,
 				},
 				icon_boss = {
 					order = 4,
@@ -83,7 +86,7 @@ local function configTable()
 					set = function(info, value)
 						E.db.mMT.tags.icons.boss = value
 					end,
-					values = icons,
+					values = class,
 				},
 			},
 		},
