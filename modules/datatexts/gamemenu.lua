@@ -2,38 +2,21 @@ local mMT, E, L, V, P, G = unpack((select(2, ...)))
 local DT = E:GetModule("DataTexts")
 
 local _G = _G
-local mod = mod
-local next = next
 local sort = sort
-local floor = floor
 local tinsert = tinsert
-local unpack = unpack
-local hooksecurefunc = hooksecurefunc
-local utf8sub = string.utf8sub
 
 local CloseAllWindows = CloseAllWindows
 local CloseMenus = CloseMenus
 local CreateFrame = CreateFrame
-local GetMinimapZoneText = GetMinimapZoneText
-local GetTime = GetTime
-local GetZonePVPInfo = GetZonePVPInfo
 local HideUIPanel = HideUIPanel
 local InCombatLockdown = InCombatLockdown
 local IsAddOnLoaded = IsAddOnLoaded
-local IsShiftKeyDown = IsShiftKeyDown
-local PlaySound = PlaySound
 local ShowUIPanel = ShowUIPanel
 local ToggleFrame = ToggleFrame
 local UIParentLoadAddOn = UIParentLoadAddOn
-
 local MainMenuMicroButton = MainMenuMicroButton
 local MainMenuMicroButton_SetNormal = MainMenuMicroButton_SetNormal
 
-local WorldMapFrame = _G.WorldMapFrame
-local MinimapCluster = _G.MinimapCluster
-local Minimap = _G.Minimap
-
-local IndicatorLayout
 local menuList = nil
 local menuFrame = CreateFrame("Frame", "mSystemMenu", E.UIParent)
 menuFrame:SetTemplate("Transparent", true)

@@ -19,8 +19,8 @@ local C_MythicPlus_GetSeasonBestForMap = C_MythicPlus.GetSeasonBestForMap
 local C_MythicPlus_GetOwnedKeystoneLevel = C_MythicPlus.GetOwnedKeystoneLevel
 local C_DateAndTime_GetSecondsUntilWeeklyReset = C_DateAndTime.GetSecondsUntilWeeklyReset
 
-local tablesort = table.sort
-local tablegetn = table.getn
+local tablesort = sort
+local tablegetn = getn
 
 local displayString = ""
 local tyrannical = C_ChallengeMode_GetAffixInfo(9)
@@ -171,9 +171,9 @@ local function GetDungeonScores()
 	if ScoreTable and map_table then
 		if E.db.mMT.mpscore.upgrade then
 			SortWeeklyScore(ScoreTable)
-			ScoreTable[map_table[tablegetn(map_table)]].upgrade = true
-			ScoreTable[map_table[tablegetn(map_table) - 1]].upgrade = true
-			ScoreTable[map_table[tablegetn(map_table) - 2]].upgrade = true
+			ScoreTable[map_table[#map_table]].upgrade = true
+			ScoreTable[map_table[#map_table - 1]].upgrade = true
+			ScoreTable[map_table[#map_table - 2]].upgrade = true
 		end
 
 		if E.db.mMT.mpscore.sort == "SCORE" and weehlyAffixName then
