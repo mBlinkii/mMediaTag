@@ -88,7 +88,7 @@ function mMT:UpdateTagSettings()
 		boss = format("|T%s:14:14|t", mMT.Media.ClassIcons[E.db.mMT.tags.icons.boss]),
 		afk = format("|T%s:14:14|t", mMT.Media.AFKIcons[E.db.mMT.tags.icons.afk]),
 		dnd = format("|T%s:14:14|t", mMT.Media.DNDIcons[E.db.mMT.tags.icons.dnd]),
-		dc = format("|T%s:14:14|t", mMT.Media.DCIcons[E.db.mMT.tags.icons.dc]),
+		dc = format("|T%s:14:14|t", mMT.Media.DCIcons[E.db.mMT.tags.icons.offline]),
 		death = format("|T%s:14:14|t", mMT.Media.DeathIcons[E.db.mMT.tags.icons.death]),
 		ghost = format("|T%s:14:14|t", mMT.Media.GhostIcons[E.db.mMT.tags.icons.ghost]),
 		pvp = format("|T%s:14:14|t", "Interface\\AddOns\\ElvUI_mMediaTag\\media\\icons\\tags\\pvp.tga"),
@@ -776,19 +776,19 @@ E:AddTag(
 )
 
 E:AddTagInfo("mHealth", mMT.Name .. " " .. L["Health"], L["Health changes between maximum Health and Percent in combat."])
-E:AddTagInfo("mHealth:short", mMT.Name .. " " .. L["Class"], L["Shortened version of"] .. " mHealth.")
+E:AddTagInfo("mHealth:short", mMT.Name .. " " .. L["Health"], L["Shortened version of"] .. " mHealth.")
 E:AddTagInfo("mHealth:icon", mMT.Name .. " " .. L["Health"], L["Health changes between maximum Health and Percent in combat, with Status Icons."])
-E:AddTagInfo("mHealth:icon:short", mMT.Name .. " " .. L["Class"], L["Shortened version of"] .. " mHealth:icon.")
+E:AddTagInfo("mHealth:icon:short", mMT.Name .. " " .. L["Health"], L["Shortened version of"] .. " mHealth:icon.")
 E:AddTagInfo("mHealth:current-percent", mMT.Name .. " " .. L["Health"], L["Health changes between maximum Health and Current Health - Percent in combat."])
-E:AddTagInfo("mHealth:current-percent:short", mMT.Name .. " " .. L["Class"], L["Shortened version of"] .. " mHealth:current-percent.")
+E:AddTagInfo("mHealth:current-percent:short", mMT.Name .. " " .. L["Health"], L["Shortened version of"] .. " mHealth:current-percent.")
 E:AddTagInfo("mHealth:nodeath", mMT.Name .. " " .. L["Health"], L["If the unit is alive, its health will change between maximum health and percentage in combat."])
-E:AddTagInfo("mHealth:nodeath:short", mMT.Name .. " " .. L["Class"], L["Shortened version of"] .. " mHealth:nodeath.")
-E:AddTagInfo("mHealth:nodeath:current-percent", mMT.Name .. " " .. L["Class"], L["Same as"] .. " mHealth:current-percen " .. L["and"] .. " mHealth:nodeath ")
-E:AddTagInfo("mHealth:nodeath:short:current-percent", mMT.Name .. " " .. L["Class"], L["Shortened version of"] .. " mHealth:nodeath:current-percent.")
+E:AddTagInfo("mHealth:nodeath:short", mMT.Name .. " " .. L["Health"], L["Shortened version of"] .. " mHealth:nodeath.")
+E:AddTagInfo("mHealth:nodeath:current-percent", mMT.Name .. " " .. L["Health"], L["Same as"] .. " mHealth:current-percen " .. L["and"] .. " mHealth:nodeath ")
+E:AddTagInfo("mHealth:nodeath:short:current-percent", mMT.Name .. " " .. L["Health"], L["Shortened version of"] .. " mHealth:nodeath:current-percent.")
 E:AddTagInfo("mHealth:NoAFK", mMT.Name .. " " .. L["Health"], L["Health changes between maximum Health and Percent in combat, without AFK Status."])
-E:AddTagInfo("mHealth:NoAFK:short", mMT.Name .. " " .. L["Class"], L["Shortened version of"] .. " mHealth:NoAFK.")
-E:AddTagInfo("mHealth:NoAFK:current-percent", mMT.Name .. " " .. L["Class"], L["Same as"] .. " mHealth:current-percen " .. L["and"] .. " mHealth:NoAFK ")
-E:AddTagInfo("mHealth:NoAFK:short:current-percent", mMT.Name .. " " .. L["Class"], L["Shortened version of"] .. " mHealth:NoAFK:current-percent.")
+E:AddTagInfo("mHealth:NoAFK:short", mMT.Name .. " " .. L["Health"], L["Shortened version of"] .. " mHealth:NoAFK.")
+E:AddTagInfo("mHealth:NoAFK:current-percent", mMT.Name .. " " .. L["Health"], L["Same as"] .. " mHealth:current-percen " .. L["and"] .. " mHealth:NoAFK ")
+E:AddTagInfo("mHealth:NoAFK:short:current-percent", mMT.Name .. " " .. L["Health"], L["Shortened version of"] .. " mHealth:NoAFK:current-percent.")
 
 local UnitmDeathCount = {}
 local mID = 0

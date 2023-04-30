@@ -129,7 +129,10 @@
         "xx",
         "Settings",
         "UIParentLoadAddOn",
-        "DAMAGER"
+        "DAMAGER",
+        "PVEFrameTab1",
+        "PVEFrameTab3",
+        "UISpecialFrames"
     ],
     "Lua.diagnostics.disable": [
         "redundant-parameter",

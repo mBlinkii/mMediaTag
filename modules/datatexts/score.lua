@@ -220,6 +220,9 @@ end
 local function OnClick(self, button)
 	if button == "LeftButton" then
 		_G.ToggleLFDParentFrame()
+	elseif button == "MiddleButton" then
+			_G.ToggleLFDParentFrame()
+			_G.PVEFrameTab3:Click()
 	else
 		if not _G.WeeklyRewardsFrame then
 			LoadAddOn("Blizzard_WeeklyRewards")
@@ -272,6 +275,7 @@ local function OnEnter(self)
 
 	DT.tooltip:AddLine(" ")
 	DT.tooltip:AddLine(format("%s  %s%s|r", mMT:mIcon(mMT.Media.Mouse["LEFT"]), E.db.mMT.datatextcolors.colortip.hex, L["Click to open LFD Frame"]))
+	DT.tooltip:AddLine(format("%s  %s%s|r", mMT:mIcon(mMT.Media.Mouse["LEFT"]), E.db.mMT.datatextcolors.colortip.hex, L["Middleclick to open M+ Frame"]))
 	DT.tooltip:AddLine(format("%s  %s%s|r", mMT:mIcon(mMT.Media.Mouse["RIGHT"]), E.db.mMT.datatextcolors.colortip.hex, L["Click to open Great Vault"]))
 
 	DT.tooltip:Show()
