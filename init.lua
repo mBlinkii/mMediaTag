@@ -229,7 +229,8 @@ function mMT:PLAYER_ENTERING_WORLD()
 		C_MythicPlus_RequestCurrentAffixes()
 	end
 
-	--mMT:UpdateTagSettings()
+	mMT:UpdateTagSettings()
+	mMT:TagDeathCount()
 end
 
 function mMT:PLAYER_TALENT_UPDATE()
@@ -244,6 +245,7 @@ end
 
 function mMT:UPDATE_INSTANCE_INFO()
 	mMT:UpdateText()
+	mMT:TagDeathCount()
 end
 
 function mMT:CHALLENGE_MODE_START()

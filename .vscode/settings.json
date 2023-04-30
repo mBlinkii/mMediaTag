@@ -128,7 +128,8 @@
         "class",
         "xx",
         "Settings",
-        "UIParentLoadAddOn"
+        "UIParentLoadAddOn",
+        "DAMAGER"
     ],
     "Lua.diagnostics.disable": [
         "redundant-parameter",
