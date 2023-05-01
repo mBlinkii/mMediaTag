@@ -9,8 +9,6 @@ local format = format
 local _G = _G
 local ObjectiveTrackerFrame = _G.ObjectiveTrackerFrame
 local ObjectiveTrackerBlocksFrame = _G.ObjectiveTrackerBlocksFrame
---local WORLD_QUEST_TRACKER_MODULE = _G.WORLD_QUEST_TRACKER_MODULE
---local BONUS_OBJECTIVE_TRACKER_MODULE = _G.BONUS_OBJECTIVE_TRACKER_MODULE
 local maxNumQuestsCanAccept = 35 --MAX_QUESTS
 local HeaderTitel = ObjectiveTrackerBlocksFrame.QuestHeader.Text:GetText()
 local width = _G.ObjectiveTrackerFrame:GetWidth()
@@ -538,25 +536,6 @@ function mMT:InitializemOBT()
 		hooksecurefunc("ObjectiveTracker_Update", SkinOBT)
 		hooksecurefunc(_G.SCENARIO_CONTENT_TRACKER_MODULE, "UpdateCriteria", SkinOBTScenario)
 		hooksecurefunc(_G.SCENARIO_CONTENT_TRACKER_MODULE, "Update", SkinOBTScenarioBlock)
-		-- hooksecurefunc('ObjectiveTracker_Expand',TrackerStateChanged)
-		-- hooksecurefunc('ObjectiveTracker_Collapse',TrackerStateChanged)
-		-- hooksecurefunc('QuestObjectiveSetupBlockButton_Item', HandleItemButton)
-		-- hooksecurefunc(_G.BONUS_OBJECTIVE_TRACKER_MODULE, "AddObjective", HandleItemButton)
-		-- hooksecurefunc('BonusObjectiveTrackerProgressBar_SetValue',ColorProgressBars)			--[Color]: Bonus Objective Progress Bar
-		-- hooksecurefunc('ObjectiveTrackerProgressBar_SetValue',ColorProgressBars)				--[Color]: Quest Progress Bar
-		-- hooksecurefunc('ScenarioTrackerProgressBar_SetValue',ColorProgressBars)					--[Color]: Scenario Progress Bar
-		-- hooksecurefunc('QuestObjectiveSetupBlockButton_AddRightButton',PositionFindGroupButton)	--[Move]: The eye & quest item to the left of the eye
-		-- hooksecurefunc('ObjectiveTracker_CheckAndHideHeader',SkinOjectiveTrackerHeaders)		--[Skin]: Module Headers
-		-- hooksecurefunc('QuestObjectiveSetupBlockButton_FindGroup',SkinFindGroupButton)			--[Skin]: The eye
-		-- hooksecurefunc(_G.BONUS_OBJECTIVE_TRACKER_MODULE,'AddProgressBar',SkinProgressBars)		--[Skin]: Bonus Objective Progress Bar
-		-- hooksecurefunc(_G.WORLD_QUEST_TRACKER_MODULE,'AddProgressBar',SkinProgressBars)			--[Skin]: World Quest Progress Bar
-		-- hooksecurefunc(_G.DEFAULT_OBJECTIVE_TRACKER_MODULE,'AddProgressBar',SkinProgressBars)	--[Skin]: Quest Progress Bar
-		-- hooksecurefunc(_G.SCENARIO_TRACKER_MODULE,'AddProgressBar',SkinProgressBars)			--[Skin]: Scenario Progress Bar
-		-- hooksecurefunc(_G.CAMPAIGN_QUEST_TRACKER_MODULE,'AddProgressBar',SkinProgressBars)		--[Skin]: Campaign Progress Bar
-		-- hooksecurefunc(_G.QUEST_TRACKER_MODULE,'AddProgressBar',SkinProgressBars)				--[Skin]: Quest Progress Bar
-		-- hooksecurefunc(_G.QUEST_TRACKER_MODULE,'AddTimerBar',SkinTimerBars)						--[Skin]: Quest Timer Bar
-		-- hooksecurefunc(_G.SCENARIO_TRACKER_MODULE,'AddTimerBar',SkinTimerBars)					--[Skin]: Scenario Timer Bar
-		-- hooksecurefunc(_G.ACHIEVEMENT_TRACKER_MODULE,'AddTimerBar',SkinTimerBars)				--[Skin]: Achievement Timer Bar
 		if E.db.mMT.objectivetracker.text.backdrop then
 			hooksecurefunc("BonusObjectiveTrackerProgressBar_SetValue", mBackdropBars) --[Color]: Bonus Objective Progress Bar
 			hooksecurefunc("ObjectiveTrackerProgressBar_SetValue", mBackdropBars) --[Color]: Quest Progress Bar

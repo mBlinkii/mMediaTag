@@ -293,6 +293,15 @@ P.mMT = {
 		},
 		dash = { style = "none", texture = "STAR11", customstring = ">" },
 	},
+	datatextcurrency = {
+		icon = true,
+		short = true,
+		name = false,
+		style = "auto",
+		showmax = false,
+		hide = false,
+		bag = false,
+	},
 }
 
 G.mMT = {

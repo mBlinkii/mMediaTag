@@ -8,4 +8,8 @@
 	<Script file="ProfessionMenu.lua"/>
 	<Script file="Dungeon.lua"/>
 	<Script file="gamemenu.lua"/>
+	<Script file="TimewarpedBadge.lua"/>
+	<Script file="ElementalOverflow.lua"/>
+	<Script file="DragonIslesSupplies.lua"/>
+	<Script file="Conquest.lua"/>
 </Ui>

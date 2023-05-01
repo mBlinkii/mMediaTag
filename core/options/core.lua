@@ -102,6 +102,12 @@ local function configTable()
 						name = L["Game Menu"],
 						args = {},
 					},
+					currency = {
+						order = 7,
+						type = "group",
+						name = L["Currency"],
+						args = {},
+					},
 				},
 			},
 			tags = {

@@ -25,4 +25,5 @@
 	<Script file="tagcolors.lua"/>
 	<Script file="tagicons.lua"/>
 	<Script file="objectivetracker.lua"/>
+	<Script file="currency.lua"/>
 </Ui>
