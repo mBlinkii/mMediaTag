@@ -61,10 +61,12 @@ local interruptSpellList = {
 	[1467] = 351338,
 	[1468] = 351338,
 }
-function _G.mMediaTag_interruptOnCD()
+function mMT:mMediaTag_interruptOnCD()
 	if interruptSpellID then
 		local cdStart, _, enabled, _ = GetSpellCooldown(interruptSpellID)
 		return (enabled == 0 and true or false) or (E.db.mMT.interruptoncd.outofrange and OutOfRange)
+	else
+		return false
 	end
 end
 

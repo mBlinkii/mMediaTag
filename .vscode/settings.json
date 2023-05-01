@@ -132,7 +132,15 @@
         "DAMAGER",
         "PVEFrameTab1",
         "PVEFrameTab3",
-        "UISpecialFrames"
+        "UISpecialFrames",
+        "NONE",
+        "EventTrace",
+        "BuffFrame",
+        "TableAttributeDisplay",
+        "ObjectiveTrackerFrame",
+        "ObjectiveTracker_UpdateHeight",
+        "EditModeManagerFrame",
+        "SCENARIO_CONTENT_TRACKER_MODULE"
     ],
     "Lua.diagnostics.disable": [
         "redundant-parameter",

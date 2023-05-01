@@ -68,6 +68,33 @@ mMT.Media.AFKIcons = {
 	AFK17 = "Interface\\AddOns\\ElvUI_mMediaTag\\media\\icons\\tags\\afk17.tga",
 }
 
+mMT.Media.DashIcons = {
+	DASH1 = "Interface\\AddOns\\ElvUI_mMediaTag\\media\\icons\\misc\\dash1.tga",
+	DASH2 = "Interface\\AddOns\\ElvUI_mMediaTag\\media\\icons\\misc\\dash2.tga",
+	DASH3 = "Interface\\AddOns\\ElvUI_mMediaTag\\media\\icons\\misc\\dash3.tga",
+	DASH4 = "Interface\\AddOns\\ElvUI_mMediaTag\\media\\icons\\misc\\dash4.tga",
+	STAR1 = "Interface\\AddOns\\ElvUI_mMediaTag\\media\\icons\\role\\star1.tga",
+	STAR8 = "Interface\\AddOns\\ElvUI_mMediaTag\\media\\icons\\role\\star7.tga",
+	STAR9 = "Interface\\AddOns\\ElvUI_mMediaTag\\media\\icons\\role\\star8.tga",
+	STAR10 = "Interface\\AddOns\\ElvUI_mMediaTag\\media\\icons\\role\\star9.tga",
+	STAR11 = "Interface\\AddOns\\ElvUI_mMediaTag\\media\\icons\\misc\\star.tga"
+
+}
+
+mMT.Media.MiscIcons = {
+	DONE1 = "Interface\\AddOns\\ElvUI_mMediaTag\\media\\icons\\misc\\done1.tga",
+	DONE2 = "Interface\\AddOns\\ElvUI_mMediaTag\\media\\icons\\misc\\done2.tga",
+	DONE3 = "Interface\\AddOns\\ElvUI_mMediaTag\\media\\icons\\misc\\done3.tga",
+	DONE4 = "Interface\\AddOns\\ElvUI_mMediaTag\\media\\icons\\misc\\done4.tga",
+	DONE5 = "Interface\\AddOns\\ElvUI_mMediaTag\\media\\icons\\misc\\done5.tga",
+	DONE6 = "Interface\\AddOns\\ElvUI_mMediaTag\\media\\icons\\misc\\done6.tga",
+	CLOSE1 = "Interface\\AddOns\\ElvUI_mMediaTag\\media\\icons\\misc\\x1.tga",
+	CLOSE2 = "Interface\\AddOns\\ElvUI_mMediaTag\\media\\icons\\misc\\x2.tga",
+	CLOSE3 = "Interface\\AddOns\\ElvUI_mMediaTag\\media\\icons\\misc\\x3.tga",
+	CLOSE4 = "Interface\\AddOns\\ElvUI_mMediaTag\\media\\icons\\misc\\x4.tga",
+	CLOSE5 = "Interface\\AddOns\\ElvUI_mMediaTag\\media\\icons\\misc\\x5.tga",
+	CLOSE6 = "Interface\\AddOns\\ElvUI_mMediaTag\\media\\icons\\tags\\dc2.tga",
+}
 mMT.Media.DNDIcons = {
 	DND1 = "Interface\\AddOns\\ElvUI_mMediaTag\\media\\icons\\tags\\dnd1.tga",
 	DND2 = "Interface\\AddOns\\ElvUI_mMediaTag\\media\\icons\\tags\\dnd2.tga",
@@ -316,6 +343,7 @@ mMT.Media.Role = {
 	STAR8 = "Interface\\AddOns\\ElvUI_mMediaTag\\media\\icons\\role\\star7.tga",
 	STAR9 = "Interface\\AddOns\\ElvUI_mMediaTag\\media\\icons\\role\\star8.tga",
 	STAR10 = "Interface\\AddOns\\ElvUI_mMediaTag\\media\\icons\\role\\star9.tga",
+	STAR11 = "Interface\\AddOns\\ElvUI_mMediaTag\\media\\icons\\misc\\star.tga",
 
 	SWORD1 = "Interface\\AddOns\\ElvUI_mMediaTag\\media\\icons\\role\\sword1.tga",
 	SWORD2 = "Interface\\AddOns\\ElvUI_mMediaTag\\media\\icons\\role\\sword2.tga",

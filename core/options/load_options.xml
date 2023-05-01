@@ -24,4 +24,5 @@
 	<Script file="gamemenu.lua"/>
 	<Script file="tagcolors.lua"/>
 	<Script file="tagicons.lua"/>
+	<Script file="objectivetracker.lua"/>
 </Ui>

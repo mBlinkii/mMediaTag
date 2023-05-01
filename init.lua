@@ -19,8 +19,7 @@ local tonumber = tonumber
 local GetAddOnMetadata = _G.GetAddOnMetadata
 local C_MythicPlus_RequestMapInfo = C_MythicPlus.RequestMapInfo
 local C_MythicPlus_RequestCurrentAffixes = C_MythicPlus.RequestCurrentAffixes
-local _, unitClass = UnitClass("player")
-local class = ElvUF.colors.class[unitClass]
+local class = ElvUF.colors.class[E.myclass]
 
 addon[1] = mMT
 addon[2] = E --ElvUI Engine
@@ -42,6 +41,7 @@ mMT.ClassColor = {
 	hex = E:RGBToHex(class[1], class[2], class[3]),
 	string = strjoin("", E:RGBToHex(class[1], class[2], class[3]), "%s|r"),
 }
+mMT.ElvUI_EltreumUI = (IsAddOnLoaded("ElvUI_EltreumUI") and E.db.ElvUI_EltreumUI and E.db.ElvUI_EltreumUI.unitframes and E.db.ElvUI_EltreumUI.unitframes.gradientmode and E.db.ElvUI_EltreumUI.unitframes.gradientmode.enable) or false
 mMT.Media = {}
 mMT.Config = {}
 
@@ -211,6 +211,32 @@ function mMT:Initialize()
 			mMT:RegisterEvent("CHAT_MSG_RAID")
 			mMT:RegisterEvent("CHAT_MSG_RAID_LEADER")
 			mMT:RegisterEvent("CHAT_MSG_GUILD")
+		end
+
+		if (E.db.mMT.objectivetracker.enable or (E.db.mMT.objectivetracker.enable and E.db.mMT.objectivetracker.simple))  and E.private.skins.blizzard.enable and not IsAddOnLoaded("!KalielsTracker") then
+			if not E.private.skins.blizzard.objectiveTracker then
+				StaticPopupDialogs["mErrorSkin"] = {
+					text = L["ElvUI skin must be enabled to activate mMediaTag Quest skins! Should it be enabled?"],
+					button1 = L["Yes"],
+					button2 = L["No"],
+					timeout = 120,
+					whileDead = true,
+					hideOnEscape = false,
+					preferredIndex = 3,
+					OnAccept = function()
+						E.private.skins.blizzard.objectiveTracker = true
+						C_UI.Reload()
+					end,
+					OnCancel = function()
+						E.db.mMT.objectivetracker.enable = false
+						C_UI.Reload()
+					end,
+				}
+
+				StaticPopup_Show("mErrorSkin")
+			end
+
+			mMT:InitializemOBT()
 		end
 	end
 end

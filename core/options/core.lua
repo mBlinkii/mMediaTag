@@ -201,6 +201,13 @@ local function configTable()
 						name = L["Role Icons"],
 						args = {},
 					},
+					objectivetracker = {
+						order = 5,
+						type = "group",
+						name = L["Objective Tracker"],
+						childGroups = "tab",
+						args = {},
+					},
 					textures = {
 						order = 20,
 						type = "group",

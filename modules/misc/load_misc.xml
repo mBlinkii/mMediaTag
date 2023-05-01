@@ -7,4 +7,5 @@
 	<Script file="KeystoneToChat.lua"/>
 	<Script file="instancedifficulty.lua"/>
 	<Script file="Tags.lua"/>
+	<Script file="ObjectiveTracker.lua"/>
 </Ui>
