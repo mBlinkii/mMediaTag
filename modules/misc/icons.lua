@@ -1,14 +1,14 @@
 local mMT, E, L, V, P, G = unpack((select(2, ...)))
 
 -- Combat Icons
-E.Media.CombatIcons.mMediaTag1 = [[Interface\AddOns\ElvUI_mMediaTag\media\icons\combat\combat1.tga]]
-E.Media.CombatIcons.mMediaTag2 = [[Interface\AddOns\ElvUI_mMediaTag\media\icons\combat\combat2.tga]]
-E.Media.CombatIcons.mMediaTag3 = [[Interface\AddOns\ElvUI_mMediaTag\media\icons\combat\combat3.tga]]
-E.Media.CombatIcons.mMediaTag4 = [[Interface\AddOns\ElvUI_mMediaTag\media\icons\combat\combat4.tga]]
-E.Media.CombatIcons.mMediaTag5 = [[Interface\AddOns\ElvUI_mMediaTag\media\icons\combat\combat5.tga]]
-E.Media.CombatIcons.mMediaTag6 = [[Interface\AddOns\ElvUI_mMediaTag\media\icons\combat\combat6.tga]]
+E.Media.CombatIcons.mMediaTag1 = [[Interface\AddOns\ElvUI_mMediaTag\media\icons\datatext\combat1.tga]]
+E.Media.CombatIcons.mMediaTag2 = [[Interface\AddOns\ElvUI_mMediaTag\media\icons\datatext\combat2.tga]]
+E.Media.CombatIcons.mMediaTag3 = [[Interface\AddOns\ElvUI_mMediaTag\media\icons\datatext\combat3.tga]]
+E.Media.CombatIcons.mMediaTag4 = [[Interface\AddOns\ElvUI_mMediaTag\media\icons\datatext\combat4.tga]]
+E.Media.CombatIcons.mMediaTag5 = [[Interface\AddOns\ElvUI_mMediaTag\media\icons\datatext\combat5.tga]]
+E.Media.CombatIcons.mMediaTag6 = [[Interface\AddOns\ElvUI_mMediaTag\media\icons\datatext\combat6.tga]]
 E.Media.CombatIcons.mMediaTag7 = [[Interface\AddOns\ElvUI_mMediaTag\media\icons\role\fire2.tga]]
-E.Media.CombatIcons.mMediaTag8 = [[Interface\AddOns\ElvUI_mMediaTag\media\icons\role\fire7.tga]]
+E.Media.CombatIcons.mMediaTag8 = [[Interface\AddOns\ElvUI_mMediaTag\media\icons\role\fire5.tga]]
 E.Media.CombatIcons.mMediaTag9 = [[Interface\AddOns\ElvUI_mMediaTag\media\icons\role\lightning2.tga]]
 E.Media.CombatIcons.mMediaTag10 = [[Interface\AddOns\ElvUI_mMediaTag\media\icons\role\lightning7.tga]]
 
