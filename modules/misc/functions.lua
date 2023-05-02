@@ -17,7 +17,17 @@ local GetDifficultyInfo = GetDifficultyInfo
 local GetRaidDifficultyID = GetRaidDifficultyID
 local GetDungeonDifficultyID = GetDungeonDifficultyID
 local GetDetailedItemLevelInfo = GetDetailedItemLevelInfo
+local C_MythicPlus = C_MythicPlus
+local GetDetailedItemLevelInfo = GetDetailedItemLevelInfo
+local C_PlayerInfo_GetPlayerMythicPlusRatingSummary = C_PlayerInfo.GetPlayerMythicPlusRatingSummary
+local C_ChallengeMode_GetOverallDungeonScore = C_ChallengeMode.GetOverallDungeonScore
+local C_ChallengeMode_GetDungeonScoreRarityColor = C_ChallengeMode.GetDungeonScoreRarityColor
 
+--Great Vault Functions
+local function mColorGardient(level)
+	local r, g, b = E:ColorGradient(level * 0.04, 0, 0.43, 0.86, 0.63, 0.2, 0.93, 0.89, 0.16, 0.31)
+	return E:RGBToHex(r, g, b)
+end
 function mMT:Print(text)
 	print("|CFF8E44ADm|r|CFF2ECC71Media|r|CFF3498DBTag|r - " .. text)
 end
@@ -47,6 +57,43 @@ function mMT:mColorDatatext()
 		E.db.mMT.datatextcolors.colortitel.hex,
 		E.db.mMT.datatextcolors.colortip.hex
 	return nhc, hc, myth, mythp, other, titel, tip
+end
+
+function mMT:mGetVaultInfo()
+	local vaultinfo = {}
+	vaultinfo = wipe(vaultinfo)
+	local vaultinforaid, vaultinfomplus, vaultinfopvp, vaultinfohighest, ok = {}, {}, {}, nil, nil
+	vaultinforaid = wipe(vaultinforaid)
+	vaultinfomplus = wipe(vaultinfomplus)
+	vaultinfopvp = wipe(vaultinfopvp)
+	vaultinfo = C_WeeklyRewards.GetActivities()
+	if not vaultinfo then
+		return {}, {}, {}, nil, false
+	else
+		local vaultinfohighest, ok = 0, false
+		for i = 1, 9 do
+			local id = vaultinfo[i] and vaultinfo[i].id or 0
+			local itemLink = C_WeeklyRewards.GetExampleRewardItemHyperlinks(id)
+			if itemLink then
+				local ItemLevelInfo = GetDetailedItemLevelInfo(itemLink)
+				if ItemLevelInfo then
+					vaultinfohighest = (
+						vaultinfohighest and (vaultinfohighest < ItemLevelInfo) and ItemLevelInfo or vaultinfohighest
+					) or (not vaultinfohighest and ItemLevelInfo)
+					if i < 4 then
+						mInsert(vaultinfomplus, format("%s%s|r", mColorGardient(ItemLevelInfo), ItemLevelInfo))
+					elseif i < 7 then
+						mInsert(vaultinfopvp, format("%s%s|r", mColorGardient(ItemLevelInfo), ItemLevelInfo))
+					else
+						mInsert(vaultinforaid, format("%s%s|r", mColorGardient(ItemLevelInfo), ItemLevelInfo))
+					end
+					ok = true
+				end
+			end
+		end
+		vaultinfohighest = format("%s%s|r", mColorGardient(tonumber(vaultinfohighest)), vaultinfohighest)
+		return vaultinforaid, vaultinfomplus, vaultinfopvp, vaultinfohighest, ok
+	end
 end
 
 --Dungeon Difficulty

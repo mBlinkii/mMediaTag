@@ -57,7 +57,11 @@ local function OnEvent(self, event, ...)
 				CurrencValue = E:ShortValue(info.quantity, 2)
 			end
 
-			local CurrencyTextSring = mMT.ClassColor.string
+			local CurrencyTextSring = "%s" .. mMT.ClassColor.string
+			
+			if TextJustify == "RIGHT" then
+				CurrencyTextSring = mMT.ClassColor.string .. "%s"
+			end
 
 			if E.db.mMT.datatextcurrency.style == "color" then
 				if TextJustify == "RIGHT" then

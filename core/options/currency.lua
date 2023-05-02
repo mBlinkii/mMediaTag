@@ -1,4 +1,5 @@
 local mMT, E, L, V, P, G = unpack((select(2, ...)))
+local DT = E:GetModule("DataTexts")
 local tinsert = tinsert
 
 local function configTable()
@@ -18,7 +19,7 @@ local function configTable()
 					end,
 					set = function(info, value)
 						E.db.mMT.datatextcurrency.style = value
-						E:StaticPopup_Show("CONFIG_RL")
+						DT:LoadDataTexts()
 					end,
 					values = {
 						auto = L["Auto"],
@@ -44,7 +45,7 @@ local function configTable()
 					end,
 					set = function(info, value)
 						E.db.mMT.datatextcurrency.icon = value
-						E:StaticPopup_Show("CONFIG_RL")
+						DT:LoadDataTexts()
 					end,
 				},
 				currency_Name = {
@@ -57,7 +58,7 @@ local function configTable()
 					end,
 					set = function(info, value)
 						E.db.mMT.datatextcurrency.name = value
-						E:StaticPopup_Show("CONFIG_RL")
+						DT:LoadDataTexts()
 					end,
 				},
 			},
@@ -78,7 +79,7 @@ local function configTable()
 					end,
 					set = function(info, value)
 						E.db.mMT.datatextcurrency.short = value
-						E:StaticPopup_Show("CONFIG_RL")
+						DT:LoadDataTexts()
 					end,
 				},
 				currency_Hide = {
@@ -90,7 +91,7 @@ local function configTable()
 					end,
 					set = function(info, value)
 						E.db.mMT.datatextcurrency.hide = value
-						E:StaticPopup_Show("CONFIG_RL")
+						DT:LoadDataTexts()
 					end,
 				},
 				currency_bag = {
@@ -102,7 +103,7 @@ local function configTable()
 					end,
 					set = function(info, value)
 						E.db.mMT.datatextcurrency.bag = value
-						E:StaticPopup_Show("CONFIG_RL")
+						DT:LoadDataTexts()
 					end,
 				},
 			},

@@ -62,7 +62,11 @@ local function OnEvent(self, event, ...)
 				CurrencValue = CurrencValue .. " / " .. maxValue
 			end
 
-			local CurrencyTextSring = mMT.ClassColor.string
+			local CurrencyTextSring = "%s" .. mMT.ClassColor.string
+			
+			if TextJustify == "RIGHT" then
+				CurrencyTextSring = mMT.ClassColor.string .. "%s"
+			end
 
 			if E.db.mMT.datatextcurrency.style == "color" then
 				if TextJustify == "RIGHT" then
