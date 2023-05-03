@@ -277,9 +277,7 @@ local function OnClick(self, button)
 			end
 		else
 			mMT:mOnClick(self, "CheckFrameProfession")
-			-- SpellbookMicroButton:Click()
-			-- SpellBookFrameTabButton2:Click()
-			ToggleFrame(_G.SpellBookFrame)
+			--ToggleFrame(_G.SpellBookFrame)
 			ToggleSpellBook(_G.BOOKTYPE_PROFESSION)
 		end
 	end

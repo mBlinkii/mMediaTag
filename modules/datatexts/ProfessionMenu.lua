@@ -242,11 +242,7 @@ local function OnClick(self, button)
 		end
 	else
 		if mMT:CheckCombatLockdown() then
-			if not SpellBookFrame:IsShown() then
-				ShowUIPanel(SpellBookFrame)
-			else
-				HideUIPanel(SpellBookFrame)
-			end
+			ToggleSpellBook(_G.BOOKTYPE_PROFESSION)
 		end
 	end
 	ProfessionsList = wipe(ProfessionsList)
