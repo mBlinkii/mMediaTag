@@ -53,7 +53,7 @@ end
 local function OnClick(self)
 	if mMT:CheckCombatLockdown() then
 		mMT:mOnClick(self, "CheckFrameQuest")
-		ToggleFrame(_G.QuestLogFrame)
+		_G.ToggleQuestLog()
 	end
 end
 
