@@ -1,0 +1,15 @@
+<Ui xmlns="http://www.blizzard.com/wow/ui/">
+	<Script file="CombatTime.lua"/>
+	<Script file="FPSMS.lua"/>
+	<Script file="CoordinatesX.lua"/>
+	<Script file="Coordinatesy.lua"/>
+	<Script file="Score.lua"/>
+	<Script file="Teleports.lua"/>
+	<Script file="ProfessionMenu.lua"/>
+	<Script file="Dungeon.lua"/>
+	<Script file="gamemenu.lua"/>
+	<Script file="TimewarpedBadge.lua"/>
+	<Script file="ElementalOverflow.lua"/>
+	<Script file="DragonIslesSupplies.lua"/>
+	<Script file="Conquest.lua"/>
+</Ui>

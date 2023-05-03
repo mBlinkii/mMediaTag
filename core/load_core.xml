@@ -1,8 +1,8 @@
 <Ui xmlns="http://www.blizzard.com/wow/ui/">
-	<Script file="init.lua"/>
-	<Script file="mSettings.lua"/>
-	<Script file="mOptions.lua"/>
-	<Script file="mChangelog.lua"/>
-	<Script file="mDropdown.lua"/>
-	<Script file="mFunctions.lua"/>
+	<Script file="settings\defaultSettings.lua"/>
+	<Include file="options\load_options.xml"/>
+	<Script file="dropdown.lua"/>
+	<Script file="greeting.lua"/>
+	<Script file="cmd.lua"/>
+	<Script file="functions.lua"/>
 </Ui>

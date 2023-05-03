@@ -1,0 +1,11 @@
+<Ui xmlns="http://www.blizzard.com/wow/ui/">
+	<Script file="tooltip.lua"/>
+	<Script file="icons.lua"/>
+	<Script file="functions.lua"/>
+	<Script file="rollbutton.lua"/>
+	<Script file="chatbutton.lua"/>
+	<Script file="KeystoneToChat.lua"/>
+	<Script file="instancedifficulty.lua"/>
+	<Script file="Tags.lua"/>
+	<Script file="ObjectiveTracker.lua"/>
+</Ui>
