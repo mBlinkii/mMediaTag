@@ -49,6 +49,7 @@ local function configTable()
 					end,
 					set = function(info, value)
 						E.db.mMT.tags.icons.rare = value
+						mMT:UpdateTagSettings()
 					end,
 					values = class,
 				},
@@ -61,6 +62,7 @@ local function configTable()
 					end,
 					set = function(info, value)
 						E.db.mMT.tags.icons.relite = value
+						mMT:UpdateTagSettings()
 					end,
 					values = class,
 				},
@@ -73,6 +75,7 @@ local function configTable()
 					end,
 					set = function(info, value)
 						E.db.mMT.tags.icons.elite = value
+						mMT:UpdateTagSettings()
 					end,
 					values = class,
 				},
@@ -85,6 +88,7 @@ local function configTable()
 					end,
 					set = function(info, value)
 						E.db.mMT.tags.icons.boss = value
+						mMT:UpdateTagSettings()
 					end,
 					values = class,
 				},
@@ -105,6 +109,7 @@ local function configTable()
 					end,
 					set = function(info, value)
 						E.db.mMT.tags.icons.afk = value
+						mMT:UpdateTagSettings()
 					end,
 					values = afk,
 				},
@@ -117,6 +122,7 @@ local function configTable()
 					end,
 					set = function(info, value)
 						E.db.mMT.tags.icons.dnd = value
+						mMT:UpdateTagSettings()
 					end,
 					values = dnd,
 				},
@@ -129,6 +135,7 @@ local function configTable()
 					end,
 					set = function(info, value)
 						E.db.mMT.tags.icons.offline = value
+						mMT:UpdateTagSettings()
 					end,
 					values = dc,
 				},
@@ -141,6 +148,7 @@ local function configTable()
 					end,
 					set = function(info, value)
 						E.db.mMT.tags.icons.death = value
+						mMT:UpdateTagSettings()
 					end,
 					values = death,
 				},
@@ -153,6 +161,7 @@ local function configTable()
 					end,
 					set = function(info, value)
 						E.db.mMT.tags.icons.ghost = value
+						mMT:UpdateTagSettings()
 					end,
 					values = ghost,
 				},
