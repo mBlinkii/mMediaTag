@@ -5,6 +5,7 @@ local format = format
 local pi = math.pi
 
 --Variables
+local _G = _G
 local mText = format("Dock %s", L["Itemlevel"])
 local mTextName = "mItemLevel"
 local r, g, b = 1, 1, 1
@@ -101,7 +102,7 @@ end
 local function OnClick(self)
 	if mMT:CheckCombatLockdown() then
 		mMT:mOnClick(self, "CheckFrameItemlevel")
-		ToggleCharacter("PaperDollFrame")
+		_G.ToggleCharacter("PaperDollFrame")
 	end
 end
 

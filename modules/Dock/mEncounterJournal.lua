@@ -5,6 +5,7 @@ local DT = E:GetModule("DataTexts")
 local format = format
 
 --Variables
+local _G = _G
 local mText = format("Dock %s", ENCOUNTER_JOURNAL)
 local mTextName = "mEncounterJournal"
 
@@ -52,7 +53,10 @@ end
 local function OnClick(self)
 	if mMT:CheckCombatLockdown() then
 		mMT:mOnClick(self, "CheckFrameEncounterJournal")
-		ToggleEncounterJournal()
+		if not IsAddOnLoaded("Blizzard_EncounterJournal") then
+			UIParentLoadAddOn("Blizzard_EncounterJournal")
+		end
+		ToggleFrame(_G.EncounterJournal)
 	end
 end
 

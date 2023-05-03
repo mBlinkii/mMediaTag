@@ -255,9 +255,9 @@ local function OnClick(self, btn)
 	elseif InCombatLockdown() then
 		_G.UIErrorsFrame:AddMessage(E.InfoColor .. _G.ERR_NOT_IN_COMBAT)
 	elseif E.Retail then
-		ToggleGuildFrame()
+		_G.ToggleGuildFrame()
 	else
-		ToggleFriendsFrame(3)
+		_G.ToggleFriendsFrame(3)
 	end
 
 	mMT:ShowHideNotification(self, false)

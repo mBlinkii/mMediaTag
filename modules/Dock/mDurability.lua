@@ -185,7 +185,7 @@ local function OnClick(self)
 		if mCheckDurability() then
 			mMT:DockCustomColor(self, mCheckDurability())
 		end
-		ToggleCharacter("PaperDollFrame")
+		_G.ToggleCharacter("PaperDollFrame")
 	end
 end
 

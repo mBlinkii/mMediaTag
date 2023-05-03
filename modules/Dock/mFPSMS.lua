@@ -5,6 +5,7 @@ local DT = E:GetModule("DataTexts")
 local format = format
 
 --Variables
+local _G = _G
 local mText = format("Dock %s", L["FPS/ MS"])
 local mTextName = "mFPSMS"
 local TextColor = mMT:mClassColorString()
@@ -153,19 +154,28 @@ local function OnClick(self, button)
 	if mMT:CheckCombatLockdown() then
 		mMT:mOnClick(self, "CheckFrameFPSMS")
 		if button == "LeftButton" then
-			if not GameMenuFrame:IsShown() then
-				if VideoOptionsFrame:IsShown() then
-					VideoOptionsFrameCancel:Click()
-				elseif AudioOptionsFrame:IsShown() then
-					AudioOptionsFrameCancel:Click()
-				elseif InterfaceOptionsFrame:IsShown() then
-					InterfaceOptionsFrameCancel:Click()
+			if not _G.GameMenuFrame:IsShown() then
+				if not E.Retail then
+					if _G.VideoOptionsFrame:IsShown() then
+						_G.VideoOptionsFrameCancel:Click()
+					elseif _G.AudioOptionsFrame:IsShown() then
+						_G.AudioOptionsFrameCancel:Click()
+					elseif _G.InterfaceOptionsFrame:IsShown() then
+						_G.InterfaceOptionsFrameCancel:Click()
+					end
 				end
+
 				CloseMenus()
 				CloseAllWindows()
-				ShowUIPanel(GameMenuFrame)
+				ShowUIPanel(_G.GameMenuFrame)
 			else
-				HideUIPanel(GameMenuFrame)
+				HideUIPanel(_G.GameMenuFrame)
+
+				if E.Retail then
+					MainMenuMicroButton:SetButtonState("NORMAL")
+				else
+					MainMenuMicroButton_SetNormal()
+				end
 			end
 		else
 			E:ToggleOptions()

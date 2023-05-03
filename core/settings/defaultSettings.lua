@@ -369,7 +369,6 @@ P.mMT = {
 			customcolor = false,
 		},
 		mainmenu = {
-			sound = true,
 			text = "FPS",
 			color = "default",
 			option = "none",

@@ -5,6 +5,7 @@ local DT = E:GetModule("DataTexts")
 local format = format
 
 --WoW API / Variables
+local _G = _G
 local IsInInstance = IsInInstance
 
 --Variables
@@ -265,15 +266,15 @@ local function OnClick(self, button)
 		mMT:mOnClick(self, "CheckFrameLFDTool")
 		if E.db.mMT.dockdatatext.lfd.greatvault then
 			if button == "LeftButton" then
-				ToggleLFDParentFrame()
+				_G.ToggleLFDParentFrame()
 			else
-				if not WeeklyRewardsFrame then
+				if not _G.WeeklyRewardsFrame then
 					LoadAddOn("Blizzard_WeeklyRewards")
 				end
-				if WeeklyRewardsFrame:IsVisible() then
-					WeeklyRewardsFrame:Hide()
+				if _G.WeeklyRewardsFrame:IsVisible() then
+					_G.WeeklyRewardsFrame:Hide()
 				else
-					WeeklyRewardsFrame:Show()
+					_G.WeeklyRewardsFrame:Show()
 				end
 			end
 		else

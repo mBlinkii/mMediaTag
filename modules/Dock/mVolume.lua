@@ -8,6 +8,7 @@ local ipairs = ipairs
 local tinsert = tinsert
 
 --WoW API / Variables
+local _G = _G
 local SetCVar = SetCVar
 local GetCVar = GetCVar
 local GetCVarBool = GetCVarBool

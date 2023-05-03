@@ -177,10 +177,8 @@ local function OnClick(self, button)
 
 				CloseMenus()
 				CloseAllWindows()
-				PlaySound(850) --IG_MAINMENU_OPEN
 				ShowUIPanel(_G.GameMenuFrame)
 			else
-				PlaySound(854) --IG_MAINMENU_QUIT
 				HideUIPanel(_G.GameMenuFrame)
 
 				if E.Retail then
@@ -189,8 +187,6 @@ local function OnClick(self, button)
 					MainMenuMicroButton_SetNormal()
 				end
 			end
-		elseif button == "MiddleButton" and E.db.mMT.dockdatatext.mainmenu.sound then
-			mMT:MuteVolume()
 		else
 			mMT:mOnClick(self, "CheckFrameMainMenu")
 			E:ToggleOptions()

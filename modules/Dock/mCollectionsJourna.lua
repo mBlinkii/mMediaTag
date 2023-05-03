@@ -5,6 +5,7 @@ local DT = E:GetModule("DataTexts")
 local format = format
 
 --Variables
+local _G = _G
 local mText = format("Dock %s", COLLECTIONS)
 local mTextName = "mCollectionsJourna"
 
@@ -66,7 +67,7 @@ end
 local function OnClick(self)
 	if mMT:CheckCombatLockdown() then
 		mMT:mOnClick(self, "CheckFrameCollectionsJourna")
-		ToggleCollectionsJournal()
+		_G.ToggleCollectionsJournal()
 	end
 end
 

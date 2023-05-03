@@ -5,6 +5,7 @@ local DT = E:GetModule("DataTexts")
 local format = format
 
 --Variables
+local _G = _G
 local mText = format("Dock %s", ACHIEVEMENT_BUTTON)
 local mTextName = "mAchievement"
 
@@ -95,7 +96,7 @@ end
 local function OnClick(self)
 	if mMT:CheckCombatLockdown() then
 		mMT:mOnClick(self, "CheckFrameAchievement")
-		ToggleAchievementFrame()
+		_G.ToggleAchievementFrame()
 	end
 end
 

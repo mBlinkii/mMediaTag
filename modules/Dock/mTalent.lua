@@ -188,17 +188,7 @@ local function OnClick(self, button)
 		end
 
 		if button == "LeftButton" then
-			local frame = _G.ClassTalentFrame
-			if not frame then
-				LoadAddOn('Blizzard_ClassTalentUI')
-				frame = _G.ClassTalentFrame
-			end
-
-			if frame:IsShown() then
-				HideUIPanel(frame)
-			else
-				ShowUIPanel(frame)
-			end
+			_G.ToggleTalentFrame()
 		elseif button == "MiddleButton" then
 			E:SetEasyMenuAnchor(E.EasyMenu, self)
 			_G.EasyMenu(specList, E.EasyMenu, nil, nil, nil, "MENU")

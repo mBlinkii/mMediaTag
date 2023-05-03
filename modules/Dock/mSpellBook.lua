@@ -5,6 +5,7 @@ local DT = E:GetModule("DataTexts")
 local format = format
 
 --Variables
+local _G = _G
 local mText = format("Dock %s", SPELLBOOK_ABILITIES_BUTTON)
 local mTextName = "mSpellBook"
 
@@ -52,11 +53,7 @@ end
 local function OnClick(self)
 	if mMT:CheckCombatLockdown() then
 		mMT:mOnClick(self, "CheckFrameSpellBook")
-		if not SpellBookFrame:IsShown() then
-			ShowUIPanel(SpellBookFrame)
-		else
-			HideUIPanel(SpellBookFrame)
-		end
+		ToggleFrame(_G.SpellBookFrame)
 	end
 end
 

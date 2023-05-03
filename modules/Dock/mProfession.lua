@@ -5,6 +5,7 @@ local DT = E:GetModule("DataTexts")
 local format = format
 
 --Variables
+local _G = _G
 local mText = format("Dock %s", L["Professions"])
 local mTextName = "mProfession"
 local menuFrame = CreateFrame("Frame", "mProfessionMenu", E.UIParent, "BackdropTemplate")
@@ -278,6 +279,7 @@ local function OnClick(self, button)
 			mMT:mOnClick(self, "CheckFrameProfession")
 			-- SpellbookMicroButton:Click()
 			-- SpellBookFrameTabButton2:Click()
+			ToggleFrame(_G.SpellBookFrame)
 			ToggleSpellBook(_G.BOOKTYPE_PROFESSION)
 		end
 	end

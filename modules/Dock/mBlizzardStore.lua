@@ -3,7 +3,7 @@ local DT = E:GetModule("DataTexts")
 
 --Lua functions
 local format = format
-
+local _G = _G
 --Variables
 local mText = format("Dock %s", BLIZZARD_STORE)
 local mTextName = "mBlizzardStore"
@@ -52,7 +52,7 @@ end
 
 local function OnClick(self)
 	mMT:mOnClick(self, "CheckFrameBlizzardStore")
-	StoreMicroButton:Click()
+	_G.StoreMicroButton:Click()
 end
 
 DT:RegisterDatatext(mTextName, "mDock", nil, OnEvent, nil, OnClick, OnEnter, OnLeave, mText, nil, nil)

@@ -5,6 +5,7 @@ local DT = E:GetModule("DataTexts")
 local format = format
 
 --Variables
+local _G = _G
 local mText = format("Dock %s", QUESTLOG_BUTTON)
 local mTextName = "mQuest"
 
@@ -52,7 +53,7 @@ end
 local function OnClick(self)
 	if mMT:CheckCombatLockdown() then
 		mMT:mOnClick(self, "CheckFrameQuest")
-		ToggleQuestLog()
+		ToggleFrame(_G.QuestLogFrame)
 	end
 end
 

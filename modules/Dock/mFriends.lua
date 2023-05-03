@@ -8,6 +8,7 @@ local sort, next, wipe, tremove, tinsert = sort, next, wipe, tremove, tinsert
 local format, gsub, strfind, strjoin, strmatch = format, gsub, strfind, strjoin, strmatch
 
 --WoW API / Variables
+local _G = _G
 local BNet_GetValidatedCharacterName = BNet_GetValidatedCharacterName
 local GetMouseFocus = GetMouseFocus
 local BNGetInfo = BNGetInfo
@@ -650,7 +651,7 @@ local function Click(self, btn)
 	elseif InCombatLockdown() then
 		_G.UIErrorsFrame:AddMessage(E.InfoColor .. _G.ERR_NOT_IN_COMBAT)
 	else
-		ToggleFriendsFrame(1)
+		_G.ToggleFriendsFrame()
 	end
 end
 

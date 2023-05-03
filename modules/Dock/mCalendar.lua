@@ -3,7 +3,7 @@ local DT = E:GetModule("DataTexts")
 
 --Lua functions
 local format = format
-
+local _G = _G
 --Variables
 local mText = format("Dock %s", L["Calendar"])
 local mTextName = "mCalendar"
@@ -101,10 +101,10 @@ local function OnClick(self)
 	if mMT:CheckCombatLockdown() then
 		mMT:mOnClick(self, "CheckFrameCalendar")
 		if E.Retail then
-			GameTimeFrame:Click()
+			_G.GameTimeFrame:Click()
 		else
-			Calendar_LoadUI()
-			ToggleCalendar()
+			_G.Calendar_LoadUI()
+			_G.ToggleCalendar()
 		end
 	end
 end
