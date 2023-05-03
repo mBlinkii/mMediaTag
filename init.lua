@@ -145,7 +145,7 @@ function mMT:Initialize()
 	-- Register Events
 	mMT:RegisterEvent("PLAYER_ENTERING_WORLD")
 
-	LoadTextures()
+	--LoadTextures()
 
 	if E.db.mMT.nameplate.executemarker.auto or E.db.mMT.interruptoncd.enable then
 		mMT:RegisterEvent("PLAYER_TALENT_UPDATE")

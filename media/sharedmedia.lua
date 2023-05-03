@@ -21,7 +21,7 @@ local function mAddBorder(name, file)
 	LSM:Register("border", name, "Interface\\AddOns\\ElvUI_mMediaTag\\media\\border\\" .. file)
 end
 
-function mMT:LoadSeriesA()
+--function mMT:LoadSeriesA()
 	mAddStatusbar("mMediaTag A1", "a1.tga")
 	mAddStatusbar("mMediaTag A2", "a2.tga")
 	mAddStatusbar("mMediaTag A3", "a3.tga")
@@ -37,9 +37,9 @@ function mMT:LoadSeriesA()
 	mAddStatusbar("mMediaTag A13", "a13.tga")
 	mAddStatusbar("mMediaTag A14", "a14.tga")
 	mAddStatusbar("mMediaTag A15", "a15.tga")
-end
+--end
 
-function mMT:LoadSeriesB()
+--function mMT:LoadSeriesB()
 	mAddStatusbar("mMediaTag B1", "b1.tga")
 	mAddStatusbar("mMediaTag B2", "b2.tga")
 	mAddStatusbar("mMediaTag B3", "b3.tga")
@@ -57,9 +57,9 @@ function mMT:LoadSeriesB()
 	mAddStatusbar("mMediaTag B15", "b15.tga")
 	mAddStatusbar("mMediaTag B16", "b16.tga")
 	mAddStatusbar("mMediaTag B17", "b17.tga")
-end
+--end
 
-function mMT:LoadSeriesC()
+--function mMT:LoadSeriesC()
 	mAddStatusbar("mMediaTag C1", "c1.tga")
 	mAddStatusbar("mMediaTag C2", "c2.tga")
 	mAddStatusbar("mMediaTag C3", "c3.tga")
@@ -75,9 +75,9 @@ function mMT:LoadSeriesC()
 	mAddStatusbar("mMediaTag C13", "c13.tga")
 	mAddStatusbar("mMediaTag C14", "c14.tga")
 	mAddStatusbar("mMediaTag C15", "c15.tga")
-end
+--end
 
-function mMT:LoadSeriesD()
+--function mMT:LoadSeriesD()
 	mAddStatusbar("mMediaTag D1", "d1.tga")
 	mAddStatusbar("mMediaTag D2", "d2.tga")
 	mAddStatusbar("mMediaTag D3", "d3.tga")
@@ -93,9 +93,9 @@ function mMT:LoadSeriesD()
 	mAddStatusbar("mMediaTag D13", "d13.tga")
 	mAddStatusbar("mMediaTag D14", "d14.tga")
 	mAddStatusbar("mMediaTag D15", "d15.tga")
-end
+--end
 
-function mMT:LoadSeriesE()
+--function mMT:LoadSeriesE()
 	mAddStatusbar("mMediaTag E1", "e1.tga")
 	mAddStatusbar("mMediaTag E2", "e2.tga")
 	mAddStatusbar("mMediaTag E3", "e3.tga")
@@ -108,9 +108,9 @@ function mMT:LoadSeriesE()
 	mAddStatusbar("mMediaTag E10", "e10.tga")
 	mAddStatusbar("mMediaTag E11", "e11.tga")
 	mAddStatusbar("mMediaTag E12", "e12.tga")
-end
+--end
 
-function mMT:LoadSeriesF()
+--function mMT:LoadSeriesF()
 	mAddStatusbar("mMediaTag F1", "f1.tga")
 	mAddStatusbar("mMediaTag F2", "f2.tga")
 	mAddStatusbar("mMediaTag F3", "f3.tga")
@@ -126,9 +126,9 @@ function mMT:LoadSeriesF()
 	mAddStatusbar("mMediaTag F13", "f13.tga")
 	mAddStatusbar("mMediaTag F14", "f14.tga")
 	mAddStatusbar("mMediaTag F15", "f15.tga")
-end
+--end
 
-function mMT:LoadSeriesG()
+--function mMT:LoadSeriesG()
 	mAddStatusbar("mMediaTag G1", "g1.tga")
 	mAddStatusbar("mMediaTag G2", "g2.tga")
 	mAddStatusbar("mMediaTag G3", "g3.tga")
@@ -144,9 +144,9 @@ function mMT:LoadSeriesG()
 	mAddStatusbar("mMediaTag G13", "g13.tga")
 	mAddStatusbar("mMediaTag G14", "g14.tga")
 	mAddStatusbar("mMediaTag G15", "g15.tga")
-end
+--end
 
-function mMT:LoadSeriesH()
+--function mMT:LoadSeriesH()
 	mAddStatusbar("mMediaTag H1", "h1.tga")
 	mAddStatusbar("mMediaTag H2", "h2.tga")
 	mAddStatusbar("mMediaTag H3", "h3.tga")
@@ -165,9 +165,9 @@ function mMT:LoadSeriesH()
 	mAddStatusbar("mMediaTag H16", "h16.tga")
 	mAddStatusbar("mMediaTag H17", "h17.tga")
 	mAddStatusbar("mMediaTag H18", "h18.tga")
-end
+--end
 
-function mMT:LoadSeriesI()
+--function mMT:LoadSeriesI()
 	mAddStatusbar("mMediaTag I1", "i1.tga")
 	mAddStatusbar("mMediaTag I2", "i2.tga")
 	mAddStatusbar("mMediaTag I3", "i3.tga")
@@ -178,9 +178,9 @@ function mMT:LoadSeriesI()
 	mAddStatusbar("mMediaTag I8", "i8.tga")
 	mAddStatusbar("mMediaTag I9", "i9.tga")
 	mAddStatusbar("mMediaTag I10", "i10.tga")
-end
+--end
 
-function mMT:LoadSeriesJ()
+--function mMT:LoadSeriesJ()
 	mAddStatusbar("mMediaTag J1", "j1.tga")
 	mAddStatusbar("mMediaTag J2", "j2.tga")
 	mAddStatusbar("mMediaTag J3", "j3.tga")
@@ -191,9 +191,9 @@ function mMT:LoadSeriesJ()
 	mAddStatusbar("mMediaTag J8", "j8.tga")
 	mAddStatusbar("mMediaTag J9", "j9.tga")
 	mAddStatusbar("mMediaTag J10", "j10.tga")
-end
+--end
 
-function mMT:LoadSeriesK()
+--function mMT:LoadSeriesK()
 	mAddStatusbar("mMediaTag K1", "k1.tga")
 	mAddStatusbar("mMediaTag K2", "k2.tga")
 	mAddStatusbar("mMediaTag K3", "k3.tga")
@@ -228,9 +228,9 @@ function mMT:LoadSeriesK()
 	mAddStatusbar("mMediaTag K32", "k32.tga")
 	mAddStatusbar("mMediaTag K33", "k33.tga")
 	mAddStatusbar("mMediaTag K34", "k34.tga")
-end
+--end
 
-function mMT:LoadSeriesL()
+--function mMT:LoadSeriesL()
 	mAddStatusbar("mMediaTag L1", "l1.tga")
 	mAddStatusbar("mMediaTag L2", "l2.tga")
 	mAddStatusbar("mMediaTag L3", "l3.tga")
@@ -246,9 +246,9 @@ function mMT:LoadSeriesL()
 	mAddStatusbar("mMediaTag L13", "l13.tga")
 	mAddStatusbar("mMediaTag L14", "l14.tga")
 	mAddStatusbar("mMediaTag L15", "l15.tga")
-end
+--end
 
-function mMT:LoadSeriesM()
+--function mMT:LoadSeriesM()
 	mAddStatusbar("mMediaTag M1", "m1.tga")
 	mAddStatusbar("mMediaTag M2", "m2.tga")
 	mAddStatusbar("mMediaTag M3", "m3.tga")
@@ -264,9 +264,9 @@ function mMT:LoadSeriesM()
 	mAddStatusbar("mMediaTag M13", "m13.tga")
 	mAddStatusbar("mMediaTag M14", "m14.tga")
 	mAddStatusbar("mMediaTag M15", "m15.tga")
-end
+--end
 
-function mMT:LoadSeriesN()
+--function mMT:LoadSeriesN()
 	mAddStatusbar("mMediaTag N1", "n1.tga")
 	mAddStatusbar("mMediaTag N2", "n2.tga")
 	mAddStatusbar("mMediaTag N3", "n3.tga")
@@ -308,9 +308,9 @@ function mMT:LoadSeriesN()
 	mAddStatusbar("mMediaTag N38v2", "n38v2.tga")
 	mAddStatusbar("mMediaTag N38v3", "n38v3.tga")
 	mAddStatusbar("mMediaTag N39", "n39.tga")
-end
+--end
 
-function mMT:LoadSeriesO()
+--function mMT:LoadSeriesO()
 	mAddStatusbar("mMediaTag O1", "o1.tga")
 	mAddStatusbar("mMediaTag O2", "o2.tga")
 	mAddStatusbar("mMediaTag O3", "o3.tga")
@@ -326,9 +326,9 @@ function mMT:LoadSeriesO()
 	mAddStatusbar("mMediaTag O13", "o13.tga")
 	mAddStatusbar("mMediaTag O14", "o14.tga")
 	mAddStatusbar("mMediaTag O15", "o15.tga")
-end
+--end
 
-function mMT:LoadSeriesP()
+--function mMT:LoadSeriesP()
 	mAddStatusbar("mMediaTag P1", "p1.tga")
 	mAddStatusbar("mMediaTag P2", "p2.tga")
 	mAddStatusbar("mMediaTag P3", "p3.tga")
@@ -347,16 +347,16 @@ function mMT:LoadSeriesP()
 	mAddStatusbar("mMediaTag P16", "p16.tga")
 	mAddStatusbar("mMediaTag P17", "p17.tga")
 	mAddStatusbar("mMediaTag P18", "p18.tga")
-end
+--end
 
-function mMT:LoadSeriesQ()
+--function mMT:LoadSeriesQ()
 	mAddStatusbar("mMediaTag Q1", "q1.tga")
 	mAddStatusbar("mMediaTag Q2", "q2.tga")
 	mAddStatusbar("mMediaTag Q3", "q3.tga")
 	mAddStatusbar("mMediaTag Q4", "q4.tga")
-end
+--end
 
-function mMT:LoadSeriesR()
+--function mMT:LoadSeriesR()
 	mAddStatusbar("mMediaTag R1", "r1.tga")
 	mAddStatusbar("mMediaTag R2", "r2.tga")
 	mAddStatusbar("mMediaTag R3", "r3.tga")
@@ -386,7 +386,7 @@ function mMT:LoadSeriesR()
 	mAddStatusbar("mMediaTag R27", "r27.tga")
 	mAddStatusbar("mMediaTag R28", "r28.tga")
 	mAddStatusbar("mMediaTag R29", "r29.tga")
-end
+--end
 
 function mMT:LoadSeriesAll()
 	mMT:LoadSeriesA()

@@ -138,7 +138,8 @@
         "LIGHTGRAY_FONT_COLOR",
         "DUNGEON_SCORE_OVERTIME_TIME",
         "NO",
-        "UIParentLoadAddOn"
+        "UIParentLoadAddOn",
+        "BOOKTYPE_PROFESSION"
     ],
     "Lua.diagnostics.disable": [
         "redundant-parameter",

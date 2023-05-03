@@ -242,6 +242,8 @@ local function OnClick(self, button)
 		end
 	else
 		if mMT:CheckCombatLockdown() then
+			--ToggleFrame(_G.BOOKTYPE_PROFESSION)
+			--ToggleFrame(_G.SpellBookFrame)
 			ToggleSpellBook(_G.BOOKTYPE_PROFESSION)
 		end
 	end

@@ -278,6 +278,7 @@ local function OnClick(self, button)
 		else
 			mMT:mOnClick(self, "CheckFrameProfession")
 			--ToggleFrame(_G.SpellBookFrame)
+			--ToggleFrame(_G.BOOKTYPE_PROFESSION)
 			ToggleSpellBook(_G.BOOKTYPE_PROFESSION)
 		end
 	end
