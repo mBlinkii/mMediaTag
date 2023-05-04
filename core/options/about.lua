@@ -80,7 +80,7 @@ local function configTable()
                     type = "execute",
                     name = L["Changelog"],
                     func = function()
-                       -- mMT:Changelog(true)
+                        mMT:Changelog()
                     end,
                 },
             },

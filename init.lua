@@ -49,12 +49,7 @@ mMT.Config = {}
 
 --AddonCompartment
 function ElvUI_mMediaTag_OnAddonCompartmentClick()
-	local ACD = E.Libs.AceConfigDialog
-	if ACD and ACD.OpenFrames and ACD.OpenFrames.ElvUI then
-		E:ToggleOptions()
-	else
-		E:ToggleOptions("ElvUI_mMediaTag")
-	end
+ 	E:ToggleOptions("mMT")
 end
 
 function ElvUI_mMediaTag_OnAddonCompartmentOnEnter()

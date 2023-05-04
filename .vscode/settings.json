@@ -139,7 +139,9 @@
         "DUNGEON_SCORE_OVERTIME_TIME",
         "NO",
         "UIParentLoadAddOn",
-        "BOOKTYPE_PROFESSION"
+        "BOOKTYPE_PROFESSION",
+        "InterfaceOptions_AddCategory",
+        "MainMenuBar"
     ],
     "Lua.diagnostics.disable": [
         "redundant-parameter",

@@ -195,7 +195,7 @@ local function BuildMenu()
 				if ACD and ACD.OpenFrames and ACD.OpenFrames.ElvUI then
 					E:ToggleOptions()
 				else
-					E:ToggleOptions("ElvUI_mMediaTag")
+					E:ToggleOptions("mMT")
 					HideUIPanel(_G["GameMenuFrame"])
 				end
 			end
