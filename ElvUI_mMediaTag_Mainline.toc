@@ -5,6 +5,8 @@
 ## Notes: ElvUI Plugin from Blinkii | Support: mMediaTag@gmx.de
 ## IconTexture: Interface\AddOns\ElvUI_mMediaTag\media\logo\mmt_icon
 ## AddonCompartmentFunc: ElvUI_mMediaTag_OnAddonCompartmentClick
+## AddonCompartmentFuncOnEnter: ElvUI_mMediaTag_OnAddonCompartmentOnEnter
+## AddonCompartmentFuncOnLeave: ElvUI_mMediaTag_OnAddonCompartmentOnLeave
 ## RequiredDeps: ElvUI
 ## DefaultState: Enabled
 ## X-Tukui-ProjectID: 60

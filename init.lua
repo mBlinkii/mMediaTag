@@ -1,6 +1,7 @@
 local E, _, V, P, G = unpack(ElvUI)
 local EP = LibStub("LibElvUIPlugin-1.0")
 local L = E.Libs.ACL:GetLocale("ElvUI", E.global.general.locale)
+local DT = E:GetModule("DataTexts")
 
 -- Addon Name and Namespace
 local addonName, addon = ...
@@ -48,8 +49,23 @@ mMT.Config = {}
 
 --AddonCompartment
 function ElvUI_mMediaTag_OnAddonCompartmentClick()
-	E:ToggleOptions()
-	E.Libs.AceConfigDialog:SelectGroup("ElvUI", "mMT")
+	local ACD = E.Libs.AceConfigDialog
+	if ACD and ACD.OpenFrames and ACD.OpenFrames.ElvUI then
+		E:ToggleOptions()
+	else
+		E:ToggleOptions("ElvUI_mMediaTag")
+	end
+end
+
+function ElvUI_mMediaTag_OnAddonCompartmentOnEnter()
+	GameTooltip:ClearLines()
+	GameTooltip:SetOwner(UIParent, "ANCHOR_CURSOR_RIGHT")
+	GameTooltip:AddDoubleLine(mMT.Name, format("|CFFF7DC6FVer. %s|r", mMT.Version))
+	GameTooltip:Show()
+end
+
+function ElvUI_mMediaTag_OnAddonCompartmentOnLeave()
+	GameTooltip:Hide()
 end
 
 -- Load Settings
