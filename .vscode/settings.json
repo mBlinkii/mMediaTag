@@ -141,7 +141,9 @@
         "UIParentLoadAddOn",
         "BOOKTYPE_PROFESSION",
         "InterfaceOptions_AddCategory",
-        "MainMenuBar"
+        "MainMenuBar",
+        "Settings",
+        "Add"
     ],
     "Lua.diagnostics.disable": [
         "redundant-parameter",

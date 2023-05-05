@@ -1,5 +1,6 @@
 local mMT, E, L, V, P, G = unpack((select(2, ...)))
 
+local _G = _G
 local  tinsert =  tinsert
 local tconcat = _G.table.concat
 

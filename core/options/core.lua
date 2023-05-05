@@ -231,8 +231,17 @@ local function configTable()
 				args = {
 				},
 			},
+			changelog = {
+				order = 11,
+				type = "group",
+				name = format("|CFFFF0094%s|r", L["Changelog"]),
+				icon = "Interface\\Addons\\ElvUI_mMediaTag\\media\\system\\changelog.tga",
+				childGroups = "tab",
+				args = {
+				},
+			},
 			setup = {
-				order = 10,
+				order = 20,
 				type = "group",
 				name = format("|CFF0094FF%s|r", L["Setup"]),
 				icon = "Interface\\Addons\\ElvUI_mMediaTag\\media\\system\\setup.tga",
