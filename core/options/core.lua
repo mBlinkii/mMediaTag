@@ -214,6 +214,13 @@ local function configTable()
 						childGroups = "tab",
 						args = {},
 					},
+					unitframeicons = {
+						order = 6,
+						type = "group",
+						name = L["Unitframe Icons"],
+						childGroups = "tab",
+						args = {},
+					},
 					-- textures = {
 					-- 	order = 20,
 					-- 	type = "group",

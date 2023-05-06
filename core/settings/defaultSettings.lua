@@ -452,6 +452,21 @@ P.mMT = {
 			customcolor = false,
 		},
 	},
+	unitframeicons = {
+		phase = {
+			enable = false,
+			icon = "PHASE01",
+			color = {
+				enable = true,
+				withe = true,
+				chromie = { r = 1, g = 0.9, b = 0.5 },
+				warmode = { r = 1, g = 0.3, b = 0.3 },
+				sharding = { r = 0.5, g = 1, b = 0.3 },
+				phasing = { r = 0.3, g = 0.5, b = 1 },
+			},
+		},
+		readycheck = { enable = false, ready = "READY06", notready = "NOTREADY01", waiting = "COLOR26" },
+	},
 }
 
 G.mMT = {

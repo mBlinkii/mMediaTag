@@ -199,6 +199,14 @@ function mMT:Initialize()
 		mMT:mNamePlateBorderColor()
 	end
 
+	if E.db.mMT.unitframeicons.readycheck.enable then
+		mMT:SetupReadyCheckIcons()
+	end
+
+	if E.db.mMT.unitframeicons.phase.enable then
+		mMT:SetupPhaseIcons()
+	end
+
 	if E.Retail then
 		if E.db.mMT.interruptoncd.enable then
 			mMT:mSetupCastbar()

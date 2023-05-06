@@ -28,4 +28,5 @@
 	<Script file="currency.lua"/>
 	<Script file="dock.lua"/>
 	<Script file="changelog.lua"/>
+	<Script file="unitframeicons.lua"/>
 </Ui>
