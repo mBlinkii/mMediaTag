@@ -33,6 +33,9 @@ local change_log_new = {
 	"Addon Compartment Tooltip",
 	"5 new Icons, according to a user's request",
 	"Change Log",
+	"Custom Readycheck Icons",
+	"Custom Phase Icons",
+	"Custom Phase Colors"
 }
 
 local change_log_update = {
