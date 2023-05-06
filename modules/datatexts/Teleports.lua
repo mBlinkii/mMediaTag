@@ -213,17 +213,21 @@ local Teleports = {
 		159898, --path-of-the-skies
 		373274, --path-of-the-scrappy-prince
 		373262, --path-of-the-fallen-guardian
+		410071, -- path-of-the-freebooter
+		410078, -- path-of-the-earth-warder
+		410080, -- path-of-winds-domain
+		410074, -- path-of-festering-rot
 	},
 	season = {
 		available = false,
-		393262, --path-of-the-windswept-plains
-		393273, --path-of-the-draconic-diploma
-		393279, --pfad-der-arkanen-geheimnisse
-		393256, --pfad-des-nestverteidigers
-		393766, --path-of-the-grand-magistrix
-		131204, --path-of-the-jade-serpent
-		393764, --path-of-proven-worth
-		159899, --path-of-the-crescent-moon
+		393267, -- path-of-the-rotting-woods
+		393222, -- path-of-the-watchers-legacy
+		410071, -- path-of-the-freebooter
+		393276, -- path-of-the-obsidian-hoard
+		393283, -- path-of-the-titanic-reservoir
+		410078, -- path-of-the-earth-warder
+		410080, -- path-of-winds-domain
+		410074, -- path-of-festering-rot
 	},
 	sl = {
 		available = false,
@@ -479,7 +483,7 @@ end
 local function OnEvent(self, event, unit)
 	CheckIfAvailable()
 	if E.db.mMT.teleports.icon then
-		self.text:SetFormattedText(mMT.ClassColor.string, format("|TInterface\\AddOns\\ElvUI_mMediaTag\\media\\icons\\datatext\\teleports.tga:16:16:0:0:64:64|t %s", mText))
+		self.text:SetFormattedText(mMT.ClassColor.string, format("|T%s:16:16:0:0:64:64|t %s", mMT.Media.TeleportIcons[E.db.mMT.teleports.customicon], mText))
 	else
 		self.text:SetFormattedText(mMT.ClassColor.string, mText)
 	end

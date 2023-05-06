@@ -162,6 +162,15 @@ mMT.Media.GhostIcons = {
 	GHOST7 = "Interface\\AddOns\\ElvUI_mMediaTag\\media\\icons\\tags\\skull3.tga",
 }
 
+mMT.Media.TeleportIcons = {
+	TP1 = "Interface\\AddOns\\ElvUI_mMediaTag\\media\\icons\\datatext\\teleports1.tga",
+	TP2 = "Interface\\AddOns\\ElvUI_mMediaTag\\media\\icons\\datatext\\teleports2.tga",
+	TP3 = "Interface\\AddOns\\ElvUI_mMediaTag\\media\\icons\\datatext\\teleports3.tga",
+	TP4 = GetItemIcon(6948),
+	TP5 = GetItemIcon(110560),
+	TP6 = GetItemIcon(193588),
+}
+
 mMT.Media.ClassIcons = {
 	CLASS1 = "Interface\\AddOns\\ElvUI_mMediaTag\\media\\icons\\tags\\class1.tga",
 	CLASS2 = "Interface\\AddOns\\ElvUI_mMediaTag\\media\\icons\\tags\\class2.tga",
