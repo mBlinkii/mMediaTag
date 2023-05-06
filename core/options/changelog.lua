@@ -46,6 +46,7 @@ local change_log_update = {
 	"Update the Tags, all aviable Tags under ElvUI > Tags",
 	"New Tag Classification Icon",
 	"Objectivetracker Skin, skins now the Dungeon tracker",
+	"Update Teleports for Season 2",
 }
 
 local change_log_fix = {
