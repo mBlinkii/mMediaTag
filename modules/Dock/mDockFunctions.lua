@@ -92,16 +92,20 @@ local function mDockCreatText(self)
 	end
 
 	if not self.mIcon.TextA then
-		self.mIcon.TextA = self:CreateFontString(nil, "OVERLAY", "GameTooltipText")
+		self.mIcon.TextA = self:CreateFontString(nil, 'ARTWORK')
 	end
-	self.mIcon.TextA:SetFont(LSM:Fetch("font", E.db.mMT.dockdatatext.font), FontSize, E.db.mMT.dockdatatext.fontflag)
+	self.mIcon.TextA:FontTemplate(LSM:Fetch("font", E.db.mMT.dockdatatext.font), FontSize, E.db.mMT.dockdatatext.fontflag)
 	self.mIcon.TextA:ClearAllPoints()
+	self.mIcon.TextA:SetShadowColor(0, 0, 0, 0)
+	self.mIcon.TextA.SetShadowColor = function() end
 
 	if not self.mIcon.TextB then
-		self.mIcon.TextB = self:CreateFontString(nil, "OVERLAY", "GameTooltipText")
+		self.mIcon.TextB = self:CreateFontString(nil, 'ARTWORK')
 	end
-	self.mIcon.TextB:SetFont(LSM:Fetch("font", E.db.mMT.dockdatatext.font), FontSize, E.db.mMT.dockdatatext.fontflag)
+	self.mIcon.TextB:FontTemplate(LSM:Fetch("font", E.db.mMT.dockdatatext.font), FontSize, E.db.mMT.dockdatatext.fontflag)
 	self.mIcon.TextB:ClearAllPoints()
+	self.mIcon.TextB:SetShadowColor(0, 0, 0, 0)
+	self.mIcon.TextB.SetShadowColor = function() end
 
 	if self.mSettings.Spezial then
 		self.mIcon.TextB:SetPoint("TOP", self.mIcon, "TOP", 0, 0)
@@ -110,9 +114,17 @@ local function mDockCreatText(self)
 		else
 			self.mIcon.TextA:SetPoint("BOTTOM", self.mIcon, "BOTTOM", 0, 0)
 		end
+		self.mIcon.TextA:SetJustifyH('CENTER')
+		self.mIcon.TextA:SetWordWrap(true)
+		self.mIcon.TextB:SetJustifyH('CENTER')
+		self.mIcon.TextB:SetWordWrap(true)
 	else
 		self.mIcon.TextA:SetPoint("BOTTOMRIGHT", self.mIcon, "BOTTOMRIGHT", 0, 0)
 		self.mIcon.TextB:SetPoint("BOTTOMLEFT", self.mIcon, "BOTTOMLEFT", 0, 0)
+		self.mIcon.TextA:SetJustifyH('RIGHT')
+		self.mIcon.TextA:SetWordWrap(true)
+		self.mIcon.TextB:SetJustifyH('LEFT')
+		self.mIcon.TextB:SetWordWrap(true)
 	end
 
 	if not self.mSettings.DontClearText then

@@ -143,7 +143,10 @@
         "InterfaceOptions_AddCategory",
         "MainMenuBar",
         "Settings",
-        "Add"
+        "Add",
+        "CURRENCY",
+        "EasyMenu",
+        "ElvDB"
     ],
     "Lua.diagnostics.disable": [
         "redundant-parameter",

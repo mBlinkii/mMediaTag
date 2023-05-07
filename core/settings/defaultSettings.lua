@@ -451,6 +451,11 @@ P.mMT = {
 			iconcolor = { r = 1, g = 1, b = 1, a = 0.75 },
 			customcolor = false,
 		},
+		bag = {
+			icon = "COLOR68",
+			iconcolor = { r = 1, g = 1, b = 1, a = 0.75 },
+			customcolor = false, text = 5,
+		},
 	},
 	unitframeicons = {
 		phase = {
