@@ -195,7 +195,7 @@ function mMT:Initialize()
 		mMT:mChat()
 	end
 
-	if E.db.mMT.nameplate.bordercolor.glow and E.db.mMT.nameplate.bordercolor.border then
+	if E.db.mMT.nameplate.bordercolor.glow or E.db.mMT.nameplate.bordercolor.border then
 		mMT:mNamePlateBorderColor()
 	end
 
@@ -290,6 +290,29 @@ function mMT:PLAYER_ENTERING_WORLD()
 		E:ToggleOptions()
 		E.Libs.AceConfigDialog:SelectGroup("ElvUI", "mMT", "changelog")
 		E.db.mMT.version = mMT.Version
+	end
+
+	-- quick setup
+	if not E.db.mMT.quicksetup then
+		StaticPopupDialogs["mQuickSetup"] = {
+			text = format(L["It looks like you are using %s for the first time. Would you like to open the Quick Settings window?"], mMT.Name),
+			button1 = L["Yes"],
+			button2 = L["No"],
+			timeout = 120,
+			whileDead = true,
+			hideOnEscape = false,
+			preferredIndex = 3,
+			OnAccept = function()
+				E:ToggleOptions()
+				E.Libs.AceConfigDialog:SelectGroup("ElvUI", "mMT", "setup")
+				E.db.mMT.quicksetup = true
+			end,
+			OnCancel = function()
+				E.db.mMT.quicksetup = true
+			end,
+		}
+
+		StaticPopup_Show("mQuickSetup")
 	end
 
 	mMT.ClassColor = {

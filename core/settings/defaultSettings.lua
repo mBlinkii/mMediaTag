@@ -1,7 +1,7 @@
 local mMT, E, L, V, P, G = unpack((select(2, ...)))
 
 P.mMT = {
-	version = 0,
+	version = 0, quicksetup = false,
 	general = { greeting = true, keystochat = false },
 	tooltip = { enable = false, iconsize = 32, iconzoom = true },
 	combattime = { ooctexture = "CI2", ictexture = "CI12", hide = 30 },
