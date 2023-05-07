@@ -157,8 +157,8 @@ end
 
 local function SetGradientColors(bar, r, g, b)
 	if mMT.ElvUI_EltreumUI and E.db.mMT.objectivetracker.header.barcolorstyle == "class" then
-		local ElvUI_EltreumUI = E:GetModule("ElvUI_EltreumUI")
-		if E.db.ElvUI_EltreumUI.unitframes.gradientmode.customcolor then
+		local ElvUI_EltreumUI = E:GetModule("ElvUI_EltreumUI", true)
+		if ElvUI_EltreumUI and E.db.ElvUI_EltreumUI.unitframes.gradientmode.customcolor then
 			bar:GetStatusBarTexture()
 				:SetGradient("HORIZONTAL", ElvUI_EltreumUI:GradientColorsCustom(E.myclass, false, false, false))
 		else

@@ -1,6 +1,7 @@
 local mMT, E, L, V, P, G = unpack((select(2, ...)))
 
 P.mMT = {
+	version = 0, quicksetup = false,
 	general = { greeting = true, keystochat = false },
 	tooltip = { enable = false, iconsize = 32, iconzoom = true },
 	combattime = { ooctexture = "CI2", ictexture = "CI12", hide = 30 },
@@ -114,7 +115,7 @@ P.mMT = {
 			r = 0.11,
 		},
 	},
-	teleports = { icon = false },
+	teleports = { icon = false, customicon = "TP1" },
 	profession = { icon = false, proficon = true },
 	dungeon = { icon = false, texttoname = true, key = true, score = true, affix = true },
 	instancedifficulty = {
@@ -450,6 +451,27 @@ P.mMT = {
 			iconcolor = { r = 1, g = 1, b = 1, a = 0.75 },
 			customcolor = false,
 		},
+		bag = {
+			icon = "COLOR68",
+			iconcolor = { r = 1, g = 1, b = 1, a = 0.75 },
+			customcolor = false, text = 5,
+		},
+	},
+	unitframeicons = {
+		phase = {
+			enable = false,
+			icon = "PHASE01",
+			color = {
+				enable = true,
+				withe = true,
+				chromie = { r = 1, g = 0.9, b = 0.5 },
+				warmode = { r = 1, g = 0.3, b = 0.3 },
+				sharding = { r = 0.5, g = 1, b = 0.3 },
+				phasing = { r = 0.3, g = 0.5, b = 1 },
+			},
+		},
+		resurrection = { enable = false, icon = "RES3" },
+		readycheck = { enable = false, ready = "READY06", notready = "NOTREADY01", waiting = "COLOR26" },
 	},
 }
 

@@ -35,26 +35,6 @@ local function configTable()
 		icons[key] = E:TextureString(icon, ":14:14") .. " " .. key
 	end
 	E.Options.args.mMT.args.dock.args = {
-		-- header_greeting = {
-		-- 	order = 1,
-		-- 	type = "group",
-		-- 	inline = true,
-		-- 	name = L["Welcome text"],
-		-- 	args = {
-		-- 		toggle_greeting = {
-		-- 			order = 2,
-		-- 			type = "toggle",
-		-- 			name = L["Show Welcome text"],
-		-- 			get = function(info)
-		-- 				return E.db.mMT.general.greeting
-		-- 			end,
-		-- 			set = function(info, value)
-		-- 				E.db.mMT.general.greeting = value
-		-- 			end,
-		-- 		},
-		-- 	},
-		-- },
-
 		dockgeneral = {
 			order = 10,
 			type = "group",
@@ -1674,6 +1654,76 @@ local function configTable()
 					end,
 					set = function(info, value)
 						E.db.mMT.dockdatatext.nottification.flash = value
+					end,
+				},
+			},
+		},
+		dockbag = {
+			order = 220,
+			type = "group",
+			name = L["Bags"],
+			args = {
+				dockbagicon = {
+					order = 1,
+					type = "select",
+					name = L["Icon"],
+					get = function(info)
+						return E.db.mMT.dockdatatext.bag.icon
+					end,
+					set = function(info, value)
+						E.db.mMT.dockdatatext.bag.icon = value
+						DT:ForceUpdate_DataText("mBags")
+					end,
+					values = icons,
+				},
+				dockbagtext = {
+					order = 2,
+					type = "select",
+					name = L["Text to display"],
+					get = function(info)
+						return E.db.mMT.dockdatatext.bag.text
+					end,
+					set = function(info, value)
+						E.db.mMT.dockdatatext.bag.text = value
+						DT:ForceUpdate_DataText("mBags")
+					end,
+					values = {
+						[1] = L["Bag - FREE"],
+						[2] = L["Bag - USED"],
+						[3] = L["Bag - FREE/TOTAL"],
+						[4] = L["GOLD"],
+						[5] = L["NONE"]
+
+					},
+				},
+				bagtoggle = {
+					order = 3,
+					name = L["Custom color"],
+					type = "toggle",
+					get = function(info)
+						return E.db.mMT.dockdatatext.bag.customcolor
+					end,
+					set = function(info, value)
+						E.db.mMT.dockdatatext.bag.customcolor = value
+						DT:ForceUpdate_DataText("mBags")
+					end,
+				},
+				bagcolor = {
+					type = "color",
+					order = 4,
+					name = L["Custom Icon Color"],
+					hasAlpha = true,
+					disabled = function()
+						return not E.db.mMT.dockdatatext.bag.customcolor
+					end,
+					get = function(info)
+						local t = E.db.mMT.dockdatatext.bag.iconcolor
+						return t.r, t.g, t.b, t.a
+					end,
+					set = function(info, r, g, b, a)
+						local t = E.db.mMT.dockdatatext.bag.iconcolor
+						t.r, t.g, t.b, t.a = r, g, b, a
+						DT:ForceUpdate_DataText("mBags")
 					end,
 				},
 			},

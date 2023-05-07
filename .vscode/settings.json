@@ -139,7 +139,14 @@
         "DUNGEON_SCORE_OVERTIME_TIME",
         "NO",
         "UIParentLoadAddOn",
-        "BOOKTYPE_PROFESSION"
+        "BOOKTYPE_PROFESSION",
+        "InterfaceOptions_AddCategory",
+        "MainMenuBar",
+        "Settings",
+        "Add",
+        "CURRENCY",
+        "EasyMenu",
+        "ElvDB"
     ],
     "Lua.diagnostics.disable": [
         "redundant-parameter",

@@ -3,7 +3,6 @@ local mMT, E, L, V, P, G = unpack((select(2, ...)))
 local UF = E:GetModule("UnitFrames")
 local LSM = LibStub("LibSharedMedia-3.0")
 
-local addon, ns = ...
 
 local function CustomHealthBackdrop(unitframe, framename, r, g, b)
 	if unitframe.backdropTex then

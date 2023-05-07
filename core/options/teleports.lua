@@ -5,9 +5,10 @@ local tinsert = tinsert
 local function configTable()
 	local icons = {}
 
-	for key, icon in pairs(mMT.Media.CombatIcons) do
-		icons[key] = E:TextureString(icon, ":14:14")
+	for key, icon in pairs(mMT.Media.TeleportIcons) do
+		icons[key] = E:TextureString(icon, ":14:14") .. " " .. key
 	end
+
 	E.Options.args.mMT.args.datatexts.args.teleports.args = {
 		header_teleports = {
 			order = 1,
@@ -26,6 +27,19 @@ local function configTable()
 						E.db.mMT.teleports.icon = value
                         DT:ForceUpdate_DataText("mTeleports")
 					end,
+				},
+				icon_teleports = {
+					order = 2,
+					type = "select",
+					name = L["Icon out of Combat"],
+					get = function(info)
+						return E.db.mMT.teleports.customicon
+					end,
+					set = function(info, value)
+						E.db.mMT.teleports.customicon = value
+						DT:ForceUpdate_DataText("mTeleports")
+					end,
+					values = icons,
 				},
 			},
 		},

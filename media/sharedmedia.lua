@@ -228,6 +228,7 @@ end
 	mAddStatusbar("mMediaTag K32", "k32.tga")
 	mAddStatusbar("mMediaTag K33", "k33.tga")
 	mAddStatusbar("mMediaTag K34", "k34.tga")
+	mAddStatusbar("mMediaTag K35", "k35.tga")
 --end
 
 --function mMT:LoadSeriesL()

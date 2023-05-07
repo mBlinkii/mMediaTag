@@ -1,6 +1,7 @@
 local E, _, V, P, G = unpack(ElvUI)
 local EP = LibStub("LibElvUIPlugin-1.0")
 local L = E.Libs.ACL:GetLocale("ElvUI", E.global.general.locale)
+local DT = E:GetModule("DataTexts")
 
 -- Addon Name and Namespace
 local addonName, addon = ...
@@ -31,7 +32,8 @@ _G[addonName] = addon
 
 --Constants
 mMT.Version = GetAddOnMetadata(addonName, "Version")
-mMT.Name = "|CFF6559F1m|r|CFF7A4DEFM|r|CFF8845ECe|r|CFFA037E9d|r|CFFA435E8i|r|CFFB32DE6a|r|CFFBC26E5T|r|CFFCB1EE3a|r|CFFDD14E0g|r |CFFFF006C&|r |CFFFF4C00T|r|CFFFF7300o|r|CFFFF9300o|r|CFFFFA800l|r|CFFFFC900s|r"
+mMT.Name =
+	"|CFF6559F1m|r|CFF7A4DEFM|r|CFF8845ECe|r|CFFA037E9d|r|CFFA435E8i|r|CFFB32DE6a|r|CFFBC26E5T|r|CFFCB1EE3a|r|CFFDD14E0g|r |CFFFF006C&|r |CFFFF4C00T|r|CFFFF7300o|r|CFFFF9300o|r|CFFFFA800l|r|CFFFFC900s|r"
 mMT.NameShort = "|CFF6559F1m|r|CFFA037E9M|r|CFFDD14E0T|r"
 mMT.Icon = "|TInterface\\Addons\\ElvUI_mMediaTag\\media\\logo\\mmt_icon_round.tga:14:14|t"
 mMT.IconSquare = "|TInterface\\Addons\\ElvUI_mMediaTag\\media\\logo\\mmt_icon.tga:14:14|t"
@@ -42,14 +44,30 @@ mMT.ClassColor = {
 	hex = E:RGBToHex(class[1], class[2], class[3]),
 	string = strjoin("", E:RGBToHex(class[1], class[2], class[3]), "%s|r"),
 }
-mMT.ElvUI_EltreumUI = (IsAddOnLoaded("ElvUI_EltreumUI") and E.db.ElvUI_EltreumUI and E.db.ElvUI_EltreumUI.unitframes and E.db.ElvUI_EltreumUI.unitframes.gradientmode and E.db.ElvUI_EltreumUI.unitframes.gradientmode.enable) or false
+mMT.ElvUI_EltreumUI = (
+	IsAddOnLoaded("ElvUI_EltreumUI")
+	and E.db.ElvUI_EltreumUI
+	and E.db.ElvUI_EltreumUI.unitframes
+	and E.db.ElvUI_EltreumUI.unitframes.gradientmode
+	and E.db.ElvUI_EltreumUI.unitframes.gradientmode.enable
+) or false
 mMT.Media = {}
 mMT.Config = {}
 
 --AddonCompartment
 function ElvUI_mMediaTag_OnAddonCompartmentClick()
-	E:ToggleOptions()
-	E.Libs.AceConfigDialog:SelectGroup("ElvUI", "mMT")
+	E:ToggleOptions("mMT")
+end
+
+function ElvUI_mMediaTag_OnAddonCompartmentOnEnter()
+	GameTooltip:ClearLines()
+	GameTooltip:SetOwner(UIParent, "ANCHOR_CURSOR_RIGHT")
+	GameTooltip:AddDoubleLine(mMT.Name, format("|CFFF7DC6FVer. %s|r", mMT.Version))
+	GameTooltip:Show()
+end
+
+function ElvUI_mMediaTag_OnAddonCompartmentOnLeave()
+	GameTooltip:Hide()
 end
 
 -- Load Settings
@@ -63,79 +81,79 @@ end
 
 local function LoadTextures()
 	if E.db.mMT.textures.all then
-        mMT:LoadSeriesAll()
+		mMT:LoadSeriesAll()
 	end
 
 	if E.db.mMT.textures.a then
-        mMT:LoadSeriesA()
+		mMT:LoadSeriesA()
 	end
 
 	if E.db.mMT.textures.b then
-        mMT:LoadSeriesB()
+		mMT:LoadSeriesB()
 	end
 
 	if E.db.mMT.textures.c then
-        mMT:LoadSeriesC()
+		mMT:LoadSeriesC()
 	end
 
 	if E.db.mMT.textures.d then
-        mMT:LoadSeriesD()
+		mMT:LoadSeriesD()
 	end
 
 	if E.db.mMT.textures.e then
-        mMT:LoadSeriesE()
+		mMT:LoadSeriesE()
 	end
 
 	if E.db.mMT.textures.f then
-        mMT:LoadSeriesF()
+		mMT:LoadSeriesF()
 	end
 
 	if E.db.mMT.textures.g then
-        mMT:LoadSeriesG()
+		mMT:LoadSeriesG()
 	end
 
 	if E.db.mMT.textures.h then
-        mMT:LoadSeriesH()
+		mMT:LoadSeriesH()
 	end
 
 	if E.db.mMT.textures.i then
-        mMT:LoadSeriesI()
+		mMT:LoadSeriesI()
 	end
 
 	if E.db.mMT.textures.j then
-        mMT:LoadSeriesJ()
+		mMT:LoadSeriesJ()
 	end
 
 	if E.db.mMT.textures.k then
-        mMT:LoadSeriesK()
+		mMT:LoadSeriesK()
 	end
 
 	if E.db.mMT.textures.l then
-        mMT:LoadSeriesL()
+		mMT:LoadSeriesL()
 	end
 
 	if E.db.mMT.textures.m then
-        mMT:LoadSeriesM()
+		mMT:LoadSeriesM()
 	end
 
 	if E.db.mMT.textures.n then
-        mMT:LoadSeriesN()
+		mMT:LoadSeriesN()
 	end
 
 	if E.db.mMT.textures.o then
-        mMT:LoadSeriesO()
+		mMT:LoadSeriesO()
 	end
 
 	if E.db.mMT.textures.p then
-        mMT:LoadSeriesP()
+		mMT:LoadSeriesP()
 	end
 
 	if E.db.mMT.textures.q then
-        mMT:LoadSeriesQ()
+		mMT:LoadSeriesQ()
 	end
 
 	if E.db.mMT.textures.r then
-        mMT:LoadSeriesR()
+		mMT:LoadSeriesR()
 	end
 end
 -- Initialize Addon
@@ -144,8 +162,6 @@ function mMT:Initialize()
 
 	-- Register Events
 	mMT:RegisterEvent("PLAYER_ENTERING_WORLD")
-
-	--LoadTextures()
 
 	if E.db.mMT.nameplate.executemarker.auto or E.db.mMT.interruptoncd.enable then
 		mMT:RegisterEvent("PLAYER_TALENT_UPDATE")
@@ -179,8 +195,20 @@ function mMT:Initialize()
 		mMT:mChat()
 	end
 
-	if E.db.mMT.nameplate.bordercolor.glow and E.db.mMT.nameplate.bordercolor.border then
+	if E.db.mMT.nameplate.bordercolor.glow or E.db.mMT.nameplate.bordercolor.border then
 		mMT:mNamePlateBorderColor()
+	end
+
+	if E.db.mMT.unitframeicons.readycheck.enable then
+		mMT:SetupReadyCheckIcons()
+	end
+
+	if E.db.mMT.unitframeicons.phase.enable then
+		mMT:SetupPhaseIcons()
+	end
+
+	if E.db.mMT.unitframeicons.resurrection.enable then
+		mMT:SetupResurrectionIcon()
 	end
 
 	if E.Retail then
@@ -188,11 +216,18 @@ function mMT:Initialize()
 			mMT:mSetupCastbar()
 		end
 
-		if E.db.mMT.custombackgrounds.health.enable or E.db.mMT.custombackgrounds.power.enable or E.db.mMT.custombackgrounds.castbar.enable then
+		if
+			E.db.mMT.custombackgrounds.health.enable
+			or E.db.mMT.custombackgrounds.power.enable
+			or E.db.mMT.custombackgrounds.castbar.enable
+		then
 			mMT:CustomBackdrop()
 		end
 
-		if E.private.nameplates.enable and E.db.mMT.nameplate.healthmarker.enable or E.db.mMT.nameplate.executemarker.enable then
+		if
+			E.private.nameplates.enable and E.db.mMT.nameplate.healthmarker.enable
+			or E.db.mMT.nameplate.executemarker.enable
+		then
 			mMT:StartNameplateTools()
 		end
 
@@ -214,7 +249,14 @@ function mMT:Initialize()
 			mMT:RegisterEvent("CHAT_MSG_GUILD")
 		end
 
-		if (E.db.mMT.objectivetracker.enable or (E.db.mMT.objectivetracker.enable and E.db.mMT.objectivetracker.simple))  and E.private.skins.blizzard.enable and not IsAddOnLoaded("!KalielsTracker") then
+		if
+			(
+				E.db.mMT.objectivetracker.enable
+				or (E.db.mMT.objectivetracker.enable and E.db.mMT.objectivetracker.simple)
+			)
+			and E.private.skins.blizzard.enable
+			and not IsAddOnLoaded("!KalielsTracker")
+		then
 			if not E.private.skins.blizzard.objectiveTracker then
 				StaticPopupDialogs["mErrorSkin"] = {
 					text = L["ElvUI skin must be enabled to activate mMediaTag Quest skins! Should it be enabled?"],
@@ -243,6 +285,36 @@ function mMT:Initialize()
 end
 
 function mMT:PLAYER_ENTERING_WORLD()
+	-- Change Log
+	if E.db.mMT.version ~= mMT.Version then
+		E:ToggleOptions()
+		E.Libs.AceConfigDialog:SelectGroup("ElvUI", "mMT", "changelog")
+		E.db.mMT.version = mMT.Version
+	end
+
+	-- quick setup
+	if not E.db.mMT.quicksetup then
+		StaticPopupDialogs["mQuickSetup"] = {
+			text = format(L["It looks like you are using %s for the first time. Would you like to open the Quick Settings window?"], mMT.Name),
+			button1 = L["Yes"],
+			button2 = L["No"],
+			timeout = 120,
+			whileDead = true,
+			hideOnEscape = false,
+			preferredIndex = 3,
+			OnAccept = function()
+				E:ToggleOptions()
+				E.Libs.AceConfigDialog:SelectGroup("ElvUI", "mMT", "setup")
+				E.db.mMT.quicksetup = true
+			end,
+			OnCancel = function()
+				E.db.mMT.quicksetup = true
+			end,
+		}
+
+		StaticPopup_Show("mQuickSetup")
+	end
+
 	mMT.ClassColor = {
 		r = class[1],
 		g = class[2],

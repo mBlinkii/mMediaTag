@@ -1,6 +1,50 @@
 # Changelog - ElvUI_mMediaTag
 [Eng] - All changes to this project will be documented in this file. The latest changes are at the top.
-[Ger] - Alle Änderungen an diesem Projekt werden in dieser Datei dokumentiert. Die neuesten Änderungen stehen ganz oben.
+
+## [ver. 3.1] - 07.05.2023
+### Update
+- Update Teleports for Season 2
+- Update Example Dock
+### Fix
+- Tag update function in Settings menu
+### NEW
+- Addon Compartment Tooltip
+- Add in Game Changlog
+- New Icons for Dock
+- New Game Menu Icons
+- New Teleport Datatext Icons
+- Custom Ready Check Icons
+- Custom Phase Icons and Color
+- Custom Resurrection icons
+- New Dock Icon for Bags
+- New Quick Setup Menu
+
+## [ver. 3.0] - 02.05.2023
+### IMPORTANT
+!!! Currently only for Retail
+
+### Update
+- Code Update
+- The settings will be reset
+- Update logo and Name
+- Add new Logo and Settings for Retail 10.1
+- More Mediafiles, for Dock, Role, Tags. Datatexts
+- Interrupt on CD now shows when the Unit is out of range
+- M+ Datatext got more functionality for the tooltip, now shows an overview.
+- You can now choos a Icon for Chatbutton and Rollbutton
+- Update Dungeon Name function for Dataext Dungeons
+- Nameplate border and hover color can now be set separately
+- Add new Target Arrows to ElvUI
+- Add new Combat Icons to ElvUI
+- Add new Mail Icons to ElvUI
+- Add new Resting Icons to ElvUI
+- Update the Tags, all aviable Tags under ElvUI > Tags
+- Tags spelling is now consistent
+- Removed old and unused Tags
+- New Tag Classification Icon
+- Objectivetracker Skin, skins now the Dungeon tracker
+- New Dock Icons
+- 3 special Styles for Dock Calendar
 
 ## [ver. 2.95.2] - 04.04.2023
 ### Update

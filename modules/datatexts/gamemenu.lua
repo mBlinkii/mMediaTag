@@ -191,9 +191,7 @@ local function BuildMenu()
 		bottom = true,
 		func = function()
 			if not InCombatLockdown() then
-				E:ToggleOptions()
-				E.Libs.AceConfigDialog:SelectGroup("ElvUI", "mMT")
-				HideUIPanel(_G["GameMenuFrame"])
+				E:ToggleOptions("mMT")
 			end
 		end,
 	})

@@ -25,6 +25,8 @@ function mMT:mDockFull(top, enable)
 	E.db["datatexts"]["panels"]["mDock"][15] = "mProfession"
 	E.db["datatexts"]["panels"]["mDock"][16] = "mDurability"
 	E.db["datatexts"]["panels"]["mDock"][17] = "mCalendar"
+	E.db["datatexts"]["panels"]["mDock"][18] = "mVolume"
+	E.db["datatexts"]["panels"]["mDock"][19] = "mBags"
 	E.db["datatexts"]["panels"]["mDock"]["enable"] = enable
 
 	E.global["datatexts"]["customPanels"]["mDock"]["backdrop"] = false
@@ -39,14 +41,14 @@ function mMT:mDockFull(top, enable)
 	E.global["datatexts"]["customPanels"]["mDock"]["height"] = 42
 	E.global["datatexts"]["customPanels"]["mDock"]["mouseover"] = false
 	E.global["datatexts"]["customPanels"]["mDock"]["name"] = "mDock"
-	E.global["datatexts"]["customPanels"]["mDock"]["numPoints"] = 17
+	E.global["datatexts"]["customPanels"]["mDock"]["numPoints"] = 19
 	E.global["datatexts"]["customPanels"]["mDock"]["panelTransparency"] = false
 	E.global["datatexts"]["customPanels"]["mDock"]["textJustify"] = "CENTER"
 	E.global["datatexts"]["customPanels"]["mDock"]["tooltipAnchor"] = "ANCHOR_TOP"
 	E.global["datatexts"]["customPanels"]["mDock"]["tooltipXOffset"] = 0
 	E.global["datatexts"]["customPanels"]["mDock"]["tooltipYOffset"] = 9
 	E.global["datatexts"]["customPanels"]["mDock"]["visibility"] = "[petbattle] hide;show"
-	E.global["datatexts"]["customPanels"]["mDock"]["width"] = 800
+	E.global["datatexts"]["customPanels"]["mDock"]["width"] = 900
 
 	if top then
 		E.db["movers"]["DTPanelmDockMover"] = "TOP,ElvUIParent,TOP,0,-4"

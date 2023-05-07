@@ -20,4 +20,5 @@
 	<Script file="mSpellBook.lua"/>
 	<Script file="mTalent.lua"/>
 	<Script file="mVolume.lua"/>
+	<Script file="mBags.lua"/>
 </Ui>
