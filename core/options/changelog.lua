@@ -14,43 +14,30 @@ local new, fix, update, important, dash =
 local change_log_important = {
 	red .. "!!! Currently only for Retail" .. endtag,
 	"Code Update",
-	"The settings will be reset",
+	"The settings will be rest if you update from v2 to v3",
 	"Removed old and unused Tags",
 }
 
 local change_log_new = {
-	"Add new Logo and Settings for Retail 10.1",
-	"More Mediafiles, for Dock, Role, Tags. Datatexts",
-	"You can now choos a Icon for Chatbutton and Rollbutton",
-	"Nameplate border and hover color can now be set separately",
-	"Add new Target Arrows to ElvUI",
-	"Add new Combat Icons to ElvUI",
-	"Add new Mail Icons to ElvUI",
-	"Add new Resting Icons to ElvUI",
-	"Tags spelling is now consistent",
-	"New Dock Icons",
-	"3 special Styles for Dock Calendar",
 	"Addon Compartment Tooltip",
-	"5 new Icons, according to a user's request",
-	"Change Log",
-	"Custom Readycheck Icons",
-	"Custom Phase Icons",
-	"Custom Phase Colors"
+	"Add in Game Changlog",
+	"New Icons for Dock",
+	"New Game Menu Icons",
+	"New Teleport Datatext Icons",
+	"Custom Ready Check Icons",
+	"Custom Phase Icons and Color",
+	"Custom Resurrection icons",
+	"New Dock Icon for Bags",
+	"New Quick Setup Menu",
 }
 
 local change_log_update = {
-	"Update logo and Name",
-	"Interrupt on CD now shows when the Unit is out of range",
-	"M+ Datatext got more functionality for the tooltip, now shows an overview.",
-	"Update Dungeon Name function for Dataext Dungeons",
-	"Update the Tags, all aviable Tags under ElvUI > Tags",
-	"New Tag Classification Icon",
-	"Objectivetracker Skin, skins now the Dungeon tracker",
 	"Update Teleports for Season 2",
+	"Update Example Dock",
 }
 
 local change_log_fix = {
-	"tag settings updatefunction",
+	"Tag update function in Settings menu",
 }
 
 local function Concatenation(tbl, icon, color)
@@ -70,7 +57,7 @@ local function Concatenation(tbl, icon, color)
 end
 
 local function configTable()
-    local releasdate = "05.05.2023"
+    local releasdate = "07.05.2023"
 	local change_log_important_string = Concatenation(change_log_important)
     local change_log_new_string = Concatenation(change_log_new)
     local change_log_update_string = Concatenation(change_log_update)
