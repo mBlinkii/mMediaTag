@@ -207,6 +207,10 @@ function mMT:Initialize()
 		mMT:SetupPhaseIcons()
 	end
 
+	if E.db.mMT.unitframeicons.resurrection.enable then
+		mMT:SetupResurrectionIcon()
+	end
+
 	if E.Retail then
 		if E.db.mMT.interruptoncd.enable then
 			mMT:mSetupCastbar()

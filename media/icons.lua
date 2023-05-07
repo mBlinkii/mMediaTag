@@ -206,6 +206,15 @@ mMT.Media.UnitframeIcons = {
 	CLOSE5 = "Interface\\AddOns\\ElvUI_mMediaTag\\media\\icons\\misc\\x5.tga",
 	COLOR25 = "Interface\\AddOns\\ElvUI_mMediaTag\\media\\dock\\colored\\color25.tga",
 	COLOR26 = "Interface\\AddOns\\ElvUI_mMediaTag\\media\\dock\\colored\\color26.tga",
+	RES1 = "Interface\\AddOns\\ElvUI_mMediaTag\\media\\icons\\unitframes\\resurrection1.tga",
+	RES2 = "Interface\\AddOns\\ElvUI_mMediaTag\\media\\icons\\unitframes\\resurrection2.tga",
+	RES3 = "Interface\\AddOns\\ElvUI_mMediaTag\\media\\icons\\unitframes\\resurrection3.tga",
+	RES4 = "Interface\\AddOns\\ElvUI_mMediaTag\\media\\icons\\unitframes\\resurrection4.tga",
+	RES5 = "Interface\\AddOns\\ElvUI_mMediaTag\\media\\icons\\unitframes\\resurrection5.tga",
+	RES6 = "Interface\\AddOns\\ElvUI_mMediaTag\\media\\icons\\unitframes\\resurrection6.tga",
+	RES7 = "Interface\\AddOns\\ElvUI_mMediaTag\\media\\icons\\unitframes\\resurrection7.tga",
+	RES8 = "Interface\\AddOns\\ElvUI_mMediaTag\\media\\icons\\unitframes\\resurrection8.tga",
+	RES9 = "Interface\\AddOns\\ElvUI_mMediaTag\\media\\icons\\unitframes\\resurrection9.tga",
 }
 
 mMT.Media.TeleportIcons = {

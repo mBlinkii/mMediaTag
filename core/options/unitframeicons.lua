@@ -37,6 +37,17 @@ local function configTable()
 						E.db.mMT.unitframeicons.phase.enable = value
 					end,
 				},
+				toggle_resurrection = {
+					order = 3,
+					type = "toggle",
+					name = L["Resurrection"],
+					get = function(info)
+						return E.db.mMT.unitframeicons.resurrection.enable
+					end,
+					set = function(info, value)
+						E.db.mMT.unitframeicons.resurrection.enable = value
+					end,
+				},
             },
 		},
 		header_readycheck = {
@@ -86,7 +97,7 @@ local function configTable()
 				},
 			},
 		},
-		header_misc = {
+		header_phase = {
 			order = 3,
 			type = "group",
 			inline = true,
@@ -200,6 +211,29 @@ local function configTable()
 						local t = E.db.mMT.unitframeicons.phase.color.phasing
 						t.r, t.g, t.b = r, g, b
 					end,
+				},
+			},
+		},
+		header_misc = {
+			order = 4,
+			type = "group",
+			inline = true,
+			name = L["Misc"],
+			args = {
+				ready = {
+					order = 1,
+					type = "select",
+					name = L["Resurrection"],
+					disabled = function()
+                        return not E.db.mMT.unitframeicons.resurrection.enable
+                    end,
+					get = function(info)
+						return E.db.mMT.unitframeicons.resurrection.icon
+					end,
+					set = function(info, value)
+						E.db.mMT.unitframeicons.resurrection.icon = value
+					end,
+					values = icons,
 				},
 			},
 		},

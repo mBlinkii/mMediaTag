@@ -16,25 +16,32 @@ local function ReadyCheckIcons(_, frame)
 end
 
 function mMT:PhaseIconColor(hidden, phaseReason)
-    if E.db.mMT.unitframeicons.phase.color.withe then
-        self.Center:SetVertexColor(1, 1, 1)
-    else
-	if phaseReason == 3 then -- chromie, gold
-        c = PhaseColors.chromie
-		self.Center:SetVertexColor(c.r, c.g, c.b)
-	elseif phaseReason == 2 then -- warmode, red
-        c = PhaseColors.warmode
-		self.Center:SetVertexColor(c.r, c.g, c.b)
-	elseif phaseReason == 1 then -- sharding, green
-        c = PhaseColors.sharding
-		self.Center:SetVertexColor(c.r, c.g, c.b)
-	else -- phasing, blue
-        c = PhaseColors.phasing
-		self.Center:SetVertexColor(c.r, c.g, c.b)
+	if E.db.mMT.unitframeicons.phase.color.withe then
+		self.Center:SetVertexColor(1, 1, 1)
+	else
+		if phaseReason == 3 then -- chromie, gold
+			c = PhaseColors.chromie
+			self.Center:SetVertexColor(c.r, c.g, c.b)
+		elseif phaseReason == 2 then -- warmode, red
+			c = PhaseColors.warmode
+			self.Center:SetVertexColor(c.r, c.g, c.b)
+		elseif phaseReason == 1 then -- sharding, green
+			c = PhaseColors.sharding
+			self.Center:SetVertexColor(c.r, c.g, c.b)
+		else -- phasing, blue
+			c = PhaseColors.phasing
+			self.Center:SetVertexColor(c.r, c.g, c.b)
+		end
 	end
 end
+
+local function ResurrectionIcon(_, frame)
+	frame.ResurrectIndicator:SetTexture(mMT.Media.UnitframeIcons[E.db.mMT.unitframeicons.resurrection.icon])
 end
 
+function mMT:SetupResurrectionIcon()
+	hooksecurefunc(UF, "Configure_ResurrectionIcon", ResurrectionIcon)
+end
 function mMT:SetupReadyCheckIcons()
 	hooksecurefunc(UF, "Configure_ReadyCheckIcon", ReadyCheckIcons)
 end

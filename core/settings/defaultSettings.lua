@@ -470,6 +470,7 @@ P.mMT = {
 				phasing = { r = 0.3, g = 0.5, b = 1 },
 			},
 		},
+		resurrection = { enable = false, icon = "RES3" },
 		readycheck = { enable = false, ready = "READY06", notready = "NOTREADY01", waiting = "COLOR26" },
 	},
 }
