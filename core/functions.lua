@@ -10,6 +10,7 @@ local tonumber = tonumber
 local _G = _G
 
 function mMT:DebugPrintTable(tbl)
+	print(mMT.Name .. ": Table Start >>>")
 	for k, v in pairs(tbl) do
 		print(k, v)
 	end

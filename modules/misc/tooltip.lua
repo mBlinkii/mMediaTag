@@ -7,12 +7,14 @@ local GetSpellInfo = GetSpellInfo
 
 --|TTexturePath:size1:size2:xoffset:yoffset:dimx:dimy:coordx1:coordx2:coordy1:coordy2|t
 local function SetTooltipIcon(tooltip, icon, title)
-	if icon and title and not strfind(title, "|T") then
-		if E.db.mMT.tooltip.iconzoom then
-			_G[tooltip:GetName() .. "TextLeft1"]:SetFormattedText("|T%s:%d:%d:0:0:64:64:4:60:4:60|t %s", icon, E.db.mMT.tooltip.iconsize, E.db.mMT.tooltip.iconsize, title)
-		else
-			_G[tooltip:GetName() .. "TextLeft1"]:SetFormattedText("|T%s:%d|t %s", icon, E.db.mMT.tooltip.iconsize, title)
-		end
+	if E.db.mMT.tooltip.iconzoom then
+		icon = format("|T%s:%d:%d:0:0:64:64:4:60:4:60|t", icon, E.db.mMT.tooltip.iconsize, E.db.mMT.tooltip.iconsize)
+	else
+		icon = format("|T%s:%d|t", icon, E.db.mMT.tooltip.iconsize)
+	end
+
+	if title and not strfind(title, "|T") then
+		_G[tooltip:GetName() .. "TextLeft1"]:SetFormattedText("%s %s", icon, title)
 	end
 end
 

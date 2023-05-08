@@ -38,6 +38,8 @@ local change_log_update = {
 
 local change_log_fix = {
 	"Tag update function in Settings menu",
+	"Phase Icon",
+	"Nil error on mDock Bags",
 }
 
 local function Concatenation(tbl, icon, color)
@@ -57,11 +59,11 @@ local function Concatenation(tbl, icon, color)
 end
 
 local function configTable()
-    local releasdate = "07.05.2023"
+	local releasdate = "07.05.2023"
 	local change_log_important_string = Concatenation(change_log_important)
-    local change_log_new_string = Concatenation(change_log_new)
-    local change_log_update_string = Concatenation(change_log_update)
-    local change_log_fix_string = Concatenation(change_log_fix)
+	local change_log_new_string = Concatenation(change_log_new)
+	local change_log_update_string = Concatenation(change_log_update)
+	local change_log_fix_string = Concatenation(change_log_fix)
 	E.Options.args.mMT.args.changelog.args = {
 		header_changelog = {
 			order = 1,
@@ -81,7 +83,7 @@ local function configTable()
 							fontSize = "medium",
 							name = green .. mMT.Version .. endtag,
 						},
-                        date = {
+						date = {
 							order = 2,
 							type = "description",
 							fontSize = "medium",
@@ -93,13 +95,13 @@ local function configTable()
 					order = 2,
 					type = "group",
 					inline = true,
-					name = important .. "  " .. red ..  L["Important:"] .. endtag,
-                    hidden  = function()
+					name = important .. "  " .. red .. L["Important:"] .. endtag,
+					hidden = function()
 						if change_log_important_string then
-                            return false
-                        else
-                            return true
-                        end
+							return false
+						else
+							return true
+						end
 					end,
 					args = {
 						important = {
@@ -114,13 +116,13 @@ local function configTable()
 					order = 3,
 					type = "group",
 					inline = true,
-					name = new .. "  " ..  green .. L["New:"] .. endtag,
-                    hidden  = function()
+					name = new .. "  " .. green .. L["New:"] .. endtag,
+					hidden = function()
 						if change_log_new_string then
-                            return false
-                        else
-                            return true
-                        end
+							return false
+						else
+							return true
+						end
 					end,
 					args = {
 						new = {
@@ -136,12 +138,12 @@ local function configTable()
 					type = "group",
 					inline = true,
 					name = update .. "  " .. blue .. L["Update:"] .. endtag,
-                    hidden  = function()
+					hidden = function()
 						if change_log_update_string then
-                            return false
-                        else
-                            return true
-                        end
+							return false
+						else
+							return true
+						end
 					end,
 					args = {
 						update = {
@@ -157,12 +159,12 @@ local function configTable()
 					type = "group",
 					inline = true,
 					name = fix .. "  " .. yellow .. L["Fix:"] .. endtag,
-                    hidden  = function()
+					hidden = function()
 						if change_log_fix_string then
-                            return false
-                        else
-                            return true
-                        end
+							return false
+						else
+							return true
+						end
 					end,
 					args = {
 						fix = {
