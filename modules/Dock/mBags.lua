@@ -12,6 +12,7 @@ local mText = format("Dock %s", L["Bags"])
 local mTextName = "mBags"
 
 local GetContainerNumFreeSlots = GetContainerNumFreeSlots or (C_Container and C_Container.GetContainerNumFreeSlots)
+local GetContainerNumSlots = GetContainerNumSlots or (C_Container and C_Container.GetContainerNumSlots)
 local NUM_BAG_SLOTS = NUM_BAG_SLOTS + (E.Retail and 1 or 0) -- add the profession bag
 
 local EasyMenu = EasyMenu
@@ -145,75 +146,134 @@ end
 
 local function OnEnter(self)
 	if E.db.mMT.dockdatatext.tip.enable then
-        DT.tooltip:ClearLines()
+		DT.tooltip:ClearLines()
 
-        DT.tooltip:AddLine(L["Session:"])
-        DT.tooltip:AddDoubleLine(L["Earned:"], E:FormatMoney(Profit, "SHORTINT", false), 1, 1, 1, 1, 1, 1)
-        DT.tooltip:AddDoubleLine(L["Spent:"], E:FormatMoney(Spent, "SHORTINT", false), 1, 1, 1, 1, 1, 1)
-    
-        if Spent ~= 0 then
-            local gained = Profit > Spent
-            DT.tooltip:AddDoubleLine(gained and L["Profit:"] or L["Deficit:"], E:FormatMoney(Profit-Spent, "SHORTINT", false), gained and 0 or 1, gained and 1 or 0, 0, 1, 1, 1)
-        end
-    
-        DT.tooltip:AddLine(' ')
-        DT.tooltip:AddLine(L["Character: "])
-    
-        sort(myGold, sortFunction)
-    
-        for _, g in ipairs(myGold) do
-            local nameLine = ''
-            if g.faction ~= '' and g.faction ~= 'Neutral' then
-                nameLine = format([[|TInterface\FriendsFrame\PlusManz-%s:14|t ]], g.faction)
-            end
-    
-            local toonName = format('%s%s%s', nameLine, g.name, (g.realm and g.realm ~= E.myrealm and ' - '..g.realm) or '')
-            DT.tooltip:AddDoubleLine((g.name == E.myname and toonName..[[ |TInterface\COMMON\Indicator-Green:14|t]]) or toonName, g.amountText, g.r, g.g, g.b, 1, 1, 1)
-        end
-    
-        DT.tooltip:AddLine(' ')
-        DT.tooltip:AddLine(L["Server: "])
-        if totalAlliance > 0 and totalHorde > 0 then
-            if totalAlliance ~= 0 then DT.tooltip:AddDoubleLine(L["Alliance: "], E:FormatMoney(totalAlliance, "SHORTINT", false), 0, .376, 1, 1, 1, 1) end
-            if totalHorde ~= 0 then DT.tooltip:AddDoubleLine(L["Horde: "], E:FormatMoney(totalHorde, "SHORTINT", false), 1, .2, .2, 1, 1, 1) end
-            DT.tooltip:AddLine(' ')
-        end
-        DT.tooltip:AddDoubleLine(L["Total: "], E:FormatMoney(totalGold, "SHORTINT", false), 1, 1, 1, 1, 1, 1)
-    
-        if E.Retail then
-            DT.tooltip:AddLine(' ')
-            DT.tooltip:AddDoubleLine(L["WoW Token:"], E:FormatMoney(C_WowTokenPublic_GetCurrentMarketPrice() or 0, "SHORTINT", false), 0, .8, 1, 1, 1, 1)
-        end
-    
-        if E.Retail or E.Wrath then
-            local index = 1
-            local info, name = DT:BackpackCurrencyInfo(index)
-    
-            while name do
-                if index == 1 then
-                    DT.tooltip:AddLine(' ')
-                    DT.tooltip:AddLine(CURRENCY)
-                end
-    
-                if info.quantity then
-                    DT.tooltip:AddDoubleLine(format('%s %s', format(iconString, info.iconFileID), name), BreakUpLargeNumbers(info.quantity), 1, 1, 1, 1, 1, 1)
-                end
-    
-                index = index + 1
-                info, name = DT:BackpackCurrencyInfo(index)
-            end
-        end
-    
-        local grayValue = B:GetGraysValue()
-        if grayValue > 0 then
-            DT.tooltip:AddLine(' ')
-            DT.tooltip:AddDoubleLine(L["Grays"], E:FormatMoney(grayValue, "SHORTINT", false), nil, nil, nil, 1, 1, 1)
-        end
-    
-        DT.tooltip:AddLine(' ')
-        DT.tooltip:AddLine(resetCountersFormatter)
-        DT.tooltip:AddLine(resetInfoFormatter)
-        DT.tooltip:Show()
+		DT.tooltip:AddLine(L["Session:"])
+		DT.tooltip:AddDoubleLine(L["Earned:"], E:FormatMoney(Profit, "SHORTINT", false), 1, 1, 1, 1, 1, 1)
+		DT.tooltip:AddDoubleLine(L["Spent:"], E:FormatMoney(Spent, "SHORTINT", false), 1, 1, 1, 1, 1, 1)
+
+		if Spent ~= 0 then
+			local gained = Profit > Spent
+			DT.tooltip:AddDoubleLine(
+				gained and L["Profit:"] or L["Deficit:"],
+				E:FormatMoney(Profit - Spent, "SHORTINT", false),
+				gained and 0 or 1,
+				gained and 1 or 0,
+				0,
+				1,
+				1,
+				1
+			)
+		end
+
+		DT.tooltip:AddLine(" ")
+		DT.tooltip:AddLine(L["Character: "])
+
+		sort(myGold, sortFunction)
+
+		for _, g in ipairs(myGold) do
+			local nameLine = ""
+			if g.faction ~= "" and g.faction ~= "Neutral" then
+				nameLine = format([[|TInterface\FriendsFrame\PlusManz-%s:14|t ]], g.faction)
+			end
+
+			local toonName =
+				format("%s%s%s", nameLine, g.name, (g.realm and g.realm ~= E.myrealm and " - " .. g.realm) or "")
+			DT.tooltip:AddDoubleLine(
+				(g.name == E.myname and toonName .. [[ |TInterface\COMMON\Indicator-Green:14|t]]) or toonName,
+				g.amountText,
+				g.r,
+				g.g,
+				g.b,
+				1,
+				1,
+				1
+			)
+		end
+
+		DT.tooltip:AddLine(" ")
+		DT.tooltip:AddLine(L["Server: "])
+		if totalAlliance > 0 and totalHorde > 0 then
+			if totalAlliance ~= 0 then
+				DT.tooltip:AddDoubleLine(
+					L["Alliance: "],
+					E:FormatMoney(totalAlliance, "SHORTINT", false),
+					0,
+					0.376,
+					1,
+					1,
+					1,
+					1
+				)
+			end
+			if totalHorde ~= 0 then
+				DT.tooltip:AddDoubleLine(
+					L["Horde: "],
+					E:FormatMoney(totalHorde, "SHORTINT", false),
+					1,
+					0.2,
+					0.2,
+					1,
+					1,
+					1
+				)
+			end
+			DT.tooltip:AddLine(" ")
+		end
+		DT.tooltip:AddDoubleLine(L["Total: "], E:FormatMoney(totalGold, "SHORTINT", false), 1, 1, 1, 1, 1, 1)
+
+		if E.Retail then
+			DT.tooltip:AddLine(" ")
+			DT.tooltip:AddDoubleLine(
+				L["WoW Token:"],
+				E:FormatMoney(C_WowTokenPublic_GetCurrentMarketPrice() or 0, "SHORTINT", false),
+				0,
+				0.8,
+				1,
+				1,
+				1,
+				1
+			)
+		end
+
+		if E.Retail or E.Wrath then
+			local index = 1
+			local info, name = DT:BackpackCurrencyInfo(index)
+
+			while name do
+				if index == 1 then
+					DT.tooltip:AddLine(" ")
+					DT.tooltip:AddLine(CURRENCY)
+				end
+
+				if info.quantity then
+					DT.tooltip:AddDoubleLine(
+						format("%s %s", format(iconString, info.iconFileID), name),
+						BreakUpLargeNumbers(info.quantity),
+						1,
+						1,
+						1,
+						1,
+						1,
+						1
+					)
+				end
+
+				index = index + 1
+				info, name = DT:BackpackCurrencyInfo(index)
+			end
+		end
+
+		local grayValue = B:GetGraysValue()
+		if grayValue > 0 then
+			DT.tooltip:AddLine(" ")
+			DT.tooltip:AddDoubleLine(L["Grays"], E:FormatMoney(grayValue, "SHORTINT", false), nil, nil, nil, 1, 1, 1)
+		end
+
+		DT.tooltip:AddLine(" ")
+		DT.tooltip:AddLine(resetCountersFormatter)
+		DT.tooltip:AddLine(resetInfoFormatter)
+		DT.tooltip:Show()
 	end
 	self.mIcon.isClicked = mDockCheckFrame()
 	mMT:mOnEnter(self, "CheckFrameBags")
@@ -277,7 +337,6 @@ local function OnEvent(self, event, ...)
 				end
 			end
 
-			local text = nil
 			if self.mSettings.Text == 1 then
 				text = free
 			elseif self.mSettings.Text == 2 then
@@ -287,7 +346,6 @@ local function OnEvent(self, event, ...)
 			else
 				text = total - free .. "/" .. total
 			end
-			self.mIcon.TextA:SetText(text)
 		end
 		self.mIcon.TextA:SetText(text or "")
 	end
@@ -305,18 +363,38 @@ end
 local function OnClick(self, btn)
 	if mMT:CheckCombatLockdown() then
 		mMT:mOnClick(self, "CheckFrameBags")
-        if btn == 'RightButton' then
-            if IsShiftKeyDown() then
-                E:SetEasyMenuAnchor(E.EasyMenu, self)
-                EasyMenu(menuList, E.EasyMenu, nil, nil, nil, 'MENU')
-            elseif IsControlKeyDown() then
-                Profit = 0
-                Spent = 0
-            end
-        else
-            _G.ToggleAllBags()
-        end
+		if btn == "RightButton" then
+			if IsShiftKeyDown() then
+				E:SetEasyMenuAnchor(E.EasyMenu, self)
+				EasyMenu(menuList, E.EasyMenu, nil, nil, nil, "MENU")
+			elseif IsControlKeyDown() then
+				Profit = 0
+				Spent = 0
+			end
+		else
+			_G.ToggleAllBags()
+		end
 	end
 end
 
-DT:RegisterDatatext(mTextName, "mDock", {'PLAYER_MONEY', 'SEND_MAIL_MONEY_CHANGED', 'SEND_MAIL_COD_CHANGED', 'PLAYER_TRADE_MONEY', 'TRADE_MONEY_CHANGED', 'CURRENCY_DISPLAY_UPDATE', 'PERKS_PROGRAM_CURRENCY_REFRESH'}, OnEvent, nil, OnClick, OnEnter, OnLeave, mText, nil, nil)
+DT:RegisterDatatext(
+	mTextName,
+	"mDock",
+	{
+		"PLAYER_MONEY",
+		"SEND_MAIL_MONEY_CHANGED",
+		"SEND_MAIL_COD_CHANGED",
+		"PLAYER_TRADE_MONEY",
+		"TRADE_MONEY_CHANGED",
+		"CURRENCY_DISPLAY_UPDATE",
+		"PERKS_PROGRAM_CURRENCY_REFRESH",
+	},
+	OnEvent,
+	nil,
+	OnClick,
+	OnEnter,
+	OnLeave,
+	mText,
+	nil,
+	nil
+)

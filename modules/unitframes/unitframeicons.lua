@@ -8,7 +8,6 @@ local PhaseColors = {
 	sharding = { r = 0.5, g = 1, b = 0.3 },
 	phasing = { r = 0.3, g = 0.5, b = 1 },
 }
-local c = PhaseColors.phasing
 local function ReadyCheckIcons(_, frame)
 	frame.ReadyCheckIndicator.readyTexture = mMT.Media.UnitframeIcons[E.db.mMT.unitframeicons.readycheck.ready]
 	frame.ReadyCheckIndicator.notReadyTexture = mMT.Media.UnitframeIcons[E.db.mMT.unitframeicons.readycheck.notready]
@@ -39,6 +38,11 @@ local function ResurrectionIcon(_, frame)
 	frame.ResurrectIndicator:SetTexture(mMT.Media.UnitframeIcons[E.db.mMT.unitframeicons.resurrection.icon])
 end
 
+local function PhaseIcon(_, frame)
+	frame.PhaseIndicator:SetTexture(blank)
+	frame.PhaseIndicator.Center:SetTexture(mMT.Media.UnitframeIcons[E.db.mMT.unitframeicons.phase.icon])
+end
+
 function mMT:SetupResurrectionIcon()
 	hooksecurefunc(UF, "Configure_ResurrectionIcon", ResurrectionIcon)
 end
@@ -46,8 +50,10 @@ function mMT:SetupReadyCheckIcons()
 	hooksecurefunc(UF, "Configure_ReadyCheckIcon", ReadyCheckIcons)
 end
 function mMT:SetupPhaseIcons()
+
 	E.Media.Textures.PhaseBorder = blank
 	E.Media.Textures.PhaseCenter = mMT.Media.UnitframeIcons[E.db.mMT.unitframeicons.phase.icon]
+	hooksecurefunc(UF, "Configure_PhaseIcon", PhaseIcon)
 
 	if E.db.mMT.unitframeicons.phase.color.enable then
 		PhaseColors = {
