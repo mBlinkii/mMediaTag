@@ -1,6 +1,6 @@
 <p align="center">
   <a href="" rel="noopener">
- <img width=200px height=200px src="https://github.com/mBlinkii/mMediaTag/blob/main/media/logo/mmt_logo.tga" alt="Project logo"></a>
+ <img width=200px height=200px src="https://raw.githubusercontent.com/mBlinkii/mMediaTag/dev/mmt_logo.png" alt="Project logo"></a>
 </p>
 
 <h3 align="center">Project Title</h3>
