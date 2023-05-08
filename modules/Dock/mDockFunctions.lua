@@ -60,22 +60,22 @@ local function mDockCreatIcon(self)
 end
 
 local function mDockCreatmNotifications(self)
-	local XY = E.db.mMT.dockdatatext.nottification.size
+	local XY = E.db.mMT.dockdatatext.notification.size
 	local r, g, b, a =
-		E.db.mMT.dockdatatext.nottification.r,
-		E.db.mMT.dockdatatext.nottification.g,
-		E.db.mMT.dockdatatext.nottification.b,
-		E.db.mMT.dockdatatext.nottification.a
+		E.db.mMT.dockdatatext.notification.r,
+		E.db.mMT.dockdatatext.notification.g,
+		E.db.mMT.dockdatatext.notification.b,
+		E.db.mMT.dockdatatext.notification.a
 
-	if E.db.mMT.dockdatatext.nottification.style == "class" then
-		r, g, b, a = class[1], class[2], class[3], E.db.mMT.dockdatatext.nottification.a
+	if E.db.mMT.dockdatatext.notification.style == "class" then
+		r, g, b, a = class[1], class[2], class[3], E.db.mMT.dockdatatext.notification.a
 	end
 
 	if not self.mNotifications then
 		self.mNotifications = self:CreateTexture(nil, "ARTWORK")
 	end
 
-	self.mNotifications:SetTexture(E.db.mMT.dockdatatext.nottification.icon)
+	self.mNotifications:SetTexture(E.db.mMT.dockdatatext.notification.icon)
 	self.mNotifications:ClearAllPoints()
 	self.mNotifications:Point("TOPLEFT", self.mIcon, "TOPLEFT", 2, 2)
 	self.mNotifications:Size(XY, XY)
@@ -184,7 +184,7 @@ end
 function mMT:ShowHideNotification(self, show, timer)
 	if show then
 		self.mNotifications:Show()
-		if E.db.mMT.dockdatatext.nottification.flash then
+		if E.db.mMT.dockdatatext.notification.flash then
 			E:Flash(self.mNotifications, 0.5, true)
 		end
 		if timer then
@@ -195,7 +195,7 @@ function mMT:ShowHideNotification(self, show, timer)
 		end
 	else
 		self.mNotifications:Hide()
-		if E.db.mMT.dockdatatext.nottification.flash then
+		if E.db.mMT.dockdatatext.notification.flash then
 			E:StopFlash(self.mNotifications)
 		end
 		if timer then
@@ -208,7 +208,7 @@ end
 function mMT:NotificationTimer(self, option)
 	if option then
 		self.mNotifications:Hide()
-		if E.db.mMT.dockdatatext.nottification.flash then
+		if E.db.mMT.dockdatatext.notification.flash then
 			E:StopFlash(self.mNotifications)
 		end
 		mMT:CancelTimer(self.NotificationTimer)

@@ -156,12 +156,12 @@ local function configTable()
 				docknotificationstyle = {
 					order = 40,
 					type = "select",
-					name = L["Nottification Color Style"],
+					name = L["Notification Color Style"],
 					get = function(info)
-						return E.db.mMT.dockdatatext.nottification.style
+						return E.db.mMT.dockdatatext.notification.style
 					end,
 					set = function(info, value)
-						E.db.mMT.dockdatatext.nottification.style = value
+						E.db.mMT.dockdatatext.notification.style = value
 						DT:LoadDataTexts()
 					end,
 					values = {
@@ -172,14 +172,14 @@ local function configTable()
 				docknotificationcolor = {
 					type = "color",
 					order = 42,
-					name = L["Custom nottification Color"],
+					name = L["Custom Notification Color"],
 					hasAlpha = true,
 					get = function(info)
-						local t = E.db.mMT.dockdatatext.nottification
+						local t = E.db.mMT.dockdatatext.notification
 						return t.r, t.g, t.b, t.a
 					end,
 					set = function(info, r, g, b, a)
-						local t = E.db.mMT.dockdatatext.nottification
+						local t = E.db.mMT.dockdatatext.notification
 						t.r, t.g, t.b, t.a = r, g, b, a
 						DT:LoadDataTexts()
 					end,
@@ -1607,25 +1607,25 @@ local function configTable()
 				},
 			},
 		},
-		docknottification = {
+		dockNotification = {
 			order = 200,
 			type = "group",
-			name = L["Nottification"],
+			name = L["Notification"],
 			args = {
-				docknottificationicon = {
+				dockNotificationicon = {
 					order = 1,
 					type = "select",
 					name = L["Icon"],
 					get = function(info)
-						return E.db.mMT.dockdatatext.nottification.icon
+						return E.db.mMT.dockdatatext.notification.icon
 					end,
 					set = function(info, value)
-						E.db.mMT.dockdatatext.nottification.icon = value
+						E.db.mMT.dockdatatext.notification.icon = value
 						DT:LoadDataTexts()
 					end,
 					values = icons,
 				},
-				docknottificationiconsize = {
+				dockNotificationiconsize = {
 					order = 2,
 					name = L["Icon size"],
 					type = "range",
@@ -1633,27 +1633,27 @@ local function configTable()
 					max = 128,
 					step = 2,
 					get = function(info)
-						return E.db.mMT.dockdatatext.nottification.size
+						return E.db.mMT.dockdatatext.notification.size
 					end,
 					set = function(info, value)
-						E.db.mMT.dockdatatext.nottification.size = value
+						E.db.mMT.dockdatatext.notification.size = value
 						DT:LoadDataTexts()
 					end,
 				},
-				docknottificationspacer1 = {
+				dockNotificationspacer1 = {
 					order = 3,
 					type = "description",
 					name = "\n",
 				},
-				docknottificationiconflash = {
+				dockNotificationiconflash = {
 					order = 4,
 					type = "toggle",
 					name = L["Icon flash"],
 					get = function(info)
-						return E.db.mMT.dockdatatext.nottification.flash
+						return E.db.mMT.dockdatatext.notification.flash
 					end,
 					set = function(info, value)
-						E.db.mMT.dockdatatext.nottification.flash = value
+						E.db.mMT.dockdatatext.notification.flash = value
 					end,
 				},
 			},

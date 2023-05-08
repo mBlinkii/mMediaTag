@@ -42,7 +42,7 @@ local function configTable()
 					keystochat = {
 						order = 4,
 						type = "group",
-						name = L["Keyston to Chat"] .. " (!keys)",
+						name = L["Keystone to Chat"] .. " (!keys)",
 						args = {},
 					},
 					instancedifficulty = {
