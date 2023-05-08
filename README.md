@@ -1,16 +1,16 @@
 <p align="center">
   <a href="" rel="noopener">
- <img width=200px height=200px src="https://raw.githubusercontent.com/mBlinkii/mMediaTag/dev/mmt_logo.png" alt="Project logo"></a>
+ <img width=1024px height=128px src="https://raw.githubusercontent.com/mBlinkii/mMediaTag/dev/mmt_logo.png" alt="mMediaTag & Tools"></a>
 </p>
 
-<h3 align="center">Project Title</h3>
+<h3 align="center">mMediaTag & Tools</h3>
 
 <div align="center">
 
 [![Status](https://img.shields.io/badge/status-active-success.svg)]()
-[![GitHub Issues](https://img.shields.io/github/issues/kylelobo/The-Documentation-Compendium.svg)](https://github.com/kylelobo/The-Documentation-Compendium/issues)
-[![GitHub Pull Requests](https://img.shields.io/github/issues-pr/kylelobo/The-Documentation-Compendium.svg)](https://github.com/kylelobo/The-Documentation-Compendium/pulls)
-[![License](https://img.shields.io/badge/license-MIT-blue.svg)](/LICENSE)
+[![GitHub Issues](https://img.shields.io/github/issues/kylelobo/The-Documentation-Compendium.svg)](https://github.com/mBlinkii/mMediaTag/issues)
+[![GitHub Pull Requests](https://img.shields.io/github/issues-pr/kylelobo/The-Documentation-Compendium.svg)](https://github.com/mBlinkii/mMediaTag/pulls)
+[![License](https://img.shields.io/badge/license-ARR-blue.svg)](https://github.com/mBlinkii/mMediaTag/blob/dev/LICENSE.txt)
 
 </div>
 
