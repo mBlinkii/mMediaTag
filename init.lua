@@ -72,7 +72,7 @@ end
 
 -- Load Settings
 local function GetOptions()
-	E.Options.name = format("%s + %s %s |cff99ff33%.2f|r", E.Options.name, mMT.IconSquare, mMT.Name, mMT.Version)
+	E.Options.name = format("%s + %s %s |cff99ff33%s|r", E.Options.name, mMT.IconSquare, mMT.Name, mMT.Version)
 
 	for _, func in pairs(mMT.Config) do
 		func()
