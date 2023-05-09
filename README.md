@@ -25,6 +25,7 @@
 - [Features](#features)
 - [Requires](#requires)
 - [Support/ Help](#help)
+- [Screenshots](#screenshots)
 
 
 ## 🧐 Features <a name = "features"></a>
@@ -100,3 +101,6 @@ translated into
 ```
 L["Mythic Plus Keystone"] = "Mythisch Plus Schlüsselstein"
 ```
+
+
+## 🎈 Screenshots <a name="screenshots"></a>
