@@ -67,6 +67,113 @@ local icons = {
 	quest = format("|T%s:14:14|t", "Interface\\AddOns\\ElvUI_mMediaTag\\media\\icons\\tags\\quest1.tga"),
 }
 
+local BossIDs = {
+	-- DF Dungeons
+	["189719"] = true,
+	["189722"] = true,
+	["189727"] = true,
+	["189729"] = true,
+
+	["186116"] = true,
+	["186120"] = true,
+	["186121"] = true,
+	["186122"] = true,
+	["186124"] = true,
+	["186125"] = true,
+
+	["184018"] = true,
+	["184124"] = true,
+	["184125"] = true,
+	["184422"] = true,
+	["184580"] = true,
+	["184581"] = true,
+	["184582"] = true,
+
+	["181861"] = true,
+	["189340"] = true,
+	["189478"] = true,
+	["189901"] = true,
+
+	["188252"] = true,
+	["189232"] = true,
+	["190484"] = true,
+	["190485"] = true,
+
+	["186151"] = true,
+	["186338"] = true,
+	["186339"] = true,
+	["186615"] = true,
+	["186616"] = true,
+
+	["186644"] = true,
+	["186737"] = true,
+	["186738"] = true,
+	["186739"] = true,
+
+	["190609"] = true,
+	["191736"] = true,
+	["194181"] = true,
+	["196482"] = true,
+
+	-- S2 Dungeons
+	["91003"] = true,
+	["91004"] = true,
+	["91005"] = true,
+	["91007"] = true,
+
+	["126832"] = true,
+	["126845"] = true,
+	["126847"] = true,
+	["126848"] = true,
+	["126969"] = true,
+	["126983"] = true,
+
+	["133007"] = true,
+	["131817"] = true,
+	["131383"] = true,
+	["131318"] = true,
+
+	["43873"] = true,
+	["43875"] = true,
+	["43878"] = true,
+
+	-- DF Worldboss
+	["193532"] = true,
+	["193533"] = true,
+	["193534"] = true,
+	["193535"] = true,
+	["199853"] = true,
+	["203220"] = true,
+
+	-- DF Raid Vault of the Incarnates
+	["184972"] = true,
+	["184986"] = true,
+	["187767"] = true,
+	["187768"] = true,
+	["187771"] = true,
+	["187772"] = true,
+	["187967"] = true,
+	["189492"] = true,
+	["189813"] = true,
+	["190245"] = true,
+	["190496"] = true,
+
+	-- DF Raid Aberrus
+	["199659"] = true,
+	["200912"] = true,
+	["200913"] = true,
+	["200918"] = true,
+	["201261"] = true,
+	["201320"] = true,
+	["201579"] = true,
+	["201773"] = true,
+	["201774"] = true,
+	["201934"] = true,
+	["202637"] = true,
+	["204223"] = true,
+	["205319"] = true,
+}
+
 function mMT:UpdateTagSettings()
 	colors = {
 		rare = E.db.mMT.tags.colors.rare.hex,
@@ -221,17 +328,16 @@ E:AddTag("mName:last", "UNIT_NAME_UPDATE INSTANCE_ENCOUNTER_ENGAGE_UNIT", functi
 end)
 
 E:AddTag("mName:last:onlyininstance", "UNIT_NAME_UPDATE INSTANCE_ENCOUNTER_ENGAGE_UNIT", function(unit)
-		local name = UnitName(unit)
-		local inInstance, InstanceType = IsInInstance()
-		if name and strfind(name, "%s") then
-			name = inInstance and ShortName(name) or E.TagFunctions.Abbrev(name)
-		end
-
-		if name then
-			return name
-		end
+	local name = UnitName(unit)
+	local inInstance, InstanceType = IsInInstance()
+	if name and strfind(name, "%s") then
+		name = inInstance and ShortName(name) or E.TagFunctions.Abbrev(name)
 	end
-)
+
+	if name then
+		return name
+	end
+end)
 
 E:AddTag("mTargetAbbrev", "UNIT_TARGET", function(unit)
 	local targetName = UnitName(unit .. "target")
@@ -240,27 +346,67 @@ E:AddTag("mTargetAbbrev", "UNIT_TARGET", function(unit)
 	end
 end)
 
--- veryshort = 5, short = 10, medium = 15, long = 20 
+-- veryshort = 5, short = 10, medium = 15, long = 20
 E:AddTagInfo("mName:status", mMT.NameShort .. " " .. L["Name"], L["Replace the Unit name with Status, if applicable."])
-E:AddTagInfo("mName:statusicon", mMT.NameShort .. " " .. L["Name"], L["Replace the Unit name with Status Icon, if applicable."])
+E:AddTagInfo(
+	"mName:statusicon",
+	mMT.NameShort .. " " .. L["Name"],
+	L["Replace the Unit name with Status Icon, if applicable."]
+)
 E:AddTagInfo("mName:status:veryshort", mMT.NameShort .. " " .. L["Name"], L["Shortened version of"] .. " mName:status.")
 E:AddTagInfo("mName:status:short", mMT.NameShort .. " " .. L["Name"], L["Shortened version of"] .. " mName:status.")
 E:AddTagInfo("mName:status:medium", mMT.NameShort .. " " .. L["Name"], L["Shortened version of"] .. " mName:status.")
 E:AddTagInfo("mName:status:long", mMT.NameShort .. " " .. L["Name"], L["Shortened version of"] .. " mName:status.")
-E:AddTagInfo("mName:statusicon:veryshort", mMT.NameShort .. " " .. L["Name"], L["Shortened version of"] .. " mName:statusicon.")
-E:AddTagInfo("mName:statusicon:short", mMT.NameShort .. " " .. L["Name"], L["Shortened version of"] .. " mName:statusicon.")
-E:AddTagInfo("mName:statusicon:medium", mMT.NameShort .. " " .. L["Name"], L["Shortened version of"] .. " mName:statusicon.")
-E:AddTagInfo("mName:statusicon:long", mMT.NameShort .. " " .. L["Name"], L["Shortened version of"] .. " mName:statusicon.")
+E:AddTagInfo(
+	"mName:statusicon:veryshort",
+	mMT.NameShort .. " " .. L["Name"],
+	L["Shortened version of"] .. " mName:statusicon."
+)
+E:AddTagInfo(
+	"mName:statusicon:short",
+	mMT.NameShort .. " " .. L["Name"],
+	L["Shortened version of"] .. " mName:statusicon."
+)
+E:AddTagInfo(
+	"mName:statusicon:medium",
+	mMT.NameShort .. " " .. L["Name"],
+	L["Shortened version of"] .. " mName:statusicon."
+)
+E:AddTagInfo(
+	"mName:statusicon:long",
+	mMT.NameShort .. " " .. L["Name"],
+	L["Shortened version of"] .. " mName:statusicon."
+)
 E:AddTagInfo("mName:last", mMT.NameShort .. " " .. L["Name"], L["Displays the last word of the Unit name."])
 E:AddTagInfo("mName:last:veryshort", mMT.NameShort .. " " .. L["Name"], L["Shortened version of"] .. " mName:last.")
 E:AddTagInfo("mName:last:short", mMT.NameShort .. " " .. L["Name"], L["Shortened version of"] .. " mName:last.")
 E:AddTagInfo("mName:last:medium", mMT.NameShort .. " " .. L["Name"], L["Shortened version of"] .. " mName:last.")
 E:AddTagInfo("mName:last:long", mMT.NameShort .. " " .. L["Name"], L["Shortened version of"] .. " mName:last.")
-E:AddTagInfo("mName:last:onlyininstance", mMT.NameShort .. " " .. L["Name"], L["Displays the last word of the Unit name, only in an Instance."])
-E:AddTagInfo("mName:last:onlyininstance:veryshort", mMT.NameShort .. " " .. L["Name"], L["Shortened version of"] .. " mName:last:onlyininstance.")
-E:AddTagInfo("mName:last:onlyininstance:short", mMT.NameShort .. " " .. L["Name"], L["Shortened version of"] .. " mName:last:onlyininstance.")
-E:AddTagInfo("mName:last:onlyininstance:medium", mMT.NameShort .. " " .. L["Name"], L["Shortened version of"] .. " mName:last:onlyininstance.")
-E:AddTagInfo("mName:last:onlyininstance:long", mMT.NameShort .. " " .. L["Name"], L["Shortened version of"] .. " mName:last:onlyininstance.")
+E:AddTagInfo(
+	"mName:last:onlyininstance",
+	mMT.NameShort .. " " .. L["Name"],
+	L["Displays the last word of the Unit name, only in an Instance."]
+)
+E:AddTagInfo(
+	"mName:last:onlyininstance:veryshort",
+	mMT.NameShort .. " " .. L["Name"],
+	L["Shortened version of"] .. " mName:last:onlyininstance."
+)
+E:AddTagInfo(
+	"mName:last:onlyininstance:short",
+	mMT.NameShort .. " " .. L["Name"],
+	L["Shortened version of"] .. " mName:last:onlyininstance."
+)
+E:AddTagInfo(
+	"mName:last:onlyininstance:medium",
+	mMT.NameShort .. " " .. L["Name"],
+	L["Shortened version of"] .. " mName:last:onlyininstance."
+)
+E:AddTagInfo(
+	"mName:last:onlyininstance:long",
+	mMT.NameShort .. " " .. L["Name"],
+	L["Shortened version of"] .. " mName:last:onlyininstance."
+)
 E:AddTagInfo("mTargetAbbrev", mMT.NameShort .. " " .. L["Name"], L["Abbrev Name of Target."])
 
 E:AddTag("mClass", "UNIT_CLASSIFICATION_CHANGED", function(unit)
@@ -293,15 +439,17 @@ end)
 
 E:AddTag("mClass:icon", "UNIT_CLASSIFICATION_CHANGED", function(unit)
 	local c = UnitClassification(unit)
+	local guid = UnitGUID(unit)
+	local npcID = guid and select(6, strsplit('-', guid))
 
-	if c == "rare" then
+	if (npcID and BossIDs[npcID]) or c == "worldboss" then
+		return icons.boss
+	elseif c == "rare" then
 		return icons.rare
 	elseif c == "rareelite" then
 		return icons.relite
 	elseif c == "elite" then
 		return icons.elite
-	elseif c == "worldboss" then
-		return icons.boss
 	end
 end)
 
@@ -342,7 +490,6 @@ E:AddTag("mStatus:icon", "UNIT_HEALTH UNIT_CONNECTION PLAYER_FLAGS_CHANGED", fun
 		end
 	end
 end)
-
 
 local unitStatus = {}
 E:AddTag("mStatustimer", 1, function(unit)
@@ -450,8 +597,16 @@ E:AddTag("mColor:target", "UNIT_TARGET", function(unit)
 	end
 end)
 
-E:AddTagInfo("mColor", mMT.NameShort .. " " .. L["Color"], L["Unit colors with mMediaTag colors for Rare, Rareelite, Elite and Boss and Classcolors."])
-E:AddTagInfo("mColor:target", mMT.NameShort .. " " .. L["Color"], L["Targetunit colors with mMediaTag colors for Rare, Rareelite, Elite and Boss and Classcolors."])
+E:AddTagInfo(
+	"mColor",
+	mMT.NameShort .. " " .. L["Color"],
+	L["Unit colors with mMediaTag colors for Rare, Rareelite, Elite and Boss and Classcolors."]
+)
+E:AddTagInfo(
+	"mColor:target",
+	mMT.NameShort .. " " .. L["Color"],
+	L["Targetunit colors with mMediaTag colors for Rare, Rareelite, Elite and Boss and Classcolors."]
+)
 
 E:AddTag(
 	"mHealth",
@@ -775,20 +930,64 @@ E:AddTag(
 	end
 )
 
-E:AddTagInfo("mHealth", mMT.NameShort .. " " .. L["Health"], L["Health changes between maximum Health and Percent in combat."])
+E:AddTagInfo(
+	"mHealth",
+	mMT.NameShort .. " " .. L["Health"],
+	L["Health changes between maximum Health and Percent in combat."]
+)
 E:AddTagInfo("mHealth:short", mMT.NameShort .. " " .. L["Health"], L["Shortened version of"] .. " mHealth.")
-E:AddTagInfo("mHealth:icon", mMT.NameShort .. " " .. L["Health"], L["Health changes between maximum Health and Percent in combat, with Status Icons."])
+E:AddTagInfo(
+	"mHealth:icon",
+	mMT.NameShort .. " " .. L["Health"],
+	L["Health changes between maximum Health and Percent in combat, with Status Icons."]
+)
 E:AddTagInfo("mHealth:icon:short", mMT.NameShort .. " " .. L["Health"], L["Shortened version of"] .. " mHealth:icon.")
-E:AddTagInfo("mHealth:current-percent", mMT.NameShort .. " " .. L["Health"], L["Health changes between maximum Health and Current Health - Percent in combat."])
-E:AddTagInfo("mHealth:current-percent:short", mMT.NameShort .. " " .. L["Health"], L["Shortened version of"] .. " mHealth:current-percent.")
-E:AddTagInfo("mHealth:nodeath", mMT.NameShort .. " " .. L["Health"], L["If the unit is alive, its health will change between maximum health and percentage in combat."])
-E:AddTagInfo("mHealth:nodeath:short", mMT.NameShort .. " " .. L["Health"], L["Shortened version of"] .. " mHealth:nodeath.")
-E:AddTagInfo("mHealth:nodeath:current-percent", mMT.NameShort .. " " .. L["Health"], L["Same as"] .. " mHealth:current-percen " .. L["and"] .. " mHealth:nodeath ")
-E:AddTagInfo("mHealth:nodeath:short:current-percent", mMT.NameShort .. " " .. L["Health"], L["Shortened version of"] .. " mHealth:nodeath:current-percent.")
-E:AddTagInfo("mHealth:NoAFK", mMT.NameShort .. " " .. L["Health"], L["Health changes between maximum Health and Percent in combat, without AFK Status."])
+E:AddTagInfo(
+	"mHealth:current-percent",
+	mMT.NameShort .. " " .. L["Health"],
+	L["Health changes between maximum Health and Current Health - Percent in combat."]
+)
+E:AddTagInfo(
+	"mHealth:current-percent:short",
+	mMT.NameShort .. " " .. L["Health"],
+	L["Shortened version of"] .. " mHealth:current-percent."
+)
+E:AddTagInfo(
+	"mHealth:nodeath",
+	mMT.NameShort .. " " .. L["Health"],
+	L["If the unit is alive, its health will change between maximum health and percentage in combat."]
+)
+E:AddTagInfo(
+	"mHealth:nodeath:short",
+	mMT.NameShort .. " " .. L["Health"],
+	L["Shortened version of"] .. " mHealth:nodeath."
+)
+E:AddTagInfo(
+	"mHealth:nodeath:current-percent",
+	mMT.NameShort .. " " .. L["Health"],
+	L["Same as"] .. " mHealth:current-percen " .. L["and"] .. " mHealth:nodeath "
+)
+E:AddTagInfo(
+	"mHealth:nodeath:short:current-percent",
+	mMT.NameShort .. " " .. L["Health"],
+	L["Shortened version of"] .. " mHealth:nodeath:current-percent."
+)
+E:AddTagInfo(
+	"mHealth:NoAFK",
+	mMT.NameShort .. " " .. L["Health"],
+	L["Health changes between maximum Health and Percent in combat, without AFK Status."]
+)
 E:AddTagInfo("mHealth:NoAFK:short", mMT.NameShort .. " " .. L["Health"], L["Shortened version of"] .. " mHealth:NoAFK.")
-E:AddTagInfo("mHealth:NoAFK:current-percent", mMT.NameShort .. " " .. L["Health"], L["Same as"] .. " mHealth:current-percen " .. L["and"] .. " mHealth:NoAFK ")
-E:AddTagInfo("mHealth:NoAFK:short:current-percent", mMT.NameShort .. " " .. L["Health"], L["Shortened version of"] .. " mHealth:NoAFK:current-percent.")
+E:AddTagInfo(
+	"mHealth:NoAFK:current-percent",
+	mMT.NameShort .. " " .. L["Health"],
+	L["Same as"] .. " mHealth:current-percen " .. L["and"] .. " mHealth:NoAFK "
+)
+E:AddTagInfo(
+	"mHealth:NoAFK:short:current-percent",
+	mMT.NameShort .. " " .. L["Health"],
+	L["Shortened version of"] .. " mHealth:NoAFK:current-percent."
+)
 
 local UnitmDeathCount = {}
 local mID = 0
@@ -885,10 +1084,17 @@ E:AddTag("mDeathCount:hide:text", "UNIT_HEALTH", function(unit)
 end)
 
 E:AddTagInfo("mDeathCount", mMT.NameShort .. " " .. L["Misc"], L["Death Counter, resets in new Instances."])
-E:AddTagInfo("mDeathCount:hide", mMT.NameShort .. " " .. L["Misc"], L["Displays the Death counter only when the unit is Death, resets in new instances."])
+E:AddTagInfo(
+	"mDeathCount:hide",
+	mMT.NameShort .. " " .. L["Misc"],
+	L["Displays the Death counter only when the unit is Death, resets in new instances."]
+)
 E:AddTagInfo("mDeathCount:color", mMT.NameShort .. " " .. L["Misc"], L["Death Counter color."])
-E:AddTagInfo("mDeathCount:hide:text", mMT.NameShort .. " " .. L["Misc"], L["Displays the Death counter only when the unit is Death and Shows a Text (Death: 7), resets in new instances."])
-
+E:AddTagInfo(
+	"mDeathCount:hide:text",
+	mMT.NameShort .. " " .. L["Misc"],
+	L["Displays the Death counter only when the unit is Death and Shows a Text (Death: 7), resets in new instances."]
+)
 
 E:AddTag("mRole", "PLAYER_ROLES_ASSIGNED GROUP_ROSTER_UPDATE", function(unit)
 	local Role = ""
@@ -1058,11 +1264,18 @@ E:AddTag("mLevelSmart:hideMax", "UNIT_LEVEL PLAYER_LEVEL_UP PLAYER_UPDATE_RESTIN
 	end
 end)
 
-
 E:AddTagInfo("mLevel", mMT.NameShort .. " " .. L["Level"], L["Level changes to resting in resting Areas."])
-E:AddTagInfo("mLevel:hideMax", mMT.NameShort .. " " .. L["Level"], L["Same as"] .. " mLevel" .. L[" hidden at maximum level."])
+E:AddTagInfo(
+	"mLevel:hideMax",
+	mMT.NameShort .. " " .. L["Level"],
+	L["Same as"] .. " mLevel" .. L[" hidden at maximum level."]
+)
 E:AddTagInfo("mLevelSmart", mMT.NameShort .. " " .. L["Level"], L["Smart Level changes to resting in resting Areas."])
-E:AddTagInfo("mLevelSmart:hideMax", mMT.NameShort .. " " .. L["Level"], L["Same as"] .. " mLevelSmart" .. L[" hidden at maximum level."])
+E:AddTagInfo(
+	"mLevelSmart:hideMax",
+	mMT.NameShort .. " " .. L["Level"],
+	L["Same as"] .. " mLevelSmart" .. L[" hidden at maximum level."]
+)
 
 E:AddTag("mPvP:icon", "UNIT_FACTION", function(unit)
 	local factionGroup = UnitFactionGroup(unit)
@@ -1314,7 +1527,6 @@ E:AddTag(
 	end
 )
 
-
 E:AddTag(
 	"mPowerPercent:heal:hidefull",
 	"UNIT_DISPLAYPOWER UNIT_POWER_FREQUENT UNIT_MAXPOWER PLAYER_ROLES_ASSIGNED GROUP_ROSTER_UPDATE UNIT_COMBAT",
@@ -1332,9 +1544,21 @@ E:AddTag(
 )
 
 E:AddTagInfo("mPowerPercent", mMT.NameShort .. " " .. L["Power"], L["Displays Power/Mana, with a low healer warning."])
-E:AddTagInfo("mPowerPercent:hidefull", mMT.NameShort .. " " .. L["Power"], L["Displays Power/Mana, with a low healer warning, hidden when full."])
-E:AddTagInfo("mPowerPercent:heal", mMT.NameShort .. " " .. L["Power"], L["Displays the healer's Power/Mana, with a low healer warning."])
-E:AddTagInfo("mPowerPercent:heal:hidefull", mMT.NameShort .. " " .. L["Power"], L["Displays the healer's Power/Mana, with a low healer warning, hidden when full."])
+E:AddTagInfo(
+	"mPowerPercent:hidefull",
+	mMT.NameShort .. " " .. L["Power"],
+	L["Displays Power/Mana, with a low healer warning, hidden when full."]
+)
+E:AddTagInfo(
+	"mPowerPercent:heal",
+	mMT.NameShort .. " " .. L["Power"],
+	L["Displays the healer's Power/Mana, with a low healer warning."]
+)
+E:AddTagInfo(
+	"mPowerPercent:heal:hidefull",
+	mMT.NameShort .. " " .. L["Power"],
+	L["Displays the healer's Power/Mana, with a low healer warning, hidden when full."]
+)
 
 E:AddTag("mQuestIcon", "QUEST_LOG_UPDATE", function(unit)
 	if UnitIsPlayer(unit) then
@@ -1383,15 +1607,21 @@ local function GetPartyTargetsIcons(unit, style)
 	for i = 1, GetNumGroupMembers() - 1 do
 		if UnitIsUnit("party" .. i .. "target", unit) then
 			local _, unitClass = UnitClass("party" .. i)
-			ClassString = format("|TInterface\\AddOns\\ElvUI_mMediaTag\\media\\icons\\tags\\targetindicator\\%s%s.tga:14:14|t", unitClass, style)
-				.. ClassString
+			ClassString = format(
+				"|TInterface\\AddOns\\ElvUI_mMediaTag\\media\\icons\\tags\\targetindicator\\%s%s.tga:14:14|t",
+				unitClass,
+				style
+			) .. ClassString
 		end
 	end
 
 	if UnitIsUnit("playertarget", unit) then
 		local _, unitClass = UnitClass("player")
-		ClassString = format("|TInterface\\AddOns\\ElvUI_mMediaTag\\media\\icons\\tags\\targetindicator\\%s%s.tga:14:14|t", unitClass, style)
-			.. ClassString
+		ClassString = format(
+			"|TInterface\\AddOns\\ElvUI_mMediaTag\\media\\icons\\tags\\targetindicator\\%s%s.tga:14:14|t",
+			unitClass,
+			style
+		) .. ClassString
 	end
 
 	if ClassString ~= "" then
