@@ -23,7 +23,7 @@
 ## 📝 Table of Contents
 
 - [Features](#features)
-- [Getting Started](#getting_started)
+- [Getting Started](#requires)
 - [Usage](#usage)
 - [Built Using](#built_using)
 - [TODO](../TODO.md)
@@ -83,9 +83,9 @@ Tags:
 - Tags for Classification
 - and much more
 
-## 🏁 Getting Started <a name = "getting_started"></a>
+## 🔧 Requires <a name = "requires"></a>
 
-These instructions will get you a copy of the project up and running on your local machine for development and testing purposes. See [deployment](#deployment) for notes on how to deploy the project on a live system.
+This plugin is for ElvUI only and does not work without ElvUI.
 
 ### Prerequisites
 
