@@ -23,13 +23,9 @@
 ## 📝 Table of Contents
 
 - [Features](#features)
-- [Getting Started](#requires)
-- [Usage](#usage)
-- [Built Using](#built_using)
-- [TODO](../TODO.md)
-- [Contributing](../CONTRIBUTING.md)
-- [Authors](#authors)
-- [Acknowledgments](#acknowledgement)
+- [Requires](#requires)
+- [Support/ Help](#help)
+
 
 ## 🧐 Features <a name = "features"></a>
 
@@ -87,73 +83,20 @@ Tags:
 
 This plugin is for ElvUI only and does not work without ElvUI.
 
-### Prerequisites
+## 🎈 Support /Help <a name="help"></a>
 
-What things you need to install the software and how to install them.
+You want to support this addon? Then help me translate the addon into your language, just download this [file](https://github.com/mBlinkii/mMediaTag/blob/dev/translation_example.lua) and translate the texts inside. [Language File](https://github.com/mBlinkii/mMediaTag/blob/dev/translation_example.lua).
 
-```
-Give examples
-```
+Example:
 
-### Installing
-
-A step by step series of examples that tell you how to get a development env running.
-
-Say what the step will be
 
 ```
-Give the example
+L["Mythic Plus Keystone"] = "true"
 ```
 
-And repeat
+translated into
+
 
 ```
-until finished
+L["Mythic Plus Keystone"] = "Mythisch Plus Schlüsselstein"
 ```
-
-End with an example of getting some data out of the system or using it for a little demo.
-
-## 🔧 Running the tests <a name = "tests"></a>
-
-Explain how to run the automated tests for this system.
-
-### Break down into end to end tests
-
-Explain what these tests test and why
-
-```
-Give an example
-```
-
-### And coding style tests
-
-Explain what these tests test and why
-
-```
-Give an example
-```
-
-## 🎈 Usage <a name="usage"></a>
-
-Add notes about how to use the system.
-
-## 🚀 Deployment <a name = "deployment"></a>
-
-Add additional notes about how to deploy this on a live system.
-
-## ⛏️ Built Using <a name = "built_using"></a>
-
-- [MongoDB](https://www.mongodb.com/) - Database
-- [Express](https://expressjs.com/) - Server Framework
-- [VueJs](https://vuejs.org/) - Web Framework
-- [NodeJs](https://nodejs.org/en/) - Server Environment
-
-## ✍️ Authors <a name = "authors"></a>
-
--
-
-## 🎉 Acknowledgements <a name = "acknowledgement"></a>
-
-- Hat tip to anyone whose code was used
-- Inspiration
-- References
