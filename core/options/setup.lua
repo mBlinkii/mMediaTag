@@ -70,6 +70,7 @@ local function configTable()
 					type = "group",
 					inline = true,
 					name = L["Chat Button"],
+					hidden  = function() return not E.Retail end,
 					args = {
 						toggle_keystochat = {
 							order = 1,
@@ -98,6 +99,7 @@ local function configTable()
 					type = "group",
 					inline = true,
 					name = L["Instance Difficulty"],
+					hidden  = function() return not E.Retail end,
 					args = {
 						toggle_instancedifficulty = {
 							order = 1,
@@ -242,6 +244,7 @@ local function configTable()
 					type = "group",
 					inline = true,
 					name = L["Role Icons"],
+					hidden  = function() return not E.Retail end,
 					args = {
 						toggle_roleicons = {
 							order = 1,
@@ -270,6 +273,7 @@ local function configTable()
 					type = "group",
 					inline = true,
 					name = L["Objective Tracker"],
+					hidden  = function() return not E.Retail end,
 					args = {
 						toggle_objectivetracker = {
 							order = 1,
@@ -358,6 +362,7 @@ local function configTable()
 					type = "group",
 					inline = true,
 					name = L["Interrupt on CD"],
+					hidden  = function() return not E.Retail end,
 					args = {
 						toggle_castbar = {
 							order = 1,
@@ -386,6 +391,7 @@ local function configTable()
 					type = "group",
 					inline = true,
 					name = L["Execute Marker"],
+					hidden  = function() return not E.Retail end,
 					args = {
 						toggle_executemarker = {
 							order = 1,
@@ -414,6 +420,7 @@ local function configTable()
 					type = "group",
 					inline = true,
 					name = L["Health markers"],
+					hidden  = function() return not E.Retail end,
 					args = {
 						toggle_healthmarker = {
 							order = 1,

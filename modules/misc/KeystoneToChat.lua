@@ -1,5 +1,4 @@
 local mMT, E, L, V, P, G = unpack((select(2, ...)))
-
 --Lua functions
 local strlower = strlower
 local string = string

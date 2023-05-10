@@ -18,9 +18,8 @@ local print = print
 local tonumber = tonumber
 
 local GetAddOnMetadata = _G.GetAddOnMetadata
-local C_MythicPlus_RequestMapInfo = C_MythicPlus.RequestMapInfo
-local C_MythicPlus_RequestCurrentAffixes = C_MythicPlus.RequestCurrentAffixes
-local class = ElvUF.colors.class[E.myclass]
+local C_MythicPlus_RequestMapInfo = nil
+local C_MythicPlus_RequestCurrentAffixes = nil
 
 addon[1] = mMT
 addon[2] = E --ElvUI Engine
@@ -30,6 +29,7 @@ addon[5] = P --ElvUI ProfileDB
 addon[6] = G --ElvUI GlobalDB
 _G[addonName] = addon
 
+local class = ElvUF.colors.class[E.myclass]
 --Constants
 mMT.Version = GetAddOnMetadata(addonName, "Version")
 mMT.Name =
@@ -51,8 +51,14 @@ mMT.ElvUI_EltreumUI = (
 	and E.db.ElvUI_EltreumUI.unitframes.gradientmode
 	and E.db.ElvUI_EltreumUI.unitframes.gradientmode.enable
 ) or false
+
 mMT.Media = {}
 mMT.Config = {}
+
+if E.Retail then
+	C_MythicPlus_RequestMapInfo = C_MythicPlus.RequestMapInfo
+	C_MythicPlus_RequestCurrentAffixes = C_MythicPlus.RequestCurrentAffixes
+end
 
 --AddonCompartment
 function ElvUI_mMediaTag_OnAddonCompartmentClick()
@@ -163,10 +169,6 @@ function mMT:Initialize()
 	-- Register Events
 	mMT:RegisterEvent("PLAYER_ENTERING_WORLD")
 
-	if E.db.mMT.nameplate.executemarker.auto or E.db.mMT.interruptoncd.enable then
-		mMT:RegisterEvent("PLAYER_TALENT_UPDATE")
-	end
-
 	-- Initialize main things
 	mMT:LoadCommands()
 
@@ -211,17 +213,13 @@ function mMT:Initialize()
 		mMT:SetupResurrectionIcon()
 	end
 
+	if E.db.mMT.custombackgrounds.health.enable or E.db.mMT.custombackgrounds.power.enable or E.db.mMT.custombackgrounds.castbar.enable then
+		mMT:CustomBackdrop()
+	end
+
 	if E.Retail then
 		if E.db.mMT.interruptoncd.enable then
 			mMT:mSetupCastbar()
-		end
-
-		if
-			E.db.mMT.custombackgrounds.health.enable
-			or E.db.mMT.custombackgrounds.power.enable
-			or E.db.mMT.custombackgrounds.castbar.enable
-		then
-			mMT:CustomBackdrop()
 		end
 
 		if
@@ -247,6 +245,10 @@ function mMT:Initialize()
 			mMT:RegisterEvent("CHAT_MSG_RAID")
 			mMT:RegisterEvent("CHAT_MSG_RAID_LEADER")
 			mMT:RegisterEvent("CHAT_MSG_GUILD")
+		end
+
+		if E.db.mMT.nameplate.executemarker.auto or E.db.mMT.interruptoncd.enable then
+			mMT:RegisterEvent("PLAYER_TALENT_UPDATE")
 		end
 
 		if

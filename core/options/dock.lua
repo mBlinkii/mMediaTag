@@ -323,6 +323,7 @@ local function configTable()
 			order = 20,
 			type = "group",
 			name = ACHIEVEMENT_BUTTON,
+			hidden  = function() return not E.Retail end,
 			args = {
 				dockachievmenticon = {
 					order = 1,
@@ -373,6 +374,7 @@ local function configTable()
 			order = 30,
 			type = "group",
 			name = BLIZZARD_STORE,
+			hidden  = function() return not E.Retail end,
 			args = {
 				dockblizzardstoreicon = {
 					order = 1,
@@ -507,6 +509,7 @@ local function configTable()
 			order = 50,
 			type = "group",
 			name = COLLECTIONS,
+			hidden  = function() return not E.Retail end,
 			args = {
 				dockcollectionicon = {
 					order = 1,
@@ -557,6 +560,7 @@ local function configTable()
 			order = 60,
 			type = "group",
 			name = ENCOUNTER_JOURNAL,
+			hidden  = function() return not E.Retail end,
 			args = {
 				dockencountericon = {
 					order = 1,
@@ -673,6 +677,7 @@ local function configTable()
 			order = 80,
 			type = "group",
 			name = DUNGEONS_BUTTON,
+			hidden  = function() return not E.Retail end,
 			args = {
 				docklfdicon = {
 					order = 10,
@@ -996,6 +1001,7 @@ local function configTable()
 			order = 120,
 			type = "group",
 			name = TALENTS_BUTTON,
+			hidden  = function() return not E.Retail end,
 			args = {
 				docktalenticon = {
 					order = 1,
@@ -1057,6 +1063,7 @@ local function configTable()
 			order = 130,
 			type = "group",
 			name = L["Itemlevel"],
+			hidden  = function() return not E.Retail end,
 			args = {
 				dockitemlevelicon = {
 					order = 1,
@@ -1394,6 +1401,7 @@ local function configTable()
 			order = 170,
 			type = "group",
 			name = L["Professions"],
+			hidden  = function() return not E.Retail end,
 			args = {
 				dockprofessionicon = {
 					order = 1,

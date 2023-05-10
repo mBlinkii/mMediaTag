@@ -32,14 +32,12 @@ local change_log_new = {
 }
 
 local change_log_update = {
-	"Update Teleports for Season 2",
-	"Update Example Dock",
+	"Update V3 for Classic and Wrath",
+	"Add Boss Ids for Tags",
 }
 
 local change_log_fix = {
-	"Tag update function in Settings menu",
-	"Phase Icon",
-	"Nil error on mDock Bags",
+	"NP Border Colors, was not set when custom class colors were enabled",
 }
 
 local function Concatenation(tbl, icon, color)
@@ -61,7 +59,7 @@ end
 local function configTable()
 	local releasdate = "07.05.2023"
 	local change_log_important_string = Concatenation(change_log_important)
-	local change_log_new_string = Concatenation(change_log_new)
+	--local change_log_new_string = Concatenation(change_log_new)
 	local change_log_update_string = Concatenation(change_log_update)
 	local change_log_fix_string = Concatenation(change_log_fix)
 	E.Options.args.mMT.args.changelog.args = {

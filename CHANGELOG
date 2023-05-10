@@ -1,6 +1,13 @@
 # Changelog - ElvUI_mMediaTag
 [Eng] - All changes to this project will be documented in this file. The latest changes are at the top.
 
+## [ver. 3.12] - 10.05.2023
+### Update
+- Update V3 for Classic and Wrath
+- Add Boss Ids for Tags
+### FIX
+- NP Border Colors, was not set when custom class colors were enabled.
+
 ## [ver. 3.1.1] - 08.05.2023
 ### FIX
 - Phase Icon

@@ -8,7 +8,9 @@
 	<Script file="mFriends.lua"/>
 	<Script file="mGuild.lua"/>
 	<Script file="mMainMenu.lua"/>
+	<Script file="mNoIcon.lua"/>
 	<Script file="mQuest.lua"/>
 	<Script file="mSpellBook.lua"/>
 	<Script file="mVolume.lua"/>
+	<Script file="mBags.lua"/>
 </Ui>

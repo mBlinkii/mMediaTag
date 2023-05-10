@@ -1,7 +1,7 @@
 local mMT, E, L, V, P, G = unpack((select(2, ...)))
 
 function mMT:mNamePlateBorderColor()
-	local classColor = E:ClassColor(E.myclass, true)
+	local classColor = ElvUF.colors.class[E.myclass]
 
 	if E.db.mMT.nameplate.bordercolor.border and E.global["nameplates"]["filters"]["ElvUI_Target"] then
 		E.global["nameplates"]["filters"]["ElvUI_Target"]["actions"]["color"]["borderColor"]["b"] = classColor.b
