@@ -18,6 +18,7 @@ function mMT:PhaseIconColor(hidden, phaseReason)
 	if E.db.mMT.unitframeicons.phase.color.withe then
 		self.Center:SetVertexColor(1, 1, 1)
 	else
+		local c = {r = 1, g = 1, b = 1}
 		if phaseReason == 3 then -- chromie, gold
 			c = PhaseColors.chromie
 			self.Center:SetVertexColor(c.r, c.g, c.b)

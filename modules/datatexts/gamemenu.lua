@@ -1,3 +1,4 @@
+---@diagnostic disable: missing-return
 local mMT, E, L, V, P, G = unpack((select(2, ...)))
 local DT = E:GetModule("DataTexts")
 

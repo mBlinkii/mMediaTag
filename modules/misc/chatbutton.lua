@@ -1,6 +1,4 @@
 local mMT, E, L, V, P, G = unpack((select(2, ...)))
-local DT = E:GetModule("DataTexts")
-local NP = E:GetModule("NamePlates")
 
 --Lua functions
 local format = format

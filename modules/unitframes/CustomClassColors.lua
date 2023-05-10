@@ -2,7 +2,11 @@ local mMT, E, L, V, P, G = unpack((select(2, ...)))
 local ClassColor = E.oUF.colors.class
 local UF = E:GetModule('UnitFrames')
 local classes = {"HUNTER", "WARLOCK", "PRIEST", "PALADIN", "MAGE", "ROGUE", "DRUID", "SHAMAN", "WARRIOR", "DEATHKNIGHT", "MONK", "DEMONHUNTER", "EVOKER"}
-
+if E.Classic then
+	 classes = {"HUNTER", "WARLOCK", "PRIEST", "PALADIN", "MAGE", "ROGUE", "DRUID", "SHAMAN", "WARRIOR"}
+elseif E.Wrath then
+	classes = {"HUNTER", "WARLOCK", "PRIEST", "PALADIN", "MAGE", "ROGUE", "DRUID", "SHAMAN", "WARRIOR", "DEATHKNIGHT"}
+end
 local function UpdateColors()
     for i, className in ipairs(classes) do
 		E.oUF.colors.class[className][1] = E.db.mMT.customclasscolors.colors[className]["r"]

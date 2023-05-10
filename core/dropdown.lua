@@ -101,9 +101,13 @@ function mMT:mDropDown(list, frame, menuparent, ButtonWidth, HideDelay)
 
 				local _, unitClass = UnitClass("player")
 				local class = ElvUF.colors.class[unitClass]
-				frame.buttons[i].hoverTex:SetGradient("HORIZONTAL", {r = class[1], g = class[2], b = class[3], a = 0.75},
-					{r = mMT:ColorCheck(class[1] + 0.4), g = mMT:ColorCheck(class[2] + 0.4), b = mMT:ColorCheck(class[3] + 0.4), a = 0.75})
-
+				if E.Retail then
+					frame.buttons[i].hoverTex:SetGradient("HORIZONTAL", {r = class[1], g = class[2], b = class[3], a = 0.75},
+						{r = mMT:ColorCheck(class[1] + 0.4), g = mMT:ColorCheck(class[2] + 0.4), b = mMT:ColorCheck(class[3] + 0.4), a = 0.75})
+				else
+					frame.buttons[i].hoverTex:SetGradientAlpha("HORIZONTAL", class[1], class[2], class[3], 0.75,
+						mMT:ColorCheck(class[1] + 0.4), mMT:ColorCheck(class[2] + 0.4), mMT:ColorCheck(class[3] + 0.4), 0.75)
+				end
 				frame.buttons[i].hoverTex:SetBlendMode("BLEND")
 				frame.buttons[i].hoverTex:Hide()
 			end

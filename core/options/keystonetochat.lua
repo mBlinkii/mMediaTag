@@ -7,12 +7,12 @@ local function configTable()
 			order = 1,
 			type = "group",
 			inline = true,
-			name = L["Keyston to Chat"] .. " (!keys)",
+			name = L["Keystone to Chat"] .. " (!keys)",
 			args = {
 				toggle_keystochat = {
 					order = 2,
 					type = "toggle",
-					name = L["Keyston to Chat"],
+					name = L["Keystone to Chat"],
 					get = function(info)
 						return E.db.mMT.general.keystochat
 					end,

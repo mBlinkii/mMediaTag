@@ -102,7 +102,7 @@ local function OnClick(self)
 		mMT:mOnClick(self, "CheckFrameCalendar")
 		if E.Retail then
 			_G.GameTimeFrame:Click()
-		else
+		elseif E.Wrath then
 			_G.Calendar_LoadUI()
 			_G.ToggleCalendar()
 		end

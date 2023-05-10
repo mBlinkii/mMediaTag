@@ -10,21 +10,14 @@ local mInsert = table.insert
 
 --WoW API / Variables
 local _G = _G
-local GetAchievementCriteriaInfo = GetAchievementCriteriaInfo
-local GetAchievementInfo = GetAchievementInfo
+
 local GetInstanceInfo = GetInstanceInfo
 local GetDifficultyInfo = GetDifficultyInfo
 local GetRaidDifficultyID = GetRaidDifficultyID
 local GetDungeonDifficultyID = GetDungeonDifficultyID
-local GetDetailedItemLevelInfo = GetDetailedItemLevelInfo
-local C_MythicPlus = C_MythicPlus
-local GetDetailedItemLevelInfo = GetDetailedItemLevelInfo
-local C_PlayerInfo_GetPlayerMythicPlusRatingSummary = C_PlayerInfo.GetPlayerMythicPlusRatingSummary
-local C_ChallengeMode_GetOverallDungeonScore = C_ChallengeMode.GetOverallDungeonScore
-local C_ChallengeMode_GetDungeonScoreRarityColor = C_ChallengeMode.GetDungeonScoreRarityColor
+--local GetDetailedItemLevelInfo = GetDetailedItemLevelInfo
 
---Great Vault Functions
-local function mColorGardient(level)
+function mMT:mColorGardient(level)
 	local r, g, b = E:ColorGradient(level * 0.04, 0, 0.43, 0.86, 0.63, 0.2, 0.93, 0.89, 0.16, 0.31)
 	return E:RGBToHex(r, g, b)
 end
@@ -57,88 +50,6 @@ function mMT:mColorDatatext()
 		E.db.mMT.datatextcolors.colortitel.hex,
 		E.db.mMT.datatextcolors.colortip.hex
 	return nhc, hc, myth, mythp, other, titel, tip
-end
-
-function mMT:mGetVaultInfo()
-	local vaultinfo = {}
-	vaultinfo = wipe(vaultinfo)
-	local vaultinforaid, vaultinfomplus, vaultinfopvp, vaultinfohighest, ok = {}, {}, {}, nil, nil
-	vaultinforaid = wipe(vaultinforaid)
-	vaultinfomplus = wipe(vaultinfomplus)
-	vaultinfopvp = wipe(vaultinfopvp)
-	vaultinfo = C_WeeklyRewards.GetActivities()
-	if not vaultinfo then
-		return {}, {}, {}, nil, false
-	else
-		local vaultinfohighest, ok = 0, false
-		for i = 1, 9 do
-			local id = vaultinfo[i] and vaultinfo[i].id or 0
-			local itemLink = C_WeeklyRewards.GetExampleRewardItemHyperlinks(id)
-			if itemLink then
-				local ItemLevelInfo = GetDetailedItemLevelInfo(itemLink)
-				if ItemLevelInfo then
-					vaultinfohighest = (
-						vaultinfohighest and (vaultinfohighest < ItemLevelInfo) and ItemLevelInfo or vaultinfohighest
-					) or (not vaultinfohighest and ItemLevelInfo)
-					if i < 4 then
-						mInsert(vaultinfomplus, format("%s%s|r", mColorGardient(ItemLevelInfo), ItemLevelInfo))
-					elseif i < 7 then
-						mInsert(vaultinfopvp, format("%s%s|r", mColorGardient(ItemLevelInfo), ItemLevelInfo))
-					else
-						mInsert(vaultinforaid, format("%s%s|r", mColorGardient(ItemLevelInfo), ItemLevelInfo))
-					end
-					ok = true
-				end
-			end
-		end
-		vaultinfohighest = format("%s%s|r", mColorGardient(tonumber(vaultinfohighest)), vaultinfohighest)
-		return vaultinforaid, vaultinfomplus, vaultinfopvp, vaultinfohighest, ok
-	end
-end
-
---Dungeon Difficulty
-function mMT:DungeonDifficultyShort()
-	local name, instanceType, instanceDifficultyID, difficultyName, maxPlayers, dynamicDifficulty, isDynamicInstance =
-		GetInstanceInfo()
-	local nhc, hc, myth, mythp, other, titel = mMT:mColorDatatext()
-
-	if
-		instanceDifficultyID == 1
-		or instanceDifficultyID == 3
-		or instanceDifficultyID == 4
-		or instanceDifficultyID == 14
-	then
-		return format("%s%s|r", nhc, L["N"])
-	elseif
-		instanceDifficultyID == 2
-		or instanceDifficultyID == 5
-		or instanceDifficultyID == 6
-		or instanceDifficultyID == 15
-		or instanceDifficultyID == 39
-		or instanceDifficultyID == 149
-	then
-		return format("%s%s|r", hc, L["H"])
-	elseif instanceDifficultyID == 23 or instanceDifficultyID == 16 or instanceDifficultyID == 40 then
-		return format("%s%s|r", myth, L["M"])
-	elseif instanceDifficultyID == 8 then
-		local keyStoneLevel, _ = C_ChallengeMode.GetActiveKeystoneInfo()
-		local r, g, b = E:ColorGradient(keyStoneLevel * 0.06, 0.1, 1, 0.1, 1, 1, 0.1, 1, 0.1, 0.1)
-		if
-			keyStoneLevel ~= nil
-			and C_MythicPlus.IsMythicPlusActive()
-			and (C_ChallengeMode.GetActiveChallengeMapID() ~= nil)
-		then
-			return format(L["%sM|r%s+%s|r"], mythp, E:RGBToHex(r, g, b), keyStoneLevel)
-		else
-			return format("%s%s|r", mythp, L["M+"])
-		end
-	elseif instanceDifficultyID == 24 then
-		return format("%s%s|r", "|CFF85C1E9", E:ShortenString(difficultyName, 1))
-	elseif instanceDifficultyID == 167 then
-		return format("%s%s|r", "|CFFF4D03F", E:ShortenString(difficultyName, 1))
-	else
-		return format("%s%s|r", other, E:ShortenString(difficultyName, 1))
-	end
 end
 
 --Instance Settings Player
