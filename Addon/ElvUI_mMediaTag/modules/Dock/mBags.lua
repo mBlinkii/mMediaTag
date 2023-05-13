@@ -377,7 +377,7 @@ local function OnClick(self, btn)
 			_G.ToggleAllBags()
 		end
 	end
-end
+end 
 
 DT:RegisterDatatext(
 	mTextName,

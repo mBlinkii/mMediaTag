@@ -4,6 +4,7 @@
         "ACHIEVEMENT_BUTTON",
         "AchievementFrame",
         "Add",
+        "ToggleAllBags",
         "AudioOptionsFrame",
         "AudioOptionsFrameCancel",
         "BACKPACK_CONTAINER",
@@ -373,7 +374,8 @@
         "strsplit",
         "tinsert",
         "tremove",
-        "wipe"
+        "wipe",
+        "change_log_new_string"
     ],
     "Lua.diagnostics.disable": [
     ]
