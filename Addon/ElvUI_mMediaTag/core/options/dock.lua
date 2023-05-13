@@ -826,57 +826,6 @@ local function configTable()
 					end,
 					values = icons,
 				},
-				dockmainmenucolor = {
-					order = 2,
-					type = "select",
-					name = L["Text Color Styl"],
-					get = function(info)
-						return E.db.mMT.dockdatatext.mainmenu.color
-					end,
-					set = function(info, value)
-						E.db.mMT.dockdatatext.mainmenu.color = value
-						DT:ForceUpdate_DataText("mMainMenu")
-					end,
-					values = {
-						default = L["Default"],
-						elvui = L["ElvUI"],
-					},
-				},
-				dockmainmenuoption = {
-					order = 3,
-					type = "select",
-					name = L["Show Text on Icon"],
-					get = function(info)
-						return E.db.mMT.dockdatatext.mainmenu.option
-					end,
-					set = function(info, value)
-						E.db.mMT.dockdatatext.mainmenu.option = value
-						if value == "fps" then
-							E.db.mMT.dockdatatext.mainmenu.text = "FPS"
-						else
-							E.db.mMT.dockdatatext.mainmenu.text = "MS"
-						end
-						DT:ForceUpdate_DataText("mMainMenu")
-					end,
-					values = {
-						none = L["NONE"],
-						fps = L["FPS"],
-						ms = L["MS"],
-					},
-				},
-				dockmainmenutext = {
-					order = 4,
-					name = L["Text"],
-					type = "input",
-					width = "smal",
-					get = function()
-						return E.db.mMT.dockdatatext.mainmenu.text
-					end,
-					set = function(info, value)
-						E.db.mMT.dockdatatext.mainmenu.text = value
-						DT:ForceUpdate_DataText("mMainMenu")
-					end,
-				},
 				mainmenutoggle = {
 					order = 6,
 					name = L["Custom color"],
@@ -1105,8 +1054,8 @@ local function configTable()
 				},
 				dockitemlevelcolor = {
 					order = 3,
-					type = "select",
-					name = L["Text Color Styl"],
+					type = "toggle",
+					name = L["Colored Text"],
 					get = function(info)
 						return E.db.mMT.dockdatatext.itemlevel.color
 					end,
@@ -1114,11 +1063,6 @@ local function configTable()
 						E.db.mMT.dockdatatext.itemlevel.color = value
 						DT:ForceUpdate_DataText("mItemLevel")
 					end,
-					values = {
-						default = L["Default"],
-						custom = L["Custom"],
-						class = L["Class"],
-					},
 				},
 				dockitemlevelonlytext = {
 					order = 4,

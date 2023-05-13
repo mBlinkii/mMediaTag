@@ -5,8 +5,6 @@ local format = format
 local mInsert = table.insert
 
 --Variables
-local _, unitClass = UnitClass("player")
-local class = ElvUF.colors.class[unitClass]
 local mChatMenuFrame = nil
 function mMT:mChatUpdateIcon()
 	if mChatMenuFrame and mChatMenuFrame.mSettings then
@@ -14,7 +12,7 @@ function mMT:mChatUpdateIcon()
 
 		if E.db.mMT.chat.colormodenormal == "class" then
 			mChatMenuFrame.mSettings.ColorNormal =
-				{ r = class[1], g = class[2], b = class[3], a = E.db.mMT.chat.colornormal.a }
+				{ r = mMT.ClassColor.r, g = mMT.ClassColor.g, b = mMT.ClassColor.b, a = E.db.mMT.chat.colornormal.a }
 		else
 			mChatMenuFrame.mSettings.ColorNormal = {
 				r = E.db.mMT.chat.colornormal.r,
@@ -26,7 +24,7 @@ function mMT:mChatUpdateIcon()
 
 		if E.db.mMT.chat.colormodehover == "class" then
 			mChatMenuFrame.mSettings.ColorHover =
-				{ r = class[1], g = class[2], b = class[3], a = E.db.mMT.chat.colorhover.a }
+				{ r = mMT.ClassColor.r, g = mMT.ClassColor.g, b = mMT.ClassColor.b, a = E.db.mMT.chat.colorhover.a }
 		else
 			mChatMenuFrame.mSettings.ColorHover = {
 				r = E.db.mMT.chat.colorhover.r,

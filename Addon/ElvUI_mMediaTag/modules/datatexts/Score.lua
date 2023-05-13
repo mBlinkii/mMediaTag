@@ -93,14 +93,12 @@ local function SaveMyKeystone()
 	elseif weeklyAffixID == E.db.mMT.mpscore.keys.affix and resetTime < E.db.mMT.mpscore.keys.week then
 		local name = UnitName("player")
 		local realmName = GetRealmName()
-		local _, unitClass = UnitClass("player")
-		local class = ElvUF.colors.class[unitClass]
 		local keyStoneLevel = C_MythicPlus_GetOwnedKeystoneLevel()
 		if keyStoneLevel then
 			local challengeMapID = C_MythicPlus_GetOwnedKeystoneChallengeMapID()
 			local keyname, id, timeLimit, texture, backgroundTexture = C_ChallengeMode_GetMapUIInfo(challengeMapID)
 			E.global.mMT.keys[name .. "-" .. realmName] = {
-				name = format("%s%s|r", E:RGBToHex(class[1], class[2], class[3]), name),
+				name = format("%s%s|r", mMT.ClassColor.hex, name),
 				key = format("%s%s|r %s", E.db.mMT.datatextcolors.colormyth.hex, keyname, mMT:GetKeyColor(keyStoneLevel)),
 			}
 		end

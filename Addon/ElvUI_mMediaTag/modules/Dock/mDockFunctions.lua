@@ -26,6 +26,7 @@ function mMT:mDockUpdateFont()
 	FontSize = E.db.mMT.dockdatatext.fontSize
 	Font = LSM:Fetch("font", E.db.mMT.dockdatatext.font)
 end
+
 local function mDockUpdateIcon(self)
 	local Nr, Ng, Nb, Na =
 		E.db.mMT.dockdatatext.normal.r,
@@ -120,6 +121,7 @@ function mMT:mDockSetText(self, textA, textB, colorA, colorB)
 		self.mIcon.TextB:SetText("")
 	end
 end
+
 local function mDockUpdateText(self, A, B, textA, textB, colorA, colorB)
 	if not E.db.mMT.dockdatatext.customfontzise then
 		FontSize = self.mSettings.XY / 3
@@ -427,15 +429,13 @@ end
 -- }
 
 function mMT:DockInitialisation(self, event, textA, textB, colorA, colorB)
-	print(event)
+	self.mSettings.XY = self:GetHeight() + 4
+	if E.db.mMT.dockdatatext.autogrow then
+		self.mSettings.GrowXY = self.mSettings.XY / 2 + self.mSettings.XY
+	else
+		self.mSettings.GrowXY = E.db.mMT.dockdatatext.growsize + self.mSettings.XY
+	end
 	if event == "ELVUI_FORCE_UPDATE" then
-		self.mSettings.XY = self:GetHeight() + 4
-		if E.db.mMT.dockdatatext.autogrow then
-			self.mSettings.GrowXY = self.mSettings.XY / 2 + self.mSettings.XY
-		else
-			self.mSettings.GrowXY = E.db.mMT.dockdatatext.growsize + self.mSettings.XY
-		end
-
 		if not self.mIcon then
 			mDockCreatIcon(self)
 
@@ -443,7 +443,11 @@ function mMT:DockInitialisation(self, event, textA, textB, colorA, colorB)
 				mDockCreatmNotifications(self)
 			end
 
-			if self.mSettings.text and (not self.mIcon.TextA or not self.mIcon.TextB) then
+			if
+				self.mSettings.text
+				and not self.mSettings.text.onlytext
+				and (not self.mIcon.TextA or not self.mIcon.TextB)
+			then
 				mDockCreatText(self, self.mSettings.text.textA, self.mSettings.text.textB, textA, textB, colorA, colorB)
 			else
 				if self.mIcon.TextA then
@@ -464,7 +468,18 @@ function mMT:DockInitialisation(self, event, textA, textB, colorA, colorB)
 				self.mNotifications = nil
 			end
 
-			if self.mSettings.text and (self.mIcon.TextA or self.mIcon.TextB) then
+			if
+				self.mSettings.text
+				and not self.mSettings.text.onlytext
+				and (not self.mIcon.TextA or not self.mIcon.TextB)
+			then
+				mDockCreatText(self, self.mSettings.text.textA, self.mSettings.text.textB, textA, textB, colorA, colorB)
+			elseif
+				self.mSettings.text
+				and not self.mSettings.text.onlytext
+				and (self.mIcon.TextA or self.mIcon.TextB)
+			then
+
 				mDockUpdateText(
 					self,
 					self.mSettings.text.textA,

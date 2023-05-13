@@ -31,8 +31,6 @@ local UnitLevel = UnitLevel
 local UnitName = UnitName
 local UnitReaction = UnitReaction
 local TANK, HEALER = TANK, HEALER
-
--- GLOBALS: ElvUF, Hex, _TAGS
 local UnitFaction = {}
 
 -- fallback colors

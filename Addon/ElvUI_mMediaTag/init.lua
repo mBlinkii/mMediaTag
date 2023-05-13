@@ -1,4 +1,4 @@
-local E, _, V, P, G = unpack(ElvUI)
+local E, _, V, P, G = unpack((ElvUI))
 local EP = LibStub("LibElvUIPlugin-1.0")
 local L = E.Libs.ACL:GetLocale("ElvUI", E.global.general.locale)
 local DT = E:GetModule("DataTexts")
@@ -29,7 +29,8 @@ addon[5] = P --ElvUI ProfileDB
 addon[6] = G --ElvUI GlobalDB
 _G[addonName] = addon
 
-local class = ElvUF.colors.class[E.myclass]
+local class = E:ClassColor(E.myclass)
+local hex = E:RGBToHex(class.r, class.g, class.b)
 --Constants
 mMT.Version = GetAddOnMetadata(addonName, "Version")
 mMT.Name =
@@ -38,11 +39,11 @@ mMT.NameShort = "|CFF6559F1m|r|CFFA037E9M|r|CFFDD14E0T|r"
 mMT.Icon = "|TInterface\\Addons\\ElvUI_mMediaTag\\media\\logo\\mmt_icon_round.tga:14:14|t"
 mMT.IconSquare = "|TInterface\\Addons\\ElvUI_mMediaTag\\media\\logo\\mmt_icon.tga:14:14|t"
 mMT.ClassColor = {
-	r = class[1],
-	g = class[2],
-	b = class[3],
-	hex = E:RGBToHex(class[1], class[2], class[3]),
-	string = strjoin("", E:RGBToHex(class[1], class[2], class[3]), "%s|r"),
+	r = class.r,
+	g = class.g,
+	b = class.b,
+	hex = hex,
+	string = strjoin("", hex, "%s|r"),
 }
 mMT.ElvUI_EltreumUI = (
 	IsAddOnLoaded("ElvUI_EltreumUI")
@@ -165,14 +166,13 @@ end
 -- Initialize Addon
 function mMT:Initialize()
 	EP:RegisterPlugin(addonName, GetOptions)
-
 	-- Register Events
 	mMT:RegisterEvent("PLAYER_ENTERING_WORLD")
 
 	-- Initialize main things
 	mMT:LoadCommands()
 	mMT:mDockUpdateFont()
-	
+
 	-- Initialize Modules
 	if E.db.mMT.general.greeting then
 		mMT:GreetingText()
@@ -318,12 +318,15 @@ function mMT:PLAYER_ENTERING_WORLD()
 		StaticPopup_Show("mQuickSetup")
 	end
 
+
+	class = E:ClassColor(E.myclass)
+	hex = E:RGBToHex(class.r, class.g, class.b)
 	mMT.ClassColor = {
-		r = class[1],
-		g = class[2],
-		b = class[3],
-		hex = E:RGBToHex(class[1], class[2], class[3]),
-		string = strjoin("", E:RGBToHex(class[1], class[2], class[3]), "%s|r"),
+		r = class.r,
+		g = class.g,
+		b = class.b,
+		hex = hex,
+		string = strjoin("", hex, "%s|r"),
 	}
 
 	if E.Retail then

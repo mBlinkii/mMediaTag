@@ -85,9 +85,10 @@ local HM_NPCs = {
 	[165946] = { 50 }, --Mordretha
 
 	-- BFA Dungeons
+
 	-- Freehold
-	[126983] = { 60 }, -- Harlan Sweete
-	[129732] = { 75 }, --Skycap'n Kragg
+	[126983] = { 60, 30 }, -- Harlan Sweete
+	[126832] = { 75 }, --Skycap'n Kragg
 
 	-- Operation: Mechagon
 	[150276] = { 50 }, --Heavy Scrapbots (Junk)

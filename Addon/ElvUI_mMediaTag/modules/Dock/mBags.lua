@@ -37,12 +37,6 @@ local totalGold, totalHorde, totalAlliance = 0, 0, 0
 
 local iconString = "|T%s:16:16:0:0:64:64:4:60:4:60|t"
 
-local BAG_TYPES = {
-	[0x0001] = "Quiver",
-	[0x0002] = "Ammo Pouch",
-	[0x0004] = "Soul Bag",
-}
-
 local function sortFunction(a, b)
 	return a.amount > b.amount
 end
@@ -280,6 +274,8 @@ local function OnEnter(self)
 end
 
 local function OnEvent(self, event, ...)
+	print(E:ClassColor(E.myclass))
+	mMT:DebugPrintTable(E:ClassColor(E.myclass))
 	self.mSettings = {
 		Name = mTextName,
 		text = {
@@ -377,26 +373,14 @@ local function OnClick(self, btn)
 			_G.ToggleAllBags()
 		end
 	end
-end 
+end
 
-DT:RegisterDatatext(
-	mTextName,
-	"mDock",
-	{
-		"PLAYER_MONEY",
-		"SEND_MAIL_MONEY_CHANGED",
-		"SEND_MAIL_COD_CHANGED",
-		"PLAYER_TRADE_MONEY",
-		"TRADE_MONEY_CHANGED",
-		"CURRENCY_DISPLAY_UPDATE",
-		"PERKS_PROGRAM_CURRENCY_REFRESH",
-	},
-	OnEvent,
-	nil,
-	OnClick,
-	OnEnter,
-	OnLeave,
-	mText,
-	nil,
-	nil
-)
+DT:RegisterDatatext(mTextName, "mDock", {
+	"PLAYER_MONEY",
+	"SEND_MAIL_MONEY_CHANGED",
+	"SEND_MAIL_COD_CHANGED",
+	"PLAYER_TRADE_MONEY",
+	"TRADE_MONEY_CHANGED",
+	"CURRENCY_DISPLAY_UPDATE",
+	"PERKS_PROGRAM_CURRENCY_REFRESH",
+}, OnEvent, nil, OnClick, OnEnter, OnLeave, mText, nil, nil)

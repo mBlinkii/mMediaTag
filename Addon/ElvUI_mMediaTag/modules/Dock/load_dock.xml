@@ -11,7 +11,7 @@
 	<Script file="mFPSMS.lua"/>
 	<!-- <Script file="mFriends.lua"/> -->
 	<!-- <Script file="mGuild.lua"/> -->
-	<!-- <Script file="mItemLevel.lua"/> -->
+	<Script file="mItemLevel.lua"/>
 	<Script file="mLFDTool.lua"/>
 	<Script file="mMainMenu.lua"/>
 	<Script file="mNoIcon.lua"/>
