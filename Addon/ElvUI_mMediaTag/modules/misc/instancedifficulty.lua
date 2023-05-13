@@ -121,6 +121,13 @@ local shortNames = {
 	[1753] = "SOTT", --Seat of the Triumvirate
 	[1594] = "TM", --The MOTHERLODE!!
 	[2522] = "VOTI", --Vault of the Incarnates
+	[5035] = "NL",
+	[9164] = "FH",
+	[9391] = "UNDR",
+	[13968] = "ULD",
+	[13991] = "BH",
+	[14011] = "NELT",
+	[14082] = "HOI",
 }
 
 local colors = {
@@ -278,11 +285,22 @@ function mMT:GetDungeonInfo(datatext)
 			difficultyColor = instanceDifficulty[34] and instanceDifficulty[34].c or "|CFFFFFFFF"
 			difficultyShort = instanceDifficulty[34] and instanceDifficulty[34].d or ""
 			if datatext then
-				text = format("%s%s|r %s%s|r", isGuildParty and colors.guild.color or colors.name.color, name, difficultyColor, difficultyShort)
+				text = format(
+					"%s%s|r %s%s|r",
+					isGuildParty and colors.guild.color or colors.name.color,
+					name,
+					difficultyColor,
+					difficultyShort
+				)
 			else
-				text = format("%s%s|r\n%s%s|r", isGuildParty and colors.guild.color or colors.name.color, name, difficultyColor, difficultyShort)
+				text = format(
+					"%s%s|r\n%s%s|r",
+					isGuildParty and colors.guild.color or colors.name.color,
+					name,
+					difficultyColor,
+					difficultyShort
+				)
 			end
-
 		else
 			if datatext then
 				text = format(

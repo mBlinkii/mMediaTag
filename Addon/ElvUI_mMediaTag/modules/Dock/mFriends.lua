@@ -39,7 +39,7 @@ local PRIEST_COLOR = RAID_CLASS_COLORS.PRIEST
 --Variables
 local mText = format("Dock %s", L["Friends"])
 local mTextName = "mFriends"
-local TextColor = mMT:mClassColorString()
+local TextColor = mMT.ClassColor.string
 
 -- create a popup
 E.PopupDialogs.SET_BN_BROADCAST = {
@@ -897,7 +897,7 @@ local function OnEvent(self, event, message)
 		CustomColor = E.db.mMT.dockdatatext.friends.customcolor,
 	}
 
-	mMT:DockInitialisation(self)
+	mMT:DockInitialisation(self, event)
 
 	local onlineFriends = C_FriendList_GetNumOnlineFriends()
 	local _, numBNetOnline = BNGetNumFriends()
@@ -917,7 +917,7 @@ local function OnEvent(self, event, message)
 		OnEnter(self)
 	end
 	if E.db.mMT.dockdatatext.friends.color == "default" then
-		self.mIcon.TextA:SetFormattedText(mMT:mClassColorString(), onlineFriends + numBNetOnline)
+		self.mIcon.TextA:SetFormattedText(mMT.ClassColor.string, onlineFriends + numBNetOnline)
 	else
 		self.mIcon.TextA:SetFormattedText(
 			strjoin(

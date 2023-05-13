@@ -400,7 +400,7 @@ local function OnEvent(self, event, ...)
 		CustomColor = E.db.mMT.dockdatatext.guild.customcolor,
 	}
 
-	mMT:DockInitialisation(self)
+	mMT:DockInitialisation(self, event)
 
 	if E.db.mMT.dockdatatext.guild.color == "custom" then
 		local r, g, b =
@@ -419,7 +419,7 @@ local function OnEvent(self, event, ...)
 		end
 
 		if E.db.mMT.dockdatatext.guild.color == "default" then
-			self.mIcon.TextA:SetFormattedText(mMT:mClassColorString(), #guildTable)
+			self.mIcon.TextA:SetFormattedText(mMT.ClassColor.string, #guildTable)
 		else
 			self.mIcon.TextA:SetFormattedText(
 				strjoin(

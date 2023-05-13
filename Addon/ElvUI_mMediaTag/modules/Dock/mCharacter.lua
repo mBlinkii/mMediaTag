@@ -50,7 +50,6 @@ local function colorize(num)
 	end
 end
 
-
 local function mCheckDurability()
 	if totalDurability <= 35 then
 		local r, g, b = E:ColorGradient(totalDurability * 0.01, 1, 0.1, 0.1, 1, 1, 0.1, 0.1, 1, 0.1)
@@ -130,15 +129,18 @@ local function OnEvent(self, event, ...)
 
 	self.mSettings = {
 		Name = mTextName,
-		IconTexture = mMT.Media.DockIcons[E.db.mMT.dockdatatext.character.icon],
-		Notifications = false,
-		Text = true,
-		Spezial = false,
-		IconColor = E.db.mMT.dockdatatext.character.iconcolor,
-		CustomColor = E.db.mMT.dockdatatext.character.customcolor,
+		text = {
+			onlytext = false,
+			spezial = false,
+			textA = true,
+			textB = false,
+		},
+		icon = {
+			texture = mMT.Media.DockIcons[E.db.mMT.dockdatatext.character.icon],
+			color = E.db.mMT.dockdatatext.character.iconcolor,
+			customcolor = E.db.mMT.dockdatatext.character.customcolor,
+		},
 	}
-
-	mMT:DockInitialisation(self)
 
 	totalDurability = 100
 	totalRepairCost = 0
@@ -148,7 +150,7 @@ local function OnEvent(self, event, ...)
 	for index in pairs(slots) do
 		local currentDura, maxDura = GetInventoryItemDurability(index)
 		if currentDura and maxDura > 0 then
-			local perc, repairCost = (currentDura / maxDura) * 100
+			local perc, repairCost = (currentDura / maxDura) * 100, 0
 			invDurability[index] = perc
 
 			if perc < totalDurability then
@@ -169,30 +171,17 @@ local function OnEvent(self, event, ...)
 		end
 	end
 
-	local r, g, b = E:ColorGradient(totalDurability * 0.01, 1, 0.1, 0.1, 1, 1, 0.1, 0.1, 1, 0.1)
-	local hex = E:RGBToHex(r, g, b)
+	local r, g, b = 1, 1, 1
+	local hex = nil
+	local text = nil
 
 	if Option == "durability" then
 		if Color == "default" then
-			self.mIcon.TextA:SetFormattedText("%s%d%%|r", hex, totalDurability)
-		elseif Color == "custom" then
-			self.mIcon.TextA:SetFormattedText(
-				strjoin(
-					"",
-					E:RGBToHex(
-						E.db.mMT.dockdatatext.fontcolor.r,
-						E.db.mMT.dockdatatext.fontcolor.g,
-						E.db.mMT.dockdatatext.fontcolor.b
-					),
-					"%s|r"
-				),
-				format("%d%%|r", totalDurability)
-			)
-		else
-			self.mIcon.TextA:SetFormattedText(mMT:mClassColorString(), format("%d%%|r", totalDurability))
+			r, g, b = E:ColorGradient(totalDurability * 0.01, 1, 0.1, 0.1, 1, 1, 0.1, 0.1, 1, 0.1)
+			hex = E:RGBToHex(r, g, b)
 		end
+		text = format("%%d%%", totalDurability)
 	elseif Option == "ilvl" then
-
 		local avg, avgEquipped = GetAverageItemLevel()
 		if Color == "default" then
 			r, g, b = E:ColorGradient(
@@ -208,15 +197,11 @@ local function OnEvent(self, event, ...)
 				0.78
 			)
 			hex = E:RGBToHex(r, g, b)
-
-			TextColor = strjoin("", E:RGBToHex(r, g, b), "%s|r")
-			self.mIcon.TextA:SetFormattedText("%s%d|r", hex, avgEquipped)
-		else
-			self.mIcon.TextA:SetFormattedText(mMT:mClassColorString(), avgEquipped)
 		end
-	else
-		self.mIcon.TextA:SetText("")
+		text = avgEquipped
 	end
+
+	mMT:DockInitialisation(self, event, text, nil, hex)
 
 	if mCheckDurability() then
 		E:Flash(self, 0.5, true)

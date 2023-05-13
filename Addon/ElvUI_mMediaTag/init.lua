@@ -171,7 +171,8 @@ function mMT:Initialize()
 
 	-- Initialize main things
 	mMT:LoadCommands()
-
+	mMT:mDockUpdateFont()
+	
 	-- Initialize Modules
 	if E.db.mMT.general.greeting then
 		mMT:GreetingText()

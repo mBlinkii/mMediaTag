@@ -69,7 +69,7 @@ local function SelectStream(_, ...)
 
 	if E.db.mMT.dockdatatext.volume.showtext then
 		panel.mIcon.TextA:SetFormattedText(
-			mMT:mClassColorString(),
+			mMT.ClassColor.string,
 			GetStreamString(activeStream or "Sound_MasterVolume", true)
 		)
 	end
@@ -82,7 +82,7 @@ local function ToggleStream(_, ...)
 
 	if E.db.mMT.dockdatatext.volume.showtext then
 		panel.mIcon.TextA:SetFormattedText(
-			mMT:mClassColorString(),
+			mMT.ClassColor.string,
 			GetStreamString(activeStream or "Sound_MasterVolume", true)
 		)
 	end
@@ -166,7 +166,7 @@ local function OnMouseWheel(self, delta)
 
 	if E.db.mMT.dockdatatext.volume.showtext then
 		self.mIcon.TextA:SetFormattedText(
-			mMT:mClassColorString(),
+			mMT.ClassColor.string,
 			GetStreamString(activeStream or "Sound_MasterVolume", true)
 		)
 	end
@@ -190,7 +190,7 @@ local function OnEvent(self, event)
 		CustomColor = E.db.mMT.dockdatatext.volume.customcolor,
 	}
 
-	mMT:DockInitialisation(self)
+	mMT:DockInitialisation(self, event)
 
 	activeStream = AudioStreams[activeIndex]
 	panel = self
@@ -203,7 +203,7 @@ local function OnEvent(self, event)
 
 	if E.db.mMT.dockdatatext.volume.showtext then
 		self.mIcon.TextA:SetFormattedText(
-			mMT:mClassColorString(),
+			mMT.ClassColor.string,
 			GetStreamString(activeStream or "Sound_MasterVolume", true)
 		)
 	end

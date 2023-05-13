@@ -29,7 +29,7 @@ local TANK_ICON = E:TextureString(E.Media.Textures.Tank, ":14:14")
 local HEALER_ICON = E:TextureString(E.Media.Textures.Healer, ":14:14")
 local DPS_ICON = E:TextureString(E.Media.Textures.DPS, ":14:14")
 
-local active = ""
+local active = nil
 local activeString = strjoin("", "|cff00FF00", _G.ACTIVE_PETS, "|r")
 local inactiveString = strjoin("", "|cffFF0000", _G.FACTION_INACTIVE, "|r")
 local menuList = {
@@ -92,11 +92,20 @@ local function OnEnter(self)
 		end
 
 		DT.tooltip:AddLine(" ")
-		DT.tooltip:AddLine(format("%s %s%s|r", mMT:mIcon(mMT.Media.Mouse["LEFT"]), tip, L["Left Click: Show Talent Specialization UI"]))
 		DT.tooltip:AddLine(
-			format("%s %s%s|r", mMT:mIcon(mMT.Media.Mouse["MIDDLE"]), tip, L["Middle Click: Change Talent Specialization"])
+			format("%s %s%s|r", mMT:mIcon(mMT.Media.Mouse["LEFT"]), tip, L["Left Click: Show Talent Specialization UI"])
 		)
-		DT.tooltip:AddLine(format("%s %s%s|r", mMT:mIcon(mMT.Media.Mouse["RIGHT"]), tip, L["Right Click: Change Loot Specialization"]))
+		DT.tooltip:AddLine(
+			format(
+				"%s %s%s|r",
+				mMT:mIcon(mMT.Media.Mouse["MIDDLE"]),
+				tip,
+				L["Middle Click: Change Talent Specialization"]
+			)
+		)
+		DT.tooltip:AddLine(
+			format("%s %s%s|r", mMT:mIcon(mMT.Media.Mouse["RIGHT"]), tip, L["Right Click: Change Loot Specialization"])
+		)
 		DT.tooltip:Show()
 	end
 	self.mIcon.isClicked = mDockCheckFrame()
@@ -106,15 +115,17 @@ end
 local function OnEvent(self, event, ...)
 	self.mSettings = {
 		Name = mTextName,
-		IconTexture = mMT.Media.DockIcons[E.db.mMT.dockdatatext.talent.icon],
-		Notifications = false,
-		Text = E.db.mMT.dockdatatext.talent.showrole,
-		Spezial = false,
-		IconColor = E.db.mMT.dockdatatext.talent.iconcolor,
-		CustomColor = E.db.mMT.dockdatatext.talent.customcolor,
+		text = {
+			spezial = false,
+			textA = E.db.mMT.dockdatatext.talent.showrole,
+			textB = false,
+		},
+		icon = {
+			texture = mMT.Media.DockIcons[E.db.mMT.dockdatatext.talent.icon],
+			color = E.db.mMT.dockdatatext.talent.iconcolor,
+			customcolor = E.db.mMT.dockdatatext.talent.customcolor,
+		},
 	}
-
-	mMT:DockInitialisation(self)
 
 	if E.db.mMT.roleicons.enable then
 		TANK_ICON = E:TextureString(mMT.Media.Role[E.db.mMT.roleicons.tank], ":14:14")
@@ -156,19 +167,22 @@ local function OnEvent(self, event, ...)
 		active = specIndex
 	end
 
+	local text = nil
 	if E.db.mMT.dockdatatext.talent.showrole then
 		if IsInGroup() then
-			local Role = UnitGroupRolesAssigned("PLAYER")
+			local Role = UnitGroupRolesAssigned("player")
 
 			if Role == "TANK" then
-				self.mIcon.TextA:SetText(TANK_ICON)
+				text = TANK_ICON
 			elseif Role == "HEALER" then
-				self.mIcon.TextA:SetText(HEALER_ICON)
+				text =  HEALER_ICON
 			else
-				self.mIcon.TextA:SetText(DPS_ICON)
+				text = DPS_ICON
 			end
 		end
 	end
+
+	mMT:DockInitialisation(self, event, text)
 end
 
 local function OnLeave(self)
@@ -202,22 +216,10 @@ local function OnClick(self, button)
 	end
 end
 
-DT:RegisterDatatext(
-	mTextName,
-	"mDock",
-	{
-		"CHARACTER_POINTS_CHANGED",
-		"PLAYER_TALENT_UPDATE",
-		"ACTIVE_TALENT_GROUP_CHANGED",
-		"PLAYER_LOOT_SPEC_UPDATED",
-		"GROUP_ROSTER_UPDATE",
-	},
-	OnEvent,
-	nil,
-	OnClick,
-	OnEnter,
-	OnLeave,
-	mText,
-	nil,
-	nil
-)
+DT:RegisterDatatext(mTextName, "mDock", {
+	"CHARACTER_POINTS_CHANGED",
+	"PLAYER_TALENT_UPDATE",
+	"ACTIVE_TALENT_GROUP_CHANGED",
+	"PLAYER_LOOT_SPEC_UPDATED",
+	"GROUP_ROSTER_UPDATE",
+}, OnEvent, nil, OnClick, OnEnter, OnLeave, mText, nil, nil)

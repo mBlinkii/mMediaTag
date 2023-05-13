@@ -11,7 +11,7 @@ local GetFramerate = GetFramerate
 --Variables
 local mText = format("Dock %s", MAINMENU_BUTTON)
 local mTextName = "mMainMenu"
-local TextColor = mMT:mClassColorString()
+local TextColor = mMT.ClassColor.string
 local statusColors = {
 	"|cff0CD809",
 	"|cffE8DA0F",
@@ -69,7 +69,7 @@ local function mTip()
 	end
 end
 
-local function OnEnter(self)
+local function OnEnter(self, count)
 	self.mIcon.isClicked = mDockCheckFrame()
 	mMT:mOnEnter(self, "CheckFrameMainMenu")
 
@@ -140,15 +140,14 @@ end
 local function OnEvent(self, event, ...)
 	self.mSettings = {
 		Name = mTextName,
-		IconTexture = mMT.Media.DockIcons[E.db.mMT.dockdatatext.mainmenu.icon],
-		Notifications = false,
-		Text = true,
-		Spezial = true,
-		IconColor = E.db.mMT.dockdatatext.mainmenu.iconcolor,
-		CustomColor = E.db.mMT.dockdatatext.mainmenu.customcolor,
+		icon = {
+			texture = mMT.Media.DockIcons[E.db.mMT.dockdatatext.mainmenu.icon],
+			color = E.db.mMT.dockdatatext.mainmenu.iconcolor,
+			customcolor = E.db.mMT.dockdatatext.mainmenu.customcolor,
+		},
 	}
 
-	mMT:DockInitialisation(self)
+	mMT:DockInitialisation(self, event)
 end
 
 local function OnLeave(self)

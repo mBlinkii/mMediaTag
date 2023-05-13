@@ -25,7 +25,7 @@ local C_WowTokenPublic_UpdateMarketPrice = C_WowTokenPublic.UpdateMarketPrice
 local C_WowTokenPublic_GetCurrentMarketPrice = C_WowTokenPublic.GetCurrentMarketPrice
 local C_Timer_NewTicker = C_Timer.NewTicker
 
-local Profit, Spent, Ticker = 0, 0
+local Profit, Spent, Ticker = 0, 0, nil
 local resetCountersFormatter = strjoin("", "|cffaaaaaa", L["Reset Session Data: Hold Ctrl + Right Click"], "|r")
 local resetInfoFormatter = strjoin("", "|cffaaaaaa", L["Reset Character Data: Hold Shift + Right Click"], "|r")
 
@@ -282,22 +282,23 @@ end
 local function OnEvent(self, event, ...)
 	self.mSettings = {
 		Name = mTextName,
-		IconTexture = mMT.Media.DockIcons[E.db.mMT.dockdatatext.bag.icon],
+		text = {
+			onlytext = false,
+			spezial = true,
+			textA = (E.db.mMT.dockdatatext.bag.text ~= 5),
+			textB = false,
+		},
+		icon = {
+			texture = mMT.Media.DockIcons[E.db.mMT.dockdatatext.bag.icon],
+			color = E.db.mMT.dockdatatext.bag.iconcolor,
+			customcolor = E.db.mMT.dockdatatext.bag.customcolor,
+		},
 		Notifications = false,
-		Text = E.db.mMT.dockdatatext.bag.text ~= 5 and E.db.mMT.dockdatatext.bag.text or false,
-		Spezial = true,
-		IconColor = E.db.mMT.dockdatatext.bag.iconcolor,
-		CustomColor = E.db.mMT.dockdatatext.bag.customcolor,
 	}
+	local text = nil
 
-	mMT:DockInitialisation(self)
-
-	if self.mSettings.Text then
-		if self.text ~= "" then
-			self.text:SetText("")
-		end
-		local text = nil
-		if self.mSettings.Text == 4 then
+	if self.mSettings.text.textA then
+		if E.db.mMT.dockdatatext.bag.text == 4 then
 			if not IsLoggedIn() then
 				return
 			end
@@ -337,18 +338,19 @@ local function OnEvent(self, event, ...)
 				end
 			end
 
-			if self.mSettings.Text == 1 then
+			if E.db.mMT.dockdatatext.bag.text == 1 then
 				text = free
-			elseif self.mSettings.Text == 2 then
+			elseif E.db.mMT.dockdatatext.bag.text == 2 then
 				text = total - free
-			elseif self.mSettings.Text == 3 then
+			elseif E.db.mMT.dockdatatext.bag.text == 3 then
 				text = free .. "/" .. total
 			else
 				text = total - free .. "/" .. total
 			end
 		end
-		self.mIcon.TextA:SetText(text or "")
 	end
+
+	mMT:DockInitialisation(self, event, text)
 end
 
 local function OnLeave(self)

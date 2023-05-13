@@ -30,15 +30,14 @@ end
 local function OnEvent(self, event, ...)
 	self.mSettings = {
 		Name = mTextName,
-		IconTexture = mMT.Media.DockIcons[E.db.mMT.dockdatatext.blizzardstore.icon],
-		Notifications = false,
-		Text = false,
-		Spezial = false,
-		IconColor = E.db.mMT.dockdatatext.blizzardstore.iconcolor,
-		CustomColor = E.db.mMT.dockdatatext.blizzardstore.customcolor,
+		icon = {
+			texture = mMT.Media.DockIcons[E.db.mMT.dockdatatext.blizzardstore.icon],
+			color = E.db.mMT.dockdatatext.blizzardstore.iconcolor,
+			customcolor = E.db.mMT.dockdatatext.blizzardstore.customcolor,
+		},
 	}
 
-	mMT:DockInitialisation(self)
+	mMT:DockInitialisation(self, event)
 end
 
 local function OnLeave(self)

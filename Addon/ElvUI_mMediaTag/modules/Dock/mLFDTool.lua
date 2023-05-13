@@ -163,14 +163,19 @@ end
 
 local function OnEvent(self, event)
 	self.mSettings = {
-		Name = mTextName,
-		IconTexture = mMT.Media.DockIcons[E.db.mMT.dockdatatext.lfd.icon],
-		Notifications = true,
-		Text = true,
-		Spezial = false,
-		IconColor = E.db.mMT.dockdatatext.lfd.iconcolor,
-		CustomColor = E.db.mMT.dockdatatext.lfd.customcolor,
-	}
+	Name = mTextName,
+	text = {
+		spezial = false,
+		textA = true,
+		textB = false,
+	},
+	icon = {
+		texture = mMT.Media.DockIcons[E.db.mMT.dockdatatext.lfd.icon],
+		color = E.db.mMT.dockdatatext.lfd.iconcolor,
+		customcolor = E.db.mMT.dockdatatext.lfd.customcolor,
+	},
+	Notifications = true,
+}
 
 	local mTextString = ""
 
@@ -227,29 +232,30 @@ local function OnEvent(self, event)
 		end
 	end
 
-	mMT:DockInitialisation(self)
+	local inInstance, _ = IsInInstance()
+	local isGroup = IsInGroup()
+	local isRaid = IsInRaid()
+	local text = nil
+
+	if E.db.mMT.dockdatatext.lfd.difficulty and (inInstance or isGroup) then
+		if inInstance then
+			text = mMT:DungeonDifficultyShort()
+		elseif isGroup then
+			text = mMT:InctanceDifficultyDungeon()
+		elseif isRaid then
+			text = mMT:InctanceDifficultyRaid()
+		end
+	else
+		text = mTextString
+	end
+
+	mMT:DockInitialisation(self, event, text)
 
 	mMT:ShowHideNotification(
 		self,
 		(E.db.mMT.dockdatatext.lfd.greatvault and C_WeeklyRewards.HasAvailableRewards()),
 		"LFDToolGreatVault"
 	)
-
-	local inInstance, _ = IsInInstance()
-	local isGroup = IsInGroup()
-	local isRaid = IsInRaid()
-
-	if E.db.mMT.dockdatatext.lfd.difficulty and (inInstance or isGroup) then
-		if inInstance then
-			self.mIcon.TextA:SetText(mMT:DungeonDifficultyShort())
-		elseif isGroup then
-			self.mIcon.TextA:SetText(mMT:InctanceDifficultyDungeon())
-		elseif isRaid then
-			self.mIcon.TextA:SetText(mMT:InctanceDifficultyRaid())
-		end
-	else
-		self.mIcon.TextA:SetText(mTextString)
-	end
 end
 
 local function OnLeave(self)

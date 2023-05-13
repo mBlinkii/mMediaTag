@@ -9,9 +9,9 @@
 	<Script file="mEncounterJournal.lua"/>
 	<Script file="mExampleDock.lua"/>
 	<Script file="mFPSMS.lua"/>
-	<Script file="mFriends.lua"/>
-	<Script file="mGuild.lua"/>
-	<Script file="mItemLevel.lua"/>
+	<!-- <Script file="mFriends.lua"/> -->
+	<!-- <Script file="mGuild.lua"/> -->
+	<!-- <Script file="mItemLevel.lua"/> -->
 	<Script file="mLFDTool.lua"/>
 	<Script file="mMainMenu.lua"/>
 	<Script file="mNoIcon.lua"/>
@@ -19,6 +19,6 @@
 	<Script file="mQuest.lua"/>
 	<Script file="mSpellBook.lua"/>
 	<Script file="mTalent.lua"/>
-	<Script file="mVolume.lua"/>
+	<!-- <Script file="mVolume.lua"/> -->
 	<Script file="mBags.lua"/>
 </Ui>

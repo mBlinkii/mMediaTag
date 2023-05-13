@@ -254,6 +254,7 @@ local function configTable()
 					end,
 					set = function(info, value)
 						E.db.mMT.dockdatatext.font = value
+						mMT:mDockUpdateFont()
 						DT:LoadDataTexts()
 					end,
 				},
@@ -267,6 +268,7 @@ local function configTable()
 					end,
 					set = function(info, value)
 						E.db.mMT.dockdatatext.fontflag = value
+						mMT:mDockUpdateFont()
 						DT:LoadDataTexts()
 					end,
 				},
@@ -279,6 +281,7 @@ local function configTable()
 					end,
 					set = function(info, value)
 						E.db.mMT.dockdatatext.customfontzise = value
+						mMT:mDockUpdateFont()
 						DT:LoadDataTexts()
 					end,
 				},
@@ -296,15 +299,29 @@ local function configTable()
 					end,
 					set = function(info, value)
 						E.db.mMT.dockdatatext.fontSize = value
+						mMT:mDockUpdateFont()
 						DT:LoadDataTexts()
 					end,
 					disabled = function()
 						return not E.db.mMT.dockdatatext.customfontzise
 					end,
 				},
+				dockgeneralcustomfontcolor = {
+					order = 65,
+					name = L["Custom Font color"],
+					type = "toggle",
+					get = function(info)
+						return E.db.mMT.dockdatatext.customfontcolor
+					end,
+					set = function(info, value)
+						E.db.mMT.dockdatatext.customfontcolor = value
+						mMT:mDockUpdateFont()
+						DT:LoadDataTexts()
+					end,
+				},
 				dockgeneralfontcolor = {
 					type = "color",
-					order = 65,
+					order = 66,
 					name = L["Custom Font Color"],
 					hasAlpha = false,
 					get = function(info)
@@ -313,7 +330,7 @@ local function configTable()
 					end,
 					set = function(info, r, g, b)
 						local t = E.db.mMT.dockdatatext.fontcolor
-						t.r, t.g, t.b = r, g, b
+						t.r, t.g, t.b, t.hex = r, g, b, E:RGBToHex(r, g, b)
 						DT:LoadDataTexts()
 					end,
 				},
@@ -441,8 +458,8 @@ local function configTable()
 				},
 				dockcharcteroptioncolor = {
 					order = 2,
-					type = "select",
-					name = L["Text Color Styl"],
+					type = "toggle",
+					name = L["Colored Text"],
 					get = function(info)
 						return E.db.mMT.dockdatatext.character.color
 					end,
@@ -450,11 +467,6 @@ local function configTable()
 						E.db.mMT.dockdatatext.character.color = value
 						DT:ForceUpdate_DataText("mCharacter")
 					end,
-					values = {
-						default = L["Default"],
-						custom = L["Custom"],
-						elvui = L["ElvUI"],
-					},
 				},
 				dockcharcteroption = {
 					order = 3,
@@ -1238,8 +1250,8 @@ local function configTable()
 				},
 				dockdurabilitycolor = {
 					order = 2,
-					type = "select",
-					name = L["Text Color Styl"],
+					type = "toggle",
+					name = L["Colored Text"],
 					get = function(info)
 						return E.db.mMT.dockdatatext.durability.color
 					end,
@@ -1247,11 +1259,6 @@ local function configTable()
 						E.db.mMT.dockdatatext.durability.color = value
 						DT:ForceUpdate_DataText("mDurability")
 					end,
-					values = {
-						default = L["Default"],
-						custom = L["Custom"],
-						class = L["Class"],
-					},
 				},
 				dockdurabilitytext = {
 					order = 3,

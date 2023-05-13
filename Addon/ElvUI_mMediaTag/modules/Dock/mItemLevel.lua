@@ -62,10 +62,10 @@ local function OnEvent(self, event, ...)
 		CustomColor = E.db.mMT.dockdatatext.itemlevel.customcolor,
 	}
 
-	mMT:DockInitialisation(self)
+	mMT:DockInitialisation(self, event)
 
 	local Color = E.db.mMT.dockdatatext.itemlevel.color
-	local TextColor = mMT:mClassColorString()
+	local TextColor = mMT.ClassColor.string
 
 	local avg, avgEquipped = GetAverageItemLevel()
 	if Color == "default" then
