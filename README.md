@@ -1,6 +1,6 @@
 <p align="center">
   <a href="" rel="noopener">
- <img width=1024px height=128px src="https://raw.githubusercontent.com/mBlinkii/mMediaTag/dev/mmt_logo.png" alt="mMediaTag & Tools"></a>
+ <img width=1024px height=128px src="https://raw.githubusercontent.com/mBlinkii/mMediaTag/Development/Logo/mmt_logo.png" alt="mMediaTag & Tools"></a>
 </p>
 
 <h3 align="center">mMediaTag & Tools</h3>
