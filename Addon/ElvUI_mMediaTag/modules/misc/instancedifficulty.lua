@@ -75,10 +75,10 @@ local instanceDifficulty = {
 }
 
 local shortNames = {
-	[2451] = "ULOT", --Uldaman: Legacy of Tyr
+	[2451] = "ULD", --Uldaman: Legacy of Tyr
 	[2515] = "AV", --The Azure Vault
 	[2516] = "NO", --The Nokhud Offensive
-	[2519] = "NL", --Neltharus
+	[2519] = "NELT", --Neltharus
 	[2520] = "BH", --Brackenhide Hollow
 	[2521] = "RLP", --Ruby Life Pools
 	[2526] = "AA", --Algeth'ar Academy
@@ -121,13 +121,8 @@ local shortNames = {
 	[1753] = "SOTT", --Seat of the Triumvirate
 	[1594] = "TM", --The MOTHERLODE!!
 	[2522] = "VOTI", --Vault of the Incarnates
-	[5035] = "NL",
-	[9164] = "FH",
-	[9391] = "UNDR",
-	[13968] = "ULD",
-	[13991] = "BH",
-	[14011] = "NELT",
-	[14082] = "HOI",
+	[1754] = "FH", -- Freehold
+	[1841] = "UNDR", -- The Underrot
 }
 
 local colors = {
