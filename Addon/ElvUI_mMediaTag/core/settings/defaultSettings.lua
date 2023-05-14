@@ -354,7 +354,6 @@ P.mMT = {
 			customcolor = false,
 		},
 		guild = {
-			color = "class",
 			icon = "COLOR38",
 			iconcolor = { r = 1, g = 1, b = 1, a = 0.75 },
 			customcolor = false,
