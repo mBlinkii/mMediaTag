@@ -239,7 +239,10 @@
         "MainMenuMicroButton_SetNormal",
         "_TAGS",
         "InviteUnit",
-        "ShowOptionsPanel"
+        "ShowOptionsPanel",
+        "LookingForGuildFrame",
+        "MouseIsOver",
+        "CHAT_MSG_SYSTEM"
     ],
     "Lua.diagnostics.disable": [
         "undefined-field"

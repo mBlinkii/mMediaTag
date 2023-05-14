@@ -85,37 +85,39 @@ local function mDockCreatmNotifications(self)
 end
 
 function mMT:mDockSetText(self, textA, textB, colorA, colorB)
-	local textColorA = E.media.hexvaluecolor
-	local textColorB = E.media.hexvaluecolor
+	if self.mIcon then
+		local textColorA = E.media.hexvaluecolor
+		local textColorB = E.media.hexvaluecolor
 
-	if E.db.mMT.dockdatatext.customfontcolor then
-		if textA then
-			textColorA = E.db.mMT.dockdatatext.fontcolor.hex
+		if E.db.mMT.dockdatatext.customfontcolor then
+			if textA then
+				textColorA = E.db.mMT.dockdatatext.fontcolor.hex
+			end
+
+			if textB then
+				textColorA = E.db.mMT.dockdatatext.fontcolor.hex
+			end
+		else
+			if textA and colorA then
+				textColorA = colorA
+			end
+
+			if textB and colorB then
+				textColorB = colorB
+			end
 		end
 
-		if textB then
-			textColorA = E.db.mMT.dockdatatext.fontcolor.hex
-		end
-	else
-		if textA and colorA then
-			textColorA = colorA
+		if self.mIcon.TextA and textA then
+			self.mIcon.TextA:SetText(format("%s%s|r", textColorA, textA))
+		elseif self.mIcon.TextA then
+			self.mIcon.TextA:SetText("")
 		end
 
-		if textB and colorB then
-			textColorB = colorB
+		if self.mIcon.TextB and textB then
+			self.mIcon.TextB:SetText(format("%s%s|r", textColorB, textB))
+		elseif self.mIcon.TextB then
+			self.mIcon.TextB:SetText("")
 		end
-	end
-
-	if self.mIcon.TextA and textA then
-		self.mIcon.TextA:SetText(format("%s%s|r", textColorA, textA))
-	elseif self.mIcon.TextA then
-		self.mIcon.TextA:SetText("")
-	end
-
-	if self.mIcon.TextB and textB then
-		self.mIcon.TextB:SetText(format("%s%s|r", textColorB, textB))
-	elseif self.mIcon.TextB then
-		self.mIcon.TextB:SetText("")
 	end
 end
 
@@ -176,6 +178,15 @@ end
 
 function mMT:mOnEnter(self, timer)
 	local mDock = self.mIcon
+
+	if not self.mSettings.GrowXY then
+		self.mSettings.XY = self:GetHeight() + 4
+		if E.db.mMT.dockdatatext.autogrow then
+			self.mSettings.GrowXY = self.mSettings.XY / 2 + self.mSettings.XY
+		else
+			self.mSettings.GrowXY = E.db.mMT.dockdatatext.growsize + self.mSettings.XY
+		end
+	end
 	mDock:Size(self.mSettings.GrowXY, self.mSettings.GrowXY)
 
 	if self.mSettings.Text and mMT:CheckCombatLockdown() then
@@ -476,7 +487,6 @@ function mMT:DockInitialisation(self, event, textA, textB, colorA, colorB)
 				and not self.mSettings.text.onlytext
 				and (self.mIcon.TextA or self.mIcon.TextB)
 			then
-
 				mDockUpdateText(
 					self,
 					self.mSettings.text.textA,

@@ -182,16 +182,18 @@ end
 local function OnEvent(self, event)
 	self.mSettings = {
 		Name = mTextName,
-		IconTexture = mMT.Media.DockIcons[E.db.mMT.dockdatatext.volume.icon],
-		Notifications = false,
-		Text = E.db.mMT.dockdatatext.volume.showtext,
-		Spezial = E.db.mMT.dockdatatext.volume.showtext,
-		IconColor = E.db.mMT.dockdatatext.volume.iconcolor,
-		CustomColor = E.db.mMT.dockdatatext.volume.customcolor,
+		text = {
+			onlytext = false,
+			spezial = E.db.mMT.dockdatatext.volume.showtext,
+			textA = E.db.mMT.dockdatatext.volume.showtext,
+			textB = false,
+		},
+		icon = {
+			texture = mMT.Media.DockIcons[E.db.mMT.dockdatatext.volume.icon],
+			color = E.db.mMT.dockdatatext.volume.iconcolor,
+			customcolor = E.db.mMT.dockdatatext.volume.customcolor,
+		},
 	}
-
-	mMT:DockInitialisation(self, event)
-
 	activeStream = AudioStreams[activeIndex]
 	panel = self
 
@@ -201,12 +203,12 @@ local function OnEvent(self, event)
 		self.mScript = true
 	end
 
+	local text = nil
 	if E.db.mMT.dockdatatext.volume.showtext then
-		self.mIcon.TextA:SetFormattedText(
-			mMT.ClassColor.string,
-			GetStreamString(activeStream or "Sound_MasterVolume", true)
-		)
+			text = GetStreamString(activeStream or "Sound_MasterVolume", true)
 	end
+
+	mMT:DockInitialisation(self, event, text)
 end
 
 local function OnLeave(self)

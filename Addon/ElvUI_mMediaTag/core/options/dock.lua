@@ -1123,22 +1123,6 @@ local function configTable()
 					end,
 					values = icons,
 				},
-				dockfriendcolor = {
-					order = 2,
-					type = "select",
-					name = L["Text Color Styl"],
-					get = function(info)
-						return E.db.mMT.dockdatatext.friends.color
-					end,
-					set = function(info, value)
-						E.db.mMT.dockdatatext.friends.color = value
-						DT:ForceUpdate_DataText("mFriends")
-					end,
-					values = {
-						custom = L["Custom"],
-						default = L["Default"],
-					},
-				},
 				friendstoggle = {
 					order = 4,
 					name = L["Custom color"],

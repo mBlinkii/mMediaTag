@@ -392,7 +392,6 @@ P.mMT = {
 			customcolor = false,
 		},
 		friends = {
-			color = "class",
 			icon = "COLOR58",
 			iconcolor = { r = 1, g = 1, b = 1, a = 0.75 },
 			customcolor = false,

@@ -3,7 +3,6 @@ local DT = E:GetModule("DataTexts")
 --Lua functions
 local format = format
 local pi = math.pi
-
 --Variables
 local _G = _G
 local mText = format("Dock %s", L["Itemlevel"])

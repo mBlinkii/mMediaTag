@@ -274,8 +274,6 @@ local function OnEnter(self)
 end
 
 local function OnEvent(self, event, ...)
-	print(E:ClassColor(E.myclass))
-	mMT:DebugPrintTable(E:ClassColor(E.myclass))
 	self.mSettings = {
 		Name = mTextName,
 		text = {

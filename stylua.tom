@@ -1,0 +1,7 @@
+column_width = 320
+indent_type = "Tabs"
+indent_width = 4
+quote_style = "AutoPreferDouble"
+
+[sort_requires]
+enabled = false
