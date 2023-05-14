@@ -1,4 +1,4 @@
-local mMT, E, L, V, P, G = unpack((select(2, ...)))
+local E, L = unpack(ElvUI)
 local DT = E:GetModule("DataTexts")
 
 --Lua functions
@@ -46,7 +46,7 @@ local function mTip()
 			or (latencyWorld >= 150 and latencyWorld < 300) and 2
 			or (latencyWorld >= 300 and latencyWorld < 500) and 3
 			or 4
-		local bandwidthIn, bandwidthOut, latencyHome, latencyWorld = GetNetStats()
+		_, _, latencyHome, latencyWorld = GetNetStats()
 		DT.tooltip:AddDoubleLine(
 			format("%s%s|r", L["FPS:"], titel),
 			format("%s%d|r %sFPS", statusColors[fps], framerate, other)
@@ -80,7 +80,7 @@ local function OnEnter(self)
 	mTip()
 end
 
-local function OnEvent(self, event, ...)
+local function OnEvent(self, event)
 	self.mSettings = {
 		Name = mTextName,
 		icon = {

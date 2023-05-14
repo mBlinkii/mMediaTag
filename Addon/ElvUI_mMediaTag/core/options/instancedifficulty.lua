@@ -1,4 +1,4 @@
-local mMT, E, L, V, P, G = unpack((select(2, ...)))
+local E, L, V, P, G = unpack(ElvUI)
 
 local tinsert = tinsert
 local percentValue = {
@@ -406,8 +406,12 @@ local function configTable()
 									percentValue[i]
 								)
 							end
-							color = E:RGBToHex(color.r, color.g, color.b)
-							tmpText = tmpText .. color .. tostring(i) .. "|r "
+
+							local colorString = "|CFFFFFFFF|"
+							if color then
+								colorString = E:RGBToHex(color.r, color.g, color.b)
+							end
+							tmpText = tmpText .. colorString .. tostring(i) .. "|r "
 						end
 
 						tmpText = tmpText

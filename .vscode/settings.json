@@ -232,6 +232,16 @@
         "ElvUI",
         "LibStub",
         "L",
-        "Settings"
+        "Settings",
+        "MinimapCluster",
+        "InterfaceOptionsFrameCancel",
+        "mMT",
+        "MainMenuMicroButton_SetNormal",
+        "_TAGS",
+        "InviteUnit",
+        "ShowOptionsPanel"
+    ],
+    "Lua.diagnostics.disable": [
+        "undefined-field"
     ]
 }

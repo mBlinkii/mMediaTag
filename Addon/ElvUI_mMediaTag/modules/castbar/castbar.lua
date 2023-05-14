@@ -1,9 +1,8 @@
-local mMT, E, L, V, P, G = unpack((select(2, ...)))
+local E = unpack(ElvUI)
 local NP = E:GetModule("NamePlates")
 local UF = E:GetModule("UnitFrames")
 
 local GetSpecializationInfo = GetSpecializationInfo
-local GetActiveSpecGroup = GetActiveSpecGroup
 local GetSpellCooldown = GetSpellCooldown
 local interruptSpellID = nil
 local OutOfRange = false

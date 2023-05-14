@@ -1,8 +1,7 @@
-local mMT, E, L, V, P, G = unpack((select(2, ...)))
+local E, L = unpack(ElvUI)
 
 --Lua functions
 local format = format
-local mInsert = table.insert
 
 --Variables
 local mChatMenuFrame = nil

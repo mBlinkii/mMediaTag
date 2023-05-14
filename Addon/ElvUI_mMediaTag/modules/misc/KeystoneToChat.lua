@@ -1,19 +1,12 @@
-local mMT, E, L, V, P, G = unpack((select(2, ...)))
---Lua functions
 local strlower = strlower
 local string = string
 local ipairs = ipairs
-local select = select
 
 --WoW API / Variables
-local _G = _G
 local GetContainerNumSlots = C_Container.GetContainerNumSlots
 local GetContainerItemInfo = C_Container.GetContainerItemInfo
 local C_MythicPlus = C_MythicPlus
 local InCombatLockdown = InCombatLockdown()
-
---Variables
-local mKeystoneToChat = nil
 
 local function mCheckText(text)
 	local word = strlower(text)

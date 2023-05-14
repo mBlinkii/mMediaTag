@@ -1,4 +1,4 @@
-local mMT, E, L, V, P, G = unpack((select(2, ...)))
+local E, L = unpack(ElvUI)
 local DT = E:GetModule("DataTexts")
 
 --Lua functions
@@ -20,8 +20,6 @@ local IsInGuild = IsInGuild
 local IsShiftKeyDown = IsShiftKeyDown
 local LoadAddOn = LoadAddOn
 local SetItemRef = SetItemRef
-local ToggleGuildFrame = ToggleGuildFrame
-local ToggleFriendsFrame = ToggleFriendsFrame
 local UnitInParty = UnitInParty
 local UnitInRaid = UnitInRaid
 local InCombatLockdown = InCombatLockdown
@@ -40,8 +38,6 @@ local mText = format("Dock %s", L["Guild"])
 local mTextName = "mGuild"
 local tthead, ttsubh, ttoff = { r = 0.4, g = 0.78, b = 1 }, { r = 0.75, g = 0.9, b = 1 }, { r = 0.3, g = 1, b = 0.3 }
 local activezone, inactivezone = { r = 0.3, g = 1.0, b = 0.3 }, { r = 0.65, g = 0.65, b = 0.65 }
-local displayString = ""
-local noGuildString = ""
 local guildInfoString = "%s"
 local guildInfoString2 = GUILD .. ": %d/%d"
 local guildMotDString = "%s |cffaaaaaa- |cffffffff%s"

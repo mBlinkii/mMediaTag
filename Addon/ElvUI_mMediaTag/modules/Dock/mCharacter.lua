@@ -1,4 +1,4 @@
-local mMT, E, L, V, P, G = unpack((select(2, ...)))
+local E, L = unpack(ElvUI)
 local DT = E:GetModule("DataTexts")
 
 --Lua functions
@@ -6,14 +6,11 @@ local pairs = pairs
 local format = format
 local wipe = wipe
 local select = select
-local strjoin = strjoin
 local pi = math.pi
 
 --WoW API / Variables
 local _G = _G
 local GetInventoryItemDurability = GetInventoryItemDurability
-local ToggleCharacter = ToggleCharacter
-local InCombatLockdown = InCombatLockdown
 local GetInventoryItemTexture = GetInventoryItemTexture
 local GetInventoryItemLink = GetInventoryItemLink
 local GetMoneyString = GetMoneyString
@@ -21,7 +18,6 @@ local GetMoneyString = GetMoneyString
 --Variables
 local mText = format("Dock %s", CHARACTER_BUTTON)
 local mTextName = "mCharacter"
-local DURABILITY = DURABILITY
 local REPAIR_COST = REPAIR_COST
 local tooltipString = "%d%%"
 local totalDurability = 0

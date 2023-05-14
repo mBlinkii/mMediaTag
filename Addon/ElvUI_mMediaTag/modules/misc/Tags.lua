@@ -1,11 +1,10 @@
-local mMT, E, L, V, P, G = unpack((select(2, ...)))
+local E, L = unpack(ElvUI)
 
 local format, floor, tostring = format, floor, tostring
 
 local CreateTextureMarkup = CreateTextureMarkup
 local GetInstanceInfo = GetInstanceInfo
 local GetNumGroupMembers = GetNumGroupMembers
-local GetRaidRosterInfo = GetRaidRosterInfo
 local GetTime = GetTime
 local IsInInstance = IsInInstance
 local IsResting = IsResting
@@ -29,7 +28,6 @@ local UnitIsUnit = UnitIsUnit
 local UnitIsWildBattlePet = UnitIsWildBattlePet
 local UnitLevel = UnitLevel
 local UnitName = UnitName
-local UnitReaction = UnitReaction
 local TANK, HEALER = TANK, HEALER
 local UnitFaction = {}
 
@@ -988,7 +986,7 @@ E:AddTagInfo(
 )
 
 local UnitmDeathCount = {}
-local mID = 0
+local mID = ""
 local mTyp = "none"
 function mMT:TagDeathCount()
 	local iniId, typ = tostring(({ GetInstanceInfo() })[8]), tostring(({ GetInstanceInfo() })[2])

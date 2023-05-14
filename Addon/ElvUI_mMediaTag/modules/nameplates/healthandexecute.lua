@@ -1,10 +1,7 @@
-local mMT, E, L, V, P, G = unpack((select(2, ...)))
+local E = unpack(ElvUI)
 
 local NP = E:GetModule("NamePlates")
 local LSM = LibStub("LibSharedMedia-3.0")
-
-local CreateFrame = CreateFrame
-local IsResting = IsResting
 
 local HM_NPCs = {
 	-- DF Dungeons

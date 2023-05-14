@@ -1,4 +1,3 @@
-local mMT, E, L, V, P, G = unpack((select(2, ...)))
 local LSM = LibStub("LibSharedMedia-3.0")
 
 if LSM == nil then

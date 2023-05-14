@@ -1,10 +1,6 @@
-local mMT, E, L, V, P, G = unpack((select(2, ...)))
-local DT = E:GetModule("DataTexts")
-local NP = E:GetModule("NamePlates")
-
+local E, L = unpack(ElvUI)
 --Lua functions
 local format = format
-local mInsert = table.insert
 
 --Variables
 local mRollFrame = nil

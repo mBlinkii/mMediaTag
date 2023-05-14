@@ -1,40 +1,24 @@
-local E, _, V, P, G = unpack((ElvUI))
+local E = unpack(ElvUI)
 local EP = LibStub("LibElvUIPlugin-1.0")
 local L = E.Libs.ACL:GetLocale("ElvUI", E.global.general.locale)
-local DT = E:GetModule("DataTexts")
 
 -- Addon Name and Namespace
 local addonName, addon = ...
-
-local mMT = E:NewModule(addonName, "AceHook-3.0", "AceEvent-3.0", "AceTimer-3.0", "AceConsole-3.0")
+mMT = E:NewModule(addonName, "AceHook-3.0", "AceEvent-3.0", "AceTimer-3.0", "AceConsole-3.0")
 
 --Cache Lua / WoW API
 local _G = _G
-local collectgarbage = collectgarbage
 local format = format
-local hooksecurefunc = hooksecurefunc
-local next = next
-local print = print
-local tonumber = tonumber
-
 local GetAddOnMetadata = _G.GetAddOnMetadata
 local C_MythicPlus_RequestMapInfo = nil
 local C_MythicPlus_RequestCurrentAffixes = nil
-
-addon[1] = mMT
-addon[2] = E --ElvUI Engine
-addon[3] = L --ElvUI Locales
-addon[4] = V --ElvUI PrivateDB
-addon[5] = P --ElvUI ProfileDB
-addon[6] = G --ElvUI GlobalDB
-_G[addonName] = addon
-
 local class = E:ClassColor(E.myclass)
 local hex = E:RGBToHex(class.r, class.g, class.b)
+
 --Constants
 mMT.Version = GetAddOnMetadata(addonName, "Version")
 mMT.Name =
-	"|CFF6559F1m|r|CFF7A4DEFM|r|CFF8845ECe|r|CFFA037E9d|r|CFFA435E8i|r|CFFB32DE6a|r|CFFBC26E5T|r|CFFCB1EE3a|r|CFFDD14E0g|r |CFFFF006C&|r |CFFFF4C00T|r|CFFFF7300o|r|CFFFF9300o|r|CFFFFA800l|r|CFFFFC900s|r"
+"|CFF6559F1m|r|CFF7A4DEFM|r|CFF8845ECe|r|CFFA037E9d|r|CFFA435E8i|r|CFFB32DE6a|r|CFFBC26E5T|r|CFFCB1EE3a|r|CFFDD14E0g|r |CFFFF006C&|r |CFFFF4C00T|r|CFFFF7300o|r|CFFFF9300o|r|CFFFFA800l|r|CFFFFC900s|r"
 mMT.NameShort = "|CFF6559F1m|r|CFFA037E9M|r|CFFDD14E0T|r"
 mMT.Icon = "|TInterface\\Addons\\ElvUI_mMediaTag\\media\\logo\\mmt_icon_round.tga:14:14|t"
 mMT.IconSquare = "|TInterface\\Addons\\ElvUI_mMediaTag\\media\\logo\\mmt_icon.tga:14:14|t"
@@ -86,83 +70,6 @@ local function GetOptions()
 	end
 end
 
-local function LoadTextures()
-	if E.db.mMT.textures.all then
-		mMT:LoadSeriesAll()
-	end
-
-	if E.db.mMT.textures.a then
-		mMT:LoadSeriesA()
-	end
-
-	if E.db.mMT.textures.b then
-		mMT:LoadSeriesB()
-	end
-
-	if E.db.mMT.textures.c then
-		mMT:LoadSeriesC()
-	end
-
-	if E.db.mMT.textures.d then
-		mMT:LoadSeriesD()
-	end
-
-	if E.db.mMT.textures.e then
-		mMT:LoadSeriesE()
-	end
-
-	if E.db.mMT.textures.f then
-		mMT:LoadSeriesF()
-	end
-
-	if E.db.mMT.textures.g then
-		mMT:LoadSeriesG()
-	end
-
-	if E.db.mMT.textures.h then
-		mMT:LoadSeriesH()
-	end
-
-	if E.db.mMT.textures.i then
-		mMT:LoadSeriesI()
-	end
-
-	if E.db.mMT.textures.j then
-		mMT:LoadSeriesJ()
-	end
-
-	if E.db.mMT.textures.k then
-		mMT:LoadSeriesK()
-	end
-
-	if E.db.mMT.textures.l then
-		mMT:LoadSeriesL()
-	end
-
-	if E.db.mMT.textures.m then
-		mMT:LoadSeriesM()
-	end
-
-	if E.db.mMT.textures.n then
-		mMT:LoadSeriesN()
-	end
-
-	if E.db.mMT.textures.o then
-		mMT:LoadSeriesO()
-	end
-
-	if E.db.mMT.textures.p then
-		mMT:LoadSeriesP()
-	end
-
-	if E.db.mMT.textures.q then
-		mMT:LoadSeriesQ()
-	end
-
-	if E.db.mMT.textures.r then
-		mMT:LoadSeriesR()
-	end
-end
 -- Initialize Addon
 function mMT:Initialize()
 	EP:RegisterPlugin(addonName, GetOptions)
@@ -214,7 +121,11 @@ function mMT:Initialize()
 		mMT:SetupResurrectionIcon()
 	end
 
-	if E.db.mMT.custombackgrounds.health.enable or E.db.mMT.custombackgrounds.power.enable or E.db.mMT.custombackgrounds.castbar.enable then
+	if
+		E.db.mMT.custombackgrounds.health.enable
+		or E.db.mMT.custombackgrounds.power.enable
+		or E.db.mMT.custombackgrounds.castbar.enable
+	then
 		mMT:CustomBackdrop()
 	end
 
@@ -298,7 +209,10 @@ function mMT:PLAYER_ENTERING_WORLD()
 	-- quick setup
 	if not E.db.mMT.quicksetup then
 		StaticPopupDialogs["mQuickSetup"] = {
-			text = format(L["It looks like you are using %s for the first time. Would you like to open the Quick Settings window?"], mMT.Name),
+			text = format(
+				L["It looks like you are using %s for the first time. Would you like to open the Quick Settings window?"],
+				mMT.Name
+			),
 			button1 = L["Yes"],
 			button2 = L["No"],
 			timeout = 120,
@@ -317,7 +231,6 @@ function mMT:PLAYER_ENTERING_WORLD()
 
 		StaticPopup_Show("mQuickSetup")
 	end
-
 
 	class = E:ClassColor(E.myclass)
 	hex = E:RGBToHex(class.r, class.g, class.b)
@@ -360,9 +273,11 @@ end
 function mMT:CHAT_MSG_PARTY(event, text)
 	mMT:GetKey("PARTY", text)
 end
+
 function mMT:CHAT_MSG_PARTY_LEADER(event, text)
 	mMT:GetKey("PARTY", text)
 end
+
 function mMT:CHAT_MSG_RAID(event, text)
 	mMT:GetKey("RAID", text)
 end
@@ -370,6 +285,7 @@ end
 function mMT:CHAT_MSG_RAID_LEADER(event, text)
 	mMT:GetKey("RAID", text)
 end
+
 function mMT:CHAT_MSG_GUILD(event, text)
 	mMT:GetKey("GUILD", text)
 end

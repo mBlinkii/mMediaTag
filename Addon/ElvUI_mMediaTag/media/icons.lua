@@ -1,5 +1,3 @@
-local mMT, E, L, V, P, G = unpack((select(2, ...)))
-
 mMT.Media.CombatIcons = {
 	CI1 = "Interface\\AddOns\\ElvUI_mMediaTag\\media\\icons\\datatext\\combat1.tga",
 	CI2 = "Interface\\AddOns\\ElvUI_mMediaTag\\media\\icons\\datatext\\combat2.tga",

@@ -1,13 +1,7 @@
-
-local mMT, E, L, V, P, G = unpack((select(2, ...)))
+local E = unpack(ElvUI)
 
 --Lua functions
-local tinsert = tinsert
 local format = format
-local tonumber = tonumber
-
---WoW API / Variables
-local _G = _G
 
 function mMT:DebugPrintTable(tbl)
 	print(mMT.Name .. ": Table Start >>>")

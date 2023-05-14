@@ -1,4 +1,4 @@
-local mMT, E, L, V, P, G = unpack((select(2, ...)))
+local E = unpack(ElvUI)
 
 function mMT:mNamePlateBorderColor()
 	if E.db.mMT.nameplate.bordercolor.border and E.global["nameplates"]["filters"]["ElvUI_Target"] then

@@ -1,4 +1,4 @@
-local mMT, E, L, V, P, G = unpack((select(2, ...)))
+local E, L = unpack(ElvUI)
 local DT = E:GetModule("DataTexts")
 
 --Lua functions
@@ -28,7 +28,7 @@ local function OnEvent(self, event, ...)
 		self.mIcon:SetTexture(nil)
 		self.mIcon = nil
 		self.mSettings = nil
-		
+
 		print(self.mIcon)
 		print(self.mSettings)
 		print(self.mNotifications)

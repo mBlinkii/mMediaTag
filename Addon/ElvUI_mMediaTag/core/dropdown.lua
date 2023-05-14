@@ -1,5 +1,4 @@
-local mMT, E, L, V, P, G = unpack((select(2, ...)))
-local LSM = E.Libs.LSM
+local E = unpack(ElvUI)
 
 --Lua functions
 local tinsert = tinsert
@@ -7,9 +6,7 @@ local format = format
 
 --WoW API / Variables
 local _G = _G
-local GetCursorPosition = GetCursorPosition
 local InCombatLockdown = InCombatLockdown
-local UnitClass = UnitClass
 local CreateFrame = CreateFrame
 local strfind = strfind
 local ToggleFrame = ToggleFrame

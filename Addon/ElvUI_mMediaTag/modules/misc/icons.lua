@@ -1,4 +1,4 @@
-local mMT, E, L, V, P, G = unpack((select(2, ...)))
+local E = unpack(ElvUI)
 
 -- Combat Icons
 E.Media.CombatIcons.mMediaTag1 = [[Interface\AddOns\ElvUI_mMediaTag\media\icons\datatext\combat1.tga]]

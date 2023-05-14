@@ -1,10 +1,8 @@
-local mMT, E, L, V, P, G = unpack((select(2, ...)))
+local E, L, V, P, G = unpack(ElvUI)
 local LSM = E.Libs.LSM
 
 --Lua functions
-local mInsert = table.insert
 local format = format
-local wipe = wipe
 
 --WoW API / Variables
 local GetInstanceInfo = GetInstanceInfo
@@ -218,23 +216,23 @@ local function GetKeystoneLevelandColor()
 	elseif keyStoneLevel <= 9 then
 		color =
 			mMT:ColorFade(E.db.mMT.instancedifficulty.mpa, E.db.mMT.instancedifficulty.mpb, percentValue[keyStoneLevel])
-		return format("%s%s|r", color.color, keyStoneLevel)
+			if color then return format("%s%s|r", color.color, keyStoneLevel) end
 	elseif keyStoneLevel <= 14 then
 		color =
 			mMT:ColorFade(E.db.mMT.instancedifficulty.mpb, E.db.mMT.instancedifficulty.mpc, percentValue[keyStoneLevel])
-		return format("%s%s|r", color.color, keyStoneLevel)
+			if color then return format("%s%s|r", color.color, keyStoneLevel) end
 	elseif keyStoneLevel <= 19 then
 		color =
 			mMT:ColorFade(E.db.mMT.instancedifficulty.mpc, E.db.mMT.instancedifficulty.mpd, percentValue[keyStoneLevel])
-		return format("%s%s|r", color.color, keyStoneLevel)
+			if color then return format("%s%s|r", color.color, keyStoneLevel) end
 	elseif keyStoneLevel >= 24 then
 		color =
 			mMT:ColorFade(E.db.mMT.instancedifficulty.mpd, E.db.mMT.instancedifficulty.mpe, percentValue[keyStoneLevel])
-		return format("%s%s|r", color.color, keyStoneLevel)
+			if color then return format("%s%s|r", color.color, keyStoneLevel) end
 	elseif keyStoneLevel >= 29 then
 		color =
 			mMT:ColorFade(E.db.mMT.instancedifficulty.mpe, E.db.mMT.instancedifficulty.mpf, percentValue[keyStoneLevel])
-		return format("%s%s|r", color.color, keyStoneLevel)
+			if color then return format("%s%s|r", color.color, keyStoneLevel) end
 	else
 		return format("%s%s|r", colors.mpf.color, keyStoneLevel)
 	end

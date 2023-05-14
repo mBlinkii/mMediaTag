@@ -1,9 +1,4 @@
-local mMT, E, L, V, P, G = unpack((select(2, ...)))
-local DT = E:GetModule("DataTexts")
-
---Lua functions
-
---Variables
+local E = unpack(ElvUI)
 
 function mMT:mDockFull(top, enable)
 	E.DataTexts:BuildPanelFrame("mDock")

@@ -1,11 +1,9 @@
-local mMT, E, L, V, P, G = unpack((select(2, ...)))
+local E, L = unpack(ElvUI)
 local DT = E:GetModule("DataTexts")
 
 --Lua functions
 local _G = _G
 local GetInventoryItemDurability = GetInventoryItemDurability
-local ToggleCharacter = ToggleCharacter
-local InCombatLockdown = InCombatLockdown
 local GetInventoryItemTexture = GetInventoryItemTexture
 local GetInventoryItemLink = GetInventoryItemLink
 local GetMoneyString = GetMoneyString
@@ -13,7 +11,6 @@ local GetMoneyString = GetMoneyString
 --Variables
 local mText = format("Dock %s", L["Durability"])
 local mTextName = "mDurability"
-local DURABILITY = DURABILITY
 local REPAIR_COST = REPAIR_COST
 local tooltipString = "%d%%"
 local totalDurability = 0

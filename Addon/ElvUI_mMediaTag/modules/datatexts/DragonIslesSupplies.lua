@@ -1,10 +1,9 @@
-local mMT, E, L, V, P, G = unpack((select(2, ...)))
+local E = unpack(ElvUI)
 
 local DT = E:GetModule("DataTexts")
 
 --Lua functions
 local format = format
-local strjoin = strjoin
 
 --WoW API / Variables
 local _G = _G
@@ -60,7 +59,7 @@ local function OnEvent(self, event, ...)
 			end
 
 			local CurrencyTextSring = "%s" .. mMT.ClassColor.string
-			
+
 			if TextJustify == "RIGHT" then
 				CurrencyTextSring = mMT.ClassColor.string .. "%s"
 			end

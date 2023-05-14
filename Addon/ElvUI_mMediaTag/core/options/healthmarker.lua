@@ -1,6 +1,5 @@
-local mMT, E, L, V, P, G = unpack((select(2, ...)))
+local E, L, V, P, G = unpack(ElvUI)
 local LSM = LibStub("LibSharedMedia-3.0")
-
 local tinsert = tinsert
 local selectedID = nil
 local selected = nil

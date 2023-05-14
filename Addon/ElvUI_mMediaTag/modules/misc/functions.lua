@@ -1,11 +1,11 @@
-local mMT, E, L, V, P, G = unpack((select(2, ...)))
+local E, L = unpack(ElvUI)
 
 --Lua functions
-local string, type, ipairs, date = string, type, ipairs, date
+local string = string
 local gmatch, gsub, format = gmatch, gsub, format
-local unpack, pairs, wipe, floor, ceil = unpack, pairs, wipe, floor, ceil
-local strfind, strmatch, strlower, strsplit = strfind, strmatch, strlower, strsplit
-local utf8lower, utf8sub, utf8len = string.utf8lower, string.utf8sub, string.utf8len
+local wipe = wipe
+local strmatch = strmatch
+local utf8lower, utf8sub = string.utf8lower, string.utf8sub
 local mInsert = table.insert
 
 --WoW API / Variables
@@ -15,7 +15,6 @@ local GetInstanceInfo = GetInstanceInfo
 local GetDifficultyInfo = GetDifficultyInfo
 local GetRaidDifficultyID = GetRaidDifficultyID
 local GetDungeonDifficultyID = GetDungeonDifficultyID
---local GetDetailedItemLevelInfo = GetDetailedItemLevelInfo
 
 function mMT:mColorGardient(level)
 	local r, g, b = E:ColorGradient(level * 0.04, 0, 0.43, 0.86, 0.63, 0.2, 0.93, 0.89, 0.16, 0.31)

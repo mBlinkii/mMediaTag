@@ -1,4 +1,4 @@
-local mMT, E, L, V, P, G = unpack((select(2, ...)))
+local E, L = unpack(ElvUI)
 local DT = E:GetModule("DataTexts")
 
 --Lua functions
@@ -9,7 +9,6 @@ local _G = _G
 local enteredFrame = false
 local mText = format("Dock %s", L["FPS/ MS"])
 local mTextName = "mFPSMS"
-local TextColor = mMT.ClassColor.string
 local statusColors = {
 	"|cff0CD809",
 	"|cffE8DA0F",

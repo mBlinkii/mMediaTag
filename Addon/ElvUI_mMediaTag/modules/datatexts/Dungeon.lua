@@ -1,9 +1,8 @@
-local mMT, E, L, V, P, G = unpack((select(2, ...)))
+local E, L = unpack(ElvUI)
 local DT = E:GetModule("DataTexts")
 
 --Lua functions
 local format = format
-local strjoin = strjoin
 local wipe = table.wipe
 
 --WoW API / Variables

@@ -1,12 +1,9 @@
-local mMT, E, L, V, P, G = unpack((select(2, ...)))
-local DT = E:GetModule("DataTexts")
+local E = unpack(ElvUI)
 
 --Lua functions
 local format = format
-local strjoin = strjoin
 
 --WoW API / Variables
-local _G = _G
 local InCombatLockdown = InCombatLockdown
 
 --Variables

@@ -1,4 +1,4 @@
-local mMT, E, L, V, P, G = unpack((select(2, ...)))
+local E, L = unpack(ElvUI)
 local DT = E:GetModule("DataTexts")
 
 --Lua functions
@@ -11,7 +11,6 @@ local string = string
 local select = select
 
 --WoW API / Variables
-local _G = _G
 local CreateFrame = CreateFrame
 local GameTooltip = GameTooltip
 local GetSpellTexture = GetSpellTexture
@@ -359,7 +358,7 @@ local function EngineeringCheck()
 	if prof1 then
 		prof1 = select(7, GetProfessionInfo(prof1))
 	end
-	
+
 	if prof2 then
 		prof2 = select(7, GetProfessionInfo(prof2))
 	end
