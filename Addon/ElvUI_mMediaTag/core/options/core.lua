@@ -155,6 +155,18 @@ local function configTable()
 				icon = "Interface\\Addons\\ElvUI_mMediaTag\\media\\system\\castbar.tga",
 				childGroups = "tab",
 				args = {
+					interrupt = {
+						order = 1,
+						type = "group",
+						name = L["Interrupt on CD"],
+						args = {},
+					},
+					important = {
+						order = 2,
+						type = "group",
+						name = L["Important Spells"],
+						args = {},
+					},
 				},
 			},
 			nameplates = {

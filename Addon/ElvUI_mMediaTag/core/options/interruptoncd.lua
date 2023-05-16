@@ -2,7 +2,7 @@ local E, L, V, P, G = unpack(ElvUI)
 
 local tinsert = tinsert
 local function configTable()
-	E.Options.args.mMT.args.castbar.args = {
+	E.Options.args.mMT.args.castbar.args.interrupt.args = {
 		header_interruptoncd = {
 			order = 1,
 			type = "group",

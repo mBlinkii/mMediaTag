@@ -16,6 +16,13 @@ P.mMT = {
 		intimecolor = { colora = { r = 0, g = 0.78, b = 1 }, colorb = { r = 0, g = 0.46, b = 0.65 } },
 		outofrangecolor = { colora = { r = 1, g = 0.48, b = 0 }, colorb = { r = 0.74, g = 0.28, b = 0 } },
 	},
+	importantspells = {
+		enable = false,
+		gradient = false,
+		icon = {enable = false, replace = true, auto = true, sizeX = 32, sizeY = 32, stun = "CAST15", interrupt = "CAST15" },
+		interrupt = {enable = false, ids = {}, colora = { r = 0, g = 1, b = 0 }, colorb = { r = 0, g = 0.53, b = 0.0 } },
+		stun = {enable = false, ids = {}, colora = { r = 0, g = 0.1, b = 1 }, colorb = { r = 0, g = 0.05, b = 0.52 } },
+	},
 	custombackgrounds = {
 		enable = false,
 		health = { enable = false, texture = "mMediaTag A8" },

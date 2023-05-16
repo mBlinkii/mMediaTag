@@ -6,7 +6,7 @@ local selected = nil
 local filterTabel = {}
 
 local function updateFilterTabel()
-	filterTabel = wipe(filterTabel)
+	wipe(filterTabel)
 	for k, v in pairs(E.db.mMT.nameplate.healthmarker.NPCs) do
 		tinsert(filterTabel, k)
 	end

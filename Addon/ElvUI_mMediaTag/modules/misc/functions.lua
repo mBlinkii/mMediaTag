@@ -20,9 +20,6 @@ function mMT:mColorGardient(level)
 	local r, g, b = E:ColorGradient(level * 0.04, 0, 0.43, 0.86, 0.63, 0.2, 0.93, 0.89, 0.16, 0.31)
 	return E:RGBToHex(r, g, b)
 end
-function mMT:Print(text)
-	print("|CFF8E44ADm|r|CFF2ECC71Media|r|CFF3498DBTag|r - " .. text)
-end
 
 function mMT:mAbbrev(text)
 	local letters, lastWord = "", strmatch(text, ".+%s(.+)$")

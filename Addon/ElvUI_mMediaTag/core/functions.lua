@@ -26,7 +26,7 @@ function mMT:ColorFade(colorA, colorB, percent)
 		color.r = colorA.r - (colorA.r - colorB.r) * percent
 		color.g = colorA.g - (colorA.g - colorB.g) * percent
 		color.b = colorA.b - (colorA.b - colorB.b) * percent
-		color.color  = E:RGBToHex(color.r, color.g, color.b)
+		color.color = E:RGBToHex(color.r, color.g, color.b)
 		return color
 	elseif colorA and colorA.r and colorA.g and colorA.b then
 		return colorA
@@ -54,4 +54,16 @@ function mMT:round(number, decimals)
 		mMT:Print(L["!! ERROR - Round:"] .. " " .. number .. " - " .. decimals)
 		return 0
 	end
+end
+
+function mMT:IsNumber(number)
+	if tonumber(number) then
+		return true
+	else
+		return false
+	end
+end
+
+function mMT:Print(text)
+	print(mMT.Name, text)
 end
