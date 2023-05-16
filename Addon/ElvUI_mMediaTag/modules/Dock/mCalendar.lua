@@ -53,7 +53,7 @@ local function OnEvent(self, event, ...)
 	self.mSettings = {
 		Name = mTextName,
 		text = {
-			spezial = EnableText,
+			special = EnableText,
 			textA = EnableText,
 			textB = false,
 		},
@@ -86,7 +86,7 @@ local function OnEvent(self, event, ...)
 		end
 	end
 
-	mMT:DockInitialisation(self, event, DateText)
+	mMT:DockInitialization(self, event, DateText)
 end
 
 local function OnLeave(self)

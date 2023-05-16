@@ -50,5 +50,8 @@ end
 function mMT:round(number, decimals)
 	if number then
 		return (("%%.%df"):format(decimals)):format(number)
+	else
+		mMT:Print(L["!! ERROR - Round:"] .. " " .. number .. " - " .. decimals)
+		return 0
 	end
 end

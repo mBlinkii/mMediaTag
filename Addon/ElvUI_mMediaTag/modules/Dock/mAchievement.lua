@@ -76,7 +76,7 @@ local function OnEvent(self, event, ...)
 		},
 	}
 
-	mMT:DockInitialisation(self, event)
+	mMT:DockInitialization(self, event)
 end
 
 local function OnLeave(self)

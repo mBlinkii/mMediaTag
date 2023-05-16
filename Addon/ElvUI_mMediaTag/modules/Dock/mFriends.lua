@@ -889,7 +889,7 @@ local function OnEvent(self, event, message)
 		Name = mTextName,
 		text = {
 			onlytext = false,
-			spezial = false,
+			special = false,
 			textA = true,
 			textB = false,
 		},
@@ -915,7 +915,7 @@ local function OnEvent(self, event, message)
 		OnEnter(self)
 	end
 
-	mMT:DockInitialisation(self, event, onlineFriends + numBNetOnline)
+	mMT:DockInitialization(self, event, onlineFriends + numBNetOnline)
 end
 
 local function OnLeave(self)

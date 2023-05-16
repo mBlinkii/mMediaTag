@@ -15,21 +15,21 @@ local C_ChallengeMode = C_ChallengeMode
 local mText = L["Dungeon"]
 
 local function mSetup(self)
-	local mInctanceInfo = mMT:InctanceInfo()
-	if mInctanceInfo then
+	local mInstanceInfo = mMT:InstanceInfo()
+	if mInstanceInfo then
 		DT.tooltip:AddLine(" ")
-		DT.tooltip:AddLine(mInctanceInfo[1] or "-")
-		DT.tooltip:AddLine(mInctanceInfo[2] or "-")
-		DT.tooltip:AddLine(mInctanceInfo[3] or "-")
+		DT.tooltip:AddLine(mInstanceInfo[1] or "-")
+		DT.tooltip:AddLine(mInstanceInfo[2] or "-")
+		DT.tooltip:AddLine(mInstanceInfo[3] or "-")
 	end
 
 	local inInstance, _ = IsInInstance()
 	if inInstance then
-		local infoinInstance = mMT:DungeonInfo()
+		local infoInstance = mMT:DungeonInfo()
 		DT.tooltip:AddLine(" ")
-		DT.tooltip:AddLine(infoinInstance[1] or "-")
-		DT.tooltip:AddLine(infoinInstance[2] or "-")
-		DT.tooltip:AddLine(infoinInstance[3] or "-")
+		DT.tooltip:AddLine(infoInstance[1] or "-")
+		DT.tooltip:AddLine(infoInstance[2] or "-")
+		DT.tooltip:AddLine(infoInstance[3] or "-")
 	end
 
 	if C_MythicPlus.IsMythicPlusActive() and (C_ChallengeMode.GetActiveChallengeMapID() ~= nil) then

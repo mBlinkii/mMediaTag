@@ -52,7 +52,7 @@ function mMT:mColorDatatext()
 end
 
 --Instance Settings Player
-function mMT:InctanceInfo()
+function mMT:InstanceInfo()
 	local InctanceInfoText = {}
 	InctanceInfoText = wipe(InctanceInfoText)
 	local DungeonID = GetDungeonDifficultyID()

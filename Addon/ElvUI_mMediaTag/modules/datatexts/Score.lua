@@ -24,12 +24,12 @@ local tyrannical = C_ChallengeMode_GetAffixInfo(9)
 local fortified = C_ChallengeMode_GetAffixInfo(10)
 local affixes = C_MythicPlus_GetCurrentAffixes()
 local weeklyAffixID = affixes and affixes[1] and affixes[1].id
-local weehlyAffixName = weeklyAffixID and C_ChallengeMode_GetAffixInfo(weeklyAffixID)
+local weeklyAffixName = weeklyAffixID and C_ChallengeMode_GetAffixInfo(weeklyAffixID)
 local map_table = C_ChallengeMode_GetMapTable()
 local MPlusDataLoaded = false
 
 local IconOverall = E:TextureString("Interface\\AddOns\\ElvUI_mMediaTag\\media\\icons\\datatext\\overall.tga", ":14:14")
-local IconThyranical = E:TextureString("Interface\\AddOns\\ElvUI_mMediaTag\\media\\icons\\datatext\\thyranical.tga", ":14:14")
+local IconTyrannical = E:TextureString("Interface\\AddOns\\ElvUI_mMediaTag\\media\\icons\\datatext\\tyrannical.tga", ":14:14")
 local IconFortified = E:TextureString("Interface\\AddOns\\ElvUI_mMediaTag\\media\\icons\\datatext\\fortified.tga", ":14:14")
 
 local function GetPlayerScore()
@@ -45,14 +45,14 @@ end
 local function SortWeeklyLevel(ScoreTable)
 	map_table = C_ChallengeMode_GetMapTable()
 	tablesort(map_table, function(a, b)
-		return ScoreTable[a][weehlyAffixName].level > ScoreTable[b][weehlyAffixName].level
+		return ScoreTable[a][weeklyAffixName].level > ScoreTable[b][weeklyAffixName].level
 	end)
 end
 
 local function SortWeeklyScore(ScoreTable)
 	map_table = C_ChallengeMode_GetMapTable()
 	tablesort(map_table, function(a, b)
-		return ScoreTable[a][weehlyAffixName].score > ScoreTable[b][weehlyAffixName].score
+		return ScoreTable[a][weeklyAffixName].score > ScoreTable[b][weeklyAffixName].score
 	end)
 end
 
@@ -179,9 +179,9 @@ local function GetDungeonScores()
 			ScoreTable[map_table[#map_table - 2]].upgrade = true
 		end
 
-		if E.db.mMT.mpscore.sort == "SCORE" and weehlyAffixName then
+		if E.db.mMT.mpscore.sort == "SCORE" and weeklyAffixName then
 			SortWeeklyScore(ScoreTable)
-		elseif E.db.mMT.mpscore.sort == "AFFIX" and weehlyAffixName then
+		elseif E.db.mMT.mpscore.sort == "AFFIX" and weeklyAffixName then
 			SortWeeklyLevel(ScoreTable)
 		else
 			SortScore(ScoreTable)
@@ -254,7 +254,7 @@ local function OnEnter(self)
 	end
 
 	DT.tooltip:AddLine(" ")
-	DT.tooltip:AddLine(L["Keystons on your Account"])
+	DT.tooltip:AddLine(L["Keystones on your Account"])
 	for k, v in pairs(E.global.mMT.keys) do
 		DT.tooltip:AddDoubleLine(v.name, v.key)
 	end
@@ -274,7 +274,7 @@ local function OnEnter(self)
 		DT.tooltip:AddLine(" ")
 		DT.tooltip:AddDoubleLine(DUNGEON_SCORE, mMT:GetDungeonScore())
 		DT.tooltip:AddLine(" ")
-		DT.tooltip:AddDoubleLine(L["Dungeon Name"], IconThyranical .. " | " .. IconFortified .. " | " .. IconOverall)
+		DT.tooltip:AddDoubleLine(L["Dungeon Name"], IconTyrannical .. " | " .. IconFortified .. " | " .. IconOverall)
 		GetDungeonScores()
 	end
 
@@ -292,7 +292,7 @@ local function OnEnter(self)
 			"%s  %s%s|r",
 			mMT:mIcon(mMT.Media.Mouse["LEFT"]),
 			E.db.mMT.datatextcolors.colortip.hex,
-			L["Middleclick to open M+ Frame"]
+			L["Middle click to open M+ Frame"]
 		)
 	)
 	DT.tooltip:AddLine(
@@ -316,7 +316,7 @@ local function OnEvent(self, event, ...)
 	elseif event == "MYTHIC_PLUS_CURRENT_AFFIX_UPDATE" then
 		affixes = C_MythicPlus_GetCurrentAffixes()
 		weeklyAffixID = affixes and affixes[1] and affixes[1].id
-		weehlyAffixName = weeklyAffixID and C_ChallengeMode_GetAffixInfo(weeklyAffixID)
+		weeklyAffixName = weeklyAffixID and C_ChallengeMode_GetAffixInfo(weeklyAffixID)
 		MPlusDataLoaded = true
 	end
 

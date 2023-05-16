@@ -138,7 +138,7 @@ local function OnEvent(self, event, ...)
 		Name = mTextName,
 		text = {
 			onlytext = false,
-			spezial = true,
+			special = true,
 			textA = true,
 			textB = true,
 		},
@@ -149,7 +149,7 @@ local function OnEvent(self, event, ...)
 		},
 	}
 
-	mMT:DockInitialisation(self, event)
+	mMT:DockInitialization(self, event)
 end
 
 local function OnLeave(self)

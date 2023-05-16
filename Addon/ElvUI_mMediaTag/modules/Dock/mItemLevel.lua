@@ -53,7 +53,7 @@ local function OnEvent(self, event, ...)
 		Name = mTextName,
 		text = {
 			onlytext = E.db.mMT.dockdatatext.itemlevel.onlytext,
-			spezial = true,
+			special = true,
 			textA = true,
 			textB = true,
 		},
@@ -69,8 +69,7 @@ local function OnEvent(self, event, ...)
 	local _, avgEquipped = GetAverageItemLevel()
 	text = mMT:round(avgEquipped or 0)
 	if E.db.mMT.dockdatatext.itemlevel.color then
-		r, g, b =
-			E:ColorGradient(mMT:round((avgEquipped / 260) * 100 or 0) * 0.01, 0, 1, 0.11, 0, 0.4, 0.8, 0.63, 0.18, 0.78)
+		r, g, b = GetItemLevelColor()
 		color = E:RGBToHex(r, g, b)
 	end
 
@@ -82,12 +81,12 @@ local function OnEvent(self, event, ...)
 				format("%s%s|r", color or "|cffffffff", text or 0)
 			)
 		)
-		mMT:DockInitialisation(self, event)
+		mMT:DockInitialization(self, event)
 	else
 		if self.text ~= "" then
 			self.text:SetText("")
 		end
-		mMT:DockInitialisation(self, event, text, E.db.mMT.dockdatatext.itemlevel.text, color)
+		mMT:DockInitialization(self, event, text, E.db.mMT.dockdatatext.itemlevel.text, color)
 	end
 end
 

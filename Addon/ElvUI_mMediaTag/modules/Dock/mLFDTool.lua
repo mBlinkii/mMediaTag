@@ -11,7 +11,7 @@ local IsInInstance = IsInInstance
 --Variables
 local mText = format("Dock %s", DUNGEONS_BUTTON)
 local mTextName = "mLFDTool"
-local mInctanceInfoText, keyText, mAffixesText, vaultinforaidText, vaultinfomplusText, vaultinfopvpText =
+local mInstanceInfoText, keyText, mAffixesText, vaultinforaidText, vaultinfomplusText, vaultinfopvpText =
 	{}, {}, {}, {}, {}, {}
 local TANK_ICON = E:TextureString(E.Media.Textures.Tank, ":14:14")
 local HEALER_ICON = E:TextureString(E.Media.Textures.Healer, ":14:14")
@@ -39,14 +39,14 @@ local function MakeIconString(tank, healer, damage)
 end
 
 local function mLFDTooltip()
-	local _, hc, myth, mythp, other, titel, tip = mMT:mColorDatatext()
+	local _, hc, myth, mythp, other, title, tip = mMT:mColorDatatext()
 
-	mInctanceInfoText = mMT:InctanceInfo()
-	if mInctanceInfoText then
+	mInstanceInfoText = mMT:InstanceInfo()
+	if mInstanceInfoText then
 		DT.tooltip:AddLine(" ")
-		DT.tooltip:AddLine(mInctanceInfoText[1])
-		DT.tooltip:AddLine(mInctanceInfoText[2])
-		DT.tooltip:AddLine(mInctanceInfoText[3])
+		DT.tooltip:AddLine(mInstanceInfoText[1])
+		DT.tooltip:AddLine(mInstanceInfoText[2])
+		DT.tooltip:AddLine(mInstanceInfoText[3])
 	end
 
 	if E.db.mMT.dockdatatext.lfd.keystone then
@@ -81,7 +81,7 @@ local function mLFDTooltip()
 		vaultinforaidText, vaultinfomplusText, vaultinfopvpText, vaultinfohighest, ok = mMT:mGetVaultInfo()
 		if ok then
 			DT.tooltip:AddLine(" ")
-			DT.tooltip:AddLine(format("%s%s|r", titel, GREAT_VAULT_REWARDS))
+			DT.tooltip:AddLine(format("%s%s|r", title, GREAT_VAULT_REWARDS))
 
 			if vaultinfohighest then
 				DT.tooltip:AddDoubleLine(format(L["%sActual reward:|r"], other), vaultinfohighest or "-")
@@ -125,7 +125,7 @@ local function mLFDTooltip()
 		end
 		if C_WeeklyRewards.HasAvailableRewards() then
 			DT.tooltip:AddLine(" ")
-			DT.tooltip:AddLine(format("%s%s|r", titel, GREAT_VAULT_REWARDS_WAITING))
+			DT.tooltip:AddLine(format("%s%s|r", title, GREAT_VAULT_REWARDS_WAITING))
 		end
 	end
 
@@ -165,13 +165,13 @@ local function OnEvent(self, event)
 	self.mSettings = {
 	Name = mTextName,
 	text = {
-		spezial = false,
+		special = false,
 		textA = true,
 		textB = false,
 	},
 	icon = {
 		texture = mMT.Media.DockIcons[E.db.mMT.dockdatatext.lfd.icon],
-		color = E.db.mMT.dockdatatext.lfd.iconcolor,
+		color = E.db.mMT.dockdatatext.lfd.iconology,
 		customcolor = E.db.mMT.dockdatatext.lfd.customcolor,
 	},
 	Notifications = true,
@@ -249,7 +249,7 @@ local function OnEvent(self, event)
 		text = mTextString
 	end
 
-	mMT:DockInitialisation(self, event, text)
+	mMT:DockInitialization(self, event, text)
 
 	mMT:ShowHideNotification(
 		self,

@@ -278,7 +278,7 @@ local function OnEvent(self, event, ...)
 		Name = mTextName,
 		text = {
 			onlytext = false,
-			spezial = true,
+			special = true,
 			textA = (E.db.mMT.dockdatatext.bag.text ~= 5),
 			textB = false,
 		},
@@ -344,7 +344,7 @@ local function OnEvent(self, event, ...)
 		end
 	end
 
-	mMT:DockInitialisation(self, event, text)
+	mMT:DockInitialization(self, event, text)
 end
 
 local function OnLeave(self)

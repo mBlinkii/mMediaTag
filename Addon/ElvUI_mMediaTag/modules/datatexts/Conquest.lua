@@ -27,9 +27,9 @@ local function OnEvent(self, event, ...)
 	local TextJustify = self.text:GetJustifyH()
 	if info then
 		local name = ""
-		local CurrencValue, maxValue = info.quantity, info.maxQuantity
+		local CurrencyValue, maxValue = info.quantity, info.maxQuantity
 
-		if E.db.mMT.datatextcurrency.hide and CurrencValue == 0 then
+		if E.db.mMT.datatextcurrency.hide and CurrencyValue == 0 then
 			hideCurrency = true
 		else
 			hideCurrency = false
@@ -53,34 +53,34 @@ local function OnEvent(self, event, ...)
 			end
 
 			if E.db.mMT.datatextcurrency.short then
-				CurrencValue = E:ShortValue(info.quantity, 2)
+				CurrencyValue = E:ShortValue(info.quantity, 2)
 				maxValue = E:ShortValue(info.maxQuantity, 2)
 			end
 
 			if E.db.mMT.datatextcurrency.showmax then
-				CurrencValue = CurrencValue .. " / " .. maxValue
+				CurrencyValue = CurrencyValue .. " / " .. maxValue
 			end
 
-			local CurrencyTextSring = "%s" .. mMT.ClassColor.string
+			local CurrencyTextString = "%s" .. mMT.ClassColor.string
 
 			if TextJustify == "RIGHT" then
-				CurrencyTextSring = mMT.ClassColor.string .. "%s"
+				CurrencyTextString = mMT.ClassColor.string .. "%s"
 			end
 
 			if E.db.mMT.datatextcurrency.style == "color" then
 				if TextJustify == "RIGHT" then
-					CurrencyTextSring = "|CFFC9913C%s|r%s"
+					CurrencyTextString = "|CFFC9913C%s|r%s"
 				else
-					CurrencyTextSring = "%s|CFFC9913C%s|r"
+					CurrencyTextString = "%s|CFFC9913C%s|r"
 				end
 			elseif E.db.mMT.datatextcurrency.style == "white" then
-				CurrencyTextSring = "|CFFFFFFFF%s%s|r"
+				CurrencyTextString = "|CFFFFFFFF%s%s|r"
 			end
 
 			if TextJustify == "RIGHT" then
-				self.text:SetFormattedText(CurrencyTextSring, CurrencValue, name)
+				self.text:SetFormattedText(CurrencyTextString, CurrencyValue, name)
 			else
-				self.text:SetFormattedText(CurrencyTextSring, name, CurrencValue)
+				self.text:SetFormattedText(CurrencyTextString, name, CurrencyValue)
 			end
 		end
 	else

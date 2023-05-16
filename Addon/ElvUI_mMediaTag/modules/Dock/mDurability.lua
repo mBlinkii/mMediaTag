@@ -83,8 +83,8 @@ local function OnEvent(self, event, ...)
 		Name = mTextName,
 		text = {
 			onlytext = E.db.mMT.dockdatatext.durability.onlytext,
-			spezial = true,
-			textA = E.db.mMT.dockdatatext.bag.text ~= 5 and E.db.mMT.dockdatatext.durability.text or false,
+			special = true,
+			textA = not E.db.mMT.dockdatatext.durability.onlytext,
 			textB = false,
 		},
 		icon = {
@@ -132,7 +132,7 @@ local function OnEvent(self, event, ...)
 		hex = E:RGBToHex(r, g, b)
 	end
 
-	if self.mSettings.OnlyText and totalDurability then
+	if E.db.mMT.dockdatatext.durability.onlytext and totalDurability then
 		if E.db.mMT.dockdatatext.durability.color then
 			self.text:SetFormattedText("%s%d%%|r", hex, totalDurability)
 		else
@@ -146,7 +146,7 @@ local function OnEvent(self, event, ...)
 		text = format("%d%%|r", totalDurability)
 	end
 
-	mMT:DockInitialisation(self, event, text, nil, hex)
+	mMT:DockInitialization(self, event, text, nil, hex)
 
 	if mCheckDurability() then
 		E:Flash(self, 0.5, true)

@@ -357,7 +357,7 @@ local function OnEvent(self, event, arg1)
 		Name = mTextName,
 		text = {
 			onlytext = false,
-			spezial = false,
+			special = false,
 			textA = true,
 			textB = false,
 		},
@@ -369,7 +369,7 @@ local function OnEvent(self, event, arg1)
 		Notifications = true,
 	}
 
-	mMT:DockInitialisation(self, event, "")
+	mMT:DockInitialization(self, event, "")
 	if IsInGuild() then
 		if event == "PLAYER_GUILD_UPDATE" then
 			C_GuildInfo_GuildRoster()

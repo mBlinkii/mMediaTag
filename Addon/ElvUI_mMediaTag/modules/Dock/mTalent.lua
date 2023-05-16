@@ -110,7 +110,7 @@ local function OnEvent(self, event, ...)
 	self.mSettings = {
 		Name = mTextName,
 		text = {
-			spezial = false,
+			special = false,
 			textA = E.db.mMT.dockdatatext.talent.showrole,
 			textB = false,
 		},
@@ -176,7 +176,7 @@ local function OnEvent(self, event, ...)
 		end
 	end
 
-	mMT:DockInitialisation(self, event, text)
+	mMT:DockInitialization(self, event, text)
 end
 
 local function OnLeave(self)

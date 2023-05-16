@@ -184,7 +184,7 @@ local function OnEvent(self, event)
 		Name = mTextName,
 		text = {
 			onlytext = false,
-			spezial = E.db.mMT.dockdatatext.volume.showtext,
+			special = E.db.mMT.dockdatatext.volume.showtext,
 			textA = E.db.mMT.dockdatatext.volume.showtext,
 			textB = false,
 		},
@@ -208,7 +208,7 @@ local function OnEvent(self, event)
 			text = GetStreamString(activeStream or "Sound_MasterVolume", true)
 	end
 
-	mMT:DockInitialisation(self, event, text)
+	mMT:DockInitialization(self, event, text)
 end
 
 local function OnLeave(self)

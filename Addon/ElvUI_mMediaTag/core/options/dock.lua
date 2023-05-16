@@ -1573,18 +1573,6 @@ local function configTable()
 								DT:ForceUpdate_DataText("mCalendar")
 							end,
 						},
-						calendardateicon = {
-							order = 3,
-							name = L["Use Dateicons"],
-							type = "toggle",
-							get = function(info)
-								return E.db.mMT.dockdatatext.calendar.dateicon
-							end,
-							set = function(info, value)
-								E.db.mMT.dockdatatext.calendar.dateicon = value
-								DT:ForceUpdate_DataText("mCalendar")
-							end,
-						},
 						calendardateiconstyle = {
 							order = 4,
 							type = "select",
@@ -1908,7 +1896,7 @@ local function configTable()
 					type = "execute",
 					name = L["Dockbar mDock Special"],
 					func = function()
-						mMT:mDockSpezial(ExampleDockSettings.top, true)
+						mMT:mDockSpecial(ExampleDockSettings.top, true)
 						E:StaticPopup_Show("CONFIG_RL")
 					end,
 				},
@@ -1924,7 +1912,7 @@ local function configTable()
 					func = function()
 						mMT:mDockFull(ExampleDockSettings.top, false)
 						mMT:mDockMicroBar(ExampleDockSettings.top, false)
-						mMT:mDockSpezial(ExampleDockSettings.top, false)
+						mMT:mDockSpecial(ExampleDockSettings.top, false)
 						E:StaticPopup_Show("CONFIG_RL")
 					end,
 				},

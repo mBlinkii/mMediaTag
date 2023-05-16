@@ -120,15 +120,12 @@ local function OnEnter(self)
 end
 
 local function OnEvent(self, event, ...)
-	local Option = E.db.mMT.dockdatatext.character.option
-	local Color = E.db.mMT.dockdatatext.character.color
-
 	self.mSettings = {
 		Name = mTextName,
 		text = {
 			onlytext = false,
-			spezial = false,
-			textA = true,
+			special = true,
+			textA = E.db.mMT.dockdatatext.character.option ~= "none",
 			textB = false,
 		},
 		icon = {
@@ -138,66 +135,56 @@ local function OnEvent(self, event, ...)
 		},
 	}
 
-	totalDurability = 100
-	totalRepairCost = 0
-
-	wipe(invDurability)
-
-	for index in pairs(slots) do
-		local currentDura, maxDura = GetInventoryItemDurability(index)
-		if currentDura and maxDura > 0 then
-			local perc, repairCost = (currentDura / maxDura) * 100, 0
-			invDurability[index] = perc
-
-			if perc < totalDurability then
-				totalDurability = perc
-			end
-
-			if E.Retail and E.ScanTooltip.GetTooltipData then
-				E.ScanTooltip:SetInventoryItem("player", index)
-				E.ScanTooltip:Show()
-
-				local data = E.ScanTooltip:GetTooltipData()
-				repairCost = data and data.repairCost
-			else
-				repairCost = select(3, E.ScanTooltip:SetInventoryItem("player", index))
-			end
-
-			totalRepairCost = totalRepairCost + (repairCost or 0)
-		end
-	end
-
 	local r, g, b = 1, 1, 1
-	local hex = nil
+	local color = nil
 	local text = nil
 
-	if Option == "durability" then
-		if Color == "default" then
-			r, g, b = E:ColorGradient(totalDurability * 0.01, 1, 0.1, 0.1, 1, 1, 0.1, 0.1, 1, 0.1)
-			hex = E:RGBToHex(r, g, b)
+		totalDurability = 100
+		totalRepairCost = 0
+
+		wipe(invDurability)
+
+		for index in pairs(slots) do
+			local currentDura, maxDura = GetInventoryItemDurability(index)
+			if currentDura and maxDura > 0 then
+				local perc, repairCost = (currentDura / maxDura) * 100, 0
+				invDurability[index] = perc
+
+				if perc < totalDurability then
+					totalDurability = perc
+				end
+
+				if E.Retail and E.ScanTooltip.GetTooltipData then
+					E.ScanTooltip:SetInventoryItem("player", index)
+					E.ScanTooltip:Show()
+
+					local data = E.ScanTooltip:GetTooltipData()
+					repairCost = data and data.repairCost
+				else
+					repairCost = select(3, E.ScanTooltip:SetInventoryItem("player", index))
+				end
+
+				totalRepairCost = totalRepairCost + (repairCost or 0)
+			end
 		end
-		text = format("%%d%%", totalDurability)
-	elseif Option == "ilvl" then
+
+		if E.db.mMT.dockdatatext.character.color and E.db.mMT.dockdatatext.character.option == "durability" then
+			r, g, b = E:ColorGradient(totalDurability * .01, 1, .1, .1, 1, 1, .1, .1, 1, .1)
+			color = E:RGBToHex(r, g, b)
+		end
+
+		if E.db.mMT.dockdatatext.character.option == "durability" then
+			text = format("%d%%|r", totalDurability)
+		elseif E.db.mMT.dockdatatext.character.option == "ilvl" then
 		local avg, avgEquipped = GetAverageItemLevel()
-		if Color == "default" then
-			r, g, b = E:ColorGradient(
-				mMT:round((avgEquipped / 260) * 100 or 0) * 0.01,
-				0,
-				1,
-				0.11,
-				0,
-				0.4,
-				0.8,
-				0.63,
-				0.18,
-				0.78
-			)
-			hex = E:RGBToHex(r, g, b)
+		if E.db.mMT.dockdatatext.character.color and E.db.mMT.dockdatatext.character.option == "ilvl" then
+			r, g, b = GetItemLevelColor()
+			color = E:RGBToHex(r, g, b)
 		end
-		text = avgEquipped
+		text = mMT:round(avgEquipped or 0)
 	end
 
-	mMT:DockInitialisation(self, event, text, nil, hex)
+	mMT:DockInitialization(self, event, text, nil, color)
 
 	if mCheckDurability() then
 		E:Flash(self, 0.5, true)

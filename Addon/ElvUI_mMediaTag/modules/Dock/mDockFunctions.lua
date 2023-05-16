@@ -138,7 +138,7 @@ local function mDockUpdateText(self, A, B, textA, textB, colorA, colorB)
 		self.mIcon.TextB:SetWordWrap(true)
 	end
 
-	if self.mSettings.text.spezial then
+	if self.mSettings.text.special then
 		if A then
 			self.mIcon.TextA:SetPoint("BOTTOM", self.mIcon, "BOTTOM", 0, 0)
 			self.mIcon.TextA:SetJustifyH("CENTER")
@@ -189,7 +189,7 @@ function mMT:mOnEnter(self, timer)
 	end
 	mDock:Size(self.mSettings.GrowXY, self.mSettings.GrowXY)
 
-	if self.mSettings.Text and mMT:CheckCombatLockdown() then
+	if self.mSettings.text and mMT:CheckCombatLockdown() then
 		if self.mIcon.TextA then
 			E:UIFrameFadeOut(self.mIcon.TextA, 0.25, 1, 0)
 		end
@@ -272,7 +272,7 @@ function mMT:mOnLeave(self)
 	local mDock = self.mIcon
 	mDock:Size(self.mSettings.XY, self.mSettings.XY)
 
-	if self.mSettings.Text and self.isFaded then
+	if self.mSettings.text and self.isFaded then
 		if self.mIcon.TextA then
 			E:UIFrameFadeIn(self.mIcon.TextA, 0.75, 0, 1)
 		end
@@ -302,11 +302,11 @@ function mMT:mOnLeave(self)
 			E.db.mMT.dockdatatext.normal.b,
 			E.db.mMT.dockdatatext.normal.a
 
-		if self.mSettings.CustomColor then
-			Nr = self.mSettings.IconColor.r
-			Ng = self.mSettings.IconColor.g
-			Nb = self.mSettings.IconColor.b
-			Na = self.mSettings.IconColor.a
+		if self.mSettings.icon.customcolor then
+			Nr = self.mSettings.icon.color.r
+			Ng = self.mSettings.icon.color.g
+			Nb = self.mSettings.icon.color.b
+			Na = self.mSettings.icon.color.a
 		elseif E.db.mMT.dockdatatext.normal.style == "class" then
 			Nr, Ng, Nb = class[1], class[2], class[3]
 		end
@@ -381,11 +381,11 @@ function mMT:DockTimer(self)
 			E.db.mMT.dockdatatext.normal.b,
 			E.db.mMT.dockdatatext.normal.a
 
-		if self.mSettings.CustomColor then
-			Nr = self.mSettings.IconColor.r
-			Ng = self.mSettings.IconColor.g
-			Nb = self.mSettings.IconColor.b
-			Na = self.mSettings.IconColor.a
+		if self.mSettings.icon.customcolor then
+			Nr = self.mSettings.icon.color.r
+			Ng = self.mSettings.icon.color.g
+			Nb = self.mSettings.icon.color.b
+			Na = self.mSettings.icon.color.a
 		elseif E.db.mMT.dockdatatext.normal.style == "class" then
 			Nr, Ng, Nb = class[1], class[2], class[3]
 		end
@@ -404,11 +404,11 @@ function mMT:DockNormalColor(self)
 		E.db.mMT.dockdatatext.normal.b,
 		E.db.mMT.dockdatatext.normal.a
 
-	if self.mSettings.CustomColor then
-		Nr = self.mSettings.IconColor.r
-		Ng = self.mSettings.IconColor.g
-		Nb = self.mSettings.IconColor.b
-		Na = self.mSettings.IconColor.a
+	if self.mSettings.icon.customcolor then
+		Nr = self.mSettings.icon.color.r
+		Ng = self.mSettings.icon.color.g
+		Nb = self.mSettings.icon.color.b
+		Na = self.mSettings.icon.color.a
 	elseif E.db.mMT.dockdatatext.normal.style == "class" then
 		Nr, Ng, Nb = class[1], class[2], class[3]
 	end
@@ -424,7 +424,7 @@ end
 -- 	Name = mTextName,
 -- 	text = {
 -- 		onlytext = false,
--- 		spezial = true,
+-- 		special = true,
 -- 		textA = E.db.mMT.dockdatatext.bag.text ~= 5 and E.db.mMT.dockdatatext.bag.text or false,
 -- 		textB = false,
 -- 	},
@@ -436,7 +436,7 @@ end
 -- 	Notifications = false,
 -- }
 
-function mMT:DockInitialisation(self, event, textA, textB, colorA, colorB)
+function mMT:DockInitialization(self, event, textA, textB, colorA, colorB)
 	self.mSettings.XY = self:GetHeight() + 4
 	if E.db.mMT.dockdatatext.autogrow then
 		self.mSettings.GrowXY = self.mSettings.XY / 2 + self.mSettings.XY

@@ -21,7 +21,7 @@ local function OnUpdate(self)
 	self.text:SetText(mIconUpdate .. UpdateText())
 end
 
-function mMT:mCleartText(self)
+function mMT:mClearText(self)
 	self.text:SetText("")
 	clear = true
 end
@@ -54,7 +54,7 @@ local function OnEvent(self, event, _, timeSeconds)
 			inEncounter = nil
 		end
 		if clear == false then
-			self.mTimer = mMT:ScheduleTimer("mCleartText", E.db.mMT.combattime.hide or 30, self)
+			self.mTimer = mMT:ScheduleTimer("mClearText", E.db.mMT.combattime.hide or 30, self)
 		end
 	elseif not inArena and (event == "PLAYER_REGEN_DISABLED" or started) then
 		mIconUpdate = format("|T%s:16:16:0:0:64:64|t", mMT.Media.CombatIcons[E.db.mMT.combattime.ooctexture])
@@ -68,7 +68,7 @@ local function OnEvent(self, event, _, timeSeconds)
 	elseif not self.text:GetText() then
 		self.text:SetText("")
 		if clear == false then
-			self.mTimer = mMT:ScheduleTimer("mCleartText", E.db.mMT.combattime.hide or 30, self)
+			self.mTimer = mMT:ScheduleTimer("mClearText", E.db.mMT.combattime.hide or 30, self)
 		end
 	end
 end
