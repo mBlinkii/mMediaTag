@@ -1,7 +1,8 @@
 local E, L, V, P, G = unpack(ElvUI)
 
 P.mMT = {
-	version = 0, quicksetup = false,
+	version = 0,
+	quicksetup = false,
 	general = { greeting = true, keystochat = false },
 	tooltip = { enable = false, iconsize = 32, iconzoom = true },
 	combattime = { ooctexture = "CI2", ictexture = "CI12", hide = 30 },
@@ -450,7 +451,8 @@ P.mMT = {
 		bag = {
 			icon = "COLOR68",
 			iconcolor = { r = 1, g = 1, b = 1, a = 0.75 },
-			customcolor = false, text = 5,
+			customcolor = false,
+			text = 5,
 		},
 	},
 	unitframeicons = {
