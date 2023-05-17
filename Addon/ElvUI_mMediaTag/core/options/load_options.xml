@@ -4,7 +4,8 @@
 	<Script file="about.lua"/>
 	<Script file="tooltip.lua"/>
 	<Script file="combaticon.lua"/>
-	<Script file="castbar.lua"/>
+	<Script file="interruptoncd.lua"/>
+	<Script file="importantspells.lua"/>
 	<Script file="background.lua"/>
 	<Script file="customclasscolors.lua"/>
 	<Script file="datatextcolors.lua"/>

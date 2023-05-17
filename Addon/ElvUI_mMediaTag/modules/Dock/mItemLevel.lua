@@ -1,9 +1,8 @@
-local mMT, E, L, V, P, G = unpack((select(2, ...)))
+local E, L = unpack(ElvUI)
 local DT = E:GetModule("DataTexts")
 --Lua functions
 local format = format
 local pi = math.pi
-
 --Variables
 local _G = _G
 local mText = format("Dock %s", L["Itemlevel"])
@@ -52,41 +51,42 @@ end
 local function OnEvent(self, event, ...)
 	self.mSettings = {
 		Name = mTextName,
-		IconTexture = mMT.Media.DockIcons[E.db.mMT.dockdatatext.itemlevel.icon],
-		Notifications = false,
-		Text = true,
-		Center = false,
-		Spezial = true,
-		OnlyText = E.db.mMT.dockdatatext.itemlevel.onlytext,
-		IconColor = E.db.mMT.dockdatatext.itemlevel.iconcolor,
-		CustomColor = E.db.mMT.dockdatatext.itemlevel.customcolor,
+		text = {
+			onlytext = E.db.mMT.dockdatatext.itemlevel.onlytext,
+			special = true,
+			textA = true,
+			textB = true,
+		},
+		icon = {
+			texture = mMT.Media.DockIcons[E.db.mMT.dockdatatext.itemlevel.icon],
+			color = E.db.mMT.dockdatatext.itemlevel.iconcolor,
+			customcolor = E.db.mMT.dockdatatext.itemlevel.customcolor,
+		},
 	}
 
-	mMT:DockInitialisation(self)
-
-	local Color = E.db.mMT.dockdatatext.itemlevel.color
-	local TextColor = mMT:mClassColorString()
-
-	local avg, avgEquipped = GetAverageItemLevel()
-	if Color == "default" then
-		local r, g, b =
-			E:ColorGradient(mMT:round((avgEquipped / 260) * 100 or 0) * 0.01, 0, 1, 0.11, 0, 0.4, 0.8, 0.63, 0.18, 0.78)
-		TextColor = strjoin("", E:RGBToHex(r, g, b), "%s|r")
-	elseif Color == "custom" then
-		r, g, b = E.db.mMT.dockdatatext.fontcolor.r, E.db.mMT.dockdatatext.fontcolor.g, E.db.mMT.dockdatatext.fontcolor.b
-		TextColor = strjoin("", E:RGBToHex(r, g, b), "%s|r")
+	local color = nil
+	local text = nil
+	local _, avgEquipped = GetAverageItemLevel()
+	text = mMT:round(avgEquipped or 0)
+	if E.db.mMT.dockdatatext.itemlevel.color then
+		r, g, b = GetItemLevelColor()
+		color = E:RGBToHex(r, g, b)
 	end
 
-	if self.mSettings.OnlyText then
+	if self.mSettings.text.onlytext then
 		self.text:SetText(
-			format("%s%s", E.db.mMT.dockdatatext.itemlevel.text, format(TextColor, mMT:round(avgEquipped or 0)))
+			format(
+				"%s %s",
+				format("%s%s|r", mMT.ClassColor.hex, E.db.mMT.dockdatatext.itemlevel.text or ""),
+				format("%s%s|r", color or "|cffffffff", text or 0)
+			)
 		)
+		mMT:DockInitialization(self, event)
 	else
 		if self.text ~= "" then
 			self.text:SetText("")
 		end
-		self.mIcon.TextA:SetFormattedText(TextColor, mMT:round(avgEquipped or 0))
-		self.mIcon.TextB:SetText(E.db.mMT.dockdatatext.itemlevel.text)
+		mMT:DockInitialization(self, event, text, E.db.mMT.dockdatatext.itemlevel.text, color)
 	end
 end
 

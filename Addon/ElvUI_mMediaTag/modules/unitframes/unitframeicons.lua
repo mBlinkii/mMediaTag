@@ -1,4 +1,4 @@
-local mMT, E, L, V, P, G = unpack((select(2, ...)))
+local E = unpack(ElvUI)
 local UF = E:GetModule("UnitFrames")
 
 local blank = "Interface\\AddOns\\ElvUI_mMediaTag\\media\\icons\\unitframes\\blank.tga"

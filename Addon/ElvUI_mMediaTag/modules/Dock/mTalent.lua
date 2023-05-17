@@ -1,4 +1,4 @@
-local mMT, E, L, V, P, G = unpack((select(2, ...)))
+local E, L = unpack(ElvUI)
 local DT = E:GetModule("DataTexts")
 
 --Lua functions
@@ -9,29 +9,23 @@ local mText = format("Dock %s", TALENTS_BUTTON)
 local mTextName = "mTalent"
 
 local _G = _G
-local ipairs, wipe = ipairs, wipe
-local format, next, strjoin = format, next, strjoin
+local ipairs = ipairs
+local format, strjoin = format, strjoin
 local GetLootSpecialization = GetLootSpecialization
 local GetNumSpecializations = GetNumSpecializations
-local GetPvpTalentInfoByID = GetPvpTalentInfoByID
 local GetSpecialization = GetSpecialization
 local GetSpecializationInfo = GetSpecializationInfo
-local GetTalentInfo = GetTalentInfo
-local HideUIPanel = HideUIPanel
-local IsShiftKeyDown = IsShiftKeyDown
 local SetLootSpecialization = SetLootSpecialization
 local SetSpecialization = SetSpecialization
-local ShowUIPanel = ShowUIPanel
 local SELECT_LOOT_SPECIALIZATION = SELECT_LOOT_SPECIALIZATION
 local LOOT_SPECIALIZATION_DEFAULT = LOOT_SPECIALIZATION_DEFAULT
-local C_SpecializationInfo_GetAllSelectedPvpTalentIDs = C_SpecializationInfo.GetAllSelectedPvpTalentIDs
 local TANK_ICON = E:TextureString(E.Media.Textures.Tank, ":14:14")
 local HEALER_ICON = E:TextureString(E.Media.Textures.Healer, ":14:14")
 local DPS_ICON = E:TextureString(E.Media.Textures.DPS, ":14:14")
-
-local active = ""
+local active = nil
 local activeString = strjoin("", "|cff00FF00", _G.ACTIVE_PETS, "|r")
 local inactiveString = strjoin("", "|cffFF0000", _G.FACTION_INACTIVE, "|r")
+
 local menuList = {
 	{ text = SELECT_LOOT_SPECIALIZATION, isTitle = true, notCheckable = true },
 	{
@@ -92,11 +86,20 @@ local function OnEnter(self)
 		end
 
 		DT.tooltip:AddLine(" ")
-		DT.tooltip:AddLine(format("%s %s%s|r", mMT:mIcon(mMT.Media.Mouse["LEFT"]), tip, L["Left Click: Show Talent Specialization UI"]))
 		DT.tooltip:AddLine(
-			format("%s %s%s|r", mMT:mIcon(mMT.Media.Mouse["MIDDLE"]), tip, L["Middle Click: Change Talent Specialization"])
+			format("%s %s%s|r", mMT:mIcon(mMT.Media.Mouse["LEFT"]), tip, L["Left Click: Show Talent Specialization UI"])
 		)
-		DT.tooltip:AddLine(format("%s %s%s|r", mMT:mIcon(mMT.Media.Mouse["RIGHT"]), tip, L["Right Click: Change Loot Specialization"]))
+		DT.tooltip:AddLine(
+			format(
+				"%s %s%s|r",
+				mMT:mIcon(mMT.Media.Mouse["MIDDLE"]),
+				tip,
+				L["Middle Click: Change Talent Specialization"]
+			)
+		)
+		DT.tooltip:AddLine(
+			format("%s %s%s|r", mMT:mIcon(mMT.Media.Mouse["RIGHT"]), tip, L["Right Click: Change Loot Specialization"])
+		)
 		DT.tooltip:Show()
 	end
 	self.mIcon.isClicked = mDockCheckFrame()
@@ -106,15 +109,17 @@ end
 local function OnEvent(self, event, ...)
 	self.mSettings = {
 		Name = mTextName,
-		IconTexture = mMT.Media.DockIcons[E.db.mMT.dockdatatext.talent.icon],
-		Notifications = false,
-		Text = E.db.mMT.dockdatatext.talent.showrole,
-		Spezial = false,
-		IconColor = E.db.mMT.dockdatatext.talent.iconcolor,
-		CustomColor = E.db.mMT.dockdatatext.talent.customcolor,
+		text = {
+			special = false,
+			textA = E.db.mMT.dockdatatext.talent.showrole,
+			textB = false,
+		},
+		icon = {
+			texture = mMT.Media.DockIcons[E.db.mMT.dockdatatext.talent.icon],
+			color = E.db.mMT.dockdatatext.talent.iconcolor,
+			customcolor = E.db.mMT.dockdatatext.talent.customcolor,
+		},
 	}
-
-	mMT:DockInitialisation(self)
 
 	if E.db.mMT.roleicons.enable then
 		TANK_ICON = E:TextureString(mMT.Media.Role[E.db.mMT.roleicons.tank], ":14:14")
@@ -156,19 +161,22 @@ local function OnEvent(self, event, ...)
 		active = specIndex
 	end
 
+	local text = nil
 	if E.db.mMT.dockdatatext.talent.showrole then
 		if IsInGroup() then
-			local Role = UnitGroupRolesAssigned("PLAYER")
+			local Role = UnitGroupRolesAssigned("player")
 
 			if Role == "TANK" then
-				self.mIcon.TextA:SetText(TANK_ICON)
+				text = TANK_ICON
 			elseif Role == "HEALER" then
-				self.mIcon.TextA:SetText(HEALER_ICON)
+				text =  HEALER_ICON
 			else
-				self.mIcon.TextA:SetText(DPS_ICON)
+				text = DPS_ICON
 			end
 		end
 	end
+
+	mMT:DockInitialization(self, event, text)
 end
 
 local function OnLeave(self)
@@ -202,22 +210,10 @@ local function OnClick(self, button)
 	end
 end
 
-DT:RegisterDatatext(
-	mTextName,
-	"mDock",
-	{
-		"CHARACTER_POINTS_CHANGED",
-		"PLAYER_TALENT_UPDATE",
-		"ACTIVE_TALENT_GROUP_CHANGED",
-		"PLAYER_LOOT_SPEC_UPDATED",
-		"GROUP_ROSTER_UPDATE",
-	},
-	OnEvent,
-	nil,
-	OnClick,
-	OnEnter,
-	OnLeave,
-	mText,
-	nil,
-	nil
-)
+DT:RegisterDatatext(mTextName, "mDock", {
+	"CHARACTER_POINTS_CHANGED",
+	"PLAYER_TALENT_UPDATE",
+	"ACTIVE_TALENT_GROUP_CHANGED",
+	"PLAYER_LOOT_SPEC_UPDATED",
+	"GROUP_ROSTER_UPDATE",
+}, OnEvent, nil, OnClick, OnEnter, OnLeave, mText, nil, nil)

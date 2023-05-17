@@ -1,7 +1,8 @@
-local mMT, E, L, V, P, G = unpack((select(2, ...)))
+local E, L, V, P, G = unpack(ElvUI)
 
 P.mMT = {
-	version = 0, quicksetup = false,
+	version = 0,
+	quicksetup = false,
 	general = { greeting = true, keystochat = false },
 	tooltip = { enable = false, iconsize = 32, iconzoom = true },
 	combattime = { ooctexture = "CI2", ictexture = "CI12", hide = 30 },
@@ -14,6 +15,13 @@ P.mMT = {
 		oncdcolor = { colora = { r = 0.81, g = 0.02, b = 1 }, colorb = { r = 0.52, g = 0.04, b = 0.72 } },
 		intimecolor = { colora = { r = 0, g = 0.78, b = 1 }, colorb = { r = 0, g = 0.46, b = 0.65 } },
 		outofrangecolor = { colora = { r = 1, g = 0.48, b = 0 }, colorb = { r = 0.74, g = 0.28, b = 0 } },
+	},
+	importantspells = {
+		enable = false,
+		gradient = false,
+		icon = {enable = false, replace = true, auto = true, sizeX = 32, sizeY = 32, stun = "CAST15", interrupt = "CAST15", anchor = "CENTER", posX = 0, posY = 0  },
+		interrupt = {enable = false, ids = {}, colora = { r = 0, g = 1, b = 0 }, colorb = { r = 0, g = 0.53, b = 0.0 } },
+		stun = {enable = false, ids = {}, colora = { r = 0, g = 0.1, b = 1 }, colorb = { r = 0, g = 0.05, b = 0.52 } },
 	},
 	custombackgrounds = {
 		enable = false,
@@ -320,7 +328,8 @@ P.mMT = {
 		font = "PT Sans Narrow",
 		fontSize = 12,
 		fontflag = "OUTLINE",
-		fontcolor = { r = 1, g = 1, b = 1 },
+		customfontcolor = false,
+		fontcolor = { r = 1, g = 1, b = 1, hex = "|cffffffff" },
 		normal = { r = 1, g = 1, b = 1, a = 1, style = "custom" },
 		hover = { r = 0.5, g = 0.5, b = 0.5, a = 0.75, style = "custom" },
 		click = { r = 0.2, g = 0.2, b = 0.2, a = 1, style = "custom" },
@@ -336,7 +345,7 @@ P.mMT = {
 			customcolor = false,
 		},
 		character = {
-			color = "default",
+			color = true,
 			option = "none",
 			icon = "COLOR19",
 			iconcolor = { r = 1, g = 1, b = 1, a = 0.75 },
@@ -353,7 +362,6 @@ P.mMT = {
 			customcolor = false,
 		},
 		guild = {
-			color = "class",
 			icon = "COLOR38",
 			iconcolor = { r = 1, g = 1, b = 1, a = 0.75 },
 			customcolor = false,
@@ -370,9 +378,6 @@ P.mMT = {
 			customcolor = false,
 		},
 		mainmenu = {
-			text = "FPS",
-			color = "default",
-			option = "none",
 			icon = "COLOR11",
 			iconcolor = { r = 1, g = 1, b = 1, a = 0.75 },
 			customcolor = false,
@@ -394,7 +399,6 @@ P.mMT = {
 			customcolor = false,
 		},
 		friends = {
-			color = "class",
 			icon = "COLOR58",
 			iconcolor = { r = 1, g = 1, b = 1, a = 0.75 },
 			customcolor = false,
@@ -409,7 +413,7 @@ P.mMT = {
 		},
 		durability = {
 			onlytext = false,
-			color = "default",
+			color = true,
 			icon = "COLOR53",
 			iconcolor = { r = 1, g = 1, b = 1, a = 0.75 },
 			customcolor = false,
@@ -417,7 +421,7 @@ P.mMT = {
 		itemlevel = {
 			onlytext = false,
 			text = "Ilvl",
-			color = "default",
+			color = true,
 			icon = "COLOR50",
 			iconcolor = { r = 1, g = 1, b = 1, a = 0.75 },
 			customcolor = false,
@@ -454,7 +458,8 @@ P.mMT = {
 		bag = {
 			icon = "COLOR68",
 			iconcolor = { r = 1, g = 1, b = 1, a = 0.75 },
-			customcolor = false, text = 5,
+			customcolor = false,
+			text = 5,
 		},
 	},
 	unitframeicons = {

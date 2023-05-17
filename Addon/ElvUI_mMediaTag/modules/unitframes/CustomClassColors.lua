@@ -1,5 +1,4 @@
-local mMT, E, L, V, P, G = unpack((select(2, ...)))
-local ClassColor = E.oUF.colors.class
+local E = unpack(ElvUI)
 local UF = E:GetModule('UnitFrames')
 local classes = {"HUNTER", "WARLOCK", "PRIEST", "PALADIN", "MAGE", "ROGUE", "DRUID", "SHAMAN", "WARRIOR", "DEATHKNIGHT", "MONK", "DEMONHUNTER", "EVOKER"}
 if E.Classic then

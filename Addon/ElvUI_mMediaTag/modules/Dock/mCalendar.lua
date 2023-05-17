@@ -1,4 +1,4 @@
-local mMT, E, L, V, P, G = unpack((select(2, ...)))
+local E, L = unpack(ElvUI)
 local DT = E:GetModule("DataTexts")
 
 --Lua functions
@@ -50,21 +50,22 @@ local function OnEvent(self, event, ...)
 	else
 		texture = mMT.Media.DockIcons[E.db.mMT.dockdatatext.calendar.icon]
 	end
-
 	self.mSettings = {
 		Name = mTextName,
-		IconTexture = texture,
-		Notifications = false,
-		Text = EnableText,
-		Spezial = EnableText,
-		IconColor = E.db.mMT.dockdatatext.calendar.iconcolor,
-		CustomColor = E.db.mMT.dockdatatext.calendar.customcolor,
+		text = {
+			special = EnableText,
+			textA = EnableText,
+			textB = false,
+		},
+		icon = {
+			texture = texture,
+			color = E.db.mMT.dockdatatext.calendar.iconcolor,
+			customcolor = E.db.mMT.dockdatatext.calendar.customcolor,
+		},
 	}
 
-	mMT:DockInitialisation(self)
-
+	local DateText = nil
 	if EnableText and not E.db.mMT.dockdatatext.calendar.dateicon == "none" then
-		local DateText = ""
 		local day, month, year = date("%d"), date("%m"), date("%y")
 		if E.db.mMT.dockdatatext.calendar.showyear then
 			if option == "de" then
@@ -83,9 +84,9 @@ local function OnEvent(self, event, ...)
 				DateText = format("%s/%s", day, month)
 			end
 		end
-
-		self.mIcon.TextA:SetFormattedText(mMT:mClassColorString(), DateText)
 	end
+
+	mMT:DockInitialization(self, event, DateText)
 end
 
 local function OnLeave(self)

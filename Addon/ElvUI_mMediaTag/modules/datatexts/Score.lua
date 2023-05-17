@@ -1,4 +1,4 @@
-local mMT, E, L, V, P, G = unpack((select(2, ...)))
+local E, L = unpack(ElvUI)
 local DT = E:GetModule("DataTexts")
 
 local _G = _G
@@ -15,7 +15,6 @@ local C_ChallengeMode_GetSpecificDungeonOverallScoreRarityColor =
 	C_ChallengeMode.GetSpecificDungeonOverallScoreRarityColor
 local C_MythicPlus_GetSeasonBestAffixScoreInfoForMap = C_MythicPlus.GetSeasonBestAffixScoreInfoForMap
 local C_ChallengeMode_GetMapUIInfo = C_ChallengeMode.GetMapUIInfo
-local C_MythicPlus_GetSeasonBestForMap = C_MythicPlus.GetSeasonBestForMap
 local C_MythicPlus_GetOwnedKeystoneLevel = C_MythicPlus.GetOwnedKeystoneLevel
 local C_DateAndTime_GetSecondsUntilWeeklyReset = C_DateAndTime.GetSecondsUntilWeeklyReset
 
@@ -25,9 +24,13 @@ local tyrannical = C_ChallengeMode_GetAffixInfo(9)
 local fortified = C_ChallengeMode_GetAffixInfo(10)
 local affixes = C_MythicPlus_GetCurrentAffixes()
 local weeklyAffixID = affixes and affixes[1] and affixes[1].id
-local weehlyAffixName = weeklyAffixID and C_ChallengeMode_GetAffixInfo(weeklyAffixID)
+local weeklyAffixName = weeklyAffixID and C_ChallengeMode_GetAffixInfo(weeklyAffixID)
 local map_table = C_ChallengeMode_GetMapTable()
 local MPlusDataLoaded = false
+
+local IconOverall = E:TextureString("Interface\\AddOns\\ElvUI_mMediaTag\\media\\icons\\datatext\\overall.tga", ":14:14")
+local IconTyrannical = E:TextureString("Interface\\AddOns\\ElvUI_mMediaTag\\media\\icons\\datatext\\tyrannical.tga", ":14:14")
+local IconFortified = E:TextureString("Interface\\AddOns\\ElvUI_mMediaTag\\media\\icons\\datatext\\fortified.tga", ":14:14")
 
 local function GetPlayerScore()
 	local ratingSummary = C_PlayerInfo_GetPlayerMythicPlusRatingSummary("PLAYER")
@@ -42,14 +45,14 @@ end
 local function SortWeeklyLevel(ScoreTable)
 	map_table = C_ChallengeMode_GetMapTable()
 	tablesort(map_table, function(a, b)
-		return ScoreTable[a][weehlyAffixName].level > ScoreTable[b][weehlyAffixName].level
+		return ScoreTable[a][weeklyAffixName].level > ScoreTable[b][weeklyAffixName].level
 	end)
 end
 
 local function SortWeeklyScore(ScoreTable)
 	map_table = C_ChallengeMode_GetMapTable()
 	tablesort(map_table, function(a, b)
-		return ScoreTable[a][weehlyAffixName].score > ScoreTable[b][weehlyAffixName].score
+		return ScoreTable[a][weeklyAffixName].score > ScoreTable[b][weeklyAffixName].score
 	end)
 end
 
@@ -93,15 +96,18 @@ local function SaveMyKeystone()
 	elseif weeklyAffixID == E.db.mMT.mpscore.keys.affix and resetTime < E.db.mMT.mpscore.keys.week then
 		local name = UnitName("player")
 		local realmName = GetRealmName()
-		local _, unitClass = UnitClass("player")
-		local class = ElvUF.colors.class[unitClass]
 		local keyStoneLevel = C_MythicPlus_GetOwnedKeystoneLevel()
 		if keyStoneLevel then
 			local challengeMapID = C_MythicPlus_GetOwnedKeystoneChallengeMapID()
-			local keyname, id, timeLimit, texture, backgroundTexture = C_ChallengeMode_GetMapUIInfo(challengeMapID)
+			local keyname, _, _, _, _ = C_ChallengeMode_GetMapUIInfo(challengeMapID)
 			E.global.mMT.keys[name .. "-" .. realmName] = {
-				name = format("%s%s|r", E:RGBToHex(class[1], class[2], class[3]), name),
-				key = format("%s%s|r %s", E.db.mMT.datatextcolors.colormyth.hex, keyname, mMT:GetKeyColor(keyStoneLevel)),
+				name = format("%s%s|r", mMT.ClassColor.hex, name .. "-" .. realmName),
+				key = format(
+					"%s%s|r %s",
+					E.db.mMT.datatextcolors.colormyth.hex,
+					keyname,
+					mMT:GetKeyColor(keyStoneLevel)
+				),
 			}
 		end
 	else
@@ -120,7 +126,6 @@ local function GetDungeonScores()
 		local mapID = map_table[i]
 		local affixScores, overAllScore = C_MythicPlus_GetSeasonBestAffixScoreInfoForMap(mapID)
 		local name, _, _, icon = C_ChallengeMode_GetMapUIInfo(mapID)
-		local inTimeInfo, overtimeInfo = C_MythicPlus_GetSeasonBestForMap(mapID)
 		local color = "|CFFB2BABB"
 
 		ScoreTable[mapID] = {}
@@ -174,9 +179,9 @@ local function GetDungeonScores()
 			ScoreTable[map_table[#map_table - 2]].upgrade = true
 		end
 
-		if E.db.mMT.mpscore.sort == "SCORE" and weehlyAffixName then
+		if E.db.mMT.mpscore.sort == "SCORE" and weeklyAffixName then
 			SortWeeklyScore(ScoreTable)
-		elseif E.db.mMT.mpscore.sort == "AFFIX" and weehlyAffixName then
+		elseif E.db.mMT.mpscore.sort == "AFFIX" and weeklyAffixName then
 			SortWeeklyLevel(ScoreTable)
 		else
 			SortScore(ScoreTable)
@@ -221,8 +226,8 @@ local function OnClick(self, button)
 	if button == "LeftButton" then
 		_G.ToggleLFDParentFrame()
 	elseif button == "MiddleButton" then
-			_G.ToggleLFDParentFrame()
-			_G.PVEFrameTab3:Click()
+		_G.ToggleLFDParentFrame()
+		_G.PVEFrameTab3:Click()
 	else
 		if not _G.WeeklyRewardsFrame then
 			LoadAddOn("Blizzard_WeeklyRewards")
@@ -249,7 +254,7 @@ local function OnEnter(self)
 	end
 
 	DT.tooltip:AddLine(" ")
-	DT.tooltip:AddLine(L["Keystons on your Account"])
+	DT.tooltip:AddLine(L["Keystones on your Account"])
 	for k, v in pairs(E.global.mMT.keys) do
 		DT.tooltip:AddDoubleLine(v.name, v.key)
 	end
@@ -269,14 +274,35 @@ local function OnEnter(self)
 		DT.tooltip:AddLine(" ")
 		DT.tooltip:AddDoubleLine(DUNGEON_SCORE, mMT:GetDungeonScore())
 		DT.tooltip:AddLine(" ")
-		DT.tooltip:AddDoubleLine(L["Dungeon Name"], "Tyr | For | Sco")
+		DT.tooltip:AddDoubleLine(L["Dungeon Name"], IconTyrannical .. " | " .. IconFortified .. " | " .. IconOverall)
 		GetDungeonScores()
 	end
 
 	DT.tooltip:AddLine(" ")
-	DT.tooltip:AddLine(format("%s  %s%s|r", mMT:mIcon(mMT.Media.Mouse["LEFT"]), E.db.mMT.datatextcolors.colortip.hex, L["Click to open LFD Frame"]))
-	DT.tooltip:AddLine(format("%s  %s%s|r", mMT:mIcon(mMT.Media.Mouse["LEFT"]), E.db.mMT.datatextcolors.colortip.hex, L["Middleclick to open M+ Frame"]))
-	DT.tooltip:AddLine(format("%s  %s%s|r", mMT:mIcon(mMT.Media.Mouse["RIGHT"]), E.db.mMT.datatextcolors.colortip.hex, L["Click to open Great Vault"]))
+	DT.tooltip:AddLine(
+		format(
+			"%s  %s%s|r",
+			mMT:mIcon(mMT.Media.Mouse["LEFT"]),
+			E.db.mMT.datatextcolors.colortip.hex,
+			L["Click to open LFD Frame"]
+		)
+	)
+	DT.tooltip:AddLine(
+		format(
+			"%s  %s%s|r",
+			mMT:mIcon(mMT.Media.Mouse["LEFT"]),
+			E.db.mMT.datatextcolors.colortip.hex,
+			L["Middle click to open M+ Frame"]
+		)
+	)
+	DT.tooltip:AddLine(
+		format(
+			"%s  %s%s|r",
+			mMT:mIcon(mMT.Media.Mouse["RIGHT"]),
+			E.db.mMT.datatextcolors.colortip.hex,
+			L["Click to open Great Vault"]
+		)
+	)
 
 	DT.tooltip:Show()
 
@@ -290,7 +316,7 @@ local function OnEvent(self, event, ...)
 	elseif event == "MYTHIC_PLUS_CURRENT_AFFIX_UPDATE" then
 		affixes = C_MythicPlus_GetCurrentAffixes()
 		weeklyAffixID = affixes and affixes[1] and affixes[1].id
-		weehlyAffixName = weeklyAffixID and C_ChallengeMode_GetAffixInfo(weeklyAffixID)
+		weeklyAffixName = weeklyAffixID and C_ChallengeMode_GetAffixInfo(weeklyAffixID)
 		MPlusDataLoaded = true
 	end
 

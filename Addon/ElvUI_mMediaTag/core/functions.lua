@@ -1,13 +1,7 @@
-
-local mMT, E, L, V, P, G = unpack((select(2, ...)))
+local E = unpack(ElvUI)
 
 --Lua functions
-local tinsert = tinsert
 local format = format
-local tonumber = tonumber
-
---WoW API / Variables
-local _G = _G
 
 function mMT:DebugPrintTable(tbl)
 	print(mMT.Name .. ": Table Start >>>")
@@ -32,7 +26,7 @@ function mMT:ColorFade(colorA, colorB, percent)
 		color.r = colorA.r - (colorA.r - colorB.r) * percent
 		color.g = colorA.g - (colorA.g - colorB.g) * percent
 		color.b = colorA.b - (colorA.b - colorB.b) * percent
-		color.color  = E:RGBToHex(color.r, color.g, color.b)
+		color.color = E:RGBToHex(color.r, color.g, color.b)
 		return color
 	elseif colorA and colorA.r and colorA.g and colorA.b then
 		return colorA
@@ -56,5 +50,20 @@ end
 function mMT:round(number, decimals)
 	if number then
 		return (("%%.%df"):format(decimals)):format(number)
+	else
+		mMT:Print(L["!! ERROR - Round:"] .. " " .. number .. " - " .. decimals)
+		return 0
 	end
+end
+
+function mMT:IsNumber(number)
+	if tonumber(number) then
+		return true
+	else
+		return false
+	end
+end
+
+function mMT:Print(...)
+	print(mMT.Name .. ":", ...)
 end

@@ -1,25 +1,16 @@
-local mMT, E, L, V, P, G = unpack((select(2, ...)))
+local E, L = unpack(ElvUI)
 
 --Lua functions
-local string, type, ipairs = string, type, ipairs
-local gmatch, gsub, format = gmatch, gsub, format
-local unpack, pairs, wipe, floor, ceil = unpack, pairs, wipe, floor, ceil
-local strfind, strmatch, strlower, strsplit = strfind, strmatch, strlower, strsplit
-local utf8lower, utf8sub, utf8len = string.utf8lower, string.utf8sub, string.utf8len
+local string, ipairs = string, ipairs
+local format = format
+local wipe =  wipe
 local tinsert = tinsert
 
 --WoW API / Variables
-local _G = _G
-local GetAchievementCriteriaInfo = GetAchievementCriteriaInfo
-local GetAchievementInfo = GetAchievementInfo
 local GetInstanceInfo = GetInstanceInfo
---local GetDifficultyInfo = GetDifficultyInfo
---local GetRaidDifficultyID = GetRaidDifficultyID
---local GetDungeonDifficultyID = GetDungeonDifficultyID
 local GetDetailedItemLevelInfo = GetDetailedItemLevelInfo
 local C_MythicPlus = C_MythicPlus
 local C_PlayerInfo_GetPlayerMythicPlusRatingSummary = C_PlayerInfo.GetPlayerMythicPlusRatingSummary
-local C_ChallengeMode_GetOverallDungeonScore = C_ChallengeMode.GetOverallDungeonScore
 local C_ChallengeMode_GetDungeonScoreRarityColor = C_ChallengeMode.GetDungeonScoreRarityColor
 
 

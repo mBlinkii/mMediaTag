@@ -1,18 +1,15 @@
-local mMT, E, L, V, P, G = unpack((select(2, ...)))
-local DT = E:GetModule("DataTexts")
+local E = unpack(ElvUI)
 
 --Lua functions
 local format = format
-local strjoin = strjoin
 
 --WoW API / Variables
-local _G = _G
 local InCombatLockdown = InCombatLockdown
 
 --Variables
 local LSM = E.Libs.LSM
-local _, unitClass = UnitClass("player")
-local class = ElvUF.colors.class[unitClass]
+local FontSize = 12
+local Font = LSM:Fetch("font", "PT Sans Narrow")
 
 function mMT:CheckCombatLockdown()
 	if InCombatLockdown() then
@@ -22,44 +19,46 @@ function mMT:CheckCombatLockdown()
 	end
 end
 
-function mMT:mClassColorString()
-	return strjoin("", E:RGBToHex(class[1], class[2], class[3]), "%s|r")
+function mMT:mDockUpdateFont()
+	FontSize = E.db.mMT.dockdatatext.fontSize
+	Font = LSM:Fetch("font", E.db.mMT.dockdatatext.font)
 end
 
-local function mDockCreatIcon(self)
+local function mDockUpdateIcon(self)
 	local Nr, Ng, Nb, Na =
 		E.db.mMT.dockdatatext.normal.r,
 		E.db.mMT.dockdatatext.normal.g,
 		E.db.mMT.dockdatatext.normal.b,
 		E.db.mMT.dockdatatext.normal.a
 
-
-	if self.mSettings.CustomColor then
-		Nr = self.mSettings.IconColor.r
-		Ng = self.mSettings.IconColor.g
-		Nb = self.mSettings.IconColor.b
-		Na = self.mSettings.IconColor.a
+	if self.mSettings.icon.customcolor then
+		Nr = self.mSettings.icon.color.r
+		Ng = self.mSettings.icon.color.g
+		Nb = self.mSettings.icon.color.b
+		Na = self.mSettings.icon.color.a
 	elseif E.db.mMT.dockdatatext.normal.style == "class" then
-		Nr, Ng, Nb = class[1], class[2], class[3]
+		Nr, Ng, Nb = mMT.ClassColor.r, mMT.ClassColor.g, mMT.ClassColor.b
 	end
 
-	if not self.mIcon then
-		self.mIcon = self:CreateTexture(nil, "ARTWORK")
-	end
+	self.mIcon:Size(self.mSettings.XY, self.mSettings.XY)
+	self.mIcon:SetVertexColor(Nr, Ng, Nb, Na)
 
-	if self.mSettings.OnlyText then
+	if self.mSettings.text and self.mSettings.text.onlytext then
 		self.mIcon:SetTexture(nil)
 	else
-		self.mIcon:SetTexture(self.mSettings.IconTexture)
+		self.mIcon:SetTexture(self.mSettings.icon.texture)
 	end
-
-	self.mIcon:ClearAllPoints()
-	self.mIcon:Point("CENTER")
-	self.mIcon:Size(self.XY, self.XY)
-	self.mIcon:SetVertexColor(Nr, Ng, Nb, Na)
 end
 
-local function mDockCreatmNotifications(self)
+local function mDockCreatIcon(self)
+	self.mIcon = self:CreateTexture(nil, "ARTWORK")
+	self.mIcon:ClearAllPoints()
+	self.mIcon:Point("CENTER")
+
+	mDockUpdateIcon(self)
+end
+
+local function mDockUpdateNotifications(self)
 	local XY = E.db.mMT.dockdatatext.notification.size
 	local r, g, b, a =
 		E.db.mMT.dockdatatext.notification.r,
@@ -68,76 +67,129 @@ local function mDockCreatmNotifications(self)
 		E.db.mMT.dockdatatext.notification.a
 
 	if E.db.mMT.dockdatatext.notification.style == "class" then
-		r, g, b, a = class[1], class[2], class[3], E.db.mMT.dockdatatext.notification.a
-	end
-
-	if not self.mNotifications then
-		self.mNotifications = self:CreateTexture(nil, "ARTWORK")
+		r, g, b, a = mMT.ClassColor.r, mMT.ClassColor.g, mMT.ClassColor.b, E.db.mMT.dockdatatext.notification.a
 	end
 
 	self.mNotifications:SetTexture(E.db.mMT.dockdatatext.notification.icon)
-	self.mNotifications:ClearAllPoints()
-	self.mNotifications:Point("TOPLEFT", self.mIcon, "TOPLEFT", 2, 2)
 	self.mNotifications:Size(XY, XY)
 	self.mNotifications:SetVertexColor(r, g, b, a)
 	self.mNotifications:Hide()
 end
 
-local function mDockCreatText(self)
-	local FontSize = 12
-	if E.db.mMT.dockdatatext.customfontzise then
-		FontSize = E.db.mMT.dockdatatext.fontSize
-	else
-		FontSize = self.XY / 3
-	end
+local function mDockCreatmNotifications(self)
+	self.mNotifications = self:CreateTexture(nil, "ARTWORK")
+	self.mNotifications:ClearAllPoints()
+	self.mNotifications:Point("TOPLEFT", self.mIcon, "TOPLEFT", 2, 2)
 
-	if not self.mIcon.TextA then
-		self.mIcon.TextA = self:CreateFontString(nil, 'ARTWORK')
-	end
-	self.mIcon.TextA:FontTemplate(LSM:Fetch("font", E.db.mMT.dockdatatext.font), FontSize, E.db.mMT.dockdatatext.fontflag)
-	self.mIcon.TextA:ClearAllPoints()
-	self.mIcon.TextA:SetShadowColor(0, 0, 0, 0)
-	self.mIcon.TextA.SetShadowColor = function() end
+	mDockUpdateNotifications(self)
+end
 
-	if not self.mIcon.TextB then
-		self.mIcon.TextB = self:CreateFontString(nil, 'ARTWORK')
-	end
-	self.mIcon.TextB:FontTemplate(LSM:Fetch("font", E.db.mMT.dockdatatext.font), FontSize, E.db.mMT.dockdatatext.fontflag)
-	self.mIcon.TextB:ClearAllPoints()
-	self.mIcon.TextB:SetShadowColor(0, 0, 0, 0)
-	self.mIcon.TextB.SetShadowColor = function() end
+function mMT:mDockSetText(self, textA, textB, colorA, colorB)
+	if self.mIcon then
+		local textColorA = E.media.hexvaluecolor
+		local textColorB = E.media.hexvaluecolor
 
-	if self.mSettings.Spezial then
-		self.mIcon.TextB:SetPoint("TOP", self.mIcon, "TOP", 0, 0)
-		if self.mSettings.Center then
-			self.mIcon.TextA:SetPoint("CENTER", self.mIcon, "CENTER", 0, 0)
+		if E.db.mMT.dockdatatext.customfontcolor then
+			if textA then
+				textColorA = E.db.mMT.dockdatatext.fontcolor.hex
+			end
+
+			if textB then
+				textColorA = E.db.mMT.dockdatatext.fontcolor.hex
+			end
 		else
-			self.mIcon.TextA:SetPoint("BOTTOM", self.mIcon, "BOTTOM", 0, 0)
+			if textA and colorA then
+				textColorA = colorA
+			end
+
+			if textB and colorB then
+				textColorB = colorB
+			end
 		end
-		self.mIcon.TextA:SetJustifyH('CENTER')
+
+		if self.mIcon.TextA and textA then
+			self.mIcon.TextA:SetText(format("%s%s|r", textColorA, textA))
+		elseif self.mIcon.TextA then
+			self.mIcon.TextA:SetText("")
+		end
+
+		if self.mIcon.TextB and textB then
+			self.mIcon.TextB:SetText(format("%s%s|r", textColorB, textB))
+		elseif self.mIcon.TextB then
+			self.mIcon.TextB:SetText("")
+		end
+	end
+end
+
+local function mDockUpdateText(self, A, B, textA, textB, colorA, colorB)
+	if not E.db.mMT.dockdatatext.customfontzise then
+		FontSize = self.mSettings.XY / 3
+	end
+
+	if A then
+		self.mIcon.TextA:FontTemplate(Font, FontSize, E.db.mMT.dockdatatext.fontflag)
+		self.mIcon.TextA:ClearAllPoints()
 		self.mIcon.TextA:SetWordWrap(true)
-		self.mIcon.TextB:SetJustifyH('CENTER')
-		self.mIcon.TextB:SetWordWrap(true)
-	else
-		self.mIcon.TextA:SetPoint("BOTTOMRIGHT", self.mIcon, "BOTTOMRIGHT", 0, 0)
-		self.mIcon.TextB:SetPoint("BOTTOMLEFT", self.mIcon, "BOTTOMLEFT", 0, 0)
-		self.mIcon.TextA:SetJustifyH('RIGHT')
-		self.mIcon.TextA:SetWordWrap(true)
-		self.mIcon.TextB:SetJustifyH('LEFT')
+	end
+
+	if B then
+		self.mIcon.TextB:FontTemplate(Font, FontSize, E.db.mMT.dockdatatext.fontflag)
+		self.mIcon.TextB:ClearAllPoints()
 		self.mIcon.TextB:SetWordWrap(true)
 	end
 
-	if not self.mSettings.DontClearText then
-		self.mIcon.TextA:SetText("")
-		self.mIcon.TextB:SetText("")
+	if self.mSettings.text.special then
+		if A then
+			self.mIcon.TextA:SetPoint("BOTTOM", self.mIcon, "BOTTOM", 0, 0)
+			self.mIcon.TextA:SetJustifyH("CENTER")
+		end
+
+		if B then
+			self.mIcon.TextB:SetPoint("TOP", self.mIcon, "TOP", 0, 0)
+			self.mIcon.TextB:SetJustifyH("CENTER")
+		end
+	else
+		if A then
+			self.mIcon.TextA:SetPoint("BOTTOMRIGHT", self.mIcon, "BOTTOMRIGHT", 0, 0)
+			self.mIcon.TextA:SetJustifyH("RIGHT")
+		end
+
+		if B then
+			self.mIcon.TextB:SetPoint("BOTTOMLEFT", self.mIcon, "BOTTOMLEFT", 0, 0)
+			self.mIcon.TextB:SetJustifyH("LEFT")
+		end
 	end
+
+	mMT:mDockSetText(self, textA, textB, colorA, colorB)
+end
+local function mDockCreatText(self, A, B, textA, textB, colorA, colorB)
+	if A and not self.mIcon.TextA then
+		self.mIcon.TextA = self:CreateFontString(nil, "ARTWORK")
+		self.mIcon.TextA.SetShadowColor = function() end
+	end
+
+	if B and not self.mIcon.TextB then
+		self.mIcon.TextB = self:CreateFontString(nil, "ARTWORK")
+		self.mIcon.TextB.SetShadowColor = function() end
+	end
+
+	mDockUpdateText(self, A, B, textA, textB, colorA, colorB)
 end
 
 function mMT:mOnEnter(self, timer)
 	local mDock = self.mIcon
-	mDock:Size(self.GrowXY, self.GrowXY)
 
-	if self.mSettings.Text and mMT:CheckCombatLockdown() then
+	if not self.mSettings.GrowXY then
+		self.mSettings.XY = self:GetHeight() + 4
+		if E.db.mMT.dockdatatext.autogrow then
+			self.mSettings.GrowXY = self.mSettings.XY / 2 + self.mSettings.XY
+		else
+			self.mSettings.GrowXY = E.db.mMT.dockdatatext.growsize + self.mSettings.XY
+		end
+	end
+	mDock:Size(self.mSettings.GrowXY, self.mSettings.GrowXY)
+
+	if self.mSettings.text and mMT:CheckCombatLockdown() then
 		if self.mIcon.TextA then
 			E:UIFrameFadeOut(self.mIcon.TextA, 0.25, 1, 0)
 		end
@@ -175,7 +227,7 @@ function mMT:mOnEnter(self, timer)
 		if E.db.mMT.dockdatatext.hover.style == "class" then
 			Hr, Hg, Hb = class[1], class[2], class[3]
 		end
-		mDock:SetVertexColor(Hr, Hg, Hb,  Ha)
+		mDock:SetVertexColor(Hr, Hg, Hb, Ha)
 	end
 
 	mDock.isHover = true
@@ -218,9 +270,9 @@ end
 
 function mMT:mOnLeave(self)
 	local mDock = self.mIcon
-	mDock:Size(self.XY, self.XY)
+	mDock:Size(self.mSettings.XY, self.mSettings.XY)
 
-	if self.mSettings.Text and self.isFaded then
+	if self.mSettings.text and self.isFaded then
 		if self.mIcon.TextA then
 			E:UIFrameFadeIn(self.mIcon.TextA, 0.75, 0, 1)
 		end
@@ -250,11 +302,11 @@ function mMT:mOnLeave(self)
 			E.db.mMT.dockdatatext.normal.b,
 			E.db.mMT.dockdatatext.normal.a
 
-		if self.mSettings.CustomColor then
-			Nr = self.mSettings.IconColor.r
-			Ng = self.mSettings.IconColor.g
-			Nb = self.mSettings.IconColor.b
-			Na = self.mSettings.IconColor.a
+		if self.mSettings.icon.customcolor then
+			Nr = self.mSettings.icon.color.r
+			Ng = self.mSettings.icon.color.g
+			Nb = self.mSettings.icon.color.b
+			Na = self.mSettings.icon.color.a
 		elseif E.db.mMT.dockdatatext.normal.style == "class" then
 			Nr, Ng, Nb = class[1], class[2], class[3]
 		end
@@ -329,11 +381,11 @@ function mMT:DockTimer(self)
 			E.db.mMT.dockdatatext.normal.b,
 			E.db.mMT.dockdatatext.normal.a
 
-		if self.mSettings.CustomColor then
-			Nr = self.mSettings.IconColor.r
-			Ng = self.mSettings.IconColor.g
-			Nb = self.mSettings.IconColor.b
-			Na = self.mSettings.IconColor.a
+		if self.mSettings.icon.customcolor then
+			Nr = self.mSettings.icon.color.r
+			Ng = self.mSettings.icon.color.g
+			Nb = self.mSettings.icon.color.b
+			Na = self.mSettings.icon.color.a
 		elseif E.db.mMT.dockdatatext.normal.style == "class" then
 			Nr, Ng, Nb = class[1], class[2], class[3]
 		end
@@ -351,12 +403,12 @@ function mMT:DockNormalColor(self)
 		E.db.mMT.dockdatatext.normal.g,
 		E.db.mMT.dockdatatext.normal.b,
 		E.db.mMT.dockdatatext.normal.a
-		
-	if self.mSettings.CustomColor then
-		Nr = self.mSettings.IconColor.r
-		Ng = self.mSettings.IconColor.g
-		Nb = self.mSettings.IconColor.b
-		Na = self.mSettings.IconColor.a
+
+	if self.mSettings.icon.customcolor then
+		Nr = self.mSettings.icon.color.r
+		Ng = self.mSettings.icon.color.g
+		Nb = self.mSettings.icon.color.b
+		Na = self.mSettings.icon.color.a
 	elseif E.db.mMT.dockdatatext.normal.style == "class" then
 		Nr, Ng, Nb = class[1], class[2], class[3]
 	end
@@ -367,35 +419,92 @@ function mMT:DockCustomColor(self, r, g, b, a)
 	self.mIcon:SetVertexColor(r, g, b, a)
 end
 
-function mMT:DockInitialisation(self)
-	if self.mIcon then
-		if self.mIcon.TextA and self.mIcon.TextB and not self.mSettings.DontClearText then
-			self.mIcon.TextA:SetText("")
-			self.mIcon.TextB:SetText("")
-		end
+-- ** Dock Settings
+-- self.mSettings = {
+-- 	Name = mTextName,
+-- 	text = {
+-- 		onlytext = false,
+-- 		special = true,
+-- 		textA = E.db.mMT.dockdatatext.bag.text ~= 5 and E.db.mMT.dockdatatext.bag.text or false,
+-- 		textB = false,
+-- 	},
+-- 	icon = {
+-- 		texture = mMT.Media.DockIcons[E.db.mMT.dockdatatext.bag.icon],
+-- 		color = E.db.mMT.dockdatatext.bag.iconcolor,
+-- 		customcolor = E.db.mMT.dockdatatext.bag.customcolor,
+-- 	},
+-- 	Notifications = false,
+-- }
 
-		if self.mNotifications and not self.mSettings.Notifications then
-			self.mNotifications:Hide()
-		end
-	end
-
-	self.XY = self:GetHeight() + 4
+function mMT:DockInitialization(self, event, textA, textB, colorA, colorB)
+	self.mSettings.XY = self:GetHeight() + 4
 	if E.db.mMT.dockdatatext.autogrow then
-		self.GrowXY = self.XY / 2 + self.XY
+		self.mSettings.GrowXY = self.mSettings.XY / 2 + self.mSettings.XY
 	else
-		self.GrowXY = E.db.mMT.dockdatatext.growsize + self.XY
+		self.mSettings.GrowXY = E.db.mMT.dockdatatext.growsize + self.mSettings.XY
 	end
+	if event == "ELVUI_FORCE_UPDATE" then
+		if not self.mIcon then
+			mDockCreatIcon(self)
 
-	mDockCreatIcon(self)
+			if self.mSettings.Notifications and not self.mNotifications then
+				mDockCreatmNotifications(self)
+			end
 
-	if self.mSettings.Notifications then
-		mDockCreatmNotifications(self)
+			if
+				self.mSettings.text
+				and not self.mSettings.text.onlytext
+				and (not self.mIcon.TextA or not self.mIcon.TextB)
+			then
+				mDockCreatText(self, self.mSettings.text.textA, self.mSettings.text.textB, textA, textB, colorA, colorB)
+			else
+				if self.mIcon.TextA then
+					self.mIcon.TextA:SetText("")
+				end
+
+				if self.mIcon.TextB then
+					self.mIcon.TextB:SetText("")
+				end
+			end
+		else
+			mDockUpdateIcon(self)
+
+			if self.mSettings.Notifications and self.mNotifications then
+				mDockUpdateNotifications(self)
+			elseif self.mNotifications and not self.mSettings.Notifications then
+				self.mNotifications:Hide()
+				self.mNotifications = nil
+			end
+
+			if
+				self.mSettings.text
+				and not self.mSettings.text.onlytext
+				and (not self.mIcon.TextA or not self.mIcon.TextB)
+			then
+				mDockCreatText(self, self.mSettings.text.textA, self.mSettings.text.textB, textA, textB, colorA, colorB)
+			elseif
+				self.mSettings.text
+				and not self.mSettings.text.onlytext
+				and (self.mIcon.TextA or self.mIcon.TextB)
+			then
+				mDockUpdateText(
+					self,
+					self.mSettings.text.textA,
+					self.mSettings.text.textB,
+					textA,
+					textB,
+					colorA,
+					colorB
+				)
+			else
+				if self.mIcon.TextA then
+					self.mIcon.TextA:SetText("")
+				end
+
+				if self.mIcon.TextB then
+					self.mIcon.TextB:SetText("")
+				end
+			end
+		end
 	end
-
-	if self.mSettings.Text then
-		mDockCreatText(self)
-	end
-
-	self.mDockLoaded = true
-	self.CheckIcon = self.mSettings.Name
 end

@@ -1,4 +1,4 @@
-local mMT, E, L, V, P, G = unpack((select(2, ...)))
+local E, L = unpack(ElvUI)
 local DT = E:GetModule("DataTexts")
 local CH = E:GetModule("Chat")
 
@@ -24,7 +24,6 @@ local IsAltKeyDown = IsAltKeyDown
 local IsShiftKeyDown = IsShiftKeyDown
 local SendChatMessage = SendChatMessage
 local SetItemRef = SetItemRef
-local ToggleFriendsFrame = ToggleFriendsFrame
 local UnitInParty = UnitInParty
 local UnitInRaid = UnitInRaid
 local C_FriendList_GetNumFriends = C_FriendList.GetNumFriends
@@ -39,7 +38,7 @@ local PRIEST_COLOR = RAID_CLASS_COLORS.PRIEST
 --Variables
 local mText = format("Dock %s", L["Friends"])
 local mTextName = "mFriends"
-local TextColor = mMT:mClassColorString()
+local TextColor = mMT.ClassColor.string
 
 -- create a popup
 E.PopupDialogs.SET_BN_BROADCAST = {
@@ -888,23 +887,22 @@ end
 local function OnEvent(self, event, message)
 	self.mSettings = {
 		Name = mTextName,
-		IconTexture = mMT.Media.DockIcons[E.db.mMT.dockdatatext.friends.icon],
-		Notifications = false,
-		Text = true,
-		DontClearText = true,
-		Spezial = false,
-		IconColor = E.db.mMT.dockdatatext.friends.iconcolor,
-		CustomColor = E.db.mMT.dockdatatext.friends.customcolor,
+		text = {
+			onlytext = false,
+			special = false,
+			textA = true,
+			textB = false,
+		},
+		icon = {
+			texture = mMT.Media.DockIcons[E.db.mMT.dockdatatext.friends.icon],
+			color = E.db.mMT.dockdatatext.friends.iconcolor,
+			customcolor = E.db.mMT.dockdatatext.friends.customcolor,
+		},
 	}
-
-	mMT:DockInitialisation(self)
 
 	local onlineFriends = C_FriendList_GetNumOnlineFriends()
 	local _, numBNetOnline = BNGetNumFriends()
 
-	-- special handler to detect friend coming online or going offline
-	-- when this is the case, we invalidate our buffered table and update the
-	-- datatext information
 	if event == "CHAT_MSG_SYSTEM" then
 		if not (strfind(message, friendOnline) or strfind(message, friendOffline)) then
 			return
@@ -916,22 +914,8 @@ local function OnEvent(self, event, message)
 	if not IsAltKeyDown() and event == "MODIFIER_STATE_CHANGED" and GetMouseFocus() == self then
 		OnEnter(self)
 	end
-	if E.db.mMT.dockdatatext.friends.color == "default" then
-		self.mIcon.TextA:SetFormattedText(mMT:mClassColorString(), onlineFriends + numBNetOnline)
-	else
-		self.mIcon.TextA:SetFormattedText(
-			strjoin(
-				"",
-				E:RGBToHex(
-					E.db.mMT.dockdatatext.fontcolor.r,
-					E.db.mMT.dockdatatext.fontcolor.g,
-					E.db.mMT.dockdatatext.fontcolor.b
-				),
-				"%s|r"
-			),
-			onlineFriends + numBNetOnline
-		)
-	end
+
+	mMT:DockInitialization(self, event, onlineFriends + numBNetOnline)
 end
 
 local function OnLeave(self)

@@ -1,4 +1,4 @@
-local mMT, E, L, V, P, G = unpack((select(2, ...)))
+local E, L = unpack(ElvUI)
 local DT = E:GetModule("DataTexts")
 
 --Lua functions
@@ -10,21 +10,28 @@ local mTextName = "mNoIcon"
 
 local function OnEvent(self, event, ...)
 	if self.mIcon then
-		if self.mIcon.TextA and self.mIcon.TextB then
+		if self.mIcon.TextA then
 			self.mIcon.TextA:SetText("")
+		end
+
+		if self.mIcon.TextB then
 			self.mIcon.TextB:SetText("")
 		end
 
-		if self.mNotificationsthen then
+		if self.mNotifications then
 			self.mNotifications:Hide()
+			self.mNotifications = nil
 		end
 
-		self.mIcon:SetTexture(nil)
+		self.text:SetText("")
 
-		wipe(self.mIcon)
-		wipe(self.mSettings)
+		self.mIcon:SetTexture(nil)
 		self.mIcon = nil
 		self.mSettings = nil
+
+		print(self.mIcon)
+		print(self.mSettings)
+		print(self.mNotifications)
 	end
 end
 

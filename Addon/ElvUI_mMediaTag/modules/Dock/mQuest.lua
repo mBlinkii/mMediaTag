@@ -1,4 +1,4 @@
-local mMT, E, L, V, P, G = unpack((select(2, ...)))
+local E = unpack(ElvUI)
 local DT = E:GetModule("DataTexts")
 
 --Lua functions
@@ -30,15 +30,14 @@ end
 local function OnEvent(self, event, ...)
 	self.mSettings = {
 		Name = mTextName,
-		IconTexture = mMT.Media.DockIcons[E.db.mMT.dockdatatext.quest.icon],
-		Notifications = false,
-		Text = false,
-		Spezial = false,
-		IconColor = E.db.mMT.dockdatatext.quest.iconcolor,
-		CustomColor = E.db.mMT.dockdatatext.quest.customcolor,
+		icon = {
+			texture = mMT.Media.DockIcons[E.db.mMT.dockdatatext.quest.icon],
+			color = E.db.mMT.dockdatatext.quest.iconcolor,
+			customcolor = E.db.mMT.dockdatatext.quest.customcolor,
+		},
 	}
 
-	mMT:DockInitialisation(self)
+	mMT:DockInitialization(self, event)
 end
 
 local function OnLeave(self)

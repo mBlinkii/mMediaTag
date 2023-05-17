@@ -1,9 +1,6 @@
-local mMT, E, L, V, P, G = unpack((select(2, ...)))
+local E, L, V, P, G = unpack(ElvUI)
 local DT = E:GetModule("DataTexts")
-
 local tinsert = tinsert
-
-local addon, ns = ...
 
 --Lua functions
 local pairs = pairs
@@ -36,294 +33,328 @@ local function configTable()
 	end
 	E.Options.args.mMT.args.dock.args = {
 		dockgeneral = {
-			order = 10,
+			order = 1,
 			type = "group",
 			name = L["General"],
 			args = {
 				headerdockgeneralcolor = {
-					order = 0,
-					type = "header",
+					order = 1,
+					type = "group",
 					name = L["Color"],
-				},
-				docknormalstyle = {
-					order = 10,
-					type = "select",
-					name = L["Normal Color Style"],
-					get = function(info)
-						return E.db.mMT.dockdatatext.normal.style
-					end,
-					set = function(info, value)
-						E.db.mMT.dockdatatext.normal.style = value
-						DT:LoadDataTexts()
-					end,
-					values = {
-						class = L["Class"],
-						custom = L["Custom"],
+					inline = true,
+					args = {
+						docknormalstyle = {
+							order = 1,
+							type = "select",
+							name = L["Normal Color Style"],
+							get = function(info)
+								return E.db.mMT.dockdatatext.normal.style
+							end,
+							set = function(info, value)
+								E.db.mMT.dockdatatext.normal.style = value
+								DT:LoadDataTexts()
+							end,
+							values = {
+								class = L["Class"],
+								custom = L["Custom"],
+							},
+						},
+						docknormalcolor = {
+							type = "color",
+							order = 2,
+							name = L["Custom Icon Color"],
+							hasAlpha = true,
+							get = function(info)
+								local t = E.db.mMT.dockdatatext.normal
+								return t.r, t.g, t.b, t.a
+							end,
+							set = function(info, r, g, b, a)
+								local t = E.db.mMT.dockdatatext.normal
+								t.r, t.g, t.b, t.a = r, g, b, a
+								DT:LoadDataTexts()
+							end,
+						},
+						dockgeneralspacer1 = {
+							order = 3,
+							type = "description",
+							name = "\n",
+						},
+						dockhoverstyle = {
+							order = 4,
+							type = "select",
+							name = L["Hover Color Style"],
+							get = function(info)
+								return E.db.mMT.dockdatatext.hover.style
+							end,
+							set = function(info, value)
+								E.db.mMT.dockdatatext.hover.style = value
+								DT:LoadDataTexts()
+							end,
+							values = {
+								class = L["Class"],
+								custom = L["Custom"],
+							},
+						},
+						dockhovercolor = {
+							type = "color",
+							order = 5,
+							name = L["Custom hover Color"],
+							hasAlpha = true,
+							get = function(info)
+								local t = E.db.mMT.dockdatatext.hover
+								return t.r, t.g, t.b, t.a
+							end,
+							set = function(info, r, g, b, a)
+								local t = E.db.mMT.dockdatatext.hover
+								t.r, t.g, t.b, t.a = r, g, b, a
+								DT:LoadDataTexts()
+							end,
+						},
+						dockgeneralspacer2 = {
+							order = 6,
+							type = "description",
+							name = "\n",
+						},
+						dockclickstyle = {
+							order = 7,
+							type = "select",
+							name = L["Click Color Style"],
+							get = function(info)
+								return E.db.mMT.dockdatatext.click.style
+							end,
+							set = function(info, value)
+								E.db.mMT.dockdatatext.click.style = value
+								DT:LoadDataTexts()
+							end,
+							values = {
+								class = L["Class"],
+								custom = L["Custom"],
+							},
+						},
+						dockclickcolor = {
+							type = "color",
+							order = 8,
+							name = L["Custom click Color"],
+							hasAlpha = true,
+							get = function(info)
+								local t = E.db.mMT.dockdatatext.click
+								return t.r, t.g, t.b, t.a
+							end,
+							set = function(info, r, g, b, a)
+								local t = E.db.mMT.dockdatatext.click
+								t.r, t.g, t.b, t.a = r, g, b, a
+								DT:LoadDataTexts()
+							end,
+						},
+						dockgeneralspacer3 = {
+							order = 9,
+							type = "description",
+							name = "\n",
+						},
+						docknotificationstyle = {
+							order = 10,
+							type = "select",
+							name = L["Notification Color Style"],
+							get = function(info)
+								return E.db.mMT.dockdatatext.notification.style
+							end,
+							set = function(info, value)
+								E.db.mMT.dockdatatext.notification.style = value
+								DT:LoadDataTexts()
+							end,
+							values = {
+								class = L["Class"],
+								custom = L["Custom"],
+							},
+						},
+						docknotificationcolor = {
+							type = "color",
+							order = 11,
+							name = L["Custom Notification Color"],
+							hasAlpha = true,
+							get = function(info)
+								local t = E.db.mMT.dockdatatext.notification
+								return t.r, t.g, t.b, t.a
+							end,
+							set = function(info, r, g, b, a)
+								local t = E.db.mMT.dockdatatext.notification
+								t.r, t.g, t.b, t.a = r, g, b, a
+								DT:LoadDataTexts()
+							end,
+						},
 					},
-				},
-				docknormalcolor = {
-					type = "color",
-					order = 11,
-					name = L["Custom Icon Color"],
-					hasAlpha = true,
-					get = function(info)
-						local t = E.db.mMT.dockdatatext.normal
-						return t.r, t.g, t.b, t.a
-					end,
-					set = function(info, r, g, b, a)
-						local t = E.db.mMT.dockdatatext.normal
-						t.r, t.g, t.b, t.a = r, g, b, a
-						DT:LoadDataTexts()
-					end,
-				},
-				dockgeneralspacer1 = {
-					order = 19,
-					type = "description",
-					name = "\n",
-				},
-				dockhoverstyle = {
-					order = 20,
-					type = "select",
-					name = L["Hover Color Style"],
-					get = function(info)
-						return E.db.mMT.dockdatatext.hover.style
-					end,
-					set = function(info, value)
-						E.db.mMT.dockdatatext.hover.style = value
-						DT:LoadDataTexts()
-					end,
-					values = {
-						class = L["Class"],
-						custom = L["Custom"],
-					},
-				},
-				dockhovercolor = {
-					type = "color",
-					order = 21,
-					name = L["Custom hover Color"],
-					hasAlpha = true,
-					get = function(info)
-						local t = E.db.mMT.dockdatatext.hover
-						return t.r, t.g, t.b, t.a
-					end,
-					set = function(info, r, g, b, a)
-						local t = E.db.mMT.dockdatatext.hover
-						t.r, t.g, t.b, t.a = r, g, b, a
-						DT:LoadDataTexts()
-					end,
-				},
-				dockgeneralspacer2 = {
-					order = 29,
-					type = "description",
-					name = "\n",
-				},
-				dockclickstyle = {
-					order = 30,
-					type = "select",
-					name = L["Click Color Style"],
-					get = function(info)
-						return E.db.mMT.dockdatatext.click.style
-					end,
-					set = function(info, value)
-						E.db.mMT.dockdatatext.click.style = value
-						DT:LoadDataTexts()
-					end,
-					values = {
-						class = L["Class"],
-						custom = L["Custom"],
-					},
-				},
-				dockclickcolor = {
-					type = "color",
-					order = 31,
-					name = L["Custom click Color"],
-					hasAlpha = true,
-					get = function(info)
-						local t = E.db.mMT.dockdatatext.click
-						return t.r, t.g, t.b, t.a
-					end,
-					set = function(info, r, g, b, a)
-						local t = E.db.mMT.dockdatatext.click
-						t.r, t.g, t.b, t.a = r, g, b, a
-						DT:LoadDataTexts()
-					end,
-				},
-				dockgeneralspacer3 = {
-					order = 39,
-					type = "description",
-					name = "\n",
-				},
-				docknotificationstyle = {
-					order = 40,
-					type = "select",
-					name = L["Notification Color Style"],
-					get = function(info)
-						return E.db.mMT.dockdatatext.notification.style
-					end,
-					set = function(info, value)
-						E.db.mMT.dockdatatext.notification.style = value
-						DT:LoadDataTexts()
-					end,
-					values = {
-						class = L["Class"],
-						custom = L["Custom"],
-					},
-				},
-				docknotificationcolor = {
-					type = "color",
-					order = 42,
-					name = L["Custom Notification Color"],
-					hasAlpha = true,
-					get = function(info)
-						local t = E.db.mMT.dockdatatext.notification
-						return t.r, t.g, t.b, t.a
-					end,
-					set = function(info, r, g, b, a)
-						local t = E.db.mMT.dockdatatext.notification
-						t.r, t.g, t.b, t.a = r, g, b, a
-						DT:LoadDataTexts()
-					end,
 				},
 				headerdockgeneralsettings = {
-					order = 50,
-					type = "header",
+					order = 2,
 					name = L["Settings"],
+					type = "group",
+					inline = true,
+					args = {
+
+						dockgeneraltip = {
+							order = 1,
+							type = "toggle",
+							name = L["Tooltip"],
+							get = function(info)
+								return E.db.mMT.dockdatatext.tip.enable
+							end,
+							set = function(info, value)
+								E.db.mMT.dockdatatext.tip.enable = value
+							end,
+						},
+						dockgeneralautogrow = {
+							order = 2,
+							type = "toggle",
+							name = L["Auto Hover growsize"],
+							get = function(info)
+								return E.db.mMT.dockdatatext.autogrow
+							end,
+							set = function(info, value)
+								E.db.mMT.dockdatatext.autogrow = value
+								DT:LoadDataTexts()
+							end,
+						},
+						dockgeneralgrowsize = {
+							order = 3,
+							name = L["Hover growsize"],
+							type = "range",
+							min = 2,
+							max = 128,
+							step = 2,
+							softMin = 2,
+							softMax = 128,
+							get = function(info)
+								return E.db.mMT.dockdatatext.growsize
+							end,
+							set = function(info, value)
+								E.db.mMT.dockdatatext.growsize = value
+								DT:LoadDataTexts()
+							end,
+							disabled = function()
+								return E.db.mMT.dockdatatext.autogrow
+							end,
+						},
+					},
 				},
 
-				dockgeneraltip = {
-					order = 56,
-					type = "toggle",
-					name = L["Tooltip"],
-					get = function(info)
-						return E.db.mMT.dockdatatext.tip.enable
-					end,
-					set = function(info, value)
-						E.db.mMT.dockdatatext.tip.enable = value
-					end,
-				},
-				dockgeneralautogrow = {
-					order = 57,
-					type = "toggle",
-					name = L["Auto Hover growsize"],
-					get = function(info)
-						return E.db.mMT.dockdatatext.autogrow
-					end,
-					set = function(info, value)
-						E.db.mMT.dockdatatext.autogrow = value
-						DT:LoadDataTexts()
-					end,
-				},
-				dockgeneralgrowsize = {
-					order = 58,
-					name = L["Hover growsize"],
-					type = "range",
-					min = 2,
-					max = 128,
-					step = 2,
-					softMin = 2,
-					softMax = 128,
-					get = function(info)
-						return E.db.mMT.dockdatatext.growsize
-					end,
-					set = function(info, value)
-						E.db.mMT.dockdatatext.growsize = value
-						DT:LoadDataTexts()
-					end,
-					disabled = function()
-						return E.db.mMT.dockdatatext.autogrow
-					end,
-				},
-				dockgeneralspacer6 = {
-					order = 59,
-					type = "description",
-					name = "\n",
-				},
 				headerdockgeneralfont = {
-					order = 60,
-					type = "header",
+					order = 3,
 					name = L["Font"],
-				},
-				dockgeneralfont = {
-					type = "select",
-					dialogControl = "LSM30_Font",
-					order = 61,
-					name = L["Default Font"],
-					values = LSM:HashTable("font"),
-					get = function(info)
-						return E.db.mMT.dockdatatext.font
-					end,
-					set = function(info, value)
-						E.db.mMT.dockdatatext.font = value
-						DT:LoadDataTexts()
-					end,
-				},
-				dockgeneralfontStyle = {
-					type = "select",
-					order = 62,
-					name = L["Font contour"],
-					values = mFontFlags,
-					get = function(info)
-						return E.db.mMT.dockdatatext.fontflag
-					end,
-					set = function(info, value)
-						E.db.mMT.dockdatatext.fontflag = value
-						DT:LoadDataTexts()
-					end,
-				},
-				dockgeneralcustomfontSize = {
-					order = 63,
-					name = L["Custom Font Size"],
-					type = "toggle",
-					get = function(info)
-						return E.db.mMT.dockdatatext.customfontzise
-					end,
-					set = function(info, value)
-						E.db.mMT.dockdatatext.customfontzise = value
-						DT:LoadDataTexts()
-					end,
-				},
-				dockgeneralfontSize = {
-					order = 64,
-					name = L["Font Size"],
-					type = "range",
-					min = 6,
-					max = 64,
-					step = 1,
-					softMin = 8,
-					softMax = 32,
-					get = function(info)
-						return E.db.mMT.dockdatatext.fontSize
-					end,
-					set = function(info, value)
-						E.db.mMT.dockdatatext.fontSize = value
-						DT:LoadDataTexts()
-					end,
-					disabled = function()
-						return not E.db.mMT.dockdatatext.customfontzise
-					end,
-				},
-				dockgeneralfontcolor = {
-					type = "color",
-					order = 65,
-					name = L["Custom Font Color"],
-					hasAlpha = false,
-					get = function(info)
-						local t = E.db.mMT.dockdatatext.fontcolor
-						return t.r, t.g, t.b
-					end,
-					set = function(info, r, g, b)
-						local t = E.db.mMT.dockdatatext.fontcolor
-						t.r, t.g, t.b = r, g, b
-						DT:LoadDataTexts()
-					end,
+					type = "group",
+					inline = true,
+					args = {
+						dockgeneralfont = {
+							type = "select",
+							dialogControl = "LSM30_Font",
+							order = 1,
+							name = L["Default Font"],
+							values = LSM:HashTable("font"),
+							get = function(info)
+								return E.db.mMT.dockdatatext.font
+							end,
+							set = function(info, value)
+								E.db.mMT.dockdatatext.font = value
+								mMT:mDockUpdateFont()
+								DT:LoadDataTexts()
+							end,
+						},
+						dockgeneralfontStyle = {
+							type = "select",
+							order = 2,
+							name = L["Font contour"],
+							values = mFontFlags,
+							get = function(info)
+								return E.db.mMT.dockdatatext.fontflag
+							end,
+							set = function(info, value)
+								E.db.mMT.dockdatatext.fontflag = value
+								mMT:mDockUpdateFont()
+								DT:LoadDataTexts()
+							end,
+						},
+						dockgeneralspacer3 = {
+							order = 3,
+							type = "description",
+							name = "\n",
+						},
+						dockgeneralcustomfontSize = {
+							order = 4,
+							name = L["Custom Font Size"],
+							type = "toggle",
+							get = function(info)
+								return E.db.mMT.dockdatatext.customfontzise
+							end,
+							set = function(info, value)
+								E.db.mMT.dockdatatext.customfontzise = value
+								mMT:mDockUpdateFont()
+								DT:LoadDataTexts()
+							end,
+						},
+						dockgeneralfontSize = {
+							order = 4,
+							name = L["Font Size"],
+							type = "range",
+							min = 6,
+							max = 64,
+							step = 1,
+							softMin = 8,
+							softMax = 32,
+							get = function(info)
+								return E.db.mMT.dockdatatext.fontSize
+							end,
+							set = function(info, value)
+								E.db.mMT.dockdatatext.fontSize = value
+								mMT:mDockUpdateFont()
+								DT:LoadDataTexts()
+							end,
+							disabled = function()
+								return not E.db.mMT.dockdatatext.customfontzise
+							end,
+						},
+						dockgeneralspacer4 = {
+							order = 6,
+							type = "description",
+							name = "\n",
+						},
+						dockgeneralcustomfontcolor = {
+							order = 7,
+							name = L["Custom Font color"],
+							type = "toggle",
+							get = function(info)
+								return E.db.mMT.dockdatatext.customfontcolor
+							end,
+							set = function(info, value)
+								E.db.mMT.dockdatatext.customfontcolor = value
+								mMT:mDockUpdateFont()
+								DT:LoadDataTexts()
+							end,
+						},
+						dockgeneralfontcolor = {
+							type = "color",
+							order = 8,
+							name = L["Custom Font Color"],
+							hasAlpha = false,
+							get = function(info)
+								local t = E.db.mMT.dockdatatext.fontcolor
+								return t.r, t.g, t.b
+							end,
+							set = function(info, r, g, b)
+								local t = E.db.mMT.dockdatatext.fontcolor
+								t.r, t.g, t.b, t.hex = r, g, b, E:RGBToHex(r, g, b)
+								DT:LoadDataTexts()
+							end,
+						},
+					},
 				},
 			},
 		},
 		dockachievment = {
-			order = 20,
+			order = 2,
 			type = "group",
 			name = ACHIEVEMENT_BUTTON,
-			hidden  = function() return not E.Retail end,
+			hidden = function()
+				return not E.Retail
+			end,
 			args = {
 				dockachievmenticon = {
 					order = 1,
@@ -338,8 +369,13 @@ local function configTable()
 					end,
 					values = icons,
 				},
-				achievmenttoggle = {
+				dockspacer = {
 					order = 2,
+					type = "description",
+					name = "\n",
+				},
+				achievmenttoggle = {
+					order = 3,
 					name = L["Custom color"],
 					type = "toggle",
 					get = function(info)
@@ -352,7 +388,7 @@ local function configTable()
 				},
 				achievmentcolor = {
 					type = "color",
-					order = 3,
+					order = 4,
 					name = L["Custom Icon Color"],
 					hasAlpha = true,
 					disabled = function()
@@ -371,10 +407,12 @@ local function configTable()
 			},
 		},
 		dockblizzardstore = {
-			order = 30,
+			order = 3,
 			type = "group",
 			name = BLIZZARD_STORE,
-			hidden  = function() return not E.Retail end,
+			hidden = function()
+				return not E.Retail
+			end,
 			args = {
 				dockblizzardstoreicon = {
 					order = 1,
@@ -389,8 +427,13 @@ local function configTable()
 					end,
 					values = icons,
 				},
-				blizzardstoretoggle = {
+				dockspacer = {
 					order = 2,
+					type = "description",
+					name = "\n",
+				},
+				blizzardstoretoggle = {
+					order = 3,
 					name = L["Custom color"],
 					type = "toggle",
 					get = function(info)
@@ -403,7 +446,7 @@ local function configTable()
 				},
 				blizzardstorecolor = {
 					type = "color",
-					order = 3,
+					order = 4,
 					name = L["Custom Icon Color"],
 					hasAlpha = true,
 					disabled = function()
@@ -422,7 +465,7 @@ local function configTable()
 			},
 		},
 		dockcharcter = {
-			order = 40,
+			order = 4,
 			type = "group",
 			name = CHARACTER_BUTTON,
 			args = {
@@ -439,77 +482,90 @@ local function configTable()
 					end,
 					values = icons,
 				},
-				dockcharcteroptioncolor = {
+				settings = {
 					order = 2,
-					type = "select",
-					name = L["Text Color Styl"],
-					get = function(info)
-						return E.db.mMT.dockdatatext.character.color
-					end,
-					set = function(info, value)
-						E.db.mMT.dockdatatext.character.color = value
-						DT:ForceUpdate_DataText("mCharacter")
-					end,
-					values = {
-						default = L["Default"],
-						custom = L["Custom"],
-						elvui = L["ElvUI"],
+					type = "group",
+					name = L["Settings"],
+					inline = true,
+					args = {
+						dockcharcteroption = {
+							order = 1,
+							type = "select",
+							name = L["Show Text on Icon"],
+							get = function(info)
+								return E.db.mMT.dockdatatext.character.option
+							end,
+							set = function(info, value)
+								E.db.mMT.dockdatatext.character.option = value
+								DT:ForceUpdate_DataText("mCharacter")
+							end,
+							values = {
+								none = L["NONE"],
+								durability = L["Durability"],
+								ilvl = L["Itemlevel"],
+							},
+						},
+						dockcharcteroptioncolor = {
+							order = 2,
+							type = "toggle",
+							name = L["Colored Text"],
+							get = function(info)
+								return E.db.mMT.dockdatatext.character.color
+							end,
+							set = function(info, value)
+								E.db.mMT.dockdatatext.character.color = value
+								DT:ForceUpdate_DataText("mCharacter")
+							end,
+						},
 					},
 				},
-				dockcharcteroption = {
+				color = {
 					order = 3,
-					type = "select",
-					name = L["Show Text on Icon"],
-					get = function(info)
-						return E.db.mMT.dockdatatext.character.option
-					end,
-					set = function(info, value)
-						E.db.mMT.dockdatatext.character.option = value
-						DT:ForceUpdate_DataText("mCharacter")
-					end,
-					values = {
-						none = L["NONE"],
-						durability = L["Durability"],
-						ilvl = L["Itemlevel"],
+					type = "group",
+					name = L["Color"],
+					inline = true,
+					args = {
+						charactertoggle = {
+							order = 1,
+							name = L["Custom color"],
+							type = "toggle",
+							get = function(info)
+								return E.db.mMT.dockdatatext.character.customcolor
+							end,
+							set = function(info, value)
+								E.db.mMT.dockdatatext.character.customcolor = value
+								DT:ForceUpdate_DataText("mCharacter")
+							end,
+						},
+						charactercolor = {
+							type = "color",
+							order = 2,
+							name = L["Custom Icon Color"],
+							hasAlpha = true,
+							disabled = function()
+								return not E.db.mMT.dockdatatext.character.customcolor
+							end,
+							get = function(info)
+								local t = E.db.mMT.dockdatatext.character.iconcolor
+								return t.r, t.g, t.b, t.a
+							end,
+							set = function(info, r, g, b, a)
+								local t = E.db.mMT.dockdatatext.character.iconcolor
+								t.r, t.g, t.b, t.a = r, g, b, a
+								DT:ForceUpdate_DataText("mCharacter")
+							end,
+						},
 					},
-				},
-				charactertoggle = {
-					order = 4,
-					name = L["Custom color"],
-					type = "toggle",
-					get = function(info)
-						return E.db.mMT.dockdatatext.character.customcolor
-					end,
-					set = function(info, value)
-						E.db.mMT.dockdatatext.character.customcolor = value
-						DT:ForceUpdate_DataText("mCharacter")
-					end,
-				},
-				charactercolor = {
-					type = "color",
-					order = 5,
-					name = L["Custom Icon Color"],
-					hasAlpha = true,
-					disabled = function()
-						return not E.db.mMT.dockdatatext.character.customcolor
-					end,
-					get = function(info)
-						local t = E.db.mMT.dockdatatext.character.iconcolor
-						return t.r, t.g, t.b, t.a
-					end,
-					set = function(info, r, g, b, a)
-						local t = E.db.mMT.dockdatatext.character.iconcolor
-						t.r, t.g, t.b, t.a = r, g, b, a
-						DT:ForceUpdate_DataText("mCharacter")
-					end,
 				},
 			},
 		},
 		dockcollection = {
-			order = 50,
+			order = 5,
 			type = "group",
 			name = COLLECTIONS,
-			hidden  = function() return not E.Retail end,
+			hidden = function()
+				return not E.Retail
+			end,
 			args = {
 				dockcollectionicon = {
 					order = 1,
@@ -524,8 +580,13 @@ local function configTable()
 					end,
 					values = icons,
 				},
-				collectiontoggle = {
+				dockspacer = {
 					order = 2,
+					type = "description",
+					name = "\n",
+				},
+				collectiontoggle = {
+					order = 3,
 					name = L["Custom color"],
 					type = "toggle",
 					get = function(info)
@@ -538,7 +599,7 @@ local function configTable()
 				},
 				collectioncolor = {
 					type = "color",
-					order = 3,
+					order = 4,
 					name = L["Custom Icon Color"],
 					hasAlpha = true,
 					disabled = function()
@@ -557,10 +618,12 @@ local function configTable()
 			},
 		},
 		dockencounter = {
-			order = 60,
+			order = 6,
 			type = "group",
 			name = ENCOUNTER_JOURNAL,
-			hidden  = function() return not E.Retail end,
+			hidden = function()
+				return not E.Retail
+			end,
 			args = {
 				dockencountericon = {
 					order = 1,
@@ -575,8 +638,13 @@ local function configTable()
 					end,
 					values = icons,
 				},
-				encountertoggle = {
+				dockspacer = {
 					order = 2,
+					type = "description",
+					name = "\n",
+				},
+				encountertoggle = {
+					order = 3,
 					name = L["Custom color"],
 					type = "toggle",
 					get = function(info)
@@ -589,7 +657,7 @@ local function configTable()
 				},
 				encountercolor = {
 					type = "color",
-					order = 3,
+					order = 4,
 					name = L["Custom Icon Color"],
 					hasAlpha = true,
 					disabled = function()
@@ -608,7 +676,7 @@ local function configTable()
 			},
 		},
 		dockguild = {
-			order = 70,
+			order = 7,
 			type = "group",
 			name = mGuild,
 			args = {
@@ -625,21 +693,10 @@ local function configTable()
 					end,
 					values = icons,
 				},
-				dockguildcolor = {
+				dockspacer = {
 					order = 2,
-					type = "select",
-					name = L["Text Color Styl"],
-					get = function(info)
-						return E.db.mMT.dockdatatext.guild.color
-					end,
-					set = function(info, value)
-						E.db.mMT.dockdatatext.guild.color = value
-						DT:ForceUpdate_DataText("mGuild")
-					end,
-					values = {
-						custom = L["Custom"],
-						default = L["Default"],
-					},
+					type = "description",
+					name = "\n",
 				},
 				guildtoggle = {
 					order = 3,
@@ -674,13 +731,15 @@ local function configTable()
 			},
 		},
 		docklfd = {
-			order = 80,
+			order = 8,
 			type = "group",
 			name = DUNGEONS_BUTTON,
-			hidden  = function() return not E.Retail end,
+			hidden = function()
+				return not E.Retail
+			end,
 			args = {
 				docklfdicon = {
-					order = 10,
+					order = 1,
 					type = "select",
 					name = L["Icon"],
 					get = function(info)
@@ -692,112 +751,128 @@ local function configTable()
 					end,
 					values = icons,
 				},
-				docklfdgreatvault = {
-					order = 20,
-					type = "toggle",
-					name = L["Great Vault"],
-					desc = L["Show Greaut Vault infos in the Tooltip and opens the Great Vault"],
-					get = function(info)
-						return E.db.mMT.dockdatatext.lfd.greatvault
-					end,
-					set = function(info, value)
-						E.db.mMT.dockdatatext.lfd.greatvault = value
-					end,
+				settings = {
+					order = 2,
+					type = "group",
+					name = L["Settings"],
+					inline = true,
+					args = {
+						docklfdgreatvault = {
+							order = 1,
+							type = "toggle",
+							name = L["Great Vault"],
+							desc = L["Show Greaut Vault infos in the Tooltip and opens the Great Vault"],
+							get = function(info)
+								return E.db.mMT.dockdatatext.lfd.greatvault
+							end,
+							set = function(info, value)
+								E.db.mMT.dockdatatext.lfd.greatvault = value
+							end,
+						},
+						docklfdaffixes = {
+							order = 2,
+							type = "toggle",
+							name = L["Weekly Affixes"],
+							desc = L["Shows the Weekly Affixes."],
+							get = function(info)
+								return E.db.mMT.dockdatatext.lfd.affix
+							end,
+							set = function(info, value)
+								E.db.mMT.dockdatatext.lfd.affix = value
+							end,
+						},
+						docklfdkeystone = {
+							order = 3,
+							type = "toggle",
+							name = L["Tooltip Keystone"],
+							desc = L["Shows your Keystone in the tooltip."],
+							get = function(info)
+								return E.db.mMT.dockdatatext.lfd.keystone
+							end,
+							set = function(info, value)
+								E.db.mMT.dockdatatext.lfd.keystone = value
+							end,
+						},
+						docklfdcta = {
+							order = 4,
+							type = "toggle",
+							name = L["Call To Arms"],
+							get = function(info)
+								return E.db.mMT.dockdatatext.lfd.cta
+							end,
+							set = function(info, value)
+								E.db.mMT.dockdatatext.lfd.ctm = value
+								DT:ForceUpdate_DataText("mLFDTool")
+							end,
+						},
+						docklfdscore = {
+							order = 5,
+							type = "toggle",
+							name = L["Mythic+ Score"],
+							get = function(info)
+								return E.db.mMT.dockdatatext.lfd.score
+							end,
+							set = function(info, value)
+								E.db.mMT.dockdatatext.lfd.score = value
+								DT:ForceUpdate_DataText("mLFDTool")
+							end,
+						},
+						docklfddifficulty = {
+							order = 6,
+							type = "toggle",
+							name = L["Difficulty Text"],
+							get = function(info)
+								return E.db.mMT.dockdatatext.lfd.difficulty
+							end,
+							set = function(info, value)
+								E.db.mMT.dockdatatext.lfd.difficulty = value
+								DT:ForceUpdate_DataText("mLFDTool")
+							end,
+						},
+					},
 				},
-				docklfdaffixes = {
-					order = 40,
-					type = "toggle",
-					name = L["Weekly Affixes"],
-					desc = L["Shows the Weekly Affixes."],
-					get = function(info)
-						return E.db.mMT.dockdatatext.lfd.affix
-					end,
-					set = function(info, value)
-						E.db.mMT.dockdatatext.lfd.affix = value
-					end,
-				},
-				docklfdkeystone = {
-					order = 50,
-					type = "toggle",
-					name = L["Tooltip Keystone"],
-					desc = L["Shows your Keystone in the tooltip."],
-					get = function(info)
-						return E.db.mMT.dockdatatext.lfd.keystone
-					end,
-					set = function(info, value)
-						E.db.mMT.dockdatatext.lfd.keystone = value
-					end,
-				},
-				docklfddifficulty = {
-					order = 60,
-					type = "toggle",
-					name = L["Difficulty Text"],
-					get = function(info)
-						return E.db.mMT.dockdatatext.lfd.difficulty
-					end,
-					set = function(info, value)
-						E.db.mMT.dockdatatext.lfd.difficulty = value
-						DT:ForceUpdate_DataText("mLFDTool")
-					end,
-				},
-				docklfdcta = {
-					order = 60,
-					type = "toggle",
-					name = L["Call To Arms"],
-					get = function(info)
-						return E.db.mMT.dockdatatext.lfd.cta
-					end,
-					set = function(info, value)
-						E.db.mMT.dockdatatext.lfd.ctm = value
-						DT:ForceUpdate_DataText("mLFDTool")
-					end,
-				},
-				docklfdscore = {
-					order = 61,
-					type = "toggle",
-					name = L["Mythic+ Score"],
-					get = function(info)
-						return E.db.mMT.dockdatatext.lfd.score
-					end,
-					set = function(info, value)
-						E.db.mMT.dockdatatext.lfd.score = value
-						DT:ForceUpdate_DataText("mLFDTool")
-					end,
-				},
-				lfdtoggle = {
-					order = 61,
-					name = L["Custom color"],
-					type = "toggle",
-					get = function(info)
-						return E.db.mMT.dockdatatext.lfd.customcolor
-					end,
-					set = function(info, value)
-						E.db.mMT.dockdatatext.lfd.customcolor = value
-						DT:ForceUpdate_DataText("mLFDTool")
-					end,
-				},
-				lfdcolor = {
-					type = "color",
-					order = 62,
-					name = L["Custom Icon Color"],
-					hasAlpha = true,
-					disabled = function()
-						return not E.db.mMT.dockdatatext.lfd.customcolor
-					end,
-					get = function(info)
-						local t = E.db.mMT.dockdatatext.lfd.iconcolor
-						return t.r, t.g, t.b, t.a
-					end,
-					set = function(info, r, g, b, a)
-						local t = E.db.mMT.dockdatatext.lfd.iconcolor
-						t.r, t.g, t.b, t.a = r, g, b, a
-						DT:ForceUpdate_DataText("mLFDTool")
-					end,
+				color = {
+					order = 3,
+					type = "group",
+					name = L["Color"],
+					inline = true,
+					args = {
+						lfdtoggle = {
+							order = 1,
+							name = L["Custom color"],
+							type = "toggle",
+							get = function(info)
+								return E.db.mMT.dockdatatext.lfd.customcolor
+							end,
+							set = function(info, value)
+								E.db.mMT.dockdatatext.lfd.customcolor = value
+								DT:ForceUpdate_DataText("mLFDTool")
+							end,
+						},
+						lfdcolor = {
+							type = "color",
+							order = 2,
+							name = L["Custom Icon Color"],
+							hasAlpha = true,
+							disabled = function()
+								return not E.db.mMT.dockdatatext.lfd.customcolor
+							end,
+							get = function(info)
+								local t = E.db.mMT.dockdatatext.lfd.iconcolor
+								return t.r, t.g, t.b, t.a
+							end,
+							set = function(info, r, g, b, a)
+								local t = E.db.mMT.dockdatatext.lfd.iconcolor
+								t.r, t.g, t.b, t.a = r, g, b, a
+								DT:ForceUpdate_DataText("mLFDTool")
+							end,
+						},
+					},
 				},
 			},
 		},
 		dockmainmenu = {
-			order = 90,
+			order = 9,
 			type = "group",
 			name = MAINMENU_BUTTON,
 			args = {
@@ -814,59 +889,13 @@ local function configTable()
 					end,
 					values = icons,
 				},
-				dockmainmenucolor = {
+				dockspacer = {
 					order = 2,
-					type = "select",
-					name = L["Text Color Styl"],
-					get = function(info)
-						return E.db.mMT.dockdatatext.mainmenu.color
-					end,
-					set = function(info, value)
-						E.db.mMT.dockdatatext.mainmenu.color = value
-						DT:ForceUpdate_DataText("mMainMenu")
-					end,
-					values = {
-						default = L["Default"],
-						elvui = L["ElvUI"],
-					},
-				},
-				dockmainmenuoption = {
-					order = 3,
-					type = "select",
-					name = L["Show Text on Icon"],
-					get = function(info)
-						return E.db.mMT.dockdatatext.mainmenu.option
-					end,
-					set = function(info, value)
-						E.db.mMT.dockdatatext.mainmenu.option = value
-						if value == "fps" then
-							E.db.mMT.dockdatatext.mainmenu.text = "FPS"
-						else
-							E.db.mMT.dockdatatext.mainmenu.text = "MS"
-						end
-						DT:ForceUpdate_DataText("mMainMenu")
-					end,
-					values = {
-						none = L["NONE"],
-						fps = L["FPS"],
-						ms = L["MS"],
-					},
-				},
-				dockmainmenutext = {
-					order = 4,
-					name = L["Text"],
-					type = "input",
-					width = "smal",
-					get = function()
-						return E.db.mMT.dockdatatext.mainmenu.text
-					end,
-					set = function(info, value)
-						E.db.mMT.dockdatatext.mainmenu.text = value
-						DT:ForceUpdate_DataText("mMainMenu")
-					end,
+					type = "description",
+					name = "\n",
 				},
 				mainmenutoggle = {
-					order = 6,
+					order = 3,
 					name = L["Custom color"],
 					type = "toggle",
 					get = function(info)
@@ -879,7 +908,7 @@ local function configTable()
 				},
 				mainmenucolor = {
 					type = "color",
-					order = 7,
+					order = 4,
 					name = L["Custom Icon Color"],
 					hasAlpha = true,
 					disabled = function()
@@ -898,7 +927,7 @@ local function configTable()
 			},
 		},
 		dockquest = {
-			order = 100,
+			order = 10,
 			type = "group",
 			name = QUESTLOG_BUTTON,
 			args = {
@@ -915,8 +944,13 @@ local function configTable()
 					end,
 					values = icons,
 				},
-				questtoggle = {
+				dockspacer = {
 					order = 2,
+					type = "description",
+					name = "\n",
+				},
+				questtoggle = {
+					order = 3,
 					name = L["Custom color"],
 					type = "toggle",
 					get = function(info)
@@ -929,7 +963,7 @@ local function configTable()
 				},
 				questcolor = {
 					type = "color",
-					order = 3,
+					order = 4,
 					name = L["Custom Icon Color"],
 					hasAlpha = true,
 					disabled = function()
@@ -948,7 +982,7 @@ local function configTable()
 			},
 		},
 		dockspellbook = {
-			order = 110,
+			order = 11,
 			type = "group",
 			name = SPELLBOOK_ABILITIES_BUTTON,
 			args = {
@@ -965,8 +999,13 @@ local function configTable()
 					end,
 					values = icons,
 				},
-				spellbooktoggle = {
+				dockspacer = {
 					order = 2,
+					type = "description",
+					name = "\n",
+				},
+				spellbooktoggle = {
+					order = 3,
 					name = L["Custom color"],
 					type = "toggle",
 					get = function(info)
@@ -979,7 +1018,7 @@ local function configTable()
 				},
 				spellbookcolor = {
 					type = "color",
-					order = 3,
+					order = 4,
 					name = L["Custom Icon Color"],
 					hasAlpha = true,
 					disabled = function()
@@ -998,10 +1037,12 @@ local function configTable()
 			},
 		},
 		docktalent = {
-			order = 120,
+			order = 12,
 			type = "group",
 			name = TALENTS_BUTTON,
-			hidden  = function() return not E.Retail end,
+			hidden = function()
+				return not E.Retail
+			end,
 			args = {
 				docktalenticon = {
 					order = 1,
@@ -1016,8 +1057,13 @@ local function configTable()
 					end,
 					values = icons,
 				},
-				docktalentrole = {
+				dockspacer = {
 					order = 2,
+					type = "description",
+					name = "\n",
+				},
+				docktalentrole = {
+					order = 3,
 					type = "toggle",
 					name = L["Show Role if in Group"],
 					get = function(info)
@@ -1027,8 +1073,13 @@ local function configTable()
 						E.db.mMT.dockdatatext.talent.showrole = value
 					end,
 				},
+				dockspacer1 = {
+					order = 4,
+					type = "description",
+					name = "\n",
+				},
 				talenttoggle = {
-					order = 3,
+					order = 5,
 					name = L["Custom color"],
 					type = "toggle",
 					get = function(info)
@@ -1041,7 +1092,7 @@ local function configTable()
 				},
 				talentcolor = {
 					type = "color",
-					order = 4,
+					order = 6,
 					name = L["Custom Icon Color"],
 					hasAlpha = true,
 					disabled = function()
@@ -1060,10 +1111,12 @@ local function configTable()
 			},
 		},
 		dockitemlevel = {
-			order = 130,
+			order = 13,
 			type = "group",
 			name = L["Itemlevel"],
-			hidden  = function() return not E.Retail end,
+			hidden = function()
+				return not E.Retail
+			end,
 			args = {
 				dockitemlevelicon = {
 					order = 1,
@@ -1078,82 +1131,93 @@ local function configTable()
 					end,
 					values = icons,
 				},
-				dockitemleveltext = {
+				settings = {
 					order = 2,
-					name = L["Text"],
-					type = "input",
-					width = "smal",
-					get = function()
-						return E.db.mMT.dockdatatext.itemlevel.text
-					end,
-					set = function(info, value)
-						E.db.mMT.dockdatatext.itemlevel.text = value
-						DT:ForceUpdate_DataText("mItemLevel")
-					end,
-				},
-				dockitemlevelcolor = {
-					order = 3,
-					type = "select",
-					name = L["Text Color Styl"],
-					get = function(info)
-						return E.db.mMT.dockdatatext.itemlevel.color
-					end,
-					set = function(info, value)
-						E.db.mMT.dockdatatext.itemlevel.color = value
-						DT:ForceUpdate_DataText("mItemLevel")
-					end,
-					values = {
-						default = L["Default"],
-						custom = L["Custom"],
-						class = L["Class"],
+					type = "group",
+					name = L["Settings"],
+					inline = true,
+					args = {
+						dockitemleveltext = {
+							order = 1,
+							name = L["Text"],
+							type = "input",
+							width = "smal",
+							get = function()
+								return E.db.mMT.dockdatatext.itemlevel.text
+							end,
+							set = function(info, value)
+								E.db.mMT.dockdatatext.itemlevel.text = value
+								DT:ForceUpdate_DataText("mItemLevel")
+							end,
+						},
+						dockitemlevelcolor = {
+							order = 2,
+							type = "toggle",
+							name = L["Colored Text"],
+							get = function(info)
+								return E.db.mMT.dockdatatext.itemlevel.color
+							end,
+							set = function(info, value)
+								E.db.mMT.dockdatatext.itemlevel.color = value
+								DT:ForceUpdate_DataText("mItemLevel")
+							end,
+						},
+						dockitemlevelonlytext = {
+							order = 3,
+							type = "toggle",
+							name = L["Show only Text"],
+							get = function(info)
+								return E.db.mMT.dockdatatext.itemlevel.onlytext
+							end,
+							set = function(info, value)
+								E.db.mMT.dockdatatext.itemlevel.onlytext = value
+								DT:ForceUpdate_DataText("mItemLevel")
+							end,
+						},
 					},
 				},
-				dockitemlevelonlytext = {
-					order = 4,
-					type = "toggle",
-					name = L["Show only Text"],
-					get = function(info)
-						return E.db.mMT.dockdatatext.itemlevel.onlytext
-					end,
-					set = function(info, value)
-						E.db.mMT.dockdatatext.itemlevel.onlytext = value
-						DT:ForceUpdate_DataText("mItemLevel")
-					end,
-				},
-				itemleveltoggle = {
-					order = 4,
-					name = L["Custom color"],
-					type = "toggle",
-					get = function(info)
-						return E.db.mMT.dockdatatext.itemlevel.customcolor
-					end,
-					set = function(info, value)
-						E.db.mMT.dockdatatext.itemlevel.customcolor = value
-						DT:ForceUpdate_DataText("mItemLevel")
-					end,
-				},
-				itemlevelcolor = {
-					type = "color",
-					order = 5,
-					name = L["Custom Icon Color"],
-					hasAlpha = true,
-					disabled = function()
-						return not E.db.mMT.dockdatatext.itemlevel.customcolor
-					end,
-					get = function(info)
-						local t = E.db.mMT.dockdatatext.itemlevel.iconcolor
-						return t.r, t.g, t.b, t.a
-					end,
-					set = function(info, r, g, b, a)
-						local t = E.db.mMT.dockdatatext.itemlevel.iconcolor
-						t.r, t.g, t.b, t.a = r, g, b, a
-						DT:ForceUpdate_DataText("mItemLevel")
-					end,
+				color = {
+					order = 3,
+					type = "group",
+					name = L["Color"],
+					inline = true,
+					args = {
+						itemleveltoggle = {
+							order = 1,
+							name = L["Custom color"],
+							type = "toggle",
+							get = function(info)
+								return E.db.mMT.dockdatatext.itemlevel.customcolor
+							end,
+							set = function(info, value)
+								E.db.mMT.dockdatatext.itemlevel.customcolor = value
+								DT:ForceUpdate_DataText("mItemLevel")
+							end,
+						},
+						itemlevelcolor = {
+							type = "color",
+							order = 2,
+							name = L["Custom Icon Color"],
+							hasAlpha = true,
+							disabled = function()
+								return not E.db.mMT.dockdatatext.itemlevel.customcolor
+							end,
+							get = function(info)
+								local t = E.db.mMT.dockdatatext.itemlevel.iconcolor
+								return t.r, t.g, t.b, t.a
+							end,
+							set = function(info, r, g, b, a)
+								local t = E.db.mMT.dockdatatext.itemlevel.iconcolor
+								t.r, t.g, t.b, t.a = r, g, b, a
+								DT:ForceUpdate_DataText("mItemLevel")
+							end,
+						},
+					},
 				},
 			},
 		},
 		dockfriends = {
-			order = 140,
+			order = 14,
 			type = "group",
 			name = L["Friends"],
 			args = {
@@ -1170,24 +1234,13 @@ local function configTable()
 					end,
 					values = icons,
 				},
-				dockfriendcolor = {
+				dockspacer = {
 					order = 2,
-					type = "select",
-					name = L["Text Color Styl"],
-					get = function(info)
-						return E.db.mMT.dockdatatext.friends.color
-					end,
-					set = function(info, value)
-						E.db.mMT.dockdatatext.friends.color = value
-						DT:ForceUpdate_DataText("mFriends")
-					end,
-					values = {
-						custom = L["Custom"],
-						default = L["Default"],
-					},
+					type = "description",
+					name = "\n",
 				},
 				friendstoggle = {
-					order = 4,
+					order = 3,
 					name = L["Custom color"],
 					type = "toggle",
 					get = function(info)
@@ -1200,7 +1253,7 @@ local function configTable()
 				},
 				friendslcolor = {
 					type = "color",
-					order = 5,
+					order = 4,
 					name = L["Custom Icon Color"],
 					hasAlpha = true,
 					disabled = function()
@@ -1219,7 +1272,7 @@ local function configTable()
 			},
 		},
 		dockdurability = {
-			order = 150,
+			order = 15,
 			type = "group",
 			name = L["Durability"],
 			args = {
@@ -1236,69 +1289,80 @@ local function configTable()
 					end,
 					values = icons,
 				},
-				dockdurabilitycolor = {
+				settings = {
 					order = 2,
-					type = "select",
-					name = L["Text Color Styl"],
-					get = function(info)
-						return E.db.mMT.dockdatatext.durability.color
-					end,
-					set = function(info, value)
-						E.db.mMT.dockdatatext.durability.color = value
-						DT:ForceUpdate_DataText("mDurability")
-					end,
-					values = {
-						default = L["Default"],
-						custom = L["Custom"],
-						class = L["Class"],
+					type = "group",
+					name = L["Settings"],
+					inline = true,
+					args = {
+						dockdurabilitycolor = {
+							order = 1,
+							type = "toggle",
+							name = L["Colored Text"],
+							get = function(info)
+								return E.db.mMT.dockdatatext.durability.color
+							end,
+							set = function(info, value)
+								E.db.mMT.dockdatatext.durability.color = value
+								DT:ForceUpdate_DataText("mDurability")
+							end,
+						},
+						dockdurabilitytext = {
+							order = 2,
+							type = "toggle",
+							name = L["Show only Text"],
+							get = function(info)
+								return E.db.mMT.dockdatatext.durability.onlytext
+							end,
+							set = function(info, value)
+								E.db.mMT.dockdatatext.durability.onlytext = value
+								DT:ForceUpdate_DataText("mDurability")
+							end,
+						},
 					},
 				},
-				dockdurabilitytext = {
+				color = {
 					order = 3,
-					type = "toggle",
-					name = L["Show only Text"],
-					get = function(info)
-						return E.db.mMT.dockdatatext.durability.onlytext
-					end,
-					set = function(info, value)
-						E.db.mMT.dockdatatext.durability.onlytext = value
-						DT:ForceUpdate_DataText("mDurability")
-					end,
-				},
-				durabilitytoggle = {
-					order = 4,
-					name = L["Custom color"],
-					type = "toggle",
-					get = function(info)
-						return E.db.mMT.dockdatatext.durability.customcolor
-					end,
-					set = function(info, value)
-						E.db.mMT.dockdatatext.durability.customcolor = value
-						DT:ForceUpdate_DataText("mDurability")
-					end,
-				},
-				durabilitycolor = {
-					type = "color",
-					order = 5,
-					name = L["Custom Icon Color"],
-					hasAlpha = true,
-					disabled = function()
-						return not E.db.mMT.dockdatatext.durability.customcolor
-					end,
-					get = function(info)
-						local t = E.db.mMT.dockdatatext.durability.iconcolor
-						return t.r, t.g, t.b, t.a
-					end,
-					set = function(info, r, g, b, a)
-						local t = E.db.mMT.dockdatatext.durability.iconcolor
-						t.r, t.g, t.b, t.a = r, g, b, a
-						DT:ForceUpdate_DataText("mDurability")
-					end,
+					type = "group",
+					name = L["Color"],
+					inline = true,
+					args = {
+						durabilitytoggle = {
+							order = 1,
+							name = L["Custom color"],
+							type = "toggle",
+							get = function(info)
+								return E.db.mMT.dockdatatext.durability.customcolor
+							end,
+							set = function(info, value)
+								E.db.mMT.dockdatatext.durability.customcolor = value
+								DT:ForceUpdate_DataText("mDurability")
+							end,
+						},
+						durabilitycolor = {
+							type = "color",
+							order = 2,
+							name = L["Custom Icon Color"],
+							hasAlpha = true,
+							disabled = function()
+								return not E.db.mMT.dockdatatext.durability.customcolor
+							end,
+							get = function(info)
+								local t = E.db.mMT.dockdatatext.durability.iconcolor
+								return t.r, t.g, t.b, t.a
+							end,
+							set = function(info, r, g, b, a)
+								local t = E.db.mMT.dockdatatext.durability.iconcolor
+								t.r, t.g, t.b, t.a = r, g, b, a
+								DT:ForceUpdate_DataText("mDurability")
+							end,
+						},
+					},
 				},
 			},
 		},
 		dockfpsms = {
-			order = 160,
+			order = 16,
 			type = "group",
 			name = L["FPS / MS"],
 			args = {
@@ -1315,93 +1379,95 @@ local function configTable()
 					end,
 					values = icons,
 				},
-				dockfpsmscolor = {
+				settings = {
 					order = 2,
-					type = "select",
-					name = L["Text Color Styl"],
-					get = function(info)
-						return E.db.mMT.dockdatatext.fpsms.color
-					end,
-					set = function(info, value)
-						E.db.mMT.dockdatatext.fpsms.color = value
-						DT:ForceUpdate_DataText("mFPSMS")
-					end,
-					values = {
-						default = L["Default"],
-						elvui = L["ElvUI"],
+					type = "group",
+					name = L["Settings"],
+					inline = true,
+					args = {
+						dockfpsmsoption = {
+							order = 1,
+							type = "select",
+							name = L["Show Text on Icon"],
+							get = function(info)
+								return E.db.mMT.dockdatatext.fpsms.option
+							end,
+							set = function(info, value)
+								E.db.mMT.dockdatatext.fpsms.option = value
+								if value == "fps" then
+									E.db.mMT.dockdatatext.fpsms.text = "FPS"
+								else
+									E.db.mMT.dockdatatext.fpsms.text = "MS"
+								end
+								DT:ForceUpdate_DataText("mFPSMS")
+							end,
+							values = {
+								fps = L["FPS"],
+								ms = L["MS"],
+							},
+						},
+						dockfpsmstext = {
+							order = 2,
+							name = L["Text"],
+							type = "input",
+							width = "smal",
+							get = function()
+								return E.db.mMT.dockdatatext.fpsms.text
+							end,
+							set = function(info, value)
+								E.db.mMT.dockdatatext.fpsms.text = value
+								DT:ForceUpdate_DataText("mFPSMS")
+							end,
+						},
 					},
 				},
-				dockfpsmsoption = {
+				color = {
 					order = 3,
-					type = "select",
-					name = L["Show Text on Icon"],
-					get = function(info)
-						return E.db.mMT.dockdatatext.fpsms.option
-					end,
-					set = function(info, value)
-						E.db.mMT.dockdatatext.fpsms.option = value
-						if value == "fps" then
-							E.db.mMT.dockdatatext.fpsms.text = "FPS"
-						else
-							E.db.mMT.dockdatatext.fpsms.text = "MS"
-						end
-						DT:ForceUpdate_DataText("mFPSMS")
-					end,
-					values = {
-						fps = L["FPS"],
-						ms = L["MS"],
+					type = "group",
+					name = L["Color"],
+					inline = true,
+					args = {
+						fpsmstoggle = {
+							order = 1,
+							name = L["Custom color"],
+							type = "toggle",
+							get = function(info)
+								return E.db.mMT.dockdatatext.fpsms.customcolor
+							end,
+							set = function(info, value)
+								E.db.mMT.dockdatatext.fpsms.customcolor = value
+								DT:ForceUpdate_DataText("mFPSMS")
+							end,
+						},
+						fpsmscolor = {
+							type = "color",
+							order = 2,
+							name = L["Custom Icon Color"],
+							hasAlpha = true,
+							disabled = function()
+								return not E.db.mMT.dockdatatext.fpsms.customcolor
+							end,
+							get = function(info)
+								local t = E.db.mMT.dockdatatext.fpsms.iconcolor
+								return t.r, t.g, t.b, t.a
+							end,
+							set = function(info, r, g, b, a)
+								local t = E.db.mMT.dockdatatext.fpsms.iconcolor
+								t.r, t.g, t.b, t.a = r, g, b, a
+								DT:ForceUpdate_DataText("mFPSMS")
+							end,
+						},
 					},
-				},
-				dockfpsmstext = {
-					order = 4,
-					name = L["Text"],
-					type = "input",
-					width = "smal",
-					get = function()
-						return E.db.mMT.dockdatatext.fpsms.text
-					end,
-					set = function(info, value)
-						E.db.mMT.dockdatatext.fpsms.text = value
-						DT:ForceUpdate_DataText("mFPSMS")
-					end,
-				},
-				fpsmstoggle = {
-					order = 5,
-					name = L["Custom color"],
-					type = "toggle",
-					get = function(info)
-						return E.db.mMT.dockdatatext.fpsms.customcolor
-					end,
-					set = function(info, value)
-						E.db.mMT.dockdatatext.fpsms.customcolor = value
-						DT:ForceUpdate_DataText("mFPSMS")
-					end,
-				},
-				fpsmscolor = {
-					type = "color",
-					order = 6,
-					name = L["Custom Icon Color"],
-					hasAlpha = true,
-					disabled = function()
-						return not E.db.mMT.dockdatatext.fpsms.customcolor
-					end,
-					get = function(info)
-						local t = E.db.mMT.dockdatatext.fpsms.iconcolor
-						return t.r, t.g, t.b, t.a
-					end,
-					set = function(info, r, g, b, a)
-						local t = E.db.mMT.dockdatatext.fpsms.iconcolor
-						t.r, t.g, t.b, t.a = r, g, b, a
-						DT:ForceUpdate_DataText("mFPSMS")
-					end,
 				},
 			},
 		},
 		dockprofession = {
-			order = 170,
+			order = 17,
 			type = "group",
 			name = L["Professions"],
-			hidden  = function() return not E.Retail end,
+			hidden = function()
+				return not E.Retail
+			end,
 			args = {
 				dockprofessionicon = {
 					order = 1,
@@ -1416,8 +1482,13 @@ local function configTable()
 					end,
 					values = icons,
 				},
+				dockspacer = {
+					order = 2,
+					type = "description",
+					name = "\n",
+				},
 				professiontoggle = {
-					order = 5,
+					order = 3,
 					name = L["Custom color"],
 					type = "toggle",
 					get = function(info)
@@ -1430,7 +1501,7 @@ local function configTable()
 				},
 				professioncolor = {
 					type = "color",
-					order = 6,
+					order = 4,
 					name = L["Custom Icon Color"],
 					hasAlpha = true,
 					disabled = function()
@@ -1449,7 +1520,7 @@ local function configTable()
 			},
 		},
 		dockcalendar = {
-			order = 180,
+			order = 18,
 			type = "group",
 			name = L["Calendar"],
 			args = {
@@ -1466,95 +1537,99 @@ local function configTable()
 					end,
 					values = icons,
 				},
-				dockcalendaroption = {
+				settings = {
 					order = 2,
-					type = "select",
-					name = L["Date Style"],
-					get = function(info)
-						return E.db.mMT.dockdatatext.calendar.option
-					end,
-					set = function(info, value)
-						E.db.mMT.dockdatatext.calendar.option = value
-						DT:ForceUpdate_DataText("mCalendar")
-					end,
-					values = {
-						none = L["NONE"],
-						de = "DE",
-						us = "US",
-						gb = "GB",
+					type = "group",
+					name = L["Settings"],
+					inline = true,
+					args = {
+						dockcalendaroption = {
+							order = 1,
+							type = "select",
+							name = L["Date Style"],
+							get = function(info)
+								return E.db.mMT.dockdatatext.calendar.option
+							end,
+							set = function(info, value)
+								E.db.mMT.dockdatatext.calendar.option = value
+								DT:ForceUpdate_DataText("mCalendar")
+							end,
+							values = {
+								none = L["NONE"],
+								de = "DE",
+								us = "US",
+								gb = "GB",
+							},
+						},
+						dockcalendarshowyear = {
+							order = 2,
+							type = "toggle",
+							name = L["Show Year"],
+							get = function(info)
+								return E.db.mMT.dockdatatext.calendar.showyear
+							end,
+							set = function(info, value)
+								E.db.mMT.dockdatatext.calendar.showyear = value
+								DT:ForceUpdate_DataText("mCalendar")
+							end,
+						},
+						calendardateiconstyle = {
+							order = 4,
+							type = "select",
+							name = L["Date Style"],
+							get = function(info)
+								return E.db.mMT.dockdatatext.calendar.dateicon
+							end,
+							set = function(info, value)
+								E.db.mMT.dockdatatext.calendar.dateicon = value
+								DT:ForceUpdate_DataText("mCalendar")
+							end,
+							values = { a = "A", b = "B", c = "C", none = L["NONE"] },
+						},
 					},
 				},
-				dockcalendarshowyear = {
+				color = {
 					order = 3,
-					type = "toggle",
-					name = L["Show Year"],
-					get = function(info)
-						return E.db.mMT.dockdatatext.calendar.showyear
-					end,
-					set = function(info, value)
-						E.db.mMT.dockdatatext.calendar.showyear = value
-						DT:ForceUpdate_DataText("mCalendar")
-					end,
-				},
-				calendardateicon = {
-					order = 5,
-					name = L["Use Dateicons"],
-					type = "toggle",
-					get = function(info)
-						return E.db.mMT.dockdatatext.calendar.dateicon
-					end,
-					set = function(info, value)
-						E.db.mMT.dockdatatext.calendar.dateicon = value
-						DT:ForceUpdate_DataText("mCalendar")
-					end,
-				},
-				calendardateiconstyle = {
-					order = 5,
-					type = "select",
-					name = L["Date Style"],
-					get = function(info)
-						return E.db.mMT.dockdatatext.calendar.dateicon
-					end,
-					set = function(info, value)
-						E.db.mMT.dockdatatext.calendar.dateicon = value
-						DT:ForceUpdate_DataText("mCalendar")
-					end,
-					values = { a = "A", b = "B", c = "C", none = L["NONE"] },
-				},
-				calendartoggle = {
-					order = 6,
-					name = L["Custom color"],
-					type = "toggle",
-					get = function(info)
-						return E.db.mMT.dockdatatext.calendar.customcolor
-					end,
-					set = function(info, value)
-						E.db.mMT.dockdatatext.calendar.customcolor = value
-						DT:ForceUpdate_DataText("mCalendar")
-					end,
-				},
-				calendarcolor = {
-					type = "color",
-					order = 7,
-					name = L["Custom Icon Color"],
-					hasAlpha = true,
-					disabled = function()
-						return not E.db.mMT.dockdatatext.calendar.customcolor
-					end,
-					get = function(info)
-						local t = E.db.mMT.dockdatatext.calendar.iconcolor
-						return t.r, t.g, t.b, t.a
-					end,
-					set = function(info, r, g, b, a)
-						local t = E.db.mMT.dockdatatext.calendar.iconcolor
-						t.r, t.g, t.b, t.a = r, g, b, a
-						DT:ForceUpdate_DataText("mCalendar")
-					end,
+					type = "group",
+					name = L["Color"],
+					inline = true,
+					args = {
+						calendartoggle = {
+							order = 1,
+							name = L["Custom color"],
+							type = "toggle",
+							get = function(info)
+								return E.db.mMT.dockdatatext.calendar.customcolor
+							end,
+							set = function(info, value)
+								E.db.mMT.dockdatatext.calendar.customcolor = value
+								DT:ForceUpdate_DataText("mCalendar")
+							end,
+						},
+						calendarcolor = {
+							type = "color",
+							order = 2,
+							name = L["Custom Icon Color"],
+							hasAlpha = true,
+							disabled = function()
+								return not E.db.mMT.dockdatatext.calendar.customcolor
+							end,
+							get = function(info)
+								local t = E.db.mMT.dockdatatext.calendar.iconcolor
+								return t.r, t.g, t.b, t.a
+							end,
+							set = function(info, r, g, b, a)
+								local t = E.db.mMT.dockdatatext.calendar.iconcolor
+								t.r, t.g, t.b, t.a = r, g, b, a
+								DT:ForceUpdate_DataText("mCalendar")
+							end,
+						},
+					},
 				},
 			},
 		},
 		dockvolume = {
-			order = 190,
+			order = 19,
 			type = "group",
 			name = L["Volume"],
 			args = {
@@ -1571,52 +1646,68 @@ local function configTable()
 					end,
 					values = icons,
 				},
-				dockvolumetext = {
+				settings = {
 					order = 2,
-					type = "toggle",
-					name = L["Show Text"],
-					get = function(info)
-						return E.db.mMT.dockdatatext.volume.showtext
-					end,
-					set = function(info, value)
-						E.db.mMT.dockdatatext.volume.showtext = value
-						DT:ForceUpdate_DataText("mVolume")
-					end,
+					type = "group",
+					name = L["Settings"],
+					inline = true,
+					args = {
+						dockvolumetext = {
+							order = 1,
+							type = "toggle",
+							name = L["Show Text"],
+							get = function(info)
+								return E.db.mMT.dockdatatext.volume.showtext
+							end,
+							set = function(info, value)
+								E.db.mMT.dockdatatext.volume.showtext = value
+								DT:ForceUpdate_DataText("mVolume")
+							end,
+						},
+					},
 				},
-				volumetoggle = {
-					order = 5,
-					name = L["Custom color"],
-					type = "toggle",
-					get = function(info)
-						return E.db.mMT.dockdatatext.volume.customcolor
-					end,
-					set = function(info, value)
-						E.db.mMT.dockdatatext.volume.customcolor = value
-						DT:ForceUpdate_DataText("mVolume")
-					end,
-				},
-				volumecolor = {
-					type = "color",
-					order = 6,
-					name = L["Custom Icon Color"],
-					hasAlpha = true,
-					disabled = function()
-						return not E.db.mMT.dockdatatext.volume.customcolor
-					end,
-					get = function(info)
-						local t = E.db.mMT.dockdatatext.volume.iconcolor
-						return t.r, t.g, t.b, t.a
-					end,
-					set = function(info, r, g, b, a)
-						local t = E.db.mMT.dockdatatext.volume.iconcolor
-						t.r, t.g, t.b, t.a = r, g, b, a
-						DT:ForceUpdate_DataText("mVolume")
-					end,
+				color = {
+					order = 3,
+					type = "group",
+					name = L["Color"],
+					inline = true,
+					args = {
+						volumetoggle = {
+							order = 1,
+							name = L["Custom color"],
+							type = "toggle",
+							get = function(info)
+								return E.db.mMT.dockdatatext.volume.customcolor
+							end,
+							set = function(info, value)
+								E.db.mMT.dockdatatext.volume.customcolor = value
+								DT:ForceUpdate_DataText("mVolume")
+							end,
+						},
+						volumecolor = {
+							type = "color",
+							order = 2,
+							name = L["Custom Icon Color"],
+							hasAlpha = true,
+							disabled = function()
+								return not E.db.mMT.dockdatatext.volume.customcolor
+							end,
+							get = function(info)
+								local t = E.db.mMT.dockdatatext.volume.iconcolor
+								return t.r, t.g, t.b, t.a
+							end,
+							set = function(info, r, g, b, a)
+								local t = E.db.mMT.dockdatatext.volume.iconcolor
+								t.r, t.g, t.b, t.a = r, g, b, a
+								DT:ForceUpdate_DataText("mVolume")
+							end,
+						},
+					},
 				},
 			},
 		},
 		dockNotification = {
-			order = 200,
+			order = 20,
 			type = "group",
 			name = L["Notification"],
 			args = {
@@ -1667,7 +1758,7 @@ local function configTable()
 			},
 		},
 		dockbag = {
-			order = 220,
+			order = 22,
 			type = "group",
 			name = L["Bags"],
 			args = {
@@ -1684,55 +1775,70 @@ local function configTable()
 					end,
 					values = icons,
 				},
-				dockbagtext = {
+				settings = {
 					order = 2,
-					type = "select",
-					name = L["Text to display"],
-					get = function(info)
-						return E.db.mMT.dockdatatext.bag.text
-					end,
-					set = function(info, value)
-						E.db.mMT.dockdatatext.bag.text = value
-						DT:ForceUpdate_DataText("mBags")
-					end,
-					values = {
-						[1] = L["Bag - FREE"],
-						[2] = L["Bag - USED"],
-						[3] = L["Bag - FREE/TOTAL"],
-						[4] = L["GOLD"],
-						[5] = L["NONE"]
-
+					type = "group",
+					name = L["Settings"],
+					inline = true,
+					args = {
+						dockbagtext = {
+							order = 1,
+							type = "select",
+							name = L["Text to display"],
+							get = function(info)
+								return E.db.mMT.dockdatatext.bag.text
+							end,
+							set = function(info, value)
+								E.db.mMT.dockdatatext.bag.text = value
+								DT:ForceUpdate_DataText("mBags")
+							end,
+							values = {
+								[1] = L["Bag - FREE"],
+								[2] = L["Bag - USED"],
+								[3] = L["Bag - FREE/TOTAL"],
+								[4] = L["GOLD"],
+								[5] = L["NONE"],
+							},
+						},
 					},
 				},
-				bagtoggle = {
-					order = 3,
-					name = L["Custom color"],
-					type = "toggle",
-					get = function(info)
-						return E.db.mMT.dockdatatext.bag.customcolor
-					end,
-					set = function(info, value)
-						E.db.mMT.dockdatatext.bag.customcolor = value
-						DT:ForceUpdate_DataText("mBags")
-					end,
-				},
-				bagcolor = {
-					type = "color",
-					order = 4,
-					name = L["Custom Icon Color"],
-					hasAlpha = true,
-					disabled = function()
-						return not E.db.mMT.dockdatatext.bag.customcolor
-					end,
-					get = function(info)
-						local t = E.db.mMT.dockdatatext.bag.iconcolor
-						return t.r, t.g, t.b, t.a
-					end,
-					set = function(info, r, g, b, a)
-						local t = E.db.mMT.dockdatatext.bag.iconcolor
-						t.r, t.g, t.b, t.a = r, g, b, a
-						DT:ForceUpdate_DataText("mBags")
-					end,
+				color = {
+					order = 2,
+					type = "group",
+					name = L["Color"],
+					inline = true,
+					args = {
+						bagtoggle = {
+							order = 1,
+							name = L["Custom color"],
+							type = "toggle",
+							get = function(info)
+								return E.db.mMT.dockdatatext.bag.customcolor
+							end,
+							set = function(info, value)
+								E.db.mMT.dockdatatext.bag.customcolor = value
+								DT:ForceUpdate_DataText("mBags")
+							end,
+						},
+						bagcolor = {
+							type = "color",
+							order = 2,
+							name = L["Custom Icon Color"],
+							hasAlpha = true,
+							disabled = function()
+								return not E.db.mMT.dockdatatext.bag.customcolor
+							end,
+							get = function(info)
+								local t = E.db.mMT.dockdatatext.bag.iconcolor
+								return t.r, t.g, t.b, t.a
+							end,
+							set = function(info, r, g, b, a)
+								local t = E.db.mMT.dockdatatext.bag.iconcolor
+								t.r, t.g, t.b, t.a = r, g, b, a
+								DT:ForceUpdate_DataText("mBags")
+							end,
+						},
+					},
 				},
 			},
 		},
@@ -1790,7 +1896,7 @@ local function configTable()
 					type = "execute",
 					name = L["Dockbar mDock Special"],
 					func = function()
-						mMT:mDockSpezial(ExampleDockSettings.top, true)
+						mMT:mDockSpecial(ExampleDockSettings.top, true)
 						E:StaticPopup_Show("CONFIG_RL")
 					end,
 				},
@@ -1806,7 +1912,7 @@ local function configTable()
 					func = function()
 						mMT:mDockFull(ExampleDockSettings.top, false)
 						mMT:mDockMicroBar(ExampleDockSettings.top, false)
-						mMT:mDockSpezial(ExampleDockSettings.top, false)
+						mMT:mDockSpecial(ExampleDockSettings.top, false)
 						E:StaticPopup_Show("CONFIG_RL")
 					end,
 				},

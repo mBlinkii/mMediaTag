@@ -1,4 +1,4 @@
-local mMT, E, L, V, P, G = unpack((select(2, ...)))
+local E = unpack(ElvUI)
 
 --WoW API / Variables
 local _G = _G

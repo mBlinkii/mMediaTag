@@ -1,4 +1,4 @@
-local mMT, E, L, V, P, G = unpack((select(2, ...)))
+local E, L = unpack(ElvUI)
 local DT = E:GetModule("DataTexts")
 
 --Lua functions
@@ -20,8 +20,6 @@ local IsInGuild = IsInGuild
 local IsShiftKeyDown = IsShiftKeyDown
 local LoadAddOn = LoadAddOn
 local SetItemRef = SetItemRef
-local ToggleGuildFrame = ToggleGuildFrame
-local ToggleFriendsFrame = ToggleFriendsFrame
 local UnitInParty = UnitInParty
 local UnitInRaid = UnitInRaid
 local InCombatLockdown = InCombatLockdown
@@ -40,8 +38,6 @@ local mText = format("Dock %s", L["Guild"])
 local mTextName = "mGuild"
 local tthead, ttsubh, ttoff = { r = 0.4, g = 0.78, b = 1 }, { r = 0.75, g = 0.9, b = 1 }, { r = 0.3, g = 1, b = 0.3 }
 local activezone, inactivezone = { r = 0.3, g = 1.0, b = 0.3 }, { r = 0.65, g = 0.65, b = 0.65 }
-local displayString = ""
-local noGuildString = ""
 local guildInfoString = "%s"
 local guildInfoString2 = GUILD .. ": %d/%d"
 local guildMotDString = "%s |cffaaaaaa- |cffffffff%s"
@@ -131,39 +127,6 @@ end
 
 local FRIEND_ONLINE = select(2, strsplit(" ", _G.ERR_FRIEND_ONLINE_SS, 2))
 local resendRequest = false
-local eventHandlers = {
-	PLAYER_GUILD_UPDATE = C_GuildInfo_GuildRoster,
-	CHAT_MSG_SYSTEM = function(_, arg1)
-		if FRIEND_ONLINE ~= nil and arg1 and strfind(arg1, FRIEND_ONLINE) then
-			resendRequest = true
-		end
-	end,
-	-- when we enter the world and guildframe is not available then
-	-- load guild frame, update guild message and guild xp
-	PLAYER_ENTERING_WORLD = function()
-		if not _G.GuildFrame and IsInGuild() then
-			LoadAddOn("Blizzard_GuildUI")
-			C_GuildInfo_GuildRoster()
-		end
-	end,
-	-- Guild Roster updated, so rebuild the guild table
-	GUILD_ROSTER_UPDATE = function(self)
-		if resendRequest then
-			resendRequest = false
-			return C_GuildInfo_GuildRoster()
-		else
-			BuildGuildTable()
-			UpdateGuildMessage()
-			if GetMouseFocus() == self then
-				self:GetScript("OnEnter")(self, nil, true)
-			end
-		end
-	end,
-	-- our guild message of the day changed
-	GUILD_MOTD = function(_, arg1)
-		guildMotD = arg1
-	end,
-}
 
 local menuList = {
 	{ text = _G.OPTIONS_MENU, isTitle = true, notCheckable = true },
@@ -389,53 +352,63 @@ local function OnEnter(self, _, noUpdate)
 	end
 end
 
-local function OnEvent(self, event, ...)
+local function OnEvent(self, event, arg1)
 	self.mSettings = {
 		Name = mTextName,
-		IconTexture = mMT.Media.DockIcons[E.db.mMT.dockdatatext.guild.icon],
+		text = {
+			onlytext = false,
+			special = false,
+			textA = true,
+			textB = false,
+		},
+		icon = {
+			texture = mMT.Media.DockIcons[E.db.mMT.dockdatatext.guild.icon],
+			color = E.db.mMT.dockdatatext.guild.iconcolor,
+			customcolor = E.db.mMT.dockdatatext.guild.customcolor,
+		},
 		Notifications = true,
-		Text = true,
-		Spezial = false,
-		IconColor = E.db.mMT.dockdatatext.guild.iconcolor,
-		CustomColor = E.db.mMT.dockdatatext.guild.customcolor,
 	}
 
-	mMT:DockInitialisation(self)
-
-	if E.db.mMT.dockdatatext.guild.color == "custom" then
-		local r, g, b =
-			E.db.mMT.dockdatatext.fontcolor.r, E.db.mMT.dockdatatext.fontcolor.g, E.db.mMT.dockdatatext.fontcolor.b
-		TextColor = strjoin("", E:RGBToHex(r, g, b), "%s|r")
-	end
-
+	mMT:DockInitialization(self, event, "")
 	if IsInGuild() then
-		local func = eventHandlers[event]
-		if func then
-			func(self, ...)
+		if event == "PLAYER_GUILD_UPDATE" then
+			C_GuildInfo_GuildRoster()
+		end
+		if event == "CHAT_MSG_SYSTEM" then
+			if FRIEND_ONLINE ~= nil and arg1 and strfind(arg1, FRIEND_ONLINE) then
+				resendRequest = true
+			end
+		end
+		-- when we enter the world and guildframe is not available then
+		-- load guild frame, update guild message and guild xp
+		if event == "PLAYER_ENTERING_WORLD" then
+			if not _G.GuildFrame and IsInGuild() then
+				LoadAddOn("Blizzard_GuildUI")
+				C_GuildInfo_GuildRoster()
+			end
+		end
+		-- Guild Roster updated, so rebuild the guild table
+		if event == "GUILD_ROSTER_UPDATE" then
+			if resendRequest then
+				resendRequest = false
+				return C_GuildInfo_GuildRoster()
+			else
+				BuildGuildTable()
+				UpdateGuildMessage()
+				if MouseIsOver(self) then
+					self:GetScript("OnEnter")(self, nil, true)
+				end
+			end
+		end
+		-- our guild message of the day changed
+		if event == "GUILD_MOTD" then
+			guildMotD = arg1
 		end
 
 		if not IsAltKeyDown() and event == "MODIFIER_STATE_CHANGED" and GetMouseFocus() == self then
 			OnEnter(self)
 		end
-
-		if E.db.mMT.dockdatatext.guild.color == "default" then
-			self.mIcon.TextA:SetFormattedText(mMT:mClassColorString(), #guildTable)
-		else
-			self.mIcon.TextA:SetFormattedText(
-				strjoin(
-					"",
-					E:RGBToHex(
-						E.db.mMT.dockdatatext.fontcolor.r,
-						E.db.mMT.dockdatatext.fontcolor.g,
-						E.db.mMT.dockdatatext.fontcolor.b
-					),
-					"%s|r"
-				),
-				#guildTable
-			)
-		end
-	else
-		self.mIcon.TextA:SetText("")
+		mMT:mDockSetText(self, #guildTable)
 	end
 
 	if E.Retail then
@@ -458,7 +431,7 @@ end
 DT:RegisterDatatext(
 	mTextName,
 	"mDock",
-	{'CHAT_MSG_SYSTEM', 'GUILD_ROSTER_UPDATE', 'PLAYER_GUILD_UPDATE', 'GUILD_MOTD', 'MODIFIER_STATE_CHANGED'},
+	{ "CHAT_MSG_SYSTEM", "GUILD_ROSTER_UPDATE", "PLAYER_GUILD_UPDATE", "GUILD_MOTD", "MODIFIER_STATE_CHANGED" },
 	OnEvent,
 	nil,
 	OnClick,

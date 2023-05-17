@@ -1,13 +1,12 @@
-local mMT, E, L, V, P, G = unpack((select(2, ...)))
+local E, L, V, P, G = unpack(ElvUI)
 local LSM = LibStub("LibSharedMedia-3.0")
-
 local tinsert = tinsert
 local selectedID = nil
 local selected = nil
 local filterTabel = {}
 
 local function updateFilterTabel()
-	filterTabel = wipe(filterTabel)
+	wipe(filterTabel)
 	for k, v in pairs(E.db.mMT.nameplate.healthmarker.NPCs) do
 		tinsert(filterTabel, k)
 	end

@@ -1,14 +1,8 @@
-local mMT, E, L, V, P, G = unpack((select(2, ...)))
-local DT = E:GetModule("DataTexts")
-local NP = E:GetModule("NamePlates")
-
+local E, L = unpack(ElvUI)
 --Lua functions
 local format = format
-local mInsert = table.insert
 
 --Variables
-local _, unitClass = UnitClass("player")
-local class = ElvUF.colors.class[unitClass]
 local mRollFrame = nil
 function mMT:mRollUpdateIcon()
 	if mRollFrame and mRollFrame.mSettings then
@@ -16,7 +10,7 @@ function mMT:mRollUpdateIcon()
 
 		if E.db.mMT.roll.colormodenormal == "class" then
 			mRollFrame.mSettings.ColorNormal =
-				{ r = class[1], g = class[2], b = class[3], a = E.db.mMT.roll.colornormal.a }
+				{ r = mMT.ClassColor.r, g = mMT.ClassColor.g, b = mMT.ClassColor.b, a = E.db.mMT.roll.colornormal.a }
 		else
 			mRollFrame.mSettings.ColorNormal = {
 				r = E.db.mMT.roll.colornormal.r,
@@ -28,7 +22,7 @@ function mMT:mRollUpdateIcon()
 
 		if E.db.mMT.roll.colormodehover == "class" then
 			mRollFrame.mSettings.ColorHover =
-				{ r = class[1], g = class[2], b = class[3], a = E.db.mMT.roll.colorhover.a }
+				{ r = mMT.ClassColor.r, g = mMT.ClassColor.g, b = mMT.ClassColor.b, a = E.db.mMT.roll.colorhover.a }
 		else
 			mRollFrame.mSettings.ColorHover = {
 				r = E.db.mMT.roll.colorhover.r,

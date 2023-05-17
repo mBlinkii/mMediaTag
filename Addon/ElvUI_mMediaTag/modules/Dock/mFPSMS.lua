@@ -1,4 +1,4 @@
-local mMT, E, L, V, P, G = unpack((select(2, ...)))
+local E, L = unpack(ElvUI)
 local DT = E:GetModule("DataTexts")
 
 --Lua functions
@@ -6,9 +6,9 @@ local format = format
 
 --Variables
 local _G = _G
+local enteredFrame = false
 local mText = format("Dock %s", L["FPS/ MS"])
 local mTextName = "mFPSMS"
-local TextColor = mMT:mClassColorString()
 local statusColors = {
 	"|cff0CD809",
 	"|cffE8DA0F",
@@ -25,7 +25,7 @@ function mMT:CheckFrameFPSMS(self)
 	mMT:DockTimer(self)
 end
 
-local function OnEnter(self)
+local function OnEnter(self, count)
 	self.mIcon.isClicked = mDockCheckFrame()
 	mMT:mOnEnter(self, "CheckFrameFPSMS")
 
@@ -63,8 +63,12 @@ local function OnEnter(self)
 		DT.tooltip:AddLine(" ")
 		DT.tooltip:AddDoubleLine(mMT.Name, format("%sVer.|r %s%s|r", titel, other, mMT.Version))
 		DT.tooltip:AddLine(" ")
-		DT.tooltip:AddLine(format("%s %s%s|r", mMT:mIcon(mMT.Media.Mouse["LEFT"]), tip, L["Click left to open the main menu."]))
-		DT.tooltip:AddLine(format("%s %s%s|r", mMT:mIcon(mMT.Media.Mouse["RIGHT"]), tip, L["Right click to open the ElvUI settings."]))
+		DT.tooltip:AddLine(
+			format("%s %s%s|r", mMT:mIcon(mMT.Media.Mouse["LEFT"]), tip, L["Click left to open the main menu."])
+		)
+		DT.tooltip:AddLine(
+			format("%s %s%s|r", mMT:mIcon(mMT.Media.Mouse["RIGHT"]), tip, L["Right click to open the ElvUI settings."])
+		)
 
 		DT.tooltip:Show()
 	end
@@ -90,23 +94,25 @@ local function OnUpdate(self, elapsed)
 			or 4
 
 		if self.mIcon.TextA and self.mIcon.TextB then
-			local Color = E.db.mMT.dockdatatext.fpsms.color
 			local Option = E.db.mMT.dockdatatext.fpsms.option
-
-			if Color == "default" then
+			local textA = nil
+			local color = nil
+			if E.db.mMT.dockdatatext.fpsms.color then
 				if Option == "fps" then
-					self.mIcon.TextA:SetText(format("%s%d|r", statusColors[fps], framerate))
+					textA = framerate
+					color = statusColors[fps]
 				else
-					self.mIcon.TextA:SetText(format("%s%d|r", statusColors[ping], latency))
+					textA = latency
+					color = statusColors[ping]
 				end
 			else
 				if Option == "fps" then
-					self.mIcon.TextA:SetFormattedText(TextColor, format("%d|r", framerate))
+					textA = framerate
 				else
-					self.mIcon.TextA:SetFormattedText(TextColor, format("%d|r", latency))
+					textA = latency
 				end
 			end
-			self.mIcon.TextB:SetText(E.db.mMT.dockdatatext.fpsms.text)
+			mMT:mDockSetText(self, textA, E.db.mMT.dockdatatext.fpsms.text, color)
 		end
 
 		if not enteredFrame then
@@ -130,15 +136,20 @@ end
 local function OnEvent(self, event, ...)
 	self.mSettings = {
 		Name = mTextName,
-		IconTexture = mMT.Media.DockIcons[E.db.mMT.dockdatatext.fpsms.icon],
-		Notifications = false,
-		Text = true,
-		Spezial = true,
-		IconColor = E.db.mMT.dockdatatext.fpsms.iconcolor,
-		CustomColor = E.db.mMT.dockdatatext.fpsms.customcolor,
+		text = {
+			onlytext = false,
+			special = true,
+			textA = true,
+			textB = true,
+		},
+		icon = {
+			texture = mMT.Media.DockIcons[E.db.mMT.dockdatatext.fpsms.icon],
+			color = E.db.mMT.dockdatatext.fpsms.iconcolor,
+			customcolor = E.db.mMT.dockdatatext.fpsms.customcolor,
+		},
 	}
 
-	mMT:DockInitialisation(self)
+	mMT:DockInitialization(self, event)
 end
 
 local function OnLeave(self)

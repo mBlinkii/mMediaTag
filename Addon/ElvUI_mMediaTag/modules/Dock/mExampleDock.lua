@@ -1,9 +1,4 @@
-local mMT, E, L, V, P, G = unpack((select(2, ...)))
-local DT = E:GetModule("DataTexts")
-
---Lua functions
-
---Variables
+local E = unpack(ElvUI)
 
 function mMT:mDockFull(top, enable)
 	E.DataTexts:BuildPanelFrame("mDock")
@@ -105,150 +100,150 @@ function mMT:mDockMicroBar(top, enable)
 	E:StaggeredUpdateAll(nil, true)
 end
 
-function mMT:mDockSpezial(top, enable)
-	E.DataTexts:BuildPanelFrame("mSpezialDockBaground")
-	E.DataTexts:BuildPanelFrame("mSpezialDockLeft")
-	E.DataTexts:BuildPanelFrame("mSpezialDockRight")
-	E.DataTexts:BuildPanelFrame("mSpezialDockTime")
-	E.DataTexts:BuildPanelFrame("mSpezialDockDate")
+function mMT:mDockSpecial(top, enable)
+	E.DataTexts:BuildPanelFrame("mspecialDockBaground")
+	E.DataTexts:BuildPanelFrame("mspecialDockLeft")
+	E.DataTexts:BuildPanelFrame("mspecialDockRight")
+	E.DataTexts:BuildPanelFrame("mspecialDockTime")
+	E.DataTexts:BuildPanelFrame("mspecialDockDate")
 
-	E.global["datatexts"]["customPanels"]["mSpezialDockBaground"]["backdrop"] = true
-	E.global["datatexts"]["customPanels"]["mSpezialDockBaground"]["border"] = true
-	E.global["datatexts"]["customPanels"]["mSpezialDockBaground"]["fonts"]["enable"] = false
-	E.global["datatexts"]["customPanels"]["mSpezialDockBaground"]["fonts"]["font"] = "PT Sans Narrow"
-	E.global["datatexts"]["customPanels"]["mSpezialDockBaground"]["fonts"]["fontOutline"] = "OUTLINE"
-	E.global["datatexts"]["customPanels"]["mSpezialDockBaground"]["fonts"]["fontSize"] = 12
-	E.global["datatexts"]["customPanels"]["mSpezialDockBaground"]["frameLevel"] = 1
-	E.global["datatexts"]["customPanels"]["mSpezialDockBaground"]["frameStrata"] = "LOW"
-	E.global["datatexts"]["customPanels"]["mSpezialDockBaground"]["growth"] = "HORIZONTAL"
-	E.global["datatexts"]["customPanels"]["mSpezialDockBaground"]["height"] = 48
-	E.global["datatexts"]["customPanels"]["mSpezialDockBaground"]["mouseover"] = false
-	E.global["datatexts"]["customPanels"]["mSpezialDockBaground"]["name"] = "mSpezialDockBaground"
-	E.global["datatexts"]["customPanels"]["mSpezialDockBaground"]["numPoints"] = 1
-	E.global["datatexts"]["customPanels"]["mSpezialDockBaground"]["panelTransparency"] = false
-	E.global["datatexts"]["customPanels"]["mSpezialDockBaground"]["textJustify"] = "CENTER"
-	E.global["datatexts"]["customPanels"]["mSpezialDockBaground"]["tooltipAnchor"] = "ANCHOR_TOPLEFT"
-	E.global["datatexts"]["customPanels"]["mSpezialDockBaground"]["tooltipXOffset"] = -17
-	E.global["datatexts"]["customPanels"]["mSpezialDockBaground"]["tooltipYOffset"] = 4
-	E.global["datatexts"]["customPanels"]["mSpezialDockBaground"]["visibility"] = "[petbattle] hide;show"
-	E.global["datatexts"]["customPanels"]["mSpezialDockBaground"]["width"] = 505
+	E.global["datatexts"]["customPanels"]["mspecialDockBaground"]["backdrop"] = true
+	E.global["datatexts"]["customPanels"]["mspecialDockBaground"]["border"] = true
+	E.global["datatexts"]["customPanels"]["mspecialDockBaground"]["fonts"]["enable"] = false
+	E.global["datatexts"]["customPanels"]["mspecialDockBaground"]["fonts"]["font"] = "PT Sans Narrow"
+	E.global["datatexts"]["customPanels"]["mspecialDockBaground"]["fonts"]["fontOutline"] = "OUTLINE"
+	E.global["datatexts"]["customPanels"]["mspecialDockBaground"]["fonts"]["fontSize"] = 12
+	E.global["datatexts"]["customPanels"]["mspecialDockBaground"]["frameLevel"] = 1
+	E.global["datatexts"]["customPanels"]["mspecialDockBaground"]["frameStrata"] = "LOW"
+	E.global["datatexts"]["customPanels"]["mspecialDockBaground"]["growth"] = "HORIZONTAL"
+	E.global["datatexts"]["customPanels"]["mspecialDockBaground"]["height"] = 48
+	E.global["datatexts"]["customPanels"]["mspecialDockBaground"]["mouseover"] = false
+	E.global["datatexts"]["customPanels"]["mspecialDockBaground"]["name"] = "mspecialDockBaground"
+	E.global["datatexts"]["customPanels"]["mspecialDockBaground"]["numPoints"] = 1
+	E.global["datatexts"]["customPanels"]["mspecialDockBaground"]["panelTransparency"] = false
+	E.global["datatexts"]["customPanels"]["mspecialDockBaground"]["textJustify"] = "CENTER"
+	E.global["datatexts"]["customPanels"]["mspecialDockBaground"]["tooltipAnchor"] = "ANCHOR_TOPLEFT"
+	E.global["datatexts"]["customPanels"]["mspecialDockBaground"]["tooltipXOffset"] = -17
+	E.global["datatexts"]["customPanels"]["mspecialDockBaground"]["tooltipYOffset"] = 4
+	E.global["datatexts"]["customPanels"]["mspecialDockBaground"]["visibility"] = "[petbattle] hide;show"
+	E.global["datatexts"]["customPanels"]["mspecialDockBaground"]["width"] = 505
 
-	E.db["datatexts"]["panels"]["mSpezialDockBaground"][1] = ""
-	E.db["datatexts"]["panels"]["mSpezialDockBaground"]["enable"] = enable
+	E.db["datatexts"]["panels"]["mspecialDockBaground"][1] = ""
+	E.db["datatexts"]["panels"]["mspecialDockBaground"]["enable"] = enable
 
-	E.global["datatexts"]["customPanels"]["mSpezialDockLeft"]["backdrop"] = false
-	E.global["datatexts"]["customPanels"]["mSpezialDockLeft"]["border"] = true
-	E.global["datatexts"]["customPanels"]["mSpezialDockLeft"]["fonts"]["enable"] = false
-	E.global["datatexts"]["customPanels"]["mSpezialDockLeft"]["fonts"]["font"] = "PT Sans Narrow"
-	E.global["datatexts"]["customPanels"]["mSpezialDockLeft"]["fonts"]["fontOutline"] = "OUTLINE"
-	E.global["datatexts"]["customPanels"]["mSpezialDockLeft"]["fonts"]["fontSize"] = 12
-	E.global["datatexts"]["customPanels"]["mSpezialDockLeft"]["frameLevel"] = 1
-	E.global["datatexts"]["customPanels"]["mSpezialDockLeft"]["frameStrata"] = "MEDIUM"
-	E.global["datatexts"]["customPanels"]["mSpezialDockLeft"]["growth"] = "HORIZONTAL"
-	E.global["datatexts"]["customPanels"]["mSpezialDockLeft"]["height"] = 42
-	E.global["datatexts"]["customPanels"]["mSpezialDockLeft"]["mouseover"] = false
-	E.global["datatexts"]["customPanels"]["mSpezialDockLeft"]["name"] = "mSpezialDockLeft"
-	E.global["datatexts"]["customPanels"]["mSpezialDockLeft"]["numPoints"] = 4
-	E.global["datatexts"]["customPanels"]["mSpezialDockLeft"]["panelTransparency"] = false
-	E.global["datatexts"]["customPanels"]["mSpezialDockLeft"]["textJustify"] = "CENTER"
-	E.global["datatexts"]["customPanels"]["mSpezialDockLeft"]["tooltipAnchor"] = "ANCHOR_TOPLEFT"
-	E.global["datatexts"]["customPanels"]["mSpezialDockLeft"]["tooltipXOffset"] = -17
-	E.global["datatexts"]["customPanels"]["mSpezialDockLeft"]["tooltipYOffset"] = 4
-	E.global["datatexts"]["customPanels"]["mSpezialDockLeft"]["visibility"] = "[petbattle] hide;show"
-	E.global["datatexts"]["customPanels"]["mSpezialDockLeft"]["width"] = 200
+	E.global["datatexts"]["customPanels"]["mspecialDockLeft"]["backdrop"] = false
+	E.global["datatexts"]["customPanels"]["mspecialDockLeft"]["border"] = true
+	E.global["datatexts"]["customPanels"]["mspecialDockLeft"]["fonts"]["enable"] = false
+	E.global["datatexts"]["customPanels"]["mspecialDockLeft"]["fonts"]["font"] = "PT Sans Narrow"
+	E.global["datatexts"]["customPanels"]["mspecialDockLeft"]["fonts"]["fontOutline"] = "OUTLINE"
+	E.global["datatexts"]["customPanels"]["mspecialDockLeft"]["fonts"]["fontSize"] = 12
+	E.global["datatexts"]["customPanels"]["mspecialDockLeft"]["frameLevel"] = 1
+	E.global["datatexts"]["customPanels"]["mspecialDockLeft"]["frameStrata"] = "MEDIUM"
+	E.global["datatexts"]["customPanels"]["mspecialDockLeft"]["growth"] = "HORIZONTAL"
+	E.global["datatexts"]["customPanels"]["mspecialDockLeft"]["height"] = 42
+	E.global["datatexts"]["customPanels"]["mspecialDockLeft"]["mouseover"] = false
+	E.global["datatexts"]["customPanels"]["mspecialDockLeft"]["name"] = "mspecialDockLeft"
+	E.global["datatexts"]["customPanels"]["mspecialDockLeft"]["numPoints"] = 4
+	E.global["datatexts"]["customPanels"]["mspecialDockLeft"]["panelTransparency"] = false
+	E.global["datatexts"]["customPanels"]["mspecialDockLeft"]["textJustify"] = "CENTER"
+	E.global["datatexts"]["customPanels"]["mspecialDockLeft"]["tooltipAnchor"] = "ANCHOR_TOPLEFT"
+	E.global["datatexts"]["customPanels"]["mspecialDockLeft"]["tooltipXOffset"] = -17
+	E.global["datatexts"]["customPanels"]["mspecialDockLeft"]["tooltipYOffset"] = 4
+	E.global["datatexts"]["customPanels"]["mspecialDockLeft"]["visibility"] = "[petbattle] hide;show"
+	E.global["datatexts"]["customPanels"]["mspecialDockLeft"]["width"] = 200
 
-	E.db["datatexts"]["panels"]["mSpezialDockLeft"][1] = "mCharacter"
-	E.db["datatexts"]["panels"]["mSpezialDockLeft"][2] = "mItemLevel"
-	E.db["datatexts"]["panels"]["mSpezialDockLeft"][3] = "mGuild"
-	E.db["datatexts"]["panels"]["mSpezialDockLeft"][4] = "mFriends"
-	E.db["datatexts"]["panels"]["mSpezialDockLeft"]["enable"] = enable
+	E.db["datatexts"]["panels"]["mspecialDockLeft"][1] = "mCharacter"
+	E.db["datatexts"]["panels"]["mspecialDockLeft"][2] = "mItemLevel"
+	E.db["datatexts"]["panels"]["mspecialDockLeft"][3] = "mGuild"
+	E.db["datatexts"]["panels"]["mspecialDockLeft"][4] = "mFriends"
+	E.db["datatexts"]["panels"]["mspecialDockLeft"]["enable"] = enable
 
-	E.global["datatexts"]["customPanels"]["mSpezialDockRight"]["backdrop"] = false
-	E.global["datatexts"]["customPanels"]["mSpezialDockRight"]["border"] = true
-	E.global["datatexts"]["customPanels"]["mSpezialDockRight"]["fonts"]["enable"] = false
-	E.global["datatexts"]["customPanels"]["mSpezialDockRight"]["fonts"]["font"] = "PT Sans Narrow"
-	E.global["datatexts"]["customPanels"]["mSpezialDockRight"]["fonts"]["fontOutline"] = "OUTLINE"
-	E.global["datatexts"]["customPanels"]["mSpezialDockRight"]["fonts"]["fontSize"] = 12
-	E.global["datatexts"]["customPanels"]["mSpezialDockRight"]["frameLevel"] = 1
-	E.global["datatexts"]["customPanels"]["mSpezialDockRight"]["frameStrata"] = "MEDIUM"
-	E.global["datatexts"]["customPanels"]["mSpezialDockRight"]["growth"] = "HORIZONTAL"
-	E.global["datatexts"]["customPanels"]["mSpezialDockRight"]["height"] = 42
-	E.global["datatexts"]["customPanels"]["mSpezialDockRight"]["mouseover"] = false
-	E.global["datatexts"]["customPanels"]["mSpezialDockRight"]["name"] = "mSpezialDockRight"
-	E.global["datatexts"]["customPanels"]["mSpezialDockRight"]["numPoints"] = 4
-	E.global["datatexts"]["customPanels"]["mSpezialDockRight"]["panelTransparency"] = false
-	E.global["datatexts"]["customPanels"]["mSpezialDockRight"]["textJustify"] = "CENTER"
-	E.global["datatexts"]["customPanels"]["mSpezialDockRight"]["tooltipAnchor"] = "ANCHOR_TOPLEFT"
-	E.global["datatexts"]["customPanels"]["mSpezialDockRight"]["tooltipXOffset"] = -17
-	E.global["datatexts"]["customPanels"]["mSpezialDockRight"]["tooltipYOffset"] = 4
-	E.global["datatexts"]["customPanels"]["mSpezialDockRight"]["visibility"] = "[petbattle] hide;show"
-	E.global["datatexts"]["customPanels"]["mSpezialDockRight"]["width"] = 200
+	E.global["datatexts"]["customPanels"]["mspecialDockRight"]["backdrop"] = false
+	E.global["datatexts"]["customPanels"]["mspecialDockRight"]["border"] = true
+	E.global["datatexts"]["customPanels"]["mspecialDockRight"]["fonts"]["enable"] = false
+	E.global["datatexts"]["customPanels"]["mspecialDockRight"]["fonts"]["font"] = "PT Sans Narrow"
+	E.global["datatexts"]["customPanels"]["mspecialDockRight"]["fonts"]["fontOutline"] = "OUTLINE"
+	E.global["datatexts"]["customPanels"]["mspecialDockRight"]["fonts"]["fontSize"] = 12
+	E.global["datatexts"]["customPanels"]["mspecialDockRight"]["frameLevel"] = 1
+	E.global["datatexts"]["customPanels"]["mspecialDockRight"]["frameStrata"] = "MEDIUM"
+	E.global["datatexts"]["customPanels"]["mspecialDockRight"]["growth"] = "HORIZONTAL"
+	E.global["datatexts"]["customPanels"]["mspecialDockRight"]["height"] = 42
+	E.global["datatexts"]["customPanels"]["mspecialDockRight"]["mouseover"] = false
+	E.global["datatexts"]["customPanels"]["mspecialDockRight"]["name"] = "mspecialDockRight"
+	E.global["datatexts"]["customPanels"]["mspecialDockRight"]["numPoints"] = 4
+	E.global["datatexts"]["customPanels"]["mspecialDockRight"]["panelTransparency"] = false
+	E.global["datatexts"]["customPanels"]["mspecialDockRight"]["textJustify"] = "CENTER"
+	E.global["datatexts"]["customPanels"]["mspecialDockRight"]["tooltipAnchor"] = "ANCHOR_TOPLEFT"
+	E.global["datatexts"]["customPanels"]["mspecialDockRight"]["tooltipXOffset"] = -17
+	E.global["datatexts"]["customPanels"]["mspecialDockRight"]["tooltipYOffset"] = 4
+	E.global["datatexts"]["customPanels"]["mspecialDockRight"]["visibility"] = "[petbattle] hide;show"
+	E.global["datatexts"]["customPanels"]["mspecialDockRight"]["width"] = 200
 
-	E.db["datatexts"]["panels"]["mSpezialDockRight"][1] = "mLFDTool"
-	E.db["datatexts"]["panels"]["mSpezialDockRight"][2] = "mProfession"
-	E.db["datatexts"]["panels"]["mSpezialDockRight"][3] = "mCollectionsJourna"
-	E.db["datatexts"]["panels"]["mSpezialDockRight"][4] = "mMainMenu"
-	E.db["datatexts"]["panels"]["mSpezialDockRight"]["enable"] = enable
+	E.db["datatexts"]["panels"]["mspecialDockRight"][1] = "mLFDTool"
+	E.db["datatexts"]["panels"]["mspecialDockRight"][2] = "mProfession"
+	E.db["datatexts"]["panels"]["mspecialDockRight"][3] = "mCollectionsJourna"
+	E.db["datatexts"]["panels"]["mspecialDockRight"][4] = "mMainMenu"
+	E.db["datatexts"]["panels"]["mspecialDockRight"]["enable"] = enable
 
-	E.global["datatexts"]["customPanels"]["mSpezialDockTime"]["backdrop"] = false
-	E.global["datatexts"]["customPanels"]["mSpezialDockTime"]["border"] = true
-	E.global["datatexts"]["customPanels"]["mSpezialDockTime"]["fonts"]["enable"] = true
-	E.global["datatexts"]["customPanels"]["mSpezialDockTime"]["fonts"]["font"] = "PT Sans Narrow"
-	E.global["datatexts"]["customPanels"]["mSpezialDockTime"]["fonts"]["fontOutline"] = "OUTLINE"
-	E.global["datatexts"]["customPanels"]["mSpezialDockTime"]["fonts"]["fontSize"] = 24
-	E.global["datatexts"]["customPanels"]["mSpezialDockTime"]["frameLevel"] = 1
-	E.global["datatexts"]["customPanels"]["mSpezialDockTime"]["frameStrata"] = "MEDIUM"
-	E.global["datatexts"]["customPanels"]["mSpezialDockTime"]["growth"] = "VERTICAL"
-	E.global["datatexts"]["customPanels"]["mSpezialDockTime"]["height"] = 21
-	E.global["datatexts"]["customPanels"]["mSpezialDockTime"]["mouseover"] = false
-	E.global["datatexts"]["customPanels"]["mSpezialDockTime"]["name"] = "mSpezialDockTime"
-	E.global["datatexts"]["customPanels"]["mSpezialDockTime"]["numPoints"] = 1
-	E.global["datatexts"]["customPanels"]["mSpezialDockTime"]["panelTransparency"] = false
-	E.global["datatexts"]["customPanels"]["mSpezialDockTime"]["textJustify"] = "CENTER"
-	E.global["datatexts"]["customPanels"]["mSpezialDockTime"]["tooltipAnchor"] = "ANCHOR_TOPLEFT"
-	E.global["datatexts"]["customPanels"]["mSpezialDockTime"]["tooltipXOffset"] = -17
-	E.global["datatexts"]["customPanels"]["mSpezialDockTime"]["tooltipYOffset"] = 4
-	E.global["datatexts"]["customPanels"]["mSpezialDockTime"]["visibility"] = "[petbattle] hide;show"
-	E.global["datatexts"]["customPanels"]["mSpezialDockTime"]["width"] = 100
+	E.global["datatexts"]["customPanels"]["mspecialDockTime"]["backdrop"] = false
+	E.global["datatexts"]["customPanels"]["mspecialDockTime"]["border"] = true
+	E.global["datatexts"]["customPanels"]["mspecialDockTime"]["fonts"]["enable"] = true
+	E.global["datatexts"]["customPanels"]["mspecialDockTime"]["fonts"]["font"] = "PT Sans Narrow"
+	E.global["datatexts"]["customPanels"]["mspecialDockTime"]["fonts"]["fontOutline"] = "OUTLINE"
+	E.global["datatexts"]["customPanels"]["mspecialDockTime"]["fonts"]["fontSize"] = 24
+	E.global["datatexts"]["customPanels"]["mspecialDockTime"]["frameLevel"] = 1
+	E.global["datatexts"]["customPanels"]["mspecialDockTime"]["frameStrata"] = "MEDIUM"
+	E.global["datatexts"]["customPanels"]["mspecialDockTime"]["growth"] = "VERTICAL"
+	E.global["datatexts"]["customPanels"]["mspecialDockTime"]["height"] = 21
+	E.global["datatexts"]["customPanels"]["mspecialDockTime"]["mouseover"] = false
+	E.global["datatexts"]["customPanels"]["mspecialDockTime"]["name"] = "mspecialDockTime"
+	E.global["datatexts"]["customPanels"]["mspecialDockTime"]["numPoints"] = 1
+	E.global["datatexts"]["customPanels"]["mspecialDockTime"]["panelTransparency"] = false
+	E.global["datatexts"]["customPanels"]["mspecialDockTime"]["textJustify"] = "CENTER"
+	E.global["datatexts"]["customPanels"]["mspecialDockTime"]["tooltipAnchor"] = "ANCHOR_TOPLEFT"
+	E.global["datatexts"]["customPanels"]["mspecialDockTime"]["tooltipXOffset"] = -17
+	E.global["datatexts"]["customPanels"]["mspecialDockTime"]["tooltipYOffset"] = 4
+	E.global["datatexts"]["customPanels"]["mspecialDockTime"]["visibility"] = "[petbattle] hide;show"
+	E.global["datatexts"]["customPanels"]["mspecialDockTime"]["width"] = 100
 
-	E.db["datatexts"]["panels"]["mSpezialDockTime"][1] = "Time"
-	E.db["datatexts"]["panels"]["mSpezialDockTime"]["enable"] = enable
+	E.db["datatexts"]["panels"]["mspecialDockTime"][1] = "Time"
+	E.db["datatexts"]["panels"]["mspecialDockTime"]["enable"] = enable
 
-	E.global["datatexts"]["customPanels"]["mSpezialDockDate"]["backdrop"] = false
-	E.global["datatexts"]["customPanels"]["mSpezialDockDate"]["border"] = true
-	E.global["datatexts"]["customPanels"]["mSpezialDockDate"]["fonts"]["enable"] = false
-	E.global["datatexts"]["customPanels"]["mSpezialDockDate"]["fonts"]["fontOutline"] = "OUTLINE"
-	E.global["datatexts"]["customPanels"]["mSpezialDockDate"]["fonts"]["fontSize"] = 12
-	E.global["datatexts"]["customPanels"]["mSpezialDockDate"]["frameLevel"] = 1
-	E.global["datatexts"]["customPanels"]["mSpezialDockDate"]["frameStrata"] = "MEDIUM"
-	E.global["datatexts"]["customPanels"]["mSpezialDockDate"]["growth"] = "VERTICAL"
-	E.global["datatexts"]["customPanels"]["mSpezialDockDate"]["height"] = 22
-	E.global["datatexts"]["customPanels"]["mSpezialDockDate"]["mouseover"] = false
-	E.global["datatexts"]["customPanels"]["mSpezialDockDate"]["name"] = "mSpezialDockDate"
-	E.global["datatexts"]["customPanels"]["mSpezialDockDate"]["numPoints"] = 1
-	E.global["datatexts"]["customPanels"]["mSpezialDockDate"]["panelTransparency"] = false
-	E.global["datatexts"]["customPanels"]["mSpezialDockDate"]["textJustify"] = "CENTER"
-	E.global["datatexts"]["customPanels"]["mSpezialDockDate"]["tooltipAnchor"] = "ANCHOR_TOPLEFT"
-	E.global["datatexts"]["customPanels"]["mSpezialDockDate"]["tooltipXOffset"] = -17
-	E.global["datatexts"]["customPanels"]["mSpezialDockDate"]["tooltipYOffset"] = 4
-	E.global["datatexts"]["customPanels"]["mSpezialDockDate"]["visibility"] = "[petbattle] hide;show"
-	E.global["datatexts"]["customPanels"]["mSpezialDockDate"]["width"] = 100
+	E.global["datatexts"]["customPanels"]["mspecialDockDate"]["backdrop"] = false
+	E.global["datatexts"]["customPanels"]["mspecialDockDate"]["border"] = true
+	E.global["datatexts"]["customPanels"]["mspecialDockDate"]["fonts"]["enable"] = false
+	E.global["datatexts"]["customPanels"]["mspecialDockDate"]["fonts"]["fontOutline"] = "OUTLINE"
+	E.global["datatexts"]["customPanels"]["mspecialDockDate"]["fonts"]["fontSize"] = 12
+	E.global["datatexts"]["customPanels"]["mspecialDockDate"]["frameLevel"] = 1
+	E.global["datatexts"]["customPanels"]["mspecialDockDate"]["frameStrata"] = "MEDIUM"
+	E.global["datatexts"]["customPanels"]["mspecialDockDate"]["growth"] = "VERTICAL"
+	E.global["datatexts"]["customPanels"]["mspecialDockDate"]["height"] = 22
+	E.global["datatexts"]["customPanels"]["mspecialDockDate"]["mouseover"] = false
+	E.global["datatexts"]["customPanels"]["mspecialDockDate"]["name"] = "mspecialDockDate"
+	E.global["datatexts"]["customPanels"]["mspecialDockDate"]["numPoints"] = 1
+	E.global["datatexts"]["customPanels"]["mspecialDockDate"]["panelTransparency"] = false
+	E.global["datatexts"]["customPanels"]["mspecialDockDate"]["textJustify"] = "CENTER"
+	E.global["datatexts"]["customPanels"]["mspecialDockDate"]["tooltipAnchor"] = "ANCHOR_TOPLEFT"
+	E.global["datatexts"]["customPanels"]["mspecialDockDate"]["tooltipXOffset"] = -17
+	E.global["datatexts"]["customPanels"]["mspecialDockDate"]["tooltipYOffset"] = 4
+	E.global["datatexts"]["customPanels"]["mspecialDockDate"]["visibility"] = "[petbattle] hide;show"
+	E.global["datatexts"]["customPanels"]["mspecialDockDate"]["width"] = 100
 
-	E.db["datatexts"]["panels"]["mSpezialDockDate"][1] = "Date"
-	E.db["datatexts"]["panels"]["mSpezialDockDate"]["enable"] = enable
+	E.db["datatexts"]["panels"]["mspecialDockDate"][1] = "Date"
+	E.db["datatexts"]["panels"]["mspecialDockDate"]["enable"] = enable
 
 	if top then
-		E.db["movers"]["DTPanelmSpezialDockBagroundMover"] = "TOP,ElvUIParent,TOP,0,-4"
-		E.db["movers"]["DTPanelmSpezialDockLeftMover"] = "TOP,ElvUIParent,TOP,-153,-7"
-		E.db["movers"]["DTPanelmSpezialDockDateMover"] = "TOP,ElvUIParent,TOP,0,-32"
-		E.db["movers"]["DTPanelmSpezialDockTimeMover"] = "TOP,ElvUIParent,TOP,0,-8"
-		E.db["movers"]["DTPanelmSpezialDockRightMover"] = "TOP,ElvUIParent,TOP,152,-7"
+		E.db["movers"]["DTPanelmspecialDockBagroundMover"] = "TOP,ElvUIParent,TOP,0,-4"
+		E.db["movers"]["DTPanelmspecialDockLeftMover"] = "TOP,ElvUIParent,TOP,-153,-7"
+		E.db["movers"]["DTPanelmspecialDockDateMover"] = "TOP,ElvUIParent,TOP,0,-32"
+		E.db["movers"]["DTPanelmspecialDockTimeMover"] = "TOP,ElvUIParent,TOP,0,-8"
+		E.db["movers"]["DTPanelmspecialDockRightMover"] = "TOP,ElvUIParent,TOP,152,-7"
 	else
-		E.db["movers"]["DTPanelmSpezialDockBagroundMover"] = "BOTTOM,ElvUIParent,BOTTOM,0,4"
-		E.db["movers"]["DTPanelmSpezialDockLeftMover"] = "BOTTOM,ElvUIParent,BOTTOM,-153,7"
-		E.db["movers"]["DTPanelmSpezialDockDateMover"] = "BOTTOM,ElvUIParent,BOTTOM,0,4"
-		E.db["movers"]["DTPanelmSpezialDockTimeMover"] = "BOTTOM,ElvUIParent,BOTTOM,0,28"
-		E.db["movers"]["DTPanelmSpezialDockRightMover"] = "BOTTOM,ElvUIParent,BOTTOM,152,7"
+		E.db["movers"]["DTPanelmspecialDockBagroundMover"] = "BOTTOM,ElvUIParent,BOTTOM,0,4"
+		E.db["movers"]["DTPanelmspecialDockLeftMover"] = "BOTTOM,ElvUIParent,BOTTOM,-153,7"
+		E.db["movers"]["DTPanelmspecialDockDateMover"] = "BOTTOM,ElvUIParent,BOTTOM,0,4"
+		E.db["movers"]["DTPanelmspecialDockTimeMover"] = "BOTTOM,ElvUIParent,BOTTOM,0,28"
+		E.db["movers"]["DTPanelmspecialDockRightMover"] = "BOTTOM,ElvUIParent,BOTTOM,152,7"
 	end
 
 	E:StaggeredUpdateAll(nil, true)

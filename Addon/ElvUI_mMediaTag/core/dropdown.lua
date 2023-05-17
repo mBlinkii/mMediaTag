@@ -1,5 +1,4 @@
-local mMT, E, L, V, P, G = unpack((select(2, ...)))
-local LSM = E.Libs.LSM
+local E = unpack(ElvUI)
 
 --Lua functions
 local tinsert = tinsert
@@ -7,15 +6,10 @@ local format = format
 
 --WoW API / Variables
 local _G = _G
-local GetCursorPosition = GetCursorPosition
 local InCombatLockdown = InCombatLockdown
-local UnitClass = UnitClass
 local CreateFrame = CreateFrame
 local strfind = strfind
 local ToggleFrame = ToggleFrame
-
--- ElvUI
-local ElvUF = ElvUF
 
 --Variables
 local autoHideDelay = 2
@@ -99,14 +93,12 @@ function mMT:mDropDown(list, frame, menuparent, ButtonWidth, HideDelay)
 				frame.buttons[i].hoverTex:SetAllPoints()
 				frame.buttons[i].hoverTex:SetTexture(texture)
 
-				local _, unitClass = UnitClass("player")
-				local class = ElvUF.colors.class[unitClass]
 				if E.Retail then
-					frame.buttons[i].hoverTex:SetGradient("HORIZONTAL", {r = class[1], g = class[2], b = class[3], a = 0.75},
-						{r = mMT:ColorCheck(class[1] + 0.4), g = mMT:ColorCheck(class[2] + 0.4), b = mMT:ColorCheck(class[3] + 0.4), a = 0.75})
+					frame.buttons[i].hoverTex:SetGradient("HORIZONTAL", {r = mMT.ClassColor.r, g = mMT.ClassColor.g, b = mMT.ClassColor.b, a = 0.75},
+						{r = mMT:ColorCheck(mMT.ClassColor.r + 0.4), g = mMT:ColorCheck(mMT.ClassColor.g + 0.4), b = mMT:ColorCheck(mMT.ClassColor.b + 0.4), a = 0.75})
 				else
-					frame.buttons[i].hoverTex:SetGradientAlpha("HORIZONTAL", class[1], class[2], class[3], 0.75,
-						mMT:ColorCheck(class[1] + 0.4), mMT:ColorCheck(class[2] + 0.4), mMT:ColorCheck(class[3] + 0.4), 0.75)
+					frame.buttons[i].hoverTex:SetGradientAlpha("HORIZONTAL", mMT.ClassColor.r, mMT.ClassColor.g, mMT.ClassColor.b, 0.75,
+						mMT:ColorCheck(mMT.ClassColor.r + 0.4), mMT:ColorCheck(mMT.ClassColor.g + 0.4), mMT:ColorCheck(mMT.ClassColor.b + 0.4), 0.75)
 				end
 				frame.buttons[i].hoverTex:SetBlendMode("BLEND")
 				frame.buttons[i].hoverTex:Hide()

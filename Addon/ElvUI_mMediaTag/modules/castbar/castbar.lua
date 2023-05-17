@@ -1,9 +1,8 @@
-local mMT, E, L, V, P, G = unpack((select(2, ...)))
+local E, L = unpack(ElvUI)
 local NP = E:GetModule("NamePlates")
 local UF = E:GetModule("UnitFrames")
 
 local GetSpecializationInfo = GetSpecializationInfo
-local GetActiveSpecGroup = GetActiveSpecGroup
 local GetSpellCooldown = GetSpellCooldown
 local interruptSpellID = nil
 local OutOfRange = false
@@ -61,6 +60,14 @@ local interruptSpellList = {
 	[1467] = 351338,
 	[1468] = 351338,
 }
+
+local ImportantSpellsInterrupt = {}
+local ImportantSpellsStun = {}
+
+function mMT:UpdateImportantSpells()
+	ImportantSpellsInterrupt = E.db.mMT.importantspells.interrupt.ids
+	ImportantSpellsStun = E.db.mMT.importantspells.stun.ids
+end
 function mMT:mMediaTag_interruptOnCD()
 	if interruptSpellID then
 		local cdStart, _, enabled, _ = GetSpellCooldown(interruptSpellID)
@@ -73,7 +80,6 @@ end
 function mMT:UpdateInterruptSpell()
 	interruptSpellID = interruptSpellList[select(1, GetSpecializationInfo(GetSpecialization()))]
 end
-
 local function CreateMarker(castbar)
 	castbar.InterruptMarker = castbar:CreateTexture(nil, "overlay")
 	castbar.InterruptMarker:SetDrawLayer("overlay", 4)
@@ -85,6 +91,125 @@ local function CreateMarker(castbar)
 		E.db.mMT.interruptoncd.readymarkercolor.b
 	)
 	castbar.InterruptMarker:Hide()
+end
+
+local function SetCastbarColor(castbar, colorA, colorB)
+	if colorA and colorB then
+		castbar:GetStatusBarTexture():SetGradient(
+			"HORIZONTAL",
+			{ r = colorA.r, g = colorA.g, b = colorA.b, a = 1 },
+			{ r = colorB.r, g = colorB.g, b = colorB.b, a = 1 }
+		)
+	else
+		castbar:SetStatusBarColor(colorA.r, colorA.g, colorA.b)
+	end
+end
+
+local function IconColor(icon, stun, auto)
+	local color = { 1, 1, 1 }
+	if auto then
+		if stun then
+			color = E.db.mMT.importantspells.stun.colora
+			icon:SetVertexColor(color.r, color.g, color.b, 1)
+		else
+			color = E.db.mMT.importantspells.interrupt.colora
+			icon:SetVertexColor(color.r, color.g, color.b, 1)
+		end
+	else
+		icon:SetVertexColor(1, 1, 1, 1)
+	end
+end
+
+local function ImportantSpellIcon(castbar, set, stun)
+	if set then
+		if not castbar.mImportantIcon then
+			castbar.mImportantIcon = castbar:CreateTexture("ImportantSpellIcon", "OVERLAY")
+			castbar.mImportantIcon:SetWidth(E.db.mMT.importantspells.icon.sizeX)
+			castbar.mImportantIcon:SetHeight(E.db.mMT.importantspells.icon.sizeY)
+			castbar.mImportantIcon:SetPoint(
+				E.db.mMT.importantspells.icon.anchor,
+				E.db.mMT.importantspells.icon.posX,
+				E.db.mMT.importantspells.icon.posY
+			)
+		else
+			castbar.mImportantIcon:ClearAllPoints()
+			castbar.mImportantIcon:SetWidth(E.db.mMT.importantspells.icon.sizeX)
+			castbar.mImportantIcon:SetHeight(E.db.mMT.importantspells.icon.sizeY)
+			castbar.mImportantIcon:SetPoint(
+				E.db.mMT.importantspells.icon.anchor,
+				E.db.mMT.importantspells.icon.posX,
+				E.db.mMT.importantspells.icon.posY
+			)
+		end
+
+		if castbar.mImportantIcon then
+			if stun then
+				castbar.mImportantIcon:SetTexture(mMT.Media.Castbar[E.db.mMT.importantspells.icon.stun])
+			else
+				castbar.mImportantIcon:SetTexture(mMT.Media.Castbar[E.db.mMT.importantspells.icon.interrupt])
+			end
+			castbar.mImportantIcon:Show()
+		end
+
+		IconColor(castbar.mImportantIcon, stun, E.db.mMT.importantspells.icon.auto)
+	elseif castbar.mImportantIcon then
+		castbar.mImportantIcon:Hide()
+	end
+end
+
+local function ImportantSpellIconReplace(castbar, set, stun)
+	if castbar.ButtonIcon then
+		if set then
+			if stun then
+				castbar.ButtonIcon:SetTexture(mMT.Media.Castbar[E.db.mMT.importantspells.icon.stun])
+			else
+				castbar.ButtonIcon:SetTexture(mMT.Media.Castbar[E.db.mMT.importantspells.icon.interrupt])
+			end
+			IconColor(castbar.ButtonIcon, stun, E.db.mMT.importantspells.icon.auto)
+		end
+	end
+end
+
+local function ImportantSpells(castbar)
+	local ImportantInterrupt = ImportantSpellsInterrupt[castbar.spellID]
+	local ImportantStun = ImportantSpellsStun[castbar.spellID]
+
+	if ImportantInterrupt == ImportantStun then
+		mMT:Print(L["Error, Interrupt and Stun Spell IDs are the same!"])
+		return
+	end
+
+	if E.db.mMT.importantspells.interrupt.enable then
+		if ImportantInterrupt then
+			if E.db.mMT.importantspells.gradient then
+				SetCastbarColor(
+					castbar,
+					E.db.mMT.importantspells.interrupt.colora,
+					E.db.mMT.importantspells.interrupt.colorb
+				)
+			else
+				SetCastbarColor(castbar, E.db.mMT.importantspells.interrupt.colora)
+			end
+		elseif ImportantStun then
+			if E.db.mMT.importantspells.gradient then
+				SetCastbarColor(castbar, E.db.mMT.importantspells.stun.colora, E.db.mMT.importantspells.stun.colorb)
+			else
+				SetCastbarColor(castbar, E.db.mMT.importantspells.stun.colora)
+			end
+		end
+	end
+
+	ImportantSpellIconReplace(
+		castbar,
+		(E.db.mMT.importantspells.icon.replace and ImportantInterrupt or ImportantStun),
+		ImportantStun
+	)
+
+	ImportantSpellIcon(
+		castbar,
+		(E.db.mMT.importantspells.icon.enable and ImportantInterrupt or ImportantStun),
+		ImportantStun
+	)
 end
 local function InterruptChecker(castbar)
 	if castbar.unit == "vehicle" or castbar.unit == "player" then
@@ -128,13 +253,9 @@ local function InterruptChecker(castbar)
 
 		if E.db.mMT.interruptoncd.outofrange and OutOfRange then
 			if E.db.mMT.interruptoncd.gradient then
-				castbar:GetStatusBarTexture():SetGradient(
-					"HORIZONTAL",
-					{ r = colorOutOfRange.r, g = colorOutOfRange.g, b = colorOutOfRange.b, a = 1 },
-					{ r = colorOutOfRangeB.r, g = colorOutOfRangeB.g, b = colorOutOfRangeB.b, a = 1 }
-				)
+				SetCastbarColor(castbar, colorOutOfRange, colorOutOfRangeB)
 			else
-				castbar:SetStatusBarColor(colorOutOfRange.r, colorOutOfRange.g, colorOutOfRange.b)
+				SetCastbarColor(castbar, colorOutOfRange)
 			end
 		elseif interruptCD and interruptCD > inactivetime and interruptReadyInTime then
 			if not castbar.InterruptMarker then
@@ -150,25 +271,21 @@ local function InterruptChecker(castbar)
 			castbar.InterruptMarker:Show()
 
 			if E.db.mMT.interruptoncd.gradient then
-				castbar:GetStatusBarTexture():SetGradient(
-					"HORIZONTAL",
-					{ r = colorInterruptinTime.r, g = colorInterruptinTime.g, b = colorInterruptinTime.b, a = 1 },
-					{ r = colorInterruptinTimeb.r, g = colorInterruptinTimeb.g, b = colorInterruptinTimeb.b, a = 1 }
-				)
+				SetCastbarColor(castbar, colorInterruptinTime, colorInterruptinTimeb)
 			else
-				castbar:SetStatusBarColor(colorInterruptinTime.r, colorInterruptinTime.g, colorInterruptinTime.b)
+				SetCastbarColor(castbar, colorInterruptinTime)
 			end
 		elseif interruptCD and interruptCD > inactivetime then
 			if E.db.mMT.interruptoncd.gradient then
-				castbar:GetStatusBarTexture():SetGradient(
-					"HORIZONTAL",
-					{ r = colorInterruptonCD.r, g = colorInterruptonCD.g, b = colorInterruptonCD.b, a = 1 },
-					{ r = colorInterruptonCDb.r, g = colorInterruptonCDb.g, b = colorInterruptonCDb.b, a = 1 }
-				)
+				SetCastbarColor(castbar, colorInterruptonCD, colorInterruptonCDb)
 			else
-				castbar:SetStatusBarColor(colorInterruptonCD.r, colorInterruptonCD.g, colorInterruptonCD.b)
+				SetCastbarColor(castbar, colorInterruptonCD)
 			end
 		end
+	end
+
+	if castbar.spellID and (E.db.mMT.importantspells.interrupt.enable or E.db.mMT.importantspells.stun.enable) then
+		ImportantSpells(castbar)
 	end
 end
 function mMT:mSetupCastbar()

@@ -1,10 +1,8 @@
-local mMT, E, L, V, P, G = unpack((select(2, ...)))
+local E, L, V, P, G = unpack(ElvUI)
 local LSM = E.Libs.LSM
 
 --Lua functions
-local mInsert = table.insert
 local format = format
-local wipe = wipe
 
 --WoW API / Variables
 local GetInstanceInfo = GetInstanceInfo
@@ -75,10 +73,10 @@ local instanceDifficulty = {
 }
 
 local shortNames = {
-	[2451] = "ULOT", --Uldaman: Legacy of Tyr
+	[2451] = "ULD", --Uldaman: Legacy of Tyr
 	[2515] = "AV", --The Azure Vault
 	[2516] = "NO", --The Nokhud Offensive
-	[2519] = "NL", --Neltharus
+	[2519] = "NELT", --Neltharus
 	[2520] = "BH", --Brackenhide Hollow
 	[2521] = "RLP", --Ruby Life Pools
 	[2526] = "AA", --Algeth'ar Academy
@@ -121,6 +119,8 @@ local shortNames = {
 	[1753] = "SOTT", --Seat of the Triumvirate
 	[1594] = "TM", --The MOTHERLODE!!
 	[2522] = "VOTI", --Vault of the Incarnates
+	[1754] = "FH", -- Freehold
+	[1841] = "UNDR", -- The Underrot
 }
 
 local colors = {
@@ -216,23 +216,23 @@ local function GetKeystoneLevelandColor()
 	elseif keyStoneLevel <= 9 then
 		color =
 			mMT:ColorFade(E.db.mMT.instancedifficulty.mpa, E.db.mMT.instancedifficulty.mpb, percentValue[keyStoneLevel])
-		return format("%s%s|r", color.color, keyStoneLevel)
+			if color then return format("%s%s|r", color.color, keyStoneLevel) end
 	elseif keyStoneLevel <= 14 then
 		color =
 			mMT:ColorFade(E.db.mMT.instancedifficulty.mpb, E.db.mMT.instancedifficulty.mpc, percentValue[keyStoneLevel])
-		return format("%s%s|r", color.color, keyStoneLevel)
+			if color then return format("%s%s|r", color.color, keyStoneLevel) end
 	elseif keyStoneLevel <= 19 then
 		color =
 			mMT:ColorFade(E.db.mMT.instancedifficulty.mpc, E.db.mMT.instancedifficulty.mpd, percentValue[keyStoneLevel])
-		return format("%s%s|r", color.color, keyStoneLevel)
+			if color then return format("%s%s|r", color.color, keyStoneLevel) end
 	elseif keyStoneLevel >= 24 then
 		color =
 			mMT:ColorFade(E.db.mMT.instancedifficulty.mpd, E.db.mMT.instancedifficulty.mpe, percentValue[keyStoneLevel])
-		return format("%s%s|r", color.color, keyStoneLevel)
+			if color then return format("%s%s|r", color.color, keyStoneLevel) end
 	elseif keyStoneLevel >= 29 then
 		color =
 			mMT:ColorFade(E.db.mMT.instancedifficulty.mpe, E.db.mMT.instancedifficulty.mpf, percentValue[keyStoneLevel])
-		return format("%s%s|r", color.color, keyStoneLevel)
+			if color then return format("%s%s|r", color.color, keyStoneLevel) end
 	else
 		return format("%s%s|r", colors.mpf.color, keyStoneLevel)
 	end
@@ -278,11 +278,22 @@ function mMT:GetDungeonInfo(datatext)
 			difficultyColor = instanceDifficulty[34] and instanceDifficulty[34].c or "|CFFFFFFFF"
 			difficultyShort = instanceDifficulty[34] and instanceDifficulty[34].d or ""
 			if datatext then
-				text = format("%s%s|r %s%s|r", isGuildParty and colors.guild.color or colors.name.color, name, difficultyColor, difficultyShort)
+				text = format(
+					"%s%s|r %s%s|r",
+					isGuildParty and colors.guild.color or colors.name.color,
+					name,
+					difficultyColor,
+					difficultyShort
+				)
 			else
-				text = format("%s%s|r\n%s%s|r", isGuildParty and colors.guild.color or colors.name.color, name, difficultyColor, difficultyShort)
+				text = format(
+					"%s%s|r\n%s%s|r",
+					isGuildParty and colors.guild.color or colors.name.color,
+					name,
+					difficultyColor,
+					difficultyShort
+				)
 			end
-
 		else
 			if datatext then
 				text = format(

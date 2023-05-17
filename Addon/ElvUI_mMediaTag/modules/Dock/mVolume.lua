@@ -1,4 +1,4 @@
-local mMT, E, L, V, P, G = unpack((select(2, ...)))
+local E, L = unpack(ElvUI)
 local DT = E:GetModule("DataTexts")
 
 --Lua functions
@@ -69,7 +69,7 @@ local function SelectStream(_, ...)
 
 	if E.db.mMT.dockdatatext.volume.showtext then
 		panel.mIcon.TextA:SetFormattedText(
-			mMT:mClassColorString(),
+			mMT.ClassColor.string,
 			GetStreamString(activeStream or "Sound_MasterVolume", true)
 		)
 	end
@@ -82,7 +82,7 @@ local function ToggleStream(_, ...)
 
 	if E.db.mMT.dockdatatext.volume.showtext then
 		panel.mIcon.TextA:SetFormattedText(
-			mMT:mClassColorString(),
+			mMT.ClassColor.string,
 			GetStreamString(activeStream or "Sound_MasterVolume", true)
 		)
 	end
@@ -166,7 +166,7 @@ local function OnMouseWheel(self, delta)
 
 	if E.db.mMT.dockdatatext.volume.showtext then
 		self.mIcon.TextA:SetFormattedText(
-			mMT:mClassColorString(),
+			mMT.ClassColor.string,
 			GetStreamString(activeStream or "Sound_MasterVolume", true)
 		)
 	end
@@ -182,16 +182,18 @@ end
 local function OnEvent(self, event)
 	self.mSettings = {
 		Name = mTextName,
-		IconTexture = mMT.Media.DockIcons[E.db.mMT.dockdatatext.volume.icon],
-		Notifications = false,
-		Text = E.db.mMT.dockdatatext.volume.showtext,
-		Spezial = E.db.mMT.dockdatatext.volume.showtext,
-		IconColor = E.db.mMT.dockdatatext.volume.iconcolor,
-		CustomColor = E.db.mMT.dockdatatext.volume.customcolor,
+		text = {
+			onlytext = false,
+			special = E.db.mMT.dockdatatext.volume.showtext,
+			textA = E.db.mMT.dockdatatext.volume.showtext,
+			textB = false,
+		},
+		icon = {
+			texture = mMT.Media.DockIcons[E.db.mMT.dockdatatext.volume.icon],
+			color = E.db.mMT.dockdatatext.volume.iconcolor,
+			customcolor = E.db.mMT.dockdatatext.volume.customcolor,
+		},
 	}
-
-	mMT:DockInitialisation(self)
-
 	activeStream = AudioStreams[activeIndex]
 	panel = self
 
@@ -201,12 +203,12 @@ local function OnEvent(self, event)
 		self.mScript = true
 	end
 
+	local text = nil
 	if E.db.mMT.dockdatatext.volume.showtext then
-		self.mIcon.TextA:SetFormattedText(
-			mMT:mClassColorString(),
-			GetStreamString(activeStream or "Sound_MasterVolume", true)
-		)
+			text = GetStreamString(activeStream or "Sound_MasterVolume", true)
 	end
+
+	mMT:DockInitialization(self, event, text)
 end
 
 local function OnLeave(self)

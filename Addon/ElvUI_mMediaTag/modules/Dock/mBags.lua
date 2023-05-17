@@ -1,4 +1,4 @@
-local mMT, E, L, V, P, G = unpack((select(2, ...)))
+local E, L = unpack(ElvUI)
 local DT = E:GetModule("DataTexts")
 local B = E:GetModule("Bags")
 
@@ -25,7 +25,7 @@ local C_WowTokenPublic_UpdateMarketPrice = C_WowTokenPublic.UpdateMarketPrice
 local C_WowTokenPublic_GetCurrentMarketPrice = C_WowTokenPublic.GetCurrentMarketPrice
 local C_Timer_NewTicker = C_Timer.NewTicker
 
-local Profit, Spent, Ticker = 0, 0
+local Profit, Spent, Ticker = 0, 0, nil
 local resetCountersFormatter = strjoin("", "|cffaaaaaa", L["Reset Session Data: Hold Ctrl + Right Click"], "|r")
 local resetInfoFormatter = strjoin("", "|cffaaaaaa", L["Reset Character Data: Hold Shift + Right Click"], "|r")
 
@@ -36,12 +36,6 @@ local menuList, myGold = {}, {}
 local totalGold, totalHorde, totalAlliance = 0, 0, 0
 
 local iconString = "|T%s:16:16:0:0:64:64:4:60:4:60|t"
-
-local BAG_TYPES = {
-	[0x0001] = "Quiver",
-	[0x0002] = "Ammo Pouch",
-	[0x0004] = "Soul Bag",
-}
 
 local function sortFunction(a, b)
 	return a.amount > b.amount
@@ -282,22 +276,23 @@ end
 local function OnEvent(self, event, ...)
 	self.mSettings = {
 		Name = mTextName,
-		IconTexture = mMT.Media.DockIcons[E.db.mMT.dockdatatext.bag.icon],
+		text = {
+			onlytext = false,
+			special = true,
+			textA = (E.db.mMT.dockdatatext.bag.text ~= 5),
+			textB = false,
+		},
+		icon = {
+			texture = mMT.Media.DockIcons[E.db.mMT.dockdatatext.bag.icon],
+			color = E.db.mMT.dockdatatext.bag.iconcolor,
+			customcolor = E.db.mMT.dockdatatext.bag.customcolor,
+		},
 		Notifications = false,
-		Text = E.db.mMT.dockdatatext.bag.text ~= 5 and E.db.mMT.dockdatatext.bag.text or false,
-		Spezial = true,
-		IconColor = E.db.mMT.dockdatatext.bag.iconcolor,
-		CustomColor = E.db.mMT.dockdatatext.bag.customcolor,
 	}
+	local text = nil
 
-	mMT:DockInitialisation(self)
-
-	if self.mSettings.Text then
-		if self.text ~= "" then
-			self.text:SetText("")
-		end
-		local text = nil
-		if self.mSettings.Text == 4 then
+	if self.mSettings.text.textA then
+		if E.db.mMT.dockdatatext.bag.text == 4 then
 			if not IsLoggedIn() then
 				return
 			end
@@ -337,18 +332,19 @@ local function OnEvent(self, event, ...)
 				end
 			end
 
-			if self.mSettings.Text == 1 then
+			if E.db.mMT.dockdatatext.bag.text == 1 then
 				text = free
-			elseif self.mSettings.Text == 2 then
+			elseif E.db.mMT.dockdatatext.bag.text == 2 then
 				text = total - free
-			elseif self.mSettings.Text == 3 then
+			elseif E.db.mMT.dockdatatext.bag.text == 3 then
 				text = free .. "/" .. total
 			else
 				text = total - free .. "/" .. total
 			end
 		end
-		self.mIcon.TextA:SetText(text or "")
 	end
+
+	mMT:DockInitialization(self, event, text)
 end
 
 local function OnLeave(self)
@@ -377,24 +373,12 @@ local function OnClick(self, btn)
 	end
 end
 
-DT:RegisterDatatext(
-	mTextName,
-	"mDock",
-	{
-		"PLAYER_MONEY",
-		"SEND_MAIL_MONEY_CHANGED",
-		"SEND_MAIL_COD_CHANGED",
-		"PLAYER_TRADE_MONEY",
-		"TRADE_MONEY_CHANGED",
-		"CURRENCY_DISPLAY_UPDATE",
-		"PERKS_PROGRAM_CURRENCY_REFRESH",
-	},
-	OnEvent,
-	nil,
-	OnClick,
-	OnEnter,
-	OnLeave,
-	mText,
-	nil,
-	nil
-)
+DT:RegisterDatatext(mTextName, "mDock", {
+	"PLAYER_MONEY",
+	"SEND_MAIL_MONEY_CHANGED",
+	"SEND_MAIL_COD_CHANGED",
+	"PLAYER_TRADE_MONEY",
+	"TRADE_MONEY_CHANGED",
+	"CURRENCY_DISPLAY_UPDATE",
+	"PERKS_PROGRAM_CURRENCY_REFRESH",
+}, OnEvent, nil, OnClick, OnEnter, OnLeave, mText, nil, nil)

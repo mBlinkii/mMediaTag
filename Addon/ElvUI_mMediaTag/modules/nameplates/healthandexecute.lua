@@ -1,84 +1,152 @@
-local mMT, E, L, V, P, G = unpack((select(2, ...)))
+local E = unpack(ElvUI)
 
 local NP = E:GetModule("NamePlates")
 local LSM = LibStub("LibSharedMedia-3.0")
 
-local CreateFrame = CreateFrame
-local IsResting = IsResting
-
 local HM_NPCs = {
 	-- DF Dungeons
-	[190485] = { 50 }, --Stormvein - Ruby Life pools
-	[193435] = { 50 }, --Kyrakka - Ruby Life pools
-	[188252] = { 66, 33 }, --Melidrussa Chillworn - Ruby Life pools
-	[197697] = { 50 }, -- Flamegullet - Ruby Life Pools
-	[186738] = { 75, 50, 25 }, --Umbrelskul - The Azure Vault
-	[186125] = { 30 }, --Tricktotem - Brackenhide Hollow
-	[186122] = { 30 }, --Rira Hackclaw - Brackenhide Hollow
-	[186124] = { 30 }, --Gashtooth - Brackenhide Hollow
-	[185534] = { 10 }, --Bonebolt Hunter - Brackenhide Hollow
-	[186121] = { 4 }, -- Decatriarch Wratheye - Brackenhide Hollow
-	[194816] = { 10 }, -- Forgewrought Monstrosity - Neltharus
-	[189719] = { 15 }, --Watcher Irideus - Halls of Infusion
-	[190407] = { 20 }, --Aqua Rager - Halls of Infusion
-	[186151] = { 60 }, --Balakar Khan - The Nokhud Offensive
-	[184020] = { 40 }, -- Hulking Berserker-  Uldaman: Legacy of Tyr
-	[184580] = { 10 }, -- Olaf -  Uldaman: Legacy of Tyr
-	[184581] = { 10 }, -- Baelog -  Uldaman: Legacy of Tyr
-	[184582] = { 10 }, -- Eric "The Swift" -  Uldaman: Legacy of Tyr
-	[184422] = { 70, 30 }, --Emberon - Uldaman: Legacy of Tyr
+	-- Algeth'ar Academy
+	[191736] = { 75, 45 }, --Crawth
+
+	-- Brackenhide Hollow
+	[186125] = { 15 }, --Tricktotem
+	[186122] = { 15 }, --Rira Hackclaw
+	[186124] = { 15 }, --Gashtooth
+	[186121] = { 4 }, -- Decatriarch Wratheye
+	[185534] = { 15 }, --Bonebolt Hunter
+	[185508] = { 15 }, --Claw Fighter
+	[186206] = { 15 }, --Cruel Bonecrusher
+	[185528] = { 15 }, --Trickclaw Mystic
+	[189719] = { 15 }, --Watcher Irideus
+
+	-- Halls of Infusion
+	[190407] = { 20 }, --Aqua Rager
+
+	-- Neltharus
+	[194816] = { 10 }, -- Forgewrought Monstrosity
+
+	-- Ruby Life pools
+	[190485] = { 50 }, --Stormvein
+	[190484] = { 50 }, --Kyrakka
+	[193435] = { 50 }, --Kyrakka
+	[188252] = { 66, 33 }, --Melidrussa Chillworn
+	[197697] = { 50 }, -- Flamegullet
+
+	-- The Azure Vault
+	[186738] = { 75, 50, 25 }, --Umbrelskul
+
+	-- The Nokhud Offensive
+	[186151] = { 60 }, --Balakar Khan
+
+	-- Uldaman: Legacy of Tyr
+	[184020] = { 40 }, -- Hulking Berserker
+	[184580] = { 10 }, -- Olaf
+	[184581] = { 10 }, -- Baelog
+	[184582] = { 10 }, -- Eric "The Swift"
+	[184422] = { 70, 30 }, --Emberon
 
 	-- SL Dungeons
-	[164451] = { 40 }, --dessia the decapirator - theater of pain
-	[164463] = { 40 }, --Paceran the Virulent - theater of pain
-	[164461] = { 40 }, --Sathel the Accursed - theater of pain
-	[165946] = { 50 }, -- ~mordretha - thather of pain
-	[164501] = { 70, 40, 10 }, --mistcaller -mists of  tina
-	[164926] = { 50 }, --Drust Boughbreaker - mists of tina
-	[164804] = { 22 }, -- Droman Oulfarran - mists of tina
-	[164267] = { 66, 33 }, --Magrave Stradama - Plaguefall
-	[164967] = { 66, 33 }, --Doctor ickus - Plaguefall
-	[169861] = { 66, 33 }, -- Ickor Bileflesh - Plaguefall
-	[164218] = { 70, 40 }, --Lord Chamberlain - Halls of Atonemen
-	[162099] = { 50 }, --General Kaal Boss fight- Sanguine Depths
-	[162061] = { 70, 30 }, --Devos - Spires of Ascension
-	[163121] = { 70 }, -- Stitched vanguard - Necrotic Wake
-	[164558] = { 80, 60, 40, 20 }, --Hakkar the Soulflayer - De Other Side
-	[177269] = { 40 }, --So'leah - Tazavesh: Gambit
-	[175806] = { 66, 33 }, --So'azmi - Tazavesh: Streets
+	-- De Other Side
+	[164558] = { 80, 60, 40, 20 }, --Hakkar the Soulflayer
+
+	-- Halls of Atonemen
+	[164218] = { 70, 40 }, --Lord Chamberlain
+
+	-- Mists of Tirna Scithe
+	[164501] = { 70, 40, 10 }, --Mistcaller
+	[164926] = { 50 }, --Drust Boughbreaker
+	[164804] = { 22 }, -- Droman Oulfarran
+
+	-- Plaguefall
+	[164267] = { 66, 33 }, --Magrave Stradama
+	[164967] = { 66, 33 }, --Doctor ickus
+	[169861] = { 66, 33 }, -- Ickor Bileflesh
+
+	-- Sanguine Depths
+	[162099] = { 50 }, --General Kaal Boss fight
+
+	-- Spires of Ascension
+	[162061] = { 70, 30 }, --Devos
+
+	-- Tazavesh
+	[177269] = { 40 }, --So'leah (Gambit)
+	[175806] = { 66, 33 }, --So'azmi (Streets)
+
+	-- The Necrotic Wake
+	[163121] = { 70 }, -- Stitched vanguard
+
+	-- Theater of Pain
+	[164451] = { 40 }, --Dessia the Decapirator
+	[164463] = { 40 }, --Paceran the Virulent
+	[164461] = { 40 }, --Sathel the Accursed
+	[165946] = { 50 }, --Mordretha
 
 	-- BFA Dungeons
-	[133345] = { 20 }, --Feckless Assistant - The MOTHERLODE!!
-	[150276] = { 50 }, --Heavy Scrapbots - Mechagon: Junk
-	[152009] = { 30 }, --Malfunctioning Scrapbots - Mechagon: Jun
-	[144298] = { 30 }, --Defense Bot Mk III (casts a shield) -Mechagon: Work
+
+	-- Freehold
+	[126983] = { 60, 30 }, -- Harlan Sweete
+	[126832] = { 75 }, --Skycap'n Kragg
+
+	-- Operation: Mechagon
+	[150276] = { 50 }, --Heavy Scrapbots (Junk)
+	[152009] = { 30 }, --Malfunctioning Scrapbots (Junk)
+	[144298] = { 30 }, --Defense Bot Mk III (Workshop)
+
+	--The MOTHERLODE!!
+	[133345] = { 20 }, --Feckless Assistant
+
+	--The Underrot
+	[133007] = { 85, 68, 51, 34, 17 }, --Unbound Abomination
 
 	-- Draenor Dungeons
-	[81236] = { 50 }, --Grimrail Technician - Grimrail Depot
-	[79545] = { 60 }, --Nitrogg Thundertower - Grimrail Depot
-	[77803] = { 20 }, --Railmaster Rocketspark - Grimrail Depot
-	[81297] = { 50 }, --Dreadfang -> Fleshrender Nok'gar - Iron Docks
+	-- Grimrail Depot
+	[81236] = { 50 }, -- Grimrail Technician
+	[79545] = { 60 }, -- Nitrogg Thundertower
+	[77803] = { 20 }, -- Railmaster Rocketspark
+
+	-- Iron Docks
+	[81297] = { 50 }, -- Dreadfang -> Fleshrender Nok'gar
+
+	-- Shadowmoon Burial Grounds
+	[76057] = { 20 }, -- Carrion Worm
 
 	-- Legion Dungeons
-	[114790] = { 66, 33 }, -- Viz'aduum - Kara: Upper
-	[114261] = { 50 }, --Toe Knee - Kara: Lower
-	[114260] = { 50 }, -- Mrrgria - Kara: Lower
-	[114265] = { 50 }, --Gang Ruffian - Kara: Lower
-	[114783] = { 50 }, --Reformed Maiden - Kara: Lower
-	[114312] = { 60 }, -- Moroes - Kara: Lower
-	[96574] = { 30 }, --Stormforged Sentinel - Halls of Valor
-	[95676] = { 80 }, --Odyn - Halls of Valor
-	[94960] = { 10 }, -- Hymdall - Halls of Valor
-	[95674] = { 60 }, -- Fenryr - Halls of Valor
-	[104215] = { 25 }, -- Patrouillenoffizier Gerdo
+	-- Court of Stars
+	[104215] = { 25 }, -- Patrol Captain Gerdo
+
+	-- Return to Karazhan (Lower)
+	[114261] = { 50 }, --Toe Knee
+	[114260] = { 50 }, -- Mrrgria
+	[114265] = { 50 }, --Gang Ruffian
+	[114783] = { 50 }, --Reformed Maiden
+	[114312] = { 60 }, -- Moroes
+
+	-- Return to Karazhan (Upper)
+	[114790] = { 66, 33 }, -- Viz'aduum
+
+	-- Halls of Valor
+	[96574] = { 30 }, --Stormforged Sentinel
+	[97087] = { 30 }, --Valarjar Champion
+	[95674] = { 60 }, -- Fenryr P1
+	[94960] = { 10 }, -- Hymdall
+	[95676] = { 80 }, --Odyn
+
+	-- Neltharion's Lair
+	[91005] = { 20 }, -- Naraxas
+	[113537] = { 15 }, -- Emberhusk Dominator
 
 	-- Pandaria Dungeons
+	-- Temple of The Jade Serpent
 	[59544] = { 50 }, --The Nodding Tiger
-	[56732] = { 70, 30 }, --Liu Flammenherz
+	[56732] = { 70, 30 }, -- Liu Flameheart
 
 	-- DF Raid
-	[181378] = { 66, 33 }, --Kurog Grimtotem, Vault of the Incarnates
-	[194990] = { 50 }, -- Stormseeker Acolyte, Vault of the Incarnates
+	[194990] = { 50 }, -- Stormseeker Acolyte, Vault
+	[189492] = { 65 }, -- Raszageth, Vault
+	[201261] = { 80, 60, 40 }, -- Kazzara, Aberrus
+	[201773] = { 50 }, -- Chamber: Eternal Blaze, Aberrus
+	[201774] = { 50 }, -- Chamber: Essence of Shadow, Aberrus
+	[199659] = { 25 }, -- Assault:Warlord Kagni, Aberrus
 
 	-- SL Raid
 	[181548] = { 40 }, --Absolution: Prototype Pantheon, Sepulcher of the First Ones
@@ -100,10 +168,12 @@ local HM_NPCs = {
 	[167406] = { 70.5, 37.5 }, --Sire Denathrius, Castle Nathria
 	[173162] = { 66, 33 }, --Lord Evershade, Castle Nathria
 
-	-- World
+	-- Kortia (SL)
 	[180013] = { 20 }, --Escaped Wilderling, Shadowlands - Korthia
 	[179931] = { 80, 60 }, --Relic Breaker krelva, Shadowlands - Korthia
-	[193532] = { 40 }, --Bazual, The Dreaded Flame, Dhragonflight
+
+	--Dragon Isles (DF)
+	[193532] = { 40 }, --Bazual, The Dreaded Flame - WordBoss
 
 	--Mage Tower
 	[116410] = { 33 }, -- Karam Magespear

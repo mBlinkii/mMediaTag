@@ -1,11 +1,9 @@
-local mMT, E, L, V, P, G = unpack((select(2, ...)))
+local E, L = unpack(ElvUI)
 local DT = E:GetModule("DataTexts")
 
 --Lua functions
 local _G = _G
 local GetInventoryItemDurability = GetInventoryItemDurability
-local ToggleCharacter = ToggleCharacter
-local InCombatLockdown = InCombatLockdown
 local GetInventoryItemTexture = GetInventoryItemTexture
 local GetInventoryItemLink = GetInventoryItemLink
 local GetMoneyString = GetMoneyString
@@ -13,7 +11,6 @@ local GetMoneyString = GetMoneyString
 --Variables
 local mText = format("Dock %s", L["Durability"])
 local mTextName = "mDurability"
-local DURABILITY = DURABILITY
 local REPAIR_COST = REPAIR_COST
 local tooltipString = "%d%%"
 local totalDurability = 0
@@ -82,20 +79,20 @@ local function OnEnter(self)
 end
 
 local function OnEvent(self, event, ...)
-	local Color = E.db.mMT.dockdatatext.durability.color
 	self.mSettings = {
 		Name = mTextName,
-		IconTexture = mMT.Media.DockIcons[E.db.mMT.dockdatatext.durability.icon],
-		Notifications = false,
-		Text = true,
-		Center = false,
-		Spezial = true,
-		OnlyText = E.db.mMT.dockdatatext.durability.onlytext,
-		IconColor = E.db.mMT.dockdatatext.durability.iconcolor,
-		CustomColor = E.db.mMT.dockdatatext.durability.customcolor,
+		text = {
+			onlytext = E.db.mMT.dockdatatext.durability.onlytext,
+			special = true,
+			textA = not E.db.mMT.dockdatatext.durability.onlytext,
+			textB = false,
+		},
+		icon = {
+			texture = mMT.Media.DockIcons[E.db.mMT.dockdatatext.durability.icon],
+			color = E.db.mMT.dockdatatext.durability.iconcolor,
+			customcolor = E.db.mMT.dockdatatext.durability.customcolor,
+		},
 	}
-
-	mMT:DockInitialisation(self)
 
 	totalDurability = 100
 	totalRepairCost = 0
@@ -105,7 +102,7 @@ local function OnEvent(self, event, ...)
 	for index in pairs(slots) do
 		local currentDura, maxDura = GetInventoryItemDurability(index)
 		if currentDura and maxDura > 0 then
-			local perc, repairCost = (currentDura / maxDura) * 100
+			local perc, repairCost = (currentDura / maxDura) * 100, 0
 			invDurability[index] = perc
 
 			if perc < totalDurability then
@@ -126,36 +123,30 @@ local function OnEvent(self, event, ...)
 		end
 	end
 
-	local r, g, b = E:ColorGradient(totalDurability * 0.01, 1, 0.1, 0.1, 1, 1, 0.1, 0.1, 1, 0.1)
-	local hex = E:RGBToHex(r, g, b)
+	local r, g, b = 1, 1, 1
+	local hex = nil
+	local text = nil
 
-	if self.mSettings.OnlyText and totalDurability then
-		self.text:SetFormattedText("%s%d%%|r", hex, totalDurability)
+	if E.db.mMT.dockdatatext.durability.color then
+		r, g, b = E:ColorGradient(totalDurability * 0.01, 1, 0.1, 0.1, 1, 1, 0.1, 0.1, 1, 0.1)
+		hex = E:RGBToHex(r, g, b)
+	end
+
+	if E.db.mMT.dockdatatext.durability.onlytext and totalDurability then
+		if E.db.mMT.dockdatatext.durability.color then
+			self.text:SetFormattedText("%s%d%%|r", hex, totalDurability)
+		else
+			self.text:SetFormattedText("%s%d%%|r", E.media.hexvaluecolor, totalDurability)
+		end
 	else
 		if self.text ~= "" then
 			self.text:SetText("")
 		end
 
-		if Color == "default" then
-			self.mIcon.TextA:SetFormattedText("%s%d%%|r", hex, totalDurability)
-		elseif Color == "custom" then
-			self.mIcon.TextA:SetFormattedText(
-				strjoin(
-					"",
-					E:RGBToHex(
-						E.db.mMT.dockdatatext.fontcolor.r,
-						E.db.mMT.dockdatatext.fontcolor.g,
-						E.db.mMT.dockdatatext.fontcolor.b
-					),
-					"%s|r"
-				),
-				format("%d%%|r", totalDurability)
-			)
-		else
-			self.mIcon.TextA:SetFormattedText(mMT:mClassColorString(), format("%d%%|r", totalDurability))
-		end
+		text = format("%d%%|r", totalDurability)
 	end
 
+	mMT:DockInitialization(self, event, text, nil, hex)
 
 	if mCheckDurability() then
 		E:Flash(self, 0.5, true)

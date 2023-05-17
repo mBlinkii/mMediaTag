@@ -1,5 +1,3 @@
-local mMT, E, L, V, P, G = unpack((select(2, ...)))
-
 mMT.Media.CombatIcons = {
 	CI1 = "Interface\\AddOns\\ElvUI_mMediaTag\\media\\icons\\datatext\\combat1.tga",
 	CI2 = "Interface\\AddOns\\ElvUI_mMediaTag\\media\\icons\\datatext\\combat2.tga",
@@ -19,6 +17,24 @@ mMT.Media.RollIcons = {
 	RI2 = "Interface\\AddOns\\ElvUI_mMediaTag\\media\\icons\\roll\\roll2.tga",
 	RI3 = "Interface\\AddOns\\ElvUI_mMediaTag\\media\\icons\\roll\\roll3.tga",
 	RI4 = "Interface\\AddOns\\ElvUI_mMediaTag\\media\\icons\\roll\\roll4.tga",
+}
+
+mMT.Media.Castbar = {
+	CAST01 = "Interface\\AddOns\\ElvUI_mMediaTag\\media\\icons\\castbar\\cast01.tga",
+	CAST02 = "Interface\\AddOns\\ElvUI_mMediaTag\\media\\icons\\castbar\\cast02.tga",
+	CAST03 = "Interface\\AddOns\\ElvUI_mMediaTag\\media\\icons\\castbar\\cast03.tga",
+	CAST04 = "Interface\\AddOns\\ElvUI_mMediaTag\\media\\icons\\castbar\\cast04.tga",
+	CAST05 = "Interface\\AddOns\\ElvUI_mMediaTag\\media\\icons\\castbar\\cast05.tga",
+	CAST06 = "Interface\\AddOns\\ElvUI_mMediaTag\\media\\icons\\castbar\\cast06.tga",
+	CAST07 = "Interface\\AddOns\\ElvUI_mMediaTag\\media\\icons\\castbar\\cast07.tga",
+	CAST08 = "Interface\\AddOns\\ElvUI_mMediaTag\\media\\icons\\castbar\\cast08.tga",
+	CAST09 = "Interface\\AddOns\\ElvUI_mMediaTag\\media\\icons\\castbar\\cast09.tga",
+	CAST10 = "Interface\\AddOns\\ElvUI_mMediaTag\\media\\icons\\castbar\\cast10.tga",
+	CAST11 = "Interface\\AddOns\\ElvUI_mMediaTag\\media\\icons\\castbar\\cast11.tga",
+	CAST12 = "Interface\\AddOns\\ElvUI_mMediaTag\\media\\icons\\castbar\\cast12.tga",
+	CAST13 = "Interface\\AddOns\\ElvUI_mMediaTag\\media\\icons\\castbar\\cast13.tga",
+	CAST14 = "Interface\\AddOns\\ElvUI_mMediaTag\\media\\icons\\castbar\\cast14.tga",
+	CAST15 = "Interface\\AddOns\\ElvUI_mMediaTag\\media\\icons\\castbar\\cast15.tga",
 }
 
 mMT.Media.ChatIcons = {

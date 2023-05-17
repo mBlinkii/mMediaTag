@@ -1,4 +1,4 @@
-local mMT, E, L, V, P, G = unpack((select(2, ...)))
+local E = unpack(ElvUI)
 local CH = E:GetModule("Chat")
 local UF = E:GetModule("UnitFrames")
 

@@ -1,8 +1,7 @@
-local mMT, E, L, V, P, G = unpack((select(2, ...)))
+local E = unpack(ElvUI)
 local LSM = E.Libs.LSM
 
 -- Lib Globals
-local unpack = unpack
 local format = format
 
 -- WoW Globals
@@ -81,10 +80,8 @@ local function mSetupHeaderFont(headdertext)
 		headdertext:SetTextColor(c.r, c.g, c.b)
 
 		if E.db.mMT.objectivetracker.header.textshadow then
-			headdertext:SetShadowColor(0, 0, 0, 1)
 			headdertext:SetShadowOffset(1, -1)
 		else
-			headdertext:SetShadowColor(0, 0, 0, 0)
 			headdertext.SetShadowColor = function() end
 		end
 
@@ -109,10 +106,8 @@ local function mSetupTitleFont(titletext)
 		titletext:SetTextColor(c.r, c.g, c.b)
 
 		if E.db.mMT.objectivetracker.title.textshadow then
-			titletext:SetShadowColor(0, 0, 0, 1)
 			titletext:SetShadowOffset(1, -1)
 		else
-			titletext:SetShadowColor(0, 0, 0, 0)
 			titletext.SetShadowColor = function() end
 		end
 
@@ -140,10 +135,8 @@ local function mSetupQuestFont(linetext, state)
 		linetext:SetTextColor(c.r, c.g, c.b)
 
 		if E.db.mMT.objectivetracker.text.textshadow then
-			linetext:SetShadowColor(0, 0, 0, 1)
 			linetext:SetShadowOffset(1, -1)
 		else
-			linetext:SetShadowColor(0, 0, 0, 0)
 			linetext.SetShadowColor = function() end
 		end
 
