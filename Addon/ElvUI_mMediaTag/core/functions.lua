@@ -64,6 +64,6 @@ function mMT:IsNumber(number)
 	end
 end
 
-function mMT:Print(text)
-	print(mMT.Name, text)
+function mMT:Print(...)
+	print(mMT.Name .. ":", ...)
 end

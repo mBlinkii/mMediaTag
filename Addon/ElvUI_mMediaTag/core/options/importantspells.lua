@@ -1,4 +1,6 @@
 local E, L, V, P, G = unpack(ElvUI)
+local LibDeflate = E.Libs.Deflate
+local D = E:GetModule("Distributor")
 
 local tinsert = tinsert
 local selectedInterruptID = nil
@@ -6,7 +8,9 @@ local selectedStunID = nil
 
 local valuesInterruptID = {}
 local valuesStunID = {}
-
+local exportText = nil
+local importText = ""
+local button = "none"
 local function UpdateTableInterrupt()
 	wipe(valuesInterruptID)
 	for key, _ in pairs(E.db.mMT.importantspells.interrupt.ids) do
@@ -21,7 +25,7 @@ local function UpdateTableStun()
 	end
 end
 local function configTable()
-    local icons = {}
+	local icons = {}
 
 	for key, icon in pairs(mMT.Media.Castbar) do
 		icons[key] = E:TextureString(icon, ":14:14") .. " " .. key
@@ -65,7 +69,7 @@ local function configTable()
 			inline = true,
 			name = L["Settings"],
 			args = {
-				gardient = {
+				gradient = {
 					order = 1,
 					type = "toggle",
 					name = L["Gradient  Mode"],
@@ -157,8 +161,162 @@ local function configTable()
 				},
 			},
 		},
-		header_ids_interrupt = {
+		header_icon = {
 			order = 5,
+			type = "group",
+			inline = true,
+			name = L["Icon"],
+			args = {
+				toggle_icon = {
+					order = 1,
+					type = "toggle",
+					name = L["Enable Extra Icon"],
+					get = function(info)
+						return E.db.mMT.importantspells.icon.enable
+					end,
+					set = function(info, value)
+						E.db.mMT.importantspells.icon.enable = value
+					end,
+				},
+				toggle_replace = {
+					order = 2,
+					type = "toggle",
+					name = L["Replace Castbar Icon"],
+					get = function(info)
+						return E.db.mMT.importantspells.icon.replace
+					end,
+					set = function(info, value)
+						E.db.mMT.importantspells.icon.replace = value
+					end,
+				},
+				toggle_auto = {
+					order = 3,
+					type = "toggle",
+					name = L["Auto color Icon"],
+					get = function(info)
+						return E.db.mMT.importantspells.icon.auto
+					end,
+					set = function(info, value)
+						E.db.mMT.importantspells.icon.auto = value
+					end,
+				},
+				spacer1 = {
+					order = 4,
+					type = "description",
+					name = "\n",
+				},
+				range_x = {
+					order = 5,
+					name = L["Extra Icon size X"],
+					type = "range",
+					min = 16,
+					max = 128,
+					step = 2,
+					get = function(info)
+						return E.db.mMT.importantspells.icon.sizeX
+					end,
+					set = function(info, value)
+						E.db.mMT.importantspells.icon.sizeX = value
+					end,
+				},
+				range_y = {
+					order = 6,
+					name = L["Extra Icon size Y"],
+					type = "range",
+					min = 16,
+					max = 128,
+					step = 2,
+					get = function(info)
+						return E.db.mMT.importantspells.icon.sizeY
+					end,
+					set = function(info, value)
+						E.db.mMT.importantspells.icon.sizeY = value
+					end,
+				},
+				spacer2 = {
+					order = 7,
+					type = "description",
+					name = "\n",
+				},
+				select_interrupt = {
+					order = 8,
+					type = "select",
+					name = L["Interruptible Icon"],
+					get = function(info)
+						return E.db.mMT.importantspells.icon.interrupt
+					end,
+					set = function(info, value)
+						E.db.mMT.importantspells.icon.interrupt = value
+					end,
+					values = icons,
+				},
+				select_stun = {
+					order = 9,
+					type = "select",
+					name = L["Not Interruptible Icon"],
+					get = function(info)
+						return E.db.mMT.importantspells.icon.stun
+					end,
+					set = function(info, value)
+						E.db.mMT.importantspells.icon.stun = value
+					end,
+					values = icons,
+				},
+				spacer3 = {
+					order = 10,
+					type = "description",
+					name = "\n",
+				},
+				select_anchor = {
+					order = 11,
+					type = "select",
+					name = L["Extra Icon Anchor"],
+					get = function(info)
+						return E.db.mMT.importantspells.icon.anchor
+					end,
+					set = function(info, value)
+						E.db.mMT.importantspells.icon.anchor = value
+					end,
+					values = {
+						TOP = "TOP",
+						BOTTOM = "BOTTOM",
+						LEFT = "LEFT",
+						RIGHT = "RIGHT",
+						CENTER = "CENTER",
+					},
+				},
+				range_posx = {
+					order = 12,
+					name = L["Position"] .. " X",
+					type = "range",
+					min = -256,
+					max = 256,
+					step = 1,
+					get = function(info)
+						return E.db.mMT.importantspells.icon.posX
+					end,
+					set = function(info, value)
+						E.db.mMT.importantspells.icon.posX = value
+					end,
+				},
+				range_posy = {
+					order = 13,
+					name = L["Position"] .. " Y",
+					type = "range",
+					min = -256,
+					max = 256,
+					step = 1,
+					get = function(info)
+						return E.db.mMT.importantspells.icon.posY
+					end,
+					set = function(info, value)
+						E.db.mMT.importantspells.icon.posY = value
+					end,
+				},
+			},
+		},
+		header_ids_interrupt = {
+			order = 6,
 			type = "group",
 			inline = true,
 			name = L["IDs for interruptible Spells"],
@@ -176,7 +334,7 @@ local function configTable()
 							else
 								tinsert(E.db.mMT.importantspells.interrupt.ids, value, true)
 							end
-                            mMT:UpdateImportantSpells()
+							mMT:UpdateImportantSpells()
 						else
 							mMT:Print(L["!! Error - this is not am ID."])
 						end
@@ -208,7 +366,7 @@ local function configTable()
 								E.db.mMT.importantspells.interrupt.ids[tonumber(value)] = nil
 								selectedInterruptID = nil
 							end
-                            mMT:UpdateImportantSpells()
+							mMT:UpdateImportantSpells()
 						else
 							mMT:Print(L["!! Error - this is not am ID."])
 						end
@@ -221,13 +379,13 @@ local function configTable()
 					func = function()
 						wipe(E.db.mMT.importantspells.interrupt.ids)
 						wipe(valuesInterruptID)
-                        mMT:UpdateImportantSpells()
+						mMT:UpdateImportantSpells()
 					end,
 				},
 			},
 		},
 		header_ids_stun = {
-			order = 6,
+			order = 7,
 			type = "group",
 			inline = true,
 			name = L["Spell IDs for |CFFFF006Cnot|r interruptible Spells"],
@@ -245,7 +403,7 @@ local function configTable()
 							else
 								tinsert(E.db.mMT.importantspells.stun.ids, value, true)
 							end
-                            mMT:UpdateImportantSpells()
+							mMT:UpdateImportantSpells()
 						else
 							mMT:Print(L["!! Error - this is not am ID."])
 						end
@@ -277,7 +435,7 @@ local function configTable()
 								E.db.mMT.importantspells.stun.ids[tonumber(value)] = nil
 								selectedStunID = nil
 							end
-                            mMT:UpdateImportantSpells()
+							mMT:UpdateImportantSpells()
 						else
 							mMT:Print(L["!! Error - this is not am ID."])
 						end
@@ -290,111 +448,79 @@ local function configTable()
 					func = function()
 						wipe(E.db.mMT.importantspells.stun.ids)
 						wipe(valuesStunID)
-                        mMT:UpdateImportantSpells()
+						mMT:UpdateImportantSpells()
 					end,
 				},
 			},
 		},
-        header_color_icon = {
-			order = 7,
+		header_importexport = {
+			order = 8,
 			type = "group",
 			inline = true,
-			name = L["Icon"],
+			name = L["Import/ Export of Spell IDs"],
 			args = {
-                toggle_icon = {
+				export_interrupt = {
 					order = 1,
-					type = "toggle",
-					name = L["Enable Extra Icon"],
-					get = function(info)
-						return E.db.mMT.importantspells.icon.enable
-					end,
-					set = function(info, value)
-						E.db.mMT.importantspells.icon.enable = value
+					type = "execute",
+					name = L["Export Interrupt Ids"],
+					func = function()
+						if next(E.db.mMT.importantspells.interrupt.ids) then
+							exportText = mMT:GetExportText(E.db.mMT.importantspells.interrupt.ids, "mMTInterrupt")
+							button = exportText and "export" or "none"
+						end
 					end,
 				},
-                toggle_replace = {
+				export_stun = {
 					order = 2,
-					type = "toggle",
-					name = L["Replace Castbar Icon"],
-					get = function(info)
-						return E.db.mMT.importantspells.icon.replace
-					end,
-					set = function(info, value)
-						E.db.mMT.importantspells.icon.replace = value
+					type = "execute",
+					name = L["Export Stun IDs"],
+					func = function()
+						if next(E.db.mMT.importantspells.stun.ids) then
+							exportText = mMT:GetExportText(E.db.mMT.importantspells.stun.ids, "mMTStun")
+							button = exportText and "export" or "none"
+						end
 					end,
 				},
-                toggle_auto = {
+				import = {
 					order = 3,
-					type = "toggle",
-					name = L["Auto color Icon"],
-					get = function(info)
-						return E.db.mMT.importantspells.icon.auto
-					end,
-					set = function(info, value)
-						E.db.mMT.importantspells.icon.auto = value
+					type = "execute",
+					name = L["Import"],
+					func = function()
+						local profileType, profileData = mMT:GetImportText(importText)
+						if profileType == "mMTStun" then
+							E:CopyTable(E.db.mMT.importantspells.stun.ids, profileData)
+						elseif profileType == "mMTInterrupt" then
+							E:CopyTable(E.db.mMT.importantspells.interrupt.ids, profileData)
+						end
 					end,
 				},
-                spacer1 = {
+				text = {
 					order = 4,
-					type = "description",
-					name = "\n",
-				},
-				range_x = {
-					order = 5,
-					name = L["Extra Icon size X"],
-					type = "range",
-					min = 16,
-					max = 128,
-					step = 2,
-					get = function(info)
-						return E.db.mMT.importantspells.icon.sizeX
+					name = function()
+						-- disable input box button
+						E.Options.args.mMT.args.castbar.args.important.args.header_importexport.args.text.disableButton =
+							true
+						E.Options.args.mMT.args.castbar.args.important.args.header_importexport.args.text.textChanged = function(
+							text
+						)
+							if text ~= importText then
+								importText = text
+							end
+							button = "none"
+						end
+						return L["Output/ Input"]
 					end,
-					set = function(info, value)
-						E.db.mMT.importantspells.icon.sizeX = value
+					type = "input",
+					width = "full",
+					multiline = 10,
+					set = function() end,
+					get = function()
+						if button == "export" and exportText then
+							return exportText
+						else
+							return ""
+						end
 					end,
-				},
-                range_y = {
-					order = 6,
-					name = L["Extra Icon size Y"],
-					type = "range",
-					min = 16,
-					max = 128,
-					step = 2,
-					get = function(info)
-						return E.db.mMT.importantspells.icon.sizeY
-					end,
-					set = function(info, value)
-						E.db.mMT.importantspells.icon.sizeY = value
-					end,
-				},
-                spacer2 = {
-					order = 7,
-					type = "description",
-					name = "\n",
-				},
-                select_interrupt = {
-					order = 8,
-					type = "select",
-					name = L["Interruptible Icon"],
-					get = function(info)
-						return E.db.mMT.importantspells.icon.interrupt
-					end,
-					set = function(info, value)
-						E.db.mMT.importantspells.icon.interrupt = value
-					end,
-					values = icons,
-				},
-                select_stun = {
-					order = 9,
-					type = "select",
-					name = L["Not Interruptible Icon"],
-					get = function(info)
-						return E.db.mMT.importantspells.icon.stun
-					end,
-					set = function(info, value)
-						E.db.mMT.importantspells.icon.stun = value
-					end,
-					values = icons,
 				},
 			},
 		},

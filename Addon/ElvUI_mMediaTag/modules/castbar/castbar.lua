@@ -96,41 +96,52 @@ end
 local function SetCastbarColor(castbar, colorA, colorB)
 	if colorA and colorB then
 		castbar:GetStatusBarTexture():SetGradient(
-					"HORIZONTAL",
-					{ r = colorA.r, g = colorA.g, b = colorA.b, a = 1 },
-					{ r = colorB.r, g = colorB.g, b = colorB.b, a = 1 }
-				)
+			"HORIZONTAL",
+			{ r = colorA.r, g = colorA.g, b = colorA.b, a = 1 },
+			{ r = colorB.r, g = colorB.g, b = colorB.b, a = 1 }
+		)
 	else
 		castbar:SetStatusBarColor(colorA.r, colorA.g, colorA.b)
 	end
 end
 
-local function IconColor(icon, stun)
-	local color = {1, 1, 1}
-	if stun then
-		color = E.db.mMT.importantspells.stun.colora
-		icon:SetVertexColor(color.r, color.g, color.b, 1)
+local function IconColor(icon, stun, auto)
+	local color = { 1, 1, 1 }
+	if auto then
+		if stun then
+			color = E.db.mMT.importantspells.stun.colora
+			icon:SetVertexColor(color.r, color.g, color.b, 1)
+		else
+			color = E.db.mMT.importantspells.interrupt.colora
+			icon:SetVertexColor(color.r, color.g, color.b, 1)
+		end
 	else
-		color = E.db.mMT.importantspells.interrupt.colora
-		icon:SetVertexColor(color.r, color.g, color.b, 1)
+		icon:SetVertexColor(1, 1, 1, 1)
 	end
 end
 
 local function ImportantSpellIcon(castbar, stun)
-	    if not castbar.mImportantIcon then
-		castbar.mImportantIcon = castbar:CreateTexture("BagBuddy_Icon", "BACKGROUND")
-		castbar.mImportantIcon:SetWidth(60)
-		castbar.mImportantIcon:SetHeight(60)
-		castbar.mImportantIcon:SetPoint("TOPLEFT", 7, -6)
-		castbar.mImportantIcon:SetTexture("Interface\\Icons\\INV_Misc_EngGizmos_17")
-		SetPortraitToTexture(castbar.mImportantIcon, "Interface\\Icons\\INV_Misc_EngGizmos_17")
-		else
-			castbar.mImportantIcon:SetTexture("Interface\\Icons\\INV_Misc_EngGizmos_17")
-		end
+	if not castbar.mImportantIcon then
+		castbar.mImportantIcon = castbar:CreateTexture("ImportantSpellIcon", "OVERLAY")
+		castbar.mImportantIcon:SetWidth(E.db.mMT.importantspells.icon.sizeX)
+		castbar.mImportantIcon:SetHeight(E.db.mMT.importantspells.icon.sizeY)
+		castbar.mImportantIcon:SetPoint(E.db.mMT.importantspells.icon.anchor, E.db.mMT.importantspells.icon.posX, E.db.mMT.importantspells.icon.posY)
+	else
+		castbar.mImportantIcon:ClearAllPoints()
+		castbar.mImportantIcon:SetWidth(E.db.mMT.importantspells.icon.sizeX)
+		castbar.mImportantIcon:SetHeight(E.db.mMT.importantspells.icon.sizeY)
+		castbar.mImportantIcon:SetPoint(E.db.mMT.importantspells.icon.anchor, E.db.mMT.importantspells.icon.posX, E.db.mMT.importantspells.icon.posY)
+	end
 
-		if castbar.ButtonIcon then
-			castbar.ButtonIcon:SetTexture("Interface\\Icons\\INV_Misc_EngGizmos_17")
+	if castbar.mImportantIcon then
+		if stun then
+			castbar.mImportantIcon:SetTexture(mMT.Media.Castbar[E.db.mMT.importantspells.icon.stun])
+		else
+			castbar.mImportantIcon:SetTexture(mMT.Media.Castbar[E.db.mMT.importantspells.icon.interrupt])
 		end
+	end
+
+	IconColor(castbar.mImportantIcon, stun, E.db.mMT.importantspells.icon.auto)
 end
 
 local function ImportantSpellIconReplace(castbar, stun)
@@ -141,32 +152,39 @@ local function ImportantSpellIconReplace(castbar, stun)
 			castbar.ButtonIcon:SetTexture(mMT.Media.Castbar[E.db.mMT.importantspells.icon.interrupt])
 		end
 
-		if E.db.mMT.importantspells.icon.auto then
-			IconColor(castbar.ButtonIcon, stun)
-		end
+
+		IconColor(castbar.ButtonIcon, stun, E.db.mMT.importantspells.icon.auto)
 	end
 end
 
 local function ImportantSpells(castbar)
-		if E.db.mMT.importantspells.interrupt.enable and ImportantSpellsInterrupt[castbar.spellID] then
-			if E.db.mMT.importantspells.gradient then
-				SetCastbarColor(castbar, E.db.mMT.importantspells.interrupt.colora, E.db.mMT.importantspells.interrupt.colorb)
-			else
-				SetCastbarColor(castbar, E.db.mMT.importantspells.interrupt.colora)
-			end
-		elseif E.db.mMT.importantspells.stun.enable and ImportantSpellsStun[castbar.spellID] then
-			if E.db.mMT.importantspells.gradient then
-				SetCastbarColor(castbar, E.db.mMT.importantspells.stun.colora, E.db.mMT.importantspells.stun.colorb)
-			else
-				SetCastbarColor(castbar, E.db.mMT.importantspells.stun.colora)
-			end
+	if E.db.mMT.importantspells.interrupt.enable and ImportantSpellsInterrupt[castbar.spellID] then
+		if E.db.mMT.importantspells.gradient then
+			SetCastbarColor(
+				castbar,
+				E.db.mMT.importantspells.interrupt.colora,
+				E.db.mMT.importantspells.interrupt.colorb
+			)
+		else
+			SetCastbarColor(castbar, E.db.mMT.importantspells.interrupt.colora)
 		end
-
-		if E.db.mMT.importantspells.icon.replace then
-			ImportantSpellIconReplace(castbar, ImportantSpellsStun[castbar.spellID])
+	elseif E.db.mMT.importantspells.stun.enable and ImportantSpellsStun[castbar.spellID] then
+		if E.db.mMT.importantspells.gradient then
+			SetCastbarColor(castbar, E.db.mMT.importantspells.stun.colora, E.db.mMT.importantspells.stun.colorb)
+		else
+			SetCastbarColor(castbar, E.db.mMT.importantspells.stun.colora)
 		end
+	end
 
-		--ImportantSpellIcon(castbar)
+	if E.db.mMT.importantspells.icon.replace then
+		ImportantSpellIconReplace(castbar, ImportantSpellsStun[castbar.spellID])
+	end
+
+	if E.db.mMT.importantspells.icon.enable then
+		ImportantSpellIcon(castbar, ImportantSpellsStun[castbar.spellID])
+	end
+
+	--ImportantSpellIcon(castbar)
 end
 local function InterruptChecker(castbar)
 	if castbar.unit == "vehicle" or castbar.unit == "player" then
