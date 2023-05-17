@@ -31,50 +31,51 @@
 ## 🧐 Features <a name = "features"></a>
 
 Media:
-- 5 Diffrent Fonts
+- 5 Different Fonts
 - over 317 Statusbar Textures
 - 5 Borders
-- 16 Bakcgrounds
-- 10 Diffrent Combat icons
-- 18 Diffrent Mail icons
+- 16 Backgrounds
+- 10 Different Combat icons
+- 18 Different Mail icons
 - 4 Resting icons
 - 36 Nameplate Arrows
 
 Tools:
 - Chat Menu Icon for Emotes
 - Roll Button for fast dice from 1-100
-- Keystone to Chat links your Keyston to the party chat when you type !key or !keys into the chat
+- Keystone to Chat links your Keystone to the party chat when you type !key or !keys into the chat
 - Instance Difficulty - replaces the ElvUI Instance Difficulty
 - Mods for the Castbar, different castbar colors if your interrupt is on CD or you are out of range.
+- Mods for the Castbar, highlight important spells by Spell ID.
 - Healthmarker for Nameplates
-- Executemarker for Namplates
+- Executemarker for Nameplates
 - Auto color for Nameplate Border and Glow
 - Tooltip Icon
 - Custom Backgrounds for Healthbar, Powerbar and Castbar
 - Custom Class colors
-- Diffrent Role Icons for Tank/ Heal and DD role
+- Different Role Icons for Tank/ Heal and DD role
 - Skin for Objective Tracker
 - Icons for Ready Check, Phase indicator and Resurrection icon
 
 Datatexts:
 - Combattime with icon
 - Currencies Datatexts for Conquest, Dragon Isles Supplies, Elemental Overflow, Timewarped Badge
-- Cordinates X
-- Cordinates Y
+- Coordinates X
+- Coordinates Y
 - Dungeon with useful information about the M+ rating, Affixes and your Keystone
 - FPS/ MS without Addon Statistics
 - Game Menu
 - M+ Score, with a Dungeon overview
-- Teleports a clickable Menu with diffrent Teleports like Heartstons and Dungeonportals
+- Teleports a clickable Menu with Different Teleports like Hearthstone and Dungeonportals
 
-Special Datattexs mDock:
-- mDock Datatexs, to create your own Dock using the ElvUI Datatext bars
+Special Datatexts mDock:
+- mDock Datatexts, to create your own Dock using the ElvUI Datatext bars
 - Dock Icons for: Achievements, Bags, Store, Calendar, Collection,Durability, Encounter Journal, FPS/ MS, Friends, Guild, Item Level, LFD Tool, Main Menu, Profession, Quest, Spellbook, Talents, Volume
 
 Tags:
-- 75 Tags as Exaple
+- 75 Tags as Example
 - Tags with Icons for Status
-- Tgas with Death and Ghost Icons
+- Tags with Death and Ghost Icons
 - Tags with Targetindicators
 - Tags for Colors
 - Tags for Classification
