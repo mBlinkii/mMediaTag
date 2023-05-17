@@ -20,14 +20,14 @@ function mMT:GetExportText(tbl, profileType)
 end
 
 function mMT:GetImportText(string)
-	local profileInfo, profileType, profileKey, profileData
+	local profileInfo, profileType, profileData
 	local stringType = GetImportStringType(string)
 	if stringType == "Deflate" then
 		local data = gsub(string, "^" .. exportPrefix, "")
 		local decodedData = LibDeflate:DecodeForPrint(data)
 		local decompressed = LibDeflate:DecompressDeflate(decodedData)
 		if not decompressed then
-			mMT:Print("Error decompressing data.")
+			mMT:Print(L["Error decompressing data."])
 			return
 		end
 
@@ -35,16 +35,16 @@ function mMT:GetImportText(string)
 		serializedData, profileInfo = E:SplitString(decompressed, "^^::") -- '^^' indicates the end of the AceSerializer string
 
 		if not profileInfo then
-			mMT:Print("Error importing profile. String is invalid or corrupted!")
+			mMT:Print(L["Error importing profile. String is invalid or corrupted!"])
 			return
 		end
 
 		serializedData = format("%s%s", serializedData, "^^") --Add back the AceSerializer terminator
-		profileType, profileKey = E:SplitString(profileInfo, "::")
+		profileType, _ = E:SplitString(profileInfo, "::")
 		success, profileData = D:Deserialize(serializedData)
 
 		if not success then
-			mMT:Print("Error deserializing:", profileData)
+			mMT:Print(L["Error deserializing:"], profileData)
 			return
 		end
 	end
