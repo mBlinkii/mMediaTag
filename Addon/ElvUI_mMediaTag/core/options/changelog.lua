@@ -2,7 +2,8 @@ local E, L, V, P, G = unpack(ElvUI)
 
 local _G = _G
 local tinsert = tinsert
-local change_log_important_string, change_log_new_string, change_log_update_string, change_log_fix_string = nil, nil, nil, nil
+local change_log_important_string, change_log_new_string, change_log_update_string, change_log_fix_string =
+	nil, nil, nil, nil
 local green, blue, yellow, red, endtag = "|CFF00D80E", "|CFF00A9FF", "|CFFFFCC00", "|CFFFF0048", "|r"
 local new, fix, update, important, dash =
 	"|TInterface\\Addons\\ElvUI_mMediaTag\\media\\icons\\misc\\star.tga:14:14|t",
@@ -19,25 +20,19 @@ local change_log_important = {
 }
 
 local change_log_new = {
-	"Addon Compartment Tooltip",
-	"Add in Game Changlog",
-	"New Icons for Dock",
-	"New Game Menu Icons",
-	"New Teleport Datatext Icons",
-	"Custom Ready Check Icons",
-	"Custom Phase Icons and Color",
-	"Custom Resurrection icons",
-	"New Dock Icon for Bags",
-	"New Quick Setup Menu",
+	"NEW function for Castbars Important Spells for Interruptible and not Interruptible Spells, changes the Castbar color, Icon and adds a Icon, with import/ export function",
 }
 
 local change_log_update = {
-	"Update V3 for Classic and Wrath",
-	"Add Boss Ids for Tags",
+	"Add Affix Icons to Score Datattext",
+	"Cleanup Dock Settings",
+	"Code update, removed unused code",
+	"Healthmarker IDs for S2, Thanks Trenchy",
 }
 
 local change_log_fix = {
-	"NP Border Colors, was not set when custom class colors were enabled",
+	"Fix Dock Icons Text and Color function",
+	"Fix some Bugs in Dock Icons",
 }
 
 local function Concatenation(tbl, icon, color)
@@ -57,9 +52,9 @@ local function Concatenation(tbl, icon, color)
 end
 
 local function configTable()
-	local releasdate = "07.05.2023"
-	local change_log_important_string = Concatenation(change_log_important)
-	--local change_log_new_string = Concatenation(change_log_new)
+	local releasdate = "17.05.2023"
+	--local change_log_important_string = Concatenation(change_log_important)
+	local change_log_new_string = Concatenation(change_log_new)
 	local change_log_update_string = Concatenation(change_log_update)
 	local change_log_fix_string = Concatenation(change_log_fix)
 	E.Options.args.mMT.args.changelog.args = {

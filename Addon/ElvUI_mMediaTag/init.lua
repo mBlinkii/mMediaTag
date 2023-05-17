@@ -79,7 +79,6 @@ function mMT:Initialize()
 	-- Initialize main things
 	mMT:LoadCommands()
 	mMT:mDockUpdateFont()
-	mMT:UpdateImportantSpells()
 
 	-- Initialize Modules
 	if E.db.mMT.general.greeting then
@@ -133,6 +132,10 @@ function mMT:Initialize()
 	if E.Retail then
 		if E.db.mMT.interruptoncd.enable then
 			mMT:mSetupCastbar()
+		end
+
+		if (E.db.mMT.importantspells.interrupt.enable or E.db.mMT.importantspells.stun.enable) then
+			mMT:UpdateImportantSpells()
 		end
 
 		if

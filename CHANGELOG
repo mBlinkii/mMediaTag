@@ -1,6 +1,18 @@
 # Changelog - ElvUI_mMediaTag
 [Eng] - All changes to this project will be documented in this file. The latest changes are at the top.
 
+## [ver. 3.13] - 17.05.2023
+### Update
+- Healthmarker IDs for S2, Thanks Trenchy
+- Code update, removed unused code
+- Cleanup Dock Settings
+- Add Affix Icons to Score Datattext
+### FIX
+- Fix Dock Icons Text and Color function
+- Fix some Bugs in Dock Icons
+### NEW
+- NEW function for Castbars Important Spells for Interruptible and not Interruptible Spells, changes the Castbar color, Icon and adds a Icon, with import/ export function
+
 ## [ver. 3.12] - 10.05.2023
 ### Update
 - Update V3 for Classic and Wrath
