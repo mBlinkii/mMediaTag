@@ -301,7 +301,7 @@ local function configTable()
 					order = 7,
 					type = "group",
 					inline = true,
-					name = L["Unitframeicons Icon"],
+					name = L["Unitframe icons Icon"],
 					args = {
 						toggle_readycheck = {
 							order = 1,

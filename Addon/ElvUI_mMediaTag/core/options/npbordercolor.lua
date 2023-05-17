@@ -13,7 +13,7 @@ local function configTable()
 					order = 1,
 					type = "toggle",
                     name = L["Auto color Border"],
-                    desc = L["Class colored Namplates Border."],
+                    desc = L["Class colored Nameplates Border."],
 					get = function(info)
 						return E.db.mMT.nameplate.bordercolor.border
 					end,
@@ -26,7 +26,7 @@ local function configTable()
 					order = 2,
 					type = "toggle",
                     name = L["Auto color Glow"],
-                    desc = L["Class colored Namplates Glow."],
+                    desc = L["Class colored Nameplates Glow."],
 					get = function(info)
 						return E.db.mMT.nameplate.bordercolor.glow
 					end,

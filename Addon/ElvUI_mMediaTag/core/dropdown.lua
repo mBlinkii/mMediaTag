@@ -17,7 +17,7 @@ local PADDING = 10
 local BUTTON_HEIGHT = 16
 local mDropDownFrame = {}
 
--- frame hide functon for the timer
+-- frame hide function for the timer
 function mMT:DropDownTimer()
 	mDropDownFrame:Hide()
 end

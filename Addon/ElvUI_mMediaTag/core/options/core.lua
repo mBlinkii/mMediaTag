@@ -58,7 +58,7 @@ local function configTable()
 			datatexts = {
 				order = 3,
 				type = "group",
-				name = L["DatatTexts"],
+				name = L["DataTexts"],
 				icon = "Interface\\Addons\\ElvUI_mMediaTag\\media\\system\\datatexts.tga",
 				childGroups = "tab",
 				args = {

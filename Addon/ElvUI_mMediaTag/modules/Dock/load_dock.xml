@@ -3,7 +3,7 @@
 	<Script file="mBlizzardStore.lua"/>
 	<Script file="mCalendar.lua"/>
 	<Script file="mCharacter.lua"/>
-	<Script file="mCollectionsJourna.lua"/>
+	<Script file="mCollectionsJournal.lua"/>
 	<Script file="mDockFunctions.lua"/>
 	<Script file="mDurability.lua"/>
 	<Script file="mEncounterJournal.lua"/>

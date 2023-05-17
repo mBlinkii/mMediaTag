@@ -4,7 +4,7 @@ local _G = _G
 local tinsert = tinsert
 local tconcat = _G.table.concat
 
-local licens_general_text = {
+local license_general_text = {
 	mMT.Name .. " License",
 	"",
 	"Copyright ©2009-2023 The contents of this addon, excluding third-party resources, are",
@@ -24,16 +24,16 @@ local licens_general_text = {
 	"the copyright holders.",
 }
 
-local licens_general_string = tconcat(licens_general_text, "|n")
+local license_general_string = tconcat(license_general_text, "|n")
 
-local licens_materialicons_text = {
+local license_materialicons_text = {
 	"Google - Material Design Icons are available under material.io.",
 	"",
 	"The symbols are available under the APACHE LICENSE, VERSION 2.0.",
 	"",
 	"Icons were resized to 64x64 pixel and the color was changed.",
 }
-local licens_materialicons_string = tconcat(licens_materialicons_text, "|n")
+local license_materialicons_string = tconcat(license_materialicons_text, "|n")
 
 local thanks_text = {
 	"Simpy",
@@ -86,35 +86,35 @@ local function configTable()
 				},
 			},
 		},
-		licens = {
+		license = {
 			order = 3,
 			type = "group",
 			inline = true,
 			name = L["Licens"],
 			args = {
-				licens_general = {
+				license_general = {
 					order = 1,
 					type = "description",
 					fontSize = "medium",
-					name = "|CFFF7DC6F" .. licens_general_string .. "|r",
+					name = "|CFFF7DC6F" .. license_general_string .. "|r",
 				},
-				spacerlicens_1 = {
+				spacer_license_1 = {
 					order = 2,
 					type = "description",
 					name = "\n\n\n",
 				},
-				licens_materialicons = {
+				license_materialicons = {
 					order = 3,
 					type = "description",
 					fontSize = "medium",
-					name = "|CFF00C6C6" .. licens_materialicons_string .. "|r",
+					name = "|CFF00C6C6" .. license_materialicons_string .. "|r",
 				},
-				spacerlicens_2 = {
+				spacer_license_2 = {
 					order = 4,
 					type = "description",
 					name = "\n\n\n",
 				},
-				licens_icons8 = {
+				license_icons8 = {
 					order = 5,
 					type = "description",
 					fontSize = "medium",

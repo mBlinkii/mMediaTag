@@ -87,7 +87,7 @@ local function configTable()
                 datatextgeneralcolortitel = {
                     type = "color",
                     order = 5,
-                    name = L["Color Titel"],
+                    name = L["Color Title"],
                     desc = L["Custom color for Datatext Tip"],
                     hasAlpha = false,
                     get = function(info)
