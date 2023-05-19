@@ -174,7 +174,7 @@ local function ImportantSpells(castbar)
 	local ImportantInterrupt = ImportantSpellsInterrupt[castbar.spellID]
 	local ImportantStun = ImportantSpellsStun[castbar.spellID]
 
-	if ImportantInterrupt == ImportantStun then
+	if ImportantInterrupt and ImportantStun and ImportantInterrupt == ImportantStun then
 		mMT:Print(L["Error, Interrupt and Stun Spell IDs are the same!"])
 		return
 	end
