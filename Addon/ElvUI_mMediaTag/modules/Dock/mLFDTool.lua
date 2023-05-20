@@ -241,7 +241,7 @@ local function OnEvent(self, event)
 
 	if E.db.mMT.dockdatatext.lfd.difficulty and (inInstance or isGroup) then
 		if inInstance then
-			text = mMT:DungeonDifficultyShort()
+			text = mMT:GetDungeonInfo(true)
 		elseif isGroup then
 			text = mMT:InctanceDifficultyDungeon()
 		elseif isRaid then

@@ -50,7 +50,7 @@ local function mDockUpdateIcon(self)
 	end
 end
 
-local function mDockCreatIcon(self)
+local function mDockCreateIcon(self)
 	self.mIcon = self:CreateTexture(nil, "ARTWORK")
 	self.mIcon:ClearAllPoints()
 	self.mIcon:Point("CENTER")
@@ -121,40 +121,40 @@ function mMT:mDockSetText(self, textA, textB, colorA, colorB)
 	end
 end
 
-local function mDockUpdateText(self, A, B, textA, textB, colorA, colorB)
+local function mDockUpdateText(self, textA, textB, colorA, colorB)
 	if not E.db.mMT.dockdatatext.customfontzise then
 		FontSize = self.mSettings.XY / 3
 	end
 
-	if A then
+	if self.mSettings.text.textA then
 		self.mIcon.TextA:FontTemplate(Font, FontSize, E.db.mMT.dockdatatext.fontflag)
 		self.mIcon.TextA:ClearAllPoints()
 		self.mIcon.TextA:SetWordWrap(true)
 	end
 
-	if B then
+	if self.mSettings.text.textB then
 		self.mIcon.TextB:FontTemplate(Font, FontSize, E.db.mMT.dockdatatext.fontflag)
 		self.mIcon.TextB:ClearAllPoints()
 		self.mIcon.TextB:SetWordWrap(true)
 	end
 
 	if self.mSettings.text.special then
-		if A then
+		if self.mSettings.text.textA then
 			self.mIcon.TextA:SetPoint("BOTTOM", self.mIcon, "BOTTOM", 0, 0)
 			self.mIcon.TextA:SetJustifyH("CENTER")
 		end
 
-		if B then
+		if self.mSettings.text.textB then
 			self.mIcon.TextB:SetPoint("TOP", self.mIcon, "TOP", 0, 0)
 			self.mIcon.TextB:SetJustifyH("CENTER")
 		end
 	else
-		if A then
+		if self.mSettings.text.textA then
 			self.mIcon.TextA:SetPoint("BOTTOMRIGHT", self.mIcon, "BOTTOMRIGHT", 0, 0)
 			self.mIcon.TextA:SetJustifyH("RIGHT")
 		end
 
-		if B then
+		if self.mSettings.text.textB then
 			self.mIcon.TextB:SetPoint("BOTTOMLEFT", self.mIcon, "BOTTOMLEFT", 0, 0)
 			self.mIcon.TextB:SetJustifyH("LEFT")
 		end
@@ -162,18 +162,18 @@ local function mDockUpdateText(self, A, B, textA, textB, colorA, colorB)
 
 	mMT:mDockSetText(self, textA, textB, colorA, colorB)
 end
-local function mDockCreatText(self, A, B, textA, textB, colorA, colorB)
-	if A and not self.mIcon.TextA then
+local function mDockCreateText(self, textA, textB, colorA, colorB)
+	if not self.mIcon.TextA and self.mSettings.text.textA then
 		self.mIcon.TextA = self:CreateFontString(nil, "ARTWORK")
 		self.mIcon.TextA.SetShadowColor = function() end
 	end
 
-	if B and not self.mIcon.TextB then
+	if not self.mIcon.TextB and self.mSettings.text.textB then
 		self.mIcon.TextB = self:CreateFontString(nil, "ARTWORK")
 		self.mIcon.TextB.SetShadowColor = function() end
 	end
 
-	mDockUpdateText(self, A, B, textA, textB, colorA, colorB)
+	mDockUpdateText(self, textA, textB, colorA, colorB)
 end
 
 function mMT:mOnEnter(self, timer)
@@ -443,9 +443,10 @@ function mMT:DockInitialization(self, event, textA, textB, colorA, colorB)
 	else
 		self.mSettings.GrowXY = E.db.mMT.dockdatatext.growsize + self.mSettings.XY
 	end
+
 	if event == "ELVUI_FORCE_UPDATE" then
 		if not self.mIcon then
-			mDockCreatIcon(self)
+			mDockCreateIcon(self)
 
 			if self.mSettings.Notifications and not self.mNotifications then
 				mDockCreatmNotifications(self)
@@ -456,7 +457,7 @@ function mMT:DockInitialization(self, event, textA, textB, colorA, colorB)
 				and not self.mSettings.text.onlytext
 				and (not self.mIcon.TextA or not self.mIcon.TextB)
 			then
-				mDockCreatText(self, self.mSettings.text.textA, self.mSettings.text.textB, textA, textB, colorA, colorB)
+				mDockCreateText(self, textA, textB, colorA, colorB)
 			else
 				if self.mIcon.TextA then
 					self.mIcon.TextA:SetText("")
@@ -466,44 +467,38 @@ function mMT:DockInitialization(self, event, textA, textB, colorA, colorB)
 					self.mIcon.TextB:SetText("")
 				end
 			end
+		end
+	else
+		mDockUpdateIcon(self)
+
+		if self.mSettings.Notifications and self.mNotifications then
+			mDockUpdateNotifications(self)
+		elseif self.mNotifications and not self.mSettings.Notifications then
+			self.mNotifications:Hide()
+			self.mNotifications = nil
+		end
+
+		if
+			(textA or textB)
+			and self.mSettings.text
+			and not self.mSettings.text.onlytext
+			and (not self.mIcon.TextA or not self.mIcon.TextB)
+		then
+			mDockCreateText(self, textA, textB, colorA, colorB)
+		elseif
+			(textA or textB)
+			and self.mSettings.text
+			and not self.mSettings.text.onlytext
+			and (self.mIcon.TextA or self.mIcon.TextB)
+		then
+			mDockUpdateText(self, textA, textB, colorA, colorB)
 		else
-			mDockUpdateIcon(self)
-
-			if self.mSettings.Notifications and self.mNotifications then
-				mDockUpdateNotifications(self)
-			elseif self.mNotifications and not self.mSettings.Notifications then
-				self.mNotifications:Hide()
-				self.mNotifications = nil
+			if self.mIcon.TextA then
+				self.mIcon.TextA:SetText("")
 			end
 
-			if
-				self.mSettings.text
-				and not self.mSettings.text.onlytext
-				and (not self.mIcon.TextA or not self.mIcon.TextB)
-			then
-				mDockCreatText(self, self.mSettings.text.textA, self.mSettings.text.textB, textA, textB, colorA, colorB)
-			elseif
-				self.mSettings.text
-				and not self.mSettings.text.onlytext
-				and (self.mIcon.TextA or self.mIcon.TextB)
-			then
-				mDockUpdateText(
-					self,
-					self.mSettings.text.textA,
-					self.mSettings.text.textB,
-					textA,
-					textB,
-					colorA,
-					colorB
-				)
-			else
-				if self.mIcon.TextA then
-					self.mIcon.TextA:SetText("")
-				end
-
-				if self.mIcon.TextB then
-					self.mIcon.TextB:SetText("")
-				end
+			if self.mIcon.TextB then
+				self.mIcon.TextB:SetText("")
 			end
 		end
 	end
