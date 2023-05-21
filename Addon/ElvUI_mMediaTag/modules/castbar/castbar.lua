@@ -251,6 +251,10 @@ local function InterruptChecker(castbar)
 			OutOfRange = IsSpellInRange(GetSpellInfo(interruptSpellID), castbar.unit) == 0
 		end
 
+		if castbar.spellID and (E.db.mMT.importantspells.interrupt.enable or E.db.mMT.importantspells.stun.enable) then
+			ImportantSpells(castbar)
+		end
+
 		if E.db.mMT.interruptoncd.outofrange and OutOfRange then
 			if E.db.mMT.interruptoncd.gradient then
 				SetCastbarColor(castbar, colorOutOfRange, colorOutOfRangeB)
@@ -282,10 +286,6 @@ local function InterruptChecker(castbar)
 				SetCastbarColor(castbar, colorInterruptonCD)
 			end
 		end
-	end
-
-	if castbar.spellID and (E.db.mMT.importantspells.interrupt.enable or E.db.mMT.importantspells.stun.enable) then
-		ImportantSpells(castbar)
 	end
 end
 function mMT:mSetupCastbar()
