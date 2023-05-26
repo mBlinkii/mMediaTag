@@ -120,8 +120,8 @@ local function IconColor(icon, stun, auto)
 	end
 end
 
-local function ImportantSpellIcon(castbar, set, stun)
-	if set then
+local function ImportantSpellIcon(castbar, interrupt, stun)
+	if interrupt or stun then
 		if not castbar.mImportantIcon then
 			castbar.mImportantIcon = castbar:CreateTexture("ImportantSpellIcon", "OVERLAY")
 			castbar.mImportantIcon:SetWidth(E.db.mMT.importantspells.icon.sizeX)
@@ -142,10 +142,12 @@ local function ImportantSpellIcon(castbar, set, stun)
 			)
 		end
 
-		if castbar.mImportantIcon then
+		castbar.mImportantIcon:Hide()
+
+		if interrupt or stun then
 			if stun then
 				castbar.mImportantIcon:SetTexture(mMT.Media.Castbar[E.db.mMT.importantspells.icon.stun])
-			else
+			elseif interrupt then
 				castbar.mImportantIcon:SetTexture(mMT.Media.Castbar[E.db.mMT.importantspells.icon.interrupt])
 			end
 			castbar.mImportantIcon:Show()
@@ -157,12 +159,12 @@ local function ImportantSpellIcon(castbar, set, stun)
 	end
 end
 
-local function ImportantSpellIconReplace(castbar, set, stun)
+local function ImportantSpellIconReplace(castbar, interrupt, stun)
 	if castbar.ButtonIcon then
-		if set then
+		if interrupt or stun then
 			if stun then
 				castbar.ButtonIcon:SetTexture(mMT.Media.Castbar[E.db.mMT.importantspells.icon.stun])
-			else
+			elseif interrupt then
 				castbar.ButtonIcon:SetTexture(mMT.Media.Castbar[E.db.mMT.importantspells.icon.interrupt])
 			end
 			IconColor(castbar.ButtonIcon, stun, E.db.mMT.importantspells.icon.auto)
@@ -199,17 +201,15 @@ local function ImportantSpells(castbar)
 		end
 	end
 
-	ImportantSpellIconReplace(
-		castbar,
-		(E.db.mMT.importantspells.icon.replace and ImportantInterrupt or ImportantStun),
-		ImportantStun
-	)
+	if E.db.mMT.importantspells.icon.replace then
+		ImportantSpellIconReplace(castbar, ImportantInterrupt, ImportantStun)
+	end
 
-	ImportantSpellIcon(
-		castbar,
-		(E.db.mMT.importantspells.icon.enable and ImportantInterrupt or ImportantStun),
-		ImportantStun
-	)
+	if E.db.mMT.importantspells.icon.enable then
+		ImportantSpellIcon( castbar, ImportantInterrupt,ImportantStun )
+	elseif castbar.mImportantIcon then
+		castbar.mImportantIcon:Hide()
+	end
 end
 local function InterruptChecker(castbar)
 	if castbar.unit == "vehicle" or castbar.unit == "player" then
