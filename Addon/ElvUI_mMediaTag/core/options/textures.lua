@@ -22,6 +22,9 @@ local function configTable()
 			type = "group",
 			inline = true,
 			name = L["General"],
+			disabled = function()
+				return not IsAddOnLoaded("!mMT_MediaPack")
+			end,
 			args = {
 				toggle_all = {
 					order = 1,
@@ -32,7 +35,7 @@ local function configTable()
 					end,
 					set = function(info, value)
 						mMTSettings.textures.all = value
-						mMT:LoadSeriesAll()
+						E:StaticPopup_Show("CONFIG_RL")
 					end,
 				},
 				execute_disableall = {

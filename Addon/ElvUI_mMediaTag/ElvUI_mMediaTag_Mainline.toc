@@ -7,7 +7,6 @@
 ## AddonCompartmentFunc: ElvUI_mMediaTag_OnAddonCompartmentClick
 ## AddonCompartmentFuncOnEnter: ElvUI_mMediaTag_OnAddonCompartmentOnEnter
 ## AddonCompartmentFuncOnLeave: ElvUI_mMediaTag_OnAddonCompartmentOnLeave
-## SavedVariables: mMTSettings
 ## RequiredDeps: ElvUI
 ## DefaultState: Enabled
 ## X-Tukui-ProjectID: 60

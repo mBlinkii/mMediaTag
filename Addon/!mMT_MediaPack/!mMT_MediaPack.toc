@@ -1,0 +1,12 @@
+## Interface: 100100
+## Author: Blinkii
+## Version: 3.13
+## Title:  |CFF6559F1m|r|CFF7A4DEFM|r|CFFBC26E5T|r |CFFFF4C00Media Pack|r
+## Notes: mMT Media Pack by Blinkii | Support: mMediaTag@gmx.de
+## IconTexture: Interface\AddOns\ElvUI_mMediaTag\media\logo\mmt_icon
+## SavedVariables: mMTSettings
+## DefaultState: Enabled
+## OptionalDeps: LibStub, LibSharedMedia-3.0
+
+embeds.xml
+media\core.lua
