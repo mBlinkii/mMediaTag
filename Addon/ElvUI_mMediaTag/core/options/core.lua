@@ -245,12 +245,12 @@ local function configTable()
 						childGroups = "tab",
 						args = {},
 					},
-					-- textures = {
-					-- 	order = 20,
-					-- 	type = "group",
-					-- 	name = L["Textures"],
-					-- 	args = {},
-					-- },
+					textures = {
+						order = 20,
+						type = "group",
+						name = L["Textures"],
+						args = {},
+					},
 				},
 			},
 			about = {

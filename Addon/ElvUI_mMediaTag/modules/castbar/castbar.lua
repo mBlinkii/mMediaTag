@@ -151,11 +151,13 @@ local function ImportantSpellIcon(castbar, interrupt, stun)
 				castbar.mImportantIcon:SetTexture(mMT.Media.Castbar[E.db.mMT.importantspells.icon.interrupt])
 			end
 			castbar.mImportantIcon:Show()
+			castbar.mImportantIcon:SetAlpha(1)
 		end
 
 		IconColor(castbar.mImportantIcon, stun, E.db.mMT.importantspells.icon.auto)
 	elseif castbar.mImportantIcon then
 		castbar.mImportantIcon:Hide()
+		castbar.mImportantIcon:SetAlpha(0)
 	end
 end
 

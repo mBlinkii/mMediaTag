@@ -18,7 +18,7 @@ local hex = E:RGBToHex(class.r, class.g, class.b)
 --Constants
 mMT.Version = GetAddOnMetadata(addonName, "Version")
 mMT.Name =
-"|CFF6559F1m|r|CFF7A4DEFM|r|CFF8845ECe|r|CFFA037E9d|r|CFFA435E8i|r|CFFB32DE6a|r|CFFBC26E5T|r|CFFCB1EE3a|r|CFFDD14E0g|r |CFFFF006C&|r |CFFFF4C00T|r|CFFFF7300o|r|CFFFF9300o|r|CFFFFA800l|r|CFFFFC900s|r"
+	"|CFF6559F1m|r|CFF7A4DEFM|r|CFF8845ECe|r|CFFA037E9d|r|CFFA435E8i|r|CFFB32DE6a|r|CFFBC26E5T|r|CFFCB1EE3a|r|CFFDD14E0g|r |CFFFF006C&|r |CFFFF4C00T|r|CFFFF7300o|r|CFFFF9300o|r|CFFFFA800l|r|CFFFFC900s|r"
 mMT.NameShort = "|CFF6559F1m|r|CFFA037E9M|r|CFFDD14E0T|r"
 mMT.Icon = "|TInterface\\Addons\\ElvUI_mMediaTag\\media\\logo\\mmt_icon_round.tga:14:14|t"
 mMT.IconSquare = "|TInterface\\Addons\\ElvUI_mMediaTag\\media\\logo\\mmt_icon.tga:14:14|t"
@@ -134,7 +134,7 @@ function mMT:Initialize()
 			mMT:mSetupCastbar()
 		end
 
-		if (E.db.mMT.importantspells.interrupt.enable or E.db.mMT.importantspells.stun.enable) then
+		if E.db.mMT.importantspells.interrupt.enable or E.db.mMT.importantspells.stun.enable then
 			mMT:UpdateImportantSpells()
 		end
 

@@ -28,10 +28,10 @@ local function configTable()
 					type = "toggle",
 					name = L["Load All"],
 					get = function(info)
-						return E.db.mMT.textures.all
+						return mMTSettings.textures.all
 					end,
 					set = function(info, value)
-						E.db.mMT.textures.all = value
+						mMTSettings.textures.all = value
 						mMT:LoadSeriesAll()
 					end,
 				},
@@ -40,10 +40,10 @@ local function configTable()
 					type = "execute",
 					name = L["Disable All"],
 					disabled = function()
-						return E.db.mMT.textures.all
+						return mMTSettings.textures.all
 					end,
 					func = function()
-						local db = E.db.mMT.textures
+						local db = mMTSettings.textures
 						db.a = false
 						db.b = false
 						db.c = false
@@ -78,14 +78,14 @@ local function configTable()
 					type = "toggle",
 					name = L["Load Pack"] .. " A",
 					disabled = function()
-						return E.db.mMT.textures.all
+						return mMTSettings.textures.all
 					end,
 					get = function(info)
-						return E.db.mMT.textures.a
+						return mMTSettings.textures.a
 					end,
 					set = function(info, value)
-						E.db.mMT.textures.a = value
-						mMT:LoadSeriesA()
+						mMTSettings.textures.a = value
+						E:StaticPopup_Show("CONFIG_RL")
 					end,
 				},
 				toggle_b = {
@@ -93,14 +93,14 @@ local function configTable()
 					type = "toggle",
 					name = L["Load Pack"] .. " B",
 					disabled = function()
-						return E.db.mMT.textures.all
+						return mMTSettings.textures.all
 					end,
 					get = function(info)
-						return E.db.mMT.textures.b
+						return mMTSettings.textures.b
 					end,
 					set = function(info, value)
-						E.db.mMT.textures.b = value
-						mMT:LoadSeriesB()
+						mMTSettings.textures.b = value
+						E:StaticPopup_Show("CONFIG_RL")
 					end,
 				},
 				toggle_c = {
@@ -108,14 +108,14 @@ local function configTable()
 					type = "toggle",
 					name = L["Load Pack"] .. " C",
 					disabled = function()
-						return E.db.mMT.textures.all
+						return mMTSettings.textures.all
 					end,
 					get = function(info)
-						return E.db.mMT.textures.c
+						return mMTSettings.textures.c
 					end,
 					set = function(info, value)
-						E.db.mMT.textures.c = value
-						mMT:LoadSeriesC()
+						mMTSettings.textures.c = value
+						E:StaticPopup_Show("CONFIG_RL")
 					end,
 				},
 				toggle_d = {
@@ -123,14 +123,14 @@ local function configTable()
 					type = "toggle",
 					name = L["Load Pack"] .. " D",
 					disabled = function()
-						return E.db.mMT.textures.all
+						return mMTSettings.textures.all
 					end,
 					get = function(info)
-						return E.db.mMT.textures.d
+						return mMTSettings.textures.d
 					end,
 					set = function(info, value)
-						E.db.mMT.textures.d = value
-						mMT:LoadSeriesD()
+						mMTSettings.textures.d = value
+						E:StaticPopup_Show("CONFIG_RL")
 					end,
 				},
 				toggle_e = {
@@ -138,14 +138,14 @@ local function configTable()
 					type = "toggle",
 					name = L["Load Pack"] .. " E",
 					disabled = function()
-						return E.db.mMT.textures.all
+						return mMTSettings.textures.all
 					end,
 					get = function(info)
-						return E.db.mMT.textures.e
+						return mMTSettings.textures.e
 					end,
 					set = function(info, value)
-						E.db.mMT.textures.e = value
-						mMT:LoadSeriesE()
+						mMTSettings.textures.e = value
+						E:StaticPopup_Show("CONFIG_RL")
 					end,
 				},
 				toggle_f = {
@@ -153,14 +153,14 @@ local function configTable()
 					type = "toggle",
 					name = L["Load Pack"] .. " F",
 					disabled = function()
-						return E.db.mMT.textures.all
+						return mMTSettings.textures.all
 					end,
 					get = function(info)
-						return E.db.mMT.textures.f
+						return mMTSettings.textures.f
 					end,
 					set = function(info, value)
-						E.db.mMT.textures.f = value
-						mMT:LoadSeriesF()
+						mMTSettings.textures.f = value
+						E:StaticPopup_Show("CONFIG_RL")
 					end,
 				},
 				toggle_g = {
@@ -168,14 +168,14 @@ local function configTable()
 					type = "toggle",
 					name = L["Load Pack"] .. " G",
 					disabled = function()
-						return E.db.mMT.textures.all
+						return mMTSettings.textures.all
 					end,
 					get = function(info)
-						return E.db.mMT.textures.g
+						return mMTSettings.textures.g
 					end,
 					set = function(info, value)
-						E.db.mMT.textures.g = value
-						mMT:LoadSeriesG()
+						mMTSettings.textures.g = value
+						E:StaticPopup_Show("CONFIG_RL")
 					end,
 				},
 				toggle_h = {
@@ -183,14 +183,14 @@ local function configTable()
 					type = "toggle",
 					name = L["Load Pack"] .. " H",
 					disabled = function()
-						return E.db.mMT.textures.all
+						return mMTSettings.textures.all
 					end,
 					get = function(info)
-						return E.db.mMT.textures.h
+						return mMTSettings.textures.h
 					end,
 					set = function(info, value)
-						E.db.mMT.textures.h = value
-						mMT:LoadSeriesH()
+						mMTSettings.textures.h = value
+						E:StaticPopup_Show("CONFIG_RL")
 					end,
 				},
 				toggle_i = {
@@ -198,14 +198,14 @@ local function configTable()
 					type = "toggle",
 					name = L["Load Pack"] .. " I",
 					disabled = function()
-						return E.db.mMT.textures.all
+						return mMTSettings.textures.all
 					end,
 					get = function(info)
-						return E.db.mMT.textures.i
+						return mMTSettings.textures.i
 					end,
 					set = function(info, value)
-						E.db.mMT.textures.i = value
-						mMT:LoadSeriesI()
+						mMTSettings.textures.i = value
+						E:StaticPopup_Show("CONFIG_RL")
 					end,
 				},
 				toggle_j = {
@@ -213,14 +213,14 @@ local function configTable()
 					type = "toggle",
 					name = L["Load Pack"] .. " J",
 					disabled = function()
-						return E.db.mMT.textures.all
+						return mMTSettings.textures.all
 					end,
 					get = function(info)
-						return E.db.mMT.textures.j
+						return mMTSettings.textures.j
 					end,
 					set = function(info, value)
-						E.db.mMT.textures.j = value
-						mMT:LoadSeriesJ()
+						mMTSettings.textures.j = value
+						E:StaticPopup_Show("CONFIG_RL")
 					end,
 				},
 				toggle_k = {
@@ -228,14 +228,14 @@ local function configTable()
 					type = "toggle",
 					name = L["Load Pack"] .. " K",
 					disabled = function()
-						return E.db.mMT.textures.all
+						return mMTSettings.textures.all
 					end,
 					get = function(info)
-						return E.db.mMT.textures.k
+						return mMTSettings.textures.k
 					end,
 					set = function(info, value)
-						E.db.mMT.textures.k = value
-						mMT:LoadSeriesK()
+						mMTSettings.textures.k = value
+						E:StaticPopup_Show("CONFIG_RL")
 					end,
 				},
 				toggle_l = {
@@ -243,14 +243,14 @@ local function configTable()
 					type = "toggle",
 					name = L["Load Pack"] .. " L",
 					disabled = function()
-						return E.db.mMT.textures.all
+						return mMTSettings.textures.all
 					end,
 					get = function(info)
-						return E.db.mMT.textures.l
+						return mMTSettings.textures.l
 					end,
 					set = function(info, value)
-						E.db.mMT.textures.l = value
-						mMT:LoadSeriesL()
+						mMTSettings.textures.l = value
+						E:StaticPopup_Show("CONFIG_RL")
 					end,
 				},
 				toggle_m = {
@@ -258,14 +258,14 @@ local function configTable()
 					type = "toggle",
 					name = L["Load Pack"] .. " M",
 					disabled = function()
-						return E.db.mMT.textures.all
+						return mMTSettings.textures.all
 					end,
 					get = function(info)
-						return E.db.mMT.textures.m
+						return mMTSettings.textures.m
 					end,
 					set = function(info, value)
-						E.db.mMT.textures.m = value
-						mMT:LoadSeriesM()
+						mMTSettings.textures.m = value
+						E:StaticPopup_Show("CONFIG_RL")
 					end,
 				},
 				toggle_n = {
@@ -273,14 +273,14 @@ local function configTable()
 					type = "toggle",
 					name = L["Load Pack"] .. " N",
 					disabled = function()
-						return E.db.mMT.textures.all
+						return mMTSettings.textures.all
 					end,
 					get = function(info)
-						return E.db.mMT.textures.n
+						return mMTSettings.textures.n
 					end,
 					set = function(info, value)
-						E.db.mMT.textures.n = value
-						mMT:LoadSeriesN()
+						mMTSettings.textures.n = value
+						E:StaticPopup_Show("CONFIG_RL")
 					end,
 				},
 				toggle_o = {
@@ -288,14 +288,14 @@ local function configTable()
 					type = "toggle",
 					name = L["Load Pack"] .. " O",
 					disabled = function()
-						return E.db.mMT.textures.all
+						return mMTSettings.textures.all
 					end,
 					get = function(info)
-						return E.db.mMT.textures.o
+						return mMTSettings.textures.o
 					end,
 					set = function(info, value)
-						E.db.mMT.textures.o = value
-						mMT:LoadSeriesO()
+						mMTSettings.textures.o = value
+						E:StaticPopup_Show("CONFIG_RL")
 					end,
 				},
 				toggle_p = {
@@ -303,14 +303,14 @@ local function configTable()
 					type = "toggle",
 					name = L["Load Pack"] .. " P",
 					disabled = function()
-						return E.db.mMT.textures.all
+						return mMTSettings.textures.all
 					end,
 					get = function(info)
-						return E.db.mMT.textures.p
+						return mMTSettings.textures.p
 					end,
 					set = function(info, value)
-						E.db.mMT.textures.p = value
-						mMT:LoadSeriesP()
+						mMTSettings.textures.p = value
+						E:StaticPopup_Show("CONFIG_RL")
 					end,
 				},
 				toggle_q = {
@@ -318,14 +318,14 @@ local function configTable()
 					type = "toggle",
 					name = L["Load Pack"] .. " Q",
 					disabled = function()
-						return E.db.mMT.textures.all
+						return mMTSettings.textures.all
 					end,
 					get = function(info)
-						return E.db.mMT.textures.q
+						return mMTSettings.textures.q
 					end,
 					set = function(info, value)
-						E.db.mMT.textures.q = value
-						mMT:LoadSeriesQ()
+						mMTSettings.textures.q = value
+						E:StaticPopup_Show("CONFIG_RL")
 					end,
 				},
 				toggle_r = {
@@ -333,14 +333,14 @@ local function configTable()
 					type = "toggle",
 					name = L["Load Pack"] .. " R",
 					disabled = function()
-						return E.db.mMT.textures.all
+						return mMTSettings.textures.all
 					end,
 					get = function(info)
-						return E.db.mMT.textures.r
+						return mMTSettings.textures.r
 					end,
 					set = function(info, value)
-						E.db.mMT.textures.r = value
-						mMT:LoadSeriesR()
+						mMTSettings.textures.r = value
+						E:StaticPopup_Show("CONFIG_RL")
 					end,
 				},
 			},
