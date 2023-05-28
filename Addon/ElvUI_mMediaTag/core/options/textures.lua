@@ -1,4 +1,5 @@
 local E, L, V, P, G = unpack(ElvUI)
+ if not mMTSettings then return end
 
 local tinsert = tinsert
 local function configTable()
