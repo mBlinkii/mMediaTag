@@ -30,5 +30,4 @@
 	<Script file="dock.lua"/>
 	<Script file="changelog.lua"/>
 	<Script file="unitframeicons.lua"/>
-	<Script file="setup.lua"/>
 </Ui>

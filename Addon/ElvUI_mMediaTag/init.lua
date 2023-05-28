@@ -130,8 +130,8 @@ function mMT:Initialize()
 	end
 
 	if E.Retail then
-		if E.db.mMT.interruptoncd.enable then
-			mMT:mSetupCastbar()
+		if E.db.mMT.interruptoncd.enable or E.db.mMT.importantspells.interrupt.enable or E.db.mMT.importantspells.stun.enable then
+			mMT:CastbarModuleLoader()
 		end
 
 		if E.db.mMT.importantspells.interrupt.enable or E.db.mMT.importantspells.stun.enable then
@@ -208,32 +208,6 @@ function mMT:PLAYER_ENTERING_WORLD()
 		E:ToggleOptions()
 		E.Libs.AceConfigDialog:SelectGroup("ElvUI", "mMT", "changelog")
 		E.db.mMT.version = mMT.Version
-	end
-
-	-- quick setup
-	if not E.db.mMT.quicksetup then
-		StaticPopupDialogs["mQuickSetup"] = {
-			text = format(
-				L["It looks like you are using %s for the first time. Would you like to open the Quick Settings window?"],
-				mMT.Name
-			),
-			button1 = L["Yes"],
-			button2 = L["No"],
-			timeout = 120,
-			whileDead = true,
-			hideOnEscape = false,
-			preferredIndex = 3,
-			OnAccept = function()
-				E:ToggleOptions()
-				E.Libs.AceConfigDialog:SelectGroup("ElvUI", "mMT", "setup")
-				E.db.mMT.quicksetup = true
-			end,
-			OnCancel = function()
-				E.db.mMT.quicksetup = true
-			end,
-		}
-
-		StaticPopup_Show("mQuickSetup")
 	end
 
 	class = E:ClassColor(E.myclass)

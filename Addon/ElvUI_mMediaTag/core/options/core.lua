@@ -271,15 +271,6 @@ local function configTable()
 				args = {
 				},
 			},
-			setup = {
-				order = 20,
-				type = "group",
-				name = format("|CFF0094FF%s|r", L["Setup"]),
-				icon = "Interface\\Addons\\ElvUI_mMediaTag\\media\\system\\setup.tga",
-				childGroups = "tab",
-				args = {
-				},
-			},
 		},
 	}
 end
