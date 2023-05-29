@@ -85,11 +85,7 @@ local function CreateMarker(castbar)
 end
 
 function mMT:InterruptChecker(castbar)
-	if castbar.unit == "vehicle" or castbar.unit == "player" then
-		return
-	end
-
-	if castbar.InterruptMarker then
+ 	if castbar.InterruptMarker then
 		castbar.InterruptMarker:Hide()
 	end
 

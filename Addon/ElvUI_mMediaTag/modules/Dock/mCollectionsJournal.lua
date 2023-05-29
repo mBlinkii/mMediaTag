@@ -13,7 +13,7 @@ local function mDockCheckFrame()
 	return (CollectionsJournal and CollectionsJournal:IsShown())
 end
 
-function mMT:CheckFrameCollectionsJourna(self)
+function mMT:CheckFrameCollectionsJournal(self)
 	self.mIcon.isClicked = mDockCheckFrame()
 	mMT:DockTimer(self)
 end
