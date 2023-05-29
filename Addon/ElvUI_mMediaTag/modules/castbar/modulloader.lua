@@ -23,6 +23,7 @@ local function Loader(castbar)
 	end
 
 	if E.db.mMT.importantspells.interrupt.enable or E.db.mMT.importantspells.stun.enable then
+		mMT:ImportantSpells(castbar)
 	end
 end
 

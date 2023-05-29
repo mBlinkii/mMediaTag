@@ -238,7 +238,7 @@ local function GetKeystoneLevelandColor()
 	end
 end
 
-function mMT:GetDungeonInfo(datatext)
+function mMT:GetDungeonInfo(datatext, short)
 	local name, instanceType, difficultyID, difficultyName, maxPlayers, dynamicDifficulty, isDynamic, instanceID, instanceGroupSize, LfgDungeonID =
 		GetInstanceInfo()
 	local inInstance, InstanceType = IsInInstance()
@@ -264,6 +264,13 @@ function mMT:GetDungeonInfo(datatext)
 					difficultyShort,
 					GetKeystoneLevelandColor()
 				)
+			elseif short then
+				text = format(
+					"%s%s|r %s",
+					difficultyColor,
+					difficultyShort,
+					GetKeystoneLevelandColor()
+				)
 			else
 				text = format(
 					"%s%s|r\n%s%s|r %s",
@@ -282,6 +289,12 @@ function mMT:GetDungeonInfo(datatext)
 					"%s%s|r %s%s|r",
 					isGuildParty and colors.guild.color or colors.name.color,
 					name,
+					difficultyColor,
+					difficultyShort
+				)
+			elseif short then
+				text = format(
+					"%s%s|r",
 					difficultyColor,
 					difficultyShort
 				)

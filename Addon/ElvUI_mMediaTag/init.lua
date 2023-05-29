@@ -151,11 +151,7 @@ function mMT:Initialize()
 	end
 
 	if E.Retail then
-		if
-			E.db.mMT.interruptoncd.enable
-			or E.db.mMT.importantspells.interrupt.enable
-			or E.db.mMT.importantspells.stun.enable
-		then
+		if E.db.mMT.interruptoncd.enable or E.db.mMT.importantspells.interrupt.enable or E.db.mMT.importantspells.stun.enable then
 			mMT:CastbarModuleLoader()
 		end
 

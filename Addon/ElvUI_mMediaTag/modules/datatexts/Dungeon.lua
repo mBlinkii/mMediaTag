@@ -100,7 +100,7 @@ local function OnEvent(self, event, unit)
 	if E.db.mMT.dungeon.texttoname then
 		local inInstance, _ = IsInInstance()
 		if inInstance then
-			self.text:SetText(mMT:GetDungeonInfo(true))
+			self.text:SetText(mMT:GetDungeonInfo(true, true))
 		else
 			self.text:SetFormattedText(mMT.ClassColor.string, TextString)
 		end
