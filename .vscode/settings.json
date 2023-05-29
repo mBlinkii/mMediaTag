@@ -246,7 +246,8 @@
         "GetItemLevelColor",
         "SetPortraitToTexture",
         "SlashCmdList",
-        "mMTSettings"
+        "mMTSettings",
+        "mMTDB"
     ],
     "Lua.diagnostics.disable": [
         "undefined-field"
@@ -316,6 +317,8 @@
         "MONOCHROMEOUTLINE",
         "MONOCHROMETHICKOUTLINE",
         "mpscore",
+        "MTDB",
+        "myclass",
         "mythp",
         "oncdcolor",
         "onlytext",

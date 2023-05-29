@@ -473,8 +473,3 @@ P.mMT = {
 		readycheck = { enable = false, ready = "READY06", notready = "NOTREADY01", waiting = "COLOR26" },
 	},
 }
-
-G.mMT = {
-	mplusaffix = { affixes = nil, season = nil, reset = false, year = nil },
-	keys = {},
-}

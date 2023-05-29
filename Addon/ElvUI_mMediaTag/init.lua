@@ -39,6 +39,27 @@ mMT.ElvUI_EltreumUI = (
 
 mMT.Media = {}
 mMT.Config = {}
+mMT.DB = {}
+
+local DB_Loader = CreateFrame("FRAME")
+DB_Loader:RegisterEvent("PLAYER_LOGOUT")
+DB_Loader:RegisterEvent("ADDON_LOADED")
+
+function DB_Loader:OnEvent(event, arg1)
+	if event == "ADDON_LOADED" and arg1 == "ElvUI_mMediaTag" then
+		if mMTDB == nil then
+			mMTDB = {
+				mplusaffix = { affixes = nil, season = nil, reset = false, year = nil },
+				keys = {},
+			}
+		end
+		mMT.DB = mMTDB
+	elseif event == "PLAYER_LOGOUT" then
+		mMTDB = mMT.DB
+	end
+end
+
+DB_Loader:SetScript("OnEvent", DB_Loader.OnEvent)
 
 if E.Retail then
 	C_MythicPlus_RequestMapInfo = C_MythicPlus.RequestMapInfo
@@ -130,7 +151,11 @@ function mMT:Initialize()
 	end
 
 	if E.Retail then
-		if E.db.mMT.interruptoncd.enable or E.db.mMT.importantspells.interrupt.enable or E.db.mMT.importantspells.stun.enable then
+		if
+			E.db.mMT.interruptoncd.enable
+			or E.db.mMT.importantspells.interrupt.enable
+			or E.db.mMT.importantspells.stun.enable
+		then
 			mMT:CastbarModuleLoader()
 		end
 
@@ -201,6 +226,7 @@ function mMT:Initialize()
 		end
 	end
 end
+
 
 function mMT:PLAYER_ENTERING_WORLD()
 	-- Change Log

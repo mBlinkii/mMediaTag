@@ -90,7 +90,7 @@ end
 local function SaveMyKeystone()
 	local resetTime = C_DateAndTime_GetSecondsUntilWeeklyReset()
 	if resetTime > E.db.mMT.mpscore.keys.week then
-		E.global.mMT.keys = {}
+		mMT.DB.keys = {}
 		E.db.mMT.mpscore.keys.week = resetTime
 		E.db.mMT.mpscore.keys.affix = weeklyAffixID
 	elseif weeklyAffixID == E.db.mMT.mpscore.keys.affix and resetTime < E.db.mMT.mpscore.keys.week then
@@ -100,7 +100,7 @@ local function SaveMyKeystone()
 		if keyStoneLevel then
 			local challengeMapID = C_MythicPlus_GetOwnedKeystoneChallengeMapID()
 			local keyname, _, _, _, _ = C_ChallengeMode_GetMapUIInfo(challengeMapID)
-			E.global.mMT.keys[name .. "-" .. realmName] = {
+			mMT.DB.keys[name .. "-" .. realmName] = {
 				name = format("%s%s|r", mMT.ClassColor.hex, name .. "-" .. realmName),
 				key = format(
 					"%s%s|r %s",
@@ -111,7 +111,7 @@ local function SaveMyKeystone()
 			}
 		end
 	else
-		E.global.mMT.keys = {}
+		mMT.DB.keys = {}
 		E.db.mMT.mpscore.keys.week = resetTime
 		E.db.mMT.mpscore.keys.affix = weeklyAffixID
 	end
@@ -255,7 +255,7 @@ local function OnEnter(self)
 
 	DT.tooltip:AddLine(" ")
 	DT.tooltip:AddLine(L["Keystones on your Account"])
-	for k, v in pairs(E.global.mMT.keys) do
+	for k, v in pairs(mMT.DB.keys) do
 		DT.tooltip:AddDoubleLine(v.name, v.key)
 	end
 
