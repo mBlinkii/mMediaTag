@@ -284,7 +284,7 @@ function mMT:GetDungeonInfo(datatext, short)
 		elseif InstanceType == "pvp" or InstanceType == "arena" then
 			difficultyColor = instanceDifficulty[34] and instanceDifficulty[34].c or "|CFFFFFFFF"
 			difficultyShort = instanceDifficulty[34] and instanceDifficulty[34].d or ""
-			if datatext then
+			if datatext and not short then
 				text = format(
 					"%s%s|r %s%s|r",
 					isGuildParty and colors.guild.color or colors.name.color,
@@ -308,7 +308,7 @@ function mMT:GetDungeonInfo(datatext, short)
 				)
 			end
 		else
-			if datatext then
+			if datatext and not short then
 				text = format(
 					"%s%s|r %s%s|r |CFFF7DC6F%s|r",
 					isGuildParty and colors.guild.color or colors.name.color,

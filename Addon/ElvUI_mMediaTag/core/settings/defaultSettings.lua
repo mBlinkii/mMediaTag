@@ -456,6 +456,17 @@ P.mMT = {
 			text = 5,
 		},
 	},
+	castbarshield = {
+		enable = false,
+		auto = true,
+		sizeX = 32,
+		sizeY = 32,
+		anchor = "CENTER",
+		posX = 0,
+		posY = 0,
+		color = { r = 1, g = 1, b = 1, a = 1 },
+		icon = "",
+	},
 	unitframeicons = {
 		phase = {
 			enable = false,
