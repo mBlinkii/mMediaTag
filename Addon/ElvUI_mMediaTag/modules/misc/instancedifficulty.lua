@@ -255,7 +255,7 @@ function mMT:GetDungeonInfo(datatext, short)
 			and C_MythicPlus.IsMythicPlusActive()
 			and (C_ChallengeMode.GetActiveChallengeMapID() ~= nil)
 		then
-			if datatext then
+			if datatext and not short then
 				text = format(
 					"%s%s|r %s%s|r %s",
 					isGuildParty and colors.guild.color or colors.name.color,

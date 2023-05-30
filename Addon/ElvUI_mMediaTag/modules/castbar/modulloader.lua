@@ -1,4 +1,4 @@
-local E, L = unpack(ElvUI)
+local E = unpack(ElvUI)
 local NP = E:GetModule("NamePlates")
 local UF = E:GetModule("UnitFrames")
 
@@ -18,12 +18,12 @@ local function Loader(castbar)
 		return
 	end
 
-	if E.db.mMT.interruptoncd.enable then
-		mMT:InterruptChecker(castbar)
-	end
-
 	if E.db.mMT.importantspells.interrupt.enable or E.db.mMT.importantspells.stun.enable then
 		mMT:ImportantSpells(castbar)
+	end
+
+	if E.db.mMT.interruptoncd.enable then
+		mMT:InterruptChecker(castbar)
 	end
 end
 

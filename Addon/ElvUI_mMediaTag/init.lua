@@ -245,6 +245,10 @@ function mMT:PLAYER_ENTERING_WORLD()
 	if E.Retail then
 		C_MythicPlus_RequestMapInfo()
 		C_MythicPlus_RequestCurrentAffixes()
+
+		if E.db.mMT.interruptoncd.enable then
+			mMT:UpdateInterruptSpell()
+		end
 	end
 
 	mMT:UpdateTagSettings()
