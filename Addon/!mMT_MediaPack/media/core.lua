@@ -4,20 +4,25 @@ if LSM == nil then
 	return
 end
 
+local MediaType_BACKGROUND = LSM.MediaType.BACKGROUND
+local MediaType_BORDER = LSM.MediaType.BORDER
+local MediaType_FONT = LSM.MediaType.FONT
+local MediaType_STATUSBAR = LSM.MediaType.STATUSBAR
+
 local function mAddStatusbar(name, file)
-	LSM:Register("statusbar", name, "Interface\\AddOns\\ElvUI_mMediaTag\\media\\textures\\" .. file)
+	LSM:Register(MediaType_STATUSBAR, name, [[Interface\AddOns\!mMT_MediaPack\media\textures\]] .. file)
 end
 
 local function mAddBackground(name, file)
-	LSM:Register("background", name, "Interface\\AddOns\\ElvUI_mMediaTag\\media\\backgrounds\\" .. file)
+	LSM:Register(MediaType_BACKGROUND, name, [[Interface\AddOns\!mMT_MediaPack\media\backgrounds\]] .. file)
 end
 
 local function mAddFont(name, file)
-	LSM:Register("font", name, "Interface\\AddOns\\ElvUI_mMediaTag\\media\\fonts\\" .. file)
+	LSM:Register(MediaType_FONT, name, [[Interface\AddOns\!mMT_MediaPack\media\fonts\]] .. file)
 end
 
 local function mAddBorder(name, file)
-	LSM:Register("border", name, "Interface\\AddOns\\ElvUI_mMediaTag\\media\\border\\" .. file)
+	LSM:Register(MediaType_BORDER, name, [[Interface\AddOns\!mMT_MediaPack\media\border\]] .. file)
 end
 
 local function LoadSeriesA()

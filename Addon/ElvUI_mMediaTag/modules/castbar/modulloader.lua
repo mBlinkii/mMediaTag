@@ -25,6 +25,10 @@ local function Loader(castbar)
 	if E.db.mMT.interruptoncd.enable then
 		mMT:InterruptChecker(castbar)
 	end
+
+	if E.db.mMT.castbarshield.enable then
+		mMT:CastbarShield(castbar)
+	end
 end
 
 function mMT:CastbarModuleLoader()

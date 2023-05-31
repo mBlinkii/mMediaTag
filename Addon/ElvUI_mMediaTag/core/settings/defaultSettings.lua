@@ -459,13 +459,14 @@ P.mMT = {
 	castbarshield = {
 		enable = false,
 		auto = true,
+		custom = false,
 		sizeX = 32,
 		sizeY = 32,
 		anchor = "CENTER",
 		posX = 0,
 		posY = 0,
 		color = { r = 1, g = 1, b = 1, a = 1 },
-		icon = "",
+		icon = "CAST16",
 	},
 	unitframeicons = {
 		phase = {

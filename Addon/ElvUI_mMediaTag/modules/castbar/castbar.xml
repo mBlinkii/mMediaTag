@@ -2,4 +2,5 @@
 	<Script file="modulloader.lua"/>
 	<Script file="importantspells.lua"/>
 	<Script file="interruptoncd.lua"/>
+	<Script file="castbarshield.lua"/>
 </Ui>

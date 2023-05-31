@@ -30,4 +30,5 @@
 	<Script file="dock.lua"/>
 	<Script file="changelog.lua"/>
 	<Script file="unitframeicons.lua"/>
+	<Script file="castbarshield.lua"/>
 </Ui>

@@ -167,6 +167,12 @@ local function configTable()
 						name = L["Important Spells"],
 						args = {},
 					},
+					shield = {
+						order = 3,
+						type = "group",
+						name = L["Castbar Shield"],
+						args = {},
+					},
 				},
 			},
 			nameplates = {
