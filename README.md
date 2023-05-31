@@ -10,7 +10,8 @@
 [![Status](https://img.shields.io/badge/status-active-success.svg)]()
 [![GitHub Issues](https://img.shields.io/github/issues/mBlinkii/mMediaTag.svg)](https://github.com/mBlinkii/mMediaTag/issues)
 [![GitHub Pull Requests](https://img.shields.io/github/issues-pr/mBlinkii/mMediaTag.svg)](https://github.com/mBlinkii/mMediaTag/pulls)
-[![License](https://img.shields.io/badge/license-ARR-blue.svg)](https://github.com/mBlinkii/mMediaTag/blob/dev/LICENSE.txt)
+[![Discord](https://img.shields.io/badge/discord-mMediaTag-blueviolet.svg?logo=discord)](https://discord.gg/AE9XebMU49)
+[![License](https://img.shields.io/badge/license-ARR-blue.svg)](https://github.com/mBlinkii/mMediaTag/blob/main/LICENSE.txt)
 
 </div>
 
@@ -106,9 +107,9 @@ L["Mythic Plus Keystone"] = "Mythisch Plus Schlüsselstein"
 
 ## 🎈 Screenshots <a name="screenshots"></a>
 
-<img src="https://raw.githubusercontent.com/mBlinkii/mMediaTag/dev/pre1.png" alt="Screenshot 1"></a>
-<img src="https://raw.githubusercontent.com/mBlinkii/mMediaTag/dev/pre2.png" alt="Screenshot 2"></a>
-<img src="https://raw.githubusercontent.com/mBlinkii/mMediaTag/dev/pre3.png" alt="Screenshot 3"></a>
-<img src="https://raw.githubusercontent.com/mBlinkii/mMediaTag/dev/pre4.png" alt="Screenshot 4"></a>
-<img src="https://raw.githubusercontent.com/mBlinkii/mMediaTag/dev/pre5.png" alt="Screenshot 5"></a>
-<img src="https://raw.githubusercontent.com/mBlinkii/mMediaTag/dev/pre6.png" alt="Screenshot 6"></a>
+<img src="https://raw.githubusercontent.com/mBlinkii/mMediaTag/main/Screenshot/pre1.png" alt="Screenshot 1"></a>
+<img src="https://raw.githubusercontent.com/mBlinkii/mMediaTag/main/Screenshot/pre2.png" alt="Screenshot 2"></a>
+<img src="https://raw.githubusercontent.com/mBlinkii/mMediaTag/main/Screenshot/pre3.png" alt="Screenshot 3"></a>
+<img src="https://raw.githubusercontent.com/mBlinkii/mMediaTag/main/Screenshot/pre4.png" alt="Screenshot 4"></a>
+<img src="https://raw.githubusercontent.com/mBlinkii/mMediaTag/main/Screenshot/pre5.png" alt="Screenshot 5"></a>
+<img src="https://raw.githubusercontent.com/mBlinkii/mMediaTag/main/Screenshot/pre6.png" alt="Screenshot 6"></a>
