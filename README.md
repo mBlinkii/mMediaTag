@@ -10,6 +10,7 @@
 [![Status](https://img.shields.io/badge/status-active-success.svg)]()
 [![GitHub Issues](https://img.shields.io/github/issues/mBlinkii/mMediaTag.svg)](https://github.com/mBlinkii/mMediaTag/issues)
 [![GitHub Pull Requests](https://img.shields.io/github/issues-pr/mBlinkii/mMediaTag.svg)](https://github.com/mBlinkii/mMediaTag/pulls)
+[![Discord](https://img.shields.io/badge/discord-mMediaTag-blueviolet.svg?style=flat&logo=appveyor)](https://github.com/mBlinkii/mMediaTag/blob/dev/LICENSE.txt)
 [![License](https://img.shields.io/badge/license-ARR-blue.svg)](https://github.com/mBlinkii/mMediaTag/blob/dev/LICENSE.txt)
 
 </div>
