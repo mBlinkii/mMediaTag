@@ -283,6 +283,7 @@ local function executeMarker(unit, percent)
 	end
 
 	local range = nil
+	local inCombat = InCombatLockdown()
 
 	if db.auto and executeAutoRange.enabel then
 		range = executeAutoRange.range
@@ -290,7 +291,7 @@ local function executeMarker(unit, percent)
 		range = db.range
 	end
 
-	if range then
+	if range and inCombat then
 		if percent > range then
 			local overlaySize = health:GetWidth() * range / 100
 			health.executeMarker:SetSize(2, health:GetHeight())
