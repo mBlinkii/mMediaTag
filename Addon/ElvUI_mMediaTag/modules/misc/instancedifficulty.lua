@@ -317,6 +317,14 @@ function mMT:GetDungeonInfo(datatext, short)
 					difficultyShort,
 					instanceGroupSize
 				)
+			elseif short then
+				text = format(
+					"%s%s|r %s%s|r",
+					isGuildParty and colors.guild.color or colors.name.color,
+					name,
+					difficultyColor,
+					difficultyShort
+				)
 			else
 				text = format(
 					"%s%s|r\n%s%s|r |CFFF7DC6F%s|r",

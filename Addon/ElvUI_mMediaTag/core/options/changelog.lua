@@ -20,19 +20,24 @@ local change_log_important = {
 }
 
 local change_log_new = {
-	"NEW function for Castbars Important Spells for Interruptible and not Interruptible Spells, changes the Castbar color, Icon and adds a Icon, with import/ export function",
+	"NEW function Castbar Shield Shield Icon for not interruptible Spells",
+	"NEW the media files are now moved to a separate extra addon. Now you can enable/ disable each Pack/ Series to improve the texture Dropdown Menu. The settings are aviable in ElvUI or type /mmtmp help in chat.",
 }
 
 local change_log_update = {
-	"Add Affix Icons to Score Datattext",
-	"Cleanup Dock Settings",
-	"Code update, removed unused code",
-	"Healthmarker IDs for S2, Thanks Trenchy",
+	"Update te Text function of the Dock Icons",
+	"Revert Quick Setup",
+	"Short dungeon text fur Dock LFD",
+	"Show Executemarker only in combat, thx to Merathilis",
 }
 
 local change_log_fix = {
-	"Fix Dock Icons Text and Color function",
-	"Fix some Bugs in Dock Icons",
+	"Fixed Dock LFD events",
+	"Fixed Dock Journal bug",
+	"Fixed Important Spell Same Error",
+	"Fixed Important Spell extra Icon",
+	"Fixed Tag Role  icons",
+	"Fixed spelling",
 }
 
 local function Concatenation(tbl, icon, color)
@@ -52,7 +57,7 @@ local function Concatenation(tbl, icon, color)
 end
 
 local function configTable()
-	local releasdate = "17.05.2023"
+	local releasdate = "02.06.2023"
 	--local change_log_important_string = Concatenation(change_log_important)
 	local change_log_new_string = Concatenation(change_log_new)
 	local change_log_update_string = Concatenation(change_log_update)

@@ -250,7 +250,8 @@
         "mMTDB",
         "ACCEPT",
         "CANCEL",
-        "ReloadUI"
+        "ReloadUI",
+        "Add"
     ],
     "Lua.diagnostics.disable": [
         "undefined-field"
