@@ -85,7 +85,7 @@ function mMT:mDropDown(list, frame, menuparent, ButtonWidth, HideDelay)
 				end
 			end
 
-			local texture = [[Interface\AddOns\ElvUI_mMediaTag\media\textures\k35.tga]]
+			local texture = [[Interface\AddOns\!mMT_MediaPack\media\textures\k35.tga]]
 				or [[Interface\QuestFrame\UI-QuestTitleHighlight]]
 
 			if not list[i].isTitle then
