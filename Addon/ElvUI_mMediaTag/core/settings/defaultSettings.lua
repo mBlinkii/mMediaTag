@@ -467,6 +467,8 @@ P.mMT = {
 		posY = 0,
 		color = { r = 1, g = 1, b = 1, a = 1 },
 		icon = "CAST16",
+		np = true,
+		uf = false,
 	},
 	unitframeicons = {
 		phase = {

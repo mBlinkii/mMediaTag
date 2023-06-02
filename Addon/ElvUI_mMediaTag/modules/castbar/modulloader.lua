@@ -13,7 +13,24 @@ function mMT:SetCastbarColor(castbar, colorA, colorB)
 		castbar:SetStatusBarColor(colorA.r, colorA.g, colorA.b)
 	end
 end
-local function Loader(castbar)
+local function NPLoader(castbar)
+	if castbar.unit == "vehicle" or castbar.unit == "player" then
+		return
+	end
+
+	if E.db.mMT.importantspells.interrupt.enable or E.db.mMT.importantspells.stun.enable then
+		mMT:ImportantSpells(castbar)
+	end
+
+	if E.db.mMT.interruptoncd.enable then
+		mMT:InterruptChecker(castbar)
+	end
+
+	if E.db.mMT.castbarshield.enable then
+		mMT:CastbarShield(castbar)
+	end
+end
+local function UFLoader(castbar)
 	if castbar.unit == "vehicle" or castbar.unit == "player" then
 		return
 	end
@@ -32,6 +49,6 @@ local function Loader(castbar)
 end
 
 function mMT:CastbarModuleLoader()
-	hooksecurefunc(NP, "Castbar_CheckInterrupt", Loader)
-	hooksecurefunc(UF, "PostCastStart", Loader)
+	hooksecurefunc(NP, "Castbar_CheckInterrupt", NPLoader)
+	hooksecurefunc(UF, "PostCastStart", UFLoader)
 end

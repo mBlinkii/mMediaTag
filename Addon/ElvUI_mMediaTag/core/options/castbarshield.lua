@@ -26,6 +26,30 @@ local function configTable()
 						E:StaticPopup_Show("CONFIG_RL")
 					end,
 				},
+				toggle_castbarshieldnp = {
+					order = 2,
+					type = "toggle",
+					name = L["Enable on Nameplates"],
+					get = function(info)
+						return E.db.mMT.castbarshield.np
+					end,
+					set = function(info, value)
+						E.db.mMT.castbarshield.np = value
+						E:StaticPopup_Show("CONFIG_RL")
+					end,
+				},
+				toggle_castbarshielduf = {
+					order = 3,
+					type = "toggle",
+					name = L["Enable on Unitframes"],
+					get = function(info)
+						return E.db.mMT.castbarshield.uf
+					end,
+					set = function(info, value)
+						E.db.mMT.castbarshield.uf = value
+						E:StaticPopup_Show("CONFIG_RL")
+					end,
+				},
 			},
 		},
 		header_settings = {

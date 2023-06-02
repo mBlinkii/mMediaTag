@@ -96,7 +96,7 @@ function mMT:mChat()
 			nil,
 			"ALL,MMEDIATAG",
 			nil,
-			"mMT,general,Chat",
+			"mMT,general,chat",
 			nil
 		)
 	end
