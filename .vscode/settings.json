@@ -247,7 +247,10 @@
         "SetPortraitToTexture",
         "SlashCmdList",
         "mMTSettings",
-        "mMTDB"
+        "mMTDB",
+        "ACCEPT",
+        "CANCEL",
+        "ReloadUI"
     ],
     "Lua.diagnostics.disable": [
         "undefined-field"

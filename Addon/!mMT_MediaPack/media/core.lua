@@ -413,98 +413,237 @@ local function LoadSeriesAll()
 	LoadSeriesR()
 end
 
-local  mMT_MediaPack = CreateFrame("FRAME")
- mMT_MediaPack:RegisterEvent("ADDON_LOADED")
+local defaultDB = {
+	textures = {
+		all = true,
+		a = true,
+		b = true,
+		c = true,
+		d = true,
+		e = true,
+		f = true,
+		g = true,
+		h = true,
+		i = true,
+		j = true,
+		k = true,
+		l = true,
+		n = true,
+		m = true,
+		o = true,
+		p = true,
+		q = true,
+		r = true,
+	},
+}
 
-function  mMT_MediaPack:OnEvent(event, arg1)
+local mMT_MediaPack = CreateFrame("FRAME")
+mMT_MediaPack:RegisterEvent("ADDON_LOADED")
+mMT_MediaPack:RegisterEvent("PLAYER_LOGOUT")
+function mMT_MediaPack:OnEvent(event, arg1)
 	if event == "ADDON_LOADED" and arg1 == "!mMT_MediaPack" then
-		if mMTSettings == nil then
-			mMTSettings = {
-				textures = {
-					all = true,
-					a = true,
-					b = true,
-					c = true,
-					d = true,
-					e = true,
-					f = true,
-					g = true,
-					h = true,
-					i = true,
-					j = true,
-					k = true,
-					l = true,
-					n = true,
-					m = true,
-					o = true,
-					p = true,
-					q = true,
-					r = true,
-				},
-			}
+		mMTSettings = mMTSettings or {}
+		mMT_MediaPack.db = mMTSettings
+
+		for k, v in pairs(defaultDB) do
+			if mMT_MediaPack.db[k] == nil then
+				mMT_MediaPack.db[k] = v
+			end
 		end
 
-		if mMTSettings.textures.all then
+		if mMT_MediaPack.db.textures.all then
 			LoadSeriesAll()
 		end
-		if mMTSettings.textures.a then
+		if mMT_MediaPack.db.textures.a then
 			LoadSeriesA()
 		end
-		if mMTSettings.textures.b then
+		if mMT_MediaPack.db.textures.b then
 			LoadSeriesB()
 		end
-		if mMTSettings.textures.c then
+		if mMT_MediaPack.db.textures.c then
 			LoadSeriesC()
 		end
-		if mMTSettings.textures.d then
+		if mMT_MediaPack.db.textures.d then
 			LoadSeriesD()
 		end
-		if mMTSettings.textures.e then
+		if mMT_MediaPack.db.textures.e then
 			LoadSeriesE()
 		end
-		if mMTSettings.textures.f then
+		if mMT_MediaPack.db.textures.f then
 			LoadSeriesF()
 		end
-		if mMTSettings.textures.g then
+		if mMT_MediaPack.db.textures.g then
 			LoadSeriesG()
 		end
-		if mMTSettings.textures.h then
+		if mMT_MediaPack.db.textures.h then
 			LoadSeriesH()
 		end
-		if mMTSettings.textures.i then
+		if mMT_MediaPack.db.textures.i then
 			LoadSeriesI()
 		end
-		if mMTSettings.textures.j then
+		if mMT_MediaPack.db.textures.j then
 			LoadSeriesJ()
 		end
-		if mMTSettings.textures.k then
+		if mMT_MediaPack.db.textures.k then
 			LoadSeriesK()
 		end
-		if mMTSettings.textures.l then
+		if mMT_MediaPack.db.textures.l then
 			LoadSeriesL()
 		end
-		if mMTSettings.textures.m then
+		if mMT_MediaPack.db.textures.m then
 			LoadSeriesM()
 		end
-		if mMTSettings.textures.n then
+		if mMT_MediaPack.db.textures.n then
 			LoadSeriesN()
 		end
-		if mMTSettings.textures.o then
+		if mMT_MediaPack.db.textures.o then
 			LoadSeriesO()
 		end
-		if mMTSettings.textures.p then
+		if mMT_MediaPack.db.textures.p then
 			LoadSeriesP()
 		end
-		if mMTSettings.textures.q then
+		if mMT_MediaPack.db.textures.q then
 			LoadSeriesQ()
 		end
-		if mMTSettings.textures.r then
+		if mMT_MediaPack.db.textures.r then
 			LoadSeriesR()
 		end
+	elseif event == "PLAYER_LOGOUT" then
+		mMTSettings = mMT_MediaPack.db
 	end
 end
 
- mMT_MediaPack:SetScript("OnEvent",  mMT_MediaPack.OnEvent)
+StaticPopupDialogs["MMTMPRL"] = {
+	text = "One or more of the changes you have made require a ReloadUI.",
+	button1 = ACCEPT,
+	button2 = CANCEL,
+	OnAccept = ReloadUI,
+	whileDead = 1,
+	hideOnEscape = false,
+}
+local function RLDialog()
+	StaticPopup_Show("MMTMPRL")
+end
+
+local function PrintStatus(...)
+	local name =
+		"|CFFAB02FDm|r|CFFB820D5M|r|CFFC031BDT|r |CFFCB4A9CM|r|CFFD25A87e|r|CFFD96972d|r|CFFDE7464i|r|CFFE27E57a|r |CFFE88B46P|r|CFFF09D2Da|r|CFFF4A720c|r|CFFFCB70Ak|r"
+	print(name .. ":", ...)
+end
+
+local function PrintStatusOne(setting, toggleg)
+	PrintStatus("Texture Pack is |CFF1D9EF9" .. setting .. "|r:", toggleg)
+end
+local function SetDBAll()
+	if mMT_MediaPack.db.textures.all then
+		mMT_MediaPack.db.textures.all = false
+		PrintStatus("Texture Pack is |CFF1D9EF9all|r:", mMT_MediaPack.db.textures.all)
+	end
+end
+
+local function DisableAll()
+	for k, v in pairs(mMT_MediaPack.db.textures) do
+		if mMT_MediaPack.db.textures[k] == true then
+			mMT_MediaPack.db.textures[k] = false
+			PrintStatusOne(k, mMT_MediaPack.db.textures[k])
+		end
+	end
+	RLDialog()
+end
+
+local function EnableAll()
+	for k, v in pairs(mMT_MediaPack.db.textures) do
+		if mMT_MediaPack.db.textures[k] == false then
+			mMT_MediaPack.db.textures[k] = true
+			PrintStatusOne(k, mMT_MediaPack.db.textures[k])
+		end
+	end
+	RLDialog()
+end
+
+local function SetSetting(setting)
+	if setting ~= "all" then
+		SetDBAll()
+	end
+	mMT_MediaPack.db.textures[setting] = not mMT_MediaPack.db.textures[setting]
+	PrintStatusOne(setting, mMT_MediaPack.db.textures[setting] )
+	RLDialog()
+end
+
+local function PrintHelp()
+	print("Available slash Commands:")
+	print("----------------------------------------------------------")
+	print("|CFFFCB70A/mmtmp help|r = shows the list of available commands")
+	print("|CFFFCB70A/mmtmp reset|r = resets Settings to default")
+	print("|CFFFCB70A/mmtmp all|r = enabled/disabled loading all textures")
+	print("|CFFFCB70A/mmtmp disable all|r = disables all textures")
+	print("|CFFFCB70A/mmtmp enable all|r = enables all textures")
+	print("----------------------------------------------------------")
+	print("To selectively enable or disable a texture pack you must enter /mmtmp followed by the letter (a - r) of the pack.")
+	print("Here are two example commands")
+	print("|CFFFCB70A/mmtmp a|r = enabled/disabled loading texture pack A")
+	print("|CFFFCB70A/mmtmp f|r = enabled/disabled loading texture pack F")
+end
+
+mMT_MediaPack:SetScript("OnEvent", mMT_MediaPack.OnEvent)
+
+SLASH_MMTMP1 = "/mmtmp"
+SlashCmdList.MMTMP = function(msg, editBox)
+	msg = strlower(msg)
+
+	if msg == "reset" then
+		mMTSettings = CopyTable(defaultDB) -- reset to defaults
+		mMT_MediaPack.db = mMTSettings
+		PrintStatus("Settings has been reset to default")
+		RLDialog()
+	elseif msg == "a" then
+		SetSetting(msg)
+	elseif msg == "b" then
+		SetSetting(msg)
+	elseif msg == "c" then
+		SetSetting(msg)
+	elseif msg == "d" then
+		SetSetting(msg)
+	elseif msg == "e" then
+		SetSetting(msg)
+	elseif msg == "f" then
+		SetSetting(msg)
+	elseif msg == "g" then
+		SetSetting(msg)
+	elseif msg == "h" then
+		SetSetting(msg)
+	elseif msg == "i" then
+		SetSetting(msg)
+	elseif msg == "j" then
+		SetSetting(msg)
+	elseif msg == "k" then
+		SetSetting(msg)
+	elseif msg == "l" then
+		SetSetting(msg)
+	elseif msg == "m" then
+		SetSetting(msg)
+	elseif msg == "n" then
+		SetSetting(msg)
+	elseif msg == "o" then
+		SetSetting(msg)
+	elseif msg == "p" then
+		SetSetting(msg)
+	elseif msg == "q" then
+		SetSetting(msg)
+	elseif msg == "r" then
+		SetSetting(msg)
+	elseif msg == "all" then
+		SetSetting(msg)
+	elseif msg == "disable all" then
+		DisableAll()
+	elseif msg == "enable all" then
+		EnableAll()
+	elseif msg == "help" then
+		PrintHelp()
+	else
+		print("|CFFFCB70A/mmtmp help|r to shows the list of available commands")
+	end
+end
 
 mAddStatusbar("mMediaTag Caith UI 1", "Wglass.tga")
 mAddStatusbar("mMediaTag Caith UI 2", "Wisps.tga")
