@@ -13,14 +13,14 @@ local function mDockCheckFrame()
 	return (CollectionsJournal and CollectionsJournal:IsShown())
 end
 
-function mMT:CheckFrameCollectionsJourna(self)
+function mMT:CheckFrameCollectionsJournal(self)
 	self.mIcon.isClicked = mDockCheckFrame()
 	mMT:DockTimer(self)
 end
 
 local function OnEnter(self)
 	self.mIcon.isClicked = mDockCheckFrame()
-	mMT:mOnEnter(self, "CheckFrameCollectionsJourna")
+	mMT:mOnEnter(self, "CheckFrameCollectionsJournal")
 
 	local numOwned = 0
 	local mountIDs = C_MountJournal.GetMountIDs()
@@ -65,7 +65,7 @@ end
 
 local function OnClick(self)
 	if mMT:CheckCombatLockdown() then
-		mMT:mOnClick(self, "CheckFrameCollectionsJourna")
+		mMT:mOnClick(self, "CheckFrameCollectionsJournal")
 		_G.ToggleCollectionsJournal()
 	end
 end

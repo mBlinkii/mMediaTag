@@ -75,7 +75,7 @@ local function configTable()
 			order = 2,
 			type = "group",
 			inline = true,
-			name = L["Difficultys Colors"],
+			name = L["Difficulties Colors"],
 			args = {
 				ID_Color_NHC = {
 					type = "color",

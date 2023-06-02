@@ -371,6 +371,9 @@ local function SkinOBTScenarioBlock()
 
 	_G.ScenarioStageBlock.NormalBG:Hide()
 	_G.ScenarioStageBlock.FinalBG:Hide()
+	if _G.ScenarioStageBlock.WidgetContainer then
+		_G.ScenarioStageBlock.WidgetContainer:Hide()
+	end
 end
 local function SkinOBTScenario(numCriteria, objectiveBlock)
 	if _G.ScenarioObjectiveBlock then

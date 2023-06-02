@@ -9,13 +9,13 @@ function mMT:mStartRoleSmbols()
 		{ tank = { icon = nil, path = nil }, heal = { icon = nil, path = nil }, dd = { icon = nil, path = nil } }
 
 	if E.db.mMT.roleicons.customtexture then
-		icons.tank.icon = E:TextureString(format(E.db.mMT.roleicons.customtank), sizeString)
+		icons.tank.icon = E:TextureString(E.db.mMT.roleicons.customtank, sizeString)
 		icons.tank.path = E.db.mMT.roleicons.customtank
 
-		icons.heal.icon = E:TextureString(format(E.db.mMT.roleicons.customheal), sizeString)
+		icons.heal.icon = E:TextureString(E.db.mMT.roleicons.customheal, sizeString)
 		icons.heal.path = E.db.mMT.roleicons.customtheal
 
-		icons.dd.icon = E:TextureString(format(E.db.mMT.roleicons.customdd), sizeString)
+		icons.dd.icon = E:TextureString(E.db.mMT.roleicons.customdd, sizeString)
 		icons.dd.path = E.db.mMT.roleicons.customdd
 	else
 		icons.tank.icon = E:TextureString(mMT.Media.Role[E.db.mMT.roleicons.tank], sizeString)

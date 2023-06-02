@@ -80,7 +80,7 @@ local function configTable()
 							order = 2,
 							type = "description",
 							fontSize = "medium",
-							name = green .. L["Releas date:"] .. endtag .. " " .. (releasdate or "ERROR"),
+							name = green .. L["Release"] .. endtag .. " " .. (releasdate or "ERROR"),
 						},
 					},
 				},

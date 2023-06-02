@@ -238,7 +238,7 @@ local function GetKeystoneLevelandColor()
 	end
 end
 
-function mMT:GetDungeonInfo(datatext)
+function mMT:GetDungeonInfo(datatext, short)
 	local name, instanceType, difficultyID, difficultyName, maxPlayers, dynamicDifficulty, isDynamic, instanceID, instanceGroupSize, LfgDungeonID =
 		GetInstanceInfo()
 	local inInstance, InstanceType = IsInInstance()
@@ -255,11 +255,18 @@ function mMT:GetDungeonInfo(datatext)
 			and C_MythicPlus.IsMythicPlusActive()
 			and (C_ChallengeMode.GetActiveChallengeMapID() ~= nil)
 		then
-			if datatext then
+			if datatext and not short then
 				text = format(
 					"%s%s|r %s%s|r %s",
 					isGuildParty and colors.guild.color or colors.name.color,
 					name,
+					difficultyColor,
+					difficultyShort,
+					GetKeystoneLevelandColor()
+				)
+			elseif short then
+				text = format(
+					"%s%s|r %s",
 					difficultyColor,
 					difficultyShort,
 					GetKeystoneLevelandColor()
@@ -277,11 +284,17 @@ function mMT:GetDungeonInfo(datatext)
 		elseif InstanceType == "pvp" or InstanceType == "arena" then
 			difficultyColor = instanceDifficulty[34] and instanceDifficulty[34].c or "|CFFFFFFFF"
 			difficultyShort = instanceDifficulty[34] and instanceDifficulty[34].d or ""
-			if datatext then
+			if datatext and not short then
 				text = format(
 					"%s%s|r %s%s|r",
 					isGuildParty and colors.guild.color or colors.name.color,
 					name,
+					difficultyColor,
+					difficultyShort
+				)
+			elseif short then
+				text = format(
+					"%s%s|r",
 					difficultyColor,
 					difficultyShort
 				)
@@ -295,7 +308,7 @@ function mMT:GetDungeonInfo(datatext)
 				)
 			end
 		else
-			if datatext then
+			if datatext and not short then
 				text = format(
 					"%s%s|r %s%s|r |CFFF7DC6F%s|r",
 					isGuildParty and colors.guild.color or colors.name.color,

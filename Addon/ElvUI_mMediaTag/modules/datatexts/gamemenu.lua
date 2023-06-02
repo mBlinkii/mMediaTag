@@ -167,6 +167,7 @@ local function BuildMenu()
 		if a and b and a.text and b.text then
 			return a.text < b.text
 		end
+		return false
 	end)
 
 	for i = 1, #menuList do

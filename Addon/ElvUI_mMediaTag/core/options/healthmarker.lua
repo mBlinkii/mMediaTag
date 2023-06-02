@@ -186,7 +186,7 @@ local function configTable()
 					args = {
 						mark1 = {
 							order = 1,
-							name = L["Healthmark 1"],
+							name = L["Healthmarker 1"],
 							desc = L["0 = disable"],
 							type = "range",
 							min = 0,
@@ -213,7 +213,7 @@ local function configTable()
 						},
 						mark2 = {
 							order = 2,
-							name = L["Healthmark 2"],
+							name = L["Healthmarker 2"],
 							desc = L["0 = disable"],
 							type = "range",
 							min = 0,
@@ -260,7 +260,7 @@ local function configTable()
 						},
 						mark3 = {
 							order = 3,
-							name = L["Healthmark 3"],
+							name = L["Healthmarker 3"],
 							desc = L["0 = disable"],
 							type = "range",
 							min = 0,
@@ -305,7 +305,7 @@ local function configTable()
 						},
 						mark4 = {
 							order = 4,
-							name = L["Healthmark 4"],
+							name = L["Healthmarker 4"],
 							desc = L["0 = disable"],
 							type = "range",
 							min = 0,

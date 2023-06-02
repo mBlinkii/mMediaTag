@@ -4,9 +4,6 @@
 	<Include file="unitframes\load_unitframes.xml"/>
 	<Include file="retail\load_retail.xml"/>
 	<Include file="nameplates\load_nameplates.xml"/>
-	<Script file="castbar\castbar.lua"/>
+	<Include file="castbar\castbar.xml"/>
 	<Include file="dock\load_dock.xml"/>
-	<!-- <Include file="options\load_options.xml"/>
-	<Script file="greeting.lua"/>
-	<Script file="cmd.lua"/> -->
 </Ui>

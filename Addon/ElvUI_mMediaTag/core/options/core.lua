@@ -58,7 +58,7 @@ local function configTable()
 			datatexts = {
 				order = 3,
 				type = "group",
-				name = L["DatatTexts"],
+				name = L["DataTexts"],
 				icon = "Interface\\Addons\\ElvUI_mMediaTag\\media\\system\\datatexts.tga",
 				childGroups = "tab",
 				args = {
@@ -167,6 +167,12 @@ local function configTable()
 						name = L["Important Spells"],
 						args = {},
 					},
+					shield = {
+						order = 3,
+						type = "group",
+						name = L["Castbar Shield"],
+						args = {},
+					},
 				},
 			},
 			nameplates = {
@@ -245,12 +251,12 @@ local function configTable()
 						childGroups = "tab",
 						args = {},
 					},
-					-- textures = {
-					-- 	order = 20,
-					-- 	type = "group",
-					-- 	name = L["Textures"],
-					-- 	args = {},
-					-- },
+					textures = {
+						order = 20,
+						type = "group",
+						name = L["Textures"],
+						args = {},
+					},
 				},
 			},
 			about = {
@@ -267,15 +273,6 @@ local function configTable()
 				type = "group",
 				name = format("|CFFFF0094%s|r", L["Changelog"]),
 				icon = "Interface\\Addons\\ElvUI_mMediaTag\\media\\system\\changelog.tga",
-				childGroups = "tab",
-				args = {
-				},
-			},
-			setup = {
-				order = 20,
-				type = "group",
-				name = format("|CFF0094FF%s|r", L["Setup"]),
-				icon = "Interface\\Addons\\ElvUI_mMediaTag\\media\\system\\setup.tga",
 				childGroups = "tab",
 				args = {
 				},

@@ -21,7 +21,7 @@
 	<Script file="healthmarker.lua"/>
 	<Script file="executemarker.lua"/>
 	<Script file="npbordercolor.lua"/>
-	<!-- <Script file="textures.lua"/> -->
+	<Script file="textures.lua"/>
 	<Script file="gamemenu.lua"/>
 	<Script file="tagcolors.lua"/>
 	<Script file="tagicons.lua"/>
@@ -30,5 +30,5 @@
 	<Script file="dock.lua"/>
 	<Script file="changelog.lua"/>
 	<Script file="unitframeicons.lua"/>
-	<Script file="setup.lua"/>
+	<Script file="castbarshield.lua"/>
 </Ui>

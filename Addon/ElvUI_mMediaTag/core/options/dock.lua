@@ -205,7 +205,7 @@ local function configTable()
 						dockgeneralautogrow = {
 							order = 2,
 							type = "toggle",
-							name = L["Auto Hover growsize"],
+							name = L["Auto Hover grow size"],
 							get = function(info)
 								return E.db.mMT.dockdatatext.autogrow
 							end,
@@ -216,7 +216,7 @@ local function configTable()
 						},
 						dockgeneralgrowsize = {
 							order = 3,
-							name = L["Hover growsize"],
+							name = L["Hover grow size"],
 							type = "range",
 							min = 2,
 							max = 128,
@@ -576,7 +576,7 @@ local function configTable()
 					end,
 					set = function(info, value)
 						E.db.mMT.dockdatatext.collection.icon = value
-						DT:ForceUpdate_DataText("mCollectionsJourna")
+						DT:ForceUpdate_DataText("mCollectionsJournal")
 					end,
 					values = icons,
 				},
@@ -594,7 +594,7 @@ local function configTable()
 					end,
 					set = function(info, value)
 						E.db.mMT.dockdatatext.collection.customcolor = value
-						DT:ForceUpdate_DataText("mCollectionsJourna")
+						DT:ForceUpdate_DataText("mCollectionsJournal")
 					end,
 				},
 				collectioncolor = {
@@ -612,7 +612,7 @@ local function configTable()
 					set = function(info, r, g, b, a)
 						local t = E.db.mMT.dockdatatext.collection.iconcolor
 						t.r, t.g, t.b, t.a = r, g, b, a
-						DT:ForceUpdate_DataText("mCollectionsJourna")
+						DT:ForceUpdate_DataText("mCollectionsJournal")
 					end,
 				},
 			},
@@ -761,7 +761,7 @@ local function configTable()
 							order = 1,
 							type = "toggle",
 							name = L["Great Vault"],
-							desc = L["Show Greaut Vault infos in the Tooltip and opens the Great Vault"],
+							desc = L["Show Great Vault infos in the Tooltip and opens the Great Vault"],
 							get = function(info)
 								return E.db.mMT.dockdatatext.lfd.greatvault
 							end,

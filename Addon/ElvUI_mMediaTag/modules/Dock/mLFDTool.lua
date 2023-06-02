@@ -132,7 +132,9 @@ local function mLFDTooltip()
 	DT.tooltip:AddLine(" ")
 	DT.tooltip:AddLine(format("%s %s%s|r", mMT:mIcon(mMT.Media.Mouse["LEFT"]), tip, L["left click to open LFD Window"]))
 	if E.db.mMT.dockdatatext.lfd.greatvault then
-		DT.tooltip:AddLine(format("%s %s%s|r", mMT:mIcon(mMT.Media.Mouse["RIGHT"]), tip, L["right click to open Great Vault Window"]))
+		DT.tooltip:AddLine(
+			format("%s %s%s|r", mMT:mIcon(mMT.Media.Mouse["RIGHT"]), tip, L["right click to open Great Vault Window"])
+		)
 	end
 end
 
@@ -163,19 +165,19 @@ end
 
 local function OnEvent(self, event)
 	self.mSettings = {
-	Name = mTextName,
-	text = {
-		special = false,
-		textA = true,
-		textB = false,
-	},
-	icon = {
-		texture = mMT.Media.DockIcons[E.db.mMT.dockdatatext.lfd.icon],
-		color = E.db.mMT.dockdatatext.lfd.iconology,
-		customcolor = E.db.mMT.dockdatatext.lfd.customcolor,
-	},
-	Notifications = true,
-}
+		Name = mTextName,
+		text = {
+			special = false,
+			textA = true,
+			textB = false,
+		},
+		icon = {
+			texture = mMT.Media.DockIcons[E.db.mMT.dockdatatext.lfd.icon],
+			color = E.db.mMT.dockdatatext.lfd.iconology,
+			customcolor = E.db.mMT.dockdatatext.lfd.customcolor,
+		},
+		Notifications = true,
+	}
 
 	local mTextString = ""
 
@@ -239,7 +241,7 @@ local function OnEvent(self, event)
 
 	if E.db.mMT.dockdatatext.lfd.difficulty and (inInstance or isGroup) then
 		if inInstance then
-			text = mMT:DungeonDifficultyShort()
+			text = mMT:GetDungeonInfo(true, true)
 		elseif isGroup then
 			text = mMT:InctanceDifficultyDungeon()
 		elseif isRaid then
@@ -289,21 +291,10 @@ local function OnClick(self, button)
 	end
 end
 
-DT:RegisterDatatext(
-	mTextName,
-	"mDock",
-	{
-		"LFG_UPDATE_RANDOM_INFO",
-		"CHALLENGE_MODE_START",
-		"CHAT_MSG_SYSTEM",
-		"LOADING_SCREEN_DISABLED",
-	},
-	OnEvent,
-	nil,
-	OnClick,
-	OnEnter,
-	OnLeave,
-	mText,
-	nil,
-	nil
-)
+DT:RegisterDatatext(mTextName, "mDock", {
+	"LFG_UPDATE_RANDOM_INFO",
+	"CHALLENGE_MODE_START",
+	"CHAT_MSG_SYSTEM",
+	"LOADING_SCREEN_DISABLED",
+	"GROUP_ROSTER_UPDATE",
+}, OnEvent, nil, OnClick, OnEnter, OnLeave, mText, nil, nil)

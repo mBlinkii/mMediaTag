@@ -35,6 +35,10 @@ mMT.Media.Castbar = {
 	CAST13 = "Interface\\AddOns\\ElvUI_mMediaTag\\media\\icons\\castbar\\cast13.tga",
 	CAST14 = "Interface\\AddOns\\ElvUI_mMediaTag\\media\\icons\\castbar\\cast14.tga",
 	CAST15 = "Interface\\AddOns\\ElvUI_mMediaTag\\media\\icons\\castbar\\cast15.tga",
+	CAST16 = "Interface\\AddOns\\ElvUI_mMediaTag\\media\\icons\\castbar\\castbarshield1.tga",
+	CAST17 = "Interface\\AddOns\\ElvUI_mMediaTag\\media\\icons\\castbar\\castbarshield2.tga",
+	CAST18 = "Interface\\AddOns\\ElvUI_mMediaTag\\media\\icons\\castbar\\castbarshield3.tga",
+	CAST19 = "Interface\\AddOns\\ElvUI_mMediaTag\\media\\icons\\castbar\\castbarshield4.tga",
 }
 
 mMT.Media.ChatIcons = {

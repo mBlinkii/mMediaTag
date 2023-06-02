@@ -18,7 +18,7 @@ local hex = E:RGBToHex(class.r, class.g, class.b)
 --Constants
 mMT.Version = GetAddOnMetadata(addonName, "Version")
 mMT.Name =
-"|CFF6559F1m|r|CFF7A4DEFM|r|CFF8845ECe|r|CFFA037E9d|r|CFFA435E8i|r|CFFB32DE6a|r|CFFBC26E5T|r|CFFCB1EE3a|r|CFFDD14E0g|r |CFFFF006C&|r |CFFFF4C00T|r|CFFFF7300o|r|CFFFF9300o|r|CFFFFA800l|r|CFFFFC900s|r"
+	"|CFF6559F1m|r|CFF7A4DEFM|r|CFF8845ECe|r|CFFA037E9d|r|CFFA435E8i|r|CFFB32DE6a|r|CFFBC26E5T|r|CFFCB1EE3a|r|CFFDD14E0g|r |CFFFF006C&|r |CFFFF4C00T|r|CFFFF7300o|r|CFFFF9300o|r|CFFFFA800l|r|CFFFFC900s|r"
 mMT.NameShort = "|CFF6559F1m|r|CFFA037E9M|r|CFFDD14E0T|r"
 mMT.Icon = "|TInterface\\Addons\\ElvUI_mMediaTag\\media\\logo\\mmt_icon_round.tga:14:14|t"
 mMT.IconSquare = "|TInterface\\Addons\\ElvUI_mMediaTag\\media\\logo\\mmt_icon.tga:14:14|t"
@@ -39,6 +39,32 @@ mMT.ElvUI_EltreumUI = (
 
 mMT.Media = {}
 mMT.Config = {}
+mMT.DB = {}
+
+local defaultDB = {
+	mplusaffix = { affixes = nil, season = nil, reset = false, year = nil },
+	keys = {},
+}
+
+local DB_Loader = CreateFrame("FRAME")
+DB_Loader:RegisterEvent("PLAYER_LOGOUT")
+DB_Loader:RegisterEvent("ADDON_LOADED")
+
+function DB_Loader:OnEvent(event, arg1)
+	if event == "ADDON_LOADED" and arg1 == "ElvUI_mMediaTag" then
+		mMTDB = mMTDB or {}
+		mMT.DB = mMTDB
+		for k, v in pairs(defaultDB) do
+			if mMT.DB[k] == nil then
+				mMT.DB[k] = v
+			end
+		end
+	elseif event == "PLAYER_LOGOUT" then
+		mMTDB = mMT.DB
+	end
+end
+
+DB_Loader:SetScript("OnEvent", DB_Loader.OnEvent)
 
 if E.Retail then
 	C_MythicPlus_RequestMapInfo = C_MythicPlus.RequestMapInfo
@@ -130,11 +156,11 @@ function mMT:Initialize()
 	end
 
 	if E.Retail then
-		if E.db.mMT.interruptoncd.enable then
-			mMT:mSetupCastbar()
+		if E.db.mMT.interruptoncd.enable or E.db.mMT.importantspells.interrupt.enable or E.db.mMT.importantspells.stun.enable or E.db.mMT.castbarshield.enable then
+			mMT:CastbarModuleLoader()
 		end
 
-		if (E.db.mMT.importantspells.interrupt.enable or E.db.mMT.importantspells.stun.enable) then
+		if E.db.mMT.importantspells.interrupt.enable or E.db.mMT.importantspells.stun.enable then
 			mMT:UpdateImportantSpells()
 		end
 
@@ -202,38 +228,13 @@ function mMT:Initialize()
 	end
 end
 
+
 function mMT:PLAYER_ENTERING_WORLD()
 	-- Change Log
 	if E.db.mMT.version ~= mMT.Version then
 		E:ToggleOptions()
 		E.Libs.AceConfigDialog:SelectGroup("ElvUI", "mMT", "changelog")
 		E.db.mMT.version = mMT.Version
-	end
-
-	-- quick setup
-	if not E.db.mMT.quicksetup then
-		StaticPopupDialogs["mQuickSetup"] = {
-			text = format(
-				L["It looks like you are using %s for the first time. Would you like to open the Quick Settings window?"],
-				mMT.Name
-			),
-			button1 = L["Yes"],
-			button2 = L["No"],
-			timeout = 120,
-			whileDead = true,
-			hideOnEscape = false,
-			preferredIndex = 3,
-			OnAccept = function()
-				E:ToggleOptions()
-				E.Libs.AceConfigDialog:SelectGroup("ElvUI", "mMT", "setup")
-				E.db.mMT.quicksetup = true
-			end,
-			OnCancel = function()
-				E.db.mMT.quicksetup = true
-			end,
-		}
-
-		StaticPopup_Show("mQuickSetup")
 	end
 
 	class = E:ClassColor(E.myclass)
@@ -249,6 +250,10 @@ function mMT:PLAYER_ENTERING_WORLD()
 	if E.Retail then
 		C_MythicPlus_RequestMapInfo()
 		C_MythicPlus_RequestCurrentAffixes()
+
+		if E.db.mMT.interruptoncd.enable then
+			mMT:UpdateInterruptSpell()
+		end
 	end
 
 	mMT:UpdateTagSettings()

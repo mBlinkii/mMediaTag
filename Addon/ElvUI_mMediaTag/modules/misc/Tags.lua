@@ -200,6 +200,17 @@ function mMT:UpdateTagSettings()
 		dd = E:TextureString(E.Media.Textures.DPS, ":14:14"),
 		quest = format("|T%s:14:14|t", "Interface\\AddOns\\ElvUI_mMediaTag\\media\\icons\\tags\\quest1.tga"),
 	}
+	if E.db.mMT.roleicons.enable then
+		if E.db.mMT.roleicons.customtexture then
+			icons.tank = E:TextureString(E.db.mMT.roleicons.customtank, ":14:14")
+			icons.heal = E:TextureString(E.db.mMT.roleicons.customtheal, ":14:14")
+			icons.dd = E:TextureString(E.db.mMT.roleicons.customdd, ":14:14")
+		else
+			icons.tank = E:TextureString(mMT.Media.Role[E.db.mMT.roleicons.tank], ":14:14")
+			icons.heal = E:TextureString(mMT.Media.Role[E.db.mMT.roleicons.heal], ":14:14")
+			icons.dd = E:TextureString(mMT.Media.Role[E.db.mMT.roleicons.dd], ":14:14")
+		end
+	end
 end
 
 local function ShortName(name)
@@ -436,7 +447,7 @@ end)
 E:AddTag("mClass:icon", "UNIT_CLASSIFICATION_CHANGED", function(unit)
 	local c = UnitClassification(unit)
 	local guid = UnitGUID(unit)
-	local npcID = guid and select(6, strsplit('-', guid))
+	local npcID = guid and select(6, strsplit("-", guid))
 
 	if (npcID and BossIDs[npcID]) or c == "worldboss" then
 		return icons.boss

@@ -149,7 +149,7 @@ local function configTable()
 						headerfontcolorstyle = {
 							order = 2,
 							type = "select",
-							name = L["Fontcolor Style"],
+							name = L["Font color Style"],
 							get = function(info)
 								return E.db.mMT.objectivetracker.header.fontcolorstyle
 							end,
@@ -165,7 +165,7 @@ local function configTable()
 						headerfontcolor = {
 							type = "color",
 							order = 3,
-							name = L["Fontcolor"],
+							name = L["Font color"],
 							hasAlpha = false,
 							disabled = function()
 								return (E.db.mMT.objectivetracker.header.fontcolorstyle == "class")
@@ -225,7 +225,7 @@ local function configTable()
 						headerbarcolorstyle = {
 							order = 2,
 							type = "select",
-							name = L["Barcolor Style"],
+							name = L["Bar color Style"],
 							disabled = function()
 								return (E.db.mMT.objectivetracker.header.barstyle == "none")
 							end,
@@ -244,7 +244,7 @@ local function configTable()
 						headerbarcolor = {
 							type = "color",
 							order = 3,
-							name = L["Barcolor"],
+							name = L["Bar color"],
 							hasAlpha = false,
 							disabled = function()
 								return (E.db.mMT.objectivetracker.header.barcolorstyle == "class")
@@ -386,7 +386,7 @@ local function configTable()
 						titlefontcolorstyle = {
 							order = 2,
 							type = "select",
-							name = L["Fontcolor Style"],
+							name = L["Font color Style"],
 							get = function(info)
 								return E.db.mMT.objectivetracker.title.fontcolorstyle
 							end,
@@ -402,7 +402,7 @@ local function configTable()
 						titlefontcolor = {
 							type = "color",
 							order = 3,
-							name = L["Fontcolor"],
+							name = L["Font color"],
 							hasAlpha = false,
 							disabled = function()
 								return not E.db.mMT.objectivetracker.title.fontcolorstyle == "class"
@@ -467,7 +467,7 @@ local function configTable()
 						textfontcolorstyle = {
 							order = 2,
 							type = "select",
-							name = L["Fontcolor Style"],
+							name = L["Font color Style"],
 							get = function(info)
 								return E.db.mMT.objectivetracker.text.fontcolorstyle
 							end,
@@ -483,7 +483,7 @@ local function configTable()
 						textfontcolor = {
 							type = "color",
 							order = 3,
-							name = L["Fontcolor"],
+							name = L["Font color"],
 							hasAlpha = false,
 							disabled = function()
 								return not E.db.mMT.objectivetracker.text.fontcolorstyle == "class"
@@ -521,7 +521,7 @@ local function configTable()
 						textfontcolorcomplete = {
 							type = "color",
 							order = 1,
-							name = L["Complete Fontcolor"],
+							name = L["Complete Font color"],
 							hasAlpha = false,
 							get = function(info)
 								local t = E.db.mMT.objectivetracker.text.completecolor
@@ -536,7 +536,7 @@ local function configTable()
 						textfontcolorfailed = {
 							type = "color",
 							order = 2,
-							name = L["Failed Fontcolor"],
+							name = L["Failed Font color"],
 							hasAlpha = false,
 							get = function(info)
 								local t = E.db.mMT.objectivetracker.text.failedcolor

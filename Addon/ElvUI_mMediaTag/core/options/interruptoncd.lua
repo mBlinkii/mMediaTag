@@ -13,7 +13,7 @@ local function configTable()
 					order = 2,
 					type = "toggle",
 					name = L["Enable"],
-					desc = L["Enable Interrupt on CD colors for Castbars"],
+					desc = L["Enable Interrupt on CD colors for Castbar"],
 					get = function(info)
 						return E.db.mMT.interruptoncd.enable
 					end,

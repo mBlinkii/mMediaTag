@@ -2,7 +2,6 @@ local E, L, V, P, G = unpack(ElvUI)
 
 P.mMT = {
 	version = 0,
-	quicksetup = false,
 	general = { greeting = true, keystochat = false },
 	tooltip = { enable = false, iconsize = 32, iconzoom = true },
 	combattime = { ooctexture = "CI2", ictexture = "CI12", hide = 30 },
@@ -19,9 +18,25 @@ P.mMT = {
 	importantspells = {
 		enable = false,
 		gradient = false,
-		icon = {enable = false, replace = true, auto = true, sizeX = 32, sizeY = 32, stun = "CAST15", interrupt = "CAST15", anchor = "CENTER", posX = 0, posY = 0  },
-		interrupt = {enable = false, ids = {}, colora = { r = 0, g = 1, b = 0 }, colorb = { r = 0, g = 0.53, b = 0.0 } },
-		stun = {enable = false, ids = {}, colora = { r = 0, g = 0.1, b = 1 }, colorb = { r = 0, g = 0.05, b = 0.52 } },
+		icon = {
+			enable = false,
+			replace = true,
+			auto = true,
+			sizeX = 32,
+			sizeY = 32,
+			stun = "CAST15",
+			interrupt = "CAST15",
+			anchor = "CENTER",
+			posX = 0,
+			posY = 0,
+		},
+		interrupt = {
+			enable = false,
+			ids = {},
+			colora = { r = 0, g = 1, b = 0 },
+			colorb = { r = 0, g = 0.53, b = 0.0 },
+		},
+		stun = { enable = false, ids = {}, colora = { r = 0, g = 0.1, b = 1 }, colorb = { r = 0, g = 0.05, b = 0.52 } },
 	},
 	custombackgrounds = {
 		enable = false,
@@ -172,27 +187,6 @@ P.mMT = {
 			range = 20,
 		},
 		bordercolor = { border = false, glow = false },
-	},
-	textures = {
-		all = true,
-		a = true,
-		b = true,
-		c = true,
-		d = true,
-		e = true,
-		f = true,
-		g = true,
-		h = true,
-		i = true,
-		j = true,
-		k = true,
-		l = true,
-		n = true,
-		m = true,
-		o = true,
-		p = true,
-		q = true,
-		r = true,
 	},
 	gamemenu = { icon = true, menuicons = true, color = true },
 	tags = {
@@ -462,6 +456,20 @@ P.mMT = {
 			text = 5,
 		},
 	},
+	castbarshield = {
+		enable = false,
+		auto = true,
+		custom = false,
+		sizeX = 32,
+		sizeY = 32,
+		anchor = "CENTER",
+		posX = 0,
+		posY = 0,
+		color = { r = 1, g = 1, b = 1, a = 1 },
+		icon = "CAST16",
+		np = true,
+		uf = false,
+	},
 	unitframeicons = {
 		phase = {
 			enable = false,
@@ -478,9 +486,4 @@ P.mMT = {
 		resurrection = { enable = false, icon = "RES3" },
 		readycheck = { enable = false, ready = "READY06", notready = "NOTREADY01", waiting = "COLOR26" },
 	},
-}
-
-G.mMT = {
-	mplusaffix = { affixes = nil, season = nil, reset = false, year = nil },
-	keys = {},
 }
