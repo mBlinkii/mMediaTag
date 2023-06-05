@@ -1,5 +1,6 @@
 local E, L = unpack(ElvUI)
 local DT = E:GetModule("DataTexts")
+local LOR = LibStub("LibOpenRaid-1.0")
 
 local _G = _G
 
@@ -16,7 +17,7 @@ local C_ChallengeMode_GetSpecificDungeonOverallScoreRarityColor =
 local C_MythicPlus_GetSeasonBestAffixScoreInfoForMap = C_MythicPlus.GetSeasonBestAffixScoreInfoForMap
 local C_ChallengeMode_GetMapUIInfo = C_ChallengeMode.GetMapUIInfo
 local C_MythicPlus_GetOwnedKeystoneLevel = C_MythicPlus.GetOwnedKeystoneLevel
-local C_DateAndTime_GetSecondsUntilWeeklyReset = C_DateAndTime.GetSecondsUntilWeeklyReset
+local C_ChallengeMode_GetDungeonScoreRarityColor = C_ChallengeMode.GetDungeonScoreRarityColor
 
 local tablesort = sort
 local displayString = ""
@@ -29,8 +30,10 @@ local map_table = C_ChallengeMode_GetMapTable()
 local MPlusDataLoaded = false
 
 local IconOverall = E:TextureString("Interface\\AddOns\\ElvUI_mMediaTag\\media\\icons\\datatext\\overall.tga", ":14:14")
-local IconTyrannical = E:TextureString("Interface\\AddOns\\ElvUI_mMediaTag\\media\\icons\\datatext\\tyrannical.tga", ":14:14")
-local IconFortified = E:TextureString("Interface\\AddOns\\ElvUI_mMediaTag\\media\\icons\\datatext\\fortified.tga", ":14:14")
+local IconTyrannical =
+	E:TextureString("Interface\\AddOns\\ElvUI_mMediaTag\\media\\icons\\datatext\\tyrannical.tga", ":14:14")
+local IconFortified =
+	E:TextureString("Interface\\AddOns\\ElvUI_mMediaTag\\media\\icons\\datatext\\fortified.tga", ":14:14")
 
 local function GetPlayerScore()
 	local ratingSummary = C_PlayerInfo_GetPlayerMythicPlusRatingSummary("PLAYER")
@@ -88,12 +91,7 @@ function mMT:GetKeyColor(key)
 	end
 end
 local function SaveMyKeystone()
-	local resetTime = C_DateAndTime_GetSecondsUntilWeeklyReset()
-	if resetTime > E.db.mMT.mpscore.keys.week then
-		mMT.DB.keys = {}
-		E.db.mMT.mpscore.keys.week = resetTime
-		E.db.mMT.mpscore.keys.affix = weeklyAffixID
-	elseif weeklyAffixID == E.db.mMT.mpscore.keys.affix and resetTime < E.db.mMT.mpscore.keys.week then
+	if weeklyAffixID == mMT.DB.affix then
 		local name = UnitName("player")
 		local realmName = GetRealmName()
 		local keyStoneLevel = C_MythicPlus_GetOwnedKeystoneLevel()
@@ -111,9 +109,9 @@ local function SaveMyKeystone()
 			}
 		end
 	else
+		mMT:Print("RESET SCORE")
 		mMT.DB.keys = {}
-		E.db.mMT.mpscore.keys.week = resetTime
-		E.db.mMT.mpscore.keys.affix = weeklyAffixID
+		mMT.DB.affix = weeklyAffixID
 	end
 end
 
@@ -243,20 +241,61 @@ end
 local function OnLeave(self)
 	DT.tooltip:Hide()
 end
-local function OnEnter(self)
-	SaveMyKeystone()
-	DT.tooltip:ClearLines()
 
-	local keyText = mMT:OwenKeystone()
-	if keyText then
-		DT.tooltip:AddLine(keyText[1])
-		DT.tooltip:AddLine(keyText[2])
+local function GetGroupKeystone()
+	local Units = {}
+
+	for i = 1, GetNumGroupMembers() - 1 do
+		tinsert(Units, "party" .. i)
 	end
 
-	DT.tooltip:AddLine(" ")
-	DT.tooltip:AddLine(L["Keystones on your Account"])
-	for k, v in pairs(mMT.DB.keys) do
-		DT.tooltip:AddDoubleLine(v.name, v.key)
+	tinsert(Units, "player")
+
+	LOR.RequestKeystoneDataFromParty()
+
+	for _, unit in ipairs(Units) do
+		local info = LOR.GetKeystoneInfo(unit)
+		if info then
+			local mapName, _, _, icon = C_ChallengeMode.GetMapUIInfo(info.mythicPlusMapID)
+
+			if mapName then
+				local name = UnitName(unit)
+				local classColor = mMT:GetClassColor(unit)
+				local KeyLevel = mMT:GetKeyColor(info.level)
+				local scoreColor = C_ChallengeMode_GetDungeonScoreRarityColor(info.rating)
+				scoreColor = E:RGBToHex(scoreColor.r, scoreColor.g, scoreColor.b)
+				DT.tooltip:AddDoubleLine(
+					format("%s%s|r (%s%s|r)", classColor, name, scoreColor, info.rating),
+					format("%s%s|r %s", E.db.mMT.datatextcolors.colormyth.hex, mapName, KeyLevel)
+				)
+			end
+		end
+	end
+end
+local function OnEnter(self)
+	local inCombat = InCombatLockdown()
+	DT.tooltip:ClearLines()
+
+	if not inCombat then
+		SaveMyKeystone()
+
+		local keyText = mMT:OwenKeystone()
+		if keyText then
+			DT.tooltip:AddLine(keyText[1])
+			DT.tooltip:AddLine(keyText[2])
+		end
+
+		DT.tooltip:AddLine(" ")
+		DT.tooltip:AddLine(L["Keystones on your Account"])
+		for k, v in pairs(mMT.DB.keys) do
+			DT.tooltip:AddDoubleLine(v.name, v.key)
+		end
+
+		if E.db.mMT.mpscore.groupkeys and LOR and IsInGroup() then
+			DT.tooltip:AddLine(" ")
+			DT.tooltip:AddLine(L["Keystones in your Group"])
+			GetGroupKeystone()
+		end
 	end
 
 	local mAffixesText = mMT:WeeklyAffixes()

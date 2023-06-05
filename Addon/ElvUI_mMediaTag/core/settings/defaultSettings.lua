@@ -126,8 +126,8 @@ P.mMT = {
 		size = 16,
 	},
 	mpscore = {
-		keys = { week = 0, affix = "" },
 		highlight = true,
+		groupkeys = true,
 		sort = "AFFIX",
 		upgrade = true,
 		icon = "UI7",

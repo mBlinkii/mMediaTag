@@ -43,6 +43,7 @@ mMT.DB = {}
 
 local defaultDB = {
 	mplusaffix = { affixes = nil, season = nil, reset = false, year = nil },
+	affix = nil,
 	keys = {},
 }
 

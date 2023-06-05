@@ -67,3 +67,11 @@ end
 function mMT:Print(...)
 	print(mMT.Name .. ":", ...)
 end
+
+function mMT:GetClassColor(unit)
+	if UnitIsPlayer(unit) then
+		local _, unitClass = UnitClass(unit)
+		local cs = E.oUF.colors.class[unitClass]
+		return (cs and E:RGBToHex(cs.r, cs.g, cs.b)) or '|cFFcccccc'
+	end
+end
