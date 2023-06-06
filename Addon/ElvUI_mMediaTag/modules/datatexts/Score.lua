@@ -1,6 +1,6 @@
 local E, L = unpack(ElvUI)
 local DT = E:GetModule("DataTexts")
-local LOR = LibStub("LibOpenRaid-1.0")
+local LOR = LibStub("LibOpenRaid-1.0", true)
 
 local _G = _G
 
@@ -260,7 +260,7 @@ local function GetGroupKeystone()
 			if mapName then
 				local name = UnitName(unit)
 				local scoreColor = C_ChallengeMode_GetDungeonScoreRarityColor(info.rating)
-				icon = format("|T%s:%d|t", icon, 14)
+				icon = E:TextureString(icon, ":14:14")
 				local key = format("%s%s%s|r %s", icon, E.db.mMT.datatextcolors.colormyth.hex, mapName, mMT:GetKeyColor(info.level))
 
 				scoreColor = E:RGBToHex(scoreColor.r, scoreColor.g, scoreColor.b)
