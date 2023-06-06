@@ -243,34 +243,34 @@ local function OnLeave(self)
 end
 
 local function GetGroupKeystone()
-	local Units = {}
+	local GroupMembers = {}
+	tinsert(GroupMembers, "player")
 
 	for i = 1, GetNumGroupMembers() - 1 do
-		tinsert(Units, "party" .. i)
+		tinsert(GroupMembers, "party" .. i)
 	end
-
-	tinsert(Units, "player")
 
 	LOR.RequestKeystoneDataFromParty()
 
-	for _, unit in ipairs(Units) do
+	for _, unit in ipairs(GroupMembers) do
 		local info = LOR.GetKeystoneInfo(unit)
 		if info then
 			local mapName, _, _, icon = C_ChallengeMode.GetMapUIInfo(info.mythicPlusMapID)
 
 			if mapName then
 				local name = UnitName(unit)
-				local classColor = mMT:GetClassColor(unit)
-				local KeyLevel = mMT:GetKeyColor(info.level)
 				local scoreColor = C_ChallengeMode_GetDungeonScoreRarityColor(info.rating)
+				icon = format("|T%s:%d|t", icon, 14)
+				local key = format("%s%s%s|r %s", icon, E.db.mMT.datatextcolors.colormyth.hex, mapName, mMT:GetKeyColor(info.level))
+
 				scoreColor = E:RGBToHex(scoreColor.r, scoreColor.g, scoreColor.b)
-				DT.tooltip:AddDoubleLine(
-					format("%s%s|r (%s%s|r)", classColor, name, scoreColor, info.rating),
-					format("%s%s|r %s", E.db.mMT.datatextcolors.colormyth.hex, mapName, KeyLevel)
-				)
+				name = format("%s%s|r (%s%s|r)", mMT:GetClassColor(unit), UnitName(unit), scoreColor. info.rating)
+
+				DT.tooltip:AddDoubleLine(name, key)
 			end
 		end
 	end
+
 end
 local function OnEnter(self)
 	local inCombat = InCombatLockdown()

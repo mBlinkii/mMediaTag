@@ -339,6 +339,7 @@
         "showtext",
         "Simpy",
         "Spellbook",
+        "strfind",
         "strjoin",
         "strmatch",
         "tablesort",
