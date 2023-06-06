@@ -97,6 +97,25 @@ local function configTable()
 				},
 			},
 		},
+		header_settings = {
+			order = 4,
+			type = "group",
+			inline = true,
+			name = L["Settings"],
+			args = {
+				toggle_groupkeys = {
+					order = 1,
+					type = "toggle",
+					name = L["Show Groupmember Keys."],
+					get = function(info)
+						return E.db.mMT.mpscore.groupkeys
+					end,
+					set = function(info, value)
+						E.db.mMT.mpscore.groupkeys = value
+					end,
+				},
+			},
+		},
 	}
 end
 

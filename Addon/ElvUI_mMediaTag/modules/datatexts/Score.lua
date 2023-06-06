@@ -254,17 +254,22 @@ local function GetGroupKeystone()
 
 	for _, unit in ipairs(GroupMembers) do
 		local info = LOR.GetKeystoneInfo(unit)
+		-- mapID
+		-- challengeMapID
+		-- mythicPlusMapID
+		-- rating
+		-- classID
+		-- level
 		if info then
 			local mapName, _, _, icon = C_ChallengeMode.GetMapUIInfo(info.mythicPlusMapID)
-
 			if mapName then
 				local name = UnitName(unit)
 				local scoreColor = C_ChallengeMode_GetDungeonScoreRarityColor(info.rating)
 				icon = E:TextureString(icon, ":14:14")
-				local key = format("%s%s%s|r %s", icon, E.db.mMT.datatextcolors.colormyth.hex, mapName, mMT:GetKeyColor(info.level))
+				local key = format("%s %s%s|r %s", icon, E.db.mMT.datatextcolors.colormyth.hex, mapName, mMT:GetKeyColor(info.level))
 
 				scoreColor = E:RGBToHex(scoreColor.r, scoreColor.g, scoreColor.b)
-				name = format("%s%s|r (%s%s|r)", mMT:GetClassColor(unit), UnitName(unit), scoreColor. info.rating)
+				name = format("%s%s|r (%s%s|r)", mMT:GetClassColor(unit), UnitName(unit), scoreColor, info.rating)
 
 				DT.tooltip:AddDoubleLine(name, key)
 			end
