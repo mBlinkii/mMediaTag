@@ -34,7 +34,7 @@ local IconTyrannical =
 	E:TextureString("Interface\\AddOns\\ElvUI_mMediaTag\\media\\icons\\datatext\\tyrannical.tga", ":14:14")
 local IconFortified =
 	E:TextureString("Interface\\AddOns\\ElvUI_mMediaTag\\media\\icons\\datatext\\fortified.tga", ":14:14")
-
+local LeadIcon = E:TextureString("Interface\\AddOns\\ElvUI_mMediaTag\\media\\icons\\misc\\crown1.tga", ":14:14")
 local function GetPlayerScore()
 	local ratingSummary = C_PlayerInfo_GetPlayerMythicPlusRatingSummary("PLAYER")
 	return ratingSummary and ratingSummary.currentSeasonScore or 0
@@ -269,7 +269,11 @@ local function GetGroupKeystone()
 				local key = format("%s %s%s|r %s", icon, E.db.mMT.datatextcolors.colormyth.hex, mapName, mMT:GetKeyColor(info.level))
 
 				scoreColor = E:RGBToHex(scoreColor.r, scoreColor.g, scoreColor.b)
-				name = format("%s%s|r (%s%s|r)", mMT:GetClassColor(unit), UnitName(unit), scoreColor, info.rating)
+				if UnitIsGroupLeader(unit) then
+					name = format("%s %s%s|r (%s%s|r)", LeadIcon, mMT:GetClassColor(unit), UnitName(unit), scoreColor, info.rating)
+				else
+					name = format("%s%s|r (%s%s|r)", mMT:GetClassColor(unit), UnitName(unit), scoreColor, info.rating)
+				end
 
 				DT.tooltip:AddDoubleLine(name, key)
 			end
