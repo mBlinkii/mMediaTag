@@ -26,7 +26,7 @@ local function NPLoader(castbar)
 		mMT:InterruptChecker(castbar)
 	end
 
-	if E.db.mMT.castbarshield.enable then
+	if E.db.mMT.castbarshield.enable and E.db.mMT.castbarshield.np then
 		mMT:CastbarShield(castbar)
 	end
 end
@@ -43,7 +43,7 @@ local function UFLoader(castbar)
 		mMT:InterruptChecker(castbar)
 	end
 
-	if E.db.mMT.castbarshield.enable then
+	if E.db.mMT.castbarshield.enable and E.db.mMT.castbarshield.uf then
 		mMT:CastbarShield(castbar)
 	end
 end
