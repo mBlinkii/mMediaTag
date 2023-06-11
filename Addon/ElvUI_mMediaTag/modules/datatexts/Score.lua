@@ -251,15 +251,27 @@ local function GetGroupKeystone()
 	end
 
 	LOR.RequestKeystoneDataFromParty()
+	LOR.GearManager.GetAllUnitsGear()
 
 	for _, unit in ipairs(GroupMembers) do
 		local info = LOR.GetKeystoneInfo(unit)
+		local UnitInfo = LOR.GetUnitGear(unit)
+		local ilevel = ""
+		local leader = ""
 		-- mapID
 		-- challengeMapID
 		-- mythicPlusMapID
 		-- rating
 		-- classID
 		-- level
+		if UnitIsGroupLeader(unit) then
+			leader = LeadIcon .. " "
+		end
+
+		if UnitInfo then
+			ilevel = UnitInfo.ilevel
+		end
+
 		if info then
 			local mapName, _, _, icon = C_ChallengeMode.GetMapUIInfo(info.mythicPlusMapID)
 			if mapName then
@@ -269,11 +281,8 @@ local function GetGroupKeystone()
 				local key = format("%s %s%s|r %s", icon, E.db.mMT.datatextcolors.colormyth.hex, mapName, mMT:GetKeyColor(info.level))
 
 				scoreColor = E:RGBToHex(scoreColor.r, scoreColor.g, scoreColor.b)
-				if UnitIsGroupLeader(unit) then
-					name = format("%s %s%s|r (%s%s|r)", LeadIcon, mMT:GetClassColor(unit), UnitName(unit), scoreColor, info.rating)
-				else
-					name = format("%s%s|r (%s%s|r)", mMT:GetClassColor(unit), UnitName(unit), scoreColor, info.rating)
-				end
+
+				name = format("%s %s%s|r |CFFFFFFFF[|r %sM+|r %s%s|r |CFFFFFFFF-|r  |CFFFFCC00i|r |CFFFFFFFF%s|r|CFFFFFFFF]|r ", leader, mMT:GetClassColor(unit), UnitName(unit), E.db.mMT.instancedifficulty.mp.color, scoreColor, info.rating, ilevel)
 
 				DT.tooltip:AddDoubleLine(name, key)
 			end

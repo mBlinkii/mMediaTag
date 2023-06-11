@@ -305,6 +305,7 @@
         "hooksecurefunc",
         "iconcolor",
         "ictexture",
+        "ilevel",
         "ilvl",
         "importantspells",
         "inactivetime",

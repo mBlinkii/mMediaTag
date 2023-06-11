@@ -66,3 +66,19 @@ function mMT:SetupPhaseIcons()
 		hooksecurefunc(UF, "PostUpdate_PhaseIcon", mMT.PhaseIconColor)
 	end
 end
+
+local function SummonIcon(_, frame)
+	frame.SummonIndicator.PostUpdate = function(self, status)
+		if status == 1 then
+			self:SetTexture(mMT.Media.UnitframeIcons[E.db.mMT.unitframeicons.phase.icon])
+		elseif status == 2 then
+			self:SetTexture(mMT.Media.UnitframeIcons[E.db.mMT.unitframeicons.phase.icon])
+		elseif status == 3 then
+			self:SetTexture(mMT.Media.UnitframeIcons[E.db.mMT.unitframeicons.phase.icon])
+		end
+	end
+end
+
+function mMT:SetupSummon()
+	hooksecurefunc(UF, 'Configure_SummonIcon', SummonIcon)
+end
