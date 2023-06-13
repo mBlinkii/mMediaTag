@@ -25,7 +25,6 @@ local function OnEnter(self)
 	if not hide then
 		DT:SetupTooltip(self)
 		DT.tooltip:SetHyperlink(Currency.info.link)
-		DT.tooltip:AddLine(" ")
 		DT.tooltip:Show()
 	end
 end
