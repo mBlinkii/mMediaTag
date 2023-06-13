@@ -3,7 +3,7 @@ local E, L = unpack(ElvUI)
 --Lua functions
 local string, ipairs = string, ipairs
 local format = format
-local wipe =  wipe
+local wipe = wipe
 local tinsert = tinsert
 
 --WoW API / Variables
@@ -12,7 +12,82 @@ local GetDetailedItemLevelInfo = GetDetailedItemLevelInfo
 local C_MythicPlus = C_MythicPlus
 local C_PlayerInfo_GetPlayerMythicPlusRatingSummary = C_PlayerInfo.GetPlayerMythicPlusRatingSummary
 local C_ChallengeMode_GetDungeonScoreRarityColor = C_ChallengeMode.GetDungeonScoreRarityColor
+local GetItemCount = GetItemCount
+local GetItemInfo = GetItemInfo
+local C_CurrencyInfo_GetCurrencyInfo = C_CurrencyInfo.GetCurrencyInfo
 
+-- local Currency = {
+-- 	info = {
+-- 		color = "|CFFFF8000",
+-- 		id = 204194,
+-- 		name = nil,
+-- 		icon = nil,
+-- 		link = nil,
+-- 		count = nil,
+--         cap = nil,
+-- 	},
+-- 	bag = {
+-- 		id = 204078,
+-- 		link = nil,
+-- 		icon = nil,
+-- 		count = nil,
+-- 	},
+-- 	fragment = {
+-- 		id = 2412,
+-- 		cap = nil,
+-- 		quantity = nil,
+-- 	},
+-- 	loaded = false,
+-- }
+function mMT:GetCurrenciesInfo(tbl, item)
+	if tbl and tbl.info and tbl.info.id then
+		local itemName, itemLink, itemTexture, itemStackCount  = nil, nil, nil, nil
+		local info = nil
+
+		if item then
+			itemName, itemLink, _, _, _, _, _, itemStackCount , _, itemTexture, _, _, _, _, _, _, _ = GetItemInfo(tbl.info.id)
+			if itemName and itemLink and itemTexture then
+				tbl.info.name = itemName
+				tbl.info.icon = mMT:mIcon(itemTexture, 12, 12)
+				tbl.info.link = itemLink
+				tbl.info.count = GetItemCount(tbl.info.id)
+				tbl.info.cap = itemStackCount
+				tbl.loaded = true
+			end
+		else
+			info = C_CurrencyInfo_GetCurrencyInfo(tbl.info.id)
+			if info then
+				tbl.info.name = info.name
+				tbl.info.icon = mMT:mIcon(info.iconFileID, 12, 12)
+				tbl.info.link = mMT:mCurrencyLink(tbl.info.id)
+				tbl.info.count = info.quantity
+				tbl.loaded = true
+				if not tbl.fragment and info.maxQuantity then
+					tbl.info.cap = info.maxQuantity
+				end
+			end
+		end
+
+		if tbl.bag and tbl.bag.id then
+			itemName, itemLink, _, _, _, _, _, _, _, itemTexture, _, _, _, _, _, _, _ = GetItemInfo(tbl.bag.id)
+			if itemName and itemLink and itemTexture then
+				tbl.bag.link = itemLink
+				tbl.bag.icon = mMT:mIcon(itemTexture, 12, 12)
+				tbl.bag.count = GetItemCount(tbl.bag.id)
+			end
+		end
+
+		if tbl.fragment and tbl.fragment.id then
+			info = C_CurrencyInfo_GetCurrencyInfo(tbl.fragment.id)
+			if info then
+				tbl.fragment.cap = info.maxQuantity
+				tbl.fragment.quantity = info.quantity or 0
+			end
+		end
+	else
+		error(L["GetCurrenciesInfo no Table or no ID."])
+	end
+end
 
 function mMT:OwenKeystone()
 	local OwenKeystoneText = {}
@@ -25,7 +100,11 @@ function mMT:OwenKeystone()
 		local nhc, hc, myth, _, other, titel = mMT:mColorDatatext()
 
 		tinsert(OwenKeystoneText, 1, format("%s%s|r", titel, L["Mythic Plus Keystone"]))
-		tinsert(OwenKeystoneText, 2, format("%s%s:|r %s%s|r %s", other, L["Keystone"], myth, name, mMT:GetKeyColor(keyStoneLevel)))
+		tinsert(
+			OwenKeystoneText,
+			2,
+			format("%s%s:|r %s%s|r %s", other, L["Keystone"], myth, name, mMT:GetKeyColor(keyStoneLevel))
+		)
 		return OwenKeystoneText
 	end
 end
@@ -52,10 +131,7 @@ function mMT:WeeklyAffixes()
 
 	affixes = C_MythicPlus.GetCurrentAffixes()
 
-	if
-		(date("%u") == "2")
-		or (date("%u") == "3" or date("%y") ~= savedYear) and not mMT.DB.mplusaffix.reset
-	then
+	if (date("%u") == "2") or (date("%u") == "3" or date("%y") ~= savedYear) and not mMT.DB.mplusaffix.reset then
 		mMT.DB.mplusaffix.affixes = nil
 		mMT.DB.mplusaffix.reset = true
 		mMT.DB.mplusaffix.year = date("%y")
@@ -110,7 +186,11 @@ function mMT:WeeklyAffixes()
 			tinsert(
 				WeeklyAffixesText,
 				3,
-				format( "|CFFE74C3C%s|n%s|r", L["Season has not started yet."], L["%sERROR! Please open the Mythic+ window, LFG Tool or Reload UI!|r"] )
+				format(
+					"|CFFE74C3C%s|n%s|r",
+					L["Season has not started yet."],
+					L["%sERROR! Please open the Mythic+ window, LFG Tool or Reload UI!|r"]
+				)
 			)
 			return WeeklyAffixesText
 		end

@@ -1,81 +1,84 @@
 local E = unpack(ElvUI)
 local DT = E:GetModule("DataTexts")
---Lua functions
-local format = format
 
 --WoW API / Variables
 local _G = _G
-local C_CurrencyInfo = C_CurrencyInfo
+local floor = floor
 
 --Variables
-local mTextName = "mElementalOverflow"
-local mCurrencyID = 2118
-local info = C_CurrencyInfo.GetCurrencyInfo(mCurrencyID)
-local mText = format("mMediaTag %s", info.name)
-local hideCurrency = false
+local hide = false
+local Currency = {
+	info = {
+		color = "|CFF44FFCD",
+		id = 2118,
+		name = nil,
+		icon = nil,
+		link = nil,
+		count = nil,
+		cap = nil,
+	},
+	loaded = false,
+}
 
 local function OnEnter(self)
-	if not hideCurrency then
+	DT.tooltip:ClearLines()
+	if not hide then
 		DT:SetupTooltip(self)
-		DT.tooltip:SetHyperlink(mMT:mCurrencyLink(mCurrencyID))
+		DT.tooltip:SetHyperlink(Currency.info.link)
+		DT.tooltip:AddLine(" ")
 		DT.tooltip:Show()
 	end
 end
 
 local function OnEvent(self, event, ...)
-	info = C_CurrencyInfo.GetCurrencyInfo(mCurrencyID)
 	local TextJustify = self.text:GetJustifyH()
-	if info then
-		local name = ""
-		local CurrencValue = info.quantity
+	mMT:GetCurrenciesInfo(Currency)
 
-		if E.db.mMT.datatextcurrency.hide and CurrencValue == 0 then
-			hideCurrency = true
-		else
-			hideCurrency = false
-		end
+	hide = (E.db.mMT.datatextcurrency.hide and Currency.info.count == 0)
 
-		if not hideCurrency then
+	if Currency.loaded then
+		local name = nil
+		local icon = nil
+		local bagCount = nil
+		local color = mMT.ClassColor.string
+
+		if not hide then
 			if E.db.mMT.datatextcurrency.name then
-				if TextJustify == "RIGHT" then
-					name = " " .. info.name
-				else
-					name = info.name .. " "
-				end
+				name = Currency.info.name
 			end
 
 			if E.db.mMT.datatextcurrency.icon then
-				if TextJustify == "RIGHT" then
-					name = format("%s %s", name, mMT:mIcon(info.iconFileID, 12, 12))
-				else
-					name = format("%s %s", mMT:mIcon(info.iconFileID, 12, 12), name)
-				end
+				icon = Currency.info.icon
 			end
 
-			if E.db.mMT.datatextcurrency.short then
-				CurrencValue = E:ShortValue(info.quantity, 2)
-			end
-
-			local CurrencyTextSring = "%s" .. mMT.ClassColor.string
-
-			if TextJustify == "RIGHT" then
-				CurrencyTextSring = mMT.ClassColor.string .. "%s"
+			if E.db.mMT.datatextcurrency.short and Currency.info.count >= 1000 then
+				Currency.info.count = E:ShortValue(Currency.info.count, 2)
 			end
 
 			if E.db.mMT.datatextcurrency.style == "color" then
-				if TextJustify == "RIGHT" then
-					CurrencyTextSring = "|CFF44FFCD%s|r%s"
-				else
-					CurrencyTextSring = "%s|CFF44FFCD%s|r"
-				end
+				color = Currency.info.color
 			elseif E.db.mMT.datatextcurrency.style == "white" then
-				CurrencyTextSring = "|CFFFFFFFF%s%s|r"
+				color = "|CFFFFFFFF"
 			end
 
 			if TextJustify == "RIGHT" then
-				self.text:SetFormattedText(CurrencyTextSring, CurrencValue, name)
+				self.text:SetFormattedText(
+					"%s%s %s %s|r%s",
+					color,
+					bagCount or "",
+					Currency.info.count,
+					name or "",
+					icon or ""
+				)
 			else
-				self.text:SetFormattedText(CurrencyTextSring, name, CurrencValue)
+				self.text:SetFormattedText(
+					"%s%s%s %s %s|r",
+					icon or "",
+					color,
+					name or "",
+					Currency.info.count,
+					bagCount or ""
+				)
 			end
 		end
 	else
@@ -88,7 +91,7 @@ local function OnLeave(self)
 end
 
 DT:RegisterDatatext(
-	mTextName,
+	"mElementalOverflow",
 	_G.CURRENCY,
 	{ "CHAT_MSG_CURRENCY", "CURRENCY_DISPLAY_UPDATE" },
 	OnEvent,
@@ -96,6 +99,6 @@ DT:RegisterDatatext(
 	nil,
 	OnEnter,
 	OnLeave,
-	mText,
+	"mMediaTag Elemental Overflow",
 	nil
 )

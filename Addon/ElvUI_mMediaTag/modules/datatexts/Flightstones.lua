@@ -9,8 +9,8 @@ local floor = floor
 local hide = false
 local Currency = {
 	info = {
-		color = "|CFF0873B9",
-		id = 2003,
+		color = "|CFF00CCFF",
+		id = 2245,
 		name = nil,
 		icon = nil,
 		link = nil,
@@ -40,6 +40,7 @@ local function OnEvent(self, event, ...)
 		local name = nil
 		local icon = nil
 		local bagCount = nil
+		local max = nil
 		local color = mMT.ClassColor.string
 
 		if not hide then
@@ -61,22 +62,32 @@ local function OnEvent(self, event, ...)
 				color = "|CFFFFFFFF"
 			end
 
+			if E.db.mMT.datatextcurrency.max then
+				if TextJustify == "RIGHT" then
+					max = " " .. Currency.info.cap .. " /"
+				else
+					max = "/ " .. Currency.info.cap .. " "
+				end
+			end
+
 			if TextJustify == "RIGHT" then
 				self.text:SetFormattedText(
-					"%s%s %s %s|r%s",
+					"%s%s %s%s %s|r%s",
 					color,
 					bagCount or "",
+					max or "",
 					Currency.info.count,
 					name or "",
 					icon or ""
 				)
 			else
 				self.text:SetFormattedText(
-					"%s%s%s %s %s|r",
+					"%s%s%s %s%s %s|r",
 					icon or "",
 					color,
 					name or "",
 					Currency.info.count,
+					max or "",
 					bagCount or ""
 				)
 			end
@@ -91,7 +102,7 @@ local function OnLeave(self)
 end
 
 DT:RegisterDatatext(
-	"mDragonIslesSupplies",
+	"mFlightstones",
 	_G.CURRENCY,
 	{ "CHAT_MSG_CURRENCY", "CURRENCY_DISPLAY_UPDATE" },
 	OnEvent,
@@ -99,6 +110,6 @@ DT:RegisterDatatext(
 	nil,
 	OnEnter,
 	OnLeave,
-	"mMediaTag Dragon Isles Supplies",
+	"mMediaTag Flightstones",
 	nil
 )

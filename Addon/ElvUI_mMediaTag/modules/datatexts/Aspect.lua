@@ -9,30 +9,43 @@ local floor = floor
 local hide = false
 local Currency = {
 	info = {
-		color = "|CFF0873B9",
-		id = 2003,
+		color = "|CFFFF8000",
+		id = 204194,
 		name = nil,
 		icon = nil,
 		link = nil,
 		count = nil,
+        cap = nil,
+	},
+	bag = {
+		id = 204078,
+		link = nil,
+		icon = nil,
+		count = nil,
+	},
+	fragment = {
+		id = 2412,
 		cap = nil,
+		quantity = nil,
 	},
 	loaded = false,
 }
 
+local FRAGMENTS_EARNED = gsub(_G.ITEM_UPGRADE_FRAGMENTS_TOTAL, "%s*|c.+$", "")
 local function OnEnter(self)
-	DT.tooltip:ClearLines()
+    DT.tooltip:ClearLines()
 	if not hide then
 		DT:SetupTooltip(self)
 		DT.tooltip:SetHyperlink(Currency.info.link)
 		DT.tooltip:AddLine(" ")
+		DT.tooltip:AddLine(FRAGMENTS_EARNED .. " " ..  (Currency.bag.icon  or "") .. " |CFFFFFFFF" .. Currency.fragment.quantity .. "/" .. Currency.fragment.cap .. "|r")
 		DT.tooltip:Show()
 	end
 end
 
 local function OnEvent(self, event, ...)
 	local TextJustify = self.text:GetJustifyH()
-	mMT:GetCurrenciesInfo(Currency)
+	mMT:GetCurrenciesInfo(Currency, true)
 
 	hide = (E.db.mMT.datatextcurrency.hide and Currency.info.count == 0)
 
@@ -59,6 +72,15 @@ local function OnEvent(self, event, ...)
 				color = Currency.info.color
 			elseif E.db.mMT.datatextcurrency.style == "white" then
 				color = "|CFFFFFFFF"
+			end
+
+			if E.db.mMT.datatextcurrency.bag then
+				bagCount = floor((Currency.bag.count or 0) / 15)
+				if bagCount ~= 0 then
+					bagCount = "|CFFFFFFFF[|r" .. bagCount .. "|CFFFFFFFF]|r"
+				else
+					bagCount = nil
+				end
 			end
 
 			if TextJustify == "RIGHT" then
@@ -91,14 +113,14 @@ local function OnLeave(self)
 end
 
 DT:RegisterDatatext(
-	"mDragonIslesSupplies",
+	"mAspect",
 	_G.CURRENCY,
-	{ "CHAT_MSG_CURRENCY", "CURRENCY_DISPLAY_UPDATE" },
+	{ "BAG_UPDATE", "CHAT_MSG_CURRENCY", "CURRENCY_DISPLAY_UPDATE" },
 	OnEvent,
 	nil,
 	nil,
 	OnEnter,
 	OnLeave,
-	"mMediaTag Dragon Isles Supplies",
+	"mMediaTag Aspect's Shadowflame Crest",
 	nil
 )

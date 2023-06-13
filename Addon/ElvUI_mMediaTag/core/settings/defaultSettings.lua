@@ -314,6 +314,7 @@ P.mMT = {
 		showmax = false,
 		hide = false,
 		bag = false,
+		max = false,
 	},
 	dockdatatext = {
 		autogrow = true,

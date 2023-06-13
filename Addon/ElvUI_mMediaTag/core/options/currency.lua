@@ -106,6 +106,18 @@ local function configTable()
 						DT:LoadDataTexts()
 					end,
 				},
+				currency_max = {
+					order = 4,
+					type = "toggle",
+					name = L["Show Max Count"],
+					get = function(info)
+						return E.db.mMT.datatextcurrency.max
+					end,
+					set = function(info, value)
+						E.db.mMT.datatextcurrency.max = value
+						DT:LoadDataTexts()
+					end,
+				},
 			},
 		},
 	}
