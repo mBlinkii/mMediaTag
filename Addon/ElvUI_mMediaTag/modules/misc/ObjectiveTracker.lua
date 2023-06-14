@@ -149,7 +149,7 @@ local function mSetupQuestFont(linetext, state)
 end
 
 local function SetGradientColors(bar, r, g, b)
-	if mMT.ElvUI_EltreumUI and E.db.mMT.objectivetracker.header.barcolorstyle == "class" then
+	if mMT.ElvUI_EltreumUI.loaded and E.db.ElvUI_EltreumUI.unitframes.gradientmode and E.db.mMT.objectivetracker.header.barcolorstyle == "class" then
 		local ElvUI_EltreumUI = E:GetModule("ElvUI_EltreumUI", true)
 		if ElvUI_EltreumUI and E.db.ElvUI_EltreumUI.unitframes.gradientmode.customcolor then
 			bar:GetStatusBarTexture()

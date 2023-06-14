@@ -29,14 +29,11 @@ mMT.ClassColor = {
 	hex = hex,
 	string = strjoin("", hex, "%s|r"),
 }
-mMT.ElvUI_EltreumUI = (
-	IsAddOnLoaded("ElvUI_EltreumUI")
-	and E.db.ElvUI_EltreumUI
-	and E.db.ElvUI_EltreumUI.unitframes
-	and E.db.ElvUI_EltreumUI.unitframes.gradientmode
-	and E.db.ElvUI_EltreumUI.unitframes.gradientmode.enable
-) or false
-
+mMT.ElvUI_EltreumUI = {
+	loaded = IsAddOnLoaded("ElvUI_EltreumUI"),
+	gradient = false,
+	dark = false,
+}
 mMT.Media = {}
 mMT.Config = {}
 mMT.DB = {}
@@ -99,6 +96,16 @@ end
 
 -- Initialize Addon
 function mMT:Initialize()
+	if mMT.ElvUI_EltreumUI.loaded then
+		mMT.ElvUI_EltreumUI.gradient = E.db.ElvUI_EltreumUI
+			and E.db.ElvUI_EltreumUI.unitframes
+			and E.db.ElvUI_EltreumUI.unitframes.gradientmode
+			and E.db.ElvUI_EltreumUI.unitframes.gradientmode.enable
+		mMT.ElvUI_EltreumUI.dark = E.db.ElvUI_EltreumUI
+			and E.db.ElvUI_EltreumUI.unitframes
+			and E.db.ElvUI_EltreumUI.unitframes.darkmode
+	end
+
 	EP:RegisterPlugin(addonName, GetOptions)
 	-- Register Events
 	mMT:RegisterEvent("PLAYER_ENTERING_WORLD")
@@ -149,15 +156,20 @@ function mMT:Initialize()
 	end
 
 	if
-		E.db.mMT.custombackgrounds.health.enable
+		(E.db.mMT.custombackgrounds.health.enable
 		or E.db.mMT.custombackgrounds.power.enable
-		or E.db.mMT.custombackgrounds.castbar.enable
+		or E.db.mMT.custombackgrounds.castbar.enable) and not mMT.ElvUI_EltreumUI.dark
 	then
 		mMT:CustomBackdrop()
 	end
 
 	if E.Retail then
-		if E.db.mMT.interruptoncd.enable or E.db.mMT.importantspells.interrupt.enable or E.db.mMT.importantspells.stun.enable or E.db.mMT.castbarshield.enable then
+		if
+			E.db.mMT.interruptoncd.enable
+			or E.db.mMT.importantspells.interrupt.enable
+			or E.db.mMT.importantspells.stun.enable
+			or E.db.mMT.castbarshield.enable
+		then
 			mMT:CastbarModuleLoader()
 		end
 
@@ -228,7 +240,6 @@ function mMT:Initialize()
 		end
 	end
 end
-
 
 function mMT:PLAYER_ENTERING_WORLD()
 	-- Change Log
