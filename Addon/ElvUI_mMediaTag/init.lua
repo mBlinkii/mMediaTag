@@ -155,6 +155,10 @@ function mMT:Initialize()
 		mMT:SetupResurrectionIcon()
 	end
 
+	if E.db.mMT.unitframeicons.summon.enable then
+		mMT:SetupSummonIcon()
+	end
+
 	if
 		(E.db.mMT.custombackgrounds.health.enable
 		or E.db.mMT.custombackgrounds.power.enable
