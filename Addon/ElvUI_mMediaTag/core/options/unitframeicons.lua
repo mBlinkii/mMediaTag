@@ -229,7 +229,7 @@ local function configTable()
 			order = 4,
 			type = "group",
 			inline = true,
-			name = L["Ready Check Icons"],
+			name = L["Summon Icons"],
             disabled = function()
                 return not E.db.mMT.unitframeicons.summon.enable
             end,
