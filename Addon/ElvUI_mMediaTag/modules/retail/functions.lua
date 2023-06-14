@@ -50,7 +50,7 @@ function mMT:GetCurrenciesInfo(tbl, item)
 				tbl.info.name = itemName
 				tbl.info.icon = mMT:mIcon(itemTexture, 12, 12)
 				tbl.info.link = itemLink
-				tbl.info.count = GetItemCount(tbl.info.id)
+				tbl.info.count = GetItemCount(tbl.info.id, true)
 				tbl.info.cap = itemStackCount
 				tbl.loaded = true
 			end
@@ -73,7 +73,7 @@ function mMT:GetCurrenciesInfo(tbl, item)
 			if itemName and itemLink and itemTexture then
 				tbl.bag.link = itemLink
 				tbl.bag.icon = mMT:mIcon(itemTexture, 12, 12)
-				tbl.bag.count = GetItemCount(tbl.bag.id)
+				tbl.bag.count = GetItemCount(tbl.bag.id, true)
 			end
 		end
 

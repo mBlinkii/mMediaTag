@@ -8,6 +8,32 @@ local format = format
 local _G = _G
 local mText = format("Dock %s", COLLECTIONS)
 local mTextName = "mCollectionsJourna"
+--Polished Pet Charm
+local PPC = {
+	info = {
+		color = "|CFF58D68D",
+		id = 163036,
+		name = nil,
+		icon = nil,
+		link = nil,
+		count = nil,
+        cap = nil,
+	},
+	loaded = false,
+}
+-- Battle Pet Bandage
+local BPB = {
+	info = {
+		color = "|CFF1ABC9C",
+		id = 86143,
+		name = nil,
+		icon = nil,
+		link = nil,
+		count = nil,
+        cap = nil,
+	},
+	loaded = false,
+}
 
 local function mDockCheckFrame()
 	return (CollectionsJournal and CollectionsJournal:IsShown())
@@ -21,6 +47,7 @@ end
 local function OnEnter(self)
 	self.mIcon.isClicked = mDockCheckFrame()
 	mMT:mOnEnter(self, "CheckFrameCollectionsJournal")
+	mMT:GetCurrenciesInfo(PPC, true)
 
 	local numOwned = 0
 	local mountIDs = C_MountJournal.GetMountIDs()
@@ -37,6 +64,13 @@ local function OnEnter(self)
 		DT.tooltip:AddLine(L["Collected"])
 		DT.tooltip:AddDoubleLine(format("|CFF40E0D0%s|r", L["Mounts"]), format("|CFF6495ED%s|r", numOwned))
 		DT.tooltip:AddDoubleLine(format("|CFFDE3163%s|r", L["Pets"]), format("|CFF6495ED%s|r", select(2,C_PetJournal.GetNumPets())))
+		if PPC.loaded and PPC.info.count ~= 0 then
+			DT.tooltip:AddLine(" ")
+			DT.tooltip:AddDoubleLine(PPC.info.color .. PPC.info.name .. "|r", "|CFF6495ED" .. PPC.info.count .. "|r")
+		end
+		if BPB.loaded and BPB.info.count ~= 0 then
+			DT.tooltip:AddDoubleLine(BPB.info.color .. BPB.info.name .. "|r", "|CFF6495ED" .. BPB.info.count .. "|r")
+		end
 		DT.tooltip:Show()
 	end
 end
@@ -51,6 +85,7 @@ local function OnEvent(self, event, ...)
 		},
 	}
 
+	mMT:GetCurrenciesInfo(PPC, true)
 	mMT:DockInitialization(self, event)
 end
 
