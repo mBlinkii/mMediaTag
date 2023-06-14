@@ -251,7 +251,10 @@
         "ACCEPT",
         "CANCEL",
         "ReloadUI",
-        "Add"
+        "Add",
+        "TRACKER_HEADER_QUESTS",
+        "COMPLETE",
+        "INCOMPLETE"
     ],
     "Lua.diagnostics.disable": [
         "undefined-field"
