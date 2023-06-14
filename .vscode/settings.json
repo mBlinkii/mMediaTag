@@ -254,7 +254,10 @@
         "Add",
         "TRACKER_HEADER_QUESTS",
         "COMPLETE",
-        "INCOMPLETE"
+        "INCOMPLETE",
+        "SelectQuestLogEntry",
+        "GetQuestLogTitle",
+        "GetNumQuestLogEntries"
     ],
     "Lua.diagnostics.disable": [
         "undefined-field"

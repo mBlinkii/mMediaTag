@@ -8,7 +8,7 @@ local format = format
 local _G = _G
 local ObjectiveTrackerFrame = _G.ObjectiveTrackerFrame
 local ObjectiveTrackerBlocksFrame = _G.ObjectiveTrackerBlocksFrame
-local maxNumQuestsCanAccept = 35 --MAX_QUESTS
+local maxNumQuestsCanAccept = min(C_QuestLog.GetMaxNumQuestsCanAccept() + (E.Retail and 10 or 0), 35) -- 20 for ERA, 25 for WotLK, 35 for Retail
 local HeaderTitel = ObjectiveTrackerBlocksFrame.QuestHeader.Text:GetText()
 local width = _G.ObjectiveTrackerFrame:GetWidth()
 

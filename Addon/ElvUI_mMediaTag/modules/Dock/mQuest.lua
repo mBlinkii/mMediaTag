@@ -9,25 +9,20 @@ local format = format
 local _G = _G
 local mText = format("Dock %s", QUESTLOG_BUTTON)
 local mTextName = "mQuest"
-
-local _G = _G
 local UnitXPMax = UnitXPMax
-local MouseIsOver = MouseIsOver
 local IsShiftKeyDown = IsShiftKeyDown
 local GetQuestLogTitle = GetQuestLogTitle
 local GetQuestLogRewardXP = GetQuestLogRewardXP
 local SelectQuestLogEntry = SelectQuestLogEntry
 local GetQuestLogRewardMoney = GetQuestLogRewardMoney
 local BreakUpLargeNumbers = BreakUpLargeNumbers
-
 local C_QuestLog_GetInfo = C_QuestLog.GetInfo
 local GetNumQuestLogEntries = (C_QuestLog and C_QuestLog.GetNumQuestLogEntries) or GetNumQuestLogEntries
 
-local MAX_QUESTLOG_QUESTS = min(C_QuestLog.GetMaxNumQuestsCanAccept() + (E.Retail and 10 or 0), 35) -- 20 for ERA, 25 for WotLK, 35 for Retail
 local TRACKER_HEADER_QUESTS = TRACKER_HEADER_QUESTS
 local COMPLETE = COMPLETE
 local INCOMPLETE = INCOMPLETE
-local numEntries, numQuests, xpToLevel = 0, 0, 0
+local numEntries, xpToLevel = 0, 0
 
 local function GetQuestInfo(questIndex)
 	if E.Retail then
@@ -105,7 +100,7 @@ local function OnEvent(self, event, ...)
 
 	mMT:DockInitialization(self, event)
 
-	numEntries, numQuests = GetNumQuestLogEntries()
+	numEntries, _ = GetNumQuestLogEntries()
 	xpToLevel = UnitXPMax("player")
 end
 
