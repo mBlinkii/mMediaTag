@@ -18,8 +18,8 @@ local function NPLoader(castbar)
 		return
 	end
 
-	if E.db.mMT.importantspells.interrupt.enable or E.db.mMT.importantspells.stun.enable then
-		mMT:ImportantSpells(castbar)
+	if E.db.mMT.importantspells.enable and E.db.mMT.importantspells.np then
+		mMT:ImportantSpells(castbar, true)
 	end
 
 	if E.db.mMT.interruptoncd.enable then
@@ -35,7 +35,7 @@ local function UFLoader(castbar)
 		return
 	end
 
-	if E.db.mMT.importantspells.interrupt.enable or E.db.mMT.importantspells.stun.enable then
+	if E.db.mMT.importantspells.enable and E.db.mMT.importantspells.uf then
 		mMT:ImportantSpells(castbar)
 	end
 

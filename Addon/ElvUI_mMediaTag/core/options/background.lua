@@ -1,4 +1,4 @@
-local E, L, V, P, G = unpack(ElvUI)
+local E, L = unpack(ElvUI)
 
 local LSM = LibStub("LibSharedMedia-3.0")
 local tinsert = tinsert

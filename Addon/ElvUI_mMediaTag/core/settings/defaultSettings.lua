@@ -18,25 +18,9 @@ P.mMT = {
 	importantspells = {
 		enable = false,
 		gradient = false,
-		icon = {
-			enable = false,
-			replace = true,
-			auto = true,
-			sizeX = 32,
-			sizeY = 32,
-			stun = "CAST15",
-			interrupt = "CAST15",
-			anchor = "CENTER",
-			posX = 0,
-			posY = 0,
-		},
-		interrupt = {
-			enable = false,
-			ids = {},
-			colora = { r = 0, g = 1, b = 0 },
-			colorb = { r = 0, g = 0.53, b = 0.0 },
-		},
-		stun = { enable = false, ids = {}, colora = { r = 0, g = 0.1, b = 1 }, colorb = { r = 0, g = 0.05, b = 0.52 } },
+		np = true,
+		uf = true,
+		spells = {},
 	},
 	custombackgrounds = {
 		enable = false,

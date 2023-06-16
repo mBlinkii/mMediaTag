@@ -42,6 +42,7 @@ local defaultDB = {
 	mplusaffix = { affixes = nil, season = nil, reset = false, year = nil },
 	affix = nil,
 	keys = {},
+	spells = {},
 }
 
 local DB_Loader = CreateFrame("FRAME")
@@ -170,14 +171,13 @@ function mMT:Initialize()
 	if E.Retail then
 		if
 			E.db.mMT.interruptoncd.enable
-			or E.db.mMT.importantspells.interrupt.enable
-			or E.db.mMT.importantspells.stun.enable
+			or (E.db.mMT.importantspells.enable and (E.db.mMT.importantspells.np or E.db.mMT.importantspells.uf))
 			or E.db.mMT.castbarshield.enable
 		then
 			mMT:CastbarModuleLoader()
 		end
 
-		if E.db.mMT.importantspells.interrupt.enable or E.db.mMT.importantspells.stun.enable then
+		if (E.db.mMT.importantspells.enable and (E.db.mMT.importantspells.np or E.db.mMT.importantspells.uf)) then
 			mMT:UpdateImportantSpells()
 		end
 
