@@ -8,7 +8,7 @@ local format = format
 local _G = _G
 local ObjectiveTrackerFrame = _G.ObjectiveTrackerFrame
 local ObjectiveTrackerBlocksFrame = _G.ObjectiveTrackerBlocksFrame
-local maxNumQuestsCanAccept = 35 --MAX_QUESTS
+local maxNumQuestsCanAccept = min(C_QuestLog.GetMaxNumQuestsCanAccept() + (E.Retail and 10 or 0), 35) -- 20 for ERA, 25 for WotLK, 35 for Retail
 local HeaderTitel = ObjectiveTrackerBlocksFrame.QuestHeader.Text:GetText()
 local width = _G.ObjectiveTrackerFrame:GetWidth()
 
@@ -149,7 +149,7 @@ local function mSetupQuestFont(linetext, state)
 end
 
 local function SetGradientColors(bar, r, g, b)
-	if mMT.ElvUI_EltreumUI and E.db.mMT.objectivetracker.header.barcolorstyle == "class" then
+	if mMT.ElvUI_EltreumUI.loaded and E.db.ElvUI_EltreumUI.unitframes.gradientmode and E.db.mMT.objectivetracker.header.barcolorstyle == "class" then
 		local ElvUI_EltreumUI = E:GetModule("ElvUI_EltreumUI", true)
 		if ElvUI_EltreumUI and E.db.ElvUI_EltreumUI.unitframes.gradientmode.customcolor then
 			bar:GetStatusBarTexture()

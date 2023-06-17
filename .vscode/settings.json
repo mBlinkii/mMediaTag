@@ -250,7 +250,15 @@
         "mMTDB",
         "ACCEPT",
         "CANCEL",
-        "ReloadUI"
+        "ReloadUI",
+        "Add",
+        "TRACKER_HEADER_QUESTS",
+        "COMPLETE",
+        "INCOMPLETE",
+        "SelectQuestLogEntry",
+        "GetQuestLogTitle",
+        "GetNumQuestLogEntries",
+        "NEW"
     ],
     "Lua.diagnostics.disable": [
         "undefined-field"
@@ -294,7 +302,9 @@
         "Dura",
         "EDITBOX",
         "Eltreum",
+        "Eltruism",
         "ELVUI",
+        "Flightstones",
         "greatvault",
         "growsize",
         "Healthbar",
@@ -304,6 +314,7 @@
         "hooksecurefunc",
         "iconcolor",
         "ictexture",
+        "ilevel",
         "ilvl",
         "importantspells",
         "inactivetime",
@@ -338,6 +349,7 @@
         "showtext",
         "Simpy",
         "Spellbook",
+        "strfind",
         "strjoin",
         "strmatch",
         "tablesort",

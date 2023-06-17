@@ -1,86 +1,94 @@
-local E, L = unpack(ElvUI)
+local E = unpack(ElvUI)
 local DT = E:GetModule("DataTexts")
-
---Lua functions
-local format = format
 
 --WoW API / Variables
 local _G = _G
-local C_CurrencyInfo = C_CurrencyInfo
+local floor = floor
 
 --Variables
-local mText = format("mMediaTag %s", L["Conquest"])
-local mTextName = "mConquest"
-local mCurrencyID = 1602
-local hideCurrency = false
+local hide = false
+local Currency = {
+	info = {
+		color = "|CFFC9913C",
+		id = 1602,
+		name = nil,
+		icon = nil,
+		link = nil,
+		count = nil,
+		cap = nil,
+	},
+	loaded = false,
+}
 
 local function OnEnter(self)
-	if not hideCurrency then
+	DT.tooltip:ClearLines()
+	if not hide then
 		DT:SetupTooltip(self)
-		DT.tooltip:SetHyperlink(mMT:mCurrencyLink(mCurrencyID))
+		DT.tooltip:SetHyperlink(Currency.info.link)
 		DT.tooltip:Show()
 	end
 end
 
 local function OnEvent(self, event, ...)
-	local info = C_CurrencyInfo.GetCurrencyInfo(mCurrencyID)
 	local TextJustify = self.text:GetJustifyH()
-	if info then
-		local name = ""
-		local CurrencyValue, maxValue = info.quantity, info.maxQuantity
+	mMT:GetCurrenciesInfo(Currency)
 
-		if E.db.mMT.datatextcurrency.hide and CurrencyValue == 0 then
-			hideCurrency = true
-		else
-			hideCurrency = false
-		end
+	hide = (E.db.mMT.datatextcurrency.hide and Currency.info.count == 0)
 
-		if not hideCurrency then
+	if Currency.loaded then
+		local name = nil
+		local icon = nil
+		local bagCount = nil
+		local max = nil
+		local color = mMT.ClassColor.string
+
+		if not hide then
 			if E.db.mMT.datatextcurrency.name then
-				if TextJustify == "RIGHT" then
-					name = " " .. info.name
-				else
-					name = info.name .. " "
-				end
+				name = Currency.info.name
 			end
 
 			if E.db.mMT.datatextcurrency.icon then
-				if TextJustify == "RIGHT" then
-					name = format("%s %s", name, mMT:mIcon(info.iconFileID, 12, 12))
-				else
-					name = format("%s %s", mMT:mIcon(info.iconFileID, 12, 12), name)
-				end
+				icon = Currency.info.icon
 			end
 
-			if E.db.mMT.datatextcurrency.short then
-				CurrencyValue = E:ShortValue(info.quantity, 2)
-				maxValue = E:ShortValue(info.maxQuantity, 2)
-			end
-
-			if E.db.mMT.datatextcurrency.showmax then
-				CurrencyValue = CurrencyValue .. " / " .. maxValue
-			end
-
-			local CurrencyTextString = "%s" .. mMT.ClassColor.string
-
-			if TextJustify == "RIGHT" then
-				CurrencyTextString = mMT.ClassColor.string .. "%s"
+			if E.db.mMT.datatextcurrency.short and Currency.info.count >= 1000 then
+				Currency.info.count = E:ShortValue(Currency.info.count, 2)
 			end
 
 			if E.db.mMT.datatextcurrency.style == "color" then
-				if TextJustify == "RIGHT" then
-					CurrencyTextString = "|CFFC9913C%s|r%s"
-				else
-					CurrencyTextString = "%s|CFFC9913C%s|r"
-				end
+				color = Currency.info.color
 			elseif E.db.mMT.datatextcurrency.style == "white" then
-				CurrencyTextString = "|CFFFFFFFF%s%s|r"
+				color = "|CFFFFFFFF"
+			end
+
+			if E.db.mMT.datatextcurrency.max then
+				if TextJustify == "RIGHT" then
+					max = " " .. Currency.info.cap .. " /"
+				else
+					max = "/ " .. Currency.info.cap .. " "
+				end
 			end
 
 			if TextJustify == "RIGHT" then
-				self.text:SetFormattedText(CurrencyTextString, CurrencyValue, name)
+				self.text:SetFormattedText(
+					"%s%s %s%s %s|r%s",
+					color,
+					bagCount or "",
+					max or "",
+					Currency.info.count,
+					name or "",
+					icon or ""
+				)
 			else
-				self.text:SetFormattedText(CurrencyTextString, name, CurrencyValue)
+				self.text:SetFormattedText(
+					"%s%s%s %s%s %s|r",
+					icon or "",
+					color,
+					name or "",
+					Currency.info.count,
+					max or "",
+					bagCount or ""
+				)
 			end
 		end
 	else
@@ -93,7 +101,7 @@ local function OnLeave(self)
 end
 
 DT:RegisterDatatext(
-	mTextName,
+	"mConquest",
 	_G.CURRENCY,
 	{ "CHAT_MSG_CURRENCY", "CURRENCY_DISPLAY_UPDATE" },
 	OnEvent,
@@ -101,6 +109,6 @@ DT:RegisterDatatext(
 	nil,
 	OnEnter,
 	OnLeave,
-	mText,
+	"mMediaTag Conquest",
 	nil
 )

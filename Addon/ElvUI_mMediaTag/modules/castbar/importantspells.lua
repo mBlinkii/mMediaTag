@@ -1,118 +1,93 @@
-local E, L = unpack(ElvUI)
+local E = unpack(ElvUI)
 
-local ImportantSpellsInterrupt = {}
-local ImportantSpellsStun = {}
+local ImportantSpellIDs = {}
 
 function mMT:UpdateImportantSpells()
-	ImportantSpellsInterrupt = E.db.mMT.importantspells.interrupt.ids
-	ImportantSpellsStun = E.db.mMT.importantspells.stun.ids
+	ImportantSpellIDs = E.db.mMT.importantspells.spells
 end
 
-local function IconColor(icon, stun, auto)
-	local color = { 1, 1, 1 }
-	if auto then
-		if stun then
-			color = E.db.mMT.importantspells.stun.colora
-			icon:SetVertexColor(color.r, color.g, color.b, 1)
-		else
-			color = E.db.mMT.importantspells.interrupt.colora
-			icon:SetVertexColor(color.r, color.g, color.b, 1)
+local function SetPoint(icon, settings)
+	local size = icon.mSize
+	local pos = 0
+
+	if settings.size.auto then
+		icon:SetWidth(size)
+		icon:SetHeight(size)
+	else
+		icon:SetWidth(settings.size.sizeXY)
+		icon:SetHeight(settings.size.sizeXY)
+	end
+
+	if settings.anchor.auto then
+		if settings.anchor.point == "CENTER" then
+			icon:SetPoint(settings.anchor.point, pos, pos)
+		elseif settings.anchor.point == "TOP" then
+			pos = size / 2
+			icon:SetPoint(settings.anchor.point, 0, pos)
+		elseif settings.anchor.point == "BOTTOM" then
+			pos = size / 2 - size
+			icon:SetPoint(settings.anchor.point, 0, pos)
+		elseif settings.anchor.point == "LEFT" then
+			pos = size / 2 - size
+			icon:SetPoint(settings.anchor.point, pos, 0)
+		elseif settings.anchor.point == "RIGHT" then
+			pos = size / 2
+			icon:SetPoint(settings.anchor.point, pos, 0)
 		end
 	else
-		icon:SetVertexColor(1, 1, 1, 1)
+		icon:SetPoint(settings.anchor.point, settings.anchor.posX, settings.anchor.posY)
 	end
 end
-
-local function ImportantSpellIcon(castbar, interrupt, stun)
-	if interrupt or stun then
-		if not castbar.mImportantIcon then
-			castbar.mImportantIcon = castbar:CreateTexture("ImportantSpellIcon", "OVERLAY")
-			castbar.mImportantIcon:SetWidth(E.db.mMT.importantspells.icon.sizeX)
-			castbar.mImportantIcon:SetHeight(E.db.mMT.importantspells.icon.sizeY)
-			castbar.mImportantIcon:SetPoint(
-				E.db.mMT.importantspells.icon.anchor,
-				E.db.mMT.importantspells.icon.posX,
-				E.db.mMT.importantspells.icon.posY
-			)
-		else
-			castbar.mImportantIcon:ClearAllPoints()
-			castbar.mImportantIcon:SetWidth(E.db.mMT.importantspells.icon.sizeX)
-			castbar.mImportantIcon:SetHeight(E.db.mMT.importantspells.icon.sizeY)
-			castbar.mImportantIcon:SetPoint(
-				E.db.mMT.importantspells.icon.anchor,
-				E.db.mMT.importantspells.icon.posX,
-				E.db.mMT.importantspells.icon.posY
-			)
-		end
-
-		castbar.mImportantIcon:Hide()
-
-		if interrupt or stun then
-			if stun then
-				castbar.mImportantIcon:SetTexture(mMT.Media.Castbar[E.db.mMT.importantspells.icon.stun])
-			elseif interrupt then
-				castbar.mImportantIcon:SetTexture(mMT.Media.Castbar[E.db.mMT.importantspells.icon.interrupt])
-			end
-			castbar.mImportantIcon:Show()
-		end
-
-		IconColor(castbar.mImportantIcon, stun, E.db.mMT.importantspells.icon.auto)
-	elseif castbar.mImportantIcon then
-		castbar.mImportantIcon:Hide()
+local function SetSpellIcon(castbar, settings)
+	if not castbar.mSpellIcon then
+		castbar.mSpellIcon = castbar:CreateTexture("ImportantSpellIcon", "OVERLAY")
+		castbar.mSpellIcon.mSize = settings.size.auto and castbar:GetHeight() or settings.size.sizeXY
+		SetPoint(castbar.mSpellIcon, settings)
+	else
+		castbar.mSpellIcon:ClearAllPoints()
+		castbar.mSpellIcon.mSize = settings.size.auto and castbar:GetHeight() or settings.size.sizeXY
+		SetPoint(castbar.mSpellIcon, settings)
 	end
-end
 
-local function ImportantSpellIconReplace(castbar, interrupt, stun)
-	if castbar.ButtonIcon then
-		if interrupt or stun then
-			if stun then
-				castbar.ButtonIcon:SetTexture(mMT.Media.Castbar[E.db.mMT.importantspells.icon.stun])
-			elseif interrupt then
-				castbar.ButtonIcon:SetTexture(mMT.Media.Castbar[E.db.mMT.importantspells.icon.interrupt])
-			end
-			IconColor(castbar.ButtonIcon, stun, E.db.mMT.importantspells.icon.auto)
-		end
-	end
+	castbar.mSpellIcon:SetTexture(mMT.Media.Castbar[settings.icon])
+	castbar.mSpellIcon:SetVertexColor(settings.color.r, settings.color.g, settings.color.b, 1)
+
+	castbar.mSpellIcon:Show()
 end
 
 function mMT:ImportantSpells(castbar)
-	local ImportantInterrupt = ImportantSpellsInterrupt[castbar.spellID]
-	local ImportantStun = ImportantSpellsStun[castbar.spellID]
+	local Spell = ImportantSpellIDs[castbar.spellID] and ImportantSpellIDs[castbar.spellID] or false
 
-	if ImportantInterrupt and ImportantStun and ImportantInterrupt == ImportantStun then
-		mMT:Print(L["Error, Interrupt and Stun Spell IDs are the same!"])
-		return
+	if castbar.mSpellIcon then
+		castbar.mSpellIcon:Hide()
 	end
 
-    if castbar.mImportantIcon then
-		castbar.mImportantIcon:Hide()
-	end
-
-	if E.db.mMT.importantspells.interrupt.enable then
-		if ImportantInterrupt then
+	if Spell then
+		if Spell.color.enable then
 			if E.db.mMT.importantspells.gradient then
-				mMT:SetCastbarColor(
-					castbar,
-					E.db.mMT.importantspells.interrupt.colora,
-					E.db.mMT.importantspells.interrupt.colorb
-				)
+				mMT:SetCastbarColor(castbar, Spell.color.a, Spell.color.b)
 			else
-				mMT:SetCastbarColor(castbar, E.db.mMT.importantspells.interrupt.colora)
-			end
-		elseif ImportantStun then
-			if E.db.mMT.importantspells.gradient then
-				mMT:SetCastbarColor(castbar, E.db.mMT.importantspells.stun.colora, E.db.mMT.importantspells.stun.colorb)
-			else
-				mMT:SetCastbarColor(castbar, E.db.mMT.importantspells.stun.colora)
+				mMT:SetCastbarColor(castbar, Spell.color.a)
 			end
 		end
-	end
 
-	if E.db.mMT.importantspells.icon.replace then
-		ImportantSpellIconReplace(castbar, ImportantInterrupt, ImportantStun)
-	end
+		if (Spell.sound.enable and Spell.sound.file) and castbar.unit == "target" then
+			PlaySoundFile(E.LSM:Fetch("sound", Spell.sound.file), "Master")
+		end
 
-	if E.db.mMT.importantspells.icon.enable then
-		ImportantSpellIcon( castbar, ImportantInterrupt,ImportantStun )
-    end
+		if Spell.texture.enable and Spell.texture.texture then
+			if not castbar.mTextureChanged then
+				castbar.mTextureChanged = true
+			end
+
+			castbar:SetStatusBarTexture(E.LSM:Fetch("statusbar", Spell.texture.texture))
+		end
+
+		if Spell.icon.enable and Spell.icon.icon then
+			SetSpellIcon(castbar, Spell.icon)
+		end
+	elseif castbar.mTextureChanged then
+			castbar:SetStatusBarTexture(E.LSM:Fetch("statusbar", E.db.mMT.importantspells.default))
+			castbar.mTextureChanged = false
+	end
 end

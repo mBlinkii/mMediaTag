@@ -20,19 +20,21 @@ local change_log_important = {
 }
 
 local change_log_new = {
-	"NEW function for Castbars Important Spells for Interruptible and not Interruptible Spells, changes the Castbar color, Icon and adds a Icon, with import/ export function",
-}
+	"NEW function Castbar Shield Shield Icon for not interruptible Spells",
+	"NEW Datatexts for Crests and Flightstones",
+	"NEW you can now customizes the Summon Icon on the Unitframes",
+	"NEW Complete rework of Important Spells, you can now change for each Spell in the list color, sound, texture and icon."}
 
 local change_log_update = {
-	"Add Affix Icons to Score Datattext",
-	"Cleanup Dock Settings",
-	"Code update, removed unused code",
-	"Healthmarker IDs for S2, Thanks Trenchy",
+	"Score datatext can now show the keystones and Itemlevel of your group (requires LibOpenRaid or Details)",
+	"Dock Quest shows now mor information's about your Quests",
+	"Dock Collection shows now the amount of your Polished Pet Charm and Battle Pet Bandage"
+
 }
 
 local change_log_fix = {
-	"Fix Dock Icons Text and Color function",
-	"Fix some Bugs in Dock Icons",
+	"Fixed Castbar Shield toggle for UF and NP",
+	"Fixed Custom Backdrop prevents dark mode of Eltruism"
 }
 
 local function Concatenation(tbl, icon, color)
@@ -52,7 +54,7 @@ local function Concatenation(tbl, icon, color)
 end
 
 local function configTable()
-	local releasdate = "17.05.2023"
+	local releasdate = "02.06.2023"
 	--local change_log_important_string = Concatenation(change_log_important)
 	local change_log_new_string = Concatenation(change_log_new)
 	local change_log_update_string = Concatenation(change_log_update)

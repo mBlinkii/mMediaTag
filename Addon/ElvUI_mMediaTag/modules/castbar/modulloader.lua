@@ -18,15 +18,15 @@ local function NPLoader(castbar)
 		return
 	end
 
-	if E.db.mMT.importantspells.interrupt.enable or E.db.mMT.importantspells.stun.enable then
-		mMT:ImportantSpells(castbar)
+	if E.db.mMT.importantspells.enable and E.db.mMT.importantspells.np then
+		mMT:ImportantSpells(castbar, true)
 	end
 
 	if E.db.mMT.interruptoncd.enable then
 		mMT:InterruptChecker(castbar)
 	end
 
-	if E.db.mMT.castbarshield.enable then
+	if E.db.mMT.castbarshield.enable and E.db.mMT.castbarshield.np then
 		mMT:CastbarShield(castbar)
 	end
 end
@@ -35,7 +35,7 @@ local function UFLoader(castbar)
 		return
 	end
 
-	if E.db.mMT.importantspells.interrupt.enable or E.db.mMT.importantspells.stun.enable then
+	if E.db.mMT.importantspells.enable and E.db.mMT.importantspells.uf then
 		mMT:ImportantSpells(castbar)
 	end
 
@@ -43,7 +43,7 @@ local function UFLoader(castbar)
 		mMT:InterruptChecker(castbar)
 	end
 
-	if E.db.mMT.castbarshield.enable then
+	if E.db.mMT.castbarshield.enable and E.db.mMT.castbarshield.uf then
 		mMT:CastbarShield(castbar)
 	end
 end

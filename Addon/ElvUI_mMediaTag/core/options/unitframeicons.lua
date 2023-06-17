@@ -48,6 +48,17 @@ local function configTable()
 						E.db.mMT.unitframeicons.resurrection.enable = value
 					end,
 				},
+				toggle_summon = {
+					order = 3,
+					type = "toggle",
+					name = L["Summon"],
+					get = function(info)
+						return E.db.mMT.unitframeicons.summon.enable
+					end,
+					set = function(info, value)
+						E.db.mMT.unitframeicons.summon.enable = value
+					end,
+				},
             },
 		},
 		header_readycheck = {
@@ -214,8 +225,55 @@ local function configTable()
 				},
 			},
 		},
-		header_misc = {
+		header_summon = {
 			order = 4,
+			type = "group",
+			inline = true,
+			name = L["Summon Icons"],
+            disabled = function()
+                return not E.db.mMT.unitframeicons.summon.enable
+            end,
+			args = {
+				available = {
+					order = 1,
+					type = "select",
+					name = L["Available"],
+					get = function(info)
+						return E.db.mMT.unitframeicons.summon.available
+					end,
+					set = function(info, value)
+						E.db.mMT.unitframeicons.summon.available = value
+					end,
+					values = icons,
+				},
+				rejected = {
+					order = 2,
+					type = "select",
+					name = L["Rejected"],
+					get = function(info)
+						return E.db.mMT.unitframeicons.summon.rejected
+					end,
+					set = function(info, value)
+						E.db.mMT.unitframeicons.summon.rejected = value
+					end,
+					values = icons,
+				},
+				accepted = {
+					order = 3,
+					type = "select",
+					name = L["Accepted"],
+					get = function(info)
+						return E.db.mMT.unitframeicons.summon.accepted
+					end,
+					set = function(info, value)
+						E.db.mMT.unitframeicons.summon.accepted = value
+					end,
+					values = icons,
+				},
+			},
+		},
+		header_misc = {
+			order = 5,
 			type = "group",
 			inline = true,
 			name = L["Misc"],

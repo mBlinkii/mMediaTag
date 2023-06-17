@@ -18,7 +18,7 @@ function mMT:PhaseIconColor(hidden, phaseReason)
 	if E.db.mMT.unitframeicons.phase.color.withe then
 		self.Center:SetVertexColor(1, 1, 1)
 	else
-		local c = {r = 1, g = 1, b = 1}
+		local c = { r = 1, g = 1, b = 1 }
 		if phaseReason == 3 then -- chromie, gold
 			c = PhaseColors.chromie
 			self.Center:SetVertexColor(c.r, c.g, c.b)
@@ -51,7 +51,6 @@ function mMT:SetupReadyCheckIcons()
 	hooksecurefunc(UF, "Configure_ReadyCheckIcon", ReadyCheckIcons)
 end
 function mMT:SetupPhaseIcons()
-
 	E.Media.Textures.PhaseBorder = blank
 	E.Media.Textures.PhaseCenter = mMT.Media.UnitframeIcons[E.db.mMT.unitframeicons.phase.icon]
 	hooksecurefunc(UF, "Configure_PhaseIcon", PhaseIcon)
@@ -65,4 +64,20 @@ function mMT:SetupPhaseIcons()
 		}
 		hooksecurefunc(UF, "PostUpdate_PhaseIcon", mMT.PhaseIconColor)
 	end
+end
+
+local function SummonIcon(_, frame)
+	frame.SummonIndicator.PostUpdate = function(self, status)
+		if status == 1 then
+			self:SetTexture(mMT.Media.UnitframeIcons[E.db.mMT.unitframeicons.summon.available])
+		elseif status == 2 then
+			self:SetTexture(mMT.Media.UnitframeIcons[E.db.mMT.unitframeicons.summon.accepted])
+		elseif status == 3 then
+			self:SetTexture(mMT.Media.UnitframeIcons[E.db.mMT.unitframeicons.summon.rejected])
+		end
+	end
+end
+
+function mMT:SetupSummonIcon()
+	hooksecurefunc(UF, "Configure_SummonIcon", SummonIcon)
 end

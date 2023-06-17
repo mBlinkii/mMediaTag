@@ -18,25 +18,10 @@ P.mMT = {
 	importantspells = {
 		enable = false,
 		gradient = false,
-		icon = {
-			enable = false,
-			replace = true,
-			auto = true,
-			sizeX = 32,
-			sizeY = 32,
-			stun = "CAST15",
-			interrupt = "CAST15",
-			anchor = "CENTER",
-			posX = 0,
-			posY = 0,
-		},
-		interrupt = {
-			enable = false,
-			ids = {},
-			colora = { r = 0, g = 1, b = 0 },
-			colorb = { r = 0, g = 0.53, b = 0.0 },
-		},
-		stun = { enable = false, ids = {}, colora = { r = 0, g = 0.1, b = 1 }, colorb = { r = 0, g = 0.05, b = 0.52 } },
+		np = true,
+		uf = true,
+		default = nil,
+		spells = {},
 	},
 	custombackgrounds = {
 		enable = false,
@@ -126,8 +111,8 @@ P.mMT = {
 		size = 16,
 	},
 	mpscore = {
-		keys = { week = 0, affix = "" },
 		highlight = true,
+		groupkeys = true,
 		sort = "AFFIX",
 		upgrade = true,
 		icon = "UI7",
@@ -314,6 +299,7 @@ P.mMT = {
 		showmax = false,
 		hide = false,
 		bag = false,
+		max = false,
 	},
 	dockdatatext = {
 		autogrow = true,
@@ -483,7 +469,8 @@ P.mMT = {
 				phasing = { r = 0.3, g = 0.5, b = 1 },
 			},
 		},
-		resurrection = { enable = false, icon = "RES3" },
+		summon = { enable = false, available = "SUM13", rejected = "SUM14", accepted = "SUM15" },
+		resurrection = { enable = false, icon = "RES03" },
 		readycheck = { enable = false, ready = "READY06", notready = "NOTREADY01", waiting = "COLOR26" },
 	},
 }
