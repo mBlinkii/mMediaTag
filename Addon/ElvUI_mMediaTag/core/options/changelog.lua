@@ -21,23 +21,20 @@ local change_log_important = {
 
 local change_log_new = {
 	"NEW function Castbar Shield Shield Icon for not interruptible Spells",
-	"NEW the media files are now moved to a separate extra addon. Now you can enable/ disable each Pack/ Series to improve the texture Dropdown Menu. The settings are aviable in ElvUI or type /mmtmp help in chat.",
-}
+	"NEW Datatexts for Crests and Flightstones",
+	"NEW you can now customizes the Summon Icon on the Unitframes",
+	"NEW Complete rework of Important Spells, you can now change for each Spell in the list color, sound, texture and icon."}
 
 local change_log_update = {
-	"Update te Text function of the Dock Icons",
-	"Revert Quick Setup",
-	"Short dungeon text fur Dock LFD",
-	"Show Executemarker only in combat, thx to Merathilis",
+	"Score datatext can now show the keystones and Itemlevel of your group (requires LibOpenRaid or Details)",
+	"Dock Quest shows now mor information's about your Quests",
+	"Dock Collection shows now the amount of your Polished Pet Charm and Battle Pet Bandage"
+
 }
 
 local change_log_fix = {
-	"Fixed Dock LFD events",
-	"Fixed Dock Journal bug",
-	"Fixed Important Spell Same Error",
-	"Fixed Important Spell extra Icon",
-	"Fixed Tag Role  icons",
-	"Fixed spelling",
+	"Fixed Castbar Shield toggle for UF and NP",
+	"Fixed Custom Backdrop prevents dark mode of Eltruism"
 }
 
 local function Concatenation(tbl, icon, color)

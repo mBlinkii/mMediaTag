@@ -90,5 +90,4 @@ function mMT:ImportantSpells(castbar)
 			castbar:SetStatusBarTexture(E.LSM:Fetch("statusbar", E.db.mMT.importantspells.default))
 			castbar.mTextureChanged = false
 	end
-	mMT:Print(castbar.mTextureChanged)
 end

@@ -1,6 +1,20 @@
 # Changelog - ElvUI_mMediaTag
 [Eng] - All changes to this project will be documented in this file. The latest changes are at the top.
 
+## [ver. 3.15] - 17.06.2023
+### Update
+- Score datatext can now show the keystones and Itemlevel of your group (requires LibOpenRaid or Details)
+- Dock Quest shows now mor information's about your Quests
+- Dock Collection shows now the amount of your Polished Pet Charm and Battle Pet Bandage
+### FIX
+- Fixed Castbar Shield toggle for UF and NP
+- Fixed Custom Backdrop prevents dark mode of Eltruism
+### NEW
+- NEW function Castbar Shield Shield Icon for not interruptible Spells
+- NEW Datatexts for Crests and Flightstones
+- NEW you can now customizes the Summon Icon on the Unitframes
+- NEW Complete rework of Important Spells, you can now change for each Spell in the list color, sound, texture and icon.
+
 ## [ver. 3.14] - 02.06.2023
 ### Update
 - Update te Text function of the Dock Icons

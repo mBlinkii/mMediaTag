@@ -257,7 +257,8 @@
         "INCOMPLETE",
         "SelectQuestLogEntry",
         "GetQuestLogTitle",
-        "GetNumQuestLogEntries"
+        "GetNumQuestLogEntries",
+        "NEW"
     ],
     "Lua.diagnostics.disable": [
         "undefined-field"
@@ -301,7 +302,9 @@
         "Dura",
         "EDITBOX",
         "Eltreum",
+        "Eltruism",
         "ELVUI",
+        "Flightstones",
         "greatvault",
         "growsize",
         "Healthbar",
