@@ -42,7 +42,6 @@ local defaultDB = {
 	mplusaffix = { affixes = nil, season = nil, reset = false, year = nil },
 	affix = nil,
 	keys = {},
-	spells = {},
 }
 
 local DB_Loader = CreateFrame("FRAME")
@@ -274,6 +273,17 @@ function mMT:PLAYER_ENTERING_WORLD()
 
 	mMT:UpdateTagSettings()
 	mMT:TagDeathCount()
+
+	class = (E.db.mMT.customclasscolors.enable and not mMT:Check_ElvUI_EltreumUI()) and E.db.mMT.customclasscolors.colors[E.myclass] or E:ClassColor(E.myclass)
+	hex = E:RGBToHex(class.r, class.g, class.b)
+
+	mMT.ClassColor = {
+		r = class.r,
+		g = class.g,
+		b = class.b,
+		hex = hex,
+		string = strjoin("", hex, "%s|r"),
+	}
 end
 
 function mMT:PLAYER_TALENT_UPDATE()
