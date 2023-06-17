@@ -53,7 +53,7 @@ local function OnEvent(self, event, ...)
 		local name = nil
 		local icon = nil
 		local bagCount = nil
-		local color = mMT.ClassColor.string
+		local color = mMT.ClassColor.hex
 
 		if not hide then
 			if E.db.mMT.datatextcurrency.name then
