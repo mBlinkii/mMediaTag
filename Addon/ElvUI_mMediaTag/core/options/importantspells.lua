@@ -28,6 +28,7 @@ local function configTable()
 			order = 1,
 			type = "toggle",
 			name = L["Enable Important Spells"],
+			desc = L["Enable Important Spells module."],
 			get = function(info)
 				return E.db.mMT.importantspells.enable
 			end,
@@ -46,6 +47,7 @@ local function configTable()
 					order = 1,
 					type = "toggle",
 					name = L["Enable on Nameplate"],
+					desc = L["Enable this module on Nameplates."],
 					get = function(info)
 						return E.db.mMT.importantspells.np
 					end,
@@ -57,6 +59,7 @@ local function configTable()
 					order = 2,
 					type = "toggle",
 					name = L["Enable on Unitframes"],
+					desc = L["Enable this module on Unitframes."],
 					get = function(info)
 						return E.db.mMT.importantspells.uf
 					end,
@@ -68,6 +71,7 @@ local function configTable()
 					order = 3,
 					type = "toggle",
 					name = L["Gradient  Mode"],
+					desc = L["Enable Gradient colors, this will use the second color."],
 					get = function(info)
 						return E.db.mMT.importantspells.gradient
 					end,
@@ -86,6 +90,7 @@ local function configTable()
 				id = {
 					order = 1,
 					name = L["Spell ID"],
+					desc = L["Enter a Spell ID it accepts only Numbers."],
 					type = "input",
 					width = "smal",
 					set = function(info, value)
@@ -96,7 +101,7 @@ local function configTable()
 								tinsert(E.db.mMT.importantspells.spells, value, {
 									enable = true,
 									color = { enable = true, a = { r = 1, g = 1, b = 1 }, b = { r = 1, g = 1, b = 1 } },
-									sound = { enable = false, file = nil },
+									sound = { enable = false, file = nil, target = true },
 									texture = { enable = false, texture = nil },
 									icon = {
 										enable = false,
@@ -117,6 +122,7 @@ local function configTable()
 					type = "select",
 					order = 2,
 					name = L["Spell IDs"],
+					desc = L["Select your spell to set it."],
 					values = function()
 						UpdateTableSpellIDs()
 						return valuesSpellIDs
@@ -131,6 +137,7 @@ local function configTable()
 				DeleteID = {
 					order = 3,
 					name = L["Delete ID"],
+					desc = L["Delete the Spell, enter a ID."],
 					type = "input",
 					width = "smal",
 					set = function(info, value)
@@ -149,6 +156,7 @@ local function configTable()
 					order = 4,
 					type = "execute",
 					name = L["Reset"],
+					desc = L["Delete all and reset the list."],
 					func = function()
 						wipe(E.db.mMT.importantspells.spells)
 						wipe(valuesSpellIDs)
@@ -166,8 +174,23 @@ local function configTable()
 				return not E.db.mMT.importantspells.spells[SelectedSpellID]
 			end,
 			args = {
-				header_color = {
+				select_default = {
 					order = 1,
+					type = "select",
+					dialogControl = "LSM30_Statusbar",
+					name = L["Default Castbar Texture"],
+					desc = L["The default castbar texture when no spell modification is active."],
+					values = LSM:HashTable("statusbar"),
+					get = function(info)
+						return E.db.mMT.importantspells.default or E.private.general.normTex
+
+					end,
+					set = function(info, value)
+							E.db.mMT.importantspells.default = value
+					end,
+				},
+				header_color = {
+					order = 2,
 					type = "group",
 					inline = true,
 					name = L["Castbar Color"],
@@ -176,6 +199,7 @@ local function configTable()
 							order = 1,
 							type = "toggle",
 							name = L["Change Castbar color"],
+							desc = L["Change the Castbar color."],
 							get = function(info)
 								return E.db.mMT.importantspells.spells[SelectedSpellID]
 										and E.db.mMT.importantspells.spells[SelectedSpellID].color.enable
@@ -191,6 +215,7 @@ local function configTable()
 							type = "color",
 							order = 2,
 							name = L["Color"] .. " 1",
+							desc = L["Main color."],
 							hasAlpha = false,
 							get = function(info)
 								local t = E.db.mMT.importantspells.spells[SelectedSpellID]
@@ -209,6 +234,7 @@ local function configTable()
 							type = "color",
 							order = 3,
 							name = L["Color"] .. " 2",
+							desc = L["This is the gradient color and will only be used if the Gradient mod is enabled."],
 							hasAlpha = false,
 							get = function(info)
 								local t = E.db.mMT.importantspells.spells[SelectedSpellID]
@@ -235,6 +261,7 @@ local function configTable()
 							order = 1,
 							type = "toggle",
 							name = L["Change Castbar Texture"],
+							desc = L["Change the Castbar Texture."],
 							get = function(info)
 								return E.db.mMT.importantspells.spells[SelectedSpellID]
 										and E.db.mMT.importantspells.spells[SelectedSpellID].texture.enable
@@ -271,10 +298,11 @@ local function configTable()
 					inline = true,
 					name = L["Castbar Sound"],
 					args = {
-						texture = {
+						sound = {
 							order = 1,
 							type = "toggle",
 							name = L["Play a Sound"],
+							desc = L["Plays a Sound."],
 							get = function(info)
 								return E.db.mMT.importantspells.spells[SelectedSpellID]
 										and E.db.mMT.importantspells.spells[SelectedSpellID].sound.enable
@@ -286,8 +314,24 @@ local function configTable()
 								end
 							end,
 						},
-						select_sound = {
+						target = {
 							order = 2,
+							type = "toggle",
+							name = L["Only if Target"],
+							desc = L["Plays a sound only when the unit is your target."],
+							get = function(info)
+								return E.db.mMT.importantspells.spells[SelectedSpellID]
+										and E.db.mMT.importantspells.spells[SelectedSpellID].sound.target
+									or false
+							end,
+							set = function(info, value)
+								if E.db.mMT.importantspells.spells[SelectedSpellID] then
+									E.db.mMT.importantspells.spells[SelectedSpellID].sound.target = value
+								end
+							end,
+						},
+						select_sound = {
+							order = 3,
 							type = "select",
 							dialogControl = "LSM30_Sound",
 							name = L["Sound"],
@@ -315,6 +359,7 @@ local function configTable()
 							order = 1,
 							type = "toggle",
 							name = L["Icon"],
+							desc = L["Adds an Extra Icon to the Castbar."],
 							get = function(info)
 								return E.db.mMT.importantspells.spells[SelectedSpellID]
 										and E.db.mMT.importantspells.spells[SelectedSpellID].icon.enable
@@ -330,6 +375,7 @@ local function configTable()
 							order = 2,
 							type = "select",
 							name = L["Icon"],
+							desc = L["Select an Icon."],
 							get = function(info)
 								return E.db.mMT.importantspells.spells[SelectedSpellID]
 										and E.db.mMT.importantspells.spells[SelectedSpellID].icon.icon
@@ -345,7 +391,8 @@ local function configTable()
 						color_icon_color = {
 							type = "color",
 							order = 3,
-							name = L["Color"] .. " 2",
+							name = L["Color"],
+							desc = L["Icon color. Note: If you chose a colored icon, set the color to white for the best look."],
 							hasAlpha = false,
 							get = function(info)
 								local t = E.db.mMT.importantspells.spells[SelectedSpellID]
@@ -370,6 +417,7 @@ local function configTable()
 									order = 1,
 									type = "toggle",
 									name = L["Auto Size"],
+									desc = L["Set the icon size according to the height of the castbar."],
 									get = function(info)
 										return E.db.mMT.importantspells.spells[SelectedSpellID]
 											and E.db.mMT.importantspells.spells[SelectedSpellID].icon.size.auto
@@ -382,7 +430,8 @@ local function configTable()
 								},
 								range_x = {
 									order = 2,
-									name = L["Icon size X"],
+									name = L["Icon Size"],
+									desc = L["Icon seize if not Auto size is enabled."],
 									type = "range",
 									min = 16,
 									max = 128,
@@ -410,6 +459,7 @@ local function configTable()
 									order = 1,
 									type = "select",
 									name = L["Extra Icon Anchor"],
+									desc = L["Anchor point for the extra Icon."],
 									get = function(info)
 										return E.db.mMT.importantspells.spells[SelectedSpellID]
 												and E.db.mMT.importantspells.spells[SelectedSpellID].icon.anchor.point
@@ -432,6 +482,7 @@ local function configTable()
 									order = 2,
 									type = "toggle",
 									name = L["Auto Point"],
+									desc = L["Sets the offset according to the anchor."],
 									get = function(info)
 										return E.db.mMT.importantspells.spells[SelectedSpellID]
 											and E.db.mMT.importantspells.spells[SelectedSpellID].icon.anchor.auto
@@ -444,7 +495,8 @@ local function configTable()
 								},
 								range_posX = {
 									order = 3,
-									name = L["Position"] .. " X",
+									name = L["Offset"] .. " X",
+									desc = L["Icon offset if not Auto point is enabled."],
 									type = "range",
 									min = -256,
 									max = 256,
@@ -462,7 +514,8 @@ local function configTable()
 								},
 								range_posY = {
 									order = 4,
-									name = L["Position"] .. " Y",
+									name = L["Offset"] .. " Y",
+									desc = L["Icon offset if not Auto point is enabled."],
 									type = "range",
 									min = -256,
 									max = 256,

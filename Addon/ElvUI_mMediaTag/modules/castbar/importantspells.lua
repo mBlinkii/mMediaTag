@@ -55,14 +55,11 @@ local function SetSpellIcon(castbar, settings)
 	castbar.mSpellIcon:Show()
 end
 
-function mMT:ImportantSpells(castbar, np)
+function mMT:ImportantSpells(castbar)
 	local Spell = ImportantSpellIDs[castbar.spellID] and ImportantSpellIDs[castbar.spellID] or false
 
 	if castbar.mSpellIcon then
 		castbar.mSpellIcon:Hide()
-	end
-
-	if castbar.unit == "target" then
 	end
 
 	if Spell then
@@ -79,10 +76,8 @@ function mMT:ImportantSpells(castbar, np)
 		end
 
 		if Spell.texture.enable and Spell.texture.texture then
-			if not castbar.mBackup and np then
-				castbar.mBackup = castbar:GetStatusBarTexture()
-				--mMT:DebugPrintTable(castbar.mBackup)
-				--mMT:Print("BACKUP", castbar.mBackup)
+			if not castbar.mTextureChanged then
+				castbar.mTextureChanged = true
 			end
 
 			castbar:SetStatusBarTexture(E.LSM:Fetch("statusbar", Spell.texture.texture))
@@ -91,11 +86,9 @@ function mMT:ImportantSpells(castbar, np)
 		if Spell.icon.enable and Spell.icon.icon then
 			SetSpellIcon(castbar, Spell.icon)
 		end
-	else
-		if castbar.mBackup and np then
-			--mMT:Print("SET", castbar.mBackup)
-			castbar:SetStatusBarTexture(castbar.mBackup)
-			castbar.mBackup = nil
-		end
+	elseif castbar.mTextureChanged then
+			castbar:SetStatusBarTexture(E.LSM:Fetch("statusbar", E.db.mMT.importantspells.default))
+			castbar.mTextureChanged = false
 	end
+	mMT:Print(castbar.mTextureChanged)
 end

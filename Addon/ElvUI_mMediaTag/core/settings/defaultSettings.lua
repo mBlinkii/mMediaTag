@@ -20,6 +20,7 @@ P.mMT = {
 		gradient = false,
 		np = true,
 		uf = true,
+		default = nil,
 		spells = {},
 	},
 	custombackgrounds = {
