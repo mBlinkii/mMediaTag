@@ -91,27 +91,28 @@ function mMT:GetKeyColor(key)
 	end
 end
 local function SaveMyKeystone()
-	if weeklyAffixID == mMT.DB.affix then
-		local name = UnitName("player")
-		local realmName = GetRealmName()
-		local keyStoneLevel = C_MythicPlus_GetOwnedKeystoneLevel()
-		if keyStoneLevel then
-			local challengeMapID = C_MythicPlus_GetOwnedKeystoneChallengeMapID()
-			local keyname, _, _, _, _ = C_ChallengeMode_GetMapUIInfo(challengeMapID)
-			mMT.DB.keys[name .. "-" .. realmName] = {
-				name = format("%s%s|r", mMT.ClassColor.hex, name .. "-" .. realmName),
-				key = format(
-					"%s%s|r %s",
-					E.db.mMT.datatextcolors.colormyth.hex,
-					keyname,
-					mMT:GetKeyColor(keyStoneLevel)
-				),
-			}
+	if weeklyAffixID then
+		if weeklyAffixID == mMT.DB.affix then
+			local name = UnitName("player")
+			local realmName = GetRealmName()
+			local keyStoneLevel = C_MythicPlus_GetOwnedKeystoneLevel()
+			if keyStoneLevel then
+				local challengeMapID = C_MythicPlus_GetOwnedKeystoneChallengeMapID()
+				local keyname, _, _, _, _ = C_ChallengeMode_GetMapUIInfo(challengeMapID)
+				mMT.DB.keys[name .. "-" .. realmName] = {
+					name = format("%s%s|r", mMT.ClassColor.hex, name .. "-" .. realmName),
+					key = format(
+						"%s%s|r %s",
+						E.db.mMT.datatextcolors.colormyth.hex,
+						keyname,
+						mMT:GetKeyColor(keyStoneLevel)
+					),
+				}
+			end
+		else
+			mMT.DB.keys = {}
+			mMT.DB.affix = weeklyAffixID
 		end
-	else
-		mMT:Print("RESET SCORE")
-		mMT.DB.keys = {}
-		mMT.DB.affix = weeklyAffixID
 	end
 end
 
@@ -278,20 +279,40 @@ local function GetGroupKeystone()
 			if mapName then
 				local scoreColor = C_ChallengeMode_GetDungeonScoreRarityColor(info.rating)
 				icon = E:TextureString(icon, ":14:14")
-				local key = format("%s %s%s|r %s", icon, E.db.mMT.datatextcolors.colormyth.hex, mapName, mMT:GetKeyColor(info.level))
+				local key = format(
+					"%s %s%s|r %s",
+					icon,
+					E.db.mMT.datatextcolors.colormyth.hex,
+					mapName,
+					mMT:GetKeyColor(info.level)
+				)
 
 				scoreColor = E:RGBToHex(scoreColor.r, scoreColor.g, scoreColor.b)
 
-				name = format("%s %s%s|r |CFFFFFFFF[|r %sM+|r %s%s|r |CFFFFFFFF-|r %s|CFFFFFFFF]|r ", leader, mMT:GetClassColor(unit), UnitName(unit), E.db.mMT.instancedifficulty.mp.color, scoreColor, info.rating, ilevel)
+				name = format(
+					"%s %s%s|r |CFFFFFFFF[|r %sM+|r %s%s|r |CFFFFFFFF-|r %s|CFFFFFFFF]|r ",
+					leader,
+					mMT:GetClassColor(unit),
+					UnitName(unit),
+					E.db.mMT.instancedifficulty.mp.color,
+					scoreColor,
+					info.rating,
+					ilevel
+				)
 
 				DT.tooltip:AddDoubleLine(name, key)
 			end
 		elseif UnitInfo then
-			name = format("%s %s%s|r |CFFFFFFFF[|r%s|CFFFFFFFF]|r ", leader, mMT:GetClassColor(unit), UnitName(unit), ilevel)
+			name = format(
+				"%s %s%s|r |CFFFFFFFF[|r%s|CFFFFFFFF]|r ",
+				leader,
+				mMT:GetClassColor(unit),
+				UnitName(unit),
+				ilevel
+			)
 			DT.tooltip:AddDoubleLine(name, L["No Keystone"])
 		end
 	end
-
 end
 local function OnEnter(self)
 	local inCombat = InCombatLockdown()
