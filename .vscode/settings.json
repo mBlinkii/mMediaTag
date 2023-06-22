@@ -258,7 +258,8 @@
         "SelectQuestLogEntry",
         "GetQuestLogTitle",
         "GetNumQuestLogEntries",
-        "NEW"
+        "NEW",
+        "DEFAULT_AFK_MESSAGE"
     ],
     "Lua.diagnostics.disable": [
         "undefined-field"
