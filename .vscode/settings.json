@@ -259,7 +259,13 @@
         "GetQuestLogTitle",
         "GetNumQuestLogEntries",
         "NEW",
-        "DEFAULT_AFK_MESSAGE"
+        "DEFAULT_AFK_MESSAGE",
+        "EventTrace",
+        "BuffFrame",
+        "TableAttributeDisplay",
+        "ObjectiveTrackerFrame",
+        "ObjectiveTracker_UpdateHeight",
+        "EditModeManagerFrame"
     ],
     "Lua.diagnostics.disable": [
         "undefined-field"

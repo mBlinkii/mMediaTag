@@ -3,7 +3,6 @@ local E = unpack(ElvUI)
 local GetSpecializationInfo = GetSpecializationInfo
 local GetSpellCooldown = GetSpellCooldown
 local interruptSpellID = nil
-local OutOfRange = false
 
 local interruptSpellList = {
 	-- warrior
@@ -59,12 +58,21 @@ local interruptSpellList = {
 	[1468] = 351338,
 }
 
-function mMT:mMediaTag_interruptOnCD()
-	if interruptSpellID then
-		local cdStart, _, enabled, _ = GetSpellCooldown(interruptSpellID)
-		return (enabled == 0 and true or false) or (E.db.mMT.interruptoncd.outofrange and OutOfRange)
-	else
-		return false
+function mMT:mMediaTag_interruptOnCD(castbar)
+	if castbar then
+		mMT:Print("START", interruptSpellID, castbar.unit, castbar.mOutOfRange)
+		if castbar.unit == "vehicle" or castbar.unit == "player" then
+			return false
+		end
+
+		if interruptSpellID then
+			local cdStart, _, enabled, _ = GetSpellCooldown(interruptSpellID)
+			mMT:Print("ON CD", cdStart, enabled)
+			return (enabled == 0 and true or false) or (E.db.mMT.interruptoncd.outofrange and castbar.mOutOfRange)
+		else
+			mMT:Print("OFF CD")
+			return false
+		end
 	end
 end
 
@@ -85,7 +93,7 @@ local function CreateMarker(castbar)
 end
 
 function mMT:InterruptChecker(castbar)
- 	if castbar.InterruptMarker then
+	if castbar.InterruptMarker then
 		castbar.InterruptMarker:Hide()
 	end
 
@@ -117,10 +125,10 @@ function mMT:InterruptChecker(castbar)
 		local colorOutOfRangeB = E.db.mMT.interruptoncd.outofrangecolor.colorb
 
 		if E.db.mMT.interruptoncd.outofrange then
-			OutOfRange = IsSpellInRange(GetSpellInfo(interruptSpellID), castbar.unit) == 0
+			castbar.mOutOfRange = IsSpellInRange(GetSpellInfo(interruptSpellID), castbar.unit) == 0
 		end
 
-		if E.db.mMT.interruptoncd.outofrange and OutOfRange then
+		if E.db.mMT.interruptoncd.outofrange and castbar.mOutOfRange then
 			if E.db.mMT.interruptoncd.gradient then
 				mMT:SetCastbarColor(castbar, colorOutOfRange, colorOutOfRangeB)
 			else

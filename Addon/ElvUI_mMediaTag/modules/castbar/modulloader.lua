@@ -19,7 +19,7 @@ local function NPLoader(castbar)
 	end
 
 	if E.db.mMT.importantspells.enable and E.db.mMT.importantspells.np then
-		mMT:ImportantSpells(castbar, true)
+		mMT:ImportantSpells(castbar)
 	end
 
 	if E.db.mMT.interruptoncd.enable then
