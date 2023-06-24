@@ -31,4 +31,5 @@
 	<Script file="changelog.lua"/>
 	<Script file="unitframeicons.lua"/>
 	<Script file="castbarshield.lua"/>
+	<Script file="maui.lua"/>
 </Ui>

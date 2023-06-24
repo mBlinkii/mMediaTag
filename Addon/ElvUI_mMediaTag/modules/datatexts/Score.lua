@@ -290,10 +290,10 @@ local function GetGroupKeystone()
 				scoreColor = E:RGBToHex(scoreColor.r, scoreColor.g, scoreColor.b)
 
 				name = format(
-					"%s %s%s|r |CFFFFFFFF[|r %sM+|r %s%s|r |CFFFFFFFF-|r %s|CFFFFFFFF]|r ",
-					leader,
+					"%s%s|r%s |CFFFFFFFF[|r %sM+|r %s%s|r |CFFFFFFFF-|r %s|CFFFFFFFF]|r ",
 					mMT:GetClassColor(unit),
 					UnitName(unit),
+					leader,
 					E.db.mMT.instancedifficulty.mp.color,
 					scoreColor,
 					info.rating,
@@ -304,10 +304,10 @@ local function GetGroupKeystone()
 			end
 		elseif UnitInfo then
 			name = format(
-				"%s %s%s|r |CFFFFFFFF[|r%s|CFFFFFFFF]|r ",
-				leader,
+				"%s%s|r%s |CFFFFFFFF[|r%s|CFFFFFFFF]|r ",
 				mMT:GetClassColor(unit),
 				UnitName(unit),
+				leader,
 				ilevel
 			)
 			DT.tooltip:AddDoubleLine(name, L["No Keystone"])
