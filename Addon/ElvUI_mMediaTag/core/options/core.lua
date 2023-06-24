@@ -1,6 +1,6 @@
 local E, L, V, P, G = unpack(ElvUI)
 
-local  tinsert =  tinsert
+local tinsert = tinsert
 
 local function configTable()
 	E.Options.args.mMT = {
@@ -12,7 +12,9 @@ local function configTable()
 				type = "description",
 				name = "",
 				order = 1,
-				image = function() return "Interface\\Addons\\ElvUI_mMediaTag\\media\\logo\\mmt_logo.tga", 512, 64 end,
+				image = function()
+					return "Interface\\Addons\\ElvUI_mMediaTag\\media\\logo\\mmt_logo.tga", 512, 64
+				end,
 			},
 			general = {
 				order = 2,
@@ -43,14 +45,18 @@ local function configTable()
 						order = 4,
 						type = "group",
 						name = L["Keystone to Chat"] .. " (!keys)",
-						hidden  = function() return not E.Retail end,
+						hidden = function()
+							return not E.Retail
+						end,
 						args = {},
 					},
 					instancedifficulty = {
 						order = 5,
 						type = "group",
 						name = L["Instance Difficulty"],
-						hidden  = function() return not E.Retail end,
+						hidden = function()
+							return not E.Retail
+						end,
 						args = {},
 					},
 				},
@@ -78,28 +84,36 @@ local function configTable()
 						order = 3,
 						type = "group",
 						name = L["M+ Score"],
-						hidden  = function() return not E.Retail end,
+						hidden = function()
+							return not E.Retail
+						end,
 						args = {},
 					},
 					teleports = {
 						order = 4,
 						type = "group",
 						name = L["Teleports"],
-						hidden  = function() return not E.Retail end,
+						hidden = function()
+							return not E.Retail
+						end,
 						args = {},
 					},
 					profession = {
 						order = 5,
 						type = "group",
 						name = L["Professions"],
-						hidden  = function() return not E.Retail end,
+						hidden = function()
+							return not E.Retail
+						end,
 						args = {},
 					},
 					dungeon = {
 						order = 6,
 						type = "group",
 						name = L["Dungeon"],
-						hidden  = function() return not E.Retail end,
+						hidden = function()
+							return not E.Retail
+						end,
 						args = {},
 					},
 					gamemenu = {
@@ -112,7 +126,9 @@ local function configTable()
 						order = 7,
 						type = "group",
 						name = L["Currency"],
-						hidden  = function() return not E.Retail end,
+						hidden = function()
+							return not E.Retail
+						end,
 						args = {},
 					},
 				},
@@ -144,14 +160,15 @@ local function configTable()
 				name = L["Dock"],
 				icon = "Interface\\Addons\\ElvUI_mMediaTag\\media\\system\\dock.tga",
 				childGroups = "tab",
-				args = {
-				},
+				args = {},
 			},
 			castbar = {
 				order = 6,
 				type = "group",
 				name = L["Castbar"],
-				hidden  = function() return not E.Retail end,
+				hidden = function()
+					return not E.Retail
+				end,
 				icon = "Interface\\Addons\\ElvUI_mMediaTag\\media\\system\\castbar.tga",
 				childGroups = "tab",
 				args = {
@@ -186,14 +203,18 @@ local function configTable()
 						order = 1,
 						type = "group",
 						name = L["Health markers"],
-						hidden  = function() return not E.Retail end,
+						hidden = function()
+							return not E.Retail
+						end,
 						args = {},
 					},
 					executemarker = {
 						order = 2,
 						type = "group",
 						name = L["Execute markers"],
-						hidden  = function() return not E.Retail end,
+						hidden = function()
+							return not E.Retail
+						end,
 						args = {},
 					},
 					bordercolor = {
@@ -233,14 +254,18 @@ local function configTable()
 						order = 4,
 						type = "group",
 						name = L["Role Icons"],
-						hidden  = function() return not E.Retail end,
+						hidden = function()
+							return not E.Retail
+						end,
 						args = {},
 					},
 					objectivetracker = {
 						order = 5,
 						type = "group",
 						name = L["Objective Tracker"],
-						hidden  = function() return not E.Retail end,
+						hidden = function()
+							return not E.Retail
+						end,
 						childGroups = "tab",
 						args = {},
 					},
@@ -259,14 +284,21 @@ local function configTable()
 					},
 				},
 			},
-			about = {
+			maui = {
 				order = 9,
+				type = "group",
+				name = "|CFF29C0E3M|r|CFF5493FFa|r|CFF854FE3U|r|CFFA632E3I|r",
+				icon = "Interface\\Addons\\ElvUI_mMediaTag\\media\\logo\\maui_icon.tga",
+				childGroups = "tab",
+				args = {},
+			},
+			about = {
+				order = 10,
 				type = "group",
 				name = format("|CFF05E464%s|r", L["About"]),
 				icon = "Interface\\Addons\\ElvUI_mMediaTag\\media\\system\\about.tga",
 				childGroups = "tab",
-				args = {
-				},
+				args = {},
 			},
 			changelog = {
 				order = 11,
@@ -274,8 +306,7 @@ local function configTable()
 				name = format("|CFFFF0094%s|r", L["Changelog"]),
 				icon = "Interface\\Addons\\ElvUI_mMediaTag\\media\\system\\changelog.tga",
 				childGroups = "tab",
-				args = {
-				},
+				args = {},
 			},
 		},
 	}
