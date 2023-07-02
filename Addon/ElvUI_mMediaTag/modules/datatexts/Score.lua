@@ -243,6 +243,11 @@ local function OnLeave(self)
 	DT.tooltip:Hide()
 end
 
+local function colorIlvl(level)
+	if level <= 400 then
+	elseif level <= 300 then
+	end
+end
 local function GetGroupKeystone()
 	local GroupMembers = {}
 	tinsert(GroupMembers, "player")
@@ -267,7 +272,7 @@ local function GetGroupKeystone()
 		-- classID
 		-- level
 		if UnitIsGroupLeader(unit) then
-			leader = LeadIcon .. " "
+			leader = LeadIcon
 		end
 
 		if UnitInfo then
@@ -290,7 +295,7 @@ local function GetGroupKeystone()
 				scoreColor = E:RGBToHex(scoreColor.r, scoreColor.g, scoreColor.b)
 
 				name = format(
-					"%s%s|r%s |CFFFFFFFF[|r %sM+|r %s%s|r |CFFFFFFFF-|r %s|CFFFFFFFF]|r ",
+					"%s%s|r %s |CFFFFFFFF[|r %sM+|r %s%s|r |CFFFFFFFF-|r %s|CFFFFFFFF]|r ",
 					mMT:GetClassColor(unit),
 					UnitName(unit),
 					leader,
@@ -304,7 +309,7 @@ local function GetGroupKeystone()
 			end
 		elseif UnitInfo then
 			name = format(
-				"%s%s|r%s |CFFFFFFFF[|r%s|CFFFFFFFF]|r ",
+				"%s%s|r %s |CFFFFFFFF[|r%s|CFFFFFFFF]|r ",
 				mMT:GetClassColor(unit),
 				UnitName(unit),
 				leader,
@@ -417,6 +422,7 @@ DT:RegisterDatatext("M+ Score", "mMediaTag", {
 	"CHALLENGE_MODE_COMPLETED",
 	"PLAYER_ENTERING_WORLD",
 	"UPDATE_INSTANCE_INFO",
-	"CHALLENGE_MODE_LEADERS_UPDATE",
+	"CHALLENGE_MODE_RESET",
+	"ENCOUNTER_END",
 	"MYTHIC_PLUS_CURRENT_AFFIX_UPDATE",
 }, OnEvent, nil, OnClick, OnEnter, OnLeave, nil, nil, ValueColorUpdate)
