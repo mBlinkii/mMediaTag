@@ -59,17 +59,21 @@ local interruptSpellList = {
 }
 
 function mMT:mMediaTag_interruptOnCD(castbar)
-	if castbar then
+	local enabled = nil
+
+	if interruptSpellID then
+		_, _, enabled, _ = GetSpellCooldown(interruptSpellID)
+	end
+
+	if castbar and ((enabled == 0) or (E.db.mMT.interruptoncd.outofrange and castbar.mOutOfRange or false)) then
 		if castbar.unit == "vehicle" or castbar.unit == "player" then
 			return false
 		end
-
-		if interruptSpellID then
-			local cdStart, _, enabled, _ = GetSpellCooldown(interruptSpellID)
-			return (enabled == 0 and true or false) or (E.db.mMT.interruptoncd.outofrange and castbar.mOutOfRange)
-		else
-			return false
-		end
+		return true
+	elseif (enabled == 0) then
+		return true
+	else
+		return false
 	end
 end
 
@@ -121,7 +125,9 @@ function mMT:InterruptChecker(castbar)
 		local colorOutOfRange = E.db.mMT.interruptoncd.outofrangecolor.colora
 		local colorOutOfRangeB = E.db.mMT.interruptoncd.outofrangecolor.colorb
 
-		castbar.mOutOfRange = (E.db.mMT.interruptoncd.outofrange and IsSpellInRange(GetSpellInfo(interruptSpellID), castbar.unit) == 0) or false
+		castbar.mOutOfRange = (
+			E.db.mMT.interruptoncd.outofrange and IsSpellInRange(GetSpellInfo(interruptSpellID), castbar.unit) == 0
+		) or false
 		castbar.mInterruptOnCD = (enabled == 0 and true or false)
 
 		if castbar.mOutOfRange then
