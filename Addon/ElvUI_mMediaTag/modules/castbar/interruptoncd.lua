@@ -65,7 +65,7 @@ function mMT:mMediaTag_interruptOnCD(castbar)
 		_, _, enabled, _ = GetSpellCooldown(interruptSpellID)
 	end
 
-	if castbar and ((enabled == 0) or (E.db.mMT.interruptoncd.outofrange and castbar.mOutOfRange or false)) then
+	if castbar and ((enabled == 0) or (E.db.mMT.interruptoncd.outofrange and castbar.mOutOfRange)) then
 		if castbar.unit == "vehicle" or castbar.unit == "player" then
 			return false
 		end
