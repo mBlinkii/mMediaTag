@@ -16,6 +16,56 @@ local GetItemCount = GetItemCount
 local GetItemInfo = GetItemInfo
 local C_CurrencyInfo_GetCurrencyInfo = C_CurrencyInfo.GetCurrencyInfo
 
+local totalDurability = 0
+local invDurability = {}
+local totalRepairCost
+
+local slots = {
+	[1] = _G.INVTYPE_HEAD,
+	[3] = _G.INVTYPE_SHOULDER,
+	[5] = _G.INVTYPE_CHEST,
+	[6] = _G.INVTYPE_WAIST,
+	[7] = _G.INVTYPE_LEGS,
+	[8] = _G.INVTYPE_FEET,
+	[9] = _G.INVTYPE_WRIST,
+	[10] = _G.INVTYPE_HAND,
+	[16] = _G.INVTYPE_WEAPONMAINHAND,
+	[17] = _G.INVTYPE_WEAPONOFFHAND,
+	[18] = _G.INVTYPE_RANGED,
+}
+function mMT:GetDurabilityInfo()
+	totalDurability = 100
+	totalRepairCost = 0
+
+	wipe(invDurability)
+
+	for index in pairs(slots) do
+		local currentDura, maxDura = GetInventoryItemDurability(index)
+		if currentDura and maxDura > 0 then
+			local perc, repairCost = (currentDura / maxDura) * 100, 0
+			invDurability[index] = perc
+
+			if perc < totalDurability then
+				totalDurability = perc
+			end
+
+			if E.Retail and E.ScanTooltip.GetTooltipData then
+				E.ScanTooltip:SetInventoryItem("player", index)
+				E.ScanTooltip:Show()
+
+				local data = E.ScanTooltip:GetTooltipData()
+				repairCost = data and data.repairCost
+			else
+				repairCost = select(3, E.ScanTooltip:SetInventoryItem("player", index))
+			end
+
+			totalRepairCost = totalRepairCost + (repairCost or 0)
+
+			return { durability = mMT:round(totalDurability), repair = (( totalRepairCost ~= 0) and GetMoneyString(totalRepairCost)) or nil}
+		end
+	end
+end
+
 -- local Currency = {
 -- 	info = {
 -- 		color = "|CFFFF8000",

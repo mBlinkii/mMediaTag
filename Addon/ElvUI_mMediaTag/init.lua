@@ -110,6 +110,10 @@ function mMT:Initialize()
 	-- Register Events
 	mMT:RegisterEvent("PLAYER_ENTERING_WORLD")
 
+	if E.db.mMT.general.afk then
+		mMT:RegisterEvent("PLAYER_FLAGS_CHANGED")
+	end
+
 	-- Initialize main things
 	mMT:LoadCommands()
 	mMT:mDockUpdateFont()
@@ -323,6 +327,13 @@ end
 
 function mMT:CHAT_MSG_GUILD(event, text)
 	mMT:GetKey("GUILD", text)
+end
+
+function mMT:PLAYER_FLAGS_CHANGED(_,unit)
+	if E.db.general.afk and unit == "player" and UnitIsAFK(unit) then
+		mMT:Print("AFK")
+		mMT:MaUI_AFKScreen()
+	end
 end
 
 E:RegisterModule(mMT:GetName())

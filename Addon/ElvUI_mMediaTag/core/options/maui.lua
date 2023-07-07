@@ -36,6 +36,7 @@ local function configTable()
 					name = "Install",
 					desc = "Run the installation process.",
 					func = function()
+						mMT:DEBUGTEXT()
 						--E:GetModule("PluginInstaller"):Queue(InstallerData); E:ToggleOptions();
 					end,
 				},

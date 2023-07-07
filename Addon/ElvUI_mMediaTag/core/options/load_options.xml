@@ -32,4 +32,5 @@
 	<Script file="unitframeicons.lua"/>
 	<Script file="castbarshield.lua"/>
 	<Script file="maui.lua"/>
+	<Script file="afk.lua"/>
 </Ui>

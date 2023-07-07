@@ -59,6 +59,12 @@ local function configTable()
 						end,
 						args = {},
 					},
+					afk = {
+						order = 5,
+						type = "group",
+						name = L["AFK Screen"],
+						args = {},
+					},
 				},
 			},
 			datatexts = {

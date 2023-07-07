@@ -2,7 +2,7 @@ local E, L, V, P, G = unpack(ElvUI)
 
 P.mMT = {
 	version = 0,
-	general = { greeting = true, keystochat = false },
+	general = { greeting = true, keystochat = false, afk = false },
 	tooltip = { enable = false, iconsize = 32, iconzoom = true },
 	combattime = { ooctexture = "CI2", ictexture = "CI12", hide = 30 },
 	interruptoncd = {
