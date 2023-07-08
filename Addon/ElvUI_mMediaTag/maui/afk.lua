@@ -33,6 +33,27 @@ local PlayerStats = {
 	},
 }
 
+local function formatMem(memory)
+	if memory >= 1024 then
+		return format("%.2f mb", memory / 1024)
+	else
+		return format("%d kb", memory)
+	end
+end
+
+local function CleanMemory()
+	local a, b, c = 0, 0, 0
+	a = collectgarbage("count")
+	collectgarbage("collect")
+	ResetCPUUsage()
+	b = collectgarbage("count")
+
+	if a ~= b then
+		c = a - b
+		return formatMem(c)
+	end
+end
+
 local function ConcatString(tbl)
 	local text = nil
 
@@ -67,6 +88,11 @@ local function UpdateTexts()
 			lines = {},
 			text = nil,
 		},
+		misc = {
+			title = nil,
+			lines = {},
+			text = nil,
+		},
 	}
 
 	PaperDollFrame_UpdateStats()
@@ -77,7 +103,10 @@ local function UpdateTexts()
 
 		PlayerStats.values.title = PET_BATTLE_STATS_LABEL
 		tinsert(PlayerStats.values.lines, LEVEL .. ": |CFFFFFFFF" .. UnitLevel("player") .. "|r")
-		tinsert(PlayerStats.values.lines, ITEM_UPGRADE_STAT_AVERAGE_ITEM_LEVEL .. ": |CFFFFFFFF" .. mMT:round(GetAverageItemLevel() or 0) .. "|r")
+		tinsert(
+			PlayerStats.values.lines,
+			ITEM_UPGRADE_STAT_AVERAGE_ITEM_LEVEL .. ": |CFFFFFFFF" .. mMT:round(GetAverageItemLevel() or 0) .. "|r"
+		)
 		tinsert(PlayerStats.values.lines, DURABILITY .. ": |CFFFFFFFF" .. DurabilityInfos.durability .. "%" .. "|r")
 		if DurabilityInfos.repair then
 			tinsert(PlayerStats.values.lines, REPAIR_COST .. " |CFFFFFFFF" .. DurabilityInfos.repair .. "|r")
@@ -99,6 +128,15 @@ local function UpdateTexts()
 			elseif Percent then
 				tinsert(PlayerStats.enhancements.lines, Label .. " |CFFFFFFFF" .. Value .. "|r")
 			end
+		end
+	end
+
+	if E.db.mMT.general.garbage then
+		local savedMemory = CleanMemory()
+		if savedMemory then
+			PlayerStats.misc.title = L["Misc"]
+			tinsert(PlayerStats.misc.lines, L["Cleaned Memory"] .. ": |CFFFFFFFF" .. savedMemory .. "|r")
+			PlayerStats.misc.text = ConcatString(PlayerStats.misc.lines)
 		end
 	end
 
@@ -240,6 +278,20 @@ function mMT:MaUI_AFKScreen()
 				"BOTTOMLEFT",
 				{ r = 0.20, b = 0.59, g = 0.85 }
 			)
+			MaUI_AFK_InfoScreen.TitleE = CreateLabel(
+				MaUI_AFK_InfoScreen,
+				true,
+				MaUI_AFK_InfoScreen.BlockD,
+				"BOTTOMLEFT",
+				{ r = 1, b = 1, g = 1 }
+			)
+			MaUI_AFK_InfoScreen.BlockE = CreateLabel(
+				MaUI_AFK_InfoScreen,
+				false,
+				MaUI_AFK_InfoScreen.TitleE,
+				"BOTTOMLEFT",
+				{ r = 0.20, b = 0.59, g = 0.85 }
+			)
 
 			_G.ElvUIAFKFrame.MaUI_AFK_InfoScreen = MaUI_AFK_InfoScreen
 		end
@@ -254,6 +306,8 @@ function mMT:MaUI_AFKScreen()
 		_G.ElvUIAFKFrame.MaUI_AFK_InfoScreen.BlockC:SetText(PlayerStats.enhancements.text)
 		_G.ElvUIAFKFrame.MaUI_AFK_InfoScreen.TitleD:SetText(PlayerStats.progress.title)
 		_G.ElvUIAFKFrame.MaUI_AFK_InfoScreen.BlockD:SetText(PlayerStats.progress.text)
+		_G.ElvUIAFKFrame.MaUI_AFK_InfoScreen.TitleE:SetText(PlayerStats.misc.title)
+		_G.ElvUIAFKFrame.MaUI_AFK_InfoScreen.BlockE:SetText(PlayerStats.misc.text)
 	end
 end
 

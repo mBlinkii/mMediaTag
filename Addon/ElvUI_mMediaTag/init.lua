@@ -9,6 +9,7 @@ mMT = E:NewModule(addonName, "AceHook-3.0", "AceEvent-3.0", "AceTimer-3.0", "Ace
 --Cache Lua / WoW API
 local _G = _G
 local format = format
+local collectgarbage = collectgarbage
 local GetAddOnMetadata = _G.GetAddOnMetadata
 local C_MythicPlus_RequestMapInfo = nil
 local C_MythicPlus_RequestCurrentAffixes = nil
@@ -164,9 +165,11 @@ function mMT:Initialize()
 	end
 
 	if
-		(E.db.mMT.custombackgrounds.health.enable
-		or E.db.mMT.custombackgrounds.power.enable
-		or E.db.mMT.custombackgrounds.castbar.enable) and not mMT.ElvUI_EltreumUI.dark
+		(
+			E.db.mMT.custombackgrounds.health.enable
+			or E.db.mMT.custombackgrounds.power.enable
+			or E.db.mMT.custombackgrounds.castbar.enable
+		) and not mMT.ElvUI_EltreumUI.dark
 	then
 		mMT:CustomBackdrop()
 	end
@@ -180,7 +183,7 @@ function mMT:Initialize()
 			mMT:CastbarModuleLoader()
 		end
 
-		if (E.db.mMT.importantspells.enable and (E.db.mMT.importantspells.np or E.db.mMT.importantspells.uf)) then
+		if E.db.mMT.importantspells.enable and (E.db.mMT.importantspells.np or E.db.mMT.importantspells.uf) then
 			mMT:UpdateImportantSpells()
 		end
 
@@ -278,7 +281,9 @@ function mMT:PLAYER_ENTERING_WORLD()
 	mMT:UpdateTagSettings()
 	mMT:TagDeathCount()
 
-	class = (E.db.mMT.customclasscolors.enable and not mMT:Check_ElvUI_EltreumUI()) and E.db.mMT.customclasscolors.colors[E.myclass] or E:ClassColor(E.myclass)
+	class = (E.db.mMT.customclasscolors.enable and not mMT:Check_ElvUI_EltreumUI())
+			and E.db.mMT.customclasscolors.colors[E.myclass]
+		or E:ClassColor(E.myclass)
 	hex = E:RGBToHex(class.r, class.g, class.b)
 
 	mMT.ClassColor = {
@@ -329,9 +334,8 @@ function mMT:CHAT_MSG_GUILD(event, text)
 	mMT:GetKey("GUILD", text)
 end
 
-function mMT:PLAYER_FLAGS_CHANGED(_,unit)
+function mMT:PLAYER_FLAGS_CHANGED(_, unit)
 	if E.db.general.afk and unit == "player" and UnitIsAFK(unit) then
-		mMT:Print("AFK")
 		mMT:MaUI_AFKScreen()
 	end
 end

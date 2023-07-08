@@ -21,6 +21,17 @@ local function configTable()
                         E:StaticPopup_Show("CONFIG_RL")
 					end,
 				},
+                toggle_garbage = {
+					order = 2,
+					type = "toggle",
+					name = L["Collect Garbage"],
+					get = function(info)
+						return E.db.mMT.general.garbage
+					end,
+					set = function(info, value)
+						E.db.mMT.general.garbage = value
+					end,
+				},
 			},
 		},
 	}
