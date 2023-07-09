@@ -467,6 +467,39 @@ function mMT:DockInitialization(self, event, textA, textB, colorA, colorB)
 					self.mIcon.TextB:SetText("")
 				end
 			end
+		else
+			mDockUpdateIcon(self)
+
+			if self.mSettings.Notifications and self.mNotifications then
+				mDockUpdateNotifications(self)
+			elseif self.mNotifications and not self.mSettings.Notifications then
+				self.mNotifications:Hide()
+				self.mNotifications = nil
+			end
+
+			if
+				(textA or textB)
+				and self.mSettings.text
+				and not self.mSettings.text.onlytext
+				and (not self.mIcon.TextA or not self.mIcon.TextB)
+			then
+				mDockCreateText(self, textA, textB, colorA, colorB)
+			elseif
+				(textA or textB)
+				and self.mSettings.text
+				and not self.mSettings.text.onlytext
+				and (self.mIcon.TextA or self.mIcon.TextB)
+			then
+				mDockUpdateText(self, textA, textB, colorA, colorB)
+			else
+				if self.mIcon.TextA then
+					self.mIcon.TextA:SetText("")
+				end
+
+				if self.mIcon.TextB then
+					self.mIcon.TextB:SetText("")
+				end
+			end
 		end
 	else
 		mDockUpdateIcon(self)
