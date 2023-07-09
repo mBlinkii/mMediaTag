@@ -2,7 +2,17 @@ local E, L, V, P, G = unpack(ElvUI)
 
 P.mMT = {
 	version = 0,
-	general = { greeting = true, keystochat = false, afk = false, garbage = true },
+	general = { greeting = true, keystochat = false },
+	afk = {
+		enable = false,
+		garbage = true,
+		title = { r = 1, g = 1, b = 1 },
+		values = {enable = true, r = 1, g = 1, b = 1 },
+		attributes = {enable = true, r = 1, g = 1, b = 1 },
+		enhancements = {enable = true, r = 1, g = 1, b = 1 },
+		progress = {enable = true, r = 1, g = 1, b = 1 },
+		misc = {enable = true, r = 1, g = 1, b = 1 },
+	},
 	tooltip = { enable = false, iconsize = 32, iconzoom = true },
 	combattime = { ooctexture = "CI2", ictexture = "CI12", hide = 30 },
 	interruptoncd = {

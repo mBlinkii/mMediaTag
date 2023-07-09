@@ -111,7 +111,7 @@ function mMT:Initialize()
 	-- Register Events
 	mMT:RegisterEvent("PLAYER_ENTERING_WORLD")
 
-	if E.db.mMT.general.afk then
+	if E.db.mMT.afk.enable then
 		mMT:RegisterEvent("PLAYER_FLAGS_CHANGED")
 	end
 

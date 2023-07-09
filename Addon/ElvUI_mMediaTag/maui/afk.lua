@@ -131,7 +131,7 @@ local function UpdateTexts()
 		end
 	end
 
-	if E.db.mMT.general.garbage then
+	if E.db.mMT.afk.garbage then
 		local savedMemory = CleanMemory()
 		if savedMemory then
 			PlayerStats.misc.title = L["Misc"]
@@ -151,7 +151,7 @@ local function CreateLabel(parent, isTitle, anchor, anchorPoint, color, offset)
 	label:FontTemplate(nil, isTitle and 20 or 18)
 	label:SetText("")
 	label:Point("TOPLEFT", anchor or parent, anchorPoint or "TOPLEFT", offset or 0, isTitle and -24 or -6)
-	label:SetTextColor(color.r, color.b, color.g)
+	label:SetTextColor(color.r, color.g, color.b)
 	label:SetJustifyH("LEFT")
 	label:SetJustifyV("TOP")
 
@@ -218,6 +218,8 @@ function mMT:MaUI_AFKScreen()
 			_G.ElvUIAFKFrame.MaUI_Logo = MaUI_Logo
 		end
 
+		local db = E.db.mMT.afk
+
 		if not _G.ElvUIAFKFrame.MaUI_AFK_InfoScreen then
 			local MaUI_AFK_InfoScreen = CreateFrame("Frame", nil, _G.ElvUIAFKFrame)
 			MaUI_AFK_InfoScreen:SetFrameLevel(0)
@@ -227,87 +229,121 @@ function mMT:MaUI_AFKScreen()
 			MaUI_AFK_InfoScreen:Height(E.screenHeight / 1.75)
 			MaUI_AFK_InfoScreen:SetBackdropColor(mMT.ClassColor.r, mMT.ClassColor.g, mMT.ClassColor.b, 1)
 
-			MaUI_AFK_InfoScreen.TitleA =
-				CreateLabel(MaUI_AFK_InfoScreen, true, MaUI_AFK_InfoScreen, "TOPLEFT", { r = 1, b = 1, g = 1 }, 10)
-			MaUI_AFK_InfoScreen.BlockA = CreateLabel(
-				MaUI_AFK_InfoScreen,
-				false,
-				MaUI_AFK_InfoScreen.TitleA,
-				"BOTTOMLEFT",
-				{ r = 0.18, b = 0.8, g = 0.44 }
-			)
-			MaUI_AFK_InfoScreen.TitleB = CreateLabel(
-				MaUI_AFK_InfoScreen,
-				true,
-				MaUI_AFK_InfoScreen.BlockA,
-				"BOTTOMLEFT",
-				{ r = 1, b = 1, g = 1 }
-			)
-			MaUI_AFK_InfoScreen.BlockB = CreateLabel(
-				MaUI_AFK_InfoScreen,
-				false,
-				MaUI_AFK_InfoScreen.TitleB,
-				"BOTTOMLEFT",
-				{ r = 0.64, b = 0.41, g = 0.74 }
-			)
-			MaUI_AFK_InfoScreen.TitleC = CreateLabel(
-				MaUI_AFK_InfoScreen,
-				true,
-				MaUI_AFK_InfoScreen.BlockB,
-				"BOTTOMLEFT",
-				{ r = 1, b = 1, g = 1 }
-			)
-			MaUI_AFK_InfoScreen.BlockC = CreateLabel(
-				MaUI_AFK_InfoScreen,
-				false,
-				MaUI_AFK_InfoScreen.TitleC,
-				"BOTTOMLEFT",
-				{ r = 0.96, b = 0.69, g = 0.25 }
-			)
-			MaUI_AFK_InfoScreen.TitleD = CreateLabel(
-				MaUI_AFK_InfoScreen,
-				true,
-				MaUI_AFK_InfoScreen.BlockC,
-				"BOTTOMLEFT",
-				{ r = 1, b = 1, g = 1 }
-			)
-			MaUI_AFK_InfoScreen.BlockD = CreateLabel(
-				MaUI_AFK_InfoScreen,
-				false,
-				MaUI_AFK_InfoScreen.TitleD,
-				"BOTTOMLEFT",
-				{ r = 0.20, b = 0.59, g = 0.85 }
-			)
-			MaUI_AFK_InfoScreen.TitleE = CreateLabel(
-				MaUI_AFK_InfoScreen,
-				true,
-				MaUI_AFK_InfoScreen.BlockD,
-				"BOTTOMLEFT",
-				{ r = 1, b = 1, g = 1 }
-			)
-			MaUI_AFK_InfoScreen.BlockE = CreateLabel(
-				MaUI_AFK_InfoScreen,
-				false,
-				MaUI_AFK_InfoScreen.TitleE,
-				"BOTTOMLEFT",
-				{ r = 0.20, b = 0.59, g = 0.85 }
-			)
+			if db.values.enable then
+				MaUI_AFK_InfoScreen.TitleA = CreateLabel(
+					MaUI_AFK_InfoScreen,
+					true,
+					MaUI_AFK_InfoScreen,
+					"TOPLEFT",
+					{ r = db.title.r, g = db.title.g, b = db.title.b, },
+					10
+				)
+				MaUI_AFK_InfoScreen.BlockA = CreateLabel(
+					MaUI_AFK_InfoScreen,
+					false,
+					MaUI_AFK_InfoScreen.TitleA,
+					"BOTTOMLEFT",
+					{ r = db.values.r, g = db.values.g, b = db.values.b }
+				)
+			end
+
+			if db.attributes.enable then
+				MaUI_AFK_InfoScreen.TitleB = CreateLabel(
+					MaUI_AFK_InfoScreen,
+					true,
+					MaUI_AFK_InfoScreen.BlockA,
+					"BOTTOMLEFT",
+					{ r = db.title.r, g = db.title.g, b = db.title.b,}
+				)
+				MaUI_AFK_InfoScreen.BlockB = CreateLabel(
+					MaUI_AFK_InfoScreen,
+					false,
+					MaUI_AFK_InfoScreen.TitleB,
+					"BOTTOMLEFT",
+					{ r = db.attributes.r, g = db.attributes.g, b = db.attributes.b }
+				)
+			end
+
+			if db.enhancements.enable then
+				MaUI_AFK_InfoScreen.TitleC = CreateLabel(
+					MaUI_AFK_InfoScreen,
+					true,
+					MaUI_AFK_InfoScreen.BlockB,
+					"BOTTOMLEFT",
+					{ r = db.title.r, g = db.title.g, b = db.title.b,}
+				)
+				MaUI_AFK_InfoScreen.BlockC = CreateLabel(
+					MaUI_AFK_InfoScreen,
+					false,
+					MaUI_AFK_InfoScreen.TitleC,
+					"BOTTOMLEFT",
+					{ r = db.enhancements.r, g = db.enhancements.g, b = db.enhancements.b }
+				)
+			end
+
+			if db.progress.enable then
+				MaUI_AFK_InfoScreen.TitleD = CreateLabel(
+					MaUI_AFK_InfoScreen,
+					true,
+					MaUI_AFK_InfoScreen.BlockC,
+					"BOTTOMLEFT",
+					{ r = db.title.r, g = db.title.g, b = db.title.b,}
+				)
+				MaUI_AFK_InfoScreen.BlockD = CreateLabel(
+					MaUI_AFK_InfoScreen,
+					false,
+					MaUI_AFK_InfoScreen.TitleD,
+					"BOTTOMLEFT",
+					{ r = db.progress.r, g = db.progress.g, b = db.progress.b }
+				)
+			end
+
+			if db.misc.enable then
+				MaUI_AFK_InfoScreen.TitleE = CreateLabel(
+					MaUI_AFK_InfoScreen,
+					true,
+					MaUI_AFK_InfoScreen.BlockD,
+					"BOTTOMLEFT",
+					{ r = db.title.r, g = db.title.g, b = db.title.b,}
+				)
+				MaUI_AFK_InfoScreen.BlockE = CreateLabel(
+					MaUI_AFK_InfoScreen,
+					false,
+					MaUI_AFK_InfoScreen.TitleE,
+					"BOTTOMLEFT",
+					{ r = db.misc.r, g = db.misc.g, b = db.misc.b }
+				)
+			end
 
 			_G.ElvUIAFKFrame.MaUI_AFK_InfoScreen = MaUI_AFK_InfoScreen
 		end
 
 		UpdateTexts()
 
-		_G.ElvUIAFKFrame.MaUI_AFK_InfoScreen.TitleA:SetText(PlayerStats.values.title)
-		_G.ElvUIAFKFrame.MaUI_AFK_InfoScreen.BlockA:SetText(PlayerStats.values.text)
-		_G.ElvUIAFKFrame.MaUI_AFK_InfoScreen.TitleB:SetText(PlayerStats.attributes.title)
-		_G.ElvUIAFKFrame.MaUI_AFK_InfoScreen.BlockB:SetText(PlayerStats.attributes.text)
-		_G.ElvUIAFKFrame.MaUI_AFK_InfoScreen.TitleC:SetText(PlayerStats.enhancements.title)
-		_G.ElvUIAFKFrame.MaUI_AFK_InfoScreen.BlockC:SetText(PlayerStats.enhancements.text)
-		_G.ElvUIAFKFrame.MaUI_AFK_InfoScreen.TitleD:SetText(PlayerStats.progress.title)
-		_G.ElvUIAFKFrame.MaUI_AFK_InfoScreen.BlockD:SetText(PlayerStats.progress.text)
-		_G.ElvUIAFKFrame.MaUI_AFK_InfoScreen.TitleE:SetText(PlayerStats.misc.title)
-		_G.ElvUIAFKFrame.MaUI_AFK_InfoScreen.BlockE:SetText(PlayerStats.misc.text)
+		if db.values.enable then
+			_G.ElvUIAFKFrame.MaUI_AFK_InfoScreen.TitleA:SetText(PlayerStats.values.title)
+			_G.ElvUIAFKFrame.MaUI_AFK_InfoScreen.BlockA:SetText(PlayerStats.values.text)
+		end
+
+		if db.attributes.enable then
+			_G.ElvUIAFKFrame.MaUI_AFK_InfoScreen.TitleB:SetText(PlayerStats.attributes.title)
+			_G.ElvUIAFKFrame.MaUI_AFK_InfoScreen.BlockB:SetText(PlayerStats.attributes.text)
+		end
+
+		if db.enhancements.enable then
+			_G.ElvUIAFKFrame.MaUI_AFK_InfoScreen.TitleC:SetText(PlayerStats.enhancements.title)
+			_G.ElvUIAFKFrame.MaUI_AFK_InfoScreen.BlockC:SetText(PlayerStats.enhancements.text)
+		end
+
+		if db.progress.enable then
+			_G.ElvUIAFKFrame.MaUI_AFK_InfoScreen.TitleD:SetText(PlayerStats.progress.title)
+			_G.ElvUIAFKFrame.MaUI_AFK_InfoScreen.BlockD:SetText(PlayerStats.progress.text)
+		end
+
+		if db.misc.enable then
+			_G.ElvUIAFKFrame.MaUI_AFK_InfoScreen.TitleE:SetText(PlayerStats.misc.title)
+			_G.ElvUIAFKFrame.MaUI_AFK_InfoScreen.BlockE:SetText(PlayerStats.misc.text)
+		end
 	end
 end
 
