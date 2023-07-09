@@ -532,7 +532,7 @@ local function PrintStatus(...)
 end
 
 local function PrintStatusOne(setting, toggleg)
-	PrintStatus("Texture Pack is |CFF1D9EF9" .. setting .. "|r:", toggleg)
+	PrintStatus("Texture Pack is |CFF1D9EF9" .. setting .. "|r:", toggleg == true and "|CFF2ECC71Enabled|r" or "|CFFE74C3CDisabled|r")
 end
 local function SetDBAll()
 	if mMT_MediaPack.db.textures.all then
