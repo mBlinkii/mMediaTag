@@ -34,6 +34,7 @@ local slots = {
 	[18] = _G.INVTYPE_RANGED,
 }
 function mMT:GetDurabilityInfo()
+
 	totalDurability = 100
 	totalRepairCost = 0
 
@@ -42,7 +43,7 @@ function mMT:GetDurabilityInfo()
 	for index in pairs(slots) do
 		local currentDura, maxDura = GetInventoryItemDurability(index)
 		if currentDura and maxDura > 0 then
-			local perc, repairCost = (currentDura / maxDura) * 100, 0
+			local perc, repairCost = (currentDura/maxDura)*100, 0
 			invDurability[index] = perc
 
 			if perc < totalDurability then
@@ -50,20 +51,28 @@ function mMT:GetDurabilityInfo()
 			end
 
 			if E.Retail and E.ScanTooltip.GetTooltipData then
-				E.ScanTooltip:SetInventoryItem("player", index)
+				E.ScanTooltip:SetInventoryItem('player', index)
 				E.ScanTooltip:Show()
 
 				local data = E.ScanTooltip:GetTooltipData()
 				repairCost = data and data.repairCost
 			else
-				repairCost = select(3, E.ScanTooltip:SetInventoryItem("player", index))
+				repairCost = select(3, E.ScanTooltip:SetInventoryItem('player', index))
 			end
 
 			totalRepairCost = totalRepairCost + (repairCost or 0)
-
-			return { durability = mMT:round(totalDurability), repair = (( totalRepairCost ~= 0) and GetMoneyString(totalRepairCost)) or nil}
 		end
 	end
+
+	local r, g, b = E:ColorGradient(totalDurability * .01, 1, .1, .1, 1, 1, .1, .1, 1, .1)
+	local hex = E:RGBToHex(r, g, b)
+
+	totalDurability = 100
+	totalRepairCost = 0
+
+	wipe(invDurability)
+
+	return { durability = mMT:round(totalDurability), repair = (( totalRepairCost ~= 0) and GetMoneyString(totalRepairCost)) or nil}
 end
 
 -- local Currency = {
