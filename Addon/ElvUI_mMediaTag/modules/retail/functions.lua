@@ -67,12 +67,7 @@ function mMT:GetDurabilityInfo()
 	local r, g, b = E:ColorGradient(totalDurability * .01, 1, .1, .1, 1, 1, .1, .1, 1, .1)
 	local hex = E:RGBToHex(r, g, b)
 
-	totalDurability = 100
-	totalRepairCost = 0
-
-	wipe(invDurability)
-
-	return { durability = mMT:round(totalDurability), repair = (( totalRepairCost ~= 0) and GetMoneyString(totalRepairCost)) or nil}
+	return { durability = format("%s%d%%|r", hex, totalDurability), repair = (( totalRepairCost ~= 0) and GetMoneyString(totalRepairCost)) or nil}
 end
 
 -- local Currency = {

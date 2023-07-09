@@ -107,7 +107,7 @@ local function UpdateTexts()
 			PlayerStats.values.lines,
 			ITEM_UPGRADE_STAT_AVERAGE_ITEM_LEVEL .. ": |CFFFFFFFF" .. mMT:round(GetAverageItemLevel() or 0) .. "|r"
 		)
-		tinsert(PlayerStats.values.lines, DURABILITY .. ": |CFFFFFFFF" .. DurabilityInfos.durability .. "%" .. "|r")
+		tinsert(PlayerStats.values.lines, DURABILITY .. ": " .. DurabilityInfos.durability)
 		if DurabilityInfos.repair then
 			tinsert(PlayerStats.values.lines, REPAIR_COST .. " |CFFFFFFFF" .. DurabilityInfos.repair .. "|r")
 		end
