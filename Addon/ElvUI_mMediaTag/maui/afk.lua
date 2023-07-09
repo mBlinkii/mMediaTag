@@ -323,26 +323,36 @@ function mMT:MaUI_AFKScreen()
 		if db.values.enable then
 			_G.ElvUIAFKFrame.MaUI_AFK_InfoScreen.TitleA:SetText(PlayerStats.values.title)
 			_G.ElvUIAFKFrame.MaUI_AFK_InfoScreen.BlockA:SetText(PlayerStats.values.text)
+			_G.ElvUIAFKFrame.MaUI_AFK_InfoScreen.TitleA:SetTextColor(db.title.r, db.title.g, db.title.b)
+			_G.ElvUIAFKFrame.MaUI_AFK_InfoScreen.BlockA:SetTextColor(db.values.r, db.values.g, db.values.b)
 		end
 
 		if db.attributes.enable then
 			_G.ElvUIAFKFrame.MaUI_AFK_InfoScreen.TitleB:SetText(PlayerStats.attributes.title)
 			_G.ElvUIAFKFrame.MaUI_AFK_InfoScreen.BlockB:SetText(PlayerStats.attributes.text)
+			_G.ElvUIAFKFrame.MaUI_AFK_InfoScreen.TitleB:SetTextColor(db.title.r, db.title.g, db.title.b)
+			_G.ElvUIAFKFrame.MaUI_AFK_InfoScreen.BlockB:SetTextColor(db.attributes.r, db.attributes.g, db.attributes.b)
 		end
 
 		if db.enhancements.enable then
 			_G.ElvUIAFKFrame.MaUI_AFK_InfoScreen.TitleC:SetText(PlayerStats.enhancements.title)
 			_G.ElvUIAFKFrame.MaUI_AFK_InfoScreen.BlockC:SetText(PlayerStats.enhancements.text)
+			_G.ElvUIAFKFrame.MaUI_AFK_InfoScreen.TitleC:SetTextColor(db.title.r, db.title.g, db.title.b)
+			_G.ElvUIAFKFrame.MaUI_AFK_InfoScreen.BlockC:SetTextColor(db.enhancements.r, db.enhancements.g, db.enhancements.b)
 		end
 
 		if db.progress.enable then
 			_G.ElvUIAFKFrame.MaUI_AFK_InfoScreen.TitleD:SetText(PlayerStats.progress.title)
 			_G.ElvUIAFKFrame.MaUI_AFK_InfoScreen.BlockD:SetText(PlayerStats.progress.text)
+			_G.ElvUIAFKFrame.MaUI_AFK_InfoScreen.TitleD:SetTextColor(db.title.r, db.title.g, db.title.b)
+			_G.ElvUIAFKFrame.MaUI_AFK_InfoScreen.BlockD:SetTextColor(db.progress.r, db.progress.g, db.progress.b)
 		end
 
 		if db.misc.enable then
 			_G.ElvUIAFKFrame.MaUI_AFK_InfoScreen.TitleE:SetText(PlayerStats.misc.title)
 			_G.ElvUIAFKFrame.MaUI_AFK_InfoScreen.BlockE:SetText(PlayerStats.misc.text)
+			_G.ElvUIAFKFrame.MaUI_AFK_InfoScreen.TitleE:SetTextColor(db.title.r, db.title.g, db.title.b)
+			_G.ElvUIAFKFrame.MaUI_AFK_InfoScreen.BlockE:SetTextColor(db.misc.r, db.misc.g, db.misc.b)
 		end
 	end
 end
