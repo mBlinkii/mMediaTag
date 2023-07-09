@@ -158,16 +158,6 @@ local function CreateLabel(parent, isTitle, anchor, anchorPoint, color, offset)
 	return label
 end
 
-function mMT:DEBUGTEXT()
-	UpdateTexts()
-	mMT:Print(PlayerStats.values.title)
-	mMT:DebugPrintTable(PlayerStats.values.lines)
-	mMT:Print(PlayerStats.attributes.title)
-	mMT:DebugPrintTable(PlayerStats.attributes.lines)
-	mMT:Print(PlayerStats.enhancements.title)
-	mMT:DebugPrintTable(PlayerStats.enhancements.lines)
-end
-
 function mMT:MaUI_AFKScreen()
 	if E.db.general.afk then
 		-- ElvUI AFK Screen Elements
