@@ -55,7 +55,11 @@ local function OnClick(self)
 		if not IsAddOnLoaded("Blizzard_EncounterJournal") then
 			UIParentLoadAddOn("Blizzard_EncounterJournal")
 		end
-		ToggleFrame(_G.EncounterJournal)
+		if not EncounterJournal:IsShown() then
+			EncounterJournal_OpenJournal()
+		else
+			ToggleFrame(_G.EncounterJournal)
+		end
 	end
 end
 

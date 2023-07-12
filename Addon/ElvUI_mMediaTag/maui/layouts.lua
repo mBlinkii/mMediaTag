@@ -671,7 +671,6 @@ function mMT:Layout_Movers()
 	E.db["movers"]["iFilger_CooldownsMover"] = "BOTTOM,ElvUIParent,BOTTOM,-135,400"
 	E.db["movers"]["iFilger_ItemCooldownsMover"] = "BOTTOM,ElvUIParent,BOTTOM,0,400"
 	E.db["movers"]["iFilger_TargetDebuffsMover"] = "BOTTOM,ElvUIParent,BOTTOM,135,400"
-
 end
 
 function mMT:Layout_Nameplate()
@@ -1283,25 +1282,31 @@ function mMT:Layout_Unitframe_Arena()
 	E.db["unitframe"]["units"]["arena"]["castbar"]["width"] = 130
 	E.db["unitframe"]["units"]["arena"]["castbar"]["xOffsetText"] = 2
 	E.db["unitframe"]["units"]["arena"]["castbar"]["xOffsetTime"] = -2
-	E.db["unitframe"]["units"]["arena"]["customTexts"]["mHealth"]["attachTextTo"] = "Health"
-	E.db["unitframe"]["units"]["arena"]["customTexts"]["mHealth"]["enable"] = true
-	E.db["unitframe"]["units"]["arena"]["customTexts"]["mHealth"]["font"] = MaUI_Font
-	E.db["unitframe"]["units"]["arena"]["customTexts"]["mHealth"]["fontOutline"] = "NONE"
-	E.db["unitframe"]["units"]["arena"]["customTexts"]["mHealth"]["justifyH"] = "LEFT"
-	E.db["unitframe"]["units"]["arena"]["customTexts"]["mHealth"]["size"] = 18
-	E.db["unitframe"]["units"]["arena"]["customTexts"]["mHealth"]["text_format"] =
-		"[mHealth:nodeath:short:current-percent][mStatus:icon]"
-	E.db["unitframe"]["units"]["arena"]["customTexts"]["mHealth"]["xOffset"] = 2
-	E.db["unitframe"]["units"]["arena"]["customTexts"]["mHealth"]["yOffset"] = -1
-	E.db["unitframe"]["units"]["arena"]["customTexts"]["mPower"]["attachTextTo"] = "Power"
-	E.db["unitframe"]["units"]["arena"]["customTexts"]["mPower"]["enable"] = true
-	E.db["unitframe"]["units"]["arena"]["customTexts"]["mPower"]["font"] = MaUI_Font
-	E.db["unitframe"]["units"]["arena"]["customTexts"]["mPower"]["fontOutline"] = "NONE"
-	E.db["unitframe"]["units"]["arena"]["customTexts"]["mPower"]["justifyH"] = "RIGHT"
-	E.db["unitframe"]["units"]["arena"]["customTexts"]["mPower"]["size"] = 12
-	E.db["unitframe"]["units"]["arena"]["customTexts"]["mPower"]["text_format"] = "[powercolor][mPowerPercent]"
-	E.db["unitframe"]["units"]["arena"]["customTexts"]["mPower"]["xOffset"] = -2
-	E.db["unitframe"]["units"]["arena"]["customTexts"]["mPower"]["yOffset"] = 0
+
+	E.db["unitframe"]["units"]["arena"]["customTexts"] = E.db["unitframe"]["units"]["arena"]["customTexts"] or {}
+
+	E.db["unitframe"]["units"]["arena"]["customTexts"]["mHealth"] = {
+		["attachTextTo"] = "Health",
+		["enable"] = true,
+		["font"] = MaUI_Font,
+		["fontOutline"] = "NONE",
+		["justifyH"] = "LEFT",
+		["size"] = 18,
+		["text_format"] = "[mHealth:nodeath:short:current-percent][mStatus:icon]",
+		["xOffset"] = 2,
+		["yOffset"] = -1,
+	}
+	E.db["unitframe"]["units"]["arena"]["customTexts"]["mPower"] = {
+		["attachTextTo"] = "Power",
+		["enable"] = true,
+		["font"] = MaUI_Font,
+		["fontOutline"] = "NONE",
+		["justifyH"] = "RIGHT",
+		["size"] = 12,
+		["text_format"] = "[powercolor][mPowerPercent]",
+		["xOffset"] = -2,
+		["yOffset"] = 0,
+	}
 	E.db["unitframe"]["units"]["arena"]["debuffs"]["desaturate"] = true
 	E.db["unitframe"]["units"]["arena"]["debuffs"]["enable"] = false
 	E.db["unitframe"]["units"]["arena"]["debuffs"]["growthX"] = "LEFT"
@@ -1347,25 +1352,30 @@ function mMT:Layout_Unitframe_Boss()
 	E.db["unitframe"]["units"]["boss"]["castbar"]["width"] = 130
 	E.db["unitframe"]["units"]["boss"]["castbar"]["xOffsetText"] = 2
 	E.db["unitframe"]["units"]["boss"]["castbar"]["xOffsetTime"] = -2
-	E.db["unitframe"]["units"]["boss"]["customTexts"]["mHealth"]["attachTextTo"] = "Health"
-	E.db["unitframe"]["units"]["boss"]["customTexts"]["mHealth"]["enable"] = true
-	E.db["unitframe"]["units"]["boss"]["customTexts"]["mHealth"]["font"] = MaUI_Font
-	E.db["unitframe"]["units"]["boss"]["customTexts"]["mHealth"]["fontOutline"] = "NONE"
-	E.db["unitframe"]["units"]["boss"]["customTexts"]["mHealth"]["justifyH"] = "LEFT"
-	E.db["unitframe"]["units"]["boss"]["customTexts"]["mHealth"]["size"] = 18
-	E.db["unitframe"]["units"]["boss"]["customTexts"]["mHealth"]["text_format"] =
-		"[mHealth:nodeath:short:current-percent][mStatus:icon]"
-	E.db["unitframe"]["units"]["boss"]["customTexts"]["mHealth"]["xOffset"] = 2
-	E.db["unitframe"]["units"]["boss"]["customTexts"]["mHealth"]["yOffset"] = -1
-	E.db["unitframe"]["units"]["boss"]["customTexts"]["mPower"]["attachTextTo"] = "Power"
-	E.db["unitframe"]["units"]["boss"]["customTexts"]["mPower"]["enable"] = true
-	E.db["unitframe"]["units"]["boss"]["customTexts"]["mPower"]["font"] = MaUI_Font
-	E.db["unitframe"]["units"]["boss"]["customTexts"]["mPower"]["fontOutline"] = "NONE"
-	E.db["unitframe"]["units"]["boss"]["customTexts"]["mPower"]["justifyH"] = "RIGHT"
-	E.db["unitframe"]["units"]["boss"]["customTexts"]["mPower"]["size"] = 12
-	E.db["unitframe"]["units"]["boss"]["customTexts"]["mPower"]["text_format"] = "[powercolor][mPowerPercent]"
-	E.db["unitframe"]["units"]["boss"]["customTexts"]["mPower"]["xOffset"] = -2
-	E.db["unitframe"]["units"]["boss"]["customTexts"]["mPower"]["yOffset"] = 0
+
+	E.db["unitframe"]["units"]["boss"]["customTexts"] = E.db["unitframe"]["units"]["boss"]["customTexts"] or {}
+	E.db["unitframe"]["units"]["boss"]["customTexts"]["mHealth"] = {
+		["attachTextTo"] = "Health",
+		["enable"] = true,
+		["font"] = MaUI_Font,
+		["fontOutline"] = "NONE",
+		["justifyH"] = "LEFT",
+		["size"] = 18,
+		["text_format"] = "[mHealth:nodeath:short:current-percent][mStatus:icon]",
+		["xOffset"] = 2,
+		["yOffset"] = -1,
+	}
+	E.db["unitframe"]["units"]["boss"]["customTexts"]["mPower"] = {
+		["attachTextTo"] = "Power",
+		["enable"] = true,
+		["font"] = MaUI_Font,
+		["fontOutline"] = "NONE",
+		["justifyH"] = "RIGHT",
+		["size"] = 12,
+		["text_format"] = "[powercolor][mPowerPercent]",
+		["xOffset"] = -2,
+		["yOffset"] = 0,
+	}
 	E.db["unitframe"]["units"]["boss"]["debuffs"]["enable"] = false
 	E.db["unitframe"]["units"]["boss"]["debuffs"]["growthX"] = "LEFT"
 	E.db["unitframe"]["units"]["boss"]["debuffs"]["maxDuration"] = 300
@@ -1438,35 +1448,42 @@ function mMT:Layout_Unitframe_Party()
 	E.db["unitframe"]["units"]["party"]["castbar"]["overlayOnFrame"] = "InfoPanel"
 	E.db["unitframe"]["units"]["party"]["castbar"]["width"] = 150
 	E.db["unitframe"]["units"]["party"]["classbar"]["height"] = 7
-	E.db["unitframe"]["units"]["party"]["customTexts"]["mDeath"]["attachTextTo"] = "Health"
-	E.db["unitframe"]["units"]["party"]["customTexts"]["mDeath"]["enable"] = true
-	E.db["unitframe"]["units"]["party"]["customTexts"]["mDeath"]["font"] = MaUI_Font
-	E.db["unitframe"]["units"]["party"]["customTexts"]["mDeath"]["fontOutline"] = "NONE"
-	E.db["unitframe"]["units"]["party"]["customTexts"]["mDeath"]["justifyH"] = "CENTER"
-	E.db["unitframe"]["units"]["party"]["customTexts"]["mDeath"]["size"] = 12
-	E.db["unitframe"]["units"]["party"]["customTexts"]["mDeath"]["text_format"] =
-		"[mouseover][mDeathCount:color][mDeathCount:hide:text][mDeathCount]||r"
-	E.db["unitframe"]["units"]["party"]["customTexts"]["mDeath"]["xOffset"] = 0
-	E.db["unitframe"]["units"]["party"]["customTexts"]["mDeath"]["yOffset"] = 0
-	E.db["unitframe"]["units"]["party"]["customTexts"]["mHealth"]["attachTextTo"] = "Health"
-	E.db["unitframe"]["units"]["party"]["customTexts"]["mHealth"]["enable"] = true
-	E.db["unitframe"]["units"]["party"]["customTexts"]["mHealth"]["font"] = MaUI_Font
-	E.db["unitframe"]["units"]["party"]["customTexts"]["mHealth"]["fontOutline"] = "NONE"
-	E.db["unitframe"]["units"]["party"]["customTexts"]["mHealth"]["justifyH"] = "RIGHT"
-	E.db["unitframe"]["units"]["party"]["customTexts"]["mHealth"]["size"] = 24
-	E.db["unitframe"]["units"]["party"]["customTexts"]["mHealth"]["text_format"] =
-		"[mStatustimer< - ][mHealth:icon:short][ - >mDeathCount:hide]"
-	E.db["unitframe"]["units"]["party"]["customTexts"]["mHealth"]["xOffset"] = -2
-	E.db["unitframe"]["units"]["party"]["customTexts"]["mHealth"]["yOffset"] = 0
-	E.db["unitframe"]["units"]["party"]["customTexts"]["mPower"]["attachTextTo"] = "Power"
-	E.db["unitframe"]["units"]["party"]["customTexts"]["mPower"]["enable"] = true
-	E.db["unitframe"]["units"]["party"]["customTexts"]["mPower"]["font"] = MaUI_Font
-	E.db["unitframe"]["units"]["party"]["customTexts"]["mPower"]["fontOutline"] = "NONE"
-	E.db["unitframe"]["units"]["party"]["customTexts"]["mPower"]["justifyH"] = "RIGHT"
-	E.db["unitframe"]["units"]["party"]["customTexts"]["mPower"]["size"] = 14
-	E.db["unitframe"]["units"]["party"]["customTexts"]["mPower"]["text_format"] = "[mPvP:icon< ][mPowerPercent]"
-	E.db["unitframe"]["units"]["party"]["customTexts"]["mPower"]["xOffset"] = -2
-	E.db["unitframe"]["units"]["party"]["customTexts"]["mPower"]["yOffset"] = 0
+
+	E.db["unitframe"]["units"]["party"]["customTexts"] = E.db["unitframe"]["units"]["party"]["customTexts"] or {}
+
+	E.db["unitframe"]["units"]["party"]["customTexts"]["mDeath"] = {
+		["attachTextTo"] = "Health",
+		["enable"] = true,
+		["font"] = MaUI_Font,
+		["fontOutline"] = "NONE",
+		["justifyH"] = "CENTER",
+		["size"] = 12,
+		["text_format"] = "[mouseover][mDeathCount:color][mDeathCount:hide:text][mDeathCount]||r",
+		["xOffset"] = 0,
+		["yOffset"] = 0,
+	}
+	E.db["unitframe"]["units"]["party"]["customTexts"]["mHealth"] = {
+		["attachTextTo"] = "Health",
+		["enable"] = true,
+		["font"] = MaUI_Font,
+		["fontOutline"] = "NONE",
+		["justifyH"] = "RIGHT",
+		["size"] = 24,
+		["text_format"] = "[mStatustimer< - ][mHealth:icon:short][ - >mDeathCount:hide]",
+		["xOffset"] = -2,
+		["yOffset"] = 0,
+	}
+	E.db["unitframe"]["units"]["party"]["customTexts"]["mPower"] = {
+		["attachTextTo"] = "Power",
+		["enable"] = true,
+		["font"] = MaUI_Font,
+		["fontOutline"] = "NONE",
+		["justifyH"] = "RIGHT",
+		["size"] = 14,
+		["text_format"] = "[mPvP:icon< ][mPowerPercent]",
+		["xOffset"] = -2,
+		["yOffset"] = 0,
+	}
 	E.db["unitframe"]["units"]["party"]["debuffs"]["countFontSize"] = 20
 	E.db["unitframe"]["units"]["party"]["debuffs"]["perrow"] = 4
 	E.db["unitframe"]["units"]["party"]["debuffs"]["priority"] =
@@ -1619,45 +1636,53 @@ function mMT:Layout_Unitframe_Player()
 	E.db["unitframe"]["units"]["player"]["classbar"]["height"] = 20
 	E.db["unitframe"]["units"]["player"]["classbar"]["spacing"] = 2
 	E.db["unitframe"]["units"]["player"]["classbar"]["verticalOrientation"] = true
-	E.db["unitframe"]["units"]["player"]["customTexts"]["mDeath"]["attachTextTo"] = "Health"
-	E.db["unitframe"]["units"]["player"]["customTexts"]["mDeath"]["enable"] = true
-	E.db["unitframe"]["units"]["player"]["customTexts"]["mDeath"]["font"] = MaUI_Font
-	E.db["unitframe"]["units"]["player"]["customTexts"]["mDeath"]["fontOutline"] = "NONE"
-	E.db["unitframe"]["units"]["player"]["customTexts"]["mDeath"]["justifyH"] = "LEFT"
-	E.db["unitframe"]["units"]["player"]["customTexts"]["mDeath"]["size"] = 14
-	E.db["unitframe"]["units"]["player"]["customTexts"]["mDeath"]["text_format"] =
-		"[mouseover][mDeathCount:color][mDeathCount:hide:text][mDeathCount]"
-	E.db["unitframe"]["units"]["player"]["customTexts"]["mDeath"]["xOffset"] = 2
-	E.db["unitframe"]["units"]["player"]["customTexts"]["mDeath"]["yOffset"] = 9
-	E.db["unitframe"]["units"]["player"]["customTexts"]["mGroup"]["attachTextTo"] = "Power"
-	E.db["unitframe"]["units"]["player"]["customTexts"]["mGroup"]["enable"] = true
-	E.db["unitframe"]["units"]["player"]["customTexts"]["mGroup"]["font"] = MaUI_Font
-	E.db["unitframe"]["units"]["player"]["customTexts"]["mGroup"]["fontOutline"] = "NONE"
-	E.db["unitframe"]["units"]["player"]["customTexts"]["mGroup"]["justifyH"] = "CENTER"
-	E.db["unitframe"]["units"]["player"]["customTexts"]["mGroup"]["size"] = 14
-	E.db["unitframe"]["units"]["player"]["customTexts"]["mGroup"]["text_format"] =
-		"||cffE91E63[Grp. >group][mouseover]||r"
-	E.db["unitframe"]["units"]["player"]["customTexts"]["mGroup"]["xOffset"] = -50
-	E.db["unitframe"]["units"]["player"]["customTexts"]["mGroup"]["yOffset"] = 0
-	E.db["unitframe"]["units"]["player"]["customTexts"]["mHealth"]["attachTextTo"] = "Health"
-	E.db["unitframe"]["units"]["player"]["customTexts"]["mHealth"]["enable"] = true
-	E.db["unitframe"]["units"]["player"]["customTexts"]["mHealth"]["font"] = MaUI_Font
-	E.db["unitframe"]["units"]["player"]["customTexts"]["mHealth"]["fontOutline"] = "NONE"
-	E.db["unitframe"]["units"]["player"]["customTexts"]["mHealth"]["justifyH"] = "RIGHT"
-	E.db["unitframe"]["units"]["player"]["customTexts"]["mHealth"]["size"] = 30
-	E.db["unitframe"]["units"]["player"]["customTexts"]["mHealth"]["text_format"] =
-		"[mStatustimer< - ][mHealth:icon:short]"
-	E.db["unitframe"]["units"]["player"]["customTexts"]["mHealth"]["xOffset"] = -2
-	E.db["unitframe"]["units"]["player"]["customTexts"]["mHealth"]["yOffset"] = -3
-	E.db["unitframe"]["units"]["player"]["customTexts"]["mPvP"]["attachTextTo"] = "Health"
-	E.db["unitframe"]["units"]["player"]["customTexts"]["mPvP"]["enable"] = true
-	E.db["unitframe"]["units"]["player"]["customTexts"]["mPvP"]["font"] = MaUI_Font
-	E.db["unitframe"]["units"]["player"]["customTexts"]["mPvP"]["fontOutline"] = "NONE"
-	E.db["unitframe"]["units"]["player"]["customTexts"]["mPvP"]["justifyH"] = "CENTER"
-	E.db["unitframe"]["units"]["player"]["customTexts"]["mPvP"]["size"] = 16
-	E.db["unitframe"]["units"]["player"]["customTexts"]["mPvP"]["text_format"] = "||cffE91E63[pvptimer][mouseover]||r"
-	E.db["unitframe"]["units"]["player"]["customTexts"]["mPvP"]["xOffset"] = 0
-	E.db["unitframe"]["units"]["player"]["customTexts"]["mPvP"]["yOffset"] = -10
+
+	E.db["unitframe"]["units"]["player"]["customTexts"] = E.db["unitframe"]["units"]["player"]["customTexts"] or {}
+
+	E.db["unitframe"]["units"]["player"]["customTexts"]["mDeath"] = {
+		["attachTextTo"] = "Health",
+		["enable"] = true,
+		["font"] = MaUI_Font,
+		["fontOutline"] = "NONE",
+		["justifyH"] = "LEFT",
+		["size"] = 14,
+		["text_format"] = "[mouseover][mDeathCount:color][mDeathCount:hide:text][mDeathCount]",
+		["xOffset"] = 2,
+		["yOffset"] = 9,
+	}
+	E.db["unitframe"]["units"]["player"]["customTexts"]["mGroup"] = {
+		["attachTextTo"] = "Power",
+		["enable"] = true,
+		["font"] = MaUI_Font,
+		["fontOutline"] = "NONE",
+		["justifyH"] = "CENTER",
+		["size"] = 14,
+		["text_format"] = "||cffE91E63[Grp. >group][mouseover]||r",
+		["xOffset"] = -50,
+		["yOffset"] = 0,
+	}
+	E.db["unitframe"]["units"]["player"]["customTexts"]["mHealth"] = {
+		["attachTextTo"] = "Health",
+		["enable"] = true,
+		["font"] = MaUI_Font,
+		["fontOutline"] = "NONE",
+		["justifyH"] = "RIGHT",
+		["size"] = 30,
+		["text_format"] = "[mStatustimer< - ][mHealth:icon:short]",
+		["xOffset"] = -2,
+		["yOffset"] = -3,
+	}
+	E.db["unitframe"]["units"]["player"]["customTexts"]["mPvP"] = {
+		["attachTextTo"] = "Health",
+		["enable"] = true,
+		["font"] = MaUI_Font,
+		["fontOutline"] = "NONE",
+		["justifyH"] = "CENTER",
+		["size"] = 16,
+		["text_format"] = "||cffE91E63[pvptimer][mouseover]||r",
+		["xOffset"] = 0,
+		["yOffset"] = -10,
+	}
 	E.db["unitframe"]["units"]["player"]["debuffs"]["anchorPoint"] = "TOPRIGHT"
 	E.db["unitframe"]["units"]["player"]["debuffs"]["countFontSize"] = 14
 	E.db["unitframe"]["units"]["player"]["debuffs"]["growthX"] = "LEFT"
@@ -1706,6 +1731,10 @@ function mMT:Layout_Unitframe_Raid()
 	E.db["unitframe"]["units"]["raid1"]["classbar"]["enable"] = false
 	E.db["unitframe"]["units"]["raid1"]["classbar"]["fill"] = "spaced"
 	E.db["unitframe"]["units"]["raid1"]["classbar"]["height"] = 7
+
+	-- hier --
+	E.db["unitframe"]["units"]["raid1"]["customTexts"] = E.db["unitframe"]["units"]["raid1"]["customTexts"] or {}
+
 	E.db["unitframe"]["units"]["raid1"]["customTexts"]["mGroup"]["attachTextTo"] = "Health"
 	E.db["unitframe"]["units"]["raid1"]["customTexts"]["mGroup"]["enable"] = true
 	E.db["unitframe"]["units"]["raid1"]["customTexts"]["mGroup"]["font"] = MaUI_Font
@@ -2681,7 +2710,6 @@ function mMT:Layout_Nameplate_Filters_Affix()
 	E.db["nameplates"]["filters"]["m-Sanguine"]["triggers"]["enable"] = true
 	E.db["nameplates"]["filters"]["m-Spiteful-on-You"]["triggers"]["enable"] = true
 	E.db["nameplates"]["filters"]["m-Spitefull"]["triggers"]["enable"] = true
-
 
 	-- E.global["nameplates"]["filters"]["m-Inspiring"]["actions"]["color"]["border"] = true
 	-- E.global["nameplates"]["filters"]["m-Inspiring"]["actions"]["color"]["borderColor"]["b"] = 0.23137254901961

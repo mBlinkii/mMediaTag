@@ -305,7 +305,8 @@
         "PET_BATTLE_STATS_LABEL",
         "LEVEL",
         "ITEM_UPGRADE_STAT_AVERAGE_ITEM_LEVEL",
-        "AFK"
+        "AFK",
+        "EncounterJournal_OpenJournal"
     ],
     "Lua.diagnostics.disable": [
         "undefined-field"
