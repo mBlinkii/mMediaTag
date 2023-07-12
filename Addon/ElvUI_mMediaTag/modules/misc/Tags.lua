@@ -170,8 +170,6 @@ local BossIDs = {
 	["205319"] = true,
 }
 
-local sizeString = "|T%s:15:15:0:2|t"
-
 function mMT:UpdateTagSettings()
 	colors = {
 		rare = E.db.mMT.tags.colors.rare.hex,

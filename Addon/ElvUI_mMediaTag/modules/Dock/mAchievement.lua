@@ -30,13 +30,14 @@ local function OnEnter(self)
 		local trackedAchievements = C_ContentTracking.GetTrackedIDs(Enum.ContentTrackingType.Achievement)
 
 		if trackedAchievements and (#trackedAchievements ~= 0) then
+			DT.tooltip:AddLine(" ")
 			DT.tooltip:AddDoubleLine(L["Tracked Achievements"], format("|CFFFFFFFF%s|r", #trackedAchievements))
 			for i = 1, #trackedAchievements do
 				local achievementID = trackedAchievements[i]
 				local _, achievementName, _, completed, _, _, _, description, _, icon, _, _, wasEarnedByMe =
 					GetAchievementInfo(achievementID)
 				DT.tooltip:AddDoubleLine(
-					format("|CFF40E0D0%s|r", achievementName),
+					format("|T%s:15:15:0:0|t |CFF40E0D0%s|r", icon, achievementName),
 					completed and "|CFF88FF88" .. L["Completed"] .. "|r" or "|CFFFF8888" .. L["Missing"] .. "|r"
 				)
 			end
