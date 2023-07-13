@@ -1,6 +1,6 @@
 ## Interface: 100105
 ## Author: Blinkii
-## Version: 1.00
+## Version: 1.01
 ## Title:  |CFFAB02FDm|r|CFFB820D5M|r|CFFC031BDT|r |CFFCB4A9CM|r|CFFD25A87e|r|CFFD96972d|r|CFFDE7464i|r|CFFE27E57a|r |CFFE88B46P|r|CFFF09D2Da|r|CFFF4A720c|r|CFFFCB70Ak|r
 ## Notes: mMT Media Pack by Blinkii | Support: mMediaTag@gmx.de
 ## IconTexture: Interface\AddOns\!mMT_MediaPack\media\logo\mmt_icon

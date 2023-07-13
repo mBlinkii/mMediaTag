@@ -414,6 +414,7 @@
         "TOPLEFT",
         "Trenchy",
         "Tukui",
+        "UIAFK",
         "Unitframe",
         "Unitframes",
         "valuecolor",
@@ -421,6 +422,7 @@
         "vaultinfomplus",
         "vaultinfopvp",
         "vaultinforaid",
-        "Warmode"
+        "Warmode",
+        "WOTLK"
     ]
 }

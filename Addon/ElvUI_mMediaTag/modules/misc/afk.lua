@@ -167,6 +167,10 @@ function mMT:MaUI_AFKScreen()
 		_G.ElvUIAFKFrame.bottom:SetHeight(E.screenHeight * 0.075)
 		_G.ElvUIAFKFrame.bottom:SetPoint("BOTTOM", _G.ElvUIAFKFrame, "BOTTOM", 0, 50)
 
+		-- Chat
+		_G.ElvUIAFKFrame.chat:ClearAllPoints()
+		_G.ElvUIAFKFrame.chat:Point("TOP", _G.ElvUIAFKFrame, "TOP", 0, -4)
+
 		-- Logo
 		_G.ElvUIAFKFrame.bottom.LogoTop:SetSize(E.screenHeight * 0.1, E.screenHeight * 0.05)
 		_G.ElvUIAFKFrame.bottom.LogoTop:ClearAllPoints()
