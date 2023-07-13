@@ -20,42 +20,26 @@ end
 
 local function OnEnter(self)
 	if E.db.mMT.dockdatatext.tip.enable then
-		DT.tooltip:AddDoubleLine(ACHIEVEMENT_BUTTON, format("|CFFFFFFFF%s|r", L["Points"]))
+		DT.tooltip:AddLine(ACHIEVEMENT_BUTTON)
 		DT.tooltip:AddLine(" ")
 		DT.tooltip:AddDoubleLine(
 			format(mMT.ClassColor.string, UnitName("player")),
 			format("|CFF6495ED%s|r", GetTotalAchievementPoints())
 		)
 
-		local ID1, ID2 = GetTrackedAchievements()
+		local trackedAchievements = C_ContentTracking.GetTrackedIDs(Enum.ContentTrackingType.Achievement)
 
-		if ID1 then
+		if trackedAchievements and (#trackedAchievements ~= 0) then
 			DT.tooltip:AddLine(" ")
-			DT.tooltip:AddDoubleLine(L["Tracked Achievements"], format("|CFFFFFFFF%s|r", GetNumTrackedAchievements()))
-			local IDNumber, Name, Points, Completed, Month, Day, Year, Description, Flags, Image, RewardText, isGuildAch =
-				GetAchievementInfo(ID1)
-
-			DT.tooltip:AddLine(" ")
-			DT.tooltip:AddDoubleLine(
-				format("|CFF40E0D0%s|r", Name),
-				Completed and "|CFF88FF88completed|r" or "|CFFFF8888missing|r"
-			)
-			if not Completed and Description then
-				DT.tooltip:AddLine(format("|CFFFFFFFF%s|r", Description))
-			end
-		end
-
-		if ID2 then
-			local IDNumber, Name, Points, Completed, Month, Day, Year, Description, Flags, Image, RewardText, isGuildAch =
-				GetAchievementInfo(ID2)
-
-			DT.tooltip:AddLine(" ")
-			DT.tooltip:AddDoubleLine(
-				format("|CFF40E0D0%s|r", Name),
-				Completed and "|CFF88FF88completed|r" or "|CFFFF8888missing|r"
-			)
-			if not Completed and Description then
-				DT.tooltip:AddLine(format("|CFFFFFFFF%s|r", Description))
+			DT.tooltip:AddDoubleLine(L["Tracked Achievements"], format("|CFFFFFFFF%s|r", #trackedAchievements))
+			for i = 1, #trackedAchievements do
+				local achievementID = trackedAchievements[i]
+				local _, achievementName, _, completed, _, _, _, description, _, icon, _, _, wasEarnedByMe =
+					GetAchievementInfo(achievementID)
+				DT.tooltip:AddDoubleLine(
+					format("|T%s:15:15:0:0|t |CFF40E0D0%s|r", icon, achievementName),
+					completed and "|CFF88FF88" .. L["Completed"] .. "|r" or "|CFFFF8888" .. L["Missing"] .. "|r"
+				)
 			end
 		end
 

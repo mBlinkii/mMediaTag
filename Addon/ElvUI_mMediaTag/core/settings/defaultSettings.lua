@@ -3,6 +3,16 @@ local E, L, V, P, G = unpack(ElvUI)
 P.mMT = {
 	version = 0,
 	general = { greeting = true, keystochat = false },
+	afk = {
+		enable = false,
+		garbage = true,
+		title = { r = 1, g = 0.65, b = 0 },
+		values = {enable = true, r = 0.98, g = 0.82, b = 1 },
+		attributes = {enable = true, r = 0.23, g = 0.67, b = 1 },
+		enhancements = {enable = true, r = 0.35, g = 0.55, b = 1 },
+		progress = {enable = true, r = 0.64, g = 0.35, b = 1 },
+		misc = {enable = true, r = 0.64, g = 0.23, b = 1 },
+	},
 	tooltip = { enable = false, iconsize = 32, iconzoom = true },
 	combattime = { ooctexture = "CI2", ictexture = "CI12", hide = 30 },
 	interruptoncd = {
@@ -469,8 +479,8 @@ P.mMT = {
 				phasing = { r = 0.3, g = 0.5, b = 1 },
 			},
 		},
-		summon = { enable = false, available = "SUM13", rejected = "SUM14", accepted = "SUM15" },
-		resurrection = { enable = false, icon = "RES03" },
-		readycheck = { enable = false, ready = "READY06", notready = "NOTREADY01", waiting = "COLOR26" },
+		summon = { enable = false, available = "SUM10", rejected = "SUM11", accepted = "SUM12" },
+		resurrection = { enable = false, icon = "RES04" },
+		readycheck = { enable = false, ready = "DONE01", notready = "NOTREADY01", waiting = "COLOR26" },
 	},
 }

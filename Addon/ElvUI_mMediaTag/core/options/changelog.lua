@@ -20,21 +20,26 @@ local change_log_important = {
 }
 
 local change_log_new = {
-	"NEW function Castbar Shield Shield Icon for not interruptible Spells",
-	"NEW Datatexts for Crests and Flightstones",
-	"NEW you can now customizes the Summon Icon on the Unitframes",
-	"NEW Complete rework of Important Spells, you can now change for each Spell in the list color, sound, texture and icon."}
+	"NEW tags mClass:icon:boss and mClass:icon:rare",
+	"AFK Screen with Additional information's",
+}
 
 local change_log_update = {
-	"Score datatext can now show the keystones and Itemlevel of your group (requires LibOpenRaid or Details)",
-	"Dock Quest shows now mor information's about your Quests",
-	"Dock Collection shows now the amount of your Polished Pet Charm and Battle Pet Bandage"
-
+	"Toc Update for Retail and WOTLK",
+	"Add Scenario Quest IDs to Instance difficulty text.",
+	"Change the Leader Icon position on Score Datatext",
+	"Update targeting players indicator texture for the SQ one",
+	"Update MediaPack chat command feedback",
+	"Update Defaults",
 }
 
 local change_log_fix = {
-	"Fixed Castbar Shield toggle for UF and NP",
-	"Fixed Custom Backdrop prevents dark mode of Eltruism"
+	"Fixed Datatext Color function String",
+	"Fixed Datatext Score Leys reset function",
+	"Fixed Dock icons not updating, if you change to an other one",
+	"Fixed Texture offset for Tags",
+	"Fixed Dock Achievement Tooltip and Tooltip Icons",
+	"Fixed Nil error with Datatext Tooltips",
 }
 
 local function Concatenation(tbl, icon, color)
@@ -54,11 +59,11 @@ local function Concatenation(tbl, icon, color)
 end
 
 local function configTable()
-	local releasdate = "02.06.2023"
-	--local change_log_important_string = Concatenation(change_log_important)
-	local change_log_new_string = Concatenation(change_log_new)
-	local change_log_update_string = Concatenation(change_log_update)
-	local change_log_fix_string = Concatenation(change_log_fix)
+	local releasdate = "13.07.2023"
+	--change_log_important_string = Concatenation(change_log_important)
+	change_log_new_string = Concatenation(change_log_new)
+	change_log_update_string = Concatenation(change_log_update)
+	change_log_fix_string = Concatenation(change_log_fix)
 	E.Options.args.mMT.args.changelog.args = {
 		header_changelog = {
 			order = 1,

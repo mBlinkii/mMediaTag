@@ -3,7 +3,6 @@ local E = unpack(ElvUI)
 local GetSpecializationInfo = GetSpecializationInfo
 local GetSpellCooldown = GetSpellCooldown
 local interruptSpellID = nil
-local OutOfRange = false
 
 local interruptSpellList = {
 	-- warrior
@@ -59,10 +58,20 @@ local interruptSpellList = {
 	[1468] = 351338,
 }
 
-function mMT:mMediaTag_interruptOnCD()
+function mMT:mMediaTag_interruptOnCD(castbar)
+	local enabled = nil
+
 	if interruptSpellID then
-		local cdStart, _, enabled, _ = GetSpellCooldown(interruptSpellID)
-		return (enabled == 0 and true or false) or (E.db.mMT.interruptoncd.outofrange and OutOfRange)
+		_, _, enabled, _ = GetSpellCooldown(interruptSpellID)
+	end
+
+	if castbar and ((enabled == 0) or (E.db.mMT.interruptoncd.outofrange and castbar.mOutOfRange)) then
+		if castbar.unit == "vehicle" or castbar.unit == "player" then
+			return false
+		end
+		return true
+	elseif (enabled == 0) then
+		return true
 	else
 		return false
 	end
@@ -85,7 +94,7 @@ local function CreateMarker(castbar)
 end
 
 function mMT:InterruptChecker(castbar)
- 	if castbar.InterruptMarker then
+	if castbar.InterruptMarker then
 		castbar.InterruptMarker:Hide()
 	end
 
@@ -93,7 +102,7 @@ function mMT:InterruptChecker(castbar)
 		local interruptCD, interruptReadyInTime = nil, false
 		local interruptDur, interruptStart = 0, 0
 
-		local cdStart, cdDur = GetSpellCooldown(interruptSpellID)
+		local cdStart, cdDur, enabled, _ = GetSpellCooldown(interruptSpellID)
 		local tmpInterruptCD = (cdStart > 0 and cdDur - (GetTime() - cdStart)) or 0
 		if not interruptCD or (tmpInterruptCD < interruptCD) then
 			interruptCD = tmpInterruptCD
@@ -116,11 +125,12 @@ function mMT:InterruptChecker(castbar)
 		local colorOutOfRange = E.db.mMT.interruptoncd.outofrangecolor.colora
 		local colorOutOfRangeB = E.db.mMT.interruptoncd.outofrangecolor.colorb
 
-		if E.db.mMT.interruptoncd.outofrange then
-			OutOfRange = IsSpellInRange(GetSpellInfo(interruptSpellID), castbar.unit) == 0
-		end
+		castbar.mOutOfRange = (
+			E.db.mMT.interruptoncd.outofrange and IsSpellInRange(GetSpellInfo(interruptSpellID), castbar.unit) == 0
+		) or false
+		castbar.mInterruptOnCD = (enabled == 0 and true or false)
 
-		if E.db.mMT.interruptoncd.outofrange and OutOfRange then
+		if castbar.mOutOfRange then
 			if E.db.mMT.interruptoncd.gradient then
 				mMT:SetCastbarColor(castbar, colorOutOfRange, colorOutOfRangeB)
 			else

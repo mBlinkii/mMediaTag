@@ -8,4 +8,5 @@
 	<Script file="instancedifficulty.lua"/>
 	<Script file="Tags.lua"/>
 	<Script file="ObjectiveTracker.lua"/>
+	<Script file="afk.lua"/>
 </Ui>

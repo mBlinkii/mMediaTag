@@ -47,20 +47,20 @@ local colors = {
 
 -- fallback icons
 local icons = {
-	rare = "|TInterface\\Addons\\ElvUI_mMediaTag\\media\\logo\\mmt_icon.tga:14:14|t",
-	relite = "|TInterface\\Addons\\ElvUI_mMediaTag\\media\\logo\\mmt_icon.tga:14:14|t",
-	elite = "|TInterface\\Addons\\ElvUI_mMediaTag\\media\\logo\\mmt_icon.tga:14:14|t",
-	boss = "|TInterface\\Addons\\ElvUI_mMediaTag\\media\\logo\\mmt_icon.tga:14:14|t",
-	afk = "|TInterface\\Addons\\ElvUI_mMediaTag\\media\\logo\\mmt_icon.tga:14:14|t",
-	dnd = "|TInterface\\Addons\\ElvUI_mMediaTag\\media\\logo\\mmt_icon.tga:14:14|t",
-	dc = "|TInterface\\Addons\\ElvUI_mMediaTag\\media\\logo\\mmt_icon.tga:14:14|t",
-	death = "|TInterface\\Addons\\ElvUI_mMediaTag\\media\\logo\\mmt_icon.tga:14:14|t",
-	ghost = "|TInterface\\Addons\\ElvUI_mMediaTag\\media\\logo\\mmt_icon.tga:14:14|t",
-	pvp = format("|T%s:14:14|t", "Interface\\AddOns\\ElvUI_mMediaTag\\media\\icons\\tags\\pvp.tga"),
-	tank = "|TInterface\\Addons\\ElvUI_mMediaTag\\media\\logo\\mmt_icon.tga:14:14|t",
-	heal = "|TInterface\\Addons\\ElvUI_mMediaTag\\media\\logo\\mmt_icon.tga:14:14|t",
-	dd = "|TInterface\\Addons\\ElvUI_mMediaTag\\media\\logo\\mmt_icon.tga:14:14|t",
-	quest = format("|T%s:14:14|t", "Interface\\AddOns\\ElvUI_mMediaTag\\media\\icons\\tags\\quest1.tga"),
+	rare = "|TInterface\\Addons\\ElvUI_mMediaTag\\media\\logo\\mmt_icon.tga:15:15|t",
+	relite = "|TInterface\\Addons\\ElvUI_mMediaTag\\media\\logo\\mmt_icon.tga:15:15|t",
+	elite = "|TInterface\\Addons\\ElvUI_mMediaTag\\media\\logo\\mmt_icon.tga:15:15|t",
+	boss = "|TInterface\\Addons\\ElvUI_mMediaTag\\media\\logo\\mmt_icon.tga:15:15|t",
+	afk = "|TInterface\\Addons\\ElvUI_mMediaTag\\media\\logo\\mmt_icon.tga:15:15|t",
+	dnd = "|TInterface\\Addons\\ElvUI_mMediaTag\\media\\logo\\mmt_icon.tga:15:15|t",
+	dc = "|TInterface\\Addons\\ElvUI_mMediaTag\\media\\logo\\mmt_icon.tga:15:15|t",
+	death = "|TInterface\\Addons\\ElvUI_mMediaTag\\media\\logo\\mmt_icon.tga:15:15|t",
+	ghost = "|TInterface\\Addons\\ElvUI_mMediaTag\\media\\logo\\mmt_icon.tga:15:15|t",
+	pvp = format("|T%s:15:15:0:2|t", "Interface\\AddOns\\ElvUI_mMediaTag\\media\\icons\\tags\\pvp.tga"),
+	tank = "|TInterface\\Addons\\ElvUI_mMediaTag\\media\\logo\\mmt_icon.tga:15:15|t",
+	heal = "|TInterface\\Addons\\ElvUI_mMediaTag\\media\\logo\\mmt_icon.tga:15:15|t",
+	dd = "|TInterface\\Addons\\ElvUI_mMediaTag\\media\\logo\\mmt_icon.tga:15:15|t",
+	quest = format("|T%s:15:15:0:2|t", "Interface\\AddOns\\ElvUI_mMediaTag\\media\\icons\\tags\\quest1.tga"),
 }
 
 local BossIDs = {
@@ -185,30 +185,30 @@ function mMT:UpdateTagSettings()
 	}
 
 	icons = {
-		rare = format("|T%s:14:14|t", mMT.Media.ClassIcons[E.db.mMT.tags.icons.rare]),
-		relite = format("|T%s:14:14|t", mMT.Media.ClassIcons[E.db.mMT.tags.icons.relite]),
-		elite = format("|T%s:14:14|t", mMT.Media.ClassIcons[E.db.mMT.tags.icons.elite]),
-		boss = format("|T%s:14:14|t", mMT.Media.ClassIcons[E.db.mMT.tags.icons.boss]),
-		afk = format("|T%s:14:14|t", mMT.Media.AFKIcons[E.db.mMT.tags.icons.afk]),
-		dnd = format("|T%s:14:14|t", mMT.Media.DNDIcons[E.db.mMT.tags.icons.dnd]),
-		dc = format("|T%s:14:14|t", mMT.Media.DCIcons[E.db.mMT.tags.icons.offline]),
-		death = format("|T%s:14:14|t", mMT.Media.DeathIcons[E.db.mMT.tags.icons.death]),
-		ghost = format("|T%s:14:14|t", mMT.Media.GhostIcons[E.db.mMT.tags.icons.ghost]),
-		pvp = format("|T%s:14:14|t", "Interface\\AddOns\\ElvUI_mMediaTag\\media\\icons\\tags\\pvp.tga"),
-		tank = E:TextureString(E.Media.Textures.Tank, ":14:14"),
-		heal = E:TextureString(E.Media.Textures.Healer, ":14:14"),
-		dd = E:TextureString(E.Media.Textures.DPS, ":14:14"),
-		quest = format("|T%s:14:14|t", "Interface\\AddOns\\ElvUI_mMediaTag\\media\\icons\\tags\\quest1.tga"),
+		rare = format("|T%s:15:15:0:2|t", mMT.Media.ClassIcons[E.db.mMT.tags.icons.rare]),
+		relite = format("|T%s:15:15:0:2|t", mMT.Media.ClassIcons[E.db.mMT.tags.icons.relite]),
+		elite = format("|T%s:15:15:0:2|t", mMT.Media.ClassIcons[E.db.mMT.tags.icons.elite]),
+		boss = format("|T%s:15:15:0:2|t", mMT.Media.ClassIcons[E.db.mMT.tags.icons.boss]),
+		afk = format("|T%s:15:15:0:2|t", mMT.Media.AFKIcons[E.db.mMT.tags.icons.afk]),
+		dnd = format("|T%s:15:15:0:2|t", mMT.Media.DNDIcons[E.db.mMT.tags.icons.dnd]),
+		dc = format("|T%s:15:15:0:2|t", mMT.Media.DCIcons[E.db.mMT.tags.icons.offline]),
+		death = format("|T%s:15:15:0:2|t", mMT.Media.DeathIcons[E.db.mMT.tags.icons.death]),
+		ghost = format("|T%s:15:15:0:2|t", mMT.Media.GhostIcons[E.db.mMT.tags.icons.ghost]),
+		pvp = format("|T%s:15:15:0:2|t", "Interface\\AddOns\\ElvUI_mMediaTag\\media\\icons\\tags\\pvp.tga"),
+		tank = E:TextureString(E.Media.Textures.Tank, ":15:15"),
+		heal = E:TextureString(E.Media.Textures.Healer, ":15:15"),
+		dd = E:TextureString(E.Media.Textures.DPS, ":15:15"),
+		quest = format("|T%s:15:15:0:2|t", "Interface\\AddOns\\ElvUI_mMediaTag\\media\\icons\\tags\\quest1.tga"),
 	}
 	if E.db.mMT.roleicons.enable then
 		if E.db.mMT.roleicons.customtexture then
-			icons.tank = E:TextureString(E.db.mMT.roleicons.customtank, ":14:14")
-			icons.heal = E:TextureString(E.db.mMT.roleicons.customtheal, ":14:14")
-			icons.dd = E:TextureString(E.db.mMT.roleicons.customdd, ":14:14")
+			icons.tank = E:TextureString(E.db.mMT.roleicons.customtank, ":15:15")
+			icons.heal = E:TextureString(E.db.mMT.roleicons.customtheal, ":15:15")
+			icons.dd = E:TextureString(E.db.mMT.roleicons.customdd, ":15:15")
 		else
-			icons.tank = E:TextureString(mMT.Media.Role[E.db.mMT.roleicons.tank], ":14:14")
-			icons.heal = E:TextureString(mMT.Media.Role[E.db.mMT.roleicons.heal], ":14:14")
-			icons.dd = E:TextureString(mMT.Media.Role[E.db.mMT.roleicons.dd], ":14:14")
+			icons.tank = E:TextureString(mMT.Media.Role[E.db.mMT.roleicons.tank], ":15:15")
+			icons.heal = E:TextureString(mMT.Media.Role[E.db.mMT.roleicons.heal], ":15:15")
+			icons.dd = E:TextureString(mMT.Media.Role[E.db.mMT.roleicons.dd], ":15:15")
 		end
 	end
 end
@@ -460,9 +460,30 @@ E:AddTag("mClass:icon", "UNIT_CLASSIFICATION_CHANGED", function(unit)
 	end
 end)
 
+E:AddTag("mClass:icon:boss", "UNIT_CLASSIFICATION_CHANGED", function(unit)
+	local c = UnitClassification(unit)
+	local guid = UnitGUID(unit)
+	local npcID = guid and select(6, strsplit("-", guid))
+
+	if (npcID and BossIDs[npcID]) or c == "worldboss" then
+		return icons.boss
+	end
+end)
+
+E:AddTag("mClass:icon:rare", "UNIT_CLASSIFICATION_CHANGED", function(unit)
+	local c = UnitClassification(unit)
+	if c == "rare" then
+		return icons.rare
+	elseif c == "rareelite" then
+		return icons.relite
+	end
+end)
+
 E:AddTagInfo("mClass", mMT.NameShort .. " " .. L["Class"], L["Displays the Unit Class."])
 E:AddTagInfo("mClass:short", mMT.NameShort .. " " .. L["Class"], L["Shortened version of"] .. " mClass.")
 E:AddTagInfo("mClass:icon", mMT.NameShort .. " " .. L["Class"], L["Displays the Unit Class Icon."])
+E:AddTagInfo("mClass:icon:boss", mMT.NameShort .. " " .. L["Class"], L["Displays the Unit Class Icon only for Boss NPCs."])
+E:AddTagInfo("mClass:icon:rare", mMT.NameShort .. " " .. L["Class"], L["Displays the Unit Class Icon only for Rare and Rare Elite NPCs."])
 
 E:AddTag("mStatus", "UNIT_HEALTH UNIT_CONNECTION PLAYER_FLAGS_CHANGED", function(unit)
 	local isAFK = UnitIsAFK(unit)
@@ -1615,7 +1636,7 @@ local function GetPartyTargetsIcons(unit, style)
 		if UnitIsUnit("party" .. i .. "target", unit) then
 			local _, unitClass = UnitClass("party" .. i)
 			ClassString = format(
-				"|TInterface\\AddOns\\ElvUI_mMediaTag\\media\\icons\\tags\\targetindicator\\%s%s.tga:14:14|t",
+				"|TInterface\\AddOns\\ElvUI_mMediaTag\\media\\icons\\tags\\targetindicator\\%s%s.tga:15:15|t",
 				unitClass,
 				style
 			) .. ClassString
@@ -1625,7 +1646,7 @@ local function GetPartyTargetsIcons(unit, style)
 	if UnitIsUnit("playertarget", unit) then
 		local _, unitClass = UnitClass("player")
 		ClassString = format(
-			"|TInterface\\AddOns\\ElvUI_mMediaTag\\media\\icons\\tags\\targetindicator\\%s%s.tga:14:14|t",
+			"|TInterface\\AddOns\\ElvUI_mMediaTag\\media\\icons\\tags\\targetindicator\\%s%s.tga:15:15|t",
 			unitClass,
 			style
 		) .. ClassString

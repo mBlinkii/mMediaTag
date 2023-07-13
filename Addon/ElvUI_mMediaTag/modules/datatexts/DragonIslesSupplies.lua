@@ -21,6 +21,10 @@ local Currency = {
 }
 
 local function OnEnter(self)
+	if Currency.loaded then
+		mMT:GetCurrenciesInfo(Currency)
+	end
+
 	DT.tooltip:ClearLines()
 	if not hide then
 		DT:SetupTooltip(self)
@@ -39,7 +43,7 @@ local function OnEvent(self, event, ...)
 		local name = nil
 		local icon = nil
 		local bagCount = nil
-		local color = mMT.ClassColor.string
+		local color = mMT.ClassColor.hex
 
 		if not hide then
 			if E.db.mMT.datatextcurrency.name then

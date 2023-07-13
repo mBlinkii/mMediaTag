@@ -371,14 +371,25 @@ local function SkinOBTScenarioBlock()
 
 	_G.ScenarioStageBlock.NormalBG:Hide()
 	_G.ScenarioStageBlock.FinalBG:Hide()
-	if _G.ScenarioStageBlock.WidgetContainer then
-		_G.ScenarioStageBlock.WidgetContainer:Hide()
+	-- if _G.ScenarioStageBlock.WidgetContainer then
+	-- 	_G.ScenarioStageBlock.WidgetContainer:Hide()
+	-- end
+
+	local container = _G.ScenarioStageBlock.WidgetContainer
+    if not container or not container.widgetFrames then
+        return
+    end
+
+    for _, widgetFrame in pairs(container.widgetFrames) do
+        if widgetFrame.Frame then
+            widgetFrame.Frame:SetAlpha(0)
+        end
 	end
 end
 local function SkinOBTScenario(numCriteria, objectiveBlock)
 	if _G.ScenarioObjectiveBlock then
-		local childs = { _G.ScenarioObjectiveBlock:GetChildren() }
-		for _, child in pairs(childs) do
+		local childe = { _G.ScenarioObjectiveBlock:GetChildren() }
+		for _, child in pairs(childe) do
 			if child.Text then
 				local LineText = ""
 				mSetupQuestFont(child.Text)
@@ -387,7 +398,7 @@ local function SkinOBTScenario(numCriteria, objectiveBlock)
 				if child.Icon then
 					local current, required, details = strmatch(LineText, "^(%d-)/(%d-) (.+)")
 					if (current ~= nil or required ~= nil) and current == required then
-						child.Icon:SetTexture(mMT.Media.MiscIcons["DONE1"])
+						child.Icon:SetTexture(mMT.Media.MiscIcons["DONE01"])
 					else
 						if E.db.mMT.objectivetracker.dash.style == "icon" then
 							child.Icon:SetTexture(mMT.Media.DashIcons[E.db.mMT.objectivetracker.dash.texture])

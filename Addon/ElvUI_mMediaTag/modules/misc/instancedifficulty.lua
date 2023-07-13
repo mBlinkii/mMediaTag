@@ -121,6 +121,19 @@ local shortNames = {
 	[2522] = "VOTI", --Vault of the Incarnates
 	[1754] = "FH", -- Freehold
 	[1841] = "UNDR", -- The Underrot
+	[657] = "VP",
+	[2570] = "TFR",
+	[2444] = "DI",
+	[2512] = "GTA",
+	[2518] = "OB",
+	[2523] = "TDD",
+	[2524] = "TRD",
+	[2529] = "YB",
+	[2534] = "DI-BDC",
+	[2556] = "ED",
+	[2563] = "NPGA",
+	[2573] = "LA",
+	[2574] = "DIR",
 }
 
 local colors = {
@@ -239,9 +252,8 @@ local function GetKeystoneLevelandColor()
 end
 
 function mMT:GetDungeonInfo(datatext, short)
-	local name, instanceType, difficultyID, difficultyName, maxPlayers, dynamicDifficulty, isDynamic, instanceID, instanceGroupSize, LfgDungeonID =
-		GetInstanceInfo()
-	local inInstance, InstanceType = IsInInstance()
+	local name, _, difficultyID, _, _, _, _, instanceID, instanceGroupSize, _ = GetInstanceInfo()
+	local _, InstanceType = IsInInstance()
 
 	name = shortNames[instanceID] or mMT:ShortName(name)
 
@@ -345,9 +357,8 @@ function UpdateDifficulty()
 	guild:Hide()
 	challenge:Hide()
 
-	local name, instanceType, difficultyID, difficultyName, maxPlayers, dynamicDifficulty, isDynamic, instanceID, instanceGroupSize, LfgDungeonID =
-		GetInstanceInfo()
-	local inInstance, InstanceType = IsInInstance()
+	local name, _, _, _, _, _, _, _, _, _ = GetInstanceInfo()
+	local inInstance, _ = IsInInstance()
 
 	if inInstance and name then
 		mIDF.Text:SetText(mMT:GetDungeonInfo())

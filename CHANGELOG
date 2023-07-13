@@ -1,6 +1,25 @@
 # Changelog - ElvUI_mMediaTag
 [Eng] - All changes to this project will be documented in this file. The latest changes are at the top.
 
+## [ver. 3.16] - 13.07.2023
+### Update
+- Toc Update for Retail and WOTLK
+- Add Scenario Quest IDs to Instance difficulty text.
+- Change the Leader Icon position on Score Datatext
+- Update targeting players indicator texture for the SQ one
+- Update MediaPack chat command feedback
+- Update Defaults
+### FIX
+- Fixed Datatext Color function String
+- Fixed Datatext Score Leys reset function
+- Fixed Dock icons not updating, if you change to an other one
+- Fixed Texture offset for Tags
+- Fixed Dock Achievement Tooltip and Tooltip Icons
+- Fixed Nil error with Datatext Tooltips
+### NEW
+- NEW tags mClass:icon:boss and mClass:icon:rare
+- AFK Screen with Additional information's
+
 ## [ver. 3.15] - 17.06.2023
 ### Update
 - Score datatext can now show the keystones and Itemlevel of your group (requires LibOpenRaid or Details)

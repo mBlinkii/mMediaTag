@@ -2,7 +2,7 @@ local E = unpack(ElvUI)
 local CH = E:GetModule("Chat")
 local UF = E:GetModule("UnitFrames")
 
-local sizeString = ":16:16:0:0:64:64:4:60:4:60"
+local sizeString = ":15:15"
 
 function mMT:mStartRoleSmbols()
 	local icons =
