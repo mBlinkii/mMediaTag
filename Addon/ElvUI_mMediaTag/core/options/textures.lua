@@ -349,6 +349,14 @@ local function configTable()
 				},
 			},
 		},
+		preview = {
+			type = "description",
+			name = "",
+			order = 4,
+			image = function()
+				return "Interface\\Addons\\!mMT_MediaPack\\media\\misc\\texture_preview.tga", 512, 256
+			end,
+		},
 	}
 end
 
