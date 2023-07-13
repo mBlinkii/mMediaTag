@@ -52,12 +52,11 @@ end
 local function OnClick(self)
 	if mMT:CheckCombatLockdown() then
 		mMT:mOnClick(self, "CheckFrameEncounterJournal")
-		if not IsAddOnLoaded("Blizzard_EncounterJournal") then
-			UIParentLoadAddOn("Blizzard_EncounterJournal")
+
+		if not _G.EncounterJournal then
+			_G.EncounterJournal_LoadUI()
 		end
-		if not EncounterJournal:IsShown() then
-			EncounterJournal_OpenJournal()
-		else
+		if _G.EncounterJournal then
 			ToggleFrame(_G.EncounterJournal)
 		end
 	end

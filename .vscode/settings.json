@@ -306,7 +306,9 @@
         "LEVEL",
         "ITEM_UPGRADE_STAT_AVERAGE_ITEM_LEVEL",
         "AFK",
-        "EncounterJournal_OpenJournal"
+        "EncounterJournal_OpenJournal",
+        "CollectionsMicroButton",
+        "EncounterJournal_LoadUI"
     ],
     "Lua.diagnostics.disable": [
         "undefined-field"
