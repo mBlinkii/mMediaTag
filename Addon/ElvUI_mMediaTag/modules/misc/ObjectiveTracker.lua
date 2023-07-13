@@ -398,7 +398,7 @@ local function SkinOBTScenario(numCriteria, objectiveBlock)
 				if child.Icon then
 					local current, required, details = strmatch(LineText, "^(%d-)/(%d-) (.+)")
 					if (current ~= nil or required ~= nil) and current == required then
-						child.Icon:SetTexture(mMT.Media.MiscIcons["DONE1"])
+						child.Icon:SetTexture(mMT.Media.MiscIcons["DONE01"])
 					else
 						if E.db.mMT.objectivetracker.dash.style == "icon" then
 							child.Icon:SetTexture(mMT.Media.DashIcons[E.db.mMT.objectivetracker.dash.texture])

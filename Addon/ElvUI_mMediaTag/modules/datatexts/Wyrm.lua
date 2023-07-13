@@ -33,6 +33,10 @@ local Currency = {
 
 local FRAGMENTS_EARNED = gsub(_G.ITEM_UPGRADE_FRAGMENTS_TOTAL, "%s*|c.+$", "")
 local function OnEnter(self)
+	if Currency.loaded then
+		mMT:GetCurrenciesInfo(Currency, true)
+	end
+
     DT.tooltip:ClearLines()
 	if not hide then
 		DT:SetupTooltip(self)

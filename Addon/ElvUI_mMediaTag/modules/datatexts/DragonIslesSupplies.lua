@@ -21,6 +21,10 @@ local Currency = {
 }
 
 local function OnEnter(self)
+	if Currency.loaded then
+		mMT:GetCurrenciesInfo(Currency)
+	end
+
 	DT.tooltip:ClearLines()
 	if not hide then
 		DT:SetupTooltip(self)

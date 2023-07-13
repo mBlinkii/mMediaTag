@@ -101,18 +101,18 @@ mMT.Media.DashIcons = {
 }
 
 mMT.Media.MiscIcons = {
-	DONE1 = "Interface\\AddOns\\ElvUI_mMediaTag\\media\\icons\\misc\\done1.tga",
-	DONE2 = "Interface\\AddOns\\ElvUI_mMediaTag\\media\\icons\\misc\\done2.tga",
-	DONE3 = "Interface\\AddOns\\ElvUI_mMediaTag\\media\\icons\\misc\\done3.tga",
-	DONE4 = "Interface\\AddOns\\ElvUI_mMediaTag\\media\\icons\\misc\\done4.tga",
-	DONE5 = "Interface\\AddOns\\ElvUI_mMediaTag\\media\\icons\\misc\\done5.tga",
-	DONE6 = "Interface\\AddOns\\ElvUI_mMediaTag\\media\\icons\\misc\\done6.tga",
-	CLOSE1 = "Interface\\AddOns\\ElvUI_mMediaTag\\media\\icons\\misc\\x1.tga",
-	CLOSE2 = "Interface\\AddOns\\ElvUI_mMediaTag\\media\\icons\\misc\\x2.tga",
-	CLOSE3 = "Interface\\AddOns\\ElvUI_mMediaTag\\media\\icons\\misc\\x3.tga",
-	CLOSE4 = "Interface\\AddOns\\ElvUI_mMediaTag\\media\\icons\\misc\\x4.tga",
-	CLOSE5 = "Interface\\AddOns\\ElvUI_mMediaTag\\media\\icons\\misc\\x5.tga",
-	CLOSE6 = "Interface\\AddOns\\ElvUI_mMediaTag\\media\\icons\\tags\\dc2.tga",
+	DONE01 = "Interface\\AddOns\\ElvUI_mMediaTag\\media\\icons\\misc\\done1.tga",
+	DONE02 = "Interface\\AddOns\\ElvUI_mMediaTag\\media\\icons\\misc\\done2.tga",
+	DONE03 = "Interface\\AddOns\\ElvUI_mMediaTag\\media\\icons\\misc\\done3.tga",
+	DONE04 = "Interface\\AddOns\\ElvUI_mMediaTag\\media\\icons\\misc\\done4.tga",
+	DONE05 = "Interface\\AddOns\\ElvUI_mMediaTag\\media\\icons\\misc\\done5.tga",
+	DONE06 = "Interface\\AddOns\\ElvUI_mMediaTag\\media\\icons\\misc\\done6.tga",
+	CLOSE01 = "Interface\\AddOns\\ElvUI_mMediaTag\\media\\icons\\misc\\x1.tga",
+	CLOSE02 = "Interface\\AddOns\\ElvUI_mMediaTag\\media\\icons\\misc\\x2.tga",
+	CLOSE03 = "Interface\\AddOns\\ElvUI_mMediaTag\\media\\icons\\misc\\x3.tga",
+	CLOSE04 = "Interface\\AddOns\\ElvUI_mMediaTag\\media\\icons\\misc\\x4.tga",
+	CLOSE05 = "Interface\\AddOns\\ElvUI_mMediaTag\\media\\icons\\misc\\x5.tga",
+	CLOSE06 = "Interface\\AddOns\\ElvUI_mMediaTag\\media\\icons\\tags\\dc2.tga",
 }
 mMT.Media.DNDIcons = {
 	DND1 = "Interface\\AddOns\\ElvUI_mMediaTag\\media\\icons\\tags\\dnd1.tga",

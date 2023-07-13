@@ -479,8 +479,8 @@ P.mMT = {
 				phasing = { r = 0.3, g = 0.5, b = 1 },
 			},
 		},
-		summon = { enable = false, available = "SUM13", rejected = "SUM14", accepted = "SUM15" },
-		resurrection = { enable = false, icon = "RES03" },
-		readycheck = { enable = false, ready = "READY06", notready = "NOTREADY01", waiting = "COLOR26" },
+		summon = { enable = false, available = "SUM10", rejected = "SUM11", accepted = "SUM12" },
+		resurrection = { enable = false, icon = "RES04" },
+		readycheck = { enable = false, ready = "DONE01", notready = "NOTREADY01", waiting = "COLOR26" },
 	},
 }
