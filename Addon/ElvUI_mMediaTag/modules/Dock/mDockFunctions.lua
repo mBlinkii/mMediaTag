@@ -24,6 +24,14 @@ local Defaults = {
 	nfauto = true,
 	update = false,
 }
+
+function mMT:CheckCombatLockdown()
+	if InCombatLockdown() then
+		return false
+	else
+		return true
+	end
+end
 function mMT:UpdateDockSettings()
 	-- update settings
 	Defaults.autogrow = E.db.mMT.dockdatatext.autogrow
