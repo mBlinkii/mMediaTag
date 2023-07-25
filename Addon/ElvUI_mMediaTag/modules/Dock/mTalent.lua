@@ -1,13 +1,7 @@
 local E, L = unpack(ElvUI)
 local DT = E:GetModule("DataTexts")
 
---Lua functions
-local format = format
-
 --Variables
-local mText = format("Dock %s", TALENTS_BUTTON)
-local mTextName = "mTalent"
-
 local _G = _G
 local ipairs = ipairs
 local format, strjoin = format, strjoin
@@ -42,14 +36,22 @@ local specList = {
 	{ text = _G.SPECIALIZATION, isTitle = true, notCheckable = true },
 }
 
-local function mDockCheckFrame()
-	return (PlayerTalentFrame and PlayerTalentFrame:IsShown())
-end
-
-function mMT:CheckFrameTalent(self)
-	self.mIcon.isClicked = mDockCheckFrame()
-	mMT:DockTimer(self)
-end
+local Config = {
+	name = "mMT_Dock_Talent",
+	localizedName = mMT.DockString .. " " .. TALENTS_BUTTON,
+	category = "mMT-" .. mMT.DockString,
+	text = {
+		enable = true,
+		center = false,
+		a = true, -- first label
+		b = false, -- second label
+	},
+	icon = {
+		notification = false,
+		texture = mMT.IconSquare,
+		color = { r = 1, g = 1, b = 1, a = 1 },
+	},
+}
 
 local function OnEnter(self)
 	if E.db.mMT.dockdatatext.tip.enable then
@@ -59,67 +61,36 @@ local function OnEnter(self)
 		local specIndex = DT.SPECIALIZATION_CACHE[sameSpec or specialization]
 
 		if specIndex and specIndex.name then
-			DT.tooltip:AddLine(
-				format("%s%s|r", titel, format(LOOT_SPECIALIZATION_DEFAULT, format("|CFF00FA7D%s|r", specIndex.name)))
-			)
+			DT.tooltip:AddLine(format("%s%s|r", titel, format(LOOT_SPECIALIZATION_DEFAULT, format("|CFF00FA7D%s|r", specIndex.name))))
 
 			for i, info in ipairs(DT.SPECIALIZATION_CACHE) do
-				DT.tooltip:AddLine(
-					strjoin(" ", info.name, mMT:mIcon(info.icon), (i == active and activeString or inactiveString)),
-					1,
-					1,
-					1
-				)
+				DT.tooltip:AddLine(strjoin(" ", info.name, mMT:mIcon(info.icon), (i == active and activeString or inactiveString)), 1, 1, 1)
 			end
 
 			DT.tooltip:AddLine(" ")
-			DT.tooltip:AddLine(
-				format(
-					"%s%s:|r %s%s|r",
-					titel,
-					SELECT_LOOT_SPECIALIZATION,
-					other,
-					sameSpec and format(LOOT_SPECIALIZATION_DEFAULT, format("|CFF00FA7D%s|r", specIndex.name))
-						or specIndex.name
-				)
-			)
+			DT.tooltip:AddLine(format("%s%s:|r %s%s|r", titel, SELECT_LOOT_SPECIALIZATION, other, sameSpec and format(LOOT_SPECIALIZATION_DEFAULT, format("|CFF00FA7D%s|r", specIndex.name)) or specIndex.name))
 		end
 
 		DT.tooltip:AddLine(" ")
-		DT.tooltip:AddLine(
-			format("%s %s%s|r", mMT:mIcon(mMT.Media.Mouse["LEFT"]), tip, L["Left Click: Show Talent Specialization UI"])
-		)
-		DT.tooltip:AddLine(
-			format(
-				"%s %s%s|r",
-				mMT:mIcon(mMT.Media.Mouse["MIDDLE"]),
-				tip,
-				L["Middle Click: Change Talent Specialization"]
-			)
-		)
-		DT.tooltip:AddLine(
-			format("%s %s%s|r", mMT:mIcon(mMT.Media.Mouse["RIGHT"]), tip, L["Right Click: Change Loot Specialization"])
-		)
+		DT.tooltip:AddLine(format("%s %s%s|r", mMT:mIcon(mMT.Media.Mouse["LEFT"]), tip, L["Left Click: Show Talent Specialization UI"]))
+		DT.tooltip:AddLine(format("%s %s%s|r", mMT:mIcon(mMT.Media.Mouse["MIDDLE"]), tip, L["Middle Click: Change Talent Specialization"]))
+		DT.tooltip:AddLine(format("%s %s%s|r", mMT:mIcon(mMT.Media.Mouse["RIGHT"]), tip, L["Right Click: Change Loot Specialization"]))
 		DT.tooltip:Show()
 	end
-	self.mIcon.isClicked = mDockCheckFrame()
-	mMT:mOnEnter(self)
+
+	mMT:Dock_OnEnter(self, Config)
 end
 
 local function OnEvent(self, event, ...)
-	self.mSettings = {
-		Name = mTextName,
-		text = {
-			special = false,
-			textA = E.db.mMT.dockdatatext.talent.showrole,
-			textB = false,
-		},
-		icon = {
-			texture = mMT.Media.DockIcons[E.db.mMT.dockdatatext.talent.icon],
-			color = E.db.mMT.dockdatatext.talent.iconcolor,
-			customcolor = E.db.mMT.dockdatatext.talent.customcolor,
-		},
-	}
+	if event == "ELVUI_FORCE_UPDATE" then
+		--setup settings
+		Config.text.enable = E.db.mMT.dockdatatext.talent.showrole
+		Config.text.a = E.db.mMT.dockdatatext.talent.showrole
+		Config.icon.texture = mMT.Media.DockIcons[E.db.mMT.dockdatatext.talent.icon]
+		Config.icon.color = E.db.mMT.dockdatatext.talent.customcolor and E.db.mMT.dockdatatext.talent.iconcolor or nil
+
+		mMT:InitializeDockIcon(self, Config, event)
+	end
 
 	if E.db.mMT.roleicons.enable then
 		TANK_ICON = E:TextureString(mMT.Media.Role[E.db.mMT.roleicons.tank], ":14:14")
@@ -154,7 +125,6 @@ local function OnEvent(self, event, ...)
 	end
 
 	local specIndex = GetSpecialization()
-	local specialization = GetLootSpecialization()
 	local info = DT.SPECIALIZATION_CACHE[specIndex]
 
 	if info then
@@ -169,14 +139,15 @@ local function OnEvent(self, event, ...)
 			if Role == "TANK" then
 				text = TANK_ICON
 			elseif Role == "HEALER" then
-				text =  HEALER_ICON
+				text = HEALER_ICON
 			else
 				text = DPS_ICON
 			end
+			self.mMT_Dock.TextA:SetText(text)
 		end
+	else
+		self.mMT_Dock.TextA:SetText("")
 	end
-
-	mMT:DockInitialization(self, event, text)
 end
 
 local function OnLeave(self)
@@ -184,12 +155,12 @@ local function OnLeave(self)
 		DT.tooltip:Hide()
 	end
 
-	self.mIcon.isClicked = mDockCheckFrame()
-	mMT:mOnLeave(self)
+	mMT:Dock_OnLeave(self, Config)
 end
 
 local function OnClick(self, button)
 	if mMT:CheckCombatLockdown() then
+		mMT:Dock_Click(self, Config)
 		local specIndex = GetSpecialization()
 		if not specIndex then
 			return
@@ -210,10 +181,4 @@ local function OnClick(self, button)
 	end
 end
 
-DT:RegisterDatatext(mTextName, "mDock", {
-	"CHARACTER_POINTS_CHANGED",
-	"PLAYER_TALENT_UPDATE",
-	"ACTIVE_TALENT_GROUP_CHANGED",
-	"PLAYER_LOOT_SPEC_UPDATED",
-	"GROUP_ROSTER_UPDATE",
-}, OnEvent, nil, OnClick, OnEnter, OnLeave, mText, nil, nil)
+DT:RegisterDatatext(Config.name, Config.category, { "CHARACTER_POINTS_CHANGED", "PLAYER_TALENT_UPDATE", "ACTIVE_TALENT_GROUP_CHANGED", "PLAYER_LOOT_SPEC_UPDATED", "GROUP_ROSTER_UPDATE" }, OnEvent, nil, OnClick, OnEnter, OnLeave, Config.localizedName, nil, nil)

@@ -7,8 +7,22 @@ local format = format
 --Variables
 local _G = _G
 local enteredFrame = false
-local mText = format("Dock %s", L["FPS/ MS"])
-local mTextName = "mFPSMS"
+local Config = {
+	name = "mMT_Dock_FPSMS",
+	localizedName = mMT.DockString .. " " .. L["FPS/ MS"],
+	category = "mMT-" .. mMT.DockString,
+	text = {
+		enable = true,
+		center = true,
+		a = true, -- first label
+		b = true, -- second label
+	},
+	icon = {
+		notification = false,
+		texture = mMT.IconSquare,
+		color = { r = 1, g = 1, b = 1, a = 1 },
+	},
+}
 local statusColors = {
 	"|cff0CD809",
 	"|cffE8DA0F",
@@ -16,59 +30,27 @@ local statusColors = {
 	"|cffD80909",
 }
 
-local function mDockCheckFrame()
-	return (GameMenuFrame and GameMenuFrame:IsShown())
-end
-
-function mMT:CheckFrameFPSMS(self)
-	self.mIcon.isClicked = mDockCheckFrame()
-	mMT:DockTimer(self)
-end
-
 local function OnEnter(self, count)
-	self.mIcon.isClicked = mDockCheckFrame()
-	mMT:mOnEnter(self, "CheckFrameFPSMS")
+	mMT:Dock_OnEnter(self, Config)
 
 	if E.db.mMT.dockdatatext.tip.enable then
 		local _, _, _, _, other, titel, tip = mMT:mColorDatatext()
 
 		local framerate = GetFramerate()
 		local _, _, latencyHome, latencyWorld = GetNetStats()
-		local fps = framerate >= 30 and 1
-			or (framerate >= 20 and framerate < 30) and 2
-			or (framerate >= 10 and framerate < 20) and 3
-			or 4
-		local pingHome = latencyHome < 150 and 1
-			or (latencyHome >= 150 and latencyHome < 300) and 2
-			or (latencyHome >= 300 and latencyHome < 500) and 3
-			or 4
-		local pingWorld = latencyWorld < 150 and 1
-			or (latencyWorld >= 150 and latencyWorld < 300) and 2
-			or (latencyWorld >= 300 and latencyWorld < 500) and 3
-			or 4
+		local fps = framerate >= 30 and 1 or (framerate >= 20 and framerate < 30) and 2 or (framerate >= 10 and framerate < 20) and 3 or 4
+		local pingHome = latencyHome < 150 and 1 or (latencyHome >= 150 and latencyHome < 300) and 2 or (latencyHome >= 300 and latencyHome < 500) and 3 or 4
+		local pingWorld = latencyWorld < 150 and 1 or (latencyWorld >= 150 and latencyWorld < 300) and 2 or (latencyWorld >= 300 and latencyWorld < 500) and 3 or 4
 
 		local bandwidthIn, bandwidthOut, latencyHome, latencyWorld = GetNetStats()
-		DT.tooltip:AddDoubleLine(
-			format("%s%s|r", L["FPS:"], titel),
-			format("%s%d|r %sFPS", statusColors[fps], framerate, other)
-		)
-		DT.tooltip:AddDoubleLine(
-			format("%s%s|r", L["Home Latency:"], titel),
-			format("%s%d|r %sms", statusColors[pingHome], latencyHome, other)
-		)
-		DT.tooltip:AddDoubleLine(
-			format("%s%s|r", L["World Latency:"], titel),
-			format("%s%d|r %sms", statusColors[pingWorld], latencyWorld, other)
-		)
+		DT.tooltip:AddDoubleLine(format("%s%s|r", L["FPS:"], titel), format("%s%d|r %sFPS", statusColors[fps], framerate, other))
+		DT.tooltip:AddDoubleLine(format("%s%s|r", L["Home Latency:"], titel), format("%s%d|r %sms", statusColors[pingHome], latencyHome, other))
+		DT.tooltip:AddDoubleLine(format("%s%s|r", L["World Latency:"], titel), format("%s%d|r %sms", statusColors[pingWorld], latencyWorld, other))
 		DT.tooltip:AddLine(" ")
 		DT.tooltip:AddDoubleLine(mMT.Name, format("%sVer.|r %s%s|r", titel, other, mMT.Version))
 		DT.tooltip:AddLine(" ")
-		DT.tooltip:AddLine(
-			format("%s %s%s|r", mMT:mIcon(mMT.Media.Mouse["LEFT"]), tip, L["Click left to open the main menu."])
-		)
-		DT.tooltip:AddLine(
-			format("%s %s%s|r", mMT:mIcon(mMT.Media.Mouse["RIGHT"]), tip, L["Right click to open the ElvUI settings."])
-		)
+		DT.tooltip:AddLine(format("%s %s%s|r", mMT:mIcon(mMT.Media.Mouse["LEFT"]), tip, L["Click left to open the main menu."]))
+		DT.tooltip:AddLine(format("%s %s%s|r", mMT:mIcon(mMT.Media.Mouse["RIGHT"]), tip, L["Right click to open the ElvUI settings."]))
 
 		DT.tooltip:Show()
 	end
@@ -84,16 +66,10 @@ local function OnUpdate(self, elapsed)
 		local framerate = floor(GetFramerate())
 		local _, _, _, latency = GetNetStats()
 
-		local fps = framerate >= 30 and 1
-			or (framerate >= 20 and framerate < 30) and 2
-			or (framerate >= 10 and framerate < 20) and 3
-			or 4
-		local ping = latency < 150 and 1
-			or (latency >= 150 and latency < 300) and 2
-			or (latency >= 300 and latency < 500) and 3
-			or 4
+		local fps = framerate >= 30 and 1 or (framerate >= 20 and framerate < 30) and 2 or (framerate >= 10 and framerate < 20) and 3 or 4
+		local ping = latency < 150 and 1 or (latency >= 150 and latency < 300) and 2 or (latency >= 300 and latency < 500) and 3 or 4
 
-		if self.mIcon.TextA and self.mIcon.TextB then
+		if self.mMT_Dock.TextA and self.mMT_Dock.TextB then
 			local Option = E.db.mMT.dockdatatext.fpsms.option
 			local textA = nil
 			local color = nil
@@ -112,7 +88,8 @@ local function OnUpdate(self, elapsed)
 					textA = latency
 				end
 			end
-			mMT:mDockSetText(self, textA, E.db.mMT.dockdatatext.fpsms.text, color)
+			self.mMT_Dock.TextA:SetText((color or "") .. textA .. "|r")
+			self.mMT_Dock.TextB:SetText(E.db.mMT.dockdatatext.fpsms.text)
 		end
 
 		if not enteredFrame then
@@ -134,22 +111,13 @@ local function OnUpdate(self, elapsed)
 end
 
 local function OnEvent(self, event, ...)
-	self.mSettings = {
-		Name = mTextName,
-		text = {
-			onlytext = false,
-			special = true,
-			textA = true,
-			textB = true,
-		},
-		icon = {
-			texture = mMT.Media.DockIcons[E.db.mMT.dockdatatext.fpsms.icon],
-			color = E.db.mMT.dockdatatext.fpsms.iconcolor,
-			customcolor = E.db.mMT.dockdatatext.fpsms.customcolor,
-		},
-	}
+	if event == "ELVUI_FORCE_UPDATE" then
+		--setup settings
+		Config.icon.texture = mMT.Media.DockIcons[E.db.mMT.dockdatatext.fpsms.icon]
+		Config.icon.color = E.db.mMT.dockdatatext.fpsms.customcolor and E.db.mMT.dockdatatext.fpsms.iconcolor or nil
 
-	mMT:DockInitialization(self, event)
+		mMT:InitializeDockIcon(self, Config, event)
+	end
 end
 
 local function OnLeave(self)
@@ -157,13 +125,12 @@ local function OnLeave(self)
 		DT.tooltip:Hide()
 	end
 
-	self.mIcon.isClicked = mDockCheckFrame()
-	mMT:mOnLeave(self)
+	mMT:Dock_OnLeave(self, Config)
 end
 
 local function OnClick(self, button)
 	if mMT:CheckCombatLockdown() then
-		mMT:mOnClick(self, "CheckFrameFPSMS")
+		mMT:Dock_Click(self, Config)
 		if button == "LeftButton" then
 			if not _G.GameMenuFrame:IsShown() then
 				if not E.Retail then
@@ -194,4 +161,4 @@ local function OnClick(self, button)
 	end
 end
 
-DT:RegisterDatatext(mTextName, "mDock", nil, OnEvent, OnUpdate, OnClick, OnEnter, OnLeave, mText, nil, nil)
+DT:RegisterDatatext(Config.name, Config.category, nil, OnEvent, OnUpdate, OnClick, OnEnter, OnLeave, Config.localizedName, nil, nil)

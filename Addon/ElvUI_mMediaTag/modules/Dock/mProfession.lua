@@ -6,10 +6,23 @@ local format = format
 
 --Variables
 local _G = _G
-local mText = format("Dock %s", L["Professions"])
-local mTextName = "mProfession"
-local menuFrame = CreateFrame("Frame", "mProfessionMenu", E.UIParent, "BackdropTemplate")
-menuFrame:SetTemplate("Transparent", true)
+local Config = {
+	name = "mMT_Dock_Profession",
+	localizedName = mMT.DockString .. " " .. TRADE_SKILLS,
+	category = "mMT-" .. mMT.DockString,
+	icon = {
+		notification = false,
+		texture = mMT.IconSquare,
+		color = { r = 1, g = 1, b = 1, a = 1 },
+	},
+	misc = {
+		secure = true,
+		macroA = "/click SpellbookMicroButton\n/click SpellBookFrameTabButton2",
+		funcOnEnter = nil,
+		funcOnLeave = nil,
+	},
+}
+
 local ProfessionsList = {}
 local ProfessionsColor = {
 	[129] = "|CFFF32AFC", -- First Aid
@@ -28,15 +41,6 @@ local ProfessionsColor = {
 	[773] = "|CFFFEE4E9", -- Inscription
 	[794] = "|CFFE4FEF1", -- Archeology
 }
-
-local function mDockCheckFrame()
-	return (SpellBookFrame and SpellBookFrame:IsShown())
-end
-
-function mMT:CheckFrameProfession(self)
-	self.mIcon.isClicked = mDockCheckFrame()
-	mMT:DockTimer(self)
-end
 
 local function getProfName(index)
 	local name, icon, _, _, _, _, skillLine, _, _, _ = GetProfessionInfo(index)
@@ -213,74 +217,57 @@ local function LoadProfessions()
 end
 
 local function mLoadTooltip()
-	local _, _, _, _, other, titel, tip = mMT:mColorDatatext()
+	local _, _, _, _, _, _, tip = mMT:mColorDatatext()
 
 	LoadProfessions()
 
 	if ProfessionsList.NoProfession then
-		DT.tooltip:AddLine(format("%s%s|r", "|CFFE74C3C", L["No Professions|r"]))
+		GameTooltip:AddLine(format("%s%s|r", "|CFFE74C3C", L["No Professions|r"]))
 	else
 		for i = 1, ProfessionsList.Index, 1 do
 			if not ProfessionsList.List[i].isTitle then
-				DT.tooltip:AddDoubleLine(ProfessionsList.List[i].text, ProfessionsList.List[i].Secondtext)
+				GameTooltip:AddDoubleLine(ProfessionsList.List[i].text, ProfessionsList.List[i].Secondtext)
 			end
 		end
 	end
 
-	DT.tooltip:AddLine(L[" "])
-	DT.tooltip:AddLine(format("%s %s%s|r", mMT:mIcon(mMT.Media.Mouse["LEFT"]), tip, L["left click to open the menu."]))
-	DT.tooltip:AddLine(format("%s %s%s|r", mMT:mIcon(mMT.Media.Mouse["RIGHT"]), tip, L["right click to open the profession window."]))
+	GameTooltip:AddLine(L[" "])
+	GameTooltip:AddLine(format("%s %s%s|r", mMT:mIcon(mMT.Media.Mouse["LEFT"]), tip, L["left click to open the profession window."]))
 end
 
 local function OnEnter(self)
 	if E.db.mMT.dockdatatext.tip.enable then
-		DT.tooltip:AddLine(L["Professions"])
+		GameTooltip:ClearLines()
+		GameTooltip:SetOwner(self, "ANCHOR_CURSOR_RIGHT")
+		GameTooltip:AddLine(TRADE_SKILLS)
 		mLoadTooltip()
-		DT.tooltip:Show()
+		GameTooltip:Show()
 	end
-	self.mIcon.isClicked = mDockCheckFrame()
-	mMT:mOnEnter(self, "CheckFrameProfession")
-end
 
-local function OnEvent(self, event, ...)
-	self.mSettings = {
-		Name = mTextName,
-		icon = {
-			texture = mMT.Media.DockIcons[E.db.mMT.dockdatatext.profession.icon],
-			color = E.db.mMT.dockdatatext.profession.iconcolor,
-			customcolor = E.db.mMT.dockdatatext.profession.customcolor,
-		},
-	}
-
-	mMT:DockInitialization(self, event)
+	mMT:Dock_OnEnter(self:GetParent(), Config)
 end
 
 local function OnLeave(self)
 	if E.db.mMT.dockdatatext.tip.enable then
-		DT.tooltip:Hide()
+		GameTooltip:Hide()
 	end
 
-	self.mIcon.isClicked = mDockCheckFrame()
-	mMT:mOnLeave(self)
+
+	mMT:Dock_OnLeave(self:GetParent(), Config)
 end
 
-local function OnClick(self, button)
-	if mMT:CheckCombatLockdown() then
-		if button == "LeftButton" then
-			if ProfessionsList.NoProfession then
-				_G.UIErrorsFrame:AddMessage(format(L["%s: |CFFFF006CNo professions available!|r"], mMT.Name))
-				print(format(L["%s: |CFFFF006CNo professions available!|r"], mMT.Name))
-			else
-				LoadProfessions()
-				mMT:mDropDown(ProfessionsList.List, menuFrame, self, 200, 2)
-			end
-		else
-			mMT:mOnClick(self, "CheckFrameProfession")
-			--ToggleFrame(_G.SpellBookFrame)
-			--ToggleFrame(_G.BOOKTYPE_PROFESSION)
-			ToggleSpellBook(_G.BOOKTYPE_PROFESSION)
-		end
+local function OnEvent(self, event, ...)
+	if event == "ELVUI_FORCE_UPDATE" then
+		--setup settings
+
+		Config.icon.texture = mMT.Media.DockIcons[E.db.mMT.dockdatatext.profession.icon]
+		Config.icon.color = E.db.mMT.dockdatatext.profession.customcolor and E.db.mMT.dockdatatext.profession.iconcolor or nil
+
+		Config.misc.funcOnEnter = OnEnter
+		Config.misc.funcOnLeave = OnLeave
+
+		mMT:InitializeDockIcon(self, Config, event)
 	end
 end
 
-DT:RegisterDatatext(mTextName, "mDock", nil, OnEvent, nil, OnClick, OnEnter, OnLeave, mText, nil, nil)
+DT:RegisterDatatext(Config.name, Config.category, nil, OnEvent, nil, nil, nil, nil, Config.localizedName, nil, nil)

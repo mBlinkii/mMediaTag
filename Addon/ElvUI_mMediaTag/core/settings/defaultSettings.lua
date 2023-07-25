@@ -319,7 +319,7 @@ P.mMT = {
 		fontSize = 12,
 		fontflag = "OUTLINE",
 		customfontcolor = false,
-		fontcolor = { r = 1, g = 1, b = 1, hex = "|cffffffff" },
+		fontcolor = { r = 1, g = 1, b = 1},
 		normal = { r = 1, g = 1, b = 1, a = 1, style = "custom" },
 		hover = { r = 0.5, g = 0.5, b = 0.5, a = 0.75, style = "custom" },
 		click = { r = 0.2, g = 0.2, b = 0.2, a = 1, style = "custom" },
@@ -402,7 +402,6 @@ P.mMT = {
 			customcolor = false,
 		},
 		durability = {
-			onlytext = false,
 			color = true,
 			icon = "COLOR53",
 			iconcolor = { r = 1, g = 1, b = 1, a = 0.75 },
@@ -424,6 +423,7 @@ P.mMT = {
 			a = 0.75,
 			style = "custom",
 			size = 16,
+			auto = true,
 			flash = true,
 		},
 		profession = {
@@ -441,6 +441,7 @@ P.mMT = {
 			option = "us",
 			dateicon = "b",
 			showyear = false,
+			text = flase,
 			icon = "COLOR02",
 			iconcolor = { r = 1, g = 1, b = 1, a = 0.75 },
 			customcolor = false,

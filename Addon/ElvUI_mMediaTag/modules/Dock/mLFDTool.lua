@@ -7,15 +7,30 @@ local format = format
 --WoW API / Variables
 local _G = _G
 local IsInInstance = IsInInstance
+local PVEFrame_ToggleFrame = PVEFrame_ToggleFrame
 
 --Variables
-local mText = format("Dock %s", DUNGEONS_BUTTON)
-local mTextName = "mLFDTool"
-local mInstanceInfoText, keyText, mAffixesText, vaultinforaidText, vaultinfomplusText, vaultinfopvpText =
-	{}, {}, {}, {}, {}, {}
+local mInstanceInfoText, keyText, mAffixesText, vaultinforaidText, vaultinfomplusText, vaultinfopvpText = {}, {}, {}, {}, {}, {}
 local TANK_ICON = E:TextureString(E.Media.Textures.Tank, ":14:14")
 local HEALER_ICON = E:TextureString(E.Media.Textures.Healer, ":14:14")
 local DPS_ICON = E:TextureString(E.Media.Textures.DPS, ":14:14")
+
+local Config = {
+	name = "mMT_Dock_LFDTool",
+	localizedName = mMT.DockString .. " " .. DUNGEONS_BUTTON,
+	category = "mMT-" .. mMT.DockString,
+	text = {
+		enable = true,
+		center = false,
+		a = true, -- first label
+		b = false, -- second label
+	},
+	icon = {
+		notification = true,
+		texture = mMT.IconSquare,
+		color = { r = 1, g = 1, b = 1, a = 1 },
+	},
+}
 
 local function MakeIconString(tank, healer, damage)
 	if E.db.mMT.roleicons.enable then
@@ -36,6 +51,62 @@ local function MakeIconString(tank, healer, damage)
 	end
 
 	return str
+end
+
+local function getCallToArmsInfo()
+	local tankReward = false
+	local healerReward = false
+	local dpsReward = false
+	local unavailable = true
+	local text = nil
+
+	--Dungeons
+	for i = 1, GetNumRandomDungeons() do
+		local id = GetLFGRandomDungeonInfo(i)
+		for x = 1, LFG_ROLE_NUM_SHORTAGE_TYPES do
+			local eligible, forTank, forHealer, forDamage, itemCount = GetLFGRoleShortageRewards(id, x)
+			if eligible and forTank and itemCount > 0 then
+				tankReward = true
+				unavailable = false
+			end
+			if eligible and forHealer and itemCount > 0 then
+				healerReward = true
+				unavailable = false
+			end
+			if eligible and forDamage and itemCount > 0 then
+				dpsReward = true
+				unavailable = false
+			end
+		end
+	end
+
+	--LFR
+	for i = 1, GetNumRFDungeons() do
+		local id = GetRFDungeonInfo(i)
+		for x = 1, LFG_ROLE_NUM_SHORTAGE_TYPES do
+			local eligible, forTank, forHealer, forDamage, itemCount = GetLFGRoleShortageRewards(id, x)
+			if eligible and forTank and itemCount > 0 then
+				tankReward = true
+				unavailable = false
+			end
+			if eligible and forHealer and itemCount > 0 then
+				healerReward = true
+				unavailable = false
+			end
+			if eligible and forDamage and itemCount > 0 then
+				dpsReward = true
+				unavailable = false
+			end
+		end
+	end
+
+	if not unavailable then
+		text = MakeIconString(tankReward, healerReward, dpsReward)
+	else
+		text = ""
+	end
+
+	return text
 end
 
 local function mLFDTooltip()
@@ -77,7 +148,7 @@ local function mLFDTooltip()
 	end
 
 	if E.db.mMT.dockdatatext.lfd.greatvault then
-		local vaultinfohighest, ok = 0, false
+		local vaultinfohighest, ok = nil, false
 		vaultinforaidText, vaultinfomplusText, vaultinfopvpText, vaultinfohighest, ok = mMT:mGetVaultInfo()
 		if ok then
 			DT.tooltip:AddLine(" ")
@@ -88,39 +159,15 @@ local function mLFDTooltip()
 			end
 
 			if vaultinforaidText[1] then
-				DT.tooltip:AddDoubleLine(
-					format("%sRaid|r", myth),
-					format(
-						"%s, %s, %s",
-						vaultinforaidText[1] or "-",
-						vaultinforaidText[2] or "-",
-						vaultinforaidText[3] or "-"
-					)
-				)
+				DT.tooltip:AddDoubleLine(format("%sRaid|r", myth), format("%s, %s, %s", vaultinforaidText[1] or "-", vaultinforaidText[2] or "-", vaultinforaidText[3] or "-"))
 			end
 
 			if vaultinfomplusText[1] then
-				DT.tooltip:AddDoubleLine(
-					format("%sMyth+|r", mythp),
-					format(
-						"%s, %s, %s",
-						vaultinfomplusText[1] or "-",
-						vaultinfomplusText[2] or "-",
-						vaultinfomplusText[3] or "-"
-					)
-				)
+				DT.tooltip:AddDoubleLine(format("%sMyth+|r", mythp), format("%s, %s, %s", vaultinfomplusText[1] or "-", vaultinfomplusText[2] or "-", vaultinfomplusText[3] or "-"))
 			end
 
 			if vaultinfopvpText[1] then
-				DT.tooltip:AddDoubleLine(
-					format("%sPvP|r", hc),
-					format(
-						"%s, %s, %s",
-						vaultinfopvpText[1] or "-",
-						vaultinfopvpText[2] or "-",
-						vaultinfopvpText[3] or "-"
-					)
-				)
+				DT.tooltip:AddDoubleLine(format("%sPvP|r", hc), format("%s, %s, %s", vaultinfopvpText[1] or "-", vaultinfopvpText[2] or "-", vaultinfopvpText[3] or "-"))
 			end
 		end
 		if C_WeeklyRewards.HasAvailableRewards() then
@@ -132,19 +179,8 @@ local function mLFDTooltip()
 	DT.tooltip:AddLine(" ")
 	DT.tooltip:AddLine(format("%s %s%s|r", mMT:mIcon(mMT.Media.Mouse["LEFT"]), tip, L["left click to open LFD Window"]))
 	if E.db.mMT.dockdatatext.lfd.greatvault then
-		DT.tooltip:AddLine(
-			format("%s %s%s|r", mMT:mIcon(mMT.Media.Mouse["RIGHT"]), tip, L["right click to open Great Vault Window"])
-		)
+		DT.tooltip:AddLine(format("%s %s%s|r", mMT:mIcon(mMT.Media.Mouse["RIGHT"]), tip, L["right click to open Great Vault Window"]))
 	end
-end
-
-local function mDockCheckFrame()
-	return (PVEFrame and PVEFrame:IsShown())
-end
-
-function mMT:CheckFrameLFDTool(self)
-	self.mIcon.isClicked = mDockCheckFrame()
-	mMT:DockTimer(self)
 end
 
 function mMT:LFDToolGreatVault(self)
@@ -154,84 +190,22 @@ function mMT:LFDToolGreatVault(self)
 end
 
 local function OnEnter(self)
-	self.mIcon.isClicked = mDockCheckFrame()
-	mMT:mOnEnter(self, "CheckFrameLFDTool")
+	mMT:Dock_OnEnter(self, Config)
 
 	if E.db.mMT.dockdatatext.tip.enable then
+		DT.tooltip:ClearLines()
 		mLFDTooltip()
 		DT.tooltip:Show()
 	end
 end
 
 local function OnEvent(self, event)
-	self.mSettings = {
-		Name = mTextName,
-		text = {
-			special = false,
-			textA = true,
-			textB = false,
-		},
-		icon = {
-			texture = mMT.Media.DockIcons[E.db.mMT.dockdatatext.lfd.icon],
-			color = E.db.mMT.dockdatatext.lfd.iconology,
-			customcolor = E.db.mMT.dockdatatext.lfd.customcolor,
-		},
-		Notifications = true,
-	}
+	if event == "ELVUI_FORCE_UPDATE" then
+		--setup settings
+		Config.icon.texture = mMT.Media.DockIcons[E.db.mMT.dockdatatext.lfd.icon]
+		Config.icon.color = E.db.mMT.dockdatatext.lfd.customcolor and E.db.mMT.dockdatatext.lfd.iconcolor or nil
 
-	local mTextString = ""
-
-	if E.db.mMT.dockdatatext.lfd.cta then
-		local tankReward = false
-		local healerReward = false
-		local dpsReward = false
-		local unavailable = true
-
-		--Dungeons
-		for i = 1, GetNumRandomDungeons() do
-			local id = GetLFGRandomDungeonInfo(i)
-			for x = 1, LFG_ROLE_NUM_SHORTAGE_TYPES do
-				local eligible, forTank, forHealer, forDamage, itemCount = GetLFGRoleShortageRewards(id, x)
-				if eligible and forTank and itemCount > 0 then
-					tankReward = true
-					unavailable = false
-				end
-				if eligible and forHealer and itemCount > 0 then
-					healerReward = true
-					unavailable = false
-				end
-				if eligible and forDamage and itemCount > 0 then
-					dpsReward = true
-					unavailable = false
-				end
-			end
-		end
-
-		--LFR
-		for i = 1, GetNumRFDungeons() do
-			local id = GetRFDungeonInfo(i)
-			for x = 1, LFG_ROLE_NUM_SHORTAGE_TYPES do
-				local eligible, forTank, forHealer, forDamage, itemCount = GetLFGRoleShortageRewards(id, x)
-				if eligible and forTank and itemCount > 0 then
-					tankReward = true
-					unavailable = false
-				end
-				if eligible and forHealer and itemCount > 0 then
-					healerReward = true
-					unavailable = false
-				end
-				if eligible and forDamage and itemCount > 0 then
-					dpsReward = true
-					unavailable = false
-				end
-			end
-		end
-
-		if not unavailable then
-			mTextString = MakeIconString(tankReward, healerReward, dpsReward)
-		else
-			mTextString = ""
-		end
+		mMT:InitializeDockIcon(self, Config, event)
 	end
 
 	local inInstance, _ = IsInInstance()
@@ -239,25 +213,23 @@ local function OnEvent(self, event)
 	local isRaid = IsInRaid()
 	local text = nil
 
+	if E.db.mMT.dockdatatext.lfd.cta and not inInstance then
+		text = getCallToArmsInfo()
+	end
+
 	if E.db.mMT.dockdatatext.lfd.difficulty and (inInstance or isGroup) then
 		if inInstance then
 			text = mMT:GetDungeonInfo(true, true)
 		elseif isGroup then
-			text = mMT:InctanceDifficultyDungeon()
+			text = mMT:InstanceDifficultyDungeon()
 		elseif isRaid then
-			text = mMT:InctanceDifficultyRaid()
+			text = mMT:InstanceDifficultyRaid()
 		end
-	else
-		text = mTextString
 	end
 
-	mMT:DockInitialization(self, event, text)
+	self.mMT_Dock.TextA:SetText(text or "")
 
-	mMT:ShowHideNotification(
-		self,
-		(E.db.mMT.dockdatatext.lfd.greatvault and C_WeeklyRewards.HasAvailableRewards()),
-		"LFDToolGreatVault"
-	)
+	mMT:UpdateNotificationState(self, C_WeeklyRewards.HasAvailableRewards())
 end
 
 local function OnLeave(self)
@@ -265,16 +237,16 @@ local function OnLeave(self)
 		DT.tooltip:Hide()
 	end
 
-	self.mIcon.isClicked = mDockCheckFrame()
-	mMT:mOnLeave(self)
+	mMT:Dock_OnLeave(self, Config)
 end
 
 local function OnClick(self, button)
+	mMT:UpdateNotificationState(self, C_WeeklyRewards.HasAvailableRewards())
 	if mMT:CheckCombatLockdown() then
-		mMT:mOnClick(self, "CheckFrameLFDTool")
+		mMT:Dock_Click(self, Config)
 		if E.db.mMT.dockdatatext.lfd.greatvault then
 			if button == "LeftButton" then
-				_G.ToggleLFDParentFrame()
+				PVEFrame_ToggleFrame("GroupFinderFrame", _G.LFDParentFrame)
 			else
 				if not _G.WeeklyRewardsFrame then
 					LoadAddOn("Blizzard_WeeklyRewards")
@@ -286,15 +258,9 @@ local function OnClick(self, button)
 				end
 			end
 		else
-			ToggleLFDParentFrame()
+			PVEFrame_ToggleFrame("GroupFinderFrame", _G.LFDParentFrame)
 		end
 	end
 end
 
-DT:RegisterDatatext(mTextName, "mDock", {
-	"LFG_UPDATE_RANDOM_INFO",
-	"CHALLENGE_MODE_START",
-	"CHAT_MSG_SYSTEM",
-	"LOADING_SCREEN_DISABLED",
-	"GROUP_ROSTER_UPDATE",
-}, OnEvent, nil, OnClick, OnEnter, OnLeave, mText, nil, nil)
+DT:RegisterDatatext(Config.name, Config.category, { "LFG_UPDATE_RANDOM_INFO", "CHALLENGE_MODE_START", "CHALLENGE_MODE_RESET", "CHALLENGE_MODE_COMPLETED", "GROUP_ROSTER_UPDATE", "CHAT_MSG_LOOT" }, OnEvent, nil, OnClick, OnEnter, OnLeave, Config.localizedName, nil, nil)

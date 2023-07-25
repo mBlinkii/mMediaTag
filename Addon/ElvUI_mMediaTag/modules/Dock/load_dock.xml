@@ -21,4 +21,8 @@
 	<Script file="mTalent.lua"/>
 	<Script file="mVolume.lua"/>
 	<Script file="mBags.lua"/>
+
+	<Script file="newDock.lua"/>
+	<Script file="newDockB.lua"/>
+	<Script file="newDockFunctions.lua"/>
 </Ui>

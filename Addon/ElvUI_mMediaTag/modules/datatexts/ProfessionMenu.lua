@@ -243,8 +243,9 @@ local function OnClick(self, button)
 	else
 		if mMT:CheckCombatLockdown() then
 			--ToggleFrame(_G.BOOKTYPE_PROFESSION)
-			--ToggleFrame(_G.SpellBookFrame)
+			ToggleFrame(_G.SpellBookFrame)
 			ToggleSpellBook(_G.BOOKTYPE_PROFESSION)
+			--ToggleSpellBook(self.bookType)
 		end
 	end
 	ProfessionsList = wipe(ProfessionsList)

@@ -52,6 +52,7 @@ local function configTable()
 							end,
 							set = function(info, value)
 								E.db.mMT.dockdatatext.normal.style = value
+								mMT:UpdateDockSettings()
 								DT:LoadDataTexts()
 							end,
 							values = {
@@ -71,6 +72,7 @@ local function configTable()
 							set = function(info, r, g, b, a)
 								local t = E.db.mMT.dockdatatext.normal
 								t.r, t.g, t.b, t.a = r, g, b, a
+								mMT:UpdateDockSettings()
 								DT:LoadDataTexts()
 							end,
 						},
@@ -88,6 +90,7 @@ local function configTable()
 							end,
 							set = function(info, value)
 								E.db.mMT.dockdatatext.hover.style = value
+								mMT:UpdateDockSettings()
 								DT:LoadDataTexts()
 							end,
 							values = {
@@ -107,6 +110,7 @@ local function configTable()
 							set = function(info, r, g, b, a)
 								local t = E.db.mMT.dockdatatext.hover
 								t.r, t.g, t.b, t.a = r, g, b, a
+								mMT:UpdateDockSettings()
 								DT:LoadDataTexts()
 							end,
 						},
@@ -124,6 +128,7 @@ local function configTable()
 							end,
 							set = function(info, value)
 								E.db.mMT.dockdatatext.click.style = value
+								mMT:UpdateDockSettings()
 								DT:LoadDataTexts()
 							end,
 							values = {
@@ -143,6 +148,7 @@ local function configTable()
 							set = function(info, r, g, b, a)
 								local t = E.db.mMT.dockdatatext.click
 								t.r, t.g, t.b, t.a = r, g, b, a
+								mMT:UpdateDockSettings()
 								DT:LoadDataTexts()
 							end,
 						},
@@ -160,6 +166,7 @@ local function configTable()
 							end,
 							set = function(info, value)
 								E.db.mMT.dockdatatext.notification.style = value
+								mMT:UpdateDockSettings()
 								DT:LoadDataTexts()
 							end,
 							values = {
@@ -179,6 +186,7 @@ local function configTable()
 							set = function(info, r, g, b, a)
 								local t = E.db.mMT.dockdatatext.notification
 								t.r, t.g, t.b, t.a = r, g, b, a
+								mMT:UpdateDockSettings()
 								DT:LoadDataTexts()
 							end,
 						},
@@ -200,6 +208,7 @@ local function configTable()
 							end,
 							set = function(info, value)
 								E.db.mMT.dockdatatext.tip.enable = value
+								mMT:UpdateDockSettings()
 							end,
 						},
 						dockgeneralautogrow = {
@@ -211,6 +220,7 @@ local function configTable()
 							end,
 							set = function(info, value)
 								E.db.mMT.dockdatatext.autogrow = value
+								mMT:UpdateDockSettings()
 								DT:LoadDataTexts()
 							end,
 						},
@@ -228,6 +238,7 @@ local function configTable()
 							end,
 							set = function(info, value)
 								E.db.mMT.dockdatatext.growsize = value
+								mMT:UpdateDockSettings()
 								DT:LoadDataTexts()
 							end,
 							disabled = function()
@@ -254,7 +265,7 @@ local function configTable()
 							end,
 							set = function(info, value)
 								E.db.mMT.dockdatatext.font = value
-								mMT:mDockUpdateFont()
+								mMT:UpdateDockSettings()
 								DT:LoadDataTexts()
 							end,
 						},
@@ -268,7 +279,7 @@ local function configTable()
 							end,
 							set = function(info, value)
 								E.db.mMT.dockdatatext.fontflag = value
-								mMT:mDockUpdateFont()
+								mMT:UpdateDockSettings()
 								DT:LoadDataTexts()
 							end,
 						},
@@ -286,7 +297,7 @@ local function configTable()
 							end,
 							set = function(info, value)
 								E.db.mMT.dockdatatext.customfontzise = value
-								mMT:mDockUpdateFont()
+								mMT:UpdateDockSettings()
 								DT:LoadDataTexts()
 							end,
 						},
@@ -304,7 +315,7 @@ local function configTable()
 							end,
 							set = function(info, value)
 								E.db.mMT.dockdatatext.fontSize = value
-								mMT:mDockUpdateFont()
+								mMT:UpdateDockSettings()
 								DT:LoadDataTexts()
 							end,
 							disabled = function()
@@ -325,7 +336,7 @@ local function configTable()
 							end,
 							set = function(info, value)
 								E.db.mMT.dockdatatext.customfontcolor = value
-								mMT:mDockUpdateFont()
+								mMT:UpdateDockSettings()
 								DT:LoadDataTexts()
 							end,
 						},
@@ -340,7 +351,8 @@ local function configTable()
 							end,
 							set = function(info, r, g, b)
 								local t = E.db.mMT.dockdatatext.fontcolor
-								t.r, t.g, t.b, t.hex = r, g, b, E:RGBToHex(r, g, b)
+								t.r, t.g, t.b = r, g, b
+								mMT:UpdateDockSettings()
 								DT:LoadDataTexts()
 							end,
 						},
@@ -365,7 +377,7 @@ local function configTable()
 					end,
 					set = function(info, value)
 						E.db.mMT.dockdatatext.achievement.icon = value
-						DT:ForceUpdate_DataText("mAchievement")
+						DT:ForceUpdate_DataText("mMT_Dock_Achievement")
 					end,
 					values = icons,
 				},
@@ -383,7 +395,7 @@ local function configTable()
 					end,
 					set = function(info, value)
 						E.db.mMT.dockdatatext.achievement.customcolor = value
-						DT:ForceUpdate_DataText("mAchievement")
+						DT:ForceUpdate_DataText("mMT_Dock_Achievement")
 					end,
 				},
 				achievmentcolor = {
@@ -401,7 +413,7 @@ local function configTable()
 					set = function(info, r, g, b, a)
 						local t = E.db.mMT.dockdatatext.achievement.iconcolor
 						t.r, t.g, t.b, t.a = r, g, b, a
-						DT:ForceUpdate_DataText("mAchievement")
+						DT:ForceUpdate_DataText("mMT_Dock_Achievement")
 					end,
 				},
 			},
@@ -423,7 +435,7 @@ local function configTable()
 					end,
 					set = function(info, value)
 						E.db.mMT.dockdatatext.blizzardstore.icon = value
-						DT:ForceUpdate_DataText("mBlizzardStore")
+						DT:ForceUpdate_DataText("mMT_Dock_BlizzardStore")
 					end,
 					values = icons,
 				},
@@ -441,7 +453,7 @@ local function configTable()
 					end,
 					set = function(info, value)
 						E.db.mMT.dockdatatext.blizzardstore.customcolor = value
-						DT:ForceUpdate_DataText("mBlizzardStore")
+						DT:ForceUpdate_DataText("mMT_Dock_BlizzardStore")
 					end,
 				},
 				blizzardstorecolor = {
@@ -459,7 +471,7 @@ local function configTable()
 					set = function(info, r, g, b, a)
 						local t = E.db.mMT.dockdatatext.blizzardstore.iconcolor
 						t.r, t.g, t.b, t.a = r, g, b, a
-						DT:ForceUpdate_DataText("mBlizzardStore")
+						DT:ForceUpdate_DataText("mMT_Dock_BlizzardStore")
 					end,
 				},
 			},
@@ -478,7 +490,7 @@ local function configTable()
 					end,
 					set = function(info, value)
 						E.db.mMT.dockdatatext.character.icon = value
-						DT:ForceUpdate_DataText("mCharacter")
+						DT:ForceUpdate_DataText("mMT_Dock_Character")
 					end,
 					values = icons,
 				},
@@ -497,7 +509,7 @@ local function configTable()
 							end,
 							set = function(info, value)
 								E.db.mMT.dockdatatext.character.option = value
-								DT:ForceUpdate_DataText("mCharacter")
+								DT:ForceUpdate_DataText("mMT_Dock_Character")
 							end,
 							values = {
 								none = L["NONE"],
@@ -514,7 +526,7 @@ local function configTable()
 							end,
 							set = function(info, value)
 								E.db.mMT.dockdatatext.character.color = value
-								DT:ForceUpdate_DataText("mCharacter")
+								DT:ForceUpdate_DataText("mMT_Dock_Character")
 							end,
 						},
 					},
@@ -534,7 +546,7 @@ local function configTable()
 							end,
 							set = function(info, value)
 								E.db.mMT.dockdatatext.character.customcolor = value
-								DT:ForceUpdate_DataText("mCharacter")
+								DT:ForceUpdate_DataText("mMT_Dock_Character")
 							end,
 						},
 						charactercolor = {
@@ -552,7 +564,7 @@ local function configTable()
 							set = function(info, r, g, b, a)
 								local t = E.db.mMT.dockdatatext.character.iconcolor
 								t.r, t.g, t.b, t.a = r, g, b, a
-								DT:ForceUpdate_DataText("mCharacter")
+								DT:ForceUpdate_DataText("mMT_Dock_Character")
 							end,
 						},
 					},
@@ -576,7 +588,7 @@ local function configTable()
 					end,
 					set = function(info, value)
 						E.db.mMT.dockdatatext.collection.icon = value
-						DT:ForceUpdate_DataText("mCollectionsJournal")
+						DT:ForceUpdate_DataText("mMT_Dock_CollectionsJournal")
 					end,
 					values = icons,
 				},
@@ -594,7 +606,7 @@ local function configTable()
 					end,
 					set = function(info, value)
 						E.db.mMT.dockdatatext.collection.customcolor = value
-						DT:ForceUpdate_DataText("mCollectionsJournal")
+						DT:ForceUpdate_DataText("mMT_Dock_CollectionsJournal")
 					end,
 				},
 				collectioncolor = {
@@ -612,7 +624,7 @@ local function configTable()
 					set = function(info, r, g, b, a)
 						local t = E.db.mMT.dockdatatext.collection.iconcolor
 						t.r, t.g, t.b, t.a = r, g, b, a
-						DT:ForceUpdate_DataText("mCollectionsJournal")
+						DT:ForceUpdate_DataText("mMT_Dock_CollectionsJournal")
 					end,
 				},
 			},
@@ -634,7 +646,7 @@ local function configTable()
 					end,
 					set = function(info, value)
 						E.db.mMT.dockdatatext.encounter.icon = value
-						DT:ForceUpdate_DataText("mEncounterJournal")
+						DT:ForceUpdate_DataText("mMT_Dock_EncounterJournal")
 					end,
 					values = icons,
 				},
@@ -652,7 +664,7 @@ local function configTable()
 					end,
 					set = function(info, value)
 						E.db.mMT.dockdatatext.encounter.customcolor = value
-						DT:ForceUpdate_DataText("mEncounterJournal")
+						DT:ForceUpdate_DataText("mMT_Dock_EncounterJournal")
 					end,
 				},
 				encountercolor = {
@@ -670,7 +682,7 @@ local function configTable()
 					set = function(info, r, g, b, a)
 						local t = E.db.mMT.dockdatatext.encounter.iconcolor
 						t.r, t.g, t.b, t.a = r, g, b, a
-						DT:ForceUpdate_DataText("mEncounterJournal")
+						DT:ForceUpdate_DataText("mMT_Dock_EncounterJournal")
 					end,
 				},
 			},
@@ -689,7 +701,7 @@ local function configTable()
 					end,
 					set = function(info, value)
 						E.db.mMT.dockdatatext.guild.icon = value
-						DT:ForceUpdate_DataText("mGuild")
+						DT:ForceUpdate_DataText("mMT_Dock_Guild")
 					end,
 					values = icons,
 				},
@@ -707,7 +719,7 @@ local function configTable()
 					end,
 					set = function(info, value)
 						E.db.mMT.dockdatatext.guild.customcolor = value
-						DT:ForceUpdate_DataText("mGuild")
+						DT:ForceUpdate_DataText("mMT_Dock_Guild")
 					end,
 				},
 				guildcolor = {
@@ -725,7 +737,7 @@ local function configTable()
 					set = function(info, r, g, b, a)
 						local t = E.db.mMT.dockdatatext.guild.iconcolor
 						t.r, t.g, t.b, t.a = r, g, b, a
-						DT:ForceUpdate_DataText("mGuild")
+						DT:ForceUpdate_DataText("mMT_Dock_Guild")
 					end,
 				},
 			},
@@ -747,7 +759,7 @@ local function configTable()
 					end,
 					set = function(info, value)
 						E.db.mMT.dockdatatext.lfd.icon = value
-						DT:ForceUpdate_DataText("mLFDTool")
+						DT:ForceUpdate_DataText("mMT_Dock_LFDTool")
 					end,
 					values = icons,
 				},
@@ -802,7 +814,7 @@ local function configTable()
 							end,
 							set = function(info, value)
 								E.db.mMT.dockdatatext.lfd.ctm = value
-								DT:ForceUpdate_DataText("mLFDTool")
+								DT:ForceUpdate_DataText("mMT_Dock_LFDTool")
 							end,
 						},
 						docklfdscore = {
@@ -814,7 +826,7 @@ local function configTable()
 							end,
 							set = function(info, value)
 								E.db.mMT.dockdatatext.lfd.score = value
-								DT:ForceUpdate_DataText("mLFDTool")
+								DT:ForceUpdate_DataText("mMT_Dock_LFDTool")
 							end,
 						},
 						docklfddifficulty = {
@@ -826,7 +838,7 @@ local function configTable()
 							end,
 							set = function(info, value)
 								E.db.mMT.dockdatatext.lfd.difficulty = value
-								DT:ForceUpdate_DataText("mLFDTool")
+								DT:ForceUpdate_DataText("mMT_Dock_LFDTool")
 							end,
 						},
 					},
@@ -846,7 +858,7 @@ local function configTable()
 							end,
 							set = function(info, value)
 								E.db.mMT.dockdatatext.lfd.customcolor = value
-								DT:ForceUpdate_DataText("mLFDTool")
+								DT:ForceUpdate_DataText("mMT_Dock_LFDTool")
 							end,
 						},
 						lfdcolor = {
@@ -864,7 +876,7 @@ local function configTable()
 							set = function(info, r, g, b, a)
 								local t = E.db.mMT.dockdatatext.lfd.iconcolor
 								t.r, t.g, t.b, t.a = r, g, b, a
-								DT:ForceUpdate_DataText("mLFDTool")
+								DT:ForceUpdate_DataText("mMT_Dock_LFDTool")
 							end,
 						},
 					},
@@ -885,7 +897,7 @@ local function configTable()
 					end,
 					set = function(info, value)
 						E.db.mMT.dockdatatext.mainmenu.icon = value
-						DT:ForceUpdate_DataText("mMainMenu")
+						DT:ForceUpdate_DataText("mMT_Dock_MainMenu")
 					end,
 					values = icons,
 				},
@@ -903,7 +915,7 @@ local function configTable()
 					end,
 					set = function(info, value)
 						E.db.mMT.dockdatatext.mainmenu.customcolor = value
-						DT:ForceUpdate_DataText("mMainMenu")
+						DT:ForceUpdate_DataText("mMT_Dock_MainMenu")
 					end,
 				},
 				mainmenucolor = {
@@ -921,7 +933,7 @@ local function configTable()
 					set = function(info, r, g, b, a)
 						local t = E.db.mMT.dockdatatext.mainmenu.iconcolor
 						t.r, t.g, t.b, t.a = r, g, b, a
-						DT:ForceUpdate_DataText("mMainMenu")
+						DT:ForceUpdate_DataText("mMT_Dock_MainMenu")
 					end,
 				},
 			},
@@ -940,7 +952,7 @@ local function configTable()
 					end,
 					set = function(info, value)
 						E.db.mMT.dockdatatext.quest.icon = value
-						DT:ForceUpdate_DataText("mQuest")
+						DT:ForceUpdate_DataText("mMT_Dock_Quest")
 					end,
 					values = icons,
 				},
@@ -958,7 +970,7 @@ local function configTable()
 					end,
 					set = function(info, value)
 						E.db.mMT.dockdatatext.quest.customcolor = value
-						DT:ForceUpdate_DataText("mQuest")
+						DT:ForceUpdate_DataText("mMT_Dock_Quest")
 					end,
 				},
 				questcolor = {
@@ -976,7 +988,7 @@ local function configTable()
 					set = function(info, r, g, b, a)
 						local t = E.db.mMT.dockdatatext.quest.iconcolor
 						t.r, t.g, t.b, t.a = r, g, b, a
-						DT:ForceUpdate_DataText("mQuest")
+						DT:ForceUpdate_DataText("mMT_Dock_Quest")
 					end,
 				},
 			},
@@ -995,7 +1007,7 @@ local function configTable()
 					end,
 					set = function(info, value)
 						E.db.mMT.dockdatatext.spellbook.icon = value
-						DT:ForceUpdate_DataText("mSpellBook")
+						DT:ForceUpdate_DataText("mMT_Dock_SpellBook")
 					end,
 					values = icons,
 				},
@@ -1013,7 +1025,7 @@ local function configTable()
 					end,
 					set = function(info, value)
 						E.db.mMT.dockdatatext.spellbook.customcolor = value
-						DT:ForceUpdate_DataText("mSpellBook")
+						DT:ForceUpdate_DataText("mMT_Dock_SpellBook")
 					end,
 				},
 				spellbookcolor = {
@@ -1031,7 +1043,7 @@ local function configTable()
 					set = function(info, r, g, b, a)
 						local t = E.db.mMT.dockdatatext.spellbook.iconcolor
 						t.r, t.g, t.b, t.a = r, g, b, a
-						DT:ForceUpdate_DataText("mSpellBook")
+						DT:ForceUpdate_DataText("mMT_Dock_SpellBook")
 					end,
 				},
 			},
@@ -1053,7 +1065,7 @@ local function configTable()
 					end,
 					set = function(info, value)
 						E.db.mMT.dockdatatext.talent.icon = value
-						DT:ForceUpdate_DataText("mTalent")
+						DT:ForceUpdate_DataText("mMT_Dock_Talent")
 					end,
 					values = icons,
 				},
@@ -1087,7 +1099,7 @@ local function configTable()
 					end,
 					set = function(info, value)
 						E.db.mMT.dockdatatext.talent.customcolor = value
-						DT:ForceUpdate_DataText("mTalent")
+						DT:ForceUpdate_DataText("mMT_Dock_Talent")
 					end,
 				},
 				talentcolor = {
@@ -1105,7 +1117,7 @@ local function configTable()
 					set = function(info, r, g, b, a)
 						local t = E.db.mMT.dockdatatext.talent.iconcolor
 						t.r, t.g, t.b, t.a = r, g, b, a
-						DT:ForceUpdate_DataText("mTalent")
+						DT:ForceUpdate_DataText("mMT_Dock_Talent")
 					end,
 				},
 			},
@@ -1127,7 +1139,7 @@ local function configTable()
 					end,
 					set = function(info, value)
 						E.db.mMT.dockdatatext.itemlevel.icon = value
-						DT:ForceUpdate_DataText("mItemLevel")
+						DT:ForceUpdate_DataText("mMT_Dock_ItemLevel")
 					end,
 					values = icons,
 				},
@@ -1147,7 +1159,7 @@ local function configTable()
 							end,
 							set = function(info, value)
 								E.db.mMT.dockdatatext.itemlevel.text = value
-								DT:ForceUpdate_DataText("mItemLevel")
+								DT:ForceUpdate_DataText("mMT_Dock_ItemLevel")
 							end,
 						},
 						dockitemlevelcolor = {
@@ -1159,19 +1171,7 @@ local function configTable()
 							end,
 							set = function(info, value)
 								E.db.mMT.dockdatatext.itemlevel.color = value
-								DT:ForceUpdate_DataText("mItemLevel")
-							end,
-						},
-						dockitemlevelonlytext = {
-							order = 3,
-							type = "toggle",
-							name = L["Show only Text"],
-							get = function(info)
-								return E.db.mMT.dockdatatext.itemlevel.onlytext
-							end,
-							set = function(info, value)
-								E.db.mMT.dockdatatext.itemlevel.onlytext = value
-								DT:ForceUpdate_DataText("mItemLevel")
+								DT:ForceUpdate_DataText("mMT_Dock_ItemLevel")
 							end,
 						},
 					},
@@ -1191,7 +1191,7 @@ local function configTable()
 							end,
 							set = function(info, value)
 								E.db.mMT.dockdatatext.itemlevel.customcolor = value
-								DT:ForceUpdate_DataText("mItemLevel")
+								DT:ForceUpdate_DataText("mMT_Dock_ItemLevel")
 							end,
 						},
 						itemlevelcolor = {
@@ -1209,7 +1209,7 @@ local function configTable()
 							set = function(info, r, g, b, a)
 								local t = E.db.mMT.dockdatatext.itemlevel.iconcolor
 								t.r, t.g, t.b, t.a = r, g, b, a
-								DT:ForceUpdate_DataText("mItemLevel")
+								DT:ForceUpdate_DataText("mMT_Dock_ItemLevel")
 							end,
 						},
 					},
@@ -1230,7 +1230,7 @@ local function configTable()
 					end,
 					set = function(info, value)
 						E.db.mMT.dockdatatext.friends.icon = value
-						DT:ForceUpdate_DataText("mFriends")
+						DT:ForceUpdate_DataText("mMT_Dock_Friends")
 					end,
 					values = icons,
 				},
@@ -1248,7 +1248,7 @@ local function configTable()
 					end,
 					set = function(info, value)
 						E.db.mMT.dockdatatext.friends.customcolor = value
-						DT:ForceUpdate_DataText("mFriends")
+						DT:ForceUpdate_DataText("mMT_Dock_Friends")
 					end,
 				},
 				friendslcolor = {
@@ -1266,7 +1266,7 @@ local function configTable()
 					set = function(info, r, g, b, a)
 						local t = E.db.mMT.dockdatatext.friends.iconcolor
 						t.r, t.g, t.b, t.a = r, g, b, a
-						DT:ForceUpdate_DataText("mFriends")
+						DT:ForceUpdate_DataText("mMT_Dock_Friends")
 					end,
 				},
 			},
@@ -1285,7 +1285,7 @@ local function configTable()
 					end,
 					set = function(info, value)
 						E.db.mMT.dockdatatext.durability.icon = value
-						DT:ForceUpdate_DataText("mDurability")
+						DT:ForceUpdate_DataText("mMT_Dock_Durability")
 					end,
 					values = icons,
 				},
@@ -1304,19 +1304,7 @@ local function configTable()
 							end,
 							set = function(info, value)
 								E.db.mMT.dockdatatext.durability.color = value
-								DT:ForceUpdate_DataText("mDurability")
-							end,
-						},
-						dockdurabilitytext = {
-							order = 2,
-							type = "toggle",
-							name = L["Show only Text"],
-							get = function(info)
-								return E.db.mMT.dockdatatext.durability.onlytext
-							end,
-							set = function(info, value)
-								E.db.mMT.dockdatatext.durability.onlytext = value
-								DT:ForceUpdate_DataText("mDurability")
+								DT:ForceUpdate_DataText("mMT_Dock_Durability")
 							end,
 						},
 					},
@@ -1336,7 +1324,7 @@ local function configTable()
 							end,
 							set = function(info, value)
 								E.db.mMT.dockdatatext.durability.customcolor = value
-								DT:ForceUpdate_DataText("mDurability")
+								DT:ForceUpdate_DataText("mMT_Dock_Durability")
 							end,
 						},
 						durabilitycolor = {
@@ -1354,7 +1342,7 @@ local function configTable()
 							set = function(info, r, g, b, a)
 								local t = E.db.mMT.dockdatatext.durability.iconcolor
 								t.r, t.g, t.b, t.a = r, g, b, a
-								DT:ForceUpdate_DataText("mDurability")
+								DT:ForceUpdate_DataText("mMT_Dock_Durability")
 							end,
 						},
 					},
@@ -1375,7 +1363,7 @@ local function configTable()
 					end,
 					set = function(info, value)
 						E.db.mMT.dockdatatext.fpsms.icon = value
-						DT:ForceUpdate_DataText("mFPSMS")
+						DT:ForceUpdate_DataText("mMT_Dock_FPSMS")
 					end,
 					values = icons,
 				},
@@ -1399,7 +1387,7 @@ local function configTable()
 								else
 									E.db.mMT.dockdatatext.fpsms.text = "MS"
 								end
-								DT:ForceUpdate_DataText("mFPSMS")
+								DT:ForceUpdate_DataText("mMT_Dock_FPSMS")
 							end,
 							values = {
 								fps = L["FPS"],
@@ -1416,7 +1404,7 @@ local function configTable()
 							end,
 							set = function(info, value)
 								E.db.mMT.dockdatatext.fpsms.text = value
-								DT:ForceUpdate_DataText("mFPSMS")
+								DT:ForceUpdate_DataText("mMT_Dock_FPSMS")
 							end,
 						},
 					},
@@ -1436,7 +1424,7 @@ local function configTable()
 							end,
 							set = function(info, value)
 								E.db.mMT.dockdatatext.fpsms.customcolor = value
-								DT:ForceUpdate_DataText("mFPSMS")
+								DT:ForceUpdate_DataText("mMT_Dock_FPSMS")
 							end,
 						},
 						fpsmscolor = {
@@ -1454,7 +1442,7 @@ local function configTable()
 							set = function(info, r, g, b, a)
 								local t = E.db.mMT.dockdatatext.fpsms.iconcolor
 								t.r, t.g, t.b, t.a = r, g, b, a
-								DT:ForceUpdate_DataText("mFPSMS")
+								DT:ForceUpdate_DataText("mMT_Dock_FPSMS")
 							end,
 						},
 					},
@@ -1478,7 +1466,7 @@ local function configTable()
 					end,
 					set = function(info, value)
 						E.db.mMT.dockdatatext.profession.icon = value
-						DT:ForceUpdate_DataText("mProfession")
+						DT:ForceUpdate_DataText("mMT_Dock_Profession")
 					end,
 					values = icons,
 				},
@@ -1496,7 +1484,7 @@ local function configTable()
 					end,
 					set = function(info, value)
 						E.db.mMT.dockdatatext.profession.customcolor = value
-						DT:ForceUpdate_DataText("mProfession")
+						DT:ForceUpdate_DataText("mMT_Dock_Profession")
 					end,
 				},
 				professioncolor = {
@@ -1514,7 +1502,7 @@ local function configTable()
 					set = function(info, r, g, b, a)
 						local t = E.db.mMT.dockdatatext.profession.iconcolor
 						t.r, t.g, t.b, t.a = r, g, b, a
-						DT:ForceUpdate_DataText("mProfession")
+						DT:ForceUpdate_DataText("mMT_Dock_Profession")
 					end,
 				},
 			},
@@ -1533,7 +1521,7 @@ local function configTable()
 					end,
 					set = function(info, value)
 						E.db.mMT.dockdatatext.calendar.icon = value
-						DT:ForceUpdate_DataText("mCalendar")
+						DT:ForceUpdate_DataText("mMT_Dock_Calendar")
 					end,
 					values = icons,
 				},
@@ -1552,7 +1540,7 @@ local function configTable()
 							end,
 							set = function(info, value)
 								E.db.mMT.dockdatatext.calendar.option = value
-								DT:ForceUpdate_DataText("mCalendar")
+								DT:ForceUpdate_DataText("mMT_Dock_Calendar")
 							end,
 							values = {
 								none = L["NONE"],
@@ -1561,8 +1549,20 @@ local function configTable()
 								gb = "GB",
 							},
 						},
-						dockcalendarshowyear = {
+						dockcalendartext = {
 							order = 2,
+							type = "toggle",
+							name = L["Show Text"],
+							get = function(info)
+								return E.db.mMT.dockdatatext.calendar.text
+							end,
+							set = function(info, value)
+								E.db.mMT.dockdatatext.calendar.text = value
+								DT:ForceUpdate_DataText("mMT_Dock_Calendar")
+							end,
+						},
+						dockcalendarshowyear = {
+							order = 3,
 							type = "toggle",
 							name = L["Show Year"],
 							get = function(info)
@@ -1570,7 +1570,7 @@ local function configTable()
 							end,
 							set = function(info, value)
 								E.db.mMT.dockdatatext.calendar.showyear = value
-								DT:ForceUpdate_DataText("mCalendar")
+								DT:ForceUpdate_DataText("mMT_Dock_Calendar")
 							end,
 						},
 						calendardateiconstyle = {
@@ -1582,7 +1582,7 @@ local function configTable()
 							end,
 							set = function(info, value)
 								E.db.mMT.dockdatatext.calendar.dateicon = value
-								DT:ForceUpdate_DataText("mCalendar")
+								DT:ForceUpdate_DataText("mMT_Dock_Calendar")
 							end,
 							values = { a = "A", b = "B", c = "C", none = L["NONE"] },
 						},
@@ -1603,7 +1603,7 @@ local function configTable()
 							end,
 							set = function(info, value)
 								E.db.mMT.dockdatatext.calendar.customcolor = value
-								DT:ForceUpdate_DataText("mCalendar")
+								DT:ForceUpdate_DataText("mMT_Dock_Calendar")
 							end,
 						},
 						calendarcolor = {
@@ -1621,7 +1621,7 @@ local function configTable()
 							set = function(info, r, g, b, a)
 								local t = E.db.mMT.dockdatatext.calendar.iconcolor
 								t.r, t.g, t.b, t.a = r, g, b, a
-								DT:ForceUpdate_DataText("mCalendar")
+								DT:ForceUpdate_DataText("mMT_Dock_Calendar")
 							end,
 						},
 					},
@@ -1642,7 +1642,7 @@ local function configTable()
 					end,
 					set = function(info, value)
 						E.db.mMT.dockdatatext.volume.icon = value
-						DT:ForceUpdate_DataText("mVolume")
+						DT:ForceUpdate_DataText("mMT_Dock_Volume")
 					end,
 					values = icons,
 				},
@@ -1661,7 +1661,7 @@ local function configTable()
 							end,
 							set = function(info, value)
 								E.db.mMT.dockdatatext.volume.showtext = value
-								DT:ForceUpdate_DataText("mVolume")
+								DT:ForceUpdate_DataText("mMT_Dock_Volume")
 							end,
 						},
 					},
@@ -1681,7 +1681,7 @@ local function configTable()
 							end,
 							set = function(info, value)
 								E.db.mMT.dockdatatext.volume.customcolor = value
-								DT:ForceUpdate_DataText("mVolume")
+								DT:ForceUpdate_DataText("mMT_Dock_Volume")
 							end,
 						},
 						volumecolor = {
@@ -1699,7 +1699,7 @@ local function configTable()
 							set = function(info, r, g, b, a)
 								local t = E.db.mMT.dockdatatext.volume.iconcolor
 								t.r, t.g, t.b, t.a = r, g, b, a
-								DT:ForceUpdate_DataText("mVolume")
+								DT:ForceUpdate_DataText("mMT_Dock_Volume")
 							end,
 						},
 					},
@@ -1720,6 +1720,7 @@ local function configTable()
 					end,
 					set = function(info, value)
 						E.db.mMT.dockdatatext.notification.icon = value
+						mMT:UpdateDockSettings()
 						DT:LoadDataTexts()
 					end,
 					values = icons,
@@ -1736,16 +1737,30 @@ local function configTable()
 					end,
 					set = function(info, value)
 						E.db.mMT.dockdatatext.notification.size = value
+						mMT:UpdateDockSettings()
+						DT:LoadDataTexts()
+					end,
+				},
+				dockNotificationiconauto = {
+					order = 3,
+					type = "toggle",
+					name = L["Auto Size"],
+					get = function(info)
+						return E.db.mMT.dockdatatext.notification.auto
+					end,
+					set = function(info, value)
+						E.db.mMT.dockdatatext.notification.auto = value
+						mMT:UpdateDockSettings()
 						DT:LoadDataTexts()
 					end,
 				},
 				dockNotificationspacer1 = {
-					order = 3,
+					order = 4,
 					type = "description",
 					name = "\n",
 				},
 				dockNotificationiconflash = {
-					order = 4,
+					order = 5,
 					type = "toggle",
 					name = L["Icon flash"],
 					get = function(info)
@@ -1753,6 +1768,7 @@ local function configTable()
 					end,
 					set = function(info, value)
 						E.db.mMT.dockdatatext.notification.flash = value
+						mMT:UpdateDockSettings()
 					end,
 				},
 			},
@@ -1771,7 +1787,7 @@ local function configTable()
 					end,
 					set = function(info, value)
 						E.db.mMT.dockdatatext.bag.icon = value
-						DT:ForceUpdate_DataText("mBags")
+						DT:ForceUpdate_DataText("mMT_Dock_Bags")
 					end,
 					values = icons,
 				},
@@ -1790,7 +1806,7 @@ local function configTable()
 							end,
 							set = function(info, value)
 								E.db.mMT.dockdatatext.bag.text = value
-								DT:ForceUpdate_DataText("mBags")
+								DT:ForceUpdate_DataText("mMT_Dock_Bags")
 							end,
 							values = {
 								[1] = L["Bag - FREE"],
@@ -1817,7 +1833,7 @@ local function configTable()
 							end,
 							set = function(info, value)
 								E.db.mMT.dockdatatext.bag.customcolor = value
-								DT:ForceUpdate_DataText("mBags")
+								DT:ForceUpdate_DataText("mMT_Dock_Bags")
 							end,
 						},
 						bagcolor = {
@@ -1835,7 +1851,7 @@ local function configTable()
 							set = function(info, r, g, b, a)
 								local t = E.db.mMT.dockdatatext.bag.iconcolor
 								t.r, t.g, t.b, t.a = r, g, b, a
-								DT:ForceUpdate_DataText("mBags")
+								DT:ForceUpdate_DataText("mMT_Dock_Bags")
 							end,
 						},
 					},

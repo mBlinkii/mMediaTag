@@ -1,18 +1,18 @@
 local E, L = unpack(ElvUI)
 local DT = E:GetModule("DataTexts")
 
---Lua functions
+--Variables
+local _G = _G
 local ipairs, select, sort, unpack, wipe, ceil = ipairs, select, sort, unpack, wipe, ceil
 local format, strfind, strjoin, strsplit, strmatch = format, strfind, strjoin, strsplit, strmatch
 
---WoW API / Variables
-local _G = _G
+local EasyMenu = EasyMenu
 local GetDisplayedInviteType = GetDisplayedInviteType
 local GetGuildFactionInfo = GetGuildFactionInfo
 local GetGuildInfo = GetGuildInfo
 local GetGuildRosterInfo = GetGuildRosterInfo
 local GetGuildRosterMOTD = GetGuildRosterMOTD
-local GetMouseFocus = GetMouseFocus
+local MouseIsOver = MouseIsOver
 local GetNumGuildMembers = GetNumGuildMembers
 local GetQuestDifficultyColor = GetQuestDifficultyColor
 local C_GuildInfo_GuildRoster = C_GuildInfo.GuildRoster
@@ -20,6 +20,8 @@ local IsInGuild = IsInGuild
 local IsShiftKeyDown = IsShiftKeyDown
 local LoadAddOn = LoadAddOn
 local SetItemRef = SetItemRef
+local ToggleGuildFrame = ToggleGuildFrame
+local ToggleFriendsFrame = ToggleFriendsFrame
 local UnitInParty = UnitInParty
 local UnitInRaid = UnitInRaid
 local InCombatLockdown = InCombatLockdown
@@ -33,9 +35,6 @@ local REMOTE_CHAT = REMOTE_CHAT
 local GUILD_MOTD = GUILD_MOTD
 local GUILD = GUILD
 
---Variables
-local mText = format("Dock %s", L["Guild"])
-local mTextName = "mGuild"
 local tthead, ttsubh, ttoff = { r = 0.4, g = 0.78, b = 1 }, { r = 0.75, g = 0.9, b = 1 }, { r = 0.3, g = 1, b = 0.3 }
 local activezone, inactivezone = { r = 0.3, g = 1.0, b = 0.3 }, { r = 0.65, g = 0.65, b = 0.65 }
 local guildInfoString = "%s"
@@ -49,6 +48,23 @@ local moreMembersOnlineString = strjoin("", "+ %d ", _G.FRIENDS_LIST_ONLINE, "..
 local noteString = strjoin("", "|cff999999   ", _G.LABEL_NOTE, ":|r %s")
 local officerNoteString = strjoin("", "|cff999999   ", _G.GUILD_RANK1_DESC, ":|r %s")
 local guildTable, guildMotD = {}, ""
+
+local Config = {
+	name = "mMT_Dock_Guild",
+	localizedName = mMT.DockString .. " " .. L["Guild"],
+	category = "mMT-" .. mMT.DockString,
+	text = {
+		enable = true,
+		center = false,
+		a = true, -- first label
+		b = false, -- second label
+	},
+	icon = {
+		notification = true,
+		texture = mMT.IconSquare,
+		color = { r = 1, g = 1, b = 1, a = 1 },
+	},
+}
 
 local function sortByRank(a, b)
 	if a and b then
@@ -93,8 +109,7 @@ local function BuildGuildTable()
 
 	local totalMembers = GetNumGuildMembers()
 	for i = 1, totalMembers do
-		local name, rank, rankIndex, level, _, zone, note, officerNote, connected, memberstatus, className, _, _, isMobile, _, _, guid =
-			GetGuildRosterInfo(i)
+		local name, rank, rankIndex, level, _, zone, note, officerNote, connected, memberstatus, className, _, _, isMobile, _, _, guid = GetGuildRosterInfo(i)
 		if not name then
 			return
 		end
@@ -127,6 +142,39 @@ end
 
 local FRIEND_ONLINE = select(2, strsplit(" ", _G.ERR_FRIEND_ONLINE_SS, 2))
 local resendRequest = false
+local eventHandlers = {
+	PLAYER_GUILD_UPDATE = C_GuildInfo_GuildRoster,
+	CHAT_MSG_SYSTEM = function(_, arg1)
+		if FRIEND_ONLINE ~= nil and arg1 and strfind(arg1, FRIEND_ONLINE) then
+			resendRequest = true
+		end
+	end,
+	-- when we enter the world and guildframe is not available then
+	-- load guild frame, update guild message and guild xp
+	PLAYER_ENTERING_WORLD = function()
+		if not _G.GuildFrame and IsInGuild() then
+			LoadAddOn("Blizzard_GuildUI")
+			C_GuildInfo_GuildRoster()
+		end
+	end,
+	-- Guild Roster updated, so rebuild the guild table
+	GUILD_ROSTER_UPDATE = function(self)
+		if resendRequest then
+			resendRequest = false
+			return C_GuildInfo_GuildRoster()
+		else
+			BuildGuildTable()
+			UpdateGuildMessage()
+			if MouseIsOver(self) then
+				self:GetScript("OnEnter")(self, nil, true)
+			end
+		end
+	end,
+	-- our guild message of the day changed
+	GUILD_MOTD = function(_, arg1)
+		guildMotD = arg1
+	end,
+}
 
 local menuList = {
 	{ text = _G.OPTIONS_MENU, isTitle = true, notCheckable = true },
@@ -160,19 +208,9 @@ local function whisperClick(_, playerName)
 	SetItemRef("player:" .. playerName, format("|Hplayer:%1$s|h[%1$s]|h", playerName), "LeftButton")
 end
 
-local function mDockCheckFrame()
-	return (CommunitiesFrame and CommunitiesFrame:IsShown())
-		or (GuildFrame and GuildFrame:IsShown())
-		or (LookingForGuildFrame and LookingForGuildFrame:IsShown())
-end
-
-function mMT:CheckFrameGuild(self)
-	self.mIcon.isClicked = mDockCheckFrame()
-	mMT:DockTimer(self)
-end
-
 local function OnClick(self, btn)
-	mMT:mOnClick(self, "CheckFrameGuild")
+	mMT:Dock_Click(self, Config)
+	mMT:UpdateNotificationState(self, false)
 
 	if btn == "RightButton" and IsInGuild() then
 		local menuCountWhispers = 0
@@ -188,52 +226,44 @@ local function OnClick(self, btn)
 					classc = levelc
 				end
 
-				local name = format(
-					levelNameString,
-					levelc.r * 255,
-					levelc.g * 255,
-					levelc.b * 255,
-					info.level,
-					classc.r * 255,
-					classc.g * 255,
-					classc.b * 255,
-					info.name
-				)
+				local name = format(levelNameString, levelc.r * 255, levelc.g * 255, levelc.b * 255, info.level, classc.r * 255, classc.g * 255, classc.b * 255, info.name)
 				if inGroup(info.name) ~= "" then
 					name = name .. " |cffaaaaaa*|r"
 				elseif not (info.isMobile and info.zone == REMOTE_CHAT) then
 					menuCountInvites = menuCountInvites + 1
-					menuList[2].menuList[menuCountInvites] =
-						{ text = name, arg1 = info.name, arg2 = info.guid, notCheckable = true, func = inviteClick }
+					menuList[2].menuList[menuCountInvites] = { text = name, arg1 = info.name, arg2 = info.guid, notCheckable = true, func = inviteClick }
 				end
 
 				menuCountWhispers = menuCountWhispers + 1
-				menuList[3].menuList[menuCountWhispers] =
-					{ text = name, arg1 = info.name, notCheckable = true, func = whisperClick }
+				menuList[3].menuList[menuCountWhispers] = { text = name, arg1 = info.name, notCheckable = true, func = whisperClick }
 			end
 		end
 
 		E:SetEasyMenuAnchor(E.EasyMenu, self)
-		_G.EasyMenu(menuList, E.EasyMenu, nil, nil, nil, "MENU")
+		EasyMenu(menuList, E.EasyMenu, nil, nil, nil, "MENU")
 	elseif InCombatLockdown() then
 		_G.UIErrorsFrame:AddMessage(E.InfoColor .. _G.ERR_NOT_IN_COMBAT)
 	elseif E.Retail then
-		_G.ToggleGuildFrame()
+		ToggleGuildFrame()
 	else
-		_G.ToggleFriendsFrame(3)
+		ToggleFriendsFrame(3)
 	end
 
 	mMT:ShowHideNotification(self, false)
 end
 
-local function OnEnter(self, _, noUpdate)
-	self.mIcon.isClicked = mDockCheckFrame()
-	mMT:mOnEnter(self, "CheckFrameGuild")
-
+local function OnLeave(self)
 	if E.db.mMT.dockdatatext.tip.enable then
-		if not IsInGuild() then
-			return
-		end
+		DT.tooltip:Hide()
+	end
+
+	mMT:Dock_OnLeave(self, Config)
+end
+
+local function OnEnter(self, _, noUpdate)
+	mMT:Dock_OnEnter(self, Config)
+
+	if E.db.mMT.dockdatatext.tip.enable and IsInGuild() then
 		DT.tooltip:ClearLines()
 
 		local shiftDown = IsShiftKeyDown()
@@ -246,16 +276,7 @@ local function OnEnter(self, _, noUpdate)
 
 		local guildName, guildRank = GetGuildInfo("player")
 		if guildName and guildRank then
-			DT.tooltip:AddDoubleLine(
-				format(guildInfoString, guildName),
-				format(guildInfoString2, online, total),
-				tthead.r,
-				tthead.g,
-				tthead.b,
-				tthead.r,
-				tthead.g,
-				tthead.b
-			)
+			DT.tooltip:AddDoubleLine(format(guildInfoString, guildName), format(guildInfoString2, online, total), tthead.r, tthead.g, tthead.b, tthead.r, tthead.g, tthead.b)
 			DT.tooltip:AddLine(guildRank, unpack(tthead))
 		end
 
@@ -269,15 +290,7 @@ local function OnEnter(self, _, noUpdate)
 			if standingID ~= 8 then -- Not Max Rep
 				barMax = barMax - barMin
 				barValue = barValue - barMin
-				DT.tooltip:AddLine(
-					format(
-						standingString,
-						COMBAT_FACTION_CHANGE,
-						E:ShortValue(barValue),
-						E:ShortValue(barMax),
-						ceil((barValue / barMax) * 100)
-					)
-				)
+				DT.tooltip:AddLine(format(standingString, COMBAT_FACTION_CHANGE, E:ShortValue(barValue), E:ShortValue(barMax), ceil((barValue / barMax) * 100)))
 			end
 		end
 
@@ -285,7 +298,7 @@ local function OnEnter(self, _, noUpdate)
 
 		DT.tooltip:AddLine(" ")
 		for i, info in ipairs(guildTable) do
-			-- if more then 30 guild members are online, we don't Show any more, but inform user there are more
+			-- if more then 30 guild members are online, we don"t Show any more, but inform user there are more
 			if 30 - i < 1 then
 				if online - 30 > 1 then
 					DT.tooltip:AddLine(format(moreMembersOnlineString, online - 30), ttsubh.r, ttsubh.g, ttsubh.b)
@@ -305,16 +318,7 @@ local function OnEnter(self, _, noUpdate)
 			end
 
 			if shiftDown then
-				DT.tooltip:AddDoubleLine(
-					format(nameRankString, info.name, info.rank),
-					info.zone,
-					classc.r,
-					classc.g,
-					classc.b,
-					zonec.r,
-					zonec.g,
-					zonec.b
-				)
+				DT.tooltip:AddDoubleLine(format(nameRankString, info.name, info.rank), info.zone, classc.r, classc.g, classc.b, zonec.r, zonec.g, zonec.b)
 				if info.note ~= "" then
 					DT.tooltip:AddLine(format(noteString, info.note), ttsubh.r, ttsubh.g, ttsubh.b, 1)
 				end
@@ -322,25 +326,7 @@ local function OnEnter(self, _, noUpdate)
 					DT.tooltip:AddLine(format(officerNoteString, info.officerNote), ttoff.r, ttoff.g, ttoff.b, 1)
 				end
 			else
-				DT.tooltip:AddDoubleLine(
-					format(
-						levelNameStatusString,
-						levelc.r * 255,
-						levelc.g * 255,
-						levelc.b * 255,
-						info.level,
-						strmatch(info.name, "([^%-]+).*"),
-						inGroup(info.name),
-						info.status
-					),
-					info.zone,
-					classc.r,
-					classc.g,
-					classc.b,
-					zonec.r,
-					zonec.g,
-					zonec.b
-				)
+				DT.tooltip:AddDoubleLine(format(levelNameStatusString, levelc.r * 255, levelc.g * 255, levelc.b * 255, info.level, strmatch(info.name, "([^%-]+).*"), inGroup(info.name), info.status), info.zone, classc.r, classc.g, classc.b, zonec.r, zonec.g, zonec.b)
 			end
 		end
 
@@ -352,92 +338,31 @@ local function OnEnter(self, _, noUpdate)
 	end
 end
 
-local function OnEvent(self, event, arg1)
-	self.mSettings = {
-		Name = mTextName,
-		text = {
-			onlytext = false,
-			special = false,
-			textA = true,
-			textB = false,
-		},
-		icon = {
-			texture = mMT.Media.DockIcons[E.db.mMT.dockdatatext.guild.icon],
-			color = E.db.mMT.dockdatatext.guild.iconcolor,
-			customcolor = E.db.mMT.dockdatatext.guild.customcolor,
-		},
-		Notifications = true,
-	}
+local function OnEvent(self, event, ...)
+	if event == "ELVUI_FORCE_UPDATE" then
+		--setup settings
+		Config.icon.texture = mMT.Media.DockIcons[E.db.mMT.dockdatatext.guild.icon]
+		Config.icon.color = E.db.mMT.dockdatatext.guild.customcolor and E.db.mMT.dockdatatext.guild.iconcolor or nil
 
-	mMT:DockInitialization(self, event, "")
+		mMT:InitializeDockIcon(self, Config, event)
+	end
+
 	if IsInGuild() then
-		if event == "PLAYER_GUILD_UPDATE" then
-			C_GuildInfo_GuildRoster()
-		end
-		if event == "CHAT_MSG_SYSTEM" then
-			if FRIEND_ONLINE ~= nil and arg1 and strfind(arg1, FRIEND_ONLINE) then
-				resendRequest = true
-			end
-		end
-		-- when we enter the world and guildframe is not available then
-		-- load guild frame, update guild message and guild xp
-		if event == "PLAYER_ENTERING_WORLD" then
-			if not _G.GuildFrame and IsInGuild() then
-				LoadAddOn("Blizzard_GuildUI")
-				C_GuildInfo_GuildRoster()
-			end
-		end
-		-- Guild Roster updated, so rebuild the guild table
-		if event == "GUILD_ROSTER_UPDATE" then
-			if resendRequest then
-				resendRequest = false
-				return C_GuildInfo_GuildRoster()
-			else
-				BuildGuildTable()
-				UpdateGuildMessage()
-				if MouseIsOver(self) then
-					self:GetScript("OnEnter")(self, nil, true)
-				end
-			end
-		end
-		-- our guild message of the day changed
-		if event == "GUILD_MOTD" then
-			guildMotD = arg1
+		if #guildTable == 0 then
+			BuildGuildTable()
 		end
 
-		if not IsAltKeyDown() and event == "MODIFIER_STATE_CHANGED" and GetMouseFocus() == self then
-			OnEnter(self)
-		end
-		mMT:mDockSetText(self, #guildTable)
+		self.mMT_Dock.TextA:SetText(#guildTable)
+	else
+		self.mMT_Dock.TextA:SetText("")
 	end
 
-	if E.Retail then
-		mMT:ShowHideNotification(
-			self,
-			(GuildMicroButtonMixin:HasUnseenInvitations() or CommunitiesUtil.DoesAnyCommunityHaveUnreadMessages())
-		)
-	end
+	if _G.GuildMicroButton and _G.GuildMicroButton.NotificationOverlay then
+		local isShown = _G.GuildMicroButton.NotificationOverlay:IsShown()
+		mMT:UpdateNotificationState(self, isShown)
+	else
+		mMT:UpdateNotificationState(self, false)
+    end
 end
 
-local function OnLeave(self)
-	if E.db.mMT.dockdatatext.tip.enable then
-		DT.tooltip:Hide()
-	end
-
-	self.mIcon.isClicked = mDockCheckFrame()
-	mMT:mOnLeave(self)
-end
-
-DT:RegisterDatatext(
-	mTextName,
-	"mDock",
-	{ "CHAT_MSG_SYSTEM", "GUILD_ROSTER_UPDATE", "PLAYER_GUILD_UPDATE", "GUILD_MOTD", "MODIFIER_STATE_CHANGED" },
-	OnEvent,
-	nil,
-	OnClick,
-	OnEnter,
-	OnLeave,
-	mText,
-	nil,
-	nil
-)
+DT:RegisterDatatext(Config.name, Config.category, { "CHAT_MSG_SYSTEM", "GUILD_ROSTER_UPDATE", "PLAYER_GUILD_UPDATE", "GUILD_MOTD", "MODIFIER_STATE_CHANGED" }, OnEvent, nil, OnClick, OnEnter, OnLeave, Config.localizedName, nil, nil)

@@ -5,61 +5,54 @@ local DT = E:GetModule("DataTexts")
 local format = format
 
 --Variables
-local _G = _G
-local mText = format("Dock %s", ENCOUNTER_JOURNAL)
-local mTextName = "mEncounterJournal"
-
-local function mDockCheckFrame()
-	return (EncounterJournal and EncounterJournal:IsShown())
-end
-
-function mMT:CheckFrameEncounterJournal(self)
-	self.mIcon.isClicked = mDockCheckFrame()
-	mMT:DockTimer(self)
-end
+local Config = {
+	name = "mMT_Dock_EncounterJournal",
+	localizedName = mMT.DockString .. " " .. ENCOUNTER_JOURNAL,
+	category = "mMT-" .. mMT.DockString,
+	icon = {
+		notification = false,
+		texture = mMT.IconSquare,
+		color = { r = 1, g = 1, b = 1, a = 1 },
+	},
+	misc = {
+		secure = true,
+		macroA = "/click EJMicroButton",
+		funcOnEnter = nil,
+		funcOnLeave = nil,
+	},
+}
 
 local function OnEnter(self)
 	if E.db.mMT.dockdatatext.tip.enable then
-		DT.tooltip:AddLine(ENCOUNTER_JOURNAL)
-		DT.tooltip:Show()
+		GameTooltip:ClearLines()
+		GameTooltip:SetOwner(self, "ANCHOR_CURSOR_RIGHT")
+		GameTooltip:AddLine(ENCOUNTER_JOURNAL)
+		GameTooltip:Show()
 	end
-	self.mIcon.isClicked = mDockCheckFrame()
-	mMT:mOnEnter(self, "CheckFrameEncounterJournal")
-end
 
-local function OnEvent(self, event, ...)
-	self.mSettings = {
-		Name = mTextName,
-		icon = {
-			texture = mMT.Media.DockIcons[E.db.mMT.dockdatatext.encounter.icon],
-			color = E.db.mMT.dockdatatext.encounter.iconcolor,
-			customcolor = E.db.mMT.dockdatatext.encounter.customcolor,
-		},
-	}
-
-	mMT:DockInitialization(self, event)
+	mMT:Dock_OnEnter(self:GetParent(), Config)
 end
 
 local function OnLeave(self)
 	if E.db.mMT.dockdatatext.tip.enable then
-		DT.tooltip:Hide()
+		GameTooltip:Hide()
 	end
 
-	self.mIcon.isClicked = mDockCheckFrame()
-	mMT:mOnLeave(self)
+	mMT:Dock_OnLeave(self:GetParent(), Config)
 end
 
-local function OnClick(self)
-	if mMT:CheckCombatLockdown() then
-		mMT:mOnClick(self, "CheckFrameEncounterJournal")
+local function OnEvent(self, event, ...)
+	if event == "ELVUI_FORCE_UPDATE" then
+		--setup settings
 
-		if not _G.EncounterJournal then
-			_G.EncounterJournal_LoadUI()
-		end
-		if _G.EncounterJournal then
-			ToggleFrame(_G.EncounterJournal)
-		end
+		Config.icon.texture = mMT.Media.DockIcons[E.db.mMT.dockdatatext.encounter.icon]
+		Config.icon.color = E.db.mMT.dockdatatext.encounter.customcolor and E.db.mMT.dockdatatext.encounter.iconcolor or nil
+
+		Config.misc.funcOnEnter = OnEnter
+		Config.misc.funcOnLeave = OnLeave
+
+		mMT:InitializeDockIcon(self, Config, event)
 	end
 end
 
-DT:RegisterDatatext(mTextName, "mDock", nil, OnEvent, nil, OnClick, OnEnter, OnLeave, mText, nil, nil)
+DT:RegisterDatatext(Config.name, Config.category, nil, OnEvent, nil, nil, nil, nil, Config.localizedName, nil, nil)
