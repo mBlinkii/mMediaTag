@@ -8,7 +8,7 @@ local format = format
 local _G = _G
 local menuFrame = CreateFrame("Frame", "mProfessionMenu", E.UIParent, "BackdropTemplate")
 menuFrame:SetTemplate("Transparent", true)
-local menuList = nil
+local menuList = {}
 local Config = {
 	name = "mMT_Dock_Profession",
 	localizedName = mMT.DockString .. " " .. TRADE_SKILLS,
@@ -21,32 +21,40 @@ local Config = {
 }
 
 local function OnEnter(self)
-	menuList = mMT:GetProfessions()
-	if menuList then
-		for i = 1, #menuList do
-			if not menuList[i].isTitle and not (menuList[i].text == TRADE_SKILLS) then
-				DT.tooltip:AddDoubleLine((mMT:mIcon(menuList[i].icon) or "") .. "  " .. menuList[i].color ..  menuList[i].text .. "|r", menuList[i].Secondtext)
-			end
-		end
+	if E.db.mMT.dockdatatext.tip.enable then
+		wipe(menuList)
+		menuList = mMT:GetProfessions()
 
+		DT.tooltip:AddLine(TRADE_SKILLS)
 		DT.tooltip:AddLine(" ")
-		DT.tooltip:AddLine(format("%s %s%s|r", mMT:mIcon(mMT.Media.Mouse["LEFT"]), E.db.mMT.datatextcolors.colortip.hex, L["left click to open the menu."]))
-	else
-		DT.tooltip:AddLine(format("%s%s|r", "|CFFE74C3C", L["No Professions|r"]))
+
+		if menuList then
+			for i = 1, #menuList do
+				if not menuList[i].isTitle and not (menuList[i].text == TRADE_SKILLS) then
+					DT.tooltip:AddDoubleLine((mMT:mIcon(menuList[i].icon) or "") .. "  " .. menuList[i].color .. menuList[i].text .. "|r", menuList[i].Secondtext)
+				end
+			end
+
+			DT.tooltip:AddLine(" ")
+			DT.tooltip:AddLine(format("%s %s%s|r", mMT:mIcon(mMT.Media.Mouse["LEFT"]), E.db.mMT.datatextcolors.colortip.hex, L["left click to open the menu."]))
+		else
+			DT.tooltip:AddLine(format("%s%s|r", "|CFFE74C3C", L["No Professions|r"]))
+		end
+		DT.tooltip:Show()
 	end
-	DT.tooltip:Show()
 	mMT:Dock_OnEnter(self, Config)
 end
 
 local function OnLeave(self)
 	if E.db.mMT.dockdatatext.tip.enable then
-		GameTooltip:Hide()
+		DT.tooltip:Hide()
 	end
 
 	mMT:Dock_OnLeave(self, Config)
 end
 
 local function OnClick(self, button)
+	wipe(menuList)
 	menuList = mMT:GetProfessions()
 	if menuList then
 		mMT:mDropDown(menuList, menuFrame, self, 200, 2)
