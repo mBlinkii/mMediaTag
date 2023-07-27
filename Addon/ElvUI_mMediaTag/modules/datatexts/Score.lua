@@ -242,12 +242,6 @@ end
 local function OnLeave(self)
 	DT.tooltip:Hide()
 end
-
-local function colorIlvl(level)
-	if level <= 400 then
-	elseif level <= 300 then
-	end
-end
 local function GetGroupKeystone()
 	local GroupMembers = {}
 	tinsert(GroupMembers, "player")

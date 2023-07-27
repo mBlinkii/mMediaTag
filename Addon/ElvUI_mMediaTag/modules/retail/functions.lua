@@ -340,3 +340,171 @@ function mMT:DungeonDifficultyShort()
 		return format("%s%s|r", other, E:ShortenString(difficultyName, 1))
 	end
 end
+
+-- professions
+local ProfessionsColor = {
+	[129] = "|CFFF32AFC", -- First Aid
+	[164] = "|CFFFAEAAD", -- Blacksmithing
+	[165] = "|CFFBD6803", -- Leatherworking
+	[171] = "|CFFAAFF00", -- Alchemy
+	[182] = "|CFF00FA7D", -- Herbalism
+	[185] = "|CFFFDDA16", -- Cooking
+	[186] = "|CFFE1CDF7", -- Mining
+	[197] = "|CFF46A5F4", -- Tailoring
+	[202] = "|CFFFFAB86", -- Engineering
+	[333] = "|CFF9386FF", -- Enchanting
+	[356] = "|CFF0061FF", -- Fishing
+	[393] = "|CFFB94900", -- Skinning
+	[755] = "|CFF4D00FF", -- Jewelcrafting
+	[773] = "|CFFFEE4E9", -- Inscription
+	[794] = "|CFFE4FEF1", -- Archeology
+}
+
+-- list = tbl see below
+-- text = string, Secondtext = string, color = color string for first text, icon = texture, func = function, funcOnEnter = function,
+-- funcOnLeave = function, isTitle = bolean, macro = macrotext, tooltip = id or var you can use for the functions, notClickable = bolean
+
+local function getProfSkill(skillLevel, maxSkillLevel, skillModifier)
+	local text = nil
+	local sm = nil
+	local colorTip = E.db.mMT.datatextcolors.colorother.hex
+
+	if skillModifier ~= 0 then
+		sm = format(" %s+%s|r", "|CFF68FF00", skillModifier)
+	end
+
+	if skillLevel == maxSkillLevel then
+		text = format("%s[|r%s%s|r%s%s]|r", colorTip, "|CFF3AFF00", skillLevel, sm or "", colorTip)
+	else
+		local color = "|CFF9BFF00"
+		local SkillPercent = tonumber(mMT:round(skillLevel / maxSkillLevel * 100))
+
+		if SkillPercent >= 75 then
+			color = "|CFF9BFF00"
+		elseif SkillPercent >= 50 and SkillPercent <= 75 then
+			color = "|CFFF3FF00"
+		elseif SkillPercent >= 25 and SkillPercent <= 50 then
+			color = "|CFFFFC900"
+		elseif SkillPercent >= 0 and SkillPercent <= 25 then
+			color = "|CFFFF6800"
+		end
+
+		text = format("%s[|r%s%s|r%s%s/|r%s%s|r%s]|r", colorTip, color, skillLevel, sm or "", colorTip, "|CFF00B9FF", maxSkillLevel, colorTip)
+	end
+
+	return text
+end
+
+local function GetProfInfo(prof)
+	local name, icon, skillLevel, maxSkillLevel, numAbilities, spelloffset, skillLine, skillModifier, specializationIndex, specializationOffset = GetProfessionInfo(prof)
+	return { name = name, color = ProfessionsColor[skillLine], icon = icon, skill = getProfSkill(skillLevel, maxSkillLevel, skillModifier), spell = spelloffset }
+end
+
+local function BuildProfTable()
+	local prof1, prof2, arch, fish, cook = GetProfessions()
+	local tbl = {
+		main = {},
+		secondary = {},
+		nomain = false,
+		nosecondary = false,
+	}
+
+	if not prof1 and prof2 then
+		tbl.nomain = true
+	else
+		if prof1 then
+			tinsert(tbl.main, 1, GetProfInfo(prof1))
+		end
+
+		if prof2 then
+			tinsert(tbl.main, 2, GetProfInfo(prof2))
+		end
+
+		tbl.nomain = false
+	end
+
+	if not arch and not fish and not cook then
+		tbl.nosecondary = true
+	else
+		if arch then
+			tinsert(tbl.secondary, 1, GetProfInfo(arch))
+		end
+
+		if fish then
+			tinsert(tbl.secondary, 2, GetProfInfo(fish))
+		end
+
+		if cook then
+			tinsert(tbl.secondary, 3, GetProfInfo(cook))
+		end
+
+		tbl.nosecondary = false
+	end
+
+	return tbl
+end
+
+local function castProf(spell)
+	CastSpell(spell + 1, "Spell")
+end
+
+local function InsertInTable(tbl, textA, textB, title, icon, color, spell)
+	if spell then
+		tinsert(tbl, {
+			text = textA,
+			Secondtext = textB,
+			color = color,
+			icon = icon,
+			isTitle = title,
+			notClickable = title,
+			func = function()
+				castProf(spell)
+			end,
+		})
+	else
+		-- text = string, Secondtext = string, color = color string for first text, icon = texture, func = function, funcOnEnter = function,
+		-- funcOnLeave = function, isTitle = bolean, macro = macrotext, tooltip = id or var you can use for the functions, notClickable = bolean
+		tinsert(tbl, { text = textA, Secondtext = textB, isTitle = title, notClickable = title, func = function() end })
+	end
+end
+
+function mMT:GetProfessions()
+	local MenuTable = {}
+	local ProfTable = BuildProfTable()
+	local textA = ""
+
+	if not ProfTable.nomain or not ProfTable.nosecondary then
+		if ProfTable.nomain then
+			textA = "|CFFE74C3C" .. L["No Main Professions"] .. "|r"
+			InsertInTable(MenuTable,textA, nil, true)
+		else
+			textA = E.db.mMT.datatextcolors.colortitel.hex .. L["Main Professions"] .. "|r"
+			InsertInTable(MenuTable,textA, nil, true)
+
+			for i, prof in pairs(ProfTable.main) do
+				InsertInTable(MenuTable,prof.name, prof.skill, false, prof.icon, prof.color, prof.spell)
+			end
+		end
+
+		if ProfTable.nosecondary then
+			InsertInTable(MenuTable,"", nil, true)
+			textA = "|CFFE74C3C" .. L["No Secondary Professions"] .. "|r"
+			InsertInTable(MenuTable,textA, nil, true)
+		else
+			InsertInTable(MenuTable,"", nil, true)
+			textA = E.db.mMT.datatextcolors.colortitel.hex .. L["Secondary Professions"] .. "|r"
+			InsertInTable(MenuTable,textA, nil, true)
+
+			for i, prof in pairs(ProfTable.secondary) do
+				InsertInTable(MenuTable,prof.name, prof.skill, false, prof.icon, prof.color, prof.spell)
+			end
+		end
+
+		InsertInTable(MenuTable, "", nil, true)
+		tinsert(MenuTable, { text = TRADE_SKILLS, color = "|CFFBC26E5", isTitle = false, macro = "/click SpellbookMicroButton\n/click SpellBookFrameTabButton2" })
+
+		return MenuTable
+	else
+		return false
+	end
+end

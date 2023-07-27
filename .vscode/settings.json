@@ -381,7 +381,14 @@
         "CHALLENGE_MODE_COMPLETED",
         "DUNGEONS",
         "BOOKTYPE_PROFESSION",
-        "TRADE_SKILLS"
+        "TRADE_SKILLS",
+        "FormatProfession",
+        "PrimaryProfession1",
+        "PrimaryProfession2",
+        "SecondaryProfession1",
+        "SecondaryProfession2",
+        "SecondaryProfession3",
+        "Professions"
     ],
     "Lua.diagnostics.disable": [
         "undefined-field"
@@ -469,6 +476,8 @@
         "nficon",
         "nfsize",
         "nfstyle",
+        "nomain",
+        "nosecondary",
         "oncdcolor",
         "onlytext",
         "ooctexture",
