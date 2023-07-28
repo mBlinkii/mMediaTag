@@ -9,7 +9,6 @@ mMT = E:NewModule(addonName, "AceHook-3.0", "AceEvent-3.0", "AceTimer-3.0", "Ace
 --Cache Lua / WoW API
 local _G = _G
 local format = format
-local collectgarbage = collectgarbage
 local GetAddOnMetadata = _G.GetAddOnMetadata
 local C_MythicPlus_RequestMapInfo = nil
 local C_MythicPlus_RequestCurrentAffixes = nil
@@ -38,6 +37,7 @@ mMT.ElvUI_EltreumUI = {
 }
 mMT.Media = {}
 mMT.Config = {}
+mMT.DevMode = false
 mMT.DB = {}
 
 local defaultDB = {
@@ -117,7 +117,7 @@ function mMT:Initialize()
 	end
 
 	-- Initialize main things
-	mMT:LoadCommands()
+	--mMT:LoadCommands()
 
 	-- Initialize Modules
 	if E.db.mMT.general.greeting then
