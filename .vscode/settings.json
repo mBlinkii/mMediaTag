@@ -438,7 +438,10 @@
         "FCF_SetWindowName",
         "ChatFrame_AddChannel",
         "FCFTab_UpdateColors",
-        "FCFDock_SelectWindow"
+        "FCFDock_SelectWindow",
+        "ERR_NOT_IN_COMBAT",
+        "CLOSE",
+        "GameFontHighlightSmall"
     ],
     "Lua.diagnostics.disable": [
         "undefined-field"

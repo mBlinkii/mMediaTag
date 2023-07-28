@@ -314,6 +314,17 @@ local function configTable()
 				childGroups = "tab",
 				args = {},
 			},
+			dev = {
+				order = 20,
+				type = "group",
+				name = format("|CFF6559F1%s|r", L["DEV Tools"]),
+				icon = "Interface\\Addons\\ElvUI_mMediaTag\\media\\logo\\mmt_icon.tga",
+				childGroups = "tab",
+				hidden = function()
+					return not mMT.DevMode
+				end,
+				args = {},
+			},
 		},
 	}
 end
