@@ -15,6 +15,7 @@ local C_ChallengeMode_GetDungeonScoreRarityColor = C_ChallengeMode.GetDungeonSco
 local GetItemCount = GetItemCount
 local GetItemInfo = GetItemInfo
 local C_CurrencyInfo_GetCurrencyInfo = C_CurrencyInfo.GetCurrencyInfo
+local GetSpellCooldown = GetSpellCooldown
 
 local totalDurability = 0
 local invDurability = {}
@@ -34,7 +35,6 @@ local slots = {
 	[18] = _G.INVTYPE_RANGED,
 }
 function mMT:GetDurabilityInfo()
-
 	totalDurability = 100
 	totalRepairCost = 0
 
@@ -43,7 +43,7 @@ function mMT:GetDurabilityInfo()
 	for index in pairs(slots) do
 		local currentDura, maxDura = GetInventoryItemDurability(index)
 		if currentDura and maxDura > 0 then
-			local perc, repairCost = (currentDura/maxDura)*100, 0
+			local perc, repairCost = (currentDura / maxDura) * 100, 0
 			invDurability[index] = perc
 
 			if perc < totalDurability then
@@ -51,23 +51,23 @@ function mMT:GetDurabilityInfo()
 			end
 
 			if E.Retail and E.ScanTooltip.GetTooltipData then
-				E.ScanTooltip:SetInventoryItem('player', index)
+				E.ScanTooltip:SetInventoryItem("player", index)
 				E.ScanTooltip:Show()
 
 				local data = E.ScanTooltip:GetTooltipData()
 				repairCost = data and data.repairCost
 			else
-				repairCost = select(3, E.ScanTooltip:SetInventoryItem('player', index))
+				repairCost = select(3, E.ScanTooltip:SetInventoryItem("player", index))
 			end
 
 			totalRepairCost = totalRepairCost + (repairCost or 0)
 		end
 	end
 
-	local r, g, b = E:ColorGradient(totalDurability * .01, 1, .1, .1, 1, 1, .1, .1, 1, .1)
+	local r, g, b = E:ColorGradient(totalDurability * 0.01, 1, 0.1, 0.1, 1, 1, 0.1, 0.1, 1, 0.1)
 	local hex = E:RGBToHex(r, g, b)
 
-	return { durability = format("%s%d%%|r", hex, totalDurability), repair = (( totalRepairCost ~= 0) and GetMoneyString(totalRepairCost)) or nil}
+	return { durability = format("%s%d%%|r", hex, totalDurability), repair = ((totalRepairCost ~= 0) and GetMoneyString(totalRepairCost)) or nil }
 end
 
 -- local Currency = {
@@ -95,11 +95,11 @@ end
 -- }
 function mMT:GetCurrenciesInfo(tbl, item)
 	if tbl and tbl.info and tbl.info.id then
-		local itemName, itemLink, itemTexture, itemStackCount  = nil, nil, nil, nil
+		local itemName, itemLink, itemTexture, itemStackCount = nil, nil, nil, nil
 		local info = nil
 
 		if item then
-			itemName, itemLink, _, _, _, _, _, itemStackCount , _, itemTexture, _, _, _, _, _, _, _ = GetItemInfo(tbl.info.id)
+			itemName, itemLink, _, _, _, _, _, itemStackCount, _, itemTexture, _, _, _, _, _, _, _ = GetItemInfo(tbl.info.id)
 			if itemName and itemLink and itemTexture then
 				tbl.info.name = itemName
 				tbl.info.icon = mMT:mIcon(itemTexture, 12, 12)
@@ -154,11 +154,7 @@ function mMT:OwenKeystone()
 		local nhc, hc, myth, _, other, titel = mMT:mColorDatatext()
 
 		tinsert(OwenKeystoneText, 1, format("%s%s|r", titel, L["Mythic Plus Keystone"]))
-		tinsert(
-			OwenKeystoneText,
-			2,
-			format("%s%s:|r %s%s|r %s", other, L["Keystone"], myth, name, mMT:GetKeyColor(keyStoneLevel))
-		)
+		tinsert(OwenKeystoneText, 2, format("%s%s:|r %s%s|r %s", other, L["Keystone"], myth, name, mMT:GetKeyColor(keyStoneLevel)))
 		return OwenKeystoneText
 	end
 end
@@ -237,23 +233,11 @@ function mMT:WeeklyAffixes()
 
 			return WeeklyAffixesText
 		else
-			tinsert(
-				WeeklyAffixesText,
-				3,
-				format(
-					"|CFFE74C3C%s|n%s|r",
-					L["Season has not started yet."],
-					L["%sERROR! Please open the Mythic+ window, LFG Tool or Reload UI!|r"]
-				)
-			)
+			tinsert(WeeklyAffixesText, 3, format("|CFFE74C3C%s|n%s|r", L["Season has not started yet."], L["%sERROR! Please open the Mythic+ window, LFG Tool or Reload UI!|r"]))
 			return WeeklyAffixesText
 		end
 	else
-		tinsert(
-			WeeklyAffixesText,
-			3,
-			format("|CFFE74C3C%s|r", L["ERROR! Please open the Mythic+ window, LFG Tool or Reload UI!"])
-		)
+		tinsert(WeeklyAffixesText, 3, format("|CFFE74C3C%s|r", L["ERROR! Please open the Mythic+ window, LFG Tool or Reload UI!"]))
 		return WeeklyAffixesText
 	end
 end
@@ -277,9 +261,7 @@ function mMT:mGetVaultInfo()
 			if itemLink then
 				local ItemLevelInfo = GetDetailedItemLevelInfo(itemLink)
 				if ItemLevelInfo then
-					vaultinfohighest = (
-						vaultinfohighest and (vaultinfohighest < ItemLevelInfo) and ItemLevelInfo or vaultinfohighest
-					) or (not vaultinfohighest and ItemLevelInfo)
+					vaultinfohighest = (vaultinfohighest and (vaultinfohighest < ItemLevelInfo) and ItemLevelInfo or vaultinfohighest) or (not vaultinfohighest and ItemLevelInfo)
 					if i < 4 then
 						tinsert(vaultinfomplus, format("%s%s|r", mMT:mColorGardient(ItemLevelInfo), ItemLevelInfo))
 					elseif i < 7 then
@@ -298,36 +280,19 @@ end
 
 --Dungeon Difficulty
 function mMT:DungeonDifficultyShort()
-	local name, instanceType, instanceDifficultyID, difficultyName, maxPlayers, dynamicDifficulty, isDynamicInstance =
-		GetInstanceInfo()
+	local name, instanceType, instanceDifficultyID, difficultyName, maxPlayers, dynamicDifficulty, isDynamicInstance = GetInstanceInfo()
 	local nhc, hc, myth, mythp, other, titel = mMT:mColorDatatext()
 
-	if
-		instanceDifficultyID == 1
-		or instanceDifficultyID == 3
-		or instanceDifficultyID == 4
-		or instanceDifficultyID == 14
-	then
+	if instanceDifficultyID == 1 or instanceDifficultyID == 3 or instanceDifficultyID == 4 or instanceDifficultyID == 14 then
 		return format("%s%s|r", nhc, L["N"])
-	elseif
-		instanceDifficultyID == 2
-		or instanceDifficultyID == 5
-		or instanceDifficultyID == 6
-		or instanceDifficultyID == 15
-		or instanceDifficultyID == 39
-		or instanceDifficultyID == 149
-	then
+	elseif instanceDifficultyID == 2 or instanceDifficultyID == 5 or instanceDifficultyID == 6 or instanceDifficultyID == 15 or instanceDifficultyID == 39 or instanceDifficultyID == 149 then
 		return format("%s%s|r", hc, L["H"])
 	elseif instanceDifficultyID == 23 or instanceDifficultyID == 16 or instanceDifficultyID == 40 then
 		return format("%s%s|r", myth, L["M"])
 	elseif instanceDifficultyID == 8 then
 		local keyStoneLevel, _ = C_ChallengeMode.GetActiveKeystoneInfo()
 		local r, g, b = E:ColorGradient(keyStoneLevel * 0.06, 0.1, 1, 0.1, 1, 1, 0.1, 1, 0.1, 0.1)
-		if
-			keyStoneLevel ~= nil
-			and C_MythicPlus.IsMythicPlusActive()
-			and (C_ChallengeMode.GetActiveChallengeMapID() ~= nil)
-		then
+		if keyStoneLevel ~= nil and C_MythicPlus.IsMythicPlusActive() and (C_ChallengeMode.GetActiveChallengeMapID() ~= nil) then
 			return format(L["%sM|r%s+%s|r"], mythp, E:RGBToHex(r, g, b), keyStoneLevel)
 		else
 			return format("%s%s|r", mythp, L["M+"])
@@ -407,6 +372,7 @@ local function BuildProfTable()
 		secondary = {},
 		nomain = false,
 		nosecondary = false,
+		cook = false,
 	}
 
 	if not prof1 and prof2 then
@@ -436,6 +402,7 @@ local function BuildProfTable()
 
 		if cook then
 			tinsert(tbl.secondary, 3, GetProfInfo(cook))
+			tbl.cook = true
 		end
 
 		tbl.nosecondary = false
@@ -468,6 +435,18 @@ local function InsertInTable(tbl, textA, textB, title, icon, color, spell)
 	end
 end
 
+local function GetFireCD()
+	local start, duration = GetSpellCooldown(818)
+	local cooldown = start + duration - GetTime()
+	if cooldown <= 0 then
+		return ""
+	else
+		local minutes = math.floor(cooldown / 60)
+		local seconds = string.format("%02.f", math.floor(cooldown - minutes * 60))
+		return "|cffdb3030" .. minutes .. "m " .. seconds .. "s|r"
+	end
+end
+
 function mMT:GetProfessions()
 	local MenuTable = {}
 	local ProfTable = BuildProfTable()
@@ -476,33 +455,46 @@ function mMT:GetProfessions()
 	if not ProfTable.nomain or not ProfTable.nosecondary then
 		if ProfTable.nomain then
 			textA = "|CFFE74C3C" .. L["No Main Professions"] .. "|r"
-			InsertInTable(MenuTable,textA, nil, true)
+			InsertInTable(MenuTable, textA, nil, true)
 		else
 			textA = E.db.mMT.datatextcolors.colortitel.hex .. L["Main Professions"] .. "|r"
-			InsertInTable(MenuTable,textA, nil, true)
+			InsertInTable(MenuTable, textA, nil, true)
 
 			for i, prof in pairs(ProfTable.main) do
-				InsertInTable(MenuTable,prof.name, prof.skill, false, prof.icon, prof.color, prof.spell)
+				InsertInTable(MenuTable, prof.name, prof.skill, false, prof.icon, prof.color, prof.spell)
 			end
 		end
 
 		if ProfTable.nosecondary then
-			InsertInTable(MenuTable,"", nil, true)
+			InsertInTable(MenuTable, "", nil, true)
 			textA = "|CFFE74C3C" .. L["No Secondary Professions"] .. "|r"
-			InsertInTable(MenuTable,textA, nil, true)
+			InsertInTable(MenuTable, textA, nil, true)
 		else
-			InsertInTable(MenuTable,"", nil, true)
+			InsertInTable(MenuTable, "", nil, true)
 			textA = E.db.mMT.datatextcolors.colortitel.hex .. L["Secondary Professions"] .. "|r"
-			InsertInTable(MenuTable,textA, nil, true)
+			InsertInTable(MenuTable, textA, nil, true)
 
 			for i, prof in pairs(ProfTable.secondary) do
-				InsertInTable(MenuTable,prof.name, prof.skill, false, prof.icon, prof.color, prof.spell)
+				InsertInTable(MenuTable, prof.name, prof.skill, false, prof.icon, prof.color, prof.spell)
 			end
 		end
 
 		InsertInTable(MenuTable, "", nil, true)
-		tinsert(MenuTable, { text = TRADE_SKILLS, color = "|CFFBC26E5", isTitle = false, macro = "/click SpellbookMicroButton\n/click SpellBookFrameTabButton2" })
+		textA = E.db.mMT.datatextcolors.colortitel.hex .. L["Others"] .. "|r"
+		InsertInTable(MenuTable, textA, nil, true)
+		tinsert(MenuTable, { text = format("|T%s:14:14:0:0:64:64:5:59:5:59|t %s", "4620670", TRADE_SKILLS), color = "|CFFBC26E5", isTitle = false, macro = "/click SpellbookMicroButton\n/click SpellBookFrameTabButton2" })
 
+		if ProfTable.cook and IsSpellKnown(818) then
+			local texture = GetSpellTexture(818)
+			local name = GetSpellInfo(818)
+			tinsert(MenuTable, {
+				text = format("|T%s:14:14:0:0:64:64:5:59:5:59|t %s", texture, name),
+				Secondtext = GetFireCD(),
+				color = "|CFFFF9B00",
+				isTitle = false,
+				macro = "/cast " .. name,
+			})
+		end
 		return MenuTable
 	else
 		return false
