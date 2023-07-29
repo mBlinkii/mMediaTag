@@ -45,6 +45,9 @@ local HM_NPCs = {
 	[184582] = { 10 }, -- Eric "The Swift"
 	[184422] = { 70, 30 }, --Emberon
 
+	--Dawn of the Infinite
+	[194907] = {90, 85}, -- Iridikron
+
 	-- SL Dungeons
 	-- De Other Side
 	[164558] = { 80, 60, 40, 20 }, --Hakkar the Soulflayer
