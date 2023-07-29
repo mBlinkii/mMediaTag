@@ -121,7 +121,8 @@ function mMT:Initialize()
 	end
 
 	-- Initialize main things
-	--mMT:LoadCommands()
+	tinsert(E.ConfigModeLayouts, "MMEDIATAG")
+	E.ConfigModeLocalizedStrings["MMEDIATAG"] = mMT.Name
 
 	-- Initialize Modules
 	if E.db.mMT.general.greeting then

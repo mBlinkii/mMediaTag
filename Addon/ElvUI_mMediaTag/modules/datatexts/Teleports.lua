@@ -53,6 +53,8 @@ local Teleports = {
 		166747, --brewfest-revelers-hearthstone
 		165802, --noble-gardeners-hearthstone
 		190196, --enlightened-hearthstone
+		110560, --garrison-hearthstone
+		140192, --dalaran-hearthstone
 	},
 	engineering = {
 		available = false,
@@ -77,8 +79,6 @@ local Teleports = {
 		54452, --ethereal-portal
 		93672, --dark-portal
 		184871, --dark-portal 2?
-		110560, --garrison-hearthstone
-		140192, --dalaran-hearthstone
 		141605, --flight-masters-whistle
 		128353, --admirals-compass
 		18984, --dimensional-ripper-everlook
