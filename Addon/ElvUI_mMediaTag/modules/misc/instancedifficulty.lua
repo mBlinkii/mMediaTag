@@ -134,6 +134,7 @@ local shortNames = {
 	[2563] = "NPGA",
 	[2573] = "LA",
 	[2574] = "DIR",
+	[2579] = "DOTI", -- Dawn of the Infinite
 }
 
 local colors = {
