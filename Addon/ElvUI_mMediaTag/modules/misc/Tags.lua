@@ -133,6 +133,20 @@ local BossIDs = {
 	["43875"] = true,
 	["43878"] = true,
 
+	-- DF Dawn of the Infinite
+	["198997"] = true,
+	["198999"] = true,
+	["198996"] = true,
+	["201788"] = true,
+	["201790"] = true,
+	["201792"]  = true,
+	["198933"] = true,
+	["198995"] = true,
+	["198998"] = true,
+	["209207"] = true,
+	["209208"] = true,
+	["199000"] = true,
+
 	-- DF Worldboss
 	["193532"] = true,
 	["193533"] = true,
