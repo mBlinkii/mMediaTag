@@ -289,7 +289,7 @@ local function mOnEnterSpell(btn)
 	GameTooltip:Show()
 end
 
-local function mGetInfos(TeleportsTable, spell, ttip, check)
+local function mGetInfos(TeleportsTable, spell, tip, check)
 	for i, v in pairs(TeleportsTable.tps) do
 		local texture, name, hasSpell, hasItem = nil, nil, false, 0
 		if spell then
@@ -314,9 +314,6 @@ local function mGetInfos(TeleportsTable, spell, ttip, check)
 					start, duration = GetItemCooldown(i)
 				end
 				local cooldown = start + duration - GetTime()
-				if type(v) == "string" then
-					name = "[|CFF00AAFF" .. v .. "|r] " .. name
-				end
 
 				if cooldown >= 2 then
 					local hours = math.floor(cooldown / 3600)
@@ -336,7 +333,11 @@ local function mGetInfos(TeleportsTable, spell, ttip, check)
 				end
 
 				if text1 and text2 then
-					if ttip then
+					if type(v) == "string" then
+						text1 = "[|CFF00AAFF" .. v .. "|r] " .. text1
+					end
+
+					if tip then
 						DT.tooltip:AddDoubleLine(format("|T%s:14:14:0:0:64:64:5:59:5:59|t %s", texture, text1), text2)
 					elseif spell then
 						mMenuAdd(Teleports.menu, text1, text2, "/cast " .. name, texture, i, function(btn)
