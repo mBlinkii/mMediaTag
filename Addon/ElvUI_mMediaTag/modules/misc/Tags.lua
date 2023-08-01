@@ -139,7 +139,7 @@ local BossIDs = {
 	["198996"] = true,
 	["201788"] = true,
 	["201790"] = true,
-	["201792"]  = true,
+	["201792"] = true,
 	["198933"] = true,
 	["198995"] = true,
 	["198998"] = true,
@@ -244,98 +244,54 @@ for textFormat, length in pairs({ veryshort = 5, short = 10, medium = 15, long =
 		end
 	end)
 
-	E:AddTag(
-		format("mName:last:onlyininstance:%s", textFormat),
-		"UNIT_NAME_UPDATE INSTANCE_ENCOUNTER_ENGAGE_UNIT",
-		function(unit)
-			local name = UnitName(unit)
-			local inInstance, InstanceType = IsInInstance()
-			if name and strfind(name, "%s") then
-				name = inInstance and ShortName(name) or E.TagFunctions.Abbrev(name)
-			end
-
-			if name then
-				return E:ShortenString(name, length)
-			end
-		end
-	)
-
-	E:AddTag(
-		format("mName:statusicon:%s", textFormat),
-		"UNIT_NAME_UPDATE UNIT_CONNECTION PLAYER_FLAGS_CHANGED UNIT_HEALTH INSTANCE_ENCOUNTER_ENGAGE_UNIT",
-		function(unit)
-			local name = UnitName(unit)
-			if
-				UnitIsAFK(unit)
-				or UnitIsDND(unit)
-				or (not UnitIsConnected(unit))
-				or (UnitIsDead(unit))
-				or (UnitIsGhost(unit))
-			then
-				return _TAGS["mStatus:icon"](unit)
-			elseif name then
-				return E:ShortenString(name, length)
-			end
-		end
-	)
-
-	E:AddTag(
-		format("mName:status:%s", textFormat),
-		"UNIT_NAME_UPDATE UNIT_CONNECTION PLAYER_FLAGS_CHANGED UNIT_HEALTH INSTANCE_ENCOUNTER_ENGAGE_UNIT",
-		function(unit)
-			local name = UnitName(unit)
-			if
-				UnitIsAFK(unit)
-				or UnitIsDND(unit)
-				or (not UnitIsConnected(unit))
-				or (UnitIsDead(unit))
-				or (UnitIsGhost(unit))
-			then
-				return _TAGS.mStatus(unit)
-			elseif name then
-				return E:ShortenString(name, length)
-			end
-		end
-	)
-end
-
-E:AddTag(
-	"mName:statusicon",
-	"UNIT_NAME_UPDATE UNIT_CONNECTION PLAYER_FLAGS_CHANGED UNIT_HEALTH INSTANCE_ENCOUNTER_ENGAGE_UNIT",
-	function(unit)
+	E:AddTag(format("mName:last:onlyininstance:%s", textFormat), "UNIT_NAME_UPDATE INSTANCE_ENCOUNTER_ENGAGE_UNIT", function(unit)
 		local name = UnitName(unit)
-		if
-			UnitIsAFK(unit)
-			or UnitIsDND(unit)
-			or (not UnitIsConnected(unit))
-			or (UnitIsDead(unit))
-			or (UnitIsGhost(unit))
-		then
+		local inInstance, InstanceType = IsInInstance()
+		if name and strfind(name, "%s") then
+			name = inInstance and ShortName(name) or E.TagFunctions.Abbrev(name)
+		end
+
+		if name then
+			return E:ShortenString(name, length)
+		end
+	end)
+
+	E:AddTag(format("mName:statusicon:%s", textFormat), "UNIT_NAME_UPDATE UNIT_CONNECTION PLAYER_FLAGS_CHANGED UNIT_HEALTH INSTANCE_ENCOUNTER_ENGAGE_UNIT", function(unit)
+		local name = UnitName(unit)
+		if UnitIsAFK(unit) or UnitIsDND(unit) or (not UnitIsConnected(unit)) or (UnitIsDead(unit)) or (UnitIsGhost(unit)) then
 			return _TAGS["mStatus:icon"](unit)
 		elseif name then
-			return name
+			return E:ShortenString(name, length)
 		end
-	end
-)
+	end)
 
-E:AddTag(
-	"mName:status",
-	"UNIT_NAME_UPDATE UNIT_CONNECTION PLAYER_FLAGS_CHANGED UNIT_HEALTH INSTANCE_ENCOUNTER_ENGAGE_UNIT",
-	function(unit)
+	E:AddTag(format("mName:status:%s", textFormat), "UNIT_NAME_UPDATE UNIT_CONNECTION PLAYER_FLAGS_CHANGED UNIT_HEALTH INSTANCE_ENCOUNTER_ENGAGE_UNIT", function(unit)
 		local name = UnitName(unit)
-		if
-			UnitIsAFK(unit)
-			or UnitIsDND(unit)
-			or (not UnitIsConnected(unit))
-			or (UnitIsDead(unit))
-			or (UnitIsGhost(unit))
-		then
+		if UnitIsAFK(unit) or UnitIsDND(unit) or (not UnitIsConnected(unit)) or (UnitIsDead(unit)) or (UnitIsGhost(unit)) then
 			return _TAGS.mStatus(unit)
 		elseif name then
-			return name
+			return E:ShortenString(name, length)
 		end
+	end)
+end
+
+E:AddTag("mName:statusicon", "UNIT_NAME_UPDATE UNIT_CONNECTION PLAYER_FLAGS_CHANGED UNIT_HEALTH INSTANCE_ENCOUNTER_ENGAGE_UNIT", function(unit)
+	local name = UnitName(unit)
+	if UnitIsAFK(unit) or UnitIsDND(unit) or (not UnitIsConnected(unit)) or (UnitIsDead(unit)) or (UnitIsGhost(unit)) then
+		return _TAGS["mStatus:icon"](unit)
+	elseif name then
+		return name
 	end
-)
+end)
+
+E:AddTag("mName:status", "UNIT_NAME_UPDATE UNIT_CONNECTION PLAYER_FLAGS_CHANGED UNIT_HEALTH INSTANCE_ENCOUNTER_ENGAGE_UNIT", function(unit)
+	local name = UnitName(unit)
+	if UnitIsAFK(unit) or UnitIsDND(unit) or (not UnitIsConnected(unit)) or (UnitIsDead(unit)) or (UnitIsGhost(unit)) then
+		return _TAGS.mStatus(unit)
+	elseif name then
+		return name
+	end
+end)
 
 E:AddTag("mName:last", "UNIT_NAME_UPDATE INSTANCE_ENCOUNTER_ENGAGE_UNIT", function(unit)
 	local name = UnitName(unit)
@@ -369,65 +325,25 @@ end)
 
 -- veryshort = 5, short = 10, medium = 15, long = 20
 E:AddTagInfo("mName:status", mMT.NameShort .. " " .. L["Name"], L["Replace the Unit name with Status, if applicable."])
-E:AddTagInfo(
-	"mName:statusicon",
-	mMT.NameShort .. " " .. L["Name"],
-	L["Replace the Unit name with Status Icon, if applicable."]
-)
+E:AddTagInfo("mName:statusicon", mMT.NameShort .. " " .. L["Name"], L["Replace the Unit name with Status Icon, if applicable."])
 E:AddTagInfo("mName:status:veryshort", mMT.NameShort .. " " .. L["Name"], L["Shortened version of"] .. " mName:status.")
 E:AddTagInfo("mName:status:short", mMT.NameShort .. " " .. L["Name"], L["Shortened version of"] .. " mName:status.")
 E:AddTagInfo("mName:status:medium", mMT.NameShort .. " " .. L["Name"], L["Shortened version of"] .. " mName:status.")
 E:AddTagInfo("mName:status:long", mMT.NameShort .. " " .. L["Name"], L["Shortened version of"] .. " mName:status.")
-E:AddTagInfo(
-	"mName:statusicon:veryshort",
-	mMT.NameShort .. " " .. L["Name"],
-	L["Shortened version of"] .. " mName:statusicon."
-)
-E:AddTagInfo(
-	"mName:statusicon:short",
-	mMT.NameShort .. " " .. L["Name"],
-	L["Shortened version of"] .. " mName:statusicon."
-)
-E:AddTagInfo(
-	"mName:statusicon:medium",
-	mMT.NameShort .. " " .. L["Name"],
-	L["Shortened version of"] .. " mName:statusicon."
-)
-E:AddTagInfo(
-	"mName:statusicon:long",
-	mMT.NameShort .. " " .. L["Name"],
-	L["Shortened version of"] .. " mName:statusicon."
-)
+E:AddTagInfo("mName:statusicon:veryshort", mMT.NameShort .. " " .. L["Name"], L["Shortened version of"] .. " mName:statusicon.")
+E:AddTagInfo("mName:statusicon:short", mMT.NameShort .. " " .. L["Name"], L["Shortened version of"] .. " mName:statusicon.")
+E:AddTagInfo("mName:statusicon:medium", mMT.NameShort .. " " .. L["Name"], L["Shortened version of"] .. " mName:statusicon.")
+E:AddTagInfo("mName:statusicon:long", mMT.NameShort .. " " .. L["Name"], L["Shortened version of"] .. " mName:statusicon.")
 E:AddTagInfo("mName:last", mMT.NameShort .. " " .. L["Name"], L["Displays the last word of the Unit name."])
 E:AddTagInfo("mName:last:veryshort", mMT.NameShort .. " " .. L["Name"], L["Shortened version of"] .. " mName:last.")
 E:AddTagInfo("mName:last:short", mMT.NameShort .. " " .. L["Name"], L["Shortened version of"] .. " mName:last.")
 E:AddTagInfo("mName:last:medium", mMT.NameShort .. " " .. L["Name"], L["Shortened version of"] .. " mName:last.")
 E:AddTagInfo("mName:last:long", mMT.NameShort .. " " .. L["Name"], L["Shortened version of"] .. " mName:last.")
-E:AddTagInfo(
-	"mName:last:onlyininstance",
-	mMT.NameShort .. " " .. L["Name"],
-	L["Displays the last word of the Unit name, only in an Instance."]
-)
-E:AddTagInfo(
-	"mName:last:onlyininstance:veryshort",
-	mMT.NameShort .. " " .. L["Name"],
-	L["Shortened version of"] .. " mName:last:onlyininstance."
-)
-E:AddTagInfo(
-	"mName:last:onlyininstance:short",
-	mMT.NameShort .. " " .. L["Name"],
-	L["Shortened version of"] .. " mName:last:onlyininstance."
-)
-E:AddTagInfo(
-	"mName:last:onlyininstance:medium",
-	mMT.NameShort .. " " .. L["Name"],
-	L["Shortened version of"] .. " mName:last:onlyininstance."
-)
-E:AddTagInfo(
-	"mName:last:onlyininstance:long",
-	mMT.NameShort .. " " .. L["Name"],
-	L["Shortened version of"] .. " mName:last:onlyininstance."
-)
+E:AddTagInfo("mName:last:onlyininstance", mMT.NameShort .. " " .. L["Name"], L["Displays the last word of the Unit name, only in an Instance."])
+E:AddTagInfo("mName:last:onlyininstance:veryshort", mMT.NameShort .. " " .. L["Name"], L["Shortened version of"] .. " mName:last:onlyininstance.")
+E:AddTagInfo("mName:last:onlyininstance:short", mMT.NameShort .. " " .. L["Name"], L["Shortened version of"] .. " mName:last:onlyininstance.")
+E:AddTagInfo("mName:last:onlyininstance:medium", mMT.NameShort .. " " .. L["Name"], L["Shortened version of"] .. " mName:last:onlyininstance.")
+E:AddTagInfo("mName:last:onlyininstance:long", mMT.NameShort .. " " .. L["Name"], L["Shortened version of"] .. " mName:last:onlyininstance.")
 E:AddTagInfo("mTargetAbbrev", mMT.NameShort .. " " .. L["Name"], L["Abbrev Name of Target."])
 
 E:AddTag("mClass", "UNIT_CLASSIFICATION_CHANGED", function(unit)
@@ -592,30 +508,26 @@ E:AddTagInfo("mStatus:icon", mMT.NameShort .. " " .. L["Status"], L["Displays th
 E:AddTagInfo("mStatustimer", mMT.NameShort .. " " .. L["Status"], L["Displays the Unit Status text and time."])
 E:AddTagInfo("mAFK", mMT.NameShort .. " " .. L["Status"], L["Displays the Unit AFK Status."])
 
-E:AddTag(
-	"mColor",
-	"UNIT_NAME_UPDATE UNIT_FACTION INSTANCE_ENCOUNTER_ENGAGE_UNIT UNIT_CLASSIFICATION_CHANGED",
-	function(unit)
-		local c = UnitClassification(unit)
-		local unitPlayer = UnitIsPlayer(unit)
+E:AddTag("mColor", "UNIT_NAME_UPDATE UNIT_FACTION INSTANCE_ENCOUNTER_ENGAGE_UNIT UNIT_CLASSIFICATION_CHANGED", function(unit)
+	local c = UnitClassification(unit)
+	local unitPlayer = UnitIsPlayer(unit)
 
-		if unitPlayer then
-			return _TAGS.classcolor(unit)
+	if unitPlayer then
+		return _TAGS.classcolor(unit)
+	else
+		if c == "rare" then
+			return colors.rare
+		elseif c == "rareelite" then
+			return colors.relite
+		elseif c == "elite" then
+			return colors.elite
+		elseif c == "worldboss" then
+			return colors.boss
 		else
-			if c == "rare" then
-				return colors.rare
-			elseif c == "rareelite" then
-				return colors.relite
-			elseif c == "elite" then
-				return colors.elite
-			elseif c == "worldboss" then
-				return colors.boss
-			else
-				return _TAGS.classcolor(unit)
-			end
+			return _TAGS.classcolor(unit)
 		end
 	end
-)
+end)
 
 E:AddTag("mColor:target", "UNIT_TARGET", function(unit)
 	local target = unit .. "target"
@@ -639,259 +551,15 @@ E:AddTag("mColor:target", "UNIT_TARGET", function(unit)
 	end
 end)
 
-E:AddTagInfo(
-	"mColor",
-	mMT.NameShort .. " " .. L["Color"],
-	L["Unit colors with mMediaTag colors for Rare, Rareelite, Elite and Boss and Classcolors."]
-)
-E:AddTagInfo(
-	"mColor:target",
-	mMT.NameShort .. " " .. L["Color"],
-	L["Targetunit colors with mMediaTag colors for Rare, Rareelite, Elite and Boss and Classcolors."]
-)
+E:AddTagInfo("mColor", mMT.NameShort .. " " .. L["Color"], L["Unit colors with mMediaTag colors for Rare, Rareelite, Elite and Boss and Classcolors."])
+E:AddTagInfo("mColor:target", mMT.NameShort .. " " .. L["Color"], L["Targetunit colors with mMediaTag colors for Rare, Rareelite, Elite and Boss and Classcolors."])
 
-E:AddTag(
-	"mHealth",
-	"UNIT_HEALTH UNIT_MAXHEALTH UNIT_CONNECTION PLAYER_FLAGS_CHANGED PLAYER_UPDATE_RESTING",
-	function(unit)
-		local isAFK = UnitIsAFK(unit)
+E:AddTag("mHealth", "UNIT_HEALTH UNIT_MAXHEALTH UNIT_CONNECTION PLAYER_FLAGS_CHANGED PLAYER_UPDATE_RESTING", function(unit)
+	local isAFK = UnitIsAFK(unit)
 
-		if isAFK then
-			return _TAGS.mAFK(unit)
-		else
-			if (UnitIsDead(unit)) or (UnitIsGhost(unit)) or (not UnitIsConnected(unit)) then
-				return _TAGS.mStatus(unit)
-			else
-				local currentHealth = UnitHealth(unit)
-				local deficit = UnitHealthMax(unit) - currentHealth
-
-				if deficit > 0 and currentHealth > 0 then
-					return E:GetFormattedText("PERCENT", UnitHealth(unit), UnitHealthMax(unit))
-				else
-					return E:GetFormattedText("CURRENT", UnitHealth(unit), UnitHealthMax(unit))
-				end
-			end
-		end
-	end
-)
-
-E:AddTag(
-	"mHealth:short",
-	"UNIT_HEALTH UNIT_MAXHEALTH UNIT_CONNECTION PLAYER_FLAGS_CHANGED PLAYER_UPDATE_RESTING",
-	function(unit)
-		local isAFK = UnitIsAFK(unit)
-
-		if isAFK then
-			return _TAGS.mAFK(unit)
-		else
-			if (UnitIsDead(unit)) or (UnitIsGhost(unit)) or (not UnitIsConnected(unit)) then
-				return _TAGS.mStatus(unit)
-			else
-				local currentHealth = UnitHealth(unit)
-				local deficit = UnitHealthMax(unit) - currentHealth
-
-				if deficit > 0 and currentHealth > 0 then
-					return E:GetFormattedText("PERCENT", UnitHealth(unit), UnitHealthMax(unit))
-				else
-					return E:GetFormattedText("CURRENT", UnitHealth(unit), UnitHealthMax(unit), nil, true)
-				end
-			end
-		end
-	end
-)
-
-E:AddTag(
-	"mHealth:nodeath",
-	"UNIT_HEALTH UNIT_MAXHEALTH UNIT_CONNECTION PLAYER_FLAGS_CHANGED PLAYER_UPDATE_RESTING",
-	function(unit)
-		if (not UnitIsDead(unit)) or (not UnitIsGhost(unit)) then
-			local currentHealth = UnitHealth(unit)
-			local deficit = UnitHealthMax(unit) - currentHealth
-
-			if deficit > 0 and currentHealth > 0 then
-				return E:GetFormattedText("PERCENT", UnitHealth(unit), UnitHealthMax(unit))
-			else
-				return E:GetFormattedText("CURRENT", UnitHealth(unit), UnitHealthMax(unit))
-			end
-		end
-	end
-)
-
-E:AddTag(
-	"mHealth:nodeath:short",
-	"UNIT_HEALTH UNIT_MAXHEALTH UNIT_CONNECTION PLAYER_FLAGS_CHANGED PLAYER_UPDATE_RESTING",
-	function(unit)
-		if (not UnitIsDead(unit)) or (not UnitIsGhost(unit)) then
-			local currentHealth = UnitHealth(unit)
-			local deficit = UnitHealthMax(unit) - currentHealth
-
-			if deficit > 0 and currentHealth > 0 then
-				return E:GetFormattedText("PERCENT", UnitHealth(unit), UnitHealthMax(unit))
-			else
-				return E:GetFormattedText("CURRENT", UnitHealth(unit), UnitHealthMax(unit), nil, true)
-			end
-		end
-	end
-)
-
-E:AddTag(
-	"mHealth:nodeath:current-percent",
-	"UNIT_HEALTH UNIT_MAXHEALTH UNIT_CONNECTION PLAYER_FLAGS_CHANGED PLAYER_UPDATE_RESTING",
-	function(unit)
-		if (UnitIsDead(unit)) or (UnitIsGhost(unit)) then
-			return ""
-		else
-			local currentHealth = UnitHealth(unit)
-			local deficit = UnitHealthMax(unit) - currentHealth
-
-			if deficit > 0 and currentHealth > 0 then
-				return format(
-					"%s | %s",
-					E:GetFormattedText("CURRENT", UnitHealth(unit), UnitHealthMax(unit)),
-					E:GetFormattedText("PERCENT", UnitHealth(unit), UnitHealthMax(unit))
-				)
-			else
-				return E:GetFormattedText("CURRENT", UnitHealth(unit), UnitHealthMax(unit))
-			end
-		end
-	end
-)
-
-E:AddTag(
-	"mHealth:nodeath:short:current-percent",
-	"UNIT_HEALTH UNIT_MAXHEALTH UNIT_CONNECTION PLAYER_FLAGS_CHANGED PLAYER_UPDATE_RESTING",
-	function(unit)
-		if (UnitIsDead(unit)) or (UnitIsGhost(unit)) then
-			return ""
-		else
-			local currentHealth = UnitHealth(unit)
-			local deficit = UnitHealthMax(unit) - currentHealth
-
-			if deficit > 0 and currentHealth > 0 then
-				return format(
-					"%s | %s",
-					E:GetFormattedText("CURRENT", UnitHealth(unit), UnitHealthMax(unit), nil, true),
-					E:GetFormattedText("PERCENT", UnitHealth(unit), UnitHealthMax(unit))
-				)
-			else
-				return E:GetFormattedText("CURRENT", UnitHealth(unit), UnitHealthMax(unit), nil, true)
-			end
-		end
-	end
-)
-
-E:AddTag(
-	"mHealth:icon",
-	"UNIT_HEALTH UNIT_MAXHEALTH UNIT_CONNECTION PLAYER_FLAGS_CHANGED PLAYER_UPDATE_RESTING",
-	function(unit)
-		if
-			(UnitIsDead(unit))
-			or (UnitIsGhost(unit))
-			or (not UnitIsConnected(unit))
-			or (UnitIsAFK(unit))
-			or (UnitIsDND(unit))
-		then
-			return _TAGS["mStatus:icon"](unit)
-		else
-			local currentHealth = UnitHealth(unit)
-			local deficit = UnitHealthMax(unit) - currentHealth
-
-			if deficit > 0 and currentHealth > 0 then
-				return E:GetFormattedText("PERCENT", UnitHealth(unit), UnitHealthMax(unit))
-			else
-				return E:GetFormattedText("CURRENT", UnitHealth(unit), UnitHealthMax(unit))
-			end
-		end
-	end
-)
-
-E:AddTag(
-	"mHealth:icon:short",
-	"UNIT_HEALTH UNIT_MAXHEALTH UNIT_CONNECTION PLAYER_FLAGS_CHANGED PLAYER_UPDATE_RESTING",
-	function(unit)
-		if
-			(UnitIsDead(unit))
-			or (UnitIsGhost(unit))
-			or (not UnitIsConnected(unit))
-			or (UnitIsAFK(unit))
-			or (UnitIsDND(unit))
-		then
-			return _TAGS["mStatus:icon"](unit)
-		else
-			local currentHealth = UnitHealth(unit)
-			local deficit = UnitHealthMax(unit) - currentHealth
-
-			if deficit > 0 and currentHealth > 0 then
-				return E:GetFormattedText("PERCENT", UnitHealth(unit), UnitHealthMax(unit))
-			else
-				return E:GetFormattedText("CURRENT", UnitHealth(unit), UnitHealthMax(unit), nil, true)
-			end
-		end
-	end
-)
-
-E:AddTag(
-	"mHealth:current-percent",
-	"UNIT_HEALTH UNIT_MAXHEALTH UNIT_CONNECTION PLAYER_FLAGS_CHANGED PLAYER_UPDATE_RESTING",
-	function(unit)
-		local isAFK = UnitIsAFK(unit)
-
-		if isAFK then
-			return _TAGS.mAFK(unit)
-		else
-			if (UnitIsDead(unit)) or (UnitIsGhost(unit)) or (not UnitIsConnected(unit)) then
-				return _TAGS.mStatus(unit)
-			else
-				local currentHealth = UnitHealth(unit)
-				local deficit = UnitHealthMax(unit) - currentHealth
-
-				if deficit > 0 and currentHealth > 0 then
-					return format(
-						"%s | %s",
-						E:GetFormattedText("CURRENT", UnitHealth(unit), UnitHealthMax(unit)),
-						E:GetFormattedText("PERCENT", UnitHealth(unit), UnitHealthMax(unit))
-					)
-				else
-					return E:GetFormattedText("CURRENT", UnitHealth(unit), UnitHealthMax(unit))
-				end
-			end
-		end
-	end
-)
-
-E:AddTag(
-	"mHealth:current-percent:short",
-	"UNIT_HEALTH UNIT_MAXHEALTH UNIT_CONNECTION PLAYER_FLAGS_CHANGED PLAYER_UPDATE_RESTING",
-	function(unit)
-		local isAFK = UnitIsAFK(unit)
-
-		if isAFK then
-			return _TAGS.mAFK(unit)
-		else
-			if (UnitIsDead(unit)) or (UnitIsGhost(unit)) or (not UnitIsConnected(unit)) then
-				return _TAGS.mStatus(unit)
-			else
-				local currentHealth = UnitHealth(unit)
-				local deficit = UnitHealthMax(unit) - currentHealth
-
-				if deficit > 0 and currentHealth > 0 then
-					return format(
-						"%s | %s",
-						E:GetFormattedText("CURRENT", UnitHealth(unit), UnitHealthMax(unit), nil, true),
-						E:GetFormattedText("PERCENT", UnitHealth(unit), UnitHealthMax(unit))
-					)
-				else
-					return E:GetFormattedText("CURRENT", UnitHealth(unit), UnitHealthMax(unit), nil, true)
-				end
-			end
-		end
-	end
-)
-
-E:AddTag(
-	"mHealth:NoAFK",
-	"UNIT_HEALTH UNIT_MAXHEALTH UNIT_CONNECTION PLAYER_FLAGS_CHANGED PLAYER_UPDATE_RESTING",
-	function(unit)
+	if isAFK then
+		return _TAGS.mAFK(unit)
+	else
 		if (UnitIsDead(unit)) or (UnitIsGhost(unit)) or (not UnitIsConnected(unit)) then
 			return _TAGS.mStatus(unit)
 		else
@@ -905,12 +573,14 @@ E:AddTag(
 			end
 		end
 	end
-)
+end)
 
-E:AddTag(
-	"mHealth:NoAFK:short",
-	"UNIT_HEALTH UNIT_MAXHEALTH UNIT_CONNECTION PLAYER_FLAGS_CHANGED PLAYER_UPDATE_RESTING",
-	function(unit)
+E:AddTag("mHealth:short", "UNIT_HEALTH UNIT_MAXHEALTH UNIT_CONNECTION PLAYER_FLAGS_CHANGED PLAYER_UPDATE_RESTING", function(unit)
+	local isAFK = UnitIsAFK(unit)
+
+	if isAFK then
+		return _TAGS.mAFK(unit)
+	else
 		if (UnitIsDead(unit)) or (UnitIsGhost(unit)) or (not UnitIsConnected(unit)) then
 			return _TAGS.mStatus(unit)
 		else
@@ -924,12 +594,100 @@ E:AddTag(
 			end
 		end
 	end
-)
+end)
 
-E:AddTag(
-	"mHealth:NoAFK:current-percent",
-	"UNIT_HEALTH UNIT_MAXHEALTH UNIT_CONNECTION PLAYER_FLAGS_CHANGED PLAYER_UPDATE_RESTING",
-	function(unit)
+E:AddTag("mHealth:nodeath", "UNIT_HEALTH UNIT_MAXHEALTH UNIT_CONNECTION PLAYER_FLAGS_CHANGED PLAYER_UPDATE_RESTING", function(unit)
+	if (not UnitIsDead(unit)) or (not UnitIsGhost(unit)) then
+		local currentHealth = UnitHealth(unit)
+		local deficit = UnitHealthMax(unit) - currentHealth
+
+		if deficit > 0 and currentHealth > 0 then
+			return E:GetFormattedText("PERCENT", UnitHealth(unit), UnitHealthMax(unit))
+		else
+			return E:GetFormattedText("CURRENT", UnitHealth(unit), UnitHealthMax(unit))
+		end
+	end
+end)
+
+E:AddTag("mHealth:nodeath:short", "UNIT_HEALTH UNIT_MAXHEALTH UNIT_CONNECTION PLAYER_FLAGS_CHANGED PLAYER_UPDATE_RESTING", function(unit)
+	if (not UnitIsDead(unit)) or (not UnitIsGhost(unit)) then
+		local currentHealth = UnitHealth(unit)
+		local deficit = UnitHealthMax(unit) - currentHealth
+
+		if deficit > 0 and currentHealth > 0 then
+			return E:GetFormattedText("PERCENT", UnitHealth(unit), UnitHealthMax(unit))
+		else
+			return E:GetFormattedText("CURRENT", UnitHealth(unit), UnitHealthMax(unit), nil, true)
+		end
+	end
+end)
+
+E:AddTag("mHealth:nodeath:current-percent", "UNIT_HEALTH UNIT_MAXHEALTH UNIT_CONNECTION PLAYER_FLAGS_CHANGED PLAYER_UPDATE_RESTING", function(unit)
+	if (UnitIsDead(unit)) or (UnitIsGhost(unit)) then
+		return ""
+	else
+		local currentHealth = UnitHealth(unit)
+		local deficit = UnitHealthMax(unit) - currentHealth
+
+		if deficit > 0 and currentHealth > 0 then
+			return format("%s | %s", E:GetFormattedText("CURRENT", UnitHealth(unit), UnitHealthMax(unit)), E:GetFormattedText("PERCENT", UnitHealth(unit), UnitHealthMax(unit)))
+		else
+			return E:GetFormattedText("CURRENT", UnitHealth(unit), UnitHealthMax(unit))
+		end
+	end
+end)
+
+E:AddTag("mHealth:nodeath:short:current-percent", "UNIT_HEALTH UNIT_MAXHEALTH UNIT_CONNECTION PLAYER_FLAGS_CHANGED PLAYER_UPDATE_RESTING", function(unit)
+	if (UnitIsDead(unit)) or (UnitIsGhost(unit)) then
+		return ""
+	else
+		local currentHealth = UnitHealth(unit)
+		local deficit = UnitHealthMax(unit) - currentHealth
+
+		if deficit > 0 and currentHealth > 0 then
+			return format("%s | %s", E:GetFormattedText("CURRENT", UnitHealth(unit), UnitHealthMax(unit), nil, true), E:GetFormattedText("PERCENT", UnitHealth(unit), UnitHealthMax(unit)))
+		else
+			return E:GetFormattedText("CURRENT", UnitHealth(unit), UnitHealthMax(unit), nil, true)
+		end
+	end
+end)
+
+E:AddTag("mHealth:icon", "UNIT_HEALTH UNIT_MAXHEALTH UNIT_CONNECTION PLAYER_FLAGS_CHANGED PLAYER_UPDATE_RESTING", function(unit)
+	if (UnitIsDead(unit)) or (UnitIsGhost(unit)) or (not UnitIsConnected(unit)) or (UnitIsAFK(unit)) or (UnitIsDND(unit)) then
+		return _TAGS["mStatus:icon"](unit)
+	else
+		local currentHealth = UnitHealth(unit)
+		local deficit = UnitHealthMax(unit) - currentHealth
+
+		if deficit > 0 and currentHealth > 0 then
+			return E:GetFormattedText("PERCENT", UnitHealth(unit), UnitHealthMax(unit))
+		else
+			return E:GetFormattedText("CURRENT", UnitHealth(unit), UnitHealthMax(unit))
+		end
+	end
+end)
+
+E:AddTag("mHealth:icon:short", "UNIT_HEALTH UNIT_MAXHEALTH UNIT_CONNECTION PLAYER_FLAGS_CHANGED PLAYER_UPDATE_RESTING", function(unit)
+	if (UnitIsDead(unit)) or (UnitIsGhost(unit)) or (not UnitIsConnected(unit)) or (UnitIsAFK(unit)) or (UnitIsDND(unit)) then
+		return _TAGS["mStatus:icon"](unit)
+	else
+		local currentHealth = UnitHealth(unit)
+		local deficit = UnitHealthMax(unit) - currentHealth
+
+		if deficit > 0 and currentHealth > 0 then
+			return E:GetFormattedText("PERCENT", UnitHealth(unit), UnitHealthMax(unit))
+		else
+			return E:GetFormattedText("CURRENT", UnitHealth(unit), UnitHealthMax(unit), nil, true)
+		end
+	end
+end)
+
+E:AddTag("mHealth:current-percent", "UNIT_HEALTH UNIT_MAXHEALTH UNIT_CONNECTION PLAYER_FLAGS_CHANGED PLAYER_UPDATE_RESTING", function(unit)
+	local isAFK = UnitIsAFK(unit)
+
+	if isAFK then
+		return _TAGS.mAFK(unit)
+	else
 		if (UnitIsDead(unit)) or (UnitIsGhost(unit)) or (not UnitIsConnected(unit)) then
 			return _TAGS.mStatus(unit)
 		else
@@ -937,22 +695,20 @@ E:AddTag(
 			local deficit = UnitHealthMax(unit) - currentHealth
 
 			if deficit > 0 and currentHealth > 0 then
-				return format(
-					"%s | %s",
-					E:GetFormattedText("CURRENT", UnitHealth(unit), UnitHealthMax(unit)),
-					E:GetFormattedText("PERCENT", UnitHealth(unit), UnitHealthMax(unit))
-				)
+				return format("%s | %s", E:GetFormattedText("CURRENT", UnitHealth(unit), UnitHealthMax(unit)), E:GetFormattedText("PERCENT", UnitHealth(unit), UnitHealthMax(unit)))
 			else
 				return E:GetFormattedText("CURRENT", UnitHealth(unit), UnitHealthMax(unit))
 			end
 		end
 	end
-)
+end)
 
-E:AddTag(
-	"mHealth:NoAFK:short:current-percent",
-	"UNIT_HEALTH UNIT_MAXHEALTH UNIT_CONNECTION PLAYER_FLAGS_CHANGED PLAYER_UPDATE_RESTING",
-	function(unit)
+E:AddTag("mHealth:current-percent:short", "UNIT_HEALTH UNIT_MAXHEALTH UNIT_CONNECTION PLAYER_FLAGS_CHANGED PLAYER_UPDATE_RESTING", function(unit)
+	local isAFK = UnitIsAFK(unit)
+
+	if isAFK then
+		return _TAGS.mAFK(unit)
+	else
 		if (UnitIsDead(unit)) or (UnitIsGhost(unit)) or (not UnitIsConnected(unit)) then
 			return _TAGS.mStatus(unit)
 		else
@@ -960,76 +716,88 @@ E:AddTag(
 			local deficit = UnitHealthMax(unit) - currentHealth
 
 			if deficit > 0 and currentHealth > 0 then
-				return format(
-					"%s | %s",
-					E:GetFormattedText("CURRENT", UnitHealth(unit), UnitHealthMax(unit), nil, true),
-					E:GetFormattedText("PERCENT", UnitHealth(unit), UnitHealthMax(unit))
-				)
+				return format("%s | %s", E:GetFormattedText("CURRENT", UnitHealth(unit), UnitHealthMax(unit), nil, true), E:GetFormattedText("PERCENT", UnitHealth(unit), UnitHealthMax(unit)))
 			else
-				return E:GetFormattedText("CURRENT", UnitHealth(unit), UnitHealthMax(unit))
+				return E:GetFormattedText("CURRENT", UnitHealth(unit), UnitHealthMax(unit), nil, true)
 			end
 		end
 	end
-)
+end)
 
-E:AddTagInfo(
-	"mHealth",
-	mMT.NameShort .. " " .. L["Health"],
-	L["Health changes between maximum Health and Percent in combat."]
-)
+E:AddTag("mHealth:NoAFK", "UNIT_HEALTH UNIT_MAXHEALTH UNIT_CONNECTION PLAYER_FLAGS_CHANGED PLAYER_UPDATE_RESTING", function(unit)
+	if (UnitIsDead(unit)) or (UnitIsGhost(unit)) or (not UnitIsConnected(unit)) then
+		return _TAGS.mStatus(unit)
+	else
+		local currentHealth = UnitHealth(unit)
+		local deficit = UnitHealthMax(unit) - currentHealth
+
+		if deficit > 0 and currentHealth > 0 then
+			return E:GetFormattedText("PERCENT", UnitHealth(unit), UnitHealthMax(unit))
+		else
+			return E:GetFormattedText("CURRENT", UnitHealth(unit), UnitHealthMax(unit))
+		end
+	end
+end)
+
+E:AddTag("mHealth:NoAFK:short", "UNIT_HEALTH UNIT_MAXHEALTH UNIT_CONNECTION PLAYER_FLAGS_CHANGED PLAYER_UPDATE_RESTING", function(unit)
+	if (UnitIsDead(unit)) or (UnitIsGhost(unit)) or (not UnitIsConnected(unit)) then
+		return _TAGS.mStatus(unit)
+	else
+		local currentHealth = UnitHealth(unit)
+		local deficit = UnitHealthMax(unit) - currentHealth
+
+		if deficit > 0 and currentHealth > 0 then
+			return E:GetFormattedText("PERCENT", UnitHealth(unit), UnitHealthMax(unit))
+		else
+			return E:GetFormattedText("CURRENT", UnitHealth(unit), UnitHealthMax(unit), nil, true)
+		end
+	end
+end)
+
+E:AddTag("mHealth:NoAFK:current-percent", "UNIT_HEALTH UNIT_MAXHEALTH UNIT_CONNECTION PLAYER_FLAGS_CHANGED PLAYER_UPDATE_RESTING", function(unit)
+	if (UnitIsDead(unit)) or (UnitIsGhost(unit)) or (not UnitIsConnected(unit)) then
+		return _TAGS.mStatus(unit)
+	else
+		local currentHealth = UnitHealth(unit)
+		local deficit = UnitHealthMax(unit) - currentHealth
+
+		if deficit > 0 and currentHealth > 0 then
+			return format("%s | %s", E:GetFormattedText("CURRENT", UnitHealth(unit), UnitHealthMax(unit)), E:GetFormattedText("PERCENT", UnitHealth(unit), UnitHealthMax(unit)))
+		else
+			return E:GetFormattedText("CURRENT", UnitHealth(unit), UnitHealthMax(unit))
+		end
+	end
+end)
+
+E:AddTag("mHealth:NoAFK:short:current-percent", "UNIT_HEALTH UNIT_MAXHEALTH UNIT_CONNECTION PLAYER_FLAGS_CHANGED PLAYER_UPDATE_RESTING", function(unit)
+	if (UnitIsDead(unit)) or (UnitIsGhost(unit)) or (not UnitIsConnected(unit)) then
+		return _TAGS.mStatus(unit)
+	else
+		local currentHealth = UnitHealth(unit)
+		local deficit = UnitHealthMax(unit) - currentHealth
+
+		if deficit > 0 and currentHealth > 0 then
+			return format("%s | %s", E:GetFormattedText("CURRENT", UnitHealth(unit), UnitHealthMax(unit), nil, true), E:GetFormattedText("PERCENT", UnitHealth(unit), UnitHealthMax(unit)))
+		else
+			return E:GetFormattedText("CURRENT", UnitHealth(unit), UnitHealthMax(unit))
+		end
+	end
+end)
+
+E:AddTagInfo("mHealth", mMT.NameShort .. " " .. L["Health"], L["Health changes between maximum Health and Percent in combat."])
 E:AddTagInfo("mHealth:short", mMT.NameShort .. " " .. L["Health"], L["Shortened version of"] .. " mHealth.")
-E:AddTagInfo(
-	"mHealth:icon",
-	mMT.NameShort .. " " .. L["Health"],
-	L["Health changes between maximum Health and Percent in combat, with Status Icons."]
-)
+E:AddTagInfo("mHealth:icon", mMT.NameShort .. " " .. L["Health"], L["Health changes between maximum Health and Percent in combat, with Status Icons."])
 E:AddTagInfo("mHealth:icon:short", mMT.NameShort .. " " .. L["Health"], L["Shortened version of"] .. " mHealth:icon.")
-E:AddTagInfo(
-	"mHealth:current-percent",
-	mMT.NameShort .. " " .. L["Health"],
-	L["Health changes between maximum Health and Current Health - Percent in combat."]
-)
-E:AddTagInfo(
-	"mHealth:current-percent:short",
-	mMT.NameShort .. " " .. L["Health"],
-	L["Shortened version of"] .. " mHealth:current-percent."
-)
-E:AddTagInfo(
-	"mHealth:nodeath",
-	mMT.NameShort .. " " .. L["Health"],
-	L["If the unit is alive, its health will change between maximum health and percentage in combat."]
-)
-E:AddTagInfo(
-	"mHealth:nodeath:short",
-	mMT.NameShort .. " " .. L["Health"],
-	L["Shortened version of"] .. " mHealth:nodeath."
-)
-E:AddTagInfo(
-	"mHealth:nodeath:current-percent",
-	mMT.NameShort .. " " .. L["Health"],
-	L["Same as"] .. " mHealth:current-percen " .. L["and"] .. " mHealth:nodeath "
-)
-E:AddTagInfo(
-	"mHealth:nodeath:short:current-percent",
-	mMT.NameShort .. " " .. L["Health"],
-	L["Shortened version of"] .. " mHealth:nodeath:current-percent."
-)
-E:AddTagInfo(
-	"mHealth:NoAFK",
-	mMT.NameShort .. " " .. L["Health"],
-	L["Health changes between maximum Health and Percent in combat, without AFK Status."]
-)
+E:AddTagInfo("mHealth:current-percent", mMT.NameShort .. " " .. L["Health"], L["Health changes between maximum Health and Current Health - Percent in combat."])
+E:AddTagInfo("mHealth:current-percent:short", mMT.NameShort .. " " .. L["Health"], L["Shortened version of"] .. " mHealth:current-percent.")
+E:AddTagInfo("mHealth:nodeath", mMT.NameShort .. " " .. L["Health"], L["If the unit is alive, its health will change between maximum health and percentage in combat."])
+E:AddTagInfo("mHealth:nodeath:short", mMT.NameShort .. " " .. L["Health"], L["Shortened version of"] .. " mHealth:nodeath.")
+E:AddTagInfo("mHealth:nodeath:current-percent", mMT.NameShort .. " " .. L["Health"], L["Same as"] .. " mHealth:current-percen " .. L["and"] .. " mHealth:nodeath ")
+E:AddTagInfo("mHealth:nodeath:short:current-percent", mMT.NameShort .. " " .. L["Health"], L["Shortened version of"] .. " mHealth:nodeath:current-percent.")
+E:AddTagInfo("mHealth:NoAFK", mMT.NameShort .. " " .. L["Health"], L["Health changes between maximum Health and Percent in combat, without AFK Status."])
 E:AddTagInfo("mHealth:NoAFK:short", mMT.NameShort .. " " .. L["Health"], L["Shortened version of"] .. " mHealth:NoAFK.")
-E:AddTagInfo(
-	"mHealth:NoAFK:current-percent",
-	mMT.NameShort .. " " .. L["Health"],
-	L["Same as"] .. " mHealth:current-percen " .. L["and"] .. " mHealth:NoAFK "
-)
-E:AddTagInfo(
-	"mHealth:NoAFK:short:current-percent",
-	mMT.NameShort .. " " .. L["Health"],
-	L["Shortened version of"] .. " mHealth:NoAFK:current-percent."
-)
+E:AddTagInfo("mHealth:NoAFK:current-percent", mMT.NameShort .. " " .. L["Health"], L["Same as"] .. " mHealth:current-percen " .. L["and"] .. " mHealth:NoAFK ")
+E:AddTagInfo("mHealth:NoAFK:short:current-percent", mMT.NameShort .. " " .. L["Health"], L["Shortened version of"] .. " mHealth:NoAFK:current-percent.")
 
 local UnitmDeathCount = {}
 local mID = ""
@@ -1126,17 +894,9 @@ E:AddTag("mDeathCount:hide:text", "UNIT_HEALTH", function(unit)
 end)
 
 E:AddTagInfo("mDeathCount", mMT.NameShort .. " " .. L["Misc"], L["Death Counter, resets in new Instances."])
-E:AddTagInfo(
-	"mDeathCount:hide",
-	mMT.NameShort .. " " .. L["Misc"],
-	L["Displays the Death counter only when the unit is Death, resets in new instances."]
-)
+E:AddTagInfo("mDeathCount:hide", mMT.NameShort .. " " .. L["Misc"], L["Displays the Death counter only when the unit is Death, resets in new instances."])
 E:AddTagInfo("mDeathCount:color", mMT.NameShort .. " " .. L["Misc"], L["Death Counter color."])
-E:AddTagInfo(
-	"mDeathCount:hide:text",
-	mMT.NameShort .. " " .. L["Misc"],
-	L["Displays the Death counter only when the unit is Death and Shows a Text (Death: 7), resets in new instances."]
-)
+E:AddTagInfo("mDeathCount:hide:text", mMT.NameShort .. " " .. L["Misc"], L["Displays the Death counter only when the unit is Death and Shows a Text (Death: 7), resets in new instances."])
 
 E:AddTag("mRole", "PLAYER_ROLES_ASSIGNED GROUP_ROSTER_UPDATE", function(unit)
 	local Role = ""
@@ -1173,14 +933,16 @@ E:AddTag("mRoleIcon:target", "UNIT_TARGET UNIT_COMBAT", function(unit)
 
 	if E.Retail then
 		Role = UnitGroupRolesAssigned(unit .. "target")
-	end
 
-	if Role == "TANK" then
-		return icons.tank
-	elseif Role == "HEALER" then
-		return icons.heal
-	elseif Role == "DAMAGER" then
-		return icons.dd
+		if Role == "TANK" then
+			return icons.tank
+		elseif Role == "HEALER" then
+			return icons.heal
+		elseif Role == "DAMAGER" then
+			return icons.dd
+		end
+	else
+		return ""
 	end
 end)
 
@@ -1307,17 +1069,9 @@ E:AddTag("mLevelSmart:hideMax", "UNIT_LEVEL PLAYER_LEVEL_UP PLAYER_UPDATE_RESTIN
 end)
 
 E:AddTagInfo("mLevel", mMT.NameShort .. " " .. L["Level"], L["Level changes to resting in resting Areas."])
-E:AddTagInfo(
-	"mLevel:hideMax",
-	mMT.NameShort .. " " .. L["Level"],
-	L["Same as"] .. " mLevel" .. L[" hidden at maximum level."]
-)
+E:AddTagInfo("mLevel:hideMax", mMT.NameShort .. " " .. L["Level"], L["Same as"] .. " mLevel" .. L[" hidden at maximum level."])
 E:AddTagInfo("mLevelSmart", mMT.NameShort .. " " .. L["Level"], L["Smart Level changes to resting in resting Areas."])
-E:AddTagInfo(
-	"mLevelSmart:hideMax",
-	mMT.NameShort .. " " .. L["Level"],
-	L["Same as"] .. " mLevelSmart" .. L[" hidden at maximum level."]
-)
+E:AddTagInfo("mLevelSmart:hideMax", mMT.NameShort .. " " .. L["Level"], L["Same as"] .. " mLevelSmart" .. L[" hidden at maximum level."])
 
 E:AddTag("mPvP:icon", "UNIT_FACTION", function(unit)
 	local factionGroup = UnitFactionGroup(unit)
@@ -1341,19 +1095,7 @@ E:AddTag("mFaction:icon", "UNIT_FACTION", function(unit)
 		local factionGroup = UnitFactionGroup(unit)
 		if factionGroup then
 			UnitFaction[guid] = {
-				CreateTextureMarkup(
-					"Interface\\FriendsFrame\\PlusManz-" .. factionGroup,
-					16,
-					16,
-					16,
-					16,
-					0,
-					1,
-					0,
-					1,
-					0,
-					0
-				),
+				CreateTextureMarkup("Interface\\FriendsFrame\\PlusManz-" .. factionGroup, 16, 16, 16, 16, 0, 1, 0, 1, 0, 0),
 				factionGroup,
 			}
 		end
@@ -1381,19 +1123,7 @@ E:AddTag("mFaction:text", "UNIT_FACTION", function(unit)
 		local factionGroup = UnitFactionGroup(unit)
 		if factionGroup then
 			UnitFaction[guid] = {
-				CreateTextureMarkup(
-					"Interface\\FriendsFrame\\PlusManz-" .. factionGroup,
-					16,
-					16,
-					16,
-					16,
-					0,
-					1,
-					0,
-					1,
-					0,
-					0
-				),
+				CreateTextureMarkup("Interface\\FriendsFrame\\PlusManz-" .. factionGroup, 16, 16, 16, 16, 0, 1, 0, 1, 0, 0),
 				factionGroup,
 			}
 		end
@@ -1423,19 +1153,7 @@ E:AddTag("mFaction:text:opposite", "UNIT_FACTION", function(unit)
 		local factionGroup = UnitFactionGroup(unit)
 		if factionGroup then
 			UnitFaction[guid] = {
-				CreateTextureMarkup(
-					"Interface\\FriendsFrame\\PlusManz-" .. factionGroup,
-					16,
-					16,
-					16,
-					16,
-					0,
-					1,
-					0,
-					1,
-					0,
-					0
-				),
+				CreateTextureMarkup("Interface\\FriendsFrame\\PlusManz-" .. factionGroup, 16, 16, 16, 16, 0, 1, 0, 1, 0, 0),
 				factionGroup,
 			}
 		end
@@ -1444,10 +1162,7 @@ E:AddTag("mFaction:text:opposite", "UNIT_FACTION", function(unit)
 	if UnitFaction[guid] then
 		if UnitFaction[guid][2] then
 			local factionPlayer = UnitFactionGroup("Player")
-			if
-				(UnitFaction[guid][2] == "Horde" or UnitFaction[guid][2] == "Alliance")
-				and (UnitFaction[guid][2] ~= factionPlayer)
-			then
+			if (UnitFaction[guid][2] == "Horde" or UnitFaction[guid][2] == "Alliance") and (UnitFaction[guid][2] ~= factionPlayer) then
 				return UnitFaction[guid][2]
 			end
 		end
@@ -1469,19 +1184,7 @@ E:AddTag("mFaction:icon:opposite", "UNIT_FACTION", function(unit)
 		local factionGroup = UnitFactionGroup(unit)
 		if factionGroup then
 			UnitFaction[guid] = {
-				CreateTextureMarkup(
-					"Interface\\FriendsFrame\\PlusManz-" .. factionGroup,
-					16,
-					16,
-					16,
-					16,
-					0,
-					1,
-					0,
-					1,
-					0,
-					0
-				),
+				CreateTextureMarkup("Interface\\FriendsFrame\\PlusManz-" .. factionGroup, 16, 16, 16, 16, 0, 1, 0, 1, 0, 0),
 				factionGroup,
 			}
 		end
@@ -1490,10 +1193,7 @@ E:AddTag("mFaction:icon:opposite", "UNIT_FACTION", function(unit)
 	if UnitFaction[guid] then
 		if UnitFaction[guid][1] then
 			local factionPlayer = UnitFactionGroup("Player")
-			if
-				(UnitFaction[guid][2] == "Horde" or UnitFaction[guid][2] == "Alliance")
-				and (UnitFaction[guid][2] ~= factionPlayer)
-			then
+			if (UnitFaction[guid][2] == "Horde" or UnitFaction[guid][2] == "Alliance") and (UnitFaction[guid][2] ~= factionPlayer) then
 				return UnitFaction[guid][1]
 			end
 		end
@@ -1506,101 +1206,73 @@ E:AddTagInfo("mFaction:icon:opposite", mMT.NameShort .. " " .. L["Misc"], L["Dis
 E:AddTagInfo("mFaction:text", mMT.NameShort .. " " .. L["Misc"], L["Displays the Faction."])
 E:AddTagInfo("mFaction:text:opposite", mMT.NameShort .. " " .. L["Misc"], L["Displays the opposite Faction."])
 
-E:AddTag(
-	"mPowerPercent",
-	"UNIT_DISPLAYPOWER UNIT_POWER_FREQUENT UNIT_MAXPOWER PLAYER_ROLES_ASSIGNED GROUP_ROSTER_UPDATE",
-	function(unit)
-		local powerType = UnitPowerType(unit)
-		local min = UnitPower(unit, powerType)
-		local max = UnitPowerMax(unit, powerType)
-		if min ~= 0 then
-			local Role = ""
+E:AddTag("mPowerPercent", "UNIT_DISPLAYPOWER UNIT_POWER_FREQUENT UNIT_MAXPOWER PLAYER_ROLES_ASSIGNED GROUP_ROSTER_UPDATE", function(unit)
+	local powerType = UnitPowerType(unit)
+	local min = UnitPower(unit, powerType)
+	local max = UnitPowerMax(unit, powerType)
+	if min ~= 0 then
+		local Role = ""
 
-			if E.Retail then
-				Role = UnitGroupRolesAssigned(unit)
-			end
+		if E.Retail then
+			Role = UnitGroupRolesAssigned(unit)
+		end
 
-			if min == max then
-				return "100%"
-			end
+		if min == max then
+			return "100%"
+		end
 
-			if Role == "HEALER" then
-				local perc = min / max * 100
-				if perc <= 30 then
-					return format("|CFFF7DC6F%s|r", E:GetFormattedText("PERCENT", min, max))
-				elseif perc <= 5 then
-					return format("|CFFE74C3C%s|r", E:GetFormattedText("PERCENT", min, max))
-				else
-					return E:GetFormattedText("PERCENT", min, max)
-				end
+		if Role == "HEALER" then
+			local perc = min / max * 100
+			if perc <= 30 then
+				return format("|CFFF7DC6F%s|r", E:GetFormattedText("PERCENT", min, max))
+			elseif perc <= 5 then
+				return format("|CFFE74C3C%s|r", E:GetFormattedText("PERCENT", min, max))
 			else
 				return E:GetFormattedText("PERCENT", min, max)
 			end
+		else
+			return E:GetFormattedText("PERCENT", min, max)
 		end
 	end
-)
+end)
 
-E:AddTag(
-	"mPowerPercent:hidefull",
-	"UNIT_DISPLAYPOWER UNIT_POWER_FREQUENT UNIT_MAXPOWER PLAYER_ROLES_ASSIGNED GROUP_ROSTER_UPDATE UNIT_COMBAT",
-	function(unit)
-		local powerType = UnitPowerType(unit)
-		local min = UnitPower(unit, powerType)
-		local max = UnitPowerMax(unit, powerType)
-		if (min ~= max) and min ~= 0 then
-			return _TAGS.mPowerPercent(unit)
-		end
+E:AddTag("mPowerPercent:hidefull", "UNIT_DISPLAYPOWER UNIT_POWER_FREQUENT UNIT_MAXPOWER PLAYER_ROLES_ASSIGNED GROUP_ROSTER_UPDATE UNIT_COMBAT", function(unit)
+	local powerType = UnitPowerType(unit)
+	local min = UnitPower(unit, powerType)
+	local max = UnitPowerMax(unit, powerType)
+	if (min ~= max) and min ~= 0 then
+		return _TAGS.mPowerPercent(unit)
 	end
-)
+end)
 
-E:AddTag(
-	"mPowerPercent:heal",
-	"UNIT_DISPLAYPOWER UNIT_POWER_FREQUENT UNIT_MAXPOWER PLAYER_ROLES_ASSIGNED GROUP_ROSTER_UPDATE",
-	function(unit)
-		local Role = "HEALER"
+E:AddTag("mPowerPercent:heal", "UNIT_DISPLAYPOWER UNIT_POWER_FREQUENT UNIT_MAXPOWER PLAYER_ROLES_ASSIGNED GROUP_ROSTER_UPDATE", function(unit)
+	local Role = "HEALER"
 
-		if E.Retail then
-			Role = UnitGroupRolesAssigned(unit)
-		end
-
-		if Role == "HEALER" then
-			return _TAGS.mPowerPercent(unit)
-		end
+	if E.Retail then
+		Role = UnitGroupRolesAssigned(unit)
 	end
-)
 
-E:AddTag(
-	"mPowerPercent:heal:hidefull",
-	"UNIT_DISPLAYPOWER UNIT_POWER_FREQUENT UNIT_MAXPOWER PLAYER_ROLES_ASSIGNED GROUP_ROSTER_UPDATE UNIT_COMBAT",
-	function(unit)
-		local Role = "HEALER"
-
-		if E.Retail then
-			Role = UnitGroupRolesAssigned(unit)
-		end
-
-		if Role == "HEALER" then
-			return _TAGS["mPowerPercent:hidefull"](unit)
-		end
+	if Role == "HEALER" then
+		return _TAGS.mPowerPercent(unit)
 	end
-)
+end)
+
+E:AddTag("mPowerPercent:heal:hidefull", "UNIT_DISPLAYPOWER UNIT_POWER_FREQUENT UNIT_MAXPOWER PLAYER_ROLES_ASSIGNED GROUP_ROSTER_UPDATE UNIT_COMBAT", function(unit)
+	local Role = "HEALER"
+
+	if E.Retail then
+		Role = UnitGroupRolesAssigned(unit)
+	end
+
+	if Role == "HEALER" then
+		return _TAGS["mPowerPercent:hidefull"](unit)
+	end
+end)
 
 E:AddTagInfo("mPowerPercent", mMT.NameShort .. " " .. L["Power"], L["Displays Power/Mana, with a low healer warning."])
-E:AddTagInfo(
-	"mPowerPercent:hidefull",
-	mMT.NameShort .. " " .. L["Power"],
-	L["Displays Power/Mana, with a low healer warning, hidden when full."]
-)
-E:AddTagInfo(
-	"mPowerPercent:heal",
-	mMT.NameShort .. " " .. L["Power"],
-	L["Displays the healer's Power/Mana, with a low healer warning."]
-)
-E:AddTagInfo(
-	"mPowerPercent:heal:hidefull",
-	mMT.NameShort .. " " .. L["Power"],
-	L["Displays the healer's Power/Mana, with a low healer warning, hidden when full."]
-)
+E:AddTagInfo("mPowerPercent:hidefull", mMT.NameShort .. " " .. L["Power"], L["Displays Power/Mana, with a low healer warning, hidden when full."])
+E:AddTagInfo("mPowerPercent:heal", mMT.NameShort .. " " .. L["Power"], L["Displays the healer's Power/Mana, with a low healer warning."])
+E:AddTagInfo("mPowerPercent:heal:hidefull", mMT.NameShort .. " " .. L["Power"], L["Displays the healer's Power/Mana, with a low healer warning, hidden when full."])
 
 E:AddTag("mQuestIcon", "QUEST_LOG_UPDATE", function(unit)
 	if UnitIsPlayer(unit) then
@@ -1649,25 +1321,17 @@ local function GetPartyTargetsIcons(unit, style)
 	for i = 1, GetNumGroupMembers() - 1 do
 		if UnitIsUnit("party" .. i .. "target", unit) then
 			local _, unitClass = UnitClass("party" .. i)
-			ClassString = format(
-				"|TInterface\\AddOns\\ElvUI_mMediaTag\\media\\icons\\tags\\targetindicator\\%s%s.tga:15:15|t",
-				unitClass,
-				style
-			) .. ClassString
+			ClassString = format("|TInterface\\AddOns\\ElvUI_mMediaTag\\media\\icons\\tags\\targetindicator\\%s%s.tga:15:15|t", unitClass, style) .. ClassString
 		end
 	end
 
 	if UnitIsUnit("playertarget", unit) then
 		local _, unitClass = UnitClass("player")
-		ClassString = format(
-			"|TInterface\\AddOns\\ElvUI_mMediaTag\\media\\icons\\tags\\targetindicator\\%s%s.tga:15:15|t",
-			unitClass,
-			style
-		) .. ClassString
+		ClassString = format("|TInterface\\AddOns\\ElvUI_mMediaTag\\media\\icons\\tags\\targetindicator\\%s%s.tga:15:15|t", unitClass, style) .. ClassString
 	end
 
 	if ClassString ~= "" then
-		return ClassString
+		return ClassString --"|TInterface\\AddOns\\ElvUI_mMediaTag\\media\\icons\\tags\\targetindicator\\PRIEST_SQ.tga:14:14:0:0:16:16:0:16:0:16:0:255:255|t" --ClassString
 	end
 end
 
