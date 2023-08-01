@@ -381,37 +381,43 @@ local function mUpdateTPList(button)
 	local _, _, _, _, _, titel = mMT:mColorDatatext()
 	Teleports.menu = {}
 
-	if Teleports.toys.available then
+	if Teleports.toys.available and button == "LeftButton" then
 		tinsert(Teleports.menu, { text = format("%s%s|r", titel, L["Toys"]), isTitle = true, notClickable = true })
 
 		mGetInfos(Teleports.toys, false, false, false)
 		tinsert(Teleports.menu, { text = "", isTitle = true, notClickable = true })
 	end
 
-	if EngineeringCheck() and Teleports.engineering.available then
+	if EngineeringCheck() and Teleports.engineering.available and button == "RightButton" then
 		tinsert(Teleports.menu, { text = format("%s%s|r", titel, L["Engineering"]), isTitle = true, notClickable = true })
 
 		mGetInfos(Teleports.engineering, false, false, false)
 		tinsert(Teleports.menu, { text = "", isTitle = true, notClickable = true })
 	end
 
-	if Teleports.season.available then
+	if Teleports.season.available and button == "LeftButton" then
 		tinsert(Teleports.menu, { text = format("%s%s|r", titel, L["M+ Season"]), isTitle = true, notClickable = true })
 
 		mGetInfos(Teleports.season, true, false, false)
 		tinsert(Teleports.menu, { text = "", isTitle = true, notClickable = true })
 	end
 
-	if Teleports.df.available then
+	if Teleports.df.available and button == "LeftButton" then
 		tinsert(Teleports.menu, { text = format("%s%s|r", titel, L["DF Dungeons"]), isTitle = true, notClickable = true })
 
 		mGetInfos(Teleports.df, true, false, false)
 		tinsert(Teleports.menu, { text = "", isTitle = true, notClickable = true })
 	end
 
+	if Teleports.dungeonportals.available and button == "MiddleButton" then
+		tinsert(Teleports.menu, { text = format("%s%s|r", titel, L["All Dungeon Teleports"]), isTitle = true, notClickable = true })
+
+		mGetInfos(Teleports.dungeonportals, true, false, false)
+		tinsert(Teleports.menu, { text = "", isTitle = true, notClickable = true })
+	end
+
 	if (Teleports.items.available or Teleports.spells.available) and button == "RightButton" then
 		tinsert(Teleports.menu, { text = "", isTitle = true, notClickable = true })
-
 		tinsert(Teleports.menu, { text = format("%s%s|r", titel, L["Other"]), isTitle = true, notClickable = true })
 
 		mGetInfos(Teleports.items, false, false, false)
@@ -464,7 +470,8 @@ local function OnEnter(self)
 	mTPTooltip()
 	DT.tooltip:AddLine(" ")
 	DT.tooltip:AddLine(format("%s %s%s|r", mMT:mIcon(mMT.Media.Mouse["LEFT"]), tip, L["left click to open the small menu."]))
-	DT.tooltip:AddLine(format("%s %s%s|r", mMT:mIcon(mMT.Media.Mouse["RIGHT"]), tip, L["right click to open the full menu."]))
+	DT.tooltip:AddLine(format("%s %s%s|r", mMT:mIcon(mMT.Media.Mouse["MIDDLE"]), tip, L["middle click to open the Dungeon Teleports menu."]))
+	DT.tooltip:AddLine(format("%s %s%s|r", mMT:mIcon(mMT.Media.Mouse["RIGHT"]), tip, L["right click to open the other Teleports menu."]))
 	DT.tooltip:Show()
 end
 
