@@ -245,8 +245,8 @@ function mMT:InitializeDockIcon(DT, conf, event)
 			if not DT.mMT_Dock.TextA then
 				DT.mMT_Dock.TextA = DT:CreateFontString(nil, "ARTWORK")
 			end
-			point = conf.text.center and "BOTTOM" or (conf.text.b and "BOTTOMRIGHT" or "BOTTOM")
-			justify = conf.text.center and "CENTER" or (conf.text.b and "RIGHT" or "CENTER")
+			point = conf.text.center and "BOTTOM" or "BOTTOMRIGHT"
+			justify = conf.text.center and "CENTER" or "RIGHT"
 			SetupLabel(DT.mMT_Dock.TextA, DT.mMT_Dock.size, DT.mMT_Dock.Icon or DT.mMT_Dock.macroBtn.Icon, point, justify)
 		elseif DT.mMT_Dock.TextA then
 			DeleteLabel(DT.mMT_Dock.TextA)
@@ -257,7 +257,7 @@ function mMT:InitializeDockIcon(DT, conf, event)
 			if not DT.mMT_Dock.TextB then
 				DT.mMT_Dock.TextB = DT:CreateFontString(nil, "ARTWORK")
 			end
-			point = conf.text.center and "TOP" or (conf.text.b and "BOTTOMLEFT" or "BOTTOM")
+			point = conf.text.center and "TOP" or "BOTTOMLEFT"
 			justify = conf.text.center and "CENTER" or "LEFT"
 			SetupLabel(DT.mMT_Dock.TextB, DT.mMT_Dock.size, DT.mMT_Dock.Icon or DT.mMT_Dock.macroBtn.Icon, point, justify)
 		elseif DT.mMT_Dock.TextB then

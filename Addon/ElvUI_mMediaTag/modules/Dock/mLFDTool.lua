@@ -191,6 +191,7 @@ end
 
 local function OnEnter(self)
 	mMT:Dock_OnEnter(self, Config)
+	mMT:UpdateNotificationState(self, C_WeeklyRewards.HasAvailableRewards())
 
 	if E.db.mMT.dockdatatext.tip.enable then
 		DT.tooltip:ClearLines()
