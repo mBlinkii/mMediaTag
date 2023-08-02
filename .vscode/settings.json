@@ -441,7 +441,11 @@
         "FCFDock_SelectWindow",
         "ERR_NOT_IN_COMBAT",
         "CLOSE",
-        "GameFontHighlightSmall"
+        "GameFontHighlightSmall",
+        "ToggleTalentFrame",
+        "PVP_TALENTS",
+        "BLUE_FONT_COLOR",
+        "PlayerUtil"
     ],
     "Lua.diagnostics.disable": [
         "undefined-field"
@@ -514,6 +518,7 @@
         "Jiberish",
         "KEYLEVELS",
         "keyname",
+        "Loadout",
         "Lockdown",
         "Luckyone",
         "materialicons",
@@ -558,6 +563,7 @@
         "Timewarped",
         "tinsert",
         "TOPLEFT",
+        "tremove",
         "Trenchy",
         "Tukui",
         "UIAFK",
