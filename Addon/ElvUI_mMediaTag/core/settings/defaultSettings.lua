@@ -5,7 +5,10 @@ P.mMT = {
 	general = { greeting = true, keystochat = false },
 	afk = {
 		enable = false,
+		logo = false,
+		texture = "",
 		garbage = true,
+		infoscreen = true,
 		title = { r = 1, g = 0.65, b = 0 },
 		values = {enable = true, r = 0.98, g = 0.82, b = 1 },
 		attributes = {enable = true, r = 0.23, g = 0.67, b = 1 },

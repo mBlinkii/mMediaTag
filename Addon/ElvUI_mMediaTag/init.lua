@@ -328,7 +328,7 @@ end
 
 function mMT:PLAYER_FLAGS_CHANGED(_, unit)
 	if E.db.general.afk and unit == "player" and UnitIsAFK(unit) then
-		mMT:MaUI_AFKScreen()
+		mMT:mMT_AFKScreen()
 	end
 end
 
