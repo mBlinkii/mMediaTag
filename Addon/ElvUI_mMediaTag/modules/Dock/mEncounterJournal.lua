@@ -14,12 +14,6 @@ local Config = {
 		texture = mMT.IconSquare,
 		color = { r = 1, g = 1, b = 1, a = 1 },
 	},
-	misc = {
-		secure = true,
-		macroA = "/click EJMicroButton",
-		funcOnEnter = nil,
-		funcOnLeave = nil,
-	},
 }
 
 local function OnEnter(self)
@@ -30,7 +24,7 @@ local function OnEnter(self)
 		GameTooltip:Show()
 	end
 
-	mMT:Dock_OnEnter(self:GetParent(), Config)
+	mMT:Dock_OnEnter(self, Config)
 end
 
 local function OnLeave(self)
@@ -38,7 +32,17 @@ local function OnLeave(self)
 		GameTooltip:Hide()
 	end
 
-	mMT:Dock_OnLeave(self:GetParent(), Config)
+	mMT:Dock_OnLeave(self, Config)
+end
+
+local function OnClick(self)
+	if mMT:CheckCombatLockdown() then
+		mMT:Dock_Click(self, Config)
+		if not IsAddOnLoaded("Blizzard_EncounterJournal") then
+			UIParentLoadAddOn("Blizzard_EncounterJournal")
+		end
+		ToggleFrame(_G.EncounterJournal)
+	end
 end
 
 local function OnEvent(self, event, ...)
@@ -48,11 +52,8 @@ local function OnEvent(self, event, ...)
 		Config.icon.texture = mMT.Media.DockIcons[E.db.mMT.dockdatatext.encounter.icon]
 		Config.icon.color = E.db.mMT.dockdatatext.encounter.customcolor and E.db.mMT.dockdatatext.encounter.iconcolor or nil
 
-		Config.misc.funcOnEnter = OnEnter
-		Config.misc.funcOnLeave = OnLeave
-
 		mMT:InitializeDockIcon(self, Config, event)
 	end
 end
 
-DT:RegisterDatatext(Config.name, Config.category, nil, OnEvent, nil, nil, nil, nil, Config.localizedName, nil, nil)
+DT:RegisterDatatext(Config.name, Config.category, nil, OnEvent, nil, OnClick, OnEnter, OnLeave, Config.localizedName, nil, nil)
