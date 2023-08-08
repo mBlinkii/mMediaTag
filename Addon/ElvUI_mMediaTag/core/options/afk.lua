@@ -21,6 +21,38 @@ local function configTable()
 						E:StaticPopup_Show("CONFIG_RL")
 					end,
 				},
+				toggle_logo = {
+					order = 1,
+					type = "toggle",
+					name = L["AFK Logo"],
+					get = function(info)
+						return E.db.mMT.afk.logo
+					end,
+					set = function(info, value)
+						E.db.mMT.afk.logo = value
+						E:StaticPopup_Show("CONFIG_RL")
+					end,
+				},
+				toggle_infoscreen = {
+					order = 1,
+					type = "toggle",
+					name = L["AFK Info Screen"],
+					get = function(info)
+						return E.db.mMT.afk.infoscreen
+					end,
+					set = function(info, value)
+						E.db.mMT.afk.infoscreen = value
+						E:StaticPopup_Show("CONFIG_RL")
+					end,
+				},
+			},
+		},
+		header_info = {
+			order = 2,
+			type = "group",
+			inline = true,
+			name = L["Info Screen"],
+			args = {
 				toggle_values = {
 					order = 2,
 					type = "toggle",
@@ -89,8 +121,48 @@ local function configTable()
 				},
 			},
 		},
+		header_logo = {
+			order = 3,
+			type = "group",
+			inline = true,
+			name = L["Logo"],
+			args = {
+				explanationA = {
+					order = 1,
+					type = "description",
+					name = L["Attention! The path of the custom texture must comply with WoW standards. Example: Interface\\MYFOLDER\\MYFILE.tga. If you see only a green box, the path is not correct or there is a typo."],
+				},
+				explanationB = {
+					order = 2,
+					type = "description",
+					name = L["Optimal size for the logo is 512 x 128 Pixel"],
+				},
+				logo_texture = {
+					order = 3,
+					name = function()
+						if E.db.mMT.afk.texture then
+							return L["Logo Texture"] .. "  " .. E:TextureString(E.db.mMT.afk.texture, ":26:102")
+						else
+							return L["Logo Texture"]
+						end
+					end,
+					type = "input",
+					width = "smal",
+					disabled = function()
+						return not E.db.mMT.afk.logo
+					end,
+					get = function(info)
+						return E.db.mMT.afk.texture
+					end,
+					set = function(info, value)
+						E.db.mMT.afk.texture = value
+						E:StaticPopup_Show("CONFIG_RL")
+					end,
+				},
+			},
+		},
 		header_color = {
-			order = 2,
+			order = 4,
 			type = "group",
 			inline = true,
 			name = L["Colors"],

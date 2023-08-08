@@ -9,8 +9,23 @@ local GetInventoryItemLink = GetInventoryItemLink
 local GetMoneyString = GetMoneyString
 
 --Variables
-local mText = format("Dock %s", L["Durability"])
-local mTextName = "mDurability"
+local Config = {
+	name = "mMT_Dock_Durability",
+	localizedName = mMT.DockString .. " " .. L["Durability"],
+	category = "mMT-" .. mMT.DockString,
+	text = {
+		enable = true,
+		center = false,
+		a = true, -- first label
+		b = false, -- second label
+	},
+	icon = {
+		notification = false,
+		texture = mMT.IconSquare,
+		color = { r = 1, g = 1, b = 1, a = 1 },
+	},
+}
+
 local REPAIR_COST = REPAIR_COST
 local tooltipString = "%d%%"
 local totalDurability = 0
@@ -31,20 +46,23 @@ local slots = {
 	[18] = _G.INVTYPE_RANGED,
 }
 
+local function StartFlash(self, color)
+	mMT:SetTextureColor(self.mMT_Dock.Icon, color)
+	self.mMT_Dock.Icon.flash = true
+	E:Flash(self.mMT_Dock.Icon, 0.5, true)
+end
+
+local function StopFlash(self)
+	self.mMT_Dock.Icon.flash = false
+	E:StopFlash(self.mMT_Dock.Icon)
+	mMT:InitializeDockIcon(self, Config)
+end
+
 local function mCheckDurability()
 	if totalDurability <= 35 then
 		local r, g, b = E:ColorGradient(totalDurability * 0.01, 1, 0.1, 0.1, 1, 1, 0.1, 0.1, 1, 0.1)
-		return r, g, b, 1
+		return { r = r, g = g, b = b, a = 1 }
 	end
-end
-
-local function mDockCheckFrame()
-	return (CharacterFrame and CharacterFrame:IsShown())
-end
-
-function mMT:CheckFrameDurability(self)
-	self.mIcon.isClicked = mDockCheckFrame()
-	mMT:DockTimer(self)
 end
 
 local function OnEnter(self)
@@ -52,18 +70,7 @@ local function OnEnter(self)
 		DT.tooltip:ClearLines()
 
 		for slot, durability in pairs(invDurability) do
-			DT.tooltip:AddDoubleLine(
-				format(
-					"|T%s:14:14:0:0:64:64:4:60:4:60|t %s",
-					GetInventoryItemTexture("player", slot),
-					GetInventoryItemLink("player", slot)
-				),
-				format(tooltipString, durability),
-				1,
-				1,
-				1,
-				E:ColorGradient(durability * 0.01, 1, 0.1, 0.1, 1, 1, 0.1, 0.1, 1, 0.1)
-			)
+			DT.tooltip:AddDoubleLine(format("|T%s:14:14:0:0:64:64:4:60:4:60|t %s", GetInventoryItemTexture("player", slot), GetInventoryItemLink("player", slot)), format(tooltipString, durability), 1, 1, 1, E:ColorGradient(durability * 0.01, 1, 0.1, 0.1, 1, 1, 0.1, 0.1, 1, 0.1))
 		end
 
 		if totalRepairCost > 0 then
@@ -74,25 +81,17 @@ local function OnEnter(self)
 		DT.tooltip:Show()
 	end
 
-	self.mIcon.isClicked = mDockCheckFrame()
-	mMT:mOnEnter(self, "CheckFrameDurability")
+	mMT:Dock_OnEnter(self, Config)
 end
 
 local function OnEvent(self, event, ...)
-	self.mSettings = {
-		Name = mTextName,
-		text = {
-			onlytext = E.db.mMT.dockdatatext.durability.onlytext,
-			special = true,
-			textA = not E.db.mMT.dockdatatext.durability.onlytext,
-			textB = false,
-		},
-		icon = {
-			texture = mMT.Media.DockIcons[E.db.mMT.dockdatatext.durability.icon],
-			color = E.db.mMT.dockdatatext.durability.iconcolor,
-			customcolor = E.db.mMT.dockdatatext.durability.customcolor,
-		},
-	}
+	if event == "ELVUI_FORCE_UPDATE" then
+		--setup settings
+		Config.icon.texture = mMT.Media.DockIcons[E.db.mMT.dockdatatext.durability.icon]
+		Config.icon.color = E.db.mMT.dockdatatext.durability.customcolor and E.db.mMT.dockdatatext.durability.iconcolor or nil
+
+		mMT:InitializeDockIcon(self, Config, event)
+	end
 
 	totalDurability = 100
 	totalRepairCost = 0
@@ -123,37 +122,24 @@ local function OnEvent(self, event, ...)
 		end
 	end
 
-	local r, g, b = 1, 1, 1
-	local hex = nil
-	local text = nil
+	if totalDurability then
+		local r, g, b = 1, 1, 1
+		local hex = nil
 
-	if E.db.mMT.dockdatatext.durability.color then
-		r, g, b = E:ColorGradient(totalDurability * 0.01, 1, 0.1, 0.1, 1, 1, 0.1, 0.1, 1, 0.1)
-		hex = E:RGBToHex(r, g, b)
-	end
-
-	if E.db.mMT.dockdatatext.durability.onlytext and totalDurability then
 		if E.db.mMT.dockdatatext.durability.color then
-			self.text:SetFormattedText("%s%d%%|r", hex, totalDurability)
+			r, g, b = E:ColorGradient(totalDurability * 0.01, 1, 0.1, 0.1, 1, 1, 0.1, 0.1, 1, 0.1)
+			hex = E:RGBToHex(r, g, b)
+			self.mMT_Dock.TextA:SetText(hex .. format("%d%%|r", totalDurability) .. "|r")
 		else
-			self.text:SetFormattedText("%s%d%%|r", E.media.hexvaluecolor, totalDurability)
+			self.mMT_Dock.TextA:SetText(format("%d%%|r", totalDurability))
 		end
-	else
-		if self.text ~= "" then
-			self.text:SetText("")
-		end
-
-		text = format("%d%%|r", totalDurability)
 	end
 
-	mMT:DockInitialization(self, event, text, nil, hex)
-
-	if mCheckDurability() then
-		E:Flash(self, 0.5, true)
-		mMT:DockCustomColor(self, mCheckDurability())
-	else
-		E:StopFlash(self)
-		mMT:DockNormalColor(self)
+	local colorWarning = mCheckDurability()
+	if colorWarning then
+		StartFlash(self, colorWarning)
+	elseif self.mMT_Dock.Icon.flash then
+		StopFlash(self)
 	end
 end
 
@@ -162,34 +148,19 @@ local function OnLeave(self)
 		DT.tooltip:Hide()
 	end
 
-	self.mIcon.isClicked = mDockCheckFrame()
-	mMT:mOnLeave(self)
+	mMT:Dock_OnLeave(self, Config)
 
-	if mCheckDurability() then
-		mMT:DockCustomColor(self, mCheckDurability())
+	local colorWarning = mCheckDurability()
+	if colorWarning then
+		StartFlash(self, colorWarning)
 	end
 end
 
 local function OnClick(self)
 	if mMT:CheckCombatLockdown() then
-		mMT:mOnClick(self, "CheckFrameDurability")
-		if mCheckDurability() then
-			mMT:DockCustomColor(self, mCheckDurability())
-		end
+		mMT:Dock_Click(self, Config)
 		_G.ToggleCharacter("PaperDollFrame")
 	end
 end
 
-DT:RegisterDatatext(
-	mTextName,
-	"mDock",
-	{ "UPDATE_INVENTORY_DURABILITY" },
-	OnEvent,
-	nil,
-	OnClick,
-	OnEnter,
-	OnLeave,
-	mText,
-	nil,
-	nil
-)
+DT:RegisterDatatext(Config.name, Config.category, { "UPDATE_INVENTORY_DURABILITY" }, OnEvent, nil, OnClick, OnEnter, OnLeave, Config.localizedName, nil, nil)

@@ -56,6 +56,7 @@ local interruptSpellList = {
 	--EVOKER
 	[1467] = 351338,
 	[1468] = 351338,
+	[1473] = 351338,
 }
 
 function mMT:mMediaTag_interruptOnCD(castbar)

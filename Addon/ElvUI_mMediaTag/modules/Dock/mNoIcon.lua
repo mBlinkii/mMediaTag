@@ -1,38 +1,46 @@
 local E, L = unpack(ElvUI)
 local DT = E:GetModule("DataTexts")
 
---Lua functions
-local format = format
-
---Variables
-local mText = format("Dock %s", L["None"])
-local mTextName = "mNoIcon"
-
 local function OnEvent(self, event, ...)
-	if self.mIcon then
-		if self.mIcon.TextA then
-			self.mIcon.TextA:SetText("")
+	if self.mMT_Dock then
+		if self.mMT_Dock.macroBtn then
+			-- delete macro button
+			self.mMT_Dock.macroBtn:Hide()
+			self.mMT_Dock.macroBtn:SetScript("OnEnter", nil)
+			self.mMT_Dock.macroBtn:SetScript("OnLeave", nil)
+			self.mMT_Dock.macroBtn = nil
 		end
 
-		if self.mIcon.TextB then
-			self.mIcon.TextB:SetText("")
+		-- delete text a
+		if self.mMT_Dock.TextA then
+			self.mMT_Dock.TextA:SetText("")
+			self.mMT_Dock.TextA = nil
 		end
 
-		if self.mNotifications then
-			self.mNotifications:Hide()
-			self.mNotifications = nil
+		-- delete text b
+		if self.mMT_Dock.TextB then
+			self.mMT_Dock.TextB:SetText("")
+			self.mMT_Dock.TextB = nil
 		end
 
-		self.text:SetText("")
+		-- delete notification
+		if self.mMT_Dock.Notification then
+			self.mMT_Dock.Notification:Hide()
+			self.mMT_Dock.Notification:SetTexture(nil)
+			E:StopFlash(self.mMT_Dock.Notification)
+			self.mMT_Dock.Notification = nil
+		end
 
-		self.mIcon:SetTexture(nil)
-		self.mIcon = nil
-		self.mSettings = nil
+		-- delete icon
+		if self.mMT_Dock.Icon then
+			self.mMT_Dock.Icon:Hide()
+			self.mMT_Dock.Icon:SetTexture(nil)
+			self.mMT_Dock.Icon = nil
+		end
 
-		print(self.mIcon)
-		print(self.mSettings)
-		print(self.mNotifications)
+		-- delete db
+		DT.mMT_Dock = nil
 	end
 end
 
-DT:RegisterDatatext(mTextName, "mDock", nil, OnEvent, nil, nil, nil, nil, mText, nil, nil)
+DT:RegisterDatatext("mMT_Dock_None", "mMT-" .. mMT.DockString, nil, OnEvent, nil, nil, nil, nil, mMT.DockString .. " |CFFFF006C" .. L["None"] .. "|r", nil, nil)

@@ -6,38 +6,34 @@ local format = format
 
 --Variables
 local _G = _G
-local mText = format("Dock %s", SPELLBOOK_ABILITIES_BUTTON)
-local mTextName = "mSpellBook"
-
-local function mDockCheckFrame()
-	return (SpellBookFrame and SpellBookFrame:IsShown())
-end
-
-function mMT:CheckFrameSpellBook(self)
-	self.mIcon.isClicked = mDockCheckFrame()
-	mMT:DockTimer(self)
-end
+local Config = {
+	name = "mMT_Dock_SpellBook",
+	localizedName = mMT.DockString .. " " .. SPELLBOOK_ABILITIES_BUTTON,
+	category = "mMT-" .. mMT.DockString,
+	icon = {
+		notification = false,
+		texture = mMT.IconSquare,
+		color = { r = 1, g = 1, b = 1, a = 1 },
+	},
+}
 
 local function OnEnter(self)
 	if E.db.mMT.dockdatatext.tip.enable then
 		DT.tooltip:AddLine(SPELLBOOK_ABILITIES_BUTTON)
 		DT.tooltip:Show()
 	end
-	self.mIcon.isClicked = mDockCheckFrame()
-	mMT:mOnEnter(self, "CheckFrameSpellBook")
+
+	mMT:Dock_OnEnter(self, Config)
 end
 
 local function OnEvent(self, event, ...)
-	self.mSettings = {
-		Name = mTextName,
-		icon = {
-			texture = mMT.Media.DockIcons[E.db.mMT.dockdatatext.spellbook.icon],
-			color = E.db.mMT.dockdatatext.spellbook.iconcolor,
-			customcolor = E.db.mMT.dockdatatext.spellbook.customcolor,
-		},
-	}
+	if event == "ELVUI_FORCE_UPDATE" then
+		--setup settings
+		Config.icon.texture = mMT.Media.DockIcons[E.db.mMT.dockdatatext.spellbook.icon]
+		Config.icon.color = E.db.mMT.dockdatatext.spellbook.customcolor and E.db.mMT.dockdatatext.spellbook.iconcolor or nil
 
-	mMT:DockInitialization(self, event)
+		mMT:InitializeDockIcon(self, Config, event)
+	end
 end
 
 local function OnLeave(self)
@@ -45,15 +41,15 @@ local function OnLeave(self)
 		DT.tooltip:Hide()
 	end
 
-	self.mIcon.isClicked = mDockCheckFrame()
-	mMT:mOnLeave(self)
+
+	mMT:Dock_OnLeave(self, Config)
 end
 
 local function OnClick(self)
 	if mMT:CheckCombatLockdown() then
-		mMT:mOnClick(self, "CheckFrameSpellBook")
+		mMT:Dock_Click(self, Config)
 		ToggleFrame(_G.SpellBookFrame)
 	end
 end
 
-DT:RegisterDatatext(mTextName, "mDock", nil, OnEvent, nil, OnClick, OnEnter, OnLeave, mText, nil, nil)
+DT:RegisterDatatext(Config.name, Config.category, nil, OnEvent, nil, OnClick, OnEnter, OnLeave, Config.localizedName, nil, nil)

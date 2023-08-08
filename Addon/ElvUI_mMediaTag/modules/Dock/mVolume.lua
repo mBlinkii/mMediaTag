@@ -21,22 +21,6 @@ local Sound_GameSystem_GetNumOutputDrivers = Sound_GameSystem_GetNumOutputDriver
 local Sound_GameSystem_RestartSoundSystem = Sound_GameSystem_RestartSoundSystem
 
 --Variables
-local stream = { Name = _G.MASTER, Volume = "Sound_MasterVolume", Enabled = "Sound_EnableAllSound" }
-local mText = format("Dock %s", L["Volume"])
-local mTextName = "mVolume"
-local Sound_CVars = {
-	Sound_EnableAllSound = true,
-	Sound_EnableSFX = true,
-	Sound_EnableAmbience = true,
-	Sound_EnableDialog = true,
-	Sound_EnableMusic = true,
-	Sound_MasterVolume = true,
-	Sound_SFXVolume = true,
-	Sound_AmbienceVolume = true,
-	Sound_DialogVolume = true,
-	Sound_MusicVolume = true,
-}
-
 local AudioStreams = {
 	{ Name = _G.MASTER, Volume = "Sound_MasterVolume", Enabled = "Sound_EnableAllSound" },
 	{ Name = _G.SOUND_VOLUME or _G.FX_VOLUME, Volume = "Sound_SFXVolume", Enabled = "Sound_EnableSFX" },
@@ -51,6 +35,23 @@ local activeStream = AudioStreams[activeIndex]
 local menu = { { text = L["Select Volume Stream"], isTitle = true, notCheckable = true } }
 local toggleMenu = { { text = L["Toggle Volume Stream"], isTitle = true, notCheckable = true } }
 local deviceMenu = { { text = L["Output Audio Device"], isTitle = true, notCheckable = true } }
+
+local Config = {
+	name = "mMT_Dock_Volume",
+	localizedName = mMT.DockString .. " " .. L["Volume"],
+	category = "mMT-" .. mMT.DockString,
+	text = {
+		enable = true,
+		center = false,
+		a = true, -- first label
+		b = false, -- second label
+	},
+	icon = {
+		notification = false,
+		texture = mMT.IconSquare,
+		color = { r = 1, g = 1, b = 1, a = 1 },
+	},
+}
 
 local function GetStreamString(stream, tooltip)
 	if not stream then
@@ -68,10 +69,7 @@ local function SelectStream(_, ...)
 	activeStream = AudioStreams[activeIndex]
 
 	if E.db.mMT.dockdatatext.volume.showtext then
-		panel.mIcon.TextA:SetFormattedText(
-			mMT.ClassColor.string,
-			GetStreamString(activeStream or "Sound_MasterVolume", true)
-		)
+		panel.mIcon.TextA:SetFormattedText(mMT.ClassColor.string, GetStreamString(activeStream or "Sound_MasterVolume", true))
 	end
 end
 
@@ -81,10 +79,7 @@ local function ToggleStream(_, ...)
 	SetCVar(Stream.Enabled, GetCVarBool(Stream.Enabled) and 0 or 1, "MMT_ELVUI_VOLUME")
 
 	if E.db.mMT.dockdatatext.volume.showtext then
-		panel.mIcon.TextA:SetFormattedText(
-			mMT.ClassColor.string,
-			GetStreamString(activeStream or "Sound_MasterVolume", true)
-		)
+		panel.mIcon.TextA:SetFormattedText(mMT.ClassColor.string, GetStreamString(activeStream or "Sound_MasterVolume", true))
 	end
 end
 
@@ -165,35 +160,28 @@ local function OnMouseWheel(self, delta)
 	SetCVar(activeStream.Volume, vol, "MMT_ELVUI_VOLUME")
 
 	if E.db.mMT.dockdatatext.volume.showtext then
-		self.mIcon.TextA:SetFormattedText(
-			mMT.ClassColor.string,
-			GetStreamString(activeStream or "Sound_MasterVolume", true)
-		)
+		self.mIcon.TextA:SetFormattedText(mMT.ClassColor.string, GetStreamString(activeStream or "Sound_MasterVolume", true))
 	end
 
 	mVolumeTip()
 end
 
 local function OnEnter(self)
-	mMT:mOnEnter(self)
+	mMT:Dock_OnEnter(self, Config)
 	mVolumeTip()
 end
 
 local function OnEvent(self, event)
-	self.mSettings = {
-		Name = mTextName,
-		text = {
-			onlytext = false,
-			special = E.db.mMT.dockdatatext.volume.showtext,
-			textA = E.db.mMT.dockdatatext.volume.showtext,
-			textB = false,
-		},
-		icon = {
-			texture = mMT.Media.DockIcons[E.db.mMT.dockdatatext.volume.icon],
-			color = E.db.mMT.dockdatatext.volume.iconcolor,
-			customcolor = E.db.mMT.dockdatatext.volume.customcolor,
-		},
-	}
+	if event == "ELVUI_FORCE_UPDATE" then
+		--setup settings
+		Config.text.enable = E.db.mMT.dockdatatext.volume.showtext
+		Config.text.a = E.db.mMT.dockdatatext.volume.showtext
+		Config.icon.texture = mMT.Media.DockIcons[E.db.mMT.dockdatatext.volume.icon]
+		Config.icon.color = E.db.mMT.dockdatatext.volume.customcolor and E.db.mMT.dockdatatext.volume.iconcolor or nil
+
+		mMT:InitializeDockIcon(self, Config, event)
+	end
+
 	activeStream = AudioStreams[activeIndex]
 	panel = self
 
@@ -205,21 +193,21 @@ local function OnEvent(self, event)
 
 	local text = nil
 	if E.db.mMT.dockdatatext.volume.showtext then
-			text = GetStreamString(activeStream or "Sound_MasterVolume", true)
+		text = GetStreamString(activeStream or "Sound_MasterVolume", true)
+		self.mMT_Dock.TextA:SetText(text)
 	end
-
-	mMT:DockInitialization(self, event, text)
 end
 
 local function OnLeave(self)
 	if E.db.mMT.dockdatatext.tip.enable then
 		DT.tooltip:Hide()
 	end
-	mMT:mOnLeave(self)
+	mMT:Dock_OnLeave(self, Config)
 end
 
 local function OnClick(self, button)
 	if mMT:CheckCombatLockdown() then
+		mMT:Dock_Click(self, Config)
 		if button == "LeftButton" then
 			if IsShiftKeyDown() then
 				if E.Retail then
@@ -241,4 +229,4 @@ local function OnClick(self, button)
 	end
 end
 
-DT:RegisterDatatext(mTextName, "mDock", nil, OnEvent, nil, OnClick, OnEnter, OnLeave, mText, nil, nil)
+DT:RegisterDatatext(Config.name, Config.category, nil, OnEvent, nil, OnClick, OnEnter, OnLeave, Config.localizedName, nil, nil)

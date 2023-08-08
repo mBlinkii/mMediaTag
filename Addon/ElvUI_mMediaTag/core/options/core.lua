@@ -290,14 +290,14 @@ local function configTable()
 					},
 				},
 			},
-			maui = {
-				order = 9,
-				type = "group",
-				name = "|CFF29C0E3M|r|CFF5493FFa|r|CFF854FE3U|r|CFFA632E3I|r",
-				icon = "Interface\\Addons\\ElvUI_mMediaTag\\media\\logo\\maui_icon.tga",
-				childGroups = "tab",
-				args = {},
-			},
+			-- maui = {
+			-- 	order = 9,
+			-- 	type = "group",
+			-- 	name = "|CFF29C0E3M|r|CFF5493FFa|r|CFF854FE3U|r|CFFA632E3I|r",
+			-- 	icon = "Interface\\Addons\\ElvUI_mMediaTag\\media\\logo\\maui_icon.tga",
+			-- 	childGroups = "tab",
+			-- 	args = {},
+			-- },
 			about = {
 				order = 10,
 				type = "group",
@@ -312,6 +312,17 @@ local function configTable()
 				name = format("|CFFFF0094%s|r", L["Changelog"]),
 				icon = "Interface\\Addons\\ElvUI_mMediaTag\\media\\system\\changelog.tga",
 				childGroups = "tab",
+				args = {},
+			},
+			dev = {
+				order = 20,
+				type = "group",
+				name = format("|CFF6559F1%s|r", L["DEV Tools"]),
+				icon = "Interface\\Addons\\ElvUI_mMediaTag\\media\\logo\\mmt_icon.tga",
+				childGroups = "tab",
+				hidden = function()
+					return not mMT.DevMode
+				end,
 				args = {},
 			},
 		},

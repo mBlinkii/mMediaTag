@@ -5,21 +5,20 @@ local DT = E:GetModule("DataTexts")
 local format = format
 local _G = _G
 --Variables
-local mText = format("Dock %s", BLIZZARD_STORE)
-local mTextName = "mBlizzardStore"
 
-local function mDockCheckFrame()
-	return (StoreFrame and StoreFrame_IsShown())
-end
-
-function mMT:CheckFrameBlizzardStore(self)
-	self.mIcon.isClicked = mDockCheckFrame()
-	mMT:DockTimer(self)
-end
+local Config = {
+	name = "mMT_Dock_BlizzardStore",
+	localizedName = mMT.DockString .. " " .. BLIZZARD_STORE,
+	category = "mMT-" .. mMT.DockString,
+	icon = {
+		notification = false,
+		texture = mMT.IconSquare,
+		color = { r = 1, g = 1, b = 1, a = 1 },
+	},
+}
 
 local function OnEnter(self)
-	self.mIcon.isClicked = mDockCheckFrame()
-	mMT:mOnEnter(self, "CheckFrameBlizzardStore")
+	mMT:Dock_OnEnter(self, Config)
 
 	if E.db.mMT.dockdatatext.tip.enable then
 		DT.tooltip:AddLine(BLIZZARD_STORE)
@@ -28,16 +27,13 @@ local function OnEnter(self)
 end
 
 local function OnEvent(self, event, ...)
-	self.mSettings = {
-		Name = mTextName,
-		icon = {
-			texture = mMT.Media.DockIcons[E.db.mMT.dockdatatext.blizzardstore.icon],
-			color = E.db.mMT.dockdatatext.blizzardstore.iconcolor,
-			customcolor = E.db.mMT.dockdatatext.blizzardstore.customcolor,
-		},
-	}
+	if event == "ELVUI_FORCE_UPDATE" then
+		--setup settings
+		Config.icon.texture = mMT.Media.DockIcons[E.db.mMT.dockdatatext.blizzardstore.icon]
+		Config.icon.color = E.db.mMT.dockdatatext.blizzardstore.customcolor and E.db.mMT.dockdatatext.blizzardstore.iconcolor or nil
 
-	mMT:DockInitialization(self, event)
+		mMT:InitializeDockIcon(self, Config, event)
+	end
 end
 
 local function OnLeave(self)
@@ -45,13 +41,12 @@ local function OnLeave(self)
 		DT.tooltip:Hide()
 	end
 
-	self.mIcon.isClicked = mDockCheckFrame()
-	mMT:mOnLeave(self)
+	mMT:Dock_OnLeave(self, Config)
 end
 
 local function OnClick(self)
-	mMT:mOnClick(self, "CheckFrameBlizzardStore")
+	mMT:Dock_Click(self, Config)
 	_G.StoreMicroButton:Click()
 end
 
-DT:RegisterDatatext(mTextName, "mDock", nil, OnEvent, nil, OnClick, OnEnter, OnLeave, mText, nil, nil)
+DT:RegisterDatatext(Config.name, Config.category, nil, OnEvent, nil, OnClick, OnEnter, OnLeave, Config.localizedName, nil, nil)

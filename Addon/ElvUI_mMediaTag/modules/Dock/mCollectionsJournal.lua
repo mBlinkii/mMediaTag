@@ -6,8 +6,17 @@ local format = format
 
 --Variables
 local _G = _G
-local mText = format("Dock %s", COLLECTIONS)
-local mTextName = "mCollectionsJourna"
+local Config = {
+	name = "mMT_Dock_CollectionsJournal",
+	localizedName = mMT.DockString .. " " .. COLLECTIONS,
+	category = "mMT-" .. mMT.DockString,
+	icon = {
+		notification = false,
+		texture = mMT.IconSquare,
+		color = { r = 1, g = 1, b = 1, a = 1 },
+	},
+}
+
 --Polished Pet Charm
 local PPC = {
 	info = {
@@ -17,7 +26,7 @@ local PPC = {
 		icon = nil,
 		link = nil,
 		count = nil,
-        cap = nil,
+		cap = nil,
 	},
 	loaded = false,
 }
@@ -30,23 +39,13 @@ local BPB = {
 		icon = nil,
 		link = nil,
 		count = nil,
-        cap = nil,
+		cap = nil,
 	},
 	loaded = false,
 }
 
-local function mDockCheckFrame()
-	return (CollectionsJournal and CollectionsJournal:IsShown())
-end
-
-function mMT:CheckFrameCollectionsJournal(self)
-	self.mIcon.isClicked = mDockCheckFrame()
-	mMT:DockTimer(self)
-end
-
 local function OnEnter(self)
-	self.mIcon.isClicked = mDockCheckFrame()
-	mMT:mOnEnter(self, "CheckFrameCollectionsJournal")
+	mMT:Dock_OnEnter(self, Config)
 	mMT:GetCurrenciesInfo(PPC, true)
 
 	local numOwned = 0
@@ -63,7 +62,7 @@ local function OnEnter(self)
 		DT.tooltip:AddLine(" ")
 		DT.tooltip:AddLine(L["Collected"])
 		DT.tooltip:AddDoubleLine(format("|CFF40E0D0%s|r", L["Mounts"]), format("|CFF6495ED%s|r", numOwned))
-		DT.tooltip:AddDoubleLine(format("|CFFDE3163%s|r", L["Pets"]), format("|CFF6495ED%s|r", select(2,C_PetJournal.GetNumPets())))
+		DT.tooltip:AddDoubleLine(format("|CFFDE3163%s|r", L["Pets"]), format("|CFF6495ED%s|r", select(2, C_PetJournal.GetNumPets())))
 		if PPC.loaded and PPC.info.count ~= 0 then
 			DT.tooltip:AddLine(" ")
 			DT.tooltip:AddDoubleLine(PPC.info.color .. PPC.info.name .. "|r", "|CFF6495ED" .. PPC.info.count .. "|r")
@@ -76,17 +75,14 @@ local function OnEnter(self)
 end
 
 local function OnEvent(self, event, ...)
-	self.mSettings = {
-		Name = mTextName,
-		icon = {
-			texture = mMT.Media.DockIcons[E.db.mMT.dockdatatext.collection.icon],
-			color = E.db.mMT.dockdatatext.collection.iconcolor,
-			customcolor = E.db.mMT.dockdatatext.collection.customcolor,
-		},
-	}
+	if event == "ELVUI_FORCE_UPDATE" then
+		--setup settings
+		Config.icon.texture = mMT.Media.DockIcons[E.db.mMT.dockdatatext.collection.icon]
+		Config.icon.color = E.db.mMT.dockdatatext.collection.customcolor and E.db.mMT.dockdatatext.collection.iconcolor or nil
 
-	mMT:GetCurrenciesInfo(PPC, true)
-	mMT:DockInitialization(self, event)
+		mMT:GetCurrenciesInfo(PPC, true)
+		mMT:InitializeDockIcon(self, Config, event)
+	end
 end
 
 local function OnLeave(self)
@@ -94,15 +90,14 @@ local function OnLeave(self)
 		DT.tooltip:Hide()
 	end
 
-	self.mIcon.isClicked = mDockCheckFrame()
-	mMT:mOnLeave(self)
+	mMT:Dock_OnLeave(self, Config)
 end
 
 local function OnClick(self)
 	if mMT:CheckCombatLockdown() then
-		mMT:mOnClick(self, "CheckFrameCollectionsJournal")
+		mMT:Dock_Click(self, Config)
 		_G.ToggleCollectionsJournal()
 	end
 end
 
-DT:RegisterDatatext(mTextName, "mDock", nil, OnEvent, nil, OnClick, OnEnter, OnLeave, mText, nil, nil)
+DT:RegisterDatatext(Config.name, Config.category, nil, OnEvent, nil, OnClick, OnEnter, OnLeave, Config.localizedName, nil, nil)

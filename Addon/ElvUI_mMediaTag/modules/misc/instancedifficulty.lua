@@ -121,7 +121,10 @@ local shortNames = {
 	[2522] = "VOTI", --Vault of the Incarnates
 	[1754] = "FH", -- Freehold
 	[1841] = "UNDR", -- The Underrot
-	[657] = "VP",
+	[657] = "VP", -- Vortex
+	[2579] = "DOTI", -- Dawn of the Infinite
+
+	-- Quest Scenarios
 	[2570] = "TFR",
 	[2444] = "DI",
 	[2512] = "GTA",

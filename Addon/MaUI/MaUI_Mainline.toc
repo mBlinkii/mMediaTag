@@ -1,0 +1,15 @@
+## Interface: 100105
+## Author: Blinkii
+## Version: 1.0
+## Title: |CFF29C0E3M|r|CFF5493FFa|r|CFF854FE3U|r|CFFA632E3I|r
+## Notes: MaUI Profile Installer for ElvUI.
+## Notes-deDE: MaUI Profil Installations Addon für ElvUI.
+## IconTexture: Interface\AddOns\MaUI\media\mmt_icon.tga
+# AddonCompartmentFunc: ElvUI_mMediaTag_OnAddonCompartmentClick
+# AddonCompartmentFuncOnEnter: ElvUI_mMediaTag_OnAddonCompartmentOnEnter
+# AddonCompartmentFuncOnLeave: ElvUI_mMediaTag_OnAddonCompartmentOnLeave
+## RequiredDeps: ElvUI, ElvUI_mMediaTag
+## DefaultState: Enabled
+## X-Curse-Project-ID: 289502
+## X-Wago-ID: 9rN48AND
+

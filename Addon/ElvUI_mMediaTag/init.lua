@@ -9,7 +9,6 @@ mMT = E:NewModule(addonName, "AceHook-3.0", "AceEvent-3.0", "AceTimer-3.0", "Ace
 --Cache Lua / WoW API
 local _G = _G
 local format = format
-local collectgarbage = collectgarbage
 local GetAddOnMetadata = _G.GetAddOnMetadata
 local C_MythicPlus_RequestMapInfo = nil
 local C_MythicPlus_RequestCurrentAffixes = nil
@@ -18,9 +17,9 @@ local hex = E:RGBToHex(class.r, class.g, class.b)
 
 --Constants
 mMT.Version = GetAddOnMetadata(addonName, "Version")
-mMT.Name =
-	"|CFF6559F1m|r|CFF7A4DEFM|r|CFF8845ECe|r|CFFA037E9d|r|CFFA435E8i|r|CFFB32DE6a|r|CFFBC26E5T|r|CFFCB1EE3a|r|CFFDD14E0g|r |CFFFF006C&|r |CFFFF4C00T|r|CFFFF7300o|r|CFFFF9300o|r|CFFFFA800l|r|CFFFFC900s|r"
+mMT.Name = "|CFF6559F1m|r|CFF7A4DEFM|r|CFF8845ECe|r|CFFA037E9d|r|CFFA435E8i|r|CFFB32DE6a|r|CFFBC26E5T|r|CFFCB1EE3a|r|CFFDD14E0g|r |CFFFF006C&|r |CFFFF4C00T|r|CFFFF7300o|r|CFFFF9300o|r|CFFFFA800l|r|CFFFFC900s|r"
 mMT.NameShort = "|CFF6559F1m|r|CFFA037E9M|r|CFFDD14E0T|r"
+mMT.DockString = "|CFF2CD204D|r|CFF1BE43Ao|r|CFF10EE5Cc|r|CFF05FA82k|r"
 mMT.Icon = "|TInterface\\Addons\\ElvUI_mMediaTag\\media\\logo\\mmt_icon_round.tga:14:14|t"
 mMT.IconSquare = "|TInterface\\Addons\\ElvUI_mMediaTag\\media\\logo\\mmt_icon.tga:14:14|t"
 mMT.ClassColor = {
@@ -37,12 +36,19 @@ mMT.ElvUI_EltreumUI = {
 }
 mMT.Media = {}
 mMT.Config = {}
+mMT.DevMode = false
 mMT.DB = {}
+mMT.DEVNames = {
+	["Blinkii"] = true,
+	["Flinkii"] = true,
+	["Raeldan"] = true,
+}
 
 local defaultDB = {
 	mplusaffix = { affixes = nil, season = nil, reset = false, year = nil },
 	affix = nil,
 	keys = {},
+	dev = { enabled = false, frame = { top = nil, left = nil }, unit = {}, zone = {} },
 }
 
 local DB_Loader = CreateFrame("FRAME")
@@ -59,6 +65,10 @@ function DB_Loader:OnEvent(event, arg1)
 			end
 		end
 	elseif event == "PLAYER_LOGOUT" then
+		if mMT.DevMode then
+			mMT:SaveFramePos()
+			mMT.DB.dev.enabled = mMT.DevMode
+		end
 		mMTDB = mMT.DB
 	end
 end
@@ -98,13 +108,8 @@ end
 -- Initialize Addon
 function mMT:Initialize()
 	if mMT.ElvUI_EltreumUI.loaded then
-		mMT.ElvUI_EltreumUI.gradient = E.db.ElvUI_EltreumUI
-			and E.db.ElvUI_EltreumUI.unitframes
-			and E.db.ElvUI_EltreumUI.unitframes.gradientmode
-			and E.db.ElvUI_EltreumUI.unitframes.gradientmode.enable
-		mMT.ElvUI_EltreumUI.dark = E.db.ElvUI_EltreumUI
-			and E.db.ElvUI_EltreumUI.unitframes
-			and E.db.ElvUI_EltreumUI.unitframes.darkmode
+		mMT.ElvUI_EltreumUI.gradient = E.db.ElvUI_EltreumUI and E.db.ElvUI_EltreumUI.unitframes and E.db.ElvUI_EltreumUI.unitframes.gradientmode and E.db.ElvUI_EltreumUI.unitframes.gradientmode.enable
+		mMT.ElvUI_EltreumUI.dark = E.db.ElvUI_EltreumUI and E.db.ElvUI_EltreumUI.unitframes and E.db.ElvUI_EltreumUI.unitframes.darkmode
 	end
 
 	EP:RegisterPlugin(addonName, GetOptions)
@@ -116,8 +121,8 @@ function mMT:Initialize()
 	end
 
 	-- Initialize main things
-	mMT:LoadCommands()
-	mMT:mDockUpdateFont()
+	tinsert(E.ConfigModeLayouts, "MMEDIATAG")
+	E.ConfigModeLocalizedStrings["MMEDIATAG"] = mMT.Name
 
 	-- Initialize Modules
 	if E.db.mMT.general.greeting then
@@ -164,22 +169,12 @@ function mMT:Initialize()
 		mMT:SetupSummonIcon()
 	end
 
-	if
-		(
-			E.db.mMT.custombackgrounds.health.enable
-			or E.db.mMT.custombackgrounds.power.enable
-			or E.db.mMT.custombackgrounds.castbar.enable
-		) and not mMT.ElvUI_EltreumUI.dark
-	then
+	if (E.db.mMT.custombackgrounds.health.enable or E.db.mMT.custombackgrounds.power.enable or E.db.mMT.custombackgrounds.castbar.enable) and not mMT.ElvUI_EltreumUI.dark then
 		mMT:CustomBackdrop()
 	end
 
 	if E.Retail then
-		if
-			E.db.mMT.interruptoncd.enable
-			or (E.db.mMT.importantspells.enable and (E.db.mMT.importantspells.np or E.db.mMT.importantspells.uf))
-			or E.db.mMT.castbarshield.enable
-		then
+		if E.db.mMT.interruptoncd.enable or (E.db.mMT.importantspells.enable and (E.db.mMT.importantspells.np or E.db.mMT.importantspells.uf)) or E.db.mMT.castbarshield.enable then
 			mMT:CastbarModuleLoader()
 		end
 
@@ -187,10 +182,7 @@ function mMT:Initialize()
 			mMT:UpdateImportantSpells()
 		end
 
-		if
-			E.private.nameplates.enable and E.db.mMT.nameplate.healthmarker.enable
-			or E.db.mMT.nameplate.executemarker.enable
-		then
+		if E.private.nameplates.enable and E.db.mMT.nameplate.healthmarker.enable or E.db.mMT.nameplate.executemarker.enable then
 			mMT:StartNameplateTools()
 		end
 
@@ -216,14 +208,7 @@ function mMT:Initialize()
 			mMT:RegisterEvent("PLAYER_TALENT_UPDATE")
 		end
 
-		if
-			(
-				E.db.mMT.objectivetracker.enable
-				or (E.db.mMT.objectivetracker.enable and E.db.mMT.objectivetracker.simple)
-			)
-			and E.private.skins.blizzard.enable
-			and not IsAddOnLoaded("!KalielsTracker")
-		then
+		if (E.db.mMT.objectivetracker.enable or (E.db.mMT.objectivetracker.enable and E.db.mMT.objectivetracker.simple)) and E.private.skins.blizzard.enable and not IsAddOnLoaded("!KalielsTracker") then
 			if not E.private.skins.blizzard.objectiveTracker then
 				StaticPopupDialogs["mErrorSkin"] = {
 					text = L["ElvUI skin must be enabled to activate mMediaTag Quest skins! Should it be enabled?"],
@@ -278,12 +263,11 @@ function mMT:PLAYER_ENTERING_WORLD()
 		end
 	end
 
+	mMT:UpdateDockSettings()
 	mMT:UpdateTagSettings()
 	mMT:TagDeathCount()
 
-	class = (E.db.mMT.customclasscolors.enable and not mMT:Check_ElvUI_EltreumUI())
-			and E.db.mMT.customclasscolors.colors[E.myclass]
-		or E:ClassColor(E.myclass)
+	class = (E.db.mMT.customclasscolors.enable and not mMT:Check_ElvUI_EltreumUI()) and E.db.mMT.customclasscolors.colors[E.myclass] or E:ClassColor(E.myclass)
 	hex = E:RGBToHex(class.r, class.g, class.b)
 
 	mMT.ClassColor = {
@@ -293,6 +277,14 @@ function mMT:PLAYER_ENTERING_WORLD()
 		hex = hex,
 		string = strjoin("", hex, "%s|r"),
 	}
+
+	if mMT.DB.dev.enabled and mMT.DEVNames[UnitName("player")] then
+		mMT:Print("|CFFFFC900DEV - Tools:|r |CFF00E360enabld|r")
+		mMT.DevMode = true
+		mMT:DevTools()
+	else
+		mMT.DevMode = false
+	end
 end
 
 function mMT:PLAYER_TALENT_UPDATE()
@@ -336,7 +328,7 @@ end
 
 function mMT:PLAYER_FLAGS_CHANGED(_, unit)
 	if E.db.general.afk and unit == "player" and UnitIsAFK(unit) then
-		mMT:MaUI_AFKScreen()
+		mMT:mMT_AFKScreen()
 	end
 end
 

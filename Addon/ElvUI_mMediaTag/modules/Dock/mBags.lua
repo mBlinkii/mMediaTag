@@ -8,8 +8,23 @@ local format, strjoin, tinsert = format, strjoin, tinsert
 
 --Variables
 local _G = _G
-local mText = format("Dock %s", L["Bags"])
-local mTextName = "mBags"
+
+local Config = {
+	name = "mMT_Dock_Bags",
+	localizedName = mMT.DockString .. " " .. L["Bags"],
+	category = "mMT-" .. mMT.DockString,
+	text = {
+		enable = true,
+		center = false,
+		a = true, -- first label
+		b = false, -- second label
+	},
+	icon = {
+		notification = false,
+		texture = mMT.IconSquare,
+		color = { r = 1, g = 1, b = 1, a = 1 },
+	},
+}
 
 local GetContainerNumFreeSlots = GetContainerNumFreeSlots or (C_Container and C_Container.GetContainerNumFreeSlots)
 local GetContainerNumSlots = GetContainerNumSlots or (C_Container and C_Container.GetContainerNumSlots)
@@ -60,6 +75,9 @@ local function updateTotal(faction, change)
 end
 
 local function updateGold(self, updateAll, goldChange)
+	local textOnly = false
+	local style = "BLIZZARD"
+
 	if updateAll then
 		wipe(myGold)
 		wipe(menuList)
@@ -91,7 +109,7 @@ local function updateGold(self, updateAll, goldChange)
 						name = name,
 						realm = realm,
 						amount = gold,
-						amountText = E:FormatMoney(gold, "SHORTINT", false),
+						amountText = E:FormatMoney(gold, style, textOnly),
 						faction = faction or "",
 						r = color.r,
 						g = color.g,
@@ -114,7 +132,7 @@ local function updateGold(self, updateAll, goldChange)
 		for _, info in ipairs(myGold) do
 			if info.name == E.myname and info.realm == E.myrealm then
 				info.amount = ElvDB.gold[E.myrealm][E.myname]
-				info.amountText = E:FormatMoney(ElvDB.gold[E.myrealm][E.myname], "SHORTINT", false)
+				info.amountText = E:FormatMoney(ElvDB.gold[E.myrealm][E.myname], style, textOnly)
 
 				break
 			end
@@ -129,35 +147,21 @@ end
 local function UpdateMarketPrice()
 	return C_WowTokenPublic_UpdateMarketPrice()
 end
-local function mDockCheckFrame()
-	return (ElvUI_ContainerFrame and ElvUI_ContainerFrame:IsShown())
-end
-
-function mMT:CheckFrameBags(self)
-	self.mIcon.isClicked = mDockCheckFrame()
-	mMT:DockTimer(self)
-end
 
 local function OnEnter(self)
 	if E.db.mMT.dockdatatext.tip.enable then
 		DT.tooltip:ClearLines()
 
+		local textOnly = false
+		local style = "BLIZZARD"
+
 		DT.tooltip:AddLine(L["Session:"])
-		DT.tooltip:AddDoubleLine(L["Earned:"], E:FormatMoney(Profit, "SHORTINT", false), 1, 1, 1, 1, 1, 1)
-		DT.tooltip:AddDoubleLine(L["Spent:"], E:FormatMoney(Spent, "SHORTINT", false), 1, 1, 1, 1, 1, 1)
+		DT.tooltip:AddDoubleLine(L["Earned:"], E:FormatMoney(Profit, style, textOnly), 1, 1, 1, 1, 1, 1)
+		DT.tooltip:AddDoubleLine(L["Spent:"], E:FormatMoney(Spent, style, textOnly), 1, 1, 1, 1, 1, 1)
 
 		if Spent ~= 0 then
 			local gained = Profit > Spent
-			DT.tooltip:AddDoubleLine(
-				gained and L["Profit:"] or L["Deficit:"],
-				E:FormatMoney(Profit - Spent, "SHORTINT", false),
-				gained and 0 or 1,
-				gained and 1 or 0,
-				0,
-				1,
-				1,
-				1
-			)
+			DT.tooltip:AddDoubleLine(gained and L["Profit:"] or L["Deficit:"], E:FormatMoney(Profit - Spent, style, textOnly), gained and 0 or 1, gained and 1 or 0, 0, 1, 1, 1)
 		end
 
 		DT.tooltip:AddLine(" ")
@@ -171,63 +175,26 @@ local function OnEnter(self)
 				nameLine = format([[|TInterface\FriendsFrame\PlusManz-%s:14|t ]], g.faction)
 			end
 
-			local toonName =
-				format("%s%s%s", nameLine, g.name, (g.realm and g.realm ~= E.myrealm and " - " .. g.realm) or "")
-			DT.tooltip:AddDoubleLine(
-				(g.name == E.myname and toonName .. [[ |TInterface\COMMON\Indicator-Green:14|t]]) or toonName,
-				g.amountText,
-				g.r,
-				g.g,
-				g.b,
-				1,
-				1,
-				1
-			)
+			local toonName = format("%s%s%s", nameLine, g.name, (g.realm and g.realm ~= E.myrealm and " - " .. g.realm) or "")
+			DT.tooltip:AddDoubleLine((g.name == E.myname and toonName .. [[ |TInterface\COMMON\Indicator-Green:14|t]]) or toonName, g.amountText, g.r, g.g, g.b, 1, 1, 1)
 		end
 
 		DT.tooltip:AddLine(" ")
 		DT.tooltip:AddLine(L["Server: "])
 		if totalAlliance > 0 and totalHorde > 0 then
 			if totalAlliance ~= 0 then
-				DT.tooltip:AddDoubleLine(
-					L["Alliance: "],
-					E:FormatMoney(totalAlliance, "SHORTINT", false),
-					0,
-					0.376,
-					1,
-					1,
-					1,
-					1
-				)
+				DT.tooltip:AddDoubleLine(L["Alliance: "], E:FormatMoney(totalAlliance, style, textOnly), 0, 0.376, 1, 1, 1, 1)
 			end
 			if totalHorde ~= 0 then
-				DT.tooltip:AddDoubleLine(
-					L["Horde: "],
-					E:FormatMoney(totalHorde, "SHORTINT", false),
-					1,
-					0.2,
-					0.2,
-					1,
-					1,
-					1
-				)
+				DT.tooltip:AddDoubleLine(L["Horde: "], E:FormatMoney(totalHorde, style, textOnly), 1, 0.2, 0.2, 1, 1, 1)
 			end
 			DT.tooltip:AddLine(" ")
 		end
-		DT.tooltip:AddDoubleLine(L["Total: "], E:FormatMoney(totalGold, "SHORTINT", false), 1, 1, 1, 1, 1, 1)
+		DT.tooltip:AddDoubleLine(L["Total: "], E:FormatMoney(totalGold, style, textOnly), 1, 1, 1, 1, 1, 1)
 
 		if E.Retail then
 			DT.tooltip:AddLine(" ")
-			DT.tooltip:AddDoubleLine(
-				L["WoW Token:"],
-				E:FormatMoney(C_WowTokenPublic_GetCurrentMarketPrice() or 0, "SHORTINT", false),
-				0,
-				0.8,
-				1,
-				1,
-				1,
-				1
-			)
+			DT.tooltip:AddDoubleLine(L["WoW Token:"], E:FormatMoney(C_WowTokenPublic_GetCurrentMarketPrice() or 0, style, textOnly), 0, 0.8, 1, 1, 1, 1)
 		end
 
 		if E.Retail or E.Wrath then
@@ -241,16 +208,7 @@ local function OnEnter(self)
 				end
 
 				if info.quantity then
-					DT.tooltip:AddDoubleLine(
-						format("%s %s", format(iconString, info.iconFileID), name),
-						BreakUpLargeNumbers(info.quantity),
-						1,
-						1,
-						1,
-						1,
-						1,
-						1
-					)
+					DT.tooltip:AddDoubleLine(format("%s %s", format(iconString, info.iconFileID), name), BreakUpLargeNumbers(info.quantity), 1, 1, 1, 1, 1, 1)
 				end
 
 				index = index + 1
@@ -261,7 +219,7 @@ local function OnEnter(self)
 		local grayValue = B:GetGraysValue()
 		if grayValue > 0 then
 			DT.tooltip:AddLine(" ")
-			DT.tooltip:AddDoubleLine(L["Grays"], E:FormatMoney(grayValue, "SHORTINT", false), nil, nil, nil, 1, 1, 1)
+			DT.tooltip:AddDoubleLine(L["Grays"], E:FormatMoney(grayValue, style, textOnly), nil, nil, nil, 1, 1, 1)
 		end
 
 		DT.tooltip:AddLine(" ")
@@ -269,59 +227,53 @@ local function OnEnter(self)
 		DT.tooltip:AddLine(resetInfoFormatter)
 		DT.tooltip:Show()
 	end
-	self.mIcon.isClicked = mDockCheckFrame()
-	mMT:mOnEnter(self, "CheckFrameBags")
+
+	mMT:Dock_OnEnter(self, Config)
 end
 
 local function OnEvent(self, event, ...)
-	self.mSettings = {
-		Name = mTextName,
-		text = {
-			onlytext = false,
-			special = true,
-			textA = (E.db.mMT.dockdatatext.bag.text ~= 5),
-			textB = false,
-		},
-		icon = {
-			texture = mMT.Media.DockIcons[E.db.mMT.dockdatatext.bag.icon],
-			color = E.db.mMT.dockdatatext.bag.iconcolor,
-			customcolor = E.db.mMT.dockdatatext.bag.customcolor,
-		},
-		Notifications = false,
-	}
-	local text = nil
+	if event == "ELVUI_FORCE_UPDATE" then
+		--setup settings
+		Config.text.enable = (E.db.mMT.dockdatatext.bag.text ~= 5)
+		Config.text.a = (E.db.mMT.dockdatatext.bag.text ~= 5)
+		Config.icon.texture = mMT.Media.DockIcons[E.db.mMT.dockdatatext.bag.icon]
+		Config.icon.color = E.db.mMT.dockdatatext.bag.customcolor and E.db.mMT.dockdatatext.bag.iconcolor or nil
 
-	if self.mSettings.text.textA then
-		if E.db.mMT.dockdatatext.bag.text == 4 then
-			if not IsLoggedIn() then
-				return
-			end
+		mMT:InitializeDockIcon(self, Config, event)
+	end
 
-			if E.Retail and not Ticker then
-				C_WowTokenPublic_UpdateMarketPrice()
-				Ticker = C_Timer_NewTicker(60, UpdateMarketPrice)
-			end
+	local NewMoney = nil
 
-			--prevent an error possibly from really old profiles
-			local oldMoney = ElvDB.gold[E.myrealm][E.myname]
-			if oldMoney and type(oldMoney) ~= "number" then
-				ElvDB.gold[E.myrealm][E.myname] = nil
-				oldMoney = nil
-			end
+	if IsLoggedIn() then
+		if E.Retail and not Ticker then
+			C_WowTokenPublic_UpdateMarketPrice()
+			Ticker = C_Timer_NewTicker(60, UpdateMarketPrice)
+		end
 
-			local NewMoney = GetMoney()
-			ElvDB.gold[E.myrealm][E.myname] = NewMoney
+		--prevent an error possibly from really old profiles
+		local oldMoney = ElvDB.gold[E.myrealm][E.myname]
+		if oldMoney and type(oldMoney) ~= "number" then
+			ElvDB.gold[E.myrealm][E.myname] = nil
+			oldMoney = nil
+		end
 
-			local OldMoney = oldMoney or NewMoney
-			local Change = NewMoney - OldMoney -- Positive if we gain money
-			if OldMoney > NewMoney then -- Lost Money
-				Spent = Spent - Change
-			else -- Gained Moeny
-				Profit = Profit + Change
-			end
+		NewMoney = GetMoney()
+		ElvDB.gold[E.myrealm][E.myname] = NewMoney
 
-			updateGold(self, event == "ELVUI_FORCE_UPDATE", Change)
+		local OldMoney = oldMoney or NewMoney
+		local Change = NewMoney - OldMoney -- Positive if we gain money
+		if OldMoney > NewMoney then -- Lost Money
+			Spent = Spent - Change
+		else -- Gained Moeny
+			Profit = Profit + Change
+		end
 
+		updateGold(self, event == "ELVUI_FORCE_UPDATE", Change)
+	end
+
+	if Config.text.a then
+		local text = nil
+		if E.db.mMT.dockdatatext.bag.text == 4 and NewMoney then
 			text = E:FormatMoney(NewMoney, "SHORTINT")
 		else
 			local free, total = 0, 0
@@ -342,9 +294,9 @@ local function OnEvent(self, event, ...)
 				text = total - free .. "/" .. total
 			end
 		end
-	end
 
-	mMT:DockInitialization(self, event, text)
+		self.mMT_Dock.TextA:SetText(text)
+	end
 end
 
 local function OnLeave(self)
@@ -352,13 +304,12 @@ local function OnLeave(self)
 		DT.tooltip:Hide()
 	end
 
-	self.mIcon.isClicked = mDockCheckFrame()
-	mMT:mOnLeave(self)
+	mMT:Dock_OnLeave(self, Config)
 end
 
 local function OnClick(self, btn)
 	if mMT:CheckCombatLockdown() then
-		mMT:mOnClick(self, "CheckFrameBags")
+		mMT:Dock_Click(self, Config)
 		if btn == "RightButton" then
 			if IsShiftKeyDown() then
 				E:SetEasyMenuAnchor(E.EasyMenu, self)
@@ -373,7 +324,7 @@ local function OnClick(self, btn)
 	end
 end
 
-DT:RegisterDatatext(mTextName, "mDock", {
+DT:RegisterDatatext(Config.name, Config.category, {
 	"PLAYER_MONEY",
 	"SEND_MAIL_MONEY_CHANGED",
 	"SEND_MAIL_COD_CHANGED",
@@ -381,4 +332,4 @@ DT:RegisterDatatext(mTextName, "mDock", {
 	"TRADE_MONEY_CHANGED",
 	"CURRENCY_DISPLAY_UPDATE",
 	"PERKS_PROGRAM_CURRENCY_REFRESH",
-}, OnEvent, nil, OnClick, OnEnter, OnLeave, mText, nil, nil)
+}, OnEvent, nil, OnClick, OnEnter, OnLeave, Config.localizedName, nil, nil)

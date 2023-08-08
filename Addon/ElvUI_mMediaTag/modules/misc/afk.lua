@@ -103,10 +103,7 @@ local function UpdateTexts()
 
 		PlayerStats.values.title = PET_BATTLE_STATS_LABEL
 		tinsert(PlayerStats.values.lines, LEVEL .. ": |CFFFFFFFF" .. UnitLevel("player") .. "|r")
-		tinsert(
-			PlayerStats.values.lines,
-			ITEM_UPGRADE_STAT_AVERAGE_ITEM_LEVEL .. ": |CFFFFFFFF" .. mMT:round(GetAverageItemLevel() or 0) .. "|r"
-		)
+		tinsert(PlayerStats.values.lines, ITEM_UPGRADE_STAT_AVERAGE_ITEM_LEVEL .. ": |CFFFFFFFF" .. mMT:round(GetAverageItemLevel() or 0) .. "|r")
 		tinsert(PlayerStats.values.lines, DURABILITY .. ": " .. DurabilityInfos.durability)
 		if DurabilityInfos.repair then
 			tinsert(PlayerStats.values.lines, REPAIR_COST .. " |CFFFFFFFF" .. DurabilityInfos.repair .. "|r")
@@ -158,197 +155,141 @@ local function CreateLabel(parent, isTitle, anchor, anchorPoint, color, offset)
 	return label
 end
 
-function mMT:MaUI_AFKScreen()
+function mMT:mMT_AFKScreen()
 	if E.db.general.afk then
 		-- ElvUI AFK Screen Elements
 		-- Insperated by Eltruism AFK Screen
-		-- Frame
-		_G.ElvUIAFKFrame.bottom:SetWidth(E.screenWidth / 1.75)
-		_G.ElvUIAFKFrame.bottom:SetHeight(E.screenHeight * 0.075)
-		_G.ElvUIAFKFrame.bottom:SetPoint("BOTTOM", _G.ElvUIAFKFrame, "BOTTOM", 0, 50)
-
-		-- Chat
-		_G.ElvUIAFKFrame.chat:ClearAllPoints()
-		_G.ElvUIAFKFrame.chat:Point("TOP", _G.ElvUIAFKFrame, "TOP", 0, -4)
-
-		-- Logo
-		_G.ElvUIAFKFrame.bottom.LogoTop:SetSize(E.screenHeight * 0.1, E.screenHeight * 0.05)
-		_G.ElvUIAFKFrame.bottom.LogoTop:ClearAllPoints()
-		_G.ElvUIAFKFrame.bottom.LogoTop:Point("RIGHT", _G.ElvUIAFKFrame.bottom, "CENTER", -10, 0)
-
-		_G.ElvUIAFKFrame.bottom.LogoBottom:SetSize(E.screenHeight * 0.1, E.screenHeight * 0.05)
-		_G.ElvUIAFKFrame.bottom.LogoBottom:ClearAllPoints()
-		_G.ElvUIAFKFrame.bottom.LogoBottom:Point("RIGHT", _G.ElvUIAFKFrame.bottom, "CENTER", -10, 0)
-
-		-- Time
-		_G.ElvUIAFKFrame.bottom.time:ClearAllPoints()
-		_G.ElvUIAFKFrame.bottom.time:Point("RIGHT", _G.ElvUIAFKFrame.bottom, "RIGHT", -10, 0)
-		_G.ElvUIAFKFrame.bottom.time:SetTextColor(0.36, 0.53, 1)
-
-		-- Icon
-		_G.ElvUIAFKFrame.bottom.faction:ClearAllPoints()
-		_G.ElvUIAFKFrame.bottom.faction:Point("LEFT", _G.ElvUIAFKFrame.bottom, "LEFT", 0, 0)
-		_G.ElvUIAFKFrame.bottom.faction:Size(E.screenHeight * 0.05, E.screenHeight * 0.05)
-
-		-- Name
-		_G.ElvUIAFKFrame.bottom.name:ClearAllPoints()
-		_G.ElvUIAFKFrame.bottom.name:Point("TOPLEFT", _G.ElvUIAFKFrame.bottom.faction, "TOPRIGHT", 10, -2)
-
-		-- Guild
-		_G.ElvUIAFKFrame.bottom.guild:SetTextColor(0, 0.82, 0.1)
-
-		-- Model
-		local point, relativeTo, relativePoint, _, yOfs = _G.ElvUIAFKFrame.bottom.modelHolder:GetPoint()
-		_G.ElvUIAFKFrame.bottom.modelHolder:ClearAllPoints()
-		_G.ElvUIAFKFrame.bottom.modelHolder:Point(point, relativeTo, relativePoint, 250, yOfs + 10)
-		_G.ElvUIAFKFrame.bottom.model:SetScale(0.9)
-
-		if not _G.ElvUIAFKFrame.MaUI_Logo then
-			local MaUI_Logo = _G.ElvUIAFKFrame:CreateTexture(nil, "OVERLAY")
-			MaUI_Logo:Size(E.screenHeight * 0.2, E.screenHeight * 0.05)
-			MaUI_Logo:Point("CENTER", _G.ElvUIAFKFrame.bottom)
-			MaUI_Logo:SetTexture("Interface\\Addons\\ElvUI_mMediaTag\\media\\logo\\maui_logo.tga")
-			MaUI_Logo:Point("LEFT", _G.ElvUIAFKFrame.bottom, "CENTER", 10, 0)
-			_G.ElvUIAFKFrame.MaUI_Logo = MaUI_Logo
-		end
 
 		local db = E.db.mMT.afk
 
-		if not _G.ElvUIAFKFrame.MaUI_AFK_InfoScreen then
-			local MaUI_AFK_InfoScreen = CreateFrame("Frame", nil, _G.ElvUIAFKFrame)
-			MaUI_AFK_InfoScreen:SetFrameLevel(0)
-			MaUI_AFK_InfoScreen:SetTemplate("Transparent")
-			MaUI_AFK_InfoScreen:Point("LEFT", _G.ElvUIAFKFrame, "LEFT", 20, 0)
-			MaUI_AFK_InfoScreen:Width(5)
-			MaUI_AFK_InfoScreen:Height(E.screenHeight / 1.75)
-			MaUI_AFK_InfoScreen:SetBackdropColor(mMT.ClassColor.r, mMT.ClassColor.g, mMT.ClassColor.b, 1)
+		-- Frame
+		if db.logo then
+			_G.ElvUIAFKFrame.bottom:SetWidth(E.screenWidth / 1.75)
+			_G.ElvUIAFKFrame.bottom:SetHeight(E.screenHeight * 0.075)
+			_G.ElvUIAFKFrame.bottom:SetPoint("BOTTOM", _G.ElvUIAFKFrame, "BOTTOM", 0, 50)
+
+			-- Logo
+			_G.ElvUIAFKFrame.bottom.LogoTop:SetSize(E.screenHeight * 0.1, E.screenHeight * 0.05)
+			_G.ElvUIAFKFrame.bottom.LogoTop:ClearAllPoints()
+			_G.ElvUIAFKFrame.bottom.LogoTop:Point("RIGHT", _G.ElvUIAFKFrame.bottom, "CENTER", -10, 0)
+
+			_G.ElvUIAFKFrame.bottom.LogoBottom:SetSize(E.screenHeight * 0.1, E.screenHeight * 0.05)
+			_G.ElvUIAFKFrame.bottom.LogoBottom:ClearAllPoints()
+			_G.ElvUIAFKFrame.bottom.LogoBottom:Point("RIGHT", _G.ElvUIAFKFrame.bottom, "CENTER", -10, 0)
+
+			-- Time
+			_G.ElvUIAFKFrame.bottom.time:ClearAllPoints()
+			_G.ElvUIAFKFrame.bottom.time:Point("RIGHT", _G.ElvUIAFKFrame.bottom, "RIGHT", -10, 0)
+			_G.ElvUIAFKFrame.bottom.time:SetTextColor(0.36, 0.53, 1)
+
+			-- Icon
+			_G.ElvUIAFKFrame.bottom.faction:ClearAllPoints()
+			_G.ElvUIAFKFrame.bottom.faction:Point("LEFT", _G.ElvUIAFKFrame.bottom, "LEFT", 0, 0)
+			_G.ElvUIAFKFrame.bottom.faction:Size(E.screenHeight * 0.05, E.screenHeight * 0.05)
+
+			-- Name
+			_G.ElvUIAFKFrame.bottom.name:ClearAllPoints()
+			_G.ElvUIAFKFrame.bottom.name:Point("TOPLEFT", _G.ElvUIAFKFrame.bottom.faction, "TOPRIGHT", 10, -2)
+
+			-- Guild
+			_G.ElvUIAFKFrame.bottom.guild:SetTextColor(0, 0.82, 0.1)
+
+			-- Model
+			local point, relativeTo, relativePoint, _, yOfs = _G.ElvUIAFKFrame.bottom.modelHolder:GetPoint()
+			_G.ElvUIAFKFrame.bottom.modelHolder:ClearAllPoints()
+			_G.ElvUIAFKFrame.bottom.modelHolder:Point(point, relativeTo, relativePoint, 250, yOfs + 10)
+			_G.ElvUIAFKFrame.bottom.model:SetScale(0.9)
+
+			if not _G.ElvUIAFKFrame.mMT_Logo then
+				local mMT_Logo = _G.ElvUIAFKFrame:CreateTexture(nil, "OVERLAY")
+				mMT_Logo:Size(E.screenHeight * 0.2, E.screenHeight * 0.05)
+				mMT_Logo:Point("CENTER", _G.ElvUIAFKFrame.bottom)
+				mMT_Logo:SetTexture((not (db.texture == "")) and db.texture or "Interface\\Addons\\ElvUI_mMediaTag\\media\\logo\\mmt_logo.tga")
+				mMT_Logo:Point("LEFT", _G.ElvUIAFKFrame.bottom, "CENTER", 10, 0)
+				_G.ElvUIAFKFrame.mMT_Logo = mMT_Logo
+			end
+		end
+
+		if db.infoscreen then
+			-- Chat
+			_G.ElvUIAFKFrame.chat:ClearAllPoints()
+			_G.ElvUIAFKFrame.chat:Point("TOP", _G.ElvUIAFKFrame, "TOP", 0, -4)
+
+			if not _G.ElvUIAFKFrame.mMT_AFK_InfoScreen then
+				local mMT_AFK_InfoScreen = CreateFrame("Frame", nil, _G.ElvUIAFKFrame)
+				mMT_AFK_InfoScreen:SetFrameLevel(0)
+				mMT_AFK_InfoScreen:SetTemplate("Transparent")
+				mMT_AFK_InfoScreen:Point("LEFT", _G.ElvUIAFKFrame, "LEFT", 20, 0)
+				mMT_AFK_InfoScreen:Width(5)
+				mMT_AFK_InfoScreen:Height(E.screenHeight / 1.75)
+				mMT_AFK_InfoScreen:SetBackdropColor(mMT.ClassColor.r, mMT.ClassColor.g, mMT.ClassColor.b, 1)
+
+				if db.values.enable then
+					mMT_AFK_InfoScreen.TitleA = CreateLabel(mMT_AFK_InfoScreen, true, mMT_AFK_InfoScreen, "TOPLEFT", { r = db.title.r, g = db.title.g, b = db.title.b }, 10)
+					mMT_AFK_InfoScreen.BlockA = CreateLabel(mMT_AFK_InfoScreen, false, mMT_AFK_InfoScreen.TitleA, "BOTTOMLEFT", { r = db.values.r, g = db.values.g, b = db.values.b })
+				end
+
+				if db.attributes.enable then
+					mMT_AFK_InfoScreen.TitleB = CreateLabel(mMT_AFK_InfoScreen, true, mMT_AFK_InfoScreen.BlockA, "BOTTOMLEFT", { r = db.title.r, g = db.title.g, b = db.title.b })
+					mMT_AFK_InfoScreen.BlockB = CreateLabel(mMT_AFK_InfoScreen, false, mMT_AFK_InfoScreen.TitleB, "BOTTOMLEFT", { r = db.attributes.r, g = db.attributes.g, b = db.attributes.b })
+				end
+
+				if db.enhancements.enable then
+					mMT_AFK_InfoScreen.TitleC = CreateLabel(mMT_AFK_InfoScreen, true, mMT_AFK_InfoScreen.BlockB, "BOTTOMLEFT", { r = db.title.r, g = db.title.g, b = db.title.b })
+					mMT_AFK_InfoScreen.BlockC = CreateLabel(mMT_AFK_InfoScreen, false, mMT_AFK_InfoScreen.TitleC, "BOTTOMLEFT", { r = db.enhancements.r, g = db.enhancements.g, b = db.enhancements.b })
+				end
+
+				if db.progress.enable then
+					mMT_AFK_InfoScreen.TitleD = CreateLabel(mMT_AFK_InfoScreen, true, mMT_AFK_InfoScreen.BlockC, "BOTTOMLEFT", { r = db.title.r, g = db.title.g, b = db.title.b })
+					mMT_AFK_InfoScreen.BlockD = CreateLabel(mMT_AFK_InfoScreen, false, mMT_AFK_InfoScreen.TitleD, "BOTTOMLEFT", { r = db.progress.r, g = db.progress.g, b = db.progress.b })
+				end
+
+				if db.misc.enable then
+					mMT_AFK_InfoScreen.TitleE = CreateLabel(mMT_AFK_InfoScreen, true, mMT_AFK_InfoScreen.BlockD, "BOTTOMLEFT", { r = db.title.r, g = db.title.g, b = db.title.b })
+					mMT_AFK_InfoScreen.BlockE = CreateLabel(mMT_AFK_InfoScreen, false, mMT_AFK_InfoScreen.TitleE, "BOTTOMLEFT", { r = db.misc.r, g = db.misc.g, b = db.misc.b })
+				end
+
+				_G.ElvUIAFKFrame.mMT_AFK_InfoScreen = mMT_AFK_InfoScreen
+			end
+
+			UpdateTexts()
 
 			if db.values.enable then
-				MaUI_AFK_InfoScreen.TitleA = CreateLabel(
-					MaUI_AFK_InfoScreen,
-					true,
-					MaUI_AFK_InfoScreen,
-					"TOPLEFT",
-					{ r = db.title.r, g = db.title.g, b = db.title.b, },
-					10
-				)
-				MaUI_AFK_InfoScreen.BlockA = CreateLabel(
-					MaUI_AFK_InfoScreen,
-					false,
-					MaUI_AFK_InfoScreen.TitleA,
-					"BOTTOMLEFT",
-					{ r = db.values.r, g = db.values.g, b = db.values.b }
-				)
+				_G.ElvUIAFKFrame.mMT_AFK_InfoScreen.TitleA:SetText(PlayerStats.values.title)
+				_G.ElvUIAFKFrame.mMT_AFK_InfoScreen.BlockA:SetText(PlayerStats.values.text)
+				_G.ElvUIAFKFrame.mMT_AFK_InfoScreen.TitleA:SetTextColor(db.title.r, db.title.g, db.title.b)
+				_G.ElvUIAFKFrame.mMT_AFK_InfoScreen.BlockA:SetTextColor(db.values.r, db.values.g, db.values.b)
 			end
 
 			if db.attributes.enable then
-				MaUI_AFK_InfoScreen.TitleB = CreateLabel(
-					MaUI_AFK_InfoScreen,
-					true,
-					MaUI_AFK_InfoScreen.BlockA,
-					"BOTTOMLEFT",
-					{ r = db.title.r, g = db.title.g, b = db.title.b,}
-				)
-				MaUI_AFK_InfoScreen.BlockB = CreateLabel(
-					MaUI_AFK_InfoScreen,
-					false,
-					MaUI_AFK_InfoScreen.TitleB,
-					"BOTTOMLEFT",
-					{ r = db.attributes.r, g = db.attributes.g, b = db.attributes.b }
-				)
+				_G.ElvUIAFKFrame.mMT_AFK_InfoScreen.TitleB:SetText(PlayerStats.attributes.title)
+				_G.ElvUIAFKFrame.mMT_AFK_InfoScreen.BlockB:SetText(PlayerStats.attributes.text)
+				_G.ElvUIAFKFrame.mMT_AFK_InfoScreen.TitleB:SetTextColor(db.title.r, db.title.g, db.title.b)
+				_G.ElvUIAFKFrame.mMT_AFK_InfoScreen.BlockB:SetTextColor(db.attributes.r, db.attributes.g, db.attributes.b)
 			end
 
 			if db.enhancements.enable then
-				MaUI_AFK_InfoScreen.TitleC = CreateLabel(
-					MaUI_AFK_InfoScreen,
-					true,
-					MaUI_AFK_InfoScreen.BlockB,
-					"BOTTOMLEFT",
-					{ r = db.title.r, g = db.title.g, b = db.title.b,}
-				)
-				MaUI_AFK_InfoScreen.BlockC = CreateLabel(
-					MaUI_AFK_InfoScreen,
-					false,
-					MaUI_AFK_InfoScreen.TitleC,
-					"BOTTOMLEFT",
-					{ r = db.enhancements.r, g = db.enhancements.g, b = db.enhancements.b }
-				)
+				_G.ElvUIAFKFrame.mMT_AFK_InfoScreen.TitleC:SetText(PlayerStats.enhancements.title)
+				_G.ElvUIAFKFrame.mMT_AFK_InfoScreen.BlockC:SetText(PlayerStats.enhancements.text)
+				_G.ElvUIAFKFrame.mMT_AFK_InfoScreen.TitleC:SetTextColor(db.title.r, db.title.g, db.title.b)
+				_G.ElvUIAFKFrame.mMT_AFK_InfoScreen.BlockC:SetTextColor(db.enhancements.r, db.enhancements.g, db.enhancements.b)
 			end
 
 			if db.progress.enable then
-				MaUI_AFK_InfoScreen.TitleD = CreateLabel(
-					MaUI_AFK_InfoScreen,
-					true,
-					MaUI_AFK_InfoScreen.BlockC,
-					"BOTTOMLEFT",
-					{ r = db.title.r, g = db.title.g, b = db.title.b,}
-				)
-				MaUI_AFK_InfoScreen.BlockD = CreateLabel(
-					MaUI_AFK_InfoScreen,
-					false,
-					MaUI_AFK_InfoScreen.TitleD,
-					"BOTTOMLEFT",
-					{ r = db.progress.r, g = db.progress.g, b = db.progress.b }
-				)
+				_G.ElvUIAFKFrame.mMT_AFK_InfoScreen.TitleD:SetText(PlayerStats.progress.title)
+				_G.ElvUIAFKFrame.mMT_AFK_InfoScreen.BlockD:SetText(PlayerStats.progress.text)
+				_G.ElvUIAFKFrame.mMT_AFK_InfoScreen.TitleD:SetTextColor(db.title.r, db.title.g, db.title.b)
+				_G.ElvUIAFKFrame.mMT_AFK_InfoScreen.BlockD:SetTextColor(db.progress.r, db.progress.g, db.progress.b)
 			end
 
 			if db.misc.enable then
-				MaUI_AFK_InfoScreen.TitleE = CreateLabel(
-					MaUI_AFK_InfoScreen,
-					true,
-					MaUI_AFK_InfoScreen.BlockD,
-					"BOTTOMLEFT",
-					{ r = db.title.r, g = db.title.g, b = db.title.b,}
-				)
-				MaUI_AFK_InfoScreen.BlockE = CreateLabel(
-					MaUI_AFK_InfoScreen,
-					false,
-					MaUI_AFK_InfoScreen.TitleE,
-					"BOTTOMLEFT",
-					{ r = db.misc.r, g = db.misc.g, b = db.misc.b }
-				)
+				_G.ElvUIAFKFrame.mMT_AFK_InfoScreen.TitleE:SetText(PlayerStats.misc.title)
+				_G.ElvUIAFKFrame.mMT_AFK_InfoScreen.BlockE:SetText(PlayerStats.misc.text)
+				_G.ElvUIAFKFrame.mMT_AFK_InfoScreen.TitleE:SetTextColor(db.title.r, db.title.g, db.title.b)
+				_G.ElvUIAFKFrame.mMT_AFK_InfoScreen.BlockE:SetTextColor(db.misc.r, db.misc.g, db.misc.b)
 			end
-
-			_G.ElvUIAFKFrame.MaUI_AFK_InfoScreen = MaUI_AFK_InfoScreen
-		end
-
-		UpdateTexts()
-
-		if db.values.enable then
-			_G.ElvUIAFKFrame.MaUI_AFK_InfoScreen.TitleA:SetText(PlayerStats.values.title)
-			_G.ElvUIAFKFrame.MaUI_AFK_InfoScreen.BlockA:SetText(PlayerStats.values.text)
-			_G.ElvUIAFKFrame.MaUI_AFK_InfoScreen.TitleA:SetTextColor(db.title.r, db.title.g, db.title.b)
-			_G.ElvUIAFKFrame.MaUI_AFK_InfoScreen.BlockA:SetTextColor(db.values.r, db.values.g, db.values.b)
-		end
-
-		if db.attributes.enable then
-			_G.ElvUIAFKFrame.MaUI_AFK_InfoScreen.TitleB:SetText(PlayerStats.attributes.title)
-			_G.ElvUIAFKFrame.MaUI_AFK_InfoScreen.BlockB:SetText(PlayerStats.attributes.text)
-			_G.ElvUIAFKFrame.MaUI_AFK_InfoScreen.TitleB:SetTextColor(db.title.r, db.title.g, db.title.b)
-			_G.ElvUIAFKFrame.MaUI_AFK_InfoScreen.BlockB:SetTextColor(db.attributes.r, db.attributes.g, db.attributes.b)
-		end
-
-		if db.enhancements.enable then
-			_G.ElvUIAFKFrame.MaUI_AFK_InfoScreen.TitleC:SetText(PlayerStats.enhancements.title)
-			_G.ElvUIAFKFrame.MaUI_AFK_InfoScreen.BlockC:SetText(PlayerStats.enhancements.text)
-			_G.ElvUIAFKFrame.MaUI_AFK_InfoScreen.TitleC:SetTextColor(db.title.r, db.title.g, db.title.b)
-			_G.ElvUIAFKFrame.MaUI_AFK_InfoScreen.BlockC:SetTextColor(db.enhancements.r, db.enhancements.g, db.enhancements.b)
-		end
-
-		if db.progress.enable then
-			_G.ElvUIAFKFrame.MaUI_AFK_InfoScreen.TitleD:SetText(PlayerStats.progress.title)
-			_G.ElvUIAFKFrame.MaUI_AFK_InfoScreen.BlockD:SetText(PlayerStats.progress.text)
-			_G.ElvUIAFKFrame.MaUI_AFK_InfoScreen.TitleD:SetTextColor(db.title.r, db.title.g, db.title.b)
-			_G.ElvUIAFKFrame.MaUI_AFK_InfoScreen.BlockD:SetTextColor(db.progress.r, db.progress.g, db.progress.b)
-		end
-
-		if db.misc.enable then
-			_G.ElvUIAFKFrame.MaUI_AFK_InfoScreen.TitleE:SetText(PlayerStats.misc.title)
-			_G.ElvUIAFKFrame.MaUI_AFK_InfoScreen.BlockE:SetText(PlayerStats.misc.text)
-			_G.ElvUIAFKFrame.MaUI_AFK_InfoScreen.TitleE:SetTextColor(db.title.r, db.title.g, db.title.b)
-			_G.ElvUIAFKFrame.MaUI_AFK_InfoScreen.BlockE:SetTextColor(db.misc.r, db.misc.g, db.misc.b)
 		end
 	end
 end
 
---hooksecurefunc(AFK, "Initialize", MaUI_AFKScreen)
+--hooksecurefunc(AFK, "Initialize", mMT_AFKScreen)

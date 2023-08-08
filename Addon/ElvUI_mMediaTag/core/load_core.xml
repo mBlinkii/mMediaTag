@@ -6,4 +6,5 @@
 	<Script file="cmd.lua"/>
 	<Script file="functions.lua"/>
 	<Script file="importexport.lua"/>
+	<Script file="devmode.lua"/>
 </Ui>
