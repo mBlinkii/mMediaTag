@@ -445,7 +445,8 @@
         "ToggleTalentFrame",
         "PVP_TALENTS",
         "BLUE_FONT_COLOR",
-        "PlayerUtil"
+        "PlayerUtil",
+        "ID"
     ],
     "Lua.diagnostics.disable": [
         "undefined-field"

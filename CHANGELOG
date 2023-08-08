@@ -1,6 +1,19 @@
 # Changelog - ElvUI_mMediaTag
 [Eng] - All changes to this project will be documented in this file. The latest changes are at the top.
 
+## [ver. 3.17] - 08.08.2023
+### Update
+- Dock functions and Code to prevent taints and performance optimized
+- Update Dock Professions menu to prevent taints
+- Update Professions Datatext to prevent taints, add Icons, Fire Spell and Open Prof Window
+- Add Mega Dungeon ID to Instance Difficulty
+- Update Hearthstones Dala and Garrison to Toys
+- Update TP Datatext add, add extra menu for Dungeon TPs and add short names for the Dungeon TPs
+### FIX
+- Fixed many Bugs with Dock colors and Font settings
+### NEW
+- NEW AFK Screen gets settings for custom logo and toggle for infoscreen
+
 ## [ver. 3.16] - 13.07.2023
 ### Update
 - Toc Update for Retail and WOTLK

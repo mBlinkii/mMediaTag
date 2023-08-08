@@ -20,26 +20,20 @@ local change_log_important = {
 }
 
 local change_log_new = {
-	"NEW tags mClass:icon:boss and mClass:icon:rare",
-	"AFK Screen with Additional information's",
+	"AFK Screen gets settings for custom logo and toggle for infoscreen",
 }
 
 local change_log_update = {
-	"Toc Update for Retail and WOTLK",
-	"Add Scenario Quest IDs to Instance difficulty text.",
-	"Change the Leader Icon position on Score Datatext",
-	"Update targeting players indicator texture for the SQ one",
-	"Update MediaPack chat command feedback",
-	"Update Defaults",
+	"Dock functions and Code to prevent taints and performance optimized",
+	"Update Dock Professions menu to prevent taints",
+	"Update Professions Datatext to prevent taints, add Icons, Fire Spell and Open Prof Window",
+	"Add Mega Dungeon ID to Instance Difficulty",
+	"Update Hearthstones Dala and Garrison to Toys",
+	"Update TP Datatext add, add extra menu for Dungeon TPs and add short names for the Dungeon TPs",
 }
 
 local change_log_fix = {
-	"Fixed Datatext Color function String",
-	"Fixed Datatext Score Leys reset function",
-	"Fixed Dock icons not updating, if you change to an other one",
-	"Fixed Texture offset for Tags",
-	"Fixed Dock Achievement Tooltip and Tooltip Icons",
-	"Fixed Nil error with Datatext Tooltips",
+	"Fixed many Bugs with Dock colors and Font settings",
 }
 
 local function Concatenation(tbl, icon, color)
