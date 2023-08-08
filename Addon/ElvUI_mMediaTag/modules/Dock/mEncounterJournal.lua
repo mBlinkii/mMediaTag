@@ -48,7 +48,6 @@ end
 local function OnEvent(self, event, ...)
 	if event == "ELVUI_FORCE_UPDATE" then
 		--setup settings
-
 		Config.icon.texture = mMT.Media.DockIcons[E.db.mMT.dockdatatext.encounter.icon]
 		Config.icon.color = E.db.mMT.dockdatatext.encounter.customcolor and E.db.mMT.dockdatatext.encounter.iconcolor or nil
 

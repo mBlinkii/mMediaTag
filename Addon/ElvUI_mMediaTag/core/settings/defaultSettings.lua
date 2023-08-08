@@ -319,6 +319,7 @@ P.mMT = {
 		growsize = 8,
 		customfontzise = false,
 		font = "PT Sans Narrow",
+		center = false,
 		fontSize = 12,
 		fontflag = "OUTLINE",
 		customfontcolor = false,

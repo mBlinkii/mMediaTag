@@ -301,8 +301,26 @@ local function configTable()
 								DT:LoadDataTexts()
 							end,
 						},
-						dockgeneralfontSize = {
+						dockgeneralspacer4 = {
 							order = 4,
+							type = "description",
+							name = "\n",
+						},
+						fontcenter = {
+							order = 5,
+							name = L["Center Text"],
+							type = "toggle",
+							get = function(info)
+								return E.db.mMT.dockdatatext.center
+							end,
+							set = function(info, value)
+								E.db.mMT.dockdatatext.center = value
+								mMT:UpdateDockSettings()
+								DT:LoadDataTexts()
+							end,
+						},
+						dockgeneralfontSize = {
+							order = 6,
 							name = L["Font Size"],
 							type = "range",
 							min = 6,
@@ -322,13 +340,13 @@ local function configTable()
 								return not E.db.mMT.dockdatatext.customfontzise
 							end,
 						},
-						dockgeneralspacer4 = {
-							order = 6,
+						dockgeneralspacer5 = {
+							order = 7,
 							type = "description",
 							name = "\n",
 						},
 						dockgeneralcustomfontcolor = {
-							order = 7,
+							order = 8,
 							name = L["Custom Font color"],
 							type = "toggle",
 							get = function(info)
@@ -342,7 +360,7 @@ local function configTable()
 						},
 						dockgeneralfontcolor = {
 							type = "color",
-							order = 8,
+							order = 9,
 							name = L["Custom Font Color"],
 							hasAlpha = false,
 							get = function(info)

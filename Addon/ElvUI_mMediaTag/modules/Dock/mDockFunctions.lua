@@ -9,6 +9,7 @@ local Defaults = {
 	click = { r = 0.2, g = 0.2, b = 0.2, a = 1 },
 	customfontcolor = false,
 	customfontzise = false,
+	center = false,
 	font = LSM:Fetch("font", "PT Sans Narrow"),
 	fontSize = 12,
 	fontcolor = { r = 1, g = 1, b = 1, hex = "|cffffffff" },
@@ -37,6 +38,7 @@ function mMT:UpdateDockSettings()
 	Defaults.autogrow = E.db.mMT.dockdatatext.autogrow
 	Defaults.customfontcolor = E.db.mMT.dockdatatext.customfontcolor
 	Defaults.customfontzise = E.db.mMT.dockdatatext.customfontzise
+	Defaults.center = E.db.mMT.dockdatatext.center
 	Defaults.font = LSM:Fetch("font", E.db.mMT.dockdatatext.font)
 	Defaults.fontSize = E.db.mMT.dockdatatext.fontSize
 	Defaults.fontcolor = E.db.mMT.dockdatatext.fontcolor
@@ -245,7 +247,7 @@ function mMT:InitializeDockIcon(DT, conf, event)
 			if not DT.mMT_Dock.TextA then
 				DT.mMT_Dock.TextA = DT:CreateFontString(nil, "ARTWORK")
 			end
-			point = conf.text.center and "BOTTOM" or "BOTTOMRIGHT"
+			point = (conf.text.center or Defaults.center) and "BOTTOM" or "BOTTOMRIGHT"
 			justify = conf.text.center and "CENTER" or "RIGHT"
 			SetupLabel(DT.mMT_Dock.TextA, DT.mMT_Dock.size, DT.mMT_Dock.Icon or DT.mMT_Dock.macroBtn.Icon, point, justify)
 		elseif DT.mMT_Dock.TextA then
