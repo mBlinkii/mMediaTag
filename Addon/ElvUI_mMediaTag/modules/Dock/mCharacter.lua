@@ -203,4 +203,4 @@ local function OnClick(self)
 	end
 end
 
-DT:RegisterDatatext(Config.name, Config.category, { "UPDATE_INVENTORY_DURABILITY", "PLAYER_AVG_ITEM_LEVEL_UPDATE" }, OnEvent, nil, OnClick, OnEnter, OnLeave, Config.localizedName, nil, nil)
+DT:RegisterDatatext(Config.name, Config.category, { "UPDATE_INVENTORY_DURABILITY" }, OnEvent, nil, OnClick, OnEnter, OnLeave, Config.localizedName, nil, nil)
