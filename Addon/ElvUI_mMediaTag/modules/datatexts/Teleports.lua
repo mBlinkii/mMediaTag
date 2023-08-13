@@ -379,39 +379,44 @@ end
 
 local function mUpdateTPList(button)
 	CheckIfAvailable()
-	local _, _, _, _, _, titel = mMT:mColorDatatext()
-	Teleports.menu = {}
+	local _, _, _, _, _, title = mMT:mColorDatatext()
 
+	wipe(Teleports.menu)
 	if Teleports.toys.available and button == "LeftButton" then
-		tinsert(Teleports.menu, { text = format("%s%s|r", titel, L["Toys"]), isTitle = true, notClickable = true })
+		tinsert(Teleports.menu, { text = format("%s%s|r", title, L["Toys"]), isTitle = true, notClickable = true })
 
 		mGetInfos(Teleports.toys, false, false, false)
 		tinsert(Teleports.menu, { text = "", isTitle = true, notClickable = true })
 	end
 
 	if EngineeringCheck() and Teleports.engineering.available and button == "RightButton" then
-		tinsert(Teleports.menu, { text = format("%s%s|r", titel, L["Engineering"]), isTitle = true, notClickable = true })
+		tinsert(Teleports.menu, { text = format("%s%s|r", title, L["Engineering"]), isTitle = true, notClickable = true })
 
 		mGetInfos(Teleports.engineering, false, false, false)
 		tinsert(Teleports.menu, { text = "", isTitle = true, notClickable = true })
 	end
 
 	if Teleports.season.available and button == "LeftButton" then
-		tinsert(Teleports.menu, { text = format("%s%s|r", titel, L["M+ Season"]), isTitle = true, notClickable = true })
+		tinsert(Teleports.menu, { text = format("%s%s|r", title, L["M+ Season"]), isTitle = true, notClickable = true })
 
 		mGetInfos(Teleports.season, true, false, false)
 		tinsert(Teleports.menu, { text = "", isTitle = true, notClickable = true })
 	end
 
 	if Teleports.df.available and button == "LeftButton" then
-		tinsert(Teleports.menu, { text = format("%s%s|r", titel, L["DF Dungeons"]), isTitle = true, notClickable = true })
+		tinsert(Teleports.menu, { text = format("%s%s|r", title, L["DF Dungeons"]), isTitle = true, notClickable = true })
 
 		mGetInfos(Teleports.df, true, false, false)
 		tinsert(Teleports.menu, { text = "", isTitle = true, notClickable = true })
 	end
 
 	if Teleports.dungeonportals.available and button == "MiddleButton" then
-		tinsert(Teleports.menu, { text = format("%s%s|r", titel, L["All Dungeon Teleports"]), isTitle = true, notClickable = true })
+		tinsert(Teleports.menu, { text = format("%s%s|r", title, L["M+ Season"]), isTitle = true, notClickable = true })
+
+		mGetInfos(Teleports.season, true, false, false)
+		tinsert(Teleports.menu, { text = "", isTitle = true, notClickable = true })
+
+		tinsert(Teleports.menu, { text = format("%s%s|r", title, L["All Dungeon Teleports"]), isTitle = true, notClickable = true })
 
 		mGetInfos(Teleports.dungeonportals, true, false, false)
 		tinsert(Teleports.menu, { text = "", isTitle = true, notClickable = true })
@@ -419,7 +424,7 @@ local function mUpdateTPList(button)
 
 	if (Teleports.items.available or Teleports.spells.available) and button == "RightButton" then
 		tinsert(Teleports.menu, { text = "", isTitle = true, notClickable = true })
-		tinsert(Teleports.menu, { text = format("%s%s|r", titel, L["Other"]), isTitle = true, notClickable = true })
+		tinsert(Teleports.menu, { text = format("%s%s|r", title, L["Other"]), isTitle = true, notClickable = true })
 
 		mGetInfos(Teleports.items, false, false, false)
 		mGetInfos(Teleports.spells, true, false, false)
@@ -429,7 +434,6 @@ end
 local function OnClick(self, button)
 	mUpdateTPList(button)
 	mMT:mDropDown(Teleports.menu, menuFrame, self, 260, 2)
-	Teleports.menu = wipe(Teleports.menu)
 end
 
 local function mTPTooltip()

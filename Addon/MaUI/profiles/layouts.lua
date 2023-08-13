@@ -1679,7 +1679,7 @@ function mMT:Layout_Unitframe_Player()
 		["fontOutline"] = "NONE",
 		["justifyH"] = "CENTER",
 		["size"] = 16,
-		["text_format"] = "||cffE91E63[pvptimer][mouseover]||r",
+		["text_format"] = "|cffE91E63[pvptimer][mouseover]|r",
 		["xOffset"] = 0,
 		["yOffset"] = -10,
 	}
