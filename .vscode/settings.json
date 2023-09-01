@@ -448,7 +448,8 @@
         "PlayerUtil",
         "ID",
         "COLOR_PICKER",
-        "FONT_SIZE"
+        "FONT_SIZE",
+        "RegisterUnitWatch"
     ],
     "Lua.diagnostics.disable": [
         "undefined-field"

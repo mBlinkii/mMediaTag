@@ -1,19 +1,19 @@
 local E = unpack(ElvUI)
-local UF = E:GetModule('UnitFrames')
-local classes = {"HUNTER", "WARLOCK", "PRIEST", "PALADIN", "MAGE", "ROGUE", "DRUID", "SHAMAN", "WARRIOR", "DEATHKNIGHT", "MONK", "DEMONHUNTER", "EVOKER"}
+local UF = E:GetModule("UnitFrames")
+local classes = { "DEATHKNIGHT", "DEMONHUNTER", "DRUID", "EVOKER", "HUNTER", "MAGE", "MONK", "PALADIN", "PRIEST", "ROGUE", "SHAMAN", "WARLOCK", "WARRIOR" }
 if E.Classic then
-	 classes = {"HUNTER", "WARLOCK", "PRIEST", "PALADIN", "MAGE", "ROGUE", "DRUID", "SHAMAN", "WARRIOR"}
+	classes = { "HUNTER", "WARLOCK", "PRIEST", "PALADIN", "MAGE", "ROGUE", "DRUID", "SHAMAN", "WARRIOR" }
 elseif E.Wrath then
-	classes = {"HUNTER", "WARLOCK", "PRIEST", "PALADIN", "MAGE", "ROGUE", "DRUID", "SHAMAN", "WARRIOR", "DEATHKNIGHT"}
+	classes = { "HUNTER", "WARLOCK", "PRIEST", "PALADIN", "MAGE", "ROGUE", "DRUID", "SHAMAN", "WARRIOR", "DEATHKNIGHT" }
 end
 local function UpdateColors()
-    for i, className in ipairs(classes) do
+	for i, className in ipairs(classes) do
 		E.oUF.colors.class[className][1] = E.db.mMT.customclasscolors.colors[className]["r"]
-        E.oUF.colors.class[className][2] = E.db.mMT.customclasscolors.colors[className]["g"]
-        E.oUF.colors.class[className][3] = E.db.mMT.customclasscolors.colors[className]["b"]
-        E.oUF.colors.class[className]["r"] = E.db.mMT.customclasscolors.colors[className]["r"]
-        E.oUF.colors.class[className]["g"] = E.db.mMT.customclasscolors.colors[className]["g"]
-        E.oUF.colors.class[className]["b"] = E.db.mMT.customclasscolors.colors[className]["b"]
+		E.oUF.colors.class[className][2] = E.db.mMT.customclasscolors.colors[className]["g"]
+		E.oUF.colors.class[className][3] = E.db.mMT.customclasscolors.colors[className]["b"]
+		E.oUF.colors.class[className]["r"] = E.db.mMT.customclasscolors.colors[className]["r"]
+		E.oUF.colors.class[className]["g"] = E.db.mMT.customclasscolors.colors[className]["g"]
+		E.oUF.colors.class[className]["b"] = E.db.mMT.customclasscolors.colors[className]["b"]
 	end
 	UF:Update_AllFrames()
 end
@@ -32,9 +32,7 @@ local function mClassColor(elv, class)
 		return
 	end
 
-	local color = (E.db.mMT.customclasscolors.colors and E.db.mMT.customclasscolors.colors[class])
-		or (_G.CUSTOM_CLASS_COLORS and _G.CUSTOM_CLASS_COLORS[class])
-		or _G.RAID_CLASS_COLORS[class]
+	local color = (E.db.mMT.customclasscolors.colors and E.db.mMT.customclasscolors.colors[class]) or (_G.CUSTOM_CLASS_COLORS and _G.CUSTOM_CLASS_COLORS[class]) or _G.RAID_CLASS_COLORS[class]
 
 	if type(color) ~= "table" then
 		return
@@ -48,8 +46,6 @@ local function mClassColor(elv, class)
 
 	return color
 end
-
-
 
 function mMT:SetCustomColors()
 	UpdateColors()
