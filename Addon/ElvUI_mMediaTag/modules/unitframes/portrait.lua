@@ -86,6 +86,15 @@ local textures = {
 	EXTRA6 = "Interface\\Addons\\ElvUI_mMediaTag\\media\\portraits\\extra6.tga",
 }
 
+local extraFull = {
+	EXTRA1 = "Interface\\Addons\\ElvUI_mMediaTag\\media\\portraits\\extrafull.tga",
+	EXTRA2 = "Interface\\Addons\\ElvUI_mMediaTag\\media\\portraits\\extrafull2.tga",
+	EXTRA3 = "Interface\\Addons\\ElvUI_mMediaTag\\media\\portraits\\extrafull3.tga",
+	EXTRA4 = "Interface\\Addons\\ElvUI_mMediaTag\\media\\portraits\\extrafull4.tga",
+	EXTRA5 = "Interface\\Addons\\ElvUI_mMediaTag\\media\\portraits\\extrafull5.tga",
+	EXTRA6 = "Interface\\Addons\\ElvUI_mMediaTag\\media\\portraits\\extrafull6.tga",
+}
+
 local colors = {
 	default = {
 		a = { r = 1, g = 1, b = 0, a = 1 },
@@ -239,7 +248,11 @@ local function CreatePortrait(parent, conf, unit)
 	if unit == "target" and conf.extraEnable then
 		frame.extra = frame:CreateTexture("mMT_Extra", "OVERLAY", nil, -8)
 		frame.extra:SetAllPoints(frame)
-		frame.extra:SetTexture(textures[conf.extra], "CLAMP", "CLAMP", "TRILINEAR")
+		local tx = textures[conf.extra]
+		if conf.texture == "CIRCLE1" or conf.texture == "CIRCLE2" or conf.texture == "CIRCLE3" or conf.texture == "CIRCLE4" or conf.texture == "CIRCLE5" or conf.texture == "CIRCLE6" then
+			tx = extraFull[conf.extra]
+		end
+		frame.extra:SetTexture(tx, "CLAMP", "CLAMP", "TRILINEAR")
 		mirrorTexture(frame.extra, not conf.mirror)
 		frame.extra:Hide()
 	end
@@ -275,7 +288,11 @@ local function UpdatePortrait(frame, conf, unit, parent)
 	frame:SetPoint(conf.point, parent, conf.relativePoint, conf.x, conf.y)
 
 	if unit == "target" and conf.extraEnable then
-		frame.extra:SetTexture(textures[conf.extra], "CLAMP", "CLAMP", "TRILINEAR")
+		local tx = textures[conf.extra]
+		if conf.texture == "CIRCLE1" or conf.texture == "CIRCLE2" or conf.texture == "CIRCLE3" or conf.texture == "CIRCLE4" or conf.texture == "CIRCLE5" or conf.texture == "CIRCLE6" then
+			tx = extraFull[conf.extra]
+		end
+		frame.extra:SetTexture(tx, "CLAMP", "CLAMP", "TRILINEAR")
 		mirrorTexture(frame.extra, not conf.mirror)
 		frame.extra:Hide()
 		CheckRareElite(frame, unit)
