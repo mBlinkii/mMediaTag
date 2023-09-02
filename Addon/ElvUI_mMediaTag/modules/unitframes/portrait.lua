@@ -54,12 +54,24 @@ local textures = {
 	SQUARE4 = "Interface\\Addons\\ElvUI_mMediaTag\\media\\portraits\\square4.tga",
 	SQUARE5 = "Interface\\Addons\\ElvUI_mMediaTag\\media\\portraits\\square5.tga",
 	SQUARE6 = "Interface\\Addons\\ElvUI_mMediaTag\\media\\portraits\\square6.tga",
+	CLASSICSQ1 = "Interface\\Addons\\ElvUI_mMediaTag\\media\\portraits\\squareclassic.tga",
+	CLASSICSQ2 = "Interface\\Addons\\ElvUI_mMediaTag\\media\\portraits\\squareclassic2.tga",
+	CLASSICSQ3 = "Interface\\Addons\\ElvUI_mMediaTag\\media\\portraits\\squareclassic3.tga",
+	CLASSICSQ4 = "Interface\\Addons\\ElvUI_mMediaTag\\media\\portraits\\squareclassic4.tga",
+	CLASSICSQ5 = "Interface\\Addons\\ElvUI_mMediaTag\\media\\portraits\\squareclassic5.tga",
+	CLASSICSQ6 = "Interface\\Addons\\ElvUI_mMediaTag\\media\\portraits\\squareclassic6.tga",
 	ROUND1 = "Interface\\Addons\\ElvUI_mMediaTag\\media\\portraits\\round.tga",
 	ROUND2 = "Interface\\Addons\\ElvUI_mMediaTag\\media\\portraits\\round2.tga",
 	ROUND3 = "Interface\\Addons\\ElvUI_mMediaTag\\media\\portraits\\round3.tga",
 	ROUND4 = "Interface\\Addons\\ElvUI_mMediaTag\\media\\portraits\\round4.tga",
 	ROUND5 = "Interface\\Addons\\ElvUI_mMediaTag\\media\\portraits\\round5.tga",
 	ROUND6 = "Interface\\Addons\\ElvUI_mMediaTag\\media\\portraits\\round6.tga",
+	CLASSICRO1 = "Interface\\Addons\\ElvUI_mMediaTag\\media\\portraits\\roundclassic.tga",
+	CLASSICRO2 = "Interface\\Addons\\ElvUI_mMediaTag\\media\\portraits\\roundclassic2.tga",
+	CLASSICRO3 = "Interface\\Addons\\ElvUI_mMediaTag\\media\\portraits\\roundclassic3.tga",
+	CLASSICRO4 = "Interface\\Addons\\ElvUI_mMediaTag\\media\\portraits\\roundclassic4.tga",
+	CLASSICRO5 = "Interface\\Addons\\ElvUI_mMediaTag\\media\\portraits\\roundclassic5.tga",
+	CLASSICRO6 = "Interface\\Addons\\ElvUI_mMediaTag\\media\\portraits\\roundclassic6.tga",
 	CIRCLE1 = "Interface\\Addons\\ElvUI_mMediaTag\\media\\portraits\\party.tga",
 	CIRCLE2 = "Interface\\Addons\\ElvUI_mMediaTag\\media\\portraits\\party2.tga",
 	CIRCLE3 = "Interface\\Addons\\ElvUI_mMediaTag\\media\\portraits\\party3.tga",
@@ -72,8 +84,6 @@ local textures = {
 	EXTRA4 = "Interface\\Addons\\ElvUI_mMediaTag\\media\\portraits\\extra4.tga",
 	EXTRA5 = "Interface\\Addons\\ElvUI_mMediaTag\\media\\portraits\\extra5.tga",
 	EXTRA6 = "Interface\\Addons\\ElvUI_mMediaTag\\media\\portraits\\extra6.tga",
-	BG1 = "Interface\\Addons\\ElvUI_mMediaTag\\media\\portraits\\bg.tga",
-	BG2 = "Interface\\Addons\\ElvUI_mMediaTag\\media\\portraits\\partybg.tga",
 }
 
 local colors = {
@@ -239,7 +249,7 @@ local function CreatePortrait(parent, conf, unit)
 	frame.texture:SetTexture(textures[conf.texture], "CLAMP", "CLAMP", "TRILINEAR")
 	mirrorTexture(frame.texture, conf.mirror)
 
-	local yx = (conf.size / 5 * E.perfect)
+	local yx = (conf.size / 5.5 * E.perfect)
 	frame.portrait = frame:CreateTexture("mMT_Portrait", "OVERLAY", nil, 1)
 	frame.portrait:SetPoint("TOPLEFT", yx, -yx)
 	frame.portrait:SetPoint("BOTTOMRIGHT", -yx, yx)
@@ -275,7 +285,7 @@ local function UpdatePortrait(frame, conf, unit, parent)
 	mirrorTexture(frame.texture, conf.mirror)
 	setColor(frame.texture, getColor(frame, unit), conf.mirror)
 
-	local yx = (conf.size / 5 * E.perfect)
+	local yx = (conf.size / 5.5 * E.perfect)
 	frame.portrait:SetPoint("TOPLEFT", yx, -yx)
 	frame.portrait:SetPoint("BOTTOMRIGHT", -yx, yx)
 	mirrorTexture(frame.portrait, conf.mirror)
