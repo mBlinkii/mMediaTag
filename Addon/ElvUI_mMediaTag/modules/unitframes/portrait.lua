@@ -248,6 +248,17 @@ local function CreatePortrait(parent, conf, unit)
 	return frame
 end
 
+local function CheckRareElite(frame, unit)
+	local c = UnitClassification(unit)
+
+	if c == "rare" or c == "rareelite" or c == "elite" then
+		setColor(frame.extra, colors[c])
+		frame.extra:Show()
+	else
+		frame.extra:Hide()
+	end
+end
+
 local function UpdatePortrait(frame, conf, unit, parent)
 	frame:SetSize(conf.size, conf.size)
 	frame:ClearAllPoints()
@@ -257,6 +268,7 @@ local function UpdatePortrait(frame, conf, unit, parent)
 		frame.extra:SetTexture(textures[conf.extra], "CLAMP", "CLAMP", "TRILINEAR")
 		mirrorTexture(frame.extra, not conf.mirror)
 		frame.extra:Hide()
+		CheckRareElite(frame, unit)
 	end
 
 	frame.texture:SetTexture(textures[conf.texture], "CLAMP", "CLAMP", "TRILINEAR")
@@ -267,6 +279,7 @@ local function UpdatePortrait(frame, conf, unit, parent)
 	frame.portrait:SetPoint("TOPLEFT", yx, -yx)
 	frame.portrait:SetPoint("BOTTOMRIGHT", -yx, yx)
 	mirrorTexture(frame.portrait, conf.mirror)
+	SetPortraitTexture(frame.portrait, unit, (E.Retail and not conf.circle))
 end
 
 function mMT:UpdatePortraits()
@@ -317,14 +330,7 @@ function mMT:SetupPortraits()
 			SetPortraitTexture(self.portrait, "target", (E.Retail and not target.circle))
 			setColor(self.texture, getColor(self, "target"), target.mirror)
 			if target.extraEnable then
-				local c = UnitClassification("target")
-
-				if c == "rare" or c == "rareelite" or c == "elite" then
-					setColor(self.extra, colors[c])
-					self.extra:Show()
-				else
-					self.extra:Hide()
-				end
+				CheckRareElite(self, "target")
 			else
 				self.extra:Hide()
 			end
