@@ -43,8 +43,8 @@ local general = {
 	enable = true,
 	combat = false,
 	gradient = true,
+	default = false,
 	ori = "HORIZONTAL",
-	scale = 10,
 }
 
 local textures = {
@@ -203,6 +203,9 @@ local function setColor(texture, color, mirror)
 end
 
 local function getColor(frame, unit)
+	if general.default then
+		return colors.default
+	end
 	local isPlayer = UnitIsPlayer(unit)
 	--print("START >>", unit, isPlayer)
 	if isPlayer then

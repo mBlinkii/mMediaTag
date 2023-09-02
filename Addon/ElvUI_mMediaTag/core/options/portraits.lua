@@ -529,7 +529,7 @@ local function configTable()
 			name = L["Colors"],
 			args = {
 				execute_apply = {
-					order = 0,
+					order = 1,
 					type = "execute",
 					name = L["Apply"],
 					func = function()
@@ -537,8 +537,22 @@ local function configTable()
 						mMT:UpdatePortraits()
 					end,
 				},
+				toggle_default = {
+					order = 2,
+					type = "toggle",
+					name = L["Use only Default Color"],
+					desc = L["Uses for every Unit the Default Color."],
+					get = function(info)
+						return E.db.mMT.portraits.general.default
+					end,
+					set = function(info, value)
+						E.db.mMT.portraits.general.default = value
+						mMT:UpdatePortraitSettings()
+						mMT:UpdatePortraits()
+					end,
+				},
 				DEATHKNIGHT = {
-					order = 1,
+					order = 3,
 					type = "group",
 					inline = true,
 					name = L["DEATHKNIGHT"],
@@ -574,7 +588,7 @@ local function configTable()
 					},
 				},
 				DEMONHUNTER = {
-					order = 2,
+					order = 4,
 					type = "group",
 					inline = true,
 					name = L["DEMONHUNTER"],
@@ -610,7 +624,7 @@ local function configTable()
 					},
 				},
 				DRUID = {
-					order = 3,
+					order = 5,
 					type = "group",
 					inline = true,
 					name = L["DRUID"],
@@ -646,7 +660,7 @@ local function configTable()
 					},
 				},
 				EVOKER = {
-					order = 4,
+					order = 6,
 					type = "group",
 					inline = true,
 					name = L["EVOKER"],
@@ -682,7 +696,7 @@ local function configTable()
 					},
 				},
 				HUNTER = {
-					order = 5,
+					order = 7,
 					type = "group",
 					inline = true,
 					name = L["HUNTER"],
@@ -718,7 +732,7 @@ local function configTable()
 					},
 				},
 				MAGE = {
-					order = 6,
+					order = 8,
 					type = "group",
 					inline = true,
 					name = L["MAGE"],
@@ -754,7 +768,7 @@ local function configTable()
 					},
 				},
 				MONK = {
-					order = 7,
+					order = 9,
 					type = "group",
 					inline = true,
 					name = L["MONK"],
@@ -790,7 +804,7 @@ local function configTable()
 					},
 				},
 				PALADIN = {
-					order = 8,
+					order = 10,
 					type = "group",
 					inline = true,
 					name = L["PALADIN"],
@@ -826,7 +840,7 @@ local function configTable()
 					},
 				},
 				PRIEST = {
-					order = 9,
+					order = 11,
 					type = "group",
 					inline = true,
 					name = L["PRIEST"],
@@ -862,7 +876,7 @@ local function configTable()
 					},
 				},
 				ROGUE = {
-					order = 10,
+					order = 12,
 					type = "group",
 					inline = true,
 					name = L["ROGUE"],
@@ -898,7 +912,7 @@ local function configTable()
 					},
 				},
 				SHAMAN = {
-					order = 11,
+					order = 13,
 					type = "group",
 					inline = true,
 					name = L["SHAMAN"],
@@ -934,7 +948,7 @@ local function configTable()
 					},
 				},
 				WARLOCK = {
-					order = 12,
+					order = 14,
 					type = "group",
 					inline = true,
 					name = L["WARLOCK"],
@@ -970,7 +984,7 @@ local function configTable()
 					},
 				},
 				WARRIOR = {
-					order = 13,
+					order = 15,
 					type = "group",
 					inline = true,
 					name = L["WARRIOR"],
@@ -1006,10 +1020,10 @@ local function configTable()
 					},
 				},
 				default = {
-					order = 14,
+					order = 16,
 					type = "group",
 					inline = true,
-					name = L["default"],
+					name = L["DEFAULT"],
 					args = {
 						color_a = {
 							type = "color",
@@ -1042,10 +1056,10 @@ local function configTable()
 					},
 				},
 				rare = {
-					order = 15,
+					order = 17,
 					type = "group",
 					inline = true,
-					name = L["rare"],
+					name = L["RARE"],
 					args = {
 						color_a = {
 							type = "color",
@@ -1077,11 +1091,11 @@ local function configTable()
 						},
 					},
 				},
-				relite = {
-					order = 16,
+				rareelite = {
+					order = 18,
 					type = "group",
 					inline = true,
-					name = L["relite"],
+					name = L["RARE ELITE"],
 					args = {
 						color_a = {
 							type = "color",
@@ -1089,11 +1103,11 @@ local function configTable()
 							name = "A",
 							hasAlpha = true,
 							get = function(info)
-								local t = E.db.mMT.portraits.colors.relite.a
+								local t = E.db.mMT.portraits.colors.rareelite.a
 								return t.r, t.g, t.b, t.a
 							end,
 							set = function(info, r, g, b, a)
-								local t = E.db.mMT.portraits.colors.relite.a
+								local t = E.db.mMT.portraits.colors.rareelite.a
 								t.r, t.g, t.b, t.a = r, g, b, a
 							end,
 						},
@@ -1103,21 +1117,21 @@ local function configTable()
 							name = "B",
 							hasAlpha = true,
 							get = function(info)
-								local t = E.db.mMT.portraits.colors.relite.b
+								local t = E.db.mMT.portraits.colors.rareelite.b
 								return t.r, t.g, t.b, t.a
 							end,
 							set = function(info, r, g, b, a)
-								local t = E.db.mMT.portraits.colors.relite.b
+								local t = E.db.mMT.portraits.colors.rareelite.b
 								t.r, t.g, t.b, t.a = r, g, b, a
 							end,
 						},
 					},
 				},
 				elite = {
-					order = 17,
+					order = 19,
 					type = "group",
 					inline = true,
-					name = L["elite"],
+					name = L["ELITE"],
 					args = {
 						color_a = {
 							type = "color",
@@ -1150,10 +1164,10 @@ local function configTable()
 					},
 				},
 				enemy = {
-					order = 18,
+					order = 20,
 					type = "group",
 					inline = true,
-					name = L["enemy"],
+					name = L["ENEMY"],
 					args = {
 						color_a = {
 							type = "color",
@@ -1186,10 +1200,10 @@ local function configTable()
 					},
 				},
 				neutral = {
-					order = 19,
+					order = 21,
 					type = "group",
 					inline = true,
-					name = L["neutral"],
+					name = L["NEUTRAL"],
 					args = {
 						color_a = {
 							type = "color",
@@ -1222,10 +1236,10 @@ local function configTable()
 					},
 				},
 				friendly = {
-					order = 20,
+					order = 22,
 					type = "group",
 					inline = true,
-					name = L["friendly"],
+					name = L["FRIENDLY"],
 					args = {
 						color_a = {
 							type = "color",
