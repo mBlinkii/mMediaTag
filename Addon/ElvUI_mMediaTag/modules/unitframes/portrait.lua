@@ -224,6 +224,7 @@ local function CreatePortrait(parent, conf, unit)
 	local frame = CreateFrame("Frame", "mMT_Portrait_" .. unit, parent)
 	frame:SetSize(conf.size, conf.size)
 	frame:SetPoint(conf.point, parent, conf.relativePoint, conf.x, conf.y)
+	frame:SetFrameLevel(parent.Health:GetFrameLevel() + 1)
 
 	if unit == "target" and conf.extraEnable then
 		frame.extra = frame:CreateTexture("mMT_Extra", "OVERLAY", nil, -8)
