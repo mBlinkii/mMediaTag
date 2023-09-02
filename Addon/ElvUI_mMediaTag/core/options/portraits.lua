@@ -980,7 +980,7 @@ local function configTable()
 					order = 13,
 					type = "group",
 					inline = true,
-					name = L["DEMONHUNTER"],
+					name = L["WARRIOR"],
 					args = {
 						color_a = {
 							type = "color",
