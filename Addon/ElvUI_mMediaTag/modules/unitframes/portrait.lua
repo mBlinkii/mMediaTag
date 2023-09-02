@@ -54,6 +54,12 @@ local textures = {
 	SQUARE4 = "Interface\\Addons\\ElvUI_mMediaTag\\media\\portraits\\square4.tga",
 	SQUARE5 = "Interface\\Addons\\ElvUI_mMediaTag\\media\\portraits\\square5.tga",
 	SQUARE6 = "Interface\\Addons\\ElvUI_mMediaTag\\media\\portraits\\square6.tga",
+	SQUAREEX1 = "Interface\\Addons\\ElvUI_mMediaTag\\media\\portraits\\squareextra.tga",
+	SQUAREEX2 = "Interface\\Addons\\ElvUI_mMediaTag\\media\\portraits\\squareextra2.tga",
+	SQUAREEX3 = "Interface\\Addons\\ElvUI_mMediaTag\\media\\portraits\\squareextra3.tga",
+	SQUAREEX4 = "Interface\\Addons\\ElvUI_mMediaTag\\media\\portraits\\squareextra4.tga",
+	SQUAREEX5 = "Interface\\Addons\\ElvUI_mMediaTag\\media\\portraits\\squareextra5.tga",
+	SQUAREEX6 = "Interface\\Addons\\ElvUI_mMediaTag\\media\\portraits\\squareextra6.tga",
 	CLASSICSQ1 = "Interface\\Addons\\ElvUI_mMediaTag\\media\\portraits\\squareclassic.tga",
 	CLASSICSQ2 = "Interface\\Addons\\ElvUI_mMediaTag\\media\\portraits\\squareclassic2.tga",
 	CLASSICSQ3 = "Interface\\Addons\\ElvUI_mMediaTag\\media\\portraits\\squareclassic3.tga",
@@ -358,6 +364,7 @@ function mMT:SetupPortraits()
 		mMT.Portraits.Target:SetScript("OnEvent", function(self, event)
 			--OnEvent(event, self, "target", target.mirror)
 			SetPortraitTexture(self.portrait, "target", (E.Retail and not target.circle))
+			print(target.mirror)
 			setColor(self.texture, getColor(self, "target"), target.mirror)
 			if target.extraEnable then
 				CheckRareElite(self, "target")
