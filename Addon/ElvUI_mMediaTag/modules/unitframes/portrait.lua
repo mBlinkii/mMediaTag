@@ -72,6 +72,8 @@ local textures = {
 	EXTRA4 = "Interface\\Addons\\ElvUI_mMediaTag\\media\\portraits\\extra4.tga",
 	EXTRA5 = "Interface\\Addons\\ElvUI_mMediaTag\\media\\portraits\\extra5.tga",
 	EXTRA6 = "Interface\\Addons\\ElvUI_mMediaTag\\media\\portraits\\extra6.tga",
+	BG1 = "Interface\\Addons\\ElvUI_mMediaTag\\media\\portraits\\bg.tga",
+	BG2 = "Interface\\Addons\\ElvUI_mMediaTag\\media\\portraits\\partybg.tga",
 }
 
 local colors = {
@@ -181,7 +183,7 @@ local function setColor(texture, color, mirror)
 	end
 end
 
-local function getColor(frame, unit, classification)
+local function getColor(frame, unit)
 	local isPlayer = UnitIsPlayer(unit)
 	--print("START >>", unit, isPlayer)
 	if isPlayer then
@@ -193,18 +195,6 @@ local function getColor(frame, unit, classification)
 		end
 
 		return frame.color
-	elseif classification then
-		local c = UnitClassification(unit)
-
-		if c == "rare" then
-			return colors.rare
-		elseif c == "rareelite" then
-			return colors.rareelite
-		elseif c == "elite" then
-			return colors.elite
-			-- elseif c == "worldboss" then
-			--     color = aura_env.config["colors"]["worldboss"]
-		end
 	else
 		local reaction = UnitReaction("player", unit)
 		--print("REACTION >>", reaction)
@@ -235,24 +225,24 @@ local function CreatePortrait(parent, conf, unit)
 	frame:SetSize(conf.size, conf.size)
 	frame:SetPoint(conf.point, parent, conf.relativePoint, conf.x, conf.y)
 
+	if unit == "target" and conf.extraEnable then
+		frame.extra = frame:CreateTexture("mMT_Extra", "OVERLAY", nil, -8)
+		frame.extra:SetAllPoints(frame)
+		frame.extra:SetTexture(textures[conf.extra], "CLAMP", "CLAMP", "TRILINEAR")
+		mirrorTexture(frame.extra, not conf.mirror)
+		frame.extra:Hide()
+	end
+
 	frame.texture = frame:CreateTexture("mMT_Border", "OVERLAY", nil, 2)
 	frame.texture:SetAllPoints(frame)
 	frame.texture:SetTexture(textures[conf.texture], "CLAMP", "CLAMP", "TRILINEAR")
 	mirrorTexture(frame.texture, conf.mirror)
 
-	frame.portrait = frame:CreateTexture("mMT_Portrait", "OVERLAY", nil, 1)
 	local yx = (conf.size / 5 * E.perfect)
+	frame.portrait = frame:CreateTexture("mMT_Portrait", "OVERLAY", nil, 1)
 	frame.portrait:SetPoint("TOPLEFT", yx, -yx)
 	frame.portrait:SetPoint("BOTTOMRIGHT", -yx, yx)
 	mirrorTexture(frame.portrait, conf.mirror)
-
-	if unit == "target" then
-		frame.extra = frame:CreateTexture("mMT_Extra", "OVERLAY", nil, 0)
-		frame.extra:SetAllPoints(frame)
-		frame.extra:SetTexture(textures[conf.extra], "CLAMP", "CLAMP", "TRILINEAR")
-		mirrorTexture(frame.extra, (not conf.mirror))
-		frame.extra:Hide()
-	end
 
 	return frame
 end
@@ -262,20 +252,20 @@ local function UpdatePortrait(frame, conf, unit, parent)
 	frame:ClearAllPoints()
 	frame:SetPoint(conf.point, parent, conf.relativePoint, conf.x, conf.y)
 
+	if unit == "target" and conf.extraEnable then
+		frame.extra:SetTexture(textures[conf.extra], "CLAMP", "CLAMP", "TRILINEAR")
+		mirrorTexture(frame.extra, not conf.mirror)
+		frame.extra:Hide()
+	end
+
 	frame.texture:SetTexture(textures[conf.texture], "CLAMP", "CLAMP", "TRILINEAR")
 	mirrorTexture(frame.texture, conf.mirror)
-	setColor(frame.texture, getColor(frame, unit),conf.mirror)
+	setColor(frame.texture, getColor(frame, unit), conf.mirror)
 
 	local yx = (conf.size / 5 * E.perfect)
 	frame.portrait:SetPoint("TOPLEFT", yx, -yx)
 	frame.portrait:SetPoint("BOTTOMRIGHT", -yx, yx)
 	mirrorTexture(frame.portrait, conf.mirror)
-
-	if unit == "target" then
-		frame.extra:SetTexture(textures[conf.extra], "CLAMP", "CLAMP", "TRILINEAR")
-		mirrorTexture(frame.extra, (not conf.mirror))
-		frame.extra:Hide()
-	end
 end
 
 function mMT:UpdatePortraits()
@@ -325,6 +315,18 @@ function mMT:SetupPortraits()
 			--OnEvent(event, self, "target", target.mirror)
 			SetPortraitTexture(self.portrait, "target", (E.Retail and not target.circle))
 			setColor(self.texture, getColor(self, "target"), target.mirror)
+			if target.extraEnable then
+				local c = UnitClassification("target")
+
+				if c == "rare" or c == "rareelite" or c == "elite" then
+					setColor(self.extra, colors[c])
+					self.extra:Show()
+				else
+					self.extra:Hide()
+				end
+			else
+				self.extra:Hide()
+			end
 		end)
 	end
 
