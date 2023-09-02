@@ -145,16 +145,18 @@ local function configTable()
 					type = "select",
 					name = L["Anchor Point"],
 					get = function(info)
-						return E.db.mMT.portraits.player.point
+						return E.db.mMT.portraits.player.relativePoint
 					end,
 					set = function(info, value)
-						E.db.mMT.portraits.player.point = value
-
+						E.db.mMT.portraits.player.relativePoint = value
 						if value == "LEFT" then
-							E.db.mMT.portraits.player.relativePoint = "RIGHT"
-							E.db.mMT.portraits.player.mirror = true
+							E.db.mMT.portraits.player.point = "RIGHT"
+							E.db.mMT.portraits.player.mirror = false
 						elseif value == "RIGHT" then
-							E.db.mMT.portraits.player.relativePoint = "LEFT"
+							E.db.mMT.portraits.player.point = "LEFT"
+							E.db.mMT.portraits.player.mirror = true
+						else
+							E.db.mMT.portraits.player.point = value
 							E.db.mMT.portraits.player.mirror = false
 						end
 
@@ -164,6 +166,7 @@ local function configTable()
 					values = {
 						LEFT = "LEFT",
 						RIGHT = "RIGHT",
+						CENTER = "CENTER"
 					},
 				},
 				range_ofsX = {
@@ -320,16 +323,18 @@ local function configTable()
 					type = "select",
 					name = L["Anchor Point"],
 					get = function(info)
-						return E.db.mMT.portraits.target.point
+						return E.db.mMT.portraits.target.relativePoint
 					end,
 					set = function(info, value)
-						E.db.mMT.portraits.target.point = value
-
+						E.db.mMT.portraits.target.relativePoint = value
 						if value == "LEFT" then
-							E.db.mMT.portraits.target.relativePoint = "RIGHT"
-							E.db.mMT.portraits.target.mirror = true
+							E.db.mMT.portraits.target.point = "RIGHT"
+							E.db.mMT.portraits.target.mirror = false
 						elseif value == "RIGHT" then
-							E.db.mMT.portraits.target.relativePoint = "LEFT"
+							E.db.mMT.portraits.target.point = "LEFT"
+							E.db.mMT.portraits.target.mirror = true
+						else
+							E.db.mMT.portraits.target.point = value
 							E.db.mMT.portraits.target.mirror = false
 						end
 
@@ -339,6 +344,7 @@ local function configTable()
 					values = {
 						LEFT = "LEFT",
 						RIGHT = "RIGHT",
+						CENTER = "CENTER"
 					},
 				},
 				range_ofsX = {
@@ -461,16 +467,18 @@ local function configTable()
 					type = "select",
 					name = L["Anchor Point"],
 					get = function(info)
-						return E.db.mMT.portraits.party.point
+						return E.db.mMT.portraits.party.relativePoint
 					end,
 					set = function(info, value)
-						E.db.mMT.portraits.party.point = value
-
+						E.db.mMT.portraits.party.relativePoint = value
 						if value == "LEFT" then
-							E.db.mMT.portraits.party.relativePoint = "RIGHT"
-							E.db.mMT.portraits.party.mirror = true
+							E.db.mMT.portraits.party.point = "RIGHT"
+							E.db.mMT.portraits.party.mirror = false
 						elseif value == "RIGHT" then
-							E.db.mMT.portraits.party.relativePoint = "LEFT"
+							E.db.mMT.portraits.party.point = "LEFT"
+							E.db.mMT.portraits.party.mirror = true
+						else
+							E.db.mMT.portraits.party.point = value
 							E.db.mMT.portraits.party.mirror = false
 						end
 
@@ -480,6 +488,7 @@ local function configTable()
 					values = {
 						LEFT = "LEFT",
 						RIGHT = "RIGHT",
+						CENTER = "CENTER",
 					},
 				},
 				range_ofsX = {

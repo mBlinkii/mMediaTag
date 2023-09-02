@@ -445,7 +445,7 @@ P.mMT = {
 			option = "us",
 			dateicon = "b",
 			showyear = false,
-			text = flase,
+			text = false,
 			icon = "COLOR02",
 			iconcolor = { r = 1, g = 1, b = 1, a = 0.75 },
 			customcolor = false,
