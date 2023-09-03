@@ -36,7 +36,7 @@ local function GetQuestInfo(questIndex)
 	if E.Retail then
 		return C_QuestLog_GetInfo(questIndex)
 	else
-		local info, _ = {}
+		local info = {}
 		info.title, info.level, info.questTag, info.isHeader, info.isCollapsed, info.isComplete, info.frequency, info.questID, info.startEvent, _, info.isOnMap, info.hasLocalPOI, info.isTask, info.isBounty, info.isStory, info.isHidden, info.isScaling = GetQuestLogTitle(questIndex)
 		SelectQuestLogEntry(questIndex)
 

@@ -531,6 +531,12 @@ P.mMT = {
 			default = false,
 			ori = "HORIZONTAL",
 		},
+		shadow = {
+			enable = true,
+			inner = true,
+			color = {r = 0, g =0, b = 0, a = 1 },
+			innerColor = {r = 0, g = 0, b = 0, a = 1 }
+		},
 		colors = {
 			default = {
 				a = { r = 0.89, g = 0.61, b = 0.29, a = 1 },

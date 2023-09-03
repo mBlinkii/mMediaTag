@@ -5,40 +5,28 @@ local tinsert = tinsert
 local textures = {
 	SQUARE1 = "FLAT",
 	SQUARE2 = "FLAT/SMOOTH",
-	SQUARE3 = "FLAT/SHADOW",
-	SQUARE4 = "FLAT/SMOTH/SHADOW",
-	SQUARE5 = "FLAT/BORDER",
-	SQUARE6 = "FLAT/SMOOTH/BORDER",
+	SQUARE3 = "FLAT/BORDER",
+	SQUARE4 = "FLAT/SMOOTH/BORDER",
 	SQUAREEX1 = "EXTRA FLAT",
 	SQUAREEX2 = "EXTRA FLAT/SMOOTH",
-	SQUAREEX3 = "EXTRA FLAT/SHADOW",
-	SQUAREEX4 = "EXTRA FLAT/SMOTH/SHADOW",
-	SQUAREEX5 = "EXTRA FLAT/BORDER",
-	SQUAREEX6 = "EXTRA FLAT/SMOOTH/BORDER",
+	SQUAREEX3 = "EXTRA FLAT/BORDER",
+	SQUAREEX4 = "EXTRA FLAT/SMOOTH/BORDER",
 	CLASSICSQ1 = "CLASSIC FLAT",
 	CLASSICSQ2 = "CLASSIC FLAT/SMOOTH",
-	CLASSICSQ3 = "CLASSIC FLAT/SHADOW",
-	CLASSICSQ4 = "CLASSIC FLAT/SMOOTH/SHADOW",
-	CLASSICSQ5 = "CLASSIC FLAT/BORDER",
-	CLASSICSQ6 = "CLASSIC FLAT/SMOOTH/BORDER",
+	CLASSICSQ3 = "CLASSIC FLAT/BORDER",
+	CLASSICSQ4 = "CLASSIC FLAT/SMOOTH/BORDER",
 	ROUND1 = "ROUND",
 	ROUND2 = "ROUND/SMOOTH",
-	ROUND3 = "ROUND/SHADOW",
-	ROUND4 = "ROUND/SMOTH/SHADOW",
-	ROUND5 = "ROUND/BORDER",
-	ROUND6 = "ROUND/SMOOTH/BORDER",
+	ROUND3 = "ROUND/BORDER",
+	ROUND4 = "ROUND/SMOOTH/BORDER",
 	CLASSICRO1 = "CLASSIC ROUND",
 	CLASSICRO2 = "CLASSIC ROUND/SMOOTH",
-	CLASSICRO3 = "CLASSIC ROUND/SHADOW",
-	CLASSICRO4 = "CLASSIC ROUND/SMOOTH/SHADOW",
-	CLASSICRO5 = "CLASSIC ROUND/BORDER",
-	CLASSICRO6 = "CLASSIC ROUND/SMOOTH/BORDER",
+	CLASSICRO3 = "CLASSIC ROUND/BORDER",
+	CLASSICRO4 = "CLASSIC ROUND/SMOOTH/BORDER",
 	CIRCLE1 = "CIRCLE",
 	CIRCLE2 = "CIRCLE/SMOOTH",
-	CIRCLE3 = "CIRCLE/SHADOW",
-	CIRCLE4 = "CIRCLE/SMOTH/SHADOW",
-	CIRCLE5 = "CIRCLE/BORDER",
-	CIRCLE6 = "CIRCLE/SMOOTH/BORDER",
+	CIRCLE3 = "CIRCLE/BORDER",
+	CIRCLE4 = "CIRCLE/SMOOTH/BORDER",
 }
 
 local circle = {
@@ -46,38 +34,26 @@ local circle = {
 	SQUARE2 = false,
 	SQUARE3 = false,
 	SQUARE4 = false,
-	SQUARE5 = false,
-	SQUARE6 = false,
 	SQUAREEX1 = false,
 	SQUAREEX2 = false,
 	SQUAREEX3 = false,
 	SQUAREEX4 = false,
-	SQUAREEX5 = false,
-	SQUAREEX6 = false,
 	CLASSICSQ1 = true,
 	CLASSICSQ2 = true,
 	CLASSICSQ3 = true,
 	CLASSICSQ4 = true,
-	CLASSICSQ5 = true,
-	CLASSICSQ6 = true,
 	ROUND1 = false,
 	ROUND2 = false,
 	ROUND3 = false,
 	ROUND4 = false,
-	ROUND5 = false,
-	ROUND6 = false,
 	CLASSICRO1 = true,
 	CLASSICRO2 = true,
 	CLASSICRO3 = true,
 	CLASSICRO4 = true,
-	CLASSICRO5 = true,
-	CLASSICRO6 = true,
 	CIRCLE1 = true,
 	CIRCLE2 = true,
 	CIRCLE3 = true,
 	CIRCLE4 = true,
-	CIRCLE5 = true,
-	CIRCLE6 = true,
 }
 local function configTable()
 	E.Options.args.mMT.args.cosmetic.args.portraits.args = {
@@ -323,10 +299,8 @@ local function configTable()
 					values = {
 						EXTRA1 = "EXTRA",
 						EXTRA2 = "EXTRA/SMOOTH",
-						EXTRA3 = "EXTRA/SHADOW",
-						EXTRA4 = "EXTRA/SMOTH/SHADOW",
-						EXTRA5 = "EXTRA/BORDER",
-						EXTRA6 = "EXTRA/SMOOTH/BORDER",
+						EXTRA3 = "EXTRA/BORDER",
+						EXTRA4 = "EXTRA/SMOOTH/BORDER",
 					},
 				},
 				range_size = {
@@ -534,8 +508,79 @@ local function configTable()
 				},
 			},
 		},
-		header_colors = {
+		header_shadow = {
 			order = 4,
+			type = "group",
+			inline = true,
+			name = L["Shadow"],
+			args = {
+				toggle_shadow = {
+					order = 1,
+					type = "toggle",
+					name = L["Shadow"],
+					desc = L["Enable Shadow"],
+					get = function(info)
+						return E.db.mMT.portraits.shadow.enable
+					end,
+					set = function(info, value)
+						E.db.mMT.portraits.shadow.enable = value
+						E:StaticPopup_Show("CONFIG_RL")
+					end,
+				},
+				color_shadow = {
+					type = "color",
+					order = 2,
+					name = L["Shadow Color"],
+					hasAlpha = true,
+					get = function(info)
+						local t = E.db.mMT.portraits.shadow.color
+						return t.r, t.g, t.b, t.a
+					end,
+					set = function(info, r, g, b, a)
+						local t = E.db.mMT.portraits.shadow.color
+						t.r, t.g, t.b, t.a = r, g, b, a
+						mMT:UpdatePortraitSettings()
+						mMT:UpdatePortraits()
+					end,
+				},
+				spacer_1 = {
+					order = 3,
+					type = "description",
+					name = "\n\n",
+				},
+				toggle_inner = {
+					order = 4,
+					type = "toggle",
+					name = L["Inner Shadow"],
+					desc = L["Enable Inner Shadow"],
+					get = function(info)
+						return E.db.mMT.portraits.shadow.inner
+					end,
+					set = function(info, value)
+						E.db.mMT.portraits.shadow.inner = value
+						E:StaticPopup_Show("CONFIG_RL")
+					end,
+				},
+				color_inner = {
+					type = "color",
+					order = 5,
+					name = L["Inner Shadow Color"],
+					hasAlpha = true,
+					get = function(info)
+						local t = E.db.mMT.portraits.shadow.innerColor
+						return t.r, t.g, t.b, t.a
+					end,
+					set = function(info, r, g, b, a)
+						local t = E.db.mMT.portraits.shadow.innerColor
+						t.r, t.g, t.b, t.a = r, g, b, a
+						mMT:UpdatePortraitSettings()
+						mMT:UpdatePortraits()
+					end,
+				},
+			},
+		},
+		header_colors = {
+			order = 5,
 			type = "group",
 			inline = true,
 			name = L["Colors"],
