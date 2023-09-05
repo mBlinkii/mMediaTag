@@ -17,8 +17,10 @@ local player = {
 local shadow = {
 	enable = true,
 	inner = true,
-	color = { r = 0, g = 0, b = 0, a = 1 },
-	innerColor = { r = 0, g = 0, b = 0, a = 1 },
+	border = true,
+	borderColor = {r = 0, g =0, b = 0, a = 1 },
+	color = {r = 0, g =0, b = 0, a = 1 },
+	innerColor = {r = 0, g = 0, b = 0, a = 1 }
 }
 
 local target = {
@@ -49,51 +51,127 @@ local party = {
 
 local general = {
 	enable = true,
-	combat = false,
 	gradient = true,
 	default = false,
+	style = "flat",
 	ori = "HORIZONTAL",
 }
-
-local textures = {
-	SQUARE1 = "Interface\\Addons\\ElvUI_mMediaTag\\media\\portraits\\square.tga",
-	SQUARE2 = "Interface\\Addons\\ElvUI_mMediaTag\\media\\portraits\\square2.tga",
-	SQUARE3 = "Interface\\Addons\\ElvUI_mMediaTag\\media\\portraits\\square3.tga",
-	SQUARE4 = "Interface\\Addons\\ElvUI_mMediaTag\\media\\portraits\\square4.tga",
-	SQUAREEX1 = "Interface\\Addons\\ElvUI_mMediaTag\\media\\portraits\\squareextra.tga",
-	SQUAREEX2 = "Interface\\Addons\\ElvUI_mMediaTag\\media\\portraits\\squareextra2.tga",
-	SQUAREEX3 = "Interface\\Addons\\ElvUI_mMediaTag\\media\\portraits\\squareextra3.tga",
-	SQUAREEX4 = "Interface\\Addons\\ElvUI_mMediaTag\\media\\portraits\\squareextra4.tga",
-	CLASSICSQ1 = "Interface\\Addons\\ElvUI_mMediaTag\\media\\portraits\\squareclassic.tga",
-	CLASSICSQ2 = "Interface\\Addons\\ElvUI_mMediaTag\\media\\portraits\\squareclassic2.tga",
-	CLASSICSQ3 = "Interface\\Addons\\ElvUI_mMediaTag\\media\\portraits\\squareclassic3.tga",
-	CLASSICSQ4 = "Interface\\Addons\\ElvUI_mMediaTag\\media\\portraits\\squareclassic4.tga",
-	ROUND1 = "Interface\\Addons\\ElvUI_mMediaTag\\media\\portraits\\round.tga",
-	ROUND2 = "Interface\\Addons\\ElvUI_mMediaTag\\media\\portraits\\round2.tga",
-	ROUND3 = "Interface\\Addons\\ElvUI_mMediaTag\\media\\portraits\\round3.tga",
-	ROUND4 = "Interface\\Addons\\ElvUI_mMediaTag\\media\\portraits\\round4.tga",
-	CLASSICRO1 = "Interface\\Addons\\ElvUI_mMediaTag\\media\\portraits\\roundclassic.tga",
-	CLASSICRO2 = "Interface\\Addons\\ElvUI_mMediaTag\\media\\portraits\\roundclassic2.tga",
-	CLASSICRO3 = "Interface\\Addons\\ElvUI_mMediaTag\\media\\portraits\\roundclassic3.tga",
-	CLASSICRO4 = "Interface\\Addons\\ElvUI_mMediaTag\\media\\portraits\\roundclassic4.tga",
-	CIRCLE1 = "Interface\\Addons\\ElvUI_mMediaTag\\media\\portraits\\party.tga",
-	CIRCLE2 = "Interface\\Addons\\ElvUI_mMediaTag\\media\\portraits\\party2.tga",
-	CIRCLE3 = "Interface\\Addons\\ElvUI_mMediaTag\\media\\portraits\\party3.tga",
-	CIRCLE4 = "Interface\\Addons\\ElvUI_mMediaTag\\media\\portraits\\party4.tga",
-	EXTRA1 = "Interface\\Addons\\ElvUI_mMediaTag\\media\\portraits\\extra.tga",
-	EXTRA2 = "Interface\\Addons\\ElvUI_mMediaTag\\media\\portraits\\extra2.tga",
-	EXTRA3 = "Interface\\Addons\\ElvUI_mMediaTag\\media\\portraits\\extra3.tga",
-	EXTRA4 = "Interface\\Addons\\ElvUI_mMediaTag\\media\\portraits\\extra4.tga",
+local path = "Interface\\Addons\\ElvUI_mMediaTag\\media\\portraits\\"
+local tx_DB = {
+	retail = {
+		texture = {
+			flat = {
+				SQ = path .. "sq_a.tga",
+				RO = path .. "ro_a.tga",
+				CI = path .. "ci_a.tga",
+				CO = path .. "co_a.tga",
+				EA = path .. "ex_a_a.tga",
+				EB = path .. "ex_b_a.tga",
+			},
+			smooth = {
+				SQ = path .. "sq_b.tga",
+				RO = path .. "ro_b.tga",
+				CI = path .. "ci_b.tga",
+				CO = path .. "co_b.tga",
+				EA = path .. "ex_a_b.tga",
+				EB = path .. "ex_b_b.tga",
+			},
+			metal = {
+				SQ = path .. "sq_c.tga",
+				RO = path .. "ro_c.tga",
+				CI = path .. "ci_c.tga",
+				CO = path .. "co_c.tga",
+				EA = path .. "ex_a_c.tga",
+				EB = path .. "ex_b_c.tga",
+			},
+		},
+		border = {
+			SQ = path .. "border_sq.tga",
+			RO = path .. "border_ro.tga",
+			CI = path .. "border_ci.tga",
+			CO = path .. "border_co.tga",
+			EA = path .. "border_ex_a.tga",
+			EB = path .. "border_ex_b.tga",
+		},
+		shadow = {
+			SQ = path .. "shadow_sq.tga",
+			RO = path .. "shadow_ro.tga",
+			CI = path .. "shadow_ci.tga",
+			EA = path .. "shadow_ex_a.tga",
+			EB = path .. "shadow_ex_b.tga",
+		},
+		inner = {
+			SQ = path .. "inner_a.tga",
+			RO = path .. "inner_a.tga",
+			CI = path .. "inner_b.tga",
+		},
+		mask = {
+			CI = path .. "mask_c.tga",
+			A = {
+				SQ = path .. "mask_a.tga",
+				RO = path .. "mask_a.tga",
+			},
+			B = {
+				SQ = path .. "mask_b.tga",
+				RO = path .. "mask_b.tga",
+			},
+		},
+	},
+	classic = {
+		texture = {
+			flat = {
+				SQ = path .. "sq_a_c.tga",
+				RO = path .. "ro_a_c.tga",
+				CI = path .. "ci_a.tga",
+				CO = path .. "co_a.tga",
+				EA = path .. "ex_a_a.tga",
+				EB = path .. "ex_b_a.tga",
+			},
+			smooth = {
+				SQ = path .. "sq_b_c.tga",
+				RO = path .. "ro_b_c.tga",
+				CI = path .. "ci_b.tga",
+				CO = path .. "co_b.tga",
+				EA = path .. "ex_a_b.tga",
+				EB = path .. "ex_b_b.tga",
+			},
+			metal = {
+				SQ = path .. "sq_c_c.tga",
+				RO = path .. "ro_c_c.tga",
+				CI = path .. "ci_c.tga",
+				CO = path .. "co_c.tga",
+				EA = path .. "ex_a_c.tga",
+				EB = path .. "ex_b_c.tga",
+			},
+		},
+		border = {
+			SQ = path .. "border_sq.tga",
+			RO = path .. "border_ro.tga",
+			CI = path .. "border_ci.tga",
+			CO = path .. "border_co.tga",
+			EA = path .. "border_ex_a.tga",
+			EB = path .. "border_ex_b.tga",
+		},
+		shadow = {
+			SQ = path .. "shadow_sq_c.tga",
+			RO = path .. "shadow_ro_c.tga",
+			CI = path .. "shadow_ci.tga",
+			EA = path .. "shadow_ex_a.tga",
+			EB = path .. "shadow_ex_b.tga",
+		},
+		inner = {
+			SQ = path .. "inner_b.tga",
+			RO = path .. "inner_b.tga",
+			CI = path .. "inner_b.tga",
+		},
+		mask = {
+			SQ = path .. "mask_c.tga",
+			RO = path .. "mask_c.tga",
+			CI = path .. "mask_c.tga",
+		},
+	},
 }
-
-local extraFull = {
-	EXTRA1 = "Interface\\Addons\\ElvUI_mMediaTag\\media\\portraits\\extrafull.tga",
-	EXTRA2 = "Interface\\Addons\\ElvUI_mMediaTag\\media\\portraits\\extrafull2.tga",
-	EXTRA3 = "Interface\\Addons\\ElvUI_mMediaTag\\media\\portraits\\extrafull3.tga",
-	EXTRA4 = "Interface\\Addons\\ElvUI_mMediaTag\\media\\portraits\\extrafull4.tga",
-	EXTRA5 = "Interface\\Addons\\ElvUI_mMediaTag\\media\\portraits\\extrafull5.tga",
-	EXTRA6 = "Interface\\Addons\\ElvUI_mMediaTag\\media\\portraits\\extrafull6.tga",
-}
+local textures = tx_DB.retail
 
 local colors = {
 	default = {
@@ -188,18 +266,16 @@ function mMT:UpdatePortraitSettings()
 end
 
 local function setColor(texture, color, mirror)
-	if not color then
-		color = colors.default
-	end
+	color = color or colors.default
 
-	if general.gradient then
+	if general.gradient and not color.r then
+		local a, b = color.a, color.b
 		if mirror and (general.ori == "HORIZONTAL") then
-			texture:SetGradient(general.ori, color.b, color.a)
-		else
-			texture:SetGradient(general.ori, color.a, color.b)
+			a, b = b, a
 		end
+		texture:SetGradient(general.ori, a, b)
 	else
-		texture:SetVertexColor(color.a.r, color.a.g, color.a.b, color.a.a)
+		texture:SetVertexColor(color.r, color.g, color.b, color.a)
 	end
 end
 
@@ -207,25 +283,17 @@ local function getColor(frame, unit)
 	if general.default then
 		return colors.default
 	end
-	local isPlayer = UnitIsPlayer(unit)
-	if isPlayer then
+	if UnitIsPlayer(unit) then
 		local _, class = UnitClass(unit)
-		if not (frame.class and not frame.class == class) then
+		if frame.class ~= class then
 			frame.class = class
 			frame.color = colors[class]
 		end
-
 		return frame.color
 	else
 		local reaction = UnitReaction("player", unit)
 		if reaction then
-			if reaction <= 3 then
-				return colors.enemy
-			elseif reaction == 4 then
-				return colors.neutral
-			elseif reaction >= 5 then
-				return colors.friendly
-			end
+			return colors[reaction <= 3 and "enemy" or reaction == 4 and "neutral" or "friendly"]
 		else
 			return colors.enemy
 		end
@@ -233,101 +301,103 @@ local function getColor(frame, unit)
 end
 
 local function mirrorTexture(texture, mirror)
-	if mirror then
-		texture:SetTexCoord(1, 0, 0, 1)
-	else
-		texture:SetTexCoord(0, 1, 0, 1)
-	end
+	texture:SetTexCoord(mirror and 1 or 0, mirror and 0 or 1, 0, 1)
 end
 
 local function CreatePortrait(parent, conf, unit)
 	local texture = nil
+
+	-- Portraits Frame
 	local frame = CreateFrame("Frame", "mMT_Portrait_" .. unit, parent)
 	frame:SetSize(conf.size, conf.size)
 	frame:SetPoint(conf.point, parent, conf.relativePoint, conf.x, conf.y)
 	frame:SetFrameLevel(parent.Health:GetFrameLevel() + 1)
 
-	if unit == "target" and conf.extraEnable then
-		texture = textures[conf.extra]
-
-		if conf.texture:match("CIRCLE%d") then
-			texture = extraFull[conf.extra]
-		end
-
-		frame.extra = frame:CreateTexture("mMT_Extra", "OVERLAY", nil, -6)
-		frame.extra:SetAllPoints(frame)
-		frame.extra:SetTexture(texture, "CLAMP", "CLAMP", "TRILINEAR")
-		mirrorTexture(frame.extra, not conf.mirror)
-
-		if shadow.enable then
-			texture = "Interface\\Addons\\ElvUI_mMediaTag\\media\\portraits\\shadowextra1.tga"
-
-			if conf.texture:match("CIRCLE%d") then
-				texture = "Interface\\Addons\\ElvUI_mMediaTag\\media\\portraits\\shadowextra2.tga"
-			end
-
-			frame.extra.shadow = frame:CreateTexture("mMT_Extra", "OVERLAY", nil, -8)
-			frame.extra.shadow:SetAllPoints(frame)
-			frame.extra.shadow:SetTexture(texture, "CLAMP", "CLAMP", "TRILINEAR")
-			frame.extra.shadow:SetVertexColor(shadow.color.r, shadow.color.g, shadow.color.b, shadow.color.a)
-			mirrorTexture(frame.extra.shadow, not conf.mirror)
-		end
-
-		frame.extra:Hide()
-	end
-
-	if shadow.enable then
-		texture = "Interface\\Addons\\ElvUI_mMediaTag\\media\\portraits\\shadow1.tga"
-
-		if conf.texture:match("CIRCLE%d") then
-			texture = "Interface\\Addons\\ElvUI_mMediaTag\\media\\portraits\\shadow4.tga"
-		elseif conf.texture:match("SQUAREEX%d") then
-			texture = "Interface\\Addons\\ElvUI_mMediaTag\\media\\portraits\\shadow3.tga"
-		end
-
-		frame.shadow = frame:CreateTexture("mMT_Shadow", "OVERLAY", nil, -4)
-		frame.shadow:SetAllPoints(frame)
-		frame.shadow:SetTexture(texture, "CLAMP", "CLAMP", "TRILINEAR")
-		frame.shadow:SetVertexColor(shadow.color.r, shadow.color.g, shadow.color.b, shadow.color.a)
-		mirrorTexture(frame.shadow, conf.mirror)
-	end
-
-	if shadow.inner then
-		texture = "Interface\\Addons\\ElvUI_mMediaTag\\media\\portraits\\innershadow1.tga"
-
-		if conf.circle then
-			texture = "Interface\\Addons\\ElvUI_mMediaTag\\media\\portraits\\innershadow2.tga"
-		end
-
-		frame.InnerShadow = frame:CreateTexture("mMT_innerShadow", "OVERLAY", nil, 2)
-		frame.InnerShadow:SetAllPoints(frame)
-		frame.InnerShadow:SetTexture(texture, "CLAMP", "CLAMP", "TRILINEAR")
-		frame.InnerShadow:SetVertexColor(shadow.innerColor.r, shadow.innerColor.g, shadow.innerColor.b, shadow.innerColor.a)
-		mirrorTexture(frame.InnerShadow, conf.mirror)
-	end
-
+	-- Portrait Texture
+	print(general.style, conf.texture)
+	texture = textures.texture[general.style][conf.texture]
 	frame.texture = frame:CreateTexture("mMT_Border", "OVERLAY", nil, 4)
 	frame.texture:SetAllPoints(frame)
-	frame.texture:SetTexture(textures[conf.texture], "CLAMP", "CLAMP", "TRILINEAR")
+	frame.texture:SetTexture(texture, "CLAMP", "CLAMP", "TRILINEAR")
 	mirrorTexture(frame.texture, conf.mirror)
 
+	-- Unit Portrait
 	local offset = (conf.size / 5.5 * E.perfect)
 	frame.portrait = frame:CreateTexture("mMT_Portrait", "OVERLAY", nil, 1)
 	frame.portrait:SetPoint("TOPLEFT", offset, -offset)
 	frame.portrait:SetPoint("BOTTOMRIGHT", -offset, offset)
 	mirrorTexture(frame.portrait, conf.mirror)
+	SetPortraitTexture(frame.portrait, unit, (E.Retail and not (conf.texture == "CI")))
 
-	texture = "Interface\\Addons\\ElvUI_mMediaTag\\media\\portraits\\mask1.tga"
-	if conf.mirror then
-		texture = "Interface\\Addons\\ElvUI_mMediaTag\\media\\portraits\\mask2.tga"
-	elseif conf.circle then
-		texture = "Interface\\Addons\\ElvUI_mMediaTag\\media\\portraits\\mask3.tga"
-	end
-
+	-- Portrait Mask
+	texture = textures.mask[conf.texture] or conf.mirror and textures.mask.B[conf.texture] or textures.mask.A[conf.texture]
 	frame.mask = frame:CreateMaskTexture()
 	frame.mask:SetTexture(texture, "CLAMPTOBLACKADDITIVE", "CLAMPTOBLACKADDITIVE")
-	mirrorTexture(frame.mask, true)
 	frame.mask:SetAllPoints(frame.portrait)
+
+	-- Portrait Shadow
+	if shadow.enable then
+		texture = textures.shadow[conf.texture]
+		frame.shadow = frame:CreateTexture("mMT_Shadow", "OVERLAY", nil, -4)
+		frame.shadow:SetAllPoints(frame)
+		frame.shadow:SetTexture(texture, "CLAMP", "CLAMP", "TRILINEAR")
+		setColor(frame.shadow, shadow.color)
+		mirrorTexture(frame.shadow, conf.mirror)
+	end
+
+	-- Inner Portrait Shadow
+	if shadow.inner then
+		texture = textures.inner[conf.texture]
+		frame.InnerShadow = frame:CreateTexture("mMT_innerShadow", "OVERLAY", nil, 2)
+		frame.InnerShadow:SetAllPoints(frame)
+		frame.InnerShadow:SetTexture(texture, "CLAMP", "CLAMP", "TRILINEAR")
+		setColor(frame.InnerShadow, shadow.innerColor)
+		mirrorTexture(frame.InnerShadow, conf.mirror)
+	end
+
+	-- Portrait Border
+	if shadow.border then
+		texture = textures.border[conf.texture]
+		frame.border = frame:CreateTexture("mMT_Border", "OVERLAY", nil, 6)
+		frame.border:SetAllPoints(frame)
+		frame.border:SetTexture(texture, "CLAMP", "CLAMP", "TRILINEAR")
+		setColor(frame.border, shadow.borderColor)
+		mirrorTexture(frame.border, conf.mirror)
+	end
+
+	-- Rare/Elite Texture
+	if unit == "target" and conf.extraEnable then
+		-- Texture
+		texture = (conf.texture == "CI") and textures.texture[general.style]["EA"] or textures.texture[general.style]["EB"]
+		frame.extra = frame:CreateTexture("mMT_Extra", "OVERLAY", nil, -6)
+		frame.extra:SetAllPoints(frame)
+		frame.extra:SetTexture(texture, "CLAMP", "CLAMP", "TRILINEAR")
+		mirrorTexture(frame.extra, not conf.mirror)
+
+		-- Shadow
+		if shadow.enable then
+			texture = (conf.texture == "CI") and textures.shadow.EA or textures.shadow.EB
+			frame.extra.shadow = frame:CreateTexture("mMT_Extra", "OVERLAY", nil, -8)
+			frame.extra.shadow:SetAllPoints(frame)
+			frame.extra.shadow:SetTexture(texture, "CLAMP", "CLAMP", "TRILINEAR")
+			setColor(frame.extra.shadow, shadow.color)
+			mirrorTexture(frame.extra.shadow, not conf.mirror)
+			frame.extra.shadow:Hide()
+		end
+
+		-- Border
+		if shadow.border then
+			texture = (conf.texture == "CI") and textures.border.EA or textures.border.EB
+			frame.extra.border = frame:CreateTexture("mMT_Border_Extra", "OVERLAY", nil, -4)
+			frame.extra.border:SetAllPoints(frame)
+			frame.extra.border:SetTexture(texture, "CLAMP", "CLAMP", "TRILINEAR")
+			setColor(frame.extra.border, shadow.borderColor)
+			mirrorTexture(frame.extra.border, conf.mirror)
+			frame.extra.border:Hide()
+		end
+
+		frame.extra:Hide()
+	end
 
 	return frame
 end
@@ -339,10 +409,14 @@ local function CheckRareElite(frame, unit)
 
 	if color then
 		setColor(extra, color)
-		extra.shadow:Show()
+		if shadow.enable then
+			extra.shadow:Show()
+		end
 		extra:Show()
 	else
-		extra.shadow:Hide()
+		if shadow.enable then
+			extra.shadow:Hide()
+		end
 		extra:Hide()
 	end
 end
@@ -350,70 +424,75 @@ end
 local function UpdatePortrait(frame, conf, unit, parent)
 	local texture = nil
 
+	-- Portraits Frame
 	frame:SetSize(conf.size, conf.size)
-	frame:ClearAllPoints()
 	frame:SetPoint(conf.point, parent, conf.relativePoint, conf.x, conf.y)
+	frame:SetFrameLevel(parent.Health:GetFrameLevel() + 1)
 
+	-- Portrait Texture
+	texture = textures.texture[general.style][conf.texture]
+	frame.texture:SetTexture(texture, "CLAMP", "CLAMP", "TRILINEAR")
+	mirrorTexture(frame.texture, conf.mirror)
+
+	-- Unit Portrait
+	local offset = (conf.size / 5.5 * E.perfect)
+	frame.portrait:SetPoint("TOPLEFT", offset, -offset)
+	frame.portrait:SetPoint("BOTTOMRIGHT", -offset, offset)
+	mirrorTexture(frame.portrait, conf.mirror)
+
+	-- Portrait Mask
+	texture = textures.mask[conf.texture] or conf.mirror and textures.mask.B[conf.texture] or textures.mask.A[conf.texture]
+	frame.mask:SetTexture(texture, "CLAMPTOBLACKADDITIVE", "CLAMPTOBLACKADDITIVE")
+
+	-- Portrait Shadow
+	if shadow.enable then
+		texture = textures.shadow[conf.texture]
+		frame.shadow:SetTexture(texture, "CLAMP", "CLAMP", "TRILINEAR")
+		setColor(frame.shadow, shadow.color)
+		mirrorTexture(frame.shadow, conf.mirror)
+	end
+
+	-- Inner Portrait Shadow
+	if shadow.inner then
+		texture = textures.inner[conf.texture]
+		frame.InnerShadow:SetTexture(texture, "CLAMP", "CLAMP", "TRILINEAR")
+		setColor(frame.InnerShadow, shadow.innerColor)
+		mirrorTexture(frame.InnerShadow, conf.mirror)
+	end
+
+	-- Portrait Border
+	if shadow.border then
+		texture = textures.border[conf.texture]
+		frame.border:SetTexture(texture, "CLAMP", "CLAMP", "TRILINEAR")
+		setColor(frame.border, shadow.borderColor)
+		mirrorTexture(frame.border, conf.mirror)
+	end
+
+	-- Rare/Elite Texture
 	if unit == "target" and conf.extraEnable then
-		texture = textures[conf.extra]
-		if conf.texture:match("CIRCLE%d") then
-			texture = extraFull[conf.extra]
-		end
+		-- Texture
+		texture = (conf.texture == "CI") and textures.texture[general.style]["EA"] or textures.texture[general.style]["EB"]
 		frame.extra:SetTexture(texture, "CLAMP", "CLAMP", "TRILINEAR")
 		mirrorTexture(frame.extra, not conf.mirror)
-		frame.extra:Hide()
 
+		-- Shadow
 		if shadow.enable then
-			texture = "Interface\\Addons\\ElvUI_mMediaTag\\media\\portraits\\shadowextra1.tga"
-
-			if conf.texture:match("CIRCLE%d") then
-				texture = "Interface\\Addons\\ElvUI_mMediaTag\\media\\portraits\\shadowextra2.tga"
-			end
-
+			texture = (conf.texture == "CI") and textures.shadow.EA or textures.shadow.EB
 			frame.extra.shadow:SetTexture(texture, "CLAMP", "CLAMP", "TRILINEAR")
-			frame.extra.shadow:SetVertexColor(shadow.color.r, shadow.color.g, shadow.color.b, shadow.color.a)
+			setColor(frame.extra.shadow, shadow.color)
 			mirrorTexture(frame.extra.shadow, not conf.mirror)
-			frame.extra.shadow:Hide()
+		end
+
+		-- Border
+		if shadow.border then
+			texture = (conf.texture == "CI") and textures.border.EA or textures.border.EB
+			frame.extra.border:SetTexture(texture, "CLAMP", "CLAMP", "TRILINEAR")
+			setColor(frame.extra.border, shadow.borderColor)
+			mirrorTexture(frame.extra.border, conf.mirror)
 		end
 
 		CheckRareElite(frame, unit)
 	end
-
-	if shadow.enable then
-		texture = "Interface\\Addons\\ElvUI_mMediaTag\\media\\portraits\\shadow1.tga"
-
-		if conf.texture:match("CIRCLE%d") then
-			texture = "Interface\\Addons\\ElvUI_mMediaTag\\media\\portraits\\shadow4.tga"
-		elseif conf.texture:match("SQUAREEX%d") then
-			texture = "Interface\\Addons\\ElvUI_mMediaTag\\media\\portraits\\shadow3.tga"
-		end
-
-		frame.shadow:SetTexture(texture, "CLAMP", "CLAMP", "TRILINEAR")
-		frame.shadow:SetVertexColor(shadow.color.r, shadow.color.g, shadow.color.b, shadow.color.a)
-		mirrorTexture(frame.shadow, conf.mirror)
-	end
-
-	if shadow.inner then
-		texture = "Interface\\Addons\\ElvUI_mMediaTag\\media\\portraits\\innershadow1.tga"
-
-		if conf.circle then
-			texture = "Interface\\Addons\\ElvUI_mMediaTag\\media\\portraits\\innershadow2.tga"
-		end
-
-		frame.InnerShadow:SetTexture(texture, "CLAMP", "CLAMP", "TRILINEAR")
-		mirrorTexture(frame.InnerShadow, conf.mirror)
-		frame.InnerShadow:SetVertexColor(shadow.innerColor.r, shadow.innerColor.g, shadow.innerColor.b, shadow.innerColor.a)
-	end
-
-	frame.texture:SetTexture(textures[conf.texture], "CLAMP", "CLAMP", "TRILINEAR")
-	mirrorTexture(frame.texture, conf.mirror)
-	setColor(frame.texture, getColor(frame, unit), conf.mirror)
-
-	local yx = (conf.size / 5.5 * E.perfect)
-	frame.portrait:SetPoint("TOPLEFT", yx, -yx)
-	frame.portrait:SetPoint("BOTTOMRIGHT", -yx, yx)
-	mirrorTexture(frame.portrait, conf.mirror)
-	SetPortraitTexture(frame.portrait, unit, (E.Retail and not conf.circle))
 end
 
 function mMT:UpdatePortraits()
@@ -433,7 +512,9 @@ function mMT:UpdatePortraits()
 		UpdatePortrait(mMT.Portraits.Party5, party, _G.ElvUF_PartyGroup1UnitButton5.unit, _G.ElvUF_PartyGroup1UnitButton5)
 	end
 end
+
 function mMT:SetupPortraits()
+	textures = E.Retail and tx_DB.retail or tx_DB.classic
 	if not mMT.Portraits then
 		mMT.Portraits = {}
 	end
@@ -443,7 +524,7 @@ function mMT:SetupPortraits()
 		mMT.Portraits.Player:RegisterUnitEvent("UNIT_PORTRAIT_UPDATE", "player")
 		mMT.Portraits.Player:RegisterEvent("PLAYER_ENTERING_WORLD")
 		mMT.Portraits.Player:SetScript("OnEvent", function(self, event)
-			SetPortraitTexture(self.portrait, "player", (E.Retail and not player.circle))
+			SetPortraitTexture(self.portrait, "player", (E.Retail and not (player.texture == "CI")))
 			setColor(self.texture, getColor(self, "player"), player.mirror)
 		end)
 	end
@@ -454,7 +535,7 @@ function mMT:SetupPortraits()
 		mMT.Portraits.Target:RegisterEvent("PLAYER_TARGET_CHANGED")
 		mMT.Portraits.Target:RegisterEvent("PLAYER_ENTERING_WORLD")
 		mMT.Portraits.Target:SetScript("OnEvent", function(self, event)
-			SetPortraitTexture(self.portrait, "target", (E.Retail and not target.circle))
+			SetPortraitTexture(self.portrait, "target", (E.Retail and not (target.texture == "CI")))
 			setColor(self.texture, getColor(self, "target"), target.mirror)
 			if target.extraEnable then
 				CheckRareElite(self, "target")
@@ -464,60 +545,28 @@ function mMT:SetupPortraits()
 		end)
 	end
 
+	--self:RegisterEvent('UNIT_MODEL_CHANGED', Path)
+	--self:RegisterEvent('UNIT_PORTRAIT_UPDATE', Path)
+	--self:RegisterEvent('PORTRAITS_UPDATED', Path, true)
+	--self:RegisterEvent('UNIT_CONNECTION', Path)
+	--self:RegisterEvent('PARTY_MEMBER_ENABLE', Path)
+
 	if party.enable then
-		if not mMT.Portraits.Party1 then
-			mMT.Portraits.Party1 = CreatePortrait(_G.ElvUF_PartyGroup1UnitButton1, party, _G.ElvUF_PartyGroup1UnitButton1.unit)
-			mMT.Portraits.Party1:RegisterUnitEvent("UNIT_PORTRAIT_UPDATE", _G.ElvUF_PartyGroup1UnitButton1.unit)
-			mMT.Portraits.Party1:RegisterEvent("PLAYER_ENTERING_WORLD")
-			mMT.Portraits.Party1:RegisterEvent("GROUP_ROSTER_UPDATE")
-			mMT.Portraits.Party1:SetScript("OnEvent", function(self, event)
-				SetPortraitTexture(self.portrait, _G.ElvUF_PartyGroup1UnitButton1.unit, (E.Retail and not party.circle))
-				setColor(self.texture, getColor(self, _G.ElvUF_PartyGroup1UnitButton1.unit), party.mirror)
-			end)
-		end
-
-		if not mMT.Portraits.Party2 then
-			mMT.Portraits.Party2 = CreatePortrait(_G.ElvUF_PartyGroup1UnitButton2, party, _G.ElvUF_PartyGroup1UnitButton2.unit)
-			mMT.Portraits.Party2:RegisterUnitEvent("UNIT_PORTRAIT_UPDATE", _G.ElvUF_PartyGroup1UnitButton2.unit)
-			mMT.Portraits.Party2:RegisterEvent("PLAYER_ENTERING_WORLD")
-			mMT.Portraits.Party2:RegisterEvent("GROUP_ROSTER_UPDATE")
-			mMT.Portraits.Party2:SetScript("OnEvent", function(self, event)
-				SetPortraitTexture(self.portrait, _G.ElvUF_PartyGroup1UnitButton2.unit, (E.Retail and not party.circle))
-				setColor(self.texture, getColor(self, _G.ElvUF_PartyGroup1UnitButton2.unit), party.mirror)
-			end)
-		end
-
-		if not mMT.Portraits.Party3 then
-			mMT.Portraits.Party3 = CreatePortrait(_G.ElvUF_PartyGroup1UnitButton3, party, _G.ElvUF_PartyGroup1UnitButton3.unit)
-			mMT.Portraits.Party3:RegisterUnitEvent("UNIT_PORTRAIT_UPDATE", _G.ElvUF_PartyGroup1UnitButton3.unit)
-			mMT.Portraits.Party3:RegisterEvent("PLAYER_ENTERING_WORLD")
-			mMT.Portraits.Party3:RegisterEvent("GROUP_ROSTER_UPDATE")
-			mMT.Portraits.Party3:SetScript("OnEvent", function(self, event)
-				SetPortraitTexture(self.portrait, _G.ElvUF_PartyGroup1UnitButton3.unit, (E.Retail and not party.circle))
-				setColor(self.texture, getColor(self, _G.ElvUF_PartyGroup1UnitButton3.unit), party.mirror)
-			end)
-		end
-
-		if not mMT.Portraits.Party4 then
-			mMT.Portraits.Party4 = CreatePortrait(_G.ElvUF_PartyGroup1UnitButton4, party, _G.ElvUF_PartyGroup1UnitButton4.unit)
-			mMT.Portraits.Party4:RegisterUnitEvent("UNIT_PORTRAIT_UPDATE", _G.ElvUF_PartyGroup1UnitButton4.unit)
-			mMT.Portraits.Party4:RegisterEvent("PLAYER_ENTERING_WORLD")
-			mMT.Portraits.Party4:RegisterEvent("GROUP_ROSTER_UPDATE")
-			mMT.Portraits.Party4:SetScript("OnEvent", function(self, event)
-				SetPortraitTexture(self.portrait, _G.ElvUF_PartyGroup1UnitButton4.unit, (E.Retail and not party.circle))
-				setColor(self.texture, getColor(self, _G.ElvUF_PartyGroup1UnitButton4.unit), party.mirror)
-			end)
-		end
-
-		if not mMT.Portraits.Party5 then
-			mMT.Portraits.Party5 = CreatePortrait(_G.ElvUF_PartyGroup1UnitButton5, party, _G.ElvUF_PartyGroup1UnitButton5.unit)
-			mMT.Portraits.Party5:RegisterUnitEvent("UNIT_PORTRAIT_UPDATE", _G.ElvUF_PartyGroup1UnitButton5.unit)
-			mMT.Portraits.Party5:RegisterEvent("PLAYER_ENTERING_WORLD")
-			mMT.Portraits.Party5:RegisterEvent("GROUP_ROSTER_UPDATE")
-			mMT.Portraits.Party5:SetScript("OnEvent", function(self, event)
-				SetPortraitTexture(self.portrait, _G.ElvUF_PartyGroup1UnitButton5.unit, (E.Retail and not party.circle))
-				setColor(self.texture, getColor(self, _G.ElvUF_PartyGroup1UnitButton5.unit), party.mirror)
-			end)
+		for i = 1, 5 do
+			local portrait = "Party" .. i
+			local frame = _G["ElvUF_PartyGroup1UnitButton" .. i]
+			if not mMT.Portraits[portrait] then
+				mMT.Portraits[portrait] = CreatePortrait(frame, party, frame.unit)
+				mMT.Portraits[portrait]:RegisterUnitEvent("UNIT_PORTRAIT_UPDATE", frame.unit)
+				mMT.Portraits[portrait]:RegisterEvent("PLAYER_ENTERING_WORLD")
+				mMT.Portraits[portrait]:RegisterEvent("GROUP_ROSTER_UPDATE")
+				mMT.Portraits[portrait]:RegisterEvent("UNIT_CONNECTION")
+				mMT.Portraits[portrait]:SetScript("OnEvent", function(self, event)
+					mMT:Print(event)
+					SetPortraitTexture(self.portrait, frame.unit, (E.Retail and not (party.texture == "CI")))
+					setColor(self.texture, getColor(self, frame.unit), party.mirror)
+				end)
+			end
 		end
 	end
 end

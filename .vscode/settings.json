@@ -450,7 +450,8 @@
         "COLOR_PICKER",
         "FONT_SIZE",
         "RegisterUnitWatch",
-        "DevTool"
+        "DevTool",
+        "UPDATE"
     ],
     "Lua.diagnostics.disable": [
         "undefined-field"

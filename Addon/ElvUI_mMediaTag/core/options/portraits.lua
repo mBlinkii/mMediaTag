@@ -2,59 +2,18 @@ local E, L, V, P, G = unpack(ElvUI)
 
 local tinsert = tinsert
 
-local textures = {
-	SQUARE1 = "FLAT",
-	SQUARE2 = "FLAT/SMOOTH",
-	SQUARE3 = "FLAT/BORDER",
-	SQUARE4 = "FLAT/SMOOTH/BORDER",
-	SQUAREEX1 = "EXTRA FLAT",
-	SQUAREEX2 = "EXTRA FLAT/SMOOTH",
-	SQUAREEX3 = "EXTRA FLAT/BORDER",
-	SQUAREEX4 = "EXTRA FLAT/SMOOTH/BORDER",
-	CLASSICSQ1 = "CLASSIC FLAT",
-	CLASSICSQ2 = "CLASSIC FLAT/SMOOTH",
-	CLASSICSQ3 = "CLASSIC FLAT/BORDER",
-	CLASSICSQ4 = "CLASSIC FLAT/SMOOTH/BORDER",
-	ROUND1 = "ROUND",
-	ROUND2 = "ROUND/SMOOTH",
-	ROUND3 = "ROUND/BORDER",
-	ROUND4 = "ROUND/SMOOTH/BORDER",
-	CLASSICRO1 = "CLASSIC ROUND",
-	CLASSICRO2 = "CLASSIC ROUND/SMOOTH",
-	CLASSICRO3 = "CLASSIC ROUND/BORDER",
-	CLASSICRO4 = "CLASSIC ROUND/SMOOTH/BORDER",
-	CIRCLE1 = "CIRCLE",
-	CIRCLE2 = "CIRCLE/SMOOTH",
-	CIRCLE3 = "CIRCLE/BORDER",
-	CIRCLE4 = "CIRCLE/SMOOTH/BORDER",
+local form = {
+	SQ = "SQUARE",
+	RO = "ROUND",
+	CI = "CIRCLE",
 }
 
-local circle = {
-	SQUARE1 = false,
-	SQUARE2 = false,
-	SQUARE3 = false,
-	SQUARE4 = false,
-	SQUAREEX1 = false,
-	SQUAREEX2 = false,
-	SQUAREEX3 = false,
-	SQUAREEX4 = false,
-	CLASSICSQ1 = true,
-	CLASSICSQ2 = true,
-	CLASSICSQ3 = true,
-	CLASSICSQ4 = true,
-	ROUND1 = false,
-	ROUND2 = false,
-	ROUND3 = false,
-	ROUND4 = false,
-	CLASSICRO1 = true,
-	CLASSICRO2 = true,
-	CLASSICRO3 = true,
-	CLASSICRO4 = true,
-	CIRCLE1 = true,
-	CIRCLE2 = true,
-	CIRCLE3 = true,
-	CIRCLE4 = true,
+local style = {
+	flat = "FLAT",
+	smooth = "SMOOTH",
+	metal = "METALLIC",
 }
+
 local function configTable()
 	E.Options.args.mMT.args.cosmetic.args.portraits.args = {
 		header_general = {
@@ -114,6 +73,21 @@ local function configTable()
 						VERTICAL = "VERTICAL",
 					},
 				},
+				select_style = {
+					order = 2,
+					type = "select",
+					name = L["Texture Style"],
+					get = function(info)
+						return E.db.mMT.portraits.general.style
+					end,
+					set = function(info, value)
+						E.db.mMT.portraits.general.style = value
+
+						mMT:UpdatePortraitSettings()
+						mMT:UpdatePortraits()
+					end,
+					values = style,
+				},
 			},
 		},
 		header_player = {
@@ -138,18 +112,17 @@ local function configTable()
 				select_style = {
 					order = 2,
 					type = "select",
-					name = L["Style"],
+					name = L["Texture Form"],
 					get = function(info)
 						return E.db.mMT.portraits.player.texture
 					end,
 					set = function(info, value)
 						E.db.mMT.portraits.player.texture = value
-						E.db.mMT.portraits.player.circle = circle[value]
 
 						mMT:UpdatePortraitSettings()
 						mMT:UpdatePortraits()
 					end,
-					values = textures,
+					values = form,
 				},
 				range_size = {
 					order = 3,
@@ -270,18 +243,17 @@ local function configTable()
 				select_style = {
 					order = 3,
 					type = "select",
-					name = L["Style"],
+					name = L["Texture Form"],
 					get = function(info)
 						return E.db.mMT.portraits.target.texture
 					end,
 					set = function(info, value)
 						E.db.mMT.portraits.target.texture = value
-						E.db.mMT.portraits.target.circle = circle[value]
 
 						mMT:UpdatePortraitSettings()
 						mMT:UpdatePortraits()
 					end,
-					values = textures,
+					values = form,
 				},
 				select_styleExtra = {
 					order = 4,
@@ -297,10 +269,9 @@ local function configTable()
 						mMT:UpdatePortraits()
 					end,
 					values = {
-						EXTRA1 = "EXTRA",
-						EXTRA2 = "EXTRA/SMOOTH",
-						EXTRA3 = "EXTRA/BORDER",
-						EXTRA4 = "EXTRA/SMOOTH/BORDER",
+						A = "FLAT",
+						B = "SMOOTH",
+						C = "METALLIC",
 					},
 				},
 				range_size = {
@@ -410,18 +381,17 @@ local function configTable()
 				select_style = {
 					order = 2,
 					type = "select",
-					name = L["Style"],
+					name = L["Texture Form"],
 					get = function(info)
 						return E.db.mMT.portraits.party.texture
 					end,
 					set = function(info, value)
 						E.db.mMT.portraits.party.texture = value
-						E.db.mMT.portraits.party.circle = circle[value]
 
 						mMT:UpdatePortraitSettings()
 						mMT:UpdatePortraits()
 					end,
-					values = textures,
+					values = form,
 				},
 				range_size = {
 					order = 3,
@@ -512,7 +482,7 @@ local function configTable()
 			order = 4,
 			type = "group",
 			inline = true,
-			name = L["Shadow"],
+			name = L["Shadow/ Border"],
 			args = {
 				toggle_shadow = {
 					order = 1,
@@ -572,6 +542,40 @@ local function configTable()
 					end,
 					set = function(info, r, g, b, a)
 						local t = E.db.mMT.portraits.shadow.innerColor
+						t.r, t.g, t.b, t.a = r, g, b, a
+						mMT:UpdatePortraitSettings()
+						mMT:UpdatePortraits()
+					end,
+				},
+				spacer_2 = {
+					order = 6,
+					type = "description",
+					name = "\n\n",
+				},
+				toggle_border = {
+					order = 7,
+					type = "toggle",
+					name = L["Border"],
+					desc = L["Enable Borders"],
+					get = function(info)
+						return E.db.mMT.portraits.shadow.border
+					end,
+					set = function(info, value)
+						E.db.mMT.portraits.shadow.border = value
+						E:StaticPopup_Show("CONFIG_RL")
+					end,
+				},
+				color_border = {
+					type = "color",
+					order = 8,
+					name = L["Border Color"],
+					hasAlpha = true,
+					get = function(info)
+						local t = E.db.mMT.portraits.shadow.borderColor
+						return t.r, t.g, t.b, t.a
+					end,
+					set = function(info, r, g, b, a)
+						local t = E.db.mMT.portraits.shadow.borderColor
 						t.r, t.g, t.b, t.a = r, g, b, a
 						mMT:UpdatePortraitSettings()
 						mMT:UpdatePortraits()
