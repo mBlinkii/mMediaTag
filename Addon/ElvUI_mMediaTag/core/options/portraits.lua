@@ -581,6 +581,22 @@ local function configTable()
 						mMT:UpdatePortraits()
 					end,
 				},
+				color_rareborder = {
+					type = "color",
+					order = 9,
+					name = L["Rare Border Color"],
+					hasAlpha = true,
+					get = function(info)
+						local t = E.db.mMT.portraits.shadow.borderColorRare
+						return t.r, t.g, t.b, t.a
+					end,
+					set = function(info, r, g, b, a)
+						local t = E.db.mMT.portraits.shadow.borderColorRare
+						t.r, t.g, t.b, t.a = r, g, b, a
+						mMT:UpdatePortraitSettings()
+						mMT:UpdatePortraits()
+					end,
+				},
 			},
 		},
 		header_colors = {

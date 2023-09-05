@@ -533,6 +533,7 @@ P.mMT = {
 			inner = true,
 			border = true,
 			borderColor = {r = 0, g =0, b = 0, a = 1 },
+			borderColorRare = {r = 0, g =0, b = 0, a = 1 },
 			color = {r = 0, g =0, b = 0, a = 1 },
 			innerColor = {r = 0, g = 0, b = 0, a = 1 }
 		},

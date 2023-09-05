@@ -19,6 +19,7 @@ local shadow = {
 	inner = true,
 	border = true,
 	borderColor = {r = 0, g =0, b = 0, a = 1 },
+	borderColorRare = {r = 0, g =0, b = 0, a = 1 },
 	color = {r = 0, g =0, b = 0, a = 1 },
 	innerColor = {r = 0, g = 0, b = 0, a = 1 }
 }
@@ -391,7 +392,7 @@ local function CreatePortrait(parent, conf, unit)
 			frame.extra.border = frame:CreateTexture("mMT_Border_Extra", "OVERLAY", nil, -4)
 			frame.extra.border:SetAllPoints(frame)
 			frame.extra.border:SetTexture(texture, "CLAMP", "CLAMP", "TRILINEAR")
-			setColor(frame.extra.border, shadow.borderColor)
+			setColor(frame.extra.border, shadow.borderColorRare)
 			mirrorTexture(frame.extra.border, conf.mirror)
 			frame.extra.border:Hide()
 		end
@@ -412,10 +413,16 @@ local function CheckRareElite(frame, unit)
 		if shadow.enable then
 			extra.shadow:Show()
 		end
+		if shadow.border then
+			frame.extra.border:Show()
+		end
 		extra:Show()
 	else
 		if shadow.enable then
 			extra.shadow:Hide()
+		end
+		if shadow.border then
+			frame.extra.border:Hide()
 		end
 		extra:Hide()
 	end
@@ -487,7 +494,7 @@ local function UpdatePortrait(frame, conf, unit, parent)
 		if shadow.border then
 			texture = (conf.texture == "CI") and textures.border.EA or textures.border.EB
 			frame.extra.border:SetTexture(texture, "CLAMP", "CLAMP", "TRILINEAR")
-			setColor(frame.extra.border, shadow.borderColor)
+			setColor(frame.extra.border, shadow.borderColorRare)
 			mirrorTexture(frame.extra.border, conf.mirror)
 		end
 
