@@ -74,7 +74,7 @@ local function configTable()
 					},
 				},
 				select_style = {
-					order = 2,
+					order = 5,
 					type = "select",
 					name = L["Texture Style"],
 					get = function(info)
@@ -87,6 +87,18 @@ local function configTable()
 						mMT:UpdatePortraits()
 					end,
 					values = style,
+				},
+				toggle_corner = {
+					order = 6,
+					type = "toggle",
+					name = L["Enable Corner"],
+					get = function(info)
+						return E.db.mMT.portraits.general.corner
+					end,
+					set = function(info, value)
+						E.db.mMT.portraits.general.corner = value
+						E:StaticPopup_Show("CONFIG_RL")
+					end,
 				},
 			},
 		},

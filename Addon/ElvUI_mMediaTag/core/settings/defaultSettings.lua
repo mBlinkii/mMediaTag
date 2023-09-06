@@ -525,6 +525,7 @@ P.mMT = {
 			enable = true,
 			gradient = true,
 			default = false,
+			corner = true,
 			style = "flat",
 			ori = "HORIZONTAL",
 		},

@@ -18,10 +18,10 @@ local shadow = {
 	enable = true,
 	inner = true,
 	border = true,
-	borderColor = {r = 0, g =0, b = 0, a = 1 },
-	borderColorRare = {r = 0, g =0, b = 0, a = 1 },
-	color = {r = 0, g =0, b = 0, a = 1 },
-	innerColor = {r = 0, g = 0, b = 0, a = 1 }
+	borderColor = { r = 0, g = 0, b = 0, a = 1 },
+	borderColorRare = { r = 0, g = 0, b = 0, a = 1 },
+	color = { r = 0, g = 0, b = 0, a = 1 },
+	innerColor = { r = 0, g = 0, b = 0, a = 1 },
 }
 
 local target = {
@@ -53,6 +53,7 @@ local party = {
 local general = {
 	enable = true,
 	gradient = true,
+	corner = true,
 	default = false,
 	style = "flat",
 	ori = "HORIZONTAL",
@@ -315,11 +316,11 @@ local function CreatePortrait(parent, conf, unit)
 	frame:SetFrameLevel(parent.Health:GetFrameLevel() + 1)
 
 	-- Portrait Texture
-	print(general.style, conf.texture)
 	texture = textures.texture[general.style][conf.texture]
 	frame.texture = frame:CreateTexture("mMT_Border", "OVERLAY", nil, 4)
 	frame.texture:SetAllPoints(frame)
 	frame.texture:SetTexture(texture, "CLAMP", "CLAMP", "TRILINEAR")
+	setColor(frame.texture, getColor(frame, unit), conf.mirror)
 	mirrorTexture(frame.texture, conf.mirror)
 
 	-- Unit Portrait
@@ -367,22 +368,22 @@ local function CreatePortrait(parent, conf, unit)
 	end
 
 	-- Rare/Elite Texture
-	if unit == "target" and conf.extraEnable then
+	if unit == "target" and target.enable and conf.extraEnable then
 		-- Texture
 		texture = (conf.texture == "CI") and textures.texture[general.style]["EA"] or textures.texture[general.style]["EB"]
 		frame.extra = frame:CreateTexture("mMT_Extra", "OVERLAY", nil, -6)
 		frame.extra:SetAllPoints(frame)
 		frame.extra:SetTexture(texture, "CLAMP", "CLAMP", "TRILINEAR")
-		mirrorTexture(frame.extra, not conf.mirror)
+		mirrorTexture(frame.extra)
 
 		-- Shadow
 		if shadow.enable then
 			texture = (conf.texture == "CI") and textures.shadow.EA or textures.shadow.EB
 			frame.extra.shadow = frame:CreateTexture("mMT_Extra", "OVERLAY", nil, -8)
-			frame.extra.shadow:SetAllPoints(frame)
+			frame.extra.shadow:SetAllPoints(frame.extra)
 			frame.extra.shadow:SetTexture(texture, "CLAMP", "CLAMP", "TRILINEAR")
 			setColor(frame.extra.shadow, shadow.color)
-			mirrorTexture(frame.extra.shadow, not conf.mirror)
+			mirrorTexture(frame.extra.shadow)
 			frame.extra.shadow:Hide()
 		end
 
@@ -390,14 +391,34 @@ local function CreatePortrait(parent, conf, unit)
 		if shadow.border then
 			texture = (conf.texture == "CI") and textures.border.EA or textures.border.EB
 			frame.extra.border = frame:CreateTexture("mMT_Border_Extra", "OVERLAY", nil, -4)
-			frame.extra.border:SetAllPoints(frame)
+			frame.extra.border:SetAllPoints(frame.extra)
 			frame.extra.border:SetTexture(texture, "CLAMP", "CLAMP", "TRILINEAR")
 			setColor(frame.extra.border, shadow.borderColorRare)
-			mirrorTexture(frame.extra.border, conf.mirror)
+			mirrorTexture(frame.extra.border)
 			frame.extra.border:Hide()
 		end
 
 		frame.extra:Hide()
+	end
+
+	-- Corner
+	if general.corner and (conf.texture ~= "CI") then
+		texture = textures.texture[general.style].CO
+		frame.corner = frame:CreateTexture("mMT_Border", "OVERLAY", nil, 5)
+		frame.corner:SetAllPoints(frame)
+		frame.corner:SetTexture(texture, "CLAMP", "CLAMP", "TRILINEAR")
+		setColor(frame.corner, getColor(frame, unit), conf.mirror)
+		mirrorTexture(frame.corner, conf.mirror)
+
+		-- Border
+		if shadow.border then
+			texture = textures.border.CO
+			frame.corner.border = frame:CreateTexture("mMT_Border", "OVERLAY", nil, 6)
+			frame.corner.border:SetAllPoints(frame.corner)
+			frame.corner.border:SetTexture(texture, "CLAMP", "CLAMP", "TRILINEAR")
+			setColor(frame.corner.border, shadow.borderColor)
+			mirrorTexture(frame.corner.border, conf.mirror)
+		end
 	end
 
 	return frame
@@ -439,6 +460,7 @@ local function UpdatePortrait(frame, conf, unit, parent)
 	-- Portrait Texture
 	texture = textures.texture[general.style][conf.texture]
 	frame.texture:SetTexture(texture, "CLAMP", "CLAMP", "TRILINEAR")
+	setColor(frame.texture, getColor(frame, unit), conf.mirror)
 	mirrorTexture(frame.texture, conf.mirror)
 
 	-- Unit Portrait
@@ -500,6 +522,22 @@ local function UpdatePortrait(frame, conf, unit, parent)
 
 		CheckRareElite(frame, unit)
 	end
+
+	-- Corner
+	if general.corner and (conf.texture ~= "CI") then
+		texture = textures.texture[general.style].CO
+		frame.corner:SetTexture(texture, "CLAMP", "CLAMP", "TRILINEAR")
+		setColor(frame.corner, getColor(frame, unit), conf.mirror)
+		mirrorTexture(frame.corner, conf.mirror)
+
+		-- Border
+		if shadow.border then
+			texture = textures.border.CO
+			frame.corner.border:SetTexture(texture, "CLAMP", "CLAMP", "TRILINEAR")
+			setColor(frame.corner.border, shadow.borderColor)
+			mirrorTexture(frame.corner.border, conf.mirror)
+		end
+	end
 end
 
 function mMT:UpdatePortraits()
@@ -533,6 +571,9 @@ function mMT:SetupPortraits()
 		mMT.Portraits.Player:SetScript("OnEvent", function(self, event)
 			SetPortraitTexture(self.portrait, "player", (E.Retail and not (player.texture == "CI")))
 			setColor(self.texture, getColor(self, "player"), player.mirror)
+			if general.corner and (player.texture ~= "CI") then
+				setColor(self.corner, getColor(self, "player"), player.mirror)
+			end
 		end)
 	end
 
@@ -544,6 +585,9 @@ function mMT:SetupPortraits()
 		mMT.Portraits.Target:SetScript("OnEvent", function(self, event)
 			SetPortraitTexture(self.portrait, "target", (E.Retail and not (target.texture == "CI")))
 			setColor(self.texture, getColor(self, "target"), target.mirror)
+			if general.corner and (target.texture ~= "CI") then
+				setColor(self.corner, getColor(self, "target"), target.mirror)
+			end
 			if target.extraEnable then
 				CheckRareElite(self, "target")
 			else
