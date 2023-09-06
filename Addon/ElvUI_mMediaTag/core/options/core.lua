@@ -282,6 +282,12 @@ local function configTable()
 						childGroups = "tab",
 						args = {},
 					},
+					portraits = {
+						order = 7,
+						type = "group",
+						name = L["Portraits"],
+						args = {},
+					},
 					textures = {
 						order = 20,
 						type = "group",
@@ -290,14 +296,6 @@ local function configTable()
 					},
 				},
 			},
-			-- maui = {
-			-- 	order = 9,
-			-- 	type = "group",
-			-- 	name = "|CFF29C0E3M|r|CFF5493FFa|r|CFF854FE3U|r|CFFA632E3I|r",
-			-- 	icon = "Interface\\Addons\\ElvUI_mMediaTag\\media\\logo\\maui_icon.tga",
-			-- 	childGroups = "tab",
-			-- 	args = {},
-			-- },
 			about = {
 				order = 10,
 				type = "group",

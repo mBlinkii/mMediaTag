@@ -3,4 +3,5 @@
 	<Script file="CustomClassColors.lua"/>
 	<Script file="RoleIcons.lua"/>
 	<Script file="unitframeicons.lua"/>
+	<Script file="portrait.lua"/>
 </Ui>

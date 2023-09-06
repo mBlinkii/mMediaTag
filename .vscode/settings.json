@@ -446,7 +446,12 @@
         "PVP_TALENTS",
         "BLUE_FONT_COLOR",
         "PlayerUtil",
-        "ID"
+        "ID",
+        "COLOR_PICKER",
+        "FONT_SIZE",
+        "RegisterUnitWatch",
+        "DevTool",
+        "UPDATE"
     ],
     "Lua.diagnostics.disable": [
         "undefined-field"

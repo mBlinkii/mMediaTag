@@ -22,7 +22,7 @@ local function configTable()
 					end,
 				},
 				toggle_logo = {
-					order = 1,
+					order = 2,
 					type = "toggle",
 					name = L["AFK Logo"],
 					get = function(info)
@@ -34,9 +34,9 @@ local function configTable()
 					end,
 				},
 				toggle_infoscreen = {
-					order = 1,
+					order = 3,
 					type = "toggle",
-					name = L["AFK Info Screen"],
+					name = L["Info Screen"],
 					get = function(info)
 						return E.db.mMT.afk.infoscreen
 					end,

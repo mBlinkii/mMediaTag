@@ -237,6 +237,11 @@ function mMT:Initialize()
 end
 
 function mMT:PLAYER_ENTERING_WORLD()
+	if E.db.mMT.portraits.general.enable then
+		mMT:UpdatePortraitSettings()
+		mMT:SetupPortraits()
+	end
+
 	-- Change Log
 	if E.db.mMT.version ~= mMT.Version then
 		E:ToggleOptions()
