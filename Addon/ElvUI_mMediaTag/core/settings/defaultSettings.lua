@@ -522,7 +522,7 @@ P.mMT = {
 			y = 0,
 		},
 		general = {
-			enable = true,
+			enable = false,
 			gradient = true,
 			default = false,
 			corner = true,
