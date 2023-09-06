@@ -20,20 +20,17 @@ local change_log_important = {
 }
 
 local change_log_new = {
-	"AFK Screen gets settings for custom logo and toggle for infoscreen",
+	"NEW Unit Portraits",
 }
 
 local change_log_update = {
-	"Dock functions and Code to prevent taints and performance optimized",
-	"Update Dock Professions menu to prevent taints",
-	"Update Professions Datatext to prevent taints, add Icons, Fire Spell and Open Prof Window",
-	"Add Mega Dungeon ID to Instance Difficulty",
-	"Update Hearthstones Dala and Garrison to Toys",
-	"Update TP Datatext add, add extra menu for Dungeon TPs and add short names for the Dungeon TPs",
+	"Update Events for Dock ",
 }
 
 local change_log_fix = {
-	"Fixed many Bugs with Dock colors and Font settings",
+	"Fixed for dropdown menu, to prevent wrong menu entries",
+	"Fixed Settings menu for afk screen (sorting)",
+	"Fixed Guild dock bug old api",
 }
 
 local function Concatenation(tbl, icon, color)
@@ -53,7 +50,7 @@ local function Concatenation(tbl, icon, color)
 end
 
 local function configTable()
-	local releasdate = "08.08.2023"
+	local releasdate = "06.09.2023"
 	--change_log_important_string = Concatenation(change_log_important)
 	change_log_new_string = Concatenation(change_log_new)
 	change_log_update_string = Concatenation(change_log_update)
