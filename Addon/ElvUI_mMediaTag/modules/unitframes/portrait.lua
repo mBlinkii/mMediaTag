@@ -611,11 +611,13 @@ function mMT:SetupPortraits()
 				mMT.Portraits[portrait]:RegisterUnitEvent("UNIT_PORTRAIT_UPDATE", frame.unit)
 				mMT.Portraits[portrait]:RegisterEvent("PLAYER_ENTERING_WORLD")
 				mMT.Portraits[portrait]:RegisterEvent("GROUP_ROSTER_UPDATE")
-				mMT.Portraits[portrait]:RegisterEvent("UNIT_CONNECTION")
+				mMT.Portraits[portrait]:RegisterEvent("PORTRAITS_UPDATED")
 				mMT.Portraits[portrait]:SetScript("OnEvent", function(self, event)
-					mMT:Print(event)
 					SetPortraitTexture(self.portrait, frame.unit, (E.Retail and not (party.texture == "CI")))
 					setColor(self.texture, getColor(self, frame.unit), party.mirror)
+					if general.corner and (player.texture ~= "CI") then
+						setColor(self.corner, getColor(self, frame.unit), party.mirror)
+					end
 				end)
 			end
 		end

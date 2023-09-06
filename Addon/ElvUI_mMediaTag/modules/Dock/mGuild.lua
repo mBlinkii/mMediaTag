@@ -248,8 +248,6 @@ local function OnClick(self, btn)
 	else
 		ToggleFriendsFrame(3)
 	end
-
-	mMT:ShowHideNotification(self, false)
 end
 
 local function OnLeave(self)

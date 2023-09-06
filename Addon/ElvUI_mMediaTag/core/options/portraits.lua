@@ -73,8 +73,13 @@ local function configTable()
 						VERTICAL = "VERTICAL",
 					},
 				},
-				select_style = {
+				spacer_2 = {
 					order = 5,
+					type = "description",
+					name = "\n\n",
+				},
+				select_style = {
+					order = 6,
 					type = "select",
 					name = L["Texture Style"],
 					get = function(info)
@@ -89,7 +94,7 @@ local function configTable()
 					values = style,
 				},
 				toggle_corner = {
-					order = 6,
+					order = 7,
 					type = "toggle",
 					name = L["Enable Corner"],
 					get = function(info)
