@@ -384,7 +384,7 @@ local function CreatePortrait(parent, conf, unit)
 			frame.extra.shadow:SetAllPoints(frame.extra)
 			frame.extra.shadow:SetTexture(texture, "CLAMP", "CLAMP", "TRILINEAR")
 			setColor(frame.extra.shadow, shadow.color)
-			mirrorTexture(frame.extra.shadow,not conf.mirror)
+			mirrorTexture(frame.extra.shadow, not conf.mirror)
 			frame.extra.shadow:Hide()
 		end
 
@@ -395,7 +395,7 @@ local function CreatePortrait(parent, conf, unit)
 			frame.extra.border:SetAllPoints(frame.extra)
 			frame.extra.border:SetTexture(texture, "CLAMP", "CLAMP", "TRILINEAR")
 			setColor(frame.extra.border, shadow.borderColorRare)
-			mirrorTexture(frame.extra.border,not conf.mirror)
+			mirrorTexture(frame.extra.border, not conf.mirror)
 			frame.extra.border:Hide()
 		end
 
@@ -572,9 +572,12 @@ function mMT:SetupPortraits()
 		mMT.Portraits.Player:RegisterEvent("PLAYER_ENTERING_WORLD")
 		mMT.Portraits.Player:SetScript("OnEvent", function(self, event)
 			SetPortraitTexture(self.portrait, "player", (E.Retail and not (player.texture == "CI")))
-			setColor(self.texture, getColor(self, "player"), player.mirror)
-			if general.corner and (player.texture ~= "CI") then
-				setColor(self.corner, getColor(self, "player"), player.mirror)
+
+			if event == "PLAYER_ENTERING_WORLD" then
+				setColor(self.texture, getColor(self, "player"), player.mirror)
+				if general.corner and E.Retail and (player.texture ~= "CI") then
+					setColor(self.corner, getColor(self, "player"), player.mirror)
+				end
 			end
 		end)
 	end
@@ -586,23 +589,22 @@ function mMT:SetupPortraits()
 		mMT.Portraits.Target:RegisterEvent("PLAYER_ENTERING_WORLD")
 		mMT.Portraits.Target:SetScript("OnEvent", function(self, event)
 			SetPortraitTexture(self.portrait, "target", (E.Retail and not (target.texture == "CI")))
-			setColor(self.texture, getColor(self, "target"), target.mirror)
-			if general.corner and (target.texture ~= "CI") then
-				setColor(self.corner, getColor(self, "target"), target.mirror)
-			end
-			if target.extraEnable then
-				CheckRareElite(self, "target")
-			else
-				self.extra:Hide()
+
+			if event == "PLAYER_TARGET_CHANGED" or event == "PLAYER_ENTERING_WORLD" then
+				setColor(self.texture, getColor(self, "target"), target.mirror)
+
+				if general.corner and E.Retail and (player.texture ~= "CI") then
+					setColor(self.corner, getColor(self, "target"), target.mirror)
+				end
+
+				if target.extraEnable then
+					CheckRareElite(self, "target")
+				else
+					self.extra:Hide()
+				end
 			end
 		end)
 	end
-
-	--self:RegisterEvent('UNIT_MODEL_CHANGED', Path)
-	--self:RegisterEvent('UNIT_PORTRAIT_UPDATE', Path)
-	--self:RegisterEvent('PORTRAITS_UPDATED', Path, true)
-	--self:RegisterEvent('UNIT_CONNECTION', Path)
-	--self:RegisterEvent('PARTY_MEMBER_ENABLE', Path)
 
 	if party.enable then
 		for i = 1, 5 do
@@ -615,11 +617,14 @@ function mMT:SetupPortraits()
 				mMT.Portraits[portrait]:RegisterEvent("GROUP_ROSTER_UPDATE")
 				mMT.Portraits[portrait]:RegisterEvent("PORTRAITS_UPDATED")
 				mMT.Portraits[portrait]:SetScript("OnEvent", function(self, event)
-					SetPortraitTexture(self.portrait, frame.unit, (E.Retail and not (party.texture == "CI")))
-					setColor(self.texture, getColor(self, frame.unit), party.mirror)
-					if general.corner and (player.texture ~= "CI") then
-						setColor(self.corner, getColor(self, frame.unit), party.mirror)
+					if event == "GROUP_ROSTER_UPDATE" or event == "PLAYER_ENTERING_WORLD" then
+						setColor(self.texture, getColor(self, frame.unit), party.mirror)
+						if general.corner and E.Retail and (player.texture ~= "CI") then
+							setColor(self.corner, getColor(self, frame.unit), party.mirror)
+						end
 					end
+
+					SetPortraitTexture(self.portrait, frame.unit, (E.Retail and not (party.texture == "CI")))
 				end)
 			end
 		end
