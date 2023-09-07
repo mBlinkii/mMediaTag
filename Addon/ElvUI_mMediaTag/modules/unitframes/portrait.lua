@@ -335,7 +335,7 @@ local function CreatePortrait(parent, conf, unit)
 	texture = textures.mask[conf.texture] or conf.mirror and textures.mask.B[conf.texture] or textures.mask.A[conf.texture]
 	frame.mask = frame:CreateMaskTexture()
 	frame.mask:SetTexture(texture, "CLAMPTOBLACKADDITIVE", "CLAMPTOBLACKADDITIVE")
-	frame.mask:SetAllPoints(frame.portrait)
+	frame.mask:SetAllPoints(frame)
 	frame.portrait:AddMaskTexture(frame.mask)
 
 	-- Portrait Shadow
