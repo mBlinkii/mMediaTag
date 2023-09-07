@@ -147,8 +147,8 @@ local tx_DB = {
 			},
 		},
 		border = {
-			SQ = path .. "border_sq.tga",
-			RO = path .. "border_ro.tga",
+			SQ = path .. "border_sq_c.tga",
+			RO = path .. "border_ro_c.tga",
 			CI = path .. "border_ci.tga",
 			CO = path .. "border_co.tga",
 			EA = path .. "border_ex_a.tga",
@@ -336,6 +336,7 @@ local function CreatePortrait(parent, conf, unit)
 	frame.mask = frame:CreateMaskTexture()
 	frame.mask:SetTexture(texture, "CLAMPTOBLACKADDITIVE", "CLAMPTOBLACKADDITIVE")
 	frame.mask:SetAllPoints(frame.portrait)
+	frame.portrait:AddMaskTexture(frame.mask)
 
 	-- Portrait Shadow
 	if shadow.enable then
