@@ -2,62 +2,7 @@ local E = unpack(ElvUI)
 local _G = _G
 local SetPortraitTexture = SetPortraitTexture
 
-local player = {
-	enable = true,
-	texture = "ROUND5",
-	mirror = false,
-	size = 90,
-	point = "RIGHT",
-	relativePoint = "LEFT",
-	circle = false,
-	x = 0,
-	y = 0,
-}
-
-local shadow = {
-	enable = true,
-	inner = true,
-	border = true,
-	borderColor = { r = 0, g = 0, b = 0, a = 1 },
-	borderColorRare = { r = 0, g = 0, b = 0, a = 1 },
-	color = { r = 0, g = 0, b = 0, a = 1 },
-	innerColor = { r = 0, g = 0, b = 0, a = 1 },
-}
-
-local target = {
-	enable = true,
-	texture = "ROUND5",
-	extraEnable = true,
-	extra = "EXTRA5",
-	mirror = true,
-	size = 90,
-	point = "LEFT",
-	relativePoint = "RIGHT",
-	circle = false,
-	x = 0,
-	y = 0,
-}
-
-local party = {
-	enable = true,
-	texture = "ROUND5",
-	mirror = false,
-	size = 90,
-	point = "RIGHT",
-	relativePoint = "LEFT",
-	circle = false,
-	x = 0,
-	y = 0,
-}
-
-local general = {
-	enable = true,
-	gradient = true,
-	corner = true,
-	default = false,
-	style = "flat",
-	ori = "HORIZONTAL",
-}
+local settings = {}
 local path = "Interface\\Addons\\ElvUI_mMediaTag\\media\\portraits\\"
 local tx_DB = {
 	retail = {
@@ -147,8 +92,8 @@ local tx_DB = {
 			},
 		},
 		border = {
-			SQ = path .. "border_sq_c.tga",
-			RO = path .. "border_ro_c.tga",
+			SQ = path .. "border_sq.tga",
+			RO = path .. "border_ro.tga",
 			CI = path .. "border_ci.tga",
 			CO = path .. "border_co.tga",
 			EA = path .. "border_ex_a.tga",
@@ -175,129 +120,43 @@ local tx_DB = {
 }
 local textures = tx_DB.retail
 
-local colors = {
-	default = {
-		a = { r = 1, g = 1, b = 0, a = 1 },
-		b = { r = 1, g = 1, b = 0, a = 1 },
-	},
-	DEATHKNIGHT = {
-		a = { r = 0.77, g = 0.12, b = 0.23, a = 1 },
-		b = { r = 0.37, g = 0, b = 0, a = 1 },
-	},
-	DEMONHUNTER = {
-		a = { r = 0.64, g = 0.19, b = 0.79, a = 1 },
-		b = { r = 0.24, g = 0, b = 0.37, a = 1 },
-	},
-	DRUID = {
-		a = { r = 1.00, g = 0.49, b = 0.04, a = 1 },
-		b = { r = 0.6, g = 0.09, b = 0, a = 1 },
-	},
-	EVOKER = {
-		a = { r = 0.20, g = 0.58, b = 0.50, a = 1 },
-		b = { r = 0, g = 0.18, b = 0.1, a = 1 },
-	},
-	HUNTER = {
-		a = { r = 0.67, g = 0.83, b = 0.45, a = 1 },
-		b = { r = 0.27, g = 0.43, b = 0.05, a = 1 },
-	},
-	MAGE = {
-		a = { r = 0.20, g = 0.78, b = 0.92, a = 1 },
-		b = { r = 0, g = 0.38, b = 0.52, a = 1 },
-	},
-	MONK = {
-		a = { r = 0, g = 1.00, b = 0.60, a = 1 },
-		b = { r = 0, g = 0.6, b = 0.2, a = 1 },
-	},
-	PALADIN = {
-		a = { r = 0.96, g = 0.55, b = 0.73, a = 1 },
-		b = { r = 0.56, g = 0.15, b = 0.43, a = 1 },
-	},
-	PRIEST = {
-		a = { r = 1.00, g = 1.00, b = 1.00, a = 1 },
-		b = { r = 0.6, g = 0.6, b = 0.6, a = 1 },
-	},
-	ROGUE = {
-		a = { r = 1.00, g = 0.96, b = 0.41, a = 1 },
-		b = { r = 0.6, g = 0.56, b = 0.01, a = 1 },
-	},
-	SHAMAN = {
-		a = { r = 0.00, g = 0.44, b = 0.87, a = 1 },
-		b = { r = 0, g = 0.04, b = 0.47, a = 1 },
-	},
-	WARLOCK = {
-		a = { r = 0.53, g = 0.53, b = 0.93, a = 1 },
-		b = { r = 0.13, g = 0.13, b = 0.53, a = 1 },
-	},
-	WARRIOR = {
-		a = { r = 0.78, g = 0.61, b = 0.43, a = 1 },
-		b = { r = 0.38, g = 0.21, b = 0.03, a = 1 },
-	},
-	rare = {
-		a = { r = 0.51, g = 0.33, b = 0.33, a = 1 },
-		b = { r = 0.11, g = 0, b = 0, a = 1 },
-	},
-	relite = {
-		a = { r = 0.67, g = 0.32, b = 0.78, a = 1 },
-		b = { r = 0.27, g = 0, b = 0.38, a = 1 },
-	},
-	elite = {
-		a = { r = 1, g = 0.40, b = 0.83, a = 1 },
-		b = { r = 0.6, g = 0, b = 0.43, a = 1 },
-	},
-	enemy = {
-		a = { r = 0.77, g = 0.12, b = 0.23, a = 1 },
-		b = { r = 0.37, g = 0, b = 0, a = 1 },
-	},
-	neutral = {
-		a = { r = 1.00, g = 0.96, b = 0.41, a = 1 },
-		b = { r = 0.6, g = 0.56, b = 0.01, a = 1 },
-	},
-	friendly = {
-		a = { r = 0, g = 1.00, b = 0.60, a = 1 },
-		b = { r = 0, g = 0.6, b = 0.2, a = 1 },
-	},
-}
-
 function mMT:UpdatePortraitSettings()
-	player = E.db.mMT.portraits.player
-	target = E.db.mMT.portraits.target
-	party = E.db.mMT.portraits.party
-	general = E.db.mMT.portraits.general
-	colors = E.db.mMT.portraits.colors
-	shadow = E.db.mMT.portraits.shadow
+	settings = E.db.mMT.portraits
 end
 
 local function setColor(texture, color, mirror)
-	color = color or colors.default
+	if not texture or not color then
+		return
+	end
 
-	if general.gradient and not color.r then
+	if settings.general.gradient and not color.r then
 		local a, b = color.a, color.b
-		if mirror and (general.ori == "HORIZONTAL") then
+		if mirror and (settings.general.ori == "HORIZONTAL") then
 			a, b = b, a
 		end
-		texture:SetGradient(general.ori, a, b)
-	else
+		texture:SetGradient(settings.general.ori, a, b)
+	elseif color.r then
 		texture:SetVertexColor(color.r, color.g, color.b, color.a)
 	end
 end
 
 local function getColor(frame, unit)
-	if general.default then
-		return colors.default
+	if settings.general.default then
+		return settings.colors.default
 	end
 	if UnitIsPlayer(unit) then
 		local _, class = UnitClass(unit)
 		if frame.class ~= class then
 			frame.class = class
-			frame.color = colors[class]
+			frame.color = settings.colors[class]
 		end
 		return frame.color
 	else
 		local reaction = UnitReaction("player", unit)
 		if reaction then
-			return colors[reaction <= 3 and "enemy" or reaction == 4 and "neutral" or "friendly"]
+			return settings.colors[reaction <= 3 and "enemy" or reaction == 4 and "neutral" or "friendly"]
 		else
-			return colors.enemy
+			return settings.colors.enemy
 		end
 	end
 end
@@ -316,7 +175,7 @@ local function CreatePortrait(parent, conf, unit)
 	frame:SetFrameLevel(parent.Health:GetFrameLevel() + 1)
 
 	-- Portrait Texture
-	texture = textures.texture[general.style][conf.texture]
+	texture = textures.texture[settings.general.style][conf.texture]
 	frame.texture = frame:CreateTexture("mMT_Border", "OVERLAY", nil, 4)
 	frame.texture:SetAllPoints(frame)
 	frame.texture:SetTexture(texture, "CLAMP", "CLAMP", "TRILINEAR")
@@ -339,62 +198,62 @@ local function CreatePortrait(parent, conf, unit)
 	frame.portrait:AddMaskTexture(frame.mask)
 
 	-- Portrait Shadow
-	if shadow.enable then
+	if settings.shadow.enable then
 		texture = textures.shadow[conf.texture]
 		frame.shadow = frame:CreateTexture("mMT_Shadow", "OVERLAY", nil, -4)
 		frame.shadow:SetAllPoints(frame)
 		frame.shadow:SetTexture(texture, "CLAMP", "CLAMP", "TRILINEAR")
-		setColor(frame.shadow, shadow.color)
+		setColor(frame.shadow, settings.shadow.color)
 		mirrorTexture(frame.shadow, conf.mirror)
 	end
 
 	-- Inner Portrait Shadow
-	if shadow.inner then
+	if settings.shadow.inner then
 		texture = textures.inner[conf.texture]
 		frame.InnerShadow = frame:CreateTexture("mMT_innerShadow", "OVERLAY", nil, 2)
 		frame.InnerShadow:SetAllPoints(frame)
 		frame.InnerShadow:SetTexture(texture, "CLAMP", "CLAMP", "TRILINEAR")
-		setColor(frame.InnerShadow, shadow.innerColor)
+		setColor(frame.InnerShadow, settings.shadow.innerColor)
 		mirrorTexture(frame.InnerShadow, conf.mirror)
 	end
 
 	-- Portrait Border
-	if shadow.border then
+	if settings.shadow.border then
 		texture = textures.border[conf.texture]
 		frame.border = frame:CreateTexture("mMT_Border", "OVERLAY", nil, 6)
 		frame.border:SetAllPoints(frame)
 		frame.border:SetTexture(texture, "CLAMP", "CLAMP", "TRILINEAR")
-		setColor(frame.border, shadow.borderColor)
+		setColor(frame.border, settings.shadow.borderColor)
 		mirrorTexture(frame.border, conf.mirror)
 	end
 
 	-- Rare/Elite Texture
-	if unit == "target" and target.enable and conf.extraEnable then
+	if unit == "target" and settings.target.enable and conf.extraEnable then
 		-- Texture
-		texture = (conf.texture == "CI") and textures.texture[general.style]["EA"] or textures.texture[general.style]["EB"]
+		texture = (conf.texture == "CI") and textures.texture[settings.general.style]["EA"] or textures.texture[settings.general.style]["EB"]
 		frame.extra = frame:CreateTexture("mMT_Extra", "OVERLAY", nil, -6)
 		frame.extra:SetAllPoints(frame)
 		frame.extra:SetTexture(texture, "CLAMP", "CLAMP", "TRILINEAR")
 		mirrorTexture(frame.extra, not conf.mirror)
 
 		-- Shadow
-		if shadow.enable then
+		if settings.shadow.enable then
 			texture = (conf.texture == "CI") and textures.shadow.EA or textures.shadow.EB
 			frame.extra.shadow = frame:CreateTexture("mMT_Extra", "OVERLAY", nil, -8)
 			frame.extra.shadow:SetAllPoints(frame.extra)
 			frame.extra.shadow:SetTexture(texture, "CLAMP", "CLAMP", "TRILINEAR")
-			setColor(frame.extra.shadow, shadow.color)
+			setColor(frame.extra.shadow, settings.shadow.color)
 			mirrorTexture(frame.extra.shadow, not conf.mirror)
 			frame.extra.shadow:Hide()
 		end
 
 		-- Border
-		if shadow.border then
+		if settings.shadow.border then
 			texture = (conf.texture == "CI") and textures.border.EA or textures.border.EB
 			frame.extra.border = frame:CreateTexture("mMT_Border_Extra", "OVERLAY", nil, -4)
 			frame.extra.border:SetAllPoints(frame.extra)
 			frame.extra.border:SetTexture(texture, "CLAMP", "CLAMP", "TRILINEAR")
-			setColor(frame.extra.border, shadow.borderColorRare)
+			setColor(frame.extra.border, settings.shadow.borderColorRare)
 			mirrorTexture(frame.extra.border, not conf.mirror)
 			frame.extra.border:Hide()
 		end
@@ -403,8 +262,8 @@ local function CreatePortrait(parent, conf, unit)
 	end
 
 	-- Corner
-	if general.corner and (conf.texture ~= "CI") then
-		texture = textures.texture[general.style].CO
+	if settings.general.corner and (conf.texture ~= "CI") then
+		texture = textures.texture[settings.general.style].CO
 		frame.corner = frame:CreateTexture("mMT_Border", "OVERLAY", nil, 5)
 		frame.corner:SetAllPoints(frame)
 		frame.corner:SetTexture(texture, "CLAMP", "CLAMP", "TRILINEAR")
@@ -412,12 +271,12 @@ local function CreatePortrait(parent, conf, unit)
 		mirrorTexture(frame.corner, conf.mirror)
 
 		-- Border
-		if shadow.border then
+		if settings.shadow.border then
 			texture = textures.border.CO
 			frame.corner.border = frame:CreateTexture("mMT_Border", "OVERLAY", nil, 6)
 			frame.corner.border:SetAllPoints(frame.corner)
 			frame.corner.border:SetTexture(texture, "CLAMP", "CLAMP", "TRILINEAR")
-			setColor(frame.corner.border, shadow.borderColor)
+			setColor(frame.corner.border, settings.shadow.borderColor)
 			mirrorTexture(frame.corner.border, conf.mirror)
 		end
 	end
@@ -427,26 +286,25 @@ end
 
 local function CheckRareElite(frame, unit)
 	local c = UnitClassification(unit)
-	local extra = frame.extra
-	local color = colors[c]
+	local color = settings.colors[c]
 
 	if color then
-		setColor(extra, color)
-		if shadow.enable then
-			extra.shadow:Show()
+		setColor(frame.extra, color)
+		if settings.shadow.enable and frame.extra.shadow then
+			frame.extra.shadow:Show()
 		end
-		if shadow.border then
+		if settings.shadow.border and frame.extra.border then
 			frame.extra.border:Show()
 		end
-		extra:Show()
+		frame.extra:Show()
 	else
-		if shadow.enable then
-			extra.shadow:Hide()
+		if settings.shadow.enable and frame.extra.shadow then
+			frame.extra.shadow:Hide()
 		end
-		if shadow.border then
+		if settings.shadow.border and frame.extra.border then
 			frame.extra.border:Hide()
 		end
-		extra:Hide()
+		frame.extra:Hide()
 	end
 end
 
@@ -460,7 +318,7 @@ local function UpdatePortrait(frame, conf, unit, parent)
 	frame:SetFrameLevel(parent.Health:GetFrameLevel() + 1)
 
 	-- Portrait Texture
-	texture = textures.texture[general.style][conf.texture]
+	texture = textures.texture[settings.general.style][conf.texture]
 	frame.texture:SetTexture(texture, "CLAMP", "CLAMP", "TRILINEAR")
 	setColor(frame.texture, getColor(frame, unit), conf.mirror)
 	mirrorTexture(frame.texture, conf.mirror)
@@ -476,49 +334,49 @@ local function UpdatePortrait(frame, conf, unit, parent)
 	frame.mask:SetTexture(texture, "CLAMPTOBLACKADDITIVE", "CLAMPTOBLACKADDITIVE")
 
 	-- Portrait Shadow
-	if shadow.enable then
+	if settings.shadow.enable then
 		texture = textures.shadow[conf.texture]
 		frame.shadow:SetTexture(texture, "CLAMP", "CLAMP", "TRILINEAR")
-		setColor(frame.shadow, shadow.color)
+		setColor(frame.shadow, settings.shadow.color)
 		mirrorTexture(frame.shadow, conf.mirror)
 	end
 
 	-- Inner Portrait Shadow
-	if shadow.inner then
+	if settings.shadow.inner then
 		texture = textures.inner[conf.texture]
 		frame.InnerShadow:SetTexture(texture, "CLAMP", "CLAMP", "TRILINEAR")
-		setColor(frame.InnerShadow, shadow.innerColor)
+		setColor(frame.InnerShadow, settings.shadow.innerColor)
 		mirrorTexture(frame.InnerShadow, conf.mirror)
 	end
 
 	-- Portrait Border
-	if shadow.border then
+	if settings.shadow.border then
 		texture = textures.border[conf.texture]
 		frame.border:SetTexture(texture, "CLAMP", "CLAMP", "TRILINEAR")
-		setColor(frame.border, shadow.borderColor)
+		setColor(frame.border, settings.shadow.borderColor)
 		mirrorTexture(frame.border, conf.mirror)
 	end
 
 	-- Rare/Elite Texture
 	if unit == "target" and conf.extraEnable then
 		-- Texture
-		texture = (conf.texture == "CI") and textures.texture[general.style]["EA"] or textures.texture[general.style]["EB"]
+		texture = (conf.texture == "CI") and textures.texture[settings.general.style]["EA"] or textures.texture[settings.general.style]["EB"]
 		frame.extra:SetTexture(texture, "CLAMP", "CLAMP", "TRILINEAR")
 		mirrorTexture(frame.extra, not conf.mirror)
 
 		-- Shadow
-		if shadow.enable then
+		if settings.shadow.enable then
 			texture = (conf.texture == "CI") and textures.shadow.EA or textures.shadow.EB
 			frame.extra.shadow:SetTexture(texture, "CLAMP", "CLAMP", "TRILINEAR")
-			setColor(frame.extra.shadow, shadow.color)
+			setColor(frame.extra.shadow, settings.shadow.color)
 			mirrorTexture(frame.extra.shadow, not conf.mirror)
 		end
 
 		-- Border
-		if shadow.border then
+		if settings.shadow.border then
 			texture = (conf.texture == "CI") and textures.border.EA or textures.border.EB
 			frame.extra.border:SetTexture(texture, "CLAMP", "CLAMP", "TRILINEAR")
-			setColor(frame.extra.border, shadow.borderColorRare)
+			setColor(frame.extra.border, settings.shadow.borderColorRare)
 			mirrorTexture(frame.extra.border, not conf.mirror)
 		end
 
@@ -526,78 +384,87 @@ local function UpdatePortrait(frame, conf, unit, parent)
 	end
 
 	-- Corner
-	if general.corner and (conf.texture ~= "CI") then
-		texture = textures.texture[general.style].CO
+	if settings.general.corner and (conf.texture ~= "CI") then
+		texture = textures.texture[settings.general.style].CO
 		frame.corner:SetTexture(texture, "CLAMP", "CLAMP", "TRILINEAR")
 		setColor(frame.corner, getColor(frame, unit), conf.mirror)
 		mirrorTexture(frame.corner, conf.mirror)
 
 		-- Border
-		if shadow.border then
+		if settings.shadow.border then
 			texture = textures.border.CO
 			frame.corner.border:SetTexture(texture, "CLAMP", "CLAMP", "TRILINEAR")
-			setColor(frame.corner.border, shadow.borderColor)
+			setColor(frame.corner.border, settings.shadow.borderColor)
 			mirrorTexture(frame.corner.border, conf.mirror)
 		end
 	end
 end
 
 function mMT:UpdatePortraits()
+	if not settings or not E.db.mMT.portraits.general.enable then
+		return
+	end
+
 	if mMT.Portraits.Player then
-		UpdatePortrait(mMT.Portraits.Player, player, "player", _G.ElvUF_Player)
+		UpdatePortrait(mMT.Portraits.Player, settings.player, "player", _G.ElvUF_Player)
 	end
 
 	if mMT.Portraits.Target then
-		UpdatePortrait(mMT.Portraits.Target, target, "target", _G.ElvUF_Target)
+		UpdatePortrait(mMT.Portraits.Target, settings.target, "target", _G.ElvUF_Target)
 	end
 
 	if mMT.Portraits.Party1 then
-		UpdatePortrait(mMT.Portraits.Party1, party, _G.ElvUF_PartyGroup1UnitButton1.unit, _G.ElvUF_PartyGroup1UnitButton1)
-		UpdatePortrait(mMT.Portraits.Party2, party, _G.ElvUF_PartyGroup1UnitButton2.unit, _G.ElvUF_PartyGroup1UnitButton2)
-		UpdatePortrait(mMT.Portraits.Party3, party, _G.ElvUF_PartyGroup1UnitButton3.unit, _G.ElvUF_PartyGroup1UnitButton3)
-		UpdatePortrait(mMT.Portraits.Party4, party, _G.ElvUF_PartyGroup1UnitButton4.unit, _G.ElvUF_PartyGroup1UnitButton4)
-		UpdatePortrait(mMT.Portraits.Party5, party, _G.ElvUF_PartyGroup1UnitButton5.unit, _G.ElvUF_PartyGroup1UnitButton5)
+		UpdatePortrait(mMT.Portraits.Party1, settings.party, _G.ElvUF_PartyGroup1UnitButton1.unit, _G.ElvUF_PartyGroup1UnitButton1)
+		UpdatePortrait(mMT.Portraits.Party2, settings.party, _G.ElvUF_PartyGroup1UnitButton2.unit, _G.ElvUF_PartyGroup1UnitButton2)
+		UpdatePortrait(mMT.Portraits.Party3, settings.party, _G.ElvUF_PartyGroup1UnitButton3.unit, _G.ElvUF_PartyGroup1UnitButton3)
+		UpdatePortrait(mMT.Portraits.Party4, settings.party, _G.ElvUF_PartyGroup1UnitButton4.unit, _G.ElvUF_PartyGroup1UnitButton4)
+		UpdatePortrait(mMT.Portraits.Party5, settings.party, _G.ElvUF_PartyGroup1UnitButton5.unit, _G.ElvUF_PartyGroup1UnitButton5)
 	end
 end
 
 function mMT:SetupPortraits()
+	if not settings and settings.colors then
+		return
+	end
+
 	textures = E.Retail and tx_DB.retail or tx_DB.classic
+
 	if not mMT.Portraits then
 		mMT.Portraits = {}
 	end
 
-	if player.enable and not mMT.Portraits.Player then
-		mMT.Portraits.Player = CreatePortrait(_G.ElvUF_Player, player, "player")
+	if settings.player.enable and not mMT.Portraits.Player then
+		mMT.Portraits.Player = CreatePortrait(_G.ElvUF_Player, settings.player, "player")
 		mMT.Portraits.Player:RegisterUnitEvent("UNIT_PORTRAIT_UPDATE", "player")
 		mMT.Portraits.Player:RegisterEvent("PLAYER_ENTERING_WORLD")
 		mMT.Portraits.Player:SetScript("OnEvent", function(self, event)
-			SetPortraitTexture(self.portrait, "player", (E.Retail and not (player.texture == "CI")))
+			SetPortraitTexture(self.portrait, "player", (E.Retail and not (settings.player.texture == "CI")))
 
 			if event == "PLAYER_ENTERING_WORLD" then
-				setColor(self.texture, getColor(self, "player"), player.mirror)
-				if general.corner and E.Retail and (player.texture ~= "CI") then
-					setColor(self.corner, getColor(self, "player"), player.mirror)
+				setColor(self.texture, getColor(self, "player"), settings.player.mirror)
+				if settings.general.corner and E.Retail and (settings.player.texture ~= "CI") then
+					setColor(self.corner, getColor(self, "player"), settings.player.mirror)
 				end
 			end
 		end)
 	end
 
-	if target.enable and not mMT.Portraits.Target then
-		mMT.Portraits.Target = CreatePortrait(_G.ElvUF_Target, target, "target")
+	if settings.target.enable and not mMT.Portraits.Target then
+		mMT.Portraits.Target = CreatePortrait(_G.ElvUF_Target, settings.target, "target")
 		mMT.Portraits.Target:RegisterUnitEvent("UNIT_PORTRAIT_UPDATE", "target")
 		mMT.Portraits.Target:RegisterEvent("PLAYER_TARGET_CHANGED")
 		mMT.Portraits.Target:RegisterEvent("PLAYER_ENTERING_WORLD")
 		mMT.Portraits.Target:SetScript("OnEvent", function(self, event)
-			SetPortraitTexture(self.portrait, "target", (E.Retail and not (target.texture == "CI")))
+			SetPortraitTexture(self.portrait, "target", (E.Retail and not (settings.target.texture == "CI")))
 
 			if event == "PLAYER_TARGET_CHANGED" or event == "PLAYER_ENTERING_WORLD" then
-				setColor(self.texture, getColor(self, "target"), target.mirror)
+				setColor(self.texture, getColor(self, "target"), settings.target.mirror)
 
-				if general.corner and E.Retail and (player.texture ~= "CI") then
-					setColor(self.corner, getColor(self, "target"), target.mirror)
+				if settings.general.corner and E.Retail and (settings.target.texture ~= "CI") then
+					setColor(self.corner, getColor(self, "target"), settings.target.mirror)
 				end
 
-				if target.extraEnable then
+				if settings.target.extraEnable then
 					CheckRareElite(self, "target")
 				else
 					self.extra:Hide()
@@ -606,25 +473,25 @@ function mMT:SetupPortraits()
 		end)
 	end
 
-	if party.enable then
+	if settings.party.enable then
 		for i = 1, 5 do
 			local portrait = "Party" .. i
 			local frame = _G["ElvUF_PartyGroup1UnitButton" .. i]
 			if not mMT.Portraits[portrait] then
-				mMT.Portraits[portrait] = CreatePortrait(frame, party, frame.unit)
+				mMT.Portraits[portrait] = CreatePortrait(frame, settings.party, frame.unit)
 				mMT.Portraits[portrait]:RegisterUnitEvent("UNIT_PORTRAIT_UPDATE", frame.unit)
 				mMT.Portraits[portrait]:RegisterEvent("PLAYER_ENTERING_WORLD")
 				mMT.Portraits[portrait]:RegisterEvent("GROUP_ROSTER_UPDATE")
 				mMT.Portraits[portrait]:RegisterEvent("PORTRAITS_UPDATED")
 				mMT.Portraits[portrait]:SetScript("OnEvent", function(self, event)
 					if event == "GROUP_ROSTER_UPDATE" or event == "PLAYER_ENTERING_WORLD" then
-						setColor(self.texture, getColor(self, frame.unit), party.mirror)
-						if general.corner and E.Retail and (player.texture ~= "CI") then
-							setColor(self.corner, getColor(self, frame.unit), party.mirror)
+						setColor(self.texture, getColor(self, frame.unit), settings.party.mirror)
+						if settings.general.corner and E.Retail and (settings.party.texture ~= "CI") then
+							setColor(self.corner, getColor(self, frame.unit), settings.party.mirror)
 						end
 					end
 
-					SetPortraitTexture(self.portrait, frame.unit, (E.Retail and not (party.texture == "CI")))
+					SetPortraitTexture(self.portrait, frame.unit, (E.Retail and not (settings.party.texture == "CI")))
 				end)
 			end
 		end
