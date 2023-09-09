@@ -75,6 +75,24 @@ end
 
 DB_Loader:SetScript("OnEvent", DB_Loader.OnEvent)
 
+StaticPopupDialogs["mMT_ProfileChanged"] = {
+	text = L["It seems you have changed the ElvUI profile! For mMediaTag to work properly, a reload of the interface is recommended. Should a reload be performed now?"],
+	button1 = L["Yes"],
+	button2 = L["No"],
+	OnAccept = function()
+		ReloadUI()
+	end,
+	timeout = 0,
+	whileDead = true,
+	hideOnEscape = true,
+	preferredIndex = 3,  -- avoid some UI taint, see http://www.wowace.com/announcements/how-to-avoid-some-ui-taint/
+  }
+
+local function ProfileChange()
+	mMT:Print(L["Profile changed?"])
+	StaticPopup_Show ("mMT_ProfileChanged")
+end
+
 if E.Retail then
 	C_MythicPlus_RequestMapInfo = C_MythicPlus.RequestMapInfo
 	C_MythicPlus_RequestCurrentAffixes = C_MythicPlus.RequestCurrentAffixes
@@ -113,6 +131,9 @@ function mMT:Initialize()
 	end
 
 	EP:RegisterPlugin(addonName, GetOptions)
+
+	hooksecurefunc(E, "UpdateAll", ProfileChange)
+
 	-- Register Events
 	mMT:RegisterEvent("PLAYER_ENTERING_WORLD")
 
