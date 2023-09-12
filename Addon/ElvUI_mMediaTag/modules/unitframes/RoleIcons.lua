@@ -4,7 +4,7 @@ local UF = E:GetModule("UnitFrames")
 
 local sizeString = ":15:15"
 
-function mMT:mStartRoleSmbols()
+function mMT:mStartRoleSymbols()
 	local icons =
 		{ tank = { icon = nil, path = nil }, heal = { icon = nil, path = nil }, dd = { icon = nil, path = nil } }
 

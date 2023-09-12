@@ -195,7 +195,7 @@ function mMT:Initialize()
 	end
 
 	if (E.Retail or E.Wrath) and E.db.mMT.roleicons.enable then
-		mMT:mStartRoleSmbols()
+		mMT:mStartRoleSymbols()
 	end
 
 	if E.Retail then
