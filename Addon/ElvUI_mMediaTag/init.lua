@@ -170,7 +170,7 @@ function mMT:Initialize()
 		mMT:mChat()
 	end
 
-	if E.db.mMT.nameplate.bordercolor.glow or E.db.mMT.nameplate.bordercolor.border then
+	if E.private.nameplates.enable and (E.db.mMT.nameplate.bordercolor.glow or E.db.mMT.nameplate.bordercolor.border) then
 		mMT:mNamePlateBorderColor()
 	end
 
@@ -203,7 +203,7 @@ function mMT:Initialize()
 			mMT:UpdateImportantSpells()
 		end
 
-		if E.private.nameplates.enable and E.db.mMT.nameplate.healthmarker.enable or E.db.mMT.nameplate.executemarker.enable then
+		if E.private.nameplates.enable and (E.db.mMT.nameplate.healthmarker.enable or E.db.mMT.nameplate.executemarker.enable) then
 			mMT:StartNameplateTools()
 		end
 
@@ -225,7 +225,7 @@ function mMT:Initialize()
 			mMT:RegisterEvent("CHAT_MSG_GUILD")
 		end
 
-		if E.db.mMT.nameplate.executemarker.auto or E.db.mMT.interruptoncd.enable then
+		if (E.private.nameplates.enable and E.db.mMT.nameplate.executemarker.auto) or E.db.mMT.interruptoncd.enable then
 			mMT:RegisterEvent("PLAYER_TALENT_UPDATE")
 		end
 
@@ -318,7 +318,7 @@ function mMT:PLAYER_TALENT_UPDATE()
 		mMT:UpdateInterruptSpell()
 	end
 
-	if E.db.mMT.nameplate.executemarker.auto then
+	if E.private.nameplates.enable and E.db.mMT.nameplate.executemarker.auto then
 		mMT:updateAutoRange()
 	end
 end
@@ -358,4 +358,8 @@ function mMT:PLAYER_FLAGS_CHANGED(_, unit)
 	end
 end
 
-E:RegisterModule(mMT:GetName())
+local function CallbackInitialize()
+	mMT:Initialize()
+end
+
+E:RegisterModule(addon, CallbackInitialize)

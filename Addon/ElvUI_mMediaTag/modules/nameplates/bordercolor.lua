@@ -8,7 +8,7 @@ function mMT:mNamePlateBorderColor()
 		E.global["nameplates"]["filters"]["ElvUI_Target"]["actions"]["color"]["border"] = true
 	end
 
-	if E.db.mMT.nameplate.bordercolor.glow then
+	if E.db.mMT.nameplate.bordercolor.glow and E.db["nameplates"]["colors"]["glowColor"] then
 		E.db["nameplates"]["colors"]["glowColor"]["b"] = mMT.ClassColor.b
 		E.db["nameplates"]["colors"]["glowColor"]["r"] = mMT.ClassColor.r
 		E.db["nameplates"]["colors"]["glowColor"]["g"] = mMT.ClassColor.g
