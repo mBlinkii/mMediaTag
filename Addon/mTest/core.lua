@@ -44,7 +44,7 @@ local function configTable()
 				end,
 				set = function(info, value)
 					E.db.MT.enable = value
-                    MTEST.Modules.DEVTest:Update_Settings()
+					MTEST.Modules.DEVTest:Update_Settings()
 				end,
 			},
 			color_shadow = {
@@ -59,7 +59,7 @@ local function configTable()
 				set = function(info, r, g, b, a)
 					local t = E.db.MT.color
 					t.r, t.g, t.b, t.a = r, g, b, a
-                    MTEST.Modules.DEVTest:Update_Settings()
+					MTEST.Modules.DEVTest:Update_Settings()
 				end,
 			},
 			input_text = {
@@ -72,7 +72,7 @@ local function configTable()
 				end,
 				set = function(info, value)
 					E.db.MT.text = value
-                    MTEST.Modules.DEVTest:Update_Settings()
+					MTEST.Modules.DEVTest:Update_Settings()
 				end,
 			},
 		},
@@ -89,23 +89,22 @@ function MTEST:ConfigTable()
 	end
 end
 
-function MTEST:ProfileDBUpdate(event, bole)
-    MTEST.print("UPDATE", event, bole)
-    MTEST.print("UPDATE", E.db.MT.enable, E.db.MT.color.r, E.db.MT.color.g, E.db.MT.color.b, E.db.MT.color.a, E.db.MT.text)
+function ProfileDBUpdate(event, bole)
+	print("IIIDIDD")
+	MTEST.print("|CFF6559F1UPDATE|r", event, bole)
+	MTEST.print("|CFF6559F1UPDATE|r", E.db.MT.enable, E.db.MT.color.r, E.db.MT.color.g, E.db.MT.color.b, E.db.MT.color.a, E.db.MT.text)
+	MTEST.Modules.DEVTest:Init(E.db.MT)
 end
 
 function MTEST:Initialize()
 	EP:RegisterPlugin(addon, MTEST.ConfigTable)
 
-	--Modules
-	MTEST.Modules.DEVTest = {}
-
-	hooksecurefunc(E, "UpdateAll", MTEST.ProfileDBUpdate)
+	hooksecurefunc(E, "UpdateAll", ProfileDBUpdate)
 	self:RegisterEvent("PLAYER_ENTERING_WORLD")
 end
 
 function MTEST:print(...)
-    print("!DEBUG PRINT MTEST:", ...)
+	print("|CFFBC26E5!DEBUG PRINT MTEST:|r", ...)
 end
 
 local function CallbackInitialize()
@@ -113,8 +112,8 @@ local function CallbackInitialize()
 end
 
 function MTEST:PLAYER_ENTERING_WORLD(event)
-    MTEST.print(event, E.db.MT.enable, E.db.MT.color.r, E.db.MT.color.g, E.db.MT.color.b, E.db.MT.color.a, E.db.MT.text)
-
+	MTEST.print(event, E.db.MT.enable, E.db.MT.color.r, E.db.MT.color.g, E.db.MT.color.b, E.db.MT.color.a, E.db.MT.text)
+	MTEST.Modules.DEVTest:Init()
 	E:Delay(1, collectgarbage, "collect")
 end
 

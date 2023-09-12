@@ -85,12 +85,12 @@ StaticPopupDialogs["mMT_ProfileChanged"] = {
 	timeout = 0,
 	whileDead = true,
 	hideOnEscape = true,
-	preferredIndex = 3,  -- avoid some UI taint, see http://www.wowace.com/announcements/how-to-avoid-some-ui-taint/
-  }
+	preferredIndex = 3, -- avoid some UI taint, see http://www.wowace.com/announcements/how-to-avoid-some-ui-taint/
+}
 
 local function ProfileChange()
 	mMT:Print(L["Profile changed?"])
-	StaticPopup_Show ("mMT_ProfileChanged")
+	StaticPopup_Show("mMT_ProfileChanged")
 end
 
 if E.Retail then
@@ -194,6 +194,10 @@ function mMT:Initialize()
 		mMT:CustomBackdrop()
 	end
 
+	if (E.Retail or E.Wrath) and E.db.mMT.roleicons.enable then
+		mMT:mStartRoleSmbols()
+	end
+
 	if E.Retail then
 		if E.db.mMT.interruptoncd.enable or (E.db.mMT.importantspells.enable and (E.db.mMT.importantspells.np or E.db.mMT.importantspells.uf)) or E.db.mMT.castbarshield.enable then
 			mMT:CastbarModuleLoader()
@@ -211,10 +215,6 @@ function mMT:Initialize()
 			mMT:RegisterEvent("UPDATE_INSTANCE_INFO")
 			mMT:RegisterEvent("CHALLENGE_MODE_START")
 			mMT:SetupInstanceDifficulty()
-		end
-
-		if E.db.mMT.roleicons.enable then
-			mMT:mStartRoleSmbols()
 		end
 
 		if E.db.mMT.general.keystochat then
@@ -362,4 +362,4 @@ local function CallbackInitialize()
 	mMT:Initialize()
 end
 
-E:RegisterModule(addon, CallbackInitialize)
+E:RegisterModule(mMT:GetName())

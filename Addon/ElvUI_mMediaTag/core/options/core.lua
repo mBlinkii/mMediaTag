@@ -261,7 +261,7 @@ local function configTable()
 						type = "group",
 						name = L["Role Icons"],
 						hidden = function()
-							return not E.Retail
+							return not (E.Retail or E.Wrath)
 						end,
 						args = {},
 					},
