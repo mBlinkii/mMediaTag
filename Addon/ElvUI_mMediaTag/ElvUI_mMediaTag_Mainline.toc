@@ -13,8 +13,9 @@
 ## X-Curse-Project-ID: 289502
 ## X-Wago-ID: 9rN48AND
 
+core\mMT_DB.lua
+
 init.lua
 core\load_core.xml
 media\load_media.xml
 modules\load_modules.xml
-

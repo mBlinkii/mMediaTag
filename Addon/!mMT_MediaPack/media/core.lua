@@ -649,6 +649,8 @@ mAddStatusbar("mMediaTag Caith UI 1", "Wglass.tga")
 mAddStatusbar("mMediaTag Caith UI 2", "Wisps.tga")
 
 mAddStatusbar("MaUIv3", "MaUIv3.tga")
+mAddStatusbar("MaUIv3 LEFT", "MaUIv3Left.tga")
+mAddStatusbar("MaUIv3 RIGHT", "MaUIv3Right.tga")
 
 -- Backgrounds
 mAddBackground("mMediaTag BG1", "bg1.tga")

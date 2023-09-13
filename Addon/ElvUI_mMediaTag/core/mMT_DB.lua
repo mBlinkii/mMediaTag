@@ -1,3 +1,4 @@
+-- default settings
 local defaultDB = {
 	mplusaffix = { affixes = nil, season = nil, reset = false, year = nil },
 	affix = nil,
@@ -5,17 +6,17 @@ local defaultDB = {
 	dev = { enabled = false, frame = { top = nil, left = nil }, unit = {}, zone = {} },
 }
 
+-- Create Frame and register events
 local DB_Loader = CreateFrame("FRAME")
 DB_Loader:RegisterEvent("PLAYER_LOGOUT")
 DB_Loader:RegisterEvent("ADDON_LOADED")
 
-function DB_Loader:OnEvent(event, arg1)
+local function OnEvent(event, arg1)
 	if event == "ADDON_LOADED" and arg1 == "ElvUI_mMediaTag" then
 		mMTDB = mMTDB or {}
-		mMT.DB = mMTDB
 		for k, v in pairs(defaultDB) do
-			if mMT.DB[k] == nil then
-				mMT.DB[k] = v
+			if mMTDB[k] == nil then
+				mMTDB[k] = v
 			end
 		end
 	elseif event == "PLAYER_LOGOUT" then
@@ -23,8 +24,11 @@ function DB_Loader:OnEvent(event, arg1)
 			mMT:SaveFramePos()
 			mMT.DB.dev.enabled = mMT.DevMode
 		end
-		mMTDB = mMT.DB
+
+		if mMT.DB then
+			mMTDB = mMT.DB
+		end
 	end
 end
 
-DB_Loader:SetScript("OnEvent", DB_Loader.OnEvent)
+DB_Loader:SetScript("OnEvent", OnEvent)
