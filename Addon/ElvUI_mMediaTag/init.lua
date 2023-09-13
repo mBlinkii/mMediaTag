@@ -32,6 +32,7 @@ mMT.DevMode = false
 
 local function UpdateModules()
 	-- update module settings
+	mMT.Modules.Portraits:Initialize()
 end
 
 -- Load Settings
@@ -184,8 +185,7 @@ function mMT:PLAYER_ENTERING_WORLD(event)
 
 	-- Modules only for all Game Versions
 	if E.db.mMT.portraits.general.enable then
-		mMT:UpdatePortraitSettings()
-		mMT:SetupPortraits()
+		mMT.Modules.Portraits:Initialize()
 	end
 
 	if E.db.mMT.afk.enable then

@@ -1,8 +1,13 @@
 local E = unpack(ElvUI)
+
 local _G = _G
 local SetPortraitTexture = SetPortraitTexture
 
+mMT.Modules.Portraits = {}
+local module = mMT.Modules.Portraits
+
 local settings = {}
+
 local path = "Interface\\Addons\\ElvUI_mMediaTag\\media\\portraits\\"
 local tx_DB = {
 	retail = {
@@ -119,10 +124,6 @@ local tx_DB = {
 	},
 }
 local textures = tx_DB.retail
-
-function mMT:UpdatePortraitSettings()
-	settings = E.db.mMT.portraits
-end
 
 local function setColor(texture, color, mirror)
 	if not texture or not color then
@@ -397,102 +398,159 @@ local function UpdatePortrait(frame, conf, unit, parent)
 			setColor(frame.corner.border, settings.shadow.borderColor)
 			mirrorTexture(frame.corner.border, conf.mirror)
 		end
+		frame.corner:Show()
+		frame.corner.border:Show()
+	elseif frame.corner then
+		frame.corner:Hide()
+		frame.corner.border:Hide()
 	end
 end
 
-function mMT:UpdatePortraits()
-	if not settings or not E.db.mMT.portraits.general.enable then
-		return
+function module:UpdatePortraits()
+	if module.Player then
+		UpdatePortrait(module.Player, settings.player, "player", _G.ElvUF_Player)
 	end
 
-	if mMT.Portraits.Player then
-		UpdatePortrait(mMT.Portraits.Player, settings.player, "player", _G.ElvUF_Player)
+	if module.Target then
+		UpdatePortrait(module.Target, settings.target, "target", _G.ElvUF_Target)
 	end
 
-	if mMT.Portraits.Target then
-		UpdatePortrait(mMT.Portraits.Target, settings.target, "target", _G.ElvUF_Target)
-	end
-
-	if mMT.Portraits.Party1 then
-		UpdatePortrait(mMT.Portraits.Party1, settings.party, _G.ElvUF_PartyGroup1UnitButton1.unit, _G.ElvUF_PartyGroup1UnitButton1)
-		UpdatePortrait(mMT.Portraits.Party2, settings.party, _G.ElvUF_PartyGroup1UnitButton2.unit, _G.ElvUF_PartyGroup1UnitButton2)
-		UpdatePortrait(mMT.Portraits.Party3, settings.party, _G.ElvUF_PartyGroup1UnitButton3.unit, _G.ElvUF_PartyGroup1UnitButton3)
-		UpdatePortrait(mMT.Portraits.Party4, settings.party, _G.ElvUF_PartyGroup1UnitButton4.unit, _G.ElvUF_PartyGroup1UnitButton4)
-		UpdatePortrait(mMT.Portraits.Party5, settings.party, _G.ElvUF_PartyGroup1UnitButton5.unit, _G.ElvUF_PartyGroup1UnitButton5)
+	if module.Party1 then
+		UpdatePortrait(module.Party1, settings.party, _G.ElvUF_PartyGroup1UnitButton1.unit, _G.ElvUF_PartyGroup1UnitButton1)
+		UpdatePortrait(module.Party2, settings.party, _G.ElvUF_PartyGroup1UnitButton2.unit, _G.ElvUF_PartyGroup1UnitButton2)
+		UpdatePortrait(module.Party3, settings.party, _G.ElvUF_PartyGroup1UnitButton3.unit, _G.ElvUF_PartyGroup1UnitButton3)
+		UpdatePortrait(module.Party4, settings.party, _G.ElvUF_PartyGroup1UnitButton4.unit, _G.ElvUF_PartyGroup1UnitButton4)
+		UpdatePortrait(module.Party5, settings.party, _G.ElvUF_PartyGroup1UnitButton5.unit, _G.ElvUF_PartyGroup1UnitButton5)
 	end
 end
 
-function mMT:SetupPortraits()
-	if not settings and settings.colors then
-		return
-	end
+function module:Initialize()
+	settings = E.db.mMT.portraits
 
-	textures = E.Retail and tx_DB.retail or tx_DB.classic
+	if settings.general.enable then
+		textures = E.Retail and tx_DB.retail or tx_DB.classic
 
-	if not mMT.Portraits then
-		mMT.Portraits = {}
-	end
+		if settings.player.enable then
+			if not module.Player then
+				module.Player = CreatePortrait(_G.ElvUF_Player, settings.player, "player")
+				module.Player:RegisterUnitEvent("UNIT_PORTRAIT_UPDATE", "player")
+				module.Player:RegisterEvent("PLAYER_ENTERING_WORLD")
+				module.Player:SetScript("OnEvent", function(self, event)
+					SetPortraitTexture(self.portrait, "player", (E.Retail and not (settings.player.texture == "CI")))
 
-	if settings.player.enable and not mMT.Portraits.Player then
-		mMT.Portraits.Player = CreatePortrait(_G.ElvUF_Player, settings.player, "player")
-		mMT.Portraits.Player:RegisterUnitEvent("UNIT_PORTRAIT_UPDATE", "player")
-		mMT.Portraits.Player:RegisterEvent("PLAYER_ENTERING_WORLD")
-		mMT.Portraits.Player:SetScript("OnEvent", function(self, event)
-			SetPortraitTexture(self.portrait, "player", (E.Retail and not (settings.player.texture == "CI")))
-
-			if event == "PLAYER_ENTERING_WORLD" then
-				setColor(self.texture, getColor(self, "player"), settings.player.mirror)
-				if settings.general.corner and E.Retail and (settings.player.texture ~= "CI") then
-					setColor(self.corner, getColor(self, "player"), settings.player.mirror)
-				end
-			end
-		end)
-	end
-
-	if settings.target.enable and not mMT.Portraits.Target then
-		mMT.Portraits.Target = CreatePortrait(_G.ElvUF_Target, settings.target, "target")
-		mMT.Portraits.Target:RegisterUnitEvent("UNIT_PORTRAIT_UPDATE", "target")
-		mMT.Portraits.Target:RegisterEvent("PLAYER_TARGET_CHANGED")
-		mMT.Portraits.Target:RegisterEvent("PLAYER_ENTERING_WORLD")
-		mMT.Portraits.Target:SetScript("OnEvent", function(self, event)
-			SetPortraitTexture(self.portrait, "target", (E.Retail and not (settings.target.texture == "CI")))
-
-			if event == "PLAYER_TARGET_CHANGED" or event == "PLAYER_ENTERING_WORLD" then
-				setColor(self.texture, getColor(self, "target"), settings.target.mirror)
-
-				if settings.general.corner and E.Retail and (settings.target.texture ~= "CI") then
-					setColor(self.corner, getColor(self, "target"), settings.target.mirror)
-				end
-
-				if settings.target.extraEnable then
-					CheckRareElite(self, "target")
-				else
-					self.extra:Hide()
-				end
-			end
-		end)
-	end
-
-	if settings.party.enable then
-		for i = 1, 5 do
-			local portrait = "Party" .. i
-			local frame = _G["ElvUF_PartyGroup1UnitButton" .. i]
-			if not mMT.Portraits[portrait] then
-				mMT.Portraits[portrait] = CreatePortrait(frame, settings.party, frame.unit)
-				mMT.Portraits[portrait]:RegisterUnitEvent("UNIT_PORTRAIT_UPDATE", frame.unit)
-				mMT.Portraits[portrait]:RegisterEvent("PLAYER_ENTERING_WORLD")
-				mMT.Portraits[portrait]:RegisterEvent("GROUP_ROSTER_UPDATE")
-				mMT.Portraits[portrait]:RegisterEvent("PORTRAITS_UPDATED")
-				mMT.Portraits[portrait]:SetScript("OnEvent", function(self, event)
-					if event == "GROUP_ROSTER_UPDATE" or event == "PLAYER_ENTERING_WORLD" then
-						setColor(self.texture, getColor(self, frame.unit), settings.party.mirror)
-						if settings.general.corner and E.Retail and (settings.party.texture ~= "CI") then
-							setColor(self.corner, getColor(self, frame.unit), settings.party.mirror)
+					if event == "PLAYER_ENTERING_WORLD" then
+						setColor(self.texture, getColor(self, "player"), settings.player.mirror)
+						if settings.general.corner and E.Retail and (settings.player.texture ~= "CI") then
+							setColor(self.corner, getColor(self, "player"), settings.player.mirror)
 						end
 					end
-
-					SetPortraitTexture(self.portrait, frame.unit, (E.Retail and not (settings.party.texture == "CI")))
 				end)
+			end
+		else
+			module.Player:UnregisterEvent("UNIT_PORTRAIT_UPDATE")
+			module.Player:UnregisterEvent("PLAYER_ENTERING_WORLD")
+			module.Player:Hide()
+			module.Player = nil
+		end
+
+		if settings.general.enable and settings.target.enable then
+			if not module.Target then
+				module.Target = CreatePortrait(_G.ElvUF_Target, settings.target, "target")
+				module.Target:RegisterUnitEvent("UNIT_PORTRAIT_UPDATE", "target")
+				module.Target:RegisterEvent("PLAYER_TARGET_CHANGED")
+				module.Target:RegisterEvent("PLAYER_ENTERING_WORLD")
+				module.Target:SetScript("OnEvent", function(self, event)
+					SetPortraitTexture(self.portrait, "target", (E.Retail and not (settings.target.texture == "CI")))
+
+					if event == "PLAYER_TARGET_CHANGED" or event == "PLAYER_ENTERING_WORLD" then
+						setColor(self.texture, getColor(self, "target"), settings.target.mirror)
+
+						if settings.general.corner and E.Retail and (settings.target.texture ~= "CI") then
+							setColor(self.corner, getColor(self, "target"), settings.target.mirror)
+						end
+
+						if settings.target.extraEnable then
+							CheckRareElite(self, "target")
+						else
+							self.extra:Hide()
+						end
+					end
+				end)
+			end
+		else
+			module.Target:UnregisterEvent("UNIT_PORTRAIT_UPDATE")
+			module.Target:UnregisterEvent("PLAYER_ENTERING_WORLD")
+			module.Target:UnregisterEvent("PLAYER_TARGET_CHANGED")
+			module.Target:Hide()
+			module.Target = nil
+		end
+
+		if settings.general.enable and settings.party.enable then
+			if not module.Party1 then
+				for i = 1, 5 do
+					local portrait = "Party" .. i
+					local frame = _G["ElvUF_PartyGroup1UnitButton" .. i]
+					if not module[portrait] then
+						module[portrait] = CreatePortrait(frame, settings.party, frame.unit)
+						module[portrait]:RegisterUnitEvent("UNIT_PORTRAIT_UPDATE", frame.unit)
+						module[portrait]:RegisterEvent("PLAYER_ENTERING_WORLD")
+						module[portrait]:RegisterEvent("GROUP_ROSTER_UPDATE")
+						module[portrait]:RegisterEvent("PORTRAITS_UPDATED")
+						module[portrait]:SetScript("OnEvent", function(self, event)
+							if event == "GROUP_ROSTER_UPDATE" or event == "PLAYER_ENTERING_WORLD" then
+								setColor(self.texture, getColor(self, frame.unit), settings.party.mirror)
+								if settings.general.corner and E.Retail and (settings.party.texture ~= "CI") then
+									setColor(self.corner, getColor(self, frame.unit), settings.party.mirror)
+								end
+							end
+
+							SetPortraitTexture(self.portrait, frame.unit, (E.Retail and not (settings.party.texture == "CI")))
+						end)
+					end
+				end
+			end
+		else
+			for i = 1, 5 do
+				local portrait = "Party" .. i
+				if module[portrait] then
+					module[portrait]:UnregisterEvent("UNIT_PORTRAIT_UPDATE")
+					module[portrait]:UnregisterEvent("PLAYER_ENTERING_WORLD")
+					module[portrait]:UnregisterEvent("GROUP_ROSTER_UPDATE")
+					module[portrait]:UnregisterEvent("PORTRAITS_UPDATED")
+					module[portrait]:Hide()
+					module[portrait] = nil
+				end
+			end
+		end
+
+		module:UpdatePortraits()
+	else
+		if module.Player then
+			module.Player:UnregisterEvent("UNIT_PORTRAIT_UPDATE")
+			module.Player:UnregisterEvent("PLAYER_ENTERING_WORLD")
+			module.Player:Hide()
+			module.Player = nil
+		end
+
+		if module.Target then
+			module.Target:UnregisterEvent("UNIT_PORTRAIT_UPDATE")
+			module.Target:UnregisterEvent("PLAYER_ENTERING_WORLD")
+			module.Target:UnregisterEvent("PLAYER_TARGET_CHANGED")
+			module.Target:Hide()
+			module.Target = nil
+		end
+
+		if module.Party1 then
+			for i = 1, 5 do
+				local portrait = "Party" .. i
+				if module[portrait] then
+					module[portrait]:UnregisterEvent("UNIT_PORTRAIT_UPDATE")
+					module[portrait]:UnregisterEvent("PLAYER_ENTERING_WORLD")
+					module[portrait]:UnregisterEvent("GROUP_ROSTER_UPDATE")
+					module[portrait]:UnregisterEvent("PORTRAITS_UPDATED")
+					module[portrait]:Hide()
+					module[portrait] = nil
+				end
 			end
 		end
 	end

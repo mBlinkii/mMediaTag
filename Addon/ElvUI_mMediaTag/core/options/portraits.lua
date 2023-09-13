@@ -49,8 +49,7 @@ local function configTable()
 					end,
 					set = function(info, value)
 						E.db.mMT.portraits.general.gradient = value
-						mMT:UpdatePortraitSettings()
-						mMT:UpdatePortraits()
+						mMT.Modules.Portraits:Initialize()
 					end,
 				},
 				select_gradient = {
@@ -65,8 +64,7 @@ local function configTable()
 					end,
 					set = function(info, value)
 						E.db.mMT.portraits.general.ori = value
-						mMT:UpdatePortraitSettings()
-						mMT:UpdatePortraits()
+						mMT.Modules.Portraits:Initialize()
 					end,
 					values = {
 						HORIZONTAL = "HORIZONTAL",
@@ -88,8 +86,7 @@ local function configTable()
 					set = function(info, value)
 						E.db.mMT.portraits.general.style = value
 
-						mMT:UpdatePortraitSettings()
-						mMT:UpdatePortraits()
+						mMT.Modules.Portraits:Initialize()
 					end,
 					values = style,
 				},
@@ -102,6 +99,7 @@ local function configTable()
 					end,
 					set = function(info, value)
 						E.db.mMT.portraits.general.corner = value
+						mMT.Modules.Portraits:Initialize()
 						E:StaticPopup_Show("CONFIG_RL")
 					end,
 				},
@@ -123,6 +121,7 @@ local function configTable()
 					end,
 					set = function(info, value)
 						E.db.mMT.portraits.player.enable = value
+						mMT.Modules.Portraits:Initialize()
 						E:StaticPopup_Show("CONFIG_RL")
 					end,
 				},
@@ -136,8 +135,7 @@ local function configTable()
 					set = function(info, value)
 						E.db.mMT.portraits.player.texture = value
 
-						mMT:UpdatePortraitSettings()
-						mMT:UpdatePortraits()
+						mMT.Modules.Portraits:Initialize()
 					end,
 					values = form,
 				},
@@ -155,8 +153,7 @@ local function configTable()
 					end,
 					set = function(info, value)
 						E.db.mMT.portraits.player.size = value
-						mMT:UpdatePortraitSettings()
-						mMT:UpdatePortraits()
+						mMT.Modules.Portraits:Initialize()
 					end,
 				},
 				select_anchor = {
@@ -179,8 +176,7 @@ local function configTable()
 							E.db.mMT.portraits.player.mirror = false
 						end
 
-						mMT:UpdatePortraitSettings()
-						mMT:UpdatePortraits()
+						mMT.Modules.Portraits:Initialize()
 					end,
 					values = {
 						LEFT = "LEFT",
@@ -202,8 +198,7 @@ local function configTable()
 					end,
 					set = function(info, value)
 						E.db.mMT.portraits.player.x = value
-						mMT:UpdatePortraitSettings()
-						mMT:UpdatePortraits()
+						mMT.Modules.Portraits:Initialize()
 					end,
 				},
 				range_ofsY = {
@@ -220,8 +215,7 @@ local function configTable()
 					end,
 					set = function(info, value)
 						E.db.mMT.portraits.player.y = value
-						mMT:UpdatePortraitSettings()
-						mMT:UpdatePortraits()
+						mMT.Modules.Portraits:Initialize()
 					end,
 				},
 			},
@@ -242,6 +236,7 @@ local function configTable()
 					end,
 					set = function(info, value)
 						E.db.mMT.portraits.target.enable = value
+						mMT.Modules.Portraits:Initialize()
 						E:StaticPopup_Show("CONFIG_RL")
 					end,
 				},
@@ -267,8 +262,7 @@ local function configTable()
 					set = function(info, value)
 						E.db.mMT.portraits.target.texture = value
 
-						mMT:UpdatePortraitSettings()
-						mMT:UpdatePortraits()
+						mMT.Modules.Portraits:Initialize()
 					end,
 					values = form,
 				},
@@ -282,8 +276,7 @@ local function configTable()
 					set = function(info, value)
 						E.db.mMT.portraits.target.extra = value
 
-						mMT:UpdatePortraitSettings()
-						mMT:UpdatePortraits()
+						mMT.Modules.Portraits:Initialize()
 					end,
 					values = {
 						A = "FLAT",
@@ -305,8 +298,7 @@ local function configTable()
 					end,
 					set = function(info, value)
 						E.db.mMT.portraits.target.size = value
-						mMT:UpdatePortraitSettings()
-						mMT:UpdatePortraits()
+						mMT.Modules.Portraits:Initialize()
 					end,
 				},
 				select_anchor = {
@@ -329,8 +321,7 @@ local function configTable()
 							E.db.mMT.portraits.target.mirror = false
 						end
 
-						mMT:UpdatePortraitSettings()
-						mMT:UpdatePortraits()
+						mMT.Modules.Portraits:Initialize()
 					end,
 					values = {
 						LEFT = "LEFT",
@@ -352,8 +343,7 @@ local function configTable()
 					end,
 					set = function(info, value)
 						E.db.mMT.portraits.target.x = value
-						mMT:UpdatePortraitSettings()
-						mMT:UpdatePortraits()
+						mMT.Modules.Portraits:Initialize()
 					end,
 				},
 				range_ofsY = {
@@ -370,8 +360,7 @@ local function configTable()
 					end,
 					set = function(info, value)
 						E.db.mMT.portraits.target.y = value
-						mMT:UpdatePortraitSettings()
-						mMT:UpdatePortraits()
+						mMT.Modules.Portraits:Initialize()
 					end,
 				},
 			},
@@ -392,6 +381,7 @@ local function configTable()
 					end,
 					set = function(info, value)
 						E.db.mMT.portraits.party.enable = value
+						mMT.Modules.Portraits:Initialize()
 						E:StaticPopup_Show("CONFIG_RL")
 					end,
 				},
@@ -405,8 +395,7 @@ local function configTable()
 					set = function(info, value)
 						E.db.mMT.portraits.party.texture = value
 
-						mMT:UpdatePortraitSettings()
-						mMT:UpdatePortraits()
+						mMT.Modules.Portraits:Initialize()
 					end,
 					values = form,
 				},
@@ -424,8 +413,7 @@ local function configTable()
 					end,
 					set = function(info, value)
 						E.db.mMT.portraits.party.size = value
-						mMT:UpdatePortraitSettings()
-						mMT:UpdatePortraits()
+						mMT.Modules.Portraits:Initialize()
 					end,
 				},
 				select_anchor = {
@@ -448,8 +436,7 @@ local function configTable()
 							E.db.mMT.portraits.party.mirror = false
 						end
 
-						mMT:UpdatePortraitSettings()
-						mMT:UpdatePortraits()
+						mMT.Modules.Portraits:Initialize()
 					end,
 					values = {
 						LEFT = "LEFT",
@@ -471,8 +458,7 @@ local function configTable()
 					end,
 					set = function(info, value)
 						E.db.mMT.portraits.party.x = value
-						mMT:UpdatePortraitSettings()
-						mMT:UpdatePortraits()
+						mMT.Modules.Portraits:Initialize()
 					end,
 				},
 				range_ofsY = {
@@ -489,8 +475,7 @@ local function configTable()
 					end,
 					set = function(info, value)
 						E.db.mMT.portraits.party.y = value
-						mMT:UpdatePortraitSettings()
-						mMT:UpdatePortraits()
+						mMT.Modules.Portraits:Initialize()
 					end,
 				},
 			},
@@ -526,8 +511,7 @@ local function configTable()
 					set = function(info, r, g, b, a)
 						local t = E.db.mMT.portraits.shadow.color
 						t.r, t.g, t.b, t.a = r, g, b, a
-						mMT:UpdatePortraitSettings()
-						mMT:UpdatePortraits()
+						mMT.Modules.Portraits:Initialize()
 					end,
 				},
 				spacer_1 = {
@@ -560,8 +544,7 @@ local function configTable()
 					set = function(info, r, g, b, a)
 						local t = E.db.mMT.portraits.shadow.innerColor
 						t.r, t.g, t.b, t.a = r, g, b, a
-						mMT:UpdatePortraitSettings()
-						mMT:UpdatePortraits()
+						mMT.Modules.Portraits:Initialize()
 					end,
 				},
 				spacer_2 = {
@@ -594,8 +577,7 @@ local function configTable()
 					set = function(info, r, g, b, a)
 						local t = E.db.mMT.portraits.shadow.borderColor
 						t.r, t.g, t.b, t.a = r, g, b, a
-						mMT:UpdatePortraitSettings()
-						mMT:UpdatePortraits()
+						mMT.Modules.Portraits:Initialize()
 					end,
 				},
 				color_rareborder = {
@@ -610,8 +592,7 @@ local function configTable()
 					set = function(info, r, g, b, a)
 						local t = E.db.mMT.portraits.shadow.borderColorRare
 						t.r, t.g, t.b, t.a = r, g, b, a
-						mMT:UpdatePortraitSettings()
-						mMT:UpdatePortraits()
+						mMT.Modules.Portraits:Initialize()
 					end,
 				},
 			},
@@ -627,8 +608,7 @@ local function configTable()
 					type = "execute",
 					name = L["Apply"],
 					func = function()
-						mMT:UpdatePortraitSettings()
-						mMT:UpdatePortraits()
+						mMT.Modules.Portraits:Initialize()
 					end,
 				},
 				toggle_default = {
@@ -641,8 +621,7 @@ local function configTable()
 					end,
 					set = function(info, value)
 						E.db.mMT.portraits.general.default = value
-						mMT:UpdatePortraitSettings()
-						mMT:UpdatePortraits()
+						mMT.Modules.Portraits:Initialize()
 					end,
 				},
 				DEATHKNIGHT = {
