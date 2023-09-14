@@ -3,8 +3,10 @@ local E = unpack(ElvUI)
 local _G = _G
 local SetPortraitTexture = SetPortraitTexture
 
-mMT.Modules.Portraits = {}
 local module = mMT.Modules.Portraits
+if not module then
+	return
+end
 
 local settings = {}
 

@@ -2,11 +2,19 @@ local E = unpack(ElvUI)
 local CH = E:GetModule("Chat")
 local UF = E:GetModule("UnitFrames")
 
+local module = mMT.Modules.RoleIcons
+if not module then
+	return
+end
+
 local sizeString = ":15:15"
 
-function mMT:mStartRoleSymbols()
-	local icons =
-		{ tank = { icon = nil, path = nil }, heal = { icon = nil, path = nil }, dd = { icon = nil, path = nil } }
+function module:Initialize()
+	if not E.db.mMT.roleicons.enable then
+		return
+	end
+
+	local icons = { tank = { icon = nil, path = nil }, heal = { icon = nil, path = nil }, dd = { icon = nil, path = nil } }
 
 	if E.db.mMT.roleicons.customtexture then
 		icons.tank.icon = E:TextureString(E.db.mMT.roleicons.customtank, sizeString)

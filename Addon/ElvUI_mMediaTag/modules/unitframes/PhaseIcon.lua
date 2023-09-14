@@ -1,6 +1,11 @@
 local E = unpack(ElvUI)
 local UF = E:GetModule("UnitFrames")
 
+local module = mMT.Modules.PhaseIcon
+if not module then
+	return
+end
+
 local blank = "Interface\\AddOns\\ElvUI_mMediaTag\\media\\icons\\unitframes\\blank.tga"
 local PhaseColors = {
 	chromie = { r = 1, g = 0.9, b = 0.5 },
@@ -8,13 +13,8 @@ local PhaseColors = {
 	sharding = { r = 0.5, g = 1, b = 0.3 },
 	phasing = { r = 0.3, g = 0.5, b = 1 },
 }
-local function ReadyCheckIcons(_, frame)
-	frame.ReadyCheckIndicator.readyTexture = mMT.Media.UnitframeIcons[E.db.mMT.unitframeicons.readycheck.ready]
-	frame.ReadyCheckIndicator.notReadyTexture = mMT.Media.UnitframeIcons[E.db.mMT.unitframeicons.readycheck.notready]
-	frame.ReadyCheckIndicator.waitingTexture = mMT.Media.UnitframeIcons[E.db.mMT.unitframeicons.readycheck.waiting]
-end
 
-function mMT:PhaseIconColor(hidden, phaseReason)
+function module:PhaseIconColor(hidden, phaseReason)
 	if E.db.mMT.unitframeicons.phase.color.withe then
 		self.Center:SetVertexColor(1, 1, 1)
 	else
@@ -35,25 +35,19 @@ function mMT:PhaseIconColor(hidden, phaseReason)
 	end
 end
 
-local function ResurrectionIcon(_, frame)
-	frame.ResurrectIndicator:SetTexture(mMT.Media.UnitframeIcons[E.db.mMT.unitframeicons.resurrection.icon])
-end
-
 local function PhaseIcon(_, frame)
 	frame.PhaseIndicator:SetTexture(blank)
 	frame.PhaseIndicator.Center:SetTexture(mMT.Media.UnitframeIcons[E.db.mMT.unitframeicons.phase.icon])
 end
 
-function mMT:SetupResurrectionIcon()
-	hooksecurefunc(UF, "Configure_ResurrectionIcon", ResurrectionIcon)
-end
-function mMT:SetupReadyCheckIcons()
-	hooksecurefunc(UF, "Configure_ReadyCheckIcon", ReadyCheckIcons)
-end
-function mMT:SetupPhaseIcons()
+function module:Initialize()
 	E.Media.Textures.PhaseBorder = blank
 	E.Media.Textures.PhaseCenter = mMT.Media.UnitframeIcons[E.db.mMT.unitframeicons.phase.icon]
-	hooksecurefunc(UF, "Configure_PhaseIcon", PhaseIcon)
+
+	if not module.hooked_Configure then
+		hooksecurefunc(UF, "Configure_PhaseIcon", PhaseIcon)
+		module.hooked_Configure = true
+	end
 
 	if E.db.mMT.unitframeicons.phase.color.enable then
 		PhaseColors = {
@@ -62,22 +56,10 @@ function mMT:SetupPhaseIcons()
 			sharding = E.db.mMT.unitframeicons.phase.color.sharding,
 			phasing = E.db.mMT.unitframeicons.phase.color.phasing,
 		}
-		hooksecurefunc(UF, "PostUpdate_PhaseIcon", mMT.PhaseIconColor)
-	end
-end
 
-local function SummonIcon(_, frame)
-	frame.SummonIndicator.PostUpdate = function(self, status)
-		if status == 1 then
-			self:SetTexture(mMT.Media.UnitframeIcons[E.db.mMT.unitframeicons.summon.available])
-		elseif status == 2 then
-			self:SetTexture(mMT.Media.UnitframeIcons[E.db.mMT.unitframeicons.summon.accepted])
-		elseif status == 3 then
-			self:SetTexture(mMT.Media.UnitframeIcons[E.db.mMT.unitframeicons.summon.rejected])
+		if not module.hooked_PostUpdate then
+			hooksecurefunc(UF, "PostUpdate_PhaseIcon", module.PhaseIconColor)
+			module.hooked_PostUpdate = true
 		end
 	end
-end
-
-function mMT:SetupSummonIcon()
-	hooksecurefunc(UF, "Configure_SummonIcon", SummonIcon)
 end

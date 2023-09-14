@@ -33,6 +33,7 @@ mMT.DevMode = false
 local function UpdateModules()
 	-- update module settings
 	mMT.Modules.Portraits:Initialize()
+	mMT.Modules.RoleIcons:Initialize()
 end
 
 -- Load Settings
@@ -50,13 +51,7 @@ function mMT:Initialize()
 
 	EP:RegisterPlugin(addonName, LoadSettings)
 
-	-- Register Events
-	self:RegisterEvent("PLAYER_ENTERING_WORLD")
-
-	if E.db.mMT.afk.enable then
-		self:RegisterEvent("PLAYER_FLAGS_CHANGED")
-	end
-
+	-- Create Modules and Register Events for all Retail
 	if E.Retail then
 		if E.db.mMT.instancedifficulty.enable then
 			self:RegisterEvent("UPDATE_INSTANCE_INFO")
@@ -75,6 +70,46 @@ function mMT:Initialize()
 		if (E.private.nameplates.enable and E.db.mMT.nameplate.executemarker.auto) or E.db.mMT.interruptoncd.enable then
 			self:RegisterEvent("PLAYER_TALENT_UPDATE")
 		end
+
+		-- Modules
+		if E.db.mMT.roleicons.enable then
+			mMT.Modules.RoleIcons = {}
+		end
+	end
+
+	-- Modules for Wrath
+	if E.Wrath then
+		if E.db.mMT.roleicons.enable then
+			mMT.Modules.RoleIcons = {}
+		end
+	end
+
+	-- Create Modules and Register Events for all Game Versions
+	self:RegisterEvent("PLAYER_ENTERING_WORLD")
+
+	if E.db.mMT.afk.enable then
+		self:RegisterEvent("PLAYER_FLAGS_CHANGED")
+	end
+
+	-- Modules
+	if E.db.mMT.portraits.general.enable then
+		mMT.Modules.Portraits = {}
+	end
+
+	if E.db.mMT.unitframeicons.summon.enable then
+		mMT.Modules.SummonIcon = {}
+	end
+
+	if E.db.mMT.unitframeicons.phase.enable then
+		mMT.Modules.PhaseIcon = {}
+	end
+
+	if E.db.mMT.unitframeicons.resurrection.enable then
+		mMT.Modules.ResurrectionIcon = {}
+	end
+
+	if E.db.mMT.unitframeicons.readycheck.enable then
+		mMT.Modules.ReadyCheckIcons = {}
 	end
 
 	-- hook ElvUI UpdateAll function
@@ -133,7 +168,7 @@ function mMT:PLAYER_ENTERING_WORLD(event)
 
 		if E.Retail then
 			if E.db.mMT.roleicons.enable then
-				mMT:mStartRoleSymbols()
+				mMT.Modules.RoleIcons:Initialize()
 			end
 
 			if E.db.mMT.interruptoncd.enable or (E.db.mMT.importantspells.enable and (E.db.mMT.importantspells.np or E.db.mMT.importantspells.uf)) or E.db.mMT.castbarshield.enable then
@@ -179,7 +214,7 @@ function mMT:PLAYER_ENTERING_WORLD(event)
 	-- Modules for Wrath
 	if E.Wrath then
 		if E.db.mMT.roleicons.enable then
-			mMT:mStartRoleSymbols()
+			mMT.Modules.RoleIcons:Initialize()
 		end
 	end
 
@@ -226,19 +261,19 @@ function mMT:PLAYER_ENTERING_WORLD(event)
 	end
 
 	if E.db.mMT.unitframeicons.readycheck.enable then
-		mMT:SetupReadyCheckIcons()
+		mMT.Modules.ReadyCheckIcons:Initialize()
 	end
 
 	if E.db.mMT.unitframeicons.phase.enable then
-		mMT:SetupPhaseIcons()
+		mMT.Modules.PhaseIcon:Initialize()
 	end
 
 	if E.db.mMT.unitframeicons.resurrection.enable then
-		mMT:SetupResurrectionIcon()
+		mMT.Modules.ResurrectionIcon:Initialize()
 	end
 
 	if E.db.mMT.unitframeicons.summon.enable then
-		mMT:SetupSummonIcon()
+		mMT.Modules.SummonIcon:Initialize()
 	end
 
 	if (E.db.mMT.custombackgrounds.health.enable or E.db.mMT.custombackgrounds.power.enable or E.db.mMT.custombackgrounds.castbar.enable) and not mMT.ElvUI_EltreumUI.dark then

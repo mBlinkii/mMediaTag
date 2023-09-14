@@ -2,6 +2,9 @@
 	<Script file="background.lua"/>
 	<Script file="CustomClassColors.lua"/>
 	<Script file="RoleIcons.lua"/>
-	<Script file="unitframeicons.lua"/>
+	<Script file="PhaseIcon.lua"/>
+	<Script file="ReadyCheckIcon.lua"/>
+	<Script file="ResurrectionIcon.lua"/>
+	<Script file="SummonIcon.lua"/>
 	<Script file="portrait.lua"/>
 </Ui>
