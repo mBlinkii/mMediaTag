@@ -30,6 +30,12 @@ mMT.ElvUI_EltreumUI = {}
 mMT.DEVNames = {}
 mMT.DevMode = false
 
+mMT.Modules.Portraits = {}
+mMT.Modules.SummonIcon = {}
+mMT.Modules.PhaseIcon = {}
+mMT.Modules.ResurrectionIcon = {}
+mMT.Modules.ReadyCheckIcons = {}
+
 local function UpdateModules()
 	-- update module settings
 	mMT.Modules.Portraits:Initialize()
@@ -92,25 +98,6 @@ function mMT:Initialize()
 	end
 
 	-- Modules
-	if E.db.mMT.portraits.general.enable then
-		mMT.Modules.Portraits = {}
-	end
-
-	if E.db.mMT.unitframeicons.summon.enable then
-		mMT.Modules.SummonIcon = {}
-	end
-
-	if E.db.mMT.unitframeicons.phase.enable then
-		mMT.Modules.PhaseIcon = {}
-	end
-
-	if E.db.mMT.unitframeicons.resurrection.enable then
-		mMT.Modules.ResurrectionIcon = {}
-	end
-
-	if E.db.mMT.unitframeicons.readycheck.enable then
-		mMT.Modules.ReadyCheckIcons = {}
-	end
 
 	-- hook ElvUI UpdateAll function
 	hooksecurefunc(E, "UpdateAll", UpdateModules)
