@@ -35,7 +35,7 @@ mMT.Modules.SummonIcon = {}
 mMT.Modules.PhaseIcon = {}
 mMT.Modules.ResurrectionIcon = {}
 mMT.Modules.ReadyCheckIcons = {}
-
+mMT.Modules.RoleIcons = {}
 local function UpdateModules()
 	-- update module settings
 	mMT.Modules.Portraits:Initialize()
@@ -56,6 +56,11 @@ function mMT:Initialize()
 	mMT.DB = mMTDB
 
 	EP:RegisterPlugin(addonName, LoadSettings)
+
+	-- update defaults
+	mMT.ClassColor = mMT:UpdateClassColor()
+	mMT.ElvUI_EltreumUI = mMT:CheckEltruism()
+	mMT.DEVNames = mMT:GetDevNames()
 
 	-- Create Modules and Register Events for all Retail
 	if E.Retail then
@@ -78,17 +83,9 @@ function mMT:Initialize()
 		end
 
 		-- Modules
-		if E.db.mMT.roleicons.enable then
-			mMT.Modules.RoleIcons = {}
-		end
 	end
 
 	-- Modules for Wrath
-	if E.Wrath then
-		if E.db.mMT.roleicons.enable then
-			mMT.Modules.RoleIcons = {}
-		end
-	end
 
 	-- Create Modules and Register Events for all Game Versions
 	self:RegisterEvent("PLAYER_ENTERING_WORLD")
