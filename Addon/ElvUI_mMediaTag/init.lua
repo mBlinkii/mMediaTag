@@ -14,6 +14,37 @@ local GetAddOnMetadata = _G.C_AddOns and _G.C_AddOns.GetAddOnMetadata or _G.GetA
 local addonName, addon = ...
 mMT = E:NewModule(addonName, "AceHook-3.0", "AceEvent-3.0", "AceTimer-3.0", "AceConsole-3.0")
 
+local defaultDB = {
+	mplusaffix = { affixes = nil, season = nil, reset = false, year = nil },
+	affix = nil,
+	keys = {},
+	dev = { enabled = false, frame = { top = nil, left = nil }, unit = {}, zone = {} },
+}
+
+local DB_Loader = CreateFrame("FRAME")
+DB_Loader:RegisterEvent("PLAYER_LOGOUT")
+DB_Loader:RegisterEvent("ADDON_LOADED")
+
+function DB_LoaderOnEvent(event, arg1)
+	if event == "ADDON_LOADED" and arg1 == "ElvUI_mMediaTag" then
+		mMTDB = mMTDB or {}
+		mMT.DB = mMTDB
+		for k, v in pairs(defaultDB) do
+			if mMT.DB[k] == nil then
+				mMT.DB[k] = v
+			end
+		end
+	elseif event == "PLAYER_LOGOUT" then
+		if mMT.DevMode then
+			mMT:SaveFramePos()
+			mMT.DB.dev.enabled = mMT.DevMode
+		end
+		mMTDB = mMT.DB
+	end
+end
+
+DB_Loader:SetScript("OnEvent", DB_LoaderOnEvent)
+
 -- Settings
 mMT.Version = GetAddOnMetadata(addonName, "Version")
 mMT.Name = "|CFF6559F1m|r|CFF7A4DEFM|r|CFF8845ECe|r|CFFA037E9d|r|CFFA435E8i|r|CFFB32DE6a|r|CFFBC26E5T|r|CFFCB1EE3a|r|CFFDD14E0g|r |CFFFF006C&|r |CFFFF4C00T|r|CFFFF7300o|r|CFFFF9300o|r|CFFFFA800l|r|CFFFFC900s|r"
@@ -52,9 +83,6 @@ local function LoadSettings()
 end
 
 function mMT:Initialize()
-	-- Set DB
-	mMT.DB = mMTDB
-
 	EP:RegisterPlugin(addonName, LoadSettings)
 
 	-- update defaults
@@ -109,9 +137,6 @@ local function CallbackInitialize()
 end
 
 function mMT:PLAYER_ENTERING_WORLD(event)
-	-- Set DB
-	mMT.DB = mMTDB
-
 	-- update defaults
 	mMT.ClassColor = mMT:UpdateClassColor()
 	mMT.ElvUI_EltreumUI = mMT:CheckEltruism()
