@@ -448,7 +448,7 @@ function module:Initialize()
 					end
 				end)
 			end
-		else
+		elseif module.Player then
 			module.Player:UnregisterEvent("UNIT_PORTRAIT_UPDATE")
 			module.Player:UnregisterEvent("PLAYER_ENTERING_WORLD")
 			module.Player:Hide()
@@ -479,7 +479,7 @@ function module:Initialize()
 					end
 				end)
 			end
-		else
+		elseif module.Target then
 			module.Target:UnregisterEvent("UNIT_PORTRAIT_UPDATE")
 			module.Target:UnregisterEvent("PLAYER_ENTERING_WORLD")
 			module.Target:UnregisterEvent("PLAYER_TARGET_CHANGED")
@@ -511,7 +511,7 @@ function module:Initialize()
 					end
 				end
 			end
-		else
+		elseif module.Party1 then
 			for i = 1, 5 do
 				local portrait = "Party" .. i
 				if module[portrait] then
