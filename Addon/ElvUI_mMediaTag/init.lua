@@ -48,7 +48,7 @@ local DB_Loader = CreateFrame("FRAME")
 DB_Loader:RegisterEvent("PLAYER_LOGOUT")
 DB_Loader:RegisterEvent("ADDON_LOADED")
 
-function DB_LoaderOnEvent(event, arg1)
+function DB_Loader:OnEvent(event, arg1)
 	if event == "ADDON_LOADED" and arg1 == "ElvUI_mMediaTag" then
 		mMTDB = mMTDB or {}
 		mMT.DB = mMTDB
@@ -66,7 +66,7 @@ function DB_LoaderOnEvent(event, arg1)
 	end
 end
 
-DB_Loader:SetScript("OnEvent", DB_LoaderOnEvent)
+DB_Loader:SetScript("OnEvent", DB_Loader.OnEvent)
 
 local function UpdateModules()
 	-- update module settings
