@@ -128,6 +128,22 @@ function mMT:Initialize()
 	-- hook ElvUI UpdateAll function
 	hooksecurefunc(E, "UpdateAll", UpdateModules)
 
+	if E.db.mMT.unitframeicons.readycheck.enable then
+		mMT.Modules.ReadyCheckIcons:Initialize()
+	end
+
+	if E.db.mMT.unitframeicons.phase.enable then
+		mMT.Modules.PhaseIcon:Initialize()
+	end
+
+	if E.db.mMT.unitframeicons.resurrection.enable then
+		mMT.Modules.ResurrectionIcon:Initialize()
+	end
+
+	if E.db.mMT.unitframeicons.summon.enable then
+		mMT.Modules.SummonIcon:Initialize()
+	end
+
 	-- Initialize main things
 	tinsert(E.ConfigModeLayouts, "MMEDIATAG")
 	E.ConfigModeLocalizedStrings["MMEDIATAG"] = mMT.Name
