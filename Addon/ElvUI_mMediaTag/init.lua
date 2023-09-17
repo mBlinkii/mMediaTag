@@ -68,7 +68,14 @@ function DB_Loader:OnEvent(event, arg1)
 end
 
 DB_Loader:SetScript("OnEvent", DB_Loader.OnEvent)
-
+local function UpdateLoadedModules()
+	for name, module in pairs(mMT.Modules) do
+		mMT:Print(name, module.enable, module.loaded, module.reload)
+		if module.enable and module.loaded then
+			module:Initialize()
+		end
+	end
+end
 local function UpdateModules()
 	-- update module settings
 	mMT:Print(" --- UPDATE MODULES --- ")
@@ -78,8 +85,8 @@ local function UpdateModules()
 
 	-- update all other
 	for name, module in pairs(mMT.Modules) do
-		mMT:Print(name, module.enable, module.loaded, module.reload)
-		if module.enable and module.loaded then
+		if module.loaded then
+			mMT:Print(name, "Update")
 			module:Initialize()
 		end
 	end

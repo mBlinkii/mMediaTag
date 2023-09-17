@@ -430,6 +430,7 @@ function module:Initialize()
 	settings = E.db.mMT.portraits
 
 	if settings.general.enable then
+		module.loaded = true
 		textures = E.Retail and tx_DB.retail or tx_DB.classic
 
 		if settings.player.enable then
@@ -527,6 +528,7 @@ function module:Initialize()
 
 		module:UpdatePortraits()
 	else
+		module.loaded = false
 		if module.Player then
 			module.Player:UnregisterEvent("UNIT_PORTRAIT_UPDATE")
 			module.Player:UnregisterEvent("PLAYER_ENTERING_WORLD")

@@ -432,8 +432,10 @@ local function mUpdateTPList(button)
 end
 
 local function OnClick(self, button)
-	mUpdateTPList(button)
-	mMT:mDropDown(Teleports.menu, menuFrame, self, 260, 2)
+	if not InCombatLockdown() then
+		mUpdateTPList(button)
+		mMT:mDropDown(Teleports.menu, menuFrame, self, 260, 2)
+	end
 end
 
 local function mTPTooltip()
