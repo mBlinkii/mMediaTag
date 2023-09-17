@@ -36,6 +36,7 @@ mMT.Modules.PhaseIcon = {}
 mMT.Modules.ResurrectionIcon = {}
 mMT.Modules.ReadyCheckIcons = {}
 mMT.Modules.RoleIcons = {}
+mMT.Modules.Castbar = {}
 
 local defaultDB = {
 	mplusaffix = { affixes = nil, season = nil, reset = false, year = nil },
@@ -70,8 +71,20 @@ DB_Loader:SetScript("OnEvent", DB_Loader.OnEvent)
 
 local function UpdateModules()
 	-- update module settings
-	mMT.Modules.Portraits:Initialize()
-	mMT.Modules.RoleIcons:Initialize()
+	mMT:Print(" --- UPDATE MODULES --- ")
+	-- update every time
+
+	-- check first if is loaded and update this
+
+	-- update all other
+	for name, module in pairs(mMT.Modules) do
+		mMT:Print(name, module.enable, module.loaded, module.reload)
+		if module.enable and module.loaded then
+			module:Initialize()
+		end
+	end
+
+	mMT:Print(" --- END --- ")
 end
 
 -- Load Settings
@@ -129,20 +142,30 @@ function mMT:Initialize()
 	hooksecurefunc(E, "UpdateAll", UpdateModules)
 
 	if E.db.mMT.unitframeicons.readycheck.enable then
+		mMT.Modules.ReadyCheckIcons.enable = true
 		mMT.Modules.ReadyCheckIcons:Initialize()
 	end
 
 	if E.db.mMT.unitframeicons.phase.enable then
+		mMT.Modules.PhaseIcon.enable = true
 		mMT.Modules.PhaseIcon:Initialize()
 	end
 
 	if E.db.mMT.unitframeicons.resurrection.enable then
+		mMT.Modules.ResurrectionIcon.enable = true
 		mMT.Modules.ResurrectionIcon:Initialize()
 	end
 
 	if E.db.mMT.unitframeicons.summon.enable then
+		mMT.Modules.SummonIcon.enable = true
 		mMT.Modules.SummonIcon:Initialize()
 	end
+
+		-- Add Modules
+		if E.db.mMT.interruptoncd.enable or (E.db.mMT.importantspells.enable and (E.db.mMT.importantspells.np or E.db.mMT.importantspells.uf)) or E.db.mMT.castbarshield.enable then
+			mMT.Modules.Castbar.enable = true
+			mMT.Modules.Castbar:Initialize()
+		end
 
 	-- Initialize main things
 	tinsert(E.ConfigModeLayouts, "MMEDIATAG")
@@ -198,7 +221,7 @@ function mMT:PLAYER_ENTERING_WORLD(event)
 			end
 
 			if E.db.mMT.interruptoncd.enable or (E.db.mMT.importantspells.enable and (E.db.mMT.importantspells.np or E.db.mMT.importantspells.uf)) or E.db.mMT.castbarshield.enable then
-				mMT:CastbarModuleLoader()
+				mMT.Modules.Castbar:Initialize()
 			end
 
 			if E.db.mMT.importantspells.enable and (E.db.mMT.importantspells.np or E.db.mMT.importantspells.uf) then
@@ -246,6 +269,7 @@ function mMT:PLAYER_ENTERING_WORLD(event)
 
 	-- Modules only for all Game Versions
 	if E.db.mMT.portraits.general.enable then
+		mMT.Modules.Portraits.enable = true
 		mMT.Modules.Portraits:Initialize()
 	end
 

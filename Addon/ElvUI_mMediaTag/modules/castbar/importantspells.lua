@@ -65,9 +65,9 @@ function mMT:ImportantSpells(castbar)
 	if Spell then
 		if Spell.color.enable then
 			if E.db.mMT.importantspells.gradient then
-				mMT:SetCastbarColor(castbar, Spell.color.a, Spell.color.b)
+				mMT.Modules.Castbar:SetCastbarColor(castbar, Spell.color.a, Spell.color.b)
 			else
-				mMT:SetCastbarColor(castbar, Spell.color.a)
+				mMT.Modules.Castbar:SetCastbarColor(castbar, Spell.color.a)
 			end
 		end
 
