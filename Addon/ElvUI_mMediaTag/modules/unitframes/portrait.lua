@@ -11,121 +11,65 @@ end
 local settings = {}
 
 local path = "Interface\\Addons\\ElvUI_mMediaTag\\media\\portraits\\"
-local tx_DB = {
-	retail = {
-		texture = {
-			flat = {
-				SQ = path .. "sq_a.tga",
-				RO = path .. "ro_a.tga",
-				CI = path .. "ci_a.tga",
-				CO = path .. "co_a.tga",
-				EA = path .. "ex_a_a.tga",
-				EB = path .. "ex_b_a.tga",
-			},
-			smooth = {
-				SQ = path .. "sq_b.tga",
-				RO = path .. "ro_b.tga",
-				CI = path .. "ci_b.tga",
-				CO = path .. "co_b.tga",
-				EA = path .. "ex_a_b.tga",
-				EB = path .. "ex_b_b.tga",
-			},
-			metal = {
-				SQ = path .. "sq_c.tga",
-				RO = path .. "ro_c.tga",
-				CI = path .. "ci_c.tga",
-				CO = path .. "co_c.tga",
-				EA = path .. "ex_a_c.tga",
-				EB = path .. "ex_b_c.tga",
-			},
+local textures = {
+	texture = {
+		flat = {
+			SQ = path .. "sq_a.tga",
+			RO = path .. "ro_a.tga",
+			CI = path .. "ci_a.tga",
+			CO = path .. "co_a.tga",
+			EA = path .. "ex_a_a.tga",
+			EB = path .. "ex_b_a.tga",
 		},
-		border = {
-			SQ = path .. "border_sq.tga",
-			RO = path .. "border_ro.tga",
-			CI = path .. "border_ci.tga",
-			CO = path .. "border_co.tga",
-			EA = path .. "border_ex_a.tga",
-			EB = path .. "border_ex_b.tga",
+		smooth = {
+			SQ = path .. "sq_b.tga",
+			RO = path .. "ro_b.tga",
+			CI = path .. "ci_b.tga",
+			CO = path .. "co_b.tga",
+			EA = path .. "ex_a_b.tga",
+			EB = path .. "ex_b_b.tga",
 		},
-		shadow = {
-			SQ = path .. "shadow_sq.tga",
-			RO = path .. "shadow_ro.tga",
-			CI = path .. "shadow_ci.tga",
-			EA = path .. "shadow_ex_a.tga",
-			EB = path .. "shadow_ex_b.tga",
-		},
-		inner = {
-			SQ = path .. "inner_a.tga",
-			RO = path .. "inner_a.tga",
-			CI = path .. "inner_b.tga",
-		},
-		mask = {
-			CI = path .. "mask_c.tga",
-			A = {
-				SQ = path .. "mask_a.tga",
-				RO = path .. "mask_a.tga",
-			},
-			B = {
-				SQ = path .. "mask_b.tga",
-				RO = path .. "mask_b.tga",
-			},
+		metal = {
+			SQ = path .. "sq_c.tga",
+			RO = path .. "ro_c.tga",
+			CI = path .. "ci_c.tga",
+			CO = path .. "co_c.tga",
+			EA = path .. "ex_a_c.tga",
+			EB = path .. "ex_b_c.tga",
 		},
 	},
-	classic = {
-		texture = {
-			flat = {
-				SQ = path .. "sq_a_c.tga",
-				RO = path .. "ro_a_c.tga",
-				CI = path .. "ci_a.tga",
-				CO = path .. "co_a.tga",
-				EA = path .. "ex_a_a.tga",
-				EB = path .. "ex_b_a.tga",
-			},
-			smooth = {
-				SQ = path .. "sq_b_c.tga",
-				RO = path .. "ro_b_c.tga",
-				CI = path .. "ci_b.tga",
-				CO = path .. "co_b.tga",
-				EA = path .. "ex_a_b.tga",
-				EB = path .. "ex_b_b.tga",
-			},
-			metal = {
-				SQ = path .. "sq_c_c.tga",
-				RO = path .. "ro_c_c.tga",
-				CI = path .. "ci_c.tga",
-				CO = path .. "co_c.tga",
-				EA = path .. "ex_a_c.tga",
-				EB = path .. "ex_b_c.tga",
-			},
+	border = {
+		SQ = path .. "border_sq.tga",
+		RO = path .. "border_ro.tga",
+		CI = path .. "border_ci.tga",
+		CO = path .. "border_co.tga",
+		EA = path .. "border_ex_a.tga",
+		EB = path .. "border_ex_b.tga",
+	},
+	shadow = {
+		SQ = path .. "shadow_sq.tga",
+		RO = path .. "shadow_ro.tga",
+		CI = path .. "shadow_ci.tga",
+		EA = path .. "shadow_ex_a.tga",
+		EB = path .. "shadow_ex_b.tga",
+	},
+	inner = {
+		SQ = path .. "inner_a.tga",
+		RO = path .. "inner_a.tga",
+		CI = path .. "inner_b.tga",
+	},
+	mask = {
+		CI = path .. "mask_c.tga",
+		A = {
+			SQ = path .. "mask_a.tga",
+			RO = path .. "mask_a.tga",
 		},
-		border = {
-			SQ = path .. "border_sq.tga",
-			RO = path .. "border_ro.tga",
-			CI = path .. "border_ci.tga",
-			CO = path .. "border_co.tga",
-			EA = path .. "border_ex_a.tga",
-			EB = path .. "border_ex_b.tga",
-		},
-		shadow = {
-			SQ = path .. "shadow_sq_c.tga",
-			RO = path .. "shadow_ro_c.tga",
-			CI = path .. "shadow_ci.tga",
-			EA = path .. "shadow_ex_a.tga",
-			EB = path .. "shadow_ex_b.tga",
-		},
-		inner = {
-			SQ = path .. "inner_b.tga",
-			RO = path .. "inner_b.tga",
-			CI = path .. "inner_b.tga",
-		},
-		mask = {
-			SQ = path .. "mask_c.tga",
-			RO = path .. "mask_c.tga",
-			CI = path .. "mask_c.tga",
+		B = {
+			SQ = path .. "mask_b.tga",
+			RO = path .. "mask_b.tga",
 		},
 	},
 }
-local textures = tx_DB.retail
 
 local function setColor(texture, color, mirror)
 	if not texture or not color then
@@ -191,7 +135,7 @@ local function CreatePortrait(parent, conf, unit)
 	frame.portrait:SetPoint("TOPLEFT", offset, -offset)
 	frame.portrait:SetPoint("BOTTOMRIGHT", -offset, offset)
 	mirrorTexture(frame.portrait, conf.mirror)
-	SetPortraitTexture(frame.portrait, unit, (E.Retail and not (conf.texture == "CI")))
+	SetPortraitTexture(frame.portrait, unit, not (conf.texture == "CI"))
 
 	-- Portrait Mask
 	texture = textures.mask[conf.texture] or conf.mirror and textures.mask.B[conf.texture] or textures.mask.A[conf.texture]
@@ -431,7 +375,6 @@ function module:Initialize()
 
 	if settings.general.enable then
 		module.loaded = true
-		textures = E.Retail and tx_DB.retail or tx_DB.classic
 
 		if settings.player.enable then
 			if not module.Player then
@@ -439,11 +382,11 @@ function module:Initialize()
 				module.Player:RegisterUnitEvent("UNIT_PORTRAIT_UPDATE", "player")
 				module.Player:RegisterEvent("PLAYER_ENTERING_WORLD")
 				module.Player:SetScript("OnEvent", function(self, event)
-					SetPortraitTexture(self.portrait, "player", (E.Retail and not (settings.player.texture == "CI")))
+					SetPortraitTexture(self.portrait, "player", not (settings.player.texture == "CI"))
 
 					if event == "PLAYER_ENTERING_WORLD" then
 						setColor(self.texture, getColor(self, "player"), settings.player.mirror)
-						if settings.general.corner and E.Retail and (settings.player.texture ~= "CI") then
+						if settings.general.corner and (settings.player.texture ~= "CI") then
 							setColor(self.corner, getColor(self, "player"), settings.player.mirror)
 						end
 					end
@@ -463,12 +406,12 @@ function module:Initialize()
 				module.Target:RegisterEvent("PLAYER_TARGET_CHANGED")
 				module.Target:RegisterEvent("PLAYER_ENTERING_WORLD")
 				module.Target:SetScript("OnEvent", function(self, event)
-					SetPortraitTexture(self.portrait, "target", (E.Retail and not (settings.target.texture == "CI")))
+					SetPortraitTexture(self.portrait, "target", not (settings.target.texture == "CI"))
 
 					if event == "PLAYER_TARGET_CHANGED" or event == "PLAYER_ENTERING_WORLD" then
 						setColor(self.texture, getColor(self, "target"), settings.target.mirror)
 
-						if settings.general.corner and E.Retail and (settings.target.texture ~= "CI") then
+						if settings.general.corner and (settings.target.texture ~= "CI") then
 							setColor(self.corner, getColor(self, "target"), settings.target.mirror)
 						end
 
@@ -502,12 +445,12 @@ function module:Initialize()
 						module[portrait]:SetScript("OnEvent", function(self, event)
 							if event == "GROUP_ROSTER_UPDATE" or event == "PLAYER_ENTERING_WORLD" then
 								setColor(self.texture, getColor(self, frame.unit), settings.party.mirror)
-								if settings.general.corner and E.Retail and (settings.party.texture ~= "CI") then
+								if settings.general.corner and (settings.party.texture ~= "CI") then
 									setColor(self.corner, getColor(self, frame.unit), settings.party.mirror)
 								end
 							end
 
-							SetPortraitTexture(self.portrait, frame.unit, (E.Retail and not (settings.party.texture == "CI")))
+							SetPortraitTexture(self.portrait, frame.unit, not (settings.party.texture == "CI"))
 						end)
 					end
 				end

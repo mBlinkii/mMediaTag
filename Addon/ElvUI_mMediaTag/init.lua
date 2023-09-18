@@ -168,11 +168,13 @@ function mMT:Initialize()
 		mMT.Modules.SummonIcon:Initialize()
 	end
 
+	if E.Retail then
 		-- Add Modules
 		if E.db.mMT.interruptoncd.enable or (E.db.mMT.importantspells.enable and (E.db.mMT.importantspells.np or E.db.mMT.importantspells.uf)) or E.db.mMT.castbarshield.enable then
 			mMT.Modules.Castbar.enable = true
 			mMT.Modules.Castbar:Initialize()
 		end
+	end
 
 	-- Initialize main things
 	tinsert(E.ConfigModeLayouts, "MMEDIATAG")
