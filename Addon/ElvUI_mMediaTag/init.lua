@@ -68,15 +68,67 @@ function DB_Loader:OnEvent(event, arg1)
 end
 
 DB_Loader:SetScript("OnEvent", DB_Loader.OnEvent)
-local function UpdateLoadedModules()
-	for name, module in pairs(mMT.Modules) do
-		mMT:Print(name, module.enable, module.loaded, module.reload)
-		if module.enable and module.loaded then
-			module:Initialize()
+
+
+StaticPopupDialogs["mMT_Reload_Required"] = {
+	text = L["Some settings have been changed! For mMediaTag to work properly, a reload of the interface is recommended. Should a reload be performed now?"],
+	button1 = L["ReloadUI"],
+	button2 = L["Abort"],
+	OnAccept = function()
+		ReloadUI()
+	end,
+	timeout = 0,
+	whileDead = true,
+	hideOnEscape = true,
+	preferredIndex = 3,
+  }
+
+local function UpdateModuleSettings()
+	--  XXX Change this
+	mMT:UpdateDockSettings()
+	mMT:UpdateTagSettings()
+
+	mMT:TagDeathCount()
+
+	-- Modules only for Retail
+	if E.Retail then
+		C_MythicPlus_RequestMapInfo = C_MythicPlus.RequestMapInfo
+		C_MythicPlus_RequestCurrentAffixes = C_MythicPlus.RequestCurrentAffixes
+
+		C_MythicPlus_RequestMapInfo()
+		C_MythicPlus_RequestCurrentAffixes()
+
+		if E.db.mMT.interruptoncd.enable then
+			mMT:UpdateInterruptSpell()
 		end
 	end
 end
+
+local function EnableModules()
+	-- All Game Versions
+	mMT.Modules.ReadyCheckIcons.enable = E.db.mMT.unitframeicons.readycheck.enable
+	mMT.Modules.PhaseIcon.enable = E.db.mMT.unitframeicons.phase.enable
+	mMT.Modules.ResurrectionIcon.enable = E.db.mMT.unitframeicons.resurrection.enable
+	mMT.Modules.SummonIcon.enable = E.db.mMT.unitframeicons.summon.enable
+	mMT.Modules.Portraits.enable = E.db.mMT.portraits.general.enable
+
+	-- Retail
+	if E.Retail then
+		mMT.Modules.Castbar.enable = (E.db.mMT.interruptoncd.enable or (E.db.mMT.importantspells.enable and (E.db.mMT.importantspells.np or E.db.mMT.importantspells.uf)) or E.db.mMT.castbarshield.enable)
+		mMT.Modules.RoleIcons.enable = E.db.mMT.roleicons.enable
+	end
+
+	-- Wrath
+	if E.Retail then
+		mMT.Modules.Castbar.enable = (E.db.mMT.interruptoncd.enable or (E.db.mMT.importantspells.enable and (E.db.mMT.importantspells.np or E.db.mMT.importantspells.uf)) or E.db.mMT.castbarshield.enable)
+		mMT.Modules.RoleIcons.enable = E.db.mMT.roleicons.enable
+	end
+end
+
 local function UpdateModules()
+	mMT:Print("SETIN>>>>>", E.db.mMT.portraits.general.enable)
+	EnableModules()
+	local reloadRequired = false
 	-- update module settings
 	mMT:Print(" --- UPDATE MODULES --- ")
 	-- update every time
@@ -85,10 +137,23 @@ local function UpdateModules()
 
 	-- update all other
 	for name, module in pairs(mMT.Modules) do
-		if module.loaded then
-			mMT:Print(name, "Update")
+		if (not module.enable and module.loaded) or module.loaded or module.enable then
+			mMT:Print(name, "Update", module.loaded, "Disable", (not module.enable and module.loaded), "Enable", module.enable)
 			module:Initialize()
+
+			if module.needReloadUI and ((not module.enable and module.loaded) or (module.loaded and not module.enable)) then
+				mMT:Print("RELOAD REQUIERED")
+				reloadRequired = true
+			end
+
+			if module.loaded and not module.enable then
+				module.loaded = false
+			end
 		end
+	end
+
+	if reloadRequired then
+		StaticPopup_Show ("mMT_Reload_Required")
 	end
 
 	mMT:Print(" --- END --- ")
@@ -111,7 +176,7 @@ function mMT:Initialize()
 	mMT.ElvUI_EltreumUI = mMT:CheckEltruism()
 	mMT.DEVNames = mMT:GetDevNames()
 
-	-- Create Modules and Register Events for all Retail
+	-- Register Events for Retail
 	if E.Retail then
 		if E.db.mMT.instancedifficulty.enable then
 			self:RegisterEvent("UPDATE_INSTANCE_INFO")
@@ -130,13 +195,9 @@ function mMT:Initialize()
 		if (E.private.nameplates.enable and E.db.mMT.nameplate.executemarker.auto) or E.db.mMT.interruptoncd.enable then
 			self:RegisterEvent("PLAYER_TALENT_UPDATE")
 		end
-
-		-- Modules
 	end
 
-	-- Modules for Wrath
-
-	-- Create Modules and Register Events for all Game Versions
+	-- Register Events for all Game Versions
 	self:RegisterEvent("PLAYER_ENTERING_WORLD")
 
 	if E.db.mMT.afk.enable then
@@ -144,37 +205,11 @@ function mMT:Initialize()
 	end
 
 	-- Modules
+	UpdateModuleSettings()
+	UpdateModules()
 
 	-- hook ElvUI UpdateAll function
 	hooksecurefunc(E, "UpdateAll", UpdateModules)
-
-	if E.db.mMT.unitframeicons.readycheck.enable then
-		mMT.Modules.ReadyCheckIcons.enable = true
-		mMT.Modules.ReadyCheckIcons:Initialize()
-	end
-
-	if E.db.mMT.unitframeicons.phase.enable then
-		mMT.Modules.PhaseIcon.enable = true
-		mMT.Modules.PhaseIcon:Initialize()
-	end
-
-	if E.db.mMT.unitframeicons.resurrection.enable then
-		mMT.Modules.ResurrectionIcon.enable = true
-		mMT.Modules.ResurrectionIcon:Initialize()
-	end
-
-	if E.db.mMT.unitframeicons.summon.enable then
-		mMT.Modules.SummonIcon.enable = true
-		mMT.Modules.SummonIcon:Initialize()
-	end
-
-	if E.Retail then
-		-- Add Modules
-		if E.db.mMT.interruptoncd.enable or (E.db.mMT.importantspells.enable and (E.db.mMT.importantspells.np or E.db.mMT.importantspells.uf)) or E.db.mMT.castbarshield.enable then
-			mMT.Modules.Castbar.enable = true
-			mMT.Modules.Castbar:Initialize()
-		end
-	end
 
 	-- Initialize main things
 	tinsert(E.ConfigModeLayouts, "MMEDIATAG")
@@ -191,7 +226,7 @@ function mMT:PLAYER_ENTERING_WORLD(event)
 	mMT.ElvUI_EltreumUI = mMT:CheckEltruism()
 	mMT.DEVNames = mMT:GetDevNames()
 
-	-- Change Log
+	-- Changelog
 	if E.db.mMT.version ~= mMT.Version then
 		E:ToggleOptions()
 		E.Libs.AceConfigDialog:SelectGroup("ElvUI", "mMT", "changelog")
@@ -207,32 +242,13 @@ function mMT:PLAYER_ENTERING_WORLD(event)
 		mMT.DevMode = false
 	end
 
-	--  XXX Change this
-	mMT:UpdateDockSettings()
-	mMT:UpdateTagSettings()
-	mMT:TagDeathCount()
+	-- Modules
+	UpdateModuleSettings()
+	UpdateModules()
 
 	-- Modules only for Retail
 	if E.Retail then
-		C_MythicPlus_RequestMapInfo = C_MythicPlus.RequestMapInfo
-		C_MythicPlus_RequestCurrentAffixes = C_MythicPlus.RequestCurrentAffixes
-
-		C_MythicPlus_RequestMapInfo()
-		C_MythicPlus_RequestCurrentAffixes()
-
-		if E.db.mMT.interruptoncd.enable then
-			mMT:UpdateInterruptSpell()
-		end
-
 		if E.Retail then
-			if E.db.mMT.roleicons.enable then
-				mMT.Modules.RoleIcons:Initialize()
-			end
-
-			if E.db.mMT.interruptoncd.enable or (E.db.mMT.importantspells.enable and (E.db.mMT.importantspells.np or E.db.mMT.importantspells.uf)) or E.db.mMT.castbarshield.enable then
-				mMT.Modules.Castbar:Initialize()
-			end
-
 			if E.db.mMT.importantspells.enable and (E.db.mMT.importantspells.np or E.db.mMT.importantspells.uf) then
 				mMT:UpdateImportantSpells()
 			end
@@ -267,19 +283,6 @@ function mMT:PLAYER_ENTERING_WORLD(event)
 				mMT:InitializemOBT()
 			end
 		end
-	end
-
-	-- Modules for Wrath
-	if E.Wrath then
-		if E.db.mMT.roleicons.enable then
-			mMT.Modules.RoleIcons:Initialize()
-		end
-	end
-
-	-- Modules only for all Game Versions
-	if E.db.mMT.portraits.general.enable then
-		mMT.Modules.Portraits.enable = true
-		mMT.Modules.Portraits:Initialize()
 	end
 
 	if E.db.mMT.afk.enable then
@@ -317,22 +320,6 @@ function mMT:PLAYER_ENTERING_WORLD(event)
 
 	if E.private.nameplates.enable and (E.db.mMT.nameplate.bordercolor.glow or E.db.mMT.nameplate.bordercolor.border) then
 		mMT:mNamePlateBorderColor()
-	end
-
-	if E.db.mMT.unitframeicons.readycheck.enable then
-		mMT.Modules.ReadyCheckIcons:Initialize()
-	end
-
-	if E.db.mMT.unitframeicons.phase.enable then
-		mMT.Modules.PhaseIcon:Initialize()
-	end
-
-	if E.db.mMT.unitframeicons.resurrection.enable then
-		mMT.Modules.ResurrectionIcon:Initialize()
-	end
-
-	if E.db.mMT.unitframeicons.summon.enable then
-		mMT.Modules.SummonIcon:Initialize()
 	end
 
 	if (E.db.mMT.custombackgrounds.health.enable or E.db.mMT.custombackgrounds.power.enable or E.db.mMT.custombackgrounds.castbar.enable) and not mMT.ElvUI_EltreumUI.dark then

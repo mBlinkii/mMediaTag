@@ -11,5 +11,10 @@ local function ResurrectionIcon(_, frame)
 end
 
 function module:Initialize()
+	if module.hooked then return end
 	hooksecurefunc(UF, "Configure_ResurrectionIcon", ResurrectionIcon)
+
+    module.hooked = true
+	module.needReloadUI = true
+	module.loaded = true
 end

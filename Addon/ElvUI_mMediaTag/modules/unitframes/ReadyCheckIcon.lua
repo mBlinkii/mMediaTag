@@ -15,6 +15,9 @@ end
 function module:Initialize()
     if module.hooked then return end
 	hooksecurefunc(UF, "Configure_ReadyCheckIcon", ReadyCheckIcons)
+
     module.hooked = true
+	module.needReloadUI = true
+	module.loaded = true
 end
 

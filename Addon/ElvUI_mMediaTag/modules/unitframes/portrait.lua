@@ -374,10 +374,8 @@ function module:Initialize()
 	settings = E.db.mMT.portraits
 
 	if settings.general.enable then
-		module.loaded = true
-
 		if settings.player.enable then
-			if not module.Player then
+			if not module.Player and _G.ElvUF_Player then
 				module.Player = CreatePortrait(_G.ElvUF_Player, settings.player, "player")
 				module.Player:RegisterUnitEvent("UNIT_PORTRAIT_UPDATE", "player")
 				module.Player:RegisterEvent("PLAYER_ENTERING_WORLD")
@@ -400,7 +398,7 @@ function module:Initialize()
 		end
 
 		if settings.general.enable and settings.target.enable then
-			if not module.Target then
+			if not module.Target and _G.ElvUF_Target then
 				module.Target = CreatePortrait(_G.ElvUF_Target, settings.target, "target")
 				module.Target:RegisterUnitEvent("UNIT_PORTRAIT_UPDATE", "target")
 				module.Target:RegisterEvent("PLAYER_TARGET_CHANGED")
@@ -432,7 +430,7 @@ function module:Initialize()
 		end
 
 		if settings.general.enable and settings.party.enable then
-			if not module.Party1 then
+			if not module.Party1 and _G.ElvUF_PartyGroup1UnitButton1 then
 				for i = 1, 5 do
 					local portrait = "Party" .. i
 					local frame = _G["ElvUF_PartyGroup1UnitButton" .. i]
@@ -470,8 +468,9 @@ function module:Initialize()
 		end
 
 		module:UpdatePortraits()
+
+		module.loaded = true
 	else
-		module.loaded = false
 		if module.Player then
 			module.Player:UnregisterEvent("UNIT_PORTRAIT_UPDATE")
 			module.Player:UnregisterEvent("PLAYER_ENTERING_WORLD")
@@ -500,5 +499,7 @@ function module:Initialize()
 				end
 			end
 		end
+
+		module.loaded = false
 	end
 end

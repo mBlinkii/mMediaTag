@@ -10,10 +10,6 @@ end
 local sizeString = ":15:15"
 
 function module:Initialize()
-	if not E.db.mMT.roleicons.enable then
-		return
-	end
-
 	local icons = { tank = { icon = nil, path = nil }, heal = { icon = nil, path = nil }, dd = { icon = nil, path = nil } }
 
 	if E.db.mMT.roleicons.customtexture then
@@ -53,4 +49,8 @@ function module:Initialize()
 			DAMAGER = icons.dd.path,
 		}
 	end
+
+	module.hooked = true
+	module.needReloadUI = true
+	module.loaded = true
 end

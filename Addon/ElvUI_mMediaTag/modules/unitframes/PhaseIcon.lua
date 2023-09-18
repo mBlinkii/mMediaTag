@@ -62,4 +62,7 @@ function module:Initialize()
 			module.hooked_PostUpdate = true
 		end
 	end
+
+	module.needReloadUI = true
+	module.loaded = true
 end

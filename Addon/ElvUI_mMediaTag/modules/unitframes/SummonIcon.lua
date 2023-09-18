@@ -24,5 +24,8 @@ function module:Initialize()
 	end
 
 	hooksecurefunc(UF, "Configure_SummonIcon", SummonIcon)
+
 	module.hooked = true
+	module.needReloadUI = true
+	module.loaded = true
 end
