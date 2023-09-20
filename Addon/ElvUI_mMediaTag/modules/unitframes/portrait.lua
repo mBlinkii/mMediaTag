@@ -188,7 +188,7 @@ local function CreatePortrait(parent, conf, unit)
 	end
 
 	-- Rare/Elite Texture
-	if unit == "target" and settings.target.enable and conf.extraEnable then
+	if conf.extraEnable then
 		-- Texture
 		texture = (conf.texture == "CI") and textures.texture[settings.general.style]["EA"] or textures.texture[settings.general.style]["EB"]
 		frame.extra = frame:CreateTexture("mMT_Extra", "OVERLAY", nil, -6)
@@ -318,7 +318,7 @@ local function UpdatePortrait(frame, conf, unit, parent)
 	end
 
 	-- Rare/Elite Texture
-	if unit == "target" and conf.extraEnable and frame.extra then
+	if conf.extraEnable and frame.extra then
 		-- Texture
 		texture = (conf.texture == "CI") and textures.texture[settings.general.style]["EA"] or textures.texture[settings.general.style]["EB"]
 		frame.extra:SetTexture(texture, "CLAMP", "CLAMP", "TRILINEAR")
@@ -567,9 +567,9 @@ function module:Initialize()
 						setColor(self.corner, getColor(self, "target"), settings.target.mirror)
 					end
 
-					if settings.target.extraEnable then
+					if settings.target.extraEnable and self.extra then
 						CheckRareElite(self, "target")
-					else
+					elseif self.extra then
 						self.extra:Hide()
 					end
 				end
@@ -601,9 +601,9 @@ function module:Initialize()
 						setColor(self.corner, getColor(self, "focus"), settings.focus.mirror)
 					end
 
-					if settings.focus.extraEnable then
+					if settings.focus.extraEnable and self.extra then
 						CheckRareElite(self, "focus")
-					else
+					elseif self.extra then
 						self.extra:Hide()
 					end
 				end
