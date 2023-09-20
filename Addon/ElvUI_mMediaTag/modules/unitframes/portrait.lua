@@ -18,6 +18,7 @@ local textures = {
 			RO = path .. "ro_a.tga",
 			CI = path .. "ci_a.tga",
 			CO = path .. "co_a.tga",
+			PI = path .. "pi_a.tga",
 			EA = path .. "ex_a_a.tga",
 			EB = path .. "ex_b_a.tga",
 		},
@@ -26,6 +27,7 @@ local textures = {
 			RO = path .. "ro_b.tga",
 			CI = path .. "ci_b.tga",
 			CO = path .. "co_b.tga",
+			PI = path .. "pi_b.tga",
 			EA = path .. "ex_a_b.tga",
 			EB = path .. "ex_b_b.tga",
 		},
@@ -34,6 +36,7 @@ local textures = {
 			RO = path .. "ro_c.tga",
 			CI = path .. "ci_c.tga",
 			CO = path .. "co_c.tga",
+			PI = path .. "pi_c.tga",
 			EA = path .. "ex_a_c.tga",
 			EB = path .. "ex_b_c.tga",
 		},
@@ -43,6 +46,7 @@ local textures = {
 		RO = path .. "border_ro.tga",
 		CI = path .. "border_ci.tga",
 		CO = path .. "border_co.tga",
+		PI = path .. "border_pi.tga",
 		EA = path .. "border_ex_a.tga",
 		EB = path .. "border_ex_b.tga",
 	},
@@ -50,6 +54,7 @@ local textures = {
 		SQ = path .. "shadow_sq.tga",
 		RO = path .. "shadow_ro.tga",
 		CI = path .. "shadow_ci.tga",
+		PI = path .. "shadow_PI.tga",
 		EA = path .. "shadow_ex_a.tga",
 		EB = path .. "shadow_ex_b.tga",
 	},
@@ -57,9 +62,11 @@ local textures = {
 		SQ = path .. "inner_a.tga",
 		RO = path .. "inner_a.tga",
 		CI = path .. "inner_b.tga",
+		PI = path .. "inner_b.tga",
 	},
 	mask = {
 		CI = path .. "mask_c.tga",
+		PI = path .. "mask_c.tga",
 		A = {
 			SQ = path .. "mask_a.tga",
 			RO = path .. "mask_a.tga",
@@ -281,7 +288,7 @@ local function UpdatePortrait(frame, conf, unit, parent)
 	frame.mask:SetTexture(texture, "CLAMPTOBLACKADDITIVE", "CLAMPTOBLACKADDITIVE")
 
 	-- Portrait Shadow
-	if settings.shadow.enable then
+	if settings.shadow.enable and frame.shadow then
 		texture = textures.shadow[conf.texture]
 		frame.shadow:SetTexture(texture, "CLAMP", "CLAMP", "TRILINEAR")
 		setColor(frame.shadow, settings.shadow.color)
@@ -289,7 +296,7 @@ local function UpdatePortrait(frame, conf, unit, parent)
 	end
 
 	-- Inner Portrait Shadow
-	if settings.shadow.inner then
+	if settings.shadow.inner and frame.InnerShadow then
 		texture = textures.inner[conf.texture]
 		frame.InnerShadow:SetTexture(texture, "CLAMP", "CLAMP", "TRILINEAR")
 		setColor(frame.InnerShadow, settings.shadow.innerColor)
@@ -297,7 +304,7 @@ local function UpdatePortrait(frame, conf, unit, parent)
 	end
 
 	-- Portrait Border
-	if settings.shadow.border then
+	if settings.shadow.border and frame.border then
 		texture = textures.border[conf.texture]
 		frame.border:SetTexture(texture, "CLAMP", "CLAMP", "TRILINEAR")
 		setColor(frame.border, settings.shadow.borderColor)
@@ -305,14 +312,14 @@ local function UpdatePortrait(frame, conf, unit, parent)
 	end
 
 	-- Rare/Elite Texture
-	if unit == "target" and conf.extraEnable then
+	if unit == "target" and conf.extraEnable and frame.extra then
 		-- Texture
 		texture = (conf.texture == "CI") and textures.texture[settings.general.style]["EA"] or textures.texture[settings.general.style]["EB"]
 		frame.extra:SetTexture(texture, "CLAMP", "CLAMP", "TRILINEAR")
 		mirrorTexture(frame.extra, not conf.mirror)
 
 		-- Shadow
-		if settings.shadow.enable then
+		if settings.shadow.enable and frame.extra.shadow then
 			texture = (conf.texture == "CI") and textures.shadow.EA or textures.shadow.EB
 			frame.extra.shadow:SetTexture(texture, "CLAMP", "CLAMP", "TRILINEAR")
 			setColor(frame.extra.shadow, settings.shadow.color)
@@ -320,7 +327,7 @@ local function UpdatePortrait(frame, conf, unit, parent)
 		end
 
 		-- Border
-		if settings.shadow.border then
+		if settings.shadow.border and frame.extra.border then
 			texture = (conf.texture == "CI") and textures.border.EA or textures.border.EB
 			frame.extra.border:SetTexture(texture, "CLAMP", "CLAMP", "TRILINEAR")
 			setColor(frame.extra.border, settings.shadow.borderColorRare)
@@ -331,14 +338,14 @@ local function UpdatePortrait(frame, conf, unit, parent)
 	end
 
 	-- Corner
-	if settings.general.corner and (conf.texture ~= "CI") then
+	if settings.general.corner and frame.corner and (conf.texture ~= "CI") then
 		texture = textures.texture[settings.general.style].CO
 		frame.corner:SetTexture(texture, "CLAMP", "CLAMP", "TRILINEAR")
 		setColor(frame.corner, getColor(frame, unit), conf.mirror)
 		mirrorTexture(frame.corner, conf.mirror)
 
 		-- Border
-		if settings.shadow.border then
+		if settings.shadow.border and frame.corner.border then
 			texture = textures.border.CO
 			frame.corner.border:SetTexture(texture, "CLAMP", "CLAMP", "TRILINEAR")
 			setColor(frame.corner.border, settings.shadow.borderColor)
@@ -373,97 +380,127 @@ end
 function module:Initialize()
 	settings = E.db.mMT.portraits
 
+	local frames = {
+		Player = {
+			parent = _G.ElvUF_Player,
+			settings = settings.player,
+			unit = "player",
+			events = {
+				"PLAYER_ENTERING_WORLD",
+			},
+			unitEvents = {
+				"UNIT_PORTRAIT_UPDATE",
+			},
+		},
+		Target = {
+			parent = _G.ElvUF_Target,
+			settings = settings.target,
+			unit = "target",
+			events = {
+				"PLAYER_ENTERING_WORLD",
+				"PLAYER_TARGET_CHANGED",
+			},
+			unitEvents = {
+				"UNIT_PORTRAIT_UPDATE",
+			},
+		},
+	}
+
+	if _G.ElvUF_PartyGroup1UnitButton1 then
+		for i = 1, 5 do
+			frames["Party" .. i] = {
+				parent = _G["ElvUF_PartyGroup1UnitButton" .. i],
+				settings = settings.party,
+				unit = _G["ElvUF_PartyGroup1UnitButton" .. i].unit,
+				events = {
+					"PLAYER_ENTERING_WORLD",
+					"PLAYER_TARGET_CHANGED",
+					"GROUP_ROSTER_UPDATE",
+					"PORTRAITS_UPDATED",
+				},
+				unitEvents = {
+					"UNIT_PORTRAIT_UPDATE",
+				},
+			}
+		end
+	end
+
 	if settings.general.enable then
-		if settings.player.enable then
-			if not module.Player and _G.ElvUF_Player then
-				module.Player = CreatePortrait(_G.ElvUF_Player, settings.player, "player")
-				module.Player:RegisterUnitEvent("UNIT_PORTRAIT_UPDATE", "player")
-				module.Player:RegisterEvent("PLAYER_ENTERING_WORLD")
-				module.Player:SetScript("OnEvent", function(self, event)
-					SetPortraitTexture(self.portrait, "player", not (settings.player.texture == "CI"))
+		for name, unit in pairs(frames) do
+			if unit.settings.enable and unit.parent and not module[name] then
+				module[name] = CreatePortrait(unit.parent, unit.settings, unit.unit)
 
-					if event == "PLAYER_ENTERING_WORLD" then
-						setColor(self.texture, getColor(self, "player"), settings.player.mirror)
-						if settings.general.corner and (settings.player.texture ~= "CI") then
-							setColor(self.corner, getColor(self, "player"), settings.player.mirror)
-						end
-					end
-				end)
+				for _, event in pairs(unit.unitEvents) do
+					module[name]:RegisterUnitEvent(event, unit.unit)
+				end
+
+				for _, event in pairs(unit.events) do
+					module[name]:RegisterEvent(event)
+				end
+			elseif module[name] and not unit.settings.enable then
+				for _, event in pairs(unit.unitEvents) do
+					module[name]:UnregisterEvent(event)
+				end
+
+				for _, event in pairs(unit.events) do
+					module[name]:UnregisterEvent(event)
+				end
+
+				module[name]:Hide()
+				module[name] = nil
 			end
-		elseif module.Player then
-			module.Player:UnregisterEvent("UNIT_PORTRAIT_UPDATE")
-			module.Player:UnregisterEvent("PLAYER_ENTERING_WORLD")
-			module.Player:Hide()
-			module.Player = nil
 		end
 
-		if settings.general.enable and settings.target.enable then
-			if not module.Target and _G.ElvUF_Target then
-				module.Target = CreatePortrait(_G.ElvUF_Target, settings.target, "target")
-				module.Target:RegisterUnitEvent("UNIT_PORTRAIT_UPDATE", "target")
-				module.Target:RegisterEvent("PLAYER_TARGET_CHANGED")
-				module.Target:RegisterEvent("PLAYER_ENTERING_WORLD")
-				module.Target:SetScript("OnEvent", function(self, event)
-					SetPortraitTexture(self.portrait, "target", not (settings.target.texture == "CI"))
+		if settings.player.enable and module.Player and not module.Player.ScriptSet then
+			module.Player:SetScript("OnEvent", function(self, event)
+				SetPortraitTexture(self.portrait, "player", not (settings.player.texture == "CI"))
 
-					if event == "PLAYER_TARGET_CHANGED" or event == "PLAYER_ENTERING_WORLD" then
-						setColor(self.texture, getColor(self, "target"), settings.target.mirror)
-
-						if settings.general.corner and (settings.target.texture ~= "CI") then
-							setColor(self.corner, getColor(self, "target"), settings.target.mirror)
-						end
-
-						if settings.target.extraEnable then
-							CheckRareElite(self, "target")
-						else
-							self.extra:Hide()
-						end
-					end
-				end)
-			end
-		elseif module.Target then
-			module.Target:UnregisterEvent("UNIT_PORTRAIT_UPDATE")
-			module.Target:UnregisterEvent("PLAYER_ENTERING_WORLD")
-			module.Target:UnregisterEvent("PLAYER_TARGET_CHANGED")
-			module.Target:Hide()
-			module.Target = nil
-		end
-
-		if settings.general.enable and settings.party.enable then
-			if not module.Party1 and _G.ElvUF_PartyGroup1UnitButton1 then
-				for i = 1, 5 do
-					local portrait = "Party" .. i
-					local frame = _G["ElvUF_PartyGroup1UnitButton" .. i]
-					if not module[portrait] then
-						module[portrait] = CreatePortrait(frame, settings.party, frame.unit)
-						module[portrait]:RegisterUnitEvent("UNIT_PORTRAIT_UPDATE", frame.unit)
-						module[portrait]:RegisterEvent("PLAYER_ENTERING_WORLD")
-						module[portrait]:RegisterEvent("GROUP_ROSTER_UPDATE")
-						module[portrait]:RegisterEvent("PORTRAITS_UPDATED")
-						module[portrait]:SetScript("OnEvent", function(self, event)
-							if event == "GROUP_ROSTER_UPDATE" or event == "PLAYER_ENTERING_WORLD" then
-								setColor(self.texture, getColor(self, frame.unit), settings.party.mirror)
-								if settings.general.corner and (settings.party.texture ~= "CI") then
-									setColor(self.corner, getColor(self, frame.unit), settings.party.mirror)
-								end
-							end
-
-							SetPortraitTexture(self.portrait, frame.unit, not (settings.party.texture == "CI"))
-						end)
+				if event == "PLAYER_ENTERING_WORLD" then
+					setColor(self.texture, getColor(self, "player"), settings.player.mirror)
+					if settings.general.corner and (settings.player.texture ~= "CI") then
+						setColor(self.corner, getColor(self, "player"), settings.player.mirror)
 					end
 				end
-			end
-		elseif module.Party1 then
+			end)
+			module.Player.ScriptSet = true
+		end
+
+		if settings.target.enable and module.Target and not module.Target.ScriptSet then
+			module.Target:SetScript("OnEvent", function(self, event)
+				SetPortraitTexture(self.portrait, "target", not (settings.target.texture == "CI"))
+
+				if event == "PLAYER_TARGET_CHANGED" or event == "PLAYER_ENTERING_WORLD" then
+					setColor(self.texture, getColor(self, "target"), settings.target.mirror)
+
+					if settings.general.corner and (settings.target.texture ~= "CI") then
+						setColor(self.corner, getColor(self, "target"), settings.target.mirror)
+					end
+
+					if settings.target.extraEnable then
+						CheckRareElite(self, "target")
+					else
+						self.extra:Hide()
+					end
+				end
+			end)
+			module.Target.ScriptSet = true
+		end
+
+		if settings.party.enable and module.Party1 and not module.Party1.ScriptSet then
 			for i = 1, 5 do
-				local portrait = "Party" .. i
-				if module[portrait] then
-					module[portrait]:UnregisterEvent("UNIT_PORTRAIT_UPDATE")
-					module[portrait]:UnregisterEvent("PLAYER_ENTERING_WORLD")
-					module[portrait]:UnregisterEvent("GROUP_ROSTER_UPDATE")
-					module[portrait]:UnregisterEvent("PORTRAITS_UPDATED")
-					module[portrait]:Hide()
-					module[portrait] = nil
-				end
+				local frame = _G["ElvUF_PartyGroup1UnitButton" .. i]
+				module["Party" .. i]:SetScript("OnEvent", function(self, event)
+					if event == "GROUP_ROSTER_UPDATE" or event == "PLAYER_ENTERING_WORLD" then
+						setColor(self.texture, getColor(self, frame.unit), settings.party.mirror)
+						if settings.general.corner and (settings.party.texture ~= "CI") then
+							setColor(self.corner, getColor(self, frame.unit), settings.party.mirror)
+						end
+					end
+
+					SetPortraitTexture(self.portrait, frame.unit, not (settings.party.texture == "CI"))
+				end)
+
+				module["Party" .. i].ScriptSet = true
 			end
 		end
 
@@ -471,32 +508,18 @@ function module:Initialize()
 
 		module.loaded = true
 	else
-		if module.Player then
-			module.Player:UnregisterEvent("UNIT_PORTRAIT_UPDATE")
-			module.Player:UnregisterEvent("PLAYER_ENTERING_WORLD")
-			module.Player:Hide()
-			module.Player = nil
-		end
-
-		if module.Target then
-			module.Target:UnregisterEvent("UNIT_PORTRAIT_UPDATE")
-			module.Target:UnregisterEvent("PLAYER_ENTERING_WORLD")
-			module.Target:UnregisterEvent("PLAYER_TARGET_CHANGED")
-			module.Target:Hide()
-			module.Target = nil
-		end
-
-		if module.Party1 then
-			for i = 1, 5 do
-				local portrait = "Party" .. i
-				if module[portrait] then
-					module[portrait]:UnregisterEvent("UNIT_PORTRAIT_UPDATE")
-					module[portrait]:UnregisterEvent("PLAYER_ENTERING_WORLD")
-					module[portrait]:UnregisterEvent("GROUP_ROSTER_UPDATE")
-					module[portrait]:UnregisterEvent("PORTRAITS_UPDATED")
-					module[portrait]:Hide()
-					module[portrait] = nil
+		for name, unit in pairs(frames) do
+			if module[name] then
+				for _, event in pairs(unit.unitEvents) do
+					module[name]:UnregisterEvent(event)
 				end
+
+				for _, event in pairs(unit.events) do
+					module[name]:UnregisterEvent(event)
+				end
+
+				module[name]:Hide()
+				module[name] = nil
 			end
 		end
 
