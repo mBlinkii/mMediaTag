@@ -29,6 +29,7 @@ mMT.ClassColor = {}
 mMT.ElvUI_EltreumUI = {}
 mMT.DEVNames = {}
 mMT.DevMode = false
+mMT.CurrentProfile = nil
 
 mMT.Modules.Portraits = {}
 mMT.Modules.SummonIcon = {}
@@ -69,7 +70,6 @@ end
 
 DB_Loader:SetScript("OnEvent", DB_Loader.OnEvent)
 
-
 StaticPopupDialogs["mMT_Reload_Required"] = {
 	text = L["Some settings have been changed! For mMediaTag to work properly, a reload of the interface is recommended. Should a reload be performed now?"],
 	button1 = L["ReloadUI"],
@@ -81,7 +81,7 @@ StaticPopupDialogs["mMT_Reload_Required"] = {
 	whileDead = true,
 	hideOnEscape = true,
 	preferredIndex = 3,
-  }
+}
 
 local function UpdateModuleSettings()
 	--  XXX Change this
@@ -126,7 +126,6 @@ local function EnableModules()
 end
 
 local function UpdateModules()
-	mMT:Print("SETIN>>>>>", E.db.mMT.portraits.general.enable)
 	EnableModules()
 	local reloadRequired = false
 	-- update module settings
@@ -153,10 +152,19 @@ local function UpdateModules()
 	end
 
 	if reloadRequired then
-		StaticPopup_Show ("mMT_Reload_Required")
+		StaticPopup_Show("mMT_Reload_Required")
 	end
 
 	mMT:Print(" --- END --- ")
+end
+
+local function UpdateAllModules()
+	local currentProfile = E.data:GetCurrentProfile()
+	if mMT.CurrentProfile ~= currentProfile then
+		mMT:Print(mMT.CurrentProfile, currentProfile)
+		UpdateModules()
+		mMT.CurrentProfile = currentProfile
+	end
 end
 
 -- Load Settings
@@ -209,11 +217,13 @@ function mMT:Initialize()
 	UpdateModules()
 
 	-- hook ElvUI UpdateAll function
-	hooksecurefunc(E, "UpdateAll", UpdateModules)
+	hooksecurefunc(E, "UpdateAll", UpdateAllModules)
 
 	-- Initialize main things
 	tinsert(E.ConfigModeLayouts, "MMEDIATAG")
 	E.ConfigModeLocalizedStrings["MMEDIATAG"] = mMT.Name
+
+	mMT.CurrentProfile = E.data:GetCurrentProfile()
 end
 
 local function CallbackInitialize()
