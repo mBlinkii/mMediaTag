@@ -488,7 +488,8 @@
         "table",
         "UnitIsGroupLeader",
         "string",
-        "min"
+        "min",
+        "DAMAGER"
     ],
     "Lua.diagnostics.disable": [
         "undefined-field"

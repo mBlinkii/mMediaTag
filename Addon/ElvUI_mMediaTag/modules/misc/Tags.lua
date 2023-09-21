@@ -1318,16 +1318,43 @@ end
 
 local function GetPartyTargetsIcons(unit, style)
 	local ClassString = ""
-	for i = 1, GetNumGroupMembers() - 1 do
-		if UnitIsUnit("party" .. i .. "target", unit) then
-			local _, unitClass = UnitClass("party" .. i)
+
+	if style == "role" then
+		local targetTextures = {
+			TANK = "|TInterface\\AddOns\\ElvUI_mMediaTag\\media\\icons\\tags\\targetindicator\\tank.tga:15:15:0:0:16:16:0:16:0:16",
+			HEALER = "|TInterface\\AddOns\\ElvUI_mMediaTag\\media\\icons\\tags\\targetindicator\\heala.tga:15:15:0:0:16:16:0:16:0:16",
+			DAMAGER = "|TInterface\\AddOns\\ElvUI_mMediaTag\\media\\icons\\tags\\targetindicator\\dd.tga:15:15:0:0:16:16:0:16:0:16",
+		}
+
+		for i = 1, GetNumGroupMembers() - 1 do
+			if UnitIsUnit("party" .. i .. "target", unit) then
+				local role = targetTextures[UnitGroupRolesAssigned("party" .. i)] or targetTextures.DAMAGER
+				local _, unitClass = UnitClass("party" .. i)
+				local color = E:ClassColor(unitClass)
+				local colorString = ":" .. tostring(color.r * 255) .. ":" .. tostring(color.g * 255) .. ":" .. tostring(color.b * 255)
+				ClassString = role .. colorString .. "|t" .. ClassString
+			end
+		end
+
+		if UnitIsUnit("playertarget", unit) then
+			local role = targetTextures[UnitGroupRolesAssigned("player")] or targetTextures.DAMAGER
+			local _, unitClass = UnitClass("player")
+			local color = E:ClassColor(unitClass)
+			local colorString = ":" .. tostring(mMT:round(color.r * 255)) .. ":" .. tostring(mMT:round(color.g * 255)) .. ":" .. tostring(mMT:round(color.b * 255))
+			ClassString = role .. colorString .. "|t" .. ClassString
+		end
+	else
+		for i = 1, GetNumGroupMembers() - 1 do
+			if UnitIsUnit("party" .. i .. "target", unit) then
+				local _, unitClass = UnitClass("party" .. i)
+				ClassString = format("|TInterface\\AddOns\\ElvUI_mMediaTag\\media\\icons\\tags\\targetindicator\\%s%s.tga:15:15|t", unitClass, style) .. ClassString
+			end
+		end
+
+		if UnitIsUnit("playertarget", unit) then
+			local _, unitClass = UnitClass("player")
 			ClassString = format("|TInterface\\AddOns\\ElvUI_mMediaTag\\media\\icons\\tags\\targetindicator\\%s%s.tga:15:15|t", unitClass, style) .. ClassString
 		end
-	end
-
-	if UnitIsUnit("playertarget", unit) then
-		local _, unitClass = UnitClass("player")
-		ClassString = format("|TInterface\\AddOns\\ElvUI_mMediaTag\\media\\icons\\tags\\targetindicator\\%s%s.tga:15:15|t", unitClass, style) .. ClassString
 	end
 
 	if ClassString ~= "" then
@@ -1366,6 +1393,12 @@ end)
 E:AddTag("mTargetingPlayers:icons:DIA", 2, function(unit)
 	if (InCombatLockdown()) and UnitAffectingCombat(unit) and (IsInGroup()) then
 		return GetPartyTargetsIcons(unit, "_DIA")
+	end
+end)
+
+E:AddTag("mTargetingPlayers:icons:role", 2, function(unit)
+	if (InCombatLockdown()) and UnitAffectingCombat(unit) and (IsInGroup()) and (E.Retail or E.Wrath) then
+		return GetPartyTargetsIcons(unit, "role")
 	end
 end)
 
