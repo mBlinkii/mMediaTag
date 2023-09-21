@@ -286,6 +286,7 @@ local function configTable()
 						order = 7,
 						type = "group",
 						name = L["Portraits"],
+						childGroups = "tab",
 						args = {},
 					},
 					textures = {

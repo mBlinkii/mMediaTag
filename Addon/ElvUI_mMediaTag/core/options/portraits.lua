@@ -17,25 +17,25 @@ local style = {
 
 local function configTable()
 	E.Options.args.mMT.args.cosmetic.args.portraits.args = {
-		header_general = {
+		toggle_enable = {
 			order = 1,
+			type = "toggle",
+			name = L["Enable"],
+			desc = L["Enable Portraits"],
+			get = function(info)
+				return E.db.mMT.portraits.general.enable
+			end,
+			set = function(info, value)
+				E.db.mMT.portraits.general.enable = value
+				E:StaticPopup_Show("CONFIG_RL")
+			end,
+		},
+		header_general = {
+			order = 2,
 			type = "group",
-			inline = true,
 			name = L["General"],
 			args = {
-				toggle_enable = {
-					order = 1,
-					type = "toggle",
-					name = L["Enable"],
-					desc = L["Enable Portraits"],
-					get = function(info)
-						return E.db.mMT.portraits.general.enable
-					end,
-					set = function(info, value)
-						E.db.mMT.portraits.general.enable = value
-						E:StaticPopup_Show("CONFIG_RL")
-					end,
-				},
+
 				spacer_1 = {
 					order = 2,
 					type = "description",
@@ -107,9 +107,8 @@ local function configTable()
 			},
 		},
 		header_player = {
-			order = 2,
+			order = 3,
 			type = "group",
-			inline = true,
 			name = L["Player"],
 			args = {
 				toggle_enable = {
@@ -222,9 +221,8 @@ local function configTable()
 			},
 		},
 		header_target = {
-			order = 3,
+			order = 4,
 			type = "group",
-			inline = true,
 			name = L["Target"],
 			args = {
 				toggle_enable = {
@@ -367,9 +365,8 @@ local function configTable()
 			},
 		},
 		header_pet = {
-			order = 4,
+			order = 5,
 			type = "group",
-			inline = true,
 			name = L["Pet"],
 			args = {
 				toggle_enable = {
@@ -482,9 +479,8 @@ local function configTable()
 			},
 		},
 		header_focus = {
-			order = 5,
+			order = 6,
 			type = "group",
-			inline = true,
 			name = L["Focus"],
 			args = {
 				toggle_enable = {
@@ -627,9 +623,8 @@ local function configTable()
 			},
 		},
 		header_party = {
-			order = 6,
+			order = 7,
 			type = "group",
-			inline = true,
 			name = L["Party"],
 			args = {
 				toggle_enable = {
@@ -742,9 +737,8 @@ local function configTable()
 			},
 		},
 		header_boss = {
-			order = 7,
+			order = 8,
 			type = "group",
-			inline = true,
 			name = L["Boss"],
 			args = {
 				toggle_enable = {
@@ -857,9 +851,8 @@ local function configTable()
 			},
 		},
 		header_arena = {
-			order = 8,
+			order = 9,
 			type = "group",
-			inline = true,
 			name = L["Arena"],
 			args = {
 				toggle_enable = {
@@ -972,9 +965,8 @@ local function configTable()
 			},
 		},
 		header_shadow = {
-			order = 9,
+			order = 10,
 			type = "group",
-			inline = true,
 			name = L["Shadow/ Border"],
 			args = {
 				toggle_shadow = {
@@ -1089,9 +1081,8 @@ local function configTable()
 			},
 		},
 		header_colors = {
-			order = 10,
+			order = 11,
 			type = "group",
-			inline = true,
 			name = L["Colors"],
 			args = {
 				execute_apply = {
