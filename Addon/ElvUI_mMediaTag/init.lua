@@ -30,6 +30,7 @@ mMT.ElvUI_EltreumUI = {}
 mMT.DEVNames = {}
 mMT.DevMode = false
 mMT.CurrentProfile = nil
+mMT.Classes = { "DEATHKNIGHT", "DEMONHUNTER", "DRUID", "EVOKER", "HUNTER", "MAGE", "MONK", "PALADIN", "PRIEST", "ROGUE", "SHAMAN", "WARLOCK", "WARRIOR" }
 
 mMT.Modules.Portraits = {}
 mMT.Modules.SummonIcon = {}
@@ -183,6 +184,7 @@ function mMT:Initialize()
 	mMT.ClassColor = mMT:UpdateClassColor()
 	mMT.ElvUI_EltreumUI = mMT:CheckEltruism()
 	mMT.DEVNames = mMT:GetDevNames()
+	mMT.Classes = mMT:ClassesTable()
 
 	-- Register Events for Retail
 	if E.Retail then
@@ -235,6 +237,7 @@ function mMT:PLAYER_ENTERING_WORLD(event)
 	mMT.ClassColor = mMT:UpdateClassColor()
 	mMT.ElvUI_EltreumUI = mMT:CheckEltruism()
 	mMT.DEVNames = mMT:GetDevNames()
+	mMT.Classes = mMT:ClassesTable()
 
 	-- Changelog
 	if E.db.mMT.version ~= mMT.Version then

@@ -1,13 +1,8 @@
 local E = unpack(ElvUI)
 local UF = E:GetModule("UnitFrames")
-local classes = { "DEATHKNIGHT", "DEMONHUNTER", "DRUID", "EVOKER", "HUNTER", "MAGE", "MONK", "PALADIN", "PRIEST", "ROGUE", "SHAMAN", "WARLOCK", "WARRIOR" }
-if E.Classic then
-	classes = { "HUNTER", "WARLOCK", "PRIEST", "PALADIN", "MAGE", "ROGUE", "DRUID", "SHAMAN", "WARRIOR" }
-elseif E.Wrath then
-	classes = { "HUNTER", "WARLOCK", "PRIEST", "PALADIN", "MAGE", "ROGUE", "DRUID", "SHAMAN", "WARRIOR", "DEATHKNIGHT" }
-end
+
 local function UpdateColors()
-	for i, className in ipairs(classes) do
+	for i, className in ipairs(mMT.Classes) do
 		E.oUF.colors.class[className][1] = E.db.mMT.customclasscolors.colors[className]["r"]
 		E.oUF.colors.class[className][2] = E.db.mMT.customclasscolors.colors[className]["g"]
 		E.oUF.colors.class[className][3] = E.db.mMT.customclasscolors.colors[className]["b"]
@@ -19,7 +14,7 @@ local function UpdateColors()
 end
 
 function mMT:SetElvUIMediaColor()
-	local _, unitClass = UnitClass("PLAYER")
+	local _, unitClass = UnitClass("player")
 	local colorDB = (E.db.mMT.customclasscolors.enable and not mMT:Check_ElvUI_EltreumUI()) and E.db.mMT.customclasscolors.colors[unitClass] or E:ClassColor(E.myclass, true)
 	E.db.general.valuecolor["r"] = colorDB.r
 	E.db.general.valuecolor["g"] = colorDB.g

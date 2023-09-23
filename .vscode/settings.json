@@ -600,6 +600,7 @@
         "strlower",
         "strmatch",
         "tablesort",
+        "targetindicator",
         "Targetindicators",
         "tconcat",
         "texttoname",
