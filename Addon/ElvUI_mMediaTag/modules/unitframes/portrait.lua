@@ -125,6 +125,19 @@ local function mirrorTexture(texture, mirror)
 	texture:SetTexCoord(mirror and 1 or 0, mirror and 0 or 1, 0, 1)
 end
 
+local function CreatePortraitTexture(frame, name, layer, texture, color, mirror)
+	local tmpTexture = frame:CreateTexture(name, "OVERLAY", nil, layer)
+	tmpTexture:SetAllPoints(frame)
+	tmpTexture:SetTexture(texture, "CLAMP", "CLAMP", "TRILINEAR")
+	mirrorTexture(tmpTexture, mirror)
+
+	if color then
+		setColor(tmpTexture, color, mirror)
+	end
+
+	return tmpTexture
+end
+
 local function CreatePortrait(parent, conf, unit)
 	local texture = nil
 
@@ -136,14 +149,11 @@ local function CreatePortrait(parent, conf, unit)
 
 	-- Portrait Texture
 	texture = textures.texture[settings.general.style][conf.texture]
-	frame.texture = frame:CreateTexture("mMT_Border", "OVERLAY", nil, 4)
-	frame.texture:SetAllPoints(frame)
-	frame.texture:SetTexture(texture, "CLAMP", "CLAMP", "TRILINEAR")
-	setColor(frame.texture, getColor(frame, unit), conf.mirror)
-	mirrorTexture(frame.texture, conf.mirror)
+	frame.texture = CreatePortraitTexture(frame, "mMT_Texture", 4, texture, getColor(frame, unit), conf.mirror)
 
 	-- Unit Portrait
-	local offset = (conf.size / 5.5 * E.perfect)
+	local offset = ((conf.size / 5) * E.perfect)
+	--frame.portrait = CreatePortraitTexture(frame, "mMT_Portrait", 1, texture, unit, conf.mirror)
 	frame.portrait = frame:CreateTexture("mMT_Portrait", "OVERLAY", nil, 1)
 	frame.portrait:SetPoint("TOPLEFT", offset, -offset)
 	frame.portrait:SetPoint("BOTTOMRIGHT", -offset, offset)
@@ -160,61 +170,38 @@ local function CreatePortrait(parent, conf, unit)
 	-- Portrait Shadow
 	if settings.shadow.enable then
 		texture = textures.shadow[conf.texture]
-		frame.shadow = frame:CreateTexture("mMT_Shadow", "OVERLAY", nil, -4)
-		frame.shadow:SetAllPoints(frame)
-		frame.shadow:SetTexture(texture, "CLAMP", "CLAMP", "TRILINEAR")
-		setColor(frame.shadow, settings.shadow.color)
-		mirrorTexture(frame.shadow, conf.mirror)
+		frame.shadow = CreatePortraitTexture(frame, "mMT_Shadow", -4, texture, settings.shadow.color, conf.mirror)
 	end
 
 	-- Inner Portrait Shadow
 	if settings.shadow.inner then
 		texture = textures.inner[conf.texture]
-		frame.InnerShadow = frame:CreateTexture("mMT_innerShadow", "OVERLAY", nil, 2)
-		frame.InnerShadow:SetAllPoints(frame)
-		frame.InnerShadow:SetTexture(texture, "CLAMP", "CLAMP", "TRILINEAR")
-		setColor(frame.InnerShadow, settings.shadow.innerColor)
-		mirrorTexture(frame.InnerShadow, conf.mirror)
+		frame.InnerShadow = CreatePortraitTexture(frame, "mMT_innerShadow", 2, texture, settings.shadow.innerColor, conf.mirror)
 	end
 
 	-- Portrait Border
 	if settings.shadow.border then
 		texture = textures.border[conf.texture]
-		frame.border = frame:CreateTexture("mMT_Border", "OVERLAY", nil, 6)
-		frame.border:SetAllPoints(frame)
-		frame.border:SetTexture(texture, "CLAMP", "CLAMP", "TRILINEAR")
-		setColor(frame.border, settings.shadow.borderColor)
-		mirrorTexture(frame.border, conf.mirror)
+		frame.border = CreatePortraitTexture(frame, "mMT_Border", 2, texture, settings.shadow.borderColor, conf.mirror)
 	end
 
 	-- Rare/Elite Texture
 	if conf.extraEnable then
 		-- Texture
 		texture = (conf.texture == "CI") and textures.texture[settings.general.style]["EA"] or textures.texture[settings.general.style]["EB"]
-		frame.extra = frame:CreateTexture("mMT_Extra", "OVERLAY", nil, -6)
-		frame.extra:SetAllPoints(frame)
-		frame.extra:SetTexture(texture, "CLAMP", "CLAMP", "TRILINEAR")
-		mirrorTexture(frame.extra, not conf.mirror)
+		frame.extra = CreatePortraitTexture(frame, "mMT_Extra", -6, texture, nil, not conf.mirror)
 
 		-- Shadow
 		if settings.shadow.enable then
 			texture = (conf.texture == "CI") and textures.shadow.EA or textures.shadow.EB
-			frame.extra.shadow = frame:CreateTexture("mMT_Extra", "OVERLAY", nil, -8)
-			frame.extra.shadow:SetAllPoints(frame.extra)
-			frame.extra.shadow:SetTexture(texture, "CLAMP", "CLAMP", "TRILINEAR")
-			setColor(frame.extra.shadow, settings.shadow.color)
-			mirrorTexture(frame.extra.shadow, not conf.mirror)
+			frame.extra.shadow = CreatePortraitTexture(frame, "mMT_Extra_Shadow", -8, texture, settings.shadow.color, not conf.mirror)
 			frame.extra.shadow:Hide()
 		end
 
 		-- Border
 		if settings.shadow.border then
 			texture = (conf.texture == "CI") and textures.border.EA or textures.border.EB
-			frame.extra.border = frame:CreateTexture("mMT_Border_Extra", "OVERLAY", nil, -4)
-			frame.extra.border:SetAllPoints(frame.extra)
-			frame.extra.border:SetTexture(texture, "CLAMP", "CLAMP", "TRILINEAR")
-			setColor(frame.extra.border, settings.shadow.borderColorRare)
-			mirrorTexture(frame.extra.border, not conf.mirror)
+			frame.extra.border = CreatePortraitTexture(frame, "mMT_Extra_Border", -4, texture, settings.shadow.borderColorRare, not conf.mirror)
 			frame.extra.border:Hide()
 		end
 
@@ -224,20 +211,12 @@ local function CreatePortrait(parent, conf, unit)
 	-- Corner
 	if settings.general.corner and textures.corner[conf.texture] then
 		texture = textures.texture[settings.general.style].CO
-		frame.corner = frame:CreateTexture("mMT_Border", "OVERLAY", nil, 5)
-		frame.corner:SetAllPoints(frame)
-		frame.corner:SetTexture(texture, "CLAMP", "CLAMP", "TRILINEAR")
-		setColor(frame.corner, getColor(frame, unit), conf.mirror)
-		mirrorTexture(frame.corner, conf.mirror)
+		frame.corner = CreatePortraitTexture(frame, "mMT_Corner", 5, texture, getColor(frame, unit), conf.mirror)
 
 		-- Border
 		if settings.shadow.border then
 			texture = textures.border.CO
-			frame.corner.border = frame:CreateTexture("mMT_Border", "OVERLAY", nil, 6)
-			frame.corner.border:SetAllPoints(frame.corner)
-			frame.corner.border:SetTexture(texture, "CLAMP", "CLAMP", "TRILINEAR")
-			setColor(frame.corner.border, settings.shadow.borderColor)
-			mirrorTexture(frame.corner.border, conf.mirror)
+			frame.corner.border = CreatePortraitTexture(frame, "mMT_Corner_Border", 6, texture, settings.shadow.borderColor, conf.mirror)
 		end
 	end
 
@@ -268,6 +247,15 @@ local function CheckRareElite(frame, unit)
 	end
 end
 
+local function UpdatePortraitTexture(tx, texture, color, mirror)
+	tx:SetTexture(texture, "CLAMP", "CLAMP", "TRILINEAR")
+	mirrorTexture(tx, mirror)
+
+	if color then
+		setColor(tx, color, mirror)
+	end
+end
+
 local function UpdatePortrait(frame, conf, unit, parent)
 	local texture = nil
 
@@ -279,12 +267,10 @@ local function UpdatePortrait(frame, conf, unit, parent)
 
 	-- Portrait Texture
 	texture = textures.texture[settings.general.style][conf.texture]
-	frame.texture:SetTexture(texture, "CLAMP", "CLAMP", "TRILINEAR")
-	setColor(frame.texture, getColor(frame, unit), conf.mirror)
-	mirrorTexture(frame.texture, conf.mirror)
+	UpdatePortraitTexture(frame.texture, texture, getColor(frame, unit), conf.mirror)
 
 	-- Unit Portrait
-	local offset = (conf.size / 5.5 * E.perfect)
+	local offset = ((conf.size / 5) * E.perfect)
 	frame.portrait:SetPoint("TOPLEFT", offset, -offset)
 	frame.portrait:SetPoint("BOTTOMRIGHT", -offset, offset)
 	mirrorTexture(frame.portrait, conf.mirror)
@@ -294,74 +280,121 @@ local function UpdatePortrait(frame, conf, unit, parent)
 	frame.mask:SetTexture(texture, "CLAMPTOBLACKADDITIVE", "CLAMPTOBLACKADDITIVE")
 
 	-- Portrait Shadow
-	if settings.shadow.enable and frame.shadow then
+	if settings.shadow.enable then
 		texture = textures.shadow[conf.texture]
-		frame.shadow:SetTexture(texture, "CLAMP", "CLAMP", "TRILINEAR")
-		setColor(frame.shadow, settings.shadow.color)
-		mirrorTexture(frame.shadow, conf.mirror)
+		if frame.shadow then
+			UpdatePortraitTexture(frame.shadow, texture, settings.shadow.color, conf.mirror)
+			frame.shadow:Show()
+		else
+			frame.shadow = CreatePortraitTexture(frame, "mMT_Shadow", -4, texture, settings.shadow.color, conf.mirror)
+		end
+	elseif not settings.shadow.enable and frame.shadow then
+		frame.shadow:Hide()
 	end
 
 	-- Inner Portrait Shadow
-	if settings.shadow.inner and frame.InnerShadow then
+	if settings.shadow.inner then
 		texture = textures.inner[conf.texture]
-		frame.InnerShadow:SetTexture(texture, "CLAMP", "CLAMP", "TRILINEAR")
-		setColor(frame.InnerShadow, settings.shadow.innerColor)
-		mirrorTexture(frame.InnerShadow, conf.mirror)
+		if frame.InnerShadow then
+			UpdatePortraitTexture(frame.InnerShadow, texture, settings.shadow.innerColor, conf.mirror)
+			frame.InnerShadow:Show()
+		else
+			frame.InnerShadow = CreatePortraitTexture(frame, "mMT_innerShadow", 2, texture, settings.shadow.innerColor, conf.mirror)
+		end
+	elseif not settings.shadow.inner and frame.InnerShadow then
+		frame.InnerShadow:Hide()
 	end
 
 	-- Portrait Border
-	if settings.shadow.border and frame.border then
+	if settings.shadow.border then
 		texture = textures.border[conf.texture]
-		frame.border:SetTexture(texture, "CLAMP", "CLAMP", "TRILINEAR")
-		setColor(frame.border, settings.shadow.borderColor)
-		mirrorTexture(frame.border, conf.mirror)
+		if frame.border then
+			UpdatePortraitTexture(frame.border, texture, settings.shadow.borderColor, conf.mirror)
+			frame.border:Show()
+		else
+			frame.border = CreatePortraitTexture(frame, "mMT_Border", 2, texture, settings.shadow.borderColor, conf.mirror)
+		end
+	elseif not settings.shadow.border and frame.border then
+		frame.border:Hide()
 	end
 
 	-- Rare/Elite Texture
-	if conf.extraEnable and frame.extra then
+	if conf.extraEnable then
 		-- Texture
 		texture = (conf.texture == "CI") and textures.texture[settings.general.style]["EA"] or textures.texture[settings.general.style]["EB"]
-		frame.extra:SetTexture(texture, "CLAMP", "CLAMP", "TRILINEAR")
-		mirrorTexture(frame.extra, not conf.mirror)
+		if frame.extra then
+			UpdatePortraitTexture(frame.extra, texture, nil, not conf.mirror)
+		else
+			frame.extra = CreatePortraitTexture(frame, "mMT_Extra", -6, texture, nil, not conf.mirror)
+		end
 
 		-- Shadow
-		if settings.shadow.enable and frame.extra.shadow then
+		if settings.shadow.enable then
 			texture = (conf.texture == "CI") and textures.shadow.EA or textures.shadow.EB
-			frame.extra.shadow:SetTexture(texture, "CLAMP", "CLAMP", "TRILINEAR")
-			setColor(frame.extra.shadow, settings.shadow.color)
-			mirrorTexture(frame.extra.shadow, not conf.mirror)
+			if frame.extra.shadow then
+				UpdatePortraitTexture(frame.extra.shadow, texture, settings.shadow.color, not conf.mirror)
+			else
+				frame.extra.shadow = CreatePortraitTexture(frame, "mMT_Extra_Shadow", -8, texture, settings.shadow.color, not conf.mirror)
+				frame.extra.shadow:Hide()
+			end
+		elseif not settings.shadow.enable and frame.extra.shadow then
+			frame.extra.shadow:Hide()
 		end
 
 		-- Border
-		if settings.shadow.border and frame.extra.border then
+		if settings.shadow.border then
 			texture = (conf.texture == "CI") and textures.border.EA or textures.border.EB
-			frame.extra.border:SetTexture(texture, "CLAMP", "CLAMP", "TRILINEAR")
-			setColor(frame.extra.border, settings.shadow.borderColorRare)
-			mirrorTexture(frame.extra.border, not conf.mirror)
+			if frame.extra.border then
+				UpdatePortraitTexture(frame.extra.border, texture, settings.shadow.borderColorRare, not conf.mirror)
+			else
+				frame.extra.border = CreatePortraitTexture(frame, "mMT_Extra_Border", -4, texture, settings.shadow.borderColorRare, not conf.mirror)
+				frame.extra.border:Hide()
+			end
+		elseif not settings.shadow.border and frame.extra.border then
+			frame.extra.border:Hide()
 		end
 
 		CheckRareElite(frame, unit)
+	elseif not conf.extraEnable and frame.extra then
+		if frame.extra.shadow then
+			frame.extra.shadow:Hide()
+		end
+
+		if frame.extra.border then
+			frame.extra.border:Hide()
+		end
+
+		frame.extra:Hide()
 	end
 
 	-- Corner
-	if settings.general.corner and frame.corner and textures.corner[conf.texture] then
+	if settings.general.corner and textures.corner[conf.texture] then
 		texture = textures.texture[settings.general.style].CO
-		frame.corner:SetTexture(texture, "CLAMP", "CLAMP", "TRILINEAR")
-		setColor(frame.corner, getColor(frame, unit), conf.mirror)
-		mirrorTexture(frame.corner, conf.mirror)
+		if frame.corner then
+			UpdatePortraitTexture(frame.corner, texture, getColor(frame, unit), conf.mirror)
+			frame.corner:Show()
+		else
+			frame.corner = CreatePortraitTexture(frame, "mMT_Corner", 5, texture, getColor(frame, unit), conf.mirror)
+		end
 
 		-- Border
-		if settings.shadow.border and frame.corner.border then
+		if settings.shadow.border then
 			texture = textures.border.CO
-			frame.corner.border:SetTexture(texture, "CLAMP", "CLAMP", "TRILINEAR")
-			setColor(frame.corner.border, settings.shadow.borderColor)
-			mirrorTexture(frame.corner.border, conf.mirror)
+			if frame.corner.border then
+				UpdatePortraitTexture(frame.corner.border, texture, settings.shadow.borderColor, conf.mirror)
+				frame.corner.border:Show()
+			else
+				frame.corner.border = CreatePortraitTexture(frame, "mMT_Corner_Border", 6, texture, settings.shadow.borderColor, conf.mirror)
+			end
+		elseif frame.corner.border then
+			frame.corner.border:Hide()
 		end
-		frame.corner:Show()
-		frame.corner.border:Show()
-	elseif frame.corner then
+	elseif not (settings.general.corner and textures.corner[conf.texture]) and frame.corner then
+		if frame.corner.border then
+			frame.corner.border:Hide()
+		end
+
 		frame.corner:Hide()
-		frame.corner.border:Hide()
 	end
 end
 

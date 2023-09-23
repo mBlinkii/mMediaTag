@@ -226,6 +226,10 @@ function mMT:Initialize()
 	E.ConfigModeLocalizedStrings["MMEDIATAG"] = mMT.Name
 
 	mMT.CurrentProfile = E.data:GetCurrentProfile()
+
+	if (E.db.mMT.custombackgrounds.health.enable or E.db.mMT.custombackgrounds.power.enable or E.db.mMT.custombackgrounds.castbar.enable) and not mMT.ElvUI_EltreumUI.dark then
+		mMT:CustomBackdrop()
+	end
 end
 
 local function CallbackInitialize()
@@ -333,10 +337,6 @@ function mMT:PLAYER_ENTERING_WORLD(event)
 
 	if E.private.nameplates.enable and (E.db.mMT.nameplate.bordercolor.glow or E.db.mMT.nameplate.bordercolor.border) then
 		mMT:mNamePlateBorderColor()
-	end
-
-	if (E.db.mMT.custombackgrounds.health.enable or E.db.mMT.custombackgrounds.power.enable or E.db.mMT.custombackgrounds.castbar.enable) and not mMT.ElvUI_EltreumUI.dark then
-		mMT:CustomBackdrop()
 	end
 
 	E:Delay(1, collectgarbage, "collect")

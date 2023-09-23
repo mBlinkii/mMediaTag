@@ -101,7 +101,6 @@ local function configTable()
 					set = function(info, value)
 						E.db.mMT.portraits.general.corner = value
 						mMT.Modules.Portraits:Initialize()
-						E:StaticPopup_Show("CONFIG_RL")
 					end,
 				},
 			},
@@ -122,7 +121,6 @@ local function configTable()
 					set = function(info, value)
 						E.db.mMT.portraits.player.enable = value
 						mMT.Modules.Portraits:Initialize()
-						E:StaticPopup_Show("CONFIG_RL")
 					end,
 				},
 				select_style = {
@@ -236,7 +234,6 @@ local function configTable()
 					set = function(info, value)
 						E.db.mMT.portraits.target.enable = value
 						mMT.Modules.Portraits:Initialize()
-						E:StaticPopup_Show("CONFIG_RL")
 					end,
 				},
 				toggle_extra = {
@@ -248,7 +245,6 @@ local function configTable()
 					end,
 					set = function(info, value)
 						E.db.mMT.portraits.target.extraEnable = value
-						E:StaticPopup_Show("CONFIG_RL")
 					end,
 				},
 				select_style = {
@@ -380,7 +376,6 @@ local function configTable()
 					set = function(info, value)
 						E.db.mMT.portraits.pet.enable = value
 						mMT.Modules.Portraits:Initialize()
-						E:StaticPopup_Show("CONFIG_RL")
 					end,
 				},
 				select_style = {
@@ -494,7 +489,6 @@ local function configTable()
 					set = function(info, value)
 						E.db.mMT.portraits.focus.enable = value
 						mMT.Modules.Portraits:Initialize()
-						E:StaticPopup_Show("CONFIG_RL")
 					end,
 				},
 				toggle_extra = {
@@ -506,7 +500,6 @@ local function configTable()
 					end,
 					set = function(info, value)
 						E.db.mMT.portraits.focus.extraEnable = value
-						E:StaticPopup_Show("CONFIG_RL")
 					end,
 				},
 				select_style = {
@@ -638,7 +631,6 @@ local function configTable()
 					set = function(info, value)
 						E.db.mMT.portraits.party.enable = value
 						mMT.Modules.Portraits:Initialize()
-						E:StaticPopup_Show("CONFIG_RL")
 					end,
 				},
 				select_style = {
@@ -752,7 +744,6 @@ local function configTable()
 					set = function(info, value)
 						E.db.mMT.portraits.boss.enable = value
 						mMT.Modules.Portraits:Initialize()
-						E:StaticPopup_Show("CONFIG_RL")
 					end,
 				},
 				select_style = {
@@ -866,7 +857,6 @@ local function configTable()
 					set = function(info, value)
 						E.db.mMT.portraits.arena.enable = value
 						mMT.Modules.Portraits:Initialize()
-						E:StaticPopup_Show("CONFIG_RL")
 					end,
 				},
 				select_style = {
@@ -979,7 +969,7 @@ local function configTable()
 					end,
 					set = function(info, value)
 						E.db.mMT.portraits.shadow.enable = value
-						E:StaticPopup_Show("CONFIG_RL")
+						mMT.Modules.Portraits:Initialize()
 					end,
 				},
 				color_shadow = {
@@ -1012,7 +1002,7 @@ local function configTable()
 					end,
 					set = function(info, value)
 						E.db.mMT.portraits.shadow.inner = value
-						E:StaticPopup_Show("CONFIG_RL")
+						mMT.Modules.Portraits:Initialize()
 					end,
 				},
 				color_inner = {
@@ -1045,7 +1035,7 @@ local function configTable()
 					end,
 					set = function(info, value)
 						E.db.mMT.portraits.shadow.border = value
-						E:StaticPopup_Show("CONFIG_RL")
+						mMT.Modules.Portraits:Initialize()
 					end,
 				},
 				color_border = {
