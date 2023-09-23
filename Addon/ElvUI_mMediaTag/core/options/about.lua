@@ -36,14 +36,16 @@ local license_materialicons_text = {
 local license_materialicons_string = tconcat(license_materialicons_text, "|n")
 
 local thanks_text = {
-	"Azilroka",
-	"Dalerija",
-	"Eltreum",
-	"Jiberish",
-	"Luckyone",
 	"Simpy",
-	"Trenchy",
+	"Azilroka",
+	"Repooc",
+	"Luckyone",
+	"Eltreum",
 	"Tsxy",
+	"Merathilis",
+	"Dalerija",
+	"Jiberish",
+	"Trenchy",
 	"Tukui Community",
 }
 local thanks_string = tconcat(thanks_text, "|n")
