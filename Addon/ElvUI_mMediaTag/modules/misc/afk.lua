@@ -291,5 +291,3 @@ function mMT:mMT_AFKScreen()
 		end
 	end
 end
-
---hooksecurefunc(AFK, "Initialize", mMT_AFKScreen)

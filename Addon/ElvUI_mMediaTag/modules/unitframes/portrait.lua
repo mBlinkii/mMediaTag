@@ -19,8 +19,7 @@ local textures = {
 			CI = path .. "ci_a.tga",
 			CO = path .. "co_a.tga",
 			PI = path .. "pi_a.tga",
-			EA = path .. "ex_a_a.tga",
-			EB = path .. "ex_b_a.tga",
+			RA = path .. "ra_a.tga",
 		},
 		smooth = {
 			SQ = path .. "sq_b.tga",
@@ -28,8 +27,7 @@ local textures = {
 			CI = path .. "ci_b.tga",
 			CO = path .. "co_b.tga",
 			PI = path .. "pi_b.tga",
-			EA = path .. "ex_a_b.tga",
-			EB = path .. "ex_b_b.tga",
+			RA = path .. "ra_b.tga",
 		},
 		metal = {
 			SQ = path .. "sq_c.tga",
@@ -37,8 +35,44 @@ local textures = {
 			CI = path .. "ci_c.tga",
 			CO = path .. "co_c.tga",
 			PI = path .. "pi_c.tga",
-			EA = path .. "ex_a_c.tga",
-			EB = path .. "ex_b_c.tga",
+			RA = path .. "ra_c.tga",
+		},
+	},
+	extra = {
+		flat = {
+			CI = path .. "ex_a_a.tga",
+			SQ = path .. "ex_b_a.tga",
+			RO = path .. "ex_b_a.tga",
+			PI = path .. "ex_a_a.tga",
+			RA = path .. "ex_ra_a.tga",
+		},
+		smooth = {
+			CI = path .. "ex_a_b.tga",
+			SQ = path .. "ex_b_b.tga",
+			RO = path .. "ex_b_b.tga",
+			PI = path .. "ex_a_b.tga",
+			RA = path .. "ex_ra_b.tga",
+		},
+		metal = {
+			CI = path .. "ex_a_c.tga",
+			SQ = path .. "ex_b_c.tga",
+			RO = path .. "ex_b_c.tga",
+			PI = path .. "ex_a_c.tga",
+			RA = path .. "ex_ra_c.tga",
+		},
+		border = {
+			CI = path .. "border_ex_a.tga",
+			SQ = path .. "border_ex_b.tga",
+			RO = path .. "border_ex_b.tga",
+			PI = path .. "border_ex_b.tga",
+			RA = path .. "border_ex_ra.tga",
+		},
+		shadow = {
+			CI = path .. "shadow_ex_a.tga",
+			SQ = path .. "shadow_ex_b.tga",
+			RO = path .. "shadow_ex_b.tga",
+			PI = path .. "shadow_ex_b.tga",
+			RA = path .. "shadow_ex_ra.tga",
 		},
 	},
 	border = {
@@ -47,26 +81,26 @@ local textures = {
 		CI = path .. "border_ci.tga",
 		CO = path .. "border_co.tga",
 		PI = path .. "border_pi.tga",
-		EA = path .. "border_ex_a.tga",
-		EB = path .. "border_ex_b.tga",
+		RA = path .. "border_ra.tga",
 	},
 	shadow = {
 		SQ = path .. "shadow_sq.tga",
 		RO = path .. "shadow_ro.tga",
 		CI = path .. "shadow_ci.tga",
-		PI = path .. "shadow_PI.tga",
-		EA = path .. "shadow_ex_a.tga",
-		EB = path .. "shadow_ex_b.tga",
+		PI = path .. "shadow_pi.tga",
+		RA = path .. "shadow_ra.tga",
 	},
 	inner = {
 		SQ = path .. "inner_a.tga",
 		RO = path .. "inner_a.tga",
 		CI = path .. "inner_b.tga",
 		PI = path .. "inner_b.tga",
+		RA = path .. "inner_ra.tga",
 	},
 	mask = {
 		CI = path .. "mask_c.tga",
 		PI = path .. "mask_c.tga",
+		RA = path .. "mask_d.tga",
 		A = {
 			SQ = path .. "mask_a.tga",
 			RO = path .. "mask_a.tga",
@@ -81,6 +115,7 @@ local textures = {
 		RO = true,
 		CI = false,
 		PI = false,
+		RA = false,
 	},
 }
 
@@ -188,19 +223,19 @@ local function CreatePortrait(parent, conf, unit)
 	-- Rare/Elite Texture
 	if conf.extraEnable then
 		-- Texture
-		texture = (conf.texture == "CI") and textures.texture[settings.general.style]["EA"] or textures.texture[settings.general.style]["EB"]
+		texture = textures.extra[settings.general.style][conf.texture]
 		frame.extra = CreatePortraitTexture(frame, "mMT_Extra", -6, texture, nil, not conf.mirror)
 
 		-- Shadow
 		if settings.shadow.enable then
-			texture = (conf.texture == "CI") and textures.shadow.EA or textures.shadow.EB
+			texture = textures.extra.border[conf.texture]
 			frame.extra.shadow = CreatePortraitTexture(frame, "mMT_Extra_Shadow", -8, texture, settings.shadow.color, not conf.mirror)
 			frame.extra.shadow:Hide()
 		end
 
 		-- Border
 		if settings.shadow.border then
-			texture = (conf.texture == "CI") and textures.border.EA or textures.border.EB
+			texture = textures.extra.shadow[conf.texture]
 			frame.extra.border = CreatePortraitTexture(frame, "mMT_Extra_Border", -4, texture, settings.shadow.borderColorRare, not conf.mirror)
 			frame.extra.border:Hide()
 		end
@@ -321,7 +356,7 @@ local function UpdatePortrait(frame, conf, unit, parent)
 	-- Rare/Elite Texture
 	if conf.extraEnable then
 		-- Texture
-		texture = (conf.texture == "CI") and textures.texture[settings.general.style]["EA"] or textures.texture[settings.general.style]["EB"]
+		texture = textures.extra[settings.general.style][conf.texture]
 		if frame.extra then
 			UpdatePortraitTexture(frame.extra, texture, nil, not conf.mirror)
 		else
@@ -330,7 +365,7 @@ local function UpdatePortrait(frame, conf, unit, parent)
 
 		-- Shadow
 		if settings.shadow.enable then
-			texture = (conf.texture == "CI") and textures.shadow.EA or textures.shadow.EB
+			texture = textures.extra.border[conf.texture]
 			if frame.extra.shadow then
 				UpdatePortraitTexture(frame.extra.shadow, texture, settings.shadow.color, not conf.mirror)
 			else
@@ -343,7 +378,7 @@ local function UpdatePortrait(frame, conf, unit, parent)
 
 		-- Border
 		if settings.shadow.border then
-			texture = (conf.texture == "CI") and textures.border.EA or textures.border.EB
+			texture = textures.extra.shadow[conf.texture]
 			if frame.extra.border then
 				UpdatePortraitTexture(frame.extra.border, texture, settings.shadow.borderColorRare, not conf.mirror)
 			else
