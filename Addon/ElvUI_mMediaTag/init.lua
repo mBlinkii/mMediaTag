@@ -130,7 +130,7 @@ local function UpdateModules()
 	EnableModules()
 	local reloadRequired = false
 	-- update module settings
-	mMT:Print(" --- UPDATE MODULES --- ")
+	--mMT:Print(" --- UPDATE MODULES --- ")
 	-- update every time
 
 	-- check first if is loaded and update this
@@ -138,11 +138,11 @@ local function UpdateModules()
 	-- update all other
 	for name, module in pairs(mMT.Modules) do
 		if (not module.enable and module.loaded) or module.loaded or module.enable then
-			mMT:Print(name, "Update", module.loaded, "Disable", (not module.enable and module.loaded), "Enable", module.enable)
+			--mMT:Print(name, "Update", module.loaded, "Disable", (not module.enable and module.loaded), "Enable", module.enable)
 			module:Initialize()
 
 			if module.needReloadUI and ((not module.enable and module.loaded) or (module.loaded and not module.enable)) then
-				mMT:Print("RELOAD REQUIERED")
+				--mMT:Print("RELOAD REQUIERED")
 				reloadRequired = true
 			end
 
@@ -156,7 +156,7 @@ local function UpdateModules()
 		StaticPopup_Show("mMT_Reload_Required")
 	end
 
-	mMT:Print(" --- END --- ")
+	--mMT:Print(" --- END --- ")
 end
 
 local function UpdateAllModules()
