@@ -1,5 +1,10 @@
 local E = unpack(ElvUI)
 
+local module = mMT.Modules.InterruptOnCD
+if not module then
+	return
+end
+
 local GetSpecializationInfo = GetSpecializationInfo
 local GetSpellCooldown = GetSpellCooldown
 local interruptSpellID = nil
@@ -68,8 +73,10 @@ function mMT:mMediaTag_interruptOnCD(castbar)
 	end
 end
 
-function mMT:UpdateInterruptSpell()
+function module:Initialize()
 	interruptSpellID = interruptSpellList[select(1, GetSpecializationInfo(GetSpecialization()))]
+	module.needReloadUI = true
+	module.loaded = true
 end
 
 local function CreateMarker(castbar)
@@ -81,7 +88,7 @@ local function CreateMarker(castbar)
 	castbar.InterruptMarker:Hide()
 end
 
-function mMT:InterruptChecker(castbar, isUnitFrame)
+function module:InterruptChecker(castbar, isUnitFrame)
 	if castbar.InterruptMarker then
 		castbar.InterruptMarker:Hide()
 	end

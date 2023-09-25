@@ -17,12 +17,12 @@ local function NPLoader(castbar)
 		return
 	end
 
-	if E.db.mMT.importantspells.enable and E.db.mMT.importantspells.np then
-		mMT:ImportantSpells(castbar)
+	if mMT.Modules.ImportantSpells.loaded and E.db.mMT.importantspells.np then
+		mMT.Modules.ImportantSpells:UpdateCastbar(castbar)
 	end
 
-	if E.db.mMT.interruptoncd.enable then
-		mMT:InterruptChecker(castbar)
+	if mMT.Modules.InterruptOnCD.loaded then
+		mMT.Modules.InterruptOnCD:InterruptChecker(castbar)
 	end
 
 	if E.db.mMT.castbarshield.enable and E.db.mMT.castbarshield.np then
@@ -35,12 +35,12 @@ local function UFLoader(castbar)
 		return
 	end
 
-	if E.db.mMT.importantspells.enable and E.db.mMT.importantspells.uf then
-		mMT:ImportantSpells(castbar)
-	end
+	if mMT.Modules.ImportantSpells.loaded and E.db.mMT.importantspells.uf then
+		mMT.Modules.ImportantSpells:UpdateCastbar(castbar)
+	end 
 
-	if E.db.mMT.interruptoncd.enable then
-		mMT:InterruptChecker(castbar, true)
+	if mMT.Modules.InterruptOnCD.loaded then
+		mMT.Modules.InterruptOnCD:InterruptChecker(castbar, true)
 	end
 
 	if E.db.mMT.castbarshield.enable and E.db.mMT.castbarshield.uf then
@@ -49,21 +49,17 @@ local function UFLoader(castbar)
 end
 
 function module:Initialize()
-	if E.db.mMT.interruptoncd.enable then
-		mMT:UpdateInterruptSpell()
-	end
-
 	if not module.NP and (E.db.mMT.interruptoncd.enable or (E.db.mMT.importantspells.enable and E.db.mMT.importantspells.np) or E.db.mMT.castbarshield.enable) then
 		hooksecurefunc(NP, "Castbar_CheckInterrupt", NPLoader)
 		module.loaded = true
-		module.reload = true
+		module.needReloadUI = true
 		module.NP = true
 	end
 
 	if not module.UF and (E.db.mMT.interruptoncd.enable or (E.db.mMT.importantspells.enable and E.db.mMT.importantspells.uf) or (E.db.mMT.castbarshield.enable and E.db.mMT.castbarshield.uf)) then
 		hooksecurefunc(UF, "PostCastStart", UFLoader)
 		module.loaded = true
-		module.reload = true
+		module.needReloadUI = true
 		module.UF = true
 	end
 end

@@ -39,6 +39,8 @@ mMT.Modules.ResurrectionIcon = {}
 mMT.Modules.ReadyCheckIcons = {}
 mMT.Modules.RoleIcons = {}
 mMT.Modules.Castbar = {}
+mMT.Modules.ImportantSpells = {}
+mMT.Modules.InterruptOnCD = {}
 
 local defaultDB = {
 	mplusaffix = { affixes = nil, season = nil, reset = false, year = nil },
@@ -98,10 +100,6 @@ local function UpdateModuleSettings()
 
 		C_MythicPlus_RequestMapInfo()
 		C_MythicPlus_RequestCurrentAffixes()
-
-		if E.db.mMT.interruptoncd.enable then
-			mMT:UpdateInterruptSpell()
-		end
 	end
 end
 
@@ -112,11 +110,13 @@ local function EnableModules()
 	mMT.Modules.ResurrectionIcon.enable = E.db.mMT.unitframeicons.resurrection.enable
 	mMT.Modules.SummonIcon.enable = E.db.mMT.unitframeicons.summon.enable
 	mMT.Modules.Portraits.enable = E.db.mMT.portraits.general.enable
+	mMT.Modules.ImportantSpells.enable = (E.db.mMT.importantspells.enable and (E.db.mMT.importantspells.np or E.db.mMT.importantspells.uf))
 
 	-- Retail
 	if E.Retail then
 		mMT.Modules.Castbar.enable = (E.db.mMT.interruptoncd.enable or (E.db.mMT.importantspells.enable and (E.db.mMT.importantspells.np or E.db.mMT.importantspells.uf)) or E.db.mMT.castbarshield.enable)
 		mMT.Modules.RoleIcons.enable = E.db.mMT.roleicons.enable
+		mMT.Modules.InterruptOnCD.enable = E.db.mMT.interruptoncd.enable
 	end
 
 	-- Wrath
@@ -266,9 +266,6 @@ function mMT:PLAYER_ENTERING_WORLD(event)
 	-- Modules only for Retail
 	if E.Retail then
 		if E.Retail then
-			if E.db.mMT.importantspells.enable and (E.db.mMT.importantspells.np or E.db.mMT.importantspells.uf) then
-				mMT:UpdateImportantSpells()
-			end
 
 			if E.private.nameplates.enable and (E.db.mMT.nameplate.healthmarker.enable or E.db.mMT.nameplate.executemarker.enable) then
 				mMT:StartNameplateTools()
@@ -343,8 +340,8 @@ function mMT:PLAYER_ENTERING_WORLD(event)
 end
 
 function mMT:PLAYER_TALENT_UPDATE()
-	if E.db.mMT.interruptoncd.enable then
-		mMT:UpdateInterruptSpell()
+	if mMT.Modules.InterruptOnCD.loaded then
+		mMT.Modules.InterruptOnCD:Initialize()
 	end
 
 	if E.private.nameplates.enable and E.db.mMT.nameplate.executemarker.auto then

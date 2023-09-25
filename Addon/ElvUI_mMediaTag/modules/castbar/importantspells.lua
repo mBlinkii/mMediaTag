@@ -1,9 +1,16 @@
 local E = unpack(ElvUI)
 
+local module = mMT.Modules.ImportantSpells
+if not module then
+	return
+end
+
 local ImportantSpellIDs = {}
 
-function mMT:UpdateImportantSpells()
+function module:Initialize()
 	ImportantSpellIDs = E.db.mMT.importantspells.spells
+	module.needReloadUI = true
+	module.loaded = true
 end
 
 local function SetPoint(icon, settings)
@@ -38,6 +45,7 @@ local function SetPoint(icon, settings)
 		icon:SetPoint(settings.anchor.point, settings.anchor.posX, settings.anchor.posY)
 	end
 end
+
 local function SetSpellIcon(castbar, settings)
 	if not castbar.mSpellIcon then
 		castbar.mSpellIcon = castbar:CreateTexture("ImportantSpellIcon", "OVERLAY")
@@ -55,7 +63,7 @@ local function SetSpellIcon(castbar, settings)
 	castbar.mSpellIcon:Show()
 end
 
-function mMT:ImportantSpells(castbar)
+function module:UpdateCastbar(castbar)
 	local Spell = ImportantSpellIDs[castbar.spellID] and ImportantSpellIDs[castbar.spellID] or false
 
 	if castbar.mSpellIcon then
