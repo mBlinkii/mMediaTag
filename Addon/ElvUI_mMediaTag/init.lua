@@ -165,6 +165,7 @@ local function UpdateAllModules()
 		mMT:Print(mMT.CurrentProfile, currentProfile)
 		UpdateModules()
 		mMT.CurrentProfile = currentProfile
+		StaticPopup_Show("mMT_Reload_Required")
 	end
 end
 
