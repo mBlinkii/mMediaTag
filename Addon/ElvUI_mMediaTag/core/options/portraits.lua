@@ -8,6 +8,7 @@ local form = {
 	CI = "CIRCLE",
 	PI = "PILLOW",
 	RA = "CARO",
+	QA = "RECTANGLE"
 }
 
 local style = {

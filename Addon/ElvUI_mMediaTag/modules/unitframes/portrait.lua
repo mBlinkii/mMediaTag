@@ -20,6 +20,7 @@ local textures = {
 			CO = path .. "co_a.tga",
 			PI = path .. "pi_a.tga",
 			RA = path .. "ra_a.tga",
+			QA = path .. "qa_a.tga",
 		},
 		smooth = {
 			SQ = path .. "sq_b.tga",
@@ -28,6 +29,7 @@ local textures = {
 			CO = path .. "co_b.tga",
 			PI = path .. "pi_b.tga",
 			RA = path .. "ra_b.tga",
+			QA = path .. "qa_b.tga",
 		},
 		metal = {
 			SQ = path .. "sq_c.tga",
@@ -36,6 +38,7 @@ local textures = {
 			CO = path .. "co_c.tga",
 			PI = path .. "pi_c.tga",
 			RA = path .. "ra_c.tga",
+			QA = path .. "qa_c.tga",
 		},
 	},
 	extra = {
@@ -45,6 +48,7 @@ local textures = {
 			RO = path .. "ex_b_a.tga",
 			PI = path .. "ex_pi_a.tga",
 			RA = path .. "ex_ra_a.tga",
+			QA = path .. "ex_qa_a.tga",
 		},
 		smooth = {
 			CI = path .. "ex_a_b.tga",
@@ -52,6 +56,7 @@ local textures = {
 			RO = path .. "ex_b_b.tga",
 			PI = path .. "ex_pi_b.tga",
 			RA = path .. "ex_ra_b.tga",
+			QA = path .. "ex_qa_b.tga",
 		},
 		metal = {
 			CI = path .. "ex_a_c.tga",
@@ -59,6 +64,7 @@ local textures = {
 			RO = path .. "ex_b_c.tga",
 			PI = path .. "ex_pi_c.tga",
 			RA = path .. "ex_ra_c.tga",
+			QA = path .. "ex_qa_c.tga",
 		},
 		border = {
 			CI = path .. "border_ex_a.tga",
@@ -66,6 +72,7 @@ local textures = {
 			RO = path .. "border_ex_b.tga",
 			PI = path .. "border_ex_pi.tga",
 			RA = path .. "border_ex_ra.tga",
+			QA = path .. "border_ex_qa.tga",
 		},
 		shadow = {
 			CI = path .. "shadow_ex_a.tga",
@@ -73,6 +80,7 @@ local textures = {
 			RO = path .. "shadow_ex_b.tga",
 			PI = path .. "shadow_ex_pi.tga",
 			RA = path .. "shadow_ex_ra.tga",
+			QA = path .. "shadow_ex_qa.tga",
 		},
 	},
 	border = {
@@ -82,6 +90,7 @@ local textures = {
 		CO = path .. "border_co.tga",
 		PI = path .. "border_pi.tga",
 		RA = path .. "border_ra.tga",
+		QA = path .. "border_qa.tga",
 	},
 	shadow = {
 		SQ = path .. "shadow_sq.tga",
@@ -89,6 +98,7 @@ local textures = {
 		CI = path .. "shadow_ci.tga",
 		PI = path .. "shadow_pi.tga",
 		RA = path .. "shadow_ra.tga",
+		QA = path .. "shadow_qa.tga",
 	},
 	inner = {
 		SQ = path .. "inner_a.tga",
@@ -96,11 +106,13 @@ local textures = {
 		CI = path .. "inner_b.tga",
 		PI = path .. "inner_pi.tga",
 		RA = path .. "inner_ra.tga",
+		QA = path .. "inner_qa.tga",
 	},
 	mask = {
 		CI = path .. "mask_c.tga",
 		PI = path .. "mask_pi.tga",
 		RA = path .. "mask_d.tga",
+		QA = path .. "mask_qa.tga",
 
 		A = {
 			SQ = path .. "mask_a.tga",
@@ -117,6 +129,7 @@ local textures = {
 		CI = false,
 		PI = false,
 		RA = false,
+		QA = false,
 	},
 }
 
@@ -188,7 +201,7 @@ local function CreatePortrait(parent, conf, unit)
 	frame.texture = CreatePortraitTexture(frame, "mMT_Texture", 4, texture, getColor(frame, unit), conf.mirror)
 
 	-- Unit Portrait
-	local offset = ((conf.size / 5) * E.perfect)
+	local offset =  ((conf.size / 5) * E.perfect)
 	--frame.portrait = CreatePortraitTexture(frame, "mMT_Portrait", 1, texture, unit, conf.mirror)
 	frame.portrait = frame:CreateTexture("mMT_Portrait", "OVERLAY", nil, 1)
 	frame.portrait:SetPoint("TOPLEFT", offset, -offset)
@@ -481,7 +494,6 @@ end
 
 function module:Initialize()
 	settings = E.db.mMT.portraits
-
 	local frames = {
 		Player = {
 			parent = _G.ElvUF_Player,
