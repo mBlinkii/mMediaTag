@@ -484,10 +484,14 @@ end
 
 local function OnEvent(self, event, unit)
 	CheckIfAvailable()
+
+	local hex = E:RGBToHex(E.db.general.valuecolor.r, E.db.general.valuecolor.g, E.db.general.valuecolor.b)
+	local string = strjoin("", hex, "%s|r")
+
 	if E.db.mMT.teleports.icon then
-		self.text:SetFormattedText(mMT.ClassColor.string, format("|T%s:16:16:0:0:64:64|t %s", mMT.Media.TeleportIcons[E.db.mMT.teleports.customicon], mText))
+		self.text:SetFormattedText(string, format("|T%s:16:16:0:0:64:64|t %s", mMT.Media.TeleportIcons[E.db.mMT.teleports.customicon], mText))
 	else
-		self.text:SetFormattedText(mMT.ClassColor.string, mText)
+		self.text:SetFormattedText(string, mText)
 	end
 end
 
