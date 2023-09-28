@@ -263,24 +263,6 @@ local function configTable()
 					end,
 					values = form,
 				},
-				select_styleExtra = {
-					order = 4,
-					type = "select",
-					name = L["Rare/ Elite Style"],
-					get = function(info)
-						return E.db.mMT.portraits.target.extra
-					end,
-					set = function(info, value)
-						E.db.mMT.portraits.target.extra = value
-
-						mMT.Modules.Portraits:Initialize()
-					end,
-					values = {
-						A = "FLAT",
-						B = "SMOOTH",
-						C = "METALLIC",
-					},
-				},
 				range_size = {
 					order = 5,
 					name = L["Size"],
@@ -362,8 +344,132 @@ local function configTable()
 				},
 			},
 		},
-		header_pet = {
+		header_targettarget = {
 			order = 5,
+			type = "group",
+			name = L["Target of Target"],
+			args = {
+				toggle_enable = {
+					order = 1,
+					type = "toggle",
+					name = L["Enable"],
+					desc = L["Enable Target of Target Portraits"],
+					get = function(info)
+						return E.db.mMT.portraits.targettarget.enable
+					end,
+					set = function(info, value)
+						E.db.mMT.portraits.targettarget.enable = value
+						mMT.Modules.Portraits:Initialize()
+					end,
+				},
+				toggle_extra = {
+					order = 2,
+					type = "toggle",
+					name = L["Enable Rare/Elite Border"],
+					get = function(info)
+						return E.db.mMT.portraits.targettarget.extraEnable
+					end,
+					set = function(info, value)
+						E.db.mMT.portraits.targettarget.extraEnable = value
+					end,
+				},
+				select_style = {
+					order = 3,
+					type = "select",
+					name = L["Texture Form"],
+					get = function(info)
+						return E.db.mMT.portraits.targettarget.texture
+					end,
+					set = function(info, value)
+						E.db.mMT.portraits.targettarget.texture = value
+
+						mMT.Modules.Portraits:Initialize()
+					end,
+					values = form,
+				},
+				range_size = {
+					order = 5,
+					name = L["Size"],
+					type = "range",
+					min = 16,
+					max = 256,
+					step = 1,
+					softMin = 16,
+					softMax = 256,
+					get = function(info)
+						return E.db.mMT.portraits.targettarget.size
+					end,
+					set = function(info, value)
+						E.db.mMT.portraits.targettarget.size = value
+						mMT.Modules.Portraits:Initialize()
+					end,
+				},
+				select_anchor = {
+					order = 6,
+					type = "select",
+					name = L["Anchor Point"],
+					get = function(info)
+						return E.db.mMT.portraits.targettarget.relativePoint
+					end,
+					set = function(info, value)
+						E.db.mMT.portraits.targettarget.relativePoint = value
+						if value == "LEFT" then
+							E.db.mMT.portraits.targettarget.point = "RIGHT"
+							E.db.mMT.portraits.targettarget.mirror = false
+						elseif value == "RIGHT" then
+							E.db.mMT.portraits.targettarget.point = "LEFT"
+							E.db.mMT.portraits.targettarget.mirror = true
+						else
+							E.db.mMT.portraits.targettarget.point = value
+							E.db.mMT.portraits.targettarget.mirror = false
+						end
+
+						mMT.Modules.Portraits:Initialize()
+					end,
+					values = {
+						LEFT = "LEFT",
+						RIGHT = "RIGHT",
+						CENTER = "CENTER",
+					},
+				},
+				range_ofsX = {
+					order = 7,
+					name = L["X offset"],
+					type = "range",
+					min = -256,
+					max = 256,
+					step = 1,
+					softMin = -256,
+					softMax = 256,
+					get = function(info)
+						return E.db.mMT.portraits.targettarget.x
+					end,
+					set = function(info, value)
+						E.db.mMT.portraits.targettarget.x = value
+						mMT.Modules.Portraits:Initialize()
+					end,
+				},
+				range_ofsY = {
+					order = 8,
+					name = L["Y offset"],
+					type = "range",
+					min = -256,
+					max = 256,
+					step = 1,
+					softMin = -256,
+					softMax = 256,
+					get = function(info)
+						return E.db.mMT.portraits.targettarget.y
+					end,
+					set = function(info, value)
+						E.db.mMT.portraits.targettarget.y = value
+						mMT.Modules.Portraits:Initialize()
+					end,
+				},
+			},
+		},
+		header_pet = {
+			order = 6,
 			type = "group",
 			name = L["Pet"],
 			args = {
@@ -476,7 +582,7 @@ local function configTable()
 			},
 		},
 		header_focus = {
-			order = 6,
+			order = 7,
 			type = "group",
 			name = L["Focus"],
 			args = {
@@ -517,24 +623,6 @@ local function configTable()
 						mMT.Modules.Portraits:Initialize()
 					end,
 					values = form,
-				},
-				select_styleExtra = {
-					order = 4,
-					type = "select",
-					name = L["Rare/ Elite Style"],
-					get = function(info)
-						return E.db.mMT.portraits.focus.extra
-					end,
-					set = function(info, value)
-						E.db.mMT.portraits.focus.extra = value
-
-						mMT.Modules.Portraits:Initialize()
-					end,
-					values = {
-						A = "FLAT",
-						B = "SMOOTH",
-						C = "METALLIC",
-					},
 				},
 				range_size = {
 					order = 5,
@@ -618,7 +706,7 @@ local function configTable()
 			},
 		},
 		header_party = {
-			order = 7,
+			order = 8,
 			type = "group",
 			name = L["Party"],
 			args = {
@@ -731,7 +819,7 @@ local function configTable()
 			},
 		},
 		header_boss = {
-			order = 8,
+			order = 9,
 			type = "group",
 			name = L["Boss"],
 			args = {
@@ -844,7 +932,7 @@ local function configTable()
 			},
 		},
 		header_arena = {
-			order = 9,
+			order = 10,
 			type = "group",
 			name = L["Arena"],
 			args = {
@@ -957,7 +1045,7 @@ local function configTable()
 			},
 		},
 		header_shadow = {
-			order = 10,
+			order = 11,
 			type = "group",
 			name = L["Shadow/ Border"],
 			args = {
@@ -1073,7 +1161,7 @@ local function configTable()
 			},
 		},
 		header_colors = {
-			order = 11,
+			order = 12,
 			type = "group",
 			name = L["Colors"],
 			args = {

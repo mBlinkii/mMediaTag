@@ -201,11 +201,11 @@ local function CreatePortrait(parent, conf, unit)
 	frame.texture = CreatePortraitTexture(frame, "mMT_Texture", 4, texture, getColor(frame, unit), conf.mirror)
 
 	-- Unit Portrait
-	local offset =  ((conf.size / 5) * E.perfect)
+	local offset = ((conf.size / 5) * E.perfect)
 	--frame.portrait = CreatePortraitTexture(frame, "mMT_Portrait", 1, texture, unit, conf.mirror)
 	frame.portrait = frame:CreateTexture("mMT_Portrait", "OVERLAY", nil, 1)
-	frame.portrait:SetPoint("TOPLEFT", offset, -offset)
-	frame.portrait:SetPoint("BOTTOMRIGHT", -offset, offset)
+	frame.portrait:SetPoint("TOPLEFT", 0 + offset, 0 - offset)
+	frame.portrait:SetPoint("BOTTOMRIGHT", 0 - offset, 0 + offset)
 	mirrorTexture(frame.portrait, conf.mirror)
 	SetPortraitTexture(frame.portrait, unit, not (conf.texture == "CI"))
 
@@ -320,8 +320,8 @@ local function UpdatePortrait(frame, conf, unit, parent)
 
 	-- Unit Portrait
 	local offset = ((conf.size / 5) * E.perfect)
-	frame.portrait:SetPoint("TOPLEFT", offset, -offset)
-	frame.portrait:SetPoint("BOTTOMRIGHT", -offset, offset)
+	frame.portrait:SetPoint("TOPLEFT", 0 + offset, 0 - offset)
+	frame.portrait:SetPoint("BOTTOMRIGHT", 0 - offset, 0 + offset)
 	mirrorTexture(frame.portrait, conf.mirror)
 
 	-- Portrait Mask
@@ -464,6 +464,10 @@ function module:UpdatePortraits()
 		UpdatePortrait(module.Focus, settings.focus, "focus", _G.ElvUF_Focus)
 	end
 
+	if module.TargetTarget then
+		UpdatePortrait(module.TargetTarget, settings.targettarget, "targettarget", _G.ElvUF_TargetTarget)
+	end
+
 	if module.Party1 then
 		UpdatePortrait(module.Party1, settings.party, _G.ElvUF_PartyGroup1UnitButton1.unit, _G.ElvUF_PartyGroup1UnitButton1)
 		UpdatePortrait(module.Party2, settings.party, _G.ElvUF_PartyGroup1UnitButton2.unit, _G.ElvUF_PartyGroup1UnitButton2)
@@ -518,7 +522,10 @@ function module:Initialize()
 				"UNIT_PORTRAIT_UPDATE",
 			},
 		},
-		Pet = {
+	}
+
+	if _G.ElvUF_Pet and settings.pet.enable then
+		frames["Pet"] = {
 			parent = _G.ElvUF_Pet,
 			settings = settings.pet,
 			unit = "pet",
@@ -528,8 +535,26 @@ function module:Initialize()
 			unitEvents = {
 				"UNIT_PORTRAIT_UPDATE",
 			},
-		},
-		Focus = {
+		}
+	end
+
+	if _G.ElvUF_TargetTarget and settings.targettarget.enable then
+		frames["TargetTarget"] = {
+			parent = _G.ElvUF_TargetTarget,
+			settings = settings.targettarget,
+			unit = "targettarget",
+			events = {
+				"PLAYER_ENTERING_WORLD",
+				"PLAYER_TARGET_CHANGED",
+			},
+			unitEvents = {
+				"UNIT_PORTRAIT_UPDATE",
+			},
+		}
+	end
+
+	if _G.ElvUF_Focus and settings.focus.enable then
+		frames["Focus"] = {
 			parent = _G.ElvUF_Focus,
 			settings = settings.focus,
 			unit = "focus",
@@ -540,8 +565,8 @@ function module:Initialize()
 			unitEvents = {
 				"UNIT_PORTRAIT_UPDATE",
 			},
-		},
-	}
+		}
+	end
 
 	if _G.ElvUF_PartyGroup1UnitButton1 and settings.party.enable then
 		for i = 1, 5 do
@@ -675,7 +700,6 @@ function module:Initialize()
 		if settings.focus.enable and module.Focus and not module.Focus.ScriptSet then
 			module.Focus:SetScript("OnEvent", function(self, event)
 				SetPortraitTexture(self.portrait, "focus", not (settings.focus.texture == "CI"))
-
 				if event == "PLAYER_ENTERING_WORLD" or event == "PLAYER_FOCUS_CHANGED" then
 					setColor(self.texture, getColor(self, "focus"), settings.focus.mirror)
 					if settings.general.corner and textures.corner[settings.focus.texture] then
@@ -690,6 +714,25 @@ function module:Initialize()
 				end
 			end)
 			module.Focus.ScriptSet = true
+		end
+
+		if settings.targettarget.enable and module.TargetTarget and not module.TargetTarget.ScriptSet then
+			module.TargetTarget:SetScript("OnEvent", function(self, event)
+				SetPortraitTexture(self.portrait, "targettarget", not (settings.targettarget.texture == "CI"))
+				if event == "PLAYER_ENTERING_WORLD" or event == "PLAYER_TARGET_CHANGED" then
+					setColor(self.texture, getColor(self, "targettarget"), settings.targettarget.mirror)
+					if settings.general.corner and textures.corner[settings.targettarget.texture] then
+						setColor(self.corner, getColor(self, "targettarget"), settings.targettarget.mirror)
+					end
+
+					if settings.targettarget.extraEnable and self.extra then
+						CheckRareElite(self, "targettarget")
+					elseif self.extra then
+						self.extra:Hide()
+					end
+				end
+			end)
+			module.TargetTarget.ScriptSet = true
 		end
 
 		if settings.party.enable and module.Party1 and not module.Party1.ScriptSet then
