@@ -131,6 +131,14 @@ local textures = {
 		RA = false,
 		QA = false,
 	},
+	offset = {
+		SQ = 16,
+		RO = 16,
+		CI = 16,
+		PI = 0,
+		RA = 20,
+		QA = 8,
+	}
 }
 
 local function setColor(texture, color, mirror)
@@ -201,9 +209,9 @@ local function CreatePortrait(parent, conf, unit)
 	frame.texture = CreatePortraitTexture(frame, "mMT_Texture", 4, texture, getColor(frame, unit), conf.mirror)
 
 	-- Unit Portrait
-	local offset = ((conf.size / 5) * E.perfect)
-	--frame.portrait = CreatePortraitTexture(frame, "mMT_Portrait", 1, texture, unit, conf.mirror)
+	local offset = textures.offset[conf.texture] * E.perfect --~= 0 and ((conf.size / textures.offset[conf.texture]) * E.perfect) or 0
 	frame.portrait = frame:CreateTexture("mMT_Portrait", "OVERLAY", nil, 1)
+	frame.portrait:SetAllPoints(frame)
 	frame.portrait:SetPoint("TOPLEFT", 0 + offset, 0 - offset)
 	frame.portrait:SetPoint("BOTTOMRIGHT", 0 - offset, 0 + offset)
 	mirrorTexture(frame.portrait, conf.mirror)
@@ -319,7 +327,7 @@ local function UpdatePortrait(frame, conf, unit, parent)
 	UpdatePortraitTexture(frame.texture, texture, getColor(frame, unit), conf.mirror)
 
 	-- Unit Portrait
-	local offset = ((conf.size / 5) * E.perfect)
+	local offset = textures.offset[conf.texture] * E.perfect -- ~= 0 and ((conf.size / textures.offset[conf.texture]) * E.perfect) or 0
 	frame.portrait:SetPoint("TOPLEFT", 0 + offset, 0 - offset)
 	frame.portrait:SetPoint("BOTTOMRIGHT", 0 - offset, 0 + offset)
 	mirrorTexture(frame.portrait, conf.mirror)
