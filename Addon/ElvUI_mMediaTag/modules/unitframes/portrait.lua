@@ -561,10 +561,10 @@ function module:Initialize()
 			unit = "targettarget",
 			events = {
 				"PLAYER_ENTERING_WORLD",
-				"PLAYER_TARGET_CHANGED",
 			},
 			unitEvents = {
 				"UNIT_PORTRAIT_UPDATE",
+				"UNIT_TARGET"
 			},
 		}
 	end
@@ -644,7 +644,7 @@ function module:Initialize()
 				module[name] = CreatePortrait(unit.parent, unit.settings, unit.unit)
 
 				for _, event in pairs(unit.unitEvents) do
-					module[name]:RegisterUnitEvent(event, unit.unit)
+					module[name]:RegisterUnitEvent(event, event == "UNIT_TARGET" and "target" or unit.unit)
 				end
 
 				for _, event in pairs(unit.events) do
@@ -734,8 +734,9 @@ function module:Initialize()
 
 		if settings.targettarget.enable and module.TargetTarget and not module.TargetTarget.ScriptSet then
 			module.TargetTarget:SetScript("OnEvent", function(self, event)
+				mMT:Print("TargetTarget", event)
 				SetPortraitTexture(self.portrait, "targettarget", not (settings.targettarget.texture == "CI"))
-				if event == "PLAYER_ENTERING_WORLD" or event == "PLAYER_TARGET_CHANGED" then
+				if event == "PLAYER_ENTERING_WORLD" or event == "UNIT_TARGET" then
 					setColor(self.texture, getColor(self, "targettarget"), settings.targettarget.mirror)
 					if settings.general.corner and textures.corner[settings.targettarget.texture] then
 						setColor(self.corner, getColor(self, "targettarget"), settings.targettarget.mirror)

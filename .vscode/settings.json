@@ -489,7 +489,9 @@
         "UnitIsGroupLeader",
         "string",
         "min",
-        "DAMAGER"
+        "DAMAGER",
+        "READY_CHECK",
+        "READY_CHECK_FINISHED"
     ],
     "Lua.diagnostics.disable": [
         "undefined-field"
