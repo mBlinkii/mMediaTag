@@ -4,4 +4,5 @@
 	<Include file="nameplates\load_nameplates_classic.xml"/>
 	<Include file="unitframes\load_unitframes_classic.xml"/>
 	<Include file="dock\load_dock_classic.xml"/>
+	<Include file="castbar\castbar_classic.xml"/>
 </Ui>
