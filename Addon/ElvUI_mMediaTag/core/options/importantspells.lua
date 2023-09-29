@@ -112,7 +112,7 @@ local function configTable()
 									},
 								})
 							end
-							mMT:UpdateImportantSpells()
+							mMT.Modules.ImportantSpells:Initialize()
 						else
 							mMT:Print(L["!! Error - this is not an ID."])
 						end
@@ -146,7 +146,7 @@ local function configTable()
 								E.db.mMT.importantspells.spells[tonumber(value)] = nil
 								SelectedSpellID = nil
 							end
-							mMT:UpdateImportantSpells()
+							mMT.Modules.ImportantSpells:Initialize()
 						else
 							mMT:Print(L["!! Error - this is not am ID."])
 						end
@@ -160,7 +160,7 @@ local function configTable()
 					func = function()
 						wipe(E.db.mMT.importantspells.spells)
 						wipe(valuesSpellIDs)
-						mMT:UpdateImportantSpells()
+						mMT.Modules.ImportantSpells:Initialize()
 					end,
 				},
 			},

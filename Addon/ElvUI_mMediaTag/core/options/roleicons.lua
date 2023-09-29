@@ -50,7 +50,7 @@ local function configTable()
 						E.db.mMT.roleicons.tank = value
 						UF:HeaderConfig(UF.party, UF.party.forceShow ~= true or nil)
 						UF:HeaderConfig(UF.party, UF.party.forceShow ~= true or nil)
-						mMT:mStartRoleSmbols()
+						mMT.Modules.RoleIcons:Initialize()
 					end,
 					values = icons,
 				},
@@ -68,7 +68,7 @@ local function configTable()
 						E.db.mMT.roleicons.heal = value
 						UF:HeaderConfig(UF.party, UF.party.forceShow ~= true or nil)
 						UF:HeaderConfig(UF.party, UF.party.forceShow ~= true or nil)
-						mMT:mStartRoleSmbols()
+						mMT.Modules.RoleIcons:Initialize()
 					end,
 					values = icons,
 				},
@@ -84,7 +84,9 @@ local function configTable()
 					end,
 					set = function(info, value)
 						E.db.mMT.roleicons.dd = value
-						mMT:mStartRoleSmbols()
+						UF:HeaderConfig(UF.party, UF.party.forceShow ~= true or nil)
+						UF:HeaderConfig(UF.party, UF.party.forceShow ~= true or nil)
+						mMT.Modules.RoleIcons:Initialize()
 					end,
 					values = icons,
 				},

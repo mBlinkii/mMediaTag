@@ -2,15 +2,9 @@ local E, L, V, P, G = unpack(ElvUI)
 
 local _G = _G
 local tinsert = tinsert
-local change_log_important_string, change_log_new_string, change_log_update_string, change_log_fix_string =
-	nil, nil, nil, nil
+local change_log_important_string, change_log_new_string, change_log_update_string, change_log_fix_string = nil, nil, nil, nil
 local green, blue, yellow, red, endtag = "|CFF00D80E", "|CFF00A9FF", "|CFFFFCC00", "|CFFFF0048", "|r"
-local new, fix, update, important, dash =
-	"|TInterface\\Addons\\ElvUI_mMediaTag\\media\\icons\\misc\\star.tga:14:14|t",
-	"|TInterface\\Addons\\ElvUI_mMediaTag\\media\\icons\\misc\\done1.tga:14:14|t",
-	"|TInterface\\Addons\\ElvUI_mMediaTag\\media\\icons\\datatext\\upgrade7.tga:14:14|t",
-	"|TInterface\\Addons\\ElvUI_mMediaTag\\media\\icons\\tags\\quest2.tga:14:14|t",
-	"> "
+local new, fix, update, important, dash = "|TInterface\\Addons\\ElvUI_mMediaTag\\media\\icons\\misc\\star.tga:14:14|t", "|TInterface\\Addons\\ElvUI_mMediaTag\\media\\icons\\misc\\done1.tga:14:14|t", "|TInterface\\Addons\\ElvUI_mMediaTag\\media\\icons\\datatext\\upgrade7.tga:14:14|t", "|TInterface\\Addons\\ElvUI_mMediaTag\\media\\icons\\tags\\quest2.tga:14:14|t", "> "
 
 local change_log_important = {
 	red .. "!!! Currently only for Retail" .. endtag,
@@ -20,17 +14,27 @@ local change_log_important = {
 }
 
 local change_log_new = {
-	"NEW Unit Portraits",
+	"More Layouts for Portraits",
+	"Portraits for Focus, Pet, TargetTarget, Boss and Arena Frames",
+	"Custom Role Icons for Wrath",
+	"Important Spells is available for Classic and Wrath",
+	"A Reload UI Popup will show if you change your ElvUI Profile",
+	"mTargetingPlayers:icons:Role shows classcolred role icons of targeting Players",
+	"mTargetingPlayers:icons:Stop shows classcolred icons of targeting Players",
+	"Statusbartexture q5 and q6 are under testing (maybe they get an own Series)",
 }
 
 local change_log_update = {
-	"Update Events for Dock ",
+	"Portraits Classic and Retail have now the same look, no mor different textures",
+	"Optimized Portraits Events and Code",
+	"Combatcheck for Teleports Datatext",
+	"Optimized Portraits Settings",
+	"Force Datatexts to use ElvUI Value color",
 }
 
 local change_log_fix = {
-	"Fixed for dropdown menu, to prevent wrong menu entries",
-	"Fixed Settings menu for afk screen (sorting)",
-	"Fixed Guild dock bug old api",
+	"Nil error on Score Datatext",
+	"Custom Backdrops",
 }
 
 local function Concatenation(tbl, icon, color)
@@ -50,7 +54,7 @@ local function Concatenation(tbl, icon, color)
 end
 
 local function configTable()
-	local releasdate = "06.09.2023"
+	local releasdate = "20.09.2023"
 	--change_log_important_string = Concatenation(change_log_important)
 	change_log_new_string = Concatenation(change_log_new)
 	change_log_update_string = Concatenation(change_log_update)

@@ -1,48 +1,46 @@
-local E = unpack(ElvUI)
-local EP = LibStub("LibElvUIPlugin-1.0")
+local E, _, V, P, G = unpack(ElvUI)
+
+local EP = E.Libs.EP
 local L = E.Libs.ACL:GetLocale("ElvUI", E.global.general.locale)
+
+local _G = _G
+local tinsert, type = tinsert, type
+local print = print
+
+local collectgarbage = collectgarbage
+local GetAddOnMetadata = _G.C_AddOns and _G.C_AddOns.GetAddOnMetadata or _G.GetAddOnMetadata
 
 -- Addon Name and Namespace
 local addonName, addon = ...
 mMT = E:NewModule(addonName, "AceHook-3.0", "AceEvent-3.0", "AceTimer-3.0", "AceConsole-3.0")
 
---Cache Lua / WoW API
-local _G = _G
-local format = format
-local GetAddOnMetadata = _G.GetAddOnMetadata
-local C_MythicPlus_RequestMapInfo = nil
-local C_MythicPlus_RequestCurrentAffixes = nil
-local class = E:ClassColor(E.myclass)
-local hex = E:RGBToHex(class.r, class.g, class.b)
-
---Constants
+-- Settings
 mMT.Version = GetAddOnMetadata(addonName, "Version")
 mMT.Name = "|CFF6559F1m|r|CFF7A4DEFM|r|CFF8845ECe|r|CFFA037E9d|r|CFFA435E8i|r|CFFB32DE6a|r|CFFBC26E5T|r|CFFCB1EE3a|r|CFFDD14E0g|r |CFFFF006C&|r |CFFFF4C00T|r|CFFFF7300o|r|CFFFF9300o|r|CFFFFA800l|r|CFFFFC900s|r"
 mMT.NameShort = "|CFF6559F1m|r|CFFA037E9M|r|CFFDD14E0T|r"
 mMT.DockString = "|CFF2CD204D|r|CFF1BE43Ao|r|CFF10EE5Cc|r|CFF05FA82k|r"
 mMT.Icon = "|TInterface\\Addons\\ElvUI_mMediaTag\\media\\logo\\mmt_icon_round.tga:14:14|t"
 mMT.IconSquare = "|TInterface\\Addons\\ElvUI_mMediaTag\\media\\logo\\mmt_icon.tga:14:14|t"
-mMT.ClassColor = {
-	r = class.r,
-	g = class.g,
-	b = class.b,
-	hex = hex,
-	string = strjoin("", hex, "%s|r"),
-}
-mMT.ElvUI_EltreumUI = {
-	loaded = IsAddOnLoaded("ElvUI_EltreumUI"),
-	gradient = false,
-	dark = false,
-}
+mMT.Modules = {}
 mMT.Media = {}
 mMT.Config = {}
-mMT.DevMode = false
 mMT.DB = {}
-mMT.DEVNames = {
-	["Blinkii"] = true,
-	["Flinkii"] = true,
-	["Raeldan"] = true,
-}
+mMT.ClassColor = {}
+mMT.ElvUI_EltreumUI = {}
+mMT.DEVNames = {}
+mMT.DevMode = false
+mMT.CurrentProfile = nil
+mMT.Classes = { "DEATHKNIGHT", "DEMONHUNTER", "DRUID", "EVOKER", "HUNTER", "MAGE", "MONK", "PALADIN", "PRIEST", "ROGUE", "SHAMAN", "WARLOCK", "WARRIOR" }
+
+mMT.Modules.Portraits = {}
+mMT.Modules.SummonIcon = {}
+mMT.Modules.PhaseIcon = {}
+mMT.Modules.ResurrectionIcon = {}
+mMT.Modules.ReadyCheckIcons = {}
+mMT.Modules.RoleIcons = {}
+mMT.Modules.Castbar = {}
+mMT.Modules.ImportantSpells = {}
+mMT.Modules.InterruptOnCD = {}
 
 local defaultDB = {
 	mplusaffix = { affixes = nil, season = nil, reset = false, year = nil },
@@ -75,29 +73,104 @@ end
 
 DB_Loader:SetScript("OnEvent", DB_Loader.OnEvent)
 
-if E.Retail then
-	C_MythicPlus_RequestMapInfo = C_MythicPlus.RequestMapInfo
-	C_MythicPlus_RequestCurrentAffixes = C_MythicPlus.RequestCurrentAffixes
+StaticPopupDialogs["mMT_Reload_Required"] = {
+	text = L["Some settings have been changed! For mMediaTag to work properly, a reload of the interface is recommended. Should a reload be performed now?"],
+	button1 = L["ReloadUI"],
+	button2 = L["Abort"],
+	OnAccept = function()
+		ReloadUI()
+	end,
+	timeout = 0,
+	whileDead = true,
+	hideOnEscape = true,
+	preferredIndex = 3,
+}
+
+local function UpdateModuleSettings()
+	--  XXX Change this
+	mMT:UpdateDockSettings()
+	mMT:UpdateTagSettings()
+
+	mMT:TagDeathCount()
+
+	-- Modules only for Retail
+	if E.Retail then
+		C_MythicPlus_RequestMapInfo = C_MythicPlus.RequestMapInfo
+		C_MythicPlus_RequestCurrentAffixes = C_MythicPlus.RequestCurrentAffixes
+
+		C_MythicPlus_RequestMapInfo()
+		C_MythicPlus_RequestCurrentAffixes()
+	end
 end
 
---AddonCompartment
-function ElvUI_mMediaTag_OnAddonCompartmentClick()
-	E:ToggleOptions("mMT")
+local function EnableModules()
+	-- All Game Versions
+	mMT.Modules.ReadyCheckIcons.enable = E.db.mMT.unitframeicons.readycheck.enable
+	mMT.Modules.PhaseIcon.enable = E.db.mMT.unitframeicons.phase.enable
+	mMT.Modules.ResurrectionIcon.enable = E.db.mMT.unitframeicons.resurrection.enable
+	mMT.Modules.SummonIcon.enable = E.db.mMT.unitframeicons.summon.enable
+	mMT.Modules.Portraits.enable = E.db.mMT.portraits.general.enable
+	mMT.Modules.ImportantSpells.enable = (E.db.mMT.importantspells.enable and (E.db.mMT.importantspells.np or E.db.mMT.importantspells.uf))
+
+	-- Retail
+	if E.Retail then
+		mMT.Modules.Castbar.enable = (E.db.mMT.interruptoncd.enable or (E.db.mMT.importantspells.enable and (E.db.mMT.importantspells.np or E.db.mMT.importantspells.uf)) or E.db.mMT.castbarshield.enable)
+		mMT.Modules.RoleIcons.enable = E.db.mMT.roleicons.enable
+		mMT.Modules.InterruptOnCD.enable = E.db.mMT.interruptoncd.enable
+	end
+
+	-- Wrath
+	if E.Retail then
+		mMT.Modules.Castbar.enable = (E.db.mMT.interruptoncd.enable or (E.db.mMT.importantspells.enable and (E.db.mMT.importantspells.np or E.db.mMT.importantspells.uf)) or E.db.mMT.castbarshield.enable)
+		mMT.Modules.RoleIcons.enable = E.db.mMT.roleicons.enable
+	end
 end
 
-function ElvUI_mMediaTag_OnAddonCompartmentOnEnter()
-	GameTooltip:ClearLines()
-	GameTooltip:SetOwner(UIParent, "ANCHOR_CURSOR_RIGHT")
-	GameTooltip:AddDoubleLine(mMT.Name, format("|CFFF7DC6FVer. %s|r", mMT.Version))
-	GameTooltip:Show()
+local function UpdateModules()
+	EnableModules()
+	local reloadRequired = false
+	-- update module settings
+	--mMT:Print(" --- UPDATE MODULES --- ")
+	-- update every time
+
+	-- check first if is loaded and update this
+
+	-- update all other
+	for name, module in pairs(mMT.Modules) do
+		if (not module.enable and module.loaded) or module.loaded or module.enable then
+			--mMT:Print(name, "Update", module.loaded, "Disable", (not module.enable and module.loaded), "Enable", module.enable)
+			module:Initialize()
+
+			if module.needReloadUI and ((not module.enable and module.loaded) or (module.loaded and not module.enable)) then
+				--mMT:Print("RELOAD REQUIERED")
+				reloadRequired = true
+			end
+
+			if module.loaded and not module.enable then
+				module.loaded = false
+			end
+		end
+	end
+
+	if reloadRequired then
+		StaticPopup_Show("mMT_Reload_Required")
+	end
+
+	--mMT:Print(" --- END --- ")
 end
 
-function ElvUI_mMediaTag_OnAddonCompartmentOnLeave()
-	GameTooltip:Hide()
+local function UpdateAllModules()
+	local currentProfile = E.data:GetCurrentProfile()
+	if mMT.CurrentProfile ~= currentProfile then
+		mMT:Print(mMT.CurrentProfile, currentProfile)
+		UpdateModules()
+		mMT.CurrentProfile = currentProfile
+		StaticPopup_Show("mMT_Reload_Required")
+	end
 end
 
 -- Load Settings
-local function GetOptions()
+local function LoadSettings()
 	E.Options.name = format("%s + %s %s |cff99ff33%s|r", E.Options.name, mMT.IconSquare, mMT.Name, mMT.Version)
 
 	for _, func in pairs(mMT.Config) do
@@ -105,16 +178,127 @@ local function GetOptions()
 	end
 end
 
--- Initialize Addon
 function mMT:Initialize()
-	if mMT.ElvUI_EltreumUI.loaded then
-		mMT.ElvUI_EltreumUI.gradient = E.db.ElvUI_EltreumUI and E.db.ElvUI_EltreumUI.unitframes and E.db.ElvUI_EltreumUI.unitframes.gradientmode and E.db.ElvUI_EltreumUI.unitframes.gradientmode.enable
-		mMT.ElvUI_EltreumUI.dark = E.db.ElvUI_EltreumUI and E.db.ElvUI_EltreumUI.unitframes and E.db.ElvUI_EltreumUI.unitframes.darkmode
+	EP:RegisterPlugin(addonName, LoadSettings)
+
+	-- update defaults
+	mMT.ClassColor = mMT:UpdateClassColor()
+	mMT.ElvUI_EltreumUI = mMT:CheckEltruism()
+	mMT.DEVNames = mMT:GetDevNames()
+	mMT.Classes = mMT:ClassesTable()
+
+	-- Register Events for Retail
+	if E.Retail then
+		if E.db.mMT.instancedifficulty.enable then
+			self:RegisterEvent("UPDATE_INSTANCE_INFO")
+			self:RegisterEvent("CHALLENGE_MODE_START")
+			self:SetupInstanceDifficulty()
+		end
+
+		if E.db.mMT.general.keystochat then
+			self:RegisterEvent("CHAT_MSG_PARTY")
+			self:RegisterEvent("CHAT_MSG_PARTY_LEADER")
+			self:RegisterEvent("CHAT_MSG_RAID")
+			self:RegisterEvent("CHAT_MSG_RAID_LEADER")
+			self:RegisterEvent("CHAT_MSG_GUILD")
+		end
+
+		if (E.private.nameplates.enable and E.db.mMT.nameplate.executemarker.auto) or E.db.mMT.interruptoncd.enable then
+			self:RegisterEvent("PLAYER_TALENT_UPDATE")
+		end
 	end
 
-	EP:RegisterPlugin(addonName, GetOptions)
-	-- Register Events
-	mMT:RegisterEvent("PLAYER_ENTERING_WORLD")
+	-- Register Events for all Game Versions
+	self:RegisterEvent("PLAYER_ENTERING_WORLD")
+
+	if E.db.mMT.afk.enable then
+		self:RegisterEvent("PLAYER_FLAGS_CHANGED")
+	end
+
+	-- Modules
+	UpdateModuleSettings()
+	UpdateModules()
+
+	-- hook ElvUI UpdateAll function
+	hooksecurefunc(E, "UpdateAll", UpdateAllModules)
+
+	-- Initialize main things
+	tinsert(E.ConfigModeLayouts, "MMEDIATAG")
+	E.ConfigModeLocalizedStrings["MMEDIATAG"] = mMT.Name
+
+	mMT.CurrentProfile = E.data:GetCurrentProfile()
+
+	if (E.db.mMT.custombackgrounds.health.enable or E.db.mMT.custombackgrounds.power.enable or E.db.mMT.custombackgrounds.castbar.enable) and not mMT.ElvUI_EltreumUI.dark then
+		mMT:CustomBackdrop()
+	end
+end
+
+local function CallbackInitialize()
+	mMT:Initialize()
+end
+
+function mMT:PLAYER_ENTERING_WORLD(event)
+	-- update defaults
+	mMT.ClassColor = mMT:UpdateClassColor()
+	mMT.ElvUI_EltreumUI = mMT:CheckEltruism()
+	mMT.DEVNames = mMT:GetDevNames()
+	mMT.Classes = mMT:ClassesTable()
+
+	-- Changelog
+	if E.db.mMT.version ~= mMT.Version then
+		E:ToggleOptions()
+		E.Libs.AceConfigDialog:SelectGroup("ElvUI", "mMT", "changelog")
+		E.db.mMT.version = mMT.Version
+	end
+
+	-- DevMode
+	if mMT.DB.dev.enabled and mMT.DEVNames[UnitName("player")] then
+		mMT:Print("|CFFFFC900DEV - Tools:|r |CFF00E360enabld|r")
+		mMT.DevMode = true
+		mMT:DevTools()
+	else
+		mMT.DevMode = false
+	end
+
+	-- Modules
+	UpdateModuleSettings()
+	UpdateModules()
+
+	-- Modules only for Retail
+	if E.Retail then
+		if E.Retail then
+
+			if E.private.nameplates.enable and (E.db.mMT.nameplate.healthmarker.enable or E.db.mMT.nameplate.executemarker.enable) then
+				mMT:StartNameplateTools()
+			end
+
+			if (E.db.mMT.objectivetracker.enable or (E.db.mMT.objectivetracker.enable and E.db.mMT.objectivetracker.simple)) and E.private.skins.blizzard.enable and not IsAddOnLoaded("!KalielsTracker") then
+				if not E.private.skins.blizzard.objectiveTracker then
+					StaticPopupDialogs["mErrorSkin"] = {
+						text = L["ElvUI skin must be enabled to activate mMediaTag Quest skins! Should it be enabled?"],
+						button1 = L["Yes"],
+						button2 = L["No"],
+						timeout = 120,
+						whileDead = true,
+						hideOnEscape = false,
+						preferredIndex = 3,
+						OnAccept = function()
+							E.private.skins.blizzard.objectiveTracker = true
+							C_UI.Reload()
+						end,
+						OnCancel = function()
+							E.db.mMT.objectivetracker.enable = false
+							C_UI.Reload()
+						end,
+					}
+
+					StaticPopup_Show("mErrorSkin")
+				end
+
+				mMT:InitializemOBT()
+			end
+		end
+	end
 
 	if E.db.mMT.afk.enable then
 		mMT:RegisterEvent("PLAYER_FLAGS_CHANGED")
@@ -133,7 +317,7 @@ function mMT:Initialize()
 		mMT:TipIcon()
 	end
 
-	if E.db.mMT.customclasscolors.enable and not mMT:Check_ElvUI_EltreumUI() then
+	if E.db.mMT.customclasscolors.enable and not (mMT.ElvUI_EltreumUI.gradient or mMT.ElvUI_EltreumUI.dark) then
 		mMT:SetCustomColors()
 	end
 
@@ -149,155 +333,19 @@ function mMT:Initialize()
 		mMT:mChat()
 	end
 
-	if E.db.mMT.nameplate.bordercolor.glow or E.db.mMT.nameplate.bordercolor.border then
+	if E.private.nameplates.enable and (E.db.mMT.nameplate.bordercolor.glow or E.db.mMT.nameplate.bordercolor.border) then
 		mMT:mNamePlateBorderColor()
 	end
 
-	if E.db.mMT.unitframeicons.readycheck.enable then
-		mMT:SetupReadyCheckIcons()
-	end
-
-	if E.db.mMT.unitframeicons.phase.enable then
-		mMT:SetupPhaseIcons()
-	end
-
-	if E.db.mMT.unitframeicons.resurrection.enable then
-		mMT:SetupResurrectionIcon()
-	end
-
-	if E.db.mMT.unitframeicons.summon.enable then
-		mMT:SetupSummonIcon()
-	end
-
-	if (E.db.mMT.custombackgrounds.health.enable or E.db.mMT.custombackgrounds.power.enable or E.db.mMT.custombackgrounds.castbar.enable) and not mMT.ElvUI_EltreumUI.dark then
-		mMT:CustomBackdrop()
-	end
-
-	if E.Retail then
-		if E.db.mMT.interruptoncd.enable or (E.db.mMT.importantspells.enable and (E.db.mMT.importantspells.np or E.db.mMT.importantspells.uf)) or E.db.mMT.castbarshield.enable then
-			mMT:CastbarModuleLoader()
-		end
-
-		if E.db.mMT.importantspells.enable and (E.db.mMT.importantspells.np or E.db.mMT.importantspells.uf) then
-			mMT:UpdateImportantSpells()
-		end
-
-		if E.private.nameplates.enable and E.db.mMT.nameplate.healthmarker.enable or E.db.mMT.nameplate.executemarker.enable then
-			mMT:StartNameplateTools()
-		end
-
-		if E.db.mMT.instancedifficulty.enable then
-			mMT:RegisterEvent("UPDATE_INSTANCE_INFO")
-			mMT:RegisterEvent("CHALLENGE_MODE_START")
-			mMT:SetupInstanceDifficulty()
-		end
-
-		if E.db.mMT.roleicons.enable then
-			mMT:mStartRoleSmbols()
-		end
-
-		if E.db.mMT.general.keystochat then
-			mMT:RegisterEvent("CHAT_MSG_PARTY")
-			mMT:RegisterEvent("CHAT_MSG_PARTY_LEADER")
-			mMT:RegisterEvent("CHAT_MSG_RAID")
-			mMT:RegisterEvent("CHAT_MSG_RAID_LEADER")
-			mMT:RegisterEvent("CHAT_MSG_GUILD")
-		end
-
-		if E.db.mMT.nameplate.executemarker.auto or E.db.mMT.interruptoncd.enable then
-			mMT:RegisterEvent("PLAYER_TALENT_UPDATE")
-		end
-
-		if (E.db.mMT.objectivetracker.enable or (E.db.mMT.objectivetracker.enable and E.db.mMT.objectivetracker.simple)) and E.private.skins.blizzard.enable and not IsAddOnLoaded("!KalielsTracker") then
-			if not E.private.skins.blizzard.objectiveTracker then
-				StaticPopupDialogs["mErrorSkin"] = {
-					text = L["ElvUI skin must be enabled to activate mMediaTag Quest skins! Should it be enabled?"],
-					button1 = L["Yes"],
-					button2 = L["No"],
-					timeout = 120,
-					whileDead = true,
-					hideOnEscape = false,
-					preferredIndex = 3,
-					OnAccept = function()
-						E.private.skins.blizzard.objectiveTracker = true
-						C_UI.Reload()
-					end,
-					OnCancel = function()
-						E.db.mMT.objectivetracker.enable = false
-						C_UI.Reload()
-					end,
-				}
-
-				StaticPopup_Show("mErrorSkin")
-			end
-
-			mMT:InitializemOBT()
-		end
-	end
-end
-
-function mMT:PLAYER_ENTERING_WORLD()
-	if E.db.mMT.portraits.general.enable then
-		mMT:UpdatePortraitSettings()
-		mMT:SetupPortraits()
-	end
-
-	-- Change Log
-	if E.db.mMT.version ~= mMT.Version then
-		E:ToggleOptions()
-		E.Libs.AceConfigDialog:SelectGroup("ElvUI", "mMT", "changelog")
-		E.db.mMT.version = mMT.Version
-	end
-
-	class = E:ClassColor(E.myclass)
-	hex = E:RGBToHex(class.r, class.g, class.b)
-	mMT.ClassColor = {
-		r = class.r,
-		g = class.g,
-		b = class.b,
-		hex = hex,
-		string = strjoin("", hex, "%s|r"),
-	}
-
-	if E.Retail then
-		C_MythicPlus_RequestMapInfo()
-		C_MythicPlus_RequestCurrentAffixes()
-
-		if E.db.mMT.interruptoncd.enable then
-			mMT:UpdateInterruptSpell()
-		end
-	end
-
-	mMT:UpdateDockSettings()
-	mMT:UpdateTagSettings()
-	mMT:TagDeathCount()
-
-	class = (E.db.mMT.customclasscolors.enable and not mMT:Check_ElvUI_EltreumUI()) and E.db.mMT.customclasscolors.colors[E.myclass] or E:ClassColor(E.myclass)
-	hex = E:RGBToHex(class.r, class.g, class.b)
-
-	mMT.ClassColor = {
-		r = class.r,
-		g = class.g,
-		b = class.b,
-		hex = hex,
-		string = strjoin("", hex, "%s|r"),
-	}
-
-	if mMT.DB.dev.enabled and mMT.DEVNames[UnitName("player")] then
-		mMT:Print("|CFFFFC900DEV - Tools:|r |CFF00E360enabld|r")
-		mMT.DevMode = true
-		mMT:DevTools()
-	else
-		mMT.DevMode = false
-	end
+	E:Delay(1, collectgarbage, "collect")
 end
 
 function mMT:PLAYER_TALENT_UPDATE()
-	if E.db.mMT.interruptoncd.enable then
-		mMT:UpdateInterruptSpell()
+	if mMT.Modules.InterruptOnCD.loaded then
+		mMT.Modules.InterruptOnCD:Initialize()
 	end
 
-	if E.db.mMT.nameplate.executemarker.auto then
+	if E.private.nameplates.enable and E.db.mMT.nameplate.executemarker.auto then
 		mMT:updateAutoRange()
 	end
 end
@@ -337,4 +385,4 @@ function mMT:PLAYER_FLAGS_CHANGED(_, unit)
 	end
 end
 
-E:RegisterModule(mMT:GetName())
+E:RegisterModule(mMT:GetName(), CallbackInitialize)

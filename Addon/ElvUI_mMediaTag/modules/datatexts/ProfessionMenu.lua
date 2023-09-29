@@ -53,7 +53,10 @@ local function OnEvent(self, event, unit)
 		TextString = format("|TInterface\\AddOns\\ElvUI_mMediaTag\\media\\icons\\datatext\\profession.tga:16:16:0:0:64:64|t %s", mText)
 	end
 
-	self.text:SetFormattedText(mMT.ClassColor.string, TextString)
+	local hex = E:RGBToHex(E.db.general.valuecolor.r, E.db.general.valuecolor.g, E.db.general.valuecolor.b)
+	local string = strjoin("", hex, "%s|r")
+
+	self.text:SetFormattedText(string, TextString)
 end
 
 local function OnLeave(self)

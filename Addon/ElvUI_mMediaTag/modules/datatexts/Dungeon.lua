@@ -97,15 +97,18 @@ local function OnEvent(self, event, unit)
 		TextString = format("|TInterface\\AddOns\\ElvUI_mMediaTag\\media\\icons\\datatext\\dungeon.tga:16:16:0:0:64:64|t %s", mText)
 	end
 
+	local hex = E:RGBToHex(E.db.general.valuecolor.r, E.db.general.valuecolor.g, E.db.general.valuecolor.b)
+	local string = strjoin("", hex, "%s|r")
+
 	if E.db.mMT.dungeon.texttoname then
 		local inInstance, _ = IsInInstance()
 		if inInstance then
 			self.text:SetText(mMT:GetDungeonInfo(true, true))
 		else
-			self.text:SetFormattedText(mMT.ClassColor.string, TextString)
+			self.text:SetFormattedText(string, TextString)
 		end
 	else
-		self.text:SetFormattedText(mMT.ClassColor.string, TextString)
+		self.text:SetFormattedText(string, TextString)
 	end
 end
 

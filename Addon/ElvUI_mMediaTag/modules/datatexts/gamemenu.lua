@@ -18,7 +18,7 @@ local MainMenuMicroButton = MainMenuMicroButton
 local MainMenuMicroButton_SetNormal = MainMenuMicroButton_SetNormal
 
 local menuList = nil
-local menuFrame = CreateFrame("Frame", "mSystemMenu", E.UIParent)
+local menuFrame = CreateFrame("Frame", "mMT_SystemMenu", E.UIParent)
 menuFrame:SetTemplate("Transparent", true)
 
 local colors = {
@@ -241,8 +241,11 @@ local function OnEvent(self, event)
 		BuildMenu()
 	end
 
+	local hex = E:RGBToHex(E.db.general.valuecolor.r, E.db.general.valuecolor.g, E.db.general.valuecolor.b)
+	local string = strjoin("", hex, "%s|r")
+
 	self.text:SetFormattedText(
-		mMT.ClassColor.string,
+		string,
 		E.db.mMT.gamemenu.icon
 				and format(
 					"|TInterface\\AddOns\\ElvUI_mMediaTag\\media\\icons\\misc\\gears.tga:16:16:0:0:64:64|t %s",

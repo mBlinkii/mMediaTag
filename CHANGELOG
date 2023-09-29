@@ -1,6 +1,26 @@
 # Changelog - ElvUI_mMediaTag
 [Eng] - All changes to this project will be documented in this file. The latest changes are at the top.
 
+## [ver. 3.20] - 20.09.2023
+### FIX
+- Fix - Nil error on Score Datatext
+- Fix - Custom Backdrops
+### Update
+- Update - Portraits Classic and Retail have now the same look, no mor different textures
+- Update - Optimized Portraits Events and Code
+- Update - Combatcheck for Teleports Datatext
+- Update - Optimized Portraits Settings
+- Update - Force Datatexts to use ElvUI Value color
+### NEW
+- More Layouts for Portraits
+- Portraits for Focus, Pet, TargetTarget, Boss and Arena Frames
+- Custom Role Icons for Wrath
+- Important Spells is available for Classic and Wrath
+- A Reload UI Popup will show if you change your ElvUI Profile
+- mTargetingPlayers:icons:Role shows classcolred role icons of targeting Players
+- mTargetingPlayers:icons:Stop shows classcolred icons of targeting Players
+- Statusbartexture q5 and q6 are under testing (maybe they get an own Series)
+
 ## [ver. 3.19] - 06.09.2023
 ### FIX
 - Fixed Portraits default off

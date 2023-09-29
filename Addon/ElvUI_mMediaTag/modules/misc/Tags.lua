@@ -1316,22 +1316,61 @@ local function GetRaidTargets(unit)
 	end
 end
 
+local targetTextures = {
+	TANK = "|TInterface\\AddOns\\ElvUI_mMediaTag\\media\\icons\\tags\\targetindicator\\TANK.tga:16:16:0:0:16:16:0:16:0:16",
+	HEALER = "|TInterface\\AddOns\\ElvUI_mMediaTag\\media\\icons\\tags\\targetindicator\\HEAL.tga:16:16:0:0:16:16:0:16:0:16",
+	DAMAGER = "|TInterface\\AddOns\\ElvUI_mMediaTag\\media\\icons\\tags\\targetindicator\\DD.tga:16:16:0:0:16:16:0:16:0:16",
+	STOP = "|TInterface\\AddOns\\ElvUI_mMediaTag\\media\\icons\\tags\\targetindicator\\STOP.tga:16:16:0:0:16:16:0:16:0:16",
+	SQ = "|TInterface\\AddOns\\ElvUI_mMediaTag\\media\\icons\\tags\\targetindicator\\SQ.tga:16:16:0:0:16:16:0:16:0:16",
+	FLAT = "|TInterface\\AddOns\\ElvUI_mMediaTag\\media\\icons\\tags\\targetindicator\\FLAT.tga:16:16:0:0:16:16:0:16:0:16",
+	GLAS = "|TInterface\\AddOns\\ElvUI_mMediaTag\\media\\icons\\tags\\targetindicator\\GLAS.tga:16:16:0:0:16:16:0:16:0:16",
+	DIA = "|TInterface\\AddOns\\ElvUI_mMediaTag\\media\\icons\\tags\\targetindicator\\DIA.tga:16:16:0:0:16:16:0:16:0:16",
+
+}
+
+local targetStringColors = {}
 local function GetPartyTargetsIcons(unit, style)
+	if not targetStringColors.build then
+		for _, class in ipairs(mMT.Classes) do
+			local color = E:ClassColor(class)
+			targetStringColors[class] = ":" .. tostring(mMT:round(color.r * 255)) .. ":" .. tostring(mMT:round(color.g * 255)) .. ":" .. tostring(mMT:round(color.b * 255)) .. "|t"
+		end
+
+		targetStringColors.build = true
+	end
+
 	local ClassString = ""
-	for i = 1, GetNumGroupMembers() - 1 do
-		if UnitIsUnit("party" .. i .. "target", unit) then
-			local _, unitClass = UnitClass("party" .. i)
-			ClassString = format("|TInterface\\AddOns\\ElvUI_mMediaTag\\media\\icons\\tags\\targetindicator\\%s%s.tga:15:15|t", unitClass, style) .. ClassString
+
+	if style == "role" then
+		for i = 1, GetNumGroupMembers() - 1 do
+			if UnitIsUnit("party" .. i .. "target", unit) then
+				local role = targetTextures[UnitGroupRolesAssigned("party" .. i)] or targetTextures.DAMAGER
+				local _, unitClass = UnitClass("party" .. i)
+				ClassString = role .. targetStringColors[unitClass]  .. ClassString
+			end
+		end
+
+		if UnitIsUnit("playertarget", unit) then
+			local role = targetTextures[UnitGroupRolesAssigned("player")] or targetTextures.DAMAGER
+			local _, unitClass = UnitClass("player")
+			ClassString = role .. targetStringColors[unitClass]  .. ClassString
+		end
+	else
+		for i = 1, GetNumGroupMembers() - 1 do
+			if UnitIsUnit("party" .. i .. "target", unit) then
+				local _, unitClass = UnitClass("party" .. i)
+				ClassString = targetTextures[style] .. targetStringColors[unitClass]  .. ClassString
+			end
+		end
+
+		if UnitIsUnit("playertarget", unit) then
+			local _, unitClass = UnitClass("player")
+			ClassString = targetTextures[style] .. targetStringColors[unitClass]  .. ClassString
 		end
 	end
 
-	if UnitIsUnit("playertarget", unit) then
-		local _, unitClass = UnitClass("player")
-		ClassString = format("|TInterface\\AddOns\\ElvUI_mMediaTag\\media\\icons\\tags\\targetindicator\\%s%s.tga:15:15|t", unitClass, style) .. ClassString
-	end
-
 	if ClassString ~= "" then
-		return ClassString --"|TInterface\\AddOns\\ElvUI_mMediaTag\\media\\icons\\tags\\targetindicator\\PRIEST_SQ.tga:14:14:0:0:16:16:0:16:0:16:0:255:255|t" --ClassString
+		return ClassString
 	end
 end
 
@@ -1347,25 +1386,37 @@ end)
 
 E:AddTag("mTargetingPlayers:icons:Flat", 2, function(unit)
 	if (InCombatLockdown()) and UnitAffectingCombat(unit) and (IsInGroup()) then
-		return GetPartyTargetsIcons(unit, "_FLAT")
+		return GetPartyTargetsIcons(unit, "FLAT")
 	end
 end)
 
 E:AddTag("mTargetingPlayers:icons:Glas", 2, function(unit)
 	if (InCombatLockdown()) and UnitAffectingCombat(unit) and (IsInGroup()) then
-		return GetPartyTargetsIcons(unit, "_GLAS")
+		return GetPartyTargetsIcons(unit, "GLAS")
 	end
 end)
 
 E:AddTag("mTargetingPlayers:icons:SQ", 2, function(unit)
 	if (InCombatLockdown()) and UnitAffectingCombat(unit) and (IsInGroup()) then
-		return GetPartyTargetsIcons(unit, "_SQ")
+		return GetPartyTargetsIcons(unit, "SQ")
 	end
 end)
 
 E:AddTag("mTargetingPlayers:icons:DIA", 2, function(unit)
 	if (InCombatLockdown()) and UnitAffectingCombat(unit) and (IsInGroup()) then
-		return GetPartyTargetsIcons(unit, "_DIA")
+		return GetPartyTargetsIcons(unit, "DIA")
+	end
+end)
+
+E:AddTag("mTargetingPlayers:icons:Stop", 2, function(unit)
+	if (InCombatLockdown()) and UnitAffectingCombat(unit) and (IsInGroup()) then
+		return GetPartyTargetsIcons(unit, "STOP")
+	end
+end)
+
+E:AddTag("mTargetingPlayers:icons:Role", 2, function(unit)
+	if (InCombatLockdown()) and UnitAffectingCombat(unit) and (IsInGroup()) and (E.Retail or E.Wrath) then
+		return GetPartyTargetsIcons(unit, "role")
 	end
 end)
 
@@ -1373,4 +1424,6 @@ E:AddTagInfo("mTargetingPlayers", mMT.NameShort .. " " .. L["Misc"], L["Target c
 E:AddTagInfo("mTargetingPlayers:icons:Flat", mMT.NameShort .. " " .. L["Misc"], L["Target counter Icon (Flat Circle)."])
 E:AddTagInfo("mTargetingPlayers:icons:Glas", mMT.NameShort .. " " .. L["Misc"], L["Target counter Icon (Glas Circle)."])
 E:AddTagInfo("mTargetingPlayers:icons:SQ", mMT.NameShort .. " " .. L["Misc"], L["Target counter Icon (Flat Square)."])
-E:AddTagInfo("mTargetingPlayers:icons:DIA", mMT.NameShort .. " " .. L["Misc"], L["Target counter Icon (Flat Dimond)."])
+E:AddTagInfo("mTargetingPlayers:icons:DIA", mMT.NameShort .. " " .. L["Misc"], L["Target counter Icon (Flat Diamond)."])
+E:AddTagInfo("mTargetingPlayers:icons:Stop", mMT.NameShort .. " " .. L["Misc"], L["Target counter Icon (Flat Stop shield)."])
+E:AddTagInfo("mTargetingPlayers:icons:Role", mMT.NameShort .. " " .. L["Misc"], L["Target counter Icon (Roleicons)."])
