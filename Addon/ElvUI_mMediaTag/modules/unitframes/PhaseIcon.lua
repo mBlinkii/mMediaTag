@@ -15,10 +15,10 @@ local PhaseColors = {
 }
 
 function module:PhaseIconColor(hidden, phaseReason)
+	local c = { r = 1, g = 1, b = 1 }
 	if E.db.mMT.unitframeicons.phase.color.withe then
-		self.Center:SetVertexColor(1, 1, 1)
+		c = { r = 1, g = 1, b = 1 }
 	else
-		local c = { r = 1, g = 1, b = 1 }
 		if phaseReason == 3 then -- chromie
 			c = PhaseColors.chromie
 		elseif phaseReason == 2 then -- warmode
@@ -28,8 +28,8 @@ function module:PhaseIconColor(hidden, phaseReason)
 		else -- phasing
 			c = PhaseColors.phasing
 		end
-		self.Center:SetVertexColor(c.r or 1, c.g or 1, c.b or 1)
 	end
+	self.Center:SetVertexColor(c.r or 1, c.g or 1, c.b or 1)
 end
 
 local function PhaseIcon(_, frame)
