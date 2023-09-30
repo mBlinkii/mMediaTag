@@ -20,6 +20,7 @@ function mMT:SetElvUIMediaColor()
 	E.db.general.valuecolor["g"] = colorDB.g
 	E.db.general.valuecolor["b"] = colorDB.b
 	E.db.general.valuecolor["a"] = 1
+	E:UpdateAll()
 end
 
 local function mClassColor(elv, class)
