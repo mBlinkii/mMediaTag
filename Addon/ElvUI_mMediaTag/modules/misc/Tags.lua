@@ -575,6 +575,17 @@ E:AddTag("mHealth", "UNIT_HEALTH UNIT_MAXHEALTH UNIT_CONNECTION PLAYER_FLAGS_CHA
 	end
 end)
 
+E:AddTag("mHealth:noStatus", "UNIT_HEALTH UNIT_MAXHEALTH", function(unit)
+	local currentHealth = UnitHealth(unit)
+	local deficit = UnitHealthMax(unit) - currentHealth
+
+	if deficit > 0 and currentHealth > 0 then
+		return E:GetFormattedText("PERCENT", UnitHealth(unit), UnitHealthMax(unit))
+	else
+		return E:GetFormattedText("CURRENT", UnitHealth(unit), UnitHealthMax(unit))
+	end
+end)
+
 E:AddTag("mHealth:short", "UNIT_HEALTH UNIT_MAXHEALTH UNIT_CONNECTION PLAYER_FLAGS_CHANGED PLAYER_UPDATE_RESTING", function(unit)
 	local isAFK = UnitIsAFK(unit)
 
@@ -593,6 +604,17 @@ E:AddTag("mHealth:short", "UNIT_HEALTH UNIT_MAXHEALTH UNIT_CONNECTION PLAYER_FLA
 				return E:GetFormattedText("CURRENT", UnitHealth(unit), UnitHealthMax(unit), nil, true)
 			end
 		end
+	end
+end)
+
+E:AddTag("mHealth:noStatus:short", "UNIT_HEALTH UNIT_MAXHEALTH", function(unit)
+	local currentHealth = UnitHealth(unit)
+	local deficit = UnitHealthMax(unit) - currentHealth
+
+	if deficit > 0 and currentHealth > 0 then
+		return E:GetFormattedText("PERCENT", UnitHealth(unit), UnitHealthMax(unit))
+	else
+		return E:GetFormattedText("CURRENT", UnitHealth(unit), UnitHealthMax(unit), nil, true)
 	end
 end)
 
@@ -619,6 +641,17 @@ E:AddTag("mHealth:nodeath:short", "UNIT_HEALTH UNIT_MAXHEALTH UNIT_CONNECTION PL
 		else
 			return E:GetFormattedText("CURRENT", UnitHealth(unit), UnitHealthMax(unit), nil, true)
 		end
+	end
+end)
+
+E:AddTag("mHealth:noStatus:current-percent", "UNIT_HEALTH UNIT_MAXHEALTH", function(unit)
+	local currentHealth = UnitHealth(unit)
+	local deficit = UnitHealthMax(unit) - currentHealth
+
+	if deficit > 0 and currentHealth > 0 then
+		return format("%s | %s", E:GetFormattedText("CURRENT", UnitHealth(unit), UnitHealthMax(unit)), E:GetFormattedText("PERCENT", UnitHealth(unit), UnitHealthMax(unit)))
+	else
+		return E:GetFormattedText("CURRENT", UnitHealth(unit), UnitHealthMax(unit))
 	end
 end)
 
@@ -1245,10 +1278,17 @@ E:AddTag("mPowerPercent:hidefull", "UNIT_DISPLAYPOWER UNIT_POWER_FREQUENT UNIT_M
 	end
 end)
 
+E:AddTag("mPower:percent:hideZero", "UNIT_DISPLAYPOWER UNIT_POWER_FREQUENT UNIT_MAXPOWER PLAYER_ROLES_ASSIGNED GROUP_ROSTER_UPDATE UNIT_COMBAT", function(unit)
+	local power = _TAGS.perpp(unit)
+	if min ~= "0" then
+		return _TAGS.perpp(unit)
+	end
+end)
+
 E:AddTag("mPowerPercent:heal", "UNIT_DISPLAYPOWER UNIT_POWER_FREQUENT UNIT_MAXPOWER PLAYER_ROLES_ASSIGNED GROUP_ROSTER_UPDATE", function(unit)
 	local Role = "HEALER"
 
-	if E.Retail then
+	if E.Retail or E.Wrath then
 		Role = UnitGroupRolesAssigned(unit)
 	end
 
@@ -1260,7 +1300,7 @@ end)
 E:AddTag("mPowerPercent:heal:hidefull", "UNIT_DISPLAYPOWER UNIT_POWER_FREQUENT UNIT_MAXPOWER PLAYER_ROLES_ASSIGNED GROUP_ROSTER_UPDATE UNIT_COMBAT", function(unit)
 	local Role = "HEALER"
 
-	if E.Retail then
+	if E.Retail or E.Wrath then
 		Role = UnitGroupRolesAssigned(unit)
 	end
 
@@ -1325,7 +1365,6 @@ local targetTextures = {
 	FLAT = "|TInterface\\AddOns\\ElvUI_mMediaTag\\media\\icons\\tags\\targetindicator\\FLAT.tga:16:16:0:0:16:16:0:16:0:16",
 	GLAS = "|TInterface\\AddOns\\ElvUI_mMediaTag\\media\\icons\\tags\\targetindicator\\GLAS.tga:16:16:0:0:16:16:0:16:0:16",
 	DIA = "|TInterface\\AddOns\\ElvUI_mMediaTag\\media\\icons\\tags\\targetindicator\\DIA.tga:16:16:0:0:16:16:0:16:0:16",
-
 }
 
 local targetStringColors = {}
@@ -1346,26 +1385,26 @@ local function GetPartyTargetsIcons(unit, style)
 			if UnitIsUnit("party" .. i .. "target", unit) then
 				local role = targetTextures[UnitGroupRolesAssigned("party" .. i)] or targetTextures.DAMAGER
 				local _, unitClass = UnitClass("party" .. i)
-				ClassString = role .. targetStringColors[unitClass]  .. ClassString
+				ClassString = role .. targetStringColors[unitClass] .. ClassString
 			end
 		end
 
 		if UnitIsUnit("playertarget", unit) then
 			local role = targetTextures[UnitGroupRolesAssigned("player")] or targetTextures.DAMAGER
 			local _, unitClass = UnitClass("player")
-			ClassString = role .. targetStringColors[unitClass]  .. ClassString
+			ClassString = role .. targetStringColors[unitClass] .. ClassString
 		end
 	else
 		for i = 1, GetNumGroupMembers() - 1 do
 			if UnitIsUnit("party" .. i .. "target", unit) then
 				local _, unitClass = UnitClass("party" .. i)
-				ClassString = targetTextures[style] .. targetStringColors[unitClass]  .. ClassString
+				ClassString = targetTextures[style] .. targetStringColors[unitClass] .. ClassString
 			end
 		end
 
 		if UnitIsUnit("playertarget", unit) then
 			local _, unitClass = UnitClass("player")
-			ClassString = targetTextures[style] .. targetStringColors[unitClass]  .. ClassString
+			ClassString = targetTextures[style] .. targetStringColors[unitClass] .. ClassString
 		end
 	end
 

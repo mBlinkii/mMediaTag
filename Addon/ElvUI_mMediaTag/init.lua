@@ -208,6 +208,10 @@ function mMT:Initialize()
 		end
 	end
 
+	if E.db.mMT.customclasscolors.emediaenable then
+		mMT:SetElvUIMediaColor()
+	end
+
 	-- Register Events for all Game Versions
 	self:RegisterEvent("PLAYER_ENTERING_WORLD")
 
