@@ -10,7 +10,7 @@ P.mMT = {
 		garbage = true,
 		infoscreen = true,
 		title = { r = 1, g = 0.65, b = 0 },
-		values = { enable = true, r = 0.98, g = 0.82, b = 1 },
+		values = { enable = true, r = 0.09, g = 0.82, b = 1 },
 		attributes = { enable = true, r = 0.23, g = 0.67, b = 1 },
 		enhancements = { enable = true, r = 0.35, g = 0.55, b = 1 },
 		progress = { enable = true, r = 0.64, g = 0.35, b = 1 },
