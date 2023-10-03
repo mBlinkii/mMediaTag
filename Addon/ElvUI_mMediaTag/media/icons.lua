@@ -340,6 +340,10 @@ mMT.Media.Role = {
 	SHIELD9 = "Interface\\AddOns\\ElvUI_mMediaTag\\media\\icons\\role\\shield9.tga",
 	SHIELD10 = "Interface\\AddOns\\ElvUI_mMediaTag\\media\\icons\\role\\shield10.tga",
 	SHIELD11 = "Interface\\AddOns\\ElvUI_mMediaTag\\media\\icons\\role\\shield11.tga",
+	SHIELD12 = "Interface\\AddOns\\ElvUI_mMediaTag\\media\\icons\\role\\shield12.tga",
+	SHIELD13 = "Interface\\AddOns\\ElvUI_mMediaTag\\media\\icons\\role\\shield13.tga",
+	SHIELD14 = "Interface\\AddOns\\ElvUI_mMediaTag\\media\\icons\\role\\shield14.tga",
+	SHIELD15 = "Interface\\AddOns\\ElvUI_mMediaTag\\media\\icons\\role\\shield15.tga",
 
 	SHIELDOUT1 = "Interface\\AddOns\\ElvUI_mMediaTag\\media\\icons\\role\\shieldoutliner1.tga",
 	SHIELDOUT2 = "Interface\\AddOns\\ElvUI_mMediaTag\\media\\icons\\role\\shieldoutliner2.tga",
@@ -475,6 +479,10 @@ mMT.Media.Role = {
 	SWORD7 = "Interface\\AddOns\\ElvUI_mMediaTag\\media\\icons\\role\\sword7.tga",
 	SWORD8 = "Interface\\AddOns\\ElvUI_mMediaTag\\media\\icons\\role\\sword8.tga",
 	SWORD9 = "Interface\\AddOns\\ElvUI_mMediaTag\\media\\icons\\role\\sword9.tga",
+	SWORD10 = "Interface\\AddOns\\ElvUI_mMediaTag\\media\\icons\\role\\sword10.tga",
+	SWORD11 = "Interface\\AddOns\\ElvUI_mMediaTag\\media\\icons\\role\\sword11.tga",
+	SWORD12 = "Interface\\AddOns\\ElvUI_mMediaTag\\media\\icons\\role\\sword12.tga",
+	SWORD13 = "Interface\\AddOns\\ElvUI_mMediaTag\\media\\icons\\role\\sword13.tga",
 
 	SWORDOUT1 = "Interface\\AddOns\\ElvUI_mMediaTag\\media\\icons\\role\\swordoutline1.tga",
 	SWORDOUT2 = "Interface\\AddOns\\ElvUI_mMediaTag\\media\\icons\\role\\swordoutline2.tga",
@@ -483,6 +491,12 @@ mMT.Media.Role = {
 	SWORDOUT5 = "Interface\\AddOns\\ElvUI_mMediaTag\\media\\icons\\role\\swordoutline5.tga",
 	SWORDOUT6 = "Interface\\AddOns\\ElvUI_mMediaTag\\media\\icons\\role\\swordoutline6.tga",
 	SWORDOUT7 = "Interface\\AddOns\\ElvUI_mMediaTag\\media\\icons\\role\\swordoutline7.tga",
+
+	LEAF01 = "Interface\\AddOns\\ElvUI_mMediaTag\\media\\icons\\role\\leaf1.tga",
+	LEAF02 = "Interface\\AddOns\\ElvUI_mMediaTag\\media\\icons\\role\\leaf2.tga",
+	LEAF03 = "Interface\\AddOns\\ElvUI_mMediaTag\\media\\icons\\role\\leaf3.tga",
+	LEAF04 = "Interface\\AddOns\\ElvUI_mMediaTag\\media\\icons\\role\\leaf4.tga",
+	LEAF05 = "Interface\\AddOns\\ElvUI_mMediaTag\\media\\icons\\role\\leaf5.tga",
 }
 
 mMT.Media.DockIcons = {

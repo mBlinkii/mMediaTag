@@ -1280,7 +1280,7 @@ end)
 
 E:AddTag("mPower:percent:hideZero", "UNIT_DISPLAYPOWER UNIT_POWER_FREQUENT UNIT_MAXPOWER PLAYER_ROLES_ASSIGNED GROUP_ROSTER_UPDATE UNIT_COMBAT", function(unit)
 	local power = _TAGS.perpp(unit)
-	if min ~= "0" then
+	if power ~= 0 then
 		return _TAGS.perpp(unit)
 	end
 end)
