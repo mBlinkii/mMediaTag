@@ -323,6 +323,16 @@ E:AddTag("mTarget:abbrev", "UNIT_TARGET", function(unit)
 	end
 end)
 
+for textFormat, length in pairs({ veryshort = 5, short = 10, medium = 15, long = 20 }) do
+	E:AddTag(format("mTarget:abbrev:%s", textFormat), "UNIT_NAME_UPDATE INSTANCE_ENCOUNTER_ENGAGE_UNIT", function(unit)
+		local targetName = UnitName(unit .. "target")
+
+		if targetName then
+			return E:ShortenString(targetName, length)
+		end
+	end)
+end
+
 -- veryshort = 5, short = 10, medium = 15, long = 20
 E:AddTagInfo("mName:status", mMT.NameShort .. " " .. L["Name"], L["Replace the Unit name with Status, if applicable."])
 E:AddTagInfo("mName:statusicon", mMT.NameShort .. " " .. L["Name"], L["Replace the Unit name with Status Icon, if applicable."])
