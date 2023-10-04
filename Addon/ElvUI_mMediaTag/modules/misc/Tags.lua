@@ -316,7 +316,7 @@ E:AddTag("mName:last:onlyininstance", "UNIT_NAME_UPDATE INSTANCE_ENCOUNTER_ENGAG
 	end
 end)
 
-E:AddTag("mTargetAbbrev", "UNIT_TARGET", function(unit)
+E:AddTag("mTarget:abbrev", "UNIT_TARGET", function(unit)
 	local targetName = UnitName(unit .. "target")
 	if targetName then
 		return E.TagFunctions.Abbrev(targetName)
