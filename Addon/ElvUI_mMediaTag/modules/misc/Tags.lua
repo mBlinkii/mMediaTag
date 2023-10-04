@@ -333,7 +333,12 @@ for textFormat, length in pairs({ veryshort = 5, short = 10, medium = 15, long =
 	end)
 end
 
--- veryshort = 5, short = 10, medium = 15, long = 20
+E:AddTagInfo("mTarget:abbrev", mMT.NameShort .. " " .. L["Name"], L["Abbrev Name of Target."])
+E:AddTagInfo("mTarget:abbrev:veryshort", mMT.NameShort .. " " .. L["Name"], L["Shortened version of abbrev Name of Target."])
+E:AddTagInfo("mTarget:abbrev:short", mMT.NameShort .. " " .. L["Name"], L["Shortened version of abbrev Name of Target."])
+E:AddTagInfo("mTarget:abbrev:medium", mMT.NameShort .. " " .. L["Name"], L["Shortened version of abbrev Name of Target."])
+E:AddTagInfo("mTarget:abbrev:long", mMT.NameShort .. " " .. L["Name"], L["Shortened version of abbrev Name of Target."])
+
 E:AddTagInfo("mName:status", mMT.NameShort .. " " .. L["Name"], L["Replace the Unit name with Status, if applicable."])
 E:AddTagInfo("mName:statusicon", mMT.NameShort .. " " .. L["Name"], L["Replace the Unit name with Status Icon, if applicable."])
 E:AddTagInfo("mName:status:veryshort", mMT.NameShort .. " " .. L["Name"], L["Shortened version of"] .. " mName:status.")
@@ -354,7 +359,6 @@ E:AddTagInfo("mName:last:onlyininstance:veryshort", mMT.NameShort .. " " .. L["N
 E:AddTagInfo("mName:last:onlyininstance:short", mMT.NameShort .. " " .. L["Name"], L["Shortened version of"] .. " mName:last:onlyininstance.")
 E:AddTagInfo("mName:last:onlyininstance:medium", mMT.NameShort .. " " .. L["Name"], L["Shortened version of"] .. " mName:last:onlyininstance.")
 E:AddTagInfo("mName:last:onlyininstance:long", mMT.NameShort .. " " .. L["Name"], L["Shortened version of"] .. " mName:last:onlyininstance.")
-E:AddTagInfo("mTargetAbbrev", mMT.NameShort .. " " .. L["Name"], L["Abbrev Name of Target."])
 
 E:AddTag("mClass", "UNIT_CLASSIFICATION_CHANGED", function(unit)
 	local c = UnitClassification(unit)
@@ -827,6 +831,8 @@ E:AddTag("mHealth:NoAFK:short:current-percent", "UNIT_HEALTH UNIT_MAXHEALTH UNIT
 	end
 end)
 
+mHealth:noStatus:short
+
 E:AddTagInfo("mHealth", mMT.NameShort .. " " .. L["Health"], L["Health changes between maximum Health and Percent in combat."])
 E:AddTagInfo("mHealth:short", mMT.NameShort .. " " .. L["Health"], L["Shortened version of"] .. " mHealth.")
 E:AddTagInfo("mHealth:icon", mMT.NameShort .. " " .. L["Health"], L["Health changes between maximum Health and Percent in combat, with Status Icons."])
@@ -841,6 +847,9 @@ E:AddTagInfo("mHealth:NoAFK", mMT.NameShort .. " " .. L["Health"], L["Health cha
 E:AddTagInfo("mHealth:NoAFK:short", mMT.NameShort .. " " .. L["Health"], L["Shortened version of"] .. " mHealth:NoAFK.")
 E:AddTagInfo("mHealth:NoAFK:current-percent", mMT.NameShort .. " " .. L["Health"], L["Same as"] .. " mHealth:current-percen " .. L["and"] .. " mHealth:NoAFK ")
 E:AddTagInfo("mHealth:NoAFK:short:current-percent", mMT.NameShort .. " " .. L["Health"], L["Shortened version of"] .. " mHealth:NoAFK:current-percent.")
+E:AddTagInfo("mHealth:noStatus", mMT.NameShort .. " " .. L["Health"], L["no Status version of"] .. " mHealth.")
+E:AddTagInfo("mHealth:noStatus:short", mMT.NameShort .. " " .. L["Health"], L["no Status version of"] .. " mHealth.")
+E:AddTagInfo("mHealth:noStatus:current-percent", mMT.NameShort .. " " .. L["Health"], L["no Status version of"] .. " mHealth.")
 
 local UnitmDeathCount = {}
 local mID = ""
@@ -1323,6 +1332,7 @@ E:AddTagInfo("mPowerPercent", mMT.NameShort .. " " .. L["Power"], L["Displays Po
 E:AddTagInfo("mPowerPercent:hidefull", mMT.NameShort .. " " .. L["Power"], L["Displays Power/Mana, with a low healer warning, hidden when full."])
 E:AddTagInfo("mPowerPercent:heal", mMT.NameShort .. " " .. L["Power"], L["Displays the healer's Power/Mana, with a low healer warning."])
 E:AddTagInfo("mPowerPercent:heal:hidefull", mMT.NameShort .. " " .. L["Power"], L["Displays the healer's Power/Mana, with a low healer warning, hidden when full."])
+E:AddTagInfo("mPower:percent:hideZero", mMT.NameShort .. " " .. L["Power"], L["Displays Power/Mana, hidden when zero."])
 
 E:AddTag("mQuestIcon", "QUEST_LOG_UPDATE", function(unit)
 	if UnitIsPlayer(unit) then
