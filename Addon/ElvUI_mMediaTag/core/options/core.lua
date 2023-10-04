@@ -178,28 +178,28 @@ local function configTable()
 				icon = "Interface\\Addons\\ElvUI_mMediaTag\\media\\system\\castbar.tga",
 				childGroups = "tab",
 				args = {
-					interrupt = {
+					general = {
 						order = 1,
+						type = "group",
+						name = L["General"],
+						args = {},
+					},
+					interrupt = {
+						order = 2,
 						type = "group",
 						name = L["Interrupt on CD"],
 						args = {},
 					},
 					important = {
-						order = 2,
+						order = 3,
 						type = "group",
 						name = L["Important Spells"],
 						args = {},
 					},
 					shield = {
-						order = 3,
+						order = 4,
 						type = "group",
 						name = L["Castbar Shield"],
-						args = {},
-					},
-					general = {
-						order = 3,
-						type = "group",
-						name = L["General"],
 						args = {},
 					},
 				},

@@ -132,14 +132,6 @@ local textures = {
 		RA = false,
 		QA = false,
 	},
-	offset = {
-		SQ = 5.5,
-		RO = 5.5,
-		CI = 5.5,
-		PI = 10,
-		RA = 6,
-		QA = 20,
-	},
 }
 
 local function setColor(texture, color, mirror)
@@ -215,7 +207,7 @@ local function CreatePortrait(parent, conf, unit)
 	frame.texture = CreatePortraitTexture(frame, "mMT_Texture", 4, texture, getColor(frame, unit), conf.mirror)
 
 	-- Unit Portrait
-	local offset = GetOffset(conf.size, textures.offset[conf.texture])
+	local offset = GetOffset(conf.size, settings.offset[conf.texture])
 	frame.portrait = frame:CreateTexture("mMT_Portrait", "OVERLAY", nil, 1)
 	frame.portrait:SetAllPoints(frame)
 	frame.portrait:SetPoint("TOPLEFT", 0 + offset, 0 - offset)
@@ -333,7 +325,7 @@ local function UpdatePortrait(frame, conf, unit, parent)
 	UpdatePortraitTexture(frame.texture, texture, getColor(frame, unit), conf.mirror)
 
 	-- Unit Portrait
-	local offset = GetOffset(conf.size, textures.offset[conf.texture])
+	local offset = GetOffset(conf.size, settings.offset[conf.texture])
 	frame.portrait:SetPoint("TOPLEFT", 0 + offset, 0 - offset)
 	frame.portrait:SetPoint("BOTTOMRIGHT", 0 - offset, 0 + offset)
 	mirrorTexture(frame.portrait, conf.mirror)
@@ -512,6 +504,7 @@ end
 
 function module:Initialize()
 	settings = E.db.mMT.portraits
+
 	local frames = {
 		Player = {
 			parent = _G.ElvUF_Player,

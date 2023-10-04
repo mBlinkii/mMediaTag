@@ -584,6 +584,14 @@ P.mMT = {
 			style = "flat",
 			ori = "HORIZONTAL",
 		},
+		offset = {
+			SQ = 5.5,
+			RO = 5.5,
+			CI = 5.5,
+			PI = 10,
+			RA = 6,
+			QA = 20,
+		},
 		shadow = {
 			enable = true,
 			inner = true,
