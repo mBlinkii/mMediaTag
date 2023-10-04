@@ -196,6 +196,12 @@ local function configTable()
 						name = L["Castbar Shield"],
 						args = {},
 					},
+					general = {
+						order = 3,
+						type = "group",
+						name = L["General"],
+						args = {},
+					},
 				},
 			},
 			nameplates = {

@@ -34,4 +34,5 @@
 	<Script file="afk.lua"/>
 	<Script file="dev.lua"/>
 	<Script file="portraits.lua"/>
+	<Script file="castbargeneral.lua"/>
 </Ui>

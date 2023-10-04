@@ -28,6 +28,10 @@ P.mMT = {
 		intimecolor = { colora = { r = 0, g = 0.78, b = 1 }, colorb = { r = 0, g = 0.46, b = 0.65 } },
 		outofrangecolor = { colora = { r = 1, g = 0.48, b = 0 }, colorb = { r = 0.74, g = 0.28, b = 0 } },
 	},
+	castbar = {
+		multiplier = 0.3,
+		setBGColor = false,
+	},
 	importantspells = {
 		enable = false,
 		gradient = false,

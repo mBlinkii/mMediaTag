@@ -93,6 +93,8 @@ function module:InterruptChecker(castbar, isUnitFrame)
 		castbar.InterruptMarker:Hide()
 	end
 
+	mMT.Modules.Castbar:SetCastbarColor(castbar, E.db.mMT.interruptoncd.oncdcolor.colora, E.db.mMT.interruptoncd.oncdcolor.colorb)
+
 	if interruptSpellID and not castbar.notInterruptible then
 		local interruptCD, interruptReadyInTime = nil, false
 		local interruptDur, interruptStart = 0, 0
