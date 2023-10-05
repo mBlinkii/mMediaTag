@@ -522,6 +522,9 @@ mMT.Media.Role = {
 	LEAF04 = "Interface\\AddOns\\ElvUI_mMediaTag\\media\\icons\\role\\leaf4.tga",
 	LEAF05 = "Interface\\AddOns\\ElvUI_mMediaTag\\media\\icons\\role\\leaf5.tga",
 
+	KNIFE01 = "Interface\\AddOns\\ElvUI_mMediaTag\\media\\icons\\role\\knife01.tga",
+	KNIFE02 = "Interface\\AddOns\\ElvUI_mMediaTag\\media\\icons\\role\\knife02.tga",
+
 	FRUIT1 = "Interface\\AddOns\\ElvUI_mMediaTag\\media\\icons\\tags\\fruit1.tga",
 	FRUIT2 = "Interface\\AddOns\\ElvUI_mMediaTag\\media\\icons\\tags\\fruit2.tga",
 	FRUIT3 = "Interface\\AddOns\\ElvUI_mMediaTag\\media\\icons\\tags\\fruit3.tga",
