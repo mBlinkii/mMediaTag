@@ -19,4 +19,5 @@
 	<Script file="Aspect.lua"/>
 	<Script file="firstprof.lua"/>
 	<Script file="secondprof.lua"/>
+	<Script file="durability_ilevel.lua"/>
 </Ui>

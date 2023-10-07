@@ -492,7 +492,8 @@
         "DAMAGER",
         "READY_CHECK",
         "READY_CHECK_FINISHED",
-        "NUM_ACTIONBAR_BUTTONS"
+        "NUM_ACTIONBAR_BUTTONS",
+        "avgEquipped"
     ],
     "Lua.diagnostics.disable": [
         "undefined-field"
