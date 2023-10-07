@@ -557,6 +557,7 @@ mMT.Media.Role = {
 }
 
 mMT.Media.DockIcons = {
+	test = "Interface\\AddOns\\ElvUI_mMediaTag\\media\\dock\\material\\test.tga",
 	COLOR01 = "Interface\\AddOns\\ElvUI_mMediaTag\\media\\dock\\colored\\color01.tga",
 	COLOR02 = "Interface\\AddOns\\ElvUI_mMediaTag\\media\\dock\\colored\\color02.tga",
 	COLOR03 = "Interface\\AddOns\\ElvUI_mMediaTag\\media\\dock\\colored\\color03.tga",

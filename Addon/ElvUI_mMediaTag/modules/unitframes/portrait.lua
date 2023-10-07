@@ -135,7 +135,7 @@ local textures = {
 }
 
 local function setColor(texture, color, mirror)
-	if not texture or not color then
+	if not texture or not color or not color.a or not color.b then
 		return
 	end
 

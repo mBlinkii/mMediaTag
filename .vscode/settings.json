@@ -491,7 +491,8 @@
         "min",
         "DAMAGER",
         "READY_CHECK",
-        "READY_CHECK_FINISHED"
+        "READY_CHECK_FINISHED",
+        "NUM_ACTIONBAR_BUTTONS"
     ],
     "Lua.diagnostics.disable": [
         "undefined-field"

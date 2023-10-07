@@ -17,4 +17,6 @@
 	<Script file="Drake.lua"/>
 	<Script file="Wyrm.lua"/>
 	<Script file="Aspect.lua"/>
+	<Script file="firstprof.lua"/>
+	<Script file="secondprof.lua"/>
 </Ui>

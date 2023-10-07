@@ -44,7 +44,6 @@ local function OnEnter(self)
 		DT.tooltip:AddLine(format("%s%s|r", "|CFFE74C3C", L["No Professions|r"]))
 	end
 	DT.tooltip:Show()
-	DT.tooltip:Show()
 end
 
 local function OnEvent(self, event, unit)
@@ -63,4 +62,4 @@ local function OnLeave(self)
 	DT.tooltip:Hide()
 end
 
-DT:RegisterDatatext("mProfessions", "mMediaTag", nil, OnEvent, nil, OnClick, OnEnter, OnLeave, mText, nil, nil)
+DT:RegisterDatatext("mProfessions", "mMediaTag", "TRADE_SKILL_DETAILS_UPDATE", OnEvent, nil, OnClick, OnEnter, OnLeave, mText, nil, nil)
