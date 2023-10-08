@@ -273,7 +273,7 @@ function mMT:Layout_Chat()
 	E.db["chat"]["maxLines"] = 200
 	E.db["chat"]["noAlertInCombat"] = true
 	E.db["chat"]["numScrollMessages"] = 1
-	E.db["chat"]["panelBackdropNameLeft"] = "Interface\\Addons\\!mMT_MediaPack\\media\\backgrounds\\chat4.tga"
+	E.db["chat"]["panelBackdropNameLeft"] = "Interface\\Addons\\!mMT_MediaPack\\media\\backgrounds\\bg11.tga"
 	E.db["chat"]["panelBackdropNameRight"] = "Interface\\Addons\\!mMT_MediaPack\\media\\backgrounds\\chat3.tga"
 	E.db["chat"]["panelColor"]["a"] = 0.5087765455246
 	E.db["chat"]["panelColor"]["b"] = 0.094117656350136
