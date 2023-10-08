@@ -12,12 +12,15 @@ local select = select
 --Variables
 local LSM = LibStub("LibSharedMedia-3.0")
 local mFontFlags = {
-	NONE = L["NONE"],
-	OUTLINE = "Outline",
-	THICKOUTLINE = "Thick",
-	MONOCHROME = "|cffaaaaaaMono|r",
-	MONOCHROMEOUTLINE = "|cffaaaaaaMono|r Outline",
-	MONOCHROMETHICKOUTLINE = "|cffaaaaaaMono|r Thick",
+	NONE = 'None',
+	OUTLINE = 'Outline',
+	THICKOUTLINE = 'Thick',
+	SHADOW = '|cff888888Shadow|r',
+	SHADOWOUTLINE = '|cff888888Shadow|r Outline',
+	SHADOWTHICKOUTLINE = '|cff888888Shadow|r Thick',
+	MONOCHROME = '|cFFAAAAAAMono|r',
+	MONOCHROMEOUTLINE = '|cFFAAAAAAMono|r Outline',
+	MONOCHROMETHICKOUTLINE = '|cFFAAAAAAMono|r Thick'
 }
 local ExampleDockSettings = { top = false }
 local mGuild = L["Guild"]

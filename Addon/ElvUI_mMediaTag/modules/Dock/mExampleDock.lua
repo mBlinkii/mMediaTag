@@ -157,7 +157,7 @@ function mMT:Dock_XIVLike(top)
 	E.global.datatexts.customPanels["mMT XIV Clock"]["border"] = false
 	E.global.datatexts.customPanels["mMT XIV Clock"]["fonts"]["enable"] = true
 	E.global.datatexts.customPanels["mMT XIV Clock"]["fonts"]["font"] = "Montserrat-SemiBold"
-	E.global.datatexts.customPanels["mMT XIV Clock"]["fonts"]["fontOutline"] = "NONE"
+	E.global.datatexts.customPanels["mMT XIV Clock"]["fonts"]["fontOutline"] = "SHADOW"
 	E.global.datatexts.customPanels["mMT XIV Clock"]["fonts"]["fontSize"] = 32
 	E.global.datatexts.customPanels["mMT XIV Clock"]["name"] = "mMT XIV Clock"
 	E.global.datatexts.customPanels["mMT XIV Clock"]["numPoints"] = 1
@@ -168,7 +168,7 @@ function mMT:Dock_XIVLike(top)
 	E.global.datatexts.customPanels["mMT XIV Info"]["border"] = false
 	E.global.datatexts.customPanels["mMT XIV Info"]["fonts"]["enable"] = true
 	E.global.datatexts.customPanels["mMT XIV Info"]["fonts"]["font"] = "Montserrat-Medium"
-	E.global.datatexts.customPanels["mMT XIV Info"]["fonts"]["fontOutline"] = "NONE"
+	E.global.datatexts.customPanels["mMT XIV Info"]["fonts"]["fontOutline"] = "SHADOW"
 	E.global.datatexts.customPanels["mMT XIV Info"]["fonts"]["fontSize"] = 16
 	E.global.datatexts.customPanels["mMT XIV Info"]["height"] = 28
 	E.global.datatexts.customPanels["mMT XIV Info"]["name"] = "mMT XIV Info"
@@ -188,7 +188,7 @@ function mMT:Dock_XIVLike(top)
 	E.global.datatexts.customPanels["mMT XIV Right"]["border"] = false
 	E.global.datatexts.customPanels["mMT XIV Right"]["fonts"]["enable"] = true
 	E.global.datatexts.customPanels["mMT XIV Right"]["fonts"]["font"] = "Montserrat-Medium"
-	E.global.datatexts.customPanels["mMT XIV Right"]["fonts"]["fontOutline"] = "NONE"
+	E.global.datatexts.customPanels["mMT XIV Right"]["fonts"]["fontOutline"] = "SHADOW"
 	E.global.datatexts.customPanels["mMT XIV Right"]["fonts"]["fontSize"] = 14
 	E.global.datatexts.customPanels["mMT XIV Right"]["height"] = 28
 	E.global.datatexts.customPanels["mMT XIV Right"]["name"] = "mMT XIV Right"
@@ -199,7 +199,7 @@ function mMT:Dock_XIVLike(top)
 	E.global.datatexts.customPanels["mMT XIV Talent"]["border"] = false
 	E.global.datatexts.customPanels["mMT XIV Talent"]["fonts"]["enable"] = true
 	E.global.datatexts.customPanels["mMT XIV Talent"]["fonts"]["font"] = "Montserrat-Medium"
-	E.global.datatexts.customPanels["mMT XIV Talent"]["fonts"]["fontOutline"] = "NONE"
+	E.global.datatexts.customPanels["mMT XIV Talent"]["fonts"]["fontOutline"] = "SHADOW"
 	E.global.datatexts.customPanels["mMT XIV Talent"]["fonts"]["fontSize"] = 14
 	E.global.datatexts.customPanels["mMT XIV Talent"]["height"] = 28
 	E.global.datatexts.customPanels["mMT XIV Talent"]["name"] = "mMT XIV Talent"
@@ -211,7 +211,7 @@ function mMT:Dock_XIVLike(top)
 	E.global.datatexts.customPanels["mMT XIV Profession"]["border"] = false
 	E.global.datatexts.customPanels["mMT XIV Profession"]["fonts"]["enable"] = true
 	E.global.datatexts.customPanels["mMT XIV Profession"]["fonts"]["font"] = "Montserrat-Medium"
-	E.global.datatexts.customPanels["mMT XIV Profession"]["fonts"]["fontOutline"] = "NONE"
+	E.global.datatexts.customPanels["mMT XIV Profession"]["fonts"]["fontOutline"] = "SHADOW"
 	E.global.datatexts.customPanels["mMT XIV Profession"]["fonts"]["fontSize"] = 14
 	E.global.datatexts.customPanels["mMT XIV Profession"]["height"] = 28
 	E.global.datatexts.customPanels["mMT XIV Profession"]["name"] = "mMT XIV Profession"
@@ -308,7 +308,7 @@ function mMT:Dock_Extra(top)
 	E.DataTexts:BuildPanelFrame("mMT Extra Clock")
 	E.global.datatexts.customPanels["mMT Extra Clock"]["fonts"]["enable"] = true
 	E.global.datatexts.customPanels["mMT Extra Clock"]["fonts"]["font"] = "Montserrat-Bold"
-	E.global.datatexts.customPanels["mMT Extra Clock"]["fonts"]["fontOutline"] = "NONE"
+	E.global.datatexts.customPanels["mMT Extra Clock"]["fonts"]["fontOutline"] = "SHADOW"
 	E.global.datatexts.customPanels["mMT Extra Clock"]["fonts"]["fontSize"] = 32
 	E.global.datatexts.customPanels["mMT Extra Clock"]["height"] = 30
 	E.global.datatexts.customPanels["mMT Extra Clock"]["name"] = "mMT Extra Clock"
@@ -326,7 +326,7 @@ function mMT:Dock_Extra(top)
 	E.DataTexts:BuildPanelFrame("mMT Extra Infos")
 	E.global.datatexts.customPanels["mMT Extra Infos"]["fonts"]["enable"] = true
 	E.global.datatexts.customPanels["mMT Extra Infos"]["fonts"]["font"] = "Montserrat-SemiBold"
-	E.global.datatexts.customPanels["mMT Extra Infos"]["fonts"]["fontOutline"] = "NONE"
+	E.global.datatexts.customPanels["mMT Extra Infos"]["fonts"]["fontOutline"] = "SHADOW"
 	E.global.datatexts.customPanels["mMT Extra Infos"]["name"] = "mMT Extra Infos"
 	E.global.datatexts.customPanels["mMT Extra Infos"]["numPoints"] = 4
 	E.global.datatexts.customPanels["mMT Extra Infos"]["panelTransparency"] = true
