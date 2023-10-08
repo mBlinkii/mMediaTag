@@ -10,6 +10,14 @@ local mText = L["first Profession"]
 local hexColor = E:RGBToHex(E.db.general.valuecolor.r, E.db.general.valuecolor.g, E.db.general.valuecolor.b)
 
 local spell = nil
+
+local function colorText(value, withe)
+	if withe then
+		return value
+	else
+		return hexColor .. value .. "|r"
+	end
+end
 local function OnEnter(self)
 	local profession, secondProfession, _, _, _ = GetProfessions()
 
@@ -19,12 +27,14 @@ local function OnEnter(self)
 
 		if profession then
 			local name, icon, skillLevel, maxSkillLevel, _, _, _, skillModifier, _, _ = GetProfessionInfo(profession)
-			DT.tooltip:AddDoubleLine(format("|T%s:14:14:0:0:64:64:5:59:5:59|t %s", icon, name), hexColor .. skillLevel .. "|CFFFFFFFF/|r" .. maxSkillLevel .. " +" .. skillModifier .. "|r")
+			name = format("|T%s:14:14:0:0:64:64:5:59:5:59|t %s", icon, name)
+			DT.tooltip:AddDoubleLine(name, colorText(skillLevel) .. colorText("/", true) .. colorText(maxSkillLevel) .. colorText(" +", true) .. colorText(skillModifier))
 		end
 
 		if secondProfession then
 			local name, icon, skillLevel, maxSkillLevel, _, _, _, skillModifier, _, _ = GetProfessionInfo(secondProfession)
-			DT.tooltip:AddDoubleLine(format("|T%s:14:14:0:0:64:64:5:59:5:59|t %s", icon, name), hexColor .. skillLevel .. "|CFFFFFFFF/|r" .. maxSkillLevel .. " +" .. skillModifier .. "|r")
+			name = format("|T%s:14:14:0:0:64:64:5:59:5:59|t %s", icon, name)
+			DT.tooltip:AddDoubleLine(name, colorText(skillLevel) .. colorText("/", true) .. colorText(maxSkillLevel) .. colorText(" +", true) .. colorText(skillModifier))
 		end
 	else
 		DT.tooltip:AddLine(format("%s%s|r", "|CFFE74C3C", L["No Professions|r"]))
@@ -47,7 +57,11 @@ local function OnEvent(self)
 
 		spell = spellOffset + 1
 
-		self.text:SetText(format("|T%s:14:14:0:0:64:64:5:59:5:59|t %s", icon, name) .. " " .. hexColor .. skillLevel .. "|r")
+		local text = "%s %s %s"
+		icon = E.db.mMT.singleProfession.icon and format("|T%s:14:14:0:0:64:64:5:59:5:59|t", icon) or ""
+		text = format(text, icon, colorText(name, E.db.mMT.singleProfession.witheText), colorText(skillLevel, E.db.mMT.singleProfession.witheValue))
+
+		self.text:SetText(text)
 	end
 end
 

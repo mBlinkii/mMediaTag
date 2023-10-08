@@ -36,28 +36,36 @@ local function colorize(num)
 		return E:ColorGradient(-(pi / num), 1, 0.1, 0.1, 1, 1, 0.1, 0.1, 1, 0.1)
 	end
 end
+
+local function colorText(value)
+	if E.db.mMT.durabilityIlevel.witheText then
+		return value
+	else
+		return hexColor .. value .. "|r"
+	end
+end
 local function OnEnter(self)
-    DT.tooltip:ClearLines()
+	DT.tooltip:ClearLines()
 
-    for slot, durability in pairs(invDurability) do
-        DT.tooltip:AddDoubleLine(format("|T%s:14:14:0:0:64:64:4:60:4:60|t %s", GetInventoryItemTexture("player", slot), GetInventoryItemLink("player", slot)), format(tooltipString, durability), 1, 1, 1, E:ColorGradient(durability * 0.01, 1, 0.1, 0.1, 1, 1, 0.1, 0.1, 1, 0.1))
-    end
+	for slot, durability in pairs(invDurability) do
+		DT.tooltip:AddDoubleLine(format("|T%s:14:14:0:0:64:64:4:60:4:60|t %s", GetInventoryItemTexture("player", slot), GetInventoryItemLink("player", slot)), format(tooltipString, durability), 1, 1, 1, E:ColorGradient(durability * 0.01, 1, 0.1, 0.1, 1, 1, 0.1, 0.1, 1, 0.1))
+	end
 
-    if totalRepairCost > 0 then
-        DT.tooltip:AddLine(" ")
-        DT.tooltip:AddDoubleLine(REPAIR_COST, GetMoneyString(totalRepairCost), 0.6, 0.8, 1, 1, 1, 1)
-    end
+	if totalRepairCost > 0 then
+		DT.tooltip:AddLine(" ")
+		DT.tooltip:AddDoubleLine(REPAIR_COST, GetMoneyString(totalRepairCost), 0.6, 0.8, 1, 1, 1, 1)
+	end
 
-    local avg, avgEquipped, avgPvp = GetAverageItemLevel()
-    DT.tooltip:AddDoubleLine(STAT_AVERAGE_ITEM_LEVEL, format("%0.2f", avg), 1, 1, 1, 0.1, 1, 0.1)
-    DT.tooltip:AddDoubleLine(GMSURVEYRATING3, format("%0.2f", avgEquipped), 1, 1, 1, colorize(avgEquipped - avg))
-    DT.tooltip:AddDoubleLine(LFG_LIST_ITEM_LEVEL_INSTR_PVP_SHORT, format("%0.2f", avgPvp), 1, 1, 1, colorize(avgPvp - avg))
+	local avg, avgEquipped, avgPvp = GetAverageItemLevel()
+	DT.tooltip:AddDoubleLine(STAT_AVERAGE_ITEM_LEVEL, format("%0.2f", avg), 1, 1, 1, 0.1, 1, 0.1)
+	DT.tooltip:AddDoubleLine(GMSURVEYRATING3, format("%0.2f", avgEquipped), 1, 1, 1, colorize(avgEquipped - avg))
+	DT.tooltip:AddDoubleLine(LFG_LIST_ITEM_LEVEL_INSTR_PVP_SHORT, format("%0.2f", avgPvp), 1, 1, 1, colorize(avgPvp - avg))
 
 	DT.tooltip:Show()
 end
 
 local function OnLeave(self)
-    DT.tooltip:Hide()
+	DT.tooltip:Hide()
 end
 
 local function OnEvent(self)
@@ -89,10 +97,20 @@ local function OnEvent(self)
 			totalRepairCost = totalRepairCost + (repairCost or 0)
 		end
 	end
-    local _, avgEquipped = GetAverageItemLevel()
-    local TextDurability = totalDurability and format("|TInterface\\AddOns\\ElvUI_mMediaTag\\media\\icons\\datatext\\shield.tga:14:14:0:0:64:64:5:59:5:59|t %s", format("%d%%|r", totalDurability)) or ""
-	local TextIlvl = format("|TInterface\\AddOns\\ElvUI_mMediaTag\\media\\icons\\datatext\\armor.tga:14:14:0:0:64:64:5:59:5:59|t %s", mMT:round(avgEquipped or 0))
-    self.text:SetText(TextDurability .. " " .. TextIlvl)
+
+	local _, avgEquipped = GetAverageItemLevel()
+	local text = E.db.mMT.durabilityIlevel.icon and "%s %s  %s %s" or "%s%s | %s%s"
+	local shieldIcon = "|TInterface\\AddOns\\ElvUI_mMediaTag\\media\\icons\\datatext\\shield.tga:14:14:0:0:64:64:5:59:5:59|t"
+	local armorIcon = "|TInterface\\AddOns\\ElvUI_mMediaTag\\media\\icons\\datatext\\armor.tga:14:14:0:0:64:64:5:59:5:59|t"
+
+	shieldIcon = E.db.mMT.durabilityIlevel.icon and shieldIcon or ""
+	armorIcon = E.db.mMT.durabilityIlevel.icon and armorIcon or ""
+	totalDurability = totalDurability or 0
+	avgEquipped = mMT:round(avgEquipped or 0)
+
+	text = format(text, shieldIcon, colorText(totalDurability), armorIcon, colorText(avgEquipped))
+
+	self.text:SetText(text)
 end
 
 local function OnClick()

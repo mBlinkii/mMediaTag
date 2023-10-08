@@ -137,6 +137,18 @@ local function configTable()
 						end,
 						args = {},
 					},
+					firstandsecondprofession = {
+						order = 8,
+						type = "group",
+						name = L["first and second Profession"],
+						args = {},
+					},
+					durabilityanditemlevel = {
+						order = 9,
+						type = "group",
+						name = L["Durability and Item Level"],
+						args = {},
+					},
 				},
 			},
 			tags = {

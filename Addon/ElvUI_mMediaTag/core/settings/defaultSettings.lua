@@ -46,6 +46,15 @@ P.mMT = {
 		power = { enable = false, texture = "mMediaTag A8" },
 		castbar = { enable = false, texture = "mMediaTag A8" },
 	},
+	singleProfession = {
+		icon = true,
+		witheText = true,
+	},
+	durabilityIlevel = {
+		icon = true,
+		witheText = true,
+		witheValue = false,
+	},
 	customclasscolors = {
 		enable = false,
 		emediaenable = false,
