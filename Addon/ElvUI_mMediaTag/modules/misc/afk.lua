@@ -145,7 +145,7 @@ end
 
 local function CreateLabel(parent, isTitle, anchor, anchorPoint, color, offset)
 	local label = parent:CreateFontString(nil, "OVERLAY")
-	label:FontTemplate(nil, isTitle and 20 or 18)
+	label:FontTemplate(nil, isTitle and 20 or 18, "SHADOW")
 	label:SetText("")
 	label:Point("TOPLEFT", anchor or parent, anchorPoint or "TOPLEFT", offset or 0, isTitle and -24 or -6)
 	label:SetTextColor(color.r, color.g, color.b)

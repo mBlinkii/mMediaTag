@@ -528,8 +528,7 @@ local function RLDialog()
 end
 
 local function PrintStatus(...)
-	local name =
-		"|CFFAB02FDm|r|CFFB820D5M|r|CFFC031BDT|r |CFFCB4A9CM|r|CFFD25A87e|r|CFFD96972d|r|CFFDE7464i|r|CFFE27E57a|r |CFFE88B46P|r|CFFF09D2Da|r|CFFF4A720c|r|CFFFCB70Ak|r"
+	local name = "|CFFAB02FDm|r|CFFB820D5M|r|CFFC031BDT|r |CFFCB4A9CM|r|CFFD25A87e|r|CFFD96972d|r|CFFDE7464i|r|CFFE27E57a|r |CFFE88B46P|r|CFFF09D2Da|r|CFFF4A720c|r|CFFFCB70Ak|r"
 	print(name .. ":", ...)
 end
 
@@ -568,7 +567,7 @@ local function SetSetting(setting)
 		SetDBAll()
 	end
 	mMT_MediaPack.db.textures[setting] = not mMT_MediaPack.db.textures[setting]
-	PrintStatusOne(setting, mMT_MediaPack.db.textures[setting] )
+	PrintStatusOne(setting, mMT_MediaPack.db.textures[setting])
 	RLDialog()
 end
 
