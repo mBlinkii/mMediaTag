@@ -384,7 +384,7 @@ function mMT:SetupInstanceDifficulty()
 	mIDF:SetPoint(position, Minimap, xOffset, yOffset)
 	mIDF.Text = mIDF:CreateFontString("mIDF_Text", "OVERLAY", "GameTooltipText")
 	mIDF.Text:SetPoint("CENTER", mIDF, "CENTER")
-	mIDF.Text:SetFont(Font, E.db.general.fontSize or 12)
+	mIDF.Text:SetFont(Font, E.db.general.fontSize or 12, "SHADOW")
 	mIDF:Hide()
 
 	mMT:UpdateColors()
