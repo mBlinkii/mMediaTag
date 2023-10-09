@@ -105,8 +105,8 @@ local function OnEvent(self)
 
 	shieldIcon = E.db.mMT.durabilityIlevel.icon and shieldIcon or ""
 	armorIcon = E.db.mMT.durabilityIlevel.icon and armorIcon or ""
-	totalDurability = format("%."..E.db.general.decimalLength .."f%%", totalDurability or 0)
-	avgEquipped = format("%."..E.db.general.decimalLength .."f%%", avgEquipped or 0)
+	totalDurability = format("%." .. E.db.general.decimalLength .. "f%%", totalDurability or 0)
+	avgEquipped = format("%." .. E.db.general.decimalLength .. "f", avgEquipped or 0)
 
 	text = format(text, shieldIcon, colorText(totalDurability), armorIcon, colorText(avgEquipped))
 
