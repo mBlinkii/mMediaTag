@@ -651,6 +651,7 @@ mAddStatusbar("MaUIv3", "MaUIv3.tga")
 mAddStatusbar("MaUIv3 LEFT", "MaUIv3Left.tga")
 mAddStatusbar("MaUIv3 RIGHT", "MaUIv3Right.tga")
 mAddStatusbar("mMT Blank", "mMT_Blank.tga")
+mAddStatusbar("mMT Target", "mMT_Target.tga")
 -- Backgrounds
 mAddBackground("mMediaTag BG1", "bg1.tga")
 mAddBackground("mMediaTag BG2", "bg2.tga")
