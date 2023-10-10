@@ -359,8 +359,6 @@ local function LoadSeriesQ()
 	mAddStatusbar("mMediaTag Q2", "q2.tga")
 	mAddStatusbar("mMediaTag Q3", "q3.tga")
 	mAddStatusbar("mMediaTag Q4", "q4.tga")
-	mAddStatusbar("mMediaTag Q5", "q5.tga")
-	mAddStatusbar("mMediaTag Q6", "q6.tga")
 end
 local function LoadSeriesR()
 	mAddStatusbar("mMediaTag R1", "r1.tga")
@@ -652,7 +650,7 @@ mAddStatusbar("mMediaTag Caith UI 2", "Wisps.tga")
 mAddStatusbar("MaUIv3", "MaUIv3.tga")
 mAddStatusbar("MaUIv3 LEFT", "MaUIv3Left.tga")
 mAddStatusbar("MaUIv3 RIGHT", "MaUIv3Right.tga")
-
+mAddStatusbar("mMT Blank", "mMT_Blank.tga")
 -- Backgrounds
 mAddBackground("mMediaTag BG1", "bg1.tga")
 mAddBackground("mMediaTag BG2", "bg2.tga")
