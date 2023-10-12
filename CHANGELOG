@@ -3,18 +3,27 @@
 
 ## [ver. 3.21] - 12.10.2023
 ### FIX
-- Fix - Portraits Event updates to prevent wrong or empty Portraits
-- Fix - Nil error for custom Class colors
-- Fix - Nil error on custom Phase icon
+- FIX - Portraits Event updates to prevent wrong or empty Portraits
+- FIX - Nil error for custom Class colors
+- FIX - Nil error on custom Phase icon
+- FIX - Updates now correctly for Profession Datatext
 ### Update
-- Update - Portraits Classic and Retail have now the same look, no mor different textures
-- Update - Optimized Portraits Events and Code
-- Update - Combatcheck for Teleports Datatext
-- Update - Optimized Portraits Settings
-- Update - Force Datatexts to use ElvUI Value color
+- UPDATE - Changed Tag mTargetAbbrev to mTarget:abbrev and also add short Versions
+- UPDATE - Example Docks, and add ne examples XIV like, custom Dock, micro menu replacement
+- UPDATE - Font flags for ElvUI shadow flag
+- UPDATE - Removed golden-hearthstone-card-lord-jaraxxus from Teleports Datatext, thx Xheno
+- UPDATE - Removed Statusbar textures q5 and q6, dont liked them
 ### NEW
 - NEW - Tags mHealth:noStatus, mHealth:noStatus:current-percent, mHealth:noStatus, mPower:percent:hideZero
-- NEW - Font 
+- NEW - Font Montserrat
+- NEW - Icons for Tags, role and Classification
+- NEW - Icons fr Role
+- NEW - Castbar background color for Castbar modules
+- NEW - Slider for Portrait offsets/ zoom
+- NEW - Datatext for first and second Profession
+- NEW - Datatext Durability and Ilevel in one
+- NEW - Chat backgrounds 7 - 13
+- NEW - Textures, mMT Blank and mMT Target
 -
 
 ## [ver. 3.20] - 20.09.2023
