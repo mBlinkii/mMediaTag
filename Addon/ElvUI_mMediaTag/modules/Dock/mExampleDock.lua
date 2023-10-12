@@ -153,70 +153,71 @@ end
 
 function mMT:Dock_XIVLike(top)
 	E.DataTexts:BuildPanelFrame("mMT XIV Clock")
-	E.global.datatexts.customPanels["mMT XIV Clock"]["backdrop"] = false
-	E.global.datatexts.customPanels["mMT XIV Clock"]["border"] = false
-	E.global.datatexts.customPanels["mMT XIV Clock"]["fonts"]["enable"] = true
-	E.global.datatexts.customPanels["mMT XIV Clock"]["fonts"]["font"] = "Montserrat-SemiBold"
-	E.global.datatexts.customPanels["mMT XIV Clock"]["fonts"]["fontOutline"] = "SHADOW"
-	E.global.datatexts.customPanels["mMT XIV Clock"]["fonts"]["fontSize"] = 32
-	E.global.datatexts.customPanels["mMT XIV Clock"]["name"] = "mMT XIV Clock"
-	E.global.datatexts.customPanels["mMT XIV Clock"]["numPoints"] = 1
-	E.global.datatexts.customPanels["mMT XIV Clock"]["width"] = 125
+	E.global["datatexts"]["customPanels"]["mMT XIV Clock"]["backdrop"] = false
+	E.global["datatexts"]["customPanels"]["mMT XIV Clock"]["border"] = false
+	E.global["datatexts"]["customPanels"]["mMT XIV Clock"]["fonts"]["enable"] = true
+	E.global["datatexts"]["customPanels"]["mMT XIV Clock"]["fonts"]["font"] = "Montserrat-SemiBold"
+	E.global["datatexts"]["customPanels"]["mMT XIV Clock"]["fonts"]["fontOutline"] = "SHADOW"
+	E.global["datatexts"]["customPanels"]["mMT XIV Clock"]["fonts"]["fontSize"] = 32
+	E.global["datatexts"]["customPanels"]["mMT XIV Clock"]["name"] = "mMT XIV Clock"
+	E.global["datatexts"]["customPanels"]["mMT XIV Clock"]["numPoints"] = 1
+	E.global["datatexts"]["customPanels"]["mMT XIV Clock"]["width"] = 125
 
 	E.DataTexts:BuildPanelFrame("mMT XIV Info")
-	E.global.datatexts.customPanels["mMT XIV Info"]["backdrop"] = false
-	E.global.datatexts.customPanels["mMT XIV Info"]["border"] = false
-	E.global.datatexts.customPanels["mMT XIV Info"]["fonts"]["enable"] = true
-	E.global.datatexts.customPanels["mMT XIV Info"]["fonts"]["font"] = "Montserrat-Medium"
-	E.global.datatexts.customPanels["mMT XIV Info"]["fonts"]["fontOutline"] = "SHADOW"
-	E.global.datatexts.customPanels["mMT XIV Info"]["fonts"]["fontSize"] = 16
-	E.global.datatexts.customPanels["mMT XIV Info"]["height"] = 28
-	E.global.datatexts.customPanels["mMT XIV Info"]["name"] = "mMT XIV Info"
-	E.global.datatexts.customPanels["mMT XIV Info"]["numPoints"] = 1
-	E.global.datatexts.customPanels["mMT XIV Info"]["width"] = 162
+	E.global["datatexts"]["customPanels"]["mMT XIV Info"]["backdrop"] = false
+	E.global["datatexts"]["customPanels"]["mMT XIV Info"]["border"] = false
+	E.global["datatexts"]["customPanels"]["mMT XIV Info"]["fonts"]["enable"] = true
+	E.global["datatexts"]["customPanels"]["mMT XIV Info"]["fonts"]["font"] = "Montserrat-Medium"
+	E.global["datatexts"]["customPanels"]["mMT XIV Info"]["fonts"]["fontOutline"] = "SHADOW"
+	E.global["datatexts"]["customPanels"]["mMT XIV Info"]["fonts"]["fontSize"] = 16
+	E.global["datatexts"]["customPanels"]["mMT XIV Info"]["height"] = 28
+	E.global["datatexts"]["customPanels"]["mMT XIV Info"]["name"] = "mMT XIV Info"
+	E.global["datatexts"]["customPanels"]["mMT XIV Info"]["numPoints"] = 1
+	E.global["datatexts"]["customPanels"]["mMT XIV Info"]["width"] = 162
 
 	E.DataTexts:BuildPanelFrame("mMT XIV Left")
-	E.global.datatexts.customPanels["mMT XIV Left"]["backdrop"] = false
-	E.global.datatexts.customPanels["mMT XIV Left"]["border"] = false
-	E.global.datatexts.customPanels["mMT XIV Left"]["height"] = 28
-	E.global.datatexts.customPanels["mMT XIV Left"]["name"] = "mMT XIV Left"
-	E.global.datatexts.customPanels["mMT XIV Left"]["numPoints"] = 11
-	E.global.datatexts.customPanels["mMT XIV Left"]["width"] = 440
+	E.global["datatexts"]["customPanels"]["mMT XIV Left"]["backdrop"] = false
+	E.global["datatexts"]["customPanels"]["mMT XIV Left"]["border"] = false
+	E.global["datatexts"]["customPanels"]["mMT XIV Left"]["height"] = 28
+	E.global["datatexts"]["customPanels"]["mMT XIV Left"]["name"] = "mMT XIV Left"
+	E.global["datatexts"]["customPanels"]["mMT XIV Left"]["numPoints"] = 11
+	E.global["datatexts"]["customPanels"]["mMT XIV Left"]["width"] = 440
 
 	E.DataTexts:BuildPanelFrame("mMT XIV Right")
-	E.global.datatexts.customPanels["mMT XIV Right"]["backdrop"] = false
-	E.global.datatexts.customPanels["mMT XIV Right"]["border"] = false
-	E.global.datatexts.customPanels["mMT XIV Right"]["fonts"]["enable"] = true
-	E.global.datatexts.customPanels["mMT XIV Right"]["fonts"]["font"] = "Montserrat-Medium"
-	E.global.datatexts.customPanels["mMT XIV Right"]["fonts"]["fontOutline"] = "SHADOW"
-	E.global.datatexts.customPanels["mMT XIV Right"]["fonts"]["fontSize"] = 14
-	E.global.datatexts.customPanels["mMT XIV Right"]["height"] = 28
-	E.global.datatexts.customPanels["mMT XIV Right"]["name"] = "mMT XIV Right"
-	E.global.datatexts.customPanels["mMT XIV Right"]["width"] = 440
+	E.global["datatexts"]["customPanels"]["mMT XIV Right"]["backdrop"] = false
+	E.global["datatexts"]["customPanels"]["mMT XIV Right"]["border"] = false
+	E.global["datatexts"]["customPanels"]["mMT XIV Right"]["fonts"]["enable"] = true
+	E.global["datatexts"]["customPanels"]["mMT XIV Right"]["fonts"]["font"] = "Montserrat-Medium"
+	E.global["datatexts"]["customPanels"]["mMT XIV Right"]["fonts"]["fontOutline"] = "SHADOW"
+	E.global["datatexts"]["customPanels"]["mMT XIV Right"]["fonts"]["fontSize"] = 14
+	E.global["datatexts"]["customPanels"]["mMT XIV Right"]["height"] = 28
+	E.global["datatexts"]["customPanels"]["mMT XIV Right"]["name"] = "mMT XIV Right"
+	E.global["datatexts"]["customPanels"]["mMT XIV Right"]["numPoints"] = 4
+	E.global["datatexts"]["customPanels"]["mMT XIV Right"]["width"] = 440
 
 	E.DataTexts:BuildPanelFrame("mMT XIV Talent")
-	E.global.datatexts.customPanels["mMT XIV Talent"]["backdrop"] = false
-	E.global.datatexts.customPanels["mMT XIV Talent"]["border"] = false
-	E.global.datatexts.customPanels["mMT XIV Talent"]["fonts"]["enable"] = true
-	E.global.datatexts.customPanels["mMT XIV Talent"]["fonts"]["font"] = "Montserrat-Medium"
-	E.global.datatexts.customPanels["mMT XIV Talent"]["fonts"]["fontOutline"] = "SHADOW"
-	E.global.datatexts.customPanels["mMT XIV Talent"]["fonts"]["fontSize"] = 14
-	E.global.datatexts.customPanels["mMT XIV Talent"]["height"] = 28
-	E.global.datatexts.customPanels["mMT XIV Talent"]["name"] = "mMT XIV Talent"
-	E.global.datatexts.customPanels["mMT XIV Talent"]["numPoints"] = 1
-	E.global.datatexts.customPanels["mMT XIV Talent"]["width"] = 240
+E.global["datatexts"]["customPanels"]["mMT XIV Talent"]["backdrop"] = false
+E.global["datatexts"]["customPanels"]["mMT XIV Talent"]["border"] = false
+E.global["datatexts"]["customPanels"]["mMT XIV Talent"]["fonts"]["enable"] = true
+E.global["datatexts"]["customPanels"]["mMT XIV Talent"]["fonts"]["font"] = "Montserrat-Medium"
+E.global["datatexts"]["customPanels"]["mMT XIV Talent"]["fonts"]["fontOutline"] = "SHADOW"
+E.global["datatexts"]["customPanels"]["mMT XIV Talent"]["fonts"]["fontSize"] = 14
+E.global["datatexts"]["customPanels"]["mMT XIV Talent"]["height"] = 28
+E.global["datatexts"]["customPanels"]["mMT XIV Talent"]["name"] = "mMT XIV Talent"
+E.global["datatexts"]["customPanels"]["mMT XIV Talent"]["numPoints"] = 1
+E.global["datatexts"]["customPanels"]["mMT XIV Talent"]["width"] = 240
 
 	E.DataTexts:BuildPanelFrame("mMT XIV Profession")
-	E.global.datatexts.customPanels["mMT XIV Profession"]["backdrop"] = false
-	E.global.datatexts.customPanels["mMT XIV Profession"]["border"] = false
-	E.global.datatexts.customPanels["mMT XIV Profession"]["fonts"]["enable"] = true
-	E.global.datatexts.customPanels["mMT XIV Profession"]["fonts"]["font"] = "Montserrat-Medium"
-	E.global.datatexts.customPanels["mMT XIV Profession"]["fonts"]["fontOutline"] = "SHADOW"
-	E.global.datatexts.customPanels["mMT XIV Profession"]["fonts"]["fontSize"] = 14
-	E.global.datatexts.customPanels["mMT XIV Profession"]["height"] = 28
-	E.global.datatexts.customPanels["mMT XIV Profession"]["name"] = "mMT XIV Profession"
-	E.global.datatexts.customPanels["mMT XIV Profession"]["numPoints"] = 2
-	E.global.datatexts.customPanels["mMT XIV Profession"]["width"] = 430
+	E.global["datatexts"]["customPanels"]["mMT XIV Profession"]["backdrop"] = false
+	E.global["datatexts"]["customPanels"]["mMT XIV Profession"]["border"] = false
+	E.global["datatexts"]["customPanels"]["mMT XIV Profession"]["fonts"]["enable"] = true
+	E.global["datatexts"]["customPanels"]["mMT XIV Profession"]["fonts"]["font"] = "Montserrat-Medium"
+	E.global["datatexts"]["customPanels"]["mMT XIV Profession"]["fonts"]["fontOutline"] = "SHADOW"
+	E.global["datatexts"]["customPanels"]["mMT XIV Profession"]["fonts"]["fontSize"] = 14
+	E.global["datatexts"]["customPanels"]["mMT XIV Profession"]["height"] = 28
+	E.global["datatexts"]["customPanels"]["mMT XIV Profession"]["name"] = "mMT XIV Profession"
+	E.global["datatexts"]["customPanels"]["mMT XIV Profession"]["numPoints"] = 2
+	E.global["datatexts"]["customPanels"]["mMT XIV Profession"]["width"] = 430
 
 	E.db["datatexts"]["panels"]["mMT XIV Clock"][1] = "Time"
 	E.db["datatexts"]["panels"]["mMT XIV Clock"][2] = ""
@@ -244,9 +245,10 @@ function mMT:Dock_XIVLike(top)
 	E.db["datatexts"]["panels"]["mMT XIV Left"]["battleground"] = false
 	E.db["datatexts"]["panels"]["mMT XIV Left"]["enable"] = true
 
-	E.db["datatexts"]["panels"]["mMT XIV Right"][1] = "System"
-	E.db["datatexts"]["panels"]["mMT XIV Right"][2] = "Gold"
+	E.db["datatexts"]["panels"]["mMT XIV Right"][1] = "mFPS"
+	E.db["datatexts"]["panels"]["mMT XIV Right"][2] = "M+ Score"
 	E.db["datatexts"]["panels"]["mMT XIV Right"][3] = "mTeleports"
+	E.db["datatexts"]["panels"]["mMT XIV Right"][4] = "Gold"
 	E.db["datatexts"]["panels"]["mMT XIV Right"]["battleground"] = false
 	E.db["datatexts"]["panels"]["mMT XIV Right"]["enable"] = true
 
