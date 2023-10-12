@@ -14,27 +14,31 @@ local change_log_important = {
 }
 
 local change_log_new = {
-	"More Layouts for Portraits",
-	"Portraits for Focus, Pet, TargetTarget, Boss and Arena Frames",
-	"Custom Role Icons for Wrath",
-	"Important Spells is available for Classic and Wrath",
-	"A Reload UI Popup will show if you change your ElvUI Profile",
-	"mTargetingPlayers:icons:Role shows classcolred role icons of targeting Players",
-	"mTargetingPlayers:icons:Stop shows classcolred icons of targeting Players",
-	"Statusbartexture q5 and q6 are under testing (maybe they get an own Series)",
+	"Tags mHealth:noStatus, mHealth:noStatus:current-percent, mHealth:noStatus, mPower:percent:hideZero",
+	"Font Montserrat",
+	"Icons for Tags, role and Classification",
+	"Icons fr Role",
+	"Castbar background color for Castbar modules",
+	"Slider for Portrait offsets/ zoom",
+	"Datatext for first and second Profession",
+	"Datatext Durability and Ilevel in one",
+	"Chat backgrounds 7 - 13",
+	"Textures, mMT Blank and mMT Target",
 }
 
 local change_log_update = {
-	"Portraits Classic and Retail have now the same look, no mor different textures",
-	"Optimized Portraits Events and Code",
-	"Combatcheck for Teleports Datatext",
-	"Optimized Portraits Settings",
-	"Force Datatexts to use ElvUI Value color",
+	"Changed Tag mTargetAbbrev to mTarget:abbrev and also add short Versions",
+	"Example Docks, and add ne examples XIV like, custom Dock, micro menu replacement",
+	"Font flags for ElvUI shadow flag",
+	"Removed golden-hearthstone-card-lord-jaraxxus from Teleports Datatext, thx Xheno",
+	"Removed Statusbar textures q5 and q6, dont liked them",
 }
 
 local change_log_fix = {
-	"Nil error on Score Datatext",
-	"Custom Backdrops",
+	"Portraits Event updates to prevent wrong or empty Portraits",
+	"Nil error for custom Class colors",
+	"Nil error on custom Phase icon",
+	"Updates now correctly for Profession Datatext"
 }
 
 local function Concatenation(tbl, icon, color)
@@ -54,7 +58,7 @@ local function Concatenation(tbl, icon, color)
 end
 
 local function configTable()
-	local releasdate = "20.09.2023"
+	local releasdate = "12.10.2023"
 	--change_log_important_string = Concatenation(change_log_important)
 	change_log_new_string = Concatenation(change_log_new)
 	change_log_update_string = Concatenation(change_log_update)

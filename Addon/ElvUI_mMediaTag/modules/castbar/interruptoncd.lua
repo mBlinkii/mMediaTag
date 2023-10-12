@@ -122,13 +122,7 @@ function module:InterruptChecker(castbar, isUnitFrame)
 
 		local isOutOfRange = (E.db.mMT.interruptoncd.outofrange and IsSpellInRange(GetSpellInfo(interruptSpellID), castbar.unit) == 0) or false
 
-		if isOutOfRange then
-			if E.db.mMT.interruptoncd.gradient then
-				mMT.Modules.Castbar:SetCastbarColor(castbar, colorOutOfRange, colorOutOfRangeB)
-			else
-				mMT.Modules.Castbar:SetCastbarColor(castbar, colorOutOfRange)
-			end
-		elseif interruptCD and interruptCD > inactivetime and interruptReadyInTime then
+		if interruptCD and interruptCD > inactivetime and interruptReadyInTime then
 			if not castbar.InterruptMarker then
 				CreateMarker(castbar)
 			end
@@ -151,6 +145,12 @@ function module:InterruptChecker(castbar, isUnitFrame)
 				mMT.Modules.Castbar:SetCastbarColor(castbar, colorInterruptonCD, colorInterruptonCDb)
 			else
 				mMT.Modules.Castbar:SetCastbarColor(castbar, colorInterruptonCD)
+			end
+		elseif isOutOfRange then
+			if E.db.mMT.interruptoncd.gradient then
+				mMT.Modules.Castbar:SetCastbarColor(castbar, colorOutOfRange, colorOutOfRangeB)
+			else
+				mMT.Modules.Castbar:SetCastbarColor(castbar, colorOutOfRange)
 			end
 		end
 	end

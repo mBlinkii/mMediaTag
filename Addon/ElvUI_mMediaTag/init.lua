@@ -171,7 +171,7 @@ end
 
 -- Load Settings
 local function LoadSettings()
-	E.Options.name = format("%s + %s %s |cff99ff33%s|r", E.Options.name, mMT.IconSquare, mMT.Name, mMT.Version)
+	E.Options.name = format("%s + %s %s |cff99ff33%s|r", E.Options.name, mMT.IconSquare, mMT.Name, mMT.Version ..  " |CFF6559F1DEV|r")
 
 	for _, func in pairs(mMT.Config) do
 		func()
@@ -206,6 +206,10 @@ function mMT:Initialize()
 		if (E.private.nameplates.enable and E.db.mMT.nameplate.executemarker.auto) or E.db.mMT.interruptoncd.enable then
 			self:RegisterEvent("PLAYER_TALENT_UPDATE")
 		end
+	end
+
+	if E.db.mMT.customclasscolors.emediaenable then
+		mMT:SetElvUIMediaColor()
 	end
 
 	-- Register Events for all Game Versions

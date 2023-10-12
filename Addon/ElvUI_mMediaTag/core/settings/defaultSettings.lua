@@ -10,7 +10,7 @@ P.mMT = {
 		garbage = true,
 		infoscreen = true,
 		title = { r = 1, g = 0.65, b = 0 },
-		values = { enable = true, r = 0.98, g = 0.82, b = 1 },
+		values = { enable = true, r = 0.09, g = 0.82, b = 1 },
 		attributes = { enable = true, r = 0.23, g = 0.67, b = 1 },
 		enhancements = { enable = true, r = 0.35, g = 0.55, b = 1 },
 		progress = { enable = true, r = 0.64, g = 0.35, b = 1 },
@@ -28,6 +28,10 @@ P.mMT = {
 		intimecolor = { colora = { r = 0, g = 0.78, b = 1 }, colorb = { r = 0, g = 0.46, b = 0.65 } },
 		outofrangecolor = { colora = { r = 1, g = 0.48, b = 0 }, colorb = { r = 0.74, g = 0.28, b = 0 } },
 	},
+	castbar = {
+		multiplier = 0.3,
+		setBGColor = false,
+	},
 	importantspells = {
 		enable = false,
 		gradient = false,
@@ -41,6 +45,15 @@ P.mMT = {
 		health = { enable = false, texture = "mMediaTag A8" },
 		power = { enable = false, texture = "mMediaTag A8" },
 		castbar = { enable = false, texture = "mMediaTag A8" },
+	},
+	singleProfession = {
+		icon = true,
+		witheText = true,
+	},
+	durabilityIlevel = {
+		icon = true,
+		witheText = true,
+		witheValue = false,
 	},
 	customclasscolors = {
 		enable = false,
@@ -579,6 +592,14 @@ P.mMT = {
 			corner = true,
 			style = "flat",
 			ori = "HORIZONTAL",
+		},
+		offset = {
+			SQ = 5.5,
+			RO = 5.5,
+			CI = 5.5,
+			PI = 10,
+			RA = 6,
+			QA = 20,
 		},
 		shadow = {
 			enable = true,

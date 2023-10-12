@@ -12,12 +12,15 @@ local select = select
 --Variables
 local LSM = LibStub("LibSharedMedia-3.0")
 local mFontFlags = {
-	NONE = L["NONE"],
-	OUTLINE = "Outline",
-	THICKOUTLINE = "Thick",
-	MONOCHROME = "|cffaaaaaaMono|r",
-	MONOCHROMEOUTLINE = "|cffaaaaaaMono|r Outline",
-	MONOCHROMETHICKOUTLINE = "|cffaaaaaaMono|r Thick",
+	NONE = 'None',
+	OUTLINE = 'Outline',
+	THICKOUTLINE = 'Thick',
+	SHADOW = '|cff888888Shadow|r',
+	SHADOWOUTLINE = '|cff888888Shadow|r Outline',
+	SHADOWTHICKOUTLINE = '|cff888888Shadow|r Thick',
+	MONOCHROME = '|cFFAAAAAAMono|r',
+	MONOCHROMEOUTLINE = '|cFFAAAAAAMono|r Outline',
+	MONOCHROMETHICKOUTLINE = '|cFFAAAAAAMono|r Thick'
 }
 local ExampleDockSettings = { top = false }
 local mGuild = L["Guild"]
@@ -1884,7 +1887,7 @@ local function configTable()
 				examplesdescription = {
 					order = 1,
 					type = "description",
-					name = L["These are just examples of how to create your own dock with ElvUI's custom bars.\n\nTo delete the examples completely, you have to delete the bars in the ElvUI settings. (ElvUI>Datatext>Bars> click on the bar you want to delete, scroll down and click delete).\n\n\nTo create your own bar you have to go to ElvUI under ElvUI>Datatext>Bars Steps 1. enter name press OK and click Add, set the width of the bar depends on how many icons you want to display, the height of the bar is also the size of the icons. Set the number of data text and now you only need to assign the icons to the places, for example 1 = Dock FPS, 2 = Dock Profession and so on.\n\n"],
+					name = L["These are just examples of how to create your own dock with ElvUI's custom bars.\n\n\nTo create your own bar you have to go to ElvUI under ElvUI>Datatext>Bars Steps 1. enter name press OK and click Add, set the width of the bar depends on how many icons you want to display, the height of the bar is also the size of the icons. Set the number of data text and now you only need to assign the icons to the places, for example 1 = Dock FPS, 2 = Dock Profession and so on.\n\n"],
 				},
 				examplesheader = {
 					order = 2,
@@ -1910,27 +1913,27 @@ local function configTable()
 				dockbar1 = {
 					order = 11,
 					type = "execute",
-					name = L["Dockbar mDock Full"],
+					name = L["mMT XIV Like"],
 					func = function()
-						mMT:mDockFull(ExampleDockSettings.top, true)
+						mMT:Dock_XIVLike(ExampleDockSettings.top)
 						E:StaticPopup_Show("CONFIG_RL")
 					end,
 				},
 				dockbar2 = {
 					order = 21,
 					type = "execute",
-					name = L["Dockbar mDockMicroBar"],
+					name = L["mMT Dock"],
 					func = function()
-						mMT:mDockMicroBar(ExampleDockSettings.top, true)
+						mMT:Dock_Default(ExampleDockSettings.top)
 						E:StaticPopup_Show("CONFIG_RL")
 					end,
 				},
 				dockbar3 = {
 					order = 31,
 					type = "execute",
-					name = L["Dockbar mDock Special"],
+					name = L["mMT Extra"],
 					func = function()
-						mMT:mDockSpecial(ExampleDockSettings.top, true)
+						mMT:Dock_Extra(ExampleDockSettings.top)
 						E:StaticPopup_Show("CONFIG_RL")
 					end,
 				},
@@ -1942,12 +1945,23 @@ local function configTable()
 				dockbardisable = {
 					order = 41,
 					type = "execute",
-					name = L["Disable All"],
+					name = L["Delete All"],
 					func = function()
-						mMT:mDockFull(ExampleDockSettings.top, false)
-						mMT:mDockMicroBar(ExampleDockSettings.top, false)
-						mMT:mDockSpecial(ExampleDockSettings.top, false)
+						mMT:DeleteAll()
 						E:StaticPopup_Show("CONFIG_RL")
+					end,
+				},
+				examplespacer3 = {
+					order = 50,
+					type = "description",
+					name = "\n",
+				},
+				preview = {
+					type = "description",
+					name = "",
+					order = 51,
+					image = function()
+						return "Interface\\Addons\\ElvUI_mMediaTag\\media\\system\\dock.tga", 819, 102
 					end,
 				},
 			},

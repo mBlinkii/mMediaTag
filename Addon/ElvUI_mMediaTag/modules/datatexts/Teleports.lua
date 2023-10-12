@@ -37,7 +37,6 @@ local Teleports = {
 		available = false,
 		tps = {
 			[110560] = true, --garrison-hearthstone
-			[119211] = true, --golden-hearthstone-card-lord-jaraxxus
 			[140192] = true, --dalaran-hearthstone
 			[162973] = true, --greatfather-winters-hearthstone
 			[163045] = true, --headless-horsemans-hearthstone

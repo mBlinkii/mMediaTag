@@ -8,7 +8,7 @@ local form = {
 	CI = "CIRCLE",
 	PI = "PILLOW",
 	RA = "CARO",
-	QA = "RECTANGLE"
+	QA = "RECTANGLE",
 }
 
 local style = {
@@ -37,73 +37,194 @@ local function configTable()
 			type = "group",
 			name = L["General"],
 			args = {
-
-				spacer_1 = {
-					order = 2,
-					type = "description",
-					name = "\n\n",
-				},
-				toggle_gradient = {
-					order = 3,
-					type = "toggle",
+				header_gradient = {
+					order = 1,
+					type = "group",
 					name = L["Gradient"],
-					get = function(info)
-						return E.db.mMT.portraits.general.gradient
-					end,
-					set = function(info, value)
-						E.db.mMT.portraits.general.gradient = value
-						mMT.Modules.Portraits:Initialize()
-					end,
-				},
-				select_gradient = {
-					order = 4,
-					type = "select",
-					name = L["Gradient Orientation"],
-					disabled = function()
-						return not E.db.mMT.portraits.general.gradient
-					end,
-					get = function(info)
-						return E.db.mMT.portraits.general.ori
-					end,
-					set = function(info, value)
-						E.db.mMT.portraits.general.ori = value
-						mMT.Modules.Portraits:Initialize()
-					end,
-					values = {
-						HORIZONTAL = "HORIZONTAL",
-						VERTICAL = "VERTICAL",
+					args = {
+						toggle_gradient = {
+							order = 3,
+							type = "toggle",
+							name = L["Gradient"],
+							get = function(info)
+								return E.db.mMT.portraits.general.gradient
+							end,
+							set = function(info, value)
+								E.db.mMT.portraits.general.gradient = value
+								mMT.Modules.Portraits:Initialize()
+							end,
+						},
+						select_gradient = {
+							order = 4,
+							type = "select",
+							name = L["Gradient Orientation"],
+							disabled = function()
+								return not E.db.mMT.portraits.general.gradient
+							end,
+							get = function(info)
+								return E.db.mMT.portraits.general.ori
+							end,
+							set = function(info, value)
+								E.db.mMT.portraits.general.ori = value
+								mMT.Modules.Portraits:Initialize()
+							end,
+							values = {
+								HORIZONTAL = "HORIZONTAL",
+								VERTICAL = "VERTICAL",
+							},
+						},
 					},
 				},
-				spacer_2 = {
-					order = 5,
-					type = "description",
-					name = "\n\n",
-				},
-				select_style = {
-					order = 6,
-					type = "select",
+				header_style = {
+					order = 2,
+					type = "group",
 					name = L["Texture Style"],
-					get = function(info)
-						return E.db.mMT.portraits.general.style
-					end,
-					set = function(info, value)
-						E.db.mMT.portraits.general.style = value
+					args = {
+						select_style = {
+							order = 1,
+							type = "select",
+							name = L["Texture Style"],
+							get = function(info)
+								return E.db.mMT.portraits.general.style
+							end,
+							set = function(info, value)
+								E.db.mMT.portraits.general.style = value
 
-						mMT.Modules.Portraits:Initialize()
-					end,
-					values = style,
+								mMT.Modules.Portraits:Initialize()
+							end,
+							values = style,
+						},
+						toggle_corner = {
+							order = 2,
+							type = "toggle",
+							name = L["Enable Corner"],
+							get = function(info)
+								return E.db.mMT.portraits.general.corner
+							end,
+							set = function(info, value)
+								E.db.mMT.portraits.general.corner = value
+								mMT.Modules.Portraits:Initialize()
+							end,
+						},
+					},
 				},
-				toggle_corner = {
-					order = 7,
-					type = "toggle",
-					name = L["Enable Corner"],
-					get = function(info)
-						return E.db.mMT.portraits.general.corner
-					end,
-					set = function(info, value)
-						E.db.mMT.portraits.general.corner = value
-						mMT.Modules.Portraits:Initialize()
-					end,
+				header_offset = {
+					order = 3,
+					type = "group",
+					name = L["Portrait Offset/ Zoom"],
+					args = {
+						range_sq = {
+							order = 1,
+							name = "SQUARE",
+							type = "range",
+							min = 0,
+							max = 10,
+							step = 0.1,
+							get = function(info)
+								return E.db.mMT.portraits.offset.SQ
+							end,
+							set = function(info, value)
+								E.db.mMT.portraits.offset.SQ = value
+								mMT.Modules.Portraits:Initialize()
+							end,
+						},
+						range_ro = {
+							order = 2,
+							name = "ROUND",
+							type = "range",
+							min = 0,
+							max = 10,
+							step = 0.1,
+							get = function(info)
+								return E.db.mMT.portraits.offset.RO
+							end,
+							set = function(info, value)
+								E.db.mMT.portraits.offset.RO = value
+								mMT.Modules.Portraits:Initialize()
+							end,
+						},
+						range_ci = {
+							order = 3,
+							name = "CIRCLE",
+							type = "range",
+							min = 0,
+							max = 10,
+							step = 0.1,
+							get = function(info)
+								return E.db.mMT.portraits.offset.CI
+							end,
+							set = function(info, value)
+								E.db.mMT.portraits.offset.CI = value
+								mMT.Modules.Portraits:Initialize()
+							end,
+						},
+						range_pi = {
+							order = 4,
+							name = "PILLOW",
+							type = "range",
+							min = 0,
+							max = 15,
+							step = 0.1,
+							get = function(info)
+								return E.db.mMT.portraits.offset.PI
+							end,
+							set = function(info, value)
+								E.db.mMT.portraits.offset.PI = value
+								mMT.Modules.Portraits:Initialize()
+							end,
+						},
+						range_ra = {
+							order = 5,
+							name = "CARO",
+							type = "range",
+							min = 0,
+							max = 10,
+							step = 0.1,
+							get = function(info)
+								return E.db.mMT.portraits.offset.RA
+							end,
+							set = function(info, value)
+								E.db.mMT.portraits.offset.RA = value
+								mMT.Modules.Portraits:Initialize()
+							end,
+						},
+						range_qa = {
+							order = 5,
+							name = "RECTANGLE",
+							type = "range",
+							min = 0,
+							max = 20,
+							step = 0.1,
+							get = function(info)
+								return E.db.mMT.portraits.offset.QA
+							end,
+							set = function(info, value)
+								E.db.mMT.portraits.offset.QA = value
+								mMT.Modules.Portraits:Initialize()
+							end,
+						},
+						spacer_1 = {
+							order = 20,
+							type = "description",
+							name = "\n\n",
+						},
+						reset = {
+							order = 40,
+							type = "execute",
+							name = L["Reset"],
+							func = function()
+								E.db.mMT.portraits.offset = {
+									SQ = 5.5,
+									RO = 5.5,
+									CI = 5.5,
+									PI = 10,
+									RA = 6,
+									QA = 20,
+								}
+								mMT.Modules.Portraits:Initialize()
+							end,
+						},
+					},
 				},
 			},
 		},

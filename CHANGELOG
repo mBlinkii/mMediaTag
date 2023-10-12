@@ -1,6 +1,31 @@
 # Changelog - ElvUI_mMediaTag
 [Eng] - All changes to this project will be documented in this file. The latest changes are at the top.
 
+## [ver. 3.21] - 12.10.2023
+### FIX
+- FIX - Portraits Event updates to prevent wrong or empty Portraits
+- FIX - Nil error for custom Class colors
+- FIX - Nil error on custom Phase icon
+- FIX - Updates now correctly for Profession Datatext
+### Update
+- UPDATE - Changed Tag mTargetAbbrev to mTarget:abbrev and also add short Versions
+- UPDATE - Example Docks, and add ne examples XIV like, custom Dock, micro menu replacement
+- UPDATE - Font flags for ElvUI shadow flag
+- UPDATE - Removed golden-hearthstone-card-lord-jaraxxus from Teleports Datatext, thx Xheno
+- UPDATE - Removed Statusbar textures q5 and q6, dont liked them
+### NEW
+- NEW - Tags mHealth:noStatus, mHealth:noStatus:current-percent, mHealth:noStatus, mPower:percent:hideZero
+- NEW - Font Montserrat
+- NEW - Icons for Tags, role and Classification
+- NEW - Icons fr Role
+- NEW - Castbar background color for Castbar modules
+- NEW - Slider for Portrait offsets/ zoom
+- NEW - Datatext for first and second Profession
+- NEW - Datatext Durability and Ilevel in one
+- NEW - Chat backgrounds 7 - 13
+- NEW - Textures, mMT Blank and mMT Target
+-
+
 ## [ver. 3.20] - 20.09.2023
 ### FIX
 - Fix - Nil error on Score Datatext

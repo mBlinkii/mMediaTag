@@ -2,6 +2,7 @@ local E = unpack(ElvUI)
 
 local _G = _G
 local SetPortraitTexture = SetPortraitTexture
+local UnitExists = UnitExists
 
 local module = mMT.Modules.Portraits
 if not module then
@@ -131,18 +132,10 @@ local textures = {
 		RA = false,
 		QA = false,
 	},
-	offset = {
-		SQ = 5.5,
-		RO = 5.5,
-		CI = 5.5,
-		PI = 10,
-		RA = 6,
-		QA = 20,
-	}
 }
 
 local function setColor(texture, color, mirror)
-	if not texture or not color then
+	if not texture or not color or not color.a or not color.b then
 		return
 	end
 
@@ -161,13 +154,10 @@ local function getColor(frame, unit)
 	if settings.general.default then
 		return settings.colors.default
 	end
+
 	if UnitIsPlayer(unit) then
 		local _, class = UnitClass(unit)
-		if frame.class ~= class then
-			frame.class = class
-			frame.color = settings.colors[class]
-		end
-		return frame.color
+		return settings.colors[class]
 	else
 		local reaction = UnitReaction("player", unit)
 		if reaction then
@@ -217,7 +207,7 @@ local function CreatePortrait(parent, conf, unit)
 	frame.texture = CreatePortraitTexture(frame, "mMT_Texture", 4, texture, getColor(frame, unit), conf.mirror)
 
 	-- Unit Portrait
-	local offset = GetOffset(conf.size, textures.offset[conf.texture])
+	local offset = GetOffset(conf.size, settings.offset[conf.texture])
 	frame.portrait = frame:CreateTexture("mMT_Portrait", "OVERLAY", nil, 1)
 	frame.portrait:SetAllPoints(frame)
 	frame.portrait:SetPoint("TOPLEFT", 0 + offset, 0 - offset)
@@ -335,7 +325,7 @@ local function UpdatePortrait(frame, conf, unit, parent)
 	UpdatePortraitTexture(frame.texture, texture, getColor(frame, unit), conf.mirror)
 
 	-- Unit Portrait
-	local offset = GetOffset(conf.size, textures.offset[conf.texture])
+	local offset = GetOffset(conf.size, settings.offset[conf.texture])
 	frame.portrait:SetPoint("TOPLEFT", 0 + offset, 0 - offset)
 	frame.portrait:SetPoint("BOTTOMRIGHT", 0 - offset, 0 + offset)
 	mirrorTexture(frame.portrait, conf.mirror)
@@ -514,6 +504,7 @@ end
 
 function module:Initialize()
 	settings = E.db.mMT.portraits
+
 	local frames = {
 		Player = {
 			parent = _G.ElvUF_Player,
@@ -550,6 +541,7 @@ function module:Initialize()
 			},
 			unitEvents = {
 				"UNIT_PORTRAIT_UPDATE",
+				"UNIT_NAME_UPDATE"
 			},
 		}
 	end
@@ -565,6 +557,7 @@ function module:Initialize()
 			},
 			unitEvents = {
 				"UNIT_PORTRAIT_UPDATE",
+				"UNIT_TARGET",
 			},
 		}
 	end
@@ -580,6 +573,7 @@ function module:Initialize()
 			},
 			unitEvents = {
 				"UNIT_PORTRAIT_UPDATE",
+				"UNIT_NAME_UPDATE"
 			},
 		}
 	end
@@ -592,12 +586,12 @@ function module:Initialize()
 				unit = _G["ElvUF_PartyGroup1UnitButton" .. i].unit,
 				events = {
 					"PLAYER_ENTERING_WORLD",
-					"PLAYER_TARGET_CHANGED",
 					"GROUP_ROSTER_UPDATE",
 					"PORTRAITS_UPDATED",
 				},
 				unitEvents = {
 					"UNIT_PORTRAIT_UPDATE",
+					"UNIT_NAME_UPDATE"
 				},
 			}
 		end
@@ -615,6 +609,7 @@ function module:Initialize()
 				},
 				unitEvents = {
 					"UNIT_PORTRAIT_UPDATE",
+					"UNIT_NAME_UPDATE"
 				},
 			}
 		end
@@ -633,6 +628,7 @@ function module:Initialize()
 				},
 				unitEvents = {
 					"UNIT_PORTRAIT_UPDATE",
+					"UNIT_NAME_UPDATE",
 				},
 			}
 		end
@@ -644,7 +640,7 @@ function module:Initialize()
 				module[name] = CreatePortrait(unit.parent, unit.settings, unit.unit)
 
 				for _, event in pairs(unit.unitEvents) do
-					module[name]:RegisterUnitEvent(event, unit.unit)
+					module[name]:RegisterUnitEvent(event, event == "UNIT_TARGET" and "target" or unit.unit)
 				end
 
 				for _, event in pairs(unit.events) do
@@ -666,12 +662,13 @@ function module:Initialize()
 
 		if settings.player.enable and module.Player and not module.Player.ScriptSet then
 			module.Player:SetScript("OnEvent", function(self, event)
-				SetPortraitTexture(self.portrait, "player", not (settings.player.texture == "CI"))
-
-				if event == "PLAYER_ENTERING_WORLD" then
-					setColor(self.texture, getColor(self, "player"), settings.player.mirror)
-					if settings.general.corner and textures.corner[settings.player.texture] then
-						setColor(self.corner, getColor(self, "player"), settings.player.mirror)
+				if UnitExists("player") then
+					SetPortraitTexture(self.portrait, "player", not (settings.player.texture == "CI"))
+					if event == "PLAYER_ENTERING_WORLD" then
+						setColor(self.texture, getColor(self, "player"), settings.player.mirror)
+						if settings.general.corner and textures.corner[settings.player.texture] then
+							setColor(self.corner, getColor(self, "player"), settings.player.mirror)
+						end
 					end
 				end
 			end)
@@ -680,19 +677,20 @@ function module:Initialize()
 
 		if settings.target.enable and module.Target and not module.Target.ScriptSet then
 			module.Target:SetScript("OnEvent", function(self, event)
-				SetPortraitTexture(self.portrait, "target", not (settings.target.texture == "CI"))
+				if UnitExists("target") then
+					SetPortraitTexture(self.portrait, "target", not (settings.target.texture == "CI"))
+					if event == "PLAYER_TARGET_CHANGED" or event == "PLAYER_ENTERING_WORLD" then
+						setColor(self.texture, getColor(self, "target"), settings.target.mirror)
 
-				if event == "PLAYER_TARGET_CHANGED" or event == "PLAYER_ENTERING_WORLD" then
-					setColor(self.texture, getColor(self, "target"), settings.target.mirror)
+						if settings.general.corner and textures.corner[settings.target.texture] then
+							setColor(self.corner, getColor(self, "target"), settings.target.mirror)
+						end
 
-					if settings.general.corner and textures.corner[settings.target.texture] then
-						setColor(self.corner, getColor(self, "target"), settings.target.mirror)
-					end
-
-					if settings.target.extraEnable and self.extra then
-						CheckRareElite(self, "target")
-					elseif self.extra then
-						self.extra:Hide()
+						if settings.target.extraEnable and self.extra then
+							CheckRareElite(self, "target")
+						elseif self.extra then
+							self.extra:Hide()
+						end
 					end
 				end
 			end)
@@ -701,12 +699,14 @@ function module:Initialize()
 
 		if settings.pet.enable and module.Pet and not module.Pet.ScriptSet then
 			module.Pet:SetScript("OnEvent", function(self, event)
-				SetPortraitTexture(self.portrait, "pet", not (settings.pet.texture == "CI"))
+				if UnitExists("pet") then
+					SetPortraitTexture(self.portrait, "pet", not (settings.pet.texture == "CI"))
 
-				if event == "PLAYER_ENTERING_WORLD" then
-					setColor(self.texture, getColor(self, "pet"), settings.pet.mirror)
-					if settings.general.corner and textures.corner[settings.pet.texture] then
-						setColor(self.corner, getColor(self, "pet"), settings.pet.mirror)
+					if event == "PLAYER_ENTERING_WORLD" or event == "UNIT_NAME_UPDATE" then
+						setColor(self.texture, getColor(self, "pet"), settings.pet.mirror)
+						if settings.general.corner and textures.corner[settings.pet.texture] then
+							setColor(self.corner, getColor(self, "pet"), settings.pet.mirror)
+						end
 					end
 				end
 			end)
@@ -715,17 +715,19 @@ function module:Initialize()
 
 		if settings.focus.enable and module.Focus and not module.Focus.ScriptSet then
 			module.Focus:SetScript("OnEvent", function(self, event)
-				SetPortraitTexture(self.portrait, "focus", not (settings.focus.texture == "CI"))
-				if event == "PLAYER_ENTERING_WORLD" or event == "PLAYER_FOCUS_CHANGED" then
-					setColor(self.texture, getColor(self, "focus"), settings.focus.mirror)
-					if settings.general.corner and textures.corner[settings.focus.texture] then
-						setColor(self.corner, getColor(self, "focus"), settings.focus.mirror)
-					end
+				if UnitExists("focus") then
+					SetPortraitTexture(self.portrait, "focus", not (settings.focus.texture == "CI"))
+					if event == "PLAYER_ENTERING_WORLD" or event == "PLAYER_FOCUS_CHANGED" or event == "UNIT_NAME_UPDATE" then
+						setColor(self.texture, getColor(self, "focus"), settings.focus.mirror)
+						if settings.general.corner and textures.corner[settings.focus.texture] then
+							setColor(self.corner, getColor(self, "focus"), settings.focus.mirror)
+						end
 
-					if settings.focus.extraEnable and self.extra then
-						CheckRareElite(self, "focus")
-					elseif self.extra then
-						self.extra:Hide()
+						if settings.focus.extraEnable and self.extra then
+							CheckRareElite(self, "focus")
+						elseif self.extra then
+							self.extra:Hide()
+						end
 					end
 				end
 			end)
@@ -734,17 +736,19 @@ function module:Initialize()
 
 		if settings.targettarget.enable and module.TargetTarget and not module.TargetTarget.ScriptSet then
 			module.TargetTarget:SetScript("OnEvent", function(self, event)
-				SetPortraitTexture(self.portrait, "targettarget", not (settings.targettarget.texture == "CI"))
-				if event == "PLAYER_ENTERING_WORLD" or event == "PLAYER_TARGET_CHANGED" then
-					setColor(self.texture, getColor(self, "targettarget"), settings.targettarget.mirror)
-					if settings.general.corner and textures.corner[settings.targettarget.texture] then
-						setColor(self.corner, getColor(self, "targettarget"), settings.targettarget.mirror)
-					end
+				if UnitExists("targettarget") then
+					SetPortraitTexture(self.portrait, "targettarget", not (settings.targettarget.texture == "CI"))
+					if event == "PLAYER_ENTERING_WORLD" or event == "UNIT_TARGET" or event == "PLAYER_TARGET_CHANGED" then
+						setColor(self.texture, getColor(self, "targettarget"), settings.targettarget.mirror)
+						if settings.general.corner and textures.corner[settings.targettarget.texture] then
+							setColor(self.corner, getColor(self, "targettarget"), settings.targettarget.mirror)
+						end
 
-					if settings.targettarget.extraEnable and self.extra then
-						CheckRareElite(self, "targettarget")
-					elseif self.extra then
-						self.extra:Hide()
+						if settings.targettarget.extraEnable and self.extra then
+							CheckRareElite(self, "targettarget")
+						elseif self.extra then
+							self.extra:Hide()
+						end
 					end
 				end
 			end)
@@ -755,14 +759,16 @@ function module:Initialize()
 			for i = 1, 5 do
 				local frame = _G["ElvUF_PartyGroup1UnitButton" .. i]
 				module["Party" .. i]:SetScript("OnEvent", function(self, event)
-					if event == "GROUP_ROSTER_UPDATE" or event == "PLAYER_ENTERING_WORLD" then
-						setColor(self.texture, getColor(self, frame.unit), settings.party.mirror)
-						if settings.general.corner and textures.corner[settings.party.texture] then
-							setColor(self.corner, getColor(self, frame.unit), settings.party.mirror)
+					if UnitExists(frame.unit) then
+						if event == "GROUP_ROSTER_UPDATE" or event == "PLAYER_ENTERING_WORLD" or event == "UNIT_NAME_UPDATE" then
+							setColor(self.texture, getColor(self, frame.unit), settings.party.mirror)
+							if settings.general.corner and textures.corner[settings.party.texture] then
+								setColor(self.corner, getColor(self, frame.unit), settings.party.mirror)
+							end
 						end
-					end
 
-					SetPortraitTexture(self.portrait, frame.unit, not (settings.party.texture == "CI"))
+						SetPortraitTexture(self.portrait, frame.unit, not (settings.party.texture == "CI"))
+					end
 				end)
 
 				module["Party" .. i].ScriptSet = true
@@ -773,14 +779,16 @@ function module:Initialize()
 			for i = 1, 8 do
 				local frame = _G["ElvUF_Boss" .. i]
 				module["Boss" .. i]:SetScript("OnEvent", function(self, event)
-					if event == "UNIT_PORTRAIT_UPDATE" or event == "PLAYER_ENTERING_WORLD" then
-						setColor(self.texture, getColor(self, frame.unit), settings.boss.mirror)
-						if settings.general.corner and textures.corner[settings.boss.texture] then
-							setColor(self.corner, getColor(self, frame.unit), settings.boss.mirror)
+					if UnitExists(frame.unit) then
+						if event == "UNIT_PORTRAIT_UPDATE" or event == "PLAYER_ENTERING_WORLD" or event == "UNIT_NAME_UPDATE" then
+							setColor(self.texture, getColor(self, frame.unit), settings.boss.mirror)
+							if settings.general.corner and textures.corner[settings.boss.texture] then
+								setColor(self.corner, getColor(self, frame.unit), settings.boss.mirror)
+							end
 						end
-					end
 
-					SetPortraitTexture(self.portrait, frame.unit, not (settings.boss.texture == "CI"))
+						SetPortraitTexture(self.portrait, frame.unit, not (settings.boss.texture == "CI"))
+					end
 				end)
 
 				module["Boss" .. i].ScriptSet = true
@@ -791,14 +799,16 @@ function module:Initialize()
 			for i = 1, 5 do
 				local frame = _G["ElvUF_Arena" .. i]
 				module["Arena" .. i]:SetScript("OnEvent", function(self, event)
-					if event == "ARENA_OPPONENT_UPDATE" or event == "PLAYER_ENTERING_WORLD" then
-						setColor(self.texture, getColor(self, frame.unit), settings.arena.mirror)
-						if settings.general.corner and textures.corner[settings.arena.texture] then
-							setColor(self.corner, getColor(self, frame.unit), settings.arena.mirror)
+					if UnitExists(frame.unit) then
+						if event == "ARENA_OPPONENT_UPDATE" or event == "PLAYER_ENTERING_WORLD" or "UNIT_NAME_UPDATE" then
+							setColor(self.texture, getColor(self, frame.unit), settings.arena.mirror)
+							if settings.general.corner and textures.corner[settings.arena.texture] then
+								setColor(self.corner, getColor(self, frame.unit), settings.arena.mirror)
+							end
 						end
-					end
 
-					SetPortraitTexture(self.portrait, frame.unit, not (settings.arena.texture == "CI"))
+						SetPortraitTexture(self.portrait, frame.unit, not (settings.arena.texture == "CI"))
+					end
 				end)
 
 				module["Arena" .. i].ScriptSet = true

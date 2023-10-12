@@ -489,7 +489,13 @@
         "UnitIsGroupLeader",
         "string",
         "min",
-        "DAMAGER"
+        "DAMAGER",
+        "READY_CHECK",
+        "READY_CHECK_FINISHED",
+        "NUM_ACTIONBAR_BUTTONS",
+        "NONE",
+        "Specialization",
+        "GROUP"
     ],
     "Lua.diagnostics.disable": [
         "undefined-field"
@@ -508,6 +514,7 @@
         "CFFE",
         "CFFFF",
         "CFFFFFFFF",
+        "chromie",
         "Chromie",
         "colora",
         "colorb",

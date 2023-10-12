@@ -359,8 +359,6 @@ local function LoadSeriesQ()
 	mAddStatusbar("mMediaTag Q2", "q2.tga")
 	mAddStatusbar("mMediaTag Q3", "q3.tga")
 	mAddStatusbar("mMediaTag Q4", "q4.tga")
-	mAddStatusbar("mMediaTag Q5", "q5.tga")
-	mAddStatusbar("mMediaTag Q6", "q6.tga")
 end
 local function LoadSeriesR()
 	mAddStatusbar("mMediaTag R1", "r1.tga")
@@ -528,8 +526,7 @@ local function RLDialog()
 end
 
 local function PrintStatus(...)
-	local name =
-		"|CFFAB02FDm|r|CFFB820D5M|r|CFFC031BDT|r |CFFCB4A9CM|r|CFFD25A87e|r|CFFD96972d|r|CFFDE7464i|r|CFFE27E57a|r |CFFE88B46P|r|CFFF09D2Da|r|CFFF4A720c|r|CFFFCB70Ak|r"
+	local name = "|CFFAB02FDm|r|CFFB820D5M|r|CFFC031BDT|r |CFFCB4A9CM|r|CFFD25A87e|r|CFFD96972d|r|CFFDE7464i|r|CFFE27E57a|r |CFFE88B46P|r|CFFF09D2Da|r|CFFF4A720c|r|CFFFCB70Ak|r"
 	print(name .. ":", ...)
 end
 
@@ -568,7 +565,7 @@ local function SetSetting(setting)
 		SetDBAll()
 	end
 	mMT_MediaPack.db.textures[setting] = not mMT_MediaPack.db.textures[setting]
-	PrintStatusOne(setting, mMT_MediaPack.db.textures[setting] )
+	PrintStatusOne(setting, mMT_MediaPack.db.textures[setting])
 	RLDialog()
 end
 
@@ -653,7 +650,8 @@ mAddStatusbar("mMediaTag Caith UI 2", "Wisps.tga")
 mAddStatusbar("MaUIv3", "MaUIv3.tga")
 mAddStatusbar("MaUIv3 LEFT", "MaUIv3Left.tga")
 mAddStatusbar("MaUIv3 RIGHT", "MaUIv3Right.tga")
-
+mAddStatusbar("mMT Blank", "mMT_Blank.tga")
+mAddStatusbar("mMT Target", "mMT_Target.tga")
 -- Backgrounds
 mAddBackground("mMediaTag BG1", "bg1.tga")
 mAddBackground("mMediaTag BG2", "bg2.tga")
@@ -665,6 +663,7 @@ mAddBackground("mMediaTag BG7", "bg7.tga")
 mAddBackground("mMediaTag BG8", "bg8.tga")
 mAddBackground("mMediaTag BG9", "bg9.tga")
 mAddBackground("mMediaTag BG10", "bg10.tga")
+mAddBackground("mMediaTag BG11", "bg11.tga")
 
 mAddBackground("mMediaTag Chat1", "chat1.tga")
 mAddBackground("mMediaTag Chat2", "chat2.tga")
@@ -672,6 +671,13 @@ mAddBackground("mMediaTag Chat3", "chat3.tga")
 mAddBackground("mMediaTag Chat4", "chat4.tga")
 mAddBackground("mMediaTag Chat5", "chat5.tga")
 mAddBackground("mMediaTag Chat6", "chat6.tga")
+mAddBackground("mMediaTag Chat7", "chat7.tga")
+mAddBackground("mMediaTag Chat8", "chat8.tga")
+mAddBackground("mMediaTag Chat9", "chat9.tga")
+mAddBackground("mMediaTag Chat10", "chat10.tga")
+mAddBackground("mMediaTag Chat11", "chat11.tga")
+mAddBackground("mMediaTag Chat12", "chat12.tga")
+mAddBackground("mMediaTag Chat13", "chat13.tga")
 
 mAddBorder("mMediaTag Border1", "mborder1.tga")
 mAddBorder("mMediaTag yborder", "yborder.tga")
@@ -691,3 +697,9 @@ mAddFont("Ubuntu-Bold", "Ubuntu-Bold.ttf")
 mAddFont("Ubuntu-Medium", "Ubuntu-Medium.ttf")
 mAddFont("NotoSans-Bold", "NotoSans-Bold.ttf")
 mAddFont("NotoSans-SemiBold", "NotoSans-SemiBold.ttf")
+mAddFont("Montserrat-Black", "Montserrat-Black.ttf")
+mAddFont("Montserrat-Bold", "Montserrat-Bold.ttf")
+mAddFont("Montserrat-ExtraBold", "Montserrat-ExtraBold.ttf")
+mAddFont("Montserrat-Medium", "Montserrat-Medium.ttf")
+mAddFont("Montserrat-Regular", "Montserrat-Regular.ttf")
+mAddFont("Montserrat-SemiBold", "Montserrat-SemiBold.ttf")

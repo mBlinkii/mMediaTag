@@ -4,11 +4,16 @@ local UF = E:GetModule("UnitFrames")
 
 local module = mMT.Modules.Castbar
 
-function module:SetCastbarColor(castbar, colorA, colorB)
+function module:SetCastbarColor(castbar, colorA, colorB, bg)
 	if colorA and colorB then
 		castbar:GetStatusBarTexture():SetGradient("HORIZONTAL", { r = colorA.r, g = colorA.g, b = colorA.b, a = 1 }, { r = colorB.r, g = colorB.g, b = colorB.b, a = 1 })
 	else
 		castbar:SetStatusBarColor(colorA.r, colorA.g, colorA.b)
+	end
+
+	if E.db.mMT.castbar.setBGColor and castbar.bg then
+		local multiplier = E.db.mMT.castbar.multiplier
+		castbar.bg:SetVertexColor(colorA.r * multiplier, colorA.g * multiplier, colorA.b * multiplier,1)
 	end
 end
 
@@ -37,7 +42,7 @@ local function UFLoader(castbar)
 
 	if mMT.Modules.ImportantSpells.loaded and E.db.mMT.importantspells.uf then
 		mMT.Modules.ImportantSpells:UpdateCastbar(castbar)
-	end 
+	end
 
 	if mMT.Modules.InterruptOnCD.loaded then
 		mMT.Modules.InterruptOnCD:InterruptChecker(castbar, true)

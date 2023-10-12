@@ -1,249 +1,395 @@
 local E = unpack(ElvUI)
+local DT = E:GetModule("DataTexts")
+function mMT:DeleteAll()
+	if E.global.datatexts.customPanels["mMT XIV Clock"] then
+		E.Options.args.datatexts.args.panels.args["mMT XIV Clock"] = nil
+		E.db.datatexts.panels["mMT XIV Clock"] = nil
+		E.global.datatexts.customPanels["mMT XIV Clock"] = nil
 
-function mMT:mDockFull(top, enable)
-	E.DataTexts:BuildPanelFrame("mDock")
+		DT:ReleasePanel("mMT XIV Clock")
+	end
 
-	E.db["datatexts"]["panels"]["mDock"][1] = "mCharacter"
-	E.db["datatexts"]["panels"]["mDock"][2] = "mSpellBook"
-	E.db["datatexts"]["panels"]["mDock"][3] = "mTalent"
-	E.db["datatexts"]["panels"]["mDock"][4] = "mAchievement"
-	E.db["datatexts"]["panels"]["mDock"][5] = "mQuest"
-	E.db["datatexts"]["panels"]["mDock"][6] = "mItemLevel"
-	E.db["datatexts"]["panels"]["mDock"][7] = "mLFDTool"
-	E.db["datatexts"]["panels"]["mDock"][8] = "mCollectionsJourna"
-	E.db["datatexts"]["panels"]["mDock"][9] = "mEncounterJournal"
-	E.db["datatexts"]["panels"]["mDock"][10] = "mBlizzardStore"
-	E.db["datatexts"]["panels"]["mDock"][11] = "mMainMenu"
-	E.db["datatexts"]["panels"]["mDock"][12] = "mFPSMS"
-	E.db["datatexts"]["panels"]["mDock"][13] = "mFriends"
-	E.db["datatexts"]["panels"]["mDock"][14] = "mGuild"
-	E.db["datatexts"]["panels"]["mDock"][15] = "mProfession"
-	E.db["datatexts"]["panels"]["mDock"][16] = "mDurability"
-	E.db["datatexts"]["panels"]["mDock"][17] = "mCalendar"
-	E.db["datatexts"]["panels"]["mDock"][18] = "mVolume"
-	E.db["datatexts"]["panels"]["mDock"][19] = "mBags"
-	E.db["datatexts"]["panels"]["mDock"]["enable"] = enable
+	if E.global.datatexts.customPanels["mMT XIV Info"] then
+		E.Options.args.datatexts.args.panels.args["mMT XIV Info"] = nil
+		E.db.datatexts.panels["mMT XIV Info"] = nil
+		E.global.datatexts.customPanels["mMT XIV Info"] = nil
 
-	E.global["datatexts"]["customPanels"]["mDock"]["backdrop"] = false
-	E.global["datatexts"]["customPanels"]["mDock"]["border"] = false
-	E.global["datatexts"]["customPanels"]["mDock"]["fonts"]["enable"] = false
-	E.global["datatexts"]["customPanels"]["mDock"]["fonts"]["font"] = "PT Sans Narrow"
-	E.global["datatexts"]["customPanels"]["mDock"]["fonts"]["fontOutline"] = "OUTLINE"
-	E.global["datatexts"]["customPanels"]["mDock"]["fonts"]["fontSize"] = 14
-	E.global["datatexts"]["customPanels"]["mDock"]["frameLevel"] = 1
-	E.global["datatexts"]["customPanels"]["mDock"]["frameStrata"] = "HIGH"
-	E.global["datatexts"]["customPanels"]["mDock"]["growth"] = "HORIZONTAL"
-	E.global["datatexts"]["customPanels"]["mDock"]["height"] = 42
-	E.global["datatexts"]["customPanels"]["mDock"]["mouseover"] = false
-	E.global["datatexts"]["customPanels"]["mDock"]["name"] = "mDock"
-	E.global["datatexts"]["customPanels"]["mDock"]["numPoints"] = 19
-	E.global["datatexts"]["customPanels"]["mDock"]["panelTransparency"] = false
-	E.global["datatexts"]["customPanels"]["mDock"]["textJustify"] = "CENTER"
-	E.global["datatexts"]["customPanels"]["mDock"]["tooltipAnchor"] = "ANCHOR_TOP"
-	E.global["datatexts"]["customPanels"]["mDock"]["tooltipXOffset"] = 0
-	E.global["datatexts"]["customPanels"]["mDock"]["tooltipYOffset"] = 9
-	E.global["datatexts"]["customPanels"]["mDock"]["visibility"] = "[petbattle] hide;show"
-	E.global["datatexts"]["customPanels"]["mDock"]["width"] = 900
+		DT:ReleasePanel("mMT XIV Info")
+	end
+
+	if E.global.datatexts.customPanels["mMT XIV Left"] then
+		E.Options.args.datatexts.args.panels.args["mMT XIV Left"] = nil
+		E.db.datatexts.panels["mMT XIV Left"] = nil
+		E.global.datatexts.customPanels["mMT XIV Left"] = nil
+
+		DT:ReleasePanel("mMT XIV Left")
+	end
+
+	if E.global.datatexts.customPanels["mMT XIV Right"] then
+		E.Options.args.datatexts.args.panels.args["mMT XIV Right"] = nil
+		E.db.datatexts.panels["mMT XIV Right"] = nil
+		E.global.datatexts.customPanels["mMT XIV Right"] = nil
+
+		DT:ReleasePanel("mMT XIV Right")
+	end
+
+	if E.global.datatexts.customPanels["mMT XIV Talent"] then
+		E.Options.args.datatexts.args.panels.args["mMT XIV Talent"] = nil
+		E.db.datatexts.panels["mMT XIV Talent"] = nil
+		E.global.datatexts.customPanels["mMT XIV Talent"] = nil
+
+		DT:ReleasePanel("mMT XIV Talent")
+	end
+
+	if E.global.datatexts.customPanels["mMT XIV Profession"] then
+		E.Options.args.datatexts.args.panels.args["mMT XIV Profession"] = nil
+		E.db.datatexts.panels["mMT XIV Profession"] = nil
+		E.global.datatexts.customPanels["mMT XIV Profession"] = nil
+
+		DT:ReleasePanel("mMT XIV Profession")
+	end
+
+	if E.global.datatexts.customPanels["mMT Dock"] then
+		E.Options.args.datatexts.args.panels.args["mMT Dock"] = nil
+		E.db.datatexts.panels["mMT Dock"] = nil
+		E.global.datatexts.customPanels["mMT Dock"] = nil
+
+		DT:ReleasePanel("mMT Dock")
+	end
+
+	if E.global.datatexts.customPanels["mMT Extra Infos"] then
+		E.Options.args.datatexts.args.panels.args["mMT Extra Infos"] = nil
+		E.db.datatexts.panels["mMT Extra Infos"] = nil
+		E.global.datatexts.customPanels["mMT Extra Infos"] = nil
+
+		DT:ReleasePanel("mMT Extra Infos")
+	end
+
+	if E.global.datatexts.customPanels["mMT Extra Icons"] then
+		E.Options.args.datatexts.args.panels.args["mMT Extra Icons"] = nil
+		E.db.datatexts.panels["mMT Extra Icons"] = nil
+		E.global.datatexts.customPanels["mMT Extra Icons"] = nil
+
+		DT:ReleasePanel("mMT Extra Icons")
+	end
+
+	if E.global.datatexts.customPanels["mMT Extra Clock"] then
+		E.Options.args.datatexts.args.panels.args["mMT Extra Clock"] = nil
+		E.db.datatexts.panels["mMT Extra Clock"] = nil
+		E.global.datatexts.customPanels["mMT Extra Clock"] = nil
+
+		DT:ReleasePanel("mMT Extra Clock")
+	end
+end
+
+function mMT:Dock_Default(top)
+	E.DataTexts:BuildPanelFrame("mMT Dock")
+
+	E.global.datatexts.customPanels["mMT Dock"]["backdrop"] = false
+	E.global.datatexts.customPanels["mMT Dock"]["border"] = false
+	E.global.datatexts.customPanels["mMT Dock"]["height"] = 32
+	E.global.datatexts.customPanels["mMT Dock"]["name"] = "mMT Dock"
+	E.global.datatexts.customPanels["mMT Dock"]["numPoints"] = 12
+	E.global.datatexts.customPanels["mMT Dock"]["visibility"] = "[petbattle][combat]  hide; show"
+	E.global.datatexts.customPanels["mMT Dock"]["width"] = 433
+
+	E.db["datatexts"]["panels"]["mMT Dock"][1] = "mMT_Dock_Character"
+	E.db["datatexts"]["panels"]["mMT Dock"][2] = "mMT_Dock_SpellBook"
+	E.db["datatexts"]["panels"]["mMT Dock"][3] = "mMT_Dock_Talent"
+	E.db["datatexts"]["panels"]["mMT Dock"][4] = "mMT_Dock_Achievement"
+	E.db["datatexts"]["panels"]["mMT Dock"][5] = "mMT_Dock_Quest"
+	E.db["datatexts"]["panels"]["mMT Dock"][6] = "mMT_Dock_LFDTool"
+	E.db["datatexts"]["panels"]["mMT Dock"][7] = "mMT_Dock_EncounterJournal"
+	E.db["datatexts"]["panels"]["mMT Dock"][8] = "mMT_Dock_CollectionsJournal"
+	E.db["datatexts"]["panels"]["mMT Dock"][9] = "mMT_Dock_Calendar"
+	E.db["datatexts"]["panels"]["mMT Dock"][10] = "mMT_Dock_Volume"
+	E.db["datatexts"]["panels"]["mMT Dock"][11] = "mMT_Dock_BlizzardStore"
+	E.db["datatexts"]["panels"]["mMT Dock"][12] = "mMT_Dock_MainMenu"
+	E.db["datatexts"]["panels"]["mMT Dock"]["battleground"] = false
+	E.db["datatexts"]["panels"]["mMT Dock"]["enable"] = true
+
+	E.db["mMT"]["dockdatatext"]["achievement"]["icon"] = "COLOR35"
+	E.db["mMT"]["dockdatatext"]["collection"]["icon"] = "COLOR05"
+	E.db["mMT"]["dockdatatext"]["encounter"]["icon"] = "COLOR17"
+	E.db["mMT"]["dockdatatext"]["talent"]["icon"] = "COLOR45"
+	E.db["mMT"]["dockdatatext"]["blizzardstore"]["icon"] = "COLOR01"
+	E.db["mMT"]["dockdatatext"]["character"]["icon"] = "COLOR19"
+	E.db["mMT"]["dockdatatext"]["guild"]["icon"] = "COLOR38"
+	E.db["mMT"]["dockdatatext"]["lfd"]["icon"] = "COLOR27"
+	E.db["mMT"]["dockdatatext"]["mainmenu"]["icon"] = "COLOR11"
+	E.db["mMT"]["dockdatatext"]["quest"]["icon"] = "COLOR26"
+	E.db["mMT"]["dockdatatext"]["spellbook"]["icon"] = "COLOR46"
+	E.db["mMT"]["dockdatatext"]["friends"]["icon"] = "COLOR58"
+	E.db["mMT"]["dockdatatext"]["fpsms"]["icon"] = "COLOR31"
+	E.db["mMT"]["dockdatatext"]["durability"]["icon"] = "COLOR53"
+	E.db["mMT"]["dockdatatext"]["itemlevel"]["icon"] = "COLOR50"
+	E.db["mMT"]["dockdatatext"]["notification"]["icon"] = "FILLED27"
+	E.db["mMT"]["dockdatatext"]["profession"]["icon"] = "COLOR06"
+	E.db["mMT"]["dockdatatext"]["volume"]["icon"] = "COLOR62"
+	E.db["mMT"]["dockdatatext"]["calendar"]["icon"] = "COLOR02"
+	E.db["mMT"]["dockdatatext"]["bag"]["icon"] = "COLOR68"
+
+
+	E.db["mMT"]["dockdatatext"]["calendar"]["option"] = "de"
+	E.db["mMT"]["dockdatatext"]["calendar"]["showyear"] = true
+	E.db["mMT"]["dockdatatext"]["fontSize"] = 12
+	E.db["mMT"]["dockdatatext"]["customfontzise"] = false
+	E.db["mMT"]["dockdatatext"]["fontcolor"]["b"] = 0.10
+	E.db["mMT"]["dockdatatext"]["fontcolor"]["g"] = 0
+	E.db["mMT"]["dockdatatext"]["fontcolor"]["r"] = 0.96
+	E.db["mMT"]["dockdatatext"]["fontflag"] = "NONE"
+	E.db["mMT"]["dockdatatext"]["itemlevel"]["onlytext"] = true
+	E.db["mMT"]["dockdatatext"]["itemlevel"]["text"] = "GS "
+
+
+	if top then
+		E.db["movers"]["DTPanelmMT DockMover"] = "TOP,ElvUIParent,TOP,0,-5"
+	else
+		E.db["movers"]["DTPanelmMT DockMover"] = "BOTTOM,ElvUIParent,BOTTOM,0,5"
+	end
+
+	E:StaggeredUpdateAll(nil, true)
+end
+
+function mMT:Dock_XIVLike(top)
+	E.DataTexts:BuildPanelFrame("mMT XIV Clock")
+	E.global["datatexts"]["customPanels"]["mMT XIV Clock"]["backdrop"] = false
+	E.global["datatexts"]["customPanels"]["mMT XIV Clock"]["border"] = false
+	E.global["datatexts"]["customPanels"]["mMT XIV Clock"]["fonts"]["enable"] = true
+	E.global["datatexts"]["customPanels"]["mMT XIV Clock"]["fonts"]["font"] = "Montserrat-SemiBold"
+	E.global["datatexts"]["customPanels"]["mMT XIV Clock"]["fonts"]["fontOutline"] = "SHADOW"
+	E.global["datatexts"]["customPanels"]["mMT XIV Clock"]["fonts"]["fontSize"] = 32
+	E.global["datatexts"]["customPanels"]["mMT XIV Clock"]["name"] = "mMT XIV Clock"
+	E.global["datatexts"]["customPanels"]["mMT XIV Clock"]["numPoints"] = 1
+	E.global["datatexts"]["customPanels"]["mMT XIV Clock"]["width"] = 125
+
+	E.DataTexts:BuildPanelFrame("mMT XIV Info")
+	E.global["datatexts"]["customPanels"]["mMT XIV Info"]["backdrop"] = false
+	E.global["datatexts"]["customPanels"]["mMT XIV Info"]["border"] = false
+	E.global["datatexts"]["customPanels"]["mMT XIV Info"]["fonts"]["enable"] = true
+	E.global["datatexts"]["customPanels"]["mMT XIV Info"]["fonts"]["font"] = "Montserrat-Medium"
+	E.global["datatexts"]["customPanels"]["mMT XIV Info"]["fonts"]["fontOutline"] = "SHADOW"
+	E.global["datatexts"]["customPanels"]["mMT XIV Info"]["fonts"]["fontSize"] = 16
+	E.global["datatexts"]["customPanels"]["mMT XIV Info"]["height"] = 28
+	E.global["datatexts"]["customPanels"]["mMT XIV Info"]["name"] = "mMT XIV Info"
+	E.global["datatexts"]["customPanels"]["mMT XIV Info"]["numPoints"] = 1
+	E.global["datatexts"]["customPanels"]["mMT XIV Info"]["width"] = 162
+
+	E.DataTexts:BuildPanelFrame("mMT XIV Left")
+	E.global["datatexts"]["customPanels"]["mMT XIV Left"]["backdrop"] = false
+	E.global["datatexts"]["customPanels"]["mMT XIV Left"]["border"] = false
+	E.global["datatexts"]["customPanels"]["mMT XIV Left"]["height"] = 28
+	E.global["datatexts"]["customPanels"]["mMT XIV Left"]["name"] = "mMT XIV Left"
+	E.global["datatexts"]["customPanels"]["mMT XIV Left"]["numPoints"] = 11
+	E.global["datatexts"]["customPanels"]["mMT XIV Left"]["width"] = 440
+
+	E.DataTexts:BuildPanelFrame("mMT XIV Right")
+	E.global["datatexts"]["customPanels"]["mMT XIV Right"]["backdrop"] = false
+	E.global["datatexts"]["customPanels"]["mMT XIV Right"]["border"] = false
+	E.global["datatexts"]["customPanels"]["mMT XIV Right"]["fonts"]["enable"] = true
+	E.global["datatexts"]["customPanels"]["mMT XIV Right"]["fonts"]["font"] = "Montserrat-Medium"
+	E.global["datatexts"]["customPanels"]["mMT XIV Right"]["fonts"]["fontOutline"] = "SHADOW"
+	E.global["datatexts"]["customPanels"]["mMT XIV Right"]["fonts"]["fontSize"] = 14
+	E.global["datatexts"]["customPanels"]["mMT XIV Right"]["height"] = 28
+	E.global["datatexts"]["customPanels"]["mMT XIV Right"]["name"] = "mMT XIV Right"
+	E.global["datatexts"]["customPanels"]["mMT XIV Right"]["numPoints"] = 4
+	E.global["datatexts"]["customPanels"]["mMT XIV Right"]["width"] = 440
+
+	E.DataTexts:BuildPanelFrame("mMT XIV Talent")
+E.global["datatexts"]["customPanels"]["mMT XIV Talent"]["backdrop"] = false
+E.global["datatexts"]["customPanels"]["mMT XIV Talent"]["border"] = false
+E.global["datatexts"]["customPanels"]["mMT XIV Talent"]["fonts"]["enable"] = true
+E.global["datatexts"]["customPanels"]["mMT XIV Talent"]["fonts"]["font"] = "Montserrat-Medium"
+E.global["datatexts"]["customPanels"]["mMT XIV Talent"]["fonts"]["fontOutline"] = "SHADOW"
+E.global["datatexts"]["customPanels"]["mMT XIV Talent"]["fonts"]["fontSize"] = 14
+E.global["datatexts"]["customPanels"]["mMT XIV Talent"]["height"] = 28
+E.global["datatexts"]["customPanels"]["mMT XIV Talent"]["name"] = "mMT XIV Talent"
+E.global["datatexts"]["customPanels"]["mMT XIV Talent"]["numPoints"] = 1
+E.global["datatexts"]["customPanels"]["mMT XIV Talent"]["width"] = 240
+
+	E.DataTexts:BuildPanelFrame("mMT XIV Profession")
+	E.global["datatexts"]["customPanels"]["mMT XIV Profession"]["backdrop"] = false
+	E.global["datatexts"]["customPanels"]["mMT XIV Profession"]["border"] = false
+	E.global["datatexts"]["customPanels"]["mMT XIV Profession"]["fonts"]["enable"] = true
+	E.global["datatexts"]["customPanels"]["mMT XIV Profession"]["fonts"]["font"] = "Montserrat-Medium"
+	E.global["datatexts"]["customPanels"]["mMT XIV Profession"]["fonts"]["fontOutline"] = "SHADOW"
+	E.global["datatexts"]["customPanels"]["mMT XIV Profession"]["fonts"]["fontSize"] = 14
+	E.global["datatexts"]["customPanels"]["mMT XIV Profession"]["height"] = 28
+	E.global["datatexts"]["customPanels"]["mMT XIV Profession"]["name"] = "mMT XIV Profession"
+	E.global["datatexts"]["customPanels"]["mMT XIV Profession"]["numPoints"] = 2
+	E.global["datatexts"]["customPanels"]["mMT XIV Profession"]["width"] = 430
+
+	E.db["datatexts"]["panels"]["mMT XIV Clock"][1] = "Time"
+	E.db["datatexts"]["panels"]["mMT XIV Clock"][2] = ""
+	E.db["datatexts"]["panels"]["mMT XIV Clock"][3] = ""
+	E.db["datatexts"]["panels"]["mMT XIV Clock"]["battleground"] = false
+	E.db["datatexts"]["panels"]["mMT XIV Clock"]["enable"] = true
+
+	E.db["datatexts"]["panels"]["mMT XIV Info"][1] = "DurabilityIlevel"
+	E.db["datatexts"]["panels"]["mMT XIV Info"][2] = ""
+	E.db["datatexts"]["panels"]["mMT XIV Info"][3] = ""
+	E.db["datatexts"]["panels"]["mMT XIV Info"]["battleground"] = false
+	E.db["datatexts"]["panels"]["mMT XIV Info"]["enable"] = true
+
+	E.db["datatexts"]["panels"]["mMT XIV Left"][1] = "mMT_Dock_MainMenu"
+	E.db["datatexts"]["panels"]["mMT XIV Left"][2] = "mMT_Dock_Character"
+	E.db["datatexts"]["panels"]["mMT XIV Left"][3] = "mMT_Dock_Guild"
+	E.db["datatexts"]["panels"]["mMT XIV Left"][4] = "mMT_Dock_Friends"
+	E.db["datatexts"]["panels"]["mMT XIV Left"][5] = "mMT_Dock_Achievement"
+	E.db["datatexts"]["panels"]["mMT XIV Left"][6] = "mMT_Dock_SpellBook"
+	E.db["datatexts"]["panels"]["mMT XIV Left"][7] = "mMT_Dock_LFDTool"
+	E.db["datatexts"]["panels"]["mMT XIV Left"][8] = "mMT_Dock_EncounterJournal"
+	E.db["datatexts"]["panels"]["mMT XIV Left"][9] = "mMT_Dock_Quest"
+	E.db["datatexts"]["panels"]["mMT XIV Left"][10] = "mMT_Dock_CollectionsJournal"
+	E.db["datatexts"]["panels"]["mMT XIV Left"][11] = "mMT_Dock_BlizzardStore"
+	E.db["datatexts"]["panels"]["mMT XIV Left"]["battleground"] = false
+	E.db["datatexts"]["panels"]["mMT XIV Left"]["enable"] = true
+
+	E.db["datatexts"]["panels"]["mMT XIV Right"][1] = "mFPS"
+	E.db["datatexts"]["panels"]["mMT XIV Right"][2] = "M+ Score"
+	E.db["datatexts"]["panels"]["mMT XIV Right"][3] = "mTeleports"
+	E.db["datatexts"]["panels"]["mMT XIV Right"][4] = "Gold"
+	E.db["datatexts"]["panels"]["mMT XIV Right"]["battleground"] = false
+	E.db["datatexts"]["panels"]["mMT XIV Right"]["enable"] = true
+
+	E.db["datatexts"]["panels"]["mMT XIV Talent"][1] = "Talent/Loot Specialization"
+	E.db["datatexts"]["panels"]["mMT XIV Talent"][2] = ""
+	E.db["datatexts"]["panels"]["mMT XIV Talent"][3] = ""
+	E.db["datatexts"]["panels"]["mMT XIV Talent"]["battleground"] = false
+	E.db["datatexts"]["panels"]["mMT XIV Talent"]["enable"] = true
+
+	E.db["datatexts"]["panels"]["mMT XIV Profession"][1] = "firstProf"
+	E.db["datatexts"]["panels"]["mMT XIV Profession"][2] = "secondProf"
+	E.db["datatexts"]["panels"]["mMT XIV Profession"][3] = ""
+	E.db["datatexts"]["panels"]["mMT XIV Profession"]["battleground"] = false
+	E.db["datatexts"]["panels"]["mMT XIV Profession"]["enable"] = true
+
+	E.db["mMT"]["dockdatatext"]["achievement"]["icon"] = "MATERIAL01"
+	E.db["mMT"]["dockdatatext"]["blizzardstore"]["icon"] = "MATERIAL59"
+	E.db["mMT"]["dockdatatext"]["character"]["icon"] = "MATERIAL39"
+	E.db["mMT"]["dockdatatext"]["collection"]["icon"] = "MATERIAL33"
+	E.db["mMT"]["dockdatatext"]["customfontcolor"] = true
+	E.db["mMT"]["dockdatatext"]["customfontzise"] = true
+	E.db["mMT"]["dockdatatext"]["encounter"]["icon"] = "MATERIAL42"
+	E.db["mMT"]["dockdatatext"]["font"] = "Montserrat-SemiBold"
+	E.db["mMT"]["dockdatatext"]["fontSize"] = 14
+	E.db["mMT"]["dockdatatext"]["fontcolor"]["g"] = 0.77254909276962
+	E.db["mMT"]["dockdatatext"]["fontcolor"]["r"] = 0.086274512112141
+	E.db["mMT"]["dockdatatext"]["friends"]["icon"] = "MATERIAL28"
+	E.db["mMT"]["dockdatatext"]["guild"]["icon"] = "MATERIAL35"
+	E.db["mMT"]["dockdatatext"]["hover"]["style"] = "class"
+	E.db["mMT"]["dockdatatext"]["lfd"]["icon"] = "MATERIAL11"
+	E.db["mMT"]["dockdatatext"]["mainmenu"]["icon"] = "MATERIAL52"
+	E.db["mMT"]["dockdatatext"]["normal"]["a"] = 0.80718515813351
+	E.db["mMT"]["dockdatatext"]["profession"]["icon"] = "test"
+	E.db["mMT"]["dockdatatext"]["quest"]["icon"] = "MATERIAL20"
+	E.db["mMT"]["dockdatatext"]["spellbook"]["icon"] = "MATERIAL22"
 
 	if top then
 		E.db["movers"]["DTPanelmDockMover"] = "TOP,ElvUIParent,TOP,0,-4"
+
+		E.db["movers"]["DTPanelmMT XIV ClockMover"] = "TOP,ElvUIParent,TOP,0,-10"
+		E.db["movers"]["DTPanelmMT XIV InfoMover"] = "TOPLEFT,UIParent,TOPLEFT,467,-4"
+		E.db["movers"]["DTPanelmMT XIV LeftMover"] = "TOPLEFT,ElvUIParent,TOPLEFT,14,-4"
+		E.db["movers"]["DTPanelmMT XIV RightMover"] = "TOPRIGHT,UIParent,TOPRIGHT,-4,-4"
+		E.db["movers"]["DTPanelmMT XIV TalentMover"] = "TOP,UIParent,TOP,-204,-4"
+		E.db["movers"]["DTPanelmMT XIV ProfessionMover"] = "TOP,UIParent,TOP,286,-4"
 	else
-		E.db["movers"]["DTPanelmDockMover"] = "BOTTOM,ElvUIParent,BOTTOM,0,4"
+		E.db["movers"]["DTPanelmMT XIV ClockMover"] = "BOTTOM,ElvUIParent,BOTTOM,0,10"
+		E.db["movers"]["DTPanelmMT XIV InfoMover"] = "BOTTOMLEFT,UIParent,BOTTOMLEFT,467,4"
+		E.db["movers"]["DTPanelmMT XIV LeftMover"] = "BOTTOMLEFT,ElvUIParent,BOTTOMLEFT,14,4"
+		E.db["movers"]["DTPanelmMT XIV RightMover"] = "BOTTOMRIGHT,UIParent,BOTTOMRIGHT,-4,4"
+		E.db["movers"]["DTPanelmMT XIV TalentMover"] = "BOTTOM,UIParent,BOTTOM,-204,4"
+		E.db["movers"]["DTPanelmMT XIV ProfessionMover"] = "BOTTOM,UIParent,BOTTOM,286,4"
 	end
 
 	E:StaggeredUpdateAll(nil, true)
 end
 
-function mMT:mDockMicroBar(top, enable)
-	E.DataTexts:BuildPanelFrame("mMicroBar")
+function mMT:Dock_Extra(top)
+	E.DataTexts:BuildPanelFrame("mMT Extra Clock")
+	E.global.datatexts.customPanels["mMT Extra Clock"]["fonts"]["enable"] = true
+	E.global.datatexts.customPanels["mMT Extra Clock"]["fonts"]["font"] = "Montserrat-Bold"
+	E.global.datatexts.customPanels["mMT Extra Clock"]["fonts"]["fontOutline"] = "SHADOW"
+	E.global.datatexts.customPanels["mMT Extra Clock"]["fonts"]["fontSize"] = 32
+	E.global.datatexts.customPanels["mMT Extra Clock"]["height"] = 30
+	E.global.datatexts.customPanels["mMT Extra Clock"]["name"] = "mMT Extra Clock"
+	E.global.datatexts.customPanels["mMT Extra Clock"]["numPoints"] = 1
+	E.global.datatexts.customPanels["mMT Extra Clock"]["panelTransparency"] = true
+	E.global.datatexts.customPanels["mMT Extra Clock"]["width"] = 188
 
-	E.db["datatexts"]["panels"]["mMicroBar"][1] = "mCharacter"
-	E.db["datatexts"]["panels"]["mMicroBar"][2] = "mSpellBook"
-	E.db["datatexts"]["panels"]["mMicroBar"][3] = "mTalent"
-	E.db["datatexts"]["panels"]["mMicroBar"][4] = "mAchievement"
-	E.db["datatexts"]["panels"]["mMicroBar"][5] = "mQuest"
-	E.db["datatexts"]["panels"]["mMicroBar"][6] = "mGuild"
-	E.db["datatexts"]["panels"]["mMicroBar"][7] = "mLFDTool"
-	E.db["datatexts"]["panels"]["mMicroBar"][8] = "mCollectionsJourna"
-	E.db["datatexts"]["panels"]["mMicroBar"][9] = "mEncounterJournal"
-	E.db["datatexts"]["panels"]["mMicroBar"][10] = "mBlizzardStore"
-	E.db["datatexts"]["panels"]["mMicroBar"][11] = "mMainMenu"
-	E.db["datatexts"]["panels"]["mMicroBar"]["enable"] = enable
+	E.DataTexts:BuildPanelFrame("mMT Extra Icons")
+	E.global.datatexts.customPanels["mMT Extra Icons"]["height"] = 30
+	E.global.datatexts.customPanels["mMT Extra Icons"]["name"] = "mMT Extra Icons"
+	E.global.datatexts.customPanels["mMT Extra Icons"]["numPoints"] = 10
+	E.global.datatexts.customPanels["mMT Extra Icons"]["panelTransparency"] = true
+	E.global.datatexts.customPanels["mMT Extra Icons"]["width"] = 428
 
-	E.global["datatexts"]["customPanels"]["mMicroBar"]["backdrop"] = false
-	E.global["datatexts"]["customPanels"]["mMicroBar"]["border"] = true
-	E.global["datatexts"]["customPanels"]["mMicroBar"]["fonts"]["enable"] = false
-	E.global["datatexts"]["customPanels"]["mMicroBar"]["fonts"]["font"] = "PT Sans Narrow"
-	E.global["datatexts"]["customPanels"]["mMicroBar"]["fonts"]["fontOutline"] = "OUTLINE"
-	E.global["datatexts"]["customPanels"]["mMicroBar"]["fonts"]["fontSize"] = 12
-	E.global["datatexts"]["customPanels"]["mMicroBar"]["frameLevel"] = 1
-	E.global["datatexts"]["customPanels"]["mMicroBar"]["frameStrata"] = "LOW"
-	E.global["datatexts"]["customPanels"]["mMicroBar"]["growth"] = "HORIZONTAL"
-	E.global["datatexts"]["customPanels"]["mMicroBar"]["height"] = 42
-	E.global["datatexts"]["customPanels"]["mMicroBar"]["mouseover"] = false
-	E.global["datatexts"]["customPanels"]["mMicroBar"]["name"] = "mMicroBar"
-	E.global["datatexts"]["customPanels"]["mMicroBar"]["numPoints"] = 11
-	E.global["datatexts"]["customPanels"]["mMicroBar"]["panelTransparency"] = false
-	E.global["datatexts"]["customPanels"]["mMicroBar"]["textJustify"] = "CENTER"
-	E.global["datatexts"]["customPanels"]["mMicroBar"]["tooltipAnchor"] = "ANCHOR_TOPLEFT"
-	E.global["datatexts"]["customPanels"]["mMicroBar"]["tooltipXOffset"] = -17
-	E.global["datatexts"]["customPanels"]["mMicroBar"]["tooltipYOffset"] = 4
-	E.global["datatexts"]["customPanels"]["mMicroBar"]["visibility"] = "[petbattle] hide;show"
-	E.global["datatexts"]["customPanels"]["mMicroBar"]["width"] = 570
+	E.DataTexts:BuildPanelFrame("mMT Extra Infos")
+	E.global.datatexts.customPanels["mMT Extra Infos"]["fonts"]["enable"] = true
+	E.global.datatexts.customPanels["mMT Extra Infos"]["fonts"]["font"] = "Montserrat-SemiBold"
+	E.global.datatexts.customPanels["mMT Extra Infos"]["fonts"]["fontOutline"] = "SHADOW"
+	E.global.datatexts.customPanels["mMT Extra Infos"]["name"] = "mMT Extra Infos"
+	E.global.datatexts.customPanels["mMT Extra Infos"]["numPoints"] = 4
+	E.global.datatexts.customPanels["mMT Extra Infos"]["panelTransparency"] = true
+	E.global.datatexts.customPanels["mMT Extra Infos"]["width"] = 618
 
-	if top then
-		E.db["movers"]["DTPanelmMicroBarMover"] = "TOP,ElvUIParent,TOP,0,-4"
-	else
-		E.db["movers"]["DTPanelmMicroBarMover"] = "BOTTOM,ElvUIParent,BOTTOM,0,4"
-	end
+	E.db["datatexts"]["panels"]["mMT Extra Clock"][1] = "Time"
+	E.db["datatexts"]["panels"]["mMT Extra Clock"][2] = ""
+	E.db["datatexts"]["panels"]["mMT Extra Clock"][3] = ""
+	E.db["datatexts"]["panels"]["mMT Extra Clock"]["battleground"] = false
+	E.db["datatexts"]["panels"]["mMT Extra Clock"]["enable"] = true
 
-	E:StaggeredUpdateAll(nil, true)
-end
+	E.db["datatexts"]["panels"]["mMT Extra Icons"][1] = "mMT_Dock_Character"
+	E.db["datatexts"]["panels"]["mMT Extra Icons"][2] = "mMT_Dock_SpellBook"
+	E.db["datatexts"]["panels"]["mMT Extra Icons"][3] = "mMT_Dock_Talent"
+	E.db["datatexts"]["panels"]["mMT Extra Icons"][4] = "mMT_Dock_Achievement"
+	E.db["datatexts"]["panels"]["mMT Extra Icons"][5] = "mMT_Dock_Quest"
+	E.db["datatexts"]["panels"]["mMT Extra Icons"][6] = "mMT_Dock_LFDTool"
+	E.db["datatexts"]["panels"]["mMT Extra Icons"][7] = "mMT_Dock_EncounterJournal"
+	E.db["datatexts"]["panels"]["mMT Extra Icons"][8] = "mMT_Dock_CollectionsJournal"
+	E.db["datatexts"]["panels"]["mMT Extra Icons"][9] = "mMT_Dock_BlizzardStore"
+	E.db["datatexts"]["panels"]["mMT Extra Icons"][10] = "mMT_Dock_MainMenu"
+	E.db["datatexts"]["panels"]["mMT Extra Icons"]["battleground"] = false
+	E.db["datatexts"]["panels"]["mMT Extra Icons"]["enable"] = true
 
-function mMT:mDockSpecial(top, enable)
-	E.DataTexts:BuildPanelFrame("mspecialDockBaground")
-	E.DataTexts:BuildPanelFrame("mspecialDockLeft")
-	E.DataTexts:BuildPanelFrame("mspecialDockRight")
-	E.DataTexts:BuildPanelFrame("mspecialDockTime")
-	E.DataTexts:BuildPanelFrame("mspecialDockDate")
+	E.db["datatexts"]["panels"]["mMT Extra Infos"][1] = "Talent/Loot Specialization"
+	E.db["datatexts"]["panels"]["mMT Extra Infos"][2] = "firstProf"
+	E.db["datatexts"]["panels"]["mMT Extra Infos"][3] = "secondProf"
+	E.db["datatexts"]["panels"]["mMT Extra Infos"][4] = "System"
+	E.db["datatexts"]["panels"]["mMT Extra Infos"]["battleground"] = false
+	E.db["datatexts"]["panels"]["mMT Extra Infos"]["enable"] = true
 
-	E.global["datatexts"]["customPanels"]["mspecialDockBaground"]["backdrop"] = true
-	E.global["datatexts"]["customPanels"]["mspecialDockBaground"]["border"] = true
-	E.global["datatexts"]["customPanels"]["mspecialDockBaground"]["fonts"]["enable"] = false
-	E.global["datatexts"]["customPanels"]["mspecialDockBaground"]["fonts"]["font"] = "PT Sans Narrow"
-	E.global["datatexts"]["customPanels"]["mspecialDockBaground"]["fonts"]["fontOutline"] = "OUTLINE"
-	E.global["datatexts"]["customPanels"]["mspecialDockBaground"]["fonts"]["fontSize"] = 12
-	E.global["datatexts"]["customPanels"]["mspecialDockBaground"]["frameLevel"] = 1
-	E.global["datatexts"]["customPanels"]["mspecialDockBaground"]["frameStrata"] = "LOW"
-	E.global["datatexts"]["customPanels"]["mspecialDockBaground"]["growth"] = "HORIZONTAL"
-	E.global["datatexts"]["customPanels"]["mspecialDockBaground"]["height"] = 48
-	E.global["datatexts"]["customPanels"]["mspecialDockBaground"]["mouseover"] = false
-	E.global["datatexts"]["customPanels"]["mspecialDockBaground"]["name"] = "mspecialDockBaground"
-	E.global["datatexts"]["customPanels"]["mspecialDockBaground"]["numPoints"] = 1
-	E.global["datatexts"]["customPanels"]["mspecialDockBaground"]["panelTransparency"] = false
-	E.global["datatexts"]["customPanels"]["mspecialDockBaground"]["textJustify"] = "CENTER"
-	E.global["datatexts"]["customPanels"]["mspecialDockBaground"]["tooltipAnchor"] = "ANCHOR_TOPLEFT"
-	E.global["datatexts"]["customPanels"]["mspecialDockBaground"]["tooltipXOffset"] = -17
-	E.global["datatexts"]["customPanels"]["mspecialDockBaground"]["tooltipYOffset"] = 4
-	E.global["datatexts"]["customPanels"]["mspecialDockBaground"]["visibility"] = "[petbattle] hide;show"
-	E.global["datatexts"]["customPanels"]["mspecialDockBaground"]["width"] = 505
-
-	E.db["datatexts"]["panels"]["mspecialDockBaground"][1] = ""
-	E.db["datatexts"]["panels"]["mspecialDockBaground"]["enable"] = enable
-
-	E.global["datatexts"]["customPanels"]["mspecialDockLeft"]["backdrop"] = false
-	E.global["datatexts"]["customPanels"]["mspecialDockLeft"]["border"] = true
-	E.global["datatexts"]["customPanels"]["mspecialDockLeft"]["fonts"]["enable"] = false
-	E.global["datatexts"]["customPanels"]["mspecialDockLeft"]["fonts"]["font"] = "PT Sans Narrow"
-	E.global["datatexts"]["customPanels"]["mspecialDockLeft"]["fonts"]["fontOutline"] = "OUTLINE"
-	E.global["datatexts"]["customPanels"]["mspecialDockLeft"]["fonts"]["fontSize"] = 12
-	E.global["datatexts"]["customPanels"]["mspecialDockLeft"]["frameLevel"] = 1
-	E.global["datatexts"]["customPanels"]["mspecialDockLeft"]["frameStrata"] = "MEDIUM"
-	E.global["datatexts"]["customPanels"]["mspecialDockLeft"]["growth"] = "HORIZONTAL"
-	E.global["datatexts"]["customPanels"]["mspecialDockLeft"]["height"] = 42
-	E.global["datatexts"]["customPanels"]["mspecialDockLeft"]["mouseover"] = false
-	E.global["datatexts"]["customPanels"]["mspecialDockLeft"]["name"] = "mspecialDockLeft"
-	E.global["datatexts"]["customPanels"]["mspecialDockLeft"]["numPoints"] = 4
-	E.global["datatexts"]["customPanels"]["mspecialDockLeft"]["panelTransparency"] = false
-	E.global["datatexts"]["customPanels"]["mspecialDockLeft"]["textJustify"] = "CENTER"
-	E.global["datatexts"]["customPanels"]["mspecialDockLeft"]["tooltipAnchor"] = "ANCHOR_TOPLEFT"
-	E.global["datatexts"]["customPanels"]["mspecialDockLeft"]["tooltipXOffset"] = -17
-	E.global["datatexts"]["customPanels"]["mspecialDockLeft"]["tooltipYOffset"] = 4
-	E.global["datatexts"]["customPanels"]["mspecialDockLeft"]["visibility"] = "[petbattle] hide;show"
-	E.global["datatexts"]["customPanels"]["mspecialDockLeft"]["width"] = 200
-
-	E.db["datatexts"]["panels"]["mspecialDockLeft"][1] = "mCharacter"
-	E.db["datatexts"]["panels"]["mspecialDockLeft"][2] = "mItemLevel"
-	E.db["datatexts"]["panels"]["mspecialDockLeft"][3] = "mGuild"
-	E.db["datatexts"]["panels"]["mspecialDockLeft"][4] = "mFriends"
-	E.db["datatexts"]["panels"]["mspecialDockLeft"]["enable"] = enable
-
-	E.global["datatexts"]["customPanels"]["mspecialDockRight"]["backdrop"] = false
-	E.global["datatexts"]["customPanels"]["mspecialDockRight"]["border"] = true
-	E.global["datatexts"]["customPanels"]["mspecialDockRight"]["fonts"]["enable"] = false
-	E.global["datatexts"]["customPanels"]["mspecialDockRight"]["fonts"]["font"] = "PT Sans Narrow"
-	E.global["datatexts"]["customPanels"]["mspecialDockRight"]["fonts"]["fontOutline"] = "OUTLINE"
-	E.global["datatexts"]["customPanels"]["mspecialDockRight"]["fonts"]["fontSize"] = 12
-	E.global["datatexts"]["customPanels"]["mspecialDockRight"]["frameLevel"] = 1
-	E.global["datatexts"]["customPanels"]["mspecialDockRight"]["frameStrata"] = "MEDIUM"
-	E.global["datatexts"]["customPanels"]["mspecialDockRight"]["growth"] = "HORIZONTAL"
-	E.global["datatexts"]["customPanels"]["mspecialDockRight"]["height"] = 42
-	E.global["datatexts"]["customPanels"]["mspecialDockRight"]["mouseover"] = false
-	E.global["datatexts"]["customPanels"]["mspecialDockRight"]["name"] = "mspecialDockRight"
-	E.global["datatexts"]["customPanels"]["mspecialDockRight"]["numPoints"] = 4
-	E.global["datatexts"]["customPanels"]["mspecialDockRight"]["panelTransparency"] = false
-	E.global["datatexts"]["customPanels"]["mspecialDockRight"]["textJustify"] = "CENTER"
-	E.global["datatexts"]["customPanels"]["mspecialDockRight"]["tooltipAnchor"] = "ANCHOR_TOPLEFT"
-	E.global["datatexts"]["customPanels"]["mspecialDockRight"]["tooltipXOffset"] = -17
-	E.global["datatexts"]["customPanels"]["mspecialDockRight"]["tooltipYOffset"] = 4
-	E.global["datatexts"]["customPanels"]["mspecialDockRight"]["visibility"] = "[petbattle] hide;show"
-	E.global["datatexts"]["customPanels"]["mspecialDockRight"]["width"] = 200
-
-	E.db["datatexts"]["panels"]["mspecialDockRight"][1] = "mLFDTool"
-	E.db["datatexts"]["panels"]["mspecialDockRight"][2] = "mProfession"
-	E.db["datatexts"]["panels"]["mspecialDockRight"][3] = "mCollectionsJourna"
-	E.db["datatexts"]["panels"]["mspecialDockRight"][4] = "mMainMenu"
-	E.db["datatexts"]["panels"]["mspecialDockRight"]["enable"] = enable
-
-	E.global["datatexts"]["customPanels"]["mspecialDockTime"]["backdrop"] = false
-	E.global["datatexts"]["customPanels"]["mspecialDockTime"]["border"] = true
-	E.global["datatexts"]["customPanels"]["mspecialDockTime"]["fonts"]["enable"] = true
-	E.global["datatexts"]["customPanels"]["mspecialDockTime"]["fonts"]["font"] = "PT Sans Narrow"
-	E.global["datatexts"]["customPanels"]["mspecialDockTime"]["fonts"]["fontOutline"] = "OUTLINE"
-	E.global["datatexts"]["customPanels"]["mspecialDockTime"]["fonts"]["fontSize"] = 24
-	E.global["datatexts"]["customPanels"]["mspecialDockTime"]["frameLevel"] = 1
-	E.global["datatexts"]["customPanels"]["mspecialDockTime"]["frameStrata"] = "MEDIUM"
-	E.global["datatexts"]["customPanels"]["mspecialDockTime"]["growth"] = "VERTICAL"
-	E.global["datatexts"]["customPanels"]["mspecialDockTime"]["height"] = 21
-	E.global["datatexts"]["customPanels"]["mspecialDockTime"]["mouseover"] = false
-	E.global["datatexts"]["customPanels"]["mspecialDockTime"]["name"] = "mspecialDockTime"
-	E.global["datatexts"]["customPanels"]["mspecialDockTime"]["numPoints"] = 1
-	E.global["datatexts"]["customPanels"]["mspecialDockTime"]["panelTransparency"] = false
-	E.global["datatexts"]["customPanels"]["mspecialDockTime"]["textJustify"] = "CENTER"
-	E.global["datatexts"]["customPanels"]["mspecialDockTime"]["tooltipAnchor"] = "ANCHOR_TOPLEFT"
-	E.global["datatexts"]["customPanels"]["mspecialDockTime"]["tooltipXOffset"] = -17
-	E.global["datatexts"]["customPanels"]["mspecialDockTime"]["tooltipYOffset"] = 4
-	E.global["datatexts"]["customPanels"]["mspecialDockTime"]["visibility"] = "[petbattle] hide;show"
-	E.global["datatexts"]["customPanels"]["mspecialDockTime"]["width"] = 100
-
-	E.db["datatexts"]["panels"]["mspecialDockTime"][1] = "Time"
-	E.db["datatexts"]["panels"]["mspecialDockTime"]["enable"] = enable
-
-	E.global["datatexts"]["customPanels"]["mspecialDockDate"]["backdrop"] = false
-	E.global["datatexts"]["customPanels"]["mspecialDockDate"]["border"] = true
-	E.global["datatexts"]["customPanels"]["mspecialDockDate"]["fonts"]["enable"] = false
-	E.global["datatexts"]["customPanels"]["mspecialDockDate"]["fonts"]["fontOutline"] = "OUTLINE"
-	E.global["datatexts"]["customPanels"]["mspecialDockDate"]["fonts"]["fontSize"] = 12
-	E.global["datatexts"]["customPanels"]["mspecialDockDate"]["frameLevel"] = 1
-	E.global["datatexts"]["customPanels"]["mspecialDockDate"]["frameStrata"] = "MEDIUM"
-	E.global["datatexts"]["customPanels"]["mspecialDockDate"]["growth"] = "VERTICAL"
-	E.global["datatexts"]["customPanels"]["mspecialDockDate"]["height"] = 22
-	E.global["datatexts"]["customPanels"]["mspecialDockDate"]["mouseover"] = false
-	E.global["datatexts"]["customPanels"]["mspecialDockDate"]["name"] = "mspecialDockDate"
-	E.global["datatexts"]["customPanels"]["mspecialDockDate"]["numPoints"] = 1
-	E.global["datatexts"]["customPanels"]["mspecialDockDate"]["panelTransparency"] = false
-	E.global["datatexts"]["customPanels"]["mspecialDockDate"]["textJustify"] = "CENTER"
-	E.global["datatexts"]["customPanels"]["mspecialDockDate"]["tooltipAnchor"] = "ANCHOR_TOPLEFT"
-	E.global["datatexts"]["customPanels"]["mspecialDockDate"]["tooltipXOffset"] = -17
-	E.global["datatexts"]["customPanels"]["mspecialDockDate"]["tooltipYOffset"] = 4
-	E.global["datatexts"]["customPanels"]["mspecialDockDate"]["visibility"] = "[petbattle] hide;show"
-	E.global["datatexts"]["customPanels"]["mspecialDockDate"]["width"] = 100
-
-	E.db["datatexts"]["panels"]["mspecialDockDate"][1] = "Date"
-	E.db["datatexts"]["panels"]["mspecialDockDate"]["enable"] = enable
+	E.db["mMT"]["dockdatatext"]["achievement"]["icon"] = "MATERIAL01"
+	E.db["mMT"]["dockdatatext"]["blizzardstore"]["icon"] = "MATERIAL14"
+	E.db["mMT"]["dockdatatext"]["calendar"]["option"] = "de"
+	E.db["mMT"]["dockdatatext"]["calendar"]["showyear"] = true
+	E.db["mMT"]["dockdatatext"]["character"]["icon"] = "MATERIAL30"
+	E.db["mMT"]["dockdatatext"]["collection"]["icon"] = "MATERIAL33"
+	E.db["mMT"]["dockdatatext"]["encounter"]["icon"] = "MATERIAL50"
+	E.db["mMT"]["dockdatatext"]["font"] = "Montserrat-SemiBold"
+	E.db["mMT"]["dockdatatext"]["fontSize"] = 20
+	E.db["mMT"]["dockdatatext"]["fontcolor"]["b"] = 0.10588236153126
+	E.db["mMT"]["dockdatatext"]["fontcolor"]["g"] = 0
+	E.db["mMT"]["dockdatatext"]["fontcolor"]["r"] = 0.96862751245499
+	E.db["mMT"]["dockdatatext"]["fontflag"] = "NONE"
+	E.db["mMT"]["dockdatatext"]["hover"]["style"] = "custom"
+	E.db["mMT"]["dockdatatext"]["itemlevel"]["onlytext"] = true
+	E.db["mMT"]["dockdatatext"]["itemlevel"]["text"] = "GS "
+	E.db["mMT"]["dockdatatext"]["lfd"]["icon"] = "MATERIAL48"
+	E.db["mMT"]["dockdatatext"]["mainmenu"]["icon"] = "MATERIAL52"
+	E.db["mMT"]["dockdatatext"]["quest"]["icon"] = "MATERIAL41"
+	E.db["mMT"]["dockdatatext"]["spellbook"]["icon"] = "MATERIAL22"
+	E.db["mMT"]["dockdatatext"]["talent"]["icon"] = "MATERIAL42"
 
 	if top then
-		E.db["movers"]["DTPanelmspecialDockBagroundMover"] = "TOP,ElvUIParent,TOP,0,-4"
-		E.db["movers"]["DTPanelmspecialDockLeftMover"] = "TOP,ElvUIParent,TOP,-153,-7"
-		E.db["movers"]["DTPanelmspecialDockDateMover"] = "TOP,ElvUIParent,TOP,0,-32"
-		E.db["movers"]["DTPanelmspecialDockTimeMover"] = "TOP,ElvUIParent,TOP,0,-8"
-		E.db["movers"]["DTPanelmspecialDockRightMover"] = "TOP,ElvUIParent,TOP,152,-7"
+		E.db["movers"]["DTPanelmMT Extra ClockMover"] = "TOP,ElvUIParent,TOP,-215,-4"
+		E.db["movers"]["DTPanelmMT Extra IconsMover"] = "TOP,UIParent,TOP,95,-4"
+		E.db["movers"]["DTPanelmMT Extra InfosMover"] = "TOP,UIParent,TOP,0,-36"
 	else
-		E.db["movers"]["DTPanelmspecialDockBagroundMover"] = "BOTTOM,ElvUIParent,BOTTOM,0,4"
-		E.db["movers"]["DTPanelmspecialDockLeftMover"] = "BOTTOM,ElvUIParent,BOTTOM,-153,7"
-		E.db["movers"]["DTPanelmspecialDockDateMover"] = "BOTTOM,ElvUIParent,BOTTOM,0,4"
-		E.db["movers"]["DTPanelmspecialDockTimeMover"] = "BOTTOM,ElvUIParent,BOTTOM,0,28"
-		E.db["movers"]["DTPanelmspecialDockRightMover"] = "BOTTOM,ElvUIParent,BOTTOM,152,7"
+		E.db["movers"]["DTPanelmMT Extra ClockMover"] = "BOTTOM,ElvUIParent,BOTTOM,-215,4"
+		E.db["movers"]["DTPanelmMT Extra IconsMover"] = "BOTTOM,UIParent,BOTTOM,95,4"
+		E.db["movers"]["DTPanelmMT Extra InfosMover"] = "BOTTOM,UIParent,BOTTOM,0,36"
 	end
 
 	E:StaggeredUpdateAll(nil, true)
