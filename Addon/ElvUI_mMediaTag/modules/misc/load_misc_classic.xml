@@ -5,4 +5,5 @@
 	<Script file="rollbutton.lua"/>
 	<Script file="chatbutton.lua"/>
 	<Script file="Tags.lua"/>
+	<Script file="afk.lua"/>
 </Ui>
