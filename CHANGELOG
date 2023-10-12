@@ -1,6 +1,22 @@
 # Changelog - ElvUI_mMediaTag
 [Eng] - All changes to this project will be documented in this file. The latest changes are at the top.
 
+## [ver. 3.21] - 12.10.2023
+### FIX
+- Fix - Portraits Event updates to prevent wrong or empty Portraits
+- Fix - Nil error for custom Class colors
+- Fix - Nil error on custom Phase icon
+### Update
+- Update - Portraits Classic and Retail have now the same look, no mor different textures
+- Update - Optimized Portraits Events and Code
+- Update - Combatcheck for Teleports Datatext
+- Update - Optimized Portraits Settings
+- Update - Force Datatexts to use ElvUI Value color
+### NEW
+- NEW - Tags mHealth:noStatus, mHealth:noStatus:current-percent, mHealth:noStatus, mPower:percent:hideZero
+- NEW - Font 
+-
+
 ## [ver. 3.20] - 20.09.2023
 ### FIX
 - Fix - Nil error on Score Datatext
