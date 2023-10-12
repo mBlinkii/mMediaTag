@@ -494,7 +494,8 @@
         "READY_CHECK_FINISHED",
         "NUM_ACTIONBAR_BUTTONS",
         "NONE",
-        "Specialization"
+        "Specialization",
+        "GROUP"
     ],
     "Lua.diagnostics.disable": [
         "undefined-field"

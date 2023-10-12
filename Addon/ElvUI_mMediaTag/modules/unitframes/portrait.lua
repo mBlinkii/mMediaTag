@@ -541,6 +541,7 @@ function module:Initialize()
 			},
 			unitEvents = {
 				"UNIT_PORTRAIT_UPDATE",
+				"UNIT_NAME_UPDATE"
 			},
 		}
 	end
@@ -572,6 +573,7 @@ function module:Initialize()
 			},
 			unitEvents = {
 				"UNIT_PORTRAIT_UPDATE",
+				"UNIT_NAME_UPDATE"
 			},
 		}
 	end
@@ -589,6 +591,7 @@ function module:Initialize()
 				},
 				unitEvents = {
 					"UNIT_PORTRAIT_UPDATE",
+					"UNIT_NAME_UPDATE"
 				},
 			}
 		end
@@ -602,11 +605,11 @@ function module:Initialize()
 				unit = _G["ElvUF_Boss" .. i].unit,
 				events = {
 					"PLAYER_ENTERING_WORLD",
-					"PLAYER_TARGET_CHANGED",
 					"PORTRAITS_UPDATED",
 				},
 				unitEvents = {
 					"UNIT_PORTRAIT_UPDATE",
+					"UNIT_NAME_UPDATE"
 				},
 			}
 		end
@@ -625,6 +628,7 @@ function module:Initialize()
 				},
 				unitEvents = {
 					"UNIT_PORTRAIT_UPDATE",
+					"UNIT_NAME_UPDATE",
 				},
 			}
 		end
@@ -698,7 +702,7 @@ function module:Initialize()
 				if UnitExists("pet") then
 					SetPortraitTexture(self.portrait, "pet", not (settings.pet.texture == "CI"))
 
-					if event == "PLAYER_ENTERING_WORLD" then
+					if event == "PLAYER_ENTERING_WORLD" or event == "UNIT_NAME_UPDATE" then
 						setColor(self.texture, getColor(self, "pet"), settings.pet.mirror)
 						if settings.general.corner and textures.corner[settings.pet.texture] then
 							setColor(self.corner, getColor(self, "pet"), settings.pet.mirror)
@@ -713,7 +717,7 @@ function module:Initialize()
 			module.Focus:SetScript("OnEvent", function(self, event)
 				if UnitExists("focus") then
 					SetPortraitTexture(self.portrait, "focus", not (settings.focus.texture == "CI"))
-					if event == "PLAYER_ENTERING_WORLD" or event == "PLAYER_FOCUS_CHANGED" then
+					if event == "PLAYER_ENTERING_WORLD" or event == "PLAYER_FOCUS_CHANGED" or event == "UNIT_NAME_UPDATE" then
 						setColor(self.texture, getColor(self, "focus"), settings.focus.mirror)
 						if settings.general.corner and textures.corner[settings.focus.texture] then
 							setColor(self.corner, getColor(self, "focus"), settings.focus.mirror)
@@ -756,7 +760,7 @@ function module:Initialize()
 				local frame = _G["ElvUF_PartyGroup1UnitButton" .. i]
 				module["Party" .. i]:SetScript("OnEvent", function(self, event)
 					if UnitExists(frame.unit) then
-						if event == "GROUP_ROSTER_UPDATE" or event == "PLAYER_ENTERING_WORLD" then
+						if event == "GROUP_ROSTER_UPDATE" or event == "PLAYER_ENTERING_WORLD" or event == "UNIT_NAME_UPDATE" then
 							setColor(self.texture, getColor(self, frame.unit), settings.party.mirror)
 							if settings.general.corner and textures.corner[settings.party.texture] then
 								setColor(self.corner, getColor(self, frame.unit), settings.party.mirror)
@@ -776,7 +780,7 @@ function module:Initialize()
 				local frame = _G["ElvUF_Boss" .. i]
 				module["Boss" .. i]:SetScript("OnEvent", function(self, event)
 					if UnitExists(frame.unit) then
-						if event == "UNIT_PORTRAIT_UPDATE" or event == "PLAYER_ENTERING_WORLD" or event == "PLAYER_TARGET_CHANGED" then
+						if event == "UNIT_PORTRAIT_UPDATE" or event == "PLAYER_ENTERING_WORLD" or event == "UNIT_NAME_UPDATE" then
 							setColor(self.texture, getColor(self, frame.unit), settings.boss.mirror)
 							if settings.general.corner and textures.corner[settings.boss.texture] then
 								setColor(self.corner, getColor(self, frame.unit), settings.boss.mirror)
@@ -796,7 +800,7 @@ function module:Initialize()
 				local frame = _G["ElvUF_Arena" .. i]
 				module["Arena" .. i]:SetScript("OnEvent", function(self, event)
 					if UnitExists(frame.unit) then
-						if event == "ARENA_OPPONENT_UPDATE" or event == "PLAYER_ENTERING_WORLD" then
+						if event == "ARENA_OPPONENT_UPDATE" or event == "PLAYER_ENTERING_WORLD" or "UNIT_NAME_UPDATE" then
 							setColor(self.texture, getColor(self, frame.unit), settings.arena.mirror)
 							if settings.general.corner and textures.corner[settings.arena.texture] then
 								setColor(self.corner, getColor(self, frame.unit), settings.arena.mirror)
