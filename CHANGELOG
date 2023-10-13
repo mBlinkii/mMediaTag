@@ -1,7 +1,7 @@
 # Changelog - ElvUI_mMediaTag
 [Eng] - All changes to this project will be documented in this file. The latest changes are at the top.
 
-## [ver. 3.22] - 12.10.2023
+## [ver. 3.22] - 13.10.2023
 ### FIX
 - FIX - AFK Screen for Classic Versions
 - FIX - Guild Dock, is not Updating correctly
@@ -33,7 +33,6 @@
 - NEW - Datatext Durability and Ilevel in one
 - NEW - Chat backgrounds 7 - 13
 - NEW - Textures, mMT Blank and mMT Target
--
 
 ## [ver. 3.20] - 20.09.2023
 ### FIX
