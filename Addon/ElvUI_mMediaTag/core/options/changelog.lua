@@ -38,7 +38,11 @@ local change_log_fix = {
 	"Portraits Event updates to prevent wrong or empty Portraits",
 	"Nil error for custom Class colors",
 	"Nil error on custom Phase icon",
-	"Updates now correctly for Profession Datatext"
+	"Updates now correctly for Profession Datatext",
+	"AFK Screen for Classic Versions",
+	"Guild Dock, is not Updating correctly",
+	"Remove DEV tag",
+	"MediaPack Toc files"
 }
 
 local function Concatenation(tbl, icon, color)
