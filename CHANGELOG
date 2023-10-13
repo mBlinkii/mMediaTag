@@ -3,6 +3,15 @@
 
 ## [ver. 3.21] - 12.10.2023
 ### FIX
+- FIX - AFK Screen for Classic Versions
+- FIX - Guild Dock, is not Updating correctly
+- FIX - Remove DEV tag
+- FIX - MediaPack Toc files
+### Update
+- UPDATE - Update Boss Portrait event
+
+## [ver. 3.21] - 12.10.2023
+### FIX
 - FIX - Portraits Event updates to prevent wrong or empty Portraits
 - FIX - Nil error for custom Class colors
 - FIX - Nil error on custom Phase icon

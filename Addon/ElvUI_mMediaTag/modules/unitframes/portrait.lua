@@ -587,7 +587,6 @@ function module:Initialize()
 				events = {
 					"PLAYER_ENTERING_WORLD",
 					"GROUP_ROSTER_UPDATE",
-					"PORTRAITS_UPDATED",
 				},
 				unitEvents = {
 					"UNIT_PORTRAIT_UPDATE",
@@ -605,7 +604,7 @@ function module:Initialize()
 				unit = _G["ElvUF_Boss" .. i].unit,
 				events = {
 					"PLAYER_ENTERING_WORLD",
-					"PORTRAITS_UPDATED",
+					"INSTANCE_ENCOUNTER_ENGAGE_UNIT"
 				},
 				unitEvents = {
 					"UNIT_PORTRAIT_UPDATE",
@@ -623,7 +622,6 @@ function module:Initialize()
 				unit = _G["ElvUF_Arena" .. i].unit,
 				events = {
 					"PLAYER_ENTERING_WORLD",
-					"PORTRAITS_UPDATED",
 					"ARENA_OPPONENT_UPDATE",
 				},
 				unitEvents = {

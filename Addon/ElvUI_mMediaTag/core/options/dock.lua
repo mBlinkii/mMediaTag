@@ -1889,13 +1889,18 @@ local function configTable()
 					type = "description",
 					name = L["These are just examples of how to create your own dock with ElvUI's custom bars.\n\n\nTo create your own bar you have to go to ElvUI under ElvUI>Datatext>Bars Steps 1. enter name press OK and click Add, set the width of the bar depends on how many icons you want to display, the height of the bar is also the size of the icons. Set the number of data text and now you only need to assign the icons to the places, for example 1 = Dock FPS, 2 = Dock Profession and so on.\n\n"],
 				},
-				examplesheader = {
+				warningdescription = {
 					order = 2,
+					type = "description",
+					name = L["In Classic, the docks may look different, since not all modules are available in this version. You can customize the docks in the settings of ElvUI."],
+				},
+				examplesheader = {
+					order = 3,
 					type = "header",
 					name = "",
 				},
 				exampletop = {
-					order = 3,
+					order = 4,
 					type = "toggle",
 					name = L["Dock on Top"],
 					get = function(info)
@@ -1906,7 +1911,7 @@ local function configTable()
 					end,
 				},
 				examplespacer1 = {
-					order = 4,
+					order = 5,
 					type = "description",
 					name = "\n",
 				},

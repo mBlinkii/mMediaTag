@@ -346,6 +346,13 @@ local function OnEvent(self, event, ...)
 	end
 
 	if IsInGuild() then
+		local func = eventHandlers[event]
+		if func then func(self, ...) end
+
+		if not IsAltKeyDown() and event == 'MODIFIER_STATE_CHANGED' and MouseIsOver(self) then
+			OnEnter(self)
+		end
+
 		if #guildTable == 0 then
 			BuildGuildTable()
 		end
