@@ -522,7 +522,7 @@ E:AddTagInfo("mStatus:icon", mMT.NameShort .. " " .. L["Status"], L["Displays th
 E:AddTagInfo("mStatustimer", mMT.NameShort .. " " .. L["Status"], L["Displays the Unit Status text and time."])
 E:AddTagInfo("mAFK", mMT.NameShort .. " " .. L["Status"], L["Displays the Unit AFK Status."])
 
-E:AddTag("mColor", "UNIT_NAME_UPDATE UNIT_FACTION INSTANCE_ENCOUNTER_ENGAGE_UNIT UNIT_CLASSIFICATION_CHANGED", function(unit)
+E:AddTag("mColor", "UNIT_NAME_UPDATE UNIT_FACTION UNIT_CLASSIFICATION_CHANGED", function(unit)
 	local c = UnitClassification(unit)
 	local unitPlayer = UnitIsPlayer(unit)
 
@@ -540,6 +540,16 @@ E:AddTag("mColor", "UNIT_NAME_UPDATE UNIT_FACTION INSTANCE_ENCOUNTER_ENGAGE_UNIT
 		else
 			return _TAGS.classcolor(unit)
 		end
+	end
+end)
+
+E:AddTag("mColor:rare", "UNIT_NAME_UPDATE UNIT_CLASSIFICATION_CHANGED", function(unit)
+	local c = UnitClassification(unit)
+
+	if c == "rare" then
+		return colors.rare
+	elseif c == "rareelite" then
+		return colors.relite
 	end
 end)
 
@@ -566,6 +576,7 @@ E:AddTag("mColor:target", "UNIT_TARGET", function(unit)
 end)
 
 E:AddTagInfo("mColor", mMT.NameShort .. " " .. L["Color"], L["Unit colors with mMediaTag colors for Rare, Rareelite, Elite and Boss and Classcolors."])
+E:AddTagInfo("mColor:rare", mMT.NameShort .. " " .. L["Color"], L["Unit colors with mMediaTag colors for Rare and Rareelite."])
 E:AddTagInfo("mColor:target", mMT.NameShort .. " " .. L["Color"], L["Targetunit colors with mMediaTag colors for Rare, Rareelite, Elite and Boss and Classcolors."])
 
 E:AddTag("mHealth", "UNIT_HEALTH UNIT_MAXHEALTH UNIT_CONNECTION PLAYER_FLAGS_CHANGED PLAYER_UPDATE_RESTING", function(unit)
