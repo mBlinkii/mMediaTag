@@ -163,11 +163,11 @@ end
 local function UpdateAllModules()
 	UpdateModules()
 
-	local currentProfile = E.data:GetCurrentProfile()
-	if mMT.CurrentProfile ~= currentProfile then
-		mMT.CurrentProfile = currentProfile
-		StaticPopup_Show("mMT_Reload_Required")
-	end
+	--local currentProfile = E.data:GetCurrentProfile()
+	--if mMT.CurrentProfile ~= currentProfile then
+	--	mMT.CurrentProfile = currentProfile
+	--	StaticPopup_Show("mMT_Reload_Required")
+	--end
 end
 
 -- Load Settings
