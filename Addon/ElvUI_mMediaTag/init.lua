@@ -30,6 +30,7 @@ mMT.ElvUI_EltreumUI = {}
 mMT.DEVNames = {}
 mMT.DevMode = false
 mMT.CurrentProfile = nil
+mMT.firstLoad = 0
 mMT.Classes = { "DEATHKNIGHT", "DEMONHUNTER", "DRUID", "EVOKER", "HUNTER", "MAGE", "MONK", "PALADIN", "PRIEST", "ROGUE", "SHAMAN", "WARLOCK", "WARRIOR" }
 
 mMT.Modules.Portraits = {}
@@ -160,10 +161,10 @@ local function UpdateModules()
 end
 
 local function UpdateAllModules()
+	UpdateModules()
+
 	local currentProfile = E.data:GetCurrentProfile()
 	if mMT.CurrentProfile ~= currentProfile then
-		mMT:Print(mMT.CurrentProfile, currentProfile)
-		UpdateModules()
 		mMT.CurrentProfile = currentProfile
 		StaticPopup_Show("mMT_Reload_Required")
 	end
