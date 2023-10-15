@@ -31,6 +31,8 @@ E.Media.MailIcons.mMediaTag15 = [[Interface\AddOns\ElvUI_mMediaTag\media\icons\m
 E.Media.MailIcons.mMediaTag16 = [[Interface\AddOns\ElvUI_mMediaTag\media\icons\mail\mail16.tga]]
 E.Media.MailIcons.mMediaTag17 = [[Interface\AddOns\ElvUI_mMediaTag\media\icons\mail\mail17.tga]]
 E.Media.MailIcons.mMediaTag18 = [[Interface\AddOns\ElvUI_mMediaTag\media\icons\mail\mail18.tga]]
+E.Media.MailIcons.mMediaTag19 = [[Interface\AddOns\ElvUI_mMediaTag\media\icons\mail\mail19.tga]]
+E.Media.MailIcons.mMediaTag20 = [[Interface\AddOns\ElvUI_mMediaTag\media\icons\mail\mail20.tga]]
 
 -- Resting Icons
 E.Media.RestIcons.mMediaTag1 = [[Interface\AddOns\ElvUI_mMediaTag\media\icons\resticon\resticon1.tga]]
