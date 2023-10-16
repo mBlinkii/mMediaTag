@@ -309,10 +309,6 @@ function mMT:PLAYER_ENTERING_WORLD(event)
 		mMT:RegisterEvent("PLAYER_FLAGS_CHANGED")
 	end
 
-	-- Initialize main things
-	tinsert(E.ConfigModeLayouts, "MMEDIATAG")
-	E.ConfigModeLocalizedStrings["MMEDIATAG"] = mMT.Name
-
 	-- Initialize Modules
 	if E.db.mMT.general.greeting then
 		mMT:GreetingText()

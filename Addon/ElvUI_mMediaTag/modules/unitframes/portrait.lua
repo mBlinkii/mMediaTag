@@ -587,6 +587,7 @@ function module:Initialize()
 				events = {
 					"PLAYER_ENTERING_WORLD",
 					"GROUP_ROSTER_UPDATE",
+					"INSTANCE_ENCOUNTER_ENGAGE_UNIT"
 				},
 				unitEvents = {
 					"UNIT_PORTRAIT_UPDATE",

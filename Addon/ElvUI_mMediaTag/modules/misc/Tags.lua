@@ -576,7 +576,7 @@ E:AddTag("mColor:target", "UNIT_TARGET", function(unit)
 end)
 
 E:AddTagInfo("mColor", mMT.NameShort .. " " .. L["Color"], L["Unit colors with mMediaTag colors for Rare, Rareelite, Elite and Boss and Classcolors."])
-E:AddTagInfo("mColor:rare", mMT.NameShort .. " " .. L["Color"], L["Unit colors with mMediaTag colors for Rare and Rareelite."])
+E:AddTagInfo("status", mMT.NameShort .. " " .. L["Color"], L["Unit colors with mMediaTag colors for Rare and Rareelite."])
 E:AddTagInfo("mColor:target", mMT.NameShort .. " " .. L["Color"], L["Targetunit colors with mMediaTag colors for Rare, Rareelite, Elite and Boss and Classcolors."])
 
 E:AddTag("mHealth", "UNIT_HEALTH UNIT_MAXHEALTH UNIT_CONNECTION PLAYER_FLAGS_CHANGED PLAYER_UPDATE_RESTING", function(unit)

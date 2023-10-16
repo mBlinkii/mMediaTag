@@ -507,6 +507,7 @@ mMT.Media.Role = {
 	SWORD11 = "Interface\\AddOns\\ElvUI_mMediaTag\\media\\icons\\role\\sword11.tga",
 	SWORD12 = "Interface\\AddOns\\ElvUI_mMediaTag\\media\\icons\\role\\sword12.tga",
 	SWORD13 = "Interface\\AddOns\\ElvUI_mMediaTag\\media\\icons\\role\\sword13.tga",
+	SWORD14 = "Interface\\AddOns\\ElvUI_mMediaTag\\media\\icons\\role\\sword14.tga",
 
 	SWORDOUT1 = "Interface\\AddOns\\ElvUI_mMediaTag\\media\\icons\\role\\swordoutline1.tga",
 	SWORDOUT2 = "Interface\\AddOns\\ElvUI_mMediaTag\\media\\icons\\role\\swordoutline2.tga",
