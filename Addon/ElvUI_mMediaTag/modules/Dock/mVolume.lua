@@ -69,7 +69,7 @@ local function SelectStream(_, ...)
 	activeStream = AudioStreams[activeIndex]
 
 	if E.db.mMT.dockdatatext.volume.showtext then
-		panel.mIcon.TextA:SetFormattedText(mMT.ClassColor.string, GetStreamString(activeStream or "Sound_MasterVolume", true))
+		panel.mMT_Dock.TextA:SetFormattedText(mMT.ClassColor.string, GetStreamString(activeStream or "Sound_MasterVolume", true))
 	end
 end
 
@@ -79,7 +79,7 @@ local function ToggleStream(_, ...)
 	SetCVar(Stream.Enabled, GetCVarBool(Stream.Enabled) and 0 or 1, "MMT_ELVUI_VOLUME")
 
 	if E.db.mMT.dockdatatext.volume.showtext then
-		panel.mIcon.TextA:SetFormattedText(mMT.ClassColor.string, GetStreamString(activeStream or "Sound_MasterVolume", true))
+		panel.mMT_Dock.TextA:SetFormattedText(mMT.ClassColor.string, GetStreamString(activeStream or "Sound_MasterVolume", true))
 	end
 end
 
@@ -160,7 +160,7 @@ local function OnMouseWheel(self, delta)
 	SetCVar(activeStream.Volume, vol, "MMT_ELVUI_VOLUME")
 
 	if E.db.mMT.dockdatatext.volume.showtext then
-		self.mIcon.TextA:SetFormattedText(mMT.ClassColor.string, GetStreamString(activeStream or "Sound_MasterVolume", true))
+		self.mMT_Dock.TextA:SetFormattedText(mMT.ClassColor.string, GetStreamString(activeStream or "Sound_MasterVolume", true))
 	end
 
 	mVolumeTip()
