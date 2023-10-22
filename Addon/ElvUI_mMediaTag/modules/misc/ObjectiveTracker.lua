@@ -478,6 +478,7 @@ local function SkinOBT()
 			local Modules = Frame[i]
 			if Modules then
 				mSetupHeaderFont(Modules.Header.Text)
+
 				if not Modules.IsSkinned then
 					if E.db.mMT.objectivetracker.header.barstyle ~= "none" then
 						mCreatBar(Modules.Header)

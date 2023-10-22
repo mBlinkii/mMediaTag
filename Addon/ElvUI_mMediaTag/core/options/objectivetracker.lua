@@ -183,18 +183,6 @@ local function configTable()
 								E:StaticPopup_Show("CONFIG_RL")
 							end,
 						},
-						headerfontshadow = {
-							order = 4,
-							type = "toggle",
-							name = L["Font shadow"],
-							get = function(info)
-								return E.db.mMT.objectivetracker.header.textshadow
-							end,
-							set = function(info, value)
-								E.db.mMT.objectivetracker.header.textshadow = value
-								E:StaticPopup_Show("CONFIG_RL")
-							end,
-						},
 					},
 				},
 				header_bar = {
@@ -420,18 +408,6 @@ local function configTable()
 								E:StaticPopup_Show("CONFIG_RL")
 							end,
 						},
-						titlefontshadow = {
-							order = 4,
-							type = "toggle",
-							name = L["Font shadow"],
-							get = function(info)
-								return E.db.mMT.objectivetracker.title.textshadow
-							end,
-							set = function(info, value)
-								E.db.mMT.objectivetracker.title.textshadow = value
-								E:StaticPopup_Show("CONFIG_RL")
-							end,
-						},
 					},
 				},
 			},
@@ -498,18 +474,6 @@ local function configTable()
 							set = function(info, r, g, b)
 								local t = E.db.mMT.objectivetracker.text.fontcolor
 								t.r, t.g, t.b, t.hex = r, g, b, E:RGBToHex(r, g, b)
-								E:StaticPopup_Show("CONFIG_RL")
-							end,
-						},
-						textfontshadow = {
-							order = 4,
-							type = "toggle",
-							name = L["Font shadow"],
-							get = function(info)
-								return E.db.mMT.objectivetracker.text.textshadow
-							end,
-							set = function(info, value)
-								E.db.mMT.objectivetracker.text.textshadow = value
 								E:StaticPopup_Show("CONFIG_RL")
 							end,
 						},

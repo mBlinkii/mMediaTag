@@ -288,7 +288,6 @@ P.mMT = {
 			gradient = true,
 			revers = false,
 			barcolorstyle = "class",
-			textshadow = true,
 			barcolor = { r = 1, g = 0.78, b = 0, hex = "|cffffc700" },
 			barshadow = true,
 			questcount = "colorright",
@@ -297,13 +296,11 @@ P.mMT = {
 		title = {
 			fontsize = 13,
 			fontcolorstyle = "custom",
-			textshadow = true,
 			fontcolor = { r = 1, g = 0.78, b = 0, hex = "|cffffc700" },
 		},
 		text = {
 			fontsize = 13,
 			fontcolorstyle = "custom",
-			textshadow = true,
 			fontcolor = { r = 0.87, g = 0.87, b = 0.87, hex = "|cff00ffa4" },
 			completecolor = { r = 0, g = 1, b = 0.27, hex = "|cff00ff45" },
 			failedcolor = { r = 1, g = 0.16, b = 0, hex = "|cffff2800" },

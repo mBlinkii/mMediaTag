@@ -42,6 +42,7 @@ mMT.Modules.RoleIcons = {}
 mMT.Modules.Castbar = {}
 mMT.Modules.ImportantSpells = {}
 mMT.Modules.InterruptOnCD = {}
+--mMT.Modules.ObjectiveTracker = {}
 
 local defaultDB = {
 	mplusaffix = { affixes = nil, season = nil, reset = false, year = nil },
@@ -112,6 +113,7 @@ local function EnableModules()
 	mMT.Modules.SummonIcon.enable = E.db.mMT.unitframeicons.summon.enable
 	mMT.Modules.Portraits.enable = E.db.mMT.portraits.general.enable
 	mMT.Modules.ImportantSpells.enable = (E.db.mMT.importantspells.enable and (E.db.mMT.importantspells.np or E.db.mMT.importantspells.uf))
+	--mMT.Modules.ObjectiveTracker.enable = E.db.mMT.objectivetracker.enable and (E.private.skins.blizzard.enable and E.private.skins.blizzard.objectiveTracker) and not IsAddOnLoaded("!KalielsTracker")
 
 	-- Retail
 	if E.Retail then
@@ -207,6 +209,32 @@ function mMT:Initialize()
 		if (E.private.nameplates.enable and E.db.mMT.nameplate.executemarker.auto) or E.db.mMT.interruptoncd.enable then
 			self:RegisterEvent("PLAYER_TALENT_UPDATE")
 		end
+
+		if (E.db.mMT.objectivetracker.enable or (E.db.mMT.objectivetracker.enable and E.db.mMT.objectivetracker.simple)) and E.private.skins.blizzard.enable and not IsAddOnLoaded("!KalielsTracker") then
+			if not E.private.skins.blizzard.objectiveTracker then
+				StaticPopupDialogs["mErrorSkin"] = {
+					text = L["ElvUI skin must be enabled to activate mMediaTag Quest skins! Should it be enabled?"],
+					button1 = L["Yes"],
+					button2 = L["No"],
+					timeout = 120,
+					whileDead = true,
+					hideOnEscape = false,
+					preferredIndex = 3,
+					OnAccept = function()
+						E.private.skins.blizzard.objectiveTracker = true
+						C_UI.Reload()
+					end,
+					OnCancel = function()
+						E.db.mMT.objectivetracker.enable = false
+						C_UI.Reload()
+					end,
+				}
+
+				StaticPopup_Show("mErrorSkin")
+			end
+
+			mMT:InitializemOBT()
+		end
 	end
 
 	if E.db.mMT.customclasscolors.emediaenable then
@@ -275,32 +303,6 @@ function mMT:PLAYER_ENTERING_WORLD(event)
 
 			if E.private.nameplates.enable and (E.db.mMT.nameplate.healthmarker.enable or E.db.mMT.nameplate.executemarker.enable) then
 				mMT:StartNameplateTools()
-			end
-
-			if (E.db.mMT.objectivetracker.enable or (E.db.mMT.objectivetracker.enable and E.db.mMT.objectivetracker.simple)) and E.private.skins.blizzard.enable and not IsAddOnLoaded("!KalielsTracker") then
-				if not E.private.skins.blizzard.objectiveTracker then
-					StaticPopupDialogs["mErrorSkin"] = {
-						text = L["ElvUI skin must be enabled to activate mMediaTag Quest skins! Should it be enabled?"],
-						button1 = L["Yes"],
-						button2 = L["No"],
-						timeout = 120,
-						whileDead = true,
-						hideOnEscape = false,
-						preferredIndex = 3,
-						OnAccept = function()
-							E.private.skins.blizzard.objectiveTracker = true
-							C_UI.Reload()
-						end,
-						OnCancel = function()
-							E.db.mMT.objectivetracker.enable = false
-							C_UI.Reload()
-						end,
-					}
-
-					StaticPopup_Show("mErrorSkin")
-				end
-
-				mMT:InitializemOBT()
 			end
 		end
 	end

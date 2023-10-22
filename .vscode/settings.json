@@ -495,7 +495,14 @@
         "NUM_ACTIONBAR_BUTTONS",
         "NONE",
         "Specialization",
-        "GROUP"
+        "GROUP",
+        "QUEST_TRACKER_MODULE",
+        "QuestObjective_SetupHeader",
+        "QuestObjectiveSetupBlockButton_FindGroup",
+        "QuestObjectiveSetupBlockButton_Item",
+        "OBJECTIVE_TRACKER_TEXT_WIDTH",
+        "ObjectiveTrackerBlocksFrame",
+        "MINIMAP_LABEL"
     ],
     "Lua.diagnostics.disable": [
         "undefined-field"
@@ -548,6 +555,7 @@
         "fontcolor",
         "fontflag",
         "fontsize",
+        "gamemenu",
         "greatvault",
         "growsize",
         "Healthbar",
@@ -562,6 +570,7 @@
         "importantspells",
         "inactivetime",
         "infoscreen",
+        "instancedifficulty",
         "Interruptible",
         "Interruptin",
         "interruptoncd",
