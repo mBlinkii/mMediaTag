@@ -17,4 +17,5 @@ init.lua
 core\load_core.xml
 media\load_media.xml
 modules\load_modules_classic.xml
+modules\classic\load_classic.xml
 modules\unitframes\RoleIcons.lua

@@ -502,7 +502,10 @@
         "QuestObjectiveSetupBlockButton_Item",
         "OBJECTIVE_TRACKER_TEXT_WIDTH",
         "ObjectiveTrackerBlocksFrame",
-        "MINIMAP_LABEL"
+        "MINIMAP_LABEL",
+        "PROFESSIONS_COOKING",
+        "PROFESSIONS_FIRST_AID",
+        "PROFESSIONS_FISHING"
     ],
     "Lua.diagnostics.disable": [
         "undefined-field"
