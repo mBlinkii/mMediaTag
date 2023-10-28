@@ -1,5 +1,6 @@
 local E, L = unpack(ElvUI)
 local DT = E:GetModule("DataTexts")
+local LAC = LibStub("LibAddonCompat-1.0")
 
 local _G = _G
 local format = format
@@ -19,20 +20,20 @@ local function colorText(value, withe)
 	end
 end
 local function OnEnter(self)
-	local profession, secondProfession, _, _, _ = mMT:GetClassicProfessions()
+	local profession, secondProfession, _, _, _ = LAC:GetProfessions()
 
 	if profession or secondProfession then
 		DT.tooltip:AddLine(TRADE_SKILLS)
 		DT.tooltip:AddLine(" ")
 
 		if profession then
-			local name, icon, skillLevel, maxSkillLevel, _, _, _, skillModifier, _, _ = GetProfessionInfo(profession)
+			local name, icon, skillLevel, maxSkillLevel, _, _, _, skillModifier, _, _ = LAC:GetProfessionInfo(profession)
 			name = format("|T%s:14:14:0:0:64:64:5:59:5:59|t %s", icon, name)
 			DT.tooltip:AddDoubleLine(name, colorText(skillLevel) .. colorText("/", true) .. colorText(maxSkillLevel) .. colorText(" +", true) .. colorText(skillModifier))
 		end
 
 		if secondProfession then
-			local name, icon, skillLevel, maxSkillLevel, _, _, _, skillModifier, _, _ = GetProfessionInfo(secondProfession)
+			local name, icon, skillLevel, maxSkillLevel, _, _, _, skillModifier, _, _ = LAC:GetProfessionInfo(secondProfession)
 			name = format("|T%s:14:14:0:0:64:64:5:59:5:59|t %s", icon, name)
 			DT.tooltip:AddDoubleLine(name, colorText(skillLevel) .. colorText("/", true) .. colorText(maxSkillLevel) .. colorText(" +", true) .. colorText(skillModifier))
 		end
@@ -50,15 +51,15 @@ end
 local function OnEvent(self)
 	hexColor = E:RGBToHex(E.db.general.valuecolor.r, E.db.general.valuecolor.g, E.db.general.valuecolor.b)
 
-	local _, profession, _, _, _ = mMT:GetClassicProfessions()
+	local _, profession, _, _, _ = LAC:GetProfessions()
 
 	if profession then
-		local name, _, _, skillLevel, _, _, maxSkillLevel, _, _, _, _, _, skillDescription = GetSkillLineInfo(profession)
+		local name, icon, skillLevel, maxSkillLevel, _, _, _, skillModifier, _, _ = LAC:GetProfessionInfo(profession)
 		local isNotMax = not (skillLevel == maxSkillLevel)
 		spell = name
 
 		local text = "%s %s %s"
-		local icon = E.db.mMT.singleProfession.icon and format("|T%s:14:14:0:0:64:64:5:59:5:59|t", icon or "12987") or ""
+		local icon = E.db.mMT.singleProfession.icon and format("|T%s:14:14:0:0:64:64:5:59:5:59|t", icon) or ""
 		text = format(text, icon, colorText(name, E.db.mMT.singleProfession.witheText), isNotMax and colorText(skillLevel, E.db.mMT.singleProfession.witheValue) or "")
 
 		self.text:SetText(text)
