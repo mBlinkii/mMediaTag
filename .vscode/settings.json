@@ -505,7 +505,8 @@
         "MINIMAP_LABEL",
         "PROFESSIONS_COOKING",
         "PROFESSIONS_FIRST_AID",
-        "PROFESSIONS_FISHING"
+        "PROFESSIONS_FISHING",
+        "INSCRIPTION"
     ],
     "Lua.diagnostics.disable": [
         "undefined-field"

@@ -14,6 +14,8 @@
 ## X-Curse-Project-ID: 289502
 ## X-Wago-ID: 9rN48AND
 
+lib\LibAddonCompat-1.0.lua
+
 init.lua
 core\load_core.xml
 media\load_media.xml
