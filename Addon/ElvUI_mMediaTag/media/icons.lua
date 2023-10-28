@@ -205,9 +205,9 @@ mMT.Media.GhostIcons = {
 	GHOST5 = "Interface\\AddOns\\ElvUI_mMediaTag\\media\\icons\\tags\\skull1.tga",
 	GHOST6 = "Interface\\AddOns\\ElvUI_mMediaTag\\media\\icons\\tags\\skull2.tga",
 	GHOST7 = "Interface\\AddOns\\ElvUI_mMediaTag\\media\\icons\\tags\\skull3.tga",
-	GHOST8 = "Interface\\AddOns\\ElvUI_mMediaTag\\media\\icons\\tags\\ghost5.tga",
-	GHOST9 = "Interface\\AddOns\\ElvUI_mMediaTag\\media\\icons\\tags\\ghost6.tga",
-	GHOST10 = "Interface\\AddOns\\ElvUI_mMediaTag\\media\\icons\\tags\\ghost7.tga",
+	GHOST8 = "Interface\\AddOns\\ElvUI_mMediaTag\\media\\icons\\tags\\ghost05.tga",
+	GHOST9 = "Interface\\AddOns\\ElvUI_mMediaTag\\media\\icons\\tags\\ghost06.tga",
+	GHOST10 = "Interface\\AddOns\\ElvUI_mMediaTag\\media\\icons\\tags\\ghost07.tga",
 }
 
 mMT.Media.UnitframeIcons = {
@@ -916,9 +916,9 @@ mMT.Media.DockIcons = {
 	GHOST2 = "Interface\\AddOns\\ElvUI_mMediaTag\\media\\icons\\tags\\ghost2.tga",
 	GHOST3 = "Interface\\AddOns\\ElvUI_mMediaTag\\media\\icons\\tags\\ghost3.tga",
 	GHOST4 = "Interface\\AddOns\\ElvUI_mMediaTag\\media\\icons\\tags\\ghost4.tga",
-	GHOST5 = "Interface\\AddOns\\ElvUI_mMediaTag\\media\\icons\\tags\\ghost5.tga",
-	GHOST6 = "Interface\\AddOns\\ElvUI_mMediaTag\\media\\icons\\tags\\ghost6.tga",
-	GHOST7 = "Interface\\AddOns\\ElvUI_mMediaTag\\media\\icons\\tags\\ghost7.tga",
+	GHOST8 = "Interface\\AddOns\\ElvUI_mMediaTag\\media\\icons\\tags\\ghost05.tga",
+	GHOST9 = "Interface\\AddOns\\ElvUI_mMediaTag\\media\\icons\\tags\\ghost06.tga",
+	GHOST10 = "Interface\\AddOns\\ElvUI_mMediaTag\\media\\icons\\tags\\ghost07.tga",
 	CLASS1 = "Interface\\AddOns\\ElvUI_mMediaTag\\media\\icons\\tags\\class1.tga",
 	CLASS2 = "Interface\\AddOns\\ElvUI_mMediaTag\\media\\icons\\tags\\class2.tga",
 	CLASS3 = "Interface\\AddOns\\ElvUI_mMediaTag\\media\\icons\\tags\\class3.tga",
