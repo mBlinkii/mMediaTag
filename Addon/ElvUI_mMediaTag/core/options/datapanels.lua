@@ -150,7 +150,7 @@ local function configTable()
 					order = 2,
 					type = "group",
 					inline = true,
-					name = L["Background"],
+					name = L["Border"],
 					args = {
 						select_Style = {
 							type = "select",

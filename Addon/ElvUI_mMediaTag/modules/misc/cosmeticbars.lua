@@ -37,8 +37,20 @@ local function UpdatePanelColors(_, name, panel)
 	end
 end
 
+local function CheckAndRemoveSettings()
+    local cleanList = E.db.mMT.cosmeticbars.bars
+	for k, v in pairs(E.db.mMT.cosmeticbars.bars) do
+		if not DT.RegisteredPanels[k] then
+            cleanList[k] = nil
+        end
+	end
+    E.db.mMT.cosmeticbars.bars = cleanList
+end
+
 function module:Initialize()
 	if not module.loaded then
+        CheckAndRemoveSettings()
+        mMT:DebugPrintTable(E.db.mMT.cosmeticbars.bars)
 		hooksecurefunc(DT, "UpdatePanelInfo", UpdatePanelColors)
 		module.loaded = true
 		module.needReloadUI = true
