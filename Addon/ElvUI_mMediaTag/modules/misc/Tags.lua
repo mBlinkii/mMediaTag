@@ -1386,9 +1386,16 @@ local function GetRaidTargets(unit)
 end
 
 local targetTextures = {
-	TANK = "|TInterface\\AddOns\\ElvUI_mMediaTag\\media\\icons\\tags\\targetindicator\\TANK.tga:16:16:0:0:16:16:0:16:0:16",
-	HEALER = "|TInterface\\AddOns\\ElvUI_mMediaTag\\media\\icons\\tags\\targetindicator\\HEAL.tga:16:16:0:0:16:16:0:16:0:16",
-	DAMAGER = "|TInterface\\AddOns\\ElvUI_mMediaTag\\media\\icons\\tags\\targetindicator\\DD.tga:16:16:0:0:16:16:0:16:0:16",
+	role = {
+		TANK = "|TInterface\\AddOns\\ElvUI_mMediaTag\\media\\icons\\tags\\targetindicator\\TANK.tga:16:16:0:0:16:16:0:16:0:16",
+		HEALER = "|TInterface\\AddOns\\ElvUI_mMediaTag\\media\\icons\\tags\\targetindicator\\HEAL.tga:16:16:0:0:16:16:0:16:0:16",
+		DAMAGER = "|TInterface\\AddOns\\ElvUI_mMediaTag\\media\\icons\\tags\\targetindicator\\DD.tga:16:16:0:0:16:16:0:16:0:16",
+	},
+	sticker = {
+		TANK = "|TInterface\\AddOns\\ElvUI_mMediaTag\\media\\icons\\tags\\targetindicator\\stickerTank.tga:16:16:0:0:16:16:0:16:0:16",
+		HEALER = "|TInterface\\AddOns\\ElvUI_mMediaTag\\media\\icons\\tags\\targetindicator\\stickerHeal.tga:16:16:0:0:16:16:0:16:0:16",
+		DAMAGER = "|TInterface\\AddOns\\ElvUI_mMediaTag\\media\\icons\\tags\\targetindicator\\stickerDD.tga:16:16:0:0:16:16:0:16:0:16",
+	},
 	STOP = "|TInterface\\AddOns\\ElvUI_mMediaTag\\media\\icons\\tags\\targetindicator\\STOP.tga:16:16:0:0:16:16:0:16:0:16",
 	SQ = "|TInterface\\AddOns\\ElvUI_mMediaTag\\media\\icons\\tags\\targetindicator\\SQ.tga:16:16:0:0:16:16:0:16:0:16",
 	FLAT = "|TInterface\\AddOns\\ElvUI_mMediaTag\\media\\icons\\tags\\targetindicator\\FLAT.tga:16:16:0:0:16:16:0:16:0:16",
@@ -1412,14 +1419,14 @@ local function GetPartyTargetsIcons(unit, style)
 	if style == "role" then
 		for i = 1, GetNumGroupMembers() - 1 do
 			if UnitIsUnit("party" .. i .. "target", unit) then
-				local role = targetTextures[UnitGroupRolesAssigned("party" .. i)] or targetTextures.DAMAGER
+				local role = targetTextures.role[UnitGroupRolesAssigned("party" .. i)] or targetTextures.DAMAGER
 				local _, unitClass = UnitClass("party" .. i)
 				ClassString = role .. targetStringColors[unitClass] .. ClassString
 			end
 		end
 
 		if UnitIsUnit("playertarget", unit) then
-			local role = targetTextures[UnitGroupRolesAssigned("player")] or targetTextures.DAMAGER
+			local role = targetTextures.role[UnitGroupRolesAssigned("player")] or targetTextures.DAMAGER
 			local _, unitClass = UnitClass("player")
 			ClassString = role .. targetStringColors[unitClass] .. ClassString
 		end
@@ -1495,3 +1502,4 @@ E:AddTagInfo("mTargetingPlayers:icons:SQ", mMT.NameShort .. " " .. L["Misc"], L[
 E:AddTagInfo("mTargetingPlayers:icons:DIA", mMT.NameShort .. " " .. L["Misc"], L["Target counter Icon (Flat Diamond)."])
 E:AddTagInfo("mTargetingPlayers:icons:Stop", mMT.NameShort .. " " .. L["Misc"], L["Target counter Icon (Flat Stop shield)."])
 E:AddTagInfo("mTargetingPlayers:icons:Role", mMT.NameShort .. " " .. L["Misc"], L["Target counter Icon (Roleicons)."])
+E:AddTagInfo("mTargetingPlayers:icons:Sticker", mMT.NameShort .. " " .. L["Misc"], L["Target counter Icon (Roleicons)."])
