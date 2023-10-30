@@ -324,6 +324,10 @@ P.mMT = {
 		bag = false,
 		max = false,
 	},
+	cosmeticbars = {
+		enable = false,
+		bars = {}
+	},
 	dockdatatext = {
 		autogrow = true,
 		growsize = 8,

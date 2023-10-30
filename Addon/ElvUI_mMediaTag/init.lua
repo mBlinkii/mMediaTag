@@ -42,6 +42,7 @@ mMT.Modules.RoleIcons = {}
 mMT.Modules.Castbar = {}
 mMT.Modules.ImportantSpells = {}
 mMT.Modules.InterruptOnCD = {}
+mMT.Modules.CosmeticBars = {}
 --mMT.Modules.ObjectiveTracker = {}
 
 local defaultDB = {
@@ -113,6 +114,7 @@ local function EnableModules()
 	mMT.Modules.SummonIcon.enable = E.db.mMT.unitframeicons.summon.enable
 	mMT.Modules.Portraits.enable = E.db.mMT.portraits.general.enable
 	mMT.Modules.ImportantSpells.enable = (E.db.mMT.importantspells.enable and (E.db.mMT.importantspells.np or E.db.mMT.importantspells.uf))
+	mMT.Modules.CosmeticBars.enable = E.db.mMT.cosmeticbars.enable
 	--mMT.Modules.ObjectiveTracker.enable = E.db.mMT.objectivetracker.enable and (E.private.skins.blizzard.enable and E.private.skins.blizzard.objectiveTracker) and not IsAddOnLoaded("!KalielsTracker")
 
 	-- Retail

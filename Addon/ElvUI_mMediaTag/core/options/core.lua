@@ -307,6 +307,13 @@ local function configTable()
 						childGroups = "tab",
 						args = {},
 					},
+					datapanels = {
+						order = 8,
+						type = "group",
+						name = L["Datapanels"],
+						childGroups = "tab",
+						args = {},
+					},
 					textures = {
 						order = 20,
 						type = "group",

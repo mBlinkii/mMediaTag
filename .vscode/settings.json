@@ -506,7 +506,8 @@
         "PROFESSIONS_COOKING",
         "PROFESSIONS_FIRST_AID",
         "PROFESSIONS_FISHING",
-        "INSCRIPTION"
+        "INSCRIPTION",
+        "classColor"
     ],
     "Lua.diagnostics.disable": [
         "undefined-field"
@@ -537,11 +538,14 @@
         "colortip",
         "combattime",
         "Cooldown",
+        "cosmeticbars",
         "Creatm",
         "customcolor",
         "customfontcolor",
         "customfontzise",
         "Dalerija",
+        "darkclass",
+        "datapanels",
         "Datatext",
         "datatextcolors",
         "datatextcurrency",
