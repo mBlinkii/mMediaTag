@@ -37,5 +37,4 @@
 	<Script file="castbargeneral.lua"/>
 	<Script file="durabilityanditemlevel.lua"/>
 	<Script file="firstandsecondprofession.lua"/>
-	<Script file="modulecopy.lua"/>
 </Ui>
