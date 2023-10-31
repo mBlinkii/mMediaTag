@@ -134,7 +134,7 @@ local function configTable()
 							type = "range",
 							min = 0,
 							max = 1,
-							step = 0.1,
+							step = 0.01,
 							get = function(info)
 								return E.db.mMT.cosmeticbars.bars[Selected] and E.db.mMT.cosmeticbars.bars[Selected].bg.color.a or 1
 							end,
