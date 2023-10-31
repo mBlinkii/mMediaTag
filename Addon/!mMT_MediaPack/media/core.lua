@@ -681,6 +681,7 @@ mAddBackground("mMediaTag Chat12", "chat12.tga")
 mAddBackground("mMediaTag Chat13", "chat13.tga")
 
 mAddBorder("mMediaTag Border1", "mborder1.tga")
+mAddBorder("mMediaTag Border2", "mborder2.tga")
 mAddBorder("mMediaTag yborder", "yborder.tga")
 mAddBorder("mMediaTag yborder2", "yborder2.tga")
 mAddBorder("mMediaTag YuluBorderSwitch", "YuluBorderSwitch.tga")
