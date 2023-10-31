@@ -29,6 +29,7 @@ local UnitIsWildBattlePet = UnitIsWildBattlePet
 local UnitLevel = UnitLevel
 local UnitName = UnitName
 local TANK, HEALER = TANK, HEALER
+local UnitAffectingCombat = UnitAffectingCombat
 local UnitFaction = {}
 
 -- fallback colors
@@ -1267,53 +1268,40 @@ E:AddTagInfo("mFaction:icon:opposite", mMT.NameShort .. " " .. L["Misc"], L["Dis
 E:AddTagInfo("mFaction:text", mMT.NameShort .. " " .. L["Misc"], L["Displays the Faction."])
 E:AddTagInfo("mFaction:text:opposite", mMT.NameShort .. " " .. L["Misc"], L["Displays the opposite Faction."])
 
-E:AddTag("mPowerPercent", "UNIT_DISPLAYPOWER UNIT_POWER_FREQUENT UNIT_MAXPOWER PLAYER_ROLES_ASSIGNED GROUP_ROSTER_UPDATE", function(unit)
-	local powerType = UnitPowerType(unit)
-	local min = UnitPower(unit, powerType)
-	local max = UnitPowerMax(unit, powerType)
-	if min ~= 0 then
+E:AddTag("mPower:percent", "UNIT_DISPLAYPOWER UNIT_POWER_FREQUENT UNIT_MAXPOWER PLAYER_ROLES_ASSIGNED GROUP_ROSTER_UPDATE", function(unit, power)
+	if not power then
+		power = _TAGS.perpp(unit)
+	end
+
+	if power ~= 0 then
 		local Role = ""
 
-		if E.Retail then
+		if E.Retail or E.Wrath then
 			Role = UnitGroupRolesAssigned(unit)
 		end
 
-		if min == max then
-			return "100%"
-		end
-
 		if Role == "HEALER" then
-			local perc = min / max * 100
-			if perc <= 30 then
-				return format("|CFFF7DC6F%s|r", E:GetFormattedText("PERCENT", min, max))
-			elseif perc <= 5 then
-				return format("|CFFE74C3C%s|r", E:GetFormattedText("PERCENT", min, max))
+			if power <= 30 then
+				return format("|CFFF7DC6F%s|r", power)
+			elseif power <= 5 then -- "Interface\\AddOns\\ElvUI_mMediaTag\\media\\icons\\unitframes\\notready03.tga"
+				return format("|TInterface\\AddOns\\ElvUI_mMediaTag\\media\\icons\\unitframes\\notready03.tga:15:15:0:2|t|CFFE74C3C%s|r", power)
 			else
-				return E:GetFormattedText("PERCENT", min, max)
+				return power
 			end
 		else
-			return E:GetFormattedText("PERCENT", min, max)
+			return power
 		end
 	end
 end)
 
-E:AddTag("mPowerPercent:hidefull", "UNIT_DISPLAYPOWER UNIT_POWER_FREQUENT UNIT_MAXPOWER PLAYER_ROLES_ASSIGNED GROUP_ROSTER_UPDATE UNIT_COMBAT", function(unit)
-	local powerType = UnitPowerType(unit)
-	local min = UnitPower(unit, powerType)
-	local max = UnitPowerMax(unit, powerType)
-	if (min ~= max) and min ~= 0 then
-		return _TAGS.mPowerPercent(unit)
-	end
-end)
-
-E:AddTag("mPower:percent:hideZero", "UNIT_DISPLAYPOWER UNIT_POWER_FREQUENT UNIT_MAXPOWER PLAYER_ROLES_ASSIGNED GROUP_ROSTER_UPDATE UNIT_COMBAT", function(unit)
+E:AddTag("mPower:percent:hidefull", "UNIT_DISPLAYPOWER UNIT_POWER_FREQUENT UNIT_MAXPOWER PLAYER_ROLES_ASSIGNED GROUP_ROSTER_UPDATE UNIT_COMBAT", function(unit)
 	local power = _TAGS.perpp(unit)
-	if power ~= 0 then
-		return _TAGS.perpp(unit)
+	if power ~= 100 then
+		return _TAGS["mPower:percent"](unit, power)
 	end
 end)
 
-E:AddTag("mPowerPercent:heal", "UNIT_DISPLAYPOWER UNIT_POWER_FREQUENT UNIT_MAXPOWER PLAYER_ROLES_ASSIGNED GROUP_ROSTER_UPDATE", function(unit)
+E:AddTag("mPower:percent:heal", "UNIT_DISPLAYPOWER UNIT_POWER_FREQUENT UNIT_MAXPOWER PLAYER_ROLES_ASSIGNED GROUP_ROSTER_UPDATE", function(unit, power)
 	local Role = "HEALER"
 
 	if E.Retail or E.Wrath then
@@ -1321,27 +1309,49 @@ E:AddTag("mPowerPercent:heal", "UNIT_DISPLAYPOWER UNIT_POWER_FREQUENT UNIT_MAXPO
 	end
 
 	if Role == "HEALER" then
-		return _TAGS.mPowerPercent(unit)
+		if not power then
+			power = _TAGS.perpp(unit)
+		end
+
+		if power ~= 0 then
+			if power <= 30 then
+				return format("|CFFF7DC6F%s|r", power)
+			elseif power <= 5 then
+				return format("|TInterface\\AddOns\\ElvUI_mMediaTag\\media\\icons\\unitframes\\notready03.tga:15:15:0:2|t|CFFE74C3C%s|r", power)
+			else
+				return power
+			end
+		end
 	end
 end)
 
-E:AddTag("mPowerPercent:heal:hidefull", "UNIT_DISPLAYPOWER UNIT_POWER_FREQUENT UNIT_MAXPOWER PLAYER_ROLES_ASSIGNED GROUP_ROSTER_UPDATE UNIT_COMBAT", function(unit)
-	local Role = "HEALER"
-
-	if E.Retail or E.Wrath then
-		Role = UnitGroupRolesAssigned(unit)
-	end
-
-	if Role == "HEALER" then
-		return _TAGS["mPowerPercent:hidefull"](unit)
+E:AddTag("mPower:percent:heal:hidefull", "UNIT_DISPLAYPOWER UNIT_POWER_FREQUENT UNIT_MAXPOWER PLAYER_ROLES_ASSIGNED GROUP_ROSTER_UPDATE UNIT_COMBAT", function(unit)
+	local power = _TAGS.perpp(unit)
+	if power ~= 100 then
+		return _TAGS["mPower:percent:heal"](unit, power)
 	end
 end)
 
-E:AddTagInfo("mPowerPercent", mMT.NameShort .. " " .. L["Power"], L["Displays Power/Mana, with a low healer warning."])
-E:AddTagInfo("mPowerPercent:hidefull", mMT.NameShort .. " " .. L["Power"], L["Displays Power/Mana, with a low healer warning, hidden when full."])
-E:AddTagInfo("mPowerPercent:heal", mMT.NameShort .. " " .. L["Power"], L["Displays the healer's Power/Mana, with a low healer warning."])
-E:AddTagInfo("mPowerPercent:heal:hidefull", mMT.NameShort .. " " .. L["Power"], L["Displays the healer's Power/Mana, with a low healer warning, hidden when full."])
-E:AddTagInfo("mPower:percent:hideZero", mMT.NameShort .. " " .. L["Power"], L["Displays Power/Mana, hidden when zero."])
+E:AddTag("mPower:percent:combat", "UNIT_DISPLAYPOWER UNIT_POWER_FREQUENT UNIT_MAXPOWER PLAYER_ROLES_ASSIGNED GROUP_ROSTER_UPDATE UNIT_COMBAT", function(unit)
+	local power = _TAGS.perpp(unit)
+	if power ~= 100 or UnitAffectingCombat(unit) then
+		return _TAGS["mPower:percent"](unit, power)
+	end
+end)
+
+E:AddTag("mPower:percent:heal:combat", "UNIT_DISPLAYPOWER UNIT_POWER_FREQUENT UNIT_MAXPOWER PLAYER_ROLES_ASSIGNED GROUP_ROSTER_UPDATE UNIT_COMBAT", function(unit)
+	local power = _TAGS.perpp(unit)
+	if power ~= 100 or UnitAffectingCombat(unit) then
+		return _TAGS["mPower:percent:heal"](unit, power)
+	end
+end)
+
+E:AddTagInfo("mPower:percent", mMT.NameShort .. " " .. L["Power"], L["Displays Power/Mana, with a low healer warning."])
+E:AddTagInfo("mPower:percent:hidefull", mMT.NameShort .. " " .. L["Power"], L["Displays Power/Mana, with a low healer warning, hidden when full."])
+E:AddTagInfo("mPower:percent:heal", mMT.NameShort .. " " .. L["Power"], L["Displays the healer's Power/Mana, with a low healer warning."])
+E:AddTagInfo("mPower:percent:heal:hidefull", mMT.NameShort .. " " .. L["Power"], L["Displays the healer's Power/Mana, with a low healer warning, hidden when full."])
+E:AddTagInfo("mPower:percent:combat", mMT.NameShort .. " " .. L["Power"], L["Displays Power/Mana, in combat and if < 100%."])
+E:AddTagInfo("mPower:percent:heal:combat", mMT.NameShort .. " " .. L["Power"], L["Displays Power/Mana for Heal only, in combat and if < 100%."])
 
 E:AddTag("mQuestIcon", "QUEST_LOG_UPDATE", function(unit)
 	if UnitIsPlayer(unit) then
