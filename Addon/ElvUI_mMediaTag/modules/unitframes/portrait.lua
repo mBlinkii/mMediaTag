@@ -688,12 +688,10 @@ function module:Initialize()
 
 				if UnitExists("player") then
 					SetPortraitTexture(self.portrait, "player", not (settings.player.texture == "CI"))
-					if event == "PLAYER_ENTERING_WORLD" then
 						setColor(self.texture, getColor(self, "player"), settings.player.mirror)
 						if settings.general.corner and textures.corner[settings.player.texture] then
 							setColor(self.corner, getColor(self, "player"), settings.player.mirror)
 						end
-					end
 				end
 			end)
 			module.Player.ScriptSet = true
@@ -707,7 +705,6 @@ function module:Initialize()
 
 				if UnitExists("target") then
 					SetPortraitTexture(self.portrait, "target", not (settings.target.texture == "CI"))
-					--if event == "PLAYER_TARGET_CHANGED" or event == "PLAYER_ENTERING_WORLD" then
 					setColor(self.texture, getColor(self, "target"), settings.target.mirror)
 
 					if settings.general.corner and textures.corner[settings.target.texture] then
@@ -719,7 +716,6 @@ function module:Initialize()
 					elseif self.extra then
 						self.extra:Hide()
 					end
-					--end
 				end
 			end)
 			module.Target.ScriptSet = true
@@ -751,7 +747,6 @@ function module:Initialize()
 
 				if UnitExists("focus") then
 					SetPortraitTexture(self.portrait, "focus", not (settings.focus.texture == "CI"))
-					if event == "PLAYER_ENTERING_WORLD" or event == "PLAYER_FOCUS_CHANGED" then
 						setColor(self.texture, getColor(self, "focus"), settings.focus.mirror)
 						if settings.general.corner and textures.corner[settings.focus.texture] then
 							setColor(self.corner, getColor(self, "focus"), settings.focus.mirror)
@@ -762,7 +757,6 @@ function module:Initialize()
 						elseif self.extra then
 							self.extra:Hide()
 						end
-					end
 				end
 			end)
 			module.Focus.ScriptSet = true
@@ -776,7 +770,6 @@ function module:Initialize()
 
 				if UnitExists("targettarget") then
 					SetPortraitTexture(self.portrait, "targettarget", not (settings.targettarget.texture == "CI"))
-					if event == "PLAYER_ENTERING_WORLD" or event == "UNIT_TARGET" or event == "PLAYER_TARGET_CHANGED" then
 						setColor(self.texture, getColor(self, "targettarget"), settings.targettarget.mirror)
 						if settings.general.corner and textures.corner[settings.targettarget.texture] then
 							setColor(self.corner, getColor(self, "targettarget"), settings.targettarget.mirror)
@@ -787,7 +780,6 @@ function module:Initialize()
 						elseif self.extra then
 							self.extra:Hide()
 						end
-					end
 				end
 			end)
 			module.TargetTarget.ScriptSet = true
@@ -802,12 +794,10 @@ function module:Initialize()
 					end
 
 					if UnitExists(frame.unit) then
-						if event == "GROUP_ROSTER_UPDATE" or event == "PLAYER_ENTERING_WORLD" then
 							setColor(self.texture, getColor(self, frame.unit), settings.party.mirror)
 							if settings.general.corner and textures.corner[settings.party.texture] then
 								setColor(self.corner, getColor(self, frame.unit), settings.party.mirror)
 							end
-						end
 
 						SetPortraitTexture(self.portrait, frame.unit, not (settings.party.texture == "CI"))
 					end
