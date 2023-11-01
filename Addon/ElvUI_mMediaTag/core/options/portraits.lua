@@ -17,6 +17,16 @@ local style = {
 	metal = "METALLIC",
 }
 
+local frameStrata = {
+	BACKGROUND = "BACKGROUND",
+	LOW = "LOW",
+	MEDIUM = "MEDIUM",
+	HIGH = "HIGH",
+	DIALOG = "DIALOG",
+	TOOLTIP = "TOOLTIP",
+	AUTO = "Auto",
+}
+
 local function configTable()
 	E.Options.args.mMT.args.cosmetic.args.portraits.args = {
 		toggle_enable = {
@@ -339,8 +349,21 @@ local function configTable()
 						mMT.Modules.Portraits:Initialize()
 					end,
 				},
-				range_level = {
+				select_strata = {
 					order = 7,
+					type = "select",
+					name = L["Frame Strata"],
+					get = function(info)
+						return E.db.mMT.portraits.player.strata
+					end,
+					set = function(info, value)
+						E.db.mMT.portraits.player.strata = value
+						mMT.Modules.Portraits:Initialize()
+					end,
+					values = frameStrata,
+				},
+				range_level = {
+					order = 8,
 					name = L["Frame Level"],
 					type = "range",
 					min = 0,
@@ -480,8 +503,21 @@ local function configTable()
 						mMT.Modules.Portraits:Initialize()
 					end,
 				},
-				range_level = {
+				select_strata = {
 					order = 9,
+					type = "select",
+					name = L["Frame Strata"],
+					get = function(info)
+						return E.db.mMT.portraits.target.strata
+					end,
+					set = function(info, value)
+						E.db.mMT.portraits.target.strata = value
+						mMT.Modules.Portraits:Initialize()
+					end,
+					values = frameStrata,
+				},
+				range_level = {
+					order = 10,
 					name = L["Frame Level"],
 					type = "range",
 					min = 0,
@@ -621,8 +657,21 @@ local function configTable()
 						mMT.Modules.Portraits:Initialize()
 					end,
 				},
-				range_level = {
+				select_strata = {
 					order = 9,
+					type = "select",
+					name = L["Frame Strata"],
+					get = function(info)
+						return E.db.mMT.portraits.targettarget.strata
+					end,
+					set = function(info, value)
+						E.db.mMT.portraits.targettarget.strata = value
+						mMT.Modules.Portraits:Initialize()
+					end,
+					values = frameStrata,
+				},
+				range_level = {
+					order = 10,
 					name = L["Frame Level"],
 					type = "range",
 					min = 0,
@@ -751,8 +800,21 @@ local function configTable()
 						mMT.Modules.Portraits:Initialize()
 					end,
 				},
-				range_level = {
+				select_strata = {
 					order = 7,
+					type = "select",
+					name = L["Frame Strata"],
+					get = function(info)
+						return E.db.mMT.portraits.pet.strata
+					end,
+					set = function(info, value)
+						E.db.mMT.portraits.pet.strata = value
+						mMT.Modules.Portraits:Initialize()
+					end,
+					values = frameStrata,
+				},
+				range_level = {
+					order = 8,
 					name = L["Frame Level"],
 					type = "range",
 					min = 0,
@@ -892,8 +954,21 @@ local function configTable()
 						mMT.Modules.Portraits:Initialize()
 					end,
 				},
-				range_level = {
+				select_strata = {
 					order = 9,
+					type = "select",
+					name = L["Frame Strata"],
+					get = function(info)
+						return E.db.mMT.portraits.focus.strata
+					end,
+					set = function(info, value)
+						E.db.mMT.portraits.focus.strata = value
+						mMT.Modules.Portraits:Initialize()
+					end,
+					values = frameStrata,
+				},
+				range_level = {
+					order = 10,
 					name = L["Frame Level"],
 					type = "range",
 					min = 0,
@@ -1022,8 +1097,21 @@ local function configTable()
 						mMT.Modules.Portraits:Initialize()
 					end,
 				},
-				range_level = {
+				select_strata = {
 					order = 7,
+					type = "select",
+					name = L["Frame Strata"],
+					get = function(info)
+						return E.db.mMT.portraits.party.strata
+					end,
+					set = function(info, value)
+						E.db.mMT.portraits.party.strata = value
+						mMT.Modules.Portraits:Initialize()
+					end,
+					values = frameStrata,
+				},
+				range_level = {
+					order = 8,
 					name = L["Frame Level"],
 					type = "range",
 					min = 0,
@@ -1152,8 +1240,21 @@ local function configTable()
 						mMT.Modules.Portraits:Initialize()
 					end,
 				},
-				range_level = {
+				select_strata = {
 					order = 7,
+					type = "select",
+					name = L["Frame Strata"],
+					get = function(info)
+						return E.db.mMT.portraits.boss.strata
+					end,
+					set = function(info, value)
+						E.db.mMT.portraits.boss.strata = value
+						mMT.Modules.Portraits:Initialize()
+					end,
+					values = frameStrata,
+				},
+				range_level = {
+					order = 8,
 					name = L["Frame Level"],
 					type = "range",
 					min = 0,
@@ -1282,8 +1383,21 @@ local function configTable()
 						mMT.Modules.Portraits:Initialize()
 					end,
 				},
-				range_level = {
+				select_strata = {
 					order = 7,
+					type = "select",
+					name = L["Frame Strata"],
+					get = function(info)
+						return E.db.mMT.portraits.arena.strata
+					end,
+					set = function(info, value)
+						E.db.mMT.portraits.arena.strata = value
+						mMT.Modules.Portraits:Initialize()
+					end,
+					values = frameStrata,
+				},
+				range_level = {
+					order = 8,
 					name = L["Frame Level"],
 					type = "range",
 					min = 0,

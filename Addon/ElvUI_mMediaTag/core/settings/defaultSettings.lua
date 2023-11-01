@@ -512,6 +512,7 @@ P.mMT = {
 			relativePoint = "LEFT",
 			x = 0,
 			y = 0,
+			strata = "AUTO",
 			level = 20,
 		},
 		pet = {
@@ -523,6 +524,7 @@ P.mMT = {
 			relativePoint = "LEFT",
 			x = 0,
 			y = 0,
+			strata = "AUTO",
 			level = 20,
 		},
 		target = {
@@ -535,6 +537,7 @@ P.mMT = {
 			relativePoint = "RIGHT",
 			x = 0,
 			y = 0,
+			strata = "AUTO",
 			level = 20,
 		},
 		targettarget = {
@@ -547,6 +550,7 @@ P.mMT = {
 			relativePoint = "RIGHT",
 			x = 0,
 			y = 0,
+			strata = "AUTO",
 			level = 20,
 		},
 		focus = {
@@ -559,6 +563,7 @@ P.mMT = {
 			relativePoint = "RIGHT",
 			x = 0,
 			y = 0,
+			strata = "AUTO",
 			level = 20,
 		},
 		party = {
@@ -570,6 +575,7 @@ P.mMT = {
 			relativePoint = "LEFT",
 			x = 0,
 			y = 0,
+			strata = "AUTO",
 			level = 20,
 		},
 		boss = {
@@ -581,6 +587,7 @@ P.mMT = {
 			relativePoint = "RIGHT",
 			x = 0,
 			y = 0,
+			strata = "AUTO",
 			level = 20,
 		},
 		arena = {
@@ -592,6 +599,7 @@ P.mMT = {
 			relativePoint = "RIGHT",
 			x = 0,
 			y = 0,
+			strata = "AUTO",
 			level = 20,
 		},
 		general = {

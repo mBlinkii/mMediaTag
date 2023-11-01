@@ -507,7 +507,11 @@
         "PROFESSIONS_FIRST_AID",
         "PROFESSIONS_FISHING",
         "INSCRIPTION",
-        "classColor"
+        "classColor",
+        "BACKGROUND",
+        "LOW",
+        "HIGH",
+        "WORLD"
     ],
     "Lua.diagnostics.disable": [
         "undefined-field"
