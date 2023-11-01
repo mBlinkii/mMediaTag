@@ -195,10 +195,11 @@ end
 
 local function CreatePortrait(parent, conf, unit)
 	if mMT.DevMode then
-		mMT:Print("Create Function", "Unit:", unit, "Parent Unit:", parent.unit)
+		mMT:Print("Create Function", "Unit:", unit, "Exists", UnitExists(unit), "Parent Unit:", parent.unit, "Parent Exists:", UnitExists(parent.unit))
 	end
 
 	local texture = nil
+	unit = UnitExists(unit) and unit or "player"
 
 	-- Portraits Frame
 	local frame = CreateFrame("Frame", "mMT_Portrait_" .. unit, parent)
@@ -219,8 +220,9 @@ local function CreatePortrait(parent, conf, unit)
 	frame.portrait:SetAllPoints(frame)
 	frame.portrait:SetPoint("TOPLEFT", 0 + offset, 0 - offset)
 	frame.portrait:SetPoint("BOTTOMRIGHT", 0 - offset, 0 + offset)
-	mirrorTexture(frame.portrait, conf.mirror)
+	frame.portrait:SetTexture(path .. "unknown.tga", "CLAMP", "CLAMP", "TRILINEAR")
 	SetPortraitTexture(frame.portrait, unit, not (conf.texture == "CI"))
+	mirrorTexture(frame.portrait, conf.mirror)
 
 	-- Portrait Mask
 	texture = textures.mask[conf.texture] or conf.mirror and textures.mask.B[conf.texture] or textures.mask.A[conf.texture]
@@ -320,10 +322,11 @@ end
 
 local function UpdatePortrait(frame, conf, unit, parent)
 	if mMT.DevMode then
-		mMT:Print("Update Function", "Unit:", unit, "Parent Unit:", parent.unit)
+		mMT:Print("Create Update", "Unit:", unit, "Exists", UnitExists(unit), "Parent Unit:", parent.unit, "Parent Exists:", UnitExists(parent.unit))
 	end
 
 	local texture = nil
+	unit = UnitExists(unit) and unit or "player"
 
 	-- Portraits Frame
 	frame:SetSize(conf.size, conf.size)
@@ -555,7 +558,7 @@ function module:Initialize()
 			},
 			unitEvents = {
 				"UNIT_PORTRAIT_UPDATE",
-				"UNIT_NAME_UPDATE"
+				"UNIT_NAME_UPDATE",
 			},
 		}
 	end
@@ -587,7 +590,7 @@ function module:Initialize()
 			},
 			unitEvents = {
 				"UNIT_PORTRAIT_UPDATE",
-				"UNIT_NAME_UPDATE"
+				"UNIT_NAME_UPDATE",
 			},
 		}
 	end
@@ -601,11 +604,11 @@ function module:Initialize()
 				events = {
 					"PLAYER_ENTERING_WORLD",
 					"GROUP_ROSTER_UPDATE",
-					"INSTANCE_ENCOUNTER_ENGAGE_UNIT"
+					"INSTANCE_ENCOUNTER_ENGAGE_UNIT",
 				},
 				unitEvents = {
 					"UNIT_PORTRAIT_UPDATE",
-					"UNIT_NAME_UPDATE"
+					"UNIT_NAME_UPDATE",
 				},
 			}
 		end
@@ -619,11 +622,11 @@ function module:Initialize()
 				unit = _G["ElvUF_Boss" .. i].unit,
 				events = {
 					"PLAYER_ENTERING_WORLD",
-					"INSTANCE_ENCOUNTER_ENGAGE_UNIT"
+					"INSTANCE_ENCOUNTER_ENGAGE_UNIT",
 				},
 				unitEvents = {
 					"UNIT_PORTRAIT_UPDATE",
-					"UNIT_NAME_UPDATE"
+					"UNIT_NAME_UPDATE",
 				},
 			}
 		end
