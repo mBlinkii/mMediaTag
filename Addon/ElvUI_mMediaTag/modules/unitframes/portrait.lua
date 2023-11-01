@@ -708,17 +708,17 @@ function module:Initialize()
 				if UnitExists("target") then
 					SetPortraitTexture(self.portrait, "target", not (settings.target.texture == "CI"))
 					--if event == "PLAYER_TARGET_CHANGED" or event == "PLAYER_ENTERING_WORLD" then
-						setColor(self.texture, getColor(self, "target"), settings.target.mirror)
+					setColor(self.texture, getColor(self, "target"), settings.target.mirror)
 
-						if settings.general.corner and textures.corner[settings.target.texture] then
-							setColor(self.corner, getColor(self, "target"), settings.target.mirror)
-						end
+					if settings.general.corner and textures.corner[settings.target.texture] then
+						setColor(self.corner, getColor(self, "target"), settings.target.mirror)
+					end
 
-						if settings.target.extraEnable and self.extra then
-							CheckRareElite(self, "target")
-						elseif self.extra then
-							self.extra:Hide()
-						end
+					if settings.target.extraEnable and self.extra then
+						CheckRareElite(self, "target")
+					elseif self.extra then
+						self.extra:Hide()
+					end
 					--end
 				end
 			end)
@@ -734,11 +734,9 @@ function module:Initialize()
 				if UnitExists("pet") then
 					SetPortraitTexture(self.portrait, "pet", not (settings.pet.texture == "CI"))
 
-					if event == "PLAYER_ENTERING_WORLD" or event == "UNIT_NAME_UPDATE" then
-						setColor(self.texture, getColor(self, "pet"), settings.pet.mirror)
-						if settings.general.corner and textures.corner[settings.pet.texture] then
-							setColor(self.corner, getColor(self, "pet"), settings.pet.mirror)
-						end
+					setColor(self.texture, getColor(self, "pet"), settings.pet.mirror)
+					if settings.general.corner and textures.corner[settings.pet.texture] then
+						setColor(self.corner, getColor(self, "pet"), settings.pet.mirror)
 					end
 				end
 			end)
@@ -753,7 +751,7 @@ function module:Initialize()
 
 				if UnitExists("focus") then
 					SetPortraitTexture(self.portrait, "focus", not (settings.focus.texture == "CI"))
-					if event == "PLAYER_ENTERING_WORLD" or event == "PLAYER_FOCUS_CHANGED" or event == "UNIT_NAME_UPDATE" then
+					if event == "PLAYER_ENTERING_WORLD" or event == "PLAYER_FOCUS_CHANGED" then
 						setColor(self.texture, getColor(self, "focus"), settings.focus.mirror)
 						if settings.general.corner and textures.corner[settings.focus.texture] then
 							setColor(self.corner, getColor(self, "focus"), settings.focus.mirror)
@@ -804,7 +802,7 @@ function module:Initialize()
 					end
 
 					if UnitExists(frame.unit) then
-						if event == "GROUP_ROSTER_UPDATE" or event == "PLAYER_ENTERING_WORLD" or event == "UNIT_NAME_UPDATE" then
+						if event == "GROUP_ROSTER_UPDATE" or event == "PLAYER_ENTERING_WORLD" then
 							setColor(self.texture, getColor(self, frame.unit), settings.party.mirror)
 							if settings.general.corner and textures.corner[settings.party.texture] then
 								setColor(self.corner, getColor(self, frame.unit), settings.party.mirror)
@@ -828,11 +826,9 @@ function module:Initialize()
 					end
 
 					if UnitExists(frame.unit) then
-						if event == "UNIT_PORTRAIT_UPDATE" or event == "PLAYER_ENTERING_WORLD" or event == "UNIT_NAME_UPDATE" then
-							setColor(self.texture, getColor(self, frame.unit), settings.boss.mirror)
-							if settings.general.corner and textures.corner[settings.boss.texture] then
-								setColor(self.corner, getColor(self, frame.unit), settings.boss.mirror)
-							end
+						setColor(self.texture, getColor(self, frame.unit), settings.boss.mirror)
+						if settings.general.corner and textures.corner[settings.boss.texture] then
+							setColor(self.corner, getColor(self, frame.unit), settings.boss.mirror)
 						end
 
 						SetPortraitTexture(self.portrait, frame.unit, not (settings.boss.texture == "CI"))
@@ -852,11 +848,9 @@ function module:Initialize()
 					end
 
 					if UnitExists(frame.unit) then
-						if event == "ARENA_OPPONENT_UPDATE" or event == "PLAYER_ENTERING_WORLD" or "UNIT_NAME_UPDATE" then
-							setColor(self.texture, getColor(self, frame.unit), settings.arena.mirror)
-							if settings.general.corner and textures.corner[settings.arena.texture] then
-								setColor(self.corner, getColor(self, frame.unit), settings.arena.mirror)
-							end
+						setColor(self.texture, getColor(self, frame.unit), settings.arena.mirror)
+						if settings.general.corner and textures.corner[settings.arena.texture] then
+							setColor(self.corner, getColor(self, frame.unit), settings.arena.mirror)
 						end
 
 						SetPortraitTexture(self.portrait, frame.unit, not (settings.arena.texture == "CI"))
