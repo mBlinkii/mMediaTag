@@ -424,11 +424,23 @@ E:AddTag("mClass:icon:rare", "UNIT_CLASSIFICATION_CHANGED", function(unit)
 	end
 end)
 
+E:AddTag("mClass:icon:noelite", "UNIT_CLASSIFICATION_CHANGED", function(unit)
+	local c = UnitClassification(unit)
+	if (npcID and BossIDs[npcID]) or c == "worldboss" then
+		return icons.boss
+	elseif c == "rare" then
+		return icons.rare
+	elseif c == "rareelite" then
+		return icons.relite
+	end
+end)
+
 E:AddTagInfo("mClass", mMT.NameShort .. " " .. L["Class"], L["Displays the Unit Class."])
 E:AddTagInfo("mClass:short", mMT.NameShort .. " " .. L["Class"], L["Shortened version of"] .. " mClass.")
 E:AddTagInfo("mClass:icon", mMT.NameShort .. " " .. L["Class"], L["Displays the Unit Class Icon."])
 E:AddTagInfo("mClass:icon:boss", mMT.NameShort .. " " .. L["Class"], L["Displays the Unit Class Icon only for Boss NPCs."])
 E:AddTagInfo("mClass:icon:rare", mMT.NameShort .. " " .. L["Class"], L["Displays the Unit Class Icon only for Rare and Rare Elite NPCs."])
+E:AddTagInfo("mClass:icon:noelite", mMT.NameShort .. " " .. L["Class"], L["Displays the Unit Class Icon only for Rare and Boss NPCs."])
 
 E:AddTag("mStatus", "UNIT_HEALTH UNIT_CONNECTION PLAYER_FLAGS_CHANGED", function(unit)
 	local isAFK = UnitIsAFK(unit)
