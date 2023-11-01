@@ -558,7 +558,7 @@ function module:Initialize()
 			},
 			unitEvents = {
 				"UNIT_PORTRAIT_UPDATE",
-				"UNIT_NAME_UPDATE",
+				"UNIT_MODEL_CHANGED",
 			},
 		}
 	end
@@ -574,6 +574,7 @@ function module:Initialize()
 			},
 			unitEvents = {
 				"UNIT_PORTRAIT_UPDATE",
+				"UNIT_MODEL_CHANGED",
 				"UNIT_TARGET",
 			},
 		}
@@ -590,7 +591,7 @@ function module:Initialize()
 			},
 			unitEvents = {
 				"UNIT_PORTRAIT_UPDATE",
-				"UNIT_NAME_UPDATE",
+				"UNIT_MODEL_CHANGED",
 			},
 		}
 	end
@@ -604,11 +605,12 @@ function module:Initialize()
 				events = {
 					"PLAYER_ENTERING_WORLD",
 					"GROUP_ROSTER_UPDATE",
-					"INSTANCE_ENCOUNTER_ENGAGE_UNIT",
+					"UNIT_CONNECTION",
 				},
 				unitEvents = {
 					"UNIT_PORTRAIT_UPDATE",
-					"UNIT_NAME_UPDATE",
+					"UNIT_MODEL_CHANGED",
+					"PARTY_MEMBER_ENABLE",
 				},
 			}
 		end
@@ -623,10 +625,11 @@ function module:Initialize()
 				events = {
 					"PLAYER_ENTERING_WORLD",
 					"INSTANCE_ENCOUNTER_ENGAGE_UNIT",
+					"UNIT_TARGETABLE_CHANGED",
 				},
 				unitEvents = {
 					"UNIT_PORTRAIT_UPDATE",
-					"UNIT_NAME_UPDATE",
+					"UNIT_MODEL_CHANGED",
 				},
 			}
 		end
@@ -641,10 +644,11 @@ function module:Initialize()
 				events = {
 					"PLAYER_ENTERING_WORLD",
 					"ARENA_OPPONENT_UPDATE",
+					"UNIT_CONNECTION",
 				},
 				unitEvents = {
 					"UNIT_PORTRAIT_UPDATE",
-					"UNIT_NAME_UPDATE",
+					"UNIT_MODEL_CHANGED",
 				},
 			}
 		end
@@ -703,7 +707,7 @@ function module:Initialize()
 
 				if UnitExists("target") then
 					SetPortraitTexture(self.portrait, "target", not (settings.target.texture == "CI"))
-					if event == "PLAYER_TARGET_CHANGED" or event == "PLAYER_ENTERING_WORLD" then
+					--if event == "PLAYER_TARGET_CHANGED" or event == "PLAYER_ENTERING_WORLD" then
 						setColor(self.texture, getColor(self, "target"), settings.target.mirror)
 
 						if settings.general.corner and textures.corner[settings.target.texture] then
@@ -715,7 +719,7 @@ function module:Initialize()
 						elseif self.extra then
 							self.extra:Hide()
 						end
-					end
+					--end
 				end
 			end)
 			module.Target.ScriptSet = true
