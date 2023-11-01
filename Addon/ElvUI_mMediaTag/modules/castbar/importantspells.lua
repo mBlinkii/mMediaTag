@@ -64,7 +64,11 @@ local function SetSpellIcon(castbar, settings)
 end
 
 function module:UpdateCastbar(castbar)
-	local Spell = ImportantSpellIDs[castbar.spellID] and ImportantSpellIDs[castbar.spellID] or false
+	if mMT.DevMode then
+		mMT:Print("Spell ID:", castbar.spellID, "DB ID:", ImportantSpellIDs[castbar.spellID])
+	end
+
+	local Spell = ImportantSpellIDs[castbar.spellID] or false
 
 	if castbar.mSpellIcon then
 		castbar.mSpellIcon:Hide()
