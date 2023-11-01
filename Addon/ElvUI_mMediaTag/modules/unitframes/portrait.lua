@@ -200,7 +200,7 @@ local function CreatePortrait(parent, conf, unit)
 	local frame = CreateFrame("Frame", "mMT_Portrait_" .. unit, parent)
 	frame:SetSize(conf.size, conf.size)
 	frame:SetPoint(conf.point, parent, conf.relativePoint, conf.x, conf.y)
-	frame:SetFrameLevel(parent.Health:GetFrameLevel() + 1)
+	frame:SetFrameLevel(conf.level)
 
 	-- Portrait Texture
 	texture = textures.texture[settings.general.style][conf.texture]
@@ -318,7 +318,7 @@ local function UpdatePortrait(frame, conf, unit, parent)
 	frame:SetSize(conf.size, conf.size)
 	frame:ClearAllPoints()
 	frame:SetPoint(conf.point, parent, conf.relativePoint, conf.x, conf.y)
-	frame:SetFrameLevel(parent.Health:GetFrameLevel() + 1)
+	frame:SetFrameLevel(conf.level)
 
 	-- Portrait Texture
 	texture = textures.texture[settings.general.style][conf.texture]

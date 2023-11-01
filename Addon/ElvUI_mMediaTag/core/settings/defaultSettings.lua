@@ -512,6 +512,7 @@ P.mMT = {
 			relativePoint = "LEFT",
 			x = 0,
 			y = 0,
+			level = 20,
 		},
 		pet = {
 			enable = false,
@@ -522,6 +523,7 @@ P.mMT = {
 			relativePoint = "LEFT",
 			x = 0,
 			y = 0,
+			level = 20,
 		},
 		target = {
 			enable = true,
@@ -533,6 +535,7 @@ P.mMT = {
 			relativePoint = "RIGHT",
 			x = 0,
 			y = 0,
+			level = 20,
 		},
 		targettarget = {
 			enable = true,
@@ -544,6 +547,7 @@ P.mMT = {
 			relativePoint = "RIGHT",
 			x = 0,
 			y = 0,
+			level = 20,
 		},
 		focus = {
 			enable = false,
@@ -555,6 +559,7 @@ P.mMT = {
 			relativePoint = "RIGHT",
 			x = 0,
 			y = 0,
+			level = 20,
 		},
 		party = {
 			enable = true,
@@ -565,6 +570,7 @@ P.mMT = {
 			relativePoint = "LEFT",
 			x = 0,
 			y = 0,
+			level = 20,
 		},
 		boss = {
 			enable = false,
@@ -575,6 +581,7 @@ P.mMT = {
 			relativePoint = "RIGHT",
 			x = 0,
 			y = 0,
+			level = 20,
 		},
 		arena = {
 			enable = false,
@@ -585,6 +592,7 @@ P.mMT = {
 			relativePoint = "RIGHT",
 			x = 0,
 			y = 0,
+			level = 20,
 		},
 		general = {
 			enable = false,
