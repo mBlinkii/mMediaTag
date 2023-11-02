@@ -511,7 +511,15 @@
         "BACKGROUND",
         "LOW",
         "HIGH",
-        "WORLD"
+        "WORLD",
+        "IsLevelAtEffectiveMaxLevel",
+        "FACTION_ALLIANCE",
+        "FACTION_HORDE",
+        "PLAYER_FACTION_GROUP",
+        "GameMenuButtonAddons",
+        "GameMenuButtonLogout",
+        "UIErrorsFrame",
+        "mMT_Colors"
     ],
     "Lua.diagnostics.disable": [
         "undefined-field"

@@ -77,3 +77,12 @@ function mMT:GetClassColor(unit)
 		return (cs and E:RGBToHex(cs.r, cs.g, cs.b)) or '|cFFcccccc'
 	end
 end
+
+function mMT:SetElvUIMediaColor()
+	local color = E:ClassColor(E.myclass)
+	E.db.general.valuecolor["r"] = color.r
+	E.db.general.valuecolor["g"] = color.g
+	E.db.general.valuecolor["b"] = color.b
+	E.db.general.valuecolor["a"] = 1
+	E:UpdateAll()
+end

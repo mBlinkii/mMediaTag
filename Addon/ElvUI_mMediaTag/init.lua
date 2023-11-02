@@ -239,7 +239,7 @@ function mMT:Initialize()
 		end
 	end
 
-	if E.db.mMT.customclasscolors.emediaenable then
+	if E.db.mMT.general.emediaenable then
 		mMT:SetElvUIMediaColor()
 	end
 
@@ -265,6 +265,14 @@ function mMT:Initialize()
 
 	if (E.db.mMT.custombackgrounds.health.enable or E.db.mMT.custombackgrounds.power.enable or E.db.mMT.custombackgrounds.castbar.enable) and not mMT.ElvUI_EltreumUI.dark then
 		mMT:CustomBackdrop()
+	end
+
+	-- if E.db.mMT.customclasscolors.enable and not (mMT.ElvUI_EltreumUI.gradient or mMT.ElvUI_EltreumUI.dark) then
+	-- 	mMT:SetCustomColors()
+	-- end
+
+	if E.db.mMT.general.greeting then
+		mMT:GreetingText()
 	end
 end
 
@@ -314,19 +322,11 @@ function mMT:PLAYER_ENTERING_WORLD(event)
 	end
 
 	-- Initialize Modules
-	if E.db.mMT.general.greeting then
-		mMT:GreetingText()
-	end
-
 	if E.db.mMT.tooltip.enable then
 		mMT:TipIcon()
 	end
 
-	if E.db.mMT.customclasscolors.enable and not (mMT.ElvUI_EltreumUI.gradient or mMT.ElvUI_EltreumUI.dark) then
-		mMT:SetCustomColors()
-	end
-
-	if E.db.mMT.customclasscolors.emediaenable then
+	if E.db.mMT.general.emediaenable then
 		mMT:SetElvUIMediaColor()
 	end
 

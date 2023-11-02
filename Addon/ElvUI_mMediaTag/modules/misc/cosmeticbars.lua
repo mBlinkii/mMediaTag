@@ -1,5 +1,6 @@
 local E, L, V, P, G = unpack(ElvUI)
 local DT = E:GetModule("DataTexts")
+
 local _G = _G
 local module = mMT.Modules.CosmeticBars
 

@@ -54,6 +54,7 @@ local function configTable()
 							E.db.mMT.cosmeticbars.bars[value] = {
 								bg = { style = "custom", color = { r = 1, g = 1, b = 1, a = 1 } },
 								border = { style = "custom", color = { r = 1, g = 1, b = 1 } },
+								texture = {enable = false, file = "Solid"}
 							}
 						end
 					end,
