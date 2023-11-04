@@ -3,15 +3,15 @@ local LSM = E.Libs.LSM
 
 local tinsert = tinsert
 local mFontFlags = {
-	NONE = 'None',
-	OUTLINE = 'Outline',
-	THICKOUTLINE = 'Thick',
-	SHADOW = '|cff888888Shadow|r',
-	SHADOWOUTLINE = '|cff888888Shadow|r Outline',
-	SHADOWTHICKOUTLINE = '|cff888888Shadow|r Thick',
-	MONOCHROME = '|cFFAAAAAAMono|r',
-	MONOCHROMEOUTLINE = '|cFFAAAAAAMono|r Outline',
-	MONOCHROMETHICKOUTLINE = '|cFFAAAAAAMono|r Thick'
+	NONE = "None",
+	OUTLINE = "Outline",
+	THICKOUTLINE = "Thick",
+	SHADOW = "|cff888888Shadow|r",
+	SHADOWOUTLINE = "|cff888888Shadow|r Outline",
+	SHADOWTHICKOUTLINE = "|cff888888Shadow|r Thick",
+	MONOCHROME = "|cFFAAAAAAMono|r",
+	MONOCHROMEOUTLINE = "|cFFAAAAAAMono|r Outline",
+	MONOCHROMETHICKOUTLINE = "|cFFAAAAAAMono|r Thick",
 }
 local positionValues = {
 	LEFT = "LEFT",
@@ -26,7 +26,7 @@ local positionValues = {
 }
 
 local function configTable()
-    local icons = {}
+	local icons = {}
 
 	for key, icon in pairs(mMT.Media.DashIcons) do
 		icons[key] = E:TextureString(icon, ":14:14") .. " " .. key
@@ -120,18 +120,18 @@ local function configTable()
 			order = 3,
 			type = "group",
 			name = L["Header"],
-            disabled = function()
+			disabled = function()
 				return not ((E.db.mMT.objectivetracker.enable and E.db.mMT.objectivetracker.simple) or E.db.mMT.objectivetracker.enable)
-            end,
+			end,
 			args = {
 				header_font = {
 					order = 1,
 					type = "group",
 					inline = true,
 					name = L["Font"],
-                    disabled = function()
-                        return E.db.mMT.objectivetracker.simple
-                    end,
+					disabled = function()
+						return E.db.mMT.objectivetracker.simple
+					end,
 					args = {
 						headerfontsize = {
 							order = 1,
@@ -190,9 +190,9 @@ local function configTable()
 					type = "group",
 					inline = true,
 					name = L["Bar"],
-                    disabled = function()
-                        return not (E.db.mMT.objectivetracker.simple or E.db.mMT.objectivetracker.enable)
-                    end,
+					disabled = function()
+						return not (E.db.mMT.objectivetracker.simple or E.db.mMT.objectivetracker.enable)
+					end,
 					args = {
 						headerbarstyle = {
 							order = 1,
@@ -316,9 +316,9 @@ local function configTable()
 					type = "group",
 					inline = true,
 					name = L["Settings"],
-                    disabled = function()
-                        return E.db.mMT.objectivetracker.simple
-                    end,
+					disabled = function()
+						return E.db.mMT.objectivetracker.simple
+					end,
 					args = {
 						headerquestamount = {
 							order = 1,
@@ -349,7 +349,7 @@ local function configTable()
 			type = "group",
 			name = L["Title"],
 			disabled = function()
-                return not (E.db.mMT.objectivetracker.enable and not E.db.mMT.objectivetracker.simple)
+				return not (E.db.mMT.objectivetracker.enable and not E.db.mMT.objectivetracker.simple)
 			end,
 			args = {
 				header_font = {
@@ -697,6 +697,92 @@ local function configTable()
 								E.db.mMT.objectivetracker.dash.customstring = value
 								E:StaticPopup_Show("CONFIG_RL")
 							end,
+						},
+					},
+				},
+			},
+		},
+		group_bar = {
+			order = 6,
+			type = "group",
+			name = L["Bars"],
+			disabled = function()
+				return not (E.db.mMT.objectivetracker.enable and not E.db.mMT.objectivetracker.simple)
+			end,
+			args = {
+				header_font = {
+					order = 1,
+					type = "group",
+					inline = true,
+					name = L["Font"],
+					args = {
+						fontsize_bar = {
+							order = 1,
+							name = L["Font Size"],
+							type = "range",
+							min = 1,
+							max = 64,
+							step = 1,
+							softMin = 8,
+							softMax = 32,
+							get = function(info)
+								return E.db.mMT.objectivetracker.bar.fontsize
+							end,
+							set = function(info, value)
+								E.db.mMT.objectivetracker.bar.fontsize = value
+							end,
+						},
+						select_fontpoint = {
+							order = 2,
+							type = "select",
+							name = L["Anchor Point"],
+							get = function(info)
+								return E.db.mMT.objectivetracker.bar.fontpoint
+							end,
+							set = function(info, value)
+								E.db.mMT.objectivetracker.bar.fontpoint = value
+								E:StaticPopup_Show("CONFIG_RL")
+							end,
+							values = {
+								LEFT = L["LEFT"],
+								CENTER = L["CENTER"],
+								RIGHT = L["RIGHT"],
+							},
+						},
+					},
+					header_bar = {
+						order = 2,
+						type = "group",
+						inline = true,
+						name = L["Settings"],
+						args = {
+							toggle_barbg = {
+								order = 1,
+								type = "toggle",
+								name = L["Transparent Backdrop"],
+								get = function(info)
+									return E.db.mMT.objectivetracker.bar.transparent
+								end,
+								set = function(info, value)
+									E.db.mMT.objectivetracker.bar.transparent = value
+									E:StaticPopup_Show("CONFIG_RL")
+								end,
+							},
+							bar_hight = {
+								order = 2,
+								name = L["Bar hight"],
+								type = "range",
+								min = 1,
+								max = 128,
+								step = 1,
+								get = function(info)
+									return E.db.mMT.objectivetracker.bar.hight
+								end,
+								set = function(info, value)
+									E.db.mMT.objectivetracker.bar.hight = value
+									E:StaticPopup_Show("CONFIG_RL")
+								end,
+							},
 						},
 					},
 				},

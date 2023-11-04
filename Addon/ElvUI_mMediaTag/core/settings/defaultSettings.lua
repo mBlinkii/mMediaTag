@@ -261,6 +261,12 @@ P.mMT = {
 		simple = false,
 		font = "PT Sans Narrow",
 		fontflag = "NONE",
+		bar = {
+			fontsize = 12,
+			fontpoint = "CENTER",
+			transparent = false,
+			hight = 18,
+		},
 		header = {
 			fontsize = 14,
 			fontcolorstyle = "custom",
