@@ -750,39 +750,39 @@ local function configTable()
 							},
 						},
 					},
-					header_bar = {
-						order = 2,
-						type = "group",
-						inline = true,
-						name = L["Settings"],
-						args = {
-							toggle_barbg = {
-								order = 1,
-								type = "toggle",
-								name = L["Transparent Backdrop"],
-								get = function(info)
-									return E.db.mMT.objectivetracker.bar.transparent
-								end,
-								set = function(info, value)
-									E.db.mMT.objectivetracker.bar.transparent = value
-									E:StaticPopup_Show("CONFIG_RL")
-								end,
-							},
-							bar_hight = {
-								order = 2,
-								name = L["Bar hight"],
-								type = "range",
-								min = 1,
-								max = 128,
-								step = 1,
-								get = function(info)
-									return E.db.mMT.objectivetracker.bar.hight
-								end,
-								set = function(info, value)
-									E.db.mMT.objectivetracker.bar.hight = value
-									E:StaticPopup_Show("CONFIG_RL")
-								end,
-							},
+				},
+				header_bar = {
+					order = 2,
+					type = "group",
+					inline = true,
+					name = L["Settings"],
+					args = {
+						toggle_barbg = {
+							order = 1,
+							type = "toggle",
+							name = L["Transparent Backdrop"],
+							get = function(info)
+								return E.db.mMT.objectivetracker.bar.transparent
+							end,
+							set = function(info, value)
+								E.db.mMT.objectivetracker.bar.transparent = value
+								E:StaticPopup_Show("CONFIG_RL")
+							end,
+						},
+						bar_hight = {
+							order = 2,
+							name = L["Bar hight"],
+							type = "range",
+							min = 1,
+							max = 128,
+							step = 1,
+							get = function(info)
+								return E.db.mMT.objectivetracker.bar.hight
+							end,
+							set = function(info, value)
+								E.db.mMT.objectivetracker.bar.hight = value
+								E:StaticPopup_Show("CONFIG_RL")
+							end,
 						},
 					},
 				},
