@@ -72,7 +72,7 @@ local function configTable()
 				},
 			},
 		},
-		group_font = {
+		group_fontold = {
 			order = 2,
 			type = "group",
 			name = L["Font"],
@@ -695,6 +695,270 @@ local function configTable()
 							end,
 							set = function(info, value)
 								E.db.mMT.objectivetracker.dash.customstring = value
+								E:StaticPopup_Show("CONFIG_RL")
+							end,
+						},
+					},
+				},
+			},
+		},
+		group_font = {
+			order = 6,
+			type = "group",
+			name = L["Font"],
+			disabled = function()
+				return not (E.db.mMT.objectivetracker.enable and not E.db.mMT.objectivetracker.simple)
+			end,
+			args = {
+				header_font = {
+					order = 1,
+					type = "group",
+					inline = true,
+					name = L["Font"],
+					args = {
+						select_font = {
+							type = "select",
+							dialogControl = "LSM30_Font",
+							order = 1,
+							name = L["Default Font"],
+							values = LSM:HashTable("font"),
+							get = function(info)
+								return E.db.mMT.objectivetracker.font.font
+							end,
+							set = function(info, value)
+								E.db.mMT.objectivetracker.font.font = value
+							end,
+						},
+						select_fontflag = {
+							type = "select",
+							order = 2,
+							name = L["Font contour"],
+							values = mFontFlags,
+							get = function(info)
+								return E.db.mMT.objectivetracker.font.fontflag
+							end,
+							set = function(info, value)
+								E.db.mMT.objectivetracker.font.fontflag = value
+							end,
+						},
+					},
+				},
+				header_settings = {
+					order = 2,
+					type = "group",
+					inline = true,
+					name = L["Settings"],
+					args = {
+						range_highlight = {
+							order = 1,
+							name = L["Highlight dim Value"],
+							type = "range",
+							min = 0,
+							max = 1,
+							step = 0.01,
+							get = function(info)
+								return E.db.mMT.objectivetracker.font.highlight
+							end,
+							set = function(info, value)
+								E.db.mMT.objectivetracker.font.highlight = value
+							end,
+						},
+					},
+				},
+				header_fontcolor = {
+					order = 2,
+					type = "group",
+					inline = true,
+					name = L["Font Colors"],
+					args = {
+						color_title = {
+							type = "color",
+							order = 1,
+							name = L["Title"],
+							hasAlpha = false,
+							get = function(info)
+								local t = E.db.mMT.objectivetracker.font.color.title
+								return t.r, t.g, t.b
+							end,
+							set = function(info, r, g, b)
+								local t = E.db.mMT.objectivetracker.font.color.title
+								t.r, t.g, t.b, t.hex = r, g, b, E:RGBToHex(r, g, b)
+								E:StaticPopup_Show("CONFIG_RL")
+							end,
+						},
+						toggle_title = {
+							order = 2,
+							type = "toggle",
+							name = L["Class colored"],
+							get = function(info)
+								return E.db.mMT.objectivetracker.font.color.title.class
+							end,
+							set = function(info, value)
+								E.db.mMT.objectivetracker.font.color.title.class = value
+								E:StaticPopup_Show("CONFIG_RL")
+							end,
+						},
+						spacer_1 = {
+							order = 3,
+							type = "description",
+							name = "\n\n\n",
+						},
+						color_header = {
+							type = "color",
+							order = 4,
+							name = L["Header"],
+							hasAlpha = false,
+							get = function(info)
+								local t = E.db.mMT.objectivetracker.font.color.header
+								return t.r, t.g, t.b
+							end,
+							set = function(info, r, g, b)
+								local t = E.db.mMT.objectivetracker.font.color.header
+								t.r, t.g, t.b, t.hex = r, g, b, E:RGBToHex(r, g, b)
+								E:StaticPopup_Show("CONFIG_RL")
+							end,
+						},
+						toggle_header = {
+							order = 5,
+							type = "toggle",
+							name = L["Class colored"],
+							get = function(info)
+								return E.db.mMT.objectivetracker.font.color.header.class
+							end,
+							set = function(info, value)
+								E.db.mMT.objectivetracker.font.color.header.class = value
+								E:StaticPopup_Show("CONFIG_RL")
+							end,
+						},
+						spacer_2 = {
+							order = 6,
+							type = "description",
+							name = "\n\n\n",
+						},
+						color_text = {
+							type = "color",
+							order = 7,
+							name = L["Text"],
+							hasAlpha = false,
+							get = function(info)
+								local t = E.db.mMT.objectivetracker.font.color.text
+								return t.r, t.g, t.b
+							end,
+							set = function(info, r, g, b)
+								local t = E.db.mMT.objectivetracker.font.color.text
+								t.r, t.g, t.b, t.hex = r, g, b, E:RGBToHex(r, g, b)
+								E:StaticPopup_Show("CONFIG_RL")
+							end,
+						},
+						toggle_text = {
+							order = 8,
+							type = "toggle",
+							name = L["Class colored"],
+							get = function(info)
+								return E.db.mMT.objectivetracker.font.color.text.class
+							end,
+							set = function(info, value)
+								E.db.mMT.objectivetracker.font.color.text.class = value
+								E:StaticPopup_Show("CONFIG_RL")
+							end,
+						},
+						spacer_3 = {
+							order = 9,
+							type = "description",
+							name = "\n\n\n",
+						},
+						color_failed = {
+							type = "color",
+							order = 10,
+							name = L["Failed"],
+							hasAlpha = false,
+							get = function(info)
+								local t = E.db.mMT.objectivetracker.font.color.failed
+								return t.r, t.g, t.b
+							end,
+							set = function(info, r, g, b)
+								local t = E.db.mMT.objectivetracker.font.color.failed
+								t.r, t.g, t.b, t.hex = r, g, b, E:RGBToHex(r, g, b)
+								E:StaticPopup_Show("CONFIG_RL")
+							end,
+						},
+						spacer_4 = {
+							order = 11,
+							type = "description",
+							name = "\n\n\n",
+						},
+						color_complete = {
+							type = "color",
+							order = 12,
+							name = L["Complete"],
+							hasAlpha = false,
+							get = function(info)
+								local t = E.db.mMT.objectivetracker.font.color.complete
+								return t.r, t.g, t.b
+							end,
+							set = function(info, r, g, b)
+								local t = E.db.mMT.objectivetracker.font.color.complete
+								t.r, t.g, t.b, t.hex = r, g, b, E:RGBToHex(r, g, b)
+								E:StaticPopup_Show("CONFIG_RL")
+							end,
+						},
+						spacer_6 = {
+							order = 16,
+							type = "description",
+							name = "\n\n\n",
+						},
+						color_good = {
+							type = "color",
+							order = 17,
+							name = L["Progress Good"],
+							hasAlpha = false,
+							get = function(info)
+								local t = E.db.mMT.objectivetracker.font.color.good
+								return t.r, t.g, t.b
+							end,
+							set = function(info, r, g, b)
+								local t = E.db.mMT.objectivetracker.font.color.good
+								t.r, t.g, t.b, t.hex = r, g, b, E:RGBToHex(r, g, b)
+								E:StaticPopup_Show("CONFIG_RL")
+							end,
+						},
+						spacer_7 = {
+							order = 18,
+							type = "description",
+							name = "\n\n\n",
+						},
+						color_transit = {
+							type = "color",
+							order = 19,
+							name = L["Progress Transit"],
+							hasAlpha = false,
+							get = function(info)
+								local t = E.db.mMT.objectivetracker.font.color.transit
+								return t.r, t.g, t.b
+							end,
+							set = function(info, r, g, b)
+								local t = E.db.mMT.objectivetracker.font.color.transit
+								t.r, t.g, t.b, t.hex = r, g, b, E:RGBToHex(r, g, b)
+								E:StaticPopup_Show("CONFIG_RL")
+							end,
+						},
+						spacer_8 = {
+							order = 20,
+							type = "description",
+							name = "\n\n\n",
+						},
+						color_bad = {
+							type = "color",
+							order = 21,
+							name = L["Progress bad"],
+							hasAlpha = false,
+							get = function(info)
+								local t = E.db.mMT.objectivetracker.font.color.bad
+								return t.r, t.g, t.b
+							end,
+							set = function(info, r, g, b)
+								local t = E.db.mMT.objectivetracker.font.color.bad
+								t.r, t.g, t.b, t.hex = r, g, b, E:RGBToHex(r, g, b)
 								E:StaticPopup_Show("CONFIG_RL")
 							end,
 						},

@@ -2,7 +2,7 @@ local E, L, V, P, G = unpack(ElvUI)
 
 P.mMT = {
 	version = 0,
-	general = { greeting = true, keystochat = false, emediaenable = false},
+	general = { greeting = true, keystochat = false, emediaenable = false },
 	afk = {
 		enable = false,
 		logo = false,
@@ -259,13 +259,26 @@ P.mMT = {
 	objectivetracker = {
 		enable = false,
 		simple = false,
-		font = "PT Sans Narrow",
-		fontflag = "NONE",
 		bar = {
 			fontsize = 12,
 			fontpoint = "CENTER",
 			transparent = false,
 			hight = 18,
+		},
+		font = {
+			font = "PT Sans Narrow",
+			fontflag = "NONE",
+			highlight = 0.4,
+			color = {
+				title = { class = false, r = 1, g = 0.78, b = 0, hex = "|cffffc700" },
+				header = { class = false, r = 1, g = 0.78, b = 0, hex = "|cffffc700" },
+				text = { class = false, r = 0.87, g = 0.87, b = 0.87, hex = "|cff00ffa4" },
+				failed = { r = 1, g = 0.16, b = 0, hex = "|cffff2800" },
+				complete = { r = 0, g = 1, b = 0.27, hex = "|cff00ff45" },
+				good = { r = 0.25, g = 1, b = 0.43, hex = "|cff40ff6e" },
+				bad = { r = 0.92, g = 0.46, b = 0.1, hex = "|cffeb751a" },
+				transit = { r = 1, g = 0.63, b = 0.05, hex = "|cffffa10d" },
+			},
 		},
 		header = {
 			fontsize = 14,
@@ -313,7 +326,7 @@ P.mMT = {
 	},
 	cosmeticbars = {
 		enable = false,
-		bars = {}
+		bars = {},
 	},
 	dockdatatext = {
 		autogrow = true,
@@ -609,10 +622,10 @@ P.mMT = {
 			enable = true,
 			inner = true,
 			border = true,
-			borderColor = {r = 0, g =0, b = 0, a = 1 },
-			borderColorRare = {r = 0, g =0, b = 0, a = 1 },
-			color = {r = 0, g =0, b = 0, a = 1 },
-			innerColor = {r = 0, g = 0, b = 0, a = 1 }
+			borderColor = { r = 0, g = 0, b = 0, a = 1 },
+			borderColorRare = { r = 0, g = 0, b = 0, a = 1 },
+			color = { r = 0, g = 0, b = 0, a = 1 },
+			innerColor = { r = 0, g = 0, b = 0, a = 1 },
 		},
 		colors = {
 			default = {
