@@ -519,7 +519,12 @@
         "GameMenuButtonAddons",
         "GameMenuButtonLogout",
         "UIErrorsFrame",
-        "mMT_Colors"
+        "mMT_Colors",
+        "OBJECTIVE_DASH_STYLE_SHOW",
+        "QUEST_DASH",
+        "OBJECTIVE_DASH_STYLE_HIDE",
+        "OBJECTIVE_DASH_STYLE_HIDE_AND_COLLAPSE",
+        "DEFAULT_OBJECTIVE_TRACKER_MODULE"
     ],
     "Lua.diagnostics.disable": [
         "undefined-field"
@@ -627,6 +632,7 @@
         "outofrangecolor",
         "perc",
         "Powerbar",
+        "questcount",
         "readymarkercolor",
         "REGEN",
         "roleicons",

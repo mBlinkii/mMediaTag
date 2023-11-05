@@ -702,6 +702,35 @@ local function configTable()
 				},
 			},
 		},
+		header_settings = {
+			order = 5,
+			type = "group",
+			inline = true,
+			name = L["Settings"],
+			args = {
+				header_settings = {
+					order = 1,
+					type = "group",
+					inline = true,
+					name = L["Title"],
+					args = {
+						toggle_questcount = {
+							order = 1,
+							type = "toggle",
+							name = L["Quest Count"],
+							get = function(info)
+								return E.db.mMT.objectivetracker.settings.questcount
+							end,
+							set = function(info, value)
+								E.db.mMT.objectivetracker.settings.questcount = value
+								E:StaticPopup_Show("CONFIG_RL")
+							end,
+						},
+					},
+				},
+			},
+		},
+
 		group_font = {
 			order = 6,
 			type = "group",
@@ -739,6 +768,69 @@ local function configTable()
 							end,
 							set = function(info, value)
 								E.db.mMT.objectivetracker.font.fontflag = value
+							end,
+						},
+						spacer_1 = {
+							order = 3,
+							type = "description",
+							name = "\n\n\n",
+						},
+						fontsize_header = {
+							order = 4,
+							name = L["Font Size"] .. " " .. L["Header"],
+							type = "range",
+							min = 1,
+							max = 64,
+							step = 1,
+							softMin = 8,
+							softMax = 32,
+							get = function(info)
+								return E.db.mMT.objectivetracker.font.fontsize.header
+							end,
+							set = function(info, value)
+								E.db.mMT.objectivetracker.font.fontsize.header = value
+							end,
+						},
+						spacer_2 = {
+							order = 5,
+							type = "description",
+							name = "\n\n\n",
+						},
+						fontsize_title = {
+							order = 6,
+							name = L["Font Size"] .. " " .. L["Title"],
+							type = "range",
+							min = 1,
+							max = 64,
+							step = 1,
+							softMin = 8,
+							softMax = 32,
+							get = function(info)
+								return E.db.mMT.objectivetracker.font.fontsize.title
+							end,
+							set = function(info, value)
+								E.db.mMT.objectivetracker.font.fontsize.title = value
+							end,
+						},
+						spacer_3 = {
+							order = 7,
+							type = "description",
+							name = "\n\n\n",
+						},
+						fontsize_text = {
+							order = 8,
+							name = L["Font Size"] .. " " .. L["Text"],
+							type = "range",
+							min = 1,
+							max = 64,
+							step = 1,
+							softMin = 8,
+							softMax = 32,
+							get = function(info)
+								return E.db.mMT.objectivetracker.font.fontsize.text
+							end,
+							set = function(info, value)
+								E.db.mMT.objectivetracker.font.fontsize.text = value
 							end,
 						},
 					},

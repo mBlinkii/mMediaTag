@@ -279,24 +279,14 @@ P.mMT = {
 				bad = { r = 0.92, g = 0.46, b = 0.1, hex = "|cffeb751a" },
 				transit = { r = 1, g = 0.63, b = 0.05, hex = "|cffffa10d" },
 			},
+			fontsize = {
+				header = 14,
+				title = 12,
+				text = 12,
+			}
 		},
-		header = {
-			fontsize = 14,
-			fontcolorstyle = "custom",
-			fontcolor = { r = 1, g = 0.78, b = 0, hex = "|cffffc700" },
-			barstyle = "onebig",
-			gradient = true,
-			revers = false,
-			barcolorstyle = "class",
-			barcolor = { r = 1, g = 0.78, b = 0, hex = "|cffffc700" },
-			barshadow = true,
-			questcount = "colorright",
-			texture = "Solid",
-		},
-		title = {
-			fontsize = 13,
-			fontcolorstyle = "custom",
-			fontcolor = { r = 1, g = 0.78, b = 0, hex = "|cffffc700" },
+		settings = {
+			questcount = true,
 		},
 		text = {
 			fontsize = 13,
