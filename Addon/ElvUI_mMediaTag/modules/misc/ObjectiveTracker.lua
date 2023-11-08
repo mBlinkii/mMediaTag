@@ -128,41 +128,38 @@ local function SetLineText(text, completed)
 	text:SetFont(LSM:Fetch("font", db.font.font), fontsize, db.font.fontflag)
 	text:SetTextColor(color.r, color.g, color.b)
 	text.SetShadowColor = function() end
-
+	local lineText = text:GetText()
 	-- Text Progress
 	if not completed then
-		local lineText = text:GetText()
 		local current, required, questText = strmatch(lineText, "^(%d-)/(%d-) (.+)")
 		if not current or not required or not questText then
 			questText, current, required = strmatch(lineText, "(.+): (%d-)/(%d-)$")
 		end
 
 		if current and required and questText then
-			if current == required then
-				-- local doneIcon = "|TInterface\\AddOns\\ElvUI_mMediaTag\\media\\icons\\misc\\questDone.tga:16:16:0:0:16:16:0:16:0:16"
-				-- doneIcon = doneIcon .. ":" .. tostring(mMT:round(db.font.color.good.r * 255)) .. ":" .. tostring(mMT:round(db.font.color.good.g * 255)) .. ":" .. tostring(mMT:round(db.font.color.good.b * 255)) .. "|t"
-				lineText = questText
-			else
-				local progressPercent = mMT:round((tonumber(current) / tonumber(required)) * 100 or 0)
+			local progressPercent = (tonumber(current) / tonumber(required)) * 100 or 0
 
-				local colorGood = db.font.color.good
-				local colorTransit = db.font.color.transit
-				local colorBad = db.font.color.bad
-				local r, g, b = E:ColorGradient(progressPercent * 0.01, colorBad.r, colorBad.g, colorBad.b, colorTransit.r, colorTransit.g, colorTransit.b, colorGood.r, colorGood.g, colorGood.b)
-				local colorProgress = E:RGBToHex(r, g, b)
-
-				lineText = colorProgress .. current .. "/" .. required .. " - " .. progressPercent .. "%|r" .. "  " .. questText
-			end
-			text:SetText(lineText)
+			local colorGood = db.font.color.good
+			local colorTransit = db.font.color.transit
+			local colorBad = db.font.color.bad
+			local r, g, b = E:ColorGradient(progressPercent * 0.01, colorBad.r, colorBad.g, colorBad.b, colorTransit.r, colorTransit.g, colorTransit.b, colorGood.r, colorGood.g, colorGood.b)
+			local colorProgress = E:RGBToHex(r, g, b)
+			local progressPercent = format("%.f%%", progressPercent)
+			lineText = colorProgress .. current .. "/" .. required .. " - " .. progressPercent .. "|r" .. "  " .. questText
 		end
+	else
+		local doneIcon = "|TInterface\\AddOns\\ElvUI_mMediaTag\\media\\icons\\misc\\questDone.tga:16:16:0:0:16:16:0:16:0:16"
+		doneIcon = doneIcon .. ":" .. tostring(mMT:round(db.font.color.good.r * 255)) .. ":" .. tostring(mMT:round(db.font.color.good.g * 255)) .. ":" .. tostring(mMT:round(db.font.color.good.b * 255)) .. "|t"
+		lineText = doneIcon .. lineText
 	end
 
+	text:SetText(lineText)
 	text:SetWordWrap(true)
 
-	return text:GetHeight()
+	return text:GetStringHeight()
 end
 
-local function SkinObjective(_, block, objectiveKey, text, lineType, useFullHeight, dashStyle, colorStyle, adjustForNoText, overrideHeight)
+local function SkinObjective(_, block, objectiveKey, _, lineType, useFullHeight, dashStyle, colorStyle, adjustForNoText, overrideHeight)
 	--mMT:Print(objectiveKey, block.currentLine.state)
 	if block then
 		if block.HeaderText then
@@ -170,14 +167,26 @@ local function SkinObjective(_, block, objectiveKey, text, lineType, useFullHeig
 		end
 
 		if block.currentLine then
-			if block.currentLine.Text then
-				local height = SetLineText(block.currentLine.Text, block.currentLine.state or (objectiveKey == "QuestComplete"))
-				block.currentLine:SetHeight(height)
+			local complete = block.currentLine.state or (objectiveKey == "QuestComplete")
+			local text = block.currentLine.Text
+			if text then
+				local height = SetLineText(text, complete)
 
-				text = block.currentLine.Text:GetText()
-				if not (adjustForNoText and text == "") then
-					block.height = block.height + height / 3
+				if height ~= text:GetHeight() then
+					text:SetHeight(height)
 				end
+			end
+
+			local dash = block.currentLine.Dash
+
+			local check = block.currentLine.Check
+			if check then
+				-- if DashStyle == "none" then
+				-- 	line.currentLine.Check:ClearAllPoints()
+				-- 	line.currentLine.Check:Point("TOPRIGHT", line.currentLine.Dash, "TOPLEFT", 0, 0)
+				-- end
+				check:SetTexture(mMT.Media.MiscIcons["DONE1"])
+				check:SetVertexColor(1, 1, 1, 1)
 			end
 		end
 
