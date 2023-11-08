@@ -1336,7 +1336,7 @@ E:AddTag("mQuestIcon", "QUEST_LOG_UPDATE", function(unit)
 	if UnitIsPlayer(unit) then
 		return
 	end
-	local isQuest = E.TagFunctions.GetQuestData(unit, "title")
+	local isQuest = false --E.TagFunctions.GetQuestData(unit, "title")
 	if isQuest then
 		return icons.quest
 	end
