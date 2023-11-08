@@ -652,6 +652,7 @@ mAddStatusbar("MaUIv3 LEFT", "MaUIv3Left.tga")
 mAddStatusbar("MaUIv3 RIGHT", "MaUIv3Right.tga")
 mAddStatusbar("mMT Blank", "mMT_Blank.tga")
 mAddStatusbar("mMT Target", "mMT_Target.tga")
+
 -- Backgrounds
 mAddBackground("mMediaTag BG1", "bg1.tga")
 mAddBackground("mMediaTag BG2", "bg2.tga")
@@ -680,6 +681,7 @@ mAddBackground("mMediaTag Chat12", "chat12.tga")
 mAddBackground("mMediaTag Chat13", "chat13.tga")
 
 mAddBorder("mMediaTag Border1", "mborder1.tga")
+mAddBorder("mMediaTag Border2", "mborder2.tga")
 mAddBorder("mMediaTag yborder", "yborder.tga")
 mAddBorder("mMediaTag yborder2", "yborder2.tga")
 mAddBorder("mMediaTag YuluBorderSwitch", "YuluBorderSwitch.tga")

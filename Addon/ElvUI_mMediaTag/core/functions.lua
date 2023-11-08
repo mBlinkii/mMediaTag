@@ -4,9 +4,13 @@ local E = unpack(ElvUI)
 local format = format
 
 function mMT:DebugPrintTable(tbl)
-	print(mMT.Name .. ": Table Start >>>")
-	for k, v in pairs(tbl) do
-		print(k, v)
+	mMT:Print(": Table Start >>>")
+	if type(tbl) == "table" then
+		for k, v in pairs(tbl) do
+			print(k, v)
+		end
+	else
+		mMT:Print("Not a Table:", tbl)
 	end
 end
 
@@ -74,6 +78,15 @@ function mMT:GetClassColor(unit)
 	if UnitIsPlayer(unit) then
 		local _, unitClass = UnitClass(unit)
 		local cs = E.oUF.colors.class[unitClass]
-		return (cs and E:RGBToHex(cs.r, cs.g, cs.b)) or '|cFFcccccc'
+		return (cs and E:RGBToHex(cs.r, cs.g, cs.b)) or "|cFFcccccc"
 	end
+end
+
+function mMT:SetElvUIMediaColor()
+	local color = E:ClassColor(E.myclass)
+	E.db.general.valuecolor["r"] = color.r
+	E.db.general.valuecolor["g"] = color.g
+	E.db.general.valuecolor["b"] = color.b
+	E.db.general.valuecolor["a"] = 1
+	E:UpdateAll()
 end

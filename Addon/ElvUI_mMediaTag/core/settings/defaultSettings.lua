@@ -2,7 +2,7 @@ local E, L, V, P, G = unpack(ElvUI)
 
 P.mMT = {
 	version = 0,
-	general = { greeting = true, keystochat = false },
+	general = { greeting = true, keystochat = false, emediaenable = false },
 	afk = {
 		enable = false,
 		logo = false,
@@ -54,25 +54,6 @@ P.mMT = {
 		icon = true,
 		witheText = true,
 		witheValue = false,
-	},
-	customclasscolors = {
-		enable = false,
-		emediaenable = false,
-		colors = {
-			HUNTER = { r = 0.67, g = 0.83, b = 0.45 },
-			WARLOCK = { r = 0.53, g = 0.53, b = 0.93 },
-			PRIEST = { r = 1.00, g = 1.00, b = 1.00 },
-			PALADIN = { r = 0.96, g = 0.55, b = 0.73 },
-			MAGE = { r = 0.20, g = 0.78, b = 0.92 },
-			ROGUE = { r = 1.00, g = 0.96, b = 0.41 },
-			DRUID = { r = 1.00, g = 0.49, b = 0.04 },
-			SHAMAN = { r = 0.00, g = 0.44, b = 0.87 },
-			WARRIOR = { r = 0.78, g = 0.61, b = 0.43 },
-			DEATHKNIGHT = { r = 0.77, g = 0.12, b = 0.23 },
-			MONK = { r = 0.00, g = 1.00, b = 0.60 },
-			DEMONHUNTER = { r = 0.64, g = 0.19, b = 0.79 },
-			EVOKER = { r = 0.20, g = 0.58, b = 0.50 },
-		},
 	},
 	datatextcolors = {
 		colorhc = {
@@ -327,6 +308,10 @@ P.mMT = {
 		bag = false,
 		max = false,
 	},
+	cosmeticbars = {
+		enable = false,
+		bars = {},
+	},
 	dockdatatext = {
 		autogrow = true,
 		growsize = 8,
@@ -511,6 +496,8 @@ P.mMT = {
 			relativePoint = "LEFT",
 			x = 0,
 			y = 0,
+			strata = "AUTO",
+			level = 20,
 		},
 		pet = {
 			enable = false,
@@ -521,6 +508,8 @@ P.mMT = {
 			relativePoint = "LEFT",
 			x = 0,
 			y = 0,
+			strata = "AUTO",
+			level = 20,
 		},
 		target = {
 			enable = true,
@@ -532,6 +521,8 @@ P.mMT = {
 			relativePoint = "RIGHT",
 			x = 0,
 			y = 0,
+			strata = "AUTO",
+			level = 20,
 		},
 		targettarget = {
 			enable = true,
@@ -543,6 +534,8 @@ P.mMT = {
 			relativePoint = "RIGHT",
 			x = 0,
 			y = 0,
+			strata = "AUTO",
+			level = 20,
 		},
 		focus = {
 			enable = false,
@@ -554,6 +547,8 @@ P.mMT = {
 			relativePoint = "RIGHT",
 			x = 0,
 			y = 0,
+			strata = "AUTO",
+			level = 20,
 		},
 		party = {
 			enable = true,
@@ -564,6 +559,8 @@ P.mMT = {
 			relativePoint = "LEFT",
 			x = 0,
 			y = 0,
+			strata = "AUTO",
+			level = 20,
 		},
 		boss = {
 			enable = false,
@@ -574,6 +571,8 @@ P.mMT = {
 			relativePoint = "RIGHT",
 			x = 0,
 			y = 0,
+			strata = "AUTO",
+			level = 20,
 		},
 		arena = {
 			enable = false,
@@ -584,6 +583,8 @@ P.mMT = {
 			relativePoint = "RIGHT",
 			x = 0,
 			y = 0,
+			strata = "AUTO",
+			level = 20,
 		},
 		general = {
 			enable = false,
@@ -605,10 +606,10 @@ P.mMT = {
 			enable = true,
 			inner = true,
 			border = true,
-			borderColor = {r = 0, g =0, b = 0, a = 1 },
-			borderColorRare = {r = 0, g =0, b = 0, a = 1 },
-			color = {r = 0, g =0, b = 0, a = 1 },
-			innerColor = {r = 0, g = 0, b = 0, a = 1 }
+			borderColor = { r = 0, g = 0, b = 0, a = 1 },
+			borderColorRare = { r = 0, g = 0, b = 0, a = 1 },
+			color = { r = 0, g = 0, b = 0, a = 1 },
+			innerColor = { r = 0, g = 0, b = 0, a = 1 },
 		},
 		colors = {
 			default = {

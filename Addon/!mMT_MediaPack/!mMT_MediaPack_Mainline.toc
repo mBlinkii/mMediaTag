@@ -1,7 +1,7 @@
 ## Interface: 100107
 ## Author: Blinkii
 ## Version: 1.10
-## Title:  |CFFAB02FDm|r|CFFB820D5M|r|CFFC031BDT|r |CFFCB4A9CM|r|CFFD25A87e|r|CFFD96972d|r|CFFDE7464i|r|CFFE27E57a|r |CFFE88B46P|r|CFFF09D2Da|r|CFFF4A720c|r|CFFFCB70Ak|r
+## Title: |CFF6559F1m|r|CFFA037E9M|r|CFFDD14E0T|r - |CFFFF06A2M|r|CFFFF108Ce|r|CFFFF197Ad|r|CFFFF216Bi|r|CFFFF275Da|r |CFFFF3441P|r|CFFFF3F2Ca|r|CFFFF461Cc|r|CFFFF4E0Ck|r
 ## Notes: mMT Media Pack by Blinkii | Support: mMediaTag@gmx.de
 ## IconTexture: Interface\AddOns\!mMT_MediaPack\media\logo\mmt_icon
 ## SavedVariables: mMTSettings

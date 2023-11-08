@@ -129,7 +129,6 @@ function mMT:Dock_Default(top)
 	E.db["mMT"]["dockdatatext"]["calendar"]["icon"] = "COLOR02"
 	E.db["mMT"]["dockdatatext"]["bag"]["icon"] = "COLOR68"
 
-
 	E.db["mMT"]["dockdatatext"]["calendar"]["option"] = "de"
 	E.db["mMT"]["dockdatatext"]["calendar"]["showyear"] = true
 	E.db["mMT"]["dockdatatext"]["fontSize"] = 12
@@ -140,7 +139,6 @@ function mMT:Dock_Default(top)
 	E.db["mMT"]["dockdatatext"]["fontflag"] = "NONE"
 	E.db["mMT"]["dockdatatext"]["itemlevel"]["onlytext"] = true
 	E.db["mMT"]["dockdatatext"]["itemlevel"]["text"] = "GS "
-
 
 	if top then
 		E.db["movers"]["DTPanelmMT DockMover"] = "TOP,ElvUIParent,TOP,0,-5"
@@ -196,16 +194,16 @@ function mMT:Dock_XIVLike(top)
 	E.global["datatexts"]["customPanels"]["mMT XIV Right"]["width"] = 440
 
 	E.DataTexts:BuildPanelFrame("mMT XIV Talent")
-E.global["datatexts"]["customPanels"]["mMT XIV Talent"]["backdrop"] = false
-E.global["datatexts"]["customPanels"]["mMT XIV Talent"]["border"] = false
-E.global["datatexts"]["customPanels"]["mMT XIV Talent"]["fonts"]["enable"] = true
-E.global["datatexts"]["customPanels"]["mMT XIV Talent"]["fonts"]["font"] = "Montserrat-Medium"
-E.global["datatexts"]["customPanels"]["mMT XIV Talent"]["fonts"]["fontOutline"] = "SHADOW"
-E.global["datatexts"]["customPanels"]["mMT XIV Talent"]["fonts"]["fontSize"] = 14
-E.global["datatexts"]["customPanels"]["mMT XIV Talent"]["height"] = 28
-E.global["datatexts"]["customPanels"]["mMT XIV Talent"]["name"] = "mMT XIV Talent"
-E.global["datatexts"]["customPanels"]["mMT XIV Talent"]["numPoints"] = 1
-E.global["datatexts"]["customPanels"]["mMT XIV Talent"]["width"] = 240
+	E.global["datatexts"]["customPanels"]["mMT XIV Talent"]["backdrop"] = false
+	E.global["datatexts"]["customPanels"]["mMT XIV Talent"]["border"] = false
+	E.global["datatexts"]["customPanels"]["mMT XIV Talent"]["fonts"]["enable"] = true
+	E.global["datatexts"]["customPanels"]["mMT XIV Talent"]["fonts"]["font"] = "Montserrat-Medium"
+	E.global["datatexts"]["customPanels"]["mMT XIV Talent"]["fonts"]["fontOutline"] = "SHADOW"
+	E.global["datatexts"]["customPanels"]["mMT XIV Talent"]["fonts"]["fontSize"] = 14
+	E.global["datatexts"]["customPanels"]["mMT XIV Talent"]["height"] = 28
+	E.global["datatexts"]["customPanels"]["mMT XIV Talent"]["name"] = "mMT XIV Talent"
+	E.global["datatexts"]["customPanels"]["mMT XIV Talent"]["numPoints"] = 1
+	E.global["datatexts"]["customPanels"]["mMT XIV Talent"]["width"] = 240
 
 	E.DataTexts:BuildPanelFrame("mMT XIV Profession")
 	E.global["datatexts"]["customPanels"]["mMT XIV Profession"]["backdrop"] = false
@@ -264,26 +262,91 @@ E.global["datatexts"]["customPanels"]["mMT XIV Talent"]["width"] = 240
 	E.db["datatexts"]["panels"]["mMT XIV Profession"]["battleground"] = false
 	E.db["datatexts"]["panels"]["mMT XIV Profession"]["enable"] = true
 
+	E.db["mMT"]["dockdatatext"]["achievement"]["customcolor"] = false
+	E.db["mMT"]["dockdatatext"]["achievement"]["iconcolor"]["b"] = 1
+	E.db["mMT"]["dockdatatext"]["achievement"]["iconcolor"]["g"] = 1
+	E.db["mMT"]["dockdatatext"]["achievement"]["iconcolor"]["r"] = 1
+
+	E.db["mMT"]["dockdatatext"]["blizzardstore"]["customcolor"] = false
+	E.db["mMT"]["dockdatatext"]["blizzardstore"]["iconcolor"]["b"] = 1
+	E.db["mMT"]["dockdatatext"]["blizzardstore"]["iconcolor"]["g"] = 1
+	E.db["mMT"]["dockdatatext"]["blizzardstore"]["iconcolor"]["r"] = 1
+
+	E.db["mMT"]["dockdatatext"]["character"]["customcolor"] = false
+	E.db["mMT"]["dockdatatext"]["character"]["iconcolor"]["b"] = 1
+	E.db["mMT"]["dockdatatext"]["character"]["iconcolor"]["g"] = 1
+	E.db["mMT"]["dockdatatext"]["character"]["iconcolor"]["r"] = 1
+
+	E.db["mMT"]["dockdatatext"]["collection"]["customcolor"] = false
+	E.db["mMT"]["dockdatatext"]["collection"]["iconcolor"]["b"] = 1
+	E.db["mMT"]["dockdatatext"]["collection"]["iconcolor"]["g"] = 1
+	E.db["mMT"]["dockdatatext"]["collection"]["iconcolor"]["r"] = 1
+
+	E.db["mMT"]["dockdatatext"]["encounter"]["customcolor"] = false
+	E.db["mMT"]["dockdatatext"]["encounter"]["iconcolor"]["b"] = 1
+	E.db["mMT"]["dockdatatext"]["encounter"]["iconcolor"]["g"] = 1
+	E.db["mMT"]["dockdatatext"]["encounter"]["iconcolor"]["r"] = 1
+
+	E.db["mMT"]["dockdatatext"]["friends"]["customcolor"] = false
+	E.db["mMT"]["dockdatatext"]["friends"]["iconcolor"]["b"] = 1
+	E.db["mMT"]["dockdatatext"]["friends"]["iconcolor"]["g"] = 1
+	E.db["mMT"]["dockdatatext"]["friends"]["iconcolor"]["r"] = 1
+
+	E.db["mMT"]["dockdatatext"]["guild"]["customcolor"] = false
+	E.db["mMT"]["dockdatatext"]["guild"]["iconcolor"]["b"] = 1
+	E.db["mMT"]["dockdatatext"]["guild"]["iconcolor"]["g"] = 1
+	E.db["mMT"]["dockdatatext"]["guild"]["iconcolor"]["r"] = 1
+
+	E.db["mMT"]["dockdatatext"]["lfd"]["customcolor"] = false
+	E.db["mMT"]["dockdatatext"]["lfd"]["iconcolor"]["b"] = 1
+	E.db["mMT"]["dockdatatext"]["lfd"]["iconcolor"]["g"] = 1
+	E.db["mMT"]["dockdatatext"]["lfd"]["iconcolor"]["r"] = 1
+
+	E.db["mMT"]["dockdatatext"]["mainmenu"]["customcolor"] = false
+	E.db["mMT"]["dockdatatext"]["mainmenu"]["iconcolor"]["b"] = 1
+	E.db["mMT"]["dockdatatext"]["mainmenu"]["iconcolor"]["g"] = 1
+	E.db["mMT"]["dockdatatext"]["mainmenu"]["iconcolor"]["r"] = 1
+
+	E.db["mMT"]["dockdatatext"]["quest"]["customcolor"] = false
+	E.db["mMT"]["dockdatatext"]["quest"]["iconcolor"]["b"] = 1
+	E.db["mMT"]["dockdatatext"]["quest"]["iconcolor"]["g"] = 1
+	E.db["mMT"]["dockdatatext"]["quest"]["iconcolor"]["r"] = 1
+
+	E.db["mMT"]["dockdatatext"]["spellbook"]["customcolor"] = false
+	E.db["mMT"]["dockdatatext"]["spellbook"]["iconcolor"]["b"] = 1
+	E.db["mMT"]["dockdatatext"]["spellbook"]["iconcolor"]["g"] = 1
+	E.db["mMT"]["dockdatatext"]["spellbook"]["iconcolor"]["r"] = 1
+
 	E.db["mMT"]["dockdatatext"]["achievement"]["icon"] = "MATERIAL01"
-	E.db["mMT"]["dockdatatext"]["blizzardstore"]["icon"] = "MATERIAL59"
-	E.db["mMT"]["dockdatatext"]["character"]["icon"] = "MATERIAL39"
+	E.db["mMT"]["dockdatatext"]["blizzardstore"]["icon"] = "MATERIAL14"
+	E.db["mMT"]["dockdatatext"]["character"]["icon"] = "MATERIAL12"
 	E.db["mMT"]["dockdatatext"]["collection"]["icon"] = "MATERIAL33"
-	E.db["mMT"]["dockdatatext"]["customfontcolor"] = true
-	E.db["mMT"]["dockdatatext"]["customfontzise"] = true
 	E.db["mMT"]["dockdatatext"]["encounter"]["icon"] = "MATERIAL42"
-	E.db["mMT"]["dockdatatext"]["font"] = "Montserrat-SemiBold"
-	E.db["mMT"]["dockdatatext"]["fontSize"] = 14
-	E.db["mMT"]["dockdatatext"]["fontcolor"]["g"] = 0.77254909276962
-	E.db["mMT"]["dockdatatext"]["fontcolor"]["r"] = 0.086274512112141
 	E.db["mMT"]["dockdatatext"]["friends"]["icon"] = "MATERIAL28"
 	E.db["mMT"]["dockdatatext"]["guild"]["icon"] = "MATERIAL35"
-	E.db["mMT"]["dockdatatext"]["hover"]["style"] = "class"
 	E.db["mMT"]["dockdatatext"]["lfd"]["icon"] = "MATERIAL11"
 	E.db["mMT"]["dockdatatext"]["mainmenu"]["icon"] = "MATERIAL52"
-	E.db["mMT"]["dockdatatext"]["normal"]["a"] = 0.80718515813351
-	E.db["mMT"]["dockdatatext"]["profession"]["icon"] = "test"
-	E.db["mMT"]["dockdatatext"]["quest"]["icon"] = "MATERIAL20"
+	E.db["mMT"]["dockdatatext"]["quest"]["icon"] = "MATERIAL41"
 	E.db["mMT"]["dockdatatext"]["spellbook"]["icon"] = "MATERIAL22"
+
+	E.db["mMT"]["dockdatatext"]["calendar"]["option"] = "de"
+	E.db["mMT"]["dockdatatext"]["calendar"]["showyear"] = true
+
+	E.db["mMT"]["dockdatatext"]["center"] = true
+	E.db["mMT"]["dockdatatext"]["customfontcolor"] = true
+	E.db["mMT"]["dockdatatext"]["customfontzise"] = true
+
+	E.db["mMT"]["dockdatatext"]["font"] = "Montserrat-SemiBold"
+	E.db["mMT"]["dockdatatext"]["fontSize"] = 14
+	E.db["mMT"]["dockdatatext"]["fontflag"] = "SHADOW"
+	E.db["mMT"]["dockdatatext"]["fontcolor"]["b"] = 0.10588236153126
+	E.db["mMT"]["dockdatatext"]["fontcolor"]["g"] = 0.77254909276962
+	E.db["mMT"]["dockdatatext"]["fontcolor"]["r"] = 0.086274512112141
+
+	E.db["mMT"]["dockdatatext"]["hover"]["style"] = "class"
+
+	E.db["mMT"]["dockdatatext"]["itemlevel"]["onlytext"] = true
+	E.db["mMT"]["dockdatatext"]["itemlevel"]["text"] = "GS "
 
 	if top then
 		E.db["movers"]["DTPanelmDockMover"] = "TOP,ElvUIParent,TOP,0,-4"
@@ -304,6 +367,65 @@ E.global["datatexts"]["customPanels"]["mMT XIV Talent"]["width"] = 240
 	end
 
 	E:StaggeredUpdateAll(nil, true)
+end
+
+function mMT:Dock_XIVLike_Color(top)
+	mMT:Dock_XIVLike(top)
+
+	E.db["mMT"]["dockdatatext"]["achievement"]["customcolor"] = true
+	E.db["mMT"]["dockdatatext"]["achievement"]["iconcolor"]["b"] = 0.17254902422428
+	E.db["mMT"]["dockdatatext"]["achievement"]["iconcolor"]["g"] = 0.16078431904316
+	E.db["mMT"]["dockdatatext"]["achievement"]["iconcolor"]["r"] = 0.92549026012421
+
+	E.db["mMT"]["dockdatatext"]["blizzardstore"]["customcolor"] = true
+	E.db["mMT"]["dockdatatext"]["blizzardstore"]["iconcolor"]["b"] = 0.53333336114883
+	E.db["mMT"]["dockdatatext"]["blizzardstore"]["iconcolor"]["g"] = 0.92549026012421
+	E.db["mMT"]["dockdatatext"]["blizzardstore"]["iconcolor"]["r"] = 0
+
+	E.db["mMT"]["dockdatatext"]["character"]["customcolor"] = true
+	E.db["mMT"]["dockdatatext"]["character"]["iconcolor"]["b"] = 0.93725496530533
+	E.db["mMT"]["dockdatatext"]["character"]["iconcolor"]["g"] = 0.20000001788139
+	E.db["mMT"]["dockdatatext"]["character"]["iconcolor"]["r"] = 0.65098041296005
+
+	E.db["mMT"]["dockdatatext"]["collection"]["customcolor"] = true
+	E.db["mMT"]["dockdatatext"]["collection"]["iconcolor"]["b"] = 0
+	E.db["mMT"]["dockdatatext"]["collection"]["iconcolor"]["g"] = 0.92549026012421
+	E.db["mMT"]["dockdatatext"]["collection"]["iconcolor"]["r"] = 0.11372549831867
+
+	E.db["mMT"]["dockdatatext"]["encounter"]["customcolor"] = true
+	E.db["mMT"]["dockdatatext"]["encounter"]["iconcolor"]["b"] = 0
+	E.db["mMT"]["dockdatatext"]["encounter"]["iconcolor"]["g"] = 0.7294117808342
+	E.db["mMT"]["dockdatatext"]["encounter"]["iconcolor"]["r"] = 0.92549026012421
+
+	E.db["mMT"]["dockdatatext"]["friends"]["customcolor"] = true
+	E.db["mMT"]["dockdatatext"]["friends"]["iconcolor"]["b"] = 0.53333336114883
+	E.db["mMT"]["dockdatatext"]["friends"]["iconcolor"]["g"] = 0.14117647707462
+	E.db["mMT"]["dockdatatext"]["friends"]["iconcolor"]["r"] = 0.92549026012421
+
+	E.db["mMT"]["dockdatatext"]["guild"]["customcolor"] = true
+	E.db["mMT"]["dockdatatext"]["guild"]["iconcolor"]["b"] = 0.92549026012421
+	E.db["mMT"]["dockdatatext"]["guild"]["iconcolor"]["g"] = 0.18823531270027
+	E.db["mMT"]["dockdatatext"]["guild"]["iconcolor"]["r"] = 0.90196084976196
+
+	E.db["mMT"]["dockdatatext"]["lfd"]["customcolor"] = true
+	E.db["mMT"]["dockdatatext"]["lfd"]["iconcolor"]["b"] = 0
+	E.db["mMT"]["dockdatatext"]["lfd"]["iconcolor"]["g"] = 0.50588238239288
+	E.db["mMT"]["dockdatatext"]["lfd"]["iconcolor"]["r"] = 0.92549026012421
+
+	E.db["mMT"]["dockdatatext"]["mainmenu"]["customcolor"] = true
+	E.db["mMT"]["dockdatatext"]["mainmenu"]["iconcolor"]["b"] = 0.94509810209274
+	E.db["mMT"]["dockdatatext"]["mainmenu"]["iconcolor"]["g"] = 0.20784315466881
+	E.db["mMT"]["dockdatatext"]["mainmenu"]["iconcolor"]["r"] = 0.58823531866074
+
+	E.db["mMT"]["dockdatatext"]["quest"]["customcolor"] = true
+	E.db["mMT"]["dockdatatext"]["quest"]["iconcolor"]["b"] = 0
+	E.db["mMT"]["dockdatatext"]["quest"]["iconcolor"]["g"] = 0.92549026012421
+	E.db["mMT"]["dockdatatext"]["quest"]["iconcolor"]["r"] = 0.69019609689713
+
+	E.db["mMT"]["dockdatatext"]["spellbook"]["customcolor"] = true
+	E.db["mMT"]["dockdatatext"]["spellbook"]["iconcolor"]["b"] = 0
+	E.db["mMT"]["dockdatatext"]["spellbook"]["iconcolor"]["g"] = 0.3137255012989
+	E.db["mMT"]["dockdatatext"]["spellbook"]["iconcolor"]["r"] = 0.92549026012421
 end
 
 function mMT:Dock_Extra(top)

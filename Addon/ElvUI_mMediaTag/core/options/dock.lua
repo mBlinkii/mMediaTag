@@ -1925,7 +1925,16 @@ local function configTable()
 					end,
 				},
 				dockbar2 = {
-					order = 21,
+					order = 12,
+					type = "execute",
+					name = L["mMT XIV Like Color"],
+					func = function()
+						mMT:Dock_XIVLike_Color(ExampleDockSettings.top)
+						E:StaticPopup_Show("CONFIG_RL")
+					end,
+				},
+				dockbar3 = {
+					order = 13,
 					type = "execute",
 					name = L["mMT Dock"],
 					func = function()
@@ -1933,8 +1942,8 @@ local function configTable()
 						E:StaticPopup_Show("CONFIG_RL")
 					end,
 				},
-				dockbar3 = {
-					order = 31,
+				dockbar4 = {
+					order = 14,
 					type = "execute",
 					name = L["mMT Extra"],
 					func = function()

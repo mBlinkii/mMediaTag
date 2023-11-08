@@ -14,35 +14,27 @@ local change_log_important = {
 }
 
 local change_log_new = {
-	"Tags mHealth:noStatus, mHealth:noStatus:current-percent, mHealth:noStatus, mPower:percent:hideZero",
-	"Font Montserrat",
-	"Icons for Tags, role and Classification",
-	"Icons fr Role",
-	"Castbar background color for Castbar modules",
-	"Slider for Portrait offsets/ zoom",
-	"Datatext for first and second Profession",
-	"Datatext Durability and Ilevel in one",
-	"Chat backgrounds 7 - 13",
-	"Textures, mMT Blank and mMT Target",
+	"Tags mColor:rare, mClass:icon:noelite, mPower:percent:combat, mPower:percent:heal:combat",
+	"Mail Icons",
+	"More new Dock Icons",
+	"Add LibAddonCompat to WoW Classic for Profession Datatexts",
+	"Function Custom Datatext Background Colors",
+	"New Border Texture",
+	"Add frame level settings for each portrait frame"
 }
 
 local change_log_update = {
-	"Changed Tag mTargetAbbrev to mTarget:abbrev and also add short Versions",
-	"Example Docks, and add ne examples XIV like, custom Dock, micro menu replacement",
-	"Font flags for ElvUI shadow flag",
-	"Removed golden-hearthstone-card-lord-jaraxxus from Teleports Datatext, thx Xheno",
-	"Removed Statusbar textures q5 and q6, dont liked them",
+	"Example Docks, Icons and a Color Version of XIV",
+	"First and Second Profession Datatext is available in Classic",
+	"Removed mPower:hideZero because default will hide if power is 0",
+	"Portraits events",
+	"Change custom class colors module, it uses now CUSTOM_CLASS_COLORS so and its a extra Addon, so every supported addon can use the colors"
 }
 
 local change_log_fix = {
-	"Portraits Event updates to prevent wrong or empty Portraits",
-	"Nil error for custom Class colors",
-	"Nil error on custom Phase icon",
-	"Updates now correctly for Profession Datatext",
-	"AFK Screen for Classic Versions",
-	"Guild Dock, is not Updating correctly",
-	"Remove DEV tag",
-	"MediaPack Toc files"
+	"Multiple Mover Menu entry's",
+	"Bug in Dock Volume",
+	"Prevent empty Portraits in preview",
 }
 
 local function Concatenation(tbl, icon, color)
@@ -62,7 +54,7 @@ local function Concatenation(tbl, icon, color)
 end
 
 local function configTable()
-	local releasdate = "12.10.2023"
+	local releasdate = "08.11.2023"
 	--change_log_important_string = Concatenation(change_log_important)
 	change_log_new_string = Concatenation(change_log_new)
 	change_log_update_string = Concatenation(change_log_update)

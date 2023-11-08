@@ -29,6 +29,7 @@ local UnitIsWildBattlePet = UnitIsWildBattlePet
 local UnitLevel = UnitLevel
 local UnitName = UnitName
 local TANK, HEALER = TANK, HEALER
+local UnitAffectingCombat = UnitAffectingCombat
 local UnitFaction = {}
 
 -- fallback colors
@@ -423,11 +424,23 @@ E:AddTag("mClass:icon:rare", "UNIT_CLASSIFICATION_CHANGED", function(unit)
 	end
 end)
 
+E:AddTag("mClass:icon:noelite", "UNIT_CLASSIFICATION_CHANGED", function(unit)
+	local c = UnitClassification(unit)
+	if (npcID and BossIDs[npcID]) or c == "worldboss" then
+		return icons.boss
+	elseif c == "rare" then
+		return icons.rare
+	elseif c == "rareelite" then
+		return icons.relite
+	end
+end)
+
 E:AddTagInfo("mClass", mMT.NameShort .. " " .. L["Class"], L["Displays the Unit Class."])
 E:AddTagInfo("mClass:short", mMT.NameShort .. " " .. L["Class"], L["Shortened version of"] .. " mClass.")
 E:AddTagInfo("mClass:icon", mMT.NameShort .. " " .. L["Class"], L["Displays the Unit Class Icon."])
 E:AddTagInfo("mClass:icon:boss", mMT.NameShort .. " " .. L["Class"], L["Displays the Unit Class Icon only for Boss NPCs."])
 E:AddTagInfo("mClass:icon:rare", mMT.NameShort .. " " .. L["Class"], L["Displays the Unit Class Icon only for Rare and Rare Elite NPCs."])
+E:AddTagInfo("mClass:icon:noelite", mMT.NameShort .. " " .. L["Class"], L["Displays the Unit Class Icon only for Rare and Boss NPCs."])
 
 E:AddTag("mStatus", "UNIT_HEALTH UNIT_CONNECTION PLAYER_FLAGS_CHANGED", function(unit)
 	local isAFK = UnitIsAFK(unit)
@@ -522,7 +535,7 @@ E:AddTagInfo("mStatus:icon", mMT.NameShort .. " " .. L["Status"], L["Displays th
 E:AddTagInfo("mStatustimer", mMT.NameShort .. " " .. L["Status"], L["Displays the Unit Status text and time."])
 E:AddTagInfo("mAFK", mMT.NameShort .. " " .. L["Status"], L["Displays the Unit AFK Status."])
 
-E:AddTag("mColor", "UNIT_NAME_UPDATE UNIT_FACTION INSTANCE_ENCOUNTER_ENGAGE_UNIT UNIT_CLASSIFICATION_CHANGED", function(unit)
+E:AddTag("mColor", "UNIT_NAME_UPDATE UNIT_FACTION UNIT_CLASSIFICATION_CHANGED", function(unit)
 	local c = UnitClassification(unit)
 	local unitPlayer = UnitIsPlayer(unit)
 
@@ -540,6 +553,16 @@ E:AddTag("mColor", "UNIT_NAME_UPDATE UNIT_FACTION INSTANCE_ENCOUNTER_ENGAGE_UNIT
 		else
 			return _TAGS.classcolor(unit)
 		end
+	end
+end)
+
+E:AddTag("mColor:rare", "UNIT_NAME_UPDATE UNIT_CLASSIFICATION_CHANGED", function(unit)
+	local c = UnitClassification(unit)
+
+	if c == "rare" then
+		return colors.rare
+	elseif c == "rareelite" then
+		return colors.relite
 	end
 end)
 
@@ -566,6 +589,7 @@ E:AddTag("mColor:target", "UNIT_TARGET", function(unit)
 end)
 
 E:AddTagInfo("mColor", mMT.NameShort .. " " .. L["Color"], L["Unit colors with mMediaTag colors for Rare, Rareelite, Elite and Boss and Classcolors."])
+E:AddTagInfo("status", mMT.NameShort .. " " .. L["Color"], L["Unit colors with mMediaTag colors for Rare and Rareelite."])
 E:AddTagInfo("mColor:target", mMT.NameShort .. " " .. L["Color"], L["Targetunit colors with mMediaTag colors for Rare, Rareelite, Elite and Boss and Classcolors."])
 
 E:AddTag("mHealth", "UNIT_HEALTH UNIT_MAXHEALTH UNIT_CONNECTION PLAYER_FLAGS_CHANGED PLAYER_UPDATE_RESTING", function(unit)
@@ -1256,53 +1280,40 @@ E:AddTagInfo("mFaction:icon:opposite", mMT.NameShort .. " " .. L["Misc"], L["Dis
 E:AddTagInfo("mFaction:text", mMT.NameShort .. " " .. L["Misc"], L["Displays the Faction."])
 E:AddTagInfo("mFaction:text:opposite", mMT.NameShort .. " " .. L["Misc"], L["Displays the opposite Faction."])
 
-E:AddTag("mPowerPercent", "UNIT_DISPLAYPOWER UNIT_POWER_FREQUENT UNIT_MAXPOWER PLAYER_ROLES_ASSIGNED GROUP_ROSTER_UPDATE", function(unit)
-	local powerType = UnitPowerType(unit)
-	local min = UnitPower(unit, powerType)
-	local max = UnitPowerMax(unit, powerType)
-	if min ~= 0 then
+E:AddTag("mPower:percent", "UNIT_DISPLAYPOWER UNIT_POWER_FREQUENT UNIT_MAXPOWER PLAYER_ROLES_ASSIGNED GROUP_ROSTER_UPDATE", function(unit, power)
+	if not power then
+		power = _TAGS.perpp(unit)
+	end
+
+	if power ~= 0 then
 		local Role = ""
 
-		if E.Retail then
+		if E.Retail or E.Wrath then
 			Role = UnitGroupRolesAssigned(unit)
 		end
 
-		if min == max then
-			return "100%"
-		end
-
 		if Role == "HEALER" then
-			local perc = min / max * 100
-			if perc <= 30 then
-				return format("|CFFF7DC6F%s|r", E:GetFormattedText("PERCENT", min, max))
-			elseif perc <= 5 then
-				return format("|CFFE74C3C%s|r", E:GetFormattedText("PERCENT", min, max))
+			if power <= 30 then
+				return format("|CFFF7DC6F%s|r", power)
+			elseif power <= 8 then -- "Interface\\AddOns\\ElvUI_mMediaTag\\media\\icons\\unitframes\\notready03.tga"
+				return format("|TInterface\\AddOns\\ElvUI_mMediaTag\\media\\icons\\unitframes\\notready03.tga:15:15:0:2|t|CFFE74C3C%s|r", power)
 			else
-				return E:GetFormattedText("PERCENT", min, max)
+				return power
 			end
 		else
-			return E:GetFormattedText("PERCENT", min, max)
+			return power
 		end
 	end
 end)
 
-E:AddTag("mPowerPercent:hidefull", "UNIT_DISPLAYPOWER UNIT_POWER_FREQUENT UNIT_MAXPOWER PLAYER_ROLES_ASSIGNED GROUP_ROSTER_UPDATE UNIT_COMBAT", function(unit)
-	local powerType = UnitPowerType(unit)
-	local min = UnitPower(unit, powerType)
-	local max = UnitPowerMax(unit, powerType)
-	if (min ~= max) and min ~= 0 then
-		return _TAGS.mPowerPercent(unit)
-	end
-end)
-
-E:AddTag("mPower:percent:hideZero", "UNIT_DISPLAYPOWER UNIT_POWER_FREQUENT UNIT_MAXPOWER PLAYER_ROLES_ASSIGNED GROUP_ROSTER_UPDATE UNIT_COMBAT", function(unit)
+E:AddTag("mPower:percent:hidefull", "UNIT_DISPLAYPOWER UNIT_POWER_FREQUENT UNIT_MAXPOWER PLAYER_ROLES_ASSIGNED GROUP_ROSTER_UPDATE UNIT_COMBAT", function(unit)
 	local power = _TAGS.perpp(unit)
-	if power ~= 0 then
-		return _TAGS.perpp(unit)
+	if power ~= 100 then
+		return _TAGS["mPower:percent"](unit, power)
 	end
 end)
 
-E:AddTag("mPowerPercent:heal", "UNIT_DISPLAYPOWER UNIT_POWER_FREQUENT UNIT_MAXPOWER PLAYER_ROLES_ASSIGNED GROUP_ROSTER_UPDATE", function(unit)
+E:AddTag("mPower:percent:heal", "UNIT_DISPLAYPOWER UNIT_POWER_FREQUENT UNIT_MAXPOWER PLAYER_ROLES_ASSIGNED GROUP_ROSTER_UPDATE", function(unit, power)
 	local Role = "HEALER"
 
 	if E.Retail or E.Wrath then
@@ -1310,27 +1321,49 @@ E:AddTag("mPowerPercent:heal", "UNIT_DISPLAYPOWER UNIT_POWER_FREQUENT UNIT_MAXPO
 	end
 
 	if Role == "HEALER" then
-		return _TAGS.mPowerPercent(unit)
+		if not power then
+			power = _TAGS.perpp(unit)
+		end
+
+		if power ~= 0 then
+			if power <= 30 then
+				return format("|CFFF7DC6F%s|r", power)
+			elseif power <= 8 then
+				return format("|TInterface\\AddOns\\ElvUI_mMediaTag\\media\\icons\\unitframes\\notready03.tga:15:15:0:2|t|CFFE74C3C%s|r", power)
+			else
+				return power
+			end
+		end
 	end
 end)
 
-E:AddTag("mPowerPercent:heal:hidefull", "UNIT_DISPLAYPOWER UNIT_POWER_FREQUENT UNIT_MAXPOWER PLAYER_ROLES_ASSIGNED GROUP_ROSTER_UPDATE UNIT_COMBAT", function(unit)
-	local Role = "HEALER"
-
-	if E.Retail or E.Wrath then
-		Role = UnitGroupRolesAssigned(unit)
-	end
-
-	if Role == "HEALER" then
-		return _TAGS["mPowerPercent:hidefull"](unit)
+E:AddTag("mPower:percent:heal:hidefull", "UNIT_DISPLAYPOWER UNIT_POWER_FREQUENT UNIT_MAXPOWER PLAYER_ROLES_ASSIGNED GROUP_ROSTER_UPDATE UNIT_COMBAT", function(unit)
+	local power = _TAGS.perpp(unit)
+	if power ~= 100 then
+		return _TAGS["mPower:percent:heal"](unit, power)
 	end
 end)
 
-E:AddTagInfo("mPowerPercent", mMT.NameShort .. " " .. L["Power"], L["Displays Power/Mana, with a low healer warning."])
-E:AddTagInfo("mPowerPercent:hidefull", mMT.NameShort .. " " .. L["Power"], L["Displays Power/Mana, with a low healer warning, hidden when full."])
-E:AddTagInfo("mPowerPercent:heal", mMT.NameShort .. " " .. L["Power"], L["Displays the healer's Power/Mana, with a low healer warning."])
-E:AddTagInfo("mPowerPercent:heal:hidefull", mMT.NameShort .. " " .. L["Power"], L["Displays the healer's Power/Mana, with a low healer warning, hidden when full."])
-E:AddTagInfo("mPower:percent:hideZero", mMT.NameShort .. " " .. L["Power"], L["Displays Power/Mana, hidden when zero."])
+E:AddTag("mPower:percent:combat", "UNIT_DISPLAYPOWER UNIT_POWER_FREQUENT UNIT_MAXPOWER PLAYER_ROLES_ASSIGNED GROUP_ROSTER_UPDATE UNIT_COMBAT", function(unit)
+	local power = _TAGS.perpp(unit)
+	if UnitAffectingCombat(unit) then
+		return _TAGS["mPower:percent"](unit, power)
+	end
+end)
+
+E:AddTag("mPower:percent:heal:combat", "UNIT_DISPLAYPOWER UNIT_POWER_FREQUENT UNIT_MAXPOWER PLAYER_ROLES_ASSIGNED GROUP_ROSTER_UPDATE UNIT_COMBAT", function(unit)
+	local power = _TAGS.perpp(unit)
+	if UnitAffectingCombat(unit) then
+		return _TAGS["mPower:percent:heal"](unit, power)
+	end
+end)
+
+E:AddTagInfo("mPower:percent", mMT.NameShort .. " " .. L["Power"], L["Displays Power/Mana, with a low healer warning."])
+E:AddTagInfo("mPower:percent:hidefull", mMT.NameShort .. " " .. L["Power"], L["Displays Power/Mana, with a low healer warning, hidden when full."])
+E:AddTagInfo("mPower:percent:heal", mMT.NameShort .. " " .. L["Power"], L["Displays the healer's Power/Mana, with a low healer warning."])
+E:AddTagInfo("mPower:percent:heal:hidefull", mMT.NameShort .. " " .. L["Power"], L["Displays the healer's Power/Mana, with a low healer warning, hidden when full."])
+E:AddTagInfo("mPower:percent:combat", mMT.NameShort .. " " .. L["Power"], L["Displays Power/Mana, in combat."])
+E:AddTagInfo("mPower:percent:heal:combat", mMT.NameShort .. " " .. L["Power"], L["Displays Power/Mana for Heal only, in combat."])
 
 E:AddTag("mQuestIcon", "QUEST_LOG_UPDATE", function(unit)
 	if UnitIsPlayer(unit) then
@@ -1375,9 +1408,16 @@ local function GetRaidTargets(unit)
 end
 
 local targetTextures = {
-	TANK = "|TInterface\\AddOns\\ElvUI_mMediaTag\\media\\icons\\tags\\targetindicator\\TANK.tga:16:16:0:0:16:16:0:16:0:16",
-	HEALER = "|TInterface\\AddOns\\ElvUI_mMediaTag\\media\\icons\\tags\\targetindicator\\HEAL.tga:16:16:0:0:16:16:0:16:0:16",
-	DAMAGER = "|TInterface\\AddOns\\ElvUI_mMediaTag\\media\\icons\\tags\\targetindicator\\DD.tga:16:16:0:0:16:16:0:16:0:16",
+	role = {
+		TANK = "|TInterface\\AddOns\\ElvUI_mMediaTag\\media\\icons\\tags\\targetindicator\\TANK.tga:16:16:0:0:16:16:0:16:0:16",
+		HEALER = "|TInterface\\AddOns\\ElvUI_mMediaTag\\media\\icons\\tags\\targetindicator\\HEAL.tga:16:16:0:0:16:16:0:16:0:16",
+		DAMAGER = "|TInterface\\AddOns\\ElvUI_mMediaTag\\media\\icons\\tags\\targetindicator\\DD.tga:16:16:0:0:16:16:0:16:0:16",
+	},
+	sticker = {
+		TANK = "|TInterface\\AddOns\\ElvUI_mMediaTag\\media\\icons\\tags\\targetindicator\\stickerTank.tga:16:16:0:0:16:16:0:16:0:16",
+		HEALER = "|TInterface\\AddOns\\ElvUI_mMediaTag\\media\\icons\\tags\\targetindicator\\stickerHeal.tga:16:16:0:0:16:16:0:16:0:16",
+		DAMAGER = "|TInterface\\AddOns\\ElvUI_mMediaTag\\media\\icons\\tags\\targetindicator\\stickerDD.tga:16:16:0:0:16:16:0:16:0:16",
+	},
 	STOP = "|TInterface\\AddOns\\ElvUI_mMediaTag\\media\\icons\\tags\\targetindicator\\STOP.tga:16:16:0:0:16:16:0:16:0:16",
 	SQ = "|TInterface\\AddOns\\ElvUI_mMediaTag\\media\\icons\\tags\\targetindicator\\SQ.tga:16:16:0:0:16:16:0:16:0:16",
 	FLAT = "|TInterface\\AddOns\\ElvUI_mMediaTag\\media\\icons\\tags\\targetindicator\\FLAT.tga:16:16:0:0:16:16:0:16:0:16",
@@ -1401,14 +1441,14 @@ local function GetPartyTargetsIcons(unit, style)
 	if style == "role" then
 		for i = 1, GetNumGroupMembers() - 1 do
 			if UnitIsUnit("party" .. i .. "target", unit) then
-				local role = targetTextures[UnitGroupRolesAssigned("party" .. i)] or targetTextures.DAMAGER
+				local role = targetTextures.role[UnitGroupRolesAssigned("party" .. i)] or targetTextures.DAMAGER
 				local _, unitClass = UnitClass("party" .. i)
 				ClassString = role .. targetStringColors[unitClass] .. ClassString
 			end
 		end
 
 		if UnitIsUnit("playertarget", unit) then
-			local role = targetTextures[UnitGroupRolesAssigned("player")] or targetTextures.DAMAGER
+			local role = targetTextures.role[UnitGroupRolesAssigned("player")] or targetTextures.DAMAGER
 			local _, unitClass = UnitClass("player")
 			ClassString = role .. targetStringColors[unitClass] .. ClassString
 		end
@@ -1484,3 +1524,4 @@ E:AddTagInfo("mTargetingPlayers:icons:SQ", mMT.NameShort .. " " .. L["Misc"], L[
 E:AddTagInfo("mTargetingPlayers:icons:DIA", mMT.NameShort .. " " .. L["Misc"], L["Target counter Icon (Flat Diamond)."])
 E:AddTagInfo("mTargetingPlayers:icons:Stop", mMT.NameShort .. " " .. L["Misc"], L["Target counter Icon (Flat Stop shield)."])
 E:AddTagInfo("mTargetingPlayers:icons:Role", mMT.NameShort .. " " .. L["Misc"], L["Target counter Icon (Roleicons)."])
+E:AddTagInfo("mTargetingPlayers:icons:Sticker", mMT.NameShort .. " " .. L["Misc"], L["Target counter Icon (Roleicons)."])

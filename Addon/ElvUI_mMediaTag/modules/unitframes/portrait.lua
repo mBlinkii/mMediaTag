@@ -194,13 +194,21 @@ local function GetOffset(size, offset)
 end
 
 local function CreatePortrait(parent, conf, unit)
+	if mMT.DevMode then
+		mMT:Print("Create Function", "Unit:", unit, "Exists", UnitExists(unit), "Parent Unit:", parent.unit, "Parent Exists:", UnitExists(parent.unit))
+	end
+
 	local texture = nil
+	unit = UnitExists(unit) and unit or "player"
 
 	-- Portraits Frame
 	local frame = CreateFrame("Frame", "mMT_Portrait_" .. unit, parent)
 	frame:SetSize(conf.size, conf.size)
 	frame:SetPoint(conf.point, parent, conf.relativePoint, conf.x, conf.y)
-	frame:SetFrameLevel(parent.Health:GetFrameLevel() + 1)
+	if conf.strata ~= "AUTO" then
+		frame:SetFrameStrata(conf.strata)
+	end
+	frame:SetFrameLevel(conf.level)
 
 	-- Portrait Texture
 	texture = textures.texture[settings.general.style][conf.texture]
@@ -212,8 +220,9 @@ local function CreatePortrait(parent, conf, unit)
 	frame.portrait:SetAllPoints(frame)
 	frame.portrait:SetPoint("TOPLEFT", 0 + offset, 0 - offset)
 	frame.portrait:SetPoint("BOTTOMRIGHT", 0 - offset, 0 + offset)
-	mirrorTexture(frame.portrait, conf.mirror)
+	frame.portrait:SetTexture(path .. "unknown.tga", "CLAMP", "CLAMP", "TRILINEAR")
 	SetPortraitTexture(frame.portrait, unit, not (conf.texture == "CI"))
+	mirrorTexture(frame.portrait, conf.mirror)
 
 	-- Portrait Mask
 	texture = textures.mask[conf.texture] or conf.mirror and textures.mask.B[conf.texture] or textures.mask.A[conf.texture]
@@ -312,13 +321,21 @@ local function UpdatePortraitTexture(tx, texture, color, mirror)
 end
 
 local function UpdatePortrait(frame, conf, unit, parent)
+	if mMT.DevMode then
+		mMT:Print("Create Update", "Unit:", unit, "Exists", UnitExists(unit), "Parent Unit:", parent.unit, "Parent Exists:", UnitExists(parent.unit))
+	end
+
 	local texture = nil
+	unit = UnitExists(unit) and unit or "player"
 
 	-- Portraits Frame
 	frame:SetSize(conf.size, conf.size)
 	frame:ClearAllPoints()
 	frame:SetPoint(conf.point, parent, conf.relativePoint, conf.x, conf.y)
-	frame:SetFrameLevel(parent.Health:GetFrameLevel() + 1)
+	if conf.strata ~= "AUTO" then
+		frame:SetFrameStrata(conf.strata)
+	end
+	frame:SetFrameLevel(conf.level)
 
 	-- Portrait Texture
 	texture = textures.texture[settings.general.style][conf.texture]
@@ -541,7 +558,7 @@ function module:Initialize()
 			},
 			unitEvents = {
 				"UNIT_PORTRAIT_UPDATE",
-				"UNIT_NAME_UPDATE"
+				"UNIT_MODEL_CHANGED",
 			},
 		}
 	end
@@ -557,6 +574,7 @@ function module:Initialize()
 			},
 			unitEvents = {
 				"UNIT_PORTRAIT_UPDATE",
+				"UNIT_MODEL_CHANGED",
 				"UNIT_TARGET",
 			},
 		}
@@ -573,7 +591,7 @@ function module:Initialize()
 			},
 			unitEvents = {
 				"UNIT_PORTRAIT_UPDATE",
-				"UNIT_NAME_UPDATE"
+				"UNIT_MODEL_CHANGED",
 			},
 		}
 	end
@@ -587,10 +605,12 @@ function module:Initialize()
 				events = {
 					"PLAYER_ENTERING_WORLD",
 					"GROUP_ROSTER_UPDATE",
+					"UNIT_CONNECTION",
 				},
 				unitEvents = {
 					"UNIT_PORTRAIT_UPDATE",
-					"UNIT_NAME_UPDATE"
+					"UNIT_MODEL_CHANGED",
+					"PARTY_MEMBER_ENABLE",
 				},
 			}
 		end
@@ -604,11 +624,12 @@ function module:Initialize()
 				unit = _G["ElvUF_Boss" .. i].unit,
 				events = {
 					"PLAYER_ENTERING_WORLD",
-					"INSTANCE_ENCOUNTER_ENGAGE_UNIT"
+					"INSTANCE_ENCOUNTER_ENGAGE_UNIT",
+					"UNIT_TARGETABLE_CHANGED",
 				},
 				unitEvents = {
 					"UNIT_PORTRAIT_UPDATE",
-					"UNIT_NAME_UPDATE"
+					"UNIT_MODEL_CHANGED",
 				},
 			}
 		end
@@ -623,10 +644,11 @@ function module:Initialize()
 				events = {
 					"PLAYER_ENTERING_WORLD",
 					"ARENA_OPPONENT_UPDATE",
+					"UNIT_CONNECTION",
 				},
 				unitEvents = {
 					"UNIT_PORTRAIT_UPDATE",
-					"UNIT_NAME_UPDATE",
+					"UNIT_MODEL_CHANGED",
 				},
 			}
 		end
@@ -660,14 +682,16 @@ function module:Initialize()
 
 		if settings.player.enable and module.Player and not module.Player.ScriptSet then
 			module.Player:SetScript("OnEvent", function(self, event)
+				if mMT.DevMode then
+					mMT:Print("Script Player", "Event:", event, "Unit Exists:", UnitExists("player"))
+				end
+
 				if UnitExists("player") then
 					SetPortraitTexture(self.portrait, "player", not (settings.player.texture == "CI"))
-					if event == "PLAYER_ENTERING_WORLD" then
 						setColor(self.texture, getColor(self, "player"), settings.player.mirror)
 						if settings.general.corner and textures.corner[settings.player.texture] then
 							setColor(self.corner, getColor(self, "player"), settings.player.mirror)
 						end
-					end
 				end
 			end)
 			module.Player.ScriptSet = true
@@ -675,20 +699,22 @@ function module:Initialize()
 
 		if settings.target.enable and module.Target and not module.Target.ScriptSet then
 			module.Target:SetScript("OnEvent", function(self, event)
+				if mMT.DevMode then
+					mMT:Print("Script Target", "Event:", event, "Unit Exists:", UnitExists("target"))
+				end
+
 				if UnitExists("target") then
 					SetPortraitTexture(self.portrait, "target", not (settings.target.texture == "CI"))
-					if event == "PLAYER_TARGET_CHANGED" or event == "PLAYER_ENTERING_WORLD" then
-						setColor(self.texture, getColor(self, "target"), settings.target.mirror)
+					setColor(self.texture, getColor(self, "target"), settings.target.mirror)
 
-						if settings.general.corner and textures.corner[settings.target.texture] then
-							setColor(self.corner, getColor(self, "target"), settings.target.mirror)
-						end
+					if settings.general.corner and textures.corner[settings.target.texture] then
+						setColor(self.corner, getColor(self, "target"), settings.target.mirror)
+					end
 
-						if settings.target.extraEnable and self.extra then
-							CheckRareElite(self, "target")
-						elseif self.extra then
-							self.extra:Hide()
-						end
+					if settings.target.extraEnable and self.extra then
+						CheckRareElite(self, "target")
+					elseif self.extra then
+						self.extra:Hide()
 					end
 				end
 			end)
@@ -697,14 +723,16 @@ function module:Initialize()
 
 		if settings.pet.enable and module.Pet and not module.Pet.ScriptSet then
 			module.Pet:SetScript("OnEvent", function(self, event)
+				if mMT.DevMode then
+					mMT:Print("Script Pet", "Event:", event, "Unit Exists:", UnitExists("pet"))
+				end
+
 				if UnitExists("pet") then
 					SetPortraitTexture(self.portrait, "pet", not (settings.pet.texture == "CI"))
 
-					if event == "PLAYER_ENTERING_WORLD" or event == "UNIT_NAME_UPDATE" then
-						setColor(self.texture, getColor(self, "pet"), settings.pet.mirror)
-						if settings.general.corner and textures.corner[settings.pet.texture] then
-							setColor(self.corner, getColor(self, "pet"), settings.pet.mirror)
-						end
+					setColor(self.texture, getColor(self, "pet"), settings.pet.mirror)
+					if settings.general.corner and textures.corner[settings.pet.texture] then
+						setColor(self.corner, getColor(self, "pet"), settings.pet.mirror)
 					end
 				end
 			end)
@@ -713,9 +741,12 @@ function module:Initialize()
 
 		if settings.focus.enable and module.Focus and not module.Focus.ScriptSet then
 			module.Focus:SetScript("OnEvent", function(self, event)
+				if mMT.DevMode then
+					mMT:Print("Script Focus", "Event:", event, "Unit Exists:", UnitExists("focus"))
+				end
+
 				if UnitExists("focus") then
 					SetPortraitTexture(self.portrait, "focus", not (settings.focus.texture == "CI"))
-					if event == "PLAYER_ENTERING_WORLD" or event == "PLAYER_FOCUS_CHANGED" or event == "UNIT_NAME_UPDATE" then
 						setColor(self.texture, getColor(self, "focus"), settings.focus.mirror)
 						if settings.general.corner and textures.corner[settings.focus.texture] then
 							setColor(self.corner, getColor(self, "focus"), settings.focus.mirror)
@@ -726,7 +757,6 @@ function module:Initialize()
 						elseif self.extra then
 							self.extra:Hide()
 						end
-					end
 				end
 			end)
 			module.Focus.ScriptSet = true
@@ -734,9 +764,12 @@ function module:Initialize()
 
 		if settings.targettarget.enable and module.TargetTarget and not module.TargetTarget.ScriptSet then
 			module.TargetTarget:SetScript("OnEvent", function(self, event)
+				if mMT.DevMode then
+					mMT:Print("Script Target of Target", "Event:", event, "Unit Exists:", UnitExists("targettarget"))
+				end
+
 				if UnitExists("targettarget") then
 					SetPortraitTexture(self.portrait, "targettarget", not (settings.targettarget.texture == "CI"))
-					if event == "PLAYER_ENTERING_WORLD" or event == "UNIT_TARGET" or event == "PLAYER_TARGET_CHANGED" then
 						setColor(self.texture, getColor(self, "targettarget"), settings.targettarget.mirror)
 						if settings.general.corner and textures.corner[settings.targettarget.texture] then
 							setColor(self.corner, getColor(self, "targettarget"), settings.targettarget.mirror)
@@ -747,7 +780,6 @@ function module:Initialize()
 						elseif self.extra then
 							self.extra:Hide()
 						end
-					end
 				end
 			end)
 			module.TargetTarget.ScriptSet = true
@@ -757,13 +789,15 @@ function module:Initialize()
 			for i = 1, 5 do
 				local frame = _G["ElvUF_PartyGroup1UnitButton" .. i]
 				module["Party" .. i]:SetScript("OnEvent", function(self, event)
+					if mMT.DevMode then
+						mMT:Print("Script Party " .. i, "Event:", event, "Unit:", frame.unit, "Unit Exists:", UnitExists(frame.unit))
+					end
+
 					if UnitExists(frame.unit) then
-						if event == "GROUP_ROSTER_UPDATE" or event == "PLAYER_ENTERING_WORLD" or event == "UNIT_NAME_UPDATE" then
 							setColor(self.texture, getColor(self, frame.unit), settings.party.mirror)
 							if settings.general.corner and textures.corner[settings.party.texture] then
 								setColor(self.corner, getColor(self, frame.unit), settings.party.mirror)
 							end
-						end
 
 						SetPortraitTexture(self.portrait, frame.unit, not (settings.party.texture == "CI"))
 					end
@@ -777,12 +811,14 @@ function module:Initialize()
 			for i = 1, 8 do
 				local frame = _G["ElvUF_Boss" .. i]
 				module["Boss" .. i]:SetScript("OnEvent", function(self, event)
+					if mMT.DevMode then
+						mMT:Print("Script Boss " .. i, "Event:", event, "Unit:", frame.unit, "Unit Exists:", UnitExists(frame.unit))
+					end
+
 					if UnitExists(frame.unit) then
-						if event == "UNIT_PORTRAIT_UPDATE" or event == "PLAYER_ENTERING_WORLD" or event == "UNIT_NAME_UPDATE" then
-							setColor(self.texture, getColor(self, frame.unit), settings.boss.mirror)
-							if settings.general.corner and textures.corner[settings.boss.texture] then
-								setColor(self.corner, getColor(self, frame.unit), settings.boss.mirror)
-							end
+						setColor(self.texture, getColor(self, frame.unit), settings.boss.mirror)
+						if settings.general.corner and textures.corner[settings.boss.texture] then
+							setColor(self.corner, getColor(self, frame.unit), settings.boss.mirror)
 						end
 
 						SetPortraitTexture(self.portrait, frame.unit, not (settings.boss.texture == "CI"))
@@ -797,12 +833,14 @@ function module:Initialize()
 			for i = 1, 5 do
 				local frame = _G["ElvUF_Arena" .. i]
 				module["Arena" .. i]:SetScript("OnEvent", function(self, event)
+					if mMT.DevMode then
+						mMT:Print("Script Arena " .. i, "Event:", event, "Unit:", frame.unit, "Unit Exists:", UnitExists(frame.unit))
+					end
+
 					if UnitExists(frame.unit) then
-						if event == "ARENA_OPPONENT_UPDATE" or event == "PLAYER_ENTERING_WORLD" or "UNIT_NAME_UPDATE" then
-							setColor(self.texture, getColor(self, frame.unit), settings.arena.mirror)
-							if settings.general.corner and textures.corner[settings.arena.texture] then
-								setColor(self.corner, getColor(self, frame.unit), settings.arena.mirror)
-							end
+						setColor(self.texture, getColor(self, frame.unit), settings.arena.mirror)
+						if settings.general.corner and textures.corner[settings.arena.texture] then
+							setColor(self.corner, getColor(self, frame.unit), settings.arena.mirror)
 						end
 
 						SetPortraitTexture(self.portrait, frame.unit, not (settings.arena.texture == "CI"))

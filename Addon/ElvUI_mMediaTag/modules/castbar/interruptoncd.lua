@@ -107,9 +107,9 @@ function module:InterruptChecker(castbar, isUnitFrame)
 		local value = castbar:GetValue()
 
 		if castbar.channeling then
-			interruptReadyInTime = (interruptCD + 0.5) < value
+			interruptReadyInTime = (interruptCD + 0.2) < value
 		else
-			interruptReadyInTime = (interruptCD + 0.5) < (castbar.max - value)
+			interruptReadyInTime = (interruptCD + 0.2) < (castbar.max - value)
 		end
 
 		local inactivetime = E.db.mMT.interruptoncd.inactivetime
@@ -127,7 +127,7 @@ function module:InterruptChecker(castbar, isUnitFrame)
 				CreateMarker(castbar)
 			end
 
-			local sparkPosition = (interruptStart + interruptDur - castbar.startTime + 0.5) / castbar.max
+			local sparkPosition = (interruptStart + interruptDur - castbar.startTime + 0.2) / castbar.max
 			if castbar.channeling or castbar:GetReverseFill() then
 				sparkPosition = 1 - sparkPosition
 			end
