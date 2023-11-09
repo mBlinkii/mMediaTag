@@ -1,6 +1,30 @@
 # Changelog - ElvUI_mMediaTag
 [Eng] - All changes to this project will be documented in this file. The latest changes are at the top.
 
+## [ver. 3.23.1] - 09.11.2023
+### FIX
+- FIX - Game Version in TOC Files
+
+## [ver. 3.23] - 08.11.2023
+### FIX
+- FIX - Multiple Mover Menu entry's
+- FIX - Bug in Dock Volume
+- FIX - Prevent empty Portraits in preview
+### Update
+- UPDATE - Example Docks, Icons and a Color Version of XIV
+- UPDATE - First and Second Profession Datatext is available in Classic
+- UPDATE - Removed mPower:hideZero because default will hide if power is 0
+- UPDATE - Portraits events
+- UPDATE - Change custom class colors module, it uses now CUSTOM_CLASS_COLORS so and its a extra Addon, so every supported addon can use the colors
+### NEW
+- NEW - Tags mColor:rare, mClass:icon:noelite, mPower:percent:combat, mPower:percent:heal:combat
+- NEW - Mail Icons
+- NEW - More new Dock Icons
+- NEW - Add LibAddonCompat to WoW Classic for Profession Datatexts
+- NEW - Function Custom Datatext Background Colors
+- NEW - New Border Texture
+- NEW - Add frame level settings for each portrait frame
+
 ## [ver. 3.22] - 13.10.2023
 ### FIX
 - FIX - AFK Screen for Classic Versions

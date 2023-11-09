@@ -54,6 +54,8 @@ local Teleports = {
 			[190196] = true, --enlightened-hearthstone
 			[193588] = true, --Timewalker's Hearthstone
 			[200630] = true, --ohnir-windsages-hearthstone
+			[183716] = true, -- Venthyr Sinstone
+			[208704] = true, -- Deepdweller's Earthen Hearthstone
 		},
 	},
 	engineering = {
@@ -188,12 +190,22 @@ local Teleports = {
 			[410074] = "UNDR", -- path-of-festering-rot
 			[410078] = "NL", -- path-of-the-earth-warder
 			[410080] = "VP", -- path-of-winds-domain
+
+			-- S3
+			[426121] = "DOTI", --teleport-dawn-of-the-infinite
+			[424167] = "WM", --path-of-hearts-bane
+			[424187] = "AD", --path-of-the-golden-tomb
+			[424163] = "DH", --path-of-the-nightmare-lord
+			[424153] = "BRH", --path-of-ancient-horrors
+			[159901] = "EB", --path-of-the-verdant
+			[424142] = "TOT", --path-of-the-tidehunter
 		},
 	},
 
 	df = {
 		available = false,
 		tps = {
+			[426121] = "DOTI", --teleport-dawn-of-the-infinite
 			[393222] = "ULD", --path-of-the-watchers-legacy
 			[393256] = "RLP", --pfad-des-nestverteidigers
 			[393262] = "NO", --path-of-the-windswept-plains
@@ -223,7 +235,7 @@ local Teleports = {
 			[159898] = true, --path-of-the-skies
 			[159899] = true, --path-of-the-crescent-moon
 			[159900] = true, --path-of-the-dark-rail
-			[159901] = true, --path-of-the-verdant
+			[159901] = "EB", --path-of-the-verdant
 			[159902] = true, --path-of-the-burning-mountain
 			[354462] = true, --path-of-the-courageous
 			[354463] = true, --path-of-the-plagued
@@ -238,6 +250,7 @@ local Teleports = {
 			[373192] = true, --path-of-the-first-ones
 			[373262] = true, --path-of-the-fallen-guardian
 			[373274] = true, --path-of-the-scrappy-prince
+			[426121] = "DOTI", --teleport-dawn-of-the-infinite
 			[393222] = "ULD", --path-of-the-watchers-legacy
 			[393256] = "RLP", --path-of-the-clutch-defender
 			[393262] = "NO", --path-of-the-windswept-plains
@@ -252,6 +265,11 @@ local Teleports = {
 			[410074] = "UNDR", -- path-of-festering-rot
 			[410078] = "NL", -- path-of-the-earth-warder
 			[410080] = "VP", -- path-of-winds-domain
+			[424167] = "WM", --path-of-hearts-bane
+			[424187] = "AD", --path-of-the-golden-tomb
+			[424163] = "DH", --path-of-the-nightmare-lord
+			[424153] = "BRH", --path-of-ancient-horrors
+			[424142] = "TOT", --path-of-the-tidehunter
 		},
 	},
 	menu = {},
