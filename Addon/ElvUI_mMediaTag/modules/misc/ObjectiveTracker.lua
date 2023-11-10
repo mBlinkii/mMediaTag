@@ -101,7 +101,6 @@ local function mSetupTitleFont(titletext)
 		else
 			titletext.SetShadowColor = function() end
 		end
-
 		titletext:SetWordWrap(true)
 
 		local TextHight = titletext:GetStringHeight()
@@ -247,7 +246,6 @@ local function SkinQuestText(text)
 			ObjectiveTrackerBlocksFrame.QuestHeader.Text:SetText(format("%s [%s]", HeaderTitel, QuestCountText))
 		end
 	end
-
 	local current, required, details = strmatch(text, "^(%d-)/(%d-) (.+)")
 	if (current == nil) or (required == nil) or (details == nil) then
 		details, current, required = strmatch(text, "(.+): (%d-)/(%d-)$")
