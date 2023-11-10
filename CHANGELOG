@@ -1,6 +1,11 @@
 # Changelog - ElvUI_mMediaTag
 [Eng] - All changes to this project will be documented in this file. The latest changes are at the top.
 
+## [ver. 3.24] - 10.11.2023
+### FIX
+- FIX - Bug in Classic Version
+- FIX - Objective tracker Bar color
+
 ## [ver. 3.23.1] - 09.11.2023
 ### FIX
 - FIX - Game Version in TOC Files
