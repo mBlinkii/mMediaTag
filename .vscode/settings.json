@@ -524,7 +524,8 @@
         "QUEST_DASH",
         "OBJECTIVE_DASH_STYLE_HIDE",
         "OBJECTIVE_DASH_STYLE_HIDE_AND_COLLAPSE",
-        "DEFAULT_OBJECTIVE_TRACKER_MODULE"
+        "DEFAULT_OBJECTIVE_TRACKER_MODULE",
+        "Bug"
     ],
     "Lua.diagnostics.disable": [
         "undefined-field"

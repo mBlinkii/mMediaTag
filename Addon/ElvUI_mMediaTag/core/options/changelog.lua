@@ -20,7 +20,7 @@ local change_log_new = {
 	"Add LibAddonCompat to WoW Classic for Profession Datatexts",
 	"Function Custom Datatext Background Colors",
 	"New Border Texture",
-	"Add frame level settings for each portrait frame"
+	"Add frame level settings for each portrait frame",
 }
 
 local change_log_update = {
@@ -28,13 +28,15 @@ local change_log_update = {
 	"First and Second Profession Datatext is available in Classic",
 	"Removed mPower:hideZero because default will hide if power is 0",
 	"Portraits events",
-	"Change custom class colors module, it uses now CUSTOM_CLASS_COLORS so and its a extra Addon, so every supported addon can use the colors"
+	"Change custom class colors module, it uses now CUSTOM_CLASS_COLORS so and its a extra Addon, so every supported addon can use the colors",
 }
 
 local change_log_fix = {
 	"Multiple Mover Menu entry's",
 	"Bug in Dock Volume",
 	"Prevent empty Portraits in preview",
+	"Bug in Classic Version",
+	"Objective tracker Bar color",
 }
 
 local function Concatenation(tbl, icon, color)
