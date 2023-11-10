@@ -3,15 +3,15 @@ local LSM = E.Libs.LSM
 
 local tinsert = tinsert
 local mFontFlags = {
-	NONE = "None",
-	OUTLINE = "Outline",
-	THICKOUTLINE = "Thick",
-	SHADOW = "|cff888888Shadow|r",
-	SHADOWOUTLINE = "|cff888888Shadow|r Outline",
-	SHADOWTHICKOUTLINE = "|cff888888Shadow|r Thick",
-	MONOCHROME = "|cFFAAAAAAMono|r",
-	MONOCHROMEOUTLINE = "|cFFAAAAAAMono|r Outline",
-	MONOCHROMETHICKOUTLINE = "|cFFAAAAAAMono|r Thick",
+	NONE = 'None',
+	OUTLINE = 'Outline',
+	THICKOUTLINE = 'Thick',
+	SHADOW = '|cff888888Shadow|r',
+	SHADOWOUTLINE = '|cff888888Shadow|r Outline',
+	SHADOWTHICKOUTLINE = '|cff888888Shadow|r Thick',
+	MONOCHROME = '|cFFAAAAAAMono|r',
+	MONOCHROMEOUTLINE = '|cFFAAAAAAMono|r Outline',
+	MONOCHROMETHICKOUTLINE = '|cFFAAAAAAMono|r Thick'
 }
 local positionValues = {
 	LEFT = "LEFT",
@@ -26,7 +26,7 @@ local positionValues = {
 }
 
 local function configTable()
-	local icons = {}
+    local icons = {}
 
 	for key, icon in pairs(mMT.Media.DashIcons) do
 		icons[key] = E:TextureString(icon, ":14:14") .. " " .. key
@@ -72,7 +72,7 @@ local function configTable()
 				},
 			},
 		},
-		group_fontold = {
+		group_font = {
 			order = 2,
 			type = "group",
 			name = L["Font"],
@@ -120,18 +120,18 @@ local function configTable()
 			order = 3,
 			type = "group",
 			name = L["Header"],
-			disabled = function()
+            disabled = function()
 				return not ((E.db.mMT.objectivetracker.enable and E.db.mMT.objectivetracker.simple) or E.db.mMT.objectivetracker.enable)
-			end,
+            end,
 			args = {
 				header_font = {
 					order = 1,
 					type = "group",
 					inline = true,
 					name = L["Font"],
-					disabled = function()
-						return E.db.mMT.objectivetracker.simple
-					end,
+                    disabled = function()
+                        return E.db.mMT.objectivetracker.simple
+                    end,
 					args = {
 						headerfontsize = {
 							order = 1,
@@ -183,6 +183,18 @@ local function configTable()
 								E:StaticPopup_Show("CONFIG_RL")
 							end,
 						},
+						headerfontshadow = {
+							order = 4,
+							type = "toggle",
+							name = L["Font shadow"],
+							get = function(info)
+								return E.db.mMT.objectivetracker.header.textshadow
+							end,
+							set = function(info, value)
+								E.db.mMT.objectivetracker.header.textshadow = value
+								E:StaticPopup_Show("CONFIG_RL")
+							end,
+						},
 					},
 				},
 				header_bar = {
@@ -190,9 +202,9 @@ local function configTable()
 					type = "group",
 					inline = true,
 					name = L["Bar"],
-					disabled = function()
-						return not (E.db.mMT.objectivetracker.simple or E.db.mMT.objectivetracker.enable)
-					end,
+                    disabled = function()
+                        return not (E.db.mMT.objectivetracker.simple or E.db.mMT.objectivetracker.enable)
+                    end,
 					args = {
 						headerbarstyle = {
 							order = 1,
@@ -316,9 +328,9 @@ local function configTable()
 					type = "group",
 					inline = true,
 					name = L["Settings"],
-					disabled = function()
-						return E.db.mMT.objectivetracker.simple
-					end,
+                    disabled = function()
+                        return E.db.mMT.objectivetracker.simple
+                    end,
 					args = {
 						headerquestamount = {
 							order = 1,
@@ -349,7 +361,7 @@ local function configTable()
 			type = "group",
 			name = L["Title"],
 			disabled = function()
-				return not (E.db.mMT.objectivetracker.enable and not E.db.mMT.objectivetracker.simple)
+                return not (E.db.mMT.objectivetracker.enable and not E.db.mMT.objectivetracker.simple)
 			end,
 			args = {
 				header_font = {
@@ -405,6 +417,18 @@ local function configTable()
 							set = function(info, r, g, b)
 								local t = E.db.mMT.objectivetracker.title.fontcolor
 								t.r, t.g, t.b, t.hex = r, g, b, E:RGBToHex(r, g, b)
+								E:StaticPopup_Show("CONFIG_RL")
+							end,
+						},
+						titlefontshadow = {
+							order = 4,
+							type = "toggle",
+							name = L["Font shadow"],
+							get = function(info)
+								return E.db.mMT.objectivetracker.title.textshadow
+							end,
+							set = function(info, value)
+								E.db.mMT.objectivetracker.title.textshadow = value
 								E:StaticPopup_Show("CONFIG_RL")
 							end,
 						},
@@ -474,6 +498,18 @@ local function configTable()
 							set = function(info, r, g, b)
 								local t = E.db.mMT.objectivetracker.text.fontcolor
 								t.r, t.g, t.b, t.hex = r, g, b, E:RGBToHex(r, g, b)
+								E:StaticPopup_Show("CONFIG_RL")
+							end,
+						},
+						textfontshadow = {
+							order = 4,
+							type = "toggle",
+							name = L["Font shadow"],
+							get = function(info)
+								return E.db.mMT.objectivetracker.text.textshadow
+							end,
+							set = function(info, value)
+								E.db.mMT.objectivetracker.text.textshadow = value
 								E:StaticPopup_Show("CONFIG_RL")
 							end,
 						},
@@ -695,448 +731,6 @@ local function configTable()
 							end,
 							set = function(info, value)
 								E.db.mMT.objectivetracker.dash.customstring = value
-								E:StaticPopup_Show("CONFIG_RL")
-							end,
-						},
-					},
-				},
-			},
-		},
-		header_settings = {
-			order = 5,
-			type = "group",
-			inline = true,
-			name = L["Settings"],
-			args = {
-				header_settings = {
-					order = 1,
-					type = "group",
-					inline = true,
-					name = L["Title"],
-					args = {
-						toggle_questcount = {
-							order = 1,
-							type = "toggle",
-							name = L["Quest Count"],
-							get = function(info)
-								return E.db.mMT.objectivetracker.settings.questcount
-							end,
-							set = function(info, value)
-								E.db.mMT.objectivetracker.settings.questcount = value
-								E:StaticPopup_Show("CONFIG_RL")
-							end,
-						},
-					},
-				},
-			},
-		},
-
-		group_font = {
-			order = 6,
-			type = "group",
-			name = L["Font"],
-			disabled = function()
-				return not (E.db.mMT.objectivetracker.enable and not E.db.mMT.objectivetracker.simple)
-			end,
-			args = {
-				header_font = {
-					order = 1,
-					type = "group",
-					inline = true,
-					name = L["Font"],
-					args = {
-						select_font = {
-							type = "select",
-							dialogControl = "LSM30_Font",
-							order = 1,
-							name = L["Default Font"],
-							values = LSM:HashTable("font"),
-							get = function(info)
-								return E.db.mMT.objectivetracker.font.font
-							end,
-							set = function(info, value)
-								E.db.mMT.objectivetracker.font.font = value
-							end,
-						},
-						select_fontflag = {
-							type = "select",
-							order = 2,
-							name = L["Font contour"],
-							values = mFontFlags,
-							get = function(info)
-								return E.db.mMT.objectivetracker.font.fontflag
-							end,
-							set = function(info, value)
-								E.db.mMT.objectivetracker.font.fontflag = value
-							end,
-						},
-						spacer_1 = {
-							order = 3,
-							type = "description",
-							name = "\n\n\n",
-						},
-						fontsize_header = {
-							order = 4,
-							name = L["Font Size"] .. " " .. L["Header"],
-							type = "range",
-							min = 1,
-							max = 64,
-							step = 1,
-							softMin = 8,
-							softMax = 32,
-							get = function(info)
-								return E.db.mMT.objectivetracker.font.fontsize.header
-							end,
-							set = function(info, value)
-								E.db.mMT.objectivetracker.font.fontsize.header = value
-							end,
-						},
-						spacer_2 = {
-							order = 5,
-							type = "description",
-							name = "\n\n\n",
-						},
-						fontsize_title = {
-							order = 6,
-							name = L["Font Size"] .. " " .. L["Title"],
-							type = "range",
-							min = 1,
-							max = 64,
-							step = 1,
-							softMin = 8,
-							softMax = 32,
-							get = function(info)
-								return E.db.mMT.objectivetracker.font.fontsize.title
-							end,
-							set = function(info, value)
-								E.db.mMT.objectivetracker.font.fontsize.title = value
-							end,
-						},
-						spacer_3 = {
-							order = 7,
-							type = "description",
-							name = "\n\n\n",
-						},
-						fontsize_text = {
-							order = 8,
-							name = L["Font Size"] .. " " .. L["Text"],
-							type = "range",
-							min = 1,
-							max = 64,
-							step = 1,
-							softMin = 8,
-							softMax = 32,
-							get = function(info)
-								return E.db.mMT.objectivetracker.font.fontsize.text
-							end,
-							set = function(info, value)
-								E.db.mMT.objectivetracker.font.fontsize.text = value
-							end,
-						},
-					},
-				},
-				header_settings = {
-					order = 2,
-					type = "group",
-					inline = true,
-					name = L["Settings"],
-					args = {
-						range_highlight = {
-							order = 1,
-							name = L["Highlight dim Value"],
-							type = "range",
-							min = 0,
-							max = 1,
-							step = 0.01,
-							get = function(info)
-								return E.db.mMT.objectivetracker.font.highlight
-							end,
-							set = function(info, value)
-								E.db.mMT.objectivetracker.font.highlight = value
-							end,
-						},
-					},
-				},
-				header_fontcolor = {
-					order = 2,
-					type = "group",
-					inline = true,
-					name = L["Font Colors"],
-					args = {
-						color_title = {
-							type = "color",
-							order = 1,
-							name = L["Title"],
-							hasAlpha = false,
-							get = function(info)
-								local t = E.db.mMT.objectivetracker.font.color.title
-								return t.r, t.g, t.b
-							end,
-							set = function(info, r, g, b)
-								local t = E.db.mMT.objectivetracker.font.color.title
-								t.r, t.g, t.b, t.hex = r, g, b, E:RGBToHex(r, g, b)
-								E:StaticPopup_Show("CONFIG_RL")
-							end,
-						},
-						toggle_title = {
-							order = 2,
-							type = "toggle",
-							name = L["Class colored"],
-							get = function(info)
-								return E.db.mMT.objectivetracker.font.color.title.class
-							end,
-							set = function(info, value)
-								E.db.mMT.objectivetracker.font.color.title.class = value
-								E:StaticPopup_Show("CONFIG_RL")
-							end,
-						},
-						spacer_1 = {
-							order = 3,
-							type = "description",
-							name = "\n\n\n",
-						},
-						color_header = {
-							type = "color",
-							order = 4,
-							name = L["Header"],
-							hasAlpha = false,
-							get = function(info)
-								local t = E.db.mMT.objectivetracker.font.color.header
-								return t.r, t.g, t.b
-							end,
-							set = function(info, r, g, b)
-								local t = E.db.mMT.objectivetracker.font.color.header
-								t.r, t.g, t.b, t.hex = r, g, b, E:RGBToHex(r, g, b)
-								E:StaticPopup_Show("CONFIG_RL")
-							end,
-						},
-						toggle_header = {
-							order = 5,
-							type = "toggle",
-							name = L["Class colored"],
-							get = function(info)
-								return E.db.mMT.objectivetracker.font.color.header.class
-							end,
-							set = function(info, value)
-								E.db.mMT.objectivetracker.font.color.header.class = value
-								E:StaticPopup_Show("CONFIG_RL")
-							end,
-						},
-						spacer_2 = {
-							order = 6,
-							type = "description",
-							name = "\n\n\n",
-						},
-						color_text = {
-							type = "color",
-							order = 7,
-							name = L["Text"],
-							hasAlpha = false,
-							get = function(info)
-								local t = E.db.mMT.objectivetracker.font.color.text
-								return t.r, t.g, t.b
-							end,
-							set = function(info, r, g, b)
-								local t = E.db.mMT.objectivetracker.font.color.text
-								t.r, t.g, t.b, t.hex = r, g, b, E:RGBToHex(r, g, b)
-								E:StaticPopup_Show("CONFIG_RL")
-							end,
-						},
-						toggle_text = {
-							order = 8,
-							type = "toggle",
-							name = L["Class colored"],
-							get = function(info)
-								return E.db.mMT.objectivetracker.font.color.text.class
-							end,
-							set = function(info, value)
-								E.db.mMT.objectivetracker.font.color.text.class = value
-								E:StaticPopup_Show("CONFIG_RL")
-							end,
-						},
-						spacer_3 = {
-							order = 9,
-							type = "description",
-							name = "\n\n\n",
-						},
-						color_failed = {
-							type = "color",
-							order = 10,
-							name = L["Failed"],
-							hasAlpha = false,
-							get = function(info)
-								local t = E.db.mMT.objectivetracker.font.color.failed
-								return t.r, t.g, t.b
-							end,
-							set = function(info, r, g, b)
-								local t = E.db.mMT.objectivetracker.font.color.failed
-								t.r, t.g, t.b, t.hex = r, g, b, E:RGBToHex(r, g, b)
-								E:StaticPopup_Show("CONFIG_RL")
-							end,
-						},
-						spacer_4 = {
-							order = 11,
-							type = "description",
-							name = "\n\n\n",
-						},
-						color_complete = {
-							type = "color",
-							order = 12,
-							name = L["Complete"],
-							hasAlpha = false,
-							get = function(info)
-								local t = E.db.mMT.objectivetracker.font.color.complete
-								return t.r, t.g, t.b
-							end,
-							set = function(info, r, g, b)
-								local t = E.db.mMT.objectivetracker.font.color.complete
-								t.r, t.g, t.b, t.hex = r, g, b, E:RGBToHex(r, g, b)
-								E:StaticPopup_Show("CONFIG_RL")
-							end,
-						},
-						spacer_6 = {
-							order = 16,
-							type = "description",
-							name = "\n\n\n",
-						},
-						color_good = {
-							type = "color",
-							order = 17,
-							name = L["Progress Good"],
-							hasAlpha = false,
-							get = function(info)
-								local t = E.db.mMT.objectivetracker.font.color.good
-								return t.r, t.g, t.b
-							end,
-							set = function(info, r, g, b)
-								local t = E.db.mMT.objectivetracker.font.color.good
-								t.r, t.g, t.b, t.hex = r, g, b, E:RGBToHex(r, g, b)
-								E:StaticPopup_Show("CONFIG_RL")
-							end,
-						},
-						spacer_7 = {
-							order = 18,
-							type = "description",
-							name = "\n\n\n",
-						},
-						color_transit = {
-							type = "color",
-							order = 19,
-							name = L["Progress Transit"],
-							hasAlpha = false,
-							get = function(info)
-								local t = E.db.mMT.objectivetracker.font.color.transit
-								return t.r, t.g, t.b
-							end,
-							set = function(info, r, g, b)
-								local t = E.db.mMT.objectivetracker.font.color.transit
-								t.r, t.g, t.b, t.hex = r, g, b, E:RGBToHex(r, g, b)
-								E:StaticPopup_Show("CONFIG_RL")
-							end,
-						},
-						spacer_8 = {
-							order = 20,
-							type = "description",
-							name = "\n\n\n",
-						},
-						color_bad = {
-							type = "color",
-							order = 21,
-							name = L["Progress bad"],
-							hasAlpha = false,
-							get = function(info)
-								local t = E.db.mMT.objectivetracker.font.color.bad
-								return t.r, t.g, t.b
-							end,
-							set = function(info, r, g, b)
-								local t = E.db.mMT.objectivetracker.font.color.bad
-								t.r, t.g, t.b, t.hex = r, g, b, E:RGBToHex(r, g, b)
-								E:StaticPopup_Show("CONFIG_RL")
-							end,
-						},
-					},
-				},
-			},
-		},
-		group_bar = {
-			order = 6,
-			type = "group",
-			name = L["Bars"],
-			disabled = function()
-				return not (E.db.mMT.objectivetracker.enable and not E.db.mMT.objectivetracker.simple)
-			end,
-			args = {
-				header_font = {
-					order = 1,
-					type = "group",
-					inline = true,
-					name = L["Font"],
-					args = {
-						fontsize_bar = {
-							order = 1,
-							name = L["Font Size"],
-							type = "range",
-							min = 1,
-							max = 64,
-							step = 1,
-							softMin = 8,
-							softMax = 32,
-							get = function(info)
-								return E.db.mMT.objectivetracker.bar.fontsize
-							end,
-							set = function(info, value)
-								E.db.mMT.objectivetracker.bar.fontsize = value
-							end,
-						},
-						select_fontpoint = {
-							order = 2,
-							type = "select",
-							name = L["Anchor Point"],
-							get = function(info)
-								return E.db.mMT.objectivetracker.bar.fontpoint
-							end,
-							set = function(info, value)
-								E.db.mMT.objectivetracker.bar.fontpoint = value
-								E:StaticPopup_Show("CONFIG_RL")
-							end,
-							values = {
-								LEFT = L["LEFT"],
-								CENTER = L["CENTER"],
-								RIGHT = L["RIGHT"],
-							},
-						},
-					},
-				},
-				header_bar = {
-					order = 2,
-					type = "group",
-					inline = true,
-					name = L["Settings"],
-					args = {
-						toggle_barbg = {
-							order = 1,
-							type = "toggle",
-							name = L["Transparent Backdrop"],
-							get = function(info)
-								return E.db.mMT.objectivetracker.bar.transparent
-							end,
-							set = function(info, value)
-								E.db.mMT.objectivetracker.bar.transparent = value
-								E:StaticPopup_Show("CONFIG_RL")
-							end,
-						},
-						bar_hight = {
-							order = 2,
-							name = L["Bar hight"],
-							type = "range",
-							min = 1,
-							max = 128,
-							step = 1,
-							get = function(info)
-								return E.db.mMT.objectivetracker.bar.hight
-							end,
-							set = function(info, value)
-								E.db.mMT.objectivetracker.bar.hight = value
 								E:StaticPopup_Show("CONFIG_RL")
 							end,
 						},
