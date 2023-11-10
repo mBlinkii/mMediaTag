@@ -3,6 +3,10 @@ local DT = E:GetModule("DataTexts")
 
 local _G = _G
 local module = mMT.Modules.CosmeticBars
+if not module then
+	return
+end
+
 
 local function SetColor(panel, setting, border)
 	local color = { r = 1, g = 1, b = 1, a = 1 }

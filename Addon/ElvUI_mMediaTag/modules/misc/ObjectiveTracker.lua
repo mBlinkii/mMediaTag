@@ -29,12 +29,7 @@ local function mBackdropBars(self, value)
 	if not (self.Bar and self.isSkinned and value) then
 		return
 	end
-	self.Bar.backdrop:SetBackdropColor(
-		E.db.general.backdropfadecolor.r,
-		E.db.general.backdropfadecolor.g,
-		E.db.general.backdropfadecolor.b,
-		E.db.general.backdropfadecolor.a
-	)
+	self.Bar.backdrop:SetBackdropColor(E.db.general.backdropfadecolor.r, E.db.general.backdropfadecolor.g, E.db.general.backdropfadecolor.b, E.db.general.backdropfadecolor.a)
 end
 
 local function mSetupHeaderFont(headdertext)
@@ -61,13 +56,9 @@ local function mSetupHeaderFont(headdertext)
 				local CountColorString = E:RGBToHex(r, g, b)
 
 				if QuestCount == "colorleft" then
-					ObjectiveTrackerBlocksFrame.QuestHeader.Text:SetText(
-						format("[%s%s|r] %s", CountColorString, QuestCountText, HeaderTitel)
-					)
+					ObjectiveTrackerBlocksFrame.QuestHeader.Text:SetText(format("[%s%s|r] %s", CountColorString, QuestCountText, HeaderTitel))
 				elseif QuestCount == "colorright" then
-					ObjectiveTrackerBlocksFrame.QuestHeader.Text:SetText(
-						format("%s [%s%s|r]", HeaderTitel, CountColorString, QuestCountText)
-					)
+					ObjectiveTrackerBlocksFrame.QuestHeader.Text:SetText(format("%s [%s%s|r]", HeaderTitel, CountColorString, QuestCountText))
 				end
 			elseif QuestCount == "left" then
 				ObjectiveTrackerBlocksFrame.QuestHeader.Text:SetText(format("[%s] %s", QuestCountText, HeaderTitel))
@@ -110,7 +101,6 @@ local function mSetupTitleFont(titletext)
 		else
 			titletext.SetShadowColor = function() end
 		end
-
 		titletext:SetWordWrap(true)
 
 		local TextHight = titletext:GetStringHeight()
@@ -152,19 +142,15 @@ local function SetGradientColors(bar, r, g, b)
 	if mMT.ElvUI_EltreumUI.loaded and E.db.ElvUI_EltreumUI.unitframes.gradientmode and E.db.mMT.objectivetracker.header.barcolorstyle == "class" then
 		local ElvUI_EltreumUI = E:GetModule("ElvUI_EltreumUI", true)
 		if ElvUI_EltreumUI and E.db.ElvUI_EltreumUI.unitframes.gradientmode.customcolor then
-			bar:GetStatusBarTexture()
-				:SetGradient("HORIZONTAL", ElvUI_EltreumUI:GradientColorsCustom(E.myclass, false, false, false))
+			bar.texture:SetGradient("HORIZONTAL", ElvUI_EltreumUI:GradientColorsCustom(E.myclass, false, false, false))
 		else
-			bar:GetStatusBarTexture()
-				:SetGradient("HORIZONTAL", ElvUI_EltreumUI:GradientColors(E.myclass, false, false, false))
+			bar.texture:SetGradient("HORIZONTAL", ElvUI_EltreumUI:GradientColors(E.myclass, false, false, false))
 		end
 	else
 		if E.db.mMT.objectivetracker.header.revers then
-			bar:GetStatusBarTexture()
-				:SetGradient("HORIZONTAL", CreateColor(r, g, b, 1), CreateColor(r - 0.4, g - 0.4, b - 0.4, 1))
+			bar.texture:SetGradient("HORIZONTAL", CreateColor(r, g, b, 1), CreateColor(r - 0.4, g - 0.4, b - 0.4, 1))
 		else
-			bar:GetStatusBarTexture()
-				:SetGradient("HORIZONTAL", CreateColor(r - 0.4, g - 0.4, b - 0.4, 1), CreateColor(r, g, b, 1))
+			bar.texture:SetGradient("HORIZONTAL", CreateColor(r - 0.4, g - 0.4, b - 0.4, 1), CreateColor(r, g, b, 1))
 		end
 	end
 end
@@ -175,24 +161,30 @@ local function mCreatBar(modul)
 		BarColor = E.db.mMT.objectivetracker.header.barcolor
 		BarColorStyle = E.db.mMT.objectivetracker.header.barcolorstyle
 		BarShadow = E.db.mMT.objectivetracker.header.barshadow
+
 		if BarColorStyle == "class" then
 			BarColor = { r = mMT.ClassColor.r, g = mMT.ClassColor.g, b = mMT.ClassColor.b }
 		end
 		local BarTexture = LSM:Fetch("statusbar", E.db.mMT.objectivetracker.header.texture)
-
-		local mBarOne = CreateFrame("StatusBar", "mMT_BarOne", modul)
+		local mBarOne = CreateFrame("Frame", "mMT_BarOne", modul)
 		mBarOne:SetFrameStrata("BACKGROUND")
 		if (BarStyle == "onebig") or (BarStyle == "twobig") then
 			mBarOne:SetSize(width, 5)
 		else
 			mBarOne:SetSize(width, 1)
 		end
+
+		mBarOne.texture = mBarOne:CreateTexture()
+		mBarOne.texture:SetAllPoints(mBarOne)
+		mBarOne.texture:SetTexture(BarTexture)
+
 		mBarOne:SetPoint("BOTTOM", 0, 0)
-		mBarOne:SetStatusBarTexture(BarTexture)
+		--mBarOne:SetStatusBarTexture(BarTexture)
+		mMT:Print(BarColor.r, BarColor.g, BarColor.b)
 		if E.db.mMT.objectivetracker.header.gradient then
 			SetGradientColors(mBarOne, BarColor.r, BarColor.g, BarColor.b)
 		else
-			mBarOne:SetStatusBarColor(BarColor.r, BarColor.g, BarColor.b)
+			mBarOne.texture:SetVertexColor(BarColor.r, BarColor.g, BarColor.b, 1)
 		end
 		mBarOne:CreateBackdrop()
 
@@ -201,19 +193,24 @@ local function mCreatBar(modul)
 		end
 
 		if (BarStyle == "two") or (BarStyle == "twobig") then
-			local mBarTwo = CreateFrame("StatusBar", "mMT_BarTwo", modul)
+			local mBarTwo = CreateFrame("Frame", "mMT_BarTwo", modul)
 			mBarTwo:SetFrameStrata("BACKGROUND")
 			if BarStyle == "twobig" then
 				mBarTwo:SetSize(width, 5)
 			else
 				mBarTwo:SetSize(width, 1)
 			end
+
+			mBarTwo.texture = mBarOne:CreateTexture()
+			mBarTwo.texture:SetAllPoints(mBarOne)
+			mBarTwo.texture:SetTexture(BarTexture)
+
 			mBarTwo:SetPoint("TOP", 0, 0)
-			mBarTwo:SetStatusBarTexture(BarTexture, BarColor.r, BarColor.g, BarColor.b)
+			--mBarTwo:SetStatusBarTexture(BarTexture, BarColor.r, BarColor.g, BarColor.b)
 			if E.db.mMT.objectivetracker.header.gradient then
 				SetGradientColors(mBarTwo)
 			else
-				mBarTwo:SetStatusBarColor(BarColor.r, BarColor.g, BarColor.b)
+				mBarTwo.texture:SetVertexColor(BarColor.r, BarColor.g, BarColor.b, 1)
 			end
 			mBarTwo:CreateBackdrop()
 
@@ -239,13 +236,9 @@ local function SkinQuestText(text)
 			local CountColorString = E:RGBToHex(r, g, b)
 
 			if QuestCount == "colorleft" then
-				ObjectiveTrackerBlocksFrame.QuestHeader.Text:SetText(
-					format("[%s%s|r] %s", CountColorString, QuestCountText, HeaderTitel)
-				)
+				ObjectiveTrackerBlocksFrame.QuestHeader.Text:SetText(format("[%s%s|r] %s", CountColorString, QuestCountText, HeaderTitel))
 			elseif QuestCount == "colorright" then
-				ObjectiveTrackerBlocksFrame.QuestHeader.Text:SetText(
-					format("%s [%s%s|r]", HeaderTitel, CountColorString, QuestCountText)
-				)
+				ObjectiveTrackerBlocksFrame.QuestHeader.Text:SetText(format("%s [%s%s|r]", HeaderTitel, CountColorString, QuestCountText))
 			end
 		elseif QuestCount == "left" then
 			ObjectiveTrackerBlocksFrame.QuestHeader.Text:SetText(format("[%s] %s", QuestCountText, HeaderTitel))
@@ -253,7 +246,6 @@ local function SkinQuestText(text)
 			ObjectiveTrackerBlocksFrame.QuestHeader.Text:SetText(format("%s [%s]", HeaderTitel, QuestCountText))
 		end
 	end
-
 	local current, required, details = strmatch(text, "^(%d-)/(%d-) (.+)")
 	if (current == nil) or (required == nil) or (details == nil) then
 		details, current, required = strmatch(text, "(.+): (%d-)/(%d-)$")
@@ -273,31 +265,11 @@ local function SkinQuestText(text)
 			local r, g, b = E:ColorGradient(tmpPercent * 0.01, cb.r, cb.g, cb.b, ct.r, ct.g, ct.b, cg.r, cg.g, cg.b)
 			local ColorString = E:RGBToHex(r, g, b)
 
-			if
-				E.db.mMT.objectivetracker.text.progresscolor
-				and E.db.mMT.objectivetracker.text.progrespercent
-				and (tonumber(required) >= 2)
-			then
+			if E.db.mMT.objectivetracker.text.progresscolor and E.db.mMT.objectivetracker.text.progrespercent and (tonumber(required) >= 2) then
 				if E.db.mMT.objectivetracker.text.cleantext then
-					return format(
-						"%s%s/%s|r - %s%s|r %s",
-						ColorString,
-						current,
-						required,
-						ColorString,
-						tmpPercent .. "%",
-						details
-					)
+					return format("%s%s/%s|r - %s%s|r %s", ColorString, current, required, ColorString, tmpPercent .. "%", details)
 				else
-					return format(
-						"%s%s/%s|r - %s%s|r %s",
-						ColorString,
-						current,
-						required,
-						ColorString,
-						tmpPercent .. "%",
-						details
-					)
+					return format("%s%s/%s|r - %s%s|r %s", ColorString, current, required, ColorString, tmpPercent .. "%", details)
 				end
 			else
 				if E.db.mMT.objectivetracker.text.cleantext then
@@ -376,14 +348,14 @@ local function SkinOBTScenarioBlock()
 	-- end
 
 	local container = _G.ScenarioStageBlock.WidgetContainer
-    if not container or not container.widgetFrames then
-        return
-    end
+	if not container or not container.widgetFrames then
+		return
+	end
 
-    for _, widgetFrame in pairs(container.widgetFrames) do
-        if widgetFrame.Frame then
-            widgetFrame.Frame:SetAlpha(0)
-        end
+	for _, widgetFrame in pairs(container.widgetFrames) do
+		if widgetFrame.Frame then
+			widgetFrame.Frame:SetAlpha(0)
+		end
 	end
 end
 local function SkinOBTScenario(numCriteria, objectiveBlock)
@@ -435,9 +407,7 @@ local function SkinOBTText(_, line)
 						if DashStyle == "custom" then
 							line.currentLine.Dash:SetText(E.db.mMT.objectivetracker.dash.customstring)
 						elseif DashStyle == "icon" then
-							line.currentLine.Dash:SetText(
-								mDashIcon(mMT.Media.DashIcons[E.db.mMT.objectivetracker.dash.texture])
-							)
+							line.currentLine.Dash:SetText(mDashIcon(mMT.Media.DashIcons[E.db.mMT.objectivetracker.dash.texture]))
 						else
 							line.currentLine.Dash:Hide()
 							line.currentLine.Text:ClearAllPoints()
