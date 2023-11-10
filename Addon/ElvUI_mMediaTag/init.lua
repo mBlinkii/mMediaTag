@@ -144,7 +144,11 @@ local function UpdateModules()
 	for name, module in pairs(mMT.Modules) do
 		if (not module.enable and module.loaded) or module.loaded or module.enable then
 			--mMT:Print(name, "Update", module.loaded, "Disable", (not module.enable and module.loaded), "Enable", module.enable)
-			module:Initialize()
+			if module.Initialize then
+				module:Initialize()
+			else
+				mMT:Print("Module not found:", module)
+			end
 
 			if module.needReloadUI and ((not module.enable and module.loaded) or (module.loaded and not module.enable)) then
 				--mMT:Print("RELOAD REQUIERED")

@@ -121,7 +121,7 @@ local function SetHeaderText(text)
 	text.SetShadowColor = function() end
 end
 
-local function SetLineText(text, completed)
+local function SetLineText(text, completed, check)
 	color = completed and db.font.color.complete or (db.font.color.text.class and mMT.ClassColor or db.font.color.text)
 	fontsize = db.font.fontsize.text
 
@@ -129,6 +129,7 @@ local function SetLineText(text, completed)
 	text:SetTextColor(color.r, color.g, color.b)
 	text.SetShadowColor = function() end
 	local lineText = text:GetText()
+
 	-- Text Progress
 	if not completed then
 		local current, required, questText = strmatch(lineText, "^(%d-)/(%d-) (.+)")
@@ -144,10 +145,14 @@ local function SetLineText(text, completed)
 			local colorBad = db.font.color.bad
 			local r, g, b = E:ColorGradient(progressPercent * 0.01, colorBad.r, colorBad.g, colorBad.b, colorTransit.r, colorTransit.g, colorTransit.b, colorGood.r, colorGood.g, colorGood.b)
 			local colorProgress = E:RGBToHex(r, g, b)
-			local progressPercent = format("%.f%%", progressPercent)
+			progressPercent = format("%.f%%", progressPercent)
 			lineText = colorProgress .. current .. "/" .. required .. " - " .. progressPercent .. "|r" .. "  " .. questText
 		end
-	else
+	elseif not check then
+		local questText, _, _ = strmatch(lineText, "(.+): (%d-)/(%d-)$")
+		if questText then
+			lineText = questText
+		end
 		local doneIcon = "|TInterface\\AddOns\\ElvUI_mMediaTag\\media\\icons\\misc\\questDone.tga:16:16:0:0:16:16:0:16:0:16"
 		doneIcon = doneIcon .. ":" .. tostring(mMT:round(db.font.color.good.r * 255)) .. ":" .. tostring(mMT:round(db.font.color.good.g * 255)) .. ":" .. tostring(mMT:round(db.font.color.good.b * 255)) .. "|t"
 		lineText = doneIcon .. lineText
@@ -167,10 +172,22 @@ local function SkinObjective(_, block, objectiveKey, _, lineType, useFullHeight,
 		end
 
 		if block.currentLine then
+			local check = block.currentLine.Check
+			local isShownCheck = false
+			if check then
+				isShownCheck = true
+				-- if DashStyle == "none" then
+				-- 	line.currentLine.Check:ClearAllPoints()
+				-- 	line.currentLine.Check:Point("TOPRIGHT", line.currentLine.Dash, "TOPLEFT", 0, 0)
+				-- end
+				check:SetTexture("Interface\\AddOns\\ElvUI_mMediaTag\\media\\icons\\misc\\questDoneBig.tga")
+				check:SetVertexColor(db.font.color.good.r, db.font.color.good.g, db.font.color.good.b, 1)
+			end
+
 			local complete = block.currentLine.state or (objectiveKey == "QuestComplete")
 			local text = block.currentLine.Text
 			if text then
-				local height = SetLineText(text, complete)
+				local height = SetLineText(text, complete, isShownCheck)
 
 				if height ~= text:GetHeight() then
 					text:SetHeight(height)
@@ -178,16 +195,6 @@ local function SkinObjective(_, block, objectiveKey, _, lineType, useFullHeight,
 			end
 
 			local dash = block.currentLine.Dash
-
-			local check = block.currentLine.Check
-			if check then
-				-- if DashStyle == "none" then
-				-- 	line.currentLine.Check:ClearAllPoints()
-				-- 	line.currentLine.Check:Point("TOPRIGHT", line.currentLine.Dash, "TOPLEFT", 0, 0)
-				-- end
-				check:SetTexture(mMT.Media.MiscIcons["DONE1"])
-				check:SetVertexColor(1, 1, 1, 1)
-			end
 		end
 
 		--mMT:DebugPrintTable(block.currentLine.Check)
