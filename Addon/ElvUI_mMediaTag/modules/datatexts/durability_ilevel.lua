@@ -8,6 +8,9 @@ local pi = math.pi
 --Variables
 local mText = L["Durability/ Ilevel"]
 local hexColor = E:RGBToHex(E.db.general.valuecolor.r, E.db.general.valuecolor.g, E.db.general.valuecolor.b)
+local GetAverageItemLevel = GetAverageItemLevel
+local GetInventoryItemLink = GetInventoryItemLink
+local GetInventoryItemTexture = GetInventoryItemTexture
 
 local REPAIR_COST = REPAIR_COST
 local tooltipString = "%d%%"
@@ -58,10 +61,12 @@ local function OnEnter(self)
 		DT.tooltip:AddDoubleLine(REPAIR_COST, GetMoneyString(totalRepairCost), 0.6, 0.8, 1, 1, 1, 1)
 	end
 
-	local avg, avgEquipped, avgPvp = GetAverageItemLevel()
-	DT.tooltip:AddDoubleLine(STAT_AVERAGE_ITEM_LEVEL, format("%0.2f", avg), 1, 1, 1, 0.1, 1, 0.1)
-	DT.tooltip:AddDoubleLine(GMSURVEYRATING3, format("%0.2f", avgEquipped), 1, 1, 1, colorize(avgEquipped - avg))
-	DT.tooltip:AddDoubleLine(LFG_LIST_ITEM_LEVEL_INSTR_PVP_SHORT, format("%0.2f", avgPvp), 1, 1, 1, colorize(avgPvp - avg))
+	if E.Retail or E.Wrath then
+		local avg, avgEquipped, avgPvp = GetAverageItemLevel()
+		DT.tooltip:AddDoubleLine(STAT_AVERAGE_ITEM_LEVEL, format("%0.2f", avg), 1, 1, 1, 0.1, 1, 0.1)
+		DT.tooltip:AddDoubleLine(GMSURVEYRATING3, format("%0.2f", avgEquipped), 1, 1, 1, colorize(avgEquipped - avg))
+		DT.tooltip:AddDoubleLine(LFG_LIST_ITEM_LEVEL_INSTR_PVP_SHORT, format("%0.2f", avgPvp), 1, 1, 1, colorize(avgPvp - avg))
+	end
 
 	DT.tooltip:Show()
 end
@@ -100,18 +105,25 @@ local function OnEvent(self)
 		end
 	end
 
-	local _, avgEquipped = GetAverageItemLevel()
-	local text = E.db.mMT.durabilityIlevel.icon and "%s %s  %s %s" or "%s%s | %s%s"
+	local avgEquipped = 0
 	local shieldIcon = "|TInterface\\AddOns\\ElvUI_mMediaTag\\media\\icons\\datatext\\shield.tga:14:14:0:0:64:64:5:59:5:59|t"
 	local armorIcon = "|TInterface\\AddOns\\ElvUI_mMediaTag\\media\\icons\\datatext\\armor.tga:14:14:0:0:64:64:5:59:5:59|t"
+	local text = E.db.mMT.durabilityIlevel.icon and "%s %s  %s %s" or "%s%s | %s%s"
+	local avgEquippedString = ""
 	local lowDurability = (totalDurability or 0) <= 15
 
-	shieldIcon = E.db.mMT.durabilityIlevel.icon and shieldIcon or ""
 	armorIcon = E.db.mMT.durabilityIlevel.icon and armorIcon or ""
 	local totalDurabilityString = format("%." .. E.db.general.decimalLength .. "f%%", totalDurability or 0)
-	local avgEquippedString = format("%." .. E.db.general.decimalLength .. "f", avgEquipped or 0)
 
-	text = format(text, shieldIcon,colorText(totalDurabilityString, lowDurability), armorIcon, colorText(avgEquippedString))
+	if E.Retail or E.Wrath then
+		_, avgEquipped = GetAverageItemLevel()
+		shieldIcon = E.db.mMT.durabilityIlevel.icon and shieldIcon or ""
+		avgEquippedString = format("%." .. E.db.general.decimalLength .. "f", avgEquipped or 0)
+		text = format(text, shieldIcon, colorText(totalDurabilityString, lowDurability), armorIcon, colorText(avgEquippedString))
+	else
+		text = E.db.mMT.durabilityIlevel.icon and "%s %s" or "%s%s"
+		text = format(text, shieldIcon, colorText(totalDurabilityString, lowDurability))
+	end
 
 	self.text:SetText(text)
 end
