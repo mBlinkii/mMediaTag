@@ -8,49 +8,43 @@ if not module then
 end
 
 local LSM = E.Libs.LSM
-local function SetColor(panel, setting, border)
-	local color = { r = 1, g = 1, b = 1, a = 1 }
 
-	color = { r = 1, g = 1, b = 1, a = 1 }
+local function getColor(setting)
+	mMT:Print(setting.style)
 	if setting.style == "custom" then
-		color = setting.color
+		return setting.color
+	elseif setting.style == "class" then
+		return mMT.ClassColor
+	elseif setting.style == "darkclass" then
+		local c = mMT.ClassColor
+		return { r = c.r - 0.3, g = c.g - 0.3, b = c.b - 0.3, a = 1 }
 	else
-		color = E:ClassColor(E.myclass)
-		if setting.style == "darkclass" then
-			color.r = color.r - 0.3
-			color.g = color.g - 0.3
-			color.b = color.b - 0.3
-		end
-	end
-
-	if border then
-		panel:SetBackdropBorderColor(color.r, color.g, color.b)
-	else
-		panel:SetBackdropColor(color.r, color.g, color.b, setting.color.a)
-	end
-end
-
-local function SetBGTexture(panel, file, border)
-	local BGInfo = panel.backdropInfo
-	panel:SetBackdrop({ bgFile = LSM:Fetch("statusbar", file), edgeSize = BGInfo.edgeSize, edgeFile = BGInfo.edgeFile })
-
-	if border then
-		panel:SetBackdropBorderColor(0, 0, 0, 1)
+		return { r = 1, g = 1, b = 1, a = 1 }
 	end
 end
 
 local function UpdatePanelColors(_, name, panel)
-	if E.db.mMT.cosmeticbars.bars[name] then
-		if E.db.mMT.cosmeticbars.bars[name].texture.enable then
-			SetBGTexture(panel, E.db.mMT.cosmeticbars.bars[name].texture.file, (E.db.mMT.cosmeticbars.bars[name].border.style == "disabled"))
+	local conf = E.db.mMT.cosmeticbars.bars[name]
+
+	if conf then
+		if conf.texture.enable then
+			panel:SetBackdrop({ bgFile = LSM:Fetch("statusbar", conf.texture.file), edgeSize = panel.backdropInfo.edgeSize, edgeFile = panel.backdropInfo.edgeFile })
+
+			if conf.border.style == "disabled" then
+				panel:SetBackdropBorderColor(0, 0, 0, 1)
+			end
 		end
 
-		if E.db.mMT.cosmeticbars.bars[name].bg.style ~= "disabled" then
-			SetColor(panel, E.db.mMT.cosmeticbars.bars[name].bg, false)
+		local color = { r = 1, g = 1, b = 1, a = 1 }
+
+		if conf.bg.style ~= "disabled" then
+			color = getColor(conf.bg)
+			panel:SetBackdropColor(color.r, color.g, color.b, conf.bg.color.a)
 		end
 
-		if E.db.mMT.cosmeticbars.bars[name].border.style ~= "disabled" then
-			SetColor(panel, E.db.mMT.cosmeticbars.bars[name].border, true)
+		if conf.border.style ~= "disabled" then
+			color = getColor(conf.border)
+			panel:SetBackdropBorderColor(color.r, color.g, color.b)
 		end
 	end
 end
