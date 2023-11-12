@@ -7,7 +7,7 @@ local function SetQuestIcons(_, nameplate)
 	local plateDB = NP:PlateDB(nameplate)
 	local db = E.Retail and plateDB.questIcon
 
-	if db and db.enable and not nameplate.isBattlePet and (nameplate.frameType == "FRIENDLY_NPC" or nameplate.frameType == "ENEMY_NPC") then
+	if db and db.enable and not nameplate.isBattlePet and (nameplate.frameType == "FRIENDLY_NPC" or nameplate.frameType == "ENEMY_NPC") and not nameplate.QuestIcons.mMTSkin then
 		for _, object in ipairs(NP.QuestIcons.iconTypes) do
 			mMT:Print("QuestIcon", "Object", object)
 			local icon = nameplate.QuestIcons[object]
@@ -20,7 +20,7 @@ local function SetQuestIcons(_, nameplate)
 				icon.Text:Hide()
 			end
 		end
-		--nameplate.QuestIcons.mMTSkin = true
+		nameplate.QuestIcons.mMTSkin = true
 	end
 end
 
