@@ -1,5 +1,6 @@
 local E, L = unpack(ElvUI)
 local DT = E:GetModule("DataTexts")
+local LSM = E.Libs.LSM
 
 local tinsert = tinsert
 local Selected = nil
@@ -54,12 +55,12 @@ local function configTable()
 							E.db.mMT.cosmeticbars.bars[value] = {
 								bg = { style = "custom", color = { r = 1, g = 1, b = 1, a = 1 } },
 								border = { style = "custom", color = { r = 1, g = 1, b = 1 } },
-								texture = {enable = false, file = "Solid"}
+								texture = { enable = false, file = "Solid" },
 							}
 						end
 					end,
 				},
-                apply = {
+				apply = {
 					order = 2,
 					type = "execute",
 					name = L["Apply"],
@@ -190,9 +191,45 @@ local function configTable()
 						},
 					},
 				},
+				header_texture = {
+					order = 3,
+					type = "group",
+					inline = true,
+					name = L["Texture"],
+					args = {
+						toggle_enable = {
+							order = 1,
+							type = "toggle",
+							name = L["Change Texture"],
+							get = function(info)
+								return E.db.mMT.cosmeticbars.bars[Selected] and E.db.mMT.cosmeticbars.bars[Selected].texture.enable or false
+							end,
+							set = function(info, value)
+								if E.db.mMT.cosmeticbars.bars[Selected] then
+									E.db.mMT.cosmeticbars.bars[Selected].texture.enable = value
+								end
+							end,
+						},
+						texture = {
+							order = 2,
+							type = "select",
+							dialogControl = "LSM30_Statusbar",
+							name = L["Texture"],
+							values = LSM:HashTable("statusbar"),
+							get = function(info)
+								return E.db.mMT.cosmeticbars.bars[Selected] and E.db.mMT.cosmeticbars.bars[Selected].texture.file or "Solid"
+							end,
+							set = function(info, value)
+								if E.db.mMT.cosmeticbars.bars[Selected] then
+									E.db.mMT.cosmeticbars.bars[Selected].texture.file = value
+								end
+							end,
+						},
+					},
+				},
 			},
 		},
-        header_importexport = {
+		header_importexport = {
 			order = 4,
 			type = "group",
 			inline = true,
@@ -225,11 +262,8 @@ local function configTable()
 					order = 4,
 					name = function()
 						-- disable input box button
-						E.Options.args.mMT.args.cosmetic.args.datapanels.args.header_importexport.args.text.disableButton =
-							true
-                            E.Options.args.mMT.args.cosmetic.args.datapanels.args.header_importexport.args.text.textChanged = function(
-							text
-						)
+						E.Options.args.mMT.args.cosmetic.args.datapanels.args.header_importexport.args.text.disableButton = true
+						E.Options.args.mMT.args.cosmetic.args.datapanels.args.header_importexport.args.text.textChanged = function(text)
 							if text ~= importText then
 								importText = text
 							end
