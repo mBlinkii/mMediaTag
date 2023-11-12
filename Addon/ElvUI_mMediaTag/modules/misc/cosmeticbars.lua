@@ -10,7 +10,6 @@ end
 local LSM = E.Libs.LSM
 
 local function getColor(setting)
-	mMT:Print(setting.style)
 	if setting.style == "custom" then
 		return setting.color
 	elseif setting.style == "class" then
