@@ -10,23 +10,12 @@ local hide = false
 local Currency = {
 	info = {
 		color = "|CFFFF8000",
-		id = 204194,
+		id = 2709,
 		name = nil,
 		icon = nil,
 		link = nil,
 		count = nil,
         cap = nil,
-	},
-	bag = {
-		id = 204078,
-		link = nil,
-		icon = nil,
-		count = nil,
-	},
-	fragment = {
-		id = 2412,
-		cap = nil,
-		quantity = nil,
 	},
 	loaded = false,
 }
@@ -41,22 +30,19 @@ local function OnEnter(self)
 	if not hide then
 		DT:SetupTooltip(self)
 		DT.tooltip:SetHyperlink(Currency.info.link)
-		DT.tooltip:AddLine(" ")
-		DT.tooltip:AddLine(FRAGMENTS_EARNED .. " " ..  (Currency.bag.icon  or "") .. " |CFFFFFFFF" .. Currency.fragment.quantity .. "/" .. Currency.fragment.cap .. "|r")
 		DT.tooltip:Show()
 	end
 end
 
 local function OnEvent(self, event, ...)
 	local TextJustify = self.text:GetJustifyH()
-	mMT:GetCurrenciesInfo(Currency, true)
+	mMT:GetCurrenciesInfo(Currency)
 
 	hide = (E.db.mMT.datatextcurrency.hide and Currency.info.count == 0)
 
 	if Currency.loaded then
 		local name = nil
 		local icon = nil
-		local bagCount = nil
 		local color = mMT.ClassColor.hex
 
 		if not hide then
@@ -80,32 +66,21 @@ local function OnEvent(self, event, ...)
 				color = "|CFFFFFFFF"
 			end
 
-			if E.db.mMT.datatextcurrency.bag then
-				bagCount = floor((Currency.bag.count or 0) / 15)
-				if bagCount ~= 0 then
-					bagCount = "|CFFFFFFFF[|r" .. bagCount .. "|CFFFFFFFF]|r"
-				else
-					bagCount = nil
-				end
-			end
-
 			if TextJustify == "RIGHT" then
 				self.text:SetFormattedText(
-					"%s%s %s %s|r%s",
+					"%s%s %s|r%s",
 					color,
-					bagCount or "",
 					Currency.info.count,
 					name or "",
 					icon or ""
 				)
 			else
 				self.text:SetFormattedText(
-					"%s%s%s %s %s|r",
+					"%s%s%s %s|r",
 					icon or "",
 					color,
 					name or "",
-					Currency.info.count,
-					bagCount or ""
+					Currency.info.count
 				)
 			end
 		end

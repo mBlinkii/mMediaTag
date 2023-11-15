@@ -54,12 +54,15 @@ local function OnEvent(self)
 	local _, profession, _, _, _ = LAC:GetProfessions()
 
 	if profession then
-		local name, icon, skillLevel, maxSkillLevel, _, spellOffset, _, _, _, _= LAC:GetProfessionInfo(profession)
+		local name, icon, skillLevel, maxSkillLevel, _, spellOffset, _, _, _, _ = LAC:GetProfessionInfo(profession)
 		local isNotMax = not (skillLevel == maxSkillLevel)
-		spell = spellOffset + 1
+
+		if spellOffset then
+			spell = spellOffset + 1
+		end
 
 		local text = "%s %s %s"
-		local icon = E.db.mMT.singleProfession.icon and format("|T%s:14:14:0:0:64:64:5:59:5:59|t", icon) or ""
+		icon = E.db.mMT.singleProfession.icon and format("|T%s:14:14:0:0:64:64:5:59:5:59|t", icon) or ""
 		text = format(text, icon, colorText(name, E.db.mMT.singleProfession.witheText), isNotMax and colorText(skillLevel, E.db.mMT.singleProfession.witheValue) or "")
 
 		self.text:SetText(text)

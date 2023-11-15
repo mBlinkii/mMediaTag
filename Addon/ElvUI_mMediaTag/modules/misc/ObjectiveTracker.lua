@@ -179,8 +179,6 @@ local function mCreatBar(modul)
 		mBarOne.texture:SetTexture(BarTexture)
 
 		mBarOne:SetPoint("BOTTOM", 0, 0)
-		--mBarOne:SetStatusBarTexture(BarTexture)
-		mMT:Print(BarColor.r, BarColor.g, BarColor.b)
 		if E.db.mMT.objectivetracker.header.gradient then
 			SetGradientColors(mBarOne, BarColor.r, BarColor.g, BarColor.b)
 		else

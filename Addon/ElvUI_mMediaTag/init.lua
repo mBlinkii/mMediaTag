@@ -43,6 +43,7 @@ mMT.Modules.Castbar = {}
 mMT.Modules.ImportantSpells = {}
 mMT.Modules.InterruptOnCD = {}
 mMT.Modules.CosmeticBars = {}
+mMT.Modules.QuestIcons = {}
 --mMT.Modules.ObjectiveTracker = {}
 
 local defaultDB = {
@@ -122,6 +123,7 @@ local function EnableModules()
 		mMT.Modules.Castbar.enable = (E.db.mMT.interruptoncd.enable or (E.db.mMT.importantspells.enable and (E.db.mMT.importantspells.np or E.db.mMT.importantspells.uf)) or E.db.mMT.castbarshield.enable)
 		mMT.Modules.RoleIcons.enable = E.db.mMT.roleicons.enable
 		mMT.Modules.InterruptOnCD.enable = E.db.mMT.interruptoncd.enable
+		mMT.Modules.QuestIcons.enable = E.db.mMT.questicons.enable
 	end
 
 	-- Wrath

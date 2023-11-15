@@ -1951,6 +1951,24 @@ local function configTable()
 						E:StaticPopup_Show("CONFIG_RL")
 					end,
 				},
+				dockbar6 = {
+					order = 15,
+					type = "execute",
+					name = L["MaUI XIV Like"],
+					func = function()
+						mMT:Dock_BG(ExampleDockSettings.top)
+						E:StaticPopup_Show("CONFIG_RL")
+					end,
+				},
+				dockbar5 = {
+					order = 15,
+					type = "execute",
+					name = L["Add XIV Background"],
+					func = function()
+						mMT:Dock_MaUI(ExampleDockSettings.top)
+						E:StaticPopup_Show("CONFIG_RL")
+					end,
+				},
 				examplespacer2 = {
 					order = 40,
 					type = "description",

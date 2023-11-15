@@ -314,6 +314,13 @@ local function configTable()
 						childGroups = "tab",
 						args = {},
 					},
+					questicons = {
+						order = 9,
+						type = "group",
+						name = L["Quest Icons"],
+						childGroups = "tab",
+						args = {},
+					},
 					textures = {
 						order = 20,
 						type = "group",

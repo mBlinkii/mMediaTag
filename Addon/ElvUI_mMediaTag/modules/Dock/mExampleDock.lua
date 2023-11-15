@@ -80,6 +80,54 @@ function mMT:DeleteAll()
 
 		DT:ReleasePanel("mMT Extra Clock")
 	end
+
+	if E.global.datatexts.customPanels["MaUI Left"] then
+		E.Options.args.datatexts.args.panels.args["MaUI Left"] = nil
+		E.db.datatexts.panels["MaUI Left"] = nil
+		E.global.datatexts.customPanels["MaUI Left"] = nil
+
+		DT:ReleasePanel("MaUI Left")
+	end
+
+	if E.global.datatexts.customPanels["MaUI Right"] then
+		E.Options.args.datatexts.args.panels.args["MaUI Right"] = nil
+		E.db.datatexts.panels["MaUI Right"] = nil
+		E.global.datatexts.customPanels["MaUI Right"] = nil
+
+		DT:ReleasePanel("MaUI Right")
+	end
+
+	if E.global.datatexts.customPanels["MaUI Time"] then
+		E.Options.args.datatexts.args.panels.args["MaUI Time"] = nil
+		E.db.datatexts.panels["MaUI Time"] = nil
+		E.global.datatexts.customPanels["MaUI Time"] = nil
+
+		DT:ReleasePanel("MaUI Time")
+	end
+
+	if E.global.datatexts.customPanels["MaUI Time Left"] then
+		E.Options.args.datatexts.args.panels.args["MaUI Time Left"] = nil
+		E.db.datatexts.panels["MaUI Time Left"] = nil
+		E.global.datatexts.customPanels["MaUI Time Left"] = nil
+
+		DT:ReleasePanel("MaUI Time Left")
+	end
+
+	if E.global.datatexts.customPanels["MaUI Time Right"] then
+		E.Options.args.datatexts.args.panels.args["MaUI Time Right"] = nil
+		E.db.datatexts.panels["MaUI Time Right"] = nil
+		E.global.datatexts.customPanels["MaUI Time Right"] = nil
+
+		DT:ReleasePanel("MaUI Time Right")
+	end
+
+	if E.global.datatexts.customPanels["mMT Databar Background"] then
+		E.Options.args.datatexts.args.panels.args["mMT Databar Background"] = nil
+		E.db.datatexts.panels["mMT Databar Background"] = nil
+		E.global.datatexts.customPanels["mMT Databar Background"] = nil
+
+		DT:ReleasePanel("mMT Databar Background")
+	end
 end
 
 function mMT:Dock_Default(top)
@@ -147,6 +195,198 @@ function mMT:Dock_Default(top)
 	end
 
 	E:StaggeredUpdateAll(nil, true)
+end
+
+function mMT:Dock_MaUI(top)
+	E.DataTexts:BuildPanelFrame("MaUI Left")
+	E.global["datatexts"]["customPanels"]["MaUI Left"]["backdrop"] = false
+	E.global["datatexts"]["customPanels"]["MaUI Left"]["height"] = 32
+	E.global["datatexts"]["customPanels"]["MaUI Left"]["name"] = "MaUI Left"
+	E.global["datatexts"]["customPanels"]["MaUI Left"]["numPoints"] = 12
+	E.global["datatexts"]["customPanels"]["MaUI Left"]["textJustify"] = "LEFT"
+	E.global["datatexts"]["customPanels"]["MaUI Left"]["width"] = 460
+
+	E.db["datatexts"]["panels"]["MaUI Left"][1] = "mMT_Dock_Character"
+	E.db["datatexts"]["panels"]["MaUI Left"][2] = "mMT_Dock_SpellBook"
+	E.db["datatexts"]["panels"]["MaUI Left"][3] = "mMT_Dock_Guild"
+	E.db["datatexts"]["panels"]["MaUI Left"][4] = "mMT_Dock_Friends"
+	E.db["datatexts"]["panels"]["MaUI Left"][5] = "mMT_Dock_Achievement"
+	E.db["datatexts"]["panels"]["MaUI Left"][6] = "mMT_Dock_Quest"
+	E.db["datatexts"]["panels"]["MaUI Left"][7] = "mMT_Dock_LFDTool"
+	E.db["datatexts"]["panels"]["MaUI Left"][8] = "mMT_Dock_EncounterJournal"
+	E.db["datatexts"]["panels"]["MaUI Left"][9] = "mMT_Dock_CollectionsJournal"
+	E.db["datatexts"]["panels"]["MaUI Left"][10] = "mMT_Dock_Volume"
+	E.db["datatexts"]["panels"]["MaUI Left"][11] = "mMT_Dock_BlizzardStore"
+	E.db["datatexts"]["panels"]["MaUI Left"][12] = "mMT_Dock_Calendar"
+	E.db["datatexts"]["panels"]["MaUI Left"][13] = "mMT_Dock_None"
+	E.db["datatexts"]["panels"]["MaUI Left"][15] = "mMT_Dock_Bags"
+	E.db["datatexts"]["panels"]["MaUI Left"]["battleground"] = false
+	E.db["datatexts"]["panels"]["MaUI Left"]["enable"] = true
+
+	E.DataTexts:BuildPanelFrame("MaUI Right")
+	E.global["datatexts"]["customPanels"]["MaUI Right"]["backdrop"] = false
+	E.global["datatexts"]["customPanels"]["MaUI Right"]["fonts"]["enable"] = true
+	E.global["datatexts"]["customPanels"]["MaUI Right"]["fonts"]["fontOutline"] = "SHADOW"
+	E.global["datatexts"]["customPanels"]["MaUI Right"]["fonts"]["fontSize"] = 16
+	E.global["datatexts"]["customPanels"]["MaUI Right"]["height"] = 32
+	E.global["datatexts"]["customPanels"]["MaUI Right"]["name"] = "MaUI Right"
+	E.global["datatexts"]["customPanels"]["MaUI Right"]["numPoints"] = 4
+	E.global["datatexts"]["customPanels"]["MaUI Right"]["textJustify"] = "RIGHT"
+	E.global["datatexts"]["customPanels"]["MaUI Right"]["width"] = 460
+
+	E.db["datatexts"]["panels"]["MaUI Right"][1] = "System"
+	E.db["datatexts"]["panels"]["MaUI Right"][2] = "M+ Score"
+	E.db["datatexts"]["panels"]["MaUI Right"][3] = "mTeleports"
+	E.db["datatexts"]["panels"]["MaUI Right"][4] = "Gold"
+	E.db["datatexts"]["panels"]["MaUI Right"]["battleground"] = false
+	E.db["datatexts"]["panels"]["MaUI Right"]["enable"] = true
+
+	E.DataTexts:BuildPanelFrame("MaUI Time")
+	E.global["datatexts"]["customPanels"]["MaUI Time"]["backdrop"] = false
+	E.global["datatexts"]["customPanels"]["MaUI Time"]["fonts"]["enable"] = true
+	E.global["datatexts"]["customPanels"]["MaUI Time"]["fonts"]["fontOutline"] = "SHADOW"
+	E.global["datatexts"]["customPanels"]["MaUI Time"]["fonts"]["fontSize"] = 32
+	E.global["datatexts"]["customPanels"]["MaUI Time"]["height"] = 32
+	E.global["datatexts"]["customPanels"]["MaUI Time"]["name"] = "MaUI Time"
+	E.global["datatexts"]["customPanels"]["MaUI Time"]["numPoints"] = 1
+	E.global["datatexts"]["customPanels"]["MaUI Time"]["width"] = 128
+
+	E.db["datatexts"]["panels"]["MaUI Time"][1] = "Time"
+	E.db["datatexts"]["panels"]["MaUI Time"][2] = ""
+	E.db["datatexts"]["panels"]["MaUI Time"][3] = ""
+	E.db["datatexts"]["panels"]["MaUI Time"]["battleground"] = false
+	E.db["datatexts"]["panels"]["MaUI Time"]["enable"] = true
+
+	E.DataTexts:BuildPanelFrame("MaUI Time Left")
+	E.global["datatexts"]["customPanels"]["MaUI Time Left"]["backdrop"] = false
+	E.global["datatexts"]["customPanels"]["MaUI Time Left"]["fonts"]["enable"] = true
+	E.global["datatexts"]["customPanels"]["MaUI Time Left"]["fonts"]["fontOutline"] = "SHADOW"
+	E.global["datatexts"]["customPanels"]["MaUI Time Left"]["fonts"]["fontSize"] = 16
+	E.global["datatexts"]["customPanels"]["MaUI Time Left"]["height"] = 32
+	E.global["datatexts"]["customPanels"]["MaUI Time Left"]["name"] = "MaUI Time Left"
+	E.global["datatexts"]["customPanels"]["MaUI Time Left"]["numPoints"] = 2
+	E.global["datatexts"]["customPanels"]["MaUI Time Left"]["width"] = 430
+
+	E.db["datatexts"]["panels"]["MaUI Time Left"][1] = "DurabilityIlevel"
+	E.db["datatexts"]["panels"]["MaUI Time Left"][2] = "Talent/Loot Specialization"
+	E.db["datatexts"]["panels"]["MaUI Time Left"][3] = ""
+	E.db["datatexts"]["panels"]["MaUI Time Left"]["battleground"] = false
+	E.db["datatexts"]["panels"]["MaUI Time Left"]["enable"] = true
+
+	E.DataTexts:BuildPanelFrame("MaUI Time Right")
+	E.global["datatexts"]["customPanels"]["MaUI Time Right"]["backdrop"] = false
+	E.global["datatexts"]["customPanels"]["MaUI Time Right"]["fonts"]["enable"] = true
+	E.global["datatexts"]["customPanels"]["MaUI Time Right"]["fonts"]["fontOutline"] = "SHADOW"
+	E.global["datatexts"]["customPanels"]["MaUI Time Right"]["fonts"]["fontSize"] = 16
+	E.global["datatexts"]["customPanels"]["MaUI Time Right"]["height"] = 32
+	E.global["datatexts"]["customPanels"]["MaUI Time Right"]["name"] = "MaUI Time Right"
+	E.global["datatexts"]["customPanels"]["MaUI Time Right"]["numPoints"] = 2
+	E.global["datatexts"]["customPanels"]["MaUI Time Right"]["width"] = 430
+
+	E.db["datatexts"]["panels"]["MaUI Time Right"][1] = "firstProf"
+	E.db["datatexts"]["panels"]["MaUI Time Right"][2] = "secondProf"
+	E.db["datatexts"]["panels"]["MaUI Time Right"][3] = ""
+	E.db["datatexts"]["panels"]["MaUI Time Right"]["battleground"] = false
+	E.db["datatexts"]["panels"]["MaUI Time Right"]["enable"] = true
+
+	E.db["mMT"]["dockdatatext"]["achievement"]["icon"] = "MAUI04"
+	E.db["mMT"]["dockdatatext"]["achievement"]["iconcolor"]["b"] = 0.17254902422428
+	E.db["mMT"]["dockdatatext"]["achievement"]["iconcolor"]["g"] = 0.16078431904316
+	E.db["mMT"]["dockdatatext"]["achievement"]["iconcolor"]["r"] = 0.92549026012421
+	E.db["mMT"]["dockdatatext"]["blizzardstore"]["icon"] = "MAUI20"
+	E.db["mMT"]["dockdatatext"]["blizzardstore"]["iconcolor"]["b"] = 0.53333336114883
+	E.db["mMT"]["dockdatatext"]["blizzardstore"]["iconcolor"]["g"] = 0.92549026012421
+	E.db["mMT"]["dockdatatext"]["blizzardstore"]["iconcolor"]["r"] = 0
+	E.db["mMT"]["dockdatatext"]["calendar"]["option"] = "de"
+	E.db["mMT"]["dockdatatext"]["calendar"]["showyear"] = true
+	E.db["mMT"]["dockdatatext"]["center"] = true
+	E.db["mMT"]["dockdatatext"]["character"]["icon"] = "MAUI15"
+	E.db["mMT"]["dockdatatext"]["character"]["iconcolor"]["b"] = 0.93725496530533
+	E.db["mMT"]["dockdatatext"]["character"]["iconcolor"]["g"] = 0.20000001788139
+	E.db["mMT"]["dockdatatext"]["character"]["iconcolor"]["r"] = 0.65098041296005
+	E.db["mMT"]["dockdatatext"]["collection"]["icon"] = "MAUI31"
+	E.db["mMT"]["dockdatatext"]["collection"]["iconcolor"]["b"] = 0
+	E.db["mMT"]["dockdatatext"]["collection"]["iconcolor"]["g"] = 0.92549026012421
+	E.db["mMT"]["dockdatatext"]["collection"]["iconcolor"]["r"] = 0.11372549831867
+	E.db["mMT"]["dockdatatext"]["customfontcolor"] = true
+	E.db["mMT"]["dockdatatext"]["customfontzise"] = true
+	E.db["mMT"]["dockdatatext"]["encounter"]["icon"] = "MAUI33"
+	E.db["mMT"]["dockdatatext"]["encounter"]["iconcolor"]["b"] = 0
+	E.db["mMT"]["dockdatatext"]["encounter"]["iconcolor"]["g"] = 0.7294117808342
+	E.db["mMT"]["dockdatatext"]["encounter"]["iconcolor"]["r"] = 0.92549026012421
+	E.db["mMT"]["dockdatatext"]["fontSize"] = 14
+	E.db["mMT"]["dockdatatext"]["fontcolor"]["b"] = 0.10588236153126
+	E.db["mMT"]["dockdatatext"]["fontcolor"]["g"] = 0.77254909276962
+	E.db["mMT"]["dockdatatext"]["fontcolor"]["r"] = 0.086274512112141
+	E.db["mMT"]["dockdatatext"]["fontflag"] = "SHADOW"
+	E.db["mMT"]["dockdatatext"]["friends"]["icon"] = "MAUI40"
+	E.db["mMT"]["dockdatatext"]["friends"]["iconcolor"]["b"] = 0.53333336114883
+	E.db["mMT"]["dockdatatext"]["friends"]["iconcolor"]["g"] = 0.14117647707462
+	E.db["mMT"]["dockdatatext"]["friends"]["iconcolor"]["r"] = 0.92549026012421
+	E.db["mMT"]["dockdatatext"]["guild"]["icon"] = "MAUI01"
+	E.db["mMT"]["dockdatatext"]["guild"]["iconcolor"]["b"] = 0.92549026012421
+	E.db["mMT"]["dockdatatext"]["guild"]["iconcolor"]["g"] = 0.18823531270027
+	E.db["mMT"]["dockdatatext"]["guild"]["iconcolor"]["r"] = 0.90196084976196
+	E.db["mMT"]["dockdatatext"]["hover"]["b"] = 0.4078431725502
+	E.db["mMT"]["dockdatatext"]["hover"]["g"] = 0.4078431725502
+	E.db["mMT"]["dockdatatext"]["hover"]["r"] = 0.4078431725502
+	E.db["mMT"]["dockdatatext"]["itemlevel"]["onlytext"] = true
+	E.db["mMT"]["dockdatatext"]["itemlevel"]["text"] = "GS "
+	E.db["mMT"]["dockdatatext"]["lfd"]["icon"] = "MAUI35"
+	E.db["mMT"]["dockdatatext"]["lfd"]["iconcolor"]["b"] = 0
+	E.db["mMT"]["dockdatatext"]["lfd"]["iconcolor"]["g"] = 0.50588238239288
+	E.db["mMT"]["dockdatatext"]["lfd"]["iconcolor"]["r"] = 0.92549026012421
+	E.db["mMT"]["dockdatatext"]["mainmenu"]["icon"] = "MAUI17"
+	E.db["mMT"]["dockdatatext"]["mainmenu"]["iconcolor"]["b"] = 0.94509810209274
+	E.db["mMT"]["dockdatatext"]["mainmenu"]["iconcolor"]["g"] = 0.20784315466881
+	E.db["mMT"]["dockdatatext"]["mainmenu"]["iconcolor"]["r"] = 0.58823531866074
+	E.db["mMT"]["dockdatatext"]["normal"]["a"] = 0.80718515813351
+	E.db["mMT"]["dockdatatext"]["quest"]["icon"] = "MAUI10"
+	E.db["mMT"]["dockdatatext"]["quest"]["iconcolor"]["b"] = 0
+	E.db["mMT"]["dockdatatext"]["quest"]["iconcolor"]["g"] = 0.92549026012421
+	E.db["mMT"]["dockdatatext"]["quest"]["iconcolor"]["r"] = 0.69019609689713
+	E.db["mMT"]["dockdatatext"]["spellbook"]["icon"] = "MAUI26"
+	E.db["mMT"]["dockdatatext"]["spellbook"]["iconcolor"]["b"] = 0
+	E.db["mMT"]["dockdatatext"]["spellbook"]["iconcolor"]["g"] = 0.3137255012989
+	E.db["mMT"]["dockdatatext"]["spellbook"]["iconcolor"]["r"] = 0.92549026012421
+	E.db["mMT"]["dockdatatext"]["talent"]["icon"] = "MAUI03"
+	E.db["mMT"]["dockdatatext"]["volume"]["icon"] = "MAUI16"
+
+	if top then
+		E.db["movers"]["DTPanelMaUI LeftMover"] = "TOPLEFT,UIParent,TOPLEFT,4,-4"
+		E.db["movers"]["DTPanelMaUI RightMover"] = "TOPRIGHT,UIParent,TOPRIGHT,-4,-4"
+		E.db["movers"]["DTPanelMaUI Time LeftMover"] = "TOP,ElvUIParent,TOP,-280,-4"
+		E.db["movers"]["DTPanelMaUI Time RightMover"] = "TOP,ElvUIParent,TOP,280,-1"
+		E.db["movers"]["DTPanelMaUI TimeMover"] = "TOP,UIParent,TOP,0,-4"
+	else
+		E.db["movers"]["DTPanelMaUI LeftMover"] = "BOTTOMLEFT,UIParent,BOTTOMLEFT,4,4"
+		E.db["movers"]["DTPanelMaUI RightMover"] = "BOTTOMRIGHT,UIParent,BOTTOMRIGHT,-4,4"
+		E.db["movers"]["DTPanelMaUI Time LeftMover"] = "BOTTOM,ElvUIParent,BOTTOM,-280,4"
+		E.db["movers"]["DTPanelMaUI Time RightMover"] = "BOTTOM,ElvUIParent,BOTTOM,280,4"
+		E.db["movers"]["DTPanelMaUI TimeMover"] = "BOTTOM,UIParent,BOTTOM,0,1"
+	end
+
+	E:StaggeredUpdateAll(nil, true)
+end
+
+function mMT:Dock_BG(top)
+	E.DataTexts:BuildPanelFrame("mMT Databar Background")
+	E.global["datatexts"]["customPanels"]["mMT Databar Background"]["frameStrata"] = "BACKGROUND"
+	E.global["datatexts"]["customPanels"]["mMT Databar Background"]["height"] = 32
+	E.global["datatexts"]["customPanels"]["mMT Databar Background"]["name"] = "mMT Databar Background"
+	E.global["datatexts"]["customPanels"]["mMT Databar Background"]["numPoints"] = 1
+	E.global["datatexts"]["customPanels"]["mMT Databar Background"]["panelTransparency"] = true
+	E.global["datatexts"]["customPanels"]["mMT Databar Background"]["width"] = 1920
+
+	E.db["datatexts"]["panels"]["mMT Databar Background"][1] = ""
+	E.db["datatexts"]["panels"]["mMT Databar Background"]["battleground"] = false
+	E.db["datatexts"]["panels"]["mMT Databar Background"]["enable"] = true
+
+	if top then
+		E.db["movers"]["DTPanelmMT Databar BackgroundMover"] = "TOP,ElvUIParent,TOP,0,-4"
+	else
+		E.db["movers"]["DTPanelmMT Databar BackgroundMover"] = "BOTTOM,ElvUIParent,BOTTOM,0,4"
+	end
 end
 
 function mMT:Dock_XIVLike(top)
