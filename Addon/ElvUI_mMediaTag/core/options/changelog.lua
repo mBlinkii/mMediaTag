@@ -21,6 +21,8 @@ local change_log_update = {
 	"Add Texture Settings to Custom Data panel colors",
 	"Season 3 Boss IDs",
 	"Removed Season 2 Teleports from Seasons list",
+	"Add a Background Button for XIV Bars",
+	"Add new Dock MaUI Styled XIV",
 }
 
 local change_log_fix = {
