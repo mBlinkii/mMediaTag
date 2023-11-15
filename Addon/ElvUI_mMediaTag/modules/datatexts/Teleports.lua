@@ -182,15 +182,6 @@ local Teleports = {
 	season = {
 		available = false,
 		tps = {
-			[393222] = "ULD", -- path-of-the-watchers-legacy
-			[393267] = "BH", -- path-of-the-rotting-woods
-			[393276] = "NELT", -- path-of-the-obsidian-hoard
-			[393283] = "HOI", -- path-of-the-titanic-reservoir
-			[410071] = "FH", -- path-of-the-freebooter
-			[410074] = "UNDR", -- path-of-festering-rot
-			[410078] = "NL", -- path-of-the-earth-warder
-			[410080] = "VP", -- path-of-winds-domain
-
 			-- S3
 			[426121] = "DOTI", --teleport-dawn-of-the-infinite
 			[424167] = "WM", --path-of-hearts-bane

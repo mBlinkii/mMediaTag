@@ -1,6 +1,19 @@
 # Changelog - ElvUI_mMediaTag
 [Eng] - All changes to this project will be documented in this file. The latest changes are at the top.
 
+## [ver. 3.25] - 15.11.2023
+### FIX
+- FIX - Removed Dev messages
+- FIX - Professions Datatext for Classic
+- FIX - Armor/ Ilevel Datatext for Classic
+- FIX - Crest Datatexts
+### Update
+- UPDATE - Add Texture Settings to Custom Data panel colors
+- UPDATE - Season 3 Boss IDs
+### NEW
+- NEW - Customization for Nameplate Quest icons
+
+
 ## [ver. 3.24] - 10.11.2023
 ### FIX
 - FIX - Bug in Classic Version
