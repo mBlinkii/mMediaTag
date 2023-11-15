@@ -14,29 +14,20 @@ local change_log_important = {
 }
 
 local change_log_new = {
-	"Tags mColor:rare, mClass:icon:noelite, mPower:percent:combat, mPower:percent:heal:combat",
-	"Mail Icons",
-	"More new Dock Icons",
-	"Add LibAddonCompat to WoW Classic for Profession Datatexts",
-	"Function Custom Datatext Background Colors",
-	"New Border Texture",
-	"Add frame level settings for each portrait frame",
+	"Customization for Nameplate Quest icons",
 }
 
 local change_log_update = {
-	"Example Docks, Icons and a Color Version of XIV",
-	"First and Second Profession Datatext is available in Classic",
-	"Removed mPower:hideZero because default will hide if power is 0",
-	"Portraits events",
-	"Change custom class colors module, it uses now CUSTOM_CLASS_COLORS so and its a extra Addon, so every supported addon can use the colors",
+	"Add Texture Settings to Custom Data panel colors",
+	"Season 3 Boss IDs",
+	"Removed Season 2 Teleports from Seasons list",
 }
 
 local change_log_fix = {
-	"Multiple Mover Menu entry's",
-	"Bug in Dock Volume",
-	"Prevent empty Portraits in preview",
-	"Bug in Classic Version",
-	"Objective tracker Bar color",
+	"Removed Dev messages",
+	"Professions Datatext for Classic",
+	"Armor/ Ilevel Datatext for Classic",
+	"Crest Datatexts",
 }
 
 local function Concatenation(tbl, icon, color)
