@@ -178,6 +178,7 @@ local BossIDs = {
 	["203861"] = true,
 	["204206"] = true,
 	["208193"] = true,
+	["199000"] = true,
 
 	-- DF Worldboss
 	["193532"] = true,
