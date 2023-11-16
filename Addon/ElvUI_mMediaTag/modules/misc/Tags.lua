@@ -486,6 +486,8 @@ end)
 
 E:AddTag("mClass:icon:noelite", "UNIT_CLASSIFICATION_CHANGED", function(unit)
 	local c = UnitClassification(unit)
+	local guid = UnitGUID(unit)
+	local npcID = guid and select(6, strsplit("-", guid))
 	if (npcID and BossIDs[npcID]) or c == "worldboss" then
 		return icons.boss
 	elseif c == "rare" then
