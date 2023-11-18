@@ -116,10 +116,10 @@ local function EnableModules()
 	mMT.Modules.Portraits.enable = E.db.mMT.portraits.general.enable
 	mMT.Modules.ImportantSpells.enable = (E.db.mMT.importantspells.enable and (E.db.mMT.importantspells.np or E.db.mMT.importantspells.uf))
 	mMT.Modules.CosmeticBars.enable = E.db.mMT.cosmeticbars.enable
-	mMT.Modules.ObjectiveTracker.enable = E.db.mMT.objectivetracker.enable and (E.private.skins.blizzard.enable and E.private.skins.blizzard.objectiveTracker) and not IsAddOnLoaded("!KalielsTracker")
 
 	-- Retail
 	if E.Retail then
+		mMT.Modules.ObjectiveTracker.enable = E.db.mMT.objectivetracker.enable and (E.private.skins.blizzard.enable and E.private.skins.blizzard.objectiveTracker) and not IsAddOnLoaded("!KalielsTracker")
 		mMT.Modules.Castbar.enable = (E.db.mMT.interruptoncd.enable or (E.db.mMT.importantspells.enable and (E.db.mMT.importantspells.np or E.db.mMT.importantspells.uf)) or E.db.mMT.castbarshield.enable)
 		mMT.Modules.RoleIcons.enable = E.db.mMT.roleicons.enable
 		mMT.Modules.InterruptOnCD.enable = E.db.mMT.interruptoncd.enable
@@ -149,7 +149,7 @@ local function UpdateModules()
 			if module.Initialize then
 				module:Initialize()
 			else
-				mMT:Print("Module not found:", module)
+				mMT:Print("Module not found:", name, module)
 			end
 
 			if module.needReloadUI and ((not module.enable and module.loaded) or (module.loaded and not module.enable)) then
@@ -217,32 +217,6 @@ function mMT:Initialize()
 		if (E.private.nameplates.enable and E.db.mMT.nameplate.executemarker.auto) or E.db.mMT.interruptoncd.enable then
 			self:RegisterEvent("PLAYER_TALENT_UPDATE")
 		end
-
-		-- if (E.db.mMT.objectivetracker.enable or (E.db.mMT.objectivetracker.enable and E.db.mMT.objectivetracker.simple)) and E.private.skins.blizzard.enable and not IsAddOnLoaded("!KalielsTracker") then
-		-- 	if not E.private.skins.blizzard.objectiveTracker then
-		-- 		StaticPopupDialogs["mErrorSkin"] = {
-		-- 			text = L["ElvUI skin must be enabled to activate mMediaTag Quest skins! Should it be enabled?"],
-		-- 			button1 = L["Yes"],
-		-- 			button2 = L["No"],
-		-- 			timeout = 120,
-		-- 			whileDead = true,
-		-- 			hideOnEscape = false,
-		-- 			preferredIndex = 3,
-		-- 			OnAccept = function()
-		-- 				E.private.skins.blizzard.objectiveTracker = true
-		-- 				C_UI.Reload()
-		-- 			end,
-		-- 			OnCancel = function()
-		-- 				E.db.mMT.objectivetracker.enable = false
-		-- 				C_UI.Reload()
-		-- 			end,
-		-- 		}
-
-		-- 		StaticPopup_Show("mErrorSkin")
-		-- 	end
-
-		-- 	mMT:InitializemOBT()
-		-- end
 	end
 
 	if E.db.mMT.general.emediaenable then
