@@ -1,493 +1,127 @@
 local E = unpack(ElvUI)
 local LSM = E.Libs.LSM
 
--- Lib Globals
-local format = format
+local module = mMT.Modules.ObjectiveTracker
+local db = E.db.mMT.objectivetracker
+if not module then
+	return
+end
 
--- WoW Globals
 local _G = _G
+local pairs, unpack = pairs, unpack
+local hooksecurefunc = hooksecurefunc
+local InCombatLockdown = InCombatLockdown
 local ObjectiveTrackerFrame = _G.ObjectiveTrackerFrame
 local ObjectiveTrackerBlocksFrame = _G.ObjectiveTrackerBlocksFrame
 local maxNumQuestsCanAccept = min(C_QuestLog.GetMaxNumQuestsCanAccept() + (E.Retail and 10 or 0), 35) -- 20 for ERA, 25 for WotLK, 35 for Retail
-local HeaderTitel = ObjectiveTrackerBlocksFrame.QuestHeader.Text:GetText()
-local width = _G.ObjectiveTrackerFrame:GetWidth()
 
-local function mDashIcon(icon)
-	return format("|T%s:8:8:-1:-3.8:64:64|t", icon)
-end
+local colorFont = {}
+local color = {}
+local dim = 0.2
+local fontsize = 12
 
-local mOTFont = nil
-local mOTFontFlag = nil
-local c = { r = 1, g = 1, b = 1 }
-
-local function mGetFont()
-	mOTFont = LSM:Fetch("font", E.db.mMT.objectivetracker.font)
-	mOTFontFlag = E.db.mMT.objectivetracker.fontflag
-end
-
-local function mBackdropBars(self, value)
-	if not (self.Bar and self.isSkinned and value) then
-		return
-	end
-	self.Bar.backdrop:SetBackdropColor(E.db.general.backdropfadecolor.r, E.db.general.backdropfadecolor.g, E.db.general.backdropfadecolor.b, E.db.general.backdropfadecolor.a)
-end
-
-local function mSetupHeaderFont(headdertext)
-	if headdertext then
-		local QuestCount = E.db.mMT.objectivetracker.header.questcount
-		mGetFont()
-
-		if E.db.mMT.objectivetracker.header.fontcolorstyle == "class" then
-			c = { r = mMT.ClassColor.r, g = mMT.ClassColor.g, b = mMT.ClassColor.b }
-		else
-			c = E.db.mMT.objectivetracker.header.fontcolor
+local function SkinBarColor(Bar, r, g, b)
+	if Bar then
+		if db.bar.elvbg then
+			local color_barBG = E.db.general.backdropfadecolor
+			Bar.backdrop:SetBackdropColor(color_barBG.r, color_barBG.g, color_barBG.b, color_barBG.a)
 		end
 
-		if QuestCount ~= "none" then
-			local _, numQuests = C_QuestLog.GetNumQuestLogEntries()
-			local QuestCountText = format("%s/%s", numQuests, maxNumQuestsCanAccept)
-
-			if (QuestCount == "colorleft") or (QuestCount == "colorright") then
-				local cg = E.db.mMT.objectivetracker.text.progresscolorgood
-				local ct = E.db.mMT.objectivetracker.text.progresscolortransit
-				local cb = E.db.mMT.objectivetracker.text.progresscolorbad
-				local tmpPercent = mMT:round((tonumber(numQuests) / tonumber(maxNumQuestsCanAccept)) * 100 or 0)
-				local r, g, b = E:ColorGradient(tmpPercent * 0.01, cg.r, cg.g, cg.b, ct.r, ct.g, ct.b, cb.r, cb.g, cb.b)
-				local CountColorString = E:RGBToHex(r, g, b)
-
-				if QuestCount == "colorleft" then
-					ObjectiveTrackerBlocksFrame.QuestHeader.Text:SetText(format("[%s%s|r] %s", CountColorString, QuestCountText, HeaderTitel))
-				elseif QuestCount == "colorright" then
-					ObjectiveTrackerBlocksFrame.QuestHeader.Text:SetText(format("%s [%s%s|r]", HeaderTitel, CountColorString, QuestCountText))
-				end
-			elseif QuestCount == "left" then
-				ObjectiveTrackerBlocksFrame.QuestHeader.Text:SetText(format("[%s] %s", QuestCountText, HeaderTitel))
-			elseif QuestCount == "right" then
-				ObjectiveTrackerBlocksFrame.QuestHeader.Text:SetText(format("%s [%s]", HeaderTitel, QuestCountText))
-			end
-		end
-
-		headdertext:SetFont(mOTFont, E.db.mMT.objectivetracker.header.fontsize, mOTFontFlag)
-		headdertext:SetTextColor(c.r, c.g, c.b)
-
-		if E.db.mMT.objectivetracker.header.textshadow then
-			headdertext:SetShadowOffset(1, -1)
-		else
-			headdertext.SetShadowColor = function() end
-		end
-
-		headdertext:SetWordWrap(true)
-
-		local TextHight = headdertext:GetStringHeight()
-		if headdertext:GetHeight() ~= TextHight then
-			headdertext:SetHeight(TextHight)
+		if db.bar.gradient then
+			Bar:GetStatusBarTexture():SetGradient("HORIZONTAL", { r = r - 0.2, g = g - 0.2, b = b - 0.2, a = 1 }, { r = r + 0.2, g = g + 0.2, b = b + 0.2, a = 1 })
 		end
 	end
 end
 
-local function mSetupTitleFont(titletext)
-	if titletext then
-		mGetFont()
-		if E.db.mMT.objectivetracker.title.fontcolorstyle == "class" then
-			c = { r = mMT.ClassColor.r, g = mMT.ClassColor.g, b = mMT.ClassColor.b }
-		else
-			c = E.db.mMT.objectivetracker.title.fontcolor
-		end
-		titletext:SetFont(mOTFont, E.db.mMT.objectivetracker.title.fontsize, mOTFontFlag)
-		titletext:SetTextColor(c.r, c.g, c.b)
-
-		if E.db.mMT.objectivetracker.title.textshadow then
-			titletext:SetShadowOffset(1, -1)
-		else
-			titletext.SetShadowColor = function() end
-		end
-		titletext:SetWordWrap(true)
-
-		local TextHight = titletext:GetStringHeight()
-		if titletext:GetHeight() ~= TextHight then
-			titletext:SetHeight(TextHight)
-		end
+local function SkinBarSetValue(self)
+	if db.bar.gradient and not self.Bar.mMT_hooked then
+		hooksecurefunc(self.Bar, "SetStatusBarColor", SkinBarColor)
+		self.Bar.mMT_hooked = true
 	end
 end
 
-local function mSetupQuestFont(linetext, state)
-	if linetext then
-		mGetFont()
-		if E.db.mMT.objectivetracker.text.fontcolorstyle == "class" then
-			c = { r = mMT.ClassColor.r, g = mMT.ClassColor.g, b = mMT.ClassColor.b }
-		elseif state == "COMPLETED" then
-			c = E.db.mMT.objectivetracker.text.completecolor
-		else
-			c = E.db.mMT.objectivetracker.text.fontcolor
-		end
-		linetext:SetFont(mOTFont, E.db.mMT.objectivetracker.text.fontsize, mOTFontFlag)
-
-		linetext:SetTextColor(c.r, c.g, c.b)
-
-		if E.db.mMT.objectivetracker.text.textshadow then
-			linetext:SetShadowOffset(1, -1)
-		else
-			linetext.SetShadowColor = function() end
-		end
-
-		linetext:SetWordWrap(true)
-		local TextHight = linetext:GetStringHeight()
-		if linetext:GetHeight() ~= TextHight then
-			linetext:SetHeight(TextHight)
-		end
-	end
-end
-
-local function SetGradientColors(bar, r, g, b)
-	if mMT.ElvUI_EltreumUI.loaded and E.db.ElvUI_EltreumUI.unitframes.gradientmode and E.db.mMT.objectivetracker.header.barcolorstyle == "class" then
-		local ElvUI_EltreumUI = E:GetModule("ElvUI_EltreumUI", true)
-		if ElvUI_EltreumUI and E.db.ElvUI_EltreumUI.unitframes.gradientmode.customcolor then
-			bar.texture:SetGradient("HORIZONTAL", ElvUI_EltreumUI:GradientColorsCustom(E.myclass, false, false, false))
-		else
-			bar.texture:SetGradient("HORIZONTAL", ElvUI_EltreumUI:GradientColors(E.myclass, false, false, false))
-		end
-	else
-		if E.db.mMT.objectivetracker.header.revers then
-			bar.texture:SetGradient("HORIZONTAL", CreateColor(r, g, b, 1), CreateColor(r - 0.4, g - 0.4, b - 0.4, 1))
-		else
-			bar.texture:SetGradient("HORIZONTAL", CreateColor(r - 0.4, g - 0.4, b - 0.4, 1), CreateColor(r, g, b, 1))
-		end
-	end
-end
-local function mCreatBar(modul)
-	local BarColorStyle, BarColor, BarShadow = "class", { r = 1, g = 1, b = 1 }, true
-	if E.db.mMT.objectivetracker.header.barstyle ~= "none" then
-		BarStyle = E.db.mMT.objectivetracker.header.barstyle
-		BarColor = E.db.mMT.objectivetracker.header.barcolor
-		BarColorStyle = E.db.mMT.objectivetracker.header.barcolorstyle
-		BarShadow = E.db.mMT.objectivetracker.header.barshadow
-
-		if BarColorStyle == "class" then
-			BarColor = { r = mMT.ClassColor.r, g = mMT.ClassColor.g, b = mMT.ClassColor.b }
-		end
-		local BarTexture = LSM:Fetch("statusbar", E.db.mMT.objectivetracker.header.texture)
-		local mBarOne = CreateFrame("Frame", "mMT_BarOne", modul)
-		mBarOne:SetFrameStrata("BACKGROUND")
-		if (BarStyle == "onebig") or (BarStyle == "twobig") then
-			mBarOne:SetSize(width, 5)
-		else
-			mBarOne:SetSize(width, 1)
-		end
-
-		mBarOne.texture = mBarOne:CreateTexture()
-		mBarOne.texture:SetAllPoints(mBarOne)
-		mBarOne.texture:SetTexture(BarTexture)
-
-		mBarOne:SetPoint("BOTTOM", 0, 0)
-		if E.db.mMT.objectivetracker.header.gradient then
-			SetGradientColors(mBarOne, BarColor.r, BarColor.g, BarColor.b)
-		else
-			mBarOne.texture:SetVertexColor(BarColor.r, BarColor.g, BarColor.b, 1)
-		end
-		mBarOne:CreateBackdrop()
-
-		if BarShadow then
-			mBarOne:CreateShadow()
-		end
-
-		if (BarStyle == "two") or (BarStyle == "twobig") then
-			local mBarTwo = CreateFrame("Frame", "mMT_BarTwo", modul)
-			mBarTwo:SetFrameStrata("BACKGROUND")
-			if BarStyle == "twobig" then
-				mBarTwo:SetSize(width, 5)
-			else
-				mBarTwo:SetSize(width, 1)
-			end
-
-			mBarTwo.texture = mBarOne:CreateTexture()
-			mBarTwo.texture:SetAllPoints(mBarOne)
-			mBarTwo.texture:SetTexture(BarTexture)
-
-			mBarTwo:SetPoint("TOP", 0, 0)
-			--mBarTwo:SetStatusBarTexture(BarTexture, BarColor.r, BarColor.g, BarColor.b)
-			if E.db.mMT.objectivetracker.header.gradient then
-				SetGradientColors(mBarTwo)
-			else
-				mBarTwo.texture:SetVertexColor(BarColor.r, BarColor.g, BarColor.b, 1)
-			end
-			mBarTwo:CreateBackdrop()
-
-			if BarShadow then
-				mBarTwo:CreateShadow()
-			end
-		end
-	end
-end
-
-local function SkinQuestText(text)
-	local QuestCount = E.db.mMT.objectivetracker.header.questcount
-	if QuestCount ~= "none" then
-		local _, numQuests = C_QuestLog.GetNumQuestLogEntries()
-		local QuestCountText = format("%s/%s", numQuests, maxNumQuestsCanAccept)
-
-		if (QuestCount == "colorleft") or (QuestCount == "colorright") then
-			local cg = E.db.mMT.objectivetracker.text.progresscolorgood
-			local ct = E.db.mMT.objectivetracker.text.progresscolortransit
-			local cb = E.db.mMT.objectivetracker.text.progresscolorbad
-			local tmpPercent = mMT:round((tonumber(numQuests) / tonumber(maxNumQuestsCanAccept)) * 100 or 0)
-			local r, g, b = E:ColorGradient(tmpPercent * 0.01, cg.r, cg.g, cg.b, ct.r, ct.g, ct.b, cb.r, cb.g, cb.b)
-			local CountColorString = E:RGBToHex(r, g, b)
-
-			if QuestCount == "colorleft" then
-				ObjectiveTrackerBlocksFrame.QuestHeader.Text:SetText(format("[%s%s|r] %s", CountColorString, QuestCountText, HeaderTitel))
-			elseif QuestCount == "colorright" then
-				ObjectiveTrackerBlocksFrame.QuestHeader.Text:SetText(format("%s [%s%s|r]", HeaderTitel, CountColorString, QuestCountText))
-			end
-		elseif QuestCount == "left" then
-			ObjectiveTrackerBlocksFrame.QuestHeader.Text:SetText(format("[%s] %s", QuestCountText, HeaderTitel))
-		elseif QuestCount == "right" then
-			ObjectiveTrackerBlocksFrame.QuestHeader.Text:SetText(format("%s [%s]", HeaderTitel, QuestCountText))
-		end
-	end
-	local current, required, details = strmatch(text, "^(%d-)/(%d-) (.+)")
-	if (current == nil) or (required == nil) or (details == nil) then
-		details, current, required = strmatch(text, "(.+): (%d-)/(%d-)$")
-	end
-
-	if (current == nil) or (required == nil) or (details == nil) then
+local function SkinProgressBars(_, _, line)
+	local progressBar = line and line.ProgressBar
+	local bar = progressBar and progressBar.Bar
+	if not bar then
 		return
 	end
 
-	if (current ~= nil) or (required ~= nil) or (details ~= nil) then
-		local tmpPercent = mMT:round((tonumber(current) / tonumber(required)) * 100 or 0)
+	local label = bar.Label
 
-		if E.db.mMT.objectivetracker.text.progresscolor then
-			local cg = E.db.mMT.objectivetracker.text.progresscolorgood
-			local ct = E.db.mMT.objectivetracker.text.progresscolortransit
-			local cb = E.db.mMT.objectivetracker.text.progresscolorbad
-			local r, g, b = E:ColorGradient(tmpPercent * 0.01, cb.r, cb.g, cb.b, ct.r, ct.g, ct.b, cg.r, cg.g, cg.b)
-			local ColorString = E:RGBToHex(r, g, b)
+	bar:Height(db.bar.hight)
 
-			if E.db.mMT.objectivetracker.text.progresscolor and E.db.mMT.objectivetracker.text.progrespercent and (tonumber(required) >= 2) then
-				if E.db.mMT.objectivetracker.text.cleantext then
-					return format("%s%s/%s|r - %s%s|r %s", ColorString, current, required, ColorString, tmpPercent .. "%", details)
-				else
-					return format("%s%s/%s|r - %s%s|r %s", ColorString, current, required, ColorString, tmpPercent .. "%", details)
-				end
-			else
-				if E.db.mMT.objectivetracker.text.cleantext then
-					return format("%s%s/%s|r %s", ColorString, current, required, details)
-				else
-					return format("[%s%s/%s|r] %s", ColorString, current, required, details)
-				end
-			end
-		else
-			if E.db.mMT.objectivetracker.text.progrespercent and (tonumber(required) >= 2) then
-				if E.db.mMT.objectivetracker.text.cleantext then
-					return format("%s/%s - %s %s", current, required, tmpPercent .. "%", details)
-				else
-					return format("[%s/%s] - %s %s", current, required, tmpPercent .. "%", details)
-				end
-			else
-				if E.db.mMT.objectivetracker.text.cleantext then
-					return format("%s/%s %s", current, required, details)
-				else
-					return format("[%s/%s] %s", current, required, details)
-				end
-			end
-		end
-	else
-		return text
+	if db.bar.elvbg then
+		local color_barBG = E.db.general.backdropfadecolor
+		bar.backdrop:SetBackdropColor(color_barBG.r, color_barBG.g, color_barBG.b, color_barBG.a)
+	end
+
+	if db.bar.gradient and not bar.mMT_hooked then
+		hooksecurefunc(bar, "SetStatusBarColor", SkinBarColor)
+		bar.mMT_hooked = true
+	end
+
+	if label then
+		label:ClearAllPoints()
+		label:SetJustifyH(db.bar.fontpoint)
+		label:Point(db.bar.fontpoint, bar, db.bar.fontpoint, db.bar.fontpoint == "LEFT" and 2 or (db.bar.fontpoint == "RIGHT" and -2 or 0), 0)
+		label:FontTemplate(nil, db.bar.fontsize, db.fontflag)
+	end
+
+	if db.bar.shadow and not bar.mMT_Shadow then
+		bar:CreateShadow()
+		bar.mMT_Shadow = true
 	end
 end
 
-local function SkinScenarioText(text)
-	local current, required, details = strmatch(text, "^(%d-)/(%d-) (.+)")
-	if (current == nil) or (required == nil) or (details == nil) then
-		details, current, required = strmatch(text, "(.+): (%d-)/(%d-)$")
+local function SkinTimerBars(_, _, line)
+	local timerBar = line and line.TimerBar
+	local bar = timerBar and timerBar.Bar
+
+	local label = bar.Label
+
+	bar:Height(db.bar.hight)
+
+	if db.bar.elvbg then
+		local color_barBG = E.db.general.backdropfadecolor
+		bar.backdrop:SetBackdropColor(color_barBG.r, color_barBG.g, color_barBG.b, color_barBG.a)
 	end
 
-	if (current ~= nil) or (required ~= nil) or (details ~= nil) then
-		local cg = E.db.mMT.objectivetracker.text.progresscolorgood.hex
-		local cb = E.db.mMT.objectivetracker.text.progresscolorbad.hex
-
-		if E.db.mMT.objectivetracker.text.cleantext then
-			if current == required then
-				return format("%s%s/%s %s|r", cg, current, required, details)
-			else
-				return format("%s%s/%s|r %s", cb, current, required, details)
-			end
-		else
-			if current == required then
-				return format("%s[%s/%s] %s|r", cg, current, required, details)
-			else
-				return format("[%s%s/%s|r] %s", cb, current, required, details)
-			end
-		end
-	else
-		return text
-	end
-end
-
-local S = E:GetModule("Skins")
-local function SkinOBTScenarioBlock()
-	if not _G.ScenarioStageBlock.mMTSkin then
-		local DungeonBG = CreateFrame("Frame", "mMT_ScenarioBlock")
-		S:HandleFrame(DungeonBG)
-		DungeonBG:SetParent(_G.ScenarioStageBlock)
-		DungeonBG:ClearAllPoints()
-		DungeonBG:SetPoint("CENTER", _G.ScenarioStageBlock, "CENTER", 27, 0)
-		DungeonBG:SetSize(width + 2, 80)
-		DungeonBG:SetFrameLevel(3)
-		DungeonBG:Show()
-
-		_G.ScenarioStageBlock.mMTSkin = true
+	if db.bar.gradient and not bar.mMT_hooked then
+		hooksecurefunc(bar, "SetStatusBarColor", SkinBarColor)
+		bar.mMT_hooked = true
 	end
 
-	_G.ScenarioStageBlock.NormalBG:Hide()
-	_G.ScenarioStageBlock.FinalBG:Hide()
-	-- if _G.ScenarioStageBlock.WidgetContainer then
-	-- 	_G.ScenarioStageBlock.WidgetContainer:Hide()
-	-- end
-
-	local container = _G.ScenarioStageBlock.WidgetContainer
-	if not container or not container.widgetFrames then
-		return
+	if label then
+		label:ClearAllPoints()
+		label:SetJustifyH(db.bar.fontpoint)
+		label:Point(db.bar.fontpoint, bar, db.bar.fontpoint, db.bar.fontpoint == "LEFT" and 2 or (db.bar.fontpoint == "RIGHT" and -2 or 0), 0)
+		label:FontTemplate(nil, db.bar.fontsize, db.fontflag)
 	end
 
-	for _, widgetFrame in pairs(container.widgetFrames) do
-		if widgetFrame.Frame then
-			widgetFrame.Frame:SetAlpha(0)
-		end
-	end
-end
-local function SkinOBTScenario(numCriteria, objectiveBlock)
-	if _G.ScenarioObjectiveBlock then
-		local childe = { _G.ScenarioObjectiveBlock:GetChildren() }
-		for _, child in pairs(childe) do
-			if child.Text then
-				local LineText = ""
-				mSetupQuestFont(child.Text)
-				LineText = child.Text:GetText()
-
-				if child.Icon then
-					local current, required, details = strmatch(LineText, "^(%d-)/(%d-) (.+)")
-					if (current ~= nil or required ~= nil) and current == required then
-						child.Icon:SetTexture(mMT.Media.MiscIcons["DONE01"])
-					else
-						if E.db.mMT.objectivetracker.dash.style == "icon" then
-							child.Icon:SetTexture(mMT.Media.DashIcons[E.db.mMT.objectivetracker.dash.texture])
-						elseif E.db.mMT.objectivetracker.dash.style == "none" then
-							child.Icon:Hide()
-						end
-					end
-				end
-
-				if LineText ~= nil then
-					LineText = SkinScenarioText(LineText)
-					if LineText ~= nil then
-						child.Text:SetText(LineText)
-					end
-				end
-			end
-		end
+	if db.bar.shadow and not bar.mMT_Shadow then
+		bar:CreateShadow()
+		bar.mMT_Shadow = true
 	end
 end
 
-local function SkinOBTText(_, line)
-	if line then
-		if line.HeaderText then
-			mSetupTitleFont(line.HeaderText)
-		end
-
-		if line.currentLine then
-			if line.currentLine.objectiveKey == 0 then
-				mSetupTitleFont(line.currentLine.Text)
-			else
-				local DashStyle = E.db.mMT.objectivetracker.dash.style
-				if line.currentLine.Dash then
-					if DashStyle ~= "blizzard" then
-						if DashStyle == "custom" then
-							line.currentLine.Dash:SetText(E.db.mMT.objectivetracker.dash.customstring)
-						elseif DashStyle == "icon" then
-							line.currentLine.Dash:SetText(mDashIcon(mMT.Media.DashIcons[E.db.mMT.objectivetracker.dash.texture]))
-						else
-							line.currentLine.Dash:Hide()
-							line.currentLine.Text:ClearAllPoints()
-							line.currentLine.Text:Point("TOPLEFT", line.currentLine.Dash, "TOPLEFT", 0, 0)
-						end
-					end
-				end
-
-				if line.currentLine.Check then
-					if DashStyle == "none" then
-						line.currentLine.Check:ClearAllPoints()
-						line.currentLine.Check:Point("TOPRIGHT", line.currentLine.Dash, "TOPLEFT", 0, 0)
-					end
-					line.currentLine.Check:SetTexture(mMT.Media.MiscIcons["DONE1"])
-					line.currentLine.Check:SetVertexColor(1, 1, 1, 1)
-				end
-
-				if line.currentLine.Text then
-					local LineText = line.currentLine.Text:GetText()
-
-					if LineText ~= nil then
-						LineText = SkinQuestText(LineText)
-						if LineText ~= nil then
-							line.currentLine.Text:SetText(LineText)
-						end
-					end
-					mSetupQuestFont(line.currentLine.Text, line.currentLine.state)
-				end
-			end
-		end
-	end
-end
-
-local function SkinOBT()
-	local Frame = ObjectiveTrackerFrame.MODULES
-	if Frame then
-		for i = 1, #Frame do
-			local Modules = Frame[i]
-			if Modules then
-				mSetupHeaderFont(Modules.Header.Text)
-				if not Modules.IsSkinned then
-					if E.db.mMT.objectivetracker.header.barstyle ~= "none" then
-						mCreatBar(Modules.Header)
-					end
-					if not E.db.mMT.objectivetracker.simple then
-						hooksecurefunc(Modules, "AddObjective", SkinOBTText)
-					end
-					Modules.IsSkinned = true
-				end
-			end
-		end
-	end
-end
-
-local function mOBTFontColors()
-	local mQuestFontColor = E.db.mMT.objectivetracker.text.fontcolor
-	local mQuestCompleteFontColor = E.db.mMT.objectivetracker.text.completecolor
-	local mQuestFailedFontColor = E.db.mMT.objectivetracker.text.failedcolor
-	local mTitelFontColor = E.db.mMT.objectivetracker.title.fontcolor
-
-	if E.db.mMT.objectivetracker.text.fontcolorstyle == "class" then
-		mQuestFontColor = { r = mMT.ClassColor.r, g = mMT.ClassColor.g, b = mMT.ClassColor.b }
-	end
-
-	if E.db.mMT.objectivetracker.title.fontcolorstyle == "class" then
-		mTitelFontColor = { r = mMT.ClassColor.r, g = mMT.ClassColor.g, b = mMT.ClassColor.b }
-	end
+local function SetTextColors()
+	colorFont = db.font.color
+	dim = db.font.highlight
+	local colorNormal = colorFont.text.class and mMT.ClassColor or colorFont.text
+	local colorHeader = colorFont.header.class and mMT.ClassColor or colorFont.header
 
 	OBJECTIVE_TRACKER_COLOR = {
-		["Normal"] = { r = mQuestFontColor.r, g = mQuestFontColor.g, b = mQuestFontColor.b },
-		["NormalHighlight"] = { r = mQuestFontColor.r + 0.2, g = mQuestFontColor.g + 0.2, b = mQuestFontColor.b + 0.2 },
-		["Failed"] = { r = mQuestFailedFontColor.r, g = mQuestFailedFontColor.g, b = mQuestFailedFontColor.b },
-		["FailedHighlight"] = {
-			r = mQuestFailedFontColor.r + 0.2,
-			g = mQuestFailedFontColor.g + 0.2,
-			b = mQuestFailedFontColor.b + 0.2,
-		},
-		["Header"] = { r = mTitelFontColor.r, g = mTitelFontColor.g, b = mTitelFontColor.b },
-		["HeaderHighlight"] = { r = mTitelFontColor.r + 0.2, g = mTitelFontColor.g + 0.2, b = mTitelFontColor.b + 0.2 },
-		["Complete"] = { r = mQuestCompleteFontColor.r, g = mQuestCompleteFontColor.g, b = mQuestCompleteFontColor.b },
-		["TimeLeft"] = { r = DIM_RED_FONT_COLOR.r, g = DIM_RED_FONT_COLOR.g, b = DIM_RED_FONT_COLOR.b },
-		["TimeLeftHighlight"] = { r = RED_FONT_COLOR.r, g = RED_FONT_COLOR.g, b = RED_FONT_COLOR.b },
+		["Normal"] = { r = colorNormal.r, g = colorNormal.g, b = colorNormal.b },
+		["NormalHighlight"] = { r = colorNormal.r - dim, g = colorNormal.g - dim, b = colorNormal.b - dim },
+		["Failed"] = { r = colorFont.failed.r, g = colorFont.failed.g, b = colorFont.failed.b },
+		["FailedHighlight"] = { r = colorFont.failed.r - dim, g = colorFont.failed.g - dim, b = colorFont.failed.b - dim },
+		["Header"] = { r = colorHeader.r, g = colorHeader.g, b = colorHeader.b },
+		["HeaderHighlight"] = { r = colorHeader.r - dim, g = colorHeader.g - dim, b = colorHeader.b - dim },
+		["Complete"] = { r = colorFont.complete.r, g = colorFont.complete.g, b = colorFont.complete.b },
+		["CompleteHighlight"] = { r = colorFont.complete.r - dim, g = colorFont.complete.g - dim, b = colorFont.complete.b - dim },
+		["TimeLeft"] = { r = colorFont.failed.r, g = colorFont.failed.g, b = colorFont.failed.b },
+		["TimeLeftHighlight"] = { r = colorFont.failed.r - dim, g = colorFont.failed.g - dim, b = colorFont.failed.b - dim },
 	}
 	OBJECTIVE_TRACKER_COLOR["Normal"].reverse = OBJECTIVE_TRACKER_COLOR["NormalHighlight"]
 	OBJECTIVE_TRACKER_COLOR["NormalHighlight"].reverse = OBJECTIVE_TRACKER_COLOR["Normal"]
@@ -500,21 +134,247 @@ local function mOBTFontColors()
 	OBJECTIVE_TRACKER_COLOR["Complete"] = OBJECTIVE_TRACKER_COLOR["Complete"]
 	OBJECTIVE_TRACKER_COLOR["CompleteHighlight"] = OBJECTIVE_TRACKER_COLOR["Complete"]
 end
+local function SetHeaderText(text)
+	color = db.font.color.header.class and mMT.ClassColor or db.font.color.header
+	fontsize = db.font.fontsize.header
 
-function mMT:InitializemOBT()
-	if E.db.mMT.objectivetracker.simple and E.db.mMT.objectivetracker.enable then
-		hooksecurefunc(_G.QUEST_TRACKER_MODULE, "SetBlockHeader", SkinOBT)
-	elseif E.db.mMT.objectivetracker.enable then
-		mOBTFontColors()
+	text:SetFont(LSM:Fetch("font", db.font.font), fontsize, db.font.fontflag)
+	text:SetTextColor(color.r, color.g, color.b)
+end
 
-		hooksecurefunc(_G.QUEST_TRACKER_MODULE, "SetBlockHeader", SkinOBT)
-		hooksecurefunc("ObjectiveTracker_Update", SkinOBT)
-		hooksecurefunc(_G.SCENARIO_CONTENT_TRACKER_MODULE, "UpdateCriteria", SkinOBTScenario)
-		hooksecurefunc(_G.SCENARIO_CONTENT_TRACKER_MODULE, "Update", SkinOBTScenarioBlock)
-		if E.db.mMT.objectivetracker.text.backdrop then
-			hooksecurefunc("BonusObjectiveTrackerProgressBar_SetValue", mBackdropBars) --[Color]: Bonus Objective Progress Bar
-			hooksecurefunc("ObjectiveTrackerProgressBar_SetValue", mBackdropBars) --[Color]: Quest Progress Bar
-			hooksecurefunc("ScenarioTrackerProgressBar_SetValue", mBackdropBars)
+local function SetLineText(text, completed, check)
+	color = completed and db.font.color.complete or (db.font.color.text.class and mMT.ClassColor or db.font.color.text)
+	fontsize = db.font.fontsize.text
+
+	text:SetFont(LSM:Fetch("font", db.font.font), fontsize, db.font.fontflag)
+	text:SetTextColor(color.r, color.g, color.b)
+	local lineText = text:GetText()
+
+	if lineText then
+		-- Text Progress
+		if not completed and not check then
+			local current, required, questText = strmatch(lineText, "^(%d-)/(%d-) (.+)")
+			if not current or not required or not questText then
+				questText, current, required = strmatch(lineText, "(.+): (%d-)/(%d-)$")
+			end
+
+			if current and required and questText then
+				if current == required then
+					lineText = questText
+				else
+					local progressPercent = (tonumber(current) / tonumber(required)) * 100 or 0
+
+					local colorGood = db.font.color.good
+					local colorTransit = db.font.color.transit
+					local colorBad = db.font.color.bad
+					local r, g, b = E:ColorGradient(progressPercent * 0.01, colorBad.r, colorBad.g, colorBad.b, colorTransit.r, colorTransit.g, colorTransit.b, colorGood.r, colorGood.g, colorGood.b)
+					local colorProgress = E:RGBToHex(r, g, b)
+					progressPercent = format("%.f%%", progressPercent)
+					lineText = colorProgress .. current .. "/" .. required .. " - " .. progressPercent .. "|r" .. "  " .. questText
+				end
+			end
+		else
+			local questText, _, _ = strmatch(lineText, "(.+): (%d-)/(%d-)$")
+			if not questText then
+				_, _, questText = strmatch(lineText, "^(%d-)/(%d-) (.+)")
+			end
+			if questText then
+				lineText = questText
+			end
+			-- local doneIcon = "|TInterface\\AddOns\\ElvUI_mMediaTag\\media\\icons\\misc\\questDone.tga:16:16:0:0:16:16:0:16:0:16"
+			-- doneIcon = doneIcon .. ":" .. tostring(mMT:round(db.font.color.good.r * 255)) .. ":" .. tostring(mMT:round(db.font.color.good.g * 255)) .. ":" .. tostring(mMT:round(db.font.color.good.b * 255)) .. "|t"
+			-- lineText = doneIcon .. lineText
+		end
+
+		text:SetText(lineText)
+		text:SetWordWrap(true)
+
+		return text:GetStringHeight()
+	end
+end
+
+local function SkinObjective(_, block, objectiveKey, _, lineType, useFullHeight, dashStyle, colorStyle, adjustForNoText, overrideHeight)
+	if block then
+		if block.HeaderText then
+			SetHeaderText(block.HeaderText)
+		end
+
+		if block.currentLine then
+			if block.currentLine.objectiveKey == 0 then
+				SetHeaderText(block.currentLine.Text)
+			else
+				local check = block.currentLine.Check
+				local isShownCheck = false
+				if check then
+					isShownCheck = true
+					check:SetTexture("Interface\\AddOns\\ElvUI_mMediaTag\\media\\icons\\misc\\questDone.tga")
+					check:SetVertexColor(db.font.color.good.r, db.font.color.good.g, db.font.color.good.b, 1)
+				end
+
+				local complete = block.currentLine.state or (objectiveKey == "QuestComplete")
+				local text = block.currentLine.Text
+				if text then
+					local height = SetLineText(text, complete, isShownCheck)
+
+					if height and height ~= text:GetHeight() then
+						text:SetHeight(height)
+					end
+				end
+
+				if db.settings.hidedash then
+					local dash = block.currentLine.Dash
+
+					if dash then
+						dash:Hide()
+						dash:SetText(nil)
+					end
+
+					if text then
+						text:ClearAllPoints()
+						text:Point("TOPLEFT", dash, "TOPLEFT", 0, 0)
+					end
+
+					if check then
+						check:ClearAllPoints()
+						check:Point("TOPRIGHT", dash, "TOPLEFT", 0, 0)
+					end
+				end
+			end
 		end
 	end
+end
+
+local function SetTitleText(text, isQuest)
+	color = colorFont.title.class and mMT.ClassColor or colorFont.title
+
+	local font = LSM:Fetch("font", db.font.font)
+	text:SetFont(font, db.font.fontsize.title, db.font.fontflag)
+	text:SetTextColor(color.r, color.g, color.b)
+
+	if isQuest and db.settings.questcount then
+		local QuestCount = ""
+		local _, numQuests = C_QuestLog.GetNumQuestLogEntries()
+		QuestCount = numQuests .. "/" .. maxNumQuestsCanAccept
+		text:SetText(QUESTS_LABEL .. " - " .. QuestCount)
+	end
+end
+
+local function ApplySkin(block, quest)
+	local title = block.Header and block.Header.Text
+
+	-- Header Text
+	if title then
+		SetTitleText(title, quest)
+	end
+
+	-- Line Texts/ Objectives
+	if block and block.AddObjective and not block.mMT_Skinned then
+		hooksecurefunc(block, "AddObjective", SkinObjective)
+		block.mMT_Skinned = true
+	end
+end
+
+local function QuestSkin(block)
+	ApplySkin(block, true)
+end
+
+local function OtherModulesSkin(block)
+	--ApplySkin(block, false)
+end
+
+local function AchievementSkin(block)
+	ApplySkin(block, false)
+end
+
+local function AddHeaderBar(header)
+	local width = _G.ObjectiveTrackerFrame:GetWidth()
+	local headerBar = CreateFrame("Frame", "mMT_ObjectiveTracker_HeaderBar", header)
+	headerBar:SetFrameStrata("BACKGROUND")
+	headerBar:SetSize(width, 5)
+	headerBar:SetPoint("BOTTOM", 0, 0)
+
+	headerBar.texture = headerBar:CreateTexture()
+	headerBar.texture:SetAllPoints(headerBar)
+	headerBar.texture:SetTexture(LSM:Fetch("statusbar", db.headerbar.texture))
+
+	local color_HeaderBar = db.headerbar.class and mMT.ClassColor or db.headerbar.color
+
+	if db.headerbar.gradient then
+		headerBar.texture:SetGradient("HORIZONTAL", { r = color_HeaderBar.r - 0.2, g = color_HeaderBar.g - 0.2, b = color_HeaderBar.b - 0.2, a = color_HeaderBar.a or 1 }, { r = color_HeaderBar.r + 0.2, g = color_HeaderBar.g + 0.2, b = color_HeaderBar.b + 0.2, a = color_HeaderBar.a or 1 })
+	else
+		headerBar.texture:SetVertexColor(color_HeaderBar.r, color_HeaderBar.g, color_HeaderBar.b, 1)
+	end
+
+	if db.headerbar.shadow then
+		headerBar:CreateShadow()
+	end
+end
+
+local function UpdateHeaders()
+	local Frame = ObjectiveTrackerFrame.MODULES
+	if Frame then
+		for i = 1, #Frame do
+			local Module = Frame[i]
+			if Module then
+				SetTitleText(Module.Header.Text)
+
+				if db.headerbar.enable and not Module.mMT_BarAdded then
+					AddHeaderBar(Module.Header)
+					Module.mMT_BarAdded = true
+				end
+			end
+		end
+	end
+
+	if _G.ObjectiveTrackerBlocksFrame and _G.ObjectiveTrackerBlocksFrame.QuestHeader and _G.ObjectiveTrackerBlocksFrame.QuestHeader.Text then
+		local QuestCount = ""
+		local _, numQuests = C_QuestLog.GetNumQuestLogEntries()
+		QuestCount = numQuests .. "/" .. maxNumQuestsCanAccept
+		_G.ObjectiveTrackerBlocksFrame.QuestHeader.Text:SetText(QUESTS_LABEL .. " - " .. QuestCount)
+	end
+end
+
+function module:Initialize()
+	db = E.db.mMT.objectivetracker
+
+	SetTextColors()
+
+	if not module.hooked then
+		-- Bar Skins
+		hooksecurefunc(_G.BONUS_OBJECTIVE_TRACKER_MODULE, "AddProgressBar", SkinProgressBars) --[Skin]: Bonus Objective Progress Bar
+		hooksecurefunc(_G.WORLD_QUEST_TRACKER_MODULE, "AddProgressBar", SkinProgressBars) --[Skin]: World Quest Progress Bar
+		hooksecurefunc(_G.DEFAULT_OBJECTIVE_TRACKER_MODULE, "AddProgressBar", SkinProgressBars) --[Skin]: Quest Progress Bar
+		hooksecurefunc(_G.SCENARIO_TRACKER_MODULE, "AddProgressBar", SkinProgressBars) --[Skin]: Scenario Progress Bar
+		hooksecurefunc(_G.CAMPAIGN_QUEST_TRACKER_MODULE, "AddProgressBar", SkinProgressBars) --[Skin]: Campaign Progress Bar
+		hooksecurefunc(_G.QUEST_TRACKER_MODULE, "AddProgressBar", SkinProgressBars) --[Skin]: Quest Progress Bar
+		hooksecurefunc(_G.UI_WIDGET_TRACKER_MODULE, "AddProgressBar", SkinProgressBars) --[Skin]: New DF Quest Progress Bar
+
+		-- Bar Color
+		hooksecurefunc("BonusObjectiveTrackerProgressBar_SetValue", SkinBarSetValue) --[Color]: Bonus Objective Progress Bar
+		hooksecurefunc("ObjectiveTrackerProgressBar_SetValue", SkinBarSetValue) --[Color]: Quest Progress Bar
+		hooksecurefunc("ScenarioTrackerProgressBar_SetValue", SkinBarSetValue)
+
+		-- Timer Bar Skins
+		hooksecurefunc(_G.QUEST_TRACKER_MODULE, "AddTimerBar", SkinTimerBars) --[Skin]: Quest Timer Bar
+		hooksecurefunc(_G.SCENARIO_TRACKER_MODULE, "AddTimerBar", SkinTimerBars) --[Skin]: Scenario Timer Bar
+		hooksecurefunc(_G.ACHIEVEMENT_TRACKER_MODULE, "AddTimerBar", SkinTimerBars) --[Skin]: Achievement Timer Bar
+
+		-- Skin Text and Headers
+		hooksecurefunc(_G.QUEST_TRACKER_MODULE, "AddObjective", SkinObjective)
+		hooksecurefunc(_G.SCENARIO_TRACKER_MODULE, "AddObjective", SkinObjective) --[Skin]: Scenario Timer Bar
+		hooksecurefunc(_G.ACHIEVEMENT_TRACKER_MODULE, "AddObjective", SkinObjective) --[Skin]: Achievement Timer Bar
+		hooksecurefunc(_G.SCENARIO_CONTENT_TRACKER_MODULE, "AddObjective", SkinObjective) --[Skin]: Achievement Timer Bar
+		hooksecurefunc(_G.UI_WIDGET_TRACKER_MODULE, "AddObjective", SkinObjective) --[Skin]: Achievement Timer Bar
+		hooksecurefunc(_G.BONUS_OBJECTIVE_TRACKER_MODULE, "AddObjective", SkinObjective) --[Skin]: Achievement Timer Bar
+		hooksecurefunc(_G.WORLD_QUEST_TRACKER_MODULE, "AddObjective", SkinObjective) --[Skin]: Achievement Timer Bar
+		hooksecurefunc(_G.CAMPAIGN_QUEST_TRACKER_MODULE, "AddObjective", SkinObjective) --[Skin]: Achievement Timer Bar
+		hooksecurefunc(_G.PROFESSION_RECIPE_TRACKER_MODULE, "AddObjective", SkinObjective) --[Skin]: Achievement Timer Bar
+		hooksecurefunc(_G.MONTHLY_ACTIVITIES_TRACKER_MODULE, "AddObjective", SkinObjective) --[Skin]: Achievement Timer Bar
+		hooksecurefunc(_G.ADVENTURE_TRACKER_MODULE, "AddObjective", SkinObjective) --[Skin]: Achievement Timer Bar
+
+		hooksecurefunc("ObjectiveTracker_Update", UpdateHeaders) --[Skin]: Header/Title Texts
+	end
+
+	module.needReloadUI = true
+	module.loaded = true
 end
