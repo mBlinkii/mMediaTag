@@ -341,36 +341,36 @@ function module:Initialize()
 
 	if not module.hooked then
 		-- Bar Skins
-		hooksecurefunc(_G.BONUS_OBJECTIVE_TRACKER_MODULE, "AddProgressBar", SkinProgressBars) --[Skin]: Bonus Objective Progress Bar
-		hooksecurefunc(_G.WORLD_QUEST_TRACKER_MODULE, "AddProgressBar", SkinProgressBars) --[Skin]: World Quest Progress Bar
-		hooksecurefunc(_G.DEFAULT_OBJECTIVE_TRACKER_MODULE, "AddProgressBar", SkinProgressBars) --[Skin]: Quest Progress Bar
-		hooksecurefunc(_G.SCENARIO_TRACKER_MODULE, "AddProgressBar", SkinProgressBars) --[Skin]: Scenario Progress Bar
-		hooksecurefunc(_G.CAMPAIGN_QUEST_TRACKER_MODULE, "AddProgressBar", SkinProgressBars) --[Skin]: Campaign Progress Bar
-		hooksecurefunc(_G.QUEST_TRACKER_MODULE, "AddProgressBar", SkinProgressBars) --[Skin]: Quest Progress Bar
-		hooksecurefunc(_G.UI_WIDGET_TRACKER_MODULE, "AddProgressBar", SkinProgressBars) --[Skin]: New DF Quest Progress Bar
+		hooksecurefunc(_G.BONUS_OBJECTIVE_TRACKER_MODULE, "AddProgressBar", SkinProgressBars)
+		hooksecurefunc(_G.WORLD_QUEST_TRACKER_MODULE, "AddProgressBar", SkinProgressBars)
+		hooksecurefunc(_G.DEFAULT_OBJECTIVE_TRACKER_MODULE, "AddProgressBar", SkinProgressBars)
+		hooksecurefunc(_G.SCENARIO_TRACKER_MODULE, "AddProgressBar", SkinProgressBars)
+		hooksecurefunc(_G.CAMPAIGN_QUEST_TRACKER_MODULE, "AddProgressBar", SkinProgressBars)
+		hooksecurefunc(_G.QUEST_TRACKER_MODULE, "AddProgressBar", SkinProgressBars)
+		hooksecurefunc(_G.UI_WIDGET_TRACKER_MODULE, "AddProgressBar", SkinProgressBars)
 
 		-- Bar Color
-		hooksecurefunc("BonusObjectiveTrackerProgressBar_SetValue", SkinBarSetValue) --[Color]: Bonus Objective Progress Bar
-		hooksecurefunc("ObjectiveTrackerProgressBar_SetValue", SkinBarSetValue) --[Color]: Quest Progress Bar
+		hooksecurefunc("BonusObjectiveTrackerProgressBar_SetValue", SkinBarSetValue)
+		hooksecurefunc("ObjectiveTrackerProgressBar_SetValue", SkinBarSetValue)
 		hooksecurefunc("ScenarioTrackerProgressBar_SetValue", SkinBarSetValue)
 
 		-- Timer Bar Skins
-		hooksecurefunc(_G.QUEST_TRACKER_MODULE, "AddTimerBar", SkinTimerBars) --[Skin]: Quest Timer Bar
-		hooksecurefunc(_G.SCENARIO_TRACKER_MODULE, "AddTimerBar", SkinTimerBars) --[Skin]: Scenario Timer Bar
-		hooksecurefunc(_G.ACHIEVEMENT_TRACKER_MODULE, "AddTimerBar", SkinTimerBars) --[Skin]: Achievement Timer Bar
+		hooksecurefunc(_G.QUEST_TRACKER_MODULE, "AddTimerBar", SkinTimerBars)
+		hooksecurefunc(_G.SCENARIO_TRACKER_MODULE, "AddTimerBar", SkinTimerBars)
+		hooksecurefunc(_G.ACHIEVEMENT_TRACKER_MODULE, "AddTimerBar", SkinTimerBars)
 
 		-- Skin Text and Headers
 		hooksecurefunc(_G.QUEST_TRACKER_MODULE, "AddObjective", SkinObjective)
-		hooksecurefunc(_G.SCENARIO_TRACKER_MODULE, "AddObjective", SkinObjective) --[Skin]: Scenario Timer Bar
-		hooksecurefunc(_G.ACHIEVEMENT_TRACKER_MODULE, "AddObjective", SkinObjective) --[Skin]: Achievement Timer Bar
-		hooksecurefunc(_G.SCENARIO_CONTENT_TRACKER_MODULE, "AddObjective", SkinObjective) --[Skin]: Achievement Timer Bar
-		hooksecurefunc(_G.UI_WIDGET_TRACKER_MODULE, "AddObjective", SkinObjective) --[Skin]: Achievement Timer Bar
-		hooksecurefunc(_G.BONUS_OBJECTIVE_TRACKER_MODULE, "AddObjective", SkinObjective) --[Skin]: Achievement Timer Bar
-		hooksecurefunc(_G.WORLD_QUEST_TRACKER_MODULE, "AddObjective", SkinObjective) --[Skin]: Achievement Timer Bar
-		hooksecurefunc(_G.CAMPAIGN_QUEST_TRACKER_MODULE, "AddObjective", SkinObjective) --[Skin]: Achievement Timer Bar
-		hooksecurefunc(_G.PROFESSION_RECIPE_TRACKER_MODULE, "AddObjective", SkinObjective) --[Skin]: Achievement Timer Bar
-		hooksecurefunc(_G.MONTHLY_ACTIVITIES_TRACKER_MODULE, "AddObjective", SkinObjective) --[Skin]: Achievement Timer Bar
-		hooksecurefunc(_G.ADVENTURE_TRACKER_MODULE, "AddObjective", SkinObjective) --[Skin]: Achievement Timer Bar
+		hooksecurefunc(_G.SCENARIO_TRACKER_MODULE, "AddObjective", SkinObjective)
+		hooksecurefunc(_G.ACHIEVEMENT_TRACKER_MODULE, "AddObjective", SkinObjective)
+		hooksecurefunc(_G.SCENARIO_CONTENT_TRACKER_MODULE, "AddObjective", SkinObjective)
+		hooksecurefunc(_G.UI_WIDGET_TRACKER_MODULE, "AddObjective", SkinObjective)
+		hooksecurefunc(_G.BONUS_OBJECTIVE_TRACKER_MODULE, "AddObjective", SkinObjective)
+		hooksecurefunc(_G.WORLD_QUEST_TRACKER_MODULE, "AddObjective", SkinObjective)
+		hooksecurefunc(_G.CAMPAIGN_QUEST_TRACKER_MODULE, "AddObjective", SkinObjective)
+		hooksecurefunc(_G.PROFESSION_RECIPE_TRACKER_MODULE, "AddObjective", SkinObjective)
+		hooksecurefunc(_G.MONTHLY_ACTIVITIES_TRACKER_MODULE, "AddObjective", SkinObjective)
+		hooksecurefunc(_G.ADVENTURE_TRACKER_MODULE, "AddObjective", SkinObjective)
 
 		hooksecurefunc("ObjectiveTracker_Update", UpdateHeaders) --[Skin]: Header/Title Texts
 	end
