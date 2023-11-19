@@ -20,6 +20,14 @@ local color = {}
 local dim = 0.2
 local fontsize = 12
 
+local function GetRequirements(text)
+	local current, required, questText = strmatch(text, "^(%d-)/(%d-) (.+)")
+	if not current or not required or not questText then
+		questText, current, required = strmatch(text, "(.+): (%d-)/(%d-)$")
+	end
+	return current, required, questText
+end
+
 local function SkinBarColor(Bar, r, g, b)
 	if Bar then
 		if db.bar.elvbg then
@@ -153,10 +161,7 @@ local function SetLineText(text, completed, check)
 	if lineText then
 		-- Text Progress
 		if not completed and not check then
-			local current, required, questText = strmatch(lineText, "^(%d-)/(%d-) (.+)")
-			if not current or not required or not questText then
-				questText, current, required = strmatch(lineText, "(.+): (%d-)/(%d-)$")
-			end
+			local current, required, questText = GetRequirements(lineText)
 
 			if current and required and questText then
 				if current == required then
@@ -174,10 +179,7 @@ local function SetLineText(text, completed, check)
 				end
 			end
 		else
-			local questText, _, _ = strmatch(lineText, "(.+): (%d-)/(%d-)$")
-			if not questText then
-				_, _, questText = strmatch(lineText, "^(%d-)/(%d-) (.+)")
-			end
+			local _, _, questText = GetRequirements(lineText)
 			if questText then
 				lineText = questText
 			end
@@ -190,6 +192,33 @@ local function SetLineText(text, completed, check)
 		text:SetWordWrap(true)
 
 		return text:GetStringHeight()
+	end
+end
+
+local function SetDungeonLineText(text, complete)
+	local lineText = text:GetText()
+	if lineText then
+		color = db.font.color.text.class and mMT.ClassColor or db.font.color.text
+		local current, required, questText = GetRequirements(lineText)
+		if complete then
+			color = db.font.color.complete
+			lineText = color.hex .. (questText or lineText) .. "|r"
+		else
+			if current and required and questText then
+				lineText = db.font.color.bad.hex .. current .. "/" .. required .. "|r" .. "  " .. questText
+			end
+		end
+
+		fontsize = db.font.fontsize.text
+
+		text:SetFont(LSM:Fetch("font", db.font.font), fontsize, db.font.fontflag)
+		text:SetTextColor(color.r, color.g, color.b)
+
+		text:SetText(lineText)
+		text:SetWordWrap(true)
+
+		mMT:Print(lineText, complete)
+		return text:GetStringHeight(), complete
 	end
 end
 
@@ -244,6 +273,78 @@ local function SkinObjective(_, block, objectiveKey, _, lineType, useFullHeight,
 	end
 end
 
+local function SkinDungeons(_, block, objectiveKey, _, lineType, useFullHeight, dashStyle, colorStyle, adjustForNoText, overrideHeight)
+	--mMT:Print(a, b, c, _, lineType, useFullHeight, dashStyle, colorStyle, adjustForNoText, overrideHeight)
+	--SkinObjective(block, objectiveKey)
+	--mMT:DebugPrintTable(c)
+	if block then
+		if block.HeaderText then
+			SetHeaderText(block.HeaderText)
+		end
+		if block.currentLine then
+			if block.currentLine.objectiveKey == 0 then
+				SetHeaderText(block.currentLine.Text)
+			else
+				--mMT:Print(objectiveKey)
+				local text = block.currentLine.Text
+				if text then
+					local height = SetDungeonLineText(text)
+
+					if height and height ~= text:GetHeight() then
+						text:SetHeight(height)
+					end
+				end
+
+				-- if db.settings.hidedash then
+				-- 	local dash = block.currentLine.Dash
+
+				-- 	if dash then
+				-- 		dash:Hide()
+				-- 		dash:SetText(nil)
+				-- 	end
+
+				-- 	if text then
+				-- 		text:ClearAllPoints()
+				-- 		text:Point("TOPLEFT", dash, "TOPLEFT", 0, 0)
+				-- 	end
+
+				-- 	if check then
+				-- 		check:ClearAllPoints()
+				-- 		check:Point("TOPRIGHT", dash, "TOPLEFT", 0, 0)
+				-- 	end
+				-- end
+			end
+		end
+	end
+end
+
+local function SkinDungeonsUpdateCriteria(_, numCriteria, block)
+	if block then
+		for criteriaIndex = 1, numCriteria do
+			local existingLine = block.lines[criteriaIndex]
+			if existingLine then
+				local text = existingLine.Text
+				if text then
+					local height = SetDungeonLineText(text, existingLine.completed)
+
+					if height and height ~= text:GetHeight() then
+						text:SetHeight(height)
+					end
+				end
+
+				local icon = existingLine.Icon
+				if icon and existingLine.completed then
+					icon:SetTexture("Interface\\AddOns\\ElvUI_mMediaTag\\media\\icons\\misc\\questDone.tga")
+					icon:SetVertexColor(db.font.color.complete.r, db.font.color.complete.g, db.font.color.complete.b, 1)
+				else
+					icon:SetTexture("Interface\\AddOns\\ElvUI_mMediaTag\\media\\icons\\misc\\questMinus.tga")
+					icon:SetVertexColor(mMT.ClassColor.r, mMT.ClassColor.g, mMT.ClassColor.b, 1)
+				end
+			end
+		end
+	end
+end
+
 local function SetTitleText(text, isQuest)
 	color = colorFont.title.class and mMT.ClassColor or colorFont.title
 
@@ -257,33 +358,6 @@ local function SetTitleText(text, isQuest)
 		QuestCount = numQuests .. "/" .. maxNumQuestsCanAccept
 		text:SetText(QUESTS_LABEL .. " - " .. QuestCount)
 	end
-end
-
-local function ApplySkin(block, quest)
-	local title = block.Header and block.Header.Text
-
-	-- Header Text
-	if title then
-		SetTitleText(title, quest)
-	end
-
-	-- Line Texts/ Objectives
-	if block and block.AddObjective and not block.mMT_Skinned then
-		hooksecurefunc(block, "AddObjective", SkinObjective)
-		block.mMT_Skinned = true
-	end
-end
-
-local function QuestSkin(block)
-	ApplySkin(block, true)
-end
-
-local function OtherModulesSkin(block)
-	--ApplySkin(block, false)
-end
-
-local function AchievementSkin(block)
-	ApplySkin(block, false)
 end
 
 local function AddHeaderBar(header)
@@ -361,7 +435,7 @@ function module:Initialize()
 
 		-- Skin Text and Headers
 		hooksecurefunc(_G.QUEST_TRACKER_MODULE, "AddObjective", SkinObjective)
-		hooksecurefunc(_G.SCENARIO_TRACKER_MODULE, "AddObjective", SkinObjective)
+		--hooksecurefunc(_G.SCENARIO_TRACKER_MODULE, "AddObjective", SkinDungeons)
 		hooksecurefunc(_G.ACHIEVEMENT_TRACKER_MODULE, "AddObjective", SkinObjective)
 		hooksecurefunc(_G.SCENARIO_CONTENT_TRACKER_MODULE, "AddObjective", SkinObjective)
 		hooksecurefunc(_G.UI_WIDGET_TRACKER_MODULE, "AddObjective", SkinObjective)
@@ -372,7 +446,11 @@ function module:Initialize()
 		hooksecurefunc(_G.MONTHLY_ACTIVITIES_TRACKER_MODULE, "AddObjective", SkinObjective)
 		hooksecurefunc(_G.ADVENTURE_TRACKER_MODULE, "AddObjective", SkinObjective)
 
-		hooksecurefunc("ObjectiveTracker_Update", UpdateHeaders) --[Skin]: Header/Title Texts
+		-- Skin Dungeon Text
+		hooksecurefunc(_G.SCENARIO_CONTENT_TRACKER_MODULE, "UpdateCriteria", SkinDungeonsUpdateCriteria)
+
+		-- Skin Headers
+		hooksecurefunc("ObjectiveTracker_Update", UpdateHeaders)
 	end
 
 	module.needReloadUI = true
