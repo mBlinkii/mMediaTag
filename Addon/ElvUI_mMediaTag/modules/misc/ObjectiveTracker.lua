@@ -166,7 +166,7 @@ local function SetLineText(text, completed, check)
 
 			if current and required and questText then
 				if current == required then
-					lineText = questText
+					lineText = db.font.color.good.hex .. questText .. "|r"
 				else
 					local progressPercent = (tonumber(current) / tonumber(required)) * 100 or 0
 
@@ -182,7 +182,7 @@ local function SetLineText(text, completed, check)
 		else
 			local _, _, questText = GetRequirements(lineText)
 			if questText then
-				lineText = questText
+				lineText = db.font.color.good.hex .. questText .. "|r"
 			end
 			-- local doneIcon = "|TInterface\\AddOns\\ElvUI_mMediaTag\\media\\icons\\misc\\questDone.tga:16:16:0:0:16:16:0:16:0:16"
 			-- doneIcon = doneIcon .. ":" .. tostring(mMT:round(db.font.color.good.r * 255)) .. ":" .. tostring(mMT:round(db.font.color.good.g * 255)) .. ":" .. tostring(mMT:round(db.font.color.good.b * 255)) .. "|t"
@@ -334,11 +334,18 @@ local function SkinDungeonsUpdateCriteria(_, numCriteria, block)
 
 				local icon = existingLine.Icon
 				if icon and existingLine.completed then
+					if db.dungeon.hidedash then
+						icon:Show()
+					end
 					icon:SetTexture("Interface\\AddOns\\ElvUI_mMediaTag\\media\\icons\\misc\\questDone.tga")
 					icon:SetVertexColor(db.font.color.complete.r, db.font.color.complete.g, db.font.color.complete.b, 1)
 				else
-					icon:SetTexture("Interface\\AddOns\\ElvUI_mMediaTag\\media\\icons\\misc\\questMinus.tga")
-					icon:SetVertexColor(mMT.ClassColor.r, mMT.ClassColor.g, mMT.ClassColor.b, 1)
+					if db.dungeon.hidedash then
+						icon:Hide()
+					else
+						icon:SetTexture("Interface\\AddOns\\ElvUI_mMediaTag\\media\\icons\\misc\\questMinus.tga")
+						icon:SetVertexColor(mMT.ClassColor.r, mMT.ClassColor.g, mMT.ClassColor.b, 1)
+					end
 				end
 			end
 		end
@@ -346,7 +353,7 @@ local function SkinDungeonsUpdateCriteria(_, numCriteria, block)
 end
 
 function SkinStageBlock(stageDescription, stageBlock, objectiveBlock, BlocksFrame, j, l)
-	mMT:Print(stageDescription, stageBlock, objectiveBlock, BlocksFrame, j, l)
+	--mMT:Print(stageDescription, stageBlock, objectiveBlock, BlocksFrame, j, l)
 	-- if not self:ShouldShowCriteria() then
 	-- 	return;
 	-- end
@@ -444,7 +451,7 @@ function SkinStageBlock(stageDescription, stageBlock, objectiveBlock, BlocksFram
 		label:SetFont(LSM:Fetch("font", db.font.font), db.font.fontsize.title, db.font.fontflag)
 		label:SetText(mMT:GetDungeonInfo(true, true))
 		label:Point("TOPRIGHT", mMT_StageBlock, "TOPRIGHT", -10, -10)
-		label:SetTextColor(color.r, color.g, color.b)
+		--label:SetTextColor(color.r, color.g, color.b)
 		label:SetJustifyH("RIGHT")
 		label:SetJustifyV("TOP")
 
