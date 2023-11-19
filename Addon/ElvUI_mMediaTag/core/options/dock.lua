@@ -1879,6 +1879,64 @@ local function configTable()
 				},
 			},
 		},
+		dockmail = {
+			order = 23,
+			type = "group",
+			name = MAIL_LABEL,
+			hidden = function()
+				return not E.Retail
+			end,
+			args = {
+				dockmail = {
+					order = 1,
+					type = "select",
+					name = L["Icon"],
+					get = function(info)
+						return E.db.mMT.dockdatatext.mail.icon
+					end,
+					set = function(info, value)
+						E.db.mMT.dockdatatext.mail.icon = value
+						DT:ForceUpdate_DataText("mMT_Dock_Mail")
+					end,
+					values = icons,
+				},
+				dockspacer = {
+					order = 2,
+					type = "description",
+					name = "\n",
+				},
+				achievmenttoggle = {
+					order = 3,
+					name = L["Custom color"],
+					type = "toggle",
+					get = function(info)
+						return E.db.mMT.dockdatatext.mail.customcolor
+					end,
+					set = function(info, value)
+						E.db.mMT.dockdatatext.mail.customcolor = value
+						DT:ForceUpdate_DataText("mMT_Dock_Mail")
+					end,
+				},
+				achievmentcolor = {
+					type = "color",
+					order = 4,
+					name = L["Custom Icon Color"],
+					hasAlpha = true,
+					disabled = function()
+						return not E.db.mMT.dockdatatext.mail.customcolor
+					end,
+					get = function(info)
+						local t = E.db.mMT.dockdatatext.mail.iconcolor
+						return t.r, t.g, t.b, t.a
+					end,
+					set = function(info, r, g, b, a)
+						local t = E.db.mMT.dockdatatext.mail.iconcolor
+						t.r, t.g, t.b, t.a = r, g, b, a
+						DT:ForceUpdate_DataText("mMT_Dock_Mail")
+					end,
+				},
+			},
+		},
 		dockexample = {
 			order = 300,
 			type = "group",

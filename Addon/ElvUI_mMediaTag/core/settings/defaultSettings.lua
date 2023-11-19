@@ -352,6 +352,11 @@ P.mMT = {
 			iconcolor = { r = 1, g = 1, b = 1, a = 0.75 },
 			customcolor = false,
 		},
+		mail = {
+			icon = "MAIL19",
+			iconcolor = { r = 1, g = 1, b = 1, a = 0.75 },
+			customcolor = false,
+		},
 		blizzardstore = {
 			icon = "COLOR01",
 			iconcolor = { r = 1, g = 1, b = 1, a = 0.75 },

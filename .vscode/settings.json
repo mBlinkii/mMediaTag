@@ -537,7 +537,9 @@
         "ADVENTURE_TRACKER_MODULE",
         "SCENARIO_TRACKER_MODULE",
         "ObjectiveTracker_AddBlock",
-        "show"
+        "show",
+        "MAIL_LABEL",
+        "HAVE_MAIL_FROM"
     ],
     "Lua.diagnostics.disable": [
         "undefined-field"
