@@ -534,7 +534,10 @@
         "ACHIEVEMENT_TRACKER_MODULE",
         "PROFESSION_RECIPE_TRACKER_MODULE",
         "MONTHLY_ACTIVITIES_TRACKER_MODULE",
-        "ADVENTURE_TRACKER_MODULE"
+        "ADVENTURE_TRACKER_MODULE",
+        "SCENARIO_TRACKER_MODULE",
+        "ObjectiveTracker_AddBlock",
+        "show"
     ],
     "Lua.diagnostics.disable": [
         "undefined-field"

@@ -1,5 +1,6 @@
 local E = unpack(ElvUI)
 local LSM = E.Libs.LSM
+local S = E:GetModule("Skins")
 
 local module = mMT.Modules.ObjectiveTracker
 local db = E.db.mMT.objectivetracker
@@ -217,7 +218,6 @@ local function SetDungeonLineText(text, complete)
 		text:SetText(lineText)
 		text:SetWordWrap(true)
 
-		mMT:Print(lineText, complete)
 		return text:GetStringHeight(), complete
 	end
 end
@@ -345,6 +345,119 @@ local function SkinDungeonsUpdateCriteria(_, numCriteria, block)
 	end
 end
 
+function SkinStageBlock(stageDescription, stageBlock, objectiveBlock, BlocksFrame, j, l)
+	mMT:Print(stageDescription, stageBlock, objectiveBlock, BlocksFrame, j, l)
+	-- if not self:ShouldShowCriteria() then
+	-- 	return;
+	-- end
+
+	-- -- A progress bar here is the entire tree for scenarios
+	-- SCENARIO_TRACKER_MODULE.lineSpacing = 2;
+	-- SCENARIO_TRACKER_MODULE:AddObjective(objectiveBlock, 1, stageDescription);
+	-- objectiveBlock.currentLine.Icon:Hide();
+	-- local progressBar = SCENARIO_TRACKER_MODULE:AddProgressBar(objectiveBlock, objectiveBlock.currentLine);
+	-- objectiveBlock:SetHeight(objectiveBlock.height);
+	-- if ( ObjectiveTracker_AddBlock(objectiveBlock) ) then
+	-- 	if ( not BlocksFrame.slidingAction ) then
+	-- 		objectiveBlock:Show();
+	-- 	end
+	-- else
+	-- 	objectiveBlock:Hide();
+	-- 	stageBlock:Hide();
+	-- end
+
+	-- if not _G.ScenarioStageBlock.mMTSkin then
+	-- 	local DungeonBG = CreateFrame("Frame", "mMT_ScenarioBlock")
+	-- 	S:HandleFrame(DungeonBG)
+	-- 	DungeonBG:SetParent(_G.ScenarioStageBlock)
+	-- 	DungeonBG:ClearAllPoints()
+	-- 	DungeonBG:SetPoint("CENTER", _G.ScenarioStageBlock, "CENTER", 27, 0)
+	-- 	DungeonBG:SetSize(width + 2, 80)
+	-- 	DungeonBG:SetFrameLevel(3)
+	-- 	DungeonBG:Show()
+
+	-- 	_G.ScenarioStageBlock.mMTSkin = true
+	-- end
+
+	-- _G.ScenarioStageBlock.NormalBG:Hide()
+	-- _G.ScenarioStageBlock.FinalBG:Hide()
+	-- -- if _G.ScenarioStageBlock.WidgetContainer then
+	-- -- 	_G.ScenarioStageBlock.WidgetContainer:Hide()
+	-- -- end
+
+	-- local container = _G.ScenarioStageBlock.WidgetContainer
+	-- if not container or not container.widgetFrames then
+	-- 	return
+	-- end
+
+	-- for _, widgetFrame in pairs(container.widgetFrames) do
+	-- 	if widgetFrame.Frame then
+	-- 		widgetFrame.Frame:SetAlpha(0)
+	-- 	end
+	-- end
+
+	-- [16:35] 0 userdata: 000001747DA41ED8
+	-- [16:35] WidgetContainer table: 0000017494C22E10
+	-- [16:35] FinalBG table: 0000017494C22C30
+	-- [16:35] appliedAlready true
+	-- [16:35] CompleteLabel table: 0000017494C22D70
+	-- [16:35] module table: 0000017494C21380
+	-- [16:35] Name table: 0000017494C22DC0
+	-- [16:35] nextBlock table: 0000017494C22AA0
+	-- [16:35] height 83.000007629395
+	-- [16:35] GlowTexture table: 0000017494C22C80
+	-- [16:35] Stage table: 0000017494C22D20
+	-- [16:35] NormalBG table: 0000017494C22BE0
+	-- [16:35] mMediaTag & Tools: table: 0000017494C20FC0 nil nil nil nil nil
+	local StageBlock = _G.ScenarioStageBlock
+
+	StageBlock.NormalBG:Hide()
+	StageBlock.FinalBG:Hide()
+
+	if not StageBlock.mMT_StageBlock then
+		-- dungeon = {
+		-- 	hidedash = true,
+		-- 	color = {
+		-- 		normal = { r = 0.24, g = 0.24, b = 0.24, a = 1},
+		-- 		complete = { r = 0, g = 1, b = 0.27, a = 1},
+		-- 	}
+		-- },
+
+		local mMT_StageBlock = CreateFrame("Frame", "mMT_StageBlock")
+		local width = _G.ObjectiveTrackerFrame:GetWidth()
+		S:HandleFrame(mMT_StageBlock)
+
+		mMT_StageBlock:SetParent(_G.ScenarioStageBlock)
+		mMT_StageBlock:ClearAllPoints()
+		mMT_StageBlock:SetPoint("TOPLEFT", 10, -5)
+
+		mMT_StageBlock:SetSize(width, 80)
+		mMT_StageBlock:SetFrameLevel(3)
+		mMT_StageBlock:Show()
+
+		if db.dungeon.shadow then
+			mMT_StageBlock:CreateShadow()
+		end
+
+		local label = mMT_StageBlock:CreateFontString(nil, "OVERLAY")
+		label:FontTemplate(nil, db.font.fontsize.title, db.font.fontflag)
+		label:SetFont(LSM:Fetch("font", db.font.font), db.font.fontsize.title, db.font.fontflag)
+		label:SetText(mMT:GetDungeonInfo(true, true))
+		label:Point("TOPRIGHT", mMT_StageBlock, "TOPRIGHT", -10, -10)
+		label:SetTextColor(color.r, color.g, color.b)
+		label:SetJustifyH("RIGHT")
+		label:SetJustifyV("TOP")
+
+		mMT_StageBlock.Difficulty = label
+
+		StageBlock.Stage:ClearAllPoints()
+		StageBlock.Stage:SetPoint("LEFT", mMT_StageBlock, "LEFT", 10, 2)
+
+		--mMT:DebugPrintTable(StageBlock)
+		StageBlock.mMT_StageBlock = mMT_StageBlock
+	end
+end
+
 local function SetTitleText(text, isQuest)
 	color = colorFont.title.class and mMT.ClassColor or colorFont.title
 
@@ -448,6 +561,9 @@ function module:Initialize()
 
 		-- Skin Dungeon Text
 		hooksecurefunc(_G.SCENARIO_CONTENT_TRACKER_MODULE, "UpdateCriteria", SkinDungeonsUpdateCriteria)
+
+		-- Skin Stage Block
+		hooksecurefunc(_G.SCENARIO_CONTENT_TRACKER_MODULE, "Update", SkinStageBlock)
 
 		-- Skin Headers
 		hooksecurefunc("ObjectiveTracker_Update", UpdateHeaders)
