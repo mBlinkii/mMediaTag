@@ -268,7 +268,7 @@ function mMT:GetDungeonInfo(datatext, short, stageBlock)
 		if
 			difficultyID == 8
 			and C_MythicPlus.IsMythicPlusActive()
-			and (C_ChallengeMode.GetActiveChallengeMapID() ~= nil)
+			and C_ChallengeMode.GetActiveChallengeMapID()
 		then
 			if datatext and not short then
 				text = format(

@@ -241,7 +241,16 @@ local function SkinObjective(_, block, objectiveKey, _, lineType, useFullHeight,
 					check:SetVertexColor(db.font.color.good.r, db.font.color.good.g, db.font.color.good.b, 1)
 				end
 
-				local complete = block.currentLine.state or (objectiveKey == "QuestComplete")
+				-- worldquest check, needs mor testing did not work
+				-- local icon = block.currentLine.Icon
+				-- if icon then
+				-- 	isShownCheck = true
+				-- 	icon:SetTexture("Interface\\AddOns\\ElvUI_mMediaTag\\media\\icons\\misc\\questDone.tga")
+				-- 	icon:SetVertexColor(db.font.color.good.r, db.font.color.good.g, db.font.color.good.b, 1)
+				-- 	icon:Hide()
+				-- end
+
+				local complete = block.currentLine.state or (objectiveKey == "QuestComplete") or block.currentLine.finished
 				local text = block.currentLine.Text
 				if text then
 					local height = SetLineText(text, complete, isShownCheck)
@@ -268,6 +277,11 @@ local function SkinObjective(_, block, objectiveKey, _, lineType, useFullHeight,
 						check:ClearAllPoints()
 						check:Point("TOPRIGHT", dash, "TOPLEFT", 0, 0)
 					end
+
+					-- if icon then
+					-- 	icon:ClearAllPoints()
+					-- 	icon:Point("TOPRIGHT", dash, "TOPLEFT", 0, 0)
+					-- end
 				end
 			end
 		end
@@ -353,74 +367,27 @@ local function SkinDungeonsUpdateCriteria(_, numCriteria, block)
 	end
 end
 
+local function isChallengeModeActive()
+	return C_MythicPlus.IsMythicPlusActive() or C_ChallengeMode.GetActiveChallengeMapID()
+end
+
 function SkinStageBlock(stageDescription, stageBlock, objectiveBlock, BlocksFrame, j, l)
-	--mMT:Print(stageDescription, stageBlock, objectiveBlock, BlocksFrame, j, l)
-	-- if not self:ShouldShowCriteria() then
-	-- 	return;
-	-- end
+	local isChallengeMode = isChallengeModeActive()
+	local StageBlock = isChallengeMode and _G.ScenarioChallengeModeBlock or _G.ScenarioStageBlock
+--mMT:DebugPrintTable(StageBlock)
 
-	-- -- A progress bar here is the entire tree for scenarios
-	-- SCENARIO_TRACKER_MODULE.lineSpacing = 2;
-	-- SCENARIO_TRACKER_MODULE:AddObjective(objectiveBlock, 1, stageDescription);
-	-- objectiveBlock.currentLine.Icon:Hide();
-	-- local progressBar = SCENARIO_TRACKER_MODULE:AddProgressBar(objectiveBlock, objectiveBlock.currentLine);
-	-- objectiveBlock:SetHeight(objectiveBlock.height);
-	-- if ( ObjectiveTracker_AddBlock(objectiveBlock) ) then
-	-- 	if ( not BlocksFrame.slidingAction ) then
-	-- 		objectiveBlock:Show();
-	-- 	end
-	-- else
-	-- 	objectiveBlock:Hide();
-	-- 	stageBlock:Hide();
-	-- end
+	if not isChallengeMode then
+		StageBlock.NormalBG:Hide()
+		StageBlock.FinalBG:Hide()
+	end
 
-	-- if not _G.ScenarioStageBlock.mMTSkin then
-	-- 	local DungeonBG = CreateFrame("Frame", "mMT_ScenarioBlock")
-	-- 	S:HandleFrame(DungeonBG)
-	-- 	DungeonBG:SetParent(_G.ScenarioStageBlock)
-	-- 	DungeonBG:ClearAllPoints()
-	-- 	DungeonBG:SetPoint("CENTER", _G.ScenarioStageBlock, "CENTER", 27, 0)
-	-- 	DungeonBG:SetSize(width + 2, 80)
-	-- 	DungeonBG:SetFrameLevel(3)
-	-- 	DungeonBG:Show()
+	if isChallengeMode then
+		--StageBlock:StripTextures()
 
-	-- 	_G.ScenarioStageBlock.mMTSkin = true
-	-- end
+		StageBlock.Level:SetText(mMT:GetDungeonInfo(false, true, true))
 
-	-- _G.ScenarioStageBlock.NormalBG:Hide()
-	-- _G.ScenarioStageBlock.FinalBG:Hide()
-	-- -- if _G.ScenarioStageBlock.WidgetContainer then
-	-- -- 	_G.ScenarioStageBlock.WidgetContainer:Hide()
-	-- -- end
-
-	-- local container = _G.ScenarioStageBlock.WidgetContainer
-	-- if not container or not container.widgetFrames then
-	-- 	return
-	-- end
-
-	-- for _, widgetFrame in pairs(container.widgetFrames) do
-	-- 	if widgetFrame.Frame then
-	-- 		widgetFrame.Frame:SetAlpha(0)
-	-- 	end
-	-- end
-
-	-- [16:35] 0 userdata: 000001747DA41ED8
-	-- [16:35] WidgetContainer table: 0000017494C22E10
-	-- [16:35] FinalBG table: 0000017494C22C30
-	-- [16:35] appliedAlready true
-	-- [16:35] CompleteLabel table: 0000017494C22D70
-	-- [16:35] module table: 0000017494C21380
-	-- [16:35] Name table: 0000017494C22DC0
-	-- [16:35] nextBlock table: 0000017494C22AA0
-	-- [16:35] height 83.000007629395
-	-- [16:35] GlowTexture table: 0000017494C22C80
-	-- [16:35] Stage table: 0000017494C22D20
-	-- [16:35] NormalBG table: 0000017494C22BE0
-	-- [16:35] mMediaTag & Tools: table: 0000017494C20FC0 nil nil nil nil nil
-	local StageBlock = _G.ScenarioStageBlock
-
-	StageBlock.NormalBG:Hide()
-	StageBlock.FinalBG:Hide()
+		--StageBlock.Affixes:Hide()
+	end
 
 	if not StageBlock.mMT_StageBlock then
 		-- dungeon = {
@@ -435,7 +402,7 @@ function SkinStageBlock(stageDescription, stageBlock, objectiveBlock, BlocksFram
 		local width = _G.ObjectiveTrackerFrame:GetWidth()
 		S:HandleFrame(mMT_StageBlock)
 
-		mMT_StageBlock:SetParent(_G.ScenarioStageBlock)
+		mMT_StageBlock:SetParent(StageBlock)
 		mMT_StageBlock:ClearAllPoints()
 		mMT_StageBlock:SetPoint("TOPLEFT", 10, -5)
 
@@ -447,27 +414,44 @@ function SkinStageBlock(stageDescription, stageBlock, objectiveBlock, BlocksFram
 			mMT_StageBlock:CreateShadow()
 		end
 
-		local label = mMT_StageBlock:CreateFontString(nil, "OVERLAY")
-		label:FontTemplate(nil, db.font.fontsize.title, db.font.fontflag)
-		label:SetFont(LSM:Fetch("font", db.font.font), db.font.fontsize.title, db.font.fontflag)
-		if IsInInstance() then
-			label:SetText(mMT:GetDungeonInfo(true, true))
+		if not isChallengeMode then
+			local label = mMT_StageBlock:CreateFontString(nil, "OVERLAY")
+			label:FontTemplate(nil, db.font.fontsize.title, db.font.fontflag)
+			label:SetFont(LSM:Fetch("font", db.font.font), db.font.fontsize.title, db.font.fontflag)
+			if IsInInstance() then
+				label:SetText(mMT:GetDungeonInfo(true, true))
+			end
+			label:Point("TOPRIGHT", mMT_StageBlock, "TOPRIGHT", -10, -10)
+			--label:SetTextColor(color.r, color.g, color.b)
+			label:SetJustifyH("RIGHT")
+			label:SetJustifyV("TOP")
+			mMT_StageBlock.Difficulty = label
 		end
-		label:Point("TOPRIGHT", mMT_StageBlock, "TOPRIGHT", -10, -10)
-		--label:SetTextColor(color.r, color.g, color.b)
-		label:SetJustifyH("RIGHT")
-		label:SetJustifyV("TOP")
 
-		mMT_StageBlock.Difficulty = label
+		if isChallengeMode then
+			StageBlock:StripTextures()
 
-		StageBlock.Stage:ClearAllPoints()
-		StageBlock.Stage:SetPoint("LEFT", mMT_StageBlock, "LEFT", 10, 2)
+			StageBlock.Level:ClearAllPoints()
+			StageBlock.Level:SetPoint("TOPLEFT", mMT_StageBlock, "TOPLEFT", 10, -10)
+
+			StageBlock.TimeLeft:ClearAllPoints()
+			StageBlock.TimeLeft:SetPoint("LEFT", mMT_StageBlock, "LEFT", 8, 2)
+
+			S:HandleStatusBar(_G.ScenarioChallengeModeBlock.StatusBar)
+		else
+			StageBlock.Stage:ClearAllPoints()
+			StageBlock.Stage:SetPoint("LEFT", mMT_StageBlock, "LEFT", 10, 2)
+		end
 
 		--mMT:DebugPrintTable(StageBlock)
 		StageBlock.mMT_StageBlock = mMT_StageBlock
 	end
 
-	if IsInInstance() and StageBlock.mMT_StageBlock then
+	-- if StageBlock.mMT_StageBlock and isChallengeMode then
+	-- 	StageBlock.mMT_StageBlock:Show()
+	-- end
+
+	if IsInInstance() and StageBlock.mMT_StageBlock and StageBlock.mMT_StageBlock.Difficulty then
 		StageBlock.mMT_StageBlock.Difficulty:SetText(mMT:GetDungeonInfo(false, false, true))
 	end
 end
