@@ -254,7 +254,7 @@ local function GetKeystoneLevelandColor()
 	end
 end
 
-function mMT:GetDungeonInfo(datatext, short)
+function mMT:GetDungeonInfo(datatext, short, stageBlock)
 	local name, _, difficultyID, _, _, _, _, instanceID, instanceGroupSize, _ = GetInstanceInfo()
 	local _, InstanceType = IsInInstance()
 
@@ -337,6 +337,13 @@ function mMT:GetDungeonInfo(datatext, short)
 					"%s%s|r %s%s|r",
 					isGuildParty and colors.guild.color or colors.name.color,
 					name,
+					difficultyColor,
+					difficultyShort
+				)
+			elseif stageBlock then
+				text = format(
+					"%s|r %s%s|r",
+					isGuildParty and colors.guild.color .. "#" or "",
 					difficultyColor,
 					difficultyShort
 				)

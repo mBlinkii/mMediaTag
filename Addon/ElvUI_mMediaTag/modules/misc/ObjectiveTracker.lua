@@ -15,6 +15,7 @@ local InCombatLockdown = InCombatLockdown
 local ObjectiveTrackerFrame = _G.ObjectiveTrackerFrame
 local ObjectiveTrackerBlocksFrame = _G.ObjectiveTrackerBlocksFrame
 local maxNumQuestsCanAccept = min(C_QuestLog.GetMaxNumQuestsCanAccept() + (E.Retail and 10 or 0), 35) -- 20 for ERA, 25 for WotLK, 35 for Retail
+local IsInInstance = IsInInstance
 
 local colorFont = {}
 local color = {}
@@ -161,7 +162,7 @@ local function SetLineText(text, completed, check)
 
 	if lineText then
 		-- Text Progress
-		if not completed and not check then
+		if not (completed and check) then
 			local current, required, questText = GetRequirements(lineText)
 
 			if current and required and questText then
@@ -218,7 +219,7 @@ local function SetDungeonLineText(text, complete)
 		text:SetText(lineText)
 		text:SetWordWrap(true)
 
-		return text:GetStringHeight(), complete
+		return text:GetStringHeight()
 	end
 end
 
@@ -449,7 +450,9 @@ function SkinStageBlock(stageDescription, stageBlock, objectiveBlock, BlocksFram
 		local label = mMT_StageBlock:CreateFontString(nil, "OVERLAY")
 		label:FontTemplate(nil, db.font.fontsize.title, db.font.fontflag)
 		label:SetFont(LSM:Fetch("font", db.font.font), db.font.fontsize.title, db.font.fontflag)
-		label:SetText(mMT:GetDungeonInfo(true, true))
+		if IsInInstance() then
+			label:SetText(mMT:GetDungeonInfo(true, true))
+		end
 		label:Point("TOPRIGHT", mMT_StageBlock, "TOPRIGHT", -10, -10)
 		--label:SetTextColor(color.r, color.g, color.b)
 		label:SetJustifyH("RIGHT")
@@ -462,6 +465,10 @@ function SkinStageBlock(stageDescription, stageBlock, objectiveBlock, BlocksFram
 
 		--mMT:DebugPrintTable(StageBlock)
 		StageBlock.mMT_StageBlock = mMT_StageBlock
+	end
+
+	if IsInInstance() and StageBlock.mMT_StageBlock then
+		StageBlock.mMT_StageBlock.Difficulty:SetText(mMT:GetDungeonInfo(false, false, true))
 	end
 end
 
