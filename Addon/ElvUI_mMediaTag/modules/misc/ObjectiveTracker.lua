@@ -384,9 +384,19 @@ local function SkinChallengeModeTime(block, elapsedTime)
 		block.mMT_Timers.chest3 = block.timeLimit * 0.6
 		block.mMT_Timers.chest2 = block.timeLimit * 0.8
 	end
-	--mMT:DebugPrintTable(block.StatusBar)
-	--block.StatusBar:GetStatusBarTexture():SetGradient("HORIZONTAL", { r = 1, g = 1, b = 1, a = 1 }, { r = 0, g = 0, b = b + 0.2, a = 1 })
-	--print((block.StatusBar:GetWidth() / block.timeLimit) * block.mMT_Timers.chest3, (block.StatusBar:GetWidth() / block.timeLimit) * block.mMT_Timers.chest2)
+
+	local barColor = db.headerbar.color.good
+	-- if elapsedTime < block.mMT_Timers.chest3 then
+	-- 	barColor = db.headerbar.color.good
+	-- 	block.StatusBar:SetStatusBarColor(barColor.r, barColor.g, barColor.b, 1)
+	-- elseif elapsedTime < block.mMT_Timers.chest2 then
+	-- 	barColor = db.headerbar.color.transit
+	-- 	block.StatusBar:SetStatusBarColor(barColor.r, barColor.g, barColor.b, 1)
+	-- else
+	-- 	barColor = db.headerbar.color.bad
+	-- 	block.StatusBar:SetStatusBarColor(barColor.r, barColor.g, barColor.b, 1)
+	-- end
+
 	if not block.timerMarker then
 		local width = block.StatusBar:GetWidth()
 		local height = block.StatusBar:GetHeight()
@@ -401,8 +411,8 @@ local function SkinChallengeModeTime(block, elapsedTime)
 		timerMarker.chest2:SetColorTexture(1, 1, 1)
 		timerMarker.chest2:SetSize(2, height) --block.StatusBar:GetHeight())
 
-		timerMarker.chest3:SetPoint("LEFT", block.StatusBar, "LEFT", (width / block.timeLimit) * block.mMT_Timers.chest3, 0)
-		timerMarker.chest2:SetPoint("LEFT", block.StatusBar, "LEFT", (width / block.timeLimit) * block.mMT_Timers.chest2, 0)
+		timerMarker.chest3:SetPoint("LEFT", block.StatusBar, "LEFT", width - (width * block.mMT_Timers.chest3 /  block.timeLimit), 0)
+		timerMarker.chest2:SetPoint("LEFT", block.StatusBar, "LEFT", width - (width * block.mMT_Timers.chest2 /  block.timeLimit), 0)
 		timerMarker.chest3:Show()
 		timerMarker.chest2:Show()
 
@@ -415,7 +425,6 @@ end
 function SkinStageBlock(stageDescription, stageBlock, objectiveBlock, BlocksFrame, j, l)
 	local isChallengeMode = isChallengeModeActive()
 	local StageBlock = isChallengeMode and _G.ScenarioChallengeModeBlock or _G.ScenarioStageBlock
-	--mMT:DebugPrintTable(StageBlock)
 
 	if not isChallengeMode then
 		StageBlock.NormalBG:Hide()
@@ -423,22 +432,10 @@ function SkinStageBlock(stageDescription, stageBlock, objectiveBlock, BlocksFram
 	end
 
 	if isChallengeMode then
-		--StageBlock:StripTextures()
-
 		StageBlock.Level:SetText(mMT:GetDungeonInfo(false, true, true))
-
-		--StageBlock.Affixes:Hide()
 	end
 
 	if not StageBlock.mMT_StageBlock then
-		-- dungeon = {
-		-- 	hidedash = true,
-		-- 	color = {
-		-- 		normal = { r = 0.24, g = 0.24, b = 0.24, a = 1},
-		-- 		complete = { r = 0, g = 1, b = 0.27, a = 1},
-		-- 	}
-		-- },
-
 		local mMT_StageBlock = CreateFrame("Frame", "mMT_StageBlock")
 		local width = _G.ObjectiveTrackerFrame:GetWidth()
 		S:HandleFrame(mMT_StageBlock)
@@ -463,7 +460,6 @@ function SkinStageBlock(stageDescription, stageBlock, objectiveBlock, BlocksFram
 				label:SetText(mMT:GetDungeonInfo(true, true))
 			end
 			label:Point("TOPRIGHT", mMT_StageBlock, "TOPRIGHT", -10, -10)
-			--label:SetTextColor(color.r, color.g, color.b)
 			label:SetJustifyH("RIGHT")
 			label:SetJustifyV("TOP")
 			mMT_StageBlock.Difficulty = label
@@ -484,13 +480,8 @@ function SkinStageBlock(stageDescription, stageBlock, objectiveBlock, BlocksFram
 			StageBlock.Stage:SetPoint("LEFT", mMT_StageBlock, "LEFT", 10, 2)
 		end
 
-		--mMT:DebugPrintTable(StageBlock)
 		StageBlock.mMT_StageBlock = mMT_StageBlock
 	end
-
-	-- if StageBlock.mMT_StageBlock and isChallengeMode then
-	-- 	StageBlock.mMT_StageBlock:Show()
-	-- end
 
 	if IsInInstance() and StageBlock.mMT_StageBlock and StageBlock.mMT_StageBlock.Difficulty then
 		StageBlock.mMT_StageBlock.Difficulty:SetText(mMT:GetDungeonInfo(false, false, true))
