@@ -329,6 +329,7 @@ function mMT:PLAYER_ENTERING_WORLD(event)
 			class = true,
 		},
 	}
+		E.db.mMT.convert = mMT.Version
 	end
 
 	-- DevMode
