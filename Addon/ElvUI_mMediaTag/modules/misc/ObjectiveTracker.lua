@@ -169,15 +169,21 @@ local function SetLineText(text, completed, check)
 				if current == required then
 					lineText = db.font.color.good.hex .. questText .. "|r"
 				else
-					local progressPercent = (tonumber(current) / tonumber(required)) * 100 or 0
+					local progressPercent = nil
 
 					local colorGood = db.font.color.good
 					local colorTransit = db.font.color.transit
 					local colorBad = db.font.color.bad
-					local r, g, b = E:ColorGradient(progressPercent * 0.01, colorBad.r, colorBad.g, colorBad.b, colorTransit.r, colorTransit.g, colorTransit.b, colorGood.r, colorGood.g, colorGood.b)
-					local colorProgress = E:RGBToHex(r, g, b)
-					progressPercent = format("%.f%%", progressPercent)
-					lineText = colorProgress .. current .. "/" .. required .. " - " .. progressPercent .. "|r" .. "  " .. questText
+
+					if required ~= "1" then
+						progressPercent = (tonumber(current) / tonumber(required)) * 100 or 0
+						local r, g, b = E:ColorGradient(progressPercent * 0.01, colorBad.r, colorBad.g, colorBad.b, colorTransit.r, colorTransit.g, colorTransit.b, colorGood.r, colorGood.g, colorGood.b)
+						local colorProgress = E:RGBToHex(r, g, b)
+						progressPercent = format("%.f%%", progressPercent)
+						lineText = colorProgress .. current .. "/" .. required .. " - " .. progressPercent .. "|r" .. "  " .. questText
+					else
+						lineText = db.font.color.bad.hex .. current .. "/" .. required .. "|r  " .. questText
+					end
 				end
 			end
 		else
@@ -368,13 +374,48 @@ local function SkinDungeonsUpdateCriteria(_, numCriteria, block)
 end
 
 local function isChallengeModeActive()
-	return C_MythicPlus.IsMythicPlusActive() or C_ChallengeMode.GetActiveChallengeMapID()
+	--mMT:Print(C_MythicPlus.IsMythicPlusActive(), C_ChallengeMode.GetActiveChallengeMapID())
+	return C_MythicPlus.IsMythicPlusActive() and C_ChallengeMode.GetActiveChallengeMapID()
+end
+
+local function SkinChallengeModeTime(block, elapsedTime)
+	if not block.mMT_Timers then
+		block.mMT_Timers = {}
+		block.mMT_Timers.chest3 = block.timeLimit * 0.6
+		block.mMT_Timers.chest2 = block.timeLimit * 0.8
+	end
+	--mMT:DebugPrintTable(block.StatusBar)
+	--block.StatusBar:GetStatusBarTexture():SetGradient("HORIZONTAL", { r = 1, g = 1, b = 1, a = 1 }, { r = 0, g = 0, b = b + 0.2, a = 1 })
+	--print((block.StatusBar:GetWidth() / block.timeLimit) * block.mMT_Timers.chest3, (block.StatusBar:GetWidth() / block.timeLimit) * block.mMT_Timers.chest2)
+	if not block.timerMarker then
+		local width = block.StatusBar:GetWidth()
+		local height = block.StatusBar:GetHeight()
+		local timerMarker = CreateFrame("Frame", nil, block)
+		timerMarker:SetAllPoints(block)
+
+		timerMarker.chest3 = timerMarker:CreateTexture(nil, "OVERLAY")
+		timerMarker.chest3:SetColorTexture(1, 1, 1)
+		timerMarker.chest3:SetSize(2, height) --block.StatusBar:GetHeight())
+
+		timerMarker.chest2 = timerMarker:CreateTexture(nil, "OVERLAY")
+		timerMarker.chest2:SetColorTexture(1, 1, 1)
+		timerMarker.chest2:SetSize(2, height) --block.StatusBar:GetHeight())
+
+		timerMarker.chest3:SetPoint("LEFT", block.StatusBar, "LEFT", (width / block.timeLimit) * block.mMT_Timers.chest3, 0)
+		timerMarker.chest2:SetPoint("LEFT", block.StatusBar, "LEFT", (width / block.timeLimit) * block.mMT_Timers.chest2, 0)
+		timerMarker.chest3:Show()
+		timerMarker.chest2:Show()
+
+		timerMarker:Show()
+
+		block.timerMarker = timerMarker
+	end
 end
 
 function SkinStageBlock(stageDescription, stageBlock, objectiveBlock, BlocksFrame, j, l)
 	local isChallengeMode = isChallengeModeActive()
 	local StageBlock = isChallengeMode and _G.ScenarioChallengeModeBlock or _G.ScenarioStageBlock
---mMT:DebugPrintTable(StageBlock)
+	--mMT:DebugPrintTable(StageBlock)
 
 	if not isChallengeMode then
 		StageBlock.NormalBG:Hide()
@@ -437,7 +478,7 @@ function SkinStageBlock(stageDescription, stageBlock, objectiveBlock, BlocksFram
 			StageBlock.TimeLeft:ClearAllPoints()
 			StageBlock.TimeLeft:SetPoint("LEFT", mMT_StageBlock, "LEFT", 8, 2)
 
-			S:HandleStatusBar(_G.ScenarioChallengeModeBlock.StatusBar)
+			S:HandleStatusBar(StageBlock.StatusBar)
 		else
 			StageBlock.Stage:ClearAllPoints()
 			StageBlock.Stage:SetPoint("LEFT", mMT_StageBlock, "LEFT", 10, 2)
@@ -562,6 +603,9 @@ function module:Initialize()
 
 		-- Skin Stage Block
 		hooksecurefunc(_G.SCENARIO_CONTENT_TRACKER_MODULE, "Update", SkinStageBlock)
+
+		-- Skin M+ Timer
+		hooksecurefunc("Scenario_ChallengeMode_UpdateTime", SkinChallengeModeTime)
 
 		-- Skin Headers
 		hooksecurefunc("ObjectiveTracker_Update", UpdateHeaders)
