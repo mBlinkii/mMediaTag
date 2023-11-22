@@ -294,51 +294,6 @@ local function SkinObjective(_, block, objectiveKey, _, lineType, useFullHeight,
 	end
 end
 
-local function SkinDungeons(_, block, objectiveKey, _, lineType, useFullHeight, dashStyle, colorStyle, adjustForNoText, overrideHeight)
-	--mMT:Print(a, b, c, _, lineType, useFullHeight, dashStyle, colorStyle, adjustForNoText, overrideHeight)
-	--SkinObjective(block, objectiveKey)
-	--mMT:DebugPrintTable(c)
-	if block then
-		if block.HeaderText then
-			SetHeaderText(block.HeaderText)
-		end
-		if block.currentLine then
-			if block.currentLine.objectiveKey == 0 then
-				SetHeaderText(block.currentLine.Text)
-			else
-				--mMT:Print(objectiveKey)
-				local text = block.currentLine.Text
-				if text then
-					local height = SetDungeonLineText(text)
-
-					if height and height ~= text:GetHeight() then
-						text:SetHeight(height)
-					end
-				end
-
-				-- if db.settings.hidedash then
-				-- 	local dash = block.currentLine.Dash
-
-				-- 	if dash then
-				-- 		dash:Hide()
-				-- 		dash:SetText(nil)
-				-- 	end
-
-				-- 	if text then
-				-- 		text:ClearAllPoints()
-				-- 		text:Point("TOPLEFT", dash, "TOPLEFT", 0, 0)
-				-- 	end
-
-				-- 	if check then
-				-- 		check:ClearAllPoints()
-				-- 		check:Point("TOPRIGHT", dash, "TOPLEFT", 0, 0)
-				-- 	end
-				-- end
-			end
-		end
-	end
-end
-
 local function SkinDungeonsUpdateCriteria(_, numCriteria, block)
 	if block then
 		for criteriaIndex = 1, numCriteria do
@@ -374,7 +329,6 @@ local function SkinDungeonsUpdateCriteria(_, numCriteria, block)
 end
 
 local function isChallengeModeActive()
-	--mMT:Print(C_MythicPlus.IsMythicPlusActive(), C_ChallengeMode.GetActiveChallengeMapID())
 	return C_MythicPlus.IsMythicPlusActive() and C_ChallengeMode.GetActiveChallengeMapID()
 end
 
@@ -385,16 +339,16 @@ local function SkinChallengeModeTime(block, elapsedTime)
 		block.mMT_Timers.chest2 = block.timeLimit * 0.8
 	end
 
-	local barColor = db.headerbar.color.good
+	-- local barColor = db.font.color.good
 	-- if elapsedTime < block.mMT_Timers.chest3 then
-	-- 	barColor = db.headerbar.color.good
-	-- 	block.StatusBar:SetStatusBarColor(barColor.r, barColor.g, barColor.b, 1)
+	-- 	barColor = db.font.color.good
+	-- 	block.StatusBar:GetStatusBarTexture():SetGradient("HORIZONTAL", { r = barColor - 0.2, g = barColor - 0.2, b = barColor - 0.2, a = 1 }, { r = barColor + 0.2, g = barColor + 0.2, b = barColor + 0.2, a = 1 })
 	-- elseif elapsedTime < block.mMT_Timers.chest2 then
-	-- 	barColor = db.headerbar.color.transit
-	-- 	block.StatusBar:SetStatusBarColor(barColor.r, barColor.g, barColor.b, 1)
+	-- 	barColor = db.font.color.good
+	-- 	block.StatusBar:GetStatusBarTexture():SetGradient("HORIZONTAL", { r = barColor - 0.2, g = barColor - 0.2, b = barColor - 0.2, a = 1 }, { r = barColor + 0.2, g = barColor + 0.2, b = barColor + 0.2, a = 1 })
 	-- else
-	-- 	barColor = db.headerbar.color.bad
-	-- 	block.StatusBar:SetStatusBarColor(barColor.r, barColor.g, barColor.b, 1)
+	-- 	barColor = db.font.color.good
+	-- 	block.StatusBar:GetStatusBarTexture():SetGradient("HORIZONTAL", { r = barColor - 0.2, g = barColor - 0.2, b = barColor - 0.2, a = 1 }, { r = barColor + 0.2, g = barColor + 0.2, b = barColor + 0.2, a = 1 })
 	-- end
 
 	if not block.timerMarker then
@@ -411,8 +365,8 @@ local function SkinChallengeModeTime(block, elapsedTime)
 		timerMarker.chest2:SetColorTexture(1, 1, 1)
 		timerMarker.chest2:SetSize(2, height) --block.StatusBar:GetHeight())
 
-		timerMarker.chest3:SetPoint("LEFT", block.StatusBar, "LEFT", width - (width * block.mMT_Timers.chest3 /  block.timeLimit), 0)
-		timerMarker.chest2:SetPoint("LEFT", block.StatusBar, "LEFT", width - (width * block.mMT_Timers.chest2 /  block.timeLimit), 0)
+		timerMarker.chest3:SetPoint("LEFT", block.StatusBar, "LEFT", width - (width * block.mMT_Timers.chest3 / block.timeLimit), 0)
+		timerMarker.chest2:SetPoint("LEFT", block.StatusBar, "LEFT", width - (width * block.mMT_Timers.chest2 / block.timeLimit), 0)
 		timerMarker.chest3:Show()
 		timerMarker.chest2:Show()
 
@@ -420,15 +374,42 @@ local function SkinChallengeModeTime(block, elapsedTime)
 
 		block.timerMarker = timerMarker
 	end
+
+	if not block.mMT_Time then
+		local timeLable = block.StatusBar:CreateFontString(nil, "OVERLAY")
+		timeLable:FontTemplate(nil, db.font.fontsize.title, db.font.fontflag)
+		timeLable:SetFont(LSM:Fetch("font", db.font.font), db.font.fontsize.title, db.font.fontflag)
+		timeLable:SetPoint("RIGHT", block.StatusBar, "RIGHT", -2, 0)
+		timeLable:SetJustifyH("RIGHT")
+		timeLable:SetJustifyV("TOP")
+		block.mMT_Time = timeLable
+	end
+
+	if block.mMT_Time then
+		local time = (elapsedTime < block.mMT_Timers.chest3) and block.mMT_Timers.chest3 or block.mMT_Timers.chest2
+		local text = (time == block.mMT_Timers.chest3) and "+3" or "+2"
+		block.mMT_Time:SetText(text .. " - " .. SecondsToClock(time - elapsedTime))
+	end
 end
 
-function SkinStageBlock(stageDescription, stageBlock, objectiveBlock, BlocksFrame, j, l)
+function SkinStageBlock()
 	local isChallengeMode = isChallengeModeActive()
 	local StageBlock = isChallengeMode and _G.ScenarioChallengeModeBlock or _G.ScenarioStageBlock
 
 	if not isChallengeMode then
+		-- Hide Dungeon Frame Block
 		StageBlock.NormalBG:Hide()
 		StageBlock.FinalBG:Hide()
+
+		-- Hide Open world Scenario Block
+		local container = StageBlock.WidgetContainer
+		if container and container.widgetFrames then
+			for _, widgetFrame in pairs(container.widgetFrames) do
+				if widgetFrame.Frame then
+					widgetFrame.Frame:Hide()
+				end
+			end
+		end
 	end
 
 	if isChallengeMode then
@@ -452,13 +433,10 @@ function SkinStageBlock(stageDescription, stageBlock, objectiveBlock, BlocksFram
 			mMT_StageBlock:CreateShadow()
 		end
 
-		if not isChallengeMode then
+		if not mMT_StageBlock.Difficulty and isChallengeMode then
 			local label = mMT_StageBlock:CreateFontString(nil, "OVERLAY")
 			label:FontTemplate(nil, db.font.fontsize.title, db.font.fontflag)
 			label:SetFont(LSM:Fetch("font", db.font.font), db.font.fontsize.title, db.font.fontflag)
-			if IsInInstance() then
-				label:SetText(mMT:GetDungeonInfo(true, true))
-			end
 			label:Point("TOPRIGHT", mMT_StageBlock, "TOPRIGHT", -10, -10)
 			label:SetJustifyH("RIGHT")
 			label:SetJustifyV("TOP")
@@ -484,7 +462,9 @@ function SkinStageBlock(stageDescription, stageBlock, objectiveBlock, BlocksFram
 	end
 
 	if IsInInstance() and StageBlock.mMT_StageBlock and StageBlock.mMT_StageBlock.Difficulty then
-		StageBlock.mMT_StageBlock.Difficulty:SetText(mMT:GetDungeonInfo(false, false, true))
+		if not isChallengeMode then
+			StageBlock.mMT_StageBlock.Difficulty:SetText(mMT:GetDungeonInfo(false, false, true))
+		end
 	end
 end
 
