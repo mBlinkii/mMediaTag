@@ -54,7 +54,8 @@ P.mMT = {
 	durabilityIlevel = {
 		icon = true,
 		whiteText = true,
-		colored = { enable = false, a = { value = 50, color = { r = 0.63, g = 0.20, b = 0.93, hex = "|cffa334ee" } }, b = { value = 20, color = { r = 1, g = 0.011, b = 0.24, hex = "|cffff033e" } } },
+		whiteIcon = true,
+		colored = { enable = false, a = { value = 50, color = { r = 0.93, g = 0.61, b = 0.02, hex = "|cffed9c07" } }, b = { value = 20, color = { r = 1, g = 0.011, b = 0.24, hex = "|cffff033e" } } },
 	},
 	datatextcolors = {
 		colorhc = {
