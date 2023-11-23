@@ -43,7 +43,7 @@ end
 local function colorText(value, low)
 	if low then
 		return "|CFFFFC900" .. value .. "|r"
-	elseif E.db.mMT.durabilityIlevel.witheText then
+	elseif E.db.mMT.durabilityIlevel.whiteText then
 		return value
 	else
 		return hexColor .. value .. "|r"

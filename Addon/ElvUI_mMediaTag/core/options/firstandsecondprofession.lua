@@ -22,10 +22,10 @@ local function configTable()
             name = L["withe Text"],
             type = "toggle",
             get = function(info)
-                return E.db.mMT.singleProfession.witheText
+                return E.db.mMT.singleProfession.whiteText
             end,
             set = function(info, value)
-                E.db.mMT.singleProfession.witheText = value
+                E.db.mMT.singleProfession.whiteText = value
                 DT:ForceUpdate_DataText("firstProf")
                 DT:ForceUpdate_DataText("secondProf")
             end,

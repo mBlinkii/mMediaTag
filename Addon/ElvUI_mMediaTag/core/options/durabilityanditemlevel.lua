@@ -21,10 +21,10 @@ local function configTable()
             name = L["withe Text"],
             type = "toggle",
             get = function(info)
-                return E.db.mMT.durabilityIlevel.witheText
+                return E.db.mMT.durabilityIlevel.whiteText
             end,
             set = function(info, value)
-                E.db.mMT.durabilityIlevel.witheText = value
+                E.db.mMT.durabilityIlevel.whiteText = value
                 DT:ForceUpdate_DataText("DurabilityIlevel")
             end,
         },

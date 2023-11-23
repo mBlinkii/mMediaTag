@@ -49,12 +49,12 @@ P.mMT = {
 	},
 	singleProfession = {
 		icon = true,
-		witheText = true,
+		whiteText = true,
 	},
 	durabilityIlevel = {
 		icon = true,
-		witheText = true,
-		witheValue = false,
+		whiteText = true,
+		colored = { enable = false, a = { value = 50, color = { r = 0.63, g = 0.20, b = 0.93, hex = "|cffa334ee" } }, b = { value = 20, color = { r = 1, g = 0.011, b = 0.24, hex = "|cffff033e" } } },
 	},
 	datatextcolors = {
 		colorhc = {
@@ -295,7 +295,7 @@ P.mMT = {
 				header = 14,
 				title = 12,
 				text = 12,
-			}
+			},
 		},
 		settings = {
 			questcount = true,
@@ -307,16 +307,16 @@ P.mMT = {
 			shadow = true,
 			difficulty = true,
 			color = {
-				normal = { r = 0.24, g = 0.24, b = 0.24, a = 1},
-				complete = { r = 0, g = 1, b = 0.27, a = 1},
-			}
+				normal = { r = 0.24, g = 0.24, b = 0.24, a = 1 },
+				complete = { r = 0, g = 1, b = 0.27, a = 1 },
+			},
 		},
 		headerbar = {
 			enable = true,
 			gradient = true,
 			shadow = true,
 			texture = "Solid",
-			color = {r = 1, g = 0.78, b = 0, a = 1},
+			color = { r = 1, g = 0.78, b = 0, a = 1 },
 			class = true,
 		},
 	},
