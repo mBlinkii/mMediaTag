@@ -26,7 +26,7 @@ local function UpdatePanelColors(_, name, panel)
 	local conf = E.db.mMT.cosmeticbars.bars[name]
 
 	if conf then
-		if conf.texture.enable then
+		if conf.texture.enable and panel.backdropInfo then
 			panel:SetBackdrop({ bgFile = LSM:Fetch("statusbar", conf.texture.file), edgeSize = panel.backdropInfo.edgeSize, edgeFile = panel.backdropInfo.edgeFile })
 
 			if conf.border.style == "disabled" then
