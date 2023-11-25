@@ -317,6 +317,14 @@ local function SkinDungeonsUpdateCriteria(_, numCriteria, block)
 
 					if mMT_elapsedTime and mMT_timeLimit and isChallengeModeActive() then
 						time = mMT_timeLimit - mMT_elapsedTime
+						if not existingLine.mMT_Info then
+							existingLine.mMT_Info = {}
+							existingLine.mMT_Info.text = text
+							existingLine.mMT_Info.time = time
+						end
+
+						text = existingLine.mMT_Info.text
+						time = existingLine.mMT_Info.time
 					end
 
 					local height = SetDungeonLineText(text, existingLine.completed, time)
@@ -375,15 +383,15 @@ local function SkinChallengeModeTime(block, elapsedTime)
 	-- timer bar color
 	local colorA = db.font.color.good
 	local colorB = db.font.color.good
-	if elapsedTime < block.mMT_Timers.chest3 and not block.StatusBar.mMT_Skin == 3 then
+	if elapsedTime < block.mMT_Timers.chest3 then
 		colorA = db.font.color.good
 		colorB = db.font.color.transit
 		block.StatusBar:GetStatusBarTexture():SetGradient("HORIZONTAL", { r = colorB.r, g = colorB.g, b = colorB.b, a = 1 }, { r = colorA.r, g = colorA.g, b = colorA.b, a = 1 })
-	elseif elapsedTime < block.mMT_Timers.chest2 and not block.StatusBar.mMT_Skin == 2 then
+	elseif elapsedTime < block.mMT_Timers.chest2 then
 		colorA = db.font.color.transit
 		colorB = db.font.color.bad
 		block.StatusBar:GetStatusBarTexture():SetGradient("HORIZONTAL", { r = colorB.r, g = colorB.g, b = colorB.b, a = 1 }, { r = colorA.r, g = colorA.g, b = colorA.b, a = 1 })
-	elseif not block.StatusBar.mMT_Skin == 1 then
+	else
 		colorA = db.font.color.bad
 		colorB = { r = colorA.r - 0.2, g = colorA.g - 0.2, b = colorA.r - 0.2 }
 		block.StatusBar:GetStatusBarTexture():SetGradient("HORIZONTAL", { r = colorB.r, g = colorB.g, b = colorB.b, a = 1 }, { r = colorA.r, g = colorA.g, b = colorA.b, a = 1 })
@@ -417,7 +425,7 @@ local function SkinChallengeModeTime(block, elapsedTime)
 		local timeLable = block.StatusBar:CreateFontString(nil, "OVERLAY")
 		timeLable:FontTemplate(nil, db.font.fontsize.title, db.font.fontflag)
 		timeLable:SetFont(LSM:Fetch("font", db.font.font), db.font.fontsize.title, db.font.fontflag)
-		timeLable:SetPoint("BOTTOMRIGHT", block.StatusBar, "TOPRIGHT", -2, 2)
+		timeLable:SetPoint("RIGHT", block.StatusBar, "RIGHT", -2, 2)
 		timeLable:SetJustifyH("RIGHT")
 		timeLable:SetJustifyV("TOP")
 		block.mMT_Time = timeLable
