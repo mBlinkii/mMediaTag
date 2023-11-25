@@ -21,6 +21,8 @@ local colorFont = {}
 local color = {}
 local dim = 0.2
 local fontsize = 12
+local mMT_elapsedTime = nil
+local mMT_timeLimit = nil
 
 local function GetRequirements(text)
 	local current, required, questText = strmatch(text, "^(%d-)/(%d-) (.+)")
@@ -203,14 +205,19 @@ local function SetLineText(text, completed, check)
 	end
 end
 
-local function SetDungeonLineText(text, complete)
+local function SetDungeonLineText(text, complete, time)
 	local lineText = text:GetText()
 	if lineText then
 		color = db.font.color.text.class and mMT.ClassColor or db.font.color.text
 		local current, required, questText = GetRequirements(lineText)
 		if complete then
 			color = db.font.color.complete
-			lineText = color.hex .. (questText or lineText) .. "|r"
+			if time then
+				mMT:Print("JAAA", time)
+				lineText = color.hex .. (questText or lineText) .. "|r" .. " [" .. SecondsToClock(time) .. "]"
+			else
+				lineText = color.hex .. (questText or lineText) .. "|r"
+			end
 		else
 			if current and required and questText then
 				lineText = db.font.color.bad.hex .. current .. "/" .. required .. "|r" .. "  " .. questText
@@ -294,6 +301,10 @@ local function SkinObjective(_, block, objectiveKey, _, lineType, useFullHeight,
 	end
 end
 
+local function isChallengeModeActive()
+	return C_MythicPlus.IsMythicPlusActive() and C_ChallengeMode.GetActiveChallengeMapID()
+end
+
 local function SkinDungeonsUpdateCriteria(_, numCriteria, block)
 	if block then
 		for criteriaIndex = 1, numCriteria do
@@ -301,7 +312,14 @@ local function SkinDungeonsUpdateCriteria(_, numCriteria, block)
 			if existingLine then
 				local text = existingLine.Text
 				if text then
-					local height = SetDungeonLineText(text, existingLine.completed)
+					local time = nil
+					mMT:Print(mMT_elapsedTime)
+
+					if mMT_elapsedTime and mMT_timeLimit and isChallengeModeActive() then
+						time = mMT_timeLimit - mMT_elapsedTime
+					end
+
+					local height = SetDungeonLineText(text, existingLine.completed, time)
 
 					if height and height ~= text:GetHeight() then
 						text:SetHeight(height)
@@ -328,28 +346,48 @@ local function SkinDungeonsUpdateCriteria(_, numCriteria, block)
 	end
 end
 
-local function isChallengeModeActive()
-	return C_MythicPlus.IsMythicPlusActive() and C_ChallengeMode.GetActiveChallengeMapID()
-end
-
 local function SkinChallengeModeTime(block, elapsedTime)
 	if not block.mMT_Timers then
 		block.mMT_Timers = {}
 		block.mMT_Timers.chest3 = block.timeLimit * 0.6
 		block.mMT_Timers.chest2 = block.timeLimit * 0.8
+		mMT_timeLimit = block.timeLimit
 	end
 
-	-- local barColor = db.font.color.good
-	-- if elapsedTime < block.mMT_Timers.chest3 then
-	-- 	barColor = db.font.color.good
-	-- 	block.StatusBar:GetStatusBarTexture():SetGradient("HORIZONTAL", { r = barColor - 0.2, g = barColor - 0.2, b = barColor - 0.2, a = 1 }, { r = barColor + 0.2, g = barColor + 0.2, b = barColor + 0.2, a = 1 })
-	-- elseif elapsedTime < block.mMT_Timers.chest2 then
-	-- 	barColor = db.font.color.good
-	-- 	block.StatusBar:GetStatusBarTexture():SetGradient("HORIZONTAL", { r = barColor - 0.2, g = barColor - 0.2, b = barColor - 0.2, a = 1 }, { r = barColor + 0.2, g = barColor + 0.2, b = barColor + 0.2, a = 1 })
-	-- else
-	-- 	barColor = db.font.color.good
-	-- 	block.StatusBar:GetStatusBarTexture():SetGradient("HORIZONTAL", { r = barColor - 0.2, g = barColor - 0.2, b = barColor - 0.2, a = 1 }, { r = barColor + 0.2, g = barColor + 0.2, b = barColor + 0.2, a = 1 })
+	mMT_elapsedTime = elapsedTime
+
+	-- if block.Affixes and not block.Affixes.mMT_Skin then
+	-- 	local num = #block.Affixes
+	-- 	local leftPoint = 30 + (4 * (num - 1)) + (22 * num);
+	-- 	block.Affixes[1]:ClearAllPoints()
+	-- 	block.Affixes[1]:SetPoint("TOPRIGHT", block.mMT_StageBlock, "TOPRIGHT", -leftPoint, -10)
+
+	-- 	-- for i = 1, num do
+	-- 	-- 	local affixFrame = block.Affixes[i]
+	-- 	-- 	local prev = block.Affixes[i - 1]
+	-- 	-- 	affixFrame:ClearAllPoints()
+	-- 	-- 	affixFrame:SetPoint("LEFT", prev, "RIGHT", 4, 0)
+	-- 	-- end
+
+	-- 	block.Affixes.mMT_Skin = true
 	-- end
+
+	-- timer bar color
+	local colorA = db.font.color.good
+	local colorB = db.font.color.good
+	if elapsedTime < block.mMT_Timers.chest3 and not block.StatusBar.mMT_Skin == 3 then
+		colorA = db.font.color.good
+		colorB = db.font.color.transit
+		block.StatusBar:GetStatusBarTexture():SetGradient("HORIZONTAL", { r = colorB.r, g = colorB.g, b = colorB.b, a = 1 }, { r = colorA.r, g = colorA.g, b = colorA.b, a = 1 })
+	elseif elapsedTime < block.mMT_Timers.chest2 and not block.StatusBar.mMT_Skin == 2 then
+		colorA = db.font.color.transit
+		colorB = db.font.color.bad
+		block.StatusBar:GetStatusBarTexture():SetGradient("HORIZONTAL", { r = colorB.r, g = colorB.g, b = colorB.b, a = 1 }, { r = colorA.r, g = colorA.g, b = colorA.b, a = 1 })
+	elseif not block.StatusBar.mMT_Skin == 1 then
+		colorA = db.font.color.bad
+		colorB = { r = colorA.r - 0.2, g = colorA.g - 0.2, b = colorA.r - 0.2 }
+		block.StatusBar:GetStatusBarTexture():SetGradient("HORIZONTAL", { r = colorB.r, g = colorB.g, b = colorB.b, a = 1 }, { r = colorA.r, g = colorA.g, b = colorA.b, a = 1 })
+	end
 
 	if not block.timerMarker then
 		local width = block.StatusBar:GetWidth()
@@ -379,16 +417,25 @@ local function SkinChallengeModeTime(block, elapsedTime)
 		local timeLable = block.StatusBar:CreateFontString(nil, "OVERLAY")
 		timeLable:FontTemplate(nil, db.font.fontsize.title, db.font.fontflag)
 		timeLable:SetFont(LSM:Fetch("font", db.font.font), db.font.fontsize.title, db.font.fontflag)
-		timeLable:SetPoint("RIGHT", block.StatusBar, "RIGHT", -2, 0)
+		timeLable:SetPoint("BOTTOMRIGHT", block.StatusBar, "TOPRIGHT", -2, 2)
 		timeLable:SetJustifyH("RIGHT")
 		timeLable:SetJustifyV("TOP")
 		block.mMT_Time = timeLable
 	end
 
-	if block.mMT_Time then
-		local time = (elapsedTime < block.mMT_Timers.chest3) and block.mMT_Timers.chest3 or block.mMT_Timers.chest2
-		local text = (time == block.mMT_Timers.chest3) and "+3" or "+2"
-		block.mMT_Time:SetText(text .. " - " .. SecondsToClock(time - elapsedTime))
+	local timeText = nil
+
+	if elapsedTime < block.mMT_Timers.chest3 then
+		timeText = "+3 " .. SecondsToClock(block.mMT_Timers.chest3 - elapsedTime)
+	elseif elapsedTime < block.mMT_Timers.chest2 then
+		timeText = "+2 " .. SecondsToClock(block.mMT_Timers.chest2 - elapsedTime)
+	elseif elapsedTime > block.timeLimit then
+		timeText = db.font.color.bad.hex .. "+ " .. SecondsToClock(elapsedTime - block.timeLimit) .. "|r"
+		block.TimeLeft:SetText(db.font.color.bad.hex .. SecondsToClock(elapsedTime) .. "|r")
+	end
+
+	if timeText then
+		block.mMT_Time:SetText(timeText)
 	end
 end
 
