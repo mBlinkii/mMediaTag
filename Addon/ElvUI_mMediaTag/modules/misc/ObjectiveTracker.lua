@@ -343,6 +343,11 @@ local function SkinDungeonsUpdateCriteria(_, numCriteria, block)
 				local text = existingLine.Text
 
 				if text then
+					-- delete line times if  is new m+
+					if NewDungeon and text.mMT_Time then
+						text.mMT_Time = nil
+					end
+
 					-- m+ time and save the time for the criteria
 					local time = mapID and mMT_elapsedTime or nil
 					if not text.mMT_Time and time and (completed or existingLine.completed) then
@@ -350,11 +355,6 @@ local function SkinDungeonsUpdateCriteria(_, numCriteria, block)
 						if criteriaID then
 							dungeonInfo.criteria[criteriaID] = { time = time, name = criteriaString }
 						end
-					end
-
-					-- delete line times if  is new m+
-					if NewDungeon and text.mMT_Time then
-						text.mMT_Time = nil
 					end
 
 					local height = SetDungeonLineText(text, criteriaString, quantity, (criteriaID ~= 0) and totalQuantity or nil, completed or existingLine.completed, time)
