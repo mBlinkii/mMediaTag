@@ -9,11 +9,9 @@ if not module then
 end
 
 local _G = _G
-local pairs, unpack = pairs, unpack
+local pairs = pairs
 local hooksecurefunc = hooksecurefunc
-local InCombatLockdown = InCombatLockdown
 local ObjectiveTrackerFrame = _G.ObjectiveTrackerFrame
-local ObjectiveTrackerBlocksFrame = _G.ObjectiveTrackerBlocksFrame
 local maxNumQuestsCanAccept = min(C_QuestLog.GetMaxNumQuestsCanAccept() + (E.Retail and 10 or 0), 35) -- 20 for ERA, 25 for WotLK, 35 for Retail
 local IsInInstance = IsInInstance
 
@@ -24,7 +22,6 @@ local fontsize = 12
 
 -- m+ times
 local mMT_elapsedTime = nil
-local mMT_timeLimit = nil
 
 -- db to save the times
 local dungeonInfo = {
@@ -65,7 +62,7 @@ local function SetUpBars(bar)
 	bar:Height(db.bar.hight)
 
 	-- bg color
-	if db.bar.elvbg then
+	if db.bar.elvbg and bar.backdrop then
 		local color_barBG = E.db.general.backdropfadecolor
 		bar.backdrop:SetBackdropColor(color_barBG.r, color_barBG.g, color_barBG.b, color_barBG.a)
 	end
@@ -391,7 +388,6 @@ local function SkinChallengeModeTime(block, elapsedTime)
 		block.mMT_Timers = {}
 		block.mMT_Timers.chest3 = block.timeLimit * 0.6
 		block.mMT_Timers.chest2 = block.timeLimit * 0.8
-		mMT_timeLimit = block.timeLimit
 	end
 
 	-- save to a local var for other functions
@@ -540,6 +536,23 @@ function SkinStageBlock()
 
 		-- hide m+ bgs of the blizzard stage block and set positions
 		if isChallengeMode then
+			-- register event if its a m+ dungeon this is to print and save dungeon infos
+			if not mMT_StageBlock.eventIsRegistered then
+				mMT_StageBlock:RegisterEvent("CHALLENGE_MODE_COMPLETED")
+
+				mMT_StageBlock:SetScript("OnEvent", function(self, event, ...)
+					if event == "CHALLENGE_MODE_COMPLETED" then
+						mMT:Print("Dungeon completed in: ", mMT_elapsedTime and SecondsToClock(mMT_elapsedTime))
+						dungeonInfo.complete = mMT_elapsedTime
+						for k, v in pairs(dungeonInfo.criteria) do
+							mMT:Print(SecondsToClock(v.time), v.name, v.complete)
+						end
+					end
+				end)
+
+				mMT_StageBlock.eventIsRegistered = true
+			end
+
 			StageBlock:StripTextures()
 
 			StageBlock.Level:ClearAllPoints()
@@ -550,6 +563,12 @@ function SkinStageBlock()
 
 			S:HandleStatusBar(StageBlock.StatusBar)
 		else
+			-- unregister event
+			if mMT_StageBlock.eventIsRegistered then
+				mMT_StageBlock:UnregisterEvent("CHALLENGE_MODE_COMPLETED")
+				mMT_StageBlock.eventIsRegistered = false
+			end
+
 			StageBlock.Stage:ClearAllPoints()
 			StageBlock.Stage:SetPoint("LEFT", mMT_StageBlock, "LEFT", 10, 2)
 		end
