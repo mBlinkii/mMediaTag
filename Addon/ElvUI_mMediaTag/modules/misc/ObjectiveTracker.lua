@@ -22,7 +22,7 @@ local fontsize = 12
 
 -- m+ times
 local mMT_elapsedTime = nil
-
+local NewDungeon = nil
 -- db to save the times
 local dungeonInfo = {
 	id = nil,
@@ -352,6 +352,11 @@ local function SkinDungeonsUpdateCriteria(_, numCriteria, block)
 						end
 					end
 
+					-- delete line times if  is new m+
+					if NewDungeon and text.mMT_Time then
+						text.mMT_Time = nil
+					end
+
 					local height = SetDungeonLineText(text, criteriaString, quantity, (criteriaID ~= 0) and totalQuantity or nil, completed or existingLine.completed, time)
 
 					-- set text/ line height
@@ -378,6 +383,8 @@ local function SkinDungeonsUpdateCriteria(_, numCriteria, block)
 				end
 			end
 		end
+
+		NewDungeon = false
 	end
 end
 
@@ -539,6 +546,7 @@ function SkinStageBlock()
 			-- register event if its a m+ dungeon this is to print and save dungeon infos
 			if not mMT_StageBlock.eventIsRegistered then
 				mMT_StageBlock:RegisterEvent("CHALLENGE_MODE_COMPLETED")
+				mMT_StageBlock:RegisterEvent("CHALLENGE_MODE_START")
 
 				mMT_StageBlock:SetScript("OnEvent", function(self, event, ...)
 					if event == "CHALLENGE_MODE_COMPLETED" then
@@ -547,6 +555,8 @@ function SkinStageBlock()
 						for k, v in pairs(dungeonInfo.criteria) do
 							mMT:Print(SecondsToClock(v.time), v.name)
 						end
+					elseif event == "CHALLENGE_MODE_START" then
+						NewDungeon = true
 					end
 				end)
 
