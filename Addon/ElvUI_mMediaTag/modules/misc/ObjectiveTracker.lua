@@ -21,9 +21,19 @@ local colorFont = {}
 local color = {}
 local dim = 0.2
 local fontsize = 12
+
+-- m+ times
 local mMT_elapsedTime = nil
 local mMT_timeLimit = nil
 
+-- db to save the times
+local dungeonInfo = {
+	id = nil,
+	keyLevel = nil,
+	criteria = {},
+}
+
+-- get quest infos
 local function GetRequirements(text)
 	local current, required, questText = strmatch(text, "^(%d-)/(%d-) (.+)")
 	if not current or not required or not questText then
@@ -32,6 +42,7 @@ local function GetRequirements(text)
 	return current, required, questText
 end
 
+-- skin progress/ timer bars
 local function SkinBarColor(Bar, r, g, b)
 	if Bar then
 		if db.bar.elvbg then
@@ -45,11 +56,49 @@ local function SkinBarColor(Bar, r, g, b)
 	end
 end
 
-local function SkinBarSetValue(self)
-	if db.bar.gradient and not self.Bar.mMT_hooked then
-		hooksecurefunc(self.Bar, "SetStatusBarColor", SkinBarColor)
-		self.Bar.mMT_hooked = true
+-- skin progress/ timer bars
+local function SetUpBars(bar)
+	-- bar text
+	local label = bar.Label
+
+	-- bar height
+	bar:Height(db.bar.hight)
+
+	-- bg color
+	if db.bar.elvbg then
+		local color_barBG = E.db.general.backdropfadecolor
+		bar.backdrop:SetBackdropColor(color_barBG.r, color_barBG.g, color_barBG.b, color_barBG.a)
 	end
+
+	-- gradient bar color
+	if db.bar.gradient and not bar.mMT_hooked then
+		hooksecurefunc(bar, "SetStatusBarColor", SkinBarColor)
+		bar.mMT_hooked = true
+	end
+
+	-- setup bar text
+	if label then
+		label:ClearAllPoints()
+		label:SetJustifyH(db.bar.fontpoint)
+		label:Point(db.bar.fontpoint, bar, db.bar.fontpoint, db.bar.fontpoint == "LEFT" and 2 or (db.bar.fontpoint == "RIGHT" and -2 or 0), 0)
+		label:FontTemplate(nil, db.bar.fontsize, db.fontflag)
+	end
+
+	-- bar shadow
+	if db.bar.shadow and not bar.mMT_Shadow then
+		bar:CreateShadow()
+		bar.mMT_Shadow = true
+	end
+end
+
+-- skin progress/ timer bars
+local function SkinBarSetValue(self)
+	local bar = self and self.Bar
+	if not bar then
+		return
+	end
+
+	SetUpBars(self.Bar)
 end
 
 local function SkinProgressBars(_, _, line)
@@ -59,64 +108,20 @@ local function SkinProgressBars(_, _, line)
 		return
 	end
 
-	local label = bar.Label
-
-	bar:Height(db.bar.hight)
-
-	if db.bar.elvbg then
-		local color_barBG = E.db.general.backdropfadecolor
-		bar.backdrop:SetBackdropColor(color_barBG.r, color_barBG.g, color_barBG.b, color_barBG.a)
-	end
-
-	if db.bar.gradient and not bar.mMT_hooked then
-		hooksecurefunc(bar, "SetStatusBarColor", SkinBarColor)
-		bar.mMT_hooked = true
-	end
-
-	if label then
-		label:ClearAllPoints()
-		label:SetJustifyH(db.bar.fontpoint)
-		label:Point(db.bar.fontpoint, bar, db.bar.fontpoint, db.bar.fontpoint == "LEFT" and 2 or (db.bar.fontpoint == "RIGHT" and -2 or 0), 0)
-		label:FontTemplate(nil, db.bar.fontsize, db.fontflag)
-	end
-
-	if db.bar.shadow and not bar.mMT_Shadow then
-		bar:CreateShadow()
-		bar.mMT_Shadow = true
-	end
+	SetUpBars(bar)
 end
 
 local function SkinTimerBars(_, _, line)
 	local timerBar = line and line.TimerBar
 	local bar = timerBar and timerBar.Bar
-
-	local label = bar.Label
-
-	bar:Height(db.bar.hight)
-
-	if db.bar.elvbg then
-		local color_barBG = E.db.general.backdropfadecolor
-		bar.backdrop:SetBackdropColor(color_barBG.r, color_barBG.g, color_barBG.b, color_barBG.a)
+	if not bar then
+		return
 	end
 
-	if db.bar.gradient and not bar.mMT_hooked then
-		hooksecurefunc(bar, "SetStatusBarColor", SkinBarColor)
-		bar.mMT_hooked = true
-	end
-
-	if label then
-		label:ClearAllPoints()
-		label:SetJustifyH(db.bar.fontpoint)
-		label:Point(db.bar.fontpoint, bar, db.bar.fontpoint, db.bar.fontpoint == "LEFT" and 2 or (db.bar.fontpoint == "RIGHT" and -2 or 0), 0)
-		label:FontTemplate(nil, db.bar.fontsize, db.fontflag)
-	end
-
-	if db.bar.shadow and not bar.mMT_Shadow then
-		bar:CreateShadow()
-		bar.mMT_Shadow = true
-	end
+	SetUpBars(bar)
 end
 
+-- quest text colors
 local function SetTextColors()
 	colorFont = db.font.color
 	dim = db.font.highlight
@@ -146,6 +151,8 @@ local function SetTextColors()
 	OBJECTIVE_TRACKER_COLOR["Complete"] = OBJECTIVE_TRACKER_COLOR["Complete"]
 	OBJECTIVE_TRACKER_COLOR["CompleteHighlight"] = OBJECTIVE_TRACKER_COLOR["Complete"]
 end
+
+-- header text settings
 local function SetHeaderText(text)
 	color = db.font.color.header.class and mMT.ClassColor or db.font.color.header
 	fontsize = db.font.fontsize.header
@@ -154,6 +161,7 @@ local function SetHeaderText(text)
 	text:SetTextColor(color.r, color.g, color.b)
 end
 
+--line text settings
 local function SetLineText(text, completed, check)
 	color = completed and db.font.color.complete or (db.font.color.text.class and mMT.ClassColor or db.font.color.text)
 	fontsize = db.font.fontsize.text
@@ -205,22 +213,27 @@ local function SetLineText(text, completed, check)
 	end
 end
 
-local function SetDungeonLineText(text, complete, time)
-	local lineText = text:GetText()
-	if lineText then
+-- line text for dungeons
+local function SetDungeonLineText(text, criteriaString, current, required, complete, time)
+	local lineText = nil
+	if criteriaString then
 		color = db.font.color.text.class and mMT.ClassColor or db.font.color.text
-		local current, required, questText = GetRequirements(lineText)
+
 		if complete then
 			color = db.font.color.complete
+
 			if time then
-				mMT:Print("JAAA", time)
-				lineText = color.hex .. (questText or lineText) .. "|r" .. " [" .. SecondsToClock(time) .. "]"
+				lineText = "[" .. SecondsToClock((text.mMT_Time or time)) .. "] - " .. color.hex .. criteriaString .. "|r"
 			else
-				lineText = color.hex .. (questText or lineText) .. "|r"
+				lineText = color.hex .. criteriaString .. "|r"
 			end
 		else
-			if current and required and questText then
-				lineText = db.font.color.bad.hex .. current .. "/" .. required .. "|r" .. "  " .. questText
+			if current and required then
+				lineText = db.font.color.bad.hex .. current .. "/" .. required .. "|r" .. "  " .. criteriaString
+			elseif current then
+				lineText = db.font.color.bad.hex .. current .. "%|r" .. "  " .. criteriaString
+			else
+				lineText = db.font.color.bad.hex .. criteriaString
 			end
 		end
 
@@ -236,16 +249,25 @@ local function SetDungeonLineText(text, complete, time)
 	end
 end
 
-local function SkinObjective(_, block, objectiveKey, _, lineType, useFullHeight, dashStyle, colorStyle, adjustForNoText, overrideHeight)
+-- check if m+ is active
+local function isChallengeModeActive()
+	return C_MythicPlus.IsMythicPlusActive() and C_ChallengeMode.GetActiveChallengeMapID()
+end
+
+-- skin Objectives
+local function SkinObjective(_, block, objectiveKey)
 	if block then
+		-- title text
 		if block.HeaderText then
 			SetHeaderText(block.HeaderText)
 		end
 
 		if block.currentLine then
+			-- title text else line text
 			if block.currentLine.objectiveKey == 0 then
 				SetHeaderText(block.currentLine.Text)
 			else
+				-- done icon
 				local check = block.currentLine.Check
 				local isShownCheck = false
 				if check then
@@ -263,77 +285,85 @@ local function SkinObjective(_, block, objectiveKey, _, lineType, useFullHeight,
 				-- 	icon:Hide()
 				-- end
 
+				-- line text
+				-- is quest completed
 				local complete = block.currentLine.state or (objectiveKey == "QuestComplete") or block.currentLine.finished
 				local text = block.currentLine.Text
 				if text then
 					local height = SetLineText(text, complete, isShownCheck)
 
+					-- set the text/ line height
 					if height and height ~= text:GetHeight() then
 						text:SetHeight(height)
 					end
 				end
 
+				-- settings if dash is hide
 				if db.settings.hidedash then
+					-- hide dash
 					local dash = block.currentLine.Dash
-
 					if dash then
 						dash:Hide()
 						dash:SetText(nil)
 					end
 
+					-- new position for text
 					if text then
 						text:ClearAllPoints()
 						text:Point("TOPLEFT", dash, "TOPLEFT", 0, 0)
 					end
 
+					-- new position for done icon
 					if check then
 						check:ClearAllPoints()
 						check:Point("TOPRIGHT", dash, "TOPLEFT", 0, 0)
 					end
-
-					-- if icon then
-					-- 	icon:ClearAllPoints()
-					-- 	icon:Point("TOPRIGHT", dash, "TOPLEFT", 0, 0)
-					-- end
 				end
 			end
 		end
 	end
 end
 
-local function isChallengeModeActive()
-	return C_MythicPlus.IsMythicPlusActive() and C_ChallengeMode.GetActiveChallengeMapID()
-end
-
 local function SkinDungeonsUpdateCriteria(_, numCriteria, block)
 	if block then
+		local mapID = isChallengeModeActive()
+
+		if dungeonInfo.id ~= mapID then
+			local keyStoneLevel, _ = C_ChallengeMode.GetActiveKeystoneInfo()
+
+			dungeonInfo = {
+				id = mapID,
+				numCriteria = numCriteria,
+				keyLevel = keyStoneLevel,
+				criteria = {},
+			}
+		end
+
 		for criteriaIndex = 1, numCriteria do
 			local existingLine = block.lines[criteriaIndex]
+			local criteriaString, _, completed, quantity, totalQuantity, _, _, _, criteriaID, _, _, _, _ = C_Scenario.GetCriteriaInfo(criteriaIndex)
 			if existingLine then
 				local text = existingLine.Text
+
 				if text then
-					local time = nil
-					mMT:Print(mMT_elapsedTime)
-
-					if mMT_elapsedTime and mMT_timeLimit and isChallengeModeActive() then
-						time = mMT_timeLimit - mMT_elapsedTime
-						if not existingLine.mMT_Info then
-							existingLine.mMT_Info = {}
-							existingLine.mMT_Info.text = text
-							existingLine.mMT_Info.time = time
+					-- m+ time and save the time for the criteria
+					local time = mapID and mMT_elapsedTime or nil
+					if not text.mMT_Time and time and (completed or existingLine.completed) then
+						text.mMT_Time = time
+						if criteriaID then
+							dungeonInfo.criteria[criteriaID] = { time = time, name = criteriaString }
 						end
-
-						text = existingLine.mMT_Info.text
-						time = existingLine.mMT_Info.time
 					end
 
-					local height = SetDungeonLineText(text, existingLine.completed, time)
+					local height = SetDungeonLineText(text, criteriaString, quantity, (criteriaID ~= 0) and totalQuantity or nil, completed or existingLine.completed, time)
 
+					-- set text/ line height
 					if height and height ~= text:GetHeight() then
 						text:SetHeight(height)
 					end
 				end
 
+				-- done icon and dash
 				local icon = existingLine.Icon
 				if icon and existingLine.completed then
 					if db.dungeon.hidedash then
@@ -354,7 +384,9 @@ local function SkinDungeonsUpdateCriteria(_, numCriteria, block)
 	end
 end
 
+-- skin m+ stage block and time
 local function SkinChallengeModeTime(block, elapsedTime)
+	-- get dungeon time limits
 	if not block.mMT_Timers then
 		block.mMT_Timers = {}
 		block.mMT_Timers.chest3 = block.timeLimit * 0.6
@@ -362,6 +394,7 @@ local function SkinChallengeModeTime(block, elapsedTime)
 		mMT_timeLimit = block.timeLimit
 	end
 
+	-- save to a local var for other functions
 	mMT_elapsedTime = elapsedTime
 
 	-- if block.Affixes and not block.Affixes.mMT_Skin then
@@ -397,6 +430,7 @@ local function SkinChallengeModeTime(block, elapsedTime)
 		block.StatusBar:GetStatusBarTexture():SetGradient("HORIZONTAL", { r = colorB.r, g = colorB.g, b = colorB.b, a = 1 }, { r = colorA.r, g = colorA.g, b = colorA.b, a = 1 })
 	end
 
+	-- create and set time limit markers
 	if not block.timerMarker then
 		local width = block.StatusBar:GetWidth()
 		local height = block.StatusBar:GetHeight()
@@ -421,11 +455,12 @@ local function SkinChallengeModeTime(block, elapsedTime)
 		block.timerMarker = timerMarker
 	end
 
+	-- create and add time for current chest or over time
 	if not block.mMT_Time then
 		local timeLable = block.StatusBar:CreateFontString(nil, "OVERLAY")
 		timeLable:FontTemplate(nil, db.font.fontsize.title, db.font.fontflag)
 		timeLable:SetFont(LSM:Fetch("font", db.font.font), db.font.fontsize.title, db.font.fontflag)
-		timeLable:SetPoint("RIGHT", block.StatusBar, "RIGHT", -2, 2)
+		timeLable:SetPoint("RIGHT", block.StatusBar, "RIGHT", -4, 0)
 		timeLable:SetJustifyH("RIGHT")
 		timeLable:SetJustifyV("TOP")
 		block.mMT_Time = timeLable
@@ -433,6 +468,7 @@ local function SkinChallengeModeTime(block, elapsedTime)
 
 	local timeText = nil
 
+	-- get time limits and set it to ta label
 	if elapsedTime < block.mMT_Timers.chest3 then
 		timeText = "+3 " .. SecondsToClock(block.mMT_Timers.chest3 - elapsedTime)
 	elseif elapsedTime < block.mMT_Timers.chest2 then
@@ -447,6 +483,7 @@ local function SkinChallengeModeTime(block, elapsedTime)
 	end
 end
 
+--skin stage block
 function SkinStageBlock()
 	local isChallengeMode = isChallengeModeActive()
 	local StageBlock = isChallengeMode and _G.ScenarioChallengeModeBlock or _G.ScenarioStageBlock
@@ -467,10 +504,12 @@ function SkinStageBlock()
 		end
 	end
 
+	-- replace the level text with keystone level of the dungeon
 	if isChallengeMode then
 		StageBlock.Level:SetText(mMT:GetDungeonInfo(false, true, true))
 	end
 
+	-- create stage block bg
 	if not StageBlock.mMT_StageBlock then
 		local mMT_StageBlock = CreateFrame("Frame", "mMT_StageBlock")
 		local width = _G.ObjectiveTrackerFrame:GetWidth()
@@ -488,7 +527,8 @@ function SkinStageBlock()
 			mMT_StageBlock:CreateShadow()
 		end
 
-		if not mMT_StageBlock.Difficulty and isChallengeMode then
+		-- create difficulty label to dungeon stage block if not m+
+		if not mMT_StageBlock.Difficulty and not isChallengeMode then
 			local label = mMT_StageBlock:CreateFontString(nil, "OVERLAY")
 			label:FontTemplate(nil, db.font.fontsize.title, db.font.fontflag)
 			label:SetFont(LSM:Fetch("font", db.font.font), db.font.fontsize.title, db.font.fontflag)
@@ -498,6 +538,7 @@ function SkinStageBlock()
 			mMT_StageBlock.Difficulty = label
 		end
 
+		-- hide m+ bgs of the blizzard stage block and set positions
 		if isChallengeMode then
 			StageBlock:StripTextures()
 
@@ -516,6 +557,7 @@ function SkinStageBlock()
 		StageBlock.mMT_StageBlock = mMT_StageBlock
 	end
 
+	-- add difficulty text to our lable
 	if IsInInstance() and StageBlock.mMT_StageBlock and StageBlock.mMT_StageBlock.Difficulty then
 		if not isChallengeMode then
 			StageBlock.mMT_StageBlock.Difficulty:SetText(mMT:GetDungeonInfo(false, false, true))
@@ -523,6 +565,7 @@ function SkinStageBlock()
 	end
 end
 
+-- set title text
 local function SetTitleText(text, isQuest)
 	color = colorFont.title.class and mMT.ClassColor or colorFont.title
 
@@ -538,6 +581,7 @@ local function SetTitleText(text, isQuest)
 	end
 end
 
+-- header bar
 local function AddHeaderBar(header)
 	local width = _G.ObjectiveTrackerFrame:GetWidth()
 	local headerBar = CreateFrame("Frame", "mMT_ObjectiveTracker_HeaderBar", header)
@@ -562,6 +606,7 @@ local function AddHeaderBar(header)
 	end
 end
 
+--  update header text and add header bar
 local function UpdateHeaders()
 	local Frame = ObjectiveTrackerFrame.MODULES
 	if Frame then
