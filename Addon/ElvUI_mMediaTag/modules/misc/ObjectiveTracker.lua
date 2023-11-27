@@ -545,7 +545,7 @@ function SkinStageBlock()
 						mMT:Print("Dungeon completed in: ", mMT_elapsedTime and SecondsToClock(mMT_elapsedTime))
 						dungeonInfo.complete = mMT_elapsedTime
 						for k, v in pairs(dungeonInfo.criteria) do
-							mMT:Print(SecondsToClock(v.time), v.name, v.complete)
+							mMT:Print(SecondsToClock(v.time), v.name)
 						end
 					end
 				end)
