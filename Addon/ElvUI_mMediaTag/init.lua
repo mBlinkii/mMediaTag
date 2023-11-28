@@ -51,6 +51,7 @@ local defaultDB = {
 	affix = nil,
 	keys = {},
 	dev = { enabled = false, frame = { top = nil, left = nil }, unit = {}, zone = {} },
+	mplus = {season = nil, version = 0, times = {}  },
 }
 
 local DB_Loader = CreateFrame("FRAME")

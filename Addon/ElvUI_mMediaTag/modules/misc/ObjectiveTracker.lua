@@ -14,6 +14,7 @@ local hooksecurefunc = hooksecurefunc
 local ObjectiveTrackerFrame = _G.ObjectiveTrackerFrame
 local maxNumQuestsCanAccept = min(C_QuestLog.GetMaxNumQuestsCanAccept() + (E.Retail and 10 or 0), 35) -- 20 for ERA, 25 for WotLK, 35 for Retail
 local IsInInstance = IsInInstance
+local C_MythicPlus_GetCurrentAffixes = C_MythicPlus.GetCurrentAffixes
 
 local colorFont = {}
 local color = {}
@@ -29,6 +30,11 @@ local dungeonInfo = {
 	keyLevel = nil,
 	criteria = {},
 }
+
+local savedTimes = {}
+
+local affixes = nil
+local weeklyAffixID = nil
 
 -- get quest infos
 local function GetRequirements(text)
@@ -220,7 +226,7 @@ local function SetDungeonLineText(text, criteriaString, current, required, compl
 			color = db.font.color.complete
 
 			if time then
-				lineText = "[" .. SecondsToClock((text.mMT_Time or time)) .. "] - " .. color.hex .. criteriaString .. "|r"
+				lineText = "[" .. (text.mMT_Time or time) .. "] - " .. color.hex .. criteriaString .. "|r"
 			else
 				lineText = color.hex .. criteriaString .. "|r"
 			end
@@ -325,6 +331,10 @@ local function SkinDungeonsUpdateCriteria(_, numCriteria, block)
 	if block then
 		local mapID = isChallengeModeActive()
 
+		if mapID and NewDungeon and weeklyAffixID then
+			savedTimes = mMT.DB.mplus.times[weeklyAffixID][mapID]
+		end
+
 		if dungeonInfo.id ~= mapID then
 			local keyStoneLevel, _ = C_ChallengeMode.GetActiveKeystoneInfo()
 
@@ -351,7 +361,15 @@ local function SkinDungeonsUpdateCriteria(_, numCriteria, block)
 					-- m+ time and save the time for the criteria
 					local time = mapID and mMT_elapsedTime or nil
 					if not text.mMT_Time and time and (completed or existingLine.completed) then
-						text.mMT_Time = time
+						if savedTimes[criteriaID] then
+							if savedTimes[criteriaID].time < time then
+								time = db.font.color.bad.hex .. "+" .. SecondsToClock(time - savedTimes[criteriaID].time) .. "|r " .. time
+							else
+								time = db.font.color.bad.hex .. "-" .. SecondsToClock(savedTimes[criteriaID].time - time) .. "|r " .. time
+							end
+						end
+
+						text.mMT_Time = SecondsToClock(time)
 						if criteriaID then
 							dungeonInfo.criteria[criteriaID] = { time = time, name = criteriaString }
 						end
@@ -553,7 +571,16 @@ function SkinStageBlock()
 						mMT:Print("Dungeon completed in: ", mMT_elapsedTime and SecondsToClock(mMT_elapsedTime))
 						dungeonInfo.complete = mMT_elapsedTime
 						for k, v in pairs(dungeonInfo.criteria) do
+							--mplus = {season = nil, times = {}
 							mMT:Print(SecondsToClock(v.time), v.name)
+						end
+
+						if weeklyAffixID then
+							if not mMT.DB.mplus.times[weeklyAffixID] then
+								mMT.DB.mplus.times[weeklyAffixID] = {}
+							end
+
+							mMT.DB.mplus.times[weeklyAffixID][dungeonInfo.id] = dungeonInfo.criteria
 						end
 					elseif event == "CHALLENGE_MODE_START" then
 						NewDungeon = true
@@ -576,6 +603,7 @@ function SkinStageBlock()
 			-- unregister event
 			if mMT_StageBlock.eventIsRegistered then
 				mMT_StageBlock:UnregisterEvent("CHALLENGE_MODE_COMPLETED")
+				mMT_StageBlock:UnregisterEvent("CHALLENGE_MODE_START")
 				mMT_StageBlock.eventIsRegistered = false
 			end
 
@@ -664,6 +692,9 @@ function module:Initialize()
 	db = E.db.mMT.objectivetracker
 
 	SetTextColors()
+
+	affixes = C_MythicPlus_GetCurrentAffixes()
+	weeklyAffixID = affixes and affixes[1] and affixes[1].id
 
 	if not module.hooked then
 		-- Bar Skins
