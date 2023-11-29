@@ -3,7 +3,7 @@ local LSM = E.Libs.LSM
 local S = E:GetModule("Skins")
 
 local module = mMT.Modules.ObjectiveTracker
-local db = E.db.mMT.objectivetracker
+local db = nil
 if not module then
 	return
 end
