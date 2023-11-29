@@ -361,7 +361,7 @@ local function SkinDungeonsUpdateCriteria(_, numCriteria, block)
 					-- m+ time and save the time for the criteria
 					local time = mapID and mMT_elapsedTime or nil
 					if not text.mMT_Time and time and (completed or existingLine.completed) then
-						if savedTimes[criteriaID] then
+						if savedTimes and savedTimes[criteriaID] then
 							if savedTimes[criteriaID].time < time then
 								time = db.font.color.bad.hex .. "+" .. SecondsToClock(time - savedTimes[criteriaID].time) .. "|r " .. time
 							else
