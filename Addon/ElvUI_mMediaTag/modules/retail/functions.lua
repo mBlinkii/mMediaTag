@@ -163,7 +163,7 @@ function mMT:GetDungeonScore()
 	local data = C_PlayerInfo_GetPlayerMythicPlusRatingSummary("PLAYER")
 	local seasonScore = data and data.currentSeasonScore
 	local colorString = ""
-	if seasonScore > 0 then
+	if seasonScore and seasonScore > 0 then
 		local color = C_ChallengeMode_GetDungeonScoreRarityColor(seasonScore)
 		if color then
 			colorString = E:RGBToHex(color.r, color.g, color.b)
