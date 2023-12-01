@@ -367,9 +367,10 @@ local function SkinDungeonsUpdateCriteria(_, numCriteria, block)
 							else
 								time = db.font.color.bad.hex .. "-" .. SecondsToClock(savedTimes[criteriaID].time - time) .. "|r " .. time
 							end
+						else
+							text.mMT_Time = SecondsToClock(time)
 						end
 
-						text.mMT_Time = SecondsToClock(time)
 						if criteriaID then
 							dungeonInfo.criteria[criteriaID] = { time = time, name = criteriaString }
 						end
