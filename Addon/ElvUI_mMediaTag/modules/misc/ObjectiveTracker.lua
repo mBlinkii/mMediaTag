@@ -1,4 +1,4 @@
-local E = unpack(ElvUI)
+local E, L, V, P, G = unpack(ElvUI)
 local LSM = E.Libs.LSM
 local S = E:GetModule("Skins")
 
@@ -21,21 +21,6 @@ local color = {}
 local dim = 0.2
 local fontsize = 12
 
--- m+ times
-local mMT_elapsedTime = nil
-local NewDungeon = nil
--- db to save the times
-local dungeonInfo = {
-	id = nil,
-	keyLevel = nil,
-	criteria = {},
-}
-
-local savedTimes = {}
-
-local affixes = nil
-local weeklyAffixID = nil
-
 -- get quest infos
 local function GetRequirements(text)
 	local current, required, questText = strmatch(text, "^(%d-)/(%d-) (.+)")
@@ -47,6 +32,9 @@ end
 
 -- skin progress/ timer bars
 local function SkinBarColor(Bar, r, g, b)
+	if not db then
+		return
+	end
 	if Bar then
 		if db.bar.elvbg then
 			local color_barBG = E.db.general.backdropfadecolor
@@ -61,6 +49,9 @@ end
 
 -- skin progress/ timer bars
 local function SetUpBars(bar)
+	if not db then
+		return
+	end
 	-- bar text
 	local label = bar.Label
 
@@ -126,6 +117,9 @@ end
 
 -- quest text colors
 local function SetTextColors()
+	if not db then
+		return
+	end
 	colorFont = db.font.color
 	dim = db.font.highlight
 	local colorNormal = colorFont.text.class and mMT.ClassColor or colorFont.text
@@ -157,6 +151,9 @@ end
 
 -- header text settings
 local function SetHeaderText(text)
+	if not db then
+		return
+	end
 	color = db.font.color.header.class and mMT.ClassColor or db.font.color.header
 	fontsize = db.font.fontsize.header
 
@@ -166,6 +163,9 @@ end
 
 --line text settings
 local function SetLineText(text, completed, check)
+	if not db then
+		return
+	end
 	color = completed and db.font.color.complete or (db.font.color.text.class and mMT.ClassColor or db.font.color.text)
 	fontsize = db.font.fontsize.text
 
@@ -204,9 +204,6 @@ local function SetLineText(text, completed, check)
 			if questText then
 				lineText = db.font.color.good.hex .. questText .. "|r"
 			end
-			-- local doneIcon = "|TInterface\\AddOns\\ElvUI_mMediaTag\\media\\icons\\misc\\questDone.tga:16:16:0:0:16:16:0:16:0:16"
-			-- doneIcon = doneIcon .. ":" .. tostring(mMT:round(db.font.color.good.r * 255)) .. ":" .. tostring(mMT:round(db.font.color.good.g * 255)) .. ":" .. tostring(mMT:round(db.font.color.good.b * 255)) .. "|t"
-			-- lineText = doneIcon .. lineText
 		end
 
 		text:SetText(lineText)
@@ -217,7 +214,10 @@ local function SetLineText(text, completed, check)
 end
 
 -- line text for dungeons
-local function SetDungeonLineText(text, criteriaString, current, required, complete, time)
+local function SetDungeonLineText(text, criteriaString, current, required, complete)
+	if not db then
+		return
+	end
 	local lineText = nil
 	if criteriaString then
 		color = db.font.color.text.class and mMT.ClassColor or db.font.color.text
@@ -225,11 +225,7 @@ local function SetDungeonLineText(text, criteriaString, current, required, compl
 		if complete then
 			color = db.font.color.complete
 
-			if time then
-				lineText = "[" .. (text.mMT_Time or time) .. "] - " .. color.hex .. criteriaString .. "|r"
-			else
-				lineText = color.hex .. criteriaString .. "|r"
-			end
+			lineText = color.hex .. criteriaString .. "|r"
 		else
 			if current and required then
 				lineText = db.font.color.bad.hex .. current .. "/" .. required .. "|r" .. "  " .. criteriaString
@@ -252,13 +248,11 @@ local function SetDungeonLineText(text, criteriaString, current, required, compl
 	end
 end
 
--- check if m+ is active
-local function isChallengeModeActive()
-	return C_MythicPlus.IsMythicPlusActive() and C_ChallengeMode.GetActiveChallengeMapID()
-end
-
 -- skin Objectives
 local function SkinObjective(_, block, objectiveKey)
+	if not db then
+		return
+	end
 	if block then
 		-- title text
 		if block.HeaderText then
@@ -328,24 +322,11 @@ local function SkinObjective(_, block, objectiveKey)
 end
 
 local function SkinDungeonsUpdateCriteria(_, numCriteria, block)
+	if not db then
+		return
+	end
+
 	if block then
-		local mapID = isChallengeModeActive()
-
-		if mapID and NewDungeon and weeklyAffixID then
-			savedTimes = mMT.DB.mplus.times[weeklyAffixID][mapID]
-		end
-
-		if dungeonInfo.id ~= mapID then
-			local keyStoneLevel, _ = C_ChallengeMode.GetActiveKeystoneInfo()
-
-			dungeonInfo = {
-				id = mapID,
-				numCriteria = numCriteria,
-				keyLevel = keyStoneLevel,
-				criteria = {},
-			}
-		end
-
 		for criteriaIndex = 1, numCriteria do
 			local existingLine = block.lines[criteriaIndex]
 			local criteriaString, _, completed, quantity, totalQuantity, _, _, _, criteriaID, _, _, _, _ = C_Scenario.GetCriteriaInfo(criteriaIndex)
@@ -353,30 +334,7 @@ local function SkinDungeonsUpdateCriteria(_, numCriteria, block)
 				local text = existingLine.Text
 
 				if text then
-					-- delete line times if  is new m+
-					if NewDungeon and text.mMT_Time then
-						text.mMT_Time = nil
-					end
-
-					-- m+ time and save the time for the criteria
-					local time = mapID and mMT_elapsedTime or nil
-					if not text.mMT_Time and time and (completed or existingLine.completed) then
-						if savedTimes and savedTimes[criteriaID] then
-							if savedTimes[criteriaID].time < time then
-								time = db.font.color.bad.hex .. "+" .. SecondsToClock(time - savedTimes[criteriaID].time) .. "|r " .. time
-							else
-								time = db.font.color.bad.hex .. "-" .. SecondsToClock(savedTimes[criteriaID].time - time) .. "|r " .. time
-							end
-						else
-							text.mMT_Time = SecondsToClock(time)
-						end
-
-						if criteriaID then
-							dungeonInfo.criteria[criteriaID] = { time = time, name = criteriaString }
-						end
-					end
-
-					local height = SetDungeonLineText(text, criteriaString, quantity, (criteriaID ~= 0) and totalQuantity or nil, completed or existingLine.completed, time)
+					local height = SetDungeonLineText(text, criteriaString, quantity, (criteriaID ~= 0) and totalQuantity or nil, (completed or existingLine.completed))
 
 					-- set text/ line height
 					if height and height ~= text:GetHeight() then
@@ -402,22 +360,20 @@ local function SkinDungeonsUpdateCriteria(_, numCriteria, block)
 				end
 			end
 		end
-
-		NewDungeon = false
 	end
 end
 
 -- skin m+ stage block and time
 local function SkinChallengeModeTime(block, elapsedTime)
+	if not db then
+		return
+	end
 	-- get dungeon time limits
 	if not block.mMT_Timers then
 		block.mMT_Timers = {}
 		block.mMT_Timers.chest3 = block.timeLimit * 0.6
 		block.mMT_Timers.chest2 = block.timeLimit * 0.8
 	end
-
-	-- save to a local var for other functions
-	mMT_elapsedTime = elapsedTime
 
 	-- if block.Affixes and not block.Affixes.mMT_Skin then
 	-- 	local num = #block.Affixes
@@ -498,6 +454,8 @@ local function SkinChallengeModeTime(block, elapsedTime)
 	elseif elapsedTime > block.timeLimit then
 		timeText = db.font.color.bad.hex .. "+ " .. SecondsToClock(elapsedTime - block.timeLimit) .. "|r"
 		block.TimeLeft:SetText(db.font.color.bad.hex .. SecondsToClock(elapsedTime) .. "|r")
+	elseif block.mMT_Timers then
+		block.TimeLeft:SetText("")
 	end
 
 	if timeText then
@@ -505,8 +463,16 @@ local function SkinChallengeModeTime(block, elapsedTime)
 	end
 end
 
+-- check if m+ is active
+local function isChallengeModeActive()
+	return C_MythicPlus.IsMythicPlusActive() and C_ChallengeMode.GetActiveChallengeMapID()
+end
+
 --skin stage block
 function SkinStageBlock()
+	if not db then
+		return
+	end
 	local isChallengeMode = isChallengeModeActive()
 	local StageBlock = isChallengeMode and _G.ScenarioChallengeModeBlock or _G.ScenarioStageBlock
 
@@ -562,35 +528,6 @@ function SkinStageBlock()
 
 		-- hide m+ bgs of the blizzard stage block and set positions
 		if isChallengeMode then
-			-- register event if its a m+ dungeon this is to print and save dungeon infos
-			if not mMT_StageBlock.eventIsRegistered then
-				mMT_StageBlock:RegisterEvent("CHALLENGE_MODE_COMPLETED")
-				mMT_StageBlock:RegisterEvent("CHALLENGE_MODE_START")
-
-				mMT_StageBlock:SetScript("OnEvent", function(self, event, ...)
-					if event == "CHALLENGE_MODE_COMPLETED" then
-						mMT:Print("Dungeon completed in: ", mMT_elapsedTime and SecondsToClock(mMT_elapsedTime))
-						dungeonInfo.complete = mMT_elapsedTime
-						for k, v in pairs(dungeonInfo.criteria) do
-							--mplus = {season = nil, times = {}
-							mMT:Print(SecondsToClock(v.time), v.name)
-						end
-
-						if weeklyAffixID then
-							if not mMT.DB.mplus.times[weeklyAffixID] then
-								mMT.DB.mplus.times[weeklyAffixID] = {}
-							end
-
-							mMT.DB.mplus.times[weeklyAffixID][dungeonInfo.id] = dungeonInfo.criteria
-						end
-					elseif event == "CHALLENGE_MODE_START" then
-						NewDungeon = true
-					end
-				end)
-
-				mMT_StageBlock.eventIsRegistered = true
-			end
-
 			StageBlock:StripTextures()
 
 			StageBlock.Level:ClearAllPoints()
@@ -601,23 +538,14 @@ function SkinStageBlock()
 
 			S:HandleStatusBar(StageBlock.StatusBar)
 		else
-			-- unregister event
-			if mMT_StageBlock.eventIsRegistered then
-				mMT_StageBlock:UnregisterEvent("CHALLENGE_MODE_COMPLETED")
-				mMT_StageBlock:UnregisterEvent("CHALLENGE_MODE_START")
-				mMT_StageBlock.eventIsRegistered = false
-			end
-
 			StageBlock.Stage:ClearAllPoints()
 			StageBlock.Stage:SetPoint("LEFT", mMT_StageBlock, "LEFT", 10, 2)
 		end
 
 		StageBlock.mMT_StageBlock = mMT_StageBlock
-	end
-
-	-- add difficulty text to our lable
-	if IsInInstance() and StageBlock.mMT_StageBlock and StageBlock.mMT_StageBlock.Difficulty then
-		if not isChallengeMode then
+	else
+		-- add difficulty text to our lable
+		if IsInInstance() and StageBlock.mMT_StageBlock and StageBlock.mMT_StageBlock.Difficulty then
 			StageBlock.mMT_StageBlock.Difficulty:SetText(mMT:GetDungeonInfo(false, false, true))
 		end
 	end
@@ -625,6 +553,9 @@ end
 
 -- set title text
 local function SetTitleText(text, isQuest)
+	if not db then
+		return
+	end
 	color = colorFont.title.class and mMT.ClassColor or colorFont.title
 
 	local font = LSM:Fetch("font", db.font.font)
@@ -641,6 +572,9 @@ end
 
 -- header bar
 local function AddHeaderBar(header)
+	if not db then
+		return
+	end
 	local width = _G.ObjectiveTrackerFrame:GetWidth()
 	local headerBar = CreateFrame("Frame", "mMT_ObjectiveTracker_HeaderBar", header)
 	headerBar:SetFrameStrata("BACKGROUND")
@@ -666,6 +600,9 @@ end
 
 --  update header text and add header bar
 local function UpdateHeaders()
+	if not db then
+		return
+	end
 	local Frame = ObjectiveTrackerFrame.MODULES
 	if Frame then
 		for i = 1, #Frame do
@@ -693,9 +630,6 @@ function module:Initialize()
 	db = E.db.mMT.objectivetracker
 
 	SetTextColors()
-
-	affixes = C_MythicPlus_GetCurrentAffixes()
-	weeklyAffixID = affixes and affixes[1] and affixes[1].id
 
 	if not module.hooked then
 		-- Bar Skins

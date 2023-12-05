@@ -539,7 +539,17 @@
         "ObjectiveTracker_AddBlock",
         "show",
         "MAIL_LABEL",
-        "HAVE_MAIL_FROM"
+        "HAVE_MAIL_FROM",
+        "active",
+        "SecondsToClock",
+        "C_Scenario",
+        "FindSpellBookSlotBySpellID",
+        "GetSpellBookItemTexture",
+        "rawset",
+        "HasNewMail",
+        "GetLatestThreeSenders",
+        "ResetCPUUsage",
+        "SetPortraitTexture"
     ],
     "Lua.diagnostics.disable": [
         "undefined-field"

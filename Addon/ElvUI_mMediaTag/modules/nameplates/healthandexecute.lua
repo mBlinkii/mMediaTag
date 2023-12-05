@@ -365,9 +365,5 @@ local function mNameplateTools(table, event, frame)
 end
 
 function mMT:StartNameplateTools()
-	if E.db.mMT.nameplate.executemarker.auto then
-		mMT:updateAutoRange()
-	end
-
 	hooksecurefunc(NP, "Health_UpdateColor", mNameplateTools)
 end

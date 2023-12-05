@@ -51,7 +51,6 @@ local defaultDB = {
 	affix = nil,
 	keys = {},
 	dev = { enabled = false, frame = { top = nil, left = nil }, unit = {}, zone = {} },
-	mplus = {season = nil, version = 0, times = {}  },
 }
 
 local DB_Loader = CreateFrame("FRAME")
@@ -218,6 +217,10 @@ function mMT:Initialize()
 		if (E.private.nameplates.enable and E.db.mMT.nameplate.executemarker.auto) or E.db.mMT.interruptoncd.enable then
 			self:RegisterEvent("PLAYER_TALENT_UPDATE")
 		end
+
+		if E.private.nameplates.enable and (E.db.mMT.nameplate.healthmarker.enable or E.db.mMT.nameplate.executemarker.enable) then
+			mMT:StartNameplateTools()
+		end
 	end
 
 	if E.db.mMT.general.emediaenable then
@@ -296,16 +299,9 @@ function mMT:PLAYER_ENTERING_WORLD(event)
 
 	-- Modules only for Retail
 	if E.Retail then
-		if E.Retail then
-
-			if E.private.nameplates.enable and (E.db.mMT.nameplate.healthmarker.enable or E.db.mMT.nameplate.executemarker.enable) then
-				mMT:StartNameplateTools()
-			end
+		if E.private.nameplates.enable and E.db.mMT.nameplate.executemarker.auto then
+			mMT:updateAutoRange()
 		end
-	end
-
-	if E.db.mMT.afk.enable then
-		mMT:RegisterEvent("PLAYER_FLAGS_CHANGED")
 	end
 
 	-- Initialize Modules
