@@ -1,7 +1,6 @@
 local E, L, V, P, G = unpack(ElvUI)
 
 P.mMT = {
-	convert = 0,
 	version = 0,
 	general = { greeting = true, keystochat = false, emediaenable = false },
 	afk = {
@@ -269,6 +268,7 @@ P.mMT = {
 		hidetext = false,
 	},
 	objectivetracker = {
+		convert = 0,
 		enable = false,
 		bar = {
 			fontsize = 12,

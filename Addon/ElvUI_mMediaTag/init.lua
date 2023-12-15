@@ -278,10 +278,10 @@ function mMT:PLAYER_ENTERING_WORLD(event)
 		E.db.mMT.version = mMT.Version
 	end
 
-	-- Changelog
-	if E.db.mMT.convert ~= mMT.Version then
-		--mMT:ConvertDB()
-		E.db.mMT.convert = mMT.Version
+	-- ObjectiveTracker DB converter
+	if E.db.mMT.objectivetracker.convert < 1 then
+		mMT:ConvertDB()
+		E.db.mMT.convert = 1
 	end
 
 	-- DevMode
