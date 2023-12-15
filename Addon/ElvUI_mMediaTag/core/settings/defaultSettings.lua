@@ -307,9 +307,9 @@ P.mMT = {
 			shadow = true,
 			difficulty = true,
 			color = {
-				chest3 = { a = { r = 0, g = 1, b = 0.27, a = 1 }, b = { r = 0, g = 1, b = 0.27, a = 1 } },
-				chest2 = { a = { r = 0, g = 1, b = 0.27, a = 1 }, b = { r = 0, g = 1, b = 0.27, a = 1 } },
-				chest1 = { a = { r = 0, g = 1, b = 0.27, a = 1 }, b = { r = 0, g = 1, b = 0.27, a = 1 } },
+				chest3 = { a = { r = 0, g = 0.54, b = 1, a = 1 }, b = { r = 0, g = 0.71, b = 0.1, a = 1 } },
+				chest2 = { a = { r = 1, g = 0.73, b = 0, a = 1 }, b = { r = 1, g = 0.49, b = 0, a = 1 } },
+				chest1 = { a = { r = 1, g = 0, b = 0.14, a = 1 }, b = { r = 1, g = 0.33, b = 0, a = 1 } },
 			},
 		},
 		headerbar = {
