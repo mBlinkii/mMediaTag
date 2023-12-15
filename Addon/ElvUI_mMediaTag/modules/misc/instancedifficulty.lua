@@ -137,6 +137,16 @@ local shortNames = {
 	[2563] = "NPGA",
 	[2573] = "LA",
 	[2574] = "DIR",
+
+	-- Time Rifts
+	[2639] = "TR",
+	[2635] = "TR",
+	[2634] = "TR",
+	[2595] = "TR",
+	[2594] = "TR",
+	[2593] = "TR",
+	[2587] = "TR",
+	[2586] = "TR",
 }
 
 local colors = {
@@ -219,9 +229,7 @@ local function GetIconSettings(button)
 	local defaults = P.general.minimap.icons[button]
 	local profile = E.db.general.minimap.icons[button]
 
-	return profile.position or defaults.position,
-		profile.xOffset or defaults.xOffset,
-		profile.yOffset or defaults.yOffset
+	return profile.position or defaults.position, profile.xOffset or defaults.xOffset, profile.yOffset or defaults.yOffset
 end
 
 local function GetKeystoneLevelandColor()
@@ -230,25 +238,30 @@ local function GetKeystoneLevelandColor()
 	if keyStoneLevel == 2 then
 		return format("%s%s|r", colors.mpa.color, keyStoneLevel)
 	elseif keyStoneLevel <= 9 then
-		color =
-			mMT:ColorFade(E.db.mMT.instancedifficulty.mpa, E.db.mMT.instancedifficulty.mpb, percentValue[keyStoneLevel])
-			if color then return format("%s%s|r", color.color, keyStoneLevel) end
+		color = mMT:ColorFade(E.db.mMT.instancedifficulty.mpa, E.db.mMT.instancedifficulty.mpb, percentValue[keyStoneLevel])
+		if color then
+			return format("%s%s|r", color.color, keyStoneLevel)
+		end
 	elseif keyStoneLevel <= 14 then
-		color =
-			mMT:ColorFade(E.db.mMT.instancedifficulty.mpb, E.db.mMT.instancedifficulty.mpc, percentValue[keyStoneLevel])
-			if color then return format("%s%s|r", color.color, keyStoneLevel) end
+		color = mMT:ColorFade(E.db.mMT.instancedifficulty.mpb, E.db.mMT.instancedifficulty.mpc, percentValue[keyStoneLevel])
+		if color then
+			return format("%s%s|r", color.color, keyStoneLevel)
+		end
 	elseif keyStoneLevel <= 19 then
-		color =
-			mMT:ColorFade(E.db.mMT.instancedifficulty.mpc, E.db.mMT.instancedifficulty.mpd, percentValue[keyStoneLevel])
-			if color then return format("%s%s|r", color.color, keyStoneLevel) end
+		color = mMT:ColorFade(E.db.mMT.instancedifficulty.mpc, E.db.mMT.instancedifficulty.mpd, percentValue[keyStoneLevel])
+		if color then
+			return format("%s%s|r", color.color, keyStoneLevel)
+		end
 	elseif keyStoneLevel >= 24 then
-		color =
-			mMT:ColorFade(E.db.mMT.instancedifficulty.mpd, E.db.mMT.instancedifficulty.mpe, percentValue[keyStoneLevel])
-			if color then return format("%s%s|r", color.color, keyStoneLevel) end
+		color = mMT:ColorFade(E.db.mMT.instancedifficulty.mpd, E.db.mMT.instancedifficulty.mpe, percentValue[keyStoneLevel])
+		if color then
+			return format("%s%s|r", color.color, keyStoneLevel)
+		end
 	elseif keyStoneLevel >= 29 then
-		color =
-			mMT:ColorFade(E.db.mMT.instancedifficulty.mpe, E.db.mMT.instancedifficulty.mpf, percentValue[keyStoneLevel])
-			if color then return format("%s%s|r", color.color, keyStoneLevel) end
+		color = mMT:ColorFade(E.db.mMT.instancedifficulty.mpe, E.db.mMT.instancedifficulty.mpf, percentValue[keyStoneLevel])
+		if color then
+			return format("%s%s|r", color.color, keyStoneLevel)
+		end
 	else
 		return format("%s%s|r", colors.mpf.color, keyStoneLevel)
 	end
@@ -265,97 +278,33 @@ function mMT:GetDungeonInfo(datatext, short, stageBlock)
 		local difficultyColor = instanceDifficulty[difficultyID] and instanceDifficulty[difficultyID].c or "|CFFFFFFFF"
 		local difficultyShort = instanceDifficulty[difficultyID] and instanceDifficulty[difficultyID].d or ""
 		local isGuildParty = InGuildParty()
-		if
-			difficultyID == 8
-			and C_MythicPlus.IsMythicPlusActive()
-			and C_ChallengeMode.GetActiveChallengeMapID()
-		then
+		if difficultyID == 8 and C_MythicPlus.IsMythicPlusActive() and C_ChallengeMode.GetActiveChallengeMapID() then
 			if datatext and not short then
-				text = format(
-					"%s%s|r %s%s|r %s",
-					isGuildParty and colors.guild.color or colors.name.color,
-					name,
-					difficultyColor,
-					difficultyShort,
-					GetKeystoneLevelandColor()
-				)
+				text = format("%s%s|r %s%s|r %s", isGuildParty and colors.guild.color or colors.name.color, name, difficultyColor, difficultyShort, GetKeystoneLevelandColor())
 			elseif short then
-				text = format(
-					"%s%s|r %s",
-					difficultyColor,
-					difficultyShort,
-					GetKeystoneLevelandColor()
-				)
+				text = format("%s%s|r %s", difficultyColor, difficultyShort, GetKeystoneLevelandColor())
 			else
-				text = format(
-					"%s%s|r\n%s%s|r %s",
-					isGuildParty and colors.guild.color or colors.name.color,
-					name,
-					difficultyColor,
-					difficultyShort,
-					GetKeystoneLevelandColor()
-				)
+				text = format("%s%s|r\n%s%s|r %s", isGuildParty and colors.guild.color or colors.name.color, name, difficultyColor, difficultyShort, GetKeystoneLevelandColor())
 			end
 		elseif InstanceType == "pvp" or InstanceType == "arena" then
 			difficultyColor = instanceDifficulty[34] and instanceDifficulty[34].c or "|CFFFFFFFF"
 			difficultyShort = instanceDifficulty[34] and instanceDifficulty[34].d or ""
 			if datatext and not short then
-				text = format(
-					"%s%s|r %s%s|r",
-					isGuildParty and colors.guild.color or colors.name.color,
-					name,
-					difficultyColor,
-					difficultyShort
-				)
+				text = format("%s%s|r %s%s|r", isGuildParty and colors.guild.color or colors.name.color, name, difficultyColor, difficultyShort)
 			elseif short then
-				text = format(
-					"%s%s|r",
-					difficultyColor,
-					difficultyShort
-				)
+				text = format("%s%s|r", difficultyColor, difficultyShort)
 			else
-				text = format(
-					"%s%s|r\n%s%s|r",
-					isGuildParty and colors.guild.color or colors.name.color,
-					name,
-					difficultyColor,
-					difficultyShort
-				)
+				text = format("%s%s|r\n%s%s|r", isGuildParty and colors.guild.color or colors.name.color, name, difficultyColor, difficultyShort)
 			end
 		else
 			if datatext and not short then
-				text = format(
-					"%s%s|r %s%s|r |CFFF7DC6F%s|r",
-					isGuildParty and colors.guild.color or colors.name.color,
-					name,
-					difficultyColor,
-					difficultyShort,
-					instanceGroupSize
-				)
+				text = format("%s%s|r %s%s|r |CFFF7DC6F%s|r", isGuildParty and colors.guild.color or colors.name.color, name, difficultyColor, difficultyShort, instanceGroupSize)
 			elseif short then
-				text = format(
-					"%s%s|r %s%s|r",
-					isGuildParty and colors.guild.color or colors.name.color,
-					name,
-					difficultyColor,
-					difficultyShort
-				)
+				text = format("%s%s|r %s%s|r", isGuildParty and colors.guild.color or colors.name.color, name, difficultyColor, difficultyShort)
 			elseif stageBlock then
-				text = format(
-					"%s|r %s%s|r",
-					isGuildParty and colors.guild.color .. "#" or "",
-					difficultyColor,
-					difficultyShort
-				)
+				text = format("%s|r %s%s|r", isGuildParty and colors.guild.color .. "#" or "", difficultyColor, difficultyShort)
 			else
-				text = format(
-					"%s%s|r\n%s%s|r |CFFF7DC6F%s|r",
-					isGuildParty and colors.guild.color or colors.name.color,
-					name,
-					difficultyColor,
-					difficultyShort,
-					instanceGroupSize
-				)
+				text = format("%s%s|r\n%s%s|r |CFFF7DC6F%s|r", isGuildParty and colors.guild.color or colors.name.color, name, difficultyColor, difficultyShort, instanceGroupSize)
 			end
 		end
 		return text
