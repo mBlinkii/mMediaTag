@@ -281,7 +281,7 @@ function mMT:PLAYER_ENTERING_WORLD(event)
 	-- ObjectiveTracker DB converter
 	if E.db.mMT.objectivetracker.convert < 1 then
 		mMT:ConvertDB()
-		E.db.mMT.convert = 1
+		E.db.mMT.objectivetracker.convert = 1
 		mMT:Print(L["The ObjectiveTracker settings have been reset to reflect the latest updates in mMT."])
 	end
 
