@@ -14,7 +14,6 @@ local hooksecurefunc = hooksecurefunc
 local ObjectiveTrackerFrame = _G.ObjectiveTrackerFrame
 local maxNumQuestsCanAccept = min(C_QuestLog.GetMaxNumQuestsCanAccept() + (E.Retail and 10 or 0), 35) -- 20 for ERA, 25 for WotLK, 35 for Retail
 local IsInInstance = IsInInstance
-local C_MythicPlus_GetCurrentAffixes = C_MythicPlus.GetCurrentAffixes
 
 local colorFont = {}
 local color = {}
@@ -123,15 +122,15 @@ local function SetTextColors()
 	colorFont = db.font.color
 	dim = db.font.highlight
 	local colorNormal = colorFont.text.class and mMT.ClassColor or colorFont.text
-	local colorHeader = colorFont.header.class and mMT.ClassColor or colorFont.header
+	local colorTitle = colorFont.title.class and mMT.ClassColor or colorFont.title
 
 	OBJECTIVE_TRACKER_COLOR = {
 		["Normal"] = { r = colorNormal.r, g = colorNormal.g, b = colorNormal.b },
 		["NormalHighlight"] = { r = colorNormal.r - dim, g = colorNormal.g - dim, b = colorNormal.b - dim },
 		["Failed"] = { r = colorFont.failed.r, g = colorFont.failed.g, b = colorFont.failed.b },
 		["FailedHighlight"] = { r = colorFont.failed.r - dim, g = colorFont.failed.g - dim, b = colorFont.failed.b - dim },
-		["Header"] = { r = colorHeader.r, g = colorHeader.g, b = colorHeader.b },
-		["HeaderHighlight"] = { r = colorHeader.r - dim, g = colorHeader.g - dim, b = colorHeader.b - dim },
+		["Header"] = { r = colorTitle.r, g = colorTitle.g, b = colorTitle.b },
+		["HeaderHighlight"] = { r = colorTitle.r - dim, g = colorTitle.g - dim, b = colorTitle.b - dim },
 		["Complete"] = { r = colorFont.complete.r, g = colorFont.complete.g, b = colorFont.complete.b },
 		["CompleteHighlight"] = { r = colorFont.complete.r - dim, g = colorFont.complete.g - dim, b = colorFont.complete.b - dim },
 		["TimeLeft"] = { r = colorFont.failed.r, g = colorFont.failed.g, b = colorFont.failed.b },
@@ -149,13 +148,13 @@ local function SetTextColors()
 	OBJECTIVE_TRACKER_COLOR["CompleteHighlight"] = OBJECTIVE_TRACKER_COLOR["Complete"]
 end
 
--- header text settings
-local function SetHeaderText(text)
+-- title text settings
+local function SetTitleText(text)
 	if not db then
 		return
 	end
-	color = db.font.color.header.class and mMT.ClassColor or db.font.color.header
-	fontsize = db.font.fontsize.header
+	color = db.font.color.title.class and mMT.ClassColor or db.font.color.title
+	fontsize = db.font.fontsize.title
 
 	text:SetFont(LSM:Fetch("font", db.font.font), fontsize, db.font.fontflag)
 	text:SetTextColor(color.r, color.g, color.b)
@@ -256,13 +255,13 @@ local function SkinObjective(_, block, objectiveKey)
 	if block then
 		-- title text
 		if block.HeaderText then
-			SetHeaderText(block.HeaderText)
+			SetTitleText(block.HeaderText)
 		end
 
 		if block.currentLine then
 			-- title text else line text
 			if block.currentLine.objectiveKey == 0 then
-				SetHeaderText(block.currentLine.Text)
+				SetTitleText(block.currentLine.Text)
 			else
 				-- done icon
 				local check = block.currentLine.Check
@@ -344,18 +343,19 @@ local function SkinDungeonsUpdateCriteria(_, numCriteria, block)
 
 				-- done icon and dash
 				local icon = existingLine.Icon
-				if icon and existingLine.completed then
-					if db.dungeon.hidedash then
-						icon:Show()
-					end
-					icon:SetTexture("Interface\\AddOns\\ElvUI_mMediaTag\\media\\icons\\misc\\questDone.tga")
-					icon:SetVertexColor(db.font.color.complete.r, db.font.color.complete.g, db.font.color.complete.b, 1)
-				else
+
+				if icon then
 					if db.dungeon.hidedash then
 						icon:Hide()
 					else
-						icon:SetTexture("Interface\\AddOns\\ElvUI_mMediaTag\\media\\icons\\misc\\questMinus.tga")
-						icon:SetVertexColor(mMT.ClassColor.r, mMT.ClassColor.g, mMT.ClassColor.b, 1)
+						icon:Show()
+						if existingLine.completed then
+							icon:SetTexture("Interface\\AddOns\\ElvUI_mMediaTag\\media\\icons\\misc\\questDone.tga")
+							icon:SetVertexColor(db.font.color.complete.r, db.font.color.complete.g, db.font.color.complete.b, 1)
+						else
+							icon:SetTexture("Interface\\AddOns\\ElvUI_mMediaTag\\media\\icons\\misc\\questMinus.tga")
+							icon:SetVertexColor(mMT.ClassColor.r, mMT.ClassColor.g, mMT.ClassColor.b, 1)
+						end
 					end
 				end
 			end
@@ -392,21 +392,21 @@ local function SkinChallengeModeTime(block, elapsedTime)
 	-- end
 
 	-- timer bar color
-	local colorA = db.font.color.good
-	local colorB = db.font.color.good
+	local colorA = db.dungeon.color.chest1.a
+	local colorB = db.dungeon.color.chest1.b
+
 	if elapsedTime < block.mMT_Timers.chest3 then
-		colorA = db.font.color.good
-		colorB = db.font.color.transit
-		block.StatusBar:GetStatusBarTexture():SetGradient("HORIZONTAL", { r = colorB.r, g = colorB.g, b = colorB.b, a = 1 }, { r = colorA.r, g = colorA.g, b = colorA.b, a = 1 })
+		colorA = db.dungeon.color.chest3.a
+		colorB = db.dungeon.color.chest3.b
 	elseif elapsedTime < block.mMT_Timers.chest2 then
-		colorA = db.font.color.transit
-		colorB = db.font.color.bad
-		block.StatusBar:GetStatusBarTexture():SetGradient("HORIZONTAL", { r = colorB.r, g = colorB.g, b = colorB.b, a = 1 }, { r = colorA.r, g = colorA.g, b = colorA.b, a = 1 })
+		colorA = db.dungeon.color.chest2.a
+		colorB = db.dungeon.color.chest2.b
 	else
-		colorA = db.font.color.bad
-		colorB = { r = colorA.r - 0.2, g = colorA.g - 0.2, b = colorA.r - 0.2 }
-		block.StatusBar:GetStatusBarTexture():SetGradient("HORIZONTAL", { r = colorB.r, g = colorB.g, b = colorB.b, a = 1 }, { r = colorA.r, g = colorA.g, b = colorA.b, a = 1 })
+		colorA = db.dungeon.color.chest1.a
+		colorB = db.dungeon.color.chest1.b
 	end
+
+	block.StatusBar:GetStatusBarTexture():SetGradient("HORIZONTAL", { r = colorA.r, g = colorA.g, b = colorA.b, a = colorA.a }, { r = colorB.r, g = colorB.g, b = colorB.b, a = colorB.a })
 
 	-- create and set time limit markers
 	if not block.timerMarker then
@@ -551,15 +551,15 @@ function SkinStageBlock()
 	end
 end
 
--- set title text
-local function SetTitleText(text, isQuest)
+-- set header text
+local function SetHeaderText(text, isQuest)
 	if not db then
 		return
 	end
-	color = colorFont.title.class and mMT.ClassColor or colorFont.title
+	color = colorFont.header.class and mMT.ClassColor or colorFont.header
 
 	local font = LSM:Fetch("font", db.font.font)
-	text:SetFont(font, db.font.fontsize.title, db.font.fontflag)
+	text:SetFont(font, db.font.fontsize.header, db.font.fontflag)
 	text:SetTextColor(color.r, color.g, color.b)
 
 	if isQuest and db.settings.questcount then
@@ -608,7 +608,7 @@ local function UpdateHeaders()
 		for i = 1, #Frame do
 			local Module = Frame[i]
 			if Module then
-				SetTitleText(Module.Header.Text)
+				SetHeaderText(Module.Header.Text)
 
 				if db.headerbar.enable and not Module.mMT_BarAdded then
 					AddHeaderBar(Module.Header)

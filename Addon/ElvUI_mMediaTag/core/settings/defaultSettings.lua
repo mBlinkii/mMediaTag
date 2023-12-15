@@ -301,15 +301,15 @@ P.mMT = {
 		settings = {
 			questcount = true,
 			hidedash = true,
-			hidedungeondash = false,
 		},
 		dungeon = {
 			hidedash = true,
 			shadow = true,
 			difficulty = true,
 			color = {
-				normal = { r = 0.24, g = 0.24, b = 0.24, a = 1 },
-				complete = { r = 0, g = 1, b = 0.27, a = 1 },
+				chest3 = { a = { r = 0, g = 1, b = 0.27, a = 1 }, b = { r = 0, g = 1, b = 0.27, a = 1 } },
+				chest2 = { a = { r = 0, g = 1, b = 0.27, a = 1 }, b = { r = 0, g = 1, b = 0.27, a = 1 } },
+				chest1 = { a = { r = 0, g = 1, b = 0.27, a = 1 }, b = { r = 0, g = 1, b = 0.27, a = 1 } },
 			},
 		},
 		headerbar = {

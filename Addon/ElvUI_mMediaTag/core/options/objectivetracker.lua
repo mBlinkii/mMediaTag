@@ -113,6 +113,7 @@ local function configTable()
 							end,
 							set = function(info, value)
 								E.db.mMT.objectivetracker.font.font = value
+								E:StaticPopup_Show("CONFIG_RL")
 							end,
 						},
 						select_fontflag = {
@@ -125,6 +126,7 @@ local function configTable()
 							end,
 							set = function(info, value)
 								E.db.mMT.objectivetracker.font.fontflag = value
+								E:StaticPopup_Show("CONFIG_RL")
 							end,
 						},
 						spacer_1 = {
@@ -146,6 +148,7 @@ local function configTable()
 							end,
 							set = function(info, value)
 								E.db.mMT.objectivetracker.font.fontsize.header = value
+								E:StaticPopup_Show("CONFIG_RL")
 							end,
 						},
 						spacer_2 = {
@@ -167,6 +170,7 @@ local function configTable()
 							end,
 							set = function(info, value)
 								E.db.mMT.objectivetracker.font.fontsize.title = value
+								E:StaticPopup_Show("CONFIG_RL")
 							end,
 						},
 						spacer_3 = {
@@ -188,6 +192,7 @@ local function configTable()
 							end,
 							set = function(info, value)
 								E.db.mMT.objectivetracker.font.fontsize.text = value
+								E:StaticPopup_Show("CONFIG_RL")
 							end,
 						},
 					},
@@ -210,6 +215,7 @@ local function configTable()
 							end,
 							set = function(info, value)
 								E.db.mMT.objectivetracker.font.highlight = value
+								E:StaticPopup_Show("CONFIG_RL")
 							end,
 						},
 					},
@@ -220,41 +226,9 @@ local function configTable()
 					inline = true,
 					name = L["Font Colors"],
 					args = {
-						color_title = {
-							type = "color",
-							order = 1,
-							name = L["Title"],
-							hasAlpha = false,
-							get = function(info)
-								local t = E.db.mMT.objectivetracker.font.color.title
-								return t.r, t.g, t.b
-							end,
-							set = function(info, r, g, b)
-								local t = E.db.mMT.objectivetracker.font.color.title
-								t.r, t.g, t.b, t.hex = r, g, b, E:RGBToHex(r, g, b)
-								E:StaticPopup_Show("CONFIG_RL")
-							end,
-						},
-						toggle_title = {
-							order = 2,
-							type = "toggle",
-							name = L["Class colored"],
-							get = function(info)
-								return E.db.mMT.objectivetracker.font.color.title.class
-							end,
-							set = function(info, value)
-								E.db.mMT.objectivetracker.font.color.title.class = value
-								E:StaticPopup_Show("CONFIG_RL")
-							end,
-						},
-						spacer_1 = {
-							order = 3,
-							type = "description",
-							name = "\n\n\n",
-						},
 						color_header = {
 							type = "color",
-							order = 4,
+							order = 1,
 							name = L["Header"],
 							hasAlpha = false,
 							get = function(info)
@@ -268,7 +242,7 @@ local function configTable()
 							end,
 						},
 						toggle_header = {
-							order = 5,
+							order = 2,
 							type = "toggle",
 							name = L["Class colored"],
 							get = function(info)
@@ -276,6 +250,38 @@ local function configTable()
 							end,
 							set = function(info, value)
 								E.db.mMT.objectivetracker.font.color.header.class = value
+								E:StaticPopup_Show("CONFIG_RL")
+							end,
+						},
+						spacer_1 = {
+							order = 3,
+							type = "description",
+							name = "\n\n\n",
+						},
+						color_title = {
+							type = "color",
+							order = 4,
+							name = L["Title"],
+							hasAlpha = false,
+							get = function(info)
+								local t = E.db.mMT.objectivetracker.font.color.title
+								return t.r, t.g, t.b
+							end,
+							set = function(info, r, g, b)
+								local t = E.db.mMT.objectivetracker.font.color.title
+								t.r, t.g, t.b, t.hex = r, g, b, E:RGBToHex(r, g, b)
+								E:StaticPopup_Show("CONFIG_RL")
+							end,
+						},
+						toggle_title = {
+							order = 5,
+							type = "toggle",
+							name = L["Class colored"],
+							get = function(info)
+								return E.db.mMT.objectivetracker.font.color.title.class
+							end,
+							set = function(info, value)
+								E.db.mMT.objectivetracker.font.color.title.class = value
 								E:StaticPopup_Show("CONFIG_RL")
 							end,
 						},
@@ -638,59 +644,153 @@ local function configTable()
 				return not E.db.mMT.objectivetracker.enable
 			end,
 			args = {
-				toggle_dash = {
+				settings = {
 					order = 1,
-					type = "toggle",
-					name = L["Hide Dash"],
-					get = function(info)
-						return E.db.mMT.objectivetracker.dungeon.dash
-					end,
-					set = function(info, value)
-						E.db.mMT.objectivetracker.dungeon.dash = value
-						E:StaticPopup_Show("CONFIG_RL")
-					end,
+					type = "group",
+					inline = true,
+					name = L["Settings"],
+					args = {
+						toggle_dash = {
+							order = 1,
+							type = "toggle",
+							name = L["Hide Dash"],
+							get = function(info)
+								return E.db.mMT.objectivetracker.dungeon.hidedash
+							end,
+							set = function(info, value)
+								E.db.mMT.objectivetracker.dungeon.hidedash = value
+								E:StaticPopup_Show("CONFIG_RL")
+							end,
+						},
+						toggle_shadow = {
+							order = 2,
+							type = "toggle",
+							name = L["Shadow"],
+							get = function(info)
+								return E.db.mMT.objectivetracker.dungeon.shadow
+							end,
+							set = function(info, value)
+								E.db.mMT.objectivetracker.dungeon.shadow = value
+								E:StaticPopup_Show("CONFIG_RL")
+							end,
+						},
+					},
 				},
-				toggle_shadow = {
+				color = {
 					order = 2,
-					type = "toggle",
-					name = L["Shadow"],
-					get = function(info)
-						return E.db.mMT.objectivetracker.dungeon.shadow
-					end,
-					set = function(info, value)
-						E.db.mMT.objectivetracker.dungeon.shadow = value
-						E:StaticPopup_Show("CONFIG_RL")
-					end,
-				},
-				color_norm = {
-					type = "color",
-					order = 3,
-					name = L["Color Normal"],
-					hasAlpha = true,
-					get = function(info)
-						local t = E.db.mMT.objectivetracker.dungeon.color.normal
-						return t.r, t.g, t.b, t.a
-					end,
-					set = function(info, r, g, b, a)
-						local t = E.db.mMT.objectivetracker.dungeon.color.normal
-						t.r, t.g, t.b, t.a = r, g, b, a
-						E:StaticPopup_Show("CONFIG_RL")
-					end,
-				},
-				color_complete = {
-					type = "color",
-					order = 3,
-					name = L["Color Complete"],
-					hasAlpha = true,
-					get = function(info)
-						local t = E.db.mMT.objectivetracker.dungeon.color.complete
-						return t.r, t.g, t.b, t.a
-					end,
-					set = function(info, r, g, b, a)
-						local t = E.db.mMT.objectivetracker.dungeon.color.complete
-						t.r, t.g, t.b, t.a = r, g, b, a
-						E:StaticPopup_Show("CONFIG_RL")
-					end,
+					type = "group",
+					inline = true,
+					name = L["Mythic + Colors"],
+					args = {
+						chest_1 = {
+							order = 1,
+							type = "group",
+							inline = true,
+							name = L["Chest +1"],
+							args = {
+								color_a = {
+									type = "color",
+									order = 1,
+									name = L["A"],
+									hasAlpha = true,
+									get = function(info)
+										local t = E.db.mMT.objectivetracker.dungeon.color.chest1.a
+										return t.r, t.g, t.b, t.a
+									end,
+									set = function(info, r, g, b, a)
+										local t = E.db.mMT.objectivetracker.dungeon.color.chest1.a
+										t.r, t.g, t.b, t.a = r, g, b, a
+									end,
+								},
+								color_b = {
+									type = "color",
+									order = 1,
+									name = L["B"],
+									hasAlpha = true,
+									get = function(info)
+										local t = E.db.mMT.objectivetracker.dungeon.color.chest1.b
+										return t.r, t.g, t.b, t.a
+									end,
+									set = function(info, r, g, b, a)
+										local t = E.db.mMT.objectivetracker.dungeon.color.chest1.b
+										t.r, t.g, t.b, t.a = r, g, b, a
+									end,
+								},
+							},
+						},
+						chest_2 = {
+							order = 2,
+							type = "group",
+							inline = true,
+							name = L["Chest +2"],
+							args = {
+								color_a = {
+									type = "color",
+									order = 1,
+									name = L["A"],
+									hasAlpha = true,
+									get = function(info)
+										local t = E.db.mMT.objectivetracker.dungeon.color.chest2.a
+										return t.r, t.g, t.b, t.a
+									end,
+									set = function(info, r, g, b, a)
+										local t = E.db.mMT.objectivetracker.dungeon.color.chest2.a
+										t.r, t.g, t.b, t.a = r, g, b, a
+									end,
+								},
+								color_b = {
+									type = "color",
+									order = 1,
+									name = L["B"],
+									hasAlpha = true,
+									get = function(info)
+										local t = E.db.mMT.objectivetracker.dungeon.color.chest2.b
+										return t.r, t.g, t.b, t.a
+									end,
+									set = function(info, r, g, b, a)
+										local t = E.db.mMT.objectivetracker.dungeon.color.chest2.b
+										t.r, t.g, t.b, t.a = r, g, b, a
+									end,
+								},
+							},
+						},
+						chest_3 = {
+							order = 3,
+							type = "group",
+							inline = true,
+							name = L["Chest +3"],
+							args = {
+								color_a = {
+									type = "color",
+									order = 1,
+									name = L["A"],
+									hasAlpha = true,
+									get = function(info)
+										local t = E.db.mMT.objectivetracker.dungeon.color.chest3.a
+										return t.r, t.g, t.b, t.a
+									end,
+									set = function(info, r, g, b, a)
+										local t = E.db.mMT.objectivetracker.dungeon.color.chest3.a
+										t.r, t.g, t.b, t.a = r, g, b, a
+									end,
+								},
+								color_b = {
+									type = "color",
+									order = 1,
+									name = L["B"],
+									hasAlpha = true,
+									get = function(info)
+										local t = E.db.mMT.objectivetracker.dungeon.color.chest3.b
+										return t.r, t.g, t.b, t.a
+									end,
+									set = function(info, r, g, b, a)
+										local t = E.db.mMT.objectivetracker.dungeon.color.chest3.b
+										t.r, t.g, t.b, t.a = r, g, b, a
+									end,
+								},
+							},
+						},
+					},
 				},
 			},
 		},
