@@ -272,15 +272,6 @@ local function SkinObjective(_, block, objectiveKey)
 					check:SetVertexColor(db.font.color.good.r, db.font.color.good.g, db.font.color.good.b, 1)
 				end
 
-				-- worldquest check, needs mor testing did not work
-				-- local icon = block.currentLine.Icon
-				-- if icon then
-				-- 	isShownCheck = true
-				-- 	icon:SetTexture("Interface\\AddOns\\ElvUI_mMediaTag\\media\\icons\\misc\\questDone.tga")
-				-- 	icon:SetVertexColor(db.font.color.good.r, db.font.color.good.g, db.font.color.good.b, 1)
-				-- 	icon:Hide()
-				-- end
-
 				-- line text
 				-- is quest completed
 				local complete = block.currentLine.state or (objectiveKey == "QuestComplete") or block.currentLine.finished
@@ -363,6 +354,7 @@ local function SkinDungeonsUpdateCriteria(_, numCriteria, block)
 	end
 end
 
+
 -- skin m+ stage block and time
 local function SkinChallengeModeTime(block, elapsedTime)
 	if not db then
@@ -374,22 +366,6 @@ local function SkinChallengeModeTime(block, elapsedTime)
 		block.mMT_Timers.chest3 = block.timeLimit * 0.6
 		block.mMT_Timers.chest2 = block.timeLimit * 0.8
 	end
-
-	-- if block.Affixes and not block.Affixes.mMT_Skin then
-	-- 	local num = #block.Affixes
-	-- 	local leftPoint = 30 + (4 * (num - 1)) + (22 * num);
-	-- 	block.Affixes[1]:ClearAllPoints()
-	-- 	block.Affixes[1]:SetPoint("TOPRIGHT", block.mMT_StageBlock, "TOPRIGHT", -leftPoint, -10)
-
-	-- 	-- for i = 1, num do
-	-- 	-- 	local affixFrame = block.Affixes[i]
-	-- 	-- 	local prev = block.Affixes[i - 1]
-	-- 	-- 	affixFrame:ClearAllPoints()
-	-- 	-- 	affixFrame:SetPoint("LEFT", prev, "RIGHT", 4, 0)
-	-- 	-- end
-
-	-- 	block.Affixes.mMT_Skin = true
-	-- end
 
 	-- timer bar color
 	local colorA = db.dungeon.color.chest1.a
