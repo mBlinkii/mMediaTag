@@ -454,8 +454,8 @@ local function SkinChallengeModeTime(block, elapsedTime)
 	elseif elapsedTime > block.timeLimit then
 		timeText = db.font.color.bad.hex .. "+ " .. SecondsToClock(elapsedTime - block.timeLimit) .. "|r"
 		block.TimeLeft:SetText(db.font.color.bad.hex .. SecondsToClock(elapsedTime) .. "|r")
-	elseif block.mMT_Timers then
-		block.TimeLeft:SetText("")
+	else
+		timeText = ""
 	end
 
 	if timeText then
