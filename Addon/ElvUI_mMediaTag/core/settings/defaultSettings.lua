@@ -514,6 +514,7 @@ P.mMT = {
 		resurrection = { enable = false, icon = "RES04" },
 		readycheck = { enable = false, ready = "DONE01", notready = "NOTREADY01", waiting = "COLOR26" },
 	},
+	classcolors = {enable = true, colors = {}},
 	portraits = {
 		player = {
 			enable = true,
