@@ -1,10 +1,37 @@
 local E, L, V, P, G = unpack(ElvUI)
 
 local tinsert = tinsert
-local loaded = false
+local UF = E:GetModule('UnitFrames')
+
+local function UpdateColors()
+    for i, className in ipairs(mMT.Classes) do
+		E.oUF.colors.class[className][1] = E.db.mMT.classcolors.colors[className]["r"]
+        E.oUF.colors.class[className][2] = E.db.mMT.classcolors.colors[className]["g"]
+        E.oUF.colors.class[className][3] = E.db.mMT.classcolors.colors[className]["b"]
+        E.oUF.colors.class[className]["r"] = E.db.mMT.classcolors.colors[className]["r"]
+        E.oUF.colors.class[className]["g"] = E.db.mMT.classcolors.colors[className]["g"]
+        E.oUF.colors.class[className]["b"] = E.db.mMT.classcolors.colors[className]["b"]
+	end
+	UF:Update_AllFrames()
+end
+
+local function ResetColors()
+	for i, className in ipairs(mMT.Classes) do
+		local color = RAID_CLASS_COLORS[className]
+		E.db.mMT.classcolors.colors[className]["r"] = RAID_CLASS_COLORS[className]["r"]
+        E.db.mMT.classcolors.colors[className]["g"] = RAID_CLASS_COLORS[className]["g"]
+        E.db.mMT.classcolors.colors[className]["b"] = RAID_CLASS_COLORS[className]["b"]
+		E.oUF.colors.class[className][1] = E.db.mMT.classcolors.colors[className]["r"]
+        E.oUF.colors.class[className][2] = E.db.mMT.classcolors.colors[className]["g"]
+        E.oUF.colors.class[className][3] = E.db.mMT.classcolors.colors[className]["b"]
+        E.oUF.colors.class[className]["r"] = E.db.mMT.classcolors.colors[className]["r"]
+        E.oUF.colors.class[className]["g"] = E.db.mMT.classcolors.colors[className]["g"]
+        E.oUF.colors.class[className]["b"] = E.db.mMT.classcolors.colors[className]["b"]
+	end
+	UF:Update_AllFrames()
+end
 
 local function configTable()
-	loaded = (IsAddOnLoaded("!mMT_ClassColors"))
 	E.Options.args.mMT.args.cosmetic.args.classcolor.args = {
 		colorsheader = {
 			order = 1,
@@ -18,27 +45,10 @@ local function configTable()
 					name = L["Custom Class colors"],
 					desc = L["Enable Custom Class colors."],
 					get = function(info)
-						return loaded
+						return E.db.mMT.classcolors.enable
 					end,
 					set = function(info, value)
-						if loaded then
-							DisableAddOn("!mMT_ClassColors")
-						else
-							EnableAddOn("!mMT_ClassColors")
-						end
-						E:StaticPopup_Show("CONFIG_RL")
-					end,
-				},
-				emediacolor = {
-					order = 3,
-					type = "toggle",
-					name = L["Change ElvUI Media color"],
-					get = function(info)
-						return E.db.mMT.general.emediaenable
-					end,
-					set = function(info, value)
-						E.db.mMT.general.emediaenable = value
-						mMT:SetElvUIMediaColor()
+						E.db.mMT.classcolors.enable = value
 						E:StaticPopup_Show("CONFIG_RL")
 					end,
 				},
@@ -53,13 +63,11 @@ local function configTable()
 					name = L["Set Custom colors"],
 					desc = L["Set Custom colors"],
 					disabled = function()
-						return not loaded
+						return not E.db.mMT.classcolors.enable
 					end,
 					func = function()
-						if CUSTOM_CLASS_COLORS then
-							CUSTOM_CLASS_COLORS:UpdateColors()
-							E:StaticPopup_Show("CONFIG_RL")
-						end
+						UpdateColors()
+						E:StaticPopup_Show("CONFIG_RL")
 					end,
 				},
 				resetcolors = {
@@ -67,14 +75,9 @@ local function configTable()
 					type = "execute",
 					name = L["Reset Custom colors"],
 					desc = L["Reset Custom colors"],
-					disabled = function()
-						return not loaded
-					end,
 					func = function()
-						if CUSTOM_CLASS_COLORS then
-							CUSTOM_CLASS_COLORS:ResetColors()
-							E:StaticPopup_Show("CONFIG_RL")
-						end
+						ResetColors()
+						E:StaticPopup_Show("CONFIG_RL")
 					end,
 				},
 			},
@@ -91,17 +94,16 @@ local function configTable()
 					name = L["HUNTER"],
 					hasAlpha = false,
 					disabled = function()
-						return not loaded
+						return not E.db.mMT.classcolors.enable
 					end,
 					get = function(info)
-						local t = CUSTOM_CLASS_COLORS and CUSTOM_CLASS_COLORS.HUNTER or { r = 0.66666668653488, g = 0.82745105028152, b = 0.44705885648727 }
+						local t = E.db.mMT.classcolors.colors.HUNTER
 						return t.r, t.g, t.b
 					end,
 					set = function(info, r, g, b)
-						if CUSTOM_CLASS_COLORS then
-							CUSTOM_CLASS_COLORS:SetColor("HUNTER", r, g, b)
-							CUSTOM_CLASS_COLORS:UpdateColors()
-						end
+						local t = E.db.mMT.classcolors.colors.HUNTER
+						t.r, t.g, t.b = r, g, b
+						E:StaticPopup_Show("CONFIG_RL")
 					end,
 				},
 				WARLOCK = {
@@ -110,17 +112,16 @@ local function configTable()
 					name = L["WARLOCK"],
 					hasAlpha = false,
 					disabled = function()
-						return not loaded
+						return not E.db.mMT.classcolors.enable
 					end,
 					get = function(info)
-						local t = CUSTOM_CLASS_COLORS and CUSTOM_CLASS_COLORS.WARLOCK or { r = 0.77647066116333, g = 0.60784316062927, b = 0.42745101451874 }
+						local t = E.db.mMT.classcolors.colors.WARLOCK
 						return t.r, t.g, t.b
 					end,
 					set = function(info, r, g, b)
-						if CUSTOM_CLASS_COLORS then
-							CUSTOM_CLASS_COLORS:SetColor("WARLOCK", r, g, b)
-							CUSTOM_CLASS_COLORS:UpdateColors()
-						end
+						local t = E.db.mMT.classcolors.colors.WARLOCK
+						t.r, t.g, t.b = r, g, b
+						E:StaticPopup_Show("CONFIG_RL")
 					end,
 				},
 				PRIEST = {
@@ -129,17 +130,16 @@ local function configTable()
 					name = L["PRIEST"],
 					hasAlpha = false,
 					disabled = function()
-						return not loaded
+						return not E.db.mMT.classcolors.enable
 					end,
 					get = function(info)
-						local t = CUSTOM_CLASS_COLORS and CUSTOM_CLASS_COLORS.PRIEST or { r = 1, g = 1, b = 1 }
+						local t = E.db.mMT.classcolors.colors.PRIEST
 						return t.r, t.g, t.b
 					end,
 					set = function(info, r, g, b)
-						if CUSTOM_CLASS_COLORS then
-							CUSTOM_CLASS_COLORS:SetColor("PRIEST", r, g, b)
-							CUSTOM_CLASS_COLORS:UpdateColors()
-						end
+						local t = E.db.mMT.classcolors.colors.PRIEST
+						t.r, t.g, t.b = r, g, b
+						E:StaticPopup_Show("CONFIG_RL")
 					end,
 				},
 				PALADIN = {
@@ -148,17 +148,16 @@ local function configTable()
 					name = L["PALADIN"],
 					hasAlpha = false,
 					disabled = function()
-						return not loaded
+						return not E.db.mMT.classcolors.enable
 					end,
 					get = function(info)
-						local t = CUSTOM_CLASS_COLORS and CUSTOM_CLASS_COLORS.PALADIN or { r = 0.95686280727386, g = 0.54901963472366, b = 0.7294117808342 }
+						local t = E.db.mMT.classcolors.colors.PALADIN
 						return t.r, t.g, t.b
 					end,
 					set = function(info, r, g, b)
-						if CUSTOM_CLASS_COLORS then
-							CUSTOM_CLASS_COLORS:SetColor("PALADIN", r, g, b)
-							CUSTOM_CLASS_COLORS:UpdateColors()
-						end
+						local t = E.db.mMT.classcolors.colors.PALADIN
+						t.r, t.g, t.b = r, g, b
+						E:StaticPopup_Show("CONFIG_RL")
 					end,
 				},
 				MAGE = {
@@ -167,17 +166,16 @@ local function configTable()
 					name = L["MAGE"],
 					hasAlpha = false,
 					disabled = function()
-						return not loaded
+						return not E.db.mMT.classcolors.enable
 					end,
 					get = function(info)
-						local t = CUSTOM_CLASS_COLORS and CUSTOM_CLASS_COLORS.MAGE or { r = 0.24705883860588, g = 0.78039222955704, b = 0.9215686917305 }
+						local t = E.db.mMT.classcolors.colors.MAGE
 						return t.r, t.g, t.b
 					end,
 					set = function(info, r, g, b)
-						if CUSTOM_CLASS_COLORS then
-							CUSTOM_CLASS_COLORS:SetColor("MAGE", r, g, b)
-							CUSTOM_CLASS_COLORS:UpdateColors()
-						end
+						local t = E.db.mMT.classcolors.colors.MAGE
+						t.r, t.g, t.b = r, g, b
+						E:StaticPopup_Show("CONFIG_RL")
 					end,
 				},
 				ROGUE = {
@@ -186,17 +184,16 @@ local function configTable()
 					name = L["ROGUE"],
 					hasAlpha = false,
 					disabled = function()
-						return not loaded
+						return not E.db.mMT.classcolors.enable
 					end,
 					get = function(info)
-						local t = CUSTOM_CLASS_COLORS and CUSTOM_CLASS_COLORS.ROGUE or { r = 1, g = 0.95686280727386, b = 0.4078431725502 }
+						local t = E.db.mMT.classcolors.colors.ROGUE
 						return t.r, t.g, t.b
 					end,
 					set = function(info, r, g, b)
-						if CUSTOM_CLASS_COLORS then
-							CUSTOM_CLASS_COLORS:SetColor("ROGUE", r, g, b)
-							CUSTOM_CLASS_COLORS:UpdateColors()
-						end
+						local t = E.db.mMT.classcolors.colors.ROGUE
+						t.r, t.g, t.b = r, g, b
+						E:StaticPopup_Show("CONFIG_RL")
 					end,
 				},
 				DRUID = {
@@ -205,17 +202,16 @@ local function configTable()
 					name = L["DRUID"],
 					hasAlpha = false,
 					disabled = function()
-						return not loaded
+						return not E.db.mMT.classcolors.enable
 					end,
 					get = function(info)
-						local t = CUSTOM_CLASS_COLORS and CUSTOM_CLASS_COLORS.DRUID or { r = 1, g = 0.48627454042435, b = 0.039215687662363 }
+						local t = E.db.mMT.classcolors.colors.DRUID
 						return t.r, t.g, t.b
 					end,
 					set = function(info, r, g, b)
-						if CUSTOM_CLASS_COLORS then
-							CUSTOM_CLASS_COLORS:SetColor("DRUID", r, g, b)
-							CUSTOM_CLASS_COLORS:UpdateColors()
-						end
+						local t = E.db.mMT.classcolors.colors.DRUID
+						t.r, t.g, t.b = r, g, b
+						E:StaticPopup_Show("CONFIG_RL")
 					end,
 				},
 				SHAMAN = {
@@ -224,17 +220,16 @@ local function configTable()
 					name = L["SHAMAN"],
 					hasAlpha = false,
 					disabled = function()
-						return not loaded
+						return not E.db.mMT.classcolors.enable
 					end,
 					get = function(info)
-						local t = CUSTOM_CLASS_COLORS and CUSTOM_CLASS_COLORS.SHAMAN or { r = 0, g = 0.43921571969986, b = 0.8666667342186 }
+						local t = E.db.mMT.classcolors.colors.SHAMAN
 						return t.r, t.g, t.b
 					end,
 					set = function(info, r, g, b)
-						if CUSTOM_CLASS_COLORS then
-							CUSTOM_CLASS_COLORS:SetColor("SHAMAN", r, g, b)
-							CUSTOM_CLASS_COLORS:UpdateColors()
-						end
+						local t = E.db.mMT.classcolors.colors.SHAMAN
+						t.r, t.g, t.b = r, g, b
+						E:StaticPopup_Show("CONFIG_RL")
 					end,
 				},
 				WARRIOR = {
@@ -243,17 +238,16 @@ local function configTable()
 					name = L["WARRIOR"],
 					hasAlpha = false,
 					disabled = function()
-						return not loaded
+						return not E.db.mMT.classcolors.enable
 					end,
 					get = function(info)
-						local t = CUSTOM_CLASS_COLORS and CUSTOM_CLASS_COLORS.WARRIOR or { r = 0.77647066116333, g = 0.60784316062927, b = 0.42745101451874 }
+						local t = E.db.mMT.classcolors.colors.WARRIOR
 						return t.r, t.g, t.b
 					end,
 					set = function(info, r, g, b)
-						if CUSTOM_CLASS_COLORS then
-							CUSTOM_CLASS_COLORS:SetColor("WARRIOR", r, g, b)
-							CUSTOM_CLASS_COLORS:UpdateColors()
-						end
+						local t = E.db.mMT.classcolors.colors.WARRIOR
+						t.r, t.g, t.b = r, g, b
+						E:StaticPopup_Show("CONFIG_RL")
 					end,
 				},
 				DEATHKNIGHT = {
@@ -262,17 +256,16 @@ local function configTable()
 					name = L["DEATHKNIGHT"],
 					hasAlpha = false,
 					disabled = function()
-						return not loaded
+						return not E.db.mMT.classcolors.enable
 					end,
 					get = function(info)
-						local t = CUSTOM_CLASS_COLORS and CUSTOM_CLASS_COLORS.DEATHKNIGHT or { r = 0.76862752437592, g = 0.11764706671238, b = 0.22745099663734 }
+						local t = E.db.mMT.classcolors.colors.DEATHKNIGHT
 						return t.r, t.g, t.b
 					end,
 					set = function(info, r, g, b)
-						if CUSTOM_CLASS_COLORS then
-							CUSTOM_CLASS_COLORS:SetColor("DEATHKNIGHT", r, g, b)
-							CUSTOM_CLASS_COLORS:UpdateColors()
-						end
+						local t = E.db.mMT.classcolors.colors.DEATHKNIGHT
+						t.r, t.g, t.b = r, g, b
+						E:StaticPopup_Show("CONFIG_RL")
 					end,
 				},
 				MONK = {
@@ -281,17 +274,16 @@ local function configTable()
 					name = L["MONK"],
 					hasAlpha = false,
 					disabled = function()
-						return not loaded
+						return not E.db.mMT.classcolors.enable
 					end,
 					get = function(info)
-						local t = CUSTOM_CLASS_COLORS and CUSTOM_CLASS_COLORS.MONK or { r = 0, g = 1, b = 0.59607845544815 }
+						local t = E.db.mMT.classcolors.colors.MONK
 						return t.r, t.g, t.b
 					end,
 					set = function(info, r, g, b)
-						if CUSTOM_CLASS_COLORS then
-							CUSTOM_CLASS_COLORS:SetColor("MONK", r, g, b)
-							CUSTOM_CLASS_COLORS:UpdateColors()
-						end
+						local t = E.db.mMT.classcolors.colors.MONK
+						t.r, t.g, t.b = r, g, b
+						E:StaticPopup_Show("CONFIG_RL")
 					end,
 				},
 				DEMONHUNTER = {
@@ -300,17 +292,16 @@ local function configTable()
 					name = L["DEMONHUNTER"],
 					hasAlpha = false,
 					disabled = function()
-						return not loaded
+						return not E.db.mMT.classcolors.enable
 					end,
 					get = function(info)
-						local t = CUSTOM_CLASS_COLORS and CUSTOM_CLASS_COLORS.DEMONHUNTER or { r = 0.63921570777893, g = 0.18823531270027, b = 0.78823536634445 }
+						local t = E.db.mMT.classcolors.colors.DEMONHUNTER
 						return t.r, t.g, t.b
 					end,
 					set = function(info, r, g, b)
-						if CUSTOM_CLASS_COLORS then
-							CUSTOM_CLASS_COLORS:SetColor("DEMONHUNTER", r, g, b)
-							CUSTOM_CLASS_COLORS:UpdateColors()
-						end
+						local t = E.db.mMT.classcolors.colors.DEMONHUNTER
+						t.r, t.g, t.b = r, g, b
+						E:StaticPopup_Show("CONFIG_RL")
 					end,
 				},
 				EVOKER = {
@@ -319,17 +310,16 @@ local function configTable()
 					name = L["EVOKER"],
 					hasAlpha = false,
 					disabled = function()
-						return not loaded
+						return not E.db.mMT.classcolors.enable
 					end,
 					get = function(info)
-						local t = CUSTOM_CLASS_COLORS and CUSTOM_CLASS_COLORS.EVOKER or { r = 0.20000001788139, g = 0.57647061347961, b = 0.49803924560547 }
+						local t = E.db.mMT.classcolors.colors.EVOKER
 						return t.r, t.g, t.b
 					end,
 					set = function(info, r, g, b)
-						if CUSTOM_CLASS_COLORS then
-							CUSTOM_CLASS_COLORS:SetColor("EVOKER", r, g, b)
-							CUSTOM_CLASS_COLORS:UpdateColors()
-						end
+						local t = E.db.mMT.classcolors.colors.EVOKER
+						t.r, t.g, t.b = r, g, b
+						E:StaticPopup_Show("CONFIG_RL")
 					end,
 				},
 			},

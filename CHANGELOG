@@ -1,6 +1,20 @@
 # Changelog - ElvUI_mMediaTag
 [Eng] - All changes to this project will be documented in this file. The latest changes are at the top.
 
+## [ver. 3.26] - 26.12.2023
+### FIX
+- FIX - DOTI Telleport ID for TP Datatext
+- FIX - TAG mClass:icon:noelite
+- FIX - Compatibility fix for cosmetic bars with ElvUI_NutsAndBolts
+### Update
+- UPDATE - NEW Objectivetracker Skin, complete rework and more simplified
+- UPDATE - Add Time Rifts to Instance Difficulty
+- UPDATE - Color Settings for Datatext Durability/ Itemlevel
+- UPDATE - Update Health Markers for S3
+### NEW
+- NEW - Dock Icon for Mail
+- NEW - Custom Class colors is back again
+
 ## [ver. 3.25] - 15.11.2023
 ### FIX
 - FIX - Removed Dev messages

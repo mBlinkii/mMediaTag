@@ -16,7 +16,7 @@ local GetDifficultyInfo = GetDifficultyInfo
 local GetRaidDifficultyID = GetRaidDifficultyID
 local GetDungeonDifficultyID = GetDungeonDifficultyID
 
-function mMT:mColorGardient(level)
+function mMT:mColorGradient(level)
 	local r, g, b = E:ColorGradient(level * 0.04, 0, 0.43, 0.86, 0.63, 0.2, 0.93, 0.89, 0.16, 0.31)
 	return E:RGBToHex(r, g, b)
 end

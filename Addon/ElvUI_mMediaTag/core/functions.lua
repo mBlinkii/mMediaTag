@@ -3,6 +3,62 @@ local E = unpack(ElvUI)
 --Lua functions
 local format = format
 
+function mMT:ConvertDB()
+	E.db.mMT.objectivetracker = {
+		enable = false,
+		bar = {
+			fontsize = 12,
+			fontpoint = "CENTER",
+			elvbg = false,
+			gradient = true,
+			shadow = true,
+			hight = 18,
+		},
+		font = {
+			font = "PT Sans Narrow",
+			fontflag = "NONE",
+			highlight = 0.4,
+			color = {
+				title = { class = false, r = 1, g = 0.78, b = 0, hex = "|cffffc700" },
+				header = { class = false, r = 1, g = 0.78, b = 0, hex = "|cffffc700" },
+				text = { class = false, r = 0.87, g = 0.87, b = 0.87, hex = "|cff00ffa4" },
+				failed = { r = 1, g = 0.16, b = 0, hex = "|cffff2800" },
+				complete = { r = 0, g = 1, b = 0.27, hex = "|cff00ff45" },
+				good = { r = 0.25, g = 1, b = 0.43, hex = "|cff40ff6e" },
+				bad = { r = 0.92, g = 0.46, b = 0.1, hex = "|cffeb751a" },
+				transit = { r = 1, g = 0.63, b = 0.05, hex = "|cffffa10d" },
+			},
+			fontsize = {
+				header = 14,
+				title = 12,
+				text = 12,
+			},
+		},
+		settings = {
+			questcount = true,
+			hidedash = true,
+		},
+		dungeon = {
+			hidedash = true,
+			shadow = true,
+			difficulty = true,
+			color = {
+				chest3 = { a = { r = 0, g = 0.54, b = 1, a = 1 }, b = { r = 0, g = 0.71, b = 0.1, a = 1 } },
+				chest2 = { a = { r = 1, g = 0.73, b = 0, a = 1 }, b = { r = 1, g = 0.49, b = 0, a = 1 } },
+				chest1 = { a = { r = 1, g = 0, b = 0.14, a = 1 }, b = { r = 1, g = 0.33, b = 0, a = 1 } },
+			},
+		},
+		headerbar = {
+			enable = true,
+			gradient = true,
+			shadow = true,
+			texture = "Solid",
+			color = { r = 1, g = 0.78, b = 0, a = 1 },
+			class = true,
+		},
+	}
+end
+
 function mMT:DebugPrintTable(tbl)
 	mMT:Print(": Table Start >>>")
 	if type(tbl) == "table" then

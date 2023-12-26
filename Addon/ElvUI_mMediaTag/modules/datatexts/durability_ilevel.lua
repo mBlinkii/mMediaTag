@@ -40,10 +40,10 @@ local function colorize(num)
 	end
 end
 
-local function colorText(value, low)
-	if low then
-		return "|CFFFFC900" .. value .. "|r"
-	elseif E.db.mMT.durabilityIlevel.witheText then
+local function colorText(value, color)
+	if color then
+		return color.hex .. value .. "|r"
+	elseif E.db.mMT.durabilityIlevel.whiteText then
 		return value
 	else
 		return hexColor .. value .. "|r"
@@ -106,11 +106,27 @@ local function OnEvent(self)
 	end
 
 	local avgEquipped = 0
-	local shieldIcon = "|TInterface\\AddOns\\ElvUI_mMediaTag\\media\\icons\\datatext\\shield.tga:14:14:0:0:64:64:5:59:5:59|t"
+	local shieldIcon = "|TInterface\\AddOns\\ElvUI_mMediaTag\\media\\icons\\datatext\\shield.tga:14:14:0:0:64:64:5:59:5:59"
 	local armorIcon = "|TInterface\\AddOns\\ElvUI_mMediaTag\\media\\icons\\datatext\\armor.tga:14:14:0:0:64:64:5:59:5:59|t"
 	local text = E.db.mMT.durabilityIlevel.icon and "%s %s  %s %s" or "%s%s | %s%s"
 	local avgEquippedString = ""
-	local lowDurability = (totalDurability or 0) <= 15
+	local colorDurability = nil
+
+	if E.db.mMT.durabilityIlevel.colored.enable then
+		if (totalDurability or 0) <= E.db.mMT.durabilityIlevel.colored.a.value then
+			colorDurability = E.db.mMT.durabilityIlevel.colored.a.color
+		elseif (totalDurability or 0) <= E.db.mMT.durabilityIlevel.colored.b.value then
+			colorDurability = E.db.mMT.durabilityIlevel.colored.b.color
+		end
+	elseif (totalDurability or 0) <= 15 then
+		colorDurability = { r = 1, g = 0.78, b = 0, hex = "|CFFFFC900" }
+	end
+
+	if not E.db.mMT.durabilityIlevel.whiteIcon and colorDurability then
+		shieldIcon = shieldIcon .. ":" .. tostring(mMT:round(colorDurability.r * 255)) .. ":" .. tostring(mMT:round(colorDurability.g * 255)) .. ":" .. tostring(mMT:round(colorDurability.b * 255)) .. "|t"
+	else
+		shieldIcon = shieldIcon .. "|t"
+	end
 
 	armorIcon = E.db.mMT.durabilityIlevel.icon and armorIcon or ""
 	local totalDurabilityString = format("%." .. E.db.general.decimalLength .. "f%%", totalDurability or 0)
@@ -119,10 +135,10 @@ local function OnEvent(self)
 		_, avgEquipped = GetAverageItemLevel()
 		shieldIcon = E.db.mMT.durabilityIlevel.icon and shieldIcon or ""
 		avgEquippedString = format("%." .. E.db.general.decimalLength .. "f", avgEquipped or 0)
-		text = format(text, shieldIcon, colorText(totalDurabilityString, lowDurability), armorIcon, colorText(avgEquippedString))
+		text = format(text, shieldIcon, colorText(totalDurabilityString, colorDurability), armorIcon, colorText(avgEquippedString))
 	else
 		text = E.db.mMT.durabilityIlevel.icon and "%s %s" or "%s%s"
-		text = format(text, shieldIcon, colorText(totalDurabilityString, lowDurability))
+		text = format(text, shieldIcon, colorText(totalDurabilityString, colorDurability))
 	end
 
 	self.text:SetText(text)

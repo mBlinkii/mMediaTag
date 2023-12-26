@@ -163,7 +163,7 @@ function mMT:GetDungeonScore()
 	local data = C_PlayerInfo_GetPlayerMythicPlusRatingSummary("PLAYER")
 	local seasonScore = data and data.currentSeasonScore
 	local colorString = ""
-	if seasonScore > 0 then
+	if seasonScore and seasonScore > 0 then
 		local color = C_ChallengeMode_GetDungeonScoreRarityColor(seasonScore)
 		if color then
 			colorString = E:RGBToHex(color.r, color.g, color.b)
@@ -266,17 +266,17 @@ function mMT:mGetVaultInfo()
 				if ItemLevelInfo then
 					vaultinfohighest = (vaultinfohighest and (vaultinfohighest < ItemLevelInfo) and ItemLevelInfo or vaultinfohighest) or (not vaultinfohighest and ItemLevelInfo)
 					if i < 4 then
-						tinsert(vaultinfomplus, format("%s%s|r", mMT:mColorGardient(ItemLevelInfo), ItemLevelInfo))
+						tinsert(vaultinfomplus, format("%s%s|r", mMT:mColorGradient(ItemLevelInfo), ItemLevelInfo))
 					elseif i < 7 then
-						tinsert(vaultinfopvp, format("%s%s|r", mMT:mColorGardient(ItemLevelInfo), ItemLevelInfo))
+						tinsert(vaultinfopvp, format("%s%s|r", mMT:mColorGradient(ItemLevelInfo), ItemLevelInfo))
 					else
-						tinsert(vaultinforaid, format("%s%s|r", mMT:mColorGardient(ItemLevelInfo), ItemLevelInfo))
+						tinsert(vaultinforaid, format("%s%s|r", mMT:mColorGradient(ItemLevelInfo), ItemLevelInfo))
 					end
 					ok = true
 				end
 			end
 		end
-		vaultinfohighest = format("%s%s|r", mMT:mColorGardient(tonumber(vaultinfohighest)), vaultinfohighest)
+		vaultinfohighest = format("%s%s|r", mMT:mColorGradient(tonumber(vaultinfohighest)), vaultinfohighest)
 		return vaultinforaid, vaultinfomplus, vaultinfopvp, vaultinfohighest, ok
 	end
 end

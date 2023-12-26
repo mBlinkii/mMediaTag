@@ -59,7 +59,7 @@ local function OnEvent(self)
 
 		local text = "%s %s %s"
 		icon = E.db.mMT.singleProfession.icon and format("|T%s:14:14:0:0:64:64:5:59:5:59|t", icon) or ""
-		text = format(text, icon, colorText(name, E.db.mMT.singleProfession.witheText), isNotMax and colorText(skillLevel, E.db.mMT.singleProfession.witheValue) or "")
+		text = format(text, icon, colorText(name, E.db.mMT.singleProfession.whiteText), isNotMax and colorText(skillLevel, E.db.mMT.singleProfession.witheValue) or "")
 
 		self.text:SetText(text)
 	end
