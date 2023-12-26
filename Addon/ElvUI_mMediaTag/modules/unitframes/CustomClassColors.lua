@@ -11,14 +11,13 @@ local _G = _G
 local hooksecurefunc = _G.hooksecurefunc
 
 local function UpdateColors()
-	for i, className in ipairs(E.oUF.colors.class) do
-        print(i, className)
-		E.oUF.colors.class[className][1] = 1
-		E.oUF.colors.class[className][2] = 1
-		E.oUF.colors.class[className][3] = 1
-		E.oUF.colors.class[className]["r"] = 1
-		E.oUF.colors.class[className]["g"] = 1
-		E.oUF.colors.class[className]["b"] = 1
+	for i, className in ipairs(mMT.Classes) do
+		E.oUF.colors.class[className][1] = E.db.mMT.classcolors.colors[className]["r"]
+		E.oUF.colors.class[className][2] = E.db.mMT.classcolors.colors[className]["g"]
+		E.oUF.colors.class[className][3] = E.db.mMT.classcolors.colors[className]["b"]
+		E.oUF.colors.class[className]["r"] = E.db.mMT.classcolors.colors[className]["r"]
+		E.oUF.colors.class[className]["g"] = E.db.mMT.classcolors.colors[className]["g"]
+		E.oUF.colors.class[className]["b"] = E.db.mMT.classcolors.colors[className]["b"]
 	end
 	UF:Update_AllFrames()
 end
@@ -32,33 +31,25 @@ function module:Initialize()
 	end
 
 	if not module.hooked then
-		function E:ClassColor(class, usePriestColor)
-           -- print("ööööööööö", class)
+		function E:ClassColor(class)
+
 			if not class then
 				return
 			end
 
-			local color = (_G.CUSTOM_CLASS_COLORS and _G.CUSTOM_CLASS_COLORS[class]) or _G.RAID_CLASS_COLORS[class]
+			local color = E.db.mMT.classcolors.colors[class] or _G.RAID_CLASS_COLORS[class]
+
 			if type(color) ~= "table" then
 				return
 			end
 
-			color.r = 1
-			color.g = 1
-			color.b = 1
-
-			--if not color.colorStr then
+			if not color.colorStr then
 				color.colorStr = E:RGBToHex(color.r, color.g, color.b, "ff")
-			--elseif strlen(color.colorStr) == 6 then
-			--	color.colorStr = "ff" .. color.colorStr
-			--end
+			elseif strlen(color.colorStr) == 6 then
+				color.colorStr = "ff" .. color.colorStr
+			end
 
-			--mMT:Print("TEST OK :D")
-			--if usePriestColor and class == "PRIEST" and tonumber(color.colorStr, 16) > tonumber(E.PriestColors.colorStr, 16) then
-			--	return E.PriestColors
-			--else
-				return color
-			--end
+			return color
 		end
 		module.hooked = true
         --mMT:Print("TEST OK :D ---")
