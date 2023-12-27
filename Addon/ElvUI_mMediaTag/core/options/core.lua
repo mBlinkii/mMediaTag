@@ -268,12 +268,12 @@ local function configTable()
 						name = L["Custom Unitframe Backgrounds"],
 						args = {},
 					},
-					classcolor = {
-						order = 3,
-						type = "group",
-						name = L["Custom Class colors"],
-						args = {},
-					},
+					-- classcolor = {
+					-- 	order = 3,
+					-- 	type = "group",
+					-- 	name = L["Custom Class colors"],
+					-- 	args = {},
+					-- },
 					roleicons = {
 						order = 4,
 						type = "group",
