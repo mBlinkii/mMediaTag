@@ -15,7 +15,6 @@ local change_log_important = {
 
 local change_log_new = {
 	"Dock Icon for Mail",
-	"Custom Class colors is back again"
 }
 
 local change_log_update = {
@@ -48,7 +47,7 @@ local function Concatenation(tbl, icon, color)
 end
 
 local function configTable()
-	local releasdate = "26.12.2023"
+	local releasdate = "27.12.2023"
 	--change_log_important_string = Concatenation(change_log_important)
 	change_log_new_string = Concatenation(change_log_new)
 	change_log_update_string = Concatenation(change_log_update)

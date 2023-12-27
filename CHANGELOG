@@ -1,6 +1,11 @@
 # Changelog - ElvUI_mMediaTag
 [Eng] - All changes to this project will be documented in this file. The latest changes are at the top.
 
+
+## [ver. 3.26.1] - 27.12.2023
+### FIX
+- FIX - Removed and Disabled Custom Class colors again, since there are again bugs with this function.
+
 ## [ver. 3.26] - 26.12.2023
 ### FIX
 - FIX - DOTI Telleport ID for TP Datatext

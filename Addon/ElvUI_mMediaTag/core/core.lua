@@ -18,7 +18,8 @@ function ElvUI_mMediaTag_OnAddonCompartmentOnLeave()
 end
 
 function mMT:UpdateClassColor()
-	local class = mMT.Modules.CustomClassColors.enable and E.db.mMT.classcolors.colors[E.myclass] or E:ClassColor(E.myclass)
+	--local class = mMT.Modules.CustomClassColors.enable and E.db.mMT.classcolors.colors[E.myclass] or E:ClassColor(E.myclass)
+	local class = E:ClassColor(E.myclass)
 	local hex = E:RGBToHex(class.r, class.g, class.b)
 	return { r = class.r, g = class.g, b = class.b, hex = hex, string = strjoin("", hex, "%s|r") }
 end

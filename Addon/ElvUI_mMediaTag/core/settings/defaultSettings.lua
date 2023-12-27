@@ -515,7 +515,7 @@ P.mMT = {
 		readycheck = { enable = false, ready = "DONE01", notready = "NOTREADY01", waiting = "COLOR26" },
 	},
 	classcolors = {
-		enable = true,
+		enable = false,
 		colors = {
 			HUNTER = { r = 0.67, g = 0.83, b = 0.45 },
 			WARLOCK = { r = 0.53, g = 0.53, b = 0.93 },
