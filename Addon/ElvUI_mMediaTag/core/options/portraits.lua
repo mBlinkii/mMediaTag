@@ -15,6 +15,7 @@ local style = {
 	flat = "FLAT",
 	smooth = "SMOOTH",
 	metal = "METALLIC",
+	portrait = "ONLY PORTRAIT",
 }
 
 local frameStrata = {
@@ -98,9 +99,13 @@ local function configTable()
 								return E.db.mMT.portraits.general.style
 							end,
 							set = function(info, value)
-								E.db.mMT.portraits.general.style = value
-
-								mMT.Modules.Portraits:Initialize()
+								if value == "portrait" or E.db.mMT.portraits.general.style == "portrait" then
+									E.db.mMT.portraits.general.style = value
+									E:StaticPopup_Show("CONFIG_RL")
+								else
+									E.db.mMT.portraits.general.style = value
+									mMT.Modules.Portraits:Initialize()
+								end
 							end,
 							values = style,
 						},

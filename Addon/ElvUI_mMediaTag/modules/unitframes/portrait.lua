@@ -211,8 +211,10 @@ local function CreatePortrait(parent, conf, unit)
 	frame:SetFrameLevel(conf.level)
 
 	-- Portrait Texture
-	texture = textures.texture[settings.general.style][conf.texture]
-	frame.texture = CreatePortraitTexture(frame, "mMT_Texture", 4, texture, getColor(frame, unit), conf.mirror)
+	if settings.general.style ~= "portrait" then
+		texture = textures.texture[settings.general.style][conf.texture]
+		frame.texture = CreatePortraitTexture(frame, "mMT_Texture", 4, texture, getColor(frame, unit), conf.mirror)
+	end
 
 	-- Unit Portrait
 	local offset = GetOffset(conf.size, settings.offset[conf.texture])
@@ -231,56 +233,58 @@ local function CreatePortrait(parent, conf, unit)
 	frame.mask:SetAllPoints(frame)
 	frame.portrait:AddMaskTexture(frame.mask)
 
-	-- Portrait Shadow
-	if settings.shadow.enable then
-		texture = textures.shadow[conf.texture]
-		frame.shadow = CreatePortraitTexture(frame, "mMT_Shadow", -4, texture, settings.shadow.color, conf.mirror)
-	end
-
-	-- Inner Portrait Shadow
-	if settings.shadow.inner then
-		texture = textures.inner[conf.texture]
-		frame.InnerShadow = CreatePortraitTexture(frame, "mMT_innerShadow", 2, texture, settings.shadow.innerColor, conf.mirror)
-	end
-
-	-- Portrait Border
-	if settings.shadow.border then
-		texture = textures.border[conf.texture]
-		frame.border = CreatePortraitTexture(frame, "mMT_Border", 2, texture, settings.shadow.borderColor, conf.mirror)
-	end
-
-	-- Rare/Elite Texture
-	if conf.extraEnable then
-		-- Texture
-		texture = textures.extra[settings.general.style][conf.texture]
-		frame.extra = CreatePortraitTexture(frame, "mMT_Extra", -6, texture, nil, not conf.mirror)
-
-		-- Shadow
+	if settings.general.style ~= "portrait" then
+		-- Portrait Shadow
 		if settings.shadow.enable then
-			texture = textures.extra.border[conf.texture]
-			frame.extra.shadow = CreatePortraitTexture(frame, "mMT_Extra_Shadow", -8, texture, settings.shadow.color, not conf.mirror)
-			frame.extra.shadow:Hide()
+			texture = textures.shadow[conf.texture]
+			frame.shadow = CreatePortraitTexture(frame, "mMT_Shadow", -4, texture, settings.shadow.color, conf.mirror)
 		end
 
-		-- Border
-		if settings.shadow.border then
-			texture = textures.extra.shadow[conf.texture]
-			frame.extra.border = CreatePortraitTexture(frame, "mMT_Extra_Border", -4, texture, settings.shadow.borderColorRare, not conf.mirror)
-			frame.extra.border:Hide()
+		-- Inner Portrait Shadow
+		if settings.shadow.inner then
+			texture = textures.inner[conf.texture]
+			frame.InnerShadow = CreatePortraitTexture(frame, "mMT_innerShadow", 2, texture, settings.shadow.innerColor, conf.mirror)
 		end
 
-		frame.extra:Hide()
-	end
-
-	-- Corner
-	if settings.general.corner and textures.corner[conf.texture] then
-		texture = textures.texture[settings.general.style].CO
-		frame.corner = CreatePortraitTexture(frame, "mMT_Corner", 5, texture, getColor(frame, unit), conf.mirror)
-
-		-- Border
+		-- Portrait Border
 		if settings.shadow.border then
-			texture = textures.border.CO
-			frame.corner.border = CreatePortraitTexture(frame, "mMT_Corner_Border", 6, texture, settings.shadow.borderColor, conf.mirror)
+			texture = textures.border[conf.texture]
+			frame.border = CreatePortraitTexture(frame, "mMT_Border", 2, texture, settings.shadow.borderColor, conf.mirror)
+		end
+
+		-- Rare/Elite Texture
+		if conf.extraEnable then
+			-- Texture
+			texture = textures.extra[settings.general.style][conf.texture]
+			frame.extra = CreatePortraitTexture(frame, "mMT_Extra", -6, texture, nil, not conf.mirror)
+
+			-- Shadow
+			if settings.shadow.enable then
+				texture = textures.extra.border[conf.texture]
+				frame.extra.shadow = CreatePortraitTexture(frame, "mMT_Extra_Shadow", -8, texture, settings.shadow.color, not conf.mirror)
+				frame.extra.shadow:Hide()
+			end
+
+			-- Border
+			if settings.shadow.border then
+				texture = textures.extra.shadow[conf.texture]
+				frame.extra.border = CreatePortraitTexture(frame, "mMT_Extra_Border", -4, texture, settings.shadow.borderColorRare, not conf.mirror)
+				frame.extra.border:Hide()
+			end
+
+			frame.extra:Hide()
+		end
+
+		-- Corner
+		if settings.general.corner and textures.corner[conf.texture] then
+			texture = textures.texture[settings.general.style].CO
+			frame.corner = CreatePortraitTexture(frame, "mMT_Corner", 5, texture, getColor(frame, unit), conf.mirror)
+
+			-- Border
+			if settings.shadow.border then
+				texture = textures.border.CO
+				frame.corner.border = CreatePortraitTexture(frame, "mMT_Corner_Border", 6, texture, settings.shadow.borderColor, conf.mirror)
+			end
 		end
 	end
 
@@ -312,11 +316,13 @@ local function CheckRareElite(frame, unit)
 end
 
 local function UpdatePortraitTexture(tx, texture, color, mirror)
-	tx:SetTexture(texture, "CLAMP", "CLAMP", "TRILINEAR")
-	mirrorTexture(tx, mirror)
+	if tx then
+		tx:SetTexture(texture, "CLAMP", "CLAMP", "TRILINEAR")
+		mirrorTexture(tx, mirror)
 
-	if color then
-		setColor(tx, color, mirror)
+		if color then
+			setColor(tx, color, mirror)
+		end
 	end
 end
 
@@ -337,9 +343,11 @@ local function UpdatePortrait(frame, conf, unit, parent)
 	end
 	frame:SetFrameLevel(conf.level)
 
-	-- Portrait Texture
-	texture = textures.texture[settings.general.style][conf.texture]
-	UpdatePortraitTexture(frame.texture, texture, getColor(frame, unit), conf.mirror)
+	if settings.general.style ~= "portrait" then
+		-- Portrait Texture
+		texture = textures.texture[settings.general.style][conf.texture]
+		UpdatePortraitTexture(frame.texture, texture, getColor(frame, unit), conf.mirror)
+	end
 
 	-- Unit Portrait
 	local offset = GetOffset(conf.size, settings.offset[conf.texture])
@@ -351,122 +359,124 @@ local function UpdatePortrait(frame, conf, unit, parent)
 	texture = textures.mask[conf.texture] or conf.mirror and textures.mask.B[conf.texture] or textures.mask.A[conf.texture]
 	frame.mask:SetTexture(texture, "CLAMPTOBLACKADDITIVE", "CLAMPTOBLACKADDITIVE")
 
-	-- Portrait Shadow
-	if settings.shadow.enable then
-		texture = textures.shadow[conf.texture]
-		if frame.shadow then
-			UpdatePortraitTexture(frame.shadow, texture, settings.shadow.color, conf.mirror)
-			frame.shadow:Show()
-		else
-			frame.shadow = CreatePortraitTexture(frame, "mMT_Shadow", -4, texture, settings.shadow.color, conf.mirror)
-		end
-	elseif not settings.shadow.enable and frame.shadow then
-		frame.shadow:Hide()
-	end
-
-	-- Inner Portrait Shadow
-	if settings.shadow.inner then
-		texture = textures.inner[conf.texture]
-		if frame.InnerShadow then
-			UpdatePortraitTexture(frame.InnerShadow, texture, settings.shadow.innerColor, conf.mirror)
-			frame.InnerShadow:Show()
-		else
-			frame.InnerShadow = CreatePortraitTexture(frame, "mMT_innerShadow", 2, texture, settings.shadow.innerColor, conf.mirror)
-		end
-	elseif not settings.shadow.inner and frame.InnerShadow then
-		frame.InnerShadow:Hide()
-	end
-
-	-- Portrait Border
-	if settings.shadow.border then
-		texture = textures.border[conf.texture]
-		if frame.border then
-			UpdatePortraitTexture(frame.border, texture, settings.shadow.borderColor, conf.mirror)
-			frame.border:Show()
-		else
-			frame.border = CreatePortraitTexture(frame, "mMT_Border", 2, texture, settings.shadow.borderColor, conf.mirror)
-		end
-	elseif not settings.shadow.border and frame.border then
-		frame.border:Hide()
-	end
-
-	-- Rare/Elite Texture
-	if conf.extraEnable then
-		-- Texture
-		texture = textures.extra[settings.general.style][conf.texture]
-		if frame.extra then
-			UpdatePortraitTexture(frame.extra, texture, nil, not conf.mirror)
-		else
-			frame.extra = CreatePortraitTexture(frame, "mMT_Extra", -6, texture, nil, not conf.mirror)
-		end
-
-		-- Shadow
+	if settings.general.style ~= "portrait" then
+		-- Portrait Shadow
 		if settings.shadow.enable then
-			texture = textures.extra.border[conf.texture]
-			if frame.extra.shadow then
-				UpdatePortraitTexture(frame.extra.shadow, texture, settings.shadow.color, not conf.mirror)
+			texture = textures.shadow[conf.texture]
+			if frame.shadow then
+				UpdatePortraitTexture(frame.shadow, texture, settings.shadow.color, conf.mirror)
+				frame.shadow:Show()
 			else
-				frame.extra.shadow = CreatePortraitTexture(frame, "mMT_Extra_Shadow", -8, texture, settings.shadow.color, not conf.mirror)
+				frame.shadow = CreatePortraitTexture(frame, "mMT_Shadow", -4, texture, settings.shadow.color, conf.mirror)
+			end
+		elseif not settings.shadow.enable and frame.shadow then
+			frame.shadow:Hide()
+		end
+
+		-- Inner Portrait Shadow
+		if settings.shadow.inner then
+			texture = textures.inner[conf.texture]
+			if frame.InnerShadow then
+				UpdatePortraitTexture(frame.InnerShadow, texture, settings.shadow.innerColor, conf.mirror)
+				frame.InnerShadow:Show()
+			else
+				frame.InnerShadow = CreatePortraitTexture(frame, "mMT_innerShadow", 2, texture, settings.shadow.innerColor, conf.mirror)
+			end
+		elseif not settings.shadow.inner and frame.InnerShadow then
+			frame.InnerShadow:Hide()
+		end
+
+		-- Portrait Border
+		if settings.shadow.border then
+			texture = textures.border[conf.texture]
+			if frame.border then
+				UpdatePortraitTexture(frame.border, texture, settings.shadow.borderColor, conf.mirror)
+				frame.border:Show()
+			else
+				frame.border = CreatePortraitTexture(frame, "mMT_Border", 2, texture, settings.shadow.borderColor, conf.mirror)
+			end
+		elseif not settings.shadow.border and frame.border then
+			frame.border:Hide()
+		end
+
+		-- Rare/Elite Texture
+		if conf.extraEnable then
+			-- Texture
+			texture = textures.extra[settings.general.style][conf.texture]
+			if frame.extra then
+				UpdatePortraitTexture(frame.extra, texture, nil, not conf.mirror)
+			else
+				frame.extra = CreatePortraitTexture(frame, "mMT_Extra", -6, texture, nil, not conf.mirror)
+			end
+
+			-- Shadow
+			if settings.shadow.enable then
+				texture = textures.extra.border[conf.texture]
+				if frame.extra.shadow then
+					UpdatePortraitTexture(frame.extra.shadow, texture, settings.shadow.color, not conf.mirror)
+				else
+					frame.extra.shadow = CreatePortraitTexture(frame, "mMT_Extra_Shadow", -8, texture, settings.shadow.color, not conf.mirror)
+					frame.extra.shadow:Hide()
+				end
+			elseif not settings.shadow.enable and frame.extra.shadow then
 				frame.extra.shadow:Hide()
 			end
-		elseif not settings.shadow.enable and frame.extra.shadow then
-			frame.extra.shadow:Hide()
-		end
 
-		-- Border
-		if settings.shadow.border then
-			texture = textures.extra.shadow[conf.texture]
-			if frame.extra.border then
-				UpdatePortraitTexture(frame.extra.border, texture, settings.shadow.borderColorRare, not conf.mirror)
-			else
-				frame.extra.border = CreatePortraitTexture(frame, "mMT_Extra_Border", -4, texture, settings.shadow.borderColorRare, not conf.mirror)
+			-- Border
+			if settings.shadow.border then
+				texture = textures.extra.shadow[conf.texture]
+				if frame.extra.border then
+					UpdatePortraitTexture(frame.extra.border, texture, settings.shadow.borderColorRare, not conf.mirror)
+				else
+					frame.extra.border = CreatePortraitTexture(frame, "mMT_Extra_Border", -4, texture, settings.shadow.borderColorRare, not conf.mirror)
+					frame.extra.border:Hide()
+				end
+			elseif not settings.shadow.border and frame.extra.border then
 				frame.extra.border:Hide()
 			end
-		elseif not settings.shadow.border and frame.extra.border then
-			frame.extra.border:Hide()
-		end
 
-		CheckRareElite(frame, unit)
-	elseif not conf.extraEnable and frame.extra then
-		if frame.extra.shadow then
-			frame.extra.shadow:Hide()
-		end
-
-		if frame.extra.border then
-			frame.extra.border:Hide()
-		end
-
-		frame.extra:Hide()
-	end
-
-	-- Corner
-	if settings.general.corner and textures.corner[conf.texture] then
-		texture = textures.texture[settings.general.style].CO
-		if frame.corner then
-			UpdatePortraitTexture(frame.corner, texture, getColor(frame, unit), conf.mirror)
-			frame.corner:Show()
-		else
-			frame.corner = CreatePortraitTexture(frame, "mMT_Corner", 5, texture, getColor(frame, unit), conf.mirror)
-		end
-
-		-- Border
-		if settings.shadow.border then
-			texture = textures.border.CO
-			if frame.corner.border then
-				UpdatePortraitTexture(frame.corner.border, texture, settings.shadow.borderColor, conf.mirror)
-				frame.corner.border:Show()
-			else
-				frame.corner.border = CreatePortraitTexture(frame, "mMT_Corner_Border", 6, texture, settings.shadow.borderColor, conf.mirror)
+			CheckRareElite(frame, unit)
+		elseif not conf.extraEnable and frame.extra then
+			if frame.extra.shadow then
+				frame.extra.shadow:Hide()
 			end
-		elseif frame.corner.border then
-			frame.corner.border:Hide()
-		end
-	elseif not (settings.general.corner and textures.corner[conf.texture]) and frame.corner then
-		if frame.corner.border then
-			frame.corner.border:Hide()
+
+			if frame.extra.border then
+				frame.extra.border:Hide()
+			end
+
+			frame.extra:Hide()
 		end
 
-		frame.corner:Hide()
+		-- Corner
+		if settings.general.corner and textures.corner[conf.texture] then
+			texture = textures.texture[settings.general.style].CO
+			if frame.corner then
+				UpdatePortraitTexture(frame.corner, texture, getColor(frame, unit), conf.mirror)
+				frame.corner:Show()
+			else
+				frame.corner = CreatePortraitTexture(frame, "mMT_Corner", 5, texture, getColor(frame, unit), conf.mirror)
+			end
+
+			-- Border
+			if settings.shadow.border then
+				texture = textures.border.CO
+				if frame.corner.border then
+					UpdatePortraitTexture(frame.corner.border, texture, settings.shadow.borderColor, conf.mirror)
+					frame.corner.border:Show()
+				else
+					frame.corner.border = CreatePortraitTexture(frame, "mMT_Corner_Border", 6, texture, settings.shadow.borderColor, conf.mirror)
+				end
+			elseif frame.corner.border then
+				frame.corner.border:Hide()
+			end
+		elseif not (settings.general.corner and textures.corner[conf.texture]) and frame.corner then
+			if frame.corner.border then
+				frame.corner.border:Hide()
+			end
+
+			frame.corner:Hide()
+		end
 	end
 end
 
@@ -688,10 +698,10 @@ function module:Initialize()
 
 				if UnitExists("player") then
 					SetPortraitTexture(self.portrait, "player", not (settings.player.texture == "CI"))
-						setColor(self.texture, getColor(self, "player"), settings.player.mirror)
-						if settings.general.corner and textures.corner[settings.player.texture] then
-							setColor(self.corner, getColor(self, "player"), settings.player.mirror)
-						end
+					setColor(self.texture, getColor(self, "player"), settings.player.mirror)
+					if settings.general.corner and textures.corner[settings.player.texture] then
+						setColor(self.corner, getColor(self, "player"), settings.player.mirror)
+					end
 				end
 			end)
 			module.Player.ScriptSet = true
@@ -747,16 +757,16 @@ function module:Initialize()
 
 				if UnitExists("focus") then
 					SetPortraitTexture(self.portrait, "focus", not (settings.focus.texture == "CI"))
-						setColor(self.texture, getColor(self, "focus"), settings.focus.mirror)
-						if settings.general.corner and textures.corner[settings.focus.texture] then
-							setColor(self.corner, getColor(self, "focus"), settings.focus.mirror)
-						end
+					setColor(self.texture, getColor(self, "focus"), settings.focus.mirror)
+					if settings.general.corner and textures.corner[settings.focus.texture] then
+						setColor(self.corner, getColor(self, "focus"), settings.focus.mirror)
+					end
 
-						if settings.focus.extraEnable and self.extra then
-							CheckRareElite(self, "focus")
-						elseif self.extra then
-							self.extra:Hide()
-						end
+					if settings.focus.extraEnable and self.extra then
+						CheckRareElite(self, "focus")
+					elseif self.extra then
+						self.extra:Hide()
+					end
 				end
 			end)
 			module.Focus.ScriptSet = true
@@ -770,16 +780,16 @@ function module:Initialize()
 
 				if UnitExists("targettarget") then
 					SetPortraitTexture(self.portrait, "targettarget", not (settings.targettarget.texture == "CI"))
-						setColor(self.texture, getColor(self, "targettarget"), settings.targettarget.mirror)
-						if settings.general.corner and textures.corner[settings.targettarget.texture] then
-							setColor(self.corner, getColor(self, "targettarget"), settings.targettarget.mirror)
-						end
+					setColor(self.texture, getColor(self, "targettarget"), settings.targettarget.mirror)
+					if settings.general.corner and textures.corner[settings.targettarget.texture] then
+						setColor(self.corner, getColor(self, "targettarget"), settings.targettarget.mirror)
+					end
 
-						if settings.targettarget.extraEnable and self.extra then
-							CheckRareElite(self, "targettarget")
-						elseif self.extra then
-							self.extra:Hide()
-						end
+					if settings.targettarget.extraEnable and self.extra then
+						CheckRareElite(self, "targettarget")
+					elseif self.extra then
+						self.extra:Hide()
+					end
 				end
 			end)
 			module.TargetTarget.ScriptSet = true
@@ -794,10 +804,10 @@ function module:Initialize()
 					end
 
 					if UnitExists(frame.unit) then
-							setColor(self.texture, getColor(self, frame.unit), settings.party.mirror)
-							if settings.general.corner and textures.corner[settings.party.texture] then
-								setColor(self.corner, getColor(self, frame.unit), settings.party.mirror)
-							end
+						setColor(self.texture, getColor(self, frame.unit), settings.party.mirror)
+						if settings.general.corner and textures.corner[settings.party.texture] then
+							setColor(self.corner, getColor(self, frame.unit), settings.party.mirror)
+						end
 
 						SetPortraitTexture(self.portrait, frame.unit, not (settings.party.texture == "CI"))
 					end

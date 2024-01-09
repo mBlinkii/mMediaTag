@@ -244,7 +244,7 @@ local function OnEvent(self, event, loadoutID)
 	active = specIndex
 
 	local text = nil
-	if self.mMT_Dock.TextA then
+	if self.mMT_Dock and self.mMT_Dock.TextA then
 		if E.db.mMT.dockdatatext.talent.showrole then
 			if IsInGroup() then
 				local Role = UnitGroupRolesAssigned("player")
