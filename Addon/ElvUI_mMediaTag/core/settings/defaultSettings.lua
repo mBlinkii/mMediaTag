@@ -638,6 +638,7 @@ P.mMT = {
 			default = false,
 			corner = true,
 			style = "flat",
+			classicons = false,
 			ori = "HORIZONTAL",
 		},
 		offset = {
@@ -656,6 +657,7 @@ P.mMT = {
 			borderColorRare = { r = 0, g = 0, b = 0, a = 1 },
 			color = { r = 0, g = 0, b = 0, a = 1 },
 			innerColor = { r = 0, g = 0, b = 0, a = 1 },
+			background = { r = 0, g = 0, b = 0, a = 1 },
 		},
 		colors = {
 			default = {
