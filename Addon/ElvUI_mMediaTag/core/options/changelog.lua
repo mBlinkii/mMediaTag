@@ -14,20 +14,16 @@ local change_log_important = {
 }
 
 local change_log_new = {
-	"Dock Icon for Mail",
+	"Class icons for Portraits",
 }
 
 local change_log_update = {
-	"NEW Objectivetracker Skin, complete rework and more simplified",
-	"Add Time Rifts to Instance Difficulty",
-	"Color Settings for Datatext Durability/ Itemlevel",
-	"Update Health Markers for S3",
+	"Add Hearthstone of the Flame to Teleports menu",
+	"TOC update for new WoW Version",
 }
 
 local change_log_fix = {
-	"DOTI Telleport ID for TP Datatext",
-	"TAG mClass:icon:noelite",
-	"Compatibility fix for cosmetic bars with ElvUI_NutsAndBolts"
+	"Possible nil error with Dock Talents",
 }
 
 local function Concatenation(tbl, icon, color)
@@ -47,7 +43,7 @@ local function Concatenation(tbl, icon, color)
 end
 
 local function configTable()
-	local releasdate = "27.12.2023"
+	local releasdate = "20.01.2024"
 	--change_log_important_string = Concatenation(change_log_important)
 	change_log_new_string = Concatenation(change_log_new)
 	change_log_update_string = Concatenation(change_log_update)
