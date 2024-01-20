@@ -52,6 +52,18 @@ local function configTable()
 					type = "group",
 					name = L["Gradient"],
 					args = {
+						toggle_classicon = {
+							order = 1,
+							type = "toggle",
+							name = L["Use Class Icons"],
+							get = function(info)
+								return E.db.mMT.portraits.general.classicons
+							end,
+							set = function(info, value)
+								E.db.mMT.portraits.general.classicons = value
+								mMT.Modules.Portraits:Initialize()
+							end,
+						},
 						toggle_gradient = {
 							order = 3,
 							type = "toggle",
@@ -98,9 +110,8 @@ local function configTable()
 								return E.db.mMT.portraits.general.style
 							end,
 							set = function(info, value)
-								E.db.mMT.portraits.general.style = value
-
-								mMT.Modules.Portraits:Initialize()
+									E.db.mMT.portraits.general.style = value
+									mMT.Modules.Portraits:Initialize()
 							end,
 							values = style,
 						},
@@ -1525,6 +1536,26 @@ local function configTable()
 					end,
 					set = function(info, r, g, b, a)
 						local t = E.db.mMT.portraits.shadow.borderColorRare
+						t.r, t.g, t.b, t.a = r, g, b, a
+						mMT.Modules.Portraits:Initialize()
+					end,
+				},
+				spacer_3 = {
+					order = 10,
+					type = "description",
+					name = "\n\n",
+				},
+				color_background= {
+					type = "color",
+					order = 11,
+					name = L["Background color for Icons"],
+					hasAlpha = true,
+					get = function(info)
+						local t = E.db.mMT.portraits.shadow.background
+						return t.r, t.g, t.b, t.a
+					end,
+					set = function(info, r, g, b, a)
+						local t = E.db.mMT.portraits.shadow.background
 						t.r, t.g, t.b, t.a = r, g, b, a
 						mMT.Modules.Portraits:Initialize()
 					end,

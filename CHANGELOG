@@ -1,6 +1,14 @@
 # Changelog - ElvUI_mMediaTag
 [Eng] - All changes to this project will be documented in this file. The latest changes are at the top.
 
+## [ver. 3.27] - 20.01.2024
+### FIX
+- FIX - Possible nil error with Dock Talents
+### Update
+- UPDATE - add Hearthstone of the Flame to Teleports menu
+- UPDATE - TOC update for new WoW Version
+### NEW
+- NEW - Class icons for Portraits
 
 ## [ver. 3.26.1] - 27.12.2023
 ### FIX

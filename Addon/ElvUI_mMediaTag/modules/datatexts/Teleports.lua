@@ -56,6 +56,7 @@ local Teleports = {
 			[200630] = true, --ohnir-windsages-hearthstone
 			[183716] = true, -- Venthyr Sinstone
 			[208704] = true, -- Deepdweller's Earthen Hearthstone
+			[209035] = true, -- hearthstone-of-the-flame
 		},
 	},
 	engineering = {

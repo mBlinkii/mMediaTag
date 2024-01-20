@@ -244,21 +244,23 @@ local function OnEvent(self, event, loadoutID)
 	active = specIndex
 
 	local text = nil
-	if E.db.mMT.dockdatatext.talent.showrole then
-		if IsInGroup() then
-			local Role = UnitGroupRolesAssigned("player")
+	if self.mMT_Dock and self.mMT_Dock.TextA then
+		if E.db.mMT.dockdatatext.talent.showrole then
+			if IsInGroup() then
+				local Role = UnitGroupRolesAssigned("player")
 
-			if Role == "TANK" then
-				text = TANK_ICON
-			elseif Role == "HEALER" then
-				text = HEALER_ICON
-			else
-				text = DPS_ICON
+				if Role == "TANK" then
+					text = TANK_ICON
+				elseif Role == "HEALER" then
+					text = HEALER_ICON
+				else
+					text = DPS_ICON
+				end
+				self.mMT_Dock.TextA:SetText(text)
 			end
-			self.mMT_Dock.TextA:SetText(text)
+		else
+			self.mMT_Dock.TextA:SetText("")
 		end
-	else
-		self.mMT_Dock.TextA:SetText("")
 	end
 end
 

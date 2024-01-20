@@ -134,6 +134,20 @@ local textures = {
 	},
 }
 
+local function SetPortraits(portrait, unit, masking)
+	if E.db.mMT.portraits.general.classicons and UnitIsPlayer(unit) then
+		local class = select(2, UnitClass(unit))
+		local coords = class and CLASS_ICON_TCOORDS[class]
+		if coords then
+			portrait:SetTexCoord(unpack(coords))
+			portrait:SetTexture("Interface\\WorldStateFrame\\Icons-Classes")
+		end
+	else
+		portrait:SetTexCoord(0, 1, 0, 1)
+		SetPortraitTexture(portrait, unit, masking)
+	end
+end
+
 local function setColor(texture, color, mirror)
 	if not texture or not color or not color.a or not color.b then
 		return
@@ -169,7 +183,9 @@ local function getColor(frame, unit)
 end
 
 local function mirrorTexture(texture, mirror)
-	texture:SetTexCoord(mirror and 1 or 0, mirror and 0 or 1, 0, 1)
+	if not E.db.mMT.portraits.general.classicons then
+		texture:SetTexCoord(mirror and 1 or 0, mirror and 0 or 1, 0, 1)
+	end
 end
 
 local function CreatePortraitTexture(frame, name, layer, texture, color, mirror)
@@ -181,6 +197,17 @@ local function CreatePortraitTexture(frame, name, layer, texture, color, mirror)
 	if color then
 		setColor(tmpTexture, color, mirror)
 	end
+
+	return tmpTexture
+end
+
+local function CreateIconBackground(frame)
+	local tmpTexture = frame:CreateTexture("mMT_Background", "OVERLAY", nil, -5)
+	tmpTexture:SetAllPoints(frame)
+	tmpTexture:SetTexture(path .. "background.tga", "CLAMP", "CLAMP", "TRILINEAR")
+
+	local color = settings.shadow.background
+	tmpTexture:SetVertexColor(color.r, color.g, color.b, color.a)
 
 	return tmpTexture
 end
@@ -211,6 +238,7 @@ local function CreatePortrait(parent, conf, unit)
 	frame:SetFrameLevel(conf.level)
 
 	-- Portrait Texture
+
 	texture = textures.texture[settings.general.style][conf.texture]
 	frame.texture = CreatePortraitTexture(frame, "mMT_Texture", 4, texture, getColor(frame, unit), conf.mirror)
 
@@ -221,7 +249,7 @@ local function CreatePortrait(parent, conf, unit)
 	frame.portrait:SetPoint("TOPLEFT", 0 + offset, 0 - offset)
 	frame.portrait:SetPoint("BOTTOMRIGHT", 0 - offset, 0 + offset)
 	frame.portrait:SetTexture(path .. "unknown.tga", "CLAMP", "CLAMP", "TRILINEAR")
-	SetPortraitTexture(frame.portrait, unit, not (conf.texture == "CI"))
+	SetPortraits(frame.portrait, unit, not (conf.texture == "CI"))
 	mirrorTexture(frame.portrait, conf.mirror)
 
 	-- Portrait Mask
@@ -230,6 +258,12 @@ local function CreatePortrait(parent, conf, unit)
 	frame.mask:SetTexture(texture, "CLAMPTOBLACKADDITIVE", "CLAMPTOBLACKADDITIVE")
 	frame.mask:SetAllPoints(frame)
 	frame.portrait:AddMaskTexture(frame.mask)
+
+	-- Class Icon Background
+	if E.db.mMT.portraits.general.classicons then
+		frame.iconbg = CreateIconBackground(frame)
+		frame.iconbg:AddMaskTexture(frame.mask)
+	end
 
 	-- Portrait Shadow
 	if settings.shadow.enable then
@@ -311,12 +345,21 @@ local function CheckRareElite(frame, unit)
 	end
 end
 
-local function UpdatePortraitTexture(tx, texture, color, mirror)
-	tx:SetTexture(texture, "CLAMP", "CLAMP", "TRILINEAR")
-	mirrorTexture(tx, mirror)
+local function UpdateIconBackground(tx)
+	tx:SetTexture(path .. "background.tga", "CLAMP", "CLAMP", "TRILINEAR")
 
-	if color then
-		setColor(tx, color, mirror)
+	local color = settings.shadow.background
+	tx:SetVertexColor(color.r, color.g, color.b, color.a)
+end
+
+local function UpdatePortraitTexture(tx, texture, color, mirror)
+	if tx then
+		tx:SetTexture(texture, "CLAMP", "CLAMP", "TRILINEAR")
+		mirrorTexture(tx, mirror)
+
+		if color then
+			setColor(tx, color, mirror)
+		end
 	end
 end
 
@@ -350,6 +393,18 @@ local function UpdatePortrait(frame, conf, unit, parent)
 	-- Portrait Mask
 	texture = textures.mask[conf.texture] or conf.mirror and textures.mask.B[conf.texture] or textures.mask.A[conf.texture]
 	frame.mask:SetTexture(texture, "CLAMPTOBLACKADDITIVE", "CLAMPTOBLACKADDITIVE")
+
+	-- Class Icon Background
+	if E.db.mMT.portraits.general.classicons then
+		if frame.iconbg then
+			UpdateIconBackground(frame.iconbg)
+			frame.shadow:Show()
+		else
+			frame.iconbg = CreateIconBackground(frame)
+		end
+	elseif frame.iconbg and not E.db.mMT.portraits.general.classicons then
+		frame.iconbg:Hide()
+	end
 
 	-- Portrait Shadow
 	if settings.shadow.enable then
@@ -687,11 +742,11 @@ function module:Initialize()
 				end
 
 				if UnitExists("player") then
-					SetPortraitTexture(self.portrait, "player", not (settings.player.texture == "CI"))
-						setColor(self.texture, getColor(self, "player"), settings.player.mirror)
-						if settings.general.corner and textures.corner[settings.player.texture] then
-							setColor(self.corner, getColor(self, "player"), settings.player.mirror)
-						end
+					SetPortraits(self.portrait, "player", not (settings.player.texture == "CI"))
+					setColor(self.texture, getColor(self, "player"), settings.player.mirror)
+					if settings.general.corner and textures.corner[settings.player.texture] then
+						setColor(self.corner, getColor(self, "player"), settings.player.mirror)
+					end
 				end
 			end)
 			module.Player.ScriptSet = true
@@ -704,7 +759,7 @@ function module:Initialize()
 				end
 
 				if UnitExists("target") then
-					SetPortraitTexture(self.portrait, "target", not (settings.target.texture == "CI"))
+					SetPortraits(self.portrait, "target", not (settings.target.texture == "CI"))
 					setColor(self.texture, getColor(self, "target"), settings.target.mirror)
 
 					if settings.general.corner and textures.corner[settings.target.texture] then
@@ -728,7 +783,7 @@ function module:Initialize()
 				end
 
 				if UnitExists("pet") then
-					SetPortraitTexture(self.portrait, "pet", not (settings.pet.texture == "CI"))
+					SetPortraits(self.portrait, "pet", not (settings.pet.texture == "CI"))
 
 					setColor(self.texture, getColor(self, "pet"), settings.pet.mirror)
 					if settings.general.corner and textures.corner[settings.pet.texture] then
@@ -746,17 +801,17 @@ function module:Initialize()
 				end
 
 				if UnitExists("focus") then
-					SetPortraitTexture(self.portrait, "focus", not (settings.focus.texture == "CI"))
-						setColor(self.texture, getColor(self, "focus"), settings.focus.mirror)
-						if settings.general.corner and textures.corner[settings.focus.texture] then
-							setColor(self.corner, getColor(self, "focus"), settings.focus.mirror)
-						end
+					SetPortraits(self.portrait, "focus", not (settings.focus.texture == "CI"))
+					setColor(self.texture, getColor(self, "focus"), settings.focus.mirror)
+					if settings.general.corner and textures.corner[settings.focus.texture] then
+						setColor(self.corner, getColor(self, "focus"), settings.focus.mirror)
+					end
 
-						if settings.focus.extraEnable and self.extra then
-							CheckRareElite(self, "focus")
-						elseif self.extra then
-							self.extra:Hide()
-						end
+					if settings.focus.extraEnable and self.extra then
+						CheckRareElite(self, "focus")
+					elseif self.extra then
+						self.extra:Hide()
+					end
 				end
 			end)
 			module.Focus.ScriptSet = true
@@ -769,17 +824,17 @@ function module:Initialize()
 				end
 
 				if UnitExists("targettarget") then
-					SetPortraitTexture(self.portrait, "targettarget", not (settings.targettarget.texture == "CI"))
-						setColor(self.texture, getColor(self, "targettarget"), settings.targettarget.mirror)
-						if settings.general.corner and textures.corner[settings.targettarget.texture] then
-							setColor(self.corner, getColor(self, "targettarget"), settings.targettarget.mirror)
-						end
+					SetPortraits(self.portrait, "targettarget", not (settings.targettarget.texture == "CI"))
+					setColor(self.texture, getColor(self, "targettarget"), settings.targettarget.mirror)
+					if settings.general.corner and textures.corner[settings.targettarget.texture] then
+						setColor(self.corner, getColor(self, "targettarget"), settings.targettarget.mirror)
+					end
 
-						if settings.targettarget.extraEnable and self.extra then
-							CheckRareElite(self, "targettarget")
-						elseif self.extra then
-							self.extra:Hide()
-						end
+					if settings.targettarget.extraEnable and self.extra then
+						CheckRareElite(self, "targettarget")
+					elseif self.extra then
+						self.extra:Hide()
+					end
 				end
 			end)
 			module.TargetTarget.ScriptSet = true
@@ -794,12 +849,12 @@ function module:Initialize()
 					end
 
 					if UnitExists(frame.unit) then
-							setColor(self.texture, getColor(self, frame.unit), settings.party.mirror)
-							if settings.general.corner and textures.corner[settings.party.texture] then
-								setColor(self.corner, getColor(self, frame.unit), settings.party.mirror)
-							end
+						setColor(self.texture, getColor(self, frame.unit), settings.party.mirror)
+						if settings.general.corner and textures.corner[settings.party.texture] then
+							setColor(self.corner, getColor(self, frame.unit), settings.party.mirror)
+						end
 
-						SetPortraitTexture(self.portrait, frame.unit, not (settings.party.texture == "CI"))
+						SetPortraits(self.portrait, frame.unit, not (settings.party.texture == "CI"))
 					end
 				end)
 
@@ -821,7 +876,7 @@ function module:Initialize()
 							setColor(self.corner, getColor(self, frame.unit), settings.boss.mirror)
 						end
 
-						SetPortraitTexture(self.portrait, frame.unit, not (settings.boss.texture == "CI"))
+						SetPortraits(self.portrait, frame.unit, not (settings.boss.texture == "CI"))
 					end
 				end)
 
@@ -843,7 +898,7 @@ function module:Initialize()
 							setColor(self.corner, getColor(self, frame.unit), settings.arena.mirror)
 						end
 
-						SetPortraitTexture(self.portrait, frame.unit, not (settings.arena.texture == "CI"))
+						SetPortraits(self.portrait, frame.unit, not (settings.arena.texture == "CI"))
 					end
 				end)
 

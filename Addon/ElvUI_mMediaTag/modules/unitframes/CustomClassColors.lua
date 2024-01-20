@@ -6,7 +6,6 @@ if not module then
 	return
 end
 
-local orgFunction = nil
 local _G = _G
 local hooksecurefunc = _G.hooksecurefunc
 
@@ -22,37 +21,31 @@ local function UpdateColors()
 	UF:Update_AllFrames()
 end
 
-function module:Initialize()
-	UpdateColors()
-	--hooksecurefunc(E, "ClassColor", mClassColor)
-
-	if not orgFunction then
-		orgFunction = E.ClassColor
+local function ClassColor(_, class)
+	if not class then
+		return
 	end
 
+	local color = E.db.mMT.classcolors.colors[class] or _G.RAID_CLASS_COLORS[class]
+
+	if type(color) ~= "table" then
+		return
+	end
+
+	if not color.colorStr then
+		color.colorStr = E:RGBToHex(color.r, color.g, color.b, "ff")
+	elseif strlen(color.colorStr) == 6 then
+		color.colorStr = "ff" .. color.colorStr
+	end
+
+	return color
+end
+
+function module:Initialize()
+	UpdateColors()
+
 	if not module.hooked then
-		function E:ClassColor(class)
-
-			if not class then
-				return
-			end
-
-			local color = E.db.mMT.classcolors.colors[class] or _G.RAID_CLASS_COLORS[class]
-
-			if type(color) ~= "table" then
-				return
-			end
-
-			if not color.colorStr then
-				color.colorStr = E:RGBToHex(color.r, color.g, color.b, "ff")
-			elseif strlen(color.colorStr) == 6 then
-				color.colorStr = "ff" .. color.colorStr
-			end
-
-			return color
-		end
-		module.hooked = true
-        --mMT:Print("TEST OK :D ---")
+		hooksecurefunc(E, "ClassColor", ClassColor)
 	end
 
 	module.needReloadUI = true
