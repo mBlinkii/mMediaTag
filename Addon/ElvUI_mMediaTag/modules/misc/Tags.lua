@@ -259,20 +259,20 @@ function mMT:UpdateTagSettings()
 		level = E.db.mMT.tags.colors.level.hex,
 	}
 
-		icons.rare = format("|T%s:15:15:0:2|t", mMT.Media.ClassIcons[E.db.mMT.tags.icons.rare])
-		icons.relite = format("|T%s:15:15:0:2|t", mMT.Media.ClassIcons[E.db.mMT.tags.icons.relite])
-		icons.elite = format("|T%s:15:15:0:2|t", mMT.Media.ClassIcons[E.db.mMT.tags.icons.elite])
-		icons.boss = format("|T%s:15:15:0:2|t", mMT.Media.ClassIcons[E.db.mMT.tags.icons.boss])
-		icons.afk = format("|T%s:15:15:0:2|t", mMT.Media.AFKIcons[E.db.mMT.tags.icons.afk])
-		icons.dnd = format("|T%s:15:15:0:2|t", mMT.Media.DNDIcons[E.db.mMT.tags.icons.dnd])
-		icons.dc = format("|T%s:15:15:0:2|t", mMT.Media.DCIcons[E.db.mMT.tags.icons.offline])
-		icons.death = format("|T%s:15:15:0:2|t", mMT.Media.DeathIcons[E.db.mMT.tags.icons.death])
-		icons.ghost = format("|T%s:15:15:0:2|t", mMT.Media.GhostIcons[E.db.mMT.tags.icons.ghost])
-		icons.pvp = format("|T%s:15:15:0:2|t", "Interface\\AddOns\\ElvUI_mMediaTag\\media\\icons\\tags\\pvp.tga")
-		icons.tank = E:TextureString(E.Media.Textures.Tank, ":15:15")
-		icons.heal = E:TextureString(E.Media.Textures.Healer, ":15:15")
-		icons.dd = E:TextureString(E.Media.Textures.DPS, ":15:15")
-		icons.quest = format("|T%s:15:15:0:2|t", "Interface\\AddOns\\ElvUI_mMediaTag\\media\\icons\\tags\\quest1.tga")
+	icons.rare = format("|T%s:15:15:0:2|t", mMT.Media.ClassIcons[E.db.mMT.tags.icons.rare])
+	icons.relite = format("|T%s:15:15:0:2|t", mMT.Media.ClassIcons[E.db.mMT.tags.icons.relite])
+	icons.elite = format("|T%s:15:15:0:2|t", mMT.Media.ClassIcons[E.db.mMT.tags.icons.elite])
+	icons.boss = format("|T%s:15:15:0:2|t", mMT.Media.ClassIcons[E.db.mMT.tags.icons.boss])
+	icons.afk = format("|T%s:15:15:0:2|t", mMT.Media.AFKIcons[E.db.mMT.tags.icons.afk])
+	icons.dnd = format("|T%s:15:15:0:2|t", mMT.Media.DNDIcons[E.db.mMT.tags.icons.dnd])
+	icons.dc = format("|T%s:15:15:0:2|t", mMT.Media.DCIcons[E.db.mMT.tags.icons.offline])
+	icons.death = format("|T%s:15:15:0:2|t", mMT.Media.DeathIcons[E.db.mMT.tags.icons.death])
+	icons.ghost = format("|T%s:15:15:0:2|t", mMT.Media.GhostIcons[E.db.mMT.tags.icons.ghost])
+	icons.pvp = format("|T%s:15:15:0:2|t", "Interface\\AddOns\\ElvUI_mMediaTag\\media\\icons\\tags\\pvp.tga")
+	icons.tank = E:TextureString(E.Media.Textures.Tank, ":15:15")
+	icons.heal = E:TextureString(E.Media.Textures.Healer, ":15:15")
+	icons.dd = E:TextureString(E.Media.Textures.DPS, ":15:15")
+	icons.quest = format("|T%s:15:15:0:2|t", "Interface\\AddOns\\ElvUI_mMediaTag\\media\\icons\\tags\\quest1.tga")
 
 	if E.db.mMT.roleicons.enable then
 		if E.db.mMT.roleicons.customtexture then
@@ -653,6 +653,10 @@ E:AddTagInfo("mColor", mMT.NameShort .. " " .. L["Color"], L["Unit colors with m
 E:AddTagInfo("status", mMT.NameShort .. " " .. L["Color"], L["Unit colors with mMediaTag colors for Rare and Rareelite."])
 E:AddTagInfo("mColor:target", mMT.NameShort .. " " .. L["Color"], L["Targetunit colors with mMediaTag colors for Rare, Rareelite, Elite and Boss and Classcolors."])
 
+local function NoDecimalPercent(min, max)
+	return format("%d", (min / max * 100))
+end
+
 E:AddTag("mHealth", "UNIT_HEALTH UNIT_MAXHEALTH UNIT_CONNECTION PLAYER_FLAGS_CHANGED PLAYER_UPDATE_RESTING", function(unit)
 	local isAFK = UnitIsAFK(unit)
 
@@ -663,12 +667,35 @@ E:AddTag("mHealth", "UNIT_HEALTH UNIT_MAXHEALTH UNIT_CONNECTION PLAYER_FLAGS_CHA
 			return _TAGS.mStatus(unit)
 		else
 			local currentHealth = UnitHealth(unit)
-			local deficit = UnitHealthMax(unit) - currentHealth
+			local maxHealth = UnitHealthMax(unit)
+			local deficit = maxHealth - currentHealth
 
 			if deficit > 0 and currentHealth > 0 then
-				return E:GetFormattedText("PERCENT", UnitHealth(unit), UnitHealthMax(unit))
+				return E:GetFormattedText("PERCENT", currentHealth, maxHealth)
 			else
-				return E:GetFormattedText("CURRENT", UnitHealth(unit), UnitHealthMax(unit))
+				return E:GetFormattedText("CURRENT", currentHealth, maxHealth)
+			end
+		end
+	end
+end)
+
+E:AddTag("mHealth:nodecimalpercent", "UNIT_HEALTH UNIT_MAXHEALTH UNIT_CONNECTION PLAYER_FLAGS_CHANGED PLAYER_UPDATE_RESTING", function(unit)
+	local isAFK = UnitIsAFK(unit)
+
+	if isAFK then
+		return _TAGS.mAFK(unit)
+	else
+		if (UnitIsDead(unit)) or (UnitIsGhost(unit)) or (not UnitIsConnected(unit)) then
+			return _TAGS.mStatus(unit)
+		else
+			local currentHealth = UnitHealth(unit)
+			local maxHealth = UnitHealthMax(unit)
+			local deficit = maxHealth - currentHealth
+
+			if deficit > 0 and currentHealth > 0 then
+				return NoDecimalPercent(currentHealth, maxHealth)
+			else
+				return E:GetFormattedText("CURRENT", currentHealth, maxHealth)
 			end
 		end
 	end
@@ -676,12 +703,13 @@ end)
 
 E:AddTag("mHealth:noStatus", "UNIT_HEALTH UNIT_MAXHEALTH", function(unit)
 	local currentHealth = UnitHealth(unit)
-	local deficit = UnitHealthMax(unit) - currentHealth
+	local maxHealth = UnitHealthMax(unit)
+	local deficit = maxHealth - currentHealth
 
 	if deficit > 0 and currentHealth > 0 then
-		return E:GetFormattedText("PERCENT", UnitHealth(unit), UnitHealthMax(unit))
+		return NoDecimalPercent(currentHealth, maxHealth)
 	else
-		return E:GetFormattedText("CURRENT", UnitHealth(unit), UnitHealthMax(unit))
+		return E:GetFormattedText("CURRENT", currentHealth, maxHealth)
 	end
 end)
 
@@ -695,12 +723,13 @@ E:AddTag("mHealth:short", "UNIT_HEALTH UNIT_MAXHEALTH UNIT_CONNECTION PLAYER_FLA
 			return _TAGS.mStatus(unit)
 		else
 			local currentHealth = UnitHealth(unit)
-			local deficit = UnitHealthMax(unit) - currentHealth
+			local maxHealth = UnitHealthMax(unit)
+			local deficit = maxHealth - currentHealth
 
 			if deficit > 0 and currentHealth > 0 then
-				return E:GetFormattedText("PERCENT", UnitHealth(unit), UnitHealthMax(unit))
+				return E:GetFormattedText("PERCENT", currentHealth, maxHealth)
 			else
-				return E:GetFormattedText("CURRENT", UnitHealth(unit), UnitHealthMax(unit), nil, true)
+				return E:GetFormattedText("CURRENT", currentHealth, maxHealth, nil, true)
 			end
 		end
 	end
@@ -708,24 +737,26 @@ end)
 
 E:AddTag("mHealth:noStatus:short", "UNIT_HEALTH UNIT_MAXHEALTH", function(unit)
 	local currentHealth = UnitHealth(unit)
-	local deficit = UnitHealthMax(unit) - currentHealth
+	local maxHealth = UnitHealthMax(unit)
+	local deficit = maxHealth - currentHealth
 
 	if deficit > 0 and currentHealth > 0 then
-		return E:GetFormattedText("PERCENT", UnitHealth(unit), UnitHealthMax(unit))
+		return E:GetFormattedText("PERCENT", currentHealth, maxHealth)
 	else
-		return E:GetFormattedText("CURRENT", UnitHealth(unit), UnitHealthMax(unit), nil, true)
+		return E:GetFormattedText("CURRENT", currentHealth, maxHealth, nil, true)
 	end
 end)
 
 E:AddTag("mHealth:nodeath", "UNIT_HEALTH UNIT_MAXHEALTH UNIT_CONNECTION PLAYER_FLAGS_CHANGED PLAYER_UPDATE_RESTING", function(unit)
 	if (not UnitIsDead(unit)) or (not UnitIsGhost(unit)) then
 		local currentHealth = UnitHealth(unit)
-		local deficit = UnitHealthMax(unit) - currentHealth
+		local maxHealth = UnitHealthMax(unit)
+		local deficit = maxHealth - currentHealth
 
 		if deficit > 0 and currentHealth > 0 then
-			return E:GetFormattedText("PERCENT", UnitHealth(unit), UnitHealthMax(unit))
+			return E:GetFormattedText("PERCENT", currentHealth, maxHealth)
 		else
-			return E:GetFormattedText("CURRENT", UnitHealth(unit), UnitHealthMax(unit))
+			return E:GetFormattedText("CURRENT", currentHealth, maxHealth)
 		end
 	end
 end)
@@ -733,12 +764,13 @@ end)
 E:AddTag("mHealth:nodeath:short", "UNIT_HEALTH UNIT_MAXHEALTH UNIT_CONNECTION PLAYER_FLAGS_CHANGED PLAYER_UPDATE_RESTING", function(unit)
 	if (not UnitIsDead(unit)) or (not UnitIsGhost(unit)) then
 		local currentHealth = UnitHealth(unit)
-		local deficit = UnitHealthMax(unit) - currentHealth
+		local maxHealth = UnitHealthMax(unit)
+		local deficit = maxHealth - currentHealth
 
 		if deficit > 0 and currentHealth > 0 then
-			return E:GetFormattedText("PERCENT", UnitHealth(unit), UnitHealthMax(unit))
+			return E:GetFormattedText("PERCENT", currentHealth, maxHealth)
 		else
-			return E:GetFormattedText("CURRENT", UnitHealth(unit), UnitHealthMax(unit), nil, true)
+			return E:GetFormattedText("CURRENT", currentHealth, maxHealth, nil, true)
 		end
 	end
 end)
