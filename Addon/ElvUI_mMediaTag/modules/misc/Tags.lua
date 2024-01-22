@@ -62,6 +62,11 @@ local icons = {
 	heal = "|TInterface\\Addons\\ElvUI_mMediaTag\\media\\logo\\mmt_icon.tga:15:15|t",
 	dd = "|TInterface\\Addons\\ElvUI_mMediaTag\\media\\logo\\mmt_icon.tga:15:15|t",
 	quest = format("|T%s:15:15:0:2|t", "Interface\\AddOns\\ElvUI_mMediaTag\\media\\icons\\tags\\quest1.tga"),
+	default = {
+		tank = CreateAtlasMarkup("UI-LFG-RoleIcon-Tank", 16, 16),
+		heal = CreateAtlasMarkup("UI-LFG-RoleIcon-Healer", 16, 16),
+		dd = CreateAtlasMarkup("UI-LFG-RoleIcon-DPS", 16, 16),
+	},
 }
 
 local BossIDs = {
@@ -842,7 +847,7 @@ E:AddTag("mHealth:nodeath:short:ndp", "UNIT_HEALTH UNIT_MAXHEALTH UNIT_CONNECTIO
 		local deficit = maxHealth - currentHealth
 
 		if deficit > 0 and currentHealth > 0 then
-			 return NoDecimalPercent(currentHealth, maxHealth, "%")
+			return NoDecimalPercent(currentHealth, maxHealth, "%")
 		else
 			return E:GetFormattedText("CURRENT", currentHealth, maxHealth, nil, true)
 		end
@@ -1201,7 +1206,6 @@ E:AddTag("mHealth:NoAFK:short:current-percent", "UNIT_HEALTH UNIT_MAXHEALTH UNIT
 	end
 end)
 
-
 E:AddTag("mHealth:NoAFK:short:current-percent:ndp", "UNIT_HEALTH UNIT_MAXHEALTH UNIT_CONNECTION PLAYER_FLAGS_CHANGED PLAYER_UPDATE_RESTING", function(unit)
 	if (UnitIsDead(unit)) or (UnitIsGhost(unit)) or (not UnitIsConnected(unit)) then
 		return _TAGS.mStatus(unit)
@@ -1383,6 +1387,22 @@ E:AddTag("mRoleIcon", "PLAYER_ROLES_ASSIGNED GROUP_ROSTER_UPDATE", function(unit
 	end
 end)
 
+E:AddTag("mRoleIcon:blizz", "PLAYER_ROLES_ASSIGNED GROUP_ROSTER_UPDATE", function(unit)
+	local Role = ""
+
+	if E.Retail then
+		Role = UnitGroupRolesAssigned(unit)
+	end
+
+	if Role == "TANK" then
+		return icons.default.tank
+	elseif Role == "HEALER" then
+		return icons.default.heal
+	elseif Role == "DAMAGER" then
+		return icons.default.dd
+	end
+end)
+
 E:AddTag("mRoleIcon:target", "UNIT_TARGET UNIT_COMBAT", function(unit)
 	local Role = ""
 
@@ -1401,9 +1421,29 @@ E:AddTag("mRoleIcon:target", "UNIT_TARGET UNIT_COMBAT", function(unit)
 	end
 end)
 
+E:AddTag("mRoleIcon:target:blizz", "UNIT_TARGET UNIT_COMBAT", function(unit)
+	local Role = ""
+
+	if E.Retail then
+		Role = UnitGroupRolesAssigned(unit .. "target")
+
+		if Role == "TANK" then
+			return icons.default.tank
+		elseif Role == "HEALER" then
+			return icons.default.heal
+		elseif Role == "DAMAGER" then
+			return icons.default.dd
+		end
+	else
+		return ""
+	end
+end)
+
 E:AddTagInfo("mRole", mMT.NameShort .. " " .. L["Misc"], L["Tank and Healer roles as text."])
 E:AddTagInfo("mRoleIcon", mMT.NameShort .. " " .. L["Misc"], L["Unit role icon."])
 E:AddTagInfo("mRoleIcon:target", mMT.NameShort .. " " .. L["Misc"], L["Targetunit role icon."])
+E:AddTagInfo("mRoleIcon:blizz", mMT.NameShort .. " " .. L["Misc"], L["Blizzard Unit role icon."])
+E:AddTagInfo("mRoleIcon:target:blizz", mMT.NameShort .. " " .. L["Misc"], L["Blizzard Targetunit role icon."])
 
 E:AddTag("mLevel", "UNIT_LEVEL PLAYER_LEVEL_UP PLAYER_UPDATE_RESTING", function(unit)
 	if unit == "player" and IsResting() then

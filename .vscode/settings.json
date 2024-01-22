@@ -550,7 +550,8 @@
         "GetLatestThreeSenders",
         "ResetCPUUsage",
         "SetPortraitTexture",
-        "CLASS_ICON_TCOORDS"
+        "CLASS_ICON_TCOORDS",
+        "GetIconForRole"
     ],
     "Lua.diagnostics.disable": [
         "undefined-field"
