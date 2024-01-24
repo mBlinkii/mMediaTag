@@ -551,7 +551,8 @@
         "ResetCPUUsage",
         "SetPortraitTexture",
         "CLASS_ICON_TCOORDS",
-        "GetIconForRole"
+        "GetIconForRole",
+        "RAID_CLASS_COLORS"
     ],
     "Lua.diagnostics.disable": [
         "undefined-field"
