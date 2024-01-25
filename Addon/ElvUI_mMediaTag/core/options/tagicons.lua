@@ -172,118 +172,118 @@ local function configTable()
 				},
 			},
 		},
-		header_raidtartegticons = {
-			order = 1,
-			type = "group",
-			inline = true,
-			name = L["Raidtarget Icons"],
-			args = {
-				icon_star = {
-					order = 1,
-					type = "select",
-					name = L["Star"],
-					get = function(info)
-						return E.db.mMT.tags.icons.afk
-					end,
-					set = function(info, value)
-						E.db.mMT.tags.icons.afk = value
-						mMT:UpdateTagSettings()
-					end,
-					values = raidtarget,
-				},
-				icon_circle = {
-					order = 2,
-					type = "select",
-					name = L["Circle"],
-					get = function(info)
-						return E.db.mMT.tags.icons.dnd
-					end,
-					set = function(info, value)
-						E.db.mMT.tags.icons.dnd = value
-						mMT:UpdateTagSettings()
-					end,
-					values = raidtarget,
-				},
-				icon_diamond = {
-					order = 3,
-					type = "select",
-					name = L["Diamond"],
-					get = function(info)
-						return E.db.mMT.tags.icons.offline
-					end,
-					set = function(info, value)
-						E.db.mMT.tags.icons.offline = value
-						mMT:UpdateTagSettings()
-					end,
-					values = raidtarget,
-				},
-				icon_triangle = {
-					order = 4,
-					type = "select",
-					name = L["Triangle"],
-					get = function(info)
-						return E.db.mMT.tags.icons.death
-					end,
-					set = function(info, value)
-						E.db.mMT.tags.icons.death = value
-						mMT:UpdateTagSettings()
-					end,
-					values = raidtarget,
-				},
-				icon_moon = {
-					order = 5,
-					type = "select",
-					name = L["Moon"],
-					get = function(info)
-						return E.db.mMT.tags.icons.ghost
-					end,
-					set = function(info, value)
-						E.db.mMT.tags.icons.ghost = value
-						mMT:UpdateTagSettings()
-					end,
-					values = raidtarget,
-				},
-				icon_square = {
-					order = 6,
-					type = "select",
-					name = L["Square"],
-					get = function(info)
-						return E.db.mMT.tags.icons.ghost
-					end,
-					set = function(info, value)
-						E.db.mMT.tags.icons.ghost = value
-						mMT:UpdateTagSettings()
-					end,
-					values = raidtarget,
-				},
-				icon_cross = {
-					order = 7,
-					type = "select",
-					name = L["Cross"],
-					get = function(info)
-						return E.db.mMT.tags.icons.ghost
-					end,
-					set = function(info, value)
-						E.db.mMT.tags.icons.ghost = value
-						mMT:UpdateTagSettings()
-					end,
-					values = raidtarget,
-				},
-				icon_skull = {
-					order = 8,
-					type = "select",
-					name = L["Skull"],
-					get = function(info)
-						return E.db.mMT.tags.icons.ghost
-					end,
-					set = function(info, value)
-						E.db.mMT.tags.icons.ghost = value
-						mMT:UpdateTagSettings()
-					end,
-					values = raidtarget,
-				},
-			},
-		},
+		-- header_raidtartegticons = {
+		-- 	order = 1,
+		-- 	type = "group",
+		-- 	inline = true,
+		-- 	name = L["Raidtarget Icons"],
+		-- 	args = {
+		-- 		icon_star = {
+		-- 			order = 1,
+		-- 			type = "select",
+		-- 			name = L["Star"],
+		-- 			get = function(info)
+		-- 				return E.db.mMT.tags.icons.afk
+		-- 			end,
+		-- 			set = function(info, value)
+		-- 				E.db.mMT.tags.icons.afk = value
+		-- 				mMT:UpdateTagSettings()
+		-- 			end,
+		-- 			values = raidtarget,
+		-- 		},
+		-- 		icon_circle = {
+		-- 			order = 2,
+		-- 			type = "select",
+		-- 			name = L["Circle"],
+		-- 			get = function(info)
+		-- 				return E.db.mMT.tags.icons.dnd
+		-- 			end,
+		-- 			set = function(info, value)
+		-- 				E.db.mMT.tags.icons.dnd = value
+		-- 				mMT:UpdateTagSettings()
+		-- 			end,
+		-- 			values = raidtarget,
+		-- 		},
+		-- 		icon_diamond = {
+		-- 			order = 3,
+		-- 			type = "select",
+		-- 			name = L["Diamond"],
+		-- 			get = function(info)
+		-- 				return E.db.mMT.tags.icons.offline
+		-- 			end,
+		-- 			set = function(info, value)
+		-- 				E.db.mMT.tags.icons.offline = value
+		-- 				mMT:UpdateTagSettings()
+		-- 			end,
+		-- 			values = raidtarget,
+		-- 		},
+		-- 		icon_triangle = {
+		-- 			order = 4,
+		-- 			type = "select",
+		-- 			name = L["Triangle"],
+		-- 			get = function(info)
+		-- 				return E.db.mMT.tags.icons.death
+		-- 			end,
+		-- 			set = function(info, value)
+		-- 				E.db.mMT.tags.icons.death = value
+		-- 				mMT:UpdateTagSettings()
+		-- 			end,
+		-- 			values = raidtarget,
+		-- 		},
+		-- 		icon_moon = {
+		-- 			order = 5,
+		-- 			type = "select",
+		-- 			name = L["Moon"],
+		-- 			get = function(info)
+		-- 				return E.db.mMT.tags.icons.ghost
+		-- 			end,
+		-- 			set = function(info, value)
+		-- 				E.db.mMT.tags.icons.ghost = value
+		-- 				mMT:UpdateTagSettings()
+		-- 			end,
+		-- 			values = raidtarget,
+		-- 		},
+		-- 		icon_square = {
+		-- 			order = 6,
+		-- 			type = "select",
+		-- 			name = L["Square"],
+		-- 			get = function(info)
+		-- 				return E.db.mMT.tags.icons.ghost
+		-- 			end,
+		-- 			set = function(info, value)
+		-- 				E.db.mMT.tags.icons.ghost = value
+		-- 				mMT:UpdateTagSettings()
+		-- 			end,
+		-- 			values = raidtarget,
+		-- 		},
+		-- 		icon_cross = {
+		-- 			order = 7,
+		-- 			type = "select",
+		-- 			name = L["Cross"],
+		-- 			get = function(info)
+		-- 				return E.db.mMT.tags.icons.ghost
+		-- 			end,
+		-- 			set = function(info, value)
+		-- 				E.db.mMT.tags.icons.ghost = value
+		-- 				mMT:UpdateTagSettings()
+		-- 			end,
+		-- 			values = raidtarget,
+		-- 		},
+		-- 		icon_skull = {
+		-- 			order = 8,
+		-- 			type = "select",
+		-- 			name = L["Skull"],
+		-- 			get = function(info)
+		-- 				return E.db.mMT.tags.icons.ghost
+		-- 			end,
+		-- 			set = function(info, value)
+		-- 				E.db.mMT.tags.icons.ghost = value
+		-- 				mMT:UpdateTagSettings()
+		-- 			end,
+		-- 			values = raidtarget,
+		-- 		},
+		-- 	},
+		-- },
 	}
 end
 
