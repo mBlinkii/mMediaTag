@@ -708,5 +708,6 @@
         "Warmode",
         "WOTLK"
     ],
-    "cSpell.language": "en,de"
+    "cSpell.language": "en,de",
+    "stylua.targetReleaseVersion": "latest"
 }
