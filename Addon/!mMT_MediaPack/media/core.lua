@@ -706,6 +706,8 @@ mAddBorder("mMT Squares mirror", "squaresm.tga")
 mAddBorder("mMT Squares red", "squaresr.tga")
 mAddBorder("mMT Squares red/mirror", "squaresrm.tga")
 mAddBorder("mMT Corners", "corners.tga")
+mAddBorder("mMT Round", "round.tga")
+mAddBorder("mMT Stop", "stop.tga")
 
 mAddFont("Inter-Bold", "Inter-Bold.ttf")
 mAddFont("Inter-Regular", "Inter-Regular.ttf")
