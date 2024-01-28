@@ -46,8 +46,9 @@ local thanks_text = {
 	"Dalerija",
 	"Jiberish",
 	"Trenchy",
-	"Tukui Community",
 	"ElioteMarcondes",
+	"Dlarge",	
+	"Tukui Community",
 }
 local thanks_string = tconcat(thanks_text, "|n")
 

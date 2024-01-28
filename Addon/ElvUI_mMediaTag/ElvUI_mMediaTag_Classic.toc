@@ -18,6 +18,7 @@ lib\LibAddonCompat-1.0.lua
 
 init.lua
 core\load_core.xml
+localization\load_localization.xml
 media\load_media.xml
 modules\load_modules_classic.xml
 modules\classic\load_classic.xml
