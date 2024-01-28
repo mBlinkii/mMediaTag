@@ -53,7 +53,7 @@ local textures = {
 			PI = path .. "ex_pi_a.tga",
 			RA = path .. "ex_ra_a.tga",
 			QA = path .. "ex_qa_a.tga",
-			MO = path .. "ex_moon.tga",
+			MO = path .. "ex_mo_c.tga",
 		},
 		smooth = {
 			CI = path .. "ex_a_b.tga",
@@ -62,7 +62,7 @@ local textures = {
 			PI = path .. "ex_pi_b.tga",
 			RA = path .. "ex_ra_b.tga",
 			QA = path .. "ex_qa_b.tga",
-			MO = path .. "ex_moon.tga",
+			MO = path .. "ex_mo_a.tga",
 		},
 		metal = {
 			CI = path .. "ex_a_c.tga",
@@ -71,7 +71,7 @@ local textures = {
 			PI = path .. "ex_pi_c.tga",
 			RA = path .. "ex_ra_c.tga",
 			QA = path .. "ex_qa_c.tga",
-			MO = path .. "ex_moon.tga",
+			MO = path .. "ex_mo_b.tga",
 		},
 		border = {
 			CI = path .. "border_ex_a.tga",
@@ -89,7 +89,7 @@ local textures = {
 			PI = path .. "shadow_ex_pi.tga",
 			RA = path .. "shadow_ex_ra.tga",
 			QA = path .. "shadow_ex_qa.tga",
-			MO = path .. "nil.tga",
+			MO = nil,
 		},
 	},
 	border = {
@@ -470,7 +470,7 @@ local function UpdatePortrait(frame, conf, unit, parent)
 
 		-- Shadow
 		if settings.shadow.enable then
-			texture = textures.extra.border[conf.texture]
+			texture = textures.extra.shadow[conf.texture]
 			if frame.extra.shadow then
 				UpdatePortraitTexture(frame.extra.shadow, texture, settings.shadow.color, not conf.mirror)
 			else
@@ -483,7 +483,7 @@ local function UpdatePortrait(frame, conf, unit, parent)
 
 		-- Border
 		if settings.shadow.border then
-			texture = textures.extra.shadow[conf.texture]
+			texture = textures.extra.border[conf.texture]
 			if frame.extra.border then
 				UpdatePortraitTexture(frame.extra.border, texture, settings.shadow.borderColorRare, not conf.mirror)
 			else
