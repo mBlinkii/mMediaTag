@@ -710,6 +710,8 @@ mAddBorder("mMT Round", "round.tga")
 mAddBorder("mMT Stop", "stop.tga")
 mAddBorder("mMT Wood", "wood.tga")
 mAddBorder("mMT Glass", "glass.tga")
+mAddBorder("mMT Pencil", "pencil.tga")
+mAddBorder("mMT Round Corners", "roundcorners.tga")
 
 mAddFont("Inter-Bold", "Inter-Bold.ttf")
 mAddFont("Inter-Regular", "Inter-Regular.ttf")
