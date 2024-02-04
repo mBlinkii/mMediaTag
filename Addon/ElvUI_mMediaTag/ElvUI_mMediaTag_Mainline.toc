@@ -15,5 +15,6 @@
 
 init.lua
 core\load_core.xml
+localization\load_localization.xml
 media\load_media.xml
 modules\load_modules.xml

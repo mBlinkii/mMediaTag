@@ -648,6 +648,7 @@ P.mMT = {
 			PI = 10,
 			RA = 6,
 			QA = 20,
+			MO = 5.5,
 		},
 		shadow = {
 			enable = true,

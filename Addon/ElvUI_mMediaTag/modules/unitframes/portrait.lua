@@ -22,6 +22,7 @@ local textures = {
 			PI = path .. "pi_a.tga",
 			RA = path .. "ra_a.tga",
 			QA = path .. "qa_a.tga",
+			MO = path .. "moon_c.tga",
 		},
 		smooth = {
 			SQ = path .. "sq_b.tga",
@@ -31,6 +32,7 @@ local textures = {
 			PI = path .. "pi_b.tga",
 			RA = path .. "ra_b.tga",
 			QA = path .. "qa_b.tga",
+			MO = path .. "moon_a.tga",
 		},
 		metal = {
 			SQ = path .. "sq_c.tga",
@@ -40,6 +42,7 @@ local textures = {
 			PI = path .. "pi_c.tga",
 			RA = path .. "ra_c.tga",
 			QA = path .. "qa_c.tga",
+			MO = path .. "moon_b.tga",
 		},
 	},
 	extra = {
@@ -50,6 +53,7 @@ local textures = {
 			PI = path .. "ex_pi_a.tga",
 			RA = path .. "ex_ra_a.tga",
 			QA = path .. "ex_qa_a.tga",
+			MO = path .. "ex_mo_c.tga",
 		},
 		smooth = {
 			CI = path .. "ex_a_b.tga",
@@ -58,6 +62,7 @@ local textures = {
 			PI = path .. "ex_pi_b.tga",
 			RA = path .. "ex_ra_b.tga",
 			QA = path .. "ex_qa_b.tga",
+			MO = path .. "ex_mo_a.tga",
 		},
 		metal = {
 			CI = path .. "ex_a_c.tga",
@@ -66,6 +71,7 @@ local textures = {
 			PI = path .. "ex_pi_c.tga",
 			RA = path .. "ex_ra_c.tga",
 			QA = path .. "ex_qa_c.tga",
+			MO = path .. "ex_mo_b.tga",
 		},
 		border = {
 			CI = path .. "border_ex_a.tga",
@@ -74,6 +80,7 @@ local textures = {
 			PI = path .. "border_ex_pi.tga",
 			RA = path .. "border_ex_ra.tga",
 			QA = path .. "border_ex_qa.tga",
+			MO = path .. "border_ex_moon.tga",
 		},
 		shadow = {
 			CI = path .. "shadow_ex_a.tga",
@@ -82,6 +89,7 @@ local textures = {
 			PI = path .. "shadow_ex_pi.tga",
 			RA = path .. "shadow_ex_ra.tga",
 			QA = path .. "shadow_ex_qa.tga",
+			MO = nil,
 		},
 	},
 	border = {
@@ -92,6 +100,7 @@ local textures = {
 		PI = path .. "border_pi.tga",
 		RA = path .. "border_ra.tga",
 		QA = path .. "border_qa.tga",
+		MO = path .. "border_moon.tga",
 	},
 	shadow = {
 		SQ = path .. "shadow_sq.tga",
@@ -100,6 +109,7 @@ local textures = {
 		PI = path .. "shadow_pi.tga",
 		RA = path .. "shadow_ra.tga",
 		QA = path .. "shadow_qa.tga",
+		MO = path .. "shadow_moon.tga",
 	},
 	inner = {
 		SQ = path .. "inner_a.tga",
@@ -108,12 +118,14 @@ local textures = {
 		PI = path .. "inner_pi.tga",
 		RA = path .. "inner_ra.tga",
 		QA = path .. "inner_qa.tga",
+		MO = path .. "inner_b.tga",
 	},
 	mask = {
 		CI = path .. "mask_c.tga",
 		PI = path .. "mask_pi.tga",
 		RA = path .. "mask_d.tga",
 		QA = path .. "mask_qa.tga",
+		MO = path .. "mask_c.tga",
 
 		A = {
 			SQ = path .. "mask_a.tga",
@@ -131,6 +143,7 @@ local textures = {
 		PI = false,
 		RA = false,
 		QA = false,
+		MO = false,
 	},
 }
 
@@ -457,7 +470,7 @@ local function UpdatePortrait(frame, conf, unit, parent)
 
 		-- Shadow
 		if settings.shadow.enable then
-			texture = textures.extra.border[conf.texture]
+			texture = textures.extra.shadow[conf.texture]
 			if frame.extra.shadow then
 				UpdatePortraitTexture(frame.extra.shadow, texture, settings.shadow.color, not conf.mirror)
 			else
@@ -470,7 +483,7 @@ local function UpdatePortrait(frame, conf, unit, parent)
 
 		-- Border
 		if settings.shadow.border then
-			texture = textures.extra.shadow[conf.texture]
+			texture = textures.extra.border[conf.texture]
 			if frame.extra.border then
 				UpdatePortraitTexture(frame.extra.border, texture, settings.shadow.borderColorRare, not conf.mirror)
 			else

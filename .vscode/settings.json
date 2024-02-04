@@ -550,7 +550,9 @@
         "GetLatestThreeSenders",
         "ResetCPUUsage",
         "SetPortraitTexture",
-        "CLASS_ICON_TCOORDS"
+        "CLASS_ICON_TCOORDS",
+        "GetIconForRole",
+        "RAID_CLASS_COLORS"
     ],
     "Lua.diagnostics.disable": [
         "undefined-field"
@@ -597,6 +599,7 @@
         "Datatexts",
         "DEATHKNIGHT",
         "DEMONHUNTER",
+        "Dlarge",
         "dockdatatext",
         "Dungeonportals",
         "Dura",
@@ -706,5 +709,6 @@
         "Warmode",
         "WOTLK"
     ],
-    "cSpell.language": "en,de"
+    "cSpell.language": "en,de",
+    "stylua.targetReleaseVersion": "latest"
 }
