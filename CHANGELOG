@@ -1,6 +1,18 @@
 # Changelog - ElvUI_mMediaTag
 [Eng] - All changes to this project will be documented in this file. The latest changes are at the top.
 
+## [ver. 3.29] - 05.02.2024
+### FIX
+- FIX - German Locals
+- FIX - Prevent nil error with TAG icons and wrong settings
+- FIX - Mirror bug for Portraits
+- FIX - Shadow bug with class icons for Portraits
+- FIX - Portraits of other units with class icons enabled
+- FIX - Swapped settings for docks XIV BG and XIV MAUI
+### Update
+- UPDATE - Update TAG icon defaults
+- UPDATE - add Reload UI popup for Portraits class icons settings tp prevent errors
+
 ## [ver. 3.28] - 04.02.2024
 ### FIX
 - FIX - Removed unused Settings from TAG settings menu

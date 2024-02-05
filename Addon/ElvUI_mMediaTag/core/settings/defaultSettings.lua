@@ -184,15 +184,15 @@ P.mMT = {
 	gamemenu = { icon = true, menuicons = true, color = true },
 	tags = {
 		icons = {
-			dnd = "DND1",
+			dnd = "DND11",
 			offline = "DC9",
-			afk = "AFK1",
-			death = "DEATH7",
-			ghost = "GHOST3",
-			rare = "STAR1",
-			relite = "STAR10",
-			elite = "STAR9",
-			boss = "DEATH7",
+			afk = "AFK17",
+			death = "DEATH11",
+			ghost = "GHOST1",
+			rare = "FRUIT3",
+			relite = "FRUIT4",
+			elite = "FRUIT2",
+			boss = "BOSS1",
 		},
 		colors = {
 			rare = {
