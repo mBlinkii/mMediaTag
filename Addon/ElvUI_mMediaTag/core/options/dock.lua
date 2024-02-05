@@ -2014,7 +2014,7 @@ local function configTable()
 					type = "execute",
 					name = L["MaUI XIV Like"],
 					func = function()
-						mMT:Dock_BG(ExampleDockSettings.top)
+						mMT:Dock_MaUI(ExampleDockSettings.top)
 						E:StaticPopup_Show("CONFIG_RL")
 					end,
 				},
@@ -2023,7 +2023,7 @@ local function configTable()
 					type = "execute",
 					name = L["Add XIV Background"],
 					func = function()
-						mMT:Dock_MaUI(ExampleDockSettings.top)
+						mMT:Dock_BG(ExampleDockSettings.top)
 						E:StaticPopup_Show("CONFIG_RL")
 					end,
 				},
