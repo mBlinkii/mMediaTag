@@ -162,7 +162,11 @@ local function SetPortraits(portrait, unit, masking, mirror)
 			portrait:SetTexture("Interface\\WorldStateFrame\\Icons-Classes")
 		end
 	else
-		mirrorTexture(portrait, mirror)
+		if E.db.mMT.portraits.general.classicons then
+			portrait:SetTexCoord(mirror and 1 or 0, mirror and 0 or 1, 0, 1)
+		else
+			mirrorTexture(portrait, mirror)
+		end
 		SetPortraitTexture(portrait, unit, masking)
 	end
 end
