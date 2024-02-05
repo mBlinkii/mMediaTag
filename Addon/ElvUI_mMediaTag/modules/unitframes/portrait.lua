@@ -147,7 +147,13 @@ local textures = {
 	},
 }
 
-local function SetPortraits(portrait, unit, masking)
+local function mirrorTexture(texture, mirror)
+	if not E.db.mMT.portraits.general.classicons then
+		texture:SetTexCoord(mirror and 1 or 0, mirror and 0 or 1, 0, 1)
+	end
+end
+
+local function SetPortraits(portrait, unit, masking, mirror)
 	if E.db.mMT.portraits.general.classicons and UnitIsPlayer(unit) then
 		local class = select(2, UnitClass(unit))
 		local coords = class and CLASS_ICON_TCOORDS[class]
@@ -156,7 +162,7 @@ local function SetPortraits(portrait, unit, masking)
 			portrait:SetTexture("Interface\\WorldStateFrame\\Icons-Classes")
 		end
 	else
-		portrait:SetTexCoord(0, 1, 0, 1)
+		mirrorTexture(portrait, mirror)
 		SetPortraitTexture(portrait, unit, masking)
 	end
 end
@@ -192,12 +198,6 @@ local function getColor(frame, unit)
 		else
 			return settings.colors.enemy
 		end
-	end
-end
-
-local function mirrorTexture(texture, mirror)
-	if not E.db.mMT.portraits.general.classicons then
-		texture:SetTexCoord(mirror and 1 or 0, mirror and 0 or 1, 0, 1)
 	end
 end
 
@@ -262,7 +262,7 @@ local function CreatePortrait(parent, conf, unit)
 	frame.portrait:SetPoint("TOPLEFT", 0 + offset, 0 - offset)
 	frame.portrait:SetPoint("BOTTOMRIGHT", 0 - offset, 0 + offset)
 	frame.portrait:SetTexture(path .. "unknown.tga", "CLAMP", "CLAMP", "TRILINEAR")
-	SetPortraits(frame.portrait, unit, not (conf.texture == "CI"))
+	SetPortraits(frame.portrait, unit, not (conf.texture == "CI"), conf.mirror)
 	mirrorTexture(frame.portrait, conf.mirror)
 
 	-- Portrait Mask
@@ -755,7 +755,7 @@ function module:Initialize()
 				end
 
 				if UnitExists("player") then
-					SetPortraits(self.portrait, "player", not (settings.player.texture == "CI"))
+					SetPortraits(self.portrait, "player", not (settings.player.texture == "CI"), settings.player.mirror)
 					setColor(self.texture, getColor(self, "player"), settings.player.mirror)
 					if settings.general.corner and textures.corner[settings.player.texture] then
 						setColor(self.corner, getColor(self, "player"), settings.player.mirror)
@@ -772,7 +772,7 @@ function module:Initialize()
 				end
 
 				if UnitExists("target") then
-					SetPortraits(self.portrait, "target", not (settings.target.texture == "CI"))
+					SetPortraits(self.portrait, "target", not (settings.target.texture == "CI"), settings.target.mirror)
 					setColor(self.texture, getColor(self, "target"), settings.target.mirror)
 
 					if settings.general.corner and textures.corner[settings.target.texture] then
@@ -796,7 +796,7 @@ function module:Initialize()
 				end
 
 				if UnitExists("pet") then
-					SetPortraits(self.portrait, "pet", not (settings.pet.texture == "CI"))
+					SetPortraits(self.portrait, "pet", not (settings.pet.texture == "CI"), settings.pet.mirror)
 
 					setColor(self.texture, getColor(self, "pet"), settings.pet.mirror)
 					if settings.general.corner and textures.corner[settings.pet.texture] then
@@ -814,7 +814,7 @@ function module:Initialize()
 				end
 
 				if UnitExists("focus") then
-					SetPortraits(self.portrait, "focus", not (settings.focus.texture == "CI"))
+					SetPortraits(self.portrait, "focus", not (settings.focus.texture == "CI"), settings.focus.mirror)
 					setColor(self.texture, getColor(self, "focus"), settings.focus.mirror)
 					if settings.general.corner and textures.corner[settings.focus.texture] then
 						setColor(self.corner, getColor(self, "focus"), settings.focus.mirror)
@@ -837,7 +837,7 @@ function module:Initialize()
 				end
 
 				if UnitExists("targettarget") then
-					SetPortraits(self.portrait, "targettarget", not (settings.targettarget.texture == "CI"))
+					SetPortraits(self.portrait, "targettarget", not (settings.targettarget.texture == "CI"), settings.targettarget.mirror)
 					setColor(self.texture, getColor(self, "targettarget"), settings.targettarget.mirror)
 					if settings.general.corner and textures.corner[settings.targettarget.texture] then
 						setColor(self.corner, getColor(self, "targettarget"), settings.targettarget.mirror)
@@ -867,7 +867,7 @@ function module:Initialize()
 							setColor(self.corner, getColor(self, frame.unit), settings.party.mirror)
 						end
 
-						SetPortraits(self.portrait, frame.unit, not (settings.party.texture == "CI"))
+						SetPortraits(self.portrait, frame.unit, not (settings.party.texture == "CI"), settings.party.mirror)
 					end
 				end)
 
@@ -889,7 +889,7 @@ function module:Initialize()
 							setColor(self.corner, getColor(self, frame.unit), settings.boss.mirror)
 						end
 
-						SetPortraits(self.portrait, frame.unit, not (settings.boss.texture == "CI"))
+						SetPortraits(self.portrait, frame.unit, not (settings.boss.texture == "CI"), settings.boss.mirror)
 					end
 				end)
 
@@ -911,7 +911,7 @@ function module:Initialize()
 							setColor(self.corner, getColor(self, frame.unit), settings.arena.mirror)
 						end
 
-						SetPortraits(self.portrait, frame.unit, not (settings.arena.texture == "CI"))
+						SetPortraits(self.portrait, frame.unit, not (settings.arena.texture == "CI"), settings.arena.mirror)
 					end
 				end)
 
