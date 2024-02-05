@@ -407,18 +407,6 @@ local function UpdatePortrait(frame, conf, unit, parent)
 	texture = textures.mask[conf.texture] or conf.mirror and textures.mask.B[conf.texture] or textures.mask.A[conf.texture]
 	frame.mask:SetTexture(texture, "CLAMPTOBLACKADDITIVE", "CLAMPTOBLACKADDITIVE")
 
-	-- Class Icon Background
-	if E.db.mMT.portraits.general.classicons then
-		if frame.iconbg then
-			UpdateIconBackground(frame.iconbg)
-			frame.shadow:Show()
-		else
-			frame.iconbg = CreateIconBackground(frame)
-		end
-	elseif frame.iconbg and not E.db.mMT.portraits.general.classicons then
-		frame.iconbg:Hide()
-	end
-
 	-- Portrait Shadow
 	if settings.shadow.enable then
 		texture = textures.shadow[conf.texture]
@@ -456,6 +444,20 @@ local function UpdatePortrait(frame, conf, unit, parent)
 		end
 	elseif not settings.shadow.border and frame.border then
 		frame.border:Hide()
+	end
+
+	-- Class Icon Background
+	if E.db.mMT.portraits.general.classicons then
+		if frame.iconbg then
+			UpdateIconBackground(frame.iconbg)
+			if settings.shadow.enable then
+				frame.shadow:Show()
+			end
+		else
+			frame.iconbg = CreateIconBackground(frame)
+		end
+	elseif frame.iconbg and not E.db.mMT.portraits.general.classicons then
+		frame.iconbg:Hide()
 	end
 
 	-- Rare/Elite Texture
