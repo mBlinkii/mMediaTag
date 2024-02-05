@@ -1,6 +1,20 @@
 # Changelog - ElvUI_mMediaTag
 [Eng] - All changes to this project will be documented in this file. The latest changes are at the top.
 
+## [ver. 3.29] - XX.02.2024
+### FIX
+- FIX - German Locals
+- FIX - Portrait Rare/Elite Texture Border and Shadow was swapped
+### Update
+- UPDATE - optimized some TAGs
+- UPDATE - MediaPack TOC files
+### NEW
+- NEW - TAG mHealth with no no decimal for percents, all available under ElvUI available TAGs
+- NEW - TAG mRoleIcon:blizz and mRoleIcon:target:blizz with default Blizzard Icons
+- NEW - Many new Border Textures
+- NEW - Portrait Texture
+- NEW - German localization from Dlarge, thx for your support.
+
 ## [ver. 3.28] - 04.02.2024
 ### FIX
 - FIX - Removed unused Settings from TAG settings menu
