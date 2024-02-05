@@ -14,16 +14,29 @@ local change_log_important = {
 }
 
 local change_log_new = {
-	"Class icons for Portraits",
+	"TAG mHealth with no no decimal for percents, all available under ElvUI available TAGs",
+	"TAG mRoleIcon:blizz and mRoleIcon:target:blizz with default Blizzard Icons",
+	"Many new Border Textures",
+	"Portrait Texture (Moon)",
+	"German localization from Dlarge, thx for your support."
 }
 
 local change_log_update = {
-	"Add Hearthstone of the Flame to Teleports menu",
-	"TOC update for new WoW Version",
+	"Optimized some TAGs",
+	"MediaPack TOC files",
+	"Update TAG icon defaults",
+	"Add Reload UI popup for Portraits class icons settings tp prevent errors",
 }
 
 local change_log_fix = {
-	"Possible nil error with Dock Talents",
+	"Removed unused Settings from TAG settings menu",
+	"Portrait Rare/Elite Texture Border and Shadow was swapped",
+	"German Locals",
+	"Prevent nil error with TAG icons and wrong settings",
+	"Mirror bug for Portraits",
+	"Shadow bug with class icons for Portraits",
+	"Portraits of other units with class icons enabled",
+	"Swapped settings for docks XIV BG and XIV MAUI",
 }
 
 local function Concatenation(tbl, icon, color)
@@ -43,7 +56,7 @@ local function Concatenation(tbl, icon, color)
 end
 
 local function configTable()
-	local releasdate = "20.01.2024"
+	local releasdate = "05.02.2024"
 	--change_log_important_string = Concatenation(change_log_important)
 	change_log_new_string = Concatenation(change_log_new)
 	change_log_update_string = Concatenation(change_log_update)
