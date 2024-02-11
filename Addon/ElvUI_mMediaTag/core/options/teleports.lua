@@ -41,6 +41,17 @@ local function configTable()
 					end,
 					values = icons,
 				},
+				toggle_anchor = {
+					order = 3,
+					type = "toggle",
+					name = L["ToolTip anchor on cursor"],
+					get = function(info)
+						return E.db.mMT.teleports.anchorCursor
+					end,
+					set = function(info, value)
+						E.db.mMT.teleports.anchorCursor = value
+					end,
+				},
 			},
 		},
 	}

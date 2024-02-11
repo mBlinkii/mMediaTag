@@ -171,6 +171,8 @@ function mMT:mDropDown(list, frame, menuparent, ButtonWidth, HideDelay)
 		local anchor2 = (bottom and left and "TOPLEFT") or (bottom and "TOPRIGHT") or (left and "BOTTOMLEFT") or "BOTTOMRIGHT"
 
 		frame:Point(anchor1, menuparent, anchor2)
+		frame.pointA = anchor1
+		frame.pointB = anchor2
 	else
 		frame:Point("LEFT", frame:GetParent(), "RIGHT")
 	end
