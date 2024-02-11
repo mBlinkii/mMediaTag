@@ -14,7 +14,7 @@ local ToggleFrame = ToggleFrame
 --Variables
 local autoHideDelay = 2
 local PADDING = 10
-local BUTTON_HEIGHT = 16
+local BUTTON_HEIGHT = E.db.general.fontSize / 3 + 16
 local mDropDownFrame = {}
 
 -- frame hide function for the timer
@@ -147,6 +147,8 @@ function mMT:mDropDown(list, frame, menuparent, ButtonWidth, HideDelay)
 			frame.buttons[i].Secondtext:SetText(list[i].Secondtext or "")
 		end
 
+		--fontHeight = frame.buttons[i].text:GetStringHeight()
+
 		frame.buttons[i]:Show()
 		frame.buttons[i]:Height(BUTTON_HEIGHT)
 		frame.buttons[i]:Width(ButtonWidth)
@@ -156,6 +158,8 @@ function mMT:mDropDown(list, frame, menuparent, ButtonWidth, HideDelay)
 		else
 			frame.buttons[i]:Point("TOPLEFT", frame.buttons[i - 1], "BOTTOMLEFT")
 		end
+
+		--frame.buttons[i].text:SetText(fontHeight .. " - " .. BUTTON_HEIGHT .. " - " .. list[i].text)
 	end
 
 	frame:Height((#list * BUTTON_HEIGHT) + PADDING * 2)
