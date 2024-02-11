@@ -1,6 +1,13 @@
 # Changelog - ElvUI_mMediaTag
 [Eng] - All changes to this project will be documented in this file. The latest changes are at the top.
 
+
+## [ver. 3.30] - xx.02.2024
+### FIX
+- FIX - Dropdown menu Button height, depends now on Font size to prevent overlapping text
+### Update
+- UPDATE - Add Tooltip Anchor settings for Teleports Datatext
+
 ## [ver. 3.29] - 05.02.2024
 ### FIX
 - FIX - German Locals
