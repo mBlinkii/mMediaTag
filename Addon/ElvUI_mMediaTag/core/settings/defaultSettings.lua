@@ -194,6 +194,16 @@ P.mMT = {
 			elite = "FRUIT2",
 			boss = "BOSS1",
 		},
+		targetmarker = {
+			[1] = "TM01",
+			[2] = "TM02",
+			[3] = "TM03",
+			[4] = "TM04",
+			[5] = "TM05",
+			[6] = "TM06",
+			[7] = "TM07",
+			[8] = "TM08",
+		},
 		colors = {
 			rare = {
 				b = 0.77,

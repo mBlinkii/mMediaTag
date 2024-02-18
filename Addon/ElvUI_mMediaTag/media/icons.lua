@@ -23,6 +23,33 @@ mMT.Media.CombatIcons = {
 	FIRE6 = "Interface\\AddOns\\ElvUI_mMediaTag\\media\\icons\\role\\fire6.tga",
 }
 
+mMT.Media.TargetMarkers = {
+	TM01 = "Interface\\AddOns\\ElvUI_mMediaTag\\media\\icons\\targetmarkers\\tm01.tga",
+	TM02 = "Interface\\AddOns\\ElvUI_mMediaTag\\media\\icons\\targetmarkers\\tm02.tga",
+	TM03 = "Interface\\AddOns\\ElvUI_mMediaTag\\media\\icons\\targetmarkers\\tm03.tga",
+	TM04 = "Interface\\AddOns\\ElvUI_mMediaTag\\media\\icons\\targetmarkers\\tm04.tga",
+	TM05 = "Interface\\AddOns\\ElvUI_mMediaTag\\media\\icons\\targetmarkers\\tm05.tga",
+	TM06 = "Interface\\AddOns\\ElvUI_mMediaTag\\media\\icons\\targetmarkers\\tm06.tga",
+	TM07 = "Interface\\AddOns\\ElvUI_mMediaTag\\media\\icons\\targetmarkers\\tm07.tga",
+	TM08 = "Interface\\AddOns\\ElvUI_mMediaTag\\media\\icons\\targetmarkers\\tm08.tga",
+	TM09 = "Interface\\AddOns\\ElvUI_mMediaTag\\media\\icons\\targetmarkers\\tm09.tga",
+	TM10 = "Interface\\AddOns\\ElvUI_mMediaTag\\media\\icons\\targetmarkers\\tm10.tga",
+	TM11 = "Interface\\AddOns\\ElvUI_mMediaTag\\media\\icons\\targetmarkers\\tm11.tga",
+	TM12 = "Interface\\AddOns\\ElvUI_mMediaTag\\media\\icons\\targetmarkers\\tm12.tga",
+	TM13 = "Interface\\AddOns\\ElvUI_mMediaTag\\media\\icons\\targetmarkers\\tm13.tga",
+	TM14 = "Interface\\AddOns\\ElvUI_mMediaTag\\media\\icons\\targetmarkers\\tm14.tga",
+	TM15 = "Interface\\AddOns\\ElvUI_mMediaTag\\media\\icons\\targetmarkers\\tm15.tga",
+	TM16 = "Interface\\AddOns\\ElvUI_mMediaTag\\media\\icons\\targetmarkers\\tm16.tga",
+	TM17 = "Interface\\AddOns\\ElvUI_mMediaTag\\media\\icons\\targetmarkers\\tm17.tga",
+	TM18 = "Interface\\AddOns\\ElvUI_mMediaTag\\media\\icons\\targetmarkers\\tm18.tga",
+	TM19 = "Interface\\AddOns\\ElvUI_mMediaTag\\media\\icons\\targetmarkers\\tm19.tga",
+	TM20 = "Interface\\AddOns\\ElvUI_mMediaTag\\media\\icons\\targetmarkers\\tm20.tga",
+	TM21 = "Interface\\AddOns\\ElvUI_mMediaTag\\media\\icons\\targetmarkers\\tm21.tga",
+	TM22 = "Interface\\AddOns\\ElvUI_mMediaTag\\media\\icons\\targetmarkers\\tm22.tga",
+	TM23 = "Interface\\AddOns\\ElvUI_mMediaTag\\media\\icons\\targetmarkers\\tm23.tga",
+	TM24 = "Interface\\AddOns\\ElvUI_mMediaTag\\media\\icons\\targetmarkers\\tm24.tga",
+}
+
 mMT.Media.QuestIcons = {
 	DEATH01 = "Interface\\AddOns\\ElvUI_mMediaTag\\media\\icons\\tags\\skull1.tga",
 	DEATH02 = "Interface\\AddOns\\ElvUI_mMediaTag\\media\\icons\\tags\\skull2.tga",
