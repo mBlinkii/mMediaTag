@@ -176,7 +176,7 @@ local function configTable()
 			order = 1,
 			type = "group",
 			inline = true,
-			name = L["targetmarker Icons"],
+			name = L["Targetmarker Icons"],
 			args = {
 				icon_star = {
 					order = 1,
