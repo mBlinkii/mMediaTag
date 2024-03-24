@@ -18,6 +18,12 @@ local style = {
 	metal = "METALLIC",
 }
 
+local ClassIconsStyle = {
+	BLIZZARD = "Blizzard",
+	fabled = "Jibers fabled",
+	fabledrealm = "Jibers fabledrealm"
+}
+
 local frameStrata = {
 	BACKGROUND = "BACKGROUND",
 	LOW = "LOW",
@@ -64,6 +70,22 @@ local function configTable()
 								E.db.mMT.portraits.general.classicons = value
 								E:StaticPopup_Show("CONFIG_RL")
 							end,
+						},
+						select_classicon_style = {
+							order = 2,
+							type = "select",
+							name = L["Class Icons Style"],
+							disabled = function()
+								return not E.db.mMT.portraits.general.classicons
+							end,
+							get = function(info)
+								return E.db.mMT.portraits.general.classiconstyle
+							end,
+							set = function(info, value)
+								E.db.mMT.portraits.general.classiconstyle = value
+								E:StaticPopup_Show("CONFIG_RL")
+							end,
+							values = ClassIconsStyle,
 						},
 						toggle_gradient = {
 							order = 3,

@@ -649,6 +649,7 @@ P.mMT = {
 			corner = true,
 			style = "flat",
 			classicons = false,
+			classiconstyle = "BLIZZARD",
 			ori = "HORIZONTAL",
 		},
 		offset = {
