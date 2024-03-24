@@ -1372,16 +1372,10 @@ E:AddTag("mDeathCount:hide:text", "UNIT_HEALTH", function(unit)
 	end
 end)
 
-E:AddTag("mTargetMarker", "RAID_TARGET_UPDATE", function(unit)
-	local index = GetRaidTargetIndex(unit)
-	return CustomRaidTargetIcons[index] or ""
-end)
-
 E:AddTagInfo("mDeathCount", mMT.NameShort .. " " .. L["Misc"], L["Death Counter, resets in new Instances."])
 E:AddTagInfo("mDeathCount:hide", mMT.NameShort .. " " .. L["Misc"], L["Displays the Death counter only when the unit is Death, resets in new instances."])
 E:AddTagInfo("mDeathCount:color", mMT.NameShort .. " " .. L["Misc"], L["Death Counter color."])
 E:AddTagInfo("mDeathCount:hide:text", mMT.NameShort .. " " .. L["Misc"], L["Displays the Death counter only when the unit is Death and Shows a Text (Death: 7), resets in new instances."])
-E:AddTagInfo("mTargetMarker", mMT.NameShort .. " " .. L["Misc"], L["mMT Raidtarget marker Icons"])
 
 E:AddTag("mRole", "PLAYER_ROLES_ASSIGNED GROUP_ROSTER_UPDATE", function(unit)
 	local Role = ""
@@ -1964,6 +1958,12 @@ E:AddTag("mTargetingPlayers:icons:Role", 2, function(unit)
 	end
 end)
 
+E:AddTag("mTargetMarker", "RAID_TARGET_UPDATE", function(unit)
+	local index = GetRaidTargetIndex(unit)
+	return CustomRaidTargetIcons[index] or ""
+end)
+
+E:AddTagInfo("mTargetMarker", mMT.NameShort .. " " .. L["Misc"], L["mMT Raidtarget marker Icons"])
 E:AddTagInfo("mTargetingPlayers", mMT.NameShort .. " " .. L["Misc"], L["Target counter (Party and Raid)."])
 E:AddTagInfo("mTargetingPlayers:icons:Flat", mMT.NameShort .. " " .. L["Misc"], L["Target counter Icon (Flat Circle)."])
 E:AddTagInfo("mTargetingPlayers:icons:Glas", mMT.NameShort .. " " .. L["Misc"], L["Target counter Icon (Glas Circle)."])
