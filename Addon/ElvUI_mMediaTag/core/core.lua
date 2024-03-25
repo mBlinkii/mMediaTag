@@ -56,7 +56,6 @@ function mMT:JiberishIcons()
 		if jib_tbl.version then
 			local major, minor, patch  = strsplit(".", jib_tbl.version, 3)
 			jib_tbl.old = tonumber(major) <= 1 and tonumber(minor) == 0 and tonumber(patch) <= 3
-			mMT:Print(jib_tbl.version, major, minor, patch, jib_tbl.old)
 		end
 
 		if jib_tbl.old then
