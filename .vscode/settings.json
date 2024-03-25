@@ -552,7 +552,9 @@
         "SetPortraitTexture",
         "CLASS_ICON_TCOORDS",
         "GetIconForRole",
-        "RAID_CLASS_COLORS"
+        "RAID_CLASS_COLORS",
+        "GetMoneyString",
+        "GetRaidTargetIndex"
     ],
     "Lua.diagnostics.disable": [
         "undefined-field"

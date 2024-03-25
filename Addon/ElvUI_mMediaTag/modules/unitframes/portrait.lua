@@ -153,21 +153,6 @@ local function mirrorTexture(texture, mirror)
 --	end
 end
 
-local JIB_coords = {
-		WARRIOR		= {0, 0.125, 0, 0.125 }, -- '0:128:0:128'
-		MAGE		= {0.125, 0.25, 0, 0.125},--'128:256:0:128',
-		ROGUE		= {0.25, 0.375, 0, 0.125 }, --'256:384:0:128',
-		DRUID		= {0.375, 0.5, 0, 0.125}, -- '384:512:0:128',
-		EVOKER		= {0.5, 0.625, 0, 0.125}, --'512:640:0:128',
-		HUNTER		= {0, 0.125, 0.125, 0.25}, --'0:128:128:256',
-		SHAMAN		= {0.125, 0.25, 0.125, 0.25}, --'128:256:128:256',
-		PRIEST		= {0.25, 0.375, 0.125, 0.25}, --'256:384:128:256',
-		WARLOCK		= {0.375, 0.5, 0.125, 0.25}, --'384:512:128:256',
-		PALADIN		= {0, 0.125, 0.25, 0.375}, --'0:128:256:384',
-		DEATHKNIGHT = {0.125, 0.25, 0.25, 0.375}, --'128:256:256:384',
-		MONK		= {0.25, 0.375, 0.25, 0.375}, --'256:384:256:384',
-		DEMONHUNTER = {0.375, 0.5, 0.25, 0.375}, --'384:512:256:384',
-}
 local function SetPortraits(portrait, unit, masking, mirror)
 	if E.db.mMT.portraits.general.classicons and UnitIsPlayer(unit) then
 		local class = select(2, UnitClass(unit))
@@ -175,10 +160,9 @@ local function SetPortraits(portrait, unit, masking, mirror)
 		local coords= CLASS_ICON_TCOORDS[class]
 		local style = E.db.mMT.portraits.general.classiconstyle
 
-		if mMT.ElvUI_JiberishIcons and style ~= "BLIZZARD" then
-			local JIB_path = "Interface\\AddOns\\ElvUI_JiberishIcons\\Media\\Icons\\"
-			coords = class and JIB_coords[class]
-			IconTexture = JIB_path .. style .. ".tga"
+		if mMT.ElvUI_JiberishIcons.loaded and style ~= "BLIZZARD" then
+			coords = class and mMT.ElvUI_JiberishIcons.texCoords[class]
+			IconTexture = mMT.ElvUI_JiberishIcons.path .. style
 		end
 
 		if coords then
