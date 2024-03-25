@@ -148,16 +148,19 @@ local textures = {
 }
 
 local function mirrorTexture(texture, mirror)
-	--if not E.db.mMT.portraits.general.classicons then
+	if texture.mClass then
+		local left, right, top, bottom = unpack(texture.mCoords)
+		texture:SetTexCoord(mirror and right or left, mirror and left or right, top, bottom)
+	else
 		texture:SetTexCoord(mirror and 1 or 0, mirror and 0 or 1, 0, 1)
---	end
+	end
 end
 
 local function SetPortraits(portrait, unit, masking, mirror)
 	if E.db.mMT.portraits.general.classicons and UnitIsPlayer(unit) then
 		local class = select(2, UnitClass(unit))
 		local IconTexture = "Interface\\WorldStateFrame\\Icons-Classes"
-		local coords= CLASS_ICON_TCOORDS[class]
+		local coords = CLASS_ICON_TCOORDS[class]
 		local style = E.db.mMT.portraits.general.classiconstyle
 
 		if mMT.ElvUI_JiberishIcons.loaded and style ~= "BLIZZARD" then
@@ -166,15 +169,20 @@ local function SetPortraits(portrait, unit, masking, mirror)
 		end
 
 		if coords then
-			portrait:SetTexCoord(unpack(coords))
+			local left, right, top, bottom = unpack(coords)
+			portrait:SetTexCoord(mirror and right or left, mirror and left or right, top, bottom)
 			portrait:SetTexture(IconTexture)
 		end
+
+		portrait.mClass = unit
+		portrait.mCoords = coords
 	else
-		if E.db.mMT.portraits.general.classicons then
-			portrait:SetTexCoord(mirror and 1 or 0, mirror and 0 or 1, 0, 1)
-		else
-			mirrorTexture(portrait, mirror)
+		if portrait.mClass then
+			portrait.mClass = nil
+			portrait.mCoords = nil
 		end
+
+		mirrorTexture(portrait, mirror)
 		SetPortraitTexture(portrait, unit, masking)
 	end
 end
