@@ -1,5 +1,6 @@
 local E = unpack(ElvUI)
 local strjoin = strjoin
+local GetAddOnMetadata = _G.C_AddOns and _G.C_AddOns.GetAddOnMetadata or _G.GetAddOnMetadata
 
 -- AddonCompartment Functions
 function ElvUI_mMediaTag_OnAddonCompartmentClick()
@@ -25,20 +26,76 @@ function mMT:UpdateClassColor()
 end
 
 function mMT:CheckEltruism()
-    local isLoaded = IsAddOnLoaded("ElvUI_EltreumUI")
-    if isLoaded then
-    	return {
-            loaded = IsAddOnLoaded("ElvUI_EltreumUI"),
-            gradient = E.db.ElvUI_EltreumUI and E.db.ElvUI_EltreumUI.unitframes and E.db.ElvUI_EltreumUI.unitframes.gradientmode and E.db.ElvUI_EltreumUI.unitframes.gradientmode.enable,
-            dark = E.db.ElvUI_EltreumUI and E.db.ElvUI_EltreumUI.unitframes and E.db.ElvUI_EltreumUI.unitframes.darkmode,
-        }
-    else
-        return {
-            loaded = IsAddOnLoaded("ElvUI_EltreumUI"),
-            gradient = false,
-            dark = false,
-        }
-    end
+	local elt_tbl = {
+		loaded = IsAddOnLoaded("ElvUI_EltreumUI"),
+		gradient = false,
+		dark = false,
+	}
+
+	if elt_tbl.loaded then
+		elt_tbl.gradient = E.db.ElvUI_EltreumUI and E.db.ElvUI_EltreumUI.unitframes and E.db.ElvUI_EltreumUI.unitframes.gradientmode and E.db.ElvUI_EltreumUI.unitframes.gradientmode.enable
+		elt_tbl.dark = E.db.ElvUI_EltreumUI and E.db.ElvUI_EltreumUI.unitframes and E.db.ElvUI_EltreumUI.unitframes.darkmode
+	end
+
+	return elt_tbl
+end
+
+function mMT:JiberishIcons()
+	local jib_tbl = {
+		version = nil,
+		old = true,
+		loaded = IsAddOnLoaded("ElvUI_JiberishIcons"),
+		path = nil,
+		styles = {},
+		texCoords = {},
+	}
+
+	if jib_tbl.loaded then
+		jib_tbl.version = GetAddOnMetadata("ElvUI_JiberishIcons", "Version")
+
+		if jib_tbl.version then
+			local major, minor, patch  = strsplit(".", jib_tbl.version, 3)
+			jib_tbl.old = tonumber(major) <= 1 and tonumber(minor) == 0 and tonumber(patch) <= 3
+			mMT:Print(jib_tbl.version, major, minor, patch, jib_tbl.old)
+		end
+
+		if jib_tbl.old then
+			jib_tbl.path = "Interface\\AddOns\\ElvUI_JiberishIcons\\Media\\Icons\\"
+
+			for StyleName, _ in pairs(_G.ElvUI_JiberishIcons.iconStyles) do
+				jib_tbl.styles[StyleName] = "Jiberish " .. StyleName
+			end
+
+			jib_tbl.texCoords = {
+				WARRIOR = { 0, 0.125, 0, 0.125 }, -- '0:128:0:128'
+				MAGE = { 0.125, 0.25, 0, 0.125 }, --'128:256:0:128',
+				ROGUE = { 0.25, 0.375, 0, 0.125 }, --'256:384:0:128',
+				DRUID = { 0.375, 0.5, 0, 0.125 }, -- '384:512:0:128',
+				EVOKER = { 0.5, 0.625, 0, 0.125 }, --'512:640:0:128',
+				HUNTER = { 0, 0.125, 0.125, 0.25 }, --'0:128:128:256',
+				SHAMAN = { 0.125, 0.25, 0.125, 0.25 }, --'128:256:128:256',
+				PRIEST = { 0.25, 0.375, 0.125, 0.25 }, --'256:384:128:256',
+				WARLOCK = { 0.375, 0.5, 0.125, 0.25 }, --'384:512:128:256',
+				PALADIN = { 0, 0.125, 0.25, 0.375 }, --'0:128:256:384',
+				DEATHKNIGHT = { 0.125, 0.25, 0.25, 0.375 }, --'128:256:256:384',
+				MONK = { 0.25, 0.375, 0.25, 0.375 }, --'256:384:256:384',
+				DEMONHUNTER = { 0.375, 0.5, 0.25, 0.375 }, --'384:512:256:384',
+			}
+		else
+			local JIB, _ = unpack(_G.ElvUI_JiberishIcons)
+			jib_tbl.path = JIB.classIconPath
+
+			for StyleName, _ in pairs(JIB.iconStyles) do
+				jib_tbl.styles[StyleName] = "Jiberish " .. StyleName
+			end
+
+			for class, value in pairs(JIB.classIcons) do
+				jib_tbl.texCoords[class] = value.texCoords
+			end
+		end
+	end
+
+	return jib_tbl
 end
 
 function mMT:GetDevNames()

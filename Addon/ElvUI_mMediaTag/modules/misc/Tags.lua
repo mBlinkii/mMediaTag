@@ -46,6 +46,17 @@ local colors = {
 	level = "|cffffffff",
 }
 
+local CustomRaidTargetIcons = {
+	[1] = "|TInterface\\Addons\\ElvUI_mMediaTag\\media\\logo\\mmt_icon.tga:15:15|t",
+	[2] = "|TInterface\\Addons\\ElvUI_mMediaTag\\media\\logo\\mmt_icon.tga:15:15|t",
+	[3] = "|TInterface\\Addons\\ElvUI_mMediaTag\\media\\logo\\mmt_icon.tga:15:15|t",
+	[4] = "|TInterface\\Addons\\ElvUI_mMediaTag\\media\\logo\\mmt_icon.tga:15:15|t",
+	[5] = "|TInterface\\Addons\\ElvUI_mMediaTag\\media\\logo\\mmt_icon.tga:15:15|t",
+	[6] = "|TInterface\\Addons\\ElvUI_mMediaTag\\media\\logo\\mmt_icon.tga:15:15|t",
+	[7] = "|TInterface\\Addons\\ElvUI_mMediaTag\\media\\logo\\mmt_icon.tga:15:15|t",
+	[8] = "|TInterface\\Addons\\ElvUI_mMediaTag\\media\\logo\\mmt_icon.tga:15:15|t",
+}
+
 -- fallback icons
 local icons = {
 	rare = "|TInterface\\Addons\\ElvUI_mMediaTag\\media\\logo\\mmt_icon.tga:15:15|t",
@@ -278,6 +289,15 @@ function mMT:UpdateTagSettings()
 	icons.heal = E:TextureString(E.Media.Textures.Healer, ":15:15")
 	icons.dd = E:TextureString(E.Media.Textures.DPS, ":15:15")
 	icons.quest = format("|T%s:15:15:0:2|t", "Interface\\AddOns\\ElvUI_mMediaTag\\media\\icons\\tags\\quest1.tga")
+
+	CustomRaidTargetIcons[1] = format("|T%s:15:15:0:2|t", mMT.Media.TargetMarkers[E.db.mMT.tags.targetmarker[1] or "TM01"])
+	CustomRaidTargetIcons[2] = format("|T%s:15:15:0:2|t", mMT.Media.TargetMarkers[E.db.mMT.tags.targetmarker[2] or "TM02"])
+	CustomRaidTargetIcons[3] = format("|T%s:15:15:0:2|t", mMT.Media.TargetMarkers[E.db.mMT.tags.targetmarker[3] or "TM03"])
+	CustomRaidTargetIcons[4] = format("|T%s:15:15:0:2|t", mMT.Media.TargetMarkers[E.db.mMT.tags.targetmarker[4] or "TM04"])
+	CustomRaidTargetIcons[5] = format("|T%s:15:15:0:2|t", mMT.Media.TargetMarkers[E.db.mMT.tags.targetmarker[5] or "TM05"])
+	CustomRaidTargetIcons[6] = format("|T%s:15:15:0:2|t", mMT.Media.TargetMarkers[E.db.mMT.tags.targetmarker[6] or "TM06"])
+	CustomRaidTargetIcons[7] = format("|T%s:15:15:0:2|t", mMT.Media.TargetMarkers[E.db.mMT.tags.targetmarker[7] or "TM07"])
+	CustomRaidTargetIcons[8] = format("|T%s:15:15:0:2|t", mMT.Media.TargetMarkers[E.db.mMT.tags.targetmarker[8] or "TM08"])
 
 	if E.db.mMT.roleicons.enable then
 		if E.db.mMT.roleicons.customtexture then
@@ -1938,6 +1958,12 @@ E:AddTag("mTargetingPlayers:icons:Role", 2, function(unit)
 	end
 end)
 
+E:AddTag("mTargetMarker", "RAID_TARGET_UPDATE", function(unit)
+	local index = GetRaidTargetIndex(unit)
+	return CustomRaidTargetIcons[index] or ""
+end)
+
+E:AddTagInfo("mTargetMarker", mMT.NameShort .. " " .. L["Misc"], L["mMT Raidtarget marker Icons"])
 E:AddTagInfo("mTargetingPlayers", mMT.NameShort .. " " .. L["Misc"], L["Target counter (Party and Raid)."])
 E:AddTagInfo("mTargetingPlayers:icons:Flat", mMT.NameShort .. " " .. L["Misc"], L["Target counter Icon (Flat Circle)."])
 E:AddTagInfo("mTargetingPlayers:icons:Glas", mMT.NameShort .. " " .. L["Misc"], L["Target counter Icon (Glas Circle)."])

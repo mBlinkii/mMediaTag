@@ -14,29 +14,18 @@ local change_log_important = {
 }
 
 local change_log_new = {
-	"TAG mHealth with no no decimal for percents, all available under ElvUI available TAGs",
-	"TAG mRoleIcon:blizz and mRoleIcon:target:blizz with default Blizzard Icons",
-	"Many new Border Textures",
-	"Portrait Texture (Moon)",
-	"German localization from Dlarge, thx for your support."
+	"Add support for the great Class Icons from Jiberish for Portraits",
+	"TAG mTargetMarker",
 }
 
 local change_log_update = {
-	"Optimized some TAGs",
-	"MediaPack TOC files",
-	"Update TAG icon defaults",
-	"Add Reload UI popup for Portraits class icons settings tp prevent errors",
+	"Add Tooltip Anchor settings for Teleports Datatext",
+	"TOC update for Classic and Retail",
 }
 
 local change_log_fix = {
-	"Removed unused Settings from TAG settings menu",
-	"Portrait Rare/Elite Texture Border and Shadow was swapped",
-	"German Locals",
-	"Prevent nil error with TAG icons and wrong settings",
-	"Mirror bug for Portraits",
-	"Shadow bug with class icons for Portraits",
-	"Portraits of other units with class icons enabled",
-	"Swapped settings for docks XIV BG and XIV MAUI",
+	"Dropdown menu Button height, depends now on Font size to prevent overlapping text",
+	"Misalignment of the non-player Portraits when Classicons is enabled",
 }
 
 local function Concatenation(tbl, icon, color)

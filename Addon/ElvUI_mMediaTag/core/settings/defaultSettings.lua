@@ -131,7 +131,7 @@ P.mMT = {
 			r = 0.11,
 		},
 	},
-	teleports = { icon = false, customicon = "TP1" },
+	teleports = { anchorCursor = false, icon = false, customicon = "TP1" },
 	profession = { icon = false, proficon = true },
 	dungeon = { icon = false, texttoname = true, key = true, score = true, affix = true },
 	instancedifficulty = {
@@ -193,6 +193,16 @@ P.mMT = {
 			relite = "FRUIT4",
 			elite = "FRUIT2",
 			boss = "BOSS1",
+		},
+		targetmarker = {
+			[1] = "TM01",
+			[2] = "TM02",
+			[3] = "TM03",
+			[4] = "TM04",
+			[5] = "TM05",
+			[6] = "TM06",
+			[7] = "TM07",
+			[8] = "TM08",
 		},
 		colors = {
 			rare = {
@@ -639,6 +649,7 @@ P.mMT = {
 			corner = true,
 			style = "flat",
 			classicons = false,
+			classiconstyle = "BLIZZARD",
 			ori = "HORIZONTAL",
 		},
 		offset = {

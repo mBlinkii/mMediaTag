@@ -1,6 +1,18 @@
 # Changelog - ElvUI_mMediaTag
 [Eng] - All changes to this project will be documented in this file. The latest changes are at the top.
 
+
+## [ver. 3.30] - 25.03.2024
+### FIX
+- FIX - Dropdown menu Button height, depends now on Font size to prevent overlapping text
+- FIX - misalignment of the non-player Portraits when Classicons is enabled
+### Update
+- UPDATE - Add Tooltip Anchor settings for Teleports Datatext
+- UPDATE - TOC update for Classic and Retail
+### NEW
+- NEW - Add support for the great Class Icons from Jiberish for Portraits
+- NEW - TAG mTargetMarker
+
 ## [ver. 3.29] - 05.02.2024
 ### FIX
 - FIX - German Locals

@@ -552,7 +552,9 @@
         "SetPortraitTexture",
         "CLASS_ICON_TCOORDS",
         "GetIconForRole",
-        "RAID_CLASS_COLORS"
+        "RAID_CLASS_COLORS",
+        "GetMoneyString",
+        "GetRaidTargetIndex"
     ],
     "Lua.diagnostics.disable": [
         "undefined-field"
@@ -644,6 +646,7 @@
         "Lockdown",
         "Luckyone",
         "materialicons",
+        "menuparent",
         "modulecopy",
         "MONOCHROMEOUTLINE",
         "MONOCHROMETHICKOUTLINE",
@@ -685,6 +688,7 @@
         "tablesort",
         "targetindicator",
         "Targetindicators",
+        "targetmarker",
         "targettarget",
         "tconcat",
         "texttoname",

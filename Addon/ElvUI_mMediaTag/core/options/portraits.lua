@@ -18,6 +18,10 @@ local style = {
 	metal = "METALLIC",
 }
 
+local ClassIconStyle = {
+	BLIZZARD = "Blizzard",
+}
+
 local frameStrata = {
 	BACKGROUND = "BACKGROUND",
 	LOW = "LOW",
@@ -28,7 +32,17 @@ local frameStrata = {
 	AUTO = "Auto",
 }
 
+function BuildIconStylesTable()
+	for id, name in pairs(mMT.ElvUI_JiberishIcons.styles) do
+		ClassIconStyle[id] = name
+	end
+end
+
 local function configTable()
+	if mMT.ElvUI_JiberishIcons.loaded then
+		BuildIconStylesTable()
+	end
+
 	E.Options.args.mMT.args.cosmetic.args.portraits.args = {
 		toggle_enable = {
 			order = 1,
@@ -64,6 +78,22 @@ local function configTable()
 								E.db.mMT.portraits.general.classicons = value
 								E:StaticPopup_Show("CONFIG_RL")
 							end,
+						},
+						select_classicon_style = {
+							order = 2,
+							type = "select",
+							name = L["Class Icons Style"],
+							disabled = function()
+								return not E.db.mMT.portraits.general.classicons
+							end,
+							get = function(info)
+								return E.db.mMT.portraits.general.classiconstyle
+							end,
+							set = function(info, value)
+								E.db.mMT.portraits.general.classiconstyle = value
+								E:StaticPopup_Show("CONFIG_RL")
+							end,
+							values = ClassIconStyle,
 						},
 						toggle_gradient = {
 							order = 3,
@@ -111,8 +141,8 @@ local function configTable()
 								return E.db.mMT.portraits.general.style
 							end,
 							set = function(info, value)
-									E.db.mMT.portraits.general.style = value
-									mMT.Modules.Portraits:Initialize()
+								E.db.mMT.portraits.general.style = value
+								mMT.Modules.Portraits:Initialize()
 							end,
 							values = style,
 						},
@@ -1546,7 +1576,7 @@ local function configTable()
 					type = "description",
 					name = "\n\n",
 				},
-				color_background= {
+				color_background = {
 					type = "color",
 					order = 11,
 					name = L["Background color for Icons"],

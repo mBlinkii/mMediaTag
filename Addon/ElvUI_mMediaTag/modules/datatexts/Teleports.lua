@@ -283,16 +283,24 @@ local function mMenuAdd(tbl, text, time, macro, icon, tooltip, funcOnEnter)
 		funcOnLeave = LeaveFunc,
 	})
 end
+local function getAnchorPoint(point)
+	local anchor = "ANCHOR_CURSOR"
+	if not E.db.mMT.teleports.anchorCursor and point then
+		local left = point and strfind(point, "LEFT")
+		anchor = left and "ANCHOR_RIGHT" or "ANCHOR_LEFT"
+	end
+	return anchor
+end
 
 local function mOnEnterItem(btn)
-	GameTooltip:SetOwner(btn, "ANCHOR_CURSOR")
+	GameTooltip:SetOwner(btn, getAnchorPoint(menuFrame.pointB))
 	GameTooltip:ClearLines()
 	GameTooltip:SetItemByID(btn.tooltip)
 	GameTooltip:Show()
 end
 
 local function mOnEnterSpell(btn)
-	GameTooltip:SetOwner(btn, "ANCHOR_CURSOR")
+	GameTooltip:SetOwner(btn, getAnchorPoint(menuFrame.pointB))
 	GameTooltip:ClearLines()
 	GameTooltip:SetSpellByID(btn.tooltip)
 	GameTooltip:Show()
