@@ -665,6 +665,8 @@ P.mMT = {
 			enable = true,
 			inner = true,
 			border = true,
+			classBG = true,
+			bgColorShift = 0.5,
 			borderColor = { r = 0, g = 0, b = 0, a = 1 },
 			borderColorRare = { r = 0, g = 0, b = 0, a = 1 },
 			color = { r = 0, g = 0, b = 0, a = 1 },
