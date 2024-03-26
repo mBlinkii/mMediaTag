@@ -235,15 +235,19 @@ local function SetPortraits(frame, unit, masking, mirror)
 			IconTexture = mMT.ElvUI_JiberishIcons.path .. style
 		end
 
-		if coords then
+		if coords and #coords == 8 then
 			local ULx, ULy, LLx, LLy, URx, URy, LRx, LRy = unpack(coords)
 			if mirror then
 				frame.portrait:SetTexCoord(URx, URy, LRx, LRy, ULx, ULy, LLx, LLy)
 			else
 				frame.portrait:SetTexCoord(ULx, ULy, LLx, LLy, URx, URy, LRx, LRy)
 			end
-			frame.portrait:SetTexture(IconTexture)
+		else
+			local left, right, top, bottom = unpack(coords)
+			frame.portrait:SetTexCoord(mirror and right or left, mirror and left or right, top, bottom)
 		end
+
+		frame.portrait:SetTexture(IconTexture)
 
 		if frame.iconbg then
 			UpdateIconBackground(frame.iconbg, unit, mirror)
