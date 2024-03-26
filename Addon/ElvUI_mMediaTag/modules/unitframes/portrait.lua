@@ -149,8 +149,13 @@ local textures = {
 
 local function mirrorTexture(texture, mirror)
 	if texture.mClass then
-		local left, right, top, bottom = unpack(texture.mCoords)
-		texture:SetTexCoord(mirror and right or left, mirror and left or right, top, bottom)
+		local ULx, ULy, LLx, LLy, URx, URy, LRx, LRy = unpack(texture.mCoords)
+		if mirror then
+			texture:SetTexCoord(URx, URy, LRx, LRy, ULx, ULy, LLx, LLy)
+		else
+			texture:SetTexCoord(ULx, ULy, LLx, LLy, URx, URy, LRx, LRy)
+		end
+
 	else
 		texture:SetTexCoord(mirror and 1 or 0, mirror and 0 or 1, 0, 1)
 	end
@@ -169,8 +174,12 @@ local function SetPortraits(portrait, unit, masking, mirror)
 		end
 
 		if coords then
-			local left, right, top, bottom = unpack(coords)
-			portrait:SetTexCoord(mirror and right or left, mirror and left or right, top, bottom)
+			local ULx, ULy, LLx, LLy, URx, URy, LRx, LRy = unpack(coords)
+			if mirror then
+				portrait:SetTexCoord(URx, URy, LRx, LRy, ULx, ULy, LLx, LLy)
+			else
+				portrait:SetTexCoord(ULx, ULy, LLx, LLy, URx, URy, LRx, LRy)
+			end
 			portrait:SetTexture(IconTexture)
 		end
 
