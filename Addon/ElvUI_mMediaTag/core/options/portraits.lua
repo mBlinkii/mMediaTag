@@ -10,6 +10,7 @@ local form = {
 	RA = "CARO",
 	QA = "RECTANGLE",
 	MO = "MOON",
+	SMQ = "SIMPLE SQUARE",
 }
 
 local style = {

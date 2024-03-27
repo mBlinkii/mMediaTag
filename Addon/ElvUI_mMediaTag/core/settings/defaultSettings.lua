@@ -660,6 +660,7 @@ P.mMT = {
 			PI = 10,
 			RA = 6,
 			QA = 20,
+			SMQ = 40,
 			MO = 5.5,
 		},
 		shadow = {
