@@ -145,6 +145,13 @@ local textures = {
 		QA = false,
 		MO = false,
 	},
+	background = {
+		[1] = path .. "bg_1.tga",
+		[2] = path .. "bg_2.tga",
+		[3] = path .. "bg_3.tga",
+		[4] = path .. "bg_4.tga",
+		[5] = path .. "bg_5.tga",
+	}
 }
 
 local function mirrorTexture(texture, mirror)
@@ -195,7 +202,7 @@ local function getColor(unit)
 end
 
 local function UpdateIconBackground(tx, unit, mirror)
-	tx:SetTexture(path .. "background.tga", "CLAMP", "CLAMP", "TRILINEAR")
+	tx:SetTexture(textures.background[settings.general.bgstyle], "CLAMP", "CLAMP", "TRILINEAR")
 
 	local color = settings.shadow.classBG and getColor(unit) or settings.shadow.background
 	local bgColor = {}
@@ -224,11 +231,11 @@ local function UpdateIconBackground(tx, unit, mirror)
 end
 
 local function SetPortraits(frame, unit, masking, mirror)
-	if E.db.mMT.portraits.general.classicons and UnitIsPlayer(unit) then
+	if settings.general.classicons and UnitIsPlayer(unit) then
 		local class = select(2, UnitClass(unit))
 		local IconTexture = "Interface\\WorldStateFrame\\Icons-Classes"
 		local coords = CLASS_ICON_TCOORDS[class]
-		local style = E.db.mMT.portraits.general.classiconstyle
+		local style = settings.general.classiconstyle
 
 		if mMT.ElvUI_JiberishIcons.loaded and style ~= "BLIZZARD" then
 			coords = class and mMT.ElvUI_JiberishIcons.texCoords[class]
@@ -282,7 +289,7 @@ end
 local function CreateIconBackground(frame, unit, mirror)
 	local tmpTexture = frame:CreateTexture("mMT_Background", "OVERLAY", nil, -5)
 	tmpTexture:SetAllPoints(frame)
-	tmpTexture:SetTexture(path .. "background.tga", "CLAMP", "CLAMP", "TRILINEAR")
+	tmpTexture:SetTexture(textures.background[settings.general.bgstyle], "CLAMP", "CLAMP", "TRILINEAR")
 
 	local color = settings.shadow.classBG and getColor(unit) or settings.shadow.background
 	setColor(tmpTexture, color, mirror)
@@ -338,7 +345,7 @@ local function CreatePortrait(parent, conf, unit)
 	frame.portrait:AddMaskTexture(frame.mask)
 
 	-- Class Icon Background
-	if E.db.mMT.portraits.general.classicons then
+	if settings.general.classicons then
 		frame.iconbg = CreateIconBackground(frame, unit, conf.mirror)
 		frame.iconbg:AddMaskTexture(frame.mask)
 	end
@@ -505,7 +512,7 @@ local function UpdatePortrait(frame, conf, unit, parent)
 	end
 
 	-- Class Icon Background
-	if E.db.mMT.portraits.general.classicons then
+	if settings.general.classicons then
 		if frame.iconbg then
 			UpdateIconBackground(frame.iconbg, unit, conf.mirror)
 			if settings.shadow.enable then
@@ -514,7 +521,7 @@ local function UpdatePortrait(frame, conf, unit, parent)
 		else
 			frame.iconbg = CreateIconBackground(frame, unit, conf.mirror)
 		end
-	elseif frame.iconbg and not E.db.mMT.portraits.general.classicons then
+	elseif frame.iconbg and not settings.general.classicons then
 		frame.iconbg:Hide()
 	end
 

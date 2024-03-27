@@ -651,6 +651,7 @@ P.mMT = {
 			classicons = false,
 			classiconstyle = "BLIZZARD",
 			ori = "HORIZONTAL",
+			bgstyle = 1,
 		},
 		offset = {
 			SQ = 5.5,
