@@ -4,8 +4,11 @@
 ## [ver. 3.32] - xx.03.2024
 ### FIX
 - FIX - take care of JiberishIcons changes
+### Update
+- UPDATE - Cleand up Portraits Settings
 ### NEW
 - NEW - Add class colored bg for Portraits class icons
+- NEW - Add diffrent Styles for Portraits Class icons background
 
 ## [ver. 3.31] - 25.03.2024
 ### FIX

@@ -151,7 +151,7 @@ local textures = {
 		[3] = path .. "bg_3.tga",
 		[4] = path .. "bg_4.tga",
 		[5] = path .. "bg_5.tga",
-	}
+	},
 }
 
 local function mirrorTexture(texture, mirror)
