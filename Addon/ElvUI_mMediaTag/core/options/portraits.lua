@@ -233,7 +233,7 @@ local function configTable()
 						},
 						range_ci = {
 							order = 3,
-							name = "CIRCLE",
+							name = "CIRCLE/ MOON",
 							type = "range",
 							min = 0,
 							max = 10,
@@ -322,8 +322,8 @@ local function configTable()
 									CI = 5.5,
 									PI = 10,
 									RA = 6,
-									QA = 20,
-									SMQ = 40,
+									QA = 0,
+									SMQ = 0,
 								}
 								mMT.Modules.Portraits:Initialize()
 							end,

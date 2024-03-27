@@ -659,8 +659,8 @@ P.mMT = {
 			CI = 5.5,
 			PI = 10,
 			RA = 6,
-			QA = 20,
-			SMQ = 40,
+			QA = 0,
+			SMQ = 0,
 			MO = 5.5,
 		},
 		shadow = {
