@@ -243,6 +243,7 @@ local function configTable()
 							end,
 							set = function(info, value)
 								E.db.mMT.portraits.offset.CI = value
+								E.db.mMT.portraits.offset.MO = value
 								mMT.Modules.Portraits:Initialize()
 							end,
 						},
