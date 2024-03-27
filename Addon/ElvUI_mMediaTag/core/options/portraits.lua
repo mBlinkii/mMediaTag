@@ -291,6 +291,21 @@ local function configTable()
 								mMT.Modules.Portraits:Initialize()
 							end,
 						},
+						range_smq = {
+							order = 6,
+							name = "SIMPLE SQUARE",
+							type = "range",
+							min = 0,
+							max = 60,
+							step = 0.1,
+							get = function(info)
+								return E.db.mMT.portraits.offset.SMQ
+							end,
+							set = function(info, value)
+								E.db.mMT.portraits.offset.SMQ = value
+								mMT.Modules.Portraits:Initialize()
+							end,
+						},
 						spacer_1 = {
 							order = 20,
 							type = "description",
@@ -308,6 +323,7 @@ local function configTable()
 									PI = 10,
 									RA = 6,
 									QA = 20,
+									SMQ = 40,
 								}
 								mMT.Modules.Portraits:Initialize()
 							end,
