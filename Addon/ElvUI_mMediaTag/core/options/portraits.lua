@@ -533,6 +533,7 @@ local function configTable()
 							end,
 							set = function(info, value)
 								E.db.mMT.portraits.target.extraEnable = value
+								mMT.Modules.Portraits:Initialize()
 							end,
 						},
 						select_style = {
@@ -711,6 +712,7 @@ local function configTable()
 							end,
 							set = function(info, value)
 								E.db.mMT.portraits.targettarget.extraEnable = value
+								mMT.Modules.Portraits:Initialize()
 							end,
 						},
 						select_style = {
@@ -1056,6 +1058,7 @@ local function configTable()
 							end,
 							set = function(info, value)
 								E.db.mMT.portraits.focus.extraEnable = value
+								mMT.Modules.Portraits:Initialize()
 							end,
 						},
 						select_style = {
