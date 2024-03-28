@@ -22,6 +22,7 @@ local textures = {
 			PI = path .. "pi_a.tga",
 			RA = path .. "ra_a.tga",
 			QA = path .. "qa_a.tga",
+			SMQ = path .. "smq.tga",
 			MO = path .. "moon_c.tga",
 		},
 		smooth = {
@@ -32,6 +33,7 @@ local textures = {
 			PI = path .. "pi_b.tga",
 			RA = path .. "ra_b.tga",
 			QA = path .. "qa_b.tga",
+			SMQ = path .. "smq.tga",
 			MO = path .. "moon_a.tga",
 		},
 		metal = {
@@ -42,6 +44,7 @@ local textures = {
 			PI = path .. "pi_c.tga",
 			RA = path .. "ra_c.tga",
 			QA = path .. "qa_c.tga",
+			SMQ = path .. "smq.tga",
 			MO = path .. "moon_b.tga",
 		},
 	},
@@ -53,6 +56,7 @@ local textures = {
 			PI = path .. "ex_pi_a.tga",
 			RA = path .. "ex_ra_a.tga",
 			QA = path .. "ex_qa_a.tga",
+			SMQ = nil,
 			MO = path .. "ex_mo_c.tga",
 		},
 		smooth = {
@@ -62,6 +66,7 @@ local textures = {
 			PI = path .. "ex_pi_b.tga",
 			RA = path .. "ex_ra_b.tga",
 			QA = path .. "ex_qa_b.tga",
+			SMQ = nil,
 			MO = path .. "ex_mo_a.tga",
 		},
 		metal = {
@@ -71,6 +76,7 @@ local textures = {
 			PI = path .. "ex_pi_c.tga",
 			RA = path .. "ex_ra_c.tga",
 			QA = path .. "ex_qa_c.tga",
+			SMQ = nil,
 			MO = path .. "ex_mo_b.tga",
 		},
 		border = {
@@ -80,6 +86,7 @@ local textures = {
 			PI = path .. "border_ex_pi.tga",
 			RA = path .. "border_ex_ra.tga",
 			QA = path .. "border_ex_qa.tga",
+			SMQ = nil,
 			MO = path .. "border_ex_moon.tga",
 		},
 		shadow = {
@@ -89,6 +96,7 @@ local textures = {
 			PI = path .. "shadow_ex_pi.tga",
 			RA = path .. "shadow_ex_ra.tga",
 			QA = path .. "shadow_ex_qa.tga",
+			SMQ = nil,
 			MO = nil,
 		},
 	},
@@ -100,6 +108,7 @@ local textures = {
 		PI = path .. "border_pi.tga",
 		RA = path .. "border_ra.tga",
 		QA = path .. "border_qa.tga",
+		SMQ = path .. "border_smq.tga",
 		MO = path .. "border_moon.tga",
 	},
 	shadow = {
@@ -109,6 +118,7 @@ local textures = {
 		PI = path .. "shadow_pi.tga",
 		RA = path .. "shadow_ra.tga",
 		QA = path .. "shadow_qa.tga",
+		SMQ = path .. "shadow_smq.tga",
 		MO = path .. "shadow_moon.tga",
 	},
 	inner = {
@@ -118,6 +128,7 @@ local textures = {
 		PI = path .. "inner_pi.tga",
 		RA = path .. "inner_ra.tga",
 		QA = path .. "inner_qa.tga",
+		SMQ = path .. "inner_smq.tga",
 		MO = path .. "inner_b.tga",
 	},
 	mask = {
@@ -126,6 +137,7 @@ local textures = {
 		RA = path .. "mask_d.tga",
 		QA = path .. "mask_qa.tga",
 		MO = path .. "mask_c.tga",
+		SMQ = path .. "mask_smq.tga",
 
 		A = {
 			SQ = path .. "mask_a.tga",
@@ -144,46 +156,37 @@ local textures = {
 		RA = false,
 		QA = false,
 		MO = false,
+		SMQ = false,
 	},
+	background = {
+		[1] = path .. "bg_1.tga",
+		[2] = path .. "bg_2.tga",
+		[3] = path .. "bg_3.tga",
+		[4] = path .. "bg_4.tga",
+		[5] = path .. "bg_5.tga",
+	},
+	enablemasking = {
+		SQ = true,
+		RO = true,
+		CI = false,
+		PI = true,
+		RA = true,
+		QA = false,
+		MO = false,
+		SMQ = false,
+	}
 }
 
 local function mirrorTexture(texture, mirror)
 	if texture.mClass then
-		local left, right, top, bottom = unpack(texture.mCoords)
-		texture:SetTexCoord(mirror and right or left, mirror and left or right, top, bottom)
+		local ULx, ULy, LLx, LLy, URx, URy, LRx, LRy = unpack(texture.mCoords)
+		if mirror then
+			texture:SetTexCoord(URx, URy, LRx, LRy, ULx, ULy, LLx, LLy)
+		else
+			texture:SetTexCoord(ULx, ULy, LLx, LLy, URx, URy, LRx, LRy)
+		end
 	else
 		texture:SetTexCoord(mirror and 1 or 0, mirror and 0 or 1, 0, 1)
-	end
-end
-
-local function SetPortraits(portrait, unit, masking, mirror)
-	if E.db.mMT.portraits.general.classicons and UnitIsPlayer(unit) then
-		local class = select(2, UnitClass(unit))
-		local IconTexture = "Interface\\WorldStateFrame\\Icons-Classes"
-		local coords = CLASS_ICON_TCOORDS[class]
-		local style = E.db.mMT.portraits.general.classiconstyle
-
-		if mMT.ElvUI_JiberishIcons.loaded and style ~= "BLIZZARD" then
-			coords = class and mMT.ElvUI_JiberishIcons.texCoords[class]
-			IconTexture = mMT.ElvUI_JiberishIcons.path .. style
-		end
-
-		if coords then
-			local left, right, top, bottom = unpack(coords)
-			portrait:SetTexCoord(mirror and right or left, mirror and left or right, top, bottom)
-			portrait:SetTexture(IconTexture)
-		end
-
-		portrait.mClass = unit
-		portrait.mCoords = coords
-	else
-		if portrait.mClass then
-			portrait.mClass = nil
-			portrait.mCoords = nil
-		end
-
-		mirrorTexture(portrait, mirror)
-		SetPortraitTexture(portrait, unit, masking)
 	end
 end
 
@@ -203,7 +206,7 @@ local function setColor(texture, color, mirror)
 	end
 end
 
-local function getColor(frame, unit)
+local function getColor(unit)
 	if settings.general.default then
 		return settings.colors.default
 	end
@@ -221,6 +224,78 @@ local function getColor(frame, unit)
 	end
 end
 
+local function UpdateIconBackground(tx, unit, mirror)
+	tx:SetTexture(textures.background[settings.general.bgstyle], "CLAMP", "CLAMP", "TRILINEAR")
+
+	local color = settings.shadow.classBG and getColor(unit) or settings.shadow.background
+	local bgColor = {}
+	local ColorShift = settings.shadow.bgColorShift
+
+	if not color.r then
+		bgColor.a = { r = 1, g = 1, b = 1, a = 1 }
+		bgColor.a.r = color.a.r - ColorShift
+		bgColor.a.g = color.a.g - ColorShift
+		bgColor.a.b = color.a.b - ColorShift
+		bgColor.a.a = color.a.a
+
+		bgColor.b = { r = 1, g = 1, b = 1, a = 1 }
+		bgColor.b.r = color.b.r - ColorShift
+		bgColor.b.g = color.b.g - ColorShift
+		bgColor.b.b = color.b.b - ColorShift
+		bgColor.b.a = color.b.a
+	elseif bgColor.r then
+		bgColor = { r = 1, g = 1, b = 1, a = 1 }
+		bgColor.r = color.r - ColorShift
+		bgColor.g = color.g - ColorShift
+		bgColor.b = color.b - ColorShift
+	end
+
+	setColor(tx, bgColor, mirror)
+end
+
+local function SetPortraits(frame, unit, masking, mirror)
+	if settings.general.classicons and UnitIsPlayer(unit) then
+		local class = select(2, UnitClass(unit))
+		local IconTexture = "Interface\\WorldStateFrame\\Icons-Classes"
+		local coords = CLASS_ICON_TCOORDS[class]
+		local style = settings.general.classiconstyle
+
+		if mMT.ElvUI_JiberishIcons.loaded and style ~= "BLIZZARD" then
+			coords = class and mMT.ElvUI_JiberishIcons.texCoords[class]
+			IconTexture = mMT.ElvUI_JiberishIcons.path .. style
+		end
+
+		if coords and #coords == 8 then
+			local ULx, ULy, LLx, LLy, URx, URy, LRx, LRy = unpack(coords)
+			if mirror then
+				frame.portrait:SetTexCoord(URx, URy, LRx, LRy, ULx, ULy, LLx, LLy)
+			else
+				frame.portrait:SetTexCoord(ULx, ULy, LLx, LLy, URx, URy, LRx, LRy)
+			end
+		else
+			local left, right, top, bottom = unpack(coords)
+			frame.portrait:SetTexCoord(mirror and right or left, mirror and left or right, top, bottom)
+		end
+
+		frame.portrait:SetTexture(IconTexture)
+
+		if frame.iconbg then
+			UpdateIconBackground(frame.iconbg, unit, mirror)
+		end
+
+		frame.portrait.mClass = unit
+		frame.portrait.mCoords = coords
+	else
+		if frame.portrait.mClass then
+			frame.portrait.mClass = nil
+			frame.portrait.mCoords = nil
+		end
+
+		mirrorTexture(frame.portrait, mirror)
+		SetPortraitTexture(frame.portrait, unit, masking)
+	end
+end
+
 local function CreatePortraitTexture(frame, name, layer, texture, color, mirror)
 	local tmpTexture = frame:CreateTexture(name, "OVERLAY", nil, layer)
 	tmpTexture:SetAllPoints(frame)
@@ -234,19 +309,19 @@ local function CreatePortraitTexture(frame, name, layer, texture, color, mirror)
 	return tmpTexture
 end
 
-local function CreateIconBackground(frame)
+local function CreateIconBackground(frame, unit, mirror)
 	local tmpTexture = frame:CreateTexture("mMT_Background", "OVERLAY", nil, -5)
 	tmpTexture:SetAllPoints(frame)
-	tmpTexture:SetTexture(path .. "background.tga", "CLAMP", "CLAMP", "TRILINEAR")
+	tmpTexture:SetTexture(textures.background[settings.general.bgstyle], "CLAMP", "CLAMP", "TRILINEAR")
 
-	local color = settings.shadow.background
-	tmpTexture:SetVertexColor(color.r, color.g, color.b, color.a)
+	local color = settings.shadow.classBG and getColor(unit) or settings.shadow.background
+	setColor(tmpTexture, color, mirror)
 
 	return tmpTexture
 end
 
 local function GetOffset(size, offset)
-	if offset == 0 then
+	if offset == 0 or not offset then
 		return 0
 	else
 		return ((size / offset) * E.perfect)
@@ -273,7 +348,7 @@ local function CreatePortrait(parent, conf, unit)
 	-- Portrait Texture
 
 	texture = textures.texture[settings.general.style][conf.texture]
-	frame.texture = CreatePortraitTexture(frame, "mMT_Texture", 4, texture, getColor(frame, unit), conf.mirror)
+	frame.texture = CreatePortraitTexture(frame, "mMT_Texture", 4, texture, getColor(unit), conf.mirror)
 
 	-- Unit Portrait
 	local offset = GetOffset(conf.size, settings.offset[conf.texture])
@@ -282,7 +357,7 @@ local function CreatePortrait(parent, conf, unit)
 	frame.portrait:SetPoint("TOPLEFT", 0 + offset, 0 - offset)
 	frame.portrait:SetPoint("BOTTOMRIGHT", 0 - offset, 0 + offset)
 	frame.portrait:SetTexture(path .. "unknown.tga", "CLAMP", "CLAMP", "TRILINEAR")
-	SetPortraits(frame.portrait, unit, not (conf.texture == "CI"), conf.mirror)
+	SetPortraits(frame, unit, textures.enablemasking[conf.texture] , conf.mirror)
 	mirrorTexture(frame.portrait, conf.mirror)
 
 	-- Portrait Mask
@@ -293,8 +368,8 @@ local function CreatePortrait(parent, conf, unit)
 	frame.portrait:AddMaskTexture(frame.mask)
 
 	-- Class Icon Background
-	if E.db.mMT.portraits.general.classicons then
-		frame.iconbg = CreateIconBackground(frame)
+	if settings.general.classicons then
+		frame.iconbg = CreateIconBackground(frame, unit, conf.mirror)
 		frame.iconbg:AddMaskTexture(frame.mask)
 	end
 
@@ -342,7 +417,7 @@ local function CreatePortrait(parent, conf, unit)
 	-- Corner
 	if settings.general.corner and textures.corner[conf.texture] then
 		texture = textures.texture[settings.general.style].CO
-		frame.corner = CreatePortraitTexture(frame, "mMT_Corner", 5, texture, getColor(frame, unit), conf.mirror)
+		frame.corner = CreatePortraitTexture(frame, "mMT_Corner", 5, texture, getColor(unit), conf.mirror)
 
 		-- Border
 		if settings.shadow.border then
@@ -378,13 +453,6 @@ local function CheckRareElite(frame, unit)
 	end
 end
 
-local function UpdateIconBackground(tx)
-	tx:SetTexture(path .. "background.tga", "CLAMP", "CLAMP", "TRILINEAR")
-
-	local color = settings.shadow.background
-	tx:SetVertexColor(color.r, color.g, color.b, color.a)
-end
-
 local function UpdatePortraitTexture(tx, texture, color, mirror)
 	if tx then
 		tx:SetTexture(texture, "CLAMP", "CLAMP", "TRILINEAR")
@@ -415,7 +483,7 @@ local function UpdatePortrait(frame, conf, unit, parent)
 
 	-- Portrait Texture
 	texture = textures.texture[settings.general.style][conf.texture]
-	UpdatePortraitTexture(frame.texture, texture, getColor(frame, unit), conf.mirror)
+	UpdatePortraitTexture(frame.texture, texture, getColor(unit), conf.mirror)
 
 	-- Unit Portrait
 	local offset = GetOffset(conf.size, settings.offset[conf.texture])
@@ -467,16 +535,16 @@ local function UpdatePortrait(frame, conf, unit, parent)
 	end
 
 	-- Class Icon Background
-	if E.db.mMT.portraits.general.classicons then
+	if settings.general.classicons then
 		if frame.iconbg then
-			UpdateIconBackground(frame.iconbg)
+			UpdateIconBackground(frame.iconbg, unit, conf.mirror)
 			if settings.shadow.enable then
 				frame.shadow:Show()
 			end
 		else
-			frame.iconbg = CreateIconBackground(frame)
+			frame.iconbg = CreateIconBackground(frame, unit, conf.mirror)
 		end
-	elseif frame.iconbg and not E.db.mMT.portraits.general.classicons then
+	elseif frame.iconbg and not settings.general.classicons then
 		frame.iconbg:Hide()
 	end
 
@@ -533,10 +601,10 @@ local function UpdatePortrait(frame, conf, unit, parent)
 	if settings.general.corner and textures.corner[conf.texture] then
 		texture = textures.texture[settings.general.style].CO
 		if frame.corner then
-			UpdatePortraitTexture(frame.corner, texture, getColor(frame, unit), conf.mirror)
+			UpdatePortraitTexture(frame.corner, texture, getColor(unit), conf.mirror)
 			frame.corner:Show()
 		else
-			frame.corner = CreatePortraitTexture(frame, "mMT_Corner", 5, texture, getColor(frame, unit), conf.mirror)
+			frame.corner = CreatePortraitTexture(frame, "mMT_Corner", 5, texture, getColor(unit), conf.mirror)
 		end
 
 		-- Border
@@ -777,10 +845,10 @@ function module:Initialize()
 				end
 
 				if UnitExists("player") then
-					SetPortraits(self.portrait, "player", not (settings.player.texture == "CI"), settings.player.mirror)
-					setColor(self.texture, getColor(self, "player"), settings.player.mirror)
+					SetPortraits(self, "player", textures.enablemasking[settings.player.texture], settings.player.mirror)
+					setColor(self.texture, getColor("player"), settings.player.mirror)
 					if settings.general.corner and textures.corner[settings.player.texture] then
-						setColor(self.corner, getColor(self, "player"), settings.player.mirror)
+						setColor(self.corner, getColor("player"), settings.player.mirror)
 					end
 				end
 			end)
@@ -794,11 +862,11 @@ function module:Initialize()
 				end
 
 				if UnitExists("target") then
-					SetPortraits(self.portrait, "target", not (settings.target.texture == "CI"), settings.target.mirror)
-					setColor(self.texture, getColor(self, "target"), settings.target.mirror)
+					SetPortraits(self, "target", textures.enablemasking[settings.target.texture], settings.target.mirror)
+					setColor(self.texture, getColor("target"), settings.target.mirror)
 
 					if settings.general.corner and textures.corner[settings.target.texture] then
-						setColor(self.corner, getColor(self, "target"), settings.target.mirror)
+						setColor(self.corner, getColor("target"), settings.target.mirror)
 					end
 
 					if settings.target.extraEnable and self.extra then
@@ -818,11 +886,11 @@ function module:Initialize()
 				end
 
 				if UnitExists("pet") then
-					SetPortraits(self.portrait, "pet", not (settings.pet.texture == "CI"), settings.pet.mirror)
+					SetPortraits(self, "pet", textures.enablemasking[settings.pet.texture], settings.pet.mirror)
 
-					setColor(self.texture, getColor(self, "pet"), settings.pet.mirror)
+					setColor(self.texture, getColor("pet"), settings.pet.mirror)
 					if settings.general.corner and textures.corner[settings.pet.texture] then
-						setColor(self.corner, getColor(self, "pet"), settings.pet.mirror)
+						setColor(self.corner, getColor("pet"), settings.pet.mirror)
 					end
 				end
 			end)
@@ -836,10 +904,10 @@ function module:Initialize()
 				end
 
 				if UnitExists("focus") then
-					SetPortraits(self.portrait, "focus", not (settings.focus.texture == "CI"), settings.focus.mirror)
-					setColor(self.texture, getColor(self, "focus"), settings.focus.mirror)
+					SetPortraits(self, "focus", textures.enablemasking[settings.focus.texture], settings.focus.mirror)
+					setColor(self.texture, getColor("focus"), settings.focus.mirror)
 					if settings.general.corner and textures.corner[settings.focus.texture] then
-						setColor(self.corner, getColor(self, "focus"), settings.focus.mirror)
+						setColor(self.corner, getColor("focus"), settings.focus.mirror)
 					end
 
 					if settings.focus.extraEnable and self.extra then
@@ -859,10 +927,10 @@ function module:Initialize()
 				end
 
 				if UnitExists("targettarget") then
-					SetPortraits(self.portrait, "targettarget", not (settings.targettarget.texture == "CI"), settings.targettarget.mirror)
-					setColor(self.texture, getColor(self, "targettarget"), settings.targettarget.mirror)
+					SetPortraits(self, "targettarget", textures.enablemasking[settings.targettarget.texture], settings.targettarget.mirror)
+					setColor(self.texture, getColor("targettarget"), settings.targettarget.mirror)
 					if settings.general.corner and textures.corner[settings.targettarget.texture] then
-						setColor(self.corner, getColor(self, "targettarget"), settings.targettarget.mirror)
+						setColor(self.corner, getColor("targettarget"), settings.targettarget.mirror)
 					end
 
 					if settings.targettarget.extraEnable and self.extra then
@@ -884,12 +952,12 @@ function module:Initialize()
 					end
 
 					if UnitExists(frame.unit) then
-						setColor(self.texture, getColor(self, frame.unit), settings.party.mirror)
+						setColor(self.texture, getColor(frame.unit), settings.party.mirror)
 						if settings.general.corner and textures.corner[settings.party.texture] then
-							setColor(self.corner, getColor(self, frame.unit), settings.party.mirror)
+							setColor(self.corner, getColor(frame.unit), settings.party.mirror)
 						end
 
-						SetPortraits(self.portrait, frame.unit, not (settings.party.texture == "CI"), settings.party.mirror)
+						SetPortraits(self, frame.unit, not textures.enablemasking[settings.party.texture], settings.party.mirror)
 					end
 				end)
 
@@ -906,12 +974,12 @@ function module:Initialize()
 					end
 
 					if UnitExists(frame.unit) then
-						setColor(self.texture, getColor(self, frame.unit), settings.boss.mirror)
+						setColor(self.texture, getColor(frame.unit), settings.boss.mirror)
 						if settings.general.corner and textures.corner[settings.boss.texture] then
-							setColor(self.corner, getColor(self, frame.unit), settings.boss.mirror)
+							setColor(self.corner, getColor(frame.unit), settings.boss.mirror)
 						end
 
-						SetPortraits(self.portrait, frame.unit, not (settings.boss.texture == "CI"), settings.boss.mirror)
+						SetPortraits(self, frame.unit, textures.enablemasking[settings.boss.texture], settings.boss.mirror)
 					end
 				end)
 
@@ -928,12 +996,12 @@ function module:Initialize()
 					end
 
 					if UnitExists(frame.unit) then
-						setColor(self.texture, getColor(self, frame.unit), settings.arena.mirror)
+						setColor(self.texture, getColor(frame.unit), settings.arena.mirror)
 						if settings.general.corner and textures.corner[settings.arena.texture] then
-							setColor(self.corner, getColor(self, frame.unit), settings.arena.mirror)
+							setColor(self.corner, getColor(frame.unit), settings.arena.mirror)
 						end
 
-						SetPortraits(self.portrait, frame.unit, not (settings.arena.texture == "CI"), settings.arena.mirror)
+						SetPortraits(self, frame.unit, textures.enablemasking[settings.arena.texture], settings.arena.mirror)
 					end
 				end)
 

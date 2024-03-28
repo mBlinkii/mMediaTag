@@ -13,19 +13,22 @@ local change_log_important = {
 	"Removed old and unused Tags",
 }
 
+local releasdate = "28.03.2024"
+
 local change_log_new = {
-	"Add support for the great Class Icons from Jiberish for Portraits",
-	"TAG mTargetMarker",
+	"Add class colored bg for Portraits class icons",
+	"Add diffrent Styles for Portraits Class icons background",
+	"New Portraits Texture simple Square",
 }
 
 local change_log_update = {
-	"Add Tooltip Anchor settings for Teleports Datatext",
-	"TOC update for Classic and Retail",
+	"Cleand up Portraits Settings",
+	"Change Rare/Elite border toggle behavior for Portraits",
 }
 
 local change_log_fix = {
-	"Dropdown menu Button height, depends now on Font size to prevent overlapping text",
-	"Misalignment of the non-player Portraits when Classicons is enabled",
+	"Take care of JiberishIcons changes",
+	"Offset settings for Portraits Moon texture",
 }
 
 local function Concatenation(tbl, icon, color)
@@ -45,7 +48,6 @@ local function Concatenation(tbl, icon, color)
 end
 
 local function configTable()
-	local releasdate = "05.02.2024"
 	--change_log_important_string = Concatenation(change_log_important)
 	change_log_new_string = Concatenation(change_log_new)
 	change_log_update_string = Concatenation(change_log_update)
