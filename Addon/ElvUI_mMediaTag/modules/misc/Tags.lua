@@ -28,16 +28,15 @@ local UnitIsUnit = UnitIsUnit
 local UnitIsWildBattlePet = UnitIsWildBattlePet
 local UnitLevel = UnitLevel
 local UnitName = UnitName
-local TANK, HEALER = TANK, HEALER
 local UnitAffectingCombat = UnitAffectingCombat
 local UnitFaction = {}
 
 -- fallback colors
 local colors = {
 	rare = "|cffffffff",
-	relite = "|cffffffff",
+	rareelite = "|cffffffff",
 	elite = "|cffffffff",
-	boss = "|cffffffff",
+	worldboss = "|cffffffff",
 	afk = "|cffffffff",
 	dnd = "|cffffffff",
 	zzz = "|cffffffff",
@@ -60,23 +59,23 @@ local CustomRaidTargetIcons = {
 -- fallback icons
 local icons = {
 	rare = "|TInterface\\Addons\\ElvUI_mMediaTag\\media\\logo\\mmt_icon.tga:15:15|t",
-	relite = "|TInterface\\Addons\\ElvUI_mMediaTag\\media\\logo\\mmt_icon.tga:15:15|t",
+	rareelite = "|TInterface\\Addons\\ElvUI_mMediaTag\\media\\logo\\mmt_icon.tga:15:15|t",
 	elite = "|TInterface\\Addons\\ElvUI_mMediaTag\\media\\logo\\mmt_icon.tga:15:15|t",
-	boss = "|TInterface\\Addons\\ElvUI_mMediaTag\\media\\logo\\mmt_icon.tga:15:15|t",
+	worldboss = "|TInterface\\Addons\\ElvUI_mMediaTag\\media\\logo\\mmt_icon.tga:15:15|t",
 	afk = "|TInterface\\Addons\\ElvUI_mMediaTag\\media\\logo\\mmt_icon.tga:15:15|t",
 	dnd = "|TInterface\\Addons\\ElvUI_mMediaTag\\media\\logo\\mmt_icon.tga:15:15|t",
 	dc = "|TInterface\\Addons\\ElvUI_mMediaTag\\media\\logo\\mmt_icon.tga:15:15|t",
 	death = "|TInterface\\Addons\\ElvUI_mMediaTag\\media\\logo\\mmt_icon.tga:15:15|t",
 	ghost = "|TInterface\\Addons\\ElvUI_mMediaTag\\media\\logo\\mmt_icon.tga:15:15|t",
 	pvp = format("|T%s:15:15:0:2|t", "Interface\\AddOns\\ElvUI_mMediaTag\\media\\icons\\tags\\pvp.tga"),
-	tank = "|TInterface\\Addons\\ElvUI_mMediaTag\\media\\logo\\mmt_icon.tga:15:15|t",
-	heal = "|TInterface\\Addons\\ElvUI_mMediaTag\\media\\logo\\mmt_icon.tga:15:15|t",
-	dd = "|TInterface\\Addons\\ElvUI_mMediaTag\\media\\logo\\mmt_icon.tga:15:15|t",
+	TANK = "|TInterface\\Addons\\ElvUI_mMediaTag\\media\\logo\\mmt_icon.tga:15:15|t",
+	HEALER = "|TInterface\\Addons\\ElvUI_mMediaTag\\media\\logo\\mmt_icon.tga:15:15|t",
+	DAMAGER = "|TInterface\\Addons\\ElvUI_mMediaTag\\media\\logo\\mmt_icon.tga:15:15|t",
 	quest = format("|T%s:15:15:0:2|t", "Interface\\AddOns\\ElvUI_mMediaTag\\media\\icons\\tags\\quest1.tga"),
 	default = {
-		tank = CreateAtlasMarkup("UI-LFG-RoleIcon-Tank", 16, 16),
-		heal = CreateAtlasMarkup("UI-LFG-RoleIcon-Healer", 16, 16),
-		dd = CreateAtlasMarkup("UI-LFG-RoleIcon-DPS", 16, 16),
+		TANK = CreateAtlasMarkup("UI-LFG-RoleIcon-Tank", 16, 16),
+		HEALER = CreateAtlasMarkup("UI-LFG-RoleIcon-Healer", 16, 16),
+		DAMAGER = CreateAtlasMarkup("UI-LFG-RoleIcon-DPS", 16, 16),
 	},
 }
 
@@ -264,21 +263,21 @@ local BossIDs = {
 function mMT:UpdateTagSettings()
 	colors = {
 		rare = E.db.mMT.tags.colors.rare.hex,
-		relite = E.db.mMT.tags.colors.relite.hex,
+		rareelite = E.db.mMT.tags.colors.rareelite.hex,
 		elite = E.db.mMT.tags.colors.elite.hex,
-		boss = E.db.mMT.tags.colors.boss.hex,
+		worldboss = E.db.mMT.tags.colors.worldboss.hex,
 		afk = E.db.mMT.tags.colors.afk.hex,
 		dnd = E.db.mMT.tags.colors.dnd.hex,
 		zzz = E.db.mMT.tags.colors.zzz.hex,
-		tank = E.db.mMT.tags.colors.TANK.hex,
-		heal = E.db.mMT.tags.colors.HEALER.hex,
+		TANK = E.db.mMT.tags.colors.TANK.hex,
+		HEALER = E.db.mMT.tags.colors.HEALER.hex,
 		level = E.db.mMT.tags.colors.level.hex,
 	}
 
 	icons.rare = format("|T%s:15:15:0:2|t", mMT.Media.ClassIcons[E.db.mMT.tags.icons.rare or "FRUIT3"])
-	icons.relite = format("|T%s:15:15:0:2|t", mMT.Media.ClassIcons[E.db.mMT.tags.icons.relite or "FRUIT4"])
+	icons.rareelite = format("|T%s:15:15:0:2|t", mMT.Media.ClassIcons[E.db.mMT.tags.icons.rareelite or "FRUIT4"])
 	icons.elite = format("|T%s:15:15:0:2|t", mMT.Media.ClassIcons[E.db.mMT.tags.icons.elite or "FRUIT2"])
-	icons.boss = format("|T%s:15:15:0:2|t", mMT.Media.ClassIcons[E.db.mMT.tags.icons.boss or "BOSS1"])
+	icons.worldboss = format("|T%s:15:15:0:2|t", mMT.Media.ClassIcons[E.db.mMT.tags.icons.worldboss or "BOSS1"])
 	icons.afk = format("|T%s:15:15:0:2|t", mMT.Media.AFKIcons[E.db.mMT.tags.icons.afk or "AFK17"])
 	icons.dnd = format("|T%s:15:15:0:2|t", mMT.Media.DNDIcons[E.db.mMT.tags.icons.dnd or "DND11"])
 	icons.dc = format("|T%s:15:15:0:2|t", mMT.Media.DCIcons[E.db.mMT.tags.icons.offline or "DC9"])
@@ -331,7 +330,7 @@ for textFormat, length in pairs({ veryshort = 5, short = 10, medium = 15, long =
 
 	E:AddTag(format("mName:last:onlyininstance:%s", textFormat), "UNIT_NAME_UPDATE INSTANCE_ENCOUNTER_ENGAGE_UNIT", function(unit)
 		local name = UnitName(unit)
-		local inInstance, InstanceType = IsInInstance()
+		local inInstance, _ = IsInInstance()
 		if name and strfind(name, "%s") then
 			name = inInstance and ShortName(name) or E.TagFunctions.Abbrev(name)
 		end
@@ -391,7 +390,7 @@ end)
 
 E:AddTag("mName:last:onlyininstance", "UNIT_NAME_UPDATE INSTANCE_ENCOUNTER_ENGAGE_UNIT", function(unit)
 	local name = UnitName(unit)
-	local inInstance, InstanceType = IsInInstance()
+	local inInstance, _ = IsInInstance()
 	if name and strfind(name, "%s") then
 		name = inInstance and ShortName(name) or E.TagFunctions.Abbrev(name)
 	end
@@ -445,32 +444,29 @@ E:AddTagInfo("mName:last:onlyininstance:short", mMT.NameShort .. " " .. L["Name"
 E:AddTagInfo("mName:last:onlyininstance:medium", mMT.NameShort .. " " .. L["Name"], L["Shortened version of"] .. " mName:last:onlyininstance.")
 E:AddTagInfo("mName:last:onlyininstance:long", mMT.NameShort .. " " .. L["Name"], L["Shortened version of"] .. " mName:last:onlyininstance.")
 
+local classificationNames = {
+	full = {
+		rare = "Rare",
+		rareelite = "Rare Elite",
+		elite = "Elite",
+		worldboss = "Boss",
+	},
+	short = {
+		rare = "R",
+		rareelite = "R+",
+		elite = "+",
+		worldboss = "B",
+	},
+}
+
 E:AddTag("mClass", "UNIT_CLASSIFICATION_CHANGED", function(unit)
 	local c = UnitClassification(unit)
-
-	if c == "rare" then
-		return format("%sRare|r", colors.rare)
-	elseif c == "rareelite" then
-		return format("%sRare Elite|r", colors.relite)
-	elseif c == "elite" then
-		return format("%sElite|r", colors.elite)
-	elseif c == "worldboss" then
-		return format("%sBoss|r", colors.boss)
-	end
+	return (c and classificationNames.full[c]) and format("%s%s|r", classificationNames.full[c], colors[c]) or ""
 end)
 
 E:AddTag("mClass:short", "UNIT_CLASSIFICATION_CHANGED", function(unit)
 	local c = UnitClassification(unit)
-
-	if c == "rare" then
-		return format("%sR|r", colors.rare)
-	elseif c == "rareelite" then
-		return format("%sR+|r", colors.relite)
-	elseif c == "elite" then
-		return format("%s+|r", colors.elite)
-	elseif c == "worldboss" then
-		return format("%sB|r", colors.boss)
-	end
+	return (c and classificationNames.short[c]) and format("%s%s|r", classificationNames.short[c], colors[c]) or ""
 end)
 
 E:AddTag("mClass:icon", "UNIT_CLASSIFICATION_CHANGED", function(unit)
@@ -478,47 +474,30 @@ E:AddTag("mClass:icon", "UNIT_CLASSIFICATION_CHANGED", function(unit)
 	local guid = UnitGUID(unit)
 	local npcID = guid and select(6, strsplit("-", guid))
 
-	if (npcID and BossIDs[npcID]) or c == "worldboss" then
-		return icons.boss
-	elseif c == "rare" then
-		return icons.rare
-	elseif c == "rareelite" then
-		return icons.relite
-	elseif c == "elite" then
-		return icons.elite
-	end
+	c = (npcID and BossIDs[npcID]) and "worldboss" or c
+	return c and icons[c] or ""
 end)
 
 E:AddTag("mClass:icon:boss", "UNIT_CLASSIFICATION_CHANGED", function(unit)
 	local c = UnitClassification(unit)
 	local guid = UnitGUID(unit)
 	local npcID = guid and select(6, strsplit("-", guid))
+	c = (npcID and BossIDs[npcID]) and "worldboss" or c
 
-	if (npcID and BossIDs[npcID]) or c == "worldboss" then
-		return icons.boss
-	end
+	return (c and c == "worldboss") and icons.worldboss or ""
 end)
 
 E:AddTag("mClass:icon:rare", "UNIT_CLASSIFICATION_CHANGED", function(unit)
 	local c = UnitClassification(unit)
-	if c == "rare" then
-		return icons.rare
-	elseif c == "rareelite" then
-		return icons.relite
-	end
+	return (c and c == "rare" or c == "rareelite") and icons[c] or ""
 end)
 
 E:AddTag("mClass:icon:noelite", "UNIT_CLASSIFICATION_CHANGED", function(unit)
 	local c = UnitClassification(unit)
 	local guid = UnitGUID(unit)
 	local npcID = guid and select(6, strsplit("-", guid))
-	if (npcID and BossIDs[npcID]) or c == "worldboss" then
-		return icons.boss
-	elseif c == "rare" then
-		return icons.rare
-	elseif c == "rareelite" then
-		return icons.relite
-	end
+	c = (npcID and BossIDs[npcID]) and "worldboss" or c
+	return (c and c ~= "elite") and icons[c] or ""
 end)
 
 E:AddTagInfo("mClass", mMT.NameShort .. " " .. L["Class"], L["Displays the Unit Class."])
@@ -625,21 +604,13 @@ E:AddTag("mColor", "UNIT_NAME_UPDATE UNIT_FACTION UNIT_CLASSIFICATION_CHANGED", 
 	local c = UnitClassification(unit)
 	local unitPlayer = UnitIsPlayer(unit)
 
-	if unitPlayer then
-		return _TAGS.classcolor(unit)
-	else
-		if c == "rare" then
-			return colors.rare
-		elseif c == "rareelite" then
-			return colors.relite
-		elseif c == "elite" then
-			return colors.elite
-		elseif c == "worldboss" then
-			return colors.boss
-		else
-			return _TAGS.classcolor(unit)
-		end
+	if not unitPlayer then
+		local guid = UnitGUID(unit)
+		local npcID = guid and select(6, strsplit("-", guid))
+		c = (npcID and BossIDs[npcID]) and "worldboss" or c
 	end
+
+	return unitPlayer and _TAGS.classcolor(unit) or c and colors[c] or _TAGS.classcolor(unit)
 end)
 
 E:AddTag("mColor:rare", "UNIT_NAME_UPDATE UNIT_CLASSIFICATION_CHANGED", function(unit)
@@ -648,7 +619,7 @@ E:AddTag("mColor:rare", "UNIT_NAME_UPDATE UNIT_CLASSIFICATION_CHANGED", function
 	if c == "rare" then
 		return colors.rare
 	elseif c == "rareelite" then
-		return colors.relite
+		return colors.rareelite
 	end
 end)
 
@@ -657,21 +628,13 @@ E:AddTag("mColor:target", "UNIT_TARGET", function(unit)
 	local c = UnitClassification(target)
 	local unitPlayer = UnitIsPlayer(target)
 
-	if unitPlayer then
-		return _TAGS.classcolor(target)
-	else
-		if c == "rare" then
-			return colors.rare
-		elseif c == "rareelite" then
-			return colors.relite
-		elseif c == "elite" then
-			return colors.elite
-		elseif c == "worldboss" then
-			return colors.boss
-		else
-			return _TAGS.classcolor(target)
-		end
+	if not unitPlayer then
+		local guid = UnitGUID(unit)
+		local npcID = guid and select(6, strsplit("-", guid))
+		c = (npcID and BossIDs[npcID]) and "worldboss" or c
 	end
+
+	return unitPlayer and _TAGS.classcolor(target) or c and colors[c] or _TAGS.classcolor(target)
 end)
 
 E:AddTagInfo("mColor", mMT.NameShort .. " " .. L["Color"], L["Unit colors with mMediaTag colors for Rare, Rareelite, Elite and Boss and Classcolors."])
