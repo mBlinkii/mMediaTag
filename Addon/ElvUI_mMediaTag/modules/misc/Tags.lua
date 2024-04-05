@@ -270,8 +270,8 @@ function mMT:UpdateTagSettings()
 		afk = E.db.mMT.tags.colors.afk.hex,
 		dnd = E.db.mMT.tags.colors.dnd.hex,
 		zzz = E.db.mMT.tags.colors.zzz.hex,
-		tank = E.db.mMT.tags.colors.tank.hex,
-		heal = E.db.mMT.tags.colors.heal.hex,
+		tank = E.db.mMT.tags.colors.TANK.hex,
+		heal = E.db.mMT.tags.colors.HEALER.hex,
 		level = E.db.mMT.tags.colors.level.hex,
 	}
 
@@ -1378,17 +1378,8 @@ E:AddTagInfo("mDeathCount:color", mMT.NameShort .. " " .. L["Misc"], L["Death Co
 E:AddTagInfo("mDeathCount:hide:text", mMT.NameShort .. " " .. L["Misc"], L["Displays the Death counter only when the unit is Death and Shows a Text (Death: 7), resets in new instances."])
 
 E:AddTag("mRole", "PLAYER_ROLES_ASSIGNED GROUP_ROSTER_UPDATE", function(unit)
-	local Role = ""
-
-	if E.Retail then
-		Role = UnitGroupRolesAssigned(unit)
-	end
-
-	if Role == "TANK" then
-		return format("%s%s|r", colors.tank, TANK)
-	elseif Role == "HEALER" then
-		return format("%s%s|r", colors.heal, HEALER)
-	end
+	local UnitRole = UnitGroupRolesAssigned(unit)
+	return UnitRole and ((UnitRole == "TANK" or UnitRole == "HEALER") and format("%s%s|r", colors[UnitRole], UnitRole) or "") or ""
 end)
 
 E:AddTag("mRoleIcon", "PLAYER_ROLES_ASSIGNED GROUP_ROSTER_UPDATE", function(unit)
