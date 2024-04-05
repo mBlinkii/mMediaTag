@@ -263,21 +263,21 @@ local BossIDs = {
 function mMT:UpdateTagSettings()
 	colors = {
 		rare = E.db.mMT.tags.colors.rare.hex,
-		rareelite = E.db.mMT.tags.colors.rareelite.hex,
+		rareelite = E.db.mMT.tags.colors.relite.hex,
 		elite = E.db.mMT.tags.colors.elite.hex,
-		worldboss = E.db.mMT.tags.colors.worldboss.hex,
+		worldboss = E.db.mMT.tags.colors.boss.hex,
 		afk = E.db.mMT.tags.colors.afk.hex,
 		dnd = E.db.mMT.tags.colors.dnd.hex,
 		zzz = E.db.mMT.tags.colors.zzz.hex,
-		TANK = E.db.mMT.tags.colors.TANK.hex,
-		HEALER = E.db.mMT.tags.colors.HEALER.hex,
+		TANK = E.db.mMT.tags.colors.tank.hex,
+		HEALER = E.db.mMT.tags.colors.heal.hex,
 		level = E.db.mMT.tags.colors.level.hex,
 	}
 
 	icons.rare = format("|T%s:15:15:0:2|t", mMT.Media.ClassIcons[E.db.mMT.tags.icons.rare or "FRUIT3"])
-	icons.rareelite = format("|T%s:15:15:0:2|t", mMT.Media.ClassIcons[E.db.mMT.tags.icons.rareelite or "FRUIT4"])
+	icons.rareelite = format("|T%s:15:15:0:2|t", mMT.Media.ClassIcons[E.db.mMT.tags.icons.relite or "FRUIT4"])
 	icons.elite = format("|T%s:15:15:0:2|t", mMT.Media.ClassIcons[E.db.mMT.tags.icons.elite or "FRUIT2"])
-	icons.worldboss = format("|T%s:15:15:0:2|t", mMT.Media.ClassIcons[E.db.mMT.tags.icons.worldboss or "BOSS1"])
+	icons.worldboss = format("|T%s:15:15:0:2|t", mMT.Media.ClassIcons[E.db.mMT.tags.icons.boss or "BOSS1"])
 	icons.afk = format("|T%s:15:15:0:2|t", mMT.Media.AFKIcons[E.db.mMT.tags.icons.afk or "AFK17"])
 	icons.dnd = format("|T%s:15:15:0:2|t", mMT.Media.DNDIcons[E.db.mMT.tags.icons.dnd or "DND11"])
 	icons.dc = format("|T%s:15:15:0:2|t", mMT.Media.DCIcons[E.db.mMT.tags.icons.offline or "DC9"])
@@ -304,9 +304,9 @@ function mMT:UpdateTagSettings()
 			icons.HEALER = E:TextureString(E.db.mMT.roleicons.customtheal, ":15:15")
 			icons.DAMAGER = E:TextureString(E.db.mMT.roleicons.customdd, ":15:15")
 		else
-			icons.TANK = E:TextureString(mMT.Media.Role[E.db.mMT.roleicons.TANK], ":15:15")
-			icons.HEALER = E:TextureString(mMT.Media.Role[E.db.mMT.roleicons.HEALER], ":15:15")
-			icons.DAMAGER = E:TextureString(mMT.Media.Role[E.db.mMT.roleicons.DAMAGER], ":15:15")
+			icons.TANK = E:TextureString(mMT.Media.Role[E.db.mMT.roleicons.tank], ":15:15")
+			icons.HEALER = E:TextureString(mMT.Media.Role[E.db.mMT.roleicons.heal], ":15:15")
+			icons.DAMAGER = E:TextureString(mMT.Media.Role[E.db.mMT.roleicons.dd], ":15:15")
 		end
 	end
 end
