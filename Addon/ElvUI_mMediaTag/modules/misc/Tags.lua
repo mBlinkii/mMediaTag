@@ -285,9 +285,9 @@ function mMT:UpdateTagSettings()
 	icons.death = format("|T%s:15:15:0:2|t", mMT.Media.DeathIcons[E.db.mMT.tags.icons.death or "DEATH11"])
 	icons.ghost = format("|T%s:15:15:0:2|t", mMT.Media.GhostIcons[E.db.mMT.tags.icons.ghost or "GHOST1"])
 	icons.pvp = format("|T%s:15:15:0:2|t", "Interface\\AddOns\\ElvUI_mMediaTag\\media\\icons\\tags\\pvp.tga")
-	icons.tank = E:TextureString(E.Media.Textures.Tank, ":15:15")
-	icons.heal = E:TextureString(E.Media.Textures.Healer, ":15:15")
-	icons.dd = E:TextureString(E.Media.Textures.DPS, ":15:15")
+	icons.TANK = E:TextureString(E.Media.Textures.Tank, ":15:15")
+	icons.HEALER = E:TextureString(E.Media.Textures.Healer, ":15:15")
+	icons.DAMAGER = E:TextureString(E.Media.Textures.DPS, ":15:15")
 	icons.quest = format("|T%s:15:15:0:2|t", "Interface\\AddOns\\ElvUI_mMediaTag\\media\\icons\\tags\\quest1.tga")
 
 	CustomRaidTargetIcons[1] = format("|T%s:15:15:0:2|t", mMT.Media.TargetMarkers[E.db.mMT.tags.targetmarker[1] or "TM01"])
@@ -301,13 +301,13 @@ function mMT:UpdateTagSettings()
 
 	if E.db.mMT.roleicons.enable then
 		if E.db.mMT.roleicons.customtexture then
-			icons.tank = E:TextureString(E.db.mMT.roleicons.customtank, ":15:15")
-			icons.heal = E:TextureString(E.db.mMT.roleicons.customtheal, ":15:15")
-			icons.dd = E:TextureString(E.db.mMT.roleicons.customdd, ":15:15")
+			icons.TANK = E:TextureString(E.db.mMT.roleicons.customtank, ":15:15")
+			icons.HEALER = E:TextureString(E.db.mMT.roleicons.customtheal, ":15:15")
+			icons.DAMAGER = E:TextureString(E.db.mMT.roleicons.customdd, ":15:15")
 		else
-			icons.tank = E:TextureString(mMT.Media.Role[E.db.mMT.roleicons.tank], ":15:15")
-			icons.heal = E:TextureString(mMT.Media.Role[E.db.mMT.roleicons.heal], ":15:15")
-			icons.dd = E:TextureString(mMT.Media.Role[E.db.mMT.roleicons.dd], ":15:15")
+			icons.TANK = E:TextureString(mMT.Media.Role[E.db.mMT.roleicons.TANK], ":15:15")
+			icons.HEALER = E:TextureString(mMT.Media.Role[E.db.mMT.roleicons.HEALER], ":15:15")
+			icons.DAMAGER = E:TextureString(mMT.Media.Role[E.db.mMT.roleicons.DAMAGER], ":15:15")
 		end
 	end
 end
@@ -1392,71 +1392,23 @@ E:AddTag("mRole", "PLAYER_ROLES_ASSIGNED GROUP_ROSTER_UPDATE", function(unit)
 end)
 
 E:AddTag("mRoleIcon", "PLAYER_ROLES_ASSIGNED GROUP_ROSTER_UPDATE", function(unit)
-	local Role = ""
-
-	if E.Retail then
-		Role = UnitGroupRolesAssigned(unit)
-	end
-
-	if Role == "TANK" then
-		return icons.tank
-	elseif Role == "HEALER" then
-		return icons.heal
-	elseif Role == "DAMAGER" then
-		return icons.dd
-	end
+	local UnitRole = UnitGroupRolesAssigned(unit)
+	return UnitRole and icons[UnitRole] or ""
 end)
 
 E:AddTag("mRoleIcon:blizz", "PLAYER_ROLES_ASSIGNED GROUP_ROSTER_UPDATE", function(unit)
-	local Role = ""
-
-	if E.Retail then
-		Role = UnitGroupRolesAssigned(unit)
-	end
-
-	if Role == "TANK" then
-		return icons.default.tank
-	elseif Role == "HEALER" then
-		return icons.default.heal
-	elseif Role == "DAMAGER" then
-		return icons.default.dd
-	end
+	local UnitRole = UnitGroupRolesAssigned(unit)
+	return UnitRole and icons.default[UnitRole] or ""
 end)
 
 E:AddTag("mRoleIcon:target", "UNIT_TARGET UNIT_COMBAT", function(unit)
-	local Role = ""
-
-	if E.Retail then
-		Role = UnitGroupRolesAssigned(unit .. "target")
-
-		if Role == "TANK" then
-			return icons.tank
-		elseif Role == "HEALER" then
-			return icons.heal
-		elseif Role == "DAMAGER" then
-			return icons.dd
-		end
-	else
-		return ""
-	end
+	local UnitRole = UnitGroupRolesAssigned(unit .. "target")
+	return UnitRole and icons[UnitRole] or ""
 end)
 
 E:AddTag("mRoleIcon:target:blizz", "UNIT_TARGET UNIT_COMBAT", function(unit)
-	local Role = ""
-
-	if E.Retail then
-		Role = UnitGroupRolesAssigned(unit .. "target")
-
-		if Role == "TANK" then
-			return icons.default.tank
-		elseif Role == "HEALER" then
-			return icons.default.heal
-		elseif Role == "DAMAGER" then
-			return icons.default.dd
-		end
-	else
-		return ""
-	end
+	local UnitRole = UnitGroupRolesAssigned(unit .. "target")
+	return UnitRole and icons.default[UnitRole] or ""
 end)
 
 E:AddTagInfo("mRole", mMT.NameShort .. " " .. L["Misc"], L["Tank and Healer roles as text."])
