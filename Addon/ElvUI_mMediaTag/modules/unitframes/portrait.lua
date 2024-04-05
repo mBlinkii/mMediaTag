@@ -207,7 +207,7 @@ local function setColor(texture, color, mirror)
 end
 
 
-local function getColor(unit, x)
+local function getColor(unit)
 	if settings.general.default then
 		return settings.colors.default
 	end
@@ -847,7 +847,7 @@ function module:Initialize()
 
 				if UnitExists("player") then
 					SetPortraits(self, "player", textures.enablemasking[settings.player.texture], settings.player.mirror)
-					setColor(self.texture, getColor("player", _G.ElvUF_TargetTarget.considerSelectionInCombatHostile), settings.player.mirror)
+					setColor(self.texture, getColor("player"), settings.player.mirror)
 					if settings.general.corner and textures.corner[settings.player.texture] then
 						setColor(self.corner, getColor("player"), settings.player.mirror)
 					end
