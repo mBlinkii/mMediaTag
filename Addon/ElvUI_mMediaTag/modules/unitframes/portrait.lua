@@ -206,7 +206,8 @@ local function setColor(texture, color, mirror)
 	end
 end
 
-local function getColor(unit)
+
+local function getColor(unit, x)
 	if settings.general.default then
 		return settings.colors.default
 	end
@@ -215,9 +216,9 @@ local function getColor(unit)
 		local _, class = UnitClass(unit)
 		return settings.colors[class]
 	else
-		local reaction = UnitReaction("player", unit)
+		local reaction = UnitReaction(unit, "player")
 		if reaction then
-			return settings.colors[reaction <= 3 and "enemy" or reaction == 4 and "neutral" or "friendly"]
+			return settings.colors[(reaction <= 3) and "enemy" or reaction == 4 and "neutral" or "friendly"]
 		else
 			return settings.colors.enemy
 		end
@@ -846,7 +847,7 @@ function module:Initialize()
 
 				if UnitExists("player") then
 					SetPortraits(self, "player", textures.enablemasking[settings.player.texture], settings.player.mirror)
-					setColor(self.texture, getColor("player"), settings.player.mirror)
+					setColor(self.texture, getColor("player", _G.ElvUF_TargetTarget.considerSelectionInCombatHostile), settings.player.mirror)
 					if settings.general.corner and textures.corner[settings.player.texture] then
 						setColor(self.corner, getColor("player"), settings.player.mirror)
 					end
