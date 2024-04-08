@@ -164,7 +164,7 @@ function mMT:GetDungeonScore()
 	local seasonScore = data and data.currentSeasonScore
 	local colorString = ""
 	if seasonScore and seasonScore > 0 then
-		local color = C_ChallengeMode_GetDungeonScoreRarityColor(seasonScore)
+		local color = C_ChallengeMode_GetDungeonScoreRarityColor(seasonScore) or {r = 1, g = 1, b = 1, a = 1}
 		if color then
 			colorString = E:RGBToHex(color.r, color.g, color.b)
 		end

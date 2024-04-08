@@ -132,7 +132,7 @@ local function GetDungeonScores()
 			ScoreTable[mapID].score = overAllScore or 0
 
 			if overAllScore then
-				color = C_ChallengeMode_GetSpecificDungeonOverallScoreRarityColor(overAllScore)
+				color = C_ChallengeMode_GetSpecificDungeonOverallScoreRarityColor(overAllScore)  or {r = 1, g = 1, b = 1, a = 1}
 				ScoreTable[mapID].color = E:RGBToHex(color.r, color.g, color.b)
 			else
 				ScoreTable[mapID].color = "|CFFB2BABB"
@@ -150,7 +150,7 @@ local function GetDungeonScores()
 					if affixScores[j].overTime then
 						ScoreTable[mapID][affixScores[j].name].color = "|CFFB2BABB"
 					else
-						color = C_ChallengeMode_GetSpecificDungeonScoreRarityColor(affixScores[j].score)
+						color = C_ChallengeMode_GetSpecificDungeonScoreRarityColor(affixScores[j].score) or {r = 1, g = 1, b = 1, a = 1}
 						ScoreTable[mapID][affixScores[j].name].color = E:RGBToHex(color.r, color.g, color.b)
 					end
 				else
@@ -262,7 +262,7 @@ local function GetGroupKeystone()
 		if info then
 			local mapName, _, _, icon = C_ChallengeMode.GetMapUIInfo(info.mythicPlusMapID)
 			if mapName then
-				local scoreColor = C_ChallengeMode_GetDungeonScoreRarityColor(info.rating)
+				local scoreColor = C_ChallengeMode_GetDungeonScoreRarityColor(info.rating) or {r = 1, g = 1, b = 1, a = 1}
 				icon = E:TextureString(icon, ":14:14")
 				local key = format("%s %s%s|r %s", icon, E.db.mMT.datatextcolors.colormyth.hex, mapName, mMT:GetKeyColor(info.level))
 
