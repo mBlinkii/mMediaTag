@@ -110,7 +110,7 @@ local function UpdateTexts()
 		end
 
 		PlayerStats.progress.title = L["Progress"]
-		tinsert(PlayerStats.progress.lines, DUNGEON_SCORE .. ": |CFFFFFFFF" .. mMT:GetDungeonScore() .. "|r")
+		tinsert(PlayerStats.progress.lines, DUNGEON_SCORE .. "|CFFFFFFFF:|r" .. mMT:GetDungeonScore())
 
 		PlayerStats.attributes.title = STAT_CATEGORY_ATTRIBUTES
 		PlayerStats.enhancements.title = STAT_CATEGORY_ENHANCEMENTS
