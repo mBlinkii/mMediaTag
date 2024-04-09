@@ -354,7 +354,6 @@ local function SkinDungeonsUpdateCriteria(_, numCriteria, block)
 	end
 end
 
-
 -- skin m+ stage block and time
 local function SkinChallengeModeTime(block, elapsedTime)
 	if not db then
@@ -477,7 +476,7 @@ function SkinStageBlock()
 	-- create stage block bg
 	if not StageBlock.mMT_StageBlock then
 		local mMT_StageBlock = CreateFrame("Frame", "mMT_StageBlock")
-		local width = _G.ObjectiveTrackerFrame:GetWidth()
+		local width = ObjectiveTrackerFrame:GetWidth()
 		S:HandleFrame(mMT_StageBlock)
 
 		mMT_StageBlock:SetParent(StageBlock)
@@ -549,12 +548,9 @@ end
 
 -- header bar
 local function AddHeaderBar(header)
-	if not db then
-		return
-	end
-	local width = _G.ObjectiveTrackerFrame:GetWidth()
+	local width = ObjectiveTrackerFrame:GetWidth()
 	local headerBar = CreateFrame("Frame", "mMT_ObjectiveTracker_HeaderBar", header)
-	headerBar:SetFrameStrata("BACKGROUND")
+	headerBar:SetFrameStrata("MEDIUM")
 	headerBar:SetSize(width, 5)
 	headerBar:SetPoint("BOTTOM", 0, 0)
 
@@ -564,19 +560,35 @@ local function AddHeaderBar(header)
 
 	local color_HeaderBar = db.headerbar.class and mMT.ClassColor or db.headerbar.color
 
-	if db.headerbar.gradient then
+	if db and db.headerbar.gradient then
 		headerBar.texture:SetGradient("HORIZONTAL", { r = color_HeaderBar.r - 0.2, g = color_HeaderBar.g - 0.2, b = color_HeaderBar.b - 0.2, a = color_HeaderBar.a or 1 }, { r = color_HeaderBar.r + 0.2, g = color_HeaderBar.g + 0.2, b = color_HeaderBar.b + 0.2, a = color_HeaderBar.a or 1 })
 	else
 		headerBar.texture:SetVertexColor(color_HeaderBar.r, color_HeaderBar.g, color_HeaderBar.b, 1)
 	end
 
-	if db.headerbar.shadow then
+	if db and db.headerbar.shadow then
 		headerBar:CreateShadow()
 	end
 end
 
 --  update header text and add header bar
 local function UpdateHeaders()
+	-- skin objectivetracker bg
+	if db and db.bg.enable then
+		ObjectiveTrackerFrame.NineSlice:SetTemplate("Transparent")
+		ObjectiveTrackerFrame.NineSlice:SetBackdropColor(db.bg.color.bg.r, db.bg.color.bg.g, db.bg.color.bg.b, db.bg.color.bg.a)
+
+		if db.bg.border then
+			ObjectiveTrackerFrame.NineSlice:SetBackdropBorderColor(db.bg.color.border.r, db.bg.color.border.g, db.bg.color.border.b, db.bg.color.border.a)
+		end
+
+		if db.bg.shadow then
+			ObjectiveTrackerFrame.NineSlice:CreateShadow()
+		end
+
+		ObjectiveTrackerFrame.NineSlice:SetAlpho(db.bg.color.bg.a)
+	end
+
 	if not db then
 		return
 	end
