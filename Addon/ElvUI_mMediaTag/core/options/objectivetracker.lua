@@ -91,7 +91,6 @@ local function configTable()
 		background_settings = {
 			order = 3,
 			type = "group",
-			inline = true,
 			name = L["Background"],
 			args = {
 				toggle_background = {
@@ -106,59 +105,83 @@ local function configTable()
 						E:StaticPopup_Show("CONFIG_RL")
 					end,
 				},
-				toggle_shadow = {
+				header_color = {
 					order = 2,
-					type = "toggle",
-					name = L["Shadow"],
-					get = function(info)
-						return E.db.mMT.objectivetracker.bg.shadow
-					end,
-					set = function(info, value)
-						E.db.mMT.objectivetracker.bg.shadow = value
-						E:StaticPopup_Show("CONFIG_RL")
-					end,
+					type = "group",
+					inline = true,
+					name = L["Background Color"],
+					args = {
+						color_bg = {
+							type = "color",
+							order = 3,
+							name = L["Color"],
+							hasAlpha = true,
+							get = function(info)
+								local t = E.db.mMT.objectivetracker.bg.color.bg
+								return t.r, t.g, t.b, t.a
+							end,
+							set = function(info, r, g, b, a)
+								local t = E.db.mMT.objectivetracker.bg.color.bg
+								t.r, t.g, t.b, t.a = r, g, b, a
+								E:StaticPopup_Show("CONFIG_RL")
+							end,
+						},
+					},
 				},
-				color_bg = {
-					type = "color",
+				header_border = {
 					order = 3,
-					name = L["Color"],
-					hasAlpha = true,
-					get = function(info)
-						local t = E.db.mMT.objectivetracker.bg.color.bg
-						return t.r, t.g, t.b, t.a
-					end,
-					set = function(info, r, g, b, a)
-						local t = E.db.mMT.objectivetracker.bg.color.bg
-						t.r, t.g, t.b, t.a = r, g, b, a
-						E:StaticPopup_Show("CONFIG_RL")
-					end,
-				},
-				toggle_border = {
-					order = 4,
-					type = "toggle",
+					type = "group",
+					inline = true,
 					name = L["Border"],
-					get = function(info)
-						return E.db.mMT.objectivetracker.bg.border
-					end,
-					set = function(info, value)
-						E.db.mMT.objectivetracker.bg.border = value
-						E:StaticPopup_Show("CONFIG_RL")
-					end,
+					args = {
+						toggle_border = {
+							order = 4,
+							type = "toggle",
+							name = L["Border"],
+							get = function(info)
+								return E.db.mMT.objectivetracker.bg.border
+							end,
+							set = function(info, value)
+								E.db.mMT.objectivetracker.bg.border = value
+								E:StaticPopup_Show("CONFIG_RL")
+							end,
+						},
+						color_border = {
+							type = "color",
+							order = 5,
+							name = L["Color"],
+							hasAlpha = true,
+							get = function(info)
+								local t = E.db.mMT.objectivetracker.bg.color.border
+								return t.r, t.g, t.b, t.a
+							end,
+							set = function(info, r, g, b, a)
+								local t = E.db.mMT.objectivetracker.bg.color.border
+								t.r, t.g, t.b, t.a = r, g, b, a
+								E:StaticPopup_Show("CONFIG_RL")
+							end,
+						},
+					},
 				},
-				color_border = {
-					type = "color",
-					order = 5,
-					name = L["Color"],
-					hasAlpha = true,
-					get = function(info)
-						local t = E.db.mMT.objectivetracker.bg.color.border
-						return t.r, t.g, t.b, t.a
-					end,
-					set = function(info, r, g, b, a)
-						local t = E.db.mMT.objectivetracker.bg.color.border
-						t.r, t.g, t.b, t.a = r, g, b, a
-						E:StaticPopup_Show("CONFIG_RL")
-					end,
+				header_shadow = {
+					order = 4,
+					type = "group",
+					inline = true,
+					name = L["Schadow"],
+					args = {
+						toggle_shadow = {
+							order = 2,
+							type = "toggle",
+							name = L["Shadow"],
+							get = function(info)
+								return E.db.mMT.objectivetracker.bg.shadow
+							end,
+							set = function(info, value)
+								E.db.mMT.objectivetracker.bg.shadow = value
+								E:StaticPopup_Show("CONFIG_RL")
+							end,
+						},
+					},
 				},
 			},
 		},
