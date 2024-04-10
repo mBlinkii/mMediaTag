@@ -589,7 +589,7 @@ local function BackgroundSkin()
 		ObjectiveTrackerFrame.NineSlice:SetBackdropBorderColor(db.bg.color.border.r, db.bg.color.border.g, db.bg.color.border.b, db.bg.color.border.a)
 	end
 
-	ObjectiveTrackerFrame.NineSlice:SetAlpho(db.bg.color.bg.a)
+	ObjectiveTrackerFrame.NineSlice:SetAlpha(db.bg.color.bg.a)
 end
 
 	-- Add Quest amount text to the header

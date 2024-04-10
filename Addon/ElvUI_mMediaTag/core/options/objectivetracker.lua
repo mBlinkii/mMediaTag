@@ -167,7 +167,7 @@ local function configTable()
 					order = 4,
 					type = "group",
 					inline = true,
-					name = L["Schadow"],
+					name = L["Shadow"],
 					args = {
 						toggle_shadow = {
 							order = 2,
