@@ -1,6 +1,15 @@
 # Changelog - ElvUI_mMediaTag
 [Eng] - All changes to this project will be documented in this file. The latest changes are at the top.
 
+## [ver. 3.33] - XX.04.2024
+### FIX
+- FIX - Wrong reaction colors on portraits, thx to Tsxy
+- FIX - Prevent nil Error with Dungeon Score colors (https://github.com/Stanzilla/WoWUIBugs/issues/544)
+### Update
+- UPDATE - Enabled mRoleIcon Tags for Classic Versions
+### NEW
+- NEW - Background Skin for the Objectivetracker
+
 ## [ver. 3.32] - 28.03.2024
 ### FIX
 - FIX - take care of JiberishIcons changes
