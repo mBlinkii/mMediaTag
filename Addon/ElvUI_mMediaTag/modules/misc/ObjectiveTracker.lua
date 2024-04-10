@@ -558,7 +558,7 @@ local function AddHeaderBar(header)
 	headerBar.texture:SetAllPoints(headerBar)
 	headerBar.texture:SetTexture(LSM:Fetch("statusbar", db.headerbar.texture))
 
-	local color_HeaderBar = db.headerbar.class and mMT.ClassColor or db.headerbar.color
+	local color_HeaderBar = db and (db.headerbar.class and mMT.ClassColor or db.headerbar.color) or { 1, 1, 1, 1 }
 
 	if db and db.headerbar.gradient then
 		headerBar.texture:SetGradient("HORIZONTAL", { r = color_HeaderBar.r - 0.2, g = color_HeaderBar.g - 0.2, b = color_HeaderBar.b - 0.2, a = color_HeaderBar.a or 1 }, { r = color_HeaderBar.r + 0.2, g = color_HeaderBar.g + 0.2, b = color_HeaderBar.b + 0.2, a = color_HeaderBar.a or 1 })
@@ -571,27 +571,39 @@ local function AddHeaderBar(header)
 	end
 end
 
---  update header text and add header bar
-local function UpdateHeaders()
-	-- skin objectivetracker bg
-	if db and db.bg.enable then
+-- skin objectivetracker bg
+local function BackgroundSkin()
+	if not ObjectiveTrackerFrame.NineSlice.mMT_Skin then
 		ObjectiveTrackerFrame.NineSlice:SetTemplate("Transparent")
-		ObjectiveTrackerFrame.NineSlice:SetBackdropColor(db.bg.color.bg.r, db.bg.color.bg.g, db.bg.color.bg.b, db.bg.color.bg.a)
 
-		if db.bg.border then
-			ObjectiveTrackerFrame.NineSlice:SetBackdropBorderColor(db.bg.color.border.r, db.bg.color.border.g, db.bg.color.border.b, db.bg.color.border.a)
-		end
-
-		if db.bg.shadow then
+		if db and db.bg.shadow then
 			ObjectiveTrackerFrame.NineSlice:CreateShadow()
 		end
 
-		ObjectiveTrackerFrame.NineSlice:SetAlpho(db.bg.color.bg.a)
+		ObjectiveTrackerFrame.NineSlice.mMT_Skin = true
 	end
 
-	if not db then
-		return
+	ObjectiveTrackerFrame.NineSlice:SetBackdropColor(db.bg.color.bg.r, db.bg.color.bg.g, db.bg.color.bg.b, db.bg.color.bg.a)
+
+	if db and db.bg.border then
+		ObjectiveTrackerFrame.NineSlice:SetBackdropBorderColor(db.bg.color.border.r, db.bg.color.border.g, db.bg.color.border.b, db.bg.color.border.a)
 	end
+
+	ObjectiveTrackerFrame.NineSlice:SetAlpho(db.bg.color.bg.a)
+end
+
+	-- Add Quest amount text to the header
+local function AddQuestNumText()
+	if _G.ObjectiveTrackerBlocksFrame and _G.ObjectiveTrackerBlocksFrame.QuestHeader and _G.ObjectiveTrackerBlocksFrame.QuestHeader.Text then
+		local QuestCount = ""
+		local _, numQuests = C_QuestLog.GetNumQuestLogEntries()
+		QuestCount = numQuests .. "/" .. maxNumQuestsCanAccept
+		_G.ObjectiveTrackerBlocksFrame.QuestHeader.Text:SetText(QUESTS_LABEL .. " - " .. QuestCount)
+	end
+end
+
+--  update header text and add header bar
+local function UpdateHeaders()
 	local Frame = ObjectiveTrackerFrame.MODULES
 	if Frame then
 		for i = 1, #Frame do
@@ -599,20 +611,28 @@ local function UpdateHeaders()
 			if Module then
 				SetHeaderText(Module.Header.Text)
 
-				if db.headerbar.enable and not Module.mMT_BarAdded then
+				if not Module.mMT_BarAdded then
 					AddHeaderBar(Module.Header)
 					Module.mMT_BarAdded = true
 				end
 			end
 		end
 	end
+end
 
-	if _G.ObjectiveTrackerBlocksFrame and _G.ObjectiveTrackerBlocksFrame.QuestHeader and _G.ObjectiveTrackerBlocksFrame.QuestHeader.Text then
-		local QuestCount = ""
-		local _, numQuests = C_QuestLog.GetNumQuestLogEntries()
-		QuestCount = numQuests .. "/" .. maxNumQuestsCanAccept
-		_G.ObjectiveTrackerBlocksFrame.QuestHeader.Text:SetText(QUESTS_LABEL .. " - " .. QuestCount)
+local function UpdateTracker()
+	-- skin objectivetracker bg
+	if db and db.bg.enable then
+		BackgroundSkin()
 	end
+
+	--  update header text and add header bar
+	if db and db.headerbar.enable then
+		UpdateHeaders()
+	end
+
+	-- Add Quest amount text to the header
+	AddQuestNumText()
 end
 
 function module:Initialize()
@@ -687,7 +707,7 @@ function module:Initialize()
 		hooksecurefunc("Scenario_ChallengeMode_UpdateTime", SkinChallengeModeTime)
 
 		-- Skin Headers
-		hooksecurefunc("ObjectiveTracker_Update", UpdateHeaders)
+		hooksecurefunc("ObjectiveTracker_Update", UpdateTracker)
 	end
 
 	module.needReloadUI = true
