@@ -312,16 +312,19 @@ function mMT:UpdateTagSettings()
 end
 
 local function ShortName(name)
-	local WordA, WordB, WordC, WordD, WordE, WordF, WordG = strsplit(" ", name, 6)
-	return WordG or WordF or WordE or WordD or WordC or WordB or WordA or name
+	local a, b, c, d, e, f, g
+
+	if name and strfind(name, "%s") then
+		a, b, c, d, e, f, g = strsplit(" ", name, 6)
+		return g or f or e or d or c or b or a or name
+	end
+
+	return g or f or e or d or c or b or a or name
 end
 
 for textFormat, length in pairs({ veryshort = 5, short = 10, medium = 15, long = 20 }) do
 	E:AddTag(format("mName:last:%s", textFormat), "UNIT_NAME_UPDATE INSTANCE_ENCOUNTER_ENGAGE_UNIT", function(unit)
-		local name = UnitName(unit)
-		if name and strfind(name, "%s") then
-			name = ShortName(name)
-		end
+		local name = ShortName(UnitName(unit))
 
 		if name then
 			return E:ShortenString(name, length)
@@ -331,9 +334,7 @@ for textFormat, length in pairs({ veryshort = 5, short = 10, medium = 15, long =
 	E:AddTag(format("mName:last:onlyininstance:%s", textFormat), "UNIT_NAME_UPDATE INSTANCE_ENCOUNTER_ENGAGE_UNIT", function(unit)
 		local name = UnitName(unit)
 		local inInstance, _ = IsInInstance()
-		if name and strfind(name, "%s") then
-			name = inInstance and ShortName(name) or E.TagFunctions.Abbrev(name)
-		end
+		name = inInstance and ShortName(name) or E.TagFunctions.Abbrev(name)
 
 		if name then
 			return E:ShortenString(name, length)
@@ -378,10 +379,7 @@ E:AddTag("mName:status", "UNIT_NAME_UPDATE UNIT_CONNECTION PLAYER_FLAGS_CHANGED 
 end)
 
 E:AddTag("mName:last", "UNIT_NAME_UPDATE INSTANCE_ENCOUNTER_ENGAGE_UNIT", function(unit)
-	local name = UnitName(unit)
-	if name and strfind(name, "%s") then
-		name = ShortName(name)
-	end
+	local name = ShortName(UnitName(unit))
 
 	if name then
 		return name
@@ -391,9 +389,7 @@ end)
 E:AddTag("mName:last:onlyininstance", "UNIT_NAME_UPDATE INSTANCE_ENCOUNTER_ENGAGE_UNIT", function(unit)
 	local name = UnitName(unit)
 	local inInstance, _ = IsInInstance()
-	if name and strfind(name, "%s") then
-		name = inInstance and ShortName(name) or E.TagFunctions.Abbrev(name)
-	end
+	name = inInstance and ShortName(name) or E.TagFunctions.Abbrev(name)
 
 	if name then
 		return name
