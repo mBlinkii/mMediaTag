@@ -334,7 +334,7 @@ for textFormat, length in pairs({ veryshort = 5, short = 10, medium = 15, long =
 	E:AddTag(format("mName:last:onlyininstance:%s", textFormat), "UNIT_NAME_UPDATE INSTANCE_ENCOUNTER_ENGAGE_UNIT", function(unit)
 		local name = UnitName(unit)
 		local inInstance, _ = IsInInstance()
-		name = inInstance and ShortName(name) or E.TagFunctions.Abbrev(name)
+		name = name and (inInstance and ShortName(name) or E.TagFunctions.Abbrev(name))
 
 		if name then
 			return E:ShortenString(name, length)
@@ -389,7 +389,7 @@ end)
 E:AddTag("mName:last:onlyininstance", "UNIT_NAME_UPDATE INSTANCE_ENCOUNTER_ENGAGE_UNIT", function(unit)
 	local name = UnitName(unit)
 	local inInstance, _ = IsInInstance()
-	name = inInstance and ShortName(name) or E.TagFunctions.Abbrev(name)
+	name = name and (inInstance and ShortName(name) or E.TagFunctions.Abbrev(name))
 
 	if name then
 		return name
