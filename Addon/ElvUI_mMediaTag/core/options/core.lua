@@ -321,6 +321,12 @@ local function configTable()
 						childGroups = "tab",
 						args = {},
 					},
+					gradient = {
+						order = 10,
+						type = "group",
+						name = L["Gradient Test"],
+						args = {},
+					},
 					textures = {
 						order = 20,
 						type = "group",

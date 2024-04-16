@@ -277,6 +277,13 @@ P.mMT = {
 		},
 		hidetext = false,
 	},
+	gradient = {
+		enable = true,
+		color = {
+			a = { value = 0.2, prefix = "plus" },
+			b = { value = 0.2, prefix = "minus" },
+		},
+	},
 	objectivetracker = {
 		convert = 0,
 		enable = false,
@@ -285,7 +292,7 @@ P.mMT = {
 			shadow = true,
 			border = true,
 			color = {
-				bg = { r = 0.36, g = 0.36, b = 0.36, a = 1},
+				bg = { r = 0.36, g = 0.36, b = 0.36, a = 1 },
 				border = { r = 0, g = 0, b = 0, a = 1 },
 			},
 		},

@@ -38,5 +38,6 @@
 	<Script file="durabilityanditemlevel.lua"/>
 	<Script file="firstandsecondprofession.lua"/>
 	<Script file="datapanels.lua"/>
-	<Script file="questiocns.lua"/>
+	<Script file="questicons.lua"/>
+	<Script file="gradient.lua"/>
 </Ui>
