@@ -46,7 +46,6 @@ mMT.Modules.InterruptOnCD = {}
 mMT.Modules.CosmeticBars = {}
 mMT.Modules.QuestIcons = {}
 mMT.Modules.ObjectiveTracker = {}
-mMT.Modules.test = {}
 --mMT.Modules.CustomClassColors = {}
 
 local defaultDB = {
@@ -119,7 +118,6 @@ local function EnableModules()
 	mMT.Modules.Portraits.enable = E.db.mMT.portraits.general.enable
 	mMT.Modules.ImportantSpells.enable = (E.db.mMT.importantspells.enable and (E.db.mMT.importantspells.np or E.db.mMT.importantspells.uf))
 	mMT.Modules.CosmeticBars.enable = E.db.mMT.cosmeticbars.enable and not IsAddOnLoaded("ElvUI_NutsAndBolts")
-	mMT.Modules.test.enable = true
 	--mMT.Modules.CustomClassColors.enable = E.db.mMT.classcolors.enable and not (mMT.ElvUI_EltreumUI.gradient or mMT.ElvUI_EltreumUI.dark)
 
 	-- Retail

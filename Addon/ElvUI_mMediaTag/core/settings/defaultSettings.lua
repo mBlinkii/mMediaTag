@@ -277,13 +277,6 @@ P.mMT = {
 		},
 		hidetext = false,
 	},
-	gradient = {
-		enable = true,
-		color = {
-			a = { value = 0.2, prefix = "plus" },
-			b = { value = 0.2, prefix = "minus" },
-		},
-	},
 	objectivetracker = {
 		convert = 0,
 		enable = false,

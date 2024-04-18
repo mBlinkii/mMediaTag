@@ -39,5 +39,4 @@
 	<Script file="firstandsecondprofession.lua"/>
 	<Script file="datapanels.lua"/>
 	<Script file="questicons.lua"/>
-	<Script file="gradient.lua"/>
 </Ui>
