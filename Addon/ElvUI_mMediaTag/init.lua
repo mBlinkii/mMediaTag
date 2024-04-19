@@ -196,8 +196,8 @@ function mMT:Initialize()
 	EP:RegisterPlugin(addonName, LoadSettings)
 
 	-- update defaults
-	mMT.ClassColor = mMT:UpdateClassColor()
 	mMT.ElvUI_EltreumUI = mMT:CheckEltruism()
+	mMT.ClassColor = mMT:UpdateClassColor()
 	mMT.ElvUI_JiberishIcons = mMT:JiberishIcons()
 	mMT.DEVNames = mMT:GetDevNames()
 	mMT.Classes = mMT:ClassesTable()
@@ -270,8 +270,8 @@ end
 
 function mMT:PLAYER_ENTERING_WORLD(event)
 	-- update defaults
-	mMT.ClassColor = mMT:UpdateClassColor()
 	mMT.ElvUI_EltreumUI = mMT:CheckEltruism()
+	mMT.ClassColor = mMT:UpdateClassColor()
 	mMT.ElvUI_JiberishIcons = mMT:JiberishIcons()
 	mMT.DEVNames = mMT:GetDevNames()
 	mMT.Classes = mMT:ClassesTable()

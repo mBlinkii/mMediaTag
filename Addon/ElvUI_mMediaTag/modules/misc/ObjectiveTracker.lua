@@ -558,16 +558,27 @@ local function AddHeaderBar(header)
 	headerBar.texture:SetAllPoints(headerBar)
 	headerBar.texture:SetTexture(LSM:Fetch("statusbar", db.headerbar.texture))
 
-	local color_HeaderBar = db and (db.headerbar.class and mMT.ClassColor or db.headerbar.color) or { 1, 1, 1, 1 }
+	if db then
+		local color_HeaderBar = { r = 1, g = 1, b = 1, gradient = { a = { r = 0.8, g = 0.8, b = 0.8, a = 1 }, b = { r = 1, g = 1, b = 1, a = 1 } } }
 
-	if db and db.headerbar.gradient then
-		headerBar.texture:SetGradient("HORIZONTAL", { r = color_HeaderBar.r - 0.2, g = color_HeaderBar.g - 0.2, b = color_HeaderBar.b - 0.2, a = color_HeaderBar.a or 1 }, { r = color_HeaderBar.r + 0.2, g = color_HeaderBar.g + 0.2, b = color_HeaderBar.b + 0.2, a = color_HeaderBar.a or 1 })
-	else
-		headerBar.texture:SetVertexColor(color_HeaderBar.r, color_HeaderBar.g, color_HeaderBar.b, 1)
-	end
+		if db.headerbar.class then
+			color_HeaderBar = mMT.ClassColor or color_HeaderBar
+		else
+			color_HeaderBar = db.headerbar.color
 
-	if db and db.headerbar.shadow then
-		headerBar:CreateShadow()
+			local gradient = { a = { r = db.headerbar.color.r + 0.2, g = db.headerbar.color.g + 0.2, b = db.headerbar.color.b + 0.2, a = 1 }, b = { r = db.headerbar.color.r - 0.2, g = db.headerbar.color.g - 0.2, b = db.headerbar.color.b - 0.2, a = 1 } }
+			color_HeaderBar = { r = db.headerbar.color.r, g = db.headerbar.color.g, b = db.headerbar.color.b, gradient = gradient }
+		end
+
+		if db.headerbar.gradient then
+			headerBar.texture:SetGradient("HORIZONTAL", color_HeaderBar.gradient.a, color_HeaderBar.gradient.b)
+		else
+			headerBar.texture:SetVertexColor(color_HeaderBar.r, color_HeaderBar.g, color_HeaderBar.b, 1)
+		end
+
+		if db and db.headerbar.shadow then
+			headerBar:CreateShadow()
+		end
 	end
 end
 
@@ -592,7 +603,7 @@ local function BackgroundSkin()
 	ObjectiveTrackerFrame.NineSlice:SetAlpha(db.bg.color.bg.a)
 end
 
-	-- Add Quest amount text to the header
+-- Add Quest amount text to the header
 local function AddQuestNumText()
 	if _G.ObjectiveTrackerBlocksFrame and _G.ObjectiveTrackerBlocksFrame.QuestHeader and _G.ObjectiveTrackerBlocksFrame.QuestHeader.Text then
 		local QuestCount = ""
