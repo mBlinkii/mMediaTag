@@ -653,6 +653,7 @@ P.mMT = {
 		},
 		general = {
 			enable = false,
+			eltruism = false,
 			gradient = true,
 			default = false,
 			corner = true,

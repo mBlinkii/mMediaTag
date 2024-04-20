@@ -681,6 +681,25 @@ end
 function module:Initialize()
 	settings = E.db.mMT.portraits
 
+	if settings.general.eltruism then
+		settings.colors.WARRIOR = mMT.ElvUI_EltreumUI.colors.WARRIOR
+		settings.colors.PALADIN = mMT.ElvUI_EltreumUI.colors.PALADIN
+		settings.colors.HUNTER = mMT.ElvUI_EltreumUI.colors.HUNTER
+		settings.colors.ROGUE = mMT.ElvUI_EltreumUI.colors.ROGUE
+		settings.colors.PRIEST = mMT.ElvUI_EltreumUI.colors.PRIEST
+		settings.colors.DEATHKNIGHT = mMT.ElvUI_EltreumUI.colors.DEATHKNIGHT
+		settings.colors.SHAMAN = mMT.ElvUI_EltreumUI.colors.SHAMAN
+		settings.colors.MAGE = mMT.ElvUI_EltreumUI.colors.MAGE
+		settings.colors.WARLOCK = mMT.ElvUI_EltreumUI.colors.WARLOCK
+		settings.colors.MONK = mMT.ElvUI_EltreumUI.colors.MONK
+		settings.colors.DRUID = mMT.ElvUI_EltreumUI.colors.DRUID
+		settings.colors.DEMONHUNTER = mMT.ElvUI_EltreumUI.colors.DEMONHUNTER
+		settings.colors.EVOKER = mMT.ElvUI_EltreumUI.colors.EVOKER
+		settings.colors.friendly = mMT.ElvUI_EltreumUI.colors.friendly
+		settings.colors.neutral = mMT.ElvUI_EltreumUI.colors.neutral
+		settings.colors.enemy = mMT.ElvUI_EltreumUI.colors.enemy
+	end
+
 	local frames = {
 		Player = {
 			parent = _G.ElvUF_Player,
