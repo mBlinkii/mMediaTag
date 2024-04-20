@@ -789,6 +789,7 @@ function module:Initialize()
 					"UNIT_PORTRAIT_UPDATE",
 					"UNIT_MODEL_CHANGED",
 					"PARTY_MEMBER_ENABLE",
+					"UNIT_NAME_UPDATE",
 				},
 			}
 		end
@@ -804,6 +805,7 @@ function module:Initialize()
 					"PLAYER_ENTERING_WORLD",
 					"INSTANCE_ENCOUNTER_ENGAGE_UNIT",
 					"UNIT_TARGETABLE_CHANGED",
+					"ARENA_PREP_OPPONENT_SPECIALIZATIONS",
 				},
 				unitEvents = {
 					"UNIT_PORTRAIT_UPDATE",
@@ -827,6 +829,7 @@ function module:Initialize()
 				unitEvents = {
 					"UNIT_PORTRAIT_UPDATE",
 					"UNIT_MODEL_CHANGED",
+					"UNIT_NAME_UPDATE",
 				},
 			}
 		end
