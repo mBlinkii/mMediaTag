@@ -805,7 +805,6 @@ function module:Initialize()
 					"PLAYER_ENTERING_WORLD",
 					"INSTANCE_ENCOUNTER_ENGAGE_UNIT",
 					"UNIT_TARGETABLE_CHANGED",
-					"ARENA_PREP_OPPONENT_SPECIALIZATIONS",
 				},
 				unitEvents = {
 					"UNIT_PORTRAIT_UPDATE",
@@ -824,6 +823,7 @@ function module:Initialize()
 				events = {
 					"PLAYER_ENTERING_WORLD",
 					"ARENA_OPPONENT_UPDATE",
+					"ARENA_PREP_OPPONENT_SPECIALIZATIONS",
 					"UNIT_CONNECTION",
 				},
 				unitEvents = {
