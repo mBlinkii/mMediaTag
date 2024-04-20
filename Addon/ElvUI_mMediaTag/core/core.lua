@@ -53,6 +53,9 @@ function mMT:CheckEltruism()
 			["DRUID"] = { a = { r = db.druidcustomcolorR1, g = db.druidcustomcolorG1, b = db.druidcustomcolorB1, a = 1 }, b = { r = db.druidcustomcolorR2, g = db.druidcustomcolorG2, b = db.druidcustomcolorB2, a = 1 } },
 			["DEMONHUNTER"] = { a = { r = db.demonhuntercustomcolorR1, g = db.demonhuntercustomcolorG1, b = db.demonhuntercustomcolorB1, a = 1 }, b = { r = db.demonhuntercustomcolorR2, g = db.demonhuntercustomcolorG2, b = db.demonhuntercustomcolorB2, a = 1 } },
 			["EVOKER"] = { a = { r = db.evokercustomcolorR1, g = db.evokercustomcolorG1, b = db.evokercustomcolorB1, a = 1 }, b = { r = db.evokercustomcolorR2, g = db.evokercustomcolorG2, b = db.evokercustomcolorB2, a = 1 } },
+			["friendly"] = { a = { r = db.npcfriendlyR1, g = db.npcfriendlyG1, b = db.npcfriendlyB1, a = 1 }, b = { r = db.npcfriendlyR2, g = db.npcfriendlyG2, b = db.npcfriendlyB2, a = 1 } },
+			["neutral"] = { a = { r = db.npcneutralR1, g = db.npcneutralG1, b = db.npcneutralB1, a = 1 }, b = { r = db.npcneutralR2, g = db.npcneutralG2, b = db.npcneutralB2, a = 1 } },
+			["enemy"] = { a = { r = db.npchostileR1, g = db.npchostileG1, b = db.npchostileB1, a = 1 }, b = { r = db.npchostileR2, g = db.npchostileG2, b = db.npchostileB2, a = 1 } },
 		}
 	end
 

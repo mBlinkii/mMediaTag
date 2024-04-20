@@ -554,7 +554,9 @@
         "GetIconForRole",
         "RAID_CLASS_COLORS",
         "GetMoneyString",
-        "GetRaidTargetIndex"
+        "GetRaidTargetIndex",
+        "SettingsPanel",
+        "PlayerFrame"
     ],
     "Lua.diagnostics.disable": [
         "undefined-field"
