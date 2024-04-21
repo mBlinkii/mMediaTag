@@ -681,7 +681,7 @@ end
 function module:Initialize()
 	settings = E.db.mMT.portraits
 
-	if settings.general.eltruism then
+	if settings.general.eltruism and mMT.ElvUI_EltreumUI.loaded then
 		settings.colors.WARRIOR = mMT.ElvUI_EltreumUI.colors.WARRIOR
 		settings.colors.PALADIN = mMT.ElvUI_EltreumUI.colors.PALADIN
 		settings.colors.HUNTER = mMT.ElvUI_EltreumUI.colors.HUNTER
