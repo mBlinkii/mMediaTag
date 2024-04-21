@@ -789,7 +789,6 @@ function module:Initialize()
 					"UNIT_PORTRAIT_UPDATE",
 					"UNIT_MODEL_CHANGED",
 					"PARTY_MEMBER_ENABLE",
-					"UNIT_NAME_UPDATE",
 				},
 			}
 		end
