@@ -290,6 +290,13 @@ function mMT:PLAYER_ENTERING_WORLD(event)
 		mMT:Print(L["The ObjectiveTracker settings have been reset to reflect the latest updates in mMT."])
 	end
 
+	-- ImportantSpells DB converter
+	if E.db.mMT.importantspells.dbversion < 0.1 then
+		E.db.mMT.importantspells.spells = {}
+		E.db.mMT.importantspells.dbversion = 0.1
+		mMT:Print(L["The ImportantSpells IDs and Settings have been reset to reflect the latest updates in mMT."])
+	end
+
 	-- DevMode
 	if mMT.DB.dev.enabled and mMT.DEVNames[UnitName("player")] then
 		mMT:Print("|CFFFFC900DEV - Tools:|r |CFF00E360enabld|r")

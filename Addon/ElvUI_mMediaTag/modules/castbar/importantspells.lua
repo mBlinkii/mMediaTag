@@ -7,8 +7,24 @@ end
 
 local ImportantSpellIDs = {}
 
+function BuildSpellFilters()
+	wipe(ImportantSpellIDs)
+
+	for filter, _ in pairs(E.db.mMT.importantspells.spells) do
+		mMT:Print(filter)
+		if E.db.mMT.importantspells.spells[filter].enable then
+			for id, _ in pairs(E.db.mMT.importantspells.spells[filter].IDs) do
+				mMT:Print(id, E.db.mMT.importantspells.spells[filter].functions)
+				ImportantSpellIDs[id] = E.db.mMT.importantspells.spells[filter].functions
+				mMT:Print(id, E.db.mMT.importantspells.spells[filter].functions, ImportantSpellIDs[id])
+				mMT:DebugPrintTable(ImportantSpellIDs[id])
+			end
+		end
+	end
+end
+
 function module:Initialize()
-	ImportantSpellIDs = E.db.mMT.importantspells.spells
+	BuildSpellFilters()
 	module.needReloadUI = true
 	module.loaded = true
 end
@@ -64,10 +80,11 @@ local function SetSpellIcon(castbar, settings)
 end
 
 function module:UpdateCastbar(castbar)
-	if mMT.DevMode then
+	--if mMT.DevMode then
 		mMT:Print("Spell ID:", castbar.spellID, "DB ID:", ImportantSpellIDs[castbar.spellID])
-	end
+--	end
 
+	--mMT:DebugPrintTable(ImportantSpellIDs)
 	local Spell = ImportantSpellIDs[castbar.spellID] or false
 
 	if castbar.mSpellIcon then

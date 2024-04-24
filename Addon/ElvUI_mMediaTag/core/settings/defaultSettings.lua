@@ -33,6 +33,7 @@ P.mMT = {
 		setBGColor = false,
 	},
 	importantspells = {
+		dbversion = 0,
 		enable = false,
 		gradient = false,
 		np = true,
