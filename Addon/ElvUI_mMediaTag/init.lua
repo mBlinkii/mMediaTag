@@ -291,9 +291,9 @@ function mMT:PLAYER_ENTERING_WORLD(event)
 	end
 
 	-- ImportantSpells DB converter
-	if E.db.mMT.importantspells.dbversion < 0.1 then
+	if E.db.mMT.importantspells.dbversion < 1 then
 		E.db.mMT.importantspells.spells = {}
-		E.db.mMT.importantspells.dbversion = 0.1
+		E.db.mMT.importantspells.dbversion = 1
 		mMT:Print(L["The ImportantSpells IDs and Settings have been reset to reflect the latest updates in mMT."])
 	end
 
