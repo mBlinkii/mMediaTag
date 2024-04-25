@@ -1,7 +1,7 @@
 # Changelog - ElvUI_mMediaTag
 [Eng] - All changes to this project will be documented in this file. The latest changes are at the top.
 
-## [ver. 3.33] - XX.04.2024
+## [ver. 3.33] - 25.04.2024
 ### FIX
 - FIX - Wrong reaction colors on portraits, thx to Tsxy
 - FIX - Prevent nil Error with Dungeon Score colors (https://github.com/Stanzilla/WoWUIBugs/issues/544)
@@ -11,10 +11,12 @@
 - UPDATE - Cleand up and optimized Objectivetracker Settings
 - UPDATE - Teleports for S4
 - UPDATE - Healthmarkers for S4
-- UPDATE - Rework of the Important Spells module, the behavior is no like ElvUI Style filters, a filter ca now react now to more then one spell id
+- UPDATE - Rework of the Important Spells module, the behavior is no like ElvUI Style filters, a filter ca now react now to more then one spell id. This update will reset the Spell DB.
+- UPDATE - Currency for S4
+- UPDATE - TOC file for Classic
 ### NEW
 - NEW - Background Skin for the Objectivetracker
-- NEW - Spport for Eltruism gradient colors, Portraits and Objectivtracker, can now use the custom gradient colors of Eltruism
+- NEW - Support for Eltruism gradient colors, Portraits and Objectivtracker, can now use the custom gradient colors of Eltruism
 
 ## [ver. 3.32] - 28.03.2024
 ### FIX
