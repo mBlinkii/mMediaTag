@@ -5,10 +5,16 @@
 ### FIX
 - FIX - Wrong reaction colors on portraits, thx to Tsxy
 - FIX - Prevent nil Error with Dungeon Score colors (https://github.com/Stanzilla/WoWUIBugs/issues/544)
+- FIX - Arena Portraits wont update correctly
 ### Update
 - UPDATE - Enabled mRoleIcon Tags for Classic Versions
+- UPDATE - Cleand up and optimized Objectivetracker Settings
+- UPDATE - Teleports for S4
+- UPDATE - Healthmarkers for S4
+- UPDATE - Rework of the Important Spells module, the behavior is no like ElvUI Style filters, a filter ca now react now to more then one spell id
 ### NEW
 - NEW - Background Skin for the Objectivetracker
+- NEW - Spport for Eltruism gradient colors, Portraits and Objectivtracker, can now use the custom gradient colors of Eltruism
 
 ## [ver. 3.32] - 28.03.2024
 ### FIX
