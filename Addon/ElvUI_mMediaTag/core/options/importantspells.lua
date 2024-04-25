@@ -138,12 +138,12 @@ local function configTable()
 									},
 								},
 							}
-							--tinsert(E.db.mMT.importantspells.spells, value, newDBentry)
 						end
+
 						Selectedfilter = value
 						SelectedSpellID = nil
 						wipe(valuesSpellIDs)
-						--mMT.Modules.ImportantSpells:Initialize()
+						mMT.Modules.ImportantSpells:Initialize()
 					end,
 				},
 				filterTable = {
@@ -181,7 +181,7 @@ local function configTable()
 							wipe(valuesSpellIDs)
 						end
 
-						--mMT.Modules.ImportantSpells:Initialize()
+						mMT.Modules.ImportantSpells:Initialize()
 					end,
 				},
 				reset = {
@@ -195,7 +195,7 @@ local function configTable()
 						wipe(valuesSpellIDs)
 						wipe(E.db.mMT.importantspells.spells)
 						wipe(filterList)
-						--mMT.Modules.ImportantSpells:Initialize()
+						mMT.Modules.ImportantSpells:Initialize()
 					end,
 				},
 			},
@@ -238,13 +238,11 @@ local function configTable()
 							set = function(info, value)
 								if mMT:IsNumber(value) then
 									if E.db.mMT.importantspells.spells[Selectedfilter] and not E.db.mMT.importantspells.spells[Selectedfilter].IDs[tonumber(value)] then
-										--tinsert(E.db.mMT.importantspells.spells[Selectedfilter].IDs, value, true)
-
 										E.db.mMT.importantspells.spells[Selectedfilter].IDs[tonumber(value)] = true
 									end
 
 									SelectedSpellID = tonumber(value)
-									--mMT.Modules.ImportantSpells:Initialize()
+									mMT.Modules.ImportantSpells:Initialize()
 								else
 									mMT:Print(L["!! Error - this is not an ID."])
 								end
@@ -284,7 +282,7 @@ local function configTable()
 									SelectedSpellID = nil
 								end
 
-								--mMT.Modules.ImportantSpells:Initialize()
+								mMT.Modules.ImportantSpells:Initialize()
 							end,
 						},
 					},
@@ -629,7 +627,7 @@ local function configTable()
 					name = L["Export"],
 					func = function()
 						if next(E.db.mMT.importantspells.spells) then
-							exportText = mMT:GetExportText(E.db.mMT.importantspells.spells, "mMTImportantSpells")
+							exportText = mMT:GetExportText(E.db.mMT.importantspells.spells, "mMTImportantSpellsV2")
 							button = exportText and "export" or "none"
 						end
 					end,
@@ -641,8 +639,10 @@ local function configTable()
 					func = function()
 						local profileType, profileData = mMT:GetImportText(importText)
 						if profileType == "mMTImportantSpells" then
+							mMT:Print(L["You are trying to load an outdated profile, unfortunately this is not possible."])
+						elseif profileType == "mMTImportantSpellsV2" then
 							E:CopyTable(E.db.mMT.importantspells.spells, profileData)
-							E:StaticPopup_Show("CONFIG_RL")
+							mMT.Modules.ImportantSpells:Initialize()
 						end
 					end,
 				},
