@@ -33,6 +33,7 @@ P.mMT = {
 		setBGColor = false,
 	},
 	importantspells = {
+		dbversion = 0,
 		enable = false,
 		gradient = false,
 		np = true,
@@ -280,6 +281,15 @@ P.mMT = {
 	objectivetracker = {
 		convert = 0,
 		enable = false,
+		bg = {
+			enable = false,
+			shadow = true,
+			border = true,
+			color = {
+				bg = { r = 0.36, g = 0.36, b = 0.36, a = 1 },
+				border = { r = 0, g = 0, b = 0, a = 1 },
+			},
+		},
 		bar = {
 			fontsize = 12,
 			fontpoint = "CENTER",
@@ -644,6 +654,7 @@ P.mMT = {
 		},
 		general = {
 			enable = false,
+			eltruism = false,
 			gradient = true,
 			default = false,
 			corner = true,

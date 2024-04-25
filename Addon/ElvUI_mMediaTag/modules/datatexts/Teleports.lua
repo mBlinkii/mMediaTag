@@ -183,14 +183,15 @@ local Teleports = {
 	season = {
 		available = false,
 		tps = {
-			-- S3
-			[424197] = "DOTI", --teleport-dawn-of-the-infinite
-			[424167] = "WM", --path-of-hearts-bane
-			[424187] = "AD", --path-of-the-golden-tomb
-			[424163] = "DH", --path-of-the-nightmare-lord
-			[424153] = "BRH", --path-of-ancient-horrors
-			[159901] = "EB", --path-of-the-verdant
-			[424142] = "TOT", --path-of-the-tidehunter
+			-- S4
+			[393222] = "ULD", --path-of-the-watchers-legacy
+			[393256] = "RLP", --pfad-des-nestverteidigers
+			[393262] = "NO", --path-of-the-windswept-plains
+			[393267] = "BH", --path-of-the-rotting-woods
+			[393273] = "AA", --path-of-the-draconic-diploma
+			[393276] = "NELT", --path-of-the-obsidian-hoard
+			[393279] = "AV", --pfad-der-arkanen-geheimnisse
+			[393283] = "HOI", --path-of-the-titanic-reservoir
 		},
 	},
 

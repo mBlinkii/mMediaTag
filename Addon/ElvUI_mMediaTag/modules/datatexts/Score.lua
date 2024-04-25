@@ -32,10 +32,12 @@ local IconOverall = E:TextureString("Interface\\AddOns\\ElvUI_mMediaTag\\media\\
 local IconTyrannical = E:TextureString("Interface\\AddOns\\ElvUI_mMediaTag\\media\\icons\\datatext\\tyrannical.tga", ":14:14")
 local IconFortified = E:TextureString("Interface\\AddOns\\ElvUI_mMediaTag\\media\\icons\\datatext\\fortified.tga", ":14:14")
 local LeadIcon = E:TextureString("Interface\\AddOns\\ElvUI_mMediaTag\\media\\icons\\misc\\crown1.tga", ":14:14")
+
 local function GetPlayerScore()
 	local ratingSummary = C_PlayerInfo_GetPlayerMythicPlusRatingSummary("PLAYER")
 	return ratingSummary and ratingSummary.currentSeasonScore or 0
 end
+
 local function SortScore(ScoreTable)
 	map_table = C_ChallengeMode_GetMapTable()
 	if map_table then
@@ -67,7 +69,7 @@ local function addNotPlayed(ScoreTable, mapID, affix)
 	ScoreTable[mapID][affix].score = 0
 	ScoreTable[mapID][affix].level = 0
 	ScoreTable[mapID][affix].overTime = false
-	ScoreTable[mapID][affix].color = "|CFFB2BABB"
+	ScoreTable[mapID][affix].color = "FFB2BABB"
 end
 
 function mMT:GetKeyColor(key)
@@ -93,6 +95,7 @@ function mMT:GetKeyColor(key)
 		return format("|CFFFFFFFF+%s|r", key)
 	end
 end
+
 local function SaveMyKeystone()
 	if weeklyAffixID then
 		if weeklyAffixID == mMT.DB.affix then
@@ -123,7 +126,7 @@ local function GetDungeonScores()
 			local mapID = map_table[i]
 			local affixScores, overAllScore = C_MythicPlus_GetSeasonBestAffixScoreInfoForMap(mapID)
 			local name, _, _, icon = C_ChallengeMode_GetMapUIInfo(mapID)
-			local color = "|CFFB2BABB"
+			local color = nil
 
 			ScoreTable[mapID] = {}
 			ScoreTable[mapID].name = name
@@ -133,9 +136,9 @@ local function GetDungeonScores()
 
 			if overAllScore then
 				color = C_ChallengeMode_GetSpecificDungeonOverallScoreRarityColor(overAllScore)
-				ScoreTable[mapID].color = E:RGBToHex(color.r, color.g, color.b)
+				ScoreTable[mapID].color = color and color:GenerateHexColor() or 'FFFFFFFF'
 			else
-				ScoreTable[mapID].color = "|CFFB2BABB"
+				ScoreTable[mapID].color = "FFB2BABB"
 			end
 
 			local tmpName = nil
@@ -148,10 +151,10 @@ local function GetDungeonScores()
 					ScoreTable[mapID][affixScores[j].name].overTime = affixScores and affixScores[j].overTime or false
 
 					if affixScores[j].overTime then
-						ScoreTable[mapID][affixScores[j].name].color = "|CFFB2BABB"
+						ScoreTable[mapID][affixScores[j].name].color = "FFB2BABB"
 					else
 						color = C_ChallengeMode_GetSpecificDungeonScoreRarityColor(affixScores[j].score)
-						ScoreTable[mapID][affixScores[j].name].color = E:RGBToHex(color.r, color.g, color.b)
+						ScoreTable[mapID][affixScores[j].name].color = color and color:GenerateHexColor() or 'FFFFFFFF'
 					end
 				else
 					if tmpName and tmpName == tyrannical then
@@ -201,7 +204,7 @@ local function GetDungeonScores()
 				nameString = nameString .. "  " .. mMT:mIcon(mMT.Media.UpgradeIcons[E.db.mMT.mpscore.icon])
 			end
 
-			scoreString = format("%s%s|r | %s%s|r | %s%s|r", ScoreTable[mapID][tyrannical].color, ScoreTable[mapID][tyrannical].level, ScoreTable[mapID][fortified].color, ScoreTable[mapID][fortified].level, ScoreTable[mapID].color, ScoreTable[mapID].score)
+			scoreString = format("|C%s%s|r | |C%s%s|r | |C%s%s|r", ScoreTable[mapID][tyrannical].color, ScoreTable[mapID][tyrannical].level, ScoreTable[mapID][fortified].color, ScoreTable[mapID][fortified].level, ScoreTable[mapID].color, ScoreTable[mapID].score)
 			DT.tooltip:AddDoubleLine(nameString, scoreString)
 		end
 	end
@@ -263,12 +266,11 @@ local function GetGroupKeystone()
 			local mapName, _, _, icon = C_ChallengeMode.GetMapUIInfo(info.mythicPlusMapID)
 			if mapName then
 				local scoreColor = C_ChallengeMode_GetDungeonScoreRarityColor(info.rating)
+				scoreColor = scoreColor and scoreColor:GenerateHexColor() or 'FFFFFFFF'
 				icon = E:TextureString(icon, ":14:14")
 				local key = format("%s %s%s|r %s", icon, E.db.mMT.datatextcolors.colormyth.hex, mapName, mMT:GetKeyColor(info.level))
 
-				scoreColor = E:RGBToHex(scoreColor.r, scoreColor.g, scoreColor.b)
-
-				name = format("%s%s|r %s |CFFFFFFFF[|r %sM+|r %s%s|r |CFFFFFFFF-|r %s|CFFFFFFFF]|r ", mMT:GetClassColor(unit), UnitName(unit), leader, E.db.mMT.instancedifficulty.mp.color, scoreColor, info.rating, ilevel)
+				name = format("%s%s|r %s |CFFFFFFFF[|r %sM+|r |C%s%s|r |CFFFFFFFF-|r %s|CFFFFFFFF]|r ", mMT:GetClassColor(unit), UnitName(unit), leader, E.db.mMT.instancedifficulty.mp.color, scoreColor, info.rating, ilevel)
 
 				DT.tooltip:AddDoubleLine(name, key)
 			end

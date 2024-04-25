@@ -206,6 +206,7 @@ local function setColor(texture, color, mirror)
 	end
 end
 
+
 local function getColor(unit)
 	if settings.general.default then
 		return settings.colors.default
@@ -215,9 +216,9 @@ local function getColor(unit)
 		local _, class = UnitClass(unit)
 		return settings.colors[class]
 	else
-		local reaction = UnitReaction("player", unit)
+		local reaction = UnitReaction(unit, "player")
 		if reaction then
-			return settings.colors[reaction <= 3 and "enemy" or reaction == 4 and "neutral" or "friendly"]
+			return settings.colors[(reaction <= 3) and "enemy" or reaction == 4 and "neutral" or "friendly"]
 		else
 			return settings.colors.enemy
 		end
@@ -680,6 +681,25 @@ end
 function module:Initialize()
 	settings = E.db.mMT.portraits
 
+	if settings.general.eltruism and mMT.ElvUI_EltreumUI.loaded then
+		settings.colors.WARRIOR = mMT.ElvUI_EltreumUI.colors.WARRIOR
+		settings.colors.PALADIN = mMT.ElvUI_EltreumUI.colors.PALADIN
+		settings.colors.HUNTER = mMT.ElvUI_EltreumUI.colors.HUNTER
+		settings.colors.ROGUE = mMT.ElvUI_EltreumUI.colors.ROGUE
+		settings.colors.PRIEST = mMT.ElvUI_EltreumUI.colors.PRIEST
+		settings.colors.DEATHKNIGHT = mMT.ElvUI_EltreumUI.colors.DEATHKNIGHT
+		settings.colors.SHAMAN = mMT.ElvUI_EltreumUI.colors.SHAMAN
+		settings.colors.MAGE = mMT.ElvUI_EltreumUI.colors.MAGE
+		settings.colors.WARLOCK = mMT.ElvUI_EltreumUI.colors.WARLOCK
+		settings.colors.MONK = mMT.ElvUI_EltreumUI.colors.MONK
+		settings.colors.DRUID = mMT.ElvUI_EltreumUI.colors.DRUID
+		settings.colors.DEMONHUNTER = mMT.ElvUI_EltreumUI.colors.DEMONHUNTER
+		settings.colors.EVOKER = mMT.ElvUI_EltreumUI.colors.EVOKER
+		settings.colors.friendly = mMT.ElvUI_EltreumUI.colors.friendly
+		settings.colors.neutral = mMT.ElvUI_EltreumUI.colors.neutral
+		settings.colors.enemy = mMT.ElvUI_EltreumUI.colors.enemy
+	end
+
 	local frames = {
 		Player = {
 			parent = _G.ElvUF_Player,
@@ -802,11 +822,13 @@ function module:Initialize()
 				events = {
 					"PLAYER_ENTERING_WORLD",
 					"ARENA_OPPONENT_UPDATE",
+					"ARENA_PREP_OPPONENT_SPECIALIZATIONS",
 					"UNIT_CONNECTION",
 				},
 				unitEvents = {
 					"UNIT_PORTRAIT_UPDATE",
 					"UNIT_MODEL_CHANGED",
+					"UNIT_NAME_UPDATE",
 				},
 			}
 		end

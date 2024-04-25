@@ -196,8 +196,8 @@ function mMT:Initialize()
 	EP:RegisterPlugin(addonName, LoadSettings)
 
 	-- update defaults
-	mMT.ClassColor = mMT:UpdateClassColor()
 	mMT.ElvUI_EltreumUI = mMT:CheckEltruism()
+	mMT.ClassColor = mMT:UpdateClassColor()
 	mMT.ElvUI_JiberishIcons = mMT:JiberishIcons()
 	mMT.DEVNames = mMT:GetDevNames()
 	mMT.Classes = mMT:ClassesTable()
@@ -270,8 +270,8 @@ end
 
 function mMT:PLAYER_ENTERING_WORLD(event)
 	-- update defaults
-	mMT.ClassColor = mMT:UpdateClassColor()
 	mMT.ElvUI_EltreumUI = mMT:CheckEltruism()
+	mMT.ClassColor = mMT:UpdateClassColor()
 	mMT.ElvUI_JiberishIcons = mMT:JiberishIcons()
 	mMT.DEVNames = mMT:GetDevNames()
 	mMT.Classes = mMT:ClassesTable()
@@ -288,6 +288,13 @@ function mMT:PLAYER_ENTERING_WORLD(event)
 		mMT:ConvertDB()
 		E.db.mMT.objectivetracker.convert = 1
 		mMT:Print(L["The ObjectiveTracker settings have been reset to reflect the latest updates in mMT."])
+	end
+
+	-- ImportantSpells DB converter
+	if E.db.mMT.importantspells.dbversion < 1 then
+		E.db.mMT.importantspells.spells = {}
+		E.db.mMT.importantspells.dbversion = 1
+		mMT:Print(L["The ImportantSpells IDs and Settings have been reset to reflect the latest updates in mMT."])
 	end
 
 	-- DevMode

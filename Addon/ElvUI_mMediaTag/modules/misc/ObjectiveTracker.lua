@@ -354,7 +354,6 @@ local function SkinDungeonsUpdateCriteria(_, numCriteria, block)
 	end
 end
 
-
 -- skin m+ stage block and time
 local function SkinChallengeModeTime(block, elapsedTime)
 	if not db then
@@ -477,7 +476,7 @@ function SkinStageBlock()
 	-- create stage block bg
 	if not StageBlock.mMT_StageBlock then
 		local mMT_StageBlock = CreateFrame("Frame", "mMT_StageBlock")
-		local width = _G.ObjectiveTrackerFrame:GetWidth()
+		local width = ObjectiveTrackerFrame:GetWidth()
 		S:HandleFrame(mMT_StageBlock)
 
 		mMT_StageBlock:SetParent(StageBlock)
@@ -549,12 +548,9 @@ end
 
 -- header bar
 local function AddHeaderBar(header)
-	if not db then
-		return
-	end
-	local width = _G.ObjectiveTrackerFrame:GetWidth()
+	local width = ObjectiveTrackerFrame:GetWidth()
 	local headerBar = CreateFrame("Frame", "mMT_ObjectiveTracker_HeaderBar", header)
-	headerBar:SetFrameStrata("BACKGROUND")
+	headerBar:SetFrameStrata("MEDIUM")
 	headerBar:SetSize(width, 5)
 	headerBar:SetPoint("BOTTOM", 0, 0)
 
@@ -562,24 +558,63 @@ local function AddHeaderBar(header)
 	headerBar.texture:SetAllPoints(headerBar)
 	headerBar.texture:SetTexture(LSM:Fetch("statusbar", db.headerbar.texture))
 
-	local color_HeaderBar = db.headerbar.class and mMT.ClassColor or db.headerbar.color
+	if db then
+		local color_HeaderBar = { r = 1, g = 1, b = 1, gradient = { a = { r = 0.8, g = 0.8, b = 0.8, a = 1 }, b = { r = 1, g = 1, b = 1, a = 1 } } }
 
-	if db.headerbar.gradient then
-		headerBar.texture:SetGradient("HORIZONTAL", { r = color_HeaderBar.r - 0.2, g = color_HeaderBar.g - 0.2, b = color_HeaderBar.b - 0.2, a = color_HeaderBar.a or 1 }, { r = color_HeaderBar.r + 0.2, g = color_HeaderBar.g + 0.2, b = color_HeaderBar.b + 0.2, a = color_HeaderBar.a or 1 })
-	else
-		headerBar.texture:SetVertexColor(color_HeaderBar.r, color_HeaderBar.g, color_HeaderBar.b, 1)
+		if db.headerbar.class then
+			color_HeaderBar = mMT.ClassColor or color_HeaderBar
+		else
+			color_HeaderBar = db.headerbar.color
+
+			local gradient = { a = { r = db.headerbar.color.r + 0.2, g = db.headerbar.color.g + 0.2, b = db.headerbar.color.b + 0.2, a = 1 }, b = { r = db.headerbar.color.r - 0.2, g = db.headerbar.color.g - 0.2, b = db.headerbar.color.b - 0.2, a = 1 } }
+			color_HeaderBar = { r = db.headerbar.color.r, g = db.headerbar.color.g, b = db.headerbar.color.b, gradient = gradient }
+		end
+
+		if db.headerbar.gradient then
+			headerBar.texture:SetGradient("HORIZONTAL", color_HeaderBar.gradient.a, color_HeaderBar.gradient.b)
+		else
+			headerBar.texture:SetVertexColor(color_HeaderBar.r, color_HeaderBar.g, color_HeaderBar.b, 1)
+		end
+
+		if db and db.headerbar.shadow then
+			headerBar:CreateShadow()
+		end
+	end
+end
+
+-- skin objectivetracker bg
+local function BackgroundSkin()
+	if not ObjectiveTrackerFrame.NineSlice.mMT_Skin then
+		ObjectiveTrackerFrame.NineSlice:SetTemplate("Transparent")
+
+		if db and db.bg.shadow then
+			ObjectiveTrackerFrame.NineSlice:CreateShadow()
+		end
+
+		ObjectiveTrackerFrame.NineSlice.mMT_Skin = true
 	end
 
-	if db.headerbar.shadow then
-		headerBar:CreateShadow()
+	ObjectiveTrackerFrame.NineSlice:SetBackdropColor(db.bg.color.bg.r, db.bg.color.bg.g, db.bg.color.bg.b, db.bg.color.bg.a)
+
+	if db and db.bg.border then
+		ObjectiveTrackerFrame.NineSlice:SetBackdropBorderColor(db.bg.color.border.r, db.bg.color.border.g, db.bg.color.border.b, db.bg.color.border.a)
+	end
+
+	ObjectiveTrackerFrame.NineSlice:SetAlpha(db.bg.color.bg.a)
+end
+
+-- Add Quest amount text to the header
+local function AddQuestNumText()
+	if _G.ObjectiveTrackerBlocksFrame and _G.ObjectiveTrackerBlocksFrame.QuestHeader and _G.ObjectiveTrackerBlocksFrame.QuestHeader.Text then
+		local QuestCount = ""
+		local _, numQuests = C_QuestLog.GetNumQuestLogEntries()
+		QuestCount = numQuests .. "/" .. maxNumQuestsCanAccept
+		_G.ObjectiveTrackerBlocksFrame.QuestHeader.Text:SetText(QUESTS_LABEL .. " - " .. QuestCount)
 	end
 end
 
 --  update header text and add header bar
 local function UpdateHeaders()
-	if not db then
-		return
-	end
 	local Frame = ObjectiveTrackerFrame.MODULES
 	if Frame then
 		for i = 1, #Frame do
@@ -587,20 +622,28 @@ local function UpdateHeaders()
 			if Module then
 				SetHeaderText(Module.Header.Text)
 
-				if db.headerbar.enable and not Module.mMT_BarAdded then
+				if not Module.mMT_BarAdded then
 					AddHeaderBar(Module.Header)
 					Module.mMT_BarAdded = true
 				end
 			end
 		end
 	end
+end
 
-	if _G.ObjectiveTrackerBlocksFrame and _G.ObjectiveTrackerBlocksFrame.QuestHeader and _G.ObjectiveTrackerBlocksFrame.QuestHeader.Text then
-		local QuestCount = ""
-		local _, numQuests = C_QuestLog.GetNumQuestLogEntries()
-		QuestCount = numQuests .. "/" .. maxNumQuestsCanAccept
-		_G.ObjectiveTrackerBlocksFrame.QuestHeader.Text:SetText(QUESTS_LABEL .. " - " .. QuestCount)
+local function UpdateTracker()
+	-- skin objectivetracker bg
+	if db and db.bg.enable then
+		BackgroundSkin()
 	end
+
+	--  update header text and add header bar
+	if db and db.headerbar.enable then
+		UpdateHeaders()
+	end
+
+	-- Add Quest amount text to the header
+	AddQuestNumText()
 end
 
 function module:Initialize()
@@ -675,7 +718,7 @@ function module:Initialize()
 		hooksecurefunc("Scenario_ChallengeMode_UpdateTime", SkinChallengeModeTime)
 
 		-- Skin Headers
-		hooksecurefunc("ObjectiveTracker_Update", UpdateHeaders)
+		hooksecurefunc("ObjectiveTracker_Update", UpdateTracker)
 	end
 
 	module.needReloadUI = true

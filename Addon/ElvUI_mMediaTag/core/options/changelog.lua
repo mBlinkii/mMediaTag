@@ -7,28 +7,35 @@ local green, blue, yellow, red, endtag = "|CFF00D80E", "|CFF00A9FF", "|CFFFFCC00
 local new, fix, update, important, dash = "|TInterface\\Addons\\ElvUI_mMediaTag\\media\\icons\\misc\\star.tga:14:14|t", "|TInterface\\Addons\\ElvUI_mMediaTag\\media\\icons\\misc\\done1.tga:14:14|t", "|TInterface\\Addons\\ElvUI_mMediaTag\\media\\icons\\datatext\\upgrade7.tga:14:14|t", "|TInterface\\Addons\\ElvUI_mMediaTag\\media\\icons\\tags\\quest2.tga:14:14|t", "> "
 
 local change_log_important = {
-	red .. "!!! Currently only for Retail" .. endtag,
-	"Code Update",
-	"The settings will be rest if you update from v2 to v3",
-	"Removed old and unused Tags",
+	red .. "!!! Important" .. endtag,
+	"rework of the Important Spell feature",
+	"it is possible to create filters similar to ElvUI Style filters and assign multiple",
+	"spell IDs to the filters, so it is possible to have the same settings for multiple spells.",
+	"before you had to define separate settings for each id",
+	"This update will reset the Spell DB."
 }
 
-local releasdate = "28.03.2024"
+local releasdate = "25.04.2024"
 
 local change_log_new = {
-	"Add class colored bg for Portraits class icons",
-	"Add diffrent Styles for Portraits Class icons background",
-	"New Portraits Texture simple Square",
+	"Background Skin for the Objectivetracker",
+	"Support for Eltruism gradient colors, Portraits and Objectivtracker, can now use the custom gradient colors of Eltruism"
 }
 
 local change_log_update = {
-	"Cleand up Portraits Settings",
-	"Change Rare/Elite border toggle behavior for Portraits",
+	"Enabled mRoleIcon Tags for Classic Versions",
+	"Cleand up and optimized Objectivetracker Settings",
+	"Teleports for S4",
+	"Healthmarkers for S4",
+	"Rework of the Important Spells module, the behavior is no like ElvUI Style filters, a filter ca now react now to more then one spell id. This update will reset the Spell DB.",
+	"Currency for S4",
+	"TOC file for Classic"
 }
 
 local change_log_fix = {
-	"Take care of JiberishIcons changes",
-	"Offset settings for Portraits Moon texture",
+	"Wrong reaction colors on portraits, thx to Tsxy",
+	"Prevent nil Error with Dungeon Score colors (https://github.com/Stanzilla/WoWUIBugs/issues/544)",
+	"Arena Portraits wont update correctly"
 }
 
 local function Concatenation(tbl, icon, color)
@@ -48,7 +55,7 @@ local function Concatenation(tbl, icon, color)
 end
 
 local function configTable()
-	--change_log_important_string = Concatenation(change_log_important)
+	change_log_important_string = Concatenation(change_log_important)
 	change_log_new_string = Concatenation(change_log_new)
 	change_log_update_string = Concatenation(change_log_update)
 	change_log_fix_string = Concatenation(change_log_fix)

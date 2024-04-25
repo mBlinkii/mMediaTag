@@ -8,13 +8,40 @@ local exportText = nil
 local importText = ""
 local button = "none"
 local dummyColor = { r = 1, g = 1, b = 1 }
+local filterList = {}
 
-local function UpdateTableSpellIDs()
-	wipe(valuesSpellIDs)
-	for key, _ in pairs(E.db.mMT.importantspells.spells) do
-		valuesSpellIDs[key] = key
+local function UpdateTableSpellIDs(tbl)
+	if tbl then
+		wipe(valuesSpellIDs)
+		for key, _ in pairs(tbl) do
+			valuesSpellIDs[key] = key
+		end
 	end
 end
+
+local function UpdateFilterList()
+	wipe(filterList)
+	for key, _ in pairs(E.db.mMT.importantspells.spells) do
+		filterList[key] = key
+	end
+end
+
+local Selectedfilter = nil
+
+-- local newDBentry = {
+-- 	enable = true,
+-- 	IDs = {},
+-- 	color = { enable = true, a = { r = 1, g = 1, b = 1 }, b = { r = 1, g = 1, b = 1 } },
+-- 	sound = { enable = false, file = nil, target = true },
+-- 	texture = { enable = false, texture = nil },
+-- 	icon = {
+-- 		enable = false,
+-- 		color = { r = 1, g = 1, b = 1 },
+-- 		icon = nil,
+-- 		size = { auto = true, sizeXY = 32 },
+-- 		anchor = { auto = true, point = "CENTER", posX = 0, posY = 0 },
+-- 	},
+-- }
 
 local function configTable()
 	local icons = {}
@@ -81,25 +108,24 @@ local function configTable()
 				},
 			},
 		},
-		header_spells = {
+		header_Filter = {
 			order = 3,
 			type = "group",
 			inline = true,
-			name = L["Spell IDs"],
+			name = L["Spell Filters"],
 			args = {
-				id = {
+				newfilter = {
 					order = 1,
-					name = L["Spell ID"],
-					desc = L["Enter a Spell ID it accepts only Numbers."],
+					name = L["Filter Name"],
+					desc = L["Enter a name for your filter."],
 					type = "input",
 					width = "smal",
 					set = function(info, value)
-						if mMT:IsNumber(value) then
-							if E.db.mMT.importantspells.spells[tonumber(value)] then
-								SelectedSpellID = tonumber(value)
-							else
-								tinsert(E.db.mMT.importantspells.spells, value, {
-									enable = true,
+						if not E.db.mMT.importantspells.spells[value] then
+							E.db.mMT.importantspells.spells[value] = {
+								enable = true,
+								IDs = {},
+								functions = {
 									color = { enable = true, a = { r = 1, g = 1, b = 1 }, b = { r = 1, g = 1, b = 1 } },
 									sound = { enable = false, file = nil, target = true },
 									texture = { enable = false, texture = nil },
@@ -107,49 +133,55 @@ local function configTable()
 										enable = false,
 										color = { r = 1, g = 1, b = 1 },
 										icon = nil,
-										size = { auto = true, sizeXY = 32},
+										size = { auto = true, sizeXY = 32 },
 										anchor = { auto = true, point = "CENTER", posX = 0, posY = 0 },
 									},
-								})
-							end
-							mMT.Modules.ImportantSpells:Initialize()
-						else
-							mMT:Print(L["!! Error - this is not an ID."])
+								},
+							}
 						end
+
+						Selectedfilter = value
+						SelectedSpellID = nil
+						wipe(valuesSpellIDs)
+						mMT.Modules.ImportantSpells:Initialize()
 					end,
 				},
-				IDTable = {
+				filterTable = {
 					type = "select",
 					order = 2,
-					name = L["Spell IDs"],
-					desc = L["Select your spell to set it."],
+					name = L["Spell filters"],
+					desc = L["Select the filter to edit."],
 					values = function()
-						UpdateTableSpellIDs()
-						return valuesSpellIDs
+						UpdateFilterList()
+						return filterList
 					end,
 					get = function(info)
-						return SelectedSpellID
+						return Selectedfilter
 					end,
 					set = function(info, value)
-						SelectedSpellID = tonumber(value)
+						Selectedfilter = value
+						SelectedSpellID = nil
+						wipe(valuesSpellIDs)
 					end,
 				},
-				DeleteID = {
+				Deletefilter = {
+					type = "select",
 					order = 3,
-					name = L["Delete ID"],
-					desc = L["Delete the Spell, enter a ID."],
-					type = "input",
-					width = "smal",
+					name = L["Delete filter"],
+					desc = L["Select a filter to delete."],
+					values = function()
+						UpdateFilterList()
+						return filterList
+					end,
 					set = function(info, value)
-						if mMT:IsNumber(value) then
-							if E.db.mMT.importantspells.spells[tonumber(value)] then
-								E.db.mMT.importantspells.spells[tonumber(value)] = nil
-								SelectedSpellID = nil
-							end
-							mMT.Modules.ImportantSpells:Initialize()
-						else
-							mMT:Print(L["!! Error - this is not am ID."])
+						if E.db.mMT.importantspells.spells[value] then
+							E.db.mMT.importantspells.spells[value] = nil
+							Selectedfilter = nil
+							SelectedSpellID = nil
+							wipe(valuesSpellIDs)
 						end
+
+						mMT.Modules.ImportantSpells:Initialize()
 					end,
 				},
 				reset = {
@@ -158,20 +190,23 @@ local function configTable()
 					name = L["Reset"],
 					desc = L["Delete all and reset the list."],
 					func = function()
-						wipe(E.db.mMT.importantspells.spells)
+						Selectedfilter = nil
+						SelectedSpellID = nil
 						wipe(valuesSpellIDs)
+						wipe(E.db.mMT.importantspells.spells)
+						wipe(filterList)
 						mMT.Modules.ImportantSpells:Initialize()
 					end,
 				},
 			},
 		},
-		header_spell_setting = {
+		header_filter_setting = {
 			order = 4,
 			type = "group",
 			inline = true,
 			name = L["Spell Settings"],
 			disabled = function()
-				return not E.db.mMT.importantspells.spells[SelectedSpellID]
+				return not E.db.mMT.importantspells.spells[Selectedfilter]
 			end,
 			args = {
 				select_default = {
@@ -183,14 +218,89 @@ local function configTable()
 					values = LSM:HashTable("statusbar"),
 					get = function(info)
 						return E.db.mMT.importantspells.default or E.private.general.normTex
-
 					end,
 					set = function(info, value)
-							E.db.mMT.importantspells.default = value
+						E.db.mMT.importantspells.default = value
+					end,
+				},
+				header_IDs = {
+					order = 2,
+					type = "group",
+					inline = true,
+					name = L["Spell id"],
+					args = {
+						id = {
+							order = 1,
+							name = L["Spell ID"],
+							desc = L["Enter a Spell ID it accepts only Numbers."],
+							type = "input",
+							width = "smal",
+							set = function(info, value)
+								if mMT:IsNumber(value) then
+									if E.db.mMT.importantspells.spells[Selectedfilter] and not E.db.mMT.importantspells.spells[Selectedfilter].IDs[tonumber(value)] then
+										E.db.mMT.importantspells.spells[Selectedfilter].IDs[tonumber(value)] = true
+									end
+
+									SelectedSpellID = tonumber(value)
+									mMT.Modules.ImportantSpells:Initialize()
+								else
+									mMT:Print(L["!! Error - this is not an ID."])
+								end
+							end,
+						},
+						idList = {
+							type = "select",
+							order = 2,
+							name = L["ID list"],
+							values = function()
+								if Selectedfilter then
+									UpdateTableSpellIDs(E.db.mMT.importantspells.spells[Selectedfilter].IDs)
+								end
+								return valuesSpellIDs
+							end,
+							get = function(info)
+								return SelectedSpellID
+							end,
+							set = function(info, value)
+								SelectedSpellID = tonumber(value)
+							end,
+						},
+						Deletefilter = {
+							type = "select",
+							order = 3,
+							name = L["Delete ID"],
+							desc = L["Delete the Spell, enter a ID."],
+							values = function()
+								if Selectedfilter then
+									UpdateTableSpellIDs(E.db.mMT.importantspells.spells[Selectedfilter].IDs)
+								end
+								return valuesSpellIDs
+							end,
+							set = function(info, value)
+								if E.db.mMT.importantspells.spells[Selectedfilter].IDs[tonumber(value)] then
+									E.db.mMT.importantspells.spells[Selectedfilter].IDs[tonumber(value)] = nil
+									SelectedSpellID = nil
+								end
+
+								mMT.Modules.ImportantSpells:Initialize()
+							end,
+						},
+					},
+				},
+				enable = {
+					order = 3,
+					type = "toggle",
+					name = L["Enable Filter"],
+					desc = L["Enable this Filter."],
+					get = function(info)
+						return E.db.mMT.importantspells.spells[Selectedfilter] and E.db.mMT.importantspells.spells[Selectedfilter].enable or false
+					end,
+					set = function(info, value)
+						E.db.mMT.importantspells.spells[Selectedfilter].enable = value
 					end,
 				},
 				header_color = {
-					order = 2,
+					order = 4,
 					type = "group",
 					inline = true,
 					name = L["Castbar Color"],
@@ -201,13 +311,11 @@ local function configTable()
 							name = L["Change Castbar color"],
 							desc = L["Change the Castbar color."],
 							get = function(info)
-								return E.db.mMT.importantspells.spells[SelectedSpellID]
-										and E.db.mMT.importantspells.spells[SelectedSpellID].color.enable
-									or false
+								return E.db.mMT.importantspells.spells[Selectedfilter] and E.db.mMT.importantspells.spells[Selectedfilter].functions.color.enable or false
 							end,
 							set = function(info, value)
-								if E.db.mMT.importantspells.spells[SelectedSpellID] then
-									E.db.mMT.importantspells.spells[SelectedSpellID].color.enable = value
+								if E.db.mMT.importantspells.spells[Selectedfilter] then
+									E.db.mMT.importantspells.spells[Selectedfilter].functions.color.enable = value
 								end
 							end,
 						},
@@ -218,14 +326,12 @@ local function configTable()
 							desc = L["Main color."],
 							hasAlpha = false,
 							get = function(info)
-								local t = E.db.mMT.importantspells.spells[SelectedSpellID]
-										and E.db.mMT.importantspells.spells[SelectedSpellID].color.a
-									or dummyColor
+								local t = E.db.mMT.importantspells.spells[Selectedfilter] and E.db.mMT.importantspells.spells[Selectedfilter].functions.color.a or dummyColor
 								return t.r, t.g, t.b
 							end,
 							set = function(info, r, g, b)
-								if E.db.mMT.importantspells.spells[SelectedSpellID] then
-									local t = E.db.mMT.importantspells.spells[SelectedSpellID].color.a
+								if E.db.mMT.importantspells.spells[Selectedfilter] then
+									local t = E.db.mMT.importantspells.spells[Selectedfilter].functions.color.a
 									t.r, t.g, t.b = r, g, b
 								end
 							end,
@@ -237,14 +343,12 @@ local function configTable()
 							desc = L["This is the gradient color and will only be used if the Gradient mod is enabled."],
 							hasAlpha = false,
 							get = function(info)
-								local t = E.db.mMT.importantspells.spells[SelectedSpellID]
-										and E.db.mMT.importantspells.spells[SelectedSpellID].color.b
-									or dummyColor
+								local t = E.db.mMT.importantspells.spells[Selectedfilter] and E.db.mMT.importantspells.spells[Selectedfilter].functions.color.b or dummyColor
 								return t.r, t.g, t.b
 							end,
 							set = function(info, r, g, b)
-								if E.db.mMT.importantspells.spells[SelectedSpellID] then
-									local t = E.db.mMT.importantspells.spells[SelectedSpellID].color.b
+								if E.db.mMT.importantspells.spells[Selectedfilter] then
+									local t = E.db.mMT.importantspells.spells[Selectedfilter].functions.color.b
 									t.r, t.g, t.b = r, g, b
 								end
 							end,
@@ -252,7 +356,7 @@ local function configTable()
 					},
 				},
 				header_texture = {
-					order = 2,
+					order = 5,
 					type = "group",
 					inline = true,
 					name = L["Castbar Texture"],
@@ -263,13 +367,11 @@ local function configTable()
 							name = L["Change Castbar Texture"],
 							desc = L["Change the Castbar Texture."],
 							get = function(info)
-								return E.db.mMT.importantspells.spells[SelectedSpellID]
-										and E.db.mMT.importantspells.spells[SelectedSpellID].texture.enable
-									or false
+								return E.db.mMT.importantspells.spells[Selectedfilter] and E.db.mMT.importantspells.spells[Selectedfilter].functions.texture.enable or false
 							end,
 							set = function(info, value)
-								if E.db.mMT.importantspells.spells[SelectedSpellID] then
-									E.db.mMT.importantspells.spells[SelectedSpellID].texture.enable = value
+								if E.db.mMT.importantspells.spells[Selectedfilter] then
+									E.db.mMT.importantspells.spells[Selectedfilter].functions.texture.enable = value
 								end
 							end,
 						},
@@ -280,20 +382,18 @@ local function configTable()
 							name = L["Texture"],
 							values = LSM:HashTable("statusbar"),
 							get = function(info)
-								return E.db.mMT.importantspells.spells[SelectedSpellID]
-										and E.db.mMT.importantspells.spells[SelectedSpellID].texture.texture
-									or nil
+								return E.db.mMT.importantspells.spells[Selectedfilter] and E.db.mMT.importantspells.spells[Selectedfilter].functions.texture.texture or nil
 							end,
 							set = function(info, value)
-								if E.db.mMT.importantspells.spells[SelectedSpellID] then
-									E.db.mMT.importantspells.spells[SelectedSpellID].texture.texture = value
+								if E.db.mMT.importantspells.spells[Selectedfilter] then
+									E.db.mMT.importantspells.spells[Selectedfilter].functions.texture.texture = value
 								end
 							end,
 						},
 					},
 				},
 				header_sound = {
-					order = 3,
+					order = 6,
 					type = "group",
 					inline = true,
 					name = L["Castbar Sound"],
@@ -304,13 +404,11 @@ local function configTable()
 							name = L["Play a Sound"],
 							desc = L["Plays a Sound."],
 							get = function(info)
-								return E.db.mMT.importantspells.spells[SelectedSpellID]
-										and E.db.mMT.importantspells.spells[SelectedSpellID].sound.enable
-									or false
+								return E.db.mMT.importantspells.spells[Selectedfilter] and E.db.mMT.importantspells.spells[Selectedfilter].functions.sound.enable or false
 							end,
 							set = function(info, value)
-								if E.db.mMT.importantspells.spells[SelectedSpellID] then
-									E.db.mMT.importantspells.spells[SelectedSpellID].sound.enable = value
+								if E.db.mMT.importantspells.spells[Selectedfilter] then
+									E.db.mMT.importantspells.spells[Selectedfilter].functions.sound.enable = value
 								end
 							end,
 						},
@@ -320,13 +418,11 @@ local function configTable()
 							name = L["Only if Target"],
 							desc = L["Plays a sound only when the unit is your target."],
 							get = function(info)
-								return E.db.mMT.importantspells.spells[SelectedSpellID]
-										and E.db.mMT.importantspells.spells[SelectedSpellID].sound.target
-									or false
+								return E.db.mMT.importantspells.spells[Selectedfilter] and E.db.mMT.importantspells.spells[Selectedfilter].functions.sound.target or false
 							end,
 							set = function(info, value)
-								if E.db.mMT.importantspells.spells[SelectedSpellID] then
-									E.db.mMT.importantspells.spells[SelectedSpellID].sound.target = value
+								if E.db.mMT.importantspells.spells[Selectedfilter] then
+									E.db.mMT.importantspells.spells[Selectedfilter].functions.sound.target = value
 								end
 							end,
 						},
@@ -337,20 +433,18 @@ local function configTable()
 							name = L["Sound"],
 							values = LSM:HashTable("sound"),
 							get = function(info)
-								return E.db.mMT.importantspells.spells[SelectedSpellID]
-										and E.db.mMT.importantspells.spells[SelectedSpellID].sound.file
-									or nil
+								return E.db.mMT.importantspells.spells[Selectedfilter] and E.db.mMT.importantspells.spells[Selectedfilter].functions.sound.file or nil
 							end,
 							set = function(info, value)
-								if E.db.mMT.importantspells.spells[SelectedSpellID] then
-									E.db.mMT.importantspells.spells[SelectedSpellID].sound.file = value
+								if E.db.mMT.importantspells.spells[Selectedfilter] then
+									E.db.mMT.importantspells.spells[Selectedfilter].functions.sound.file = value
 								end
 							end,
 						},
 					},
 				},
 				header_icon = {
-					order = 4,
+					order = 7,
 					type = "group",
 					inline = true,
 					name = L["Icon Settings"],
@@ -361,13 +455,11 @@ local function configTable()
 							name = L["Icon"],
 							desc = L["Adds an Extra Icon to the Castbar."],
 							get = function(info)
-								return E.db.mMT.importantspells.spells[SelectedSpellID]
-										and E.db.mMT.importantspells.spells[SelectedSpellID].icon.enable
-									or false
+								return E.db.mMT.importantspells.spells[Selectedfilter] and E.db.mMT.importantspells.spells[Selectedfilter].functions.icon.enable or false
 							end,
 							set = function(info, value)
-								if E.db.mMT.importantspells.spells[SelectedSpellID] then
-									E.db.mMT.importantspells.spells[SelectedSpellID].icon.enable = value
+								if E.db.mMT.importantspells.spells[Selectedfilter] then
+									E.db.mMT.importantspells.spells[Selectedfilter].functions.icon.enable = value
 								end
 							end,
 						},
@@ -377,13 +469,11 @@ local function configTable()
 							name = L["Icon"],
 							desc = L["Select an Icon."],
 							get = function(info)
-								return E.db.mMT.importantspells.spells[SelectedSpellID]
-										and E.db.mMT.importantspells.spells[SelectedSpellID].icon.icon
-									or nil
+								return E.db.mMT.importantspells.spells[Selectedfilter] and E.db.mMT.importantspells.spells[Selectedfilter].functions.icon.icon or nil
 							end,
 							set = function(info, value)
-								if E.db.mMT.importantspells.spells[SelectedSpellID] then
-									E.db.mMT.importantspells.spells[SelectedSpellID].icon.icon = value
+								if E.db.mMT.importantspells.spells[Selectedfilter] then
+									E.db.mMT.importantspells.spells[Selectedfilter].functions.icon.icon = value
 								end
 							end,
 							values = icons,
@@ -395,14 +485,12 @@ local function configTable()
 							desc = L["Icon color. Note: If you chose a colored icon, set the color to white for the best look."],
 							hasAlpha = false,
 							get = function(info)
-								local t = E.db.mMT.importantspells.spells[SelectedSpellID]
-										and E.db.mMT.importantspells.spells[SelectedSpellID].icon.color
-									or dummyColor
+								local t = E.db.mMT.importantspells.spells[Selectedfilter] and E.db.mMT.importantspells.spells[Selectedfilter].functions.icon.color or dummyColor
 								return t.r, t.g, t.b
 							end,
 							set = function(info, r, g, b)
-								if E.db.mMT.importantspells.spells[SelectedSpellID] then
-									local t = E.db.mMT.importantspells.spells[SelectedSpellID].icon.color
+								if E.db.mMT.importantspells.spells[Selectedfilter] then
+									local t = E.db.mMT.importantspells.spells[Selectedfilter].functions.icon.color
 									t.r, t.g, t.b = r, g, b
 								end
 							end,
@@ -419,12 +507,11 @@ local function configTable()
 									name = L["Auto Size"],
 									desc = L["Set the icon size according to the height of the castbar."],
 									get = function(info)
-										return E.db.mMT.importantspells.spells[SelectedSpellID]
-											and E.db.mMT.importantspells.spells[SelectedSpellID].icon.size.auto
+										return E.db.mMT.importantspells.spells[Selectedfilter] and E.db.mMT.importantspells.spells[Selectedfilter].functions.icon.size.auto
 									end,
 									set = function(info, value)
-										if E.db.mMT.importantspells.spells[SelectedSpellID] then
-											E.db.mMT.importantspells.spells[SelectedSpellID].icon.size.auto = value
+										if E.db.mMT.importantspells.spells[Selectedfilter] then
+											E.db.mMT.importantspells.spells[Selectedfilter].functions.icon.size.auto = value
 										end
 									end,
 								},
@@ -437,13 +524,11 @@ local function configTable()
 									max = 128,
 									step = 2,
 									get = function(info)
-										return E.db.mMT.importantspells.spells[SelectedSpellID]
-												and E.db.mMT.importantspells.spells[SelectedSpellID].icon.size.sizeXY
-											or 0
+										return E.db.mMT.importantspells.spells[Selectedfilter] and E.db.mMT.importantspells.spells[Selectedfilter].functions.icon.size.sizeXY or 0
 									end,
 									set = function(info, value)
-										if E.db.mMT.importantspells.spells[SelectedSpellID] then
-											E.db.mMT.importantspells.spells[SelectedSpellID].icon.size.sizeXY = value
+										if E.db.mMT.importantspells.spells[Selectedfilter] then
+											E.db.mMT.importantspells.spells[Selectedfilter].functions.icon.size.sizeXY = value
 										end
 									end,
 								},
@@ -461,13 +546,11 @@ local function configTable()
 									name = L["Extra Icon Anchor"],
 									desc = L["Anchor point for the extra Icon."],
 									get = function(info)
-										return E.db.mMT.importantspells.spells[SelectedSpellID]
-												and E.db.mMT.importantspells.spells[SelectedSpellID].icon.anchor.point
-											or nil
+										return E.db.mMT.importantspells.spells[Selectedfilter] and E.db.mMT.importantspells.spells[Selectedfilter].functions.icon.anchor.point or nil
 									end,
 									set = function(info, value)
-										if E.db.mMT.importantspells.spells[SelectedSpellID] then
-											E.db.mMT.importantspells.spells[SelectedSpellID].icon.anchor.point = value
+										if E.db.mMT.importantspells.spells[Selectedfilter] then
+											E.db.mMT.importantspells.spells[Selectedfilter].functions.icon.anchor.point = value
 										end
 									end,
 									values = {
@@ -484,12 +567,11 @@ local function configTable()
 									name = L["Auto Point"],
 									desc = L["Sets the offset according to the anchor."],
 									get = function(info)
-										return E.db.mMT.importantspells.spells[SelectedSpellID]
-											and E.db.mMT.importantspells.spells[SelectedSpellID].icon.anchor.auto
+										return E.db.mMT.importantspells.spells[Selectedfilter] and E.db.mMT.importantspells.spells[Selectedfilter].functions.icon.anchor.auto
 									end,
 									set = function(info, value)
-										if E.db.mMT.importantspells.spells[SelectedSpellID] then
-											E.db.mMT.importantspells.spells[SelectedSpellID].icon.anchor.auto = value
+										if E.db.mMT.importantspells.spells[Selectedfilter] then
+											E.db.mMT.importantspells.spells[Selectedfilter].functions.icon.anchor.auto = value
 										end
 									end,
 								},
@@ -502,13 +584,11 @@ local function configTable()
 									max = 256,
 									step = 1,
 									get = function(info)
-										return E.db.mMT.importantspells.spells[SelectedSpellID]
-												and E.db.mMT.importantspells.spells[SelectedSpellID].icon.anchor.posX
-											or 0
+										return E.db.mMT.importantspells.spells[Selectedfilter] and E.db.mMT.importantspells.spells[Selectedfilter].functions.icon.anchor.posX or 0
 									end,
 									set = function(info, value)
-										if E.db.mMT.importantspells.spells[SelectedSpellID] then
-											E.db.mMT.importantspells.spells[SelectedSpellID].icon.anchor.posX = value
+										if E.db.mMT.importantspells.spells[Selectedfilter] then
+											E.db.mMT.importantspells.spells[Selectedfilter].functions.icon.anchor.posX = value
 										end
 									end,
 								},
@@ -521,13 +601,11 @@ local function configTable()
 									max = 256,
 									step = 1,
 									get = function(info)
-										return E.db.mMT.importantspells.spells[SelectedSpellID]
-												and E.db.mMT.importantspells.spells[SelectedSpellID].icon.anchor.posY
-											or 0
+										return E.db.mMT.importantspells.spells[Selectedfilter] and E.db.mMT.importantspells.spells[Selectedfilter].functions.icon.anchor.posY or 0
 									end,
 									set = function(info, value)
-										if E.db.mMT.importantspells.spells[SelectedSpellID] then
-											E.db.mMT.importantspells.spells[SelectedSpellID].icon.anchor.posY = value
+										if E.db.mMT.importantspells.spells[Selectedfilter] then
+											E.db.mMT.importantspells.spells[Selectedfilter].functions.icon.anchor.posY = value
 										end
 									end,
 								},
@@ -549,7 +627,7 @@ local function configTable()
 					name = L["Export"],
 					func = function()
 						if next(E.db.mMT.importantspells.spells) then
-							exportText = mMT:GetExportText(E.db.mMT.importantspells.spells, "mMTImportantSpells")
+							exportText = mMT:GetExportText(E.db.mMT.importantspells.spells, "mMTImportantSpellsV2")
 							button = exportText and "export" or "none"
 						end
 					end,
@@ -561,8 +639,10 @@ local function configTable()
 					func = function()
 						local profileType, profileData = mMT:GetImportText(importText)
 						if profileType == "mMTImportantSpells" then
+							mMT:Print(L["You are trying to load an outdated profile, unfortunately this is not possible."])
+						elseif profileType == "mMTImportantSpellsV2" then
 							E:CopyTable(E.db.mMT.importantspells.spells, profileData)
-							E:StaticPopup_Show("CONFIG_RL")
+							mMT.Modules.ImportantSpells:Initialize()
 						end
 					end,
 				},
@@ -570,11 +650,8 @@ local function configTable()
 					order = 4,
 					name = function()
 						-- disable input box button
-						E.Options.args.mMT.args.castbar.args.important.args.header_importexport.args.text.disableButton =
-							true
-						E.Options.args.mMT.args.castbar.args.important.args.header_importexport.args.text.textChanged = function(
-							text
-						)
+						E.Options.args.mMT.args.castbar.args.important.args.header_importexport.args.text.disableButton = true
+						E.Options.args.mMT.args.castbar.args.important.args.header_importexport.args.text.textChanged = function(text)
 							if text ~= importText then
 								importText = text
 							end

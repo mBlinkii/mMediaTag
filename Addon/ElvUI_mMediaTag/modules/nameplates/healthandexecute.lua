@@ -9,23 +9,28 @@ local HM_NPCs = {
 	[186738] = { 75, 50, 25 }, -- Umbrelskul
 
 	-- Brackenhide Hollow
-	[185508] = { 15 }, -- Claw Fighter
-	[185528] = { 15 }, -- Trickclaw Mystic
-	[185534] = { 15 }, -- Bonebolt Hunter
+	[185508] = { 15 }, --Claw Fighter
+	[185528] = { 15 }, --Trickclaw Mystic
+	[185534] = { 15 }, --Bonebolt Hunter
 	[186121] = { 4 }, -- Decatriarch Wratheye
-	[186122] = { 15 }, -- Rira Hackclaw
-	[186124] = { 15 }, -- Gashtooth
-	[186125] = { 15 }, -- Tricktotem
-	[186206] = { 15 }, -- Cruel Bonecrusher
-	[186227] = { 20 }, -- Monstrous Decay
+	[186122] = { 15 }, --Rira Hackclaw
+	[186124] = { 15 }, --Gashtooth
+	[186125] = { 15 }, --Tricktotem
+	[186206] = { 15 }, --Cruel Bonecrusher
+	[186227] = { 20 }, --Monstrous Decay
+	[189719] = { 15 }, --Watcher Irideus
 
 	-- Dawn of the Infinite
-	[198933] = { 90, 85 }, -- Iridikron
-	[198997] = { 80 }, -- Blight of Galakrond
-	[199000] = { 20 }, -- Deios
-	[201792] = { 50 }, -- Ahnzon
-	[207638] = { 80 }, -- Blight of Galakrond
-	[207639] = { 80 }, -- Blight of Galakrond
+	[198933] = { 90 }, --Iridikron
+	[198997] = { 80, 50 }, -- Blight of Galakrond / Ahnzon
+	[199000] = { 20, 8 }, -- Deios
+	[201792] = { 80, 50 }, -- Ahnzon
+	[207638] = { 80, 50 }, -- Blight of Galakrond / Ahnzon
+	[207639] = { 80, 50 }, -- Blight of Galakrond / Ahnzon
+	[209892] = { 20, 8 }, -- Deios
+
+	--Algeth'ar Academy
+	[191736] = { 75, 45 }, --Crawth
 
 	-- Halls of Infusion
 	[189719] = { 15 }, -- Watcher Irideus
@@ -39,8 +44,10 @@ local HM_NPCs = {
 	[186151] = { 60 }, -- Balakar Khan
 
 	-- Ruby Life Pools
-	[188252] = { 75, 45 }, -- Melidrussa
-	[190484] = { 50 }, -- Kyrakka
+	[188252] = { 66, 33 }, --Melidrussa Chillworn
+	[190484] = { 50 }, --Kyrakka
+	[190485] = { 50 }, --Stormvein
+	[193435] = { 50 }, --Kyrakka
 	[197697] = { 50 }, -- Flamegullet
 
 	-- Uldaman
@@ -158,6 +165,17 @@ local HM_NPCs = {
 	-- Amirdrassil
 	[208445] = { 35 }, -- Larodar
 	[209090] = { 75, 50 }, -- Tindral
+
+	-------- Open World --------
+	-- Kortia (SL)
+	[180013] = { 20 }, --Escaped Wilderling, Shadowlands - Korthia
+	[179931] = { 80, 60 }, --Relic Breaker krelva, Shadowlands - Korthia
+
+	--Dragon Isles (DF)
+	[193532] = { 40 }, --Bazual, The Dreaded Flame - WordBoss
+
+	--Mage Tower
+	[116410] = { 33 }, -- Karam Magespear
 }
 
 local executeAutoRange = { enable = false, range = 30 }

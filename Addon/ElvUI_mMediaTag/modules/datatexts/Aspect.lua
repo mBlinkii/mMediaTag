@@ -10,7 +10,7 @@ local hide = false
 local Currency = {
 	info = {
 		color = "|CFFFF8000",
-		id = 2709,
+		id = 2812,
 		name = nil,
 		icon = nil,
 		link = nil,
@@ -23,7 +23,7 @@ local Currency = {
 local FRAGMENTS_EARNED = gsub(_G.ITEM_UPGRADE_FRAGMENTS_TOTAL, "%s*|c.+$", "")
 local function OnEnter(self)
 	if Currency.loaded then
-		mMT:GetCurrenciesInfo(Currency, true)
+		mMT:GetCurrenciesInfo(Currency)
 	end
 
     DT.tooltip:ClearLines()
@@ -102,6 +102,6 @@ DT:RegisterDatatext(
 	nil,
 	OnEnter,
 	OnLeave,
-	"mMediaTag Aspect's Shadowflame Crest",
+	"mMediaTag Aspect's Awakened Crest",
 	nil
 )

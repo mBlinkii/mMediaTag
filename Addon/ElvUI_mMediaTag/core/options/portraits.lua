@@ -63,10 +63,10 @@ local function configTable()
 			type = "group",
 			name = L["General"],
 			args = {
-				header_gradient = {
+				header_general = {
 					order = 1,
 					type = "group",
-					name = L["Icon"],
+					name = L["General"],
 					args = {
 						class_icons = {
 							order = 1,
@@ -123,14 +123,14 @@ local function configTable()
 								},
 							},
 						},
-						innershadow = {
+						gradient = {
 							order = 2,
 							type = "group",
 							inline = true,
 							name = L["Gradient"],
 							args = {
 								toggle_gradient = {
-									order = 3,
+									order = 1,
 									type = "toggle",
 									name = L["Gradient"],
 									get = function(info)
@@ -141,8 +141,20 @@ local function configTable()
 										mMT.Modules.Portraits:Initialize()
 									end,
 								},
+								toggle_gradien_eltr = {
+									order = 2,
+									type = "toggle",
+									name = L["Use Eltruism colors"],
+									get = function(info)
+										return E.db.mMT.portraits.general.eltruism
+									end,
+									set = function(info, value)
+										E.db.mMT.portraits.general.eltruism = value
+										mMT.Modules.Portraits:Initialize()
+									end,
+								},
 								select_gradient = {
-									order = 4,
+									order = 3,
 									type = "select",
 									name = L["Gradient Orientation"],
 									disabled = function()

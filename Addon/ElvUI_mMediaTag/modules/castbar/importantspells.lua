@@ -7,8 +7,20 @@ end
 
 local ImportantSpellIDs = {}
 
+function BuildSpellFilters()
+	wipe(ImportantSpellIDs)
+
+	for filter, _ in pairs(E.db.mMT.importantspells.spells) do
+		if E.db.mMT.importantspells.spells[filter].enable then
+			for id, _ in pairs(E.db.mMT.importantspells.spells[filter].IDs) do
+				ImportantSpellIDs[id] = E.db.mMT.importantspells.spells[filter].functions
+			end
+		end
+	end
+end
+
 function module:Initialize()
-	ImportantSpellIDs = E.db.mMT.importantspells.spells
+	BuildSpellFilters()
 	module.needReloadUI = true
 	module.loaded = true
 end
@@ -99,7 +111,7 @@ function module:UpdateCastbar(castbar)
 			SetSpellIcon(castbar, Spell.icon)
 		end
 	elseif castbar.mTextureChanged then
-			castbar:SetStatusBarTexture(E.LSM:Fetch("statusbar", E.db.mMT.importantspells.default))
-			castbar.mTextureChanged = false
+		castbar:SetStatusBarTexture(E.LSM:Fetch("statusbar", E.db.mMT.importantspells.default))
+		castbar.mTextureChanged = false
 	end
 end
