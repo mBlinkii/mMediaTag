@@ -174,7 +174,7 @@ local textures = {
 		QA = false,
 		MO = false,
 		SMQ = false,
-	}
+	},
 }
 
 local function mirrorTexture(texture, mirror)
@@ -205,7 +205,6 @@ local function setColor(texture, color, mirror)
 		texture:SetVertexColor(color.r, color.g, color.b, color.a)
 	end
 end
-
 
 local function getColor(unit)
 	if settings.general.default then
@@ -266,16 +265,18 @@ local function SetPortraits(frame, unit, masking, mirror)
 			IconTexture = mMT.ElvUI_JiberishIcons.path .. style
 		end
 
-		if coords and #coords == 8 then
-			local ULx, ULy, LLx, LLy, URx, URy, LRx, LRy = unpack(coords)
-			if mirror then
-				frame.portrait:SetTexCoord(URx, URy, LRx, LRy, ULx, ULy, LLx, LLy)
+		if coords then
+			if #coords == 8 then
+				local ULx, ULy, LLx, LLy, URx, URy, LRx, LRy = unpack(coords)
+				if mirror then
+					frame.portrait:SetTexCoord(URx, URy, LRx, LRy, ULx, ULy, LLx, LLy)
+				else
+					frame.portrait:SetTexCoord(ULx, ULy, LLx, LLy, URx, URy, LRx, LRy)
+				end
 			else
-				frame.portrait:SetTexCoord(ULx, ULy, LLx, LLy, URx, URy, LRx, LRy)
+				local left, right, top, bottom = unpack(coords)
+				frame.portrait:SetTexCoord(mirror and right or left, mirror and left or right, top, bottom)
 			end
-		else
-			local left, right, top, bottom = unpack(coords)
-			frame.portrait:SetTexCoord(mirror and right or left, mirror and left or right, top, bottom)
 		end
 
 		frame.portrait:SetTexture(IconTexture)
@@ -358,7 +359,7 @@ local function CreatePortrait(parent, conf, unit)
 	frame.portrait:SetPoint("TOPLEFT", 0 + offset, 0 - offset)
 	frame.portrait:SetPoint("BOTTOMRIGHT", 0 - offset, 0 + offset)
 	frame.portrait:SetTexture(path .. "unknown.tga", "CLAMP", "CLAMP", "TRILINEAR")
-	SetPortraits(frame, unit, textures.enablemasking[conf.texture] , conf.mirror)
+	SetPortraits(frame, unit, textures.enablemasking[conf.texture], conf.mirror)
 	mirrorTexture(frame.portrait, conf.mirror)
 
 	-- Portrait Mask
