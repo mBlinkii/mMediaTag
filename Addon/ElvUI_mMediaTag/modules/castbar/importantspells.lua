@@ -11,7 +11,7 @@ function BuildSpellFilters()
 	wipe(ImportantSpellIDs)
 
 	for filter, _ in pairs(E.db.mMT.importantspells.spells) do
-		if E.db.mMT.importantspells.spells[filter].enable then
+		if E.db.mMT.importantspells.spells[filter] and  E.db.mMT.importantspells.spells[filter].enable and E.db.mMT.importantspells.spells[filter].IDs then
 			for id, _ in pairs(E.db.mMT.importantspells.spells[filter].IDs) do
 				ImportantSpellIDs[id] = E.db.mMT.importantspells.spells[filter].functions
 			end
