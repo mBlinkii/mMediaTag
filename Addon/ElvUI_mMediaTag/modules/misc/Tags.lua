@@ -378,6 +378,14 @@ E:AddTag("mName:status", "UNIT_NAME_UPDATE UNIT_CONNECTION PLAYER_FLAGS_CHANGED 
 	end
 end)
 
+E:AddTag("mShowIcon", "UNIT_NAME_UPDATE", function(unit, _, args)
+	local tbl, icon = strsplit(":", args or "")
+
+	if tbl and icon and mMT.Media[tbl] and mMT.Media[tbl][icon] then
+		return format("|T%s:15:15:0:2|t", mMT.Media[tbl][icon])
+	end
+end)
+
 E:AddTag("mName:last", "UNIT_NAME_UPDATE INSTANCE_ENCOUNTER_ENGAGE_UNIT", function(unit)
 	local name = ShortName(UnitName(unit))
 
