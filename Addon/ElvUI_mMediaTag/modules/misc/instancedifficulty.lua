@@ -280,31 +280,31 @@ function mMT:GetDungeonInfo(datatext, short, stageBlock)
 		local isGuildParty = InGuildParty()
 		if difficultyID == 8 and C_MythicPlus.IsMythicPlusActive() and C_ChallengeMode.GetActiveChallengeMapID() then
 			if datatext and not short then
-				text = format("%s%s|r %s%s|r %s", isGuildParty and colors.guild.color or colors.name.color, name, difficultyColor, difficultyShort, GetKeystoneLevelandColor())
+				text = format("%s%s|r %s%s|r %s", isGuildParty and colors.guild.color or colors.name.color or "|CFFFFFFFF", name, difficultyColor, difficultyShort, GetKeystoneLevelandColor())
 			elseif short then
 				text = format("%s%s|r %s", difficultyColor, difficultyShort, GetKeystoneLevelandColor())
 			else
-				text = format("%s%s|r\n%s%s|r %s", isGuildParty and colors.guild.color or colors.name.color, name, difficultyColor, difficultyShort, GetKeystoneLevelandColor())
+				text = format("%s%s|r\n%s%s|r %s", isGuildParty and colors.guild.color or colors.name.color or "|CFFFFFFFF", name, difficultyColor, difficultyShort, GetKeystoneLevelandColor())
 			end
 		elseif InstanceType == "pvp" or InstanceType == "arena" then
 			difficultyColor = instanceDifficulty[34] and instanceDifficulty[34].c or "|CFFFFFFFF"
 			difficultyShort = instanceDifficulty[34] and instanceDifficulty[34].d or ""
 			if datatext and not short then
-				text = format("%s%s|r %s%s|r", isGuildParty and colors.guild.color or colors.name.color, name, difficultyColor, difficultyShort)
+				text = format("%s%s|r %s%s|r", isGuildParty and colors.guild.color or colors.name.color or "|CFFFFFFFF", name, difficultyColor, difficultyShort)
 			elseif short then
 				text = format("%s%s|r", difficultyColor, difficultyShort)
 			else
-				text = format("%s%s|r\n%s%s|r", isGuildParty and colors.guild.color or colors.name.color, name, difficultyColor, difficultyShort)
+				text = format("%s%s|r\n%s%s|r", isGuildParty and colors.guild.color or colors.name.color or "|CFFFFFFFF", name, difficultyColor, difficultyShort)
 			end
 		else
 			if datatext and not short then
-				text = format("%s%s|r %s%s|r |CFFF7DC6F%s|r", isGuildParty and colors.guild.color or colors.name.color, name, difficultyColor, difficultyShort, instanceGroupSize)
+				text = format("%s%s|r %s%s|r |CFFF7DC6F%s|r", isGuildParty and colors.guild.color or colors.name.color or "|CFFFFFFFF", name, difficultyColor, difficultyShort, instanceGroupSize)
 			elseif short then
-				text = format("%s%s|r %s%s|r", isGuildParty and colors.guild.color or colors.name.color, name, difficultyColor, difficultyShort)
+				text = format("%s%s|r %s%s|r", isGuildParty and colors.guild.color or colors.name.color or "|CFFFFFFFF", name, difficultyColor, difficultyShort)
 			elseif stageBlock then
-				text = format("%s|r %s%s|r", isGuildParty and colors.guild.color .. "#" or "", difficultyColor, difficultyShort)
+				text = format("%s|r %s%s|r", isGuildParty and colors.guild.color or "|CFFFFFFFF" .. "#" or "", difficultyColor, difficultyShort)
 			else
-				text = format("%s%s|r\n%s%s|r |CFFF7DC6F%s|r", isGuildParty and colors.guild.color or colors.name.color, name, difficultyColor, difficultyShort, instanceGroupSize)
+				text = format("%s%s|r\n%s%s|r |CFFF7DC6F%s|r", isGuildParty and colors.guild.color or colors.name.color or "|CFFFFFFFF", name, difficultyColor, difficultyShort, instanceGroupSize)
 			end
 		end
 		return text
