@@ -99,6 +99,7 @@ end
 function mMT:Check_ElvUI_EltreumUI()
 	return (IsAddOnLoaded("ElvUI_EltreumUI") and E.db.ElvUI_EltreumUI.unitframes.gradientmode.enable)
 end
+
 function mMT:mIcon(icon, x, y)
 	if icon then
 		return format("|T%s:%s:%s:0:0:64:64:4:60:4:60|t", icon, x or 16, y or 16)

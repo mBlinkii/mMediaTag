@@ -559,21 +559,14 @@ local function AddHeaderBar(header)
 	headerBar.texture:SetTexture(LSM:Fetch("statusbar", db.headerbar.texture))
 
 	if db then
-		local color_HeaderBar = { r = 1, g = 1, b = db.headerbar.gradient and { r = 1, g = 1, b = 1, a = 1 } or 1, a = { r = 0.8, g = 0.8, b = 0.8, a = 1 } }
+		local color_HeaderBar = { r = 1, g = 1, b = 1, gradient = { a = { r = 0.8, g = 0.8, b = 0.8, a = 1 }, b = { r = 1, g = 1, b = 1, a = 1 }} }
 
 		if db.headerbar.class then
 			color_HeaderBar = mMT.ClassColor or color_HeaderBar
 		else
-			color_HeaderBar = db.headerbar.color
+			local c = db.headerbar.color
 
-			local gradient = { a = { r = db.headerbar.color.r + 0.2, g = db.headerbar.color.g + 0.2, b = db.headerbar.color.b + 0.2, a = 1 }, b = { r = db.headerbar.color.r - 0.2, g = db.headerbar.color.g - 0.2, b = db.headerbar.color.b - 0.2, a = 1 } }
-			color_HeaderBar = { r = db.headerbar.color.r, g = db.headerbar.color.g, b = db.headerbar.color.b, gradient = gradient }
-		end
-
-		if db.headerbar.gradient and not color_HeaderBar.gradient.a or not color_HeaderBar.gradient.b then
-			mMT:Print("|cffff033eERROR:|r |cff0070ddOT COLOR|r", "|cff0070ddgradient:|r", db.headerbar.gradient, "|cff0070ddcolor A:|r", color_HeaderBar.gradient.a, "|cff0070ddcolor B:|r", color_HeaderBar.gradient.b)
-			mMT:Print("|cffff033eERROR:|r |cff0070ddOT COLOR|r", "|cff0070ddmMT:|r", mMT.ClassColor, "|cff0070dddefault:|r", color_HeaderBar, "|cff0070ddDB:|r", db)
-			mMT:DebugPrintTable(mMT.ClassColor)
+			color_HeaderBar = { r = c.r, g = c.g, b = c.b, gradient = { a = { r = c.r + 0.2, g = c.g + 0.2, b = c.b + 0.2, a = 1 }, b = { r = c.r - 0.2, g = c.g - 0.2, b = c.b - 0.2, a = 1 } } }
 		end
 
 		if db.headerbar.gradient and color_HeaderBar.gradient.a and color_HeaderBar.gradient.b then
@@ -593,6 +586,7 @@ local function BackgroundSkin()
 	if not ObjectiveTrackerFrame.NineSlice.mMT_Skin then
 		ObjectiveTrackerFrame.NineSlice:SetTemplate("Transparent")
 		ObjectiveTrackerFrame.NineSlice:SetFrameStrata("LOW")
+
 		if db and db.bg.shadow then
 			ObjectiveTrackerFrame.NineSlice:CreateShadow()
 		end
