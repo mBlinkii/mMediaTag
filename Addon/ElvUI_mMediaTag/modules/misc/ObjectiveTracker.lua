@@ -550,7 +550,7 @@ end
 local function AddHeaderBar(header)
 	local width = ObjectiveTrackerFrame:GetWidth()
 	local headerBar = CreateFrame("Frame", "mMT_ObjectiveTracker_HeaderBar", header)
-	headerBar:SetFrameStrata("MEDIUM")
+	headerBar:SetFrameStrata("LOW")
 	headerBar:SetSize(width, 5)
 	headerBar:SetPoint("BOTTOM", 0, 0)
 
@@ -592,7 +592,7 @@ end
 local function BackgroundSkin()
 	if not ObjectiveTrackerFrame.NineSlice.mMT_Skin then
 		ObjectiveTrackerFrame.NineSlice:SetTemplate("Transparent")
-
+		ObjectiveTrackerFrame.NineSlice:SetFrameStrata("LOW")
 		if db and db.bg.shadow then
 			ObjectiveTrackerFrame.NineSlice:CreateShadow()
 		end
