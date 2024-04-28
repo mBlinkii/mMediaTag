@@ -1,6 +1,16 @@
 # Changelog - ElvUI_mMediaTag
 [Eng] - All changes to this project will be documented in this file. The latest changes are at the top.
 
+## [ver. 3.34] - 28.04.2024
+### FIX
+- FIX - Prevent nil error with important spells
+- FIX - Prevent nil error with tex coords Portraits/Class Icons
+- FIX - Prevent nil error with instancdifficulty
+- FIX - Fixed color table bug with DK classes
+### NEW
+- NEW - TAG mRoleIcon:blizz:nodd and mRoleIcon:nodd
+- NEW - Icons for castbar
+
 ## [ver. 3.33] - 25.04.2024
 ### FIX
 - FIX - Wrong reaction colors on portraits, thx to Tsxy

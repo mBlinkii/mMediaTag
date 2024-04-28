@@ -15,11 +15,11 @@ local change_log_important = {
 	"This update will reset the Spell DB."
 }
 
-local releasdate = "25.04.2024"
+local releasdate = "28.04.2024"
 
 local change_log_new = {
-	"Background Skin for the Objectivetracker",
-	"Support for Eltruism gradient colors, Portraits and Objectivtracker, can now use the custom gradient colors of Eltruism"
+	"TAG mRoleIcon:blizz:nodd and mRoleIcon:nodd",
+	"Icons for castbar"
 }
 
 local change_log_update = {
@@ -33,9 +33,10 @@ local change_log_update = {
 }
 
 local change_log_fix = {
-	"Wrong reaction colors on portraits, thx to Tsxy",
-	"Prevent nil Error with Dungeon Score colors (https://github.com/Stanzilla/WoWUIBugs/issues/544)",
-	"Arena Portraits wont update correctly"
+	"Prevent nil error with important spells",
+	"Prevent nil error with tex coords Portraits/Class Icons",
+	"Prevent nil error with instancdifficulty",
+	"Fixed color table bug with DK classes"
 }
 
 local function Concatenation(tbl, icon, color)
@@ -57,7 +58,7 @@ end
 local function configTable()
 	change_log_important_string = Concatenation(change_log_important)
 	change_log_new_string = Concatenation(change_log_new)
-	change_log_update_string = Concatenation(change_log_update)
+	--change_log_update_string = Concatenation(change_log_update)
 	change_log_fix_string = Concatenation(change_log_fix)
 	E.Options.args.mMT.args.changelog.args = {
 		header_changelog = {
