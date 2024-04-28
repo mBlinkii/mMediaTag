@@ -559,7 +559,7 @@ local function AddHeaderBar(header)
 	headerBar.texture:SetTexture(LSM:Fetch("statusbar", db.headerbar.texture))
 
 	if db then
-		local color_HeaderBar = { r = 1, g = 1, b = 1, gradient = { a = { r = 0.8, g = 0.8, b = 0.8, a = 1 }, b = { r = 1, g = 1, b = 1, a = 1 } } }
+		local color_HeaderBar = { r = 1, g = 1, b = db.headerbar.gradient and { r = 1, g = 1, b = 1, a = 1 } or 1, a = { r = 0.8, g = 0.8, b = 0.8, a = 1 } }
 
 		if db.headerbar.class then
 			color_HeaderBar = mMT.ClassColor or color_HeaderBar
@@ -570,10 +570,16 @@ local function AddHeaderBar(header)
 			color_HeaderBar = { r = db.headerbar.color.r, g = db.headerbar.color.g, b = db.headerbar.color.b, gradient = gradient }
 		end
 
-		if db.headerbar.gradient then
+		if db.headerbar.gradient and not color_HeaderBar.gradient.a or not color_HeaderBar.gradient.b then
+			mMT:Print("|cffff033eERROR:|r |cff0070ddOT COLOR|r", "|cff0070ddgradient:|r", db.headerbar.gradient, "|cff0070ddcolor A:|r", color_HeaderBar.gradient.a, "|cff0070ddcolor B:|r", color_HeaderBar.gradient.b)
+			mMT:Print("|cffff033eERROR:|r |cff0070ddOT COLOR|r", "|cff0070ddmMT:|r", mMT.ClassColor, "|cff0070dddefault:|r", color_HeaderBar, "|cff0070ddDB:|r", db)
+			mMT:DebugPrintTable(mMT.ClassColor)
+		end
+
+		if db.headerbar.gradient and color_HeaderBar.gradient.a and color_HeaderBar.gradient.b then
 			headerBar.texture:SetGradient("HORIZONTAL", color_HeaderBar.gradient.a, color_HeaderBar.gradient.b)
 		else
-			headerBar.texture:SetVertexColor(color_HeaderBar.r, color_HeaderBar.g, color_HeaderBar.b, 1)
+			headerBar.texture:SetVertexColor(color_HeaderBar.r or 1, color_HeaderBar.g or 1, color_HeaderBar.b or 1, 1)
 		end
 
 		if db and db.headerbar.shadow then
