@@ -550,7 +550,7 @@ end
 local function AddHeaderBar(header)
 	local width = ObjectiveTrackerFrame:GetWidth()
 	local headerBar = CreateFrame("Frame", "mMT_ObjectiveTracker_HeaderBar", header)
-	headerBar:SetFrameStrata("MEDIUM")
+	headerBar:SetFrameStrata("LOW")
 	headerBar:SetSize(width, 5)
 	headerBar:SetPoint("BOTTOM", 0, 0)
 
@@ -559,21 +559,20 @@ local function AddHeaderBar(header)
 	headerBar.texture:SetTexture(LSM:Fetch("statusbar", db.headerbar.texture))
 
 	if db then
-		local color_HeaderBar = { r = 1, g = 1, b = 1, gradient = { a = { r = 0.8, g = 0.8, b = 0.8, a = 1 }, b = { r = 1, g = 1, b = 1, a = 1 } } }
+		local color_HeaderBar = { r = 1, g = 1, b = 1, gradient = { a = { r = 0.8, g = 0.8, b = 0.8, a = 1 }, b = { r = 1, g = 1, b = 1, a = 1 }} }
 
 		if db.headerbar.class then
 			color_HeaderBar = mMT.ClassColor or color_HeaderBar
 		else
-			color_HeaderBar = db.headerbar.color
+			local c = db.headerbar.color
 
-			local gradient = { a = { r = db.headerbar.color.r + 0.2, g = db.headerbar.color.g + 0.2, b = db.headerbar.color.b + 0.2, a = 1 }, b = { r = db.headerbar.color.r - 0.2, g = db.headerbar.color.g - 0.2, b = db.headerbar.color.b - 0.2, a = 1 } }
-			color_HeaderBar = { r = db.headerbar.color.r, g = db.headerbar.color.g, b = db.headerbar.color.b, gradient = gradient }
+			color_HeaderBar = { r = c.r, g = c.g, b = c.b, gradient = { a = { r = c.r + 0.2, g = c.g + 0.2, b = c.b + 0.2, a = 1 }, b = { r = c.r - 0.2, g = c.g - 0.2, b = c.b - 0.2, a = 1 } } }
 		end
 
-		if db.headerbar.gradient then
+		if db.headerbar.gradient and color_HeaderBar.gradient.a and color_HeaderBar.gradient.b then
 			headerBar.texture:SetGradient("HORIZONTAL", color_HeaderBar.gradient.a, color_HeaderBar.gradient.b)
 		else
-			headerBar.texture:SetVertexColor(color_HeaderBar.r, color_HeaderBar.g, color_HeaderBar.b, 1)
+			headerBar.texture:SetVertexColor(color_HeaderBar.r or 1, color_HeaderBar.g or 1, color_HeaderBar.b or 1, 1)
 		end
 
 		if db and db.headerbar.shadow then
@@ -586,6 +585,7 @@ end
 local function BackgroundSkin()
 	if not ObjectiveTrackerFrame.NineSlice.mMT_Skin then
 		ObjectiveTrackerFrame.NineSlice:SetTemplate("Transparent")
+		ObjectiveTrackerFrame.NineSlice:SetFrameStrata("LOW")
 
 		if db and db.bg.shadow then
 			ObjectiveTrackerFrame.NineSlice:CreateShadow()

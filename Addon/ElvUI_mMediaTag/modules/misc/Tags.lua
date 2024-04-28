@@ -378,6 +378,14 @@ E:AddTag("mName:status", "UNIT_NAME_UPDATE UNIT_CONNECTION PLAYER_FLAGS_CHANGED 
 	end
 end)
 
+E:AddTag("mShowIcon", "UNIT_NAME_UPDATE", function(unit, _, args)
+	local tbl, icon = strsplit(":", args or "")
+
+	if tbl and icon and mMT.Media[tbl] and mMT.Media[tbl][icon] then
+		return format("|T%s:16:16:0:2|t", mMT.Media[tbl][icon])
+	end
+end)
+
 E:AddTag("mName:last", "UNIT_NAME_UPDATE INSTANCE_ENCOUNTER_ENGAGE_UNIT", function(unit)
 	local name = ShortName(UnitName(unit))
 
@@ -1346,9 +1354,19 @@ E:AddTag("mRoleIcon", "PLAYER_ROLES_ASSIGNED GROUP_ROSTER_UPDATE", function(unit
 	return UnitRole and icons[UnitRole] or ""
 end)
 
+E:AddTag("mRoleIcon:nodd", "PLAYER_ROLES_ASSIGNED GROUP_ROSTER_UPDATE", function(unit)
+	local UnitRole = UnitGroupRolesAssigned(unit)
+	return UnitRole and ((UnitRole == "TANK" or UnitRole == "HEALER") and icons[UnitRole] or "") or ""
+end)
+
 E:AddTag("mRoleIcon:blizz", "PLAYER_ROLES_ASSIGNED GROUP_ROSTER_UPDATE", function(unit)
 	local UnitRole = UnitGroupRolesAssigned(unit)
 	return UnitRole and icons.default[UnitRole] or ""
+end)
+
+E:AddTag("mRoleIcon:blizz:nodd", "PLAYER_ROLES_ASSIGNED GROUP_ROSTER_UPDATE", function(unit)
+	local UnitRole = UnitGroupRolesAssigned(unit)
+	return  UnitRole and ((UnitRole == "TANK" or UnitRole == "HEALER") and icons.default[UnitRole] or "") or ""
 end)
 
 E:AddTag("mRoleIcon:target", "UNIT_TARGET UNIT_COMBAT", function(unit)
@@ -1363,8 +1381,10 @@ end)
 
 E:AddTagInfo("mRole", mMT.NameShort .. " " .. L["Misc"], L["Tank and Healer roles as text."])
 E:AddTagInfo("mRoleIcon", mMT.NameShort .. " " .. L["Misc"], L["Unit role icon."])
+E:AddTagInfo("mRoleIcon", mMT.NameShort .. " " .. L["Misc"], L["Unit role icon, only tank and healer."])
 E:AddTagInfo("mRoleIcon:target", mMT.NameShort .. " " .. L["Misc"], L["Targetunit role icon."])
 E:AddTagInfo("mRoleIcon:blizz", mMT.NameShort .. " " .. L["Misc"], L["Blizzard Unit role icon."])
+E:AddTagInfo("mRoleIcon:blizz", mMT.NameShort .. " " .. L["Misc"], L["Blizzard Unit role icon, only tank and healer."])
 E:AddTagInfo("mRoleIcon:target:blizz", mMT.NameShort .. " " .. L["Misc"], L["Blizzard Targetunit role icon."])
 
 E:AddTag("mLevel", "UNIT_LEVEL PLAYER_LEVEL_UP PLAYER_UPDATE_RESTING", function(unit)
