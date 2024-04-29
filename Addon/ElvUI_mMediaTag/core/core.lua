@@ -1,6 +1,11 @@
 local E = unpack(ElvUI)
 local strjoin = strjoin
 local GetAddOnMetadata = _G.C_AddOns and _G.C_AddOns.GetAddOnMetadata or _G.GetAddOnMetadata
+local GetNumAddOns = _G.C_AddOns and _G.C_AddOns.GetNumAddOns or _G.GetNumAddOns
+local IsAddOnLoaded = _G.C_AddOns and _G.C_AddOns.IsAddOnLoaded or _G.IsAddOnLoaded
+local EnableAddOn = _G.C_AddOns and _G.C_AddOns.EnableAddOn or _G.EnableAddOn
+local DisableAddOn = _G.C_AddOns and _G.C_AddOns.DisableAddOn or _G.DisableAddOn
+local GetAddOnInfo = _G.C_AddOns and _G.C_AddOns.GetAddOnInfo or _G.GetAddOnInfo
 
 -- AddonCompartment Functions
 function ElvUI_mMediaTag_OnAddonCompartmentClick()
@@ -134,5 +139,51 @@ function mMT:ClassesTable()
 		return { "HUNTER", "WARLOCK", "PRIEST", "PALADIN", "MAGE", "ROGUE", "DRUID", "SHAMAN", "WARRIOR" }
 	elseif E.Wrath then
 		return { "HUNTER", "WARLOCK", "PRIEST", "PALADIN", "MAGE", "ROGUE", "DRUID", "SHAMAN", "WARRIOR", "DEATHKNIGHT" }
+	end
+end
+
+local debugAddons = {
+	["!BugGrabber"] = true,
+	["!mMT_MediaPack"] = true,
+	["BugSack"] = true,
+	["ElvUI"] = true,
+	["ElvUI_Libraries"] = true,
+	["ElvUI_Options"] = true,
+	["ElvUI_mMediaTag"] = true,
+}
+
+local safeAddons = {
+	["!BugGrabber"] = true,
+	["!mMT_MediaPack"] = true,
+	["BugSack"] = true,
+	["ElvUI"] = true,
+	["ElvUI_EltreumUI"] = true,
+	["ElvUI_JiberishIcons"] = true,
+	["ElvUI_Libraries"] = true,
+	["ElvUI_Options"] = true,
+	["ElvUI_mMediaTag"] = true,
+}
+
+function mMT:SetDebugMode(on, safe)
+	mMT:Print(on, safe, mMT.DB.debugMode)
+	local addons = safe and safeAddons or debugAddons
+	if on then
+		for i = 1, GetNumAddOns() do
+			local name = GetAddOnInfo(i)
+			if not addons[name] and E:IsAddOnEnabled(name) then
+				DisableAddOn(name, E.myname)
+				mMT.DB.disabledAddons[name] = i
+			end
+		end
+		SetCVar("scriptErrors", 1)
+		ReloadUI()
+	elseif not on then
+		if next(mMT.DB.disabledAddons) then
+			for name in pairs(mMT.DB.disabledAddons) do
+				EnableAddOn(name, E.myname)
+			end
+			wipe(mMT.DB.disabledAddons)
+			ReloadUI()
+		end
 	end
 end

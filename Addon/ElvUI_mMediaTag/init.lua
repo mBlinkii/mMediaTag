@@ -53,6 +53,8 @@ local defaultDB = {
 	affix = nil,
 	keys = {},
 	dev = { enabled = false, frame = { top = nil, left = nil }, unit = {}, zone = {} },
+	debugMode = false,
+	disabledAddons = {},
 }
 
 local DB_Loader = CreateFrame("FRAME")
@@ -304,6 +306,11 @@ function mMT:PLAYER_ENTERING_WORLD(event)
 		mMT:DevTools()
 	else
 		mMT.DevMode = false
+	end
+
+	if mMT.DB.debugMode then
+		mMT:Print("|CFFFFC900DebugMode:|r |CFF00E360enabld|r")
+		mMT:DebugPrintTable(mMT.DB.disabledAddons)
 	end
 
 	-- Modules
