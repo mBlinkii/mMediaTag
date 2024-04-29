@@ -1346,7 +1346,7 @@ E:AddTagInfo("mDeathCount:hide:text", mMT.NameShort .. " " .. L["Misc"], L["Disp
 
 E:AddTag("mRole", "PLAYER_ROLES_ASSIGNED GROUP_ROSTER_UPDATE", function(unit)
 	local UnitRole = (E.Retail or E.Wrath) and UnitGroupRolesAssigned(unit)
-	return UnitRole and ((UnitRole == "TANK" or UnitRole == "HEALER") and format("%s%s|r", colors[UnitRole], UnitRole) or "") or ""
+	return (UnitRole and (UnitRole == "TANK" or UnitRole == "HEALER")) and format("%s%s|r", colors[UnitRole], UnitRole) or ""
 end)
 
 E:AddTag("mRoleIcon", "PLAYER_ROLES_ASSIGNED GROUP_ROSTER_UPDATE", function(unit)
@@ -1356,7 +1356,7 @@ end)
 
 E:AddTag("mRoleIcon:nodd", "PLAYER_ROLES_ASSIGNED GROUP_ROSTER_UPDATE", function(unit)
 	local UnitRole = (E.Retail or E.Wrath) and UnitGroupRolesAssigned(unit)
-	return UnitRole and ((UnitRole == "TANK" or UnitRole == "HEALER") and icons[UnitRole] or "") or ""
+	return (UnitRole and (UnitRole == "TANK" or UnitRole == "HEALER")) and icons[UnitRole] or ""
 end)
 
 E:AddTag("mRoleIcon:blizz", "PLAYER_ROLES_ASSIGNED GROUP_ROSTER_UPDATE", function(unit)
@@ -1366,7 +1366,7 @@ end)
 
 E:AddTag("mRoleIcon:blizz:nodd", "PLAYER_ROLES_ASSIGNED GROUP_ROSTER_UPDATE", function(unit)
 	local UnitRole = (E.Retail or E.Wrath) and UnitGroupRolesAssigned(unit)
-	return  UnitRole and ((UnitRole == "TANK" or UnitRole == "HEALER") and icons.default[UnitRole] or "") or ""
+	return  (UnitRole and (UnitRole == "TANK" or UnitRole == "HEALER")) and icons.default[UnitRole] or ""
 end)
 
 E:AddTag("mRoleIcon:target", "UNIT_TARGET UNIT_COMBAT", function(unit)
