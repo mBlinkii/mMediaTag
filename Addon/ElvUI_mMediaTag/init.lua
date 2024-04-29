@@ -301,7 +301,7 @@ function mMT:PLAYER_ENTERING_WORLD(event)
 
 	-- DevMode
 	if mMT.DB.dev.enabled and mMT.DEVNames[UnitName("player")] then
-		mMT:Print("|CFFFFC900DEV - Tools:|r |CFF00E360enabld|r")
+		mMT:Print("|CFFFFC900DEV - Tools:|r |CFF00E360Enabled|r")
 		mMT.DevMode = true
 		mMT:DevTools()
 	else
@@ -309,8 +309,10 @@ function mMT:PLAYER_ENTERING_WORLD(event)
 	end
 
 	if mMT.DB.debugMode then
-		mMT:Print("|CFFFFC900DebugMode:|r |CFF00E360enabld|r")
-		mMT:DebugPrintTable(mMT.DB.disabledAddons)
+		mMT:Print("|CFFFFC900DebugMode:|r |CFF00E360Enabled|r", "/", mMT.NameShort .. ":", format("|CFFF7DC6F%s|r", mMT.Version), "/", "|CFF4169FFElvUI|r:", format("|CFFF7DC6F%s|r", E.version))
+		for k, v in pairs(mMT.DB.disabledAddons) do
+			mMT:Print("|CFFB7AAFF" .. k .. "|r: ", v)
+		end
 	end
 
 	-- Modules

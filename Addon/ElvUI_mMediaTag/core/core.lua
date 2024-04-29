@@ -165,14 +165,13 @@ local safeAddons = {
 }
 
 function mMT:SetDebugMode(on, safe)
-	mMT:Print(on, safe, mMT.DB.debugMode)
 	local addons = safe and safeAddons or debugAddons
 	if on then
 		for i = 1, GetNumAddOns() do
 			local name = GetAddOnInfo(i)
 			if not addons[name] and E:IsAddOnEnabled(name) then
 				DisableAddOn(name, E.myname)
-				mMT.DB.disabledAddons[name] = i
+				mMT.DB.disabledAddons[name] = "|CFFF62A0ADisabled|r"
 			end
 		end
 		SetCVar("scriptErrors", 1)
