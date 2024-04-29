@@ -559,7 +559,7 @@ local function AddHeaderBar(header)
 	headerBar.texture:SetTexture(LSM:Fetch("statusbar", db.headerbar.texture))
 
 	if db then
-		local color_HeaderBar = { r = 1, g = 1, b = 1, gradient = { a = { r = 0.8, g = 0.8, b = 0.8, a = 1 }, b = { r = 1, g = 1, b = 1, a = 1 }} }
+		local color_HeaderBar = { r = 1, g = 1, b = 1, gradient = { a = { r = 0.8, g = 0.8, b = 0.8, a = 1 }, b = { r = 1, g = 1, b = 1, a = 1 } } }
 
 		if db.headerbar.class then
 			color_HeaderBar = mMT.ClassColor or color_HeaderBar
@@ -632,18 +632,20 @@ local function UpdateHeaders()
 end
 
 local function UpdateTracker()
-	-- skin objectivetracker bg
-	if db and db.bg.enable then
-		BackgroundSkin()
-	end
+	if db then
+		-- skin objectivetracker bg
+		if db.bg.enable then
+			BackgroundSkin()
+		end
 
-	--  update header text and add header bar
-	if db and db.headerbar.enable then
-		UpdateHeaders()
-	end
+		--  update header text and add header bar
+		if db.headerbar.enable then
+			UpdateHeaders()
+		end
 
-	-- Add Quest amount text to the header
-	AddQuestNumText()
+		-- Add Quest amount text to the header
+		AddQuestNumText()
+	end
 end
 
 function module:Initialize()

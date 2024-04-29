@@ -95,8 +95,10 @@ function module:UpdateCastbar(castbar)
 			end
 		end
 
-		if (Spell.sound.enable and Spell.sound.file) and castbar.unit == "target" then
-			PlaySoundFile(E.LSM:Fetch("sound", Spell.sound.file), "Master")
+		if (Spell.sound.enable and Spell.sound.file) then
+			if (Spell.sound.target and castbar.unit == "target") or not Spell.sound.target then
+				PlaySoundFile(E.LSM:Fetch("sound", Spell.sound.file), "Master")
+			end
 		end
 
 		if Spell.texture.enable and Spell.texture.texture then
