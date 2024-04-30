@@ -117,7 +117,6 @@ function module:UpdateCastbar(castbar)
 			end
 			lastPlayed[castbar.spellID].willPlay = not willPlay
 
-			mMT:Print(not willPlay)
 		elseif lastPlayed[castbar.spellID] then
 			lastPlayed[castbar.spellID].willPlay = true
 		end
