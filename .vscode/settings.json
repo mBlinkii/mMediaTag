@@ -560,7 +560,8 @@
         "NAME",
         "DESCRIPTION",
         "ShowUIPanel",
-        "message"
+        "message",
+        "enabled"
     ],
     "Lua.diagnostics.disable": [
         "undefined-field"
