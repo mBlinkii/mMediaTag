@@ -6,7 +6,7 @@ local function configTable()
 			order = 1,
 			type = "group",
 			inline = true,
-			name = L["Castbar BG Color"],
+			name = L["Castbar Background Color"],
 			args = {
 				toggle_BG = {
 					order = 1,

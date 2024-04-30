@@ -19,7 +19,7 @@ local function configTable()
         },
         text = {
             order = 2,
-            name = L["withe Text"],
+            name = L["white Text"],
             type = "toggle",
             get = function(info)
                 return E.db.mMT.singleProfession.whiteText
@@ -32,7 +32,7 @@ local function configTable()
         },
         value = {
             order = 3,
-            name = L["withe Value"],
+            name = L["white Value"],
             type = "toggle",
             get = function(info)
                 return E.db.mMT.singleProfession.witheValue

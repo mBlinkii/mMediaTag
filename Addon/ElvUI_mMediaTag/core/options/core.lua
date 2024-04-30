@@ -140,7 +140,7 @@ local function configTable()
 					firstandsecondprofession = {
 						order = 8,
 						type = "group",
-						name = L["first and second Profession"],
+						name = L["First and Second Profession"],
 						args = {},
 					},
 					durabilityanditemlevel = {

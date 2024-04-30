@@ -13,7 +13,7 @@ local function configTable()
 					order = 1,
 					type = "toggle",
 					name = L["Enable"],
-					desc = L["Enable Nameplate Execute indicator"],
+					desc = L["Enable Nameplate Execute Marker"],
 					get = function(info)
 						return E.db.mMT.nameplate.executemarker.enable
 					end,
