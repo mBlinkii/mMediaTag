@@ -1,6 +1,5 @@
 local E = unpack(ElvUI)
 local PlaySoundFile = PlaySoundFile
-local StopSound = StopSound
 local GetTime = GetTime
 
 local lastPlayed = {}
