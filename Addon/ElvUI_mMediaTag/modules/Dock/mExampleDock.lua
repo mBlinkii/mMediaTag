@@ -376,7 +376,7 @@ function mMT:Dock_BG(top)
 	E.global["datatexts"]["customPanels"]["mMT Databar Background"]["name"] = "mMT Databar Background"
 	E.global["datatexts"]["customPanels"]["mMT Databar Background"]["numPoints"] = 1
 	E.global["datatexts"]["customPanels"]["mMT Databar Background"]["panelTransparency"] = true
-	E.global["datatexts"]["customPanels"]["mMT Databar Background"]["width"] = 1920
+	E.global["datatexts"]["customPanels"]["mMT Databar Background"]["width"] = GetScreenWidth() or 1920
 
 	E.db["datatexts"]["panels"]["mMT Databar Background"][1] = ""
 	E.db["datatexts"]["panels"]["mMT Databar Background"]["battleground"] = false
