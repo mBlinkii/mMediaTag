@@ -3,7 +3,7 @@
 	<Include file="datatexts\load_datatexts_cata.xml"/>
 	<Include file="unitframes\load_unitframes.xml"/>
 	<Include file="cata\functions.lua"/>
-	<Include file="nameplates\load_nameplates.xml"/>
-	<Include file="castbar\castbar.xml"/>
+	<Include file="nameplates\load_nameplates_classic.xml"/>
+	<Include file="castbar\castbar_cata.xml"/>
 	<Include file="dock\load_dock_cata.xml"/>
 </Ui>

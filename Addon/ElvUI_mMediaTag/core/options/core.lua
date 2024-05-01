@@ -39,6 +39,9 @@ local function configTable()
 						order = 3,
 						type = "group",
 						name = L["Chat Button"],
+						hidden = function()
+							return not E.Retail
+						end,
 						args = {},
 					},
 					keystochat = {
@@ -109,7 +112,7 @@ local function configTable()
 						type = "group",
 						name = L["Professions"],
 						hidden = function()
-							return not E.Retail
+							return not (E.Retail or E.Cata)
 						end,
 						args = {},
 					},
@@ -118,7 +121,7 @@ local function configTable()
 						type = "group",
 						name = L["Dungeon"],
 						hidden = function()
-							return not E.Retail
+							return not (E.Retail or E.Cata)
 						end,
 						args = {},
 					},
@@ -185,7 +188,7 @@ local function configTable()
 				type = "group",
 				name = L["Castbar"],
 				hidden = function()
-					return not E.Retail
+					return not (E.Retail or E.Cata)
 				end,
 				icon = "Interface\\Addons\\ElvUI_mMediaTag\\media\\system\\castbar.tga",
 				childGroups = "tab",
@@ -200,6 +203,9 @@ local function configTable()
 						order = 2,
 						type = "group",
 						name = L["Interrupt on CD"],
+						hidden = function()
+							return not E.Retail
+						end,
 						args = {},
 					},
 					important = {
