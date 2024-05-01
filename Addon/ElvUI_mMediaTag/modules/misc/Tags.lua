@@ -1345,37 +1345,37 @@ E:AddTagInfo("mDeathCount:color", mMT.NameShort .. " " .. L["Misc"], L["Death Co
 E:AddTagInfo("mDeathCount:hide:text", mMT.NameShort .. " " .. L["Misc"], L["Displays the Death counter only when the unit is Death and Shows a Text (Death: 7), resets in new instances."])
 
 E:AddTag("mRole", "PLAYER_ROLES_ASSIGNED GROUP_ROSTER_UPDATE", function(unit)
-	local UnitRole = (E.Retail or E.Wrath) and UnitGroupRolesAssigned(unit)
+	local UnitRole = (E.Retail or E.Cata) and UnitGroupRolesAssigned(unit)
 	return (UnitRole and (UnitRole == "TANK" or UnitRole == "HEALER")) and format("%s%s|r", colors[UnitRole], UnitRole) or ""
 end)
 
 E:AddTag("mRoleIcon", "PLAYER_ROLES_ASSIGNED GROUP_ROSTER_UPDATE", function(unit)
-	local UnitRole = (E.Retail or E.Wrath) and UnitGroupRolesAssigned(unit)
+	local UnitRole = (E.Retail or E.Cata) and UnitGroupRolesAssigned(unit)
 	return UnitRole and icons[UnitRole] or ""
 end)
 
 E:AddTag("mRoleIcon:nodd", "PLAYER_ROLES_ASSIGNED GROUP_ROSTER_UPDATE", function(unit)
-	local UnitRole = (E.Retail or E.Wrath) and UnitGroupRolesAssigned(unit)
+	local UnitRole = (E.Retail or E.Cata) and UnitGroupRolesAssigned(unit)
 	return (UnitRole and (UnitRole == "TANK" or UnitRole == "HEALER")) and icons[UnitRole] or ""
 end)
 
 E:AddTag("mRoleIcon:blizz", "PLAYER_ROLES_ASSIGNED GROUP_ROSTER_UPDATE", function(unit)
-	local UnitRole = (E.Retail or E.Wrath) and UnitGroupRolesAssigned(unit)
+	local UnitRole = (E.Retail or E.Cata) and UnitGroupRolesAssigned(unit)
 	return UnitRole and icons.default[UnitRole] or ""
 end)
 
 E:AddTag("mRoleIcon:blizz:nodd", "PLAYER_ROLES_ASSIGNED GROUP_ROSTER_UPDATE", function(unit)
-	local UnitRole = (E.Retail or E.Wrath) and UnitGroupRolesAssigned(unit)
+	local UnitRole = (E.Retail or E.Cata) and UnitGroupRolesAssigned(unit)
 	return  (UnitRole and (UnitRole == "TANK" or UnitRole == "HEALER")) and icons.default[UnitRole] or ""
 end)
 
 E:AddTag("mRoleIcon:target", "UNIT_TARGET UNIT_COMBAT", function(unit)
-	local UnitRole = (E.Retail or E.Wrath) and UnitGroupRolesAssigned(unit .. "target")
+	local UnitRole = (E.Retail or E.Cata) and UnitGroupRolesAssigned(unit .. "target")
 	return UnitRole and icons[UnitRole] or ""
 end)
 
 E:AddTag("mRoleIcon:target:blizz", "UNIT_TARGET UNIT_COMBAT", function(unit)
-	local UnitRole = (E.Retail or E.Wrath) and UnitGroupRolesAssigned(unit .. "target")
+	local UnitRole = (E.Retail or E.Cata) and UnitGroupRolesAssigned(unit .. "target")
 	return UnitRole and icons.default[UnitRole] or ""
 end)
 
@@ -1651,7 +1651,7 @@ E:AddTag("mPower:percent", "UNIT_DISPLAYPOWER UNIT_POWER_FREQUENT UNIT_MAXPOWER 
 	if power ~= 0 then
 		local Role = ""
 
-		if E.Retail or E.Wrath then
+		if E.Retail or E.Cata then
 			Role = UnitGroupRolesAssigned(unit)
 		end
 
@@ -1679,7 +1679,7 @@ end)
 E:AddTag("mPower:percent:heal", "UNIT_DISPLAYPOWER UNIT_POWER_FREQUENT UNIT_MAXPOWER PLAYER_ROLES_ASSIGNED GROUP_ROSTER_UPDATE", function(unit, power)
 	local Role = "HEALER"
 
-	if E.Retail or E.Wrath then
+	if E.Retail or E.Cata then
 		Role = UnitGroupRolesAssigned(unit)
 	end
 
@@ -1875,7 +1875,7 @@ E:AddTag("mTargetingPlayers:icons:Stop", 2, function(unit)
 end)
 
 E:AddTag("mTargetingPlayers:icons:Role", 2, function(unit)
-	if (InCombatLockdown()) and UnitAffectingCombat(unit) and (IsInGroup()) and (E.Retail or E.Wrath) then
+	if (InCombatLockdown()) and UnitAffectingCombat(unit) and (IsInGroup()) and (E.Retail or E.Cata) then
 		return GetPartyTargetsIcons(unit, "role")
 	end
 end)

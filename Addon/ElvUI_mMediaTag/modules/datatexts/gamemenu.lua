@@ -93,7 +93,7 @@ local function BuildMenu()
 
 	if E.Retail then
 		tinsert(menuList, { text = _G.LFG_TITLE, icon = AddIcon("eye"), func = _G.ToggleLFDParentFrame })
-	elseif E.Wrath then
+	elseif E.Cata then
 		tinsert(menuList, {
 			text = _G.LFG_TITLE,
 			icon = AddIcon("eye"),
@@ -134,11 +134,11 @@ local function BuildMenu()
 		})
 	end
 
-	if E.Wrath and E.mylevel >= _G.SHOW_PVP_LEVEL then
+	if E.Cata and E.mylevel >= _G.SHOW_PVP_LEVEL then
 		tinsert(menuList, { text = _G.PLAYER_V_PLAYER, icon = AddIcon("battle"), func = _G.TogglePVPFrame })
 	end
 
-	if E.Retail or E.Wrath then
+	if E.Retail or E.Cata then
 		tinsert(menuList, {
 			text = _G.ACHIEVEMENT_BUTTON,
 			icon = AddIcon("star"),
@@ -265,7 +265,7 @@ local function OnClick(self, button)
 	else
 		if E.Retail then
 			_G.ToggleLFDParentFrame()
-		elseif E.Wrath then
+		elseif E.Cata then
 			if not IsAddOnLoaded("Blizzard_LookingForGroupUI") then
 				UIParentLoadAddOn("Blizzard_LookingForGroupUI")
 			end
@@ -284,7 +284,7 @@ local function OnEnter(self)
 
 	DT.tooltip:AddLine(" ")
 	DT.tooltip:AddLine(format("%s %s%s|r", mMT:mIcon(mMT.Media.Mouse["LEFT"]), tip, L["left click to open the menu."]))
-	if E.Retail or E.Wrath then
+	if E.Retail or E.Cata then
 		DT.tooltip:AddLine(
 			format("%s %s%s|r", mMT:mIcon(mMT.Media.Mouse["RIGHT"]), tip, L["right click to open LFD Window"])
 		)

@@ -97,8 +97,7 @@ local function UpdateTexts()
 
 	PaperDollFrame_UpdateStats()
 
-	if E.Retail then
-		local Objects = CharacterStatsPane.statsFramePool.activeObjects
+	if E.Retail or E.Cata then
 		local DurabilityInfos = mMT:GetDurabilityInfo()
 
 		PlayerStats.values.title = PET_BATTLE_STATS_LABEL
@@ -110,20 +109,26 @@ local function UpdateTexts()
 		end
 
 		PlayerStats.progress.title = L["Progress"]
-		tinsert(PlayerStats.progress.lines, DUNGEON_SCORE .. "|CFFFFFFFF:|r" .. mMT:GetDungeonScore())
+
+		if E.Retail then
+			tinsert(PlayerStats.progress.lines, DUNGEON_SCORE .. "|CFFFFFFFF:|r" .. mMT:GetDungeonScore())
+		end
 
 		PlayerStats.attributes.title = STAT_CATEGORY_ATTRIBUTES
 		PlayerStats.enhancements.title = STAT_CATEGORY_ENHANCEMENTS
 
-		for Table in pairs(Objects) do
-			local Label = Table.Label:GetText()
-			local Value = Table.Value:GetText()
-			local Percent = string.find(Value, "%%")
+		if E.Retail then
+			local Objects = CharacterStatsPane.statsFramePool.activeObjects
+			for Table in pairs(Objects) do
+				local Label = Table.Label:GetText()
+				local Value = Table.Value:GetText()
+				local Percent = string.find(Value, "%%")
 
-			if not Percent then
-				tinsert(PlayerStats.attributes.lines, Label .. " |CFFFFFFFF" .. Value .. "|r")
-			elseif Percent then
-				tinsert(PlayerStats.enhancements.lines, Label .. " |CFFFFFFFF" .. Value .. "|r")
+				if not Percent then
+					tinsert(PlayerStats.attributes.lines, Label .. " |CFFFFFFFF" .. Value .. "|r")
+				elseif Percent then
+					tinsert(PlayerStats.enhancements.lines, Label .. " |CFFFFFFFF" .. Value .. "|r")
+				end
 			end
 		end
 	end

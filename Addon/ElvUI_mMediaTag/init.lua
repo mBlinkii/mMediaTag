@@ -339,7 +339,7 @@ function mMT:PLAYER_ENTERING_WORLD(event)
 		mMT:mRoll()
 	end
 
-	if E.db.mMT.chat.enable then
+	if E.Retail and E.db.mMT.chat.enable then
 		mMT:mChat()
 	end
 

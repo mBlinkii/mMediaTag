@@ -3,6 +3,7 @@ local E = unpack(ElvUI)
 local _G = _G
 local SetPortraitTexture = SetPortraitTexture
 local UnitExists = UnitExists
+local tinsert = tinsert
 
 local module = mMT.Modules.Portraits
 if not module then
@@ -823,7 +824,6 @@ function module:Initialize()
 				events = {
 					"PLAYER_ENTERING_WORLD",
 					"ARENA_OPPONENT_UPDATE",
-					"ARENA_PREP_OPPONENT_SPECIALIZATIONS",
 					"UNIT_CONNECTION",
 				},
 				unitEvents = {
@@ -832,6 +832,10 @@ function module:Initialize()
 					"UNIT_NAME_UPDATE",
 				},
 			}
+			
+			if E.Retail then
+				tinsert(frames["Arena" .. i].events, "ARENA_PREP_OPPONENT_SPECIALIZATIONS")
+			end
 		end
 	end
 
@@ -845,6 +849,7 @@ function module:Initialize()
 				end
 
 				for _, event in pairs(unit.events) do
+					mMT:Print(event)
 					module[name]:RegisterEvent(event)
 				end
 			elseif module[name] and not unit.settings.enable then
