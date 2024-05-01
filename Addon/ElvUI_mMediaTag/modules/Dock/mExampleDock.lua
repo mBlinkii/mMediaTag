@@ -242,6 +242,7 @@ function mMT:Dock_Default(top)
 	E.db["mMT"]["dockdatatext"]["volume"]["icon"] = "COLOR62"
 	E.db["mMT"]["dockdatatext"]["calendar"]["icon"] = "COLOR02"
 	E.db["mMT"]["dockdatatext"]["bag"]["icon"] = "COLOR68"
+	E.db["mMT"]["dockdatatext"]["friends"]["icon"] = "COLOR38"
 
 	E.db["mMT"]["dockdatatext"]["calendar"]["option"] = "de"
 	E.db["mMT"]["dockdatatext"]["calendar"]["showyear"] = true
@@ -770,6 +771,7 @@ function mMT:Dock_Extra(top)
 	E.db["mMT"]["dockdatatext"]["spellbook"]["icon"] = "MATERIAL22"
 	E.db["mMT"]["dockdatatext"]["talent"]["icon"] = "MATERIAL42"
 	E.db["mMT"]["dockdatatext"]["profession"]["icon"] = "MATERIAL25"
+	E.db["mMT"]["dockdatatext"]["friends"]["icon"] = "MATERIAL28"
 
 	if top then
 		E.db["movers"]["DTPanelmMT Extra ClockMover"] = "TOP,ElvUIParent,TOP,-215,-4"
