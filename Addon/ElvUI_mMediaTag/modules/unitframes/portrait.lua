@@ -492,7 +492,6 @@ local function UpdatePortrait(frame, conf, unit, parent)
 	local offset = GetOffset(conf.size, settings.offset[conf.texture])
 	frame.portrait:SetPoint("TOPLEFT", 0 + offset, 0 - offset)
 	frame.portrait:SetPoint("BOTTOMRIGHT", 0 - offset, 0 + offset)
-	mirrorTexture(frame.portrait, conf.mirror)
 
 	-- Portrait Mask
 	texture = textures.mask[conf.texture] or conf.mirror and textures.mask.B[conf.texture] or textures.mask.A[conf.texture]
