@@ -279,8 +279,6 @@ local function executeMarker(unit, percent)
 		if executeAutoRange.monk then
 			local playerHealth = UnitHealth("player")
 			local unitHealth = unit.Health.max
-			mMT:Print(playerHealth, unitHealth)
-
 			if playerHealth and unitHealth then
 				range = (100/unitHealth) * playerHealth
 			else
