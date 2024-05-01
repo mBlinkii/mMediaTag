@@ -216,36 +216,26 @@ function mMT:updateAutoRange()
 			end
 		end
 	elseif class == "PRIEST" then
-		if IsPlayerSpell(309072) or IsPlayerSpell(32379) then -- ToF or SW:Death
+		if IsPlayerSpell(32379) then -- ToF or SW:Death
 			executeAutoRange.enable = true
-			executeAutoRange.range = IsPlayerSpell(309072) and 35 or 20
+			executeAutoRange.range = 20
 		end
 	elseif class == "WARRIOR" then
-		if specID == 72 then
-			local execute_Id = (specID == 72) and 280735 or 163201
-			local massacre_Id = (specID == 72) and 206315 or 281001
-			if IsPlayerSpell(execute_Id) or IsPlayerSpell(massacre_Id) then -- Execute or Massacre
-				executeAutoRange.enable = true
-				executeAutoRange.range = IsPlayerSpell(massacre_Id) and 35 or 20
-			end
-		elseif specID == 73 then
-			if IsPlayerSpell(163201) then -- Execute
-				executeAutoRange.enable = true
-				executeAutoRange.range = 20
-			end
+		executeAutoRange.enable = true
+		executeAutoRange.range = 0.2
+		if (specID == 72 and IsPlayerSpell(206315)) or IsPlayerSpell(281001) then
+			executeAutoRange.range = 0.35
 		end
 	elseif class == "HUNTER" then
-		if IsPlayerSpell(273887) or ((specID == 255) and IsPlayerSpell(385718)) then
-			-- Killer Instinct or Ruthless marauder
+		if IsPlayerSpell(273887) then
 			executeAutoRange.enable = true
 			executeAutoRange.range = 35
-		else
-			-- Since Survival has it's own spellId for kill shot
-			local killShot_Id = (specID == 255) and 320976 or 53351
-			if IsPlayerSpell(killShot_Id) then -- Kill shot
-				executeAutoRange.enable = true
-				executeAutoRange.range = 20
-			end
+		elseif IsPlayerSpell(53351) then
+			executeAutoRange.enable = true
+			executeAutoRange.range = 20
+		elseif IsPlayerSpell((specID == 255) and 320976 or 53351) then -- Kill shot
+			executeAutoRange.enable = true
+			executeAutoRange.range = 20
 		end
 	elseif class == "ROGUE" then
 		if specID == 259 then
@@ -260,9 +250,10 @@ function mMT:updateAutoRange()
 			executeAutoRange.range = 20
 		end
 	elseif class == "MONK" then
-		if IsPlayerSpell(322109) and IsPlayerSpell(322113) then -- ToD
+		if IsPlayerSpell(322109) then -- ToD
 			executeAutoRange.enable = true
 			executeAutoRange.range = 15
+			executeAutoRange.monk = not IsPlayerSpell(322113)
 		end
 	elseif class == "DEATHKNIGHT" then
 		if IsPlayerSpell(343294) then -- Soulreaper
@@ -282,10 +273,22 @@ local function executeMarker(unit, percent)
 	end
 
 	local range = nil
-	local inCombat = InCombatLockdown()
+	local inCombat = true --InCombatLockdown()
 
 	if db.auto and executeAutoRange.enable then
-		range = executeAutoRange.range
+		if executeAutoRange.monk then
+			local playerHealth = UnitHealth("player")
+			local unitHealth = unit.Health.max
+			mMT:Print(playerHealth, unitHealth)
+
+			if playerHealth and unitHealth then
+				range = (100/unitHealth) * playerHealth
+			else
+				range = executeAutoRange.range 
+			end
+		else
+			range = executeAutoRange.range 
+		end
 	elseif not db.auto then
 		range = db.range
 	end

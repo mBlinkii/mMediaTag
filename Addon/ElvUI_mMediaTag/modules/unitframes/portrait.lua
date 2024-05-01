@@ -849,7 +849,6 @@ function module:Initialize()
 				end
 
 				for _, event in pairs(unit.events) do
-					mMT:Print(event)
 					module[name]:RegisterEvent(event)
 				end
 			elseif module[name] and not unit.settings.enable then
