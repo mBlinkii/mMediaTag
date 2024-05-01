@@ -273,7 +273,7 @@ local function executeMarker(unit, percent)
 	end
 
 	local range = nil
-	local inCombat = true --InCombatLockdown()
+	local inCombat = InCombatLockdown()
 
 	if db.auto and executeAutoRange.enable then
 		if executeAutoRange.monk then

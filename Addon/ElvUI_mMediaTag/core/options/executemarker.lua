@@ -65,17 +65,6 @@ local function configTable()
 						E:StaticPopup_Show("CONFIG_RL")
 					end,
 				},
-				combat = {
-					order = 1,
-					type = "toggle",
-					name = L["Show only in Combat"],
-					get = function(info)
-						return E.db.mMT.nameplate.executemarker.combat
-					end,
-					set = function(info, value)
-						E.db.mMT.nameplate.executemarker.combat = value
-					end,
-				},
 				executerange = {
 					order = 2,
 					name = L["Execute Range HP%"],
