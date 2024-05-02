@@ -273,19 +273,22 @@ local function executeMarker(unit, percent)
 	end
 
 	local range = nil
-	local inCombat = InCombatLockdown()
+	local inCombat = true --InCombatLockdown()
 
 	if db.auto and executeAutoRange.enable then
-		if executeAutoRange.monk then
-			local playerHealth = UnitHealth("player")
-			local unitHealth = unit.Health.max
+		local playerHealth = UnitHealthMax("player")
+		local unitHealth = unit.Health.max
+
+		if not executeAutoRange.monk then
+			range = executeAutoRange.range
+		end
+
+		if executeAutoRange.monk and unitHealth > playerHealth then
 			if playerHealth and unitHealth then
-				range = (100/unitHealth) * playerHealth
+				range = (100 / unitHealth) * playerHealth
 			else
-				range = executeAutoRange.range 
+				range = executeAutoRange.range
 			end
-		else
-			range = executeAutoRange.range 
 		end
 	elseif not db.auto then
 		range = db.range
