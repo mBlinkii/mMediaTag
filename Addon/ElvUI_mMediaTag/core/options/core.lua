@@ -23,20 +23,26 @@ local function configTable()
 				icon = "Interface\\Addons\\ElvUI_mMediaTag\\media\\system\\general.tga",
 				childGroups = "tab",
 				args = {
-					greeting = {
+					general = {
 						order = 1,
+						type = "group",
+						name = L["General"],
+						args = {},
+					},
+					greeting = {
+						order = 2,
 						type = "group",
 						name = L["Welcome text"],
 						args = {},
 					},
 					roll = {
-						order = 2,
+						order = 3,
 						type = "group",
 						name = L["Roll Button"],
 						args = {},
 					},
 					chat = {
-						order = 3,
+						order = 4,
 						type = "group",
 						name = L["Chat Button"],
 						hidden = function()
@@ -45,7 +51,7 @@ local function configTable()
 						args = {},
 					},
 					keystochat = {
-						order = 4,
+						order = 5,
 						type = "group",
 						name = L["Keystone to Chat"] .. " (!keys)",
 						hidden = function()
@@ -54,7 +60,7 @@ local function configTable()
 						args = {},
 					},
 					instancedifficulty = {
-						order = 5,
+						order = 6,
 						type = "group",
 						name = L["Instance Difficulty"],
 						hidden = function()
@@ -63,7 +69,7 @@ local function configTable()
 						args = {},
 					},
 					afk = {
-						order = 5,
+						order = 7,
 						type = "group",
 						name = L["AFK Screen"],
 						args = {},
