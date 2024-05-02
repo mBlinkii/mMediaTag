@@ -646,7 +646,11 @@ E:AddTagInfo("status", mMT.NameShort .. " " .. L["Color"], L["Unit colors with m
 E:AddTagInfo("mColor:target", mMT.NameShort .. " " .. L["Color"], L["Targetunit colors with mMediaTag colors for Rare, Rareelite, Elite and Boss and Classcolors."])
 
 local function NoDecimalPercent(min, max, string)
-	return format("%d", (min / max * 100)) .. string
+	if string then
+		return format("%d", (min / max * 100)) .. string
+	else
+		return format("%d", (min / max * 100))
+	end
 end
 
 E:AddTag("mHealth", "UNIT_HEALTH UNIT_MAXHEALTH UNIT_CONNECTION PLAYER_FLAGS_CHANGED PLAYER_UPDATE_RESTING", function(unit)
@@ -945,6 +949,22 @@ E:AddTag("mHealth:icon", "UNIT_HEALTH UNIT_MAXHEALTH UNIT_CONNECTION PLAYER_FLAG
 	end
 end)
 
+E:AddTag("mHealth:icon:ndp:nosign", "UNIT_HEALTH UNIT_MAXHEALTH UNIT_CONNECTION PLAYER_FLAGS_CHANGED PLAYER_UPDATE_RESTING", function(unit)
+	if (UnitIsDead(unit)) or (UnitIsGhost(unit)) or (not UnitIsConnected(unit)) or (UnitIsAFK(unit)) or (UnitIsDND(unit)) then
+		return _TAGS["mStatus:icon"](unit)
+	else
+		local currentHealth = UnitHealth(unit)
+		local maxHealth = UnitHealthMax(unit)
+		local deficit = maxHealth - currentHealth
+
+		if deficit > 0 and currentHealth > 0 then
+			return NoDecimalPercent(currentHealth, maxHealth)
+		else
+			return E:GetFormattedText("CURRENT", currentHealth, maxHealth)
+		end
+	end
+end)
+
 E:AddTag("mHealth:icon:ndp", "UNIT_HEALTH UNIT_MAXHEALTH UNIT_CONNECTION PLAYER_FLAGS_CHANGED PLAYER_UPDATE_RESTING", function(unit)
 	if (UnitIsDead(unit)) or (UnitIsGhost(unit)) or (not UnitIsConnected(unit)) or (UnitIsAFK(unit)) or (UnitIsDND(unit)) then
 		return _TAGS["mStatus:icon"](unit)
@@ -971,6 +991,22 @@ E:AddTag("mHealth:icon:short", "UNIT_HEALTH UNIT_MAXHEALTH UNIT_CONNECTION PLAYE
 
 		if deficit > 0 and currentHealth > 0 then
 			return E:GetFormattedText("PERCENT", currentHealth, maxHealth)
+		else
+			return E:GetFormattedText("CURRENT", currentHealth, maxHealth, nil, true)
+		end
+	end
+end)
+
+E:AddTag("mHealth:icon:short:ndp:nosign", "UNIT_HEALTH UNIT_MAXHEALTH UNIT_CONNECTION PLAYER_FLAGS_CHANGED PLAYER_UPDATE_RESTING", function(unit)
+	if (UnitIsDead(unit)) or (UnitIsGhost(unit)) or (not UnitIsConnected(unit)) or (UnitIsAFK(unit)) or (UnitIsDND(unit)) then
+		return _TAGS["mStatus:icon"](unit)
+	else
+		local currentHealth = UnitHealth(unit)
+		local maxHealth = UnitHealthMax(unit)
+		local deficit = maxHealth - currentHealth
+
+		if deficit > 0 and currentHealth > 0 then
+			return NoDecimalPercent(currentHealth, maxHealth)
 		else
 			return E:GetFormattedText("CURRENT", currentHealth, maxHealth, nil, true)
 		end
@@ -1366,7 +1402,7 @@ end)
 
 E:AddTag("mRoleIcon:blizz:nodd", "PLAYER_ROLES_ASSIGNED GROUP_ROSTER_UPDATE", function(unit)
 	local UnitRole = (E.Retail or E.Cata) and UnitGroupRolesAssigned(unit)
-	return  (UnitRole and (UnitRole == "TANK" or UnitRole == "HEALER")) and icons.default[UnitRole] or ""
+	return (UnitRole and (UnitRole == "TANK" or UnitRole == "HEALER")) and icons.default[UnitRole] or ""
 end)
 
 E:AddTag("mRoleIcon:target", "UNIT_TARGET UNIT_COMBAT", function(unit)
