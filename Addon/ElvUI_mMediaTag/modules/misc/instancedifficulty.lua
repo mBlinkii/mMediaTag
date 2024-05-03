@@ -302,7 +302,7 @@ function mMT:GetDungeonInfo(datatext, short, stageBlock)
 			elseif short then
 				text = format("%s%s|r %s%s|r", isGuildParty and colors.guild.color or colors.name.color or "|CFFFFFFFF", name, difficultyColor, difficultyShort)
 			elseif stageBlock then
-				text = format("%s|r %s%s|r", isGuildParty and colors.guild.color or "|CFFFFFFFF" .. "#" or "", difficultyColor, difficultyShort)
+				text = format("%s|r %s%s|r", isGuildParty and colors.guild.color or colors.name.color or "|CFFFFFFFF", difficultyColor, difficultyShort)
 			else
 				text = format("%s%s|r\n%s%s|r |CFFF7DC6F%s|r", isGuildParty and colors.guild.color or colors.name.color or "|CFFFFFFFF", name, difficultyColor, difficultyShort, instanceGroupSize)
 			end

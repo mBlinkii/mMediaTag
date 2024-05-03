@@ -62,7 +62,7 @@ local function configTable()
                 ID_description = {
                     order = 3,
                     type = 'description',
-                    name = L["The position parameters of the ElvUI instance difficulty symbol are used. To change the position, the position of the ElvUI symbol must be changed."],
+                    name = L["The position settings of Instance Difficulty are controlled by ElvUI in Maps, Minimap, Instance Difficulty."],
                 },
                 ID_description2 = {
                     order = 4,

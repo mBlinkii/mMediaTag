@@ -1,6 +1,71 @@
 local E = unpack(ElvUI)
 local DT = E:GetModule("DataTexts")
+
+local function ResetColors()
+	E.db["mMT"]["dockdatatext"]["achievement"]["customcolor"] = false
+	E.db["mMT"]["dockdatatext"]["achievement"]["iconcolor"]["b"] = 1
+	E.db["mMT"]["dockdatatext"]["achievement"]["iconcolor"]["g"] = 1
+	E.db["mMT"]["dockdatatext"]["achievement"]["iconcolor"]["r"] = 1
+
+	E.db["mMT"]["dockdatatext"]["blizzardstore"]["customcolor"] = false
+	E.db["mMT"]["dockdatatext"]["blizzardstore"]["iconcolor"]["b"] = 1
+	E.db["mMT"]["dockdatatext"]["blizzardstore"]["iconcolor"]["g"] = 1
+	E.db["mMT"]["dockdatatext"]["blizzardstore"]["iconcolor"]["r"] = 1
+
+	E.db["mMT"]["dockdatatext"]["character"]["customcolor"] = false
+	E.db["mMT"]["dockdatatext"]["character"]["iconcolor"]["b"] = 1
+	E.db["mMT"]["dockdatatext"]["character"]["iconcolor"]["g"] = 1
+	E.db["mMT"]["dockdatatext"]["character"]["iconcolor"]["r"] = 1
+
+	E.db["mMT"]["dockdatatext"]["collection"]["customcolor"] = false
+	E.db["mMT"]["dockdatatext"]["collection"]["iconcolor"]["b"] = 1
+	E.db["mMT"]["dockdatatext"]["collection"]["iconcolor"]["g"] = 1
+	E.db["mMT"]["dockdatatext"]["collection"]["iconcolor"]["r"] = 1
+
+	E.db["mMT"]["dockdatatext"]["encounter"]["customcolor"] = false
+	E.db["mMT"]["dockdatatext"]["encounter"]["iconcolor"]["b"] = 1
+	E.db["mMT"]["dockdatatext"]["encounter"]["iconcolor"]["g"] = 1
+	E.db["mMT"]["dockdatatext"]["encounter"]["iconcolor"]["r"] = 1
+
+	E.db["mMT"]["dockdatatext"]["friends"]["customcolor"] = false
+	E.db["mMT"]["dockdatatext"]["friends"]["iconcolor"]["b"] = 1
+	E.db["mMT"]["dockdatatext"]["friends"]["iconcolor"]["g"] = 1
+	E.db["mMT"]["dockdatatext"]["friends"]["iconcolor"]["r"] = 1
+
+	E.db["mMT"]["dockdatatext"]["guild"]["customcolor"] = false
+	E.db["mMT"]["dockdatatext"]["guild"]["iconcolor"]["b"] = 1
+	E.db["mMT"]["dockdatatext"]["guild"]["iconcolor"]["g"] = 1
+	E.db["mMT"]["dockdatatext"]["guild"]["iconcolor"]["r"] = 1
+
+	E.db["mMT"]["dockdatatext"]["lfd"]["customcolor"] = false
+	E.db["mMT"]["dockdatatext"]["lfd"]["iconcolor"]["b"] = 1
+	E.db["mMT"]["dockdatatext"]["lfd"]["iconcolor"]["g"] = 1
+	E.db["mMT"]["dockdatatext"]["lfd"]["iconcolor"]["r"] = 1
+
+	E.db["mMT"]["dockdatatext"]["mainmenu"]["customcolor"] = false
+	E.db["mMT"]["dockdatatext"]["mainmenu"]["iconcolor"]["b"] = 1
+	E.db["mMT"]["dockdatatext"]["mainmenu"]["iconcolor"]["g"] = 1
+	E.db["mMT"]["dockdatatext"]["mainmenu"]["iconcolor"]["r"] = 1
+
+	E.db["mMT"]["dockdatatext"]["quest"]["customcolor"] = false
+	E.db["mMT"]["dockdatatext"]["quest"]["iconcolor"]["b"] = 1
+	E.db["mMT"]["dockdatatext"]["quest"]["iconcolor"]["g"] = 1
+	E.db["mMT"]["dockdatatext"]["quest"]["iconcolor"]["r"] = 1
+
+	E.db["mMT"]["dockdatatext"]["spellbook"]["customcolor"] = false
+	E.db["mMT"]["dockdatatext"]["spellbook"]["iconcolor"]["b"] = 1
+	E.db["mMT"]["dockdatatext"]["spellbook"]["iconcolor"]["g"] = 1
+	E.db["mMT"]["dockdatatext"]["spellbook"]["iconcolor"]["r"] = 1
+
+	E.db["mMT"]["dockdatatext"]["profession"]["customcolor"] = false
+	E.db["mMT"]["dockdatatext"]["profession"]["iconcolor"]["b"] = 1
+	E.db["mMT"]["dockdatatext"]["profession"]["iconcolor"]["g"] = 1
+	E.db["mMT"]["dockdatatext"]["profession"]["iconcolor"]["r"] = 1
+end
+
 function mMT:DeleteAll()
+	ResetColors()
+
 	if E.global.datatexts.customPanels["mMT XIV Clock"] then
 		E.Options.args.datatexts.args.panels.args["mMT XIV Clock"] = nil
 		E.db.datatexts.panels["mMT XIV Clock"] = nil
@@ -131,8 +196,9 @@ function mMT:DeleteAll()
 end
 
 function mMT:Dock_Default(top)
-	E.DataTexts:BuildPanelFrame("mMT Dock")
+	ResetColors()
 
+	E.DataTexts:BuildPanelFrame("mMT Dock")
 	E.global.datatexts.customPanels["mMT Dock"]["backdrop"] = false
 	E.global.datatexts.customPanels["mMT Dock"]["border"] = false
 	E.global.datatexts.customPanels["mMT Dock"]["height"] = 32
@@ -143,7 +209,7 @@ function mMT:Dock_Default(top)
 
 	E.db["datatexts"]["panels"]["mMT Dock"][1] = "mMT_Dock_Character"
 	E.db["datatexts"]["panels"]["mMT Dock"][2] = "mMT_Dock_SpellBook"
-	E.db["datatexts"]["panels"]["mMT Dock"][3] = "mMT_Dock_Talent"
+	E.db["datatexts"]["panels"]["mMT Dock"][3] = E.Retail and "mMT_Dock_Talent" or "mMT_Dock_Friends"
 	E.db["datatexts"]["panels"]["mMT Dock"][4] = "mMT_Dock_Achievement"
 	E.db["datatexts"]["panels"]["mMT Dock"][5] = "mMT_Dock_Quest"
 	E.db["datatexts"]["panels"]["mMT Dock"][6] = "mMT_Dock_LFDTool"
@@ -151,7 +217,7 @@ function mMT:Dock_Default(top)
 	E.db["datatexts"]["panels"]["mMT Dock"][8] = "mMT_Dock_CollectionsJournal"
 	E.db["datatexts"]["panels"]["mMT Dock"][9] = "mMT_Dock_Calendar"
 	E.db["datatexts"]["panels"]["mMT Dock"][10] = "mMT_Dock_Volume"
-	E.db["datatexts"]["panels"]["mMT Dock"][11] = "mMT_Dock_BlizzardStore"
+	E.db["datatexts"]["panels"]["mMT Dock"][11] = E.Cata and "mMT_Dock_Profession" or "mMT_Dock_BlizzardStore"
 	E.db["datatexts"]["panels"]["mMT Dock"][12] = "mMT_Dock_MainMenu"
 	E.db["datatexts"]["panels"]["mMT Dock"]["battleground"] = false
 	E.db["datatexts"]["panels"]["mMT Dock"]["enable"] = true
@@ -176,6 +242,7 @@ function mMT:Dock_Default(top)
 	E.db["mMT"]["dockdatatext"]["volume"]["icon"] = "COLOR62"
 	E.db["mMT"]["dockdatatext"]["calendar"]["icon"] = "COLOR02"
 	E.db["mMT"]["dockdatatext"]["bag"]["icon"] = "COLOR68"
+	E.db["mMT"]["dockdatatext"]["friends"]["icon"] = "COLOR38"
 
 	E.db["mMT"]["dockdatatext"]["calendar"]["option"] = "de"
 	E.db["mMT"]["dockdatatext"]["calendar"]["showyear"] = true
@@ -198,6 +265,8 @@ function mMT:Dock_Default(top)
 end
 
 function mMT:Dock_MaUI(top)
+	ResetColors()
+
 	E.DataTexts:BuildPanelFrame("MaUI Left")
 	E.global["datatexts"]["customPanels"]["MaUI Left"]["backdrop"] = false
 	E.global["datatexts"]["customPanels"]["MaUI Left"]["height"] = 32
@@ -216,10 +285,8 @@ function mMT:Dock_MaUI(top)
 	E.db["datatexts"]["panels"]["MaUI Left"][8] = "mMT_Dock_EncounterJournal"
 	E.db["datatexts"]["panels"]["MaUI Left"][9] = "mMT_Dock_CollectionsJournal"
 	E.db["datatexts"]["panels"]["MaUI Left"][10] = "mMT_Dock_Volume"
-	E.db["datatexts"]["panels"]["MaUI Left"][11] = "mMT_Dock_BlizzardStore"
+	E.db["datatexts"]["panels"]["MaUI Left"][11] = E.Cata and "mMT_Dock_Profession" or "mMT_Dock_BlizzardStore"
 	E.db["datatexts"]["panels"]["MaUI Left"][12] = "mMT_Dock_Calendar"
-	E.db["datatexts"]["panels"]["MaUI Left"][13] = "mMT_Dock_None"
-	E.db["datatexts"]["panels"]["MaUI Left"][15] = "mMT_Dock_Bags"
 	E.db["datatexts"]["panels"]["MaUI Left"]["battleground"] = false
 	E.db["datatexts"]["panels"]["MaUI Left"]["enable"] = true
 
@@ -235,8 +302,8 @@ function mMT:Dock_MaUI(top)
 	E.global["datatexts"]["customPanels"]["MaUI Right"]["width"] = 460
 
 	E.db["datatexts"]["panels"]["MaUI Right"][1] = "System"
-	E.db["datatexts"]["panels"]["MaUI Right"][2] = "M+ Score"
-	E.db["datatexts"]["panels"]["MaUI Right"][3] = "mTeleports"
+	E.db["datatexts"]["panels"]["MaUI Right"][2] = E.Retail and "M+ Score" or "Currencies"
+	E.db["datatexts"]["panels"]["MaUI Right"][3] = E.Retail and "mTeleports" or "mGameMenu"
 	E.db["datatexts"]["panels"]["MaUI Right"][4] = "Gold"
 	E.db["datatexts"]["panels"]["MaUI Right"]["battleground"] = false
 	E.db["datatexts"]["panels"]["MaUI Right"]["enable"] = true
@@ -268,7 +335,7 @@ function mMT:Dock_MaUI(top)
 	E.global["datatexts"]["customPanels"]["MaUI Time Left"]["width"] = 430
 
 	E.db["datatexts"]["panels"]["MaUI Time Left"][1] = "DurabilityIlevel"
-	E.db["datatexts"]["panels"]["MaUI Time Left"][2] = "Talent/Loot Specialization"
+	E.db["datatexts"]["panels"]["MaUI Time Left"][2] = E.Retail and "Talent/Loot Specialization" or "Reputation"
 	E.db["datatexts"]["panels"]["MaUI Time Left"][3] = ""
 	E.db["datatexts"]["panels"]["MaUI Time Left"]["battleground"] = false
 	E.db["datatexts"]["panels"]["MaUI Time Left"]["enable"] = true
@@ -327,6 +394,10 @@ function mMT:Dock_MaUI(top)
 	E.db["mMT"]["dockdatatext"]["guild"]["iconcolor"]["b"] = 0.92549026012421
 	E.db["mMT"]["dockdatatext"]["guild"]["iconcolor"]["g"] = 0.18823531270027
 	E.db["mMT"]["dockdatatext"]["guild"]["iconcolor"]["r"] = 0.90196084976196
+	E.db["mMT"]["dockdatatext"]["profession"]["icon"] = "COLOR06"
+	E.db["mMT"]["dockdatatext"]["profession"]["iconcolor"]["b"] = 0.92549026012421
+	E.db["mMT"]["dockdatatext"]["profession"]["iconcolor"]["g"] = 0.18823531270027
+	E.db["mMT"]["dockdatatext"]["profession"]["iconcolor"]["r"] = 0.90196084976196
 	E.db["mMT"]["dockdatatext"]["hover"]["b"] = 0.4078431725502
 	E.db["mMT"]["dockdatatext"]["hover"]["g"] = 0.4078431725502
 	E.db["mMT"]["dockdatatext"]["hover"]["r"] = 0.4078431725502
@@ -376,7 +447,7 @@ function mMT:Dock_BG(top)
 	E.global["datatexts"]["customPanels"]["mMT Databar Background"]["name"] = "mMT Databar Background"
 	E.global["datatexts"]["customPanels"]["mMT Databar Background"]["numPoints"] = 1
 	E.global["datatexts"]["customPanels"]["mMT Databar Background"]["panelTransparency"] = true
-	E.global["datatexts"]["customPanels"]["mMT Databar Background"]["width"] = 1920
+	E.global["datatexts"]["customPanels"]["mMT Databar Background"]["width"] = GetScreenWidth() or 1920
 
 	E.db["datatexts"]["panels"]["mMT Databar Background"][1] = ""
 	E.db["datatexts"]["panels"]["mMT Databar Background"]["battleground"] = false
@@ -387,9 +458,12 @@ function mMT:Dock_BG(top)
 	else
 		E.db["movers"]["DTPanelmMT Databar BackgroundMover"] = "BOTTOM,ElvUIParent,BOTTOM,0,4"
 	end
+	E:StaggeredUpdateAll(nil, true)
 end
 
 function mMT:Dock_XIVLike(top)
+	ResetColors()
+
 	E.DataTexts:BuildPanelFrame("mMT XIV Clock")
 	E.global["datatexts"]["customPanels"]["mMT XIV Clock"]["backdrop"] = false
 	E.global["datatexts"]["customPanels"]["mMT XIV Clock"]["border"] = false
@@ -479,18 +553,18 @@ function mMT:Dock_XIVLike(top)
 	E.db["datatexts"]["panels"]["mMT XIV Left"][8] = "mMT_Dock_EncounterJournal"
 	E.db["datatexts"]["panels"]["mMT XIV Left"][9] = "mMT_Dock_Quest"
 	E.db["datatexts"]["panels"]["mMT XIV Left"][10] = "mMT_Dock_CollectionsJournal"
-	E.db["datatexts"]["panels"]["mMT XIV Left"][11] = "mMT_Dock_BlizzardStore"
+	E.db["datatexts"]["panels"]["mMT XIV Left"][11] = E.Cata and "mMT_Dock_Profession" or "mMT_Dock_BlizzardStore"
 	E.db["datatexts"]["panels"]["mMT XIV Left"]["battleground"] = false
 	E.db["datatexts"]["panels"]["mMT XIV Left"]["enable"] = true
 
 	E.db["datatexts"]["panels"]["mMT XIV Right"][1] = "mFPS"
-	E.db["datatexts"]["panels"]["mMT XIV Right"][2] = "M+ Score"
-	E.db["datatexts"]["panels"]["mMT XIV Right"][3] = "mTeleports"
+	E.db["datatexts"]["panels"]["mMT XIV Right"][2] = E.Retail and "M+ Score" or "Currencies"
+	E.db["datatexts"]["panels"]["mMT XIV Right"][3] = E.Retail and "mTeleports" or "mGameMenu"
 	E.db["datatexts"]["panels"]["mMT XIV Right"][4] = "Gold"
 	E.db["datatexts"]["panels"]["mMT XIV Right"]["battleground"] = false
 	E.db["datatexts"]["panels"]["mMT XIV Right"]["enable"] = true
 
-	E.db["datatexts"]["panels"]["mMT XIV Talent"][1] = "Talent/Loot Specialization"
+	E.db["datatexts"]["panels"]["mMT XIV Talent"][1] = E.Retail and "Talent/Loot Specialization" or "Reputation"
 	E.db["datatexts"]["panels"]["mMT XIV Talent"][2] = ""
 	E.db["datatexts"]["panels"]["mMT XIV Talent"][3] = ""
 	E.db["datatexts"]["panels"]["mMT XIV Talent"]["battleground"] = false
@@ -501,61 +575,6 @@ function mMT:Dock_XIVLike(top)
 	E.db["datatexts"]["panels"]["mMT XIV Profession"][3] = ""
 	E.db["datatexts"]["panels"]["mMT XIV Profession"]["battleground"] = false
 	E.db["datatexts"]["panels"]["mMT XIV Profession"]["enable"] = true
-
-	E.db["mMT"]["dockdatatext"]["achievement"]["customcolor"] = false
-	E.db["mMT"]["dockdatatext"]["achievement"]["iconcolor"]["b"] = 1
-	E.db["mMT"]["dockdatatext"]["achievement"]["iconcolor"]["g"] = 1
-	E.db["mMT"]["dockdatatext"]["achievement"]["iconcolor"]["r"] = 1
-
-	E.db["mMT"]["dockdatatext"]["blizzardstore"]["customcolor"] = false
-	E.db["mMT"]["dockdatatext"]["blizzardstore"]["iconcolor"]["b"] = 1
-	E.db["mMT"]["dockdatatext"]["blizzardstore"]["iconcolor"]["g"] = 1
-	E.db["mMT"]["dockdatatext"]["blizzardstore"]["iconcolor"]["r"] = 1
-
-	E.db["mMT"]["dockdatatext"]["character"]["customcolor"] = false
-	E.db["mMT"]["dockdatatext"]["character"]["iconcolor"]["b"] = 1
-	E.db["mMT"]["dockdatatext"]["character"]["iconcolor"]["g"] = 1
-	E.db["mMT"]["dockdatatext"]["character"]["iconcolor"]["r"] = 1
-
-	E.db["mMT"]["dockdatatext"]["collection"]["customcolor"] = false
-	E.db["mMT"]["dockdatatext"]["collection"]["iconcolor"]["b"] = 1
-	E.db["mMT"]["dockdatatext"]["collection"]["iconcolor"]["g"] = 1
-	E.db["mMT"]["dockdatatext"]["collection"]["iconcolor"]["r"] = 1
-
-	E.db["mMT"]["dockdatatext"]["encounter"]["customcolor"] = false
-	E.db["mMT"]["dockdatatext"]["encounter"]["iconcolor"]["b"] = 1
-	E.db["mMT"]["dockdatatext"]["encounter"]["iconcolor"]["g"] = 1
-	E.db["mMT"]["dockdatatext"]["encounter"]["iconcolor"]["r"] = 1
-
-	E.db["mMT"]["dockdatatext"]["friends"]["customcolor"] = false
-	E.db["mMT"]["dockdatatext"]["friends"]["iconcolor"]["b"] = 1
-	E.db["mMT"]["dockdatatext"]["friends"]["iconcolor"]["g"] = 1
-	E.db["mMT"]["dockdatatext"]["friends"]["iconcolor"]["r"] = 1
-
-	E.db["mMT"]["dockdatatext"]["guild"]["customcolor"] = false
-	E.db["mMT"]["dockdatatext"]["guild"]["iconcolor"]["b"] = 1
-	E.db["mMT"]["dockdatatext"]["guild"]["iconcolor"]["g"] = 1
-	E.db["mMT"]["dockdatatext"]["guild"]["iconcolor"]["r"] = 1
-
-	E.db["mMT"]["dockdatatext"]["lfd"]["customcolor"] = false
-	E.db["mMT"]["dockdatatext"]["lfd"]["iconcolor"]["b"] = 1
-	E.db["mMT"]["dockdatatext"]["lfd"]["iconcolor"]["g"] = 1
-	E.db["mMT"]["dockdatatext"]["lfd"]["iconcolor"]["r"] = 1
-
-	E.db["mMT"]["dockdatatext"]["mainmenu"]["customcolor"] = false
-	E.db["mMT"]["dockdatatext"]["mainmenu"]["iconcolor"]["b"] = 1
-	E.db["mMT"]["dockdatatext"]["mainmenu"]["iconcolor"]["g"] = 1
-	E.db["mMT"]["dockdatatext"]["mainmenu"]["iconcolor"]["r"] = 1
-
-	E.db["mMT"]["dockdatatext"]["quest"]["customcolor"] = false
-	E.db["mMT"]["dockdatatext"]["quest"]["iconcolor"]["b"] = 1
-	E.db["mMT"]["dockdatatext"]["quest"]["iconcolor"]["g"] = 1
-	E.db["mMT"]["dockdatatext"]["quest"]["iconcolor"]["r"] = 1
-
-	E.db["mMT"]["dockdatatext"]["spellbook"]["customcolor"] = false
-	E.db["mMT"]["dockdatatext"]["spellbook"]["iconcolor"]["b"] = 1
-	E.db["mMT"]["dockdatatext"]["spellbook"]["iconcolor"]["g"] = 1
-	E.db["mMT"]["dockdatatext"]["spellbook"]["iconcolor"]["r"] = 1
 
 	E.db["mMT"]["dockdatatext"]["achievement"]["icon"] = "MATERIAL01"
 	E.db["mMT"]["dockdatatext"]["blizzardstore"]["icon"] = "MATERIAL14"
@@ -568,6 +587,7 @@ function mMT:Dock_XIVLike(top)
 	E.db["mMT"]["dockdatatext"]["mainmenu"]["icon"] = "MATERIAL52"
 	E.db["mMT"]["dockdatatext"]["quest"]["icon"] = "MATERIAL41"
 	E.db["mMT"]["dockdatatext"]["spellbook"]["icon"] = "MATERIAL22"
+	E.db["mMT"]["dockdatatext"]["profession"]["icon"] = "MATERIAL25"
 
 	E.db["mMT"]["dockdatatext"]["calendar"]["option"] = "de"
 	E.db["mMT"]["dockdatatext"]["calendar"]["showyear"] = true
@@ -622,6 +642,11 @@ function mMT:Dock_XIVLike_Color(top)
 	E.db["mMT"]["dockdatatext"]["blizzardstore"]["iconcolor"]["g"] = 0.92549026012421
 	E.db["mMT"]["dockdatatext"]["blizzardstore"]["iconcolor"]["r"] = 0
 
+	E.db["mMT"]["dockdatatext"]["profession"]["customcolor"] = true
+	E.db["mMT"]["dockdatatext"]["profession"]["iconcolor"]["b"] = 0.53333336114883
+	E.db["mMT"]["dockdatatext"]["profession"]["iconcolor"]["g"] = 0.92549026012421
+	E.db["mMT"]["dockdatatext"]["profession"]["iconcolor"]["r"] = 0
+
 	E.db["mMT"]["dockdatatext"]["character"]["customcolor"] = true
 	E.db["mMT"]["dockdatatext"]["character"]["iconcolor"]["b"] = 0.93725496530533
 	E.db["mMT"]["dockdatatext"]["character"]["iconcolor"]["g"] = 0.20000001788139
@@ -669,6 +694,8 @@ function mMT:Dock_XIVLike_Color(top)
 end
 
 function mMT:Dock_Extra(top)
+	ResetColors()
+
 	E.DataTexts:BuildPanelFrame("mMT Extra Clock")
 	E.global.datatexts.customPanels["mMT Extra Clock"]["fonts"]["enable"] = true
 	E.global.datatexts.customPanels["mMT Extra Clock"]["fonts"]["font"] = "Montserrat-Bold"
@@ -704,18 +731,18 @@ function mMT:Dock_Extra(top)
 
 	E.db["datatexts"]["panels"]["mMT Extra Icons"][1] = "mMT_Dock_Character"
 	E.db["datatexts"]["panels"]["mMT Extra Icons"][2] = "mMT_Dock_SpellBook"
-	E.db["datatexts"]["panels"]["mMT Extra Icons"][3] = "mMT_Dock_Talent"
+	E.db["datatexts"]["panels"]["mMT Extra Icons"][3] = E.Retail and "mMT_Dock_Talent" or "mMT_Dock_Friends"
 	E.db["datatexts"]["panels"]["mMT Extra Icons"][4] = "mMT_Dock_Achievement"
 	E.db["datatexts"]["panels"]["mMT Extra Icons"][5] = "mMT_Dock_Quest"
 	E.db["datatexts"]["panels"]["mMT Extra Icons"][6] = "mMT_Dock_LFDTool"
 	E.db["datatexts"]["panels"]["mMT Extra Icons"][7] = "mMT_Dock_EncounterJournal"
 	E.db["datatexts"]["panels"]["mMT Extra Icons"][8] = "mMT_Dock_CollectionsJournal"
-	E.db["datatexts"]["panels"]["mMT Extra Icons"][9] = "mMT_Dock_BlizzardStore"
+	E.db["datatexts"]["panels"]["mMT Extra Icons"][9] = E.Cata and "mMT_Dock_Profession" or "mMT_Dock_BlizzardStore"
 	E.db["datatexts"]["panels"]["mMT Extra Icons"][10] = "mMT_Dock_MainMenu"
 	E.db["datatexts"]["panels"]["mMT Extra Icons"]["battleground"] = false
 	E.db["datatexts"]["panels"]["mMT Extra Icons"]["enable"] = true
 
-	E.db["datatexts"]["panels"]["mMT Extra Infos"][1] = "Talent/Loot Specialization"
+	E.db["datatexts"]["panels"]["mMT Extra Infos"][1] = E.Retail and "Talent/Loot Specialization" or "Reputation"
 	E.db["datatexts"]["panels"]["mMT Extra Infos"][2] = "firstProf"
 	E.db["datatexts"]["panels"]["mMT Extra Infos"][3] = "secondProf"
 	E.db["datatexts"]["panels"]["mMT Extra Infos"][4] = "System"
@@ -743,6 +770,8 @@ function mMT:Dock_Extra(top)
 	E.db["mMT"]["dockdatatext"]["quest"]["icon"] = "MATERIAL41"
 	E.db["mMT"]["dockdatatext"]["spellbook"]["icon"] = "MATERIAL22"
 	E.db["mMT"]["dockdatatext"]["talent"]["icon"] = "MATERIAL42"
+	E.db["mMT"]["dockdatatext"]["profession"]["icon"] = "MATERIAL25"
+	E.db["mMT"]["dockdatatext"]["friends"]["icon"] = "MATERIAL28"
 
 	if top then
 		E.db["movers"]["DTPanelmMT Extra ClockMover"] = "TOP,ElvUIParent,TOP,-215,-4"

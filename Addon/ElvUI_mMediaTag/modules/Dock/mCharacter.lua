@@ -162,7 +162,7 @@ local function OnEvent(self, event, ...)
 			end
 		elseif E.db.mMT.dockdatatext.character.option == "ilvl" then
 			text = mMT:round(select(2, GetAverageItemLevel()) or 0)
-			if E.db.mMT.dockdatatext.character.color then
+			if E.Retail  and E.db.mMT.dockdatatext.character.color then
 				r, g, b = GetItemLevelColor()
 				hex = E:RGBToHex(r, g, b)
 			end

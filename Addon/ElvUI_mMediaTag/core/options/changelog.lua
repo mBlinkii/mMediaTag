@@ -15,28 +15,30 @@ local change_log_important = {
 	"This update will reset the Spell DB."
 }
 
-local releasdate = "28.04.2024"
+local releasdate = "03.05.2024"
 
 local change_log_new = {
-	"TAG mRoleIcon:blizz:nodd and mRoleIcon:nodd",
-	"Icons for castbar"
+	"Debugmode /mmt debug and /mmt debug safe (test wit only mmt and with mmt and safe addons)",
+	"TAGs mHealth:icon:ndp:nosign and mHealth:icon:short:ndp:nosign (Health in combat shows the percentage without decimal and sign.)",
+	"Auto change ElvUI media color to Class color is back"
 }
 
 local change_log_update = {
-	"Enabled mRoleIcon Tags for Classic Versions",
-	"Cleand up and optimized Objectivetracker Settings",
-	"Teleports for S4",
-	"Healthmarkers for S4",
-	"Rework of the Important Spells module, the behavior is no like ElvUI Style filters, a filter ca now react now to more then one spell id. This update will reset the Spell DB.",
-	"Currency for S4",
-	"TOC file for Classic"
+	"Add sound delay for important spell filters",
+	"Update for Cata",
+	"Example Docks for Cata",
+	"Interrupt Spells for WL",
+	"Execute Marker now takes care of Monk Health.",
+	"Update Healthmarker for HOI last Boss",
+	"Delay for Important Spell sounds"
 }
 
 local change_log_fix = {
-	"Prevent nil error with important spells",
-	"Prevent nil error with tex coords Portraits/Class Icons",
-	"Prevent nil error with instancdifficulty",
-	"Fixed color table bug with DK classes"
+	"Sound bug with important spell filters",
+	"Removed the # in Instance difficulty label of the Objectivetracker",
+	"TAG mRole is only available for Retail and Cata not for Classic",
+	"Spell in enUS Locals, thx for Trenchy help",
+	"Bug with Portraits and Eltruism ElvUI Skin"
 }
 
 local function Concatenation(tbl, icon, color)
@@ -58,7 +60,7 @@ end
 local function configTable()
 	change_log_important_string = Concatenation(change_log_important)
 	change_log_new_string = Concatenation(change_log_new)
-	--change_log_update_string = Concatenation(change_log_update)
+	change_log_update_string = Concatenation(change_log_update)
 	change_log_fix_string = Concatenation(change_log_fix)
 	E.Options.args.mMT.args.changelog.args = {
 		header_changelog = {

@@ -646,7 +646,11 @@ E:AddTagInfo("status", mMT.NameShort .. " " .. L["Color"], L["Unit colors with m
 E:AddTagInfo("mColor:target", mMT.NameShort .. " " .. L["Color"], L["Targetunit colors with mMediaTag colors for Rare, Rareelite, Elite and Boss and Classcolors."])
 
 local function NoDecimalPercent(min, max, string)
-	return format("%d", (min / max * 100)) .. string
+	if string then
+		return format("%d", (min / max * 100)) .. string
+	else
+		return format("%d", (min / max * 100))
+	end
 end
 
 E:AddTag("mHealth", "UNIT_HEALTH UNIT_MAXHEALTH UNIT_CONNECTION PLAYER_FLAGS_CHANGED PLAYER_UPDATE_RESTING", function(unit)
@@ -945,6 +949,22 @@ E:AddTag("mHealth:icon", "UNIT_HEALTH UNIT_MAXHEALTH UNIT_CONNECTION PLAYER_FLAG
 	end
 end)
 
+E:AddTag("mHealth:icon:ndp:nosign", "UNIT_HEALTH UNIT_MAXHEALTH UNIT_CONNECTION PLAYER_FLAGS_CHANGED PLAYER_UPDATE_RESTING", function(unit)
+	if (UnitIsDead(unit)) or (UnitIsGhost(unit)) or (not UnitIsConnected(unit)) or (UnitIsAFK(unit)) or (UnitIsDND(unit)) then
+		return _TAGS["mStatus:icon"](unit)
+	else
+		local currentHealth = UnitHealth(unit)
+		local maxHealth = UnitHealthMax(unit)
+		local deficit = maxHealth - currentHealth
+
+		if deficit > 0 and currentHealth > 0 then
+			return NoDecimalPercent(currentHealth, maxHealth)
+		else
+			return E:GetFormattedText("CURRENT", currentHealth, maxHealth)
+		end
+	end
+end)
+
 E:AddTag("mHealth:icon:ndp", "UNIT_HEALTH UNIT_MAXHEALTH UNIT_CONNECTION PLAYER_FLAGS_CHANGED PLAYER_UPDATE_RESTING", function(unit)
 	if (UnitIsDead(unit)) or (UnitIsGhost(unit)) or (not UnitIsConnected(unit)) or (UnitIsAFK(unit)) or (UnitIsDND(unit)) then
 		return _TAGS["mStatus:icon"](unit)
@@ -971,6 +991,22 @@ E:AddTag("mHealth:icon:short", "UNIT_HEALTH UNIT_MAXHEALTH UNIT_CONNECTION PLAYE
 
 		if deficit > 0 and currentHealth > 0 then
 			return E:GetFormattedText("PERCENT", currentHealth, maxHealth)
+		else
+			return E:GetFormattedText("CURRENT", currentHealth, maxHealth, nil, true)
+		end
+	end
+end)
+
+E:AddTag("mHealth:icon:short:ndp:nosign", "UNIT_HEALTH UNIT_MAXHEALTH UNIT_CONNECTION PLAYER_FLAGS_CHANGED PLAYER_UPDATE_RESTING", function(unit)
+	if (UnitIsDead(unit)) or (UnitIsGhost(unit)) or (not UnitIsConnected(unit)) or (UnitIsAFK(unit)) or (UnitIsDND(unit)) then
+		return _TAGS["mStatus:icon"](unit)
+	else
+		local currentHealth = UnitHealth(unit)
+		local maxHealth = UnitHealthMax(unit)
+		local deficit = maxHealth - currentHealth
+
+		if deficit > 0 and currentHealth > 0 then
+			return NoDecimalPercent(currentHealth, maxHealth)
 		else
 			return E:GetFormattedText("CURRENT", currentHealth, maxHealth, nil, true)
 		end
@@ -1345,37 +1381,37 @@ E:AddTagInfo("mDeathCount:color", mMT.NameShort .. " " .. L["Misc"], L["Death Co
 E:AddTagInfo("mDeathCount:hide:text", mMT.NameShort .. " " .. L["Misc"], L["Displays the Death counter only when the unit is Death and Shows a Text (Death: 7), resets in new instances."])
 
 E:AddTag("mRole", "PLAYER_ROLES_ASSIGNED GROUP_ROSTER_UPDATE", function(unit)
-	local UnitRole = UnitGroupRolesAssigned(unit)
-	return UnitRole and ((UnitRole == "TANK" or UnitRole == "HEALER") and format("%s%s|r", colors[UnitRole], UnitRole) or "") or ""
+	local UnitRole = (E.Retail or E.Cata) and UnitGroupRolesAssigned(unit)
+	return (UnitRole and (UnitRole == "TANK" or UnitRole == "HEALER")) and format("%s%s|r", colors[UnitRole], UnitRole) or ""
 end)
 
 E:AddTag("mRoleIcon", "PLAYER_ROLES_ASSIGNED GROUP_ROSTER_UPDATE", function(unit)
-	local UnitRole = UnitGroupRolesAssigned(unit)
+	local UnitRole = (E.Retail or E.Cata) and UnitGroupRolesAssigned(unit)
 	return UnitRole and icons[UnitRole] or ""
 end)
 
 E:AddTag("mRoleIcon:nodd", "PLAYER_ROLES_ASSIGNED GROUP_ROSTER_UPDATE", function(unit)
-	local UnitRole = UnitGroupRolesAssigned(unit)
-	return UnitRole and ((UnitRole == "TANK" or UnitRole == "HEALER") and icons[UnitRole] or "") or ""
+	local UnitRole = (E.Retail or E.Cata) and UnitGroupRolesAssigned(unit)
+	return (UnitRole and (UnitRole == "TANK" or UnitRole == "HEALER")) and icons[UnitRole] or ""
 end)
 
 E:AddTag("mRoleIcon:blizz", "PLAYER_ROLES_ASSIGNED GROUP_ROSTER_UPDATE", function(unit)
-	local UnitRole = UnitGroupRolesAssigned(unit)
+	local UnitRole = (E.Retail or E.Cata) and UnitGroupRolesAssigned(unit)
 	return UnitRole and icons.default[UnitRole] or ""
 end)
 
 E:AddTag("mRoleIcon:blizz:nodd", "PLAYER_ROLES_ASSIGNED GROUP_ROSTER_UPDATE", function(unit)
-	local UnitRole = UnitGroupRolesAssigned(unit)
-	return  UnitRole and ((UnitRole == "TANK" or UnitRole == "HEALER") and icons.default[UnitRole] or "") or ""
+	local UnitRole = (E.Retail or E.Cata) and UnitGroupRolesAssigned(unit)
+	return (UnitRole and (UnitRole == "TANK" or UnitRole == "HEALER")) and icons.default[UnitRole] or ""
 end)
 
 E:AddTag("mRoleIcon:target", "UNIT_TARGET UNIT_COMBAT", function(unit)
-	local UnitRole = UnitGroupRolesAssigned(unit .. "target")
+	local UnitRole = (E.Retail or E.Cata) and UnitGroupRolesAssigned(unit .. "target")
 	return UnitRole and icons[UnitRole] or ""
 end)
 
 E:AddTag("mRoleIcon:target:blizz", "UNIT_TARGET UNIT_COMBAT", function(unit)
-	local UnitRole = UnitGroupRolesAssigned(unit .. "target")
+	local UnitRole = (E.Retail or E.Cata) and UnitGroupRolesAssigned(unit .. "target")
 	return UnitRole and icons.default[UnitRole] or ""
 end)
 
@@ -1651,7 +1687,7 @@ E:AddTag("mPower:percent", "UNIT_DISPLAYPOWER UNIT_POWER_FREQUENT UNIT_MAXPOWER 
 	if power ~= 0 then
 		local Role = ""
 
-		if E.Retail or E.Wrath then
+		if E.Retail or E.Cata then
 			Role = UnitGroupRolesAssigned(unit)
 		end
 
@@ -1679,7 +1715,7 @@ end)
 E:AddTag("mPower:percent:heal", "UNIT_DISPLAYPOWER UNIT_POWER_FREQUENT UNIT_MAXPOWER PLAYER_ROLES_ASSIGNED GROUP_ROSTER_UPDATE", function(unit, power)
 	local Role = "HEALER"
 
-	if E.Retail or E.Wrath then
+	if E.Retail or E.Cata then
 		Role = UnitGroupRolesAssigned(unit)
 	end
 
@@ -1875,7 +1911,7 @@ E:AddTag("mTargetingPlayers:icons:Stop", 2, function(unit)
 end)
 
 E:AddTag("mTargetingPlayers:icons:Role", 2, function(unit)
-	if (InCombatLockdown()) and UnitAffectingCombat(unit) and (IsInGroup()) and (E.Retail or E.Wrath) then
+	if (InCombatLockdown()) and UnitAffectingCombat(unit) and (IsInGroup()) and (E.Retail or E.Cata) then
 		return GetPartyTargetsIcons(unit, "role")
 	end
 end)

@@ -12,7 +12,7 @@ local function configTable()
 				toggle_keystochat = {
 					order = 2,
 					type = "toggle",
-					name = L["Show Keystone to Chat"],
+					name = L["Send Keystone to Chat with !keys command"],
 					get = function(info)
 						return E.db.mMT.general.keystochat
 					end,

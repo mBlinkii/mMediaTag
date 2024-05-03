@@ -42,7 +42,7 @@ local interruptSpellList = {
 	[62] = 2139,
 	[63] = 2139,
 	[64] = 2139,
-	--"WARLOCK
+	--WARLOCK
 	[265] = 119910,
 	[266] = 119914,
 	[267] = 119910,
@@ -74,7 +74,19 @@ function mMT:mMediaTag_interruptOnCD(castbar)
 end
 
 function module:Initialize()
-	interruptSpellID = interruptSpellList[select(1, GetSpecializationInfo(GetSpecialization()))]
+	local Specialization = select(1, GetSpecializationInfo(GetSpecialization()))
+	-- Check for WARLOCK interrupt
+	if E.myclass == "WARLOCK" then
+		if IsPlayerSpell(89766) then
+			interruptSpellList[Specialization] = 89766 or interruptSpellList[Specialization]
+		elseif IsPlayerSpell(212619) then
+			interruptSpellList[Specialization] = 212619 or interruptSpellList[Specialization]
+		elseif IsPlayerSpell(119914) then
+			interruptSpellList[Specialization] = 119914 or interruptSpellList[Specialization]
+		end
+	end
+
+	interruptSpellID = interruptSpellList[Specialization]
 	module.needReloadUI = true
 	module.loaded = true
 end

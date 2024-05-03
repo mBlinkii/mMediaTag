@@ -26,7 +26,7 @@ local Config = {
 		b = false, -- second label
 	},
 	icon = {
-		notification = true,
+		notification = E.Retail,
 		texture = mMT.IconSquare,
 		color = { r = 1, g = 1, b = 1, a = 1 },
 	},
@@ -120,7 +120,7 @@ local function mLFDTooltip()
 		DT.tooltip:AddLine(mInstanceInfoText[3])
 	end
 
-	if E.db.mMT.dockdatatext.lfd.keystone then
+	if E.Retail and E.db.mMT.dockdatatext.lfd.keystone then
 		keyText = mMT:OwenKeystone()
 		if keyText then
 			DT.tooltip:AddLine(" ")
@@ -129,12 +129,12 @@ local function mLFDTooltip()
 		end
 	end
 
-	if E.db.mMT.dockdatatext.lfd.score then
+	if E.Retail and E.db.mMT.dockdatatext.lfd.score then
 		DT.tooltip:AddLine(" ")
 		DT.tooltip:AddDoubleLine(DUNGEON_SCORE, mMT:GetDungeonScore())
 	end
 
-	if E.db.mMT.dockdatatext.lfd.affix then
+	if E.Retail and E.db.mMT.dockdatatext.lfd.affix then
 		mAffixesText = mMT:WeeklyAffixes()
 		if mAffixesText then
 			DT.tooltip:AddLine(" ")
@@ -147,7 +147,7 @@ local function mLFDTooltip()
 		end
 	end
 
-	if E.db.mMT.dockdatatext.lfd.greatvault then
+	if E.Retail and E.db.mMT.dockdatatext.lfd.greatvault then
 		local vaultinfohighest, ok = nil, false
 		vaultinforaidText, vaultinfomplusText, vaultinfopvpText, vaultinfohighest, ok = mMT:mGetVaultInfo()
 		if ok then
@@ -178,20 +178,17 @@ local function mLFDTooltip()
 
 	DT.tooltip:AddLine(" ")
 	DT.tooltip:AddLine(format("%s %s%s|r", mMT:mIcon(mMT.Media.Mouse["LEFT"]), tip, L["left click to open LFD Window"]))
-	if E.db.mMT.dockdatatext.lfd.greatvault then
+	if E.Retail and E.db.mMT.dockdatatext.lfd.greatvault then
 		DT.tooltip:AddLine(format("%s %s%s|r", mMT:mIcon(mMT.Media.Mouse["RIGHT"]), tip, L["right click to open Great Vault Window"]))
-	end
-end
-
-function mMT:LFDToolGreatVault(self)
-	if not C_WeeklyRewards.HasAvailableRewards() then
-		mMT:NotificationTimer(self, true)
 	end
 end
 
 local function OnEnter(self)
 	mMT:Dock_OnEnter(self, Config)
-	mMT:UpdateNotificationState(self, C_WeeklyRewards.HasAvailableRewards())
+
+	if E.Retail then
+		mMT:UpdateNotificationState(self, C_WeeklyRewards.HasAvailableRewards())
+	end
 
 	if E.db.mMT.dockdatatext.tip.enable then
 		DT.tooltip:ClearLines()
@@ -230,7 +227,9 @@ local function OnEvent(self, event)
 
 	self.mMT_Dock.TextA:SetText(text or "")
 
-	mMT:UpdateNotificationState(self, C_WeeklyRewards.HasAvailableRewards())
+	if E.Retail then
+		mMT:UpdateNotificationState(self, C_WeeklyRewards.HasAvailableRewards())
+	end
 end
 
 local function OnLeave(self)
@@ -242,13 +241,16 @@ local function OnLeave(self)
 end
 
 local function OnClick(self, button)
-	mMT:UpdateNotificationState(self, C_WeeklyRewards.HasAvailableRewards())
+	if E.Retail then
+		mMT:UpdateNotificationState(self, C_WeeklyRewards.HasAvailableRewards())
+	end
+
 	if mMT:CheckCombatLockdown() then
 		mMT:Dock_Click(self, Config)
 		if E.db.mMT.dockdatatext.lfd.greatvault then
 			if button == "LeftButton" then
 				PVEFrame_ToggleFrame("GroupFinderFrame", _G.LFDParentFrame)
-			else
+			elseif E.Retail then
 				if not _G.WeeklyRewardsFrame then
 					LoadAddOn("Blizzard_WeeklyRewards")
 				end

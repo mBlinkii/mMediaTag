@@ -23,26 +23,35 @@ local function configTable()
 				icon = "Interface\\Addons\\ElvUI_mMediaTag\\media\\system\\general.tga",
 				childGroups = "tab",
 				args = {
-					greeting = {
+					general = {
 						order = 1,
+						type = "group",
+						name = L["General"],
+						args = {},
+					},
+					greeting = {
+						order = 2,
 						type = "group",
 						name = L["Welcome text"],
 						args = {},
 					},
 					roll = {
-						order = 2,
+						order = 3,
 						type = "group",
 						name = L["Roll Button"],
 						args = {},
 					},
 					chat = {
-						order = 3,
+						order = 4,
 						type = "group",
 						name = L["Chat Button"],
+						hidden = function()
+							return not E.Retail
+						end,
 						args = {},
 					},
 					keystochat = {
-						order = 4,
+						order = 5,
 						type = "group",
 						name = L["Keystone to Chat"] .. " (!keys)",
 						hidden = function()
@@ -51,7 +60,7 @@ local function configTable()
 						args = {},
 					},
 					instancedifficulty = {
-						order = 5,
+						order = 6,
 						type = "group",
 						name = L["Instance Difficulty"],
 						hidden = function()
@@ -60,7 +69,7 @@ local function configTable()
 						args = {},
 					},
 					afk = {
-						order = 5,
+						order = 7,
 						type = "group",
 						name = L["AFK Screen"],
 						args = {},
@@ -109,7 +118,7 @@ local function configTable()
 						type = "group",
 						name = L["Professions"],
 						hidden = function()
-							return not E.Retail
+							return not (E.Retail or E.Cata)
 						end,
 						args = {},
 					},
@@ -118,7 +127,7 @@ local function configTable()
 						type = "group",
 						name = L["Dungeon"],
 						hidden = function()
-							return not E.Retail
+							return not (E.Retail or E.Cata)
 						end,
 						args = {},
 					},
@@ -140,7 +149,7 @@ local function configTable()
 					firstandsecondprofession = {
 						order = 8,
 						type = "group",
-						name = L["first and second Profession"],
+						name = L["First and Second Profession"],
 						args = {},
 					},
 					durabilityanditemlevel = {
@@ -185,7 +194,7 @@ local function configTable()
 				type = "group",
 				name = L["Castbar"],
 				hidden = function()
-					return not E.Retail
+					return not (E.Retail or E.Cata)
 				end,
 				icon = "Interface\\Addons\\ElvUI_mMediaTag\\media\\system\\castbar.tga",
 				childGroups = "tab",
@@ -200,6 +209,9 @@ local function configTable()
 						order = 2,
 						type = "group",
 						name = L["Interrupt on CD"],
+						hidden = function()
+							return not E.Retail
+						end,
 						args = {},
 					},
 					important = {
@@ -279,7 +291,7 @@ local function configTable()
 						type = "group",
 						name = L["Role Icons"],
 						hidden = function()
-							return not (E.Retail or E.Wrath)
+							return not (E.Retail or E.Cata)
 						end,
 						args = {},
 					},

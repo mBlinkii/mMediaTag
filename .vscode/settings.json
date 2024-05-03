@@ -559,7 +559,9 @@
         "PlayerFrame",
         "NAME",
         "DESCRIPTION",
-        "ShowUIPanel"
+        "ShowUIPanel",
+        "message",
+        "enabled"
     ],
     "Lua.diagnostics.disable": [
         "undefined-field"

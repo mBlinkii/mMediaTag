@@ -3,6 +3,7 @@ local E = unpack(ElvUI)
 local _G = _G
 local SetPortraitTexture = SetPortraitTexture
 local UnitExists = UnitExists
+local tinsert = tinsert
 
 local module = mMT.Modules.Portraits
 if not module then
@@ -491,7 +492,6 @@ local function UpdatePortrait(frame, conf, unit, parent)
 	local offset = GetOffset(conf.size, settings.offset[conf.texture])
 	frame.portrait:SetPoint("TOPLEFT", 0 + offset, 0 - offset)
 	frame.portrait:SetPoint("BOTTOMRIGHT", 0 - offset, 0 + offset)
-	mirrorTexture(frame.portrait, conf.mirror)
 
 	-- Portrait Mask
 	texture = textures.mask[conf.texture] or conf.mirror and textures.mask.B[conf.texture] or textures.mask.A[conf.texture]
@@ -823,7 +823,6 @@ function module:Initialize()
 				events = {
 					"PLAYER_ENTERING_WORLD",
 					"ARENA_OPPONENT_UPDATE",
-					"ARENA_PREP_OPPONENT_SPECIALIZATIONS",
 					"UNIT_CONNECTION",
 				},
 				unitEvents = {
@@ -832,6 +831,10 @@ function module:Initialize()
 					"UNIT_NAME_UPDATE",
 				},
 			}
+			
+			if E.Retail then
+				tinsert(frames["Arena" .. i].events, "ARENA_PREP_OPPONENT_SPECIALIZATIONS")
+			end
 		end
 	end
 

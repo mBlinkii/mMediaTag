@@ -1,4 +1,8 @@
 local E = unpack(ElvUI)
+local PlaySoundFile = PlaySoundFile
+local GetTime = GetTime
+
+local lastPlayed = {}
 
 local module = mMT.Modules.ImportantSpells
 if not module then
@@ -11,7 +15,7 @@ function BuildSpellFilters()
 	wipe(ImportantSpellIDs)
 
 	for filter, _ in pairs(E.db.mMT.importantspells.spells) do
-		if E.db.mMT.importantspells.spells[filter] and  E.db.mMT.importantspells.spells[filter].enable and E.db.mMT.importantspells.spells[filter].IDs then
+		if E.db.mMT.importantspells.spells[filter] and E.db.mMT.importantspells.spells[filter].enable and E.db.mMT.importantspells.spells[filter].IDs then
 			for id, _ in pairs(E.db.mMT.importantspells.spells[filter].IDs) do
 				ImportantSpellIDs[id] = E.db.mMT.importantspells.spells[filter].functions
 			end
@@ -95,8 +99,26 @@ function module:UpdateCastbar(castbar)
 			end
 		end
 
-		if (Spell.sound.enable and Spell.sound.file) and castbar.unit == "target" then
-			PlaySoundFile(E.LSM:Fetch("sound", Spell.sound.file), "Master")
+		if Spell.sound.enable and Spell.sound.file and (Spell.sound.target and castbar.unit == "target") or not Spell.sound.target then
+			local castTime = select(4, GetSpellInfo(castbar.spellID))
+			local delay = 0.5
+			lastPlayed[castbar.spellID] = lastPlayed[castbar.spellID] or { time = 0, queued = 0, willPlay = true }
+
+			local willPlay, soundHandle = nil, nil
+
+			if lastPlayed[castbar.spellID].willPlay and (lastPlayed[castbar.spellID].time + (castTime / 1000) + delay) < GetTime() then
+				local file = E.LSM:Fetch("sound", Spell.sound.file)
+				willPlay, soundHandle = PlaySoundFile(file, "Master")
+			end
+
+			if willPlay then
+				lastPlayed[castbar.spellID].time = GetTime()
+				lastPlayed[castbar.spellID].queued = soundHandle
+			end
+			lastPlayed[castbar.spellID].willPlay = not willPlay
+
+		elseif lastPlayed[castbar.spellID] then
+			lastPlayed[castbar.spellID].willPlay = true
 		end
 
 		if Spell.texture.enable and Spell.texture.texture then
