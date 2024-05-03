@@ -36,6 +36,7 @@ local HM_NPCs = {
 	[189719] = { 15 }, -- Watcher Irideus
 	[190368] = { 40 }, -- Flamecaller Aymi
 	[190407] = { 20 }, -- Aqua Rager
+	[189729] = { 60 }, -- Primal Tsunami
 
 	-- Neltharus
 	[194816] = { 10 }, -- Forgewrought Monstrosity

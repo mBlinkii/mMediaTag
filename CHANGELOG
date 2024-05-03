@@ -7,14 +7,19 @@
 - FIX - Removed the # in Instance difficulty label of the Objectivetracker
 - FIX - TAG mRole is only available for Retail and Cata not for Classic
 - FIX - Spell in enUS Locals, thx for Trenchy help
+- FIX - Bug with Portraits and Eltruism ElvUI Skin
 ### Update
 - UPDATE - Add sound delay for important spell filters
 - UPDATE - Update for Cata
 - UPDATE - Example Docks for Cata
 - UPDATE - Interrupt Spells for WL
 - UPDATE - Execute Marker now takes care of Monk Health.
+- UPDATE - Update Healthmarker for HOI last Boss
+- UPDATE - Delay for Important Spell sounds
 ### NEW
 - NEW - Debugmode /mmt debug and /mmt debug safe (test wit only mmt and with mmt and safe addons)
+- NEW - TAGs mHealth:icon:ndp:nosign and mHealth:icon:short:ndp:nosign (Health in combat shows the percentage without decimal and sign.)
+- NEW - Auto change ElvUI media color to Class color is back
 
 ## [ver. 3.34] - 28.04.2024
 ### FIX
