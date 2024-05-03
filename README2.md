@@ -1,6 +1,5 @@
 <br/>
 <div align="center">
-<a href="https://github.com/ShaanCoding/ReadME-Generator">
 <img src="https://raw.githubusercontent.com/mBlinkii/mMediaTag/main/Logo/mmt_icon.png" alt="Logo" width="80" height="80">
 </a>
 <h3 align="center">ElvUI mMediaTag & Tools</h3>
@@ -8,14 +7,11 @@
 mMediaTag & Tools is a plugin for WoW with ElvUI. mMediaTag adds many media files like textures/ fonts/ icons and some tools to ElvUI.
 <br/>
 <br/>
-<a href="https://github.com/mBlinkii/mMediaTag/blob/main/README.md"><strong>Explore the docs »</strong></a>
-<br/>
-<br/>
-<a href="https://www.curseforge.com/wow/addons/elvui_mmediatag">View Demo .</a>  
+<a href="https://www.curseforge.com/wow/addons/elvui_mmediatag">Curse .</a>  
 <a href="https://github.com/mBlinkii/mMediaTag/issues">Report Bug .</a>
 <a href="https://github.com/mBlinkii/mMediaTag/issues">Request Feature</a>
 </p>
-</div>
+</div> 
 
  ## About The Project
 
@@ -25,8 +21,11 @@ ElvUI mMediaTag & Tools is a plugin for the popular MMORPG World of Warcraft, wh
  ### Prerequisites
 
 This plugin is for ElvUI only and does not work without ElvUI.
-- ElvUI
- ### Installation
+- <a href="https://tukui.org/">ElvUI .</a>  
+ ### Features
+
+1. Media:
+_Fonts: The addon offers five different fonts to personalize the visual experience in the game. Status Bar Textures: With over 317 different status bar textures, players can customize the look of their user interface. Frames and Backgrounds: Five border styles and 16 background designs are available to highlight windows and elements._
 
 _Below is an example of how you can instruct your audience on installing and setting up your app. This template doesn't rely on any external dependencies or services._
 
