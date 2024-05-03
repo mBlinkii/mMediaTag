@@ -24,10 +24,10 @@ This plugin is for ElvUI only and does not work without ElvUI.
 - <a href="https://tukui.org/">ElvUI .</a>  
  ### Features
 
-1. Media:
- - ### Fonts: The addon offers five different fonts to personalize the visual experience in the game._
- - ## Status Bar Textures: With over 317 different status bar textures, players can customize the look of their user interface._ 
- - # Borders and Backgrounds: Five border styles and 16 background designs are available to highlight frames and elements._
+1. ### Media:
+ - ### Fonts: _The addon offers five different fonts to personalize the visual experience in the game._
+ - ### Status Bar Textures: _With over 317 different status bar textures, players can customize the look of their user interface._ 
+ - ### Borders and Backgrounds: _Five border styles and 16 background designs are available to highlight frames and elements._
 
 _Below is an example of how you can instruct your audience on installing and setting up your app. This template doesn't rely on any external dependencies or services._
 
