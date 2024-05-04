@@ -22,7 +22,7 @@ local function configTable()
 		toggle_enable = {
 			order = 1,
 			type = "toggle",
-			name = L["Enable"],
+			name = L["ALL_ENABLE"],
 			get = function(info)
 				return E.db.mMT.cosmeticbars.enable
 			end,
@@ -36,12 +36,12 @@ local function configTable()
 			order = 2,
 			type = "group",
 			inline = true,
-			name = L["Panels"],
+			name = L["DTP_PANELS"],
 			args = {
 				select_list = {
 					type = "select",
 					order = 1,
-					name = L["Panels"],
+					name = L["DTP_PANELS"],
 					values = function()
 						return GetPanelNames()
 					end,
@@ -63,7 +63,7 @@ local function configTable()
 				apply = {
 					order = 2,
 					type = "execute",
-					name = L["Apply"],
+					name = L["ALL_APPLY"],
 					func = function()
 						E:StaggeredUpdateAll(nil, true)
 					end,
@@ -71,8 +71,8 @@ local function configTable()
 				reset = {
 					order = 3,
 					type = "execute",
-					name = L["Reset"],
-					desc = L["Delete all Settings"],
+					name = L["ALL_RESET"],
+					desc = L["DTP_TIP_DELETE"],
 					func = function()
 						wipe(E.db.mMT.cosmeticbars.bars)
 						mMT.Modules.CosmeticBars:Initialize()
@@ -84,7 +84,7 @@ local function configTable()
 			order = 3,
 			type = "group",
 			inline = true,
-			name = L["Settings"],
+			name = L["ALL_SETTINGS"],
 			disabled = function()
 				return not E.db.mMT.cosmeticbars.bars[Selected]
 			end,
@@ -93,12 +93,12 @@ local function configTable()
 					order = 1,
 					type = "group",
 					inline = true,
-					name = L["Background"],
+					name = L["ALL_BG"],
 					args = {
 						select_Style = {
 							type = "select",
 							order = 1,
-							name = L["Color Style"],
+							name = L["ALL_COLOR_STYLE"],
 							get = function(info)
 								return E.db.mMT.cosmeticbars.bars[Selected] and E.db.mMT.cosmeticbars.bars[Selected].bg.style or "custom"
 							end,
@@ -108,16 +108,16 @@ local function configTable()
 								end
 							end,
 							values = {
-								disabled = L["Disable"],
-								class = L["Class"],
-								darkclass = L["Dark Class"],
-								custom = L["Custom"],
+								disabled = L["ALL_DISABLE"],
+								class = L["ALL_CLASS"],
+								darkclass = L["DTP_DARK_CLASS"],
+								custom = L["ALL_CUSTOM"],
 							},
 						},
 						color = {
 							type = "color",
 							order = 2,
-							name = L["Color"],
+							name = L["ALL_COLOR"],
 							hasAlpha = false,
 							get = function(info)
 								local t = E.db.mMT.cosmeticbars.bars[Selected] and E.db.mMT.cosmeticbars.bars[Selected].bg.color or { r = 1, g = 1, b = 1, a = 1 }
@@ -132,7 +132,7 @@ local function configTable()
 						},
 						alpha = {
 							order = 3,
-							name = L["Alpha"],
+							name = L["ALL_ALPHA"],
 							type = "range",
 							min = 0,
 							max = 1,
@@ -152,12 +152,12 @@ local function configTable()
 					order = 2,
 					type = "group",
 					inline = true,
-					name = L["Border"],
+					name = L["ALL_BORDER"],
 					args = {
 						select_Style = {
 							type = "select",
 							order = 1,
-							name = L["Color Style"],
+							name = L["ALL_COLOR_STYLE"],
 							get = function(info)
 								return E.db.mMT.cosmeticbars.bars[Selected] and E.db.mMT.cosmeticbars.bars[Selected].border.style or "custom"
 							end,
@@ -167,16 +167,16 @@ local function configTable()
 								end
 							end,
 							values = {
-								disabled = L["Disable"],
-								class = L["Class"],
-								darkclass = L["Dark Class"],
-								custom = L["Custom"],
+								disabled = L["ALL_DISABLE"],
+								class = L["ALL_CLASS"],
+								darkclass = L["DTP_DARK_CLASS"],
+								custom = L["ALL_CUSTOM"],
 							},
 						},
 						color = {
 							type = "color",
 							order = 2,
-							name = L["BG Color"],
+							name = L["ALL_BG_COLOR"],
 							hasAlpha = false,
 							get = function(info)
 								local t = E.db.mMT.cosmeticbars.bars[Selected] and E.db.mMT.cosmeticbars.bars[Selected].border.color or { r = 1, g = 1, b = 1 }
@@ -195,12 +195,12 @@ local function configTable()
 					order = 3,
 					type = "group",
 					inline = true,
-					name = L["Texture"],
+					name = L["ALL_TEXTURE"],
 					args = {
 						toggle_enable = {
 							order = 1,
 							type = "toggle",
-							name = L["Change Texture"],
+							name = L["DTP_CHANGE_TX"],
 							get = function(info)
 								return E.db.mMT.cosmeticbars.bars[Selected] and E.db.mMT.cosmeticbars.bars[Selected].texture.enable or false
 							end,
@@ -214,7 +214,7 @@ local function configTable()
 							order = 2,
 							type = "select",
 							dialogControl = "LSM30_Statusbar",
-							name = L["Texture"],
+							name = L["ALL_TEXTURE"],
 							values = LSM:HashTable("statusbar"),
 							get = function(info)
 								return E.db.mMT.cosmeticbars.bars[Selected] and E.db.mMT.cosmeticbars.bars[Selected].texture.file or "Solid"
@@ -233,12 +233,12 @@ local function configTable()
 			order = 4,
 			type = "group",
 			inline = true,
-			name = L["Import/ Export of this Settings"],
+			name = L["ALL_IMPORT_EXPORT"],
 			args = {
 				export_spells = {
 					order = 1,
 					type = "execute",
-					name = L["Export"],
+					name = L["ALL_EXPORT"],
 					func = function()
 						if next(E.db.mMT.cosmeticbars.bars) then
 							exportText = mMT:GetExportText(E.db.mMT.cosmeticbars.bars, "mMTCosmeticBras")
@@ -249,7 +249,7 @@ local function configTable()
 				import = {
 					order = 3,
 					type = "execute",
-					name = L["Import"],
+					name = L["ALL_IMPORT"],
 					func = function()
 						local profileType, profileData = mMT:GetImportText(importText)
 						if profileType == "mMTCosmeticBras" then
@@ -269,7 +269,7 @@ local function configTable()
 							end
 							button = "none"
 						end
-						return L["Output/ Input"]
+						return L["ALL_OUT_INPUT"]
 					end,
 					type = "input",
 					width = "full",

@@ -8,12 +8,12 @@ local function configTable()
 			order = 1,
 			type = "group",
 			inline = true,
-			name = L["Color"],
+			name = L["ALL_COLOR"],
 			args = {
 				colorstyle_currency = {
 					order = 1,
 					type = "select",
-					name = L["Color Style"],
+					name = L["ALL_COLOR_STYLE"],
 					get = function(info)
 						return E.db.mMT.datatextcurrency.style
 					end,
@@ -22,9 +22,9 @@ local function configTable()
 						DT:LoadDataTexts()
 					end,
 					values = {
-						auto = L["Auto"],
-						color = L["Color"],
-						white = L["White"],
+						auto = L["ALL_AUTO"],
+						color = L["ALL_COLOR"],
+						white = L["ALL_WHITE"],
 					},
 				},
 			},
@@ -33,13 +33,13 @@ local function configTable()
 			order = 2,
 			type = "group",
 			inline = true,
-			name = L["Icon and Name"],
+			name = L["CURR_ICON_NAME"],
 			args = {
 				currency_Icon = {
 					order = 1,
 					type = "toggle",
-					name = L["Icon"],
-					desc = L["Show Icon"],
+					name = L["ALL_ICON"],
+					desc = L["ALL_SHOW_ICON"],
 					get = function(info)
 						return E.db.mMT.datatextcurrency.icon
 					end,
@@ -52,7 +52,7 @@ local function configTable()
 					order = 2,
 					type = "toggle",
 					name = L["Name"],
-					desc = L["Shows Name"],
+					desc = L["CURR_SHOW_NAME"],
 					get = function(info)
 						return E.db.mMT.datatextcurrency.name
 					end,
@@ -67,13 +67,13 @@ local function configTable()
 			order = 3,
 			type = "group",
 			inline = true,
-			name = L["Icon and Name"],
+			name = L["CURR_ICON_NAME"],
 			args = {
 				currency_ShortNumber = {
 					order = 1,
 					type = "toggle",
-					name = L["Short Number"],
-					desc = L["Short Number"],
+					name = L["CURR_SHORT_NUM"],
+					desc = L["CURR_SHORT_NUM"],
 					get = function(info)
 						return E.db.mMT.datatextcurrency.short
 					end,
@@ -85,7 +85,7 @@ local function configTable()
 				currency_Hide = {
 					order = 2,
 					type = "toggle",
-					name = L["Hide if Zero"],
+					name = L["CURR_HIDE_ZERO"],
 					get = function(info)
 						return E.db.mMT.datatextcurrency.hide
 					end,
@@ -97,7 +97,7 @@ local function configTable()
 				currency_bag = {
 					order = 3,
 					type = "toggle",
-					name = L["Show amount in Bag"],
+					name = L["CURR_BAG_AMOUNT"],
 					get = function(info)
 						return E.db.mMT.datatextcurrency.bag
 					end,
@@ -109,7 +109,7 @@ local function configTable()
 				currency_max = {
 					order = 4,
 					type = "toggle",
-					name = L["Show Max Count"],
+					name = L["CUUR_SHOW_MAX"],
 					get = function(info)
 						return E.db.mMT.datatextcurrency.max
 					end,

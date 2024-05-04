@@ -13,12 +13,12 @@ local function configTable()
 			order = 1,
 			type = "group",
 			inline = true,
-			name = L["Combat Icon and Time"],
+			name = L["CIT_NAME"],
 			args = {
 				combaticon_ooc_icon = {
 					order = 2,
 					type = "select",
-					name = L["Icon out of Combat"],
+					name = L["CIT_ICON_OOC"],
 					get = function(info)
 						return E.db.mMT.combattime.ooctexture
 					end,
@@ -30,7 +30,7 @@ local function configTable()
 				combaticon_ic_icon = {
 					order = 3,
 					type = "select",
-					name = L["Icon in Combat"],
+					name = L["CIT_ICON_IC"],
 					get = function(info)
 						return E.db.mMT.combattime.ictexture
 					end,
@@ -41,8 +41,8 @@ local function configTable()
 				},
 				range_hide = {
 					order = 4,
-					name = L["Hide Timer in Seconds"],
-					desc = L["Time until the text disappears"],
+					name = L["CIT_HIDE"],
+					desc = L["CIT_TIP_HIDE"],
 					type = "range",
 					min = 0,
 					max = 120,

@@ -73,7 +73,7 @@ local function configTable()
 					order = 1,
 					type = "group",
 					inline = true,
-					name = L["Version:"],
+					name = L["ALL_VER"] .. ":",
 					args = {
 						version = {
 							order = 1,
@@ -85,7 +85,7 @@ local function configTable()
 							order = 2,
 							type = "description",
 							fontSize = "medium",
-							name = green .. L["Release"] .. endtag .. " " .. (releasdate or "ERROR"),
+							name = green .. L["CL_RELEASE"] .. endtag .. " " .. (releasdate or "ERROR"),
 						},
 					},
 				},
@@ -93,7 +93,7 @@ local function configTable()
 					order = 2,
 					type = "group",
 					inline = true,
-					name = important .. "  " .. red .. L["Important:"] .. endtag,
+					name = important .. "  " .. red .. L["ALL_IMPOR"] .. ":".. endtag,
 					hidden = function()
 						if change_log_important_string then
 							return false
@@ -114,7 +114,7 @@ local function configTable()
 					order = 3,
 					type = "group",
 					inline = true,
-					name = new .. "  " .. green .. L["New:"] .. endtag,
+					name = new .. "  " .. green .. L["ALL_NEW"] .. ":" .. endtag,
 					hidden = function()
 						if change_log_new_string then
 							return false
@@ -135,7 +135,7 @@ local function configTable()
 					order = 4,
 					type = "group",
 					inline = true,
-					name = update .. "  " .. blue .. L["Update:"] .. endtag,
+					name = update .. "  " .. blue .. L["ALL_UPD"] .. ":" .. endtag,
 					hidden = function()
 						if change_log_update_string then
 							return false
@@ -156,7 +156,7 @@ local function configTable()
 					order = 5,
 					type = "group",
 					inline = true,
-					name = fix .. "  " .. yellow .. L["Fix:"] .. endtag,
+					name = fix .. "  " .. yellow .. L["ALL_FIX"] .. ":" .. endtag,
 					hidden = function()
 						if change_log_fix_string then
 							return false

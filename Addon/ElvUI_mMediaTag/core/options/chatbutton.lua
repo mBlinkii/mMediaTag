@@ -14,12 +14,12 @@ local function configTable()
 			order = 1,
 			type = "group",
 			inline = true,
-			name = L["Chat Button"],
+			name = L["CBT_NAME"],
 			args = {
 				enable = {
 					order = 2,
 					type = "toggle",
-					name = L["Enable"],
+					name = L["ALL_ENABLE"],
 					get = function(info)
 						return E.db.mMT.chat.enable
 					end,
@@ -34,12 +34,12 @@ local function configTable()
 			order = 3,
 			type = "group",
 			inline = true,
-			name = L["Icon"],
+			name = L["ALL_ICON"],
 			args = {
 				icon = {
 					order = 4,
 					type = "select",
-					name = L["Icon"],
+					name = L["ALL_ICON_SIZE"],
 					disabled = function()
 						return not E.db.mMT.chat.enable
 					end,
@@ -54,7 +54,7 @@ local function configTable()
 				},
 				growsize = {
 					order = 5,
-					name = L["Icon Size"],
+					name = L["ALL_ICON_SIZE"],
 					type = "range",
 					min = 2,
 					max = 128,
@@ -78,12 +78,12 @@ local function configTable()
 			order = 6,
 			type = "group",
 			inline = true,
-			name = L["Color Normal"],
+			name = L["CBT_COLOR_N"],
 			args = {
 				colornormalmode = {
 					order = 7,
 					type = "select",
-					name = L["Color Style"],
+					name = L["ALL_COLOR_STYLE"],
 					get = function(info)
 						return E.db.mMT.chat.colormodenormal
 					end,
@@ -95,14 +95,14 @@ local function configTable()
 						return not E.db.mMT.chat.enable
 					end,
 					values = {
-						class = L["Class"],
-						custom = L["Custom"],
+						class = L["ALL_CLASS"],
+						custom = L["ALL_CUSTOM"],
 					},
 				},
 				colornormal = {
 					type = "color",
 					order = 8,
-					name = L["Custom color"],
+					name = L["ALL_CUSTOM_COLOR"],
 					hasAlpha = true,
 					get = function(info)
 						local t = E.db.mMT.chat.colornormal
@@ -123,12 +123,12 @@ local function configTable()
 			order = 9,
 			type = "group",
 			inline = true,
-			name = L["Color Hover"],
+			name = L["ALL_HOVER_COLOR"],
 			args = {
 				colorhoverlmode = {
 					order = 10,
 					type = "select",
-					name = L["Hover Color Style"],
+					name = L["ALL_HOVCOLO_S"],
 					get = function(info)
 						return E.db.mMT.chat.colormodehover
 					end,
@@ -140,14 +140,14 @@ local function configTable()
 						return not E.db.mMT.chat.enable
 					end,
 					values = {
-						class = L["Class"],
-						custom = L["Custom"],
+						class = L["ALL_CLASS"],
+						custom = L["ALL_CUSTOM"],
 					},
 				},
 				colorhover = {
 					type = "color",
 					order = 11,
-					name = L["Hover Custom Color"],
+					name = L["ALL_HOVCOLO_C"],
 					hasAlpha = true,
 					get = function(info)
 						local t = E.db.mMT.chat.colorhover

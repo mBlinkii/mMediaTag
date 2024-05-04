@@ -6,12 +6,12 @@ local function configTable()
 			order = 1,
 			type = "group",
 			inline = true,
-			name = L["Castbar Background Color"],
+			name = L["CAST_BGC"],
 			args = {
 				toggle_BG = {
 					order = 1,
 					type = "toggle",
-					name = L["Background Color"],
+					name = L["ALL_BG_COLOR"],
 					get = function(info)
 						return E.db.mMT.castbar.setBGColor
 					end,
@@ -22,7 +22,7 @@ local function configTable()
 				},
 				range_multiplier = {
 					order = 13,
-					name = L["Color Multiplier"],
+					name = L["ALL_COLOR_MUL"],
 					type = "range",
 					min = 0,
 					max = 0.75,

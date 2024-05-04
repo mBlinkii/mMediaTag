@@ -561,7 +561,9 @@
         "DESCRIPTION",
         "ShowUIPanel",
         "message",
-        "enabled"
+        "enabled",
+        "ALL_SETTINGS",
+        "Background"
     ],
     "Lua.diagnostics.disable": [
         "undefined-field"

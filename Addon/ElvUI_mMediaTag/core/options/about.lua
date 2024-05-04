@@ -63,12 +63,12 @@ local function configTable()
 			order = 2,
 			type = "group",
 			inline = true,
-			name = L["Help"],
+			name = L["ALL_HELP"],
 			args = {
 				contact = {
 					order = 1,
 					type = "execute",
-					name = L["Contact"],
+					name = L["ABOUT_CONTACT"],
 					func = function()
 						E:StaticPopup_Show("ELVUI_EDITBOX", nil, nil, "mmediatag@gmx.de")
 					end,
@@ -76,7 +76,7 @@ local function configTable()
 				git = {
 					order = 2,
 					type = "execute",
-					name = L["Git"],
+					name = "GitHub",
 					func = function()
 						E:StaticPopup_Show("ELVUI_EDITBOX", nil, nil, "https://github.com/mBlinkii/mMediaTag/tree/main")
 					end,
@@ -84,7 +84,7 @@ local function configTable()
 				changelog = {
 					order = 3,
 					type = "execute",
-					name = L["Changelog"],
+					name = L["ABOUT_CHANGELOG"],
 					func = function()
 						E.Libs.AceConfigDialog:SelectGroup("ElvUI", "mMT", "changelog")
 					end,
@@ -95,7 +95,7 @@ local function configTable()
 			order = 3,
 			type = "group",
 			inline = true,
-			name = L["Licens"],
+			name = L["ABOUT_LICENSE"],
 			args = {
 				license_general = {
 					order = 1,
@@ -131,7 +131,7 @@ local function configTable()
 			order = 4,
 			type = "group",
 			inline = true,
-			name = L["Thanks to:"],
+			name = L["ABOUT_THX"],
 			args = {
 				thxto = {
 					order = 1,

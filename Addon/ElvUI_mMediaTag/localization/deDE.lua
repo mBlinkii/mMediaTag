@@ -552,3 +552,217 @@ L["|cffFFFFFFControl + Left Click:|r Change Loadout"] = "|cffFFFFFFControl + Lin
 L["|cffFFFFFFLeft Click:|r Change Talent Specialization"] = "|cffFFFFFFLinksklick:|r Talentspezialisierung ändern"
 L["|cffFFFFFFRight Click:|r Change Loot Specialization"] = "|cffFFFFFFRechtsklick:|r Beutespezialisierung ändern"
 L["|cffFFFFFFShift + Left Click:|r Show Talent Specialization UI"] = "|cffFFFFFFUmschalt + Linksklick:|r Benutzeroberfläche für Talentspezialisierung anzeigen"
+
+
+local mMTL = LibStub("AceLocale-3.0"):NewLocale("mMT", "deDE")
+--mMTL = {
+-- settings
+-- about
+mMTL["ABOUT_NAME"] = "Über"
+mMTL["ABOUT_CONTACT"] = "Contact"
+mMTL["ABOUT_CHANGELOG"] = "Changelog"
+mMTL["ABOUT_LICENSE"] = "License"
+mMTL["ABOUT_THX"] = "Thanks to:"
+
+-- afk
+mMTL["AFK_SCR"] = "AFK Screen"
+mMTL["AFK_LOGO"] = "AFK Logo"
+mMTL["AFK_INFO"] = "Info Screen"
+mMTL["AFK_ATRB"] = "Attributes"
+mMTL["AFK_ENH"] = "Enhancements"
+mMTL["AFK_PROG"] = "Progress"
+mMTL["AFK_GARBAGE"] = "Collect Garbage"
+mMTL["AFK_ATTENTION"] = "Attention! The path of the custom texture must comply with WoW standards. Example: Interface\\MYFOLDER\\MYFILE.tga. If you see a green box, the path is incorrect or you have a typo."
+mMTL["AFK_SIZE"] = "Optimal size for the logo is 512 x 128 Pixel"
+mMTL["AFK_LOGO_TEXTURE"] = "Logo Texture"
+
+-- backgrounds
+mMTL["BG_CHBG"] = "Custom Health Backdrop"
+mMTL["BG_TIP_CHBG"] = "Enable Custom Health Backdrop"
+mMTL["BG_BGT"] = "Backdrop Texture"
+mMTL["BG_CPBG"] = "Custom Power Backdrop"
+mMTL["BG_TIP_CPBG"] = "Enable Custom Power Backdrop"
+mMTL["BG_CCBG"] = "Custom Castbar Backdrop"
+mMTL["BG_TIP_CCBG"] = "Enable Custom Castbar Backdrop"
+
+-- castbar
+mMTL["CAST_BGC"] = "Castbar Background Color"
+
+-- castbar shield
+mMTL["CBS_SHIELD"] = "Castbar Shield"
+mMTL["CBS_NI_SHIELD"] = "Enable not Interruptible Shield"
+mMTL["CBS_ICON_COLOR"] = "Custom Icon Color"
+mMTL["CBS_AUTO_SIZE"] = "Auto Size"
+mMTL["CBS_SIZE_X"] = "Icon size X"
+mMTL["CBS_SIZE_Y"] = "Icon size Y"
+mMTL["CBS_ICON_POINT"] = "Icon Anchor"
+
+-- changelog
+mMTL["CL_RELEASE"] = "Release"
+
+-- chat button
+mMTL["CBT_NAME"] = "Chat Button"
+mMTL["CBT_COLOR_N"] = "Color Normal"
+
+-- combat icon and time
+mMTL["CIT_NAME"] = "Combat Icon and Time"
+mMTL["CIT_ICON_OOC"] = "Icon out of Combat"
+mMTL["CIT_ICON_IC"] = "Icon in Combat"
+mMTL["CIT_HIDE"] = "Hide Timer in Seconds"
+mMTL["CIT_TIP_HIDE"] = "Time until the text disappears"
+
+-- core
+mMTL["CORE_DT"] = "DataTexts"
+mMTL["CORE_CB"] = "Castbar"
+mMTL["CORE_COSMETICS"] = "Cosmetic"
+mMTL["CORE_CUSTOM_UF_BG"] = "Custom Unitframe Backgrounds"
+mMTL["CORE_DEV"] = "DEV Tools"
+
+-- welcome
+mMTL["WLC_NAME"] = "Welcome text"
+
+-- roll button
+mMTL["RB_NAME"] = "Roll Button"
+
+--keystone to chat
+mMTL["KSTC_NAME"] = "Keystone to Chat"
+
+-- Instance Difficulty
+mMTL["ID_NAME"] = "Instance Difficulty"
+
+-- Datatext Colors
+mMTL["DT_COLOR"] = "Datatext Colors"
+mMTL["DT_SETTINGS_NAME"] = "Datatext Options Color (Tooltip)"
+mMTL["DT_TIP_COLOR"] = "Custom color for Datatext Tip"
+mMTL["DT_COLOR_MYHTIC"] = "Color Mythic"
+mMTL["DT_COLOR_OTHOR"] = "Color other"
+mMTL["DT_COLOR_TIP"] = "Color Tip"
+
+-- M+ Score
+mMTL["MPS_NAME"] = "M+ Score"
+
+-- Teleports
+mMTL["TP_NAME"] = "Teleports"
+
+-- Professions
+mMTL["PROF_NAME"] = "Professions"
+
+-- Game Menu
+mMTL["GM_NAME"] = "Game Menu"
+
+-- Currency
+mMTL["CURR_NAME"] = "Currency"
+mMTL["CURR_ICON_NAME"] = "Icon and Name"
+mMTL["CURR_SHOW_NAME"] = "Show Name"
+mMTL["CURR_SHORT_NUM"] = "Short Number"
+mMTL["CURR_HIDE_ZERO"] = "Hide if Zero"
+mMTL["CURR_BAG_AMOUNT"] = "Show amount in Bag"
+mMTL["CUUR_SHOW_MAX"] = "Show Max Count"
+
+-- dev
+mMTL[" DEV_UNIT"] = "Unit"
+mMTL["DEV_ZONE"] = "Zone"
+
+-- First and Second Profession
+mMTL["FASPROF_NAME"] = "First and Second Profession"
+
+--Durability and Item Level
+mMTL["DURILV_NAME"] = "Durability and Item Level"
+
+-- Tags
+mMTL["TAG_NAME"] = "Tags"
+
+-- Dock
+mMTL["DOCK_NAME"] = "Dock"
+
+-- Interrupt on CD
+mMTL["ICD_NAME"] = "Interrupt on CD"
+
+--Important Spells
+mMTL["IMPS_NAME"] = "Important Spells"
+
+--Nameplates
+mMTL["NP_NAME"] = "Nameplates"
+
+-- Health markers
+mMTL["HM_NAME"] = "Health markers"
+
+-- Execute markers
+mMTL["EM_NAME"] = "Execute markers"
+
+-- Tooltip Icon
+mMTL["TIP_NAME"] = "Tooltip Icon"
+
+-- Role Icons
+mMTL["RI_NAME"] = "Role Icons"
+
+-- Objective Tracker
+mMTL["OT_NAME"] = "Objective Tracker"
+
+-- Unitframe Icons
+mMTL["UFI_NAME"] = "Unitframe Icons"
+
+--Portraits
+mMTL["POT_NAME"] = "Portraits"
+
+-- Datapanels
+mMTL["DTP_NAME"] = "Datapanels"
+mMTL["DTP_PANELS"] = "Panels"
+mMTL["DTP_TIP_DELETE"] = "Delete all settings."
+mMTL["DTP_DARK_CLASS"] = "Dark Class"
+mMTL["DTP_CHANGE_TX"] = "Change Texture"
+
+-- Quest Icons
+mMTL["QI_NAME"] = "Quest Icons"
+
+-- used on all
+mMTL["ALL_SETTINGS"] = "Settings"
+mMTL["ALL_HELP"] = "Help"
+mMTL["ALL_VALUE"] = "Values"
+mMTL["ALL_MISC"] = "Misc"
+mMTL["ALL_COLORS"] = "Colors"
+mMTL["ALL_COLOR"] = "Color"
+mMTL["ALL_TITLE"] = "Title"
+mMTL["All_LOGO"] = "Logo"
+mMTL["ALL_BG_COLOR"] = "Background Color"
+mMTL["ALL_COLOR_MUL"] = "Color Multiplier"
+mMTL["ALL_EN_NP"] = "Enable on Nameplates"
+mMTL["ALL_EN_UF"] = "Enable on Unitframe"
+mMTL["ALL_CUSTOM_COLOR"] = "Custom color"
+mMTL["ALL_ICON"] = "Icon"
+mMTL["ALL_POSITION"] = "Position"
+mMTL["ALL_VER"] = "Version"
+mMTL["ALL_IMPOR"] = "Important"
+mMTL["ALL_NEW"] = "New"
+mMTL["ALL_UPD"] = "Update"
+mMTL["ALL_FIX"] = "FIX"
+mMTL["ALL_ENABLE"] = "Enable"
+mMTL["ALL_ICON_SIZE"] = "Icon size"
+mMTL["ALL_CLASS"] = "Class"
+mMTL["ALL_CUSTOM"] = "Custom"
+mMTL["ALL_HOVER_COLOR"] = "Hover Color"
+mMTL["ALL_HOVCOLO_S"] = "Hover Color Style"
+mMTL["ALL_HOVCOLO_C"] = "Hover Custom Color"
+mMTL["ALL_GENERAL"] = "General"
+mMTL["ALL_DUNGEON"] = "Dungeon"
+mMTL["ALL_BORDER_COLOR"] = "Border Color"
+mMTL["ALL_TEXTURES"] = "Textures"
+mMTL["ALL_TEXTURE"] = "Texture"
+mMTL["ALL_COLOR_STYLE"] = "Color Style"
+mMTL["ALL_AUTO"] = "Auto"
+mMTL["ALL_WHITE"] = "White"
+mMTL["ALL_SHOW_ICON"] = "Show Icon"
+mMTL["ALL_APPLY"] = "Apply"
+mMTL["ALL_RESET"] = "Reset"
+mMTL["ALL_BG"] = "Background"
+mMTL["ALL_DISABLE"] = "Disable"
+mMTL["ALL_ALPHA"] = "Alpha"
+mMTL["ALL_BORDER"] = "Border"
+mMTL["ALL_IMPORT_EXPORT"] = "Import/ Export of this Settings"
+mMTL["ALL_IMPORT"] = "Import"
+mMTL["ALL_EXPORT"] = "Export"
+mMTL["ALL_OUT_INPUT"] = "Output/ Input"
+mMTL["ALL_RSET_DB"] = "Reset DB"
+--  }
+
+-- no need
