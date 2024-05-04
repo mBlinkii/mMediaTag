@@ -222,10 +222,11 @@ function mMT:updateAutoRange()
 			executeAutoRange.range = 20
 		end
 	elseif class == "WARRIOR" then
-		executeAutoRange.enable = true
-		executeAutoRange.range = 0.2
-		if (specID == 72 and IsPlayerSpell(206315)) or IsPlayerSpell(281001) then
-			executeAutoRange.range = 0.35
+		local execute = (specID == 72) and 280735 or 163201
+		local massacre = (specID == 72) and 206315 or 281001
+		if IsPlayerSpell(execute) or IsPlayerSpell(massacre) then -- Execute or Massacre
+			executeAutoRange.enable = true
+			executeAutoRange.range = IsPlayerSpell(massacre) and 0.35 or 0.2
 		end
 	elseif class == "HUNTER" then
 		if IsPlayerSpell(273887) then
