@@ -1,7 +1,7 @@
-local E, L, V, P, G = unpack(ElvUI)
+local E, _, V, P, G = unpack(ElvUI)
 
 local EP = E.Libs.EP
---local L = LibStub("AceLocale-3.0"):GetLocale("mMT")
+local L = E.Libs.ACL:GetLocale("ElvUI", E.global.general.locale)
 
 local _G = _G
 local tinsert, type = tinsert, type
@@ -33,7 +33,6 @@ mMT.DevMode = false
 mMT.CurrentProfile = nil
 mMT.firstLoad = 0
 mMT.Classes = { "DEATHKNIGHT", "DEMONHUNTER", "DRUID", "EVOKER", "HUNTER", "MAGE", "MONK", "PALADIN", "PRIEST", "ROGUE", "SHAMAN", "WARLOCK", "WARRIOR" }
-mMT.Locales = {}
 
 mMT.Modules.Portraits = {}
 mMT.Modules.SummonIcon = {}

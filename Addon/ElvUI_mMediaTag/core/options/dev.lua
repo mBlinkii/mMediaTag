@@ -50,12 +50,12 @@ local function configTable()
 			order = 1,
 			type = "group",
 			inline = true,
-			name = L["DEV_UNIT"],
+			name = L["Unit"],
 			args = {
 				reset = {
 					order = 1,
 					type = "execute",
-					name = L["ALL_RSET_DB"],
+					name = L["Reset DB"],
 					func = function()
 						wipe(mMT.DB.dev.unit)
 					end,
@@ -74,12 +74,12 @@ local function configTable()
 			order = 2,
 			type = "group",
 			inline = true,
-			name = L["DEV_ZONE"],
+			name = L["Zone"],
 			args = {
 				reset = {
 					order = 1,
 					type = "execute",
-					name = L["ALL_RSET_DB"],
+					name = L["Reset DB"],
 					func = function()
 						wipe(mMT.DB.dev.zone)
 					end,

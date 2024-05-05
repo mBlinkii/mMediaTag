@@ -7,12 +7,12 @@ local function configTable()
 			order = 1,
 			type = "group",
 			inline = true,
-			name = L["ALL_SETTINGS"],
+			name = L["Settings"],
 			args = {
 				toggle_afk = {
 					order = 1,
 					type = "toggle",
-					name = L["AFK_SCR"],
+					name = L["AFK Screen"],
 					get = function(info)
 						return E.db.mMT.afk.enable
 					end,
@@ -24,7 +24,7 @@ local function configTable()
 				toggle_logo = {
 					order = 2,
 					type = "toggle",
-					name = L["AFK_LOGO"],
+					name = L["AFK Logo"],
 					get = function(info)
 						return E.db.mMT.afk.logo
 					end,
@@ -36,7 +36,7 @@ local function configTable()
 				toggle_infoscreen = {
 					order = 3,
 					type = "toggle",
-					name = L["AFK_INFO"],
+					name = L["Info Screen"],
 					get = function(info)
 						return E.db.mMT.afk.infoscreen
 					end,
@@ -51,12 +51,12 @@ local function configTable()
 			order = 2,
 			type = "group",
 			inline = true,
-			name = L["AFK_INFO"],
+			name = L["Info Screen"],
 			args = {
 				toggle_values = {
 					order = 2,
 					type = "toggle",
-					name = L["ALL_VALUE"],
+					name = L["Values"],
 					get = function(info)
 						return E.db.mMT.afk.values.enable
 					end,
@@ -67,7 +67,7 @@ local function configTable()
 				toggle_attributes = {
 					order = 3,
 					type = "toggle",
-					name = L["AFK_ATRB"],
+					name = L["Attributes"],
 					get = function(info)
 						return E.db.mMT.afk.attributes.enable
 					end,
@@ -78,7 +78,7 @@ local function configTable()
 				toggle_enhancements = {
 					order = 4,
 					type = "toggle",
-					name = L["AFK_ENH"],
+					name = L["Enhancements"],
 					get = function(info)
 						return E.db.mMT.afk.enhancements.enable
 					end,
@@ -89,7 +89,7 @@ local function configTable()
 				toggle_progress = {
 					order = 5,
 					type = "toggle",
-					name = L["AFK_PROG"],
+					name = L["Progress"],
 					get = function(info)
 						return E.db.mMT.afk.progress.enable
 					end,
@@ -100,7 +100,7 @@ local function configTable()
 				toggle_misc = {
 					order = 6,
 					type = "toggle",
-					name = L["ALL_MISC"],
+					name = L["Misc"],
 					get = function(info)
 						return E.db.mMT.afk.misc.enable
 					end,
@@ -111,7 +111,7 @@ local function configTable()
 				toggle_garbage = {
 					order = 7,
 					type = "toggle",
-					name = L["AFK_GARBAGE"],
+					name = L["Collect Garbage"],
 					get = function(info)
 						return E.db.mMT.afk.garbage
 					end,
@@ -125,25 +125,25 @@ local function configTable()
 			order = 3,
 			type = "group",
 			inline = true,
-			name = L["All_LOGO"],
+			name = L["Logo"],
 			args = {
 				explanationA = {
 					order = 1,
 					type = "description",
-					name = L["AFK_ATTENTION"],
+					name = L["Attention! The path of the custom texture must comply with WoW standards. Example: Interface\\MYFOLDER\\MYFILE.tga. If you see a green box, the path is incorrect or you have a typo."],
 				},
 				explanationB = {
 					order = 2,
 					type = "description",
-					name = L["AFK_SIZE"],
+					name = L["Optimal size for the logo is 512 x 128 Pixel"],
 				},
 				logo_texture = {
 					order = 3,
 					name = function()
 						if E.db.mMT.afk.texture then
-							return L["AFK_LOGO_TEXTURE"] .. "  " .. E:TextureString(E.db.mMT.afk.texture, ":26:102")
+							return L["Logo Texture"] .. "  " .. E:TextureString(E.db.mMT.afk.texture, ":26:102")
 						else
-							return L["AFK_LOGO_TEXTURE"]
+							return L["Logo Texture"]
 						end
 					end,
 					type = "input",
@@ -165,12 +165,12 @@ local function configTable()
 			order = 4,
 			type = "group",
 			inline = true,
-			name = L["ALL_COLORS"],
+			name = L["Colors"],
 			args = {
 				color_title = {
 					type = "color",
 					order = 1,
-					name = L["ALL_TITLE"],
+					name = L["Title"],
 					hasAlpha = false,
 					get = function(info)
 						local t = E.db.mMT.afk.title
@@ -184,7 +184,7 @@ local function configTable()
 				color_values = {
 					type = "color",
 					order = 2,
-					name = L["ALL_VALUE"],
+					name = L["Values"],
 					hasAlpha = false,
 					get = function(info)
 						local t = E.db.mMT.afk.values
@@ -198,7 +198,7 @@ local function configTable()
 				color_attributes = {
 					type = "color",
 					order = 3,
-					name = L["AFK_ATRB"],
+					name = L["Attributes"],
 					hasAlpha = false,
 					get = function(info)
 						local t = E.db.mMT.afk.attributes
@@ -212,7 +212,7 @@ local function configTable()
 				color_enhancements = {
 					type = "color",
 					order = 4,
-					name = L["AFK_ENH"],
+					name = L["Enhancements"],
 					hasAlpha = false,
 					get = function(info)
 						local t = E.db.mMT.afk.enhancements
@@ -226,7 +226,7 @@ local function configTable()
 				color_progress = {
 					type = "color",
 					order = 5,
-					name = L["AFK_PROG"],
+					name = L["Progress"],
 					hasAlpha = false,
 					get = function(info)
 						local t = E.db.mMT.afk.progress
@@ -240,7 +240,7 @@ local function configTable()
 				color_misc = {
 					type = "color",
 					order = 6,
-					name = L["ALL_MISC"],
+					name = L["Misc"],
 					hasAlpha = false,
 					get = function(info)
 						local t = E.db.mMT.afk.misc

@@ -339,11 +339,11 @@ function mMT:Layout_Misc()
 	E.db["general"]["valuecolor"]["r"] = 0.63921570777893
 	E.db["general"]["vehicleSeatIndicatorSize"] = 76
 
-	E.global["general"]["WorldMapCoordinates"]["position"] = "TOPLEFT"
-	E.global["general"]["fadeMapDuration"] = 0.1
-	E.global["general"]["mapAlphaWhenMoving"] = 0.35
-	E.global["general"]["smallerWorldMap"] = false
-	E.global["general"]["smallerWorldMapScale"] = 1
+	E.globaL["ALL_GENERAL"]["WorldMapCoordinates"]["position"] = "TOPLEFT"
+	E.globaL["ALL_GENERAL"]["fadeMapDuration"] = 0.1
+	E.globaL["ALL_GENERAL"]["mapAlphaWhenMoving"] = 0.35
+	E.globaL["ALL_GENERAL"]["smallerWorldMap"] = false
+	E.globaL["ALL_GENERAL"]["smallerWorldMapScale"] = 1
 
 	E.private["general"]["chatBubbleFontOutline"] = "OUTLINE"
 	E.private["general"]["chatBubbleFontSize"] = 10

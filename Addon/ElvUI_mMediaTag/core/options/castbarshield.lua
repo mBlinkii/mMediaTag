@@ -12,12 +12,12 @@ local function configTable()
 			order = 1,
 			type = "group",
 			inline = true,
-			name = L["CBS_SHIELD"],
+			name = L["Castbar Shield"],
 			args = {
 				toggle_castbarshield = {
 					order = 1,
 					type = "toggle",
-					name = L["CBS_NI_SHIELD"],
+					name = L["Enable not Interruptible Shield"],
 					get = function(info)
 						return E.db.mMT.castbarshield.enable
 					end,
@@ -29,7 +29,7 @@ local function configTable()
 				toggle_castbarshieldnp = {
 					order = 2,
 					type = "toggle",
-					name = L["ALL_EN_NP"],
+					name = L["Enable on Nameplates"],
 					get = function(info)
 						return E.db.mMT.castbarshield.np
 					end,
@@ -41,7 +41,7 @@ local function configTable()
 				toggle_castbarshielduf = {
 					order = 3,
 					type = "toggle",
-					name = L["ALL_EN_UFs"],
+					name = L["Enable on Unitframes"],
 					get = function(info)
 						return E.db.mMT.castbarshield.uf
 					end,
@@ -56,12 +56,12 @@ local function configTable()
 			order = 2,
 			type = "group",
 			inline = true,
-			name = L["ALL_SETTINGS"],
+			name = L["Settings"],
 			args = {
 				toggle_custom = {
 					order = 1,
 					type = "toggle",
-					name = L["ALL_CUSTOM_COLOR"],
+					name = L["Custom color"],
 					get = function(info)
 						return E.db.mMT.castbarshield.custom
 					end,
@@ -72,7 +72,7 @@ local function configTable()
 				color = {
 					type = "color",
 					order = 2,
-					name = L["CBS_ICON_COLOR"],
+					name = L["Custom Icon Color"],
 					hasAlpha = true,
 					disabled = function()
 						return not E.db.mMT.castbarshield.custom
@@ -94,7 +94,7 @@ local function configTable()
 				toggle_size = {
 					order = 4,
 					type = "toggle",
-					name = L["CBS_AUTO_SIZE"],
+					name = L["Auto Size"],
 					get = function(info)
 						return E.db.mMT.castbarshield.auto
 					end,
@@ -121,7 +121,7 @@ local function configTable()
 				},
 				range_y = {
 					order = 6,
-					name = L["CBS_SIZE_Y"],
+					name = L["Extra Icon size Y"],
 					type = "range",
 					min = 16,
 					max = 128,
@@ -144,7 +144,7 @@ local function configTable()
 				select_icon = {
 					order = 8,
 					type = "select",
-					name = L["ALL_ICON"],
+					name = L["Icon"],
 					get = function(info)
 						return E.db.mMT.castbarshield.icon
 					end,
@@ -161,7 +161,7 @@ local function configTable()
 				select_anchor = {
 					order = 10,
 					type = "select",
-					name = L["CBS_ICON_POINT"],
+					name = L["Icon Anchor"],
 					get = function(info)
 						return E.db.mMT.castbarshield.anchor
 					end,
@@ -178,7 +178,7 @@ local function configTable()
 				},
 				range_posx = {
 					order = 12,
-					name = L["ALL_POSITION"] .. " X",
+					name = L["Position"] .. " X",
 					type = "range",
 					min = -256,
 					max = 256,
@@ -192,7 +192,7 @@ local function configTable()
 				},
 				range_posy = {
 					order = 13,
-					name = L["ALL_POSITION"] .. " Y",
+					name = L["Position"] .. " Y",
 					type = "range",
 					min = -256,
 					max = 256,

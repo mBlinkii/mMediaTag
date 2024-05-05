@@ -8,13 +8,13 @@ local function configTable()
 			order = 1,
 			type = "group",
 			inline = true,
-			name = L["BG_CHBG"],
+			name = L["Custom Health Backdrop"],
 			args = {
 				bghealth = {
 					order = 2,
 					type = "toggle",
-					name = L["BG_CHBG"],
-					desc = L["BG_TIP_CHBG"],
+					name = L["Custom Health Backdrop"],
+					desc = L["Enable Custom Health Backdrop"],
 					get = function(info)
 						return E.db.mMT.custombackgrounds.health.enable
 					end,
@@ -27,7 +27,7 @@ local function configTable()
 					order = 3,
 					type = "select",
 					dialogControl = "LSM30_Statusbar",
-					name = L["BG_BGT"],
+					name = L["Backdrop Texture"],
 					values = LSM:HashTable("statusbar"),
 					disabled = function()
 						return not E.db.mMT.custombackgrounds.health.enable
@@ -46,13 +46,13 @@ local function configTable()
 			order = 11,
 			type = "group",
 			inline = true,
-			name = L["BG_CPBG"],
+			name = L["Custom Power Backdrop"],
 			args = {
 				bgpower = {
 					order = 12,
 					type = "toggle",
-					name = L["BG_CPBG"],
-					desc = L["BG_TIP_CPBG"],
+					name = L["Custom Power Backdrop"],
+					desc = L["Enable Custom Power Backdrop"],
 					get = function(info)
 						return E.db.mMT.custombackgrounds.power.enable
 					end,
@@ -65,7 +65,7 @@ local function configTable()
 					order = 13,
 					type = "select",
 					dialogControl = "LSM30_Statusbar",
-					name = L["BG_BGT"],
+					name = L["Backdrop Texture"],
 					values = LSM:HashTable("statusbar"),
 					disabled = function()
 						return not E.db.mMT.custombackgrounds.power.enable
@@ -84,13 +84,13 @@ local function configTable()
 			order = 21,
 			type = "group",
 			inline = true,
-			name = L["BG_CCBG"],
+			name = L["Custom Castbar Backdrop"],
 			args = {
 				bgcastbar = {
 					order = 22,
 					type = "toggle",
-					name = L["BG_CCBG"],
-					desc = L["BG_TIP_CCBG"],
+					name = L["Custom Castbar Backdrop"],
+					desc = L["Enable Custom Castbar Backdrop"],
 					get = function(info)
 						return E.db.mMT.custombackgrounds.castbar.enable
 					end,
@@ -103,7 +103,7 @@ local function configTable()
 					order = 23,
 					type = "select",
 					dialogControl = "LSM30_Statusbar",
-					name = L["BG_BGT"],
+					name = L["Backdrop Texture"],
 					values = LSM:HashTable("statusbar"),
 					disabled = function()
 						return not E.db.mMT.custombackgrounds.castbar.enable

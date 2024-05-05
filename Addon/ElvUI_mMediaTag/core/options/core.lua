@@ -1,5 +1,4 @@
-local E, _, _, _, _ = unpack(ElvUI)
-local L = LibStub("AceLocale-3.0"):GetLocale("mMT")
+local E, L, V, P, G = unpack(ElvUI)
 
 local tinsert = tinsert
 
@@ -20,32 +19,32 @@ local function configTable()
 			general = {
 				order = 2,
 				type = "group",
-				name = L["ALL_GENERAL"],
+				name = L["General"],
 				icon = "Interface\\Addons\\ElvUI_mMediaTag\\media\\system\\general.tga",
 				childGroups = "tab",
 				args = {
 					general = {
 						order = 1,
 						type = "group",
-						name = L["ALL_GENERAL"],
+						name = L["General"],
 						args = {},
 					},
 					greeting = {
 						order = 2,
 						type = "group",
-						name = L["WLC_NAME"],
+						name = L["Welcome text"],
 						args = {},
 					},
 					roll = {
 						order = 3,
 						type = "group",
-						name = L["RB_NAME"],
+						name = L["Roll Button"],
 						args = {},
 					},
 					chat = {
 						order = 4,
 						type = "group",
-						name = L["CBT_NAME"],
+						name = L["Chat Button"],
 						hidden = function()
 							return not E.Retail
 						end,
@@ -54,7 +53,7 @@ local function configTable()
 					keystochat = {
 						order = 5,
 						type = "group",
-						name = L["KSTC_NAME"] .. " (!keys)",
+						name = L["Keystone to Chat"] .. " (!keys)",
 						hidden = function()
 							return not E.Retail
 						end,
@@ -63,7 +62,7 @@ local function configTable()
 					instancedifficulty = {
 						order = 6,
 						type = "group",
-						name = L["ID_NAME"],
+						name = L["Instance Difficulty"],
 						hidden = function()
 							return not E.Retail
 						end,
@@ -72,7 +71,7 @@ local function configTable()
 					afk = {
 						order = 7,
 						type = "group",
-						name = L["AFK_SCR"],
+						name = L["AFK Screen"],
 						args = {},
 					},
 				},
@@ -80,26 +79,26 @@ local function configTable()
 			datatexts = {
 				order = 3,
 				type = "group",
-				name = L["CORE_DT"],
+				name = L["DataTexts"],
 				icon = "Interface\\Addons\\ElvUI_mMediaTag\\media\\system\\datatexts.tga",
 				childGroups = "tab",
 				args = {
 					colors = {
 						order = 1,
 						type = "group",
-						name = mMT.Name .. " " .. L["DT_COLOR"],
+						name = mMT.Name .. " " .. L["Datatext Colors"],
 						args = {},
 					},
 					combat = {
 						order = 2,
 						type = "group",
-						name = L["CIT_NAME"],
+						name = L["Combat Icon and Time"],
 						args = {},
 					},
 					score = {
 						order = 3,
 						type = "group",
-						name = L["MPS_NAME"],
+						name = L["M+ Score"],
 						hidden = function()
 							return not E.Retail
 						end,
@@ -108,7 +107,7 @@ local function configTable()
 					teleports = {
 						order = 4,
 						type = "group",
-						name = L["TP_NAME"],
+						name = L["Teleports"],
 						hidden = function()
 							return not E.Retail
 						end,
@@ -117,7 +116,7 @@ local function configTable()
 					profession = {
 						order = 5,
 						type = "group",
-						name = L["PROF_NAME"],
+						name = L["Professions"],
 						hidden = function()
 							return not (E.Retail or E.Cata)
 						end,
@@ -126,7 +125,7 @@ local function configTable()
 					dungeon = {
 						order = 6,
 						type = "group",
-						name = L["ALL_DUNGEON"],
+						name = L["Dungeon"],
 						hidden = function()
 							return not (E.Retail or E.Cata)
 						end,
@@ -135,13 +134,13 @@ local function configTable()
 					gamemenu = {
 						order = 7,
 						type = "group",
-						name = L["GM_NAME"],
+						name = L["Game Menu"],
 						args = {},
 					},
 					currency = {
 						order = 7,
 						type = "group",
-						name = L["CURR_NAME"],
+						name = L["Currency"],
 						hidden = function()
 							return not E.Retail
 						end,
@@ -150,13 +149,13 @@ local function configTable()
 					firstandsecondprofession = {
 						order = 8,
 						type = "group",
-						name = L["FASPROF_NAME"],
+						name = L["First and Second Profession"],
 						args = {},
 					},
 					durabilityanditemlevel = {
 						order = 9,
 						type = "group",
-						name = L["DURILV_NAME"],
+						name = L["Durability and Item Level"],
 						args = {},
 					},
 				},
@@ -164,20 +163,20 @@ local function configTable()
 			tags = {
 				order = 4,
 				type = "group",
-				name = L["TAG_NAME"],
+				name = L["Tags"],
 				icon = "Interface\\Addons\\ElvUI_mMediaTag\\media\\system\\tags.tga",
 				childGroups = "tab",
 				args = {
 					color = {
 						order = 1,
 						type = "group",
-						name = L["ALL_COLORS"],
+						name = L["Colors"],
 						args = {},
 					},
 					icon = {
 						order = 2,
 						type = "group",
-						name = L["ALL_ICON"],
+						name = L["Icons"],
 						args = {},
 					},
 				},
@@ -185,7 +184,7 @@ local function configTable()
 			dock = {
 				order = 5,
 				type = "group",
-				name = L["DOCK_NAME"],
+				name = L["Dock"],
 				icon = "Interface\\Addons\\ElvUI_mMediaTag\\media\\system\\dock.tga",
 				childGroups = "tab",
 				args = {},
@@ -193,7 +192,7 @@ local function configTable()
 			castbar = {
 				order = 6,
 				type = "group",
-				name = L["CORE_CB"],
+				name = L["Castbar"],
 				hidden = function()
 					return not (E.Retail or E.Cata)
 				end,
@@ -203,13 +202,13 @@ local function configTable()
 					general = {
 						order = 1,
 						type = "group",
-						name = L["ALL_GENERAL"],
+						name = L["General"],
 						args = {},
 					},
 					interrupt = {
 						order = 2,
 						type = "group",
-						name = L["ICD_NAME"],
+						name = L["Interrupt on CD"],
 						hidden = function()
 							return not E.Retail
 						end,
@@ -218,13 +217,13 @@ local function configTable()
 					important = {
 						order = 3,
 						type = "group",
-						name = L["IMPS_NAME"],
+						name = L["Important Spells"],
 						args = {},
 					},
 					shield = {
 						order = 4,
 						type = "group",
-						name = L["CBS_SHIELD"],
+						name = L["Castbar Shield"],
 						args = {},
 					},
 				},
@@ -232,14 +231,14 @@ local function configTable()
 			nameplates = {
 				order = 7,
 				type = "group",
-				name = L["NP_NAME"],
+				name = L["Nameplates"],
 				icon = "Interface\\Addons\\ElvUI_mMediaTag\\media\\system\\nameplates.tga",
 				childGroups = "tab",
 				args = {
 					healthmarker = {
 						order = 1,
 						type = "group",
-						name = L["HM_NAME"],
+						name = L["Health markers"],
 						hidden = function()
 							return not E.Retail
 						end,
@@ -248,7 +247,7 @@ local function configTable()
 					executemarker = {
 						order = 2,
 						type = "group",
-						name = L["EM_NAME"],
+						name = L["Execute markers"],
 						hidden = function()
 							return not E.Retail
 						end,
@@ -257,7 +256,7 @@ local function configTable()
 					bordercolor = {
 						order = 3,
 						type = "group",
-						name = L["ALL_BORDER_COLOR"],
+						name = L["Border Color"],
 						args = {},
 					},
 				},
@@ -265,20 +264,20 @@ local function configTable()
 			cosmetic = {
 				order = 8,
 				type = "group",
-				name = L["CORE_COSMETICS"],
+				name = L["Cosmetic"],
 				icon = "Interface\\Addons\\ElvUI_mMediaTag\\media\\system\\cosmetic.tga",
 				childGroups = "tab",
 				args = {
 					tooltip = {
 						order = 1,
 						type = "group",
-						name = L["TIP_NAME"],
+						name = L["Tooltip Icon"],
 						args = {},
 					},
 					background = {
 						order = 2,
 						type = "group",
-						name = L["CORE_CUSTOM_UF_BG"],
+						name = L["Custom Unitframe Backgrounds"],
 						args = {},
 					},
 					-- classcolor = {
@@ -290,7 +289,7 @@ local function configTable()
 					roleicons = {
 						order = 4,
 						type = "group",
-						name = L["RI_NAME"],
+						name = L["Role Icons"],
 						hidden = function()
 							return not (E.Retail or E.Cata)
 						end,
@@ -299,7 +298,7 @@ local function configTable()
 					objectivetracker = {
 						order = 5,
 						type = "group",
-						name = L["OT_NAME"],
+						name = L["Objective Tracker"],
 						hidden = function()
 							return not E.Retail
 						end,
@@ -309,35 +308,35 @@ local function configTable()
 					unitframeicons = {
 						order = 6,
 						type = "group",
-						name = L["UFI_NAME"],
+						name = L["Unitframe Icons"],
 						childGroups = "tab",
 						args = {},
 					},
 					portraits = {
 						order = 7,
 						type = "group",
-						name = L["POT_NAME"],
+						name = L["Portraits"],
 						childGroups = "tab",
 						args = {},
 					},
 					datapanels = {
 						order = 8,
 						type = "group",
-						name = L["DTP_NAME"],
+						name = L["Datapanels"],
 						childGroups = "tab",
 						args = {},
 					},
 					questicons = {
 						order = 9,
 						type = "group",
-						name = L["QI_NAME"],
+						name = L["Quest Icons"],
 						childGroups = "tab",
 						args = {},
 					},
 					textures = {
 						order = 20,
 						type = "group",
-						name = L["ALL_TEXTURES"],
+						name = L["Textures"],
 						args = {},
 					},
 				},
@@ -353,7 +352,7 @@ local function configTable()
 			about = {
 				order = 10,
 				type = "group",
-				name = format("|CFF05E464%s|r", L["ABOUT_NAME"]),
+				name = format("|CFF05E464%s|r", L["About"]),
 				icon = "Interface\\Addons\\ElvUI_mMediaTag\\media\\system\\about.tga",
 				childGroups = "tab",
 				args = {},
@@ -361,7 +360,7 @@ local function configTable()
 			changelog = {
 				order = 11,
 				type = "group",
-				name = format("|CFFFF0094%s|r", L["ABOUT_CHANGELOG"]),
+				name = format("|CFFFF0094%s|r", L["Changelog"]),
 				icon = "Interface\\Addons\\ElvUI_mMediaTag\\media\\system\\changelog.tga",
 				childGroups = "tab",
 				args = {},
@@ -369,7 +368,7 @@ local function configTable()
 			dev = {
 				order = 20,
 				type = "group",
-				name = format("|CFF6559F1%s|r", L["CORE_DEV"]),
+				name = format("|CFF6559F1%s|r", L["DEV Tools"]),
 				icon = "Interface\\Addons\\ElvUI_mMediaTag\\media\\logo\\mmt_icon.tga",
 				childGroups = "tab",
 				hidden = function()
