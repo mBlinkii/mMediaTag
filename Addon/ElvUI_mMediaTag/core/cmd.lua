@@ -3,8 +3,6 @@ local E = unpack(ElvUI)
 SLASH_MMT1 = "/mmt"
 SlashCmdList.MMT = function(msg, editBox)
 	msg = strlower(msg)
-
-	mMT:Print(msg)
 	if msg == "dev" and not mMT.DevMode and mMT.DEVNames[UnitName("player")] then
 		mMT:Print("|CFFFFC900DEV - Tools:|r |CFF00E360Enabled|r")
 		mMT.DevMode = true
