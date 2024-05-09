@@ -8,6 +8,7 @@ local MediaType_BACKGROUND = LSM.MediaType.BACKGROUND
 local MediaType_BORDER = LSM.MediaType.BORDER
 local MediaType_FONT = LSM.MediaType.FONT
 local MediaType_STATUSBAR = LSM.MediaType.STATUSBAR
+local MediaType_SOUND = LSM.MediaType.SOUND
 
 local function mAddStatusbar(name, file)
 	LSM:Register(MediaType_STATUSBAR, name, [[Interface\AddOns\!mMT_MediaPack\media\textures\]] .. file)
@@ -23,6 +24,10 @@ end
 
 local function mAddBorder(name, file)
 	LSM:Register(MediaType_BORDER, name, [[Interface\AddOns\!mMT_MediaPack\media\border\]] .. file)
+end
+
+local function mAddSound(name, file)
+	LSM:Register(MediaType_SOUND, name, [[Interface\AddOns\!mMT_MediaPack\media\sound\]] .. file)
 end
 
 local function LoadSeriesA()
@@ -731,3 +736,29 @@ mAddFont("Montserrat-ExtraBold", "Montserrat-ExtraBold.ttf")
 mAddFont("Montserrat-Medium", "Montserrat-Medium.ttf")
 mAddFont("Montserrat-Regular", "Montserrat-Regular.ttf")
 mAddFont("Montserrat-SemiBold", "Montserrat-SemiBold.ttf")
+
+mAddSound("mMT - Bewegen - weiblich", "bewegen_female.ogg")
+mAddSound("mMT - Unterbrechen - weiblich", "unterbrechen_female.ogg")
+mAddSound("mMT - Bewegen - mänlich", "bewegen_male.ogg")
+mAddSound("mMT - Unterbrechen - mänlich", "unterbrechen_male.ogg")
+
+mAddSound("mMT - Feet - female", "feet_female.ogg")
+mAddSound("mMT - Get out - female", "getout_female.ogg")
+mAddSound("mMT - Interrupt - female", "interrupt_female.ogg")
+mAddSound("mMT - Kick - female", "kick_female.ogg")
+mAddSound("mMT - STUN! - female", "loud_stun_female.ogg")
+mAddSound("mMT - Stun - female", "stun_female.ogg")
+
+mAddSound("mMT - Feet - male", "feet_male.ogg")
+mAddSound("mMT - Interrupt - male", "interrupt_male.ogg")
+mAddSound("mMT - Stun - male", "stun_male.ogg")
+
+mAddSound("mMT - AOE - DE - male", "aoe_de_male.ogg")
+mAddSound("mMT - AOE - DE - female", "aoe_de_female.ogg")
+mAddSound("mMT - AOE - male", "aoe_male.ogg")
+mAddSound("mMT - AOE - female", "aoe_female.ogg")
+mAddSound("mMT - AOE 2 - female", "aoe_b_female.ogg")
+
+mAddSound("mMT - Frontal - male", "frontal_male.ogg")
+mAddSound("mMT - Frontal - female", "frontal_female.ogg")
+mAddSound("mMT - Frontal 2 - female", "frontal_b_female.ogg")

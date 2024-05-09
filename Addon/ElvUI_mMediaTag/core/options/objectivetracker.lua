@@ -1,4 +1,6 @@
-local E, L, V, P, G = unpack(ElvUI)
+local E = unpack(ElvUI)
+local L = mMT.Locales
+
 local LSM = E.Libs.LSM
 
 local tinsert = tinsert
@@ -75,7 +77,7 @@ local function configTable()
 					end,
 				},
 				toggle_dash = {
-					order = 1,
+					order = 2,
 					type = "toggle",
 					name = L["Hide Dash"],
 					get = function(info)
@@ -598,7 +600,7 @@ local function configTable()
 						toggle_gradient = {
 							order = 6,
 							type = "toggle",
-							name = L["Gradient Color"],
+							name = L["Gradient"],
 							get = function(info)
 								return E.db.mMT.objectivetracker.headerbar.gradient
 							end,
@@ -705,7 +707,7 @@ local function configTable()
 						toggle_gradient = {
 							order = 3,
 							type = "toggle",
-							name = L["Gradient Color"],
+							name = L["Gradient"],
 							get = function(info)
 								return E.db.mMT.objectivetracker.bar.gradient
 							end,
@@ -777,13 +779,13 @@ local function configTable()
 					order = 2,
 					type = "group",
 					inline = true,
-					name = L["Mythic + Colors"],
+					name = L["Mythic+ Colors"],
 					args = {
 						chest_1 = {
 							order = 1,
 							type = "group",
 							inline = true,
-							name = L["Chest +1"],
+							name = L["Chest"] .. " +1",
 							args = {
 								color_a = {
 									type = "color",
@@ -819,7 +821,7 @@ local function configTable()
 							order = 2,
 							type = "group",
 							inline = true,
-							name = L["Chest +2"],
+							name = L["Chest"] .. " +2",
 							args = {
 								color_a = {
 									type = "color",
@@ -855,7 +857,7 @@ local function configTable()
 							order = 3,
 							type = "group",
 							inline = true,
-							name = L["Chest +3"],
+							name = L["Chest"] .. " +3",
 							args = {
 								color_a = {
 									type = "color",

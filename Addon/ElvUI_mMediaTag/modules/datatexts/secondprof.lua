@@ -1,4 +1,6 @@
-local E, L = unpack(ElvUI)
+local E = unpack(ElvUI)
+local L = mMT.Locales
+
 local DT = E:GetModule("DataTexts")
 
 local _G = _G
@@ -37,7 +39,7 @@ local function OnEnter(self)
 			DT.tooltip:AddDoubleLine(name, colorText(skillLevel) .. colorText("/", true) .. colorText(maxSkillLevel) .. colorText(" +", true) .. colorText(skillModifier))
 		end
 	else
-		DT.tooltip:AddLine(format("%s%s|r", "|CFFE74C3C", L["No Professions|r"]))
+		DT.tooltip:AddLine(format("%s%s|r", "|CFFE74C3C", L["No Professions"]))
 	end
 
 	DT.tooltip:Show()

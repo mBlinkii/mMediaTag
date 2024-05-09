@@ -197,6 +197,7 @@ function mMT:updateAutoRange()
 			if IsPlayerSpell(384581) then -- Arcane pressure
 				executeAutoRange.enable = true
 				executeAutoRange.range = 35
+				executeAutoRange.spell = 384581
 			end
 		elseif specID == 63 then
 			if IsPlayerSpell(269644) then -- Touch
@@ -222,10 +223,11 @@ function mMT:updateAutoRange()
 			executeAutoRange.range = 20
 		end
 	elseif class == "WARRIOR" then
-		executeAutoRange.enable = true
-		executeAutoRange.range = 0.2
-		if (specID == 72 and IsPlayerSpell(206315)) or IsPlayerSpell(281001) then
-			executeAutoRange.range = 0.35
+		local execute = (specID == 72) and 280735 or 163201
+		local massacre = (specID == 72) and 206315 or 281001
+		if IsPlayerSpell(execute) or IsPlayerSpell(massacre) then -- Execute or Massacre
+			executeAutoRange.enable = true
+			executeAutoRange.range = IsPlayerSpell(massacre) and 35 or 20
 		end
 	elseif class == "HUNTER" then
 		if IsPlayerSpell(273887) then
@@ -274,22 +276,22 @@ local function executeMarker(unit, percent)
 	end
 
 	local range = nil
-	local inCombat = true --InCombatLockdown()
+	local inCombat = InCombatLockdown()
 
 	if db.auto and executeAutoRange.enable then
-		local playerHealth = UnitHealthMax("player")
-		local unitHealth = unit.Health.max
+		if executeAutoRange.monk then
+			local playerHealth = UnitHealthMax("player")
+			local unitHealth = unit.Health.max
 
-		if not executeAutoRange.monk then
-			range = executeAutoRange.range
-		end
-
-		if executeAutoRange.monk and unitHealth > playerHealth then
-			if playerHealth and unitHealth then
-				range = (100 / unitHealth) * playerHealth
-			else
-				range = executeAutoRange.range
+			if executeAutoRange.monk and unitHealth > playerHealth then
+				if playerHealth and unitHealth then
+					range = (100 / unitHealth) * playerHealth
+				else
+					range = executeAutoRange.range
+				end
 			end
+		else
+			range = executeAutoRange.range
 		end
 	elseif not db.auto then
 		range = db.range

@@ -92,7 +92,7 @@ function mMT:ColorFade(colorA, colorB, percent)
 		return colorA
 	else
 		print("|CFFE74C3CERROR - mMediaTag - COLORFADE|r")
-		return nil
+		return { r = 1, g = 1, b = 1, a = 1 }
 	end
 end
 

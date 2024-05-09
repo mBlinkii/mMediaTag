@@ -1,4 +1,6 @@
-local E, L = unpack(ElvUI)
+local E = unpack(ElvUI)
+local L = mMT.Locales
+
 local DT = E:GetModule("DataTexts")
 local LSM = E.Libs.LSM
 

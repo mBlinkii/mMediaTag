@@ -1,4 +1,6 @@
-local E, L = unpack(ElvUI)
+local E = unpack(ElvUI)
+local L = mMT.Locales
+
 local DT = E:GetModule("DataTexts")
 local B = E:GetModule("Bags")
 
@@ -165,7 +167,7 @@ local function OnEnter(self)
 		end
 
 		DT.tooltip:AddLine(" ")
-		DT.tooltip:AddLine(L["Character: "])
+		DT.tooltip:AddLine(L["Character:"])
 
 		sort(myGold, sortFunction)
 

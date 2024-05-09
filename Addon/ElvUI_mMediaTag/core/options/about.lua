@@ -1,4 +1,5 @@
-local E, L, V, P, G = unpack(ElvUI)
+local E, _, _, _, _ = unpack(ElvUI)
+local L = mMT.Locales
 
 local _G = _G
 local tinsert = tinsert
@@ -76,7 +77,7 @@ local function configTable()
 				git = {
 					order = 2,
 					type = "execute",
-					name = L["Git"],
+					name = "GitHub",
 					func = function()
 						E:StaticPopup_Show("ELVUI_EDITBOX", nil, nil, "https://github.com/mBlinkii/mMediaTag/tree/main")
 					end,
@@ -95,7 +96,7 @@ local function configTable()
 			order = 3,
 			type = "group",
 			inline = true,
-			name = L["Licens"],
+			name = L["License"],
 			args = {
 				license_general = {
 					order = 1,

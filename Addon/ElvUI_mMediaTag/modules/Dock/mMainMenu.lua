@@ -1,4 +1,6 @@
-local E, L = unpack(ElvUI)
+local E = unpack(ElvUI)
+local L = mMT.Locales
+
 local DT = E:GetModule("DataTexts")
 
 --Lua functions
@@ -28,7 +30,7 @@ local statusColors = {
 
 local function mTip()
 	if E.db.mMT.dockdatatext.tip.enable then
-		local _, _, _, _, other, titel, tip = mMT:mColorDatatext()
+		local _, _, _, _, other, title, tip = mMT:mColorDatatext()
 		DT.tooltip:ClearLines()
 
 		local framerate = GetFramerate()
@@ -37,11 +39,11 @@ local function mTip()
 		local pingHome = latencyHome < 150 and 1 or (latencyHome >= 150 and latencyHome < 300) and 2 or (latencyHome >= 300 and latencyHome < 500) and 3 or 4
 		local pingWorld = latencyWorld < 150 and 1 or (latencyWorld >= 150 and latencyWorld < 300) and 2 or (latencyWorld >= 300 and latencyWorld < 500) and 3 or 4
 		_, _, latencyHome, latencyWorld = GetNetStats()
-		DT.tooltip:AddDoubleLine(format("%s%s|r", L["FPS:"], titel), format("%s%d|r %sFPS", statusColors[fps], framerate, other))
-		DT.tooltip:AddDoubleLine(format("%s%s|r", L["Home Latency:"], titel), format("%s%d|r %sms", statusColors[pingHome], latencyHome, other))
-		DT.tooltip:AddDoubleLine(format("%s%s|r", L["World Latency:"], titel), format("%s%d|r %sms", statusColors[pingWorld], latencyWorld, other))
+		DT.tooltip:AddDoubleLine(format("%s%s|r", "FPS:", title), format("%s%d|r %sFPS", statusColors[fps], framerate, other))
+		DT.tooltip:AddDoubleLine(format("%s%s|r", L["Home Latency:"], title), format("%s%d|r %sms", statusColors[pingHome], latencyHome, other))
+		DT.tooltip:AddDoubleLine(format("%s%s|r", L["World Latency:"], title), format("%s%d|r %sms", statusColors[pingWorld], latencyWorld, other))
 		DT.tooltip:AddLine(" ")
-		DT.tooltip:AddDoubleLine(mMT.Name, format("%sVer.|r %s%s|r", titel, other, mMT.Version))
+		DT.tooltip:AddDoubleLine(mMT.Name, format("%sVer.|r %s%s|r", title, other, mMT.Version))
 		DT.tooltip:AddLine(" ")
 		DT.tooltip:AddLine(format("%s %s%s|r", mMT:mIcon(mMT.Media.Mouse["LEFT"]), tip, L["Click left to open the main menu."]))
 		DT.tooltip:AddLine(format("%s %s%s|r", mMT:mIcon(mMT.Media.Mouse["RIGHT"]), tip, L["Right click to open the ElvUI settings."]))

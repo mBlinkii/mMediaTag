@@ -1,4 +1,6 @@
 local E = unpack(ElvUI)
+local L = mMT.Locales
+
 local LibDeflate = E.Libs.Deflate
 local D = E:GetModule("Distributor")
 

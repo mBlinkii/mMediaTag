@@ -1,4 +1,5 @@
-local E, L, V, P, G = unpack(ElvUI)
+local E = unpack(ElvUI)
+local L = mMT.Locales
 
 local tinsert = tinsert
 local function configTable()
@@ -13,6 +14,7 @@ local function configTable()
 					order = 2,
 					type = "toggle",
 					name = L["Send Keystone to Chat with !keys command"],
+					desc = L["Send Keystone to Chat with !keys command"],
 					get = function(info)
 						return E.db.mMT.general.keystochat
 					end,

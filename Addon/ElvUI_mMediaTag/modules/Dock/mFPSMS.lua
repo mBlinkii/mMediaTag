@@ -1,4 +1,6 @@
-local E, L = unpack(ElvUI)
+local E = unpack(ElvUI)
+local L = mMT.Locales
+
 local DT = E:GetModule("DataTexts")
 
 --Lua functions
@@ -9,7 +11,7 @@ local _G = _G
 local enteredFrame = false
 local Config = {
 	name = "mMT_Dock_FPSMS",
-	localizedName = mMT.DockString .. " " .. L["FPS/ MS"],
+	localizedName = mMT.DockString .. " " .. "FPS/ MS",
 	category = "mMT-" .. mMT.DockString,
 	text = {
 		enable = true,
@@ -34,7 +36,7 @@ local function OnEnter(self, count)
 	mMT:Dock_OnEnter(self, Config)
 
 	if E.db.mMT.dockdatatext.tip.enable then
-		local _, _, _, _, other, titel, tip = mMT:mColorDatatext()
+		local _, _, _, _, other, title, tip = mMT:mColorDatatext()
 
 		local framerate = GetFramerate()
 		local _, _, latencyHome, latencyWorld = GetNetStats()
@@ -43,11 +45,11 @@ local function OnEnter(self, count)
 		local pingWorld = latencyWorld < 150 and 1 or (latencyWorld >= 150 and latencyWorld < 300) and 2 or (latencyWorld >= 300 and latencyWorld < 500) and 3 or 4
 
 		local bandwidthIn, bandwidthOut, latencyHome, latencyWorld = GetNetStats()
-		DT.tooltip:AddDoubleLine(format("%s%s|r", L["FPS:"], titel), format("%s%d|r %sFPS", statusColors[fps], framerate, other))
-		DT.tooltip:AddDoubleLine(format("%s%s|r", L["Home Latency:"], titel), format("%s%d|r %sms", statusColors[pingHome], latencyHome, other))
-		DT.tooltip:AddDoubleLine(format("%s%s|r", L["World Latency:"], titel), format("%s%d|r %sms", statusColors[pingWorld], latencyWorld, other))
+		DT.tooltip:AddDoubleLine(format("%s%s|r", "FPS:", title), format("%s%d|r %sFPS", statusColors[fps], framerate, other))
+		DT.tooltip:AddDoubleLine(format("%s%s|r", L["Home Latency:"], title), format("%s%d|r %sms", statusColors[pingHome], latencyHome, other))
+		DT.tooltip:AddDoubleLine(format("%s%s|r", L["World Latency:"], title), format("%s%d|r %sms", statusColors[pingWorld], latencyWorld, other))
 		DT.tooltip:AddLine(" ")
-		DT.tooltip:AddDoubleLine(mMT.Name, format("%sVer.|r %s%s|r", titel, other, mMT.Version))
+		DT.tooltip:AddDoubleLine(mMT.Name, format("%sVer.|r %s%s|r", title, other, mMT.Version))
 		DT.tooltip:AddLine(" ")
 		DT.tooltip:AddLine(format("%s %s%s|r", mMT:mIcon(mMT.Media.Mouse["LEFT"]), tip, L["Click left to open the main menu."]))
 		DT.tooltip:AddLine(format("%s %s%s|r", mMT:mIcon(mMT.Media.Mouse["RIGHT"]), tip, L["Right click to open the ElvUI settings."]))

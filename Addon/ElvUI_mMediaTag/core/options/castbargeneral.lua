@@ -1,4 +1,5 @@
-local E, L = unpack(ElvUI)
+local E = unpack(ElvUI)
+local L = mMT.Locales
 
 local function configTable()
 	E.Options.args.mMT.args.castbar.args.general.args = {

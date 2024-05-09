@@ -1,4 +1,6 @@
-local E, L, V, P, G = unpack(ElvUI)
+local E = unpack(ElvUI)
+local L = mMT.Locales
+
 local LSM = LibStub("LibSharedMedia-3.0")
 local tinsert = tinsert
 local selectedID = nil
@@ -17,13 +19,13 @@ local function configTable()
 			order = 1,
 			type = "group",
 			inline = true,
-			name = L["Health markers"],
+			name = L["Healthmarkers"],
 			args = {
 				toggle_healthmarker = {
 					order = 1,
 					type = "toggle",
 					name = L["Enable"],
-					desc = L["Enable Nameplate Health Marker"],
+					desc = L["Enable Nameplate Healthmarkers"],
 					get = function(info)
 						return E.db.mMT.nameplate.healthmarker.enable
 					end,
@@ -123,8 +125,8 @@ local function configTable()
 			args = {
 				customid = {
 					order = 1,
-					name = L["Custom NPCID"],
-					desc = L["Enter a NPCID"],
+					name = L["Custom NPC ID"],
+					desc = L["Enter a NPC ID"],
 					type = "input",
 					width = "smal",
 					set = function(info, value)
@@ -157,7 +159,7 @@ local function configTable()
 				},
 				deleteid = {
 					order = 3,
-					name = L["Delete NPCID"],
+					name = L["Delete NPC ID"],
 					type = "input",
 					width = "smal",
 					set = function(info, value)
@@ -186,8 +188,8 @@ local function configTable()
 					args = {
 						mark1 = {
 							order = 1,
-							name = L["Healthmarker 1"],
-							desc = L["0 = disable"],
+							name = L["Healthmarker"] .. " 1",
+							desc = "0 = " .. L["disable"],
 							type = "range",
 							min = 0,
 							max = 100,
@@ -213,8 +215,8 @@ local function configTable()
 						},
 						mark2 = {
 							order = 2,
-							name = L["Healthmarker 2"],
-							desc = L["0 = disable"],
+							name = L["Healthmarker"] .. " 2",
+							desc = "0 = " .. L["disable"],
 							type = "range",
 							min = 0,
 							max = 100,
@@ -260,8 +262,8 @@ local function configTable()
 						},
 						mark3 = {
 							order = 3,
-							name = L["Healthmarker 3"],
-							desc = L["0 = disable"],
+							name = L["Healthmarker"] .. " 3",
+							desc = "0 = " .. L["disable"],
 							type = "range",
 							min = 0,
 							max = 100,
@@ -305,8 +307,8 @@ local function configTable()
 						},
 						mark4 = {
 							order = 4,
-							name = L["Healthmarker 4"],
-							desc = L["0 = disable"],
+							name = L["Healthmarker"] .. " 4",
+							desc = "0 = " .. L["disable"],
 							type = "range",
 							min = 0,
 							max = 100,

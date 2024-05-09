@@ -1,4 +1,5 @@
-local E, L, V, P, G = unpack(ElvUI)
+local E = unpack(ElvUI)
+local L = mMT.Locales
 
 local tinsert = tinsert
 local function configTable()
@@ -19,6 +20,7 @@ local function configTable()
 					order = 1,
 					type = "toggle",
 					name = L["Highlight my Keystone"],
+					desc = L["Highlight my Keystone"],
 					get = function(info)
 						return E.db.mMT.mpscore.highlight
 					end,
@@ -59,9 +61,9 @@ local function configTable()
 						E.db.mMT.mpscore.sort = value
 					end,
 					values = {
-						AFFIX = "Weekly Affix",
-						SCORE = "Weekly Score",
-						OVERA = "Overall Score",
+						AFFIX = L["Weekly Affix"],
+						SCORE = L["Weekly Score"],
+						OVERA = L["Overall Score"],
 					},
 				},
 			},
@@ -76,6 +78,7 @@ local function configTable()
 					order = 1,
 					type = "toggle",
 					name = L["Show weekly upgrades"],
+					desc = L["Show weekly upgrades"],
 					get = function(info)
 						return E.db.mMT.mpscore.upgrade
 					end,
@@ -107,6 +110,7 @@ local function configTable()
 					order = 1,
 					type = "toggle",
 					name = L["Show Groupmember Keys."],
+					desc = L["Show Groupmember Keys."],
 					get = function(info)
 						return E.db.mMT.mpscore.groupkeys
 					end,

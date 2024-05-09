@@ -1,4 +1,5 @@
-local E, L = unpack(ElvUI)
+local E = unpack(ElvUI)
+local L = mMT.Locales
 
 local function configTable()
 	local icons = {}
@@ -104,7 +105,7 @@ local function configTable()
 				},
 				range_x = {
 					order = 5,
-					name = L["Icon size X"],
+					name = L["Icon Size"] .. " X",
 					type = "range",
 					min = 16,
 					max = 128,
@@ -121,7 +122,7 @@ local function configTable()
 				},
 				range_y = {
 					order = 6,
-					name = L["Extra Icon size Y"],
+					name = L["Icon Size"] .. " Y",
 					type = "range",
 					min = 16,
 					max = 128,

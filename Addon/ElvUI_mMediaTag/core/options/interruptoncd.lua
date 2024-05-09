@@ -1,4 +1,5 @@
-local E, L, V, P, G = unpack(ElvUI)
+local E = unpack(ElvUI)
+local L = mMT.Locales
 
 local tinsert = tinsert
 local function configTable()
@@ -41,7 +42,7 @@ local function configTable()
 			name = L["Interrupt on CD Settings"],
 			args = {
 				gardient = {
-					order = 6,
+					order = 1,
 					type = "toggle",
 					name = L["Gradient  Mode"],
 					get = function(info)
@@ -52,7 +53,7 @@ local function configTable()
 					end,
 				},
 				outofrange = {
-					order = 6,
+					order = 2,
 					type = "toggle",
 					name = L["Cast is out of range"],
 					desc = L["Changes the color of the castbar when the unit is out of range and interruptible."],
@@ -65,7 +66,7 @@ local function configTable()
 				},
 				inactivetime = {
 					order = 7,
-					name = L["Inactivetime"],
+					name = L["Delay time"],
 					desc = L["do not show when the interrupt spell is ready in X seconds."],
 					type = "range",
 					min = 0,

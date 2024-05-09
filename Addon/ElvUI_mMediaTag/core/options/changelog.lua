@@ -1,4 +1,5 @@
-local E, L, V, P, G = unpack(ElvUI)
+local E = unpack(ElvUI)
+local L = mMT.Locales
 
 local _G = _G
 local tinsert = tinsert
@@ -15,30 +16,24 @@ local change_log_important = {
 	"This update will reset the Spell DB."
 }
 
-local releasdate = "03.05.2024"
+local releasdate = "09.05.2024"
 
 local change_log_new = {
-	"Debugmode /mmt debug and /mmt debug safe (test wit only mmt and with mmt and safe addons)",
-	"TAGs mHealth:icon:ndp:nosign and mHealth:icon:short:ndp:nosign (Health in combat shows the percentage without decimal and sign.)",
-	"Auto change ElvUI media color to Class color is back"
+	"Add Sound files to mMT Media"
 }
 
 local change_log_update = {
+	"Update German Locale",
+	"Update Spelling and Locales",
 	"Add sound delay for important spell filters",
-	"Update for Cata",
-	"Example Docks for Cata",
-	"Interrupt Spells for WL",
-	"Execute Marker now takes care of Monk Health.",
-	"Update Healthmarker for HOI last Boss",
-	"Delay for Important Spell sounds"
+	"TOC for new Retail Version",
+	"Add more Icons to Important Spells Icons.",
 }
 
 local change_log_fix = {
-	"Sound bug with important spell filters",
-	"Removed the # in Instance difficulty label of the Objectivetracker",
-	"TAG mRole is only available for Retail and Cata not for Classic",
-	"Spell in enUS Locals, thx for Trenchy help",
-	"Bug with Portraits and Eltruism ElvUI Skin"
+	"Incorrect Execute Rage for Warriors",
+	"Bug with Monk ToD Execute Range",
+	"Wrong variable for Dock LFD Call to Arms",
 }
 
 local function Concatenation(tbl, icon, color)
@@ -58,7 +53,7 @@ local function Concatenation(tbl, icon, color)
 end
 
 local function configTable()
-	change_log_important_string = Concatenation(change_log_important)
+	--change_log_important_string = Concatenation(change_log_important)
 	change_log_new_string = Concatenation(change_log_new)
 	change_log_update_string = Concatenation(change_log_update)
 	change_log_fix_string = Concatenation(change_log_fix)
@@ -67,7 +62,7 @@ local function configTable()
 			order = 1,
 			type = "group",
 			inline = true,
-			name = mMT.IconSquare .. "  " .. mMT.Name .. "  " .. L["Change Log"],
+			name = mMT.IconSquare .. "  " .. mMT.Name .. "  " .. L["Changelog"],
 			args = {
 				header_version = {
 					order = 1,
