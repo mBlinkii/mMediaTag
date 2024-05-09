@@ -758,3 +758,7 @@ mAddSound("mMT - AOE - DE - female", "aoe_de_female.ogg")
 mAddSound("mMT - AOE - male", "aoe_male.ogg")
 mAddSound("mMT - AOE - female", "aoe_female.ogg")
 mAddSound("mMT - AOE 2 - female", "aoe_b_female.ogg")
+
+mAddSound("mMT - Frontal - male", "frontal_male.ogg")
+mAddSound("mMT - Frontal - female", "frontal_female.ogg")
+mAddSound("mMT - Frontal 2 - female", "frontal_b_female.ogg")
