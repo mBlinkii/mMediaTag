@@ -1,4 +1,5 @@
-local E, L = unpack(ElvUI)
+local E = unpack(ElvUI)
+local L = mMT.Locales
 
 --Lua functions
 local string, ipairs = string, ipairs
@@ -151,9 +152,9 @@ function mMT:OwenKeystone()
 	if keyStoneLevel then
 		local challengeMapID = C_MythicPlus.GetOwnedKeystoneChallengeMapID()
 		local name, id, timeLimit, texture, backgroundTexture = C_ChallengeMode.GetMapUIInfo(challengeMapID)
-		local nhc, hc, myth, _, other, titel = mMT:mColorDatatext()
+		local nhc, hc, myth, _, other, title = mMT:mColorDatatext()
 
-		tinsert(OwenKeystoneText, 1, format("%s%s|r", titel, L["Mythic Plus Keystone"]))
+		tinsert(OwenKeystoneText, 1, format("%s%s|r", title, L["Mythic Plus Keystone"]))
 		tinsert(OwenKeystoneText, 2, format("%s%s:|r %s%s|r %s", other, L["Keystone"], myth, name, mMT:GetKeyColor(keyStoneLevel)))
 		return OwenKeystoneText
 	end
@@ -175,7 +176,7 @@ function mMT:WeeklyAffixes()
 	local WeeklyAffixesText, affixes = {}, {}
 	wipe(WeeklyAffixesText)
 	wipe(affixes)
-	local _, _, _, _, other, titel = mMT:mColorDatatext()
+	local _, _, _, _, other, title = mMT:mColorDatatext()
 	local AffixText = nil
 	local savedYear = mMT.DB.mplusaffix.year
 
@@ -228,12 +229,12 @@ function mMT:WeeklyAffixes()
 		if seasonID >= 1 then
 			mMT.DB.mplusaffix.season = seasonID
 
-			tinsert(WeeklyAffixesText, 1, format("%s%s|r", titel, L["This Week Affix"]))
+			tinsert(WeeklyAffixesText, 1, format("%s%s|r", title, L["This Week Affix"]))
 			tinsert(WeeklyAffixesText, 2, format("%s%s|r", other, AffixText))
 
 			return WeeklyAffixesText
 		else
-			tinsert(WeeklyAffixesText, 3, format("|CFFE74C3C%s|n%s|r", L["Season has not started yet."], L["%sERROR! Please open the Mythic+ window, LFG Tool or Reload UI!|r"]))
+			tinsert(WeeklyAffixesText, 3, format("|CFFE74C3C%s|n%s|r", L["Season has not started yet."], L["ERROR! Please open the Mythic+ window, LFG Tool or Reload UI!"]))
 			return WeeklyAffixesText
 		end
 	else
@@ -281,21 +282,21 @@ end
 --Dungeon Difficulty
 function mMT:DungeonDifficultyShort()
 	local name, instanceType, instanceDifficultyID, difficultyName, maxPlayers, dynamicDifficulty, isDynamicInstance = GetInstanceInfo()
-	local nhc, hc, myth, mythp, other, titel = mMT:mColorDatatext()
+	local nhc, hc, myth, mythp, other, title = mMT:mColorDatatext()
 
 	if instanceDifficultyID == 1 or instanceDifficultyID == 3 or instanceDifficultyID == 4 or instanceDifficultyID == 14 then
-		return format("%s%s|r", nhc, L["N"])
+		return format("%s%s|r", nhc, "N")
 	elseif instanceDifficultyID == 2 or instanceDifficultyID == 5 or instanceDifficultyID == 6 or instanceDifficultyID == 15 or instanceDifficultyID == 39 or instanceDifficultyID == 149 then
-		return format("%s%s|r", hc, L["H"])
+		return format("%s%s|r", hc, "H")
 	elseif instanceDifficultyID == 23 or instanceDifficultyID == 16 or instanceDifficultyID == 40 then
-		return format("%s%s|r", myth, L["M"])
+		return format("%s%s|r", myth, "M")
 	elseif instanceDifficultyID == 8 then
 		local keyStoneLevel, _ = C_ChallengeMode.GetActiveKeystoneInfo()
 		local r, g, b = E:ColorGradient(keyStoneLevel * 0.06, 0.1, 1, 0.1, 1, 1, 0.1, 1, 0.1, 0.1)
 		if keyStoneLevel ~= nil and C_MythicPlus.IsMythicPlusActive() and (C_ChallengeMode.GetActiveChallengeMapID() ~= nil) then
-			return format(L["%sM|r%s+%s|r"], mythp, E:RGBToHex(r, g, b), keyStoneLevel)
+			return format("%sM|r%s+%s|r", mythp, E:RGBToHex(r, g, b), keyStoneLevel)
 		else
-			return format("%s%s|r", mythp, L["M+"])
+			return format("%s%s|r", mythp, "M+")
 		end
 	elseif instanceDifficultyID == 24 then
 		return format("%s%s|r", "|CFF85C1E9", E:ShortenString(difficultyName, 1))
@@ -457,7 +458,7 @@ function mMT:GetProfessions()
 			textA = "|CFFE74C3C" .. L["No Main Professions"] .. "|r"
 			InsertInTable(MenuTable, textA, nil, true)
 		else
-			textA = E.db.mMT.datatextcolors.colortitel.hex .. L["Main Professions"] .. "|r"
+			textA = E.db.mMT.datatextcolors.colortitle.hex .. L["Main Professions"] .. "|r"
 			InsertInTable(MenuTable, textA, nil, true)
 
 			for i, prof in pairs(ProfTable.main) do
@@ -471,7 +472,7 @@ function mMT:GetProfessions()
 			InsertInTable(MenuTable, textA, nil, true)
 		else
 			InsertInTable(MenuTable, "", nil, true)
-			textA = E.db.mMT.datatextcolors.colortitel.hex .. L["Secondary Professions"] .. "|r"
+			textA = E.db.mMT.datatextcolors.colortitle.hex .. L["Secondary Professions"] .. "|r"
 			InsertInTable(MenuTable, textA, nil, true)
 
 			for i, prof in pairs(ProfTable.secondary) do
@@ -480,7 +481,7 @@ function mMT:GetProfessions()
 		end
 
 		InsertInTable(MenuTable, "", nil, true)
-		textA = E.db.mMT.datatextcolors.colortitel.hex .. L["Others"] .. "|r"
+		textA = E.db.mMT.datatextcolors.colortitle.hex .. L["Others"] .. "|r"
 		InsertInTable(MenuTable, textA, nil, true)
 		tinsert(MenuTable, { text = format("|T%s:14:14:0:0:64:64:5:59:5:59|t %s", "136241", TRADE_SKILLS), color = "|CFFBC26E5", isTitle = false, macro = "/click SpellbookMicroButton\n/click SpellBookFrameTabButton2" })
 
@@ -496,7 +497,5 @@ function mMT:GetProfessions()
 			})
 		end
 		return MenuTable
-	else
-		return false
 	end
 end

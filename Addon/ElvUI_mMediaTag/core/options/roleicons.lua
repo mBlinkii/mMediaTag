@@ -1,4 +1,6 @@
-local E, L, V, P, G = unpack(ElvUI)
+local E = unpack(ElvUI)
+local L = mMT.Locales
+
 local UF = E:GetModule("UnitFrames")
 local tinsert = tinsert
 local function configTable()
@@ -57,7 +59,7 @@ local function configTable()
 				healicon = {
 					order = 2,
 					type = "select",
-					name = L["Heal"],
+					name = L["Healer"],
 					disabled = function()
 						return not E.db.mMT.roleicons.enable
 					end,

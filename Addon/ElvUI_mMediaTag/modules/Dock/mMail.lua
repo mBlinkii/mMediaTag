@@ -1,4 +1,5 @@
-local E, L = unpack(ElvUI)
+local E = unpack(ElvUI)
+
 local DT = E:GetModule("DataTexts")
 
 --Lua functions

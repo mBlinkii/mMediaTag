@@ -1,4 +1,5 @@
-local E, L, V, P, G = unpack(ElvUI)
+local E = unpack(ElvUI)
+local L = mMT.Locales
 
 local tinsert = tinsert
 

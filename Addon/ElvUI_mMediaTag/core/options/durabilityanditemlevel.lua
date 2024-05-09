@@ -1,4 +1,6 @@
-local E, L, V, P, G = unpack(ElvUI)
+local E = unpack(ElvUI)
+local L = mMT.Locales
+
 
 local DT = E:GetModule("DataTexts")
 local tinsert = tinsert
@@ -50,6 +52,7 @@ local function configTable()
 					order = 1,
 					type = "toggle",
 					name = L["Enable custom colors"],
+                    desc = L["Enable custom colors"],
 					get = function(info)
 						return E.db.mMT.durabilityIlevel.colored.enable
 					end,
@@ -65,7 +68,7 @@ local function configTable()
 				},
 				value_a = {
 					order = 3,
-					name = L["Trigger A"],
+					name = L["Trigger"] .. " A",
 					type = "range",
 					min = 5,
 					max = 100,
@@ -81,7 +84,7 @@ local function configTable()
 				color_a = {
                     type = "color",
                     order = 4,
-                    name = L["Color A"],
+                    name = L["Color"] .. " A",
                     hasAlpha = false,
                     get = function(info)
                         local t = E.db.mMT.durabilityIlevel.colored.a.color
@@ -100,7 +103,7 @@ local function configTable()
 				},
 				value_b = {
 					order = 6,
-					name = L["Trigger B"],
+					name = L["Trigger"] .. " B",
 					type = "range",
 					min = 5,
 					max = 100,
@@ -116,7 +119,7 @@ local function configTable()
 				color_b = {
                     type = "color",
                     order = 7,
-                    name = L["Color B"],
+                    name = L["Color"] .. " B",
                     hasAlpha = false,
                     get = function(info)
                         local t = E.db.mMT.durabilityIlevel.colored.b.color

@@ -1,4 +1,4 @@
-local E, L = unpack(ElvUI)
+local E = unpack(ElvUI)
 local DT = E:GetModule("DataTexts")
 
 local floor = floor
@@ -36,4 +36,4 @@ local function OnUpdate(self, elapsed)
 	end
 end
 
-DT:RegisterDatatext("mFPS", "mMediaTag", nil, nil, OnUpdate, nil, nil, nil, L["FPS/MS"], nil, nil)
+DT:RegisterDatatext("mFPS", "mMediaTag", nil, nil, OnUpdate, nil, nil, nil, "FPS/MS", nil, nil)

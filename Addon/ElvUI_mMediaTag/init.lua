@@ -1,7 +1,5 @@
 local E, _, V, P, G = unpack(ElvUI)
-
 local EP = E.Libs.EP
-local L = E.Libs.ACL:GetLocale("ElvUI", E.global.general.locale)
 
 local _G = _G
 local tinsert, type = tinsert, type
@@ -11,7 +9,7 @@ local collectgarbage = collectgarbage
 local GetAddOnMetadata = _G.C_AddOns and _G.C_AddOns.GetAddOnMetadata or _G.GetAddOnMetadata
 
 -- Addon Name and Namespace
-local addonName, addon = ...
+local addonName, _ = ...
 mMT = E:NewModule(addonName, "AceHook-3.0", "AceEvent-3.0", "AceTimer-3.0", "AceConsole-3.0")
 
 -- Settings
@@ -33,6 +31,7 @@ mMT.DevMode = false
 mMT.CurrentProfile = nil
 mMT.firstLoad = 0
 mMT.Classes = { "DEATHKNIGHT", "DEMONHUNTER", "DRUID", "EVOKER", "HUNTER", "MAGE", "MONK", "PALADIN", "PRIEST", "ROGUE", "SHAMAN", "WARLOCK", "WARRIOR" }
+mMT.Locales = LibStub("AceLocale-3.0"):GetLocale("mMediaTag")
 
 mMT.Modules.Portraits = {}
 mMT.Modules.SummonIcon = {}
@@ -47,6 +46,8 @@ mMT.Modules.CosmeticBars = {}
 mMT.Modules.QuestIcons = {}
 mMT.Modules.ObjectiveTracker = {}
 --mMT.Modules.CustomClassColors = {}
+
+local L = mMT.Locales
 
 local defaultDB = {
 	mplusaffix = { affixes = nil, season = nil, reset = false, year = nil },

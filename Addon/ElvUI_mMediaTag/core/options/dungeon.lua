@@ -1,4 +1,6 @@
-local E, L, V, P, G = unpack(ElvUI)
+local E = unpack(ElvUI)
+local L = mMT.Locales
+
 local DT = E:GetModule("DataTexts")
 local tinsert = tinsert
 local function configTable()

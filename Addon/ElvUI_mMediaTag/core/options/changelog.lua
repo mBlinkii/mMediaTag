@@ -1,4 +1,5 @@
-local E, L, V, P, G = unpack(ElvUI)
+local E = unpack(ElvUI)
+local L = mMT.Locales
 
 local _G = _G
 local tinsert = tinsert
@@ -67,7 +68,7 @@ local function configTable()
 			order = 1,
 			type = "group",
 			inline = true,
-			name = mMT.IconSquare .. "  " .. mMT.Name .. "  " .. L["Change Log"],
+			name = mMT.IconSquare .. "  " .. mMT.Name .. "  " .. L["Changelog"],
 			args = {
 				header_version = {
 					order = 1,

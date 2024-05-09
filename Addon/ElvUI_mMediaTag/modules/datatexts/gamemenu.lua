@@ -1,4 +1,6 @@
-local E, L = unpack(ElvUI)
+local E = unpack(ElvUI)
+local L = mMT.Locales
+
 local DT = E:GetModule("DataTexts")
 
 local _G = _G
@@ -275,11 +277,11 @@ local function OnClick(self, button)
 end
 
 local function OnEnter(self)
-	local nhc, hc, myth, mythp, other, titel, tip = mMT:mColorDatatext()
+	local nhc, hc, myth, mythp, other, title, tip = mMT:mColorDatatext()
 
 	DT.tooltip:AddLine(L["Game Menu"])
 	DT.tooltip:AddLine(" ")
-	DT.tooltip:AddDoubleLine(mMT.Name, format("%sVer.|r %s%s|r", titel, other, mMT.Version))
+	DT.tooltip:AddDoubleLine(mMT.Name, format("%sVer.|r %s%s|r", title, other, mMT.Version))
 	DT.tooltip:AddLine(" ")
 
 	DT.tooltip:AddLine(" ")

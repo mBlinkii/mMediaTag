@@ -1,4 +1,5 @@
-local E, L, V, P, G = unpack(ElvUI)
+local E = unpack(ElvUI)
+local L = mMT.Locales
 
 local tinsert = tinsert
 local function configTable()
@@ -29,7 +30,7 @@ local function configTable()
 				},
 				tooltipiconsize = {
 					order = 4,
-					name = L["Icon size"],
+					name = L["Icon Size"],
 					desc = L["Tooltip Icon size."],
 					type = "range",
 					min = 16,

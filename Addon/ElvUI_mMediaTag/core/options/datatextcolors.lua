@@ -1,4 +1,5 @@
-local E, L, V, P, G = unpack(ElvUI)
+local E = unpack(ElvUI)
+local L = mMT.Locales
 
 local tinsert = tinsert
 local function configTable()
@@ -84,18 +85,18 @@ local function configTable()
                         t.r, t.g, t.b, t.hex = r, g, b, E:RGBToHex(r, g, b)
                     end,
                 },
-                datatextgeneralcolortitel = {
+                datatextgeneralcolortitle = {
                     type = "color",
                     order = 5,
                     name = L["Color Title"],
                     desc = L["Custom color for Datatext Tip"],
                     hasAlpha = false,
                     get = function(info)
-                        local t = E.db.mMT.datatextcolors.colortitel
+                        local t = E.db.mMT.datatextcolors.colortitle
                         return t.r, t.g, t.b
                     end,
                     set = function(info, r, g, b)
-                        local t = E.db.mMT.datatextcolors.colortitel
+                        local t = E.db.mMT.datatextcolors.colortitle
                         t.r, t.g, t.b, t.hex = r, g, b, E:RGBToHex(r, g, b)
                     end,
                 },

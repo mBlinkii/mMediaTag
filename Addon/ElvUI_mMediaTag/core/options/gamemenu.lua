@@ -1,4 +1,6 @@
-local E, L, V, P, G = unpack(ElvUI)
+local E = unpack(ElvUI)
+local L = mMT.Locales
+
 local DT = E:GetModule("DataTexts")
 local tinsert = tinsert
 local function configTable()
@@ -25,7 +27,7 @@ local function configTable()
 					order = 2,
 					type = "toggle",
 					name = L["Icons"],
-					desc = L["Displays the icons the menu list."],
+					desc = L["Displays the icons of the menu list."],
 					get = function(info)
 						return E.db.mMT.gamemenu.menuicons
 					end,

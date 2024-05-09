@@ -1,4 +1,5 @@
-local E, L = unpack(ElvUI)
+local E = unpack(ElvUI)
+local L = mMT.Locales
 
 --Lua functions
 local format = format

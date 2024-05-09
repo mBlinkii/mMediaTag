@@ -1,4 +1,6 @@
-local E, L = unpack(ElvUI)
+local E = unpack(ElvUI)
+local L = mMT.Locales
+
 local DT = E:GetModule("DataTexts")
 
 --Lua functions
@@ -490,7 +492,7 @@ local function mTPTooltip()
 end
 
 local function OnEnter(self)
-	local nhc, hc, myth, mythp, other, titel, tip = mMT:mColorDatatext()
+	local nhc, hc, myth, mythp, other, title, tip = mMT:mColorDatatext()
 	DT.tooltip:ClearLines()
 	mTPTooltip()
 	DT.tooltip:AddLine(" ")

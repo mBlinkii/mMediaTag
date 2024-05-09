@@ -1,4 +1,5 @@
-local E, L, V, P, G = unpack(ElvUI)
+local E = unpack(ElvUI)
+local L = mMT.Locales
 
 local tinsert = tinsert
 local function configTable()
@@ -165,7 +166,7 @@ local function configTable()
                     type = "color",
                     order = 2,
                     name = function()
-                        return format("%s%s|r",E.db.mMT.tags.colors.heal.hex ,L["Heal"])
+                        return format("%s%s|r",E.db.mMT.tags.colors.heal.hex ,L["Healer"])
                     end,
                     hasAlpha = false,
                     get = function(info)

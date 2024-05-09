@@ -1,4 +1,5 @@
-local E, L = unpack(ElvUI)
+local E = unpack(ElvUI)
+local L = mMT.Locales
 
 local format, floor, tostring = format, floor, tostring
 
@@ -507,7 +508,7 @@ end)
 E:AddTagInfo("mClass", mMT.NameShort .. " " .. L["Class"], L["Displays the Unit Class."])
 E:AddTagInfo("mClass:short", mMT.NameShort .. " " .. L["Class"], L["Shortened version of"] .. " mClass.")
 E:AddTagInfo("mClass:icon", mMT.NameShort .. " " .. L["Class"], L["Displays the Unit Class Icon."])
-E:AddTagInfo("mClass:icon:boss", mMT.NameShort .. " " .. L["Class"], L["Displays the Unit Class Icon only for Boss NPCs."])
+E:AddTagInfo("mClass:icon:boss", mMT.NameShort .. " " .. L["Class"], L["Displays the Unit Class Icon, only for Boss NPCs."])
 E:AddTagInfo("mClass:icon:rare", mMT.NameShort .. " " .. L["Class"], L["Displays the Unit Class Icon only for Rare and Rare Elite NPCs."])
 E:AddTagInfo("mClass:icon:noelite", mMT.NameShort .. " " .. L["Class"], L["Displays the Unit Class Icon only for Rare and Boss NPCs."])
 
@@ -1251,7 +1252,7 @@ E:AddTagInfo("mHealth:icon", mMT.NameShort .. " " .. L["Health"], L["Health chan
 E:AddTagInfo("mHealth:icon:short", mMT.NameShort .. " " .. L["Health"], L["Shortened version of"] .. " mHealth:icon.")
 E:AddTagInfo("mHealth:current-percent", mMT.NameShort .. " " .. L["Health"], L["Health changes between maximum Health and Current Health - Percent in combat."])
 E:AddTagInfo("mHealth:current-percent:short", mMT.NameShort .. " " .. L["Health"], L["Shortened version of"] .. " mHealth:current-percent.")
-E:AddTagInfo("mHealth:nodeath", mMT.NameShort .. " " .. L["Health"], L["If the unit is alive, its health will change between maximum health and percentage in combat."])
+E:AddTagInfo("mHealth:nodeath", mMT.NameShort .. " " .. L["Health"], L["Health changes between maximum Health and Percent in combat. Without Death Status."])
 E:AddTagInfo("mHealth:nodeath:short", mMT.NameShort .. " " .. L["Health"], L["Shortened version of"] .. " mHealth:nodeath.")
 E:AddTagInfo("mHealth:nodeath:current-percent", mMT.NameShort .. " " .. L["Health"], L["Same as"] .. " mHealth:current-percent " .. L["and"] .. " mHealth:nodeath ")
 E:AddTagInfo("mHealth:nodeath:short:current-percent", mMT.NameShort .. " " .. L["Health"], L["Shortened version of"] .. " mHealth:nodeath:current-percent.")
@@ -1269,7 +1270,7 @@ E:AddTagInfo("mHealth:icon:ndp", mMT.NameShort .. " " .. L["Health"], L["Health 
 E:AddTagInfo("mHealth:icon:short:ndp", mMT.NameShort .. " " .. L["Health"], L["Shortened version of"] .. " mHealth:icon." .. L["No decimal values for percentage."])
 E:AddTagInfo("mHealth:current-percent:ndp", mMT.NameShort .. " " .. L["Health"], L["Health changes between maximum Health and Current Health - Percent in combat."] .. L["No decimal values for percentage."])
 E:AddTagInfo("mHealth:current-percent:short:ndp", mMT.NameShort .. " " .. L["Health"], L["Shortened version of"] .. " mHealth:current-percent." .. L["No decimal values for percentage."])
-E:AddTagInfo("mHealth:nodeath:ndp", mMT.NameShort .. " " .. L["Health"], L["If the unit is alive, its health will change between maximum health and percentage in combat."] .. L["No decimal values for percentage."])
+E:AddTagInfo("mHealth:nodeath:ndp", mMT.NameShort .. " " .. L["Health"], L["Health changes between maximum Health and Percent in combat. Without Death Status."] .. L["No decimal values for percentage."])
 E:AddTagInfo("mHealth:nodeath:short:ndp", mMT.NameShort .. " " .. L["Health"], L["Shortened version of"] .. " mHealth:nodeath." .. L["No decimal values for percentage."])
 E:AddTagInfo("mHealth:nodeath:current-percent:ndp", mMT.NameShort .. " " .. L["Health"], L["Same as"] .. " mHealth:current-percent " .. L["and"] .. " mHealth:nodeath " .. L["No decimal values for percentage."])
 E:AddTagInfo("mHealth:nodeath:short:current-percent:ndp", mMT.NameShort .. " " .. L["Health"], L["Shortened version of"] .. " mHealth:nodeath:current-percent." .. L["No decimal values for percentage."])

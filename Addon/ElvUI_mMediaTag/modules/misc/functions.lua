@@ -1,4 +1,5 @@
-local E, L = unpack(ElvUI)
+local E = unpack(ElvUI)
+local L = mMT.Locales
 
 --Lua functions
 local string = string
@@ -37,15 +38,15 @@ end
 
 --Color for various Functions
 function mMT:mColorDatatext()
-	local nhc, hc, myth, mythp, other, titel, tip =
+	local nhc, hc, myth, mythp, other, title, tip =
 		E.db.mMT.datatextcolors.colornhc.hex,
 		E.db.mMT.datatextcolors.colorhc.hex,
 		E.db.mMT.datatextcolors.colormyth.hex,
 		E.db.mMT.datatextcolors.colormythplus.hex,
 		E.db.mMT.datatextcolors.colorother.hex,
-		E.db.mMT.datatextcolors.colortitel.hex,
+		E.db.mMT.datatextcolors.colortitle.hex,
 		E.db.mMT.datatextcolors.colortip.hex
-	return nhc, hc, myth, mythp, other, titel, tip
+	return nhc, hc, myth, mythp, other, title, tip
 end
 
 --Instance Settings Player
@@ -56,9 +57,9 @@ function mMT:InstanceInfo()
 	local RaidID = GetRaidDifficultyID()
 	local DungeonName, _, _, _, _, _, _ = GetDifficultyInfo(DungeonID)
 	local RaidName, _, _, _, _, _, _ = GetDifficultyInfo(RaidID)
-	local nhc, hc, myth, _, other, titel = mMT:mColorDatatext()
+	local nhc, hc, myth, _, other, title = mMT:mColorDatatext()
 
-	mInsert(InctanceInfoText, 1, format("%s%s|r", titel, L["Instance difficulty"]))
+	mInsert(InctanceInfoText, 1, format("%s%s|r", title, L["Instance difficulty"]))
 
 	if DungeonID == 1 then
 		mInsert(InctanceInfoText, 2, format("%s%s:|r %s%s|r", other, DUNGEON_DIFFICULTY, nhc, DungeonName))
@@ -86,7 +87,7 @@ end
 function mMT:InstanceDifficultyDungeon()
 	local DungeonID = GetDungeonDifficultyID()
 	local DungeonName, _, _, _, _, _, _ = GetDifficultyInfo(DungeonID)
-	local nhc, hc, myth, _, other, titel = mMT:mColorDatatext()
+	local nhc, hc, myth, _, other, title = mMT:mColorDatatext()
 
 	local mDifficultyText = ""
 
@@ -108,7 +109,7 @@ end
 function mMT:InstanceDifficultyRaid()
 	local RaidID = GetRaidDifficultyID()
 	local RaidName, _, _, _, _, _, _ = GetDifficultyInfo(RaidID)
-	local nhc, hc, myth, _, other, titel = mMT:mColorDatatext()
+	local nhc, hc, myth, _, other, title = mMT:mColorDatatext()
 
 	local mDifficultyText = ""
 
@@ -129,11 +130,11 @@ end
 function mMT:DungeonInfo()
 	local DungeonInfoText = {}
 	DungeonInfoText = wipe(DungeonInfoText)
-	local nhc, hc, myth, mythp, other, titel, tip = mMT:mColorDatatext()
+	local nhc, hc, myth, mythp, other, title, tip = mMT:mColorDatatext()
 	local name, instanceType, instanceDifficultyID, difficultyName, maxPlayers, dynamicDifficulty, isDynamicInstance =
 		GetInstanceInfo()
 
-	mInsert(DungeonInfoText, 1, format("%s%s|r", titel, L["Instance"]))
+	mInsert(DungeonInfoText, 1, format("%s%s|r", title, L["Instance"]))
 	mInsert(DungeonInfoText, 2, format("%s%s:|r %s%s|r", other, L["Name"], other, name))
 
 	if
@@ -203,7 +204,7 @@ function mMT:DungeonInfo()
 end
 
 function mMT:DungeonInfoName()
-	local nhc, hc, myth, mythp, other, titel, tip = mMT:mColorDatatext()
+	local nhc, hc, myth, mythp, other, title, tip = mMT:mColorDatatext()
 	local name, instanceType, instanceDifficultyID, difficultyName, maxPlayers, dynamicDifficulty, isDynamicInstance =
 		GetInstanceInfo()
 

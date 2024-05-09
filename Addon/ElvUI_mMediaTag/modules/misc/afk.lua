@@ -1,5 +1,5 @@
-local E, L = unpack(ElvUI)
-local AFK = E:GetModule("AFK")
+local E = unpack(ElvUI)
+local L = mMT.Locales
 
 local _G = _G
 local role = nil

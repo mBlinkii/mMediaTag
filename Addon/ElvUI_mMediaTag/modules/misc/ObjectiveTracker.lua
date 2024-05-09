@@ -1,4 +1,4 @@
-local E, L, V, P, G = unpack(ElvUI)
+local E = unpack(ElvUI)
 local LSM = E.Libs.LSM
 local S = E:GetModule("Skins")
 

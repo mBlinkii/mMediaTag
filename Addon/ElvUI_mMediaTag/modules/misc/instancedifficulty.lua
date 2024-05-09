@@ -1,4 +1,4 @@
-local E, L, V, P, G = unpack(ElvUI)
+local E, _, _, P, _ = unpack(ElvUI)
 local LSM = E.Libs.LSM
 
 --Lua functions

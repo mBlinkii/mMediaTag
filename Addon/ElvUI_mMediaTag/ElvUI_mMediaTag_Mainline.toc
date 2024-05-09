@@ -13,8 +13,11 @@
 ## X-Curse-Project-ID: 289502
 ## X-Wago-ID: 9rN48AND
 
+lib\load_libs.xml
+
+localization\load_localization.xml
+
 init.lua
 core\load_core.xml
-localization\load_localization.xml
 media\load_media.xml
 modules\load_modules.xml

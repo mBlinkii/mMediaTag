@@ -1,4 +1,5 @@
-local E, L, V, P, G = unpack(ElvUI)
+local E = unpack(ElvUI)
+local L = mMT.Locales
 
 local tinsert = tinsert
 
@@ -86,7 +87,7 @@ local function configTable()
 					colors = {
 						order = 1,
 						type = "group",
-						name = mMT.Name .. " " .. L["Datatext Colors"],
+						name = mMT.NameShort .. " " .. L["Datatext Colors"],
 						args = {},
 					},
 					combat = {
@@ -238,7 +239,7 @@ local function configTable()
 					healthmarker = {
 						order = 1,
 						type = "group",
-						name = L["Health markers"],
+						name = L["Healthmarkers"],
 						hidden = function()
 							return not E.Retail
 						end,

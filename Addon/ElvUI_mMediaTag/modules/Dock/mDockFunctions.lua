@@ -183,7 +183,7 @@ end
 --** DOCK Config Table
 -- local Config = {
 -- 	name = "DEVICON",
--- 	localizedName = "Dock" .. L["DEV ICON"],
+-- 	localizedName = "Dock" .. "DEV ICON",
 -- 	text = {
 -- 		enable = true,
 -- 		center = true,

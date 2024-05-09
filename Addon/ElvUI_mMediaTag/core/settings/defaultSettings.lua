@@ -88,7 +88,7 @@ P.mMT = {
 			hex = "|cffffffff",
 			r = 1,
 		},
-		colortitel = {
+		colortitle = {
 			b = 0,
 			g = 0.78,
 			hex = "|cffffc800",

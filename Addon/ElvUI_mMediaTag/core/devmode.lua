@@ -1,4 +1,4 @@
-local E, L = unpack(ElvUI)
+local E = unpack(ElvUI)
 --Lua functions
 local format = format
 

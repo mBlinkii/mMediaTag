@@ -1,4 +1,6 @@
-local E, L, V, P, G = unpack(ElvUI)
+local E = unpack(ElvUI)
+local L = mMT.Locales
+
 local DT = E:GetModule("DataTexts")
 local tinsert = tinsert
 
@@ -31,7 +33,7 @@ local function configTable()
 				icon_teleports = {
 					order = 2,
 					type = "select",
-					name = L["Icon out of Combat"],
+					name = L["Icon"],
 					get = function(info)
 						return E.db.mMT.teleports.customicon
 					end,

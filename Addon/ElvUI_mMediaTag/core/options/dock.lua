@@ -1,4 +1,6 @@
-local E, L, V, P, G = unpack(ElvUI)
+local E = unpack(ElvUI)
+local L = mMT.Locales
+
 local DT = E:GetModule("DataTexts")
 local tinsert = tinsert
 
@@ -294,6 +296,7 @@ local function configTable()
 						dockgeneralcustomfontSize = {
 							order = 4,
 							name = L["Custom Font Size"],
+							desc = L["Custom Font Size"],
 							type = "toggle",
 							get = function(info)
 								return E.db.mMT.dockdatatext.customfontzise
@@ -304,26 +307,8 @@ local function configTable()
 								DT:LoadDataTexts()
 							end,
 						},
-						dockgeneralspacer4 = {
-							order = 4,
-							type = "description",
-							name = "\n",
-						},
-						fontcenter = {
-							order = 5,
-							name = L["Center Text"],
-							type = "toggle",
-							get = function(info)
-								return E.db.mMT.dockdatatext.center
-							end,
-							set = function(info, value)
-								E.db.mMT.dockdatatext.center = value
-								mMT:UpdateDockSettings()
-								DT:LoadDataTexts()
-							end,
-						},
 						dockgeneralfontSize = {
-							order = 6,
+							order = 5,
 							name = L["Font Size"],
 							type = "range",
 							min = 6,
@@ -343,14 +328,33 @@ local function configTable()
 								return not E.db.mMT.dockdatatext.customfontzise
 							end,
 						},
-						dockgeneralspacer5 = {
+						dockgeneralspacer4 = {
+							order = 6,
+							type = "description",
+							name = "\n",
+						},
+						fontcenter = {
 							order = 7,
+							name = L["Center Text"],
+							type = "toggle",
+							get = function(info)
+								return E.db.mMT.dockdatatext.center
+							end,
+							set = function(info, value)
+								E.db.mMT.dockdatatext.center = value
+								mMT:UpdateDockSettings()
+								DT:LoadDataTexts()
+							end,
+						},
+						dockgeneralspacer5 = {
+							order = 8,
 							type = "description",
 							name = "\n",
 						},
 						dockgeneralcustomfontcolor = {
-							order = 8,
+							order = 9,
 							name = L["Custom Font color"],
+							desc = L["Custom Font color"],
 							type = "toggle",
 							get = function(info)
 								return E.db.mMT.dockdatatext.customfontcolor
@@ -363,7 +367,7 @@ local function configTable()
 						},
 						dockgeneralfontcolor = {
 							type = "color",
-							order = 9,
+							order = 10,
 							name = L["Custom Font Color"],
 							hasAlpha = false,
 							get = function(info)
@@ -1099,6 +1103,7 @@ local function configTable()
 					order = 3,
 					type = "toggle",
 					name = L["Show Role if in Group"],
+					desc = L["Show Role if in Group"],
 					get = function(info)
 						return E.db.mMT.dockdatatext.talent.showrole
 					end,
@@ -1373,7 +1378,7 @@ local function configTable()
 		dockfpsms = {
 			order = 16,
 			type = "group",
-			name = L["FPS / MS"],
+			name = "FPS / MS",
 			args = {
 				dockfpsmsicon = {
 					order = 1,
@@ -1411,8 +1416,8 @@ local function configTable()
 								DT:ForceUpdate_DataText("mMT_Dock_FPSMS")
 							end,
 							values = {
-								fps = L["FPS"],
-								ms = L["MS"],
+								fps = "FPS",
+								ms = "MS",
 							},
 						},
 						dockfpsmstext = {
@@ -1748,7 +1753,7 @@ local function configTable()
 				},
 				dockNotificationiconsize = {
 					order = 2,
-					name = L["Icon size"],
+					name = L["Icon Size"],
 					type = "range",
 					min = 16,
 					max = 128,
