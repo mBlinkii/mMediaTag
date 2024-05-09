@@ -1,17 +1,17 @@
 # Changelog - ElvUI_mMediaTag
 [Eng] - All changes to this project will be documented in this file. The latest changes are at the top.
 
-## [ver. 3.36] - xx.05.2024
+## [ver. 3.36] - 09.05.2024
 ### FIX
 - FIX - Wrong Execute Rage for Warriors
 - FIX - Bug with Monk ToD Execute Range
-- FIX - Update German Locale
-- FIX - Update Spelling and Locales
 - FIX - Wrong variable for Dock LFD Call to Arms
 ### Update
 - UPDATE - Add sound delay for important spell filters
 - UPDATE - TOC for new Retail Version
 - UPDATE - Add more Icons to Important Spells Icons
+- UPDATE - Update German Locale
+- UPDATE - Update Spelling and Locales
 ### NEW
 - NEW - Add Sound files to mMT Media
 
