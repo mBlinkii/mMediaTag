@@ -838,7 +838,7 @@ local function configTable()
 								return E.db.mMT.dockdatatext.lfd.cta
 							end,
 							set = function(info, value)
-								E.db.mMT.dockdatatext.lfd.ctm = value
+								E.db.mMT.dockdatatext.lfd.cta = value
 								DT:ForceUpdate_DataText("mMT_Dock_LFDTool")
 							end,
 						},
