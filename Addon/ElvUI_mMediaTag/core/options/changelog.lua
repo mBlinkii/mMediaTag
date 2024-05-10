@@ -16,7 +16,7 @@ local change_log_important = {
 	"This update will reset the Spell DB."
 }
 
-local releasdate = "09.05.2024"
+local releasdate = "10.05.2024"
 
 local change_log_new = {
 	"Add Sound files to mMT Media"
@@ -34,6 +34,7 @@ local change_log_fix = {
 	"Incorrect Execute Rage for Warriors",
 	"Bug with Monk ToD Execute Range",
 	"Wrong variable for Dock LFD Call to Arms",
+	"Fixed Bug with the new Locales, Thx for the Help of Tsxy and Dlarge",
 }
 
 local function Concatenation(tbl, icon, color)
