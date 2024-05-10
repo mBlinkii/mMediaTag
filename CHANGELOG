@@ -1,6 +1,10 @@
 # Changelog - ElvUI_mMediaTag
 [Eng] - All changes to this project will be documented in this file. The latest changes are at the top.
 
+## [ver. 3.37] - 10.05.2024
+### FIX
+- FIX - Fixed Bug with the new Locales, Thx for the Help of Tsxy and Dlarge
+
 ## [ver. 3.36] - 09.05.2024
 ### FIX
 - FIX - Wrong Execute Rage for Warriors
