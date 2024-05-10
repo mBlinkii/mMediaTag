@@ -579,7 +579,7 @@ local function configTable()
 								},
 								range_posX = {
 									order = 3,
-									name = L["Offset"] .. " X",
+									name = L["X offset"],
 									desc = L["Icon offset if not Auto point is enabled."],
 									type = "range",
 									min = -256,
@@ -596,7 +596,7 @@ local function configTable()
 								},
 								range_posY = {
 									order = 4,
-									name = L["Offset"] .. " Y",
+									name = L["Y offset"],
 									desc = L["Icon offset if not Auto point is enabled."],
 									type = "range",
 									min = -256,
