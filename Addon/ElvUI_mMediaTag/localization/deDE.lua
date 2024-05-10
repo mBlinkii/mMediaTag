@@ -1,7 +1,7 @@
 local L = LibStub("AceLocale-3.0"):NewLocale("mMediaTag", "deDE")
 if not L then return end
 
-L[" hidden at maximum level."] = " auf maximaler Stufe ausgeblenden."
+L[" hidden at maximum level."] = " auf maximaler Stufe ausblenden."
 L["!! Error - this is not an ID."] = "Fehler! Dies ist keine ID"
 L["%sActual reward:|r"] = "%Aktuelle Belohnung:|r"
 L["AFK Logo"] = true
