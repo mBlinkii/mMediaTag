@@ -3,7 +3,7 @@ if not L then return end
 
 L[" hidden at maximum level."] = " auf maximaler Stufe ausblenden."
 L["!! Error - this is not an ID."] = "Fehler! Dies ist keine ID"
-L["%sActual reward:|r"] = "%Aktuelle Belohnung:|r"
+L["Actual reward:"] = "Aktuelle Belohnung:"
 L["AFK Logo"] = true
 L["AFK Screen"] = "AFK Bildschirm"
 L["AFK"] = true

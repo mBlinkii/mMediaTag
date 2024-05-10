@@ -157,7 +157,7 @@ local function mLFDTooltip()
 			DT.tooltip:AddLine(format("%s%s|r", title, GREAT_VAULT_REWARDS))
 
 			if vaultinfohighest then
-				DT.tooltip:AddDoubleLine(format(L["%sActual reward:|r"], other), vaultinfohighest or "-")
+				DT.tooltip:AddDoubleLine(format("%s%s|r", other, L["Actual reward:"]), vaultinfohighest or "-")
 			end
 
 			if vaultinforaidText[1] then

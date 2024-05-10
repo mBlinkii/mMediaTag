@@ -3,7 +3,7 @@ if not L then return end
 
 L[" hidden at maximum level."] = true
 L["!! Error - this is not an ID."] = true
-L["%sActual reward:|r"] = true
+L["Actual reward:"] = true
 L["AFK Logo"] = true
 L["AFK Screen"] = true
 L["AFK"] = true
