@@ -1,5 +1,5 @@
 ﻿local L = LibStub("AceLocale-3.0"):NewLocale("mMediaTag", "frFR")
-
+if not L then return end
 
 L[" hidden at maximum level."] = true
 L["!! Error - this is not an ID."] = true
@@ -610,6 +610,7 @@ L["Weekly Affix"] = true
 L["Weekly Affixes"] = true
 L["Weekly Score"] = true
 L["Welcome text"] = true
+L["Welcome to %s %s version |CFFF7DC6F%s|r, type |CFF58D68D/mmt|r to access the in-game configuration menu."] = true
 L["White"] = true
 L["WoW Token:"] = true
 L["World Latency:"] = true
@@ -617,6 +618,7 @@ L["X offset"] = true
 L["Y offset"] = true
 L["You are trying to load an outdated profile, unfortunately this is not possible."] = true
 L["Zone"] = true
+L["Zooms the texture so we get clean icons without borders."] = true
 L["Zzz"] = true
 L["and"] = true
 L["do not show when the interrupt spell is ready in X seconds."] = true
@@ -635,7 +637,6 @@ L["right click to open Great Vault Window"] = true
 L["right click to open LFD Window"] = true
 L["right click to open the other Teleports menu."] = true
 L["second Profession"] = true
-L["Welcome to %s %s version |CFFF7DC6F%s|r, type |CFF58D68D/mmt|r to access the in-game configuration menu."] = true
 L["white Text"] = true
 L["white Value"] = true
 L["white shield Icon"] = true
@@ -648,4 +649,3 @@ L["|cffFFFFFFControl + Left Click:|r Change Loadout"] = true
 L["|cffFFFFFFLeft Click:|r Change Talent Specialization"] = true
 L["|cffFFFFFFRight Click:|r Change Loot Specialization"] = true
 L["|cffFFFFFFShift + Left Click:|r Show Talent Specialization UI"] = true
-L["Zooms the texture so we get clean icons without borders."] = true
