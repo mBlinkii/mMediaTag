@@ -4,14 +4,14 @@ local L = mMT.Locales
 local tinsert = tinsert
 
 local form = {
-	SQ = "SQUARE",
-	RO = "ROUND",
-	CI = "CIRCLE",
-	PI = "PILLOW",
-	RA = "CARO",
-	QA = "RECTANGLE",
-	MO = "MOON",
-	SMQ = "SIMPLE SQUARE",
+	SQ = L["SQUARE"],
+	RO = L["ROUND"],
+	CI = L["CIRCLE"],
+	PI = L["PILLOW"],
+	RA = L["CARO"],
+	QA = L["RECTANGLE"],
+	MO = L["MOON"],
+	SMQ = L["SIMPLE SQUARE"],
 }
 
 local style = {
@@ -216,7 +216,7 @@ local function configTable()
 					args = {
 						range_sq = {
 							order = 1,
-							name = "SQUARE",
+							name = L["SQUARE"],
 							type = "range",
 							min = 0,
 							max = 10,
@@ -231,7 +231,7 @@ local function configTable()
 						},
 						range_ro = {
 							order = 2,
-							name = "ROUND",
+							name = L["ROUND"],
 							type = "range",
 							min = 0,
 							max = 10,
@@ -246,7 +246,7 @@ local function configTable()
 						},
 						range_ci = {
 							order = 3,
-							name = "CIRCLE/ MOON",
+							name = L["CIRCLE/ MOON"],
 							type = "range",
 							min = 0,
 							max = 10,
@@ -262,7 +262,7 @@ local function configTable()
 						},
 						range_pi = {
 							order = 4,
-							name = "PILLOW",
+							name = L["PILLOW"],
 							type = "range",
 							min = 0,
 							max = 15,
@@ -277,7 +277,7 @@ local function configTable()
 						},
 						range_ra = {
 							order = 5,
-							name = "CARO",
+							name = L["CARO"],
 							type = "range",
 							min = 0,
 							max = 10,
@@ -292,7 +292,7 @@ local function configTable()
 						},
 						range_qa = {
 							order = 5,
-							name = "RECTANGLE",
+							name = L["RECTANGLE"],
 							type = "range",
 							min = 0,
 							max = 20,
@@ -307,7 +307,7 @@ local function configTable()
 						},
 						range_smq = {
 							order = 6,
-							name = "SIMPLE SQUARE",
+							name = L["SIMPLE SQUARE"],
 							type = "range",
 							min = 0,
 							max = 60,
