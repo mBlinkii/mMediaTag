@@ -30,6 +30,30 @@ function mMT:UpdateClassColor()
 	return { class = class, r = class.r, g = class.g, b = class.b, hex = hex, string = strjoin("", hex, "%s|r"), gradient = gradient }
 end
 
+function mMT:Update_MP_Settings()
+	if IsAddOnLoaded("!mMT_MediaPack") then
+			mMTSettings.all = E.db.mMT.mp_textures.all
+			mMTSettings.a = E.db.mMT.mp_textures.a
+			mMTSettings.b = E.db.mMT.mp_textures.b
+			mMTSettings.c = E.db.mMT.mp_textures.c
+			mMTSettings.d = E.db.mMT.mp_textures.d
+			mMTSettings.e = E.db.mMT.mp_textures.e
+			mMTSettings.f = E.db.mMT.mp_textures.f
+			mMTSettings.g = E.db.mMT.mp_textures.g
+			mMTSettings.h = E.db.mMT.mp_textures.h
+			mMTSettings.i = E.db.mMT.mp_textures.i
+			mMTSettings.j = E.db.mMT.mp_textures.j
+			mMTSettings.k = E.db.mMT.mp_textures.k
+			mMTSettings.l = E.db.mMT.mp_textures.l
+			mMTSettings.n = E.db.mMT.mp_textures.n
+			mMTSettings.m = E.db.mMT.mp_textures.m
+			mMTSettings.o = E.db.mMT.mp_textures.o
+			mMTSettings.p = E.db.mMT.mp_textures.p
+			mMTSettings.q = E.db.mMT.mp_textures.q
+			mMTSettings.r = E.db.mMT.mp_textures.r
+	end
+end
+
 function mMT:CheckEltruism()
 	local elt_tbl = {
 		loaded = IsAddOnLoaded("ElvUI_EltreumUI"),

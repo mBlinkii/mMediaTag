@@ -16,25 +16,22 @@ local change_log_important = {
 	"This update will reset the Spell DB."
 }
 
-local releasdate = "10.05.2024"
+local releasdate = "12.05.2024"
 
 local change_log_new = {
 	"Add Sound files to mMT Media"
 }
 
 local change_log_update = {
-	"Update German Locale",
-	"Update Spelling and Locales",
-	"Add sound delay for important spell filters",
-	"TOC for new Retail Version",
-	"Add more Icons to Important Spells Icons.",
+	"Update more Locales, Thx for the Help of Dlarge",
+	"Functions for Cata and Retail",
+	"For all Datatext M+ and Vault infos will now only load on Max Level",
+	"Datatext M+ Score shows below max Level the Player Level",
 }
 
 local change_log_fix = {
-	"Incorrect Execute Rage for Warriors",
-	"Bug with Monk ToD Execute Range",
-	"Wrong variable for Dock LFD Call to Arms",
-	"Fixed Bug with the new Locales, Thx for the Help of Tsxy and Dlarge",
+	"Fixed nil Error with the new Locales and Dock LFD",
+	"Fixed wrong function name in Cata",
 }
 
 local function Concatenation(tbl, icon, color)
@@ -55,7 +52,7 @@ end
 
 local function configTable()
 	--change_log_important_string = Concatenation(change_log_important)
-	change_log_new_string = Concatenation(change_log_new)
+	--change_log_new_string = Concatenation(change_log_new)
 	change_log_update_string = Concatenation(change_log_update)
 	change_log_fix_string = Concatenation(change_log_fix)
 	E.Options.args.mMT.args.changelog.args = {
