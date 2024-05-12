@@ -149,7 +149,7 @@ local function mLFDTooltip()
 		end
 	end
 
-	if E.Retail and E.db.mMT.dockdatatext.lfd.greatvault then
+	if E.Retail and E.db.mMT.dockdatatext.lfd.greatvault and UnitLevel("player") == 70 then
 		local vaultinfohighest, ok = nil, false
 		vaultinforaidText, vaultinfomplusText, vaultinfopvpText, vaultinfohighest, ok = mMT:mGetVaultInfo()
 		if ok then

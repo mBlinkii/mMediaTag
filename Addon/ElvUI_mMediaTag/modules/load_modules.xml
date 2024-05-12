@@ -1,6 +1,6 @@
 <Ui xmlns="http://www.blizzard.com/wow/ui/">
-	<Script file="retail\load_retail.xml"/>
 	<Script file="all\functions.lua"/>
+	<Script file="retail\functions.lua"/>
 	<Include file="unitframes\load_unitframes.xml"/>
 	<Include file="nameplates\load_nameplates.xml"/>
 	<Include file="misc\load_misc.xml"/>

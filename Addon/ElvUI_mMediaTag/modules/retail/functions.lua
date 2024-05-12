@@ -112,20 +112,27 @@ function mMT:WeeklyAffixes()
 	end
 end
 
+local function isMaxLevel(unit)
+	local exp, maxxp = UnitXP("player"), UnitXPMax("player")
+	return "%s / %s", exp, maxxp
+end
+
 --Great Vault Functions
 function mMT:mGetVaultInfo()
 	local vaultinfo = {}
 	vaultinfo = wipe(vaultinfo)
-	local vaultinforaid, vaultinfomplus, vaultinfopvp, vaultinfohighest, ok = {}, {}, {}, nil, nil
+	local vaultinforaid, vaultinfomplus, vaultinfopvp, vaultinfohighest, ok = {}, {}, {}, nil, false
 	vaultinforaid = wipe(vaultinforaid)
 	vaultinfomplus = wipe(vaultinfomplus)
 	vaultinfopvp = wipe(vaultinfopvp)
-	vaultinfo = C_WeeklyRewards.GetActivities()
+	vaultinfo = C_WeeklyRewards.GetActivities(Enum.WeeklyRewardChestThresholdType.Activities)
 
 	if not vaultinfo then
 		return {}, {}, {}, nil, false
 	else
-		vaultinfohighest, ok = nil, false
+		table.sort(vaultinfo, function(left, right)
+			return left.index < right.index
+		end)
 		for i = 1, 9 do
 			local id = vaultinfo[i] and vaultinfo[i].id or 0
 			local itemLink = C_WeeklyRewards.GetExampleRewardItemHyperlinks(id)
@@ -144,7 +151,7 @@ function mMT:mGetVaultInfo()
 				end
 			end
 		end
-		local vaultinfohighestString = format("%s%s|r", mMT:mColorGradient(tonumber(vaultinfohighest)), vaultinfohighest)
+		local vaultinfohighestString = format("%s%s|r", mMT:mColorGradient(tonumber(vaultinfohighest) or 0), vaultinfohighest or 0)
 		return vaultinforaid, vaultinfomplus, vaultinfopvp, vaultinfohighestString, ok
 	end
 end
