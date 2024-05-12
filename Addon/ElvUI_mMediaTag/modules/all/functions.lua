@@ -2,16 +2,14 @@ local E = unpack(ElvUI)
 local L = mMT.Locales
 
 --Lua functions
-local string, ipairs = string, ipairs
+local string = string
 local format = format
 local wipe = wipe
 local tinsert = tinsert
 
 --WoW API / Variables
 local GetInstanceInfo = GetInstanceInfo
-local GetDetailedItemLevelInfo = GetDetailedItemLevelInfo
 local C_MythicPlus = C_MythicPlus
-local C_PlayerInfo_GetPlayerMythicPlusRatingSummary = C_PlayerInfo.GetPlayerMythicPlusRatingSummary
 local GetItemCount = GetItemCount
 local GetItemInfo = GetItemInfo
 local C_CurrencyInfo_GetCurrencyInfo = C_CurrencyInfo.GetCurrencyInfo
@@ -34,6 +32,7 @@ local slots = {
 	[17] = _G.INVTYPE_WEAPONOFFHAND,
 	[18] = _G.INVTYPE_RANGED,
 }
+
 function mMT:GetDurabilityInfo()
 	totalDurability = 100
 	totalRepairCost = 0
@@ -226,7 +225,7 @@ local function getProfSkill(skillLevel, maxSkillLevel, skillModifier)
 end
 
 local function GetProfInfo(prof)
-	local name, icon, skillLevel, maxSkillLevel, numAbilities, spelloffset, skillLine, skillModifier, specializationIndex, specializationOffset = GetProfessionInfo(prof)
+	local name, icon, skillLevel, maxSkillLevel, _, spelloffset, skillLine, skillModifier, _, _ = GetProfessionInfo(prof)
 	return { name = name, color = ProfessionsColor[skillLine], icon = icon, skill = getProfSkill(skillLevel, maxSkillLevel, skillModifier), spell = spelloffset }
 end
 
@@ -361,7 +360,5 @@ function mMT:GetProfessions()
 			})
 		end
 		return MenuTable
-	else
-		return false
 	end
 end
