@@ -17,6 +17,8 @@ local C_ChallengeMode = C_ChallengeMode
 local mText = L["Dungeon"]
 
 local function mSetup(self)
+	local isMaxLevel = E:XPIsLevelMax()
+
 	local mInstanceInfo = mMT:InstanceInfo()
 	if mInstanceInfo then
 		DT.tooltip:AddLine(" ")
@@ -41,7 +43,7 @@ local function mSetup(self)
 		DT.tooltip:AddLine(infoMythicPlus[2] or "-")
 	end
 
-	if E.Retail and E.db.mMT.dungeon.key then
+	if E.Retail and E.db.mMT.dungeon.key and isMaxLevel then
 		local key = mMT:OwenKeystone()
 		if key then
 			DT.tooltip:AddLine(" ")
@@ -50,7 +52,7 @@ local function mSetup(self)
 		end
 	end
 
-	if E.Retail and E.db.mMT.dungeon.score then
+	if E.Retail and E.db.mMT.dungeon.score and isMaxLevel then
 		DT.tooltip:AddLine(" ")
 		DT.tooltip:AddDoubleLine(DUNGEON_SCORE, mMT:GetDungeonScore())
 	end

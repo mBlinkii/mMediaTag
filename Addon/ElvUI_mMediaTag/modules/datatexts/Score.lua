@@ -34,6 +34,7 @@ local IconOverall = E:TextureString("Interface\\AddOns\\ElvUI_mMediaTag\\media\\
 local IconTyrannical = E:TextureString("Interface\\AddOns\\ElvUI_mMediaTag\\media\\icons\\datatext\\tyrannical.tga", ":14:14")
 local IconFortified = E:TextureString("Interface\\AddOns\\ElvUI_mMediaTag\\media\\icons\\datatext\\fortified.tga", ":14:14")
 local LeadIcon = E:TextureString("Interface\\AddOns\\ElvUI_mMediaTag\\media\\icons\\misc\\crown1.tga", ":14:14")
+local isMaxLevel = E:XPIsLevelMax()
 
 local function GetPlayerScore()
 	local ratingSummary = C_PlayerInfo_GetPlayerMythicPlusRatingSummary("PLAYER")
@@ -138,7 +139,7 @@ local function GetDungeonScores()
 
 			if overAllScore then
 				color = C_ChallengeMode_GetSpecificDungeonOverallScoreRarityColor(overAllScore)
-				ScoreTable[mapID].color = color and color:GenerateHexColor() or 'FFFFFFFF'
+				ScoreTable[mapID].color = color and color:GenerateHexColor() or "FFFFFFFF"
 			else
 				ScoreTable[mapID].color = "FFB2BABB"
 			end
@@ -156,7 +157,7 @@ local function GetDungeonScores()
 						ScoreTable[mapID][affixScores[j].name].color = "FFB2BABB"
 					else
 						color = C_ChallengeMode_GetSpecificDungeonScoreRarityColor(affixScores[j].score)
-						ScoreTable[mapID][affixScores[j].name].color = color and color:GenerateHexColor() or 'FFFFFFFF'
+						ScoreTable[mapID][affixScores[j].name].color = color and color:GenerateHexColor() or "FFFFFFFF"
 					end
 				else
 					if tmpName and tmpName == tyrannical then
@@ -268,7 +269,7 @@ local function GetGroupKeystone()
 			local mapName, _, _, icon = C_ChallengeMode.GetMapUIInfo(info.mythicPlusMapID)
 			if mapName then
 				local scoreColor = C_ChallengeMode_GetDungeonScoreRarityColor(info.rating)
-				scoreColor = scoreColor and scoreColor:GenerateHexColor() or 'FFFFFFFF'
+				scoreColor = scoreColor and scoreColor:GenerateHexColor() or "FFFFFFFF"
 				icon = E:TextureString(icon, ":14:14")
 				local key = format("%s %s%s|r %s", icon, E.db.mMT.datatextcolors.colormyth.hex, mapName, mMT:GetKeyColor(info.level))
 
@@ -283,16 +284,20 @@ local function GetGroupKeystone()
 	end
 end
 local function OnEnter(self)
+	isMaxLevel = E:XPIsLevelMax()
+
 	local inCombat = InCombatLockdown()
 	DT.tooltip:ClearLines()
 
 	if not inCombat then
 		SaveMyKeystone()
 
-		local keyText = mMT:OwenKeystone()
-		if keyText then
-			DT.tooltip:AddLine(keyText[1])
-			DT.tooltip:AddLine(keyText[2])
+		if isMaxLevel then
+			local keyText = mMT:OwenKeystone()
+			if keyText then
+				DT.tooltip:AddLine(keyText[1])
+				DT.tooltip:AddLine(keyText[2])
+			end
 		end
 
 		DT.tooltip:AddLine(" ")
@@ -301,7 +306,7 @@ local function OnEnter(self)
 			DT.tooltip:AddDoubleLine(v.name, v.key)
 		end
 
-		if E.db.mMT.mpscore.groupkeys and LOR and IsInGroup() then
+		if E.db.mMT.mpscore.groupkeys and LOR and IsInGroup() and isMaxLevel then
 			DT.tooltip:AddLine(" ")
 			DT.tooltip:AddLine(L["Keystones in your Group"])
 			GetGroupKeystone()
@@ -319,7 +324,7 @@ local function OnEnter(self)
 		end
 	end
 
-	if MPlusDataLoaded and GetPlayerScore() > 0 then
+	if isMaxLevel and MPlusDataLoaded and GetPlayerScore() > 0 then
 		DT.tooltip:AddLine(" ")
 		DT.tooltip:AddDoubleLine(DUNGEON_SCORE, mMT:GetDungeonScore())
 		DT.tooltip:AddLine(" ")
@@ -334,23 +339,27 @@ local function OnEnter(self)
 
 	DT.tooltip:Show()
 
-	self.text:SetFormattedText(displayString, mMT:GetDungeonScore())
+	self.text:SetFormattedText(displayString, isMaxLevel and mMT:GetDungeonScore() or L["Level: "] .. E.mylevel)
 end
 
 local function OnEvent(self, event, ...)
-	if event == "ELVUI_FORCE_UPDATE" then
-		C_MythicPlus_RequestMapInfo()
-		C_MythicPlus_RequestCurrentAffixes()
-	elseif event == "MYTHIC_PLUS_CURRENT_AFFIX_UPDATE" then
-		affixes = C_MythicPlus_GetCurrentAffixes()
-		weeklyAffixID = affixes and affixes[1] and affixes[1].id
-		weeklyAffixName = weeklyAffixID and C_ChallengeMode_GetAffixInfo(weeklyAffixID)
-		MPlusDataLoaded = true
+	isMaxLevel = E:XPIsLevelMax()
+
+	if isMaxLevel then
+		if event == "ELVUI_FORCE_UPDATE" then
+			C_MythicPlus_RequestMapInfo()
+			C_MythicPlus_RequestCurrentAffixes()
+		elseif event == "MYTHIC_PLUS_CURRENT_AFFIX_UPDATE" then
+			affixes = C_MythicPlus_GetCurrentAffixes()
+			weeklyAffixID = affixes and affixes[1] and affixes[1].id
+			weeklyAffixName = weeklyAffixID and C_ChallengeMode_GetAffixInfo(weeklyAffixID)
+			MPlusDataLoaded = true
+		end
+
+		SaveMyKeystone()
 	end
 
-	SaveMyKeystone()
-
-	self.text:SetFormattedText(displayString, mMT:GetDungeonScore())
+	self.text:SetFormattedText(displayString, isMaxLevel and mMT:GetDungeonScore() or L["Level: "] .. E.mylevel)
 end
 
 local function ValueColorUpdate(self, hex)
