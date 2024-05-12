@@ -1,7 +1,7 @@
 # Changelog - ElvUI_mMediaTag
 [Eng] - All changes to this project will be documented in this file. The latest changes are at the top.
 
-## [ver. 3.38] - 10.05.2024
+## [ver. 3.38] - 12.05.2024
 ### FIX
 - FIX - Fixed nil Error with the new Locales and Dock LFD
 - FIX - Fixed wrong function name in Cata
