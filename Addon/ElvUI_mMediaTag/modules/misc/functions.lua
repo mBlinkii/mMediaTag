@@ -59,7 +59,7 @@ function mMT:InstanceInfo()
 	local RaidName, _, _, _, _, _, _ = GetDifficultyInfo(RaidID)
 	local nhc, hc, myth, _, other, title = mMT:mColorDatatext()
 
-	mInsert(InctanceInfoText, 1, format("%s%s|r", title, L["Instance difficulty"]))
+	mInsert(InctanceInfoText, 1, format("%s%s|r", title, L["Instance Difficulty"]))
 
 	if DungeonID == 1 then
 		mInsert(InctanceInfoText, 2, format("%s%s:|r %s%s|r", other, DUNGEON_DIFFICULTY, nhc, DungeonName))
