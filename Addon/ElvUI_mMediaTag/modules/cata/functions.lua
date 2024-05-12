@@ -312,7 +312,7 @@ local function GetFireCD()
 	end
 end
 
-function mMT:GetProfessionsW()
+function mMT:GetProfessions()
 	local MenuTable = {}
 	local ProfTable = BuildProfTable()
 	local textA = ""
