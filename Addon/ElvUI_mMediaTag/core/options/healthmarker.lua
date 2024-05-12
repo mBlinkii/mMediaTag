@@ -25,7 +25,7 @@ local function configTable()
 					order = 1,
 					type = "toggle",
 					name = L["Enable"],
-					desc = L["Enable Nameplate Healthmarkers"],
+					desc = L["Enable Nameplate Health Marker"],
 					get = function(info)
 						return E.db.mMT.nameplate.healthmarker.enable
 					end,

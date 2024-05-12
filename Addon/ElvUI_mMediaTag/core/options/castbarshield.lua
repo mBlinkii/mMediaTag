@@ -105,7 +105,7 @@ local function configTable()
 				},
 				range_x = {
 					order = 5,
-					name = L["Icon Size"] .. " X",
+					name = L["X-Icon Size"],
 					type = "range",
 					min = 16,
 					max = 128,
@@ -122,7 +122,7 @@ local function configTable()
 				},
 				range_y = {
 					order = 6,
-					name = L["Icon Size"] .. " Y",
+					name = L["Y-Icon Size"],
 					type = "range",
 					min = 16,
 					max = 128,
@@ -170,16 +170,16 @@ local function configTable()
 						E.db.mMT.castbarshield.anchor = value
 					end,
 					values = {
-						TOP = "TOP",
-						BOTTOM = "BOTTOM",
-						LEFT = "LEFT",
-						RIGHT = "RIGHT",
-						CENTER = "CENTER",
+						TOP = L["TOP"],
+						BOTTOM = L["BOTTOM"],
+						LEFT = L["LEFT"],
+						RIGHT = L["RIGHT"],
+						CENTER = L["CENTER"],
 					},
 				},
 				range_posx = {
 					order = 12,
-					name = L["Position"] .. " X",
+					name = L["X-Position"],
 					type = "range",
 					min = -256,
 					max = 256,
@@ -193,7 +193,7 @@ local function configTable()
 				},
 				range_posy = {
 					order = 13,
-					name = L["Position"] .. " Y",
+					name = L["Y-Position"],
 					type = "range",
 					min = -256,
 					max = 256,

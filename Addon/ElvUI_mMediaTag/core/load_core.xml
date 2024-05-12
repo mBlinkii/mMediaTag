@@ -1,11 +1,11 @@
 <Ui xmlns="http://www.blizzard.com/wow/ui/">
-	<Script file="Core.lua"/>
-	<Script file="settings\defaultSettings.lua"/>
 	<Include file="options\load_options.xml"/>
-	<Script file="dropdown.lua"/>
-	<Script file="greeting.lua"/>
+	<Script file="Core.lua"/>
 	<Script file="cmd.lua"/>
-	<Script file="functions.lua"/>
-	<Script file="importexport.lua"/>
 	<Script file="devmode.lua"/>
+	<Script file="dropdown.lua"/>
+	<Script file="functions.lua"/>
+	<Script file="greeting.lua"/>
+	<Script file="importexport.lua"/>
+	<Script file="settings\defaultSettings.lua"/>
 </Ui>

@@ -113,6 +113,7 @@ end
 
 local function mLFDTooltip()
 	local _, hc, myth, mythp, other, title, tip = mMT:mColorDatatext()
+	local isMaxLevel = E:XPIsLevelMax()
 
 	mInstanceInfoText = mMT:InstanceInfo()
 	if mInstanceInfoText then
@@ -122,7 +123,7 @@ local function mLFDTooltip()
 		DT.tooltip:AddLine(mInstanceInfoText[3])
 	end
 
-	if E.Retail and E.db.mMT.dockdatatext.lfd.keystone then
+	if E.Retail and E.db.mMT.dockdatatext.lfd.keystone and isMaxLevel then
 		keyText = mMT:OwenKeystone()
 		if keyText then
 			DT.tooltip:AddLine(" ")
@@ -131,7 +132,7 @@ local function mLFDTooltip()
 		end
 	end
 
-	if E.Retail and E.db.mMT.dockdatatext.lfd.score then
+	if E.Retail and E.db.mMT.dockdatatext.lfd.score and isMaxLevel then
 		DT.tooltip:AddLine(" ")
 		DT.tooltip:AddDoubleLine(DUNGEON_SCORE, mMT:GetDungeonScore())
 	end
@@ -149,7 +150,7 @@ local function mLFDTooltip()
 		end
 	end
 
-	if E.Retail and E.db.mMT.dockdatatext.lfd.greatvault then
+	if E.Retail and E.db.mMT.dockdatatext.lfd.greatvault and isMaxLevel then
 		local vaultinfohighest, ok = nil, false
 		vaultinforaidText, vaultinfomplusText, vaultinfopvpText, vaultinfohighest, ok = mMT:mGetVaultInfo()
 		if ok then
@@ -157,7 +158,7 @@ local function mLFDTooltip()
 			DT.tooltip:AddLine(format("%s%s|r", title, GREAT_VAULT_REWARDS))
 
 			if vaultinfohighest then
-				DT.tooltip:AddDoubleLine(format(L["%sActual reward:|r"], other), vaultinfohighest or "-")
+				DT.tooltip:AddDoubleLine(format("%s%s|r", other, L["Actual reward:"]), vaultinfohighest or "-")
 			end
 
 			if vaultinforaidText[1] then

@@ -24,11 +24,34 @@ function ElvUI_mMediaTag_OnAddonCompartmentOnLeave()
 end
 
 function mMT:UpdateClassColor()
-	--local class = mMT.Modules.CustomClassColors.enable and E.db.mMT.classcolors.colors[E.myclass] or E:ClassColor(E.myclass)
 	local class = E:ClassColor(E.myclass)
 	local hex = E:RGBToHex(class.r, class.g, class.b)
 	local gradient = mMT.ElvUI_EltreumUI.loaded and mMT.ElvUI_EltreumUI.colors[E.myclass] or { a = { r = class.r - 0.2, g = class.g - 0.2, b = class.b - 0.2, a = 1 }, b = { r = class.r + 0.2, g = class.g + 0.2, b = class.b + 0.2, a = 1 } }
 	return { class = class, r = class.r, g = class.g, b = class.b, hex = hex, string = strjoin("", hex, "%s|r"), gradient = gradient }
+end
+
+function mMT:Update_MP_Settings()
+	if IsAddOnLoaded("!mMT_MediaPack") then
+			mMTSettings.all = E.db.mMT.mp_textures.all
+			mMTSettings.a = E.db.mMT.mp_textures.a
+			mMTSettings.b = E.db.mMT.mp_textures.b
+			mMTSettings.c = E.db.mMT.mp_textures.c
+			mMTSettings.d = E.db.mMT.mp_textures.d
+			mMTSettings.e = E.db.mMT.mp_textures.e
+			mMTSettings.f = E.db.mMT.mp_textures.f
+			mMTSettings.g = E.db.mMT.mp_textures.g
+			mMTSettings.h = E.db.mMT.mp_textures.h
+			mMTSettings.i = E.db.mMT.mp_textures.i
+			mMTSettings.j = E.db.mMT.mp_textures.j
+			mMTSettings.k = E.db.mMT.mp_textures.k
+			mMTSettings.l = E.db.mMT.mp_textures.l
+			mMTSettings.n = E.db.mMT.mp_textures.n
+			mMTSettings.m = E.db.mMT.mp_textures.m
+			mMTSettings.o = E.db.mMT.mp_textures.o
+			mMTSettings.p = E.db.mMT.mp_textures.p
+			mMTSettings.q = E.db.mMT.mp_textures.q
+			mMTSettings.r = E.db.mMT.mp_textures.r
+	end
 end
 
 function mMT:CheckEltruism()

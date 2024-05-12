@@ -1,6 +1,16 @@
 # Changelog - ElvUI_mMediaTag
 [Eng] - All changes to this project will be documented in this file. The latest changes are at the top.
 
+## [ver. 3.38] - 10.05.2024
+### FIX
+- FIX - Fixed nil Error with the new Locales and Dock LFD
+- FIX - Fixed wrong function name in Cata
+### Update
+- UPDATE - Update more Locales, Thx for the Help of Dlarge
+- UPDATE - Functions for Cata and Retail
+- UPDATE - For all Datatext M+ and Vault infos will now only load on Max Level
+- UPDATE - Datatext M+ Score shows below max Level the Player Level
+
 ## [ver. 3.37] - 10.05.2024
 ### FIX
 - FIX - Fixed Bug with the new Locales, Thx for the Help of Tsxy and Dlarge
