@@ -219,11 +219,11 @@ function mMT:Initialize()
 			self:RegisterEvent("CHAT_MSG_GUILD")
 		end
 
-		if E.Retail and ((E.private.nameplates.enable and E.db.mMT.nameplate.executemarker.auto) or E.db.mMT.interruptoncd.enable) then
+		if (E.private.nameplates.enable and E.db.mMT.nameplate.executemarker.auto) or E.db.mMT.interruptoncd.enable then
 			self:RegisterEvent("PLAYER_TALENT_UPDATE")
 		end
 
-		if E.Retail and (E.private.nameplates.enable and (E.db.mMT.nameplate.healthmarker.enable or E.db.mMT.nameplate.executemarker.enable)) then
+		if E.private.nameplates.enable and (E.db.mMT.nameplate.healthmarker.enable or E.db.mMT.nameplate.executemarker.enable) then
 			mMT:StartNameplateTools()
 		end
 	end
