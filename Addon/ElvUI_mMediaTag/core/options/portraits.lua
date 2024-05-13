@@ -107,6 +107,9 @@ local function configTable()
 									order = 3,
 									type = "select",
 									name = L["Background Texture"],
+									disabled = function()
+										return not E.db.mMT.portraits.general.classicons
+									end,
 									get = function(info)
 										return E.db.mMT.portraits.general.bgstyle
 									end,
