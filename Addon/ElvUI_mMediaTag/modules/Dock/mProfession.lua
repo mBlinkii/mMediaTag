@@ -25,7 +25,7 @@ local Config = {
 local function OnEnter(self)
 	if E.db.mMT.dockdatatext.tip.enable then
 		wipe(menuList)
-		menuList = mMT:GetProfessions()
+		menuList = mMT:GetProfessions(true)
 
 		DT.tooltip:AddLine(TRADE_SKILLS)
 		DT.tooltip:AddLine(" ")

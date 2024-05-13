@@ -230,13 +230,14 @@ local function GetProfInfo(prof)
 end
 
 local function BuildProfTable()
-	local prof1, prof2, arch, fish, cook = GetProfessions()
+	local prof1, prof2, arch, fish, cook, firstaid = GetProfessions()
 	local tbl = {
 		main = {},
 		secondary = {},
 		nomain = false,
 		nosecondary = false,
 		cook = false,
+		firstaid = false
 	}
 
 	if not prof1 and prof2 then
@@ -253,7 +254,7 @@ local function BuildProfTable()
 		tbl.nomain = false
 	end
 
-	if not arch and not fish and not cook then
+	if not arch and not fish and not cook and not firstaid then
 		tbl.nosecondary = true
 	else
 		if arch then
@@ -267,6 +268,11 @@ local function BuildProfTable()
 		if cook then
 			tinsert(tbl.secondary, 3, GetProfInfo(cook))
 			tbl.cook = true
+		end
+
+		if firstaid then
+			tinsert(tbl.secondary, 3, GetProfInfo(firstaid))
+			tbl.firstaid = true
 		end
 
 		tbl.nosecondary = false
@@ -311,7 +317,7 @@ local function GetFireCD()
 	end
 end
 
-function mMT:GetProfessions()
+function mMT:GetProfessions(tooltip)
 	local MenuTable = {}
 	local ProfTable = BuildProfTable()
 	local textA = ""
@@ -343,21 +349,23 @@ function mMT:GetProfessions()
 			end
 		end
 
-		InsertInTable(MenuTable, "", nil, true)
-		textA = E.db.mMT.datatextcolors.colortitle.hex .. L["Others"] .. "|r"
-		InsertInTable(MenuTable, textA, nil, true)
-		tinsert(MenuTable, { text = format("|T%s:14:14:0:0:64:64:5:59:5:59|t %s", "136241", TRADE_SKILLS), color = "|CFFBC26E5", isTitle = false, macro = "/click SpellbookMicroButton\n/click SpellBookFrameTabButton2" })
+		if not tooltip then
+			InsertInTable(MenuTable, "", nil, true)
+			textA = E.db.mMT.datatextcolors.colortitle.hex .. L["Others"] .. "|r"
+			InsertInTable(MenuTable, textA, nil, true)
+			tinsert(MenuTable, { text = format("|T%s:14:14:0:0:64:64:5:59:5:59|t %s", "136241", TRADE_SKILLS), color = "|CFFBC26E5", isTitle = false, macro = "/click SpellbookMicroButton\n/click SpellBookFrameTabButton2" })
 
-		if ProfTable.cook and IsSpellKnown(818) then
-			local texture = GetSpellTexture(818)
-			local name = GetSpellInfo(818)
-			tinsert(MenuTable, {
-				text = format("|T%s:14:14:0:0:64:64:5:59:5:59|t %s", texture, name),
-				Secondtext = GetFireCD(),
-				color = "|CFFFF9B00",
-				isTitle = false,
-				macro = "/cast " .. name,
-			})
+			if ProfTable.cook and IsSpellKnown(818) then
+				local texture = GetSpellTexture(818)
+				local name = GetSpellInfo(818)
+				tinsert(MenuTable, {
+					text = format("|T%s:14:14:0:0:64:64:5:59:5:59|t %s", texture, name),
+					Secondtext = GetFireCD(),
+					color = "|CFFFF9B00",
+					isTitle = false,
+					macro = "/cast " .. name,
+				})
+			end
 		end
 		return MenuTable
 	end
