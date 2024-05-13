@@ -241,7 +241,7 @@ local function configTable()
 						type = "group",
 						name = L["Healthmarkers"],
 						hidden = function()
-							return not E.Retail
+							return not (E.Retail or E.Cata)
 						end,
 						args = {},
 					},

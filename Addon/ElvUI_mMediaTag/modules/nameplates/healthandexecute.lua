@@ -18,7 +18,6 @@ local HM_NPCs = {
 	[186125] = { 15 }, --Tricktotem
 	[186206] = { 15 }, --Cruel Bonecrusher
 	[186227] = { 20 }, --Monstrous Decay
-	[189719] = { 15 }, --Watcher Irideus
 
 	-- Dawn of the Infinite
 	[198933] = { 90 }, --Iridikron
@@ -330,7 +329,7 @@ local function healthMarkers(unit, percent)
 		health.healthOverlay:Hide()
 	else
 		local markersTable = nil
-		if db.useDefaults then
+		if E.Retail and db.useDefaults then
 			markersTable = db.NPCs[npcID] or HM_NPCs[npcID]
 		else
 			markersTable = db.NPCs[npcID]
@@ -376,14 +375,14 @@ local function healthMarkers(unit, percent)
 end
 
 local function mNameplateTools(table, event, frame)
-	if table.isNamePlate and (table.Health and table.Health.max) then --and executeAutoRange.enable
+	if table.isNamePlate and (table.Health and table.Health.max) then
 		local percent = math.floor((table.Health.cur or 100) / table.Health.max * 100 + 0.5)
 
 		if E.db.mMT.nameplate.healthmarker.enable then
 			healthMarkers(table, percent)
 		end
 
-		if E.db.mMT.nameplate.executemarker.enable then
+		if E.Retail and E.db.mMT.nameplate.executemarker.enable then
 			executeMarker(table, percent)
 		end
 	end
