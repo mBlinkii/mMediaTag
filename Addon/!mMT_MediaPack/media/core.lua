@@ -365,6 +365,10 @@ local function LoadSeriesQ()
 	mAddStatusbar("mMediaTag Q3", "q3.tga")
 	mAddStatusbar("mMediaTag Q4", "q4.tga")
 end
+
+mAddStatusbar("mMediaTag S1", "s1.tga")
+mAddStatusbar("mMediaTag S2", "s2.tga")
+
 local function LoadSeriesR()
 	mAddStatusbar("mMediaTag R1", "r1.tga")
 	mAddStatusbar("mMediaTag R2", "r2.tga")

@@ -505,6 +505,7 @@ P.mMT = {
 	},
 	castbarshield = {
 		enable = false,
+		iconanchor = false,
 		auto = true,
 		custom = false,
 		sizeX = 32,

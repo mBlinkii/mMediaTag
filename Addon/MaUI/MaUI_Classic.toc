@@ -12,3 +12,5 @@
 ## DefaultState: Enabled
 ## X-Curse-Project-ID: 289502
 ## X-Wago-ID: 9rN48AND
+
+init.lua
