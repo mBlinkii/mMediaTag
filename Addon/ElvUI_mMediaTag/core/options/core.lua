@@ -331,6 +331,9 @@ local function configTable()
 						order = 9,
 						type = "group",
 						name = L["Quest Icons"],
+						hidden = function()
+							return not E.Retail
+						end,
 						childGroups = "tab",
 						args = {},
 					},
