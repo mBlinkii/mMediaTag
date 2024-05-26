@@ -127,13 +127,13 @@ local function EnableModules()
 	if E.Retail or E.Cata then
 		mMT.Modules.Castbar.enable = (E.db.mMT.interruptoncd.enable or (E.db.mMT.importantspells.enable and (E.db.mMT.importantspells.np or E.db.mMT.importantspells.uf)) or E.db.mMT.castbarshield.enable)
 		mMT.Modules.RoleIcons.enable = E.db.mMT.roleicons.enable
-		mMT.Modules.QuestIcons.enable = E.db.mMT.questicons.enable
 	end
 
 	-- Retail
 	if E.Retail then
 		mMT.Modules.ObjectiveTracker.enable = E.db.mMT.objectivetracker.enable and (E.private.skins.blizzard.enable and E.private.skins.blizzard.objectiveTracker) and not IsAddOnLoaded("!KalielsTracker")
 		mMT.Modules.InterruptOnCD.enable = E.db.mMT.interruptoncd.enable
+		mMT.Modules.QuestIcons.enable = E.db.mMT.questicons.enable
 	end
 end
 
