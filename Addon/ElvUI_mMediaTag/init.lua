@@ -205,10 +205,12 @@ function mMT:Initialize()
 
 	-- Register Events for Retail
 	if E.Retail or E.Cata then
-		if E.Retail and E.db.mMT.instancedifficulty.enable then
+		if E.db.mMT.instancedifficulty.enable then
 			self:RegisterEvent("UPDATE_INSTANCE_INFO")
-			self:RegisterEvent("CHALLENGE_MODE_START")
 			self:SetupInstanceDifficulty()
+			if E.Retail then
+				self:RegisterEvent("CHALLENGE_MODE_START")
+			end
 		end
 
 		if E.Retail and E.db.mMT.general.keystochat then

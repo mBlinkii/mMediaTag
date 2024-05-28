@@ -65,7 +65,7 @@ local function configTable()
 						type = "group",
 						name = L["Instance Difficulty"],
 						hidden = function()
-							return not E.Retail
+							return not (E.Retail or E.Cata)
 						end,
 						args = {},
 					},
