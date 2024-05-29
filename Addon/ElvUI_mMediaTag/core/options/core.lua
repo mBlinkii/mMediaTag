@@ -275,11 +275,25 @@ local function configTable()
 						name = L["Tooltip Icon"],
 						args = {},
 					},
-					background = {
+					uftextures = {
 						order = 2,
 						type = "group",
-						name = L["Custom Unitframe Backgrounds"],
-						args = {},
+						name = L["Custom Unitframe Textures"],
+						childGroups = "tab",
+						args = {
+							textures = {
+								order = 1,
+								type = "group",
+								name = L["Custom Unitframe Textures"],
+								args = {},
+							},
+							background = {
+								order = 2,
+								type = "group",
+								name = L["Custom Unitframe Backgrounds"],
+								args = {},
+							},
+						},
 					},
 					-- classcolor = {
 					-- 	order = 3,

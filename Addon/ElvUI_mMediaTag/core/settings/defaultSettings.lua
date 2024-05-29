@@ -42,10 +42,16 @@ P.mMT = {
 		spells = {},
 	},
 	custombackgrounds = {
-		enable = false,
 		health = { enable = false, texture = "mMediaTag A8" },
 		power = { enable = false, texture = "mMediaTag A8" },
 		castbar = { enable = false, texture = "mMediaTag A8" },
+		altpower = { enable = false, texture = "mMediaTag A8" },
+	},
+	customtextures= {
+		health = { enable = false, texture = "mMediaTag A8" },
+		power = { enable = false, texture = "mMediaTag A8" },
+		castbar = { enable = false, texture = "mMediaTag A8" },
+		altpower = { enable = false, texture = "mMediaTag A8" },
 	},
 	singleProfession = {
 		icon = true,

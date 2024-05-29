@@ -45,6 +45,8 @@ mMT.Modules.InterruptOnCD = {}
 mMT.Modules.CosmeticBars = {}
 mMT.Modules.QuestIcons = {}
 mMT.Modules.ObjectiveTracker = {}
+mMT.Modules.CustomUFTextures = {}
+mMT.Modules.CustomBGTextures = {}
 --mMT.Modules.CustomClassColors = {}
 
 local L = mMT.Locales
@@ -121,6 +123,8 @@ local function EnableModules()
 	mMT.Modules.Portraits.enable = E.db.mMT.portraits.general.enable
 	mMT.Modules.ImportantSpells.enable = (E.db.mMT.importantspells.enable and (E.db.mMT.importantspells.np or E.db.mMT.importantspells.uf))
 	mMT.Modules.CosmeticBars.enable = E.db.mMT.cosmeticbars.enable and not IsAddOnLoaded("ElvUI_NutsAndBolts")
+	mMT.Modules.CustomUFTextures.enable = E.db.mMT.customtextures.health.enable or E.db.mMT.customtextures.power.enable or E.db.mMT.customtextures.castbar.enable or E.db.mMT.customtextures.altpower.enable
+	mMT.Modules.CustomBGTextures.enable = (E.db.mMT.custombackgrounds.health.enable or E.db.mMT.custombackgrounds.power.enable or E.db.mMT.custombackgrounds.castbar.enable) and not mMT.ElvUI_EltreumUI.dark
 	--mMT.Modules.CustomClassColors.enable = E.db.mMT.classcolors.enable and not (mMT.ElvUI_EltreumUI.gradient or mMT.ElvUI_EltreumUI.dark)
 
 	-- Retail and Cata
@@ -253,10 +257,6 @@ function mMT:Initialize()
 	E.ConfigModeLocalizedStrings["MMEDIATAG"] = mMT.Name
 
 	mMT.CurrentProfile = E.data:GetCurrentProfile()
-
-	if (E.db.mMT.custombackgrounds.health.enable or E.db.mMT.custombackgrounds.power.enable or E.db.mMT.custombackgrounds.castbar.enable) and not mMT.ElvUI_EltreumUI.dark then
-		mMT:CustomBackdrop()
-	end
 
 	-- if E.db.mMT.customclasscolors.enable and not (mMT.ElvUI_EltreumUI.gradient or mMT.ElvUI_EltreumUI.dark) then
 	-- 	mMT:SetCustomColors()
