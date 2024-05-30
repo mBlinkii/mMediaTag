@@ -22,4 +22,5 @@
 	<Script file="mVolume.lua"/>
 	<Script file="mBags.lua"/>
 	<Script file="mMail.lua"/>
+	<Script file="test.lua"/>
 </Ui>

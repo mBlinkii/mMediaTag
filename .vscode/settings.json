@@ -585,7 +585,8 @@
         "VoiceTranscriptionFrame_UpdateVoiceTab",
         "VoiceTranscriptionFrame_UpdateEditBox",
         "GUILD_EVENT_LOG",
-        "WHISPER"
+        "WHISPER",
+        "EXPANSION_NAME0"
     ],
     "Lua.diagnostics.disable": [
         "undefined-field"
