@@ -4,7 +4,6 @@
 ## [ver. 3.39] - 31.05.2024
 ### FIX
 - FIX - Portraits Background Settings is only available when Class Icons are enabled 
-- FIX - Fixed wrong function name in Cata
 - FIX - Missing module Error in Cata
 - FIX - Bug with Instance Difficulty for Datatexts and Dock in Cata
 - FIX - Bug with Dock Guild and Friends in Cata
