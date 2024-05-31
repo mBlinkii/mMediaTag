@@ -366,9 +366,6 @@ local function LoadSeriesQ()
 	mAddStatusbar("mMediaTag Q4", "q4.tga")
 end
 
-mAddStatusbar("mMediaTag S1", "s1.tga")
-mAddStatusbar("mMediaTag S2", "s2.tga")
-
 local function LoadSeriesR()
 	mAddStatusbar("mMediaTag R1", "r1.tga")
 	mAddStatusbar("mMediaTag R2", "r2.tga")
@@ -401,6 +398,19 @@ local function LoadSeriesR()
 	mAddStatusbar("mMediaTag R29", "r29.tga")
 end
 
+local function LoadSeriesS()
+	mAddStatusbar("mMediaTag S1", "s1.tga")
+	mAddStatusbar("mMediaTag S2", "s2.tga")
+	mAddStatusbar("mMediaTag S3", "s3.tga")
+	mAddStatusbar("mMediaTag S4", "s4.tga")
+	mAddStatusbar("mMediaTag S5", "s5.tga")
+	mAddStatusbar("mMediaTag S6", "s6.tga")
+	mAddStatusbar("mMediaTag S7", "s7.tga")
+	mAddStatusbar("mMediaTag S8", "s8.tga")
+	mAddStatusbar("mMediaTag S9", "s9.tga")
+	mAddStatusbar("mMediaTag S10", "s10.tga")
+end
+
 local function LoadSeriesAll()
 	LoadSeriesA()
 	LoadSeriesB()
@@ -420,6 +430,7 @@ local function LoadSeriesAll()
 	LoadSeriesP()
 	LoadSeriesQ()
 	LoadSeriesR()
+	LoadSeriesS()
 end
 
 local defaultDB = {
@@ -443,6 +454,7 @@ local defaultDB = {
 		p = true,
 		q = true,
 		r = true,
+		S = true,
 	},
 }
 
@@ -516,6 +528,9 @@ function mMT_MediaPack:OnEvent(event, arg1)
 		end
 		if mMT_MediaPack.db.textures.r then
 			LoadSeriesR()
+		end
+		if mMT_MediaPack.db.textures.s then
+			LoadSeriesS()
 		end
 	elseif event == "PLAYER_LOGOUT" then
 		mMTSettings = mMT_MediaPack.db
@@ -639,6 +654,8 @@ SlashCmdList.MMTMP = function(msg, editBox)
 	elseif msg == "q" then
 		SetSetting(msg)
 	elseif msg == "r" then
+		SetSetting(msg)
+	elseif msg == "s" then
 		SetSetting(msg)
 	elseif msg == "all" then
 		SetSetting(msg)
