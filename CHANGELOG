@@ -1,6 +1,25 @@
 # Changelog - ElvUI_mMediaTag
 [Eng] - All changes to this project will be documented in this file. The latest changes are at the top.
 
+## [ver. 3.39] - 31.05.2024
+### FIX
+- FIX - Portraits Background Settings is only available when Class Icons are enabled 
+- FIX - Fixed wrong function name in Cata
+- FIX - Missing module Error in Cata
+- FIX - Bug with Instance Difficulty for Datatexts and Dock in Cata
+- FIX - Bug with Dock Guild and Friends in Cata
+### Update
+- UPDATE - Update Healthmarkers
+- UPDATE - Updated the Settings visibility for Cata
+- UPDATE - Firstaid is now available in the Professions Menulist in Cata
+- UPDATE - Dock Friends to take care of the changes in ElvUI
+- UPDATE - mMT - Dropdown menu, changes now automaticly width and height deppending on font size
+### NEW
+- NEW - Statusbar Texture Pack Series S
+- NEW - Custom Unitframe Textures for Health, Power and Castbar
+- NEW - Healthmarkers now are available in Cata
+- NEW - Minimap Instance Difficuty is now available in Cata
+
 ## [ver. 3.38] - 12.05.2024
 ### FIX
 - FIX - Fixed nil Error with the new Locales and Dock LFD
