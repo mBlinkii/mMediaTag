@@ -58,7 +58,7 @@ end
 
 local function configTable()
 	--change_log_important_string = Concatenation(change_log_important)
-	--change_log_new_string = Concatenation(change_log_new)
+	change_log_new_string = Concatenation(change_log_new)
 	change_log_update_string = Concatenation(change_log_update)
 	change_log_fix_string = Concatenation(change_log_fix)
 	E.Options.args.mMT.args.changelog.args = {
