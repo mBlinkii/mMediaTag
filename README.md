@@ -13,8 +13,7 @@ mMediaTag & Tools is a plugin for WoW with ElvUI. mMediaTag adds many media file
 <a href="https://discord.gg/AE9XebMU49">Discord</a> 
 </p>
 </div> 
-# Downloads
-[![Downloads](https://pepy.tech/badge/sqlalchemy)](https://pepy.tech/project/sqlalchemy) [![Downloads](https://pepy.tech/badge/sqlalchemy/month)](https://pepy.tech/project/sqlalchemy/month) [![Downloads](https://pepy.tech/badge/sqlalchemy/week)](https://pepy.tech/project/sqlalchemy/week)
+https://img.shields.io/github/downloads/mBlinkii/mMediaTag/total.svg
 
    ## About The Project
    ![mMT Logo](https://raw.githubusercontent.com/mBlinkii/mMediaTag/main/Logo/mmt_logo.png)
