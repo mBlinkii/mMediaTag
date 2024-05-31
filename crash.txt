@@ -1,0 +1,6 @@
+Message: Interface/AddOns/ElvUI_mMediaTag/modules/dock/mQuest.lua:24: '=' expected near 'local'
+Time: Mon May 13 15:13:55 2024
+Count: 1
+Stack: Interface/AddOns/ElvUI_mMediaTag/modules/dock/mQuest.lua:24: '=' expected near 'local'
+
+Locals: 

@@ -6,5 +6,6 @@
 	<Script file="ResurrectionIcon.lua"/>
 	<Script file="SummonIcon.lua"/>
 	<Script file="portrait.lua"/>
+	<Script file="uftextures.lua"/>
 	<!-- <Script file="CustomClassColors.lua"/> -->
 </Ui>

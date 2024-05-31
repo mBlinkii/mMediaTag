@@ -669,3 +669,14 @@ L["|cffFFFFFFLeft Click:|r Change Talent Specialization"] = true
 L["|cffFFFFFFRight Click:|r Change Loot Specialization"] = true
 L["|cffFFFFFFShift + Left Click:|r Show Talent Specialization UI"] = true
 L["Level: "] = true
+
+--new
+L["Custom Unitframe Textures"] = true
+L["Custom Health Texture"] = true
+L["Enable Custom Health Texture"] = true
+L["Custom Power Texture"] = true
+L["Enable Custom Power Texture"] = true
+L["Custom Castbar Texture"] = true
+L["Enable Custom Castbar Texture"] = true
+L["Custom Alternative Power Texture"] = true
+L["Enable Custom Alternative Power Texture"] = true

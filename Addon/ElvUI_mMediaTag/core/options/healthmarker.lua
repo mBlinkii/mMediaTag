@@ -83,6 +83,9 @@ local function configTable()
 					type = "toggle",
 					name = L["Use Default NPC IDs"],
 					desc = L["Uses Custom and default NPC IDs"],
+					hidden = function()
+						return E.Cata
+					end,
 					get = function(info)
 						return E.db.mMT.nameplate.healthmarker.useDefaults
 					end,

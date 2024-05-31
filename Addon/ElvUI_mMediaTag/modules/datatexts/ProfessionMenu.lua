@@ -29,7 +29,7 @@ end
 
 local function OnEnter(self)
 	wipe(menuList)
-	menuList = mMT:GetProfessions()
+	menuList = mMT:GetProfessions(true)
 
 	DT.tooltip:AddLine(TRADE_SKILLS)
 	DT.tooltip:AddLine(" ")

@@ -65,7 +65,7 @@ local function configTable()
 						type = "group",
 						name = L["Instance Difficulty"],
 						hidden = function()
-							return not E.Retail
+							return not (E.Retail or E.Cata)
 						end,
 						args = {},
 					},
@@ -241,7 +241,7 @@ local function configTable()
 						type = "group",
 						name = L["Healthmarkers"],
 						hidden = function()
-							return not E.Retail
+							return not (E.Retail or E.Cata)
 						end,
 						args = {},
 					},
@@ -275,11 +275,25 @@ local function configTable()
 						name = L["Tooltip Icon"],
 						args = {},
 					},
-					background = {
+					uftextures = {
 						order = 2,
 						type = "group",
-						name = L["Custom Unitframe Backgrounds"],
-						args = {},
+						name = L["Custom Unitframe Textures"],
+						childGroups = "tab",
+						args = {
+							textures = {
+								order = 1,
+								type = "group",
+								name = L["Custom Unitframe Textures"],
+								args = {},
+							},
+							background = {
+								order = 2,
+								type = "group",
+								name = L["Custom Unitframe Backgrounds"],
+								args = {},
+							},
+						},
 					},
 					-- classcolor = {
 					-- 	order = 3,
@@ -331,6 +345,9 @@ local function configTable()
 						order = 9,
 						type = "group",
 						name = L["Quest Icons"],
+						hidden = function()
+							return not E.Retail
+						end,
 						childGroups = "tab",
 						args = {},
 					},

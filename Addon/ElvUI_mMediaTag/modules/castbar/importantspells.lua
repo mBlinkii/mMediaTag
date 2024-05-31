@@ -116,7 +116,6 @@ function module:UpdateCastbar(castbar)
 				lastPlayed[castbar.spellID].queued = soundHandle
 			end
 			lastPlayed[castbar.spellID].willPlay = not willPlay
-
 		elseif lastPlayed[castbar.spellID] then
 			lastPlayed[castbar.spellID].willPlay = true
 		end
@@ -133,7 +132,7 @@ function module:UpdateCastbar(castbar)
 			SetSpellIcon(castbar, Spell.icon)
 		end
 	elseif castbar.mTextureChanged then
-		castbar:SetStatusBarTexture(E.LSM:Fetch("statusbar", E.db.mMT.importantspells.default))
+		castbar:SetStatusBarTexture(E.LSM:Fetch("statusbar", E.db.mMT.customtextures.castbar.enable and E.db.mMT.customtextures.castbar.texture or E.db.mMT.importantspells.default))
 		castbar.mTextureChanged = false
 	end
 end

@@ -45,6 +45,8 @@ mMT.Modules.InterruptOnCD = {}
 mMT.Modules.CosmeticBars = {}
 mMT.Modules.QuestIcons = {}
 mMT.Modules.ObjectiveTracker = {}
+mMT.Modules.CustomUFTextures = {}
+mMT.Modules.CustomBGTextures = {}
 --mMT.Modules.CustomClassColors = {}
 
 local L = mMT.Locales
@@ -121,19 +123,21 @@ local function EnableModules()
 	mMT.Modules.Portraits.enable = E.db.mMT.portraits.general.enable
 	mMT.Modules.ImportantSpells.enable = (E.db.mMT.importantspells.enable and (E.db.mMT.importantspells.np or E.db.mMT.importantspells.uf))
 	mMT.Modules.CosmeticBars.enable = E.db.mMT.cosmeticbars.enable and not IsAddOnLoaded("ElvUI_NutsAndBolts")
+	mMT.Modules.CustomUFTextures.enable = E.db.mMT.customtextures.health.enable or E.db.mMT.customtextures.power.enable or E.db.mMT.customtextures.castbar.enable or E.db.mMT.customtextures.altpower.enable
+	mMT.Modules.CustomBGTextures.enable = (E.db.mMT.custombackgrounds.health.enable or E.db.mMT.custombackgrounds.power.enable or E.db.mMT.custombackgrounds.castbar.enable) and not mMT.ElvUI_EltreumUI.dark
 	--mMT.Modules.CustomClassColors.enable = E.db.mMT.classcolors.enable and not (mMT.ElvUI_EltreumUI.gradient or mMT.ElvUI_EltreumUI.dark)
 
 	-- Retail and Cata
 	if E.Retail or E.Cata then
 		mMT.Modules.Castbar.enable = (E.db.mMT.interruptoncd.enable or (E.db.mMT.importantspells.enable and (E.db.mMT.importantspells.np or E.db.mMT.importantspells.uf)) or E.db.mMT.castbarshield.enable)
 		mMT.Modules.RoleIcons.enable = E.db.mMT.roleicons.enable
-		mMT.Modules.QuestIcons.enable = E.db.mMT.questicons.enable
 	end
 
 	-- Retail
 	if E.Retail then
 		mMT.Modules.ObjectiveTracker.enable = E.db.mMT.objectivetracker.enable and (E.private.skins.blizzard.enable and E.private.skins.blizzard.objectiveTracker) and not IsAddOnLoaded("!KalielsTracker")
 		mMT.Modules.InterruptOnCD.enable = E.db.mMT.interruptoncd.enable
+		mMT.Modules.QuestIcons.enable = E.db.mMT.questicons.enable
 	end
 end
 
@@ -205,10 +209,12 @@ function mMT:Initialize()
 
 	-- Register Events for Retail
 	if E.Retail or E.Cata then
-		if E.Retail and E.db.mMT.instancedifficulty.enable then
+		if E.db.mMT.instancedifficulty.enable then
 			self:RegisterEvent("UPDATE_INSTANCE_INFO")
-			self:RegisterEvent("CHALLENGE_MODE_START")
 			self:SetupInstanceDifficulty()
+			if E.Retail then
+				self:RegisterEvent("CHALLENGE_MODE_START")
+			end
 		end
 
 		if E.Retail and E.db.mMT.general.keystochat then
@@ -219,11 +225,11 @@ function mMT:Initialize()
 			self:RegisterEvent("CHAT_MSG_GUILD")
 		end
 
-		if E.Retail and ((E.private.nameplates.enable and E.db.mMT.nameplate.executemarker.auto) or E.db.mMT.interruptoncd.enable) then
+		if (E.private.nameplates.enable and E.db.mMT.nameplate.executemarker.auto) or E.db.mMT.interruptoncd.enable then
 			self:RegisterEvent("PLAYER_TALENT_UPDATE")
 		end
 
-		if E.Retail and (E.private.nameplates.enable and (E.db.mMT.nameplate.healthmarker.enable or E.db.mMT.nameplate.executemarker.enable)) then
+		if E.private.nameplates.enable and (E.db.mMT.nameplate.healthmarker.enable or E.db.mMT.nameplate.executemarker.enable) then
 			mMT:StartNameplateTools()
 		end
 	end
@@ -251,10 +257,6 @@ function mMT:Initialize()
 	E.ConfigModeLocalizedStrings["MMEDIATAG"] = mMT.Name
 
 	mMT.CurrentProfile = E.data:GetCurrentProfile()
-
-	if (E.db.mMT.custombackgrounds.health.enable or E.db.mMT.custombackgrounds.power.enable or E.db.mMT.custombackgrounds.castbar.enable) and not mMT.ElvUI_EltreumUI.dark then
-		mMT:CustomBackdrop()
-	end
 
 	-- if E.db.mMT.customclasscolors.enable and not (mMT.ElvUI_EltreumUI.gradient or mMT.ElvUI_EltreumUI.dark) then
 	-- 	mMT:SetCustomColors()

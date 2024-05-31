@@ -1,0 +1,5 @@
+<Ui xmlns="http://www.blizzard.com/wow/ui/">
+	<Script file="healthandexecute.lua"/>
+	<Script file="bordercolor.lua"/>
+	<Script file="QuestIcons.lua"/>
+</Ui>

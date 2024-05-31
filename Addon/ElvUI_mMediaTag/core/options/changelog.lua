@@ -16,22 +16,28 @@ local change_log_important = {
 	"This update will reset the Spell DB."
 }
 
-local releasdate = "12.05.2024"
+local releasdate = "31.05.2024"
 
 local change_log_new = {
-	"Add Sound files to mMT Media"
+	"Statusbar Texture Pack Series S",
+	"Custom Unitframe Textures for Health, Power and Castbar",
+	"Healthmarkers now are available in Cata",
+	"Minimap Instance Difficuty is now available in Cata"
 }
 
 local change_log_update = {
-	"Update more Locales, Thx for the Help of Dlarge",
-	"Functions for Cata and Retail",
-	"For all Datatext M+ and Vault infos will now only load on Max Level",
-	"Datatext M+ Score shows below max Level the Player Level",
+	"Update Healthmarkers",
+	"Updated the Settings visibility for Cata",
+	"Firstaid is now available in the Professions Menulist in Cata",
+	"Dock Friends to take care of the changes in ElvUI",
+	"mMT - Dropdown menu, changes now automaticly width and height deppending on font size"
 }
 
 local change_log_fix = {
-	"Fixed nil Error with the new Locales and Dock LFD",
-	"Fixed wrong function name in Cata",
+	"Portraits Background Settings is only available when Class Icons are enabled",
+	"Missing module Error in Cata",
+	"Bug with Instance Difficulty for Datatexts and Dock in Cata",
+	"Bug with Dock Guild and Friends in Cata"
 }
 
 local function Concatenation(tbl, icon, color)
@@ -52,7 +58,7 @@ end
 
 local function configTable()
 	--change_log_important_string = Concatenation(change_log_important)
-	--change_log_new_string = Concatenation(change_log_new)
+	change_log_new_string = Concatenation(change_log_new)
 	change_log_update_string = Concatenation(change_log_update)
 	change_log_fix_string = Concatenation(change_log_fix)
 	E.Options.args.mMT.args.changelog.args = {

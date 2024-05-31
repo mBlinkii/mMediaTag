@@ -1,5 +1,6 @@
 local E, _, _, P, _ = unpack(ElvUI)
 local LSM = E.Libs.LSM
+local M = E:GetModule("Minimap")
 
 --Lua functions
 local format = format
@@ -9,10 +10,6 @@ local GetInstanceInfo = GetInstanceInfo
 local IsInInstance = IsInInstance
 local MinimapCluster = _G.MinimapCluster
 local Minimap = _G.Minimap
-local difficulty = E.Retail and MinimapCluster.InstanceDifficulty
-local instance = difficulty and difficulty.Instance or _G.MiniMapInstanceDifficulty
-local guild = difficulty and difficulty.Guild or _G.GuildInstanceDifficulty
-local challenge = difficulty and difficulty.ChallengeMode or _G.MiniMapChallengeMode
 
 --Variables
 local mIDF = nil
@@ -278,7 +275,7 @@ function mMT:GetDungeonInfo(datatext, short, stageBlock)
 		local difficultyColor = instanceDifficulty[difficultyID] and instanceDifficulty[difficultyID].c or "|CFFFFFFFF"
 		local difficultyShort = instanceDifficulty[difficultyID] and instanceDifficulty[difficultyID].d or ""
 		local isGuildParty = InGuildParty()
-		if difficultyID == 8 and C_MythicPlus.IsMythicPlusActive() and C_ChallengeMode.GetActiveChallengeMapID() then
+		if E.Retail and difficultyID == 8 and C_MythicPlus.IsMythicPlusActive() and C_ChallengeMode.GetActiveChallengeMapID() then
 			if datatext and not short then
 				text = format("%s%s|r %s%s|r %s", isGuildParty and colors.guild.color or colors.name.color or "|CFFFFFFFF", name, difficultyColor, difficultyShort, GetKeystoneLevelandColor())
 			elseif short then
@@ -312,18 +309,24 @@ function mMT:GetDungeonInfo(datatext, short, stageBlock)
 end
 
 function UpdateDifficulty()
-	instance:Hide()
-	guild:Hide()
-	challenge:Hide()
+	local difficulty = MinimapCluster.InstanceDifficulty or _G.MiniMapInstanceDifficulty
+	local difficultyGuild = _G.GuildInstanceDifficulty
+	local battlefieldFrame = _G.MiniMapBattlefieldFrame
+
+	if difficulty then difficulty:Hide() end
+	if difficultyGuild then difficultyGuild:Hide() end
+	if battlefieldFrame then battlefieldFrame:Hide() end
 
 	local name, _, _, _, _, _, _, _, _, _ = GetInstanceInfo()
 	local inInstance, _ = IsInInstance()
 
-	if inInstance and name then
-		mIDF.Text:SetText(mMT:GetDungeonInfo())
-		mIDF:Show()
-	else
-		mIDF:Hide()
+	if mIDF then
+		if inInstance and name then
+			mIDF.Text:SetText(mMT:GetDungeonInfo())
+			mIDF:Show()
+		else
+			mIDF:Hide()
+		end
 	end
 end
 
@@ -345,5 +348,5 @@ function mMT:SetupInstanceDifficulty()
 
 	mMT:UpdateColors()
 
-	hooksecurefunc(MinimapCluster.InstanceDifficulty, "Update", UpdateDifficulty)
+	hooksecurefunc(M, "UpdateIcons", UpdateDifficulty)
 end
