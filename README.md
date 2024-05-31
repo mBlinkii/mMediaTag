@@ -1,7 +1,8 @@
 <br/>
 <div align="center">
 <img src="https://raw.githubusercontent.com/mBlinkii/mMediaTag/main/Logo/mmt_icon.png" alt="Logo" width="80" height="80">
-</a>
+<br/>
+<img src="https://img.shields.io/github/downloads/mBlinkii/mMediaTag/total" alt="Downloads">
 <h3 align="center">ElvUI mMediaTag & Tools</h3>
 <p align="center">
 mMediaTag & Tools is a plugin for WoW with ElvUI. mMediaTag adds many media files like textures/ fonts/ icons and some tools to ElvUI.
@@ -11,8 +12,6 @@ mMediaTag & Tools is a plugin for WoW with ElvUI. mMediaTag adds many media file
 <a href="https://github.com/mBlinkii/mMediaTag/issues">Report Bug .</a>
 <a href="https://github.com/mBlinkii/mMediaTag/issues">Request Feature</a>
 <a href="https://discord.gg/AE9XebMU49">Discord</a> 
-<br/>
-<img src="https://img.shields.io/github/downloads/mBlinkii/mMediaTag/total" alt="Downloads">
 </p>
 </div> 
 
