@@ -20,22 +20,25 @@ local GetQuestDifficultyColor = GetQuestDifficultyColor
 local C_GuildInfo_GuildRoster = C_GuildInfo.GuildRoster
 local IsInGuild = IsInGuild
 local IsShiftKeyDown = IsShiftKeyDown
-local LoadAddOn = LoadAddOn
 local SetItemRef = SetItemRef
 local ToggleGuildFrame = ToggleGuildFrame
 local ToggleFriendsFrame = ToggleFriendsFrame
 local UnitInParty = UnitInParty
 local UnitInRaid = UnitInRaid
-local InCombatLockdown = InCombatLockdown
 local IsAltKeyDown = IsAltKeyDown
 
+local IsTimerunningPlayer = C_ChatInfo.IsTimerunningPlayer
 local InviteUnit = C_PartyInfo.InviteUnit or InviteUnit
 local C_PartyInfo_RequestInviteFromUnit = C_PartyInfo.RequestInviteFromUnit
+local LoadAddOn = (C_AddOns and C_AddOns.LoadAddOn) or LoadAddOn
 
 local COMBAT_FACTION_CHANGE = COMBAT_FACTION_CHANGE
 local REMOTE_CHAT = REMOTE_CHAT
 local GUILD_MOTD = GUILD_MOTD
 local GUILD = GUILD
+
+local TIMERUNNING_ATLAS = "|A:timerunning-glues-icon-small:%s:%s:0:0|a"
+local TIMERUNNING_SMALL = format(TIMERUNNING_ATLAS, 12, 10)
 
 local tthead, ttsubh, ttoff = { r = 0.4, g = 0.78, b = 1 }, { r = 0.75, g = 0.9, b = 1 }, { r = 0.3, g = 1, b = 0.3 }
 local activezone, inactivezone = { r = 0.3, g = 1.0, b = 0.3 }, { r = 0.65, g = 0.65, b = 0.65 }
@@ -43,7 +46,7 @@ local guildInfoString = "%s"
 local guildInfoString2 = GUILD .. ": %d/%d"
 local guildMotDString = "%s |cffaaaaaa- |cffffffff%s"
 local levelNameString = "|cff%02x%02x%02x%d|r |cff%02x%02x%02x%s|r"
-local levelNameStatusString = "|cff%02x%02x%02x%d|r %s%s %s"
+local levelNameStatusString = "|cff%02x%02x%02x%d|r %s%s%s %s"
 local nameRankString = "%s |cff999999-|cffffffff %s"
 local standingString = E:RGBToHex(ttsubh.r, ttsubh.g, ttsubh.b) .. "%s:|r |cFFFFFFFF%s/%s (%s%%)"
 local moreMembersOnlineString = strjoin("", "+ %d ", _G.FRIENDS_LIST_ONLINE, "...")
@@ -93,9 +96,10 @@ end
 
 local onlinestatus = {
 	[0] = "",
-	[1] = format("|cffFFFFFF[|r|cffFF9900%s|r|cffFFFFFF]|r", L["AFK"]),
-	[2] = format("|cffFFFFFF[|r|cffFF3333%s|r|cffFFFFFF]|r", L["DND"]),
+	[1] = format(" |cffFFFFFF[|r|cffFF9900%s|r|cffFFFFFF]|r", L["AFK"]),
+	[2] = format(" |cffFFFFFF[|r|cffFF3333%s|r|cffFFFFFF]|r", L["DND"]),
 }
+
 local mobilestatus = {
 	[0] = [[|TInterface\ChatFrame\UI-ChatIcon-ArmoryChat:14:14:0:0:16:16:0:16:0:16:73:177:73|t]],
 	[1] = [[|TInterface\ChatFrame\UI-ChatIcon-ArmoryChat-AwayMobile:14:14:0:0:16:16:0:16:0:16|t]],
@@ -133,6 +137,7 @@ local function BuildGuildTable()
 				rankIndex = rankIndex, --10
 				isMobile = isMobile, --11
 				guid = guid, --12
+				timerunningID = E.Retail and IsTimerunningPlayer(guid),
 			}
 		end
 	end
@@ -243,12 +248,12 @@ local function OnClick(self, btn)
 
 		E:SetEasyMenuAnchor(E.EasyMenu, self)
 		EasyMenu(menuList, E.EasyMenu, nil, nil, nil, "MENU")
-	elseif InCombatLockdown() then
-		_G.UIErrorsFrame:AddMessage(E.InfoColor .. _G.ERR_NOT_IN_COMBAT)
-	elseif E.Retail then
-		ToggleGuildFrame()
-	else
-		ToggleFriendsFrame(3)
+	elseif not E:AlertCombat() then
+		if E.Retail or E.Cata then
+			ToggleGuildFrame()
+		else
+			ToggleFriendsFrame(3)
+		end
 	end
 end
 
@@ -264,6 +269,9 @@ local function OnEnter(self, _, noUpdate)
 	mMT:Dock_OnEnter(self, Config)
 
 	if E.db.mMT.dockdatatext.tip.enable and IsInGuild() then
+		if not IsInGuild() then
+			return
+		end
 		DT.tooltip:ClearLines()
 
 		local shiftDown = IsShiftKeyDown()
@@ -298,7 +306,7 @@ local function OnEnter(self, _, noUpdate)
 
 		DT.tooltip:AddLine(" ")
 		for i, info in ipairs(guildTable) do
-			-- if more then 30 guild members are online, we don"t Show any more, but inform user there are more
+			-- if more then 30 guild members are online, we don't Show any more, but inform user there are more
 			if 30 - i < 1 then
 				if online - 30 > 1 then
 					DT.tooltip:AddLine(format(moreMembersOnlineString, online - 30), ttsubh.r, ttsubh.g, ttsubh.b)
@@ -326,7 +334,7 @@ local function OnEnter(self, _, noUpdate)
 					DT.tooltip:AddLine(format(officerNoteString, info.officerNote), ttoff.r, ttoff.g, ttoff.b, 1)
 				end
 			else
-				DT.tooltip:AddDoubleLine(format(levelNameStatusString, levelc.r * 255, levelc.g * 255, levelc.b * 255, info.level, strmatch(info.name, "([^%-]+).*"), inGroup(info.name), info.status), info.zone, classc.r, classc.g, classc.b, zonec.r, zonec.g, zonec.b)
+				DT.tooltip:AddDoubleLine(format(levelNameStatusString, levelc.r * 255, levelc.g * 255, levelc.b * 255, info.level, strmatch(info.name, "([^%-]+).*"), inGroup(info.name), info.status, info.timerunningID and TIMERUNNING_SMALL or ""), info.zone, classc.r, classc.g, classc.b, zonec.r, zonec.g, zonec.b)
 			end
 		end
 
@@ -349,14 +357,12 @@ local function OnEvent(self, event, ...)
 
 	if IsInGuild() then
 		local func = eventHandlers[event]
-		if func then func(self, ...) end
-
-		if not IsAltKeyDown() and event == 'MODIFIER_STATE_CHANGED' and MouseIsOver(self) then
-			OnEnter(self)
+		if func then
+			func(self, ...)
 		end
 
-		if #guildTable == 0 then
-			BuildGuildTable()
+		if not IsAltKeyDown() and event == "MODIFIER_STATE_CHANGED" and MouseIsOver(self) then
+			OnEnter(self)
 		end
 
 		self.mMT_Dock.TextA:SetText(#guildTable)
@@ -369,7 +375,7 @@ local function OnEvent(self, event, ...)
 		mMT:UpdateNotificationState(self, isShown)
 	else
 		mMT:UpdateNotificationState(self, false)
-    end
+	end
 end
 
 DT:RegisterDatatext(Config.name, Config.category, { "CHAT_MSG_SYSTEM", "GUILD_ROSTER_UPDATE", "PLAYER_GUILD_UPDATE", "GUILD_MOTD", "MODIFIER_STATE_CHANGED" }, OnEvent, nil, OnClick, OnEnter, OnLeave, Config.localizedName, nil, nil)
