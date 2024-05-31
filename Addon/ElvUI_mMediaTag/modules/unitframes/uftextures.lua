@@ -18,51 +18,34 @@ local function SetBGTexture(bg, texture)
 	bg:SetAllPoints()
 end
 
-local function CustomHealthTexture(_, frame)
-	db = E.db.mMT.customtextures
-	local texture = LSM:Fetch("statusbar", db.health.texture)
+local function SetCustomTexture(bar, texture, bg)
+	bar:SetStatusBarTexture(texture)
+	if bg and bar.backdropTex then
+		SetBGTexture(bar.backdropTex, texture)
+	end
+end
 
-	if frame and frame.Health then
-		frame.Health:SetStatusBarTexture(texture)
-		if not E.db.mMT.custombackgrounds.health.enable and frame.Health.backdropTex then
-			SetBGTexture(frame.Health.backdropTex, texture)
-		end
+local function CustomHealthTexture(_, frame)
+	if frame and frame.Health and not frame.Health.isTransparent then
+		SetCustomTexture(frame.Health, LSM:Fetch("statusbar", E.db.mMT.customtextures.health.texture), not E.db.mMT.custombackgrounds.health.enable)
 	end
 end
 
 local function CustomPowerTexture(_, frame)
-	db = E.db.mMT.customtextures
-	local texture = LSM:Fetch("statusbar", db.power.texture)
-
-	if frame and frame.Power then
-		frame.Power:SetStatusBarTexture(texture)
-		if not E.db.mMT.custombackgrounds.power.enable and frame.Power.backdropTex then
-			SetBGTexture(frame.Power.backdropTex, texture)
-		end
+	if frame and frame.Power and not frame.Power.isTransparent then
+		SetCustomTexture(frame.Power, LSM:Fetch("statusbar", E.db.mMT.customtextures.power.texture), not E.db.mMT.custombackgrounds.power.enable)
 	end
 end
 
 local function CustomCastbarTexture(_, frame)
-	db = E.db.mMT.customtextures
-	local texture = LSM:Fetch("statusbar", db.castbar.texture)
-
-	if frame and frame.Castbar then
-		frame.Castbar:SetStatusBarTexture(texture)
-		if not E.db.mMT.custombackgrounds.castbar.enable and frame.Castbar.backdropTex then
-			SetBGTexture(frame.Castbar.backdropTex, texture)
-		end
+	if frame and frame.Castbar and not frame.Castbar.isTransparent then
+		SetCustomTexture(frame.Castbar, LSM:Fetch("statusbar", E.db.mMT.customtextures.castbar.texture), not E.db.mMT.custombackgrounds.castbar.enable)
 	end
 end
 
 local function CustomAltPowerTexture(_, frame)
-	db = E.db.mMT.customtextures
-	local texture = LSM:Fetch("statusbar", db.altpower.texture)
-
-	if frame and frame.AlternativePower then
-		frame.AlternativePower:SetStatusBarTexture(texture)
-		if not E.db.mMT.custombackgrounds.altpower.enable and frame.AlternativePower.backdropTex then
-			SetBGTexture(frame.AlternativePower.backdropTex, texture)
-		end
+	if frame and frame.AlternativePower and not frame.AlternativePower.isTransparent then
+		SetCustomTexture(frame.AlternativePower, LSM:Fetch("statusbar", E.db.mMT.customtextures.altpower.texture), not E.db.mMT.custombackgrounds.altpower.enable)
 	end
 end
 

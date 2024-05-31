@@ -11,7 +11,7 @@ local _G = _G
 local hooksecurefunc = _G.hooksecurefunc
 
 local function CustomBackdrop(bar, texture)
-	if bar and bar.backdropTex then
+	if bar and bar.backdropTex and not bar.isTransparent then
 		bar.backdropTex:SetTexture(LSM:Fetch("statusbar", texture))
 		bar.backdropTex:ClearAllPoints()
 		bar.backdropTex:SetAllPoints()
