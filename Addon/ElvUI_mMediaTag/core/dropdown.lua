@@ -186,7 +186,7 @@ function mMT:mDropDown(list, frame, menuparent, ButtonWidth, HideDelay)
 		frame.buttons[i]:Width(BUTTON_WIDTH + 2)
 	end
 
-	frame:Height((#list * BUTTON_HEIGHT + PADDING * 2) - BUTTON_HEIGHT)
+	frame:Height((#list * BUTTON_HEIGHT + PADDING * 2))
 	frame:Width(BUTTON_WIDTH + PADDING * 2)
 	frame:ClearAllPoints()
 
