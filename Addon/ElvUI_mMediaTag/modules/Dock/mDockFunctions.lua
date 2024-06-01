@@ -235,7 +235,7 @@ function mMT:InitializeDockIcon(DT, conf, event)
 
 	-- setup icon
 	DT.mMT_Dock.Icon:Size(DT.mMT_Dock.size, DT.mMT_Dock.size)
-	DT.mMT_Dock.Icon:SetTexture(conf.icon.texture)
+	DT.mMT_Dock.Icon:SetTexture(conf.icon.texture, "CLAMP", "CLAMP", "TRILINEAR")
 	mMT:SetTextureColor(DT.mMT_Dock.Icon, conf.icon.color or Defaults.normal)
 
 	-- create texts
@@ -289,7 +289,7 @@ function mMT:InitializeDockIcon(DT, conf, event)
 		-- setup icon
 		local size = Defaults.nfauto and ((DT:GetHeight() + 4) / 4) or Defaults.nfsize
 		DT.mMT_Dock.Notification:Size(size, size)
-		DT.mMT_Dock.Notification:SetTexture(Defaults.nficon)
+		DT.mMT_Dock.Notification:SetTexture(Defaults.nficon, "CLAMP", "CLAMP", "TRILINEAR")
 		mMT:SetTextureColor(DT.mMT_Dock.Notification, Defaults.nfcolor)
 		DT.mMT_Dock.Notification:Hide()
 	elseif DT.mMT_Dock.Notification then
