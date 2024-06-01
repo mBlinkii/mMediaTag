@@ -681,3 +681,5 @@ L["Custom Castbar Texture"] = true
 L["Enable Custom Castbar Texture"] = true
 L["Custom Alternative Power Texture"] = true
 L["Enable Custom Alternative Power Texture"] = true
+L["Datatext Settings"] = true
+L["Font Settings"] = true

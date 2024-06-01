@@ -2,7 +2,7 @@ local E, L, V, P, G = unpack(ElvUI)
 
 P.mMT = {
 	version = 0,
-	general = { greeting = true, keystochat = false, emediaenable = false },
+	general = { greeting = true, keystochat = false, emediaenable = false, datatextfontsize = 12 },
 	afk = {
 		enable = false,
 		logo = false,
