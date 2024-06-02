@@ -168,6 +168,7 @@ L["DataTexts"] = "Infotexte"
 L["Datapanels"] = "Infotext Leisten"
 L["Datatext Colors"] = "Infotext Farben"
 L["Datatext Options Color (Tooltip)"] = "Infotext Einstellungen - Farben (Tooltip)"
+L["Datatext Settings"] = "Datentext Einstellungen"
 L["Date Style"] = "Datumsformat"
 L["Dead"] = "Tot"
 L["Death Counter color."] = "Todeszähler Farbe."
@@ -301,6 +302,7 @@ L["Filter Name"] = "Filtername"
 L["First and Second Profession"] = "Erster und Zweiter Beruf"
 L["Fix:"] = true
 L["Focus"] = "Fokus"
+L["Font Settings"] = "Schriftart Einstellungen"
 L["Font Size"] = "Schriftgröße"
 L["Font contour"] = "Schriftart Kontur"
 L["Font"] = "Schriftart"
@@ -679,7 +681,3 @@ L["|cffFFFFFFControl + Left Click:|r Change Loadout"] = "|cffFFFFFFStrg + Linksk
 L["|cffFFFFFFLeft Click:|r Change Talent Specialization"] = "|cffFFFFFFLinks Klick:|r Talent Spezialisierung ändern"
 L["|cffFFFFFFRight Click:|r Change Loot Specialization"] = "|cffFFFFFFRechtsklick:|r Beutespezialisierung ändern"
 L["|cffFFFFFFShift + Left Click:|r Show Talent Specialization UI"] = "|cffFFFFFFShift + Links Klick:|r Zeige Talent Spezialisierungs Interface"
-
---new
-L["Datatext Settings"] = true
-L["Font Settings"] = true
