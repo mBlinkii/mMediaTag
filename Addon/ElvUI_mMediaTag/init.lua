@@ -2,8 +2,7 @@ local E, _, V, P, G = unpack(ElvUI)
 local EP = E.Libs.EP
 
 local _G = _G
-local tinsert, type = tinsert, type
-local print = print
+local tinsert = tinsert
 
 local collectgarbage = collectgarbage
 local GetAddOnMetadata = _G.C_AddOns and _G.C_AddOns.GetAddOnMetadata or _G.GetAddOnMetadata
