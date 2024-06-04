@@ -484,6 +484,10 @@ local function UpdatePortrait(frame, conf, unit, parent)
 	end
 	frame:SetFrameLevel(conf.level)
 
+	if frame:GetAttribute("unit") ~= unit then
+		frame:SetAttribute("unit", unit)
+	end
+
 	-- Portrait Texture
 	texture = textures.texture[settings.general.style][conf.texture]
 	UpdatePortraitTexture(frame.texture, texture, getColor(unit), conf.mirror)
