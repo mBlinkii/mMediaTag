@@ -340,7 +340,7 @@ local function CreatePortrait(parent, conf, unit)
 	unit = UnitExists(unit) and unit or "player"
 
 	-- Portraits Frame
-	local frame = CreateFrame("Frame", "mMT_Portrait_" .. unit, parent)
+	local frame = CreateFrame("Button", "mMT_Portrait_" .. unit, parent, "SecureUnitButtonTemplate") --CreateFrame("Frame", "mMT_Portrait_" .. unit, parent)
 	frame:SetSize(conf.size, conf.size)
 	frame:SetPoint(conf.point, parent, conf.relativePoint, conf.x, conf.y)
 	if conf.strata ~= "AUTO" then
@@ -831,7 +831,7 @@ function module:Initialize()
 					"UNIT_NAME_UPDATE",
 				},
 			}
-			
+
 			if E.Retail then
 				tinsert(frames["Arena" .. i].events, "ARENA_PREP_OPPONENT_SPECIALIZATIONS")
 			end
@@ -850,6 +850,15 @@ function module:Initialize()
 				for _, event in pairs(unit.events) do
 					module[name]:RegisterEvent(event)
 				end
+
+				module[name]:SetAttribute("unit", unit.unit)
+				module[name]:SetAttribute("*type1", "target")
+				module[name]:SetAttribute("*type2", "togglemenu")
+				module[name]:SetAttribute("type3", "focus")
+				module[name]:SetAttribute("toggleForVehicle", true)
+				module[name]:SetAttribute("ping-receiver", true)
+				module[name]:RegisterForClicks("AnyUp")
+
 			elseif module[name] and not unit.settings.enable then
 				for _, event in pairs(unit.unitEvents) do
 					module[name]:UnregisterEvent(event)
