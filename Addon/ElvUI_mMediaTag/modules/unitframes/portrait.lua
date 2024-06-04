@@ -484,7 +484,9 @@ local function UpdatePortrait(frame, conf, unit, parent)
 	end
 	frame:SetFrameLevel(conf.level)
 
-	if frame:GetAttribute("unit") ~= unit then
+	local blacklist = {player = true, target = true, focus = true, targettarget = true}
+	local tmpAttribute = frame:GetAttribute("unit")
+	if not blacklist[tmpAttribute] and  tmpAttribute ~= unit then
 		frame:SetAttribute("unit", unit)
 	end
 
