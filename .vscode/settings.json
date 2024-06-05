@@ -586,7 +586,11 @@
         "VoiceTranscriptionFrame_UpdateEditBox",
         "GUILD_EVENT_LOG",
         "WHISPER",
-        "EXPANSION_NAME0"
+        "EXPANSION_NAME0",
+        "ToggleDropDownMenu",
+        "UnregisterUnitWatch",
+        "RegisterStateDriver",
+        "UnregisterStateDriver"
     ],
     "Lua.diagnostics.disable": [
         "undefined-field"

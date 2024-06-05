@@ -39,6 +39,7 @@
 	<Script file="durabilityanditemlevel.lua"/>
 	<Script file="firstandsecondprofession.lua"/>
 	<Script file="datapanels.lua"/>
+	<Script file="datatextfont.lua"/>
 	<Script file="uftextures.lua"/>
 	<Script file="questicons.lua"/>
 </Ui>

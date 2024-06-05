@@ -3,7 +3,7 @@ local L = mMT.Locales
 
 local tinsert = tinsert
 local function configTable()
-	E.Options.args.mMT.args.datatexts.args.colors.args = {
+	E.Options.args.mMT.args.datatexts.args.settings.args.colors.args = {
 		header_colors = {
 			order = 1,
 			type = "group",

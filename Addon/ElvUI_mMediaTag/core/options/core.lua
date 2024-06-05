@@ -84,11 +84,25 @@ local function configTable()
 				icon = "Interface\\Addons\\ElvUI_mMediaTag\\media\\system\\datatexts.tga",
 				childGroups = "tab",
 				args = {
-					colors = {
+					settings = {
 						order = 1,
 						type = "group",
-						name = mMT.NameShort .. " " .. L["Datatext Colors"],
-						args = {},
+						name = L["Datatext Settings"],
+						childGroups = "tab",
+						args = {
+							colors = {
+								order = 1,
+								type = "group",
+								name = L["Datatext Colors"],
+								args = {},
+							},
+							font = {
+								order = 1,
+								type = "group",
+								name = L["Font"],
+								args = {},
+							},
+						},
 					},
 					combat = {
 						order = 2,

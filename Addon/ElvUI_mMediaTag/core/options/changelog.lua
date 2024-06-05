@@ -16,28 +16,22 @@ local change_log_important = {
 	"This update will reset the Spell DB."
 }
 
-local releasdate = "31.05.2024"
+local releasdate = "05.06.2024"
 
 local change_log_new = {
-	"Statusbar Texture Pack Series S",
-	"Custom Unitframe Textures for Health, Power and Castbar",
-	"Healthmarkers now are available in Cata",
-	"Minimap Instance Difficuty is now available in Cata"
+	"mMT Datatext Dropdown Menu has now a own fontsize setting",
+	"mMT Portraits can now react on click, like targeting the unit or set it as focus or open unit menu"
 }
 
 local change_log_update = {
-	"Update Healthmarkers",
-	"Updated the Settings visibility for Cata",
-	"Firstaid is now available in the Professions Menulist in Cata",
-	"Dock Friends to take care of the changes in ElvUI",
-	"mMT - Dropdown menu, changes now automaticly width and height deppending on font size"
+	"TRILINEAR Filtering for Dock Icons",
+	"mMT Datatext Dropdown Menu no can auto adjust size to font size",
 }
 
 local change_log_fix = {
-	"Portraits Background Settings is only available when Class Icons are enabled",
-	"Missing module Error in Cata",
-	"Bug with Instance Difficulty for Datatexts and Dock in Cata",
-	"Bug with Dock Guild and Friends in Cata"
+	"Removed empty space in Teleports Datatext Menu, and fixed Text formating",
+	"Add Settings for S Series Texturs to mMT Settings menu",
+	"Error with Execute Marker in Cata, diseabled event in cata, Execute Marker should not load in Cata",
 }
 
 local function Concatenation(tbl, icon, color)

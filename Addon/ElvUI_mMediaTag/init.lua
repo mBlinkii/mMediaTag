@@ -2,8 +2,7 @@ local E, _, V, P, G = unpack(ElvUI)
 local EP = E.Libs.EP
 
 local _G = _G
-local tinsert, type = tinsert, type
-local print = print
+local tinsert = tinsert
 
 local collectgarbage = collectgarbage
 local GetAddOnMetadata = _G.C_AddOns and _G.C_AddOns.GetAddOnMetadata or _G.GetAddOnMetadata
@@ -225,7 +224,7 @@ function mMT:Initialize()
 			self:RegisterEvent("CHAT_MSG_GUILD")
 		end
 
-		if (E.private.nameplates.enable and E.db.mMT.nameplate.executemarker.auto) or E.db.mMT.interruptoncd.enable then
+		if E.Retail and (E.private.nameplates.enable and E.db.mMT.nameplate.executemarker.auto) or E.db.mMT.interruptoncd.enable then
 			self:RegisterEvent("PLAYER_TALENT_UPDATE")
 		end
 

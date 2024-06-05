@@ -427,7 +427,6 @@ local function mUpdateTPList(button)
 		tinsert(Teleports.menu, { text = format("%s%s|r", title, L["DF Dungeons"]), isTitle = true, notClickable = true })
 
 		mGetInfos(Teleports.df, true, false, false)
-		tinsert(Teleports.menu, { text = "", isTitle = true, notClickable = true })
 	end
 
 	if Teleports.dungeonportals.available and button == "MiddleButton" then

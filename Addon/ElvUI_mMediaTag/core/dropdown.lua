@@ -52,7 +52,7 @@ end
 -- text = string, Secondtext = string, color = color string for first text, icon = texture, func = function, funcOnEnter = function,
 -- funcOnLeave = function, isTitle = bolean, macro = macrotext, tooltip = id or var you can use for the functions, notClickable = bolean
 function mMT:mDropDown(list, frame, menuparent, ButtonWidth, HideDelay)
-	local SAVE_HEIGHT = E.db.general.fontSize / 3 + 16
+	local SAVE_HEIGHT = (E.db.mMT.general.datatextfontsize or E.db.general.fontSize) / 3 + 16
 	local BUTTON_HEIGHT = 0
 	local BUTTON_WIDTH = 0
 
@@ -112,14 +112,14 @@ function mMT:mDropDown(list, frame, menuparent, ButtonWidth, HideDelay)
 		if list[i].text then
 			frame.buttons[i].text = frame.buttons[i]:CreateFontString(nil, "BORDER")
 			frame.buttons[i].text:SetAllPoints()
-			frame.buttons[i].text:FontTemplate(nil, nil, "")
+			frame.buttons[i].text:FontTemplate(nil, E.db.mMT.general.datatextfontsize, "")
 			frame.buttons[i].text:SetJustifyH("LEFT")
 		end
 
 		if list[i].Secondtext then
 			frame.buttons[i].Secondtext = frame.buttons[i]:CreateFontString(nil, "BORDER")
 			frame.buttons[i].Secondtext:SetAllPoints()
-			frame.buttons[i].Secondtext:FontTemplate(nil, nil, "")
+			frame.buttons[i].Secondtext:FontTemplate(nil, E.db.mMT.general.datatextfontsize, "")
 			frame.buttons[i].Secondtext:SetJustifyH("RIGHT")
 		end
 
@@ -186,7 +186,7 @@ function mMT:mDropDown(list, frame, menuparent, ButtonWidth, HideDelay)
 		frame.buttons[i]:Width(BUTTON_WIDTH + 2)
 	end
 
-	frame:Height((#list * BUTTON_HEIGHT + PADDING * 2) - BUTTON_HEIGHT)
+	frame:Height((#list * BUTTON_HEIGHT + PADDING * 2))
 	frame:Width(BUTTON_WIDTH + PADDING * 2)
 	frame:ClearAllPoints()
 
