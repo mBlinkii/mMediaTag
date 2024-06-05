@@ -1,6 +1,18 @@
 # Changelog - ElvUI_mMediaTag
 [Eng] - All changes to this project will be documented in this file. The latest changes are at the top.
 
+## [ver. 3.40] - 05.06.2024
+### FIX
+- FIX - Removed empty space in Teleports Datatext Menu, and fixed Text formating
+- FIX - Settings for S Series Texturs to mMT Settings menu
+- FIX - Error with Execute Marker in Cata, diseabled event in cata, Execute Marker should not load in Cata
+### Update
+- UPDATE - TRILINEAR Filtering for Dock Icons
+- UPDATE - mMT Datatext Dropdown Menu no can auto adjust size to font size
+### NEW
+- NEW - mMT Datatext Dropdown Menu has now a own fontsize setting
+- NEW - mMT Portraits can now react on click, like targeting the unit or set it as focus or open unit menu
+
 ## [ver. 3.39] - 31.05.2024
 ### FIX
 - FIX - Portraits Background Settings is only available when Class Icons are enabled 
