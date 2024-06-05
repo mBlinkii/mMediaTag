@@ -337,7 +337,6 @@ local function CreatePortrait(parent, conf, unit)
 	end
 
 	local texture = nil
-	unit = UnitExists(unit) and unit or "player"
 
 	-- Portraits Frame
 	local frame = CreateFrame("Button", "mMT_Portrait_" .. unit, parent, "SecureUnitButtonTemplate") --CreateFrame("Frame", "mMT_Portrait_" .. unit, parent)
@@ -349,7 +348,7 @@ local function CreatePortrait(parent, conf, unit)
 	frame:SetFrameLevel(conf.level)
 
 	-- Portrait Texture
-
+	unit = UnitExists(unit) and unit or "player"
 	texture = textures.texture[settings.general.style][conf.texture]
 	frame.texture = CreatePortraitTexture(frame, "mMT_Texture", 4, texture, getColor(unit), conf.mirror)
 
@@ -484,11 +483,11 @@ local function UpdatePortrait(frame, conf, unit, parent)
 	end
 	frame:SetFrameLevel(conf.level)
 
-	local blacklist = {player = true, target = true, focus = true, targettarget = true}
-	local tmpAttribute = frame:GetAttribute("unit")
-	if not blacklist[tmpAttribute] and  tmpAttribute ~= unit then
-		frame:SetAttribute("unit", unit)
-	end
+	-- local blacklist = {player = true, target = true, focus = true, targettarget = true}
+	-- local tmpAttribute = frame:GetAttribute("unit")
+	-- if not blacklist[tmpAttribute] and  tmpAttribute ~= unit then
+	-- 	frame:SetAttribute("unit", unit)
+	-- end
 
 	-- Portrait Texture
 	texture = textures.texture[settings.general.style][conf.texture]
@@ -864,7 +863,6 @@ function module:Initialize()
 				module[name]:SetAttribute("toggleForVehicle", true)
 				module[name]:SetAttribute("ping-receiver", true)
 				module[name]:RegisterForClicks("AnyUp")
-
 			elseif module[name] and not unit.settings.enable then
 				for _, event in pairs(unit.unitEvents) do
 					module[name]:UnregisterEvent(event)
@@ -886,6 +884,10 @@ function module:Initialize()
 				end
 
 				if UnitExists("player") then
+					if self:GetAttribute("unit") ~= "player" then
+						self:SetAttribute("unit", "player")
+					end
+
 					SetPortraits(self, "player", textures.enablemasking[settings.player.texture], settings.player.mirror)
 					setColor(self.texture, getColor("player"), settings.player.mirror)
 					if settings.general.corner and textures.corner[settings.player.texture] then
@@ -903,6 +905,10 @@ function module:Initialize()
 				end
 
 				if UnitExists("target") then
+					if self:GetAttribute("unit") ~= "target" then
+						self:SetAttribute("unit", "target")
+					end
+
 					SetPortraits(self, "target", textures.enablemasking[settings.target.texture], settings.target.mirror)
 					setColor(self.texture, getColor("target"), settings.target.mirror)
 
@@ -927,6 +933,10 @@ function module:Initialize()
 				end
 
 				if UnitExists("pet") then
+					if self:GetAttribute("unit") ~= "pet" then
+						self:SetAttribute("unit", "pet")
+					end
+
 					SetPortraits(self, "pet", textures.enablemasking[settings.pet.texture], settings.pet.mirror)
 
 					setColor(self.texture, getColor("pet"), settings.pet.mirror)
@@ -945,6 +955,10 @@ function module:Initialize()
 				end
 
 				if UnitExists("focus") then
+					if self:GetAttribute("unit") ~= "focus" then
+						self:SetAttribute("unit", "focus")
+					end
+
 					SetPortraits(self, "focus", textures.enablemasking[settings.focus.texture], settings.focus.mirror)
 					setColor(self.texture, getColor("focus"), settings.focus.mirror)
 					if settings.general.corner and textures.corner[settings.focus.texture] then
@@ -968,6 +982,10 @@ function module:Initialize()
 				end
 
 				if UnitExists("targettarget") then
+					if self:GetAttribute("unit") ~= "targettarget" then
+						self:SetAttribute("unit", "targettarget")
+					end
+
 					SetPortraits(self, "targettarget", textures.enablemasking[settings.targettarget.texture], settings.targettarget.mirror)
 					setColor(self.texture, getColor("targettarget"), settings.targettarget.mirror)
 					if settings.general.corner and textures.corner[settings.targettarget.texture] then
@@ -993,15 +1011,20 @@ function module:Initialize()
 					end
 
 					if UnitExists(frame.unit) then
+						if self:GetAttribute("unit") ~= frame.unit then
+							self:SetAttribute("unit", frame.unit)
+						end
+
 						setColor(self.texture, getColor(frame.unit), settings.party.mirror)
 						if settings.general.corner and textures.corner[settings.party.texture] then
 							setColor(self.corner, getColor(frame.unit), settings.party.mirror)
 						end
 
 						SetPortraits(self, frame.unit, not textures.enablemasking[settings.party.texture], settings.party.mirror)
+					else
+						SetPortraits(self, "player", not textures.enablemasking[settings.party.texture], settings.party.mirror)
 					end
 				end)
-
 				module["Party" .. i].ScriptSet = true
 			end
 		end
@@ -1013,17 +1036,21 @@ function module:Initialize()
 					if mMT.DevMode then
 						mMT:Print("Script Boss " .. i, "Event:", event, "Unit:", frame.unit, "Unit Exists:", UnitExists(frame.unit))
 					end
-
 					if UnitExists(frame.unit) then
+						if self:GetAttribute("unit") ~= frame.unit then
+							self:SetAttribute("unit", frame.unit)
+						end
+
 						setColor(self.texture, getColor(frame.unit), settings.boss.mirror)
 						if settings.general.corner and textures.corner[settings.boss.texture] then
 							setColor(self.corner, getColor(frame.unit), settings.boss.mirror)
 						end
 
 						SetPortraits(self, frame.unit, textures.enablemasking[settings.boss.texture], settings.boss.mirror)
+					else
+						SetPortraits(module["Boss" .. i], "player", not textures.enablemasking[settings.boss.texture], settings.boss.mirror)
 					end
 				end)
-
 				module["Boss" .. i].ScriptSet = true
 			end
 		end
@@ -1037,6 +1064,10 @@ function module:Initialize()
 					end
 
 					if UnitExists(frame.unit) then
+						if self:GetAttribute("unit") ~= frame.unit then
+							self:SetAttribute("unit", frame.unit)
+						end
+
 						setColor(self.texture, getColor(frame.unit), settings.arena.mirror)
 						if settings.general.corner and textures.corner[settings.arena.texture] then
 							setColor(self.corner, getColor(frame.unit), settings.arena.mirror)
