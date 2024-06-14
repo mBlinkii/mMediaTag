@@ -569,6 +569,7 @@ mMT.Media.MiscIcons = {
 	CLOSE06 = "Interface\\AddOns\\ElvUI_mMediaTag\\media\\icons\\misc\\x6.tga",
 	CLOSE07 = "Interface\\AddOns\\ElvUI_mMediaTag\\media\\icons\\tags\\dc2.tga",
 }
+
 mMT.Media.DNDIcons = {
 	DND1 = "Interface\\AddOns\\ElvUI_mMediaTag\\media\\icons\\tags\\dnd1.tga",
 	DND2 = "Interface\\AddOns\\ElvUI_mMediaTag\\media\\icons\\tags\\dnd2.tga",
@@ -1448,4 +1449,6 @@ mMT.Media.DockIcons = {
 	MAIL20 = "Interface\\AddOns\\ElvUI_mMediaTag\\media\\icons\\mail\\mail20.tga",
 	MAIL21 = "Interface\\AddOns\\ElvUI_mMediaTag\\media\\icons\\mail\\mail21.tga",
 	MAIL22 = "Interface\\AddOns\\ElvUI_mMediaTag\\media\\icons\\mail\\mail22.tga",
+
+	NOPROF = "Interface\\AddOns\\ElvUI_mMediaTag\\media\\dock\\material\\noprof.png",
 }
