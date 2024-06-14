@@ -196,14 +196,21 @@ local function setColor(texture, color, mirror)
 		return
 	end
 
-	if settings.general.gradient and not color.r then
-		local a, b = color.a, color.b
-		if mirror and (settings.general.ori == "HORIZONTAL") then
-			a, b = b, a
+	if type(color.a) == "table" and type(color.b) == "table" then
+		if settings.general.gradient then
+			local a, b = color.a, color.b
+			if mirror and (settings.general.ori == "HORIZONTAL") then
+				a, b = b, a
+			end
+			texture:SetGradient(settings.general.ori, a, b)
+		else
+			texture:SetVertexColor(color.a.r, color.a.g, color.a.b, color.a.a)
 		end
-		texture:SetGradient(settings.general.ori, a, b)
 	elseif color.r then
 		texture:SetVertexColor(color.r, color.g, color.b, color.a)
+	else
+		mMT:Print("Error! - Portraits Color > ")
+		mMT:DebugPrintTable(color)
 	end
 end
 
