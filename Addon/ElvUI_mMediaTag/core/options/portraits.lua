@@ -237,6 +237,7 @@ local function configTable()
 								},
 								texture = {
 									order = 3,
+									desc = L["This is the main texture for the portraits."],
 									name = function()
 										if E.db.mMT.portraits.custom.texture and (E.db.mMT.portraits.custom.texture ~= "") then
 											return L["Texture"] .. "  > " .. E:TextureString(E.db.mMT.portraits.custom.texture, sizeString)
@@ -264,6 +265,7 @@ local function configTable()
 								},
 								extra = {
 									order = 5,
+									desc = L["This is the Rare & Elite texture for the portraits."],
 									name = function()
 										if E.db.mMT.portraits.custom.extra and (E.db.mMT.portraits.custom.extra ~= "") then
 											return L["Rare & Elite"] .. "  > " .. E:TextureString(E.db.mMT.portraits.custom.extra, sizeString)
@@ -291,6 +293,7 @@ local function configTable()
 								},
 								extraborder = {
 									order = 7,
+									desc = L["This is the Border texture for the Rare & Elite texture."],
 									name = function()
 										if E.db.mMT.portraits.custom.extraborder and (E.db.mMT.portraits.custom.extraborder ~= "") then
 											return L["Rare & Elite - Border"] .. "  > " .. E:TextureString(E.db.mMT.portraits.custom.extraborder, sizeString)
@@ -318,6 +321,7 @@ local function configTable()
 								},
 								extrashadow= {
 									order = 9,
+									desc = L["This is the shadow texture for the Rare & Elite texture."],
 									name = function()
 										if E.db.mMT.portraits.custom.extrashadow and (E.db.mMT.portraits.custom.extrashadow ~= "") then
 											return L["Rare & Elite - Shadow"] .. "  > " .. E:TextureString(E.db.mMT.portraits.custom.extrashadow, sizeString)
@@ -345,6 +349,7 @@ local function configTable()
 								},
 								border = {
 									order = 11,
+									desc = L["This is the Border texture for the portraits."],
 									name = function()
 										if E.db.mMT.portraits.custom.border and (E.db.mMT.portraits.custom.border ~= "") then
 											return L["Border"] .. "  > " .. E:TextureString(E.db.mMT.portraits.custom.border, sizeString)
@@ -372,6 +377,7 @@ local function configTable()
 								},
 								shadow = {
 									order = 13,
+									desc = L["This is the shadow texture for the portraits."],
 									name = function()
 										if E.db.mMT.portraits.custom.shadow and (E.db.mMT.portraits.custom.shadow ~= "") then
 											return L["Shadow"] .. "  > " .. E:TextureString(E.db.mMT.portraits.custom.shadow, sizeString)
@@ -399,6 +405,7 @@ local function configTable()
 								},
 								inner = {
 									order = 15,
+									desc = L["This is the inner shadow texture for the portraits."],
 									name = function()
 										if E.db.mMT.portraits.custom.inner and (E.db.mMT.portraits.custom.inner ~= "") then
 											return L["Inner Shadow"] .. "  > " .. E:TextureString(E.db.mMT.portraits.custom.inner, sizeString)
@@ -426,6 +433,7 @@ local function configTable()
 								},
 								mask = {
 									order = 17,
+									desc = L["This is the Mask texture for the portraits. This texture is used to cut out the portrait of the Unit."],
 									name = function()
 										if E.db.mMT.portraits.custom.mask and (E.db.mMT.portraits.custom.mask ~= "") then
 											return L["Mask"] .. "  > " .. E:TextureString(E.db.mMT.portraits.custom.mask, sizeString)
