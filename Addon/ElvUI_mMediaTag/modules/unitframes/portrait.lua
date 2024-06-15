@@ -176,6 +176,17 @@ local textures = {
 		MO = false,
 		SMQ = false,
 	},
+	custom = {
+		texture = "",
+		extra = "",
+		extraborder = "",
+		extrashadow = "",
+		border = "",
+		shadow = "",
+		inner = "",
+		mask = "",
+		enable = false,
+	}
 }
 
 local function mirrorTexture(texture, mirror)
@@ -356,11 +367,11 @@ local function CreatePortrait(parent, conf, unit)
 
 	-- Portrait Texture
 	unit = UnitExists(unit) and unit or "player"
-	texture = textures.texture[settings.general.style][conf.texture]
+	texture = textures.custom.enable and textures.custom.texture or textures.texture[settings.general.style][conf.texture]
 	frame.texture = CreatePortraitTexture(frame, "mMT_Texture", 4, texture, getColor(unit), conf.mirror)
 
 	-- Unit Portrait
-	local offset = GetOffset(conf.size, settings.offset[conf.texture])
+	local offset = GetOffset(conf.size, textures.custom.enable and settings.offset.CUSTOM or settings.offset[conf.texture])
 	frame.portrait = frame:CreateTexture("mMT_Portrait", "OVERLAY", nil, 1)
 	frame.portrait:SetAllPoints(frame)
 	frame.portrait:SetPoint("TOPLEFT", 0 + offset, 0 - offset)
@@ -370,7 +381,7 @@ local function CreatePortrait(parent, conf, unit)
 	mirrorTexture(frame.portrait, conf.mirror)
 
 	-- Portrait Mask
-	texture = textures.mask[conf.texture] or conf.mirror and textures.mask.B[conf.texture] or textures.mask.A[conf.texture]
+	texture = textures.custom.enable and textures.custom.mask or (textures.mask[conf.texture] or conf.mirror and textures.mask.B[conf.texture] or textures.mask.A[conf.texture])
 	frame.mask = frame:CreateMaskTexture()
 	frame.mask:SetTexture(texture, "CLAMPTOBLACKADDITIVE", "CLAMPTOBLACKADDITIVE")
 	frame.mask:SetAllPoints(frame)
@@ -384,38 +395,38 @@ local function CreatePortrait(parent, conf, unit)
 
 	-- Portrait Shadow
 	if settings.shadow.enable then
-		texture = textures.shadow[conf.texture]
+		texture = textures.custom.enable and textures.custom.shadow or textures.shadow[conf.texture]
 		frame.shadow = CreatePortraitTexture(frame, "mMT_Shadow", -4, texture, settings.shadow.color, conf.mirror)
 	end
 
 	-- Inner Portrait Shadow
 	if settings.shadow.inner then
-		texture = textures.inner[conf.texture]
+		texture = textures.custom.enable and textures.custom.inner or textures.inner[conf.texture]
 		frame.InnerShadow = CreatePortraitTexture(frame, "mMT_innerShadow", 2, texture, settings.shadow.innerColor, conf.mirror)
 	end
 
 	-- Portrait Border
 	if settings.shadow.border then
-		texture = textures.border[conf.texture]
+		texture = textures.custom.enable and textures.custom.border or textures.border[conf.texture]
 		frame.border = CreatePortraitTexture(frame, "mMT_Border", 2, texture, settings.shadow.borderColor, conf.mirror)
 	end
 
 	-- Rare/Elite Texture
 	if conf.extraEnable then
 		-- Texture
-		texture = textures.extra[settings.general.style][conf.texture]
+		texture = textures.custom.enable and textures.custom.extra or textures.extra[settings.general.style][conf.texture]
 		frame.extra = CreatePortraitTexture(frame, "mMT_Extra", -6, texture, nil, not conf.mirror)
 
 		-- Shadow
 		if settings.shadow.enable then
-			texture = textures.extra.border[conf.texture]
+			texture = textures.custom.enable and textures.custom.extrashadow or textures.extra.border[conf.texture]
 			frame.extra.shadow = CreatePortraitTexture(frame, "mMT_Extra_Shadow", -8, texture, settings.shadow.color, not conf.mirror)
 			frame.extra.shadow:Hide()
 		end
 
 		-- Border
 		if settings.shadow.border then
-			texture = textures.extra.shadow[conf.texture]
+			texture = textures.custom.enable and textures.custom.extraborder or textures.extra.shadow[conf.texture]
 			frame.extra.border = CreatePortraitTexture(frame, "mMT_Extra_Border", -4, texture, settings.shadow.borderColorRare, not conf.mirror)
 			frame.extra.border:Hide()
 		end
@@ -424,7 +435,7 @@ local function CreatePortrait(parent, conf, unit)
 	end
 
 	-- Corner
-	if settings.general.corner and textures.corner[conf.texture] then
+	if (not textures.custom.enable) and settings.general.corner and textures.corner[conf.texture] then
 		texture = textures.texture[settings.general.style].CO
 		frame.corner = CreatePortraitTexture(frame, "mMT_Corner", 5, texture, getColor(unit), conf.mirror)
 
@@ -497,21 +508,21 @@ local function UpdatePortrait(frame, conf, unit, parent)
 	-- end
 
 	-- Portrait Texture
-	texture = textures.texture[settings.general.style][conf.texture]
+	texture = textures.custom.enable and textures.custom.texture or textures.texture[settings.general.style][conf.texture]
 	UpdatePortraitTexture(frame.texture, texture, getColor(unit), conf.mirror)
 
 	-- Unit Portrait
-	local offset = GetOffset(conf.size, settings.offset[conf.texture])
+	local offset = GetOffset(conf.size, textures.custom.enable and settings.offset.CUSTOM or settings.offset[conf.texture])
 	frame.portrait:SetPoint("TOPLEFT", 0 + offset, 0 - offset)
 	frame.portrait:SetPoint("BOTTOMRIGHT", 0 - offset, 0 + offset)
 
 	-- Portrait Mask
-	texture = textures.mask[conf.texture] or conf.mirror and textures.mask.B[conf.texture] or textures.mask.A[conf.texture]
+	texture = textures.custom.enable and textures.custom.mask or (textures.mask[conf.texture] or conf.mirror and textures.mask.B[conf.texture] or textures.mask.A[conf.texture])
 	frame.mask:SetTexture(texture, "CLAMPTOBLACKADDITIVE", "CLAMPTOBLACKADDITIVE")
 
 	-- Portrait Shadow
 	if settings.shadow.enable then
-		texture = textures.shadow[conf.texture]
+		texture = textures.custom.enable and textures.custom.shadow or textures.shadow[conf.texture]
 		if frame.shadow then
 			UpdatePortraitTexture(frame.shadow, texture, settings.shadow.color, conf.mirror)
 			frame.shadow:Show()
@@ -524,7 +535,7 @@ local function UpdatePortrait(frame, conf, unit, parent)
 
 	-- Inner Portrait Shadow
 	if settings.shadow.inner then
-		texture = textures.inner[conf.texture]
+		texture = textures.custom.enable and textures.custom.inner or textures.inner[conf.texture]
 		if frame.InnerShadow then
 			UpdatePortraitTexture(frame.InnerShadow, texture, settings.shadow.innerColor, conf.mirror)
 			frame.InnerShadow:Show()
@@ -537,7 +548,7 @@ local function UpdatePortrait(frame, conf, unit, parent)
 
 	-- Portrait Border
 	if settings.shadow.border then
-		texture = textures.border[conf.texture]
+		texture = textures.custom.enable and textures.custom.border or textures.border[conf.texture]
 		if frame.border then
 			UpdatePortraitTexture(frame.border, texture, settings.shadow.borderColor, conf.mirror)
 			frame.border:Show()
@@ -565,7 +576,7 @@ local function UpdatePortrait(frame, conf, unit, parent)
 	-- Rare/Elite Texture
 	if conf.extraEnable then
 		-- Texture
-		texture = textures.extra[settings.general.style][conf.texture]
+		texture = textures.custom.enable and textures.custom.extra or textures.extra[settings.general.style][conf.texture]
 		if frame.extra then
 			UpdatePortraitTexture(frame.extra, texture, nil, not conf.mirror)
 		else
@@ -574,7 +585,7 @@ local function UpdatePortrait(frame, conf, unit, parent)
 
 		-- Shadow
 		if settings.shadow.enable then
-			texture = textures.extra.shadow[conf.texture]
+			texture = textures.custom.enable and textures.custom.extrashadow or textures.extra.shadow[conf.texture]
 			if frame.extra.shadow then
 				UpdatePortraitTexture(frame.extra.shadow, texture, settings.shadow.color, not conf.mirror)
 			else
@@ -587,7 +598,7 @@ local function UpdatePortrait(frame, conf, unit, parent)
 
 		-- Border
 		if settings.shadow.border then
-			texture = textures.extra.border[conf.texture]
+			texture = textures.custom.enable and textures.custom.extraborder or textures.extra.border[conf.texture]
 			if frame.extra.border then
 				UpdatePortraitTexture(frame.extra.border, texture, settings.shadow.borderColorRare, not conf.mirror)
 			else
@@ -612,7 +623,7 @@ local function UpdatePortrait(frame, conf, unit, parent)
 	end
 
 	-- Corner
-	if settings.general.corner and textures.corner[conf.texture] then
+	if (not textures.custom.enable) and  settings.general.corner and textures.corner[conf.texture] then
 		texture = textures.texture[settings.general.style].CO
 		if frame.corner then
 			UpdatePortraitTexture(frame.corner, texture, getColor(unit), conf.mirror)
@@ -633,7 +644,7 @@ local function UpdatePortrait(frame, conf, unit, parent)
 		elseif frame.corner.border then
 			frame.corner.border:Hide()
 		end
-	elseif not (settings.general.corner and textures.corner[conf.texture]) and frame.corner then
+	elseif not (settings.general.corner and textures.corner[conf.texture]) and frame.corner and textures.custom.enable then
 		if frame.corner.border then
 			frame.corner.border:Hide()
 		end
@@ -693,6 +704,28 @@ end
 
 function module:Initialize()
 	settings = E.db.mMT.portraits
+
+	if settings.custom.enable then
+		textures.custom.enable = true
+		textures.custom.texture = settings.custom.texture ~= "" and settings.custom.texture or nil
+		textures.custom.extra = settings.custom.extra ~= "" and settings.custom.extra or nil
+		textures.custom.extraborder = settings.custom.extraborder ~= "" and settings.custom.extraborder or nil
+		textures.custom.extrashadow = settings.custom.extrashadow ~= "" and settings.custom.extrashadow or nil
+		textures.custom.border = settings.custom.border ~= "" and settings.custom.border or nil
+		textures.custom.shadow = settings.custom.shadow ~= "" and settings.custom.shadow or nil
+		textures.custom.inner = settings.custom.inner ~= "" and settings.custom.inner or nil
+		textures.custom.mask = settings.custom.texture ~= "" and settings.custom.mask or nil
+	else
+		textures.custom.enable = false
+		textures.custom.texture = nil
+		textures.custom.extra = nil
+		textures.custom.extraborder = nil
+		textures.custom.extrashadow = nil
+		textures.custom.border = nil
+		textures.custom.shadow = nil
+		textures.custom.inner = nil
+		textures.custom.mask = nil
+	end
 
 	if settings.general.eltruism and mMT.ElvUI_EltreumUI.loaded then
 		settings.colors.WARRIOR = mMT.ElvUI_EltreumUI.colors.WARRIOR

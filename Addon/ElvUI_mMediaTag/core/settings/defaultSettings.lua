@@ -582,6 +582,17 @@ P.mMT = {
 		r = true,
 	},
 	portraits = {
+		custom = {
+			texture = "",
+			extra = "",
+			extraborder = "",
+			extrashadow = "",
+			border = "",
+			shadow = "",
+			inner = "",
+			mask = "",
+			enable = false,
+		},
 		player = {
 			enable = true,
 			texture = "RO",
@@ -702,6 +713,7 @@ P.mMT = {
 			QA = 0,
 			SMQ = 0,
 			MO = 5.5,
+			CUSTOM = 5.5,
 		},
 		shadow = {
 			enable = true,
