@@ -698,3 +698,4 @@ L["This is the shadow texture for the portraits."] = true
 L["This is the inner shadow texture for the portraits."] = true
 L["This is the Mask texture for the portraits. This texture is used to cut out the portrait of the Unit."] = true
 L["Mask"] = true
+L[" hidden in combat."] = true

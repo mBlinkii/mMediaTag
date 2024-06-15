@@ -75,16 +75,4 @@ local function OnEvent(self, event, _, timeSeconds)
 	end
 end
 
-DT:RegisterDatatext(
-	"mCombatTime",
-	"mMediaTag",
-	{ "START_TIMER", "ENCOUNTER_START", "ENCOUNTER_END", "PLAYER_REGEN_DISABLED", "PLAYER_REGEN_ENABLED" },
-	OnEvent,
-	nil,
-	nil,
-	nil,
-	nil,
-	mText,
-	nil,
-	nil
-)
+DT:RegisterDatatext("mCombatTime", "mMediaTag", { "START_TIMER", "ENCOUNTER_START", "ENCOUNTER_END", "PLAYER_REGEN_DISABLED", "PLAYER_REGEN_ENABLED" }, OnEvent, nil, nil, nil, nil, mText, nil, nil)

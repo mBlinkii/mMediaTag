@@ -1446,6 +1446,30 @@ E:AddTag("mLevel", "UNIT_LEVEL PLAYER_LEVEL_UP PLAYER_UPDATE_RESTING", function(
 	end
 end)
 
+E:AddTag("mLevel:hidecombat", "UNIT_LEVEL PLAYER_LEVEL_UP PLAYER_UPDATE_RESTING UNIT_COMBAT UNIT_FLAGS", function(unit)
+	if unit == "player" and IsResting() then
+		return format("%sZzz|r", colors.zzz)
+	else
+		if (not UnitAffectingCombat(unit)) then
+			local level = UnitLevel(unit)
+			if E.Retail then
+				if UnitIsWildBattlePet(unit) or UnitIsBattlePetCompanion(unit) then
+					return UnitBattlePetLevel(unit)
+				elseif level > 0 then
+					return level
+				else
+					return format("%s??|r", colors.level)
+				end
+			end
+			if level > 0 then
+				return level
+			else
+				return format("%s??|r", colors.level)
+			end
+		end
+	end
+end)
+
 E:AddTag("mLevel:hideMax", "UNIT_LEVEL PLAYER_LEVEL_UP PLAYER_UPDATE_RESTING", function(unit)
 	if unit == "player" and IsResting() then
 		return format("%sZzz|r", colors.zzz)
@@ -1481,6 +1505,31 @@ E:AddTag("mLevel:hideMax", "UNIT_LEVEL PLAYER_LEVEL_UP PLAYER_UPDATE_RESTING", f
 end)
 
 E:AddTag("mLevelSmart", "UNIT_LEVEL PLAYER_LEVEL_UP PLAYER_UPDATE_RESTING", function(unit)
+	if unit == "player" and IsResting() then
+		return format("%sZzz|r", colors.zzz)
+	else
+		local level = UnitLevel(unit)
+		if E.Retail then
+			if UnitIsWildBattlePet(unit) or UnitIsBattlePetCompanion(unit) then
+				return UnitBattlePetLevel(unit)
+			elseif level > 0 then
+				return level
+			else
+				return format("%s??|r", colors.level)
+			end
+		end
+
+		if level == UnitLevel("player") then
+			return ""
+		elseif level > 0 then
+			return level
+		else
+			return format("%s??|r", colors.level)
+		end
+	end
+end)
+
+E:AddTag("mLevelSmart:hidecombat", "UNIT_LEVEL PLAYER_LEVEL_UP PLAYER_UPDATE_RESTING UNIT_COMBAT UNIT_FLAGS", function(unit)
 	if unit == "player" and IsResting() then
 		return format("%sZzz|r", colors.zzz)
 	else
@@ -1543,8 +1592,10 @@ E:AddTag("mLevelSmart:hideMax", "UNIT_LEVEL PLAYER_LEVEL_UP PLAYER_UPDATE_RESTIN
 end)
 
 E:AddTagInfo("mLevel", mMT.NameShort .. " " .. L["Level"], L["Level changes to resting in resting Areas."])
+E:AddTagInfo("mLevel:hidecombat", mMT.NameShort .. " " .. L["Level"], L["Same as"] .. " mLevel" .. L[" hidden in combat."])
 E:AddTagInfo("mLevel:hideMax", mMT.NameShort .. " " .. L["Level"], L["Same as"] .. " mLevel" .. L[" hidden at maximum level."])
 E:AddTagInfo("mLevelSmart", mMT.NameShort .. " " .. L["Level"], L["Smart Level changes to resting in resting Areas."])
+E:AddTagInfo("mLevelSmart:hidecombat", mMT.NameShort .. " " .. L["Level"], L["Same as"] .. " mLevelSmart" .. L[" hidden in combat."])
 E:AddTagInfo("mLevelSmart:hideMax", mMT.NameShort .. " " .. L["Level"], L["Same as"] .. " mLevelSmart" .. L[" hidden at maximum level."])
 
 E:AddTag("mPvP:icon", "UNIT_FACTION", function(unit)

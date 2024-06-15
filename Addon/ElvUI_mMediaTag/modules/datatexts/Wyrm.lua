@@ -15,7 +15,7 @@ local Currency = {
 		icon = nil,
 		link = nil,
 		count = nil,
-        cap = nil,
+		cap = nil,
 	},
 	loaded = false,
 }
@@ -26,7 +26,7 @@ local function OnEnter(self)
 		mMT:GetCurrenciesInfo(Currency)
 	end
 
-    DT.tooltip:ClearLines()
+	DT.tooltip:ClearLines()
 	if not hide then
 		DT:SetupTooltip(self)
 		DT.tooltip:SetHyperlink(Currency.info.link)
@@ -65,21 +65,9 @@ local function OnEvent(self, event, ...)
 			end
 
 			if TextJustify == "RIGHT" then
-				self.text:SetFormattedText(
-					"%s%s %s|r%s",
-					color,
-					Currency.info.count,
-					name or "",
-					icon or ""
-				)
+				self.text:SetFormattedText("%s%s %s|r%s", color, Currency.info.count, name or "", icon or "")
 			else
-				self.text:SetFormattedText(
-					"%s%s%s %s|r",
-					icon or "",
-					color,
-					name or "",
-					Currency.info.count
-				)
+				self.text:SetFormattedText("%s%s%s %s|r", icon or "", color, name or "", Currency.info.count)
 			end
 		end
 	else
@@ -91,15 +79,4 @@ local function OnLeave(self)
 	DT.tooltip:Hide()
 end
 
-DT:RegisterDatatext(
-	"mWyrm",
-	_G.CURRENCY,
-	{ "BAG_UPDATE", "CHAT_MSG_CURRENCY", "CURRENCY_DISPLAY_UPDATE" },
-	OnEvent,
-	nil,
-	nil,
-	OnEnter,
-	OnLeave,
-	"mMediaTag Wyrm's Awakened Crest",
-	nil
-)
+DT:RegisterDatatext("mWyrm", _G.CURRENCY, { "BAG_UPDATE", "CHAT_MSG_CURRENCY", "CURRENCY_DISPLAY_UPDATE" }, OnEvent, nil, nil, OnEnter, OnLeave, "mMediaTag Wyrm's Awakened Crest", nil)
