@@ -235,8 +235,13 @@ local function configTable()
 									type = "description",
 									name = "\n\n",
 								},
-								texture = {
+								desc_important = {
 									order = 3,
+									type = "description",
+									name = L["Info! To achieve an optimal result with the portraits, a texture should be set for the texture, border and mask.\nThe mask is always required and no portrait will be visible without it.\n\n"],
+								},
+								texture = {
+									order = 4,
 									desc = L["This is the main texture for the portraits."],
 									name = function()
 										if E.db.mMT.portraits.custom.texture and (E.db.mMT.portraits.custom.texture ~= "") then
@@ -259,12 +264,12 @@ local function configTable()
 									end,
 								},
 								spacer_texture2 = {
-									order = 4,
+									order = 5,
 									type = "description",
 									name = "\n\n",
 								},
 								extra = {
-									order = 5,
+									order = 6,
 									desc = L["This is the Rare & Elite texture for the portraits."],
 									name = function()
 										if E.db.mMT.portraits.custom.extra and (E.db.mMT.portraits.custom.extra ~= "") then
@@ -287,12 +292,12 @@ local function configTable()
 									end,
 								},
 								spacer_texture3 = {
-									order = 6,
+									order = 7,
 									type = "description",
 									name = "\n\n",
 								},
 								extraborder = {
-									order = 7,
+									order = 8,
 									desc = L["This is the Border texture for the Rare & Elite texture."],
 									name = function()
 										if E.db.mMT.portraits.custom.extraborder and (E.db.mMT.portraits.custom.extraborder ~= "") then
@@ -315,12 +320,12 @@ local function configTable()
 									end,
 								},
 								spacer_texture4 = {
-									order = 8,
+									order = 9,
 									type = "description",
 									name = "\n\n",
 								},
 								extrashadow= {
-									order = 9,
+									order = 10,
 									desc = L["This is the shadow texture for the Rare & Elite texture."],
 									name = function()
 										if E.db.mMT.portraits.custom.extrashadow and (E.db.mMT.portraits.custom.extrashadow ~= "") then
@@ -343,12 +348,12 @@ local function configTable()
 									end,
 								},
 								spacer_texture5 = {
-									order = 10,
+									order = 11,
 									type = "description",
 									name = "\n\n",
 								},
 								border = {
-									order = 11,
+									order = 12,
 									desc = L["This is the Border texture for the portraits."],
 									name = function()
 										if E.db.mMT.portraits.custom.border and (E.db.mMT.portraits.custom.border ~= "") then
@@ -371,12 +376,12 @@ local function configTable()
 									end,
 								},
 								spacer_texture6 = {
-									order = 12,
+									order = 13,
 									type = "description",
 									name = "\n\n",
 								},
 								shadow = {
-									order = 13,
+									order = 14,
 									desc = L["This is the shadow texture for the portraits."],
 									name = function()
 										if E.db.mMT.portraits.custom.shadow and (E.db.mMT.portraits.custom.shadow ~= "") then
@@ -399,12 +404,12 @@ local function configTable()
 									end,
 								},
 								spacer_texture7 = {
-									order = 14,
+									order = 15,
 									type = "description",
 									name = "\n\n",
 								},
 								inner = {
-									order = 15,
+									order = 16,
 									desc = L["This is the inner shadow texture for the portraits."],
 									name = function()
 										if E.db.mMT.portraits.custom.inner and (E.db.mMT.portraits.custom.inner ~= "") then
@@ -427,12 +432,12 @@ local function configTable()
 									end,
 								},
 								spacer_texture8= {
-									order = 16,
+									order = 17,
 									type = "description",
 									name = "\n\n",
 								},
 								mask = {
-									order = 17,
+									order = 18,
 									desc = L["This is the Mask texture for the portraits. This texture is used to cut out the portrait of the Unit."],
 									name = function()
 										if E.db.mMT.portraits.custom.mask and (E.db.mMT.portraits.custom.mask ~= "") then

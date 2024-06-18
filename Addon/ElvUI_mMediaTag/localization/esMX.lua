@@ -699,3 +699,4 @@ L["This is the inner shadow texture for the portraits."] = true
 L["This is the Mask texture for the portraits. This texture is used to cut out the portrait of the Unit."] = true
 L["Mask"] = true
 L[" hidden in combat."] = true
+L["Info! To achieve an optimal result with the portraits, a texture should be set for the texture, border and mask.\nThe mask is always required and no portrait will be visible without it.\n\n"] = true
