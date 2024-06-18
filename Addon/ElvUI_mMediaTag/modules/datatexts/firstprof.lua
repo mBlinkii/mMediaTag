@@ -10,6 +10,7 @@ local InCombatLockdown = InCombatLockdown
 --Variables
 local mText = L["first Profession"]
 local hexColor = E:RGBToHex(E.db.general.valuecolor.r, E.db.general.valuecolor.g, E.db.general.valuecolor.b)
+local noProfIcon = mMT.Media.CombatIcons[E.db.mMT.combattime.ooctexture]
 local spell = nil
 
 local function colorText(value, withe)
