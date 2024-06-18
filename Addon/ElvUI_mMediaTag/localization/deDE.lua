@@ -373,6 +373,7 @@ L["Important:"] = "Wichtig:"
 L["In Classic, the docks may look different, since not all modules are available in this version. You can customize the docks in the settings of ElvUI."] = "In Classic können die Docks anders aussehen, da nicht alle Module dort verfügbar sind."
 L["Indicator Color"] = "Indikatorfarbe"
 L["Info Screen"] = "Info Bildschirm"
+L["Info! To achieve an optimal result with the portraits, a texture should be set for the texture, border and mask.\nThe mask is always required and no portrait will be visible without it.\n\n"] = "Info! Um ein optimales Ergebnis bei den Portraits zu erzielen, sollte bei Textur, Rand und Maske eine Textur eingestellt werden.\nDie Maske ist immer erforderlich und ohne sie, ist kein Portrait sichtbar.\n\n"
 L["Inner Shadow Color"] = "Farbe des Inneren Schattens"
 L["Inner Shadow"] = "Innerer Schatten"
 L["Instance Difficulty"] = "Instanz Schwierigkeit"
@@ -697,6 +698,3 @@ L["|cffFFFFFFControl + Left Click:|r Change Loadout"] = "|cffFFFFFFStrg + Linksk
 L["|cffFFFFFFLeft Click:|r Change Talent Specialization"] = "|cffFFFFFFLinks Klick:|r Talent Spezialisierung ändern"
 L["|cffFFFFFFRight Click:|r Change Loot Specialization"] = "|cffFFFFFFRechtsklick:|r Beutespezialisierung ändern"
 L["|cffFFFFFFShift + Left Click:|r Show Talent Specialization UI"] = "|cffFFFFFFShift + Links Klick:|r Zeige Talent Spezialisierungs Interface"
-
--- new
-L["Info! To achieve an optimal result with the portraits, a texture should be set for the texture, border and mask.\nThe mask is always required and no portrait will be visible without it.\n\n"] = true
