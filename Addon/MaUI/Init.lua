@@ -52,8 +52,27 @@ MAUI.Name = "|CFF29C0E3M|r|CFF5493FFa|r|CFF854FE3U|r|CFFA632E3I|r"
 MAUI.Icon = "|TInterface\\Addons\\MaUI\\media\\maui_icon.tga:14:14|t"
 MAUI.Logo = "Interface\\Addons\\MaUI\\media\\maui_logo.tga"
 MAUI.InstallerData = nil
-local globalProfile = nil
-local layoutVersion = nil
+
+local colors = {
+	selected = "|CFF5BDD04",
+	deselected = "|CFF7A7A7A",
+	highlight = "|CFF0476F0",
+	red = "|CFFE40606",
+}
+
+local icons = {
+	selected = "|TInterface\\Addons\\ElvUI_mMediaTag\\media\\icons\\misc\\done3.tga:14:14|t ",
+	deselected = "|TInterface\\Addons\\ElvUI_mMediaTag\\media\\icons\\misc\\x4.tga:14:14|t ",
+}
+
+local installSettings = {
+	global = nil,
+	layout = nil,
+	role = nil,
+	dock = false,
+	currency = false,
+	mythicPlus = false,
+}
 
 P["MaUI"] = {}
 
@@ -219,17 +238,23 @@ local function SetupProfile(layout, global)
 	end
 end
 
-local function SelectionCheck()
-	if globalProfile == nil then
-		MAUI:Print("|CFFFF006CERROR:|r", "Profile has not been created, please choose between character specific or global profile.")
-		PI:SetPage(3, 2)
-	elseif not layoutVersion then
-		MAUI:Print("|CFFFF006CERROR:|r", "Layout has not been selected, please select a layout.")
-		PI:SetPage(4, 3)
-	else
-		return true
+local function SelectionCheck(silent)
+	local errorLog = false
+	if installSettings.global == nil then
+		if not silent then
+			MAUI:Print("|CFFFF006CERROR:|r", "Profile has not been selected, please choose between character specific or global profile.")
+		end
+		errorLog = true
 	end
-	return false
+
+	if not installSettings.layout then
+		if not silent then
+			MAUI:Print("|CFFFF006CERROR:|r", "Layout has not been selected, please select a layout.")
+		end
+		errorLog = true
+	end
+
+	return not errorLog
 end
 
 local function SetupLayout(role)
@@ -237,8 +262,31 @@ local function SetupLayout(role)
 		SetupProfile(role, globalProfile)
 		if layoutVersion == "V6" then
 		elseif layoutVersion == "V7" then
-
 		end
+	end
+end
+
+local function GetOverviewText()
+	if SelectionCheck(true) then
+		local profile = "Profile: " .. colors.selected .. (installSettings.global and "Shared Profile" or "New Profile")
+		local layout = "Layout: " .. colors.selected .. "MaUI " .. installSettings.layout
+		local role = "Role: " .. colors.selected .. installSettings.role
+		local dock = "Dock: " .. (installSettings.dock and colors.selected .. "install" or colors.red .. "not install")
+		local currency = "Currency: " .. (installSettings.currency and colors.selected .. "install" or colors.red .. "not install")
+		local mythicPlus = "Mythic Plus Filters: " .. (installSettings.mythicPlus and colors.selected .. "install" or colors.red .. "not install")
+
+		return profile .. "\n" .. layout .. "\n" .. role .. "\n" .. dock .. "\n" .. currency .. "\n" .. mythicPlus
+	else
+		local errorText = ""
+		if installSettings.global == nil then
+			errorText = "|CFFFF006CERROR:|r Profile has not been selected, please choose between character specific or global profile."
+		end
+
+		if installSettings.layout == nil then
+			errorText = errorText .. "\n" .. "|CFFFF006CERROR:|r Layout has not been selected, please select a layout."
+		end
+
+		return errorText
 	end
 end
 
@@ -259,18 +307,6 @@ MAUI.InstallerData = {
 			_G.PluginInstallFrame.Option1:SetText("Skip Process")
 		end,
 		[2] = function()
-			_G.PluginInstallFrame.SubTitle:SetText("CVars & Chat")
-			_G.PluginInstallFrame.Desc1:SetText("This part of the installation process sets up your World of Warcraft default options & Chat it is recommended you should do this step for everything to behave properly.")
-			_G.PluginInstallFrame.Desc2:SetText("Please click the button below to setup your CVars & Chat.")
-			_G.PluginInstallFrame.Desc3:SetText("Importance: |cffFF3333High|r")
-			_G.PluginInstallFrame.Option1:Show()
-			_G.PluginInstallFrame.Option1:SetText("Setup CVars & Chat")
-			_G.PluginInstallFrame.Option1:SetScript("OnClick", FirstStep)
-			_G.PluginInstallFrame.Option1:SetScript("OnEnter", function()
-				OnEnter("pic1.png")
-			end)
-		end,
-		[3] = function()
 			_G.PluginInstallFrame.SubTitle:SetText("Profile Settings")
 			_G.PluginInstallFrame.Desc1:SetText("Please click the button below to setup your Profile Settings.")
 			_G.PluginInstallFrame.Desc2:SetText("New Profile will create a fresh profile for this character." .. "\n" .. "Shared Profile will select the default profile.")
@@ -278,48 +314,108 @@ MAUI.InstallerData = {
 			_G.PluginInstallFrame.Option1:Show()
 			_G.PluginInstallFrame.Option1:SetText("Shared Profile")
 			_G.PluginInstallFrame.Option1:SetScript("OnClick", function()
-				globalProfile = true
+				installSettings.global = true
+				_G.PluginInstallFrame.Option1:SetText(icons.selected .. colors.selected .. "Shared Profile" .. "|r")
+				_G.PluginInstallFrame.Option2:SetText(icons.deselected .. colors.deselected .. "New Profile" .. "|r")
 			end)
 			_G.PluginInstallFrame.Option2:Show()
 			_G.PluginInstallFrame.Option2:SetText("New Profile")
 			_G.PluginInstallFrame.Option2:SetScript("OnClick", function()
-				globalProfile = false
+				installSettings.global = false
+				_G.PluginInstallFrame.Option1:SetText(icons.deselected .. colors.deselected .. "Shared Profile" .. "|r")
+				_G.PluginInstallFrame.Option2:SetText(icons.selected .. colors.selected .. "New Profile" .. "|r")
 			end)
 		end,
-		[4] = function()
+		[3] = function()
 			_G.PluginInstallFrame.SubTitle:SetText("MaUI Layout Version")
 			_G.PluginInstallFrame.Desc1:SetText("Please click the button below to setup your MaUI Layout Version.")
 			_G.PluginInstallFrame.Desc3:SetText("Importance: |cffFF3333High|r")
 			_G.PluginInstallFrame.Option1:Show()
 			_G.PluginInstallFrame.Option1:SetText("MaUI v6")
 			_G.PluginInstallFrame.Option1:SetScript("OnClick", function()
-				layoutVersion = "V6"
+				installSettings.layout = "V6"
+				_G.PluginInstallFrame.Option1:SetText(icons.selected .. colors.selected .. "MaUI v6" .. "|r")
+				_G.PluginInstallFrame.Option2:SetText(icons.deselected .. colors.deselected .. "MaUI v7" .. "|r")
 			end)
 			_G.PluginInstallFrame.Option2:Show()
 			_G.PluginInstallFrame.Option2:SetText("MaUI v7")
 			_G.PluginInstallFrame.Option2:SetScript("OnClick", function()
-				layoutVersion = "V7"
+				installSettings.layout = "V7"
+				_G.PluginInstallFrame.Option1:SetText(icons.deselected .. colors.deselected .. "MaUI v6" .. "|r")
+				_G.PluginInstallFrame.Option2:SetText(icons.selected .. colors.selected .. "MaUI v7" .. "|r")
 			end)
 		end,
-		[5] = function()
+		[4] = function()
 			_G.PluginInstallFrame.SubTitle:SetText("Layout")
 			_G.PluginInstallFrame.Desc1:SetText("You can now choose what layout you wish to use based on your combat role.")
 			_G.PluginInstallFrame.Desc3:SetText("Importance: |cffD3CF00Medium|r")
 			_G.PluginInstallFrame.Option1:Show()
 			_G.PluginInstallFrame.Option1:SetText("Tank/ DD")
 			_G.PluginInstallFrame.Option1:SetScript("OnClick", function()
-				SetupLayout("Tank/ DD")
+				installSettings.role = "Tank/ DD"
+				_G.PluginInstallFrame.Option1:SetText(icons.selected .. colors.selected .. "Tank/ DD" .. "|r")
+				_G.PluginInstallFrame.Option2:SetText(icons.deselected .. colors.deselected .. "Heal Center" .. "|r")
+				_G.PluginInstallFrame.Option3:SetText(icons.deselected .. colors.deselected .. "Heal Left" .. "|r")
 			end)
 			_G.PluginInstallFrame.Option2:Show()
 			_G.PluginInstallFrame.Option2:SetText("Heal Center")
 			_G.PluginInstallFrame.Option2:SetScript("OnClick", function()
-				SetupLayout("Heal Center")
+				installSettings.role = "Heal Center"
+				_G.PluginInstallFrame.Option1:SetText(icons.deselected .. colors.deselected .. "Tank/ DD" .. "|r")
+				_G.PluginInstallFrame.Option2:SetText(icons.selected .. colors.selected .. "Heal Center" .. "|r")
+				_G.PluginInstallFrame.Option3:SetText(icons.deselected .. colors.deselected .. "Heal Left" .. "|r")
 			end)
 			_G.PluginInstallFrame.Option3:Show()
 			_G.PluginInstallFrame.Option3:SetText("Heal Left")
 			_G.PluginInstallFrame.Option3:SetScript("OnClick", function()
-				SetupLayout("Heal Left")
+				installSettings.role = "Heal Left"
+				_G.PluginInstallFrame.Option1:SetText(icons.deselected .. colors.deselected .. "Tank/ DD" .. "|r")
+				_G.PluginInstallFrame.Option2:SetText(icons.deselected .. colors.deselected .. "Heal Center" .. "|r")
+				_G.PluginInstallFrame.Option3:SetText(icons.selected .. colors.selected .. "Heal Left" .. "|r")
 			end)
+		end,
+		[5] = function()
+			_G.PluginInstallFrame.SubTitle:SetText("MaUI Misc")
+			_G.PluginInstallFrame.Desc1:SetText("Please click the button below to setup your Additional functions Version.")
+			_G.PluginInstallFrame.Desc3:SetText("Importance: |cffFF3333High|r")
+			_G.PluginInstallFrame.Option1:Show()
+			_G.PluginInstallFrame.Option1:SetText("Dock")
+			_G.PluginInstallFrame.Option1:SetScript("OnClick", function()
+				installSettings.dock = not installSettings.dock
+				_G.PluginInstallFrame.Option1:SetText((installSettings.dock and icons.selected or icons.deselected) .. (installSettings.dock and colors.selected or colors.deselected) .. "Dock" .. "|r")
+			end)
+			_G.PluginInstallFrame.Option2:Show()
+			_G.PluginInstallFrame.Option2:SetText("Currency")
+			_G.PluginInstallFrame.Option2:SetScript("OnClick", function()
+				installSettings.currency = not installSettings.currency
+				_G.PluginInstallFrame.Option2:SetText((installSettings.currency and icons.selected or icons.deselected) .. (installSettings.currency and colors.selected or colors.deselected) .. "Currency" .. "|r")
+			end)
+			_G.PluginInstallFrame.Option3:Show()
+			_G.PluginInstallFrame.Option3:SetText("Mythic Plus Filters")
+			_G.PluginInstallFrame.Option3:SetScript("OnClick", function()
+				installSettings.mythicPlus = not installSettings.mythicPlus
+				_G.PluginInstallFrame.Option3:SetText((installSettings.mythicPlus and icons.selected or icons.deselected) .. (installSettings.mythicPlus and colors.selected or colors.deselected) .. "Mythic Plus Filters" .. "|r")
+			end)
+		end,
+		[6] = function()
+			local selectionIsOK = SelectionCheck()
+
+			_G.PluginInstallFrame.SubTitle:SetText("Installation Overview")
+
+			if selectionIsOK then
+				_G.PluginInstallFrame.Desc1:SetText(GetOverviewText())
+				_G.PluginInstallFrame.Desc3:SetText("Importance: |cffFF3333High|r")
+				_G.PluginInstallFrame.Option1:Show()
+				_G.PluginInstallFrame.Option1:SetText("Install")
+				_G.PluginInstallFrame.Option1:SetScript("OnClick", function()
+					installSettings.dock = not installSettings.dock
+					_G.PluginInstallFrame.Option1:SetText((installSettings.dock and icons.selected or icons.deselected) .. (installSettings.dock and colors.selected or colors.deselected) .. "Dock" .. "|r")
+				end)
+			else
+				_G.PluginInstallFrame.Desc1:SetText(GetOverviewText())
+				_G.PluginInstallFrame.Desc2:SetText("Please go back and select a Setting")
+				_G.PluginInstallFrame.Desc3:SetText("Importance: |cffFF3333High|r")
+			end
 		end,
 		[20] = function()
 			_G.PluginInstallFrame.SubTitle:SetText("Installation Complete")
@@ -338,6 +434,7 @@ MAUI.InstallerData = {
 		[3] = "Profile Settings",
 		[4] = "MaUI Layout Version",
 		[5] = "Layout",
+		[6] = "Layout",
 		[20] = "Installation Complete",
 	},
 	StepTitlesColor = { 0.8, 0.8, 0.8 },
