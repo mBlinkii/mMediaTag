@@ -3,7 +3,8 @@ local E = unpack(ElvUI)
 --WoW API / Variables
 local _G = _G
 local GetItemIcon = GetItemIcon
-local GetSpellInfo = GetSpellInfo
+local GetSpellInfo = (C_Spell and C_Spell.GetSpellInfo) and C_Spell.GetSpellInfo or GetSpellInfo
+local GetSpellTexture = (C_Spell and C_Spell.GetSpellTexture) and C_Spell.GetSpellTexture or GetSpellTexture
 
 --|TTexturePath:size1:size2:xoffset:yoffset:dimx:dimy:coordx1:coordx2:coordy1:coordy2|t
 local function SetTooltipIcon(tooltip, icon, title)
