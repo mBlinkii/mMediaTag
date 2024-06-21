@@ -758,6 +758,9 @@ mAddFont("Montserrat-Medium", "Montserrat-Medium.ttf")
 mAddFont("Montserrat-Regular", "Montserrat-Regular.ttf")
 mAddFont("Montserrat-SemiBold", "Montserrat-SemiBold.ttf")
 
+mAddFont("Cascadia", "CascadiaCode.ttf")
+mAddFont("Cascadia Italic", "CascadiaCodeItalic.ttf")
+
 mAddSound("mMT - Bewegen - weiblich", "bewegen_female.ogg")
 mAddSound("mMT - Unterbrechen - weiblich", "unterbrechen_female.ogg")
 mAddSound("mMT - Bewegen - mänlich", "bewegen_male.ogg")
