@@ -590,7 +590,8 @@
         "ToggleDropDownMenu",
         "UnregisterUnitWatch",
         "RegisterStateDriver",
-        "UnregisterStateDriver"
+        "UnregisterStateDriver",
+        "ElvPrivateDB"
     ],
     "Lua.diagnostics.disable": [
         "undefined-field"

@@ -80,9 +80,71 @@ local installSettings = {
 	fct = false,
 	dbm = false,
 	details = false,
+	name = nil,
+	elvui = nil,
 }
 
 P["MaUI"] = {}
+
+StaticPopupDialogs["PROFILE_EXIST"] = {
+	text = "The profile already exists. Change the name or use the existing profile, otherwise the existing profile will be overwritten.",
+	button1 = "Change name",
+	button2 = "Overwrite",
+	button3 = "Abort",
+	OnButton1 = function()
+		StaticPopup_Show("CHANGE_NAME")
+	end,
+	OnButton2 = function()
+		print("Overwrite")
+	end,
+	OnButton3 = function()
+		print("ABORT")
+	end,
+	timeout = 0,
+	whileDead = true,
+	hideOnEscape = true,
+	preferredIndex = 3,
+}
+
+StaticPopupDialogs["CHANGE_NAME"] = {
+	text = "Enter a new name for your profile.",
+	button1 = ACCEPT,
+	hasEditBox = 1,
+	editBoxWidth = 350,
+	maxLetters = 127,
+	OnAccept = function(popup)
+		MAUI:Print(popup.editBox:GetText())
+	end,
+	OnShow = function(popup)
+		popup.editBox:SetText(installSettings.name)
+		popup.editBox:SetFocus()
+	end,
+	timeout = 0,
+	exclusive = 1,
+	whileDead = 1,
+	hideOnEscape = 1,
+	preferredIndex = 3,
+}
+
+StaticPopupDialogs["OVERWRITE"] = {
+	text = "The profile already exists. Change the name or use the existing profile, otherwise the existing profile will be overwritten.",
+	button1 = "Change name",
+	button2 = "Overwrite",
+	button3 = "Abort",
+	OnButton1 = function()
+		StaticPopup_Show("CHANGE_NAME")
+	end,
+	OnButton2 = function()
+		print("Overwrite")
+	end,
+	OnButton3 = function()
+		print("ABORT")
+	end,
+	timeout = 0,
+	whileDead = true,
+	hideOnEscape = true,
+	preferredIndex = 3,
+}
 
 function MAUI:Print(...)
 	print(MAUI.Name .. ":", ...)
@@ -97,7 +159,7 @@ end
 
 local function SetupSkip()
 	if E.db["MaUI"].skiped then
-		E.private.install_complete = nil
+		E.private.install_complete = installSettings.elvui or nil
 	end
 
 	SetupComplete()
@@ -256,48 +318,6 @@ local function OnLeave(button)
 	end
 end
 
-local function SetupProfile(layout, global)
-	if global then
-		E.data:SetProfile("MaUI-" .. layout .. " (" .. MAUI.Version .. ")")
-	else
-		E.data:SetProfile("MaUI-" .. layout .. " - " .. E.mynameRealm .. " (" .. MAUI.Version .. ")")
-	end
-end
-
-local function SelectionCheck(silent)
-	local errorLog = false
-	if installSettings.global == nil then
-		if not silent then
-			MAUI:Print("|CFFFF006CERROR:|r", "Profile has not been selected, please choose between character specific or global profile.")
-		end
-		errorLog = true
-	end
-
-	if not installSettings.layout then
-		if not silent then
-			MAUI:Print("|CFFFF006CERROR:|r", "Layout has not been selected, please select a layout.")
-		end
-		errorLog = true
-	end
-
-	return not errorLog
-end
-
-local function SetupLayout(role)
-	if SelectionCheck() then
-		SetupProfile(role, globalProfile)
-		if layoutVersion == "V6" then
-		elseif layoutVersion == "V7" then
-		end
-	end
-end
-
-local function GetCustomText(text, available)
-	local icon = available and icons.selected or icons.deselected
-	local color = available and colors.selected or colors.deselected
-	return icon .. color .. text .. "|r"
-end
-
 local function GetOverviewText()
 	local install = "will be installed"
 	local notInstall = "will not be installed"
@@ -389,7 +409,69 @@ local function SetEvents()
 	_G.PluginInstallFrame.Option3:SetScript("OnLeave", OnLeave)
 end
 
+local function SetPrivateProfile(name)
+	ElvPrivateDB.profiles[name] = {}
+	ElvPrivateDB.profileKeys[E.mynameRealm] = name
+end
 
+local function InstallLayout()
+	E:SetupCVars()
+	SetupChat()
+	if E.Retail then
+		ChatFrame_RemoveChannel(_G.ChatFrame1, "services")
+	end
+
+	if installSettings.v6 then
+	elseif installSettings.v7 then
+		--MAUI:Player_v7()
+		--MAUI:Arena_v7()
+		--MAUI:Unitframes_v7()
+		--MAUI:Boss_v7()
+		--MAUI:Focus_v7()
+		--MAUI:Party_v7()
+		--MAUI:Pet_v7()
+		--MAUI:Raid_v7()
+		--MAUI:Target_v7()
+		--MAUI:Other_v7()
+		MAUI:Actionbar_v7()
+		--MAUI:Bags_v7()
+		--MAUI:Chat_v7()
+		--MAUI:Datatexts_v7()
+		--MAUI:General_v7()
+		--MAUI:MMT_v7()
+		--MAUI:Movers_v7()
+		--MAUI:Nameplates_v7()
+	end
+end
+
+local function CheckInstall()
+	-- backup current profile
+	local currentProfile = ElvDB.profileKeys[E.mynameRealm]
+	local currentPrivateProfile = ElvPrivateDB.profileKeys[E.mynameRealm]
+	ElvDB.profiles["MAUI_BACKUP " .. E.mynameRealm] = ElvDB.profiles[currentProfile]
+	ElvPrivateDB.profileKeys["MAUI_BACKUP " .. E.mynameRealm] = ElvPrivateDB.profiles[currentPrivateProfile]
+
+	if ((installSettings.global or installSettings.shared) and (installSettings.v6 or installSettings.v7)) and (installSettings.tank or installSettings.dd or installSettings.heal1 or installSettings.heal2) then
+		local layout = (installSettings.v6 and "v6" or (installSettings.v7 and "v7" or ""))
+		local role = ((installSettings.tank or installSettings.dd) and "Tank/ DD" or (installSettings.heal1 and "Heal Center" or (installSettings.heal2 and "Heal Left" or "")))
+		local profileName = ""
+
+		if installSettings.global then
+			profileName = "MaUI " .. layout .. " " .. role
+		elseif installSettings.shared then
+			profileName = "MaUI " .. layout .. " " .. role .. " - " .. E.mynameRealm
+		end
+
+		if ElvDB.profiles[profileName] then
+			StaticPopup_Show("PROFILE_EXIST")
+		else
+			E.data:SetProfile(profileName)
+			SetPrivateProfile("MaUI " .. layout .. " " .. role)
+			InstallLayout()
+		end
+	else
+	end
+end
 
 MAUI.InstallerData = {
 	Title = MAUI.Name .. " Ver.: |CFFF7DC6F" .. MAUI.Version .. "|r",
@@ -577,7 +659,9 @@ MAUI.InstallerData = {
 			_G.PluginInstallFrame.Option1:Show()
 			_G.PluginInstallFrame.Option1.pic = nil
 			_G.PluginInstallFrame.Option1:SetText("Install")
-			_G.PluginInstallFrame.Option1:SetScript("OnClick", function() end)
+			_G.PluginInstallFrame.Option1:SetScript("OnClick", function()
+				CheckInstall()
+			end)
 		end,
 		[20] = function()
 			_G.PluginInstallFrame.SubTitle:SetText("Installation Complete")
@@ -661,6 +745,10 @@ function MAUI:Initialize()
 	SetupPluginInstaller()
 
 	if not E.db["MaUI"].install then
+		if E.private.install_complete then
+			installSettings.elvui = E.private.install_complete
+		end
+
 		if not E.private.install_complete then
 			E.db["MaUI"].skiped = true
 			E.private.install_complete = E.version
