@@ -672,6 +672,19 @@ local function configTable()
 								mMT.Modules.Portraits:Initialize()
 							end,
 						},
+						toggle_cast = {
+							order = 3,
+							type = "toggle",
+							name = L["Cast Icon"],
+							desc = L["Enable Cast Icons"],
+							get = function(info)
+								return E.db.mMT.portraits.player.cast
+							end,
+							set = function(info, value)
+								E.db.mMT.portraits.player.cast = value
+								mMT.Modules.Portraits:Initialize()
+							end,
+						},
 					},
 				},
 				anchor = {
@@ -808,20 +821,8 @@ local function configTable()
 					inline = true,
 					name = L["General"],
 					args = {
-						toggle_extra = {
-							order = 2,
-							type = "toggle",
-							name = L["Enable Rare/Elite Border"],
-							get = function(info)
-								return E.db.mMT.portraits.target.extraEnable
-							end,
-							set = function(info, value)
-								E.db.mMT.portraits.target.extraEnable = value
-								mMT.Modules.Portraits:Initialize()
-							end,
-						},
 						select_style = {
-							order = 3,
+							order = 1,
 							type = "select",
 							name = L["Texture Form"],
 							get = function(info)
@@ -835,7 +836,7 @@ local function configTable()
 							values = form,
 						},
 						range_size = {
-							order = 5,
+							order = 2,
 							name = L["Size"],
 							type = "range",
 							min = 16,
@@ -848,6 +849,31 @@ local function configTable()
 							end,
 							set = function(info, value)
 								E.db.mMT.portraits.target.size = value
+								mMT.Modules.Portraits:Initialize()
+							end,
+						},
+						toggle_extra = {
+							order = 3,
+							type = "toggle",
+							name = L["Enable Rare/Elite Border"],
+							get = function(info)
+								return E.db.mMT.portraits.target.extraEnable
+							end,
+							set = function(info, value)
+								E.db.mMT.portraits.target.extraEnable = value
+								mMT.Modules.Portraits:Initialize()
+							end,
+						},
+						toggle_cast = {
+							order = 4,
+							type = "toggle",
+							name = L["Cast Icon"],
+							desc = L["Enable Cast Icons"],
+							get = function(info)
+								return E.db.mMT.portraits.target.cast
+							end,
+							set = function(info, value)
+								E.db.mMT.portraits.target.cast = value
 								mMT.Modules.Portraits:Initialize()
 							end,
 						},
@@ -1333,20 +1359,8 @@ local function configTable()
 					inline = true,
 					name = L["General"],
 					args = {
-						toggle_extra = {
-							order = 1,
-							type = "toggle",
-							name = L["Enable Rare/Elite Border"],
-							get = function(info)
-								return E.db.mMT.portraits.focus.extraEnable
-							end,
-							set = function(info, value)
-								E.db.mMT.portraits.focus.extraEnable = value
-								mMT.Modules.Portraits:Initialize()
-							end,
-						},
 						select_style = {
-							order = 2,
+							order = 1,
 							type = "select",
 							name = L["Texture Form"],
 							get = function(info)
@@ -1360,7 +1374,7 @@ local function configTable()
 							values = form,
 						},
 						range_size = {
-							order = 3,
+							order = 2,
 							name = L["Size"],
 							type = "range",
 							min = 16,
@@ -1373,6 +1387,31 @@ local function configTable()
 							end,
 							set = function(info, value)
 								E.db.mMT.portraits.focus.size = value
+								mMT.Modules.Portraits:Initialize()
+							end,
+						},
+						toggle_extra = {
+							order = 3,
+							type = "toggle",
+							name = L["Enable Rare/Elite Border"],
+							get = function(info)
+								return E.db.mMT.portraits.focus.extraEnable
+							end,
+							set = function(info, value)
+								E.db.mMT.portraits.focus.extraEnable = value
+								mMT.Modules.Portraits:Initialize()
+							end,
+						},
+						toggle_cast = {
+							order = 4,
+							type = "toggle",
+							name = L["Cast Icon"],
+							desc = L["Enable Cast Icons"],
+							get = function(info)
+								return E.db.mMT.portraits.focus.cast
+							end,
+							set = function(info, value)
+								E.db.mMT.portraits.focus.cast = value
 								mMT.Modules.Portraits:Initialize()
 							end,
 						},
@@ -1543,6 +1582,19 @@ local function configTable()
 								mMT.Modules.Portraits:Initialize()
 							end,
 						},
+						toggle_cast = {
+							order = 3,
+							type = "toggle",
+							name = L["Cast Icon"],
+							desc = L["Enable Cast Icons"],
+							get = function(info)
+								return E.db.mMT.portraits.party.cast
+							end,
+							set = function(info, value)
+								E.db.mMT.portraits.party.cast = value
+								mMT.Modules.Portraits:Initialize()
+							end,
+						},
 					},
 				},
 				anchor = {
@@ -1710,6 +1762,19 @@ local function configTable()
 								mMT.Modules.Portraits:Initialize()
 							end,
 						},
+						toggle_cast = {
+							order = 3,
+							type = "toggle",
+							name = L["Cast Icon"],
+							desc = L["Enable Cast Icons"],
+							get = function(info)
+								return E.db.mMT.portraits.boss.cast
+							end,
+							set = function(info, value)
+								E.db.mMT.portraits.boss.cast = value
+								mMT.Modules.Portraits:Initialize()
+							end,
+						},
 					},
 				},
 				anchor = {
@@ -1874,6 +1939,19 @@ local function configTable()
 							end,
 							set = function(info, value)
 								E.db.mMT.portraits.arena.size = value
+								mMT.Modules.Portraits:Initialize()
+							end,
+						},
+						toggle_cast = {
+							order = 3,
+							type = "toggle",
+							name = L["Cast Icon"],
+							desc = L["Enable Cast Icons"],
+							get = function(info)
+								return E.db.mMT.portraits.arena.cast
+							end,
+							set = function(info, value)
+								E.db.mMT.portraits.arena.cast = value
 								mMT.Modules.Portraits:Initialize()
 							end,
 						},

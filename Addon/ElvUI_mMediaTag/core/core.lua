@@ -152,6 +152,7 @@ function mMT:GetDevNames()
 		["Blinkii"] = true,
 		["Flinkii"] = true,
 		["Raeldan"] = true,
+		["Evokii"] = true,
 	}
 end
 

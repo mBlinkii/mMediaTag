@@ -700,3 +700,5 @@ L["This is the Mask texture for the portraits. This texture is used to cut out t
 L["Mask"] = true
 L[" hidden in combat."] = true
 L["Info! To achieve an optimal result with the portraits, a texture should be set for the texture, border and mask.\nThe mask is always required and no portrait will be visible without it.\n\n"] = true
+L["Cast Icon"] = true
+L["Enable Cast Icons"] = true

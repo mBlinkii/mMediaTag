@@ -594,6 +594,7 @@ P.mMT = {
 			enable = false,
 		},
 		player = {
+			cast = false,
 			enable = true,
 			texture = "RO",
 			mirror = false,
@@ -618,6 +619,7 @@ P.mMT = {
 			level = 20,
 		},
 		target = {
+			cast = false,
 			enable = true,
 			texture = "RO",
 			extraEnable = true,
@@ -644,6 +646,7 @@ P.mMT = {
 			level = 20,
 		},
 		focus = {
+			cast = false,
 			enable = false,
 			texture = "RO",
 			extraEnable = true,
@@ -657,6 +660,7 @@ P.mMT = {
 			level = 20,
 		},
 		party = {
+			cast = false,
 			enable = true,
 			texture = "RO",
 			mirror = false,
@@ -669,6 +673,7 @@ P.mMT = {
 			level = 20,
 		},
 		boss = {
+			cast = false,
 			enable = false,
 			texture = "RO",
 			mirror = true,
@@ -681,6 +686,7 @@ P.mMT = {
 			level = 20,
 		},
 		arena = {
+			cast = false,
 			enable = false,
 			texture = "RO",
 			mirror = true,
