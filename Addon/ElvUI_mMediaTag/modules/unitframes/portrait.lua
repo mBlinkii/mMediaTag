@@ -225,14 +225,37 @@ local function setColor(texture, color, mirror)
 	end
 end
 
+local cachedFaction = {}
+
 local function getColor(unit)
 	if settings.general.default then
 		return settings.colors.default
 	end
 
 	if UnitIsPlayer(unit) then
-		local _, class = UnitClass(unit)
-		return settings.colors[class]
+		if settings.general.reaction then
+			if not cachedFaction.player then
+				cachedFaction.player = select(1, UnitFactionGroup("Player"))
+			end
+
+			if unit ~= "Player" then
+				local guid = UnitGUID(unit)
+				if guid and not cachedFaction[guid] then
+					cachedFaction[guid] = select(1, UnitFactionGroup(unit))
+				end
+
+				if cachedFaction.player ~= cachedFaction[guid] then
+					return settings.colors.enemy
+				else
+					return settings.colors.friendly
+				end
+			else
+				return settings.colors.friendly
+			end
+		else
+			local _, class = UnitClass(unit)
+			return settings.colors[class]
+		end
 	else
 		local reaction = UnitReaction(unit, "player")
 		if reaction then
@@ -381,7 +404,7 @@ local function CreatePortrait(parent, conf, unit)
 	mirrorTexture(frame.portrait, conf.mirror)
 
 	-- Portrait Mask
-	texture = textures.custom.enable and textures.custom.mask or (textures.mask[conf.texture] or conf.mirror and textures.mask.B[conf.texture] or textures.mask.A[conf.texture])
+	texture = textures.custom.enable and (conf.mirror and textures.custom.maskb or textures.custom.mask) or (textures.mask[conf.texture] or conf.mirror and textures.mask.B[conf.texture] or textures.mask.A[conf.texture])
 	frame.mask = frame:CreateMaskTexture()
 	frame.mask:SetTexture(texture, "CLAMPTOBLACKADDITIVE", "CLAMPTOBLACKADDITIVE")
 	frame.mask:SetAllPoints(frame)
@@ -517,7 +540,7 @@ local function UpdatePortrait(frame, conf, unit, parent)
 	frame.portrait:SetPoint("BOTTOMRIGHT", 0 - offset, 0 + offset)
 
 	-- Portrait Mask
-	texture = textures.custom.enable and textures.custom.mask or (textures.mask[conf.texture] or conf.mirror and textures.mask.B[conf.texture] or textures.mask.A[conf.texture])
+	texture = textures.custom.enable and (conf.mirror and textures.custom.maskb or textures.custom.mask) or (textures.mask[conf.texture] or conf.mirror and textures.mask.B[conf.texture] or textures.mask.A[conf.texture])
 	frame.mask:SetTexture(texture, "CLAMPTOBLACKADDITIVE", "CLAMPTOBLACKADDITIVE")
 
 	-- Portrait Shadow
@@ -786,7 +809,8 @@ function module:Initialize()
 		textures.custom.border = settings.custom.border ~= "" and settings.custom.border or nil
 		textures.custom.shadow = settings.custom.shadow ~= "" and settings.custom.shadow or nil
 		textures.custom.inner = settings.custom.inner ~= "" and settings.custom.inner or nil
-		textures.custom.mask = settings.custom.texture ~= "" and settings.custom.mask or nil
+		textures.custom.mask = settings.custom.mask ~= "" and settings.custom.mask or nil
+		textures.custom.maskb = settings.custom.maskb ~= "" and settings.custom.maskb or (settings.custom.mask or nil)
 	else
 		textures.custom.enable = false
 		textures.custom.texture = nil
@@ -797,6 +821,7 @@ function module:Initialize()
 		textures.custom.shadow = nil
 		textures.custom.inner = nil
 		textures.custom.mask = nil
+		textures.custom.maskb = nil
 	end
 
 	if settings.general.eltruism and mMT.ElvUI_EltreumUI.loaded then

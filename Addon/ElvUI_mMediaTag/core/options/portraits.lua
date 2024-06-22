@@ -459,6 +459,34 @@ local function configTable()
 										E:StaticPopup_Show("CONFIG_RL")
 									end,
 								},
+								spacer_texture9= {
+									order = 19,
+									type = "description",
+									name = "\n\n",
+								},
+								maskb = {
+									order = 20,
+									desc = L["This is the mirrored Mask texture for the portraits. This texture is used to cut out the portrait of the Unit."],
+									name = function()
+										if E.db.mMT.portraits.custom.maskb and (E.db.mMT.portraits.custom.maskb ~= "") then
+											return L["Mirrored Mask"] .. "  > " .. E:TextureString(E.db.mMT.portraits.custom.maskb, sizeString)
+										else
+											return L["Mirrored Mask"] .. "  > " .. L["No Texture found"]
+										end
+									end,
+									type = "input",
+									width = "smal",
+									disabled = function()
+										return not E.db.mMT.portraits.custom.enable
+									end,
+									get = function(info)
+										return E.db.mMT.portraits.custom.maskb
+									end,
+									set = function(info, value)
+										E.db.mMT.portraits.custom.mask = value
+										E:StaticPopup_Show("CONFIG_RL")
+									end,
+								},
 							},
 						},
 					},
@@ -2280,6 +2308,19 @@ local function configTable()
 					end,
 					set = function(info, value)
 						E.db.mMT.portraits.general.default = value
+						mMT.Modules.Portraits:Initialize()
+					end,
+				},
+				toggle_reaction = {
+					order = 2,
+					type = "toggle",
+					name = L["Force reaction color"],
+					desc = L["Forces reaction color for all Units."],
+					get = function(info)
+						return E.db.mMT.portraits.general.reaction
+					end,
+					set = function(info, value)
+						E.db.mMT.portraits.general.reaction = value
 						mMT.Modules.Portraits:Initialize()
 					end,
 				},

@@ -591,6 +591,7 @@ P.mMT = {
 			shadow = "",
 			inner = "",
 			mask = "",
+			maskb = "",
 			enable = false,
 		},
 		player = {
@@ -700,6 +701,7 @@ P.mMT = {
 		},
 		general = {
 			enable = false,
+			reaction = false,
 			eltruism = false,
 			gradient = true,
 			default = false,
