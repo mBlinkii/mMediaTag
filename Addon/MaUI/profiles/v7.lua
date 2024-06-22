@@ -33,24 +33,32 @@ function MAUI:Player_v7()
 	E.db["unitframe"]["units"]["player"]["classbar"]["fill"] = "spaced"
 	E.db["unitframe"]["units"]["player"]["classbar"]["height"] = 18
 	E.db["unitframe"]["units"]["player"]["classbar"]["verticalOrientation"] = true
-	E.db["unitframe"]["units"]["player"]["customTexts"]["m-Absorb"]["attachTextTo"] = "Health"
-	E.db["unitframe"]["units"]["player"]["customTexts"]["m-Absorb"]["enable"] = true
-	E.db["unitframe"]["units"]["player"]["customTexts"]["m-Absorb"]["font"] = "PT Sans Narrow"
-	E.db["unitframe"]["units"]["player"]["customTexts"]["m-Absorb"]["fontOutline"] = "SHADOW"
-	E.db["unitframe"]["units"]["player"]["customTexts"]["m-Absorb"]["justifyH"] = "LEFT"
-	E.db["unitframe"]["units"]["player"]["customTexts"]["m-Absorb"]["size"] = 14
-	E.db["unitframe"]["units"]["player"]["customTexts"]["m-Absorb"]["text_format"] = "||cf2cd5fff[absorbs]||r"
-	E.db["unitframe"]["units"]["player"]["customTexts"]["m-Absorb"]["xOffset"] = 24
-	E.db["unitframe"]["units"]["player"]["customTexts"]["m-Absorb"]["yOffset"] = 26
-	E.db["unitframe"]["units"]["player"]["customTexts"]["m-Death"]["attachTextTo"] = "Health"
-	E.db["unitframe"]["units"]["player"]["customTexts"]["m-Death"]["enable"] = true
-	E.db["unitframe"]["units"]["player"]["customTexts"]["m-Death"]["font"] = "PT Sans Narrow"
-	E.db["unitframe"]["units"]["player"]["customTexts"]["m-Death"]["fontOutline"] = "SHADOW"
-	E.db["unitframe"]["units"]["player"]["customTexts"]["m-Death"]["justifyH"] = "LEFT"
-	E.db["unitframe"]["units"]["player"]["customTexts"]["m-Death"]["size"] = 12
-	E.db["unitframe"]["units"]["player"]["customTexts"]["m-Death"]["text_format"] = "[mouseover][mDeathCount:color][mDeathCount:hide:text][mDeathCount]||r"
-	E.db["unitframe"]["units"]["player"]["customTexts"]["m-Death"]["xOffset"] = 14
-	E.db["unitframe"]["units"]["player"]["customTexts"]["m-Death"]["yOffset"] = 0
+
+	E.db["unitframe"]["units"]["player"]["customTexts"] = E.db["unitframe"]["units"]["player"]["customTexts"] or {}
+	E.db["unitframe"]["units"]["player"]["customTexts"]["m-Absorb"] = {
+		attachTextTo = "Health",
+		enable = true,
+		font = "PT Sans Narrow",
+		fontOutline = "SHADOW",
+		justifyH = "LEFT",
+		size = 14,
+		text_format = "||cf2cd5fff[absorbs]||r",
+		xOffset = 24,
+		yOffset = 26,
+	}
+
+	E.db["unitframe"]["units"]["player"]["customTexts"]["m-Death"] = {
+		attachTextTo = "Health",
+		enable = true,
+		font = "PT Sans Narrow",
+		fontOutline = "SHADOW",
+		justifyH = "LEFT",
+		size = 12,
+		text_format = "[mouseover][mDeathCount:color][mDeathCount:hide:text][mDeathCount]||r",
+		xOffset = 14,
+		yOffset = 0,
+	}
+
 	E.db["unitframe"]["units"]["player"]["customTexts"]["m-Group"]["attachTextTo"] = "Power"
 	E.db["unitframe"]["units"]["player"]["customTexts"]["m-Group"]["enable"] = true
 	E.db["unitframe"]["units"]["player"]["customTexts"]["m-Group"]["font"] = "PT Sans Narrow"
@@ -1424,6 +1432,20 @@ function MAUI:Actionbar_v7()
 	E.db["actionbar"]["vehicleExitButton"]["hotkeyFontSize"] = 12
 	E.db["actionbar"]["vehicleExitButton"]["hotkeyTextYOffset"] = -4
 	E.db["actionbar"]["zoneActionButton"]["scale"] = 0.6
+
+	E.db["movers"]["ElvAB_1"] = "BOTTOM,ElvUIParent,BOTTOM,0,77"
+	E.db["movers"]["ElvAB_10"] = "BOTTOMRIGHT,ElvUIParent,BOTTOMRIGHT,-4,400"
+	E.db["movers"]["ElvAB_13"] = "BOTTOMRIGHT,ElvUIParent,BOTTOMRIGHT,-4,400"
+	E.db["movers"]["ElvAB_14"] = "BOTTOMRIGHT,ElvUIParent,BOTTOMRIGHT,-4,400"
+	E.db["movers"]["ElvAB_15"] = "BOTTOMRIGHT,ElvUIParent,BOTTOMRIGHT,-4,400"
+	E.db["movers"]["ElvAB_2"] = "TOPLEFT,ElvUIParent,TOPLEFT,4,-159"
+	E.db["movers"]["ElvAB_3"] = "BOTTOM,ElvUIParent,BOTTOM,-312,77"
+	E.db["movers"]["ElvAB_4"] = "BOTTOMLEFT,UIParent,BOTTOMLEFT,4,203"
+	E.db["movers"]["ElvAB_5"] = "BOTTOM,ElvUIParent,BOTTOM,312,77"
+	E.db["movers"]["ElvAB_6"] = "BOTTOM,ElvUIParent,BOTTOM,0,111"
+	E.db["movers"]["ElvAB_7"] = "BOTTOMRIGHT,ElvUIParent,BOTTOMRIGHT,-4,298"
+	E.db["movers"]["ElvAB_8"] = "BOTTOMRIGHT,ElvUIParent,BOTTOMRIGHT,-4,332"
+	E.db["movers"]["ElvAB_9"] = "BOTTOMRIGHT,ElvUIParent,BOTTOMRIGHT,-4,366"
 end
 
 function MAUI:Bags_v7()
@@ -1889,19 +1911,6 @@ function MAUI:Movers_v7()
 	E.db["movers"]["DTPanelmMT CombattimeMover"] = "TOP,UIParent,TOP,0,-4"
 	E.db["movers"]["DebuffsMover"] = "TOPRIGHT,ElvUIParent,TOPRIGHT,-186,-155"
 	E.db["movers"]["DurabilityFrameMover"] = "TOPLEFT,ElvUIParent,TOPLEFT,141,-4"
-	E.db["movers"]["ElvAB_1"] = "BOTTOM,ElvUIParent,BOTTOM,0,77"
-	E.db["movers"]["ElvAB_10"] = "BOTTOMRIGHT,ElvUIParent,BOTTOMRIGHT,-4,400"
-	E.db["movers"]["ElvAB_13"] = "BOTTOMRIGHT,ElvUIParent,BOTTOMRIGHT,-4,400"
-	E.db["movers"]["ElvAB_14"] = "BOTTOMRIGHT,ElvUIParent,BOTTOMRIGHT,-4,400"
-	E.db["movers"]["ElvAB_15"] = "BOTTOMRIGHT,ElvUIParent,BOTTOMRIGHT,-4,400"
-	E.db["movers"]["ElvAB_2"] = "TOPLEFT,ElvUIParent,TOPLEFT,4,-159"
-	E.db["movers"]["ElvAB_3"] = "BOTTOM,ElvUIParent,BOTTOM,-312,77"
-	E.db["movers"]["ElvAB_4"] = "BOTTOMLEFT,UIParent,BOTTOMLEFT,4,203"
-	E.db["movers"]["ElvAB_5"] = "BOTTOM,ElvUIParent,BOTTOM,312,77"
-	E.db["movers"]["ElvAB_6"] = "BOTTOM,ElvUIParent,BOTTOM,0,111"
-	E.db["movers"]["ElvAB_7"] = "BOTTOMRIGHT,ElvUIParent,BOTTOMRIGHT,-4,298"
-	E.db["movers"]["ElvAB_8"] = "BOTTOMRIGHT,ElvUIParent,BOTTOMRIGHT,-4,332"
-	E.db["movers"]["ElvAB_9"] = "BOTTOMRIGHT,ElvUIParent,BOTTOMRIGHT,-4,366"
 	E.db["movers"]["ElvNP_PlayerMover"] = "TOP,UIParent,CENTER,0,-150"
 	E.db["movers"]["ElvUF_AssistMover"] = "TOPLEFT,ElvUIParent,TOPLEFT,4,-249"
 	E.db["movers"]["ElvUF_FocusCastbarMover"] = "BOTTOM,ElvUIParent,BOTTOM,248,190"

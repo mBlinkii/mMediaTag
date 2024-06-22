@@ -421,9 +421,11 @@ local function InstallLayout()
 		ChatFrame_RemoveChannel(_G.ChatFrame1, "services")
 	end
 
+	if not E.db.movers then E.db.movers = {} end
+
 	if installSettings.v6 then
 	elseif installSettings.v7 then
-		--MAUI:Player_v7()
+		MAUI:Player_v7()
 		--MAUI:Arena_v7()
 		--MAUI:Unitframes_v7()
 		--MAUI:Boss_v7()
@@ -432,15 +434,15 @@ local function InstallLayout()
 		--MAUI:Pet_v7()
 		--MAUI:Raid_v7()
 		--MAUI:Target_v7()
-		--MAUI:Other_v7()
+		MAUI:Other_v7()
 		MAUI:Actionbar_v7()
-		--MAUI:Bags_v7()
-		--MAUI:Chat_v7()
+		MAUI:Bags_v7()
+		MAUI:Chat_v7()
+		MAUI:General_v7()
 		--MAUI:Datatexts_v7()
-		--MAUI:General_v7()
 		--MAUI:MMT_v7()
-		--MAUI:Movers_v7()
-		--MAUI:Nameplates_v7()
+		MAUI:Movers_v7()
+		MAUI:Nameplates_v7()
 	end
 end
 
