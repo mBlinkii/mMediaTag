@@ -64,6 +64,7 @@ L["CIRCLE"] = "KREIS"
 L["CIRCLE/ MOON"] = "KREIS/MOND"
 L["Calendar"] = "Kalender"
 L["Call To Arms"] = "Ruf zu den Waffen"
+L["Cast Icon"] = "Zaubersymbol"
 L["Cast is out of range"] = "Zauber ist außer Reichweite"
 L["Castbar Background Color"] = "Zauberleisten Hintergrundfarbe"
 L["Castbar Color"] = "Zauberleisten Farbe"
@@ -243,6 +244,7 @@ L["ElvUI media color"] = "ElvUI Medienfarbe"
 L["Enable Arena Portraits"] = "Aktiviere Arena Porträts"
 L["Enable Borders"] = "Aktiviere Rahmen"
 L["Enable Boss Portraits"] = "Aktiviere Boss Porträts"
+L["Enable Cast Icons"] = "Aktiviere Zaubersymbole"
 L["Enable Class colored Background"] = "Aktiviere Klassenfarbenen Hintergrund"
 L["Enable Corner"] = "Aktiviere Ecke"
 L["Enable Custom Alternative Power Texture"] = "Aktiviere benutzerdefinierte Alternative Kraft Textur"
@@ -698,7 +700,3 @@ L["|cffFFFFFFControl + Left Click:|r Change Loadout"] = "|cffFFFFFFStrg + Linksk
 L["|cffFFFFFFLeft Click:|r Change Talent Specialization"] = "|cffFFFFFFLinks Klick:|r Talent Spezialisierung ändern"
 L["|cffFFFFFFRight Click:|r Change Loot Specialization"] = "|cffFFFFFFRechtsklick:|r Beutespezialisierung ändern"
 L["|cffFFFFFFShift + Left Click:|r Show Talent Specialization UI"] = "|cffFFFFFFShift + Links Klick:|r Zeige Talent Spezialisierungs Interface"
-
---new
-L["Cast Icon"] = true
-L["Enable Cast Icons"] = true
