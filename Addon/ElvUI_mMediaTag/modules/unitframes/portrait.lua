@@ -235,7 +235,7 @@ local function getColor(unit)
 	if UnitIsPlayer(unit) then
 		if settings.general.reaction then
 			if not cachedFaction.player then
-				cachedFaction.player = select(1, UnitFactionGroup("Player"))
+				cachedFaction.player = select(1, UnitFactionGroup("player"))
 			end
 
 			if unit ~= "Player" then
@@ -725,16 +725,18 @@ function module:UpdatePortraits()
 	end
 end
 
-local function AddCastIcon(frame, unit)
+local function AddCastIcon(self, unit)
 	local texture = select(3, UnitCastingInfo(unit))
 
-	frame.throttle = texture and true or false
+	self.throttle = texture and true or false
 
 	if not texture then
 		texture = select(3, UnitChannelInfo(unit))
 	end
 
-	frame.portrait:SetTexture(texture)
+	if texture then
+		self.portrait:SetTexture(texture)
+	end
 end
 
 local function RemovePortrait(name)
@@ -787,17 +789,65 @@ local function CastEvents(db, name, remove)
 	end
 end
 
+local throttleEvents = {
+	UNIT_SPELLCAST_INTERRUPTED = true,
+	UNIT_SPELLCAST_SUCCEEDED = true,
+}
+
+local castIconUpdateEvents = {
+	UNIT_SPELLCAST_START = true,
+	UNIT_SPELLCAST_EMPOWER_START = true,
+}
+
+local function UnitEvent(self, event, conf, castUnit, unit)
+	if mMT.DevMode then
+		mMT:Print("Script:", unit, "Event:", event, "Unit Exists:", UnitExists(unit))
+	end
+
+	if conf.cast then
+		self.empowering = (event == "UNIT_SPELLCAST_EMPOWER_START")
+	end
+
+	if conf.cast and (castUnit == unit) and castIconUpdateEvents[event] then
+		AddCastIcon(self, unit)
+	else
+		if conf.cast and throttleEvents[event] then
+			if (not self.throttle) or self.empowering then
+				return
+			end
+
+			self.throttle = false
+			self.empowering = false
+
+			SetPortraits(self, unit, textures.enablemasking[conf.texture], conf.mirror)
+		end
+
+		if self.buildData.update[event] then
+			if UnitExists(unit) then
+				if self:GetAttribute("unit") ~= unit then
+					self:SetAttribute("unit", unit)
+				end
+
+				SetPortraits(self, unit, textures.enablemasking[conf.texture], conf.mirror)
+				setColor(self.texture, getColor(unit), conf.mirror)
+
+				if settings.general.corner and textures.corner[conf.texture] then
+					setColor(self.corner, getColor(unit), conf.mirror)
+				end
+
+				if conf.extraEnable and self.extra then
+					CheckRareElite(self, unit)
+				elseif self.extra then
+					self.extra:Hide()
+				end
+			else
+				SetPortraits(self, "player", not textures.enablemasking[conf.texture], conf.mirror)
+			end
+		end
+	end
+end
+
 function module:Initialize()
-	local throttleEvents = {
-		UNIT_SPELLCAST_INTERRUPTED = true,
-		UNIT_SPELLCAST_SUCCEEDED = true,
-	}
-
-	local castIconUpdateEvents = {
-		UNIT_SPELLCAST_START = true,
-		UNIT_SPELLCAST_EMPOWER_START = true,
-	}
-
 	settings = E.db.mMT.portraits
 
 	if settings.custom.enable then
@@ -856,6 +906,10 @@ function module:Initialize()
 			unitEvents = {
 				"UNIT_PORTRAIT_UPDATE",
 			},
+			update = {
+				PLAYER_ENTERING_WORLD = true,
+				UNIT_PORTRAIT_UPDATE = true,
+			},
 		}
 
 		CastEvents(frames, "Player", not settings.player.cast)
@@ -874,6 +928,11 @@ function module:Initialize()
 			},
 			unitEvents = {
 				"UNIT_PORTRAIT_UPDATE",
+			},
+			update = {
+				PLAYER_ENTERING_WORLD = true,
+				PLAYER_TARGET_CHANGED = true,
+				UNIT_PORTRAIT_UPDATE = true,
 			},
 		}
 
@@ -897,6 +956,11 @@ function module:Initialize()
 				"UNIT_PORTRAIT_UPDATE",
 				"UNIT_MODEL_CHANGED",
 			},
+			update = {
+				PLAYER_ENTERING_WORLD = true,
+				UNIT_PORTRAIT_UPDATE = true,
+				UNIT_MODEL_CHANGED = true,
+			},
 		}
 	elseif module.Pet then
 		RemovePortrait("Pet")
@@ -916,6 +980,13 @@ function module:Initialize()
 				"UNIT_MODEL_CHANGED",
 				"UNIT_TARGET",
 			},
+			update = {
+				PLAYER_ENTERING_WORLD = true,
+				PLAYER_TARGET_CHANGED = true,
+				UNIT_PORTRAIT_UPDATE = true,
+				UNIT_MODEL_CHANGED = true,
+				UNIT_TARGET = true,
+			},
 		}
 	elseif module.TargetTarget then
 		RemovePortrait("TargetTarget")
@@ -933,6 +1004,12 @@ function module:Initialize()
 			unitEvents = {
 				"UNIT_PORTRAIT_UPDATE",
 				"UNIT_MODEL_CHANGED",
+			},
+			update = {
+				PLAYER_ENTERING_WORLD = true,
+				PLAYER_FOCUS_CHANGED = true,
+				UNIT_PORTRAIT_UPDATE = true,
+				UNIT_MODEL_CHANGED = true,
 			},
 		}
 
@@ -956,6 +1033,14 @@ function module:Initialize()
 					"UNIT_PORTRAIT_UPDATE",
 					"UNIT_MODEL_CHANGED",
 					"PARTY_MEMBER_ENABLE",
+				},
+				update = {
+					PLAYER_ENTERING_WORLD = true,
+					GROUP_ROSTER_UPDATE = true,
+					UNIT_CONNECTION = true,
+					UNIT_PORTRAIT_UPDATE = true,
+					UNIT_MODEL_CHANGED = true,
+					PARTY_MEMBER_ENABLE = true,
 				},
 			}
 
@@ -982,6 +1067,13 @@ function module:Initialize()
 					"UNIT_PORTRAIT_UPDATE",
 					"UNIT_MODEL_CHANGED",
 				},
+				update = {
+					PLAYER_ENTERING_WORLD = true,
+					INSTANCE_ENCOUNTER_ENGAGE_UNIT = true,
+					UNIT_TARGETABLE_CHANGED = true,
+					UNIT_PORTRAIT_UPDATE = true,
+					UNIT_MODEL_CHANGED = true,
+				},
 			}
 
 			CastEvents(frames, "Boss" .. i, not settings.boss.cast)
@@ -1007,6 +1099,14 @@ function module:Initialize()
 					"UNIT_PORTRAIT_UPDATE",
 					"UNIT_MODEL_CHANGED",
 					"UNIT_NAME_UPDATE",
+				},
+				update = {
+					PLAYER_ENTERING_WORLD = true,
+					ARENA_OPPONENT_UPDATE = true,
+					UNIT_CONNECTION = true,
+					UNIT_PORTRAIT_UPDATE = true,
+					UNIT_MODEL_CHANGED = true,
+					UNIT_NAME_UPDATE = true,
 				},
 			}
 
@@ -1047,174 +1147,36 @@ function module:Initialize()
 		end
 
 		if settings.player.enable and module.Player and not module.Player.ScriptSet then
-			module.Player:SetScript("OnEvent", function(self, event)
-				if mMT.DevMode then
-					mMT:Print("Script Player", "Event:", event, "Unit Exists:", UnitExists("player"))
-				end
-
-				if settings.player.cast then
-					module.Player.empowering = (event == "UNIT_SPELLCAST_EMPOWER_START")
-				end
-
-				if castIconUpdateEvents[event] then
-					AddCastIcon(module.Player, "player")
-				else
-					if settings.player.cast and throttleEvents[event] then
-						if (not module.Player.throttle) or module.Player.empowering then
-							return
-						end
-						module.Player.throttle = false
-						module.Player.empowering = false
-					end
-
-					if UnitExists("player") then
-						if self:GetAttribute("unit") ~= "player" then
-							self:SetAttribute("unit", "player")
-						end
-
-						SetPortraits(self, "player", textures.enablemasking[settings.player.texture], settings.player.mirror)
-						setColor(self.texture, getColor("player"), settings.player.mirror)
-						if settings.general.corner and textures.corner[settings.player.texture] then
-							setColor(self.corner, getColor("player"), settings.player.mirror)
-						end
-					end
-				end
+			module.Player:SetScript("OnEvent", function(self, event, castUnit)
+				UnitEvent(self, event, settings.player, castUnit, "player")
 			end)
 			module.Player.ScriptSet = true
 		end
 
 		if settings.target.enable and module.Target and not module.Target.ScriptSet then
-			module.Target:SetScript("OnEvent", function(self, event)
-				if mMT.DevMode then
-					mMT:Print("Script Target", "Event:", event, "Unit Exists:", UnitExists("target"))
-				end
-
-				if settings.target.cast then
-					module.Target.empowering = (event == "UNIT_SPELLCAST_EMPOWER_START")
-				end
-
-				if castIconUpdateEvents[event] then
-					AddCastIcon(module.Target, "target")
-				else
-					if settings.target.cast then
-						if throttleEvents[event] and ((not module.Target.throttle) or module.Target.empowering) then
-							return
-						end
-						module.Target.throttle = false
-						module.Target.empowering = false
-					end
-
-					if UnitExists("target") then
-						if self:GetAttribute("unit") ~= "target" then
-							self:SetAttribute("unit", "target")
-						end
-
-						SetPortraits(self, "target", textures.enablemasking[settings.target.texture], settings.target.mirror)
-						setColor(self.texture, getColor("target"), settings.target.mirror)
-
-						if settings.general.corner and textures.corner[settings.target.texture] then
-							setColor(self.corner, getColor("target"), settings.target.mirror)
-						end
-
-						if settings.target.extraEnable and self.extra then
-							CheckRareElite(self, "target")
-						elseif self.extra then
-							self.extra:Hide()
-						end
-					end
-				end
+			module.Target:SetScript("OnEvent", function(self, event, castUnit)
+				UnitEvent(self, event, settings.target, castUnit, "target")
 			end)
 			module.Target.ScriptSet = true
 		end
 
 		if settings.pet.enable and module.Pet and not module.Pet.ScriptSet then
 			module.Pet:SetScript("OnEvent", function(self, event)
-				if mMT.DevMode then
-					mMT:Print("Script Pet", "Event:", event, "Unit Exists:", UnitExists("pet"))
-				end
-
-				if UnitExists("pet") then
-					if self:GetAttribute("unit") ~= "pet" then
-						self:SetAttribute("unit", "pet")
-					end
-
-					SetPortraits(self, "pet", textures.enablemasking[settings.pet.texture], settings.pet.mirror)
-
-					setColor(self.texture, getColor("pet"), settings.pet.mirror)
-					if settings.general.corner and textures.corner[settings.pet.texture] then
-						setColor(self.corner, getColor("pet"), settings.pet.mirror)
-					end
-				end
+				UnitEvent(self, event, settings.pet, nil, "pet")
 			end)
 			module.Pet.ScriptSet = true
 		end
 
 		if settings.focus.enable and module.Focus and not module.Focus.ScriptSet then
-			module.Focus:SetScript("OnEvent", function(self, event)
-				if mMT.DevMode then
-					mMT:Print("Script Focus", "Event:", event, "Unit Exists:", UnitExists("focus"))
-				end
-
-				if settings.focus.cast then
-					module.Focus.empowering = (event == "UNIT_SPELLCAST_EMPOWER_START")
-				end
-
-				if castIconUpdateEvents[event] then
-					AddCastIcon(module.Focus, "focus")
-				else
-					if settings.focus.cast then
-						if throttleEvents[event] and ((not module.Focus.throttle) or module.Focus.empowering) then
-							return
-						end
-						module.Focus.throttle = false
-						module.Focus.empowering = false
-					end
-
-					if UnitExists("focus") then
-						if self:GetAttribute("unit") ~= "focus" then
-							self:SetAttribute("unit", "focus")
-						end
-
-						SetPortraits(self, "focus", textures.enablemasking[settings.focus.texture], settings.focus.mirror)
-						setColor(self.texture, getColor("focus"), settings.focus.mirror)
-						if settings.general.corner and textures.corner[settings.focus.texture] then
-							setColor(self.corner, getColor("focus"), settings.focus.mirror)
-						end
-
-						if settings.focus.extraEnable and self.extra then
-							CheckRareElite(self, "focus")
-						elseif self.extra then
-							self.extra:Hide()
-						end
-					end
-				end
+			module.Focus:SetScript("OnEvent", function(self, event, castUnit)
+				UnitEvent(self, event, settings.focus, castUnit, "focus")
 			end)
 			module.Focus.ScriptSet = true
 		end
 
 		if settings.targettarget.enable and module.TargetTarget and not module.TargetTarget.ScriptSet then
 			module.TargetTarget:SetScript("OnEvent", function(self, event)
-				if mMT.DevMode then
-					mMT:Print("Script Target of Target", "Event:", event, "Unit Exists:", UnitExists("targettarget"))
-				end
-
-				if UnitExists("targettarget") then
-					if self:GetAttribute("unit") ~= "targettarget" then
-						self:SetAttribute("unit", "targettarget")
-					end
-
-					SetPortraits(self, "targettarget", textures.enablemasking[settings.targettarget.texture], settings.targettarget.mirror)
-					setColor(self.texture, getColor("targettarget"), settings.targettarget.mirror)
-					if settings.general.corner and textures.corner[settings.targettarget.texture] then
-						setColor(self.corner, getColor("targettarget"), settings.targettarget.mirror)
-					end
-
-					if settings.targettarget.extraEnable and self.extra then
-						CheckRareElite(self, "targettarget")
-					elseif self.extra then
-						self.extra:Hide()
-					end
-				end
+				UnitEvent(self, event, settings.targettarget, nil, "targettarget")
 			end)
 			module.TargetTarget.ScriptSet = true
 		end
@@ -1222,41 +1184,8 @@ function module:Initialize()
 		if settings.party.enable and module.Party1 and not module.Party1.ScriptSet then
 			for i = 1, 5 do
 				local frame = _G["ElvUF_PartyGroup1UnitButton" .. i]
-				module["Party" .. i]:SetScript("OnEvent", function(self, event)
-					if mMT.DevMode then
-						mMT:Print("Script Party " .. i, "Event:", event, "Unit:", frame.unit, "Unit Exists:", UnitExists(frame.unit))
-					end
-
-					if settings.party.cast then
-						module["Party" .. i].empowering = (event == "UNIT_SPELLCAST_EMPOWER_START")
-					end
-
-					if castIconUpdateEvents[event] then
-						AddCastIcon(module["Party" .. i], frame.unit)
-					else
-						if settings.party.cast then
-							if throttleEvents[event] and ((not module["Party" .. i].throttle) or module["Party" .. i].empowering) then
-								return
-							end
-							module["Party" .. i].throttle = false
-							module["Party" .. i].empowering = false
-						end
-
-						if UnitExists(frame.unit) then
-							if self:GetAttribute("unit") ~= frame.unit then
-								self:SetAttribute("unit", frame.unit)
-							end
-
-							setColor(self.texture, getColor(frame.unit), settings.party.mirror)
-							if settings.general.corner and textures.corner[settings.party.texture] then
-								setColor(self.corner, getColor(frame.unit), settings.party.mirror)
-							end
-
-							SetPortraits(self, frame.unit, not textures.enablemasking[settings.party.texture], settings.party.mirror)
-						else
-							SetPortraits(self, "player", not textures.enablemasking[settings.party.texture], settings.party.mirror)
-						end
-					end
+				module["Party" .. i]:SetScript("OnEvent", function(self, event, castUnit)
+					UnitEvent(self, event, settings.party, castUnit, frame.unit)
 				end)
 				module["Party" .. i].ScriptSet = true
 			end
@@ -1265,41 +1194,8 @@ function module:Initialize()
 		if settings.boss.enable and module.Boss1 and not module.Boss1.ScriptSet then
 			for i = 1, 8 do
 				local frame = _G["ElvUF_Boss" .. i]
-				module["Boss" .. i]:SetScript("OnEvent", function(self, event)
-					if mMT.DevMode then
-						mMT:Print("Script Boss " .. i, "Event:", event, "Unit:", frame.unit, "Unit Exists:", UnitExists(frame.unit))
-					end
-
-					if settings.boss.cast then
-						module["Boss" .. i].empowering = (event == "UNIT_SPELLCAST_EMPOWER_START")
-					end
-
-					if castIconUpdateEvents[event] then
-						AddCastIcon(module["Boss" .. i], frame.unit)
-					else
-						if settings.boss.cast then
-							if throttleEvents[event] and ((not module["Boss" .. i].throttle) or module["Boss" .. i].empowering) then
-								return
-							end
-							module["Boss" .. i].throttle = false
-							module["Boss" .. i].empowering = false
-						end
-
-						if UnitExists(frame.unit) then
-							if self:GetAttribute("unit") ~= frame.unit then
-								self:SetAttribute("unit", frame.unit)
-							end
-
-							setColor(self.texture, getColor(frame.unit), settings.boss.mirror)
-							if settings.general.corner and textures.corner[settings.boss.texture] then
-								setColor(self.corner, getColor(frame.unit), settings.boss.mirror)
-							end
-
-							SetPortraits(self, frame.unit, textures.enablemasking[settings.boss.texture], settings.boss.mirror)
-						else
-							SetPortraits(module["Boss" .. i], "player", not textures.enablemasking[settings.boss.texture], settings.boss.mirror)
-						end
-					end
+				module["Boss" .. i]:SetScript("OnEvent", function(self, event, castUnit)
+					UnitEvent(self, event, settings.boss, castUnit, frame.unit)
 				end)
 				module["Boss" .. i].ScriptSet = true
 			end
@@ -1308,39 +1204,8 @@ function module:Initialize()
 		if settings.arena.enable and module.Arena1 and not module.Arena1.ScriptSet then
 			for i = 1, 5 do
 				local frame = _G["ElvUF_Arena" .. i]
-				module["Arena" .. i]:SetScript("OnEvent", function(self, event)
-					if mMT.DevMode then
-						mMT:Print("Script Arena " .. i, "Event:", event, "Unit:", frame.unit, "Unit Exists:", UnitExists(frame.unit))
-					end
-
-					if settings.arena.cast then
-						module["Arena" .. i].empowering = (event == "UNIT_SPELLCAST_EMPOWER_START")
-					end
-
-					if castIconUpdateEvents[event] then
-						AddCastIcon(module["Arena" .. i], frame.unit)
-					else
-						if settings.arena.cast then
-							if throttleEvents[event] and ((not module["Arena" .. i].throttle) or module["Arena" .. i].empowering) then
-								return
-							end
-							module["Arena" .. i].throttle = false
-							module["Arena" .. i].empowering = false
-						end
-
-						if UnitExists(frame.unit) then
-							if self:GetAttribute("unit") ~= frame.unit then
-								self:SetAttribute("unit", frame.unit)
-							end
-
-							setColor(self.texture, getColor(frame.unit), settings.arena.mirror)
-							if settings.general.corner and textures.corner[settings.arena.texture] then
-								setColor(self.corner, getColor(frame.unit), settings.arena.mirror)
-							end
-
-							SetPortraits(self, frame.unit, textures.enablemasking[settings.arena.texture], settings.arena.mirror)
-						end
-					end
+				module["Arena" .. i]:SetScript("OnEvent", function(self, event, castUnit)
+					UnitEvent(self, event, settings.arena, castUnit, frame.unit)
 				end)
 
 				module["Arena" .. i].ScriptSet = true

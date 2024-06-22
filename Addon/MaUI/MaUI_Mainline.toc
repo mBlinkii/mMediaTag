@@ -11,3 +11,4 @@
 ## X-Wago-ID: 9rN48AND
 
 init.lua
+profiles\load_profiles.xml
