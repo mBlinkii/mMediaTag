@@ -781,7 +781,7 @@ local function CastEvents(db, name, remove)
 
 		if E.Retail then
 			for _, event in pairs(castEventsRetail) do
-				tinsert(db[name].events, event)
+				tinsert(db[name].unitEvents, event)
 			end
 		end
 	end
@@ -1052,13 +1052,15 @@ function module:Initialize()
 					mMT:Print("Script Player", "Event:", event, "Unit Exists:", UnitExists("player"))
 				end
 
-				module.Player.empowering = (event == "UNIT_SPELLCAST_EMPOWER_START")
+				if settings.player.cast then
+					module.Player.empowering = (event == "UNIT_SPELLCAST_EMPOWER_START")
+				end
 
 				if castIconUpdateEvents[event] then
 					AddCastIcon(module.Player, "player")
 				else
-					if settings.player.cast then
-						if throttleEvents[event] and ((not module.Player.throttle) or module.Player.empowering) then
+					if settings.player.cast and throttleEvents[event] then
+						if (not module.Player.throttle) or module.Player.empowering then
 							return
 						end
 						module.Player.throttle = false
@@ -1087,7 +1089,9 @@ function module:Initialize()
 					mMT:Print("Script Target", "Event:", event, "Unit Exists:", UnitExists("target"))
 				end
 
-				module.Target.empowering = (event == "UNIT_SPELLCAST_EMPOWER_START")
+				if settings.target.cast then
+					module.Target.empowering = (event == "UNIT_SPELLCAST_EMPOWER_START")
+				end
 
 				if castIconUpdateEvents[event] then
 					AddCastIcon(module.Target, "target")
@@ -1151,7 +1155,9 @@ function module:Initialize()
 					mMT:Print("Script Focus", "Event:", event, "Unit Exists:", UnitExists("focus"))
 				end
 
-				module.Focus.empowering = (event == "UNIT_SPELLCAST_EMPOWER_START")
+				if settings.focus.cast then
+					module.Focus.empowering = (event == "UNIT_SPELLCAST_EMPOWER_START")
+				end
 
 				if castIconUpdateEvents[event] then
 					AddCastIcon(module.Focus, "focus")
@@ -1221,7 +1227,9 @@ function module:Initialize()
 						mMT:Print("Script Party " .. i, "Event:", event, "Unit:", frame.unit, "Unit Exists:", UnitExists(frame.unit))
 					end
 
-					module["Party" .. i].empowering = (event == "UNIT_SPELLCAST_EMPOWER_START")
+					if settings.party.cast then
+						module["Party" .. i].empowering = (event == "UNIT_SPELLCAST_EMPOWER_START")
+					end
 
 					if castIconUpdateEvents[event] then
 						AddCastIcon(module["Party" .. i], frame.unit)
@@ -1262,7 +1270,9 @@ function module:Initialize()
 						mMT:Print("Script Boss " .. i, "Event:", event, "Unit:", frame.unit, "Unit Exists:", UnitExists(frame.unit))
 					end
 
-					module["Boss" .. i].empowering = (event == "UNIT_SPELLCAST_EMPOWER_START")
+					if settings.boss.cast then
+						module["Boss" .. i].empowering = (event == "UNIT_SPELLCAST_EMPOWER_START")
+					end
 
 					if castIconUpdateEvents[event] then
 						AddCastIcon(module["Boss" .. i], frame.unit)
@@ -1303,7 +1313,9 @@ function module:Initialize()
 						mMT:Print("Script Arena " .. i, "Event:", event, "Unit:", frame.unit, "Unit Exists:", UnitExists(frame.unit))
 					end
 
-					module["Arena" .. i].empowering = (event == "UNIT_SPELLCAST_EMPOWER_START")
+					if settings.arena.cast then
+						module["Arena" .. i].empowering = (event == "UNIT_SPELLCAST_EMPOWER_START")
+					end
 
 					if castIconUpdateEvents[event] then
 						AddCastIcon(module["Arena" .. i], frame.unit)
