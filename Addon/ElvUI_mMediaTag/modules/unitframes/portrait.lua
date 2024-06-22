@@ -458,7 +458,7 @@ local function CreatePortrait(parent, conf, unit)
 	end
 
 	-- Corner
-	if (not textures.custom.enable) and settings.general.corner and textures.corner[conf.texture] then
+	if ((not textures.custom.enable) and settings.general.corner) and textures.corner[conf.texture] then
 		texture = textures.texture[settings.general.style].CO
 		frame.corner = CreatePortraitTexture(frame, "mMT_Corner", 5, texture, getColor(unit), conf.mirror)
 
@@ -646,7 +646,7 @@ local function UpdatePortrait(frame, conf, unit, parent)
 	end
 
 	-- Corner
-	if (not textures.custom.enable) and settings.general.corner and textures.corner[conf.texture] then
+	if ((not textures.custom.enable) and settings.general.corner) and textures.corner[conf.texture] then
 		texture = textures.texture[settings.general.style].CO
 		if frame.corner then
 			UpdatePortraitTexture(frame.corner, texture, getColor(unit), conf.mirror)
@@ -667,7 +667,7 @@ local function UpdatePortrait(frame, conf, unit, parent)
 		elseif frame.corner.border then
 			frame.corner.border:Hide()
 		end
-	elseif not (settings.general.corner and textures.corner[conf.texture]) and frame.corner and textures.custom.enable then
+	elseif frame.corner then
 		if frame.corner.border then
 			frame.corner.border:Hide()
 		end
