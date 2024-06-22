@@ -470,6 +470,8 @@ local function configTable()
 									name = function()
 										if E.db.mMT.portraits.custom.maskb and (E.db.mMT.portraits.custom.maskb ~= "") then
 											return L["Mirrored Mask"] .. "  > " .. E:TextureString(E.db.mMT.portraits.custom.maskb, sizeString)
+										elseif E.db.mMT.portraits.custom.mask and (E.db.mMT.portraits.custom.mask ~= "") then
+											return L["Mirrored Mask"] .. "  > " .. E:TextureString(E.db.mMT.portraits.custom.mask, sizeString)
 										else
 											return L["Mirrored Mask"] .. "  > " .. L["No Texture found"]
 										end
@@ -483,7 +485,7 @@ local function configTable()
 										return E.db.mMT.portraits.custom.maskb
 									end,
 									set = function(info, value)
-										E.db.mMT.portraits.custom.mask = value
+										E.db.mMT.portraits.custom.maskb = value
 										E:StaticPopup_Show("CONFIG_RL")
 									end,
 								},
