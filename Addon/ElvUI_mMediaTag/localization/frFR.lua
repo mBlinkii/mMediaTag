@@ -701,3 +701,7 @@ L[" hidden in combat."] = true
 L["Info! To achieve an optimal result with the portraits, a texture should be set for the texture, border and mask.\nThe mask is always required and no portrait will be visible without it.\n\n"] = true
 L["Cast Icon"] = true
 L["Enable Cast Icons"] = true
+L["Force reaction color"] = true
+L["Forces reaction color for all Units."]  = true
+L["Mirrored Mask"]  = true
+L["This is the mirrored Mask texture for the portraits. This texture is used to cut out the portrait of the Unit."] = true
