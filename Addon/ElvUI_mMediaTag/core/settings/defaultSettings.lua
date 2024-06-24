@@ -272,6 +272,12 @@ P.mMT = {
 				g = 0.01,
 				r = 1,
 			},
+			absorbs = {
+				b = 1,
+				hex = "|cffcd5fff",
+				g = 0.37,
+				r = 0.8,
+			},
 		},
 	},
 	questicons = {

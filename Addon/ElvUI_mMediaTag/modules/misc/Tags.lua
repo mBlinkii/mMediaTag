@@ -44,6 +44,7 @@ local colors = {
 	tank = "|cffffffff",
 	heal = "|cffffffff",
 	level = "|cffffffff",
+	absorbs = "|cffffffff",
 }
 
 local CustomRaidTargetIcons = {
@@ -273,6 +274,7 @@ function mMT:UpdateTagSettings()
 		TANK = E.db.mMT.tags.colors.tank.hex,
 		HEALER = E.db.mMT.tags.colors.heal.hex,
 		level = E.db.mMT.tags.colors.level.hex,
+		absorbs = E.db.mMT.tags.colors.absorbs.hex,
 	}
 
 	icons.rare = format("|T%s:15:15:0:2|t", mMT.Media.ClassIcons[E.db.mMT.tags.icons.rare or "FRUIT3"])
@@ -642,9 +644,18 @@ E:AddTag("mColor:target", "UNIT_TARGET", function(unit)
 	return unitPlayer and _TAGS.classcolor(target) or c and colors[c] or _TAGS.classcolor(target)
 end)
 
+E:AddTag("mColor:absorbs", "UNIT_ABSORB_AMOUNT_CHANGED", function(unit)
+	local absorb = UnitGetTotalAbsorbs(unit) or 0
+
+	if absorb ~= 0 then
+		return colors.absorbs or ""
+	end
+end)
+
 E:AddTagInfo("mColor", mMT.NameShort .. " " .. L["Color"], L["Unit colors with mMediaTag colors for Rare, Rareelite, Elite and Boss and Classcolors."])
-E:AddTagInfo("status", mMT.NameShort .. " " .. L["Color"], L["Unit colors with mMediaTag colors for Rare and Rareelite."])
+E:AddTagInfo("mColor:rare", mMT.NameShort .. " " .. L["Color"], L["Unit colors with mMediaTag colors for Rare and Rareelite."])
 E:AddTagInfo("mColor:target", mMT.NameShort .. " " .. L["Color"], L["Targetunit colors with mMediaTag colors for Rare, Rareelite, Elite and Boss and Classcolors."])
+E:AddTagInfo("mColor:absorbs", mMT.NameShort .. " " .. L["Color"], L["Absorbs color."])
 
 local function NoDecimalPercent(min, max, string)
 	if string then
@@ -676,7 +687,7 @@ E:AddTag("mHealth", "UNIT_HEALTH UNIT_MAXHEALTH UNIT_CONNECTION PLAYER_FLAGS_CHA
 	end
 end)
 
-E:AddTag("mHealth:absorbs", "UNIT_HEALTH UNIT_MAXHEALTH UNIT_CONNECTION PLAYER_FLAGS_CHANGED PLAYER_UPDATE_RESTING", function(unit)
+E:AddTag("mHealth:absorbs", "UNIT_HEALTH UNIT_MAXHEALTH UNIT_CONNECTION PLAYER_FLAGS_CHANGED PLAYER_UPDATE_RESTING UNIT_ABSORB_AMOUNT_CHANGED", function(unit)
 	local isAFK = UnitIsAFK(unit)
 
 	if isAFK then
@@ -776,7 +787,7 @@ E:AddTag("mHealth:short", "UNIT_HEALTH UNIT_MAXHEALTH UNIT_CONNECTION PLAYER_FLA
 	end
 end)
 
-E:AddTag("mHealth:short:absorbs", "UNIT_HEALTH UNIT_MAXHEALTH UNIT_CONNECTION PLAYER_FLAGS_CHANGED PLAYER_UPDATE_RESTING", function(unit)
+E:AddTag("mHealth:short:absorbs", "UNIT_HEALTH UNIT_MAXHEALTH UNIT_CONNECTION PLAYER_FLAGS_CHANGED PLAYER_UPDATE_RESTING UNIT_ABSORB_AMOUNT_CHANGED", function(unit)
 	local isAFK = UnitIsAFK(unit)
 
 	if isAFK then
@@ -1116,7 +1127,7 @@ E:AddTag("mHealth:current-percent", "UNIT_HEALTH UNIT_MAXHEALTH UNIT_CONNECTION 
 	end
 end)
 
-E:AddTag("mHealth:current-percent:absorbs", "UNIT_HEALTH UNIT_MAXHEALTH UNIT_CONNECTION PLAYER_FLAGS_CHANGED PLAYER_UPDATE_RESTING", function(unit)
+E:AddTag("mHealth:current-percent:absorbs", "UNIT_HEALTH UNIT_MAXHEALTH UNIT_CONNECTION PLAYER_FLAGS_CHANGED PLAYER_UPDATE_RESTING UNIT_ABSORB_AMOUNT_CHANGED", function(unit)
 	local isAFK = UnitIsAFK(unit)
 
 	if isAFK then
@@ -1170,7 +1181,7 @@ E:AddTag("mHealth:current-percent:ndp", "UNIT_HEALTH UNIT_MAXHEALTH UNIT_CONNECT
 	end
 end)
 
-E:AddTag("mHealth:current-percent:ndp:absorbs", "UNIT_HEALTH UNIT_MAXHEALTH UNIT_CONNECTION PLAYER_FLAGS_CHANGED PLAYER_UPDATE_RESTING", function(unit)
+E:AddTag("mHealth:current-percent:ndp:absorbs", "UNIT_HEALTH UNIT_MAXHEALTH UNIT_CONNECTION PLAYER_FLAGS_CHANGED PLAYER_UPDATE_RESTING UNIT_ABSORB_AMOUNT_CHANGED", function(unit)
 	local isAFK = UnitIsAFK(unit)
 
 	if isAFK then
@@ -1224,7 +1235,7 @@ E:AddTag("mHealth:current-percent:short", "UNIT_HEALTH UNIT_MAXHEALTH UNIT_CONNE
 	end
 end)
 
-E:AddTag("mHealth:current-percent:short:absorbs", "UNIT_HEALTH UNIT_MAXHEALTH UNIT_CONNECTION PLAYER_FLAGS_CHANGED PLAYER_UPDATE_RESTING", function(unit)
+E:AddTag("mHealth:current-percent:short:absorbs", "UNIT_HEALTH UNIT_MAXHEALTH UNIT_CONNECTION PLAYER_FLAGS_CHANGED PLAYER_UPDATE_RESTING UNIT_ABSORB_AMOUNT_CHANGED", function(unit)
 	local isAFK = UnitIsAFK(unit)
 
 	if isAFK then
@@ -1278,7 +1289,7 @@ E:AddTag("mHealth:current-percent:short:ndp", "UNIT_HEALTH UNIT_MAXHEALTH UNIT_C
 	end
 end)
 
-E:AddTag("mHealth:current-percent:short:ndp:absorbs", "UNIT_HEALTH UNIT_MAXHEALTH UNIT_CONNECTION PLAYER_FLAGS_CHANGED PLAYER_UPDATE_RESTING", function(unit)
+E:AddTag("mHealth:current-percent:short:ndp:absorbs", "UNIT_HEALTH UNIT_MAXHEALTH UNIT_CONNECTION PLAYER_FLAGS_CHANGED PLAYER_UPDATE_RESTING UNIT_ABSORB_AMOUNT_CHANGED", function(unit)
 	local isAFK = UnitIsAFK(unit)
 
 	if isAFK then
@@ -1438,7 +1449,7 @@ E:AddTag("mHealth:NoAFK:short:current-percent:ndp", "UNIT_HEALTH UNIT_MAXHEALTH 
 	end
 end)
 
-E:AddTag("mHealth:onlypercent-with-absorbs:ndp:nosign", "UNIT_HEALTH UNIT_MAXHEALTH UNIT_ABSORB_AMOUNT_CHANGED UNIT_CONNECTION PLAYER_FLAGS_CHANGED", function(unit)
+E:AddTag("mHealth:onlypercent-with-absorbs:ndp:nosign", "UNIT_HEALTH UNIT_MAXHEALTH UNIT_ABSORB_AMOUNT_CHANGED UNIT_CONNECTION PLAYER_FLAGS_CHANGED UNIT_ABSORB_AMOUNT_CHANGED", function(unit)
 	local status = UnitIsDead(unit) and L["Dead"] or UnitIsGhost(unit) and L["Ghost"] or not UnitIsConnected(unit) and L["Offline"]
 
 	if status then

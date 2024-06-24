@@ -206,6 +206,31 @@ local function configTable()
                 },
             },
         },
+        header_other = {
+			order = 5,
+			type = "group",
+			inline = true,
+			name = L["Other Colors"],
+			args = {
+                color_absorbs = {
+                    type = "color",
+                    order = 1,
+                    name = function()
+                        return format("%s%s|r",E.db.mMT.tags.colors.absorbs.hex ,L["Absorbs"])
+                    end,
+                    hasAlpha = false,
+                    get = function(info)
+                        local t = E.db.mMT.tags.colors.absorbs
+                        return t.r, t.g, t.b
+                    end,
+                    set = function(info, r, g, b)
+                        local t = E.db.mMT.tags.colors.absorbs
+                        t.r, t.g, t.b, t.hex = r, g, b, E:RGBToHex(r, g, b)
+                        mMT:UpdateTagSettings()
+                    end,
+                },
+            },
+        },
 	}
 end
 
