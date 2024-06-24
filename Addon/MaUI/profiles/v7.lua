@@ -34,31 +34,29 @@ function MAUI:Player_v7()
 	E.db["unitframe"]["units"]["player"]["classbar"]["height"] = 18
 	E.db["unitframe"]["units"]["player"]["classbar"]["verticalOrientation"] = true
 
-	E.db["unitframe"]["units"]["player"]["customTexts"] = E.db["unitframe"]["units"]["player"]["customTexts"] or {}
-	E.db["unitframe"]["units"]["player"]["customTexts"]["m-Absorb"] = {
-		attachTextTo = "Health",
-		enable = true,
-		font = "PT Sans Narrow",
-		fontOutline = "SHADOW",
-		justifyH = "LEFT",
-		size = 14,
-		text_format = "||cf2cd5fff[absorbs]||r",
-		xOffset = 24,
-		yOffset = 26,
-	}
+	E.db["unitframe"]["units"]["player"]["customTexts"]["m-Absorb"] = E.db["unitframe"]["units"]["player"]["customTexts"]["m-Absorb"] or {}
+	E.db["unitframe"]["units"]["player"]["customTexts"]["m-Absorb"]["attachTextTo"] = "Health"
+	E.db["unitframe"]["units"]["player"]["customTexts"]["m-Absorb"]["enable"] = true
+	E.db["unitframe"]["units"]["player"]["customTexts"]["m-Absorb"]["font"] = "PT Sans Narrow"
+	E.db["unitframe"]["units"]["player"]["customTexts"]["m-Absorb"]["fontOutline"] = "SHADOW"
+	E.db["unitframe"]["units"]["player"]["customTexts"]["m-Absorb"]["justifyH"] = "LEFT"
+	E.db["unitframe"]["units"]["player"]["customTexts"]["m-Absorb"]["size"] = 14
+	E.db["unitframe"]["units"]["player"]["customTexts"]["m-Absorb"]["text_format"] = "||cf2cd5fff[absorbs]||r"
+	E.db["unitframe"]["units"]["player"]["customTexts"]["m-Absorb"]["xOffset"] = 24
+	E.db["unitframe"]["units"]["player"]["customTexts"]["m-Absorb"]["yOffset"] = 26
 
-	E.db["unitframe"]["units"]["player"]["customTexts"]["m-Death"] = {
-		attachTextTo = "Health",
-		enable = true,
-		font = "PT Sans Narrow",
-		fontOutline = "SHADOW",
-		justifyH = "LEFT",
-		size = 12,
-		text_format = "[mouseover][mDeathCount:color][mDeathCount:hide:text][mDeathCount]||r",
-		xOffset = 14,
-		yOffset = 0,
-	}
+	E.db["unitframe"]["units"]["player"]["customTexts"]["m-Death"] = E.db["unitframe"]["units"]["player"]["customTexts"]["m-Death"] or {}
+	E.db["unitframe"]["units"]["player"]["customTexts"]["m-Death"]["attachTextTo"] = "Health"
+	E.db["unitframe"]["units"]["player"]["customTexts"]["m-Death"]["enable"] = true
+	E.db["unitframe"]["units"]["player"]["customTexts"]["m-Death"]["font"] = "PT Sans Narrow"
+	E.db["unitframe"]["units"]["player"]["customTexts"]["m-Death"]["fontOutline"] = "SHADOW"
+	E.db["unitframe"]["units"]["player"]["customTexts"]["m-Death"]["justifyH"] = "LEFT"
+	E.db["unitframe"]["units"]["player"]["customTexts"]["m-Death"]["size"] = 12
+	E.db["unitframe"]["units"]["player"]["customTexts"]["m-Death"]["text_format"] = "[mouseover][mDeathCount:color][mDeathCount:hide:text][mDeathCount]||r"
+	E.db["unitframe"]["units"]["player"]["customTexts"]["m-Death"]["xOffset"] = 14
+	E.db["unitframe"]["units"]["player"]["customTexts"]["m-Death"]["yOffset"] = 0
 
+	E.db["unitframe"]["units"]["player"]["customTexts"]["m-Group"] = E.db["unitframe"]["units"]["player"]["customTexts"]["m-Group"] or {}
 	E.db["unitframe"]["units"]["player"]["customTexts"]["m-Group"]["attachTextTo"] = "Power"
 	E.db["unitframe"]["units"]["player"]["customTexts"]["m-Group"]["enable"] = true
 	E.db["unitframe"]["units"]["player"]["customTexts"]["m-Group"]["font"] = "PT Sans Narrow"
@@ -68,6 +66,8 @@ function MAUI:Player_v7()
 	E.db["unitframe"]["units"]["player"]["customTexts"]["m-Group"]["text_format"] = "||cff00ffa3[Grp. >group][mouseover]||r"
 	E.db["unitframe"]["units"]["player"]["customTexts"]["m-Group"]["xOffset"] = 0
 	E.db["unitframe"]["units"]["player"]["customTexts"]["m-Group"]["yOffset"] = 20
+
+	E.db["unitframe"]["units"]["player"]["customTexts"]["m-Health"] = E.db["unitframe"]["units"]["player"]["customTexts"]["m-Health"] or {}
 	E.db["unitframe"]["units"]["player"]["customTexts"]["m-Health"]["attachTextTo"] = "Power"
 	E.db["unitframe"]["units"]["player"]["customTexts"]["m-Health"]["enable"] = true
 	E.db["unitframe"]["units"]["player"]["customTexts"]["m-Health"]["font"] = "PT Sans Narrow"
@@ -77,6 +77,8 @@ function MAUI:Player_v7()
 	E.db["unitframe"]["units"]["player"]["customTexts"]["m-Health"]["text_format"] = "[mHealth:short]"
 	E.db["unitframe"]["units"]["player"]["customTexts"]["m-Health"]["xOffset"] = -110
 	E.db["unitframe"]["units"]["player"]["customTexts"]["m-Health"]["yOffset"] = 0
+
+	E.db["unitframe"]["units"]["player"]["customTexts"]["m-Name"] = E.db["unitframe"]["units"]["player"]["customTexts"]["m-Name"] or {}
 	E.db["unitframe"]["units"]["player"]["customTexts"]["m-Name"]["attachTextTo"] = "Health"
 	E.db["unitframe"]["units"]["player"]["customTexts"]["m-Name"]["enable"] = true
 	E.db["unitframe"]["units"]["player"]["customTexts"]["m-Name"]["font"] = "PT Sans Narrow"
@@ -86,6 +88,8 @@ function MAUI:Player_v7()
 	E.db["unitframe"]["units"]["player"]["customTexts"]["m-Name"]["text_format"] = "[name][ || >mLevel]"
 	E.db["unitframe"]["units"]["player"]["customTexts"]["m-Name"]["xOffset"] = -4
 	E.db["unitframe"]["units"]["player"]["customTexts"]["m-Name"]["yOffset"] = 26
+
+	E.db["unitframe"]["units"]["player"]["customTexts"]["m-Power"] = E.db["unitframe"]["units"]["player"]["customTexts"]["m-Power"] or {}
 	E.db["unitframe"]["units"]["player"]["customTexts"]["m-Power"]["attachTextTo"] = "Power"
 	E.db["unitframe"]["units"]["player"]["customTexts"]["m-Power"]["enable"] = true
 	E.db["unitframe"]["units"]["player"]["customTexts"]["m-Power"]["font"] = "PT Sans Narrow"
@@ -95,6 +99,8 @@ function MAUI:Player_v7()
 	E.db["unitframe"]["units"]["player"]["customTexts"]["m-Power"]["text_format"] = "[mPower:percent:combat]"
 	E.db["unitframe"]["units"]["player"]["customTexts"]["m-Power"]["xOffset"] = -4
 	E.db["unitframe"]["units"]["player"]["customTexts"]["m-Power"]["yOffset"] = 0
+
+	E.db["unitframe"]["units"]["player"]["customTexts"]["m-PvP"] = E.db["unitframe"]["units"]["player"]["customTexts"]["m-PvP"] or {}
 	E.db["unitframe"]["units"]["player"]["customTexts"]["m-PvP"]["attachTextTo"] = "Health"
 	E.db["unitframe"]["units"]["player"]["customTexts"]["m-PvP"]["enable"] = true
 	E.db["unitframe"]["units"]["player"]["customTexts"]["m-PvP"]["font"] = "PT Sans Narrow"
@@ -104,6 +110,8 @@ function MAUI:Player_v7()
 	E.db["unitframe"]["units"]["player"]["customTexts"]["m-PvP"]["text_format"] = "||cffE91E63[pvptimer][mouseover]||r"
 	E.db["unitframe"]["units"]["player"]["customTexts"]["m-PvP"]["xOffset"] = 24
 	E.db["unitframe"]["units"]["player"]["customTexts"]["m-PvP"]["yOffset"] = 26
+
+	E.db["unitframe"]["units"]["player"]["customTexts"]["m-StatusIcon"] = E.db["unitframe"]["units"]["player"]["customTexts"]["m-StatusIcon"] or {}
 	E.db["unitframe"]["units"]["player"]["customTexts"]["m-StatusIcon"]["attachTextTo"] = "Health"
 	E.db["unitframe"]["units"]["player"]["customTexts"]["m-StatusIcon"]["enable"] = true
 	E.db["unitframe"]["units"]["player"]["customTexts"]["m-StatusIcon"]["font"] = "PT Sans Narrow"
@@ -113,6 +121,8 @@ function MAUI:Player_v7()
 	E.db["unitframe"]["units"]["player"]["customTexts"]["m-StatusIcon"]["text_format"] = "[mStatus:icon]"
 	E.db["unitframe"]["units"]["player"]["customTexts"]["m-StatusIcon"]["xOffset"] = -220
 	E.db["unitframe"]["units"]["player"]["customTexts"]["m-StatusIcon"]["yOffset"] = -2
+
+	E.db["unitframe"]["units"]["player"]["customTexts"]["m-StatusText"] = E.db["unitframe"]["units"]["player"]["customTexts"]["m-StatusText"] or {}
 	E.db["unitframe"]["units"]["player"]["customTexts"]["m-StatusText"]["attachTextTo"] = "Health"
 	E.db["unitframe"]["units"]["player"]["customTexts"]["m-StatusText"]["enable"] = true
 	E.db["unitframe"]["units"]["player"]["customTexts"]["m-StatusText"]["font"] = "PT Sans Narrow"
@@ -122,6 +132,7 @@ function MAUI:Player_v7()
 	E.db["unitframe"]["units"]["player"]["customTexts"]["m-StatusText"]["text_format"] = "[mStatustimer]"
 	E.db["unitframe"]["units"]["player"]["customTexts"]["m-StatusText"]["xOffset"] = -254
 	E.db["unitframe"]["units"]["player"]["customTexts"]["m-StatusText"]["yOffset"] = 0
+
 	E.db["unitframe"]["units"]["player"]["cutaway"]["health"]["enabled"] = true
 	E.db["unitframe"]["units"]["player"]["debuffs"]["anchorPoint"] = "TOPRIGHT"
 	E.db["unitframe"]["units"]["player"]["debuffs"]["countFontOutline"] = "SHADOW"
@@ -164,6 +175,8 @@ function MAUI:Arena_v7()
 	E.db["unitframe"]["units"]["arena"]["castbar"]["textColor"]["g"] = 1
 	E.db["unitframe"]["units"]["arena"]["castbar"]["textColor"]["r"] = 1
 	E.db["unitframe"]["units"]["arena"]["castbar"]["width"] = 180
+
+	E.db["unitframe"]["units"]["arena"]["customTexts"]["m-Health"] = E.db["unitframe"]["units"]["arena"]["customTexts"]["m-Health"] or {}
 	E.db["unitframe"]["units"]["arena"]["customTexts"]["m-Health"]["attachTextTo"] = "Power"
 	E.db["unitframe"]["units"]["arena"]["customTexts"]["m-Health"]["enable"] = true
 	E.db["unitframe"]["units"]["arena"]["customTexts"]["m-Health"]["font"] = "PT Sans Narrow"
@@ -173,6 +186,8 @@ function MAUI:Arena_v7()
 	E.db["unitframe"]["units"]["arena"]["customTexts"]["m-Health"]["text_format"] = "[mHealth:short]"
 	E.db["unitframe"]["units"]["arena"]["customTexts"]["m-Health"]["xOffset"] = 90
 	E.db["unitframe"]["units"]["arena"]["customTexts"]["m-Health"]["yOffset"] = 0
+
+	E.db["unitframe"]["units"]["arena"]["customTexts"]["m-Name"] = E.db["unitframe"]["units"]["arena"]["customTexts"]["m-Name"] or {}
 	E.db["unitframe"]["units"]["arena"]["customTexts"]["m-Name"]["attachTextTo"] = "Health"
 	E.db["unitframe"]["units"]["arena"]["customTexts"]["m-Name"]["enable"] = true
 	E.db["unitframe"]["units"]["arena"]["customTexts"]["m-Name"]["font"] = "PT Sans Narrow"
@@ -182,6 +197,8 @@ function MAUI:Arena_v7()
 	E.db["unitframe"]["units"]["arena"]["customTexts"]["m-Name"]["text_format"] = "[name:abbrev:short]"
 	E.db["unitframe"]["units"]["arena"]["customTexts"]["m-Name"]["xOffset"] = 4
 	E.db["unitframe"]["units"]["arena"]["customTexts"]["m-Name"]["yOffset"] = 20
+
+	E.db["unitframe"]["units"]["arena"]["customTexts"]["m-Power"] = E.db["unitframe"]["units"]["arena"]["customTexts"]["m-Power"] or {}
 	E.db["unitframe"]["units"]["arena"]["customTexts"]["m-Power"]["attachTextTo"] = "Power"
 	E.db["unitframe"]["units"]["arena"]["customTexts"]["m-Power"]["enable"] = true
 	E.db["unitframe"]["units"]["arena"]["customTexts"]["m-Power"]["font"] = "PT Sans Narrow"
@@ -191,6 +208,7 @@ function MAUI:Arena_v7()
 	E.db["unitframe"]["units"]["arena"]["customTexts"]["m-Power"]["text_format"] = "[mPower:percent:combat]"
 	E.db["unitframe"]["units"]["arena"]["customTexts"]["m-Power"]["xOffset"] = 4
 	E.db["unitframe"]["units"]["arena"]["customTexts"]["m-Power"]["yOffset"] = 0
+
 	E.db["unitframe"]["units"]["arena"]["debuffs"]["anchorPoint"] = "TOPRIGHT"
 	E.db["unitframe"]["units"]["arena"]["debuffs"]["attachTo"] = "HEALTH"
 	E.db["unitframe"]["units"]["arena"]["debuffs"]["countFontOutline"] = "SHADOW"
@@ -318,6 +336,8 @@ function MAUI:Boss_v7()
 	E.db["unitframe"]["units"]["boss"]["castbar"]["textColor"]["g"] = 1
 	E.db["unitframe"]["units"]["boss"]["castbar"]["textColor"]["r"] = 1
 	E.db["unitframe"]["units"]["boss"]["castbar"]["width"] = 180
+
+	E.db["unitframe"]["units"]["boss"]["customTexts"]["m-Health"] = E.db["unitframe"]["units"]["boss"]["customTexts"]["m-Health"] or {}
 	E.db["unitframe"]["units"]["boss"]["customTexts"]["m-Health"]["attachTextTo"] = "Power"
 	E.db["unitframe"]["units"]["boss"]["customTexts"]["m-Health"]["enable"] = true
 	E.db["unitframe"]["units"]["boss"]["customTexts"]["m-Health"]["font"] = "PT Sans Narrow"
@@ -327,6 +347,8 @@ function MAUI:Boss_v7()
 	E.db["unitframe"]["units"]["boss"]["customTexts"]["m-Health"]["text_format"] = "[mHealth:short]"
 	E.db["unitframe"]["units"]["boss"]["customTexts"]["m-Health"]["xOffset"] = 90
 	E.db["unitframe"]["units"]["boss"]["customTexts"]["m-Health"]["yOffset"] = 0
+
+	E.db["unitframe"]["units"]["boss"]["customTexts"]["m-Name"] = E.db["unitframe"]["units"]["boss"]["customTexts"]["m-Name"] or {}
 	E.db["unitframe"]["units"]["boss"]["customTexts"]["m-Name"]["attachTextTo"] = "Health"
 	E.db["unitframe"]["units"]["boss"]["customTexts"]["m-Name"]["enable"] = true
 	E.db["unitframe"]["units"]["boss"]["customTexts"]["m-Name"]["font"] = "PT Sans Narrow"
@@ -336,6 +358,8 @@ function MAUI:Boss_v7()
 	E.db["unitframe"]["units"]["boss"]["customTexts"]["m-Name"]["text_format"] = "[name:abbrev:short]"
 	E.db["unitframe"]["units"]["boss"]["customTexts"]["m-Name"]["xOffset"] = 4
 	E.db["unitframe"]["units"]["boss"]["customTexts"]["m-Name"]["yOffset"] = 20
+
+	E.db["unitframe"]["units"]["boss"]["customTexts"]["m-Power"] = E.db["unitframe"]["units"]["boss"]["customTexts"]["m-Power"] or {}
 	E.db["unitframe"]["units"]["boss"]["customTexts"]["m-Power"]["attachTextTo"] = "Power"
 	E.db["unitframe"]["units"]["boss"]["customTexts"]["m-Power"]["enable"] = true
 	E.db["unitframe"]["units"]["boss"]["customTexts"]["m-Power"]["font"] = "PT Sans Narrow"
@@ -345,6 +369,7 @@ function MAUI:Boss_v7()
 	E.db["unitframe"]["units"]["boss"]["customTexts"]["m-Power"]["text_format"] = "[mPower:percent:combat]"
 	E.db["unitframe"]["units"]["boss"]["customTexts"]["m-Power"]["xOffset"] = 4
 	E.db["unitframe"]["units"]["boss"]["customTexts"]["m-Power"]["yOffset"] = 0
+
 	E.db["unitframe"]["units"]["boss"]["debuffs"]["anchorPoint"] = "TOPRIGHT"
 	E.db["unitframe"]["units"]["boss"]["debuffs"]["attachTo"] = "HEALTH"
 	E.db["unitframe"]["units"]["boss"]["debuffs"]["countFontOutline"] = "SHADOW"
@@ -391,6 +416,8 @@ function MAUI:Focus_v7()
 	E.db["unitframe"]["units"]["focus"]["castbar"]["textColor"]["g"] = 1
 	E.db["unitframe"]["units"]["focus"]["castbar"]["textColor"]["r"] = 1
 	E.db["unitframe"]["units"]["focus"]["castbar"]["width"] = 110
+
+	E.db["unitframe"]["units"]["focus"]["customTexts"]["m-Health"] = E.db["unitframe"]["units"]["focus"]["customTexts"]["m-Health"] or {}
 	E.db["unitframe"]["units"]["focus"]["customTexts"]["m-Health"]["attachTextTo"] = "Power"
 	E.db["unitframe"]["units"]["focus"]["customTexts"]["m-Health"]["enable"] = true
 	E.db["unitframe"]["units"]["focus"]["customTexts"]["m-Health"]["font"] = "PT Sans Narrow"
@@ -400,6 +427,8 @@ function MAUI:Focus_v7()
 	E.db["unitframe"]["units"]["focus"]["customTexts"]["m-Health"]["text_format"] = "[mHealth:short]"
 	E.db["unitframe"]["units"]["focus"]["customTexts"]["m-Health"]["xOffset"] = 54
 	E.db["unitframe"]["units"]["focus"]["customTexts"]["m-Health"]["yOffset"] = 0
+
+	E.db["unitframe"]["units"]["focus"]["customTexts"]["m-Name"] = E.db["unitframe"]["units"]["focus"]["customTexts"]["m-Name"] or {}
 	E.db["unitframe"]["units"]["focus"]["customTexts"]["m-Name"]["attachTextTo"] = "Health"
 	E.db["unitframe"]["units"]["focus"]["customTexts"]["m-Name"]["enable"] = true
 	E.db["unitframe"]["units"]["focus"]["customTexts"]["m-Name"]["font"] = "PT Sans Narrow"
@@ -409,6 +438,8 @@ function MAUI:Focus_v7()
 	E.db["unitframe"]["units"]["focus"]["customTexts"]["m-Name"]["text_format"] = "[name:abbrev:short]"
 	E.db["unitframe"]["units"]["focus"]["customTexts"]["m-Name"]["xOffset"] = 4
 	E.db["unitframe"]["units"]["focus"]["customTexts"]["m-Name"]["yOffset"] = 20
+
+	E.db["unitframe"]["units"]["focus"]["customTexts"]["m-StatusIcon"] = E.db["unitframe"]["units"]["focus"]["customTexts"]["m-StatusIcon"] or {}
 	E.db["unitframe"]["units"]["focus"]["customTexts"]["m-StatusIcon"]["attachTextTo"] = "Health"
 	E.db["unitframe"]["units"]["focus"]["customTexts"]["m-StatusIcon"]["enable"] = true
 	E.db["unitframe"]["units"]["focus"]["customTexts"]["m-StatusIcon"]["font"] = "PT Sans Narrow"
@@ -418,6 +449,8 @@ function MAUI:Focus_v7()
 	E.db["unitframe"]["units"]["focus"]["customTexts"]["m-StatusIcon"]["text_format"] = "[mStatus:icon]"
 	E.db["unitframe"]["units"]["focus"]["customTexts"]["m-StatusIcon"]["xOffset"] = 110
 	E.db["unitframe"]["units"]["focus"]["customTexts"]["m-StatusIcon"]["yOffset"] = -2
+
+	E.db["unitframe"]["units"]["focus"]["customTexts"]["m-StatusText"] = E.db["unitframe"]["units"]["focus"]["customTexts"]["m-StatusText"] or {}
 	E.db["unitframe"]["units"]["focus"]["customTexts"]["m-StatusText"]["attachTextTo"] = "Health"
 	E.db["unitframe"]["units"]["focus"]["customTexts"]["m-StatusText"]["enable"] = true
 	E.db["unitframe"]["units"]["focus"]["customTexts"]["m-StatusText"]["font"] = "PT Sans Narrow"
@@ -427,6 +460,7 @@ function MAUI:Focus_v7()
 	E.db["unitframe"]["units"]["focus"]["customTexts"]["m-StatusText"]["text_format"] = "[mStatustimer]"
 	E.db["unitframe"]["units"]["focus"]["customTexts"]["m-StatusText"]["xOffset"] = 134
 	E.db["unitframe"]["units"]["focus"]["customTexts"]["m-StatusText"]["yOffset"] = 0
+
 	E.db["unitframe"]["units"]["focus"]["debuffs"]["anchorPoint"] = "TOPLEFT"
 	E.db["unitframe"]["units"]["focus"]["debuffs"]["attachTo"] = "HEALTH"
 	E.db["unitframe"]["units"]["focus"]["debuffs"]["countFontOutline"] = "SHADOW"
@@ -467,6 +501,8 @@ function MAUI:Party_v7()
 	E.db["unitframe"]["units"]["party"]["castbar"]["textColor"]["b"] = 1
 	E.db["unitframe"]["units"]["party"]["castbar"]["textColor"]["g"] = 1
 	E.db["unitframe"]["units"]["party"]["castbar"]["textColor"]["r"] = 1
+
+	E.db["unitframe"]["units"]["party"]["customTexts"]["m-Absorb"] = E.db["unitframe"]["units"]["party"]["customTexts"]["m-Absorb"] or {}
 	E.db["unitframe"]["units"]["party"]["customTexts"]["m-Absorb"]["attachTextTo"] = "Health"
 	E.db["unitframe"]["units"]["party"]["customTexts"]["m-Absorb"]["enable"] = true
 	E.db["unitframe"]["units"]["party"]["customTexts"]["m-Absorb"]["font"] = "PT Sans Narrow"
@@ -476,6 +512,8 @@ function MAUI:Party_v7()
 	E.db["unitframe"]["units"]["party"]["customTexts"]["m-Absorb"]["text_format"] = "||cf2cd5fff[absorbs]||r"
 	E.db["unitframe"]["units"]["party"]["customTexts"]["m-Absorb"]["xOffset"] = 20
 	E.db["unitframe"]["units"]["party"]["customTexts"]["m-Absorb"]["yOffset"] = 22
+
+	E.db["unitframe"]["units"]["party"]["customTexts"]["m-Death"] = E.db["unitframe"]["units"]["party"]["customTexts"]["m-Death"] or {}
 	E.db["unitframe"]["units"]["party"]["customTexts"]["m-Death"]["attachTextTo"] = "Health"
 	E.db["unitframe"]["units"]["party"]["customTexts"]["m-Death"]["enable"] = true
 	E.db["unitframe"]["units"]["party"]["customTexts"]["m-Death"]["font"] = "PT Sans Narrow"
@@ -485,6 +523,8 @@ function MAUI:Party_v7()
 	E.db["unitframe"]["units"]["party"]["customTexts"]["m-Death"]["text_format"] = "[mouseover][mDeathCount:color][mDeathCount:hide:text][mDeathCount]||r"
 	E.db["unitframe"]["units"]["party"]["customTexts"]["m-Death"]["xOffset"] = 20
 	E.db["unitframe"]["units"]["party"]["customTexts"]["m-Death"]["yOffset"] = 0
+
+	E.db["unitframe"]["units"]["party"]["customTexts"]["m-Faction"] = E.db["unitframe"]["units"]["party"]["customTexts"]["m-Faction"] or {}
 	E.db["unitframe"]["units"]["party"]["customTexts"]["m-Faction"]["attachTextTo"] = "Health"
 	E.db["unitframe"]["units"]["party"]["customTexts"]["m-Faction"]["enable"] = true
 	E.db["unitframe"]["units"]["party"]["customTexts"]["m-Faction"]["font"] = "PT Sans Narrow"
@@ -494,6 +534,8 @@ function MAUI:Party_v7()
 	E.db["unitframe"]["units"]["party"]["customTexts"]["m-Faction"]["text_format"] = "[mFaction:icon:opposite]"
 	E.db["unitframe"]["units"]["party"]["customTexts"]["m-Faction"]["xOffset"] = 0
 	E.db["unitframe"]["units"]["party"]["customTexts"]["m-Faction"]["yOffset"] = 0
+
+	E.db["unitframe"]["units"]["party"]["customTexts"]["m-Health"] = E.db["unitframe"]["units"]["party"]["customTexts"]["m-Health"] or {}
 	E.db["unitframe"]["units"]["party"]["customTexts"]["m-Health"]["attachTextTo"] = "Power"
 	E.db["unitframe"]["units"]["party"]["customTexts"]["m-Health"]["enable"] = true
 	E.db["unitframe"]["units"]["party"]["customTexts"]["m-Health"]["font"] = "PT Sans Narrow"
@@ -503,6 +545,8 @@ function MAUI:Party_v7()
 	E.db["unitframe"]["units"]["party"]["customTexts"]["m-Health"]["text_format"] = "[mHealth:short]"
 	E.db["unitframe"]["units"]["party"]["customTexts"]["m-Health"]["xOffset"] = -90
 	E.db["unitframe"]["units"]["party"]["customTexts"]["m-Health"]["yOffset"] = 0
+
+	E.db["unitframe"]["units"]["party"]["customTexts"]["m-Name"] = E.db["unitframe"]["units"]["party"]["customTexts"]["m-Name"] or {}
 	E.db["unitframe"]["units"]["party"]["customTexts"]["m-Name"]["attachTextTo"] = "Health"
 	E.db["unitframe"]["units"]["party"]["customTexts"]["m-Name"]["enable"] = true
 	E.db["unitframe"]["units"]["party"]["customTexts"]["m-Name"]["font"] = "PT Sans Narrow"
@@ -512,6 +556,8 @@ function MAUI:Party_v7()
 	E.db["unitframe"]["units"]["party"]["customTexts"]["m-Name"]["text_format"] = "[name:medium][ || >mLevel]"
 	E.db["unitframe"]["units"]["party"]["customTexts"]["m-Name"]["xOffset"] = -4
 	E.db["unitframe"]["units"]["party"]["customTexts"]["m-Name"]["yOffset"] = 22
+
+	E.db["unitframe"]["units"]["party"]["customTexts"]["m-Power"] = E.db["unitframe"]["units"]["party"]["customTexts"]["m-Power"] or {}
 	E.db["unitframe"]["units"]["party"]["customTexts"]["m-Power"]["attachTextTo"] = "Power"
 	E.db["unitframe"]["units"]["party"]["customTexts"]["m-Power"]["enable"] = true
 	E.db["unitframe"]["units"]["party"]["customTexts"]["m-Power"]["font"] = "PT Sans Narrow"
@@ -521,6 +567,8 @@ function MAUI:Party_v7()
 	E.db["unitframe"]["units"]["party"]["customTexts"]["m-Power"]["text_format"] = "[mPower:percent:combat]"
 	E.db["unitframe"]["units"]["party"]["customTexts"]["m-Power"]["xOffset"] = -4
 	E.db["unitframe"]["units"]["party"]["customTexts"]["m-Power"]["yOffset"] = 0
+
+	E.db["unitframe"]["units"]["party"]["customTexts"]["m-PvP"] = E.db["unitframe"]["units"]["party"]["customTexts"]["m-PvP"] or {}
 	E.db["unitframe"]["units"]["party"]["customTexts"]["m-PvP"]["attachTextTo"] = "Health"
 	E.db["unitframe"]["units"]["party"]["customTexts"]["m-PvP"]["enable"] = true
 	E.db["unitframe"]["units"]["party"]["customTexts"]["m-PvP"]["font"] = "PT Sans Narrow"
@@ -530,6 +578,8 @@ function MAUI:Party_v7()
 	E.db["unitframe"]["units"]["party"]["customTexts"]["m-PvP"]["text_format"] = "[mPvP:icon]"
 	E.db["unitframe"]["units"]["party"]["customTexts"]["m-PvP"]["xOffset"] = -30
 	E.db["unitframe"]["units"]["party"]["customTexts"]["m-PvP"]["yOffset"] = 26
+
+	E.db["unitframe"]["units"]["party"]["customTexts"]["m-StatusIcon"] = E.db["unitframe"]["units"]["party"]["customTexts"]["m-StatusIcon"] or {}
 	E.db["unitframe"]["units"]["party"]["customTexts"]["m-StatusIcon"]["attachTextTo"] = "Health"
 	E.db["unitframe"]["units"]["party"]["customTexts"]["m-StatusIcon"]["enable"] = true
 	E.db["unitframe"]["units"]["party"]["customTexts"]["m-StatusIcon"]["font"] = "PT Sans Narrow"
@@ -539,6 +589,8 @@ function MAUI:Party_v7()
 	E.db["unitframe"]["units"]["party"]["customTexts"]["m-StatusIcon"]["text_format"] = "[mStatus:icon]"
 	E.db["unitframe"]["units"]["party"]["customTexts"]["m-StatusIcon"]["xOffset"] = -181
 	E.db["unitframe"]["units"]["party"]["customTexts"]["m-StatusIcon"]["yOffset"] = 0
+
+	E.db["unitframe"]["units"]["party"]["customTexts"]["m-StatusText"] = E.db["unitframe"]["units"]["party"]["customTexts"]["m-StatusText"] or {}
 	E.db["unitframe"]["units"]["party"]["customTexts"]["m-StatusText"]["attachTextTo"] = "Health"
 	E.db["unitframe"]["units"]["party"]["customTexts"]["m-StatusText"]["enable"] = true
 	E.db["unitframe"]["units"]["party"]["customTexts"]["m-StatusText"]["font"] = "PT Sans Narrow"
@@ -548,6 +600,7 @@ function MAUI:Party_v7()
 	E.db["unitframe"]["units"]["party"]["customTexts"]["m-StatusText"]["text_format"] = "[mStatustimer][ - >mDeathCount:hide]"
 	E.db["unitframe"]["units"]["party"]["customTexts"]["m-StatusText"]["xOffset"] = -212
 	E.db["unitframe"]["units"]["party"]["customTexts"]["m-StatusText"]["yOffset"] = 2
+
 	E.db["unitframe"]["units"]["party"]["debuffs"]["countFontOutline"] = "SHADOW"
 	E.db["unitframe"]["units"]["party"]["debuffs"]["countXOffset"] = -2
 	E.db["unitframe"]["units"]["party"]["debuffs"]["perrow"] = 4
@@ -599,6 +652,8 @@ function MAUI:Pet_v7()
 	E.db["unitframe"]["units"]["pet"]["castbar"]["textColor"]["g"] = 1
 	E.db["unitframe"]["units"]["pet"]["castbar"]["textColor"]["r"] = 1
 	E.db["unitframe"]["units"]["pet"]["castbar"]["width"] = 110
+
+	E.db["unitframe"]["units"]["pet"]["customTexts"]["m-Health"] = E.db["unitframe"]["units"]["pet"]["customTexts"]["m-Health"] or {}
 	E.db["unitframe"]["units"]["pet"]["customTexts"]["m-Health"]["attachTextTo"] = "Power"
 	E.db["unitframe"]["units"]["pet"]["customTexts"]["m-Health"]["enable"] = true
 	E.db["unitframe"]["units"]["pet"]["customTexts"]["m-Health"]["font"] = "PT Sans Narrow"
@@ -608,6 +663,8 @@ function MAUI:Pet_v7()
 	E.db["unitframe"]["units"]["pet"]["customTexts"]["m-Health"]["text_format"] = "[mHealth:short]"
 	E.db["unitframe"]["units"]["pet"]["customTexts"]["m-Health"]["xOffset"] = -54
 	E.db["unitframe"]["units"]["pet"]["customTexts"]["m-Health"]["yOffset"] = 0
+
+	E.db["unitframe"]["units"]["pet"]["customTexts"]["m-Name"] = E.db["unitframe"]["units"]["pet"]["customTexts"]["m-Name"] or {}
 	E.db["unitframe"]["units"]["pet"]["customTexts"]["m-Name"]["attachTextTo"] = "Health"
 	E.db["unitframe"]["units"]["pet"]["customTexts"]["m-Name"]["enable"] = true
 	E.db["unitframe"]["units"]["pet"]["customTexts"]["m-Name"]["font"] = "PT Sans Narrow"
@@ -617,6 +674,8 @@ function MAUI:Pet_v7()
 	E.db["unitframe"]["units"]["pet"]["customTexts"]["m-Name"]["text_format"] = "[name:short]"
 	E.db["unitframe"]["units"]["pet"]["customTexts"]["m-Name"]["xOffset"] = -4
 	E.db["unitframe"]["units"]["pet"]["customTexts"]["m-Name"]["yOffset"] = 20
+
+	E.db["unitframe"]["units"]["pet"]["customTexts"]["m-StatusIcon"] = E.db["unitframe"]["units"]["pet"]["customTexts"]["m-StatusIcon"] or {}
 	E.db["unitframe"]["units"]["pet"]["customTexts"]["m-StatusIcon"]["attachTextTo"] = "Health"
 	E.db["unitframe"]["units"]["pet"]["customTexts"]["m-StatusIcon"]["enable"] = true
 	E.db["unitframe"]["units"]["pet"]["customTexts"]["m-StatusIcon"]["font"] = "PT Sans Narrow"
@@ -626,6 +685,8 @@ function MAUI:Pet_v7()
 	E.db["unitframe"]["units"]["pet"]["customTexts"]["m-StatusIcon"]["text_format"] = "[mStatus:icon]"
 	E.db["unitframe"]["units"]["pet"]["customTexts"]["m-StatusIcon"]["xOffset"] = -110
 	E.db["unitframe"]["units"]["pet"]["customTexts"]["m-StatusIcon"]["yOffset"] = -2
+
+	E.db["unitframe"]["units"]["pet"]["customTexts"]["m-StatusText"] = E.db["unitframe"]["units"]["pet"]["customTexts"]["m-StatusText"] or {}
 	E.db["unitframe"]["units"]["pet"]["customTexts"]["m-StatusText"]["attachTextTo"] = "Health"
 	E.db["unitframe"]["units"]["pet"]["customTexts"]["m-StatusText"]["enable"] = true
 	E.db["unitframe"]["units"]["pet"]["customTexts"]["m-StatusText"]["font"] = "PT Sans Narrow"
@@ -635,6 +696,7 @@ function MAUI:Pet_v7()
 	E.db["unitframe"]["units"]["pet"]["customTexts"]["m-StatusText"]["text_format"] = "[mStatustimer]"
 	E.db["unitframe"]["units"]["pet"]["customTexts"]["m-StatusText"]["xOffset"] = -134
 	E.db["unitframe"]["units"]["pet"]["customTexts"]["m-StatusText"]["yOffset"] = 0
+
 	E.db["unitframe"]["units"]["pet"]["debuffs"]["countFontOutline"] = "SHADOW"
 	E.db["unitframe"]["units"]["pet"]["debuffs"]["countXOffset"] = -2
 	E.db["unitframe"]["units"]["pet"]["debuffs"]["enable"] = true
@@ -656,6 +718,8 @@ end
 function MAUI:Raid_v7()
 	E.db["unitframe"]["units"]["raid1"]["buffIndicator"]["countFontOutline"] = "SHADOW"
 	E.db["unitframe"]["units"]["raid1"]["buffs"]["countFontOutline"] = "SHADOW"
+
+	E.db["unitframe"]["units"]["raid1"]["customTexts"]["m-Health"] = E.db["unitframe"]["units"]["raid1"]["customTexts"]["m-Health"] or {}
 	E.db["unitframe"]["units"]["raid1"]["customTexts"]["m-Health"]["attachTextTo"] = "Power"
 	E.db["unitframe"]["units"]["raid1"]["customTexts"]["m-Health"]["enable"] = true
 	E.db["unitframe"]["units"]["raid1"]["customTexts"]["m-Health"]["font"] = "PT Sans Narrow"
@@ -665,6 +729,8 @@ function MAUI:Raid_v7()
 	E.db["unitframe"]["units"]["raid1"]["customTexts"]["m-Health"]["text_format"] = "[mHealth:short]"
 	E.db["unitframe"]["units"]["raid1"]["customTexts"]["m-Health"]["xOffset"] = -38
 	E.db["unitframe"]["units"]["raid1"]["customTexts"]["m-Health"]["yOffset"] = -1
+
+	E.db["unitframe"]["units"]["raid1"]["customTexts"]["m-Name"] = E.db["unitframe"]["units"]["raid1"]["customTexts"]["m-Name"] or {}
 	E.db["unitframe"]["units"]["raid1"]["customTexts"]["m-Name"]["attachTextTo"] = "Health"
 	E.db["unitframe"]["units"]["raid1"]["customTexts"]["m-Name"]["enable"] = true
 	E.db["unitframe"]["units"]["raid1"]["customTexts"]["m-Name"]["font"] = "PT Sans Narrow"
@@ -674,6 +740,7 @@ function MAUI:Raid_v7()
 	E.db["unitframe"]["units"]["raid1"]["customTexts"]["m-Name"]["text_format"] = "[name:veryshort][ || >mLevel]"
 	E.db["unitframe"]["units"]["raid1"]["customTexts"]["m-Name"]["xOffset"] = 0
 	E.db["unitframe"]["units"]["raid1"]["customTexts"]["m-Name"]["yOffset"] = 14
+
 	E.db["unitframe"]["units"]["raid1"]["debuffs"]["countFontOutline"] = "SHADOW"
 	E.db["unitframe"]["units"]["raid1"]["disableFocusGlow"] = true
 	E.db["unitframe"]["units"]["raid1"]["disableTargetGlow"] = true
@@ -702,107 +769,6 @@ function MAUI:Raid_v7()
 	E.db["unitframe"]["units"]["raid1"]["roleIcon"]["xOffset"] = -4
 	E.db["unitframe"]["units"]["raid1"]["roleIcon"]["yOffset"] = 0
 	E.db["unitframe"]["units"]["raid1"]["verticalSpacing"] = 13
-	E.db["unitframe"]["units"]["raid2"]["buffIndicator"]["countFontOutline"] = "SHADOW"
-	E.db["unitframe"]["units"]["raid2"]["buffs"]["countFontOutline"] = "SHADOW"
-	E.db["unitframe"]["units"]["raid2"]["customTexts"]["m-Health"]["attachTextTo"] = "Power"
-	E.db["unitframe"]["units"]["raid2"]["customTexts"]["m-Health"]["enable"] = true
-	E.db["unitframe"]["units"]["raid2"]["customTexts"]["m-Health"]["font"] = "PT Sans Narrow"
-	E.db["unitframe"]["units"]["raid2"]["customTexts"]["m-Health"]["fontOutline"] = "SHADOW"
-	E.db["unitframe"]["units"]["raid2"]["customTexts"]["m-Health"]["justifyH"] = "RIGHT"
-	E.db["unitframe"]["units"]["raid2"]["customTexts"]["m-Health"]["size"] = 12
-	E.db["unitframe"]["units"]["raid2"]["customTexts"]["m-Health"]["text_format"] = "[mHealth:short]"
-	E.db["unitframe"]["units"]["raid2"]["customTexts"]["m-Health"]["xOffset"] = -38
-	E.db["unitframe"]["units"]["raid2"]["customTexts"]["m-Health"]["yOffset"] = -1
-	E.db["unitframe"]["units"]["raid2"]["customTexts"]["m-Name"]["attachTextTo"] = "Health"
-	E.db["unitframe"]["units"]["raid2"]["customTexts"]["m-Name"]["enable"] = true
-	E.db["unitframe"]["units"]["raid2"]["customTexts"]["m-Name"]["font"] = "PT Sans Narrow"
-	E.db["unitframe"]["units"]["raid2"]["customTexts"]["m-Name"]["fontOutline"] = "SHADOW"
-	E.db["unitframe"]["units"]["raid2"]["customTexts"]["m-Name"]["justifyH"] = "RIGHT"
-	E.db["unitframe"]["units"]["raid2"]["customTexts"]["m-Name"]["size"] = 12
-	E.db["unitframe"]["units"]["raid2"]["customTexts"]["m-Name"]["text_format"] = "[name:veryshort][ || >mLevel]"
-	E.db["unitframe"]["units"]["raid2"]["customTexts"]["m-Name"]["xOffset"] = 0
-	E.db["unitframe"]["units"]["raid2"]["customTexts"]["m-Name"]["yOffset"] = 14
-	E.db["unitframe"]["units"]["raid2"]["debuffs"]["countFontOutline"] = "SHADOW"
-	E.db["unitframe"]["units"]["raid2"]["disableFocusGlow"] = true
-	E.db["unitframe"]["units"]["raid2"]["disableTargetGlow"] = true
-	E.db["unitframe"]["units"]["raid2"]["groupsPerRowCol"] = 4
-	E.db["unitframe"]["units"]["raid2"]["growthDirection"] = "DOWN_RIGHT"
-	E.db["unitframe"]["units"]["raid2"]["healPrediction"]["absorbStyle"] = "WRAPPED"
-	E.db["unitframe"]["units"]["raid2"]["health"]["text_format"] = ""
-	E.db["unitframe"]["units"]["raid2"]["height"] = 20
-	E.db["unitframe"]["units"]["raid2"]["horizontalSpacing"] = 4
-	E.db["unitframe"]["units"]["raid2"]["name"]["attachTextTo"] = "InfoPanel"
-	E.db["unitframe"]["units"]["raid2"]["name"]["position"] = "BOTTOMLEFT"
-	E.db["unitframe"]["units"]["raid2"]["name"]["text_format"] = ""
-	E.db["unitframe"]["units"]["raid2"]["name"]["xOffset"] = 2
-	E.db["unitframe"]["units"]["raid2"]["numGroups"] = 8
-	E.db["unitframe"]["units"]["raid2"]["orientation"] = "LEFT"
-	E.db["unitframe"]["units"]["raid2"]["power"]["enable"] = true
-	E.db["unitframe"]["units"]["raid2"]["power"]["height"] = 10
-	E.db["unitframe"]["units"]["raid2"]["power"]["width"] = "spaced"
-	E.db["unitframe"]["units"]["raid2"]["rdebuffs"]["enable"] = true
-	E.db["unitframe"]["units"]["raid2"]["rdebuffs"]["fontOutline"] = "SHADOW"
-	E.db["unitframe"]["units"]["raid2"]["rdebuffs"]["size"] = 17
-	E.db["unitframe"]["units"]["raid2"]["rdebuffs"]["xOffset"] = -20
-	E.db["unitframe"]["units"]["raid2"]["rdebuffs"]["yOffset"] = 3
-	E.db["unitframe"]["units"]["raid2"]["resurrectIcon"]["attachTo"] = "BOTTOMRIGHT"
-	E.db["unitframe"]["units"]["raid2"]["roleIcon"]["attachTo"] = "InfoPanel"
-	E.db["unitframe"]["units"]["raid2"]["roleIcon"]["enable"] = true
-	E.db["unitframe"]["units"]["raid2"]["roleIcon"]["position"] = "RIGHT"
-	E.db["unitframe"]["units"]["raid2"]["roleIcon"]["size"] = 12
-	E.db["unitframe"]["units"]["raid2"]["roleIcon"]["xOffset"] = -4
-	E.db["unitframe"]["units"]["raid2"]["roleIcon"]["yOffset"] = 0
-	E.db["unitframe"]["units"]["raid2"]["verticalSpacing"] = 13
-	E.db["unitframe"]["units"]["raid3"]["buffIndicator"]["countFontOutline"] = "SHADOW"
-	E.db["unitframe"]["units"]["raid3"]["buffs"]["countFontOutline"] = "SHADOW"
-	E.db["unitframe"]["units"]["raid3"]["customTexts"]["m-Health"]["attachTextTo"] = "Power"
-	E.db["unitframe"]["units"]["raid3"]["customTexts"]["m-Health"]["enable"] = true
-	E.db["unitframe"]["units"]["raid3"]["customTexts"]["m-Health"]["font"] = "PT Sans Narrow"
-	E.db["unitframe"]["units"]["raid3"]["customTexts"]["m-Health"]["fontOutline"] = "SHADOW"
-	E.db["unitframe"]["units"]["raid3"]["customTexts"]["m-Health"]["justifyH"] = "RIGHT"
-	E.db["unitframe"]["units"]["raid3"]["customTexts"]["m-Health"]["size"] = 12
-	E.db["unitframe"]["units"]["raid3"]["customTexts"]["m-Health"]["text_format"] = "[mHealth:short]"
-	E.db["unitframe"]["units"]["raid3"]["customTexts"]["m-Health"]["xOffset"] = -38
-	E.db["unitframe"]["units"]["raid3"]["customTexts"]["m-Health"]["yOffset"] = -1
-	E.db["unitframe"]["units"]["raid3"]["customTexts"]["m-Name"]["attachTextTo"] = "Health"
-	E.db["unitframe"]["units"]["raid3"]["customTexts"]["m-Name"]["enable"] = true
-	E.db["unitframe"]["units"]["raid3"]["customTexts"]["m-Name"]["font"] = "PT Sans Narrow"
-	E.db["unitframe"]["units"]["raid3"]["customTexts"]["m-Name"]["fontOutline"] = "SHADOW"
-	E.db["unitframe"]["units"]["raid3"]["customTexts"]["m-Name"]["justifyH"] = "RIGHT"
-	E.db["unitframe"]["units"]["raid3"]["customTexts"]["m-Name"]["size"] = 12
-	E.db["unitframe"]["units"]["raid3"]["customTexts"]["m-Name"]["text_format"] = "[name:veryshort][ || >mLevel]"
-	E.db["unitframe"]["units"]["raid3"]["customTexts"]["m-Name"]["xOffset"] = 0
-	E.db["unitframe"]["units"]["raid3"]["customTexts"]["m-Name"]["yOffset"] = 14
-	E.db["unitframe"]["units"]["raid3"]["debuffs"]["countFontOutline"] = "SHADOW"
-	E.db["unitframe"]["units"]["raid3"]["disableFocusGlow"] = true
-	E.db["unitframe"]["units"]["raid3"]["disableTargetGlow"] = true
-	E.db["unitframe"]["units"]["raid3"]["groupsPerRowCol"] = 4
-	E.db["unitframe"]["units"]["raid3"]["growthDirection"] = "DOWN_RIGHT"
-	E.db["unitframe"]["units"]["raid3"]["healPrediction"]["absorbStyle"] = "WRAPPED"
-	E.db["unitframe"]["units"]["raid3"]["health"]["text_format"] = ""
-	E.db["unitframe"]["units"]["raid3"]["height"] = 20
-	E.db["unitframe"]["units"]["raid3"]["horizontalSpacing"] = 4
-	E.db["unitframe"]["units"]["raid3"]["name"]["attachTextTo"] = "InfoPanel"
-	E.db["unitframe"]["units"]["raid3"]["name"]["position"] = "BOTTOMLEFT"
-	E.db["unitframe"]["units"]["raid3"]["name"]["text_format"] = ""
-	E.db["unitframe"]["units"]["raid3"]["name"]["xOffset"] = 2
-	E.db["unitframe"]["units"]["raid3"]["orientation"] = "LEFT"
-	E.db["unitframe"]["units"]["raid3"]["power"]["enable"] = true
-	E.db["unitframe"]["units"]["raid3"]["power"]["height"] = 10
-	E.db["unitframe"]["units"]["raid3"]["power"]["width"] = "spaced"
-	E.db["unitframe"]["units"]["raid3"]["rdebuffs"]["enable"] = true
-	E.db["unitframe"]["units"]["raid3"]["rdebuffs"]["fontOutline"] = "SHADOW"
-	E.db["unitframe"]["units"]["raid3"]["rdebuffs"]["size"] = 17
-	E.db["unitframe"]["units"]["raid3"]["rdebuffs"]["xOffset"] = -20
-	E.db["unitframe"]["units"]["raid3"]["rdebuffs"]["yOffset"] = 3
-	E.db["unitframe"]["units"]["raid3"]["resurrectIcon"]["attachTo"] = "BOTTOMRIGHT"
-	E.db["unitframe"]["units"]["raid3"]["roleIcon"]["attachTo"] = "InfoPanel"
-	E.db["unitframe"]["units"]["raid3"]["roleIcon"]["enable"] = true
-	E.db["unitframe"]["units"]["raid3"]["roleIcon"]["position"] = "RIGHT"
-	E.db["unitframe"]["units"]["raid3"]["roleIcon"]["size"] = 12
-	E.db["unitframe"]["units"]["raid3"]["roleIcon"]["xOffset"] = -4
-	E.db["unitframe"]["units"]["raid3"]["roleIcon"]["yOffset"] = 0
-	E.db["unitframe"]["units"]["raid3"]["verticalSpacing"] = 13
 
 	E.db["unitframe"]["units"]["raidpet"]["buffIndicator"]["countFontOutline"] = "SHADOW"
 	E.db["unitframe"]["units"]["raidpet"]["buffs"]["countFontOutline"] = "SHADOW"
@@ -860,6 +826,8 @@ function MAUI:Target_v7()
 	E.db["unitframe"]["units"]["target"]["castbar"]["textColor"]["g"] = 1
 	E.db["unitframe"]["units"]["target"]["castbar"]["textColor"]["r"] = 1
 	E.db["unitframe"]["units"]["target"]["castbar"]["width"] = 297
+
+	E.db["unitframe"]["units"]["target"]["customTexts"]["m-Absorb"] = E.db["unitframe"]["units"]["target"]["customTexts"]["m-Absorb"] or {}
 	E.db["unitframe"]["units"]["target"]["customTexts"]["m-Absorb"]["attachTextTo"] = "Health"
 	E.db["unitframe"]["units"]["target"]["customTexts"]["m-Absorb"]["enable"] = true
 	E.db["unitframe"]["units"]["target"]["customTexts"]["m-Absorb"]["font"] = "PT Sans Narrow"
@@ -869,6 +837,8 @@ function MAUI:Target_v7()
 	E.db["unitframe"]["units"]["target"]["customTexts"]["m-Absorb"]["text_format"] = "||cf2cd5fff[absorbs]||r"
 	E.db["unitframe"]["units"]["target"]["customTexts"]["m-Absorb"]["xOffset"] = -24
 	E.db["unitframe"]["units"]["target"]["customTexts"]["m-Absorb"]["yOffset"] = 26
+
+	E.db["unitframe"]["units"]["target"]["customTexts"]["m-Classification"] = E.db["unitframe"]["units"]["target"]["customTexts"]["m-Classification"] or {}
 	E.db["unitframe"]["units"]["target"]["customTexts"]["m-Classification"]["attachTextTo"] = "Health"
 	E.db["unitframe"]["units"]["target"]["customTexts"]["m-Classification"]["enable"] = true
 	E.db["unitframe"]["units"]["target"]["customTexts"]["m-Classification"]["font"] = "PT Sans Narrow"
@@ -878,6 +848,8 @@ function MAUI:Target_v7()
 	E.db["unitframe"]["units"]["target"]["customTexts"]["m-Classification"]["text_format"] = "[mClass:icon:noelite]"
 	E.db["unitframe"]["units"]["target"]["customTexts"]["m-Classification"]["xOffset"] = 234
 	E.db["unitframe"]["units"]["target"]["customTexts"]["m-Classification"]["yOffset"] = 42
+
+	E.db["unitframe"]["units"]["target"]["customTexts"]["m-Health"] = E.db["unitframe"]["units"]["target"]["customTexts"]["m-Health"] or {}
 	E.db["unitframe"]["units"]["target"]["customTexts"]["m-Health"]["attachTextTo"] = "Power"
 	E.db["unitframe"]["units"]["target"]["customTexts"]["m-Health"]["enable"] = true
 	E.db["unitframe"]["units"]["target"]["customTexts"]["m-Health"]["font"] = "PT Sans Narrow"
@@ -887,6 +859,8 @@ function MAUI:Target_v7()
 	E.db["unitframe"]["units"]["target"]["customTexts"]["m-Health"]["text_format"] = "[mHealth:short]"
 	E.db["unitframe"]["units"]["target"]["customTexts"]["m-Health"]["xOffset"] = 110
 	E.db["unitframe"]["units"]["target"]["customTexts"]["m-Health"]["yOffset"] = 0
+
+	E.db["unitframe"]["units"]["target"]["customTexts"]["m-Name"] = E.db["unitframe"]["units"]["target"]["customTexts"]["m-Name"] or {}
 	E.db["unitframe"]["units"]["target"]["customTexts"]["m-Name"]["attachTextTo"] = "Health"
 	E.db["unitframe"]["units"]["target"]["customTexts"]["m-Name"]["enable"] = true
 	E.db["unitframe"]["units"]["target"]["customTexts"]["m-Name"]["font"] = "PT Sans Narrow"
@@ -896,6 +870,8 @@ function MAUI:Target_v7()
 	E.db["unitframe"]["units"]["target"]["customTexts"]["m-Name"]["text_format"] = "[difficulty][mLevel<||r][mClass:short] || [mColor:rare][name:abbrev:short]"
 	E.db["unitframe"]["units"]["target"]["customTexts"]["m-Name"]["xOffset"] = 4
 	E.db["unitframe"]["units"]["target"]["customTexts"]["m-Name"]["yOffset"] = 26
+
+	E.db["unitframe"]["units"]["target"]["customTexts"]["m-Power"] = E.db["unitframe"]["units"]["target"]["customTexts"]["m-Power"] or {}
 	E.db["unitframe"]["units"]["target"]["customTexts"]["m-Power"]["attachTextTo"] = "Power"
 	E.db["unitframe"]["units"]["target"]["customTexts"]["m-Power"]["enable"] = true
 	E.db["unitframe"]["units"]["target"]["customTexts"]["m-Power"]["font"] = "PT Sans Narrow"
@@ -905,6 +881,8 @@ function MAUI:Target_v7()
 	E.db["unitframe"]["units"]["target"]["customTexts"]["m-Power"]["text_format"] = "[mPower:percent:combat]"
 	E.db["unitframe"]["units"]["target"]["customTexts"]["m-Power"]["xOffset"] = 4
 	E.db["unitframe"]["units"]["target"]["customTexts"]["m-Power"]["yOffset"] = 0
+
+	E.db["unitframe"]["units"]["target"]["customTexts"]["m-PvPIcon"] = E.db["unitframe"]["units"]["target"]["customTexts"]["m-PvPIcon"] or {}
 	E.db["unitframe"]["units"]["target"]["customTexts"]["m-PvPIcon"]["attachTextTo"] = "Health"
 	E.db["unitframe"]["units"]["target"]["customTexts"]["m-PvPIcon"]["enable"] = true
 	E.db["unitframe"]["units"]["target"]["customTexts"]["m-PvPIcon"]["font"] = "PT Sans Narrow"
@@ -914,6 +892,8 @@ function MAUI:Target_v7()
 	E.db["unitframe"]["units"]["target"]["customTexts"]["m-PvPIcon"]["text_format"] = "[mPvP:icon]"
 	E.db["unitframe"]["units"]["target"]["customTexts"]["m-PvPIcon"]["xOffset"] = 38
 	E.db["unitframe"]["units"]["target"]["customTexts"]["m-PvPIcon"]["yOffset"] = 34
+
+	E.db["unitframe"]["units"]["target"]["customTexts"]["m-Quest"] = E.db["unitframe"]["units"]["target"]["customTexts"]["m-Quest"] or {}
 	E.db["unitframe"]["units"]["target"]["customTexts"]["m-Quest"]["attachTextTo"] = "Health"
 	E.db["unitframe"]["units"]["target"]["customTexts"]["m-Quest"]["enable"] = true
 	E.db["unitframe"]["units"]["target"]["customTexts"]["m-Quest"]["font"] = "PT Sans Narrow"
@@ -923,6 +903,8 @@ function MAUI:Target_v7()
 	E.db["unitframe"]["units"]["target"]["customTexts"]["m-Quest"]["text_format"] = "[mQuestIcon]"
 	E.db["unitframe"]["units"]["target"]["customTexts"]["m-Quest"]["xOffset"] = -22
 	E.db["unitframe"]["units"]["target"]["customTexts"]["m-Quest"]["yOffset"] = 28
+
+	E.db["unitframe"]["units"]["target"]["customTexts"]["m-StatusIcon"] = E.db["unitframe"]["units"]["target"]["customTexts"]["m-StatusIcon"] or {}
 	E.db["unitframe"]["units"]["target"]["customTexts"]["m-StatusIcon"]["attachTextTo"] = "Health"
 	E.db["unitframe"]["units"]["target"]["customTexts"]["m-StatusIcon"]["enable"] = true
 	E.db["unitframe"]["units"]["target"]["customTexts"]["m-StatusIcon"]["font"] = "PT Sans Narrow"
@@ -932,6 +914,8 @@ function MAUI:Target_v7()
 	E.db["unitframe"]["units"]["target"]["customTexts"]["m-StatusIcon"]["text_format"] = "[mStatus:icon]"
 	E.db["unitframe"]["units"]["target"]["customTexts"]["m-StatusIcon"]["xOffset"] = 220
 	E.db["unitframe"]["units"]["target"]["customTexts"]["m-StatusIcon"]["yOffset"] = -2
+
+	E.db["unitframe"]["units"]["target"]["customTexts"]["m-StatusText"] = E.db["unitframe"]["units"]["target"]["customTexts"]["m-StatusText"] or {}
 	E.db["unitframe"]["units"]["target"]["customTexts"]["m-StatusText"]["attachTextTo"] = "Health"
 	E.db["unitframe"]["units"]["target"]["customTexts"]["m-StatusText"]["enable"] = true
 	E.db["unitframe"]["units"]["target"]["customTexts"]["m-StatusText"]["font"] = "PT Sans Narrow"
@@ -941,6 +925,7 @@ function MAUI:Target_v7()
 	E.db["unitframe"]["units"]["target"]["customTexts"]["m-StatusText"]["text_format"] = "[mStatustimer]"
 	E.db["unitframe"]["units"]["target"]["customTexts"]["m-StatusText"]["xOffset"] = 254
 	E.db["unitframe"]["units"]["target"]["customTexts"]["m-StatusText"]["yOffset"] = 0
+
 	E.db["unitframe"]["units"]["target"]["cutaway"]["health"]["enabled"] = true
 	E.db["unitframe"]["units"]["target"]["debuffs"]["anchorPoint"] = "TOPLEFT"
 	E.db["unitframe"]["units"]["target"]["debuffs"]["countFontOutline"] = "SHADOW"
@@ -972,6 +957,8 @@ function MAUI:Target_v7()
 
 	E.db["unitframe"]["units"]["targettarget"]["buffs"]["countFontOutline"] = "SHADOW"
 	E.db["unitframe"]["units"]["targettarget"]["buffs"]["priority"] = "Blacklist,Personal,PlayerBuffs"
+
+	E.db["unitframe"]["units"]["targettarget"]["customTexts"]["m-Health"] = E.db["unitframe"]["units"]["targettarget"]["customTexts"]["m-Health"] or {}
 	E.db["unitframe"]["units"]["targettarget"]["customTexts"]["m-Health"]["attachTextTo"] = "Power"
 	E.db["unitframe"]["units"]["targettarget"]["customTexts"]["m-Health"]["enable"] = true
 	E.db["unitframe"]["units"]["targettarget"]["customTexts"]["m-Health"]["font"] = "PT Sans Narrow"
@@ -981,6 +968,8 @@ function MAUI:Target_v7()
 	E.db["unitframe"]["units"]["targettarget"]["customTexts"]["m-Health"]["text_format"] = "[mHealth:short]"
 	E.db["unitframe"]["units"]["targettarget"]["customTexts"]["m-Health"]["xOffset"] = 54
 	E.db["unitframe"]["units"]["targettarget"]["customTexts"]["m-Health"]["yOffset"] = 0
+
+	E.db["unitframe"]["units"]["targettarget"]["customTexts"]["m-Name"] = E.db["unitframe"]["units"]["targettarget"]["customTexts"]["m-Name"] or {}
 	E.db["unitframe"]["units"]["targettarget"]["customTexts"]["m-Name"]["attachTextTo"] = "Health"
 	E.db["unitframe"]["units"]["targettarget"]["customTexts"]["m-Name"]["enable"] = true
 	E.db["unitframe"]["units"]["targettarget"]["customTexts"]["m-Name"]["font"] = "PT Sans Narrow"
@@ -990,6 +979,8 @@ function MAUI:Target_v7()
 	E.db["unitframe"]["units"]["targettarget"]["customTexts"]["m-Name"]["text_format"] = "[name:abbrev:veryshort]"
 	E.db["unitframe"]["units"]["targettarget"]["customTexts"]["m-Name"]["xOffset"] = 4
 	E.db["unitframe"]["units"]["targettarget"]["customTexts"]["m-Name"]["yOffset"] = 20
+
+	E.db["unitframe"]["units"]["targettarget"]["customTexts"]["m-StatusIcon"] = E.db["unitframe"]["units"]["targettarget"]["customTexts"]["m-StatusIcon"] or {}
 	E.db["unitframe"]["units"]["targettarget"]["customTexts"]["m-StatusIcon"]["attachTextTo"] = "Health"
 	E.db["unitframe"]["units"]["targettarget"]["customTexts"]["m-StatusIcon"]["enable"] = true
 	E.db["unitframe"]["units"]["targettarget"]["customTexts"]["m-StatusIcon"]["font"] = "PT Sans Narrow"
@@ -999,6 +990,8 @@ function MAUI:Target_v7()
 	E.db["unitframe"]["units"]["targettarget"]["customTexts"]["m-StatusIcon"]["text_format"] = "[mStatus:icon]"
 	E.db["unitframe"]["units"]["targettarget"]["customTexts"]["m-StatusIcon"]["xOffset"] = 110
 	E.db["unitframe"]["units"]["targettarget"]["customTexts"]["m-StatusIcon"]["yOffset"] = -2
+
+	E.db["unitframe"]["units"]["targettarget"]["customTexts"]["m-StatusText"] = E.db["unitframe"]["units"]["targettarget"]["customTexts"]["m-StatusText"] or {}
 	E.db["unitframe"]["units"]["targettarget"]["customTexts"]["m-StatusText"]["attachTextTo"] = "Health"
 	E.db["unitframe"]["units"]["targettarget"]["customTexts"]["m-StatusText"]["enable"] = true
 	E.db["unitframe"]["units"]["targettarget"]["customTexts"]["m-StatusText"]["font"] = "PT Sans Narrow"
@@ -1008,6 +1001,7 @@ function MAUI:Target_v7()
 	E.db["unitframe"]["units"]["targettarget"]["customTexts"]["m-StatusText"]["text_format"] = "[mStatustimer]"
 	E.db["unitframe"]["units"]["targettarget"]["customTexts"]["m-StatusText"]["xOffset"] = 134
 	E.db["unitframe"]["units"]["targettarget"]["customTexts"]["m-StatusText"]["yOffset"] = 0
+
 	E.db["unitframe"]["units"]["targettarget"]["debuffs"]["anchorPoint"] = "TOPLEFT"
 	E.db["unitframe"]["units"]["targettarget"]["debuffs"]["attachTo"] = "FRAME"
 	E.db["unitframe"]["units"]["targettarget"]["debuffs"]["countFontOutline"] = "SHADOW"
@@ -1031,6 +1025,8 @@ function MAUI:Target_v7()
 
 	E.db["unitframe"]["units"]["targettargettarget"]["buffs"]["countFontOutline"] = "SHADOW"
 	E.db["unitframe"]["units"]["targettargettarget"]["buffs"]["priority"] = "Blacklist,Personal,PlayerBuffs"
+
+	E.db["unitframe"]["units"]["targettargettarget"]["customTexts"]["m-Name"] = E.db["unitframe"]["units"]["targettargettarget"]["customTexts"]["m-Name"] or {}
 	E.db["unitframe"]["units"]["targettargettarget"]["customTexts"]["m-Name"]["attachTextTo"] = "Health"
 	E.db["unitframe"]["units"]["targettargettarget"]["customTexts"]["m-Name"]["enable"] = true
 	E.db["unitframe"]["units"]["targettargettarget"]["customTexts"]["m-Name"]["font"] = "PT Sans Narrow"
@@ -1495,10 +1491,10 @@ function MAUI:Bags_v7()
 	E.db["bags"]["transparent"] = true
 	E.db["bags"]["vendorGrays"]["details"] = true
 	E.db["bags"]["vendorGrays"]["enable"] = true
-	E.db["chat"]["copyChatLines"] = true
 end
 
 function MAUI:Chat_v7()
+	E.db["chat"]["copyChatLines"] = true
 	E.db["chat"]["customTimeColor"]["b"] = 0.086274512112141
 	E.db["chat"]["customTimeColor"]["g"] = 0.47843140363693
 	E.db["chat"]["customTimeColor"]["r"] = 0.89803928136826
@@ -1516,9 +1512,9 @@ function MAUI:Chat_v7()
 	E.db["chat"]["panelHeight"] = 160
 	E.db["chat"]["panelWidth"] = 530
 	E.db["chat"]["socialQueueMessages"] = true
-	E.db["chat"]["tabSelectedTextColor"]["b"] = 0.78823536634445
-	E.db["chat"]["tabSelectedTextColor"]["g"] = 0.18823531270027
-	E.db["chat"]["tabSelectedTextColor"]["r"] = 0.63921570777893
+	E.db["chat"]["tabSelectedTextColor"]["b"] = 0.9215686917305
+	E.db["chat"]["tabSelectedTextColor"]["g"] = 0.78039222955704
+	E.db["chat"]["tabSelectedTextColor"]["r"] = 0.24705883860588
 	E.db["chat"]["tabSelectorColor"]["b"] = 0
 	E.db["chat"]["tabSelectorColor"]["g"] = 0.95686280727386
 	E.db["chat"]["tabSelectorColor"]["r"] = 0.5686274766922
@@ -1526,9 +1522,42 @@ function MAUI:Chat_v7()
 end
 
 function MAUI:Datatexts_v7()
-	E.db["datatexts"]["panels"]["LeftChatDataPanel"][1] = "mTeleports"
-	E.db["datatexts"]["panels"]["LeftChatDataPanel"][3] = "mGameMenu"
-	E.db["datatexts"]["panels"]["LeftChatDataPanel"]["enable"] = false
+	E.DataTexts:BuildPanelFrame("MaUI Currencies")
+	E.global["datatexts"]["customPanels"]["MaUI Currencies"]["backdrop"] = false
+	E.global["datatexts"]["customPanels"]["MaUI Currencies"]["border"] = false
+	E.global["datatexts"]["customPanels"]["MaUI Currencies"]["fonts"]["enable"] = true
+	E.global["datatexts"]["customPanels"]["MaUI Currencies"]["fonts"]["fontOutline"] = "SHADOW"
+	E.global["datatexts"]["customPanels"]["MaUI Currencies"]["fonts"]["fontSize"] = 18
+	E.global["datatexts"]["customPanels"]["MaUI Currencies"]["growth"] = "VERTICAL"
+	E.global["datatexts"]["customPanels"]["MaUI Currencies"]["height"] = 260
+	E.global["datatexts"]["customPanels"]["MaUI Currencies"]["name"] = "MaUI Currencies"
+	E.global["datatexts"]["customPanels"]["MaUI Currencies"]["numPoints"] = 12
+	E.global["datatexts"]["customPanels"]["MaUI Currencies"]["textJustify"] = "LEFT"
+	E.global["datatexts"]["customPanels"]["MaUI Currencies"]["width"] = 200
+	E.db["datatexts"]["panels"]["MaUI Currencies"][1] = "mElementalOverflow"
+	E.db["datatexts"]["panels"]["MaUI Currencies"][2] = "mDragonIslesSupplies"
+	E.db["datatexts"]["panels"]["MaUI Currencies"][3] = "mFlightstones"
+	E.db["datatexts"]["panels"]["MaUI Currencies"][4] = "mTimewarpedBadge"
+	E.db["datatexts"]["panels"]["MaUI Currencies"][5] = "mWhelpling"
+	E.db["datatexts"]["panels"]["MaUI Currencies"][6] = "mDrake"
+	E.db["datatexts"]["panels"]["MaUI Currencies"][7] = "mWyrm"
+	E.db["datatexts"]["panels"]["MaUI Currencies"][8] = "mAspect"
+	E.db["datatexts"]["panels"]["MaUI Currencies"][9] = ""
+	E.db["datatexts"]["panels"]["MaUI Currencies"][10] = ""
+	E.db["datatexts"]["panels"]["MaUI Currencies"][11] = ""
+	E.db["datatexts"]["panels"]["MaUI Currencies"][12] = ""
+	E.db["datatexts"]["panels"]["MaUI Currencies"][13] = ""
+	E.db["datatexts"]["panels"]["MaUI Currencies"][14] = ""
+	E.db["datatexts"]["panels"]["MaUI Currencies"]["battleground"] = false
+	E.db["datatexts"]["panels"]["MaUI Currencies"]["enable"] = true
+
+	E.DataTexts:BuildPanelFrame("MaUI Left")
+	E.global["datatexts"]["customPanels"]["MaUI Left"]["backdrop"] = false
+	E.global["datatexts"]["customPanels"]["MaUI Left"]["height"] = 32
+	E.global["datatexts"]["customPanels"]["MaUI Left"]["name"] = "MaUI Left"
+	E.global["datatexts"]["customPanels"]["MaUI Left"]["numPoints"] = 12
+	E.global["datatexts"]["customPanels"]["MaUI Left"]["textJustify"] = "LEFT"
+	E.global["datatexts"]["customPanels"]["MaUI Left"]["width"] = 460
 	E.db["datatexts"]["panels"]["MaUI Left"][1] = "mMT_Dock_Character"
 	E.db["datatexts"]["panels"]["MaUI Left"][2] = "mMT_Dock_SpellBook"
 	E.db["datatexts"]["panels"]["MaUI Left"][3] = "mMT_Dock_Guild"
@@ -1541,31 +1570,123 @@ function MAUI:Datatexts_v7()
 	E.db["datatexts"]["panels"]["MaUI Left"][10] = "mMT_Dock_Volume"
 	E.db["datatexts"]["panels"]["MaUI Left"][11] = "mMT_Dock_BlizzardStore"
 	E.db["datatexts"]["panels"]["MaUI Left"][12] = "mMT_Dock_Calendar"
-	E.db["datatexts"]["panels"]["MaUI Left"][13] = "mMT_Dock_None"
-	E.db["datatexts"]["panels"]["MaUI Left"][15] = "mMT_Dock_Bags"
 	E.db["datatexts"]["panels"]["MaUI Left"]["battleground"] = false
 	E.db["datatexts"]["panels"]["MaUI Left"]["enable"] = true
+
+	E.DataTexts:BuildPanelFrame("MaUI Right")
+	E.global["datatexts"]["customPanels"]["MaUI Right"]["backdrop"] = false
+	E.global["datatexts"]["customPanels"]["MaUI Right"]["fonts"]["enable"] = true
+	E.global["datatexts"]["customPanels"]["MaUI Right"]["fonts"]["fontOutline"] = "SHADOW"
+	E.global["datatexts"]["customPanels"]["MaUI Right"]["fonts"]["fontSize"] = 16
+	E.global["datatexts"]["customPanels"]["MaUI Right"]["height"] = 32
+	E.global["datatexts"]["customPanels"]["MaUI Right"]["name"] = "MaUI Right"
+	E.global["datatexts"]["customPanels"]["MaUI Right"]["numPoints"] = 4
+	E.global["datatexts"]["customPanels"]["MaUI Right"]["textJustify"] = "RIGHT"
+	E.global["datatexts"]["customPanels"]["MaUI Right"]["width"] = 460
 	E.db["datatexts"]["panels"]["MaUI Right"][1] = "System"
 	E.db["datatexts"]["panels"]["MaUI Right"][2] = "M+ Score"
 	E.db["datatexts"]["panels"]["MaUI Right"][3] = "mTeleports"
 	E.db["datatexts"]["panels"]["MaUI Right"][4] = "Gold"
 	E.db["datatexts"]["panels"]["MaUI Right"]["battleground"] = false
 	E.db["datatexts"]["panels"]["MaUI Right"]["enable"] = true
+
+	E.DataTexts:BuildPanelFrame("MaUI Time")
+	E.global["datatexts"]["customPanels"]["MaUI Time"]["backdrop"] = false
+	E.global["datatexts"]["customPanels"]["MaUI Time"]["fonts"]["enable"] = true
+	E.global["datatexts"]["customPanels"]["MaUI Time"]["fonts"]["fontOutline"] = "SHADOW"
+	E.global["datatexts"]["customPanels"]["MaUI Time"]["fonts"]["fontSize"] = 32
+	E.global["datatexts"]["customPanels"]["MaUI Time"]["height"] = 32
+	E.global["datatexts"]["customPanels"]["MaUI Time"]["name"] = "MaUI Time"
+	E.global["datatexts"]["customPanels"]["MaUI Time"]["numPoints"] = 1
+	E.global["datatexts"]["customPanels"]["MaUI Time"]["width"] = 128
 	E.db["datatexts"]["panels"]["MaUI Time"][1] = "Time"
 	E.db["datatexts"]["panels"]["MaUI Time"][2] = ""
 	E.db["datatexts"]["panels"]["MaUI Time"][3] = ""
 	E.db["datatexts"]["panels"]["MaUI Time"]["battleground"] = false
 	E.db["datatexts"]["panels"]["MaUI Time"]["enable"] = true
+
+	E.DataTexts:BuildPanelFrame("MaUI Time Left")
+	E.global["datatexts"]["customPanels"]["MaUI Time Left"]["backdrop"] = false
+	E.global["datatexts"]["customPanels"]["MaUI Time Left"]["fonts"]["enable"] = true
+	E.global["datatexts"]["customPanels"]["MaUI Time Left"]["fonts"]["fontOutline"] = "SHADOW"
+	E.global["datatexts"]["customPanels"]["MaUI Time Left"]["fonts"]["fontSize"] = 16
+	E.global["datatexts"]["customPanels"]["MaUI Time Left"]["height"] = 32
+	E.global["datatexts"]["customPanels"]["MaUI Time Left"]["name"] = "MaUI Time Left"
+	E.global["datatexts"]["customPanels"]["MaUI Time Left"]["numPoints"] = 2
+	E.global["datatexts"]["customPanels"]["MaUI Time Left"]["width"] = 430
 	E.db["datatexts"]["panels"]["MaUI Time Left"][1] = "DurabilityIlevel"
 	E.db["datatexts"]["panels"]["MaUI Time Left"][2] = "Talent/Loot Specialization"
 	E.db["datatexts"]["panels"]["MaUI Time Left"][3] = ""
 	E.db["datatexts"]["panels"]["MaUI Time Left"]["battleground"] = false
 	E.db["datatexts"]["panels"]["MaUI Time Left"]["enable"] = true
+
+	E.DataTexts:BuildPanelFrame("MaUI Time Right")
+	E.global["datatexts"]["customPanels"]["MaUI Time Right"]["backdrop"] = false
+	E.global["datatexts"]["customPanels"]["MaUI Time Right"]["fonts"]["enable"] = true
+	E.global["datatexts"]["customPanels"]["MaUI Time Right"]["fonts"]["fontOutline"] = "SHADOW"
+	E.global["datatexts"]["customPanels"]["MaUI Time Right"]["fonts"]["fontSize"] = 16
+	E.global["datatexts"]["customPanels"]["MaUI Time Right"]["height"] = 32
+	E.global["datatexts"]["customPanels"]["MaUI Time Right"]["name"] = "MaUI Time Right"
+	E.global["datatexts"]["customPanels"]["MaUI Time Right"]["numPoints"] = 2
+	E.global["datatexts"]["customPanels"]["MaUI Time Right"]["width"] = 430
 	E.db["datatexts"]["panels"]["MaUI Time Right"][1] = "firstProf"
 	E.db["datatexts"]["panels"]["MaUI Time Right"][2] = "secondProf"
 	E.db["datatexts"]["panels"]["MaUI Time Right"][3] = ""
 	E.db["datatexts"]["panels"]["MaUI Time Right"]["battleground"] = false
 	E.db["datatexts"]["panels"]["MaUI Time Right"]["enable"] = true
+
+	E.DataTexts:BuildPanelFrame("MaUI Combattime")
+	E.global["datatexts"]["customPanels"]["MaUI Combattime"]["backdrop"] = false
+	E.global["datatexts"]["customPanels"]["MaUI Combattime"]["border"] = false
+	E.global["datatexts"]["customPanels"]["MaUI Combattime"]["fonts"]["enable"] = true
+	E.global["datatexts"]["customPanels"]["MaUI Combattime"]["fonts"]["fontOutline"] = "SHADOW"
+	E.global["datatexts"]["customPanels"]["MaUI Combattime"]["fonts"]["fontSize"] = 32
+	E.global["datatexts"]["customPanels"]["MaUI Combattime"]["height"] = 32
+	E.global["datatexts"]["customPanels"]["MaUI Combattime"]["name"] = "mMT Combattime"
+	E.global["datatexts"]["customPanels"]["MaUI Combattime"]["numPoints"] = 1
+	E.global["datatexts"]["customPanels"]["MaUI Combattime"]["width"] = 188
+	E.db["datatexts"]["panels"]["MaUI Combattime"][1] = "mCombatTime"
+	E.db["datatexts"]["panels"]["MaUI Combattime"][2] = ""
+	E.db["datatexts"]["panels"]["MaUI Combattime"][3] = ""
+	E.db["datatexts"]["panels"]["MaUI Combattime"]["battleground"] = false
+	E.db["datatexts"]["panels"]["MaUI Combattime"]["enable"] = true
+
+	E.DataTexts:BuildPanelFrame("mMT Databar Background")
+	E.global["datatexts"]["customPanels"]["mMT Databar Background"]["frameStrata"] = "BACKGROUND"
+	E.global["datatexts"]["customPanels"]["mMT Databar Background"]["height"] = 32
+	E.global["datatexts"]["customPanels"]["mMT Databar Background"]["name"] = "mMT Databar Background"
+	E.global["datatexts"]["customPanels"]["mMT Databar Background"]["numPoints"] = 1
+	E.global["datatexts"]["customPanels"]["mMT Databar Background"]["panelTransparency"] = true
+	E.global["datatexts"]["customPanels"]["mMT Databar Background"]["width"] = GetScreenWidth() or 1920
+	E.db["datatexts"]["panels"]["mMT Databar Background"][1] = ""
+	E.db["datatexts"]["panels"]["mMT Databar Background"]["battleground"] = false
+	E.db["datatexts"]["panels"]["mMT Databar Background"]["enable"] = true
+
+	E.global["datatexts"]["settings"]["Armor"]["NoLabel"] = true
+	E.global["datatexts"]["settings"]["Combat"]["TimeFull"] = false
+	E.global["datatexts"]["settings"]["Currencies"]["displayedCurrency"] = "1191"
+	E.global["datatexts"]["settings"]["Currencies"]["goldFormat"] = "CONDENSED"
+	E.global["datatexts"]["settings"]["Currencies"]["headers"] = false
+	E.global["datatexts"]["settings"]["Durability"]["NoLabel"] = true
+	E.global["datatexts"]["settings"]["Durability"]["goldFormat"] = "SMART"
+	E.global["datatexts"]["settings"]["Durability"]["percThreshold"] = 40
+	E.global["datatexts"]["settings"]["Experience"]["textFormat"] = "PERCENT"
+	E.global["datatexts"]["settings"]["Gold"]["goldCoins"] = false
+	E.global["datatexts"]["settings"]["Gold"]["goldFormat"] = "SHORTSPACED"
+	E.global["datatexts"]["settings"]["Item Level"]["onlyEquipped"] = true
+	E.global["datatexts"]["settings"]["System"]["NoLabel"] = true
+
+	E.global["general"]["WorldMapCoordinates"]["position"] = "BOTTOMRIGHT"
+	E.global["general"]["commandBarSetting"] = "ENABLED"
+	E.global["general"]["fadeMapDuration"] = 0.1
+	E.global["general"]["mapAlphaWhenMoving"] = 0.35
+	E.global["general"]["smallerWorldMap"] = false
+	E.global["general"]["smallerWorldMapScale"] = 1
+
+	E.db["datatexts"]["panels"]["LeftChatDataPanel"][1] = "mTeleports"
+	E.db["datatexts"]["panels"]["LeftChatDataPanel"][3] = "mGameMenu"
+	E.db["datatexts"]["panels"]["LeftChatDataPanel"]["enable"] = false
+
 	E.db["datatexts"]["panels"]["MinimapPanel"][2] = "mProfessions"
 	E.db["datatexts"]["panels"]["MinimapPanel"]["enable"] = false
 	E.db["datatexts"]["panels"]["RightChatDataPanel"]["enable"] = false
@@ -2029,44 +2150,622 @@ function MAUI:Nameplates_v7()
 	E.db["nameplates"]["cooldown"]["secondsColor"]["b"] = 0.78823536634445
 	E.db["nameplates"]["cooldown"]["secondsColor"]["g"] = 0.18823531270027
 	E.db["nameplates"]["cooldown"]["secondsColor"]["r"] = 0.63921570777893
-	E.db["nameplates"]["filters"]["m-2nd-Priority"]["triggers"]["enable"] = true
-	E.db["nameplates"]["filters"]["m-2nd-Priority-oof"]["triggers"]["enable"] = true
-	E.db["nameplates"]["filters"]["m-3nd-Priority"]["triggers"]["enable"] = true
-	E.db["nameplates"]["filters"]["m-3nd-Priority-oof"]["triggers"]["enable"] = true
-	E.db["nameplates"]["filters"]["m-Bad-Aggro"]["triggers"]["enable"] = true
-	E.db["nameplates"]["filters"]["m-DF-Dungeon-Boss"]["triggers"]["enable"] = true
-	E.db["nameplates"]["filters"]["m-DH-Add"]["triggers"]["enable"] = true
-	E.db["nameplates"]["filters"]["m-High-HP"]["triggers"]["enable"] = true
-	E.db["nameplates"]["filters"]["m-Priority-Target"]["triggers"]["enable"] = true
-	E.db["nameplates"]["filters"]["m-Priority-Target-oof"]["triggers"]["enable"] = true
-	E.db["nameplates"]["filters"]["m-Quest"]["triggers"]["enable"] = true
-	E.db["nameplates"]["filters"]["m-Sanguine"]["triggers"]["enable"] = true
-	E.db["nameplates"]["filters"]["m-Special"]["triggers"]["enable"] = true
-	E.db["nameplates"]["filters"]["m-Spiteful-on-You"]["triggers"]["enable"] = true
-	E.db["nameplates"]["filters"]["m-Spitefull"]["triggers"]["enable"] = true
-	E.db["nameplates"]["filters"]["m-Unit-Out-of-fight"]["triggers"]["enable"] = true
-	E.db["nameplates"]["filters"]["m-hide-healthbar-resting"]["triggers"]["enable"] = false
-	E.db["nameplates"]["filters"]["m-inCombat-notTargeting"]["triggers"]["enable"] = true
-	E.db["nameplates"]["filters"]["m-soft-target"]["triggers"]["enable"] = true
-	E.db["nameplates"]["filters"]["mMT-1st-Prio-S4"]["triggers"]["enable"] = true
-	E.db["nameplates"]["filters"]["mMT-1st-Prio-oof-S4"]["triggers"]["enable"] = true
-	E.db["nameplates"]["filters"]["mMT-2nd-Prio-S4"]["triggers"]["enable"] = true
-	E.db["nameplates"]["filters"]["mMT-2nd-Prio-oof-S4"]["triggers"]["enable"] = true
-	E.db["nameplates"]["filters"]["mMT-3rd-Prio-S4"]["triggers"]["enable"] = true
-	E.db["nameplates"]["filters"]["mMT-3rd-Prio-oof-S4"]["triggers"]["enable"] = true
-	E.db["nameplates"]["filters"]["mMT-Bad-Aggro"]["triggers"]["enable"] = true
-	E.db["nameplates"]["filters"]["mMT-Cast-CC"]["triggers"]["enable"] = true
-	E.db["nameplates"]["filters"]["mMT-Cast-Frontal"]["triggers"]["enable"] = true
-	E.db["nameplates"]["filters"]["mMT-Cast-Interrupt"]["triggers"]["enable"] = true
-	E.db["nameplates"]["filters"]["mMT-DH-Add"]["triggers"]["enable"] = true
-	E.db["nameplates"]["filters"]["mMT-High-HP-S4"]["triggers"]["enable"] = true
-	E.db["nameplates"]["filters"]["mMT-M+_Sanguine"]["triggers"]["enable"] = true
-	E.db["nameplates"]["filters"]["mMT-M+_Spiteful-on-You"]["triggers"]["enable"] = true
-	E.db["nameplates"]["filters"]["mMT-M+_Spitefull"]["triggers"]["enable"] = true
-	E.db["nameplates"]["filters"]["mMT-Quest"]["triggers"]["enable"] = true
-	E.db["nameplates"]["filters"]["mMT-Soft-Target"]["triggers"]["enable"] = true
-	E.db["nameplates"]["filters"]["mMT-Special-S4"]["triggers"]["enable"] = true
-	E.db["nameplates"]["filters"]["mMT-Unit-Out-of-fight"]["triggers"]["enable"] = true
+
+	E.global["nameplates"]["filters"]["ElvUI_Boss"]["triggers"]["classification"]["worldboss"] = true
+	E.global["nameplates"]["filters"]["ElvUI_Incorporeal"]["actions"]["glow"]["color"][1] = 1
+	E.global["nameplates"]["filters"]["ElvUI_Incorporeal"]["actions"]["glow"]["color"][2] = 0
+	E.global["nameplates"]["filters"]["ElvUI_Incorporeal"]["actions"]["glow"]["color"][3] = 0.678431391716
+	E.global["nameplates"]["filters"]["ElvUI_Incorporeal"]["actions"]["glow"]["color"][4] = 0.90000000596046
+	E.global["nameplates"]["filters"]["ElvUI_Incorporeal"]["actions"]["glow"]["enable"] = true
+	E.global["nameplates"]["filters"]["ElvUI_Incorporeal"]["actions"]["glow"]["size"] = 2
+	E.global["nameplates"]["filters"]["ElvUI_Incorporeal"]["actions"]["texture"]["enable"] = true
+	E.global["nameplates"]["filters"]["ElvUI_Incorporeal"]["actions"]["texture"]["texture"] = "mMediaTag K34"
+	E.global["nameplates"]["filters"]["ElvUI_Incorporeal"]["triggers"]["priority"] = 20
+	E.global["nameplates"]["filters"]["ElvUI_NonTarget"]["actions"]["alpha"] = 45
+	E.global["nameplates"]["filters"]["ElvUI_NonTarget"]["actions"]["color"]["borderColor"]["b"] = 0.22745099663734
+	E.global["nameplates"]["filters"]["ElvUI_NonTarget"]["actions"]["color"]["borderColor"]["g"] = 0.11764706671238
+	E.global["nameplates"]["filters"]["ElvUI_NonTarget"]["actions"]["color"]["borderColor"]["r"] = 0.76862752437592
+	E.global["nameplates"]["filters"]["ElvUI_NonTarget"]["actions"]["scale"] = 0.6
+	E.global["nameplates"]["filters"]["ElvUI_NonTarget"]["triggers"]["outOfCombatUnit"] = true
+	E.global["nameplates"]["filters"]["ElvUI_NonTarget"]["triggers"]["priority"] = 6
+	E.global["nameplates"]["filters"]["ElvUI_NonTarget"]["triggers"]["requireTarget"] = false
+	E.global["nameplates"]["filters"]["ElvUI_Target"]["actions"]["alpha"] = 85
+	E.global["nameplates"]["filters"]["ElvUI_Target"]["actions"]["color"]["border"] = true
+	E.global["nameplates"]["filters"]["ElvUI_Target"]["actions"]["color"]["borderColor"]["b"] = 0.7294117808342
+	E.global["nameplates"]["filters"]["ElvUI_Target"]["actions"]["color"]["borderColor"]["g"] = 0.54901963472366
+	E.global["nameplates"]["filters"]["ElvUI_Target"]["actions"]["color"]["borderColor"]["r"] = 0.95686280727386
+	E.global["nameplates"]["filters"]["ElvUI_Target"]["actions"]["glow"]["color"]["a"] = 1
+	E.global["nameplates"]["filters"]["ElvUI_Target"]["actions"]["glow"]["color"]["b"] = 0.48627454042435
+	E.global["nameplates"]["filters"]["ElvUI_Target"]["actions"]["glow"]["color"]["g"] = 0.066666670143604
+	E.global["nameplates"]["filters"]["ElvUI_Target"]["actions"]["glow"]["color"]["r"] = 1
+	E.global["nameplates"]["filters"]["ElvUI_Target"]["actions"]["glow"]["size"] = 2
+	E.global["nameplates"]["filters"]["ElvUI_Target"]["actions"]["scale"] = 1.15
+	E.global["nameplates"]["filters"]["ElvUI_Target"]["actions"]["texture"]["enable"] = true
+	E.global["nameplates"]["filters"]["ElvUI_Target"]["actions"]["texture"]["texture"] = "mMT Target"
+	E.global["nameplates"]["filters"]["ElvUI_Target"]["triggers"]["priority"] = 10
+
+	E.global["nameplates"]["filters"]["ElvUI_Boss"]["triggers"]["classification"]["worldboss"] = true
+	E.global["nameplates"]["filters"]["ElvUI_Incorporeal"]["actions"]["glow"]["color"][1] = 1
+	E.global["nameplates"]["filters"]["ElvUI_Incorporeal"]["actions"]["glow"]["color"][2] = 0
+	E.global["nameplates"]["filters"]["ElvUI_Incorporeal"]["actions"]["glow"]["color"][3] = 0.678431391716
+	E.global["nameplates"]["filters"]["ElvUI_Incorporeal"]["actions"]["glow"]["color"][4] = 0.90000000596046
+	E.global["nameplates"]["filters"]["ElvUI_Incorporeal"]["actions"]["glow"]["enable"] = true
+	E.global["nameplates"]["filters"]["ElvUI_Incorporeal"]["actions"]["glow"]["size"] = 2
+	E.global["nameplates"]["filters"]["ElvUI_Incorporeal"]["actions"]["texture"]["enable"] = true
+	E.global["nameplates"]["filters"]["ElvUI_Incorporeal"]["actions"]["texture"]["texture"] = "mMediaTag K34"
+	E.global["nameplates"]["filters"]["ElvUI_Incorporeal"]["triggers"]["priority"] = 20
+	E.global["nameplates"]["filters"]["ElvUI_NonTarget"]["actions"]["alpha"] = 45
+	E.global["nameplates"]["filters"]["ElvUI_NonTarget"]["actions"]["color"]["borderColor"]["b"] = 0.22745099663734
+	E.global["nameplates"]["filters"]["ElvUI_NonTarget"]["actions"]["color"]["borderColor"]["g"] = 0.11764706671238
+	E.global["nameplates"]["filters"]["ElvUI_NonTarget"]["actions"]["color"]["borderColor"]["r"] = 0.76862752437592
+	E.global["nameplates"]["filters"]["ElvUI_NonTarget"]["actions"]["scale"] = 0.6
+	E.global["nameplates"]["filters"]["ElvUI_NonTarget"]["triggers"]["outOfCombatUnit"] = true
+	E.global["nameplates"]["filters"]["ElvUI_NonTarget"]["triggers"]["priority"] = 6
+	E.global["nameplates"]["filters"]["ElvUI_NonTarget"]["triggers"]["requireTarget"] = false
+	E.global["nameplates"]["filters"]["ElvUI_Target"]["actions"]["alpha"] = 85
+	E.global["nameplates"]["filters"]["ElvUI_Target"]["actions"]["color"]["border"] = true
+	E.global["nameplates"]["filters"]["ElvUI_Target"]["actions"]["color"]["borderColor"]["b"] = 0.9215686917305
+	E.global["nameplates"]["filters"]["ElvUI_Target"]["actions"]["color"]["borderColor"]["g"] = 0.78039222955704
+	E.global["nameplates"]["filters"]["ElvUI_Target"]["actions"]["color"]["borderColor"]["r"] = 0.24705883860588
+	E.global["nameplates"]["filters"]["ElvUI_Target"]["actions"]["glow"]["color"]["a"] = 1
+	E.global["nameplates"]["filters"]["ElvUI_Target"]["actions"]["glow"]["color"]["b"] = 0.48627454042435
+	E.global["nameplates"]["filters"]["ElvUI_Target"]["actions"]["glow"]["color"]["g"] = 0.066666670143604
+	E.global["nameplates"]["filters"]["ElvUI_Target"]["actions"]["glow"]["color"]["r"] = 1
+	E.global["nameplates"]["filters"]["ElvUI_Target"]["actions"]["glow"]["size"] = 2
+	E.global["nameplates"]["filters"]["ElvUI_Target"]["actions"]["scale"] = 1.06
+	E.global["nameplates"]["filters"]["ElvUI_Target"]["actions"]["texture"]["enable"] = true
+	E.global["nameplates"]["filters"]["ElvUI_Target"]["actions"]["texture"]["texture"] = "mMT Target"
+	E.global["nameplates"]["filters"]["ElvUI_Target"]["triggers"]["priority"] = 10
+
+	for _, filterName in pairs({ "mMT-1st-Prio-S4", "mMT-1st-Prio-oof-S4", "mMT-2nd-Prio-S4", "mMT-2nd-Prio-oof-S4", "mMT-3rd-Prio-S4", "mMT-3rd-Prio-oof-S4", "mMT-High-HP-S4", "mMT-M+_Sanguine", "mMT-M+_Spiteful-on-You", "mMT-M+_Spitefull", "mMT-Special-S4" }) do
+		E.global["nameplates"]["filters"][filterName] = {}
+		E.NamePlates:StyleFilterCopyDefaults(E.global["nameplates"]["filters"][filterName])
+		E.db["nameplates"]["filters"][filterName] = { triggers = { enable = true } }
+	end
+
+	E.global["nameplates"]["filters"]["mMT-1st-Prio-S4"]["actions"]["color"]["border"] = true
+	E.global["nameplates"]["filters"]["mMT-1st-Prio-S4"]["actions"]["color"]["borderColor"]["b"] = 0.79215693473816
+	E.global["nameplates"]["filters"]["mMT-1st-Prio-S4"]["actions"]["color"]["borderColor"]["g"] = 0
+	E.global["nameplates"]["filters"]["mMT-1st-Prio-S4"]["actions"]["color"]["health"] = true
+	E.global["nameplates"]["filters"]["mMT-1st-Prio-S4"]["actions"]["color"]["healthColor"]["b"] = 0.79215693473816
+	E.global["nameplates"]["filters"]["mMT-1st-Prio-S4"]["actions"]["color"]["healthColor"]["g"] = 0
+	E.global["nameplates"]["filters"]["mMT-1st-Prio-S4"]["actions"]["tags"]["name"] = "||cffff00ca[mName:last:onlyininstance:medium]||r"
+	E.global["nameplates"]["filters"]["mMT-1st-Prio-S4"]["triggers"]["inCombat"] = true
+	E.global["nameplates"]["filters"]["mMT-1st-Prio-S4"]["triggers"]["instanceDifficulty"]["dungeon"]["mythic"] = true
+	E.global["nameplates"]["filters"]["mMT-1st-Prio-S4"]["triggers"]["instanceDifficulty"]["dungeon"]["mythic+"] = true
+	E.global["nameplates"]["filters"]["mMT-1st-Prio-S4"]["triggers"]["instanceType"]["party"] = true
+	E.global["nameplates"]["filters"]["mMT-1st-Prio-S4"]["triggers"]["names"]["184132"] = true
+	E.global["nameplates"]["filters"]["mMT-1st-Prio-S4"]["triggers"]["names"]["184319"] = true
+	E.global["nameplates"]["filters"]["mMT-1st-Prio-S4"]["triggers"]["names"]["184335"] = true
+	E.global["nameplates"]["filters"]["mMT-1st-Prio-S4"]["triggers"]["names"]["184581"] = true
+	E.global["nameplates"]["filters"]["mMT-1st-Prio-S4"]["triggers"]["names"]["185529"] = true
+	E.global["nameplates"]["filters"]["mMT-1st-Prio-S4"]["triggers"]["names"]["185656"] = true
+	E.global["nameplates"]["filters"]["mMT-1st-Prio-S4"]["triggers"]["names"]["186107"] = true
+	E.global["nameplates"]["filters"]["mMT-1st-Prio-S4"]["triggers"]["names"]["186125"] = true
+	E.global["nameplates"]["filters"]["mMT-1st-Prio-S4"]["triggers"]["names"]["186208"] = true
+	E.global["nameplates"]["filters"]["mMT-1st-Prio-S4"]["triggers"]["names"]["186226"] = true
+	E.global["nameplates"]["filters"]["mMT-1st-Prio-S4"]["triggers"]["names"]["186696"] = true
+	E.global["nameplates"]["filters"]["mMT-1st-Prio-S4"]["triggers"]["names"]["186741"] = true
+	E.global["nameplates"]["filters"]["mMT-1st-Prio-S4"]["triggers"]["names"]["189531"] = true
+	E.global["nameplates"]["filters"]["mMT-1st-Prio-S4"]["triggers"]["names"]["190207"] = true
+	E.global["nameplates"]["filters"]["mMT-1st-Prio-S4"]["triggers"]["names"]["190342"] = true
+	E.global["nameplates"]["filters"]["mMT-1st-Prio-S4"]["triggers"]["names"]["190362"] = true
+	E.global["nameplates"]["filters"]["mMT-1st-Prio-S4"]["triggers"]["names"]["190368"] = true
+	E.global["nameplates"]["filters"]["mMT-1st-Prio-S4"]["triggers"]["names"]["190377"] = true
+	E.global["nameplates"]["filters"]["mMT-1st-Prio-S4"]["triggers"]["names"]["190381"] = true
+	E.global["nameplates"]["filters"]["mMT-1st-Prio-S4"]["triggers"]["names"]["190426"] = true
+	E.global["nameplates"]["filters"]["mMT-1st-Prio-S4"]["triggers"]["names"]["191164"] = true
+	E.global["nameplates"]["filters"]["mMT-1st-Prio-S4"]["triggers"]["names"]["192481"] = true
+	E.global["nameplates"]["filters"]["mMT-1st-Prio-S4"]["triggers"]["names"]["192788"] = true
+	E.global["nameplates"]["filters"]["mMT-1st-Prio-S4"]["triggers"]["names"]["192796"] = true
+	E.global["nameplates"]["filters"]["mMT-1st-Prio-S4"]["triggers"]["names"]["192955"] = true
+	E.global["nameplates"]["filters"]["mMT-1st-Prio-S4"]["triggers"]["names"]["193291"] = true
+	E.global["nameplates"]["filters"]["mMT-1st-Prio-S4"]["triggers"]["names"]["193799"] = true
+	E.global["nameplates"]["filters"]["mMT-1st-Prio-S4"]["triggers"]["names"]["194745"] = true
+	E.global["nameplates"]["filters"]["mMT-1st-Prio-S4"]["triggers"]["names"]["194894"] = true
+	E.global["nameplates"]["filters"]["mMT-1st-Prio-S4"]["triggers"]["names"]["195135"] = true
+	E.global["nameplates"]["filters"]["mMT-1st-Prio-S4"]["triggers"]["names"]["195399"] = true
+	E.global["nameplates"]["filters"]["mMT-1st-Prio-S4"]["triggers"]["names"]["195877"] = true
+	E.global["nameplates"]["filters"]["mMT-1st-Prio-S4"]["triggers"]["names"]["196043"] = true
+	E.global["nameplates"]["filters"]["mMT-1st-Prio-S4"]["triggers"]["names"]["196044"] = true
+	E.global["nameplates"]["filters"]["mMT-1st-Prio-S4"]["triggers"]["names"]["196115"] = true
+	E.global["nameplates"]["filters"]["mMT-1st-Prio-S4"]["triggers"]["names"]["196548"] = true
+	E.global["nameplates"]["filters"]["mMT-1st-Prio-S4"]["triggers"]["names"]["196576"] = true
+	E.global["nameplates"]["filters"]["mMT-1st-Prio-S4"]["triggers"]["names"]["196712"] = true
+	E.global["nameplates"]["filters"]["mMT-1st-Prio-S4"]["triggers"]["names"]["197406"] = true
+	E.global["nameplates"]["filters"]["mMT-1st-Prio-S4"]["triggers"]["names"]["197985"] = true
+	E.global["nameplates"]["filters"]["mMT-1st-Prio-S4"]["triggers"]["names"]["199368"] = true
+	E.global["nameplates"]["filters"]["mMT-1st-Prio-S4"]["triggers"]["priority"] = 31
+	E.global["nameplates"]["filters"]["mMT-1st-Prio-S4"]["triggers"]["threat"]["enable"] = true
+	E.global["nameplates"]["filters"]["mMT-1st-Prio-S4"]["triggers"]["threat"]["good"] = true
+	E.global["nameplates"]["filters"]["mMT-1st-Prio-oof-S4"]["actions"]["color"]["border"] = true
+	E.global["nameplates"]["filters"]["mMT-1st-Prio-oof-S4"]["actions"]["color"]["borderColor"]["b"] = 0.79215693473816
+	E.global["nameplates"]["filters"]["mMT-1st-Prio-oof-S4"]["actions"]["color"]["borderColor"]["g"] = 0
+	E.global["nameplates"]["filters"]["mMT-1st-Prio-oof-S4"]["actions"]["color"]["health"] = true
+	E.global["nameplates"]["filters"]["mMT-1st-Prio-oof-S4"]["actions"]["color"]["healthColor"]["b"] = 0.79215693473816
+	E.global["nameplates"]["filters"]["mMT-1st-Prio-oof-S4"]["actions"]["color"]["healthColor"]["g"] = 0
+	E.global["nameplates"]["filters"]["mMT-1st-Prio-oof-S4"]["actions"]["tags"]["name"] = "||cffff00ca[mName:last:onlyininstance:medium]||r"
+	E.global["nameplates"]["filters"]["mMT-1st-Prio-oof-S4"]["triggers"]["instanceDifficulty"]["dungeon"]["mythic"] = true
+	E.global["nameplates"]["filters"]["mMT-1st-Prio-oof-S4"]["triggers"]["instanceDifficulty"]["dungeon"]["mythic+"] = true
+	E.global["nameplates"]["filters"]["mMT-1st-Prio-oof-S4"]["triggers"]["instanceType"]["party"] = true
+	E.global["nameplates"]["filters"]["mMT-1st-Prio-oof-S4"]["triggers"]["names"]["184132"] = true
+	E.global["nameplates"]["filters"]["mMT-1st-Prio-oof-S4"]["triggers"]["names"]["184319"] = true
+	E.global["nameplates"]["filters"]["mMT-1st-Prio-oof-S4"]["triggers"]["names"]["184335"] = true
+	E.global["nameplates"]["filters"]["mMT-1st-Prio-oof-S4"]["triggers"]["names"]["184581"] = true
+	E.global["nameplates"]["filters"]["mMT-1st-Prio-oof-S4"]["triggers"]["names"]["185529"] = true
+	E.global["nameplates"]["filters"]["mMT-1st-Prio-oof-S4"]["triggers"]["names"]["185656"] = true
+	E.global["nameplates"]["filters"]["mMT-1st-Prio-oof-S4"]["triggers"]["names"]["186107"] = true
+	E.global["nameplates"]["filters"]["mMT-1st-Prio-oof-S4"]["triggers"]["names"]["186125"] = true
+	E.global["nameplates"]["filters"]["mMT-1st-Prio-oof-S4"]["triggers"]["names"]["186208"] = true
+	E.global["nameplates"]["filters"]["mMT-1st-Prio-oof-S4"]["triggers"]["names"]["186226"] = true
+	E.global["nameplates"]["filters"]["mMT-1st-Prio-oof-S4"]["triggers"]["names"]["186696"] = true
+	E.global["nameplates"]["filters"]["mMT-1st-Prio-oof-S4"]["triggers"]["names"]["186741"] = true
+	E.global["nameplates"]["filters"]["mMT-1st-Prio-oof-S4"]["triggers"]["names"]["189531"] = true
+	E.global["nameplates"]["filters"]["mMT-1st-Prio-oof-S4"]["triggers"]["names"]["190207"] = true
+	E.global["nameplates"]["filters"]["mMT-1st-Prio-oof-S4"]["triggers"]["names"]["190342"] = true
+	E.global["nameplates"]["filters"]["mMT-1st-Prio-oof-S4"]["triggers"]["names"]["190362"] = true
+	E.global["nameplates"]["filters"]["mMT-1st-Prio-oof-S4"]["triggers"]["names"]["190368"] = true
+	E.global["nameplates"]["filters"]["mMT-1st-Prio-oof-S4"]["triggers"]["names"]["190377"] = true
+	E.global["nameplates"]["filters"]["mMT-1st-Prio-oof-S4"]["triggers"]["names"]["190381"] = true
+	E.global["nameplates"]["filters"]["mMT-1st-Prio-oof-S4"]["triggers"]["names"]["190426"] = true
+	E.global["nameplates"]["filters"]["mMT-1st-Prio-oof-S4"]["triggers"]["names"]["191164"] = true
+	E.global["nameplates"]["filters"]["mMT-1st-Prio-oof-S4"]["triggers"]["names"]["192481"] = true
+	E.global["nameplates"]["filters"]["mMT-1st-Prio-oof-S4"]["triggers"]["names"]["192788"] = true
+	E.global["nameplates"]["filters"]["mMT-1st-Prio-oof-S4"]["triggers"]["names"]["192796"] = true
+	E.global["nameplates"]["filters"]["mMT-1st-Prio-oof-S4"]["triggers"]["names"]["192955"] = true
+	E.global["nameplates"]["filters"]["mMT-1st-Prio-oof-S4"]["triggers"]["names"]["193291"] = true
+	E.global["nameplates"]["filters"]["mMT-1st-Prio-oof-S4"]["triggers"]["names"]["193799"] = true
+	E.global["nameplates"]["filters"]["mMT-1st-Prio-oof-S4"]["triggers"]["names"]["194745"] = true
+	E.global["nameplates"]["filters"]["mMT-1st-Prio-oof-S4"]["triggers"]["names"]["194894"] = true
+	E.global["nameplates"]["filters"]["mMT-1st-Prio-oof-S4"]["triggers"]["names"]["195135"] = true
+	E.global["nameplates"]["filters"]["mMT-1st-Prio-oof-S4"]["triggers"]["names"]["195399"] = true
+	E.global["nameplates"]["filters"]["mMT-1st-Prio-oof-S4"]["triggers"]["names"]["195877"] = true
+	E.global["nameplates"]["filters"]["mMT-1st-Prio-oof-S4"]["triggers"]["names"]["196043"] = true
+	E.global["nameplates"]["filters"]["mMT-1st-Prio-oof-S4"]["triggers"]["names"]["196044"] = true
+	E.global["nameplates"]["filters"]["mMT-1st-Prio-oof-S4"]["triggers"]["names"]["196115"] = true
+	E.global["nameplates"]["filters"]["mMT-1st-Prio-oof-S4"]["triggers"]["names"]["196548"] = true
+	E.global["nameplates"]["filters"]["mMT-1st-Prio-oof-S4"]["triggers"]["names"]["196576"] = true
+	E.global["nameplates"]["filters"]["mMT-1st-Prio-oof-S4"]["triggers"]["names"]["196712"] = true
+	E.global["nameplates"]["filters"]["mMT-1st-Prio-oof-S4"]["triggers"]["names"]["197406"] = true
+	E.global["nameplates"]["filters"]["mMT-1st-Prio-oof-S4"]["triggers"]["names"]["197985"] = true
+	E.global["nameplates"]["filters"]["mMT-1st-Prio-oof-S4"]["triggers"]["names"]["199368"] = true
+	E.global["nameplates"]["filters"]["mMT-1st-Prio-oof-S4"]["triggers"]["outOfCombat"] = true
+	E.global["nameplates"]["filters"]["mMT-1st-Prio-oof-S4"]["triggers"]["priority"] = 31
+	E.global["nameplates"]["filters"]["mMT-1st-Prio-oof-S4"]["triggers"]["threat"]["good"] = true
+	E.global["nameplates"]["filters"]["mMT-2nd-Prio-S4"]["actions"]["color"]["border"] = true
+	E.global["nameplates"]["filters"]["mMT-2nd-Prio-S4"]["actions"]["color"]["borderColor"]["g"] = 0.39607846736908
+	E.global["nameplates"]["filters"]["mMT-2nd-Prio-S4"]["actions"]["color"]["borderColor"]["r"] = 0
+	E.global["nameplates"]["filters"]["mMT-2nd-Prio-S4"]["actions"]["color"]["health"] = true
+	E.global["nameplates"]["filters"]["mMT-2nd-Prio-S4"]["actions"]["color"]["healthColor"]["g"] = 0.39607846736908
+	E.global["nameplates"]["filters"]["mMT-2nd-Prio-S4"]["actions"]["color"]["healthColor"]["r"] = 0
+	E.global["nameplates"]["filters"]["mMT-2nd-Prio-S4"]["actions"]["tags"]["name"] = "||cff0065ff[mName:last:onlyininstance:medium]||r"
+	E.global["nameplates"]["filters"]["mMT-2nd-Prio-S4"]["triggers"]["inCombat"] = true
+	E.global["nameplates"]["filters"]["mMT-2nd-Prio-S4"]["triggers"]["instanceDifficulty"]["dungeon"]["mythic"] = true
+	E.global["nameplates"]["filters"]["mMT-2nd-Prio-S4"]["triggers"]["instanceDifficulty"]["dungeon"]["mythic+"] = true
+	E.global["nameplates"]["filters"]["mMT-2nd-Prio-S4"]["triggers"]["instanceType"]["party"] = true
+	E.global["nameplates"]["filters"]["mMT-2nd-Prio-S4"]["triggers"]["names"]["184022"] = true
+	E.global["nameplates"]["filters"]["mMT-2nd-Prio-S4"]["triggers"]["names"]["184131"] = true
+	E.global["nameplates"]["filters"]["mMT-2nd-Prio-S4"]["triggers"]["names"]["184301"] = true
+	E.global["nameplates"]["filters"]["mMT-2nd-Prio-S4"]["triggers"]["names"]["184582"] = true
+	E.global["nameplates"]["filters"]["mMT-2nd-Prio-S4"]["triggers"]["names"]["186124"] = true
+	E.global["nameplates"]["filters"]["mMT-2nd-Prio-S4"]["triggers"]["names"]["186191"] = true
+	E.global["nameplates"]["filters"]["mMT-2nd-Prio-S4"]["triggers"]["names"]["186220"] = true
+	E.global["nameplates"]["filters"]["mMT-2nd-Prio-S4"]["triggers"]["names"]["186246"] = true
+	E.global["nameplates"]["filters"]["mMT-2nd-Prio-S4"]["triggers"]["names"]["186420"] = true
+	E.global["nameplates"]["filters"]["mMT-2nd-Prio-S4"]["triggers"]["names"]["186658"] = true
+	E.global["nameplates"]["filters"]["mMT-2nd-Prio-S4"]["triggers"]["names"]["186664"] = true
+	E.global["nameplates"]["filters"]["mMT-2nd-Prio-S4"]["triggers"]["names"]["187154"] = true
+	E.global["nameplates"]["filters"]["mMT-2nd-Prio-S4"]["triggers"]["names"]["187155"] = true
+	E.global["nameplates"]["filters"]["mMT-2nd-Prio-S4"]["triggers"]["names"]["187224"] = true
+	E.global["nameplates"]["filters"]["mMT-2nd-Prio-S4"]["triggers"]["names"]["187969"] = true
+	E.global["nameplates"]["filters"]["mMT-2nd-Prio-S4"]["triggers"]["names"]["189235"] = true
+	E.global["nameplates"]["filters"]["mMT-2nd-Prio-S4"]["triggers"]["names"]["189470"] = true
+	E.global["nameplates"]["filters"]["mMT-2nd-Prio-S4"]["triggers"]["names"]["190340"] = true
+	E.global["nameplates"]["filters"]["mMT-2nd-Prio-S4"]["triggers"]["names"]["190370"] = true
+	E.global["nameplates"]["filters"]["mMT-2nd-Prio-S4"]["triggers"]["names"]["190373"] = true
+	E.global["nameplates"]["filters"]["mMT-2nd-Prio-S4"]["triggers"]["names"]["190407"] = true
+	E.global["nameplates"]["filters"]["mMT-2nd-Prio-S4"]["triggers"]["names"]["191847"] = true
+	E.global["nameplates"]["filters"]["mMT-2nd-Prio-S4"]["triggers"]["names"]["194487"] = true
+	E.global["nameplates"]["filters"]["mMT-2nd-Prio-S4"]["triggers"]["names"]["195842"] = true
+	E.global["nameplates"]["filters"]["mMT-2nd-Prio-S4"]["triggers"]["names"]["196045"] = true
+	E.global["nameplates"]["filters"]["mMT-2nd-Prio-S4"]["triggers"]["names"]["196203"] = true
+	E.global["nameplates"]["filters"]["mMT-2nd-Prio-S4"]["triggers"]["names"]["196263"] = true
+	E.global["nameplates"]["filters"]["mMT-2nd-Prio-S4"]["triggers"]["names"]["197857"] = true
+	E.global["nameplates"]["filters"]["mMT-2nd-Prio-S4"]["triggers"]["names"]["197905"] = true
+	E.global["nameplates"]["filters"]["mMT-2nd-Prio-S4"]["triggers"]["names"]["199037"] = true
+	E.global["nameplates"]["filters"]["mMT-2nd-Prio-S4"]["triggers"]["names"]["199325"] = true
+	E.global["nameplates"]["filters"]["mMT-2nd-Prio-S4"]["triggers"]["priority"] = 32
+	E.global["nameplates"]["filters"]["mMT-2nd-Prio-S4"]["triggers"]["threat"]["enable"] = true
+	E.global["nameplates"]["filters"]["mMT-2nd-Prio-S4"]["triggers"]["threat"]["good"] = true
+	E.global["nameplates"]["filters"]["mMT-2nd-Prio-oof-S4"]["actions"]["color"]["border"] = true
+	E.global["nameplates"]["filters"]["mMT-2nd-Prio-oof-S4"]["actions"]["color"]["borderColor"]["g"] = 0.39607846736908
+	E.global["nameplates"]["filters"]["mMT-2nd-Prio-oof-S4"]["actions"]["color"]["borderColor"]["r"] = 0
+	E.global["nameplates"]["filters"]["mMT-2nd-Prio-oof-S4"]["actions"]["color"]["health"] = true
+	E.global["nameplates"]["filters"]["mMT-2nd-Prio-oof-S4"]["actions"]["color"]["healthColor"]["g"] = 0.39607846736908
+	E.global["nameplates"]["filters"]["mMT-2nd-Prio-oof-S4"]["actions"]["color"]["healthColor"]["r"] = 0
+	E.global["nameplates"]["filters"]["mMT-2nd-Prio-oof-S4"]["actions"]["tags"]["name"] = "||cff0065ff[mName:last:onlyininstance:medium]||r"
+	E.global["nameplates"]["filters"]["mMT-2nd-Prio-oof-S4"]["triggers"]["instanceDifficulty"]["dungeon"]["mythic"] = true
+	E.global["nameplates"]["filters"]["mMT-2nd-Prio-oof-S4"]["triggers"]["instanceDifficulty"]["dungeon"]["mythic+"] = true
+	E.global["nameplates"]["filters"]["mMT-2nd-Prio-oof-S4"]["triggers"]["instanceType"]["party"] = true
+	E.global["nameplates"]["filters"]["mMT-2nd-Prio-oof-S4"]["triggers"]["names"]["184022"] = true
+	E.global["nameplates"]["filters"]["mMT-2nd-Prio-oof-S4"]["triggers"]["names"]["184131"] = true
+	E.global["nameplates"]["filters"]["mMT-2nd-Prio-oof-S4"]["triggers"]["names"]["184301"] = true
+	E.global["nameplates"]["filters"]["mMT-2nd-Prio-oof-S4"]["triggers"]["names"]["184582"] = true
+	E.global["nameplates"]["filters"]["mMT-2nd-Prio-oof-S4"]["triggers"]["names"]["186124"] = true
+	E.global["nameplates"]["filters"]["mMT-2nd-Prio-oof-S4"]["triggers"]["names"]["186191"] = true
+	E.global["nameplates"]["filters"]["mMT-2nd-Prio-oof-S4"]["triggers"]["names"]["186220"] = true
+	E.global["nameplates"]["filters"]["mMT-2nd-Prio-oof-S4"]["triggers"]["names"]["186246"] = true
+	E.global["nameplates"]["filters"]["mMT-2nd-Prio-oof-S4"]["triggers"]["names"]["186420"] = true
+	E.global["nameplates"]["filters"]["mMT-2nd-Prio-oof-S4"]["triggers"]["names"]["186658"] = true
+	E.global["nameplates"]["filters"]["mMT-2nd-Prio-oof-S4"]["triggers"]["names"]["186664"] = true
+	E.global["nameplates"]["filters"]["mMT-2nd-Prio-oof-S4"]["triggers"]["names"]["187154"] = true
+	E.global["nameplates"]["filters"]["mMT-2nd-Prio-oof-S4"]["triggers"]["names"]["187155"] = true
+	E.global["nameplates"]["filters"]["mMT-2nd-Prio-oof-S4"]["triggers"]["names"]["187224"] = true
+	E.global["nameplates"]["filters"]["mMT-2nd-Prio-oof-S4"]["triggers"]["names"]["187969"] = true
+	E.global["nameplates"]["filters"]["mMT-2nd-Prio-oof-S4"]["triggers"]["names"]["189235"] = true
+	E.global["nameplates"]["filters"]["mMT-2nd-Prio-oof-S4"]["triggers"]["names"]["189470"] = true
+	E.global["nameplates"]["filters"]["mMT-2nd-Prio-oof-S4"]["triggers"]["names"]["190340"] = true
+	E.global["nameplates"]["filters"]["mMT-2nd-Prio-oof-S4"]["triggers"]["names"]["190370"] = true
+	E.global["nameplates"]["filters"]["mMT-2nd-Prio-oof-S4"]["triggers"]["names"]["190373"] = true
+	E.global["nameplates"]["filters"]["mMT-2nd-Prio-oof-S4"]["triggers"]["names"]["190407"] = true
+	E.global["nameplates"]["filters"]["mMT-2nd-Prio-oof-S4"]["triggers"]["names"]["191847"] = true
+	E.global["nameplates"]["filters"]["mMT-2nd-Prio-oof-S4"]["triggers"]["names"]["194487"] = true
+	E.global["nameplates"]["filters"]["mMT-2nd-Prio-oof-S4"]["triggers"]["names"]["195842"] = true
+	E.global["nameplates"]["filters"]["mMT-2nd-Prio-oof-S4"]["triggers"]["names"]["196045"] = true
+	E.global["nameplates"]["filters"]["mMT-2nd-Prio-oof-S4"]["triggers"]["names"]["196203"] = true
+	E.global["nameplates"]["filters"]["mMT-2nd-Prio-oof-S4"]["triggers"]["names"]["196263"] = true
+	E.global["nameplates"]["filters"]["mMT-2nd-Prio-oof-S4"]["triggers"]["names"]["197857"] = true
+	E.global["nameplates"]["filters"]["mMT-2nd-Prio-oof-S4"]["triggers"]["names"]["197905"] = true
+	E.global["nameplates"]["filters"]["mMT-2nd-Prio-oof-S4"]["triggers"]["names"]["199037"] = true
+	E.global["nameplates"]["filters"]["mMT-2nd-Prio-oof-S4"]["triggers"]["names"]["199325"] = true
+	E.global["nameplates"]["filters"]["mMT-2nd-Prio-oof-S4"]["triggers"]["outOfCombat"] = true
+	E.global["nameplates"]["filters"]["mMT-2nd-Prio-oof-S4"]["triggers"]["priority"] = 32
+	E.global["nameplates"]["filters"]["mMT-2nd-Prio-oof-S4"]["triggers"]["threat"]["good"] = true
+	E.global["nameplates"]["filters"]["mMT-3rd-Prio-S4"]["actions"]["color"]["border"] = true
+	E.global["nameplates"]["filters"]["mMT-3rd-Prio-S4"]["actions"]["color"]["borderColor"]["b"] = 0.79607850313187
+	E.global["nameplates"]["filters"]["mMT-3rd-Prio-S4"]["actions"]["color"]["borderColor"]["g"] = 0.36078432202339
+	E.global["nameplates"]["filters"]["mMT-3rd-Prio-S4"]["actions"]["color"]["borderColor"]["r"] = 0.56078433990479
+	E.global["nameplates"]["filters"]["mMT-3rd-Prio-S4"]["actions"]["color"]["health"] = true
+	E.global["nameplates"]["filters"]["mMT-3rd-Prio-S4"]["actions"]["color"]["healthColor"]["b"] = 0.79607850313187
+	E.global["nameplates"]["filters"]["mMT-3rd-Prio-S4"]["actions"]["color"]["healthColor"]["g"] = 0.36078432202339
+	E.global["nameplates"]["filters"]["mMT-3rd-Prio-S4"]["actions"]["color"]["healthColor"]["r"] = 0.56078433990479
+	E.global["nameplates"]["filters"]["mMT-3rd-Prio-S4"]["actions"]["tags"]["name"] = "||cff8f5ccb[mName:last:onlyininstance:medium]||r"
+	E.global["nameplates"]["filters"]["mMT-3rd-Prio-S4"]["triggers"]["inCombat"] = true
+	E.global["nameplates"]["filters"]["mMT-3rd-Prio-S4"]["triggers"]["instanceDifficulty"]["dungeon"]["mythic"] = true
+	E.global["nameplates"]["filters"]["mMT-3rd-Prio-S4"]["triggers"]["instanceDifficulty"]["dungeon"]["mythic+"] = true
+	E.global["nameplates"]["filters"]["mMT-3rd-Prio-S4"]["triggers"]["instanceType"]["party"] = true
+	E.global["nameplates"]["filters"]["mMT-3rd-Prio-S4"]["triggers"]["names"]["184023"] = true
+	E.global["nameplates"]["filters"]["mMT-3rd-Prio-S4"]["triggers"]["names"]["184580"] = true
+	E.global["nameplates"]["filters"]["mMT-3rd-Prio-S4"]["triggers"]["names"]["185528"] = true
+	E.global["nameplates"]["filters"]["mMT-3rd-Prio-S4"]["triggers"]["names"]["186122"] = true
+	E.global["nameplates"]["filters"]["mMT-3rd-Prio-S4"]["triggers"]["names"]["186242"] = true
+	E.global["nameplates"]["filters"]["mMT-3rd-Prio-S4"]["triggers"]["names"]["187315"] = true
+	E.global["nameplates"]["filters"]["mMT-3rd-Prio-S4"]["triggers"]["names"]["188067"] = true
+	E.global["nameplates"]["filters"]["mMT-3rd-Prio-S4"]["triggers"]["names"]["189265"] = true
+	E.global["nameplates"]["filters"]["mMT-3rd-Prio-S4"]["triggers"]["names"]["189464"] = true
+	E.global["nameplates"]["filters"]["mMT-3rd-Prio-S4"]["triggers"]["names"]["189555"] = true
+	E.global["nameplates"]["filters"]["mMT-3rd-Prio-S4"]["triggers"]["names"]["190206"] = true
+	E.global["nameplates"]["filters"]["mMT-3rd-Prio-S4"]["triggers"]["names"]["190345"] = true
+	E.global["nameplates"]["filters"]["mMT-3rd-Prio-S4"]["triggers"]["names"]["190359"] = true
+	E.global["nameplates"]["filters"]["mMT-3rd-Prio-S4"]["triggers"]["names"]["190371"] = true
+	E.global["nameplates"]["filters"]["mMT-3rd-Prio-S4"]["triggers"]["names"]["192800"] = true
+	E.global["nameplates"]["filters"]["mMT-3rd-Prio-S4"]["triggers"]["names"]["193373"] = true
+	E.global["nameplates"]["filters"]["mMT-3rd-Prio-S4"]["triggers"]["names"]["193944"] = true
+	E.global["nameplates"]["filters"]["mMT-3rd-Prio-S4"]["triggers"]["names"]["194467"] = true
+	E.global["nameplates"]["filters"]["mMT-3rd-Prio-S4"]["triggers"]["names"]["194469"] = true
+	E.global["nameplates"]["filters"]["mMT-3rd-Prio-S4"]["triggers"]["names"]["195851"] = true
+	E.global["nameplates"]["filters"]["mMT-3rd-Prio-S4"]["triggers"]["names"]["196102"] = true
+	E.global["nameplates"]["filters"]["mMT-3rd-Prio-S4"]["triggers"]["names"]["196198"] = true
+	E.global["nameplates"]["filters"]["mMT-3rd-Prio-S4"]["triggers"]["names"]["196202"] = true
+	E.global["nameplates"]["filters"]["mMT-3rd-Prio-S4"]["triggers"]["names"]["196798"] = true
+	E.global["nameplates"]["filters"]["mMT-3rd-Prio-S4"]["triggers"]["priority"] = 33
+	E.global["nameplates"]["filters"]["mMT-3rd-Prio-S4"]["triggers"]["threat"]["enable"] = true
+	E.global["nameplates"]["filters"]["mMT-3rd-Prio-S4"]["triggers"]["threat"]["good"] = true
+	E.global["nameplates"]["filters"]["mMT-3rd-Prio-oof-S4"]["actions"]["color"]["border"] = true
+	E.global["nameplates"]["filters"]["mMT-3rd-Prio-oof-S4"]["actions"]["color"]["borderColor"]["b"] = 0.79607850313187
+	E.global["nameplates"]["filters"]["mMT-3rd-Prio-oof-S4"]["actions"]["color"]["borderColor"]["g"] = 0.36078432202339
+	E.global["nameplates"]["filters"]["mMT-3rd-Prio-oof-S4"]["actions"]["color"]["borderColor"]["r"] = 0.56078433990479
+	E.global["nameplates"]["filters"]["mMT-3rd-Prio-oof-S4"]["actions"]["color"]["health"] = true
+	E.global["nameplates"]["filters"]["mMT-3rd-Prio-oof-S4"]["actions"]["color"]["healthColor"]["b"] = 0.79607850313187
+	E.global["nameplates"]["filters"]["mMT-3rd-Prio-oof-S4"]["actions"]["color"]["healthColor"]["g"] = 0.36078432202339
+	E.global["nameplates"]["filters"]["mMT-3rd-Prio-oof-S4"]["actions"]["color"]["healthColor"]["r"] = 0.56078433990479
+	E.global["nameplates"]["filters"]["mMT-3rd-Prio-oof-S4"]["actions"]["tags"]["name"] = "||cff8f5ccb[mName:last:onlyininstance:medium]||r"
+	E.global["nameplates"]["filters"]["mMT-3rd-Prio-oof-S4"]["triggers"]["instanceDifficulty"]["dungeon"]["mythic"] = true
+	E.global["nameplates"]["filters"]["mMT-3rd-Prio-oof-S4"]["triggers"]["instanceDifficulty"]["dungeon"]["mythic+"] = true
+	E.global["nameplates"]["filters"]["mMT-3rd-Prio-oof-S4"]["triggers"]["instanceType"]["party"] = true
+	E.global["nameplates"]["filters"]["mMT-3rd-Prio-oof-S4"]["triggers"]["names"]["184023"] = true
+	E.global["nameplates"]["filters"]["mMT-3rd-Prio-oof-S4"]["triggers"]["names"]["184580"] = true
+	E.global["nameplates"]["filters"]["mMT-3rd-Prio-oof-S4"]["triggers"]["names"]["185528"] = true
+	E.global["nameplates"]["filters"]["mMT-3rd-Prio-oof-S4"]["triggers"]["names"]["186122"] = true
+	E.global["nameplates"]["filters"]["mMT-3rd-Prio-oof-S4"]["triggers"]["names"]["186242"] = true
+	E.global["nameplates"]["filters"]["mMT-3rd-Prio-oof-S4"]["triggers"]["names"]["187315"] = true
+	E.global["nameplates"]["filters"]["mMT-3rd-Prio-oof-S4"]["triggers"]["names"]["188067"] = true
+	E.global["nameplates"]["filters"]["mMT-3rd-Prio-oof-S4"]["triggers"]["names"]["189265"] = true
+	E.global["nameplates"]["filters"]["mMT-3rd-Prio-oof-S4"]["triggers"]["names"]["189464"] = true
+	E.global["nameplates"]["filters"]["mMT-3rd-Prio-oof-S4"]["triggers"]["names"]["189555"] = true
+	E.global["nameplates"]["filters"]["mMT-3rd-Prio-oof-S4"]["triggers"]["names"]["190206"] = true
+	E.global["nameplates"]["filters"]["mMT-3rd-Prio-oof-S4"]["triggers"]["names"]["190345"] = true
+	E.global["nameplates"]["filters"]["mMT-3rd-Prio-oof-S4"]["triggers"]["names"]["190359"] = true
+	E.global["nameplates"]["filters"]["mMT-3rd-Prio-oof-S4"]["triggers"]["names"]["190371"] = true
+	E.global["nameplates"]["filters"]["mMT-3rd-Prio-oof-S4"]["triggers"]["names"]["192800"] = true
+	E.global["nameplates"]["filters"]["mMT-3rd-Prio-oof-S4"]["triggers"]["names"]["193373"] = true
+	E.global["nameplates"]["filters"]["mMT-3rd-Prio-oof-S4"]["triggers"]["names"]["193944"] = true
+	E.global["nameplates"]["filters"]["mMT-3rd-Prio-oof-S4"]["triggers"]["names"]["194467"] = true
+	E.global["nameplates"]["filters"]["mMT-3rd-Prio-oof-S4"]["triggers"]["names"]["194469"] = true
+	E.global["nameplates"]["filters"]["mMT-3rd-Prio-oof-S4"]["triggers"]["names"]["195851"] = true
+	E.global["nameplates"]["filters"]["mMT-3rd-Prio-oof-S4"]["triggers"]["names"]["196102"] = true
+	E.global["nameplates"]["filters"]["mMT-3rd-Prio-oof-S4"]["triggers"]["names"]["196198"] = true
+	E.global["nameplates"]["filters"]["mMT-3rd-Prio-oof-S4"]["triggers"]["names"]["196202"] = true
+	E.global["nameplates"]["filters"]["mMT-3rd-Prio-oof-S4"]["triggers"]["names"]["196798"] = true
+	E.global["nameplates"]["filters"]["mMT-3rd-Prio-oof-S4"]["triggers"]["outOfCombat"] = true
+	E.global["nameplates"]["filters"]["mMT-3rd-Prio-oof-S4"]["triggers"]["priority"] = 33
+	E.global["nameplates"]["filters"]["mMT-3rd-Prio-oof-S4"]["triggers"]["threat"]["good"] = true
+	E.global["nameplates"]["filters"]["mMT-High-HP-S4"]["actions"]["color"]["border"] = true
+	E.global["nameplates"]["filters"]["mMT-High-HP-S4"]["actions"]["color"]["borderColor"]["g"] = 0.97254908084869
+	E.global["nameplates"]["filters"]["mMT-High-HP-S4"]["actions"]["color"]["borderColor"]["r"] = 0
+	E.global["nameplates"]["filters"]["mMT-High-HP-S4"]["actions"]["color"]["health"] = true
+	E.global["nameplates"]["filters"]["mMT-High-HP-S4"]["actions"]["color"]["healthColor"]["g"] = 0.97254908084869
+	E.global["nameplates"]["filters"]["mMT-High-HP-S4"]["actions"]["color"]["healthColor"]["r"] = 0
+	E.global["nameplates"]["filters"]["mMT-High-HP-S4"]["actions"]["tags"]["name"] = "||cff00f8ff[mName:last:onlyininstance:medium]||r"
+	E.global["nameplates"]["filters"]["mMT-High-HP-S4"]["triggers"]["inCombat"] = true
+	E.global["nameplates"]["filters"]["mMT-High-HP-S4"]["triggers"]["instanceDifficulty"]["dungeon"]["mythic"] = true
+	E.global["nameplates"]["filters"]["mMT-High-HP-S4"]["triggers"]["instanceDifficulty"]["dungeon"]["mythic+"] = true
+	E.global["nameplates"]["filters"]["mMT-High-HP-S4"]["triggers"]["instanceType"]["party"] = true
+	E.global["nameplates"]["filters"]["mMT-High-HP-S4"]["triggers"]["names"]["184020"] = true
+	E.global["nameplates"]["filters"]["mMT-High-HP-S4"]["triggers"]["names"]["184107"] = true
+	E.global["nameplates"]["filters"]["mMT-High-HP-S4"]["triggers"]["names"]["184300"] = true
+	E.global["nameplates"]["filters"]["mMT-High-HP-S4"]["triggers"]["names"]["184331"] = true
+	E.global["nameplates"]["filters"]["mMT-High-HP-S4"]["triggers"]["names"]["186229"] = true
+	E.global["nameplates"]["filters"]["mMT-High-HP-S4"]["triggers"]["names"]["186284"] = true
+	E.global["nameplates"]["filters"]["mMT-High-HP-S4"]["triggers"]["names"]["187192"] = true
+	E.global["nameplates"]["filters"]["mMT-High-HP-S4"]["triggers"]["names"]["187240"] = true
+	E.global["nameplates"]["filters"]["mMT-High-HP-S4"]["triggers"]["names"]["187897"] = true
+	E.global["nameplates"]["filters"]["mMT-High-HP-S4"]["triggers"]["names"]["188244"] = true
+	E.global["nameplates"]["filters"]["mMT-High-HP-S4"]["triggers"]["names"]["189466"] = true
+	E.global["nameplates"]["filters"]["mMT-High-HP-S4"]["triggers"]["names"]["190034"] = true
+	E.global["nameplates"]["filters"]["mMT-High-HP-S4"]["triggers"]["names"]["190401"] = true
+	E.global["nameplates"]["filters"]["mMT-High-HP-S4"]["triggers"]["names"]["190403"] = true
+	E.global["nameplates"]["filters"]["mMT-High-HP-S4"]["triggers"]["names"]["190404"] = true
+	E.global["nameplates"]["filters"]["mMT-High-HP-S4"]["triggers"]["names"]["190405"] = true
+	E.global["nameplates"]["filters"]["mMT-High-HP-S4"]["triggers"]["names"]["191739"] = true
+	E.global["nameplates"]["filters"]["mMT-High-HP-S4"]["triggers"]["names"]["192333"] = true
+	E.global["nameplates"]["filters"]["mMT-High-HP-S4"]["triggers"]["names"]["192680"] = true
+	E.global["nameplates"]["filters"]["mMT-High-HP-S4"]["triggers"]["names"]["194317"] = true
+	E.global["nameplates"]["filters"]["mMT-High-HP-S4"]["triggers"]["names"]["195265"] = true
+	E.global["nameplates"]["filters"]["mMT-High-HP-S4"]["triggers"]["names"]["195696"] = true
+	E.global["nameplates"]["filters"]["mMT-High-HP-S4"]["triggers"]["names"]["195927"] = true
+	E.global["nameplates"]["filters"]["mMT-High-HP-S4"]["triggers"]["names"]["195928"] = true
+	E.global["nameplates"]["filters"]["mMT-High-HP-S4"]["triggers"]["names"]["195929"] = true
+	E.global["nameplates"]["filters"]["mMT-High-HP-S4"]["triggers"]["names"]["195930"] = true
+	E.global["nameplates"]["filters"]["mMT-High-HP-S4"]["triggers"]["names"]["196117"] = true
+	E.global["nameplates"]["filters"]["mMT-High-HP-S4"]["triggers"]["names"]["196671"] = true
+	E.global["nameplates"]["filters"]["mMT-High-HP-S4"]["triggers"]["names"]["197219"] = true
+	E.global["nameplates"]["filters"]["mMT-High-HP-S4"]["triggers"]["names"]["197535"] = true
+	E.global["nameplates"]["filters"]["mMT-High-HP-S4"]["triggers"]["names"]["197697"] = true
+	E.global["nameplates"]["filters"]["mMT-High-HP-S4"]["triggers"]["names"]["197698"] = true
+	E.global["nameplates"]["filters"]["mMT-High-HP-S4"]["triggers"]["names"]["198047"] = true
+	E.global["nameplates"]["filters"]["mMT-High-HP-S4"]["triggers"]["names"]["199595"] = true
+	E.global["nameplates"]["filters"]["mMT-High-HP-S4"]["triggers"]["names"]["199717"] = true
+	E.global["nameplates"]["filters"]["mMT-High-HP-S4"]["triggers"]["priority"] = 34
+	E.global["nameplates"]["filters"]["mMT-High-HP-S4"]["triggers"]["threat"]["enable"] = true
+	E.global["nameplates"]["filters"]["mMT-High-HP-S4"]["triggers"]["threat"]["good"] = true
+	E.global["nameplates"]["filters"]["mMT-Special-S4"]["actions"]["color"]["border"] = true
+	E.global["nameplates"]["filters"]["mMT-Special-S4"]["actions"]["color"]["borderColor"]["b"] = 0.38039219379425
+	E.global["nameplates"]["filters"]["mMT-Special-S4"]["actions"]["color"]["borderColor"]["g"] = 0.63921570777893
+	E.global["nameplates"]["filters"]["mMT-Special-S4"]["actions"]["color"]["borderColor"]["r"] = 0.87843143939972
+	E.global["nameplates"]["filters"]["mMT-Special-S4"]["actions"]["color"]["health"] = true
+	E.global["nameplates"]["filters"]["mMT-Special-S4"]["actions"]["color"]["healthColor"]["b"] = 0.38039219379425
+	E.global["nameplates"]["filters"]["mMT-Special-S4"]["actions"]["color"]["healthColor"]["g"] = 0.63921570777893
+	E.global["nameplates"]["filters"]["mMT-Special-S4"]["actions"]["color"]["healthColor"]["r"] = 0.87843143939972
+	E.global["nameplates"]["filters"]["mMT-Special-S4"]["actions"]["tags"]["name"] = "||cffe0a361[mName:last:onlyininstance:medium]||r"
+	E.global["nameplates"]["filters"]["mMT-Special-S4"]["actions"]["texture"]["texture"] = "mMediaTag K34"
+	E.global["nameplates"]["filters"]["mMT-Special-S4"]["triggers"]["instanceDifficulty"]["dungeon"]["mythic"] = true
+	E.global["nameplates"]["filters"]["mMT-Special-S4"]["triggers"]["instanceDifficulty"]["dungeon"]["mythic+"] = true
+	E.global["nameplates"]["filters"]["mMT-Special-S4"]["triggers"]["instanceType"]["party"] = true
+	E.global["nameplates"]["filters"]["mMT-Special-S4"]["triggers"]["names"]["189886"] = true
+	E.global["nameplates"]["filters"]["mMT-Special-S4"]["triggers"]["names"]["190174"] = true
+	E.global["nameplates"]["filters"]["mMT-Special-S4"]["triggers"]["names"]["194897"] = true
+	E.global["nameplates"]["filters"]["mMT-Special-S4"]["triggers"]["names"]["195580"] = true
+	E.global["nameplates"]["filters"]["mMT-Special-S4"]["triggers"]["names"]["195821"] = true
+	E.global["nameplates"]["filters"]["mMT-Special-S4"]["triggers"]["priority"] = 36
+	E.global["nameplates"]["filters"]["mMT-Special-S4"]["triggers"]["threat"]["enable"] = true
+	E.global["nameplates"]["filters"]["mMT-Special-S4"]["triggers"]["threat"]["good"] = true
+
+	E.global["nameplates"]["filters"]["mMT-M+_Sanguine"]["actions"]["flash"]["color"]["b"] = 0.61176472902298
+	E.global["nameplates"]["filters"]["mMT-M+_Sanguine"]["actions"]["flash"]["color"]["g"] = 0
+	E.global["nameplates"]["filters"]["mMT-M+_Sanguine"]["actions"]["flash"]["enable"] = true
+	E.global["nameplates"]["filters"]["mMT-M+_Sanguine"]["actions"]["glow"]["color"][1] = 1
+	E.global["nameplates"]["filters"]["mMT-M+_Sanguine"]["actions"]["glow"]["color"][2] = 0
+	E.global["nameplates"]["filters"]["mMT-M+_Sanguine"]["actions"]["glow"]["color"][3] = 0.61176472902298
+	E.global["nameplates"]["filters"]["mMT-M+_Sanguine"]["actions"]["glow"]["color"][4] = 1
+	E.global["nameplates"]["filters"]["mMT-M+_Sanguine"]["actions"]["glow"]["enable"] = true
+	E.global["nameplates"]["filters"]["mMT-M+_Sanguine"]["actions"]["glow"]["size"] = 2
+	E.global["nameplates"]["filters"]["mMT-M+_Sanguine"]["actions"]["tags"]["name"] = "||CFFFD2907>||r||CFFF9251C>||r ||CFFF3213AM||r||CFFEE1C52O||r||CFFEA1969V||r||CFFE5157EE||r ||CFFDF109DO||r||CFFDA0CB5U||r||CFFD609CAT||r ||CFFD004E5>||r||CFFCC01F8>||r"
+	E.global["nameplates"]["filters"]["mMT-M+_Sanguine"]["actions"]["texture"]["enable"] = true
+	E.global["nameplates"]["filters"]["mMT-M+_Sanguine"]["actions"]["texture"]["texture"] = "mMediaTag P4"
+	E.global["nameplates"]["filters"]["mMT-M+_Sanguine"]["triggers"]["buffs"]["names"]["226510"] = true
+	E.global["nameplates"]["filters"]["mMT-M+_Sanguine"]["triggers"]["instanceDifficulty"]["dungeon"]["mythic"] = true
+	E.global["nameplates"]["filters"]["mMT-M+_Sanguine"]["triggers"]["instanceDifficulty"]["dungeon"]["mythic+"] = true
+	E.global["nameplates"]["filters"]["mMT-M+_Sanguine"]["triggers"]["instanceType"]["party"] = true
+	E.global["nameplates"]["filters"]["mMT-M+_Sanguine"]["triggers"]["priority"] = 20
+	E.global["nameplates"]["filters"]["mMT-M+_Spiteful-on-You"]["actions"]["alpha"] = 100
+	E.global["nameplates"]["filters"]["mMT-M+_Spiteful-on-You"]["actions"]["color"]["border"] = true
+	E.global["nameplates"]["filters"]["mMT-M+_Spiteful-on-You"]["actions"]["color"]["borderColor"]["b"] = 0.66666668653488
+	E.global["nameplates"]["filters"]["mMT-M+_Spiteful-on-You"]["actions"]["color"]["borderColor"]["g"] = 0
+	E.global["nameplates"]["filters"]["mMT-M+_Spiteful-on-You"]["actions"]["color"]["health"] = true
+	E.global["nameplates"]["filters"]["mMT-M+_Spiteful-on-You"]["actions"]["color"]["healthColor"]["b"] = 0.090196080505848
+	E.global["nameplates"]["filters"]["mMT-M+_Spiteful-on-You"]["actions"]["color"]["healthColor"]["r"] = 0
+	E.global["nameplates"]["filters"]["mMT-M+_Spiteful-on-You"]["actions"]["flash"]["color"]["b"] = 0.96470594406128
+	E.global["nameplates"]["filters"]["mMT-M+_Spiteful-on-You"]["actions"]["flash"]["color"]["g"] = 0
+	E.global["nameplates"]["filters"]["mMT-M+_Spiteful-on-You"]["actions"]["flash"]["enable"] = true
+	E.global["nameplates"]["filters"]["mMT-M+_Spiteful-on-You"]["actions"]["scale"] = 1.25
+	E.global["nameplates"]["filters"]["mMT-M+_Spiteful-on-You"]["actions"]["tags"]["level"] = " "
+	E.global["nameplates"]["filters"]["mMT-M+_Spiteful-on-You"]["actions"]["tags"]["name"] = "[mRoleIcon:target< ][mColor:target][mTarget:abbrev:short]"
+	E.global["nameplates"]["filters"]["mMT-M+_Spiteful-on-You"]["actions"]["tags"]["title"] = " "
+	E.global["nameplates"]["filters"]["mMT-M+_Spiteful-on-You"]["actions"]["texture"]["enable"] = true
+	E.global["nameplates"]["filters"]["mMT-M+_Spiteful-on-You"]["actions"]["texture"]["texture"] = "mMediaTag K34"
+	E.global["nameplates"]["filters"]["mMT-M+_Spiteful-on-You"]["triggers"]["instanceDifficulty"]["dungeon"]["mythic"] = true
+	E.global["nameplates"]["filters"]["mMT-M+_Spiteful-on-You"]["triggers"]["instanceDifficulty"]["dungeon"]["mythic+"] = true
+	E.global["nameplates"]["filters"]["mMT-M+_Spiteful-on-You"]["triggers"]["instanceType"]["party"] = true
+	E.global["nameplates"]["filters"]["mMT-M+_Spiteful-on-You"]["triggers"]["names"]["165251"] = true
+	E.global["nameplates"]["filters"]["mMT-M+_Spiteful-on-You"]["triggers"]["names"]["174773"] = true
+	E.global["nameplates"]["filters"]["mMT-M+_Spiteful-on-You"]["triggers"]["priority"] = 20
+	E.global["nameplates"]["filters"]["mMT-M+_Spiteful-on-You"]["triggers"]["targetMe"] = true
+	E.global["nameplates"]["filters"]["mMT-M+_Spitefull"]["actions"]["color"]["border"] = true
+	E.global["nameplates"]["filters"]["mMT-M+_Spitefull"]["actions"]["color"]["borderColor"]["b"] = 0.20784315466881
+	E.global["nameplates"]["filters"]["mMT-M+_Spitefull"]["actions"]["color"]["borderColor"]["g"] = 0
+	E.global["nameplates"]["filters"]["mMT-M+_Spitefull"]["actions"]["color"]["borderColor"]["r"] = 0.27450981736183
+	E.global["nameplates"]["filters"]["mMT-M+_Spitefull"]["actions"]["color"]["health"] = true
+	E.global["nameplates"]["filters"]["mMT-M+_Spitefull"]["actions"]["color"]["healthColor"]["b"] = 0.7294117808342
+	E.global["nameplates"]["filters"]["mMT-M+_Spitefull"]["actions"]["color"]["healthColor"]["g"] = 0.54901963472366
+	E.global["nameplates"]["filters"]["mMT-M+_Spitefull"]["actions"]["color"]["healthColor"]["r"] = 0.96078437566757
+	E.global["nameplates"]["filters"]["mMT-M+_Spitefull"]["actions"]["tags"]["level"] = "[mRoleIcon:target]"
+	E.global["nameplates"]["filters"]["mMT-M+_Spitefull"]["actions"]["tags"]["name"] = "[mColor:target][mTarget:abbrev:short]"
+	E.global["nameplates"]["filters"]["mMT-M+_Spitefull"]["actions"]["texture"]["enable"] = true
+	E.global["nameplates"]["filters"]["mMT-M+_Spitefull"]["actions"]["texture"]["texture"] = "mMediaTag K34"
+	E.global["nameplates"]["filters"]["mMT-M+_Spitefull"]["triggers"]["instanceDifficulty"]["dungeon"]["mythic"] = true
+	E.global["nameplates"]["filters"]["mMT-M+_Spitefull"]["triggers"]["instanceDifficulty"]["dungeon"]["mythic+"] = true
+	E.global["nameplates"]["filters"]["mMT-M+_Spitefull"]["triggers"]["instanceType"]["party"] = true
+	E.global["nameplates"]["filters"]["mMT-M+_Spitefull"]["triggers"]["names"]["174773"] = true
+	E.global["nameplates"]["filters"]["mMT-M+_Spitefull"]["triggers"]["priority"] = 20
+
+	for _, filterName in pairs({ "mMT-Cast-CC", "mMT-Cast-Frontal", "mMT-Cast-Interrupt" }) do
+		E.global["nameplates"]["filters"][filterName] = {}
+		E.NamePlates:StyleFilterCopyDefaults(E.global["nameplates"]["filters"][filterName])
+		E.db["nameplates"]["filters"][filterName] = { triggers = { enable = true } }
+	end
+
+	E.global["nameplates"]["filters"]["mMT-Cast-CC"]["actions"]["tags"]["power"] = "[mShowIcon{Role:STICKERSHIELD04}] ||cffff2a40CC/ STUN !||r"
+	E.global["nameplates"]["filters"]["mMT-Cast-CC"]["triggers"]["casting"]["spells"]["132117"] = true
+	E.global["nameplates"]["filters"]["mMT-Cast-CC"]["triggers"]["casting"]["spells"]["372224"] = true
+	E.global["nameplates"]["filters"]["mMT-Cast-CC"]["triggers"]["casting"]["spells"]["372735"] = true
+	E.global["nameplates"]["filters"]["mMT-Cast-CC"]["triggers"]["casting"]["spells"]["383385"] = true
+	E.global["nameplates"]["filters"]["mMT-Cast-CC"]["triggers"]["casting"]["spells"]["383392"] = true
+	E.global["nameplates"]["filters"]["mMT-Cast-CC"]["triggers"]["casting"]["spells"]["385536"] = true
+	E.global["nameplates"]["filters"]["mMT-Cast-CC"]["triggers"]["casting"]["spells"]["385567"] = true
+	E.global["nameplates"]["filters"]["mMT-Cast-CC"]["triggers"]["casting"]["spells"]["385568"] = true
+	E.global["nameplates"]["filters"]["mMT-Cast-CC"]["triggers"]["casting"]["spells"]["392451"] = true
+	E.global["nameplates"]["filters"]["mMT-Cast-CC"]["triggers"]["casting"]["spells"]["392452"] = true
+	E.global["nameplates"]["filters"]["mMT-Cast-CC"]["triggers"]["casting"]["spells"]["396812"] = true
+	E.global["nameplates"]["filters"]["mMT-Cast-CC"]["triggers"]["instanceDifficulty"]["dungeon"]["mythic"] = true
+	E.global["nameplates"]["filters"]["mMT-Cast-CC"]["triggers"]["instanceDifficulty"]["dungeon"]["mythic+"] = true
+	E.global["nameplates"]["filters"]["mMT-Cast-CC"]["triggers"]["instanceType"]["party"] = true
+	E.global["nameplates"]["filters"]["mMT-Cast-CC"]["triggers"]["priority"] = 22
+	E.global["nameplates"]["filters"]["mMT-Cast-Frontal"]["actions"]["tags"]["power"] = "[mShowIcon{Role:STICKERSHIELD01}] ||cffdea161FRONTAL !||r"
+	E.global["nameplates"]["filters"]["mMT-Cast-Frontal"]["triggers"]["casting"]["spells"]["369563"] = true
+	E.global["nameplates"]["filters"]["mMT-Cast-Frontal"]["triggers"]["casting"]["spells"]["372222"] = true
+	E.global["nameplates"]["filters"]["mMT-Cast-Frontal"]["triggers"]["casting"]["spells"]["374361"] = true
+	E.global["nameplates"]["filters"]["mMT-Cast-Frontal"]["triggers"]["casting"]["spells"]["375351"] = true
+	E.global["nameplates"]["filters"]["mMT-Cast-Frontal"]["triggers"]["casting"]["spells"]["375353"] = true
+	E.global["nameplates"]["filters"]["mMT-Cast-Frontal"]["triggers"]["casting"]["spells"]["375727"] = true
+	E.global["nameplates"]["filters"]["mMT-Cast-Frontal"]["triggers"]["casting"]["spells"]["376170"] = true
+	E.global["nameplates"]["filters"]["mMT-Cast-Frontal"]["triggers"]["casting"]["spells"]["377383"] = true
+	E.global["nameplates"]["filters"]["mMT-Cast-Frontal"]["triggers"]["casting"]["spells"]["381525"] = true
+	E.global["nameplates"]["filters"]["mMT-Cast-Frontal"]["triggers"]["casting"]["spells"]["381526"] = true
+	E.global["nameplates"]["filters"]["mMT-Cast-Frontal"]["triggers"]["casting"]["spells"]["382712"] = true
+	E.global["nameplates"]["filters"]["mMT-Cast-Frontal"]["triggers"]["casting"]["spells"]["382805"] = true
+	E.global["nameplates"]["filters"]["mMT-Cast-Frontal"]["triggers"]["casting"]["spells"]["384699"] = true
+	E.global["nameplates"]["filters"]["mMT-Cast-Frontal"]["triggers"]["casting"]["spells"]["385186"] = true
+	E.global["nameplates"]["filters"]["mMT-Cast-Frontal"]["triggers"]["casting"]["spells"]["386660"] = true
+	E.global["nameplates"]["filters"]["mMT-Cast-Frontal"]["triggers"]["casting"]["spells"]["388060"] = true
+	E.global["nameplates"]["filters"]["mMT-Cast-Frontal"]["triggers"]["casting"]["spells"]["388957"] = true
+	E.global["nameplates"]["filters"]["mMT-Cast-Frontal"]["triggers"]["casting"]["spells"]["388958"] = true
+	E.global["nameplates"]["filters"]["mMT-Cast-Frontal"]["triggers"]["casting"]["spells"]["388976"] = true
+	E.global["nameplates"]["filters"]["mMT-Cast-Frontal"]["triggers"]["casting"]["spells"]["391118"] = true
+	E.global["nameplates"]["filters"]["mMT-Cast-Frontal"]["triggers"]["casting"]["spells"]["391120"] = true
+	E.global["nameplates"]["filters"]["mMT-Cast-Frontal"]["triggers"]["casting"]["spells"]["391723"] = true
+	E.global["nameplates"]["filters"]["mMT-Cast-Frontal"]["triggers"]["casting"]["spells"]["391724"] = true
+	E.global["nameplates"]["filters"]["mMT-Cast-Frontal"]["triggers"]["casting"]["spells"]["391726"] = true
+	E.global["nameplates"]["filters"]["mMT-Cast-Frontal"]["triggers"]["casting"]["spells"]["391727"] = true
+	E.global["nameplates"]["filters"]["mMT-Cast-Frontal"]["triggers"]["instanceDifficulty"]["dungeon"]["mythic"] = true
+	E.global["nameplates"]["filters"]["mMT-Cast-Frontal"]["triggers"]["instanceDifficulty"]["dungeon"]["mythic+"] = true
+	E.global["nameplates"]["filters"]["mMT-Cast-Frontal"]["triggers"]["instanceType"]["party"] = true
+	E.global["nameplates"]["filters"]["mMT-Cast-Frontal"]["triggers"]["priority"] = 22
+	E.global["nameplates"]["filters"]["mMT-Cast-Interrupt"]["actions"]["glow"]["color"][1] = 1
+	E.global["nameplates"]["filters"]["mMT-Cast-Interrupt"]["actions"]["glow"]["color"][2] = 0.59215688705444
+	E.global["nameplates"]["filters"]["mMT-Cast-Interrupt"]["actions"]["glow"]["color"][3] = 0.054901964962482
+	E.global["nameplates"]["filters"]["mMT-Cast-Interrupt"]["actions"]["glow"]["color"][4] = 0.89999997615814
+	E.global["nameplates"]["filters"]["mMT-Cast-Interrupt"]["actions"]["tags"]["power"] = "[mShowIcon{Role:STICKERSHIELD03}] ||cffffbb00KICK ME !||r"
+	E.global["nameplates"]["filters"]["mMT-Cast-Interrupt"]["triggers"]["casting"]["spells"]["367503"] = true
+	E.global["nameplates"]["filters"]["mMT-Cast-Interrupt"]["triggers"]["casting"]["spells"]["367504"] = true
+	E.global["nameplates"]["filters"]["mMT-Cast-Interrupt"]["triggers"]["casting"]["spells"]["369602"] = true
+	E.global["nameplates"]["filters"]["mMT-Cast-Interrupt"]["triggers"]["casting"]["spells"]["369603"] = true
+	E.global["nameplates"]["filters"]["mMT-Cast-Interrupt"]["triggers"]["casting"]["spells"]["369675"] = true
+	E.global["nameplates"]["filters"]["mMT-Cast-Interrupt"]["triggers"]["casting"]["spells"]["372793"] = true
+	E.global["nameplates"]["filters"]["mMT-Cast-Interrupt"]["triggers"]["casting"]["spells"]["373395"] = true
+	E.global["nameplates"]["filters"]["mMT-Cast-Interrupt"]["triggers"]["casting"]["spells"]["374544"] = true
+	E.global["nameplates"]["filters"]["mMT-Cast-Interrupt"]["triggers"]["casting"]["spells"]["376171"] = true
+	E.global["nameplates"]["filters"]["mMT-Cast-Interrupt"]["triggers"]["casting"]["spells"]["377341"] = true
+	E.global["nameplates"]["filters"]["mMT-Cast-Interrupt"]["triggers"]["casting"]["spells"]["377488"] = true
+	E.global["nameplates"]["filters"]["mMT-Cast-Interrupt"]["triggers"]["casting"]["spells"]["378282"] = true
+	E.global["nameplates"]["filters"]["mMT-Cast-Interrupt"]["triggers"]["casting"]["spells"]["387411"] = true
+	E.global["nameplates"]["filters"]["mMT-Cast-Interrupt"]["triggers"]["casting"]["spells"]["395694"] = true
+	E.global["nameplates"]["filters"]["mMT-Cast-Interrupt"]["triggers"]["instanceDifficulty"]["dungeon"]["mythic"] = true
+	E.global["nameplates"]["filters"]["mMT-Cast-Interrupt"]["triggers"]["instanceDifficulty"]["dungeon"]["mythic+"] = true
+	E.global["nameplates"]["filters"]["mMT-Cast-Interrupt"]["triggers"]["instanceType"]["party"] = true
+	E.global["nameplates"]["filters"]["mMT-Cast-Interrupt"]["triggers"]["priority"] = 22
+
+	for _, filterName in pairs({ "mMT-Bad-Aggro", "mMT-Quest", "mMT-Soft-Target", "mMT-Unit-Out-of-fight" }) do
+		E.global["nameplates"]["filters"][filterName] = {}
+		E.NamePlates:StyleFilterCopyDefaults(E.global["nameplates"]["filters"][filterName])
+		E.db["nameplates"]["filters"][filterName] = { triggers = { enable = true } }
+	end
+
+	E.global["nameplates"]["filters"]["mMT-Bad-Aggro"]["actions"]["alpha"] = 100
+	E.global["nameplates"]["filters"]["mMT-Bad-Aggro"]["actions"]["glow"]["color"][1] = 1
+	E.global["nameplates"]["filters"]["mMT-Bad-Aggro"]["actions"]["glow"]["color"][2] = 0.10196079313755
+	E.global["nameplates"]["filters"]["mMT-Bad-Aggro"]["actions"]["glow"]["color"][3] = 0.42352944612503
+	E.global["nameplates"]["filters"]["mMT-Bad-Aggro"]["actions"]["glow"]["color"][4] = 0.90000000596046
+	E.global["nameplates"]["filters"]["mMT-Bad-Aggro"]["actions"]["glow"]["enable"] = true
+	E.global["nameplates"]["filters"]["mMT-Bad-Aggro"]["actions"]["glow"]["size"] = 2
+	E.global["nameplates"]["filters"]["mMT-Bad-Aggro"]["actions"]["scale"] = 1.25
+	E.global["nameplates"]["filters"]["mMT-Bad-Aggro"]["actions"]["tags"]["level"] = "[mRoleIcon:target]"
+	E.global["nameplates"]["filters"]["mMT-Bad-Aggro"]["actions"]["tags"]["name"] = "[mColor:target][mTarget:abbrev:short]"
+	E.global["nameplates"]["filters"]["mMT-Bad-Aggro"]["actions"]["tags"]["power"] = "! AGRRO !"
+	E.global["nameplates"]["filters"]["mMT-Bad-Aggro"]["actions"]["tags"]["title"] = "[mColor:rare][name:abbrev:veryshort]"
+	E.global["nameplates"]["filters"]["mMT-Bad-Aggro"]["actions"]["texture"]["texture"] = "mMediaTag P13"
+	E.global["nameplates"]["filters"]["mMT-Bad-Aggro"]["triggers"]["inCombat"] = true
+	E.global["nameplates"]["filters"]["mMT-Bad-Aggro"]["triggers"]["inCombatUnit"] = true
+	E.global["nameplates"]["filters"]["mMT-Bad-Aggro"]["triggers"]["instanceType"]["party"] = true
+	E.global["nameplates"]["filters"]["mMT-Bad-Aggro"]["triggers"]["instanceType"]["raid"] = true
+	E.global["nameplates"]["filters"]["mMT-Bad-Aggro"]["triggers"]["priority"] = 21
+	E.global["nameplates"]["filters"]["mMT-Bad-Aggro"]["triggers"]["threat"]["bad"] = true
+	E.global["nameplates"]["filters"]["mMT-Bad-Aggro"]["triggers"]["threat"]["enable"] = true
+	E.global["nameplates"]["filters"]["mMT-Quest"]["actions"]["color"]["border"] = true
+	E.global["nameplates"]["filters"]["mMT-Quest"]["actions"]["color"]["borderColor"]["b"] = 0
+	E.global["nameplates"]["filters"]["mMT-Quest"]["actions"]["color"]["borderColor"]["g"] = 0.67843137254902
+	E.global["nameplates"]["filters"]["mMT-Quest"]["actions"]["color"]["health"] = true
+	E.global["nameplates"]["filters"]["mMT-Quest"]["actions"]["color"]["healthColor"]["b"] = 0.039215687662363
+	E.global["nameplates"]["filters"]["mMT-Quest"]["actions"]["color"]["healthColor"]["g"] = 0.39215689897537
+	E.global["nameplates"]["filters"]["mMT-Quest"]["actions"]["glow"]["color"][1] = 1
+	E.global["nameplates"]["filters"]["mMT-Quest"]["actions"]["glow"]["color"][2] = 0.678431391716
+	E.global["nameplates"]["filters"]["mMT-Quest"]["actions"]["glow"]["color"][3] = 0
+	E.global["nameplates"]["filters"]["mMT-Quest"]["actions"]["glow"]["color"][4] = 1
+	E.global["nameplates"]["filters"]["mMT-Quest"]["actions"]["tags"]["power"] = ">> ||CFFFFC900Q||r||CFFFFA800u||r||CFFFFA800e||r||CFFFF9300s||r||CFFFF7300t||r <<"
+	E.global["nameplates"]["filters"]["mMT-Quest"]["triggers"]["buffs"]["missing"] = true
+	E.global["nameplates"]["filters"]["mMT-Quest"]["triggers"]["buffs"]["names"]["206150"] = true
+	E.global["nameplates"]["filters"]["mMT-Quest"]["triggers"]["isQuest"] = true
+	E.global["nameplates"]["filters"]["mMT-Quest"]["triggers"]["location"]["instanceIDs"]["2444"] = true
+	E.global["nameplates"]["filters"]["mMT-Quest"]["triggers"]["priority"] = 40
+	E.global["nameplates"]["filters"]["mMT-Soft-Target"]["actions"]["glow"]["color"][1] = 0
+	E.global["nameplates"]["filters"]["mMT-Soft-Target"]["actions"]["glow"]["color"][2] = 0.8156863451004
+	E.global["nameplates"]["filters"]["mMT-Soft-Target"]["actions"]["glow"]["color"][3] = 1
+	E.global["nameplates"]["filters"]["mMT-Soft-Target"]["actions"]["glow"]["color"][4] = 0.90000000596046
+	E.global["nameplates"]["filters"]["mMT-Soft-Target"]["actions"]["nameOnly"] = true
+	E.global["nameplates"]["filters"]["mMT-Soft-Target"]["actions"]["scale"] = 1.15
+	E.global["nameplates"]["filters"]["mMT-Soft-Target"]["actions"]["tags"]["name"] = "||cff00d0ff[name]||r"
+	E.global["nameplates"]["filters"]["mMT-Soft-Target"]["triggers"]["notConnected"] = true
+	E.global["nameplates"]["filters"]["mMT-Soft-Target"]["triggers"]["priority"] = 40
+	E.global["nameplates"]["filters"]["mMT-Unit-Out-of-fight"]["actions"]["alpha"] = 30
+	E.global["nameplates"]["filters"]["mMT-Unit-Out-of-fight"]["actions"]["color"]["borderColor"]["b"] = 0
+	E.global["nameplates"]["filters"]["mMT-Unit-Out-of-fight"]["actions"]["color"]["borderColor"]["r"] = 0.14901961386204
+	E.global["nameplates"]["filters"]["mMT-Unit-Out-of-fight"]["actions"]["scale"] = 0.75
+	E.global["nameplates"]["filters"]["mMT-Unit-Out-of-fight"]["actions"]["texture"]["texture"] = "mMediaTag R29"
+	E.global["nameplates"]["filters"]["mMT-Unit-Out-of-fight"]["triggers"]["inCombat"] = true
+	E.global["nameplates"]["filters"]["mMT-Unit-Out-of-fight"]["triggers"]["notTarget"] = true
+	E.global["nameplates"]["filters"]["mMT-Unit-Out-of-fight"]["triggers"]["outOfCombatUnit"] = true
+	E.global["nameplates"]["filters"]["mMT-Unit-Out-of-fight"]["triggers"]["priority"] = 40
+
 	E.db["nameplates"]["overlapV"] = 1.2
 	E.db["nameplates"]["plateSize"]["enemyWidth"] = 220
 	E.db["nameplates"]["plateSize"]["friendlyWidth"] = 220
