@@ -704,3 +704,10 @@ L["|cffFFFFFFControl + Left Click:|r Change Loadout"] = "|cffFFFFFFStrg + Linksk
 L["|cffFFFFFFLeft Click:|r Change Talent Specialization"] = "|cffFFFFFFLinks Klick:|r Talent Spezialisierung ändern"
 L["|cffFFFFFFRight Click:|r Change Loot Specialization"] = "|cffFFFFFFRechtsklick:|r Beutespezialisierung ändern"
 L["|cffFFFFFFShift + Left Click:|r Show Talent Specialization UI"] = "|cffFFFFFFShift + Links Klick:|r Zeige Talent Spezialisierungs Interface"
+
+-- new
+L["Displays the unit's current health as a percentage with absorb values"] = true
+L["Health changes between maximum Health and Current Health - Percent in combat with absorb values."] = true
+L["Absorbs"] = true
+L["Absorbs color."] = true
+L["Other Colors"] = true
