@@ -15,7 +15,7 @@
 
 ## [ver. 3.39] - 31.05.2024
 ### FIX
-- FIX - Portraits Background Settings is only available when Class Icons are enabled 
+- FIX - Portraits Background Settings is only available when Class Icons are enabled
 - FIX - Missing module Error in Cata
 - FIX - Bug with Instance Difficulty for Datatexts and Dock in Cata
 - FIX - Bug with Dock Guild and Friends in Cata
@@ -295,7 +295,7 @@
 
 ## [ver. 3.18] - 06.09.2023
 ### Update
-- Update Events for Dock 
+- Update Events for Dock
 ### FIX
 - Fixed for dropdown menu, to prevent wrong menu entries
 - Fixed Settings menu for afk screen (sorting)
@@ -506,7 +506,7 @@
 
 ## [ver. 2.91] - 18.12.2022
 ### Update
-- FIX NP-Healtmarker Auto range toggel not working
+- FIX NP-Healtmarker Auto value toggel not working
 - FIX Custom Unitframe BG Textures
 - FIX Profession Datatext Tooltip
 - FIX Nil error in tooltip icons
@@ -547,7 +547,7 @@
 - FIX Tooltips and Datatext
 - UPDATE Dropdpwn Text Update Bugfix
 - UPDATE Temporary disabled the tooltip icons for Retail
-- FIX Healthmarker Option, custom raneg is disabeld if Auto range is enabled
+- FIX Healthmarker Option, custom raneg is disabeld if Auto value is enabled
 - FIX for Dropdown Macro Buttons
 ### Added
 - NEW Statusbar Texture K31
@@ -818,7 +818,7 @@ hope that now everything should work
 - Update Profiles to MaUI v4
 - Change of Tag mStatustimer it Returns now only the Time for the Status eg afk or death
 - Bugfix Settings (Professions ans System Menu)
-- Remove of Tags mHealth:timer, mHealth:short-timer, mHealth:NoAFK-timer, mHealth:short-NoAFK-timer, 
+- Remove of Tags mHealth:timer, mHealth:short-timer, mHealth:NoAFK-timer, mHealth:short-NoAFK-timer,
   because of code changes, you can build the same function with Example: [mHealth][mStatustimer].
 
 ## [ver. 2.59] - 14.05.2021
@@ -878,7 +878,7 @@ hope that now everything should work
 - New Functions for Dock Talent Icon
 ### Update
 - Dropdown Menu
-- System Menu 
+- System Menu
 - Profession Menu
 - Dock Notification Bugfix
 - Dock Icon Textures are sortet in groups now
@@ -998,7 +998,7 @@ hope that now everything should work
 ### Update
 - Affixes are saved for one day to prevent opening of the LFG window
 - Tank/ DD Profile Update - Shadowland Currencys & some fixes
-- Error in the profile settings fixed 
+- Error in the profile settings fixed
 
 ## [ver. 2.10] - 09.12.2020
 ### Added

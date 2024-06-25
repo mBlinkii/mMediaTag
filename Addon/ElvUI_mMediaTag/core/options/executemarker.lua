@@ -56,7 +56,7 @@ local function configTable()
 				autorange = {
 					order = 1,
 					type = "toggle",
-					name = L["Auto range"],
+					name = L["Auto value"],
 					desc = L["Execute value based on your Class"],
 					get = function(info)
 						return E.db.mMT.nameplate.executemarker.auto
