@@ -115,7 +115,7 @@ local function OnEvent(self)
 	local colorDurability = nil
 
 	if E.db.mMT.durabilityIlevel.colored.enable then
-		if (totalDurability or 0) <= E.db.mMT.durabilityIlevel.colored.a.value then
+		if (totalDurability or 0) <= E.db.mMT.durabilityIlevel.colored.a.value and not ((totalDurability or 0) <= E.db.mMT.durabilityIlevel.colored.b.value) then
 			colorDurability = E.db.mMT.durabilityIlevel.colored.a.color
 		elseif (totalDurability or 0) <= E.db.mMT.durabilityIlevel.colored.b.value then
 			colorDurability = E.db.mMT.durabilityIlevel.colored.b.color
