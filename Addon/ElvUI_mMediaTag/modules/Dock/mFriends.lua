@@ -414,8 +414,6 @@ local function TooltipAddXLine(X, header, ...)
 	DT.tooltip[X](DT.tooltip, ...)
 end
 
-DT:RegisterDatatext("MMT Friends", _G.SOCIAL_LABEL, { "BN_FRIEND_ACCOUNT_ONLINE", "BN_FRIEND_ACCOUNT_OFFLINE", "BN_FRIEND_INFO_CHANGED", "FRIENDLIST_UPDATE", "CHAT_MSG_SYSTEM", "MODIFIER_STATE_CHANGED" }, OnEvent, nil, Click, OnEnter, nil, "MMT" .. _G.FRIENDS, nil, ApplySettings)
-
 local function OnLeave(self)
 	DT.tooltip:Hide()
 
