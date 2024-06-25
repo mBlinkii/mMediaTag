@@ -444,6 +444,7 @@ local function InstallLayout()
 		MAUI:Movers_v7()
 		MAUI:Nameplates_v7()
 	end
+	E:StaggeredUpdateAll()
 end
 
 local function CheckInstall()

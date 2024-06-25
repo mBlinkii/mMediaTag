@@ -35,6 +35,18 @@ local function configTable()
 						E.db.mMT.profession.proficon = value
 					end,
 				},
+				text = {
+					order = 3,
+					name = L["white Text"],
+					type = "toggle",
+					get = function(info)
+						return E.db.mMT.profession.whiteText
+					end,
+					set = function(info, value)
+						E.db.mMT.profession.whiteText = value
+						DT:ForceUpdate_DataText("mProfessions")
+					end,
+				},
 			},
 		},
 	}
