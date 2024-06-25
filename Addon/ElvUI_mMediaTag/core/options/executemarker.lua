@@ -57,7 +57,7 @@ local function configTable()
 					order = 1,
 					type = "toggle",
 					name = L["Auto range"],
-					desc = L["Execute range based on your Class"],
+					desc = L["Execute value based on your Class"],
 					get = function(info)
 						return E.db.mMT.nameplate.executemarker.auto
 					end,
@@ -68,7 +68,7 @@ local function configTable()
 				},
 				executerange = {
 					order = 2,
-					name = L["Execute Range HP%"],
+					name = L["Execute value HP%"],
 					type = "range",
 					min = 5,
 					max = 95,
