@@ -9,13 +9,13 @@ local InCombatLockdown = InCombatLockdown
 
 --Variables
 local mText = L["first Profession"]
-local hexColor = E:RGBToHex(E.db.general.valuecolor.r, E.db.general.valuecolor.g, E.db.general.valuecolor.b)
 local spell = nil
 
 local function colorText(value, withe)
 	if withe then
 		return value
 	else
+		local hexColor = E:RGBToHex(E.db.general.valuecolor.r, E.db.general.valuecolor.g, E.db.general.valuecolor.b)
 		return hexColor .. value .. "|r"
 	end
 end
@@ -49,8 +49,6 @@ local function OnLeave(self)
 end
 
 local function OnEvent(self)
-	hexColor = E:RGBToHex(E.db.general.valuecolor.r, E.db.general.valuecolor.g, E.db.general.valuecolor.b)
-
 	local profession, _, _, _, _ = GetProfessions()
 
 	if profession then

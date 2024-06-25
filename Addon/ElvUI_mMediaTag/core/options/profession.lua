@@ -3,6 +3,7 @@ local L = mMT.Locales
 
 local DT = E:GetModule("DataTexts")
 local tinsert = tinsert
+
 local function configTable()
 	E.Options.args.mMT.args.datatexts.args.profession.args = {
 		header_profession = {
