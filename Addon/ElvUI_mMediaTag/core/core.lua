@@ -51,6 +51,7 @@ function mMT:Update_MP_Settings()
 			mMTSettings.p = E.db.mMT.mp_textures.p
 			mMTSettings.q = E.db.mMT.mp_textures.q
 			mMTSettings.r = E.db.mMT.mp_textures.r
+			mMTSettings.s = E.db.mMT.mp_textures.s
 	end
 end
 

@@ -586,6 +586,7 @@ P.mMT = {
 		p = true,
 		q = true,
 		r = true,
+		s = true,
 	},
 	portraits = {
 		custom = {
