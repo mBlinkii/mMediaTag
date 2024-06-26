@@ -762,6 +762,7 @@ mMT.Media.TeleportIcons = {
 	TP4 = GetItemIcon(6948),
 	TP5 = GetItemIcon(110560),
 	TP6 = GetItemIcon(193588),
+	TP7 = "Interface\\AddOns\\ElvUI_mMediaTag\\media\\icons\\datatext\\teleports4.tga",
 }
 
 mMT.Media.ClassIcons = {
