@@ -602,6 +602,7 @@ P.mMT = {
 			enable = false,
 		},
 		player = {
+			flippe = false,
 			cast = false,
 			enable = true,
 			texture = "RO",
@@ -615,6 +616,7 @@ P.mMT = {
 			level = 20,
 		},
 		pet = {
+			flippe = false,
 			enable = false,
 			texture = "RO",
 			mirror = false,
@@ -627,6 +629,7 @@ P.mMT = {
 			level = 20,
 		},
 		target = {
+			flippe = false,
 			cast = false,
 			enable = true,
 			texture = "RO",
@@ -641,6 +644,7 @@ P.mMT = {
 			level = 20,
 		},
 		targettarget = {
+			flippe = false,
 			enable = true,
 			texture = "RO",
 			extraEnable = true,
@@ -654,6 +658,7 @@ P.mMT = {
 			level = 20,
 		},
 		focus = {
+			flippe = false,
 			cast = false,
 			enable = false,
 			texture = "RO",
@@ -668,6 +673,7 @@ P.mMT = {
 			level = 20,
 		},
 		party = {
+			flippe = false,
 			cast = false,
 			enable = true,
 			texture = "RO",
@@ -681,6 +687,7 @@ P.mMT = {
 			level = 20,
 		},
 		boss = {
+			flippe = false,
 			cast = false,
 			enable = false,
 			texture = "RO",
@@ -694,6 +701,7 @@ P.mMT = {
 			level = 20,
 		},
 		arena = {
+			flippe = false,
 			cast = false,
 			enable = false,
 			texture = "RO",

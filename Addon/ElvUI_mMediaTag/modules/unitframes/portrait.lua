@@ -23,7 +23,7 @@ local textures = {
 			PI = path .. "pi_a.tga",
 			RA = path .. "ra_a.tga",
 			QA = path .. "qa_a.tga",
-			SMQ = path .. "smq.tga",
+			SMQ = path .. "qa_a.tga",
 			MO = path .. "moon_c.tga",
 		},
 		smooth = {
@@ -34,7 +34,7 @@ local textures = {
 			PI = path .. "pi_b.tga",
 			RA = path .. "ra_b.tga",
 			QA = path .. "qa_b.tga",
-			SMQ = path .. "smq.tga",
+			SMQ = path .. "qa_b.tga",
 			MO = path .. "moon_a.tga",
 		},
 		metal = {
@@ -45,7 +45,7 @@ local textures = {
 			PI = path .. "pi_c.tga",
 			RA = path .. "ra_c.tga",
 			QA = path .. "qa_c.tga",
-			SMQ = path .. "smq.tga",
+			SMQ = path .. "qa_c.tga",
 			MO = path .. "moon_b.tga",
 		},
 	},
@@ -57,7 +57,7 @@ local textures = {
 			PI = path .. "ex_pi_a.tga",
 			RA = path .. "ex_ra_a.tga",
 			QA = path .. "ex_qa_a.tga",
-			SMQ = nil,
+			SMQ = path .. "ex_qa_a.tga",
 			MO = path .. "ex_mo_c.tga",
 		},
 		smooth = {
@@ -67,7 +67,7 @@ local textures = {
 			PI = path .. "ex_pi_b.tga",
 			RA = path .. "ex_ra_b.tga",
 			QA = path .. "ex_qa_b.tga",
-			SMQ = nil,
+			SMQ = path .. "ex_qa_b.tga",
 			MO = path .. "ex_mo_a.tga",
 		},
 		metal = {
@@ -77,7 +77,7 @@ local textures = {
 			PI = path .. "ex_pi_c.tga",
 			RA = path .. "ex_ra_c.tga",
 			QA = path .. "ex_qa_c.tga",
-			SMQ = nil,
+			SMQ = path .. "ex_qa_c.tga",
 			MO = path .. "ex_mo_b.tga",
 		},
 		border = {
@@ -87,7 +87,7 @@ local textures = {
 			PI = path .. "border_ex_pi.tga",
 			RA = path .. "border_ex_ra.tga",
 			QA = path .. "border_ex_qa.tga",
-			SMQ = nil,
+			SMQ = path .. "border_ex_qa.tga",
 			MO = path .. "border_ex_moon.tga",
 		},
 		shadow = {
@@ -97,7 +97,7 @@ local textures = {
 			PI = path .. "shadow_ex_pi.tga",
 			RA = path .. "shadow_ex_ra.tga",
 			QA = path .. "shadow_ex_qa.tga",
-			SMQ = nil,
+			SMQ = path .. "shadow_ex_qa.tga",
 			MO = nil,
 		},
 	},
@@ -109,7 +109,7 @@ local textures = {
 		PI = path .. "border_pi.tga",
 		RA = path .. "border_ra.tga",
 		QA = path .. "border_qa.tga",
-		SMQ = path .. "border_smq.tga",
+		SMQ = path .. "border_qa.tga",
 		MO = path .. "border_moon.tga",
 	},
 	shadow = {
@@ -119,7 +119,7 @@ local textures = {
 		PI = path .. "shadow_pi.tga",
 		RA = path .. "shadow_ra.tga",
 		QA = path .. "shadow_qa.tga",
-		SMQ = path .. "shadow_smq.tga",
+		SMQ = path .. "shadow_qa.tga",
 		MO = path .. "shadow_moon.tga",
 	},
 	inner = {
@@ -129,7 +129,7 @@ local textures = {
 		PI = path .. "inner_pi.tga",
 		RA = path .. "inner_ra.tga",
 		QA = path .. "inner_qa.tga",
-		SMQ = path .. "inner_smq.tga",
+		SMQ = path .. "inner_qa.tga",
 		MO = path .. "inner_b.tga",
 	},
 	mask = {
@@ -138,15 +138,19 @@ local textures = {
 		RA = path .. "mask_d.tga",
 		QA = path .. "mask_qa.tga",
 		MO = path .. "mask_c.tga",
-		SMQ = path .. "mask_smq.tga",
+		SMQ = path .. "mask_qa.tga",
 
 		A = {
 			SQ = path .. "mask_a.tga",
 			RO = path .. "mask_a.tga",
+			SQT = path .. "mask_a2.tga",
+			ROT = path .. "mask_a2.tga",
 		},
 		B = {
 			SQ = path .. "mask_b.tga",
 			RO = path .. "mask_b.tga",
+			SQT = path .. "mask_b2.tga",
+			ROT = path .. "mask_b2.tga",
 		},
 	},
 	corner = {
@@ -189,7 +193,7 @@ local textures = {
 	},
 }
 
-local function mirrorTexture(texture, mirror)
+local function mirrorTexture(texture, mirror, top)
 	if texture.mClass then
 		local ULx, ULy, LLx, LLy, URx, URy, LRx, LRy = unpack(texture.mCoords)
 		if mirror then
@@ -198,7 +202,7 @@ local function mirrorTexture(texture, mirror)
 			texture:SetTexCoord(ULx, ULy, LLx, LLy, URx, URy, LRx, LRy)
 		end
 	else
-		texture:SetTexCoord(mirror and 1 or 0, mirror and 0 or 1, 0, 1)
+		texture:SetTexCoord(mirror and 1 or 0, mirror and 0 or 1, top and 1 or 0, top and 0 or 1)
 	end
 end
 
@@ -340,11 +344,11 @@ local function SetPortraits(frame, unit, masking, mirror)
 	end
 end
 
-local function CreatePortraitTexture(frame, name, layer, texture, color, mirror)
+local function CreatePortraitTexture(frame, name, layer, texture, color, mirror, top)
 	local tmpTexture = frame:CreateTexture(name, "OVERLAY", nil, layer)
 	tmpTexture:SetAllPoints(frame)
 	tmpTexture:SetTexture(texture, "CLAMP", "CLAMP", "TRILINEAR")
-	mirrorTexture(tmpTexture, mirror)
+	mirrorTexture(tmpTexture, mirror, top)
 
 	if color then
 		setColor(tmpTexture, color, mirror)
@@ -353,12 +357,12 @@ local function CreatePortraitTexture(frame, name, layer, texture, color, mirror)
 	return tmpTexture
 end
 
-local function CreateIconBackground(frame, unit, mirror)
+local function CreateIconBackground(frame, unit, mirror, flippe)
 	local tmpTexture = frame:CreateTexture("mMT_Background", "OVERLAY", nil, -5)
 	tmpTexture:SetAllPoints(frame)
 	tmpTexture:SetTexture(textures.background[settings.general.bgstyle], "CLAMP", "CLAMP", "TRILINEAR")
 
-	local color = settings.shadow.classBG and getColor(unit) or settings.shadow.background
+	local color = flippe and {r = 0, g = 0, b = 0, a = 1} or (settings.shadow.classBG and getColor(unit) or settings.shadow.background)
 	setColor(tmpTexture, color, mirror)
 
 	return tmpTexture
@@ -380,7 +384,7 @@ local function CreatePortrait(parent, conf, unit)
 	local texture = nil
 
 	-- Portraits Frame
-	local frame = CreateFrame("Button", "mMT_Portrait_" .. unit, parent, "SecureUnitButtonTemplate") --CreateFrame("Frame", "mMT_Portrait_" .. unit, parent)
+	local frame = CreateFrame("Button", "mMT_Portrait_" .. unit, parent, "SecureUnitButtonTemplate")
 	frame:SetSize(conf.size, conf.size)
 	frame:SetPoint(conf.point, parent, conf.relativePoint, conf.x, conf.y)
 	if conf.strata ~= "AUTO" then
@@ -391,7 +395,7 @@ local function CreatePortrait(parent, conf, unit)
 	-- Portrait Texture
 	unit = UnitExists(unit) and unit or "player"
 	texture = textures.custom.enable and textures.custom.texture or textures.texture[settings.general.style][conf.texture]
-	frame.texture = CreatePortraitTexture(frame, "mMT_Texture", 4, texture, getColor(unit), conf.mirror)
+	frame.texture = CreatePortraitTexture(frame, "mMT_Texture", 4, texture, getColor(unit), conf.mirror, conf.flippe)
 
 	-- Unit Portrait
 	local offset = GetOffset(conf.size, textures.custom.enable and settings.offset.CUSTOM or settings.offset[conf.texture])
@@ -400,57 +404,57 @@ local function CreatePortrait(parent, conf, unit)
 	frame.portrait:SetPoint("TOPLEFT", 0 + offset, 0 - offset)
 	frame.portrait:SetPoint("BOTTOMRIGHT", 0 - offset, 0 + offset)
 	frame.portrait:SetTexture(path .. "unknown.tga", "CLAMP", "CLAMP", "TRILINEAR")
-	SetPortraits(frame, unit, textures.enablemasking[conf.texture], conf.mirror)
+	SetPortraits(frame, unit, (textures.enablemasking[conf.texture] and not conf.flippe), conf.mirror)
 	mirrorTexture(frame.portrait, conf.mirror)
 
 	-- Portrait Mask
-	texture = textures.custom.enable and (conf.mirror and textures.custom.maskb or textures.custom.mask) or (textures.mask[conf.texture] or conf.mirror and textures.mask.B[conf.texture] or textures.mask.A[conf.texture])
+	texture = textures.custom.enable and (conf.mirror and textures.custom.maskb or textures.custom.mask) or (textures.mask[conf.texture] or conf.mirror and textures.mask.B[conf.flippe and conf.texture .. "T" or conf.texture] or textures.mask.A[conf.flippe and conf.texture .. "T" or conf.texture])
 	frame.mask = frame:CreateMaskTexture()
 	frame.mask:SetTexture(texture, "CLAMPTOBLACKADDITIVE", "CLAMPTOBLACKADDITIVE")
 	frame.mask:SetAllPoints(frame)
 	frame.portrait:AddMaskTexture(frame.mask)
 
 	-- Class Icon Background
-	if settings.general.classicons then
-		frame.iconbg = CreateIconBackground(frame, unit, conf.mirror)
+	if settings.general.classicons or conf.flippe then
+		frame.iconbg = CreateIconBackground(frame, unit, conf.mirror, (conf.flippe and not settings.general.classicons) )
 		frame.iconbg:AddMaskTexture(frame.mask)
 	end
 
 	-- Portrait Shadow
 	if settings.shadow.enable then
 		texture = textures.custom.enable and textures.custom.shadow or textures.shadow[conf.texture]
-		frame.shadow = CreatePortraitTexture(frame, "mMT_Shadow", -4, texture, settings.shadow.color, conf.mirror)
+		frame.shadow = CreatePortraitTexture(frame, "mMT_Shadow", -4, texture, settings.shadow.color, conf.mirror, conf.flippe)
 	end
 
 	-- Inner Portrait Shadow
 	if settings.shadow.inner then
 		texture = textures.custom.enable and textures.custom.inner or textures.inner[conf.texture]
-		frame.InnerShadow = CreatePortraitTexture(frame, "mMT_innerShadow", 2, texture, settings.shadow.innerColor, conf.mirror)
+		frame.InnerShadow = CreatePortraitTexture(frame, "mMT_innerShadow", 2, texture, settings.shadow.innerColor, conf.mirror, conf.flippe)
 	end
 
 	-- Portrait Border
 	if settings.shadow.border then
 		texture = textures.custom.enable and textures.custom.border or textures.border[conf.texture]
-		frame.border = CreatePortraitTexture(frame, "mMT_Border", 2, texture, settings.shadow.borderColor, conf.mirror)
+		frame.border = CreatePortraitTexture(frame, "mMT_Border", 2, texture, settings.shadow.borderColor, conf.mirror, conf.flippe)
 	end
 
 	-- Rare/Elite Texture
 	if conf.extraEnable then
 		-- Texture
 		texture = textures.custom.enable and textures.custom.extra or textures.extra[settings.general.style][conf.texture]
-		frame.extra = CreatePortraitTexture(frame, "mMT_Extra", -6, texture, nil, not conf.mirror)
+		frame.extra = CreatePortraitTexture(frame, "mMT_Extra", -6, texture, nil, not conf.mirror, conf.flippe)
 
 		-- Shadow
 		if settings.shadow.enable then
 			texture = textures.custom.enable and textures.custom.extrashadow or textures.extra.border[conf.texture]
-			frame.extra.shadow = CreatePortraitTexture(frame, "mMT_Extra_Shadow", -8, texture, settings.shadow.color, not conf.mirror)
+			frame.extra.shadow = CreatePortraitTexture(frame, "mMT_Extra_Shadow", -8, texture, settings.shadow.color, not conf.mirror, conf.flippe)
 			frame.extra.shadow:Hide()
 		end
 
 		-- Border
 		if settings.shadow.border then
 			texture = textures.custom.enable and textures.custom.extraborder or textures.extra.shadow[conf.texture]
-			frame.extra.border = CreatePortraitTexture(frame, "mMT_Extra_Border", -4, texture, settings.shadow.borderColorRare, not conf.mirror)
+			frame.extra.border = CreatePortraitTexture(frame, "mMT_Extra_Border", -4, texture, settings.shadow.borderColorRare, not conf.mirror, conf.flippe)
 			frame.extra.border:Hide()
 		end
 
@@ -460,12 +464,12 @@ local function CreatePortrait(parent, conf, unit)
 	-- Corner
 	if ((not textures.custom.enable) and settings.general.corner) and textures.corner[conf.texture] then
 		texture = textures.texture[settings.general.style].CO
-		frame.corner = CreatePortraitTexture(frame, "mMT_Corner", 5, texture, getColor(unit), conf.mirror)
+		frame.corner = CreatePortraitTexture(frame, "mMT_Corner", 5, texture, getColor(unit), conf.mirror, conf.flippe)
 
 		-- Border
 		if settings.shadow.border then
 			texture = textures.border.CO
-			frame.corner.border = CreatePortraitTexture(frame, "mMT_Corner_Border", 6, texture, settings.shadow.borderColor, conf.mirror)
+			frame.corner.border = CreatePortraitTexture(frame, "mMT_Corner_Border", 6, texture, settings.shadow.borderColor, conf.mirror, conf.flippe)
 		end
 	end
 
@@ -496,10 +500,10 @@ local function CheckRareElite(frame, unit)
 	end
 end
 
-local function UpdatePortraitTexture(tx, texture, color, mirror)
+local function UpdatePortraitTexture(tx, texture, color, mirror, top)
 	if tx then
 		tx:SetTexture(texture, "CLAMP", "CLAMP", "TRILINEAR")
-		mirrorTexture(tx, mirror)
+		mirrorTexture(tx, mirror, top)
 
 		if color then
 			setColor(tx, color, mirror)
@@ -524,15 +528,9 @@ local function UpdatePortrait(frame, conf, unit, parent)
 	end
 	frame:SetFrameLevel(conf.level)
 
-	-- local blacklist = {player = true, target = true, focus = true, targettarget = true}
-	-- local tmpAttribute = frame:GetAttribute("unit")
-	-- if not blacklist[tmpAttribute] and  tmpAttribute ~= unit then
-	-- 	frame:SetAttribute("unit", unit)
-	-- end
-
 	-- Portrait Texture
 	texture = textures.custom.enable and textures.custom.texture or textures.texture[settings.general.style][conf.texture]
-	UpdatePortraitTexture(frame.texture, texture, getColor(unit), conf.mirror)
+	UpdatePortraitTexture(frame.texture, texture, getColor(unit), conf.mirror, conf.flippe)
 
 	-- Unit Portrait
 	local offset = GetOffset(conf.size, textures.custom.enable and settings.offset.CUSTOM or settings.offset[conf.texture])
@@ -540,17 +538,17 @@ local function UpdatePortrait(frame, conf, unit, parent)
 	frame.portrait:SetPoint("BOTTOMRIGHT", 0 - offset, 0 + offset)
 
 	-- Portrait Mask
-	texture = textures.custom.enable and (conf.mirror and textures.custom.maskb or textures.custom.mask) or (textures.mask[conf.texture] or conf.mirror and textures.mask.B[conf.texture] or textures.mask.A[conf.texture])
+	texture = textures.custom.enable and (conf.mirror and textures.custom.maskb or textures.custom.mask) or (textures.mask[conf.texture] or conf.mirror and textures.mask.B[conf.flippe and conf.texture .. "T" or conf.texture] or textures.mask.A[conf.flippe and conf.texture .. "T" or conf.texture])
 	frame.mask:SetTexture(texture, "CLAMPTOBLACKADDITIVE", "CLAMPTOBLACKADDITIVE")
 
 	-- Portrait Shadow
 	if settings.shadow.enable then
 		texture = textures.custom.enable and textures.custom.shadow or textures.shadow[conf.texture]
 		if frame.shadow then
-			UpdatePortraitTexture(frame.shadow, texture, settings.shadow.color, conf.mirror)
+			UpdatePortraitTexture(frame.shadow, texture, settings.shadow.color, conf.mirror, conf.flippe)
 			frame.shadow:Show()
 		else
-			frame.shadow = CreatePortraitTexture(frame, "mMT_Shadow", -4, texture, settings.shadow.color, conf.mirror)
+			frame.shadow = CreatePortraitTexture(frame, "mMT_Shadow", -4, texture, settings.shadow.color, conf.mirror, conf.flippe)
 		end
 	elseif not settings.shadow.enable and frame.shadow then
 		frame.shadow:Hide()
@@ -560,10 +558,10 @@ local function UpdatePortrait(frame, conf, unit, parent)
 	if settings.shadow.inner then
 		texture = textures.custom.enable and textures.custom.inner or textures.inner[conf.texture]
 		if frame.InnerShadow then
-			UpdatePortraitTexture(frame.InnerShadow, texture, settings.shadow.innerColor, conf.mirror)
+			UpdatePortraitTexture(frame.InnerShadow, texture, settings.shadow.innerColor, conf.mirror, conf.flippe)
 			frame.InnerShadow:Show()
 		else
-			frame.InnerShadow = CreatePortraitTexture(frame, "mMT_innerShadow", 2, texture, settings.shadow.innerColor, conf.mirror)
+			frame.InnerShadow = CreatePortraitTexture(frame, "mMT_innerShadow", 2, texture, settings.shadow.innerColor, conf.mirror, conf.flippe)
 		end
 	elseif not settings.shadow.inner and frame.InnerShadow then
 		frame.InnerShadow:Hide()
@@ -573,24 +571,24 @@ local function UpdatePortrait(frame, conf, unit, parent)
 	if settings.shadow.border then
 		texture = textures.custom.enable and textures.custom.border or textures.border[conf.texture]
 		if frame.border then
-			UpdatePortraitTexture(frame.border, texture, settings.shadow.borderColor, conf.mirror)
+			UpdatePortraitTexture(frame.border, texture, settings.shadow.borderColor, conf.mirror, conf.flippe)
 			frame.border:Show()
 		else
-			frame.border = CreatePortraitTexture(frame, "mMT_Border", 2, texture, settings.shadow.borderColor, conf.mirror)
+			frame.border = CreatePortraitTexture(frame, "mMT_Border", 2, texture, settings.shadow.borderColor, conf.mirror, conf.flippe)
 		end
 	elseif not settings.shadow.border and frame.border then
 		frame.border:Hide()
 	end
 
 	-- Class Icon Background
-	if settings.general.classicons then
+	if settings.general.classicons or conf.flippe then
 		if frame.iconbg then
 			UpdateIconBackground(frame.iconbg, unit, conf.mirror)
 			if settings.shadow.enable then
 				frame.shadow:Show()
 			end
 		else
-			frame.iconbg = CreateIconBackground(frame, unit, conf.mirror)
+			frame.iconbg = CreateIconBackground(frame, unit, conf.mirror, (conf.flippe and not settings.general.classicons))
 		end
 	elseif frame.iconbg and not settings.general.classicons then
 		frame.iconbg:Hide()
@@ -601,18 +599,18 @@ local function UpdatePortrait(frame, conf, unit, parent)
 		-- Texture
 		texture = textures.custom.enable and textures.custom.extra or textures.extra[settings.general.style][conf.texture]
 		if frame.extra then
-			UpdatePortraitTexture(frame.extra, texture, nil, not conf.mirror)
+			UpdatePortraitTexture(frame.extra, texture, nil, not conf.mirror, conf.flippe)
 		else
-			frame.extra = CreatePortraitTexture(frame, "mMT_Extra", -6, texture, nil, not conf.mirror)
+			frame.extra = CreatePortraitTexture(frame, "mMT_Extra", -6, texture, nil, not conf.mirror, conf.flippe)
 		end
 
 		-- Shadow
 		if settings.shadow.enable then
 			texture = textures.custom.enable and textures.custom.extrashadow or textures.extra.shadow[conf.texture]
 			if frame.extra.shadow then
-				UpdatePortraitTexture(frame.extra.shadow, texture, settings.shadow.color, not conf.mirror)
+				UpdatePortraitTexture(frame.extra.shadow, texture, settings.shadow.color, not conf.mirror, conf.flippe)
 			else
-				frame.extra.shadow = CreatePortraitTexture(frame, "mMT_Extra_Shadow", -8, texture, settings.shadow.color, not conf.mirror)
+				frame.extra.shadow = CreatePortraitTexture(frame, "mMT_Extra_Shadow", -8, texture, settings.shadow.color, not conf.mirror, conf.flippe)
 				frame.extra.shadow:Hide()
 			end
 		elseif not settings.shadow.enable and frame.extra.shadow then
@@ -623,9 +621,9 @@ local function UpdatePortrait(frame, conf, unit, parent)
 		if settings.shadow.border then
 			texture = textures.custom.enable and textures.custom.extraborder or textures.extra.border[conf.texture]
 			if frame.extra.border then
-				UpdatePortraitTexture(frame.extra.border, texture, settings.shadow.borderColorRare, not conf.mirror)
+				UpdatePortraitTexture(frame.extra.border, texture, settings.shadow.borderColorRare, not conf.mirror, conf.flippe)
 			else
-				frame.extra.border = CreatePortraitTexture(frame, "mMT_Extra_Border", -4, texture, settings.shadow.borderColorRare, not conf.mirror)
+				frame.extra.border = CreatePortraitTexture(frame, "mMT_Extra_Border", -4, texture, settings.shadow.borderColorRare, not conf.mirror, conf.flippe)
 				frame.extra.border:Hide()
 			end
 		elseif not settings.shadow.border and frame.extra.border then
@@ -649,20 +647,20 @@ local function UpdatePortrait(frame, conf, unit, parent)
 	if ((not textures.custom.enable) and settings.general.corner) and textures.corner[conf.texture] then
 		texture = textures.texture[settings.general.style].CO
 		if frame.corner then
-			UpdatePortraitTexture(frame.corner, texture, getColor(unit), conf.mirror)
+			UpdatePortraitTexture(frame.corner, texture, getColor(unit), conf.mirror, conf.flippe)
 			frame.corner:Show()
 		else
-			frame.corner = CreatePortraitTexture(frame, "mMT_Corner", 5, texture, getColor(unit), conf.mirror)
+			frame.corner = CreatePortraitTexture(frame, "mMT_Corner", 5, texture, getColor(unit), conf.mirror, conf.flippe)
 		end
 
 		-- Border
 		if settings.shadow.border then
 			texture = textures.border.CO
 			if frame.corner.border then
-				UpdatePortraitTexture(frame.corner.border, texture, settings.shadow.borderColor, conf.mirror)
+				UpdatePortraitTexture(frame.corner.border, texture, settings.shadow.borderColor, conf.mirror, conf.flippe)
 				frame.corner.border:Show()
 			else
-				frame.corner.border = CreatePortraitTexture(frame, "mMT_Corner_Border", 6, texture, settings.shadow.borderColor, conf.mirror)
+				frame.corner.border = CreatePortraitTexture(frame, "mMT_Corner_Border", 6, texture, settings.shadow.borderColor, conf.mirror, conf.flippe)
 			end
 		elseif frame.corner.border then
 			frame.corner.border:Hide()
@@ -819,7 +817,7 @@ local function UnitEvent(self, event, conf, castUnit, unit)
 			self.throttle = false
 			self.empowering = false
 
-			SetPortraits(self, unit, textures.enablemasking[conf.texture], conf.mirror)
+			SetPortraits(self, unit, (textures.enablemasking[conf.texture] and not conf.flippe), conf.mirror)
 		end
 
 		if self.buildData.update[event] then
@@ -828,7 +826,7 @@ local function UnitEvent(self, event, conf, castUnit, unit)
 					self:SetAttribute("unit", unit)
 				end
 
-				SetPortraits(self, unit, textures.enablemasking[conf.texture], conf.mirror)
+				SetPortraits(self, unit, (textures.enablemasking[conf.texture] and not conf.flippe), conf.mirror)
 				setColor(self.texture, getColor(unit), conf.mirror)
 
 				if settings.general.corner and textures.corner[conf.texture] then
@@ -841,7 +839,7 @@ local function UnitEvent(self, event, conf, castUnit, unit)
 					self.extra:Hide()
 				end
 			else
-				SetPortraits(self, "player", not textures.enablemasking[conf.texture], conf.mirror)
+				SetPortraits(self, "player", not (textures.enablemasking[conf.texture] and not conf.flippe), conf.mirror)
 			end
 		end
 	end

@@ -4,14 +4,15 @@ local L = mMT.Locales
 local tinsert = tinsert
 
 local form = {
-	SQ = L["SQUARE"],
-	RO = L["ROUND"],
-	CI = L["CIRCLE"],
-	PI = L["PILLOW"],
-	RA = L["CARO"],
-	QA = L["RECTANGLE"],
-	MO = L["MOON"],
-	SMQ = L["SIMPLE SQUARE"],
+	SQ = L["Drop"],
+	RO = L["Drop round"],
+	CI = L["Circle"],
+	PI = L["Pad"],
+	RA = L["Diamond"],
+	QA = L["Square"],
+	MO = L["Moon"],
+	SQT = L["Drop flipped"],
+	ROT = L["Drop round flipped"],
 }
 
 local style = {
@@ -500,7 +501,7 @@ local function configTable()
 					args = {
 						range_sq = {
 							order = 1,
-							name = L["SQUARE"],
+							name = L["Drop"],
 							type = "range",
 							min = 0,
 							max = 10,
@@ -515,7 +516,7 @@ local function configTable()
 						},
 						range_ro = {
 							order = 2,
-							name = L["ROUND"],
+							name = L["Drop round"],
 							type = "range",
 							min = 0,
 							max = 10,
@@ -546,7 +547,7 @@ local function configTable()
 						},
 						range_pi = {
 							order = 4,
-							name = L["PILLOW"],
+							name = L["Pad"],
 							type = "range",
 							min = 0,
 							max = 15,
@@ -561,7 +562,7 @@ local function configTable()
 						},
 						range_ra = {
 							order = 5,
-							name = L["CARO"],
+							name = L["Diamond"],
 							type = "range",
 							min = 0,
 							max = 10,
@@ -576,7 +577,7 @@ local function configTable()
 						},
 						range_qa = {
 							order = 5,
-							name = L["RECTANGLE"],
+							name = L["Square"],
 							type = "range",
 							min = 0,
 							max = 20,
@@ -591,7 +592,7 @@ local function configTable()
 						},
 						range_smq = {
 							order = 6,
-							name = L["SIMPLE SQUARE"],
+							name = L["Simple Square"],
 							type = "range",
 							min = 0,
 							max = 60,
@@ -676,11 +677,18 @@ local function configTable()
 							type = "select",
 							name = L["Texture Form"],
 							get = function(info)
-								return E.db.mMT.portraits.player.texture
+								return E.db.mMT.portraits.player.flippe and E.db.mMT.portraits.player.texture .. "T" or E.db.mMT.portraits.player.texture
 							end,
 							set = function(info, value)
-								E.db.mMT.portraits.player.texture = value
-
+								mMT:Print(value, (value == "SQT" or value == "ROT"))
+								E.db.mMT.portraits.player.flippe = (value == "SQT" or value == "ROT")
+								if value == "SQT" then
+									E.db.mMT.portraits.player.texture = "SQ"
+								elseif value == "ROT" then
+									E.db.mMT.portraits.player.texture = "RO"
+								else
+									E.db.mMT.portraits.player.texture = value
+								end
 								mMT.Modules.Portraits:Initialize()
 							end,
 							values = form,
@@ -857,10 +865,17 @@ local function configTable()
 							type = "select",
 							name = L["Texture Form"],
 							get = function(info)
-								return E.db.mMT.portraits.target.texture
+								return E.db.mMT.portraits.target.flippe and E.db.mMT.portraits.target.texture .. "T" or E.db.mMT.portraits.target.texture
 							end,
 							set = function(info, value)
-								E.db.mMT.portraits.target.texture = value
+								E.db.mMT.portraits.target.flippe = (value == "SQT" or value == "ROT")
+								if value == "SQT" then
+									E.db.mMT.portraits.target.texture = "SQ"
+								elseif value == "ROT" then
+									E.db.mMT.portraits.target.texture = "RO"
+								else
+									E.db.mMT.portraits.target.texture = value
+								end
 
 								mMT.Modules.Portraits:Initialize()
 							end,
@@ -1062,10 +1077,17 @@ local function configTable()
 							type = "select",
 							name = L["Texture Form"],
 							get = function(info)
-								return E.db.mMT.portraits.targettarget.texture
+								return E.db.mMT.portraits.targettarget.flippe and E.db.mMT.portraits.targettarget.texture .. "T" or E.db.mMT.portraits.targettarget.texture
 							end,
 							set = function(info, value)
-								E.db.mMT.portraits.targettarget.texture = value
+								E.db.mMT.portraits.targettarget.flippe = (value == "SQT" or value == "ROT")
+								if value == "SQT" then
+									E.db.mMT.portraits.targettarget.texture = "SQ"
+								elseif value == "ROT" then
+									E.db.mMT.portraits.targettarget.texture = "RO"
+								else
+									E.db.mMT.portraits.targettarget.texture = value
+								end
 
 								mMT.Modules.Portraits:Initialize()
 							end,
@@ -1229,10 +1251,17 @@ local function configTable()
 							type = "select",
 							name = L["Texture Form"],
 							get = function(info)
-								return E.db.mMT.portraits.pet.texture
+								return E.db.mMT.portraits.pet.flippe and E.db.mMT.portraits.pet.texture .. "T" or E.db.mMT.portraits.pet.texture
 							end,
 							set = function(info, value)
-								E.db.mMT.portraits.pet.texture = value
+								E.db.mMT.portraits.pet.flippe = (value == "SQT" or value == "ROT")
+								if value == "SQT" then
+									E.db.mMT.portraits.pet.texture = "SQ"
+								elseif value == "ROT" then
+									E.db.mMT.portraits.pet.texture = "RO"
+								else
+									E.db.mMT.portraits.pet.texture = value
+								end
 
 								mMT.Modules.Portraits:Initialize()
 							end,
@@ -1396,10 +1425,17 @@ local function configTable()
 							type = "select",
 							name = L["Texture Form"],
 							get = function(info)
-								return E.db.mMT.portraits.focus.texture
+								return E.db.mMT.portraits.focus.flippe and E.db.mMT.portraits.focus.texture .. "T" or E.db.mMT.portraits.focus.texture
 							end,
 							set = function(info, value)
-								E.db.mMT.portraits.focus.texture = value
+								E.db.mMT.portraits.focus.flippe = (value == "SQT" or value == "ROT")
+								if value == "SQT" then
+									E.db.mMT.portraits.focus.texture = "SQ"
+								elseif value == "ROT" then
+									E.db.mMT.portraits.focus.texture = "RO"
+								else
+									E.db.mMT.portraits.focus.texture = value
+								end
 
 								mMT.Modules.Portraits:Initialize()
 							end,
@@ -1588,10 +1624,17 @@ local function configTable()
 							type = "select",
 							name = L["Texture Form"],
 							get = function(info)
-								return E.db.mMT.portraits.party.texture
+								return E.db.mMT.portraits.party.flippe and E.db.mMT.portraits.party.texture .. "T" or E.db.mMT.portraits.party.texture
 							end,
 							set = function(info, value)
-								E.db.mMT.portraits.party.texture = value
+								E.db.mMT.portraits.party.flippe = (value == "SQT" or value == "ROT")
+								if value == "SQT" then
+									E.db.mMT.portraits.party.texture = "SQ"
+								elseif value == "ROT" then
+									E.db.mMT.portraits.party.texture = "RO"
+								else
+									E.db.mMT.portraits.party.texture = value
+								end
 
 								mMT.Modules.Portraits:Initialize()
 							end,
@@ -1769,10 +1812,17 @@ local function configTable()
 							type = "select",
 							name = L["Texture Form"],
 							get = function(info)
-								return E.db.mMT.portraits.boss.texture
+								return E.db.mMT.portraits.boss.flippe and E.db.mMT.portraits.boss.texture .. "T" or E.db.mMT.portraits.boss.texture
 							end,
 							set = function(info, value)
-								E.db.mMT.portraits.boss.texture = value
+								E.db.mMT.portraits.boss.flippe = (value == "SQT" or value == "ROT")
+								if value == "SQT" then
+									E.db.mMT.portraits.boss.texture = "SQ"
+								elseif value == "ROT" then
+									E.db.mMT.portraits.boss.texture = "RO"
+								else
+									E.db.mMT.portraits.boss.texture = value
+								end
 
 								mMT.Modules.Portraits:Initialize()
 							end,
@@ -1950,10 +2000,17 @@ local function configTable()
 							type = "select",
 							name = L["Texture Form"],
 							get = function(info)
-								return E.db.mMT.portraits.arena.texture
+								return E.db.mMT.portraits.arena.flippe and E.db.mMT.portraits.arena.texture .. "T" or E.db.mMT.portraits.arena.texture
 							end,
 							set = function(info, value)
-								E.db.mMT.portraits.arena.texture = value
+								E.db.mMT.portraits.arena.flippe = (value == "SQT" or value == "ROT")
+								if value == "SQT" then
+									E.db.mMT.portraits.arena.texture = "SQ"
+								elseif value == "ROT" then
+									E.db.mMT.portraits.arena.texture = "RO"
+								else
+									E.db.mMT.portraits.arena.texture = value
+								end
 
 								mMT.Modules.Portraits:Initialize()
 							end,
