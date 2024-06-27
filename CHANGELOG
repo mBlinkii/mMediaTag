@@ -4,13 +4,25 @@
 ## [ver. 3.41] - XX.XX.2024
 ### FIX
 - FIX - Portraits colors if gradient mode is disabled.
+- FIX - Portraits can now properly enable/disable on the fly.
+- FIX - Portraits corner wont hide if the texture does not support it.
 - FIX - Tooltip Icon can override Item names in Classic.
 - FIX - Tooltip and Teleports Datatext for TWW, (for beta use, disable the Objectivetracker Skin).
+- FIX - Removed empty data text entry.
+- FIX - Add S Pack to mMT Settings DB.
+- FIX - Datatext Durability/ Ilevel: Durability color values.
 ### Update
-- UPDATE - Add no Profession text and Icon to first and second Profession datatext.
+- UPDATE - Add no Profession text and Icon to first and second Profession data text.
+- UPDATE - White text setting for Profession data text.
+- UPDATE - NEW: Icon for Teleports data text.
+- UPDATE - Portraits texture names.
+- UPDATE - Removed Portraits texture simple square and added flipped Versions for Drop texture.
 ### NEW
-- NEW - Portraits can now use custom Textures.
-- NEW - TAGs: mLevel:hidecombat, mLevelSmart:hidecombat
+- NEW - Portraits can now use custom textures.
+- NEW - Portraits can now show cast icon, available for player, target, focus, party, boss, and arena.
+- NEW - Portraits setting to force reaction colors on Player Units.
+- NEW - TAGs: mLevel:hidecombat, mLevelSmart:hidecombat, mHealth:onlypercent-with-absorbs:ndp, mHealth:short:absorbs, mColor:absorbs.
+- NEW - TAGs: mHealth:current-percent:absorbs, mHealth:current-percent:ndp:absorbs, mHealth:current-percent:short:absorbs, mHealth:current-percent:short:ndp:absorbs.
 
 
 ## [ver. 3.40] - 05.06.2024
