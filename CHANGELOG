@@ -1,6 +1,18 @@
 # Changelog - ElvUI_mMediaTag
 [Eng] - All changes to this project will be documented in this file. The latest changes are at the top.
 
+## [ver. 3.41] - XX.XX.2024
+### FIX
+- FIX - Portraits colors if gradient mode is disabled.
+- FIX - Tooltip Icon can override Item names in Classic.
+- FIX - Tooltip and Teleports Datatext for TWW, (for beta use, disable the Objectivetracker Skin).
+### Update
+- UPDATE - Add no Profession text and Icon to first and second Profession datatext.
+### NEW
+- NEW - Portraits can now use custom Textures.
+- NEW - TAGs: mLevel:hidecombat, mLevelSmart:hidecombat
+
+
 ## [ver. 3.40] - 05.06.2024
 ### FIX
 - FIX - Removed empty space in Teleports Datatext Menu, and fixed Text formating
