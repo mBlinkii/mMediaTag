@@ -13,25 +13,36 @@ local change_log_important = {
 	"it is possible to create filters similar to ElvUI Style filters and assign multiple",
 	"spell IDs to the filters, so it is possible to have the same settings for multiple spells.",
 	"before you had to define separate settings for each id",
-	"This update will reset the Spell DB."
+	"This update will reset the Spell DB.",
 }
 
-local releasdate = "05.06.2024"
+local releasdate = "27.06.2024"
 
 local change_log_new = {
-	"mMT Datatext Dropdown Menu has now a own fontsize setting",
-	"mMT Portraits can now react on click, like targeting the unit or set it as focus or open unit menu"
+	"Portraits can now use custom textures.",
+	"Portraits can now show cast icon, available for player, target, focus, party, boss, and arena.",
+	"Portraits setting to force reaction colors on Player Units.",
+	"TAGs: mLevel:hidecombat, mLevelSmart:hidecombat, mHealth:onlypercent-with-absorbs:ndp, mHealth:short:absorbs, mColor:absorbs.",
+	"TAGs: mHealth:current-percent:absorbs, mHealth:current-percent:ndp:absorbs, mHealth:current-percent:short:absorbs, mHealth:current-percent:short:ndp:absorbs.",
 }
 
 local change_log_update = {
-	"TRILINEAR Filtering for Dock Icons",
-	"mMT Datatext Dropdown Menu no can auto adjust size to font size",
+	"Add no Profession text and Icon to first and second Profession data text.",
+	"White text setting for Profession data text.",
+	"NEW: Icon for Teleports data text.",
+	"Portraits texture names.",
+	"Removed Portraits texture simple square and added flipped Versions for Drop texture.",
 }
 
 local change_log_fix = {
-	"Removed empty space in Teleports Datatext Menu, and fixed Text formating",
-	"Add Settings for S Series Texturs to mMT Settings menu",
-	"Error with Execute Marker in Cata, diseabled event in cata, Execute Marker should not load in Cata",
+	"Portraits colors if gradient mode is disabled.",
+	"Portraits can now properly enable/disable on the fly.",
+	"Portraits corner won't hide if the texture does not support it.",
+	"Tooltip Icon can override Item names in Classic.",
+	"Tooltip and Teleports Datatext for TWW, (for beta use, disable the Objectivetracker Skin).",
+	"Removed empty data text entry.",
+	"Add S Pack to mMT Settings DB.",
+	"Datatext Durability/ Ilevel: Durability color values.",
 }
 
 local function Concatenation(tbl, icon, color)
