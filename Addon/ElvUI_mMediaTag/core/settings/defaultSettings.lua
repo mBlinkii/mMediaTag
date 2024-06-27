@@ -139,7 +139,7 @@ P.mMT = {
 		},
 	},
 	teleports = { anchorCursor = false, icon = false, customicon = "TP1" },
-	profession = { icon = false, proficon = true },
+	profession = { icon = false, proficon = true, whiteText = true },
 	dungeon = { icon = false, texttoname = true, key = true, score = true, affix = true },
 	instancedifficulty = {
 		enable = false,
@@ -271,6 +271,12 @@ P.mMT = {
 				hex = "|cffff033e",
 				g = 0.01,
 				r = 1,
+			},
+			absorbs = {
+				b = 1,
+				hex = "|cffcd5fff",
+				g = 0.37,
+				r = 0.8,
 			},
 		},
 	},
@@ -580,9 +586,24 @@ P.mMT = {
 		p = true,
 		q = true,
 		r = true,
+		s = true,
 	},
 	portraits = {
+		custom = {
+			texture = "",
+			extra = "",
+			extraborder = "",
+			extrashadow = "",
+			border = "",
+			shadow = "",
+			inner = "",
+			mask = "",
+			maskb = "",
+			enable = false,
+		},
 		player = {
+			flippe = false,
+			cast = false,
 			enable = true,
 			texture = "RO",
 			mirror = false,
@@ -595,6 +616,7 @@ P.mMT = {
 			level = 20,
 		},
 		pet = {
+			flippe = false,
 			enable = false,
 			texture = "RO",
 			mirror = false,
@@ -607,6 +629,8 @@ P.mMT = {
 			level = 20,
 		},
 		target = {
+			flippe = false,
+			cast = false,
 			enable = true,
 			texture = "RO",
 			extraEnable = true,
@@ -620,6 +644,7 @@ P.mMT = {
 			level = 20,
 		},
 		targettarget = {
+			flippe = false,
 			enable = true,
 			texture = "RO",
 			extraEnable = true,
@@ -633,6 +658,8 @@ P.mMT = {
 			level = 20,
 		},
 		focus = {
+			flippe = false,
+			cast = false,
 			enable = false,
 			texture = "RO",
 			extraEnable = true,
@@ -646,6 +673,8 @@ P.mMT = {
 			level = 20,
 		},
 		party = {
+			flippe = false,
+			cast = false,
 			enable = true,
 			texture = "RO",
 			mirror = false,
@@ -658,6 +687,8 @@ P.mMT = {
 			level = 20,
 		},
 		boss = {
+			flippe = false,
+			cast = false,
 			enable = false,
 			texture = "RO",
 			mirror = true,
@@ -670,6 +701,8 @@ P.mMT = {
 			level = 20,
 		},
 		arena = {
+			flippe = false,
+			cast = false,
 			enable = false,
 			texture = "RO",
 			mirror = true,
@@ -683,6 +716,7 @@ P.mMT = {
 		},
 		general = {
 			enable = false,
+			reaction = false,
 			eltruism = false,
 			gradient = true,
 			default = false,
@@ -702,6 +736,7 @@ P.mMT = {
 			QA = 0,
 			SMQ = 0,
 			MO = 5.5,
+			CUSTOM = 5.5,
 		},
 		shadow = {
 			enable = true,

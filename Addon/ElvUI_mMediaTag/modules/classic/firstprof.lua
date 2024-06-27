@@ -41,7 +41,7 @@ local function OnEnter(self)
 			DT.tooltip:AddDoubleLine(name, colorText(skillLevel) .. colorText("/", true) .. colorText(maxSkillLevel) .. colorText(" +", true) .. colorText(skillModifier))
 		end
 	else
-		DT.tooltip:AddLine(format("%s%s|r", "|CFFE74C3C", L["No Professions"]))
+		DT.tooltip:AddLine(format("|T%s:14:14:0:0:64:64:5:59:5:59|t %s%s|r", mMT.Media.DockIcons.NOPROF, "|CFFE74C3C", L["No Professions"]))
 	end
 
 	DT.tooltip:Show()
@@ -67,6 +67,8 @@ local function OnEvent(self)
 		text = format(text, icon, colorText(name, E.db.mMT.singleProfession.whiteText), isNotMax and colorText(skillLevel, E.db.mMT.singleProfession.witheValue) or "")
 
 		self.text:SetText(text)
+	else
+		self.text:SetText(format("|T%s:14:14:0:0:64:64:5:59:5:59|t %s|r", mMT.Media.DockIcons.NOPROF, colorText(L["No Professions"], E.db.mMT.singleProfession.whiteText)))
 	end
 end
 

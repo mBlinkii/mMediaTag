@@ -590,7 +590,8 @@
         "ToggleDropDownMenu",
         "UnregisterUnitWatch",
         "RegisterStateDriver",
-        "UnregisterStateDriver"
+        "UnregisterStateDriver",
+        "ElvPrivateDB"
     ],
     "Lua.diagnostics.disable": [
         "undefined-field"
@@ -652,6 +653,7 @@
         "fontpoint",
         "fontsize",
         "gamemenu",
+        "gradientmode",
         "greatvault",
         "growsize",
         "headerbar",
@@ -739,6 +741,7 @@
         "Tukui",
         "UIAFK",
         "Unitframe",
+        "unitframes",
         "Unitframes",
         "valuecolor",
         "vaultinfohighest",

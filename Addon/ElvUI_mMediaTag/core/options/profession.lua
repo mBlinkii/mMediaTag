@@ -3,6 +3,7 @@ local L = mMT.Locales
 
 local DT = E:GetModule("DataTexts")
 local tinsert = tinsert
+
 local function configTable()
 	E.Options.args.mMT.args.datatexts.args.profession.args = {
 		header_profession = {
@@ -33,6 +34,18 @@ local function configTable()
 					end,
 					set = function(info, value)
 						E.db.mMT.profession.proficon = value
+					end,
+				},
+				text = {
+					order = 3,
+					name = L["white Text"],
+					type = "toggle",
+					get = function(info)
+						return E.db.mMT.profession.whiteText
+					end,
+					set = function(info, value)
+						E.db.mMT.profession.whiteText = value
+						DT:ForceUpdate_DataText("mProfessions")
 					end,
 				},
 			},

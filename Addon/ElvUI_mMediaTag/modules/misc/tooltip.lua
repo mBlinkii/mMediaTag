@@ -3,14 +3,14 @@ local E = unpack(ElvUI)
 --WoW API / Variables
 local _G = _G
 local GetItemIcon = GetItemIcon
-local GetSpellInfo = GetSpellInfo
+local GetSpellInfo = (C_Spell and C_Spell.GetSpellInfo) and C_Spell.GetSpellInfo or GetSpellInfo
+local GetSpellTexture = (C_Spell and C_Spell.GetSpellTexture) and C_Spell.GetSpellTexture or GetSpellTexture
 
 --|TTexturePath:size1:size2:xoffset:yoffset:dimx:dimy:coordx1:coordx2:coordy1:coordy2|t
 local function SetTooltipIcon(tooltip, icon, title)
 	if icon then
 		if E.db.mMT.tooltip.iconzoom then
-			icon =
-				format("|T%s:%d:%d:0:0:64:64:4:60:4:60|t", icon, E.db.mMT.tooltip.iconsize, E.db.mMT.tooltip.iconsize)
+			icon = format("|T%s:%d:%d:0:0:64:64:4:60:4:60|t", icon, E.db.mMT.tooltip.iconsize, E.db.mMT.tooltip.iconsize)
 		else
 			icon = format("|T%s:%d|t", icon, E.db.mMT.tooltip.iconsize)
 		end
@@ -24,31 +24,19 @@ end
 local function AddToolTipIconMount(tooltip, data)
 	if data and tooltip then
 		local icon = select(3, C_MountJournal.GetMountInfoByID(data.id))
-		SetTooltipIcon(
-			tooltip,
-			icon,
-			_G[tooltip:GetName() .. "TextLeft1"]:GetText() or data.lines and data.lines[2] and data.lines[2].leftText
-		)
+		SetTooltipIcon(tooltip, icon, _G[tooltip:GetName() .. "TextLeft1"]:GetText() or data.lines and data.lines[2] and data.lines[2].leftText)
 	end
 end
 
 local function AddToolTipIconItem(tooltip, data)
 	if data and tooltip then
-		SetTooltipIcon(
-			tooltip,
-			GetItemIcon(data.id),
-			_G[tooltip:GetName() .. "TextLeft1"]:GetText() or data.lines and data.lines[1] and data.lines[1].leftText
-		)
+		SetTooltipIcon(tooltip, GetItemIcon(data.id), _G[tooltip:GetName() .. "TextLeft1"]:GetText() or data.lines and data.lines[1] and data.lines[1].leftText)
 	end
 end
 
 local function AddToolTipIconSpell(tooltip, data)
 	if data and tooltip then
-		SetTooltipIcon(
-			tooltip,
-			GetSpellTexture(data.id),
-			_G[tooltip:GetName() .. "TextLeft1"]:GetText() or data.lines and data.lines[1] and data.lines[1].leftText
-		)
+		SetTooltipIcon(tooltip, GetSpellTexture(data.id), _G[tooltip:GetName() .. "TextLeft1"]:GetText() or data.lines and data.lines[1] and data.lines[1].leftText)
 	end
 end
 
@@ -57,12 +45,7 @@ local function AddToolTipIconMacro(tooltip, data)
 		local name = _G[tooltip:GetName() .. "TextLeft1"]:GetText()
 		if name then
 			local icon = select(2, GetMacroInfo(name)) or GetSpellTexture(name) or GetItemIcon(name)
-			SetTooltipIcon(
-				tooltip,
-				icon,
-				_G[tooltip:GetName() .. "TextLeft1"]:GetText()
-					or data.lines and data.lines[1] and data.lines[1].leftText
-			)
+			SetTooltipIcon(tooltip, icon, _G[tooltip:GetName() .. "TextLeft1"]:GetText() or data.lines and data.lines[1] and data.lines[1].leftText)
 		end
 	end
 end
@@ -72,21 +55,9 @@ local function AddTooltipIcon(self, icon)
 		local title = _G[self:GetName() .. "TextLeft1"]
 		if title and not title:GetText():find("|T" .. icon) then
 			if E.db.mMT.tooltip.iconzoom then
-				title:SetFormattedText(
-					"|T%s:%d:%d:0:0:64:64:4:60:4:60|t %s",
-					icon,
-					E.db.mMT.tooltip.iconsize,
-					E.db.mMT.tooltip.iconsize,
-					title:GetText()
-				)
+				title:SetFormattedText("|T%s:%d:%d:0:0:64:64:4:60:4:60|t %s", icon, E.db.mMT.tooltip.iconsize, E.db.mMT.tooltip.iconsize, title:GetText())
 			else
-				title:SetFormattedText(
-					"|T%s:%d|t %s",
-					icon,
-					E.db.mMT.tooltip.iconsize,
-					E.db.mMT.tooltip.iconsize,
-					title:GetText()
-				)
+				title:SetFormattedText("|T%s:%d|t %s", icon, E.db.mMT.tooltip.iconsize, title:GetText())
 			end
 			title:Show()
 		end

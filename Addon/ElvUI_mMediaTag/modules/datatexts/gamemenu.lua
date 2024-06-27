@@ -42,9 +42,7 @@ local colors = {
 	[16] = "|CFFFFC900",
 }
 local function AddIcon(file)
-	return E.db.mMT.gamemenu.menuicons
-			and format("Interface\\AddOns\\ElvUI_mMediaTag\\media\\icons\\misc\\%s.tga", file)
-		or nil
+	return E.db.mMT.gamemenu.menuicons and format("Interface\\AddOns\\ElvUI_mMediaTag\\media\\icons\\misc\\%s.tga", file) or nil
 end
 
 local function AddColor(color)
@@ -173,7 +171,7 @@ local function BuildMenu()
 	end)
 
 	for i = 1, #menuList do
-		menuList[i].color = AddColor(i+1)
+		menuList[i].color = AddColor(i + 1)
 	end
 
 	tinsert(menuList, { text = "", isTitle = true, notClickable = true, func = function() end })
@@ -246,15 +244,7 @@ local function OnEvent(self, event)
 	local hex = E:RGBToHex(E.db.general.valuecolor.r, E.db.general.valuecolor.g, E.db.general.valuecolor.b)
 	local string = strjoin("", hex, "%s|r")
 
-	self.text:SetFormattedText(
-		string,
-		E.db.mMT.gamemenu.icon
-				and format(
-					"|TInterface\\AddOns\\ElvUI_mMediaTag\\media\\icons\\misc\\gears.tga:16:16:0:0:64:64|t %s",
-					L["Game Menu"]
-				)
-			or L["Game Menu"]
-	)
+	self.text:SetFormattedText(string, E.db.mMT.gamemenu.icon and format("|TInterface\\AddOns\\ElvUI_mMediaTag\\media\\icons\\misc\\gears.tga:16:16:0:0:64:64|t %s", L["Game Menu"]) or L["Game Menu"])
 end
 local function OnClick(self, button)
 	if not menuList then
@@ -287,9 +277,7 @@ local function OnEnter(self)
 	DT.tooltip:AddLine(" ")
 	DT.tooltip:AddLine(format("%s %s%s|r", mMT:mIcon(mMT.Media.Mouse["LEFT"]), tip, L["left click to open the menu."]))
 	if E.Retail or E.Cata then
-		DT.tooltip:AddLine(
-			format("%s %s%s|r", mMT:mIcon(mMT.Media.Mouse["RIGHT"]), tip, L["right click to open LFD Window"])
-		)
+		DT.tooltip:AddLine(format("%s %s%s|r", mMT:mIcon(mMT.Media.Mouse["RIGHT"]), tip, L["right click to open LFD Window"]))
 	end
 	DT.tooltip:Show()
 end

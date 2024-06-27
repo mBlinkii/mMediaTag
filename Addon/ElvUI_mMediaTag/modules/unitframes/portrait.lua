@@ -23,7 +23,7 @@ local textures = {
 			PI = path .. "pi_a.tga",
 			RA = path .. "ra_a.tga",
 			QA = path .. "qa_a.tga",
-			SMQ = path .. "smq.tga",
+			SMQ = path .. "qa_a.tga",
 			MO = path .. "moon_c.tga",
 		},
 		smooth = {
@@ -34,7 +34,7 @@ local textures = {
 			PI = path .. "pi_b.tga",
 			RA = path .. "ra_b.tga",
 			QA = path .. "qa_b.tga",
-			SMQ = path .. "smq.tga",
+			SMQ = path .. "qa_b.tga",
 			MO = path .. "moon_a.tga",
 		},
 		metal = {
@@ -45,7 +45,7 @@ local textures = {
 			PI = path .. "pi_c.tga",
 			RA = path .. "ra_c.tga",
 			QA = path .. "qa_c.tga",
-			SMQ = path .. "smq.tga",
+			SMQ = path .. "qa_c.tga",
 			MO = path .. "moon_b.tga",
 		},
 	},
@@ -57,7 +57,7 @@ local textures = {
 			PI = path .. "ex_pi_a.tga",
 			RA = path .. "ex_ra_a.tga",
 			QA = path .. "ex_qa_a.tga",
-			SMQ = nil,
+			SMQ = path .. "ex_qa_a.tga",
 			MO = path .. "ex_mo_c.tga",
 		},
 		smooth = {
@@ -67,7 +67,7 @@ local textures = {
 			PI = path .. "ex_pi_b.tga",
 			RA = path .. "ex_ra_b.tga",
 			QA = path .. "ex_qa_b.tga",
-			SMQ = nil,
+			SMQ = path .. "ex_qa_b.tga",
 			MO = path .. "ex_mo_a.tga",
 		},
 		metal = {
@@ -77,7 +77,7 @@ local textures = {
 			PI = path .. "ex_pi_c.tga",
 			RA = path .. "ex_ra_c.tga",
 			QA = path .. "ex_qa_c.tga",
-			SMQ = nil,
+			SMQ = path .. "ex_qa_c.tga",
 			MO = path .. "ex_mo_b.tga",
 		},
 		border = {
@@ -87,7 +87,7 @@ local textures = {
 			PI = path .. "border_ex_pi.tga",
 			RA = path .. "border_ex_ra.tga",
 			QA = path .. "border_ex_qa.tga",
-			SMQ = nil,
+			SMQ = path .. "border_ex_qa.tga",
 			MO = path .. "border_ex_moon.tga",
 		},
 		shadow = {
@@ -97,7 +97,7 @@ local textures = {
 			PI = path .. "shadow_ex_pi.tga",
 			RA = path .. "shadow_ex_ra.tga",
 			QA = path .. "shadow_ex_qa.tga",
-			SMQ = nil,
+			SMQ = path .. "shadow_ex_qa.tga",
 			MO = nil,
 		},
 	},
@@ -109,7 +109,7 @@ local textures = {
 		PI = path .. "border_pi.tga",
 		RA = path .. "border_ra.tga",
 		QA = path .. "border_qa.tga",
-		SMQ = path .. "border_smq.tga",
+		SMQ = path .. "border_qa.tga",
 		MO = path .. "border_moon.tga",
 	},
 	shadow = {
@@ -119,7 +119,7 @@ local textures = {
 		PI = path .. "shadow_pi.tga",
 		RA = path .. "shadow_ra.tga",
 		QA = path .. "shadow_qa.tga",
-		SMQ = path .. "shadow_smq.tga",
+		SMQ = path .. "shadow_qa.tga",
 		MO = path .. "shadow_moon.tga",
 	},
 	inner = {
@@ -129,7 +129,7 @@ local textures = {
 		PI = path .. "inner_pi.tga",
 		RA = path .. "inner_ra.tga",
 		QA = path .. "inner_qa.tga",
-		SMQ = path .. "inner_smq.tga",
+		SMQ = path .. "inner_qa.tga",
 		MO = path .. "inner_b.tga",
 	},
 	mask = {
@@ -138,15 +138,19 @@ local textures = {
 		RA = path .. "mask_d.tga",
 		QA = path .. "mask_qa.tga",
 		MO = path .. "mask_c.tga",
-		SMQ = path .. "mask_smq.tga",
+		SMQ = path .. "mask_qa.tga",
 
 		A = {
 			SQ = path .. "mask_a.tga",
 			RO = path .. "mask_a.tga",
+			SQT = path .. "mask_a2.tga",
+			ROT = path .. "mask_a2.tga",
 		},
 		B = {
 			SQ = path .. "mask_b.tga",
 			RO = path .. "mask_b.tga",
+			SQT = path .. "mask_b2.tga",
+			ROT = path .. "mask_b2.tga",
 		},
 	},
 	corner = {
@@ -176,9 +180,20 @@ local textures = {
 		MO = false,
 		SMQ = false,
 	},
+	custom = {
+		texture = "",
+		extra = "",
+		extraborder = "",
+		extrashadow = "",
+		border = "",
+		shadow = "",
+		inner = "",
+		mask = "",
+		enable = false,
+	},
 }
 
-local function mirrorTexture(texture, mirror)
+local function mirrorTexture(texture, mirror, top)
 	if texture.mClass then
 		local ULx, ULy, LLx, LLy, URx, URy, LRx, LRy = unpack(texture.mCoords)
 		if mirror then
@@ -187,7 +202,7 @@ local function mirrorTexture(texture, mirror)
 			texture:SetTexCoord(ULx, ULy, LLx, LLy, URx, URy, LRx, LRy)
 		end
 	else
-		texture:SetTexCoord(mirror and 1 or 0, mirror and 0 or 1, 0, 1)
+		texture:SetTexCoord(mirror and 1 or 0, mirror and 0 or 1, top and 1 or 0, top and 0 or 1)
 	end
 end
 
@@ -196,16 +211,25 @@ local function setColor(texture, color, mirror)
 		return
 	end
 
-	if settings.general.gradient and not color.r then
-		local a, b = color.a, color.b
-		if mirror and (settings.general.ori == "HORIZONTAL") then
-			a, b = b, a
+	if type(color.a) == "table" and type(color.b) == "table" then
+		if settings.general.gradient then
+			local a, b = color.a, color.b
+			if mirror and (settings.general.ori == "HORIZONTAL") then
+				a, b = b, a
+			end
+			texture:SetGradient(settings.general.ori, a, b)
+		else
+			texture:SetVertexColor(color.a.r, color.a.g, color.a.b, color.a.a)
 		end
-		texture:SetGradient(settings.general.ori, a, b)
 	elseif color.r then
 		texture:SetVertexColor(color.r, color.g, color.b, color.a)
+	else
+		mMT:Print("Error! - Portraits Color > ")
+		mMT:DebugPrintTable(color)
 	end
 end
+
+local cachedFaction = {}
 
 local function getColor(unit)
 	if settings.general.default then
@@ -213,8 +237,29 @@ local function getColor(unit)
 	end
 
 	if UnitIsPlayer(unit) then
-		local _, class = UnitClass(unit)
-		return settings.colors[class]
+		if settings.general.reaction then
+			if not cachedFaction.player then
+				cachedFaction.player = select(1, UnitFactionGroup("player"))
+			end
+
+			if unit ~= "Player" then
+				local guid = UnitGUID(unit)
+				if guid and not cachedFaction[guid] then
+					cachedFaction[guid] = select(1, UnitFactionGroup(unit))
+				end
+
+				if cachedFaction.player ~= cachedFaction[guid] then
+					return settings.colors.enemy
+				else
+					return settings.colors.friendly
+				end
+			else
+				return settings.colors.friendly
+			end
+		else
+			local _, class = UnitClass(unit)
+			return settings.colors[class]
+		end
 	else
 		local reaction = UnitReaction(unit, "player")
 		if reaction then
@@ -299,11 +344,11 @@ local function SetPortraits(frame, unit, masking, mirror)
 	end
 end
 
-local function CreatePortraitTexture(frame, name, layer, texture, color, mirror)
+local function CreatePortraitTexture(frame, name, layer, texture, color, mirror, top)
 	local tmpTexture = frame:CreateTexture(name, "OVERLAY", nil, layer)
 	tmpTexture:SetAllPoints(frame)
 	tmpTexture:SetTexture(texture, "CLAMP", "CLAMP", "TRILINEAR")
-	mirrorTexture(tmpTexture, mirror)
+	mirrorTexture(tmpTexture, mirror, top)
 
 	if color then
 		setColor(tmpTexture, color, mirror)
@@ -312,12 +357,12 @@ local function CreatePortraitTexture(frame, name, layer, texture, color, mirror)
 	return tmpTexture
 end
 
-local function CreateIconBackground(frame, unit, mirror)
+local function CreateIconBackground(frame, unit, mirror, flippe)
 	local tmpTexture = frame:CreateTexture("mMT_Background", "OVERLAY", nil, -5)
 	tmpTexture:SetAllPoints(frame)
 	tmpTexture:SetTexture(textures.background[settings.general.bgstyle], "CLAMP", "CLAMP", "TRILINEAR")
 
-	local color = settings.shadow.classBG and getColor(unit) or settings.shadow.background
+	local color = flippe and {r = 0, g = 0, b = 0, a = 1} or (settings.shadow.classBG and getColor(unit) or settings.shadow.background)
 	setColor(tmpTexture, color, mirror)
 
 	return tmpTexture
@@ -339,7 +384,7 @@ local function CreatePortrait(parent, conf, unit)
 	local texture = nil
 
 	-- Portraits Frame
-	local frame = CreateFrame("Button", "mMT_Portrait_" .. unit, parent, "SecureUnitButtonTemplate") --CreateFrame("Frame", "mMT_Portrait_" .. unit, parent)
+	local frame = CreateFrame("Button", "mMT_Portrait_" .. unit, parent, "SecureUnitButtonTemplate")
 	frame:SetSize(conf.size, conf.size)
 	frame:SetPoint(conf.point, parent, conf.relativePoint, conf.x, conf.y)
 	if conf.strata ~= "AUTO" then
@@ -349,67 +394,67 @@ local function CreatePortrait(parent, conf, unit)
 
 	-- Portrait Texture
 	unit = UnitExists(unit) and unit or "player"
-	texture = textures.texture[settings.general.style][conf.texture]
-	frame.texture = CreatePortraitTexture(frame, "mMT_Texture", 4, texture, getColor(unit), conf.mirror)
+	texture = textures.custom.enable and textures.custom.texture or textures.texture[settings.general.style][conf.texture]
+	frame.texture = CreatePortraitTexture(frame, "mMT_Texture", 4, texture, getColor(unit), conf.mirror, conf.flippe)
 
 	-- Unit Portrait
-	local offset = GetOffset(conf.size, settings.offset[conf.texture])
+	local offset = GetOffset(conf.size, textures.custom.enable and settings.offset.CUSTOM or settings.offset[conf.texture])
 	frame.portrait = frame:CreateTexture("mMT_Portrait", "OVERLAY", nil, 1)
 	frame.portrait:SetAllPoints(frame)
 	frame.portrait:SetPoint("TOPLEFT", 0 + offset, 0 - offset)
 	frame.portrait:SetPoint("BOTTOMRIGHT", 0 - offset, 0 + offset)
 	frame.portrait:SetTexture(path .. "unknown.tga", "CLAMP", "CLAMP", "TRILINEAR")
-	SetPortraits(frame, unit, textures.enablemasking[conf.texture], conf.mirror)
+	SetPortraits(frame, unit, (textures.enablemasking[conf.texture] and not conf.flippe), conf.mirror)
 	mirrorTexture(frame.portrait, conf.mirror)
 
 	-- Portrait Mask
-	texture = textures.mask[conf.texture] or conf.mirror and textures.mask.B[conf.texture] or textures.mask.A[conf.texture]
+	texture = textures.custom.enable and (conf.mirror and textures.custom.maskb or textures.custom.mask) or (textures.mask[conf.texture] or conf.mirror and textures.mask.B[conf.flippe and conf.texture .. "T" or conf.texture] or textures.mask.A[conf.flippe and conf.texture .. "T" or conf.texture])
 	frame.mask = frame:CreateMaskTexture()
 	frame.mask:SetTexture(texture, "CLAMPTOBLACKADDITIVE", "CLAMPTOBLACKADDITIVE")
 	frame.mask:SetAllPoints(frame)
 	frame.portrait:AddMaskTexture(frame.mask)
 
 	-- Class Icon Background
-	if settings.general.classicons then
-		frame.iconbg = CreateIconBackground(frame, unit, conf.mirror)
+	if settings.general.classicons or conf.flippe then
+		frame.iconbg = CreateIconBackground(frame, unit, conf.mirror, (conf.flippe and not settings.general.classicons) )
 		frame.iconbg:AddMaskTexture(frame.mask)
 	end
 
 	-- Portrait Shadow
 	if settings.shadow.enable then
-		texture = textures.shadow[conf.texture]
-		frame.shadow = CreatePortraitTexture(frame, "mMT_Shadow", -4, texture, settings.shadow.color, conf.mirror)
+		texture = textures.custom.enable and textures.custom.shadow or textures.shadow[conf.texture]
+		frame.shadow = CreatePortraitTexture(frame, "mMT_Shadow", -4, texture, settings.shadow.color, conf.mirror, conf.flippe)
 	end
 
 	-- Inner Portrait Shadow
 	if settings.shadow.inner then
-		texture = textures.inner[conf.texture]
-		frame.InnerShadow = CreatePortraitTexture(frame, "mMT_innerShadow", 2, texture, settings.shadow.innerColor, conf.mirror)
+		texture = textures.custom.enable and textures.custom.inner or textures.inner[conf.texture]
+		frame.InnerShadow = CreatePortraitTexture(frame, "mMT_innerShadow", 2, texture, settings.shadow.innerColor, conf.mirror, conf.flippe)
 	end
 
 	-- Portrait Border
 	if settings.shadow.border then
-		texture = textures.border[conf.texture]
-		frame.border = CreatePortraitTexture(frame, "mMT_Border", 2, texture, settings.shadow.borderColor, conf.mirror)
+		texture = textures.custom.enable and textures.custom.border or textures.border[conf.texture]
+		frame.border = CreatePortraitTexture(frame, "mMT_Border", 2, texture, settings.shadow.borderColor, conf.mirror, conf.flippe)
 	end
 
 	-- Rare/Elite Texture
 	if conf.extraEnable then
 		-- Texture
-		texture = textures.extra[settings.general.style][conf.texture]
-		frame.extra = CreatePortraitTexture(frame, "mMT_Extra", -6, texture, nil, not conf.mirror)
+		texture = textures.custom.enable and textures.custom.extra or textures.extra[settings.general.style][conf.texture]
+		frame.extra = CreatePortraitTexture(frame, "mMT_Extra", -6, texture, nil, not conf.mirror, conf.flippe)
 
 		-- Shadow
 		if settings.shadow.enable then
-			texture = textures.extra.border[conf.texture]
-			frame.extra.shadow = CreatePortraitTexture(frame, "mMT_Extra_Shadow", -8, texture, settings.shadow.color, not conf.mirror)
+			texture = textures.custom.enable and textures.custom.extrashadow or textures.extra.border[conf.texture]
+			frame.extra.shadow = CreatePortraitTexture(frame, "mMT_Extra_Shadow", -8, texture, settings.shadow.color, not conf.mirror, conf.flippe)
 			frame.extra.shadow:Hide()
 		end
 
 		-- Border
 		if settings.shadow.border then
-			texture = textures.extra.shadow[conf.texture]
-			frame.extra.border = CreatePortraitTexture(frame, "mMT_Extra_Border", -4, texture, settings.shadow.borderColorRare, not conf.mirror)
+			texture = textures.custom.enable and textures.custom.extraborder or textures.extra.shadow[conf.texture]
+			frame.extra.border = CreatePortraitTexture(frame, "mMT_Extra_Border", -4, texture, settings.shadow.borderColorRare, not conf.mirror, conf.flippe)
 			frame.extra.border:Hide()
 		end
 
@@ -417,14 +462,14 @@ local function CreatePortrait(parent, conf, unit)
 	end
 
 	-- Corner
-	if settings.general.corner and textures.corner[conf.texture] then
+	if ((not textures.custom.enable) and settings.general.corner) and textures.corner[conf.texture] then
 		texture = textures.texture[settings.general.style].CO
-		frame.corner = CreatePortraitTexture(frame, "mMT_Corner", 5, texture, getColor(unit), conf.mirror)
+		frame.corner = CreatePortraitTexture(frame, "mMT_Corner", 5, texture, getColor(unit), conf.mirror, conf.flippe)
 
 		-- Border
 		if settings.shadow.border then
 			texture = textures.border.CO
-			frame.corner.border = CreatePortraitTexture(frame, "mMT_Corner_Border", 6, texture, settings.shadow.borderColor, conf.mirror)
+			frame.corner.border = CreatePortraitTexture(frame, "mMT_Corner_Border", 6, texture, settings.shadow.borderColor, conf.mirror, conf.flippe)
 		end
 	end
 
@@ -455,10 +500,10 @@ local function CheckRareElite(frame, unit)
 	end
 end
 
-local function UpdatePortraitTexture(tx, texture, color, mirror)
+local function UpdatePortraitTexture(tx, texture, color, mirror, top)
 	if tx then
 		tx:SetTexture(texture, "CLAMP", "CLAMP", "TRILINEAR")
-		mirrorTexture(tx, mirror)
+		mirrorTexture(tx, mirror, top)
 
 		if color then
 			setColor(tx, color, mirror)
@@ -483,33 +528,27 @@ local function UpdatePortrait(frame, conf, unit, parent)
 	end
 	frame:SetFrameLevel(conf.level)
 
-	-- local blacklist = {player = true, target = true, focus = true, targettarget = true}
-	-- local tmpAttribute = frame:GetAttribute("unit")
-	-- if not blacklist[tmpAttribute] and  tmpAttribute ~= unit then
-	-- 	frame:SetAttribute("unit", unit)
-	-- end
-
 	-- Portrait Texture
-	texture = textures.texture[settings.general.style][conf.texture]
-	UpdatePortraitTexture(frame.texture, texture, getColor(unit), conf.mirror)
+	texture = textures.custom.enable and textures.custom.texture or textures.texture[settings.general.style][conf.texture]
+	UpdatePortraitTexture(frame.texture, texture, getColor(unit), conf.mirror, conf.flippe)
 
 	-- Unit Portrait
-	local offset = GetOffset(conf.size, settings.offset[conf.texture])
+	local offset = GetOffset(conf.size, textures.custom.enable and settings.offset.CUSTOM or settings.offset[conf.texture])
 	frame.portrait:SetPoint("TOPLEFT", 0 + offset, 0 - offset)
 	frame.portrait:SetPoint("BOTTOMRIGHT", 0 - offset, 0 + offset)
 
 	-- Portrait Mask
-	texture = textures.mask[conf.texture] or conf.mirror and textures.mask.B[conf.texture] or textures.mask.A[conf.texture]
+	texture = textures.custom.enable and (conf.mirror and textures.custom.maskb or textures.custom.mask) or (textures.mask[conf.texture] or conf.mirror and textures.mask.B[conf.flippe and conf.texture .. "T" or conf.texture] or textures.mask.A[conf.flippe and conf.texture .. "T" or conf.texture])
 	frame.mask:SetTexture(texture, "CLAMPTOBLACKADDITIVE", "CLAMPTOBLACKADDITIVE")
 
 	-- Portrait Shadow
 	if settings.shadow.enable then
-		texture = textures.shadow[conf.texture]
+		texture = textures.custom.enable and textures.custom.shadow or textures.shadow[conf.texture]
 		if frame.shadow then
-			UpdatePortraitTexture(frame.shadow, texture, settings.shadow.color, conf.mirror)
+			UpdatePortraitTexture(frame.shadow, texture, settings.shadow.color, conf.mirror, conf.flippe)
 			frame.shadow:Show()
 		else
-			frame.shadow = CreatePortraitTexture(frame, "mMT_Shadow", -4, texture, settings.shadow.color, conf.mirror)
+			frame.shadow = CreatePortraitTexture(frame, "mMT_Shadow", -4, texture, settings.shadow.color, conf.mirror, conf.flippe)
 		end
 	elseif not settings.shadow.enable and frame.shadow then
 		frame.shadow:Hide()
@@ -517,12 +556,12 @@ local function UpdatePortrait(frame, conf, unit, parent)
 
 	-- Inner Portrait Shadow
 	if settings.shadow.inner then
-		texture = textures.inner[conf.texture]
+		texture = textures.custom.enable and textures.custom.inner or textures.inner[conf.texture]
 		if frame.InnerShadow then
-			UpdatePortraitTexture(frame.InnerShadow, texture, settings.shadow.innerColor, conf.mirror)
+			UpdatePortraitTexture(frame.InnerShadow, texture, settings.shadow.innerColor, conf.mirror, conf.flippe)
 			frame.InnerShadow:Show()
 		else
-			frame.InnerShadow = CreatePortraitTexture(frame, "mMT_innerShadow", 2, texture, settings.shadow.innerColor, conf.mirror)
+			frame.InnerShadow = CreatePortraitTexture(frame, "mMT_innerShadow", 2, texture, settings.shadow.innerColor, conf.mirror, conf.flippe)
 		end
 	elseif not settings.shadow.inner and frame.InnerShadow then
 		frame.InnerShadow:Hide()
@@ -530,26 +569,26 @@ local function UpdatePortrait(frame, conf, unit, parent)
 
 	-- Portrait Border
 	if settings.shadow.border then
-		texture = textures.border[conf.texture]
+		texture = textures.custom.enable and textures.custom.border or textures.border[conf.texture]
 		if frame.border then
-			UpdatePortraitTexture(frame.border, texture, settings.shadow.borderColor, conf.mirror)
+			UpdatePortraitTexture(frame.border, texture, settings.shadow.borderColor, conf.mirror, conf.flippe)
 			frame.border:Show()
 		else
-			frame.border = CreatePortraitTexture(frame, "mMT_Border", 2, texture, settings.shadow.borderColor, conf.mirror)
+			frame.border = CreatePortraitTexture(frame, "mMT_Border", 2, texture, settings.shadow.borderColor, conf.mirror, conf.flippe)
 		end
 	elseif not settings.shadow.border and frame.border then
 		frame.border:Hide()
 	end
 
 	-- Class Icon Background
-	if settings.general.classicons then
+	if settings.general.classicons or conf.flippe then
 		if frame.iconbg then
 			UpdateIconBackground(frame.iconbg, unit, conf.mirror)
 			if settings.shadow.enable then
 				frame.shadow:Show()
 			end
 		else
-			frame.iconbg = CreateIconBackground(frame, unit, conf.mirror)
+			frame.iconbg = CreateIconBackground(frame, unit, conf.mirror, (conf.flippe and not settings.general.classicons))
 		end
 	elseif frame.iconbg and not settings.general.classicons then
 		frame.iconbg:Hide()
@@ -558,20 +597,20 @@ local function UpdatePortrait(frame, conf, unit, parent)
 	-- Rare/Elite Texture
 	if conf.extraEnable then
 		-- Texture
-		texture = textures.extra[settings.general.style][conf.texture]
+		texture = textures.custom.enable and textures.custom.extra or textures.extra[settings.general.style][conf.texture]
 		if frame.extra then
-			UpdatePortraitTexture(frame.extra, texture, nil, not conf.mirror)
+			UpdatePortraitTexture(frame.extra, texture, nil, not conf.mirror, conf.flippe)
 		else
-			frame.extra = CreatePortraitTexture(frame, "mMT_Extra", -6, texture, nil, not conf.mirror)
+			frame.extra = CreatePortraitTexture(frame, "mMT_Extra", -6, texture, nil, not conf.mirror, conf.flippe)
 		end
 
 		-- Shadow
 		if settings.shadow.enable then
-			texture = textures.extra.shadow[conf.texture]
+			texture = textures.custom.enable and textures.custom.extrashadow or textures.extra.shadow[conf.texture]
 			if frame.extra.shadow then
-				UpdatePortraitTexture(frame.extra.shadow, texture, settings.shadow.color, not conf.mirror)
+				UpdatePortraitTexture(frame.extra.shadow, texture, settings.shadow.color, not conf.mirror, conf.flippe)
 			else
-				frame.extra.shadow = CreatePortraitTexture(frame, "mMT_Extra_Shadow", -8, texture, settings.shadow.color, not conf.mirror)
+				frame.extra.shadow = CreatePortraitTexture(frame, "mMT_Extra_Shadow", -8, texture, settings.shadow.color, not conf.mirror, conf.flippe)
 				frame.extra.shadow:Hide()
 			end
 		elseif not settings.shadow.enable and frame.extra.shadow then
@@ -580,11 +619,11 @@ local function UpdatePortrait(frame, conf, unit, parent)
 
 		-- Border
 		if settings.shadow.border then
-			texture = textures.extra.border[conf.texture]
+			texture = textures.custom.enable and textures.custom.extraborder or textures.extra.border[conf.texture]
 			if frame.extra.border then
-				UpdatePortraitTexture(frame.extra.border, texture, settings.shadow.borderColorRare, not conf.mirror)
+				UpdatePortraitTexture(frame.extra.border, texture, settings.shadow.borderColorRare, not conf.mirror, conf.flippe)
 			else
-				frame.extra.border = CreatePortraitTexture(frame, "mMT_Extra_Border", -4, texture, settings.shadow.borderColorRare, not conf.mirror)
+				frame.extra.border = CreatePortraitTexture(frame, "mMT_Extra_Border", -4, texture, settings.shadow.borderColorRare, not conf.mirror, conf.flippe)
 				frame.extra.border:Hide()
 			end
 		elseif not settings.shadow.border and frame.extra.border then
@@ -605,28 +644,28 @@ local function UpdatePortrait(frame, conf, unit, parent)
 	end
 
 	-- Corner
-	if settings.general.corner and textures.corner[conf.texture] then
+	if ((not textures.custom.enable) and settings.general.corner) and textures.corner[conf.texture] then
 		texture = textures.texture[settings.general.style].CO
 		if frame.corner then
-			UpdatePortraitTexture(frame.corner, texture, getColor(unit), conf.mirror)
+			UpdatePortraitTexture(frame.corner, texture, getColor(unit), conf.mirror, conf.flippe)
 			frame.corner:Show()
 		else
-			frame.corner = CreatePortraitTexture(frame, "mMT_Corner", 5, texture, getColor(unit), conf.mirror)
+			frame.corner = CreatePortraitTexture(frame, "mMT_Corner", 5, texture, getColor(unit), conf.mirror, conf.flippe)
 		end
 
 		-- Border
 		if settings.shadow.border then
 			texture = textures.border.CO
 			if frame.corner.border then
-				UpdatePortraitTexture(frame.corner.border, texture, settings.shadow.borderColor, conf.mirror)
+				UpdatePortraitTexture(frame.corner.border, texture, settings.shadow.borderColor, conf.mirror, conf.flippe)
 				frame.corner.border:Show()
 			else
-				frame.corner.border = CreatePortraitTexture(frame, "mMT_Corner_Border", 6, texture, settings.shadow.borderColor, conf.mirror)
+				frame.corner.border = CreatePortraitTexture(frame, "mMT_Corner_Border", 6, texture, settings.shadow.borderColor, conf.mirror, conf.flippe)
 			end
 		elseif frame.corner.border then
 			frame.corner.border:Hide()
 		end
-	elseif not (settings.general.corner and textures.corner[conf.texture]) and frame.corner then
+	elseif frame.corner then
 		if frame.corner.border then
 			frame.corner.border:Hide()
 		end
@@ -684,8 +723,154 @@ function module:UpdatePortraits()
 	end
 end
 
+local function AddCastIcon(self, unit)
+	local texture = select(3, UnitCastingInfo(unit))
+
+	self.throttle = texture and true or false
+
+	if not texture then
+		texture = select(3, UnitChannelInfo(unit))
+	end
+
+	if texture then
+		self.portrait:SetTexture(texture)
+	end
+end
+
+local function RemovePortrait(name)
+	for _, event in pairs(module[name].buildData.unitEvents) do
+		module[name]:UnregisterEvent(event)
+	end
+
+	for _, event in pairs(module[name].buildData.events) do
+		module[name]:UnregisterEvent(event)
+	end
+
+	module[name]:Hide()
+	module[name] = nil
+end
+
+local function CastEvents(db, name, remove)
+	local castEvents = {
+		"UNIT_SPELLCAST_START",
+		"UNIT_SPELLCAST_CHANNEL_START",
+		"UNIT_SPELLCAST_INTERRUPTED",
+		"UNIT_SPELLCAST_SUCCEEDED",
+		"UNIT_SPELLCAST_STOP",
+	}
+
+	local castEventsRetail = {
+		"UNIT_SPELLCAST_EMPOWER_START",
+		"UNIT_SPELLCAST_EMPOWER_STOP",
+	}
+
+	if remove and module[name] then
+		for _, event in pairs(castEvents) do
+			module[name]:UnregisterEvent(event)
+		end
+
+		if E.Retail then
+			for _, event in pairs(castEventsRetail) do
+				module[name]:UnregisterEvent(event)
+			end
+		end
+	else
+		for _, event in pairs(castEvents) do
+			tinsert(db[name].events, event)
+		end
+
+		if E.Retail then
+			for _, event in pairs(castEventsRetail) do
+				tinsert(db[name].unitEvents, event)
+			end
+		end
+	end
+end
+
+local throttleEvents = {
+	UNIT_SPELLCAST_INTERRUPTED = true,
+	UNIT_SPELLCAST_SUCCEEDED = true,
+}
+
+local castIconUpdateEvents = {
+	UNIT_SPELLCAST_START = true,
+	UNIT_SPELLCAST_EMPOWER_START = true,
+}
+
+local function UnitEvent(self, event, conf, castUnit, unit)
+	if mMT.DevMode then
+		mMT:Print("Script:", unit, "Event:", event, "Unit Exists:", UnitExists(unit))
+	end
+
+	if conf.cast then
+		self.empowering = (event == "UNIT_SPELLCAST_EMPOWER_START")
+	end
+
+	if conf.cast and (castUnit == unit) and castIconUpdateEvents[event] then
+		AddCastIcon(self, unit)
+	else
+		if conf.cast and throttleEvents[event] then
+			if (not self.throttle) or self.empowering then
+				return
+			end
+
+			self.throttle = false
+			self.empowering = false
+
+			SetPortraits(self, unit, (textures.enablemasking[conf.texture] and not conf.flippe), conf.mirror)
+		end
+
+		if self.buildData.update[event] then
+			if UnitExists(unit) then
+				if self:GetAttribute("unit") ~= unit then
+					self:SetAttribute("unit", unit)
+				end
+
+				SetPortraits(self, unit, (textures.enablemasking[conf.texture] and not conf.flippe), conf.mirror)
+				setColor(self.texture, getColor(unit), conf.mirror)
+
+				if settings.general.corner and textures.corner[conf.texture] then
+					setColor(self.corner, getColor(unit), conf.mirror)
+				end
+
+				if conf.extraEnable and self.extra then
+					CheckRareElite(self, unit)
+				elseif self.extra then
+					self.extra:Hide()
+				end
+			else
+				SetPortraits(self, "player", not (textures.enablemasking[conf.texture] and not conf.flippe), conf.mirror)
+			end
+		end
+	end
+end
+
 function module:Initialize()
 	settings = E.db.mMT.portraits
+
+	if settings.custom.enable then
+		textures.custom.enable = true
+		textures.custom.texture = settings.custom.texture ~= "" and settings.custom.texture or nil
+		textures.custom.extra = settings.custom.extra ~= "" and settings.custom.extra or nil
+		textures.custom.extraborder = settings.custom.extraborder ~= "" and settings.custom.extraborder or nil
+		textures.custom.extrashadow = settings.custom.extrashadow ~= "" and settings.custom.extrashadow or nil
+		textures.custom.border = settings.custom.border ~= "" and settings.custom.border or nil
+		textures.custom.shadow = settings.custom.shadow ~= "" and settings.custom.shadow or nil
+		textures.custom.inner = settings.custom.inner ~= "" and settings.custom.inner or nil
+		textures.custom.mask = settings.custom.mask ~= "" and settings.custom.mask or nil
+		textures.custom.maskb = settings.custom.maskb ~= "" and settings.custom.maskb or (settings.custom.mask or nil)
+	else
+		textures.custom.enable = false
+		textures.custom.texture = nil
+		textures.custom.extra = nil
+		textures.custom.extraborder = nil
+		textures.custom.extrashadow = nil
+		textures.custom.border = nil
+		textures.custom.shadow = nil
+		textures.custom.inner = nil
+		textures.custom.mask = nil
+		textures.custom.maskb = nil
+	end
 
 	if settings.general.eltruism and mMT.ElvUI_EltreumUI.loaded then
 		settings.colors.WARRIOR = mMT.ElvUI_EltreumUI.colors.WARRIOR
@@ -706,8 +891,10 @@ function module:Initialize()
 		settings.colors.enemy = mMT.ElvUI_EltreumUI.colors.enemy
 	end
 
-	local frames = {
-		Player = {
+	local frames = {}
+
+	if settings.player.enable then
+		frames["Player"] = {
 			parent = _G.ElvUF_Player,
 			settings = settings.player,
 			unit = "player",
@@ -717,8 +904,19 @@ function module:Initialize()
 			unitEvents = {
 				"UNIT_PORTRAIT_UPDATE",
 			},
-		},
-		Target = {
+			update = {
+				PLAYER_ENTERING_WORLD = true,
+				UNIT_PORTRAIT_UPDATE = true,
+			},
+		}
+
+		CastEvents(frames, "Player", not settings.player.cast)
+	elseif module.Player then
+		RemovePortrait("Player")
+	end
+
+	if settings.target.enable then
+		frames["Target"] = {
 			parent = _G.ElvUF_Target,
 			settings = settings.target,
 			unit = "target",
@@ -729,8 +927,20 @@ function module:Initialize()
 			unitEvents = {
 				"UNIT_PORTRAIT_UPDATE",
 			},
-		},
-	}
+			update = {
+				PLAYER_ENTERING_WORLD = true,
+				PLAYER_TARGET_CHANGED = true,
+				UNIT_PORTRAIT_UPDATE = true,
+			},
+		}
+
+		CastEvents(frames, "Target", not settings.target.cast)
+	elseif module.Target then
+		RemovePortrait("Target")
+	end
+
+	if settings.player.cast then
+	end
 
 	if _G.ElvUF_Pet and settings.pet.enable then
 		frames["Pet"] = {
@@ -744,7 +954,14 @@ function module:Initialize()
 				"UNIT_PORTRAIT_UPDATE",
 				"UNIT_MODEL_CHANGED",
 			},
+			update = {
+				PLAYER_ENTERING_WORLD = true,
+				UNIT_PORTRAIT_UPDATE = true,
+				UNIT_MODEL_CHANGED = true,
+			},
 		}
+	elseif module.Pet then
+		RemovePortrait("Pet")
 	end
 
 	if _G.ElvUF_TargetTarget and settings.targettarget.enable then
@@ -761,7 +978,16 @@ function module:Initialize()
 				"UNIT_MODEL_CHANGED",
 				"UNIT_TARGET",
 			},
+			update = {
+				PLAYER_ENTERING_WORLD = true,
+				PLAYER_TARGET_CHANGED = true,
+				UNIT_PORTRAIT_UPDATE = true,
+				UNIT_MODEL_CHANGED = true,
+				UNIT_TARGET = true,
+			},
 		}
+	elseif module.TargetTarget then
+		RemovePortrait("TargetTarget")
 	end
 
 	if _G.ElvUF_Focus and settings.focus.enable then
@@ -777,7 +1003,17 @@ function module:Initialize()
 				"UNIT_PORTRAIT_UPDATE",
 				"UNIT_MODEL_CHANGED",
 			},
+			update = {
+				PLAYER_ENTERING_WORLD = true,
+				PLAYER_FOCUS_CHANGED = true,
+				UNIT_PORTRAIT_UPDATE = true,
+				UNIT_MODEL_CHANGED = true,
+			},
 		}
+
+		CastEvents(frames, "Focus", not settings.focus.cast)
+	elseif module.Focus then
+		RemovePortrait("Focus")
 	end
 
 	if _G.ElvUF_PartyGroup1UnitButton1 and settings.party.enable then
@@ -796,7 +1032,21 @@ function module:Initialize()
 					"UNIT_MODEL_CHANGED",
 					"PARTY_MEMBER_ENABLE",
 				},
+				update = {
+					PLAYER_ENTERING_WORLD = true,
+					GROUP_ROSTER_UPDATE = true,
+					UNIT_CONNECTION = true,
+					UNIT_PORTRAIT_UPDATE = true,
+					UNIT_MODEL_CHANGED = true,
+					PARTY_MEMBER_ENABLE = true,
+				},
 			}
+
+			CastEvents(frames, "Party" .. i, not settings.party.cast)
+		end
+	elseif module.Party1 then
+		for i = 1, 5 do
+			RemovePortrait("Party" .. i)
 		end
 	end
 
@@ -815,7 +1065,20 @@ function module:Initialize()
 					"UNIT_PORTRAIT_UPDATE",
 					"UNIT_MODEL_CHANGED",
 				},
+				update = {
+					PLAYER_ENTERING_WORLD = true,
+					INSTANCE_ENCOUNTER_ENGAGE_UNIT = true,
+					UNIT_TARGETABLE_CHANGED = true,
+					UNIT_PORTRAIT_UPDATE = true,
+					UNIT_MODEL_CHANGED = true,
+				},
 			}
+
+			CastEvents(frames, "Boss" .. i, not settings.boss.cast)
+		end
+	elseif module.Boss1 then
+		for i = 1, 8 do
+			RemovePortrait("Boss" .. i)
 		end
 	end
 
@@ -835,11 +1098,25 @@ function module:Initialize()
 					"UNIT_MODEL_CHANGED",
 					"UNIT_NAME_UPDATE",
 				},
+				update = {
+					PLAYER_ENTERING_WORLD = true,
+					ARENA_OPPONENT_UPDATE = true,
+					UNIT_CONNECTION = true,
+					UNIT_PORTRAIT_UPDATE = true,
+					UNIT_MODEL_CHANGED = true,
+					UNIT_NAME_UPDATE = true,
+				},
 			}
+
+			CastEvents(frames, "Arena" .. i, not settings.arena.cast)
 
 			if E.Retail then
 				tinsert(frames["Arena" .. i].events, "ARENA_PREP_OPPONENT_SPECIALIZATIONS")
 			end
+		end
+	elseif module.Arena1 then
+		for i = 1, 5 do
+			RemovePortrait("Arena" .. i)
 		end
 	end
 
@@ -863,141 +1140,41 @@ function module:Initialize()
 				module[name]:SetAttribute("toggleForVehicle", true)
 				module[name]:SetAttribute("ping-receiver", true)
 				module[name]:RegisterForClicks("AnyUp")
-			elseif module[name] and not unit.settings.enable then
-				for _, event in pairs(unit.unitEvents) do
-					module[name]:UnregisterEvent(event)
-				end
-
-				for _, event in pairs(unit.events) do
-					module[name]:UnregisterEvent(event)
-				end
-
-				module[name]:Hide()
-				module[name] = nil
+				module[name].buildData = unit
 			end
 		end
 
 		if settings.player.enable and module.Player and not module.Player.ScriptSet then
-			module.Player:SetScript("OnEvent", function(self, event)
-				if mMT.DevMode then
-					mMT:Print("Script Player", "Event:", event, "Unit Exists:", UnitExists("player"))
-				end
-
-				if UnitExists("player") then
-					if self:GetAttribute("unit") ~= "player" then
-						self:SetAttribute("unit", "player")
-					end
-
-					SetPortraits(self, "player", textures.enablemasking[settings.player.texture], settings.player.mirror)
-					setColor(self.texture, getColor("player"), settings.player.mirror)
-					if settings.general.corner and textures.corner[settings.player.texture] then
-						setColor(self.corner, getColor("player"), settings.player.mirror)
-					end
-				end
+			module.Player:SetScript("OnEvent", function(self, event, castUnit)
+				UnitEvent(self, event, settings.player, castUnit, "player")
 			end)
 			module.Player.ScriptSet = true
 		end
 
 		if settings.target.enable and module.Target and not module.Target.ScriptSet then
-			module.Target:SetScript("OnEvent", function(self, event)
-				if mMT.DevMode then
-					mMT:Print("Script Target", "Event:", event, "Unit Exists:", UnitExists("target"))
-				end
-
-				if UnitExists("target") then
-					if self:GetAttribute("unit") ~= "target" then
-						self:SetAttribute("unit", "target")
-					end
-
-					SetPortraits(self, "target", textures.enablemasking[settings.target.texture], settings.target.mirror)
-					setColor(self.texture, getColor("target"), settings.target.mirror)
-
-					if settings.general.corner and textures.corner[settings.target.texture] then
-						setColor(self.corner, getColor("target"), settings.target.mirror)
-					end
-
-					if settings.target.extraEnable and self.extra then
-						CheckRareElite(self, "target")
-					elseif self.extra then
-						self.extra:Hide()
-					end
-				end
+			module.Target:SetScript("OnEvent", function(self, event, castUnit)
+				UnitEvent(self, event, settings.target, castUnit, "target")
 			end)
 			module.Target.ScriptSet = true
 		end
 
 		if settings.pet.enable and module.Pet and not module.Pet.ScriptSet then
 			module.Pet:SetScript("OnEvent", function(self, event)
-				if mMT.DevMode then
-					mMT:Print("Script Pet", "Event:", event, "Unit Exists:", UnitExists("pet"))
-				end
-
-				if UnitExists("pet") then
-					if self:GetAttribute("unit") ~= "pet" then
-						self:SetAttribute("unit", "pet")
-					end
-
-					SetPortraits(self, "pet", textures.enablemasking[settings.pet.texture], settings.pet.mirror)
-
-					setColor(self.texture, getColor("pet"), settings.pet.mirror)
-					if settings.general.corner and textures.corner[settings.pet.texture] then
-						setColor(self.corner, getColor("pet"), settings.pet.mirror)
-					end
-				end
+				UnitEvent(self, event, settings.pet, nil, "pet")
 			end)
 			module.Pet.ScriptSet = true
 		end
 
 		if settings.focus.enable and module.Focus and not module.Focus.ScriptSet then
-			module.Focus:SetScript("OnEvent", function(self, event)
-				if mMT.DevMode then
-					mMT:Print("Script Focus", "Event:", event, "Unit Exists:", UnitExists("focus"))
-				end
-
-				if UnitExists("focus") then
-					if self:GetAttribute("unit") ~= "focus" then
-						self:SetAttribute("unit", "focus")
-					end
-
-					SetPortraits(self, "focus", textures.enablemasking[settings.focus.texture], settings.focus.mirror)
-					setColor(self.texture, getColor("focus"), settings.focus.mirror)
-					if settings.general.corner and textures.corner[settings.focus.texture] then
-						setColor(self.corner, getColor("focus"), settings.focus.mirror)
-					end
-
-					if settings.focus.extraEnable and self.extra then
-						CheckRareElite(self, "focus")
-					elseif self.extra then
-						self.extra:Hide()
-					end
-				end
+			module.Focus:SetScript("OnEvent", function(self, event, castUnit)
+				UnitEvent(self, event, settings.focus, castUnit, "focus")
 			end)
 			module.Focus.ScriptSet = true
 		end
 
 		if settings.targettarget.enable and module.TargetTarget and not module.TargetTarget.ScriptSet then
 			module.TargetTarget:SetScript("OnEvent", function(self, event)
-				if mMT.DevMode then
-					mMT:Print("Script Target of Target", "Event:", event, "Unit Exists:", UnitExists("targettarget"))
-				end
-
-				if UnitExists("targettarget") then
-					if self:GetAttribute("unit") ~= "targettarget" then
-						self:SetAttribute("unit", "targettarget")
-					end
-
-					SetPortraits(self, "targettarget", textures.enablemasking[settings.targettarget.texture], settings.targettarget.mirror)
-					setColor(self.texture, getColor("targettarget"), settings.targettarget.mirror)
-					if settings.general.corner and textures.corner[settings.targettarget.texture] then
-						setColor(self.corner, getColor("targettarget"), settings.targettarget.mirror)
-					end
-
-					if settings.targettarget.extraEnable and self.extra then
-						CheckRareElite(self, "targettarget")
-					elseif self.extra then
-						self.extra:Hide()
-					end
-				end
+				UnitEvent(self, event, settings.targettarget, nil, "targettarget")
 			end)
 			module.TargetTarget.ScriptSet = true
 		end
@@ -1005,25 +1182,8 @@ function module:Initialize()
 		if settings.party.enable and module.Party1 and not module.Party1.ScriptSet then
 			for i = 1, 5 do
 				local frame = _G["ElvUF_PartyGroup1UnitButton" .. i]
-				module["Party" .. i]:SetScript("OnEvent", function(self, event)
-					if mMT.DevMode then
-						mMT:Print("Script Party " .. i, "Event:", event, "Unit:", frame.unit, "Unit Exists:", UnitExists(frame.unit))
-					end
-
-					if UnitExists(frame.unit) then
-						if self:GetAttribute("unit") ~= frame.unit then
-							self:SetAttribute("unit", frame.unit)
-						end
-
-						setColor(self.texture, getColor(frame.unit), settings.party.mirror)
-						if settings.general.corner and textures.corner[settings.party.texture] then
-							setColor(self.corner, getColor(frame.unit), settings.party.mirror)
-						end
-
-						SetPortraits(self, frame.unit, not textures.enablemasking[settings.party.texture], settings.party.mirror)
-					else
-						SetPortraits(self, "player", not textures.enablemasking[settings.party.texture], settings.party.mirror)
-					end
+				module["Party" .. i]:SetScript("OnEvent", function(self, event, castUnit)
+					UnitEvent(self, event, settings.party, castUnit, frame.unit)
 				end)
 				module["Party" .. i].ScriptSet = true
 			end
@@ -1032,24 +1192,8 @@ function module:Initialize()
 		if settings.boss.enable and module.Boss1 and not module.Boss1.ScriptSet then
 			for i = 1, 8 do
 				local frame = _G["ElvUF_Boss" .. i]
-				module["Boss" .. i]:SetScript("OnEvent", function(self, event)
-					if mMT.DevMode then
-						mMT:Print("Script Boss " .. i, "Event:", event, "Unit:", frame.unit, "Unit Exists:", UnitExists(frame.unit))
-					end
-					if UnitExists(frame.unit) then
-						if self:GetAttribute("unit") ~= frame.unit then
-							self:SetAttribute("unit", frame.unit)
-						end
-
-						setColor(self.texture, getColor(frame.unit), settings.boss.mirror)
-						if settings.general.corner and textures.corner[settings.boss.texture] then
-							setColor(self.corner, getColor(frame.unit), settings.boss.mirror)
-						end
-
-						SetPortraits(self, frame.unit, textures.enablemasking[settings.boss.texture], settings.boss.mirror)
-					else
-						SetPortraits(module["Boss" .. i], "player", not textures.enablemasking[settings.boss.texture], settings.boss.mirror)
-					end
+				module["Boss" .. i]:SetScript("OnEvent", function(self, event, castUnit)
+					UnitEvent(self, event, settings.boss, castUnit, frame.unit)
 				end)
 				module["Boss" .. i].ScriptSet = true
 			end
@@ -1058,23 +1202,8 @@ function module:Initialize()
 		if settings.arena.enable and module.Arena1 and not module.Arena1.ScriptSet then
 			for i = 1, 5 do
 				local frame = _G["ElvUF_Arena" .. i]
-				module["Arena" .. i]:SetScript("OnEvent", function(self, event)
-					if mMT.DevMode then
-						mMT:Print("Script Arena " .. i, "Event:", event, "Unit:", frame.unit, "Unit Exists:", UnitExists(frame.unit))
-					end
-
-					if UnitExists(frame.unit) then
-						if self:GetAttribute("unit") ~= frame.unit then
-							self:SetAttribute("unit", frame.unit)
-						end
-
-						setColor(self.texture, getColor(frame.unit), settings.arena.mirror)
-						if settings.general.corner and textures.corner[settings.arena.texture] then
-							setColor(self.corner, getColor(frame.unit), settings.arena.mirror)
-						end
-
-						SetPortraits(self, frame.unit, textures.enablemasking[settings.arena.texture], settings.arena.mirror)
-					end
+				module["Arena" .. i]:SetScript("OnEvent", function(self, event, castUnit)
+					UnitEvent(self, event, settings.arena, castUnit, frame.unit)
 				end)
 
 				module["Arena" .. i].ScriptSet = true

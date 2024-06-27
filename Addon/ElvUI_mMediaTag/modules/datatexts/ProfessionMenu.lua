@@ -16,6 +16,15 @@ local menuFrame = CreateFrame("Frame", "mProfessionMenu", E.UIParent, "BackdropT
 menuFrame:SetTemplate("Transparent", true)
 local menuList = {}
 
+local function colorText(value, withe)
+	if withe then
+		return value
+	else
+		local hexColor = E:RGBToHex(E.db.general.valuecolor.r, E.db.general.valuecolor.g, E.db.general.valuecolor.b)
+		return hexColor .. value .. "|r"
+	end
+end
+
 local function OnClick(self, button)
 	wipe(menuList)
 	menuList = mMT:GetProfessions()
@@ -51,13 +60,10 @@ end
 local function OnEvent(self, event, unit)
 	local TextString = mText
 	if E.db.mMT.profession.icon then
-		TextString = format("|TInterface\\AddOns\\ElvUI_mMediaTag\\media\\icons\\datatext\\profession.tga:16:16:0:0:64:64|t %s", mText)
+		TextString = format("|TInterface\\AddOns\\ElvUI_mMediaTag\\media\\icons\\datatext\\profession.tga:16:16:0:0:64:64|t %s", colorText(mText, E.db.mMT.profession.whiteText))
 	end
 
-	local hex = E:RGBToHex(E.db.general.valuecolor.r, E.db.general.valuecolor.g, E.db.general.valuecolor.b)
-	local string = strjoin("", hex, "%s|r")
-
-	self.text:SetFormattedText(string, TextString)
+	self.text:SetText(TextString)
 end
 
 local function OnLeave(self)

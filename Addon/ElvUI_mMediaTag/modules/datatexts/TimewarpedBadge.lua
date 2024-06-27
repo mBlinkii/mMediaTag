@@ -65,23 +65,9 @@ local function OnEvent(self, event, ...)
 			end
 
 			if TextJustify == "RIGHT" then
-				self.text:SetFormattedText(
-					"%s%s %s %s|r%s",
-					color,
-					bagCount or "",
-					Currency.info.count,
-					name or "",
-					icon or ""
-				)
+				self.text:SetFormattedText("%s%s %s %s|r%s", color, bagCount or "", Currency.info.count, name or "", icon or "")
 			else
-				self.text:SetFormattedText(
-					"%s%s%s %s %s|r",
-					icon or "",
-					color,
-					name or "",
-					Currency.info.count,
-					bagCount or ""
-				)
+				self.text:SetFormattedText("%s%s%s %s %s|r", icon or "", color, name or "", Currency.info.count, bagCount or "")
 			end
 		end
 	else
@@ -93,15 +79,4 @@ local function OnLeave(self)
 	DT.tooltip:Hide()
 end
 
-DT:RegisterDatatext(
-	"mTimewarpedBadge",
-	_G.CURRENCY,
-	{ "CHAT_MSG_CURRENCY", "CURRENCY_DISPLAY_UPDATE" },
-	OnEvent,
-	nil,
-	nil,
-	OnEnter,
-	OnLeave,
-	"mMediaTag Timewarped Badge",
-	nil
-)
+DT:RegisterDatatext("mTimewarpedBadge", _G.CURRENCY, { "CHAT_MSG_CURRENCY", "CURRENCY_DISPLAY_UPDATE" }, OnEvent, nil, nil, OnEnter, OnLeave, "mMediaTag Timewarped Badge", nil)

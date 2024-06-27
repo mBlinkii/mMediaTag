@@ -44,6 +44,7 @@ local colors = {
 	tank = "|cffffffff",
 	heal = "|cffffffff",
 	level = "|cffffffff",
+	absorbs = "|cffffffff",
 }
 
 local CustomRaidTargetIcons = {
@@ -273,6 +274,7 @@ function mMT:UpdateTagSettings()
 		TANK = E.db.mMT.tags.colors.tank.hex,
 		HEALER = E.db.mMT.tags.colors.heal.hex,
 		level = E.db.mMT.tags.colors.level.hex,
+		absorbs = E.db.mMT.tags.colors.absorbs.hex,
 	}
 
 	icons.rare = format("|T%s:15:15:0:2|t", mMT.Media.ClassIcons[E.db.mMT.tags.icons.rare or "FRUIT3"])
@@ -642,9 +644,18 @@ E:AddTag("mColor:target", "UNIT_TARGET", function(unit)
 	return unitPlayer and _TAGS.classcolor(target) or c and colors[c] or _TAGS.classcolor(target)
 end)
 
+E:AddTag("mColor:absorbs", "UNIT_ABSORB_AMOUNT_CHANGED", function(unit)
+	local absorb = UnitGetTotalAbsorbs(unit) or 0
+
+	if absorb ~= 0 then
+		return colors.absorbs or ""
+	end
+end)
+
 E:AddTagInfo("mColor", mMT.NameShort .. " " .. L["Color"], L["Unit colors with mMediaTag colors for Rare, Rareelite, Elite and Boss and Classcolors."])
-E:AddTagInfo("status", mMT.NameShort .. " " .. L["Color"], L["Unit colors with mMediaTag colors for Rare and Rareelite."])
+E:AddTagInfo("mColor:rare", mMT.NameShort .. " " .. L["Color"], L["Unit colors with mMediaTag colors for Rare and Rareelite."])
 E:AddTagInfo("mColor:target", mMT.NameShort .. " " .. L["Color"], L["Targetunit colors with mMediaTag colors for Rare, Rareelite, Elite and Boss and Classcolors."])
+E:AddTagInfo("mColor:absorbs", mMT.NameShort .. " " .. L["Color"], L["Absorbs color."])
 
 local function NoDecimalPercent(min, max, string)
 	if string then
@@ -675,6 +686,38 @@ E:AddTag("mHealth", "UNIT_HEALTH UNIT_MAXHEALTH UNIT_CONNECTION PLAYER_FLAGS_CHA
 		end
 	end
 end)
+
+E:AddTag("mHealth:absorbs", "UNIT_HEALTH UNIT_MAXHEALTH UNIT_CONNECTION PLAYER_FLAGS_CHANGED PLAYER_UPDATE_RESTING UNIT_ABSORB_AMOUNT_CHANGED", function(unit)
+	local isAFK = UnitIsAFK(unit)
+
+	if isAFK then
+		return _TAGS.mAFK(unit)
+	else
+		if (UnitIsDead(unit)) or (UnitIsGhost(unit)) or (not UnitIsConnected(unit)) then
+			return _TAGS.mStatus(unit)
+		else
+			local currentHealth = UnitHealth(unit)
+			local maxHealth = UnitHealthMax(unit)
+			local deficit = maxHealth - currentHealth
+			local absorb = UnitGetTotalAbsorbs(unit) or 0
+
+			if absorb == 0 then
+				if deficit > 0 and currentHealth > 0 then
+					return E:GetFormattedText("PERCENT", currentHealth, maxHealth)
+				else
+					return E:GetFormattedText("CURRENT", currentHealth, maxHealth)
+				end
+			else
+				local healthTotalIncludingAbsorbs = UnitHealth(unit) + absorb
+				if deficit > 0 and currentHealth > 0 then
+					return E:GetFormattedText("PERCENT", healthTotalIncludingAbsorbs, maxHealth)
+				else
+					return E:GetFormattedText("CURRENT", healthTotalIncludingAbsorbs, maxHealth)
+				end
+			end
+		end
+	end
+end, not E.Retail)
 
 E:AddTag("mHealth:ndp", "UNIT_HEALTH UNIT_MAXHEALTH UNIT_CONNECTION PLAYER_FLAGS_CHANGED PLAYER_UPDATE_RESTING", function(unit)
 	local isAFK = UnitIsAFK(unit)
@@ -743,6 +786,38 @@ E:AddTag("mHealth:short", "UNIT_HEALTH UNIT_MAXHEALTH UNIT_CONNECTION PLAYER_FLA
 		end
 	end
 end)
+
+E:AddTag("mHealth:short:absorbs", "UNIT_HEALTH UNIT_MAXHEALTH UNIT_CONNECTION PLAYER_FLAGS_CHANGED PLAYER_UPDATE_RESTING UNIT_ABSORB_AMOUNT_CHANGED", function(unit)
+	local isAFK = UnitIsAFK(unit)
+
+	if isAFK then
+		return _TAGS.mAFK(unit)
+	else
+		if (UnitIsDead(unit)) or (UnitIsGhost(unit)) or (not UnitIsConnected(unit)) then
+			return _TAGS.mStatus(unit)
+		else
+			local currentHealth = UnitHealth(unit)
+			local maxHealth = UnitHealthMax(unit)
+			local deficit = maxHealth - currentHealth
+			local absorb = UnitGetTotalAbsorbs(unit) or 0
+
+			if absorb == 0 then
+				if deficit > 0 and currentHealth > 0 then
+					return E:GetFormattedText("PERCENT", currentHealth, maxHealth)
+				else
+					return E:GetFormattedText("CURRENT", currentHealth, maxHealth, nil, true)
+				end
+			else
+				local healthTotalIncludingAbsorbs = UnitHealth(unit) + absorb
+				if deficit > 0 and currentHealth > 0 then
+					return E:GetFormattedText("PERCENT", healthTotalIncludingAbsorbs, maxHealth)
+				else
+					return E:GetFormattedText("CURRENT", healthTotalIncludingAbsorbs, maxHealth, nil, true)
+				end
+			end
+		end
+	end
+end, not E.Retail)
 
 E:AddTag("mHealth:short:ndp", "UNIT_HEALTH UNIT_MAXHEALTH UNIT_CONNECTION PLAYER_FLAGS_CHANGED PLAYER_UPDATE_RESTING", function(unit)
 	local isAFK = UnitIsAFK(unit)
@@ -1052,6 +1127,38 @@ E:AddTag("mHealth:current-percent", "UNIT_HEALTH UNIT_MAXHEALTH UNIT_CONNECTION 
 	end
 end)
 
+E:AddTag("mHealth:current-percent:absorbs", "UNIT_HEALTH UNIT_MAXHEALTH UNIT_CONNECTION PLAYER_FLAGS_CHANGED PLAYER_UPDATE_RESTING UNIT_ABSORB_AMOUNT_CHANGED", function(unit)
+	local isAFK = UnitIsAFK(unit)
+
+	if isAFK then
+		return _TAGS.mAFK(unit)
+	else
+		if (UnitIsDead(unit)) or (UnitIsGhost(unit)) or (not UnitIsConnected(unit)) then
+			return _TAGS.mStatus(unit)
+		else
+			local currentHealth = UnitHealth(unit)
+			local maxHealth = UnitHealthMax(unit)
+			local deficit = maxHealth - currentHealth
+			local absorb = UnitGetTotalAbsorbs(unit) or 0
+
+			if absorb == 0 then
+				if deficit > 0 and currentHealth > 0 then
+					return format("%s | %s", E:GetFormattedText("CURRENT", currentHealth, maxHealth), E:GetFormattedText("PERCENT", currentHealth, maxHealth))
+				else
+					return E:GetFormattedText("CURRENT", currentHealth, maxHealth)
+				end
+			else
+				local healthTotalIncludingAbsorbs = UnitHealth(unit) + absorb
+				if deficit > 0 and currentHealth > 0 then
+					return format("%s | %s", E:GetFormattedText("CURRENT", healthTotalIncludingAbsorbs, maxHealth), E:GetFormattedText("PERCENT", healthTotalIncludingAbsorbs, maxHealth))
+				else
+					return E:GetFormattedText("CURRENT", healthTotalIncludingAbsorbs, maxHealth)
+				end
+			end
+		end
+	end
+end, not E.Retail)
+
 E:AddTag("mHealth:current-percent:ndp", "UNIT_HEALTH UNIT_MAXHEALTH UNIT_CONNECTION PLAYER_FLAGS_CHANGED PLAYER_UPDATE_RESTING", function(unit)
 	local isAFK = UnitIsAFK(unit)
 
@@ -1073,6 +1180,38 @@ E:AddTag("mHealth:current-percent:ndp", "UNIT_HEALTH UNIT_MAXHEALTH UNIT_CONNECT
 		end
 	end
 end)
+
+E:AddTag("mHealth:current-percent:ndp:absorbs", "UNIT_HEALTH UNIT_MAXHEALTH UNIT_CONNECTION PLAYER_FLAGS_CHANGED PLAYER_UPDATE_RESTING UNIT_ABSORB_AMOUNT_CHANGED", function(unit)
+	local isAFK = UnitIsAFK(unit)
+
+	if isAFK then
+		return _TAGS.mAFK(unit)
+	else
+		if (UnitIsDead(unit)) or (UnitIsGhost(unit)) or (not UnitIsConnected(unit)) then
+			return _TAGS.mStatus(unit)
+		else
+			local currentHealth = UnitHealth(unit)
+			local maxHealth = UnitHealthMax(unit)
+			local deficit = maxHealth - currentHealth
+			local absorb = UnitGetTotalAbsorbs(unit) or 0
+
+			if absorb == 0 then
+				if deficit > 0 and currentHealth > 0 then
+					return format("%s | %s", E:GetFormattedText("CURRENT", currentHealth, maxHealth), NoDecimalPercent(currentHealth, maxHealth, "%"))
+				else
+					return E:GetFormattedText("CURRENT", currentHealth, maxHealth)
+				end
+			else
+				local healthTotalIncludingAbsorbs = UnitHealth(unit) + absorb
+				if deficit > 0 and currentHealth > 0 then
+					return format("%s | %s", E:GetFormattedText("CURRENT", healthTotalIncludingAbsorbs, maxHealth), NoDecimalPercent(healthTotalIncludingAbsorbs, maxHealth, "%"))
+				else
+					return E:GetFormattedText("CURRENT", healthTotalIncludingAbsorbs, maxHealth)
+				end
+			end
+		end
+	end
+end, not E.Retail)
 
 E:AddTag("mHealth:current-percent:short", "UNIT_HEALTH UNIT_MAXHEALTH UNIT_CONNECTION PLAYER_FLAGS_CHANGED PLAYER_UPDATE_RESTING", function(unit)
 	local isAFK = UnitIsAFK(unit)
@@ -1096,6 +1235,38 @@ E:AddTag("mHealth:current-percent:short", "UNIT_HEALTH UNIT_MAXHEALTH UNIT_CONNE
 	end
 end)
 
+E:AddTag("mHealth:current-percent:short:absorbs", "UNIT_HEALTH UNIT_MAXHEALTH UNIT_CONNECTION PLAYER_FLAGS_CHANGED PLAYER_UPDATE_RESTING UNIT_ABSORB_AMOUNT_CHANGED", function(unit)
+	local isAFK = UnitIsAFK(unit)
+
+	if isAFK then
+		return _TAGS.mAFK(unit)
+	else
+		if (UnitIsDead(unit)) or (UnitIsGhost(unit)) or (not UnitIsConnected(unit)) then
+			return _TAGS.mStatus(unit)
+		else
+			local currentHealth = UnitHealth(unit)
+			local maxHealth = UnitHealthMax(unit)
+			local deficit = maxHealth - currentHealth
+			local absorb = UnitGetTotalAbsorbs(unit) or 0
+
+			if absorb == 0 then
+				if deficit > 0 and currentHealth > 0 then
+					return format("%s | %s", E:GetFormattedText("CURRENT", currentHealth, maxHealth, nil, true), E:GetFormattedText("PERCENT", currentHealth, maxHealth))
+				else
+					return E:GetFormattedText("CURRENT", currentHealth, maxHealth, nil, true)
+				end
+			else
+				local healthTotalIncludingAbsorbs = UnitHealth(unit) + absorb
+				if deficit > 0 and currentHealth > 0 then
+					return format("%s | %s", E:GetFormattedText("CURRENT", healthTotalIncludingAbsorbs, maxHealth, nil, true), E:GetFormattedText("PERCENT", healthTotalIncludingAbsorbs, maxHealth))
+				else
+					return E:GetFormattedText("CURRENT", healthTotalIncludingAbsorbs, maxHealth, nil, true)
+				end
+			end
+		end
+	end
+end, not E.Retail)
+
 E:AddTag("mHealth:current-percent:short:ndp", "UNIT_HEALTH UNIT_MAXHEALTH UNIT_CONNECTION PLAYER_FLAGS_CHANGED PLAYER_UPDATE_RESTING", function(unit)
 	local isAFK = UnitIsAFK(unit)
 
@@ -1117,6 +1288,38 @@ E:AddTag("mHealth:current-percent:short:ndp", "UNIT_HEALTH UNIT_MAXHEALTH UNIT_C
 		end
 	end
 end)
+
+E:AddTag("mHealth:current-percent:short:ndp:absorbs", "UNIT_HEALTH UNIT_MAXHEALTH UNIT_CONNECTION PLAYER_FLAGS_CHANGED PLAYER_UPDATE_RESTING UNIT_ABSORB_AMOUNT_CHANGED", function(unit)
+	local isAFK = UnitIsAFK(unit)
+
+	if isAFK then
+		return _TAGS.mAFK(unit)
+	else
+		if (UnitIsDead(unit)) or (UnitIsGhost(unit)) or (not UnitIsConnected(unit)) then
+			return _TAGS.mStatus(unit)
+		else
+			local currentHealth = UnitHealth(unit)
+			local maxHealth = UnitHealthMax(unit)
+			local deficit = maxHealth - currentHealth
+			local absorb = UnitGetTotalAbsorbs(unit) or 0
+
+			if absorb == 0 then
+				if deficit > 0 and currentHealth > 0 then
+					return format("%s | %s", E:GetFormattedText("CURRENT", currentHealth, maxHealth, nil, true), NoDecimalPercent(currentHealth, maxHealth, "%"))
+				else
+					return E:GetFormattedText("CURRENT", currentHealth, maxHealth, nil, true)
+				end
+			else
+				local healthTotalIncludingAbsorbs = UnitHealth(unit) + absorb
+				if deficit > 0 and currentHealth > 0 then
+					return format("%s | %s", E:GetFormattedText("CURRENT", healthTotalIncludingAbsorbs, maxHealth, nil, true), NoDecimalPercent(healthTotalIncludingAbsorbs, maxHealth, "%"))
+				else
+					return E:GetFormattedText("CURRENT", healthTotalIncludingAbsorbs, maxHealth, nil, true)
+				end
+			end
+		end
+	end
+end, not E.Retail)
 
 E:AddTag("mHealth:NoAFK", "UNIT_HEALTH UNIT_MAXHEALTH UNIT_CONNECTION PLAYER_FLAGS_CHANGED PLAYER_UPDATE_RESTING", function(unit)
 	if (UnitIsDead(unit)) or (UnitIsGhost(unit)) or (not UnitIsConnected(unit)) then
@@ -1246,12 +1449,32 @@ E:AddTag("mHealth:NoAFK:short:current-percent:ndp", "UNIT_HEALTH UNIT_MAXHEALTH 
 	end
 end)
 
+E:AddTag("mHealth:onlypercent-with-absorbs:ndp:nosign", "UNIT_HEALTH UNIT_MAXHEALTH UNIT_ABSORB_AMOUNT_CHANGED UNIT_CONNECTION PLAYER_FLAGS_CHANGED UNIT_ABSORB_AMOUNT_CHANGED", function(unit)
+	local status = UnitIsDead(unit) and L["Dead"] or UnitIsGhost(unit) and L["Ghost"] or not UnitIsConnected(unit) and L["Offline"]
+
+	if status then
+		return status
+	end
+
+	local absorb = UnitGetTotalAbsorbs(unit) or 0
+	if absorb == 0 then
+		return NoDecimalPercent(UnitHealth(unit), UnitHealthMax(unit))
+	end
+
+	local healthTotalIncludingAbsorbs = UnitHealth(unit) + absorb
+	return NoDecimalPercent(healthTotalIncludingAbsorbs, UnitHealthMax(unit))
+end, not E.Retail)
+
 E:AddTagInfo("mHealth", mMT.NameShort .. " " .. L["Health"], L["Health changes between maximum Health and Percent in combat."])
 E:AddTagInfo("mHealth:short", mMT.NameShort .. " " .. L["Health"], L["Shortened version of"] .. " mHealth.")
+E:AddTagInfo("mHealth:absorbs", mMT.NameShort .. " " .. L["Health"], L["Displays the unit's current health as a percentage with absorb values"])
+E:AddTagInfo("mHealth:short:absorbs", mMT.NameShort .. " " .. L["Health"], L["Shortened version of"] .. " mHealth:absorbs.")
 E:AddTagInfo("mHealth:icon", mMT.NameShort .. " " .. L["Health"], L["Health changes between maximum Health and Percent in combat, with Status Icons."])
 E:AddTagInfo("mHealth:icon:short", mMT.NameShort .. " " .. L["Health"], L["Shortened version of"] .. " mHealth:icon.")
 E:AddTagInfo("mHealth:current-percent", mMT.NameShort .. " " .. L["Health"], L["Health changes between maximum Health and Current Health - Percent in combat."])
 E:AddTagInfo("mHealth:current-percent:short", mMT.NameShort .. " " .. L["Health"], L["Shortened version of"] .. " mHealth:current-percent.")
+E:AddTagInfo("mHealth:current-percent:absorbs", mMT.NameShort .. " " .. L["Health"], L["Health changes between maximum Health and Current Health - Percent in combat with absorb values."])
+E:AddTagInfo("mHealth:current-percent:short:absorbs", mMT.NameShort .. " " .. L["Health"], L["Shortened version of"] .. " mHealth:current-percent:absorbs.")
 E:AddTagInfo("mHealth:nodeath", mMT.NameShort .. " " .. L["Health"], L["Health changes between maximum Health and Percent in combat. Without Death Status."])
 E:AddTagInfo("mHealth:nodeath:short", mMT.NameShort .. " " .. L["Health"], L["Shortened version of"] .. " mHealth:nodeath.")
 E:AddTagInfo("mHealth:nodeath:current-percent", mMT.NameShort .. " " .. L["Health"], L["Same as"] .. " mHealth:current-percent " .. L["and"] .. " mHealth:nodeath ")
@@ -1269,7 +1492,9 @@ E:AddTagInfo("mHealth:short:ndp", mMT.NameShort .. " " .. L["Health"], L["Shorte
 E:AddTagInfo("mHealth:icon:ndp", mMT.NameShort .. " " .. L["Health"], L["Health changes between maximum Health and Percent in combat, with Status Icons."] .. L["No decimal values for percentage."])
 E:AddTagInfo("mHealth:icon:short:ndp", mMT.NameShort .. " " .. L["Health"], L["Shortened version of"] .. " mHealth:icon." .. L["No decimal values for percentage."])
 E:AddTagInfo("mHealth:current-percent:ndp", mMT.NameShort .. " " .. L["Health"], L["Health changes between maximum Health and Current Health - Percent in combat."] .. L["No decimal values for percentage."])
-E:AddTagInfo("mHealth:current-percent:short:ndp", mMT.NameShort .. " " .. L["Health"], L["Shortened version of"] .. " mHealth:current-percent." .. L["No decimal values for percentage."])
+E:AddTagInfo("mHealth:current-percent:short:ndp", mMT.NameShort .. " " .. L["Health"], L["Shortened version of"] .. " mHealth:current-percent. " .. L["No decimal values for percentage."])
+E:AddTagInfo("mHealth:current-percent:ndp:absorbs", mMT.NameShort .. " " .. L["Health"], L["Health changes between maximum Health and Current Health - Percent in combat with absorb values."] .. L["No decimal values for percentage."])
+E:AddTagInfo("mHealth:current-percent:short:ndp:absorbs", mMT.NameShort .. " " .. L["Health"], L["Shortened version of"] .. " mHealth:current-percent:absorbs " .. L["No decimal values for percentage."])
 E:AddTagInfo("mHealth:nodeath:ndp", mMT.NameShort .. " " .. L["Health"], L["Health changes between maximum Health and Percent in combat. Without Death Status."] .. L["No decimal values for percentage."])
 E:AddTagInfo("mHealth:nodeath:short:ndp", mMT.NameShort .. " " .. L["Health"], L["Shortened version of"] .. " mHealth:nodeath." .. L["No decimal values for percentage."])
 E:AddTagInfo("mHealth:nodeath:current-percent:ndp", mMT.NameShort .. " " .. L["Health"], L["Same as"] .. " mHealth:current-percent " .. L["and"] .. " mHealth:nodeath " .. L["No decimal values for percentage."])
@@ -1281,6 +1506,7 @@ E:AddTagInfo("mHealth:NoAFK:short:current-percent:ndp", mMT.NameShort .. " " .. 
 E:AddTagInfo("mHealth:noStatus:ndp", mMT.NameShort .. " " .. L["Health"], L["no Status version of"] .. " mHealth." .. L["No decimal values for percentage."])
 E:AddTagInfo("mHealth:noStatus:short:ndp", mMT.NameShort .. " " .. L["Health"], L["no Status version of"] .. " mHealth." .. L["No decimal values for percentage."])
 E:AddTagInfo("mHealth:noStatus:current-percent:ndp", mMT.NameShort .. " " .. L["Health"], L["no Status version of"] .. " mHealth." .. L["No decimal values for percentage."])
+E:AddTagInfo("mHealth:onlypercent-with-absorbs:ndp:nosign", mMT.NameShort .. " " .. L["Health"], L["Displays the unit's current health as a percentage with absorb values"] .. " " .. L["No decimal values for percentage."], not E.Retail)
 
 local UnitmDeathCount = {}
 local mID = ""
@@ -1446,6 +1672,30 @@ E:AddTag("mLevel", "UNIT_LEVEL PLAYER_LEVEL_UP PLAYER_UPDATE_RESTING", function(
 	end
 end)
 
+E:AddTag("mLevel:hidecombat", "UNIT_LEVEL PLAYER_LEVEL_UP PLAYER_UPDATE_RESTING UNIT_COMBAT UNIT_FLAGS", function(unit)
+	if unit == "player" and IsResting() then
+		return format("%sZzz|r", colors.zzz)
+	else
+		if not UnitAffectingCombat(unit) then
+			local level = UnitLevel(unit)
+			if E.Retail then
+				if UnitIsWildBattlePet(unit) or UnitIsBattlePetCompanion(unit) then
+					return UnitBattlePetLevel(unit)
+				elseif level > 0 then
+					return level
+				else
+					return format("%s??|r", colors.level)
+				end
+			end
+			if level > 0 then
+				return level
+			else
+				return format("%s??|r", colors.level)
+			end
+		end
+	end
+end)
+
 E:AddTag("mLevel:hideMax", "UNIT_LEVEL PLAYER_LEVEL_UP PLAYER_UPDATE_RESTING", function(unit)
 	if unit == "player" and IsResting() then
 		return format("%sZzz|r", colors.zzz)
@@ -1481,6 +1731,31 @@ E:AddTag("mLevel:hideMax", "UNIT_LEVEL PLAYER_LEVEL_UP PLAYER_UPDATE_RESTING", f
 end)
 
 E:AddTag("mLevelSmart", "UNIT_LEVEL PLAYER_LEVEL_UP PLAYER_UPDATE_RESTING", function(unit)
+	if unit == "player" and IsResting() then
+		return format("%sZzz|r", colors.zzz)
+	else
+		local level = UnitLevel(unit)
+		if E.Retail then
+			if UnitIsWildBattlePet(unit) or UnitIsBattlePetCompanion(unit) then
+				return UnitBattlePetLevel(unit)
+			elseif level > 0 then
+				return level
+			else
+				return format("%s??|r", colors.level)
+			end
+		end
+
+		if level == UnitLevel("player") then
+			return ""
+		elseif level > 0 then
+			return level
+		else
+			return format("%s??|r", colors.level)
+		end
+	end
+end)
+
+E:AddTag("mLevelSmart:hidecombat", "UNIT_LEVEL PLAYER_LEVEL_UP PLAYER_UPDATE_RESTING UNIT_COMBAT UNIT_FLAGS", function(unit)
 	if unit == "player" and IsResting() then
 		return format("%sZzz|r", colors.zzz)
 	else
@@ -1543,8 +1818,10 @@ E:AddTag("mLevelSmart:hideMax", "UNIT_LEVEL PLAYER_LEVEL_UP PLAYER_UPDATE_RESTIN
 end)
 
 E:AddTagInfo("mLevel", mMT.NameShort .. " " .. L["Level"], L["Level changes to resting in resting Areas."])
+E:AddTagInfo("mLevel:hidecombat", mMT.NameShort .. " " .. L["Level"], L["Same as"] .. " mLevel" .. L[" hidden in combat."])
 E:AddTagInfo("mLevel:hideMax", mMT.NameShort .. " " .. L["Level"], L["Same as"] .. " mLevel" .. L[" hidden at maximum level."])
 E:AddTagInfo("mLevelSmart", mMT.NameShort .. " " .. L["Level"], L["Smart Level changes to resting in resting Areas."])
+E:AddTagInfo("mLevelSmart:hidecombat", mMT.NameShort .. " " .. L["Level"], L["Same as"] .. " mLevelSmart" .. L[" hidden in combat."])
 E:AddTagInfo("mLevelSmart:hideMax", mMT.NameShort .. " " .. L["Level"], L["Same as"] .. " mLevelSmart" .. L[" hidden at maximum level."])
 
 E:AddTag("mPvP:icon", "UNIT_FACTION", function(unit)
