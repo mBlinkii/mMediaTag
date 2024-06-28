@@ -60,7 +60,7 @@ local Teleports = {
 			[208704] = true, -- Deepdweller's Earthen Hearthstone
 			[209035] = true, -- hearthstone-of-the-flame
 			[212337] = true, -- Stone of the Hearth (Hearthstone 10th Anniversary)
-            [210455] = true, -- Draenic Hologem
+			[210455] = true, -- Draenic Hologem
 		},
 	},
 	engineering = {
@@ -311,7 +311,7 @@ local function mOnEnterSpell(btn)
 	GameTooltip:Show()
 end
 
-local function mGetInfos(TeleportsTable, spell, tip, check)
+local function mGetInfos(TeleportsTable, spell, toy, tip, check)
 	for i, v in pairs(TeleportsTable.tps) do
 		local texture, name, hasSpell, hasItem = nil, nil, false, 0
 		if spell then
@@ -365,6 +365,10 @@ local function mGetInfos(TeleportsTable, spell, tip, check)
 						mMenuAdd(Teleports.menu, text1, text2, "/cast " .. name, texture, i, function(btn)
 							mOnEnterSpell(btn)
 						end)
+					elseif toy then
+						mMenuAdd(Teleports.menu, text1, text2, "/usetoy " .. name, texture, i, function(btn)
+							mOnEnterItem(btn)
+						end)
 					else
 						mMenuAdd(Teleports.menu, text1, text2, "/use " .. name, texture, i, function(btn)
 							mOnEnterItem(btn)
@@ -390,13 +394,13 @@ local function EngineeringCheck()
 end
 
 local function CheckIfAvailable()
-	mGetInfos(Teleports.toys, false, true, true)
-	mGetInfos(Teleports.engineering, false, true, true)
-	mGetInfos(Teleports.season, true, true, true)
-	mGetInfos(Teleports.df, true, true, true)
-	mGetInfos(Teleports.dungeonportals, true, true, true)
-	mGetInfos(Teleports.items, false, true, true)
-	mGetInfos(Teleports.spells, true, true, true)
+	mGetInfos(Teleports.toys, false, true, true, true)
+	mGetInfos(Teleports.engineering, false, true, true, true)
+	mGetInfos(Teleports.season, true, false, true, true)
+	mGetInfos(Teleports.df, true, false, true, true)
+	mGetInfos(Teleports.dungeonportals, true, false, true, true)
+	mGetInfos(Teleports.items, false, false, true, true)
+	mGetInfos(Teleports.spells, true, false, true, true)
 end
 
 local function mUpdateTPList(button)
@@ -407,39 +411,39 @@ local function mUpdateTPList(button)
 	if Teleports.toys.available and button == "LeftButton" then
 		tinsert(Teleports.menu, { text = format("%s%s|r", title, L["Toys"]), isTitle = true, notClickable = true })
 
-		mGetInfos(Teleports.toys, false, false, false)
+		mGetInfos(Teleports.toys, false, true, false, false)
 		tinsert(Teleports.menu, { text = "", isTitle = true, notClickable = true })
 	end
 
 	if EngineeringCheck() and Teleports.engineering.available and button == "RightButton" then
 		tinsert(Teleports.menu, { text = format("%s%s|r", title, L["Engineering"]), isTitle = true, notClickable = true })
 
-		mGetInfos(Teleports.engineering, false, false, false)
+		mGetInfos(Teleports.engineering, false, true, false, false)
 		tinsert(Teleports.menu, { text = "", isTitle = true, notClickable = true })
 	end
 
 	if Teleports.season.available and button == "LeftButton" then
 		tinsert(Teleports.menu, { text = format("%s%s|r", title, L["M+ Season"]), isTitle = true, notClickable = true })
 
-		mGetInfos(Teleports.season, true, false, false)
+		mGetInfos(Teleports.season, true, false, false, false)
 		tinsert(Teleports.menu, { text = "", isTitle = true, notClickable = true })
 	end
 
 	if Teleports.df.available and button == "LeftButton" then
 		tinsert(Teleports.menu, { text = format("%s%s|r", title, L["DF Dungeons"]), isTitle = true, notClickable = true })
 
-		mGetInfos(Teleports.df, true, false, false)
+		mGetInfos(Teleports.df, true, false, false, false)
 	end
 
 	if Teleports.dungeonportals.available and button == "MiddleButton" then
 		tinsert(Teleports.menu, { text = format("%s%s|r", title, L["M+ Season"]), isTitle = true, notClickable = true })
 
-		mGetInfos(Teleports.season, true, false, false)
+		mGetInfos(Teleports.season, true, false, false, false)
 		tinsert(Teleports.menu, { text = "", isTitle = true, notClickable = true })
 
 		tinsert(Teleports.menu, { text = format("%s%s|r", title, L["All Dungeon Teleports"]), isTitle = true, notClickable = true })
 
-		mGetInfos(Teleports.dungeonportals, true, false, false)
+		mGetInfos(Teleports.dungeonportals, true, false, false, false)
 		tinsert(Teleports.menu, { text = "", isTitle = true, notClickable = true })
 	end
 
@@ -447,8 +451,8 @@ local function mUpdateTPList(button)
 		tinsert(Teleports.menu, { text = "", isTitle = true, notClickable = true })
 		tinsert(Teleports.menu, { text = format("%s%s|r", title, L["Other"]), isTitle = true, notClickable = true })
 
-		mGetInfos(Teleports.items, false, false, false)
-		mGetInfos(Teleports.spells, true, false, false)
+		mGetInfos(Teleports.items, false, false, false, false)
+		mGetInfos(Teleports.spells, true, false, false, false)
 	end
 end
 
@@ -463,32 +467,32 @@ local function mTPTooltip()
 	CheckIfAvailable()
 	if Teleports.toys.available then
 		DT.tooltip:AddLine(L["Toys"])
-		mGetInfos(Teleports.toys, false, true, false)
+		mGetInfos(Teleports.toys, false, true, true, false)
 	end
 
 	if EngineeringCheck() and Teleports.engineering.available then
 		DT.tooltip:AddLine(" ")
 		DT.tooltip:AddLine(L["Engineering"])
-		mGetInfos(Teleports.engineering, false, true, false)
+		mGetInfos(Teleports.engineering, false, true, true, false)
 	end
 
 	if Teleports.season.available then
 		DT.tooltip:AddLine(" ")
 		DT.tooltip:AddLine(L["M+ Season"])
-		mGetInfos(Teleports.season, true, true, false)
+		mGetInfos(Teleports.season, true, false, true, false)
 	end
 
 	if Teleports.df.available then
 		DT.tooltip:AddLine(" ")
 		DT.tooltip:AddLine(L["DF Dungeons"])
-		mGetInfos(Teleports.df, true, true, false)
+		mGetInfos(Teleports.df, true, false, true, false)
 	end
 
 	if Teleports.items.available or Teleports.spells.available then
 		DT.tooltip:AddLine(" ")
 		DT.tooltip:AddLine(L["Other"])
-		mGetInfos(Teleports.items, false, true, false)
-		mGetInfos(Teleports.spells, true, true, false)
+		mGetInfos(Teleports.items, false, false, true, false)
+		mGetInfos(Teleports.spells, true, false, true, false)
 	end
 end
 
