@@ -680,7 +680,6 @@ local function configTable()
 								return E.db.mMT.portraits.player.flippe and E.db.mMT.portraits.player.texture .. "T" or E.db.mMT.portraits.player.texture
 							end,
 							set = function(info, value)
-								mMT:Print(value, (value == "SQT" or value == "ROT"))
 								E.db.mMT.portraits.player.flippe = (value == "SQT" or value == "ROT")
 								if value == "SQT" then
 									E.db.mMT.portraits.player.texture = "SQ"
