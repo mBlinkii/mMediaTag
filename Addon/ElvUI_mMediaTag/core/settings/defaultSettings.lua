@@ -47,7 +47,7 @@ P.mMT = {
 		castbar = { enable = false, texture = "mMediaTag A8" },
 		altpower = { enable = false, texture = "mMediaTag A8" },
 	},
-	customtextures= {
+	customtextures = {
 		health = { enable = false, texture = "mMediaTag A8" },
 		power = { enable = false, texture = "mMediaTag A8" },
 		castbar = { enable = false, texture = "mMediaTag A8" },
@@ -718,6 +718,7 @@ P.mMT = {
 			enable = false,
 			reaction = false,
 			eltruism = false,
+			mui = false,
 			gradient = true,
 			default = false,
 			corner = true,

@@ -11,7 +11,7 @@ if not module then
 end
 
 local settings = {}
-
+local colors = {}
 local path = "Interface\\Addons\\ElvUI_mMediaTag\\media\\portraits\\"
 local textures = {
 	texture = {
@@ -232,7 +232,7 @@ end
 local cachedFaction = {}
 
 local function getColor(unit)
-	local defaultColor = settings.colors.default
+	local defaultColor = colors.default
 
 	if settings.general.default then
 		return defaultColor
@@ -245,14 +245,14 @@ local function getColor(unit)
 			local unitFaction = cachedFaction[UnitGUID(unit)] or select(1, UnitFactionGroup(unit))
 			cachedFaction[UnitGUID(unit)] = unitFaction
 
-			return settings.colors[(playerFaction == unitFaction) and "friendly" or "enemy"]
+			return colors[(playerFaction == unitFaction) and "friendly" or "enemy"]
 		else
 			local _, class = UnitClass(unit)
-			return settings.colors[class]
+			return colors[class]
 		end
 	else
 		local reaction = UnitReaction(unit, "player")
-		return settings.colors[reaction and ((reaction <= 3) and "enemy" or (reaction == 4) and "neutral" or "friendly") or "enemy"]
+		return colors[reaction and ((reaction <= 3) and "enemy" or (reaction == 4) and "neutral" or "friendly") or "enemy"]
 	end
 end
 
@@ -450,7 +450,7 @@ end
 
 local function CheckRareElite(frame, unit)
 	local c = UnitClassification(unit)
-	local color = settings.colors[c]
+	local color =  colors[c]
 
 	if color then
 		setColor(frame.extra, color)
@@ -846,22 +846,11 @@ function module:Initialize()
 	end
 
 	if settings.general.eltruism and mMT.ElvUI_EltreumUI.loaded then
-		settings.colors.WARRIOR = mMT.ElvUI_EltreumUI.colors.WARRIOR
-		settings.colors.PALADIN = mMT.ElvUI_EltreumUI.colors.PALADIN
-		settings.colors.HUNTER = mMT.ElvUI_EltreumUI.colors.HUNTER
-		settings.colors.ROGUE = mMT.ElvUI_EltreumUI.colors.ROGUE
-		settings.colors.PRIEST = mMT.ElvUI_EltreumUI.colors.PRIEST
-		settings.colors.DEATHKNIGHT = mMT.ElvUI_EltreumUI.colors.DEATHKNIGHT
-		settings.colors.SHAMAN = mMT.ElvUI_EltreumUI.colors.SHAMAN
-		settings.colors.MAGE = mMT.ElvUI_EltreumUI.colors.MAGE
-		settings.colors.WARLOCK = mMT.ElvUI_EltreumUI.colors.WARLOCK
-		settings.colors.MONK = mMT.ElvUI_EltreumUI.colors.MONK
-		settings.colors.DRUID = mMT.ElvUI_EltreumUI.colors.DRUID
-		settings.colors.DEMONHUNTER = mMT.ElvUI_EltreumUI.colors.DEMONHUNTER
-		settings.colors.EVOKER = mMT.ElvUI_EltreumUI.colors.EVOKER
-		settings.colors.friendly = mMT.ElvUI_EltreumUI.colors.friendly
-		settings.colors.neutral = mMT.ElvUI_EltreumUI.colors.neutral
-		settings.colors.enemy = mMT.ElvUI_EltreumUI.colors.enemy
+		colors = mMT.ElvUI_EltreumUI.colors
+	elseif settings.general.mui and mMT.ElvUI_MerathilisUI.loaded then
+		colors = mMT.ElvUI_MerathilisUI.colors
+	else
+		colors = settings.colors
 	end
 
 	local frames = {}

@@ -157,6 +157,20 @@ local function configTable()
 									end,
 									set = function(info, value)
 										E.db.mMT.portraits.general.eltruism = value
+										E.db.mMT.portraits.general.mui = not value
+										mMT.Modules.Portraits:Initialize()
+									end,
+								},
+								toggle_gradien_mui = {
+									order = 2,
+									type = "toggle",
+									name = L["Use MerathilisUI colors"],
+									get = function(info)
+										return E.db.mMT.portraits.general.mui
+									end,
+									set = function(info, value)
+										E.db.mMT.portraits.general.mui = value
+										E.db.mMT.portraits.general.eltruism = not value
 										mMT.Modules.Portraits:Initialize()
 									end,
 								},

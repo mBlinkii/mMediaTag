@@ -24,6 +24,7 @@ mMT.Config = {}
 mMT.DB = {}
 mMT.ClassColor = {}
 mMT.ElvUI_EltreumUI = {}
+mMT.ElvUI_MerathilisUI = {}
 mMT.ElvUI_JiberishIcons = {}
 mMT.DEVNames = {}
 mMT.DevMode = false
@@ -201,6 +202,7 @@ function mMT:Initialize()
 
 	-- update defaults
 	mMT.ElvUI_EltreumUI = mMT:CheckEltruism()
+	mMT.ElvUI_MerathilisUI = mMT:CheckMerathilisUI()
 	mMT.ClassColor = mMT:UpdateClassColor()
 	mMT.ElvUI_JiberishIcons = mMT:JiberishIcons()
 	mMT.DEVNames = mMT:GetDevNames()
@@ -273,6 +275,7 @@ end
 function mMT:PLAYER_ENTERING_WORLD(event)
 	-- update defaults
 	mMT.ElvUI_EltreumUI = mMT:CheckEltruism()
+	mMT.ElvUI_MerathilisUI = mMT:CheckMerathilisUI()
 	mMT.ClassColor = mMT:UpdateClassColor()
 	mMT.ElvUI_JiberishIcons = mMT:JiberishIcons()
 	mMT.DEVNames = mMT:GetDevNames()
