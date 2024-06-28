@@ -16,7 +16,7 @@ local change_log_important = {
 	"This update will reset the Spell DB.",
 }
 
-local releasdate = "27.06.2024"
+local releasdate = "28.06.2024"
 
 local change_log_new = {
 	"Portraits can now use custom textures.",
@@ -24,6 +24,7 @@ local change_log_new = {
 	"Portraits setting to force reaction colors on Player Units.",
 	"TAGs: mLevel:hidecombat, mLevelSmart:hidecombat, mHealth:onlypercent-with-absorbs:ndp, mHealth:short:absorbs, mColor:absorbs.",
 	"TAGs: mHealth:current-percent:absorbs, mHealth:current-percent:ndp:absorbs, mHealth:current-percent:short:absorbs, mHealth:current-percent:short:ndp:absorbs.",
+	"Add general TOC file for WOTLK Version in China",
 }
 
 local change_log_update = {
@@ -32,6 +33,7 @@ local change_log_update = {
 	"NEW: Icon for Teleports data text.",
 	"Portraits texture names.",
 	"Removed Portraits texture simple square and added flipped Versions for Drop texture.",
+	"Add Stone of the Hearth and Draenic Hologem to TP datatext (thx to Merathilis)",
 }
 
 local change_log_fix = {
@@ -43,6 +45,8 @@ local change_log_fix = {
 	"Removed empty data text entry.",
 	"Add S Pack to mMT Settings DB.",
 	"Datatext Durability/ Ilevel: Durability color values.",
+	"Removed debug print.",
+	"Portraits Optimized code and fixed flipped drop texture (black background)",
 }
 
 local function Concatenation(tbl, icon, color)
