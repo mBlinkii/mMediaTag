@@ -148,34 +148,8 @@ local function configTable()
 										mMT.Modules.Portraits:Initialize()
 									end,
 								},
-								toggle_gradien_eltr = {
-									order = 2,
-									type = "toggle",
-									name = L["Use Eltruism colors"],
-									get = function(info)
-										return E.db.mMT.portraits.general.eltruism
-									end,
-									set = function(info, value)
-										E.db.mMT.portraits.general.eltruism = value
-										E.db.mMT.portraits.general.mui = not value
-										mMT.Modules.Portraits:Initialize()
-									end,
-								},
-								toggle_gradien_mui = {
-									order = 2,
-									type = "toggle",
-									name = L["Use MerathilisUI colors"],
-									get = function(info)
-										return E.db.mMT.portraits.general.mui
-									end,
-									set = function(info, value)
-										E.db.mMT.portraits.general.mui = value
-										E.db.mMT.portraits.general.eltruism = not value
-										mMT.Modules.Portraits:Initialize()
-									end,
-								},
 								select_gradient = {
-									order = 3,
+									order = 2,
 									type = "select",
 									name = L["Gradient Orientation"],
 									disabled = function()
@@ -192,6 +166,39 @@ local function configTable()
 										HORIZONTAL = "HORIZONTAL",
 										VERTICAL = "VERTICAL",
 									},
+								},
+								spacer_texture1 = {
+									order = 3,
+									type = "description",
+									name = "\n\n",
+								},
+								toggle_gradien_eltr = {
+									order = 4,
+									type = "toggle",
+									name = L["Use Eltruism colors"],
+									get = function(info)
+										return E.db.mMT.portraits.general.eltruism
+									end,
+									set = function(info, value)
+										E.db.mMT.portraits.general.eltruism = value
+										E.db.mMT.portraits.general.mui = not value
+										mMT.ElvUI_EltreumUI = mMT:CheckEltruism()
+										mMT.Modules.Portraits:Initialize()
+									end,
+								},
+								toggle_gradien_mui = {
+									order = 5,
+									type = "toggle",
+									name = L["Use MerathilisUI colors"],
+									get = function(info)
+										return E.db.mMT.portraits.general.mui
+									end,
+									set = function(info, value)
+										E.db.mMT.portraits.general.mui = value
+										E.db.mMT.portraits.general.eltruism = not value
+										mMT.ElvUI_MerathilisUI = mMT:CheckMerathilisUI()
+										mMT.Modules.Portraits:Initialize()
+									end,
 								},
 							},
 						},
