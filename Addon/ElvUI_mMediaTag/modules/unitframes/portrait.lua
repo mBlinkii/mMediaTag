@@ -11,7 +11,7 @@ if not module then
 end
 
 local settings = {}
-
+local colors = {}
 local path = "Interface\\Addons\\ElvUI_mMediaTag\\media\\portraits\\"
 local textures = {
 	texture = {
@@ -195,11 +195,11 @@ local textures = {
 
 local function mirrorTexture(texture, mirror, top)
 	if texture.mClass then
-		local ULx, ULy, LLx, LLy, URx, URy, LRx, LRy = unpack(texture.mCoords)
-		if mirror then
-			texture:SetTexCoord(URx, URy, LRx, LRy, ULx, ULy, LLx, LLy)
+		local coords = texture.mCoords
+		if #coords == 8 then
+			texture:SetTexCoord(unpack(mirror and { coords[3], coords[4], coords[7], coords[8], coords[1], coords[2], coords[5], coords[6] } or coords))
 		else
-			texture:SetTexCoord(ULx, ULy, LLx, LLy, URx, URy, LRx, LRy)
+			texture:SetTexCoord(unpack(mirror and { coords[2], coords[1], coords[3], coords[4] } or coords))
 		end
 	else
 		texture:SetTexCoord(mirror and 1 or 0, mirror and 0 or 1, top and 1 or 0, top and 0 or 1)
@@ -232,68 +232,51 @@ end
 local cachedFaction = {}
 
 local function getColor(unit)
+	local defaultColor = colors.default
+
 	if settings.general.default then
-		return settings.colors.default
+		return defaultColor
 	end
 
 	if UnitIsPlayer(unit) then
 		if settings.general.reaction then
-			if not cachedFaction.player then
-				cachedFaction.player = select(1, UnitFactionGroup("player"))
-			end
+			local playerFaction = cachedFaction.player or select(1, UnitFactionGroup("player"))
+			cachedFaction.player = playerFaction
+			local unitFaction = cachedFaction[UnitGUID(unit)] or select(1, UnitFactionGroup(unit))
+			cachedFaction[UnitGUID(unit)] = unitFaction
 
-			if unit ~= "Player" then
-				local guid = UnitGUID(unit)
-				if guid and not cachedFaction[guid] then
-					cachedFaction[guid] = select(1, UnitFactionGroup(unit))
-				end
-
-				if cachedFaction.player ~= cachedFaction[guid] then
-					return settings.colors.enemy
-				else
-					return settings.colors.friendly
-				end
-			else
-				return settings.colors.friendly
-			end
+			return colors[(playerFaction == unitFaction) and "friendly" or "enemy"]
 		else
 			local _, class = UnitClass(unit)
-			return settings.colors[class]
+			return colors[class]
 		end
 	else
 		local reaction = UnitReaction(unit, "player")
-		if reaction then
-			return settings.colors[(reaction <= 3) and "enemy" or reaction == 4 and "neutral" or "friendly"]
-		else
-			return settings.colors.enemy
-		end
+		return colors[reaction and ((reaction <= 3) and "enemy" or (reaction == 4) and "neutral" or "friendly") or "enemy"]
 	end
+end
+
+local function adjustColor(color, shift)
+	return {
+		r = color.r - shift,
+		g = color.g - shift,
+		b = color.b - shift,
+		a = color.a,
+	}
 end
 
 local function UpdateIconBackground(tx, unit, mirror)
 	tx:SetTexture(textures.background[settings.general.bgstyle], "CLAMP", "CLAMP", "TRILINEAR")
 
 	local color = settings.shadow.classBG and getColor(unit) or settings.shadow.background
-	local bgColor = {}
+	local bgColor = { r = 1, g = 1, b = 1, a = 1 }
 	local ColorShift = settings.shadow.bgColorShift
 
 	if not color.r then
-		bgColor.a = { r = 1, g = 1, b = 1, a = 1 }
-		bgColor.a.r = color.a.r - ColorShift
-		bgColor.a.g = color.a.g - ColorShift
-		bgColor.a.b = color.a.b - ColorShift
-		bgColor.a.a = color.a.a
-
-		bgColor.b = { r = 1, g = 1, b = 1, a = 1 }
-		bgColor.b.r = color.b.r - ColorShift
-		bgColor.b.g = color.b.g - ColorShift
-		bgColor.b.b = color.b.b - ColorShift
-		bgColor.b.a = color.b.a
-	elseif bgColor.r then
-		bgColor = { r = 1, g = 1, b = 1, a = 1 }
-		bgColor.r = color.r - ColorShift
-		bgColor.g = color.g - ColorShift
-		bgColor.b = color.b - ColorShift
+		bgColor.a = adjustColor(color.a, ColorShift)
+		bgColor.b = adjustColor(color.b, ColorShift)
+	else
+		bgColor = adjustColor(color, ColorShift)
 	end
 
 	setColor(tx, bgColor, mirror)
@@ -302,30 +285,15 @@ end
 local function SetPortraits(frame, unit, masking, mirror)
 	if settings.general.classicons and UnitIsPlayer(unit) then
 		local class = select(2, UnitClass(unit))
-		local IconTexture = "Interface\\WorldStateFrame\\Icons-Classes"
 		local coords = CLASS_ICON_TCOORDS[class]
 		local style = settings.general.classiconstyle
 
 		if mMT.ElvUI_JiberishIcons.loaded and style ~= "BLIZZARD" then
 			coords = class and mMT.ElvUI_JiberishIcons.texCoords[class]
-			IconTexture = mMT.ElvUI_JiberishIcons.path .. style
+			frame.portrait:SetTexture(mMT.ElvUI_JiberishIcons.path .. style)
+		else
+			frame.portrait:SetTexture("Interface\\WorldStateFrame\\Icons-Classes")
 		end
-
-		if coords then
-			if #coords == 8 then
-				local ULx, ULy, LLx, LLy, URx, URy, LRx, LRy = unpack(coords)
-				if mirror then
-					frame.portrait:SetTexCoord(URx, URy, LRx, LRy, ULx, ULy, LLx, LLy)
-				else
-					frame.portrait:SetTexCoord(ULx, ULy, LLx, LLy, URx, URy, LRx, LRy)
-				end
-			else
-				local left, right, top, bottom = unpack(coords)
-				frame.portrait:SetTexCoord(mirror and right or left, mirror and left or right, top, bottom)
-			end
-		end
-
-		frame.portrait:SetTexture(IconTexture)
 
 		if frame.iconbg then
 			UpdateIconBackground(frame.iconbg, unit, mirror)
@@ -333,6 +301,10 @@ local function SetPortraits(frame, unit, masking, mirror)
 
 		frame.portrait.mClass = unit
 		frame.portrait.mCoords = coords
+
+		if coords then
+			mirrorTexture(frame.portrait, mirror)
+		end
 	else
 		if frame.portrait.mClass then
 			frame.portrait.mClass = nil
@@ -362,7 +334,7 @@ local function CreateIconBackground(frame, unit, mirror, flippe)
 	tmpTexture:SetAllPoints(frame)
 	tmpTexture:SetTexture(textures.background[settings.general.bgstyle], "CLAMP", "CLAMP", "TRILINEAR")
 
-	local color = flippe and {r = 0, g = 0, b = 0, a = 1} or (settings.shadow.classBG and getColor(unit) or settings.shadow.background)
+	local color = flippe and { r = 0, g = 0, b = 0, a = 1 } or (settings.shadow.classBG and getColor(unit) or settings.shadow.background)
 	setColor(tmpTexture, color, mirror)
 
 	return tmpTexture
@@ -416,7 +388,7 @@ local function CreatePortrait(parent, conf, unit)
 
 	-- Class Icon Background
 	if settings.general.classicons or conf.flippe then
-		frame.iconbg = CreateIconBackground(frame, unit, conf.mirror, (conf.flippe and not settings.general.classicons) )
+		frame.iconbg = CreateIconBackground(frame, unit, conf.mirror, (conf.flippe and not settings.general.classicons))
 		frame.iconbg:AddMaskTexture(frame.mask)
 	end
 
@@ -478,7 +450,7 @@ end
 
 local function CheckRareElite(frame, unit)
 	local c = UnitClassification(unit)
-	local color = settings.colors[c]
+	local color = colors[c]
 
 	if color then
 		setColor(frame.extra, color)
@@ -589,6 +561,7 @@ local function UpdatePortrait(frame, conf, unit, parent)
 			end
 		else
 			frame.iconbg = CreateIconBackground(frame, unit, conf.mirror, (conf.flippe and not settings.general.classicons))
+			frame.iconbg:AddMaskTexture(frame.mask)
 		end
 	elseif frame.iconbg and not settings.general.classicons then
 		frame.iconbg:Hide()
@@ -873,22 +846,18 @@ function module:Initialize()
 	end
 
 	if settings.general.eltruism and mMT.ElvUI_EltreumUI.loaded then
-		settings.colors.WARRIOR = mMT.ElvUI_EltreumUI.colors.WARRIOR
-		settings.colors.PALADIN = mMT.ElvUI_EltreumUI.colors.PALADIN
-		settings.colors.HUNTER = mMT.ElvUI_EltreumUI.colors.HUNTER
-		settings.colors.ROGUE = mMT.ElvUI_EltreumUI.colors.ROGUE
-		settings.colors.PRIEST = mMT.ElvUI_EltreumUI.colors.PRIEST
-		settings.colors.DEATHKNIGHT = mMT.ElvUI_EltreumUI.colors.DEATHKNIGHT
-		settings.colors.SHAMAN = mMT.ElvUI_EltreumUI.colors.SHAMAN
-		settings.colors.MAGE = mMT.ElvUI_EltreumUI.colors.MAGE
-		settings.colors.WARLOCK = mMT.ElvUI_EltreumUI.colors.WARLOCK
-		settings.colors.MONK = mMT.ElvUI_EltreumUI.colors.MONK
-		settings.colors.DRUID = mMT.ElvUI_EltreumUI.colors.DRUID
-		settings.colors.DEMONHUNTER = mMT.ElvUI_EltreumUI.colors.DEMONHUNTER
-		settings.colors.EVOKER = mMT.ElvUI_EltreumUI.colors.EVOKER
-		settings.colors.friendly = mMT.ElvUI_EltreumUI.colors.friendly
-		settings.colors.neutral = mMT.ElvUI_EltreumUI.colors.neutral
-		settings.colors.enemy = mMT.ElvUI_EltreumUI.colors.enemy
+		colors = mMT.ElvUI_EltreumUI.colors
+	elseif settings.general.mui and mMT.ElvUI_MerathilisUI.loaded then
+		--colors = mMT.ElvUI_MerathilisUI.colors
+
+		if not colors.inverted then
+			for i, tbl in pairs(mMT.ElvUI_MerathilisUI.colors) do
+				colors[i] = { a = tbl.b, b = tbl.a }
+			end
+			colors.inverted = true
+		end
+	else
+		colors = settings.colors
 	end
 
 	local frames = {}

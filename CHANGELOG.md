@@ -1,6 +1,16 @@
 # Changelog - ElvUI_mMediaTag
 [Eng] - All changes to this project will be documented in this file. The latest changes are at the top.
 
+## [ver. 3.42] - 28.06.2024
+### FIX
+- FIX - Removed debug print.
+- FIX - Portraits Optimized code and fixed flipped drop texture (black background)
+### Update
+- UPDATE - Add Stone of the Hearth and Draenic Hologem to TP datatext (thx to Merathilis)
+### NEW
+- NEW - Add general TOC file for WOTLK Version in China
+
+
 ## [ver. 3.41] - 27.06.2024
 ### FIX
 - FIX - Portraits colors if gradient mode is disabled.
