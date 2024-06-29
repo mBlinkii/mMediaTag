@@ -172,6 +172,7 @@ local Teleports = {
 			[118907] = true, --pit-fighters-punching-ring
 			[118663] = true, --relic-of-karabor
 			[103678] = true, --time-lost-artifact
+			[219222] = true, -- Time-Lost Artifact
 		},
 	},
 	spells = {
