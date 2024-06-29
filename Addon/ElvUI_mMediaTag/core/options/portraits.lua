@@ -181,7 +181,7 @@ local function configTable()
 									end,
 									set = function(info, value)
 										E.db.mMT.portraits.general.eltruism = value
-										E.db.mMT.portraits.general.mui = not value
+										E.db.mMT.portraits.general.mui = false
 										mMT.ElvUI_EltreumUI = mMT:CheckEltruism()
 										mMT.Modules.Portraits:Initialize()
 									end,
@@ -195,7 +195,7 @@ local function configTable()
 									end,
 									set = function(info, value)
 										E.db.mMT.portraits.general.mui = value
-										E.db.mMT.portraits.general.eltruism = not value
+										E.db.mMT.portraits.general.eltruism = false
 										mMT.ElvUI_MerathilisUI = mMT:CheckMerathilisUI()
 										mMT.Modules.Portraits:Initialize()
 									end,

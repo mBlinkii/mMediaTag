@@ -450,7 +450,7 @@ end
 
 local function CheckRareElite(frame, unit)
 	local c = UnitClassification(unit)
-	local color =  colors[c]
+	local color = colors[c]
 
 	if color then
 		setColor(frame.extra, color)
@@ -848,7 +848,14 @@ function module:Initialize()
 	if settings.general.eltruism and mMT.ElvUI_EltreumUI.loaded then
 		colors = mMT.ElvUI_EltreumUI.colors
 	elseif settings.general.mui and mMT.ElvUI_MerathilisUI.loaded then
-		colors = mMT.ElvUI_MerathilisUI.colors
+		--colors = mMT.ElvUI_MerathilisUI.colors
+
+		if not colors.inverted then
+			for i, tbl in pairs(mMT.ElvUI_MerathilisUI.colors) do
+				colors[i] = { a = tbl.b, b = tbl.a }
+			end
+			colors.inverted = true
+		end
 	else
 		colors = settings.colors
 	end
