@@ -440,7 +440,7 @@ local function InstallLayout()
 		MAUI:Chat_v7()
 		MAUI:General_v7()
 		MAUI:Datatexts_v7()
-		--MAUI:MMT_v7()
+		MAUI:MMT_v7()
 		MAUI:Movers_v7()
 		MAUI:Nameplates_v7()
 	end
