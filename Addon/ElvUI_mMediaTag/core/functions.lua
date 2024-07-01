@@ -77,7 +77,7 @@ end
 function mMT:DebugPrintTable(tbl)
 	if type(tbl) == "table" then
 		mMT:Print(": Table Start >>>", tbl)
-		print(PrintTable(tbl))
+		PrintTable(tbl)
 	else
 		mMT:Print("Not a Table:", tbl)
 	end
