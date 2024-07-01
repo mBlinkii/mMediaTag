@@ -26,7 +26,7 @@ end
 function mMT:UpdateClassColor()
 	local class = E:ClassColor(E.myclass)
 	local hex = E:RGBToHex(class.r, class.g, class.b)
-	local gradient = mMT.ElvUI_EltreumUI.loaded and mMT.ElvUI_EltreumUI.colors[E.myclass] or (mMT.ElvUI_MerathilisUI.loaded and mMT.ElvUI_MerathilisUI.colors[E.myclass]) or { a = { r = class.r - 0.2, g = class.g - 0.2, b = class.b - 0.2, a = 1 }, b = { r = class.r + 0.2, g = class.g + 0.2, b = class.b + 0.2, a = 1 } }
+	local gradient = ((mMT.ElvUI_EltreumUI.loaded and mMT.ElvUI_EltreumUI.colors[E.myclass]) or (mMT.ElvUI_MerathilisUI.loaded and mMT.ElvUI_MerathilisUI.colors[E.myclass])) or { a = { r = class.r - 0.2, g = class.g - 0.2, b = class.b - 0.2, a = 1 }, b = { r = class.r + 0.2, g = class.g + 0.2, b = class.b + 0.2, a = 1 } }
 	return { class = class, r = class.r, g = class.g, b = class.b, hex = hex, string = strjoin("", hex, "%s|r"), gradient = gradient }
 end
 
