@@ -712,3 +712,4 @@ L["|cffFFFFFFShift + Left Click:|r Show Talent Specialization UI"] = "|cffFFFFFF
 
 -- new
 L["Use MerathilisUI colors"] = true
+L["Thin"] = true

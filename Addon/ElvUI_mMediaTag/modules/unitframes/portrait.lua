@@ -25,6 +25,7 @@ local textures = {
 			QA = path .. "qa_a.tga",
 			SMQ = path .. "qa_a.tga",
 			MO = path .. "moon_c.tga",
+			TH = path .. "th_a.tga",
 		},
 		smooth = {
 			SQ = path .. "sq_b.tga",
@@ -36,6 +37,7 @@ local textures = {
 			QA = path .. "qa_b.tga",
 			SMQ = path .. "qa_b.tga",
 			MO = path .. "moon_a.tga",
+			TH = path .. "th_b.tga",
 		},
 		metal = {
 			SQ = path .. "sq_c.tga",
@@ -47,6 +49,7 @@ local textures = {
 			QA = path .. "qa_c.tga",
 			SMQ = path .. "qa_c.tga",
 			MO = path .. "moon_b.tga",
+			TH = path .. "th_c.tga",
 		},
 	},
 	extra = {
@@ -59,6 +62,7 @@ local textures = {
 			QA = path .. "ex_qa_a.tga",
 			SMQ = path .. "ex_qa_a.tga",
 			MO = path .. "ex_mo_c.tga",
+			TH = path .. "ex_th_a.tga",
 		},
 		smooth = {
 			CI = path .. "ex_a_b.tga",
@@ -69,6 +73,7 @@ local textures = {
 			QA = path .. "ex_qa_b.tga",
 			SMQ = path .. "ex_qa_b.tga",
 			MO = path .. "ex_mo_a.tga",
+			TH = path .. "ex_th_b.tga",
 		},
 		metal = {
 			CI = path .. "ex_a_c.tga",
@@ -79,6 +84,7 @@ local textures = {
 			QA = path .. "ex_qa_c.tga",
 			SMQ = path .. "ex_qa_c.tga",
 			MO = path .. "ex_mo_b.tga",
+			TH = path .. "ex_th_c.tga",
 		},
 		border = {
 			CI = path .. "border_ex_a.tga",
@@ -89,6 +95,7 @@ local textures = {
 			QA = path .. "border_ex_qa.tga",
 			SMQ = path .. "border_ex_qa.tga",
 			MO = path .. "border_ex_moon.tga",
+			TH = path .. "border_ex_th.tga",
 		},
 		shadow = {
 			CI = path .. "shadow_ex_a.tga",
@@ -99,6 +106,7 @@ local textures = {
 			QA = path .. "shadow_ex_qa.tga",
 			SMQ = path .. "shadow_ex_qa.tga",
 			MO = nil,
+			TH = path .. "shadow_ex_th.tga",
 		},
 	},
 	border = {
@@ -111,6 +119,7 @@ local textures = {
 		QA = path .. "border_qa.tga",
 		SMQ = path .. "border_qa.tga",
 		MO = path .. "border_moon.tga",
+		TH = path .. "border_th.tga",
 	},
 	shadow = {
 		SQ = path .. "shadow_sq.tga",
@@ -121,6 +130,7 @@ local textures = {
 		QA = path .. "shadow_qa.tga",
 		SMQ = path .. "shadow_qa.tga",
 		MO = path .. "shadow_moon.tga",
+		TH = path .. "shadow_th.tga",
 	},
 	inner = {
 		SQ = path .. "inner_a.tga",
@@ -131,6 +141,7 @@ local textures = {
 		QA = path .. "inner_qa.tga",
 		SMQ = path .. "inner_qa.tga",
 		MO = path .. "inner_b.tga",
+		TH = path .. "inner_th.tga",
 	},
 	mask = {
 		CI = path .. "mask_c.tga",
@@ -139,6 +150,7 @@ local textures = {
 		QA = path .. "mask_qa.tga",
 		MO = path .. "mask_c.tga",
 		SMQ = path .. "mask_qa.tga",
+		TH = path .. "mask_th.tga",
 
 		A = {
 			SQ = path .. "mask_a.tga",
@@ -162,6 +174,7 @@ local textures = {
 		QA = false,
 		MO = false,
 		SMQ = false,
+		TH = false,
 	},
 	background = {
 		[1] = path .. "bg_1.tga",
@@ -179,6 +192,7 @@ local textures = {
 		QA = false,
 		MO = false,
 		SMQ = false,
+		TH = true,
 	},
 	custom = {
 		texture = "",

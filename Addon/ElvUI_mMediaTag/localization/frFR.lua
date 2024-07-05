@@ -712,3 +712,4 @@ L["Other Colors"] = true
 L["Drop flipped"] = true
 L["Drop round flipped"] = true
 L["Use MerathilisUI colors"] = true
+L["Thin"] = true

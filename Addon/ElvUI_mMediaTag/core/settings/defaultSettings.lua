@@ -735,8 +735,8 @@ P.mMT = {
 			PI = 10,
 			RA = 6,
 			QA = 0,
-			SMQ = 0,
 			MO = 5.5,
+			TH = 4,
 			CUSTOM = 5.5,
 		},
 		shadow = {
