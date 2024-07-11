@@ -1,4 +1,4 @@
-## Interface: 11404
+## Interface: 11503
 ## Author: Blinkii
 ## Version: 1.0
 ## Title: |CFF29C0E3M|r|CFF5493FFa|r|CFF854FE3U|r|CFFA632E3I|r
