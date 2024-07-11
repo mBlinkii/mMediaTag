@@ -2014,7 +2014,7 @@ local function configTable()
 						E:StaticPopup_Show("CONFIG_RL")
 					end,
 				},
-				dockbar6 = {
+				dockbar5 = {
 					order = 15,
 					type = "execute",
 					name = L["MaUI XIV Like"],
@@ -2023,12 +2023,21 @@ local function configTable()
 						E:StaticPopup_Show("CONFIG_RL")
 					end,
 				},
-				dockbar5 = {
-					order = 15,
+				dockbar6 = {
+					order = 16,
 					type = "execute",
 					name = L["Add XIV Background"],
 					func = function()
 						mMT:Dock_BG(ExampleDockSettings.top)
+						E:StaticPopup_Show("CONFIG_RL")
+					end,
+				},
+				dockbar7 = {
+					order = 17,
+					type = "execute",
+					name = L["NEW XIV"],
+					func = function()
+						mMT:XIV(ExampleDockSettings.top)
 						E:StaticPopup_Show("CONFIG_RL")
 					end,
 				},

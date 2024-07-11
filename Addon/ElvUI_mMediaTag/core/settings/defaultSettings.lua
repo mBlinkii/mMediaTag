@@ -138,7 +138,7 @@ P.mMT = {
 			r = 0.11,
 		},
 	},
-	teleports = { anchorCursor = false, icon = false, customicon = "TP1" },
+	teleports = { anchorCursor = false, icon = false, customicon = "TP1", whiteText = true },
 	profession = { icon = false, proficon = true, whiteText = true },
 	dungeon = { icon = false, texttoname = true, key = true, score = true, affix = true },
 	instancedifficulty = {

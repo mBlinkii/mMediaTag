@@ -1,198 +1,314 @@
 local E = unpack(ElvUI)
 local DT = E:GetModule("DataTexts")
 
+local function ResetSettings()
+	E.db.mMT.dockdatatext = {
+		autogrow = true,
+		growsize = 8,
+		customfontzise = false,
+		font = "PT Sans Narrow",
+		center = false,
+		fontSize = 12,
+		fontflag = "OUTLINE",
+		customfontcolor = false,
+		fontcolor = { r = 1, g = 1, b = 1 },
+		normal = { r = 1, g = 1, b = 1, a = 1, style = "custom" },
+		hover = { r = 0.5, g = 0.5, b = 0.5, a = 0.75, style = "custom" },
+		click = { r = 0.2, g = 0.2, b = 0.2, a = 1, style = "custom" },
+		tip = { enable = true },
+		achievement = {
+			icon = "COLOR45",
+			iconcolor = { r = 1, g = 1, b = 1, a = 0.75 },
+			customcolor = false,
+		},
+		mail = {
+			icon = "MAIL19",
+			iconcolor = { r = 1, g = 1, b = 1, a = 0.75 },
+			customcolor = false,
+		},
+		blizzardstore = {
+			icon = "COLOR01",
+			iconcolor = { r = 1, g = 1, b = 1, a = 0.75 },
+			customcolor = false,
+		},
+		character = {
+			color = true,
+			option = "none",
+			icon = "COLOR19",
+			iconcolor = { r = 1, g = 1, b = 1, a = 0.75 },
+			customcolor = false,
+		},
+		collection = {
+			icon = "COLOR24",
+			iconcolor = { r = 1, g = 1, b = 1, a = 0.75 },
+			customcolor = false,
+		},
+		encounter = {
+			icon = "COLOR49",
+			iconcolor = { r = 1, g = 1, b = 1, a = 0.75 },
+			customcolor = false,
+		},
+		guild = {
+			icon = "COLOR38",
+			iconcolor = { r = 1, g = 1, b = 1, a = 0.75 },
+			customcolor = false,
+		},
+		lfd = {
+			score = true,
+			cta = true,
+			icon = "COLOR27",
+			greatvault = true,
+			affix = true,
+			keystone = true,
+			difficulty = true,
+			iconcolor = { r = 1, g = 1, b = 1, a = 0.75 },
+			customcolor = false,
+		},
+		mainmenu = {
+			icon = "COLOR11",
+			iconcolor = { r = 1, g = 1, b = 1, a = 0.75 },
+			customcolor = false,
+		},
+		quest = {
+			icon = "COLOR26",
+			iconcolor = { r = 1, g = 1, b = 1, a = 0.75 },
+			customcolor = false,
+		},
+		spellbook = {
+			icon = "COLOR46",
+			iconcolor = { r = 1, g = 1, b = 1, a = 0.75 },
+			customcolor = false,
+		},
+		talent = {
+			showrole = true,
+			icon = "COLOR40",
+			iconcolor = { r = 1, g = 1, b = 1, a = 0.75 },
+			customcolor = false,
+		},
+		friends = {
+			icon = "COLOR58",
+			iconcolor = { r = 1, g = 1, b = 1, a = 0.75 },
+			customcolor = false,
+		},
+		fpsms = {
+			text = "FPS",
+			color = "default",
+			option = "fps",
+			icon = "COLOR31",
+			iconcolor = { r = 1, g = 1, b = 1, a = 0.75 },
+			customcolor = false,
+		},
+		durability = {
+			color = true,
+			icon = "COLOR53",
+			iconcolor = { r = 1, g = 1, b = 1, a = 0.75 },
+			customcolor = false,
+		},
+		itemlevel = {
+			onlytext = false,
+			text = "Ilvl",
+			color = true,
+			icon = "COLOR50",
+			iconcolor = { r = 1, g = 1, b = 1, a = 0.75 },
+			customcolor = false,
+		},
+		notification = {
+			icon = "FILLED27",
+			r = 0,
+			g = 1,
+			b = 0,
+			a = 0.75,
+			style = "custom",
+			size = 16,
+			auto = true,
+			flash = true,
+		},
+		profession = {
+			icon = "COLOR06",
+			iconcolor = { r = 1, g = 1, b = 1, a = 0.75 },
+			customcolor = false,
+		},
+		volume = {
+			showtext = true,
+			icon = "COLOR62",
+			iconcolor = { r = 1, g = 1, b = 1, a = 0.75 },
+			customcolor = false,
+		},
+		calendar = {
+			option = "us",
+			dateicon = "b",
+			showyear = false,
+			text = false,
+			icon = "COLOR02",
+			iconcolor = { r = 1, g = 1, b = 1, a = 0.75 },
+			customcolor = false,
+		},
+		bag = {
+			icon = "COLOR68",
+			iconcolor = { r = 1, g = 1, b = 1, a = 0.75 },
+			customcolor = false,
+			text = 5,
+		},
+	}
+end
+
 local function ResetColors()
-	E.db["mMT"]["dockdatatext"]["achievement"]["customcolor"] = false
-	E.db["mMT"]["dockdatatext"]["achievement"]["iconcolor"]["b"] = 1
-	E.db["mMT"]["dockdatatext"]["achievement"]["iconcolor"]["g"] = 1
-	E.db["mMT"]["dockdatatext"]["achievement"]["iconcolor"]["r"] = 1
-
-	E.db["mMT"]["dockdatatext"]["blizzardstore"]["customcolor"] = false
-	E.db["mMT"]["dockdatatext"]["blizzardstore"]["iconcolor"]["b"] = 1
-	E.db["mMT"]["dockdatatext"]["blizzardstore"]["iconcolor"]["g"] = 1
-	E.db["mMT"]["dockdatatext"]["blizzardstore"]["iconcolor"]["r"] = 1
-
-	E.db["mMT"]["dockdatatext"]["character"]["customcolor"] = false
-	E.db["mMT"]["dockdatatext"]["character"]["iconcolor"]["b"] = 1
-	E.db["mMT"]["dockdatatext"]["character"]["iconcolor"]["g"] = 1
-	E.db["mMT"]["dockdatatext"]["character"]["iconcolor"]["r"] = 1
-
-	E.db["mMT"]["dockdatatext"]["collection"]["customcolor"] = false
-	E.db["mMT"]["dockdatatext"]["collection"]["iconcolor"]["b"] = 1
-	E.db["mMT"]["dockdatatext"]["collection"]["iconcolor"]["g"] = 1
-	E.db["mMT"]["dockdatatext"]["collection"]["iconcolor"]["r"] = 1
-
-	E.db["mMT"]["dockdatatext"]["encounter"]["customcolor"] = false
-	E.db["mMT"]["dockdatatext"]["encounter"]["iconcolor"]["b"] = 1
-	E.db["mMT"]["dockdatatext"]["encounter"]["iconcolor"]["g"] = 1
-	E.db["mMT"]["dockdatatext"]["encounter"]["iconcolor"]["r"] = 1
-
-	E.db["mMT"]["dockdatatext"]["friends"]["customcolor"] = false
-	E.db["mMT"]["dockdatatext"]["friends"]["iconcolor"]["b"] = 1
-	E.db["mMT"]["dockdatatext"]["friends"]["iconcolor"]["g"] = 1
-	E.db["mMT"]["dockdatatext"]["friends"]["iconcolor"]["r"] = 1
-
-	E.db["mMT"]["dockdatatext"]["guild"]["customcolor"] = false
-	E.db["mMT"]["dockdatatext"]["guild"]["iconcolor"]["b"] = 1
-	E.db["mMT"]["dockdatatext"]["guild"]["iconcolor"]["g"] = 1
-	E.db["mMT"]["dockdatatext"]["guild"]["iconcolor"]["r"] = 1
-
-	E.db["mMT"]["dockdatatext"]["lfd"]["customcolor"] = false
-	E.db["mMT"]["dockdatatext"]["lfd"]["iconcolor"]["b"] = 1
-	E.db["mMT"]["dockdatatext"]["lfd"]["iconcolor"]["g"] = 1
-	E.db["mMT"]["dockdatatext"]["lfd"]["iconcolor"]["r"] = 1
-
-	E.db["mMT"]["dockdatatext"]["mainmenu"]["customcolor"] = false
-	E.db["mMT"]["dockdatatext"]["mainmenu"]["iconcolor"]["b"] = 1
-	E.db["mMT"]["dockdatatext"]["mainmenu"]["iconcolor"]["g"] = 1
-	E.db["mMT"]["dockdatatext"]["mainmenu"]["iconcolor"]["r"] = 1
-
-	E.db["mMT"]["dockdatatext"]["quest"]["customcolor"] = false
-	E.db["mMT"]["dockdatatext"]["quest"]["iconcolor"]["b"] = 1
-	E.db["mMT"]["dockdatatext"]["quest"]["iconcolor"]["g"] = 1
-	E.db["mMT"]["dockdatatext"]["quest"]["iconcolor"]["r"] = 1
-
-	E.db["mMT"]["dockdatatext"]["spellbook"]["customcolor"] = false
-	E.db["mMT"]["dockdatatext"]["spellbook"]["iconcolor"]["b"] = 1
-	E.db["mMT"]["dockdatatext"]["spellbook"]["iconcolor"]["g"] = 1
-	E.db["mMT"]["dockdatatext"]["spellbook"]["iconcolor"]["r"] = 1
-
-	E.db["mMT"]["dockdatatext"]["profession"]["customcolor"] = false
-	E.db["mMT"]["dockdatatext"]["profession"]["iconcolor"]["b"] = 1
-	E.db["mMT"]["dockdatatext"]["profession"]["iconcolor"]["g"] = 1
-	E.db["mMT"]["dockdatatext"]["profession"]["iconcolor"]["r"] = 1
+	ResetSettings()
 end
 
 function mMT:DeleteAll()
-	ResetColors()
+	ResetSettings()
 
-	if E.global.datatexts.customPanels["mMT XIV Clock"] then
-		E.Options.args.datatexts.args.panels.args["mMT XIV Clock"] = nil
-		E.db.datatexts.panels["mMT XIV Clock"] = nil
-		E.global.datatexts.customPanels["mMT XIV Clock"] = nil
+	local panels = { "mMT XIV Clock", "mMT XIV Info", "mMT XIV Left", "mMT XIV Right", "mMT XIV Talent", "mMT XIV Profession", "mMT Dock", "mMT Extra Infos", "mMT Extra Icons", "mMT Extra Clock", "MaUI Left", "MaUI Right", "MaUI Time", "MaUI Time Left", "MaUI Time Right", "mMT Databar Background", "mMT - CENTER", "mMT - EXTRA LEFT", "mMT - EXTRA RIGHT", "mMT - LEFT", "mMT - RIGHT" }
+	for _, name in pairs(panels) do
+		if E.global.datatexts.customPanels[name] then
+			E.Options.args.datatexts.args.panels.args[name] = nil
+			E.db.datatexts.panels[name] = nil
+			E.global.datatexts.customPanels[name] = nil
 
-		DT:ReleasePanel("mMT XIV Clock")
+			DT:ReleasePanel(name)
+		end
 	end
 
-	if E.global.datatexts.customPanels["mMT XIV Info"] then
-		E.Options.args.datatexts.args.panels.args["mMT XIV Info"] = nil
-		E.db.datatexts.panels["mMT XIV Info"] = nil
-		E.global.datatexts.customPanels["mMT XIV Info"] = nil
+	E:StaggeredUpdateAll(nil, true)
+end
 
-		DT:ReleasePanel("mMT XIV Info")
+function mMT:XIV(top, setting, font, size, fontflag)
+	ResetSettings()
+
+	font = font or "Montserrat-SemiBold"
+	fontflag = fontflag or "SHADOW"
+	size = size or 14
+
+	if setting == "" then
+	else
+		E.db.mMT.dockdatatext.achievement.icon = "MATERIAL01"
+		E.db.mMT.dockdatatext.blizzardstore.icon = "MATERIAL14"
+		E.db.mMT.dockdatatext.calendar.dateicon = "none"
+		E.db.mMT.dockdatatext.calendar.icon = "MATERIAL32"
+		E.db.mMT.dockdatatext.calendar.option = "us"
+		E.db.mMT.dockdatatext.calendar.showyear = true
+		E.db.mMT.dockdatatext.center = true
+		E.db.mMT.dockdatatext.character.icon = "MATERIAL12"
+		E.db.mMT.dockdatatext.collection.icon = "MATERIAL33"
+		E.db.mMT.dockdatatext.customfontcolor = true
+		E.db.mMT.dockdatatext.customfontzise = true
+		E.db.mMT.dockdatatext.encounter.icon = "MATERIAL42"
+		E.db.mMT.dockdatatext.font = font
+		E.db.mMT.dockdatatext.fontSize = size
+		E.db.mMT.dockdatatext.fontcolor.b = 0.10588236153126
+		E.db.mMT.dockdatatext.fontcolor.g = 0.77254909276962
+		E.db.mMT.dockdatatext.fontcolor.r = 0.086274512112141
+		E.db.mMT.dockdatatext.fontflag = fontflag
+		E.db.mMT.dockdatatext.friends.icon = "MATERIAL28"
+		E.db.mMT.dockdatatext.guild.icon = "MATERIAL35"
+		E.db.mMT.dockdatatext.hover.style = "class"
+		E.db.mMT.dockdatatext.itemlevel.onlytext = true
+		E.db.mMT.dockdatatext.itemlevel.text = "GS "
+		E.db.mMT.dockdatatext.lfd.icon = "MATERIAL11"
+		E.db.mMT.dockdatatext.mainmenu.icon = "MATERIAL52"
+		E.db.mMT.dockdatatext.profession.icon = "MATERIAL25"
+		E.db.mMT.dockdatatext.quest.icon = "MATERIAL41"
+		E.db.mMT.dockdatatext.spellbook.icon = "MATERIAL22"
+
+		E.db.mMT.durabilityIlevel.colored.a.color.b = 0.027450982481241
+		E.db.mMT.durabilityIlevel.colored.a.color.g = 0.61176472902298
+		E.db.mMT.durabilityIlevel.colored.a.color.r = 0.92941182851791
+		E.db.mMT.durabilityIlevel.colored.a.value = 40
+		E.db.mMT.durabilityIlevel.colored.enable = true
+		E.db.mMT.durabilityIlevel.whiteIcon = false
+
+		E.db.mMT.teleports.customicon = "TP7"
+		E.db.mMT.teleports.icon = true
+		E.db.mMT.teleports.whiteText = true
+
+		E.global.datatexts.settings.Gold.goldFormat = "SHORTSPACED"
+
+		local panels = {
+			["mMT - CENTER"] = { width = 180, numPoints = 1, fontsize = true },
+			["mMT - EXTRA LEFT"] = { width = 644, numPoints = 3 },
+			["mMT - EXTRA RIGHT"] = { width = 644, numPoints = 3 },
+			["mMT - LEFT"] = { width = 540, numPoints = 12 },
+			["mMT - RIGHT"] = { width = 540, numPoints = 4 },
+		}
+
+		local globalDB = E.global.datatexts.customPanels
+		local db = E.db.datatexts.panels
+
+		for name, settings in pairs(panels) do
+			if not globalDB[name] then
+				E.DataTexts:BuildPanelFrame(name)
+
+				globalDB[name].backdrop = false
+				globalDB[name].border = false
+				globalDB[name].fonts.enable = true
+				globalDB[name].fonts.font = font
+				globalDB[name].fonts.fontOutline = fontflag
+				globalDB[name].fonts.fontSize = settings.fontsize and (size + size) or size
+				globalDB[name].height = 32
+				globalDB[name].name = name
+				globalDB[name].numPoints = settings.numPoints
+				globalDB[name].visibility = ""
+				globalDB[name].width = settings.width
+			end
+		end
+
+		db["mMT - CENTER"][1] = "Time"
+		db["mMT - CENTER"][2] = ""
+		db["mMT - CENTER"][3] = ""
+		db["mMT - CENTER"].battleground = false
+		db["mMT - CENTER"].enable = true
+
+		db["mMT - EXTRA LEFT"][1] = "DurabilityIlevel"
+		db["mMT - EXTRA LEFT"][2] = "Difficulty"
+		db["mMT - EXTRA LEFT"][3] = "Talent/Loot Specialization"
+		db["mMT - EXTRA LEFT"].battleground = false
+		db["mMT - EXTRA LEFT"].enable = true
+
+		db["mMT - EXTRA RIGHT"][1] = "firstProf"
+		db["mMT - EXTRA RIGHT"][2] = "secondProf"
+		db["mMT - EXTRA RIGHT"][3] = "mProfessions"
+		db["mMT - EXTRA RIGHT"].battleground = false
+		db["mMT - EXTRA RIGHT"].enable = true
+
+		db["mMT - LEFT"][1] = "mMT_Dock_MainMenu"
+		db["mMT - LEFT"][2] = "mMT_Dock_Character"
+		db["mMT - LEFT"][3] = "mMT_Dock_Guild"
+		db["mMT - LEFT"][4] = "mMT_Dock_Friends"
+		db["mMT - LEFT"][5] = "mMT_Dock_Achievement"
+		db["mMT - LEFT"][6] = "mMT_Dock_SpellBook"
+		db["mMT - LEFT"][7] = "mMT_Dock_LFDTool"
+		db["mMT - LEFT"][8] = "mMT_Dock_EncounterJournal"
+		db["mMT - LEFT"][9] = "mMT_Dock_Quest"
+		db["mMT - LEFT"][10] = "mMT_Dock_CollectionsJournal"
+		db["mMT - LEFT"][11] = "mMT_Dock_BlizzardStore"
+		db["mMT - LEFT"][12] = "mMT_Dock_Calendar"
+		db["mMT - LEFT"].battleground = false
+		db["mMT - LEFT"].enable = true
+
+		db["mMT - RIGHT"][1] = "System"
+		db["mMT - RIGHT"][2] = "M+ Score"
+		db["mMT - RIGHT"][3] = "mTeleports"
+		db["mMT - RIGHT"][4] = "Gold"
+		db["mMT - RIGHT"].battleground = false
+		db["mMT - RIGHT"].enable = true
+
+		if top then
+			E.db.movers["DTPanelmMT - CENTERMover"] = "TOP,UIParent,TOP,0,4"
+			E.db.movers["DTPanelmMT - EXTRA LEFTMover"] = "TOP,ElvUIParent,TOP,-413,4"
+			E.db.movers["DTPanelmMT - EXTRA RIGHTMover"] = "TOP,ElvUIParent,TOP,413,4"
+			E.db.movers["DTPanelmMT - LEFTMover"] = "TOPLEFT,UIParent,TOPLEFT,4,4"
+			E.db.movers["DTPanelmMT - RIGHTMover"] = "TOPRIGHT,UIParent,TOPRIGHT,-4,4"
+		else
+			E.db.movers["DTPanelmMT - CENTERMover"] = "BOTTOM,UIParent,BOTTOM,0,4"
+			E.db.movers["DTPanelmMT - EXTRA LEFTMover"] = "BOTTOM,ElvUIParent,BOTTOM,-413,4"
+			E.db.movers["DTPanelmMT - EXTRA RIGHTMover"] = "BOTTOM,ElvUIParent,BOTTOM,413,4"
+			E.db.movers["DTPanelmMT - LEFTMover"] = "BOTTOMLEFT,UIParent,BOTTOMLEFT,4,4"
+			E.db.movers["DTPanelmMT - RIGHTMover"] = "BOTTOMRIGHT,UIParent,BOTTOMRIGHT,-4,4"
+		end
 	end
 
-	if E.global.datatexts.customPanels["mMT XIV Left"] then
-		E.Options.args.datatexts.args.panels.args["mMT XIV Left"] = nil
-		E.db.datatexts.panels["mMT XIV Left"] = nil
-		E.global.datatexts.customPanels["mMT XIV Left"] = nil
-
-		DT:ReleasePanel("mMT XIV Left")
-	end
-
-	if E.global.datatexts.customPanels["mMT XIV Right"] then
-		E.Options.args.datatexts.args.panels.args["mMT XIV Right"] = nil
-		E.db.datatexts.panels["mMT XIV Right"] = nil
-		E.global.datatexts.customPanels["mMT XIV Right"] = nil
-
-		DT:ReleasePanel("mMT XIV Right")
-	end
-
-	if E.global.datatexts.customPanels["mMT XIV Talent"] then
-		E.Options.args.datatexts.args.panels.args["mMT XIV Talent"] = nil
-		E.db.datatexts.panels["mMT XIV Talent"] = nil
-		E.global.datatexts.customPanels["mMT XIV Talent"] = nil
-
-		DT:ReleasePanel("mMT XIV Talent")
-	end
-
-	if E.global.datatexts.customPanels["mMT XIV Profession"] then
-		E.Options.args.datatexts.args.panels.args["mMT XIV Profession"] = nil
-		E.db.datatexts.panels["mMT XIV Profession"] = nil
-		E.global.datatexts.customPanels["mMT XIV Profession"] = nil
-
-		DT:ReleasePanel("mMT XIV Profession")
-	end
-
-	if E.global.datatexts.customPanels["mMT Dock"] then
-		E.Options.args.datatexts.args.panels.args["mMT Dock"] = nil
-		E.db.datatexts.panels["mMT Dock"] = nil
-		E.global.datatexts.customPanels["mMT Dock"] = nil
-
-		DT:ReleasePanel("mMT Dock")
-	end
-
-	if E.global.datatexts.customPanels["mMT Extra Infos"] then
-		E.Options.args.datatexts.args.panels.args["mMT Extra Infos"] = nil
-		E.db.datatexts.panels["mMT Extra Infos"] = nil
-		E.global.datatexts.customPanels["mMT Extra Infos"] = nil
-
-		DT:ReleasePanel("mMT Extra Infos")
-	end
-
-	if E.global.datatexts.customPanels["mMT Extra Icons"] then
-		E.Options.args.datatexts.args.panels.args["mMT Extra Icons"] = nil
-		E.db.datatexts.panels["mMT Extra Icons"] = nil
-		E.global.datatexts.customPanels["mMT Extra Icons"] = nil
-
-		DT:ReleasePanel("mMT Extra Icons")
-	end
-
-	if E.global.datatexts.customPanels["mMT Extra Clock"] then
-		E.Options.args.datatexts.args.panels.args["mMT Extra Clock"] = nil
-		E.db.datatexts.panels["mMT Extra Clock"] = nil
-		E.global.datatexts.customPanels["mMT Extra Clock"] = nil
-
-		DT:ReleasePanel("mMT Extra Clock")
-	end
-
-	if E.global.datatexts.customPanels["MaUI Left"] then
-		E.Options.args.datatexts.args.panels.args["MaUI Left"] = nil
-		E.db.datatexts.panels["MaUI Left"] = nil
-		E.global.datatexts.customPanels["MaUI Left"] = nil
-
-		DT:ReleasePanel("MaUI Left")
-	end
-
-	if E.global.datatexts.customPanels["MaUI Right"] then
-		E.Options.args.datatexts.args.panels.args["MaUI Right"] = nil
-		E.db.datatexts.panels["MaUI Right"] = nil
-		E.global.datatexts.customPanels["MaUI Right"] = nil
-
-		DT:ReleasePanel("MaUI Right")
-	end
-
-	if E.global.datatexts.customPanels["MaUI Time"] then
-		E.Options.args.datatexts.args.panels.args["MaUI Time"] = nil
-		E.db.datatexts.panels["MaUI Time"] = nil
-		E.global.datatexts.customPanels["MaUI Time"] = nil
-
-		DT:ReleasePanel("MaUI Time")
-	end
-
-	if E.global.datatexts.customPanels["MaUI Time Left"] then
-		E.Options.args.datatexts.args.panels.args["MaUI Time Left"] = nil
-		E.db.datatexts.panels["MaUI Time Left"] = nil
-		E.global.datatexts.customPanels["MaUI Time Left"] = nil
-
-		DT:ReleasePanel("MaUI Time Left")
-	end
-
-	if E.global.datatexts.customPanels["MaUI Time Right"] then
-		E.Options.args.datatexts.args.panels.args["MaUI Time Right"] = nil
-		E.db.datatexts.panels["MaUI Time Right"] = nil
-		E.global.datatexts.customPanels["MaUI Time Right"] = nil
-
-		DT:ReleasePanel("MaUI Time Right")
-	end
-
-	if E.global.datatexts.customPanels["mMT Databar Background"] then
-		E.Options.args.datatexts.args.panels.args["mMT Databar Background"] = nil
-		E.db.datatexts.panels["mMT Databar Background"] = nil
-		E.global.datatexts.customPanels["mMT Databar Background"] = nil
-
-		DT:ReleasePanel("mMT Databar Background")
-	end
+	E:StaggeredUpdateAll(nil, true)
 end
 
 function mMT:Dock_Default(top)
@@ -262,6 +378,71 @@ function mMT:Dock_Default(top)
 	end
 
 	E:StaggeredUpdateAll(nil, true)
+end
+
+local function SetUp_mMT_Settings_XVI()
+	E.db.mMT.dockdatatext = {
+		["achievement"] = {
+			["icon"] = "MATERIAL01",
+		},
+		["blizzardstore"] = {
+			["icon"] = "MATERIAL14",
+		},
+		["calendar"] = {
+			["dateicon"] = "none",
+			["icon"] = "MATERIAL32",
+			["option"] = "de",
+			["showyear"] = true,
+		},
+		["center"] = true,
+		["character"] = {
+			["icon"] = "MATERIAL12",
+		},
+		["collection"] = {
+			["icon"] = "MATERIAL33",
+		},
+		["customfontcolor"] = true,
+		["customfontzise"] = true,
+		["encounter"] = {
+			["icon"] = "MATERIAL42",
+		},
+		["font"] = "Montserrat-SemiBold",
+		["fontSize"] = 14,
+		["fontcolor"] = {
+			["b"] = 0.10588236153126,
+			["g"] = 0.77254909276962,
+			["r"] = 0.086274512112141,
+		},
+		["fontflag"] = "SHADOW",
+		["friends"] = {
+			["icon"] = "MATERIAL28",
+		},
+		["guild"] = {
+			["icon"] = "MATERIAL35",
+		},
+		["hover"] = {
+			["style"] = "class",
+		},
+		["itemlevel"] = {
+			["onlytext"] = true,
+			["text"] = "GS ",
+		},
+		["lfd"] = {
+			["icon"] = "MATERIAL11",
+		},
+		["mainmenu"] = {
+			["icon"] = "MATERIAL52",
+		},
+		["profession"] = {
+			["icon"] = "MATERIAL25",
+		},
+		["quest"] = {
+			["icon"] = "MATERIAL41",
+		},
+		["spellbook"] = {
+			["icon"] = "MATERIAL22",
+		},
+	}
 end
 
 function mMT:Dock_MaUI(top)
