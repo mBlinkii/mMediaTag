@@ -1,155 +1,8 @@
-local E = unpack(ElvUI)
+local E, _, V, P, G = unpack(ElvUI)
 local DT = E:GetModule("DataTexts")
 
 local function ResetSettings()
-	E.db.mMT.dockdatatext = {
-		autogrow = true,
-		growsize = 8,
-		customfontzise = false,
-		font = "PT Sans Narrow",
-		center = false,
-		fontSize = 12,
-		fontflag = "OUTLINE",
-		customfontcolor = false,
-		fontcolor = { r = 1, g = 1, b = 1 },
-		normal = { r = 1, g = 1, b = 1, a = 1, style = "custom" },
-		hover = { r = 0.5, g = 0.5, b = 0.5, a = 0.75, style = "custom" },
-		click = { r = 0.2, g = 0.2, b = 0.2, a = 1, style = "custom" },
-		tip = { enable = true },
-		achievement = {
-			icon = "COLOR45",
-			iconcolor = { r = 1, g = 1, b = 1, a = 0.75 },
-			customcolor = false,
-		},
-		mail = {
-			icon = "MAIL19",
-			iconcolor = { r = 1, g = 1, b = 1, a = 0.75 },
-			customcolor = false,
-		},
-		blizzardstore = {
-			icon = "COLOR01",
-			iconcolor = { r = 1, g = 1, b = 1, a = 0.75 },
-			customcolor = false,
-		},
-		character = {
-			color = true,
-			option = "none",
-			icon = "COLOR19",
-			iconcolor = { r = 1, g = 1, b = 1, a = 0.75 },
-			customcolor = false,
-		},
-		collection = {
-			icon = "COLOR24",
-			iconcolor = { r = 1, g = 1, b = 1, a = 0.75 },
-			customcolor = false,
-		},
-		encounter = {
-			icon = "COLOR49",
-			iconcolor = { r = 1, g = 1, b = 1, a = 0.75 },
-			customcolor = false,
-		},
-		guild = {
-			icon = "COLOR38",
-			iconcolor = { r = 1, g = 1, b = 1, a = 0.75 },
-			customcolor = false,
-		},
-		lfd = {
-			score = true,
-			cta = true,
-			icon = "COLOR27",
-			greatvault = true,
-			affix = true,
-			keystone = true,
-			difficulty = true,
-			iconcolor = { r = 1, g = 1, b = 1, a = 0.75 },
-			customcolor = false,
-		},
-		mainmenu = {
-			icon = "COLOR11",
-			iconcolor = { r = 1, g = 1, b = 1, a = 0.75 },
-			customcolor = false,
-		},
-		quest = {
-			icon = "COLOR26",
-			iconcolor = { r = 1, g = 1, b = 1, a = 0.75 },
-			customcolor = false,
-		},
-		spellbook = {
-			icon = "COLOR46",
-			iconcolor = { r = 1, g = 1, b = 1, a = 0.75 },
-			customcolor = false,
-		},
-		talent = {
-			showrole = true,
-			icon = "COLOR40",
-			iconcolor = { r = 1, g = 1, b = 1, a = 0.75 },
-			customcolor = false,
-		},
-		friends = {
-			icon = "COLOR58",
-			iconcolor = { r = 1, g = 1, b = 1, a = 0.75 },
-			customcolor = false,
-		},
-		fpsms = {
-			text = "FPS",
-			color = "default",
-			option = "fps",
-			icon = "COLOR31",
-			iconcolor = { r = 1, g = 1, b = 1, a = 0.75 },
-			customcolor = false,
-		},
-		durability = {
-			color = true,
-			icon = "COLOR53",
-			iconcolor = { r = 1, g = 1, b = 1, a = 0.75 },
-			customcolor = false,
-		},
-		itemlevel = {
-			onlytext = false,
-			text = "Ilvl",
-			color = true,
-			icon = "COLOR50",
-			iconcolor = { r = 1, g = 1, b = 1, a = 0.75 },
-			customcolor = false,
-		},
-		notification = {
-			icon = "FILLED27",
-			r = 0,
-			g = 1,
-			b = 0,
-			a = 0.75,
-			style = "custom",
-			size = 16,
-			auto = true,
-			flash = true,
-		},
-		profession = {
-			icon = "COLOR06",
-			iconcolor = { r = 1, g = 1, b = 1, a = 0.75 },
-			customcolor = false,
-		},
-		volume = {
-			showtext = true,
-			icon = "COLOR62",
-			iconcolor = { r = 1, g = 1, b = 1, a = 0.75 },
-			customcolor = false,
-		},
-		calendar = {
-			option = "us",
-			dateicon = "b",
-			showyear = false,
-			text = false,
-			icon = "COLOR02",
-			iconcolor = { r = 1, g = 1, b = 1, a = 0.75 },
-			customcolor = false,
-		},
-		bag = {
-			icon = "COLOR68",
-			iconcolor = { r = 1, g = 1, b = 1, a = 0.75 },
-			customcolor = false,
-			text = 5,
-		},
-	}
+	E:CopyTable(P.mMT.dockdatatext, E.db.mMT.dockdatatext)
 end
 
 local function ResetColors()
@@ -176,9 +29,94 @@ end
 function mMT:XIV(top, setting, font, size, fontflag)
 	ResetSettings()
 
+	-- use default font settings if they are not set
 	font = font or "Montserrat-SemiBold"
 	fontflag = fontflag or "SHADOW"
 	size = size or 14
+
+	-- setup durabilityIlevel datatext
+	E.db.mMT.durabilityIlevel.colored.a.color.b = 0.027450982481241
+	E.db.mMT.durabilityIlevel.colored.a.color.g = 0.61176472902298
+	E.db.mMT.durabilityIlevel.colored.a.color.r = 0.92941182851791
+	E.db.mMT.durabilityIlevel.colored.a.value = 40
+	E.db.mMT.durabilityIlevel.colored.enable = true
+	E.db.mMT.durabilityIlevel.whiteIcon = false
+
+	-- setup teleports datatext
+	E.db.mMT.teleports.customicon = "TP7"
+	E.db.mMT.teleports.icon = true
+	E.db.mMT.teleports.whiteText = true
+
+	-- setup Gold datatext
+	E.global.datatexts.settings.Gold.goldFormat = "SHORTSPACED"
+
+	-- panels list and settings
+	local panels = {
+		["mMT - CENTER"] = { width = 180, numPoints = 1, double = true },
+		["mMT - EXTRA LEFT"] = { width = 644, numPoints = 3 },
+		["mMT - EXTRA RIGHT"] = { width = 644, numPoints = 3 },
+		["mMT - LEFT"] = { width = 540, numPoints = 12 },
+		["mMT - RIGHT"] = { width = 540, numPoints = 4 },
+	}
+
+	-- short db paths
+	local globalDB = E.global.datatexts.customPanels
+	local db = E.db.datatexts.panels
+
+	-- build custom panels
+	for name, settings in pairs(panels) do
+		if not globalDB[name] then
+			E.DataTexts:BuildPanelFrame(name)
+
+			globalDB[name].backdrop = false
+			globalDB[name].border = false
+			globalDB[name].fonts.enable = true
+			globalDB[name].fonts.font = font
+			globalDB[name].fonts.fontOutline = fontflag
+			globalDB[name].fonts.fontSize = settings.double and (size + size) or size
+			globalDB[name].height = 32
+			globalDB[name].name = name
+			globalDB[name].numPoints = settings.numPoints
+			globalDB[name].visibility = ""
+			globalDB[name].width = settings.width
+		end
+	end
+
+	-- set the settings for the panels
+	for name, settings in pairs(panels) do
+		db[name].battleground = false
+		db[name].enable = true
+	end
+
+	db["mMT - CENTER"][1] = "Time"
+	db["mMT - CENTER"][2] = ""
+	db["mMT - CENTER"][3] = ""
+
+	db["mMT - EXTRA LEFT"][1] = "DurabilityIlevel"
+	db["mMT - EXTRA LEFT"][2] = "Difficulty"
+	db["mMT - EXTRA LEFT"][3] = "Talent/Loot Specialization"
+
+	db["mMT - EXTRA RIGHT"][1] = "firstProf"
+	db["mMT - EXTRA RIGHT"][2] = "secondProf"
+	db["mMT - EXTRA RIGHT"][3] = "mProfessions"
+
+	db["mMT - LEFT"][1] = "mMT_Dock_MainMenu"
+	db["mMT - LEFT"][2] = "mMT_Dock_Character"
+	db["mMT - LEFT"][3] = "mMT_Dock_Guild"
+	db["mMT - LEFT"][4] = "mMT_Dock_Friends"
+	db["mMT - LEFT"][5] = "mMT_Dock_Achievement"
+	db["mMT - LEFT"][6] = "mMT_Dock_SpellBook"
+	db["mMT - LEFT"][7] = "mMT_Dock_LFDTool"
+	db["mMT - LEFT"][8] = "mMT_Dock_EncounterJournal"
+	db["mMT - LEFT"][9] = "mMT_Dock_Quest"
+	db["mMT - LEFT"][10] = "mMT_Dock_CollectionsJournal"
+	db["mMT - LEFT"][11] = "mMT_Dock_BlizzardStore"
+	db["mMT - LEFT"][12] = "mMT_Dock_Calendar"
+
+	db["mMT - RIGHT"][1] = "System"
+	db["mMT - RIGHT"][2] = "M+ Score"
+	db["mMT - RIGHT"][3] = "mTeleports"
+	db["mMT - RIGHT"][4] = "Gold"
 
 	if setting == "" then
 	else
@@ -210,104 +148,24 @@ function mMT:XIV(top, setting, font, size, fontflag)
 		E.db.mMT.dockdatatext.profession.icon = "MATERIAL25"
 		E.db.mMT.dockdatatext.quest.icon = "MATERIAL41"
 		E.db.mMT.dockdatatext.spellbook.icon = "MATERIAL22"
-
-		E.db.mMT.durabilityIlevel.colored.a.color.b = 0.027450982481241
-		E.db.mMT.durabilityIlevel.colored.a.color.g = 0.61176472902298
-		E.db.mMT.durabilityIlevel.colored.a.color.r = 0.92941182851791
-		E.db.mMT.durabilityIlevel.colored.a.value = 40
-		E.db.mMT.durabilityIlevel.colored.enable = true
-		E.db.mMT.durabilityIlevel.whiteIcon = false
-
-		E.db.mMT.teleports.customicon = "TP7"
-		E.db.mMT.teleports.icon = true
-		E.db.mMT.teleports.whiteText = true
-
-		E.global.datatexts.settings.Gold.goldFormat = "SHORTSPACED"
-
-		local panels = {
-			["mMT - CENTER"] = { width = 180, numPoints = 1, fontsize = true },
-			["mMT - EXTRA LEFT"] = { width = 644, numPoints = 3 },
-			["mMT - EXTRA RIGHT"] = { width = 644, numPoints = 3 },
-			["mMT - LEFT"] = { width = 540, numPoints = 12 },
-			["mMT - RIGHT"] = { width = 540, numPoints = 4 },
-		}
-
-		local globalDB = E.global.datatexts.customPanels
-		local db = E.db.datatexts.panels
-
-		for name, settings in pairs(panels) do
-			if not globalDB[name] then
-				E.DataTexts:BuildPanelFrame(name)
-
-				globalDB[name].backdrop = false
-				globalDB[name].border = false
-				globalDB[name].fonts.enable = true
-				globalDB[name].fonts.font = font
-				globalDB[name].fonts.fontOutline = fontflag
-				globalDB[name].fonts.fontSize = settings.fontsize and (size + size) or size
-				globalDB[name].height = 32
-				globalDB[name].name = name
-				globalDB[name].numPoints = settings.numPoints
-				globalDB[name].visibility = ""
-				globalDB[name].width = settings.width
-			end
-		end
-
-		db["mMT - CENTER"][1] = "Time"
-		db["mMT - CENTER"][2] = ""
-		db["mMT - CENTER"][3] = ""
-		db["mMT - CENTER"].battleground = false
-		db["mMT - CENTER"].enable = true
-
-		db["mMT - EXTRA LEFT"][1] = "DurabilityIlevel"
-		db["mMT - EXTRA LEFT"][2] = "Difficulty"
-		db["mMT - EXTRA LEFT"][3] = "Talent/Loot Specialization"
-		db["mMT - EXTRA LEFT"].battleground = false
-		db["mMT - EXTRA LEFT"].enable = true
-
-		db["mMT - EXTRA RIGHT"][1] = "firstProf"
-		db["mMT - EXTRA RIGHT"][2] = "secondProf"
-		db["mMT - EXTRA RIGHT"][3] = "mProfessions"
-		db["mMT - EXTRA RIGHT"].battleground = false
-		db["mMT - EXTRA RIGHT"].enable = true
-
-		db["mMT - LEFT"][1] = "mMT_Dock_MainMenu"
-		db["mMT - LEFT"][2] = "mMT_Dock_Character"
-		db["mMT - LEFT"][3] = "mMT_Dock_Guild"
-		db["mMT - LEFT"][4] = "mMT_Dock_Friends"
-		db["mMT - LEFT"][5] = "mMT_Dock_Achievement"
-		db["mMT - LEFT"][6] = "mMT_Dock_SpellBook"
-		db["mMT - LEFT"][7] = "mMT_Dock_LFDTool"
-		db["mMT - LEFT"][8] = "mMT_Dock_EncounterJournal"
-		db["mMT - LEFT"][9] = "mMT_Dock_Quest"
-		db["mMT - LEFT"][10] = "mMT_Dock_CollectionsJournal"
-		db["mMT - LEFT"][11] = "mMT_Dock_BlizzardStore"
-		db["mMT - LEFT"][12] = "mMT_Dock_Calendar"
-		db["mMT - LEFT"].battleground = false
-		db["mMT - LEFT"].enable = true
-
-		db["mMT - RIGHT"][1] = "System"
-		db["mMT - RIGHT"][2] = "M+ Score"
-		db["mMT - RIGHT"][3] = "mTeleports"
-		db["mMT - RIGHT"][4] = "Gold"
-		db["mMT - RIGHT"].battleground = false
-		db["mMT - RIGHT"].enable = true
-
-		if top then
-			E.db.movers["DTPanelmMT - CENTERMover"] = "TOP,UIParent,TOP,0,4"
-			E.db.movers["DTPanelmMT - EXTRA LEFTMover"] = "TOP,ElvUIParent,TOP,-413,4"
-			E.db.movers["DTPanelmMT - EXTRA RIGHTMover"] = "TOP,ElvUIParent,TOP,413,4"
-			E.db.movers["DTPanelmMT - LEFTMover"] = "TOPLEFT,UIParent,TOPLEFT,4,4"
-			E.db.movers["DTPanelmMT - RIGHTMover"] = "TOPRIGHT,UIParent,TOPRIGHT,-4,4"
-		else
-			E.db.movers["DTPanelmMT - CENTERMover"] = "BOTTOM,UIParent,BOTTOM,0,4"
-			E.db.movers["DTPanelmMT - EXTRA LEFTMover"] = "BOTTOM,ElvUIParent,BOTTOM,-413,4"
-			E.db.movers["DTPanelmMT - EXTRA RIGHTMover"] = "BOTTOM,ElvUIParent,BOTTOM,413,4"
-			E.db.movers["DTPanelmMT - LEFTMover"] = "BOTTOMLEFT,UIParent,BOTTOMLEFT,4,4"
-			E.db.movers["DTPanelmMT - RIGHTMover"] = "BOTTOMRIGHT,UIParent,BOTTOMRIGHT,-4,4"
-		end
 	end
 
+	-- setup the movers
+	if top then
+		E.db.movers["DTPanelmMT - CENTERMover"] = "TOP,UIParent,TOP,0,4"
+		E.db.movers["DTPanelmMT - EXTRA LEFTMover"] = "TOP,ElvUIParent,TOP,-413,4"
+		E.db.movers["DTPanelmMT - EXTRA RIGHTMover"] = "TOP,ElvUIParent,TOP,413,4"
+		E.db.movers["DTPanelmMT - LEFTMover"] = "TOPLEFT,UIParent,TOPLEFT,4,4"
+		E.db.movers["DTPanelmMT - RIGHTMover"] = "TOPRIGHT,UIParent,TOPRIGHT,-4,4"
+	else
+		E.db.movers["DTPanelmMT - CENTERMover"] = "BOTTOM,UIParent,BOTTOM,0,4"
+		E.db.movers["DTPanelmMT - EXTRA LEFTMover"] = "BOTTOM,ElvUIParent,BOTTOM,-413,4"
+		E.db.movers["DTPanelmMT - EXTRA RIGHTMover"] = "BOTTOM,ElvUIParent,BOTTOM,413,4"
+		E.db.movers["DTPanelmMT - LEFTMover"] = "BOTTOMLEFT,UIParent,BOTTOMLEFT,4,4"
+		E.db.movers["DTPanelmMT - RIGHTMover"] = "BOTTOMRIGHT,UIParent,BOTTOMRIGHT,-4,4"
+	end
+
+	-- update elvui
 	E:StaggeredUpdateAll(nil, true)
 end
 
