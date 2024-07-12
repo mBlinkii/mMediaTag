@@ -28,11 +28,15 @@ local FontFlags = {
 local docks = {
 	XIV = L["XIV"],
 	XIVCOLOR = L["XIV Colored"],
+	MAUI = L["MaUI"],
+    MMTDOCK = L["mMT Dock"],
+    MMTEXTRA = L["mMT Extra"],
+    CURRENCY = L["Currency"],
 }
 
 local previewPath = "Interface\\Addons\\ElvUI_mMediaTag\\media\\system\\xiv.tga"
 
-local settings = { dock = "XIV", top = false, font = "Montserrat-SemiBold", fontflag = "SHADOW", fontsize = 14 }
+local settings = { dock = "XIV", top = false, font = "Montserrat-SemiBold", fontflag = "SHADOW", fontsize = 14, bg = false }
 local function configTable()
 	E.Options.args.mMT.args.misc.args = {
 		customDocks = {
@@ -58,7 +62,11 @@ local function configTable()
 
 								local preview = {
 									XIV = "Interface\\Addons\\ElvUI_mMediaTag\\media\\system\\xiv.tga",
-									XIVCOLOR = "Interface\\Addons\\ElvUI_mMediaTag\\media\\system\\dockb.tga",
+									XIVCOLOR = "Interface\\Addons\\ElvUI_mMediaTag\\media\\system\\xivcolored.tga",
+									MAUI = "Interface\\Addons\\ElvUI_mMediaTag\\media\\system\\maui.tga",
+                                    MMTDOCK = "Interface\\Addons\\ElvUI_mMediaTag\\media\\system\\mmt.tga",
+                                    MMTEXTRA = "Interface\\Addons\\ElvUI_mMediaTag\\media\\system\\extra.tga",
+                                    CURRENCY = "Interface\\Addons\\ElvUI_mMediaTag\\media\\system\\currency.tga",
 								}
 								previewPath = preview[value]
 							end,
@@ -75,15 +83,26 @@ local function configTable()
 								settings.top = value
 							end,
 						},
-						spacer_1 = {
+						toggle_bg = {
 							order = 3,
+							type = "toggle",
+							name = L["Background"],
+							get = function(info)
+								return settings.bg
+							end,
+							set = function(info, value)
+								settings.bg = value
+							end,
+						},
+						spacer_1 = {
+							order = 4,
 							type = "description",
 							name = "\n",
 						},
 						select_font = {
 							type = "select",
 							dialogControl = "LSM30_Font",
-							order = 4,
+							order = 5,
 							name = L["Font"],
 							values = LSM:HashTable("font"),
 							get = function(info)
@@ -95,7 +114,7 @@ local function configTable()
 						},
 						select_fontflag = {
 							type = "select",
-							order = 5,
+							order = 6,
 							name = L["Font contour"],
 							values = FontFlags,
 							get = function(info)
@@ -106,7 +125,7 @@ local function configTable()
 							end,
 						},
 						range_fontsize = {
-							order = 6,
+							order = 7,
 							name = L["Font Size"],
 							type = "range",
 							min = 1,
@@ -119,6 +138,37 @@ local function configTable()
 							end,
 							set = function(info, value)
 								settings.fontsize = value
+							end,
+						},
+						spacer_2 = {
+							order = 8,
+							type = "description",
+							name = "\n",
+						},
+						execute_apply = {
+							order = 9,
+							type = "execute",
+							name = L["Apply"],
+							func = function()
+								if (settings.dock == "XIV") or (settings.dock == "XIVCOLOR") or (settings.dock == "MAUI") then
+									mMT:XIV(settings)
+                                elseif (settings.dock == "MMTDOCK") then
+                                    mMT:Dock_Default(settings)
+                                elseif (settings.dock == "MMTEXTRA") then
+                                    mMT:Dock_Extra(settings)
+                                elseif (settings.dock == "CURRENCY") and E.Retail then
+                                    mMT:Currency(settings)
+								end
+								E:StaticPopup_Show("CONFIG_RL")
+							end,
+						},
+						execute_delete = {
+							order = 10,
+							type = "execute",
+							name = L["Delete all"],
+							func = function()
+								mMT:DeleteAll()
+								E:StaticPopup_Show("CONFIG_RL")
 							end,
 						},
 					},
