@@ -257,7 +257,7 @@ function mMT:XIV(settings)
 		db[name].enable = true
 	end
 
-	if (settings.dock == "XIV") or (settings.dock == "XIVCOLOR") then
+	if (settings.dock ~= "SIMPLE") then
 		db["mMT - EXTRA LEFT"][1] = "DurabilityIlevel"
 		db["mMT - EXTRA LEFT"][2] = "Difficulty"
 		db["mMT - EXTRA LEFT"][3] = "Talent/Loot Specialization"
@@ -295,9 +295,8 @@ function mMT:XIV(settings)
 		db["mMT - LEFT"][12] = "mMT_Dock_Calendar"
 	end
 
-	if (settings.dock == "XIV") or (settings.dock == "XIVCOLOR") then
+	if (settings.dock == "XIV") or (settings.dock == "XIVCOLOR") or (settings.dock ~= "SIMPLE") then
 		db["mMT - CENTER"][1] = "Time"
-
 		db["mMT - RIGHT"][1] = "System"
 		db["mMT - RIGHT"][2] = "M+ Score"
 		db["mMT - RIGHT"][3] = "mTeleports"
