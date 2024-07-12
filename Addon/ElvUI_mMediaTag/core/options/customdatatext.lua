@@ -1,15 +1,7 @@
 local E = unpack(ElvUI)
 local L = mMT.Locales
 
-local DT = E:GetModule("DataTexts")
 local tinsert = tinsert
-
---Lua functions
-local pairs = pairs
-local format = format
-local tonumber = tonumber
-local strjoin = strjoin
-local select = select
 
 --Variables
 local LSM = LibStub("LibSharedMedia-3.0")
@@ -32,6 +24,8 @@ local docks = {
     MMTDOCK = L["mMT Dock"],
     MMTEXTRA = L["mMT Extra"],
     CURRENCY = L["Currency"],
+    LOCATION = L["Location"],
+    SIMPLE = L["Simple"],
 }
 
 local previewPath = "Interface\\Addons\\ElvUI_mMediaTag\\media\\system\\xiv.tga"
@@ -67,8 +61,20 @@ local function configTable()
                                     MMTDOCK = "Interface\\Addons\\ElvUI_mMediaTag\\media\\system\\mmt.tga",
                                     MMTEXTRA = "Interface\\Addons\\ElvUI_mMediaTag\\media\\system\\extra.tga",
                                     CURRENCY = "Interface\\Addons\\ElvUI_mMediaTag\\media\\system\\currency.tga",
+                                    LOCATION = "Interface\\Addons\\ElvUI_mMediaTag\\media\\system\\location.tga",
+                                    SIMPLE = "Interface\\Addons\\ElvUI_mMediaTag\\media\\system\\simple.tga",
 								}
+
 								previewPath = preview[value]
+
+
+                                if (settings.dock == "MMTEXTRA") then
+                                    settings.bg = true
+                                elseif (settings.dock == "LOCATION") then
+                                    settings.bg = true
+                                    settings.fontsize = 16
+                                    settings.top = true
+								end
 							end,
 							values = docks,
 						},
@@ -150,7 +156,7 @@ local function configTable()
 							type = "execute",
 							name = L["Apply"],
 							func = function()
-								if (settings.dock == "XIV") or (settings.dock == "XIVCOLOR") or (settings.dock == "MAUI") then
+								if (settings.dock == "XIV") or (settings.dock == "XIVCOLOR") or (settings.dock == "MAUI") or (settings.dock == "SIMPLE") then
 									mMT:XIV(settings)
                                 elseif (settings.dock == "MMTDOCK") then
                                     mMT:Dock_Default(settings)
@@ -158,6 +164,8 @@ local function configTable()
                                     mMT:Dock_Extra(settings)
                                 elseif (settings.dock == "CURRENCY") and E.Retail then
                                     mMT:Currency(settings)
+                                elseif (settings.dock == "LOCATION") then
+                                    mMT:Location(settings)
 								end
 								E:StaticPopup_Show("CONFIG_RL")
 							end,

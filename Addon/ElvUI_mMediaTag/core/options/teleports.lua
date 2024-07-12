@@ -54,6 +54,18 @@ local function configTable()
 						E.db.mMT.teleports.anchorCursor = value
 					end,
 				},
+				text = {
+					order = 4,
+					name = L["white Text"],
+					type = "toggle",
+					get = function(info)
+						return E.db.mMT.teleports.whiteText
+					end,
+					set = function(info, value)
+						E.db.mMT.teleports.whiteText = value
+						DT:ForceUpdate_DataText("mTeleports")
+					end,
+				},
 			},
 		},
 	}

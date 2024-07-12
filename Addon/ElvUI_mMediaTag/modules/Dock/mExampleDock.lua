@@ -161,7 +161,7 @@ local function DeletePanels()
 	local globalDB = E.global.datatexts.customPanels
 	local db = E.db.datatexts.panels
 
-	local panels = { "MaUI Currencies", "mMT Extra Clock", "mMT Extra Icons", "mMT Extra Infos", "mMT - Background", "mMT XIV Clock", "mMT XIV Info", "mMT XIV Left", "mMT XIV Right", "mMT XIV Talent", "mMT XIV Profession", "mMT Dock", "mMT Extra Infos", "mMT Extra Icons", "mMT Extra Clock", "MaUI Left", "MaUI Right", "MaUI Time", "MaUI Time Left", "MaUI Time Right", "mMT Databar Background", "mMT - CENTER", "mMT - EXTRA LEFT", "mMT - EXTRA RIGHT", "mMT - LEFT", "mMT - RIGHT" }
+	local panels = { "mMT - Location", "mMT - Location X", "mMT - Location Y", "MaUI Currencies", "mMT Extra Clock", "mMT Extra Icons", "mMT Extra Infos", "mMT - Background", "mMT XIV Clock", "mMT XIV Info", "mMT XIV Left", "mMT XIV Right", "mMT XIV Talent", "mMT XIV Profession", "mMT Dock", "mMT Extra Infos", "mMT Extra Icons", "mMT Extra Clock", "MaUI Left", "MaUI Right", "MaUI Time", "MaUI Time Left", "MaUI Time Right", "mMT Databar Background", "mMT - CENTER", "mMT - EXTRA LEFT", "mMT - EXTRA RIGHT", "mMT - LEFT", "mMT - RIGHT" }
 	for _, name in pairs(panels) do
 		if globalDB[name] then
 			E.Options.args.datatexts.args.panels.args[name] = nil
@@ -214,13 +214,23 @@ function mMT:XIV(settings)
 	E.global.datatexts.settings.Gold.goldFormat = "SHORTSPACED"
 
 	-- panels list and settings
-	local panels = {
-		["mMT - CENTER"] = { width = 180, numPoints = 1, double = true },
-		["mMT - EXTRA LEFT"] = { width = 644, numPoints = 3 },
-		["mMT - EXTRA RIGHT"] = { width = 644, numPoints = 3 },
-		["mMT - LEFT"] = { width = 540, numPoints = 12 },
-		["mMT - RIGHT"] = { width = 540, numPoints = 4 },
-	}
+	local panels = {}
+
+	if settings.dock == "SIMPLE" then
+		panels = {
+			["mMT - CENTER"] = { width = 600, numPoints = 3 },
+			["mMT - LEFT"] = { width = 540, numPoints = 12 },
+			["mMT - RIGHT"] = { width = 540, numPoints = 4 },
+		}
+	else
+		panels = {
+			["mMT - CENTER"] = { width = 180, numPoints = 1, double = true },
+			["mMT - EXTRA LEFT"] = { width = 644, numPoints = 3 },
+			["mMT - EXTRA RIGHT"] = { width = 644, numPoints = 3 },
+			["mMT - LEFT"] = { width = 540, numPoints = 12 },
+			["mMT - RIGHT"] = { width = 540, numPoints = 4 },
+		}
+	end
 
 	-- build custom panels
 	for name, setting in pairs(panels) do
@@ -247,17 +257,15 @@ function mMT:XIV(settings)
 		db[name].enable = true
 	end
 
-	db["mMT - CENTER"][1] = "Time"
-	db["mMT - CENTER"][2] = ""
-	db["mMT - CENTER"][3] = ""
+	if (settings.dock == "XIV") or (settings.dock == "XIVCOLOR") then
+		db["mMT - EXTRA LEFT"][1] = "DurabilityIlevel"
+		db["mMT - EXTRA LEFT"][2] = "Difficulty"
+		db["mMT - EXTRA LEFT"][3] = "Talent/Loot Specialization"
 
-	db["mMT - EXTRA LEFT"][1] = "DurabilityIlevel"
-	db["mMT - EXTRA LEFT"][2] = "Difficulty"
-	db["mMT - EXTRA LEFT"][3] = "Talent/Loot Specialization"
-
-	db["mMT - EXTRA RIGHT"][1] = "firstProf"
-	db["mMT - EXTRA RIGHT"][2] = "secondProf"
-	db["mMT - EXTRA RIGHT"][3] = "mProfessions"
+		db["mMT - EXTRA RIGHT"][1] = "firstProf"
+		db["mMT - EXTRA RIGHT"][2] = "secondProf"
+		db["mMT - EXTRA RIGHT"][3] = "mProfessions"
+	end
 
 	if settings.dock == "MAUI" then
 		db["mMT - LEFT"][1] = "mMT_Dock_Character"
@@ -272,7 +280,7 @@ function mMT:XIV(settings)
 		db["mMT - LEFT"][10] = "mMT_Dock_Volume"
 		db["mMT - LEFT"][11] = "mMT_Dock_BlizzardStore"
 		db["mMT - LEFT"][12] = "mMT_Dock_Calendar"
-	elseif (settings.dock == "XIV") or (settings.dock == "XIVCOLOR") then
+	elseif (settings.dock == "XIV") or (settings.dock == "XIVCOLOR") or (settings.dock == "SIMPLE") then
 		db["mMT - LEFT"][1] = "mMT_Dock_MainMenu"
 		db["mMT - LEFT"][2] = "mMT_Dock_Character"
 		db["mMT - LEFT"][3] = "mMT_Dock_Guild"
@@ -287,10 +295,23 @@ function mMT:XIV(settings)
 		db["mMT - LEFT"][12] = "mMT_Dock_Calendar"
 	end
 
-	db["mMT - RIGHT"][1] = "System"
-	db["mMT - RIGHT"][2] = "M+ Score"
-	db["mMT - RIGHT"][3] = "mTeleports"
-	db["mMT - RIGHT"][4] = "Gold"
+	if (settings.dock == "XIV") or (settings.dock == "XIVCOLOR") then
+		db["mMT - CENTER"][1] = "Time"
+
+		db["mMT - RIGHT"][1] = "System"
+		db["mMT - RIGHT"][2] = "M+ Score"
+		db["mMT - RIGHT"][3] = "mTeleports"
+		db["mMT - RIGHT"][4] = "Gold"
+	elseif settings.dock == "SIMPLE" then
+		db["mMT - CENTER"][1] = "DurabilityIlevel"
+		db["mMT - CENTER"][2] = "System"
+		db["mMT - CENTER"][3] = "mProfessions"
+
+		db["mMT - RIGHT"][1] = ""
+		db["mMT - RIGHT"][2] = ""
+		db["mMT - RIGHT"][3] = "Date"
+		db["mMT - RIGHT"][4] = "Time"
+	end
 
 	-- mmt dock font settings
 	E.db.mMT.dockdatatext.font = font
@@ -301,7 +322,7 @@ function mMT:XIV(settings)
 	E.db.mMT.dockdatatext.fontflag = fontflag
 
 	-- mmt dock settings
-	if (settings.dock == "XIV") or (settings.dock == "XIVCOLOR") then
+	if (settings.dock == "XIV") or (settings.dock == "XIVCOLOR") or (settings.dock == "SIMPLE") then
 		E.db.mMT.dockdatatext.achievement.icon = "MATERIAL01"
 		E.db.mMT.dockdatatext.blizzardstore.icon = "MATERIAL14"
 		E.db.mMT.dockdatatext.calendar.dateicon = "none"
@@ -437,16 +458,22 @@ function mMT:XIV(settings)
 	-- setup the movers
 	if settings.top then
 		E.db.movers["DTPanelmMT - CENTERMover"] = "TOP,UIParent,TOP,0,4"
-		E.db.movers["DTPanelmMT - EXTRA LEFTMover"] = "TOP,ElvUIParent,TOP,-413,4"
-		E.db.movers["DTPanelmMT - EXTRA RIGHTMover"] = "TOP,ElvUIParent,TOP,413,4"
 		E.db.movers["DTPanelmMT - LEFTMover"] = "TOPLEFT,UIParent,TOPLEFT,4,4"
 		E.db.movers["DTPanelmMT - RIGHTMover"] = "TOPRIGHT,UIParent,TOPRIGHT,-4,4"
+
+		if settings.dock ~= "SIMPLE" then
+			E.db.movers["DTPanelmMT - EXTRA LEFTMover"] = "TOP,ElvUIParent,TOP,-413,4"
+			E.db.movers["DTPanelmMT - EXTRA RIGHTMover"] = "TOP,ElvUIParent,TOP,413,4"
+		end
 	else
 		E.db.movers["DTPanelmMT - CENTERMover"] = "BOTTOM,UIParent,BOTTOM,0,4"
-		E.db.movers["DTPanelmMT - EXTRA LEFTMover"] = "BOTTOM,ElvUIParent,BOTTOM,-413,4"
-		E.db.movers["DTPanelmMT - EXTRA RIGHTMover"] = "BOTTOM,ElvUIParent,BOTTOM,413,4"
 		E.db.movers["DTPanelmMT - LEFTMover"] = "BOTTOMLEFT,UIParent,BOTTOMLEFT,4,4"
 		E.db.movers["DTPanelmMT - RIGHTMover"] = "BOTTOMRIGHT,UIParent,BOTTOMRIGHT,-4,4"
+
+		if settings.dock ~= "SIMPLE" then
+			E.db.movers["DTPanelmMT - EXTRA LEFTMover"] = "BOTTOM,ElvUIParent,BOTTOM,-413,4"
+			E.db.movers["DTPanelmMT - EXTRA RIGHTMover"] = "BOTTOM,ElvUIParent,BOTTOM,413,4"
+		end
 	end
 
 	-- update elvui
@@ -648,9 +675,6 @@ function mMT:Dock_Extra(settings)
 end
 
 function mMT:Currency(settings)
-	-- reset mmt settings
-	ResetSettings()
-
 	-- short db paths
 	local globalDB = E.global.datatexts.customPanels
 	local db = E.db.datatexts.panels
@@ -696,6 +720,66 @@ function mMT:Currency(settings)
 	db["MaUI Currencies"].enable = true
 
 	E.db["movers"]["DTPanelMaUI CurrenciesMover"] = "TOPLEFT,UIParent,TOPLEFT,4,-4"
+
+	E:StaggeredUpdateAll(nil, true)
+end
+
+function mMT:Location(settings)
+	-- short db paths
+	local globalDB = E.global.datatexts.customPanels
+	local db = E.db.datatexts.panels
+
+	-- use default font settings if they are not set
+	local font = settings.font or "Montserrat-SemiBold"
+	local fontflag = settings.fontflag or "SHADOW"
+	local size = settings.fontsize or 14
+
+	-- panels list and settings
+	local panels = {
+		["mMT - Location"] = { width = 300, numPoints = 1, double = false, height = 32 },
+		["mMT - Location X"] = { width = 100, numPoints = 1, double = false, height = 32 },
+		["mMT - Location Y"] = { width = 100, numPoints = 1, double = false, height = 32 },
+	}
+
+	-- build custom panels
+	for name, setting in pairs(panels) do
+		if not globalDB[name] then
+			E.DataTexts:BuildPanelFrame(name)
+		end
+
+		globalDB[name].backdrop = settings.bg
+		globalDB[name].border = settings.bg
+		globalDB[name].fonts.enable = true
+		globalDB[name].fonts.font = font
+		globalDB[name].fonts.fontOutline = fontflag
+		globalDB[name].fonts.fontSize = setting.double and (size + size) or size
+		globalDB[name].height = setting.height
+		globalDB[name].name = name
+		globalDB[name].numPoints = setting.numPoints
+		globalDB[name].panelTransparency = true
+		globalDB[name].visibility = ""
+		globalDB[name].width = setting.width
+	end
+
+	db["mMT - Location"][1] = "Location"
+	db["mMT - Location"]["battleground"] = false
+	db["mMT - Location"]["enable"] = true
+	db["mMT - Location X"][1] = "mCoordsX"
+	db["mMT - Location X"]["battleground"] = false
+	db["mMT - Location X"]["enable"] = true
+	db["mMT - Location Y"][1] = "mCoordsY"
+	db["mMT - Location Y"]["battleground"] = false
+	db["mMT - Location Y"]["enable"] = true
+
+	if settings.top then
+		E.db["movers"]["DTPanelmMT - Location XMover"] = "TOP,ElvUIParent,TOP,-202,-4"
+		E.db["movers"]["DTPanelmMT - Location YMover"] = "TOP,ElvUIParent,TOP,202,-4"
+		E.db["movers"]["DTPanelmMT - LocationMover"] = "TOP,UIParent,TOP,0,-4"
+	else
+		E.db["movers"]["DTPanelmMT - Location XMover"] = "BOTTOM,ElvUIParent,BOTTOM,-202,-4"
+		E.db["movers"]["DTPanelmMT - Location YMover"] = "BOTTOM,ElvUIParent,BOTTOM,202,-4"
+		E.db["movers"]["DTPanelmMT - LocationMover"] = "BOTTOM,UIParent,BOTTOM,0,-4"
+	end
 
 	E:StaggeredUpdateAll(nil, true)
 end

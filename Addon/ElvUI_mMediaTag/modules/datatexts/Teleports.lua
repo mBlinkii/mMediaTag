@@ -508,16 +508,22 @@ local function OnEnter(self)
 	DT.tooltip:Show()
 end
 
+local function colorText(value, withe)
+	if withe then
+		return value
+	else
+		local hexColor = E:RGBToHex(E.db.general.valuecolor.r, E.db.general.valuecolor.g, E.db.general.valuecolor.b)
+		return hexColor .. value .. "|r"
+	end
+end
+
 local function OnEvent(self, event, unit)
 	CheckIfAvailable()
 
-	local hex = E:RGBToHex(E.db.general.valuecolor.r, E.db.general.valuecolor.g, E.db.general.valuecolor.b)
-	local string = strjoin("", hex, "%s|r")
-
 	if E.db.mMT.teleports.icon then
-		self.text:SetFormattedText(string, format("|T%s:16:16:0:0:64:64|t %s", mMT.Media.TeleportIcons[E.db.mMT.teleports.customicon], mText))
+		self.text:SetText(format("|T%s:16:16:0:0:64:64|t %s", mMT.Media.TeleportIcons[E.db.mMT.teleports.customicon], colorText(mText, E.db.mMT.teleports.whiteText)))
 	else
-		self.text:SetFormattedText(string, mText)
+		self.text:SetText(colorText(mText, E.db.mMT.teleports.whiteText))
 	end
 end
 
