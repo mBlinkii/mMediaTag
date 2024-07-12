@@ -713,3 +713,8 @@ L["|cffFFFFFFShift + Left Click:|r Show Talent Specialization UI"] = "|cffFFFFFF
 -- new
 L["Use MerathilisUI colors"] = true
 L["Thin"] = true
+L["Custom Docks"] = true
+L["Preview"] = true
+L["Simple"] = true
+L["Location"] = true
+L["Open Settings"] = true
