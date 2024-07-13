@@ -59,12 +59,25 @@ function mMT:ConvertDB()
 	}
 end
 
-function mMT:DebugPrintTable(tbl)
-	mMT:Print(": Table Start >>>")
+local function PrintTable(tbl, indent, simple)
 	if type(tbl) == "table" then
-		for k, v in pairs(tbl) do
-			print(k, v)
+		for entry, value in pairs(tbl) do
+			if type(value) == "table" and not simple then
+				print(indent and indent .. "   " or "", "|cff60ffc3 [" .. entry .. "]|r", value)
+				PrintTable(value, indent and indent .. "   " or "   ")
+			else
+				print(indent and indent .. "   " or "", ((type(value) == "table") and "|cff60ffc3 [" or "|cfffbd7f9 [") .. entry .. "]|r", " > ", value)
+			end
 		end
+	else
+		print(tostring(tbl))
+	end
+end
+
+function mMT:DebugPrintTable(tbl, simple)
+	if type(tbl) == "table" then
+		mMT:Print(": Table Start >>>", tbl)
+		PrintTable(tbl, nil, simple)
 	else
 		mMT:Print("Not a Table:", tbl)
 	end

@@ -1957,106 +1957,13 @@ local function configTable()
 					type = "description",
 					name = L["In Classic, the docks may look different, since not all modules are available in this version. You can customize the docks in the settings of ElvUI."],
 				},
-				examplesheader = {
-					order = 3,
-					type = "header",
-					name = "",
-				},
-				exampletop = {
-					order = 4,
-					type = "toggle",
-					name = L["Dock on Top"],
-					get = function(info)
-						return ExampleDockSettings.top
-					end,
-					set = function(info, value)
-						ExampleDockSettings.top = value
-					end,
-				},
-				examplespacer1 = {
-					order = 5,
-					type = "description",
-					name = "\n",
-				},
-				dockbar1 = {
-					order = 11,
-					type = "execute",
-					name = L["mMT XIV Like"],
-					func = function()
-						mMT:Dock_XIVLike(ExampleDockSettings.top)
-						E:StaticPopup_Show("CONFIG_RL")
-					end,
-				},
-				dockbar2 = {
+
+				custom_docks = {
 					order = 12,
 					type = "execute",
-					name = L["mMT XIV Like Color"],
+					name = L["Open Settings"],
 					func = function()
-						mMT:Dock_XIVLike_Color(ExampleDockSettings.top)
-						E:StaticPopup_Show("CONFIG_RL")
-					end,
-				},
-				dockbar3 = {
-					order = 13,
-					type = "execute",
-					name = L["mMT Dock"],
-					func = function()
-						mMT:Dock_Default(ExampleDockSettings.top)
-						E:StaticPopup_Show("CONFIG_RL")
-					end,
-				},
-				dockbar4 = {
-					order = 14,
-					type = "execute",
-					name = L["mMT Extra"],
-					func = function()
-						mMT:Dock_Extra(ExampleDockSettings.top)
-						E:StaticPopup_Show("CONFIG_RL")
-					end,
-				},
-				dockbar6 = {
-					order = 15,
-					type = "execute",
-					name = L["MaUI XIV Like"],
-					func = function()
-						mMT:Dock_MaUI(ExampleDockSettings.top)
-						E:StaticPopup_Show("CONFIG_RL")
-					end,
-				},
-				dockbar5 = {
-					order = 15,
-					type = "execute",
-					name = L["Add XIV Background"],
-					func = function()
-						mMT:Dock_BG(ExampleDockSettings.top)
-						E:StaticPopup_Show("CONFIG_RL")
-					end,
-				},
-				examplespacer2 = {
-					order = 40,
-					type = "description",
-					name = "\n",
-				},
-				dockbardisable = {
-					order = 41,
-					type = "execute",
-					name = L["Delete All"],
-					func = function()
-						mMT:DeleteAll()
-						E:StaticPopup_Show("CONFIG_RL")
-					end,
-				},
-				examplespacer3 = {
-					order = 50,
-					type = "description",
-					name = "\n",
-				},
-				preview = {
-					type = "description",
-					name = "",
-					order = 51,
-					image = function()
-						return "Interface\\Addons\\ElvUI_mMediaTag\\media\\system\\dock.tga", 819, 102
+						E.Libs.AceConfigDialog:SelectGroup("ElvUI", "mMT", "misc", "customDocks")
 					end,
 				},
 			},

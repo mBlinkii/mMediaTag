@@ -16,37 +16,23 @@ local change_log_important = {
 	"This update will reset the Spell DB.",
 }
 
-local releasdate = "28.06.2024"
+local releasdate = "13.07.2024"
 
 local change_log_new = {
-	"Portraits can now use custom textures.",
-	"Portraits can now show cast icon, available for player, target, focus, party, boss, and arena.",
-	"Portraits setting to force reaction colors on Player Units.",
-	"TAGs: mLevel:hidecombat, mLevelSmart:hidecombat, mHealth:onlypercent-with-absorbs:ndp, mHealth:short:absorbs, mColor:absorbs.",
-	"TAGs: mHealth:current-percent:absorbs, mHealth:current-percent:ndp:absorbs, mHealth:current-percent:short:absorbs, mHealth:current-percent:short:ndp:absorbs.",
-	"Add general TOC file for WOTLK Version in China",
+	"New Settings menu for the Example Docks.",
+	"Support for MerathilisUI colors and gradient mode.",
+	"Portraits Texture Thin.",
+	"Add more example Docks and Datattext to Example Docks menu.",
 }
 
 local change_log_update = {
-	"Add no Profession text and Icon to first and second Profession data text.",
-	"White text setting for Profession data text.",
-	"NEW: Icon for Teleports data text.",
-	"Portraits texture names.",
-	"Removed Portraits texture simple square and added flipped Versions for Drop texture.",
-	"Add Stone of the Hearth and Draenic Hologem to TP datatext (thx to Merathilis)",
+	"Some code optimizations.",
+	"TOC update for Classic.",
 }
 
 local change_log_fix = {
-	"Portraits colors if gradient mode is disabled.",
-	"Portraits can now properly enable/disable on the fly.",
-	"Portraits corner won't hide if the texture does not support it.",
-	"Tooltip Icon can override Item names in Classic.",
-	"Tooltip and Teleports Datatext for TWW, (for beta use, disable the Objectivetracker Skin).",
-	"Removed empty data text entry.",
-	"Add S Pack to mMT Settings DB.",
-	"Datatext Durability/ Ilevel: Durability color values.",
-	"Removed debug print.",
-	"Portraits Optimized code and fixed flipped drop texture (black background)",
+	"Missing symbol in the menu for Docks.",
+	"Dock Icon sizing if the bar is vertical.",
 }
 
 local function Concatenation(tbl, icon, color)

@@ -425,24 +425,25 @@ local function InstallLayout()
 
 	if installSettings.v6 then
 	elseif installSettings.v7 then
-		MAUI:Player_v7()
-		MAUI:Arena_v7()
-		MAUI:Unitframes_v7()
-		MAUI:Boss_v7()
-		MAUI:Focus_v7()
-		MAUI:Party_v7()
-		MAUI:Pet_v7()
-		MAUI:Raid_v7()
-		MAUI:Target_v7()
-		MAUI:Other_v7()
-		MAUI:Actionbar_v7()
-		MAUI:Bags_v7()
-		MAUI:Chat_v7()
-		MAUI:General_v7()
-		MAUI:Datatexts_v7()
-		--MAUI:MMT_v7()
-		MAUI:Movers_v7()
-		MAUI:Nameplates_v7()
+		-- MAUI:Player_v7()
+		-- MAUI:Arena_v7()
+		-- MAUI:Unitframes_v7()
+		-- MAUI:Boss_v7()
+		-- MAUI:Focus_v7()
+		-- MAUI:Party_v7()
+		-- MAUI:Pet_v7()
+		-- MAUI:Raid_v7()
+		-- MAUI:Target_v7()
+		-- MAUI:Other_v7()
+		-- MAUI:Actionbar_v7()
+		-- MAUI:Bags_v7()
+		-- MAUI:Chat_v7()
+		-- MAUI:General_v7()
+		-- MAUI:Datatexts_v7()
+		-- MAUI:MMT_v7()
+		-- MAUI:Movers_v7()
+		-- MAUI:Nameplates_v7()
+
 	end
 	E:StaggeredUpdateAll()
 end
@@ -470,10 +471,30 @@ local function CheckInstall()
 		else
 			E.data:SetProfile(profileName)
 			SetPrivateProfile("MaUI " .. layout .. " " .. role)
-			InstallLayout()
+
+			wipe(E.db)
+			E:CopyTable(E.db, P)
+
+			wipe(E.private)
+			E:CopyTable(E.private, V)
+
+			E:ResetMovers('')
+			if not E.db['movers'] then E.db['movers'] = {} end
+
+			ElvDB.profiles[profileName] = mv7Profile
+			E:StaggeredUpdateAll()
+			--InstallLayout()
 		end
 	else
 	end
+end
+
+local function Resize()
+	_G.PluginInstallFrame:SetSize(800, 512)
+	_G.PluginInstallFrame:SetScale(1.25)
+
+	_G.PluginInstallFrame.Desc1:ClearAllPoints()
+	_G.PluginInstallFrame.Desc1:SetPoint("TOP", _G.PluginInstallFrame.SubTitle, "BOTTOM", 0, -30)
 end
 
 MAUI.InstallerData = {
@@ -483,6 +504,7 @@ MAUI.InstallerData = {
 	tutorialImageSize = { 512, 128 },
 	Pages = {
 		[1] = function()
+			Resize()
 			_G.PluginInstallFrame.tutorialImage:Show()
 			_G.PluginInstallFrame.SubTitle:SetFormattedText("Welcome to the installation for %s.", MAUI.Name)
 			_G.PluginInstallFrame.Desc1:SetText("This installation process will guide you through a few steps and apply the settings to a new ElvUI profile. To protect your current profile, make a backup copy of the profile before going through this installation process.")
@@ -492,6 +514,7 @@ MAUI.InstallerData = {
 			_G.PluginInstallFrame.Option1:SetText("Skip Process")
 		end,
 		[2] = function()
+			Resize()
 			_G.PluginInstallFrame.Option1:SetScript("OnClick", SetupSkip)
 			_G.PluginInstallFrame.tutorialImage:Show()
 			_G.PluginInstallFrame.SubTitle:SetText("Profile Settings")
@@ -518,6 +541,7 @@ MAUI.InstallerData = {
 			end)
 		end,
 		[3] = function()
+			Resize()
 			_G.PluginInstallFrame.tutorialImage:Show()
 			_G.PluginInstallFrame.SubTitle:SetText("MaUI Layout Version")
 			_G.PluginInstallFrame.Desc1:SetText("Please click the button below to choose your MaUI Layout Version.")
@@ -550,6 +574,7 @@ MAUI.InstallerData = {
 			end)
 		end,
 		[4] = function()
+			Resize()
 			_G.PluginInstallFrame.tutorialImage:Show()
 			_G.PluginInstallFrame.SubTitle:SetText("Role Layout")
 			_G.PluginInstallFrame.Desc1:SetText("You can now choose the layout you want to use based on your combat role.")
@@ -601,6 +626,7 @@ MAUI.InstallerData = {
 			end)
 		end,
 		[5] = function()
+			Resize()
 			_G.PluginInstallFrame.tutorialImage:Hide()
 			_G.PluginInstallFrame.SubTitle:SetText("MaUI Misc")
 			_G.PluginInstallFrame.Desc1:SetText("Please click the button below to setup your Additional features.")
@@ -628,6 +654,35 @@ MAUI.InstallerData = {
 			end)
 		end,
 		[6] = function()
+			Resize()
+			_G.PluginInstallFrame.tutorialImage:Hide()
+			_G.PluginInstallFrame.SubTitle:SetText("MaUI Misc")
+			_G.PluginInstallFrame.Desc1:SetText("Please click the button below to setup your Additional features.")
+			_G.PluginInstallFrame.Desc3:SetText("Importance: |cffD3CF00Medium|r")
+			_G.PluginInstallFrame.Option1:Show()
+			_G.PluginInstallFrame.Option1.pic = nil
+			_G.PluginInstallFrame.Option1:SetText(GetOptionText("Dock", installSettings.dock))
+			_G.PluginInstallFrame.Option1:SetScript("OnClick", function()
+				installSettings.dock = not installSettings.dock
+				_G.PluginInstallFrame.Option1:SetText(GetOptionText("Dock", installSettings.dock))
+			end)
+			_G.PluginInstallFrame.Option2:Show()
+			_G.PluginInstallFrame.Option2.pic = nil
+			_G.PluginInstallFrame.Option2:SetText(GetOptionText("Currency", installSettings.currency))
+			_G.PluginInstallFrame.Option2:SetScript("OnClick", function()
+				installSettings.currency = not installSettings.currency
+				_G.PluginInstallFrame.Option2:SetText(GetOptionText("Currency", installSettings.currency))
+			end)
+			_G.PluginInstallFrame.Option3:Show()
+			_G.PluginInstallFrame.Option3.pic = nil
+			_G.PluginInstallFrame.Option3:SetText(GetOptionText("Mythic Plus Filters", installSettings.mythicPlus))
+			_G.PluginInstallFrame.Option3:SetScript("OnClick", function()
+				installSettings.mythicPlus = not installSettings.mythicPlus
+				_G.PluginInstallFrame.Option3:SetText(GetOptionText("Mythic Plus Filters", installSettings.mythicPlus))
+			end)
+		end,
+		[7] = function()
+			Resize()
 			_G.PluginInstallFrame.tutorialImage:Hide()
 			_G.PluginInstallFrame.SubTitle:SetText("Addons")
 			_G.PluginInstallFrame.Desc1:SetText("Please click the button below to setup your Additional Addons.")
@@ -654,7 +709,8 @@ MAUI.InstallerData = {
 				_G.PluginInstallFrame.Option3:SetText(GetOptionText("DBM", installSettings.dbm))
 			end)
 		end,
-		[7] = function()
+		[8] = function()
+			Resize()
 			_G.PluginInstallFrame.tutorialImage:Hide()
 			_G.PluginInstallFrame.SubTitle:SetText("Installation Overview")
 			_G.PluginInstallFrame.Desc1:SetText(GetOverviewText())
@@ -667,6 +723,7 @@ MAUI.InstallerData = {
 			end)
 		end,
 		[20] = function()
+			Resize()
 			_G.PluginInstallFrame.SubTitle:SetText("Installation Complete")
 			_G.PluginInstallFrame.Desc1:SetText("You have completed the installation process.")
 			_G.PluginInstallFrame.Desc2:SetText("Please click the button below in order to finalize the process and automatically reload your UI.")
@@ -681,9 +738,10 @@ MAUI.InstallerData = {
 		[2] = "Profile Settings",
 		[3] = "MaUI Layout Version",
 		[4] = "Role Layout",
-		[5] = "MaUI Misc",
-		[6] = "Addons",
-		[7] = "Overview",
+		[5] = "Layout Setup",
+		[6] = "MaUI Misc",
+		[7] = "Addons",
+		[8] = "Overview",
 		[20] = "Installation Complete",
 	},
 	StepTitlesColor = { 0.8, 0.8, 0.8 },
@@ -732,6 +790,28 @@ local function SetupPluginInstaller()
 
 	if not _G.PluginInstallFrame.mauiPreview.bg then
 		_G.PluginInstallFrame.mauiPreview.bg = _G.PluginInstallFrame.mauiPreview:CreateTexture()
+	end
+
+	_G.PluginInstallFrame.CheckButtons = {}
+	local spacingH = 40
+	local spacingV = 0
+	local buttons = 0
+	for i = 1, 12, 1 do
+		_G.PluginInstallFrame.CheckButtons[i] = CreateFrame("CheckButton", "maui_installer_checkButton" .. i, _G.PluginInstallFrame, "ChatConfigCheckButtonTemplate")
+		_G.PluginInstallFrame.CheckButtons[i]:Size(20, 20)
+		_G.PluginInstallFrame.CheckButtons[i]:Point('LEFT', spacingH, spacingV)
+		local text = "maui_installer_checkButton" .. i .. 'Text'
+		_G[text]:SetText("TEST > " .. i)
+		_G.PluginInstallFrame.CheckButtons[i]:Show()
+		buttons = buttons + 1
+		spacingH = spacingH + 180
+		if buttons == 4 then
+			spacingV = spacingV - 30
+			buttons = 0
+			spacingH = 40
+		end
+		S:HandleCheckBox(_G.PluginInstallFrame.CheckButtons[i])
+
 	end
 
 	CreateBGTexture(_G.PluginInstallFrame.mauiBG, _G.PluginInstallFrame, "frameBG.png", { 0.44, 0.34, 0.34, 0.2 })

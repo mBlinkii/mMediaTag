@@ -138,7 +138,7 @@ P.mMT = {
 			r = 0.11,
 		},
 	},
-	teleports = { anchorCursor = false, icon = false, customicon = "TP1" },
+	teleports = { anchorCursor = false, icon = false, customicon = "TP1", whiteText = true },
 	profession = { icon = false, proficon = true, whiteText = true },
 	dungeon = { icon = false, texttoname = true, key = true, score = true, affix = true },
 	instancedifficulty = {
@@ -735,8 +735,8 @@ P.mMT = {
 			PI = 10,
 			RA = 6,
 			QA = 0,
-			SMQ = 0,
 			MO = 5.5,
+			TH = 4,
 			CUSTOM = 5.5,
 		},
 		shadow = {

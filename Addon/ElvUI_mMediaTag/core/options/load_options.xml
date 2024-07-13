@@ -42,4 +42,5 @@
 	<Script file="datatextfont.lua"/>
 	<Script file="uftextures.lua"/>
 	<Script file="questicons.lua"/>
+	<Script file="customdatatext.lua"/>
 </Ui>

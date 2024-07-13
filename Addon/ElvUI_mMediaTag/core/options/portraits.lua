@@ -13,6 +13,7 @@ local form = {
 	MO = L["Moon"],
 	SQT = L["Drop flipped"],
 	ROT = L["Drop round flipped"],
+	TH = L["Thin"],
 }
 
 local style = {
@@ -611,23 +612,23 @@ local function configTable()
 								mMT.Modules.Portraits:Initialize()
 							end,
 						},
-						range_smq = {
+						range_th = {
 							order = 6,
-							name = L["Simple Square"],
+							name = L["Thin"],
 							type = "range",
 							min = 0,
-							max = 60,
+							max = 10,
 							step = 0.1,
 							get = function(info)
-								return E.db.mMT.portraits.offset.SMQ
+								return E.db.mMT.portraits.offset.TH
 							end,
 							set = function(info, value)
-								E.db.mMT.portraits.offset.SMQ = value
+								E.db.mMT.portraits.offset.TH = value
 								mMT.Modules.Portraits:Initialize()
 							end,
 						},
 						range_custom = {
-							order = 7,
+							order = 8,
 							name = L["Custom"],
 							type = "range",
 							min = 0,
@@ -658,8 +659,8 @@ local function configTable()
 									PI = 10,
 									RA = 6,
 									QA = 0,
-									SMQ = 0,
 									MO = 5.5,
+									TH = 4,
 									CUSTOM = 5.5,
 								}
 								mMT.Modules.Portraits:Initialize()
