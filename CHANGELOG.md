@@ -1,6 +1,18 @@
 # Changelog - ElvUI_mMediaTag
 [Eng] - All changes to this project will be documented in this file. The latest changes are at the top.
 
+## [ver. 3.43] - 13.07.2024
+### FIX
+- FIX - Missing symbol in the menu for Docks
+### Update
+- UPDATE - Some code optimizations.
+- UPDATE - TOC update for Classic.
+- UPDATE - New Settings menu for the Example Docks.
+### NEW
+- NEW - Support for MerathilisUI colors and gradient mode.
+- NEW - Portraits Texture Thin.
+- NEW - Add more example Docks and Datattext to Example Docks menu.
+
 ## [ver. 3.42] - 28.06.2024
 ### FIX
 - FIX - Removed debug print.
