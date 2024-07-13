@@ -223,7 +223,7 @@ function mMT:InitializeDockIcon(DT, conf, event)
 	end
 
 	-- set defaults
-	DT.mMT_Dock.size = DT:GetHeight() + 4
+	DT.mMT_Dock.size = ((DT.db and DT.db.growth == "VERTICAL") and DT:GetWidth() or DT:GetHeight()) + 4
 	DT.mMT_Dock.grow = Defaults.autogrow and (DT.mMT_Dock.size / 2 + DT.mMT_Dock.size) or Defaults.growsize + DT.mMT_Dock.size
 
 	-- create texture
