@@ -618,7 +618,7 @@ L["The ObjectiveTracker settings have been reset to reflect the latest updates i
 L["The default castbar texture when no spell modification is active."] = "Die Standard Zauberleistentextur, wenn kein Filter aktiv ist"
 L["The position settings of Instance Difficulty are controlled by ElvUI in Maps, Minimap, Instance Difficulty."] = "Die Positions Einstellungs werden über die ElvUI Minimap Schwierigkeitsanzeige kontrolliert."
 L["These are just examples of how to create your own dock with ElvUI's custom bars.\n\n\nTo create your own bar you have to go to ElvUI under ElvUI>Datatext>Bars Steps 1. enter name press OK and click Add, set the width of the bar depends on how many icons you want to display, the height of the bar is also the size of the icons. Set the number of data text and now you only need to assign the icons to the places, for example 1 = Dock FPS, 2 = Dock Profession and so on.\n\n"] = "Das sind Beispiele, wie man mit ElvUI Infotext Leisten ein Dock erstellen kann.\n\n\nDu kannst eine eigene Leiste in ElvUI erstellen unter ElvUI > Infotexte > Leisten Steps 1. Namen eingaben und OK drücken Danach Hinzufügen drücken und die Breite der Leiste einstellen, diese hängt von der anzuzeigenden Menge der Symbole ab. Die Höhe der Leiste ist auch gleichzeitig die Größe der Symbole. Die Menge der Infotext einstellen und die Infotext setzen, z.B. 1 = Dock FPS, 2 = Dock Berufe usw...\n\n"
-L["Thin"] = "Dick"
+L["Thin"] = "Dünn"
 L["This Week Affix"] = "Affixe dieser Woche"
 L["This is the Border texture for the Rare & Elite texture."] = "Dies ist die Ramentextur für die Seltene und Elite Textur."
 L["This is the Border texture for the portraits."] = "Dies ist die Ramentextur für die Porträts."
