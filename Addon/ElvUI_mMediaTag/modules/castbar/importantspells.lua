@@ -2,6 +2,8 @@ local E = unpack(ElvUI)
 local PlaySoundFile = PlaySoundFile
 local GetTime = GetTime
 
+local GetSpellInfo = C_Spell and C_Spell.GetSpellInfo or GetSpellInfo
+
 local lastPlayed = {}
 
 local module = mMT.Modules.ImportantSpells

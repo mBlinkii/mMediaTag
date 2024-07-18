@@ -1,4 +1,4 @@
-local GetItemIcon = (C_Item and C_Item.GetItemIconByID) and C_Item.GetItemIconByID or GetItemIcon
+local GetItemIcon = C_Item and C_Item.GetItemIconByID or GetItemIcon
 
 mMT.Media.CombatIcons = {
 	CI1 = "Interface\\AddOns\\ElvUI_mMediaTag\\media\\icons\\datatext\\combat1.tga",

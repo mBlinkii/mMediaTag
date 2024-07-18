@@ -15,12 +15,12 @@ local select = select
 --WoW API / Variables
 local CreateFrame = CreateFrame
 local GameTooltip = GameTooltip
-local GetSpellTexture = (C_Spell and C_Spell.GetSpellTexture) and C_Spell.GetSpellTexture or GetSpellTexture
-local GetSpellInfo = GetSpellInfo
+local GetSpellTexture = C_Spell and C_Spell.GetSpellTexture or GetSpellTexture
+local GetSpellInfo = C_Spell and C_Spell.GetSpellInfo or GetSpellInfo
 local IsSpellKnown = IsSpellKnown
-local GetItemIcon = (C_Item and C_Item.GetItemIconByID) and C_Item.GetItemIconByID or GetItemIcon
-local GetItemInfo = GetItemInfo
-local GetItemCount = GetItemCount
+local GetItemIcon = C_Item and C_Item.GetItemIconByID or GetItemIcon
+local GetItemInfo = C_Item and C_Item.GetItemInfo or GetItemInfo
+local GetItemCount = C_Item and C_Item.GetItemCount or GetItemCount
 local PlayerHasToy = PlayerHasToy
 local C_ToyBox = C_ToyBox
 local GetSpellCooldown = GetSpellCooldown

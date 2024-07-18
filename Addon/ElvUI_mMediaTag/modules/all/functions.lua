@@ -10,9 +10,11 @@ local tinsert = tinsert
 --WoW API / Variables
 local GetInstanceInfo = GetInstanceInfo
 local C_MythicPlus = C_MythicPlus
-local GetItemCount = GetItemCount
-local GetItemInfo = GetItemInfo
+local GetItemCount = C_Item and C_Item.GetItemCount or GetItemCount
+local GetItemInfo = C_Item and C_Item.GetItemInfo or GetItemInfo
+local GetSpellInfo = C_Spell and C_Spell.GetSpellInfo or GetSpellInfo
 local C_CurrencyInfo_GetCurrencyInfo = C_CurrencyInfo.GetCurrencyInfo
+local GetSpellTexture = C_Spell and C_Spell.GetSpellTexture or GetSpellTexture
 local GetSpellCooldown = GetSpellCooldown
 
 local totalDurability = 0
