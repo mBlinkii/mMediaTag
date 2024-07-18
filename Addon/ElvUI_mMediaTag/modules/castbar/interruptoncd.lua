@@ -6,7 +6,9 @@ if not module then
 end
 
 local GetSpecializationInfo = GetSpecializationInfo
-local GetSpellCooldown = GetSpellCooldown
+local GetSpellCooldown = C_Spell and C_Spell.GetSpellCooldown or GetSpellCooldown
+local GetSpellInfo = C_Spell and C_Spell.GetSpellInfo or GetSpellInfo
+local IsSpellInRange = C_Spell and C_Spell.IsSpellInRange or IsSpellInRange
 local interruptSpellID = nil
 
 local interruptSpellList = {
@@ -66,7 +68,18 @@ local interruptSpellList = {
 
 function mMT:mMediaTag_interruptOnCD(castbar)
 	if interruptSpellID then
-		local onCD = select(1, GetSpellCooldown(interruptSpellID))
+		local onCD
+		if C_Spell then
+			-- [10:54]   [isEnabled]  >  true
+			-- [10:54]   [startTime]  >  0
+			-- [10:54]   [modRate]  >  1
+			-- [10:54]   [duration]  >  0
+			local spellCooldownInfo = GetSpellCooldown(interruptSpellID)
+			onCD = spellCooldownInfo.startTime
+		else
+			onCD = select(1, GetSpellCooldown(interruptSpellID))
+		end
+
 		return (onCD ~= 0)
 	else
 		return false
@@ -109,7 +122,19 @@ function module:InterruptChecker(castbar, isUnitFrame)
 		local interruptCD, interruptReadyInTime = nil, false
 		local interruptDur, interruptStart = 0, 0
 
-		local cdStart, cdDur, enabled, _ = GetSpellCooldown(interruptSpellID)
+		-- xxxx remove this check with tww
+		local cdStart, cdDur, enabled
+		if C_Spell then
+			-- [10:54]   [isEnabled]  >  true
+			-- [10:54]   [startTime]  >  0
+			-- [10:54]   [modRate]  >  1
+			-- [10:54]   [duration]  >  0
+			local spellCooldownInfo = GetSpellCooldown(interruptSpellID)
+			cdStart = spellCooldownInfo.startTime
+			cdDur = spellCooldownInfo.duration
+		else
+			cdStart, cdDur, enabled, _ = GetSpellCooldown(interruptSpellID)
+		end
 		local tmpInterruptCD = (cdStart > 0 and cdDur - (GetTime() - cdStart)) or 0
 		if not interruptCD or (tmpInterruptCD < interruptCD) then
 			interruptCD = tmpInterruptCD
@@ -132,7 +157,8 @@ function module:InterruptChecker(castbar, isUnitFrame)
 		local colorOutOfRange = E.db.mMT.interruptoncd.outofrangecolor.colora
 		local colorOutOfRangeB = E.db.mMT.interruptoncd.outofrangecolor.colorb
 
-		local isOutOfRange = (E.db.mMT.interruptoncd.outofrange and IsSpellInRange(GetSpellInfo(interruptSpellID), castbar.unit) == 0) or false
+		local spellInfo = GetSpellInfo(interruptSpellID)
+		local isOutOfRange = E.db.mMT.interruptoncd.outofrange and (spellInfo and IsSpellInRange(spellInfo.name, castbar.unit) == 0) or false
 
 		if interruptCD and interruptCD > inactivetime and interruptReadyInTime then
 			if not castbar.InterruptMarker then
