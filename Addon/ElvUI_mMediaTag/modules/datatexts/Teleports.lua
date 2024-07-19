@@ -332,13 +332,15 @@ local function mGetInfos(TeleportsTable, spell, toy, tip, check)
 				TeleportsTable.available = true
 			else
 				local start, duration = nil, nil
+
 				if spell then
-					local spellCooldownInfo = GetSpellCooldown(818)
+					local spellCooldownInfo = GetSpellCooldown(i)
 					start = spellCooldownInfo.startTime
 					duration = spellCooldownInfo.duration
 				else
 					start, duration = GetItemCooldown(i)
 				end
+
 				local cooldown = start + duration - GetTime()
 
 				if cooldown >= 2 then
