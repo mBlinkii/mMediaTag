@@ -591,7 +591,8 @@
         "UnregisterUnitWatch",
         "RegisterStateDriver",
         "UnregisterStateDriver",
-        "ElvPrivateDB"
+        "ElvPrivateDB",
+        "assertsafe"
     ],
     "Lua.diagnostics.disable": [
         "undefined-field"

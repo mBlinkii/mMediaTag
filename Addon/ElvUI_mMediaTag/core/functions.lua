@@ -59,6 +59,14 @@ function mMT:ConvertDB()
 	}
 end
 
+function GetTableLng(tbl)
+	local getN = 0
+	for n in pairs(tbl) do
+		getN = getN + 1
+	end
+	return getN
+end
+
 local function PrintTable(tbl, indent, simple)
 	if type(tbl) == "table" then
 		for entry, value in pairs(tbl) do
@@ -76,8 +84,9 @@ end
 
 function mMT:DebugPrintTable(tbl, simple)
 	if type(tbl) == "table" then
-		mMT:Print(": Table Start >>>", tbl)
-		PrintTable(tbl, nil, simple)
+		local tblLength = GetTableLng(tbl)
+		mMT:Print(": Table Start >>>", tbl, "Entries:", tblLength)
+		PrintTable(tbl, nil, (simple or (tblLength > 20)))
 	else
 		mMT:Print("Not a Table:", tbl)
 	end
