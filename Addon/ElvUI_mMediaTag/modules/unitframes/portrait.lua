@@ -506,13 +506,16 @@ local function UpdatePortrait(frame, conf, unit, parent)
 	unit = UnitExists(unit) and unit or "player"
 
 	-- Portraits Frame
-	frame:SetSize(conf.size, conf.size)
-	frame:ClearAllPoints()
-	frame:SetPoint(conf.point, parent, conf.relativePoint, conf.x, conf.y)
-	if conf.strata ~= "AUTO" then
-		frame:SetFrameStrata(conf.strata)
+	if not InCombatLockdown then
+		frame:SetSize(conf.size, conf.size)
+		frame:ClearAllPoints()
+		frame:SetPoint(conf.point, parent, conf.relativePoint, conf.x, conf.y)
+
+		if conf.strata ~= "AUTO" then
+			frame:SetFrameStrata(conf.strata)
+		end
+		frame:SetFrameLevel(conf.level)
 	end
-	frame:SetFrameLevel(conf.level)
 
 	-- Portrait Texture
 	texture = textures.custom.enable and textures.custom.texture or textures.texture[settings.general.style][conf.texture]
