@@ -506,7 +506,7 @@ local function UpdatePortrait(frame, conf, unit, parent)
 	unit = UnitExists(unit) and unit or "player"
 
 	-- Portraits Frame
-	if not InCombatLockdown then
+	if not InCombatLockdown() then
 		frame:SetSize(conf.size, conf.size)
 		frame:ClearAllPoints()
 		frame:SetPoint(conf.point, parent, conf.relativePoint, conf.x, conf.y)
