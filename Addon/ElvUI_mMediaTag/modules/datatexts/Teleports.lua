@@ -15,16 +15,16 @@ local select = select
 --WoW API / Variables
 local CreateFrame = CreateFrame
 local GameTooltip = GameTooltip
-local GetSpellTexture = C_Spell and C_Spell.GetSpellTexture or GetSpellTexture
-local GetSpellInfo = C_Spell and C_Spell.GetSpellInfo or GetSpellInfo
+local GetSpellTexture = (C_Spell and C_Spell.GetSpellTexture) and C_Spell.GetSpellTexture or GetSpellTexture
+local GetSpellInfo = GetSpellInfo
 local IsSpellKnown = IsSpellKnown
-local GetItemIcon = C_Item and C_Item.GetItemIconByID or GetItemIcon
-local GetItemInfo = C_Item and C_Item.GetItemInfo or GetItemInfo
-local GetItemCount = C_Item and C_Item.GetItemCount or GetItemCount
+local GetItemIcon = GetItemIcon
+local GetItemInfo = GetItemInfo
+local GetItemCount = GetItemCount
 local PlayerHasToy = PlayerHasToy
 local C_ToyBox = C_ToyBox
-local GetSpellCooldown = C_Spell and C_Spell.GetSpellCooldown or GetSpellCooldown
-local GetItemCooldown = C_Item and C_Item.GetItemCooldown or GetItemCooldown
+local GetSpellCooldown = GetSpellCooldown
+local GetItemCooldown = GetItemCooldown
 local GetTime = GetTime
 local GetProfessions = GetProfessions
 local GetProfessionInfo = GetProfessionInfo
@@ -316,9 +316,8 @@ local function mGetInfos(TeleportsTable, spell, toy, tip, check)
 	for i, v in pairs(TeleportsTable.tps) do
 		local texture, name, hasSpell, hasItem = nil, nil, false, 0
 		if spell then
-			local spellInfo = GetSpellInfo(i)
 			texture = GetSpellTexture(i)
-			name = spellInfo.name
+			name = GetSpellInfo(i)
 			hasSpell = IsSpellKnown(i)
 		else
 			texture = GetItemIcon(i)
@@ -333,13 +332,7 @@ local function mGetInfos(TeleportsTable, spell, toy, tip, check)
 			else
 				local start, duration = nil, nil
 				if spell then
-					if C_Spell then
-						local spellCooldownInfo = GetSpellCooldown(818)
-						start = spellCooldownInfo.startTime
-						duration = spellCooldownInfo.duration
-					else
-						start, duration = GetSpellCooldown(i)
-					end
+					start, duration = GetSpellCooldown(i)
 				else
 					start, duration = GetItemCooldown(i)
 				end

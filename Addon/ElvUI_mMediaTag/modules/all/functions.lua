@@ -10,12 +10,10 @@ local tinsert = tinsert
 --WoW API / Variables
 local GetInstanceInfo = GetInstanceInfo
 local C_MythicPlus = C_MythicPlus
-local GetItemCount = C_Item and C_Item.GetItemCount or GetItemCount
-local GetItemInfo = C_Item and C_Item.GetItemInfo or GetItemInfo
-local GetSpellInfo = C_Spell and C_Spell.GetSpellInfo or GetSpellInfo
+local GetItemCount = GetItemCount
+local GetItemInfo = GetItemInfo
 local C_CurrencyInfo_GetCurrencyInfo = C_CurrencyInfo.GetCurrencyInfo
-local GetSpellTexture = C_Spell and C_Spell.GetSpellTexture or GetSpellTexture
-local GetSpellCooldown = C_Spell and C_Spell.GetSpellCooldown or GetSpellCooldown
+local GetSpellCooldown = GetSpellCooldown
 
 local totalDurability = 0
 local invDurability = {}
@@ -239,7 +237,7 @@ local function BuildProfTable()
 		nomain = false,
 		nosecondary = false,
 		cook = false,
-		firstaid = false,
+		firstaid = false
 	}
 
 	if not prof1 and prof2 then
@@ -308,15 +306,7 @@ local function InsertInTable(tbl, textA, textB, title, icon, color, spell)
 end
 
 local function GetFireCD()
-	local start, duration
-	if C_Spell then
-		local spellCooldownInfo = GetSpellCooldown(818)
-		start = spellCooldownInfo.startTime
-		duration = spellCooldownInfo.duration
-	else
-		start, duration = GetSpellCooldown(818)
-	end
-
+	local start, duration = GetSpellCooldown(818)
 	local cooldown = start + duration - GetTime()
 	if cooldown <= 0 then
 		return ""
@@ -367,8 +357,7 @@ function mMT:GetProfessions(tooltip)
 
 			if ProfTable.cook and IsSpellKnown(818) then
 				local texture = GetSpellTexture(818)
-				local spellInfo = GetSpellInfo(818)
-				local name = spellInfo.name or ""
+				local name = GetSpellInfo(818)
 				tinsert(MenuTable, {
 					text = format("|T%s:14:14:0:0:64:64:5:59:5:59|t %s", texture, name),
 					Secondtext = GetFireCD(),
