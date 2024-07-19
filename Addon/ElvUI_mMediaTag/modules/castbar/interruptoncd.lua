@@ -69,16 +69,8 @@ local interruptSpellList = {
 function mMT:mMediaTag_interruptOnCD(castbar)
 	if interruptSpellID then
 		local onCD
-		if C_Spell then
-			-- [10:54]   [isEnabled]  >  true
-			-- [10:54]   [startTime]  >  0
-			-- [10:54]   [modRate]  >  1
-			-- [10:54]   [duration]  >  0
-			local spellCooldownInfo = GetSpellCooldown(interruptSpellID)
-			onCD = spellCooldownInfo.startTime
-		else
-			onCD = select(1, GetSpellCooldown(interruptSpellID))
-		end
+		local spellCooldownInfo = GetSpellCooldown(interruptSpellID)
+		onCD = spellCooldownInfo.startTime
 
 		return (onCD ~= 0)
 	else
@@ -121,25 +113,13 @@ function module:InterruptChecker(castbar, isUnitFrame)
 	if interruptSpellID and not castbar.notInterruptible then
 		local interruptCD, interruptReadyInTime = nil, false
 		local interruptDur, interruptStart = 0, 0
+		local spellCooldownInfo = GetSpellCooldown(interruptSpellID)
+		local tmpInterruptCD = (spellCooldownInfo.startTime > 0 and spellCooldownInfo.duration - (GetTime() - spellCooldownInfo.startTime)) or 0
 
-		-- xxxx remove this check with tww
-		local cdStart, cdDur, enabled
-		if C_Spell then
-			-- [10:54]   [isEnabled]  >  true
-			-- [10:54]   [startTime]  >  0
-			-- [10:54]   [modRate]  >  1
-			-- [10:54]   [duration]  >  0
-			local spellCooldownInfo = GetSpellCooldown(interruptSpellID)
-			cdStart = spellCooldownInfo.startTime
-			cdDur = spellCooldownInfo.duration
-		else
-			cdStart, cdDur, enabled, _ = GetSpellCooldown(interruptSpellID)
-		end
-		local tmpInterruptCD = (cdStart > 0 and cdDur - (GetTime() - cdStart)) or 0
 		if not interruptCD or (tmpInterruptCD < interruptCD) then
 			interruptCD = tmpInterruptCD
-			interruptDur = cdDur
-			interruptStart = cdStart
+			interruptDur = spellCooldownInfo.duration
+			interruptStart = spellCooldownInfo.startTime
 		end
 		local value = castbar:GetValue()
 
