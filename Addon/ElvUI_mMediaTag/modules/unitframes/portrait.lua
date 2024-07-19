@@ -713,7 +713,7 @@ function module:UpdatePortraits()
 	end
 end
 
-local function AddCastIcon(self, unit)
+local function AddCastIcon(self, unit, mirror)
 	local texture = select(3, UnitCastingInfo(unit))
 
 	self.throttle = texture and true or false
@@ -724,6 +724,12 @@ local function AddCastIcon(self, unit)
 
 	if texture then
 		self.portrait:SetTexture(texture)
+		if self.portrait.mClass then
+			self.portrait.mClass = nil
+			self.portrait.mCoords = nil
+		end
+
+		mirrorTexture(self.portrait, mirror)
 	end
 end
 
@@ -797,7 +803,7 @@ local function UnitEvent(self, event, conf, castUnit, unit)
 	end
 
 	if conf.cast and (castUnit == unit) and castIconUpdateEvents[event] then
-		AddCastIcon(self, unit)
+		AddCastIcon(self, unit, conf.mirror)
 	else
 		if conf.cast and throttleEvents[event] then
 			if (not self.throttle) or self.empowering then
