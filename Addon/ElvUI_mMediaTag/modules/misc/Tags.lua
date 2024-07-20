@@ -468,12 +468,12 @@ local classificationNames = {
 
 E:AddTag("mClass", "UNIT_CLASSIFICATION_CHANGED", function(unit)
 	local c = UnitClassification(unit)
-	return (c and classificationNames.full[c]) and format("%s%s|r", classificationNames.full[c], colors[c]) or ""
+	return (c and classificationNames.full[c]) and format("%s%s|r", colors[c], classificationNames.full[c]) or ""
 end)
 
 E:AddTag("mClass:short", "UNIT_CLASSIFICATION_CHANGED", function(unit)
 	local c = UnitClassification(unit)
-	return (c and classificationNames.short[c]) and format("%s%s|r", classificationNames.short[c], colors[c]) or ""
+	return (c and classificationNames.short[c]) and format("%s%s|r", colors[c], classificationNames.short[c]) or ""
 end)
 
 E:AddTag("mClass:icon", "UNIT_CLASSIFICATION_CHANGED", function(unit)
