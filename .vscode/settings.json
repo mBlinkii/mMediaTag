@@ -779,7 +779,10 @@
         "GREEN_FONT_COLOR_CODE",
         "OpenAzeriteEmpoweredItemUIFromItemLocation",
         "AZERITE_PREVIEW_UNAVAILABLE_FOR_CLASS",
-        "PAPERDOLL_STATCATEGORIES"
+        "PAPERDOLL_STATCATEGORIES",
+        "WorldFrame",
+        "QuestCache",
+        "TRACKER_HEADER_CAMPAIGN_QUESTS"
     ],
     "Lua.diagnostics.disable": [
         "undefined-field"
