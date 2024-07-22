@@ -6,6 +6,7 @@ local tinsert = tinsert
 
 local collectgarbage = collectgarbage
 local GetAddOnMetadata = _G.C_AddOns and _G.C_AddOns.GetAddOnMetadata or _G.GetAddOnMetadata
+local IsAddOnLoaded = C_AddOns and C_AddOns.IsAddOnLoaded or IsAddOnLoaded
 
 -- Addon Name and Namespace
 local addonName, _ = ...
@@ -44,7 +45,7 @@ mMT.Modules.ImportantSpells = {}
 mMT.Modules.InterruptOnCD = {}
 mMT.Modules.CosmeticBars = {}
 mMT.Modules.QuestIcons = {}
-mMT.Modules.ObjectiveTracker = {}
+--mMT.Modules.ObjectiveTracker = {}
 mMT.Modules.CustomUFTextures = {}
 mMT.Modules.CustomBGTextures = {}
 --mMT.Modules.CustomClassColors = {}
@@ -135,7 +136,7 @@ local function EnableModules()
 
 	-- Retail
 	if E.Retail then
-		mMT.Modules.ObjectiveTracker.enable = E.db.mMT.objectivetracker.enable and (E.private.skins.blizzard.enable and E.private.skins.blizzard.objectiveTracker) and not IsAddOnLoaded("!KalielsTracker")
+		--mMT.Modules.ObjectiveTracker.enable = E.db.mMT.objectivetracker.enable and (E.private.skins.blizzard.enable and E.private.skins.blizzard.objectiveTracker) and not IsAddOnLoaded("!KalielsTracker")
 		mMT.Modules.InterruptOnCD.enable = E.db.mMT.interruptoncd.enable
 		mMT.Modules.QuestIcons.enable = E.db.mMT.questicons.enable
 	end
@@ -289,11 +290,11 @@ function mMT:PLAYER_ENTERING_WORLD(event)
 	end
 
 	-- ObjectiveTracker DB converter
-	if E.db.mMT.objectivetracker.convert < 1 then
-		mMT:ConvertDB()
-		E.db.mMT.objectivetracker.convert = 1
-		mMT:Print(L["The ObjectiveTracker settings have been reset to reflect the latest updates in mMT."])
-	end
+	-- if E.db.mMT.objectivetracker.convert < 1 then
+	-- 	mMT:ConvertDB()
+	-- 	E.db.mMT.objectivetracker.convert = 1
+	-- 	mMT:Print(L["The ObjectiveTracker settings have been reset to reflect the latest updates in mMT."])
+	-- end
 
 	-- ImportantSpells DB converter
 	if E.db.mMT.importantspells.dbversion < 1 then

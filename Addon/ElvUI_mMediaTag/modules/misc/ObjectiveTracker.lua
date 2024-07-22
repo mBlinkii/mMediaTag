@@ -9,8 +9,9 @@ if not module then
 end
 
 local _G = _G
-local pairs = pairs
+local pairs, unpack = pairs, unpack
 local hooksecurefunc = hooksecurefunc
+local InCombatLockdown = InCombatLockdown
 local ObjectiveTrackerFrame = _G.ObjectiveTrackerFrame
 local maxNumQuestsCanAccept = min(C_QuestLog.GetMaxNumQuestsCanAccept() + (E.Retail and 10 or 0), 35) -- 20 for ERA, 25 for WotLK, 35 for Retail
 local IsInInstance = IsInInstance
@@ -19,6 +20,19 @@ local colorFont = {}
 local color = {}
 local dim = 0.2
 local fontsize = 12
+
+local trackers = {
+	_G.ScenarioObjectiveTracker,
+	_G.UIWidgetObjectiveTracker,
+	_G.CampaignQuestObjectiveTracker,
+	_G.QuestObjectiveTracker,
+	_G.AdventureObjectiveTracker,
+	_G.AchievementObjectiveTracker,
+	_G.MonthlyActivitiesObjectiveTracker,
+	_G.ProfessionsRecipeTracker,
+	_G.BonusObjectiveTracker,
+	_G.WorldQuestObjectiveTracker,
+}
 
 -- get quest infos
 local function GetRequirements(text)
@@ -538,10 +552,9 @@ local function SetHeaderText(text, isQuest)
 	text:SetFont(font, db.font.fontsize.header, db.font.fontflag)
 	text:SetTextColor(color.r, color.g, color.b)
 
-	if isQuest and db.settings.questcount then
-		local QuestCount = ""
-		local _, numQuests = C_QuestLog.GetNumQuestLogEntries()
-		QuestCount = numQuests .. "/" .. maxNumQuestsCanAccept
+	if db.settings.questcount and isQuest then
+		local numQuests = select(2, C_QuestLog.GetNumQuestLogEntries())
+		QuestCount = (numQuests .. "/" .. maxNumQuestsCanAccept) or ""
 		text:SetText(QUESTS_LABEL .. " - " .. QuestCount)
 	end
 end
@@ -647,6 +660,95 @@ local function UpdateTracker()
 		AddQuestNumText()
 	end
 end
+local function SkinLines(line)
+	--mMT:DebugPrintTable(line)
+	if line and db then
+		-- title text
+		if line.HeaderText then
+			mMT:Print("HEADER")
+			--SetTitleText(line.HeaderText)
+		end
+
+		-- title text else line text
+		if line.objectiveKey == 0 then
+			SetTitleText(line.Text)
+		else
+			-- done icon
+			local check = line.Check
+			local isShownCheck = false
+			if check then
+				isShownCheck = true
+				check:SetTexture("Interface\\AddOns\\ElvUI_mMediaTag\\media\\icons\\misc\\questDone.tga")
+				check:SetVertexColor(db.font.color.good.r, db.font.color.good.g, db.font.color.good.b, 1)
+			end
+
+			-- line text
+			-- is quest completed
+			local complete = line.state or (objectiveKey == "QuestComplete") or line.finished
+			--local text = line.Text
+			if line.Text then
+				local height = SetLineText(line.Text, complete, isShownCheck)
+
+				-- set the text/ line height
+				if height and height ~= line.Text:GetHeight() then
+					line.Text:SetHeight(height)
+				end
+			end
+
+			-- settings if dash is hide
+			if db.settings.hidedash then
+				-- hide dash
+				local dash = line.Dash
+				if dash then
+					dash:Hide()
+					dash:SetText(nil)
+				end
+
+				-- new position for text
+				if line.Text then
+					line.Text:ClearAllPoints()
+					line.Text:Point("TOPLEFT", dash, "TOPLEFT", 0, 0)
+				end
+
+				-- new position for done icon
+				if check then
+					check:ClearAllPoints()
+					check:Point("TOPRIGHT", dash, "TOPLEFT", 0, 0)
+				end
+			end
+		end
+	end
+end
+
+local function SkinHeaders(header)
+	--mMT:Print(header, _G.QuestObjectiveTracker.Header, (_G.QuestObjectiveTracker and (header == _G.QuestObjectiveTracker.Header)))
+	--SetHeaderText(header.Text, (_G.QuestObjectiveTracker and (header == _G.QuestObjectiveTracker.Header)))
+
+	if not db then
+		return
+	end
+
+	color = colorFont.header.class and mMT.ClassColor or colorFont.header
+
+	local font = LSM:Fetch("font", db.font.font)
+	header.Text:SetFont(font, db.font.fontsize.header, db.font.fontflag)
+	header.Text:SetTextColor(color.r, color.g, color.b)
+
+	if db.settings.questcount and (_G.QuestObjectiveTracker and (header == _G.QuestObjectiveTracker.Header)) then
+		local numQuests = select(2, C_QuestLog.GetNumQuestLogEntries())
+		QuestCount = (numQuests .. "/" .. maxNumQuestsCanAccept) or ""
+		header.Text:SetText(QUESTS_LABEL .. " - " .. QuestCount)
+	end
+end
+
+local function SkinBlock(block)
+	if db and block then
+		-- block header
+		if block.HeaderText then
+			SetTitleText(block.HeaderText)
+		end
+	end
+end
 
 function module:Initialize()
 	-- prevent bugs with wrong db entries
@@ -678,49 +780,60 @@ function module:Initialize()
 	SetTextColors()
 
 	if not module.hooked then
-		-- Bar Skins
-		hooksecurefunc(_G.BONUS_OBJECTIVE_TRACKER_MODULE, "AddProgressBar", SkinProgressBars)
-		hooksecurefunc(_G.WORLD_QUEST_TRACKER_MODULE, "AddProgressBar", SkinProgressBars)
-		hooksecurefunc(_G.DEFAULT_OBJECTIVE_TRACKER_MODULE, "AddProgressBar", SkinProgressBars)
-		hooksecurefunc(_G.SCENARIO_TRACKER_MODULE, "AddProgressBar", SkinProgressBars)
-		hooksecurefunc(_G.CAMPAIGN_QUEST_TRACKER_MODULE, "AddProgressBar", SkinProgressBars)
-		hooksecurefunc(_G.QUEST_TRACKER_MODULE, "AddProgressBar", SkinProgressBars)
-		hooksecurefunc(_G.UI_WIDGET_TRACKER_MODULE, "AddProgressBar", SkinProgressBars)
+		local MainHeader = _G.ObjectiveTrackerFrame.Header
+		SkinHeaders(MainHeader)
 
-		-- Bar Color
-		hooksecurefunc("BonusObjectiveTrackerProgressBar_SetValue", SkinBarSetValue)
-		hooksecurefunc("ObjectiveTrackerProgressBar_SetValue", SkinBarSetValue)
-		hooksecurefunc("ScenarioTrackerProgressBar_SetValue", SkinBarSetValue)
+		for _, tracker in pairs(trackers) do
+			if tracker then
+				SkinHeaders(tracker.Header)
 
-		-- Timer Bar Skins
-		hooksecurefunc(_G.QUEST_TRACKER_MODULE, "AddTimerBar", SkinTimerBars)
-		hooksecurefunc(_G.SCENARIO_TRACKER_MODULE, "AddTimerBar", SkinTimerBars)
-		hooksecurefunc(_G.ACHIEVEMENT_TRACKER_MODULE, "AddTimerBar", SkinTimerBars)
+				hooksecurefunc(tracker, "AddBlock", SkinBlock)
+			end
+		end
 
-		-- Skin Text and Headers
-		hooksecurefunc(_G.QUEST_TRACKER_MODULE, "AddObjective", SkinObjective)
-		--hooksecurefunc(_G.SCENARIO_TRACKER_MODULE, "AddObjective", SkinDungeons)
-		hooksecurefunc(_G.ACHIEVEMENT_TRACKER_MODULE, "AddObjective", SkinObjective)
-		hooksecurefunc(_G.SCENARIO_CONTENT_TRACKER_MODULE, "AddObjective", SkinObjective)
-		hooksecurefunc(_G.UI_WIDGET_TRACKER_MODULE, "AddObjective", SkinObjective)
-		hooksecurefunc(_G.BONUS_OBJECTIVE_TRACKER_MODULE, "AddObjective", SkinObjective)
-		hooksecurefunc(_G.WORLD_QUEST_TRACKER_MODULE, "AddObjective", SkinObjective)
-		hooksecurefunc(_G.CAMPAIGN_QUEST_TRACKER_MODULE, "AddObjective", SkinObjective)
-		hooksecurefunc(_G.PROFESSION_RECIPE_TRACKER_MODULE, "AddObjective", SkinObjective)
-		hooksecurefunc(_G.MONTHLY_ACTIVITIES_TRACKER_MODULE, "AddObjective", SkinObjective)
-		hooksecurefunc(_G.ADVENTURE_TRACKER_MODULE, "AddObjective", SkinObjective)
+		-- -- Bar Skins
+		-- hooksecurefunc(_G.BONUS_OBJECTIVE_TRACKER_MODULE, "AddProgressBar", SkinProgressBars)
+		-- hooksecurefunc(_G.WORLD_QUEST_TRACKER_MODULE, "AddProgressBar", SkinProgressBars)
+		-- hooksecurefunc(_G.DEFAULT_OBJECTIVE_TRACKER_MODULE, "AddProgressBar", SkinProgressBars)
+		-- hooksecurefunc(_G.SCENARIO_TRACKER_MODULE, "AddProgressBar", SkinProgressBars)
+		-- hooksecurefunc(_G.CAMPAIGN_QUEST_TRACKER_MODULE, "AddProgressBar", SkinProgressBars)
+		-- hooksecurefunc(_G.QUEST_TRACKER_MODULE, "AddProgressBar", SkinProgressBars)
+		-- hooksecurefunc(_G.UI_WIDGET_TRACKER_MODULE, "AddProgressBar", SkinProgressBars)
 
-		-- Skin Dungeon Text
-		hooksecurefunc(_G.SCENARIO_CONTENT_TRACKER_MODULE, "UpdateCriteria", SkinDungeonsUpdateCriteria)
+		-- -- Bar Color
+		-- hooksecurefunc("BonusObjectiveTrackerProgressBar_SetValue", SkinBarSetValue)
+		-- hooksecurefunc("ObjectiveTrackerProgressBar_SetValue", SkinBarSetValue)
+		-- hooksecurefunc("ScenarioTrackerProgressBar_SetValue", SkinBarSetValue)
 
-		-- Skin Stage Block
-		hooksecurefunc(_G.SCENARIO_CONTENT_TRACKER_MODULE, "Update", SkinStageBlock)
+		-- -- Timer Bar Skins
+		-- hooksecurefunc(_G.QUEST_TRACKER_MODULE, "AddTimerBar", SkinTimerBars)
+		-- hooksecurefunc(_G.SCENARIO_TRACKER_MODULE, "AddTimerBar", SkinTimerBars)
+		-- hooksecurefunc(_G.ACHIEVEMENT_TRACKER_MODULE, "AddTimerBar", SkinTimerBars)
 
-		-- Skin M+ Timer
-		hooksecurefunc("Scenario_ChallengeMode_UpdateTime", SkinChallengeModeTime)
+		-- -- Skin Text and Headers
+		-- hooksecurefunc(_G.QUEST_TRACKER_MODULE, "AddObjective", SkinObjective)
+		-- --hooksecurefunc(_G.SCENARIO_TRACKER_MODULE, "AddObjective", SkinDungeons)
+		-- hooksecurefunc(_G.ACHIEVEMENT_TRACKER_MODULE, "AddObjective", SkinObjective)
+		-- hooksecurefunc(_G.SCENARIO_CONTENT_TRACKER_MODULE, "AddObjective", SkinObjective)
+		-- hooksecurefunc(_G.UI_WIDGET_TRACKER_MODULE, "AddObjective", SkinObjective)
+		-- hooksecurefunc(_G.BONUS_OBJECTIVE_TRACKER_MODULE, "AddObjective", SkinObjective)
+		-- hooksecurefunc(_G.WORLD_QUEST_TRACKER_MODULE, "AddObjective", SkinObjective)
+		-- hooksecurefunc(_G.CAMPAIGN_QUEST_TRACKER_MODULE, "AddObjective", SkinObjective)
+		-- hooksecurefunc(_G.PROFESSION_RECIPE_TRACKER_MODULE, "AddObjective", SkinObjective)
+		-- hooksecurefunc(_G.MONTHLY_ACTIVITIES_TRACKER_MODULE, "AddObjective", SkinObjective)
+		-- hooksecurefunc(_G.ADVENTURE_TRACKER_MODULE, "AddObjective", SkinObjective)
 
-		-- Skin Headers
-		hooksecurefunc("ObjectiveTracker_Update", UpdateTracker)
+		-- -- Skin Dungeon Text
+		-- hooksecurefunc(_G.SCENARIO_CONTENT_TRACKER_MODULE, "UpdateCriteria", SkinDungeonsUpdateCriteria)
+
+		-- -- Skin Stage Block
+		-- hooksecurefunc(_G.SCENARIO_CONTENT_TRACKER_MODULE, "Update", SkinStageBlock)
+
+		-- -- Skin M+ Timer
+		-- hooksecurefunc("Scenario_ChallengeMode_UpdateTime", SkinChallengeModeTime)
+
+		-- -- Skin Headers
+		-- hooksecurefunc("ObjectiveTracker_Update", UpdateTracker)
 	end
 
 	module.needReloadUI = true

@@ -1,6 +1,20 @@
 # Changelog - ElvUI_mMediaTag
 [Eng] - All changes to this project will be documented in this file. The latest changes are at the top.
 
+## [ver. 3.44] - 23.07.2024
+### FIX
+- FIX - Bug with Portraits in combat and zone changes
+- FIX - Portrait Cast icon with enabled Class icons
+- FIX - TAG classification colors
+### Update
+- UPDATE - Update for TWW
+### Important
+- IMPORTANT - The Objectivetracker Skin is completely deactivated in mMT, because I don't have the time at the moment,
+              to adapt the skin to the current changes in WoW. I recommend to activate the skin in the addon from Eltreum > Eltruism an update will follow.
+- IMPORTANT - Some features  in the AFK screen have been disabled, again for the same reason as above and an update will follow.
+- IMPORTANT - I can understand that some people will not like these changes, but please understand that I am working
+              on this project after my work and do not always have enough time. Thanks for your understanding and have fun with the PrePatch.
+
 ## [ver. 3.43] - 13.07.2024
 ### FIX
 - FIX - Missing symbol in the menu for Docks.
