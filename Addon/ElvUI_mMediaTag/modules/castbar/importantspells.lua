@@ -2,6 +2,8 @@ local E = unpack(ElvUI)
 local PlaySoundFile = PlaySoundFile
 local GetTime = GetTime
 
+local GetSpellInfo = C_Spell and C_Spell.GetSpellInfo or GetSpellInfo
+
 local lastPlayed = {}
 
 local module = mMT.Modules.ImportantSpells
@@ -100,13 +102,13 @@ function module:UpdateCastbar(castbar)
 		end
 
 		if Spell.sound.enable and Spell.sound.file and (Spell.sound.target and castbar.unit == "target") or not Spell.sound.target then
-			local castTime = select(4, GetSpellInfo(castbar.spellID))
+			local spellInfo = GetSpellInfo(castbar.spellID)
 			local delay = 0.5
 			lastPlayed[castbar.spellID] = lastPlayed[castbar.spellID] or { time = 0, queued = 0, willPlay = true }
 
 			local willPlay, soundHandle = nil, nil
 
-			if lastPlayed[castbar.spellID].willPlay and (lastPlayed[castbar.spellID].time + (castTime / 1000) + delay) < GetTime() then
+			if lastPlayed[castbar.spellID].willPlay and (lastPlayed[castbar.spellID].time + (spellInfo.castTime / 1000) + delay) < GetTime() then
 				local file = E.LSM:Fetch("sound", Spell.sound.file)
 				willPlay, soundHandle = PlaySoundFile(file, "Master")
 			end
