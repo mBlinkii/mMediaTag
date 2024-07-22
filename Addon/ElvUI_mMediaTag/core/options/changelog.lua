@@ -9,14 +9,15 @@ local new, fix, update, important, dash = "|TInterface\\Addons\\ElvUI_mMediaTag\
 
 local change_log_important = {
 	red .. "!!! Important" .. endtag,
-	"rework of the Important Spell feature",
-	"it is possible to create filters similar to ElvUI Style filters and assign multiple",
-	"spell IDs to the filters, so it is possible to have the same settings for multiple spells.",
-	"before you had to define separate settings for each id",
-	"This update will reset the Spell DB.",
+	"",
+	"The Objectivetracker Skin is completely deactivated in mMT, because I don't have the time at the moment, to adapt the skin to the current changes in WoW. I recommend to activate the skin in the addon from Eltreum > Eltruism an update will follow.",
+	"",
+	"Some features  in the AFK screen have been disabled, again for the same reason as above and an update will follow.",
+	"",
+	"I can understand that some people will not like these changes, but please understand that I am working on this project after my work and do not always have enough time. Thanks for your understanding and have fun with the PrePatch.",
 }
 
-local releasdate = "13.07.2024"
+local releasdate = "23.07.2024"
 
 local change_log_new = {
 	"New Settings menu for the Example Docks.",
@@ -26,13 +27,13 @@ local change_log_new = {
 }
 
 local change_log_update = {
-	"Some code optimizations.",
-	"TOC update for Classic.",
+	"Update for TWW",
 }
 
 local change_log_fix = {
-	"Missing symbol in the menu for Docks.",
-	"Dock Icon sizing if the bar is vertical.",
+	"Bug with Portraits in combat and zone changes",
+	"Portrait Cast icon with enabled Class icons",
+	"TAG classification colors",
 }
 
 local function Concatenation(tbl, icon, color)
@@ -46,14 +47,14 @@ local function Concatenation(tbl, icon, color)
 			line = icon .. "  " .. line
 		end
 
-		string = string .. dash .. "  " .. line .. "\n"
+		string = string .. ((line ~= "") and dash or "") .. "  " .. line .. "\n"
 	end
 	return string
 end
 
 local function configTable()
-	--change_log_important_string = Concatenation(change_log_important)
-	change_log_new_string = Concatenation(change_log_new)
+	change_log_important_string = Concatenation(change_log_important)
+	--change_log_new_string = Concatenation(change_log_new)
 	change_log_update_string = Concatenation(change_log_update)
 	change_log_fix_string = Concatenation(change_log_fix)
 	E.Options.args.mMT.args.changelog.args = {
