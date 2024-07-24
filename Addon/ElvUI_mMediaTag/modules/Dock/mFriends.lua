@@ -8,7 +8,6 @@ local sort, next, wipe, tremove, tinsert = sort, next, wipe, tremove, tinsert
 local format, gsub, strfind, strjoin, strmatch = format, gsub, strfind, strjoin, strmatch
 
 local MouseIsOver = MouseIsOver
-local EasyMenu = EasyMenu
 local BNGetNumFriends = BNGetNumFriends
 local BNInviteFriend = BNInviteFriend
 local BNRequestInviteFriend = BNRequestInviteFriend
@@ -33,7 +32,7 @@ local C_FriendList_GetNumOnlineFriends = C_FriendList.GetNumOnlineFriends
 local C_FriendList_GetFriendInfoByIndex = C_FriendList.GetFriendInfoByIndex
 local ChatFrame_SendBNetTell = ChatFrame_SendBNetTell
 local C_PartyInfo_RequestInviteFromUnit = C_PartyInfo.RequestInviteFromUnit
-local InviteUnit = C_PartyInfo.InviteUnit or InviteUnit
+local InviteUnit = C_PartyInfo.InviteUnit
 local PRIEST_COLOR = RAID_CLASS_COLORS.PRIEST
 
 local TIMERUNNING_ATLAS = "|A:timerunning-glues-icon-small:%s:%s:0:0|a"
@@ -300,7 +299,7 @@ local function AddToBNTable(bnIndex, bnetIDAccount, accountName, battleTag, char
 	if wowProjectID and wowProjectID ~= retailID then
 		obj.classicText, obj.realmName = strmatch(gameText, "(.-)%s%-%s(.+)")
 
-		if obj.classicText ~= "" and obj.classicText ~= EXPANSION_NAME0 then
+		if obj.classicText and obj.classicText ~= '' and obj.classicText ~= EXPANSION_NAME0 then
 			obj.classicText = gsub(obj.classicText, "%s?" .. EXPANSION_NAME0 .. "%s?", "")
 		end
 	end
@@ -594,7 +593,7 @@ local function Click(self, btn)
 		end
 
 		E:SetEasyMenuAnchor(E.EasyMenu, self)
-		EasyMenu(menuList, E.EasyMenu, nil, nil, nil, "MENU")
+		E:ComplicatedMenu(menuList, E.EasyMenu, nil, nil, nil, 'MENU')
 	elseif not E:AlertCombat() then
 		ToggleFriendsFrame(1)
 	end

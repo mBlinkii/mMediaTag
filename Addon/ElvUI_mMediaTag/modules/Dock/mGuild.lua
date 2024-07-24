@@ -8,7 +8,6 @@ local _G = _G
 local ipairs, select, sort, unpack, wipe, ceil = ipairs, select, sort, unpack, wipe, ceil
 local format, strfind, strjoin, strsplit, strmatch = format, strfind, strjoin, strsplit, strmatch
 
-local EasyMenu = EasyMenu
 local GetDisplayedInviteType = GetDisplayedInviteType
 local GetGuildFactionInfo = GetGuildFactionInfo
 local GetGuildInfo = GetGuildInfo
@@ -28,7 +27,7 @@ local UnitInRaid = UnitInRaid
 local IsAltKeyDown = IsAltKeyDown
 
 local IsTimerunningPlayer = C_ChatInfo.IsTimerunningPlayer
-local InviteUnit = C_PartyInfo.InviteUnit or InviteUnit
+local InviteUnit = C_PartyInfo.InviteUnit
 local C_PartyInfo_RequestInviteFromUnit = C_PartyInfo.RequestInviteFromUnit
 local LoadAddOn = (C_AddOns and C_AddOns.LoadAddOn) or LoadAddOn
 
@@ -247,7 +246,7 @@ local function OnClick(self, btn)
 		end
 
 		E:SetEasyMenuAnchor(E.EasyMenu, self)
-		EasyMenu(menuList, E.EasyMenu, nil, nil, nil, "MENU")
+		E:ComplicatedMenu(menuList, E.EasyMenu, nil, nil, nil, 'MENU')
 	elseif not E:AlertCombat() then
 		if E.Retail or E.Cata then
 			ToggleGuildFrame()
