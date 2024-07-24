@@ -3,6 +3,7 @@ local DT = E:GetModule("DataTexts")
 
 --Lua functions
 local format = format
+local PlayerSpellsUtil = _G.PlayerSpellsUtil
 
 --Variables
 local _G = _G
@@ -41,14 +42,17 @@ local function OnLeave(self)
 		DT.tooltip:Hide()
 	end
 
-
 	mMT:Dock_OnLeave(self, Config)
 end
 
 local function OnClick(self)
 	if mMT:CheckCombatLockdown() then
 		mMT:Dock_Click(self, Config)
-		ToggleFrame(_G.SpellBookFrame)
+		if PlayerSpellsUtil then
+			PlayerSpellsUtil.ToggleSpellBookFrame()
+		else
+			ToggleFrame(_G.SpellBookFrame)
+		end
 	end
 end
 
