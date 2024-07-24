@@ -782,7 +782,8 @@
         "PAPERDOLL_STATCATEGORIES",
         "WorldFrame",
         "QuestCache",
-        "TRACKER_HEADER_CAMPAIGN_QUESTS"
+        "TRACKER_HEADER_CAMPAIGN_QUESTS",
+        "ToggleProfessionsBook"
     ],
     "Lua.diagnostics.disable": [
         "undefined-field"
