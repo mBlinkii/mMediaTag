@@ -221,12 +221,12 @@ local function OnClick(self, button)
 			end
 
 			E:SetEasyMenuAnchor(E.EasyMenu, self)
-			_G.EasyMenu(menu, E.EasyMenu, nil, nil, nil, "MENU")
+			E:ComplicatedMenu(menu, E.EasyMenu, nil, nil, nil, 'MENU')
 		elseif button == "MiddleButton" then
 			SetCVar(AudioStreams[1].Enabled, GetCVarBool(AudioStreams[1].Enabled) and 0 or 1, "MMT_ELVUI_VOLUME")
 		elseif button == "RightButton" then
 			E:SetEasyMenuAnchor(E.EasyMenu, self)
-			_G.EasyMenu(IsShiftKeyDown() and deviceMenu or toggleMenu, E.EasyMenu, nil, nil, nil, "MENU")
+			E:ComplicatedMenu(IsShiftKeyDown() and deviceMenu or toggleMenu, E.EasyMenu, nil, nil, nil, "MENU")
 		end
 	end
 end
