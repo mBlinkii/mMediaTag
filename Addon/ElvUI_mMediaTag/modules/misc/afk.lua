@@ -113,6 +113,23 @@ local function UpdateTexts()
 		if E.Retail then
 			tinsert(PlayerStats.progress.lines, DUNGEON_SCORE .. ": " .. mMT:GetDungeonScore())
 		end
+
+		PlayerStats.attributes.title = STAT_CATEGORY_ATTRIBUTES
+		PlayerStats.enhancements.title = STAT_CATEGORY_ENHANCEMENTS
+
+		if E.Retail then
+			for line in _G.CharacterStatsPane.statsFramePool:EnumerateActive() do
+				local Label = line.Label:GetText()
+				local Value = line.Value:GetText()
+				local Percent = string.find(Value, "%%")
+
+				if not Percent then
+					tinsert(PlayerStats.attributes.lines, Label .. " |CFFFFFFFF" .. Value .. "|r")
+				elseif Percent then
+					tinsert(PlayerStats.enhancements.lines, Label .. " |CFFFFFFFF" .. Value .. "|r")
+				end
+			end
+		end
 	end
 
 	if E.db.mMT.afk.garbage then
@@ -125,8 +142,8 @@ local function UpdateTexts()
 	end
 
 	PlayerStats.values.text = ConcatString(PlayerStats.values.lines)
-	--PlayerStats.attributes.text = ConcatString(PlayerStats.attributes.lines)
-	--PlayerStats.enhancements.text = ConcatString(PlayerStats.enhancements.lines)
+	PlayerStats.attributes.text = ConcatString(PlayerStats.attributes.lines)
+	PlayerStats.enhancements.text = ConcatString(PlayerStats.enhancements.lines)
 	PlayerStats.progress.text = ConcatString(PlayerStats.progress.lines)
 end
 
@@ -215,18 +232,18 @@ function mMT:mMT_AFKScreen()
 					mMT_AFK_InfoScreen.BlockA = CreateLabel(mMT_AFK_InfoScreen, false, mMT_AFK_InfoScreen.TitleA, "BOTTOMLEFT", { r = db.values.r, g = db.values.g, b = db.values.b })
 				end
 
-				--if db.attributes.enable then
-				--	mMT_AFK_InfoScreen.TitleB = CreateLabel(mMT_AFK_InfoScreen, true, mMT_AFK_InfoScreen.BlockA, "BOTTOMLEFT", { r = db.title.r, g = db.title.g, b = db.title.b })
-				--	mMT_AFK_InfoScreen.BlockB = CreateLabel(mMT_AFK_InfoScreen, false, mMT_AFK_InfoScreen.TitleB, "BOTTOMLEFT", { r = db.attributes.r, g = db.attributes.g, b = db.attributes.b })
-				--end
+				if db.attributes.enable then
+					mMT_AFK_InfoScreen.TitleB = CreateLabel(mMT_AFK_InfoScreen, true, mMT_AFK_InfoScreen.BlockA, "BOTTOMLEFT", { r = db.title.r, g = db.title.g, b = db.title.b })
+					mMT_AFK_InfoScreen.BlockB = CreateLabel(mMT_AFK_InfoScreen, false, mMT_AFK_InfoScreen.TitleB, "BOTTOMLEFT", { r = db.attributes.r, g = db.attributes.g, b = db.attributes.b })
+				end
 
-				--if db.enhancements.enable then
-				--	mMT_AFK_InfoScreen.TitleC = CreateLabel(mMT_AFK_InfoScreen, true, mMT_AFK_InfoScreen.BlockB, "BOTTOMLEFT", { r = db.title.r, g = db.title.g, b = db.title.b })
-				--	mMT_AFK_InfoScreen.BlockC = CreateLabel(mMT_AFK_InfoScreen, false, mMT_AFK_InfoScreen.TitleC, "BOTTOMLEFT", { r = db.enhancements.r, g = db.enhancements.g, b = db.enhancements.b })
-				--end
+				if db.enhancements.enable then
+					mMT_AFK_InfoScreen.TitleC = CreateLabel(mMT_AFK_InfoScreen, true, mMT_AFK_InfoScreen.BlockB, "BOTTOMLEFT", { r = db.title.r, g = db.title.g, b = db.title.b })
+					mMT_AFK_InfoScreen.BlockC = CreateLabel(mMT_AFK_InfoScreen, false, mMT_AFK_InfoScreen.TitleC, "BOTTOMLEFT", { r = db.enhancements.r, g = db.enhancements.g, b = db.enhancements.b })
+				end
 
 				if db.progress.enable then
-					mMT_AFK_InfoScreen.TitleD = CreateLabel(mMT_AFK_InfoScreen, true, mMT_AFK_InfoScreen.BlockA, "BOTTOMLEFT", { r = db.title.r, g = db.title.g, b = db.title.b })
+					mMT_AFK_InfoScreen.TitleD = CreateLabel(mMT_AFK_InfoScreen, true, mMT_AFK_InfoScreen.BlockC, "BOTTOMLEFT", { r = db.title.r, g = db.title.g, b = db.title.b })
 					mMT_AFK_InfoScreen.BlockD = CreateLabel(mMT_AFK_InfoScreen, false, mMT_AFK_InfoScreen.TitleD, "BOTTOMLEFT", { r = db.progress.r, g = db.progress.g, b = db.progress.b })
 				end
 
@@ -240,37 +257,41 @@ function mMT:mMT_AFKScreen()
 
 			UpdateTexts()
 
-			local size = 120
+			local size = 0
 			if db.values.enable then
 				_G.ElvUIAFKFrame.mMT_AFK_InfoScreen.TitleA:SetText(PlayerStats.values.title)
 				_G.ElvUIAFKFrame.mMT_AFK_InfoScreen.BlockA:SetText(PlayerStats.values.text)
 				_G.ElvUIAFKFrame.mMT_AFK_InfoScreen.TitleA:SetTextColor(db.title.r, db.title.g, db.title.b)
 				_G.ElvUIAFKFrame.mMT_AFK_InfoScreen.BlockA:SetTextColor(db.values.r, db.values.g, db.values.b)
-				size = size + _G.ElvUIAFKFrame.mMT_AFK_InfoScreen.TitleA:GetStringHeight()
-				size = size + _G.ElvUIAFKFrame.mMT_AFK_InfoScreen.BlockA:GetStringHeight()
+				size = size + _G.ElvUIAFKFrame.mMT_AFK_InfoScreen.TitleA:GetStringHeight() + 20
+				size = size + _G.ElvUIAFKFrame.mMT_AFK_InfoScreen.BlockA:GetStringHeight() + 18
 			end
 
-			-- if db.attributes.enable then
-			-- 	_G.ElvUIAFKFrame.mMT_AFK_InfoScreen.TitleB:SetText(PlayerStats.attributes.title)
-			-- 	_G.ElvUIAFKFrame.mMT_AFK_InfoScreen.BlockB:SetText(PlayerStats.attributes.text)
-			-- 	_G.ElvUIAFKFrame.mMT_AFK_InfoScreen.TitleB:SetTextColor(db.title.r, db.title.g, db.title.b)
-			-- 	_G.ElvUIAFKFrame.mMT_AFK_InfoScreen.BlockB:SetTextColor(db.attributes.r, db.attributes.g, db.attributes.b)
-			-- end
+			if db.attributes.enable then
+				_G.ElvUIAFKFrame.mMT_AFK_InfoScreen.TitleB:SetText(PlayerStats.attributes.title)
+				_G.ElvUIAFKFrame.mMT_AFK_InfoScreen.BlockB:SetText(PlayerStats.attributes.text)
+				_G.ElvUIAFKFrame.mMT_AFK_InfoScreen.TitleB:SetTextColor(db.title.r, db.title.g, db.title.b)
+				_G.ElvUIAFKFrame.mMT_AFK_InfoScreen.BlockB:SetTextColor(db.attributes.r, db.attributes.g, db.attributes.b)
+				size = size + _G.ElvUIAFKFrame.mMT_AFK_InfoScreen.TitleB:GetStringHeight() + 20
+				size = size + _G.ElvUIAFKFrame.mMT_AFK_InfoScreen.BlockB:GetStringHeight() + 18
+			end
 
-			-- if db.enhancements.enable then
-			-- 	_G.ElvUIAFKFrame.mMT_AFK_InfoScreen.TitleC:SetText(PlayerStats.enhancements.title)
-			-- 	_G.ElvUIAFKFrame.mMT_AFK_InfoScreen.BlockC:SetText(PlayerStats.enhancements.text)
-			-- 	_G.ElvUIAFKFrame.mMT_AFK_InfoScreen.TitleC:SetTextColor(db.title.r, db.title.g, db.title.b)
-			-- 	_G.ElvUIAFKFrame.mMT_AFK_InfoScreen.BlockC:SetTextColor(db.enhancements.r, db.enhancements.g, db.enhancements.b)
-			-- end
+			if db.enhancements.enable then
+				_G.ElvUIAFKFrame.mMT_AFK_InfoScreen.TitleC:SetText(PlayerStats.enhancements.title)
+				_G.ElvUIAFKFrame.mMT_AFK_InfoScreen.BlockC:SetText(PlayerStats.enhancements.text)
+				_G.ElvUIAFKFrame.mMT_AFK_InfoScreen.TitleC:SetTextColor(db.title.r, db.title.g, db.title.b)
+				_G.ElvUIAFKFrame.mMT_AFK_InfoScreen.BlockC:SetTextColor(db.enhancements.r, db.enhancements.g, db.enhancements.b)
+				size = size + _G.ElvUIAFKFrame.mMT_AFK_InfoScreen.TitleC:GetStringHeight() + 20
+				size = size + _G.ElvUIAFKFrame.mMT_AFK_InfoScreen.BlockC:GetStringHeight() + 18
+			end
 
 			if db.progress.enable then
 				_G.ElvUIAFKFrame.mMT_AFK_InfoScreen.TitleD:SetText(PlayerStats.progress.title)
 				_G.ElvUIAFKFrame.mMT_AFK_InfoScreen.BlockD:SetText(PlayerStats.progress.text)
 				_G.ElvUIAFKFrame.mMT_AFK_InfoScreen.TitleD:SetTextColor(db.title.r, db.title.g, db.title.b)
 				_G.ElvUIAFKFrame.mMT_AFK_InfoScreen.BlockD:SetTextColor(db.progress.r, db.progress.g, db.progress.b)
-				size = size + _G.ElvUIAFKFrame.mMT_AFK_InfoScreen.TitleD:GetStringHeight()
-				size = size + _G.ElvUIAFKFrame.mMT_AFK_InfoScreen.BlockD:GetStringHeight()
+				size = size + _G.ElvUIAFKFrame.mMT_AFK_InfoScreen.TitleD:GetStringHeight() + 20
+				size = size + _G.ElvUIAFKFrame.mMT_AFK_InfoScreen.BlockD:GetStringHeight() + 18
 			end
 
 			if db.misc.enable then
@@ -278,8 +299,8 @@ function mMT:mMT_AFKScreen()
 				_G.ElvUIAFKFrame.mMT_AFK_InfoScreen.BlockE:SetText(PlayerStats.misc.text)
 				_G.ElvUIAFKFrame.mMT_AFK_InfoScreen.TitleE:SetTextColor(db.title.r, db.title.g, db.title.b)
 				_G.ElvUIAFKFrame.mMT_AFK_InfoScreen.BlockE:SetTextColor(db.misc.r, db.misc.g, db.misc.b)
-				size = size + _G.ElvUIAFKFrame.mMT_AFK_InfoScreen.TitleE:GetStringHeight()
-				size = size + _G.ElvUIAFKFrame.mMT_AFK_InfoScreen.BlockE:GetStringHeight()
+				size = size + _G.ElvUIAFKFrame.mMT_AFK_InfoScreen.TitleE:GetStringHeight() + 20
+				size = size + _G.ElvUIAFKFrame.mMT_AFK_InfoScreen.BlockE:GetStringHeight() + 18
 			end
 			_G.ElvUIAFKFrame.mMT_AFK_InfoScreen:Height(size)
 		end
