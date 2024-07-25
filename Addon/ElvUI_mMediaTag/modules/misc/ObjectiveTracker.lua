@@ -739,6 +739,11 @@ local function SkinHeaders(header)
 		QuestCount = (numQuests .. "/" .. maxNumQuestsCanAccept) or ""
 		header.Text:SetText(QUESTS_LABEL .. " - " .. QuestCount)
 	end
+
+	if not header.mMT_BarAdded and header ~= _G.ObjectiveTrackerFrame.Header then
+		AddHeaderBar(header)
+		header.mMT_BarAdded = true
+	end
 end
 
 local function SkinBlock(block)
@@ -780,8 +785,8 @@ function module:Initialize()
 	SetTextColors()
 
 	if not module.hooked then
-		local MainHeader = _G.ObjectiveTrackerFrame.Header
-		SkinHeaders(MainHeader)
+		--local MainHeader = _G.ObjectiveTrackerFrame.Header
+		SkinHeaders(_G.ObjectiveTrackerFrame.Header)
 
 		for _, tracker in pairs(trackers) do
 			if tracker then
