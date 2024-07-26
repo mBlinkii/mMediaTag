@@ -801,6 +801,7 @@ local function SkinBlock(tracker, block)
 			mMT:Print(block.height)
 		end
 
+		-- anchor block
 		block:ClearAllPoints()
 
 		if tracker.lastBlock then
