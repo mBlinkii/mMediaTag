@@ -3,7 +3,7 @@ local LSM = E.Libs.LSM
 local S = E:GetModule("Skins")
 
 local module = mMT.Modules.ObjectiveTracker
-local db = nil
+
 if not module then
 	return
 end
@@ -45,16 +45,13 @@ end
 
 -- skin progress/ timer bars
 local function SkinBarColor(Bar, r, g, b)
-	if not db then
-		return
-	end
 	if Bar then
-		if db.bar.elvbg then
+		if E.db.mMT.objectivetracker.bar.elvbg then
 			local color_barBG = E.db.general.backdropfadecolor
 			Bar.backdrop:SetBackdropColor(color_barBG.r, color_barBG.g, color_barBG.b, color_barBG.a)
 		end
 
-		if db.bar.gradient then
+		if E.db.mMT.objectivetracker.bar.gradient then
 			Bar:GetStatusBarTexture():SetGradient("HORIZONTAL", { r = r - 0.2, g = g - 0.2, b = b - 0.2, a = 1 }, { r = r + 0.2, g = g + 0.2, b = b + 0.2, a = 1 })
 		end
 	end
@@ -62,23 +59,20 @@ end
 
 -- skin progress/ timer bars
 local function SetUpBars(bar)
-	if not db then
-		return
-	end
 	-- bar text
 	local label = bar.Label
 
 	-- bar height
-	bar:Height(db.bar.hight)
+	bar:Height (E.db.mMT.objectivetracker.bar.hight)
 
 	-- bg color
-	if db.bar.elvbg and bar.backdrop then
+	if E.db.mMT.objectivetracker.bar.elvbg and bar.backdrop then
 		local color_barBG = E.db.general.backdropfadecolor
 		bar.backdrop:SetBackdropColor(color_barBG.r, color_barBG.g, color_barBG.b, color_barBG.a)
 	end
 
 	-- gradient bar color
-	if db.bar.gradient and not bar.mMT_hooked then
+	if E.db.mMT.objectivetracker.bar.gradient and not bar.mMT_hooked then
 		hooksecurefunc(bar, "SetStatusBarColor", SkinBarColor)
 		bar.mMT_hooked = true
 	end
@@ -86,13 +80,13 @@ local function SetUpBars(bar)
 	-- setup bar text
 	if label then
 		label:ClearAllPoints()
-		label:SetJustifyH(db.bar.fontpoint)
-		label:Point(db.bar.fontpoint, bar, db.bar.fontpoint, db.bar.fontpoint == "LEFT" and 2 or (db.bar.fontpoint == "RIGHT" and -2 or 0), 0)
-		label:FontTemplate(nil, db.bar.fontsize, db.fontflag)
+		label:SetJustifyH (E.db.mMT.objectivetracker.bar.fontpoint)
+		label:Point (E.db.mMT.objectivetracker.bar.fontpoint, bar, E.db.mMT.objectivetracker.bar.fontpoint, E.db.mMT.objectivetracker.bar.fontpoint == "LEFT" and 2 or  (E.db.mMT.objectivetracker.bar.fontpoint == "RIGHT" and -2 or 0), 0)
+		label:FontTemplate(nil, E.db.mMT.objectivetracker.bar.fontsize, E.db.mMT.objectivetracker.fontflag)
 	end
 
 	-- bar shadow
-	if db.bar.shadow and not bar.mMT_Shadow then
+	if E.db.mMT.objectivetracker.bar.shadow and not bar.mMT_Shadow then
 		bar:CreateShadow()
 		bar.mMT_Shadow = true
 	end
@@ -130,11 +124,8 @@ end
 
 -- quest text colors
 local function SetTextColors()
-	if not db then
-		return
-	end
-	colorFont = db.font.color
-	dim = db.font.highlight
+	colorFont = E.db.mMT.objectivetracker.font.color
+	dim = E.db.mMT.objectivetracker.font.highlight
 	local colorNormal = colorFont.text.class and mMT.ClassColor or colorFont.text
 	local colorTitle = colorFont.title.class and mMT.ClassColor or colorFont.title
 
@@ -162,27 +153,12 @@ local function SetTextColors()
 	OBJECTIVE_TRACKER_COLOR["CompleteHighlight"] = OBJECTIVE_TRACKER_COLOR["Complete"]
 end
 
--- title text settings
-local function SetTitleText(text)
-	if not db then
-		return
-	end
-	color = db.font.color.title.class and mMT.ClassColor or db.font.color.title
-	fontsize = db.font.fontsize.title
-
-	text:SetFont(LSM:Fetch("font", db.font.font), fontsize, db.font.fontflag)
-	text:SetTextColor(color.r, color.g, color.b)
-end
-
 --line text settings
 local function SetLineText(text, completed, check)
-	if not db then
-		return
-	end
-	color = completed and db.font.color.complete or (db.font.color.text.class and mMT.ClassColor or db.font.color.text)
-	fontsize = db.font.fontsize.text
+	color = completed and E.db.mMT.objectivetracker.font.color.complete or (E.db.mMT.objectivetracker.font.color.text.class and mMT.ClassColor or E.db.mMT.objectivetracker.font.color.text)
+	fontsize = E.db.mMT.objectivetracker.font.fontsize.text
 
-	text:SetFont(LSM:Fetch("font", db.font.font), fontsize, db.font.fontflag)
+	text:SetFont(LSM:Fetch("font", E.db.mMT.objectivetracker.font.font), fontsize, E.db.mMT.objectivetracker.font.fontflag)
 	text:SetTextColor(color.r, color.g, color.b)
 	local lineText = text:GetText()
 
@@ -193,13 +169,13 @@ local function SetLineText(text, completed, check)
 
 			if current and required and questText then
 				if current == required then
-					lineText = db.font.color.good.hex .. questText .. "|r"
+					lineText = E.db.mMT.objectivetracker.font.color.good.hex .. questText .. "|r"
 				else
 					local progressPercent = nil
 
-					local colorGood = db.font.color.good
-					local colorTransit = db.font.color.transit
-					local colorBad = db.font.color.bad
+					local colorGood = E.db.mMT.objectivetracker.font.color.good
+					local colorTransit = E.db.mMT.objectivetracker.font.color.transit
+					local colorBad = E.db.mMT.objectivetracker.font.color.bad
 
 					if required ~= "1" then
 						progressPercent = (tonumber(current) / tonumber(required)) * 100 or 0
@@ -208,14 +184,14 @@ local function SetLineText(text, completed, check)
 						progressPercent = format("%.f%%", progressPercent)
 						lineText = colorProgress .. current .. "/" .. required .. " - " .. progressPercent .. "|r" .. "  " .. questText
 					else
-						lineText = db.font.color.bad.hex .. current .. "/" .. required .. "|r  " .. questText
+						lineText = E.db.mMT.objectivetracker.font.color.bad.hex .. current .. "/" .. required .. "|r  " .. questText
 					end
 				end
 			end
 		else
 			local _, _, questText = GetRequirements(lineText)
 			if questText then
-				lineText = db.font.color.good.hex .. questText .. "|r"
+				lineText = E.db.mMT.objectivetracker.font.color.good.hex .. questText .. "|r"
 			end
 		end
 
@@ -228,30 +204,27 @@ end
 
 -- line text for dungeons
 local function SetDungeonLineText(text, criteriaString, current, required, complete)
-	if not db then
-		return
-	end
 	local lineText = nil
 	if criteriaString then
-		color = db.font.color.text.class and mMT.ClassColor or db.font.color.text
+		color = E.db.mMT.objectivetracker.font.color.text.class and mMT.ClassColor or E.db.mMT.objectivetracker.font.color.text
 
 		if complete then
-			color = db.font.color.complete
+			color = E.db.mMT.objectivetracker.font.color.complete
 
 			lineText = color.hex .. criteriaString .. "|r"
 		else
 			if current and required then
-				lineText = db.font.color.bad.hex .. current .. "/" .. required .. "|r" .. "  " .. criteriaString
+				lineText = E.db.mMT.objectivetracker.font.color.bad.hex .. current .. "/" .. required .. "|r" .. "  " .. criteriaString
 			elseif current then
-				lineText = db.font.color.bad.hex .. current .. "%|r" .. "  " .. criteriaString
+				lineText = E.db.mMT.objectivetracker.font.color.bad.hex .. current .. "%|r" .. "  " .. criteriaString
 			else
-				lineText = db.font.color.bad.hex .. criteriaString
+				lineText = E.db.mMT.objectivetracker.font.color.bad.hex .. criteriaString
 			end
 		end
 
-		fontsize = db.font.fontsize.text
+		fontsize = E.db.mMT.objectivetracker.font.fontsize.text
 
-		text:SetFont(LSM:Fetch("font", db.font.font), fontsize, db.font.fontflag)
+		text:SetFont(LSM:Fetch("font", E.db.mMT.objectivetracker.font.font), fontsize, E.db.mMT.objectivetracker.font.fontflag)
 		text:SetTextColor(color.r, color.g, color.b)
 
 		text:SetText(lineText)
@@ -262,10 +235,7 @@ local function SetDungeonLineText(text, criteriaString, current, required, compl
 end
 
 -- skin Objectives
-local function SkinObjective(_, block, objectiveKey)
-	if not db then
-		return
-	end
+local function SkinObjectiveOld(_, block, objectiveKey)
 	if block then
 		-- title text
 		if block.HeaderText then
@@ -283,7 +253,7 @@ local function SkinObjective(_, block, objectiveKey)
 				if check then
 					isShownCheck = true
 					check:SetTexture("Interface\\AddOns\\ElvUI_mMediaTag\\media\\icons\\misc\\questDone.tga")
-					check:SetVertexColor(db.font.color.good.r, db.font.color.good.g, db.font.color.good.b, 1)
+					check:SetVertexColor (E.db.mMT.objectivetracker.font.color.good.r, E.db.mMT.objectivetracker.font.color.good.g, E.db.mMT.objectivetracker.font.color.good.b, 1)
 				end
 
 				-- line text
@@ -300,7 +270,7 @@ local function SkinObjective(_, block, objectiveKey)
 				end
 
 				-- settings if dash is hide
-				if db.settings.hidedash then
+				if E.db.mMT.objectivetracker.settings.hidedash then
 					-- hide dash
 					local dash = block.currentLine.Dash
 					if dash then
@@ -326,10 +296,6 @@ local function SkinObjective(_, block, objectiveKey)
 end
 
 local function SkinDungeonsUpdateCriteria(_, numCriteria, block)
-	if not db then
-		return
-	end
-
 	if block then
 		for criteriaIndex = 1, numCriteria do
 			local existingLine = block.lines[criteriaIndex]
@@ -350,13 +316,13 @@ local function SkinDungeonsUpdateCriteria(_, numCriteria, block)
 				local icon = existingLine.Icon
 
 				if icon then
-					if db.dungeon.hidedash then
+					if E.db.mMT.objectivetracker.dungeon.hidedash then
 						icon:Hide()
 					else
 						icon:Show()
 						if existingLine.completed then
 							icon:SetTexture("Interface\\AddOns\\ElvUI_mMediaTag\\media\\icons\\misc\\questDone.tga")
-							icon:SetVertexColor(db.font.color.complete.r, db.font.color.complete.g, db.font.color.complete.b, 1)
+							icon:SetVertexColor (E.db.mMT.objectivetracker.font.color.complete.r, E.db.mMT.objectivetracker.font.color.complete.g, E.db.mMT.objectivetracker.font.color.complete.b, 1)
 						else
 							icon:SetTexture("Interface\\AddOns\\ElvUI_mMediaTag\\media\\icons\\misc\\questMinus.tga")
 							icon:SetVertexColor(mMT.ClassColor.r, mMT.ClassColor.g, mMT.ClassColor.b, 1)
@@ -370,9 +336,6 @@ end
 
 -- skin m+ stage block and time
 local function SkinChallengeModeTime(block, elapsedTime)
-	if not db then
-		return
-	end
 	-- get dungeon time limits
 	if not block.mMT_Timers then
 		block.mMT_Timers = {}
@@ -381,18 +344,18 @@ local function SkinChallengeModeTime(block, elapsedTime)
 	end
 
 	-- timer bar color
-	local colorA = db.dungeon.color.chest1.a
-	local colorB = db.dungeon.color.chest1.b
+	local colorA = E.db.mMT.objectivetracker.dungeon.color.chest1.a
+	local colorB = E.db.mMT.objectivetracker.dungeon.color.chest1.b
 
 	if elapsedTime < block.mMT_Timers.chest3 then
-		colorA = db.dungeon.color.chest3.a
-		colorB = db.dungeon.color.chest3.b
+		colorA = E.db.mMT.objectivetracker.dungeon.color.chest3.a
+		colorB = E.db.mMT.objectivetracker.dungeon.color.chest3.b
 	elseif elapsedTime < block.mMT_Timers.chest2 then
-		colorA = db.dungeon.color.chest2.a
-		colorB = db.dungeon.color.chest2.b
+		colorA = E.db.mMT.objectivetracker.dungeon.color.chest2.a
+		colorB = E.db.mMT.objectivetracker.dungeon.color.chest2.b
 	else
-		colorA = db.dungeon.color.chest1.a
-		colorB = db.dungeon.color.chest1.b
+		colorA = E.db.mMT.objectivetracker.dungeon.color.chest1.a
+		colorB = E.db.mMT.objectivetracker.dungeon.color.chest1.b
 	end
 
 	block.StatusBar:GetStatusBarTexture():SetGradient("HORIZONTAL", { r = colorA.r, g = colorA.g, b = colorA.b, a = colorA.a }, { r = colorB.r, g = colorB.g, b = colorB.b, a = colorB.a })
@@ -425,8 +388,8 @@ local function SkinChallengeModeTime(block, elapsedTime)
 	-- create and add time for current chest or over time
 	if not block.mMT_Time then
 		local timeLable = block.StatusBar:CreateFontString(nil, "OVERLAY")
-		timeLable:FontTemplate(nil, db.font.fontsize.title, db.font.fontflag)
-		timeLable:SetFont(LSM:Fetch("font", db.font.font), db.font.fontsize.title, db.font.fontflag)
+		timeLable:FontTemplate(nil, E.db.mMT.objectivetracker.font.fontsize.title, E.db.mMT.objectivetracker.font.fontflag)
+		timeLable:SetFont(LSM:Fetch("font", E.db.mMT.objectivetracker.font.font), E.db.mMT.objectivetracker.font.fontsize.title, E.db.mMT.objectivetracker.font.fontflag)
 		timeLable:SetPoint("RIGHT", block.StatusBar, "RIGHT", -4, 0)
 		timeLable:SetJustifyH("RIGHT")
 		timeLable:SetJustifyV("TOP")
@@ -441,8 +404,8 @@ local function SkinChallengeModeTime(block, elapsedTime)
 	elseif elapsedTime < block.mMT_Timers.chest2 then
 		timeText = "+2 " .. SecondsToClock(block.mMT_Timers.chest2 - elapsedTime)
 	elseif elapsedTime > block.timeLimit then
-		timeText = db.font.color.bad.hex .. "+ " .. SecondsToClock(elapsedTime - block.timeLimit) .. "|r"
-		block.TimeLeft:SetText(db.font.color.bad.hex .. SecondsToClock(elapsedTime) .. "|r")
+		timeText = E.db.mMT.objectivetracker.font.color.bad.hex .. "+ " .. SecondsToClock(elapsedTime - block.timeLimit) .. "|r"
+		block.TimeLeft:SetText (E.db.mMT.objectivetracker.font.color.bad.hex .. SecondsToClock(elapsedTime) .. "|r")
 	else
 		timeText = ""
 	end
@@ -459,10 +422,6 @@ end
 
 --skin stage block
 function SkinStageBlock()
-	if not db then
-		return
-	end
-
 	local isChallengeMode = isChallengeModeActive()
 	local StageBlock = isChallengeMode and _G.ScenarioChallengeModeBlock or _G.ScenarioStageBlock
 
@@ -501,15 +460,15 @@ function SkinStageBlock()
 		mMT_StageBlock:SetFrameLevel(3)
 		mMT_StageBlock:Show()
 
-		if db.dungeon.shadow then
+		if E.db.mMT.objectivetracker.dungeon.shadow then
 			mMT_StageBlock:CreateShadow()
 		end
 
 		-- create difficulty label to dungeon stage block if not m+
 		if not mMT_StageBlock.Difficulty and not isChallengeMode then
 			local label = mMT_StageBlock:CreateFontString(nil, "OVERLAY")
-			label:FontTemplate(nil, db.font.fontsize.title, db.font.fontflag)
-			label:SetFont(LSM:Fetch("font", db.font.font), db.font.fontsize.title, db.font.fontflag)
+			label:FontTemplate(nil, E.db.mMT.objectivetracker.font.fontsize.title, E.db.mMT.objectivetracker.font.fontflag)
+			label:SetFont(LSM:Fetch("font", E.db.mMT.objectivetracker.font.font), E.db.mMT.objectivetracker.font.fontsize.title, E.db.mMT.objectivetracker.font.fontflag)
 			label:Point("TOPRIGHT", mMT_StageBlock, "TOPRIGHT", -10, -10)
 			label:SetJustifyH("RIGHT")
 			label:SetJustifyV("TOP")
@@ -543,16 +502,13 @@ end
 
 -- set header text
 local function SetHeaderText(text, isQuest)
-	if not db then
-		return
-	end
 	color = colorFont.header.class and mMT.ClassColor or colorFont.header
 
-	local font = LSM:Fetch("font", db.font.font)
-	text:SetFont(font, db.font.fontsize.header, db.font.fontflag)
+	local font = LSM:Fetch("font", E.db.mMT.objectivetracker.font.font)
+	text:SetFont(font, E.db.mMT.objectivetracker.font.fontsize.header, E.db.mMT.objectivetracker.font.fontflag)
 	text:SetTextColor(color.r, color.g, color.b)
 
-	if db.settings.questcount and isQuest then
+	if E.db.mMT.objectivetracker.settings.questcount and isQuest then
 		local numQuests = select(2, C_QuestLog.GetNumQuestLogEntries())
 		QuestCount = (numQuests .. "/" .. maxNumQuestsCanAccept) or ""
 		text:SetText(QUESTS_LABEL .. " - " .. QuestCount)
@@ -569,28 +525,26 @@ local function AddHeaderBar(header)
 
 	headerBar.texture = headerBar:CreateTexture()
 	headerBar.texture:SetAllPoints(headerBar)
-	headerBar.texture:SetTexture(LSM:Fetch("statusbar", db.headerbar.texture))
+	headerBar.texture:SetTexture(LSM:Fetch("statusbar", E.db.mMT.objectivetracker.headerbar.texture))
 
-	if db then
-		local color_HeaderBar = { r = 1, g = 1, b = 1, gradient = { a = { r = 0.8, g = 0.8, b = 0.8, a = 1 }, b = { r = 1, g = 1, b = 1, a = 1 } } }
+	local color_HeaderBar = { r = 1, g = 1, b = 1, gradient = { a = { r = 0.8, g = 0.8, b = 0.8, a = 1 }, b = { r = 1, g = 1, b = 1, a = 1 } } }
 
-		if db.headerbar.class then
-			color_HeaderBar = mMT.ClassColor or color_HeaderBar
-		else
-			local c = db.headerbar.color
+	if E.db.mMT.objectivetracker.headerbar.class then
+		color_HeaderBar = mMT.ClassColor or color_HeaderBar
+	else
+		local c = E.db.mMT.objectivetracker.headerbar.color
 
-			color_HeaderBar = { r = c.r, g = c.g, b = c.b, gradient = { a = { r = c.r + 0.2, g = c.g + 0.2, b = c.b + 0.2, a = 1 }, b = { r = c.r - 0.2, g = c.g - 0.2, b = c.b - 0.2, a = 1 } } }
-		end
+		color_HeaderBar = { r = c.r, g = c.g, b = c.b, gradient = { a = { r = c.r + 0.2, g = c.g + 0.2, b = c.b + 0.2, a = 1 }, b = { r = c.r - 0.2, g = c.g - 0.2, b = c.b - 0.2, a = 1 } } }
+	end
 
-		if db.headerbar.gradient and color_HeaderBar.gradient.a and color_HeaderBar.gradient.b then
-			headerBar.texture:SetGradient("HORIZONTAL", color_HeaderBar.gradient.a, color_HeaderBar.gradient.b)
-		else
-			headerBar.texture:SetVertexColor(color_HeaderBar.r or 1, color_HeaderBar.g or 1, color_HeaderBar.b or 1, 1)
-		end
+	if E.db.mMT.objectivetracker.headerbar.gradient and color_HeaderBar.gradient.a and color_HeaderBar.gradient.b then
+		headerBar.texture:SetGradient("HORIZONTAL", color_HeaderBar.gradient.a, color_HeaderBar.gradient.b)
+	else
+		headerBar.texture:SetVertexColor(color_HeaderBar.r or 1, color_HeaderBar.g or 1, color_HeaderBar.b or 1, 1)
+	end
 
-		if db and db.headerbar.shadow then
-			headerBar:CreateShadow()
-		end
+	if E.db.mMT.objectivetracker.headerbar.shadow then
+		headerBar:CreateShadow()
 	end
 end
 
@@ -600,20 +554,20 @@ local function BackgroundSkin()
 		ObjectiveTrackerFrame.NineSlice:SetTemplate("Transparent")
 		ObjectiveTrackerFrame.NineSlice:SetFrameStrata("LOW")
 
-		if db and db.bg.shadow then
+		if E.db.mMT.objectivetracker.bg.shadow then
 			ObjectiveTrackerFrame.NineSlice:CreateShadow()
 		end
 
 		ObjectiveTrackerFrame.NineSlice.mMT_Skin = true
 	end
 
-	ObjectiveTrackerFrame.NineSlice:SetBackdropColor(db.bg.color.bg.r, db.bg.color.bg.g, db.bg.color.bg.b, db.bg.color.bg.a)
+	ObjectiveTrackerFrame.NineSlice:SetBackdropColor (E.db.mMT.objectivetracker.bg.color.bg.r, E.db.mMT.objectivetracker.bg.color.bg.g, E.db.mMT.objectivetracker.bg.color.bg.b, E.db.mMT.objectivetracker.bg.color.bg.a)
 
-	if db and db.bg.border then
-		ObjectiveTrackerFrame.NineSlice:SetBackdropBorderColor(db.bg.color.border.r, db.bg.color.border.g, db.bg.color.border.b, db.bg.color.border.a)
+	if E.db.mMT.objectivetracker.bg.border then
+		ObjectiveTrackerFrame.NineSlice:SetBackdropBorderColor (E.db.mMT.objectivetracker.bg.color.border.r, E.db.mMT.objectivetracker.bg.color.border.g, E.db.mMT.objectivetracker.bg.color.border.b, E.db.mMT.objectivetracker.bg.color.border.a)
 	end
 
-	ObjectiveTrackerFrame.NineSlice:SetAlpha(db.bg.color.bg.a)
+	ObjectiveTrackerFrame.NineSlice:SetAlpha (E.db.mMT.objectivetracker.bg.color.bg.a)
 end
 
 -- Add Quest amount text to the header
@@ -645,24 +599,32 @@ local function UpdateHeaders()
 end
 
 local function UpdateTracker()
-	if db then
-		-- skin objectivetracker bg
-		if db.bg.enable then
-			BackgroundSkin()
-		end
-
-		--  update header text and add header bar
-		if db.headerbar.enable then
-			UpdateHeaders()
-		end
-
-		-- Add Quest amount text to the header
-		AddQuestNumText()
+	-- skin objectivetracker bg
+	if E.db.mMT.objectivetracker.bg.enable then
+		BackgroundSkin()
 	end
+
+	--  update header text and add header bar
+	if E.db.mMT.objectivetracker.headerbar.enable then
+		UpdateHeaders()
+	end
+
+	-- Add Quest amount text to the header
+	AddQuestNumText()
 end
-local function SkinLines(line)
+
+-- title text settings
+local function SetTitleText(text)
+	color = E.db.mMT.objectivetracker.font.color.title.class and mMT.ClassColor or E.db.mMT.objectivetracker.font.color.title
+	fontsize = E.db.mMT.objectivetracker.font.fontsize.title
+
+	text:SetFont(LSM:Fetch("font", E.db.mMT.objectivetracker.font.font), fontsize, E.db.mMT.objectivetracker.font.fontflag)
+	text:SetTextColor(color.r, color.g, color.b)
+end
+
+local function SkinLines(line, objectiveKey)
 	--mMT:DebugPrintTable(line)
-	if line and db then
+	if line then
 		-- title text
 		if line.HeaderText then
 			mMT:Print("HEADER")
@@ -679,7 +641,7 @@ local function SkinLines(line)
 			if check then
 				isShownCheck = true
 				check:SetTexture("Interface\\AddOns\\ElvUI_mMediaTag\\media\\icons\\misc\\questDone.tga")
-				check:SetVertexColor(db.font.color.good.r, db.font.color.good.g, db.font.color.good.b, 1)
+				check:SetVertexColor(E.db.mMT.objectivetracker.font.color.good.r, E.db.mMT.objectivetracker.font.color.good.g, E.db.mMT.objectivetracker.font.color.good.b, 1)
 			end
 
 			-- line text
@@ -696,7 +658,7 @@ local function SkinLines(line)
 			end
 
 			-- settings if dash is hide
-			if db.settings.hidedash then
+			if E.db.mMT.objectivetracker.settings.hidedash then
 				-- hide dash
 				local dash = line.Dash
 				if dash then
@@ -724,17 +686,13 @@ local function SkinHeaders(header)
 	--mMT:Print(header, _G.QuestObjectiveTracker.Header, (_G.QuestObjectiveTracker and (header == _G.QuestObjectiveTracker.Header)))
 	--SetHeaderText(header.Text, (_G.QuestObjectiveTracker and (header == _G.QuestObjectiveTracker.Header)))
 
-	if not db then
-		return
-	end
-
 	color = colorFont.header.class and mMT.ClassColor or colorFont.header
 
-	local font = LSM:Fetch("font", db.font.font)
-	header.Text:SetFont(font, db.font.fontsize.header, db.font.fontflag)
+	local font = LSM:Fetch("font", E.db.mMT.objectivetracker.font.font)
+	header.Text:SetFont(font, E.db.mMT.objectivetracker.font.fontsize.header, E.db.mMT.objectivetracker.font.fontflag)
 	header.Text:SetTextColor(color.r, color.g, color.b)
 
-	if db.settings.questcount and (_G.QuestObjectiveTracker and (header == _G.QuestObjectiveTracker.Header)) then
+	if E.db.mMT.objectivetracker.settings.questcount and (_G.QuestObjectiveTracker and (header == _G.QuestObjectiveTracker.Header)) then
 		local numQuests = select(2, C_QuestLog.GetNumQuestLogEntries())
 		QuestCount = (numQuests .. "/" .. maxNumQuestsCanAccept) or ""
 		header.Text:SetText(QUESTS_LABEL .. " - " .. QuestCount)
@@ -746,11 +704,71 @@ local function SkinHeaders(header)
 	end
 end
 
-local function SkinBlock(block)
-	if db and block then
-		-- block header
+
+local function SkinObjective(_, objectiveKey, text, template, useFullHeight, dashStyle, colorStyle, adjustForNoText, overrideHeight)
+	mMT:Print(a, objectiveKey, text, template, useFullHeight, dashStyle, colorStyle, adjustForNoText, overrideHeight)
+	-- local line = self:GetLine(objectiveKey, template);
+
+	-- line.progressBar = nil;
+
+	-- -- dash
+	-- if line.Dash then
+	-- 	if not dashStyle then
+	-- 		dashStyle = OBJECTIVE_DASH_STYLE_SHOW;
+	-- 	end
+	-- 	if line.dashStyle ~= dashStyle then
+	-- 		if dashStyle == OBJECTIVE_DASH_STYLE_SHOW then
+	-- 			line.Dash:Show();
+	-- 			line.Dash:SetText(QUEST_DASH);
+	-- 		elseif dashStyle == OBJECTIVE_DASH_STYLE_HIDE then
+	-- 			line.Dash:Hide();
+	-- 			line.Dash:SetText(QUEST_DASH);
+	-- 		elseif dashStyle == OBJECTIVE_DASH_STYLE_HIDE_AND_COLLAPSE then
+	-- 			line.Dash:Hide();
+	-- 			line.Dash:SetText(nil);
+	-- 		else
+	-- 			assertsafe(false, "Invalid dash style: " .. tostring(dashStyle));
+	-- 		end
+	-- 		line.dashStyle = dashStyle;
+	-- 	end
+	-- end
+
+	-- local lineSpacing = self.parentModule.lineSpacing;
+	-- local offsetY = -lineSpacing;
+
+	-- -- anchor the line
+	-- local anchor = self.lastRegion or self.HeaderText;
+	-- if anchor then
+	-- 	line:SetPoint("TOPLEFT", anchor, "BOTTOMLEFT", 0, offsetY);
+	-- else
+	-- 	line:SetPoint("TOPLEFT", 0, offsetY);
+	-- end
+	-- line:SetPoint("RIGHT", self.rightEdgeOffset, 0);
+
+	-- -- set the text
+	-- local textHeight = self:SetStringText(line.Text, text, useFullHeight, colorStyle, self.isHighlighted);
+	-- local height = overrideHeight or textHeight;
+	-- line:SetHeight(height);
+
+	-- self.height = self.height + height + lineSpacing;
+
+	-- self.lastRegion = line;
+	-- return line;
+end
+
+local function SkinBlock(_, block)
+	--mMT:DebugPrintTable(block)
+	local lastBlock = nil
+	if block then
 		if block.HeaderText then
 			SetTitleText(block.HeaderText)
+			--block.height = block.HeaderText:GetStringHeight()
+		end
+
+		if block.usedLines then
+			for objectiveKey, line in pairs(block.usedLines) do
+				SkinLines(line, objectiveKey)
+			end
 		end
 	end
 end
@@ -780,8 +798,6 @@ function module:Initialize()
 		}
 	end
 
-	db = E.db.mMT.objectivetracker
-
 	SetTextColors()
 
 	if not module.hooked then
@@ -789,10 +805,13 @@ function module:Initialize()
 		SkinHeaders(_G.ObjectiveTrackerFrame.Header)
 
 		for _, tracker in pairs(trackers) do
+			--mMT:DebugPrintTable(tracker)
 			if tracker then
 				SkinHeaders(tracker.Header)
-
-				hooksecurefunc(tracker, "AddBlock", SkinBlock)
+				if not tracker.mMTSkin then
+					hooksecurefunc(tracker, "AddBlock", SkinBlock)
+					tracker.mMTSkin = true
+				end
 			end
 		end
 

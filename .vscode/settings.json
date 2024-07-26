@@ -783,7 +783,9 @@
         "WorldFrame",
         "QuestCache",
         "TRACKER_HEADER_CAMPAIGN_QUESTS",
-        "ToggleProfessionsBook"
+        "ToggleProfessionsBook",
+        "EnumUtil",
+        "OBJECTIVE_TRACKER_COLOR"
     ],
     "Lua.diagnostics.disable": [
         "undefined-field"
