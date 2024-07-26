@@ -196,6 +196,7 @@ local function SetLineText(text, completed, check)
 		end
 
 		text:SetText(lineText)
+		mMT:Print("WIDTH", text:GetWidth())
 		--text:SetWordWrap(false)
 
 		return text:GetStringHeight()
@@ -234,66 +235,6 @@ local function SetDungeonLineText(text, criteriaString, current, required, compl
 	end
 end
 
--- skin Objectives
-local function SkinObjectiveOld(_, block, objectiveKey)
-	if block then
-		-- title text
-		if block.HeaderText then
-			SetTitleText(block.HeaderText)
-		end
-
-		if block.currentLine then
-			-- title text else line text
-			if block.currentLine.objectiveKey == 0 then
-				SetTitleText(block.currentLine.Text)
-			else
-				-- done icon
-				local check = block.currentLine.Check
-				local isShownCheck = false
-				if check then
-					isShownCheck = true
-					check:SetTexture("Interface\\AddOns\\ElvUI_mMediaTag\\media\\icons\\misc\\questDone.tga")
-					check:SetVertexColor(E.db.mMT.objectivetracker.font.color.good.r, E.db.mMT.objectivetracker.font.color.good.g, E.db.mMT.objectivetracker.font.color.good.b, 1)
-				end
-
-				-- line text
-				-- is quest completed
-				local complete = block.currentLine.state or (objectiveKey == "QuestComplete") or block.currentLine.finished
-				local text = block.currentLine.Text
-				if text then
-					local height = SetLineText(text, complete, isShownCheck)
-
-					-- set the text/ line height
-					if height and height ~= text:GetHeight() then
-						text:SetHeight(height)
-					end
-				end
-
-				-- settings if dash is hide
-				if E.db.mMT.objectivetracker.settings.hidedash then
-					-- hide dash
-					local dash = block.currentLine.Dash
-					if dash then
-						dash:Hide()
-						dash:SetText(nil)
-					end
-
-					-- new position for text
-					if text then
-						text:ClearAllPoints()
-						text:Point("TOPLEFT", dash, "TOPLEFT", 0, 0)
-					end
-
-					-- new position for done icon
-					if check then
-						check:ClearAllPoints()
-						check:Point("TOPRIGHT", dash, "TOPLEFT", 0, 0)
-					end
-				end
-			end
-		end
-	end
-end
 
 local function SkinDungeonsUpdateCriteria(_, numCriteria, block)
 	if block then
@@ -500,21 +441,6 @@ function SkinStageBlock()
 	end
 end
 
--- set header text
-local function SetHeaderText(text, isQuest)
-	color = colorFont.header.class and mMT.ClassColor or colorFont.header
-
-	local font = LSM:Fetch("font", E.db.mMT.objectivetracker.font.font)
-	text:SetFont(font, E.db.mMT.objectivetracker.font.fontsize.header, E.db.mMT.objectivetracker.font.fontflag)
-	text:SetTextColor(color.r, color.g, color.b)
-
-	if E.db.mMT.objectivetracker.settings.questcount and isQuest then
-		local numQuests = select(2, C_QuestLog.GetNumQuestLogEntries())
-		QuestCount = (numQuests .. "/" .. maxNumQuestsCanAccept) or ""
-		text:SetText(QUESTS_LABEL .. " - " .. QuestCount)
-	end
-end
-
 -- header bar
 local function AddHeaderBar(header)
 	local width = ObjectiveTrackerFrame:GetWidth()
@@ -570,33 +496,6 @@ local function BackgroundSkin()
 	ObjectiveTrackerFrame.NineSlice:SetAlpha(E.db.mMT.objectivetracker.bg.color.bg.a)
 end
 
--- Add Quest amount text to the header
-local function AddQuestNumText()
-	if _G.ObjectiveTrackerBlocksFrame and _G.ObjectiveTrackerBlocksFrame.QuestHeader and _G.ObjectiveTrackerBlocksFrame.QuestHeader.Text then
-		local QuestCount = ""
-		local _, numQuests = C_QuestLog.GetNumQuestLogEntries()
-		QuestCount = numQuests .. "/" .. maxNumQuestsCanAccept
-		_G.ObjectiveTrackerBlocksFrame.QuestHeader.Text:SetText(QUESTS_LABEL .. " - " .. QuestCount)
-	end
-end
-
---  update header text and add header bar
-local function UpdateHeaders()
-	local Frame = ObjectiveTrackerFrame.MODULES
-	if Frame then
-		for i = 1, #Frame do
-			local Module = Frame[i]
-			if Module then
-				SetHeaderText(Module.Header.Text)
-
-				if not Module.mMT_BarAdded then
-					AddHeaderBar(Module.Header)
-					Module.mMT_BarAdded = true
-				end
-			end
-		end
-	end
-end
 
 local function UpdateTracker()
 	-- skin objectivetracker bg
@@ -630,6 +529,7 @@ local function SkinLines(line, objectiveKey)
 			SetTitleText(line.Text)
 		else
 			-- done icon
+			mMT:Print(line.Check)
 			local check = line.Icon
 			local isShownCheck = false
 			if check then
@@ -641,30 +541,7 @@ local function SkinLines(line, objectiveKey)
 			-- line text
 			-- is quest completed
 			local complete = line.state or (objectiveKey == "QuestComplete") or line.finished
-			--local text = line.Text
 
-			-- local lineSpacing = self.parentModule.lineSpacing;
-			-- local offsetY = -lineSpacing;
-
-			-- -- anchor the line
-			-- local anchor = self.lastRegion or self.HeaderText;
-			-- if anchor then
-			-- 	line:SetPoint("TOPLEFT", anchor, "BOTTOMLEFT", 0, offsetY);
-			-- else
-			-- 	line:SetPoint("TOPLEFT", 0, offsetY);
-			-- end
-			-- line:SetPoint("RIGHT", self.rightEdgeOffset, 0);
-
-			-- -- set the text
-			-- local textHeight = self:SetStringText(line.Text, text, useFullHeight, colorStyle, self.isHighlighted);
-			-- local height = overrideHeight or textHeight;
-			-- line:SetHeight(height);
-
-			-- self.height = self.height + height + lineSpacing;
-
-			-- self.lastRegion = line;
-
-			-- settings if dash is hide
 			if E.db.mMT.objectivetracker.settings.hidedash then
 				-- hide dash
 				local dash = line.Dash
@@ -673,11 +550,13 @@ local function SkinLines(line, objectiveKey)
 					dash:SetText(nil)
 				end
 
+				-- dont use this
 				-- new position for text
-				if line.Text then
-					line.Text:ClearAllPoints()
-					line.Text:Point("TOPLEFT", dash, "TOPLEFT", 0, 0)
-				end
+				-- if line.Text then
+				-- 	line.Text:ClearAllPoints()
+				-- 	line.Text:SetPoint("TOPLEFT", dash, "TOPLEFT", 0, 0)
+				-- 	line:SetPoint("RIGHT", self.rightEdgeOffset, 0);
+				-- end
 
 				-- new position for done icon
 				if check then
@@ -710,57 +589,6 @@ local function SkinHeaders(header)
 		AddHeaderBar(header)
 		header.mMT_BarAdded = true
 	end
-end
-
-local function SkinObjective(_, objectiveKey, text, template, useFullHeight, dashStyle, colorStyle, adjustForNoText, overrideHeight)
-	mMT:Print(a, objectiveKey, text, template, useFullHeight, dashStyle, colorStyle, adjustForNoText, overrideHeight)
-	-- local line = self:GetLine(objectiveKey, template);
-
-	-- line.progressBar = nil;
-
-	-- -- dash
-	-- if line.Dash then
-	-- 	if not dashStyle then
-	-- 		dashStyle = OBJECTIVE_DASH_STYLE_SHOW;
-	-- 	end
-	-- 	if line.dashStyle ~= dashStyle then
-	-- 		if dashStyle == OBJECTIVE_DASH_STYLE_SHOW then
-	-- 			line.Dash:Show();
-	-- 			line.Dash:SetText(QUEST_DASH);
-	-- 		elseif dashStyle == OBJECTIVE_DASH_STYLE_HIDE then
-	-- 			line.Dash:Hide();
-	-- 			line.Dash:SetText(QUEST_DASH);
-	-- 		elseif dashStyle == OBJECTIVE_DASH_STYLE_HIDE_AND_COLLAPSE then
-	-- 			line.Dash:Hide();
-	-- 			line.Dash:SetText(nil);
-	-- 		else
-	-- 			assertsafe(false, "Invalid dash style: " .. tostring(dashStyle));
-	-- 		end
-	-- 		line.dashStyle = dashStyle;
-	-- 	end
-	-- end
-
-	-- local lineSpacing = self.parentModule.lineSpacing;
-	-- local offsetY = -lineSpacing;
-
-	-- -- anchor the line
-	-- local anchor = self.lastRegion or self.HeaderText;
-	-- if anchor then
-	-- 	line:SetPoint("TOPLEFT", anchor, "BOTTOMLEFT", 0, offsetY);
-	-- else
-	-- 	line:SetPoint("TOPLEFT", 0, offsetY);
-	-- end
-	-- line:SetPoint("RIGHT", self.rightEdgeOffset, 0);
-
-	-- -- set the text
-	-- local textHeight = self:SetStringText(line.Text, text, useFullHeight, colorStyle, self.isHighlighted);
-	-- local height = overrideHeight or textHeight;
-	-- line:SetHeight(height);
-
-	-- self.height = self.height + height + lineSpacing;
-
-	-- self.lastRegion = line;
-	-- return line;
 end
 
 local lastBlock
