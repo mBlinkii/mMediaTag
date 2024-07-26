@@ -196,7 +196,7 @@ local function SetLineText(text, completed, check)
 		end
 
 		text:SetText(lineText)
-		--text:SetWordWrap(true)
+		--text:SetWordWrap(false)
 
 		return text:GetStringHeight()
 	end
@@ -764,9 +764,9 @@ local function SkinObjective(_, objectiveKey, text, template, useFullHeight, das
 end
 
 local function SkinBlock(tracker, block)
-	mMT:DebugPrintTable(block)
+	mMT:DebugPrintTable(tracker.ContentsFrame)
 	local lastRegion
-	local lastBlock = nil
+	local lastBlock
 	if block then
 		if block.HeaderText then
 			SetTitleText(block.HeaderText)
@@ -804,20 +804,26 @@ local function SkinBlock(tracker, block)
 		-- anchor block
 		block:ClearAllPoints()
 
-		if tracker.lastBlock then
-			return tracker.lastBlock, tracker.fromBlockOffsetY, "BOTTOM"
+		local anchorFrame, offsetY, relativePoint
+
+		if lastBlock then
+			anchorFrame = lastBlock
+			offsetY = tracker.fromBlockOffsetY
+			relativePoint = "BOTTOM"
 		else
-			return tracker.ContentsFrame, tracker.fromHeaderOffsetY, "TOP"
+			anchorFrame = tracker.ContentsFrame
+			offsetY = tracker.fromHeaderOffsetY
+			relativePoint = "TOP"
 		end
 
-		local anchorFrame, offsetY, relativePoint = tracker:GetNextBlockAnchoring()
+
 		block:SetPoint("TOP", anchorFrame, relativePoint, 0, offsetY)
 		block:SetPoint("LEFT", block.offsetX or tracker.blockOffsetX, 0)
 		if not block.fixedWidth then
 			block:SetPoint("RIGHT")
 		end
+		lastBlock = block
 
-		return offsetY
 
 		--ObjectiveTrackerModuleMixin:Update(block.HeaderText:GetStringHeight())
 	end
