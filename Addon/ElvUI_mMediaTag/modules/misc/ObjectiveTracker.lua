@@ -168,7 +168,7 @@ local function SetLineText(text, completed, check)
 			local current, required, questText = GetRequirements(lineText)
 
 			if current and required and questText then
-				if current == required then
+				if current >= required then
 					lineText = E.db.mMT.objectivetracker.font.color.good.hex .. questText .. "|r"
 				else
 					local progressPercent = nil
@@ -763,13 +763,17 @@ local function SkinObjective(_, objectiveKey, text, template, useFullHeight, das
 	-- return line;
 end
 
+local lastBlock
 local function SkinBlock(tracker, block)
-	mMT:DebugPrintTable(tracker.ContentsFrame)
+	mMT:DebugPrintTable(block)
 	local lastRegion
-	local lastBlock
 	if block then
 		if block.HeaderText then
 			SetTitleText(block.HeaderText)
+			--block.HeaderText:ClearAllPoints()
+			--block.HeaderText:SetPoint("RIGHT", 0, 0)
+			--block.HeaderText:SetPoint("TOPLEFT", tracker, "BOTTOMLEFT", 0, 0)
+
 		end
 
 		if block.usedLines then
@@ -802,28 +806,27 @@ local function SkinBlock(tracker, block)
 		end
 
 		-- anchor block
-		block:ClearAllPoints()
+		-- block:ClearAllPoints()
 
-		local anchorFrame, offsetY, relativePoint
+		-- local anchorFrame, offsetY, relativePoint
 
-		if lastBlock then
-			anchorFrame = lastBlock
-			offsetY = tracker.fromBlockOffsetY
-			relativePoint = "BOTTOM"
-		else
-			anchorFrame = tracker.ContentsFrame
-			offsetY = tracker.fromHeaderOffsetY
-			relativePoint = "TOP"
-		end
+		-- if lastBlock then
+		-- 	anchorFrame = lastBlock
+		-- 	offsetY = tracker.fromBlockOffsetY
+		-- 	relativePoint = "BOTTOM"
+		-- else
+		-- 	anchorFrame = tracker.ContentsFrame
+		-- 	offsetY = tracker.fromHeaderOffsetY
+		-- 	relativePoint = "TOP"
+		-- end
 
-
-		block:SetPoint("TOP", anchorFrame, relativePoint, 0, offsetY)
-		block:SetPoint("LEFT", block.offsetX or tracker.blockOffsetX, 0)
-		if not block.fixedWidth then
-			block:SetPoint("RIGHT")
-		end
-		lastBlock = block
-
+		-- block:SetPoint("TOP", anchorFrame, relativePoint, 0, offsetY)
+		-- block:SetPoint("LEFT", block.offsetX or tracker.blockOffsetX, 0)
+		-- if not block.fixedWidth then
+		-- 	block:SetPoint("RIGHT")
+		-- end
+		-- mMT:Print(lastBlock)
+		-- lastBlock = block
 
 		--ObjectiveTrackerModuleMixin:Update(block.HeaderText:GetStringHeight())
 	end
