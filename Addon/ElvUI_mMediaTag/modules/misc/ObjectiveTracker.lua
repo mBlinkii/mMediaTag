@@ -797,27 +797,26 @@ local function SkinBlock(tracker, block)
 				block.height = block.height + textHeight + lineSpacing
 
 				lastRegion = line
-
 			end
 			mMT:Print(block.height)
 		end
 
 		block:ClearAllPoints()
 
-	if tracker.lastBlock then
-		return tracker.lastBlock, tracker.fromBlockOffsetY, "BOTTOM";
-	else
-		return tracker.ContentsFrame, tracker.fromHeaderOffsetY, "TOP";
-	end
-
-		local anchorFrame, offsetY, relativePoint = tracker:GetNextBlockAnchoring();
-		block:SetPoint("TOP", anchorFrame, relativePoint, 0, offsetY);
-		block:SetPoint("LEFT", block.offsetX or tracker.blockOffsetX, 0);
-		if not block.fixedWidth then
-			block:SetPoint("RIGHT");
+		if tracker.lastBlock then
+			return tracker.lastBlock, tracker.fromBlockOffsetY, "BOTTOM"
+		else
+			return tracker.ContentsFrame, tracker.fromHeaderOffsetY, "TOP"
 		end
 
-		return offsetY;
+		local anchorFrame, offsetY, relativePoint = tracker:GetNextBlockAnchoring()
+		block:SetPoint("TOP", anchorFrame, relativePoint, 0, offsetY)
+		block:SetPoint("LEFT", block.offsetX or tracker.blockOffsetX, 0)
+		if not block.fixedWidth then
+			block:SetPoint("RIGHT")
+		end
+
+		return offsetY
 
 		--ObjectiveTrackerModuleMixin:Update(block.HeaderText:GetStringHeight())
 	end
