@@ -63,7 +63,7 @@ local function SetUpBars(bar)
 	local label = bar.Label
 
 	-- bar height
-	bar:Height (E.db.mMT.objectivetracker.bar.hight)
+	bar:Height(E.db.mMT.objectivetracker.bar.hight)
 
 	-- bg color
 	if E.db.mMT.objectivetracker.bar.elvbg and bar.backdrop then
@@ -80,8 +80,8 @@ local function SetUpBars(bar)
 	-- setup bar text
 	if label then
 		label:ClearAllPoints()
-		label:SetJustifyH (E.db.mMT.objectivetracker.bar.fontpoint)
-		label:Point (E.db.mMT.objectivetracker.bar.fontpoint, bar, E.db.mMT.objectivetracker.bar.fontpoint, E.db.mMT.objectivetracker.bar.fontpoint == "LEFT" and 2 or  (E.db.mMT.objectivetracker.bar.fontpoint == "RIGHT" and -2 or 0), 0)
+		label:SetJustifyH(E.db.mMT.objectivetracker.bar.fontpoint)
+		label:Point(E.db.mMT.objectivetracker.bar.fontpoint, bar, E.db.mMT.objectivetracker.bar.fontpoint, E.db.mMT.objectivetracker.bar.fontpoint == "LEFT" and 2 or (E.db.mMT.objectivetracker.bar.fontpoint == "RIGHT" and -2 or 0), 0)
 		label:FontTemplate(nil, E.db.mMT.objectivetracker.bar.fontsize, E.db.mMT.objectivetracker.fontflag)
 	end
 
@@ -196,7 +196,7 @@ local function SetLineText(text, completed, check)
 		end
 
 		text:SetText(lineText)
-		text:SetWordWrap(true)
+		--text:SetWordWrap(true)
 
 		return text:GetStringHeight()
 	end
@@ -253,7 +253,7 @@ local function SkinObjectiveOld(_, block, objectiveKey)
 				if check then
 					isShownCheck = true
 					check:SetTexture("Interface\\AddOns\\ElvUI_mMediaTag\\media\\icons\\misc\\questDone.tga")
-					check:SetVertexColor (E.db.mMT.objectivetracker.font.color.good.r, E.db.mMT.objectivetracker.font.color.good.g, E.db.mMT.objectivetracker.font.color.good.b, 1)
+					check:SetVertexColor(E.db.mMT.objectivetracker.font.color.good.r, E.db.mMT.objectivetracker.font.color.good.g, E.db.mMT.objectivetracker.font.color.good.b, 1)
 				end
 
 				-- line text
@@ -322,7 +322,7 @@ local function SkinDungeonsUpdateCriteria(_, numCriteria, block)
 						icon:Show()
 						if existingLine.completed then
 							icon:SetTexture("Interface\\AddOns\\ElvUI_mMediaTag\\media\\icons\\misc\\questDone.tga")
-							icon:SetVertexColor (E.db.mMT.objectivetracker.font.color.complete.r, E.db.mMT.objectivetracker.font.color.complete.g, E.db.mMT.objectivetracker.font.color.complete.b, 1)
+							icon:SetVertexColor(E.db.mMT.objectivetracker.font.color.complete.r, E.db.mMT.objectivetracker.font.color.complete.g, E.db.mMT.objectivetracker.font.color.complete.b, 1)
 						else
 							icon:SetTexture("Interface\\AddOns\\ElvUI_mMediaTag\\media\\icons\\misc\\questMinus.tga")
 							icon:SetVertexColor(mMT.ClassColor.r, mMT.ClassColor.g, mMT.ClassColor.b, 1)
@@ -405,7 +405,7 @@ local function SkinChallengeModeTime(block, elapsedTime)
 		timeText = "+2 " .. SecondsToClock(block.mMT_Timers.chest2 - elapsedTime)
 	elseif elapsedTime > block.timeLimit then
 		timeText = E.db.mMT.objectivetracker.font.color.bad.hex .. "+ " .. SecondsToClock(elapsedTime - block.timeLimit) .. "|r"
-		block.TimeLeft:SetText (E.db.mMT.objectivetracker.font.color.bad.hex .. SecondsToClock(elapsedTime) .. "|r")
+		block.TimeLeft:SetText(E.db.mMT.objectivetracker.font.color.bad.hex .. SecondsToClock(elapsedTime) .. "|r")
 	else
 		timeText = ""
 	end
@@ -561,13 +561,13 @@ local function BackgroundSkin()
 		ObjectiveTrackerFrame.NineSlice.mMT_Skin = true
 	end
 
-	ObjectiveTrackerFrame.NineSlice:SetBackdropColor (E.db.mMT.objectivetracker.bg.color.bg.r, E.db.mMT.objectivetracker.bg.color.bg.g, E.db.mMT.objectivetracker.bg.color.bg.b, E.db.mMT.objectivetracker.bg.color.bg.a)
+	ObjectiveTrackerFrame.NineSlice:SetBackdropColor(E.db.mMT.objectivetracker.bg.color.bg.r, E.db.mMT.objectivetracker.bg.color.bg.g, E.db.mMT.objectivetracker.bg.color.bg.b, E.db.mMT.objectivetracker.bg.color.bg.a)
 
 	if E.db.mMT.objectivetracker.bg.border then
-		ObjectiveTrackerFrame.NineSlice:SetBackdropBorderColor (E.db.mMT.objectivetracker.bg.color.border.r, E.db.mMT.objectivetracker.bg.color.border.g, E.db.mMT.objectivetracker.bg.color.border.b, E.db.mMT.objectivetracker.bg.color.border.a)
+		ObjectiveTrackerFrame.NineSlice:SetBackdropBorderColor(E.db.mMT.objectivetracker.bg.color.border.r, E.db.mMT.objectivetracker.bg.color.border.g, E.db.mMT.objectivetracker.bg.color.border.b, E.db.mMT.objectivetracker.bg.color.border.a)
 	end
 
-	ObjectiveTrackerFrame.NineSlice:SetAlpha (E.db.mMT.objectivetracker.bg.color.bg.a)
+	ObjectiveTrackerFrame.NineSlice:SetAlpha(E.db.mMT.objectivetracker.bg.color.bg.a)
 end
 
 -- Add Quest amount text to the header
@@ -625,18 +625,12 @@ end
 local function SkinLines(line, objectiveKey)
 	--mMT:DebugPrintTable(line)
 	if line then
-		-- title text
-		if line.HeaderText then
-			mMT:Print("HEADER")
-			--SetTitleText(line.HeaderText)
-		end
-
 		-- title text else line text
 		if line.objectiveKey == 0 then
 			SetTitleText(line.Text)
 		else
 			-- done icon
-			local check = line.Check
+			local check = line.Icon
 			local isShownCheck = false
 			if check then
 				isShownCheck = true
@@ -648,14 +642,27 @@ local function SkinLines(line, objectiveKey)
 			-- is quest completed
 			local complete = line.state or (objectiveKey == "QuestComplete") or line.finished
 			--local text = line.Text
-			if line.Text then
-				local height = SetLineText(line.Text, complete, isShownCheck)
 
-				-- set the text/ line height
-				if height and height ~= line.Text:GetHeight() then
-					line.Text:SetHeight(height)
-				end
-			end
+			-- local lineSpacing = self.parentModule.lineSpacing;
+			-- local offsetY = -lineSpacing;
+
+			-- -- anchor the line
+			-- local anchor = self.lastRegion or self.HeaderText;
+			-- if anchor then
+			-- 	line:SetPoint("TOPLEFT", anchor, "BOTTOMLEFT", 0, offsetY);
+			-- else
+			-- 	line:SetPoint("TOPLEFT", 0, offsetY);
+			-- end
+			-- line:SetPoint("RIGHT", self.rightEdgeOffset, 0);
+
+			-- -- set the text
+			-- local textHeight = self:SetStringText(line.Text, text, useFullHeight, colorStyle, self.isHighlighted);
+			-- local height = overrideHeight or textHeight;
+			-- line:SetHeight(height);
+
+			-- self.height = self.height + height + lineSpacing;
+
+			-- self.lastRegion = line;
 
 			-- settings if dash is hide
 			if E.db.mMT.objectivetracker.settings.hidedash then
@@ -675,9 +682,10 @@ local function SkinLines(line, objectiveKey)
 				-- new position for done icon
 				if check then
 					check:ClearAllPoints()
-					check:Point("TOPRIGHT", dash, "TOPLEFT", 0, 0)
+					check:Point("RIGHT", line, "LEFT", 0, 0)
 				end
 			end
+			return SetLineText(line.Text, complete, isShownCheck)
 		end
 	end
 end
@@ -703,7 +711,6 @@ local function SkinHeaders(header)
 		header.mMT_BarAdded = true
 	end
 end
-
 
 local function SkinObjective(_, objectiveKey, text, template, useFullHeight, dashStyle, colorStyle, adjustForNoText, overrideHeight)
 	mMT:Print(a, objectiveKey, text, template, useFullHeight, dashStyle, colorStyle, adjustForNoText, overrideHeight)
@@ -756,20 +763,63 @@ local function SkinObjective(_, objectiveKey, text, template, useFullHeight, das
 	-- return line;
 end
 
-local function SkinBlock(_, block)
-	--mMT:DebugPrintTable(block)
+local function SkinBlock(tracker, block)
+	mMT:DebugPrintTable(block)
+	local lastRegion
 	local lastBlock = nil
 	if block then
 		if block.HeaderText then
 			SetTitleText(block.HeaderText)
-			--block.height = block.HeaderText:GetStringHeight()
 		end
 
 		if block.usedLines then
 			for objectiveKey, line in pairs(block.usedLines) do
-				SkinLines(line, objectiveKey)
+				local height = SkinLines(line, objectiveKey)
+				block.height = block.height + height
+
+				local lineSpacing = block.parentModule.lineSpacing
+				local offsetY = -lineSpacing
+
+				-- anchor the line
+				line:ClearAllPoints()
+				local anchor = lastRegion or block.HeaderText
+				if anchor then
+					line:SetPoint("TOPLEFT", anchor, "BOTTOMLEFT", 0, offsetY)
+				else
+					line:SetPoint("TOPLEFT", 0, offsetY)
+				end
+				line:SetPoint("RIGHT", block.rightEdgeOffset, 0)
+
+				-- set the text
+				local textHeight = SkinLines(line, objectiveKey)
+				line:SetHeight(height)
+
+				block.height = block.height + textHeight + lineSpacing
+
+				lastRegion = line
+
 			end
+			mMT:Print(block.height)
 		end
+
+		block:ClearAllPoints()
+
+	if tracker.lastBlock then
+		return tracker.lastBlock, tracker.fromBlockOffsetY, "BOTTOM";
+	else
+		return tracker.ContentsFrame, tracker.fromHeaderOffsetY, "TOP";
+	end
+
+		local anchorFrame, offsetY, relativePoint = tracker:GetNextBlockAnchoring();
+		block:SetPoint("TOP", anchorFrame, relativePoint, 0, offsetY);
+		block:SetPoint("LEFT", block.offsetX or tracker.blockOffsetX, 0);
+		if not block.fixedWidth then
+			block:SetPoint("RIGHT");
+		end
+
+		return offsetY;
+
+		--ObjectiveTrackerModuleMixin:Update(block.HeaderText:GetStringHeight())
 	end
 end
 
@@ -808,6 +858,9 @@ function module:Initialize()
 			--mMT:DebugPrintTable(tracker)
 			if tracker then
 				SkinHeaders(tracker.Header)
+				--tracker:MarkDirty()
+				--tracker:SetCollapsed(tracker:IsCollapsed())
+
 				if not tracker.mMTSkin then
 					hooksecurefunc(tracker, "AddBlock", SkinBlock)
 					tracker.mMTSkin = true
