@@ -198,6 +198,66 @@ local function configTable()
 						mMT:UpdateColors()
 					end,
 				},
+				ID_Color_AI = {
+					type = "color",
+					order = 9,
+					name = "AI",
+					hasAlpha = false,
+					get = function(info)
+						local t = E.db.mMT.instancedifficulty.ai
+						return t.r, t.g, t.b
+					end,
+					set = function(info, r, g, b)
+						local t = E.db.mMT.instancedifficulty.tai
+						t.r, t.g, t.b, t.color = r, g, b, E:RGBToHex(r, g, b)
+						mMT:UpdateColors()
+					end,
+				},
+				ID_Color_DELVE = {
+					type = "color",
+					order = 10,
+					name = "DELVE",
+					hasAlpha = false,
+					get = function(info)
+						local t = E.db.mMT.instancedifficulty.delve
+						return t.r, t.g, t.b
+					end,
+					set = function(info, r, g, b)
+						local t = E.db.mMT.instancedifficulty.delve
+						t.r, t.g, t.b, t.color = r, g, b, E:RGBToHex(r, g, b)
+						mMT:UpdateColors()
+					end,
+				},
+				ID_Color_QUEST = {
+					type = "color",
+					order = 11,
+					name = "QUEST",
+					hasAlpha = false,
+					get = function(info)
+						local t = E.db.mMT.instancedifficulty.quest
+						return t.r, t.g, t.b
+					end,
+					set = function(info, r, g, b)
+						local t = E.db.mMT.instancedifficulty.quest
+						t.r, t.g, t.b, t.color = r, g, b, E:RGBToHex(r, g, b)
+						mMT:UpdateColors()
+					end,
+				},
+				ID_Color_STORY = {
+					type = "color",
+					order = 12,
+					name = "STORY",
+					hasAlpha = false,
+					get = function(info)
+						local t = E.db.mMT.instancedifficulty.story
+						return t.r, t.g, t.b
+					end,
+					set = function(info, r, g, b)
+						local t = E.db.mMT.instancedifficulty.story
+						t.r, t.g, t.b, t.color = r, g, b, E:RGBToHex(r, g, b)
+						mMT:UpdateColors()
+					end,
+				},
 			},
 		},
 		ID_Header_Other = {

@@ -67,6 +67,10 @@ local instanceDifficulty = {
 	[149] = { c = "|CFF005AFC", d = "H" },
 	[151] = { c = "|CFFFCDE00", d = "LFR" },
 	[167] = { c = "|CFF00C9FF", d = "TG" },
+	[205] = { c = "|CFF00FCD2", d = "AI" },
+	[208] = { c = "|CFFAB5C07", d = "DELVE" },
+	[216] = { c = "|CFFFCA400", d = "QUEST" },
+	[220] = { c = "|CFF9700FC", d = "STORY" },
 }
 
 local shortNames = {
@@ -163,6 +167,10 @@ local colors = {
 	lfr = { color = "|cff00ffef", b = 0.93, g = 1, r = 0 },
 	tg = { color = "|cff5dffb8", r = 0.36, g = 1, b = 0.72 },
 	pvp = { color = "|cffeb0056", r = 0.92, g = 0, b = 0.33 },
+	quest = { color = "|cfffca400", r = 0.98, g = 0.64, b = 0 },
+	delve = { color = "|cffab5c07", r = 0.67, g = 0.36, b = 0.02 },
+	ai = { color = "|cff00fcd2", r = 0, g = 0.98, b = 0.82 },
+	story = { color = "|cff00fcd2", r = 0.59, g = 0, b = 0.98 },
 }
 
 function mMT:UpdateColors()
@@ -189,6 +197,15 @@ function mMT:UpdateColors()
 	instanceDifficulty[149].c = db.hc.color
 	instanceDifficulty[151].c = db.lfr.color
 	instanceDifficulty[167].c = db.tg.color
+	instanceDifficulty[205].c = db.ai.color
+	instanceDifficulty[208].c = db.delve.color
+	instanceDifficulty[216].c = db.quest.color
+	instanceDifficulty[220].c = db.story.color
+
+	-- [205] = { c = "|CFF00FCD2", d = "AI" },
+	-- [208] = { c = "|CFFAB5C07", d = "DELVE" },
+	-- [216] = { c = "|CFFFCA400", d = "QUEST" },
+	-- [220] = { c = "|CFF9700FC", d = "STORY" },
 
 	colors.nhc = db.nhc
 	colors.hc = db.hc
@@ -206,6 +223,10 @@ function mMT:UpdateColors()
 	colors.mpd = db.mpd
 	colors.mpe = db.mpe
 	colors.mpf = db.mpf
+	colors.ai = db.ai
+	colors.delve = db.delve
+	colors.quest = db.quest
+	colors.story = db.story
 end
 
 function mMT:ShortName(name)
@@ -267,7 +288,6 @@ end
 function mMT:GetDungeonInfo(datatext, short, stageBlock)
 	local name, _, difficultyID, _, _, _, _, instanceID, instanceGroupSize, _ = GetInstanceInfo()
 	local _, InstanceType = IsInInstance()
-
 	name = shortNames[instanceID] or mMT:ShortName(name)
 
 	if name then
@@ -313,9 +333,15 @@ function UpdateDifficulty()
 	local difficultyGuild = _G.GuildInstanceDifficulty
 	local battlefieldFrame = _G.MiniMapBattlefieldFrame
 
-	if difficulty then difficulty:Hide() end
-	if difficultyGuild then difficultyGuild:Hide() end
-	if battlefieldFrame then battlefieldFrame:Hide() end
+	if difficulty then
+		difficulty:Hide()
+	end
+	if difficultyGuild then
+		difficultyGuild:Hide()
+	end
+	if battlefieldFrame then
+		battlefieldFrame:Hide()
+	end
 
 	local name, _, _, _, _, _, _, _, _, _ = GetInstanceInfo()
 	local inInstance, _ = IsInInstance()
