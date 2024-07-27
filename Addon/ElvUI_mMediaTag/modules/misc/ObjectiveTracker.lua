@@ -276,84 +276,6 @@ local function isChallengeModeActive()
 end
 
 --skin stage block
-function SkinStageBlock()
-	local isChallengeMode = isChallengeModeActive()
-	local StageBlock = isChallengeMode and _G.ScenarioChallengeModeBlock or _G.ScenarioStageBlock
-
-	if not isChallengeMode then
-		-- Hide Dungeon Frame Block
-		StageBlock.NormalBG:Hide()
-		StageBlock.FinalBG:Hide()
-
-		-- Hide Open world Scenario Block
-		local container = StageBlock.WidgetContainer
-		if container and container.widgetFrames then
-			for _, widgetFrame in pairs(container.widgetFrames) do
-				if widgetFrame.Frame then
-					widgetFrame.Frame:Hide()
-				end
-			end
-		end
-	end
-
-	-- replace the level text with keystone level of the dungeon
-	if isChallengeMode then
-		StageBlock.Level:SetText(mMT:GetDungeonInfo(false, true, true))
-	end
-
-	-- create stage block bg
-	if not StageBlock.mMT_StageBlock then
-		local mMT_StageBlock = CreateFrame("Frame", "mMT_StageBlock")
-		local width = ObjectiveTrackerFrame:GetWidth()
-		S:HandleFrame(mMT_StageBlock)
-
-		mMT_StageBlock:SetParent(StageBlock)
-		mMT_StageBlock:ClearAllPoints()
-		mMT_StageBlock:SetPoint("TOPLEFT", 10, -5)
-
-		mMT_StageBlock:SetSize(width, 80)
-		mMT_StageBlock:SetFrameLevel(3)
-		mMT_StageBlock:Show()
-
-		if E.db.mMT.objectivetracker.dungeon.shadow then
-			mMT_StageBlock:CreateShadow()
-		end
-
-		-- create difficulty label to dungeon stage block if not m+
-		if not mMT_StageBlock.Difficulty and not isChallengeMode then
-			local label = mMT_StageBlock:CreateFontString(nil, "OVERLAY")
-			label:FontTemplate(nil, E.db.mMT.objectivetracker.font.fontsize.title, E.db.mMT.objectivetracker.font.fontflag)
-			label:SetFont(LSM:Fetch("font", E.db.mMT.objectivetracker.font.font), E.db.mMT.objectivetracker.font.fontsize.title, E.db.mMT.objectivetracker.font.fontflag)
-			label:Point("TOPRIGHT", mMT_StageBlock, "TOPRIGHT", -10, -10)
-			label:SetJustifyH("RIGHT")
-			label:SetJustifyV("TOP")
-			mMT_StageBlock.Difficulty = label
-		end
-
-		-- hide m+ bgs of the blizzard stage block and set positions
-		if isChallengeMode then
-			StageBlock:StripTextures()
-
-			StageBlock.Level:ClearAllPoints()
-			StageBlock.Level:SetPoint("TOPLEFT", mMT_StageBlock, "TOPLEFT", 10, -10)
-
-			StageBlock.TimeLeft:ClearAllPoints()
-			StageBlock.TimeLeft:SetPoint("LEFT", mMT_StageBlock, "LEFT", 8, 2)
-
-			S:HandleStatusBar(StageBlock.StatusBar)
-		else
-			StageBlock.Stage:ClearAllPoints()
-			StageBlock.Stage:SetPoint("LEFT", mMT_StageBlock, "LEFT", 10, 2)
-		end
-
-		StageBlock.mMT_StageBlock = mMT_StageBlock
-	else
-		-- add difficulty text to our lable
-		if IsInInstance() and StageBlock.mMT_StageBlock and StageBlock.mMT_StageBlock.Difficulty then
-			StageBlock.mMT_StageBlock.Difficulty:SetText(mMT:GetDungeonInfo(false, false, true))
-		end
-	end
-end
 
 -- skin objectivetracker bg
 local function BackgroundSkin()
@@ -515,12 +437,11 @@ local function SkinHeaders(header)
 	AddHeaderBarIfNeeded(header)
 end
 
-local function SetTextColor(text, color)
-	text:SetTextColor(color.r, color.g, color.b)
-end
-
-local function SetTextFont(text, fontSettings)
-	text:SetFont(LSM:Fetch("font", fontSettings.font), fontSettings.fontsize.title, fontSettings.fontflag)
+local function SetTextProperties(text, fontSettings, color)
+	text:SetFont(LSM:Fetch("font", E.db.mMT.objectivetracker.font.font), fontsize, E.db.mMT.objectivetracker.font.fontflag)
+	if color then
+		text:SetTextColor(color.r, color.g, color.b)
+	end
 end
 
 local function AdjustTextHeight(text)
@@ -531,8 +452,7 @@ local function AdjustTextHeight(text)
 end
 
 local function SetTitleText(text)
-	SetTextFont(text, E.db.mMT.objectivetracker.font)
-	SetTextColor(text, E.db.mMT.objectivetracker.font.color.title.class and mMT.ClassColor or E.db.mMT.objectivetracker.font.color.title)
+	SetTextProperties(text, { font = LSM:Fetch("font", E.db.mMT.objectivetracker.font.font), fontsize = E.db.mMT.objectivetracker.font.fontsize.title, fontflag = E.db.mMT.objectivetracker.font.fontflag }, E.db.mMT.objectivetracker.font.color.title.class and mMT.ClassColor or E.db.mMT.objectivetracker.font.color.title)
 	AdjustTextHeight(text) -- fix for overlapping blocks/ line and header - thx Merathilis & Fang
 end
 
@@ -541,8 +461,12 @@ local function SetCheckIcon(icon, completed)
 		icon:SetTexture("Interface\\AddOns\\ElvUI_mMediaTag\\media\\icons\\misc\\questDone.tga")
 		icon:SetVertexColor(E.db.mMT.objectivetracker.font.color.good.r, E.db.mMT.objectivetracker.font.color.good.g, E.db.mMT.objectivetracker.font.color.good.b, 1)
 	elseif select(1, IsInInstance()) then
-		icon:SetTexture("Interface\\AddOns\\ElvUI_mMediaTag\\media\\icons\\misc\\questMinus.tga")
-		icon:SetVertexColor(mMT.ClassColor.r, mMT.ClassColor.g, mMT.ClassColor.b, 1)
+		if E.db.mMT.objectivetracker.dungeon.hidedash then
+			icon:Hide()
+		else
+			icon:SetTexture("Interface\\AddOns\\ElvUI_mMediaTag\\media\\icons\\misc\\questMinus.tga")
+			icon:SetVertexColor(mMT.ClassColor.r, mMT.ClassColor.g, mMT.ClassColor.b, 1)
+		end
 	end
 end
 
@@ -559,11 +483,6 @@ local function HideDashIfRequired(line, check)
 			check:Point("RIGHT", line, "LEFT", 0, 0)
 		end
 	end
-end
-
-local function SetTextProperties(text, color, fontsize)
-	text:SetFont(LSM:Fetch("font", E.db.mMT.objectivetracker.font.font), fontsize, E.db.mMT.objectivetracker.font.fontflag)
-	text:SetTextColor(color.r, color.g, color.b)
 end
 
 local function GetProgressPercent(current, required)
@@ -587,7 +506,7 @@ local function GetRequirements(text)
 end
 
 local function SetLineText(text, completed)
-	SetTextProperties(text, completed and E.db.mMT.objectivetracker.font.color.complete or (E.db.mMT.objectivetracker.font.color.text.class and mMT.ClassColor or E.db.mMT.objectivetracker.font.color.text), E.db.mMT.objectivetracker.font.fontsize.text)
+	SetTextProperties(text, { font = LSM:Fetch("font", E.db.mMT.objectivetracker.font.font), fontsize = E.db.mMT.objectivetracker.font.fontsize.text, fontflag = E.db.mMT.objectivetracker.font.fontflag }, completed and E.db.mMT.objectivetracker.font.color.complete or (E.db.mMT.objectivetracker.font.color.text.class and mMT.ClassColor or E.db.mMT.objectivetracker.font.color.text))
 
 	local lineText = text:GetText()
 
@@ -626,8 +545,6 @@ local function SkinLines(line, objectiveKey)
 		if line.objectiveKey == 0 then
 			SetTitleText(line.Text)
 		else
-			--mMT:Print(line.Text:GetText())
-			--mMT:DebugPrintTable(line)
 			local complete = line.state or (objectiveKey == "QuestComplete") or line.finished
 			SetCheckIcon(line.Icon, complete)
 			HideDashIfRequired(line, line.Icon)
@@ -639,8 +556,191 @@ local function SkinLines(line, objectiveKey)
 	end
 end
 
+local function CreateStageFrame(block, isChallengeMode)
+	local mMT_StageBlock = CreateFrame("Frame", isChallengeMode and "mMT_ChallengeBlock" or "mMT_StageBlock")
+	local width = ObjectiveTrackerFrame:GetWidth()
+	S:HandleFrame(mMT_StageBlock)
+
+	mMT_StageBlock:SetParent(block)
+	mMT_StageBlock:ClearAllPoints()
+	mMT_StageBlock:SetPoint("TOPLEFT", 0, -5)
+
+	mMT_StageBlock:SetSize(width, 80)
+	mMT_StageBlock:SetFrameLevel(3)
+	mMT_StageBlock:Show()
+
+	if E.db.mMT.objectivetracker.dungeon.shadow then
+		mMT_StageBlock:CreateShadow()
+	end
+
+	-- create difficulty label to dungeon stage block if not m+
+	if not mMT_StageBlock.Difficulty and not isChallengeMode then
+		local label = mMT_StageBlock:CreateFontString(nil, "OVERLAY")
+		label:FontTemplate(nil, E.db.mMT.objectivetracker.font.fontsize.title, E.db.mMT.objectivetracker.font.fontflag)
+		SetTextProperties(label, { font = LSM:Fetch("font", E.db.mMT.objectivetracker.font.font), fontsize = E.db.mMT.objectivetracker.font.fontsize.title, fontflag = E.db.mMT.objectivetracker.font.fontflag })
+
+		label:Point("TOPRIGHT", mMT_StageBlock, "TOPRIGHT", -10, -10)
+		label:SetJustifyH("RIGHT")
+		label:SetJustifyV("TOP")
+		label:SetText(mMT:GetDungeonInfo(false, false, true))
+		mMT_StageBlock.Difficulty = label
+	end
+
+	-- hide m+ bgs of the blizzard stage block and set positions
+	if isChallengeMode then
+		block:StripTextures()
+
+		block.Level:ClearAllPoints()
+		block.Level:SetPoint("TOPLEFT", mMT_StageBlock, "TOPLEFT", 10, -10)
+		--SetTextProperties(block.Level, { font = LSM:Fetch("font", E.db.mMT.objectivetracker.font.font), fontsize = E.db.mMT.objectivetracker.font.fontsize.text, fontflag = E.db.mMT.objectivetracker.font.fontflag })
+
+
+		block.TimeLeft:ClearAllPoints()
+		block.TimeLeft:SetPoint("LEFT", mMT_StageBlock, "LEFT", 8, 2)
+		--SetTextProperties(block.TimeLeft, { font = LSM:Fetch("font", E.db.mMT.objectivetracker.font.font), fontsize = E.db.mMT.objectivetracker.font.fontsize.title, fontflag = E.db.mMT.objectivetracker.font.fontflag })
+
+		S:HandleStatusBar(block.StatusBar)
+	else
+		block.Stage:ClearAllPoints()
+		block.Stage:SetPoint("LEFT", mMT_StageBlock, "LEFT", 10, 2)
+	end
+
+	block.mMT_StageBlock = mMT_StageBlock
+end
+
+local function SkinStageBlock()
+	if _G.ScenarioObjectiveTracker then
+		local stageBlocks = { _G.ScenarioObjectiveTracker.ContentsFrame:GetChildren() }
+		for _, stageBlock in pairs(stageBlocks) do
+			if stageBlock.Stage then
+				SetTextProperties(stageBlock.Stage, { font = LSM:Fetch("font", E.db.mMT.objectivetracker.font.font), fontsize = E.db.mMT.objectivetracker.font.fontsize.title, fontflag = E.db.mMT.objectivetracker.font.fontflag })
+
+				-- create stage block bg
+				if not stageBlock.mMT_StageBlock then
+					CreateStageFrame(stageBlock, false)
+				else
+					if IsInInstance() and stageBlock.mMT_StageBlock and stageBlock.mMT_StageBlock.Difficulty then
+						stageBlock.mMT_StageBlock.Difficulty:SetText(mMT:GetDungeonInfo(false, false, true))
+					end
+				end
+			end
+
+			if stageBlock.NormalBG then
+				stageBlock.NormalBG:Hide()
+				stageBlock.NormalBG:SetTexture()
+			end
+
+			if stageBlock.FinalBG then
+				stageBlock.FinalBG:Hide()
+				stageBlock.FinalBG:SetTexture()
+			end
+		end
+	end
+end
+
+local function SkinChallengeBlock(challengeBlock, elapsedTime)
+	if not challengeBlock.SkinChallengeBlock then
+		challengeBlock:StripTextures()
+
+		-- create stage block bg
+		if not challengeBlock.mMT_StageBlock then
+			CreateStageFrame(challengeBlock, true)
+		end
+
+		-- get dungeon time limits
+		if not challengeBlock.mMT_Timers then
+			challengeBlock.mMT_Timers = {}
+			challengeBlock.mMT_Timers.chest3 = challengeBlock.timeLimit * 0.6
+			challengeBlock.mMT_Timers.chest2 = challengeBlock.timeLimit * 0.8
+		end
+
+		-- timer bar color
+		local colorA = E.db.mMT.objectivetracker.dungeon.color.chest1.a
+		local colorB = E.db.mMT.objectivetracker.dungeon.color.chest1.b
+
+		if elapsedTime < challengeBlock.mMT_Timers.chest3 then
+			colorA = E.db.mMT.objectivetracker.dungeon.color.chest3.a
+			colorB = E.db.mMT.objectivetracker.dungeon.color.chest3.b
+		elseif elapsedTime < challengeBlock.mMT_Timers.chest2 then
+			colorA = E.db.mMT.objectivetracker.dungeon.color.chest2.a
+			colorB = E.db.mMT.objectivetracker.dungeon.color.chest2.b
+		else
+			colorA = E.db.mMT.objectivetracker.dungeon.color.chest1.a
+			colorB = E.db.mMT.objectivetracker.dungeon.color.chest1.b
+		end
+
+		challengeBlock.StatusBar:GetStatusBarTexture():SetGradient("HORIZONTAL", { r = colorA.r, g = colorA.g, b = colorA.b, a = colorA.a }, { r = colorB.r, g = colorB.g, b = colorB.b, a = colorB.a })
+
+		-- create and set time limit markers
+		if not challengeBlock.timerMarker then
+			local width = challengeBlock.StatusBar:GetWidth()
+			local height = challengeBlock.StatusBar:GetHeight()
+			local timerMarker = CreateFrame("Frame", nil, challengeBlock)
+			timerMarker:SetAllPoints(challengeBlock)
+
+			timerMarker.chest3 = timerMarker:CreateTexture(nil, "OVERLAY")
+			timerMarker.chest3:SetColorTexture(1, 1, 1)
+			timerMarker.chest3:SetSize(2, height) --block.StatusBar:GetHeight())
+
+			timerMarker.chest2 = timerMarker:CreateTexture(nil, "OVERLAY")
+			timerMarker.chest2:SetColorTexture(1, 1, 1)
+			timerMarker.chest2:SetSize(2, height) --block.StatusBar:GetHeight())
+
+			timerMarker.chest3:SetPoint("LEFT", challengeBlock.StatusBar, "LEFT", width - (width * challengeBlock.mMT_Timers.chest3 / challengeBlock.timeLimit), 0)
+			timerMarker.chest2:SetPoint("LEFT", challengeBlock.StatusBar, "LEFT", width - (width * challengeBlock.mMT_Timers.chest2 / challengeBlock.timeLimit), 0)
+			timerMarker.chest3:Show()
+			timerMarker.chest2:Show()
+
+			timerMarker:Show()
+
+			challengeBlock.timerMarker = timerMarker
+		end
+
+		-- create and add time for current chest or over time
+		if not challengeBlock.mMT_Time then
+			local timeLable = challengeBlock.StatusBar:CreateFontString(nil, "OVERLAY")
+			timeLable:FontTemplate(nil, E.db.mMT.objectivetracker.font.fontsize.title, E.db.mMT.objectivetracker.font.fontflag)
+			timeLable:SetFont(LSM:Fetch("font", E.db.mMT.objectivetracker.font.font), E.db.mMT.objectivetracker.font.fontsize.title, E.db.mMT.objectivetracker.font.fontflag)
+			timeLable:SetPoint("RIGHT", challengeBlock.StatusBar, "RIGHT", -4, 0)
+			timeLable:SetJustifyH("RIGHT")
+			timeLable:SetJustifyV("TOP")
+			challengeBlock.mMT_Time = timeLable
+		end
+
+		local timeText = nil
+
+		-- get time limits and set it to ta label
+		if elapsedTime < challengeBlock.mMT_Timers.chest3 then
+			timeText = "+3 " .. SecondsToClock(challengeBlock.mMT_Timers.chest3 - elapsedTime)
+		elseif elapsedTime < challengeBlock.mMT_Timers.chest2 then
+			timeText = "+2 " .. SecondsToClock(challengeBlock.mMT_Timers.chest2 - elapsedTime)
+		elseif elapsedTime > challengeBlock.timeLimit then
+			timeText = E.db.mMT.objectivetracker.font.color.bad.hex .. "+ " .. SecondsToClock(elapsedTime - challengeBlock.timeLimit) .. "|r"
+			challengeBlock.TimeLeft:SetText(E.db.mMT.objectivetracker.font.color.bad.hex .. SecondsToClock(elapsedTime) .. "|r")
+		else
+			timeText = ""
+		end
+
+		if timeText then
+			challengeBlock.mMT_Time:SetText(timeText)
+		end
+
+		--SetTextProperties(challengeBlock.TimeLeft, { font = LSM:Fetch("font", E.db.mMT.objectivetracker.font.font), fontsize = E.db.mMT.objectivetracker.font.fontsize.title, fontflag = E.db.mMT.objectivetracker.font.fontflag })
+	end
+end
+
 local function SkinBlock(tracker, block)
 	if block then
+		if block.Stage and not block.mMT_StageSkin then
+			hooksecurefunc(block, "UpdateStageBlock", SkinStageBlock)
+			block.mMT_StageSkin = true
+		end
+
+		if block.affixPool and block.UpdateTime and not block.mMT_ChallengeBlock then
+			hooksecurefunc(block, "UpdateTime", SkinChallengeBlock)
+			block.mMT_ChallengeBlock = true
+		end
+
 		if block.HeaderText then
 			SetTitleText(block.HeaderText)
 		end
