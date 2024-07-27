@@ -536,14 +536,14 @@ local function SetTitleText(text)
 	AdjustTextHeight(text) -- fix for overlapping blocks/ line and header - thx Merathilis & Fang
 end
 
-local function SetCheckIcon(check)
-	local isShownCheck = false
-	if check then
-		isShownCheck = true
-		check:SetTexture("Interface\\AddOns\\ElvUI_mMediaTag\\media\\icons\\misc\\questDone.tga")
-		check:SetVertexColor(E.db.mMT.objectivetracker.font.color.good.r, E.db.mMT.objectivetracker.font.color.good.g, E.db.mMT.objectivetracker.font.color.good.b, 1)
+local function SetCheckIcon(icon, completed)
+	if icon and completed then
+		icon:SetTexture("Interface\\AddOns\\ElvUI_mMediaTag\\media\\icons\\misc\\questDone.tga")
+		icon:SetVertexColor(E.db.mMT.objectivetracker.font.color.good.r, E.db.mMT.objectivetracker.font.color.good.g, E.db.mMT.objectivetracker.font.color.good.b, 1)
+	elseif select(1, IsInInstance()) then
+		icon:SetTexture("Interface\\AddOns\\ElvUI_mMediaTag\\media\\icons\\misc\\questMinus.tga")
+		icon:SetVertexColor(mMT.ClassColor.r, mMT.ClassColor.g, mMT.ClassColor.b, 1)
 	end
-	return isShownCheck
 end
 
 local function HideDashIfRequired(line, check)
@@ -586,13 +586,13 @@ local function GetRequirements(text)
 	return current, required, questText
 end
 
-local function SetLineText(text, completed, check)
+local function SetLineText(text, completed)
 	SetTextProperties(text, completed and E.db.mMT.objectivetracker.font.color.complete or (E.db.mMT.objectivetracker.font.color.text.class and mMT.ClassColor or E.db.mMT.objectivetracker.font.color.text), E.db.mMT.objectivetracker.font.fontsize.text)
 
 	local lineText = text:GetText()
 
 	if lineText then
-		if not (completed and check) then
+		if not completed then
 			local current, required, questText = GetRequirements(lineText)
 
 			if current and required and questText then
@@ -626,10 +626,12 @@ local function SkinLines(line, objectiveKey)
 		if line.objectiveKey == 0 then
 			SetTitleText(line.Text)
 		else
-			local isShownCheck = SetCheckIcon(line.Icon)
+			--mMT:Print(line.Text:GetText())
+			--mMT:DebugPrintTable(line)
 			local complete = line.state or (objectiveKey == "QuestComplete") or line.finished
+			SetCheckIcon(line.Icon, complete)
 			HideDashIfRequired(line, line.Icon)
-			SetLineText(line.Text, complete, isShownCheck)
+			SetLineText(line.Text, complete)
 		end
 
 		-- fix for overlapping blocks/ line and header - thx Merathilis & Fang
