@@ -1,6 +1,21 @@
 # Changelog - ElvUI_mMediaTag
 [Eng] - All changes to this project will be documented in this file. The latest changes are at the top.
 
+## [ver. 3.45] - xx.07.2024
+### FIX
+- FIX - Dropdown Menus fro Dock Icons and Datatexts
+- FIX - GameMenu SpellBock toggle frame works now
+- FIX - SpellBock toggle frame works now for Dock and Datatexts
+- FIX - Profession toggle frame works now for Dock and Datatexts
+- FIX - AFK Screen
+### Update
+- UPDATE - AFK Screen is available again
+- UPDATE - ObjectiveTracker Skin is available again
+- UPDATE - Add - AI/ FOLLOWER, DELVE, QUEST & STORY Dungeons to difficulty text
+### NEW
+- NEW - Add Evoker Texture to E Series
+
+
 ## [ver. 3.44] - 23.07.2024
 ### FIX
 - FIX - Bug with Portraits in combat and zone changes
