@@ -117,6 +117,7 @@ local function LoadSeriesE()
 	mAddStatusbar("mMediaTag E10", "e10.tga")
 	mAddStatusbar("mMediaTag E11", "e11.tga")
 	mAddStatusbar("mMediaTag E12", "e12.tga")
+	mAddStatusbar("mMediaTag E13", "e13.tga")
 end
 
 local function LoadSeriesF()
