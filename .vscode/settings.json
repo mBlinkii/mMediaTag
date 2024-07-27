@@ -785,10 +785,12 @@
         "TRACKER_HEADER_CAMPAIGN_QUESTS",
         "ToggleProfessionsBook",
         "EnumUtil",
-        "OBJECTIVE_TRACKER_COLOR"
+        "OBJECTIVE_TRACKER_COLOR",
+        "ObjectiveTrackerUIWidgetContainer"
     ],
     "Lua.diagnostics.disable": [
-        "undefined-field"
+        "undefined-field",
+        "cast-local-type"
     ],
     "cSpell.enableFiletypes": [
         "lua"
