@@ -332,6 +332,7 @@ P.mMT = {
 				header = 14,
 				title = 12,
 				text = 12,
+				time = 20,
 			},
 		},
 		settings = {

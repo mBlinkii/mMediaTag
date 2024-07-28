@@ -786,7 +786,8 @@
         "ToggleProfessionsBook",
         "EnumUtil",
         "OBJECTIVE_TRACKER_COLOR",
-        "ObjectiveTrackerUIWidgetContainer"
+        "ObjectiveTrackerUIWidgetContainer",
+        "DisplayTableInspectorWindow"
     ],
     "Lua.diagnostics.disable": [
         "undefined-field",
