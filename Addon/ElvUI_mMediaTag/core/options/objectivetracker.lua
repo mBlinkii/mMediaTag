@@ -294,6 +294,28 @@ local function configTable()
 								E:StaticPopup_Show("CONFIG_RL")
 							end,
 						},
+						spacer_4 = {
+							order = 9,
+							type = "description",
+							name = "\n\n\n",
+						},
+						fontsize_time = {
+							order = 10,
+							name = L["Font Size"] .. " " .. L["M+ Time"],
+							type = "range",
+							min = 1,
+							max = 64,
+							step = 1,
+							softMin = 8,
+							softMax = 32,
+							get = function(info)
+								return E.db.mMT.objectivetracker.font.fontsize.time
+							end,
+							set = function(info, value)
+								E.db.mMT.objectivetracker.font.fontsize.time = value
+								E:StaticPopup_Show("CONFIG_RL")
+							end,
+						},
 					},
 				},
 				header_settings = {
