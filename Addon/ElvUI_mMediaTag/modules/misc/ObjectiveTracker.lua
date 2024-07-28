@@ -207,25 +207,11 @@ local function DimColor(color)
 
 	dim = E.db.mMT.objectivetracker.font.highlight
 
-	if color.r - dim < 0 then
-		r = 0
-	else
-		r = color.r - dim
-	end
+	local newR = math.min(1, color.r * dim)
+	local newG = math.min(1, color.g * dim)
+	local newB = math.min(1, color.b * dim)
 
-	if color.g - dim < 0 then
-		g = 0
-	else
-		g = color.g - dim
-	end
-
-	if color.b - dim < 0 then
-		b = 0
-	else
-		b = color.b - dim
-	end
-
-	return r, g, b
+	return newR, newG, newB
 end
 
 local function SetTextColors()
@@ -237,7 +223,7 @@ local function SetTextColors()
 
 	colors.text = {
 		n = { r = colorNormal.r, g = colorNormal.g, b = colorNormal.b, hex = colorNormal.hex },
-		h = { r = r - dim, g = g - dim, b = b - dim, hex = RGBToHex(r, g, b) },
+		h = { r = r, g = g, b = b, hex = RGBToHex(r, g, b) },
 	}
 
 	colorNormal = colorFontDB.title.class and mMT.ClassColor or colorFontDB.title
@@ -245,7 +231,7 @@ local function SetTextColors()
 
 	colors.title = {
 		n = { r = colorNormal.r, g = colorNormal.g, b = colorNormal.b, hex = colorNormal.hex },
-		h = { r = r - dim, g = g - dim, b = b - dim, hex = RGBToHex(r, g, b) },
+		h = { r = r, g = g, b = b, hex = RGBToHex(r, g, b) },
 	}
 
 	colorNormal = colorFontDB.header.class and mMT.ClassColor or colorFontDB.header
@@ -253,7 +239,7 @@ local function SetTextColors()
 
 	colors.header = {
 		n = { r = colorNormal.r, g = colorNormal.g, b = colorNormal.b, hex = colorNormal.hex },
-		h = { r = r - dim, g = g - dim, b = b - dim, hex = RGBToHex(r, g, b) },
+		h = { r = r, g = g, b = b, hex = RGBToHex(r, g, b) },
 	}
 
 	colorNormal = colorFontDB.failed
@@ -261,7 +247,7 @@ local function SetTextColors()
 
 	colors.failed = {
 		n = { r = colorNormal.r, g = colorNormal.g, b = colorNormal.b, hex = colorNormal.hex },
-		h = { r = r - dim, g = g - dim, b = b - dim, hex = RGBToHex(r, g, b) },
+		h = { r = r, g = g, b = b, hex = RGBToHex(r, g, b) },
 	}
 
 	colorNormal = colorFontDB.complete
@@ -269,7 +255,7 @@ local function SetTextColors()
 
 	colors.complete = {
 		n = { r = colorNormal.r, g = colorNormal.g, b = colorNormal.b, hex = colorNormal.hex },
-		h = { r = r - dim, g = g - dim, b = b - dim, hex = RGBToHex(r, g, b) },
+		h = { r = r, g = g, b = b, hex = RGBToHex(r, g, b) },
 	}
 
 	colorNormal = colorFontDB.good
@@ -277,7 +263,7 @@ local function SetTextColors()
 
 	colors.good = {
 		n = { r = colorNormal.r, g = colorNormal.g, b = colorNormal.b, hex = colorNormal.hex },
-		h = { r = r - dim, g = g - dim, b = b - dim, hex = RGBToHex(r, g, b) },
+		h = { r = r, g = g, b = b, hex = RGBToHex(r, g, b) },
 	}
 
 	colorNormal = colorFontDB.bad
@@ -285,7 +271,7 @@ local function SetTextColors()
 
 	colors.bad = {
 		n = { r = colorNormal.r, g = colorNormal.g, b = colorNormal.b, hex = colorNormal.hex },
-		h = { r = r - dim, g = g - dim, b = b - dim, hex = RGBToHex(r, g, b) },
+		h = { r = r, g = g, b = b, hex = RGBToHex(r, g, b) },
 	}
 
 	colorNormal = colorFontDB.transit
@@ -293,7 +279,7 @@ local function SetTextColors()
 
 	colors.transit = {
 		n = { r = colorNormal.r, g = colorNormal.g, b = colorNormal.b, hex = colorNormal.hex },
-		h = { r = r - dim, g = g - dim, b = b - dim, hex = RGBToHex(r, g, b) },
+		h = { r = r, g = g, b = b, hex = RGBToHex(r, g, b) },
 	}
 end
 
@@ -419,7 +405,7 @@ local function GetRequirements(text)
 end
 
 local function SetLineText(text, completed, onEnter, onLeave)
-	local fontConfig, colorConfig, color, colorBad, colorTransit, colorGood, colorProgress
+	local fontConfig, colorConfig, color, colorBad, colorTransit, colorGood, colorProgress, tmpText
 
 	fontConfig = E.db.mMT.objectivetracker.font
 	colorConfig = completed and colors.complete or colors.text
@@ -428,9 +414,11 @@ local function SetLineText(text, completed, onEnter, onLeave)
 	SetTextProperties(text, { font = fontConfig.font, fontsize = fontConfig.fontsize.text, fontflag = fontConfig.fontflag }, color)
 
 	local lineText = text:GetText()
+	local tmpText = text:GetText()
 
 	if onEnter or onLeave and text.originalText then
 		lineText = text.originalText
+		mMT:Print(text:GetText(), lineText, text.originalText)
 	end
 
 	if lineText then
@@ -460,7 +448,6 @@ local function SetLineText(text, completed, onEnter, onLeave)
 				end
 			end
 		else
-
 			local _, _, questText = GetRequirements(lineText)
 			if questText then
 				color = onEnter and colors.complete.h or colors.complete.n
@@ -468,8 +455,11 @@ local function SetLineText(text, completed, onEnter, onLeave)
 			end
 		end
 
-		if not text.originalText then
-			text.originalText = text:GetText()
+		if not text.originalText or text.originalText ~= tmpText then
+			local isSkinned, _ = string.find(text:GetText(), "|cff")
+			if not isSkinned then
+				text.originalText = text:GetText()
+			end
 		end
 
 		text:SetText(lineText)
@@ -793,8 +783,8 @@ local function SkinBlock(tracker, block)
 		end
 
 		if block.usedLines then
-			for objectiveKey, line in pairs(block.usedLines) do
-				SkinLines(line, objectiveKey)
+			for _, line in pairs(block.usedLines) do
+				SkinLines(line)
 			end
 		end
 
