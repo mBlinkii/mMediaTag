@@ -17,26 +17,9 @@ local maxNumQuestsCanAccept = min(C_QuestLog.GetMaxNumQuestsCanAccept() + (E.Ret
 local IsInInstance = IsInInstance
 local SortQuestWatches = C_QuestLog.SortQuestWatches
 
-local colors = {
-	bad = {},
-	complete = {},
-	failed = {},
-	good = {},
-	header = {},
-	text = {},
-	title = {},
-	transit = {},
-}
-
-local fonts = {
-	bar = {},
-	header = {},
-	misc = {},
-	text = {},
-	time = {},
-	title = {},
-}
-
+local colors = {}
+local fonts = {}
+local cachedLines = {}
 local dim = 0.2
 
 local trackers = {
@@ -99,82 +82,36 @@ end
 
 local function SetTextColors()
 	local colorFontDB = E.db.mMT.objectivetracker.font.color
-	local colorNormal, r, g, b
+	local colorKeys = { "text", "title", "header", "failed", "complete", "good", "bad", "transit" }
+	local tmpColors = {}
 
-	colorNormal = colorFontDB.text.class and mMT.ClassColor or colorFontDB.text
-	r, g, b = DimColor(colorNormal)
+	for _, key in ipairs(colorKeys) do
+		local colorNormal = colorFontDB[key].class and mMT.ClassColor or colorFontDB[key]
+		local r, g, b = DimColor(colorNormal)
 
-	colors.text = {
-		n = { r = colorNormal.r, g = colorNormal.g, b = colorNormal.b, hex = colorNormal.hex },
-		h = { r = r, g = g, b = b, hex = RGBToHex(r, g, b) },
-	}
+		tmpColors[key] = {
+			n = { r = colorNormal.r, g = colorNormal.g, b = colorNormal.b, hex = colorNormal.hex },
+			h = { r = r, g = g, b = b, hex = RGBToHex(r, g, b) },
+		}
+	end
 
-	colorNormal = colorFontDB.title.class and mMT.ClassColor or colorFontDB.title
-	r, g, b = DimColor(colorNormal)
-
-	colors.title = {
-		n = { r = colorNormal.r, g = colorNormal.g, b = colorNormal.b, hex = colorNormal.hex },
-		h = { r = r, g = g, b = b, hex = RGBToHex(r, g, b) },
-	}
-
-	colorNormal = colorFontDB.header.class and mMT.ClassColor or colorFontDB.header
-	r, g, b = DimColor(colorNormal)
-
-	colors.header = {
-		n = { r = colorNormal.r, g = colorNormal.g, b = colorNormal.b, hex = colorNormal.hex },
-		h = { r = r, g = g, b = b, hex = RGBToHex(r, g, b) },
-	}
-
-	colorNormal = colorFontDB.failed
-	r, g, b = DimColor(colorNormal)
-
-	colors.failed = {
-		n = { r = colorNormal.r, g = colorNormal.g, b = colorNormal.b, hex = colorNormal.hex },
-		h = { r = r, g = g, b = b, hex = RGBToHex(r, g, b) },
-	}
-
-	colorNormal = colorFontDB.complete
-	r, g, b = DimColor(colorNormal)
-
-	colors.complete = {
-		n = { r = colorNormal.r, g = colorNormal.g, b = colorNormal.b, hex = colorNormal.hex },
-		h = { r = r, g = g, b = b, hex = RGBToHex(r, g, b) },
-	}
-
-	colorNormal = colorFontDB.good
-	r, g, b = DimColor(colorNormal)
-
-	colors.good = {
-		n = { r = colorNormal.r, g = colorNormal.g, b = colorNormal.b, hex = colorNormal.hex },
-		h = { r = r, g = g, b = b, hex = RGBToHex(r, g, b) },
-	}
-
-	colorNormal = colorFontDB.bad
-	r, g, b = DimColor(colorNormal)
-
-	colors.bad = {
-		n = { r = colorNormal.r, g = colorNormal.g, b = colorNormal.b, hex = colorNormal.hex },
-		h = { r = r, g = g, b = b, hex = RGBToHex(r, g, b) },
-	}
-
-	colorNormal = colorFontDB.transit
-	r, g, b = DimColor(colorNormal)
-
-	colors.transit = {
-		n = { r = colorNormal.r, g = colorNormal.g, b = colorNormal.b, hex = colorNormal.hex },
-		h = { r = r, g = g, b = b, hex = RGBToHex(r, g, b) },
-	}
+	return tmpColors
 end
 
 local function SetFonts()
 	local fontConfig = E.db.mMT.objectivetracker.font
+	local fontKeys = { "bar", "header", "misc", "text", "time", "title" }
+	local tmpFonts = {}
 
-	fonts.bar = { font = fontConfig.font, fontsize = E.db.mMT.objectivetracker.bar.fontsize, fontflag = fontConfig.fontflag }
-	fonts.header = { font = fontConfig.font, fontsize = fontConfig.fontsize.header, fontflag = fontConfig.fontflag }
-	fonts.misc = { font = fontConfig.font, fontsize = fontConfig.fontsize.text, fontflag = fontConfig.fontflag }
-	fonts.text = { font = fontConfig.font, fontsize = fontConfig.fontsize.text, fontflag = fontConfig.fontflag }
-	fonts.time = { font = fontConfig.font, fontsize = fontConfig.fontsize.time, fontflag = fontConfig.fontflag }
-	fonts.title = { font = fontConfig.font, fontsize = fontConfig.fontsize.title, fontflag = fontConfig.fontflag }
+	for _, key in ipairs(fontKeys) do
+		tmpFonts[key] = { font = fontConfig.font, fontsize = fontConfig.fontsize[key], fontflag = fontConfig.fontflag }
+	end
+
+	if tmpFonts["bar"] then
+		tmpFonts["bar"].fontsize = E.db.mMT.objectivetracker.bar.fontsize
+	end
+
+	return tmpFonts
 end
 
 -- header bar
@@ -276,78 +213,110 @@ local function GetProgressPercent(current, required)
 	if required ~= "1" then
 		return (tonumber(current) / tonumber(required)) * 100 or 0
 	end
+
 	return nil
 end
 
 local function GetColorProgress(progressPercent, colorBad, colorTransit, colorGood)
-	dim = E.db.mMT.objectivetracker.font.highlight
 	local r, g, b = E:ColorGradient(progressPercent * 0.01, colorBad.r, colorBad.g, colorBad.b, colorTransit.r, colorTransit.g, colorTransit.b, colorGood.r, colorGood.g, colorGood.b)
 	return RGBToHex(r, g, b)
 end
 
-local function GetRequirements(text)
-	local current, required, questText = strmatch(text, "^(%d-)/(%d-) (.+)")
-	if not current or not required or not questText then
-		questText, current, required = strmatch(text, "(.+): (%d-)/(%d-)$")
-	end
-	return current, required, questText
-end
+local function matchPatterns(text)
+	local patterns = {
+		{ "^(%d-)/(%d-) (.+)$", "current", "required", "questText" },
+		{ "(.+): (%d-)/(%d-)$", "questText", "current", "required" },
+		{ "(.+) %(([%d%.]+%%)%)$", "questText", "percent" },
+		{ "^%(([%d%.]+%%)%) (.+)$", "percent", "questText" },
+	}
 
-local function SetLineText(text, completed, onEnter, onLeave)
-	local colorConfig, color, colorBad, colorTransit, colorGood, colorProgress
-
-	colorConfig = completed and colors.complete or colors.text
-	color = onEnter and colorConfig.h or colorConfig.n
-
-	SetTextProperties(text, fonts.text, color)
-
-	local lineText = text:GetText()
-	local compareText = text:GetText()
-
-	if onEnter or onLeave and text.originalText then
-		lineText = text.originalText
-	end
-
-	if lineText then
-		if not completed then
-			local current, required, questText = GetRequirements(lineText)
-
-			if current and required and questText then
-				if current >= required then
-					color = onEnter and colors.complete.h or colors.complete.n
-					lineText = color.hex .. questText .. "|r"
-				else
-					local progressPercent = GetProgressPercent(current, required)
-
-					if progressPercent then
-						colorBad = onEnter and colors.bad.h or colors.bad.n
-						colorTransit = onEnter and colors.transit.h or colors.transit.n
-						colorGood = onEnter and colors.good.h or colors.good.n
-						color = onEnter and colors.text.h or colors.text.n
-						colorProgress = GetColorProgress(progressPercent, colorBad, colorTransit, colorGood)
-
-						lineText = colorProgress .. current .. "/" .. required .. " - " .. format("%.f%%", progressPercent) .. "|r" .. "  " .. color.hex .. questText .. "|r"
-					else
-						colorBad = onEnter and colors.bad.h or colors.bad.n
-						color = onEnter and colors.text.h or colors.text.n
-						lineText = colorBad.hex .. current .. "/" .. required .. "|r  " .. color.hex .. questText .. "|r"
-					end
+	local result = {}
+	for _, pattern in ipairs(patterns) do
+		local matches = { strmatch(text, pattern[1]) }
+		if #matches > 0 then
+			for i, key in ipairs(pattern) do
+				if i > 1 then
+					result[key] = matches[i - 1]
 				end
 			end
+			break
+		end
+	end
+
+	if result.percent then
+		result.percent = string.gsub(result.percent, "%%", "")
+	end
+
+	return result
+end
+
+local function updateCachedLines(id, index, text)
+	if cachedLines[id] and (text ~= cachedLines[id][index]) then
+		cachedLines[id][index] = text
+	end
+end
+
+local function GetRequirements(text)
+	local result = matchPatterns(text)
+	if not result then
+		return nil
+	end
+
+	if result.current and result.required then
+		result.complete = result.current >= result.required
+	elseif result.percent then
+		result.complete = tonumber(result.percent) >= 100
+	end
+
+	return result
+end
+
+local function SetLineTextBasedOnProgress(result)
+	if result.percent and result.percent ~= 0 then
+		result.progress = GetColorProgress(result.percent, result.bad, result.transit, result.good)
+		if result.current and result.required then
+			return result.progress .. result.current .. "/" .. result.required .. " - " .. format("%.f%%", result.percent) .. "|r" .. "  " .. result.color.hex .. result.questText .. "|r"
 		else
-			local _, _, questText = GetRequirements(lineText)
-			if questText then
-				color = onEnter and colors.complete.h or colors.complete.n
-				lineText = color.hex .. questText .. "|r"
-			end
+			return result.color.hex .. result.questText .. "|r " .. result.progress .. "(" .. format("%.f%%", result.percent) .. "|r)"
+		end
+	else
+		return result.bad.hex .. result.current .. "/" .. result.required .. "|r  " .. result.color.hex .. result.questText .. "|r"
+	end
+end
+
+local function SetLineText(text, completed, id, index, onEnter, onLeave)
+	local colorConfig = completed and colors.complete or colors.text
+	local color = onEnter and colorConfig.h or colorConfig.n
+
+	local lineText = text:GetText()
+	SetTextProperties(text, fonts.text, color)
+
+	if lineText then
+		cachedLines[id] = cachedLines[id] or {}
+		cachedLines[id][index] = cachedLines[id][index] or lineText
+
+		if onEnter or onLeave then
+			lineText = cachedLines[id][index] or text
 		end
 
-		if lineText and (not text.originalText or (text.originalText ~= compareText)) then
-			local patternText = text:GetText()
-			if patternText then
-				local isSkinned, _ = string.find(patternText, "|cff")
-				if not isSkinned then
-					text.originalText = patternText
+		updateCachedLines(id, index, lineText)
+
+		local result = GetRequirements(lineText)
+
+		if result then
+			result.bad = onEnter and colors.bad.h or colors.bad.n
+			result.transit = onEnter and colors.transit.h or colors.transit.n
+			result.good = onEnter and colors.good.h or colors.good.n
+			result.color = color
+
+			if not result.complete then
+				if result.current and result.required and result.questText then
+					result.percent = GetProgressPercent(result.current, result.required)
+					lineText = SetLineTextBasedOnProgress(result)
+				elseif result.percent and result.questText then
+					lineText = SetLineTextBasedOnProgress(result)
+				elseif result.questText then
+					lineText = color.hex .. result.questText .. "|r"
 				end
 			end
 		end
@@ -400,7 +369,7 @@ local function SetUpBars(bar)
 	end
 end
 
-local function SkinLines(line)
+local function SkinLines(line, id, index)
 	if line then
 		if line.objectiveKey == 0 then
 			SetTextProperties(line.Text, fonts.title, colors.title.n)
@@ -408,7 +377,7 @@ local function SkinLines(line)
 			local complete = line.state or (line.objectiveKey == "QuestComplete") or line.finished
 			SetCheckIcon(line.Icon, complete)
 			HideDashIfRequired(line, line.Icon)
-			SetLineText(line.Text, complete)
+			SetLineText(line.Text, complete, id, index)
 			if line.progressBar and line.progressBar.Bar then
 				SetUpBars(line.progressBar.Bar)
 			end
@@ -443,7 +412,6 @@ local function CreateStageFrame(block, isChallengeMode)
 	-- create difficulty label to dungeon stage block if not m+
 	if not mMT_StageBlock.Difficulty and not isChallengeMode then
 		local label = mMT_StageBlock:CreateFontString(nil, "OVERLAY")
-		--label:FontTemplate(nil, fonts.title.fontsize, fontConfig.fontflag)
 		SetTextProperties(label, fonts.title)
 		label:Point("TOPRIGHT", mMT_StageBlock, "TOPRIGHT", -10, -10)
 		label:SetJustifyH("RIGHT")
@@ -596,7 +564,7 @@ local function SkinChallengeBlock(challengeBlock, elapsedTime)
 	end
 end
 
-local function LinesOnEnterLeave(line, onEnter, onLeave)
+local function LinesOnEnterLeave(line, id, index, onEnter, onLeave)
 	if line then
 		if line.objectiveKey == 0 then
 			local color = onEnter and colors.title.h or colors.title.n
@@ -604,7 +572,7 @@ local function LinesOnEnterLeave(line, onEnter, onLeave)
 			SetTextProperties(line.Text, fonts.title, color)
 		else
 			local complete = line.state or (line.objectiveKey == "QuestComplete") or line.finished
-			SetLineText(line.Text, complete, onEnter, onLeave)
+			SetLineText(line.Text, complete, id, index, onEnter, onLeave)
 		end
 	end
 end
@@ -615,8 +583,8 @@ local function OnHeaderEnter(block)
 	end
 
 	if block.usedLines then
-		for _, line in pairs(block.usedLines) do
-			LinesOnEnterLeave(line, true, false)
+		for index, line in pairs(block.usedLines) do
+			LinesOnEnterLeave(line, block.id, index, true, false)
 		end
 	end
 end
@@ -627,8 +595,8 @@ local function OnHeaderLeave(block)
 	end
 
 	if block.usedLines then
-		for _, line in pairs(block.usedLines) do
-			LinesOnEnterLeave(line, false, true)
+		for index, line in pairs(block.usedLines) do
+			LinesOnEnterLeave(line, block.id, index, false, true)
 		end
 	end
 end
@@ -650,8 +618,8 @@ local function SkinBlock(tracker, block)
 		end
 
 		if block.usedLines then
-			for _, line in pairs(block.usedLines) do
-				SkinLines(line)
+			for index, line in pairs(block.usedLines) do
+				SkinLines(line, block.id, index)
 			end
 		end
 
@@ -672,10 +640,10 @@ function module:Initialize()
 	CheckFontDB()
 
 	-- update colors
-	SetTextColors()
+	colors = SetTextColors()
 
 	-- update font
-	SetFonts()
+	fonts = SetFonts()
 
 	-- hook and skin the OT modules/ blocks
 	if not module.hooked then
