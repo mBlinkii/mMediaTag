@@ -301,6 +301,8 @@ P.mMT = {
 			enable = false,
 			shadow = true,
 			border = true,
+			classBorder = false,
+			transparent = true,
 			color = {
 				bg = { r = 0.36, g = 0.36, b = 0.36, a = 1 },
 				border = { r = 0, g = 0, b = 0, a = 1 },
@@ -338,6 +340,7 @@ P.mMT = {
 		settings = {
 			questcount = true,
 			hidedash = true,
+			hiedAll = false,
 		},
 		dungeon = {
 			hidedash = true,

@@ -9,9 +9,8 @@ if not module then
 end
 
 local _G = _G
-local pairs, unpack = pairs, unpack
+local pairs, mathMin, strmatch, stringGsub = pairs, math.min, strmatch, string.gsub
 local hooksecurefunc = hooksecurefunc
-local InCombatLockdown = InCombatLockdown
 local ObjectiveTrackerFrame = _G.ObjectiveTrackerFrame
 local maxNumQuestsCanAccept = min(C_QuestLog.GetMaxNumQuestsCanAccept() + (E.Retail and 10 or 0), 35) -- 20 for ERA, 25 for WotLK, 35 for Retail
 local IsInInstance = IsInInstance
@@ -21,6 +20,7 @@ local colors = {}
 local fonts = {}
 local cachedLines = {}
 local dim = 0.2
+local allObjectivesText
 
 local trackers = {
 	_G.AchievementObjectiveTracker,
@@ -69,15 +69,13 @@ local function RGBToHex(r, g, b, debug)
 end
 
 local function DimColor(color)
-	local r, g, b
-
 	dim = E.db.mMT.objectivetracker.font.highlight
 
-	local newR = math.min(1, color.r * dim)
-	local newG = math.min(1, color.g * dim)
-	local newB = math.min(1, color.b * dim)
+	local r = mathMin(1, color.r * dim)
+	local g = mathMin(1, color.g * dim)
+	local b = mathMin(1, color.b * dim)
 
-	return newR, newG, newB
+	return r, g, b
 end
 
 local function SetTextColors()
@@ -224,10 +222,10 @@ end
 
 local function matchPatterns(text)
 	local patterns = {
-		{ "^(%d-)/(%d-) (.+)$", "current", "required", "questText" },
-		{ "(.+): (%d-)/(%d-)$", "questText", "current", "required" },
-		{ "(.+) %(([%d%.]+%%)%)$", "questText", "percent" },
-		{ "^%(([%d%.]+%%)%) (.+)$", "percent", "questText" },
+		{ "^(%d-)/(%d-) (.+)$", "current", "required", "questText" }, -- output: number, number, text (quests with current/required)
+		{ "(.+): (%d-)/(%d-)$", "questText", "current", "required" }, -- output: text, number number (quests with current/required)
+		{ "(.+) %(([%d%.]+%%)%)$", "questText", "percent" }, -- output: text, number (quests with one number or %)
+		{ "^%(([%d%.]+%%)%) (.+)$", "percent", "questText" }, -- output: number, text (quests with one number or %)
 	}
 
 	local result = {}
@@ -244,7 +242,7 @@ local function matchPatterns(text)
 	end
 
 	if result.percent then
-		result.percent = string.gsub(result.percent, "%%", "")
+		result.percent = stringGsub(result.percent, "%%", "")
 	end
 
 	return result
@@ -292,14 +290,20 @@ local function SetLineText(text, completed, id, index, onEnter, onLeave)
 	SetTextProperties(text, fonts.text, color)
 
 	if lineText then
-		cachedLines[id] = cachedLines[id] or {}
-		cachedLines[id][index] = cachedLines[id][index] or lineText
+		if id and index then
+			cachedLines[id] = cachedLines[id] or {}
+			cachedLines[id][index] = cachedLines[id][index] or lineText
 
-		if onEnter or onLeave then
-			lineText = cachedLines[id][index] or text
+			updateCachedLines(id, index, lineText)
+		else
+			mMT:Print("ERROR - (id/index)", id, index, lineText)
 		end
 
-		updateCachedLines(id, index, lineText)
+		if onEnter or onLeave then
+			if cachedLines[id] then
+				lineText = cachedLines[id][index] or lineText
+			end
+		end
 
 		local result = GetRequirements(lineText)
 
@@ -382,9 +386,10 @@ local function SkinLines(line, id, index)
 				SetUpBars(line.progressBar.Bar)
 			end
 
-			if line.usedTimerBars or line.Bar then
-				mMT:DebugPrintTable(line)
-			end
+			-- if line.usedTimerBars or line.Bar then
+			-- 	line.TimerBar
+			-- 	mMT:DebugPrintTable(line)
+			-- end
 		end
 
 		-- fix for overlapping blocks/ line and header - thx Merathilis & Fang
@@ -603,6 +608,10 @@ end
 
 local function SkinBlock(tracker, block)
 	if block then
+		if block.id then
+			cachedLines[block.id] = cachedLines[block.id] or {}
+		end
+
 		if block.Stage and not block.mMT_StageSkin then
 			hooksecurefunc(block, "UpdateStageBlock", SkinStageBlock)
 			block.mMT_StageSkin = true
@@ -635,6 +644,44 @@ local function SkinBlock(tracker, block)
 	end
 end
 
+local function AddBackground()
+	-- inspired by Merathilis background, thank you
+	local backdrop = _G.ObjectiveTrackerFrame.backdrop
+
+	if E.db.mMT.objectivetracker.bg.enable then
+		if not backdrop then
+			_G.ObjectiveTrackerFrame:CreateBackdrop()
+			backdrop = _G.ObjectiveTrackerFrame.backdrop
+		end
+
+		if E.db.mMT.objectivetracker.bg.shadow then
+			backdrop:CreateShadow()
+		end
+
+		backdrop:SetTemplate(E.db.mMT.objectivetracker.bg.transparent and "Transparent")
+
+		if E.db.mMT.objectivetracker.bg.border then
+			local borderColor = E.db.mMT.objectivetracker.bg.classBorder and mMT.ClassColor or E.db.mMT.objectivetracker.bg.color.border
+			backdrop:SetBackdropBorderColor(borderColor.r, borderColor.g, borderColor.b, borderColor.a or 1)
+		end
+
+		if not E.db.mMT.objectivetracker.bg.transparent then
+			local backgroundColor = E.db.mMT.objectivetracker.bg.color.bg
+			backdrop:SetBackdropColor(backgroundColor.r, backgroundColor.g, backgroundColor.b, backgroundColor.a)
+		end
+
+		backdrop:ClearAllPoints()
+		backdrop:SetPoint("TOPLEFT", _G.ObjectiveTrackerFrame, "TOPLEFT", -20, 10)
+		backdrop:SetPoint("BOTTOMRIGHT", _G.ObjectiveTrackerFrame, "BOTTOMRIGHT", 10, -10)
+
+		backdrop:Show()
+	else
+		if backdrop then
+			backdrop:Hide()
+		end
+	end
+end
+
 function module:Initialize()
 	-- prevent bugs with wrong db entries
 	CheckFontDB()
@@ -645,13 +692,26 @@ function module:Initialize()
 	-- update font
 	fonts = SetFonts()
 
-	-- hook and skin the OT modules/ blocks
-	if not module.hooked then
+	if _G.ObjectiveTrackerFrame then
+		-- OT Background
+		AddBackground()
+
 		-- main header "all quests/ objectives"
-		if _G.ObjectiveTrackerFrame and _G.ObjectiveTrackerFrame.Header then
+		if _G.ObjectiveTrackerFrame.Header then
+			if _G.ObjectiveTrackerFrame.Header.Text then
+				if E.db.mMT.objectivetracker.settings.hideAll then
+					allObjectivesText = _G.ObjectiveTrackerFrame.Header.Text:GetText()
+					_G.ObjectiveTrackerFrame.Header.Text:SetText("")
+				elseif allObjectivesText then
+					_G.ObjectiveTrackerFrame.Header.Text:SetText(allObjectivesText)
+				end
+			end
 			SkinHeaders(_G.ObjectiveTrackerFrame.Header)
 		end
+	end
 
+	-- hook and skin the OT modules/ blocks
+	if not module.hooked then
 		-- add skin to each tracker and block
 		for _, tracker in pairs(trackers) do
 			if tracker then
