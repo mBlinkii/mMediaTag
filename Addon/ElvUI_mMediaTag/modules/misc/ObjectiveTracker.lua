@@ -61,7 +61,7 @@ local function CheckFontDB()
 end
 
 -- copied this from elvui because sometimes E.RGBToHex gets a nil value?
-local function RGBToHex(r, g, b, debug)
+local function RGBToHex(r, g, b)
 	r = r <= 1 and r >= 0 and r or 1
 	g = g <= 1 and g >= 0 and g or 1
 	b = b <= 1 and b >= 0 and b or 1
@@ -249,7 +249,9 @@ local function matchPatterns(text)
 end
 
 local function updateCachedLines(id, index, text)
-	if cachedLines[id] and (text ~= cachedLines[id][index]) then
+	local isSkinned = strmatch(text, "|cff") or strmatch(text, "|CFF")
+
+	if not isSkinned and cachedLines[id] then
 		cachedLines[id][index] = text
 	end
 end
@@ -292,15 +294,14 @@ local function SetLineText(text, completed, id, index, onEnter, onLeave)
 	if lineText then
 		if id and index then
 			cachedLines[id] = cachedLines[id] or {}
-			cachedLines[id][index] = cachedLines[id][index] or lineText
 
 			updateCachedLines(id, index, lineText)
+
+			if onEnter or onLeave and cachedLines[id] then
+				lineText = cachedLines[id][index] or lineText
+			end
 		else
 			mMT:Print("ERROR - (id/index)", id, index, lineText)
-		end
-
-		if onEnter or onLeave and cachedLines[id] then
-			lineText = cachedLines[id][index] or lineText
 		end
 
 		local result = GetRequirements(lineText)
