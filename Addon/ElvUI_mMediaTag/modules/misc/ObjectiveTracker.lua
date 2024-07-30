@@ -275,7 +275,7 @@ local function SetLineTextBasedOnProgress(result)
 		if result.current and result.required then
 			return result.progress .. result.current .. "/" .. result.required .. " - " .. format("%.f%%", result.percent) .. "|r" .. "  " .. result.color.hex .. result.questText .. "|r"
 		else
-			return result.color.hex .. result.questText .. "|r " .. result.progress .. "(" .. format("%.f%%", result.percent) .. "|r)"
+			return result.color.hex .. result.questText .. "|r "  .. "(" .. result.progress .. format("%.f%%", result.percent) .. "|r)"
 		end
 	else
 		return result.bad.hex .. result.current .. "/" .. result.required .. "|r  " .. result.color.hex .. result.questText .. "|r"
@@ -299,10 +299,8 @@ local function SetLineText(text, completed, id, index, onEnter, onLeave)
 			mMT:Print("ERROR - (id/index)", id, index, lineText)
 		end
 
-		if onEnter or onLeave then
-			if cachedLines[id] then
-				lineText = cachedLines[id][index] or lineText
-			end
+		if onEnter or onLeave and cachedLines[id] then
+			lineText = cachedLines[id][index] or lineText
 		end
 
 		local result = GetRequirements(lineText)
