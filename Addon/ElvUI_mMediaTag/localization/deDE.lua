@@ -719,3 +719,4 @@ L["|cffFFFFFFShift + Left Click:|r Show Talent Specialization UI"] = "|cffFFFFFF
 
 -- new
 L["M+ Time"] = true
+L["Hide (All Objectives)"] = true
