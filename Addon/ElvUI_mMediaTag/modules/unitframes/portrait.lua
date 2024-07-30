@@ -818,8 +818,10 @@ local function UnitEvent(self, event, conf, castUnit, unit)
 
 		if self.buildData.update[event] then
 			if UnitExists(unit) then
-				if self:GetAttribute("unit") ~= unit then
-					self:SetAttribute("unit", unit)
+				if not InCombatLockdown() then
+					if self:GetAttribute("unit") ~= unit then
+						self:SetAttribute("unit", unit)
+					end
 				end
 
 				SetPortraits(self, unit, (textures.enablemasking[conf.texture] and not conf.flippe), conf.mirror)
