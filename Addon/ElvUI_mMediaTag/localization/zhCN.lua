@@ -719,3 +719,5 @@ L["Preview"] = true
 L["Simple"] = true
 L["Location"] = true
 L["Open Settings"] = true
+L["M+ Time"] = true
+L["Hide (All Objectives)"] = true

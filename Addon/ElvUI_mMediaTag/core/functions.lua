@@ -67,14 +67,27 @@ function GetTableLng(tbl)
 	return getN
 end
 
-local function PrintTable(tbl, indent, simple)
+local function PrintTable(tbl, indent, simple, noFunctions)
+	--if not indent then indent = "   " end
 	if type(tbl) == "table" then
 		for entry, value in pairs(tbl) do
-			if type(value) == "table" and not simple then
+			if (type(value) == "table") and not simple then
 				print(indent and indent .. "   " or "", "|cff60ffc3 [" .. entry .. "]|r", value)
-				PrintTable(value, indent and indent .. "   " or "   ")
+				PrintTable(value, indent and indent .. "   " or "   ", true, noFunctions)
 			else
-				print(indent and indent .. "   " or "", ((type(value) == "table") and "|cff60ffc3 [" or "|cfffbd7f9 [") .. entry .. "]|r", " > ", value)
+				if type(value) == "table" then
+					print(indent and indent .. "   " or "", "|cff60ffc3 [" .. entry .. "]|r", " > ", value)
+				elseif type(value) == "number" then
+					print(indent and indent .. "   " or "", "|cfff5b062 [" .. entry .. "]|r", " = ", value)
+				elseif type(value) == "string" then
+					print(indent and indent .. "   " or "", "|cffd56ef5 [" .. entry .. "]|r", " = ", value)
+				elseif type(value) == "boolean" then
+					print(indent and indent .. "   " or "", "|cff96e1ff[" .. entry .. "]|r", " = ", (value and "|cffabff87true|r" or "|cffff8787false|r"))
+				elseif (type(value) == "function") and not noFunctions then
+					print(indent and indent .. "   " or "", "|cffb5b3f5 [" .. entry .. "]|r", " = ", value)
+				elseif type(value) ~= "function" then
+					print(indent and indent .. "   " or "", "|cfffbd7f9 [" .. entry .. "]|r", " = ", value)
+				end
 			end
 		end
 	else
@@ -82,11 +95,11 @@ local function PrintTable(tbl, indent, simple)
 	end
 end
 
-function mMT:DebugPrintTable(tbl, simple)
+function mMT:DebugPrintTable(tbl, simple, noFunctions)
 	if type(tbl) == "table" then
 		local tblLength = GetTableLng(tbl)
-		mMT:Print(": Table Start >>>", tbl, "Entries:", tblLength)
-		PrintTable(tbl, nil, (simple or (tblLength > 20)))
+		mMT:Print(": Table Start >>>", tbl, "Entries:", tblLength, "Options:", "Simple:", simple, "Functions:", noFunctions)
+		PrintTable(tbl, nil, (tblLength > 50), noFunctions)
 	else
 		mMT:Print("Not a Table:", tbl)
 	end

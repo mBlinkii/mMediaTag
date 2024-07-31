@@ -32,7 +32,6 @@ local GetContainerNumFreeSlots = GetContainerNumFreeSlots or (C_Container and C_
 local GetContainerNumSlots = GetContainerNumSlots or (C_Container and C_Container.GetContainerNumSlots)
 local NUM_BAG_SLOTS = NUM_BAG_SLOTS + (E.Retail and 1 or 0) -- add the profession bag
 
-local EasyMenu = EasyMenu
 local GetMoney = GetMoney
 local IsLoggedIn = IsLoggedIn
 local IsShiftKeyDown = IsShiftKeyDown
@@ -315,7 +314,7 @@ local function OnClick(self, btn)
 		if btn == "RightButton" then
 			if IsShiftKeyDown() then
 				E:SetEasyMenuAnchor(E.EasyMenu, self)
-				EasyMenu(menuList, E.EasyMenu, nil, nil, nil, "MENU")
+				E:ComplicatedMenu(menuList, E.EasyMenu, nil, nil, nil, "MENU")
 			elseif IsControlKeyDown() then
 				Profit = 0
 				Spent = 0

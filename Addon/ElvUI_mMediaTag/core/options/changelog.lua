@@ -10,30 +10,27 @@ local new, fix, update, important, dash = "|TInterface\\Addons\\ElvUI_mMediaTag\
 local change_log_important = {
 	red .. "!!! Important" .. endtag,
 	"",
-	"The Objectivetracker Skin is completely deactivated in mMT, because I don't have the time at the moment, to adapt the skin to the current changes in WoW. I recommend to activate the skin in the addon from Eltreum > Eltruism an update will follow.",
-	"",
-	"Some features  in the AFK screen have been disabled, again for the same reason as above and an update will follow.",
-	"",
-	"I can understand that some people will not like these changes, but please understand that I am working on this project after my work and do not always have enough time. Thanks for your understanding and have fun with the PrePatch.",
+	"Dock Guild & Friends drop down menu for Invite and Whisper can be buggy, this is known and will be fixed later.",
 }
 
-local releasdate = "23.07.2024"
+local releasdate = "31.07.2024"
 
 local change_log_new = {
-	"New Settings menu for the Example Docks.",
-	"Support for MerathilisUI colors and gradient mode.",
-	"Portraits Texture Thin.",
-	"Add more example Docks and Datattext to Example Docks menu.",
+	"Add Evoker Texture to E Series",
+	"ObjectiveTracker Skin is available again, big thx to Merathilis & Eltreum",
+	"Add - AI/ FOLLOWER, DELVE, QUEST & STORY Dungeons to difficulty text",
 }
 
 local change_log_update = {
-	"Update for TWW",
+	"AFK Screen is available again",
 }
 
 local change_log_fix = {
-	"Bug with Portraits in combat and zone changes",
-	"Portrait Cast icon with enabled Class icons",
-	"TAG classification colors",
+	"Dropdown Menus fro Dock Icons and Datatexts",
+	"GameMenu SpellBock toggle frame works now",
+	"SpellBock toggle frame works now for Dock and Datatexts",
+	"Profession toggle frame works now for Dock and Datatexts",
+	"AFK Screen",
 }
 
 local function Concatenation(tbl, icon, color)
@@ -54,7 +51,7 @@ end
 
 local function configTable()
 	change_log_important_string = Concatenation(change_log_important)
-	--change_log_new_string = Concatenation(change_log_new)
+	change_log_new_string = Concatenation(change_log_new)
 	change_log_update_string = Concatenation(change_log_update)
 	change_log_fix_string = Concatenation(change_log_fix)
 	E.Options.args.mMT.args.changelog.args = {

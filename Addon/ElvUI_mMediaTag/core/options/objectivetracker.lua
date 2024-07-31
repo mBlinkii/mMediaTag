@@ -73,7 +73,7 @@ local function configTable()
 					end,
 					set = function(info, value)
 						E.db.mMT.objectivetracker.settings.questcount = value
-						E:StaticPopup_Show("CONFIG_RL")
+						mMT.Modules.ObjectiveTracker:Initialize()
 					end,
 				},
 				toggle_dash = {
@@ -85,7 +85,7 @@ local function configTable()
 					end,
 					set = function(info, value)
 						E.db.mMT.objectivetracker.settings.hidedash = value
-						E:StaticPopup_Show("CONFIG_RL")
+						mMT.Modules.ObjectiveTracker:Initialize()
 					end,
 				},
 			},
@@ -104,7 +104,7 @@ local function configTable()
 					end,
 					set = function(info, value)
 						E.db.mMT.objectivetracker.bg.enable = value
-						E:StaticPopup_Show("CONFIG_RL")
+						mMT.Modules.ObjectiveTracker:Initialize()
 					end,
 				},
 				header_color = {
@@ -112,6 +112,9 @@ local function configTable()
 					type = "group",
 					inline = true,
 					name = L["Background Color"],
+					disabled = function()
+						return E.db.mMT.objectivetracker.bg.transparent
+					end,
 					args = {
 						color_bg = {
 							type = "color",
@@ -125,7 +128,7 @@ local function configTable()
 							set = function(info, r, g, b, a)
 								local t = E.db.mMT.objectivetracker.bg.color.bg
 								t.r, t.g, t.b, t.a = r, g, b, a
-								E:StaticPopup_Show("CONFIG_RL")
+								mMT.Modules.ObjectiveTracker:Initialize()
 							end,
 						},
 					},
@@ -145,7 +148,7 @@ local function configTable()
 							end,
 							set = function(info, value)
 								E.db.mMT.objectivetracker.bg.border = value
-								E:StaticPopup_Show("CONFIG_RL")
+								mMT.Modules.ObjectiveTracker:Initialize()
 							end,
 						},
 						color_border = {
@@ -160,7 +163,19 @@ local function configTable()
 							set = function(info, r, g, b, a)
 								local t = E.db.mMT.objectivetracker.bg.color.border
 								t.r, t.g, t.b, t.a = r, g, b, a
-								E:StaticPopup_Show("CONFIG_RL")
+								mMT.Modules.ObjectiveTracker:Initialize()
+							end,
+						},
+						toggle_header = {
+							order = 2,
+							type = "toggle",
+							name = L["Class colored"],
+							get = function(info)
+								return E.db.mMT.objectivetracker.bg.classBorder
+							end,
+							set = function(info, value)
+								E.db.mMT.objectivetracker.bg.classBorder = value
+								mMT.Modules.ObjectiveTracker:Initialize()
 							end,
 						},
 					},
@@ -180,7 +195,27 @@ local function configTable()
 							end,
 							set = function(info, value)
 								E.db.mMT.objectivetracker.bg.shadow = value
-								E:StaticPopup_Show("CONFIG_RL")
+								mMT.Modules.ObjectiveTracker:Initialize()
+							end,
+						},
+					},
+				},
+				header_transparent = {
+					order = 5,
+					type = "group",
+					inline = true,
+					name = L["Transparent"],
+					args = {
+						toggle_shadow = {
+							order = 2,
+							type = "toggle",
+							name = L["Transparent"],
+							get = function(info)
+								return E.db.mMT.objectivetracker.bg.transparent
+							end,
+							set = function(info, value)
+								E.db.mMT.objectivetracker.bg.transparent = value
+								mMT.Modules.ObjectiveTracker:Initialize()
 							end,
 						},
 					},
@@ -250,13 +285,25 @@ local function configTable()
 								E:StaticPopup_Show("CONFIG_RL")
 							end,
 						},
-						spacer_2 = {
+						toggle_hideAll = {
 							order = 5,
+							type = "toggle",
+							name = L["Hide (All Objectives)"],
+							get = function(info)
+								return E.db.mMT.objectivetracker.settings.hideAll
+							end,
+							set = function(info, value)
+								E.db.mMT.objectivetracker.settings.hideAll = value
+								mMT.Modules.ObjectiveTracker:Initialize()
+							end,
+						},
+						spacer_2 = {
+							order = 6,
 							type = "description",
 							name = "\n\n\n",
 						},
 						fontsize_title = {
-							order = 6,
+							order = 7,
 							name = L["Font Size"] .. " " .. L["Title"],
 							type = "range",
 							min = 1,
@@ -273,12 +320,12 @@ local function configTable()
 							end,
 						},
 						spacer_3 = {
-							order = 7,
+							order = 8,
 							type = "description",
 							name = "\n\n\n",
 						},
 						fontsize_text = {
-							order = 8,
+							order = 9,
 							name = L["Font Size"] .. " " .. L["Text"],
 							type = "range",
 							min = 1,
@@ -291,6 +338,28 @@ local function configTable()
 							end,
 							set = function(info, value)
 								E.db.mMT.objectivetracker.font.fontsize.text = value
+								E:StaticPopup_Show("CONFIG_RL")
+							end,
+						},
+						spacer_4 = {
+							order = 10,
+							type = "description",
+							name = "\n\n\n",
+						},
+						fontsize_time = {
+							order = 11,
+							name = L["Font Size"] .. " " .. L["M+ Time"],
+							type = "range",
+							min = 1,
+							max = 64,
+							step = 1,
+							softMin = 8,
+							softMax = 32,
+							get = function(info)
+								return E.db.mMT.objectivetracker.font.fontsize.time
+							end,
+							set = function(info, value)
+								E.db.mMT.objectivetracker.font.fontsize.time = value
 								E:StaticPopup_Show("CONFIG_RL")
 							end,
 						},
@@ -307,7 +376,7 @@ local function configTable()
 							name = L["Highlight dim Value"],
 							type = "range",
 							min = 0,
-							max = 1,
+							max = 2,
 							step = 0.01,
 							get = function(info)
 								return E.db.mMT.objectivetracker.font.highlight

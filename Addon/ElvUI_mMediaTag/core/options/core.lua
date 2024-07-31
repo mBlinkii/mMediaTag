@@ -324,16 +324,16 @@ local function configTable()
 						end,
 						args = {},
 					},
-					-- objectivetracker = {
-					-- 	order = 5,
-					-- 	type = "group",
-					-- 	name = L["Objective Tracker"],
-					-- 	hidden = function()
-					-- 		return not E.Retail
-					-- 	end,
-					-- 	childGroups = "tab",
-					-- 	args = {},
-					-- },
+					objectivetracker = {
+						order = 5,
+						type = "group",
+						name = L["Objective Tracker"],
+						hidden = function()
+							return not E.Retail
+						end,
+						childGroups = "tab",
+						args = {},
+					},
 					unitframeicons = {
 						order = 6,
 						type = "group",

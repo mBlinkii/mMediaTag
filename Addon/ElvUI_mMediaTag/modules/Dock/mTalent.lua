@@ -8,7 +8,6 @@ local _G = _G
 local ipairs, tinsert, tremove = ipairs, tinsert, tremove
 local format, next, strjoin = format, next, strjoin
 
-local EasyMenu = EasyMenu
 local GetLootSpecialization = GetLootSpecialization
 local GetNumSpecializations = GetNumSpecializations
 local GetPvpTalentInfoByID = GetPvpTalentInfoByID
@@ -19,8 +18,7 @@ local IsShiftKeyDown = IsShiftKeyDown
 local LoadAddOn = LoadAddOn
 local SetLootSpecialization = SetLootSpecialization
 local SetSpecialization = SetSpecialization
-local ToggleTalentFrame = ToggleTalentFrame
-
+local PlayerSpellsUtil = _G.PlayerSpellsUtil
 local C_SpecializationInfo_GetAllSelectedPvpTalentIDs = C_SpecializationInfo.GetAllSelectedPvpTalentIDs
 local C_Traits_GetConfigInfo = C_Traits.GetConfigInfo
 
@@ -289,7 +287,11 @@ local function OnClick(self, button)
 			end
 
 			if IsShiftKeyDown() then
-				ToggleTalentFrame(_G.TalentMicroButton.suggestedTab)
+				if PlayerSpellsUtil then
+					PlayerSpellsUtil.ToggleClassTalentOrSpecFrame()
+				else
+					_G.ToggleTalentFrame()
+				end
 			else
 				menu = IsControlKeyDown() and loadoutList or specList
 			end
@@ -304,7 +306,7 @@ local function OnClick(self, button)
 
 		if menu then
 			E:SetEasyMenuAnchor(E.EasyMenu, self)
-			EasyMenu(menu, E.EasyMenu, nil, nil, nil, "MENU")
+			E:ComplicatedMenu(menu, E.EasyMenu, nil, nil, nil, "MENU")
 		end
 	end
 end

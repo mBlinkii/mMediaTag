@@ -18,6 +18,7 @@ local ToggleFrame = ToggleFrame
 local UIParentLoadAddOn = UIParentLoadAddOn
 local MainMenuMicroButton = MainMenuMicroButton
 local MainMenuMicroButton_SetNormal = MainMenuMicroButton_SetNormal
+local PlayerSpellsUtil = _G.PlayerSpellsUtil
 
 local menuList = nil
 local menuFrame = CreateFrame("Frame", "mMT_SystemMenu", E.UIParent)
@@ -65,10 +66,31 @@ local function BuildMenu()
 			text = _G.SPELLBOOK_ABILITIES_BUTTON,
 			icon = AddIcon("literature"),
 			func = function()
-				ToggleFrame(_G.SpellBookFrame)
+				if PlayerSpellsUtil then
+					PlayerSpellsUtil.ToggleSpellBookFrame()
+				else
+					ToggleFrame(_G.SpellBookFrame)
+				end
 			end,
 		},
-		{ text = _G.TALENTS_BUTTON, icon = AddIcon("prize"), func = _G.ToggleTalentFrame },
+		{
+			text = _G.PROFESSIONS_BUTTON,
+			icon = AddIcon("profession"),
+			func = function()
+				ToggleProfessionsBook()
+			end,
+		},
+		{
+			text = _G.TALENTS_BUTTON,
+			icon = AddIcon("prize"),
+			func = function()
+				if PlayerSpellsUtil then
+					PlayerSpellsUtil.ToggleClassTalentOrSpecFrame()
+				else
+					_G.ToggleTalentFrame()
+				end
+			end,
+		},
 		{
 			text = _G.TIMEMANAGER_TITLE,
 			icon = AddIcon("watches"),
@@ -76,8 +98,8 @@ local function BuildMenu()
 				ToggleFrame(_G.TimeManagerFrame)
 			end,
 		},
-		{ text = _G.CHAT_CHANNELS, icon = AddIcon("chathistory"), func = _G.ToggleChannelFrame },
-		{ text = _G.SOCIAL_BUTTON, icon = AddIcon("users"), func = _G.ToggleFriendsFrame },
+		{ text = _G.CHAT_CHANNELS, icon = AddIcon("chathistory"), func = _G.ToggleChannelFrame() },
+		{ text = _G.SOCIAL_BUTTON, icon = AddIcon("users"), func = _G.ToggleFriendsFrame() },
 		{
 			text = _G.GUILD,
 			icon = AddIcon("homeshield"),
@@ -92,7 +114,7 @@ local function BuildMenu()
 	}
 
 	if E.Retail then
-		tinsert(menuList, { text = _G.LFG_TITLE, icon = AddIcon("eye"), func = _G.ToggleLFDParentFrame })
+		tinsert(menuList, { text = _G.LFG_TITLE, icon = AddIcon("eye"), func = _G.ToggleLFDParentFrame() })
 	elseif E.Cata then
 		tinsert(menuList, {
 			text = _G.LFG_TITLE,
@@ -107,7 +129,7 @@ local function BuildMenu()
 	end
 
 	if E.Retail then
-		tinsert(menuList, { text = _G.COLLECTIONS, icon = AddIcon("cube"), func = _G.ToggleCollectionsJournal })
+		tinsert(menuList, { text = _G.COLLECTIONS, icon = AddIcon("cube"), func = _G.ToggleCollectionsJournal() })
 		tinsert(menuList, {
 			text = _G.BLIZZARD_STORE,
 			icon = AddIcon("store"),
@@ -135,14 +157,14 @@ local function BuildMenu()
 	end
 
 	if E.Cata and E.mylevel >= _G.SHOW_PVP_LEVEL then
-		tinsert(menuList, { text = _G.PLAYER_V_PLAYER, icon = AddIcon("battle"), func = _G.TogglePVPFrame })
+		tinsert(menuList, { text = _G.PLAYER_V_PLAYER, icon = AddIcon("battle"), func = _G.TogglePVPFrame() })
 	end
 
 	if E.Retail or E.Cata then
 		tinsert(menuList, {
 			text = _G.ACHIEVEMENT_BUTTON,
 			icon = AddIcon("star"),
-			func = _G.ToggleAchievementFrame,
+			func = _G.ToggleAchievementFrame(),
 		})
 		tinsert(menuList, {
 			text = L["Calendar"],
@@ -233,7 +255,7 @@ local function BuildMenu()
 		color = AddColor(4),
 		icon = AddIcon("questionmark"),
 		bottom = true,
-		func = _G.ToggleHelpFrame,
+		func = _G.ToggleHelpFrame(),
 	})
 end
 local function OnEvent(self, event)
