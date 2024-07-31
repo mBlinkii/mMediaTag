@@ -351,6 +351,7 @@ L["Healthmarkers"] = "Gesundheits Markierungen"
 L["Help"] = "Hilfe"
 L["Here you can enable or disable individual texture packs to speed up the loading of the dropdown menu. Sometimes it may be necessary to do a /rl after enabling or disabling the packs."] = "Hier kannst du die Verschiedenen Textur Pakete Aktivieren oder deaktivieren und somit das laden des Texturen Menüs beschleunigen."
 L["Here you can set the color of the castbar when your own interrupt spell is on CD or will be ready."] = "Hier kannst du die Farben für die Zauberleiste einstellen, wenn dein Unterbrechungs Zauber auf Abklingzeit ist."
+L["Hide (All Objectives)"] = "Ausblenden (Alle Ziele)"
 L["Hide Dash"] = "Verstecke Bindestrich"
 L["Hide Text"] = "Verstecke Text"
 L["Hide Timer in Seconds"] = "Ausblendzeit in Sekunden"
@@ -416,6 +417,7 @@ L["Logo Texture"] = "Logo Textur"
 L["M+ Keystone Level"] = "M+ Schlüsselstein Stufe"
 L["M+ Score"] = "M+ Punkte"
 L["M+ Season"] = "M+ Saison"
+L["M+ Time"] = "M+ Zeit"
 L["MAGE"] = "Magier"
 L["MONK"] = "Mönch"
 L["MaUI XIV Like"] = "MaUI XIV ähnlich"
@@ -716,7 +718,3 @@ L["|cffFFFFFFControl + Left Click:|r Change Loadout"] = "|cffFFFFFFStrg + Linksk
 L["|cffFFFFFFLeft Click:|r Change Talent Specialization"] = "|cffFFFFFFLinks Klick:|r Talent Spezialisierung ändern"
 L["|cffFFFFFFRight Click:|r Change Loot Specialization"] = "|cffFFFFFFRechtsklick:|r Beutespezialisierung ändern"
 L["|cffFFFFFFShift + Left Click:|r Show Talent Specialization UI"] = "|cffFFFFFFShift + Links Klick:|r Zeige Talent Spezialisierungs Interface"
-
--- new
-L["M+ Time"] = true
-L["Hide (All Objectives)"] = true
