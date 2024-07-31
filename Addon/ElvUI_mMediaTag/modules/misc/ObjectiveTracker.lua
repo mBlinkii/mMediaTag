@@ -182,7 +182,7 @@ local function SetCheckIcon(icon, completed)
 	if icon and completed then
 		icon:SetTexture("Interface\\AddOns\\ElvUI_mMediaTag\\media\\icons\\misc\\questDone.tga")
 		icon:SetVertexColor(E.db.mMT.objectivetracker.font.color.good.r, E.db.mMT.objectivetracker.font.color.good.g, E.db.mMT.objectivetracker.font.color.good.b, 1)
-	elseif select(1, IsInInstance()) then
+	else
 		if E.db.mMT.objectivetracker.dungeon.hidedash then
 			icon:Hide()
 		else
@@ -277,7 +277,7 @@ local function SetLineTextBasedOnProgress(result)
 		if result.current and result.required then
 			return result.progress .. result.current .. "/" .. result.required .. " - " .. format("%.f%%", result.percent) .. "|r" .. "  " .. result.color.hex .. result.questText .. "|r"
 		else
-			return result.color.hex .. result.questText .. "|r "  .. "(" .. result.progress .. format("%.f%%", result.percent) .. "|r)"
+			return result.color.hex .. result.questText .. "|r " .. "(" .. result.progress .. format("%.f%%", result.percent) .. "|r)"
 		end
 	else
 		return result.bad.hex .. result.current .. "/" .. result.required .. "|r  " .. result.color.hex .. result.questText .. "|r"
@@ -300,8 +300,6 @@ local function SetLineText(text, completed, id, index, onEnter, onLeave)
 			if onEnter or onLeave and cachedLines[id] then
 				lineText = cachedLines[id][index] or lineText
 			end
-		else
-			mMT:Print("ERROR - (id/index)", id, index, lineText)
 		end
 
 		local result = GetRequirements(lineText)
@@ -385,10 +383,9 @@ local function SkinLines(line, id, index)
 				SetUpBars(line.progressBar.Bar)
 			end
 
-			-- if line.usedTimerBars or line.Bar then
-			-- 	line.TimerBar
-			-- 	mMT:DebugPrintTable(line)
-			-- end
+			if line.timerBar and line.timerBar.Bar then
+				SetUpBars(line.timerBar.Bar)
+			end
 		end
 
 		-- fix for overlapping blocks/ line and header - thx Merathilis & Fang
@@ -449,31 +446,34 @@ local function CreateStageFrame(block, isChallengeMode)
 	block.mMT_StageBlock = mMT_StageBlock
 end
 
-local function SkinStageBlock()
-	if _G.ScenarioObjectiveTracker then
-		local stageBlocks = { _G.ScenarioObjectiveTracker.ContentsFrame:GetChildren() }
-		for _, stageBlock in pairs(stageBlocks) do
-			if stageBlock.Stage then
-				SetTextProperties(stageBlock.Stage, fonts.title)
+local function SkinStageBlock(stageBlock, scenarioID, scenarioType, widgetSetID, textureKit, flags, currentStage, stageName, numStages)
+	if stageBlock.NormalBG then
+		stageBlock.NormalBG:Hide()
+		stageBlock.NormalBG:SetTexture()
+	end
 
-				-- create stage block bg
-				if not stageBlock.mMT_StageBlock then
-					CreateStageFrame(stageBlock, false)
-				else
-					if IsInInstance() and stageBlock.mMT_StageBlock and stageBlock.mMT_StageBlock.Difficulty then
-						stageBlock.mMT_StageBlock.Difficulty:SetText(mMT:GetDungeonInfo(false, false, true))
-					end
-				end
+	if stageBlock.FinalBG then
+		stageBlock.FinalBG:Hide()
+		stageBlock.FinalBG:SetTexture()
+	end
+
+	if stageBlock.Stage then
+		SetTextProperties(stageBlock.Stage, fonts.title)
+
+		-- create stage block bg
+		if not stageBlock.mMT_StageBlock then
+			CreateStageFrame(stageBlock, false)
+		else
+			if IsInInstance() and stageBlock.mMT_StageBlock and stageBlock.mMT_StageBlock.Difficulty then
+				stageBlock.mMT_StageBlock.Difficulty:SetText(mMT:GetDungeonInfo(false, false, true))
 			end
-
-			if stageBlock.NormalBG then
-				stageBlock.NormalBG:Hide()
-				stageBlock.NormalBG:SetTexture()
-			end
-
-			if stageBlock.FinalBG then
-				stageBlock.FinalBG:Hide()
-				stageBlock.FinalBG:SetTexture()
+		end
+	end
+	if stageBlock.WidgetContainer and stageBlock.WidgetContainer.widgetFrames then
+		for _, widgetFrame in pairs(stageBlock.WidgetContainer.widgetFrames) do
+			if widgetFrame.Frame then
+				widgetFrame.Frame:SetAlpha(0)
+				widgetFrame.Frame:Hide()
 			end
 		end
 	end
@@ -607,13 +607,23 @@ end
 
 local function SkinBlock(tracker, block)
 	if block then
-		if block.id then
-			cachedLines[block.id] = cachedLines[block.id] or {}
-		end
-
 		if block.Stage and not block.mMT_StageSkin then
 			hooksecurefunc(block, "UpdateStageBlock", SkinStageBlock)
+			SkinStageBlock(block)
 			block.mMT_StageSkin = true
+		end
+
+		if block.WidgetContainer and block.WidgetContainer.widgetFrames then
+			for _, widgetFrame in pairs(block.WidgetContainer.widgetFrames) do
+				if widgetFrame.Frame then
+					widgetFrame.Frame:SetAlpha(0)
+					widgetFrame.Frame:Hide()
+				end
+			end
+		end
+
+		if block.id then
+			cachedLines[block.id] = cachedLines[block.id] or {}
 		end
 
 		if block.affixPool and block.UpdateTime and not block.mMT_ChallengeBlock then

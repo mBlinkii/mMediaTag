@@ -73,7 +73,7 @@ local function PrintTable(tbl, indent, simple, noFunctions)
 		for entry, value in pairs(tbl) do
 			if (type(value) == "table") and not simple then
 				print(indent and indent .. "   " or "", "|cff60ffc3 [" .. entry .. "]|r", value)
-				PrintTable(value, indent and indent .. "   " or "   ", simple, noFunctions)
+				PrintTable(value, indent and indent .. "   " or "   ", true, noFunctions)
 			else
 				if type(value) == "table" then
 					print(indent and indent .. "   " or "", "|cff60ffc3 [" .. entry .. "]|r", " > ", value)
@@ -99,7 +99,7 @@ function mMT:DebugPrintTable(tbl, simple, noFunctions)
 	if type(tbl) == "table" then
 		local tblLength = GetTableLng(tbl)
 		mMT:Print(": Table Start >>>", tbl, "Entries:", tblLength, "Options:", "Simple:", simple, "Functions:", noFunctions)
-		PrintTable(tbl, nil, (simple or (tblLength > 20)), noFunctions)
+		PrintTable(tbl, nil, (tblLength > 50), noFunctions)
 	else
 		mMT:Print("Not a Table:", tbl)
 	end
