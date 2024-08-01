@@ -74,6 +74,10 @@ local Teleports = {
 			[168807] = true, --wormhole-generator-kultiras
 			[151652] = true, --wormhole-generator-argus
 			[112059] = true, --wormhole-centrifuge
+			[30542] = true, --Dimensional Ripper - Area
+			[30544] = true, --Ultrasafe Transporter: Toshley's Station
+			[18986] = true, --Ultrasafe Transporter: Gadgetzan
+			[18984] = true, --Dimensional Ripper - Everlook
 		},
 	},
 	items = {
