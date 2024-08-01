@@ -284,7 +284,7 @@ end
 local function mMenuAdd(tbl, text, time, macro, icon, tooltip, funcOnEnter)
 	tinsert(tbl, {
 		text = text,
-		Secondtext = time,
+		SecondText = time,
 		icon = icon,
 		isTitle = false,
 		tooltip = tooltip,
