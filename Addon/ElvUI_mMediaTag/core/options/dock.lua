@@ -1021,7 +1021,7 @@ local function configTable()
 		dockspellbook = {
 			order = 11,
 			type = "group",
-			name = SPELLBOOK_ABILITIES_BUTTON,
+			name = PLAYERSPELLS_BUTTON,
 			args = {
 				dockspellbookicon = {
 					order = 1,

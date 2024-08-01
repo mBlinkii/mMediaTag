@@ -803,7 +803,8 @@
         "LFG_LIST_AND_MORE",
         "ItemRefTooltip",
         "NPEV2_CHAT_USER_TAG_GUIDE",
-        "SOCIAL_QUEUE_QUEUED_FOR"
+        "SOCIAL_QUEUE_QUEUED_FOR",
+        "TALENTS"
     ],
     "Lua.diagnostics.disable": [
         "undefined-field",
