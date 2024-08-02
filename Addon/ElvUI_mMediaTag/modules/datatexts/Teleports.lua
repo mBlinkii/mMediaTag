@@ -187,6 +187,7 @@ local Teleports = {
 			[193759] = true, --teleport-hall-of-the-guardian
 			[193753] = true, --dreamwalk
 			[126892] = true, --zen-pilgrimage
+			[265225] = true, -- Mole Machine
 		},
 	},
 	season = {
