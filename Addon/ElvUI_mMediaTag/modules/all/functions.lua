@@ -192,7 +192,7 @@ local ProfessionsColor = {
 }
 
 -- list = tbl see below
--- text = string, Secondtext = string, color = color string for first text, icon = texture, func = function, funcOnEnter = function,
+-- text = string, SecondText = string, color = color string for first text, icon = texture, func = function, funcOnEnter = function,
 -- funcOnLeave = function, isTitle = bolean, macro = macrotext, tooltip = id or var you can use for the functions, notClickable = bolean
 
 local function getProfSkill(skillLevel, maxSkillLevel, skillModifier)
@@ -291,7 +291,7 @@ local function InsertInTable(tbl, textA, textB, title, icon, color, spell)
 	if spell then
 		tinsert(tbl, {
 			text = textA,
-			Secondtext = textB,
+			SecondText = textB,
 			color = color,
 			icon = icon,
 			isTitle = title,
@@ -301,9 +301,9 @@ local function InsertInTable(tbl, textA, textB, title, icon, color, spell)
 			end,
 		})
 	else
-		-- text = string, Secondtext = string, color = color string for first text, icon = texture, func = function, funcOnEnter = function,
+		-- text = string, SecondText = string, color = color string for first text, icon = texture, func = function, funcOnEnter = function,
 		-- funcOnLeave = function, isTitle = bolean, macro = macrotext, tooltip = id or var you can use for the functions, notClickable = bolean
-		tinsert(tbl, { text = textA, Secondtext = textB, isTitle = title, notClickable = title, func = function() end })
+		tinsert(tbl, { text = textA, SecondText = textB, isTitle = title, notClickable = title, func = function() end })
 	end
 end
 
@@ -371,7 +371,7 @@ function mMT:GetProfessions(tooltip)
 				local name = spellInfo.name or ""
 				tinsert(MenuTable, {
 					text = format("|T%s:14:14:0:0:64:64:5:59:5:59|t %s", texture, name),
-					Secondtext = GetFireCD(),
+					SecondText = GetFireCD(),
 					color = "|CFFFF9B00",
 					isTitle = false,
 					macro = "/cast " .. name,

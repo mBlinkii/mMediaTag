@@ -252,7 +252,7 @@ local function getColor(unit)
 		return defaultColor
 	end
 
-	if UnitIsPlayer(unit) then
+	if UnitIsPlayer(unit) or (E.Retail and UnitInPartyIsAI(unit)) then
 		if settings.general.reaction then
 			local playerFaction = cachedFaction.player or select(1, UnitFactionGroup("player"))
 			cachedFaction.player = playerFaction

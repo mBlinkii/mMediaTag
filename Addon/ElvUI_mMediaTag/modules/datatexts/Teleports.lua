@@ -74,6 +74,10 @@ local Teleports = {
 			[168807] = true, --wormhole-generator-kultiras
 			[151652] = true, --wormhole-generator-argus
 			[112059] = true, --wormhole-centrifuge
+			[30542] = true, --Dimensional Ripper - Area
+			[30544] = true, --Ultrasafe Transporter: Toshley's Station
+			[18986] = true, --Ultrasafe Transporter: Gadgetzan
+			[18984] = true, --Dimensional Ripper - Everlook
 		},
 	},
 	items = {
@@ -183,6 +187,7 @@ local Teleports = {
 			[193759] = true, --teleport-hall-of-the-guardian
 			[193753] = true, --dreamwalk
 			[126892] = true, --zen-pilgrimage
+			[265225] = true, -- Mole Machine
 		},
 	},
 	season = {
@@ -280,7 +285,7 @@ end
 local function mMenuAdd(tbl, text, time, macro, icon, tooltip, funcOnEnter)
 	tinsert(tbl, {
 		text = text,
-		Secondtext = time,
+		SecondText = time,
 		icon = icon,
 		isTitle = false,
 		tooltip = tooltip,

@@ -49,8 +49,8 @@ local function OnLeave(btn)
 end
 
 -- list = tbl see below
--- text = string, Secondtext = string, color = color string for first text, icon = texture, func = function, funcOnEnter = function,
--- funcOnLeave = function, isTitle = bolean, macro = macrotext, tooltip = id or var you can use for the functions, notClickable = bolean
+-- text = string, SecondText = string, color = color string for first text, icon = texture, func = function, funcOnEnter = function,
+-- funcOnLeave = function, isTitle = boolean, macro = macrotext, tooltip = id or var you can use for the functions, notClickable = boolean
 function mMT:mDropDown(list, frame, menuparent, ButtonWidth, HideDelay)
 	local SAVE_HEIGHT = (E.db.mMT.general.datatextfontsize or E.db.general.fontSize) / 3 + 16
 	local BUTTON_HEIGHT = 0
@@ -116,11 +116,11 @@ function mMT:mDropDown(list, frame, menuparent, ButtonWidth, HideDelay)
 			frame.buttons[i].text:SetJustifyH("LEFT")
 		end
 
-		if list[i].Secondtext then
-			frame.buttons[i].Secondtext = frame.buttons[i]:CreateFontString(nil, "BORDER")
-			frame.buttons[i].Secondtext:SetAllPoints()
-			frame.buttons[i].Secondtext:FontTemplate(nil, E.db.mMT.general.datatextfontsize, "")
-			frame.buttons[i].Secondtext:SetJustifyH("RIGHT")
+		if list[i].SecondText then
+			frame.buttons[i].SecondText = frame.buttons[i]:CreateFontString(nil, "BORDER")
+			frame.buttons[i].SecondText:SetAllPoints()
+			frame.buttons[i].SecondText:FontTemplate(nil, E.db.mMT.general.datatextfontsize, "")
+			frame.buttons[i].SecondText:SetJustifyH("RIGHT")
 		end
 
 		if list[i].tooltip then
@@ -146,8 +146,8 @@ function mMT:mDropDown(list, frame, menuparent, ButtonWidth, HideDelay)
 			end
 		end
 
-		if list[i].Secondtext and frame.buttons[i].Secondtext then
-			frame.buttons[i].Secondtext:SetText(list[i].Secondtext or "")
+		if list[i].SecondText and frame.buttons[i].SecondText then
+			frame.buttons[i].SecondText:SetText(list[i].SecondText or "")
 		end
 
 		if i == 1 then
@@ -165,8 +165,8 @@ function mMT:mDropDown(list, frame, menuparent, ButtonWidth, HideDelay)
 			end
 
 			if width ~= 0 then
-				if frame.buttons[i].Secondtext then
-					local secondWidth = frame.buttons[i].Secondtext:GetStringWidth()
+				if frame.buttons[i].SecondText then
+					local secondWidth = frame.buttons[i].SecondText:GetStringWidth()
 
 					if secondWidth ~= 0 then
 						width = width + secondWidth

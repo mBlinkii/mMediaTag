@@ -109,6 +109,10 @@ local function SetFonts()
 		tmpFonts["bar"].fontsize = E.db.mMT.objectivetracker.bar.fontsize
 	end
 
+	if tmpFonts["misc"] then
+		tmpFonts["misc"].fontsize = fontConfig.fontsize.text
+	end
+
 	return tmpFonts
 end
 
@@ -425,17 +429,23 @@ local function CreateStageFrame(block, isChallengeMode)
 	if isChallengeMode then
 		block:StripTextures()
 
-		block.Level:ClearAllPoints()
-		block.Level:SetPoint("TOPLEFT", mMT_StageBlock, "TOPLEFT", 10, -10)
-		SetTextProperties(block.Level, fonts.misc)
+		if block.Level then
+			block.Level:ClearAllPoints()
+			block.Level:SetPoint("TOPLEFT", mMT_StageBlock, "TOPLEFT", 10, -10)
+			SetTextProperties(block.Level, fonts.misc)
+		end
 
-		block.TimeLeft:ClearAllPoints()
-		block.TimeLeft:SetPoint("LEFT", mMT_StageBlock, "LEFT", 8, 2)
-		SetTextProperties(block.TimeLeft, fonts.time)
+		if block.TimeLeft then
+			block.TimeLeft:ClearAllPoints()
+			block.TimeLeft:SetPoint("LEFT", mMT_StageBlock, "LEFT", 8, 2)
+			SetTextProperties(block.TimeLeft, fonts.time)
+		end
 
-		--block.DeathCount:ClearAllPoints()
-		--block.DeathCount:SetPoint("RIGHT", mMT_StageBlock, "RIGHT", -8, 2)
-		SetTextProperties(block.DeathCount.Count, fonts.misc)
+		if block.DeathCount and block.DeathCount.Count then
+			--block.DeathCount:ClearAllPoints()
+			--block.DeathCount:SetPoint("RIGHT", mMT_StageBlock, "RIGHT", -8, 2)
+			SetTextProperties(block.DeathCount.Count, fonts.misc)
+		end
 
 		S:HandleStatusBar(block.StatusBar)
 	else
@@ -462,7 +472,7 @@ local function SkinStageBlock(stageBlock, scenarioID, scenarioType, widgetSetID,
 
 		-- create stage block bg
 		if not stageBlock.mMT_StageBlock then
-			CreateStageFrame(stageBlock, false)
+			CreateStageFrame(stageBlock, C_ChallengeMode.GetActiveChallengeMapID())
 		else
 			if IsInInstance() and stageBlock.mMT_StageBlock and stageBlock.mMT_StageBlock.Difficulty then
 				stageBlock.mMT_StageBlock.Difficulty:SetText(mMT:GetDungeonInfo(false, false, true))
@@ -485,7 +495,7 @@ local function SkinChallengeBlock(challengeBlock, elapsedTime)
 
 		-- create stage block bg
 		if not challengeBlock.mMT_StageBlock then
-			CreateStageFrame(challengeBlock, true)
+			CreateStageFrame(challengeBlock, C_ChallengeMode.GetActiveChallengeMapID())
 		end
 
 		-- get dungeon time limits
@@ -680,8 +690,8 @@ local function AddBackground()
 		end
 
 		backdrop:ClearAllPoints()
-		backdrop:SetPoint("TOPLEFT", _G.ObjectiveTrackerFrame, "TOPLEFT", -20, 10)
-		backdrop:SetPoint("BOTTOMRIGHT", _G.ObjectiveTrackerFrame, "BOTTOMRIGHT", 10, -10)
+		backdrop:SetPoint("TOPLEFT", _G.ObjectiveTrackerFrame.NineSlice, "TOPLEFT", 10, 10)
+		backdrop:SetPoint("BOTTOMRIGHT", _G.ObjectiveTrackerFrame.NineSlice, "BOTTOMRIGHT", 16, -10)
 
 		backdrop:Show()
 	else

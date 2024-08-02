@@ -1,6 +1,15 @@
 # Changelog - ElvUI_mMediaTag
 [Eng] - All changes to this project will be documented in this file. The latest changes are at the top.
 
+## [ver. 3.46] - 02.08.2024
+### FIX
+- FIX - Dock - Spellbook Tooltip
+- FIX - ObjectiveTracker - Bug with Chatlangemode and missing font Settings
+### Update
+- UPDATE - Datatext - Teleports add more Engineering teleports and Mole Machine
+- UPDATE - ObjectiveTracker Background - change the behavior
+- UPDATE - Portraits can now class color the Portraits from Followers/ AI NPC 
+
 ## [ver. 3.45] - 31.07.2024
 ### FIX
 - FIX - Dropdown Menus fro Dock Icons and Datatexts
