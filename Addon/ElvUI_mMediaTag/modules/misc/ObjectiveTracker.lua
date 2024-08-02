@@ -680,8 +680,8 @@ local function AddBackground()
 		end
 
 		backdrop:ClearAllPoints()
-		backdrop:SetPoint("TOPLEFT", _G.ObjectiveTrackerFrame.NineSlice, "TOPLEFT", 0, 10)
-		backdrop:SetPoint("BOTTOMRIGHT", _G.ObjectiveTrackerFrame.NineSlice, "BOTTOMRIGHT", 0, -10)
+		backdrop:SetPoint("TOPLEFT", _G.ObjectiveTrackerFrame.NineSlice, "TOPLEFT", 10, 10)
+		backdrop:SetPoint("BOTTOMRIGHT", _G.ObjectiveTrackerFrame.NineSlice, "BOTTOMRIGHT", 16, -10)
 
 		backdrop:Show()
 	else
