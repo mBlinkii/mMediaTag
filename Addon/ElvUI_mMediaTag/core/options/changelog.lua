@@ -13,7 +13,7 @@ local change_log_important = {
 	"Dock Guild & Friends drop down menu for Invite and Whisper can be buggy, this is known and will be fixed later.",
 }
 
-local releasdate = "31.07.2024"
+local releasdate = "02.08.2024"
 
 local change_log_new = {
 	"Add Evoker Texture to E Series",
@@ -22,15 +22,14 @@ local change_log_new = {
 }
 
 local change_log_update = {
-	"AFK Screen is available again",
+	"Datatext - Teleports add more Engineering teleports and Mole Machine",
+	"ObjectiveTracker Background - change the behavior",
+	"Portraits can now class color the Portraits from Followers/ AI NPC ",
 }
 
 local change_log_fix = {
-	"Dropdown Menus fro Dock Icons and Datatexts",
-	"GameMenu SpellBock toggle frame works now",
-	"SpellBock toggle frame works now for Dock and Datatexts",
-	"Profession toggle frame works now for Dock and Datatexts",
-	"AFK Screen",
+	"Dock - Spellbook Tooltip",
+	"ObjectiveTracker - Bug with Chatlangemode and missing font Settings",
 }
 
 local function Concatenation(tbl, icon, color)
@@ -51,7 +50,7 @@ end
 
 local function configTable()
 	change_log_important_string = Concatenation(change_log_important)
-	change_log_new_string = Concatenation(change_log_new)
+	--change_log_new_string = Concatenation(change_log_new)
 	change_log_update_string = Concatenation(change_log_update)
 	change_log_fix_string = Concatenation(change_log_fix)
 	E.Options.args.mMT.args.changelog.args = {
