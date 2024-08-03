@@ -69,6 +69,7 @@ local function configTable()
 						db.q = false
 						db.r = false
 						db.s = false
+						db.t = false
 						E:StaticPopup_Show("CONFIG_RL")
 					end,
 				},
@@ -362,6 +363,21 @@ local function configTable()
 					end,
 					set = function(info, value)
 						mMTSettings.textures.s = value
+						E:StaticPopup_Show("CONFIG_RL")
+					end,
+				},
+				toggle_t = {
+					order = 20,
+					type = "toggle",
+					name = L["Load Pack"] .. " T",
+					disabled = function()
+						return mMTSettings.textures.all
+					end,
+					get = function(info)
+						return mMTSettings.textures.t
+					end,
+					set = function(info, value)
+						mMTSettings.textures.t = value
 						E:StaticPopup_Show("CONFIG_RL")
 					end,
 				},

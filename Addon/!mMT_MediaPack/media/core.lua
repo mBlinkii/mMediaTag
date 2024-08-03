@@ -412,6 +412,16 @@ local function LoadSeriesS()
 	mAddStatusbar("mMediaTag S10", "s10.tga")
 end
 
+local function LoadSeriesT()
+	mAddStatusbar("mMediaTag T1", "t1.tga")
+	mAddStatusbar("mMediaTag T2", "t2.tga")
+	mAddStatusbar("mMediaTag T3", "t3.tga")
+	mAddStatusbar("mMediaTag T4", "t4.tga")
+	mAddStatusbar("mMediaTag T5", "t5.tga")
+	mAddStatusbar("mMediaTag T6", "t6.tga")
+	mAddStatusbar("mMediaTag T7", "t7.tga")
+	mAddStatusbar("mMediaTag T8", "t8.tga")
+end
 local function LoadSeriesAll()
 	LoadSeriesA()
 	LoadSeriesB()
@@ -432,6 +442,7 @@ local function LoadSeriesAll()
 	LoadSeriesQ()
 	LoadSeriesR()
 	LoadSeriesS()
+	LoadSeriesT()
 end
 
 local defaultDB = {
@@ -455,7 +466,8 @@ local defaultDB = {
 		p = true,
 		q = true,
 		r = true,
-		S = true,
+		s = true,
+		t = true,
 	},
 }
 
@@ -532,6 +544,9 @@ function mMT_MediaPack:OnEvent(event, arg1)
 		end
 		if mMT_MediaPack.db.textures.s then
 			LoadSeriesS()
+		end
+		if mMT_MediaPack.db.textures.t then
+			LoadSeriesT()
 		end
 	elseif event == "PLAYER_LOGOUT" then
 		mMTSettings = mMT_MediaPack.db
@@ -620,45 +635,7 @@ SlashCmdList.MMTMP = function(msg, editBox)
 		mMT_MediaPack.db = mMTSettings
 		PrintStatus("Settings has been reset to default")
 		RLDialog()
-	elseif msg == "a" then
-		SetSetting(msg)
-	elseif msg == "b" then
-		SetSetting(msg)
-	elseif msg == "c" then
-		SetSetting(msg)
-	elseif msg == "d" then
-		SetSetting(msg)
-	elseif msg == "e" then
-		SetSetting(msg)
-	elseif msg == "f" then
-		SetSetting(msg)
-	elseif msg == "g" then
-		SetSetting(msg)
-	elseif msg == "h" then
-		SetSetting(msg)
-	elseif msg == "i" then
-		SetSetting(msg)
-	elseif msg == "j" then
-		SetSetting(msg)
-	elseif msg == "k" then
-		SetSetting(msg)
-	elseif msg == "l" then
-		SetSetting(msg)
-	elseif msg == "m" then
-		SetSetting(msg)
-	elseif msg == "n" then
-		SetSetting(msg)
-	elseif msg == "o" then
-		SetSetting(msg)
-	elseif msg == "p" then
-		SetSetting(msg)
-	elseif msg == "q" then
-		SetSetting(msg)
-	elseif msg == "r" then
-		SetSetting(msg)
-	elseif msg == "s" then
-		SetSetting(msg)
-	elseif msg == "all" then
+	elseif defaultDB.textures[msg] then
 		SetSetting(msg)
 	elseif msg == "disable all" then
 		DisableAll()

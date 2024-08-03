@@ -13,24 +13,23 @@ local change_log_important = {
 	"Dock Guild & Friends drop down menu for Invite and Whisper can be buggy, this is known and will be fixed later.",
 }
 
-local releasdate = "31.07.2024"
+local releasdate = "03.08.2024"
 
 local change_log_new = {
-	"Add Evoker Texture to E Series",
-	"ObjectiveTracker Skin is available again, big thx to Merathilis & Eltreum",
-	"Add - AI/ FOLLOWER, DELVE, QUEST & STORY Dungeons to difficulty text",
+	"Texture Pack T Series",
 }
 
 local change_log_update = {
-	"AFK Screen is available again",
+	"Datatext - Teleports add more Engineering teleports and Mole Machine",
+	"ObjectiveTracker Background - change the behavior",
+	"Portraits can now class color the Portraits from Followers/ AI NPC ",
 }
 
 local change_log_fix = {
-	"Dropdown Menus fro Dock Icons and Datatexts",
-	"GameMenu SpellBock toggle frame works now",
-	"SpellBock toggle frame works now for Dock and Datatexts",
-	"Profession toggle frame works now for Dock and Datatexts",
-	"AFK Screen",
+	"Dock - Spellbook Tooltip",
+	"ObjectiveTracker - Bug with Chatlangemode and missing font Settings",
+	"Error with not existing Global in classic Versions & Dock Spellbook",
+	"Block Absorb TAG for Classic, its only available for Retail",
 }
 
 local function Concatenation(tbl, icon, color)

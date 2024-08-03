@@ -650,7 +650,7 @@ E:AddTag("mColor:absorbs", "UNIT_ABSORB_AMOUNT_CHANGED", function(unit)
 	if absorb ~= 0 then
 		return colors.absorbs or ""
 	end
-end)
+end, not E.Retail)
 
 E:AddTagInfo("mColor", mMT.NameShort .. " " .. L["Color"], L["Unit colors with mMediaTag colors for Rare, Rareelite, Elite and Boss and Classcolors."])
 E:AddTagInfo("mColor:rare", mMT.NameShort .. " " .. L["Color"], L["Unit colors with mMediaTag colors for Rare and Rareelite."])
