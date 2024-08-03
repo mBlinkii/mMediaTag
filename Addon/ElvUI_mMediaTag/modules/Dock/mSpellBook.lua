@@ -9,7 +9,7 @@ local PlayerSpellsUtil = _G.PlayerSpellsUtil
 local _G = _G
 local Config = {
 	name = "mMT_Dock_SpellBook",
-	localizedName = mMT.DockString .. " " .. PLAYERSPELLS_BUTTON,
+	localizedName = mMT.DockString .. " " .. (PLAYERSPELLS_BUTTON or SPELLBOOK_ABILITIES_BUTTON),
 	category = "mMT-" .. mMT.DockString,
 	icon = {
 		notification = false,
@@ -20,7 +20,7 @@ local Config = {
 
 local function OnEnter(self)
 	if E.db.mMT.dockdatatext.tip.enable then
-		DT.tooltip:AddLine(PLAYERSPELLS_BUTTON)
+		DT.tooltip:AddLine((PLAYERSPELLS_BUTTON or SPELLBOOK_ABILITIES_BUTTON))
 		DT.tooltip:Show()
 	end
 
