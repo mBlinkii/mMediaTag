@@ -1,6 +1,13 @@
 # Changelog - ElvUI_mMediaTag
 [Eng] - All changes to this project will be documented in this file. The latest changes are at the top.
 
+## [ver. 3.47] - 03.08.2024
+### FIX
+- FIX - Error with not existing Global in classic Versions & Dock Spellbook
+- FIX - Block Absorb TAG for Classic, its only available for Retail
+### NEW
+- NEW - Texture Pack T Series
+
 ## [ver. 3.46] - 02.08.2024
 ### FIX
 - FIX - Dock - Spellbook Tooltip

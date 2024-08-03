@@ -635,7 +635,7 @@ SlashCmdList.MMTMP = function(msg, editBox)
 		mMT_MediaPack.db = mMTSettings
 		PrintStatus("Settings has been reset to default")
 		RLDialog()
-	elseif defaultDB[msg] then
+	elseif defaultDB.textures[msg] then
 		SetSetting(msg)
 	elseif msg == "disable all" then
 		DisableAll()
