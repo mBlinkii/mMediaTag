@@ -684,8 +684,15 @@ local function AddBackground()
 			backdrop:SetBackdropBorderColor(borderColor.r, borderColor.g, borderColor.b, borderColor.a or 1)
 		end
 
+		local backgroundColor
+
 		if not E.db.mMT.objectivetracker.bg.transparent then
-			local backgroundColor = E.db.mMT.objectivetracker.bg.color.bg
+			backgroundColor = E.db.mMT.objectivetracker.bg.classBG and mMT.ClassColor or E.db.mMT.objectivetracker.bg.color.bg
+		else
+			backgroundColor = E.db.mMT.objectivetracker.bg.classBG and { r = mMT.ClassColor.r, g = mMT.ClassColor.g, b = mMT.ClassColor.b, a = 0.25 } or nil
+		end
+
+		if backgroundColor then
 			backdrop:SetBackdropColor(backgroundColor.r, backgroundColor.g, backgroundColor.b, backgroundColor.a)
 		end
 

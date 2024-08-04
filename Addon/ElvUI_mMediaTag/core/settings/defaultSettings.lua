@@ -301,6 +301,7 @@ P.mMT = {
 			enable = false,
 			shadow = true,
 			border = true,
+			classBG = false,
 			classBorder = false,
 			transparent = true,
 			color = {
