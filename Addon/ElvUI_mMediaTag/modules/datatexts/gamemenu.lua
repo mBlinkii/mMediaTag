@@ -63,7 +63,7 @@ local function BuildMenu()
 			end,
 		},
 		{
-			text = _G.SPELLBOOK_ABILITIES_BUTTON,
+			text = E.Retail and _G.SPELLBOOK or _G.SPELLBOOK_ABILITIES_BUTTON,
 			icon = AddIcon("literature"),
 			func = function()
 				if PlayerSpellsUtil then
@@ -98,38 +98,75 @@ local function BuildMenu()
 				ToggleFrame(_G.TimeManagerFrame)
 			end,
 		},
-		{ text = _G.CHAT_CHANNELS, icon = AddIcon("chathistory"), func = _G.ToggleChannelFrame() },
-		{ text = _G.SOCIAL_BUTTON, icon = AddIcon("users"), func = _G.ToggleFriendsFrame() },
+		{
+			text = _G.CHAT_CHANNELS,
+			icon = AddIcon("chathistory"),
+			func = function()
+				_G.ToggleChannelFrame()
+			end,
+		},
+		{
+			text = _G.SOCIAL_BUTTON,
+			icon = AddIcon("users"),
+			func = function()
+				_G.ToggleFriendsFrame()
+			end,
+		},
 		{
 			text = _G.GUILD,
 			icon = AddIcon("homeshield"),
 			func = function()
-				if E.Retail then
-					_G.ToggleGuildFrame()
-				else
-					_G.ToggleFriendsFrame(3)
-				end
+				_G.ToggleGuildFrame()
 			end,
 		},
 	}
 
-	if E.Retail then
-		tinsert(menuList, { text = _G.LFG_TITLE, icon = AddIcon("eye"), func = _G.ToggleLFDParentFrame() })
-	elseif E.Cata then
+	if E.Retail or E.Cata then
 		tinsert(menuList, {
 			text = _G.LFG_TITLE,
 			icon = AddIcon("eye"),
 			func = function()
-				if not IsAddOnLoaded("Blizzard_LookingForGroupUI") then
-					UIParentLoadAddOn("Blizzard_LookingForGroupUI")
+				if E.Retail then
+					_G.ToggleLFDParentFrame()
+				else
+					_G.PVEFrame_ToggleFrame()
 				end
-				_G.ToggleLFGParentFrame()
+			end,
+		})
+		tinsert(menuList, {
+			text = _G.COLLECTIONS,
+			icon = AddIcon("cube"),
+			func = function()
+				_G.ToggleCollectionsJournal()
+			end,
+		})
+		tinsert(menuList, {
+			text = _G.ENCOUNTER_JOURNAL,
+			icon = AddIcon("magazine"),
+			func = function()
+				if not IsAddOnLoaded("Blizzard_EncounterJournal") then
+					UIParentLoadAddOn("Blizzard_EncounterJournal")
+				end
+				ToggleFrame(_G.EncounterJournal)
+			end,
+		})
+		tinsert(menuList, {
+			text = _G.ACHIEVEMENT_BUTTON,
+			icon = AddIcon("star"),
+			func = function()
+				_G.ToggleAchievementFrame()
+			end,
+		})
+		tinsert(menuList, {
+			text = L["Calendar"],
+			icon = AddIcon("calendar"),
+			func = function()
+				_G.GameTimeFrame:Click()
 			end,
 		})
 	end
 
 	if E.Retail then
-		tinsert(menuList, { text = _G.COLLECTIONS, icon = AddIcon("cube"), func = _G.ToggleCollectionsJournal() })
 		tinsert(menuList, {
 			text = _G.BLIZZARD_STORE,
 			icon = AddIcon("store"),
@@ -145,42 +182,20 @@ local function BuildMenu()
 			end,
 		})
 		tinsert(menuList, {
-			text = _G.ENCOUNTER_JOURNAL,
-			icon = AddIcon("magazine"),
+			text = _G.QUEST_LOG,
+			icon = AddIcon("question"),
 			func = function()
-				if not IsAddOnLoaded("Blizzard_EncounterJournal") then
-					UIParentLoadAddOn("Blizzard_EncounterJournal")
-				end
-				ToggleFrame(_G.EncounterJournal)
+				ToggleFrame(_G.QuestLogFrame)
 			end,
 		})
 	end
 
 	if E.Cata and E.mylevel >= _G.SHOW_PVP_LEVEL then
-		tinsert(menuList, { text = _G.PLAYER_V_PLAYER, icon = AddIcon("battle"), func = _G.TogglePVPFrame() })
-	end
-
-	if E.Retail or E.Cata then
 		tinsert(menuList, {
-			text = _G.ACHIEVEMENT_BUTTON,
-			icon = AddIcon("star"),
-			func = _G.ToggleAchievementFrame(),
-		})
-		tinsert(menuList, {
-			text = L["Calendar"],
-			icon = AddIcon("calendar"),
+			text = _G.PLAYER_V_PLAYER,
+			icon = AddIcon("battle"),
 			func = function()
-				_G.GameTimeFrame:Click()
-			end,
-		})
-	end
-
-	if not E.Retail then
-		tinsert(menuList, {
-			text = _G.QUEST_LOG,
-			icon = AddIcon("question"),
-			func = function()
-				ToggleFrame(_G.QuestLogFrame)
+				_G.TogglePVPFrame()
 			end,
 		})
 	end
@@ -255,7 +270,9 @@ local function BuildMenu()
 		color = AddColor(4),
 		icon = AddIcon("questionmark"),
 		bottom = true,
-		func = _G.ToggleHelpFrame(),
+		func = function()
+			_G.ToggleHelpFrame()
+		end,
 	})
 end
 local function OnEvent(self, event)
