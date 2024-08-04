@@ -13,7 +13,7 @@ local change_log_important = {
 	"Dock Guild & Friends drop down menu for Invite and Whisper can be buggy, this is known and will be fixed later.",
 }
 
-local releasdate = "03.08.2024"
+local releasdate = "04.08.2024"
 
 local change_log_new = {
 	"Texture Pack T Series",
@@ -30,6 +30,7 @@ local change_log_fix = {
 	"ObjectiveTracker - Bug with Chatlangemode and missing font Settings",
 	"Error with not existing Global in classic Versions & Dock Spellbook",
 	"Block Absorb TAG for Classic, its only available for Retail",
+	"Bug with Game Menu Datatext and Customer Support window auto opens.",
 }
 
 local function Concatenation(tbl, icon, color)
