@@ -342,6 +342,8 @@ P.mMT = {
 			questcount = true,
 			hidedash = true,
 			hiedAll = false,
+			showLevel = false,
+			zoneQuests = false,
 		},
 		dungeon = {
 			hidedash = true,

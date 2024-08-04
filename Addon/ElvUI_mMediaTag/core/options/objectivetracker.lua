@@ -88,6 +88,31 @@ local function configTable()
 						mMT.Modules.ObjectiveTracker:Initialize()
 					end,
 				},
+				toggle_level = {
+					order = 3,
+					type = "toggle",
+					name = L["Show Level"],
+					get = function(info)
+						return E.db.mMT.objectivetracker.settings.showLevel
+					end,
+					set = function(info, value)
+						E.db.mMT.objectivetracker.settings.showLevel = value
+						mMT.Modules.ObjectiveTracker:Initialize()
+					end,
+				},
+				toggle_zone = {
+					order = 4,
+					type = "toggle",
+					name = L["Show only Zone Quests"],
+					get = function(info)
+						return E.db.mMT.objectivetracker.settings.zoneQuests
+					end,
+					set = function(info, value)
+						E.db.mMT.objectivetracker.settings.zoneQuests = value
+						mMT.Modules.ObjectiveTracker:Initialize()
+						E:StaticPopup_Show("CONFIG_RL")
+					end,
+				},
 			},
 		},
 		background_settings = {

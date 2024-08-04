@@ -18,7 +18,7 @@ local SortQuestWatches = C_QuestLog.SortQuestWatches
 
 local colors = {}
 local fonts = {}
-local cachedLines = {}
+local cachedQuests = {}
 local dim = 0.2
 local allObjectivesText
 
@@ -252,11 +252,64 @@ local function matchPatterns(text)
 	return result
 end
 
-local function updateCachedLines(id, index, text)
+local function GetQuestInfos(id)
+	if id then
+		local questLogIndex = C_QuestLog.GetLogIndexForQuestID(id)
+		if questLogIndex then
+			local info = C_QuestLog.GetInfo(questLogIndex)
+			-- [isAbandonOnDisable]  =  false
+			-- [difficultyLevel]  =  70
+			-- [useMinimalHeader]  =  false
+			-- [isHeader]  =  false
+			-- [questLogIndex]  =  11
+			-- [level]  =  70
+			-- [isOnMap]  =  false
+			-- [isTask]  =  false
+			-- [isHidden]  =  false
+			-- [overridesSortOrder]  =  false
+			-- [isInternalOnly]  =  false
+			-- [isCollapsed]  =  false
+			-- [startEvent]  =  false
+			-- [questID]  =  78065
+			-- [suggestedGroup]  =  0
+			-- [isBounty]  =  false
+			-- [readyForTranslation]  =  true
+			-- [isLegendarySort]  =  false
+			-- [title]  =  Die Q'onzu-Querelen
+			-- [isAutoComplete]  =  false
+			-- [isStory]  =  false
+			-- [hasLocalPOI]  =  false
+			-- [isScaling]  =  true
+			-- [frequency]  =  0
+			return info
+		end
+	end
+end
+
+local function UpdateCachedQuests(id, index, text)
 	local isSkinned = strmatch(text, "|cff") or strmatch(text, "|CFF")
 
-	if not isSkinned and cachedLines[id] then
-		cachedLines[id][index] = text
+	if not cachedQuests[id].info then
+		cachedQuests[id].info = GetQuestInfos(id)
+		cachedQuests[id].playerLevel = UnitLevel("player")
+	end
+
+	cachedQuests[id].lines = cachedQuests[id].lines or {}
+
+	if not isSkinned and cachedQuests[id].lines then
+		cachedQuests[id].lines[index] = text
+	end
+end
+
+local function UpdateCachedHeaders(id, text)
+	local isSkinned = strmatch(text, "|cff") or strmatch(text, "|CFF")
+
+	if not cachedQuests[id].info then
+		cachedQuests[id].info = GetQuestInfos(id)
+	end
+
+	if not isSkinned and cachedQuests[id].lines then
+		cachedQuests[id].header = text
 	end
 end
 
@@ -297,12 +350,12 @@ local function SetLineText(text, completed, id, index, onEnter, onLeave)
 
 	if lineText then
 		if id and index then
-			cachedLines[id] = cachedLines[id] or {}
+			cachedQuests[id] = cachedQuests[id] or {}
 
-			updateCachedLines(id, index, lineText)
+			UpdateCachedQuests(id, index, lineText)
 
-			if onEnter or onLeave and cachedLines[id] then
-				lineText = cachedLines[id][index] or lineText
+			if onEnter or onLeave and cachedQuests[id].lines then
+				lineText = cachedQuests[id].lines[index] or lineText
 			end
 		end
 
@@ -633,7 +686,20 @@ local function SkinBlock(tracker, block)
 		end
 
 		if block.id then
-			cachedLines[block.id] = cachedLines[block.id] or {}
+			cachedQuests[block.id] = cachedQuests[block.id] or {}
+
+			if not cachedQuests[block.id].info then
+				cachedQuests[block.id].info = GetQuestInfos(block.id)
+
+				if E.db.mMT.objectivetracker.settings.showLevel then
+					cachedQuests[block.id].playerLevel = UnitLevel("player")
+				end
+
+				if E.db.mMT.objectivetracker.settings.zoneQuests then
+					cachedQuests[block.id].isCampaign = QuestUtil.ShouldQuestIconsUseCampaignAppearance(block.id)
+					module:TrackUntrackQuests()
+				end
+			end
 		end
 
 		if block.affixPool and block.UpdateTime and not block.mMT_ChallengeBlock then
@@ -642,12 +708,22 @@ local function SkinBlock(tracker, block)
 		end
 
 		if block.HeaderText then
+			--local headerText = block.HeaderText:GetText()
+
+			--updateCachedHeaders(block.id, text)
 			SetTextProperties(block.HeaderText, fonts.title, colors.title.n)
+
+			if cachedQuests[block.id].info and E.db.mMT.objectivetracker.settings.showLevel then
+				--mMT:Print(block.HeaderText:GetText(), cachedQuests[block.id].info.level)
+				block.HeaderText:SetText("|cffffffff[" .. cachedQuests[block.id].info.level .. "]|r " .. block.HeaderText:GetText())
+			end
 		end
 
 		if block.usedLines then
 			for index, line in pairs(block.usedLines) do
 				SkinLines(line, block.id, index)
+
+				--questLogIndex = GetQuestLogIndexByID(questID)
 			end
 		end
 
@@ -704,6 +780,26 @@ local function AddBackground()
 	else
 		if backdrop then
 			backdrop:Hide()
+		end
+	end
+end
+
+function module:TrackUntrackQuests()
+	if not cachedQuests then
+		return
+	end
+	for id, quest in pairs(cachedQuests) do
+		--mMT:DebugPrintTable(quest.info)
+		if quest.info then
+			local isOnMap = quest.info.isOnMap
+			local isCampaign = quest.isCampaign
+
+			--mMT:Print(id, isCampaign)
+			if isOnMap or isCampaign then
+				C_QuestLog.AddQuestWatch(id)
+			else
+				C_QuestLog.RemoveQuestWatch(id)
+			end
 		end
 	end
 end

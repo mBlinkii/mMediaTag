@@ -805,7 +805,9 @@
         "NPEV2_CHAT_USER_TAG_GUIDE",
         "SOCIAL_QUEUE_QUEUED_FOR",
         "TALENTS",
-        "PLAYERSPELLS_BUTTON"
+        "PLAYERSPELLS_BUTTON",
+        "DEFAULT_CHAT_FRAME",
+        "QuestUtil"
     ],
     "Lua.diagnostics.disable": [
         "undefined-field",
@@ -952,6 +954,7 @@
         "perc",
         "PLAYERSPELLS",
         "Powerbar",
+        "Q'onzu",
         "questcount",
         "questicons",
         "questionmark",
