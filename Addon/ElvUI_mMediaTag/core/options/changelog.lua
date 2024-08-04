@@ -31,6 +31,7 @@ local change_log_fix = {
 	"Error with not existing Global in classic Versions & Dock Spellbook",
 	"Block Absorb TAG for Classic, its only available for Retail",
 	"Bug with Game Menu Datatext and Customer Support window auto opens.",
+	"Dropdown Menus on Classic, API changes.",
 }
 
 local function Concatenation(tbl, icon, color)
