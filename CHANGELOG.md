@@ -1,6 +1,11 @@
 # Changelog - ElvUI_mMediaTag
 [Eng] - All changes to this project will be documented in this file. The latest changes are at the top.
 
+## [ver. 3.48] - 07.08.2024
+### FIX
+- FIX - Bug with Game Menu Datatext and Customer Support window auto opens.
+- FIX - Dropdown Menus on Classic, API changes.
+
 ## [ver. 3.47] - 03.08.2024
 ### FIX
 - FIX - Error with not existing Global in classic Versions & Dock Spellbook

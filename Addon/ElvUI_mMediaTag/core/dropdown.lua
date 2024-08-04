@@ -99,12 +99,7 @@ function mMT:mDropDown(list, frame, menuparent, ButtonWidth, HideDelay)
 			frame.buttons[i].hoverTex = frame.buttons[i]:CreateTexture(nil, "OVERLAY")
 			frame.buttons[i].hoverTex:SetAllPoints()
 			frame.buttons[i].hoverTex:SetTexture(texture)
-
-			if E.Retail or E.Cata then
-				frame.buttons[i].hoverTex:SetGradient("HORIZONTAL", { r = mMT.ClassColor.r, g = mMT.ClassColor.g, b = mMT.ClassColor.b, a = 0.75 }, { r = mMT:ColorCheck(mMT.ClassColor.r + 0.4), g = mMT:ColorCheck(mMT.ClassColor.g + 0.4), b = mMT:ColorCheck(mMT.ClassColor.b + 0.4), a = 0.75 })
-			else
-				frame.buttons[i].hoverTex:SetGradientAlpha("HORIZONTAL", mMT.ClassColor.r, mMT.ClassColor.g, mMT.ClassColor.b, 0.75, mMT:ColorCheck(mMT.ClassColor.r + 0.4), mMT:ColorCheck(mMT.ClassColor.g + 0.4), mMT:ColorCheck(mMT.ClassColor.b + 0.4), 0.75)
-			end
+			frame.buttons[i].hoverTex:SetGradient("HORIZONTAL", { r = mMT.ClassColor.r, g = mMT.ClassColor.g, b = mMT.ClassColor.b, a = 0.75 }, { r = mMT:ColorCheck(mMT.ClassColor.r + 0.4), g = mMT:ColorCheck(mMT.ClassColor.g + 0.4), b = mMT:ColorCheck(mMT.ClassColor.b + 0.4), a = 0.75 })
 			frame.buttons[i].hoverTex:SetBlendMode("BLEND")
 			frame.buttons[i].hoverTex:Hide()
 		end
