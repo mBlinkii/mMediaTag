@@ -635,13 +635,16 @@ local function LinesOnEnterLeave(line, id, index, onEnter, onLeave)
 	end
 end
 
+
 local function GetLevelInfoText(level, onEnter)
-	if level then
+	if level and level ~= 0 then
 		local color = GetCreatureDifficultyColor(level) --GetRelativeDifficultyColor(teamLevel, level)
 		local r, g, b = onEnter and DimColor(color) or color.r, color.g, color.b
 		local colorString = RGBToHex(r, g, b)
 
 		return "[" .. colorString .. level .. "|r] "
+	else
+		return ""
 	end
 end
 
@@ -693,8 +696,9 @@ local function SkinBlock(_, block)
 			end
 		end
 
-		if block.id and not cachedQuests[block.id] then
+		if block.id and (not cachedQuests[block.id] or (cachedQuests[block.id] and not cachedQuests[block.id].update)) then
 			cachedQuests[block.id] = AddQuestToCache(block.id)
+			cachedQuests[block.id].update = true
 		end
 
 		if block.affixPool and block.UpdateTime and not block.mMT_ChallengeBlock then
@@ -704,7 +708,6 @@ local function SkinBlock(_, block)
 
 		if block.HeaderText then
 			SetTextProperties(block.HeaderText, fonts.title, colors.title.n)
-			mMT:DebugPrintTable((cachedQuests[block.id] and cachedQuests[block.id].info) and cachedQuests[block.id].info.suggestedGroup)
 			if (cachedQuests[block.id] and cachedQuests[block.id].info) and E.db.mMT.objectivetracker.settings.showLevel then
 				cachedQuests[block.id].title = block.HeaderText:GetText()
 				block.HeaderText:SetText(GetLevelInfoText(cachedQuests[block.id].info.level) .. block.HeaderText:GetText())
