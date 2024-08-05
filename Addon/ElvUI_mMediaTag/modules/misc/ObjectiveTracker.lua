@@ -635,14 +635,14 @@ local function LinesOnEnterLeave(line, id, index, onEnter, onLeave)
 	end
 end
 
-
 local function GetLevelInfoText(level, onEnter)
-	if level and level ~= 0 then
-		local color = GetCreatureDifficultyColor(level) --GetRelativeDifficultyColor(teamLevel, level)
+	if level then
+		local color = (level < 0) and {r = 1, g = 0, b = 0} or GetCreatureDifficultyColor(level) --GetRelativeDifficultyColor(teamLevel, level)
 		local r, g, b = onEnter and DimColor(color) or color.r, color.g, color.b
 		local colorString = RGBToHex(r, g, b)
+		local levelText = (level < 0) and "??" or level
 
-		return "[" .. colorString .. level .. "|r] "
+		return "[" .. colorString .. levelText .. "|r] "
 	else
 		return ""
 	end
