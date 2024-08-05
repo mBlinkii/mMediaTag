@@ -788,13 +788,12 @@ function module:TrackUntrackQuests()
 	if not cachedQuests then
 		return
 	end
+
 	for id, quest in pairs(cachedQuests) do
-		--mMT:DebugPrintTable(quest.info)
+		quest.info = GetQuestInfos(id)
 		if quest.info then
 			local isOnMap = quest.info.isOnMap
 			local isCampaign = quest.isCampaign
-
-			--mMT:Print(id, isCampaign)
 			if isOnMap or isCampaign then
 				C_QuestLog.AddQuestWatch(id)
 			else
