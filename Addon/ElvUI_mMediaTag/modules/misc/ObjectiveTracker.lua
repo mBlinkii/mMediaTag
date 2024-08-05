@@ -637,7 +637,7 @@ end
 
 local function GetLevelInfoText(level, onEnter)
 	if level then
-		local color = (level < 0) and {r = 1, g = 0, b = 0} or GetCreatureDifficultyColor(level) --GetRelativeDifficultyColor(teamLevel, level)
+		local color = (level < 0) and { r = 1, g = 0, b = 0 } or GetCreatureDifficultyColor(level) --GetRelativeDifficultyColor(teamLevel, level)
 		local r, g, b = onEnter and DimColor(color) or color.r, color.g, color.b
 		local colorString = RGBToHex(r, g, b)
 		local levelText = (level < 0) and "??" or level
@@ -696,10 +696,13 @@ local function SkinBlock(_, block)
 			end
 		end
 
-		if block.id and (not cachedQuests[block.id] or (cachedQuests[block.id] and not cachedQuests[block.id].update)) then
+		if block.id and (not cachedQuests[block.id] or not cachedQuests[block.id].update) then
 			cachedQuests[block.id] = AddQuestToCache(block.id)
-			cachedQuests[block.id].update = true
+			if cachedQuests[block.id] then
+				cachedQuests[block.id].update = true
+			end
 		end
+
 
 		if block.affixPool and block.UpdateTime and not block.mMT_ChallengeBlock then
 			hooksecurefunc(block, "UpdateTime", SkinChallengeBlock)
