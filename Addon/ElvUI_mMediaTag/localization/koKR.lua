@@ -721,3 +721,5 @@ L["Location"] = true
 L["Open Settings"] = true
 L["M+ Time"] = true
 L["Hide (All Objectives)"] = true
+L["Show Level"] = true
+L["Show only Quests on Map"] = true
