@@ -831,8 +831,7 @@ function module:Initialize()
 		if _G.ObjectiveTrackerFrame.Header then
 			if _G.ObjectiveTrackerFrame.Header.Text then
 				if E.db.mMT.objectivetracker.settings.hideAll then
-					allObjectivesText = _G.ObjectiveTrackerFrame.Header.Text:GetText()
-					_G.ObjectiveTrackerFrame.Header.Text:SetText("")
+					_G.ObjectiveTrackerFrame.Header.Text:Hide() -- do not touch this, it will taint if SetText()
 				elseif allObjectivesText then
 					_G.ObjectiveTrackerFrame.Header.Text:SetText(allObjectivesText)
 				end
