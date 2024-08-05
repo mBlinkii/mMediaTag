@@ -103,7 +103,7 @@ local function configTable()
 				toggle_zone = {
 					order = 4,
 					type = "toggle",
-					name = L["Show only Zone Quests"],
+					name = L["Show only Quests on Map"],
 					get = function(info)
 						return E.db.mMT.objectivetracker.settings.zoneQuests
 					end,

@@ -807,7 +807,9 @@
         "TALENTS",
         "PLAYERSPELLS_BUTTON",
         "DEFAULT_CHAT_FRAME",
-        "QuestUtil"
+        "QuestUtil",
+        "GetCreatureDifficultyColor",
+        "GetRelativeDifficultyColor"
     ],
     "Lua.diagnostics.disable": [
         "undefined-field",
@@ -830,6 +832,7 @@
         "CERROR",
         "CFFE",
         "CFFFF",
+        "cffffffff",
         "CFFFFFFFF",
         "chathistory",
         "chromie",
