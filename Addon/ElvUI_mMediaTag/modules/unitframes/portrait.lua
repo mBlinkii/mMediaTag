@@ -933,9 +933,6 @@ function module:Initialize()
 		RemovePortrait("Target")
 	end
 
-	if settings.player.cast then
-	end
-
 	if _G.ElvUF_Pet and settings.pet.enable then
 		frames["Pet"] = {
 			parent = _G.ElvUF_Pet,
