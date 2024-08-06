@@ -843,6 +843,13 @@ local function UnitEvent(self, event, conf, castUnit, unit)
 	end
 end
 
+local function setColors(sourceColors, targetColors)
+	targetColors.default = sourceColors.default
+	targetColors.rare = sourceColors.rare
+	targetColors.rareelite = sourceColors.rareelite
+	targetColors.elite = sourceColors.elite
+end
+
 function module:Initialize()
 	settings = E.db.mMT.portraits
 
@@ -872,18 +879,19 @@ function module:Initialize()
 
 	if settings.general.eltruism and mMT.ElvUI_EltreumUI.loaded then
 		colors = mMT.ElvUI_EltreumUI.colors
+		setColors(settings.colors, colors)
 	elseif settings.general.mui and mMT.ElvUI_MerathilisUI.loaded then
-		--colors = mMT.ElvUI_MerathilisUI.colors
-
 		if not colors.inverted then
 			for i, tbl in pairs(mMT.ElvUI_MerathilisUI.colors) do
 				colors[i] = { a = tbl.b, b = tbl.a }
 			end
 			colors.inverted = true
 		end
+		setColors(settings.colors, colors)
 	else
 		colors = settings.colors
 	end
+
 
 	local frames = {}
 
