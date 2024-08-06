@@ -552,6 +552,7 @@ L["Show Great Vault infos in the Tooltip and opens the Great Vault"] = "Zeigt In
 L["Show Groupmember Keys."] = "Zeige die Schlüsselsteine meine Gruppenmitglieder"
 L["Show Icon"] = "Symbol anzeigen"
 L["Show Icons"] = "Symbole anzeigen"
+L["Show Level"] = "Zeige Gegenstandsstufe"
 L["Show Max Count"] = "Maximalanzahl anzeigen"
 L["Show Role if in Group"] = "Zeige die Rollen an, wenn in Gruppe."
 L["Show Text on Icon"] = "Zeige Text auf dem Symbol an"
@@ -559,6 +560,7 @@ L["Show Text"] = "Zeige Text"
 L["Show Welcome text"] = "Zeige Willkommensnachricht an"
 L["Show Year"] = "Zeige das Jahr"
 L["Show amount in Bag"] = "Zeige die Anzahl in der Tasche"
+L["Show only Quests on Map"] = "Zeige nur Quests auf der Karte"
 L["Show weekly upgrades"] = "Zeige Wöchentliche Versbessrung"
 L["Shows Name"] = "Zeige Namen"
 L["Shows a marker on the castbar when the interrupt spell will be ready."] = "Zeigt eine Markierung auf der Zauberleiste an, wann dein Unterbrechungszauber bereit währe."
@@ -718,7 +720,3 @@ L["|cffFFFFFFControl + Left Click:|r Change Loadout"] = "|cffFFFFFFStrg + Linksk
 L["|cffFFFFFFLeft Click:|r Change Talent Specialization"] = "|cffFFFFFFLinks Klick:|r Talent Spezialisierung ändern"
 L["|cffFFFFFFRight Click:|r Change Loot Specialization"] = "|cffFFFFFFRechtsklick:|r Beutespezialisierung ändern"
 L["|cffFFFFFFShift + Left Click:|r Show Talent Specialization UI"] = "|cffFFFFFFShift + Links Klick:|r Zeige Talent Spezialisierungs Interface"
-
--- new
-L["Show Level"] = true
-L["Show only Quests on Map"] = true
