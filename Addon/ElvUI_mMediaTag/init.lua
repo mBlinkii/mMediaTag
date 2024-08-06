@@ -266,10 +266,6 @@ function mMT:Initialize()
 
 	mMT.CurrentProfile = E.data:GetCurrentProfile()
 
-	-- if E.db.mMT.customclasscolors.enable and not (mMT.ElvUI_EltreumUI.gradient or mMT.ElvUI_EltreumUI.dark) then
-	-- 	mMT:SetCustomColors()
-	-- end
-
 	if E.db.mMT.general.greeting then
 		mMT:GreetingText()
 	end
