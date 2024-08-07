@@ -363,8 +363,9 @@ end
 
 local function CreatePortrait(parent, conf, unit)
 	if mMT.DevMode then
-		mMT:Print("Create Function", "Unit:", unit, "Exists", UnitExists(unit), "Parent Unit:", parent.unit, "Parent Exists:", UnitExists(parent.unit))
+		mMT:Print("Create Function", "Unit:", unit, "Exists", UnitExists(unit), "Parent Unit:", parent and parent.unit or "Error", "Parent Exists:", parent and UnitExists(parent.unit) or "Error")
 	end
+	mMT:Print(parent, conf, unit, conf.size)
 
 	local texture = nil
 
@@ -733,11 +734,11 @@ local function AddCastIcon(self, unit, mirror)
 end
 
 local function RemovePortrait(name)
-	for _, event in pairs(module[name].buildData.unitEvents) do
+	for _, event in pairs(module[name].unitEvents) do
 		module[name]:UnregisterEvent(event)
 	end
 
-	for _, event in pairs(module[name].buildData.events) do
+	for _, event in pairs(module[name].events) do
 		module[name]:UnregisterEvent(event)
 	end
 
@@ -792,19 +793,21 @@ local castIconUpdateEvents = {
 	UNIT_SPELLCAST_EMPOWER_START = true,
 }
 
-local function UnitEvent(self, event, conf, castUnit, unit)
+local function UnitEvent(self, event, castUnit)
 	if mMT.DevMode then
-		mMT:Print("Script:", unit, "Event:", event, "Unit Exists:", UnitExists(unit))
+		mMT:Print("Script:", self.unit, "Event:", event, "Unit Exists:", UnitExists(self.unit))
 	end
 
-	if conf.cast then
+	local unit = self.unit
+
+	if self.settings.cast then
 		self.empowering = (event == "UNIT_SPELLCAST_EMPOWER_START")
 	end
 
-	if conf.cast and (castUnit == unit) and castIconUpdateEvents[event] then
-		AddCastIcon(self, unit, conf.mirror)
+	if self.settings.cast and (castUnit == unit) and castIconUpdateEvents[event] then
+		AddCastIcon(self, unit, self.settings.mirror)
 	else
-		if conf.cast and throttleEvents[event] then
+		if self.settings.cast and throttleEvents[event] then
 			if (not self.throttle) or self.empowering then
 				return
 			end
@@ -812,10 +815,10 @@ local function UnitEvent(self, event, conf, castUnit, unit)
 			self.throttle = false
 			self.empowering = false
 
-			SetPortraits(self, unit, (textures.enablemasking[conf.texture] and not conf.flippe), conf.mirror)
+			SetPortraits(self, unit, (textures.enablemasking[self.settings.texture] and not self.settings.flippe), self.settings.mirror)
 		end
 
-		if self.buildData.update[event] then
+		if self.update[event] then
 			if UnitExists(unit) then
 				if not InCombatLockdown() then
 					if self:GetAttribute("unit") ~= unit then
@@ -823,20 +826,20 @@ local function UnitEvent(self, event, conf, castUnit, unit)
 					end
 				end
 
-				SetPortraits(self, unit, (textures.enablemasking[conf.texture] and not conf.flippe), conf.mirror)
-				setColor(self.texture, getColor(unit), conf.mirror)
+				SetPortraits(self, unit, (textures.enablemasking[self.settings.texture] and not self.settings.flippe), self.settings.mirror)
+				setColor(self.texture, getColor(unit), self.settings.mirror)
 
-				if E.db.mMT.portraits.general.corner and textures.corner[conf.texture] then
-					setColor(self.corner, getColor(unit), conf.mirror)
+				if E.db.mMT.portraits.general.corner and textures.corner[self.settings.texture] then
+					setColor(self.corner, getColor(unit), self.settings.mirror)
 				end
 
-				if conf.extraEnable and self.extra then
+				if self.settings.extraEnable and self.extra then
 					CheckRareElite(self, unit)
 				elseif self.extra then
 					self.extra:Hide()
 				end
 			else
-				SetPortraits(self, "player", not (textures.enablemasking[conf.texture] and not conf.flippe), conf.mirror)
+				SetPortraits(self, "player", not (textures.enablemasking[self.settings.texture] and not self.settings.flippe), self.settings.mirror)
 			end
 		end
 	end
@@ -882,6 +885,86 @@ local function ConfigureColors()
 	end
 end
 
+local function SetScripts(portrait)
+	if not portrait.isBuild then
+		for _, event in pairs(portrait.unitEvents) do
+			portrait:RegisterUnitEvent(event, event == "UNIT_TARGET" and "target" or portrait.unit)
+		end
+
+		for _, event in pairs(portrait.events) do
+			portrait:RegisterEvent(event)
+		end
+
+		portrait:SetAttribute("unit", portrait.unit)
+		portrait:SetAttribute("*type1", "target")
+		portrait:SetAttribute("*type2", "togglemenu")
+		portrait:SetAttribute("type3", "focus")
+		portrait:SetAttribute("toggleForVehicle", true)
+		portrait:SetAttribute("ping-receiver", true)
+		portrait:RegisterForClicks("AnyUp")
+		portrait.isBuild = true
+	end
+end
+
+local function CreatePortraits(name, unit, parentFrame, unitSettings, events, unitEvents, cast)
+	if not module[name] then
+		module[name] = CreatePortrait(parentFrame, unitSettings, unit)
+
+		module[name].parent = parentFrame
+		module[name].unit = unit
+		module[name].events = events
+		module[name].unitEvents = unitEvents
+		module[name].update = {}
+
+		for _, event in pairs(events) do
+			module[name].update[event] = true
+		end
+
+		for _, event in pairs(unitEvents) do
+			module[name].update[event] = true
+		end
+	end
+
+	module[name].settings = unitSettings
+
+	local castEvents = { "UNIT_SPELLCAST_START", "UNIT_SPELLCAST_CHANNEL_START", "UNIT_SPELLCAST_INTERRUPTED", "UNIT_SPELLCAST_SUCCEEDED", "UNIT_SPELLCAST_STOP" }
+	local empowerEvents = { "UNIT_SPELLCAST_EMPOWER_START", "UNIT_SPELLCAST_EMPOWER_STOP" }
+
+	if cast then
+		for _, event in pairs(castEvents) do
+			tinsert(module[name].events, event)
+		end
+
+		if E.Retail then
+			for _, event in pairs(empowerEvents) do
+				tinsert(module[name].events, event)
+			end
+		end
+		module[name].castEvents = true
+	elseif module[name].castEvents then
+		for _, event in pairs(castEvents) do
+			module[name]:UnregisterEvent(event)
+		end
+
+		if E.Retail then
+			for _, event in pairs(empowerEvents) do
+				module[name]:UnregisterEvent(event)
+			end
+		end
+	end
+
+	if module[name] and not module[name].scriptsSet then
+		module[name]:SetScript("OnEvent", function(self, event, castUnit)
+			UnitEvent(self, event, castUnit)
+		end)
+
+		SetScripts(module[name])
+		module[name].scriptsSet = true
+	end
+
+	--mMT:DebugPrintTable(module[name])
+end
+
 function module:Initialize()
 	-- update texture settings
 	SetCustomTextures()
@@ -889,330 +972,81 @@ function module:Initialize()
 	-- update colors
 	ConfigureColors()
 
-	local frames = {}
-
-	local settings = E.db.mMT.portraits
-	if settings.player.enable then
-		frames["Player"] = {
-			parent = _G.ElvUF_Player,
-			settings = settings.player,
-			unit = "player",
-			events = {
-				"PLAYER_ENTERING_WORLD",
-			},
-			unitEvents = {
-				"UNIT_PORTRAIT_UPDATE",
-			},
-			update = {
-				PLAYER_ENTERING_WORLD = true,
-				UNIT_PORTRAIT_UPDATE = true,
-			},
-		}
-
-		CastEvents(frames, "Player", not settings.player.cast)
-	elseif module.Player then
-		RemovePortrait("Player")
-	end
-
-	if settings.target.enable then
-		frames["Target"] = {
-			parent = _G.ElvUF_Target,
-			settings = settings.target,
-			unit = "target",
-			events = {
-				"PLAYER_ENTERING_WORLD",
-				"PLAYER_TARGET_CHANGED",
-			},
-			unitEvents = {
-				"UNIT_PORTRAIT_UPDATE",
-			},
-			update = {
-				PLAYER_ENTERING_WORLD = true,
-				PLAYER_TARGET_CHANGED = true,
-				UNIT_PORTRAIT_UPDATE = true,
-			},
-		}
-
-		CastEvents(frames, "Target", not settings.target.cast)
-	elseif module.Target then
-		RemovePortrait("Target")
-	end
-
-	if _G.ElvUF_Pet and settings.pet.enable then
-		frames["Pet"] = {
-			parent = _G.ElvUF_Pet,
-			settings = settings.pet,
-			unit = "pet",
-			events = {
-				"PLAYER_ENTERING_WORLD",
-			},
-			unitEvents = {
-				"UNIT_PORTRAIT_UPDATE",
-				"UNIT_MODEL_CHANGED",
-			},
-			update = {
-				PLAYER_ENTERING_WORLD = true,
-				UNIT_PORTRAIT_UPDATE = true,
-				UNIT_MODEL_CHANGED = true,
-			},
-		}
-	elseif module.Pet then
-		RemovePortrait("Pet")
-	end
-
-	if _G.ElvUF_TargetTarget and settings.targettarget.enable then
-		frames["TargetTarget"] = {
-			parent = _G.ElvUF_TargetTarget,
-			settings = settings.targettarget,
-			unit = "targettarget",
-			events = {
-				"PLAYER_ENTERING_WORLD",
-				"PLAYER_TARGET_CHANGED",
-			},
-			unitEvents = {
-				"UNIT_PORTRAIT_UPDATE",
-				"UNIT_MODEL_CHANGED",
-				"UNIT_TARGET",
-			},
-			update = {
-				PLAYER_ENTERING_WORLD = true,
-				PLAYER_TARGET_CHANGED = true,
-				UNIT_PORTRAIT_UPDATE = true,
-				UNIT_MODEL_CHANGED = true,
-				UNIT_TARGET = true,
-			},
-		}
-	elseif module.TargetTarget then
-		RemovePortrait("TargetTarget")
-	end
-
-	if _G.ElvUF_Focus and settings.focus.enable then
-		frames["Focus"] = {
-			parent = _G.ElvUF_Focus,
-			settings = settings.focus,
-			unit = "focus",
-			events = {
-				"PLAYER_ENTERING_WORLD",
-				"PLAYER_FOCUS_CHANGED",
-			},
-			unitEvents = {
-				"UNIT_PORTRAIT_UPDATE",
-				"UNIT_MODEL_CHANGED",
-			},
-			update = {
-				PLAYER_ENTERING_WORLD = true,
-				PLAYER_FOCUS_CHANGED = true,
-				UNIT_PORTRAIT_UPDATE = true,
-				UNIT_MODEL_CHANGED = true,
-			},
-		}
-
-		CastEvents(frames, "Focus", not settings.focus.cast)
-	elseif module.Focus then
-		RemovePortrait("Focus")
-	end
-
-	if _G.ElvUF_PartyGroup1UnitButton1 and settings.party.enable then
-		for i = 1, 5 do
-			frames["Party" .. i] = {
-				parent = _G["ElvUF_PartyGroup1UnitButton" .. i],
-				settings = settings.party,
-				unit = _G["ElvUF_PartyGroup1UnitButton" .. i].unit,
-				events = {
-					"PLAYER_ENTERING_WORLD",
-					"GROUP_ROSTER_UPDATE",
-					"UNIT_CONNECTION",
-				},
-				unitEvents = {
-					"UNIT_PORTRAIT_UPDATE",
-					"UNIT_MODEL_CHANGED",
-					"PARTY_MEMBER_ENABLE",
-				},
-				update = {
-					PLAYER_ENTERING_WORLD = true,
-					GROUP_ROSTER_UPDATE = true,
-					UNIT_CONNECTION = true,
-					UNIT_PORTRAIT_UPDATE = true,
-					UNIT_MODEL_CHANGED = true,
-					PARTY_MEMBER_ENABLE = true,
-				},
-			}
-
-			CastEvents(frames, "Party" .. i, not settings.party.cast)
-		end
-	elseif module.Party1 then
-		for i = 1, 5 do
-			RemovePortrait("Party" .. i)
-		end
-	end
-
-	if _G.ElvUF_Boss1 and settings.boss.enable then
-		for i = 1, 8 do
-			frames["Boss" .. i] = {
-				parent = _G["ElvUF_Boss" .. i],
-				settings = settings.boss,
-				unit = _G["ElvUF_Boss" .. i].unit,
-				events = {
-					"PLAYER_ENTERING_WORLD",
-					"INSTANCE_ENCOUNTER_ENGAGE_UNIT",
-					"UNIT_TARGETABLE_CHANGED",
-				},
-				unitEvents = {
-					"UNIT_PORTRAIT_UPDATE",
-					"UNIT_MODEL_CHANGED",
-				},
-				update = {
-					PLAYER_ENTERING_WORLD = true,
-					INSTANCE_ENCOUNTER_ENGAGE_UNIT = true,
-					UNIT_TARGETABLE_CHANGED = true,
-					UNIT_PORTRAIT_UPDATE = true,
-					UNIT_MODEL_CHANGED = true,
-				},
-			}
-
-			CastEvents(frames, "Boss" .. i, not settings.boss.cast)
-		end
-	elseif module.Boss1 then
-		for i = 1, 8 do
-			RemovePortrait("Boss" .. i)
-		end
-	end
-
-	if _G.ElvUF_Arena1 and settings.arena.enable then
-		for i = 1, 5 do
-			frames["Arena" .. i] = {
-				parent = _G["ElvUF_Arena" .. i],
-				settings = settings.arena,
-				unit = _G["ElvUF_Arena" .. i].unit,
-				events = {
-					"PLAYER_ENTERING_WORLD",
-					"ARENA_OPPONENT_UPDATE",
-					"UNIT_CONNECTION",
-				},
-				unitEvents = {
-					"UNIT_PORTRAIT_UPDATE",
-					"UNIT_MODEL_CHANGED",
-					"UNIT_NAME_UPDATE",
-				},
-				update = {
-					PLAYER_ENTERING_WORLD = true,
-					ARENA_OPPONENT_UPDATE = true,
-					UNIT_CONNECTION = true,
-					UNIT_PORTRAIT_UPDATE = true,
-					UNIT_MODEL_CHANGED = true,
-					UNIT_NAME_UPDATE = true,
-				},
-			}
-
-			CastEvents(frames, "Arena" .. i, not settings.arena.cast)
-
-			if E.Retail then
-				tinsert(frames["Arena" .. i].events, "ARENA_PREP_OPPONENT_SPECIALIZATIONS")
-			end
-		end
-	elseif module.Arena1 then
-		for i = 1, 5 do
-			RemovePortrait("Arena" .. i)
-		end
-	end
-
-	if settings.general.enable then
-		for name, unit in pairs(frames) do
-			if unit.settings.enable and unit.parent and not module[name] then
-				module[name] = CreatePortrait(unit.parent, unit.settings, unit.unit)
-
-				for _, event in pairs(unit.unitEvents) do
-					module[name]:RegisterUnitEvent(event, event == "UNIT_TARGET" and "target" or unit.unit)
-				end
-
-				for _, event in pairs(unit.events) do
-					module[name]:RegisterEvent(event)
-				end
-
-				module[name]:SetAttribute("unit", unit.unit)
-				module[name]:SetAttribute("*type1", "target")
-				module[name]:SetAttribute("*type2", "togglemenu")
-				module[name]:SetAttribute("type3", "focus")
-				module[name]:SetAttribute("toggleForVehicle", true)
-				module[name]:SetAttribute("ping-receiver", true)
-				module[name]:RegisterForClicks("AnyUp")
-				module[name].buildData = unit
-			end
+	if E.db.mMT.portraits.general.enable then
+		if _G.ElvUF_Player and E.db.mMT.portraits.player.enable then
+			CreatePortraits("Player", "player", _G.ElvUF_Player, E.db.mMT.portraits.player, { "PLAYER_ENTERING_WORLD" }, { "UNIT_PORTRAIT_UPDATE" }, E.db.mMT.portraits.player.cast)
+		elseif module.Player then
+			RemovePortrait("Player")
 		end
 
-		if settings.player.enable and module.Player and not module.Player.ScriptSet then
-			module.Player:SetScript("OnEvent", function(self, event, castUnit)
-				UnitEvent(self, event, settings.player, castUnit, "player")
-			end)
-			module.Player.ScriptSet = true
+		if _G.ElvUF_Target and E.db.mMT.portraits.target.enable then
+			CreatePortraits("Target", "target", _G.ElvUF_Target, E.db.mMT.portraits.target, { "PLAYER_ENTERING_WORLD", "PLAYER_TARGET_CHANGED" }, { "UNIT_PORTRAIT_UPDATE" }, E.db.mMT.portraits.target.cast)
+		elseif module.Target then
+			RemovePortrait("Target")
 		end
 
-		if settings.target.enable and module.Target and not module.Target.ScriptSet then
-			module.Target:SetScript("OnEvent", function(self, event, castUnit)
-				UnitEvent(self, event, settings.target, castUnit, "target")
-			end)
-			module.Target.ScriptSet = true
+		if _G.ElvUF_Pet and E.db.mMT.portraits.pet.enable then
+			CreatePortraits("Pet", "pet", _G.ElvUF_Pet, E.db.mMT.portraits.pet, { "PLAYER_ENTERING_WORLD" }, { "UNIT_PORTRAIT_UPDATE", "UNIT_MODEL_CHANGED" })
+		elseif module.Pet then
+			RemovePortrait("Pet")
 		end
 
-		if settings.pet.enable and module.Pet and not module.Pet.ScriptSet then
-			module.Pet:SetScript("OnEvent", function(self, event)
-				UnitEvent(self, event, settings.pet, nil, "pet")
-			end)
-			module.Pet.ScriptSet = true
+		if _G.ElvUF_TargetTarget and E.db.mMT.portraits.targettarget.enable then
+			CreatePortraits("TargetTarget", "targettarget", _G.ElvUF_TargetTarget, E.db.mMT.portraits.targettarget, { "PLAYER_ENTERING_WORLD", "PLAYER_TARGET_CHANGED" }, { "UNIT_PORTRAIT_UPDATE", "UNIT_MODEL_CHANGED", "UNIT_TARGET" })
+		elseif module.TargetTarget then
+			RemovePortrait("TargetTarget")
 		end
 
-		if settings.focus.enable and module.Focus and not module.Focus.ScriptSet then
-			module.Focus:SetScript("OnEvent", function(self, event, castUnit)
-				UnitEvent(self, event, settings.focus, castUnit, "focus")
-			end)
-			module.Focus.ScriptSet = true
+		if _G.ElvUF_Focus and E.db.mMT.portraits.focus.enable then
+			CreatePortraits("Focus", "focus", _G.ElvUF_Focus, E.db.mMT.portraits.focus, { "PLAYER_ENTERING_WORLD", "PLAYER_FOCUS_CHANGED" }, { "UNIT_PORTRAIT_UPDATE", "UNIT_MODEL_CHANGED" }, E.db.mMT.portraits.focus.cast)
+		elseif module.Focus then
+			RemovePortrait("Focus")
 		end
 
-		if settings.targettarget.enable and module.TargetTarget and not module.TargetTarget.ScriptSet then
-			module.TargetTarget:SetScript("OnEvent", function(self, event)
-				UnitEvent(self, event, settings.targettarget, nil, "targettarget")
-			end)
-			module.TargetTarget.ScriptSet = true
-		end
-
-		if settings.party.enable and module.Party1 and not module.Party1.ScriptSet then
+		if _G.ElvUF_PartyGroup1UnitButton1 and E.db.mMT.portraits.party.enable then
 			for i = 1, 5 do
-				local frame = _G["ElvUF_PartyGroup1UnitButton" .. i]
-				module["Party" .. i]:SetScript("OnEvent", function(self, event, castUnit)
-					UnitEvent(self, event, settings.party, castUnit, frame.unit)
-				end)
-				module["Party" .. i].ScriptSet = true
+				CreatePortraits("Party" .. i, _G["ElvUF_PartyGroup1UnitButton" .. i].unit, _G["ElvUF_PartyGroup1UnitButton" .. i], E.db.mMT.portraits.party, { "PLAYER_ENTERING_WORLD", "GROUP_ROSTER_UPDATE", "UNIT_CONNECTION" }, { "UNIT_PORTRAIT_UPDATE", "UNIT_MODEL_CHANGED", "PARTY_MEMBER_ENABLE" }, E.db.mMT.portraits.party.cast)
+			end
+		elseif module.Party1 then
+			for i = 1, 5 do
+				RemovePortrait("Party" .. i)
 			end
 		end
 
-		if settings.boss.enable and module.Boss1 and not module.Boss1.ScriptSet then
+		if _G.ElvUF_Boss1 and E.db.mMT.portraits.boss.enable then
 			for i = 1, 8 do
-				local frame = _G["ElvUF_Boss" .. i]
-				module["Boss" .. i]:SetScript("OnEvent", function(self, event, castUnit)
-					UnitEvent(self, event, settings.boss, castUnit, frame.unit)
-				end)
-				module["Boss" .. i].ScriptSet = true
+				CreatePortraits("Boss" .. i, _G["ElvUF_Boss" .. i].unit, _G["ElvUF_Boss" .. i], E.db.mMT.portraits.boss, { "PLAYER_ENTERING_WORLD", "INSTANCE_ENCOUNTER_ENGAGE_UNIT", "UNIT_TARGETABLE_CHANGED" }, { "UNIT_PORTRAIT_UPDATE", "UNIT_MODEL_CHANGED" }, E.db.mMT.portraits.boss)
+			end
+		elseif module.Boss1 then
+			for i = 1, 8 do
+				RemovePortrait("Boss" .. i)
 			end
 		end
 
-		if settings.arena.enable and module.Arena1 and not module.Arena1.ScriptSet then
+		if _G.ElvUF_Arena1 and E.db.mMT.portraits.arena.enable then
 			for i = 1, 5 do
-				local frame = _G["ElvUF_Arena" .. i]
-				module["Arena" .. i]:SetScript("OnEvent", function(self, event, castUnit)
-					UnitEvent(self, event, settings.arena, castUnit, frame.unit)
-				end)
+				CreatePortraits("Arena" .. i, _G["ElvUF_Arena" .. i].unit, _G["ElvUF_Arena" .. i], E.db.mMT.portraits.arena, { "PLAYER_ENTERING_WORLD", "ARENA_OPPONENT_UPDATE", "UNIT_CONNECTION" }, { "UNIT_PORTRAIT_UPDATE", "UNIT_MODEL_CHANGED", "UNIT_NAME_UPDATE" }, E.db.mMT.portraits.arena.cast)
 
-				module["Arena" .. i].ScriptSet = true
+				if E.Retail then
+					tinsert(module["Arena" .. i].events, "ARENA_PREP_OPPONENT_SPECIALIZATIONS")
+				end
+			end
+		elseif module.Arena1 then
+			for i = 1, 5 do
+				RemovePortrait("Arena" .. i)
 			end
 		end
+
+		module:UpdatePortraits()
 	else
-		for name, unit in pairs(frames) do
+		-- need fix
+		for name, _ in pairs(module) do
 			if module[name] then
-				for _, event in pairs(unit.unitEvents) do
+				for _, event in pairs(module[name].unitEvents) do
 					module[name]:UnregisterEvent(event)
 				end
 
-				for _, event in pairs(unit.events) do
+				for _, event in pairs(module[name].events) do
 					module[name]:UnregisterEvent(event)
 				end
 
@@ -1222,6 +1056,5 @@ function module:Initialize()
 		end
 	end
 
-	module:UpdatePortraits()
 	module.loaded = E.db.mMT.portraits.general.enable
 end

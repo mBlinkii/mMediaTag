@@ -22,7 +22,6 @@
         "CreateFrame",
         "strfind",
         "ToggleFrame",
-        "IsAddOnLoaded",
         "GUILD_AND_COMMUNITIES",
         "ACHIEVEMENT_BUTTON",
         "BLIZZARD_STORE",
@@ -40,7 +39,6 @@
         "StaticPopupDialogs",
         "StaticPopup_Show",
         "C_UI",
-        "GetItemIcon",
         "AchievementFrame",
         "GetTrackedAchievements",
         "UnitName",
@@ -107,7 +105,6 @@
         "GetGuildRosterMOTD",
         "GetNumGuildMembers",
         "IsInGuild",
-        "LoadAddOn",
         "ToggleGuildFrame",
         "COMBAT_FACTION_CHANGE",
         "REMOTE_CHAT",
@@ -160,9 +157,7 @@
         "Sound_GameSystem_GetNumOutputDrivers",
         "Sound_GameSystem_RestartSoundSystem",
         "GetActiveSpecGroup",
-        "GetSpellCooldown",
         "IsSpellInRange",
-        "GetSpellInfo",
         "GetTime",
         "GetInstanceInfo",
         "C_CurrencyInfo",
@@ -170,13 +165,9 @@
         "C_PlayerInfo",
         "C_DateAndTime",
         "GetRealmName",
-        "GetSpellTexture",
         "IsSpellKnown",
-        "GetItemInfo",
-        "GetItemCount",
         "PlayerHasToy",
         "C_ToyBox",
-        "GetItemCooldown",
         "mod",
         "strlower",
         "C_QuestLog",
@@ -223,7 +214,6 @@
         "GetMacroInfo",
         "IsPlayerSpell",
         "GetAchievementCriteriaInfo",
-        "GetDetailedItemLevelInfo",
         "strlen",
         "GetContainerNumFreeSlots",
         "GetContainerNumSlots",
@@ -1051,5 +1041,20 @@
         "WOTLK"
     ],
     "cSpell.language": "en,de",
-    "stylua.targetReleaseVersion": "latest"
+    "stylua.targetReleaseVersion": "latest",
+    "Lua.runtime.version": "Lua 5.1",
+    "Lua.runtime.builtin": {
+        "basic": "disable",
+        "debug": "disable",
+        "io": "disable",
+        "math": "disable",
+        "os": "disable",
+        "package": "disable",
+        "string": "disable",
+        "table": "disable",
+        "utf8": "disable"
+    },
+    "Lua.workspace.library": [
+        "c:\\Users\\makso\\.vscode\\extensions\\ketho.wow-api-0.15.2\\Annotations"
+    ]
 }
