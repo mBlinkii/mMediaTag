@@ -91,7 +91,7 @@ local function configTable()
 				toggle_level = {
 					order = 3,
 					type = "toggle",
-					name = L["Show Level"],
+					name = L["Show Quest Level"],
 					get = function(info)
 						return E.db.mMT.objectivetracker.settings.showLevel
 					end,
