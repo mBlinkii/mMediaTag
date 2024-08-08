@@ -999,6 +999,7 @@
         "spellbook",
         "Spellbook",
         "spellbooktoggle",
+        "SPELLCAST",
         "strfind",
         "strjoin",
         "strlower",
@@ -1055,6 +1056,6 @@
         "utf8": "disable"
     },
     "Lua.workspace.library": [
-        "c:\\Users\\makso\\.vscode\\extensions\\ketho.wow-api-0.15.2\\Annotations"
+        "c:\\Users\\makso\\.vscode\\extensions\\ketho.wow-api-0.15.5\\Annotations"
     ]
 }
