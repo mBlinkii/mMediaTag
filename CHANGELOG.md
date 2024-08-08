@@ -1,6 +1,13 @@
 # Changelog - ElvUI_mMediaTag
 [Eng] - All changes to this project will be documented in this file. The latest changes are at the top.
 
+## [ver. 3.50] - 08.08.2024
+### FIX
+- FIX - Portraits: the wrong portraits were displayed for Group frames.
+- FIX - Portraits: Boss Portraits cast icon toggle.
+- FIX - Nil error with TAG targeting Icons.
+- FIX - Nil error with Objective Tracker Skin in Dungeons.
+
 ## [ver. 3.49] - 08.08.2024
 ### Update
 - UPDATE - Objective Tracker Background color function/ behavior

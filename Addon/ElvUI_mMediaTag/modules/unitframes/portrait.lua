@@ -545,9 +545,9 @@ local castIconUpdateEvents = {
 }
 
 local function UnitEvent(self, event, castUnit)
-	--if mMT.DevMode then
+	if mMT.DevMode then
 		mMT:Print("Script:", self.unit, "Event:", event, "Unit Exists:", UnitExists(self.unit))
-	--end
+	end
 
 	local unit = self.parent.unit
 
