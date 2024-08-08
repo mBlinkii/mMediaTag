@@ -267,11 +267,11 @@ local function AddQuestToCache(id, index)
 	local questLogIndex = index
 	local questID = id
 
-	if id and not questLogIndex then
+	if tonumber(id) and not questLogIndex then
 		questLogIndex = C_QuestLog.GetLogIndexForQuestID(questID)
 	end
 
-	if questLogIndex and not id then
+	if tonumber(questLogIndex) and not id then
 		questID = C_QuestLog.GetQuestIDForQuestWatchIndex(questLogIndex)
 	end
 
