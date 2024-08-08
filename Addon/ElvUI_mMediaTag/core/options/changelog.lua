@@ -28,8 +28,12 @@ local change_log_update = {
 local change_log_fix = {
 	"Taints with the Objective Tracker Skin.",
 	"Nil error with Objective Tracker: Achievements and Professions",
+	"Nil error with Objective Tracker Skin in Dungeons.",
+	"Nil error with TAG targeting Icons.",
 	"Portraits: Rare/ Elite Border and Custom colors of MerathilisUI & Eltruism",
 	"Portraits: Texture Coordinates with JiberishUI Icons",
+	"Portraits: the wrong portraits were displayed for Group frames.",
+	"Portraits: Boss Portraits cast icon toggle.",
 }
 
 local function Concatenation(tbl, icon, color)

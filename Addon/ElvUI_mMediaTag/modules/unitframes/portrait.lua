@@ -549,7 +549,7 @@ local function UnitEvent(self, event, castUnit)
 		mMT:Print("Script:", self.unit, "Event:", event, "Unit Exists:", UnitExists(self.unit))
 	end
 
-	local unit = self.unit
+	local unit = self.parent.unit
 
 	if self.settings.cast then
 		self.empowering = (event == "UNIT_SPELLCAST_EMPOWER_START")
@@ -765,7 +765,7 @@ function module:Initialize()
 
 		if _G.ElvUF_Boss1 and E.db.mMT.portraits.boss.enable then
 			for i = 1, 8 do
-				CreatePortraits("Boss" .. i, _G["ElvUF_Boss" .. i].unit, _G["ElvUF_Boss" .. i], E.db.mMT.portraits.boss, { "PLAYER_ENTERING_WORLD", "INSTANCE_ENCOUNTER_ENGAGE_UNIT", "UNIT_TARGETABLE_CHANGED" }, { "UNIT_PORTRAIT_UPDATE", "UNIT_MODEL_CHANGED" }, E.db.mMT.portraits.boss)
+				CreatePortraits("Boss" .. i, _G["ElvUF_Boss" .. i].unit, _G["ElvUF_Boss" .. i], E.db.mMT.portraits.boss, { "PLAYER_ENTERING_WORLD", "INSTANCE_ENCOUNTER_ENGAGE_UNIT", "UNIT_TARGETABLE_CHANGED" }, { "UNIT_PORTRAIT_UPDATE", "UNIT_MODEL_CHANGED" }, E.db.mMT.portraits.boss.cast)
 			end
 		elseif module.Boss1 then
 			for i = 1, 8 do
