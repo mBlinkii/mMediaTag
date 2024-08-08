@@ -1,14 +1,15 @@
 # Changelog - ElvUI_mMediaTag
 [Eng] - All changes to this project will be documented in this file. The latest changes are at the top.
 
-## [ver. 3.49] - xx.08.2024
+## [ver. 3.49] - 08.08.2024
 ### Update
 - UPDATE - Objective Tracker Background color function/ behavior
-- UPDATE - Objective Tracker Background color function/ behavior
+- UPDATE - Improved Portraits code
 ### FIX
 - FIX - Taints with the Objective Tracker Skin.
 - FIX - Nil error with Objective Tracker: Achievements and Professions
 - FIX - Portraits: Rare/ Elite Border and Custom colors of MerathilisUI & Eltruism
+- FIX - Portraits: Texture Coordinates with JiberishUI Icons
 ### NEW
 - NEW - Objective Tracker: can now show Quest Level
 - NEW - Objective Tracker: auto track/ untrack Quest if they are on map

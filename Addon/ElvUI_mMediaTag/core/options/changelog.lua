@@ -13,30 +13,28 @@ local change_log_important = {
 	"Dock Guild & Friends drop down menu for Invite and Whisper can be buggy, this is known and will be fixed later.",
 }
 
-local releasdate = "04.08.2024"
+local releasdate = "08.08.2024"
 
 local change_log_new = {
-	"Texture Pack T Series",
+	"Objective Tracker: can now show Quest Level",
+	"Objective Tracker: auto track/ untrack Quest if they are on map",
 }
 
 local change_log_update = {
-	"Datatext - Teleports add more Engineering teleports and Mole Machine",
-	"ObjectiveTracker Background - change the behavior",
-	"Portraits can now class color the Portraits from Followers/ AI NPC ",
+	"Objective Tracker Background color function/ behavior",
+	"Improved Portraits code",
 }
 
 local change_log_fix = {
-	"Dock - Spellbook Tooltip",
-	"ObjectiveTracker - Bug with Chatlangemode and missing font Settings",
-	"Error with not existing Global in classic Versions & Dock Spellbook",
-	"Block Absorb TAG for Classic, its only available for Retail",
-	"Bug with Game Menu Datatext and Customer Support window auto opens.",
-	"Dropdown Menus on Classic, API changes.",
+	"Taints with the Objective Tracker Skin.",
+	"Nil error with Objective Tracker: Achievements and Professions",
+	"Portraits: Rare/ Elite Border and Custom colors of MerathilisUI & Eltruism",
+	"Portraits: Texture Coordinates with JiberishUI Icons",
 }
 
 local function Concatenation(tbl, icon, color)
 	local string = ""
-	for key, line in pairs(tbl) do
+	for _, line in pairs(tbl) do
 		if color then
 			line = color .. line .. endtag
 		end
@@ -51,7 +49,7 @@ local function Concatenation(tbl, icon, color)
 end
 
 local function configTable()
-	change_log_important_string = Concatenation(change_log_important)
+	--change_log_important_string = Concatenation(change_log_important)
 	change_log_new_string = Concatenation(change_log_new)
 	change_log_update_string = Concatenation(change_log_update)
 	change_log_fix_string = Concatenation(change_log_fix)
