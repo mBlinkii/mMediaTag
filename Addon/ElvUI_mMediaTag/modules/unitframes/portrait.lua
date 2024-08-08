@@ -207,10 +207,10 @@ local textures = {
 }
 
 local function mirrorTexture(texture, mirror, top)
-	if texture.mClass then
-		local coords = texture.mCoords
+	if texture.classIcons then
+		local coords = texture.classCoords
 		if #coords == 8 then
-			texture:SetTexCoord(unpack(mirror and { coords[3], coords[4], coords[7], coords[8], coords[1], coords[2], coords[5], coords[6] } or coords))
+			texture:SetTexCoord(unpack(coords))
 		else
 			texture:SetTexCoord(unpack(mirror and { coords[2], coords[1], coords[3], coords[4] } or coords))
 		end
@@ -312,16 +312,16 @@ local function SetPortraits(frame, unit, masking, mirror)
 			UpdateIconBackground(frame.iconbg, unit, mirror)
 		end
 
-		frame.portrait.mClass = unit
-		frame.portrait.mCoords = coords
+		frame.portrait.classIcons = unit
+		frame.portrait.classCoords = coords
 
 		if coords then
 			mirrorTexture(frame.portrait, mirror)
 		end
 	else
-		if frame.portrait.mClass then
-			frame.portrait.mClass = nil
-			frame.portrait.mCoords = nil
+		if frame.portrait.classIcons then
+			frame.portrait.classIcons = nil
+			frame.portrait.classCoords = nil
 		end
 
 		mirrorTexture(frame.portrait, mirror)
@@ -343,18 +343,18 @@ local function CheckRareElite(frame, unit)
 
 	if color then
 		setColor(frame.extra, color)
-		if E.db.mMT.portraits.shadow.enable and frame.extra.shadow then
+		if E.db.mMT.portraits.shadow.enable and frame.extraShadow then
 			frame.extraShadow:Show()
 		end
-		if E.db.mMT.portraits.shadow.border and frame.extra.border then
+		if E.db.mMT.portraits.shadow.border and frame.extraBorder then
 			frame.extraBorder:Show()
 		end
 		frame.extra:Show()
 	else
-		if E.db.mMT.portraits.shadow.enable and frame.extra.shadow then
+		if E.db.mMT.portraits.shadow.enable and frame.extraShadow then
 			frame.extraShadow:Hide()
 		end
-		if E.db.mMT.portraits.shadow.border and frame.extra.border then
+		if E.db.mMT.portraits.shadow.border and frame.extraBorder then
 			frame.extraBorder:Hide()
 		end
 		frame.extra:Hide()
@@ -480,11 +480,13 @@ local function UpdatePortrait(portraitFrame)
 		-- Border
 		if E.db.mMT.portraits.shadow.border then
 			texture = textures.border.CO
-			UpdateTexture(portraitFrame, "corner", texture, 6, E.db.mMT.portraits.shadow.borderColor)
-			portraitFrame.corner:Show()
-		elseif portraitFrame.corner then
-			portraitFrame.corner:Hide()
+			UpdateTexture(portraitFrame, "cornerBorder", texture, 6, E.db.mMT.portraits.shadow.borderColor)
 		end
+		portraitFrame.corner:Show()
+		portraitFrame.cornerBorder:Show()
+	elseif portraitFrame.corner then
+		portraitFrame.corner:Hide()
+		portraitFrame.cornerBorder:Hide()
 	end
 end
 
@@ -508,9 +510,9 @@ local function AddCastIcon(self, unit, mirror)
 
 	if texture then
 		self.portrait:SetTexture(texture)
-		if self.portrait.mClass then
-			self.portrait.mClass = nil
-			self.portrait.mCoords = nil
+		if self.portrait.classIcons then
+			self.portrait.classIcons = nil
+			self.portrait.classCoords = nil
 		end
 
 		mirrorTexture(self.portrait, mirror)
