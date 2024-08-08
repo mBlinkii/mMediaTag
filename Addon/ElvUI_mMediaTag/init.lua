@@ -234,6 +234,12 @@ function mMT:Initialize()
 		if E.private.nameplates.enable and (E.db.mMT.nameplate.healthmarker.enable or E.db.mMT.nameplate.executemarker.enable) then
 			mMT:StartNameplateTools()
 		end
+
+		if E.db.mMT.objectivetracker.enable and E.db.mMT.objectivetracker.settings.zoneQuests then
+			self:RegisterEvent("ZONE_CHANGED_NEW_AREA")
+			self:RegisterEvent("ZONE_CHANGED_INDOORS")
+			self:RegisterEvent("ZONE_CHANGED")
+		end
 	end
 
 	if E.db.mMT.general.emediaenable then
@@ -259,10 +265,6 @@ function mMT:Initialize()
 	E.ConfigModeLocalizedStrings["MMEDIATAG"] = mMT.Name
 
 	mMT.CurrentProfile = E.data:GetCurrentProfile()
-
-	-- if E.db.mMT.customclasscolors.enable and not (mMT.ElvUI_EltreumUI.gradient or mMT.ElvUI_EltreumUI.dark) then
-	-- 	mMT:SetCustomColors()
-	-- end
 
 	if E.db.mMT.general.greeting then
 		mMT:GreetingText()
@@ -371,6 +373,18 @@ end
 
 function mMT:CHALLENGE_MODE_START()
 	mMT:UpdateText()
+end
+
+function mMT:ZONE_CHANGED_NEW_AREA()
+	mMT.Modules.ObjectiveTracker:TrackUntrackQuests()
+end
+
+function mMT:ZONE_CHANGED_INDOORS()
+	mMT.Modules.ObjectiveTracker:TrackUntrackQuests()
+end
+
+function mMT:ZONE_CHANGED()
+	mMT.Modules.ObjectiveTracker:TrackUntrackQuests()
 end
 
 function mMT:CHAT_MSG_PARTY(event, text)

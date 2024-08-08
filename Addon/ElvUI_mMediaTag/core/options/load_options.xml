@@ -8,7 +8,6 @@
 	<Script file="importantspells.lua"/>
 	<Script file="background.lua"/>
 	<Script file="general.lua"/>
-	<!-- <Script file="customclasscolors.lua"/> -->
 	<Script file="datatextcolors.lua"/>
 	<Script file="rollbutton.lua"/>
 	<Script file="chatbutton.lua"/>

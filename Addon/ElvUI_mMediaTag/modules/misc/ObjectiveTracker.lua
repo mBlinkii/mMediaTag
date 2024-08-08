@@ -18,7 +18,7 @@ local SortQuestWatches = C_QuestLog.SortQuestWatches
 
 local colors = {}
 local fonts = {}
-local cachedLines = {}
+local cachedQuests = {}
 local dim = 0.2
 local allObjectivesText
 
@@ -252,11 +252,65 @@ local function matchPatterns(text)
 	return result
 end
 
-local function updateCachedLines(id, index, text)
-	local isSkinned = strmatch(text, "|cff") or strmatch(text, "|CFF")
+local function GetQuestInfos(id)
+	if id then
+		local questLogIndex = C_QuestLog.GetLogIndexForQuestID(id)
+		if questLogIndex then
+			local info = C_QuestLog.GetInfo(questLogIndex)
+			return info
+		end
+	end
+end
 
-	if not isSkinned and cachedLines[id] then
-		cachedLines[id][index] = text
+local function AddQuestToCache(id, index)
+	local quest = {}
+	local questLogIndex = index
+	local questID = id
+
+	if id and not questLogIndex then
+		questLogIndex = C_QuestLog.GetLogIndexForQuestID(questID)
+	end
+
+	if questLogIndex and not id then
+		questID = C_QuestLog.GetQuestIDForQuestWatchIndex(questLogIndex)
+	end
+
+	if questID and questLogIndex then
+		quest.questLogIndex = questLogIndex
+		quest.info = C_QuestLog.GetInfo(questLogIndex)
+
+		if quest.info and E.db.mMT.objectivetracker.settings.zoneQuests then
+			local questLineInfo = C_QuestLine.GetQuestLineInfo(questID)
+			if questLineInfo then
+				quest.isCampaign = questLineInfo.isCampaign
+				quest.isImportant = questLineInfo.isImportant
+				quest.isDaily = questLineInfo.isDaily
+			end
+		end
+
+		local objectives = C_QuestLog.GetQuestObjectives(questID)
+		if objectives then
+			quest.lines = {}
+			for line, objective in ipairs(objectives) do
+				quest.lines[line] = objective.text
+			end
+		end
+
+		return quest
+	end
+end
+
+local function UpdateCachedQuests(id, index, text)
+	local isSkinned = strmatch(text, "|cff") or strmatch(text, "|CFF")
+	cachedQuests[id] = cachedQuests[id] or {}
+	if not cachedQuests[id] then
+		cachedQuests[id] = AddQuestToCache(id)
+	end
+
+	cachedQuests[id].lines = cachedQuests[id].lines or {}
+
+	if not isSkinned and cachedQuests[id].lines then
+		cachedQuests[id].lines[index] = text
 	end
 end
 
@@ -297,12 +351,10 @@ local function SetLineText(text, completed, id, index, onEnter, onLeave)
 
 	if lineText then
 		if id and index then
-			cachedLines[id] = cachedLines[id] or {}
+			UpdateCachedQuests(id, index, lineText)
 
-			updateCachedLines(id, index, lineText)
-
-			if onEnter or onLeave and cachedLines[id] then
-				lineText = cachedLines[id][index] or lineText
+			if onEnter or onLeave and cachedQuests[id].lines then
+				lineText = cachedQuests[id].lines[index] or lineText
 			end
 		end
 
@@ -391,9 +443,6 @@ local function SkinLines(line, id, index)
 				SetUpBars(line.timerBar.Bar)
 			end
 		end
-
-		-- fix for overlapping blocks/ line and header - thx Merathilis & Fang
-		line:SetHeight(line.Text:GetHeight())
 	end
 end
 
@@ -591,9 +640,26 @@ local function LinesOnEnterLeave(line, id, index, onEnter, onLeave)
 	end
 end
 
+local function GetLevelInfoText(level, onEnter)
+	if level then
+		local color = (level < 0) and { r = 1, g = 0, b = 0 } or GetCreatureDifficultyColor(level) --GetRelativeDifficultyColor(teamLevel, level)
+		local r, g, b = onEnter and DimColor(color) or color.r, color.g, color.b
+		local colorString = RGBToHex(r, g, b)
+		local levelText = (level < 0) and "??" or level
+
+		return "[" .. colorString .. levelText .. "|r] "
+	else
+		return ""
+	end
+end
+
 local function OnHeaderEnter(block)
 	if block.HeaderText then
 		SetTextProperties(block.HeaderText, fonts.title, colors.title.h)
+
+		if E.db.mMT.objectivetracker.settings.showLevel and (cachedQuests[block.id] and cachedQuests[block.id].info) then
+			block.HeaderText:SetText(GetLevelInfoText(cachedQuests[block.id].info.level, true) .. cachedQuests[block.id].title)
+		end
 	end
 
 	if block.usedLines then
@@ -606,6 +672,9 @@ end
 local function OnHeaderLeave(block)
 	if block.HeaderText then
 		SetTextProperties(block.HeaderText, fonts.title, colors.title.n)
+		if E.db.mMT.objectivetracker.settings.showLevel and (cachedQuests[block.id] and cachedQuests[block.id].info) then
+			block.HeaderText:SetText(GetLevelInfoText(cachedQuests[block.id].info.level) .. cachedQuests[block.id].title)
+		end
 	end
 
 	if block.usedLines then
@@ -615,7 +684,7 @@ local function OnHeaderLeave(block)
 	end
 end
 
-local function SkinBlock(tracker, block)
+local function SkinBlock(_, block)
 	if block then
 		if block.Stage and not block.mMT_StageSkin then
 			hooksecurefunc(block, "UpdateStageBlock", SkinStageBlock)
@@ -632,8 +701,11 @@ local function SkinBlock(tracker, block)
 			end
 		end
 
-		if block.id then
-			cachedLines[block.id] = cachedLines[block.id] or {}
+		if block.id and (not cachedQuests[block.id] or not cachedQuests[block.id].update) then
+			cachedQuests[block.id] = AddQuestToCache(block.id)
+			if cachedQuests[block.id] then
+				cachedQuests[block.id].update = true
+			end
 		end
 
 		if block.affixPool and block.UpdateTime and not block.mMT_ChallengeBlock then
@@ -643,11 +715,23 @@ local function SkinBlock(tracker, block)
 
 		if block.HeaderText then
 			SetTextProperties(block.HeaderText, fonts.title, colors.title.n)
+			if (cachedQuests[block.id] and cachedQuests[block.id].info) and E.db.mMT.objectivetracker.settings.showLevel then
+				cachedQuests[block.id].title = block.HeaderText:GetText()
+				block.HeaderText:SetText(GetLevelInfoText(cachedQuests[block.id].info.level) .. block.HeaderText:GetText())
+			end
+
+			local height = block.HeaderText:GetStringHeight() + 2
+			if height ~= block.HeaderText:GetHeight() then
+				block.HeaderText:SetHeight(height)
+			end
 		end
 
 		if block.usedLines then
 			for index, line in pairs(block.usedLines) do
 				SkinLines(line, block.id, index)
+
+				-- fix for overlapping blocks/ line and header - thx Merathilis & Fang
+				line:SetHeight(line.Text:GetHeight())
 			end
 		end
 
@@ -684,8 +768,15 @@ local function AddBackground()
 			backdrop:SetBackdropBorderColor(borderColor.r, borderColor.g, borderColor.b, borderColor.a or 1)
 		end
 
+		local backgroundColor
+
 		if not E.db.mMT.objectivetracker.bg.transparent then
-			local backgroundColor = E.db.mMT.objectivetracker.bg.color.bg
+			backgroundColor = E.db.mMT.objectivetracker.bg.classBG and mMT.ClassColor or E.db.mMT.objectivetracker.bg.color.bg
+		else
+			backgroundColor = E.db.mMT.objectivetracker.bg.classBG and { r = mMT.ClassColor.r, g = mMT.ClassColor.g, b = mMT.ClassColor.b, a = 0.25 } or nil
+		end
+
+		if backgroundColor then
 			backdrop:SetBackdropColor(backgroundColor.r, backgroundColor.g, backgroundColor.b, backgroundColor.a)
 		end
 
@@ -697,6 +788,37 @@ local function AddBackground()
 	else
 		if backdrop then
 			backdrop:Hide()
+		end
+	end
+end
+
+local function BuildQuestCache()
+	local watchedQuests = {}
+	for i = 1, C_QuestLog.GetNumQuestWatches() do
+		local questID = C_QuestLog.GetQuestIDForQuestWatchIndex(i)
+		if questID then
+			watchedQuests[questID] = AddQuestToCache(questID, i)
+		end
+	end
+
+	return watchedQuests
+end
+
+function module:TrackUntrackQuests()
+	if not cachedQuests then
+		cachedQuests = BuildQuestCache()
+	end
+
+	for id, quest in pairs(cachedQuests) do
+		quest.info = GetQuestInfos(id)
+		if quest.info then
+			local isOnMap = quest.info.isOnMap
+			local isCampaign = quest.isCampaign
+			if isOnMap or isCampaign then
+				C_QuestLog.AddQuestWatch(id)
+			else
+				C_QuestLog.RemoveQuestWatch(id)
+			end
 		end
 	end
 end
@@ -719,8 +841,7 @@ function module:Initialize()
 		if _G.ObjectiveTrackerFrame.Header then
 			if _G.ObjectiveTrackerFrame.Header.Text then
 				if E.db.mMT.objectivetracker.settings.hideAll then
-					allObjectivesText = _G.ObjectiveTrackerFrame.Header.Text:GetText()
-					_G.ObjectiveTrackerFrame.Header.Text:SetText("")
+					_G.ObjectiveTrackerFrame.Header.Text:Hide() -- do not touch this, it will taint if SetText()
 				elseif allObjectivesText then
 					_G.ObjectiveTrackerFrame.Header.Text:SetText(allObjectivesText)
 				end
@@ -746,9 +867,15 @@ function module:Initialize()
 		end
 	end
 
+	cachedQuests = BuildQuestCache()
+
+	if E.db.mMT.objectivetracker.settings.zoneQuests then
+		module:TrackUntrackQuests()
+	end
+
 	-- fix for overlapping blocks/ line and header - thx Merathilis & Fang
 	E:Delay(0.5, function()
-		SortQuestWatches()
+		C_QuestLog.SortQuestWatches()
 	end)
 
 	module.needReloadUI = true

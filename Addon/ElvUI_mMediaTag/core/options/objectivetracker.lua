@@ -88,6 +88,31 @@ local function configTable()
 						mMT.Modules.ObjectiveTracker:Initialize()
 					end,
 				},
+				toggle_level = {
+					order = 3,
+					type = "toggle",
+					name = L["Show Quest Level"],
+					get = function(info)
+						return E.db.mMT.objectivetracker.settings.showLevel
+					end,
+					set = function(info, value)
+						E.db.mMT.objectivetracker.settings.showLevel = value
+						mMT.Modules.ObjectiveTracker:Initialize()
+					end,
+				},
+				toggle_zone = {
+					order = 4,
+					type = "toggle",
+					name = L["Show only Quests on Map"],
+					get = function(info)
+						return E.db.mMT.objectivetracker.settings.zoneQuests
+					end,
+					set = function(info, value)
+						E.db.mMT.objectivetracker.settings.zoneQuests = value
+						mMT.Modules.ObjectiveTracker:Initialize()
+						E:StaticPopup_Show("CONFIG_RL")
+					end,
+				},
 			},
 		},
 		background_settings = {
@@ -112,15 +137,15 @@ local function configTable()
 					type = "group",
 					inline = true,
 					name = L["Background Color"],
-					disabled = function()
-						return E.db.mMT.objectivetracker.bg.transparent
-					end,
 					args = {
 						color_bg = {
 							type = "color",
-							order = 3,
+							order = 1,
 							name = L["Color"],
 							hasAlpha = true,
+							disabled = function()
+								return E.db.mMT.objectivetracker.bg.transparent
+							end,
 							get = function(info)
 								local t = E.db.mMT.objectivetracker.bg.color.bg
 								return t.r, t.g, t.b, t.a
@@ -128,6 +153,30 @@ local function configTable()
 							set = function(info, r, g, b, a)
 								local t = E.db.mMT.objectivetracker.bg.color.bg
 								t.r, t.g, t.b, t.a = r, g, b, a
+								mMT.Modules.ObjectiveTracker:Initialize()
+							end,
+						},
+						toggle_transparent = {
+							order = 2,
+							type = "toggle",
+							name = L["Transparent"],
+							get = function(info)
+								return E.db.mMT.objectivetracker.bg.transparent
+							end,
+							set = function(info, value)
+								E.db.mMT.objectivetracker.bg.transparent = value
+								mMT.Modules.ObjectiveTracker:Initialize()
+							end,
+						},
+						toggle_classColor = {
+							order = 2,
+							type = "toggle",
+							name = L["Class colored"],
+							get = function(info)
+								return E.db.mMT.objectivetracker.bg.classBG
+							end,
+							set = function(info, value)
+								E.db.mMT.objectivetracker.bg.classBG = value
 								mMT.Modules.ObjectiveTracker:Initialize()
 							end,
 						},
@@ -195,26 +244,6 @@ local function configTable()
 							end,
 							set = function(info, value)
 								E.db.mMT.objectivetracker.bg.shadow = value
-								mMT.Modules.ObjectiveTracker:Initialize()
-							end,
-						},
-					},
-				},
-				header_transparent = {
-					order = 5,
-					type = "group",
-					inline = true,
-					name = L["Transparent"],
-					args = {
-						toggle_shadow = {
-							order = 2,
-							type = "toggle",
-							name = L["Transparent"],
-							get = function(info)
-								return E.db.mMT.objectivetracker.bg.transparent
-							end,
-							set = function(info, value)
-								E.db.mMT.objectivetracker.bg.transparent = value
 								mMT.Modules.ObjectiveTracker:Initialize()
 							end,
 						},

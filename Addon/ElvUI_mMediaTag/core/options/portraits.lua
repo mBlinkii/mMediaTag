@@ -60,6 +60,7 @@ local function configTable()
 			end,
 			set = function(info, value)
 				E.db.mMT.portraits.general.enable = value
+				mMT.Modules.Portraits:Initialize()
 				E:StaticPopup_Show("CONFIG_RL")
 			end,
 		},
