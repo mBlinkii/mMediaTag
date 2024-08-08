@@ -281,7 +281,11 @@ local function AddQuestToCache(id, index)
 
 		if quest.info and E.db.mMT.objectivetracker.settings.zoneQuests then
 			local questLineInfo = C_QuestLine.GetQuestLineInfo(questID)
-			quest.isCampaign = questLineInfo and questLineInfo.isCampaign
+			if questLineInfo then
+				quest.isCampaign = questLineInfo.isCampaign
+				quest.isImportant = questLineInfo.isImportant
+				quest.isDaily = questLineInfo.isDaily
+			end
 		end
 
 		local objectives = C_QuestLog.GetQuestObjectives(questID)
