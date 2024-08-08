@@ -703,7 +703,6 @@ local function SkinBlock(_, block)
 			end
 		end
 
-
 		if block.affixPool and block.UpdateTime and not block.mMT_ChallengeBlock then
 			hooksecurefunc(block, "UpdateTime", SkinChallengeBlock)
 			block.mMT_ChallengeBlock = true

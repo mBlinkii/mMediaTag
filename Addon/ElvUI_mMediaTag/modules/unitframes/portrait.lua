@@ -210,9 +210,9 @@ local function mirrorTexture(texture, mirror, top)
 	if texture.classIcons then
 		local coords = texture.classCoords
 		if #coords == 8 then
-			texture:SetTexCoord(unpack(coords))
+			texture:SetTexCoord(unpack((mirror and { coords[5], coords[6], coords[7], coords[8], coords[1], coords[2], coords[3], coords[4] } or coords)))
 		else
-			texture:SetTexCoord(unpack(mirror and { coords[2], coords[1], coords[3], coords[4] } or coords))
+			texture:SetTexCoord(unpack((mirror and { coords[2], coords[1], coords[3], coords[4] } or coords)))
 		end
 	else
 		texture:SetTexCoord(mirror and 1 or 0, mirror and 0 or 1, top and 1 or 0, top and 0 or 1)
@@ -315,9 +315,11 @@ local function SetPortraits(frame, unit, masking, mirror)
 		frame.portrait.classIcons = unit
 		frame.portrait.classCoords = coords
 
-		if coords then
+		frame.portrait:SetTexCoord(unpack(coords))
+
+		--if coords then
 			mirrorTexture(frame.portrait, mirror)
-		end
+		--end
 	else
 		if frame.portrait.classIcons then
 			frame.portrait.classIcons = nil
