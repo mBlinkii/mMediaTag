@@ -384,7 +384,7 @@ local function UpdatePortrait(portraitFrame)
 
 	local texture, offset
 	local setting = portraitFrame.settings
-	local unit = UnitExists(portraitFrame.unit) and portraitFrame.unit or "player"
+	local unit = UnitExists(portraitFrame.unit) and portraitFrame.unit or (portraitFrame.parent.unit or "player")
 	local parent = portraitFrame.parent
 
 	-- Portraits Frame
@@ -461,17 +461,17 @@ local function UpdatePortrait(portraitFrame)
 		if E.db.mMT.portraits.shadow.enable then
 			texture = textures.custom.enable and textures.custom.extrashadow or textures.extra.border[setting.texture]
 			UpdateTexture(portraitFrame, "extraShadow", texture, -8, E.db.mMT.portraits.shadow.color)
+			portraitFrame.extraShadow:Hide()
 		end
 
 		-- Border
 		if E.db.mMT.portraits.shadow.border then
 			texture = textures.custom.enable and textures.custom.extraborder or textures.extra.shadow[setting.texture]
 			UpdateTexture(portraitFrame, "extraBorder", texture, -4, E.db.mMT.portraits.shadow.borderColorRare)
+			portraitFrame.extraBorder:Hide()
 		end
 
 		portraitFrame.extra:Hide()
-		portraitFrame.extraShadow:Hide()
-		portraitFrame.extraBorder:Hide()
 	end
 
 	-- Corner
@@ -484,6 +484,7 @@ local function UpdatePortrait(portraitFrame)
 			texture = textures.border.CO
 			UpdateTexture(portraitFrame, "cornerBorder", texture, 6, E.db.mMT.portraits.shadow.borderColor)
 		end
+
 		portraitFrame.corner:Show()
 		portraitFrame.cornerBorder:Show()
 	elseif portraitFrame.corner then
