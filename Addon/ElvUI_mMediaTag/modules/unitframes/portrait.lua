@@ -318,7 +318,7 @@ local function SetPortraits(frame, unit, masking, mirror)
 		frame.portrait:SetTexCoord(unpack(coords))
 
 		--if coords then
-			mirrorTexture(frame.portrait, mirror)
+		mirrorTexture(frame.portrait, mirror)
 		--end
 	else
 		if frame.portrait.classIcons then
@@ -483,13 +483,16 @@ local function UpdatePortrait(portraitFrame)
 		if E.db.mMT.portraits.shadow.border then
 			texture = textures.border.CO
 			UpdateTexture(portraitFrame, "cornerBorder", texture, 6, E.db.mMT.portraits.shadow.borderColor)
+			portraitFrame.cornerBorder:Show()
 		end
 
 		portraitFrame.corner:Show()
-		portraitFrame.cornerBorder:Show()
 	elseif portraitFrame.corner then
 		portraitFrame.corner:Hide()
-		portraitFrame.cornerBorder:Hide()
+
+		if portraitFrame.cornerBorder then
+			portraitFrame.cornerBorder:Hide()
+		end
 	end
 end
 
