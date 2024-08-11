@@ -498,7 +498,7 @@ local function UpdatePortrait(portraitFrame, force)
 end
 
 local function SetScripts(portrait, force)
-	local castEvents = { "UNIT_SPELLCAST_START", "UNIT_SPELLCAST_CHANNEL_START", "UNIT_SPELLCAST_INTERRUPTED", "UNIT_SPELLCAST_SUCCEEDED", "UNIT_SPELLCAST_STOP" }
+	local castEvents = { "UNIT_SPELLCAST_START", "UNIT_SPELLCAST_CHANNEL_START", "UNIT_SPELLCAST_INTERRUPTED", "UNIT_SPELLCAST_SUCCEEDED", "UNIT_SPELLCAST_STOP", "UNIT_SPELLCAST_CHANNEL_STOP" }
 	local empowerEvents = { "UNIT_SPELLCAST_EMPOWER_START", "UNIT_SPELLCAST_EMPOWER_STOP" }
 	local allUnitEvents = { "PLAYER_ENTERING_WORLD", "UNIT_MODEL_CHANGED", "UNIT_PORTRAIT_UPDATE", "UNIT_CONNECTION", "PORTRAITS_UPDATED" }
 
@@ -626,26 +626,36 @@ local function RemovePortrait(unitPortrait)
 	unitPortrait = nil
 end
 
-local throttleEvents = {
-	UNIT_SPELLCAST_INTERRUPTED = true,
-	UNIT_SPELLCAST_SUCCEEDED = true,
-}
-
-local castIconUpdateEvents = {
+local castStarted = {
 	UNIT_SPELLCAST_START = true,
 	UNIT_SPELLCAST_CHANNEL_START = true,
 	UNIT_SPELLCAST_EMPOWER_START = true,
 }
 
-local function UnitEvent(self, isCasting)
+local castStoped = {
+	UNIT_SPELLCAST_INTERRUPTED = true,
+	UNIT_SPELLCAST_STOP = true,
+	UNIT_SPELLCAST_CHANNEL_STOP = true,
+	UNIT_SPELLCAST_EMPOWER_STOP = true,
+}
+
+local function UnitEvent(self, event)
 	if mMT.DevMode then
 		mMT:Print("Script:", self.unit, self.parent.unit, "Unit Exists:", UnitExists(self.unit), UnitExists(self.parent.unit))
 	end
 
 	local unit = self.unit
 
-	if self.settings.cast and isCasting then
-		mMT:Print("CAST UPDATE", unit)
+	if self.isCasting and castStoped[event] then
+		mMT:Print("CAST STOP", unit, event)
+		self.isCasting = false
+	end
+
+	if self.settings.cast and (castStarted[event] or self.isCasting) then
+		self.empowering = (event == "UNIT_SPELLCAST_EMPOWER_START")
+		self.isCasting = true
+
+		mMT:Print("CAST Start", unit, event)
 		AddCastIcon(self)
 	else
 		if UnitExists(unit) then
@@ -729,28 +739,17 @@ local function CreatePortraits(name, unit, parentFrame, unitSettings, events, un
 	-- add event function
 	if module[name] and not module[name].scriptsSet then
 		module[name]:SetScript("OnEvent", function(self, event, eventUnit)
-			if self.unit == "party" and self.parent.unit ~= "party" then
+			local isPartyUnit = self.unit == "party" and self.parent.unit ~= "party"
+			local isTargetEvent = event == "UNIT_TARGET" and (eventUnit == "player" or eventUnit == "target")
+			local isPlayerTargetChanged = event == "PLAYER_TARGET_CHANGED" and self.unit == "target"
+			local isPlayerFocusChanged = event == "PLAYER_FOCUS_CHANGED"
+
+			if isPartyUnit then
 				self.unit = self.parent.unit
 			end
 
-			if event == "UNIT_TARGET" and (eventUnit == "player" or eventUnit == "target") then
-				UnitEvent(self)
-			end
-
-			if event == "PLAYER_TARGET_CHANGED" and (self.unit == "target") then
-				UnitEvent(self)
-			end
-
-			if event == "PLAYER_FOCUS_CHANGED" then
+			if eventUnit == self.unit or isTargetEvent or isPlayerTargetChanged or isPlayerFocusChanged then
 				UnitEvent(self, event)
-			end
-
-			if eventUnit == self.unit then
-				if self.settings.cast then
-					self.empowering = (event == "UNIT_SPELLCAST_EMPOWER_START")
-				end
-
-				UnitEvent(self, castIconUpdateEvents[event])
 			end
 		end)
 
