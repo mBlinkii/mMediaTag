@@ -552,6 +552,8 @@ local function SetScripts(portrait, force)
 		portrait:SetAttribute("ping-receiver", true)
 		portrait:RegisterForClicks("AnyUp")
 		portrait.mousScripts = true
+
+		portrait.isBuild = true
 	end
 
 	-- update cast events
