@@ -389,8 +389,16 @@ local function configTable()
 				childGroups = "tab",
 				args = {},
 			},
-			changelog = {
+			license = {
 				order = 11,
+				type = "group",
+				name = format("|CFF0080ff%s|r", L["License"]),
+				icon = "Interface\\Addons\\ElvUI_mMediaTag\\media\\system\\license.tga",
+				childGroups = "tab",
+				args = {},
+			},
+			changelog = {
+				order = 12,
 				type = "group",
 				name = format("|CFFFF0094%s|r", L["Changelog"]),
 				icon = "Interface\\Addons\\ElvUI_mMediaTag\\media\\system\\changelog.tga",
