@@ -601,7 +601,7 @@ local function SetScripts(portrait, force)
 	if force then
 		if portrait.settings.cast and not portrait.castEventsSet then
 			SetCastEvents(portrait)
-			portrait.events.castEventsSet = true
+			portrait.castEventsSet = true
 		elseif portrait.castEventsSet then
 			SetCastEvents(portrait, true)
 			portrait.castEventsSet = false
