@@ -3,6 +3,7 @@ mMT.Changelog[351] = {
 	UPDATE = {
 		"[Portrait]: improved event Handler for Party.",
         "[Portrait]: Party Portraits dont update correctly.",
+        "[System]: Datatext menu entry name.",
         "[System]: update License frame and Changelog menu.",
 	},
 	FIX = {

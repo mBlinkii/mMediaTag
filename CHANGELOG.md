@@ -5,6 +5,7 @@
 ## UPDATE
 - UPDATE [Portrait]: improved event Handler for Party.
 - UPDATE [Portrait]: Party Portraits dont update correctly.
+- UPDATE [System]: Datatext menu entry name."
 - UPDATE [System]: update License frame and Changelog menu.
 ### FIX 
 - FIX [Datatext]: Combat Time fixed name.
