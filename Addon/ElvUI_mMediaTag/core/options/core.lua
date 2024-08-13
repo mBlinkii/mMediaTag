@@ -402,7 +402,7 @@ local function configTable()
 				type = "group",
 				name = format("|CFFFF0094%s|r", L["Changelog"]),
 				icon = "Interface\\Addons\\ElvUI_mMediaTag\\media\\system\\changelog.tga",
-				childGroups = "tab",
+				childGroups = "select",
 				args = {},
 			},
 			dev = {
