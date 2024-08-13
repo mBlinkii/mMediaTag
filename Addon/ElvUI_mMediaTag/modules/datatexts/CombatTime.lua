@@ -8,7 +8,7 @@ local GetInstanceInfo = GetInstanceInfo
 local GetTime = GetTime
 
 --Variables
-local mText = "mMediaTag " .. L["Combat Time"]
+local mText = L["Combat Time"]
 local hexColor = E:RGBToHex(E.db.general.valuecolor.r, E.db.general.valuecolor.g, E.db.general.valuecolor.b)
 local timer, startTime, inEncounter = 0, 0, nil
 local mIconUpdate = nil
