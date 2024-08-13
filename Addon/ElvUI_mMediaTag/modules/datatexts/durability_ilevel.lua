@@ -154,4 +154,4 @@ local function OnClick()
 	end
 end
 
-DT:RegisterDatatext("DurabilityIlevel", "mMediaTag", "UPDATE_INVENTORY_DURABILITY", OnEvent, nil, OnClick, OnEnter, OnLeave, mText, nil, nil)
+DT:RegisterDatatext("DurabilityIlevel", mMT.DatatextString, "UPDATE_INVENTORY_DURABILITY", OnEvent, nil, OnClick, OnEnter, OnLeave, mText, nil, nil)

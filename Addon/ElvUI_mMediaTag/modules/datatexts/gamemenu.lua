@@ -325,4 +325,4 @@ local function OnLeave(self)
 	DT.tooltip:Hide()
 end
 
-DT:RegisterDatatext("mGameMenu", "mMediaTag", nil, OnEvent, nil, OnClick, OnEnter, OnLeave, L["Game Menu"], nil, nil)
+DT:RegisterDatatext("mGameMenu", mMT.DatatextString, nil, OnEvent, nil, OnClick, OnEnter, OnLeave, L["Game Menu"], nil, nil)

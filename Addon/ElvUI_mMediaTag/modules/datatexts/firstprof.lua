@@ -74,4 +74,4 @@ local function OnClick()
 	end
 end
 
-DT:RegisterDatatext("firstProf", "mMediaTag", { "TRADE_SKILL_DETAILS_UPDATE", "SKILL_LINES_CHANGED" }, OnEvent, nil, OnClick, OnEnter, OnLeave, mText, nil, nil)
+DT:RegisterDatatext("firstProf", mMT.DatatextString, { "TRADE_SKILL_DETAILS_UPDATE", "SKILL_LINES_CHANGED" }, OnEvent, nil, OnClick, OnEnter, OnLeave, mText, nil, nil)
