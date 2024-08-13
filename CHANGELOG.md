@@ -7,9 +7,10 @@
 - UPDATE [Portrait]: Party Portraits dont update correctly.
 - UPDATE [System]: update License frame and Changelog menu.
 ### FIX 
-- FIX [Portrait]: some Bugs with code update.
+- FIX [Datatext]: Combat Time fixed name.
 - FIX [ObjectiveTracker]: Nil error in Dungeons.
 - FIX [Portrait]: Boss Portraits cast icon toggle.
+- FIX [Portrait]: some Bugs with code update.
 - FIX [TAG]: Nil error with TAG targeting Icons.
 
 ## [ver. 3.50] - 08.08.2024
