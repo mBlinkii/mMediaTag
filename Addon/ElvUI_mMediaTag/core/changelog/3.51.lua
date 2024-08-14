@@ -1,5 +1,5 @@
 mMT.Changelog[351] = {
-	DATE = "xx.08.2024",
+	DATE = "14.08.2024",
 	UPDATE = {
 		"[Portrait]: improved event Handler for Party.",
         "[Portrait]: Party Portraits dont update correctly.",
