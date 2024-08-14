@@ -6,7 +6,7 @@ local tinsert = tinsert
 
 local collectgarbage = collectgarbage
 local GetAddOnMetadata = _G.C_AddOns and _G.C_AddOns.GetAddOnMetadata or _G.GetAddOnMetadata
-local IsAddOnLoaded = C_AddOns and C_AddOns.IsAddOnLoaded or IsAddOnLoaded
+local IsAddOnLoaded = _G.C_AddOns and _G.C_AddOns.IsAddOnLoaded or IsAddOnLoaded
 
 -- Addon Name and Namespace
 local addonName, _ = ...
