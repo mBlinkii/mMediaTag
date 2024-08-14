@@ -2,7 +2,7 @@ local E = unpack(ElvUI)
 local L = mMT.Locales
 
 local tinsert = tinsert
-local dash = "|TInterface\\Addons\\ElvUI_mMediaTag\\media\\system\\dash.tga:14:14|t"
+local dash = "|TInterface\\Addons\\ElvUI_mMediaTag\\media\\system\\dash.tga:14:14|t  "
 local function Color(string)
 	if type(string) ~= "string" then
 		string = tostring(string)

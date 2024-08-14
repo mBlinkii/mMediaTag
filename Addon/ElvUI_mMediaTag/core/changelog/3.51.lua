@@ -5,10 +5,11 @@ mMT.Changelog[351] = {
         "[Portrait]: Party Portraits dont update correctly.",
         "[System]: Datatext menu entry name.",
         "[System]: update License frame and Changelog menu.",
+        "[System]: update default db values.",
 	},
 	FIX = {
-        "[Datatext]: Combat Time fixed name.",
 		"[Portrait]: some Bugs with code update.",
+        "[Datatext]: Combat Time fixed name.",
         "[ObjectiveTracker]: Nil error in Dungeons.",
         "[Portrait]: Boss Portraits cast icon toggle.",
         "[TAG]: Nil error with TAG targeting Icons.",
