@@ -1,12 +1,25 @@
 # Changelog - ElvUI_mMediaTag
 [Eng] - All changes to this project will be documented in this file. The latest changes are at the top.
 
+## [ver. 3.51] - 14.08.2024
+## UPDATE
+- UPDATE [Portrait]: improved event Handler for Party.
+- UPDATE [Portrait]: Party Portraits dont update correctly.
+- UPDATE [System]: Datatext menu entry name."
+- UPDATE [System]: update License frame and Changelog menu.
+- UPDATE [System]: update default db values.
+### FIX 
+- FIX [Datatext]: Combat Time fixed name.
+- FIX [ObjectiveTracker]: Nil error in Dungeons.
+- FIX [Portrait]: Boss Portraits cast icon toggle.
+- FIX [Portrait]: some Bugs with code update.
+- FIX [TAG]: Nil error with TAG targeting Icons.
+
 ## [ver. 3.50] - 08.08.2024
 ### FIX
 - FIX - Portraits: the wrong portraits were displayed for Group frames.
-- FIX - Portraits: Boss Portraits cast icon toggle.
-- FIX - Nil error with TAG targeting Icons.
-- FIX - Nil error with Objective Tracker Skin in Dungeons.
+### Update
+- UPDATE - Portraits: improved event Handler.
 
 ## [ver. 3.49] - 08.08.2024
 ### Update

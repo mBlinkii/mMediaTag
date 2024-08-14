@@ -30,4 +30,4 @@ local function OnUpdate(self, elapsed)
 	end
 end
 
-DT:RegisterDatatext("mFPS", "mMediaTag", nil, nil, OnUpdate, nil, nil, nil, "FPS/MS", nil, nil)
+DT:RegisterDatatext("mFPS", mMT.DatatextString, nil, nil, OnUpdate, nil, nil, nil, "FPS/MS", nil, nil)

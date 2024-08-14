@@ -720,3 +720,11 @@ L["|cffFFFFFFControl + Left Click:|r Change Loadout"] = true
 L["|cffFFFFFFLeft Click:|r Change Talent Specialization"] = true
 L["|cffFFFFFFRight Click:|r Change Loot Specialization"] = true
 L["|cffFFFFFFShift + Left Click:|r Show Talent Specialization UI"] = true
+
+-- new
+L["Released"] = true
+L["Version"] = true
+L["Important"] = true
+L["New"] = true
+L["Updates"] = true
+L["Fixes"] = true

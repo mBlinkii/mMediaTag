@@ -8,7 +8,7 @@ local GetInstanceInfo = GetInstanceInfo
 local GetTime = GetTime
 
 --Variables
-local mText = mMT.NameShort .. L["Combat Time"]
+local mText = L["Combat Time"]
 local hexColor = E:RGBToHex(E.db.general.valuecolor.r, E.db.general.valuecolor.g, E.db.general.valuecolor.b)
 local timer, startTime, inEncounter = 0, 0, nil
 local mIconUpdate = nil
@@ -75,4 +75,4 @@ local function OnEvent(self, event, _, timeSeconds)
 	end
 end
 
-DT:RegisterDatatext("mCombatTime", "mMediaTag", { "START_TIMER", "ENCOUNTER_START", "ENCOUNTER_END", "PLAYER_REGEN_DISABLED", "PLAYER_REGEN_ENABLED" }, OnEvent, nil, nil, nil, nil, mText, nil, nil)
+DT:RegisterDatatext("mCombatTime", mMT.DatatextString, { "START_TIMER", "ENCOUNTER_START", "ENCOUNTER_END", "PLAYER_REGEN_DISABLED", "PLAYER_REGEN_ENABLED" }, OnEvent, nil, nil, nil, nil, mText, nil, nil)

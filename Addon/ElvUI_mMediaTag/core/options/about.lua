@@ -5,53 +5,23 @@ local _G = _G
 local tinsert = tinsert
 local tconcat = _G.table.concat
 
-local license_general_text = {
-	mMT.Name .. " License",
-	"",
-	"Copyright ©2009-2024 The contents of this addon, excluding third-party resources, are",
-	"copyrighted to their authors with all rights reserved.",
-	"",
-	"This addon is free to use and the authors hereby grants you the following rights:",
-	"",
-	"- 1. You may make modifications to this addon for private use only, you may not redistribute any part of this addon.",
-	"",
-	"- 2. You cannot change the name of this addon, including the addon folders.",
-	"",
-	"- 3. This copyright notice must appear in all copies of the software.",
-	"",
-	"- 4. You may not redistribute the textures of this addon.",
-	"",
-	"All rights not explicitly addressed in this license are reserved by",
-	"the copyright holders.",
-}
-
-local license_general_string = tconcat(license_general_text, "|n")
-
-local license_materialicons_text = {
-	"Google - Material Design Icons are available under material.io.",
-	"",
-	"The symbols are available under the APACHE LICENSE, VERSION 2.0.",
-	"",
-	"Icons were resized to 64x64 pixel and the color was changed.",
-}
-local license_materialicons_string = tconcat(license_materialicons_text, "|n")
-
-local thanks_text = {
-	"Simpy",
-	"Azilroka",
-	"Repooc",
-	"Luckyone",
-	"Eltreum",
-	"Tsxy",
-	"Merathilis",
+local credits = {
+	"|cff0070DEAzilroka|r",
+	"|cff00c0faDlarge|r",
+	E:TextGradient("Eltreum", 0.50, 0.70, 1, 0.67, 0.95, 1),
+	"|cff0DB1D0J|r|cff18A2D2i|r|cff2494D4b|r|cff2F86D7e|r|cff3B78D9r|r|cff4669DBi|r|cff525BDEs|r|cff5D4DE0h|r",
+	"|cff4beb2cLuckyone|r",
+	"|cFFAAD372Tsxy|r",
+	"|cffff7d0aMerathilis|r",
+	"|cfff48cbaRepooc|r",
+	E:TextGradient("Simpy but my name needs to be longer.", 0.18, 1.00, 0.49, 0.32, 0.85, 1.00, 0.55, 0.38, 0.85, 1.00, 0.55, 0.71, 1.00, 0.68, 0.32),
+	"|cffec1000Trenchy|r",
 	"Dalerija",
-	"Jiberish",
-	"Trenchy",
 	"ElioteMarcondes",
-	"Dlarge",
-	"Tukui Community",
+	"Pastafarian",
+	"Tukui Community - tukui.org",
 }
-local thanks_string = tconcat(thanks_text, "|n")
+local CREDITS_TEXT = tconcat(credits, "|n")
 
 local function configTable()
 	E.Options.args.mMT.args.about.args = {
@@ -92,53 +62,17 @@ local function configTable()
 				},
 			},
 		},
-		license = {
+		thx = {
 			order = 3,
 			type = "group",
-			inline = true,
-			name = L["License"],
-			args = {
-				license_general = {
-					order = 1,
-					type = "description",
-					fontSize = "medium",
-					name = "|CFFF7DC6F" .. license_general_string .. "|r",
-				},
-				spacer_license_1 = {
-					order = 2,
-					type = "description",
-					name = "\n\n\n",
-				},
-				license_materialicons = {
-					order = 3,
-					type = "description",
-					fontSize = "medium",
-					name = "|CFF00C6C6" .. license_materialicons_string .. "|r",
-				},
-				spacer_license_2 = {
-					order = 4,
-					type = "description",
-					name = "\n\n\n",
-				},
-				license_icons8 = {
-					order = 5,
-					type = "description",
-					fontSize = "medium",
-					name = "|CFFFF6A00Icons8 https://icons8.com|r",
-				},
-			},
-		},
-		thx = {
-			order = 4,
-			type = "group",
-			inline = true,
+			guiInline = true,
 			name = L["Thanks to:"],
 			args = {
-				thxto = {
+				text = {
 					order = 1,
 					type = "description",
 					fontSize = "medium",
-					name = thanks_string,
+					name = CREDITS_TEXT,
 				},
 			},
 		},

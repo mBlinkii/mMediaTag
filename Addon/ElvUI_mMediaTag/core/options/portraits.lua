@@ -742,7 +742,7 @@ local function configTable()
 							end,
 							set = function(info, value)
 								E.db.mMT.portraits.player.cast = value
-								mMT.Modules.Portraits:Initialize()
+								mMT.Modules.Portraits:Initialize(true)
 								E:StaticPopup_Show("CONFIG_RL")
 							end,
 						},
@@ -942,7 +942,7 @@ local function configTable()
 							end,
 							set = function(info, value)
 								E.db.mMT.portraits.target.cast = value
-								mMT.Modules.Portraits:Initialize()
+								mMT.Modules.Portraits:Initialize(true)
 								E:StaticPopup_Show("CONFIG_RL")
 							end,
 						},
@@ -1502,7 +1502,7 @@ local function configTable()
 							end,
 							set = function(info, value)
 								E.db.mMT.portraits.focus.cast = value
-								mMT.Modules.Portraits:Initialize()
+								mMT.Modules.Portraits:Initialize(true)
 							end,
 						},
 					},
@@ -1689,7 +1689,7 @@ local function configTable()
 							end,
 							set = function(info, value)
 								E.db.mMT.portraits.party.cast = value
-								mMT.Modules.Portraits:Initialize()
+								mMT.Modules.Portraits:Initialize(true)
 								E:StaticPopup_Show("CONFIG_RL")
 							end,
 						},
@@ -1877,7 +1877,7 @@ local function configTable()
 							end,
 							set = function(info, value)
 								E.db.mMT.portraits.boss.cast = value
-								mMT.Modules.Portraits:Initialize()
+								mMT.Modules.Portraits:Initialize(true)
 								E:StaticPopup_Show("CONFIG_RL")
 							end,
 						},
@@ -2065,7 +2065,7 @@ local function configTable()
 							end,
 							set = function(info, value)
 								E.db.mMT.portraits.arena.cast = value
-								mMT.Modules.Portraits:Initialize()
+								mMT.Modules.Portraits:Initialize(true)
 								E:StaticPopup_Show("CONFIG_RL")
 							end,
 						},

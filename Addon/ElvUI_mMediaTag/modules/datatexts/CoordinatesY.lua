@@ -44,4 +44,4 @@ local function Click()
 	_G.ToggleFrame(_G.WorldMapFrame)
 end
 
-DT:RegisterDatatext("mCoordsY", "mMediaTag", { "LOADING_SCREEN_DISABLED", "ZONE_CHANGED", "ZONE_CHANGED_INDOORS", "ZONE_CHANGED_NEW_AREA" }, OnEvent, Update, Click, nil, nil, mText, mapInfo, nil)
+DT:RegisterDatatext("mCoordsY", mMT.DatatextString, { "LOADING_SCREEN_DISABLED", "ZONE_CHANGED", "ZONE_CHANGED_INDOORS", "ZONE_CHANGED_NEW_AREA" }, OnEvent, Update, Click, nil, nil, mText, mapInfo, nil)

@@ -541,4 +541,4 @@ local function OnLeave(self)
 	DT.tooltip:Hide()
 end
 
-DT:RegisterDatatext("mTeleports", "mMediaTag", nil, OnEvent, nil, OnClick, OnEnter, OnLeave, mText, nil, nil)
+DT:RegisterDatatext("mTeleports", mMT.DatatextString, nil, OnEvent, nil, OnClick, OnEnter, OnLeave, mText, nil, nil)

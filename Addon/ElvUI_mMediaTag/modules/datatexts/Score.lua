@@ -368,7 +368,7 @@ local function ValueColorUpdate(self, hex)
 	OnEvent(self)
 end
 
-DT:RegisterDatatext("M+ Score", "mMediaTag", {
+DT:RegisterDatatext("M+ Score", mMT.DatatextString, {
 	"CHALLENGE_MODE_START",
 	"CHALLENGE_MODE_COMPLETED",
 	"PLAYER_ENTERING_WORLD",

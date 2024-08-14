@@ -1,5 +1,6 @@
 <Ui xmlns="http://www.blizzard.com/wow/ui/">
 	<Include file="options\load_options.xml"/>
+	<Include file="changelog\load_changelogs.xml"/>
 	<Script file="Core.lua"/>
 	<Script file="cmd.lua"/>
 	<Script file="devmode.lua"/>

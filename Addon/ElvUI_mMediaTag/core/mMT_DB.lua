@@ -4,6 +4,8 @@ local defaultDB = {
 	affix = nil,
 	keys = {},
 	dev = { enabled = false, frame = { top = nil, left = nil }, unit = {}, zone = {} },
+	debugMode = false,
+	disabledAddons = {},
 }
 
 -- Create Frame and register events
