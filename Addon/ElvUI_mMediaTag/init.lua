@@ -207,9 +207,13 @@ function mMT:Initialize()
 	mMT.ElvUI_EltreumUI = mMT:CheckEltruism()
 	mMT.ElvUI_MerathilisUI = mMT:CheckMerathilisUI()
 	mMT.ClassColor = mMT:UpdateClassColor()
-	mMT.ElvUI_JiberishIcons = mMT:JiberishIcons()
 	mMT.DEVNames = mMT:GetDevNames()
 	mMT.Classes = mMT:ClassesTable()
+
+	-- load JiberishUI Icons for Portraits
+	if E.db.mMT.portraits.general.enable then
+		mMT.ElvUI_JiberishIcons = mMT:JiberishIcons()
+	end
 
 	-- Register Events for Retail
 	if E.Retail or E.Cata then
