@@ -1,6 +1,12 @@
 # Changelog - ElvUI_mMediaTag
 [Eng] - All changes to this project will be documented in this file. The latest changes are at the top.
 
+## [ver. 3.52] - 15.08.2024
+### FIX 
+- FIX [Portrait]: fixed a Bug with Class icons and the recent Version of JiberishUI Icons
+- FIX [Portrait]: prevent nil error on Profile switch
+- FIX [System]: custom/ example Datatext menu entry is back again
+
 ## [ver. 3.51] - 14.08.2024
 ## UPDATE
 - UPDATE [Portrait]: improved event Handler for Party.
