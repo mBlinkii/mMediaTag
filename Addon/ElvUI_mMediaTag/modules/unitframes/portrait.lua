@@ -802,8 +802,9 @@ end
 local function ToggleForceShowGroupFrames(_, group, numGroup)
 	if group == "boss" or group == "arena" then
 		local name = (group == "boss") and "Boss" or "Arena"
+
 		for i = 1, numGroup do
-			UpdatePortrait(module[name .. i], true)
+			if module[name .. i] then UpdatePortrait(module[name .. i], true) end
 		end
 	end
 end
