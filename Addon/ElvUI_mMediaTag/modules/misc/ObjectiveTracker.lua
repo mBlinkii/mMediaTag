@@ -136,7 +136,7 @@ local function AddHeaderBar(header)
 	S:HandleFrame(headerBar)
 	headerBar:SetFrameStrata(header:GetFrameStrata())
 	headerBar:SetFrameLevel(header:GetFrameLevel()-1)
-	headerBar:SetSize(width, 80)
+	headerBar:SetSize(width, 5)
 	headerBar:SetPoint("BOTTOM", 0, 0)
 
 	headerBar.texture = headerBar:CreateTexture()
