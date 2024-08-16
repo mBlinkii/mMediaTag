@@ -133,12 +133,14 @@ end
 local function AddHeaderBar(header)
 	local width = ObjectiveTrackerFrame:GetWidth()
 	local headerBar = CreateFrame("Frame", "mMT_ObjectiveTracker_HeaderBar", header)
+	S:HandleFrame(headerBar)
 	headerBar:SetFrameStrata("LOW")
 	headerBar:SetSize(width, 5)
 	headerBar:SetPoint("BOTTOM", 0, 0)
 
 	headerBar.texture = headerBar:CreateTexture()
-	headerBar.texture:SetAllPoints(headerBar)
+	headerBar.texture:SetPoint("TOPLEFT", headerBar, "TOPLEFT", 1, -1)
+	headerBar.texture:SetPoint("BOTTOMRIGHT", headerBar ,"BOTTOMRIGHT", -1, 1)
 	headerBar.texture:SetTexture(LSM:Fetch("statusbar", E.db.mMT.objectivetracker.headerbar.texture))
 
 	local color_HeaderBar = getColorHeaderBar()
@@ -185,7 +187,7 @@ end
 local function SetCheckIcon(icon, completed)
 	if icon and completed then
 		icon:SetTexture("Interface\\AddOns\\ElvUI_mMediaTag\\media\\icons\\misc\\questDone.tga")
-		icon:SetVertexColor(E.db.mMT.objectivetracker.font.color.good.r, E.db.mMT.objectivetracker.font.color.good.g, E.db.mMT.objectivetracker.font.color.good.b, 1)
+		icon:SetVertexColor(E.db.mMT.objectivetracker.font.color.complete.r, E.db.mMT.objectivetracker.font.color.complete.g, E.db.mMT.objectivetracker.font.color.complete.b, 1)
 	else
 		if E.db.mMT.objectivetracker.dungeon.hidedash then
 			icon:Hide()
