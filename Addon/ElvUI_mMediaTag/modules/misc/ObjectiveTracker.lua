@@ -335,6 +335,7 @@ local function SetLineText(text, completed, id, index, onEnter, onLeave)
 
 	local lineText = text:GetText()
 	SetTextProperties(text, fonts.text, color)
+	mMT:Print(lineText, completed)
 
 	if lineText then
 		if id and index then
@@ -422,7 +423,7 @@ local function SkinLines(line, id, index)
 		if line.objectiveKey == 0 then
 			SkinTitleText(line.Text)
 		else
-			local complete = line.state or (line.objectiveKey == "QuestComplete") or line.finished
+			local complete = (line.objectiveKey == "QuestComplete") or line.finished
 			SetCheckIcon(line.Icon, complete)
 			HideDashIfRequired(line, line.Icon)
 			SetLineText(line.Text, complete, id, index)
@@ -615,7 +616,7 @@ local function LinesOnEnterLeave(line, id, index, onEnter, onLeave)
 			local color = onEnter and colors.title.h or colors.title.n
 			SkinTitleText(line.Text, color)
 		else
-			local complete = line.state or (line.objectiveKey == "QuestComplete") or line.finished
+			local complete = (line.objectiveKey == "QuestComplete") or line.finished
 			SetLineText(line.Text, complete, id, index, onEnter, onLeave)
 			line:SetHeight(line.Text:GetHeight())
 		end
