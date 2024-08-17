@@ -138,7 +138,7 @@ local function EnableModules()
 
 	-- Retail
 	if E.Retail then
-		mMT.Modules.ObjectiveTracker.enable = E.db.mMT.objectivetracker.enable and not IsAddOnLoaded("!KalielsTracker")
+		mMT.Modules.ObjectiveTracker.enable = E.db.mMT.objectivetracker.enable and (E.private.skins.blizzard.enable and E.private.skins.blizzard.objectiveTracker) and not IsAddOnLoaded("!KalielsTracker")
 		mMT.Modules.InterruptOnCD.enable = E.db.mMT.interruptoncd.enable
 		mMT.Modules.QuestIcons.enable = E.db.mMT.questicons.enable
 	end

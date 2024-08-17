@@ -19503,5 +19503,6 @@
     "_RECORDING_WARNING_CORRUPTED",
     "C_Container"
   ],
-  "diagnostics.disable": ["deprecated", "inject-field", "undefined-field"]
+  "diagnostics.disable": ["deprecated", "inject-field", "undefined-field",
+        "cast-local-type"]
 }

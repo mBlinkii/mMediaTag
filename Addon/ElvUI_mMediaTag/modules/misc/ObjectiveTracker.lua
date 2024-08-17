@@ -4,9 +4,7 @@ local S = E:GetModule("Skins")
 
 local module = mMT.Modules.ObjectiveTracker
 
-if not module then
-	return
-end
+if not module then return end
 
 local _G = _G
 local pairs, mathMin, strmatch, stringGsub = pairs, math.min, strmatch, string.gsub
@@ -105,13 +103,9 @@ local function SetFonts()
 		tmpFonts[key] = { font = fontConfig.font, fontsize = fontConfig.fontsize[key], fontflag = fontConfig.fontflag }
 	end
 
-	if tmpFonts["bar"] then
-		tmpFonts["bar"].fontsize = E.db.mMT.objectivetracker.bar.fontsize
-	end
+	if tmpFonts["bar"] then tmpFonts["bar"].fontsize = E.db.mMT.objectivetracker.bar.fontsize end
 
-	if tmpFonts["misc"] then
-		tmpFonts["misc"].fontsize = fontConfig.fontsize.text
-	end
+	if tmpFonts["misc"] then tmpFonts["misc"].fontsize = fontConfig.fontsize.text end
 
 	return tmpFonts
 end
@@ -135,13 +129,13 @@ local function AddHeaderBar(header)
 	local headerBar = CreateFrame("Frame", "mMT_ObjectiveTracker_HeaderBar", header)
 	S:HandleFrame(headerBar)
 	headerBar:SetFrameStrata(header:GetFrameStrata())
-	headerBar:SetFrameLevel(header:GetFrameLevel()-1)
+	headerBar:SetFrameLevel(header:GetFrameLevel() - 1)
 	headerBar:SetSize(width, 5)
 	headerBar:SetPoint("BOTTOM", 0, 0)
 
 	headerBar.texture = headerBar:CreateTexture()
 	headerBar.texture:SetPoint("TOPLEFT", headerBar, "TOPLEFT", 1, -1)
-	headerBar.texture:SetPoint("BOTTOMRIGHT", headerBar ,"BOTTOMRIGHT", -1, 1)
+	headerBar.texture:SetPoint("BOTTOMRIGHT", headerBar, "BOTTOMRIGHT", -1, 1)
 	headerBar.texture:SetTexture(LSM:Fetch("statusbar", E.db.mMT.objectivetracker.headerbar.texture))
 
 	local color_HeaderBar = getColorHeaderBar()
@@ -152,9 +146,7 @@ local function AddHeaderBar(header)
 		headerBar.texture:SetVertexColor(color_HeaderBar.r or 1, color_HeaderBar.g or 1, color_HeaderBar.b or 1, 1)
 	end
 
-	if E.db.mMT.objectivetracker.headerbar.shadow then
-		headerBar:CreateShadow()
-	end
+	if E.db.mMT.objectivetracker.headerbar.shadow then headerBar:CreateShadow() end
 end
 
 local function UpdateQuestCount(header)
@@ -179,6 +171,12 @@ local function SetTextProperties(text, fontSettings, color)
 		text:SetShadowColor(0, 0, 0, 0)
 		text.SetShadowColor = E.noop
 	end
+end
+
+local function SkinTitleText(text, color)
+	SetTextProperties(text, fonts.title, color or colors.title.n)
+	local height = text:GetStringHeight() + 2
+	if height ~= text:GetHeight() then text:SetHeight(height) end
 end
 
 local function SkinHeaders(header)
@@ -217,9 +215,7 @@ local function HideDashIfRequired(line, check)
 end
 
 local function GetProgressPercent(current, required)
-	if required ~= "1" then
-		return (tonumber(current) / tonumber(required)) * 100 or 0
-	end
+	if required ~= "1" then return (tonumber(current) / tonumber(required)) * 100 or 0 end
 
 	return nil
 end
@@ -242,17 +238,13 @@ local function matchPatterns(text)
 		local matches = { strmatch(text, pattern[1]) }
 		if #matches > 0 then
 			for i, key in ipairs(pattern) do
-				if i > 1 then
-					result[key] = matches[i - 1]
-				end
+				if i > 1 then result[key] = matches[i - 1] end
 			end
 			break
 		end
 	end
 
-	if result.percent then
-		result.percent = stringGsub(result.percent, "%%", "")
-	end
+	if result.percent then result.percent = stringGsub(result.percent, "%%", "") end
 
 	return result
 end
@@ -272,13 +264,9 @@ local function AddQuestToCache(id, index)
 	local questLogIndex = index
 	local questID = id
 
-	if tonumber(id) and not questLogIndex then
-		questLogIndex = C_QuestLog.GetLogIndexForQuestID(questID)
-	end
+	if tonumber(id) and not questLogIndex then questLogIndex = C_QuestLog.GetLogIndexForQuestID(questID) end
 
-	if tonumber(questLogIndex) and not id then
-		questID = C_QuestLog.GetQuestIDForQuestWatchIndex(questLogIndex)
-	end
+	if tonumber(questLogIndex) and not id then questID = C_QuestLog.GetQuestIDForQuestWatchIndex(questLogIndex) end
 
 	if questID and questLogIndex then
 		quest.questLogIndex = questLogIndex
@@ -308,22 +296,16 @@ end
 local function UpdateCachedQuests(id, index, text)
 	local isSkinned = strmatch(text, "|cff") or strmatch(text, "|CFF")
 	cachedQuests[id] = cachedQuests[id] or {}
-	if not cachedQuests[id] then
-		cachedQuests[id] = AddQuestToCache(id)
-	end
+	if not cachedQuests[id] then cachedQuests[id] = AddQuestToCache(id) end
 
 	cachedQuests[id].lines = cachedQuests[id].lines or {}
 
-	if not isSkinned and cachedQuests[id].lines then
-		cachedQuests[id].lines[index] = text
-	end
+	if not isSkinned and cachedQuests[id].lines then cachedQuests[id].lines[index] = text end
 end
 
 local function GetRequirements(text)
 	local result = matchPatterns(text)
-	if not result then
-		return nil
-	end
+	if not result then return nil end
 
 	if result.current and result.required then
 		result.complete = result.current >= result.required
@@ -358,9 +340,7 @@ local function SetLineText(text, completed, id, index, onEnter, onLeave)
 		if id and index then
 			UpdateCachedQuests(id, index, lineText)
 
-			if onEnter or onLeave and cachedQuests[id].lines then
-				lineText = cachedQuests[id].lines[index] or lineText
-			end
+			if onEnter or onLeave and cachedQuests[id].lines then lineText = cachedQuests[id].lines[index] or lineText end
 		end
 
 		local result = GetRequirements(lineText)
@@ -420,7 +400,13 @@ local function SetUpBars(bar)
 	if bar.Label then
 		bar.Label:ClearAllPoints()
 		bar.Label:SetJustifyH(E.db.mMT.objectivetracker.bar.fontpoint)
-		bar.Label:Point(E.db.mMT.objectivetracker.bar.fontpoint, bar, E.db.mMT.objectivetracker.bar.fontpoint, E.db.mMT.objectivetracker.bar.fontpoint == "LEFT" and 2 or (E.db.mMT.objectivetracker.bar.fontpoint == "RIGHT" and -2 or 0), 0)
+		bar.Label:Point(
+			E.db.mMT.objectivetracker.bar.fontpoint,
+			bar,
+			E.db.mMT.objectivetracker.bar.fontpoint,
+			E.db.mMT.objectivetracker.bar.fontpoint == "LEFT" and 2 or (E.db.mMT.objectivetracker.bar.fontpoint == "RIGHT" and -2 or 0),
+			0
+		)
 		SetTextProperties(bar.Label, fonts.bar)
 	end
 
@@ -434,19 +420,16 @@ end
 local function SkinLines(line, id, index)
 	if line then
 		if line.objectiveKey == 0 then
-			SetTextProperties(line.Text, fonts.title, colors.title.n)
+			SkinTitleText(line.Text)
 		else
 			local complete = line.state or (line.objectiveKey == "QuestComplete") or line.finished
 			SetCheckIcon(line.Icon, complete)
 			HideDashIfRequired(line, line.Icon)
 			SetLineText(line.Text, complete, id, index)
-			if line.progressBar and line.progressBar.Bar then
-				SetUpBars(line.progressBar.Bar)
-			end
+			line:SetHeight(line.Text:GetHeight())
+			if line.progressBar and line.progressBar.Bar then SetUpBars(line.progressBar.Bar) end
 
-			if line.timerBar and line.timerBar.Bar then
-				SetUpBars(line.timerBar.Bar)
-			end
+			if line.timerBar and line.timerBar.Bar then SetUpBars(line.timerBar.Bar) end
 		end
 	end
 end
@@ -464,9 +447,7 @@ local function CreateStageFrame(block, isChallengeMode)
 	mMT_StageBlock:SetFrameLevel(3)
 	mMT_StageBlock:Show()
 
-	if E.db.mMT.objectivetracker.dungeon.shadow then
-		mMT_StageBlock:CreateShadow()
-	end
+	if E.db.mMT.objectivetracker.dungeon.shadow then mMT_StageBlock:CreateShadow() end
 
 	-- create difficulty label to dungeon stage block if not m+
 	if not mMT_StageBlock.Difficulty and not isChallengeMode then
@@ -528,9 +509,7 @@ local function SkinStageBlock(stageBlock, scenarioID, scenarioType, widgetSetID,
 		if not stageBlock.mMT_StageBlock then
 			CreateStageFrame(stageBlock, C_ChallengeMode.GetActiveChallengeMapID())
 		else
-			if IsInInstance() and stageBlock.mMT_StageBlock and stageBlock.mMT_StageBlock.Difficulty then
-				stageBlock.mMT_StageBlock.Difficulty:SetText(mMT:GetDungeonInfo(false, false, true))
-			end
+			if IsInInstance() and stageBlock.mMT_StageBlock and stageBlock.mMT_StageBlock.Difficulty then stageBlock.mMT_StageBlock.Difficulty:SetText(mMT:GetDungeonInfo(false, false, true)) end
 		end
 	end
 	if stageBlock.WidgetContainer and stageBlock.WidgetContainer.widgetFrames then
@@ -548,9 +527,7 @@ local function SkinChallengeBlock(challengeBlock, elapsedTime)
 		challengeBlock:StripTextures()
 
 		-- create stage block bg
-		if not challengeBlock.mMT_StageBlock then
-			CreateStageFrame(challengeBlock, C_ChallengeMode.GetActiveChallengeMapID())
-		end
+		if not challengeBlock.mMT_StageBlock then CreateStageFrame(challengeBlock, C_ChallengeMode.GetActiveChallengeMapID()) end
 
 		-- get dungeon time limits
 		if not challengeBlock.mMT_Timers then
@@ -626,9 +603,7 @@ local function SkinChallengeBlock(challengeBlock, elapsedTime)
 			timeText = ""
 		end
 
-		if timeText then
-			challengeBlock.mMT_Time:SetText(timeText)
-		end
+		if timeText then challengeBlock.mMT_Time:SetText(timeText) end
 	end
 end
 
@@ -636,11 +611,11 @@ local function LinesOnEnterLeave(line, id, index, onEnter, onLeave)
 	if line then
 		if line.objectiveKey == 0 then
 			local color = onEnter and colors.title.h or colors.title.n
-
-			SetTextProperties(line.Text, fonts.title, color)
+			SkinTitleText(line.Text, color)
 		else
 			local complete = line.state or (line.objectiveKey == "QuestComplete") or line.finished
 			SetLineText(line.Text, complete, id, index, onEnter, onLeave)
+			line:SetHeight(line.Text:GetHeight())
 		end
 	end
 end
@@ -660,7 +635,7 @@ end
 
 local function OnHeaderEnter(block)
 	if block.HeaderText then
-		SetTextProperties(block.HeaderText, fonts.title, colors.title.h)
+		SkinTitleText(block.HeaderText, colors.title.h)
 
 		if E.db.mMT.objectivetracker.settings.showLevel and (cachedQuests[block.id] and cachedQuests[block.id].info) then
 			block.HeaderText:SetText(GetLevelInfoText(cachedQuests[block.id].info.level, true) .. cachedQuests[block.id].title)
@@ -676,7 +651,7 @@ end
 
 local function OnHeaderLeave(block)
 	if block.HeaderText then
-		SetTextProperties(block.HeaderText, fonts.title, colors.title.n)
+		SkinTitleText(block.HeaderText, colors.title.n)
 		if E.db.mMT.objectivetracker.settings.showLevel and (cachedQuests[block.id] and cachedQuests[block.id].info) then
 			block.HeaderText:SetText(GetLevelInfoText(cachedQuests[block.id].info.level) .. cachedQuests[block.id].title)
 		end
@@ -708,9 +683,7 @@ local function SkinBlock(_, block)
 
 		if block.id and (not cachedQuests[block.id] or not cachedQuests[block.id].update) then
 			cachedQuests[block.id] = AddQuestToCache(block.id)
-			if cachedQuests[block.id] then
-				cachedQuests[block.id].update = true
-			end
+			if cachedQuests[block.id] then cachedQuests[block.id].update = true end
 		end
 
 		if block.affixPool and block.UpdateTime and not block.mMT_ChallengeBlock then
@@ -719,15 +692,10 @@ local function SkinBlock(_, block)
 		end
 
 		if block.HeaderText then
-			SetTextProperties(block.HeaderText, fonts.title, colors.title.n)
+			SkinTitleText(block.HeaderText)
 			if (cachedQuests[block.id] and cachedQuests[block.id].info) and E.db.mMT.objectivetracker.settings.showLevel then
 				cachedQuests[block.id].title = block.HeaderText:GetText()
 				block.HeaderText:SetText(GetLevelInfoText(cachedQuests[block.id].info.level) .. block.HeaderText:GetText())
-			end
-
-			local height = block.HeaderText:GetStringHeight() + 2
-			if height ~= block.HeaderText:GetHeight() then
-				block.HeaderText:SetHeight(height)
 			end
 		end
 
@@ -762,9 +730,7 @@ local function AddBackground()
 			backdrop = _G.ObjectiveTrackerFrame.backdrop
 		end
 
-		if E.db.mMT.objectivetracker.bg.shadow then
-			backdrop:CreateShadow()
-		end
+		if E.db.mMT.objectivetracker.bg.shadow then backdrop:CreateShadow() end
 
 		backdrop:SetTemplate(E.db.mMT.objectivetracker.bg.transparent and "Transparent")
 
@@ -781,9 +747,7 @@ local function AddBackground()
 			backgroundColor = E.db.mMT.objectivetracker.bg.classBG and { r = mMT.ClassColor.r, g = mMT.ClassColor.g, b = mMT.ClassColor.b, a = 0.25 } or nil
 		end
 
-		if backgroundColor then
-			backdrop:SetBackdropColor(backgroundColor.r, backgroundColor.g, backgroundColor.b, backgroundColor.a)
-		end
+		if backgroundColor then backdrop:SetBackdropColor(backgroundColor.r, backgroundColor.g, backgroundColor.b, backgroundColor.a) end
 
 		backdrop:ClearAllPoints()
 		backdrop:SetPoint("TOPLEFT", _G.ObjectiveTrackerFrame.NineSlice, "TOPLEFT", 10, 10)
@@ -791,9 +755,7 @@ local function AddBackground()
 
 		backdrop:Show()
 	else
-		if backdrop then
-			backdrop:Hide()
-		end
+		if backdrop then backdrop:Hide() end
 	end
 end
 
@@ -801,18 +763,14 @@ local function BuildQuestCache()
 	local watchedQuests = {}
 	for i = 1, C_QuestLog.GetNumQuestWatches() do
 		local questID = C_QuestLog.GetQuestIDForQuestWatchIndex(i)
-		if questID then
-			watchedQuests[questID] = AddQuestToCache(questID, i)
-		end
+		if questID then watchedQuests[questID] = AddQuestToCache(questID, i) end
 	end
 
 	return watchedQuests
 end
 
 function module:TrackUntrackQuests()
-	if not cachedQuests then
-		cachedQuests = BuildQuestCache()
-	end
+	if not cachedQuests then cachedQuests = BuildQuestCache() end
 
 	for id, quest in pairs(cachedQuests) do
 		quest.info = GetQuestInfos(id)
@@ -874,9 +832,7 @@ function module:Initialize()
 
 	cachedQuests = BuildQuestCache()
 
-	if E.db.mMT.objectivetracker.settings.zoneQuests then
-		module:TrackUntrackQuests()
-	end
+	if E.db.mMT.objectivetracker.settings.zoneQuests then module:TrackUntrackQuests() end
 
 	-- fix for overlapping blocks/ line and header - thx Merathilis & Fang
 	E:Delay(0.5, function()
