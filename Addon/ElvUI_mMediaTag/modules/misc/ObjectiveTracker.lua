@@ -185,17 +185,41 @@ local function SkinHeaders(header)
 	AddHeaderBarIfNeeded(header)
 end
 
-local function SetCheckIcon(icon, completed)
-	if icon and completed then
-		icon:SetTexture("Interface\\AddOns\\ElvUI_mMediaTag\\media\\icons\\misc\\questDone.tga")
-		icon:SetVertexColor(E.db.mMT.objectivetracker.font.color.complete.r, E.db.mMT.objectivetracker.font.color.complete.g, E.db.mMT.objectivetracker.font.color.complete.b, 1)
-	else
+local function SetIcon(icon, texture, r, g, b)
+	icon:SetTexture(texture)
+	icon:SetVertexColor(r, g, b, 1)
+	icon:Show()
+end
+
+local function SetCheckIcon(icon, completed, isDungeon)
+	if not icon then return end
+
+	if isDungeon then
 		if E.db.mMT.objectivetracker.dungeon.hidedash then
 			icon:Hide()
 		else
-			icon:SetTexture("Interface\\AddOns\\ElvUI_mMediaTag\\media\\icons\\misc\\questMinus.tga")
-			icon:SetVertexColor(mMT.ClassColor.r, mMT.ClassColor.g, mMT.ClassColor.b, 1)
+			if completed then
+				SetIcon(
+					icon,
+					"Interface\\AddOns\\ElvUI_mMediaTag\\media\\icons\\misc\\questDone.tga",
+					E.db.mMT.objectivetracker.font.color.complete.r,
+					E.db.mMT.objectivetracker.font.color.complete.g,
+					E.db.mMT.objectivetracker.font.color.complete.b
+				)
+			else
+				SetIcon(icon, "Interface\\AddOns\\ElvUI_mMediaTag\\media\\icons\\misc\\questMinus.tga", mMT.ClassColor.r, mMT.ClassColor.g, mMT.ClassColor.b)
+			end
 		end
+	elseif completed then
+		SetIcon(
+			icon,
+			"Interface\\AddOns\\ElvUI_mMediaTag\\media\\icons\\misc\\questDone.tga",
+			E.db.mMT.objectivetracker.font.color.complete.r,
+			E.db.mMT.objectivetracker.font.color.complete.g,
+			E.db.mMT.objectivetracker.font.color.complete.b
+		)
+	else
+		icon:Hide()
 	end
 end
 
@@ -367,6 +391,7 @@ local function SetLineText(text, completed, id, index, onEnter, onLeave)
 		end
 
 		text:SetText(lineText)
+		return result and result.complete
 	end
 end
 
@@ -420,15 +445,15 @@ local function SetUpBars(bar)
 	end
 end
 
-local function SkinLines(line, id, index)
+local function SkinLines(line, id, index, isDungeon)
 	if line then
 		if line.objectiveKey == 0 then
 			SkinTitleText(line.Text)
 		else
 			local complete = (line.objectiveKey == "QuestComplete") or line.finished
-			SetCheckIcon(line.Icon, complete)
+			local lineComplete = SetLineText(line.Text, complete, id, index)
 			HideDashIfRequired(line, line.Icon)
-			SetLineText(line.Text, complete, id, index)
+			SetCheckIcon(line.Icon, (complete or lineComplete), isDungeon)
 			if line.progressBar and line.progressBar.Bar then SetUpBars(line.progressBar.Bar) end
 
 			if line.timerBar and line.timerBar.Bar then SetUpBars(line.timerBar.Bar) end
@@ -706,7 +731,7 @@ local function SkinBlock(_, block)
 
 		if block.usedLines then
 			for index, line in pairs(block.usedLines) do
-				SkinLines(line, block.id, index)
+				SkinLines(line, block.id, index, block.Stage)
 			end
 		end
 
