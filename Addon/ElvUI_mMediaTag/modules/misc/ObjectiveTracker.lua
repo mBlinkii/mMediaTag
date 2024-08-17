@@ -335,7 +335,6 @@ local function SetLineText(text, completed, id, index, onEnter, onLeave)
 
 	local lineText = text:GetText()
 	SetTextProperties(text, fonts.text, color)
-	mMT:Print(lineText, completed)
 
 	if lineText then
 		if id and index then
