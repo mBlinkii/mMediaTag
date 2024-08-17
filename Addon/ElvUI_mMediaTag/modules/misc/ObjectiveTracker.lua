@@ -331,8 +331,8 @@ local function GetRequirements(text)
 	local result = matchPatterns(text)
 	if not result then return nil end
 
-	if result.current and result.required then
-		result.complete = result.current >= result.required
+	if (result.current and result.required) then
+		result.complete = tonumber(result.current) >= tonumber(result.required)
 	elseif result.percent then
 		result.complete = tonumber(result.percent) >= 100
 	end
