@@ -361,6 +361,9 @@ local function SetLineText(text, completed, id, index, onEnter, onLeave)
 				elseif result.questText then
 					lineText = color.hex .. result.questText .. "|r"
 				end
+			elseif result.questText then
+				color = onEnter and colors.complete.h or colors.complete.n
+				lineText = color.hex .. result.questText .. "|r"
 			end
 		end
 
