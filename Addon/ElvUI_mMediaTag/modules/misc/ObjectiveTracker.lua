@@ -426,11 +426,13 @@ local function SkinLines(line, id, index)
 			SetCheckIcon(line.Icon, complete)
 			HideDashIfRequired(line, line.Icon)
 			SetLineText(line.Text, complete, id, index)
-			line:SetHeight(line.Text:GetHeight())
 			if line.progressBar and line.progressBar.Bar then SetUpBars(line.progressBar.Bar) end
 
 			if line.timerBar and line.timerBar.Bar then SetUpBars(line.timerBar.Bar) end
 		end
+
+		-- fix for overlapping blocks/ line and header - thx Merathilis & Fang
+		line:SetHeight(line.Text:GetHeight())
 	end
 end
 
@@ -702,9 +704,6 @@ local function SkinBlock(_, block)
 		if block.usedLines then
 			for index, line in pairs(block.usedLines) do
 				SkinLines(line, block.id, index)
-
-				-- fix for overlapping blocks/ line and header - thx Merathilis & Fang
-				line:SetHeight(line.Text:GetHeight())
 			end
 		end
 
@@ -784,6 +783,8 @@ function module:TrackUntrackQuests()
 			end
 		end
 	end
+
+	SortQuestWatches()
 end
 
 function module:Initialize()
@@ -836,7 +837,7 @@ function module:Initialize()
 
 	-- fix for overlapping blocks/ line and header - thx Merathilis & Fang
 	E:Delay(0.5, function()
-		C_QuestLog.SortQuestWatches()
+		SortQuestWatches()
 	end)
 
 	module.needReloadUI = true
