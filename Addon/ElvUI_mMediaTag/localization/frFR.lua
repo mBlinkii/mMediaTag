@@ -730,3 +730,4 @@ L["Updates"] = true
 L["Fixes"] = true
 L["Left Click"] = true
 L["Right Click"] = true
+L["Info: The Skin can be affected by other addons if they add a skin for all windows. To fix the problem, the skin must be deactivated in the other addon. This is not a bug of mMT."] = true
