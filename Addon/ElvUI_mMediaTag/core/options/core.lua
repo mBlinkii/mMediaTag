@@ -300,12 +300,6 @@ local function configTable()
 							},
 						},
 					},
-					-- classcolor = {
-					-- 	order = 3,
-					-- 	type = "group",
-					-- 	name = L["Custom Class colors"],
-					-- 	args = {},
-					-- },
 					roleicons = {
 						order = 4,
 						type = "group",
@@ -343,16 +337,6 @@ local function configTable()
 						order = 8,
 						type = "group",
 						name = L["Datapanels"],
-						childGroups = "tab",
-						args = {},
-					},
-					questicons = {
-						order = 9,
-						type = "group",
-						name = L["Quest Icons"],
-						hidden = function()
-							return not E.Retail
-						end,
 						childGroups = "tab",
 						args = {},
 					},

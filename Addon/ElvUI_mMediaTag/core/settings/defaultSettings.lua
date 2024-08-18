@@ -277,16 +277,6 @@ P.mMT = {
 			},
 		},
 	},
-	questicons = {
-		enable = false,
-		texture = {
-			Default = "MAUI10",
-			Item = "MAUI10",
-			Skull = "DEATH08",
-			Chat = "MAUI11",
-		},
-		hidetext = false,
-	},
 	objectivetracker = {
 		convert = 0,
 		enable = false,

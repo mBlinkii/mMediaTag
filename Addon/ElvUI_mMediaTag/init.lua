@@ -46,7 +46,6 @@ mMT.Modules.Castbar = {}
 mMT.Modules.ImportantSpells = {}
 mMT.Modules.InterruptOnCD = {}
 mMT.Modules.CosmeticBars = {}
-mMT.Modules.QuestIcons = {}
 mMT.Modules.ObjectiveTracker = {}
 mMT.Modules.CustomUFTextures = {}
 mMT.Modules.CustomBGTextures = {}
@@ -140,7 +139,6 @@ local function EnableModules()
 	if E.Retail then
 		mMT.Modules.ObjectiveTracker.enable = E.db.mMT.objectivetracker.enable and (E.private.skins.blizzard.enable and E.private.skins.blizzard.objectiveTracker) and not IsAddOnLoaded("!KalielsTracker")
 		mMT.Modules.InterruptOnCD.enable = E.db.mMT.interruptoncd.enable
-		mMT.Modules.QuestIcons.enable = E.db.mMT.questicons.enable
 	end
 end
 

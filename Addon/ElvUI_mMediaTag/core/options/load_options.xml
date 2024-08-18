@@ -31,7 +31,6 @@
 	<Script file="objectivetracker.lua"/>
 	<Script file="portraits.lua"/>
 	<Script file="profession.lua"/>
-	<Script file="questicons.lua"/>
 	<Script file="roleicons.lua"/>
 	<Script file="rollbutton.lua"/>
 	<Script file="score.lua"/>
