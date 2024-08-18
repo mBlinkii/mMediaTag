@@ -168,8 +168,6 @@ local function SetTextProperties(text, fontSettings, color)
 	text:SetFont(LSM:Fetch("font", fontSettings.font), fontSettings.fontsize, fontSettings.fontflag)
 	if color then
 		text:SetTextColor(color.r, color.g, color.b)
-		text:SetShadowColor(0, 0, 0, 0)
-		text.SetShadowColor = E.noop
 	end
 end
 
