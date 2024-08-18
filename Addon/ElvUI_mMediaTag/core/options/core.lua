@@ -42,15 +42,6 @@ local function configTable()
 						name = L["Roll Button"],
 						args = {},
 					},
-					chat = {
-						order = 4,
-						type = "group",
-						name = L["Chat Button"],
-						hidden = function()
-							return not E.Retail
-						end,
-						args = {},
-					},
 					keystochat = {
 						order = 5,
 						type = "group",

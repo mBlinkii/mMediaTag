@@ -336,10 +336,6 @@ function mMT:PLAYER_ENTERING_WORLD(event)
 		if E.private.nameplates.enable and E.db.mMT.nameplate.executemarker.auto then
 			mMT:updateAutoRange()
 		end
-
-		if E.db.mMT.chat.enable then
-			mMT:mChat()
-		end
 	end
 
 	-- Initialize Modules
