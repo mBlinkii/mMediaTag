@@ -115,6 +115,8 @@ P.mMT = {
 		colorhover = { r = 1, g = 1, b = 1, a = 0.75 },
 		texture = "RI1",
 		size = 16,
+		left = 100,
+		right = 99,
 	},
 	mpscore = {
 		highlight = true,

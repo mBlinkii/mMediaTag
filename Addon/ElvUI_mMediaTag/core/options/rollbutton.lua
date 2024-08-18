@@ -18,7 +18,7 @@ local function configTable()
 			name = L["Roll Button"],
 			args = {
 				enable = {
-					order = 2,
+					order = 1,
 					type = "toggle",
 					name = L["Enable"],
 					get = function(info)
@@ -28,6 +28,56 @@ local function configTable()
 						E.db.mMT.roll.enable = value
 						E:StaticPopup_Show("CONFIG_RL")
 					end,
+				},
+				left_click = {
+					order = 2,
+					type = "select",
+					name = L["Left Click"],
+					disabled = function()
+						return not E.db.mMT.roll.enable
+					end,
+					get = function(info)
+						return E.db.mMT.roll.left
+					end,
+					set = function(info, value)
+						E.db.mMT.roll.left = value
+						mMT:mRollUpdateIcon()
+					end,
+					values = {
+						[10] = "10",
+						[25] = "25",
+						[50] = "50",
+						[75] = "75",
+						[99] = "99",
+						[100] = "100",
+						[200] = "200",
+						[1000] = "1000",
+					},
+				},
+				right_click = {
+					order = 3,
+					type = "select",
+					name = L["Right Click"],
+					disabled = function()
+						return not E.db.mMT.roll.enable
+					end,
+					get = function(info)
+						return E.db.mMT.roll.right
+					end,
+					set = function(info, value)
+						E.db.mMT.roll.right = value
+						mMT:mRollUpdateIcon()
+					end,
+					values = {
+						[10] = "10",
+						[25] = "25",
+						[50] = "50",
+						[75] = "75",
+						[99] = "99",
+						[100] = "100",
+						[200] = "200",
+						[1000] = "1000",
+					},
 				},
 			},
 		},
