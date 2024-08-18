@@ -197,7 +197,7 @@ local function configTable()
 			inline = true,
 			name = L["Explanation"],
 			args = {
-				explanation = {
+				text = {
 					order = 1,
 					type = "description",
 					name = L["Attention! The path of the custom texture must comply with WoW standards. Example: Interface\\MYFOLDER\\MYFILE.tga. If you see a green box, the path is incorrect or you have a typo."],
