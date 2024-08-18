@@ -64,7 +64,7 @@ function mMT:mChat()
 		--mChatMenuFrame:Size(mChatMenuFrame.mSettings.xy, mChatMenuFrame.mSettings.xy)
 		mChatMenuFrame:RegisterForClicks("AnyDown")
 		mChatMenuFrame:SetScript("OnClick", function(self)
-			_G.ChatMenu:SetShown(not _G.ChatMenu:IsShown())
+			_G.ChatFrameMenuButton:OpenMenu()
 		end)
 		mChatMenuFrame:SetScript("OnEnter", function(self)
 			mChatMenuFrame.Texture:SetVertexColor(
