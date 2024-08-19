@@ -552,6 +552,22 @@ local function SetScripts(portrait, force)
 				tinsert(portrait.allEvents, event)
 			end
 
+			-- specific events for player and pet if player is in vehicle
+			if E.Retail or E.Cata then
+				if portrait.unit == "player" then
+					portrait:RegisterEvent("VEHICLE_UPDATE")
+					tinsert(portrait.allEvents, "VEHICLE_UPDATE")
+					portrait:RegisterUnitEvent("UNIT_ENTERED_VEHICLE", portrait.unit)
+					tinsert(portrait.allEvents, "UNIT_ENTERED_VEHICLE")
+					portrait:RegisterUnitEvent("UNIT_EXITED_VEHICLE", portrait.unit)
+					tinsert(portrait.allEvents, "UNIT_EXITED_VEHICLE")
+				end
+				if portrait.unit == "pet" then
+					portrait:RegisterEvent("VEHICLE_UPDATE")
+					tinsert(portrait.allEvents, "VEHICLE_UPDATE")
+				end
+			end
+
 			if portrait.events then
 				for _, event in pairs(portrait.events) do
 					portrait:RegisterUnitEvent(event)
@@ -752,6 +768,7 @@ local function shouldHandleEvent(event, eventUnit, self)
 	return (event == "UNIT_TARGET" and (eventUnit == "player" or eventUnit == "target" or eventUnit == "targettarget"))
 		or (event == "PLAYER_TARGET_CHANGED" and (self.unit == "target" or self.unit == "targettarget"))
 		or event == "PLAYER_FOCUS_CHANGED"
+		or (event == "UNIT_EXITED_VEHICLE" or event == "UNIT_ENTERED_VEHICLE" or event == "VEHICLE_UPDATE")
 		or eventUnit == self.unit
 end
 
@@ -764,9 +781,17 @@ local function PartyUnitOnEnevt(self, event, eventUnit)
 end
 
 local function OtherUnitOnEnevt(self, event, eventUnit)
+	if eventUnit == "vehicle" and (self.parent.unit == "player" or self.parent.unit == "pet") then
+		if self.parent.realUnit == "player" then self.unit = "pet" end
+
+		if self.parent.realUnit == "pet" then self.unit = "player" end
+	else
+		self.unit = self.parent.unit
+	end
+
 	if not UnitExists(self.unit) then return end
 
-	if shouldHandleEvent(event, eventUnit, self) then UnitEvent(self, event) end
+	if shouldHandleEvent(event, eventUnit, self) or (_G.ElvUF_Player.unit == "vehicle") then UnitEvent(self, event) end
 end
 
 local function CreatePortraits(name, unit, parentFrame, unitSettings, events, unitEvents)
@@ -802,8 +827,9 @@ end
 local function ToggleForceShowGroupFrames(_, group, numGroup)
 	if group == "boss" or group == "arena" then
 		local name = (group == "boss") and "Boss" or "Arena"
+
 		for i = 1, numGroup do
-			UpdatePortrait(module[name .. i], true)
+			if module[name .. i] then UpdatePortrait(module[name .. i], true) end
 		end
 	end
 end

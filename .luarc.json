@@ -19501,7 +19501,11 @@
     "ZOOM_OUT",
     "ZOOM_OUT_BUTTON_TEXT",
     "_RECORDING_WARNING_CORRUPTED",
-    "C_Container"
+    "C_Container",
+        "TANK_ICON",
+        "HEALER_ICON",
+        "DPS_ICON"
   ],
-  "diagnostics.disable": ["deprecated", "inject-field", "undefined-field"]
+  "diagnostics.disable": ["deprecated", "inject-field", "undefined-field",
+        "cast-local-type"]
 }

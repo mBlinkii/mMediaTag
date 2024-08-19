@@ -1,6 +1,28 @@
 # Changelog - ElvUI_mMediaTag
 [Eng] - All changes to this project will be documented in this file. The latest changes are at the top.
 
+## [ver. 3.53] - 19.08.2024
+## IMPORTANT
+- IMPORTANT - [REMOVED]: Chatmenu Button no more used & you can use the right click menu of  the ElvUI Chat Copy button.
+- IMPORTANT - [REMOVED]: QuestIcons no more needed & used.
+## UPDATE
+- UPDATE [Datatext]: Update the code of some Datatext & Dock icons to use the improved method of Toxi (thank you Toxi).
+- UPDATE [ObjectivTracker]: Header bar strata & level function.
+- UPDATE [ObjectivTracker]: Will now a show check Icon if the line is complete.
+- UPDATE [ObjectivTracker]: Will now not show requirements when the line is completed.
+- UPDATE [Portrait]: Will now take care if the Player is in a Vehicle and shown as Pet frame.
+- UPDATE [Roll Button]: You can now set a separat range for left & right click.
+- UPDATE [System]: Notes to Settings to inform the users.
+### FIX 
+- FIX [DOCK]: Encounter Journal - Bug with the new API.
+- FIX [DOCK]: Talents/Spec - Bug with the new API.
+- FIX [ObjectivTracker]: Header bar Borders.
+- FIX [ObjectivTracker]: Wrong complete trigger, which can show the lines as completed even if they are not yet completed.
+- FIX [ObjectivTracker]: can sometimes show wrong requirements.
+- FIX [Portrait]: Moon Shadow Texture.
+- FIX [Portrait]: Nil error when ElvUI demo frames where toggled for Arena.
+- FIX [System]: Fixed some more bugs with the new API.
+
 ## [ver. 3.52] - 15.08.2024
 ### FIX 
 - FIX [Portrait]: fixed a Bug with Class icons and the recent Version of JiberishUI Icons

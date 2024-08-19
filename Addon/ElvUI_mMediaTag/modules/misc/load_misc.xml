@@ -3,7 +3,6 @@
 	<Script file="icons.lua"/>
 	<Script file="functions.lua"/>
 	<Script file="rollbutton.lua"/>
-	<Script file="chatbutton.lua"/>
 	<Script file="KeystoneToChat.lua"/>
 	<Script file="instancedifficulty.lua"/>
 	<Script file="Tags.lua"/>

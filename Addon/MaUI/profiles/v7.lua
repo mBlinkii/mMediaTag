@@ -1224,14 +1224,6 @@ mv7Profile = {
         ["profession"] = {
             ["icon"] = true,
         },
-        ["questicons"] = {
-            ["enable"] = true,
-            ["texture"] = {
-                ["Default"] = "COLOR10",
-                ["Item"] = "MAUI30",
-                ["Skull"] = "DEATH05",
-            },
-        },
         ["roleicons"] = {
             ["dd"] = "SWORD14",
             ["enable"] = true,

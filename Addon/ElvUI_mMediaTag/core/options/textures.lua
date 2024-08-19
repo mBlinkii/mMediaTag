@@ -1,6 +1,6 @@
 local E = unpack(ElvUI)
 local L = mMT.Locales
-
+local IsAddOnLoaded = _G.C_AddOns and _G.C_AddOns.IsAddOnLoaded or _G.IsAddOnLoaded
 if not mMTSettings then return end
 
 local tinsert = tinsert

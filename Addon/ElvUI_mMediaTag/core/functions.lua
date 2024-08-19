@@ -1,7 +1,9 @@
 local E = unpack(ElvUI)
+local DT = E:GetModule("DataTexts")
 
 --Lua functions
 local format = format
+local IsAddOnLoaded = _G.C_AddOns and _G.C_AddOns.IsAddOnLoaded or IsAddOnLoaded
 
 function mMT:ConvertDB()
 	E.db.mMT.objectivetracker = {
@@ -58,6 +60,18 @@ function mMT:ConvertDB()
 		},
 	}
 end
+
+
+function mMT:GetElvUIDataText(name)
+	local dt = DT.RegisteredDataTexts[name]
+
+	if dt and dt.category ~= "Data Broker" then return dt end
+  end
+
+  function mMT:ConnectVirtualFrameToDataText(dataTextName, virtualFrame)
+	local dt = self:GetElvUIDataText(dataTextName)
+	if dt.applySettings then dt.applySettings(virtualFrame, E.media.hexvaluecolor) end
+  end
 
 function GetTableLng(tbl)
 	local getN = 0

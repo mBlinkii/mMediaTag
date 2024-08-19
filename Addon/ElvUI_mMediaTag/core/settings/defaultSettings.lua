@@ -115,15 +115,8 @@ P.mMT = {
 		colorhover = { r = 1, g = 1, b = 1, a = 0.75 },
 		texture = "RI1",
 		size = 16,
-	},
-	chat = {
-		enable = false,
-		colormodenormal = "custom",
-		colormodehover = "class",
-		colornormal = { r = 1, g = 1, b = 1, a = 0.75 },
-		colorhover = { r = 1, g = 1, b = 1, a = 0.75 },
-		texture = "CI1",
-		size = 16,
+		left = 100,
+		right = 99,
 	},
 	mpscore = {
 		highlight = true,
@@ -283,16 +276,6 @@ P.mMT = {
 				r = 0.8,
 			},
 		},
-	},
-	questicons = {
-		enable = false,
-		texture = {
-			Default = "MAUI10",
-			Item = "MAUI10",
-			Skull = "DEATH08",
-			Chat = "MAUI11",
-		},
-		hidetext = false,
 	},
 	objectivetracker = {
 		convert = 0,
