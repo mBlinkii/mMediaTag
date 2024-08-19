@@ -1,4 +1,5 @@
 local E = unpack(ElvUI)
+local DT = E:GetModule("DataTexts")
 
 --Lua functions
 local format = format
@@ -58,6 +59,13 @@ function mMT:ConvertDB()
 		},
 	}
 end
+
+
+function mMT:GetElvUIDataText(name)
+	local dt = DT.RegisteredDataTexts[name]
+
+	if dt and dt.category ~= "Data Broker" then return dt end
+  end
 
 function GetTableLng(tbl)
 	local getN = 0
