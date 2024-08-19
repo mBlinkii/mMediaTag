@@ -22,9 +22,8 @@ local Config = {
 }
 
 local function OnEnter(self)
-	if E.db.mMT.dockdatatext.tip.enable and specDT then specDT.onEnter() end
-
 	mMT:Dock_OnEnter(self, Config)
+	if E.db.mMT.dockdatatext.tip.enable and specDT then specDT.onEnter() end
 end
 
 local function OnEvent(self, event, loadoutID)

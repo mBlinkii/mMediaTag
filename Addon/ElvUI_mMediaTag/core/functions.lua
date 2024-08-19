@@ -68,6 +68,11 @@ function mMT:GetElvUIDataText(name)
 	if dt and dt.category ~= "Data Broker" then return dt end
   end
 
+  function mMT:ConnectVirtualFrameToDataText(dataTextName, virtualFrame)
+	local dt = self:GetElvUIDataText(dataTextName)
+	if dt.applySettings then dt.applySettings(virtualFrame, E.media.hexvaluecolor) end
+  end
+
 function GetTableLng(tbl)
 	local getN = 0
 	for n in pairs(tbl) do
