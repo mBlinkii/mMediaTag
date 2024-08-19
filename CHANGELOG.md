@@ -1,7 +1,7 @@
 # Changelog - ElvUI_mMediaTag
 [Eng] - All changes to this project will be documented in this file. The latest changes are at the top.
 
-## [ver. 3.53] - 15.08.2024
+## [ver. 3.53] - 19.08.2024
 ## IMPORTANT
 - IMPORTANT - [REMOVED]: Chatmenu Button no more used & you can use the right click menu of  the ElvUI Chat Copy button.
 - IMPORTANT - [REMOVED]: QuestIcons no more needed & used.
