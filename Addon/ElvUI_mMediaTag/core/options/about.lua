@@ -15,6 +15,7 @@ local credits = {
 	"|cffff7d0aMerathilis|r",
 	"|cfff48cbaRepooc|r",
 	E:TextGradient("Simpy but my name needs to be longer.", 0.18, 1.00, 0.49, 0.32, 0.85, 1.00, 0.55, 0.38, 0.85, 1.00, 0.55, 0.71, 1.00, 0.68, 0.32),
+	"|cff18a8ffToxi|r",
 	"|cffec1000Trenchy|r",
 	"Dalerija",
 	"ElioteMarcondes",
