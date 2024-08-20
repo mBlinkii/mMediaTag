@@ -14,6 +14,8 @@ local form = {
 	SQT = L["Drop flipped"],
 	ROT = L["Drop round flipped"],
 	TH = L["Thin"],
+	SHIELD = L["Shield"],
+	OCTA = L["Octagon"],
 }
 
 local style = {
@@ -626,6 +628,36 @@ local function configTable()
 								mMT.Modules.Portraits:Initialize()
 							end,
 						},
+						range_octa = {
+							order = 7,
+							name = L["Octagon"],
+							type = "range",
+							min = 0,
+							max = 10,
+							step = 0.1,
+							get = function(info)
+								return E.db.mMT.portraits.offset.OCTA
+							end,
+							set = function(info, value)
+								E.db.mMT.portraits.offset.OCTA = value
+								mMT.Modules.Portraits:Initialize()
+							end,
+						},
+						range_shield = {
+							order = 7,
+							name = L["Shield"],
+							type = "range",
+							min = 0,
+							max = 10,
+							step = 0.1,
+							get = function(info)
+								return E.db.mMT.portraits.offset.SHIELD
+							end,
+							set = function(info, value)
+								E.db.mMT.portraits.offset.SHIELD = value
+								mMT.Modules.Portraits:Initialize()
+							end,
+						},
 						range_custom = {
 							order = 8,
 							name = L["Custom"],
@@ -660,6 +692,8 @@ local function configTable()
 									QA = 0,
 									MO = 5.5,
 									TH = 4,
+									SHIELD = 3.5,
+									OCTA = 3.5,
 									CUSTOM = 5.5,
 								}
 								mMT.Modules.Portraits:Initialize()

@@ -24,6 +24,8 @@ local textures = {
 			SMQ = path .. "qa_a.tga",
 			MO = path .. "moon_c.tga",
 			TH = path .. "th_a.tga",
+			SHIELD = path .. "shield_txa.tga",
+			OCTA = path .. "octa_txa.tga",
 		},
 		smooth = {
 			SQ = path .. "sq_b.tga",
@@ -36,6 +38,8 @@ local textures = {
 			SMQ = path .. "qa_b.tga",
 			MO = path .. "moon_a.tga",
 			TH = path .. "th_b.tga",
+			SHIELD = path .. "shield_txb.tga",
+			OCTA = path .. "octa_txb.tga",
 		},
 		metal = {
 			SQ = path .. "sq_c.tga",
@@ -48,6 +52,8 @@ local textures = {
 			SMQ = path .. "qa_c.tga",
 			MO = path .. "moon_b.tga",
 			TH = path .. "th_c.tga",
+			SHIELD = path .. "shield_txc.tga",
+			OCTA = path .. "octa_txc.tga",
 		},
 	},
 	extra = {
@@ -61,6 +67,8 @@ local textures = {
 			SMQ = path .. "ex_qa_a.tga",
 			MO = path .. "ex_mo_c.tga",
 			TH = path .. "ex_th_a.tga",
+			SHIELD = path .. "shield_extra_txa.tga",
+			OCTA = path .. "octa_extra_txa.tga",
 		},
 		smooth = {
 			CI = path .. "ex_a_b.tga",
@@ -72,6 +80,8 @@ local textures = {
 			SMQ = path .. "ex_qa_b.tga",
 			MO = path .. "ex_mo_a.tga",
 			TH = path .. "ex_th_b.tga",
+			SHIELD = path .. "shield_extra_txb.tga",
+			OCTA = path .. "octa_extra_txb.tga",
 		},
 		metal = {
 			CI = path .. "ex_a_c.tga",
@@ -83,6 +93,8 @@ local textures = {
 			SMQ = path .. "ex_qa_c.tga",
 			MO = path .. "ex_mo_b.tga",
 			TH = path .. "ex_th_c.tga",
+			SHIELD = path .. "shield_extra_txc.tga",
+			OCTA = path .. "octa_extra_txc.tga",
 		},
 		border = {
 			CI = path .. "border_ex_a.tga",
@@ -94,6 +106,8 @@ local textures = {
 			SMQ = path .. "border_ex_qa.tga",
 			MO = path .. "border_ex_moon.tga",
 			TH = path .. "border_ex_th.tga",
+			SHIELD = path .. "shield_extra_border.tga",
+			OCTA = path .. "octa_extra_border.tga",
 		},
 		shadow = {
 			CI = path .. "shadow_ex_a.tga",
@@ -105,6 +119,8 @@ local textures = {
 			SMQ = path .. "shadow_ex_qa.tga",
 			MO = nil,
 			TH = path .. "shadow_ex_th.tga",
+			SHIELD = path .. "shield_extra_shadow.tga",
+			OCTA = path .. "octa_extra_shadow.tga",
 		},
 	},
 	border = {
@@ -118,6 +134,8 @@ local textures = {
 		SMQ = path .. "border_qa.tga",
 		MO = path .. "border_moon.tga",
 		TH = path .. "border_th.tga",
+		SHIELD = path .. "shield_border.tga",
+		OCTA = path .. "octa_border.tga",
 	},
 	shadow = {
 		SQ = path .. "shadow_sq.tga",
@@ -129,6 +147,8 @@ local textures = {
 		SMQ = path .. "shadow_qa.tga",
 		MO = path .. "shadow_moon.tga",
 		TH = path .. "shadow_th.tga",
+		SHIELD = path .. "shield_shadow.tga",
+		OCTA = path .. "octa_shadow.tga",
 	},
 	inner = {
 		SQ = path .. "inner_a.tga",
@@ -140,6 +160,8 @@ local textures = {
 		SMQ = path .. "inner_qa.tga",
 		MO = path .. "inner_b.tga",
 		TH = path .. "inner_th.tga",
+		SHIELD = path .. "shield_inner.tga",
+		OCTA = path .. "octa_inner.tga",
 	},
 	mask = {
 		CI = path .. "mask_c.tga",
@@ -149,6 +171,8 @@ local textures = {
 		MO = path .. "mask_c.tga",
 		SMQ = path .. "mask_qa.tga",
 		TH = path .. "mask_th.tga",
+		SHIELD = path .. "shield_mask.tga",
+		OCTA = path .. "octa_mask.tga",
 
 		A = {
 			SQ = path .. "mask_a.tga",
@@ -173,6 +197,8 @@ local textures = {
 		MO = false,
 		SMQ = false,
 		TH = false,
+		SHIELD = false,
+		OCTA = false,
 	},
 	background = {
 		[1] = path .. "bg_1.tga",
@@ -191,6 +217,8 @@ local textures = {
 		MO = false,
 		SMQ = false,
 		TH = true,
+		SHIELD = false,
+		OCTA = false,
 	},
 	custom = {
 		texture = "",
