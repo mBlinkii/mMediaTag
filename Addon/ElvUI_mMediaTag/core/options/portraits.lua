@@ -16,6 +16,7 @@ local form = {
 	TH = L["Thin"],
 	SHIELD = L["Shield"],
 	OCTA = L["Octagon"],
+	TEST = "TEST",
 }
 
 local style = {

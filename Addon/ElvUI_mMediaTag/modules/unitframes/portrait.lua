@@ -26,6 +26,7 @@ local textures = {
 			TH = path .. "th_a.tga",
 			SHIELD = path .. "shield_txa.tga",
 			OCTA = path .. "octa_txa.tga",
+			TEST = path .. "circle\\circle_txa.tga",
 		},
 		smooth = {
 			SQ = path .. "sq_b.tga",
@@ -40,6 +41,7 @@ local textures = {
 			TH = path .. "th_b.tga",
 			SHIELD = path .. "shield_txb.tga",
 			OCTA = path .. "octa_txb.tga",
+			TEST = path .. "circle\\circle_txb.tga",
 		},
 		metal = {
 			SQ = path .. "sq_c.tga",
@@ -54,6 +56,7 @@ local textures = {
 			TH = path .. "th_c.tga",
 			SHIELD = path .. "shield_txc.tga",
 			OCTA = path .. "octa_txc.tga",
+			TEST = path .. "circle\\circle_txc.tga",
 		},
 	},
 	extra = {
@@ -69,6 +72,7 @@ local textures = {
 			TH = path .. "ex_th_a.tga",
 			SHIELD = path .. "shield_extra_txa.tga",
 			OCTA = path .. "octa_extra_txa.tga",
+			TEST = path .. "circle\\circle_extra_txa.tga",
 		},
 		smooth = {
 			CI = path .. "ex_a_b.tga",
@@ -82,6 +86,7 @@ local textures = {
 			TH = path .. "ex_th_b.tga",
 			SHIELD = path .. "shield_extra_txb.tga",
 			OCTA = path .. "octa_extra_txb.tga",
+			TEST = path .. "circle\\circle_extra_txb.tga",
 		},
 		metal = {
 			CI = path .. "ex_a_c.tga",
@@ -95,6 +100,7 @@ local textures = {
 			TH = path .. "ex_th_c.tga",
 			SHIELD = path .. "shield_extra_txc.tga",
 			OCTA = path .. "octa_extra_txc.tga",
+			TEST = path .. "circle\\circle_extra_txc.tga",
 		},
 		border = {
 			CI = path .. "border_ex_a.tga",
@@ -108,6 +114,7 @@ local textures = {
 			TH = path .. "border_ex_th.tga",
 			SHIELD = path .. "shield_extra_border.tga",
 			OCTA = path .. "octa_extra_border.tga",
+			TEST = path .. "circle\\circle_extra_border.tga",
 		},
 		shadow = {
 			CI = path .. "shadow_ex_a.tga",
@@ -121,6 +128,10 @@ local textures = {
 			TH = path .. "shadow_ex_th.tga",
 			SHIELD = path .. "shield_extra_shadow.tga",
 			OCTA = path .. "octa_extra_shadow.tga",
+			TEST = path .. "circle\\circle_extra_shadow.tga",
+		},
+		mask = {
+			TEST = path .. "circle\\circle_extra_mask.tga",
 		},
 	},
 	border = {
@@ -136,6 +147,7 @@ local textures = {
 		TH = path .. "border_th.tga",
 		SHIELD = path .. "shield_border.tga",
 		OCTA = path .. "octa_border.tga",
+		TEST = path .. "circle\\circle_border.tga",
 	},
 	shadow = {
 		SQ = path .. "shadow_sq.tga",
@@ -149,6 +161,7 @@ local textures = {
 		TH = path .. "shadow_th.tga",
 		SHIELD = path .. "shield_shadow.tga",
 		OCTA = path .. "octa_shadow.tga",
+		TEST = path .. "circle\\circle_shadow.tga",
 	},
 	inner = {
 		SQ = path .. "inner_a.tga",
@@ -162,6 +175,7 @@ local textures = {
 		TH = path .. "inner_th.tga",
 		SHIELD = path .. "shield_inner.tga",
 		OCTA = path .. "octa_inner.tga",
+		TEST = path .. "circle\\circle_inner.tga",
 	},
 	mask = {
 		CI = path .. "mask_c.tga",
@@ -173,6 +187,7 @@ local textures = {
 		TH = path .. "mask_th.tga",
 		SHIELD = path .. "shield_mask.tga",
 		OCTA = path .. "octa_mask.tga",
+		TEST = path .. "circle\\circle_mask.tga",
 
 		A = {
 			SQ = path .. "mask_a.tga",
@@ -199,6 +214,7 @@ local textures = {
 		TH = false,
 		SHIELD = false,
 		OCTA = false,
+		TEST = false,
 	},
 	background = {
 		[1] = path .. "bg_1.tga",
@@ -219,6 +235,7 @@ local textures = {
 		TH = true,
 		SHIELD = false,
 		OCTA = false,
+		TEST = false,
 	},
 	custom = {
 		texture = "",
@@ -423,7 +440,7 @@ local function UpdatePortrait(portraitFrame, force)
 	UpdateTexture(portraitFrame, "texture", texture, 4, getColor(unit))
 
 	-- Unit Portrait
-	offset = GetOffset(setting.size, textures.custom.enable and E.db.mMT.portraits.offset.CUSTOM or E.db.mMT.portraits.offset[setting.texture])
+	offset = GetOffset(setting.size, textures.custom.enable and E.db.mMT.portraits.offset.CUSTOM or E.db.mMT.portraits.offset[setting.texture] or E.db.mMT.portraits.offset.CI)
 	UpdateTexture(portraitFrame, "portrait", (path .. "unknown.tga"), 1)
 	SetPortraits(portraitFrame, unit, (textures.enablemasking[setting.texture] and not setting.flippe), setting.mirror)
 	portraitFrame.portrait:SetPoint("TOPLEFT", 0 + offset, 0 - offset)
@@ -482,19 +499,35 @@ local function UpdatePortrait(portraitFrame, force)
 		texture = textures.custom.enable and textures.custom.extra or textures.extra[E.db.mMT.portraits.general.style][setting.texture]
 		UpdateTexture(portraitFrame, "extra", texture, -6, E.db.mMT.portraits.shadow.borderColor)
 
+		-- Border
+		if E.db.mMT.portraits.shadow.border then
+			texture = textures.custom.enable and textures.custom.extraborder or textures.extra.border[setting.texture]
+			UpdateTexture(portraitFrame, "extraBorder", texture, -8, E.db.mMT.portraits.shadow.borderColorRare)
+			portraitFrame.extraBorder:Hide()
+		end
+
 		-- Shadow
 		if E.db.mMT.portraits.shadow.enable then
-			texture = textures.custom.enable and textures.custom.extrashadow or textures.extra.border[setting.texture]
-			UpdateTexture(portraitFrame, "extraShadow", texture, -8, E.db.mMT.portraits.shadow.color)
+			texture = textures.custom.enable and textures.custom.extrashadow or textures.extra.shadow[setting.texture]
+			UpdateTexture(portraitFrame, "extraShadow", texture, -4, E.db.mMT.portraits.shadow.color)
 			portraitFrame.extraShadow:Hide()
 		end
 
-		-- Border
-		if E.db.mMT.portraits.shadow.border then
-			texture = textures.custom.enable and textures.custom.extraborder or textures.extra.shadow[setting.texture]
-			UpdateTexture(portraitFrame, "extraBorder", texture, -4, E.db.mMT.portraits.shadow.borderColorRare)
-			portraitFrame.extraBorder:Hide()
+		-- testing
+		-- Rare/Elite Mask
+		texture = textures.extra.mask[setting.texture]
+		if not portraitFrame.extraMask and texture then
+			mMT:Print(texture)
+			portraitFrame.extraMask = portraitFrame:CreateMaskTexture()
+			portraitFrame.extraMask:SetAllPoints(portraitFrame)
+			portraitFrame.extra:AddMaskTexture(portraitFrame.extraMask)
+			mMT:Print(portraitFrame.extraMask:GetTexture())
+
+			if portraitFrame.extraBorder then portraitFrame.extraBorder:AddMaskTexture(portraitFrame.extraMask) end
+			if portraitFrame.extraShadow then portraitFrame.extraShadow:AddMaskTexture(portraitFrame.extraMask) end
 		end
+
+		if portraitFrame.extraMask then portraitFrame.extraMask:SetTexture(texture, "CLAMPTOBLACKADDITIVE", "CLAMPTOBLACKADDITIVE") end
 
 		portraitFrame.extra:Hide()
 	end
