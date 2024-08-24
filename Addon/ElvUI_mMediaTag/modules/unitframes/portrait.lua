@@ -10,244 +10,15 @@ local module = mMT.Modules.Portraits
 if not module then return end
 
 local colors = {}
-local path = "Interface\\Addons\\ElvUI_mMediaTag\\media\\portraits\\"
-local textures = {
-	texture = {
-		flat = {
-			SQ = path .. "sq_a.tga",
-			RO = path .. "ro_a.tga",
-			CI = path .. "ci_a.tga",
-			CO = path .. "co_a.tga",
-			PI = path .. "pi_a.tga",
-			RA = path .. "ra_a.tga",
-			QA = path .. "qa_a.tga",
-			SMQ = path .. "qa_a.tga",
-			MO = path .. "moon_c.tga",
-			TH = path .. "th_a.tga",
-			SHIELD = path .. "shield_txa.tga",
-			OCTA = path .. "octa_txa.tga",
-			TEST = path .. "circle\\circle_txa.tga",
-		},
-		smooth = {
-			SQ = path .. "sq_b.tga",
-			RO = path .. "ro_b.tga",
-			CI = path .. "ci_b.tga",
-			CO = path .. "co_b.tga",
-			PI = path .. "pi_b.tga",
-			RA = path .. "ra_b.tga",
-			QA = path .. "qa_b.tga",
-			SMQ = path .. "qa_b.tga",
-			MO = path .. "moon_a.tga",
-			TH = path .. "th_b.tga",
-			SHIELD = path .. "shield_txb.tga",
-			OCTA = path .. "octa_txb.tga",
-			TEST = path .. "circle\\circle_txb.tga",
-		},
-		metal = {
-			SQ = path .. "sq_c.tga",
-			RO = path .. "ro_c.tga",
-			CI = path .. "ci_c.tga",
-			CO = path .. "co_c.tga",
-			PI = path .. "pi_c.tga",
-			RA = path .. "ra_c.tga",
-			QA = path .. "qa_c.tga",
-			SMQ = path .. "qa_c.tga",
-			MO = path .. "moon_b.tga",
-			TH = path .. "th_c.tga",
-			SHIELD = path .. "shield_txc.tga",
-			OCTA = path .. "octa_txc.tga",
-			TEST = path .. "circle\\circle_txc.tga",
-		},
-	},
-	extra = {
-		flat = {
-			CI = path .. "ex_a_a.tga",
-			SQ = path .. "ex_b_a.tga",
-			RO = path .. "ex_b_a.tga",
-			PI = path .. "ex_pi_a.tga",
-			RA = path .. "ex_ra_a.tga",
-			QA = path .. "ex_qa_a.tga",
-			SMQ = path .. "ex_qa_a.tga",
-			MO = path .. "ex_mo_c.tga",
-			TH = path .. "ex_th_a.tga",
-			SHIELD = path .. "shield_extra_txa.tga",
-			OCTA = path .. "octa_extra_txa.tga",
-			TEST = path .. "circle\\circle_extra_txa.tga",
-		},
-		smooth = {
-			CI = path .. "ex_a_b.tga",
-			SQ = path .. "ex_b_b.tga",
-			RO = path .. "ex_b_b.tga",
-			PI = path .. "ex_pi_b.tga",
-			RA = path .. "ex_ra_b.tga",
-			QA = path .. "ex_qa_b.tga",
-			SMQ = path .. "ex_qa_b.tga",
-			MO = path .. "ex_mo_a.tga",
-			TH = path .. "ex_th_b.tga",
-			SHIELD = path .. "shield_extra_txb.tga",
-			OCTA = path .. "octa_extra_txb.tga",
-			TEST = path .. "circle\\circle_extra_txb.tga",
-		},
-		metal = {
-			CI = path .. "ex_a_c.tga",
-			SQ = path .. "ex_b_c.tga",
-			RO = path .. "ex_b_c.tga",
-			PI = path .. "ex_pi_c.tga",
-			RA = path .. "ex_ra_c.tga",
-			QA = path .. "ex_qa_c.tga",
-			SMQ = path .. "ex_qa_c.tga",
-			MO = path .. "ex_mo_b.tga",
-			TH = path .. "ex_th_c.tga",
-			SHIELD = path .. "shield_extra_txc.tga",
-			OCTA = path .. "octa_extra_txc.tga",
-			TEST = path .. "circle\\circle_extra_txc.tga",
-		},
-		border = {
-			CI = path .. "border_ex_a.tga",
-			SQ = path .. "border_ex_b.tga",
-			RO = path .. "border_ex_b.tga",
-			PI = path .. "border_ex_pi.tga",
-			RA = path .. "border_ex_ra.tga",
-			QA = path .. "border_ex_qa.tga",
-			SMQ = path .. "border_ex_qa.tga",
-			MO = path .. "border_ex_moon.tga",
-			TH = path .. "border_ex_th.tga",
-			SHIELD = path .. "shield_extra_border.tga",
-			OCTA = path .. "octa_extra_border.tga",
-			TEST = path .. "circle\\circle_extra_border.tga",
-		},
-		shadow = {
-			CI = path .. "shadow_ex_a.tga",
-			SQ = path .. "shadow_ex_b.tga",
-			RO = path .. "shadow_ex_b.tga",
-			PI = path .. "shadow_ex_pi.tga",
-			RA = path .. "shadow_ex_ra.tga",
-			QA = path .. "shadow_ex_qa.tga",
-			SMQ = path .. "shadow_ex_qa.tga",
-			MO = nil,
-			TH = path .. "shadow_ex_th.tga",
-			SHIELD = path .. "shield_extra_shadow.tga",
-			OCTA = path .. "octa_extra_shadow.tga",
-			TEST = path .. "circle\\circle_extra_shadow.tga",
-		},
-		mask = {
-			TEST = path .. "circle\\circle_extra_mask.tga",
-		},
-	},
-	border = {
-		SQ = path .. "border_sq.tga",
-		RO = path .. "border_ro.tga",
-		CI = path .. "border_ci.tga",
-		CO = path .. "border_co.tga",
-		PI = path .. "border_pi.tga",
-		RA = path .. "border_ra.tga",
-		QA = path .. "border_qa.tga",
-		SMQ = path .. "border_qa.tga",
-		MO = path .. "border_moon.tga",
-		TH = path .. "border_th.tga",
-		SHIELD = path .. "shield_border.tga",
-		OCTA = path .. "octa_border.tga",
-		TEST = path .. "circle\\circle_border.tga",
-	},
-	shadow = {
-		SQ = path .. "shadow_sq.tga",
-		RO = path .. "shadow_ro.tga",
-		CI = path .. "shadow_ci.tga",
-		PI = path .. "shadow_pi.tga",
-		RA = path .. "shadow_ra.tga",
-		QA = path .. "shadow_qa.tga",
-		SMQ = path .. "shadow_qa.tga",
-		MO = path .. "shadow_moon.tga",
-		TH = path .. "shadow_th.tga",
-		SHIELD = path .. "shield_shadow.tga",
-		OCTA = path .. "octa_shadow.tga",
-		TEST = path .. "circle\\circle_shadow.tga",
-	},
-	inner = {
-		SQ = path .. "inner_a.tga",
-		RO = path .. "inner_a.tga",
-		CI = path .. "inner_b.tga",
-		PI = path .. "inner_pi.tga",
-		RA = path .. "inner_ra.tga",
-		QA = path .. "inner_qa.tga",
-		SMQ = path .. "inner_qa.tga",
-		MO = path .. "inner_b.tga",
-		TH = path .. "inner_th.tga",
-		SHIELD = path .. "shield_inner.tga",
-		OCTA = path .. "octa_inner.tga",
-		TEST = path .. "circle\\circle_inner.tga",
-	},
-	mask = {
-		CI = path .. "mask_c.tga",
-		PI = path .. "mask_pi.tga",
-		RA = path .. "mask_d.tga",
-		QA = path .. "mask_qa.tga",
-		MO = path .. "mask_c.tga",
-		SMQ = path .. "mask_qa.tga",
-		TH = path .. "mask_th.tga",
-		SHIELD = path .. "shield_mask.tga",
-		OCTA = path .. "octa_mask.tga",
-		TEST = path .. "circle\\circle_mask.tga",
 
-		A = {
-			SQ = path .. "mask_a.tga",
-			RO = path .. "mask_a.tga",
-			SQT = path .. "mask_a2.tga",
-			ROT = path .. "mask_a2.tga",
-		},
-		B = {
-			SQ = path .. "mask_b.tga",
-			RO = path .. "mask_b.tga",
-			SQT = path .. "mask_b2.tga",
-			ROT = path .. "mask_b2.tga",
-		},
-	},
-	corner = {
-		SQ = true,
-		RO = true,
-		CI = false,
-		PI = false,
-		RA = false,
-		QA = false,
-		MO = false,
-		SMQ = false,
-		TH = false,
-		SHIELD = false,
-		OCTA = false,
-		TEST = false,
-	},
-	background = {
-		[1] = path .. "bg_1.tga",
-		[2] = path .. "bg_2.tga",
-		[3] = path .. "bg_3.tga",
-		[4] = path .. "bg_4.tga",
-		[5] = path .. "bg_5.tga",
-	},
-	enablemasking = {
-		SQ = true,
-		RO = true,
-		CI = false,
-		PI = true,
-		RA = true,
-		QA = false,
-		MO = false,
-		SMQ = false,
-		TH = true,
-		SHIELD = false,
-		OCTA = false,
-		TEST = false,
-	},
-	custom = {
-		texture = "",
-		extra = "",
-		extraborder = "",
-		extrashadow = "",
-		border = "",
-		shadow = "",
-		inner = "",
-		mask = "",
-		enable = false,
-	},
+local bg_textures = {
+	[1] = "Interface\\Addons\\ElvUI_mMediaTag\\media\\portraits\\bg_1.tga",
+	[2] = "Interface\\Addons\\ElvUI_mMediaTag\\media\\portraits\\bg_2.tga",
+	[3] = "Interface\\Addons\\ElvUI_mMediaTag\\media\\portraits\\bg_3.tga",
+	[4] = "Interface\\Addons\\ElvUI_mMediaTag\\media\\portraits\\bg_4.tga",
+	[5] = "Interface\\Addons\\ElvUI_mMediaTag\\media\\portraits\\bg_5.tga",
+	empty = "Interface\\Addons\\ElvUI_mMediaTag\\media\\portraits\\empty.tga",
+	unknown = "Interface\\Addons\\ElvUI_mMediaTag\\media\\portraits\\unknown.tga",
 }
 
 local function mirrorTexture(texture, mirror, top)
@@ -319,7 +90,7 @@ local function adjustColor(color, shift)
 end
 
 local function UpdateIconBackground(tx, unit, mirror)
-	tx:SetTexture(textures.background[E.db.mMT.portraits.general.bgstyle], "CLAMP", "CLAMP", "TRILINEAR")
+	tx:SetTexture(bg_textures[E.db.mMT.portraits.general.bgstyle], "CLAMP", "CLAMP", "TRILINEAR")
 
 	local color = E.db.mMT.portraits.shadow.classBG and getColor(unit) or E.db.mMT.portraits.shadow.background
 	local bgColor = { r = 1, g = 1, b = 1, a = 1 }
@@ -365,7 +136,7 @@ local function SetPortraits(frame, unit, masking, mirror)
 		end
 
 		mirrorTexture(frame.portrait, mirror)
-		SetPortraitTexture(frame.portrait, unit, masking)
+		SetPortraitTexture(frame.portrait, unit, true)
 	end
 end
 
@@ -393,14 +164,14 @@ local function CheckRareElite(frame, unit)
 	end
 end
 
-local function UpdateTexture(portraitFrame, textureType, texture, level, color)
+local function UpdateTexture(portraitFrame, textureType, texture, level, color, reverse)
 	if not portraitFrame[textureType] then
 		portraitFrame[textureType] = portraitFrame:CreateTexture("mMT_" .. textureType, "OVERLAY", nil, level)
 		portraitFrame[textureType]:SetAllPoints(portraitFrame)
 	end
 
 	portraitFrame[textureType]:SetTexture(texture, "CLAMP", "CLAMP", "TRILINEAR")
-	mirrorTexture(portraitFrame[textureType], portraitFrame.settings.mirror, portraitFrame.settings.flippe)
+	mirrorTexture(portraitFrame[textureType], (reverse or portraitFrame.settings.mirror), portraitFrame.textures.flipp)
 
 	if color then setColor(portraitFrame[textureType], color, portraitFrame.settings.mirror) end
 end
@@ -420,6 +191,9 @@ local function UpdatePortrait(portraitFrame, force)
 		)
 	end
 
+	-- get textures
+	portraitFrame.textures = mMT:GetTextures(portraitFrame.settings.texture)
+
 	local texture, offset
 	local setting = portraitFrame.settings
 	local unit = force and "player" or (UnitExists(portraitFrame.unit) and portraitFrame.unit or (portraitFrame.parent.unit or "player"))
@@ -436,23 +210,29 @@ local function UpdatePortrait(portraitFrame, force)
 	end
 
 	-- Portrait Texture
-	texture = textures.custom.enable and textures.custom.texture or textures.texture[E.db.mMT.portraits.general.style][setting.texture]
+	texture = portraitFrame.textures.texture
 	UpdateTexture(portraitFrame, "texture", texture, 4, getColor(unit))
 
 	-- Unit Portrait
-	offset = GetOffset(setting.size, textures.custom.enable and E.db.mMT.portraits.offset.CUSTOM or E.db.mMT.portraits.offset[setting.texture] or E.db.mMT.portraits.offset.CI)
-	UpdateTexture(portraitFrame, "portrait", (path .. "unknown.tga"), 1)
-	SetPortraits(portraitFrame, unit, (textures.enablemasking[setting.texture] and not setting.flippe), setting.mirror)
+	offset = GetOffset(setting.size, portraitFrame.textures.offset)
+	UpdateTexture(portraitFrame, "portrait", bg_textures.unknown, 1)
+	SetPortraits(portraitFrame, unit, false, setting.mirror)
 	portraitFrame.portrait:SetPoint("TOPLEFT", 0 + offset, 0 - offset)
 	portraitFrame.portrait:SetPoint("BOTTOMRIGHT", 0 - offset, 0 + offset)
 
 	-- Portrait Mask
-	texture = textures.custom.enable and (setting.mirror and textures.custom.maskb or textures.custom.mask)
-		or (
-			textures.mask[setting.texture]
-			or setting.mirror and textures.mask.B[setting.flippe and setting.texture .. "T" or setting.texture]
-			or textures.mask.A[setting.flippe and setting.texture .. "T" or setting.texture]
-		)
+	--texture = portraitFrame.textures.extraMask and portraitFrame.textures.mask[setting.mirror and "b" or "a"] or portraitFrame.textures.mask
+
+	if portraitFrame.textures.extraMask then
+		if setting.mirror then
+			texture = portraitFrame.textures.mask.b
+		else
+			texture = portraitFrame.textures.mask.a
+		end
+	else
+		texture = portraitFrame.textures.mask
+	end
+
 	if not portraitFrame.mask then
 		portraitFrame.mask = portraitFrame:CreateMaskTexture()
 		portraitFrame.mask:SetAllPoints(portraitFrame)
@@ -462,16 +242,16 @@ local function UpdatePortrait(portraitFrame, force)
 	portraitFrame.mask:SetTexture(texture, "CLAMPTOBLACKADDITIVE", "CLAMPTOBLACKADDITIVE")
 
 	-- Class Icon Background
-	if (E.db.mMT.portraits.general.classicons or setting.flippe) and not portraitFrame.iconbg then
-		local color = (setting.flippe and not E.db.mMT.portraits.general.classicons) and { r = 0, g = 0, b = 0, a = 1 }
+	if (E.db.mMT.portraits.general.classicons or portraitFrame.textures.flipp) and not portraitFrame.iconbg then
+		local color = (portraitFrame.textures.flipp and not E.db.mMT.portraits.general.classicons) and { r = 0, g = 0, b = 0, a = 1 }
 			or (E.db.mMT.portraits.shadow.classBG and getColor(unit) or E.db.mMT.portraits.shadow.background)
-		UpdateTexture(portraitFrame, "iconbg", textures.background[E.db.mMT.portraits.general.bgstyle], -5, color)
+		UpdateTexture(portraitFrame, "iconbg", bg_textures[E.db.mMT.portraits.general.bgstyle], -5, color)
 		portraitFrame.iconbg:AddMaskTexture(portraitFrame.mask)
 	end
 
 	-- Portrait Shadow
 	if E.db.mMT.portraits.shadow.enable then
-		texture = textures.custom.enable and textures.custom.shadow or textures.shadow[setting.texture]
+		texture = portraitFrame.textures.shadow
 		UpdateTexture(portraitFrame, "shadow", texture, -4, E.db.mMT.portraits.shadow.color)
 		portraitFrame.shadow:Show()
 	elseif portraitFrame.shadow then
@@ -480,7 +260,7 @@ local function UpdatePortrait(portraitFrame, force)
 
 	-- Inner Portrait Shadow
 	if E.db.mMT.portraits.shadow.inner then
-		texture = textures.custom.enable and textures.custom.inner or textures.inner[setting.texture]
+		texture = portraitFrame.textures.inner
 		UpdateTexture(portraitFrame, "innerShadow", texture, 2, E.db.mMT.portraits.shadow.innerColor)
 		portraitFrame.innerShadow:Show()
 	elseif portraitFrame.innerShadow then
@@ -489,57 +269,41 @@ local function UpdatePortrait(portraitFrame, force)
 
 	-- Portrait Border
 	if E.db.mMT.portraits.shadow.border then
-		texture = textures.custom.enable and textures.custom.border or textures.border[setting.texture]
+		texture = portraitFrame.textures.border
 		UpdateTexture(portraitFrame, "border", texture, 2, E.db.mMT.portraits.shadow.borderColor)
 	end
 
 	-- Rare/Elite Texture
 	if setting.extraEnable then
 		-- Texture
-		texture = textures.custom.enable and textures.custom.extra or textures.extra[E.db.mMT.portraits.general.style][setting.texture]
-		UpdateTexture(portraitFrame, "extra", texture, -6, E.db.mMT.portraits.shadow.borderColor)
+		texture = portraitFrame.textures.rare.texture
+		UpdateTexture(portraitFrame, "extra", texture, -6, E.db.mMT.portraits.shadow.borderColor, not portraitFrame.settings.mirror)
 
 		-- Border
 		if E.db.mMT.portraits.shadow.border then
-			texture = textures.custom.enable and textures.custom.extraborder or textures.extra.border[setting.texture]
-			UpdateTexture(portraitFrame, "extraBorder", texture, -8, E.db.mMT.portraits.shadow.borderColorRare)
+			texture = portraitFrame.textures.rare.border
+			UpdateTexture(portraitFrame, "extraBorder", texture, -7, E.db.mMT.portraits.shadow.borderColorRare, not portraitFrame.settings.mirror)
 			portraitFrame.extraBorder:Hide()
 		end
 
 		-- Shadow
 		if E.db.mMT.portraits.shadow.enable then
-			texture = textures.custom.enable and textures.custom.extrashadow or textures.extra.shadow[setting.texture]
-			UpdateTexture(portraitFrame, "extraShadow", texture, -4, E.db.mMT.portraits.shadow.color)
+			texture = portraitFrame.textures.rare.shadow
+			UpdateTexture(portraitFrame, "extraShadow", texture, -8, E.db.mMT.portraits.shadow.color, not portraitFrame.settings.mirror)
 			portraitFrame.extraShadow:Hide()
 		end
-
-		-- testing
-		-- Rare/Elite Mask
-		texture = textures.extra.mask[setting.texture]
-		if not portraitFrame.extraMask and texture then
-			mMT:Print(texture)
-			portraitFrame.extraMask = portraitFrame:CreateMaskTexture()
-			portraitFrame.extraMask:SetAllPoints(portraitFrame)
-			portraitFrame.extra:AddMaskTexture(portraitFrame.extraMask)
-			mMT:Print(portraitFrame.extraMask:GetTexture())
-
-			if portraitFrame.extraBorder then portraitFrame.extraBorder:AddMaskTexture(portraitFrame.extraMask) end
-			if portraitFrame.extraShadow then portraitFrame.extraShadow:AddMaskTexture(portraitFrame.extraMask) end
-		end
-
-		if portraitFrame.extraMask then portraitFrame.extraMask:SetTexture(texture, "CLAMPTOBLACKADDITIVE", "CLAMPTOBLACKADDITIVE") end
 
 		portraitFrame.extra:Hide()
 	end
 
 	-- Corner
-	if ((not textures.custom.enable) and E.db.mMT.portraits.general.corner) and textures.corner[setting.texture] then
-		texture = textures.texture[E.db.mMT.portraits.general.style].CO
+	if portraitFrame.textures.corner then
+		texture = portraitFrame.textures.corner.texture
 		UpdateTexture(portraitFrame, "corner", texture, 5, getColor(unit))
 
 		-- Border
 		if E.db.mMT.portraits.shadow.border then
-			texture = textures.border.CO
+			texture = portraitFrame.textures.corner.border
 			UpdateTexture(portraitFrame, "cornerBorder", texture, 6, E.db.mMT.portraits.shadow.borderColor)
 			portraitFrame.cornerBorder:Show()
 		end
@@ -763,7 +527,7 @@ local function UnitEvent(self, event)
 
 	if castStoped[event] then
 		if self.isCasting then
-			SetPortraits(self, unit, (textures.enablemasking[self.settings.texture] and not self.settings.flippe), self.settings.mirror)
+			SetPortraits(self, unit, false, self.settings.mirror)
 			self.isCasting = false
 		end
 	elseif castStarted[event] then
@@ -776,28 +540,12 @@ local function UnitEvent(self, event)
 	else
 		if not InCombatLockdown() and self:GetAttribute("unit") ~= unit then self:SetAttribute("unit", unit) end
 
-		SetPortraits(self, unit, (textures.enablemasking[self.settings.texture] and not self.settings.flippe), self.settings.mirror)
+		SetPortraits(self, unit, false, self.settings.mirror)
 		setColor(self.texture, getColor(unit), self.settings.mirror)
 
-		if E.db.mMT.portraits.general.corner and textures.corner[self.settings.texture] then setColor(self.corner, getColor(unit), self.settings.mirror) end
+		if E.db.mMT.portraits.general.corner and self.textures.corner then setColor(self.corner, getColor(unit), self.settings.mirror) end
 
 		if self.settings.extraEnable and self.extra then CheckRareElite(self, unit) end
-	end
-end
-
-local function SetCustomTextures()
-	local textureFields = { "texture", "extra", "extraborder", "extrashadow", "border", "shadow", "inner", "mask", "maskb" }
-	if E.db.mMT.portraits.custom.enable then
-		textures.custom.enable = true
-		for _, field in ipairs(textureFields) do
-			textures.custom[field] = E.db.mMT.portraits.custom[field] ~= "" and E.db.mMT.portraits.custom[field] or nil
-		end
-		textures.custom.maskb = textures.custom.maskb or textures.custom.mask
-	else
-		textures.custom.enable = false
-		for _, field in ipairs(textureFields) do
-			textures.custom[field] = nil
-		end
 	end
 end
 
@@ -864,6 +612,7 @@ local function CreatePortraits(name, unit, parentFrame, unitSettings, events, un
 		module[name].events = events or nil
 		module[name].unitEvents = unitEvents or nil
 		module[name].allEvents = {}
+		module[name].name = name
 	end
 
 	-- update settings
@@ -904,9 +653,6 @@ local function HeaderConfig(_, header, configMode)
 end
 
 function module:Initialize(force)
-	-- update texture settings
-	SetCustomTextures()
-
 	-- update colors
 	ConfigureColors()
 

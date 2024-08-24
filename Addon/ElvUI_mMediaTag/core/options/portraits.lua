@@ -4,25 +4,35 @@ local L = mMT.Locales
 local tinsert = tinsert
 
 local form = {
-	SQ = L["Drop"],
-	RO = L["Drop round"],
-	CI = L["Circle"],
-	PI = L["Pad"],
-	RA = L["Diamond"],
-	QA = L["Square"],
-	MO = L["Moon"],
-	SQT = L["Drop flipped"],
-	ROT = L["Drop round flipped"],
-	TH = L["Thin"],
-	SHIELD = L["Shield"],
-	OCTA = L["Octagon"],
-	TEST = "TEST",
+	SQ = L["Old"] .. " " .. L["Drop"],
+	RO = L["Old"] .. " " .. L["Drop round"],
+	CI = L["Old"] .. " " .. L["Circle"],
+	PI = L["Old"] .. " " .. L["Pad"],
+	RA = L["Old"] .. " " .. L["Diamond"],
+	QA = L["Old"] .. " " .. L["Square"],
+	MO = L["Old"] .. " " .. L["Moon"],
+	SQT = L["Old"] .. " " .. L["Drop flipped"],
+	ROT = L["Old"] .. " " .. L["Drop round flipped"],
+	TH = L["Old"] .. " " .. L["Thin"],
+	circle = L["Circle"],
+	diamond = L["Diamond"],
+	drop = L["Drop round"],
+	dropsharp = L["Drop"],
+	dropflipp = L["Drop round flipped"],
+	dropsharpflipp = L["Drop flipped"],
+	octagon = L["Octagon"],
+	pad = L["Pad"],
+	pure = L["Pure round"],
+	puresharp = L["Pure"],
+	shield = L["Shield"],
+	square = L["Square"],
+	thin = L["Thin"],
 }
 
 local style = {
-	flat = "FLAT",
-	smooth = "SMOOTH",
-	metal = "METALLIC",
+	a = "FLAT",
+	b = "SMOOTH",
+	c = "METALLIC",
 }
 
 local ClassIconStyle = {
@@ -637,25 +647,10 @@ local function configTable()
 							max = 10,
 							step = 0.1,
 							get = function(info)
-								return E.db.mMT.portraits.offset.OCTA
+								return E.db.mMT.portraits.offset.new
 							end,
 							set = function(info, value)
-								E.db.mMT.portraits.offset.OCTA = value
-								mMT.Modules.Portraits:Initialize()
-							end,
-						},
-						range_shield = {
-							order = 7,
-							name = L["Shield"],
-							type = "range",
-							min = 0,
-							max = 10,
-							step = 0.1,
-							get = function(info)
-								return E.db.mMT.portraits.offset.SHIELD
-							end,
-							set = function(info, value)
-								E.db.mMT.portraits.offset.SHIELD = value
+								E.db.mMT.portraits.offset.new = value
 								mMT.Modules.Portraits:Initialize()
 							end,
 						},
@@ -693,9 +688,8 @@ local function configTable()
 									QA = 0,
 									MO = 5.5,
 									TH = 4,
-									SHIELD = 3.5,
-									OCTA = 3.5,
 									CUSTOM = 5.5,
+									new = 2.5,
 								}
 								mMT.Modules.Portraits:Initialize()
 							end,
@@ -733,17 +727,10 @@ local function configTable()
 							type = "select",
 							name = L["Texture Form"],
 							get = function(info)
-								return E.db.mMT.portraits.player.flippe and E.db.mMT.portraits.player.texture .. "T" or E.db.mMT.portraits.player.texture
+								return E.db.mMT.portraits.player.texture
 							end,
 							set = function(info, value)
-								E.db.mMT.portraits.player.flippe = (value == "SQT" or value == "ROT")
-								if value == "SQT" then
-									E.db.mMT.portraits.player.texture = "SQ"
-								elseif value == "ROT" then
-									E.db.mMT.portraits.player.texture = "RO"
-								else
-									E.db.mMT.portraits.player.texture = value
-								end
+								E.db.mMT.portraits.player.texture = value
 								mMT.Modules.Portraits:Initialize()
 							end,
 							values = form,
@@ -753,10 +740,10 @@ local function configTable()
 							name = L["Size"],
 							type = "range",
 							min = 16,
-							max = 256,
+							max = 512,
 							step = 1,
 							softMin = 16,
-							softMax = 256,
+							softMax = 512,
 							get = function(info)
 								return E.db.mMT.portraits.player.size
 							end,
@@ -920,17 +907,10 @@ local function configTable()
 							type = "select",
 							name = L["Texture Form"],
 							get = function(info)
-								return E.db.mMT.portraits.target.flippe and E.db.mMT.portraits.target.texture .. "T" or E.db.mMT.portraits.target.texture
+								return E.db.mMT.portraits.target.texture
 							end,
 							set = function(info, value)
-								E.db.mMT.portraits.target.flippe = (value == "SQT" or value == "ROT")
-								if value == "SQT" then
-									E.db.mMT.portraits.target.texture = "SQ"
-								elseif value == "ROT" then
-									E.db.mMT.portraits.target.texture = "RO"
-								else
-									E.db.mMT.portraits.target.texture = value
-								end
+								E.db.mMT.portraits.target.texture = value
 
 								mMT.Modules.Portraits:Initialize()
 							end,
@@ -941,10 +921,10 @@ local function configTable()
 							name = L["Size"],
 							type = "range",
 							min = 16,
-							max = 256,
+							max = 512,
 							step = 1,
 							softMin = 16,
-							softMax = 256,
+							softMax = 512,
 							get = function(info)
 								return E.db.mMT.portraits.target.size
 							end,
@@ -1132,17 +1112,10 @@ local function configTable()
 							type = "select",
 							name = L["Texture Form"],
 							get = function(info)
-								return E.db.mMT.portraits.targettarget.flippe and E.db.mMT.portraits.targettarget.texture .. "T" or E.db.mMT.portraits.targettarget.texture
+								return E.db.mMT.portraits.targettarget.texture
 							end,
 							set = function(info, value)
-								E.db.mMT.portraits.targettarget.flippe = (value == "SQT" or value == "ROT")
-								if value == "SQT" then
-									E.db.mMT.portraits.targettarget.texture = "SQ"
-								elseif value == "ROT" then
-									E.db.mMT.portraits.targettarget.texture = "RO"
-								else
-									E.db.mMT.portraits.targettarget.texture = value
-								end
+								E.db.mMT.portraits.targettarget.texture = value
 
 								mMT.Modules.Portraits:Initialize()
 							end,
@@ -1153,10 +1126,10 @@ local function configTable()
 							name = L["Size"],
 							type = "range",
 							min = 16,
-							max = 256,
+							max = 512,
 							step = 1,
 							softMin = 16,
-							softMax = 256,
+							softMax = 512,
 							get = function(info)
 								return E.db.mMT.portraits.targettarget.size
 							end,
@@ -1306,17 +1279,10 @@ local function configTable()
 							type = "select",
 							name = L["Texture Form"],
 							get = function(info)
-								return E.db.mMT.portraits.pet.flippe and E.db.mMT.portraits.pet.texture .. "T" or E.db.mMT.portraits.pet.texture
+								return E.db.mMT.portraits.pet.texture
 							end,
 							set = function(info, value)
-								E.db.mMT.portraits.pet.flippe = (value == "SQT" or value == "ROT")
-								if value == "SQT" then
-									E.db.mMT.portraits.pet.texture = "SQ"
-								elseif value == "ROT" then
-									E.db.mMT.portraits.pet.texture = "RO"
-								else
-									E.db.mMT.portraits.pet.texture = value
-								end
+								E.db.mMT.portraits.pet.texture = value
 
 								mMT.Modules.Portraits:Initialize()
 							end,
@@ -1327,10 +1293,10 @@ local function configTable()
 							name = L["Size"],
 							type = "range",
 							min = 16,
-							max = 256,
+							max = 512,
 							step = 1,
 							softMin = 16,
-							softMax = 256,
+							softMax = 512,
 							get = function(info)
 								return E.db.mMT.portraits.pet.size
 							end,
@@ -1480,17 +1446,10 @@ local function configTable()
 							type = "select",
 							name = L["Texture Form"],
 							get = function(info)
-								return E.db.mMT.portraits.focus.flippe and E.db.mMT.portraits.focus.texture .. "T" or E.db.mMT.portraits.focus.texture
+								return E.db.mMT.portraits.focus.texture
 							end,
 							set = function(info, value)
-								E.db.mMT.portraits.focus.flippe = (value == "SQT" or value == "ROT")
-								if value == "SQT" then
-									E.db.mMT.portraits.focus.texture = "SQ"
-								elseif value == "ROT" then
-									E.db.mMT.portraits.focus.texture = "RO"
-								else
-									E.db.mMT.portraits.focus.texture = value
-								end
+								E.db.mMT.portraits.focus.texture = value
 
 								mMT.Modules.Portraits:Initialize()
 							end,
@@ -1501,10 +1460,10 @@ local function configTable()
 							name = L["Size"],
 							type = "range",
 							min = 16,
-							max = 256,
+							max = 512,
 							step = 1,
 							softMin = 16,
-							softMax = 256,
+							softMax = 512,
 							get = function(info)
 								return E.db.mMT.portraits.focus.size
 							end,
@@ -1679,17 +1638,10 @@ local function configTable()
 							type = "select",
 							name = L["Texture Form"],
 							get = function(info)
-								return E.db.mMT.portraits.party.flippe and E.db.mMT.portraits.party.texture .. "T" or E.db.mMT.portraits.party.texture
+								return E.db.mMT.portraits.party.texture
 							end,
 							set = function(info, value)
-								E.db.mMT.portraits.party.flippe = (value == "SQT" or value == "ROT")
-								if value == "SQT" then
-									E.db.mMT.portraits.party.texture = "SQ"
-								elseif value == "ROT" then
-									E.db.mMT.portraits.party.texture = "RO"
-								else
-									E.db.mMT.portraits.party.texture = value
-								end
+								E.db.mMT.portraits.party.texture = value
 
 								mMT.Modules.Portraits:Initialize()
 							end,
@@ -1700,10 +1652,10 @@ local function configTable()
 							name = L["Size"],
 							type = "range",
 							min = 16,
-							max = 256,
+							max = 512,
 							step = 1,
 							softMin = 16,
-							softMax = 256,
+							softMax = 512,
 							get = function(info)
 								return E.db.mMT.portraits.party.size
 							end,
@@ -1867,17 +1819,10 @@ local function configTable()
 							type = "select",
 							name = L["Texture Form"],
 							get = function(info)
-								return E.db.mMT.portraits.boss.flippe and E.db.mMT.portraits.boss.texture .. "T" or E.db.mMT.portraits.boss.texture
+								return E.db.mMT.portraits.boss.texture
 							end,
 							set = function(info, value)
-								E.db.mMT.portraits.boss.flippe = (value == "SQT" or value == "ROT")
-								if value == "SQT" then
-									E.db.mMT.portraits.boss.texture = "SQ"
-								elseif value == "ROT" then
-									E.db.mMT.portraits.boss.texture = "RO"
-								else
-									E.db.mMT.portraits.boss.texture = value
-								end
+								E.db.mMT.portraits.boss.texture = value
 
 								mMT.Modules.Portraits:Initialize()
 							end,
@@ -1888,10 +1833,10 @@ local function configTable()
 							name = L["Size"],
 							type = "range",
 							min = 16,
-							max = 256,
+							max = 512,
 							step = 1,
 							softMin = 16,
-							softMax = 256,
+							softMax = 512,
 							get = function(info)
 								return E.db.mMT.portraits.boss.size
 							end,
@@ -2055,17 +2000,10 @@ local function configTable()
 							type = "select",
 							name = L["Texture Form"],
 							get = function(info)
-								return E.db.mMT.portraits.arena.flippe and E.db.mMT.portraits.arena.texture .. "T" or E.db.mMT.portraits.arena.texture
+								return E.db.mMT.portraits.arena.texture
 							end,
 							set = function(info, value)
-								E.db.mMT.portraits.arena.flippe = (value == "SQT" or value == "ROT")
-								if value == "SQT" then
-									E.db.mMT.portraits.arena.texture = "SQ"
-								elseif value == "ROT" then
-									E.db.mMT.portraits.arena.texture = "RO"
-								else
-									E.db.mMT.portraits.arena.texture = value
-								end
+								E.db.mMT.portraits.arena.texture = value
 
 								mMT.Modules.Portraits:Initialize()
 							end,
@@ -2076,10 +2014,10 @@ local function configTable()
 							name = L["Size"],
 							type = "range",
 							min = 16,
-							max = 256,
+							max = 512,
 							step = 1,
 							softMin = 16,
-							softMax = 256,
+							softMax = 512,
 							get = function(info)
 								return E.db.mMT.portraits.arena.size
 							end,

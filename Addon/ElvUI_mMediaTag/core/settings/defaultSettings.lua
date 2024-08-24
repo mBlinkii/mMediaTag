@@ -578,6 +578,11 @@ P.mMT = {
 			maskb = "",
 			enable = false,
 		},
+		extra = {
+			rare = "a",
+			elite = "a",
+			boss = "a",
+		},
 		player = {
 			flippe = false,
 			cast = false,
@@ -714,9 +719,8 @@ P.mMT = {
 			QA = 0,
 			MO = 5.5,
 			TH = 4,
-			SHIELD = 3.5,
-			OCTA = 3.5,
 			CUSTOM = 5.5,
+			new = 3,
 		},
 		shadow = {
 			enable = true,
