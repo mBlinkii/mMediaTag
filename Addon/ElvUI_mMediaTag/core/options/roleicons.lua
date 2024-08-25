@@ -10,7 +10,7 @@ local function configTable()
 	for key, icon in pairs(mMT.Media.Role) do
 		icons[key] = E:TextureString(icon, ":14:14") .. " " .. key
 	end
-	E.Options.args.mMT.args.cosmetic.args.roleicons.args = {
+	E.Options.args.mMT.args.unitframes.args.roleicons.args = {
 		header_roleicons = {
 			order = 1,
 			type = "group",

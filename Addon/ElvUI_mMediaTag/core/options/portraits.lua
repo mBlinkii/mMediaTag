@@ -68,7 +68,7 @@ local function configTable()
 
 	if mMT.ElvUI_JiberishIcons.loaded then BuildIconStylesTable() end
 
-	E.Options.args.mMT.args.cosmetic.args.portraits.args = {
+	E.Options.args.mMT.args.unitframes.args.portraits.args = {
 		toggle_enable = {
 			order = 1,
 			type = "toggle",

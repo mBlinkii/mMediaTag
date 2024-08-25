@@ -9,7 +9,7 @@ local function configTable()
 	for key, icon in pairs(mMT.Media.UnitframeIcons) do
 		icons[key] = E:TextureString(icon, ":14:14") .. " " .. key
 	end
-	E.Options.args.mMT.args.cosmetic.args.unitframeicons.args = {
+	E.Options.args.mMT.args.unitframes.args.unitframeicons.args = {
 		header_toggles = {
 			order = 1,
 			type = "group",
