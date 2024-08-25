@@ -730,3 +730,17 @@ L["|cffFFFFFFControl + Left Click:|r Change Loadout"] = "|cffFFFFFFStrg + Linksk
 L["|cffFFFFFFLeft Click:|r Change Talent Specialization"] = "|cffFFFFFFLinks Klick:|r Talent Spezialisierung ändern"
 L["|cffFFFFFFRight Click:|r Change Loot Specialization"] = "|cffFFFFFFRechtsklick:|r Beutespezialisierung ändern"
 L["|cffFFFFFFShift + Left Click:|r Show Talent Specialization UI"] = "|cffFFFFFFShift + Links Klick:|r Zeige Talent Spezialisierungs Interface"
+
+--new
+L["BOSS"] = true
+L["Portrait Texture"] = true
+L["Extra Texture Style"] = true
+L["Rare Texture Style"] = true
+L["Elite/ Rare Elite Texture Style"] = true
+L["Boss Texture Style"] = true
+L["New Textures"] = true
+L["Old"] = true
+L["Octagon"] = true
+L["Pure round"] = true
+L["Pure"] = true
+L["Shield"] = true
