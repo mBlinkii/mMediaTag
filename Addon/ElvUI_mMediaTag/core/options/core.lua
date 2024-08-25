@@ -309,7 +309,7 @@ local function configTable()
 				order = 8,
 				type = "group",
 				name = L["Unitframes"],
-				icon = "Interface\\Addons\\ElvUI_mMediaTag\\media\\system\\cosmetic.tga",
+				icon = "Interface\\Addons\\ElvUI_mMediaTag\\media\\system\\unitframes.tga",
 				childGroups = "tab",
 				args = {
 					uftextures = {
