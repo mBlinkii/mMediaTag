@@ -19504,7 +19504,9 @@
     "C_Container",
         "TANK_ICON",
         "HEALER_ICON",
-        "DPS_ICON"
+        "DPS_ICON",
+        "mMT",
+        "mMTDB"
   ],
   "diagnostics.disable": ["deprecated", "inject-field", "undefined-field",
         "cast-local-type"]

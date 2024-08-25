@@ -5,6 +5,8 @@ local SetPortraitTexture = SetPortraitTexture
 local UnitExists = UnitExists
 local tinsert = tinsert
 local UF = E:GetModule("UnitFrames")
+local UnitGUID = UnitGUID
+local select, strsplit = select, strsplit
 
 local module = mMT.Modules.Portraits
 if not module then return end
@@ -20,6 +22,8 @@ local bg_textures = {
 	empty = "Interface\\Addons\\ElvUI_mMediaTag\\media\\portraits\\empty.tga",
 	unknown = "Interface\\Addons\\ElvUI_mMediaTag\\media\\portraits\\unknown.tga",
 }
+
+local bossIDs = {}
 
 local function mirrorTexture(texture, mirror, top)
 	if texture.classIcons then
@@ -180,10 +184,14 @@ local function UpdateExtraTexture(portraitFrame, classification)
 	end
 end
 
+local function GetNPCID(unit)
+	local guid = UnitGUID(unit)
+	return guid and select(6, strsplit("-", guid))
+end
+
 local function CheckRareElite(frame, unit)
 	local c = UnitClassification(unit) --"worldboss", "rareelite", "elite", "rare", "normal", "trivial", or "minus"
-
-	if c == "worldboss" then c = "boss" end
+	if c == "worldboss" or bossIDs[GetNPCID(unit)] then c = "boss" end
 	local color = colors[c]
 
 	if color then
