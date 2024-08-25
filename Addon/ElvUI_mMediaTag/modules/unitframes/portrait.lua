@@ -520,6 +520,7 @@ local function AddCastIcon(self)
 end
 
 local function RemovePortrait(unitPortrait)
+	mMT:Print(unitPortrait, unitPortrait and unitPortrait.name)
 	if unitPortrait and unitPortrait.allEvents then
 		for _, event in pairs(unitPortrait.allEvents) do
 			unitPortrait:UnregisterEvent(event)
@@ -702,7 +703,7 @@ function module:Initialize(force)
 		if _G.ElvUF_TargetTarget and E.db.mMT.portraits.targettarget.enable then
 			CreatePortraits("TargetTarget", "targettarget", _G.ElvUF_TargetTarget, E.db.mMT.portraits.targettarget, { "PLAYER_TARGET_CHANGED" }, { "UNIT_TARGET" })
 		elseif module.TargetTarget then
-			RemovePortrait("TargetTarget")
+			RemovePortrait(module.TargetTarget)
 		end
 
 		if _G.ElvUF_Focus and E.db.mMT.portraits.focus.enable then
