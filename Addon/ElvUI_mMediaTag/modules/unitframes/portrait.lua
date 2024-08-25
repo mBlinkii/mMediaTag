@@ -148,11 +148,46 @@ local function GetOffset(size, offset)
 	end
 end
 
+local function UpdateTexture(portraitFrame, textureType, texture, level, color, reverse)
+	if not portraitFrame[textureType] then
+		portraitFrame[textureType] = portraitFrame:CreateTexture("mMT_" .. textureType, "OVERLAY", nil, level)
+		portraitFrame[textureType]:SetAllPoints(portraitFrame)
+	end
+
+	local mirror = portraitFrame.settings.mirror
+	portraitFrame[textureType]:SetTexture(texture, "CLAMP", "CLAMP", "TRILINEAR")
+	if reverse ~= nil then mirror = reverse end
+	mirrorTexture(portraitFrame[textureType], mirror, portraitFrame.textures.flipp)
+
+	if color then setColor(portraitFrame[textureType], color, mirror) end
+end
+
+local function UpdateExtraTexture(portraitFrame, classification)
+	-- Texture
+	local extraTextures = portraitFrame.textures[classification].texture
+	portraitFrame.extra:SetTexture(extraTextures, "CLAMP", "CLAMP", "TRILINEAR")
+
+	-- Border
+	if E.db.mMT.portraits.shadow.border then
+		extraTextures = portraitFrame.textures[classification].border
+		portraitFrame.extraBorder:SetTexture(extraTextures, "CLAMP", "CLAMP", "TRILINEAR")
+	end
+
+	-- Shadow
+	if E.db.mMT.portraits.shadow.enable then
+		extraTextures = portraitFrame.textures[classification].shadow
+		portraitFrame.extraShadow:SetTexture(extraTextures, "CLAMP", "CLAMP", "TRILINEAR")
+	end
+end
+
 local function CheckRareElite(frame, unit)
-	local c = UnitClassification(unit)
+	local c = UnitClassification(unit) --"worldboss", "rareelite", "elite", "rare", "normal", "trivial", or "minus"
+
+	if c == "worldboss" then c = "boss" end
 	local color = colors[c]
 
 	if color then
+		UpdateExtraTexture(frame, c)
 		setColor(frame.extra, color)
 		if E.db.mMT.portraits.shadow.enable and frame.extraShadow then frame.extraShadow:Show() end
 		if E.db.mMT.portraits.shadow.border and frame.extraBorder then frame.extraBorder:Show() end
@@ -162,18 +197,6 @@ local function CheckRareElite(frame, unit)
 		if E.db.mMT.portraits.shadow.border and frame.extraBorder then frame.extraBorder:Hide() end
 		frame.extra:Hide()
 	end
-end
-
-local function UpdateTexture(portraitFrame, textureType, texture, level, color, reverse)
-	if not portraitFrame[textureType] then
-		portraitFrame[textureType] = portraitFrame:CreateTexture("mMT_" .. textureType, "OVERLAY", nil, level)
-		portraitFrame[textureType]:SetAllPoints(portraitFrame)
-	end
-
-	portraitFrame[textureType]:SetTexture(texture, "CLAMP", "CLAMP", "TRILINEAR")
-	mirrorTexture(portraitFrame[textureType], (reverse or portraitFrame.settings.mirror), portraitFrame.textures.flipp)
-
-	if color then setColor(portraitFrame[textureType], color, portraitFrame.settings.mirror) end
 end
 
 local function UpdatePortrait(portraitFrame, force)
@@ -242,12 +265,12 @@ local function UpdatePortrait(portraitFrame, force)
 	portraitFrame.mask:SetTexture(texture, "CLAMPTOBLACKADDITIVE", "CLAMPTOBLACKADDITIVE")
 
 	-- Class Icon Background
-	if (E.db.mMT.portraits.general.classicons or portraitFrame.textures.flipp) and not portraitFrame.iconbg then
-		local color = (portraitFrame.textures.flipp and not E.db.mMT.portraits.general.classicons) and { r = 0, g = 0, b = 0, a = 1 }
-			or (E.db.mMT.portraits.shadow.classBG and getColor(unit) or E.db.mMT.portraits.shadow.background)
-		UpdateTexture(portraitFrame, "iconbg", bg_textures[E.db.mMT.portraits.general.bgstyle], -5, color)
-		portraitFrame.iconbg:AddMaskTexture(portraitFrame.mask)
-	end
+	--if (E.db.mMT.portraits.general.classicons or portraitFrame.textures.flipp) and not portraitFrame.iconbg then
+	local color = { r = 0, g = 0, b = 0, a = 1 }
+	if E.db.mMT.portraits.general.classicons then color = (E.db.mMT.portraits.shadow.classBG and getColor(unit) or E.db.mMT.portraits.shadow.background) end
+	UpdateTexture(portraitFrame, "iconbg", bg_textures[E.db.mMT.portraits.general.bgstyle], -5, color)
+	portraitFrame.iconbg:AddMaskTexture(portraitFrame.mask)
+	--end
 
 	-- Portrait Shadow
 	if E.db.mMT.portraits.shadow.enable then
@@ -293,7 +316,7 @@ local function UpdatePortrait(portraitFrame, force)
 			portraitFrame.extraShadow:Hide()
 		end
 
-		portraitFrame.extra:Hide()
+		CheckRareElite(portraitFrame, unit)
 	end
 
 	-- Corner

@@ -35,6 +35,14 @@ local style = {
 	c = "METALLIC",
 }
 
+local extraStyle = {
+	a = L["Style"] .. " A",
+	b = L["Style"] .. " B",
+	c = L["Style"] .. " C",
+	d = L["Style"] .. " D",
+	e = L["Style"] .. " E",
+}
+
 local ClassIconStyle = {
 	BLIZZARD = "Blizzard",
 }
@@ -119,28 +127,6 @@ local function configTable()
 									end,
 									values = ClassIconStyle,
 								},
-								select_texture = {
-									order = 3,
-									type = "select",
-									name = L["Background Texture"],
-									disabled = function()
-										return not E.db.mMT.portraits.general.classicons
-									end,
-									get = function(info)
-										return E.db.mMT.portraits.general.bgstyle
-									end,
-									set = function(info, value)
-										E.db.mMT.portraits.general.bgstyle = value
-										mMT.Modules.Portraits:Initialize()
-									end,
-									values = {
-										[1] = L["Style"] .. " 1",
-										[2] = L["Style"] .. " 2",
-										[3] = L["Style"] .. " 3",
-										[4] = L["Style"] .. " 4",
-										[5] = L["Style"] .. " 5",
-									},
-								},
 							},
 						},
 						gradient = {
@@ -222,36 +208,122 @@ local function configTable()
 					type = "group",
 					name = L["Texture Style"],
 					args = {
-						select_style = {
+						header_portrait_texture = {
 							order = 1,
-							type = "select",
-							name = L["Texture Style"],
-							get = function(info)
-								return E.db.mMT.portraits.general.style
-							end,
-							set = function(info, value)
-								E.db.mMT.portraits.general.style = value
-								mMT.Modules.Portraits:Initialize()
-							end,
-							values = style,
+							type = "group",
+							name = L["Portrait Texture"],
+							inline = true,
+							args = {
+								select_style = {
+									order = 1,
+									type = "select",
+									name = L["Texture Style"],
+									get = function(info)
+										return E.db.mMT.portraits.general.style
+									end,
+									set = function(info, value)
+										E.db.mMT.portraits.general.style = value
+										mMT.Modules.Portraits:Initialize()
+									end,
+									values = style,
+								},
+								toggle_corner = {
+									order = 2,
+									type = "toggle",
+									name = L["Enable Corner"],
+									get = function(info)
+										return E.db.mMT.portraits.general.corner
+									end,
+									set = function(info, value)
+										E.db.mMT.portraits.general.corner = value
+										mMT.Modules.Portraits:Initialize()
+									end,
+								},
+							},
 						},
-						toggle_corner = {
+						header_rare_texture = {
 							order = 2,
-							type = "toggle",
-							name = L["Enable Corner"],
-							get = function(info)
-								return E.db.mMT.portraits.general.corner
-							end,
-							set = function(info, value)
-								E.db.mMT.portraits.general.corner = value
-								mMT.Modules.Portraits:Initialize()
-							end,
+							type = "group",
+							name = L["Extra Texture Style"],
+							inline = true,
+							args = {
+								select_style_rare = {
+									order = 1,
+									type = "select",
+									name = L["Rare Texture Style"],
+									get = function(info)
+										return E.db.mMT.portraits.extra.rare
+									end,
+									set = function(info, value)
+										E.db.mMT.portraits.extra.rare = value
+										mMT.Modules.Portraits:Initialize()
+									end,
+									values = extraStyle,
+								},
+								select_style_elite = {
+									order = 2,
+									type = "select",
+									name = L["Elite/ Rare Elite Texture Style"],
+									get = function(info)
+										return E.db.mMT.portraits.extra.elite
+									end,
+									set = function(info, value)
+										E.db.mMT.portraits.extra.elite = value
+										mMT.Modules.Portraits:Initialize()
+									end,
+									values = extraStyle,
+								},
+								select_style_boss = {
+									order = 3,
+									type = "select",
+									name = L["Boss Texture Style"],
+									get = function(info)
+										return E.db.mMT.portraits.extra.boss
+									end,
+									set = function(info, value)
+										E.db.mMT.portraits.extra.boss = value
+										mMT.Modules.Portraits:Initialize()
+									end,
+									values = extraStyle,
+								},
+							},
+						},
+						header_bgtexture = {
+							order = 4,
+							type = "group",
+							name = L["Background Texture"],
+							inline = true,
+							args = {
+								select_texture = {
+									order = 3,
+									type = "select",
+									name = L["Background Texture"],
+									disabled = function()
+										return not E.db.mMT.portraits.general.classicons
+									end,
+									get = function(info)
+										return E.db.mMT.portraits.general.bgstyle
+									end,
+									set = function(info, value)
+										E.db.mMT.portraits.general.bgstyle = value
+										mMT.Modules.Portraits:Initialize()
+									end,
+									values = {
+										[1] = L["Style"] .. " 1",
+										[2] = L["Style"] .. " 2",
+										[3] = L["Style"] .. " 3",
+										[4] = L["Style"] .. " 4",
+										[5] = L["Style"] .. " 5",
+									},
+								},
+							},
 						},
 						custom = {
-							order = 3,
+							order = 5,
 							type = "group",
 							inline = true,
 							name = L["Custom Portrait Textures"],
+							inline = true,
 							args = {
 								toggle_enable = {
 									order = 1,
@@ -641,7 +713,7 @@ local function configTable()
 						},
 						range_octa = {
 							order = 7,
-							name = L["Octagon"],
+							name = L["New Textures"],
 							type = "range",
 							min = 0,
 							max = 10,
@@ -2988,8 +3060,44 @@ local function configTable()
 						},
 					},
 				},
-				enemy = {
+				boss = {
 					order = 20,
+					type = "group",
+					inline = true,
+					name = L["BOSS"],
+					args = {
+						color_a = {
+							type = "color",
+							order = 1,
+							name = "A",
+							hasAlpha = true,
+							get = function(info)
+								local t = E.db.mMT.portraits.colors.boss.a
+								return t.r, t.g, t.b, t.a
+							end,
+							set = function(info, r, g, b, a)
+								local t = E.db.mMT.portraits.colors.boss.a
+								t.r, t.g, t.b, t.a = r, g, b, a
+							end,
+						},
+						color_b = {
+							type = "color",
+							order = 2,
+							name = "B",
+							hasAlpha = true,
+							get = function(info)
+								local t = E.db.mMT.portraits.colors.boss.b
+								return t.r, t.g, t.b, t.a
+							end,
+							set = function(info, r, g, b, a)
+								local t = E.db.mMT.portraits.colors.boss.b
+								t.r, t.g, t.b, t.a = r, g, b, a
+							end,
+						},
+					},
+				},
+				enemy = {
+					order = 21,
 					type = "group",
 					inline = true,
 					name = L["ENEMY"],
@@ -3025,7 +3133,7 @@ local function configTable()
 					},
 				},
 				neutral = {
-					order = 21,
+					order = 22,
 					type = "group",
 					inline = true,
 					name = L["NEUTRAL"],
@@ -3061,7 +3169,7 @@ local function configTable()
 					},
 				},
 				friendly = {
-					order = 22,
+					order = 23,
 					type = "group",
 					inline = true,
 					name = L["FRIENDLY"],

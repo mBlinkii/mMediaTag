@@ -1201,21 +1201,25 @@ function mMT:GetTextures(style)
 				shadow = textures_source[style].rare.shadow,
 			}
 		else
+			local rareStyle = E.db.mMT.portraits.extra.rare
+			local eliteStyle = E.db.mMT.portraits.extra.elite
+			local bossStyle = E.db.mMT.portraits.extra.boss
+
 			tmp_db.offset = E.db.mMT.portraits.offset.new
 			tmp_db.rare = {
-				texture = textures_source[style].rare[rare].texture[variant],
-				border = textures_source[style].rare[rare].border,
-				shadow = textures_source[style].rare[rare].shadow,
+				texture = textures_source[style].rare[rareStyle].texture[variant],
+				border = textures_source[style].rare[rareStyle].border,
+				shadow = textures_source[style].rare[rareStyle].shadow,
 			}
 			tmp_db.elite = {
-				texture = textures_source[style].rare[elite].texture[variant],
-				border = textures_source[style].rare[elite].border,
-				shadow = textures_source[style].rare[elite].shadow,
+				texture = textures_source[style].rare[eliteStyle].texture[variant],
+				border = textures_source[style].rare[eliteStyle].border,
+				shadow = textures_source[style].rare[eliteStyle].shadow,
 			}
 			tmp_db.boss = {
-				texture = textures_source[style].rare[boss].texture[variant],
-				border = textures_source[style].rare[boss].border,
-				shadow = textures_source[style].rare[boss].shadow,
+				texture = textures_source[style].rare[bossStyle].texture[variant],
+				border = textures_source[style].rare[bossStyle].border,
+				shadow = textures_source[style].rare[bossStyle].shadow,
 			}
 		end
 	end
