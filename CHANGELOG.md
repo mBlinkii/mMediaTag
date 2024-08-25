@@ -5,14 +5,14 @@
 ## UPDATE
 
 ### FIX 
-- FIX [Portrait]: Corrected some swapped textures with the old textures.
-- FIX [Portrait]: Nil Error when disabling target of target Portrait.
+- FIX - [Portrait]: Corrected some swapped textures with the old textures.
+- FIX - [Portrait]: Nil Error when disabling target of target Portrait.
 ### NEW
-- NEW - Portraits: Rework of all Textures, the old one are also available.
-- NEW - Portraits: 3 new Portrait Textures (Shield; Octagon & Pure).
-- NEW - Portraits: Each Portrait Texture has now 5 different rare/eilte/boss borders.
-- NEW - Portraits: You can now chose a separate border texture for rare/eilte/boss (only available with the new Textures).
-- NEW - Portraits: Color for Boss Units.
+- NEW - [Portraits]: Rework of all Textures, the old one are also available.
+- NEW - [Portraits]: 3 new Portrait Textures (Shield; Octagon & Pure).
+- NEW - [Portraits]: Each Portrait Texture has now 5 different rare/eilte/boss borders.
+- NEW - [Portraits]: You can now chose a separate border texture for rare/eilte/boss (only available with the new Textures).
+- NEW - [Portraits]: Color for Boss Units.
 
 ## [ver. 3.53] - 19.08.2024
 ## IMPORTANT
