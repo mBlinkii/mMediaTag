@@ -1151,10 +1151,6 @@ function mMT:GetTextures(style)
 		OldSytleCheck()
 
 		local variant = E.db.mMT.portraits.general.style
-		local rare = E.db.mMT.portraits.extra.rare
-		local elite = E.db.mMT.portraits.extra.elite
-		local boss = E.db.mMT.portraits.extra.boss
-
 		local textures_source = old[style] and old_textures or textures
 
 		tmp_db.texture = textures_source[style].texture[variant]
