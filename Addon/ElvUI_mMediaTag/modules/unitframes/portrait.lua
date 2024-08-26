@@ -528,7 +528,6 @@ local function AddCastIcon(self)
 end
 
 local function RemovePortrait(unitPortrait)
-	mMT:Print(unitPortrait, unitPortrait and unitPortrait.name)
 	if unitPortrait and unitPortrait.allEvents then
 		for _, event in pairs(unitPortrait.allEvents) do
 			unitPortrait:UnregisterEvent(event)
