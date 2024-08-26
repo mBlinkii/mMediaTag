@@ -168,6 +168,9 @@ end
 
 local function UpdateExtraTexture(portraitFrame, classification)
 	-- Texture
+	if classification == "rareelite" then
+		classification = "rare"
+	end
 	local extraTextures = portraitFrame.textures[classification].texture
 	portraitFrame.extra:SetTexture(extraTextures, "CLAMP", "CLAMP", "TRILINEAR")
 
