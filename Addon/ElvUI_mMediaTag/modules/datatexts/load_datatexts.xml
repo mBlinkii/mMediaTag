@@ -20,4 +20,13 @@
 	<Script file="firstprof.lua"/>
 	<Script file="secondprof.lua"/>
 	<Script file="durability_ilevel.lua"/>
+
+	<Script file="c_tww_CarvedHarbingerCrest.lua"/>
+	<Script file="c_tww_GildedHarbingerCrest.lua"/>
+	<Script file="c_tww_ResidualMemories.lua"/>
+	<Script file="c_tww_ResonanceCrystals.lua"/>
+	<Script file="c_tww_RunedHarbingerCrest.lua"/>
+	<Script file="c_tww_RunedHarbingerCrest.lua"/>
+	<Script file="c_Valorstones.lua"/>
+	<Script file="c_WeatheredHarbingerCrest.lua"/>
 </Ui>
