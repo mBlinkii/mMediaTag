@@ -23,7 +23,12 @@ local bg_textures = {
 	unknown = "Interface\\Addons\\ElvUI_mMediaTag\\media\\portraits\\unknown.tga",
 }
 
-local bossIDs = {}
+local bossIDs = {
+	--db
+	[209230] = true,
+	[207205] = true,
+	[207207] = true,
+}
 
 local function mirrorTexture(texture, mirror, top)
 	if texture.classIcons then
@@ -194,7 +199,8 @@ end
 
 local function CheckRareElite(frame, unit)
 	local c = UnitClassification(unit) --"worldboss", "rareelite", "elite", "rare", "normal", "trivial", or "minus"
-	if c == "worldboss" or bossIDs[GetNPCID(unit)] then c = "boss" end
+	mMT:Print(GetNPCID(unit))
+	if c == "worldboss" or bossIDs[tonumber(GetNPCID(unit))] then c = "boss" end
 	local color = colors[c]
 
 	if color then
