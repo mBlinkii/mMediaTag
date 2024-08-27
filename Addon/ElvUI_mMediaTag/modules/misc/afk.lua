@@ -104,15 +104,11 @@ local function UpdateTexts()
 		tinsert(PlayerStats.values.lines, LEVEL .. ": |CFFFFFFFF" .. UnitLevel("player") .. "|r")
 		tinsert(PlayerStats.values.lines, ITEM_UPGRADE_STAT_AVERAGE_ITEM_LEVEL .. ": |CFFFFFFFF" .. mMT:round(GetAverageItemLevel() or 0) .. "|r")
 		tinsert(PlayerStats.values.lines, DURABILITY .. ": " .. DurabilityInfos.durability)
-		if DurabilityInfos.repair then
-			tinsert(PlayerStats.values.lines, REPAIR_COST .. " |CFFFFFFFF" .. DurabilityInfos.repair .. "|r")
-		end
+		if DurabilityInfos.repair then tinsert(PlayerStats.values.lines, REPAIR_COST .. " |CFFFFFFFF" .. DurabilityInfos.repair .. "|r") end
 
 		PlayerStats.progress.title = L["Progress"]
 
-		if E.Retail then
-			tinsert(PlayerStats.progress.lines, DUNGEON_SCORE .. ": " .. mMT:GetDungeonScore())
-		end
+		if E.Retail then tinsert(PlayerStats.progress.lines, DUNGEON_SCORE .. ": " .. mMT:GetDungeonScore()) end
 
 		PlayerStats.attributes.title = STAT_CATEGORY_ATTRIBUTES
 		PlayerStats.enhancements.title = STAT_CATEGORY_ENHANCEMENTS
@@ -121,12 +117,14 @@ local function UpdateTexts()
 			for line in _G.CharacterStatsPane.statsFramePool:EnumerateActive() do
 				local Label = line.Label:GetText()
 				local Value = line.Value:GetText()
-				local Percent = string.find(Value, "%%")
+				if Label and Value then
+					local Percent = string.find(Value, "%%")
 
-				if not Percent then
-					tinsert(PlayerStats.attributes.lines, Label .. " |CFFFFFFFF" .. Value .. "|r")
-				elseif Percent then
-					tinsert(PlayerStats.enhancements.lines, Label .. " |CFFFFFFFF" .. Value .. "|r")
+					if not Percent then
+						tinsert(PlayerStats.attributes.lines, Label .. " |CFFFFFFFF" .. Value .. "|r")
+					elseif Percent then
+						tinsert(PlayerStats.enhancements.lines, Label .. " |CFFFFFFFF" .. Value .. "|r")
+					end
 				end
 			end
 		end
