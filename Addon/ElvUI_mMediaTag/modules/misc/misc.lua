@@ -25,7 +25,7 @@ mMT.BossIDs = {
 
 	["211087"] = true,
 	["211089"] = true,
-	["224552"] = true,
+	["224552"] = true, --also raid boss Rasha'nan
 
 	["209230"] = true,
 	["207205"] = true,
@@ -35,6 +35,15 @@ mMT.BossIDs = {
 	["210156"] = true,
 	["213216"] = true,
 	["213119"] = true,
+
+	-- TWW Raid
+	["228713"] = true,
+	["214502"] = true,
+	["219853"] = true,
+	["214506"] = true,
+	["228470"] = true,
+	["223779"] = true,
+	["219778"] = true,
 
 	-- DF Dungeons
 	["189729"] = true,
