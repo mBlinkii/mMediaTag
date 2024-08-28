@@ -194,8 +194,7 @@ end
 
 local function CheckRareElite(frame, unit)
 	local c = UnitClassification(unit) --"worldboss", "rareelite", "elite", "rare", "normal", "trivial", or "minus"
-	mMT:Print(GetNPCID(unit))
-	if c == "worldboss" or bossIDs[tonumber(GetNPCID(unit))] then c = "boss" end
+	if c == "worldboss" or bossIDs[GetNPCID(unit)] then c = "boss" end
 	local color = colors[c]
 
 	if color then
