@@ -19506,7 +19506,8 @@
         "HEALER_ICON",
         "DPS_ICON",
         "mMT",
-        "mMTDB"
+        "mMTDB",
+        "_TAGS"
   ],
   "diagnostics.disable": ["deprecated", "inject-field", "undefined-field",
         "cast-local-type"]

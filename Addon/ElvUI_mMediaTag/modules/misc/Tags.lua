@@ -81,186 +81,7 @@ local icons = {
 	},
 }
 
-local BossIDs = {
-	-- DF Dungeons
-	["189729"] = true,
-	["189727"] = true,
-	["189722"] = true,
-	["189719"] = true,
-
-	["186125"] = true,
-	["186124"] = true,
-	["186122"] = true,
-	["186121"] = true,
-	["186120"] = true,
-	["186116"] = true,
-
-	["184582"] = true,
-	["184581"] = true,
-	["184580"] = true,
-	["184422"] = true,
-	["184125"] = true,
-	["184124"] = true,
-	["184018"] = true,
-
-	["189901"] = true,
-	["189478"] = true,
-	["189340"] = true,
-	["181861"] = true,
-
-	["190485"] = true,
-	["190484"] = true,
-	["189232"] = true,
-	["188252"] = true,
-
-	["186616"] = true,
-	["186615"] = true,
-	["186339"] = true,
-	["186338"] = true,
-	["186151"] = true,
-
-	["186739"] = true,
-	["186738"] = true,
-	["186737"] = true,
-	["186644"] = true,
-
-	["196482"] = true,
-	["194181"] = true,
-	["191736"] = true,
-	["190609"] = true,
-
-	-- S2 Dungeons
-	["91007"] = true,
-	["91005"] = true,
-	["91004"] = true,
-	["91003"] = true,
-
-	["126983"] = true,
-	["126969"] = true,
-	["126848"] = true,
-	["126847"] = true,
-	["126845"] = true,
-	["126832"] = true,
-
-	["131318"] = true,
-	["131383"] = true,
-	["131817"] = true,
-	["133007"] = true,
-
-	["43878"] = true,
-	["43875"] = true,
-	["43873"] = true,
-
-	-- S3 Dungeons
-	["131527"] = true,
-	["131545"] = true,
-	["131667"] = true,
-	["131823"] = true,
-	["131824"] = true,
-	["131825"] = true,
-	["131863"] = true,
-	["131864"] = true,
-
-	["103344"] = true,
-	["96512"] = true,
-	["99192"] = true,
-	["99200"] = true,
-
-	["98542"] = true,
-	["98696"] = true,
-	["98949"] = true,
-	["98965"] = true,
-	["98970"] = true,
-
-	["122963"] = true,
-	["122965"] = true,
-	["122967"] = true,
-	["122968"] = true,
-
-	["81522"] = true,
-	["82682"] = true,
-	["83846"] = true,
-	["83892"] = true,
-	["83893"] = true,
-	["83894"] = true,
-
-	["213770"] = true,
-	["40586"] = true,
-	["40765"] = true,
-	["40788"] = true,
-	["40825"] = true,
-	["44566"] = true,
-
-	-- DF Dawn of the Infinite
-	["198933"] = true,
-	["198995"] = true,
-	["198996"] = true,
-	["198997"] = true,
-	["198998"] = true,
-	["198999"] = true,
-	["199000"] = true,
-	["201788"] = true,
-	["201790"] = true,
-	["201792"] = true,
-	["203678"] = true,
-	["203679"] = true,
-	["203861"] = true,
-	["204206"] = true,
-	["204449"] = true,
-	["208193"] = true,
-	["209207"] = true,
-	["209208"] = true,
-
-	-- DF Worldboss
-	["193532"] = true,
-	["193533"] = true,
-	["193534"] = true,
-	["193535"] = true,
-	["199853"] = true,
-	["203220"] = true,
-	["209574"] = true,
-
-	-- DF Raid Vault of the Incarnates
-	["190496"] = true,
-	["190245"] = true,
-	["189813"] = true,
-	["189492"] = true,
-	["187967"] = true,
-	["187772"] = true,
-	["187771"] = true,
-	["187768"] = true,
-	["187767"] = true,
-	["184986"] = true,
-	["184972"] = true,
-
-	-- DF Raid Aberrus
-	["205319"] = true,
-	["204223"] = true,
-	["202637"] = true,
-	["201934"] = true,
-	["201774"] = true,
-	["201773"] = true,
-	["201579"] = true,
-	["201320"] = true,
-	["201261"] = true,
-	["200918"] = true,
-	["200913"] = true,
-	["200912"] = true,
-	["199659"] = true,
-
-	-- DF Raid Amirdrassil
-	["200926"] = true,
-	["200927"] = true,
-	["204931"] = true,
-	["206172"] = true,
-	["208363"] = true,
-	["208365"] = true,
-	["208367"] = true,
-	["208445"] = true,
-	["208478"] = true,
-	["209090"] = true,
-	["209333"] = true,
-}
+local bossIDs = mMT.BossIDs
 
 function mMT:UpdateTagSettings()
 	colors = {
@@ -481,7 +302,7 @@ E:AddTag("mClass:icon", "UNIT_CLASSIFICATION_CHANGED", function(unit)
 	local guid = UnitGUID(unit)
 	local npcID = guid and select(6, strsplit("-", guid))
 
-	c = (npcID and BossIDs[npcID]) and "worldboss" or c
+	c = (npcID and bossIDs[npcID]) and "worldboss" or c
 	return c and icons[c] or ""
 end)
 
@@ -489,7 +310,7 @@ E:AddTag("mClass:icon:boss", "UNIT_CLASSIFICATION_CHANGED", function(unit)
 	local c = UnitClassification(unit)
 	local guid = UnitGUID(unit)
 	local npcID = guid and select(6, strsplit("-", guid))
-	c = (npcID and BossIDs[npcID]) and "worldboss" or c
+	c = (npcID and bossIDs[npcID]) and "worldboss" or c
 
 	return (c and c == "worldboss") and icons.worldboss or ""
 end)
@@ -503,7 +324,7 @@ E:AddTag("mClass:icon:noelite", "UNIT_CLASSIFICATION_CHANGED", function(unit)
 	local c = UnitClassification(unit)
 	local guid = UnitGUID(unit)
 	local npcID = guid and select(6, strsplit("-", guid))
-	c = (npcID and BossIDs[npcID]) and "worldboss" or c
+	c = (npcID and bossIDs[npcID]) and "worldboss" or c
 	return (c and c ~= "elite") and icons[c] or ""
 end)
 
@@ -614,7 +435,7 @@ E:AddTag("mColor", "UNIT_NAME_UPDATE UNIT_FACTION UNIT_CLASSIFICATION_CHANGED", 
 	if not unitPlayer then
 		local guid = UnitGUID(unit)
 		local npcID = guid and select(6, strsplit("-", guid))
-		c = (npcID and BossIDs[npcID]) and "worldboss" or c
+		c = (npcID and bossIDs[npcID]) and "worldboss" or c
 	end
 
 	return unitPlayer and _TAGS.classcolor(unit) or c and colors[c] or _TAGS.classcolor(unit)
@@ -638,7 +459,7 @@ E:AddTag("mColor:target", "UNIT_TARGET", function(unit)
 	if not unitPlayer then
 		local guid = UnitGUID(unit)
 		local npcID = guid and select(6, strsplit("-", guid))
-		c = (npcID and BossIDs[npcID]) and "worldboss" or c
+		c = (npcID and bossIDs[npcID]) and "worldboss" or c
 	end
 
 	return unitPlayer and _TAGS.classcolor(target) or c and colors[c] or _TAGS.classcolor(target)

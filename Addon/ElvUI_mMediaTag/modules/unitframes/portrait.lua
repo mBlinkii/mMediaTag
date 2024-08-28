@@ -23,12 +23,7 @@ local bg_textures = {
 	unknown = "Interface\\Addons\\ElvUI_mMediaTag\\media\\portraits\\unknown.tga",
 }
 
-local bossIDs = {
-	--db
-	[209230] = true,
-	[207205] = true,
-	[207207] = true,
-}
+local bossIDs = mMT.BossIDs
 
 local function mirrorTexture(texture, mirror, top)
 	if texture.classIcons then
