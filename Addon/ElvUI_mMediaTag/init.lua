@@ -35,6 +35,7 @@ mMT.firstLoad = 0
 mMT.Classes = { "DEATHKNIGHT", "DEMONHUNTER", "DRUID", "EVOKER", "HUNTER", "MAGE", "MONK", "PALADIN", "PRIEST", "ROGUE", "SHAMAN", "WARLOCK", "WARRIOR" }
 mMT.Locales = LibStub("AceLocale-3.0"):GetLocale("mMediaTag")
 mMT.Changelog = {}
+mMT.BossIDs = {}
 
 mMT.Modules.Portraits = {}
 mMT.Modules.SummonIcon = {}
