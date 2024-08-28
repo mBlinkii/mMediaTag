@@ -746,3 +746,5 @@ L["Pure"] = true
 L["Shield"] = true
 L["Info! These styles are only available for the new textures."] = true
 L["Textures & Styles"] = true
+L["If your texture or the cutout for the portrait is not symmetrical in the middle, you need a 2nd mask texture, which must be exactly mirror-inverted. Use the 2nd mask texture for this."] = true
+L["Optional textures, these textures are not mandatory, but improve the appearance of the portraits."] = true
