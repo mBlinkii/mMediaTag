@@ -61,12 +61,14 @@ end
 
 local cachedFaction = {}
 
-local function getColor(unit)
+local function getColor(unit, isPlayer)
 	local defaultColor = colors.default
+
+	if isPlayer == nil then isPlayer = UnitIsPlayer(unit) end
 
 	if E.db.mMT.portraits.general.default then return defaultColor end
 
-	if UnitIsPlayer(unit) or (E.Retail and UnitInPartyIsAI(unit)) then
+	if isPlayer or (E.Retail and UnitInPartyIsAI(unit)) then
 		if E.db.mMT.portraits.general.reaction then
 			local playerFaction = cachedFaction.player or select(1, UnitFactionGroup("player"))
 			cachedFaction.player = playerFaction
@@ -168,9 +170,7 @@ end
 
 local function UpdateExtraTexture(portraitFrame, classification)
 	-- Texture
-	if classification == "rareelite" then
-		classification = "rare"
-	end
+	if classification == "rareelite" then classification = "rare" end
 	local extraTextures = portraitFrame.textures[classification].texture
 	portraitFrame.extra:SetTexture(extraTextures, "CLAMP", "CLAMP", "TRILINEAR")
 
@@ -574,13 +574,14 @@ local function UnitEvent(self, event)
 		end
 	else
 		if not InCombatLockdown() and self:GetAttribute("unit") ~= unit then self:SetAttribute("unit", unit) end
+		local isPlayer = UnitIsPlayer(unit)
 
 		SetPortraits(self, unit, false, self.settings.mirror)
-		setColor(self.texture, getColor(unit), self.settings.mirror)
+		setColor(self.texture, getColor(unit, isPlayer), self.settings.mirror)
 
-		if E.db.mMT.portraits.general.corner and self.textures.corner then setColor(self.corner, getColor(unit), self.settings.mirror) end
+		if E.db.mMT.portraits.general.corner and self.textures.corner then setColor(self.corner, getColor(unit, isPlayer), self.settings.mirror) end
 
-		if self.settings.extraEnable and self.extra then CheckRareElite(self, unit) end
+		if self.settings.extraEnable and self.extra and not isPlayer then CheckRareElite(self, unit) end
 	end
 end
 
