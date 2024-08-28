@@ -19507,7 +19507,8 @@
         "DPS_ICON",
         "mMT",
         "mMTDB",
-        "_TAGS"
+        "_TAGS",
+        "PLAYERSPELLS_BUTTON"
   ],
   "diagnostics.disable": ["deprecated", "inject-field", "undefined-field",
         "cast-local-type"]

@@ -206,7 +206,7 @@ local function configTable()
 				header_style = {
 					order = 2,
 					type = "group",
-					name = L["Texture Style"],
+					name = L["Textures & Styles"],
 					args = {
 						header_portrait_texture = {
 							order = 1,
@@ -247,8 +247,18 @@ local function configTable()
 							name = L["Extra Texture Style"],
 							inline = true,
 							args = {
-								select_style_rare = {
+								desc_note = {
 									order = 1,
+									type = "description",
+									name = L["Info! These styles are only available for the new textures."],
+								},
+								desc_space = {
+									order = 2,
+									type = "description",
+									name = "\n\n",
+								},
+								select_style_rare = {
+									order = 3,
 									type = "select",
 									name = L["Rare Texture Style"],
 									get = function(info)
@@ -261,7 +271,7 @@ local function configTable()
 									values = extraStyle,
 								},
 								select_style_elite = {
-									order = 2,
+									order = 4,
 									type = "select",
 									name = L["Elite/ Rare Elite Texture Style"],
 									get = function(info)
@@ -274,7 +284,7 @@ local function configTable()
 									values = extraStyle,
 								},
 								select_style_boss = {
-									order = 3,
+									order = 5,
 									type = "select",
 									name = L["Boss Texture Style"],
 									get = function(info)
@@ -321,7 +331,6 @@ local function configTable()
 						custom = {
 							order = 5,
 							type = "group",
-							inline = true,
 							name = L["Custom Portrait Textures"],
 							inline = true,
 							args = {

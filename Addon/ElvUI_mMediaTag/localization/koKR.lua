@@ -744,3 +744,5 @@ L["Octagon"] = true
 L["Pure round"] = true
 L["Pure"] = true
 L["Shield"] = true
+L["Info! These styles are only available for the new textures."] = true
+L["Textures & Styles"] = true
