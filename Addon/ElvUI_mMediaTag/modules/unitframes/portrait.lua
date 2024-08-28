@@ -392,7 +392,7 @@ local function SetScripts(portrait, force)
 		-- party event
 		if portrait.isPartyFrame then
 			-- events for all party frames
-			local partyEvents = { "GROUP_ROSTER_UPDATE", "PARTY_MEMBER_ENABLE", "UNIT_MODEL_CHANGED", "UNIT_PORTRAIT_UPDATE", "UNIT_CONNECTION", "PLAYER_ROLES_ASSIGNED" } --"UNIT_FLAGS"
+			local partyEvents = { "GROUP_ROSTER_UPDATE", "PARTY_MEMBER_ENABLE", "UNIT_MODEL_CHANGED", "UNIT_PORTRAIT_UPDATE", "UNIT_CONNECTION", "PLAYER_ROLES_ASSIGNED", "UNIT_FLAGS" }
 			for _, event in ipairs(partyEvents) do
 				portrait:RegisterEvent(event)
 				tinsert(portrait.allEvents, event)
@@ -620,7 +620,7 @@ local function PartyUnitOnEnevt(self, event, eventUnit)
 	if not UnitExists(self.parent.unit) then return end
 
 	self.unit = self.parent.unit
-	if eventUnit == self.unit or event == "GROUP_ROSTER_UPDATE" or event == "PLAYER_ROLES_ASSIGNED" then UnitEvent(self, event) end
+	if eventUnit == self.unit or event == "GROUP_ROSTER_UPDATE" or event == "PLAYER_ROLES_ASSIGNED" or event == "UNIT_FLAGS" then UnitEvent(self, event) end
 end
 
 local function OtherUnitOnEnevt(self, event, eventUnit)
