@@ -192,6 +192,12 @@ local function GetNPCID(unit)
 	return guid and select(6, strsplit("-", guid))
 end
 
+local function HideRareElite(frame)
+	if E.db.mMT.portraits.shadow.enable and frame.extraShadow then frame.extraShadow:Hide() end
+	if E.db.mMT.portraits.shadow.border and frame.extraBorder then frame.extraBorder:Hide() end
+	frame.extra:Hide()
+end
+
 local function CheckRareElite(frame, unit)
 	local c = UnitClassification(unit) --"worldboss", "rareelite", "elite", "rare", "normal", "trivial", or "minus"
 	if c == "worldboss" or bossIDs[GetNPCID(unit)] then c = "boss" end
@@ -204,9 +210,7 @@ local function CheckRareElite(frame, unit)
 		if E.db.mMT.portraits.shadow.border and frame.extraBorder then frame.extraBorder:Show() end
 		frame.extra:Show()
 	else
-		if E.db.mMT.portraits.shadow.enable and frame.extraShadow then frame.extraShadow:Hide() end
-		if E.db.mMT.portraits.shadow.border and frame.extraBorder then frame.extraBorder:Hide() end
-		frame.extra:Hide()
+		HideRareElite(frame)
 	end
 end
 
@@ -580,7 +584,11 @@ local function UnitEvent(self, event)
 
 		if E.db.mMT.portraits.general.corner and self.textures.corner then setColor(self.corner, getColor(unit, isPlayer), self.settings.mirror) end
 
-		if self.settings.extraEnable and self.extra and not isPlayer then CheckRareElite(self, unit) end
+		if self.settings.extraEnable and self.extra and not isPlayer then
+			CheckRareElite(self, unit)
+		else
+			HideRareElite(self)
+		end
 	end
 end
 
