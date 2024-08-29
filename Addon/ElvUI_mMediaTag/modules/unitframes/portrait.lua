@@ -567,9 +567,7 @@ local function UnitEvent(self, event)
 
 	local unit = self.unit
 
-	if self.isCasting and not CastIcon(self) then self.isCasting = false end
-
-	if castStoped[event] then
+	if castStoped[event] or (self.isCasting and not CastIcon(self)) then
 		if self.isCasting then
 			SetPortraits(self, unit, false, self.settings.mirror)
 			self.isCasting = false
