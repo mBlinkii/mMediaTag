@@ -564,7 +564,7 @@ local function UnitEvent(self, event)
 			SetPortraits(self, unit, false, self.settings.mirror)
 			self.isCasting = false
 		end
-	elseif castStarted[event] then
+	elseif self.isCasting or castStarted[event] then
 		if self.settings.cast or self.isCasting then
 			self.empowering = (event == "UNIT_SPELLCAST_EMPOWER_START")
 			self.isCasting = true
