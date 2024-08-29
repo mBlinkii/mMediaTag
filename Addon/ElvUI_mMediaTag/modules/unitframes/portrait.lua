@@ -617,6 +617,7 @@ local function shouldHandleEvent(event, eventUnit, self)
 end
 
 local function PartyUnitOnEnevt(self, event, eventUnit)
+	mMT:Print(event, self.unit, self.parent.unit, eventUnit)
 	if not UnitExists(self.parent.unit) then return end
 
 	self.unit = self.parent.unit

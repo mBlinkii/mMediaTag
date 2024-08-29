@@ -34,6 +34,7 @@ mMT.BossIDs = {
 	["210108"] = true,
 	["210156"] = true,
 	["213216"] = true,
+	["213217"] = true,
 	["213119"] = true,
 
 	-- TWW Raid
