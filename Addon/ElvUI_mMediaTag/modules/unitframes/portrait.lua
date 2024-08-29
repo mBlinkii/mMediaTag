@@ -586,7 +586,7 @@ local function UnitEvent(self, event)
 
 		if self.settings.extraEnable and self.extra and not isPlayer then
 			CheckRareElite(self, unit)
-		else
+		elseif self.extra then
 			HideRareElite(self)
 		end
 	end
