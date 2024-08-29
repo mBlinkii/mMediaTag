@@ -518,11 +518,15 @@ local function UpdateAllPortraits(force)
 	end
 end
 
+local function CastIcon(self)
+	-- local texture = select(3, UnitCastingInfo(self.unit))
+
+	-- if not texture then texture = select(3, UnitChannelInfo(self.unit)) end
+	return select(3, UnitCastingInfo(self.unit)) or select(3, UnitChannelInfo(self.unit))
+end
+
 local function AddCastIcon(self)
-	local texture = select(3, UnitCastingInfo(self.unit))
-
-	if not texture then texture = select(3, UnitChannelInfo(self.unit)) end
-
+	local texture = CastIcon(self)
 	if texture then
 		self.portrait:SetTexture(texture)
 		if self.portrait.classIcons then
@@ -563,12 +567,15 @@ local function UnitEvent(self, event)
 
 	local unit = self.unit
 
+	if self.isCasting and not CastIcon(self) then self.isCasting = false end
+
 	if castStoped[event] then
 		if self.isCasting then
 			SetPortraits(self, unit, false, self.settings.mirror)
 			self.isCasting = false
 		end
 	elseif self.isCasting or castStarted[event] then
+		mMT:Print(event)
 		if self.settings.cast or self.isCasting then
 			self.empowering = (event == "UNIT_SPELLCAST_EMPOWER_START")
 			self.isCasting = true
