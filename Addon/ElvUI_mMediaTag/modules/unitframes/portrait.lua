@@ -562,16 +562,29 @@ local castStoped = {
 	UNIT_SPELLCAST_EMPOWER_STOP = true,
 }
 
+local function UpdatePortraitTexture(self, unit)
+	if not InCombatLockdown() and self:GetAttribute("unit") ~= unit then self:SetAttribute("unit", unit) end
+	local isPlayer = UnitIsPlayer(unit)
+
+	SetPortraits(self, unit, false, self.settings.mirror)
+	setColor(self.texture, getColor(unit, isPlayer), self.settings.mirror)
+
+	if E.db.mMT.portraits.general.corner and self.textures.corner then setColor(self.corner, getColor(unit, isPlayer), self.settings.mirror) end
+
+	if self.settings.extraEnable and self.extra and not isPlayer then
+		CheckRareElite(self, unit)
+	elseif self.extra then
+		HideRareElite(self)
+	end
+end
 local function UnitEvent(self, event)
 	if mMT.DevMode then mMT:Print("Script:", self.unit, self.parent.unit, "Unit Exists:", UnitExists(self.unit), UnitExists(self.parent.unit)) end
 
 	local unit = self.unit
 
 	if castStoped[event] or (self.isCasting and not CastIcon(self)) then
-		if self.isCasting then
-			SetPortraits(self, unit, false, self.settings.mirror)
-			self.isCasting = false
-		end
+		self.isCasting = false
+		UpdatePortraitTexture(self, unit)
 	elseif self.isCasting or castStarted[event] then
 		if self.settings.cast or self.isCasting then
 			self.empowering = (event == "UNIT_SPELLCAST_EMPOWER_START")
@@ -580,19 +593,7 @@ local function UnitEvent(self, event)
 			AddCastIcon(self)
 		end
 	else
-		if not InCombatLockdown() and self:GetAttribute("unit") ~= unit then self:SetAttribute("unit", unit) end
-		local isPlayer = UnitIsPlayer(unit)
-
-		SetPortraits(self, unit, false, self.settings.mirror)
-		setColor(self.texture, getColor(unit, isPlayer), self.settings.mirror)
-
-		if E.db.mMT.portraits.general.corner and self.textures.corner then setColor(self.corner, getColor(unit, isPlayer), self.settings.mirror) end
-
-		if self.settings.extraEnable and self.extra and not isPlayer then
-			CheckRareElite(self, unit)
-		elseif self.extra then
-			HideRareElite(self)
-		end
+		UpdatePortraitTexture(self, unit)
 	end
 end
 
