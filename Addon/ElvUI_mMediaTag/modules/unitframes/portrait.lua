@@ -642,7 +642,6 @@ local function PartyUnitOnEnevt(self, event, eventUnit)
 end
 
 local function BossUnitOnEvent(self, event, eventUnit)
-	mMT:Print(event, self.parent.unit, eventUnit)
 	if not UnitExists(self.parent.unit) then return end
 
 	if eventUnit == self.unit or event == "INSTANCE_ENCOUNTER_ENGAGE_UNIT" then UnitEvent(self, event) end
