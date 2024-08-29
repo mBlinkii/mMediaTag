@@ -573,7 +573,6 @@ local function UnitEvent(self, event)
 			self.isCasting = false
 		end
 	elseif self.isCasting or castStarted[event] then
-		mMT:Print(event)
 		if self.settings.cast or self.isCasting then
 			self.empowering = (event == "UNIT_SPELLCAST_EMPOWER_START")
 			self.isCasting = true
