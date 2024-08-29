@@ -392,7 +392,7 @@ local function SetScripts(portrait, force)
 		-- party event
 		if portrait.isPartyFrame then
 			-- events for all party frames
-			local partyEvents = { "GROUP_ROSTER_UPDATE", "PARTY_MEMBER_ENABLE", "UNIT_MODEL_CHANGED", "UNIT_PORTRAIT_UPDATE", "UNIT_CONNECTION", "PLAYER_ROLES_ASSIGNED", "UNIT_FLAGS" }
+			local partyEvents = { "GROUP_ROSTER_UPDATE", "PARTY_MEMBER_ENABLE", "UNIT_MODEL_CHANGED", "UNIT_PORTRAIT_UPDATE", "UNIT_CONNECTION" }
 			for _, event in ipairs(partyEvents) do
 				portrait:RegisterEvent(event)
 				tinsert(portrait.allEvents, event)
@@ -611,39 +611,75 @@ end
 local function shouldHandleEvent(event, eventUnit, self)
 	return (event == "UNIT_TARGET" and (eventUnit == "player" or eventUnit == "target" or eventUnit == "targettarget"))
 		or (event == "PLAYER_TARGET_CHANGED" and (self.unit == "target" or self.unit == "targettarget"))
-		or event == "PLAYER_FOCUS_CHANGED"
-		or (event == "UNIT_EXITED_VEHICLE" or event == "UNIT_ENTERED_VEHICLE" or event == "VEHICLE_UPDATE")
+		or event == "PLAYER_FOCUS_CHANGED" and self.parent.unit == "focus"
 		or eventUnit == self.unit
 end
 
+local foceUpdateParty = {
+	UNIT_CONNECTION = true,
+	GROUP_ROSTER_UPDATE = true,
+	PARTY_MEMBER_ENABLE = true,
+}
+
 local function PartyUnitOnEnevt(self, event, eventUnit)
-	mMT:Print(event, self.unit, self.parent.unit, eventUnit)
 	if not UnitExists(self.parent.unit) then return end
 
 	self.unit = self.parent.unit
-	if eventUnit == self.unit or event == "GROUP_ROSTER_UPDATE" or event == "PLAYER_ROLES_ASSIGNED" or event == "UNIT_FLAGS" then UnitEvent(self, event) end
+	if eventUnit == self.unit or foceUpdateParty[event] then UnitEvent(self, event) end
 end
 
-local function OtherUnitOnEnevt(self, event, eventUnit)
-	if eventUnit == "vehicle" and (self.parent.unit == "player" or self.parent.unit == "pet") then
-		if self.parent.realUnit == "player" then self.unit = "pet" end
+local function BossUnitOnEvent(self, event, eventUnit)
+	mMT:Print(event, self.parent.unit, eventUnit)
+	if not UnitExists(self.parent.unit) then return end
 
+	if eventUnit == self.unit or event == "INSTANCE_ENCOUNTER_ENGAGE_UNIT" then UnitEvent(self, event) end
+end
+
+local function PlayerPetUnitOnEvent(self, event, eventUnit)
+	if not UnitExists(self.parent.unit) then return end
+
+	if eventUnit == "vehicle" then
+		if self.parent.realUnit == "player" then self.unit = "pet" end
 		if self.parent.realUnit == "pet" then self.unit = "player" end
 	else
 		self.unit = self.parent.unit
 	end
 
+	if eventUnit == self.unit or _G.ElvUF_Player.unit == "vehicle" or (event == "UNIT_EXITED_VEHICLE" or event == "UNIT_ENTERED_VEHICLE" or event == "VEHICLE_UPDATE") then UnitEvent(self, event) end
+end
+
+local function OtherUnitOnEnevt(self, event, eventUnit)
+	--mMT:Print(event, self.parent.unit, eventUnit)
 	if not UnitExists(self.unit) then return end
 
-	if shouldHandleEvent(event, eventUnit, self) or (_G.ElvUF_Player.unit == "vehicle") then UnitEvent(self, event) end
+	if shouldHandleEvent(event, eventUnit, self) then UnitEvent(self, event) end
 end
 
 local function CreatePortraits(name, unit, parentFrame, unitSettings, events, unitEvents)
+	local partyFrames = {
+		Party1 = true,
+		Party2 = true,
+		Party3 = true,
+		Party4 = true,
+		Party5 = true,
+	}
+	local bossFrames = {
+		Boss1 = true,
+		Boss2 = true,
+		Boss3 = true,
+		Boss4 = true,
+		Boss5 = true,
+		Boss6 = true,
+		Boss7 = true,
+		Boss8 = true,
+	}
+
 	if not module[name] then
 		module[name] = CreateFrame("Button", "mMT_Portrait_" .. name, parentFrame, "SecureUnitButtonTemplate") -- CreatePortrait(parentFrame, unitSettings, unit)
 		module[name].parent = parentFrame
 		module[name].unit = unit
-		module[name].isPartyFrame = (name == "Party1" or name == "Party2" or name == "Party3" or name == "Party4" or name == "Party5")
+		module[name].isPartyFrame = partyFrames[name]
+		module[name].isBossFrame = bossFrames[name]
 		module[name].events = events or nil
 		module[name].unitEvents = unitEvents or nil
 		module[name].allEvents = {}
@@ -657,6 +693,10 @@ local function CreatePortraits(name, unit, parentFrame, unitSettings, events, un
 	if module[name] and not module[name].scriptsSet then
 		if module[name].isPartyFrame then
 			module[name]:SetScript("OnEvent", PartyUnitOnEnevt)
+		elseif module[name].isBossFrame then
+			module[name]:SetScript("OnEvent", BossUnitOnEvent)
+		elseif name == "Player" or name == "Pet" then
+			module[name]:SetScript("OnEvent", PlayerPetUnitOnEvent)
 		else
 			module[name]:SetScript("OnEvent", OtherUnitOnEnevt)
 		end
