@@ -187,9 +187,7 @@ function mMT:updateAutoRange()
 	local _, class = UnitClass("player")
 	local spec = GetSpecialization()
 	local specID = GetSpecializationInfo(spec) or 0
-	if not (spec or class or specID) or specID == 0 then
-		return
-	end
+	if not (spec or class or specID) or specID == 0 then return end
 
 	if class == "MAGE" then
 		if specID == 62 then
@@ -199,14 +197,14 @@ function mMT:updateAutoRange()
 				executeAutoRange.spell = 384581
 			end
 		elseif specID == 63 then
-			if IsPlayerSpell(269644) then -- Touch
+			if IsPlayerSpell(2948) then -- Touch
 				executeAutoRange.enable = true
 				executeAutoRange.range = 30
 			end
 		end
 	elseif class == "WARLOCK" then
 		if specID == 265 then
-			if IsPlayerSpell(198590) then -- Souldrain
+			if IsPlayerSpell(388667) then -- Souldrain
 				executeAutoRange.enable = true
 				executeAutoRange.range = 20
 			end
@@ -222,22 +220,25 @@ function mMT:updateAutoRange()
 			executeAutoRange.range = 20
 		end
 	elseif class == "WARRIOR" then
-		local execute = (specID == 72) and 280735 or 163201
+		local execute = ((specID == 71) and 281000) or ((specID == 72) and 5308) or 163201
 		local massacre = (specID == 72) and 206315 or 281001
 		if IsPlayerSpell(execute) or IsPlayerSpell(massacre) then -- Execute or Massacre
 			executeAutoRange.enable = true
 			executeAutoRange.range = IsPlayerSpell(massacre) and 35 or 20
 		end
 	elseif class == "HUNTER" then
-		if IsPlayerSpell(273887) then
+		if (specID == 255) and IsPlayerSpell(203415) then -- fury of eagle
 			executeAutoRange.enable = true
-			executeAutoRange.range = 35
-		elseif IsPlayerSpell(53351) then
-			executeAutoRange.enable = true
-			executeAutoRange.range = 20
-		elseif IsPlayerSpell((specID == 255) and 320976 or 53351) then -- Kill shot
+			executeAutoRange.range = IsPlayerSpell(385718) and 35 or 20 -- Ruthless marauder
+		elseif (specID == 254) and IsPlayerSpell(204989) then -- Bull's eye
 			executeAutoRange.enable = true
 			executeAutoRange.range = 20
+		else
+			local killShot_Id = (specID == 255) and 320976 or 53351
+			if IsPlayerSpell(killShot_Id) then -- Kill shot
+				executeAutoRange.enable = true
+				executeAutoRange.range = 20
+			end
 		end
 	elseif class == "ROGUE" then
 		if specID == 259 then
@@ -378,13 +379,9 @@ local function mNameplateTools(table, event, frame)
 	if table.isNamePlate and (table.Health and table.Health.max) then
 		local percent = math.floor((table.Health.cur or 100) / table.Health.max * 100 + 0.5)
 
-		if E.db.mMT.nameplate.healthmarker.enable then
-			healthMarkers(table, percent)
-		end
+		if E.db.mMT.nameplate.healthmarker.enable then healthMarkers(table, percent) end
 
-		if E.Retail and E.db.mMT.nameplate.executemarker.enable then
-			executeMarker(table, percent)
-		end
+		if E.Retail and E.db.mMT.nameplate.executemarker.enable then executeMarker(table, percent) end
 	end
 end
 
