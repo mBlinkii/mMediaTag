@@ -285,12 +285,12 @@ local function GetKeystoneLevelandColor()
 	end
 end
 
-function mMT:GetDungeonInfo(datatext, short, stageBlock)
+function mMT:GetDungeonInfo(datatext, short, stageBlock, hideDelve)
 	local name, _, difficultyID, _, _, _, _, instanceID, instanceGroupSize, _ = GetInstanceInfo()
 	local _, InstanceType = IsInInstance()
 	name = shortNames[instanceID] or mMT:ShortName(name)
 
-	if name then
+	if name and not (hideDelve and difficultyID == 208) then
 		local text = ""
 		local difficultyColor = instanceDifficulty[difficultyID] and instanceDifficulty[difficultyID].c or "|CFFFFFFFF"
 		local difficultyShort = instanceDifficulty[difficultyID] and instanceDifficulty[difficultyID].d or ""

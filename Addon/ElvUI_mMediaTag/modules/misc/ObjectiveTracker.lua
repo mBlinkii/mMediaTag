@@ -481,7 +481,7 @@ local function CreateStageFrame(block, isChallengeMode)
 	if not mMT_StageBlock.Difficulty and not isChallengeMode then
 		local label = mMT_StageBlock:CreateFontString(nil, "OVERLAY")
 		SetTextProperties(label, fonts.title)
-		label:Point("TOPRIGHT", mMT_StageBlock, "BOTTOMRIGHT", -10, isChallengeMode and -10 or 20)
+		label:Point("TOPRIGHT", mMT_StageBlock, "TOPRIGHT", -10, -10)
 		label:SetJustifyH("RIGHT")
 		label:SetJustifyV("TOP")
 		label:SetText(mMT:GetDungeonInfo(false, false, true))
@@ -537,7 +537,7 @@ local function SkinStageBlock(stageBlock, scenarioID, scenarioType, widgetSetID,
 		if not stageBlock.mMT_StageBlock then
 			CreateStageFrame(stageBlock, C_ChallengeMode.GetActiveChallengeMapID())
 		else
-			if IsInInstance() and stageBlock.mMT_StageBlock and stageBlock.mMT_StageBlock.Difficulty then stageBlock.mMT_StageBlock.Difficulty:SetText(mMT:GetDungeonInfo(false, false, true)) end
+			if IsInInstance() and stageBlock.mMT_StageBlock and stageBlock.mMT_StageBlock.Difficulty then stageBlock.mMT_StageBlock.Difficulty:SetText(mMT:GetDungeonInfo(false, false, true, true)) end
 		end
 	end
 
