@@ -120,9 +120,9 @@ local function SetPortraits(frame, unit, masking, mirror)
 
 		if mMT.ElvUI_JiberishIcons.loaded and style ~= "BLIZZARD" then
 			coords = class and mMT.ElvUI_JiberishIcons.texCoords[class]
-			frame.portrait:SetTexture(mMT.ElvUI_JiberishIcons.path .. style)
+			frame.portrait:SetTexture(mMT.ElvUI_JiberishIcons.path .. style, "CLAMP", "CLAMP", "TRILINEAR")
 		else
-			frame.portrait:SetTexture("Interface\\WorldStateFrame\\Icons-Classes")
+			frame.portrait:SetTexture("Interface\\WorldStateFrame\\Icons-Classes", "CLAMP", "CLAMP", "TRILINEAR")
 		end
 
 		if frame.iconbg then UpdateIconBackground(frame.iconbg, unit, mirror) end
@@ -528,7 +528,7 @@ end
 local function AddCastIcon(self)
 	local texture = CastIcon(self)
 	if texture then
-		self.portrait:SetTexture(texture)
+		self.portrait:SetTexture(texture, "CLAMP", "CLAMP", "TRILINEAR")
 		if self.portrait.classIcons then
 			self.portrait.classIcons = nil
 			self.portrait.classCoords = nil
