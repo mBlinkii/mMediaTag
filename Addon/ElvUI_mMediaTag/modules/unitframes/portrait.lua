@@ -632,6 +632,7 @@ local foceUpdateParty = {
 	UNIT_CONNECTION = true,
 	GROUP_ROSTER_UPDATE = true,
 	PARTY_MEMBER_ENABLE = true,
+	PORTRAITS_UPDATED = true,
 }
 
 local function PartyUnitOnEnevt(self, event, eventUnit)
@@ -644,7 +645,7 @@ end
 local function BossUnitOnEvent(self, event, eventUnit)
 	if not UnitExists(self.parent.unit) then return end
 
-	if eventUnit == self.unit or event == "INSTANCE_ENCOUNTER_ENGAGE_UNIT" then UnitEvent(self, event) end
+	if eventUnit == self.unit or event == "INSTANCE_ENCOUNTER_ENGAGE_UNIT" or event == "PORTRAITS_UPDATED" then UnitEvent(self, event) end
 end
 
 local function PlayerPetUnitOnEvent(self, event, eventUnit)
