@@ -1,6 +1,8 @@
 # Changelog - ElvUI_mMediaTag
 [Eng] - All changes to this project will be documented in this file. The latest changes are at the top.
 
+## [ver. 3.55] - xx.09.2024
+
 ## [ver. 3.54] - 31.08.2024
 ## UPDATE
 - UPDATE - [Currency]: Removed old currency's.
