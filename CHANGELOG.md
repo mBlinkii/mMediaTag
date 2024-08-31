@@ -3,16 +3,27 @@
 
 ## [ver. 3.54] - xx.08.2024
 ## UPDATE
-
+- UPDATE - [Currency]: Removed old currency's.
+- UPDATE - [Execute-Marker]: Update Spells.
+- UPDATE - [Portraits]: Add some notes to Portraits Settings & cleaned up settings menu.
+- UPDATE - [Portraits]: Change default colors for Enemy.
+- UPDATE - [System]: Update TWW Boss IDs for TAGs & Portraits.
 ### FIX 
-- FIX - [Portrait]: Corrected some swapped textures with the old textures.
-- FIX - [Portrait]: Nil Error when disabling target of target Portrait.
+- FIX - [AFK]: Prevent Nil Error.
+- FIX - [Instance-Difficulty]: Text does not update correct with delves dungeons.
+- FIX - [Portraits]: Cast Icon could be replaced when changing portrait.
+- FIX - [Portraits]: Corrected some swapped textures with the old textures.
+- FIX - [Portraits]: Nil Error when disabling target of target Portrait.
+- FIX - [Portraits]: Nil Error with Rare/Eilte Borders.
+- FIX - [Portraits]: Party & Boss Portraits does not update correctly.
 ### NEW
-- NEW - [Portraits]: Rework of all Textures, the old one are also available.
-- NEW - [Portraits]: 3 new Portrait Textures (Shield; Octagon & Pure).
-- NEW - [Portraits]: Each Portrait Texture has now 5 different rare/eilte/boss borders.
-- NEW - [Portraits]: You can now chose a separate border texture for rare/eilte/boss (only available with the new Textures).
+- NEW - [Currency]: Add some Datatext for TWW currency's.
+- NEW - [Portraits]: 3 new Portrait Textures (Shield, Octagon & Pure).
 - NEW - [Portraits]: Color for Boss Units.
+- NEW - [Portraits]: Each Portrait Texture has now 5 different rare/eilte/boss borders.
+- NEW - [Portraits]: Rework of all Textures, the old one are also available.
+- NEW - [Portraits]: You can now chose a separate border texture for rare/eilte/boss (only available with the new Textures).
+- NEW - [System]: Settings Categories for Unitframes Mods like Portraits, Role Icons and so on.
 
 ## [ver. 3.53] - 19.08.2024
 ## IMPORTANT
