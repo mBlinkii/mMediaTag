@@ -1,5 +1,5 @@
 mMT.Changelog[354] = {
-	DATE = "DEV - Not",
+	DATE = "31.08.2024",
 	UPDATE = {
         "[Currency]: Removed old currency's.",
         "[Execute-Marker]: Update Spells.",
