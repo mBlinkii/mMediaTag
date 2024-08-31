@@ -537,9 +537,10 @@ local function SkinStageBlock(stageBlock, scenarioID, scenarioType, widgetSetID,
 		if not stageBlock.mMT_StageBlock then
 			CreateStageFrame(stageBlock, C_ChallengeMode.GetActiveChallengeMapID())
 		else
-			if IsInInstance() and stageBlock.mMT_StageBlock and stageBlock.mMT_StageBlock.Difficulty then stageBlock.mMT_StageBlock.Difficulty:SetText(mMT:GetDungeonInfo(false, false, true)) end
+			if IsInInstance() and stageBlock.mMT_StageBlock and stageBlock.mMT_StageBlock.Difficulty then stageBlock.mMT_StageBlock.Difficulty:SetText(mMT:GetDungeonInfo(false, false, true, true)) end
 		end
 	end
+
 	if stageBlock.WidgetContainer and stageBlock.WidgetContainer.widgetFrames then
 		for _, widgetFrame in pairs(stageBlock.WidgetContainer.widgetFrames) do
 			if widgetFrame.Frame then

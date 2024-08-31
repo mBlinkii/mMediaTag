@@ -4,7 +4,7 @@ local L = mMT.Locales
 local LSM = LibStub("LibSharedMedia-3.0")
 local tinsert = tinsert
 local function configTable()
-	E.Options.args.mMT.args.cosmetic.args.uftextures.args.textures.args = {
+	E.Options.args.mMT.args.unitframes.args.uftextures.args.textures.args = {
 		healthheader = {
 			order = 1,
 			type = "group",

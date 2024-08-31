@@ -1387,5 +1387,5 @@ mMT.Media.DockIcons = {
 	MAIL21 = "Interface\\AddOns\\ElvUI_mMediaTag\\media\\icons\\mail\\mail21.tga",
 	MAIL22 = "Interface\\AddOns\\ElvUI_mMediaTag\\media\\icons\\mail\\mail22.tga",
 
-	NOPROF = "Interface\\AddOns\\ElvUI_mMediaTag\\media\\dock\\material\\noprof.png",
+	NOPROF = "Interface\\AddOns\\ElvUI_mMediaTag\\media\\dock\\material\\noprof.tga",
 }

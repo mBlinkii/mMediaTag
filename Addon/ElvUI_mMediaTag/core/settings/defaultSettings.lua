@@ -578,6 +578,11 @@ P.mMT = {
 			maskb = "",
 			enable = false,
 		},
+		extra = {
+			rare = "a",
+			elite = "a",
+			boss = "a",
+		},
 		player = {
 			flippe = false,
 			cast = false,
@@ -715,6 +720,7 @@ P.mMT = {
 			MO = 5.5,
 			TH = 4,
 			CUSTOM = 5.5,
+			new = 3,
 		},
 		shadow = {
 			enable = true,
@@ -797,8 +803,12 @@ P.mMT = {
 				a = { r = 1, g = 0, b = 0.90, a = 1 },
 				b = { r = 0.62, g = 0, b = 0.36, a = 1 },
 			},
+			boss = {
+				a = { r = 0.78, g = 0.12, b = 0.12, a = 1 },
+				b = { r = 0.85, g = 0.25, b = 0.25, a = 1 },
+			},
 			enemy = {
-				a = { r = 0.12, g = 0.12, b = 0.78, a = 1 },
+				a = { r = 0.78, g = 0.12, b = 0.12, a = 1 },
 				b = { r = 0.85, g = 0.25, b = 0.25, a = 1 },
 			},
 			neutral = {

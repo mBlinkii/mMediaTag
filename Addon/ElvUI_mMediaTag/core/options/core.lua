@@ -280,8 +280,40 @@ local function configTable()
 						name = L["Tooltip Icon"],
 						args = {},
 					},
+					objectivetracker = {
+						order = 5,
+						type = "group",
+						name = L["Objective Tracker"],
+						hidden = function()
+							return not E.Retail
+						end,
+						childGroups = "tab",
+						args = {},
+					},
+					datapanels = {
+						order = 8,
+						type = "group",
+						name = L["Datapanels"],
+						childGroups = "tab",
+						args = {},
+					},
+					textures = {
+						order = 20,
+						type = "group",
+						name = L["Textures"],
+						args = {},
+					},
+				},
+			},
+			unitframes = {
+				order = 8,
+				type = "group",
+				name = L["Unitframes"],
+				icon = "Interface\\Addons\\ElvUI_mMediaTag\\media\\system\\unitframes.tga",
+				childGroups = "tab",
+				args = {
 					uftextures = {
-						order = 2,
+						order = 1,
 						type = "group",
 						name = L["Custom Unitframe Textures"],
 						childGroups = "tab",
@@ -301,7 +333,7 @@ local function configTable()
 						},
 					},
 					roleicons = {
-						order = 4,
+						order = 2,
 						type = "group",
 						name = L["Role Icons"],
 						hidden = function()
@@ -309,41 +341,18 @@ local function configTable()
 						end,
 						args = {},
 					},
-					objectivetracker = {
-						order = 5,
-						type = "group",
-						name = L["Objective Tracker"],
-						hidden = function()
-							return not E.Retail
-						end,
-						childGroups = "tab",
-						args = {},
-					},
 					unitframeicons = {
-						order = 6,
+						order = 3,
 						type = "group",
 						name = L["Unitframe Icons"],
 						childGroups = "tab",
 						args = {},
 					},
 					portraits = {
-						order = 7,
+						order = 4,
 						type = "group",
 						name = L["Portraits"],
 						childGroups = "tab",
-						args = {},
-					},
-					datapanels = {
-						order = 8,
-						type = "group",
-						name = L["Datapanels"],
-						childGroups = "tab",
-						args = {},
-					},
-					textures = {
-						order = 20,
-						type = "group",
-						name = L["Textures"],
 						args = {},
 					},
 				},
