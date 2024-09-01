@@ -528,7 +528,7 @@ end
 local function AddCastIcon(self)
 	local texture = CastIcon(self)
 	if texture then
-		self.portrait:SetTexture(texture, "CLAMP", "CLAMP", "TRILINEAR")
+		self.portrait:SetTexture(texture)
 		if self.portrait.classIcons then
 			self.portrait.classIcons = nil
 			self.portrait.classCoords = nil
