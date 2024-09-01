@@ -703,11 +703,6 @@ local function CreatePortraits(name, unit, parentFrame, unitSettings, events, un
 	module[name].settings = unitSettings
 	module[name].textures = mMT:GetTextures(unitSettings.texture)
 
-	if not module[name].settings or not  module[name].textures then
-		mMT:Print("ERROR! - Faild to load Portrait Settings!", name, "Settings:", module[name].settings, unitSettings, "Texture:", module[name].textures, unitSettings.texture)
-		return
-	end
-
 	-- add event function
 	if module[name] and not module[name].scriptsSet then
 		if module[name].isPartyFrame then

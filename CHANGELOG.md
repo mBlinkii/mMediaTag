@@ -1,7 +1,15 @@
 # Changelog - ElvUI_mMediaTag
 [Eng] - All changes to this project will be documented in this file. The latest changes are at the top.
 
-## [ver. 3.55] - xx.09.2024
+## [ver. 3.55] - 01.09.2024
+## UPDATE
+- UPDATE - [Datatext-Teleports]: Add TWW Dungeon Ports and & TWW S1.
+### FIX 
+- FIX - [DOCK]: Old API calls with LFG Icon & Weakly Rewards.
+- FIX - [Datatext-Dungeon]: Old API calls & Weakly Rewards.
+- FIX - [Datatext-Score]: Old API calls & Weakly Rewards.
+- FIX - [Portraits]: Bug with custom Textures.
+- FIX - [Portraits]: Cast Icon can causes a Game crash with Access Violation, big thx to Heyallo who helped me to troubleshoot this.
 
 ## [ver. 3.54] - 31.08.2024
 ## UPDATE

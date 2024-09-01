@@ -19,6 +19,7 @@ local credits = {
 	"|cffec1000Trenchy|r",
 	"Dalerija",
 	"ElioteMarcondes",
+	"Heyallo", -- thank you for the troubleshooting
 	"Pastafarian",
 	"Tukui Community - tukui.org",
 }
