@@ -156,7 +156,7 @@ end
 
 local function UpdateTexture(portraitFrame, textureType, texture, level, color, reverse)
 	if not portraitFrame[textureType] then
-		portraitFrame[textureType] = portraitFrame:CreateTexture("mMT_" .. textureType, "OVERLAY", nil, level)
+		portraitFrame[textureType] = portraitFrame:CreateTexture("mMT_" .. textureType .. "-" .. portraitFrame.name, "OVERLAY", nil, level)
 		portraitFrame[textureType]:SetAllPoints(portraitFrame)
 	end
 
