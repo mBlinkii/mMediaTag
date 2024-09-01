@@ -9,7 +9,7 @@
 - FIX - [Datatext-Dungeon]: Old API calls & Weakly Rewards.
 - FIX - [Datatext-Score]: Old API calls & Weakly Rewards.
 - FIX - [Portraits]: Bug with custom Textures.
-- FIX - [Portraits]: Cast Icon can causes a Game crash with Access Violation, big thx to Heyallo who helped me to troubleshoot this.
+- FIX - [Portraits]: Cast Icon can cause a Game crash with Access Violation, big thx to Heyallo who helped me to troubleshoot this.
 
 ## [ver. 3.54] - 31.08.2024
 ## UPDATE
