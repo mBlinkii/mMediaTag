@@ -19508,7 +19508,9 @@
         "mMT",
         "mMTDB",
         "_TAGS",
-        "PLAYERSPELLS_BUTTON"
+        "PLAYERSPELLS_BUTTON",
+        "DUNGEON_SCORE",
+        "GREAT_VAULT_REWARDS"
   ],
   "diagnostics.disable": ["deprecated", "inject-field", "undefined-field",
         "cast-local-type"]
