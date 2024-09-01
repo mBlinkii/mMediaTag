@@ -10,6 +10,7 @@ local format = format
 local _G = _G
 local IsInInstance = IsInInstance
 local PVEFrame_ToggleFrame = PVEFrame_ToggleFrame
+local UIParentLoadAddOn = UIParentLoadAddOn
 
 --Variables
 local mInstanceInfoText, keyText, mAffixesText, vaultinforaidText, vaultinfomplusText, vaultinfopvpText = {}, {}, {}, {}, {}, {}
@@ -255,7 +256,7 @@ local function OnClick(self, button)
 				PVEFrame_ToggleFrame("GroupFinderFrame", _G.LFDParentFrame)
 			elseif E.Retail then
 				if not _G.WeeklyRewardsFrame then
-					LoadAddOn("Blizzard_WeeklyRewards")
+					UIParentLoadAddOn("Blizzard_WeeklyRewards")
 				end
 				if _G.WeeklyRewardsFrame:IsVisible() then
 					_G.WeeklyRewardsFrame:Hide()
