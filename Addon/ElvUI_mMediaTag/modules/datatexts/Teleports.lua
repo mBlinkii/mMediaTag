@@ -193,30 +193,14 @@ local Teleports = {
 	season = {
 		available = false,
 		tps = {
-			-- S4
-			[393222] = "ULD", --path-of-the-watchers-legacy
-			[393256] = "RLP", --pfad-des-nestverteidigers
-			[393262] = "NO", --path-of-the-windswept-plains
-			[393267] = "BH", --path-of-the-rotting-woods
-			[393273] = "AA", --path-of-the-draconic-diploma
-			[393276] = "NELT", --path-of-the-obsidian-hoard
-			[393279] = "AV", --pfad-der-arkanen-geheimnisse
-			[393283] = "HOI", --path-of-the-titanic-reservoir
+			-- S1
 		},
 	},
 
-	df = {
+	tww = {
 		available = false,
 		tps = {
-			[424197] = "DOTI", --teleport-dawn-of-the-infinite
-			[393222] = "ULD", --path-of-the-watchers-legacy
-			[393256] = "RLP", --pfad-des-nestverteidigers
-			[393262] = "NO", --path-of-the-windswept-plains
-			[393267] = "BH", --path-of-the-rotting-woods
-			[393273] = "AA", --path-of-the-draconic-diploma
-			[393276] = "NELT", --path-of-the-obsidian-hoard
-			[393279] = "AV", --pfad-der-arkanen-geheimnisse
-			[393283] = "HOI", --path-of-the-titanic-reservoir
+
 		},
 	},
 
@@ -408,7 +392,7 @@ local function CheckIfAvailable()
 	mGetInfos(Teleports.toys, false, true, true, true)
 	mGetInfos(Teleports.engineering, false, true, true, true)
 	mGetInfos(Teleports.season, true, false, true, true)
-	mGetInfos(Teleports.df, true, false, true, true)
+	mGetInfos(Teleports.tww, true, false, true, true)
 	mGetInfos(Teleports.dungeonportals, true, false, true, true)
 	mGetInfos(Teleports.items, false, false, true, true)
 	mGetInfos(Teleports.spells, true, false, true, true)
@@ -440,10 +424,10 @@ local function mUpdateTPList(button)
 		tinsert(Teleports.menu, { text = "", isTitle = true, notClickable = true })
 	end
 
-	if Teleports.df.available and button == "LeftButton" then
-		tinsert(Teleports.menu, { text = format("%s%s|r", title, L["DF Dungeons"]), isTitle = true, notClickable = true })
+	if Teleports.tww.available and button == "LeftButton" then
+		tinsert(Teleports.menu, { text = format("%s%s|r", title, L["TWW Dungeons"]), isTitle = true, notClickable = true })
 
-		mGetInfos(Teleports.df, true, false, false, false)
+		mGetInfos(Teleports.tww, true, false, false, false)
 	end
 
 	if Teleports.dungeonportals.available and button == "MiddleButton" then
@@ -493,10 +477,10 @@ local function mTPTooltip()
 		mGetInfos(Teleports.season, true, false, true, false)
 	end
 
-	if Teleports.df.available then
+	if Teleports.tww.available then
 		DT.tooltip:AddLine(" ")
-		DT.tooltip:AddLine(L["DF Dungeons"])
-		mGetInfos(Teleports.df, true, false, true, false)
+		DT.tooltip:AddLine(L["TWW Dungeons"])
+		mGetInfos(Teleports.tww, true, false, true, false)
 	end
 
 	if Teleports.items.available or Teleports.spells.available then
