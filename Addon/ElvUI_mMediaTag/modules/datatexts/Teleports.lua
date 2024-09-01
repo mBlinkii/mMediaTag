@@ -194,13 +194,28 @@ local Teleports = {
 		available = false,
 		tps = {
 			-- S1
+			[442929] = "ARA", --teleport-ara-kara-city-of-echoes
+			[442927] = "COT", --teleport-city-of-threads
+			[442931] = "DB", --teleport-the-dawnbreaker
+			[442926] = "SV", --teleport-the-stonevault
+			[272264] = "SOB", --teleport-siege-of-boralus
+			[396121] = "GB", --teleport-grim-batol
+			[348533] = "true", --teleport-mists-of-tirna-scithe
+			[348529] = "NW", --teleport-the-necrotic-wake
 		},
 	},
 
 	tww = {
 		available = false,
 		tps = {
-
+			[442929] = "ARA", --teleport-ara-kara-city-of-echoes
+			[442927] = "COT", --teleport-city-of-threads
+			[442931] = "DB", --teleport-the-dawnbreaker
+			[442926] = "SV", --teleport-the-stonevault
+			[442932] = "CM", --teleport-cinderbrew-meadery
+			[442930] = "DC", --teleport-darkflame-cleft
+			[442923] = "POSF", --teleport-priory-of-the-sacred-flame
+			[442925] = "ROK", --teleport-the-rookery
 		},
 	},
 
