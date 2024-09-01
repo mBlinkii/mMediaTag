@@ -19,7 +19,6 @@ local C_MythicPlus_GetSeasonBestAffixScoreInfoForMap = C_MythicPlus.GetSeasonBes
 local C_ChallengeMode_GetMapUIInfo = C_ChallengeMode.GetMapUIInfo
 local C_MythicPlus_GetOwnedKeystoneLevel = C_MythicPlus.GetOwnedKeystoneLevel
 local C_ChallengeMode_GetDungeonScoreRarityColor = C_ChallengeMode.GetDungeonScoreRarityColor
-local UIParentLoadAddOn = UIParentLoadAddOn
 
 local tablesort = sort
 local displayString = ""
@@ -222,7 +221,7 @@ local function OnClick(self, button)
 		_G.PVEFrameTab3:Click()
 	else
 		if not _G.WeeklyRewardsFrame then
-			UIParentLoadAddOn("Blizzard_WeeklyRewards")
+			LoadAddOn("Blizzard_WeeklyRewards")
 		end
 		if _G.WeeklyRewardsFrame:IsVisible() then
 			_G.WeeklyRewardsFrame:Hide()

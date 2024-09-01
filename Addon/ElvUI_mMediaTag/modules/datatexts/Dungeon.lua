@@ -12,7 +12,6 @@ local _G = _G
 local IsInInstance = IsInInstance
 local C_MythicPlus = C_MythicPlus
 local C_ChallengeMode = C_ChallengeMode
-local UIParentLoadAddOn = UIParentLoadAddOn
 
 --Variables
 local mText = L["Dungeon"]
@@ -78,7 +77,7 @@ local function OnClick(self, button)
 		PVEFrame_ToggleFrame("GroupFinderFrame", _G.LFDParentFrame)
 	elseif E.Retail then
 		if not _G.WeeklyRewardsFrame then
-			UIParentLoadAddOn("Blizzard_WeeklyRewards")
+			LoadAddOn("Blizzard_WeeklyRewards")
 		end
 		if _G.WeeklyRewardsFrame:IsVisible() then
 			_G.WeeklyRewardsFrame:Hide()
