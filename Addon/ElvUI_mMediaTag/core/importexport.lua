@@ -10,15 +10,14 @@ function GetImportStringType(dataString)
 	return (strmatch(dataString, "^" .. exportPrefix) and "Deflate") or (strmatch(dataString, "^{") and "Table") or ""
 end
 
-function mMT:GetExportText(tbl, profileType)
-	local serialData = D:Serialize(tbl)
-	local exportString = D:CreateProfileExport(serialData, profileType, profileType)
+function mMT:GetExportText(profileData, profileType)
+	local serialString = D:Serialize(profileData)
+	local exportString = D:CreateProfileExport(profileType, profileType, serialString)
 	local compressedData = LibDeflate:CompressDeflate(exportString, LibDeflate.compressLevel)
-	local printableString = ""
-	local exportText = nil
-	printableString = LibDeflate:EncodeForPrint(compressedData)
-	exportText = printableString and format("%s%s", exportPrefix, printableString) or nil
-	return exportText
+	local printableString = LibDeflate:EncodeForPrint(compressedData)
+	local profileExport = printableString and format("%s%s", exportPrefix, printableString) or nil
+
+	return profileExport
 end
 
 function mMT:GetImportText(string)
