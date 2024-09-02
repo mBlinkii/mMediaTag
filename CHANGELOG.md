@@ -1,6 +1,15 @@
 # Changelog - ElvUI_mMediaTag
 [Eng] - All changes to this project will be documented in this file. The latest changes are at the top.
 
+## [ver. 3.56] - 02.09.2024
+## UPDATE
+- UPDATE - [Portraits]: Add a toggle to disable trilinear filtering for textures.
+- UPDATE - [Portraits]: Update defaults.
+### FIX 
+- FIX - [Portraits]: Add Texture DB to classic load list.
+- FIX - [Portraits]: Prevent empty Styles and not working Portraits with old Profile settings.
+- FIX - [System]: Fixed Export function for Modules.
+
 ## [ver. 3.55] - 01.09.2024
 ## UPDATE
 - UPDATE - [Datatext-Teleports]: Add TWW Dungeon Ports and & TWW S1.
@@ -9,7 +18,7 @@
 - FIX - [Datatext-Dungeon]: Old API calls & Weakly Rewards.
 - FIX - [Datatext-Score]: Old API calls & Weakly Rewards.
 - FIX - [Portraits]: Bug with custom Textures.
-- FIX - [Portraits]: Cast Icon can causes a Game crash with Access Violation, big thx to Heyallo who helped me to troubleshoot this.
+- FIX - [Portraits]: Cast Icon can cause a Game crash with Access Violation, big thx to Heyallo who helped me to troubleshoot this.
 
 ## [ver. 3.54] - 31.08.2024
 ## UPDATE

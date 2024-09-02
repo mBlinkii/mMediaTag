@@ -749,3 +749,4 @@ L["|cffFFFFFFShift + Left Click:|r Show Talent Specialization UI"] = "|cffFFFFFF
 
 --new
 L["Unitframes"] = true
+L["Trilinear Filtering"] = true
