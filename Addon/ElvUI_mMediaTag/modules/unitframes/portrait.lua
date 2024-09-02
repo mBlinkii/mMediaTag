@@ -96,7 +96,7 @@ local function adjustColor(color, shift)
 end
 
 local function UpdateIconBackground(tx, unit, mirror)
-	tx:SetTexture(bg_textures[E.db.mMT.portraits.general.bgstyle], "CLAMP", "CLAMP", "TRILINEAR")
+	tx:SetTexture(bg_textures[E.db.mMT.portraits.general.bgstyle])
 
 	local color = E.db.mMT.portraits.shadow.classBG and getColor(unit) or E.db.mMT.portraits.shadow.background
 	local bgColor = { r = 1, g = 1, b = 1, a = 1 }
@@ -120,9 +120,9 @@ local function SetPortraits(frame, unit, masking, mirror)
 
 		if mMT.ElvUI_JiberishIcons.loaded and style ~= "BLIZZARD" then
 			coords = class and mMT.ElvUI_JiberishIcons.texCoords[class]
-			frame.portrait:SetTexture(mMT.ElvUI_JiberishIcons.path .. style, "CLAMP", "CLAMP", "TRILINEAR")
+			frame.portrait:SetTexture(mMT.ElvUI_JiberishIcons.path .. style)
 		else
-			frame.portrait:SetTexture("Interface\\WorldStateFrame\\Icons-Classes", "CLAMP", "CLAMP", "TRILINEAR")
+			frame.portrait:SetTexture("Interface\\WorldStateFrame\\Icons-Classes")
 		end
 
 		if frame.iconbg then UpdateIconBackground(frame.iconbg, unit, mirror) end
@@ -161,7 +161,7 @@ local function UpdateTexture(portraitFrame, textureType, texture, level, color, 
 	end
 
 	local mirror = portraitFrame.settings.mirror
-	portraitFrame[textureType]:SetTexture(texture, "CLAMP", "CLAMP", "TRILINEAR")
+	portraitFrame[textureType]:SetTexture(texture)
 	if reverse ~= nil then mirror = reverse end
 	mirrorTexture(portraitFrame[textureType], mirror, portraitFrame.textures.flipp)
 
@@ -172,18 +172,18 @@ local function UpdateExtraTexture(portraitFrame, classification)
 	-- Texture
 	if classification == "rareelite" then classification = "rare" end
 	local extraTextures = portraitFrame.textures[classification].texture
-	portraitFrame.extra:SetTexture(extraTextures, "CLAMP", "CLAMP", "TRILINEAR")
+	portraitFrame.extra:SetTexture(extraTextures)
 
 	-- Border
 	if E.db.mMT.portraits.shadow.border then
 		extraTextures = portraitFrame.textures[classification].border
-		portraitFrame.extraBorder:SetTexture(extraTextures, "CLAMP", "CLAMP", "TRILINEAR")
+		portraitFrame.extraBorder:SetTexture(extraTextures)
 	end
 
 	-- Shadow
 	if E.db.mMT.portraits.shadow.enable then
 		extraTextures = portraitFrame.textures[classification].shadow
-		portraitFrame.extraShadow:SetTexture(extraTextures, "CLAMP", "CLAMP", "TRILINEAR")
+		portraitFrame.extraShadow:SetTexture(extraTextures)
 	end
 end
 
