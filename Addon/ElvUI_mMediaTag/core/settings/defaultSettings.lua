@@ -698,6 +698,7 @@ P.mMT = {
 		},
 		general = {
 			enable = false,
+			trilinear = true,
 			reaction = false,
 			eltruism = false,
 			mui = false,
@@ -728,8 +729,8 @@ P.mMT = {
 			border = true,
 			classBG = true,
 			bgColorShift = 0.25,
-			borderColor = { r = 1, g = 1, b = 1, a = 1 },
-			borderColorRare = { r = 0, g = 0, b = 0, a = 1 },
+			borderColor = { r = 0, g = 0, b = 0, a = 1 },
+			borderColorRare = { r = 1, g = 1, b = 1, a = 1 },
 			color = { r = 0.094, g = 0.094, b = 0.094, a = 0.6 },
 			innerColor = { r = 0.094, g = 0.094, b = 0.094, a = 0.75 },
 			background = { r = 0, g = 0, b = 0, a = 1 },

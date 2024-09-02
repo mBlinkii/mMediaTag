@@ -12,6 +12,7 @@ local module = mMT.Modules.Portraits
 if not module then return end
 
 local colors = {}
+local isTrilinear = true
 
 local bg_textures = {
 	[1] = "Interface\\Addons\\ElvUI_mMediaTag\\media\\portraits\\bg_1.tga",
@@ -24,6 +25,14 @@ local bg_textures = {
 }
 
 local bossIDs = mMT.BossIDs
+
+local function SetTextures(frame, texture)
+	if isTrilinear then
+		frame:SetTexture(texture, "CLAMP", "CLAMP", "TRILINEAR")
+	else
+		frame:SetTexture(texture)
+	end
+end
 
 local function mirrorTexture(texture, mirror, top)
 	if texture.classIcons then
@@ -96,7 +105,7 @@ local function adjustColor(color, shift)
 end
 
 local function UpdateIconBackground(tx, unit, mirror)
-	tx:SetTexture(bg_textures[E.db.mMT.portraits.general.bgstyle])
+	SetTextures(tx, bg_textures[E.db.mMT.portraits.general.bgstyle])
 
 	local color = E.db.mMT.portraits.shadow.classBG and getColor(unit) or E.db.mMT.portraits.shadow.background
 	local bgColor = { r = 1, g = 1, b = 1, a = 1 }
@@ -120,9 +129,9 @@ local function SetPortraits(frame, unit, masking, mirror)
 
 		if mMT.ElvUI_JiberishIcons.loaded and style ~= "BLIZZARD" then
 			coords = class and mMT.ElvUI_JiberishIcons.texCoords[class]
-			frame.portrait:SetTexture(mMT.ElvUI_JiberishIcons.path .. style)
+			SetTextures(frame.portrait, mMT.ElvUI_JiberishIcons.path .. style)
 		else
-			frame.portrait:SetTexture("Interface\\WorldStateFrame\\Icons-Classes")
+			SetTextures(frame.portrait, "Interface\\WorldStateFrame\\Icons-Classes")
 		end
 
 		if frame.iconbg then UpdateIconBackground(frame.iconbg, unit, mirror) end
@@ -161,7 +170,7 @@ local function UpdateTexture(portraitFrame, textureType, texture, level, color, 
 	end
 
 	local mirror = portraitFrame.settings.mirror
-	portraitFrame[textureType]:SetTexture(texture)
+	SetTextures(portraitFrame[textureType], texture)
 	if reverse ~= nil then mirror = reverse end
 	mirrorTexture(portraitFrame[textureType], mirror, portraitFrame.textures.flipp)
 
@@ -172,18 +181,17 @@ local function UpdateExtraTexture(portraitFrame, classification)
 	-- Texture
 	if classification == "rareelite" then classification = "rare" end
 	local extraTextures = portraitFrame.textures[classification].texture
-	portraitFrame.extra:SetTexture(extraTextures)
-
+	SetTextures(portraitFrame.extra, extraTextures)
 	-- Border
 	if E.db.mMT.portraits.shadow.border then
 		extraTextures = portraitFrame.textures[classification].border
-		portraitFrame.extraBorder:SetTexture(extraTextures)
+		SetTextures(portraitFrame.extraBorder, extraTextures)
 	end
 
 	-- Shadow
 	if E.db.mMT.portraits.shadow.enable then
 		extraTextures = portraitFrame.textures[classification].shadow
-		portraitFrame.extraShadow:SetTexture(extraTextures)
+		SetTextures(portraitFrame.extraShadow, extraTextures)
 	end
 end
 
@@ -742,6 +750,9 @@ local function HeaderConfig(_, header, configMode)
 end
 
 function module:Initialize(force)
+	--trilinear filtering
+	isTrilinear = E.db.mMT.portraits.general.trilinear
+
 	-- update colors
 	ConfigureColors()
 

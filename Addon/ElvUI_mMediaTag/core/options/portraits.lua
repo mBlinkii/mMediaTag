@@ -201,6 +201,27 @@ local function configTable()
 								},
 							},
 						},
+						misc = {
+							order =3,
+							type = "group",
+							inline = true,
+							name = L["Misc"],
+							args = {
+								toggle_classicon = {
+									order = 1,
+									type = "toggle",
+									name = L["Trilinear Filtering"],
+									get = function(info)
+										return E.db.mMT.portraits.general.trilinear
+									end,
+									set = function(info, value)
+										E.db.mMT.portraits.general.trilinear = value
+										mMT.Modules.Portraits:Initialize()
+										E:StaticPopup_Show("CONFIG_RL")
+									end,
+								},
+							},
+						},
 					},
 				},
 				header_style = {
