@@ -1109,12 +1109,15 @@ local flipped = {
 }
 
 local function OldSytleCheck()
-	if E.db.mMT.portraits.general.style == "flat" then
-		E.db.mMT.portraits.general.style = "a"
-	elseif E.db.mMT.portraits.general.style == "smooth" then
-		E.db.mMT.portraits.general.style = "b"
-	elseif E.db.mMT.portraits.general.style == "metal" then
-		E.db.mMT.portraits.general.style = "c"
+	local style = E.db.mMT.portraits.general.style
+	if style == "flat" then
+		style = "a"
+	elseif style == "smooth" then
+		style = "b"
+	elseif style == "metal" then
+		style = "c"
+	elseif style~= "a" or style ~= "b" or style ~= "c" then
+		style = "a"
 	end
 end
 
