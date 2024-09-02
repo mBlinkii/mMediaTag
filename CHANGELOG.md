@@ -1,6 +1,14 @@
 # Changelog - ElvUI_mMediaTag
 [Eng] - All changes to this project will be documented in this file. The latest changes are at the top.
 
+## [ver. 3.57] - xx.09.2024
+## UPDATE
+- UPDATE - []:
+### FIX 
+- FIX - []:
+## NEW
+- NEW - []:
+
 ## [ver. 3.56] - 02.09.2024
 ## UPDATE
 - UPDATE - [Portraits]: Add a toggle to disable trilinear filtering for textures.
