@@ -5,11 +5,11 @@ local GetTime = GetTime
 local GetSpellInfo = C_Spell and C_Spell.GetSpellInfo or GetSpellInfo
 
 local lastPlayed = {}
+local textureNP = nil
+local textureUF = nil
 
 local module = mMT.Modules.ImportantSpells
-if not module then
-	return
-end
+if not module then return end
 
 local ImportantSpellIDs = {}
 
@@ -20,15 +20,11 @@ function BuildSpellFilters()
 		if E.db.mMT.importantspells.spells[filter] and E.db.mMT.importantspells.spells[filter].enable and E.db.mMT.importantspells.spells[filter].IDs then
 			for id, _ in pairs(E.db.mMT.importantspells.spells[filter].IDs) do
 				ImportantSpellIDs[id] = E.db.mMT.importantspells.spells[filter].functions
+				ImportantSpellIDs[id].sound.soundFile = E.LSM:Fetch("sound", ImportantSpellIDs[id].sound.file)
+				ImportantSpellIDs[id].texture.textureFile = E.LSM:Fetch("statusbar", ImportantSpellIDs[id].texture.texture)
 			end
 		end
 	end
-end
-
-function module:Initialize()
-	BuildSpellFilters()
-	module.needReloadUI = true
-	module.loaded = true
 end
 
 local function SetPoint(icon, settings)
@@ -81,60 +77,60 @@ local function SetSpellIcon(castbar, settings)
 	castbar.mSpellIcon:Show()
 end
 
-function module:UpdateCastbar(castbar)
-	if mMT.DevMode then
-		mMT:Print("Spell ID:", castbar.spellID, "DB ID:", ImportantSpellIDs[castbar.spellID])
-	end
+function module:UpdateCastbar(castbar, isNP)
+	if mMT.DevMode then mMT:Print("Spell ID:", castbar.spellID, "DB ID:", ImportantSpellIDs[castbar.spellID]) end
 
-	local Spell = ImportantSpellIDs[castbar.spellID] or false
+	local Spell = ImportantSpellIDs[castbar.spellID]
 
-	if castbar.mSpellIcon then
-		castbar.mSpellIcon:Hide()
-	end
+	if castbar.mSpellIcon then castbar.mSpellIcon:Hide() end
 
 	if Spell then
 		if Spell.color.enable then
-			if E.db.mMT.importantspells.gradient then
-				mMT.Modules.Castbar:SetCastbarColor(castbar, Spell.color.a, Spell.color.b)
-			else
-				mMT.Modules.Castbar:SetCastbarColor(castbar, Spell.color.a)
-			end
+			local color = Spell.color.a
+			if E.db.mMT.importantspells.gradient then color = { Spell.color.a, Spell.color.b } end
+			mMT.Modules.Castbar:SetCastbarColor(castbar, unpack(color))
 		end
 
-		if Spell.sound.enable and Spell.sound.file and (Spell.sound.target and castbar.unit == "target") or not Spell.sound.target then
-			local spellInfo = GetSpellInfo(castbar.spellID)
-			local delay = 0.5
-			lastPlayed[castbar.spellID] = lastPlayed[castbar.spellID] or { time = 0, queued = 0, willPlay = true }
+		if Spell.sound.enable and Spell.sound.file then
+			local isTarget = Spell.sound.target and castbar.unit == "target"
+			if isTarget or not Spell.sound.target then
+				local spellInfo = GetSpellInfo(castbar.spellID)
+				local delay = 0.5
+				lastPlayed[castbar.spellID] = lastPlayed[castbar.spellID] or { time = 0, queued = 0, willPlay = true }
 
-			local willPlay, soundHandle = nil, nil
+				local willPlay, soundHandle = nil, nil
 
-			if lastPlayed[castbar.spellID].willPlay and (lastPlayed[castbar.spellID].time + (spellInfo.castTime / 1000) + delay) < GetTime() then
-				local file = E.LSM:Fetch("sound", Spell.sound.file)
-				willPlay, soundHandle = PlaySoundFile(file, "Master")
+				if lastPlayed[castbar.spellID].willPlay and (lastPlayed[castbar.spellID].time + (spellInfo.castTime / 1000) + delay) < GetTime() then
+					willPlay, soundHandle = PlaySoundFile(Spell.sound.soundFile, "Master")
+				end
+
+				if willPlay then
+					lastPlayed[castbar.spellID].time = GetTime()
+					lastPlayed[castbar.spellID].queued = soundHandle
+				end
+				lastPlayed[castbar.spellID].willPlay = not willPlay
+			elseif lastPlayed[castbar.spellID] then
+				lastPlayed[castbar.spellID].willPlay = true
 			end
-
-			if willPlay then
-				lastPlayed[castbar.spellID].time = GetTime()
-				lastPlayed[castbar.spellID].queued = soundHandle
-			end
-			lastPlayed[castbar.spellID].willPlay = not willPlay
-		elseif lastPlayed[castbar.spellID] then
-			lastPlayed[castbar.spellID].willPlay = true
 		end
 
 		if Spell.texture.enable and Spell.texture.texture then
-			if not castbar.mTextureChanged then
-				castbar.mTextureChanged = true
-			end
-
-			castbar:SetStatusBarTexture(E.LSM:Fetch("statusbar", Spell.texture.texture))
+			castbar.mTextureChanged = true
+			castbar:SetStatusBarTexture(Spell.texture.textureFile)
 		end
 
-		if Spell.icon.enable and Spell.icon.icon then
-			SetSpellIcon(castbar, Spell.icon)
-		end
+		if Spell.icon.enable and Spell.icon.icon then SetSpellIcon(castbar, Spell.icon) end
 	elseif castbar.mTextureChanged then
-		castbar:SetStatusBarTexture(E.LSM:Fetch("statusbar", E.db.mMT.customtextures.castbar.enable and E.db.mMT.customtextures.castbar.texture or E.db.mMT.importantspells.default))
+		castbar:SetStatusBarTexture(isNP and textureNP or textureUF)
 		castbar.mTextureChanged = false
 	end
+end
+
+function module:Initialize()
+	textureNP = E.LSM:Fetch("statusbar", E.db.mMT.customtextures.castbar.enable and E.db.mMT.customtextures.castbar.texture or E.db.nameplates.statusbar)
+	textureUF = E.LSM:Fetch("statusbar", E.db.mMT.customtextures.castbar.enable and E.db.mMT.customtextures.castbar.texture or E.db.unitframe.statusbar)
+
+	BuildSpellFilters()
+	module.needReloadUI = true
+	module.loaded = true
 end

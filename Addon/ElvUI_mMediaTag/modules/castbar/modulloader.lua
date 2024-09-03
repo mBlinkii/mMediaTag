@@ -23,7 +23,7 @@ local function NPLoader(castbar)
 	end
 
 	if mMT.Modules.ImportantSpells.loaded and E.db.mMT.importantspells.np then
-		mMT.Modules.ImportantSpells:UpdateCastbar(castbar)
+		mMT.Modules.ImportantSpells:UpdateCastbar(castbar, true)
 	end
 
 	if mMT.Modules.InterruptOnCD.loaded then

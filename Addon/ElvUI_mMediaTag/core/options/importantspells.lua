@@ -35,7 +35,7 @@ local Selectedfilter = nil
 -- 	IDs = {},
 -- 	color = { enable = true, a = { r = 1, g = 1, b = 1 }, b = { r = 1, g = 1, b = 1 } },
 -- 	sound = { enable = false, file = nil, target = true },
--- 	texture = { enable = false, texture = nil },
+-- 	texture = { enable = false, texture = "ElvUI Blank" },
 -- 	icon = {
 -- 		enable = false,
 -- 		color = { r = 1, g = 1, b = 1 },
@@ -130,7 +130,7 @@ local function configTable()
 								functions = {
 									color = { enable = true, a = { r = 1, g = 1, b = 1 }, b = { r = 1, g = 1, b = 1 } },
 									sound = { enable = false, file = nil, target = true },
-									texture = { enable = false, texture = nil },
+									texture = { enable = false, texture = "ElvUI Blank" },
 									icon = {
 										enable = false,
 										color = { r = 1, g = 1, b = 1 },
@@ -211,20 +211,6 @@ local function configTable()
 				return not E.db.mMT.importantspells.spells[Selectedfilter]
 			end,
 			args = {
-				select_default = {
-					order = 1,
-					type = "select",
-					dialogControl = "LSM30_Statusbar",
-					name = L["Default Castbar Texture"],
-					desc = L["The default castbar texture when no spell modification is active."],
-					values = LSM:HashTable("statusbar"),
-					get = function(info)
-						return E.db.mMT.importantspells.default or E.private.general.normTex
-					end,
-					set = function(info, value)
-						E.db.mMT.importantspells.default = value
-					end,
-				},
 				header_IDs = {
 					order = 2,
 					type = "group",

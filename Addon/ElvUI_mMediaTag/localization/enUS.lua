@@ -180,7 +180,6 @@ L["Death Counter color."] = true
 L["Death Counter, resets in new Instances."] = true
 L["Death"] = true
 L["Deaths"] = true
-L["Default Castbar Texture"] = true
 L["Default Font"] = true
 L["Default"] = true
 L["Deficit:"] = true
@@ -620,7 +619,6 @@ L["Textures"] = true
 L["Thanks to:"] = true
 L["The ImportantSpells IDs and Settings have been reset to reflect the latest updates in mMT."] = true
 L["The ObjectiveTracker settings have been reset to reflect the latest updates in mMT."] = true
-L["The default castbar texture when no spell modification is active."] = true
 L["The position settings of Instance Difficulty are controlled by ElvUI in Maps, Minimap, Instance Difficulty."] = true
 L["These are just examples of how to create your own dock with ElvUI's custom bars.\n\n\nTo create your own bar you have to go to ElvUI under ElvUI>Datatext>Bars Steps 1. enter name press OK and click Add, set the width of the bar depends on how many icons you want to display, the height of the bar is also the size of the icons. Set the number of data text and now you only need to assign the icons to the places, for example 1 = Dock FPS, 2 = Dock Profession and so on.\n\n"] = true
 L["Thin"] = true
