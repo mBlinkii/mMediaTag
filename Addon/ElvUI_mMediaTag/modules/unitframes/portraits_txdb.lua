@@ -1108,15 +1108,20 @@ local flipped = {
 	dropsharpflipp = true,
 }
 
+local styleOKCheck = {
+	a = true,
+	b = true,
+	c = true,
+}
 local function OldSytleCheck()
-	local style = style or E.db.mMT.portraits.general.style
+	local style = E.db.mMT.portraits.general.style
 	if style == "flat" then
 		E.db.mMT.portraits.general.style = "a"
 	elseif style == "smooth" then
 		E.db.mMT.portraits.general.style = "b"
 	elseif style == "metal" then
 		E.db.mMT.portraits.general.style = "c"
-	elseif style~= "a" or style ~= "b" or style ~= "c" then
+	elseif not styleOKCheck[style] then
 		E.db.mMT.portraits.general.style = "a"
 	end
 end
@@ -1133,7 +1138,7 @@ function mMT:GetTextures(style)
 		tmp_db.extraMask = true
 		tmp_db.mask = {
 			a = E.db.mMT.portraits.custom.mask,
-			b = E.db.mMT.portraits.custom.maskb~= "" and E.db.mMT.portraits.custom.maskb or E.db.mMT.portraits.custom.mask,
+			b = E.db.mMT.portraits.custom.maskb ~= "" and E.db.mMT.portraits.custom.maskb or E.db.mMT.portraits.custom.mask,
 		}
 		tmp_db.rare = {
 			texture = E.db.mMT.portraits.custom.extra,
