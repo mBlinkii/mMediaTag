@@ -1109,20 +1109,21 @@ local flipped = {
 }
 
 local function OldSytleCheck()
-	local style = E.db.mMT.portraits.general.style
+	local style = style or E.db.mMT.portraits.general.style
 	if style == "flat" then
-		style = "a"
+		E.db.mMT.portraits.general.style = "a"
 	elseif style == "smooth" then
-		style = "b"
+		E.db.mMT.portraits.general.style = "b"
 	elseif style == "metal" then
-		style = "c"
+		E.db.mMT.portraits.general.style = "c"
 	elseif style~= "a" or style ~= "b" or style ~= "c" then
-		style = "a"
+		E.db.mMT.portraits.general.style = "a"
 	end
 end
 
 function mMT:GetTextures(style)
 	local tmp_db = {}
+		mMT:Print(style)
 
 	if E.db.mMT.portraits.custom.enable then
 		tmp_db.offset = E.db.mMT.portraits.offset.CUSTOM
@@ -1152,6 +1153,7 @@ function mMT:GetTextures(style)
 		}
 	else
 		OldSytleCheck()
+		mMT:Print(style)
 
 		local variant = E.db.mMT.portraits.general.style
 		local textures_source = old[style] and old_textures or textures
