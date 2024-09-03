@@ -1123,7 +1123,6 @@ end
 
 function mMT:GetTextures(style)
 	local tmp_db = {}
-		mMT:Print(style)
 
 	if E.db.mMT.portraits.custom.enable then
 		tmp_db.offset = E.db.mMT.portraits.offset.CUSTOM
@@ -1153,7 +1152,6 @@ function mMT:GetTextures(style)
 		}
 	else
 		OldSytleCheck()
-		mMT:Print(style)
 
 		local variant = E.db.mMT.portraits.general.style
 		local textures_source = old[style] and old_textures or textures
