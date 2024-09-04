@@ -16,7 +16,8 @@
    - Copy your textures into this folder.
 
 ## Loading the textures
-1. **Add texture paths**: Add the paths to the individual textures in the game under `ElvUI > mMediaTag > Unitframes > Portraits > Textures & Style > Custom Texture`.
+1. **Add texture paths**: Add the paths to the individual textures in the game under `ElvUI > mMediaTag > Unitframes > Portraits > Textures & Style > Custom Texture`. 
+   - **Example Path**: `Interface\AddOns\MyPortraits\texture.tga`
 
 ## Tipps
 1. **Resolution**: The template has a resolution of 1024x1024 pixels so that the templates can be edited better. I have always saved the TGAs for the game in a resolution of 512x512 pixels to save memory space.
