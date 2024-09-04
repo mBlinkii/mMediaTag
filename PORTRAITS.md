@@ -1,27 +1,27 @@
 # Custom Portraits Texture Template
 
-## Vorbereitung
-1. **Software**: Stelle sicher, dass du eine Bildbearbeitungssoftware wie Paint.Net, Photoshop, GIMP oder eine ähnliche Anwendung installiert hast.
-2. **Vorlagen**: Lade die Standard-Portraitvorlagen herunter, um sicherzustellen, dass deine Texturen die richtigen Abmessungen haben.
-   - Die Vorlage wurde mit Paint.Net erstellt.
+## Preparation
+1. **Software**: Make sure that you have installed image editing software such as Paint.Net, Photoshop, GIMP or a similar application.
+2. **Templates**: Download the default portrait templates to ensure that your textures have the correct dimensions.
+   - The template was created with Paint.Net.
 
-## Erstellen der Texturen
-1. **Neue Datei**: Öffne deine Bildbearbeitungssoftware und erstelle eine neue Datei mit den Abmessungen der Standardvorlage.
-   - **Design**: Erstelle dein gewünschtes Design. Du kannst Farben, Muster, Bilder und andere Elemente hinzufügen, um deine Textur einzigartig zu machen.
-   - **Speichern**: Speichere die Datei im TGA-Format.
+## Creating the textures
+1. **New file**: Open your image editing software and create a new file with the dimensions of the default template or edit the template.
+   - **Design**: Create your desired design. You can add patterns and other elements to make your texture unique.
+   - **Save**: Save the file in TGA format.
 
-## Einfügen der Texturen in den Addons-Ordner
-1. **Ordner finden**: Finde deinen Addons-Ordner `Program Files (x86)\World of Warcraft\_retail_\Interface\AddOns`.
-   - Erstelle hier einen neuen Ordner mit einem beliebigen Namen.
-   - Kopiere deine Texturen in diesen Ordner.
+## Inserting the textures into the addons folder
+1. **Find folder**: Find your addons folder `Program Files (x86)\World of Warcraft\_retail_\Interface\AddOns`.
+   - Create a new folder here with a name of your choice.
+   - Copy your textures into this folder.
 
-## Laden der Texturen
-1. **Texturpfade hinzufügen**: Füge die Pfade zu den einzelnen Texturen im Spiel unter `ElvUI > mMediaTag > Unitframes > Portraits > Textures & Style > Custom Texture` hinzu.
+## Loading the textures
+1. **Add texture paths**: Add the paths to the individual textures in the game under `ElvUI > mMediaTag > Unitframes > Portraits > Textures & Style > Custom Texture`.
 
 ## Tipps
-1. **Auflösung**: Die Vorlage hat eine Auflösung von 1024x1024 Pixeln, damit die Vorlagen besser bearbeitet werden können. Die TGAs für das Spiel habe ich immer in einer Auflösung von 512x512 Pixeln gespeichert, um Speicherplatz zu sparen.
-   - Du kannst die Auflösung aber auch bei 1024x1024 belassen.
-2. **Farben und Schatten**: Die Rahmen und Schatten sind in der Vorlage schwarz, damit du eine bessere Übersicht hast. Beim Speichern habe ich die Farben für diese Texturen invertiert, sodass sie auch weiß sind. Dies ist notwendig, damit du die Farben im Spiel einstellen kannst. Eine schwarze Textur kann nicht eingefärbt werden, sie bleibt immer schwarz.
-3. **Portrait-Bereich**: Der Abschnitt für dein Portrait sollte ungefähr so groß sein wie der grüne Bereich.
+1. **Resolution**: The template has a resolution of 1024x1024 pixels so that the templates can be edited better. I have always saved the TGAs for the game in a resolution of 512x512 pixels to save memory space.
+   - You can also leave the resolution at 1024x1024.
+2. **Colors and shadows**: The frames and shadows are black in the template so that you have a better overview. When saving, I inverted the colors for these textures so that they are also white. This is necessary so that you can adjust the colors in the game. A black texture cannot be colored, it always remains black.
+3. **Portrait area**: The section for your portrait should be about the same size as the green area.
 
-Viel Spaß beim Erstellen deiner eigenen Texturen! 😊
+Have fun creating your own textures! 😊
