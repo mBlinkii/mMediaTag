@@ -502,9 +502,9 @@ L["RARE ELITE"] = true
 L["RARE"] = true
 L["RIGHT"] = true
 L["ROGUE"] = true
-L["Rare & Elite - Border"] = true
-L["Rare & Elite - Shadow"] = true
-L["Rare & Elite"]  = true
+L["Rare - Border"] = true
+L["Rare - Shadow"] = true
+L["Rare"]  = true
 L["Rare Border Color"] = true
 L["Rare Elite"] = true
 L["Rare"] = true
@@ -623,10 +623,10 @@ L["The position settings of Instance Difficulty are controlled by ElvUI in Maps,
 L["These are just examples of how to create your own dock with ElvUI's custom bars.\n\n\nTo create your own bar you have to go to ElvUI under ElvUI>Datatext>Bars Steps 1. enter name press OK and click Add, set the width of the bar depends on how many icons you want to display, the height of the bar is also the size of the icons. Set the number of data text and now you only need to assign the icons to the places, for example 1 = Dock FPS, 2 = Dock Profession and so on.\n\n"] = true
 L["Thin"] = true
 L["This Week Affix"] = true
-L["This is the Border texture for the Rare & Elite texture."] = true
+L["This is the Border texture for the Rare texture."] = true
 L["This is the Border texture for the portraits."] = true
 L["This is the Mask texture for the portraits. This texture is used to cut out the portrait of the Unit."] = true
-L["This is the Rare & Elite texture for the portraits."] = true
+L["This is the Rare texture for the portraits."] = true
 L["This is the gradient color and will only be used if the Gradient mod is enabled."] = true
 L["This is the inner shadow texture for the portraits."] = true
 L["This is the main texture for the portraits."] = true
