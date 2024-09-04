@@ -25,3 +25,12 @@
 3. **Portrait area**: The section for your portrait should be about the same size as the green area.
 
 Have fun creating your own textures! 😊
+
+## Screenshots
+<img src="https://raw.githubusercontent.com/mBlinkii/mMediaTag/Development/MyPortraits/custom_01.png" alt="Screenshot 1">
+<img src="https://raw.githubusercontent.com/mBlinkii/mMediaTag/Development/MyPortraits/custom_02.png" alt="Screenshot 2">
+<img src="https://raw.githubusercontent.com/mBlinkii/mMediaTag/Development/MyPortraits/custom_03.png" alt="Screenshot 3">
+<img src="https://raw.githubusercontent.com/mBlinkii/mMediaTag/Development/MyPortraits/custom_04.png" alt="Screenshot 4">
+<img src="https://raw.githubusercontent.com/mBlinkii/mMediaTag/Development/MyPortraits/custom_05.png" alt="Screenshot 5">
+<img src="https://raw.githubusercontent.com/mBlinkii/mMediaTag/Development/MyPortraits/custom_06.png" alt="Screenshot 6">
+<img src="https://raw.githubusercontent.com/mBlinkii/mMediaTag/Development/MyPortraits/custom_07.png" alt="Screenshot 7">
