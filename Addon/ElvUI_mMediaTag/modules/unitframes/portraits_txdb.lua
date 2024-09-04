@@ -1146,14 +1146,14 @@ function mMT:GetTextures(style)
 			shadow = E.db.mMT.portraits.custom.extrashadow,
 		}
 		tmp_db.elite = {
-			texture = E.db.mMT.portraits.custom.extra,
-			border = E.db.mMT.portraits.custom.extraborder,
-			shadow = E.db.mMT.portraits.custom.extrashadow,
+			texture = E.db.mMT.portraits.custom.elite,
+			border = E.db.mMT.portraits.custom.eliteborder,
+			shadow = E.db.mMT.portraits.custom.eliteshadow,
 		}
 		tmp_db.boss = {
-			texture = E.db.mMT.portraits.custom.extra,
-			border = E.db.mMT.portraits.custom.extraborder,
-			shadow = E.db.mMT.portraits.custom.extrashadow,
+			texture = E.db.mMT.portraits.custom.boss,
+			border = E.db.mMT.portraits.custom.bossborder,
+			shadow = E.db.mMT.portraits.custom.bossshadow,
 		}
 	else
 		OldSytleCheck()
