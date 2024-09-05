@@ -210,21 +210,21 @@ function mMT:JiberishIcons()
 	local version = GetAddOnMetadata("ElvUI_JiberishIcons", "Version")
 	local JIB = _G.ElvUI_JiberishIcons and unpack(_G.ElvUI_JiberishIcons)
 
-	if not JIB or not JIB.iconStyles or version ~= "1.1.3" then
+	if not JIB or not JIB.icons.class.styles or version ~= "1.1.5" then
 		jib_tbl.loaded = false
 		mMT:Print("|CFFEA1818Error|r: The JiberishUI icons cannot be loaded due to compatibility issues. The version used is incompatible with the supported version.")
 		return jib_tbl
 	end
 
-	jib_tbl.path = JIB.classIconPath
+	jib_tbl.path = JIB.icons.class.path
 
-	for style, value in pairs(JIB.iconStyles) do
+	for style, value in pairs(JIB.icons.class.styles) do
 		if value and value.name then
 			jib_tbl.styles[style] = "Jiberish " .. value.name
 		end
 	end
 
-	for class, value in pairs(JIB.classData) do
+	for class, value in pairs(JIB.icons.class.data) do
 		if value and value.texCoords then
 			jib_tbl.texCoords[class] = value.texCoords
 		end
