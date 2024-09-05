@@ -49,7 +49,7 @@ local function mirrorTexture(texture, mirror, top)
 end
 
 local function setColor(texture, color, mirror)
-	if not texture or not color or not color.a or not color.b then return end
+	if not texture or not color then return end
 
 	if type(color.a) == "table" and type(color.b) == "table" then
 		if E.db.mMT.portraits.general.gradient then
@@ -61,13 +61,14 @@ local function setColor(texture, color, mirror)
 		else
 			texture:SetVertexColor(color.a.r, color.a.g, color.a.b, color.a.a)
 		end
-	elseif color.r then
+	elseif color.r and color.g and color.b and color.a then
 		texture:SetVertexColor(color.r, color.g, color.b, color.a)
 	else
 		mMT:Print("Error! - Portraits Color > ")
 		mMT:DebugPrintTable(color)
 	end
 end
+
 
 local cachedFaction = {}
 
@@ -205,12 +206,6 @@ local function HideRareElite(frame)
 	if E.db.mMT.portraits.shadow.border and frame.extraBorder then frame.extraBorder:Hide() end
 	frame.extra:Hide()
 end
-
-local isExtraUnit = {
-	worldboss = true,
-	rareelite = true,
-	elite = true,
-}
 
 local simpleClassification = {
 	worldboss = "boss",
