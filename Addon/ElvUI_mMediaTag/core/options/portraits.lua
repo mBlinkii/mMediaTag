@@ -317,6 +317,18 @@ local function configTable()
 									end,
 									values = extraStyle,
 								},
+								toggle_color = {
+									order = 6,
+									type = "toggle",
+									name = L["Use Texture Color"],
+									get = function(info)
+										return E.db.mMT.portraits.general.usetexturecolor
+									end,
+									set = function(info, value)
+										E.db.mMT.portraits.general.usetexturecolor = value
+										mMT.Modules.Portraits:Initialize()
+									end,
+								},
 							},
 						},
 						header_bgtexture = {
