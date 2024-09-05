@@ -767,3 +767,4 @@ L["This is the shadow texture for the Boss texture."] = true
 L["Boss - Border"] = true
 L["Boss - Shadow"] = true
 L["Second Mask Texture"] = true
+L["Use Texture Color"] = true
