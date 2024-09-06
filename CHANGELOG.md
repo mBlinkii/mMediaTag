@@ -10,6 +10,7 @@
 - FIX - [Portraits]: Old DB check did not worked correctly.
 ## NEW
 - NEW - [Portraits]: Add Rare/ Elite/ Boss to custom Texture section.
+- NEW - [Portraits]: New color function for Rare/ Elite/ Boss textures.
 
 ## [ver. 3.56] - 02.09.2024
 ## UPDATE
