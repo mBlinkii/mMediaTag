@@ -3,11 +3,13 @@
 
 ## [ver. 3.57] - xx.09.2024
 ## UPDATE
-- UPDATE - []:
+- UPDATE - [Portraits]: Background setting is now always available.
+- UPDATE - [Portraits]: Update Class Icons for the new Version of JiberishUI Icons.
+- UPDATE - [Important-Spells]: Default Texture function.
 ### FIX 
-- FIX - []:
+- FIX - [Portraits]: Old DB check did not worked correctly.
 ## NEW
-- NEW - []:
+- NEW - [Portraits]: Add Rare/ Elite/ Boss to custom Texture section.
 
 ## [ver. 3.56] - 02.09.2024
 ## UPDATE
