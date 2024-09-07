@@ -2,6 +2,9 @@
 	<Include file="options\load_options.xml"/>
 	<Include file="changelog\load_changelogs.xml"/>
 	<Script file="Core.lua"/>
+	<Script file="eltruism.lua"/>
+	<Script file="jiberish.lua"/>
+	<Script file="merathilis.lua"/>
 	<Script file="cmd.lua"/>
 	<Script file="devmode.lua"/>
 	<Script file="dropdown.lua"/>
