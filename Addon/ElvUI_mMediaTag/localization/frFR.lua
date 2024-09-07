@@ -768,3 +768,4 @@ L["Boss - Border"] = true
 L["Boss - Shadow"] = true
 L["Second Mask Texture"] = true
 L["Use Texture Color"] = true
+L["The JiberishUI icons cannot be loaded due to compatibility issues. The version used is incompatible with the supported version."] = true

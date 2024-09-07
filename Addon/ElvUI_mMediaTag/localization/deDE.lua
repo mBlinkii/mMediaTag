@@ -769,3 +769,4 @@ L["|cffFFFFFFShift + Left Click:|r Show Talent Specialization UI"] = "|cffFFFFFF
 
 -- new
 L["Use Texture Color"] = true
+L["The JiberishUI icons cannot be loaded due to compatibility issues. The version used is incompatible with the supported version."] = true
