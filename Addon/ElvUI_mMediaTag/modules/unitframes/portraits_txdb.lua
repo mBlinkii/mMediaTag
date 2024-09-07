@@ -50,12 +50,12 @@ local textures = {
 			},
 			e = {
 				texture = {
-					a = "Interface\\Addons\\ElvUI_mMediaTag\\media\\portraits\\pure\\pure_rare1_txa.tga",
-					b = "Interface\\Addons\\ElvUI_mMediaTag\\media\\portraits\\pure\\pure_rare1_txb.tga",
-					c = "Interface\\Addons\\ElvUI_mMediaTag\\media\\portraits\\pure\\pure_rare1_txc.tga",
+					a = "Interface\\Addons\\ElvUI_mMediaTag\\media\\portraits\\circle\\circle_rare4_txa.tga",
+					b = "Interface\\Addons\\ElvUI_mMediaTag\\media\\portraits\\circle\\circle_rare4_txb.tga",
+					c = "Interface\\Addons\\ElvUI_mMediaTag\\media\\portraits\\circle\\circle_rare4_txc.tga",
 				},
-				border = "Interface\\Addons\\ElvUI_mMediaTag\\media\\portraits\\pure\\pure_rare1_border.tga",
-				shadow = "Interface\\Addons\\ElvUI_mMediaTag\\media\\portraits\\pure\\pure_rare1_shadow.tga",
+				border = "Interface\\Addons\\ElvUI_mMediaTag\\media\\portraits\\circle\\circle_rare4_border.tga",
+				shadow = "Interface\\Addons\\ElvUI_mMediaTag\\media\\portraits\\circle\\circle_rare4_shadow.tga",
 			},
 		},
 	},
@@ -169,12 +169,12 @@ local textures = {
 			},
 			e = {
 				texture = {
-					a = "Interface\\Addons\\ElvUI_mMediaTag\\media\\portraits\\pure\\pure_rare2_txa.tga",
-					b = "Interface\\Addons\\ElvUI_mMediaTag\\media\\portraits\\pure\\pure_rare2_txb.tga",
-					c = "Interface\\Addons\\ElvUI_mMediaTag\\media\\portraits\\pure\\pure_rare2_txc.tga",
+					a = "Interface\\Addons\\ElvUI_mMediaTag\\media\\portraits\\circle\\circle_rare4_txa.tga",
+					b = "Interface\\Addons\\ElvUI_mMediaTag\\media\\portraits\\circle\\circle_rare4_txb.tga",
+					c = "Interface\\Addons\\ElvUI_mMediaTag\\media\\portraits\\circle\\circle_rare4_txc.tga",
 				},
-				border = "Interface\\Addons\\ElvUI_mMediaTag\\media\\portraits\\pure\\pure_rare2_border.tga",
-				shadow = "Interface\\Addons\\ElvUI_mMediaTag\\media\\portraits\\pure\\pure_rare2_shadow.tga",
+				border = "Interface\\Addons\\ElvUI_mMediaTag\\media\\portraits\\circle\\circle_rare4_border.tga",
+				shadow = "Interface\\Addons\\ElvUI_mMediaTag\\media\\portraits\\circle\\circle_rare4_shadow.tga",
 			},
 		},
 		corner = {
@@ -238,12 +238,12 @@ local textures = {
 			},
 			e = {
 				texture = {
-					a = "Interface\\Addons\\ElvUI_mMediaTag\\media\\portraits\\pure\\pure_rare2_txa.tga",
-					b = "Interface\\Addons\\ElvUI_mMediaTag\\media\\portraits\\pure\\pure_rare2_txb.tga",
-					c = "Interface\\Addons\\ElvUI_mMediaTag\\media\\portraits\\pure\\pure_rare2_txc.tga",
+					a = "Interface\\Addons\\ElvUI_mMediaTag\\media\\portraits\\circle\\circle_rare4_txa.tga",
+					b = "Interface\\Addons\\ElvUI_mMediaTag\\media\\portraits\\circle\\circle_rare4_txb.tga",
+					c = "Interface\\Addons\\ElvUI_mMediaTag\\media\\portraits\\circle\\circle_rare4_txc.tga",
 				},
-				border = "Interface\\Addons\\ElvUI_mMediaTag\\media\\portraits\\pure\\pure_rare2_border.tga",
-				shadow = "Interface\\Addons\\ElvUI_mMediaTag\\media\\portraits\\pure\\pure_rare2_shadow.tga",
+				border = "Interface\\Addons\\ElvUI_mMediaTag\\media\\portraits\\circle\\circle_rare4_border.tga",
+				shadow = "Interface\\Addons\\ElvUI_mMediaTag\\media\\portraits\\circle\\circle_rare4_shadow.tga",
 			},
 		},
 		corner = {
@@ -307,12 +307,12 @@ local textures = {
 			},
 			e = {
 				texture = {
-					a = "Interface\\Addons\\ElvUI_mMediaTag\\media\\portraits\\pure\\pure_rare2_txa.tga",
-					b = "Interface\\Addons\\ElvUI_mMediaTag\\media\\portraits\\pure\\pure_rare2_txb.tga",
-					c = "Interface\\Addons\\ElvUI_mMediaTag\\media\\portraits\\pure\\pure_rare2_txc.tga",
+					a = "Interface\\Addons\\ElvUI_mMediaTag\\media\\portraits\\circle\\circle_rare4_txa.tga",
+					b = "Interface\\Addons\\ElvUI_mMediaTag\\media\\portraits\\circle\\circle_rare4_txb.tga",
+					c = "Interface\\Addons\\ElvUI_mMediaTag\\media\\portraits\\circle\\circle_rare4_txc.tga",
 				},
-				border = "Interface\\Addons\\ElvUI_mMediaTag\\media\\portraits\\pure\\pure_rare2_border.tga",
-				shadow = "Interface\\Addons\\ElvUI_mMediaTag\\media\\portraits\\pure\\pure_rare2_shadow.tga",
+				border = "Interface\\Addons\\ElvUI_mMediaTag\\media\\portraits\\circle\\circle_rare4_border.tga",
+				shadow = "Interface\\Addons\\ElvUI_mMediaTag\\media\\portraits\\circle\\circle_rare4_shadow.tga",
 			},
 		},
 		corner = {
@@ -376,12 +376,12 @@ local textures = {
 			},
 			e = {
 				texture = {
-					a = "Interface\\Addons\\ElvUI_mMediaTag\\media\\portraits\\pure\\pure_rare2_txa.tga",
-					b = "Interface\\Addons\\ElvUI_mMediaTag\\media\\portraits\\pure\\pure_rare2_txb.tga",
-					c = "Interface\\Addons\\ElvUI_mMediaTag\\media\\portraits\\pure\\pure_rare2_txc.tga",
+					a = "Interface\\Addons\\ElvUI_mMediaTag\\media\\portraits\\circle\\circle_rare4_txa.tga",
+					b = "Interface\\Addons\\ElvUI_mMediaTag\\media\\portraits\\circle\\circle_rare4_txb.tga",
+					c = "Interface\\Addons\\ElvUI_mMediaTag\\media\\portraits\\circle\\circle_rare4_txc.tga",
 				},
-				border = "Interface\\Addons\\ElvUI_mMediaTag\\media\\portraits\\pure\\pure_rare2_border.tga",
-				shadow = "Interface\\Addons\\ElvUI_mMediaTag\\media\\portraits\\pure\\pure_rare2_shadow.tga",
+				border = "Interface\\Addons\\ElvUI_mMediaTag\\media\\portraits\\circle\\circle_rare4_border.tga",
+				shadow = "Interface\\Addons\\ElvUI_mMediaTag\\media\\portraits\\circle\\circle_rare4_shadow.tga",
 			},
 		},
 		corner = {
@@ -534,21 +534,21 @@ local textures = {
 			},
 			b = {
 				texture = {
-					a = "Interface\\Addons\\ElvUI_mMediaTag\\media\\portraits\\pure\\pure_rare2_txa.tga",
-					b = "Interface\\Addons\\ElvUI_mMediaTag\\media\\portraits\\pure\\pure_rare2_txb.tga",
-					c = "Interface\\Addons\\ElvUI_mMediaTag\\media\\portraits\\pure\\pure_rare2_txc.tga",
+					a = "Interface\\Addons\\ElvUI_mMediaTag\\media\\portraits\\circle\\circle_rare4_txa.tga",
+					b = "Interface\\Addons\\ElvUI_mMediaTag\\media\\portraits\\circle\\circle_rare4_txb.tga",
+					c = "Interface\\Addons\\ElvUI_mMediaTag\\media\\portraits\\circle\\circle_rare4_txc.tga",
 				},
-				border = "Interface\\Addons\\ElvUI_mMediaTag\\media\\portraits\\pure\\pure_rare2_border.tga",
-				shadow = "Interface\\Addons\\ElvUI_mMediaTag\\media\\portraits\\pure\\pure_rare2_shadow.tga",
+				border = "Interface\\Addons\\ElvUI_mMediaTag\\media\\portraits\\circle\\circle_rare4_border.tga",
+				shadow = "Interface\\Addons\\ElvUI_mMediaTag\\media\\portraits\\circle\\circle_rare4_shadow.tga",
 			},
 			c = {
 				texture = {
-					a = "Interface\\Addons\\ElvUI_mMediaTag\\media\\portraits\\drop\\drop_rare1_txa.tga",
-					b = "Interface\\Addons\\ElvUI_mMediaTag\\media\\portraits\\drop\\drop_rare1_txb.tga",
-					c = "Interface\\Addons\\ElvUI_mMediaTag\\media\\portraits\\drop\\drop_rare1_txc.tga",
+					a = "Interface\\Addons\\ElvUI_mMediaTag\\media\\portraits\\pure\\pure_rare3_txa.tga",
+					b = "Interface\\Addons\\ElvUI_mMediaTag\\media\\portraits\\pure\\pure_rare3_txb.tga",
+					c = "Interface\\Addons\\ElvUI_mMediaTag\\media\\portraits\\pure\\pure_rare3_txc.tga",
 				},
-				border = "Interface\\Addons\\ElvUI_mMediaTag\\media\\portraits\\drop\\drop_rare1_border.tga",
-				shadow = "Interface\\Addons\\ElvUI_mMediaTag\\media\\portraits\\drop\\drop_rare1_shadow.tga",
+				border = "Interface\\Addons\\ElvUI_mMediaTag\\media\\portraits\\pure\\pure_rare3_border.tga",
+				shadow = "Interface\\Addons\\ElvUI_mMediaTag\\media\\portraits\\pure\\pure_rare3_shadow.tga",
 			},
 			d = {
 				texture = {
@@ -595,21 +595,21 @@ local textures = {
 			},
 			b = {
 				texture = {
-					a = "Interface\\Addons\\ElvUI_mMediaTag\\media\\portraits\\pure\\pure_rare2_txa.tga",
-					b = "Interface\\Addons\\ElvUI_mMediaTag\\media\\portraits\\pure\\pure_rare2_txb.tga",
-					c = "Interface\\Addons\\ElvUI_mMediaTag\\media\\portraits\\pure\\pure_rare2_txc.tga",
+					a = "Interface\\Addons\\ElvUI_mMediaTag\\media\\portraits\\circle\\circle_rare4_txa.tga",
+					b = "Interface\\Addons\\ElvUI_mMediaTag\\media\\portraits\\circle\\circle_rare4_txb.tga",
+					c = "Interface\\Addons\\ElvUI_mMediaTag\\media\\portraits\\circle\\circle_rare4_txc.tga",
 				},
-				border = "Interface\\Addons\\ElvUI_mMediaTag\\media\\portraits\\pure\\pure_rare2_border.tga",
-				shadow = "Interface\\Addons\\ElvUI_mMediaTag\\media\\portraits\\pure\\pure_rare2_shadow.tga",
+				border = "Interface\\Addons\\ElvUI_mMediaTag\\media\\portraits\\circle\\circle_rare4_border.tga",
+				shadow = "Interface\\Addons\\ElvUI_mMediaTag\\media\\portraits\\circle\\circle_rare4_shadow.tga",
 			},
 			c = {
 				texture = {
-					a = "Interface\\Addons\\ElvUI_mMediaTag\\media\\portraits\\drop\\drop_rare1_txa.tga",
-					b = "Interface\\Addons\\ElvUI_mMediaTag\\media\\portraits\\drop\\drop_rare1_txb.tga",
-					c = "Interface\\Addons\\ElvUI_mMediaTag\\media\\portraits\\drop\\drop_rare1_txc.tga",
+					a = "Interface\\Addons\\ElvUI_mMediaTag\\media\\portraits\\pure\\pure_rare3_txa.tga",
+					b = "Interface\\Addons\\ElvUI_mMediaTag\\media\\portraits\\pure\\pure_rare3_txb.tga",
+					c = "Interface\\Addons\\ElvUI_mMediaTag\\media\\portraits\\pure\\pure_rare3_txc.tga",
 				},
-				border = "Interface\\Addons\\ElvUI_mMediaTag\\media\\portraits\\drop\\drop_rare1_border.tga",
-				shadow = "Interface\\Addons\\ElvUI_mMediaTag\\media\\portraits\\drop\\drop_rare1_shadow.tga",
+				border = "Interface\\Addons\\ElvUI_mMediaTag\\media\\portraits\\pure\\pure_rare3_border.tga",
+				shadow = "Interface\\Addons\\ElvUI_mMediaTag\\media\\portraits\\pure\\pure_rare3_shadow.tga",
 			},
 			d = {
 				texture = {
@@ -1108,16 +1108,21 @@ local flipped = {
 	dropsharpflipp = true,
 }
 
+local styleOKCheck = {
+	a = true,
+	b = true,
+	c = true,
+}
 local function OldSytleCheck()
 	local style = E.db.mMT.portraits.general.style
 	if style == "flat" then
-		style = "a"
+		E.db.mMT.portraits.general.style = "a"
 	elseif style == "smooth" then
-		style = "b"
+		E.db.mMT.portraits.general.style = "b"
 	elseif style == "metal" then
-		style = "c"
-	elseif style~= "a" or style ~= "b" or style ~= "c" then
-		style = "a"
+		E.db.mMT.portraits.general.style = "c"
+	elseif not styleOKCheck[style] then
+		E.db.mMT.portraits.general.style = "a"
 	end
 end
 
@@ -1133,7 +1138,7 @@ function mMT:GetTextures(style)
 		tmp_db.extraMask = true
 		tmp_db.mask = {
 			a = E.db.mMT.portraits.custom.mask,
-			b = E.db.mMT.portraits.custom.maskb~= "" and E.db.mMT.portraits.custom.maskb or E.db.mMT.portraits.custom.mask,
+			b = E.db.mMT.portraits.custom.maskb ~= "" and E.db.mMT.portraits.custom.maskb or E.db.mMT.portraits.custom.mask,
 		}
 		tmp_db.rare = {
 			texture = E.db.mMT.portraits.custom.extra,
@@ -1141,14 +1146,14 @@ function mMT:GetTextures(style)
 			shadow = E.db.mMT.portraits.custom.extrashadow,
 		}
 		tmp_db.elite = {
-			texture = E.db.mMT.portraits.custom.extra,
-			border = E.db.mMT.portraits.custom.extraborder,
-			shadow = E.db.mMT.portraits.custom.extrashadow,
+			texture = E.db.mMT.portraits.custom.elite,
+			border = E.db.mMT.portraits.custom.eliteborder,
+			shadow = E.db.mMT.portraits.custom.eliteshadow,
 		}
 		tmp_db.boss = {
-			texture = E.db.mMT.portraits.custom.extra,
-			border = E.db.mMT.portraits.custom.extraborder,
-			shadow = E.db.mMT.portraits.custom.extrashadow,
+			texture = E.db.mMT.portraits.custom.boss,
+			border = E.db.mMT.portraits.custom.bossborder,
+			shadow = E.db.mMT.portraits.custom.bossshadow,
 		}
 	else
 		OldSytleCheck()

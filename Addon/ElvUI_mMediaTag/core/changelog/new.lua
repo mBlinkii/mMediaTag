@@ -1,4 +1,4 @@
-mMT.Changelog = {
+mMT.Changelog[356]  = {
 	DATE = "xx",
 	IMPORTANT = { "xx" },
 	NEW = { "xx" },

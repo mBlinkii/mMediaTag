@@ -13,6 +13,7 @@ if not module then return end
 
 local colors = {}
 local isTrilinear = true
+local useTextureColor = false
 
 local bg_textures = {
 	[1] = "Interface\\Addons\\ElvUI_mMediaTag\\media\\portraits\\bg_1.tga",
@@ -48,7 +49,7 @@ local function mirrorTexture(texture, mirror, top)
 end
 
 local function setColor(texture, color, mirror)
-	if not texture or not color or not color.a or not color.b then return end
+	if not texture or not color then return end
 
 	if type(color.a) == "table" and type(color.b) == "table" then
 		if E.db.mMT.portraits.general.gradient then
@@ -60,13 +61,14 @@ local function setColor(texture, color, mirror)
 		else
 			texture:SetVertexColor(color.a.r, color.a.g, color.a.b, color.a.a)
 		end
-	elseif color.r then
+	elseif color.r and color.g and color.b and color.a then
 		texture:SetVertexColor(color.r, color.g, color.b, color.a)
 	else
 		mMT:Print("Error! - Portraits Color > ")
 		mMT:DebugPrintTable(color)
 	end
 end
+
 
 local cachedFaction = {}
 
@@ -178,10 +180,9 @@ local function UpdateTexture(portraitFrame, textureType, texture, level, color, 
 end
 
 local function UpdateExtraTexture(portraitFrame, classification)
-	-- Texture
-	if classification == "rareelite" then classification = "rare" end
-	local extraTextures = portraitFrame.textures[classification].texture
+	local extraTextures = portraitFrame.textures[classification] and portraitFrame.textures[classification].texture
 	SetTextures(portraitFrame.extra, extraTextures)
+
 	-- Border
 	if E.db.mMT.portraits.shadow.border then
 		extraTextures = portraitFrame.textures[classification].border
@@ -206,21 +207,33 @@ local function HideRareElite(frame)
 	frame.extra:Hide()
 end
 
-local function CheckRareElite(frame, unit)
-	local c = UnitClassification(unit) --"worldboss", "rareelite", "elite", "rare", "normal", "trivial", or "minus"
-	if c == "worldboss" or bossIDs[GetNPCID(unit)] then c = "boss" end
-	local color = colors[c]
+local simpleClassification = {
+	worldboss = "boss",
+	rareelite = "rare",
+	elite = "elite",
+	rare = "rare",
+}
 
-	if color then
-		UpdateExtraTexture(frame, c)
+local function CheckRareElite(frame, unit, unitColor)
+	local c = UnitClassification(unit) --"worldboss", "rareelite", "elite", "rare", "normal", "trivial", or "minus"
+	local npcID = GetNPCID(unit)
+	local classification = simpleClassification[c] or (bossIDs[npcID] and "boss")
+
+	if classification then
+		local color = useTextureColor and (unitColor or colors[classification]) or colors[classification]
+
+		UpdateExtraTexture(frame, classification)
 		setColor(frame.extra, color)
-		if E.db.mMT.portraits.shadow.enable and frame.extraShadow then frame.extraShadow:Show() end
-		if E.db.mMT.portraits.shadow.border and frame.extraBorder then frame.extraBorder:Show() end
+		if E.db.mMT.portraits.shadow.enable then
+			if frame.extraShadow then frame.extraShadow:Show() end
+			if E.db.mMT.portraits.shadow.border and frame.extraBorder then frame.extraBorder:Show() end
+		end
 		frame.extra:Show()
 	else
 		HideRareElite(frame)
 	end
 end
+
 
 local function UpdatePortrait(portraitFrame, force)
 	if mMT.DevMode then
@@ -244,6 +257,7 @@ local function UpdatePortrait(portraitFrame, force)
 	local setting = portraitFrame.settings
 	local unit = force and "player" or (UnitExists(portraitFrame.unit) and portraitFrame.unit or (portraitFrame.parent.unit or "player"))
 	local parent = portraitFrame.parent
+	local unitColor = getColor(unit)
 
 	-- Portraits Frame
 	if not InCombatLockdown() then
@@ -257,7 +271,7 @@ local function UpdatePortrait(portraitFrame, force)
 
 	-- Portrait Texture
 	texture = portraitFrame.textures.texture
-	UpdateTexture(portraitFrame, "texture", texture, 4, getColor(unit))
+	UpdateTexture(portraitFrame, "texture", texture, 4, unitColor)
 
 	-- Unit Portrait
 	offset = GetOffset(setting.size, portraitFrame.textures.offset)
@@ -290,7 +304,7 @@ local function UpdatePortrait(portraitFrame, force)
 	-- Class Icon Background
 	--if (E.db.mMT.portraits.general.classicons or portraitFrame.textures.flipp) and not portraitFrame.iconbg then
 	local color = { r = 0, g = 0, b = 0, a = 1 }
-	if E.db.mMT.portraits.general.classicons then color = (E.db.mMT.portraits.shadow.classBG and getColor(unit) or E.db.mMT.portraits.shadow.background) end
+	if E.db.mMT.portraits.general.classicons then color = (E.db.mMT.portraits.shadow.classBG and unitColor or E.db.mMT.portraits.shadow.background) end
 	UpdateTexture(portraitFrame, "iconbg", bg_textures[E.db.mMT.portraits.general.bgstyle], -5, color)
 	portraitFrame.iconbg:AddMaskTexture(portraitFrame.mask)
 	--end
@@ -339,13 +353,13 @@ local function UpdatePortrait(portraitFrame, force)
 			portraitFrame.extraShadow:Hide()
 		end
 
-		CheckRareElite(portraitFrame, unit)
+		CheckRareElite(portraitFrame, unit, unitColor)
 	end
 
 	-- Corner
 	if portraitFrame.textures.corner then
 		texture = portraitFrame.textures.corner.texture
-		UpdateTexture(portraitFrame, "corner", texture, 5, getColor(unit))
+		UpdateTexture(portraitFrame, "corner", texture, 5, unitColor)
 
 		-- Border
 		if E.db.mMT.portraits.shadow.border then
@@ -573,14 +587,15 @@ local castStoped = {
 local function UpdatePortraitTexture(self, unit)
 	if not InCombatLockdown() and self:GetAttribute("unit") ~= unit then self:SetAttribute("unit", unit) end
 	local isPlayer = UnitIsPlayer(unit)
+	local unitColor = getColor(unit, isPlayer)
 
 	SetPortraits(self, unit, false, self.settings.mirror)
-	setColor(self.texture, getColor(unit, isPlayer), self.settings.mirror)
+	setColor(self.texture, unitColor, self.settings.mirror)
 
-	if E.db.mMT.portraits.general.corner and self.textures.corner then setColor(self.corner, getColor(unit, isPlayer), self.settings.mirror) end
+	if E.db.mMT.portraits.general.corner and self.textures.corner then setColor(self.corner, unitColor, self.settings.mirror) end
 
 	if self.settings.extraEnable and self.extra and not isPlayer then
-		CheckRareElite(self, unit)
+		CheckRareElite(self, unit, unitColor)
 	elseif self.extra then
 		HideRareElite(self)
 	end
@@ -750,8 +765,9 @@ local function HeaderConfig(_, header, configMode)
 end
 
 function module:Initialize(force)
-	--trilinear filtering
+	--update settings
 	isTrilinear = E.db.mMT.portraits.general.trilinear
+	useTextureColor = E.db.mMT.portraits.general.usetexturecolor
 
 	-- update colors
 	ConfigureColors()
