@@ -9,7 +9,7 @@ mMT.Changelog[357]  = {
 		"[Important-Spells]: Default Texture function.",
 		"[Portraits]: Background setting is now always available.",
 		"[Portraits]: Optimized Style c and b.",
-		"[Portraits]: Update Class Icons for the new Version of JiberishUI Icons.",
+		"[Portraits]: Update Class Icons for the new Version of JiberishUI Icons. (Thx Repooc)",
 	},
 	FIX = {
 		"[Portraits]: Smal Bugs with ne Textures.",
