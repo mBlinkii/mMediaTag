@@ -769,4 +769,5 @@ L["Boss - Border"] = true
 L["Boss - Shadow"] = true
 L["Second Mask Texture"] = true
 L["Use Texture Color"] = true
-L["The JiberishUI icons cannot be loaded due to compatibility issues. The version used is incompatible with the supported version."] = true
+L["mMediaTag needs an update to support the current version of JiberishUI icons, it is possible that the class icons are not displayed correctly on the portraits."] = true
+L["When loading the textures of JiberishUI icons."] = true
