@@ -61,6 +61,9 @@ function BuildIconStylesTable()
 	for id, name in pairs(mMT.ElvUI_JiberishIcons.styles) do
 		ClassIconStyle[id] = name
 	end
+	for iconStyle, value in pairs(mMT.classIcons) do
+		ClassIconStyle[iconStyle] = value.name
+	end
 end
 
 local function configTable()
@@ -123,6 +126,7 @@ local function configTable()
 									end,
 									set = function(info, value)
 										E.db.mMT.portraits.general.classiconstyle = value
+										mMT.Modules.Portraits:Initialize()
 										E:StaticPopup_Show("CONFIG_RL")
 									end,
 									values = ClassIconStyle,
