@@ -58,9 +58,9 @@ local frameStrata = {
 }
 
 function BuildIconStylesTable()
-	for id, name in pairs(mMT.ElvUI_JiberishIcons.styles) do
-		ClassIconStyle[id] = name
-	end
+	-- for id, name in pairs(mMT.ElvUI_JiberishIcons.styles) do
+	-- 	ClassIconStyle[id] = name
+	-- end
 	for iconStyle, value in pairs(mMT.classIcons) do
 		ClassIconStyle[iconStyle] = value.name
 	end
