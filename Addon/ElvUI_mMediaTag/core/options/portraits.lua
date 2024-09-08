@@ -69,7 +69,7 @@ end
 local function configTable()
 	local sizeString = ":16:16:0:0:64:64:4:60:4:60"
 
-	if mMT.ElvUI_JiberishIcons.loaded then BuildIconStylesTable() end
+	BuildIconStylesTable()
 
 	E.Options.args.mMT.args.unitframes.args.portraits.args = {
 		toggle_enable = {
