@@ -36,7 +36,17 @@ function mMT:AddClassIcons(style, texture, texCoords, name)
 	end
 end
 
-mMT:AddClassIcons("mmt_bevel", path .. "mmt_class_bevel.tga",  textureCoords, "mMT Bevel")
-mMT:AddClassIcons("mmt_clean", path .. "mmt_class_clean.tga",  textureCoords, "mMT Clean")
-mMT:AddClassIcons("mmt_withe", path .. "mmt_class_withe.tga",  textureCoords, "mMT Withe")
+mMT:AddClassIcons("mmt_border", path .. "mmt_border.tga",  textureCoords, "mMT Frame A")
+mMT:AddClassIcons("mmt_classcolored_border", path .. "mmt_classcolored_border.tga",  textureCoords, "mMT Frame B")
+
+mMT:AddClassIcons("mmt_transparent", path .. "mmt_transparent.tga",  textureCoords, "mMT Transparent A")
+mMT:AddClassIcons("mmt_transparent_shadow", path .. "mmt_transparent_shadow.tga",  textureCoords, "mMT Transparent B")
+mMT:AddClassIcons("mmt_transparent_colorboost", path .. "mmt_transparent_colorboost.tga",  textureCoords, "mMT Transparent C")
+mMT:AddClassIcons("mmt_transparent_colorboost_shadow", path .. "mmt_transparent_colorboost_shadow.tga",  textureCoords, "mMT Transparent D")
+
+mMT:AddClassIcons("mmt_transparent_outline", path .. "mmt_transparent_outline.tga",  textureCoords, "mMT Transparent Outline A")
+mMT:AddClassIcons("mmt_transparent_outline_shadow", path .. "mmt_transparent_outline_shadow.tga",  textureCoords, "mMT Transparent Outline B")
+mMT:AddClassIcons("mmt_transparent_outline_colorboost", path .. "mmt_transparent_outline_colorboost.tga",  textureCoords, "mMT Transparent Outline C")
+mMT:AddClassIcons("mmt_transparent_outline_shadow_colorboost", path .. "mmt_transparent_outline_shadow_colorboost.tga",  textureCoords, "mMT Transparent Outline D")
+
 mMT:AddClassIcons("BLIZZARD", "Interface\\WorldStateFrame\\Icons-Classes",  CLASS_ICON_TCOORDS, "Blizzard")
