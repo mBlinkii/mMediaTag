@@ -28,7 +28,7 @@ mMT.DB = {}
 mMT.ClassColor = {}
 mMT.ElvUI_EltreumUI = {}
 mMT.ElvUI_MerathilisUI = {}
-mMT.ElvUI_JiberishIcons = {}
+--mMT.ElvUI_JiberishIcons = {}
 mMT.DEVNames = {}
 mMT.DevMode = false
 mMT.CurrentProfile = nil
@@ -36,6 +36,7 @@ mMT.firstLoad = 0
 mMT.Classes = { "DEATHKNIGHT", "DEMONHUNTER", "DRUID", "EVOKER", "HUNTER", "MAGE", "MONK", "PALADIN", "PRIEST", "ROGUE", "SHAMAN", "WARLOCK", "WARRIOR" }
 mMT.Locales = LibStub("AceLocale-3.0"):GetLocale("mMediaTag")
 mMT.Changelog = {}
+mMT.classIcons = {}
 mMT.BossIDs = {}
 
 mMT.Modules.Portraits = {}
@@ -209,7 +210,7 @@ function mMT:Initialize()
 	mMT.Classes = mMT:ClassesTable()
 
 	-- load JiberishUI Icons for Portraits
-	if E.db.mMT.portraits.general.enable then mMT.ElvUI_JiberishIcons = mMT:JiberishIcons() end
+	--if E.db.mMT.portraits.general.enable then mMT.ElvUI_JiberishIcons = mMT:JiberishIcons() end
 
 	-- Register Events for Retail
 	if E.Retail or E.Cata then
@@ -276,7 +277,7 @@ function mMT:PLAYER_ENTERING_WORLD(event)
 	mMT.ElvUI_EltreumUI = mMT:CheckEltruism()
 	mMT.ElvUI_MerathilisUI = mMT:CheckMerathilisUI()
 	mMT.ClassColor = mMT:UpdateClassColor()
-	mMT.ElvUI_JiberishIcons = mMT:JiberishIcons()
+	--mMT.ElvUI_JiberishIcons = mMT:JiberishIcons()
 	mMT.DEVNames = mMT:GetDevNames()
 	mMT.Classes = mMT:ClassesTable()
 

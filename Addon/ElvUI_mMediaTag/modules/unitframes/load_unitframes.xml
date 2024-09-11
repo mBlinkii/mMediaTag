@@ -1,4 +1,5 @@
 <Ui xmlns="http://www.blizzard.com/wow/ui/">
+	<Script file="classicons.lua"/>
 	<Script file="background.lua"/>
 	<Script file="RoleIcons.lua"/>
 	<Script file="PhaseIcon.lua"/>

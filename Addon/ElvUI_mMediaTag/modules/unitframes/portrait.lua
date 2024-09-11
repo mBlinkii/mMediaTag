@@ -69,7 +69,6 @@ local function setColor(texture, color, mirror)
 	end
 end
 
-
 local cachedFaction = {}
 
 local function getColor(unit, isPlayer)
@@ -126,15 +125,11 @@ end
 local function SetPortraits(frame, unit, masking, mirror)
 	if E.db.mMT.portraits.general.classicons and UnitIsPlayer(unit) then
 		local class = select(2, UnitClass(unit))
-		local coords = CLASS_ICON_TCOORDS[class]
 		local style = E.db.mMT.portraits.general.classiconstyle
+		local coords = mMT.classIcons[style].texCoords[class]
+		local iconTexture = mMT.classIcons[style].texture
 
-		if mMT.ElvUI_JiberishIcons.loaded and style ~= "BLIZZARD" then
-			coords = class and mMT.ElvUI_JiberishIcons.texCoords[class]
-			SetTextures(frame.portrait, mMT.ElvUI_JiberishIcons.path .. style)
-		else
-			SetTextures(frame.portrait, "Interface\\WorldStateFrame\\Icons-Classes")
-		end
+		SetTextures(frame.portrait, iconTexture)
 
 		if frame.iconbg then UpdateIconBackground(frame.iconbg, unit, mirror) end
 
@@ -233,7 +228,6 @@ local function CheckRareElite(frame, unit, unitColor)
 		HideRareElite(frame)
 	end
 end
-
 
 local function UpdatePortrait(portraitFrame, force)
 	if mMT.DevMode then

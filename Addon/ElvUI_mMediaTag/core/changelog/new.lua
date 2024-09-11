@@ -1,7 +1,7 @@
 mMT.Changelog[356]  = {
-	DATE = "xx",
-	IMPORTANT = { "xx" },
-	NEW = { "xx" },
-	UPDATE = { "xx" },
-	FIX = { "xx" },
+	DATE = "there is nothing new here",
+	IMPORTANT = { "there is nothing new here" },
+	NEW = { "there is nothing new here" },
+	UPDATE = { "there is nothing new here" },
+	FIX = { "there is nothing new here" },
 }

@@ -1,8 +1,13 @@
 # Changelog - ElvUI_mMediaTag
 [Eng] - All changes to this project will be documented in this file. The latest changes are at the top.
 
+## [ver. 3.58] - 11.09.2024
+### NEW
+- NEW - [Portraits]: Add a function to add your custom Class Icons to the portraits via code.
+- NEW - [Portraits]: Add e Set of new Class Icons.
+
 ## [ver. 3.57] - 07.09.2024
-## UPDATE
+### UPDATE
 - UPDATE - [Important-Spells]: Default Texture function.
 - UPDATE - [Portraits]: Background setting is now always available.
 - UPDATE - [Portraits]: Optimized Style c and b.
@@ -10,7 +15,7 @@
 ### FIX 
 - FIX - [Portraits]: Smal Bugs with ne Textures.
 - FIX - [Portraits]: Old DB check did not worked correctly.
-## NEW
+### NEW
 - NEW - [Portraits]: Add Rare/ Elite/ Boss to custom Texture section.
 - NEW - [Portraits]: Add simple Dragon texture to Circle, Drop & Pure.
 - NEW - [Portraits]: New color function for Rare/ Elite/ Boss textures.
