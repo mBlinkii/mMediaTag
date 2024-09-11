@@ -1,12 +1,7 @@
 mMT.Changelog[358]  = {
-	DATE = "Dev - not",
+	DATE = "11.09.2024",
 	NEW = {
-		"there is nothing new here",
-	},
-	UPDATE = {
-		"there is nothing new here",
-	},
-	FIX = {
-		"there is nothing new here",
+		"[Portraits]: Add a function to add your custom Class Icons to the portraits via code.",
+		"[Portraits]: Add e Set of new Class Icons.",
 	},
 }
