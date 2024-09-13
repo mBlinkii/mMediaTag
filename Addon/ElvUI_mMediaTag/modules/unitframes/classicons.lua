@@ -1,7 +1,7 @@
 local L = mMT.Locales
 
 local type = type
-local path = "Interface\\Addons\\ElvUI_mMediaTag\\media\\portraits\\class\\"
+local path = "Interface\\Addons\\ElvUI_mMediaTag\\media\\class\\"
 local textureCoords = {
 	WARRIOR = { 0, 0, 0, 0.125, 0.125, 0, 0.125, 0.125 },
 	MAGE = { 0.125, 0, 0.125, 0.125, 0.25, 0, 0.25, 0.125 },
@@ -36,8 +36,8 @@ function mMT:AddClassIcons(style, texture, texCoords, name)
 	end
 end
 
-mMT:AddClassIcons("mmt_border", path .. "mmt_border.tga",  textureCoords, "mMT Class")
-mMT:AddClassIcons("mmt_classcolored_border", path .. "mmt_classcolored_border.tga",  textureCoords, "mMT Class colored")
+mMT:AddClassIcons("mmt_hd", path .. "mmt_border.tga",  textureCoords, "mMT HD")
+mMT:AddClassIcons("mmt_hd_black", path .. "mmt_classcolored_border.tga",  textureCoords, "mMT HD Black")
 
 mMT:AddClassIcons("mmt_transparent", path .. "mmt_transparent.tga",  textureCoords, "mMT Transp. A")
 mMT:AddClassIcons("mmt_transparent_shadow", path .. "mmt_transparent_shadow.tga",  textureCoords, "mMT Transp. B")
