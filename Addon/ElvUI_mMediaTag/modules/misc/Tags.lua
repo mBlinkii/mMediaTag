@@ -1952,7 +1952,7 @@ local classIcons = {
 for style, file in next, classIcons do
 	local tag = format('%s:%s', 'mClassIcon', style)
 
-	E:AddTag(tag, 'UNIT_NAME_UPDATE', function(unit, _, args)
+	E:AddTag(tag, 'UNIT_NAME_UPDATE', function(unit)
 		if not UnitIsPlayer(unit) then return end
 
 		local _, class = UnitClass(unit)
