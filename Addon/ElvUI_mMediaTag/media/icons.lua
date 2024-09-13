@@ -1,5 +1,7 @@
 local GetItemIcon = C_Item and C_Item.GetItemIconByID or GetItemIcon
 
+mMT.Media.CustomPortraits = {}
+
 mMT.Media.CombatIcons = {
 	CI1 = "Interface\\AddOns\\ElvUI_mMediaTag\\media\\icons\\datatext\\combat1.tga",
 	CI2 = "Interface\\AddOns\\ElvUI_mMediaTag\\media\\icons\\datatext\\combat2.tga",
