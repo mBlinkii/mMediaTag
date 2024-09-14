@@ -3,11 +3,19 @@
 
 ## [ver. 3.59] - xx.09.2024
 ### UPDATE
-- UPDATE - [xx]: xx
+- UPDATE - [Portraits]: Names of the Class icons shortened.
+- UPDATE - [System]: Boss IDs for Portraits and TAGs.
+- UPDATE - [System]: Names changed of Settings Menu first and second profession to individual profession.
+- UPDATE - [Teleports]: Update Teleports IDs.
 ### FIX 
-- FIX - [xx]: xx
+- FIX - [Portraits]: Prevent nil errors with Class icons.
+- FIX - [System]: Prevent nil errors with Locals.
 ### NEW
-- NEW - [xx]: xx
+- NEW - [Datatext]: Add individual Datatext for Fishing and Cooking.
+- NEW - [Portraits]: Add HD Class icons.
+- NEW - [Portraits]: Add an possibility to add custom portraits textures via code for Addons.
+- NEW - [TAG]: Add a few different Class icon TGAs.
+- NEW - [Teleports]: Add more Teleports to the list.
 
 ## [ver. 3.58] - 11.09.2024
 ### NEW
