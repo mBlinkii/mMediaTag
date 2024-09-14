@@ -776,3 +776,4 @@ L["Not learned"] = true
 L["Fishing"] = true
 L["Cooking"] = true
 L["Individual Professions"] = true
+L["The size can be set as follows"] = true
