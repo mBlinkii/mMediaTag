@@ -770,3 +770,7 @@ L["Second Mask Texture"] = true
 L["Use Texture Color"] = true
 L["mMediaTag needs an update to support the current version of JiberishUI icons, it is possible that the class icons are not displayed correctly on the portraits."] = true
 L["When loading the textures of JiberishUI icons."] = true
+L["Not learned"] = true
+L["Fishing"] = true
+L["Cooking"] = true
+L["Individual Professions"] = true
