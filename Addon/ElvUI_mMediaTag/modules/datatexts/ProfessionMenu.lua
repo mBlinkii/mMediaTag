@@ -70,4 +70,4 @@ local function OnLeave(self)
 	DT.tooltip:Hide()
 end
 
-DT:RegisterDatatext("mProfessions", "mMediaTag", "TRADE_SKILL_DETAILS_UPDATE", OnEvent, nil, OnClick, OnEnter, OnLeave, mText, nil, nil)
+DT:RegisterDatatext("mProfessions", mMT.DatatextString, "TRADE_SKILL_DETAILS_UPDATE", OnEvent, nil, OnClick, OnEnter, OnLeave, mText, nil, nil)
