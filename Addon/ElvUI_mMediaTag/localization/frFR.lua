@@ -775,3 +775,4 @@ L["Fishing"] = true
 L["Cooking"] = true
 L["Individual Professions"] = true
 L["The size can be set as follows"] = true
+L["This works only with the mMT Textures for Portraits."] = true
