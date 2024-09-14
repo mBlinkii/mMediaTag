@@ -1138,7 +1138,7 @@ function mMT:GetTextures(style)
 		tmp_db.extraMask = true
 		tmp_db.mask = {
 			a = E.db.mMT.portraits.custom.mask,
-			b = E.db.mMT.portraits.custom.maskb ~= "" and E.db.mMT.portraits.custom.maskb or E.db.mMT.portraits.custom.mask,
+			b = (E.db.mMT.portraits.custom.maskb ~= "") and E.db.mMT.portraits.custom.maskb or E.db.mMT.portraits.custom.mask,
 		}
 		tmp_db.rare = {
 			texture = E.db.mMT.portraits.custom.extra,
