@@ -1191,8 +1191,8 @@ function mMT:GetTextures(style)
 	else
 		OldSytleCheck()
 
-		-- prevent nil erorrs if the providing addon is not loaded
-		if not mMT.Media.CustomPortraits[style] or old_textures[style] or textures[style] then style = "drop" end
+		-- prevent nil erorr if the providing addon is not loaded
+		if not (mMT.Media.CustomPortraits[style] or old_textures[style] or textures[style]) then style = "drop" end
 
 		local variant = E.db.mMT.portraits.general.style
 		local textures_source = old[style] and old_textures or textures
