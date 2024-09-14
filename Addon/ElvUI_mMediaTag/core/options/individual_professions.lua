@@ -4,7 +4,7 @@ local L = mMT.Locales
 local DT = E:GetModule("DataTexts")
 local tinsert = tinsert
 local function configTable()
-	E.Options.args.mMT.args.datatexts.args.firstandsecondprofession.args = {
+	E.Options.args.mMT.args.datatexts.args.individual_professions.args = {
         icon = {
             order = 1,
             name = L["Show Icons"],

@@ -28,7 +28,6 @@ mMT.DB = {}
 mMT.ClassColor = {}
 mMT.ElvUI_EltreumUI = {}
 mMT.ElvUI_MerathilisUI = {}
---mMT.ElvUI_JiberishIcons = {}
 mMT.DEVNames = {}
 mMT.DevMode = false
 mMT.CurrentProfile = nil

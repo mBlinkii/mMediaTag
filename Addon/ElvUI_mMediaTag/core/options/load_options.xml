@@ -17,7 +17,7 @@
 	<Script file="dungeon.lua"/>
 	<Script file="durabilityanditemlevel.lua"/>
 	<Script file="executemarker.lua"/>
-	<Script file="firstandsecondprofession.lua"/>
+	<Script file="individual_professions.lua"/>
 	<Script file="gamemenu.lua"/>
 	<Script file="general.lua"/>
 	<Script file="greeting.lua"/>
