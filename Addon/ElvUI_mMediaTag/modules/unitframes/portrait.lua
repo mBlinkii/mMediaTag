@@ -223,7 +223,7 @@ local simpleClassification = {
 local function CheckRareElite(frame, unit, unitColor)
 	local c = UnitClassification(unit) --"worldboss", "rareelite", "elite", "rare", "normal", "trivial", or "minus"
 	local npcID = GetNPCID(unit)
-	local classification = simpleClassification[c] or (bossIDs[npcID] and "boss")
+	local classification = (bossIDs[npcID] and "boss" or simpleClassification[c])
 
 	if classification then
 		local color = useTextureColor and (unitColor or colors[classification]) or colors[classification]
