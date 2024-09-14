@@ -86,7 +86,7 @@ end
 
 function mMT:InstanceDifficultyDungeon()
 	local DungeonID = GetDungeonDifficultyID()
-	local DungeonName, _, _, _, _, _, _ = GetDifficultyInfo(DungeonID)
+	local DungeonName = GetDifficultyInfo(DungeonID)
 	local nhc, hc, myth, _, other, title = mMT:mColorDatatext()
 
 	local mDifficultyText = ""
@@ -108,7 +108,7 @@ end
 
 function mMT:InstanceDifficultyRaid()
 	local RaidID = GetRaidDifficultyID()
-	local RaidName, _, _, _, _, _, _ = RaidID and GetDifficultyInfo(RaidID) or "ERROR"
+	local RaidName = RaidID and GetDifficultyInfo(RaidID) or "ERROR"
 	local nhc, hc, myth, _, other, title = mMT:mColorDatatext()
 
 	local mDifficultyText = ""

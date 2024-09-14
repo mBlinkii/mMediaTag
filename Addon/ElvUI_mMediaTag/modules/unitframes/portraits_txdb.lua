@@ -1155,8 +1155,44 @@ function mMT:GetTextures(style)
 			border = E.db.mMT.portraits.custom.bossborder,
 			shadow = E.db.mMT.portraits.custom.bossshadow,
 		}
+	elseif mMT.Media.CustomPortraits[style] then
+		tmp_db.offset = mMT.Media.CustomPortraits[style].offset
+		tmp_db.texture = mMT.Media.CustomPortraits[style].texture
+		tmp_db.border = mMT.Media.CustomPortraits[style].border
+		tmp_db.shadow = mMT.Media.CustomPortraits[style].shadow
+		tmp_db.inner = mMT.Media.CustomPortraits[style].inner
+
+		if mMT.Media.CustomPortraits[style].maskb then
+			tmp_db.extraMask = true
+			tmp_db.mask = {
+				a = mMT.Media.CustomPortraits[style].mask,
+				b = mMT.Media.CustomPortraits[style].maskb ~= "" and E.db.mMT.portraits.custom.maskb or E.db.mMT.portraits.custom.mask,
+			}
+		else
+			tmp_db.extraMask = false
+			tmp_db.mask = mMT.Media.CustomPortraits[style].mask
+		end
+
+		tmp_db.rare = {
+			texture = mMT.Media.CustomPortraits[style].rare,
+			border = mMT.Media.CustomPortraits[style].rareborder,
+			shadow = mMT.Media.CustomPortraits[style].rareshadow,
+		}
+		tmp_db.elite = {
+			texture = mMT.Media.CustomPortraits[style].elite,
+			border = mMT.Media.CustomPortraits[style].eliteborder,
+			shadow = mMT.Media.CustomPortraits[style].eliteshadow,
+		}
+		tmp_db.boss = {
+			texture = mMT.Media.CustomPortraits[style].boss,
+			border = mMT.Media.CustomPortraits[style].bossborder,
+			shadow = mMT.Media.CustomPortraits[style].bossshadow,
+		}
 	else
 		OldSytleCheck()
+
+		-- prevent nil erorr if the providing addon is not loaded
+		if not (mMT.Media.CustomPortraits[style] or old_textures[style] or textures[style]) then style = "drop" end
 
 		local variant = E.db.mMT.portraits.general.style
 		local textures_source = old[style] and old_textures or textures

@@ -1,5 +1,42 @@
 local GetItemIcon = C_Item and C_Item.GetItemIconByID or GetItemIcon
 
+mMT.Media.CustomPortraits = {}
+
+-- mMT.Media.CustomPortraits["MyStyle"] = {
+-- 	name = "My Style", -- name to show
+
+-- 	-- portrait texture part
+-- 	texture = "dumm.tga",
+-- 	border = "dumm.tga",
+-- 	shadow = "dumm.tga",
+-- 	inner = "dumm.tga",
+
+-- 	-- mask texture, use only one deppendig on your texture
+-- 	-- this is only needed if the textur is not symetric
+-- 	extraMask = true,
+-- 	mask = {
+-- 		a = "dumm.tga",
+-- 		b = "dumm.tga",
+-- 	},
+
+-- 	-- else use this
+-- 	extraMask = false,
+-- 	mask = "dumm.tga",
+
+-- 	-- extra textures for rare, elite and boss
+-- 	rare = "dumm.tga",
+-- 	rareborder = "dumm.tga",
+-- 	rareshadow = "dumm.tga",
+
+-- 	elite = "dumm.tga",
+-- 	eliteborder = "dumm.tga",
+-- 	eliteshadow = "dumm.tga",
+
+-- 	boss = "dumm.tga",
+-- 	bossborder = "dumm.tga",
+-- 	bossshadow = "dumm.tga",
+-- }
+
 mMT.Media.CombatIcons = {
 	CI1 = "Interface\\AddOns\\ElvUI_mMediaTag\\media\\icons\\datatext\\combat1.tga",
 	CI2 = "Interface\\AddOns\\ElvUI_mMediaTag\\media\\icons\\datatext\\combat2.tga",

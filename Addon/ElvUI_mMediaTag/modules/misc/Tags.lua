@@ -150,9 +150,7 @@ for textFormat, length in pairs({ veryshort = 5, short = 10, medium = 15, long =
 	E:AddTag(format("mName:last:%s", textFormat), "UNIT_NAME_UPDATE INSTANCE_ENCOUNTER_ENGAGE_UNIT", function(unit)
 		local name = ShortName(UnitName(unit))
 
-		if name then
-			return E:ShortenString(name, length)
-		end
+		if name then return E:ShortenString(name, length) end
 	end)
 
 	E:AddTag(format("mName:last:onlyininstance:%s", textFormat), "UNIT_NAME_UPDATE INSTANCE_ENCOUNTER_ENGAGE_UNIT", function(unit)
@@ -160,9 +158,7 @@ for textFormat, length in pairs({ veryshort = 5, short = 10, medium = 15, long =
 		local inInstance, _ = IsInInstance()
 		name = name and (inInstance and ShortName(name) or E.TagFunctions.Abbrev(name))
 
-		if name then
-			return E:ShortenString(name, length)
-		end
+		if name then return E:ShortenString(name, length) end
 	end)
 
 	E:AddTag(format("mName:statusicon:%s", textFormat), "UNIT_NAME_UPDATE UNIT_CONNECTION PLAYER_FLAGS_CHANGED UNIT_HEALTH INSTANCE_ENCOUNTER_ENGAGE_UNIT", function(unit)
@@ -205,17 +201,13 @@ end)
 E:AddTag("mShowIcon", "UNIT_NAME_UPDATE", function(unit, _, args)
 	local tbl, icon = strsplit(":", args or "")
 
-	if tbl and icon and mMT.Media[tbl] and mMT.Media[tbl][icon] then
-		return format("|T%s:16:16:0:2|t", mMT.Media[tbl][icon])
-	end
+	if tbl and icon and mMT.Media[tbl] and mMT.Media[tbl][icon] then return format("|T%s:16:16:0:2|t", mMT.Media[tbl][icon]) end
 end)
 
 E:AddTag("mName:last", "UNIT_NAME_UPDATE INSTANCE_ENCOUNTER_ENGAGE_UNIT", function(unit)
 	local name = ShortName(UnitName(unit))
 
-	if name then
-		return name
-	end
+	if name then return name end
 end)
 
 E:AddTag("mName:last:onlyininstance", "UNIT_NAME_UPDATE INSTANCE_ENCOUNTER_ENGAGE_UNIT", function(unit)
@@ -223,25 +215,19 @@ E:AddTag("mName:last:onlyininstance", "UNIT_NAME_UPDATE INSTANCE_ENCOUNTER_ENGAG
 	local inInstance, _ = IsInInstance()
 	name = name and (inInstance and ShortName(name) or E.TagFunctions.Abbrev(name))
 
-	if name then
-		return name
-	end
+	if name then return name end
 end)
 
 E:AddTag("mTarget:abbrev", "UNIT_TARGET", function(unit)
 	local targetName = UnitName(unit .. "target")
-	if targetName then
-		return E.TagFunctions.Abbrev(targetName)
-	end
+	if targetName then return E.TagFunctions.Abbrev(targetName) end
 end)
 
 for textFormat, length in pairs({ veryshort = 5, short = 10, medium = 15, long = 20 }) do
 	E:AddTag(format("mTarget:abbrev:%s", textFormat), "UNIT_NAME_UPDATE INSTANCE_ENCOUNTER_ENGAGE_UNIT", function(unit)
 		local targetName = UnitName(unit .. "target")
 
-		if targetName then
-			return E:ShortenString(targetName, length)
-		end
+		if targetName then return E:ShortenString(targetName, length) end
 	end)
 end
 
@@ -371,41 +357,27 @@ end)
 
 local unitStatus = {}
 E:AddTag("mStatustimer", 1, function(unit)
-	if not UnitIsPlayer(unit) then
-		return
-	end
+	if not UnitIsPlayer(unit) then return end
 
 	local guid = UnitGUID(unit)
 
-	if not guid then
-		return
-	end
+	if not guid then return end
 
 	local status = unitStatus[guid]
 
 	if UnitIsAFK(unit) then
-		if not status or status[1] ~= "AFK" then
-			unitStatus[guid] = { "AFK", GetTime() }
-		end
+		if not status or status[1] ~= "AFK" then unitStatus[guid] = { "AFK", GetTime() } end
 	elseif UnitIsDND(unit) then
-		if not status or status[1] ~= "DND" then
-			unitStatus[guid] = { "DND", GetTime() }
-		end
+		if not status or status[1] ~= "DND" then unitStatus[guid] = { "DND", GetTime() } end
 	elseif UnitIsDead(unit) or UnitIsGhost(unit) then
-		if not status or status[1] ~= "Dead" then
-			unitStatus[guid] = { "Dead", GetTime() }
-		end
+		if not status or status[1] ~= "Dead" then unitStatus[guid] = { "Dead", GetTime() } end
 	elseif not UnitIsConnected(unit) then
-		if not status or status[1] ~= "Offline" then
-			unitStatus[guid] = { "Offline", GetTime() }
-		end
+		if not status or status[1] ~= "Offline" then unitStatus[guid] = { "Offline", GetTime() } end
 	else
 		unitStatus[guid] = nil
 	end
 
-	if status ~= unitStatus[guid] then
-		status = unitStatus[guid]
-	end
+	if status ~= unitStatus[guid] then status = unitStatus[guid] end
 
 	if status then
 		local timer = GetTime() - status[2]
@@ -418,9 +390,7 @@ end)
 E:AddTag("mAFK", "PLAYER_FLAGS_CHANGED", function(unit)
 	local isAFK = UnitIsAFK(unit)
 
-	if isAFK then
-		return format("[%sAFK|r]", colors.afk)
-	end
+	if isAFK then return format("[%sAFK|r]", colors.afk) end
 end)
 
 E:AddTagInfo("mStatus", mMT.NameShort .. " " .. L["Status"], L["Displays the Unit Status."])
@@ -468,9 +438,7 @@ end)
 E:AddTag("mColor:absorbs", "UNIT_ABSORB_AMOUNT_CHANGED", function(unit)
 	local absorb = UnitGetTotalAbsorbs(unit) or 0
 
-	if absorb ~= 0 then
-		return colors.absorbs or ""
-	end
+	if absorb ~= 0 then return colors.absorbs or "" end
 end, not E.Retail)
 
 E:AddTagInfo("mColor", mMT.NameShort .. " " .. L["Color"], L["Unit colors with mMediaTag colors for Rare, Rareelite, Elite and Boss and Classcolors."])
@@ -1273,14 +1241,10 @@ end)
 E:AddTag("mHealth:onlypercent-with-absorbs:ndp:nosign", "UNIT_HEALTH UNIT_MAXHEALTH UNIT_ABSORB_AMOUNT_CHANGED UNIT_CONNECTION PLAYER_FLAGS_CHANGED UNIT_ABSORB_AMOUNT_CHANGED", function(unit)
 	local status = UnitIsDead(unit) and L["Dead"] or UnitIsGhost(unit) and L["Ghost"] or not UnitIsConnected(unit) and L["Offline"]
 
-	if status then
-		return status
-	end
+	if status then return status end
 
 	local absorb = UnitGetTotalAbsorbs(unit) or 0
-	if absorb == 0 then
-		return NoDecimalPercent(UnitHealth(unit), UnitHealthMax(unit))
-	end
+	if absorb == 0 then return NoDecimalPercent(UnitHealth(unit), UnitHealthMax(unit)) end
 
 	local healthTotalIncludingAbsorbs = UnitHealth(unit) + absorb
 	return NoDecimalPercent(healthTotalIncludingAbsorbs, UnitHealthMax(unit))
@@ -1312,22 +1276,55 @@ E:AddTagInfo("mHealth:ndp", mMT.NameShort .. " " .. L["Health"], L["Health chang
 E:AddTagInfo("mHealth:short:ndp", mMT.NameShort .. " " .. L["Health"], L["Shortened version of"] .. " mHealth." .. L["No decimal values for percentage."])
 E:AddTagInfo("mHealth:icon:ndp", mMT.NameShort .. " " .. L["Health"], L["Health changes between maximum Health and Percent in combat, with Status Icons."] .. L["No decimal values for percentage."])
 E:AddTagInfo("mHealth:icon:short:ndp", mMT.NameShort .. " " .. L["Health"], L["Shortened version of"] .. " mHealth:icon." .. L["No decimal values for percentage."])
-E:AddTagInfo("mHealth:current-percent:ndp", mMT.NameShort .. " " .. L["Health"], L["Health changes between maximum Health and Current Health - Percent in combat."] .. L["No decimal values for percentage."])
+E:AddTagInfo(
+	"mHealth:current-percent:ndp",
+	mMT.NameShort .. " " .. L["Health"],
+	L["Health changes between maximum Health and Current Health - Percent in combat."] .. L["No decimal values for percentage."]
+)
 E:AddTagInfo("mHealth:current-percent:short:ndp", mMT.NameShort .. " " .. L["Health"], L["Shortened version of"] .. " mHealth:current-percent. " .. L["No decimal values for percentage."])
-E:AddTagInfo("mHealth:current-percent:ndp:absorbs", mMT.NameShort .. " " .. L["Health"], L["Health changes between maximum Health and Current Health - Percent in combat with absorb values."] .. L["No decimal values for percentage."])
-E:AddTagInfo("mHealth:current-percent:short:ndp:absorbs", mMT.NameShort .. " " .. L["Health"], L["Shortened version of"] .. " mHealth:current-percent:absorbs " .. L["No decimal values for percentage."])
-E:AddTagInfo("mHealth:nodeath:ndp", mMT.NameShort .. " " .. L["Health"], L["Health changes between maximum Health and Percent in combat. Without Death Status."] .. L["No decimal values for percentage."])
+E:AddTagInfo(
+	"mHealth:current-percent:ndp:absorbs",
+	mMT.NameShort .. " " .. L["Health"],
+	L["Health changes between maximum Health and Current Health - Percent in combat with absorb values."] .. L["No decimal values for percentage."]
+)
+E:AddTagInfo(
+	"mHealth:current-percent:short:ndp:absorbs",
+	mMT.NameShort .. " " .. L["Health"],
+	L["Shortened version of"] .. " mHealth:current-percent:absorbs " .. L["No decimal values for percentage."]
+)
+E:AddTagInfo(
+	"mHealth:nodeath:ndp",
+	mMT.NameShort .. " " .. L["Health"],
+	L["Health changes between maximum Health and Percent in combat. Without Death Status."] .. L["No decimal values for percentage."]
+)
 E:AddTagInfo("mHealth:nodeath:short:ndp", mMT.NameShort .. " " .. L["Health"], L["Shortened version of"] .. " mHealth:nodeath." .. L["No decimal values for percentage."])
-E:AddTagInfo("mHealth:nodeath:current-percent:ndp", mMT.NameShort .. " " .. L["Health"], L["Same as"] .. " mHealth:current-percent " .. L["and"] .. " mHealth:nodeath " .. L["No decimal values for percentage."])
-E:AddTagInfo("mHealth:nodeath:short:current-percent:ndp", mMT.NameShort .. " " .. L["Health"], L["Shortened version of"] .. " mHealth:nodeath:current-percent." .. L["No decimal values for percentage."])
+E:AddTagInfo(
+	"mHealth:nodeath:current-percent:ndp",
+	mMT.NameShort .. " " .. L["Health"],
+	L["Same as"] .. " mHealth:current-percent " .. L["and"] .. " mHealth:nodeath " .. L["No decimal values for percentage."]
+)
+E:AddTagInfo(
+	"mHealth:nodeath:short:current-percent:ndp",
+	mMT.NameShort .. " " .. L["Health"],
+	L["Shortened version of"] .. " mHealth:nodeath:current-percent." .. L["No decimal values for percentage."]
+)
 E:AddTagInfo("mHealth:NoAFK:ndp", mMT.NameShort .. " " .. L["Health"], L["Health changes between maximum Health and Percent in combat, without AFK Status."] .. L["No decimal values for percentage."])
 E:AddTagInfo("mHealth:NoAFK:short:ndp", mMT.NameShort .. " " .. L["Health"], L["Shortened version of"] .. " mHealth:NoAFK." .. L["No decimal values for percentage."])
-E:AddTagInfo("mHealth:NoAFK:current-percent:ndp", mMT.NameShort .. " " .. L["Health"], L["Same as"] .. " mHealth:current-percent " .. L["and"] .. " mHealth:NoAFK " .. L["No decimal values for percentage."])
+E:AddTagInfo(
+	"mHealth:NoAFK:current-percent:ndp",
+	mMT.NameShort .. " " .. L["Health"],
+	L["Same as"] .. " mHealth:current-percent " .. L["and"] .. " mHealth:NoAFK " .. L["No decimal values for percentage."]
+)
 E:AddTagInfo("mHealth:NoAFK:short:current-percent:ndp", mMT.NameShort .. " " .. L["Health"], L["Shortened version of"] .. " mHealth:NoAFK:current-percent." .. L["No decimal values for percentage."])
 E:AddTagInfo("mHealth:noStatus:ndp", mMT.NameShort .. " " .. L["Health"], L["no Status version of"] .. " mHealth." .. L["No decimal values for percentage."])
 E:AddTagInfo("mHealth:noStatus:short:ndp", mMT.NameShort .. " " .. L["Health"], L["no Status version of"] .. " mHealth." .. L["No decimal values for percentage."])
 E:AddTagInfo("mHealth:noStatus:current-percent:ndp", mMT.NameShort .. " " .. L["Health"], L["no Status version of"] .. " mHealth." .. L["No decimal values for percentage."])
-E:AddTagInfo("mHealth:onlypercent-with-absorbs:ndp:nosign", mMT.NameShort .. " " .. L["Health"], L["Displays the unit's current health as a percentage with absorb values"] .. " " .. L["No decimal values for percentage."], not E.Retail)
+E:AddTagInfo(
+	"mHealth:onlypercent-with-absorbs:ndp:nosign",
+	mMT.NameShort .. " " .. L["Health"],
+	L["Displays the unit's current health as a percentage with absorb values"] .. " " .. L["No decimal values for percentage."],
+	not E.Retail
+)
 
 local UnitmDeathCount = {}
 local mID = ""
@@ -1335,13 +1332,9 @@ local mTyp = "none"
 function mMT:TagDeathCount()
 	local iniId, typ = tostring(({ GetInstanceInfo() })[8]), tostring(({ GetInstanceInfo() })[2])
 
-	if typ ~= "none" and mTyp == "none" then
-		mTyp = typ
-	end
+	if typ ~= "none" and mTyp == "none" then mTyp = typ end
 
-	if mTyp ~= "none" and typ == "none" and UnitFaction then
-		UnitFaction = {}
-	end
+	if mTyp ~= "none" and typ == "none" and UnitFaction then UnitFaction = {} end
 
 	if iniId ~= mID then
 		mID = iniId
@@ -1350,56 +1343,38 @@ function mMT:TagDeathCount()
 end
 
 E:AddTag("mDeathCount", "UNIT_HEALTH", function(unit)
-	if not UnitIsPlayer(unit) then
-		return
-	end
+	if not UnitIsPlayer(unit) then return end
 
 	local guid = UnitGUID(unit)
 
-	if not guid then
-		return
-	end
+	if not guid then return end
 
 	if (UnitIsDead(unit)) or (UnitIsGhost(unit)) then
 		if not UnitmDeathCount[guid] then
 			UnitmDeathCount[guid] = { true, 1 }
 		else
-			if UnitmDeathCount[guid][1] ~= true then
-				UnitmDeathCount[guid] = { true, UnitmDeathCount[guid][2] + 1 }
-			end
+			if UnitmDeathCount[guid][1] ~= true then UnitmDeathCount[guid] = { true, UnitmDeathCount[guid][2] + 1 } end
 		end
 	else
 		if UnitmDeathCount ~= nil then
-			if UnitmDeathCount[guid] ~= nil then
-				UnitmDeathCount[guid][1] = false
-			end
+			if UnitmDeathCount[guid] ~= nil then UnitmDeathCount[guid][1] = false end
 		end
 	end
 
-	if not UnitmDeathCount then
-		return
-	end
+	if not UnitmDeathCount then return end
 
-	if UnitmDeathCount[guid] and (UnitmDeathCount[guid][2] >= 1) then
-		return UnitmDeathCount[guid][2]
-	end
+	if UnitmDeathCount[guid] and (UnitmDeathCount[guid][2] >= 1) then return UnitmDeathCount[guid][2] end
 end)
 
 E:AddTag("mDeathCount:hide", "UNIT_HEALTH", function(unit)
-	if not UnitIsPlayer(unit) then
-		return
-	end
+	if not UnitIsPlayer(unit) then return end
 	_TAGS.mDeathCount(unit)
 
-	if (UnitIsDead(unit)) or (UnitIsGhost(unit)) then
-		return _TAGS.mDeathCount(unit)
-	end
+	if (UnitIsDead(unit)) or (UnitIsGhost(unit)) then return _TAGS.mDeathCount(unit) end
 end)
 
 E:AddTag("mDeathCount:color", "UNIT_HEALTH", function(unit)
-	if not UnitIsPlayer(unit) then
-		return
-	end
+	if not UnitIsPlayer(unit) then return end
 
 	local guid = UnitGUID(unit)
 
@@ -1410,16 +1385,12 @@ E:AddTag("mDeathCount:color", "UNIT_HEALTH", function(unit)
 end)
 
 E:AddTag("mDeathCount:hide:text", "UNIT_HEALTH", function(unit)
-	if not UnitIsPlayer(unit) then
-		return
-	end
+	if not UnitIsPlayer(unit) then return end
 
 	local guid = UnitGUID(unit)
 
 	if UnitmDeathCount[guid] then
-		if UnitmDeathCount[guid][2] >= 1 then
-			return L["Deaths"] .. ": "
-		end
+		if UnitmDeathCount[guid][2] >= 1 then return L["Deaths"] .. ": " end
 	end
 end)
 
@@ -1527,9 +1498,7 @@ E:AddTag("mLevel:hideMax", "UNIT_LEVEL PLAYER_LEVEL_UP PLAYER_UPDATE_RESTING", f
 				return UnitBattlePetLevel(unit)
 			elseif level > 0 then
 				if unit == "player" then
-					if not E:XPIsLevelMax() then
-						return level
-					end
+					if not E:XPIsLevelMax() then return level end
 				else
 					return level
 				end
@@ -1539,9 +1508,7 @@ E:AddTag("mLevel:hideMax", "UNIT_LEVEL PLAYER_LEVEL_UP PLAYER_UPDATE_RESTING", f
 		end
 		if level > 0 then
 			if unit == "player" then
-				if not E:XPIsLevelMax() then
-					return level
-				end
+				if not E:XPIsLevelMax() then return level end
 			else
 				return level
 			end
@@ -1611,9 +1578,7 @@ E:AddTag("mLevelSmart:hideMax", "UNIT_LEVEL PLAYER_LEVEL_UP PLAYER_UPDATE_RESTIN
 				return UnitBattlePetLevel(unit)
 			elseif level > 0 then
 				if unit == "player" then
-					if not E:XPIsLevelMax() then
-						return level
-					end
+					if not E:XPIsLevelMax() then return level end
 				else
 					return level
 				end
@@ -1626,9 +1591,7 @@ E:AddTag("mLevelSmart:hideMax", "UNIT_LEVEL PLAYER_LEVEL_UP PLAYER_UPDATE_RESTIN
 			return ""
 		elseif level > 0 then
 			if unit == "player" then
-				if not E:XPIsLevelMax() then
-					return level
-				end
+				if not E:XPIsLevelMax() then return level end
 			else
 				return level
 			end
@@ -1647,127 +1610,93 @@ E:AddTagInfo("mLevelSmart:hideMax", mMT.NameShort .. " " .. L["Level"], L["Same 
 
 E:AddTag("mPvP:icon", "UNIT_FACTION", function(unit)
 	local factionGroup = UnitFactionGroup(unit)
-	if (UnitIsPVP(unit)) and (factionGroup == "Horde" or factionGroup == "Alliance") then
-		return icons.pvp
-	end
+	if (UnitIsPVP(unit)) and (factionGroup == "Horde" or factionGroup == "Alliance") then return icons.pvp end
 end)
 
 E:AddTag("mFaction:icon", "UNIT_FACTION", function(unit)
-	if not UnitIsPlayer(unit) then
-		return
-	end
+	if not UnitIsPlayer(unit) then return end
 
 	local guid = UnitGUID(unit)
 
-	if not guid then
-		return
-	end
+	if not guid then return end
 
 	if not UnitFaction[guid] then
 		local factionGroup = UnitFactionGroup(unit)
-		if factionGroup then
-			UnitFaction[guid] = {
-				CreateTextureMarkup("Interface\\FriendsFrame\\PlusManz-" .. factionGroup, 16, 16, 16, 16, 0, 1, 0, 1, 0, 0),
-				factionGroup,
-			}
-		end
+		if factionGroup then UnitFaction[guid] = {
+			CreateTextureMarkup("Interface\\FriendsFrame\\PlusManz-" .. factionGroup, 16, 16, 16, 16, 0, 1, 0, 1, 0, 0),
+			factionGroup,
+		} end
 	end
 
 	if UnitFaction[guid] then
-		if UnitFaction[guid][1] then
-			return UnitFaction[guid][1]
-		end
+		if UnitFaction[guid][1] then return UnitFaction[guid][1] end
 	end
 end)
 
 E:AddTag("mFaction:text", "UNIT_FACTION", function(unit)
-	if not UnitIsPlayer(unit) then
-		return
-	end
+	if not UnitIsPlayer(unit) then return end
 
 	local guid = UnitGUID(unit)
 
-	if not guid then
-		return
-	end
+	if not guid then return end
 
 	if not UnitFaction[guid] then
 		local factionGroup = UnitFactionGroup(unit)
-		if factionGroup then
-			UnitFaction[guid] = {
-				CreateTextureMarkup("Interface\\FriendsFrame\\PlusManz-" .. factionGroup, 16, 16, 16, 16, 0, 1, 0, 1, 0, 0),
-				factionGroup,
-			}
-		end
+		if factionGroup then UnitFaction[guid] = {
+			CreateTextureMarkup("Interface\\FriendsFrame\\PlusManz-" .. factionGroup, 16, 16, 16, 16, 0, 1, 0, 1, 0, 0),
+			factionGroup,
+		} end
 	end
 
 	if UnitFaction[guid] then
 		if UnitFaction[guid][2] then
-			if UnitFaction[guid][2] == "Horde" or UnitFaction[guid][2] == "Alliance" then
-				return UnitFaction[guid][2]
-			end
+			if UnitFaction[guid][2] == "Horde" or UnitFaction[guid][2] == "Alliance" then return UnitFaction[guid][2] end
 		end
 	end
 end)
 
 E:AddTag("mFaction:text:opposite", "UNIT_FACTION", function(unit)
-	if not UnitIsPlayer(unit) then
-		return
-	end
+	if not UnitIsPlayer(unit) then return end
 
 	local guid = UnitGUID(unit)
 
-	if not guid then
-		return
-	end
+	if not guid then return end
 
 	if not UnitFaction[guid] then
 		local factionGroup = UnitFactionGroup(unit)
-		if factionGroup then
-			UnitFaction[guid] = {
-				CreateTextureMarkup("Interface\\FriendsFrame\\PlusManz-" .. factionGroup, 16, 16, 16, 16, 0, 1, 0, 1, 0, 0),
-				factionGroup,
-			}
-		end
+		if factionGroup then UnitFaction[guid] = {
+			CreateTextureMarkup("Interface\\FriendsFrame\\PlusManz-" .. factionGroup, 16, 16, 16, 16, 0, 1, 0, 1, 0, 0),
+			factionGroup,
+		} end
 	end
 
 	if UnitFaction[guid] then
 		if UnitFaction[guid][2] then
 			local factionPlayer = UnitFactionGroup("Player")
-			if (UnitFaction[guid][2] == "Horde" or UnitFaction[guid][2] == "Alliance") and (UnitFaction[guid][2] ~= factionPlayer) then
-				return UnitFaction[guid][2]
-			end
+			if (UnitFaction[guid][2] == "Horde" or UnitFaction[guid][2] == "Alliance") and (UnitFaction[guid][2] ~= factionPlayer) then return UnitFaction[guid][2] end
 		end
 	end
 end)
 
 E:AddTag("mFaction:icon:opposite", "UNIT_FACTION", function(unit)
-	if not UnitIsPlayer(unit) then
-		return
-	end
+	if not UnitIsPlayer(unit) then return end
 
 	local guid = UnitGUID(unit)
 
-	if not guid then
-		return
-	end
+	if not guid then return end
 
 	if not UnitFaction[guid] then
 		local factionGroup = UnitFactionGroup(unit)
-		if factionGroup then
-			UnitFaction[guid] = {
-				CreateTextureMarkup("Interface\\FriendsFrame\\PlusManz-" .. factionGroup, 16, 16, 16, 16, 0, 1, 0, 1, 0, 0),
-				factionGroup,
-			}
-		end
+		if factionGroup then UnitFaction[guid] = {
+			CreateTextureMarkup("Interface\\FriendsFrame\\PlusManz-" .. factionGroup, 16, 16, 16, 16, 0, 1, 0, 1, 0, 0),
+			factionGroup,
+		} end
 	end
 
 	if UnitFaction[guid] then
 		if UnitFaction[guid][1] then
 			local factionPlayer = UnitFactionGroup("Player")
-			if (UnitFaction[guid][2] == "Horde" or UnitFaction[guid][2] == "Alliance") and (UnitFaction[guid][2] ~= factionPlayer) then
-				return UnitFaction[guid][1]
-			end
+			if (UnitFaction[guid][2] == "Horde" or UnitFaction[guid][2] == "Alliance") and (UnitFaction[guid][2] ~= factionPlayer) then return UnitFaction[guid][1] end
 		end
 	end
 end)
@@ -1779,16 +1708,12 @@ E:AddTagInfo("mFaction:text", mMT.NameShort .. " " .. L["Misc"], L["Displays the
 E:AddTagInfo("mFaction:text:opposite", mMT.NameShort .. " " .. L["Misc"], L["Displays the opposite Faction."])
 
 E:AddTag("mPower:percent", "UNIT_DISPLAYPOWER UNIT_POWER_FREQUENT UNIT_MAXPOWER PLAYER_ROLES_ASSIGNED GROUP_ROSTER_UPDATE", function(unit, power)
-	if not power then
-		power = _TAGS.perpp(unit)
-	end
+	if not power then power = _TAGS.perpp(unit) end
 
 	if power ~= 0 then
 		local Role = ""
 
-		if E.Retail or E.Cata then
-			Role = UnitGroupRolesAssigned(unit)
-		end
+		if E.Retail or E.Cata then Role = UnitGroupRolesAssigned(unit) end
 
 		if Role == "HEALER" then
 			if power <= 30 then
@@ -1806,22 +1731,16 @@ end)
 
 E:AddTag("mPower:percent:hidefull", "UNIT_DISPLAYPOWER UNIT_POWER_FREQUENT UNIT_MAXPOWER PLAYER_ROLES_ASSIGNED GROUP_ROSTER_UPDATE UNIT_COMBAT", function(unit)
 	local power = _TAGS.perpp(unit)
-	if power ~= 100 then
-		return _TAGS["mPower:percent"](unit, power)
-	end
+	if power ~= 100 then return _TAGS["mPower:percent"](unit, power) end
 end)
 
 E:AddTag("mPower:percent:heal", "UNIT_DISPLAYPOWER UNIT_POWER_FREQUENT UNIT_MAXPOWER PLAYER_ROLES_ASSIGNED GROUP_ROSTER_UPDATE", function(unit, power)
 	local Role = "HEALER"
 
-	if E.Retail or E.Cata then
-		Role = UnitGroupRolesAssigned(unit)
-	end
+	if E.Retail or E.Cata then Role = UnitGroupRolesAssigned(unit) end
 
 	if Role == "HEALER" then
-		if not power then
-			power = _TAGS.perpp(unit)
-		end
+		if not power then power = _TAGS.perpp(unit) end
 
 		if power ~= 0 then
 			if power <= 30 then
@@ -1837,23 +1756,17 @@ end)
 
 E:AddTag("mPower:percent:heal:hidefull", "UNIT_DISPLAYPOWER UNIT_POWER_FREQUENT UNIT_MAXPOWER PLAYER_ROLES_ASSIGNED GROUP_ROSTER_UPDATE UNIT_COMBAT", function(unit)
 	local power = _TAGS.perpp(unit)
-	if power ~= 100 then
-		return _TAGS["mPower:percent:heal"](unit, power)
-	end
+	if power ~= 100 then return _TAGS["mPower:percent:heal"](unit, power) end
 end)
 
 E:AddTag("mPower:percent:combat", "UNIT_DISPLAYPOWER UNIT_POWER_FREQUENT UNIT_MAXPOWER PLAYER_ROLES_ASSIGNED GROUP_ROSTER_UPDATE UNIT_COMBAT", function(unit)
 	local power = _TAGS.perpp(unit)
-	if UnitAffectingCombat(unit) then
-		return _TAGS["mPower:percent"](unit, power)
-	end
+	if UnitAffectingCombat(unit) then return _TAGS["mPower:percent"](unit, power) end
 end)
 
 E:AddTag("mPower:percent:heal:combat", "UNIT_DISPLAYPOWER UNIT_POWER_FREQUENT UNIT_MAXPOWER PLAYER_ROLES_ASSIGNED GROUP_ROSTER_UPDATE UNIT_COMBAT", function(unit)
 	local power = _TAGS.perpp(unit)
-	if UnitAffectingCombat(unit) then
-		return _TAGS["mPower:percent:heal"](unit, power)
-	end
+	if UnitAffectingCombat(unit) then return _TAGS["mPower:percent:heal"](unit, power) end
 end)
 
 E:AddTagInfo("mPower:percent", mMT.NameShort .. " " .. L["Power"], L["Displays Power/Mana, with a low healer warning."])
@@ -1864,13 +1777,9 @@ E:AddTagInfo("mPower:percent:combat", mMT.NameShort .. " " .. L["Power"], L["Dis
 E:AddTagInfo("mPower:percent:heal:combat", mMT.NameShort .. " " .. L["Power"], L["Displays Power/Mana for Heal only, in combat."])
 
 E:AddTag("mQuestIcon", "QUEST_LOG_UPDATE", function(unit)
-	if UnitIsPlayer(unit) then
-		return
-	end
+	if UnitIsPlayer(unit) then return end
 	local isQuest = E.TagFunctions.GetQuestData(unit, "title", Hex)
-	if isQuest then
-		return icons.quest
-	end
+	if isQuest then return icons.quest end
 end)
 
 E:AddTagInfo("mQuestIcon", mMT.NameShort .. " " .. L["Misc"], L["Displays a ! if the Unit is a Quest NPC."])
@@ -1878,31 +1787,21 @@ E:AddTagInfo("mQuestIcon", mMT.NameShort .. " " .. L["Misc"], L["Displays a ! if
 local function GetPartyTargets(unit)
 	local amount = 0
 	for i = 1, GetNumGroupMembers() - 1 do
-		if UnitIsUnit("party" .. i .. "target", unit) then
-			amount = amount + 1
-		end
+		if UnitIsUnit("party" .. i .. "target", unit) then amount = amount + 1 end
 	end
 
-	if UnitIsUnit("playertarget", unit) then
-		amount = amount + 1
-	end
+	if UnitIsUnit("playertarget", unit) then amount = amount + 1 end
 
-	if amount ~= 0 then
-		return amount
-	end
+	if amount ~= 0 then return amount end
 end
 
 local function GetRaidTargets(unit)
 	local amount = 0
 	for i = 1, GetNumGroupMembers() do
-		if UnitIsUnit("raid" .. i .. "target", unit) then
-			amount = amount + 1
-		end
+		if UnitIsUnit("raid" .. i .. "target", unit) then amount = amount + 1 end
 	end
 
-	if amount ~= 0 then
-		return amount
-	end
+	if amount ~= 0 then return amount end
 end
 
 local targetTextures = {
@@ -1941,40 +1840,30 @@ local function GetPartyTargetsIcons(unit, style)
 			if UnitIsUnit("party" .. i .. "target", unit) then
 				local role = targetTextures.role[UnitGroupRolesAssigned("party" .. i)] or targetTextures.DAMAGER
 				local _, unitClass = UnitClass("party" .. i)
-				if role and unitClass then
-					ClassString = role .. targetStringColors[unitClass] .. ClassString
-				end
+				if role and unitClass then ClassString = role .. targetStringColors[unitClass] .. ClassString end
 			end
 		end
 
 		if UnitIsUnit("playertarget", unit) then
 			local role = targetTextures.role[UnitGroupRolesAssigned("player")] or targetTextures.DAMAGER
 			local _, unitClass = UnitClass("player")
-			if role and unitClass then
-				ClassString = role .. targetStringColors[unitClass] .. ClassString
-			end
+			if role and unitClass then ClassString = role .. targetStringColors[unitClass] .. ClassString end
 		end
 	else
 		for i = 1, GetNumGroupMembers() - 1 do
 			if UnitIsUnit("party" .. i .. "target", unit) then
 				local _, unitClass = UnitClass("party" .. i)
-				if unitClass then
-					ClassString = targetTextures[style] .. targetStringColors[unitClass] .. ClassString
-				end
+				if unitClass then ClassString = targetTextures[style] .. targetStringColors[unitClass] .. ClassString end
 			end
 		end
 
 		if UnitIsUnit("playertarget", unit) then
 			local _, unitClass = UnitClass("player")
-			if unitClass then
-				ClassString = targetTextures[style] .. targetStringColors[unitClass] .. ClassString
-			end
+			if unitClass then ClassString = targetTextures[style] .. targetStringColors[unitClass] .. ClassString end
 		end
 	end
 
-	if ClassString ~= "" then
-		return ClassString
-	end
+	if ClassString ~= "" then return ClassString end
 end
 
 E:AddTag("mTargetingPlayers", 2, function(unit)
@@ -1988,39 +1877,27 @@ E:AddTag("mTargetingPlayers", 2, function(unit)
 end)
 
 E:AddTag("mTargetingPlayers:icons:Flat", 2, function(unit)
-	if (InCombatLockdown()) and UnitAffectingCombat(unit) and (IsInGroup()) then
-		return GetPartyTargetsIcons(unit, "FLAT")
-	end
+	if (InCombatLockdown()) and UnitAffectingCombat(unit) and (IsInGroup()) then return GetPartyTargetsIcons(unit, "FLAT") end
 end)
 
 E:AddTag("mTargetingPlayers:icons:Glas", 2, function(unit)
-	if (InCombatLockdown()) and UnitAffectingCombat(unit) and (IsInGroup()) then
-		return GetPartyTargetsIcons(unit, "GLAS")
-	end
+	if (InCombatLockdown()) and UnitAffectingCombat(unit) and (IsInGroup()) then return GetPartyTargetsIcons(unit, "GLAS") end
 end)
 
 E:AddTag("mTargetingPlayers:icons:SQ", 2, function(unit)
-	if (InCombatLockdown()) and UnitAffectingCombat(unit) and (IsInGroup()) then
-		return GetPartyTargetsIcons(unit, "SQ")
-	end
+	if (InCombatLockdown()) and UnitAffectingCombat(unit) and (IsInGroup()) then return GetPartyTargetsIcons(unit, "SQ") end
 end)
 
 E:AddTag("mTargetingPlayers:icons:DIA", 2, function(unit)
-	if (InCombatLockdown()) and UnitAffectingCombat(unit) and (IsInGroup()) then
-		return GetPartyTargetsIcons(unit, "DIA")
-	end
+	if (InCombatLockdown()) and UnitAffectingCombat(unit) and (IsInGroup()) then return GetPartyTargetsIcons(unit, "DIA") end
 end)
 
 E:AddTag("mTargetingPlayers:icons:Stop", 2, function(unit)
-	if (InCombatLockdown()) and UnitAffectingCombat(unit) and (IsInGroup()) then
-		return GetPartyTargetsIcons(unit, "STOP")
-	end
+	if (InCombatLockdown()) and UnitAffectingCombat(unit) and (IsInGroup()) then return GetPartyTargetsIcons(unit, "STOP") end
 end)
 
 E:AddTag("mTargetingPlayers:icons:Role", 2, function(unit)
-	if (InCombatLockdown()) and UnitAffectingCombat(unit) and (IsInGroup()) and (E.Retail or E.Cata) then
-		return GetPartyTargetsIcons(unit, "role")
-	end
+	if (InCombatLockdown()) and UnitAffectingCombat(unit) and (IsInGroup()) and (E.Retail or E.Cata) then return GetPartyTargetsIcons(unit, "role") end
 end)
 
 E:AddTag("mTargetMarker", "RAID_TARGET_UPDATE", function(unit)
@@ -2037,3 +1914,53 @@ E:AddTagInfo("mTargetingPlayers:icons:DIA", mMT.NameShort .. " " .. L["Misc"], L
 E:AddTagInfo("mTargetingPlayers:icons:Stop", mMT.NameShort .. " " .. L["Misc"], L["Target counter Icon (Flat Stop shield)."])
 E:AddTagInfo("mTargetingPlayers:icons:Role", mMT.NameShort .. " " .. L["Misc"], L["Target counter Icon (Roleicons)."])
 E:AddTagInfo("mTargetingPlayers:icons:Sticker", mMT.NameShort .. " " .. L["Misc"], L["Target counter Icon (Roleicons)."])
+
+local classIconPath = "Interface\\Addons\\ElvUI_mMediaTag\\media\\class\\"
+local classIconStrings = {
+	WARRIOR = "0:128:0:128",
+	MAGE = "128:256:0:128",
+	ROGUE = "256:384:0:128",
+	DRUID = "384:512:0:128",
+	EVOKER = "512:640:0:128",
+	HUNTER = "0:128:128:256",
+	SHAMAN = "128:256:128:256",
+	PRIEST = "256:384:128:256",
+	WARLOCK = "384:512:128:256",
+	PALADIN = "0:128:256:384",
+	DEATHKNIGHT = "128:256:256:384",
+	MONK = "256:384:256:384",
+	DEMONHUNTER = "384:512:256:384",
+}
+
+local classIcons = {
+	border = "mmt_border.tga",
+	classborder = "mmt_classcolored_border.tga",
+	hdborder = "mmt_hd_border.tga",
+	hdclassborder = "mmt_hd_class.tga",
+	hdround = "mmt_hd_round.tga",
+	transparent = "mmt_transparent.tga",
+	transparentplus = "mmt_transparent_colorboost.tga",
+	transparentshadow = "mmt_transparent_shadow.tga",
+	transparentshadowplus = "mmt_transparent_colorboost_shadow.tga",
+	outline = "mmt_transparent_outline.tga",
+	outlineplus = "mmt_transparent_outline_colorboost.tga",
+	outlineshadow = "mmt_transparent_outline_shadow.tga",
+	outlineshadowplus = "mmt_transparent_outline_shadow_colorboost.tga",
+}
+
+for style, file in next, classIcons do
+	local tag = format("%s:%s", "mClassIcon", style)
+
+	E:AddTag(tag, "UNIT_NAME_UPDATE", function(unit, _, args)
+		if not UnitIsPlayer(unit) then return end
+
+		local _, class = UnitClass(unit)
+		local size = strsplit(":", args or "")
+		size = tonumber(size)
+		size = (size and (size >= 16 and size <= 128)) and size or 64
+
+		if file and classIconStrings[class] then return format("|T%s%s:%s:%s:0:0:1024:1024:%s|t", classIconPath, file, size, size, classIconStrings[class]) end
+	end)
+
+	E:AddTagInfo(tag, mMT.NameShort .. " " .. L["Icons"], L["Class Icons."] .. " " .. L["The size can be set as follows"] .. " > mClassIcon:styl{32}")
+end

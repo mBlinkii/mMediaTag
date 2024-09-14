@@ -18,7 +18,7 @@ mMT.Name =
 	"|CFF6559F1m|r|CFF7A4DEFM|r|CFF8845ECe|r|CFFA037E9d|r|CFFA435E8i|r|CFFB32DE6a|r|CFFBC26E5T|r|CFFCB1EE3a|r|CFFDD14E0g|r |CFFFF006C&|r |CFFFF4C00T|r|CFFFF7300o|r|CFFFF9300o|r|CFFFFA800l|r|CFFFFC900s|r"
 mMT.NameShort = "|CFF6559F1m|r|CFFA037E9M|r|CFFDD14E0T|r"
 mMT.DockString = "|CFF2CD204D|r|CFF1BE43Ao|r|CFF10EE5Cc|r|CFF05FA82k|r"
-mMT.DatatextString = "|CFF6559F1m|r|CFF7A4DEFM|r|CFF8845ECe|r|CFFA037E9d|r|CFFA435E8i|r|CFFB32DE6a|r|CFFBC26E5T|r|CFFCB1EE3a|r|CFFDD14E0g|r"
+mMT.DatatextString = "|CFF6559F1m|r|CFFA037E9M|r|CFFDD14E0T|r-Datatexts"
 mMT.Icon = "|TInterface\\Addons\\ElvUI_mMediaTag\\media\\logo\\mmt_icon_round.tga:14:14|t"
 mMT.IconSquare = "|TInterface\\Addons\\ElvUI_mMediaTag\\media\\logo\\mmt_icon.tga:14:14|t"
 mMT.Modules = {}
@@ -28,7 +28,6 @@ mMT.DB = {}
 mMT.ClassColor = {}
 mMT.ElvUI_EltreumUI = {}
 mMT.ElvUI_MerathilisUI = {}
---mMT.ElvUI_JiberishIcons = {}
 mMT.DEVNames = {}
 mMT.DevMode = false
 mMT.CurrentProfile = nil

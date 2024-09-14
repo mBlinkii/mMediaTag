@@ -58,11 +58,14 @@ local frameStrata = {
 }
 
 function BuildIconStylesTable()
-	-- for id, name in pairs(mMT.ElvUI_JiberishIcons.styles) do
-	-- 	ClassIconStyle[id] = name
-	-- end
 	for iconStyle, value in pairs(mMT.classIcons) do
 		ClassIconStyle[iconStyle] = value.name
+	end
+end
+
+function BuildCustomTexturesTable()
+	for textureStyle, value in pairs(mMT.Media.CustomPortraits) do
+		form[textureStyle] = value.name
 	end
 end
 
@@ -70,6 +73,7 @@ local function configTable()
 	local sizeString = ":16:16:0:0:64:64:4:60:4:60"
 
 	BuildIconStylesTable()
+	BuildCustomTexturesTable()
 
 	E.Options.args.mMT.args.unitframes.args.portraits.args = {
 		toggle_enable = {
@@ -239,8 +243,13 @@ local function configTable()
 							name = L["Portrait Texture"],
 							inline = true,
 							args = {
-								select_style = {
+								desc_note = {
 									order = 1,
+									type = "description",
+									name = L["This works only with the mMT Textures for Portraits."],
+								},
+								select_style = {
+									order = 2,
 									type = "select",
 									name = L["Texture Style"],
 									get = function(info)
@@ -253,7 +262,7 @@ local function configTable()
 									values = style,
 								},
 								toggle_corner = {
-									order = 2,
+									order = 3,
 									type = "toggle",
 									name = L["Enable Corner"],
 									get = function(info)
@@ -277,13 +286,18 @@ local function configTable()
 									type = "description",
 									name = L["Info! These styles are only available for the new textures."],
 								},
-								desc_space = {
+								desc_note2 = {
 									order = 2,
+									type = "description",
+									name = L["This works only with the mMT Textures for Portraits."],
+								},
+								desc_space = {
+									order = 3,
 									type = "description",
 									name = "\n\n",
 								},
 								select_style_rare = {
-									order = 3,
+									order = 4,
 									type = "select",
 									name = L["Rare Texture Style"],
 									get = function(info)
@@ -296,7 +310,7 @@ local function configTable()
 									values = extraStyle,
 								},
 								select_style_elite = {
-									order = 4,
+									order = 5,
 									type = "select",
 									name = L["Elite/ Rare Elite Texture Style"],
 									get = function(info)
@@ -309,7 +323,7 @@ local function configTable()
 									values = extraStyle,
 								},
 								select_style_boss = {
-									order = 5,
+									order = 6,
 									type = "select",
 									name = L["Boss Texture Style"],
 									get = function(info)
@@ -322,7 +336,7 @@ local function configTable()
 									values = extraStyle,
 								},
 								toggle_color = {
-									order = 6,
+									order = 7,
 									type = "toggle",
 									name = L["Use Texture Color"],
 									get = function(info)

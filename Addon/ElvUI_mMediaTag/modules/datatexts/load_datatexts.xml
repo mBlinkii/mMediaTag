@@ -12,9 +12,12 @@
 	<Script file="ElementalOverflow.lua"/>
 	<Script file="DragonIslesSupplies.lua"/>
 	<Script file="Conquest.lua"/>
-	<Script file="firstprof.lua"/>
-	<Script file="secondprof.lua"/>
 	<Script file="durability_ilevel.lua"/>
+
+	<Script file="prof_first.lua"/>
+	<Script file="prof_second.lua"/>
+	<Script file="prof_cooking.lua"/>
+	<Script file="prof_fishing.lua"/>
 
 	<Script file="c_tww_CarvedHarbingerCrest.lua"/>
 	<Script file="c_tww_GildedHarbingerCrest.lua"/>

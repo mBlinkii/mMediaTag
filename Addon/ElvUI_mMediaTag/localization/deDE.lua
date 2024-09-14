@@ -769,3 +769,12 @@ L["|cffFFFFFFControl + Left Click:|r Change Loadout"] = "|cffFFFFFFStrg + Linksk
 L["|cffFFFFFFLeft Click:|r Change Talent Specialization"] = "|cffFFFFFFLinks Klick:|r Talent Spezialisierung ändern"
 L["|cffFFFFFFRight Click:|r Change Loot Specialization"] = "|cffFFFFFFRechtsklick:|r Beutespezialisierung ändern"
 L["|cffFFFFFFShift + Left Click:|r Show Talent Specialization UI"] = "|cffFFFFFFShift + Links Klick:|r Zeige Talent Spezialisierungs Interface"
+
+
+-- new
+L["Not learned"] = true
+L["Fishing"] = true
+L["Cooking"] = true
+L["Individual Professions"] = true
+L["The size can be set as follows"] = true
+L["This works only with the mMT Textures for Portraits."] = true
