@@ -58,11 +58,14 @@ local frameStrata = {
 }
 
 function BuildIconStylesTable()
-	-- for id, name in pairs(mMT.ElvUI_JiberishIcons.styles) do
-	-- 	ClassIconStyle[id] = name
-	-- end
 	for iconStyle, value in pairs(mMT.classIcons) do
 		ClassIconStyle[iconStyle] = value.name
+	end
+end
+
+function BuildCustomTexturesTable()
+	for textureStyle, value in pairs(mMT.Media.CustomPortraits) do
+		form[textureStyle] = value.name
 	end
 end
 
@@ -70,6 +73,7 @@ local function configTable()
 	local sizeString = ":16:16:0:0:64:64:4:60:4:60"
 
 	BuildIconStylesTable()
+	BuildCustomTexturesTable()
 
 	E.Options.args.mMT.args.unitframes.args.portraits.args = {
 		toggle_enable = {
