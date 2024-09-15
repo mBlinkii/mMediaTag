@@ -1156,7 +1156,7 @@ function mMT:GetTextures(style)
 			shadow = E.db.mMT.portraits.custom.bossshadow,
 		}
 	elseif mMT.Media.CustomPortraits[style] then
-		tmp_db.offset = mMT.Media.CustomPortraits[style].offset
+		tmp_db.offset = mMT.Media.CustomPortraits[style].offset or E.db.mMT.portraits.offset.CUSTOM
 		tmp_db.texture = mMT.Media.CustomPortraits[style].texture
 		tmp_db.border = mMT.Media.CustomPortraits[style].border
 		tmp_db.shadow = mMT.Media.CustomPortraits[style].shadow
