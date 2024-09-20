@@ -117,7 +117,7 @@ local function GetRewards()
 		end
 	end
 
-	return table.concat(rewardsText, "|CFFFFFFFF | |r")
+	return table.concat(rewardsText, WrapTextInColorCode("|", "FFFFFFFF"))
 end
 
 local function DungeonScoreTooltip()
@@ -161,7 +161,7 @@ local function DungeonScoreTooltip()
 
 			if E.db.mMT.mpscore.upgrade and ScoreTable[mapID].upgrade then nameString = nameString .. "  " .. mMT:mIcon(mMT.Media.UpgradeIcons[E.db.mMT.mpscore.icon]) end
 
-			color = isTimed and color or "AFAFAF"
+			color = isTimed and color or "FFAFAFAF"
 			scoreString = format("|C%s%s|r - |C%s%s|r", color, level, color, score)
 			DT.tooltip:AddDoubleLine(nameString, scoreString)
 		end
