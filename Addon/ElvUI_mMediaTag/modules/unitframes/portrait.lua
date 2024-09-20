@@ -678,7 +678,9 @@ local function PlayerPetUnitOnEvent(self, event, eventUnit)
 		self.unit = self.parent.unit
 	end
 
-	if eventUnit == self.unit or _G.ElvUF_Player.unit == "vehicle" or (event == "UNIT_EXITED_VEHICLE" or event == "UNIT_ENTERED_VEHICLE" or event == "VEHICLE_UPDATE") then UnitEvent(self, event) end
+	mMT:Print(event, self.unit, "event unit >", eventUnit)
+	UnitEvent(self, event)
+	--if eventUnit == self.unit or _G.ElvUF_Player.unit == "vehicle" or (event == "UNIT_EXITED_VEHICLE" or event == "UNIT_ENTERED_VEHICLE" or event == "VEHICLE_UPDATE") then UnitEvent(self, event) end
 end
 
 local function OtherUnitOnEnevt(self, event, eventUnit)
