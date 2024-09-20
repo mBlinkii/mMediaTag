@@ -317,6 +317,10 @@ function mMT:PLAYER_ENTERING_WORLD(event)
 		end
 	end
 
+	if IsAddOnLoaded("Details") then
+		mMT:SetupDetails()
+	end
+
 	-- Modules
 	UpdateModuleSettings()
 	UpdateModules()
