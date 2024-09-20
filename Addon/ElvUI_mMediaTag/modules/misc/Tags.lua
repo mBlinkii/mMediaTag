@@ -1916,22 +1916,6 @@ E:AddTagInfo("mTargetingPlayers:icons:Role", mMT.NameShort .. " " .. L["Misc"], 
 E:AddTagInfo("mTargetingPlayers:icons:Sticker", mMT.NameShort .. " " .. L["Misc"], L["Target counter Icon (Roleicons)."])
 
 local classIconPath = "Interface\\Addons\\ElvUI_mMediaTag\\media\\class\\"
-local classIconStrings = {
-	WARRIOR = "0:128:0:128",
-	MAGE = "128:256:0:128",
-	ROGUE = "256:384:0:128",
-	DRUID = "384:512:0:128",
-	EVOKER = "512:640:0:128",
-	HUNTER = "0:128:128:256",
-	SHAMAN = "128:256:128:256",
-	PRIEST = "256:384:128:256",
-	WARLOCK = "384:512:128:256",
-	PALADIN = "0:128:256:384",
-	DEATHKNIGHT = "128:256:256:384",
-	MONK = "256:384:256:384",
-	DEMONHUNTER = "384:512:256:384",
-}
-
 local classIcons = {
 	border = "mmt_border.tga",
 	classborder = "mmt_classcolored_border.tga",
@@ -1959,7 +1943,8 @@ for style, file in next, classIcons do
 		size = tonumber(size)
 		size = (size and (size >= 16 and size <= 128)) and size or 64
 
-		if file and classIconStrings[class] then return format("|T%s%s:%s:%s:0:0:1024:1024:%s|t", classIconPath, file, size, size, classIconStrings[class]) end
+		local classIconStrings = mMT.ClassIcons.data[class].texString
+		if file and classIconStrings then return format("|T%s%s:%s:%s:0:0:1024:1024:%s|t", classIconPath, file, size, size, classIconStrings) end
 	end)
 
 	E:AddTagInfo(tag, mMT.NameShort .. " " .. L["Icons"], L["Class Icons."] .. " " .. L["The size can be set as follows"] .. " > mClassIcon:styl{32}")
