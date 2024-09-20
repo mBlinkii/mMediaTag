@@ -1,5 +1,4 @@
 <Ui xmlns="http://www.blizzard.com/wow/ui/">
-	<Script file="classicons.lua"/>
 	<Script file="background.lua"/>
 	<Script file="RoleIcons.lua"/>
 	<Script file="PhaseIcon.lua"/>
@@ -9,5 +8,4 @@
 	<Script file="portraits_txdb.lua"/>
 	<Script file="portrait.lua"/>
 	<Script file="uftextures.lua"/>
-	<!-- <Script file="CustomClassColors.lua"/> -->
 </Ui>

@@ -125,42 +125,34 @@ end
 local function SetPortraits(frame, unit, masking, mirror)
 	if E.db.mMT.portraits.general.classicons and UnitIsPlayer(unit) then
 		local class = select(2, UnitClass(unit))
-
 		if not class then return end
 
 		local style = E.db.mMT.portraits.general.classiconstyle
+		local classIcons = mMT.ClassIcons.mMT[style] or mMT.ClassIcons.Custom[style]
 
-		if not mMT.classIcons[style] then
+		if not classIcons then
 			SetPortraitTexture(frame.portrait, unit, true)
 		else
-			local coords = mMT.classIcons[style] and mMT.classIcons[style].texCoords[class]
-
+			local defaultTexCoords = mMT.ClassIcons.data
+			local coords = classIcons.texCoords and classIcons.texCoords[class] or defaultTexCoords[class].texCoords
 			if not coords then return end
 
-			local iconTexture = mMT.classIcons[style].texture
-
-			SetTextures(frame.portrait, iconTexture)
-
+			SetTextures(frame.portrait, classIcons.texture)
 			if frame.iconbg then UpdateIconBackground(frame.iconbg, unit, mirror) end
 
 			frame.portrait.classIcons = unit
 			frame.portrait.classCoords = coords
-
 			frame.portrait:SetTexCoord(unpack(coords))
 		end
-
-		--if coords then
-		mirrorTexture(frame.portrait, mirror)
-		--end
 	else
 		if frame.portrait.classIcons then
 			frame.portrait.classIcons = nil
 			frame.portrait.classCoords = nil
 		end
-
-		mirrorTexture(frame.portrait, mirror)
 		SetPortraitTexture(frame.portrait, unit, true)
 	end
+
+	mirrorTexture(frame.portrait, mirror)
 end
 
 local function GetOffset(size, offset)

@@ -43,9 +43,7 @@ local extraStyle = {
 	e = L["Style"] .. " E",
 }
 
-local ClassIconStyle = {
-	BLIZZARD = "Blizzard",
-}
+local ClassIconStyle = {}
 
 local frameStrata = {
 	BACKGROUND = "BACKGROUND",
@@ -58,7 +56,11 @@ local frameStrata = {
 }
 
 function BuildIconStylesTable()
-	for iconStyle, value in pairs(mMT.classIcons) do
+	for iconStyle, value in pairs(mMT.ClassIcons.mMT) do
+		ClassIconStyle[iconStyle] = value.name
+	end
+
+	for iconStyle, value in pairs(mMT.ClassIcons.Custom) do
 		ClassIconStyle[iconStyle] = value.name
 	end
 end

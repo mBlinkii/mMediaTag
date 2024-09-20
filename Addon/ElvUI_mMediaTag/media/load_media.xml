@@ -1,4 +1,4 @@
 <Ui xmlns="http://www.blizzard.com/wow/ui/">
-	<!-- <Script file="sharedmedia.lua"/> -->
 	<Script file="icons.lua"/>
+	<Script file="classicons.lua"/>
 </Ui>
