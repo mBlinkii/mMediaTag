@@ -1,24 +1,3 @@
--- function Details:AddCustomIconSet(path, dropdownLabel, isSpecIcons, dropdownIcon, dropdownIconTexCoords, dropdownIconSize, dropdownIconColor)
---     --checking the parameters to improve debug for the icon set author
---     assert(self == Details, "Details:AddCustomIconSet() did you used Details.AddCustomIconSet instead of Details:AddCustomIconSet?")
---     assert(type(path) == "string", "Details:AddCustomIconSet() 'path' must be a string.")
---     assert(string.len(path) > 16, "Details:AddCustomIconSet() invalid path.")
-
---     table.insert(Details222.BarIconSetList,
---         {
---             value = path,
---             label = dropdownLabel or "Missing Label",
---             isSpec = isSpecIcons,
---             icon = dropdownIcon or defaultIconTexture,
---             texcoord = dropdownIconTexCoords or (isSpecIcons and defaultSpecIconCoords or defaultClassIconCoords),
---             iconsize = dropdownIconSize or defaultIconSize,
---             iconcolor = dropdownIconColor
---         }
---     )
-
---     return true
--- end
-
 local path = "Interface\\Addons\\ElvUI_mMediaTag\\media\\class\\"
 
 local styles = {
@@ -74,22 +53,6 @@ local styles = {
 		name = mMT.NameShort .. "- Outline D",
 		texture = path .. "mmt_transparent_outline_shadow_colorboost.tga",
 	},
-}
-
-local dropdownIconTexCoords = {
-	WARRIOR = { 0, 0, 0, 0.125, 0.125, 0, 0.125, 0.125 },
-	MAGE = { 0.125, 0, 0.125, 0.125, 0.25, 0, 0.25, 0.125 },
-	ROGUE = { 0.25, 0, 0.25, 0.125, 0.375, 0, 0.375, 0.125 },
-	DRUID = { 0.375, 0, 0.375, 0.125, 0.5, 0, 0.5, 0.125 },
-	EVOKER = { 0.5, 0, 0.5, 0.125, 0.625, 0, 0.625, 0.125 },
-	HUNTER = { 0, 0.125, 0, 0.25, 0.125, 0.125, 0.125, 0.25 },
-	SHAMAN = { 0.125, 0.125, 0.125, 0.25, 0.25, 0.125, 0.25, 0.25 },
-	PRIEST = { 0.25, 0.125, 0.25, 0.25, 0.375, 0.125, 0.375, 0.25 },
-	WARLOCK = { 0.375, 0.125, 0.375, 0.25, 0.5, 0.125, 0.5, 0.25 },
-	PALADIN = { 0, 0.25, 0, 0.375, 0.125, 0.25, 0.125, 0.375 },
-	DEATHKNIGHT = { 0.125, 0.25, 0.125, 0.375, 0.25, 0.25, 0.25, 0.375 },
-	MONK = { 0.25, 0.25, 0.25, 0.375, 0.375, 0.25, 0.375, 0.375 },
-	DEMONHUNTER = { 0.375, 0.25, 0.375, 0.375, 0.5, 0.25, 0.5, 0.375 },
 }
 
 local dropdownIcon = "Interface\\Addons\\ElvUI_mMediaTag\\media\\logo\\mmt_icon.tga"
