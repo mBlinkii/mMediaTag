@@ -32,6 +32,8 @@ local UnitName = UnitName
 local UnitAffectingCombat = UnitAffectingCombat
 local UnitFaction = {}
 
+-- GLOBALS: Hex, _TAGS, _COLORS -- added by oUF
+
 -- fallback colors
 local colors = {
 	rare = "|cffffffff",
@@ -1939,6 +1941,8 @@ for style, file in next, classIcons do
 		if not UnitIsPlayer(unit) then return end
 
 		local _, class = UnitClass(unit)
+		if not class then return end
+
 		local size = strsplit(":", args or "")
 		size = tonumber(size)
 		size = (size and (size >= 16 and size <= 128)) and size or 64

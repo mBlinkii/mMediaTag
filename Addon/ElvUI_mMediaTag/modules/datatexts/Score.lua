@@ -117,7 +117,7 @@ local function GetRewards()
 		end
 	end
 
-	return table.concat(rewardsText, WrapTextInColorCode("|", "FFFFFFFF"))
+	return table.concat(rewardsText, WrapTextInColorCode(" - ", "FFFFFFFF"))
 end
 
 local function DungeonScoreTooltip()
