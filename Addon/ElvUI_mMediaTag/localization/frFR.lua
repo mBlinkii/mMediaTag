@@ -781,3 +781,4 @@ L["Open Character Frame"] = true
 L["Right Click:"] = true
 L["Mount"] = true
 L["Repair Mount"] = true
+L["Click:"] = true

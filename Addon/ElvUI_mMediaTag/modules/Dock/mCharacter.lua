@@ -107,6 +107,9 @@ local function OnEnter(self)
 			DT.tooltip:AddDoubleLine(REPAIR_COST, GetMoneyString(totalRepairCost), 0.6, 0.8, 1, 1, 1, 1)
 		end
 
+		DT.tooltip:AddLine(" ")
+		DT.tooltip:AddDoubleLine(format("%s |CFFFFFFFF%s|r", mMT:mIcon(mMT.Media.Mouse["LEFT"]), L["Click:"]), format("%s%s|r", tip, L["Open Character Frame"]))
+
 		DT.tooltip:Show()
 	end
 end
