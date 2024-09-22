@@ -57,6 +57,7 @@ P.mMT = {
 		whiteText = true,
 	},
 	durabilityIlevel = {
+		mount = 460,
 		icon = true,
 		whiteText = true,
 		whiteIcon = true,

@@ -13,6 +13,8 @@ local hexColor = E:RGBToHex(E.db.general.valuecolor.r, E.db.general.valuecolor.g
 local GetAverageItemLevel = GetAverageItemLevel
 local GetInventoryItemLink = GetInventoryItemLink
 local GetInventoryItemTexture = GetInventoryItemTexture
+local GetMountInfoByID = C_MountJournal.GetMountInfoByID
+local SummonByID = C_MountJournal.SummonByID
 
 local REPAIR_COST = REPAIR_COST
 local tooltipString = "%d%%"
@@ -52,10 +54,18 @@ local function colorText(value, color)
 	end
 end
 local function OnEnter(self)
+	local _, hc, myth, mythp, other, title, tip = mMT:mColorDatatext()
 	DT.tooltip:ClearLines()
 
 	for slot, durability in pairs(invDurability) do
-		DT.tooltip:AddDoubleLine(format("|T%s:14:14:0:0:64:64:4:60:4:60|t %s", GetInventoryItemTexture("player", slot), GetInventoryItemLink("player", slot)), format(tooltipString, durability), 1, 1, 1, E:ColorGradient(durability * 0.01, 1, 0.1, 0.1, 1, 1, 0.1, 0.1, 1, 0.1))
+		DT.tooltip:AddDoubleLine(
+			format("|T%s:14:14:0:0:64:64:4:60:4:60|t %s", GetInventoryItemTexture("player", slot), GetInventoryItemLink("player", slot)),
+			format(tooltipString, durability),
+			1,
+			1,
+			1,
+			E:ColorGradient(durability * 0.01, 1, 0.1, 0.1, 1, 1, 0.1, 0.1, 1, 0.1)
+		)
 	end
 
 	if totalRepairCost > 0 then
@@ -68,6 +78,14 @@ local function OnEnter(self)
 		DT.tooltip:AddDoubleLine(STAT_AVERAGE_ITEM_LEVEL, format("%0.2f", avg), 1, 1, 1, 0.1, 1, 0.1)
 		DT.tooltip:AddDoubleLine(GMSURVEYRATING3, format("%0.2f", avgEquipped), 1, 1, 1, colorize(avgEquipped - avg))
 		DT.tooltip:AddDoubleLine(LFG_LIST_ITEM_LEVEL_INSTR_PVP_SHORT, format("%0.2f", avgPvp), 1, 1, 1, colorize(avgPvp - avg))
+	end
+
+	DT.tooltip:AddLine(" ")
+	DT.tooltip:AddDoubleLine(format("%s |CFFFFFFFF%s|r", mMT:mIcon(mMT.Media.Mouse["LEFT"]), L["Left Click:"]), format("%s%s|r", tip, L["Open Character Frame"]))
+	local mountID = tonumber(E.db.mMT.durabilityIlevel.mount)
+	if mountID then
+		local name, _, icon, _, isUsable = GetMountInfoByID(mountID)
+		if name and isUsable then DT.tooltip:AddDoubleLine(format("%s |CFFFFFFFF%s|r", mMT:mIcon(mMT.Media.Mouse["RIGHT"]), L["Right Click:"]), format("%s%s|r  %s", tip, name, mMT:mIcon(icon))) end
 	end
 
 	DT.tooltip:Show()
@@ -89,9 +107,7 @@ local function OnEvent(self)
 			local perc, repairCost = (currentDura / maxDura) * 100, 0
 			invDurability[index] = perc
 
-			if perc < totalDurability then
-				totalDurability = perc
-			end
+			if perc < totalDurability then totalDurability = perc end
 
 			if E.Retail and E.ScanTooltip.GetTooltipData then
 				E.ScanTooltip:SetInventoryItem("player", index)
@@ -146,11 +162,20 @@ local function OnEvent(self)
 	self.text:SetText(text)
 end
 
-local function OnClick()
+local function OnClick(_, button)
 	if InCombatLockdown() then
 		_G.UIErrorsFrame:AddMessage(E.InfoColor .. _G.ERR_NOT_IN_COMBAT)
 	else
-		_G.ToggleCharacter("PaperDollFrame")
+		mMT:Print(button)
+		if button == "LeftButton" then
+			_G.ToggleCharacter("PaperDollFrame")
+		elseif button == "RightButton" then
+			local mountID = tonumber(E.db.mMT.durabilityIlevel.mount)
+			if mountID then
+				local isUsable = select(5, GetMountInfoByID(mountID))
+				if isUsable then SummonByID(mountID) end
+			end
+		end
 	end
 end
 
