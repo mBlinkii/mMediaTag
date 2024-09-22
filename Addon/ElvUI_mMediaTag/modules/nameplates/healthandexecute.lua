@@ -4,6 +4,11 @@ local NP = E:GetModule("NamePlates")
 local LSM = LibStub("LibSharedMedia-3.0")
 
 local HM_NPCs = {
+	-------- TWW Dungeons --------
+	[129208] = { 66, 33 },
+	[213937] = { 60 },
+	[211087] = { 50 },
+
 	-------- DF Dungeons --------
 	-- Azure Vault
 	[186738] = { 75, 50, 25 }, -- Umbrelskul
