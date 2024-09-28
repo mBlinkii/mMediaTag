@@ -249,6 +249,7 @@ local function UpdatePortrait(portraitFrame, force)
 
 	-- get textures
 	portraitFrame.textures = mMT:GetTextures(portraitFrame.settings.texture)
+	portraitFrame.unit = portraitFrame.parent.unit
 
 	local texture, offset
 	local setting = portraitFrame.settings
