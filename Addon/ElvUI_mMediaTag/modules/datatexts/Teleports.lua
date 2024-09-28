@@ -90,6 +90,7 @@ local Teleports = {
 			[30544] = true, --Ultrasafe Transporter: Toshley's Station
 			[18986] = true, --Ultrasafe Transporter: Gadgetzan
 			[18984] = true, --Dimensional Ripper - Everlook
+			[221966] = true, --wormhole-generator-khaz-algar
 		},
 	},
 	items = {
