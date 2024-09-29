@@ -565,6 +565,10 @@ P.mMT = {
 		s = true,
 		t = true,
 	},
+	detailsEmbedded = {
+		chatEmbedded = "DISABLE",
+		windows = 2,
+	},
 	portraits = {
 		custom = {
 			border = "",
