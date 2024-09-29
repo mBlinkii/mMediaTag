@@ -158,19 +158,20 @@ function mMT:DetailsEmbedded()
 		-- zoomOutScale:SetDuration(1)
 		-- zoomOutScale:SetSmoothing("IN")
 
-
 		detailsToggle:RegisterForClicks("AnyDown")
 		detailsToggle:SetScript("OnClick", function()
 			mMT:DetailsEmbeddedToggle()
 
-			if detailsEmbedded:IsShown() then
-				--if zoomIn:IsPlaying() then zoomIn:Stop() end
-				--zoomOut:Play()
-				detailsToggle:SetHeight(chatHeight)
-			else
-				--if zoomOut:IsPlaying() then zoomOut:Stop() end
-				--zoomOut:Play()
-				detailsToggle:SetHeight(chatHeight / 2)
+			if windows >= 3 then
+				if detailsEmbedded:IsShown() then
+					--if zoomIn:IsPlaying() then zoomIn:Stop() end
+					--zoomOut:Play()
+					detailsToggle:SetHeight(chatHeight)
+				else
+					--if zoomOut:IsPlaying() then zoomOut:Stop() end
+					--zoomOut:Play()
+					detailsToggle:SetHeight(chatHeight / 2)
+				end
 			end
 		end)
 		detailsToggle:SetScript("OnEnter", function(self)
