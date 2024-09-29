@@ -253,8 +253,9 @@ local function OnEnter(self)
 		if isMaxLevel then
 			local keyText = mMT:OwenKeystone()
 			if keyText then
-				DT.tooltip:AddLine(keyText[1])
-				DT.tooltip:AddLine(keyText[2])
+				for i = 1, #keyText do
+					DT.tooltip:AddLine(keyText[i])
+				end
 			end
 		end
 
@@ -274,19 +275,15 @@ local function OnEnter(self)
 	local mAffixesText = mMT:WeeklyAffixes()
 	if mAffixesText then
 		DT.tooltip:AddLine(" ")
-		if mAffixesText[3] then
-			DT.tooltip:AddLine(mAffixesText[3])
-		else
-			DT.tooltip:AddLine(mAffixesText[1])
-			DT.tooltip:AddLine(mAffixesText[2])
+		for i = 1, #mAffixesText do
+			DT.tooltip:AddLine(mAffixesText[i])
 		end
 	end
 
-	if isMaxLevel then --and MPlusDataLoaded and GetPlayerScore() > 0
+	if isMaxLevel then
 		DT.tooltip:AddLine(" ")
 		DT.tooltip:AddDoubleLine(DUNGEON_SCORE, myScore)
 		DT.tooltip:AddLine(" ")
-		DT.tooltip:AddLine(L["Dungeon Name"])
 		DungeonScoreTooltip()
 		DT.tooltip:AddLine(" ")
 		DT.tooltip:AddDoubleLine(L["Rewards"], GetRewards())
@@ -301,6 +298,7 @@ local function OnEnter(self)
 
 	self.text:SetFormattedText(displayString, isMaxLevel and myScore or L["Level: "] .. E.mylevel)
 end
+
 
 local function OnEvent(self, event, ...)
 	isMaxLevel = E:XPIsLevelMax()
