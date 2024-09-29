@@ -94,8 +94,6 @@ function mMT:InstanceInfo()
 		addInstanceInfo(LegacyRaidDifficultyID, UNIT_FRAME_DROPDOWN_SUBSECTION_TITLE_LEGACY_RAID)
 	end
 
-	mMT:DebugPrintTable(InctanceInfoText)
-
 	return InctanceInfoText
 end
 
