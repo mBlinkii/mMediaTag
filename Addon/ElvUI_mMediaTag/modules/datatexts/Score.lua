@@ -188,11 +188,10 @@ local function OnLeave(self)
 	DT.tooltip:Hide()
 end
 local function GetGroupKeystone()
-	local GroupMembers = {}
-	tinsert(GroupMembers, "player")
+	local GroupMembers = {"player"}
 
 	for i = 1, GetNumGroupMembers() - 1 do
-		tinsert(GroupMembers, "party" .. i)
+		table.insert(GroupMembers, "party" .. i)
 	end
 
 	LOR.RequestKeystoneDataFromParty()
@@ -203,16 +202,11 @@ local function GetGroupKeystone()
 		local UnitInfo = LOR.GetUnitGear(unit)
 		local name = UnitName(unit)
 		local ilevel = ""
-		local leader = ""
-		-- mapID
-		-- challengeMapID
-		-- mythicPlusMapID
-		-- rating
-		-- classID
-		-- level
-		if UnitIsGroupLeader(unit) then leader = LeadIcon end
+		local leader = UnitIsGroupLeader(unit) and LeadIcon or ""
 
-		if UnitInfo then ilevel = format("|CFFFFCC00i |r|CFFFFFFFF%s|r", UnitInfo.ilevel) end
+		if UnitInfo then
+			ilevel = format("|CFFFFCC00i |r|CFFFFFFFF%s|r", UnitInfo.ilevel)
+		end
 
 		if info then
 			local mapName, _, _, icon = C_ChallengeMode.GetMapUIInfo(info.mythicPlusMapID)
@@ -241,6 +235,7 @@ local function GetGroupKeystone()
 		end
 	end
 end
+
 local function OnEnter(self)
 	isMaxLevel = E:XPIsLevelMax()
 
