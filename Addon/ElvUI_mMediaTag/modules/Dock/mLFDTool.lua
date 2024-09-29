@@ -43,15 +43,9 @@ local function MakeIconString(tank, healer, damage)
 	end
 
 	local str = ""
-	if tank then
-		str = str .. TANK_ICON
-	end
-	if healer then
-		str = str .. HEALER_ICON
-	end
-	if damage then
-		str = str .. DPS_ICON
-	end
+	if tank then str = str .. TANK_ICON end
+	if healer then str = str .. HEALER_ICON end
+	if damage then str = str .. DPS_ICON end
 
 	return str
 end
@@ -119,17 +113,18 @@ local function mLFDTooltip()
 	mInstanceInfoText = mMT:InstanceInfo()
 	if mInstanceInfoText then
 		DT.tooltip:AddLine(" ")
-		DT.tooltip:AddLine(mInstanceInfoText[1])
-		DT.tooltip:AddLine(mInstanceInfoText[2])
-		DT.tooltip:AddLine(mInstanceInfoText[3])
+		for i = 1, #mInstanceInfoText do
+			DT.tooltip:AddLine(mInstanceInfoText[i])
+		end
 	end
 
 	if E.Retail and E.db.mMT.dockdatatext.lfd.keystone and isMaxLevel then
 		keyText = mMT:OwenKeystone()
 		if keyText then
 			DT.tooltip:AddLine(" ")
-			DT.tooltip:AddLine(keyText[1])
-			DT.tooltip:AddLine(keyText[2])
+			for i = 1, #keyText do
+				DT.tooltip:AddLine(keyText[i])
+			end
 		end
 	end
 
@@ -142,11 +137,8 @@ local function mLFDTooltip()
 		mAffixesText = mMT:WeeklyAffixes()
 		if mAffixesText then
 			DT.tooltip:AddLine(" ")
-			if mAffixesText[3] then
-				DT.tooltip:AddLine(mAffixesText[3])
-			else
-				DT.tooltip:AddLine(mAffixesText[1])
-				DT.tooltip:AddLine(mAffixesText[2])
+			for i = 1, #mAffixesText do
+				DT.tooltip:AddLine(mAffixesText[i])
 			end
 		end
 	end
@@ -158,20 +150,17 @@ local function mLFDTooltip()
 			DT.tooltip:AddLine(" ")
 			DT.tooltip:AddLine(format("%s%s|r", title, GREAT_VAULT_REWARDS))
 
-			if vaultinfohighest then
-				DT.tooltip:AddDoubleLine(format("%s%s|r", other, L["Actual reward:"]), vaultinfohighest or "-")
-			end
+			if vaultinfohighest then DT.tooltip:AddDoubleLine(format("%s%s|r", other, L["Actual reward:"]), vaultinfohighest or "-") end
 
-			if vaultinforaidText[1] then
-				DT.tooltip:AddDoubleLine(format("%sRaid|r", myth), format("%s, %s, %s", vaultinforaidText[1] or "-", vaultinforaidText[2] or "-", vaultinforaidText[3] or "-"))
-			end
+			local vaultInfoTexts = {
+				{ vaultinforaidText, "Raid", myth },
+				{ vaultinfomplusText, "Myth+", mythp },
+				{ vaultinfopvpText, "PvP", hc },
+			}
 
-			if vaultinfomplusText[1] then
-				DT.tooltip:AddDoubleLine(format("%sMyth+|r", mythp), format("%s, %s, %s", vaultinfomplusText[1] or "-", vaultinfomplusText[2] or "-", vaultinfomplusText[3] or "-"))
-			end
-
-			if vaultinfopvpText[1] then
-				DT.tooltip:AddDoubleLine(format("%sPvP|r", hc), format("%s, %s, %s", vaultinfopvpText[1] or "-", vaultinfopvpText[2] or "-", vaultinfopvpText[3] or "-"))
+			for _, info in ipairs(vaultInfoTexts) do
+				local text, label, color = unpack(info)
+				if text[1] then DT.tooltip:AddDoubleLine(format("%s%s|r", color, label), table.concat({ text[1] or "-", text[2] or "-", text[3] or "-" }, ", ")) end
 			end
 		end
 		if C_WeeklyRewards.HasAvailableRewards() then
@@ -182,17 +171,13 @@ local function mLFDTooltip()
 
 	DT.tooltip:AddLine(" ")
 	DT.tooltip:AddLine(format("%s %s%s|r", mMT:mIcon(mMT.Media.Mouse["LEFT"]), tip, L["left click to open LFD Window"]))
-	if E.Retail and E.db.mMT.dockdatatext.lfd.greatvault then
-		DT.tooltip:AddLine(format("%s %s%s|r", mMT:mIcon(mMT.Media.Mouse["RIGHT"]), tip, L["right click to open Great Vault Window"]))
-	end
+	if E.Retail and E.db.mMT.dockdatatext.lfd.greatvault then DT.tooltip:AddLine(format("%s %s%s|r", mMT:mIcon(mMT.Media.Mouse["RIGHT"]), tip, L["right click to open Great Vault Window"])) end
 end
 
 local function OnEnter(self)
 	mMT:Dock_OnEnter(self, Config)
 
-	if E.Retail then
-		mMT:UpdateNotificationState(self, C_WeeklyRewards.HasAvailableRewards())
-	end
+	if E.Retail then mMT:UpdateNotificationState(self, C_WeeklyRewards.HasAvailableRewards()) end
 
 	if E.db.mMT.dockdatatext.tip.enable then
 		DT.tooltip:ClearLines()
@@ -215,9 +200,7 @@ local function OnEvent(self, event)
 	local isRaid = IsInRaid()
 	local text = nil
 
-	if E.db.mMT.dockdatatext.lfd.cta and not inInstance then
-		text = getCallToArmsInfo()
-	end
+	if E.db.mMT.dockdatatext.lfd.cta and not inInstance then text = getCallToArmsInfo() end
 
 	if E.db.mMT.dockdatatext.lfd.difficulty and (inInstance or isGroup) then
 		if inInstance then
@@ -231,23 +214,17 @@ local function OnEvent(self, event)
 
 	self.mMT_Dock.TextA:SetText(text or "")
 
-	if E.Retail then
-		mMT:UpdateNotificationState(self, C_WeeklyRewards.HasAvailableRewards())
-	end
+	if E.Retail then mMT:UpdateNotificationState(self, C_WeeklyRewards.HasAvailableRewards()) end
 end
 
 local function OnLeave(self)
-	if E.db.mMT.dockdatatext.tip.enable then
-		DT.tooltip:Hide()
-	end
+	if E.db.mMT.dockdatatext.tip.enable then DT.tooltip:Hide() end
 
 	mMT:Dock_OnLeave(self, Config)
 end
 
 local function OnClick(self, button)
-	if E.Retail then
-		mMT:UpdateNotificationState(self, C_WeeklyRewards.HasAvailableRewards())
-	end
+	if E.Retail then mMT:UpdateNotificationState(self, C_WeeklyRewards.HasAvailableRewards()) end
 
 	if mMT:CheckCombatLockdown() then
 		mMT:Dock_Click(self, Config)
@@ -255,9 +232,7 @@ local function OnClick(self, button)
 			if button == "LeftButton" then
 				PVEFrame_ToggleFrame("GroupFinderFrame", _G.LFDParentFrame)
 			elseif E.Retail then
-				if not _G.WeeklyRewardsFrame then
-					UIParentLoadAddOn("Blizzard_WeeklyRewards")
-				end
+				if not _G.WeeklyRewardsFrame then UIParentLoadAddOn("Blizzard_WeeklyRewards") end
 				if _G.WeeklyRewardsFrame:IsVisible() then
 					_G.WeeklyRewardsFrame:Hide()
 				else
@@ -270,4 +245,16 @@ local function OnClick(self, button)
 	end
 end
 
-DT:RegisterDatatext(Config.name, Config.category, { "LFG_UPDATE_RANDOM_INFO", "CHALLENGE_MODE_START", "CHALLENGE_MODE_RESET", "CHALLENGE_MODE_COMPLETED", "GROUP_ROSTER_UPDATE", "CHAT_MSG_LOOT" }, OnEvent, nil, OnClick, OnEnter, OnLeave, Config.localizedName, nil, nil)
+DT:RegisterDatatext(
+	Config.name,
+	Config.category,
+	{ "LFG_UPDATE_RANDOM_INFO", "CHALLENGE_MODE_START", "CHALLENGE_MODE_RESET", "CHALLENGE_MODE_COMPLETED", "GROUP_ROSTER_UPDATE", "CHAT_MSG_LOOT" },
+	OnEvent,
+	nil,
+	OnClick,
+	OnEnter,
+	OnLeave,
+	Config.localizedName,
+	nil,
+	nil
+)

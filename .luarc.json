@@ -19512,7 +19512,8 @@
         "DUNGEON_SCORE",
         "GREAT_VAULT_REWARDS",
         "ShowOptionsPanel",
-        "LFG_ROLE_NUM_SHORTAGE_TYPES"
+        "LFG_ROLE_NUM_SHORTAGE_TYPES",
+        "GREAT_VAULT_REWARDS_WAITING"
   ],
   "diagnostics.disable": ["deprecated", "inject-field", "undefined-field",
         "cast-local-type"]
