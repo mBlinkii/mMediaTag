@@ -188,7 +188,7 @@ local function OnLeave(self)
 	DT.tooltip:Hide()
 end
 local function GetGroupKeystone()
-	local GroupMembers = {"player"}
+	local GroupMembers = { "player" }
 
 	for i = 1, GetNumGroupMembers() - 1 do
 		table.insert(GroupMembers, "party" .. i)
@@ -204,9 +204,7 @@ local function GetGroupKeystone()
 		local ilevel = ""
 		local leader = UnitIsGroupLeader(unit) and LeadIcon or ""
 
-		if UnitInfo then
-			ilevel = format("|CFFFFCC00i |r|CFFFFFFFF%s|r", UnitInfo.ilevel)
-		end
+		if UnitInfo then ilevel = format("|CFFFFCC00i |r|CFFFFFFFF%s|r", UnitInfo.ilevel) end
 
 		if info then
 			local mapName, _, _, icon = C_ChallengeMode.GetMapUIInfo(info.mythicPlusMapID)
@@ -293,7 +291,6 @@ local function OnEnter(self)
 
 	self.text:SetFormattedText(displayString, isMaxLevel and myScore or L["Level: "] .. E.mylevel)
 end
-
 
 local function OnEvent(self, event, ...)
 	isMaxLevel = E:XPIsLevelMax()

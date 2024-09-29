@@ -7,6 +7,8 @@ local tinsert = tinsert
 local UF = E:GetModule("UnitFrames")
 local UnitGUID = UnitGUID
 local select, strsplit = select, strsplit
+local mathmax = math.max
+local mathmin = math.min
 
 local module = mMT.Modules.Portraits
 if not module then return end
@@ -155,13 +157,19 @@ local function SetPortraits(frame, unit, masking, mirror)
 	mirrorTexture(frame.portrait, mirror)
 end
 
-local function GetOffset(size, offset)
+local function GetOffset(size)
+	local offset = E.db.mMT.portraits.zoom
 	if offset == 0 or not offset then
 		return 0
 	else
-		return ((size / offset) * E.perfect)
+		local maxOffset = size / 2
+		local zoom = (1 - offset) * size / 2
+
+		zoom = mathmax(-maxOffset, mathmin(zoom, maxOffset))
+		return zoom
 	end
 end
+
 
 local function UpdateTexture(portraitFrame, textureType, texture, level, color, reverse)
 	if not portraitFrame[textureType] then
@@ -272,7 +280,7 @@ local function UpdatePortrait(portraitFrame, force)
 	UpdateTexture(portraitFrame, "texture", texture, 4, unitColor)
 
 	-- Unit Portrait
-	offset = GetOffset(setting.size, portraitFrame.textures.offset)
+	offset = GetOffset(setting.size)
 	UpdateTexture(portraitFrame, "portrait", bg_textures.unknown, 1)
 	SetPortraits(portraitFrame, unit, false, setting.mirror)
 	portraitFrame.portrait:SetPoint("TOPLEFT", 0 + offset, 0 - offset)
