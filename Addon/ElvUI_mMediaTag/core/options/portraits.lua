@@ -217,7 +217,7 @@ local function configTable()
 							inline = true,
 							name = L["Misc"],
 							args = {
-								toggle_classicon = {
+								trilinear = {
 									order = 1,
 									type = "toggle",
 									name = L["Trilinear Filtering"],
@@ -226,6 +226,19 @@ local function configTable()
 									end,
 									set = function(info, value)
 										E.db.mMT.portraits.general.trilinear = value
+										mMT.Modules.Portraits:Initialize()
+										E:StaticPopup_Show("CONFIG_RL")
+									end,
+								},
+								desaturation = {
+									order = 2,
+									type = "toggle",
+									name = L["Dead desaturation"],
+									get = function(info)
+										return E.db.mMT.portraits.general.desaturation
+									end,
+									set = function(info, value)
+										E.db.mMT.portraits.general.desaturation = value
 										mMT.Modules.Portraits:Initialize()
 										E:StaticPopup_Show("CONFIG_RL")
 									end,

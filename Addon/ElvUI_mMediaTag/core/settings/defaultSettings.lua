@@ -707,6 +707,7 @@ P.mMT = {
 			level = 20,
 		},
 		general = {
+			desaturation = true,
 			bgstyle = 1,
 			classicons = false,
 			classiconstyle = "BLIZZARD",

@@ -9,6 +9,7 @@ local UnitGUID = UnitGUID
 local select, strsplit = select, strsplit
 local mathmax = math.max
 local mathmin = math.min
+local UnitIsDead = UnitIsDead
 
 local module = mMT.Modules.Portraits
 if not module then return end
@@ -124,6 +125,16 @@ local function UpdateIconBackground(tx, unit, mirror)
 	setColor(tx, bgColor, mirror)
 end
 
+local function DeaddDesaturation(self)
+    if UnitIsDead(self.unit) then
+        self.portrait:SetDesaturated(true)
+        self.isDesaturated = true
+    elseif self.isDesaturated then
+        self.portrait:SetDesaturated(false)
+        self.isDesaturated = false
+    end
+end
+
 local function SetPortraits(frame, unit, masking, mirror)
 	if E.db.mMT.portraits.general.classicons and UnitIsPlayer(unit) then
 		local class = select(2, UnitClass(unit))
@@ -154,10 +165,8 @@ local function SetPortraits(frame, unit, masking, mirror)
 		SetPortraitTexture(frame.portrait, unit, true)
 	end
 
-	if UnitIsDead(unit) then
-		frame.portrait:SetDesaturated(1)
-	else
-		frame.portrait:SetDesaturated()
+	if E.db.mMT.portraits.general.desaturation then
+		DeaddDesaturation(frame)
 	end
 
 	mirrorTexture(frame.portrait, mirror)
@@ -175,7 +184,6 @@ local function GetOffset(size)
 		return zoom
 	end
 end
-
 
 local function UpdateTexture(portraitFrame, textureType, texture, level, color, reverse)
 	if not portraitFrame[textureType] then
@@ -444,9 +452,16 @@ local function SetScripts(portrait, force)
 		else
 			-- specific events for unit
 			local unitEvents = { "UNIT_MODEL_CHANGED", "UNIT_PORTRAIT_UPDATE", "UNIT_CONNECTION" }
+
 			for _, event in ipairs(unitEvents) do
 				portrait:RegisterUnitEvent(event, portrait.unit)
 				tinsert(portrait.allEvents, event)
+			end
+
+			if E.db.mMT.portraits.general.desaturation then
+				local healthEvent = "UNIT_HEALTH"
+				portrait:RegisterUnitEvent(healthEvent, portrait.unit)
+				tinsert(portrait.allEvents, healthEvent)
 			end
 
 			-- specific events for player and pet if player is in vehicle
@@ -488,7 +503,6 @@ local function SetScripts(portrait, force)
 
 		-- events for all units
 		portrait:RegisterEvent("PLAYER_ENTERING_WORLD")
-		--portrait:RegisterUnitEvent("UNIT_HEALTH", portrait.unit)
 		tinsert(portrait.allEvents, "PLAYER_ENTERING_WORLD")
 		portrait:RegisterEvent("PORTRAITS_UPDATED")
 		tinsert(portrait.allEvents, "PORTRAITS_UPDATED")
@@ -615,7 +629,6 @@ local function UpdatePortraitTexture(self, unit)
 end
 
 local function UnitEvent(self, event)
-
 	if mMT.DevMode then mMT:Print("Script:", self.unit, self.parent.unit, "Unit Exists:", UnitExists(self.unit), UnitExists(self.parent.unit)) end
 
 	local unit = self.unit
@@ -673,24 +686,34 @@ local foceUpdateParty = {
 	PORTRAITS_UPDATED = true,
 }
 
-local function PartyUnitOnEnevt(self, event, eventUnit)
-	if event == "UNIT_HEALTH" then mMT:Print("Script:", self.unit, self.parent.unit, "Unit Exists:", UnitExists(self.unit), UnitExists(self.parent.unit), event)end
+local function PartyUnitOnEvent(self, event, eventUnit)
 	if not UnitExists(self.parent.unit) then return end
 
+	if event == "UNIT_HEALTH" and eventUnit == self.unit then DeaddDesaturation(self) end
+
 	self.unit = self.parent.unit
+
+	if E.db.mMT.portraits.general.desaturation and not self.eventDesaturationIsSet then
+		self:RegisterUnitEvent("UNIT_HEALTH", self.unit)
+		tinsert(self.allEvents, "UNIT_HEALTH")
+		self.eventDesaturationIsSet = true
+	end
+
 	if eventUnit == self.unit or foceUpdateParty[event] then UnitEvent(self, event) end
 end
 
 local function BossUnitOnEvent(self, event, eventUnit)
-	if event == "UNIT_HEALTH" then mMT:Print("Script:", self.unit, self.parent.unit, "Unit Exists:", UnitExists(self.unit), UnitExists(self.parent.unit), event)end
 	if not UnitExists(self.parent.unit) then return end
+
+	if event == "UNIT_HEALTH" and eventUnit == self.unit then DeaddDesaturation(self) end
 
 	if eventUnit == self.unit or event == "INSTANCE_ENCOUNTER_ENGAGE_UNIT" or event == "PORTRAITS_UPDATED" then UnitEvent(self, event) end
 end
 
 local function PlayerPetUnitOnEvent(self, event, eventUnit)
-	if event == "UNIT_HEALTH" then mMT:Print("Script:", self.unit, self.parent.unit, "Unit Exists:", UnitExists(self.unit), UnitExists(self.parent.unit), event)end
 	if not UnitExists(self.parent.unit) then return end
+
+	if event == "UNIT_HEALTH" and eventUnit == self.unit then DeaddDesaturation(self) end
 
 	if eventUnit == "vehicle" then
 		if self.parent.realUnit == "player" then self.unit = "pet" end
@@ -705,8 +728,9 @@ local function PlayerPetUnitOnEvent(self, event, eventUnit)
 end
 
 local function OtherUnitOnEnevt(self, event, eventUnit)
-	if event == "UNIT_HEALTH" then mMT:Print("Script:", self.unit, self.parent.unit, "Unit Exists:", UnitExists(self.unit), UnitExists(self.parent.unit), event)end
 	if not UnitExists(self.unit) then return end
+
+	if event == "UNIT_HEALTH" and eventUnit == self.unit then DeaddDesaturation(self) end
 
 	if shouldHandleEvent(event, eventUnit, self) then UnitEvent(self, event) end
 end
@@ -749,7 +773,7 @@ local function CreatePortraits(name, unit, parentFrame, unitSettings, events, un
 	-- add event function
 	if module[name] and not module[name].scriptsSet then
 		if module[name].isPartyFrame then
-			module[name]:SetScript("OnEvent", PartyUnitOnEnevt)
+			module[name]:SetScript("OnEvent", PartyUnitOnEvent)
 		elseif module[name].isBossFrame then
 			module[name]:SetScript("OnEvent", BossUnitOnEvent)
 		elseif name == "Player" or name == "Pet" then
