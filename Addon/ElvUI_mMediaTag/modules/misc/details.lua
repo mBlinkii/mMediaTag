@@ -141,7 +141,6 @@ function mMT:DetailsEmbedded()
 				detailsEmbedded["Window" .. i] = CreateFrame("Frame", "mMT_DetailsEmbedded_Window" .. i, detailsEmbedded)
 				detailsEmbedded["Window" .. i]:SetSize(((windows == 3 and i == 3) and chatWidth or windowsWidth) - 2, windowsHeight - 2)
 				detailsEmbedded["Window" .. i]:SetPoint(points[i], detailsEmbedded, x_offset, y_offset)
-				detailsEmbedded["Window" .. i]:CreateBackdrop("Transparent")
 			end
 		end
 
