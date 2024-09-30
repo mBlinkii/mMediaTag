@@ -101,12 +101,15 @@ function mMT:DetailsEmbedded()
 		detailsToggle:SetBackdrop(backdrop)
 
 		local r, g, b, a = chat.backdrop:GetBackdropBorderColor()
-		detailsEmbedded:SetBackdropBorderColor(r, g, b, a)
+		local hide = E.db.chat.panelBackdrop == "HIDEBOTH" or (E.db.chat.panelBackdrop == "LEFT" or E.db.chat.panelBackdrop == "RIGHT")
 		detailsToggle:SetBackdropBorderColor(r, g, b, a)
+		if hide then a = 0 end
+		detailsEmbedded:SetBackdropBorderColor(r, g, b, a)
 
 		r, g, b, a = chat.backdrop:GetBackdropColor()
-		detailsEmbedded:SetBackdropColor(r, g, b, a)
 		detailsToggle:SetBackdropColor(r, g, b, a)
+		if hide then a = 0 end
+		detailsEmbedded:SetBackdropColor(r, g, b, a)
 
 		detailsEmbedded:SetSize(chatWidth, chatHeight)
 		detailsToggle:SetSize(20, chatHeight)
