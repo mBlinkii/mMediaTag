@@ -154,6 +154,12 @@ local function SetPortraits(frame, unit, masking, mirror)
 		SetPortraitTexture(frame.portrait, unit, true)
 	end
 
+	if UnitIsDead(unit) then
+		frame.portrait:SetDesaturated(1)
+	else
+		frame.portrait:SetDesaturated()
+	end
+
 	mirrorTexture(frame.portrait, mirror)
 end
 
@@ -482,6 +488,7 @@ local function SetScripts(portrait, force)
 
 		-- events for all units
 		portrait:RegisterEvent("PLAYER_ENTERING_WORLD")
+		--portrait:RegisterUnitEvent("UNIT_HEALTH", portrait.unit)
 		tinsert(portrait.allEvents, "PLAYER_ENTERING_WORLD")
 		portrait:RegisterEvent("PORTRAITS_UPDATED")
 		tinsert(portrait.allEvents, "PORTRAITS_UPDATED")
@@ -606,7 +613,9 @@ local function UpdatePortraitTexture(self, unit)
 		HideRareElite(self)
 	end
 end
+
 local function UnitEvent(self, event)
+
 	if mMT.DevMode then mMT:Print("Script:", self.unit, self.parent.unit, "Unit Exists:", UnitExists(self.unit), UnitExists(self.parent.unit)) end
 
 	local unit = self.unit
@@ -665,6 +674,7 @@ local foceUpdateParty = {
 }
 
 local function PartyUnitOnEnevt(self, event, eventUnit)
+	if event == "UNIT_HEALTH" then mMT:Print("Script:", self.unit, self.parent.unit, "Unit Exists:", UnitExists(self.unit), UnitExists(self.parent.unit), event)end
 	if not UnitExists(self.parent.unit) then return end
 
 	self.unit = self.parent.unit
@@ -672,12 +682,14 @@ local function PartyUnitOnEnevt(self, event, eventUnit)
 end
 
 local function BossUnitOnEvent(self, event, eventUnit)
+	if event == "UNIT_HEALTH" then mMT:Print("Script:", self.unit, self.parent.unit, "Unit Exists:", UnitExists(self.unit), UnitExists(self.parent.unit), event)end
 	if not UnitExists(self.parent.unit) then return end
 
 	if eventUnit == self.unit or event == "INSTANCE_ENCOUNTER_ENGAGE_UNIT" or event == "PORTRAITS_UPDATED" then UnitEvent(self, event) end
 end
 
 local function PlayerPetUnitOnEvent(self, event, eventUnit)
+	if event == "UNIT_HEALTH" then mMT:Print("Script:", self.unit, self.parent.unit, "Unit Exists:", UnitExists(self.unit), UnitExists(self.parent.unit), event)end
 	if not UnitExists(self.parent.unit) then return end
 
 	if eventUnit == "vehicle" then
@@ -693,7 +705,7 @@ local function PlayerPetUnitOnEvent(self, event, eventUnit)
 end
 
 local function OtherUnitOnEnevt(self, event, eventUnit)
-	--mMT:Print(event, self.parent.unit, eventUnit)
+	if event == "UNIT_HEALTH" then mMT:Print("Script:", self.unit, self.parent.unit, "Unit Exists:", UnitExists(self.unit), UnitExists(self.parent.unit), event)end
 	if not UnitExists(self.unit) then return end
 
 	if shouldHandleEvent(event, eventUnit, self) then UnitEvent(self, event) end
