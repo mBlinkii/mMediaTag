@@ -79,7 +79,8 @@ end
 
 function mMT:DetailsEmbedded()
 	local chatEmbedded = E.db.mMT.detailsEmbedded.chatEmbedded
-	local windows = E.db.mMT.detailsEmbedded.windows
+	local detailsWindows = Details:GetOpenedWindowsAmount()
+	local windows = (detailsWindows > E.db.mMT.detailsEmbedded.windows) and detailsWindows or E.db.mMT.detailsEmbedded.windows
 
 	if not detailsEmbedded then
 		local chat = _G[chatEmbedded .. "Panel"]
@@ -144,68 +145,49 @@ function mMT:DetailsEmbedded()
 			end
 		end
 
-		-- Animation Group for Zoom In
-		-- local zoomIn = detailsToggle:CreateAnimationGroup()
-		-- local zoomInScale = zoomIn:CreateAnimation("Scale")
-		-- zoomInScale:SetScale(1, 2)
-		-- zoomInScale:SetDuration(1)
-		-- zoomInScale:SetSmoothing("OUT")
-
-		-- -- Animation Group for Zoom Out
-		-- local zoomOut = detailsToggle:CreateAnimationGroup()
-		-- local zoomOutScale = zoomOut:CreateAnimation("Scale")
-		-- zoomOutScale:SetScale(1, 0.5)
-		-- zoomOutScale:SetDuration(1)
-		-- zoomOutScale:SetSmoothing("IN")
-
 		detailsToggle:RegisterForClicks("AnyDown")
 		detailsToggle:SetScript("OnClick", function()
 			mMT:DetailsEmbeddedToggle()
-
 			if windows >= 3 then
 				if detailsEmbedded:IsShown() then
-					--if zoomIn:IsPlaying() then zoomIn:Stop() end
-					--zoomOut:Play()
 					detailsToggle:SetHeight(chatHeight)
 				else
-					--if zoomOut:IsPlaying() then zoomOut:Stop() end
-					--zoomOut:Play()
 					detailsToggle:SetHeight(chatHeight / 2)
 				end
 			end
 		end)
+
 		detailsToggle:SetScript("OnEnter", function(self)
 			E:UIFrameFadeIn(self, 0.5, 0, 1)
-			--if (windows >= 3) and (self:GetHeight() > chatHeight) then
-			--if zoomOut:IsPlaying() then zoomOut:Stop() end
-			--zoomIn:Play()
-			---detailsToggle:SetHeight(chatHeight)
-			--end
+			_G.GameTooltip:SetOwner(detailsToggle, "ANCHOR_CURSOR")
+			_G.GameTooltip:AddLine(L["Details embedded toggle"])
+			_G.GameTooltip:AddLine(" ")
+			_G.GameTooltip:AddLine(L["Click to hide Details frames."])
+			_G.GameTooltip:Show()
 		end)
+
 		detailsToggle:SetScript("OnLeave", function(self)
 			E:UIFrameFadeOut(self, 0.5, 1, 0)
-			--if (windows >= 3) and (self:GetHeight() < chatHeight) then
-			--if zoomIn:IsPlaying() then zoomIn:Stop() end
-			--zoomOut:Play()
-			--end
+			_G.GameTooltip:Hide()
 		end)
 
 		chat:Hide()
 		detailsEmbedded:Show()
 	end
 
-	for i = 1, windows do
-		local detailsWindow = Details:GetInstance(i)
+	local i = 1
+	for _, instance in Details:ListInstances() do
+		if i > windows then break end
+
+		local detailsWindow = instance:IsEnabled() and instance
 		if detailsWindow then
 			detailsWindow:UngroupInstance()
 			detailsWindow.baseframe:ClearAllPoints()
 
 			local embeddedWindow = windows > 1 and detailsEmbedded["Window" .. i] or detailsEmbedded
-
 			detailsWindow.baseframe:SetParent(embeddedWindow)
 
-			local frames = { detailsWindow.rowframe, detailsWindow.windowSwitchButton }
-			for _, frame in ipairs(frames) do
+			for _, frame in ipairs({ detailsWindow.rowframe, detailsWindow.windowSwitchButton }) do
 				frame:SetParent(detailsWindow.baseframe)
 				frame:ClearAllPoints()
 				frame:SetAllPoints()
@@ -219,13 +201,8 @@ function mMT:DetailsEmbedded()
 
 			detailsWindow:LockInstance(true)
 			detailsWindow:SaveMainWindowPosition()
+			i = i + 1
 		end
-	end
-
-	if windows == 2 then
-		local instance1 = Details:GetInstance(1)
-		local instance2 = Details:GetInstance(2)
-		Details:CheckCoupleWindows(instance1, instance2)
 	end
 end
 
