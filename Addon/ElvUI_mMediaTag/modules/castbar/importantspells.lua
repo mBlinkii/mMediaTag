@@ -86,9 +86,10 @@ function module:UpdateCastbar(castbar, isNP)
 
 	if Spell then
 		if Spell.color.enable then
-			local color = Spell.color.a
-			if E.db.mMT.importantspells.gradient then color = { Spell.color.a, Spell.color.b } end
-			mMT.Modules.Castbar:SetCastbarColor(castbar, unpack(color))
+			local colorA = Spell.color.a
+			local colorB = Spell.color.b
+			local gradient = E.db.mMT.importantspells.gradient
+			mMT.Modules.Castbar:SetCastbarColor(castbar, colorA, gradient and colorB or nil)
 		end
 
 		if Spell.sound.enable and Spell.sound.file then

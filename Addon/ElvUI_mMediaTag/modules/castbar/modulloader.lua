@@ -7,50 +7,34 @@ local module = mMT.Modules.Castbar
 function module:SetCastbarColor(castbar, colorA, colorB, bg)
 	if colorA and colorB then
 		castbar:GetStatusBarTexture():SetGradient("HORIZONTAL", { r = colorA.r, g = colorA.g, b = colorA.b, a = 1 }, { r = colorB.r, g = colorB.g, b = colorB.b, a = 1 })
-	else
+	elseif colorA then
 		castbar:SetStatusBarColor(colorA.r, colorA.g, colorA.b)
 	end
 
 	if E.db.mMT.castbar.setBGColor and castbar.bg then
 		local multiplier = E.db.mMT.castbar.multiplier
-		castbar.bg:SetVertexColor(colorA.r * multiplier, colorA.g * multiplier, colorA.b * multiplier,1)
+		castbar.bg:SetVertexColor(colorA.r * multiplier, colorA.g * multiplier, colorA.b * multiplier, 1)
 	end
 end
 
 local function NPLoader(castbar)
-	if castbar.unit == "vehicle" or castbar.unit == "player" then
-		return
-	end
+	if castbar.unit == "vehicle" or castbar.unit == "player" then return end
 
-	if mMT.Modules.ImportantSpells.loaded and E.db.mMT.importantspells.np then
-		mMT.Modules.ImportantSpells:UpdateCastbar(castbar, true)
-	end
+	if mMT.Modules.ImportantSpells.loaded and E.db.mMT.importantspells.np then mMT.Modules.ImportantSpells:UpdateCastbar(castbar, true) end
 
-	if mMT.Modules.InterruptOnCD.loaded then
-		mMT.Modules.InterruptOnCD:InterruptChecker(castbar)
-	end
+	if mMT.Modules.InterruptOnCD.loaded then mMT.Modules.InterruptOnCD:InterruptChecker(castbar) end
 
-	if E.db.mMT.castbarshield.enable and E.db.mMT.castbarshield.np then
-		mMT:CastbarShield(castbar)
-	end
+	if E.db.mMT.castbarshield.enable and E.db.mMT.castbarshield.np then mMT:CastbarShield(castbar) end
 end
 
 local function UFLoader(castbar)
-	if castbar.unit == "vehicle" or castbar.unit == "player" then
-		return
-	end
+	if castbar.unit == "vehicle" or castbar.unit == "player" then return end
 
-	if mMT.Modules.ImportantSpells.loaded and E.db.mMT.importantspells.uf then
-		mMT.Modules.ImportantSpells:UpdateCastbar(castbar)
-	end
+	if mMT.Modules.ImportantSpells.loaded and E.db.mMT.importantspells.uf then mMT.Modules.ImportantSpells:UpdateCastbar(castbar) end
 
-	if mMT.Modules.InterruptOnCD.loaded then
-		mMT.Modules.InterruptOnCD:InterruptChecker(castbar, true)
-	end
+	if mMT.Modules.InterruptOnCD.loaded then mMT.Modules.InterruptOnCD:InterruptChecker(castbar, true) end
 
-	if E.db.mMT.castbarshield.enable and E.db.mMT.castbarshield.uf then
-		mMT:CastbarShield(castbar)
-	end
+	if E.db.mMT.castbarshield.enable and E.db.mMT.castbarshield.uf then mMT:CastbarShield(castbar) end
 end
 
 function module:Initialize()

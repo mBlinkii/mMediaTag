@@ -1,13 +1,14 @@
 # Changelog - ElvUI_mMediaTag
 [Eng] - All changes to this project will be documented in this file. The latest changes are at the top.
 
-## [ver. 3.60] - xx.xx.2024
+## [ver. 3.60] - xx.10.2024
 ### UPDATE
-- UPDATE - [xx]: xx
+- UPDATE - [System]: DropDown Menu uses now the ElvUI Font & Fontflag.
 ### FIX 
-- FIX - [xx]: xx
+- FIX - [Portraits]: Changed Boss check priority, it should now work as intended.
+- FIX - [Datatext-Score]: Prevent nil Errors with the new Season of TWW.
 ### NEW
-- NEW - [xx]: xx
+- NEW - [Class-icons]: Add Class icons to details and optimized the functions
 
 ## [ver. 3.59] - 14.09.2024
 ### UPDATE
