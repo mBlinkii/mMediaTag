@@ -66,6 +66,7 @@ local _G = _G
 local mathmax = math.max
 local InCombatLockdown = InCombatLockdown
 local unpack = unpack
+local Details = _G.Details
 function mMT:DetailsEmbeddedToggle()
 	if detailsEmbedded then
 		local chatEmbedded = E.db.mMT.detailsEmbedded.chatEmbedded
