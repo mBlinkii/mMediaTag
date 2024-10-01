@@ -324,7 +324,7 @@ P.mMT = {
 		settings = {
 			questcount = true,
 			hidedash = true,
-			hiedAll = false,
+			hideAll = false,
 			showLevel = false,
 			zoneQuests = false,
 		},
