@@ -62,6 +62,8 @@ local styles = {
 
 local dropdownIcon = "Interface\\Addons\\ElvUI_mMediaTag\\media\\logo\\mmt_icon.tga"
 
+local _G = _G
+local mathmax = math.max
 function mMT:DetailsEmbeddedToggle()
 	if detailsEmbedded then
 		local chatEmbedded = E.db.mMT.detailsEmbedded.chatEmbedded
@@ -80,20 +82,15 @@ end
 function mMT:DetailsEmbedded()
 	local chatEmbedded = E.db.mMT.detailsEmbedded.chatEmbedded
 	local detailsWindows = Details:GetOpenedWindowsAmount()
-	local windows = (detailsWindows > E.db.mMT.detailsEmbedded.windows) and detailsWindows or E.db.mMT.detailsEmbedded.windows
+	local windows = mathmax(detailsWindows, E.db.mMT.detailsEmbedded.windows)
 
 	if not detailsEmbedded then
 		local chat = _G[chatEmbedded .. "Panel"]
 
 		detailsEmbedded = CreateFrame("Frame", "mMT_DetailsEmbedded_Frame", UIParent, "BackdropTemplate")
-		detailsEmbedded:SetFrameStrata("BACKGROUND")
-
 		detailsToggle = CreateFrame("Button", "mMT_DetailsEmbedded_ToggleButton", UIParent, "BackdropTemplate")
-		detailsToggle:SetFrameStrata("BACKGROUND")
 
-		local chatHeight = chat:GetHeight()
-		local chatWidth = chat:GetWidth()
-
+		local chatHeight, chatWidth = chat:GetHeight(), chat:GetWidth()
 		if windows > 2 then chatHeight = chatHeight * 2 end
 
 		local backdrop = chat.backdrop:GetBackdrop()
@@ -101,15 +98,15 @@ function mMT:DetailsEmbedded()
 		detailsToggle:SetBackdrop(backdrop)
 
 		local r, g, b, a = chat.backdrop:GetBackdropBorderColor()
-		local hide = E.db.chat.panelBackdrop == "HIDEBOTH" or (E.db.chat.panelBackdrop == "LEFT" or E.db.chat.panelBackdrop == "RIGHT")
+		local hide = E.db.chat.panelBackdrop == "HIDEBOTH" or E.db.chat.panelBackdrop == "LEFT" or E.db.chat.panelBackdrop == "RIGHT"
 		detailsToggle:SetBackdropBorderColor(r, g, b, a)
-		detailsToggle.backdropBorderColor = {r, g, b, a}
+		detailsToggle.backdropBorderColor = { r, g, b, a }
 		if hide then a = 0 end
 		detailsEmbedded:SetBackdropBorderColor(r, g, b, a)
 
 		r, g, b, a = chat.backdrop:GetBackdropColor()
 		detailsToggle:SetBackdropColor(r, g, b, a)
-		detailsToggle.backdropColor = {r, g, b, a}
+		detailsToggle.backdropColor = { r, g, b, a }
 		if hide then a = 0 end
 		detailsEmbedded:SetBackdropColor(r, g, b, a)
 
@@ -134,12 +131,7 @@ function mMT:DetailsEmbedded()
 			local windowsWidth = (windows == 1) and chatWidth or chatWidth / 2
 			local windowsHeight = (windows <= 2) and chatHeight or chatHeight / 2
 			local points = { "BOTTOMLEFT", "BOTTOMRIGHT", "TOPLEFT", "TOPRIGHT" }
-			local offsets = {
-				{ 1, 1 },
-				{ -1, 1 },
-				{ 1, -1 },
-				{ -1, -1 },
-			}
+			local offsets = { { 1, 1 }, { -1, 1 }, { 1, -1 }, { -1, -1 } }
 
 			for i = 1, windows do
 				local x_offset, y_offset = unpack(offsets[i])
@@ -152,13 +144,7 @@ function mMT:DetailsEmbedded()
 		detailsToggle:RegisterForClicks("AnyDown")
 		detailsToggle:SetScript("OnClick", function()
 			mMT:DetailsEmbeddedToggle()
-			if windows >= 3 then
-				if detailsEmbedded:IsShown() then
-					detailsToggle:SetHeight(chatHeight)
-				else
-					detailsToggle:SetHeight(chatHeight / 2)
-				end
-			end
+			detailsToggle:SetHeight(detailsEmbedded:IsShown() and chatHeight or chatHeight / 2)
 		end)
 
 		detailsToggle:SetScript("OnEnter", function(self)
