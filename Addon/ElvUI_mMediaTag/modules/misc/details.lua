@@ -64,6 +64,8 @@ local dropdownIcon = "Interface\\Addons\\ElvUI_mMediaTag\\media\\logo\\mmt_icon.
 
 local _G = _G
 local mathmax = math.max
+local InCombatLockdown = InCombatLockdown
+local unpack = unpack
 function mMT:DetailsEmbeddedToggle()
 	if detailsEmbedded then
 		local chatEmbedded = E.db.mMT.detailsEmbedded.chatEmbedded
@@ -144,7 +146,6 @@ function mMT:DetailsEmbedded()
 		detailsToggle:RegisterForClicks("AnyDown")
 		detailsToggle:SetScript("OnClick", function()
 			mMT:DetailsEmbeddedToggle()
-			detailsToggle:SetHeight(detailsEmbedded:IsShown() and chatHeight or chatHeight / 2)
 		end)
 
 		detailsToggle:SetScript("OnEnter", function(self)
@@ -162,6 +163,24 @@ function mMT:DetailsEmbedded()
 			self:SetBackdropBorderColor(unpack(self.backdropBorderColor))
 			_G.GameTooltip:Hide()
 		end)
+
+		if E.db.mMT.detailsEmbedded.combatHide then
+			local delay = E.db.mMT.detailsEmbedded.hideDelay
+
+			local function AutoHide()
+				if not InCombatLockdown() then mMT:DetailsEmbeddedToggle() end
+			end
+
+			detailsEmbedded:RegisterEvent("PLAYER_REGEN_DISABLED")
+			detailsEmbedded:RegisterEvent("PLAYER_REGEN_ENABLED")
+			detailsEmbedded:SetScript("OnEvent", function(_, event)
+				if event == "PLAYER_REGEN_DISABLED" then
+					if not detailsEmbedded:IsShown() then mMT:DetailsEmbeddedToggle() end
+				elseif event == "PLAYER_REGEN_ENABLED" then
+					if detailsEmbedded:IsShown() then E:Delay(delay, AutoHide) end
+				end
+			end)
+		end
 
 		chat:Hide()
 		detailsEmbedded:Show()

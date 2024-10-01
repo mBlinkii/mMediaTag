@@ -33,41 +33,85 @@ local previewPath = "Interface\\Addons\\ElvUI_mMediaTag\\media\\system\\xiv.tga"
 local settings = { dock = "XIV", top = false, font = "Montserrat-SemiBold", fontflag = "SHADOW", fontsize = 14, bg = false }
 local function configTable()
 	E.Options.args.mMT.args.misc.args.details.args = {
-        chat = {
-            order = 1,
-            type = "select",
-            name = L["Embedded to Chat"],
-            get = function(info)
-                return E.db.mMT.detailsEmbedded.chatEmbedded
-            end,
-            set = function(info, value)
-                E.db.mMT.detailsEmbedded.chatEmbedded = value
-                E:StaticPopup_Show("CONFIG_RL")
-            end,
-            values = {
-                DISABLE = L["DISABLE"],
-                LeftChat = L["Left Chat"],
-                RightChat = L["Right Chat"],
-            },
-        },
-        windows = {
-            order = 2,
-            type = "select",
-            name = L["Details Windows"],
-            get = function(info)
-                return E.db.mMT.detailsEmbedded.windows
-            end,
-            set = function(info, value)
-                E.db.mMT.detailsEmbedded.windows = value
-                E:StaticPopup_Show("CONFIG_RL")
-            end,
-            values = {
-                [1] = L["One"],
-                [2] = L["Two"],
-                [3] = L["Three (double chat height)"],
-                [4] = L["Four (double chat height)"]
-            },
-        },
+		windows = {
+			order = 1,
+			type = "group",
+			name = L["Embedded Settings"],
+            inline = true,
+			args = {
+				chat = {
+					order = 1,
+					type = "select",
+					name = L["Embedded to Chat"],
+					get = function(info)
+						return E.db.mMT.detailsEmbedded.chatEmbedded
+					end,
+					set = function(info, value)
+						E.db.mMT.detailsEmbedded.chatEmbedded = value
+						E:StaticPopup_Show("CONFIG_RL")
+					end,
+					values = {
+						DISABLE = L["DISABLE"],
+						LeftChat = L["Left Chat"],
+						RightChat = L["Right Chat"],
+					},
+				},
+				windows = {
+					order = 2,
+					type = "select",
+					name = L["Details Windows"],
+					get = function(info)
+						return E.db.mMT.detailsEmbedded.windows
+					end,
+					set = function(info, value)
+						E.db.mMT.detailsEmbedded.windows = value
+						E:StaticPopup_Show("CONFIG_RL")
+					end,
+					values = {
+						[1] = L["One"],
+						[2] = L["Two"],
+						[3] = L["Three (double chat height)"],
+						[4] = L["Four (double chat height)"],
+					},
+				},
+			},
+		},
+		combathide = {
+			order = 2,
+			type = "group",
+			name = L["Combat Hide/Show"],
+            inline = true,
+			args = {
+				combathide = {
+					order = 1,
+					type = "toggle",
+					name = L["Show/Hide in Combat"],
+					desc = L["Auto shows details during combat and hides them after combat."],
+					get = function(info)
+						return E.db.mMT.detailsEmbedded.combatHide
+					end,
+					set = function(info, value)
+						E.db.mMT.detailsEmbedded.combatHide = value
+						E:StaticPopup_Show("CONFIG_RL")
+					end,
+				},
+				delay = {
+					order = 2,
+					name = L["Hied delay"],
+					type = "range",
+					min = 0,
+					max = 120,
+					step = 1,
+					get = function(info)
+						return E.db.mMT.detailsEmbedded.hideDelay
+					end,
+					set = function(info, value)
+						E.db.mMT.detailsEmbedded.hideDelay = value
+						E:StaticPopup_Show("CONFIG_RL")
+					end,
+				},
+			},
+		},
 	}
 end
 

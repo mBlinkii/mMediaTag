@@ -568,6 +568,8 @@ P.mMT = {
 	detailsEmbedded = {
 		chatEmbedded = "DISABLE",
 		windows = 2,
+		combatHide = true,
+		hideDelay = 5,
 	},
 	portraits = {
 		custom = {
