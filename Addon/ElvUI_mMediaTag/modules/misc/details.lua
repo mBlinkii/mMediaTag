@@ -103,11 +103,13 @@ function mMT:DetailsEmbedded()
 		local r, g, b, a = chat.backdrop:GetBackdropBorderColor()
 		local hide = E.db.chat.panelBackdrop == "HIDEBOTH" or (E.db.chat.panelBackdrop == "LEFT" or E.db.chat.panelBackdrop == "RIGHT")
 		detailsToggle:SetBackdropBorderColor(r, g, b, a)
+		detailsToggle.backdropBorderColor = {r, g, b, a}
 		if hide then a = 0 end
 		detailsEmbedded:SetBackdropBorderColor(r, g, b, a)
 
 		r, g, b, a = chat.backdrop:GetBackdropColor()
 		detailsToggle:SetBackdropColor(r, g, b, a)
+		detailsToggle.backdropColor = {r, g, b, a}
 		if hide then a = 0 end
 		detailsEmbedded:SetBackdropColor(r, g, b, a)
 
@@ -161,6 +163,7 @@ function mMT:DetailsEmbedded()
 
 		detailsToggle:SetScript("OnEnter", function(self)
 			E:UIFrameFadeIn(self, 0.5, 0, 1)
+			self:SetBackdropBorderColor(mMT.ClassColor.r, mMT.ClassColor.g, mMT.ClassColor.b, 1)
 			_G.GameTooltip:SetOwner(detailsToggle, "ANCHOR_CURSOR")
 			_G.GameTooltip:AddLine(L["Details embedded toggle"])
 			_G.GameTooltip:AddLine(" ")
@@ -170,6 +173,7 @@ function mMT:DetailsEmbedded()
 
 		detailsToggle:SetScript("OnLeave", function(self)
 			E:UIFrameFadeOut(self, 0.5, 1, 0)
+			self:SetBackdropBorderColor(unpack(self.backdropBorderColor))
 			_G.GameTooltip:Hide()
 		end)
 
