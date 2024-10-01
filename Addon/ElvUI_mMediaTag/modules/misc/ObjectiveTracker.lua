@@ -803,10 +803,12 @@ function module:TrackUntrackQuests()
 		if quest.info then
 			local isOnMap = quest.info.isOnMap
 			local isCampaign = quest.isCampaign
-			if isOnMap or isCampaign then
-				C_QuestLog.AddQuestWatch(id)
-			else
-				C_QuestLog.RemoveQuestWatch(id)
+			if E.db.mMT.objectivetracker.settings.zoneQuests then
+				if isOnMap or isCampaign then
+					C_QuestLog.AddQuestWatch(id)
+				else
+					C_QuestLog.RemoveQuestWatch(id)
+				end
 			end
 		end
 	end
