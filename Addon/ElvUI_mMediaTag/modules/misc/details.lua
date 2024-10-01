@@ -90,44 +90,67 @@ function mMT:DetailsEmbedded()
 		local chat = _G[chatEmbedded .. "Panel"]
 
 		detailsEmbedded = CreateFrame("Frame", "mMT_DetailsEmbedded_Frame", UIParent, "BackdropTemplate")
-		detailsToggle = CreateFrame("Button", "mMT_DetailsEmbedded_ToggleButton", UIParent, "BackdropTemplate")
+
+		if E.db.mMT.detailsEmbedded.toggle then detailsToggle = CreateFrame("Button", "mMT_DetailsEmbedded_ToggleButton", UIParent, "BackdropTemplate") end
 
 		local chatHeight, chatWidth = chat:GetHeight(), chat:GetWidth()
 		if windows > 2 then chatHeight = chatHeight * 2 end
 
 		local backdrop = chat.backdrop:GetBackdrop()
-		detailsEmbedded:SetBackdrop(backdrop)
-		detailsToggle:SetBackdrop(backdrop)
+		local bbr, bbg, bbb, bba = chat.backdrop:GetBackdropBorderColor()
+		local bdr, bdg, bdb, bda = chat.backdrop:GetBackdropColor()
 
-		local r, g, b, a = chat.backdrop:GetBackdropBorderColor()
+		if detailsToggle then
+			detailsToggle:SetBackdrop(backdrop)
+			detailsToggle:SetBackdropBorderColor(bbr, bbg, bbb, bba)
+			detailsToggle:SetBackdropColor(bdr, bdg, bdb, bda)
+			detailsToggle:SetSize(20, chatHeight)
+			detailsToggle:SetAlpha(0)
+
+			detailsToggle:SetPoint(
+				(chatEmbedded == "RightChat") and "BOTTOMRIGHT" or "BOTTOMLEFT",
+				detailsEmbedded,
+				(chatEmbedded == "RightChat") and "BOTTOMLEFT" or "BOTTOMRIGHT",
+				(chatEmbedded == "RightChat") and -2 or 2,
+				0
+			)
+
+			detailsToggle.backdropColor = { bdr, bdg, bdb, bda }
+			detailsToggle.backdropBorderColor = { bbr, bbg, bbb, bba }
+
+			detailsToggle:RegisterForClicks("AnyDown")
+			detailsToggle:SetScript("OnClick", function()
+				mMT:DetailsEmbeddedToggle()
+			end)
+
+			detailsToggle:SetScript("OnEnter", function(self)
+				E:UIFrameFadeIn(self, 0.5, 0, 1)
+				self:SetBackdropBorderColor(mMT.ClassColor.r, mMT.ClassColor.g, mMT.ClassColor.b, 1)
+				_G.GameTooltip:SetOwner(detailsToggle, "ANCHOR_CURSOR")
+				_G.GameTooltip:AddLine(L["Details embedded toggle"])
+				_G.GameTooltip:AddLine(" ")
+				_G.GameTooltip:AddLine(L["Click to hide Details frames."])
+				_G.GameTooltip:Show()
+			end)
+
+			detailsToggle:SetScript("OnLeave", function(self)
+				E:UIFrameFadeOut(self, 0.5, 1, 0)
+				self:SetBackdropBorderColor(unpack(self.backdropBorderColor))
+				_G.GameTooltip:Hide()
+			end)
+		end
+
 		local hide = E.db.chat.panelBackdrop == "HIDEBOTH" or E.db.chat.panelBackdrop == "LEFT" or E.db.chat.panelBackdrop == "RIGHT"
-		detailsToggle:SetBackdropBorderColor(r, g, b, a)
-		detailsToggle.backdropBorderColor = { r, g, b, a }
-		if hide then a = 0 end
-		detailsEmbedded:SetBackdropBorderColor(r, g, b, a)
-
-		r, g, b, a = chat.backdrop:GetBackdropColor()
-		detailsToggle:SetBackdropColor(r, g, b, a)
-		detailsToggle.backdropColor = { r, g, b, a }
-		if hide then a = 0 end
-		detailsEmbedded:SetBackdropColor(r, g, b, a)
+		detailsEmbedded:SetBackdrop(backdrop)
+		detailsEmbedded:SetBackdropBorderColor(bbr, bbg, bbb, hide and 0 or bba)
+		detailsEmbedded:SetBackdropColor(bdr, bdg, bdb, hide and 0 or bda)
 
 		detailsEmbedded:SetSize(chatWidth, chatHeight)
-		detailsToggle:SetSize(20, chatHeight)
-		detailsToggle:SetAlpha(0)
 
 		for i = 1, chat:GetNumPoints() do
 			local point, _, relativePoint, xOfs, yOfs = chat:GetPoint(i)
 			detailsEmbedded:SetPoint(point, chat, relativePoint, xOfs, yOfs)
 		end
-
-		detailsToggle:SetPoint(
-			(chatEmbedded == "RightChat") and "BOTTOMRIGHT" or "BOTTOMLEFT",
-			detailsEmbedded,
-			(chatEmbedded == "RightChat") and "BOTTOMLEFT" or "BOTTOMRIGHT",
-			(chatEmbedded == "RightChat") and -2 or 2,
-			0
-		)
 
 		if windows > 1 then
 			local windowsWidth = (windows == 1) and chatWidth or chatWidth / 2
@@ -142,27 +165,6 @@ function mMT:DetailsEmbedded()
 				detailsEmbedded["Window" .. i]:SetPoint(points[i], detailsEmbedded, x_offset, y_offset)
 			end
 		end
-
-		detailsToggle:RegisterForClicks("AnyDown")
-		detailsToggle:SetScript("OnClick", function()
-			mMT:DetailsEmbeddedToggle()
-		end)
-
-		detailsToggle:SetScript("OnEnter", function(self)
-			E:UIFrameFadeIn(self, 0.5, 0, 1)
-			self:SetBackdropBorderColor(mMT.ClassColor.r, mMT.ClassColor.g, mMT.ClassColor.b, 1)
-			_G.GameTooltip:SetOwner(detailsToggle, "ANCHOR_CURSOR")
-			_G.GameTooltip:AddLine(L["Details embedded toggle"])
-			_G.GameTooltip:AddLine(" ")
-			_G.GameTooltip:AddLine(L["Click to hide Details frames."])
-			_G.GameTooltip:Show()
-		end)
-
-		detailsToggle:SetScript("OnLeave", function(self)
-			E:UIFrameFadeOut(self, 0.5, 1, 0)
-			self:SetBackdropBorderColor(unpack(self.backdropBorderColor))
-			_G.GameTooltip:Hide()
-		end)
 
 		if E.db.mMT.detailsEmbedded.combatHide then
 			local delay = E.db.mMT.detailsEmbedded.hideDelay

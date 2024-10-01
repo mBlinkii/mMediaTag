@@ -74,6 +74,19 @@ local function configTable()
 						[4] = L["Four (double chat height)"],
 					},
 				},
+                toggle = {
+					order = 3,
+					type = "toggle",
+					name = L["Toggle Button"],
+					desc = L["Adds a button to show or hide details on click. The button is only visible on mouse over."],
+					get = function(info)
+						return E.db.mMT.detailsEmbedded.toggle
+					end,
+					set = function(info, value)
+						E.db.mMT.detailsEmbedded.toggle = value
+						E:StaticPopup_Show("CONFIG_RL")
+					end,
+				},
 			},
 		},
 		combathide = {
