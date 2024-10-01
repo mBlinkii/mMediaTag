@@ -110,7 +110,7 @@ local function configTable()
 				},
 				delay = {
 					order = 2,
-					name = L["Hied delay"],
+					name = L["Hide Delay"],
 					type = "range",
 					min = 0,
 					max = 120,
