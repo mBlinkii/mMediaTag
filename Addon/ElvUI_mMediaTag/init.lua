@@ -317,9 +317,7 @@ function mMT:PLAYER_ENTERING_WORLD(event)
 		end
 	end
 
-	if IsAddOnLoaded("Details") then
-		mMT:SetupDetails()
-	end
+	if IsAddOnLoaded("Details") then mMT:SetupDetails() end
 
 	-- Modules
 	UpdateModuleSettings()
@@ -362,7 +360,7 @@ function mMT:CHALLENGE_MODE_START()
 end
 
 function mMT:ZONE_CHANGED_NEW_AREA()
-	mMT.Modules.ObjectiveTracker:TrackUntrackQuests()
+	if E.db.mMT.objectivetracker.settings.zoneQuests then mMT.Modules.ObjectiveTracker:TrackUntrackQuests() end
 	mMT:UpdateText()
 end
 
