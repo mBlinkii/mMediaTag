@@ -126,13 +126,13 @@ local function UpdateIconBackground(tx, unit, mirror)
 end
 
 local function DeaddDesaturation(self)
-    if UnitIsDead(self.unit) then
-        self.portrait:SetDesaturated(true)
-        self.isDesaturated = true
-    elseif self.isDesaturated then
-        self.portrait:SetDesaturated(false)
-        self.isDesaturated = false
-    end
+	if UnitIsDead(self.unit) then
+		self.portrait:SetDesaturated(true)
+		self.isDesaturated = true
+	elseif self.isDesaturated then
+		self.portrait:SetDesaturated(false)
+		self.isDesaturated = false
+	end
 end
 
 local function SetPortraits(frame, unit, masking, mirror)
@@ -165,9 +165,7 @@ local function SetPortraits(frame, unit, masking, mirror)
 		SetPortraitTexture(frame.portrait, unit, true)
 	end
 
-	if E.db.mMT.portraits.general.desaturation then
-		DeaddDesaturation(frame)
-	end
+	if E.db.mMT.portraits.general.desaturation then DeaddDesaturation(frame) end
 
 	mirrorTexture(frame.portrait, mirror)
 end
@@ -715,16 +713,13 @@ local function PlayerPetUnitOnEvent(self, event, eventUnit)
 
 	if event == "UNIT_HEALTH" and eventUnit == self.unit then DeaddDesaturation(self) end
 
-	if eventUnit == "vehicle" then
-		if self.parent.realUnit == "player" then self.unit = "pet" end
-		if self.parent.realUnit == "pet" then self.unit = "player" end
+	if eventUnit == "vehicle" or _G.ElvUF_Player.unit == "vehicle" then
+		self.unit = (self.parent.realUnit == "player") and "pet" or "player"
 	else
 		self.unit = self.parent.unit
 	end
 
-	--mMT:Print(event, self.unit, "event unit >", eventUnit)
-	UnitEvent(self, event)
-	--if eventUnit == self.unit or _G.ElvUF_Player.unit == "vehicle" or (event == "UNIT_EXITED_VEHICLE" or event == "UNIT_ENTERED_VEHICLE" or event == "VEHICLE_UPDATE") then UnitEvent(self, event) end
+	if eventUnit == self.unit or _G.ElvUF_Player.unit == "vehicle" or event == "UNIT_EXITED_VEHICLE" or event == "UNIT_ENTERED_VEHICLE" or event == "VEHICLE_UPDATE" then UnitEvent(self, event) end
 end
 
 local function OtherUnitOnEnevt(self, event, eventUnit)
