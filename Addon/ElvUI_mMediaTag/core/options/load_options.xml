@@ -12,6 +12,7 @@
 	<Script file="datapanels.lua"/>
 	<Script file="datatextcolors.lua"/>
 	<Script file="datatextfont.lua"/>
+	<Script file="details.lua"/>
 	<Script file="dev.lua"/>
 	<Script file="dock.lua"/>
 	<Script file="dungeon.lua"/>

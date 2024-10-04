@@ -3,6 +3,7 @@ local E = unpack(ElvUI)
 --Lua functions
 local tinsert = tinsert
 local format = format
+local LSM = E.Libs.LSM
 
 --WoW API / Variables
 local _G = _G
@@ -55,7 +56,8 @@ function mMT:mDropDown(list, frame, menuparent, ButtonWidth, HideDelay)
 	local SAVE_HEIGHT = (E.db.mMT.general.datatextfontsize or E.db.general.fontSize) / 3 + 16
 	local BUTTON_HEIGHT = 0
 	local BUTTON_WIDTH = 0
-
+	local font = LSM:Fetch("font", E.db.general.font)
+	local fontFlag = E.db.general.fontStyle
 	autoHideDelay = HideDelay or 2
 
 	mMT:CancelAllTimers(mDropDownFrame.mTimer)
@@ -107,14 +109,15 @@ function mMT:mDropDown(list, frame, menuparent, ButtonWidth, HideDelay)
 		if list[i].text then
 			frame.buttons[i].text = frame.buttons[i]:CreateFontString(nil, "BORDER")
 			frame.buttons[i].text:SetAllPoints()
-			frame.buttons[i].text:FontTemplate(nil, E.db.mMT.general.datatextfontsize, "")
+			frame.buttons[i].text:FontTemplate(font, E.db.mMT.general.datatextfontsize, fontFlag)
+			--FontTemplate(nil, isTitle and 20 or 18, "SHADOW")
 			frame.buttons[i].text:SetJustifyH("LEFT")
 		end
 
 		if list[i].SecondText then
 			frame.buttons[i].SecondText = frame.buttons[i]:CreateFontString(nil, "BORDER")
 			frame.buttons[i].SecondText:SetAllPoints()
-			frame.buttons[i].SecondText:FontTemplate(nil, E.db.mMT.general.datatextfontsize, "")
+			frame.buttons[i].SecondText:FontTemplate(font, E.db.mMT.general.datatextfontsize, fontFlag)
 			frame.buttons[i].SecondText:SetJustifyH("RIGHT")
 		end
 

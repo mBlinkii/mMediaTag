@@ -1130,7 +1130,6 @@ function mMT:GetTextures(style)
 	local tmp_db = {}
 
 	if E.db.mMT.portraits.custom.enable then
-		tmp_db.offset = E.db.mMT.portraits.offset.CUSTOM
 		tmp_db.texture = E.db.mMT.portraits.custom.texture
 		tmp_db.border = E.db.mMT.portraits.custom.border
 		tmp_db.shadow = E.db.mMT.portraits.custom.shadow
@@ -1138,7 +1137,7 @@ function mMT:GetTextures(style)
 		tmp_db.extraMask = true
 		tmp_db.mask = {
 			a = E.db.mMT.portraits.custom.mask,
-			b = E.db.mMT.portraits.custom.maskb ~= "" and E.db.mMT.portraits.custom.maskb or E.db.mMT.portraits.custom.mask,
+			b = (E.db.mMT.portraits.custom.maskb ~= "") and E.db.mMT.portraits.custom.maskb or E.db.mMT.portraits.custom.mask,
 		}
 		tmp_db.rare = {
 			texture = E.db.mMT.portraits.custom.extra,
@@ -1156,7 +1155,6 @@ function mMT:GetTextures(style)
 			shadow = E.db.mMT.portraits.custom.bossshadow,
 		}
 	elseif mMT.Media.CustomPortraits[style] then
-		tmp_db.offset = mMT.Media.CustomPortraits[style].offset
 		tmp_db.texture = mMT.Media.CustomPortraits[style].texture
 		tmp_db.border = mMT.Media.CustomPortraits[style].border
 		tmp_db.shadow = mMT.Media.CustomPortraits[style].shadow
@@ -1224,7 +1222,6 @@ function mMT:GetTextures(style)
 		end
 
 		if old[style] then
-			tmp_db.offset = E.db.mMT.portraits.offset[style]
 			tmp_db.rare = {
 				texture = textures_source[style].rare.texture[variant],
 				border = textures_source[style].rare.border,
@@ -1245,7 +1242,6 @@ function mMT:GetTextures(style)
 			local eliteStyle = E.db.mMT.portraits.extra.elite
 			local bossStyle = E.db.mMT.portraits.extra.boss
 
-			tmp_db.offset = E.db.mMT.portraits.offset.new
 			tmp_db.rare = {
 				texture = textures_source[style].rare[rareStyle].texture[variant],
 				border = textures_source[style].rare[rareStyle].border,

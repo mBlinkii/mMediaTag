@@ -363,7 +363,20 @@ local function configTable()
 				name = L["Misc"],
 				icon = "Interface\\Addons\\ElvUI_mMediaTag\\media\\system\\misc.tga",
 				childGroups = "tab",
-				args = {},
+				args = {
+					customDocks = {
+						order = 1,
+						type = "group",
+						name = L["Custom Docks"],
+						args = {},
+					},
+					details = {
+						order = 2,
+						type = "group",
+						name = L["Details embeded"],
+						args = {},
+					},
+				},
 			},
 			about = {
 				order = 10,

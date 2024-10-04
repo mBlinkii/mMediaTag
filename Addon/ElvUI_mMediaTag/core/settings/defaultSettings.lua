@@ -57,6 +57,7 @@ P.mMT = {
 		whiteText = true,
 	},
 	durabilityIlevel = {
+		mount = 460,
 		icon = true,
 		whiteText = true,
 		whiteIcon = true,
@@ -323,7 +324,7 @@ P.mMT = {
 		settings = {
 			questcount = true,
 			hidedash = true,
-			hiedAll = false,
+			hideAll = false,
 			showLevel = false,
 			zoneQuests = false,
 		},
@@ -564,6 +565,13 @@ P.mMT = {
 		s = true,
 		t = true,
 	},
+	detailsEmbedded = {
+		chatEmbedded = "DISABLE",
+		windows = 2,
+		toggle = true,
+		combatHide = true,
+		hideDelay = 5,
+	},
 	portraits = {
 		custom = {
 			border = "",
@@ -702,6 +710,7 @@ P.mMT = {
 			level = 20,
 		},
 		general = {
+			desaturation = true,
 			bgstyle = 1,
 			classicons = false,
 			classiconstyle = "BLIZZARD",
@@ -717,18 +726,7 @@ P.mMT = {
 			trilinear = true,
 			usetexturecolor = true,
 		},
-		offset = {
-			SQ = 5.5,
-			RO = 5.5,
-			CI = 5.5,
-			PI = 10,
-			RA = 6,
-			QA = 0,
-			MO = 5.5,
-			TH = 4,
-			CUSTOM = 5.5,
-			new = 3,
-		},
+		zoom = 0,
 		shadow = {
 			enable = true,
 			inner = true,

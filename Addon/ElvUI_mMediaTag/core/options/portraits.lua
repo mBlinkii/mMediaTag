@@ -43,9 +43,7 @@ local extraStyle = {
 	e = L["Style"] .. " E",
 }
 
-local ClassIconStyle = {
-	BLIZZARD = "Blizzard",
-}
+local ClassIconStyle = {}
 
 local frameStrata = {
 	BACKGROUND = "BACKGROUND",
@@ -58,7 +56,11 @@ local frameStrata = {
 }
 
 function BuildIconStylesTable()
-	for iconStyle, value in pairs(mMT.classIcons) do
+	for iconStyle, value in pairs(mMT.ClassIcons.mMT) do
+		ClassIconStyle[iconStyle] = value.name
+	end
+
+	for iconStyle, value in pairs(mMT.ClassIcons.Custom) do
 		ClassIconStyle[iconStyle] = value.name
 	end
 end
@@ -215,7 +217,7 @@ local function configTable()
 							inline = true,
 							name = L["Misc"],
 							args = {
-								toggle_classicon = {
+								trilinear = {
 									order = 1,
 									type = "toggle",
 									name = L["Trilinear Filtering"],
@@ -224,6 +226,19 @@ local function configTable()
 									end,
 									set = function(info, value)
 										E.db.mMT.portraits.general.trilinear = value
+										mMT.Modules.Portraits:Initialize()
+										E:StaticPopup_Show("CONFIG_RL")
+									end,
+								},
+								desaturation = {
+									order = 2,
+									type = "toggle",
+									name = L["Dead desaturation"],
+									get = function(info)
+										return E.db.mMT.portraits.general.desaturation
+									end,
+									set = function(info, value)
+										E.db.mMT.portraits.general.desaturation = value
 										mMT.Modules.Portraits:Initialize()
 										E:StaticPopup_Show("CONFIG_RL")
 									end,
@@ -823,164 +838,18 @@ local function configTable()
 					type = "group",
 					name = L["Portrait Offset/ Zoom"],
 					args = {
-						range_sq = {
+						zoom = {
 							order = 1,
-							name = L["Drop"],
+							name = L["Zoom"],
 							type = "range",
 							min = 0,
-							max = 10,
-							step = 0.1,
+							max = 5,
+							step = 0.001,
 							get = function(info)
-								return E.db.mMT.portraits.offset.SQ
+								return E.db.mMT.portraits.zoom
 							end,
 							set = function(info, value)
-								E.db.mMT.portraits.offset.SQ = value
-								mMT.Modules.Portraits:Initialize()
-							end,
-						},
-						range_ro = {
-							order = 2,
-							name = L["Drop round"],
-							type = "range",
-							min = 0,
-							max = 10,
-							step = 0.1,
-							get = function(info)
-								return E.db.mMT.portraits.offset.RO
-							end,
-							set = function(info, value)
-								E.db.mMT.portraits.offset.RO = value
-								mMT.Modules.Portraits:Initialize()
-							end,
-						},
-						range_ci = {
-							order = 3,
-							name = L["CIRCLE/ MOON"],
-							type = "range",
-							min = 0,
-							max = 10,
-							step = 0.1,
-							get = function(info)
-								return E.db.mMT.portraits.offset.CI
-							end,
-							set = function(info, value)
-								E.db.mMT.portraits.offset.CI = value
-								E.db.mMT.portraits.offset.MO = value
-								mMT.Modules.Portraits:Initialize()
-							end,
-						},
-						range_pi = {
-							order = 4,
-							name = L["Pad"],
-							type = "range",
-							min = 0,
-							max = 15,
-							step = 0.1,
-							get = function(info)
-								return E.db.mMT.portraits.offset.PI
-							end,
-							set = function(info, value)
-								E.db.mMT.portraits.offset.PI = value
-								mMT.Modules.Portraits:Initialize()
-							end,
-						},
-						range_ra = {
-							order = 5,
-							name = L["Diamond"],
-							type = "range",
-							min = 0,
-							max = 10,
-							step = 0.1,
-							get = function(info)
-								return E.db.mMT.portraits.offset.RA
-							end,
-							set = function(info, value)
-								E.db.mMT.portraits.offset.RA = value
-								mMT.Modules.Portraits:Initialize()
-							end,
-						},
-						range_qa = {
-							order = 5,
-							name = L["Square"],
-							type = "range",
-							min = 0,
-							max = 20,
-							step = 0.1,
-							get = function(info)
-								return E.db.mMT.portraits.offset.QA
-							end,
-							set = function(info, value)
-								E.db.mMT.portraits.offset.QA = value
-								mMT.Modules.Portraits:Initialize()
-							end,
-						},
-						range_th = {
-							order = 6,
-							name = L["Thin"],
-							type = "range",
-							min = 0,
-							max = 10,
-							step = 0.1,
-							get = function(info)
-								return E.db.mMT.portraits.offset.TH
-							end,
-							set = function(info, value)
-								E.db.mMT.portraits.offset.TH = value
-								mMT.Modules.Portraits:Initialize()
-							end,
-						},
-						range_octa = {
-							order = 7,
-							name = L["New Textures"],
-							type = "range",
-							min = 0,
-							max = 10,
-							step = 0.1,
-							get = function(info)
-								return E.db.mMT.portraits.offset.new
-							end,
-							set = function(info, value)
-								E.db.mMT.portraits.offset.new = value
-								mMT.Modules.Portraits:Initialize()
-							end,
-						},
-						range_custom = {
-							order = 8,
-							name = L["Custom"],
-							type = "range",
-							min = 0,
-							max = 60,
-							step = 0.1,
-							get = function(info)
-								return E.db.mMT.portraits.offset.CUSTOM
-							end,
-							set = function(info, value)
-								E.db.mMT.portraits.offset.CUSTOM = value
-								mMT.Modules.Portraits:Initialize()
-							end,
-						},
-						spacer_1 = {
-							order = 20,
-							type = "description",
-							name = "\n\n",
-						},
-						reset = {
-							order = 40,
-							type = "execute",
-							name = L["Reset"],
-							func = function()
-								E.db.mMT.portraits.offset = {
-									SQ = 5.5,
-									RO = 5.5,
-									CI = 5.5,
-									PI = 10,
-									RA = 6,
-									QA = 0,
-									MO = 5.5,
-									TH = 4,
-									CUSTOM = 5.5,
-									new = 2.5,
-								}
+								E.db.mMT.portraits.zoom = value
 								mMT.Modules.Portraits:Initialize()
 							end,
 						},

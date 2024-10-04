@@ -1,6 +1,28 @@
 # Changelog - ElvUI_mMediaTag
 [Eng] - All changes to this project will be documented in this file. The latest changes are at the top.
 
+## [ver. 3.60] - 04.10.2024
+### UPDATE
+- UPDATE - [Dock-Character]: Update tooltip.
+- UPDATE - [Health-Markers]: Update for TWW S1, thx to Trenchy.
+- UPDATE - [Portraits]: Update Zoom function, only one Zoom for All Styles.
+- UPDATE - [System]: DropDown Menu uses now the ElvUI Font & Fontflag.
+- UPDATE - [System]: Update TOC for Classic.
+- UPDATE - [Teleports]: Add Wormhole Generator: Khaz Algar's, thx to Cliaux.
+- UPDATE - [Teleports]: Update Teleports for TWW S1.
+### FIX 
+- FIX - [Datatext-Score]: Prevent nil Errors with the new Season of TWW.
+- FIX - [Important-Spells]: Prevent nil Errors with not existing DB.
+- FIX - [ObjectiveTracker]: Fixed Show only Quests on Map function, thx to Cliaux.
+- FIX - [Portraits]: Changed Boss check priority, it should now work as intended.
+- FIX - [Portraits]: Possible fix for not showing Portrait if Player is in a vehicle.
+- FIX - [Portraits]: Wrong Portraits when Profile switching.
+### NEW
+- NEW - [Class-icons]: Add Class icons to details and optimized the functions
+- NEW - [Datatext-Durability]: Add Summon repair mount function.
+- NEW - [Details-Embedded]: Details embedded feature for up to 4 Details Windows.
+- NEW - [Portraits]: Add desaturate feature if Unit is dead, default is off.
+
 ## [ver. 3.59] - 14.09.2024
 ### UPDATE
 - UPDATE - [Portraits]: Names of the Class icons shortened.
