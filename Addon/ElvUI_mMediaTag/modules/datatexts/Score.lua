@@ -162,7 +162,7 @@ local function DungeonScoreTooltip()
 			if E.db.mMT.mpscore.upgrade and ScoreTable[mapID].upgrade then nameString = nameString .. "  " .. mMT:mIcon(mMT.Media.UpgradeIcons[E.db.mMT.mpscore.icon]) end
 
 			color = isTimed and color or "FFAFAFAF"
-			scoreString = format("|C%s%s|r - |C%s%s|r", color, level, color, score)
+			scoreString = (level ~= 0 and score ~= 0) and format("|C%s%s|r - |C%s%s|r", color, level, color, score) or L["No Score"]
 			DT.tooltip:AddDoubleLine(nameString, scoreString)
 		end
 	end
