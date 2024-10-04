@@ -15,6 +15,7 @@
 - FIX - [Important-Spells]: Prevent nil Errors with not existing DB.
 - FIX - [ObjectiveTracker]: Fixed Show only Quests on Map function, thx to Cliaux.
 - FIX - [Portraits]: Changed Boss check priority, it should now work as intended.
+- FIX - [Portraits]: Possible fix for not showing Portrait if Player is in a vehicle.
 - FIX - [Portraits]: Wrong Portraits when Profile switching.
 ### NEW
 - NEW - [Class-icons]: Add Class icons to details and optimized the functions

@@ -20,6 +20,7 @@ mMT.Changelog[360] = {
 		"[Important-Spells]: Prevent nil Errors with not existing DB.",
 		"[ObjectiveTracker]: Fixed Show only Quests on Map function, thx to Cliaux.",
 		"[Portraits]: Changed Boss check priority, it should now work as intended.",
+		"[Portraits]: Possible fix for not showing Portrait if Player is in a vehicle.",
 		"[Portraits]: Wrong Portraits when Profile switching.",
 	},
 }
