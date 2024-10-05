@@ -47,9 +47,7 @@ function mMT:GetDurabilityInfo()
 			local perc, repairCost = (currentDura / maxDura) * 100, 0
 			invDurability[index] = perc
 
-			if perc < totalDurability then
-				totalDurability = perc
-			end
+			if perc < totalDurability then totalDurability = perc end
 
 			if E.Retail and E.ScanTooltip.GetTooltipData then
 				E.ScanTooltip:SetInventoryItem("player", index)
@@ -117,9 +115,7 @@ function mMT:GetCurrenciesInfo(tbl, item)
 				tbl.info.link = mMT:mCurrencyLink(tbl.info.id)
 				tbl.info.count = info.quantity
 				tbl.loaded = true
-				if not tbl.fragment and info.maxQuantity then
-					tbl.info.cap = info.maxQuantity
-				end
+				if not tbl.fragment and info.maxQuantity then tbl.info.cap = info.maxQuantity end
 			end
 		end
 
@@ -200,9 +196,7 @@ local function getProfSkill(skillLevel, maxSkillLevel, skillModifier)
 	local sm = nil
 	local colorTip = E.db.mMT.datatextcolors.colorother.hex
 
-	if skillModifier ~= 0 then
-		sm = format(" %s+%s|r", "|CFF68FF00", skillModifier)
-	end
+	if skillModifier ~= 0 then sm = format(" %s+%s|r", "|CFF68FF00", skillModifier) end
 
 	if skillLevel == maxSkillLevel then
 		text = format("%s[|r%s%s|r%s%s]|r", colorTip, "|CFF3AFF00", skillLevel, sm or "", colorTip)
@@ -245,13 +239,9 @@ local function BuildProfTable()
 	if not prof1 and prof2 then
 		tbl.nomain = true
 	else
-		if prof1 then
-			tinsert(tbl.main, 1, GetProfInfo(prof1))
-		end
+		if prof1 then tinsert(tbl.main, 1, GetProfInfo(prof1)) end
 
-		if prof2 then
-			tinsert(tbl.main, 2, GetProfInfo(prof2))
-		end
+		if prof2 then tinsert(tbl.main, 2, GetProfInfo(prof2)) end
 
 		tbl.nomain = false
 	end
@@ -259,13 +249,9 @@ local function BuildProfTable()
 	if not arch and not fish and not cook and not firstaid then
 		tbl.nosecondary = true
 	else
-		if arch then
-			tinsert(tbl.secondary, 1, GetProfInfo(arch))
-		end
+		if arch then tinsert(tbl.secondary, 1, GetProfInfo(arch)) end
 
-		if fish then
-			tinsert(tbl.secondary, 2, GetProfInfo(fish))
-		end
+		if fish then tinsert(tbl.secondary, 2, GetProfInfo(fish)) end
 
 		if cook then
 			tinsert(tbl.secondary, 3, GetProfInfo(cook))
@@ -309,10 +295,12 @@ end
 
 local function GetFireCD()
 	local start, duration
-	if C_Spell then
+	if not E.Cata and C_Spell then
 		local spellCooldownInfo = GetSpellCooldown(818)
-		start = spellCooldownInfo.startTime
-		duration = spellCooldownInfo.duration
+		if spellCooldownInfo then
+			start = spellCooldownInfo.startTime
+			duration = spellCooldownInfo.duration
+		end
 	else
 		start, duration = GetSpellCooldown(818)
 	end
@@ -363,12 +351,19 @@ function mMT:GetProfessions(tooltip)
 			InsertInTable(MenuTable, "", nil, true)
 			textA = E.db.mMT.datatextcolors.colortitle.hex .. L["Others"] .. "|r"
 			InsertInTable(MenuTable, textA, nil, true)
-			tinsert(MenuTable, { text = format("|T%s:14:14:0:0:64:64:5:59:5:59|t %s", "136241", TRADE_SKILLS), color = "|CFFBC26E5", isTitle = false, func = function() ToggleProfessionsBook() end })
+			tinsert(MenuTable, {
+				text = format("|T%s:14:14:0:0:64:64:5:59:5:59|t %s", "136241", TRADE_SKILLS),
+				color = "|CFFBC26E5",
+				isTitle = false,
+				func = function()
+					ToggleProfessionsBook()
+				end,
+			})
 
 			if ProfTable.cook and IsSpellKnown(818) then
 				local texture = GetSpellTexture(818)
 				local spellInfo = GetSpellInfo(818)
-				local name = spellInfo.name or ""
+				local name = spellInfo.name or spellInfo or ""
 				tinsert(MenuTable, {
 					text = format("|T%s:14:14:0:0:64:64:5:59:5:59|t %s", texture, name),
 					SecondText = GetFireCD(),
