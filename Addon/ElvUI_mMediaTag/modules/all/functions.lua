@@ -351,14 +351,21 @@ function mMT:GetProfessions(tooltip)
 			InsertInTable(MenuTable, "", nil, true)
 			textA = E.db.mMT.datatextcolors.colortitle.hex .. L["Others"] .. "|r"
 			InsertInTable(MenuTable, textA, nil, true)
-			tinsert(MenuTable, {
-				text = format("|T%s:14:14:0:0:64:64:5:59:5:59|t %s", "136241", TRADE_SKILLS),
-				color = "|CFFBC26E5",
-				isTitle = false,
-				func = function()
-					_G.ToggleProfessionsBook()
-				end,
-			})
+			if E.Retail then
+				tinsert(MenuTable, {
+					text = format("|T%s:14:14:0:0:64:64:5:59:5:59|t %s", "136241", TRADE_SKILLS),
+					color = "|CFFBC26E5",
+					isTitle = false,
+					func = function()
+						_G.ToggleProfessionsBook()
+					end,
+				})
+			else
+				tinsert(
+					MenuTable,
+					{ text = format("|T%s:14:14:0:0:64:64:5:59:5:59|t %s", "136241", TRADE_SKILLS), color = "|CFFBC26E5", isTitle = false, macro = "/click SpellbookMicroButton\n/click SpellBookFrameTabButton2" }
+				)
+			end
 
 			if ProfTable.cook and IsSpellKnown(818) then
 				local texture = GetSpellTexture(818)
