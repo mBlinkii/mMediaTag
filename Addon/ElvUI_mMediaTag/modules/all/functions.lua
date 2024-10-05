@@ -315,7 +315,7 @@ local function GetFireCD()
 	end
 end
 
-function mMT:GetProfessions(tooltip)
+function mMT:GetProfessionsd(tooltip)
 	local MenuTable = {}
 	local ProfTable = BuildProfTable()
 	local textA = ""
@@ -382,4 +382,59 @@ function mMT:GetProfessions(tooltip)
 		end
 		return MenuTable
 	end
+end
+
+function mMT:GetProfessions(tooltip)
+	local MenuTable = {}
+	local ProfTable = BuildProfTable()
+	local textA = ""
+
+	local function InsertProfessions(profType, title, noProfText)
+		InsertInTable(MenuTable, "", nil, true)
+		if ProfTable[profType] then
+			textA = E.db.mMT.datatextcolors.colortitle.hex .. L[title] .. "|r"
+			InsertInTable(MenuTable, textA, nil, true)
+			for _, prof in pairs(ProfTable[profType]) do
+				InsertInTable(MenuTable, prof.name, prof.skill, false, prof.icon, prof.color, prof.spell)
+			end
+		else
+			textA = "|CFFE74C3C" .. L[noProfText] .. "|r"
+			InsertInTable(MenuTable, textA, nil, true)
+		end
+	end
+
+	if not ProfTable.nomain or not ProfTable.nosecondary then
+		InsertProfessions("main", "Main Professions", "No Main Professions")
+		InsertProfessions("secondary", "Secondary Professions", "No Secondary Professions")
+
+		if not tooltip then
+			InsertInTable(MenuTable, "", nil, true)
+			textA = E.db.mMT.datatextcolors.colortitle.hex .. L["Others"] .. "|r"
+			InsertInTable(MenuTable, textA, nil, true)
+			local tradeSkillsText = format("|T%s:14:14:0:0:64:64:5:59:5:59|t %s", "136241", TRADE_SKILLS)
+			local tradeSkillsEntry = {
+				text = tradeSkillsText,
+				color = "|CFFBC26E5",
+				isTitle = false,
+				func = E.Retail and _G.ToggleProfessionsBook or nil,
+				macro = not E.Retail and "/click SpellbookMicroButton\n/click SpellBookFrameTabButton2" or nil
+			}
+			tinsert(MenuTable, tradeSkillsEntry)
+
+			if ProfTable.cook and IsSpellKnown(818) then
+				local texture = GetSpellTexture(818)
+				local spellInfo = GetSpellInfo(818)
+				local name = spellInfo.name or spellInfo or ""
+				tinsert(MenuTable, {
+					text = format("|T%s:14:14:0:0:64:64:5:59:5:59|t %s", texture, name),
+					SecondText = GetFireCD(),
+					color = "|CFFFF9B00",
+					isTitle = false,
+					macro = "/cast " .. name,
+				})
+			end
+		end
+	end
+
+	return MenuTable
 end
