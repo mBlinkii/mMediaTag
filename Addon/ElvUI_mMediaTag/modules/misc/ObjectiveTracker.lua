@@ -895,6 +895,7 @@ function module:Initialize()
 				--tracker:SetHeight(5)
 			end
 		end
+		module.hooked = true
 	end
 
 	cachedQuests = BuildQuestCache()
