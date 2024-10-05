@@ -166,7 +166,6 @@ local function OnClick(_, button)
 	if InCombatLockdown() then
 		_G.UIErrorsFrame:AddMessage(E.InfoColor .. _G.ERR_NOT_IN_COMBAT)
 	else
-		mMT:Print(button)
 		if button == "LeftButton" then
 			_G.ToggleCharacter("PaperDollFrame")
 		elseif button == "RightButton" then
