@@ -171,7 +171,7 @@ end
 
 local function SkinTitleText(text, color)
 	SetTextProperties(text, fonts.title, color or colors.title.n)
-	local height = text:GetStringHeight() + 2
+	local height = text:GetStringHeight()
 	if height ~= text:GetHeight() then text:SetHeight(height) end
 end
 
