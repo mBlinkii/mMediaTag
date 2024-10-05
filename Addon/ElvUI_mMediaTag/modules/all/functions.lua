@@ -390,13 +390,13 @@ function mMT:GetProfessions(tooltip)
 	local textA = ""
 
 	local function InsertProfessions(profType, title, noProfText)
-		InsertInTable(MenuTable, "", nil, true)
 		if ProfTable[profType] then
 			textA = E.db.mMT.datatextcolors.colortitle.hex .. L[title] .. "|r"
 			InsertInTable(MenuTable, textA, nil, true)
 			for _, prof in pairs(ProfTable[profType]) do
 				InsertInTable(MenuTable, prof.name, prof.skill, false, prof.icon, prof.color, prof.spell)
 			end
+			InsertInTable(MenuTable, "", nil, true)
 		else
 			textA = "|CFFE74C3C" .. L[noProfText] .. "|r"
 			InsertInTable(MenuTable, textA, nil, true)
@@ -408,7 +408,6 @@ function mMT:GetProfessions(tooltip)
 		InsertProfessions("secondary", "Secondary Professions", "No Secondary Professions")
 
 		if not tooltip then
-			InsertInTable(MenuTable, "", nil, true)
 			textA = E.db.mMT.datatextcolors.colortitle.hex .. L["Others"] .. "|r"
 			InsertInTable(MenuTable, textA, nil, true)
 			local tradeSkillsText = format("|T%s:14:14:0:0:64:64:5:59:5:59|t %s", "136241", TRADE_SKILLS)
