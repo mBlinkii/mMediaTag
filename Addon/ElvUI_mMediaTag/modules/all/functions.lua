@@ -259,7 +259,7 @@ local function BuildProfTable()
 		end
 
 		if firstaid then
-			tinsert(tbl.secondary, 3, GetProfInfo(firstaid))
+			tinsert(tbl.secondary, 4, GetProfInfo(firstaid))
 			tbl.firstaid = true
 		end
 
@@ -356,7 +356,7 @@ function mMT:GetProfessions(tooltip)
 				color = "|CFFBC26E5",
 				isTitle = false,
 				func = function()
-					ToggleProfessionsBook()
+					_G.ToggleProfessionsBook()
 				end,
 			})
 
