@@ -736,6 +736,17 @@ mAddFont("Montserrat-Medium", "Montserrat-Medium.ttf")
 mAddFont("Montserrat-Regular", "Montserrat-Regular.ttf")
 mAddFont("Montserrat-SemiBold", "Montserrat-SemiBold.ttf")
 
+mAddFont("Beep-Black", "Beep-Black.otf")
+mAddFont("Beep-Bold", "Beep-Bold.otf")
+mAddFont("Beep-Medium", "Beep-Medium.otf")
+mAddFont("Beep-Regular", "Beep-Regular.otf")
+
+mAddFont("RingLink-Bold", "RingLink-Bold.otf")
+mAddFont("RingLink-Medium", "RingLink-Medium.otf")
+
+mAddFont("SimplySans-Bold", "SimplySans-Bold.ttf")
+mAddFont("SimplySans-Book", "SimplySans-Book.ttf")
+
 mAddSound("mMT - Bewegen - weiblich", "bewegen_female.ogg")
 mAddSound("mMT - Unterbrechen - weiblich", "unterbrechen_female.ogg")
 mAddSound("mMT - Bewegen - mänlich", "bewegen_male.ogg")

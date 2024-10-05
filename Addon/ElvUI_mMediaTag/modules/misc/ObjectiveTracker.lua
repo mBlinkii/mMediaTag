@@ -166,9 +166,7 @@ end
 
 local function SetTextProperties(text, fontSettings, color)
 	text:SetFont(LSM:Fetch("font", fontSettings.font), fontSettings.fontsize, fontSettings.fontflag)
-	if color then
-		text:SetTextColor(color.r, color.g, color.b)
-	end
+	if color then text:SetTextColor(color.r, color.g, color.b) end
 end
 
 local function SkinTitleText(text, color)
@@ -329,7 +327,7 @@ local function GetRequirements(text)
 	local result = matchPatterns(text)
 	if not result then return nil end
 
-	if (result.current and result.required) then
+	if result.current and result.required then
 		result.complete = tonumber(result.current) >= tonumber(result.required)
 	elseif result.percent then
 		result.complete = tonumber(result.percent) >= 100
@@ -743,6 +741,10 @@ local function SkinBlock(_, block)
 			hooksecurefunc(block, "OnHeaderLeave", OnHeaderLeave)
 			block.mMT_OnLeaveHook = true
 		end
+
+		-- local height = (fonts.text.fontsize) * block.height / 2
+		-- mMT:Print(block.height, height)
+		--  block:SetHeight(height)
 	end
 end
 
