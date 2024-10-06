@@ -112,46 +112,41 @@ function mMT:WeeklyAffixes()
 	end
 end
 
-local function isMaxLevel(unit)
-	local exp, maxxp = UnitXP("player"), UnitXPMax("player")
-	return "%s / %s", exp, maxxp
-end
-
 --Great Vault Functions
 function mMT:mGetVaultInfo()
-	local vaultinfo = {}
-	vaultinfo = wipe(vaultinfo)
-	local vaultinforaid, vaultinfomplus, vaultinfopvp, vaultinfohighest, ok = {}, {}, {}, nil, false
-	vaultinforaid = wipe(vaultinforaid)
-	vaultinfomplus = wipe(vaultinfomplus)
-	vaultinfopvp = wipe(vaultinfopvp)
-	vaultinfo = C_WeeklyRewards.GetActivities(Enum.WeeklyRewardChestThresholdType.Activities)
+    local vaultinfo = C_WeeklyRewards.GetActivities(Enum.WeeklyRewardChestThresholdType.Activities)
+    if not vaultinfo then
+        return {}, {}, {}, nil, false
+    end
 
-	if not vaultinfo then
-		return {}, {}, {}, nil, false
-	else
-		table.sort(vaultinfo, function(left, right)
-			return left.index < right.index
-		end)
-		for i = 1, 9 do
-			local id = vaultinfo[i] and vaultinfo[i].id or 0
-			local itemLink = C_WeeklyRewards.GetExampleRewardItemHyperlinks(id)
-			if itemLink then
-				local ItemLevelInfo = GetDetailedItemLevelInfo(itemLink)
-				if ItemLevelInfo then
-					vaultinfohighest = (vaultinfohighest and (vaultinfohighest < ItemLevelInfo) and ItemLevelInfo or vaultinfohighest) or (not vaultinfohighest and ItemLevelInfo)
-					if i < 4 then
-						tinsert(vaultinfomplus, format("%s%s|r", mMT:mColorGradient(ItemLevelInfo), ItemLevelInfo))
-					elseif i < 7 then
-						tinsert(vaultinfopvp, format("%s%s|r", mMT:mColorGradient(ItemLevelInfo), ItemLevelInfo))
-					else
-						tinsert(vaultinforaid, format("%s%s|r", mMT:mColorGradient(ItemLevelInfo), ItemLevelInfo))
-					end
-					ok = true
-				end
-			end
-		end
-		local vaultinfohighestString = format("%s%s|r", mMT:mColorGradient(tonumber(vaultinfohighest) or 0), vaultinfohighest or 0)
-		return vaultinforaid, vaultinfomplus, vaultinfopvp, vaultinfohighestString, ok
-	end
+    local vaultinforaid, vaultinfomplus, vaultinfopvp = {}, {}, {}
+    local vaultinfohighest, ok = nil, false
+
+    table.sort(vaultinfo, function(left, right)
+        return left.index < right.index
+    end)
+
+    for i = 1, #vaultinfo do
+        local id = vaultinfo[i].id
+        local itemLink = C_WeeklyRewards.GetExampleRewardItemHyperlinks(id)
+        if itemLink then
+            local ItemLevelInfo = GetDetailedItemLevelInfo(itemLink)
+            if ItemLevelInfo then
+                vaultinfohighest = math.max(vaultinfohighest or 0, ItemLevelInfo)
+                local formattedItemLevel = format("%s%s|r", mMT:mColorGradient(ItemLevelInfo), ItemLevelInfo)
+                if i <= 3 then
+                    table.insert(vaultinfomplus, formattedItemLevel)
+                elseif i <= 6 then
+                    table.insert(vaultinfopvp, formattedItemLevel)
+                else
+                    table.insert(vaultinforaid, formattedItemLevel)
+                end
+                ok = true
+            end
+        end
+    end
+
+    local vaultinfohighestString = format("%s%s|r", mMT:mColorGradient(vaultinfohighest or 0), vaultinfohighest or 0)
+    return vaultinforaid, vaultinfomplus, vaultinfopvp, vaultinfohighestString, ok
 end
+
