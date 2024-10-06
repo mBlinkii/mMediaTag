@@ -693,6 +693,8 @@ end
 
 local function SkinBlock(_, block)
 	if block then
+		local totalHeight = 2
+
 		if block.Stage and not block.mMT_StageSkin then
 			hooksecurefunc(block, "UpdateStageBlock", SkinStageBlock)
 			SkinStageBlock(block)
@@ -724,6 +726,7 @@ local function SkinBlock(_, block)
 				cachedQuests[block.id].title = block.HeaderText:GetText()
 				block.HeaderText:SetText(GetLevelInfoText(cachedQuests[block.id].info.level) .. block.HeaderText:GetText())
 			end
+			totalHeight = totalHeight + block.HeaderText:GetHeight()
 		end
 
 		if block.usedLines then
@@ -742,21 +745,16 @@ local function SkinBlock(_, block)
 			block.mMT_OnLeaveHook = true
 		end
 
-		-- fix for overlaping blocks
-		local totalHeight = 0
-		if block.HeaderText then
-			totalHeight = totalHeight + block.HeaderText:GetHeight()
-		end
-		if block.usedLines then
-			for _, line in pairs(block.usedLines) do
-				totalHeight = totalHeight + line:GetHeight()
+		if not block.WidgetContainer then
+			if block.usedLines then
+				for _, line in pairs(block.usedLines) do
+					totalHeight = totalHeight + line:GetHeight()
+				end
 			end
+			block:SetHeight(totalHeight)
 		end
-		local spacing = 2
-		block:SetHeight(totalHeight + spacing)
 	end
 end
-
 
 -- Funktion zum Erstellen eines Textblocks
 function CreateTextBlock(text, fontSize)
@@ -781,7 +779,6 @@ SetTextBlockSpacing(textBlock1, textBlock2, 10) -- Setze den Abstand zwischen de
 
 print("TextBlock1 Position: " .. textBlock1.y)
 print("TextBlock2 Position: " .. textBlock2.y)
-
 
 local function AddBackground()
 	-- inspired by Merathilis background, thank you
