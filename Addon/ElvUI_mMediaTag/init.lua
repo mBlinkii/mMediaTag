@@ -10,7 +10,7 @@ local IsAddOnLoaded = _G.C_AddOns and _G.C_AddOns.IsAddOnLoaded or IsAddOnLoaded
 
 -- Addon Name and Namespace
 local addonName, _ = ...
-mMT = E:NewModule(addonName, "AceHook-3.0", "AceEvent-3.0", "AceTimer-3.0", "AceConsole-3.0")
+mMT = E:NewModule(addonName, "AceHook-3.0", "AceEvent-3.0", "AceTimer-3.0", "AceConsole-3.0", "AceHook-3.0")
 
 -- Settings
 mMT.Version = GetAddOnMetadata(addonName, "Version")
@@ -51,6 +51,7 @@ mMT.Modules.CosmeticBars = {}
 mMT.Modules.ObjectiveTracker = {}
 mMT.Modules.CustomUFTextures = {}
 mMT.Modules.CustomBGTextures = {}
+mMT.Modules.Minimap = {}
 --mMT.Modules.CustomClassColors = {}
 
 local L = mMT.Locales
@@ -144,6 +145,8 @@ local function EnableModules()
 		mMT.Modules.ObjectiveTracker.enable = E.db.mMT.objectivetracker.enable and (E.private.skins.blizzard.enable and E.private.skins.blizzard.objectiveTracker) and not IsAddOnLoaded("!KalielsTracker")
 		mMT.Modules.InterruptOnCD.enable = E.db.mMT.interruptoncd.enable
 	end
+
+	mMT.Modules.Minimap.enable = E.db.mMT.minimap.enable
 end
 
 local function UpdateModules()

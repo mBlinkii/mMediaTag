@@ -42,4 +42,5 @@
 	<Script file="tooltip.lua"/>
 	<Script file="uftextures.lua"/>
 	<Script file="unitframeicons.lua"/>
+	<Script file="minimap.lua"/>
 </Ui>

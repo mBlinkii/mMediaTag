@@ -565,6 +565,10 @@ P.mMT = {
 		s = true,
 		t = true,
 	},
+	minimap = {
+		enable = false,
+		aspectRatio = "3:2",
+	},
 	detailsEmbedded = {
 		chatEmbedded = "DISABLE",
 		windows = 2,

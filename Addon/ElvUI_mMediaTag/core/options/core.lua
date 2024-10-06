@@ -297,6 +297,12 @@ local function configTable()
 						childGroups = "tab",
 						args = {},
 					},
+					minimap = {
+						order = 9,
+						type = "group",
+						name = L["Minimap"],
+						args = {},
+					},
 					textures = {
 						order = 20,
 						type = "group",
