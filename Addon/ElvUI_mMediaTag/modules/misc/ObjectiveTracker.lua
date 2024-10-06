@@ -745,7 +745,7 @@ local function SkinBlock(_, block)
 			block.mMT_OnLeaveHook = true
 		end
 
-		if not block.WidgetContainer then
+		if not block.WidgetContainerand and not C_ChallengeMode.GetActiveChallengeMapID() then
 			if block.usedLines then
 				for _, line in pairs(block.usedLines) do
 					totalHeight = totalHeight + line:GetHeight()
