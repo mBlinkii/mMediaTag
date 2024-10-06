@@ -236,25 +236,25 @@ end
 
 local function OnEnter(self)
 	isMaxLevel = E:XPIsLevelMax()
-
 	local inCombat = InCombatLockdown()
 	DT.tooltip:ClearLines()
 
 	if not inCombat then
 		SaveMyKeystone()
-		myScore = mMT:GetDungeonScore()
+		local myScore = mMT:GetDungeonScore()
+
 		if isMaxLevel then
 			local keyText = mMT:OwenKeystone()
 			if keyText then
-				for i = 1, #keyText do
-					DT.tooltip:AddLine(keyText[i])
+				for _, line in ipairs(keyText) do
+					DT.tooltip:AddLine(line)
 				end
 			end
 		end
 
 		DT.tooltip:AddLine(" ")
 		DT.tooltip:AddLine(L["Keystones on your Account"])
-		for k, v in pairs(mMT.DB.keys) do
+		for _, v in pairs(mMT.DB.keys) do
 			DT.tooltip:AddDoubleLine(v.name, v.key)
 		end
 
@@ -268,8 +268,8 @@ local function OnEnter(self)
 	local mAffixesText = mMT:WeeklyAffixes()
 	if mAffixesText then
 		DT.tooltip:AddLine(" ")
-		for i = 1, #mAffixesText do
-			DT.tooltip:AddLine(mAffixesText[i])
+		for _, line in ipairs(mAffixesText) do
+			DT.tooltip:AddLine(line)
 		end
 	end
 
@@ -279,7 +279,15 @@ local function OnEnter(self)
 		DT.tooltip:AddLine(" ")
 		DungeonScoreTooltip()
 		DT.tooltip:AddLine(" ")
-		DT.tooltip:AddDoubleLine(L["Rewards"], GetRewards())
+
+		local rewards = mMT:mGetVaultInfo()
+		if rewards then
+			DT.tooltip:AddLine(" ")
+			DT.tooltip:AddLine(GREAT_VAULT_REWARDS)
+			DT.tooltip:AddDoubleLine(rewards.raid.name, table.concat(rewards.raid.rewards, WrapTextInColorCode(" - ", "FFFFFFFF")))
+			DT.tooltip:AddDoubleLine(rewards.dungeons.name, table.concat(rewards.dungeons.rewards, WrapTextInColorCode(" - ", "FFFFFFFF")))
+			DT.tooltip:AddDoubleLine(rewards.world.name, table.concat(rewards.world.rewards, WrapTextInColorCode(" - ", "FFFFFFFF")))
+		end
 	end
 
 	DT.tooltip:AddLine(" ")

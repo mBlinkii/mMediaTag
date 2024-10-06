@@ -110,62 +110,40 @@ local function mLFDTooltip()
 	local _, hc, myth, mythp, other, title, tip = mMT:mColorDatatext()
 	local isMaxLevel = E:XPIsLevelMax()
 
-	mInstanceInfoText = mMT:InstanceInfo()
-	if mInstanceInfoText then
-		DT.tooltip:AddLine(" ")
-		for i = 1, #mInstanceInfoText do
-			DT.tooltip:AddLine(mInstanceInfoText[i])
-		end
-	end
-
-	if E.Retail and E.db.mMT.dockdatatext.lfd.keystone and isMaxLevel then
-		keyText = mMT:OwenKeystone()
-		if keyText then
+	local function addLines(lines)
+		if lines then
 			DT.tooltip:AddLine(" ")
-			for i = 1, #keyText do
-				DT.tooltip:AddLine(keyText[i])
+			for _, line in ipairs(lines) do
+				DT.tooltip:AddLine(line)
 			end
 		end
 	end
 
-	if E.Retail and E.db.mMT.dockdatatext.lfd.score and isMaxLevel then
-		DT.tooltip:AddLine(" ")
-		DT.tooltip:AddDoubleLine(DUNGEON_SCORE, mMT:GetDungeonScore())
-	end
+	addLines(mMT:InstanceInfo())
 
-	if E.Retail and E.db.mMT.dockdatatext.lfd.affix then
-		mAffixesText = mMT:WeeklyAffixes()
-		if mAffixesText then
+	if E.Retail and isMaxLevel then
+		if E.db.mMT.dockdatatext.lfd.keystone then addLines(mMT:OwenKeystone()) end
+
+		if E.db.mMT.dockdatatext.lfd.score then
 			DT.tooltip:AddLine(" ")
-			for i = 1, #mAffixesText do
-				DT.tooltip:AddLine(mAffixesText[i])
-			end
+			DT.tooltip:AddDoubleLine(DUNGEON_SCORE, mMT:GetDungeonScore())
 		end
-	end
 
-	if E.Retail and E.db.mMT.dockdatatext.lfd.greatvault and isMaxLevel then
-		local vaultinfohighest, ok = nil, false
-		vaultinforaidText, vaultinfomplusText, vaultinfopvpText, vaultinfohighest, ok = mMT:mGetVaultInfo()
-		if ok then
-			DT.tooltip:AddLine(" ")
-			DT.tooltip:AddLine(format("%s%s|r", title, GREAT_VAULT_REWARDS))
+		if E.db.mMT.dockdatatext.lfd.affix then addLines(mMT:WeeklyAffixes()) end
 
-			if vaultinfohighest then DT.tooltip:AddDoubleLine(format("%s%s|r", other, L["Actual reward:"]), vaultinfohighest or "-") end
-
-			local vaultInfoTexts = {
-				{ vaultinforaidText, "Raid", myth },
-				{ vaultinfomplusText, "Myth+", mythp },
-				{ vaultinfopvpText, "PvP", hc },
-			}
-
-			for _, info in ipairs(vaultInfoTexts) do
-				local text, label, color = unpack(info)
-				if text[1] then DT.tooltip:AddDoubleLine(format("%s%s|r", color, label), table.concat({ text[1] or "-", text[2] or "-", text[3] or "-" }, ", ")) end
+		if E.db.mMT.dockdatatext.lfd.greatvault then
+			local rewards = mMT:mGetVaultInfo()
+			if rewards then
+				DT.tooltip:AddLine(" ")
+				DT.tooltip:AddLine(format("%s%s|r", title, GREAT_VAULT_REWARDS))
+				DT.tooltip:AddDoubleLine(rewards.raid.name, table.concat(rewards.raid.rewards, WrapTextInColorCode(" - ", "FFFFFFFF")))
+				DT.tooltip:AddDoubleLine(rewards.dungeons.name, table.concat(rewards.dungeons.rewards, WrapTextInColorCode(" - ", "FFFFFFFF")))
+				DT.tooltip:AddDoubleLine(rewards.world.name, table.concat(rewards.world.rewards, WrapTextInColorCode(" - ", "FFFFFFFF")))
 			end
-		end
-		if C_WeeklyRewards.HasAvailableRewards() then
-			DT.tooltip:AddLine(" ")
-			DT.tooltip:AddLine(format("%s%s|r", title, GREAT_VAULT_REWARDS_WAITING))
+			if C_WeeklyRewards.HasAvailableRewards() then
+				DT.tooltip:AddLine(" ")
+				DT.tooltip:AddLine(format("%s%s|r", title, GREAT_VAULT_REWARDS_WAITING))
+			end
 		end
 	end
 

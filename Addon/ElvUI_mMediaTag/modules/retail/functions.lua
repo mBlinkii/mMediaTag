@@ -63,9 +63,7 @@ function mMT:WeeklyAffixes()
 		affixes = mMT.DB.mplusaffix.affixes
 		if affixes == nil then
 			affixes = C_MythicPlus.GetCurrentAffixes()
-			if affixes ~= nil then
-				mMT.DB.mplusaffix.affixes = affixes
-			end
+			if affixes ~= nil then mMT.DB.mplusaffix.affixes = affixes end
 		end
 	else
 		affixes = C_MythicPlus.GetCurrentAffixes()
@@ -84,16 +82,12 @@ function mMT:WeeklyAffixes()
 		end
 	else
 		affixes = C_MythicPlus.GetCurrentAffixes()
-		if not affixes == nil then
-			mMT.DB.mplusaffix.affixes = affixes
-		end
+		if not affixes == nil then mMT.DB.mplusaffix.affixes = affixes end
 	end
 
 	if AffixText ~= nil then
 		local seasonID = C_MythicPlus.GetCurrentSeason()
-		if seasonID <= 0 then
-			seasonID = mMT.DB.mplusaffix.season
-		end
+		if seasonID <= 0 then seasonID = mMT.DB.mplusaffix.season end
 
 		if seasonID >= 1 then
 			mMT.DB.mplusaffix.season = seasonID
@@ -113,40 +107,81 @@ function mMT:WeeklyAffixes()
 end
 
 --Great Vault Functions
-function mMT:mGetVaultInfo()
-    local vaultinfo = C_WeeklyRewards.GetActivities(Enum.WeeklyRewardChestThresholdType.Activities)
-    if not vaultinfo then
-        return {}, {}, {}, nil, false
-    end
 
-    local vaultinforaid, vaultinfomplus, vaultinfopvp = {}, {}, {}
-    local vaultinfohighest, ok = nil, false
+--  [16:47]   [1] table: 0000026AFCE2E360
+--  [16:47]         [type]  =  1
+--  [16:47]         [index]  =  1
+--  [16:47]         [activityTierID]  =  13
+--  [16:47]         [progress]  =  1
+--  [16:47]         [rewards]  >  table: 0000026AFCE2E3B0
+--  [16:47]         [threshold]  =  1
+--  [16:47]         [level]  =  0
+--  [16:47]         [raidString]  =  Besiegt %d Bosse im Palast der Nerub'ar
+--  [16:47]         [id]  =  134
+--  [16:47]   [2] table: 0000026AFCE2E400
+--  [16:47]         [type]  =  1
+--  [16:47]         [index]  =  2
+--  [16:47]         [activityTierID]  =  0
+--  [16:47]         [progress]  =  1
+--  [16:47]         [rewards]  >  table: 0000026AFCE2E450
+--  [16:47]         [threshold]  =  4
+--  [16:47]         [level]  =  0
+--  [16:47]         [raidString]  =  Besiegt %d Bosse im Palast der Nerub'ar
+--  [16:47]         [id]  =  135
+--  [16:47]   [3] table: 0000026AFCE2E4A0
+--  [16:47]         [type]  =  1
+--  [16:47]         [index]  =  3
+--  [16:47]         [activityTierID]  =  0
+--  [16:47]         [progress]  =  1
+--  [16:47]         [rewards]  >  table: 0000026AFCE2E4F0
+--  [16:47]         [threshold]  =  8
+--  [16:47]         [level]  =  0
+--  [16:47]         [raidString]  =  Besiegt %d Bosse im Palast der Nerub'ar
+--  [16:47]         [id]  =  136
 
-    table.sort(vaultinfo, function(left, right)
-        return left.index < right.index
-    end)
+local GetKeystoneLevelRarityColor = C_ChallengeMode.GetKeystoneLevelRarityColor
+local GetActivities = C_WeeklyRewards.GetActivities
+local WrapTextInColorCode = WrapTextInColorCode
+local GetExampleRewardItemHyperlinks =  C_WeeklyRewards.GetExampleRewardItemHyperlinks
 
-    for i = 1, #vaultinfo do
-        local id = vaultinfo[i].id
-        local itemLink = C_WeeklyRewards.GetExampleRewardItemHyperlinks(id)
-        if itemLink then
-            local ItemLevelInfo = GetDetailedItemLevelInfo(itemLink)
-            if ItemLevelInfo then
-                vaultinfohighest = math.max(vaultinfohighest or 0, ItemLevelInfo)
-                local formattedItemLevel = format("%s%s|r", mMT:mColorGradient(ItemLevelInfo), ItemLevelInfo)
-                if i <= 3 then
-                    table.insert(vaultinfomplus, formattedItemLevel)
-                elseif i <= 6 then
-                    table.insert(vaultinfopvp, formattedItemLevel)
-                else
-                    table.insert(vaultinforaid, formattedItemLevel)
-                end
-                ok = true
-            end
-        end
-    end
-
-    local vaultinfohighestString = format("%s%s|r", mMT:mColorGradient(vaultinfohighest or 0), vaultinfohighest or 0)
-    return vaultinforaid, vaultinfomplus, vaultinfopvp, vaultinfohighestString, ok
+local function padNumber(n, w)
+	n = n or 0
+	return format("%" .. w .. "s", n)
 end
 
+function mMT:mGetVaultInfo()
+	local tblRewards = {
+		raid = {
+			name = RAID,
+			rewards = {},
+		},
+		dungeons = {
+			name = DUNGEONS,
+			rewards = {},
+		},
+		world = {
+			name = WORLD,
+			rewards = {},
+		},
+	}
+
+	local function processRewards(rewardType, rewardTable)
+		local rewards = GetActivities(rewardType)
+		for _, reward in pairs(rewards) do
+			if reward.progress < reward.threshold then
+				tinsert(rewardTable, WrapTextInColorCode(reward.progress .. "/" .. reward.threshold, "ff9d9d9d"))
+			else
+				local itemLink = GetExampleRewardItemHyperlinks(reward.id)
+				local itemLevel = itemLink and GetDetailedItemLevelInfo(itemLink) or ""
+				local color = GetKeystoneLevelRarityColor(reward.level)
+				if color then tinsert(rewardTable, color:WrapTextInColorCode(padNumber("+" .. reward.level, 3) .. " (" .. itemLevel .. ")")) end
+			end
+		end
+	end
+
+	processRewards(Enum.WeeklyRewardChestThresholdType.Raid, tblRewards.raid.rewards)
+	processRewards(Enum.WeeklyRewardChestThresholdType.Activities, tblRewards.dungeons.rewards)
+	processRewards(Enum.WeeklyRewardChestThresholdType.World, tblRewards.world.rewards)
+
+	return tblRewards
+end
