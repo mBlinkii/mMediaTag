@@ -997,6 +997,10 @@ mMT.Media.Role = {
 	SWORDOUT6 = "Interface\\AddOns\\ElvUI_mMediaTag\\media\\icons\\role\\swordoutline6.tga",
 	SWORDOUT7 = "Interface\\AddOns\\ElvUI_mMediaTag\\media\\icons\\role\\swordoutline7.tga",
 
+	TANK = "Interface\\AddOns\\ElvUI_mMediaTag\\media\\icons\\role\\tank.tga",
+	HEAL = "Interface\\AddOns\\ElvUI_mMediaTag\\media\\icons\\role\\heal.tga",
+	DD = "Interface\\AddOns\\ElvUI_mMediaTag\\media\\icons\\role\\dd.tga",
+
 	STICKERSHIELD01 = "Interface\\AddOns\\ElvUI_mMediaTag\\media\\icons\\role\\stickershield01.tga",
 	STICKERSHIELD02 = "Interface\\AddOns\\ElvUI_mMediaTag\\media\\icons\\role\\stickershield02.tga",
 	STICKERSHIELD03 = "Interface\\AddOns\\ElvUI_mMediaTag\\media\\icons\\role\\stickershield03.tga",
