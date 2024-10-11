@@ -14,6 +14,8 @@ local aspectRatios = {
 local skins = {
 	circle = "circle",
 	drop_a = "drop",
+	hexagon = "hexagon",
+	octagon = "octagon",
 }
 local function configTable()
 	E.Options.args.mMT.args.cosmetic.args.minimap.args = {
