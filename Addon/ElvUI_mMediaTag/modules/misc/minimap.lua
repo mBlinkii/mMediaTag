@@ -5,6 +5,7 @@ if not module then return end
 
 local Minimap = _G.Minimap
 local MinimapCluster = _G.MinimapCluster
+local ceil = math.ceil
 
 local aspectRatios = {
 	["3:2"] = {
@@ -34,38 +35,54 @@ local aspectRatios = {
 	},
 }
 
-function HandleTrackingButton()
+local function GetYOffset()
+	local aspectRatio = aspectRatios[E.db.mMT.minimap.aspectRatio]
+	local width = E.MinimapSize
+	local height = width / aspectRatio.aspectratio
+	local difference = width - height
+	return -ceil(difference / 2) + aspectRatio.offset
+end
+
+local function HandleTrackingButton()
 	local tracking = MinimapCluster.Tracking or MinimapCluster.TrackingFrame or _G.MiniMapTrackingFrame or _G.MiniMapTracking
 	if not tracking then return end
 
 	local hidden = not Minimap:IsShown()
 	if not hidden or E.private.general.minimap.hideTracking then
-		tracking:ClearAllPoints()
-		local aspectRatio = aspectRatios[E.db.mMT.minimap.aspectRatio]
-		local width = E.MinimapSize
-		local height = width / aspectRatio.aspectratio
-		local difference = (width - height)
+		local _, position, xOffset, y = M:GetIconSettings("tracking")
+		local yOffset = GetYOffset() - y
 
-		local _, position, xOffset, yOffset = M:GetIconSettings("tracking")
-		yOffset = -ceil(difference / 2) + aspectRatio.offset - yOffset
+        tracking:ClearAllPoints()
+		tracking:SetPoint(position, Minimap, xOffset, -yOffset)
+	end
+end
 
-		tracking:Point(position, Minimap, xOffset, -yOffset)
+local function HandleExpansionButton()
+	local garrison = _G.ExpansionLandingPageMinimapButton or _G.GarrisonLandingPageMinimapButton
+	if not garrison then return end
+
+	local hidden = not Minimap:IsShown()
+
+	if not hidden or E.private.general.minimap.hideClassHallReport then
+        local _, position, xOffset, y = M:GetIconSettings("classHall")
+		local yOffset = GetYOffset() - y
+
+		garrison:ClearAllPoints()
+		garrison:Point(position, Minimap, xOffset, -yOffset)
 
 	end
 end
 
-function SkinMinimap()
+local function SkinMinimap()
 	local aspectRatio = aspectRatios[E.db.mMT.minimap.aspectRatio]
 	local width = E.MinimapSize
 	local height = width / aspectRatio.aspectratio
-	local difference = (width - height)
 
 	Minimap:SetSize(width, width)
 	M.MapHolder:SetSize(width, height)
 	Minimap:SetMaskTexture(aspectRatio.mask)
 
-	-- local function SetOutside(obj, anchor, xOffset, yOffset, anchor2, noScale)
-	local yOffset = -ceil(difference / 2) + aspectRatio.offset
+	local yOffset = GetYOffset()
 	Minimap.backdrop:ClearAllPoints()
 	Minimap.backdrop:SetOutside(Minimap, 1, yOffset)
 
@@ -75,7 +92,7 @@ function SkinMinimap()
 
 	if Minimap.location then
 		Minimap.location:ClearAllPoints()
-		Minimap.location:Point("TOP", Minimap, 0, yOffsetOther - 2)
+		Minimap.location:SetPoint("TOP", Minimap, 0, yOffsetOther - 2)
 	end
 end
 
@@ -83,11 +100,13 @@ function module:Initialize()
 	if not module.hooked then
 		hooksecurefunc(M, "UpdateSettings", SkinMinimap)
 		hooksecurefunc(M, "HandleTrackingButton", HandleTrackingButton)
+		hooksecurefunc(M, "HandleExpansionButton", HandleExpansionButton)
 		module.hooked = true
 	end
 
 	SkinMinimap()
 	HandleTrackingButton()
+    HandleExpansionButton()
 
 	module.needReloadUI = true
 	module.loaded = true
