@@ -16,6 +16,7 @@ local skins = {
 	drop_a = "drop",
 	hexagon = "hexagon",
 	octagon = "octagon",
+	paralelogram = "paralelogram",
 }
 local function configTable()
 	E.Options.args.mMT.args.cosmetic.args.minimap.args = {

@@ -26,6 +26,11 @@ local skins = {
 		texture = "Interface\\Addons\\ElvUI_mMediaTag\\media\\minimap\\skin\\octagon.tga",
 		cardinal = "Interface\\Addons\\ElvUI_mMediaTag\\media\\minimap\\skin\\cardinal_a.tga",
 	},
+	paralelogram = {
+		mask = "Interface\\Addons\\ElvUI_mMediaTag\\media\\minimap\\skin\\paralelogram_mask.tga",
+		texture = "Interface\\Addons\\ElvUI_mMediaTag\\media\\minimap\\skin\\paralelogram.tga",
+		--cardinal = "Interface\\Addons\\ElvUI_mMediaTag\\media\\minimap\\skin\\cardinal.tga",
+	},
 }
 
 local function SkinMinimap()
