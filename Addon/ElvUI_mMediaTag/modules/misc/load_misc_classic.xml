@@ -7,4 +7,5 @@
 	<Script file="afk.lua"/>
 	<Script file="cosmeticbars.lua"/>
 	<Script file="details.lua"/>
+	<Script file="minimap.lua"/>
 </Ui>
