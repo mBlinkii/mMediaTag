@@ -48,6 +48,11 @@ local function SkinMinimap()
 		end
 		Minimap.mMT_Cardinal:SetTexture(skin.cardinal, "CLAMP", "CLAMP", "TRILINEAR")
 		Minimap.mMT_Cardinal:Show()
+
+		local color = E.db.mMT.minimapSkin.colors.cardinal.class and mMT.ClassColor or E.db.mMT.minimapSkin.colors.cardinal.color
+		if color then
+			Minimap.mMT_Cardinal:SetVertexColor(color.r, color.g, color.b, color.a or 1)
+		end
 	else
 		if Minimap.mMT_Cardinal then
 			Minimap.mMT_Cardinal:Hide()
@@ -57,6 +62,10 @@ local function SkinMinimap()
 	Minimap:SetMaskTexture(skin.mask)
 	Minimap.backdrop:Hide()
 	Minimap.mMT_Border:SetTexture(skin.texture, "CLAMP", "CLAMP", "TRILINEAR")
+	local color = E.db.mMT.minimapSkin.colors.texture.class and mMT.ClassColor or E.db.mMT.minimapSkin.colors.texture.color
+	if color then
+		Minimap.mMT_Border:SetVertexColor(color.r, color.g, color.b, color.a or 1)
+	end
 end
 
 function module:Initialize()

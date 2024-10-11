@@ -570,8 +570,12 @@ P.mMT = {
 		aspectRatio = "16:8",
 	},
 	minimapSkin = {
-		enable = true,
+		enable = false,
 		skin = "circle",
+		colors = {
+			texture = { class = false, color = { r = 1, g = 0.5, b = 0.25, a = 1 } },
+			cardinal = { class = false, color = { r = 1, g = 0.5, b = 0.25, a = 1 } },
+		},
 	},
 	detailsEmbedded = {
 		chatEmbedded = "DISABLE",
