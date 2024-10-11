@@ -1,6 +1,6 @@
 local E, L, V, P, G = unpack(ElvUI)
 local M = E:GetModule("Minimap")
-local module = mMT.Modules.Minimap
+local module = mMT.Modules.MinimapAspectRatio
 if not module then return end
 
 local Minimap = _G.Minimap
@@ -36,7 +36,7 @@ local aspectRatios = {
 }
 
 local function GetYOffset()
-	local aspectRatio = aspectRatios[E.db.mMT.minimap.aspectRatio]
+	local aspectRatio = aspectRatios[E.db.mMT.minimapAspectRatio.aspectRatio]
 	local width = E.MinimapSize
 	local height = width / aspectRatio.aspectratio
 	local difference = width - height
@@ -73,8 +73,8 @@ local function HandleExpansionButton()
 	end
 end
 
-local function SkinMinimap()
-	local aspectRatio = aspectRatios[E.db.mMT.minimap.aspectRatio]
+local function SetAspectRatio()
+	local aspectRatio = aspectRatios[E.db.mMT.minimapAspectRatio.aspectRatio]
 	local width = E.MinimapSize
 	local height = width / aspectRatio.aspectratio
 
@@ -98,13 +98,13 @@ end
 
 function module:Initialize()
 	if not module.hooked then
-		hooksecurefunc(M, "UpdateSettings", SkinMinimap)
+		hooksecurefunc(M, "UpdateSettings", SetAspectRatio)
 		hooksecurefunc(M, "HandleTrackingButton", HandleTrackingButton)
 		hooksecurefunc(M, "HandleExpansionButton", HandleExpansionButton)
 		module.hooked = true
 	end
 
-	SkinMinimap()
+	SetAspectRatio()
 	HandleTrackingButton()
     HandleExpansionButton()
 

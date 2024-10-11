@@ -565,9 +565,13 @@ P.mMT = {
 		s = true,
 		t = true,
 	},
-	minimap = {
+	minimapAspectRatio = {
 		enable = false,
-		aspectRatio = "3:2",
+		aspectRatio = "16:8",
+	},
+	minimapSkin = {
+		enable = true,
+		skin = "circle",
 	},
 	detailsEmbedded = {
 		chatEmbedded = "DISABLE",

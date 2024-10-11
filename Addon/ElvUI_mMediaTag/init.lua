@@ -51,7 +51,8 @@ mMT.Modules.CosmeticBars = {}
 mMT.Modules.ObjectiveTracker = {}
 mMT.Modules.CustomUFTextures = {}
 mMT.Modules.CustomBGTextures = {}
-mMT.Modules.Minimap = {}
+mMT.Modules.MinimapAspectRatio = {}
+mMT.Modules.MinimapSkin = {}
 --mMT.Modules.CustomClassColors = {}
 
 local L = mMT.Locales
@@ -146,7 +147,8 @@ local function EnableModules()
 		mMT.Modules.InterruptOnCD.enable = E.db.mMT.interruptoncd.enable
 	end
 
-	mMT.Modules.Minimap.enable = E.db.mMT.minimap.enable
+	mMT.Modules.MinimapAspectRatio.enable = (not E.db.mMT.minimapSkin.enable) and E.db.mMT.minimapAspectRatio.enable
+	mMT.Modules.MinimapSkin.enable = E.db.mMT.minimapSkin.enable
 end
 
 local function UpdateModules()
