@@ -574,7 +574,7 @@ P.mMT = {
 		skin = "circle",
 		colors = {
 			texture = { class = false, color = { r = 1, g = 0.5, b = 0.25, a = 1 } },
-			cardinal = { class = false, color = { r = 1, g = 0.5, b = 0.25, a = 1 } },
+			cardinal = { class = false, color = { r = 0.25, g = 0.5, b = 1, a = 1 } },
 		},
 	},
 	detailsEmbedded = {
