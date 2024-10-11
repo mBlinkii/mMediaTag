@@ -4,12 +4,11 @@ local L = mMT.Locales
 local tinsert = tinsert
 
 local aspectRatios = {
+	["3:2"] = "3:2",
 	["4:3"] = "4:3",
 	["16:8"] = "16:8",
 	["16:9"] = "16:9",
 	["16:10"] = "16:10",
-	["15:10"] = "15:10",
-	["3:2"] = "3:2",
 }
 local function configTable()
 	E.Options.args.mMT.args.cosmetic.args.minimap.args = {
