@@ -4,6 +4,7 @@ local module = mMT.Modules.Minimap
 if not module then return end
 
 local Minimap = _G.Minimap
+local MinimapCluster = _G.MinimapCluster
 
 local aspectRatios = {
 	["3:2"] = {
@@ -33,33 +34,60 @@ local aspectRatios = {
 	},
 }
 
+function HandleTrackingButton()
+	local tracking = MinimapCluster.Tracking or MinimapCluster.TrackingFrame or _G.MiniMapTrackingFrame or _G.MiniMapTracking
+	if not tracking then return end
+
+	local hidden = not Minimap:IsShown()
+	if not hidden or E.private.general.minimap.hideTracking then
+		tracking:ClearAllPoints()
+		local aspectRatio = aspectRatios[E.db.mMT.minimap.aspectRatio]
+		local width = E.MinimapSize
+		local height = width / aspectRatio.aspectratio
+		local difference = (width - height)
+
+		local _, position, xOffset, yOffset = M:GetIconSettings("tracking")
+		yOffset = -ceil(difference / 2) + aspectRatio.offset - yOffset
+
+		tracking:Point(position, Minimap, xOffset, -yOffset)
+
+	end
+end
+
 function SkinMinimap()
 	local aspectRatio = aspectRatios[E.db.mMT.minimap.aspectRatio]
 	local width = E.MinimapSize
 	local height = width / aspectRatio.aspectratio
-	local half = (width - height)
+	local difference = (width - height)
 
 	Minimap:SetSize(width, width)
 	M.MapHolder:SetSize(width, height)
 	Minimap:SetMaskTexture(aspectRatio.mask)
 
 	-- local function SetOutside(obj, anchor, xOffset, yOffset, anchor2, noScale)
-	local yOffset = -ceil(half / 2) + aspectRatio.offset
+	local yOffset = -ceil(difference / 2) + aspectRatio.offset
 	Minimap.backdrop:ClearAllPoints()
 	Minimap.backdrop:SetOutside(Minimap, 1, yOffset)
 
-    Minimap:ClearAllPoints()
-    Minimap:SetPoint("TOPLEFT", M.MapHolder, "TOPLEFT", 0, - yOffset + aspectRatio.offset)
+	local yOffsetOther = yOffset + aspectRatio.offset
+	Minimap:ClearAllPoints()
+	Minimap:SetPoint("TOPLEFT", M.MapHolder, "TOPLEFT", 0, -yOffsetOther)
 
+	if Minimap.location then
+		Minimap.location:ClearAllPoints()
+		Minimap.location:Point("TOP", Minimap, 0, yOffsetOther - 2)
+	end
 end
 
 function module:Initialize()
 	if not module.hooked then
 		hooksecurefunc(M, "UpdateSettings", SkinMinimap)
+		hooksecurefunc(M, "HandleTrackingButton", HandleTrackingButton)
 		module.hooked = true
 	end
 
 	SkinMinimap()
+	HandleTrackingButton()
 
 	module.needReloadUI = true
 	module.loaded = true
