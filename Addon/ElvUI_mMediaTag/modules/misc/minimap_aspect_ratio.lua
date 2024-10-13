@@ -11,12 +11,12 @@ local aspectRatios = {
 	["3:2"] = {
 		mask = "Interface\\Addons\\ElvUI_mMediaTag\\media\\minimap\\aspectratio\\3-2.tga",
 		aspectratio = 1.5,
-		offset = 1,
+		offset = 2,
 	},
 	["4:3"] = {
 		mask = "Interface\\Addons\\ElvUI_mMediaTag\\media\\minimap\\aspectratio\\4-3.tga",
 		aspectratio = 1.33333,
-		offset = 2,
+		offset = 1,
 	},
 	["16:8"] = {
 		mask = "Interface\\Addons\\ElvUI_mMediaTag\\media\\minimap\\aspectratio\\16-8.tga",
@@ -43,34 +43,27 @@ local function GetYOffset()
 	return -ceil(difference / 2) + aspectRatio.offset
 end
 
-local function HandleTrackingButton()
-	local tracking = MinimapCluster.Tracking or MinimapCluster.TrackingFrame or _G.MiniMapTrackingFrame or _G.MiniMapTracking
-	if not tracking then return end
+local function HandleButton(button, iconType, hideSetting)
+	if not button then return end
 
 	local hidden = not Minimap:IsShown()
-	if not hidden or E.private.general.minimap.hideTracking then
-		local _, position, xOffset, y = M:GetIconSettings("tracking")
+	if not hidden or E.private.general.minimap[hideSetting] then
+		local _, position, xOffset, y = M:GetIconSettings(iconType)
 		local yOffset = GetYOffset() - y
 
-        tracking:ClearAllPoints()
-		tracking:SetPoint(position, Minimap, xOffset, -yOffset)
+		button:ClearAllPoints()
+		button:SetPoint(position, Minimap, xOffset, -yOffset)
 	end
+end
+
+local function HandleTrackingButton()
+	local tracking = MinimapCluster.Tracking or MinimapCluster.TrackingFrame or _G.MiniMapTrackingFrame or _G.MiniMapTracking
+	HandleButton(tracking, "tracking", "hideTracking")
 end
 
 local function HandleExpansionButton()
 	local garrison = _G.ExpansionLandingPageMinimapButton or _G.GarrisonLandingPageMinimapButton
-	if not garrison then return end
-
-	local hidden = not Minimap:IsShown()
-
-	if not hidden or E.private.general.minimap.hideClassHallReport then
-        local _, position, xOffset, y = M:GetIconSettings("classHall")
-		local yOffset = GetYOffset() - y
-
-		garrison:ClearAllPoints()
-		garrison:Point(position, Minimap, xOffset, -yOffset)
-
-	end
+	HandleButton(garrison, "classHall", "hideClassHallReport")
 end
 
 local function SetAspectRatio()
@@ -96,6 +89,7 @@ local function SetAspectRatio()
 	end
 end
 
+
 function module:Initialize()
 	if not module.hooked then
 		hooksecurefunc(M, "UpdateSettings", SetAspectRatio)
@@ -106,7 +100,7 @@ function module:Initialize()
 
 	SetAspectRatio()
 	HandleTrackingButton()
-    HandleExpansionButton()
+	HandleExpansionButton()
 
 	module.needReloadUI = true
 	module.loaded = true
