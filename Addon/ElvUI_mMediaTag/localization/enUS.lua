@@ -803,3 +803,9 @@ L["|cffFFFFFFControl + Left Click:|r Change Loadout"] = true
 L["|cffFFFFFFLeft Click:|r Change Talent Specialization"] = true
 L["|cffFFFFFFRight Click:|r Change Loot Specialization"] = true
 L["|cffFFFFFFShift + Left Click:|r Show Talent Specialization UI"] = true
+
+-- new
+L["Aspect ratio"] = true
+L["Effect"] = true
+L["Cardinal Point"] = true
+L["Info! To achieve an optimal result with the minimap, a texture should be set for the texture and mask.\nThe mask is always required and no minimap will be visible without it.\n\n"] = true

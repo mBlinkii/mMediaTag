@@ -10,13 +10,13 @@ local IsAddOnLoaded = _G.C_AddOns and _G.C_AddOns.IsAddOnLoaded or IsAddOnLoaded
 
 -- Addon Name and Namespace
 local addonName, _ = ...
-mMT = E:NewModule(addonName, "AceHook-3.0", "AceEvent-3.0", "AceTimer-3.0", "AceConsole-3.0")
+mMT = E:NewModule(addonName, "AceHook-3.0", "AceEvent-3.0", "AceTimer-3.0", "AceConsole-3.0", "AceHook-3.0")
 
 -- Settings
 mMT.Version = GetAddOnMetadata(addonName, "Version")
 mMT.Name =
 	"|CFF6559F1m|r|CFF7A4DEFM|r|CFF8845ECe|r|CFFA037E9d|r|CFFA435E8i|r|CFFB32DE6a|r|CFFBC26E5T|r|CFFCB1EE3a|r|CFFDD14E0g|r |CFFFF006C&|r |CFFFF4C00T|r|CFFFF7300o|r|CFFFF9300o|r|CFFFFA800l|r|CFFFFC900s|r"
-mMT.NameShort = "|CFF6559F1m|r|CFFA037E9M|r|CFFDD14E0T|r"
+mMT.NameShort = "|CFF3650D5m|r|CFF4148C3M|r|CFF4743B6T|r"
 mMT.DockString = "|CFF2CD204D|r|CFF1BE43Ao|r|CFF10EE5Cc|r|CFF05FA82k|r"
 mMT.DatatextString = "|CFF6559F1m|r|CFFA037E9M|r|CFFDD14E0T|r-Datatexts"
 mMT.Icon = "|TInterface\\Addons\\ElvUI_mMediaTag\\media\\logo\\mmt_icon_round.tga:14:14|t"
@@ -51,6 +51,8 @@ mMT.Modules.CosmeticBars = {}
 mMT.Modules.ObjectiveTracker = {}
 mMT.Modules.CustomUFTextures = {}
 mMT.Modules.CustomBGTextures = {}
+mMT.Modules.MinimapAspectRatio = {}
+mMT.Modules.MinimapSkin = {}
 --mMT.Modules.CustomClassColors = {}
 
 local L = mMT.Locales
@@ -144,6 +146,9 @@ local function EnableModules()
 		mMT.Modules.ObjectiveTracker.enable = E.db.mMT.objectivetracker.enable and (E.private.skins.blizzard.enable and E.private.skins.blizzard.objectiveTracker) and not IsAddOnLoaded("!KalielsTracker")
 		mMT.Modules.InterruptOnCD.enable = E.db.mMT.interruptoncd.enable
 	end
+
+	mMT.Modules.MinimapAspectRatio.enable = (not E.db.mMT.minimapSkin.enable) and E.db.mMT.minimapAspectRatio.enable
+	mMT.Modules.MinimapSkin.enable = E.db.mMT.minimapSkin.enable
 end
 
 local function UpdateModules()

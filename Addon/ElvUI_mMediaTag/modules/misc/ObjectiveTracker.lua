@@ -166,14 +166,12 @@ end
 
 local function SetTextProperties(text, fontSettings, color)
 	text:SetFont(LSM:Fetch("font", fontSettings.font), fontSettings.fontsize, fontSettings.fontflag)
-	if color then
-		text:SetTextColor(color.r, color.g, color.b)
-	end
+	if color then text:SetTextColor(color.r, color.g, color.b) end
 end
 
 local function SkinTitleText(text, color)
 	SetTextProperties(text, fonts.title, color or colors.title.n)
-	local height = text:GetStringHeight() + 2
+	local height = text:GetStringHeight()
 	if height ~= text:GetHeight() then text:SetHeight(height) end
 end
 
@@ -329,7 +327,7 @@ local function GetRequirements(text)
 	local result = matchPatterns(text)
 	if not result then return nil end
 
-	if (result.current and result.required) then
+	if result.current and result.required then
 		result.complete = tonumber(result.current) >= tonumber(result.required)
 	elseif result.percent then
 		result.complete = tonumber(result.percent) >= 100
@@ -695,6 +693,8 @@ end
 
 local function SkinBlock(_, block)
 	if block then
+		local totalHeight = 2
+
 		if block.Stage and not block.mMT_StageSkin then
 			hooksecurefunc(block, "UpdateStageBlock", SkinStageBlock)
 			SkinStageBlock(block)
@@ -726,6 +726,7 @@ local function SkinBlock(_, block)
 				cachedQuests[block.id].title = block.HeaderText:GetText()
 				block.HeaderText:SetText(GetLevelInfoText(cachedQuests[block.id].info.level) .. block.HeaderText:GetText())
 			end
+			totalHeight = totalHeight + block.HeaderText:GetHeight()
 		end
 
 		if block.usedLines then
@@ -743,8 +744,41 @@ local function SkinBlock(_, block)
 			hooksecurefunc(block, "OnHeaderLeave", OnHeaderLeave)
 			block.mMT_OnLeaveHook = true
 		end
+
+		if not block.WidgetContainerand and not C_ChallengeMode.GetActiveChallengeMapID() then
+			if block.usedLines then
+				for _, line in pairs(block.usedLines) do
+					totalHeight = totalHeight + line:GetHeight()
+				end
+			end
+			block:SetHeight(totalHeight)
+		end
 	end
 end
+
+-- Funktion zum Erstellen eines Textblocks
+function CreateTextBlock(text, fontSize)
+	local textBlock = {} -- Erstelle einen neuen Textblock (Tabelle)
+	textBlock.text = text
+	textBlock.fontSize = fontSize
+	textBlock.height = fontSize * 1.2 -- Berechne die Höhe des Textblocks basierend auf der Schriftgröße (1.2 ist ein Beispielwert für den Zeilenabstand)
+	return textBlock
+end
+
+-- Funktion zum Setzen des Abstands zwischen zwei Textblöcken
+function SetTextBlockSpacing(textBlock1, textBlock2, spacing)
+	textBlock2.y = textBlock1.y + textBlock1.height + spacing
+end
+
+-- Beispielverwendung
+local textBlock1 = CreateTextBlock("Erster Textblock", 14)
+textBlock1.y = 100 -- Setze die y-Position des ersten Textblocks
+
+local textBlock2 = CreateTextBlock("Zweiter Textblock", 18)
+SetTextBlockSpacing(textBlock1, textBlock2, 10) -- Setze den Abstand zwischen den Textblöcken auf 10 Einheiten
+
+print("TextBlock1 Position: " .. textBlock1.y)
+print("TextBlock2 Position: " .. textBlock2.y)
 
 local function AddBackground()
 	-- inspired by Merathilis background, thank you
@@ -856,8 +890,11 @@ function module:Initialize()
 					hooksecurefunc(tracker, "AddBlock", SkinBlock)
 					tracker.mMTSkin = true
 				end
+
+				--tracker:SetHeight(5)
 			end
 		end
+		module.hooked = true
 	end
 
 	cachedQuests = BuildQuestCache()

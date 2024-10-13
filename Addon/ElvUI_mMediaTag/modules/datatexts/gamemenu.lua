@@ -47,9 +47,7 @@ local function AddIcon(file)
 end
 
 local function AddColor(color)
-	if color > 16 then
-		color = 16
-	end
+	if color > 16 then color = 16 end
 	return E.db.mMT.gamemenu.color and colors[color] or colors[1]
 end
 
@@ -144,9 +142,7 @@ local function BuildMenu()
 			text = _G.ENCOUNTER_JOURNAL,
 			icon = AddIcon("magazine"),
 			func = function()
-				if not IsAddOnLoaded("Blizzard_EncounterJournal") then
-					UIParentLoadAddOn("Blizzard_EncounterJournal")
-				end
+				if not IsAddOnLoaded("Blizzard_EncounterJournal") then UIParentLoadAddOn("Blizzard_EncounterJournal") end
 				ToggleFrame(_G.EncounterJournal)
 			end,
 		})
@@ -190,20 +186,16 @@ local function BuildMenu()
 		})
 	end
 
-	if E.Cata and E.mylevel >= _G.SHOW_PVP_LEVEL then
-		tinsert(menuList, {
-			text = _G.PLAYER_V_PLAYER,
-			icon = AddIcon("battle"),
-			func = function()
-				_G.TogglePVPFrame()
-			end,
-		})
-	end
+	if E.Cata and E.mylevel >= _G.SHOW_PVP_LEVEL then tinsert(menuList, {
+		text = _G.PLAYER_V_PLAYER,
+		icon = AddIcon("battle"),
+		func = function()
+			_G.TogglePVPFrame()
+		end,
+	}) end
 
 	sort(menuList, function(a, b)
-		if a and b and a.text and b.text then
-			return a.text < b.text
-		end
+		if a and b and a.text and b.text then return a.text < b.text end
 		return false
 	end)
 
@@ -228,9 +220,7 @@ local function BuildMenu()
 		icon = "Interface\\Addons\\ElvUI_mMediaTag\\media\\logo\\mmt_icon.tga",
 		bottom = true,
 		func = function()
-			if not InCombatLockdown() then
-				E:ToggleOptions("mMT")
-			end
+			if not InCombatLockdown() then E:ToggleOptions("mMT") end
 		end,
 	})
 	tinsert(menuList, { text = "", isTitle = true, notClickable = true, func = function() end })
@@ -276,9 +266,7 @@ local function BuildMenu()
 	})
 end
 local function OnEvent(self, event)
-	if not menuList or event == "ELVUI_FORCE_UPDATE" then
-		BuildMenu()
-	end
+	if not menuList or event == "ELVUI_FORCE_UPDATE" then BuildMenu() end
 
 	local hex = E:RGBToHex(E.db.general.valuecolor.r, E.db.general.valuecolor.g, E.db.general.valuecolor.b)
 	local string = strjoin("", hex, "%s|r")
@@ -286,9 +274,7 @@ local function OnEvent(self, event)
 	self.text:SetFormattedText(string, E.db.mMT.gamemenu.icon and format("|TInterface\\AddOns\\ElvUI_mMediaTag\\media\\icons\\misc\\gears.tga:16:16:0:0:64:64|t %s", L["Game Menu"]) or L["Game Menu"])
 end
 local function OnClick(self, button)
-	if not menuList then
-		BuildMenu()
-	end
+	if not menuList then BuildMenu() end
 
 	DT.tooltip:Hide()
 	if button == "LeftButton" then
@@ -297,9 +283,7 @@ local function OnClick(self, button)
 		if E.Retail then
 			_G.ToggleLFDParentFrame()
 		elseif E.Cata then
-			if not IsAddOnLoaded("Blizzard_LookingForGroupUI") then
-				UIParentLoadAddOn("Blizzard_LookingForGroupUI")
-			end
+			if not IsAddOnLoaded("Blizzard_LookingForGroupUI") then UIParentLoadAddOn("Blizzard_LookingForGroupUI") end
 			_G.ToggleLFGParentFrame()
 		end
 	end
@@ -315,9 +299,7 @@ local function OnEnter(self)
 
 	DT.tooltip:AddLine(" ")
 	DT.tooltip:AddLine(format("%s %s%s|r", mMT:mIcon(mMT.Media.Mouse["LEFT"]), tip, L["left click to open the menu."]))
-	if E.Retail or E.Cata then
-		DT.tooltip:AddLine(format("%s %s%s|r", mMT:mIcon(mMT.Media.Mouse["RIGHT"]), tip, L["right click to open LFD Window"]))
-	end
+	if E.Retail or E.Cata then DT.tooltip:AddLine(format("%s %s%s|r", mMT:mIcon(mMT.Media.Mouse["RIGHT"]), tip, L["right click to open LFD Window"])) end
 	DT.tooltip:Show()
 end
 

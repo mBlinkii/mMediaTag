@@ -218,28 +218,29 @@ local Teleports = {
 		available = false,
 		tps = {
 			-- S1
-			[445417] = "ARAK", -- Ara-Kara, City of Echoes
-			[445416] = "CoT", -- City of Threads
-			[445414] = "DAWN", -- The Dawnbreaker
-			[445269] = "SV", -- The Stonevault
-			[464256] = "SIEGE", -- Siege of Boralus
-			[445424] = "GB", -- Grim Batol
-			[354464] = "MIST", -- Mists of Tirna Scithe
 			[354462] = "NW", -- Necrotic Wake
+			[354464] = "MIST", -- Mists of Tirna Scithe
+			[445269] = "SV", -- The Stonevault
+			[445414] = "DAWN", -- The Dawnbreaker
+			[445416] = "CoT", -- City of Threads
+			[445417] = "ARAK", -- Ara-Kara, City of Echoes
+			[445418] = "SIEGE", -- Siege of Boralus - alliance
+			[445424] = "GB", -- Grim Batol
+			[464256] = "SIEGE", -- Siege of Boralus - horde
 		},
 	},
 
 	tww = {
 		available = false,
 		tps = {
-			[445417] = "ARAK", -- Ara-Kara, City of Echoes
-			[445416] = "CoT", -- City of Threads
-			[445414] = "DAWN", -- The Dawnbreaker
 			[445269] = "SV", -- The Stonevault
-			[442932] = "CM", -- Cinderbrew Meadery
-			[442930] = "DC", -- Darkflame Cleft
-			[442923] = "PSF", -- Priory of the Sacred Flame
-			[442925] = "ROOK", -- The Rookery
+			[445414] = "DAWN", -- The Dawnbreaker
+			[445416] = "CoT", -- City of Threads
+			[445417] = "ARAK", -- Ara-Kara, City of Echoes
+			[445440] = "CM", -- Cinderbrew Meadery
+			[445441] = "DC", -- Darkflame Cleft
+			[445443] = "ROOK", -- The Rookery
+			[445444] = "PSF", -- Priory of the Sacred Flame
 		},
 	},
 
@@ -263,7 +264,6 @@ local Teleports = {
 			[159900] = "GD", -- Grimrail Depot
 			[159901] = "EB", -- The Everbloom
 			[159902] = "UBS", -- Upper Blackrock Spire
-			[464256] = "SIEGE", -- Siege of Boralus
 			[354462] = "NW", -- Necrotic Wake
 			[354463] = "PF", -- Plaguefall
 			[354464] = "MIST", -- Mists of Tirna Scithe
@@ -288,7 +288,6 @@ local Teleports = {
 			[393283] = "HOI", -- Halls of Infusion
 			[393764] = "HOV", -- Halls of Valor
 			[393766] = "COS", -- Court of Stars
-			[445424] = "GB", -- Grim Batol
 			[410071] = "FH", -- Freehold
 			[410074] = "UNDR", -- Underrot
 			[410078] = "NL", -- Neltharion's Lair
@@ -299,14 +298,17 @@ local Teleports = {
 			[424167] = "WM", -- Waycrest Manor
 			[424187] = "AD", -- Atal'Dazar
 			[424197] = "DOI", -- Dawn of the Infinite
-			[442923] = "PSF", -- Priory of the Sacred Flame
-			[442925] = "ROOK", -- The Rookery
 			[445269] = "SV", -- The Stonevault
+			[445414] = "DAWN", -- The Dawnbreaker
 			[445416] = "CoT", -- City of Threads
 			[445417] = "ARAK", -- Ara-Kara, City of Echoes
-			[442930] = "DC", -- Darkflame Cleft
-			[445414] = "DAWN", -- The Dawnbreaker
-			[442932] = "CM", -- Cinderbrew Meadery
+			[445418] = "SIEGE", -- Siege of Boralus - alliance
+			[445424] = "GB", -- Grim Batol
+			[445440] = "CM", -- Cinderbrew Meadery
+			[445441] = "DC", -- Darkflame Cleft
+			[445443] = "ROOK", -- The Rookery
+			[445444] = "PSF", -- Priory of the Sacred Flame
+			[464256] = "SIEGE", -- Siege of Boralus - horde
 		},
 	},
 	menu = {},

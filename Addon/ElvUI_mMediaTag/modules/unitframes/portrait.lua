@@ -870,7 +870,7 @@ function module:Initialize(force)
 					_G["ElvUF_Arena" .. i].unit,
 					_G["ElvUF_Arena" .. i],
 					E.db.mMT.portraits.arena,
-					{ "ARENA_OPPONENT_UPDATE", "ARENA_PREP_OPPONENT_SPECIALIZATIONS" },
+					{ "ARENA_OPPONENT_UPDATE" },
 					{ "UNIT_NAME_UPDATE" }
 				)
 
