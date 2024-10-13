@@ -237,10 +237,10 @@ local Teleports = {
 			[445416] = "CoT", -- City of Threads
 			[445414] = "DAWN", -- The Dawnbreaker
 			[445269] = "SV", -- The Stonevault
-			[442932] = "CM", -- Cinderbrew Meadery
-			[442930] = "DC", -- Darkflame Cleft
-			[442923] = "PSF", -- Priory of the Sacred Flame
-			[442925] = "ROOK", -- The Rookery
+			[445440] = "CM", -- Cinderbrew Meadery
+			[445441] = "DC", -- Darkflame Cleft
+			[445444] = "PSF", -- Priory of the Sacred Flame
+			[445443] = "ROOK", -- The Rookery
 		},
 	},
 
