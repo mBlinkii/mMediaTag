@@ -13,10 +13,14 @@ local aspectRatios = {
 
 local skins = {
 	circle = "circle",
-	drop_a = "drop",
+	drop = "drop",
+	drop_round = "drop round",
 	hexagon = "hexagon",
 	octagon = "octagon",
 	paralelogram = "paralelogram",
+	paralelogram_horizontal = "paralelogram horizontal",
+	zickzag = "zickzag",
+	antique = "antique",
 }
 local function configTable()
 	E.Options.args.mMT.args.cosmetic.args.minimap.args = {
@@ -95,8 +99,8 @@ local function configTable()
 						return not E.db.mMT.minimapSkin.enable
 					end,
 					args = {
-						aspectratio = {
-							order = 2,
+						skin = {
+							order = 1,
 							type = "select",
 							name = L["Style"],
 							values = skins,
@@ -105,6 +109,30 @@ local function configTable()
 							end,
 							set = function(info, value)
 								E.db.mMT.minimapSkin.skin = value
+								mMT.Modules.MinimapSkin:Initialize()
+							end,
+						},
+						cardinal = {
+							order = 2,
+							type = "toggle",
+							name = L["Cardinal Points"],
+							get = function(info)
+								return E.db.mMT.minimapSkin.cardinal
+							end,
+							set = function(info, value)
+								E.db.mMT.minimapSkin.cardinal = value
+								mMT.Modules.MinimapSkin:Initialize()
+							end,
+						},
+						effect = {
+							order = 2,
+							type = "toggle",
+							name = L["Effect"],
+							get = function(info)
+								return E.db.mMT.minimapSkin.effect
+							end,
+							set = function(info, value)
+								E.db.mMT.minimapSkin.effect = value
 								mMT.Modules.MinimapSkin:Initialize()
 							end,
 						},
@@ -184,6 +212,41 @@ local function configTable()
 									end,
 									set = function(info, value)
 										E.db.mMT.minimapSkin.colors.cardinal.class = value
+										mMT.Modules.MinimapSkin:Initialize()
+									end,
+								},
+							},
+						},
+						extra = {
+							order = 2,
+							type = "group",
+							inline = true,
+							name = L["Effect"],
+							args = {
+								color = {
+									order = 1,
+									type = "color",
+									name = L["Color"],
+									hasAlpha = true,
+									get = function(info)
+										local t = E.db.mMT.minimapSkin.colors.extra.color
+										return t.r, t.g, t.b, t.a
+									end,
+									set = function(info, r, g, b, a)
+										local t = E.db.mMT.minimapSkin.colors.extra.color
+										t.r, t.g, t.b, t.a = r, g, b, a
+										mMT.Modules.MinimapSkin:Initialize()
+									end,
+								},
+								calss = {
+									order = 2,
+									type = "toggle",
+									name = L["Class colored"],
+									get = function(info)
+										return E.db.mMT.minimapSkin.colors.extra.class
+									end,
+									set = function(info, value)
+										E.db.mMT.minimapSkin.colors.extra.class = value
 										mMT.Modules.MinimapSkin:Initialize()
 									end,
 								},

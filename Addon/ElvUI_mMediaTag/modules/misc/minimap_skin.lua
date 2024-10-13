@@ -11,10 +11,15 @@ local skins = {
 		texture = "Interface\\Addons\\ElvUI_mMediaTag\\media\\minimap\\skin\\circle.tga",
 		cardinal = "Interface\\Addons\\ElvUI_mMediaTag\\media\\minimap\\skin\\circle_cardinal.tga",
 	},
-	drop_a = {
-		mask = "Interface\\Addons\\ElvUI_mMediaTag\\media\\minimap\\skin\\drop_a_mask.tga",
-		texture = "Interface\\Addons\\ElvUI_mMediaTag\\media\\minimap\\skin\\drop_a.tga",
-		--cardinal = "Interface\\Addons\\ElvUI_mMediaTag\\media\\minimap\\skin\\cardinal.tga",
+	drop = {
+		mask = "Interface\\Addons\\ElvUI_mMediaTag\\media\\minimap\\skin\\drop_mask.tga",
+		texture = "Interface\\Addons\\ElvUI_mMediaTag\\media\\minimap\\skin\\drop.tga",
+		extra = "Interface\\Addons\\ElvUI_mMediaTag\\media\\minimap\\skin\\drop_extra.tga",
+	},
+	drop_round = {
+		mask = "Interface\\Addons\\ElvUI_mMediaTag\\media\\minimap\\skin\\drop_round_mask.tga",
+		texture = "Interface\\Addons\\ElvUI_mMediaTag\\media\\minimap\\skin\\drop_round.tga",
+		extra = "Interface\\Addons\\ElvUI_mMediaTag\\media\\minimap\\skin\\drop_extra.tga",
 	},
 	hexagon = {
 		mask = "Interface\\Addons\\ElvUI_mMediaTag\\media\\minimap\\skin\\hexagon_mask.tga",
@@ -29,7 +34,24 @@ local skins = {
 	paralelogram = {
 		mask = "Interface\\Addons\\ElvUI_mMediaTag\\media\\minimap\\skin\\paralelogram_mask.tga",
 		texture = "Interface\\Addons\\ElvUI_mMediaTag\\media\\minimap\\skin\\paralelogram.tga",
-		--cardinal = "Interface\\Addons\\ElvUI_mMediaTag\\media\\minimap\\skin\\cardinal.tga",
+		cardinal = "Interface\\Addons\\ElvUI_mMediaTag\\media\\minimap\\skin\\paralelogram_cardinal.tga",
+	},
+	paralelogram_horizontal = {
+		mask = "Interface\\Addons\\ElvUI_mMediaTag\\media\\minimap\\skin\\paralelogram_horizontal_mask.tga",
+		texture = "Interface\\Addons\\ElvUI_mMediaTag\\media\\minimap\\skin\\paralelogram_horizontal.tga",
+		cardinal = "Interface\\Addons\\ElvUI_mMediaTag\\media\\minimap\\skin\\paralelogram_horizontal_cardinal.tga",
+	},
+	zickzag = {
+		mask = "Interface\\Addons\\ElvUI_mMediaTag\\media\\minimap\\skin\\zickzag_mask.tga",
+		texture = "Interface\\Addons\\ElvUI_mMediaTag\\media\\minimap\\skin\\zickzag.tga",
+		cardinal = "Interface\\Addons\\ElvUI_mMediaTag\\media\\minimap\\skin\\zickzag_cardinal.tga",
+		extra = "Interface\\Addons\\ElvUI_mMediaTag\\media\\minimap\\skin\\zickzag_extra.tga",
+	},
+	antique = {
+		mask = "Interface\\Addons\\ElvUI_mMediaTag\\media\\minimap\\skin\\antique_mask.tga",
+		texture = "Interface\\Addons\\ElvUI_mMediaTag\\media\\minimap\\skin\\antique.tga",
+		--cardinal = "Interface\\Addons\\ElvUI_mMediaTag\\media\\minimap\\skin\\zickzag_cardinal.tga",
+		extra = "Interface\\Addons\\ElvUI_mMediaTag\\media\\minimap\\skin\\antique_extra.tga",
 	},
 }
 
@@ -37,13 +59,13 @@ local function SkinMinimap()
 	local skin = skins[E.db.mMT.minimapSkin.skin]
 
 	if not Minimap.mMT_Border then
-		Minimap.mMT_Border = Minimap:CreateTexture("mMT_Minimap_Skin", "OVERLAY", nil, 1)
+		Minimap.mMT_Border = Minimap:CreateTexture("mMT_Minimap_Skin", "OVERLAY", nil, 2)
 		Minimap.mMT_Border:SetAllPoints(Minimap)
 	end
 
-	if skin.cardinal then
+	if E.db.mMT.minimapSkin.cardinal and skin.cardinal then
 		if not Minimap.mMT_Cardinal then
-			Minimap.mMT_Cardinal = Minimap:CreateTexture("mMT_Minimap_Cardinal", "OVERLAY", nil, 2)
+			Minimap.mMT_Cardinal = Minimap:CreateTexture("mMT_Minimap_Cardinal", "OVERLAY", nil, 3)
 			Minimap.mMT_Cardinal:SetAllPoints(Minimap)
 		end
 		Minimap.mMT_Cardinal:SetTexture(skin.cardinal, "CLAMP", "CLAMP", "TRILINEAR")
@@ -56,6 +78,24 @@ local function SkinMinimap()
 	else
 		if Minimap.mMT_Cardinal then
 			Minimap.mMT_Cardinal:Hide()
+		end
+	end
+
+	if E.db.mMT.minimapSkin.effect and skin.extra then
+		if not Minimap.mMT_Extra then
+			Minimap.mMT_Extra = Minimap:CreateTexture("mMT_Minimap_Extra", "OVERLAY", nil, 1)
+			Minimap.mMT_Extra:SetAllPoints(Minimap)
+		end
+		Minimap.mMT_Extra:SetTexture(skin.extra, "CLAMP", "CLAMP", "TRILINEAR")
+		Minimap.mMT_Extra:Show()
+
+		local color = E.db.mMT.minimapSkin.colors.extra.class and mMT.ClassColor or E.db.mMT.minimapSkin.colors.extra.color
+		if color then
+			Minimap.mMT_Extra:SetVertexColor(color.r, color.g, color.b, color.a or 1)
+		end
+	else
+		if Minimap.mMT_Extra then
+			Minimap.mMT_Extra:Hide()
 		end
 	end
 

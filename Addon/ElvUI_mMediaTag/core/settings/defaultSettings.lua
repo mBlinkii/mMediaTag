@@ -572,9 +572,12 @@ P.mMT = {
 	minimapSkin = {
 		enable = false,
 		skin = "circle",
+		cardinal = true,
+		effect = true,
 		colors = {
-			texture = { class = false, color = { r = 1, g = 0.5, b = 0.25, a = 1 } },
-			cardinal = { class = false, color = { r = 0.25, g = 0.5, b = 1, a = 1 } },
+			texture = { class = false, color = { r = 0.25, g = 0.25, b = 0.25, a = 1 } },
+			cardinal = { class = false, color = { r = 0.5, g = 0.5, b = 0.5, a = 1 } },
+			extra = { class = false, color = { r = 1, g = 1, b = 1, a = 0.6 } },
 		},
 	},
 	detailsEmbedded = {
