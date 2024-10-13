@@ -66,7 +66,7 @@ local function configTable()
 								return E.db.mMT.minimapAspectRatio.aspectRatio
 							end,
 							set = function(info, value)
-								E.db.mMT.minimapAspectRatio.aspectRatio.enable = value
+								E.db.mMT.minimapAspectRatio.aspectRatio = value
 								mMT.Modules.MinimapAspectRatio:Initialize()
 							end,
 						},
@@ -89,7 +89,7 @@ local function configTable()
 					end,
 					set = function(info, value)
 						E.db.mMT.minimapSkin.enable = value
-						if value then E.db.mMT.minimapAspectRatio = false end
+						if value then E.db.mMT.minimapAspectRatio.enable = false end
 						E:StaticPopup_Show("CONFIG_RL")
 					end,
 				},

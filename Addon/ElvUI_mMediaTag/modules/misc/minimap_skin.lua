@@ -52,61 +52,41 @@ local skins = {
 		texture = "Interface\\Addons\\ElvUI_mMediaTag\\media\\minimap\\skin\\antique.tga",
 		--cardinal = "Interface\\Addons\\ElvUI_mMediaTag\\media\\minimap\\skin\\zickzag_cardinal.tga",
 		extra = "Interface\\Addons\\ElvUI_mMediaTag\\media\\minimap\\skin\\antique_extra.tga",
-		--Interface\Addons\ElvUI_mMediaTag\media\portraits\pad\
 	},
 }
+
+local function CreateOrUpdateTexture(name, layer, level, texture, color)
+	if not Minimap[name] then
+		Minimap[name] = Minimap:CreateTexture(name, layer, nil, level)
+		Minimap[name]:SetAllPoints(Minimap)
+	end
+	Minimap[name]:SetTexture(texture, "CLAMP", "CLAMP", "TRILINEAR")
+	Minimap[name]:Show()
+	if color then Minimap[name]:SetVertexColor(color.r, color.g, color.b, color.a or 1) end
+end
 
 local function SkinMinimap()
 	local skin = E.db.mMT.minimapSkin.custom.enable and E.db.mMT.minimapSkin.custom or skins[E.db.mMT.minimapSkin.skin]
 
-	if not Minimap.mMT_Border then
-		Minimap.mMT_Border = Minimap:CreateTexture("mMT_Minimap_Skin", "OVERLAY", nil, 2)
-		Minimap.mMT_Border:SetAllPoints(Minimap)
-	end
+	local color = E.db.mMT.minimapSkin.colors.texture.class and mMT.ClassColor or E.db.mMT.minimapSkin.colors.texture.color
+	CreateOrUpdateTexture("mMT_Minimap_Skin", "OVERLAY", 2, skin.texture, color)
 
 	if E.db.mMT.minimapSkin.cardinal and skin.cardinal then
-		if not Minimap.mMT_Cardinal then
-			Minimap.mMT_Cardinal = Minimap:CreateTexture("mMT_Minimap_Cardinal", "OVERLAY", nil, 3)
-			Minimap.mMT_Cardinal:SetAllPoints(Minimap)
-		end
-		Minimap.mMT_Cardinal:SetTexture(skin.cardinal, "CLAMP", "CLAMP", "TRILINEAR")
-		Minimap.mMT_Cardinal:Show()
-
-		local color = E.db.mMT.minimapSkin.colors.cardinal.class and mMT.ClassColor or E.db.mMT.minimapSkin.colors.cardinal.color
-		if color then
-			Minimap.mMT_Cardinal:SetVertexColor(color.r, color.g, color.b, color.a or 1)
-		end
+		color = E.db.mMT.minimapSkin.colors.cardinal.class and mMT.ClassColor or E.db.mMT.minimapSkin.colors.cardinal.color
+		CreateOrUpdateTexture("mMT_Cardinal", "OVERLAY", 3, skin.cardinal, color)
 	else
-		if Minimap.mMT_Cardinal then
-			Minimap.mMT_Cardinal:Hide()
-		end
+		if Minimap.mMT_Cardinal then Minimap.mMT_Cardinal:Hide() end
 	end
 
 	if E.db.mMT.minimapSkin.effect and skin.extra then
-		if not Minimap.mMT_Extra then
-			Minimap.mMT_Extra = Minimap:CreateTexture("mMT_Minimap_Extra", "OVERLAY", nil, 1)
-			Minimap.mMT_Extra:SetAllPoints(Minimap)
-		end
-		Minimap.mMT_Extra:SetTexture(skin.extra, "CLAMP", "CLAMP", "TRILINEAR")
-		Minimap.mMT_Extra:Show()
-
-		local color = E.db.mMT.minimapSkin.colors.extra.class and mMT.ClassColor or E.db.mMT.minimapSkin.colors.extra.color
-		if color then
-			Minimap.mMT_Extra:SetVertexColor(color.r, color.g, color.b, color.a or 1)
-		end
+		color = E.db.mMT.minimapSkin.colors.extra.class and mMT.ClassColor or E.db.mMT.minimapSkin.colors.extra.color
+		CreateOrUpdateTexture("mMT_Extra", "OVERLAY", 1, skin.extra, color)
 	else
-		if Minimap.mMT_Extra then
-			Minimap.mMT_Extra:Hide()
-		end
+		if Minimap.mMT_Extra then Minimap.mMT_Extra:Hide() end
 	end
 
 	Minimap:SetMaskTexture(skin.mask)
 	Minimap.backdrop:Hide()
-	Minimap.mMT_Border:SetTexture(skin.texture, "CLAMP", "CLAMP", "TRILINEAR")
-	local color = E.db.mMT.minimapSkin.colors.texture.class and mMT.ClassColor or E.db.mMT.minimapSkin.colors.texture.color
-	if color then
-		Minimap.mMT_Border:SetVertexColor(color.r, color.g, color.b, color.a or 1)
-	end
 end
 
 function module:Initialize()
