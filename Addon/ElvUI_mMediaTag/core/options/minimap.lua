@@ -22,6 +22,9 @@ local skins = {
 	zickzag = "zickzag",
 	antique = "antique",
 }
+
+local sizeString = ":16:16:0:0:64:64:4:60:4:60"
+
 local function configTable()
 	E.Options.args.mMT.args.cosmetic.args.minimap.args = {
 		aspectratio = {
@@ -251,6 +254,129 @@ local function configTable()
 									end,
 								},
 							},
+						},
+					},
+				},
+				custom = {
+					order = 4,
+					type = "group",
+					name = L["Custom Textures"],
+					inline = true,
+					args = {
+						toggle_enable = {
+							order = 1,
+							type = "toggle",
+							name = L["Enable Custom Textures"],
+							get = function(info)
+								return E.db.mMT.minimapSkin.custom.enable
+							end,
+							set = function(info, value)
+								E.db.mMT.minimapSkin.custom.enable = value
+								mMT.Modules.MinimapSkin:Initialize()
+							end,
+						},
+						spacer_texture1 = {
+							order = 2,
+							type = "description",
+							name = "\n\n",
+						},
+						desc_important = {
+							order = 3,
+							type = "description",
+							name = L["Info! To achieve an optimal result with the minimap, a texture should be set for the texture and mask.\nThe mask is always required and no minimap will be visible without it.\n\n"],
+						},
+
+						texture = {
+							order = 4,
+							desc = L["Texture"],
+							name = function()
+								if E.db.mMT.minimapSkin.custom.texture and (E.db.mMT.minimapSkin.custom.texture ~= "") then
+									return L["Texture"] .. "  > " .. E:TextureString(E.db.mMT.minimapSkin.custom.texture, sizeString)
+								else
+									return L["Texture"] .. "  > " .. L["No Texture found"]
+								end
+							end,
+							type = "input",
+							width = "smal",
+							disabled = function()
+								return not E.db.mMT.minimapSkin.custom.enable
+							end,
+							get = function(info)
+								return E.db.mMT.minimapSkin.custom.texture
+							end,
+							set = function(info, value)
+								E.db.mMT.minimapSkin.custom.texture = value
+								mMT.Modules.MinimapSkin:Initialize()
+							end,
+						},
+						mask = {
+							order = 5,
+							desc = L["Mask"],
+							name = function()
+								if E.db.mMT.minimapSkin.custom.mask and (E.db.mMT.minimapSkin.custom.mask ~= "") then
+									return L["Mask"] .. "  > " .. E:TextureString(E.db.mMT.minimapSkin.custom.mask, sizeString)
+								else
+									return L["Mask"] .. "  > " .. L["No Texture found"]
+								end
+							end,
+							type = "input",
+							width = "smal",
+							disabled = function()
+								return not E.db.mMT.minimapSkin.custom.enable
+							end,
+							get = function(info)
+								return E.db.mMT.minimapSkin.custom.mask
+							end,
+							set = function(info, value)
+								E.db.mMT.minimapSkin.custom.mask = value
+								mMT.Modules.MinimapSkin:Initialize()
+							end,
+						},
+						cardinal = {
+							order = 6,
+							desc = L["Cardinal Point"],
+							name = function()
+								if E.db.mMT.minimapSkin.custom.cardinal and (E.db.mMT.minimapSkin.custom.cardinal ~= "") then
+									return L["Cardinal Point"] .. "  > " .. E:TextureString(E.db.mMT.minimapSkin.custom.cardinal, sizeString)
+								else
+									return L["Cardinal Point"] .. "  > " .. L["No Texture found"]
+								end
+							end,
+							type = "input",
+							width = "smal",
+							disabled = function()
+								return not E.db.mMT.minimapSkin.custom.enable
+							end,
+							get = function(info)
+								return E.db.mMT.minimapSkin.custom.cardinal
+							end,
+							set = function(info, value)
+								E.db.mMT.minimapSkin.custom.cardinal = value
+								mMT.Modules.MinimapSkin:Initialize()
+							end,
+						},
+						effect = {
+							order = 7,
+							desc = L["Effect"],
+							name = function()
+								if E.db.mMT.minimapSkin.custom.extra and (E.db.mMT.minimapSkin.custom.extra ~= "") then
+									return L["Effect"] .. "  > " .. E:TextureString(E.db.mMT.minimapSkin.custom.extra, sizeString)
+								else
+									return L["Effect"] .. "  > " .. L["No Texture found"]
+								end
+							end,
+							type = "input",
+							width = "smal",
+							disabled = function()
+								return not E.db.mMT.minimapSkin.custom.enable
+							end,
+							get = function(info)
+								return E.db.mMT.minimapSkin.custom.extra
+							end,
+							set = function(info, value)
+								E.db.mMT.minimapSkin.custom.extra = value
+								mMT.Modules.MinimapSkin:Initialize()
+							end,
 						},
 					},
 				},

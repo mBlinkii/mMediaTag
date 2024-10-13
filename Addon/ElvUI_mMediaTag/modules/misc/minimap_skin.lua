@@ -52,11 +52,12 @@ local skins = {
 		texture = "Interface\\Addons\\ElvUI_mMediaTag\\media\\minimap\\skin\\antique.tga",
 		--cardinal = "Interface\\Addons\\ElvUI_mMediaTag\\media\\minimap\\skin\\zickzag_cardinal.tga",
 		extra = "Interface\\Addons\\ElvUI_mMediaTag\\media\\minimap\\skin\\antique_extra.tga",
+		--Interface\Addons\ElvUI_mMediaTag\media\portraits\pad\
 	},
 }
 
 local function SkinMinimap()
-	local skin = skins[E.db.mMT.minimapSkin.skin]
+	local skin = E.db.mMT.minimapSkin.custom.enable and E.db.mMT.minimapSkin.custom or skins[E.db.mMT.minimapSkin.skin]
 
 	if not Minimap.mMT_Border then
 		Minimap.mMT_Border = Minimap:CreateTexture("mMT_Minimap_Skin", "OVERLAY", nil, 2)
