@@ -1,13 +1,24 @@
 # Changelog - ElvUI_mMediaTag
 [Eng] - All changes to this project will be documented in this file. The latest changes are at the top.
 
-## [ver. 3.61] - xx.xx.2024
+## [ver. 3.61] - 13.10.2024
 ### UPDATE
-
+- UPDATE - [Datatext-Score]: Update rewards infos.
+- UPDATE - [Datatext-Teleports]: Update Dungeon Teleport IDs for Siege.
+- UPDATE - [Dock-LFG]: Update rewards infos.
+- UPDATE - [System]: Some minor code improvements.
 ### FIX 
-
+- FIX - [Datatext-Durability]: Removed dev print.
+- FIX - [Datatext-Profession]: Fixed Cooking menu entry.
+- FIX - [Datatext-Profession]: Fixed toggle Profession window for Cata & Classic.
+- FIX - [Objectivetracker]: Possible fix for overlapping Blocks.
+- FIX - [Objectivetracker]: Prevent multiple hooks.
+- FIX - [Portraits]: Cata & Classic unsupported event.
 ### NEW
-
+- NEW - [MEDIA]: Fonts: Beep, RingLink, SimplySans.
+- NEW - [Minimap]: Add a function to Skin the Minimap.
+- NEW - [Minimap]: Add a function to change the aspect ratio of the Minimap.
+- NEW - [Role-Icons]: Three new (Tank/Heal/DD) Role Icons.
 
 ## [ver. 3.60] - 04.10.2024
 ### UPDATE
