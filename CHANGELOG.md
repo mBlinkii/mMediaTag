@@ -1,13 +1,10 @@
 # Changelog - ElvUI_mMediaTag
 [Eng] - All changes to this project will be documented in this file. The latest changes are at the top.
 
-## [ver. 3.62] - xx.xx.2024
-### UPDATE
-- UPDATE - [xx]: xx
+## [ver. 3.62] - 14.10.2024
 ### FIX 
-- FIX - [xx]: xx
-### NEW
-- NEW - [xx]: xx
+- FIX - [Objectivtracker]: Skin for Delves and Dungeons.
+- FIX - [Objectivtracker]: Removed Test functions.
 
 ## [ver. 3.61] - 13.10.2024
 ### UPDATE
