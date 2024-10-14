@@ -745,7 +745,7 @@ local function SkinBlock(_, block)
 			block.mMT_OnLeaveHook = true
 		end
 
-		if not block.WidgetContainerand and not C_ChallengeMode.GetActiveChallengeMapID() then
+		if not block.WidgetContainerand and not (C_ChallengeMode.GetActiveChallengeMapID() or IsInInstance()) then
 			if block.usedLines then
 				for _, line in pairs(block.usedLines) do
 					totalHeight = totalHeight + line:GetHeight()
@@ -755,30 +755,6 @@ local function SkinBlock(_, block)
 		end
 	end
 end
-
--- Funktion zum Erstellen eines Textblocks
-function CreateTextBlock(text, fontSize)
-	local textBlock = {} -- Erstelle einen neuen Textblock (Tabelle)
-	textBlock.text = text
-	textBlock.fontSize = fontSize
-	textBlock.height = fontSize * 1.2 -- Berechne die Höhe des Textblocks basierend auf der Schriftgröße (1.2 ist ein Beispielwert für den Zeilenabstand)
-	return textBlock
-end
-
--- Funktion zum Setzen des Abstands zwischen zwei Textblöcken
-function SetTextBlockSpacing(textBlock1, textBlock2, spacing)
-	textBlock2.y = textBlock1.y + textBlock1.height + spacing
-end
-
--- Beispielverwendung
-local textBlock1 = CreateTextBlock("Erster Textblock", 14)
-textBlock1.y = 100 -- Setze die y-Position des ersten Textblocks
-
-local textBlock2 = CreateTextBlock("Zweiter Textblock", 18)
-SetTextBlockSpacing(textBlock1, textBlock2, 10) -- Setze den Abstand zwischen den Textblöcken auf 10 Einheiten
-
-print("TextBlock1 Position: " .. textBlock1.y)
-print("TextBlock2 Position: " .. textBlock2.y)
 
 local function AddBackground()
 	-- inspired by Merathilis background, thank you
