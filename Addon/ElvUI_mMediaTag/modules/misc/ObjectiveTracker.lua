@@ -456,7 +456,9 @@ local function SkinLines(line, id, index, isDungeon)
 		end
 
 		-- fix for overlapping blocks/ line and header - thx Merathilis & Fang
-		line:SetHeight(line.Text:GetHeight())
+		local height = line.Text:GetHeight()
+		line:SetHeight(height)
+		return height
 	end
 end
 
@@ -693,7 +695,8 @@ end
 
 local function SkinBlock(_, block)
 	if block then
-		local totalHeight = 2
+		--mMT:Print("START")
+		local totalHeight = 0
 
 		if block.Stage and not block.mMT_StageSkin then
 			hooksecurefunc(block, "UpdateStageBlock", SkinStageBlock)
@@ -729,9 +732,13 @@ local function SkinBlock(_, block)
 			totalHeight = totalHeight + block.HeaderText:GetHeight()
 		end
 
+		--mMT:Print("Total:", totalHeight)
+
 		if block.usedLines then
 			for index, line in pairs(block.usedLines) do
-				SkinLines(line, block.id, index, block.Stage)
+				local height = SkinLines(line, block.id, index, block.Stage)
+				--mMT:Print("Total Line:", totalHeight, height, line.Text:GetText())
+				totalHeight = totalHeight + height  +2
 			end
 		end
 
@@ -746,13 +753,15 @@ local function SkinBlock(_, block)
 		end
 
 		if not block.WidgetContainerand and not (C_ChallengeMode.GetActiveChallengeMapID() or IsInInstance()) then
-			if block.usedLines then
-				for _, line in pairs(block.usedLines) do
-					totalHeight = totalHeight + line:GetHeight()
-				end
-			end
+			--if block.usedLines then
+				-- for _, line in pairs(block.usedLines) do
+				-- 	totalHeight = totalHeight + line:GetHeight()
+				-- 	mMT:Print(line:GetHeight(), line:GetText())
+				-- end
+			--end
+			--mMT:Print("Total All:", totalHeight)
 			--mMT:Print("Original:", block:GetHeight(), block.height, "Calculated:", totalHeight, "Linespace:", block.parentModule.lineSpacing)
-			block:SetHeight(totalHeight)
+			block:SetHeight(totalHeight + block.parentModule.lineSpacing)
 		end
 	end
 end
