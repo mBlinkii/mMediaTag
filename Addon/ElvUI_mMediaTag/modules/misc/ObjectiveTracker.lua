@@ -751,7 +751,7 @@ local function SkinBlock(_, block)
 					totalHeight = totalHeight + line:GetHeight()
 				end
 			end
-			mMT:Print("Original:", block:GetHeight(), block.height, "Calculated:", totalHeight)
+			--mMT:Print("Original:", block:GetHeight(), block.height, "Calculated:", totalHeight, "Linespace:", block.parentModule.lineSpacing)
 			block:SetHeight(totalHeight)
 		end
 	end
