@@ -726,7 +726,7 @@ local function SkinBlock(_, block)
 				cachedQuests[block.id].title = block.HeaderText:GetText()
 				block.HeaderText:SetText(GetLevelInfoText(cachedQuests[block.id].info.level) .. block.HeaderText:GetText())
 			end
-			totalHeight = totalHeight + block.HeaderText:GetHeight()
+			--totalHeight = totalHeight + block.HeaderText:GetHeight()
 		end
 
 		if block.usedLines then
