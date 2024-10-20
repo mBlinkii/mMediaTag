@@ -824,6 +824,14 @@ function module:TrackUntrackQuests()
 	SortQuestWatches()
 end
 
+local function SetCollapsed(header, collapsed)
+	if collapsed then
+		_G.ObjectiveTrackerFrame.backdrop:Hide()
+	else
+		_G.ObjectiveTrackerFrame.backdrop:Show()
+	end
+end
+
 function module:Initialize()
 	-- prevent bugs with wrong db entries
 	CheckFontDB()
@@ -859,9 +867,18 @@ function module:Initialize()
 				-- tracker header (campaign/ quests ...)
 				SkinHeaders(tracker.Header)
 
+				SetCollapsed(nil, _G.ObjectiveTrackerFrame.isCollapsed)
+
+				if not _G.ObjectiveTrackerFrame.mMT_Skin then
+					local trackerHeader = _G.ObjectiveTrackerFrame.Header --tracker.Header
+					hooksecurefunc(trackerHeader, "SetCollapsed", SetCollapsed)
+					_G.ObjectiveTrackerFrame.mMT_Skin = true
+				end
+
 				-- add skin to each block/ quest
 				if not tracker.mMTSkin then
 					hooksecurefunc(tracker, "AddBlock", SkinBlock)
+
 					tracker.mMTSkin = true
 				end
 
