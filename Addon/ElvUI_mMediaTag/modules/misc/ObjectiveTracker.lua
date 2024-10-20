@@ -693,7 +693,7 @@ end
 
 local function SkinBlock(_, block)
 	if block then
-		local totalHeight = 2
+		--local totalHeight = 2
 
 		if block.Stage and not block.mMT_StageSkin then
 			hooksecurefunc(block, "UpdateStageBlock", SkinStageBlock)
@@ -745,14 +745,14 @@ local function SkinBlock(_, block)
 			block.mMT_OnLeaveHook = true
 		end
 
-		if not block.WidgetContainerand and not (C_ChallengeMode.GetActiveChallengeMapID() or IsInInstance()) then
-			if block.usedLines then
-				for _, line in pairs(block.usedLines) do
-					totalHeight = totalHeight + line:GetHeight()
-				end
-			end
-			block:SetHeight(totalHeight)
-		end
+		-- if not block.WidgetContainerand and not (C_ChallengeMode.GetActiveChallengeMapID() or IsInInstance()) then
+		-- 	if block.usedLines then
+		-- 		for _, line in pairs(block.usedLines) do
+		-- 			totalHeight = totalHeight + line:GetHeight()
+		-- 		end
+		-- 	end
+		-- 	block:SetHeight(totalHeight)
+		-- end
 	end
 end
 
