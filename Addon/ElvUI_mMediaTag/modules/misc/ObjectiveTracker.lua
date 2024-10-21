@@ -386,6 +386,7 @@ local function SetLineText(text, completed, id, index, onEnter, onLeave)
 			end
 		end
 
+		text:SetHeight(0);	-- force a clear of internals or GetHeight() might return an incorrect value
 		text:SetText(lineText)
 		return result and result.complete
 	end
@@ -737,7 +738,10 @@ local function SkinBlock(_, block)
 		if block.usedLines then
 			for index, line in pairs(block.usedLines) do
 				local height = SkinLines(line, block.id, index, block.Stage)
-				--mMT:Print("Total Line:", totalHeight, height, line.Text:GetText())
+				--mMT:Print(line.Text:GetText())
+				--mMT:Print("Total Line:", totalHeight, height)
+				line:SetHeight(height)
+				--block:SetHeight(height)
 				totalHeight = totalHeight + height + 2
 			end
 		end
@@ -752,17 +756,17 @@ local function SkinBlock(_, block)
 			block.mMT_OnLeaveHook = true
 		end
 
-		if not block.WidgetContainerand and not (C_ChallengeMode.GetActiveChallengeMapID() or IsInInstance()) then
-			--if block.usedLines then
-			-- for _, line in pairs(block.usedLines) do
-			-- 	totalHeight = totalHeight + line:GetHeight()
-			-- 	mMT:Print(line:GetHeight(), line:GetText())
-			-- end
-			--end
-			--mMT:Print("Total All:", totalHeight)
-			--mMT:Print("Original:", block:GetHeight(), block.height, "Calculated:", totalHeight, "Linespace:", block.parentModule.lineSpacing)
-			block:SetHeight(totalHeight + block.parentModule.lineSpacing)
-		end
+		-- if not block.WidgetContainerand and not (C_ChallengeMode.GetActiveChallengeMapID() or IsInInstance()) then
+		-- 	--if block.usedLines then
+		-- 	-- for _, line in pairs(block.usedLines) do
+		-- 	-- 	totalHeight = totalHeight + line:GetHeight()
+		-- 	-- 	mMT:Print(line:GetHeight(), line:GetText())
+		-- 	-- end
+		-- 	--end
+		-- 	mMT:Print("Total All:", totalHeight)
+		-- 	mMT:Print("Original:", block:GetHeight(), block.height, "Calculated:", totalHeight, "Linespace:", block.parentModule.lineSpacing)
+		-- 	block:SetHeight(totalHeight + block.parentModule.lineSpacing)
+		-- end
 	end
 end
 
