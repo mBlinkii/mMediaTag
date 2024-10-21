@@ -738,7 +738,7 @@ local function SkinBlock(_, block)
 			for index, line in pairs(block.usedLines) do
 				local height = SkinLines(line, block.id, index, block.Stage)
 				--mMT:Print("Total Line:", totalHeight, height, line.Text:GetText())
-				totalHeight = totalHeight + height  +2
+				totalHeight = totalHeight + height + 2
 			end
 		end
 
@@ -754,10 +754,10 @@ local function SkinBlock(_, block)
 
 		if not block.WidgetContainerand and not (C_ChallengeMode.GetActiveChallengeMapID() or IsInInstance()) then
 			--if block.usedLines then
-				-- for _, line in pairs(block.usedLines) do
-				-- 	totalHeight = totalHeight + line:GetHeight()
-				-- 	mMT:Print(line:GetHeight(), line:GetText())
-				-- end
+			-- for _, line in pairs(block.usedLines) do
+			-- 	totalHeight = totalHeight + line:GetHeight()
+			-- 	mMT:Print(line:GetHeight(), line:GetText())
+			-- end
 			--end
 			--mMT:Print("Total All:", totalHeight)
 			--mMT:Print("Original:", block:GetHeight(), block.height, "Calculated:", totalHeight, "Linespace:", block.parentModule.lineSpacing)
@@ -878,12 +878,14 @@ function module:Initialize()
 				-- tracker header (campaign/ quests ...)
 				SkinHeaders(tracker.Header)
 
-				SetCollapsed(nil, _G.ObjectiveTrackerFrame.isCollapsed)
+				if E.db.mMT.objectivetracker.bg.enable then
+					SetCollapsed(nil, _G.ObjectiveTrackerFrame.isCollapsed)
 
-				if not _G.ObjectiveTrackerFrame.mMT_Skin then
-					local trackerHeader = _G.ObjectiveTrackerFrame.Header --tracker.Header
-					hooksecurefunc(trackerHeader, "SetCollapsed", SetCollapsed)
-					_G.ObjectiveTrackerFrame.mMT_Skin = true
+					if not _G.ObjectiveTrackerFrame.mMT_Skin then
+						local trackerHeader = _G.ObjectiveTrackerFrame.Header --tracker.Header
+						hooksecurefunc(trackerHeader, "SetCollapsed", SetCollapsed)
+						_G.ObjectiveTrackerFrame.mMT_Skin = true
+					end
 				end
 
 				-- add skin to each block/ quest
