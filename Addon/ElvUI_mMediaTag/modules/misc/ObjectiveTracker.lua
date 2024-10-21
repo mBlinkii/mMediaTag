@@ -835,6 +835,7 @@ function module:TrackUntrackQuests()
 end
 
 local function SetCollapsed(header, collapsed)
+	if not _G.ObjectiveTrackerFrame.backdrop then return end
 	if collapsed then
 		_G.ObjectiveTrackerFrame.backdrop:Hide()
 	else
