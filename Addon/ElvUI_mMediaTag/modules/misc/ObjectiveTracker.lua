@@ -458,8 +458,8 @@ local function SkinLines(line, id, index, isDungeon)
 
 		-- fix for overlapping blocks/ line and header - thx Merathilis & Fang
 		local height = line.Text:GetHeight()
+		line.Text:SetHeight(height)
 		line:SetHeight(height)
-		return height
 	end
 end
 
@@ -645,7 +645,6 @@ local function LinesOnEnterLeave(line, id, index, onEnter, onLeave)
 		else
 			local complete = (line.objectiveKey == "QuestComplete") or line.finished
 			SetLineText(line.Text, complete, id, index, onEnter, onLeave)
-			line:SetHeight(line.Text:GetHeight())
 		end
 	end
 end
@@ -696,9 +695,6 @@ end
 
 local function SkinBlock(_, block)
 	if block then
-		--mMT:Print("START")
-		local totalHeight = 0
-
 		if block.Stage and not block.mMT_StageSkin then
 			hooksecurefunc(block, "UpdateStageBlock", SkinStageBlock)
 			SkinStageBlock(block)
@@ -730,19 +726,11 @@ local function SkinBlock(_, block)
 				cachedQuests[block.id].title = block.HeaderText:GetText()
 				block.HeaderText:SetText(GetLevelInfoText(cachedQuests[block.id].info.level) .. block.HeaderText:GetText())
 			end
-			totalHeight = totalHeight + block.HeaderText:GetHeight()
 		end
-
-		--mMT:Print("Total:", totalHeight)
 
 		if block.usedLines then
 			for index, line in pairs(block.usedLines) do
-				local height = SkinLines(line, block.id, index, block.Stage)
-				--mMT:Print(line.Text:GetText())
-				--mMT:Print("Total Line:", totalHeight, height)
-				line:SetHeight(height)
-				--block:SetHeight(height)
-				totalHeight = totalHeight + height + 2
+				SkinLines(line, block.id, index, block.Stage)
 			end
 		end
 
@@ -755,18 +743,6 @@ local function SkinBlock(_, block)
 			hooksecurefunc(block, "OnHeaderLeave", OnHeaderLeave)
 			block.mMT_OnLeaveHook = true
 		end
-
-		-- if not block.WidgetContainerand and not (C_ChallengeMode.GetActiveChallengeMapID() or IsInInstance()) then
-		-- 	--if block.usedLines then
-		-- 	-- for _, line in pairs(block.usedLines) do
-		-- 	-- 	totalHeight = totalHeight + line:GetHeight()
-		-- 	-- 	mMT:Print(line:GetHeight(), line:GetText())
-		-- 	-- end
-		-- 	--end
-		-- 	mMT:Print("Total All:", totalHeight)
-		-- 	mMT:Print("Original:", block:GetHeight(), block.height, "Calculated:", totalHeight, "Linespace:", block.parentModule.lineSpacing)
-		-- 	block:SetHeight(totalHeight + block.parentModule.lineSpacing)
-		-- end
 	end
 end
 
@@ -898,8 +874,6 @@ function module:Initialize()
 
 					tracker.mMTSkin = true
 				end
-
-				--tracker:SetHeight(5)
 			end
 		end
 		module.hooked = true
