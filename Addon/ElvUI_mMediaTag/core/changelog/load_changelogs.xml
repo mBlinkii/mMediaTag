@@ -17,4 +17,5 @@
     <Script file="3.60.lua"/>
     <Script file="3.61.lua"/>
     <Script file="3.62.lua"/>
+    <Script file="3.63.lua"/>
 </Ui>

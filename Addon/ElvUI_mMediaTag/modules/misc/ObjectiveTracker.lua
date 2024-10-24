@@ -386,6 +386,7 @@ local function SetLineText(text, completed, id, index, onEnter, onLeave)
 			end
 		end
 
+		text:SetHeight(0);	-- force a clear of internals or GetHeight() might return an incorrect value
 		text:SetText(lineText)
 		return result and result.complete
 	end
@@ -456,7 +457,9 @@ local function SkinLines(line, id, index, isDungeon)
 		end
 
 		-- fix for overlapping blocks/ line and header - thx Merathilis & Fang
-		line:SetHeight(line.Text:GetHeight())
+		local height = line.Text:GetHeight()
+		line.Text:SetHeight(height)
+		line:SetHeight(height)
 	end
 end
 
@@ -642,7 +645,6 @@ local function LinesOnEnterLeave(line, id, index, onEnter, onLeave)
 		else
 			local complete = (line.objectiveKey == "QuestComplete") or line.finished
 			SetLineText(line.Text, complete, id, index, onEnter, onLeave)
-			line:SetHeight(line.Text:GetHeight())
 		end
 	end
 end
@@ -693,8 +695,6 @@ end
 
 local function SkinBlock(_, block)
 	if block then
-		local totalHeight = 2
-
 		if block.Stage and not block.mMT_StageSkin then
 			hooksecurefunc(block, "UpdateStageBlock", SkinStageBlock)
 			SkinStageBlock(block)
@@ -726,7 +726,6 @@ local function SkinBlock(_, block)
 				cachedQuests[block.id].title = block.HeaderText:GetText()
 				block.HeaderText:SetText(GetLevelInfoText(cachedQuests[block.id].info.level) .. block.HeaderText:GetText())
 			end
-			totalHeight = totalHeight + block.HeaderText:GetHeight()
 		end
 
 		if block.usedLines then
@@ -743,15 +742,6 @@ local function SkinBlock(_, block)
 		if block.OnHeaderLeave and not block.mMT_OnLeaveHook then
 			hooksecurefunc(block, "OnHeaderLeave", OnHeaderLeave)
 			block.mMT_OnLeaveHook = true
-		end
-
-		if not block.WidgetContainerand and not (C_ChallengeMode.GetActiveChallengeMapID() or IsInInstance()) then
-			if block.usedLines then
-				for _, line in pairs(block.usedLines) do
-					totalHeight = totalHeight + line:GetHeight()
-				end
-			end
-			block:SetHeight(totalHeight)
 		end
 	end
 end
@@ -826,6 +816,15 @@ function module:TrackUntrackQuests()
 	SortQuestWatches()
 end
 
+local function SetCollapsed(header, collapsed)
+	if not _G.ObjectiveTrackerFrame.backdrop then return end
+	if collapsed then
+		_G.ObjectiveTrackerFrame.backdrop:Hide()
+	else
+		_G.ObjectiveTrackerFrame.backdrop:Show()
+	end
+end
+
 function module:Initialize()
 	-- prevent bugs with wrong db entries
 	CheckFontDB()
@@ -861,13 +860,22 @@ function module:Initialize()
 				-- tracker header (campaign/ quests ...)
 				SkinHeaders(tracker.Header)
 
+				if E.db.mMT.objectivetracker.bg.enable then
+					SetCollapsed(nil, _G.ObjectiveTrackerFrame.isCollapsed)
+
+					if not _G.ObjectiveTrackerFrame.mMT_Skin then
+						local trackerHeader = _G.ObjectiveTrackerFrame.Header --tracker.Header
+						hooksecurefunc(trackerHeader, "SetCollapsed", SetCollapsed)
+						_G.ObjectiveTrackerFrame.mMT_Skin = true
+					end
+				end
+
 				-- add skin to each block/ quest
 				if not tracker.mMTSkin then
 					hooksecurefunc(tracker, "AddBlock", SkinBlock)
+
 					tracker.mMTSkin = true
 				end
-
-				--tracker:SetHeight(5)
 			end
 		end
 		module.hooked = true
