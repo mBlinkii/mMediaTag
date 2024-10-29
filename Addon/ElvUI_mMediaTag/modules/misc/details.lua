@@ -185,6 +185,8 @@ function mMT:DetailsEmbedded()
 			end)
 		end
 
+		detailsEmbedded:SetFrameStrata("BACKGROUND")
+
 		chat:Hide()
 		detailsEmbedded:Show()
 	end
