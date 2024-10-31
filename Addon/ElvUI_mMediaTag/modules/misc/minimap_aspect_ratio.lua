@@ -40,7 +40,7 @@ local function GetYOffset()
 	local width = E.MinimapSize
 	local height = width / aspectRatio.aspectratio
 	local difference = width - height
-	return -ceil(difference / 2) + aspectRatio.offset
+	return -ceil(difference / 2) --+ aspectRatio.offset
 end
 
 local function HandleButton(button, iconType, hideSetting)
@@ -79,16 +79,15 @@ local function SetAspectRatio()
 	Minimap.backdrop:ClearAllPoints()
 	Minimap.backdrop:SetOutside(Minimap, 1, yOffset)
 
-	local yOffsetOther = yOffset + aspectRatio.offset
+	--local yOffsetOther = yOffset + aspectRatio.offset
 	Minimap:ClearAllPoints()
-	Minimap:SetPoint("TOPLEFT", M.MapHolder, "TOPLEFT", 0, -yOffsetOther)
+	Minimap:SetPoint("TOPLEFT", M.MapHolder, "TOPLEFT") ---yOffsetOther)
 
 	if Minimap.location then
 		Minimap.location:ClearAllPoints()
-		Minimap.location:SetPoint("TOP", Minimap, 0, yOffsetOther - 2)
+		Minimap.location:SetPoint("TOP", Minimap, 0, yOffset - 2)
 	end
 end
-
 
 function module:Initialize()
 	if not module.hooked then
