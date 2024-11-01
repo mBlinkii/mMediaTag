@@ -230,16 +230,6 @@ local function BuildMenu()
 		icon = AddIcon("gears"),
 		func = function()
 			if not _G.GameMenuFrame:IsShown() then
-				if not E.Retail then
-					if _G.VideoOptionsFrame:IsShown() then
-						_G.VideoOptionsFrameCancel:Click()
-					elseif _G.AudioOptionsFrame:IsShown() then
-						_G.AudioOptionsFrameCancel:Click()
-					elseif _G.InterfaceOptionsFrame:IsShown() then
-						_G.InterfaceOptionsFrameCancel:Click()
-					end
-				end
-
 				CloseMenus()
 				CloseAllWindows()
 				ShowUIPanel(_G.GameMenuFrame)
