@@ -97,12 +97,6 @@ local function OnClick(self, button)
 				ShowUIPanel(_G.GameMenuFrame)
 			else
 				HideUIPanel(_G.GameMenuFrame)
-
-				if E.Retail then
-					MainMenuMicroButton:SetButtonState("NORMAL")
-				else
-					MainMenuMicroButton_SetNormal()
-				end
 			end
 		else
 			E:ToggleOptions()
