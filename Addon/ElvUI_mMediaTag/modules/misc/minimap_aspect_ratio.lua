@@ -91,7 +91,7 @@ local function SetAspectRatio()
 	Minimap.backdrop:SetOutside(Minimap, borderSize, -offset + borderSize)
 
 	Minimap:ClearAllPoints()
-	Minimap:SetPoint("TOP", M.MapHolder, "TOP", 0, -offset)
+	Minimap:SetPoint("TOP", M.MapHolder, "TOP", 0, offset)
 
 	if Minimap.location then
 		Minimap.location:ClearAllPoints()
