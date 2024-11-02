@@ -805,3 +805,7 @@ L["|cffFFFFFFControl + Left Click:|r Change Loadout"] = true
 L["|cffFFFFFFLeft Click:|r Change Talent Specialization"] = true
 L["|cffFFFFFFRight Click:|r Change Loot Specialization"] = true
 L["|cffFFFFFFShift + Left Click:|r Show Talent Specialization UI"] = true
+
+-- new
+L["Alternative mode"] = true
+L["If the minimap is too close to the edge, a bar may become visible at the top or bottom. This is due to Blizzard’s limitations. Alternatively, you can activate the “Alternative Mode” but this might cause the minimap to appear distorted in some areas."] = true
