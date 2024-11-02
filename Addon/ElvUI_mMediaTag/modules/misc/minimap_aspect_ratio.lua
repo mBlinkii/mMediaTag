@@ -85,13 +85,18 @@ local function SetAspectRatio()
 	Minimap.mMT_Offset = offset
 
 	M.MapHolder:SetSize(width, height)
-	Minimap:SetMaskTexture(aspectRatio.mask)
 
-	Minimap.backdrop:ClearAllPoints()
-	Minimap.backdrop:SetOutside(Minimap, borderSize, -offset + borderSize)
+	if not E.db.mMT.minimapAspectRatio.alternative then
+		Minimap:SetMaskTexture(aspectRatio.mask)
 
-	Minimap:ClearAllPoints()
-	Minimap:SetPoint("TOP", M.MapHolder, "TOP", 0, offset)
+		Minimap.backdrop:ClearAllPoints()
+		Minimap.backdrop:SetOutside(Minimap, borderSize, -offset + borderSize)
+
+		Minimap:ClearAllPoints()
+		Minimap:SetPoint("TOP", M.MapHolder, "TOP", 0, offset)
+	else
+		Minimap:SetSize(width, height)
+	end
 
 	if Minimap.location then
 		Minimap.location:ClearAllPoints()
