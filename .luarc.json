@@ -19513,7 +19513,8 @@
         "GREAT_VAULT_REWARDS",
         "ShowOptionsPanel",
         "LFG_ROLE_NUM_SHORTAGE_TYPES",
-        "GREAT_VAULT_REWARDS_WAITING"
+        "GREAT_VAULT_REWARDS_WAITING",
+        "NUM_CHAT_WINDOWS"
   ],
   "diagnostics.disable": ["deprecated", "inject-field", "undefined-field",
         "cast-local-type"]
