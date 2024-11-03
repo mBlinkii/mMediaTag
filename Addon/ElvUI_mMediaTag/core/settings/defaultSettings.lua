@@ -568,7 +568,6 @@ P.mMT = {
 	minimapAspectRatio = {
 		enable = false,
 		aspectRatio = "16:8",
-		alternative = false,
 	},
 	minimapSkin = {
 		enable = false,
