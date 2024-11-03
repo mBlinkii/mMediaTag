@@ -23,6 +23,7 @@ L["All Dungeon Teleports"] = "Alle Instanzteleporter"
 L["Alliance: "] = "Allianz"
 L["Allways withe"] = "Immer weiß"
 L["Alpha"] = "Alpha/ Transparents"
+L["Alternative mode"] = "Alternativer Modus"
 L["Anchor Point"] = "Ankerpunkt"
 L["Anchor point for the extra Icon."] = "Ankerpunkt des zusätzliches Symbols"
 L["Anchor"] = "Anker"
@@ -405,6 +406,7 @@ L["Icon out of Combat"] = "Symbol außerhalb des Kampfes"
 L["Icon seize if not Auto size is enabled."] = "Symbolgröße, wenn Auto Größe nicht aktiviert ist."
 L["Icon"] = "Symbol"
 L["Icons"] = "Symbole"
+L["If the minimap is too close to the edge, a bar may become visible at the top or bottom. This is due to Blizzard’s limitations. Alternatively, you can activate the “Alternative Mode” but this might cause the minimap to appear distorted in some areas."] = "Wenn die Minikarte zu nah am Rand ist, kann es sein, dass oben oder unten ein Balken sichtbar wird. Dies liegt an den Limitationen von Blizzard. Alternativ kannst Du den „Alternativen Modus“ aktivieren, allerdings kann es sein, dass die Minikarte in manchen Bereichen verzerrt dargestellt wird."
 L["If your texture or the cutout for the portrait is not symmetrical in the middle, you need a 2nd mask texture, which must be exactly mirror-inverted. Use the 2nd mask texture for this."] = "Wenn deine Textur bzw. der Ausschnitt für das Portrait in der Mitte nicht symmetrisch ist, benötigst du eine 2. Maskentextur, die exakt spiegelverkehrt sein muss. Verwende hierfür die 2. Maskentextur."
 L["Import"] = "Importieren"
 L["Import/ Export of Spell IDs"] = "Importieren/ Exportieren der Zauber-IDs"
@@ -806,8 +808,3 @@ L["|cffFFFFFFControl + Left Click:|r Change Loadout"] = "|cffFFFFFFStrg + Linksk
 L["|cffFFFFFFLeft Click:|r Change Talent Specialization"] = "|cffFFFFFFLinks Klick:|r Talent Spezialisierung ändern"
 L["|cffFFFFFFRight Click:|r Change Loot Specialization"] = "|cffFFFFFFRechtsklick:|r Beutespezialisierung ändern"
 L["|cffFFFFFFShift + Left Click:|r Show Talent Specialization UI"] = "|cffFFFFFFShift + Links Klick:|r Zeige Talent Spezialisierungs Interface"
-
-
--- new
-L["Alternative mode"] = true
-L["If the minimap is too close to the edge, a bar may become visible at the top or bottom. This is due to Blizzard’s limitations. Alternatively, you can activate the “Alternative Mode” but this might cause the minimap to appear distorted in some areas."] = true

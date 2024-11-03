@@ -23,6 +23,7 @@ L["All Dungeon Teleports"] = true
 L["Alliance: "] = true
 L["Allways withe"] = true
 L["Alpha"] = true
+L["Alternative mode"] = true
 L["Anchor Point"] = true
 L["Anchor point for the extra Icon."] = true
 L["Anchor"] = true
@@ -405,6 +406,7 @@ L["Icon out of Combat"] = true
 L["Icon seize if not Auto size is enabled."] = true
 L["Icon"] = true
 L["Icons"] = true
+L["If the minimap is too close to the edge, a bar may become visible at the top or bottom. This is due to Blizzard’s limitations. Alternatively, you can activate the “Alternative Mode” but this might cause the minimap to appear distorted in some areas."] = true
 L["If your texture or the cutout for the portrait is not symmetrical in the middle, you need a 2nd mask texture, which must be exactly mirror-inverted. Use the 2nd mask texture for this."] = true
 L["Import"] = true
 L["Import/ Export of Spell IDs"] = true
@@ -805,7 +807,3 @@ L["|cffFFFFFFControl + Left Click:|r Change Loadout"] = true
 L["|cffFFFFFFLeft Click:|r Change Talent Specialization"] = true
 L["|cffFFFFFFRight Click:|r Change Loot Specialization"] = true
 L["|cffFFFFFFShift + Left Click:|r Show Talent Specialization UI"] = true
-
--- new
-L["Alternative mode"] = true
-L["If the minimap is too close to the edge, a bar may become visible at the top or bottom. This is due to Blizzard’s limitations. Alternatively, you can activate the “Alternative Mode” but this might cause the minimap to appear distorted in some areas."] = true
