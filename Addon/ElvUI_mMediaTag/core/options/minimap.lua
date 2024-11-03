@@ -57,6 +57,11 @@ local function configTable()
 						return not E.db.mMT.minimapAspectRatio.enable or E.db.mMT.minimapSkin.enable
 					end,
 					args = {
+						desc_note = {
+							order = 1,
+							type = "description",
+							name = L["If the minimap is too close to the edge, a bar may become visible at the top or bottom. This is due to Blizzard’s limitations."],
+						},
 						aspectratio = {
 							order = 2,
 							type = "select",
@@ -128,7 +133,7 @@ local function configTable()
 							end,
 						},
 						effect = {
-							order = 2,
+							order = 3,
 							type = "toggle",
 							name = L["Effect"],
 							get = function(info)

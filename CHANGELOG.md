@@ -1,6 +1,17 @@
 # Changelog - ElvUI_mMediaTag
 [Eng] - All changes to this project will be documented in this file. The latest changes are at the top.
 
+## [ver. 3.64] - 03.11.2024
+### UPDATE
+- UPDATE - [Details-Embedded]: Chatframe texture.
+- UPDATE - [System]: Boss IDs.
+- UPDATE - [System]: TOC update.
+### FIX 
+- FIX - [Details-Embedded]: Fixed Strata and Frame Level.
+- FIX - [Minimap-Aspectration]: Bug where the Border is not adjust correctly.
+- FIX - [Minimap-Aspectration]: Fixed Icon positions.
+- FIX - [System]: Bug in Cata wich prevents to open the Game menu from the mMT Dock & Datatexts.
+
 ## [ver. 3.63] - 24.10.2024
 ### UPDATE
 - UPDATE - [System]: TOC update.

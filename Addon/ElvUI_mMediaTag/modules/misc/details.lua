@@ -153,6 +153,19 @@ function mMT:DetailsEmbedded()
 			detailsEmbedded:SetPoint(point, chat, relativePoint, xOfs, yOfs)
 		end
 
+		-- Chat Panel Background Texture
+		if chat.tex then
+			local texture = (chatEmbedded == "RightChat") and E.db.chat.panelBackdropNameRight or E.db.chat.panelBackdropNameLeft
+			detailsEmbedded.tex = detailsEmbedded:CreateTexture(nil, 'OVERLAY')
+			detailsEmbedded.tex:ClearAllPoints()
+			detailsEmbedded.tex:SetPoint("TOPLEFT", chat, "TOPLEFT", 1, -1)
+			detailsEmbedded.tex:SetPoint("BOTTOMRIGHT", chat, "BOTTOMRIGHT", -1, 1)
+			detailsEmbedded.tex:SetTexture(texture)
+
+			local a = E.db.general.backdropfadecolor.a or 0.5
+			detailsEmbedded.tex:SetAlpha(a)
+		end
+
 		if windows > 1 then
 			local windowsWidth = (windows == 1) and chatWidth or chatWidth / 2
 			local windowsHeight = (windows <= 2) and chatHeight or chatHeight / 2
@@ -184,6 +197,8 @@ function mMT:DetailsEmbedded()
 				end
 			end)
 		end
+
+		detailsEmbedded:SetFrameStrata("BACKGROUND")
 
 		chat:Hide()
 		detailsEmbedded:Show()
