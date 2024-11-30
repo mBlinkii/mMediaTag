@@ -747,6 +747,7 @@ P.mMT = {
 			style = "a",
 			trilinear = true,
 			usetexturecolor = true,
+			deathcolor = false,
 		},
 		zoom = 0,
 		shadow = {
@@ -762,6 +763,10 @@ P.mMT = {
 			background = { r = 0, g = 0, b = 0, a = 1 },
 		},
 		colors = {
+			death = {
+				a = { r = 0.89, g = 0.61, b = 0.29, a = 1 },
+				b = { r = 0.89, g = 0.42, b = 0.16, a = 1 },
+			},
 			default = {
 				a = { r = 0.89, g = 0.61, b = 0.29, a = 1 },
 				b = { r = 0.89, g = 0.42, b = 0.16, a = 1 },

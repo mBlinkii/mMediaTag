@@ -74,10 +74,14 @@ end
 
 local cachedFaction = {}
 
-local function getColor(unit, isPlayer)
+local function getColor(unit, isPlayer, isDead)
 	local defaultColor = colors.default
 
 	if isPlayer == nil then isPlayer = UnitIsPlayer(unit) end
+
+	if E.db.mMT.portraits.general.deathcolor and isDead then
+		return colors.death
+	end
 
 	if E.db.mMT.portraits.general.default then return defaultColor end
 
@@ -126,7 +130,7 @@ local function UpdateIconBackground(tx, unit, mirror)
 end
 
 local function DeaddDesaturation(self)
-	if UnitIsDead(self.unit) then
+	if self.unit_is_dead then
 		self.portrait:SetDesaturated(true)
 		self.isDesaturated = true
 	elseif self.isDesaturated then
@@ -602,7 +606,7 @@ local castStarted = {
 	UNIT_SPELLCAST_EMPOWER_START = true,
 }
 
-local castStoped = {
+local castStopped = {
 	UNIT_SPELLCAST_INTERRUPTED = true,
 	UNIT_SPELLCAST_STOP = true,
 	UNIT_SPELLCAST_CHANNEL_STOP = true,
@@ -612,7 +616,7 @@ local castStoped = {
 local function UpdatePortraitTexture(self, unit)
 	if not InCombatLockdown() and self:GetAttribute("unit") ~= unit then self:SetAttribute("unit", unit) end
 	local isPlayer = UnitIsPlayer(unit)
-	local unitColor = getColor(unit, isPlayer)
+	local unitColor = getColor(unit, isPlayer, self.unit_is_dead)
 
 	SetPortraits(self, unit, false, self.settings.mirror)
 	setColor(self.texture, unitColor, self.settings.mirror)
@@ -631,7 +635,11 @@ local function UnitEvent(self, event)
 
 	local unit = self.unit
 
-	if castStoped[event] or (self.isCasting and not CastIcon(self)) then
+	if E.db.mMT.portraits.general.desaturation or E.db.mMT.portraits.general.deathcolor then
+		self.unit_is_dead = UnitIsDead(unit)
+	end
+
+	if castStopped[event] or (self.isCasting and not CastIcon(self)) then
 		self.isCasting = false
 		UpdatePortraitTexture(self, unit)
 	elseif self.isCasting or castStarted[event] then
