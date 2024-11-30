@@ -3335,7 +3335,7 @@ local function configTable()
 						toggle_death = {
 							order = 1,
 							type = "toggle",
-							name = L["Shadow"],
+							name = L["Enable"],
 							desc = L["Enable Death color"],
 							get = function(info)
 								return E.db.mMT.portraits.general.deathcolor
