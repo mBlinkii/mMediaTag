@@ -239,6 +239,7 @@ local function LoadSeriesK()
 	mAddStatusbar("mMediaTag K33", "k33.tga")
 	mAddStatusbar("mMediaTag K34", "k34.tga")
 	mAddStatusbar("mMediaTag K35", "k35.tga")
+	mAddStatusbar("mMediaTag K36", "k36.tga")
 end
 
 local function LoadSeriesL()

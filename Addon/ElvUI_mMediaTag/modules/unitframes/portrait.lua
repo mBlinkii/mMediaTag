@@ -74,10 +74,14 @@ end
 
 local cachedFaction = {}
 
-local function getColor(unit, isPlayer)
+local function getColor(unit, isPlayer, isDead)
 	local defaultColor = colors.default
 
 	if isPlayer == nil then isPlayer = UnitIsPlayer(unit) end
+
+	if E.db.mMT.portraits.general.deathcolor and isDead then
+		return colors.death
+	end
 
 	if E.db.mMT.portraits.general.default then return defaultColor end
 
@@ -126,7 +130,7 @@ local function UpdateIconBackground(tx, unit, mirror)
 end
 
 local function DeaddDesaturation(self)
-	if UnitIsDead(self.unit) then
+	if self.unit_is_dead then
 		self.portrait:SetDesaturated(true)
 		self.isDesaturated = true
 	elseif self.isDesaturated then
@@ -244,7 +248,12 @@ local function CheckRareElite(frame, unit, unitColor)
 		setColor(frame.extra, color)
 		if E.db.mMT.portraits.shadow.enable then
 			if frame.extraShadow then frame.extraShadow:Show() end
-			if E.db.mMT.portraits.shadow.border and frame.extraBorder then frame.extraBorder:Show() end
+			if E.db.mMT.portraits.shadow.border and frame.extraBorder then
+				local borderColor = colors.border[classification] or colors.border.default
+				setColor(frame.extraBorder, borderColor)
+				frame.extraBorder:Show()
+
+				end
 		end
 		frame.extra:Show()
 	else
@@ -348,19 +357,19 @@ local function UpdatePortrait(portraitFrame, force)
 	-- Portrait Border
 	if E.db.mMT.portraits.shadow.border then
 		texture = portraitFrame.textures.border
-		UpdateTexture(portraitFrame, "border", texture, 2, E.db.mMT.portraits.shadow.borderColor)
+		UpdateTexture(portraitFrame, "border", texture, 2, colors.border.default)
 	end
 
 	-- Rare/Elite Texture
 	if setting.extraEnable then
 		-- Texture
 		texture = portraitFrame.textures.rare.texture
-		UpdateTexture(portraitFrame, "extra", texture, -6, E.db.mMT.portraits.shadow.borderColor, not portraitFrame.settings.mirror)
+		UpdateTexture(portraitFrame, "extra", texture, -6, colors.border.default, not portraitFrame.settings.mirror)
 
 		-- Border
 		if E.db.mMT.portraits.shadow.border then
 			texture = portraitFrame.textures.rare.border
-			UpdateTexture(portraitFrame, "extraBorder", texture, -7, E.db.mMT.portraits.shadow.borderColorRare, not portraitFrame.settings.mirror)
+			UpdateTexture(portraitFrame, "extraBorder", texture, -7, colors.border.default, not portraitFrame.settings.mirror)
 			portraitFrame.extraBorder:Hide()
 		end
 
@@ -382,7 +391,7 @@ local function UpdatePortrait(portraitFrame, force)
 		-- Border
 		if E.db.mMT.portraits.shadow.border then
 			texture = portraitFrame.textures.corner.border
-			UpdateTexture(portraitFrame, "cornerBorder", texture, 6, E.db.mMT.portraits.shadow.borderColor)
+			UpdateTexture(portraitFrame, "cornerBorder", texture, 6, colors.border.default)
 			portraitFrame.cornerBorder:Show()
 		end
 
@@ -602,7 +611,7 @@ local castStarted = {
 	UNIT_SPELLCAST_EMPOWER_START = true,
 }
 
-local castStoped = {
+local castStopped = {
 	UNIT_SPELLCAST_INTERRUPTED = true,
 	UNIT_SPELLCAST_STOP = true,
 	UNIT_SPELLCAST_CHANNEL_STOP = true,
@@ -612,7 +621,7 @@ local castStoped = {
 local function UpdatePortraitTexture(self, unit)
 	if not InCombatLockdown() and self:GetAttribute("unit") ~= unit then self:SetAttribute("unit", unit) end
 	local isPlayer = UnitIsPlayer(unit)
-	local unitColor = getColor(unit, isPlayer)
+	local unitColor = getColor(unit, isPlayer, self.unit_is_dead)
 
 	SetPortraits(self, unit, false, self.settings.mirror)
 	setColor(self.texture, unitColor, self.settings.mirror)
@@ -631,7 +640,11 @@ local function UnitEvent(self, event)
 
 	local unit = self.unit
 
-	if castStoped[event] or (self.isCasting and not CastIcon(self)) then
+	if E.db.mMT.portraits.general.desaturation or E.db.mMT.portraits.general.deathcolor then
+		self.unit_is_dead = UnitIsDead(unit)
+	end
+
+	if castStopped[event] or (self.isCasting and not CastIcon(self)) then
 		self.isCasting = false
 		UpdatePortraitTexture(self, unit)
 	elseif self.isCasting or castStarted[event] then

@@ -17,7 +17,7 @@ function module:Initialize()
 		icons.tank.path = E.db.mMT.roleicons.customtank
 
 		icons.heal.icon = E:TextureString(E.db.mMT.roleicons.customheal, sizeString)
-		icons.heal.path = E.db.mMT.roleicons.customtheal
+		icons.heal.path = E.db.mMT.roleicons.customheal
 
 		icons.dd.icon = E:TextureString(E.db.mMT.roleicons.customdd, sizeString)
 		icons.dd.path = E.db.mMT.roleicons.customdd
