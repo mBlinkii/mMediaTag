@@ -2445,7 +2445,7 @@ local function configTable()
 							order = 1,
 							type = "group",
 							inline = true,
-							name = L["DEFAULT"],
+							name = L["Deafault"],
 							args = {
 								color_a = {
 									type = "color",
@@ -3071,7 +3071,7 @@ local function configTable()
 							order = 20,
 							type = "group",
 							inline = true,
-							name = L["BOSS"],
+							name = L["Boss"],
 							args = {
 								color_a = {
 									type = "color",
