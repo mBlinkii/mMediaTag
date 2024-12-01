@@ -1,11 +1,17 @@
 # Changelog - ElvUI_mMediaTag
 [Eng] - All changes to this project will be documented in this file. The latest changes are at the top.
 
-## [ver. 3.65] - XX.XX.2024
+## [ver. 3.65] - 01.12.2024
 ### UPDATE
-- UPDATE - [XXX]: XXX
+- UPDATE - [Portraits]: The color settings menu is now clearly sorted.
+- UPDATE - [System]: TOC update for Classic.
 ### FIX 
-- FIX - [XXX]: XXX
+- FIX - [Role-Icons]: Bug with custom role icons.
+- FIX - [TAG]: Bug with custom role icons.
+### NEW
+- New - [Portraits]: You can now set a Death texture color.
+- New - [Portraits]: You can now set separate border colors for rare/ elite/ rare elite/ boss.
+- New - [Texture]: Statusbar Texture K36.
 
 ## [ver. 3.64] - 03.11.2024
 ### UPDATE
