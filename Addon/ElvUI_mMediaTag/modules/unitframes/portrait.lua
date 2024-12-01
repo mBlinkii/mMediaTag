@@ -711,8 +711,8 @@ local function PartyUnitOnEvent(self, event, eventUnit)
 	end
 
 	if eventUnit == self.unit or forceUpdateParty[event] then UnitEvent(self, event) end
-
-	mMT:Print("DEBUG >>", "PARTY UNITS >>", "EVENT:", event, "UNIT:", self.unit, eventUnit, "SHOULD UPDATE:", "event > ", forceUpdateParty[event], "condition >", (eventUnit == self.unit or forceUpdateParty[event]))
+--#FE9204FF
+	mMT:Print("|CFF0489FEDEBUG|r >>", "|CFF8EFE04PARTY UNITS|r >>", "|CFFC804FEEVENT|r:", event, "|CFFF6FE04UNIT|r:", self.unit, eventUnit, "|CFF0492FESHOULD UPDATE|r:", "|CFFC804FEevent|r > ", forceUpdateParty[event], "|CFFFE9204condition|r >", (eventUnit == self.unit or forceUpdateParty[event]))
 end
 
 local function BossUnitOnEvent(self, event, eventUnit)
