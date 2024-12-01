@@ -756,13 +756,18 @@ P.mMT = {
 			border = true,
 			classBG = true,
 			bgColorShift = 0.25,
-			borderColor = { r = 0, g = 0, b = 0, a = 1 },
-			borderColorRare = { r = 1, g = 1, b = 1, a = 1 },
 			color = { r = 0.094, g = 0.094, b = 0.094, a = 0.6 },
 			innerColor = { r = 0.094, g = 0.094, b = 0.094, a = 0.75 },
 			background = { r = 0, g = 0, b = 0, a = 1 },
 		},
 		colors = {
+			border = {
+				default = { r = 0, g = 0, b = 0, a = 1 },
+				rare = { r = 1, g = 1, b = 1, a = 1  },
+				elite = { r = 1, g = 1, b = 1, a = 1  },
+				rareelite = { r = 1, g = 1, b = 1, a = 1  },
+				boss = { r = 1, g = 0, b = 0, a = 1 },
+			},
 			death = {
 				a = { r = 0.89, g = 0.61, b = 0.29, a = 1 },
 				b = { r = 0.89, g = 0.42, b = 0.16, a = 1 },

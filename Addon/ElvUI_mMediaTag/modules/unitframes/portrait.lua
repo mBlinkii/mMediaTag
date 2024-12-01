@@ -248,7 +248,12 @@ local function CheckRareElite(frame, unit, unitColor)
 		setColor(frame.extra, color)
 		if E.db.mMT.portraits.shadow.enable then
 			if frame.extraShadow then frame.extraShadow:Show() end
-			if E.db.mMT.portraits.shadow.border and frame.extraBorder then frame.extraBorder:Show() end
+			if E.db.mMT.portraits.shadow.border and frame.extraBorder then
+				local borderColor = colors.border[classification] or colors.border.default
+				setColor(frame.extraBorder, borderColor)
+				frame.extraBorder:Show()
+
+				end
 		end
 		frame.extra:Show()
 	else
@@ -352,19 +357,19 @@ local function UpdatePortrait(portraitFrame, force)
 	-- Portrait Border
 	if E.db.mMT.portraits.shadow.border then
 		texture = portraitFrame.textures.border
-		UpdateTexture(portraitFrame, "border", texture, 2, E.db.mMT.portraits.shadow.borderColor)
+		UpdateTexture(portraitFrame, "border", texture, 2, colors.border.default)
 	end
 
 	-- Rare/Elite Texture
 	if setting.extraEnable then
 		-- Texture
 		texture = portraitFrame.textures.rare.texture
-		UpdateTexture(portraitFrame, "extra", texture, -6, E.db.mMT.portraits.shadow.borderColor, not portraitFrame.settings.mirror)
+		UpdateTexture(portraitFrame, "extra", texture, -6, colors.border.default, not portraitFrame.settings.mirror)
 
 		-- Border
 		if E.db.mMT.portraits.shadow.border then
 			texture = portraitFrame.textures.rare.border
-			UpdateTexture(portraitFrame, "extraBorder", texture, -7, E.db.mMT.portraits.shadow.borderColorRare, not portraitFrame.settings.mirror)
+			UpdateTexture(portraitFrame, "extraBorder", texture, -7, colors.border.default, not portraitFrame.settings.mirror)
 			portraitFrame.extraBorder:Hide()
 		end
 
@@ -386,7 +391,7 @@ local function UpdatePortrait(portraitFrame, force)
 		-- Border
 		if E.db.mMT.portraits.shadow.border then
 			texture = portraitFrame.textures.corner.border
-			UpdateTexture(portraitFrame, "cornerBorder", texture, 6, E.db.mMT.portraits.shadow.borderColor)
+			UpdateTexture(portraitFrame, "cornerBorder", texture, 6, colors.border.default)
 			portraitFrame.cornerBorder:Show()
 		end
 

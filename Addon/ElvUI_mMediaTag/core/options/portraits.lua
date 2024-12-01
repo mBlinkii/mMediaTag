@@ -2313,7 +2313,7 @@ local function configTable()
 		header_shadow = {
 			order = 11,
 			type = "group",
-			name = L["Shadow/ Border"],
+			name = L["Shadow"],
 			args = {
 				shadow = {
 					order = 0,
@@ -2387,113 +2387,6 @@ local function configTable()
 						},
 					},
 				},
-				borders = {
-					order = 6,
-					type = "group",
-					inline = true,
-					name = L["Borders"],
-					args = {
-						toggle_border = {
-							order = 7,
-							type = "toggle",
-							name = L["Border"],
-							desc = L["Enable Borders"],
-							get = function(info)
-								return E.db.mMT.portraits.shadow.border
-							end,
-							set = function(info, value)
-								E.db.mMT.portraits.shadow.border = value
-								mMT.Modules.Portraits:Initialize()
-							end,
-						},
-						color_border = {
-							type = "color",
-							order = 8,
-							name = L["Border Color"],
-							hasAlpha = true,
-							get = function(info)
-								local t = E.db.mMT.portraits.shadow.borderColor
-								return t.r, t.g, t.b, t.a
-							end,
-							set = function(info, r, g, b, a)
-								local t = E.db.mMT.portraits.shadow.borderColor
-								t.r, t.g, t.b, t.a = r, g, b, a
-								mMT.Modules.Portraits:Initialize()
-							end,
-						},
-						color_rareborder = {
-							type = "color",
-							order = 9,
-							name = L["Rare Border Color"],
-							hasAlpha = true,
-							get = function(info)
-								local t = E.db.mMT.portraits.shadow.borderColorRare
-								return t.r, t.g, t.b, t.a
-							end,
-							set = function(info, r, g, b, a)
-								local t = E.db.mMT.portraits.shadow.borderColorRare
-								t.r, t.g, t.b, t.a = r, g, b, a
-								mMT.Modules.Portraits:Initialize()
-							end,
-						},
-					},
-				},
-				background = {
-					order = 10,
-					type = "group",
-					inline = true,
-					name = L["Background"],
-					args = {
-						color_background = {
-							type = "color",
-							order = 11,
-							name = L["Background color for Icons"],
-							hasAlpha = true,
-							get = function(info)
-								local t = E.db.mMT.portraits.shadow.background
-								return t.r, t.g, t.b, t.a
-							end,
-							set = function(info, r, g, b, a)
-								local t = E.db.mMT.portraits.shadow.background
-								t.r, t.g, t.b, t.a = r, g, b, a
-								mMT.Modules.Portraits:Initialize()
-							end,
-						},
-						toggle_classbg = {
-							order = 12,
-							type = "toggle",
-							name = L["Class colored Background"],
-							desc = L["Enable Class colored Background"],
-							get = function(info)
-								return E.db.mMT.portraits.shadow.classBG
-							end,
-							set = function(info, value)
-								E.db.mMT.portraits.shadow.classBG = value
-								mMT.Modules.Portraits:Initialize()
-							end,
-						},
-						range_bgColorShift = {
-							order = 14,
-							name = L["Background color shift"],
-							type = "range",
-							min = 0,
-							max = 1,
-							step = 0.01,
-							softMin = 0,
-							softMax = 1,
-							disabled = function()
-								return not E.db.mMT.portraits.shadow.classBG
-							end,
-							get = function(info)
-								return E.db.mMT.portraits.shadow.bgColorShift
-							end,
-							set = function(info, value)
-								E.db.mMT.portraits.shadow.bgColorShift = value
-								mMT.Modules.Portraits:Initialize()
-							end,
-						},
-					},
-				},
 			},
 		},
 		header_colors = {
@@ -2546,7 +2439,7 @@ local function configTable()
 				general_colors = {
 					order = 2,
 					type = "group",
-					name = L["General Colors"],
+					name = L["General"],
 					args = {
 						default = {
 							order = 1,
@@ -2589,7 +2482,7 @@ local function configTable()
 				class_colors = {
 					order = 3,
 					type = "group",
-					name = L["Class Colors"],
+					name = L["Class"],
 					args = {
 						DEATHKNIGHT = {
 							order = 3,
@@ -3064,7 +2957,7 @@ local function configTable()
 				clasification_colors = {
 					order = 4,
 					type = "group",
-					name = L["Clasification Colors"],
+					name = L["Clasification"],
 					args = {
 						rare = {
 							order = 17,
@@ -3215,7 +3108,7 @@ local function configTable()
 				reaction_colors = {
 					order = 5,
 					type = "group",
-					name = L["Reaction Colors"],
+					name = L["Reaction"],
 					args = {
 						enemy = {
 							order = 21,
@@ -3328,9 +3221,9 @@ local function configTable()
 					},
 				},
 				death_colors = {
-					order = 1,
+					order = 6,
 					type = "group",
-					name = L["Death Colors"],
+					name = L["Death"],
 					args = {
 						toggle_death = {
 							order = 1,
@@ -3380,6 +3273,167 @@ local function configTable()
 									end,
 								},
 							},
+						},
+					},
+				},
+				border_colors = {
+					order = 7,
+					type = "group",
+					name = L["Border"],
+					args = {
+						toggle_border = {
+							order = 1,
+							type = "toggle",
+							name = L["Border"],
+							desc = L["Enable Borders"],
+							get = function(info)
+								return E.db.mMT.portraits.shadow.border
+							end,
+							set = function(info, value)
+								E.db.mMT.portraits.shadow.border = value
+								mMT.Modules.Portraits:Initialize()
+							end,
+						},
+						default_color = {
+							order = 2,
+							type = "group",
+							inline = true,
+							name = L["Default"],
+							args = {
+								color_default = {
+									type = "color",
+									order = 2,
+									name = L["Default"],
+									hasAlpha = true,
+									get = function(info)
+										local t = E.db.mMT.portraits.colors.border.default
+										return t.r, t.g, t.b, t.a
+									end,
+									set = function(info, r, g, b, a)
+										local t = E.db.mMT.portraits.colors.border.default
+										t.r, t.g, t.b, t.a = r, g, b, a
+									end,
+								},
+							},
+						},
+						classification_color = {
+							order = 3,
+							type = "group",
+							inline = true,
+							name = L["Classification"],
+							args = {
+								color_rare = {
+									type = "color",
+									order = 1,
+									name = L["Rare"],
+									hasAlpha = true,
+									get = function(info)
+										local t = E.db.mMT.portraits.colors.border.rare
+										return t.r, t.g, t.b, t.a
+									end,
+									set = function(info, r, g, b, a)
+										local t = E.db.mMT.portraits.colors.border.rare
+										t.r, t.g, t.b, t.a = r, g, b, a
+									end,
+								},
+								color_elite = {
+									type = "color",
+									order = 2,
+									name = L["Elite"],
+									hasAlpha = true,
+									get = function(info)
+										local t = E.db.mMT.portraits.colors.border.elite
+										return t.r, t.g, t.b, t.a
+									end,
+									set = function(info, r, g, b, a)
+										local t = E.db.mMT.portraits.colors.border.elite
+										t.r, t.g, t.b, t.a = r, g, b, a
+									end,
+								},
+								color_rareelite = {
+									type = "color",
+									order = 3,
+									name = L["Rare Elite"],
+									hasAlpha = true,
+									get = function(info)
+										local t = E.db.mMT.portraits.colors.border.rareelite
+										return t.r, t.g, t.b, t.a
+									end,
+									set = function(info, r, g, b, a)
+										local t = E.db.mMT.portraits.colors.border.rareelite
+										t.r, t.g, t.b, t.a = r, g, b, a
+									end,
+								},
+								color_boss = {
+									type = "color",
+									order = 4,
+									name = L["Boss"],
+									hasAlpha = true,
+									get = function(info)
+										local t = E.db.mMT.portraits.colors.border.boss
+										return t.r, t.g, t.b, t.a
+									end,
+									set = function(info, r, g, b, a)
+										local t = E.db.mMT.portraits.colors.border.boss
+										t.r, t.g, t.b, t.a = r, g, b, a
+									end,
+								},
+							},
+						},
+					},
+				},
+				background_colors = {
+					order = 8,
+					type = "group",
+					name = L["Background"],
+					args = {
+						color_background = {
+							type = "color",
+							order = 11,
+							name = L["Background color for Icons"],
+							hasAlpha = true,
+							get = function(info)
+								local t = E.db.mMT.portraits.shadow.background
+								return t.r, t.g, t.b, t.a
+							end,
+							set = function(info, r, g, b, a)
+								local t = E.db.mMT.portraits.shadow.background
+								t.r, t.g, t.b, t.a = r, g, b, a
+								mMT.Modules.Portraits:Initialize()
+							end,
+						},
+						toggle_classbg = {
+							order = 12,
+							type = "toggle",
+							name = L["Class colored Background"],
+							desc = L["Enable Class colored Background"],
+							get = function(info)
+								return E.db.mMT.portraits.shadow.classBG
+							end,
+							set = function(info, value)
+								E.db.mMT.portraits.shadow.classBG = value
+								mMT.Modules.Portraits:Initialize()
+							end,
+						},
+						range_bgColorShift = {
+							order = 14,
+							name = L["Background color shift"],
+							type = "range",
+							min = 0,
+							max = 1,
+							step = 0.01,
+							softMin = 0,
+							softMax = 1,
+							disabled = function()
+								return not E.db.mMT.portraits.shadow.classBG
+							end,
+							get = function(info)
+								return E.db.mMT.portraits.shadow.bgColorShift
+							end,
+							set = function(info, value)
+								E.db.mMT.portraits.shadow.bgColorShift = value
+								mMT.Modules.Portraits:Initialize()
+							end,
 						},
 					},
 				},
