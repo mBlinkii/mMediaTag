@@ -127,7 +127,7 @@ function mMT:UpdateTagSettings()
 	if E.db.mMT.roleicons.enable then
 		if E.db.mMT.roleicons.customtexture then
 			icons.TANK = E:TextureString(E.db.mMT.roleicons.customtank, ":15:15")
-			icons.HEALER = E:TextureString(E.db.mMT.roleicons.customtheal, ":15:15")
+			icons.HEALER = E:TextureString(E.db.mMT.roleicons.customheal, ":15:15")
 			icons.DAMAGER = E:TextureString(E.db.mMT.roleicons.customdd, ":15:15")
 		else
 			icons.TANK = E:TextureString(mMT.Media.Role[E.db.mMT.roleicons.tank], ":15:15")
