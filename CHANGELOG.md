@@ -1,6 +1,14 @@
 # Changelog - ElvUI_mMediaTag
 [Eng] - All changes to this project will be documented in this file. The latest changes are at the top.
 
+## [ver. 3.66] - xx.xx.xxxx
+### UPDATE
+- UPDATE - [xxx]: xxx
+### FIX 
+- FIX - [xxx]: xxx
+### NEW
+- New - [xxx]: xxx
+
 ## [ver. 3.65] - 01.12.2024
 ### UPDATE
 - UPDATE - [Portraits]: The color settings menu is now clearly sorted.
