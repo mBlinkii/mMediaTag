@@ -5,7 +5,7 @@
 ### UPDATE
 - UPDATE - [Portraits]: Diesabled per default Texture color for rare/ elite/ boss Texture.
 ### FIX 
-- FIX - [Portraits]: Fix bug with color DB and the new Border colors, when Eltruism r MUI colors are enabled.
+- FIX - [Portraits]: Fix bug with color DB and the new Border colors, when Eltruism 0r MUI colors are enabled.
 - FIX - [Portraits]: Party Portraits should update properly in classic.
 
 ## [ver. 3.65] - 01.12.2024
