@@ -1,13 +1,12 @@
 # Changelog - ElvUI_mMediaTag
 [Eng] - All changes to this project will be documented in this file. The latest changes are at the top.
 
-## [ver. 3.66] - xx.xx.xxxx
+## [ver. 3.66] - 02.12.2024
 ### UPDATE
-- UPDATE - [xxx]: xxx
+- UPDATE - [Portraits]: Diesabled per default Texture color for rare/ elite/ boss Texture.
 ### FIX 
-- FIX - [xxx]: xxx
-### NEW
-- New - [xxx]: xxx
+- FIX - [Portraits]: Fix bug with color DB and the new Border colors, when Eltruism r MUI colors are enabled.
+- FIX - [Portraits]: Party Portraits should update properly in classic.
 
 ## [ver. 3.65] - 01.12.2024
 ### UPDATE
