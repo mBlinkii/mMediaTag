@@ -231,7 +231,7 @@ end
 
 local simpleClassification = {
 	worldboss = "boss",
-	rareelite = "rare",
+	rareelite = "rareelite",
 	elite = "elite",
 	rare = "rare",
 }
@@ -357,19 +357,19 @@ local function UpdatePortrait(portraitFrame, force)
 	-- Portrait Border
 	if E.db.mMT.portraits.shadow.border then
 		texture = portraitFrame.textures.border
-		UpdateTexture(portraitFrame, "border", texture, 2, E.db.mMT.portraits.colors.border.default)
+		UpdateTexture(portraitFrame, "border", texture, 2, colors.border.default)
 	end
 
 	-- Rare/Elite Texture
 	if setting.extraEnable then
 		-- Texture
 		texture = portraitFrame.textures.rare.texture
-		UpdateTexture(portraitFrame, "extra", texture, -6, E.db.mMT.portraits.colors.border.default, not portraitFrame.settings.mirror)
+		UpdateTexture(portraitFrame, "extra", texture, -6, colors.border.default, not portraitFrame.settings.mirror)
 
 		-- Border
 		if E.db.mMT.portraits.shadow.border then
 			texture = portraitFrame.textures.rare.border
-			UpdateTexture(portraitFrame, "extraBorder", texture, -7, E.db.mMT.portraits.colors.border.default, not portraitFrame.settings.mirror)
+			UpdateTexture(portraitFrame, "extraBorder", texture, -7, colors.border.default, not portraitFrame.settings.mirror)
 			portraitFrame.extraBorder:Hide()
 		end
 
@@ -391,7 +391,7 @@ local function UpdatePortrait(portraitFrame, force)
 		-- Border
 		if E.db.mMT.portraits.shadow.border then
 			texture = portraitFrame.textures.corner.border
-			UpdateTexture(portraitFrame, "cornerBorder", texture, 6, E.db.mMT.portraits.colors.border.default)
+			UpdateTexture(portraitFrame, "cornerBorder", texture, 6, colors.border.default)
 			portraitFrame.cornerBorder:Show()
 		end
 
@@ -664,6 +664,7 @@ local function setColors(sourceColors, targetColors)
 	targetColors.rare = sourceColors.rare
 	targetColors.rareelite = sourceColors.rareelite
 	targetColors.elite = sourceColors.elite
+	colors.border = E.db.mMT.portraits.colors.border
 end
 
 local function ConfigureColors()
@@ -710,9 +711,18 @@ local function PartyUnitOnEvent(self, event, eventUnit)
 		self.eventDesaturationIsSet = true
 	end
 
-	if eventUnit == self.unit or forceUpdateParty[event] then UnitEvent(self, event) end
---#FE9204FF
-	mMT:Print("|CFF0489FEDEBUG|r >>", "|CFF8EFE04PARTY UNITS|r >>", "|CFFC804FEEVENT|r:", event, "|CFFF6FE04UNIT|r:", self.unit, eventUnit, "|CFF0492FESHOULD UPDATE|r:", "|CFFC804FEevent|r > ", forceUpdateParty[event], "|CFFFE9204condition|r >", (eventUnit == self.unit or forceUpdateParty[event]))
+	if event == "GROUP_ROSTER_UPDATE" then
+		-- force party portraits update
+		for i = 1, 5 do
+			module["Party" .. i].unit = module["Party" .. i].parent.unit
+			UnitEvent(module["Party" .. i], event)
+		end
+	elseif eventUnit == self.unit or forceUpdateParty[event] then
+		UnitEvent(self, event)
+	end
+
+	--#FE9204FF
+	--mMT:Print("|CFF0489FEDEBUG|r >>", "|CFF8EFE04PARTY UNITS|r >>", "|CFFC804FEEVENT|r:", event, "|CFFF6FE04UNIT|r:", self.unit, eventUnit, "|CFF0492FESHOULD UPDATE|r:", "|CFFC804FEevent|r > ", forceUpdateParty[event], "|CFFFE9204condition|r >", (eventUnit == self.unit or forceUpdateParty[event]))
 end
 
 local function BossUnitOnEvent(self, event, eventUnit)

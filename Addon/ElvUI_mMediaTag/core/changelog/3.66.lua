@@ -1,7 +1,10 @@
 mMT.Changelog[366]  = {
-	DATE = "Dev not",
-	IMPORTANT = { "there is nothing new here" },
-	NEW = { "there is nothing new here" },
-	UPDATE = { "there is nothing new here" },
-	FIX = { "there is nothing new here" },
+	DATE = "02.12.2024",
+	UPDATE = {
+		"[Portraits]: Diesabled per default Texture color for rare/ elite/ boss Texture."
+	 },
+	FIX = {
+		"[Portraits]: Fix bug with color DB and the new Border colors, when Eltruism r MUI colors are enabled.",
+		"[Portraits]: Party Portraits should update properly in classic."
+	 },
 }

@@ -746,7 +746,7 @@ P.mMT = {
 			reaction = false,
 			style = "a",
 			trilinear = true,
-			usetexturecolor = true,
+			usetexturecolor = false,
 			deathcolor = false,
 		},
 		zoom = 0,
