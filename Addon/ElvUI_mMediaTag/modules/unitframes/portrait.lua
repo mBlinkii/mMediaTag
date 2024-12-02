@@ -129,7 +129,7 @@ local function UpdateIconBackground(tx, unit, mirror)
 	setColor(tx, bgColor, mirror)
 end
 
-local function DeaddDesaturation(self)
+local function DeadDesaturation(self)
 	if self.unit_is_dead then
 		self.portrait:SetDesaturated(true)
 		self.isDesaturated = true
@@ -169,7 +169,7 @@ local function SetPortraits(frame, unit, masking, mirror)
 		SetPortraitTexture(frame.portrait, unit, true)
 	end
 
-	if E.db.mMT.portraits.general.desaturation then DeaddDesaturation(frame) end
+	if E.db.mMT.portraits.general.desaturation then DeadDesaturation(frame) end
 
 	mirrorTexture(frame.portrait, mirror)
 end
@@ -690,7 +690,7 @@ local function shouldHandleEvent(event, eventUnit, self)
 		or eventUnit == self.unit
 end
 
-local foceUpdateParty = {
+local forceUpdateParty = {
 	UNIT_CONNECTION = true,
 	GROUP_ROSTER_UPDATE = true,
 	PARTY_MEMBER_ENABLE = true,
@@ -700,7 +700,7 @@ local foceUpdateParty = {
 local function PartyUnitOnEvent(self, event, eventUnit)
 	if not UnitExists(self.parent.unit) then return end
 
-	if event == "UNIT_HEALTH" and eventUnit == self.unit then DeaddDesaturation(self) end
+	if event == "UNIT_HEALTH" and eventUnit == self.unit then DeadDesaturation(self) end
 
 	self.unit = self.parent.unit
 
@@ -710,13 +710,15 @@ local function PartyUnitOnEvent(self, event, eventUnit)
 		self.eventDesaturationIsSet = true
 	end
 
-	if eventUnit == self.unit or foceUpdateParty[event] then UnitEvent(self, event) end
+	if eventUnit == self.unit or forceUpdateParty[event] then UnitEvent(self, event) end
+--#FE9204FF
+	mMT:Print("|CFF0489FEDEBUG|r >>", "|CFF8EFE04PARTY UNITS|r >>", "|CFFC804FEEVENT|r:", event, "|CFFF6FE04UNIT|r:", self.unit, eventUnit, "|CFF0492FESHOULD UPDATE|r:", "|CFFC804FEevent|r > ", forceUpdateParty[event], "|CFFFE9204condition|r >", (eventUnit == self.unit or forceUpdateParty[event]))
 end
 
 local function BossUnitOnEvent(self, event, eventUnit)
 	if not UnitExists(self.parent.unit) then return end
 
-	if event == "UNIT_HEALTH" and eventUnit == self.unit then DeaddDesaturation(self) end
+	if event == "UNIT_HEALTH" and eventUnit == self.unit then DeadDesaturation(self) end
 
 	if eventUnit == self.unit or event == "INSTANCE_ENCOUNTER_ENGAGE_UNIT" or event == "PORTRAITS_UPDATED" then UnitEvent(self, event) end
 end
@@ -724,7 +726,7 @@ end
 local function PlayerPetUnitOnEvent(self, event, eventUnit)
 	if not UnitExists(self.parent.unit) then return end
 
-	if event == "UNIT_HEALTH" and eventUnit == self.unit then DeaddDesaturation(self) end
+	if event == "UNIT_HEALTH" and eventUnit == self.unit then DeadDesaturation(self) end
 
 	if eventUnit == "vehicle" or _G.ElvUF_Player.unit == "vehicle" then
 		self.unit = (self.parent.realUnit == "player") and "pet" or "player"
@@ -738,7 +740,7 @@ end
 local function OtherUnitOnEnevt(self, event, eventUnit)
 	if not UnitExists(self.unit) then return end
 
-	if event == "UNIT_HEALTH" and eventUnit == self.unit then DeaddDesaturation(self) end
+	if event == "UNIT_HEALTH" and eventUnit == self.unit then DeadDesaturation(self) end
 
 	if shouldHandleEvent(event, eventUnit, self) then UnitEvent(self, event) end
 end
