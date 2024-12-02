@@ -711,9 +711,18 @@ local function PartyUnitOnEvent(self, event, eventUnit)
 		self.eventDesaturationIsSet = true
 	end
 
-	if eventUnit == self.unit or forceUpdateParty[event] then UnitEvent(self, event) end
---#FE9204FF
-	mMT:Print("|CFF0489FEDEBUG|r >>", "|CFF8EFE04PARTY UNITS|r >>", "|CFFC804FEEVENT|r:", event, "|CFFF6FE04UNIT|r:", self.unit, eventUnit, "|CFF0492FESHOULD UPDATE|r:", "|CFFC804FEevent|r > ", forceUpdateParty[event], "|CFFFE9204condition|r >", (eventUnit == self.unit or forceUpdateParty[event]))
+	if event == "GROUP_ROSTER_UPDATE" then
+		-- force party portraits update
+		for i = 1, 5 do
+			module["Party" .. i].unit = module["Party" .. i].parent.unit
+			UnitEvent(module["Party" .. i], event)
+		end
+	elseif eventUnit == self.unit or forceUpdateParty[event] then
+		UnitEvent(self, event)
+	end
+
+	--#FE9204FF
+	--mMT:Print("|CFF0489FEDEBUG|r >>", "|CFF8EFE04PARTY UNITS|r >>", "|CFFC804FEEVENT|r:", event, "|CFFF6FE04UNIT|r:", self.unit, eventUnit, "|CFF0492FESHOULD UPDATE|r:", "|CFFC804FEevent|r > ", forceUpdateParty[event], "|CFFFE9204condition|r >", (eventUnit == self.unit or forceUpdateParty[event]))
 end
 
 local function BossUnitOnEvent(self, event, eventUnit)
