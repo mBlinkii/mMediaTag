@@ -1,4 +1,4 @@
-mMT.Changelog[111]  = {
+mMT.Changelog[3.67]  = {
 	DATE = "Dev not",
 	IMPORTANT = { "there is nothing new here" },
 	NEW = { "there is nothing new here" },
