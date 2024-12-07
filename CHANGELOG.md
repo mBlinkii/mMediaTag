@@ -1,6 +1,14 @@
 # Changelog - ElvUI_mMediaTag
 [Eng] - All changes to this project will be documented in this file. The latest changes are at the top.
 
+## [ver. 3.67] - 07.12.2024
+### FIX 
+- FIX - [Portraits]: Fix bug with rare elite units and the new Border colors.
+- FIX - [Cosmeticbars]: Fixed Border Visibility settings if Cosmeticbars is applied to the panel.
+### NEW
+- NEW - [Datatext-Professions] Add new Custom Icons for Professions to the professions datatexts.
+- NEW - [Textures] Statusbar Texture mMT Dark.
+
 ## [ver. 3.66] - 02.12.2024
 ### UPDATE
 - UPDATE - [Portraits]: Diesabled per default Texture color for rare/ elite/ boss Texture.
