@@ -242,7 +242,6 @@ local function CheckRareElite(frame, unit, unitColor)
 	local npcID = GetNPCID(unit)
 	local classification = (bossIDs[npcID] and "boss" or simpleClassification[c])
 
-	mMT:Print(classification, c)
 	if classification then
 		local color = useTextureColor and (unitColor or colors[classification]) or colors[classification]
 
