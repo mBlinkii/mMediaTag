@@ -44,8 +44,10 @@ local function OnEnter(self)
 	DT.tooltip:AddLine(" ")
 	if next(menuList) then
 		for i = 1, #menuList do
-			if not menuList[i].isTitle and not (menuList[i].text == TRADE_SKILLS) then
-				DT.tooltip:AddDoubleLine((mMT:mIcon(menuList[i].icon) or "") .. "  " .. menuList[i].color .. menuList[i].text .. "|r", menuList[i].Secondtext)
+			if not menuList[i].isTitle and menuList[i].text ~= TRADE_SKILLS then
+				local icon = menuList[i].icon
+				if E.db.mMT.profession.iconStyle ~= "default" then icon = mMT:GetCustomProfessionIcon(menuList[i].text, E.db.mMT.profession.iconStyle) or icon end
+				DT.tooltip:AddDoubleLine((mMT:mIcon(icon) or "") .. "  " .. menuList[i].color .. menuList[i].text .. "|r", menuList[i].Secondtext)
 			end
 		end
 

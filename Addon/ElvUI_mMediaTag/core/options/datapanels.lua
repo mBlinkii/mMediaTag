@@ -66,7 +66,7 @@ local function configTable()
 						if not E.db.mMT.cosmeticbars.bars[value] then
 							E.db.mMT.cosmeticbars.bars[value] = {
 								bg = { style = "custom", color = { r = 1, g = 1, b = 1, a = 1 } },
-								border = { style = "custom", color = { r = 1, g = 1, b = 1 } },
+								border = { style = "custom", color = { r = 1, g = 1, b = 1, a = 1 } },
 								texture = { enable = false, file = "Solid" },
 							}
 						end
@@ -188,16 +188,32 @@ local function configTable()
 						color = {
 							type = "color",
 							order = 2,
-							name = L["BG Color"],
+							name = L["Color"],
 							hasAlpha = false,
 							get = function(info)
-								local t = E.db.mMT.cosmeticbars.bars[Selected] and E.db.mMT.cosmeticbars.bars[Selected].border.color or { r = 1, g = 1, b = 1 }
+								local t = E.db.mMT.cosmeticbars.bars[Selected] and E.db.mMT.cosmeticbars.bars[Selected].border.color or { r = 1, g = 1, b = 1, a = 1 }
 								return t.r, t.g, t.b
 							end,
-							set = function(info, r, g, b, a)
+							set = function(info, r, g, b)
 								if E.db.mMT.cosmeticbars.bars[Selected] then
 									local t = E.db.mMT.cosmeticbars.bars[Selected].border.color
-									t.r, t.g, t.b, t.a = r, g, b, a
+									t.r, t.g, t.b = r, g, b
+								end
+							end,
+						},
+						alpha = {
+							order = 3,
+							name = L["Alpha"],
+							type = "range",
+							min = 0,
+							max = 1,
+							step = 0.01,
+							get = function(info)
+								return E.db.mMT.cosmeticbars.bars[Selected] and E.db.mMT.cosmeticbars.bars[Selected].border.color.a or 1
+							end,
+							set = function(info, value)
+								if E.db.mMT.cosmeticbars.bars[Selected] then
+									E.db.mMT.cosmeticbars.bars[Selected].border.color.a = value
 								end
 							end,
 						},

@@ -55,6 +55,7 @@ P.mMT = {
 	singleProfession = {
 		icon = true,
 		whiteText = true,
+		iconStyle = "default",
 	},
 	durabilityIlevel = {
 		mount = 460,
@@ -132,7 +133,7 @@ P.mMT = {
 		},
 	},
 	teleports = { anchorCursor = false, icon = false, customicon = "TP1", whiteText = true },
-	profession = { icon = false, proficon = true, whiteText = true },
+	profession = { icon = false, proficon = true, whiteText = true,iconStyle = "default", },
 	dungeon = { icon = false, texttoname = true, key = true, score = true, affix = true },
 	instancedifficulty = {
 		enable = false,
@@ -619,7 +620,7 @@ P.mMT = {
 			boss = "a",
 		},
 		player = {
-			flippe = false,
+			flipe = false,
 			cast = false,
 			enable = true,
 			texture = "drop",
@@ -633,7 +634,7 @@ P.mMT = {
 			level = 20,
 		},
 		pet = {
-			flippe = false,
+			flipe = false,
 			enable = false,
 			texture = "drop",
 			mirror = false,
@@ -646,7 +647,7 @@ P.mMT = {
 			level = 20,
 		},
 		target = {
-			flippe = false,
+			flipe = false,
 			cast = false,
 			enable = true,
 			texture = "drop",
@@ -661,7 +662,7 @@ P.mMT = {
 			level = 20,
 		},
 		targettarget = {
-			flippe = false,
+			flipe = false,
 			enable = true,
 			texture = "drop",
 			extraEnable = true,
@@ -675,7 +676,7 @@ P.mMT = {
 			level = 20,
 		},
 		focus = {
-			flippe = false,
+			flipe = false,
 			cast = false,
 			enable = false,
 			texture = "drop",
@@ -690,7 +691,7 @@ P.mMT = {
 			level = 20,
 		},
 		party = {
-			flippe = false,
+			flipe = false,
 			cast = false,
 			enable = true,
 			texture = "drop",
@@ -704,7 +705,7 @@ P.mMT = {
 			level = 20,
 		},
 		boss = {
-			flippe = false,
+			flipe = false,
 			cast = false,
 			enable = false,
 			texture = "drop",
@@ -718,7 +719,7 @@ P.mMT = {
 			level = 20,
 		},
 		arena = {
-			flippe = false,
+			flipe = false,
 			cast = false,
 			enable = false,
 			texture = "drop",

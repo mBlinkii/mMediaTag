@@ -38,12 +38,16 @@ local function UpdatePanelColors(_, name, panel)
 
 		if conf.bg.style ~= "disabled" then
 			color = getColor(conf.bg)
-			panel:SetBackdropColor(color.r, color.g, color.b, conf.bg.color.a)
+			panel:SetBackdropColor(color.r, color.g, color.b, conf.bg.color.a or 1)
 		end
 
-		if conf.border.style ~= "disabled" then
+		if  conf.border.style ~= "disabled" then
 			color = getColor(conf.border)
-			panel:SetBackdropBorderColor(color.r, color.g, color.b)
+			panel:SetBackdropBorderColor(color.r, color.g, color.b, conf.border.color.a or 1)
+		end
+
+		if not panel.db.border then
+			panel:SetBackdropBorderColor(0,0,0,0)
 		end
 	end
 end

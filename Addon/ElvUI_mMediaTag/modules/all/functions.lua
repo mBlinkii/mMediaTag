@@ -363,7 +363,12 @@ function mMT:GetProfessionsd(tooltip)
 			else
 				tinsert(
 					MenuTable,
-					{ text = format("|T%s:14:14:0:0:64:64:5:59:5:59|t %s", "136241", TRADE_SKILLS), color = "|CFFBC26E5", isTitle = false, macro = "/click SpellbookMicroButton\n/click SpellBookFrameTabButton2" }
+					{
+						text = format("|T%s:14:14:0:0:64:64:5:59:5:59|t %s", "136241", TRADE_SKILLS),
+						color = "|CFFBC26E5",
+						isTitle = false,
+						macro = "/click SpellbookMicroButton\n/click SpellBookFrameTabButton2",
+					}
 				)
 			end
 
@@ -384,6 +389,58 @@ function mMT:GetProfessionsd(tooltip)
 	end
 end
 
+local PROFESSION_ALCHEMY = L["PROFESSION_ALCHEMY"]
+local PROFESSION_BLACKSMITHING = L["PROFESSION_BLACKSMITHING"]
+local PROFESSION_ENCHANTING = L["PROFESSION_ENCHANTING"]
+local PROFESSION_ENGINEERING = L["PROFESSION_ENGINEERING"]
+local PROFESSION_HERBALISM = L["PROFESSION_HERBALISM"]
+local PROFESSION_INSCRIPTION = L["PROFESSION_INSCRIPTION"]
+local PROFESSION_JEWELCRAFTING = L["PROFESSION_JEWELCRAFTING"]
+local PROFESSION_LEATHERWORKING = L["PROFESSION_LEATHERWORKING"]
+local PROFESSION_MINING = L["PROFESSION_MINING"]
+local PROFESSION_SKINNING = L["PROFESSION_SKINNING"]
+local PROFESSION_TAILORING = L["PROFESSION_TAILORING"]
+
+local alternativeIcons = {
+	color = {
+		[PROFESSION_ALCHEMY] = "Interface\\AddOns\\ElvUI_mMediaTag\\media\\icons\\professions\\alchemy.tga", -- Alchemy
+		[PROFESSION_BLACKSMITHING] = "Interface\\AddOns\\ElvUI_mMediaTag\\media\\icons\\professions\\blacksmithing.tga", -- Blacksmithing
+		[PROFESSION_ENCHANTING] = "Interface\\AddOns\\ElvUI_mMediaTag\\media\\icons\\professions\\enchanting.tga", -- Enchanting
+		[PROFESSION_ENGINEERING] = "Interface\\AddOns\\ElvUI_mMediaTag\\media\\icons\\professions\\engineering.tga", -- Engineering
+		[PROFESSION_HERBALISM] = "Interface\\AddOns\\ElvUI_mMediaTag\\media\\icons\\professions\\herbalism.tga", -- Herbalism
+		[PROFESSION_INSCRIPTION] = "Interface\\AddOns\\ElvUI_mMediaTag\\media\\icons\\professions\\inscription.tga", -- Inscription
+		[PROFESSION_JEWELCRAFTING] = "Interface\\AddOns\\ElvUI_mMediaTag\\media\\icons\\professions\\Jewelcrafting.tga", -- Jewelcrafting
+		[PROFESSION_LEATHERWORKING] = "Interface\\AddOns\\ElvUI_mMediaTag\\media\\icons\\professions\\leatherworking.tga", -- Leatherworking
+		[PROFESSION_MINING] = "Interface\\AddOns\\ElvUI_mMediaTag\\media\\icons\\professions\\mining.tga", -- Mining
+		[PROFESSION_SKINNING] = "Interface\\AddOns\\ElvUI_mMediaTag\\media\\icons\\professions\\skinning.tga", -- Skinning
+		[PROFESSION_TAILORING] = "Interface\\AddOns\\ElvUI_mMediaTag\\media\\icons\\professions\\tailoring.tga", -- Tailoring
+		[PROFESSIONS_ARCHAEOLOGY] = "Interface\\AddOns\\ElvUI_mMediaTag\\media\\icons\\professions\\archaeology.tga", -- Archaeology
+		[PROFESSIONS_COOKING] = "Interface\\AddOns\\ElvUI_mMediaTag\\media\\icons\\professions\\cooking.tga", -- Cooking
+		[PROFESSIONS_FIRST_AID] = "Interface\\AddOns\\ElvUI_mMediaTag\\media\\icons\\professions\\firstaid.tga", -- First AId
+		[PROFESSIONS_FISHING] = "Interface\\AddOns\\ElvUI_mMediaTag\\media\\icons\\professions\\fishing.tga", -- Fishing
+	},
+	withe = {
+		[PROFESSION_ALCHEMY] = "Interface\\AddOns\\ElvUI_mMediaTag\\media\\icons\\professions\\alchemy_w.tga", -- Alchemy
+		[PROFESSION_BLACKSMITHING] = "Interface\\AddOns\\ElvUI_mMediaTag\\media\\icons\\professions\\blacksmithing_w.tga", -- Blacksmithing
+		[PROFESSION_ENCHANTING] = "Interface\\AddOns\\ElvUI_mMediaTag\\media\\icons\\professions\\enchanting_w.tga", -- Enchanting
+		[PROFESSION_ENGINEERING] = "Interface\\AddOns\\ElvUI_mMediaTag\\media\\icons\\professions\\engineering_w.tga", -- Engineering
+		[PROFESSION_HERBALISM] = "Interface\\AddOns\\ElvUI_mMediaTag\\media\\icons\\professions\\herbalism_w.tga", -- Herbalism
+		[PROFESSION_INSCRIPTION] = "Interface\\AddOns\\ElvUI_mMediaTag\\media\\icons\\professions\\inscription_w.tga", -- Inscription
+		[PROFESSION_JEWELCRAFTING] = "Interface\\AddOns\\ElvUI_mMediaTag\\media\\icons\\professions\\Jewelcrafting_w.tga", -- Jewelcrafting
+		[PROFESSION_LEATHERWORKING] = "Interface\\AddOns\\ElvUI_mMediaTag\\media\\icons\\professions\\leatherworking_w.tga", -- Leatherworking
+		[PROFESSION_MINING] = "Interface\\AddOns\\ElvUI_mMediaTag\\media\\icons\\professions\\mining_w.tga", -- Mining
+		[PROFESSION_SKINNING] = "Interface\\AddOns\\ElvUI_mMediaTag\\media\\icons\\professions\\skinning_w.tga", -- Skinning
+		[PROFESSION_TAILORING] = "Interface\\AddOns\\ElvUI_mMediaTag\\media\\icons\\professions\\tailoring_w.tga", -- Tailoring
+		[PROFESSIONS_ARCHAEOLOGY] = "Interface\\AddOns\\ElvUI_mMediaTag\\media\\icons\\professions\\archaeology_w.tga", -- Archaeology
+		[PROFESSIONS_COOKING] = "Interface\\AddOns\\ElvUI_mMediaTag\\media\\icons\\professions\\cooking_w.tga", -- Cooking
+		[PROFESSIONS_FIRST_AID] = "Interface\\AddOns\\ElvUI_mMediaTag\\media\\icons\\professions\\firstaid_w.tga", -- First AId
+		[PROFESSIONS_FISHING] = "Interface\\AddOns\\ElvUI_mMediaTag\\media\\icons\\professions\\fishing_w.tga", -- Fishing
+	},
+}
+function mMT:GetCustomProfessionIcon(profession, style)
+	return alternativeIcons[style][profession]
+end
+
 function mMT:GetProfessions(tooltip)
 	local MenuTable = {}
 	local ProfTable = BuildProfTable()
@@ -394,7 +451,9 @@ function mMT:GetProfessions(tooltip)
 			textA = E.db.mMT.datatextcolors.colortitle.hex .. L[title] .. "|r"
 			InsertInTable(MenuTable, textA, nil, true)
 			for _, prof in pairs(ProfTable[profType]) do
-				InsertInTable(MenuTable, prof.name, prof.skill, false, prof.icon, prof.color, prof.spell)
+				local icon = prof.icon
+				if E.db.mMT.profession.iconStyle ~= "default" then icon = mMT:GetCustomProfessionIcon(prof.name, E.db.mMT.profession.iconStyle) or icon end
+				InsertInTable(MenuTable, prof.name, prof.skill, false, icon, prof.color, prof.spell)
 			end
 			InsertInTable(MenuTable, "", nil, true)
 		else
@@ -416,7 +475,7 @@ function mMT:GetProfessions(tooltip)
 				color = "|CFFBC26E5",
 				isTitle = false,
 				func = E.Retail and _G.ToggleProfessionsBook or nil,
-				macro = not E.Retail and "/click SpellbookMicroButton\n/click SpellBookFrameTabButton2" or nil
+				macro = not E.Retail and "/click SpellbookMicroButton\n/click SpellBookFrameTabButton2" or nil,
 			}
 			tinsert(MenuTable, tradeSkillsEntry)
 

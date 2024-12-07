@@ -145,7 +145,7 @@ local function configTable()
                 withe = {
 					order = 3,
 					type = "toggle",
-					name = L["Allways withe"],
+					name = L["Always withe"],
                     disabled = function()
                         return not E.db.mMT.unitframeicons.phase.color.enable
                     end,

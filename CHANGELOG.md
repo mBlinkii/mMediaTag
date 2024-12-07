@@ -1,6 +1,14 @@
 # Changelog - ElvUI_mMediaTag
 [Eng] - All changes to this project will be documented in this file. The latest changes are at the top.
 
+## [ver. 3.67] - 07.12.2024
+### FIX 
+- FIX - [Cosmeticbars]: Fixed Border Visibility settings if Cosmeticbars is applied to the panel.
+- FIX - [Portraits]: Fix bug with rare elite units and the new Border colors.
+### NEW
+- NEW - [Datatext-Professions] Add new Custom Icons for Professions to the professions datatexts.
+- NEW - [Textures] Statusbar Texture mMT Dark.
+
 ## [ver. 3.66] - 02.12.2024
 ### UPDATE
 - UPDATE - [Portraits]: Diesabled per default Texture color for rare/ elite/ boss Texture.
@@ -289,7 +297,7 @@
 ## [ver. 3.42] - 28.06.2024
 ### FIX
 - FIX - Removed debug print.
-- FIX - Portraits Optimized code and fixed flipped drop texture (black background)
+- FIX - Portraits Optimized code and fixed fliped drop texture (black background)
 ### Update
 - UPDATE - Add Stone of the Hearth and Draenic Hologem to TP datatext (thx to Merathilis)
 ### NEW
@@ -311,7 +319,7 @@
 - UPDATE - White text setting for Profession data text.
 - UPDATE - NEW: Icon for Teleports data text.
 - UPDATE - Portraits texture names.
-- UPDATE - Removed Portraits texture simple square and added flipped Versions for Drop texture.
+- UPDATE - Removed Portraits texture simple square and added fliped Versions for Drop texture.
 ### NEW
 - NEW - Portraits can now use custom textures.
 - NEW - Portraits can now show cast icon, available for player, target, focus, party, boss, and arena.

@@ -196,12 +196,13 @@ local function UpdateTexture(portraitFrame, textureType, texture, level, color, 
 	local mirror = portraitFrame.settings.mirror
 	SetTextures(portraitFrame[textureType], texture)
 	if reverse ~= nil then mirror = reverse end
-	mirrorTexture(portraitFrame[textureType], mirror, portraitFrame.textures.flipp)
+	mirrorTexture(portraitFrame[textureType], mirror, portraitFrame.textures.flip)
 
 	if color then setColor(portraitFrame[textureType], color, mirror) end
 end
 
 local function UpdateExtraTexture(portraitFrame, classification)
+	classification = (classification == "rareelite") and "rare" or classification
 	local extraTextures = portraitFrame.textures[classification] and portraitFrame.textures[classification].texture
 	SetTextures(portraitFrame.extra, extraTextures)
 
@@ -329,7 +330,7 @@ local function UpdatePortrait(portraitFrame, force)
 	portraitFrame.mask:SetTexture(texture, "CLAMPTOBLACKADDITIVE", "CLAMPTOBLACKADDITIVE")
 
 	-- Class Icon Background
-	--if (E.db.mMT.portraits.general.classicons or portraitFrame.textures.flipp) and not portraitFrame.iconbg then
+	--if (E.db.mMT.portraits.general.classicons or portraitFrame.textures.flip) and not portraitFrame.iconbg then
 	local color = { r = 0, g = 0, b = 0, a = 1 }
 	if E.db.mMT.portraits.general.classicons then color = (E.db.mMT.portraits.shadow.classBG and unitColor or E.db.mMT.portraits.shadow.background) end
 	UpdateTexture(portraitFrame, "iconbg", bg_textures[E.db.mMT.portraits.general.bgstyle], -5, color)
@@ -720,9 +721,6 @@ local function PartyUnitOnEvent(self, event, eventUnit)
 	elseif eventUnit == self.unit or forceUpdateParty[event] then
 		UnitEvent(self, event)
 	end
-
-	--#FE9204FF
-	--mMT:Print("|CFF0489FEDEBUG|r >>", "|CFF8EFE04PARTY UNITS|r >>", "|CFFC804FEEVENT|r:", event, "|CFFF6FE04UNIT|r:", self.unit, eventUnit, "|CFF0492FESHOULD UPDATE|r:", "|CFFC804FEevent|r > ", forceUpdateParty[event], "|CFFFE9204condition|r >", (eventUnit == self.unit or forceUpdateParty[event]))
 end
 
 local function BossUnitOnEvent(self, event, eventUnit)
@@ -747,7 +745,7 @@ local function PlayerPetUnitOnEvent(self, event, eventUnit)
 	if eventUnit == self.unit or _G.ElvUF_Player.unit == "vehicle" or event == "UNIT_EXITED_VEHICLE" or event == "UNIT_ENTERED_VEHICLE" or event == "VEHICLE_UPDATE" then UnitEvent(self, event) end
 end
 
-local function OtherUnitOnEnevt(self, event, eventUnit)
+local function OtherUnitOnEvent(self, event, eventUnit)
 	if not UnitExists(self.unit) then return end
 
 	if event == "UNIT_HEALTH" and eventUnit == self.unit then DeadDesaturation(self) end
@@ -799,7 +797,7 @@ local function CreatePortraits(name, unit, parentFrame, unitSettings, events, un
 		elseif name == "Player" or name == "Pet" then
 			module[name]:SetScript("OnEvent", PlayerPetUnitOnEvent)
 		else
-			module[name]:SetScript("OnEvent", OtherUnitOnEnevt)
+			module[name]:SetScript("OnEvent", OtherUnitOnEvent)
 		end
 
 		SetScripts(module[name])

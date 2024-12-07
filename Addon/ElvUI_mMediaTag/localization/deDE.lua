@@ -21,8 +21,8 @@ L["Adds an Extra Icon to the Castbar."] = "Fügt ein zusätzliches Symbol zur Za
 L["After setting the position, the interface must be reloaded once with /rl."] = "Nach dem einstellen der Position, muss das Interface neu geladen werden mit /rl"
 L["All Dungeon Teleports"] = "Alle Instanzteleporter"
 L["Alliance: "] = "Allianz"
-L["Allways withe"] = "Immer weiß"
-L["Alpha"] = "Alpha/ Transparents"
+L["Always withe"] = "Immer weiß"
+L["Alpha"] = "Alpha/ Tarnsparens"
 L["Anchor Point"] = "Ankerpunkt"
 L["Anchor point for the extra Icon."] = "Ankerpunkt des zusätzliches Symbols"
 L["Anchor"] = "Anker"
@@ -807,6 +807,19 @@ L["|cffFFFFFFControl + Left Click:|r Change Loadout"] = "|cffFFFFFFStrg + Linksk
 L["|cffFFFFFFLeft Click:|r Change Talent Specialization"] = "|cffFFFFFFLinks Klick:|r Talent Spezialisierung ändern"
 L["|cffFFFFFFRight Click:|r Change Loot Specialization"] = "|cffFFFFFFRechtsklick:|r Beutespezialisierung ändern"
 L["|cffFFFFFFShift + Left Click:|r Show Talent Specialization UI"] = "|cffFFFFFFShift + Links Klick:|r Zeige Talent Spezialisierungs Interface"
+
+
+L["PROFESSION_ALCHEMY"] = "Alchemie"
+L["PROFESSION_BLACKSMITHING"] = "Schmiedekunst"
+L["PROFESSION_ENCHANTING"] = "Verzauberkunst"
+L["PROFESSION_ENGINEERING"] = "Ingenieurskunst"
+L["PROFESSION_HERBALISM"] = "Kräuterkunde"
+L["PROFESSION_INSCRIPTION"] = "Inschriftenkunde"
+L["PROFESSION_JEWELCRAFTING"] = "Juwelierskunst"
+L["PROFESSION_LEATHERWORKING"] = "Lederverarbeitung"
+L["PROFESSION_MINING"] = "Bergbau"
+L["PROFESSION_SKINNING"] = "Kürschnerei"
+L["PROFESSION_TAILORING"] = "Schneiderei"
 
 -- new
 L["Reaction"] = true

@@ -186,7 +186,7 @@ local textures = {
 			border = "Interface\\Addons\\ElvUI_mMediaTag\\media\\portraits\\drop\\drop_corner_border.tga",
 		},
 	},
-	dropflipp = {
+	dropflip = {
 		texture = {
 			a = "Interface\\Addons\\ElvUI_mMediaTag\\media\\portraits\\drop\\drop_txa.tga",
 			b = "Interface\\Addons\\ElvUI_mMediaTag\\media\\portraits\\drop\\drop_txb.tga",
@@ -324,7 +324,7 @@ local textures = {
 			border = "Interface\\Addons\\ElvUI_mMediaTag\\media\\portraits\\drop\\drop_corner_border.tga",
 		},
 	},
-	dropsharpflipp = {
+	dropsharpflip = {
 		texture = {
 			a = "Interface\\Addons\\ElvUI_mMediaTag\\media\\portraits\\drop\\drop_sharp_txa.tga",
 			b = "Interface\\Addons\\ElvUI_mMediaTag\\media\\portraits\\drop\\drop_sharp_txb.tga",
@@ -1084,8 +1084,8 @@ local corner = {
 	ROT = true,
 	drop = true,
 	dropsharp = true,
-	dropflipp = true,
-	dropsharpflipp = true,
+	dropflip = true,
+	dropsharpflip = true,
 }
 
 local extraMask = {
@@ -1095,17 +1095,17 @@ local extraMask = {
 	ROT = true,
 	drop = true,
 	dropsharp = true,
-	dropflipp = true,
-	dropsharpflipp = true,
+	dropflip = true,
+	dropsharpflip = true,
 	pure = true,
 	puresharp = true,
 }
 
-local flipped = {
+local fliped = {
 	SQT = true,
 	ROT = true,
-	dropflipp = true,
-	dropsharpflipp = true,
+	dropflip = true,
+	dropsharpflip = true,
 }
 
 local styleOKCheck = {
@@ -1199,7 +1199,7 @@ function mMT:GetTextures(style)
 		tmp_db.border = textures_source[style].border
 		tmp_db.shadow = textures_source[style].shadow
 		tmp_db.inner = textures_source[style].inner
-		tmp_db.flipp = flipped[style]
+		tmp_db.flip = fliped[style]
 
 		if extraMask[style] then
 			tmp_db.extraMask = true

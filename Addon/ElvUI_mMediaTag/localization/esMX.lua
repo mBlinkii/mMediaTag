@@ -21,7 +21,7 @@ L["Adds an Extra Icon to the Castbar."] = true
 L["After setting the position, the interface must be reloaded once with /rl."] = true
 L["All Dungeon Teleports"] = true
 L["Alliance: "] = true
-L["Allways withe"] = true
+L["Always withe"] = true
 L["Alpha"] = true
 L["Anchor Point"] = true
 L["Anchor point for the extra Icon."] = true
@@ -807,6 +807,18 @@ L["|cffFFFFFFControl + Left Click:|r Change Loadout"] = true
 L["|cffFFFFFFLeft Click:|r Change Talent Specialization"] = true
 L["|cffFFFFFFRight Click:|r Change Loot Specialization"] = true
 L["|cffFFFFFFShift + Left Click:|r Show Talent Specialization UI"] = true
+
+L["PROFESSION_ALCHEMY"] = "Alquimia";
+L["PROFESSION_BLACKSMITHING"] = "Herrería";
+L["PROFESSION_ENCHANTING"] = "Encantamiento";
+L["PROFESSION_ENGINEERING"] = "Ingeniería";
+L["PROFESSION_HERBALISM"] = "Herboristería";
+L["PROFESSION_INSCRIPTION"] = "Inscripción";
+L["PROFESSION_JEWELCRAFTING"] = "Joyería";
+L["PROFESSION_LEATHERWORKING"] = "Peletería";
+L["PROFESSION_MINING"] = "Minería";
+L["PROFESSION_SKINNING"] = "Desuello";
+L["PROFESSION_TAILORING"] = "Sastrería";
 
 -- new
 L["Reaction"] = true
