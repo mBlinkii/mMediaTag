@@ -619,7 +619,7 @@ P.mMT = {
 			boss = "a",
 		},
 		player = {
-			flippe = false,
+			flipe = false,
 			cast = false,
 			enable = true,
 			texture = "drop",
@@ -633,7 +633,7 @@ P.mMT = {
 			level = 20,
 		},
 		pet = {
-			flippe = false,
+			flipe = false,
 			enable = false,
 			texture = "drop",
 			mirror = false,
@@ -646,7 +646,7 @@ P.mMT = {
 			level = 20,
 		},
 		target = {
-			flippe = false,
+			flipe = false,
 			cast = false,
 			enable = true,
 			texture = "drop",
@@ -661,7 +661,7 @@ P.mMT = {
 			level = 20,
 		},
 		targettarget = {
-			flippe = false,
+			flipe = false,
 			enable = true,
 			texture = "drop",
 			extraEnable = true,
@@ -675,7 +675,7 @@ P.mMT = {
 			level = 20,
 		},
 		focus = {
-			flippe = false,
+			flipe = false,
 			cast = false,
 			enable = false,
 			texture = "drop",
@@ -690,7 +690,7 @@ P.mMT = {
 			level = 20,
 		},
 		party = {
-			flippe = false,
+			flipe = false,
 			cast = false,
 			enable = true,
 			texture = "drop",
@@ -704,7 +704,7 @@ P.mMT = {
 			level = 20,
 		},
 		boss = {
-			flippe = false,
+			flipe = false,
 			cast = false,
 			enable = false,
 			texture = "drop",
@@ -718,7 +718,7 @@ P.mMT = {
 			level = 20,
 		},
 		arena = {
-			flippe = false,
+			flipe = false,
 			cast = false,
 			enable = false,
 			texture = "drop",

@@ -289,7 +289,7 @@
 ## [ver. 3.42] - 28.06.2024
 ### FIX
 - FIX - Removed debug print.
-- FIX - Portraits Optimized code and fixed flipped drop texture (black background)
+- FIX - Portraits Optimized code and fixed fliped drop texture (black background)
 ### Update
 - UPDATE - Add Stone of the Hearth and Draenic Hologem to TP datatext (thx to Merathilis)
 ### NEW
@@ -311,7 +311,7 @@
 - UPDATE - White text setting for Profession data text.
 - UPDATE - NEW: Icon for Teleports data text.
 - UPDATE - Portraits texture names.
-- UPDATE - Removed Portraits texture simple square and added flipped Versions for Drop texture.
+- UPDATE - Removed Portraits texture simple square and added fliped Versions for Drop texture.
 ### NEW
 - NEW - Portraits can now use custom textures.
 - NEW - Portraits can now show cast icon, available for player, target, focus, party, boss, and arena.
