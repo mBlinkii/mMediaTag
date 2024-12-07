@@ -3,8 +3,8 @@
 
 ## [ver. 3.67] - 07.12.2024
 ### FIX 
-- FIX - [Portraits]: Fix bug with rare elite units and the new Border colors.
 - FIX - [Cosmeticbars]: Fixed Border Visibility settings if Cosmeticbars is applied to the panel.
+- FIX - [Portraits]: Fix bug with rare elite units and the new Border colors.
 ### NEW
 - NEW - [Datatext-Professions] Add new Custom Icons for Professions to the professions datatexts.
 - NEW - [Textures] Statusbar Texture mMT Dark.
