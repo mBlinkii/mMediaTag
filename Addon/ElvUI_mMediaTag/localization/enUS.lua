@@ -809,6 +809,18 @@ L["|cffFFFFFFLeft Click:|r Change Talent Specialization"] = true
 L["|cffFFFFFFRight Click:|r Change Loot Specialization"] = true
 L["|cffFFFFFFShift + Left Click:|r Show Talent Specialization UI"] = true
 
+L["PROFESSION_ALCHEMY"] = "Alchemy";
+L["PROFESSION_BLACKSMITHING"] = "Blacksmithing";
+L["PROFESSION_ENCHANTING"] = "Enchanting";
+L["PROFESSION_ENGINEERING"] = "Engineering";
+L["PROFESSION_HERBALISM"] = "Herbalism";
+L["PROFESSION_INSCRIPTION"] = "Inscription";
+L["PROFESSION_JEWELCRAFTING"] = "Jewelcrafting";
+L["PROFESSION_LEATHERWORKING"] = "Leatherworking";
+L["PROFESSION_MINING"] = "Mining";
+L["PROFESSION_SKINNING"] = "Skinning";
+L["PROFESSION_TAILORING"] = "Tailoring";
+
 -- new
 L["Reaction"] = true
 L["Classification"] = true

@@ -808,6 +808,18 @@ L["|cffFFFFFFLeft Click:|r Change Talent Specialization"] = true
 L["|cffFFFFFFRight Click:|r Change Loot Specialization"] = true
 L["|cffFFFFFFShift + Left Click:|r Show Talent Specialization UI"] = true
 
+L["PROFESSION_ALCHEMY"] = "연금술";
+L["PROFESSION_BLACKSMITHING"] = "대장기술";
+L["PROFESSION_ENCHANTING"] = "마법부여";
+L["PROFESSION_ENGINEERING"] = "기계공학";
+L["PROFESSION_HERBALISM"] = "약초채집";
+L["PROFESSION_INSCRIPTION"] = "주문각인";
+L["PROFESSION_JEWELCRAFTING"] = "보석세공";
+L["PROFESSION_LEATHERWORKING"] = "가죽세공";
+L["PROFESSION_MINING"] = "채광";
+L["PROFESSION_SKINNING"] = "무두질";
+L["PROFESSION_TAILORING"] = "재봉술";
+
 -- new
 L["Reaction"] = true
 L["Classification"] = true

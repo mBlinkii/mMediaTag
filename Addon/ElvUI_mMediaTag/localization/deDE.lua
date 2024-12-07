@@ -808,6 +808,19 @@ L["|cffFFFFFFLeft Click:|r Change Talent Specialization"] = "|cffFFFFFFLinks Kli
 L["|cffFFFFFFRight Click:|r Change Loot Specialization"] = "|cffFFFFFFRechtsklick:|r Beutespezialisierung ändern"
 L["|cffFFFFFFShift + Left Click:|r Show Talent Specialization UI"] = "|cffFFFFFFShift + Links Klick:|r Zeige Talent Spezialisierungs Interface"
 
+
+L["PROFESSION_ALCHEMY"] = "Alchemie"
+L["PROFESSION_BLACKSMITHING"] = "Schmiedekunst"
+L["PROFESSION_ENCHANTING"] = "Verzauberkunst"
+L["PROFESSION_ENGINEERING"] = "Ingenieurskunst"
+L["PROFESSION_HERBALISM"] = "Kräuterkunde"
+L["PROFESSION_INSCRIPTION"] = "Inschriftenkunde"
+L["PROFESSION_JEWELCRAFTING"] = "Juwelierskunst"
+L["PROFESSION_LEATHERWORKING"] = "Lederverarbeitung"
+L["PROFESSION_MINING"] = "Bergbau"
+L["PROFESSION_SKINNING"] = "Kürschnerei"
+L["PROFESSION_TAILORING"] = "Schneiderei"
+
 -- new
 L["Reaction"] = true
 L["Classification"] = true

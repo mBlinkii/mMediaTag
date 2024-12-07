@@ -28,6 +28,7 @@ local function OnEnter(self)
 		DT.tooltip:AddLine(" ")
 
 		local name, icon, skillLevel, maxSkillLevel, _, _, _, skillModifier, _, _ = GetProfessionInfo(cooking)
+		if E.db.mMT.singleProfession.iconStyle ~= "default" then icon = mMT:GetCustomProfessionIcon(name, E.db.mMT.singleProfession.iconStyle) or icon end
 		name = format("|T%s:14:14:0:0:64:64:5:59:5:59|t %s", icon, name)
 		DT.tooltip:AddDoubleLine(name, colorText(skillLevel) .. colorText("/", true) .. colorText(maxSkillLevel) .. colorText(" +", true) .. colorText(skillModifier))
 	else
@@ -45,17 +46,22 @@ local function OnEvent(self)
 	cooking = select(5, GetProfessions())
 
 	if cooking then
-		local name, icon, skillLevel, maxSkillLevel, _, spellOffset, _, _, _, _ = GetProfessionInfo(cooking)
-		local isNotMax = not (skillLevel == maxSkillLevel)
+		local name, icon, skillLevel, maxSkillLevel, _, spellOffset = GetProfessionInfo(cooking)
+		local isNotMax = skillLevel ~= maxSkillLevel
 		spell = spellOffset + 1
 
-		local text = "%s %s %s"
-		icon = E.db.mMT.singleProfession.icon and format("|T%s:14:14:0:0:64:64:5:59:5:59|t", icon) or ""
-		text = format(text, icon, colorText(name, E.db.mMT.singleProfession.whiteText), isNotMax and colorText(skillLevel, E.db.mMT.singleProfession.witheValue) or "")
+		if E.db.mMT.singleProfession.icon then
+			local iconStyle = E.db.mMT.singleProfession.iconStyle
+			if iconStyle ~= "default" then icon = mMT:GetCustomProfessionIcon(name, iconStyle) or icon end
+			icon = format("|T%s:14:14:0:0:64:64:5:59:5:59|t", icon)
+		else
+			icon = ""
+		end
 
+		local text = format("%s %s %s", icon, colorText(name, E.db.mMT.singleProfession.whiteText), isNotMax and colorText(skillLevel, E.db.mMT.singleProfession.witheValue) or "")
 		self.text:SetText(text)
 	else
-		self.text:SetText(format("|T%s:14:14:0:0:64:64:5:59:5:59|t %s|r", mMT.Media.DockIcons.NOPROF, colorText(L["Not learned"], E.db.mMT.singleProfession.whiteText)))
+		self.text:SetText(format("|T%s:14:14:0:0:64:64:5:59:5:59|t %s|r", mMT.Media.DockIcons.NOPROF, colorText(L["No Professions"], E.db.mMT.singleProfession.whiteText)))
 	end
 end
 

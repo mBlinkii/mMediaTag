@@ -55,6 +55,7 @@ P.mMT = {
 	singleProfession = {
 		icon = true,
 		whiteText = true,
+		iconStyle = "default",
 	},
 	durabilityIlevel = {
 		mount = 460,
@@ -132,7 +133,7 @@ P.mMT = {
 		},
 	},
 	teleports = { anchorCursor = false, icon = false, customicon = "TP1", whiteText = true },
-	profession = { icon = false, proficon = true, whiteText = true },
+	profession = { icon = false, proficon = true, whiteText = true,iconStyle = "default", },
 	dungeon = { icon = false, texttoname = true, key = true, score = true, affix = true },
 	instancedifficulty = {
 		enable = false,
