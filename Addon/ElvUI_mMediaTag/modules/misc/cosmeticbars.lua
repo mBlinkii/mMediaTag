@@ -24,9 +24,6 @@ end
 
 local function UpdatePanelColors(_, name, panel)
 	local conf = E.db.mMT.cosmeticbars.bars[name]
-	if not panel.db.border then
-	mMT:DebugPrintTable(panel, nil, true)
-	end
 
 	if conf then
 		if conf.texture.enable and panel.backdropInfo then
@@ -44,10 +41,12 @@ local function UpdatePanelColors(_, name, panel)
 			panel:SetBackdropColor(color.r, color.g, color.b, conf.bg.color.a or 1)
 		end
 
-		if panel.db.border and conf.border.style ~= "disabled" then
+		if  conf.border.style ~= "disabled" then
 			color = getColor(conf.border)
 			panel:SetBackdropBorderColor(color.r, color.g, color.b, conf.border.color.a or 1)
-		else
+		end
+
+		if not panel.db.border then
 			panel:SetBackdropBorderColor(0,0,0,0)
 		end
 	end
