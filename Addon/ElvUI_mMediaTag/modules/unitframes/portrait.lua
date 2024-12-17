@@ -732,6 +732,7 @@ local function BossUnitOnEvent(self, event, eventUnit)
 end
 
 local function PlayerPetUnitOnEvent(self, event, eventUnit)
+	print(event)
 	if not UnitExists(self.parent.unit) then return end
 
 	if event == "UNIT_HEALTH" and eventUnit == self.unit then DeadDesaturation(self) end
