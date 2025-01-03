@@ -1,7 +1,8 @@
-mMT.Changelog[368]  = {
-	DATE = "Dev not",
-	IMPORTANT = { "there is nothing new here" },
-	NEW = { "there is nothing new here" },
-	UPDATE = { "there is nothing new here" },
-	FIX = { "there is nothing new here" },
+mMT.Changelog[368] = {
+	DATE = "03.01.2025",
+	NEW = { "[Portraits] New Textures Thin Diamond and Thin Circle" },
+	UPDATE = {
+		"[System]: DB function optimized.",
+		"[System]: Retail TOC.",
+	},
 }
