@@ -15,6 +15,7 @@ local form = {
 	ROT = L["Old"] .. " " .. L["Drop round flipped"],
 	TH = L["Old"] .. " " .. L["Thin"],
 	circle = L["Circle"],
+	thincircle = L["Thin Circle"],
 	diamond = L["Diamond"],
 	thindiamond = L["Thin Diamond"],
 	drop = L["Drop round"],
