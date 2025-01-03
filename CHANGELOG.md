@@ -1,6 +1,12 @@
 # Changelog - ElvUI_mMediaTag
 [Eng] - All changes to this project will be documented in this file. The latest changes are at the top.
 
+## [ver. 3.68] - 03.01.2025
+### UPDATE
+- UPDATE - [System]: DB function optimized.
+### NEW
+- NEW - [Portraits] New Textures Thin Diamond and Thin Circle
+
 ## [ver. 3.67] - 07.12.2024
 ### FIX 
 - FIX - [Cosmeticbars]: Fixed Border Visibility settings if Cosmeticbars is applied to the panel.

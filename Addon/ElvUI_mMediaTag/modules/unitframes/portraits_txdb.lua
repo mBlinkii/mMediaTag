@@ -59,6 +59,64 @@ local textures = {
 			},
 		},
 	},
+	thincircle = {
+		texture = {
+			a = "Interface\\Addons\\ElvUI_mMediaTag\\media\\portraits\\thin_circle\\thin_circle_txa.tga",
+			b = "Interface\\Addons\\ElvUI_mMediaTag\\media\\portraits\\thin_circle\\thin_circle_txb.tga",
+			c = "Interface\\Addons\\ElvUI_mMediaTag\\media\\portraits\\thin_circle\\thin_circle_txc.tga",
+		},
+		border = "Interface\\Addons\\ElvUI_mMediaTag\\media\\portraits\\thin_circle\\thin_circle_border.tga",
+		shadow = "Interface\\Addons\\ElvUI_mMediaTag\\media\\portraits\\thin_circle\\thin_circle_shadow.tga",
+		inner = "Interface\\Addons\\ElvUI_mMediaTag\\media\\portraits\\thin_circle\\thin_circle_inner.tga",
+		mask = "Interface\\Addons\\ElvUI_mMediaTag\\media\\portraits\\thin_circle\\thin_circle_mask.tga",
+		rare = {
+			a = {
+				texture = {
+					a = "Interface\\Addons\\ElvUI_mMediaTag\\media\\portraits\\circle\\circle_rare1_txa.tga",
+					b = "Interface\\Addons\\ElvUI_mMediaTag\\media\\portraits\\circle\\circle_rare1_txb.tga",
+					c = "Interface\\Addons\\ElvUI_mMediaTag\\media\\portraits\\circle\\circle_rare1_txc.tga",
+				},
+				border = "Interface\\Addons\\ElvUI_mMediaTag\\media\\portraits\\circle\\circle_rare1_border.tga",
+				shadow = "Interface\\Addons\\ElvUI_mMediaTag\\media\\portraits\\circle\\circle_rare1_shadow.tga",
+			},
+			b = {
+				texture = {
+					a = "Interface\\Addons\\ElvUI_mMediaTag\\media\\portraits\\circle\\circle_rare2_txa.tga",
+					b = "Interface\\Addons\\ElvUI_mMediaTag\\media\\portraits\\circle\\circle_rare2_txb.tga",
+					c = "Interface\\Addons\\ElvUI_mMediaTag\\media\\portraits\\circle\\circle_rare2_txc.tga",
+				},
+				border = "Interface\\Addons\\ElvUI_mMediaTag\\media\\portraits\\circle\\circle_rare2_border.tga",
+				shadow = "Interface\\Addons\\ElvUI_mMediaTag\\media\\portraits\\circle\\circle_rare2_shadow.tga",
+			},
+			c = {
+				texture = {
+					a = "Interface\\Addons\\ElvUI_mMediaTag\\media\\portraits\\circle\\circle_rare3_txa.tga",
+					b = "Interface\\Addons\\ElvUI_mMediaTag\\media\\portraits\\circle\\circle_rare3_txb.tga",
+					c = "Interface\\Addons\\ElvUI_mMediaTag\\media\\portraits\\circle\\circle_rare3_txc.tga",
+				},
+				border = "Interface\\Addons\\ElvUI_mMediaTag\\media\\portraits\\circle\\circle_rare3_border.tga",
+				shadow = "Interface\\Addons\\ElvUI_mMediaTag\\media\\portraits\\circle\\circle_rare3_shadow.tga",
+			},
+			d = {
+				texture = {
+					a = "Interface\\Addons\\ElvUI_mMediaTag\\media\\portraits\\drop\\drop_rare3_txa.tga",
+					b = "Interface\\Addons\\ElvUI_mMediaTag\\media\\portraits\\drop\\drop_rare3_txb.tga",
+					c = "Interface\\Addons\\ElvUI_mMediaTag\\media\\portraits\\drop\\drop_rare3_txc.tga",
+				},
+				border = "Interface\\Addons\\ElvUI_mMediaTag\\media\\portraits\\drop\\drop_rare3_border.tga",
+				shadow = "Interface\\Addons\\ElvUI_mMediaTag\\media\\portraits\\drop\\drop_rare3_shadow.tga",
+			},
+			e = {
+				texture = {
+					a = "Interface\\Addons\\ElvUI_mMediaTag\\media\\portraits\\circle\\circle_rare4_txa.tga",
+					b = "Interface\\Addons\\ElvUI_mMediaTag\\media\\portraits\\circle\\circle_rare4_txb.tga",
+					c = "Interface\\Addons\\ElvUI_mMediaTag\\media\\portraits\\circle\\circle_rare4_txc.tga",
+				},
+				border = "Interface\\Addons\\ElvUI_mMediaTag\\media\\portraits\\circle\\circle_rare4_border.tga",
+				shadow = "Interface\\Addons\\ElvUI_mMediaTag\\media\\portraits\\circle\\circle_rare4_shadow.tga",
+			},
+		},
+	},
 	diamond = {
 		texture = {
 			a = "Interface\\Addons\\ElvUI_mMediaTag\\media\\portraits\\diamond\\diamond_txa.tga",
@@ -69,6 +127,64 @@ local textures = {
 		shadow = "Interface\\Addons\\ElvUI_mMediaTag\\media\\portraits\\diamond\\diamond_shadow.tga",
 		inner = "Interface\\Addons\\ElvUI_mMediaTag\\media\\portraits\\diamond\\diamond_inner.tga",
 		mask = "Interface\\Addons\\ElvUI_mMediaTag\\media\\portraits\\diamond\\diamond_mask.tga",
+		rare = {
+			a = {
+				texture = {
+					a = "Interface\\Addons\\ElvUI_mMediaTag\\media\\portraits\\diamond\\diamond_rare1_txa.tga",
+					b = "Interface\\Addons\\ElvUI_mMediaTag\\media\\portraits\\diamond\\diamond_rare1_txb.tga",
+					c = "Interface\\Addons\\ElvUI_mMediaTag\\media\\portraits\\diamond\\diamond_rare1_txc.tga",
+				},
+				border = "Interface\\Addons\\ElvUI_mMediaTag\\media\\portraits\\diamond\\diamond_rare1_border.tga",
+				shadow = "Interface\\Addons\\ElvUI_mMediaTag\\media\\portraits\\diamond\\diamond_rare1_shadow.tga",
+			},
+			b = {
+				texture = {
+					a = "Interface\\Addons\\ElvUI_mMediaTag\\media\\portraits\\diamond\\diamond_rare2_txa.tga",
+					b = "Interface\\Addons\\ElvUI_mMediaTag\\media\\portraits\\diamond\\diamond_rare2_txb.tga",
+					c = "Interface\\Addons\\ElvUI_mMediaTag\\media\\portraits\\diamond\\diamond_rare2_txc.tga",
+				},
+				border = "Interface\\Addons\\ElvUI_mMediaTag\\media\\portraits\\diamond\\diamond_rare2_border.tga",
+				shadow = "Interface\\Addons\\ElvUI_mMediaTag\\media\\portraits\\diamond\\diamond_rare2_shadow.tga",
+			},
+			c = {
+				texture = {
+					a = "Interface\\Addons\\ElvUI_mMediaTag\\media\\portraits\\diamond\\diamond_rare3_txa.tga",
+					b = "Interface\\Addons\\ElvUI_mMediaTag\\media\\portraits\\diamond\\diamond_rare3_txb.tga",
+					c = "Interface\\Addons\\ElvUI_mMediaTag\\media\\portraits\\diamond\\diamond_rare3_txc.tga",
+				},
+				border = "Interface\\Addons\\ElvUI_mMediaTag\\media\\portraits\\diamond\\diamond_rare3_border.tga",
+				shadow = "Interface\\Addons\\ElvUI_mMediaTag\\media\\portraits\\diamond\\diamond_rare3_shadow.tga",
+			},
+			d = {
+				texture = {
+					a = "Interface\\Addons\\ElvUI_mMediaTag\\media\\portraits\\diamond\\diamond_rare4_txa.tga",
+					b = "Interface\\Addons\\ElvUI_mMediaTag\\media\\portraits\\diamond\\diamond_rare4_txb.tga",
+					c = "Interface\\Addons\\ElvUI_mMediaTag\\media\\portraits\\diamond\\diamond_rare4_txc.tga",
+				},
+				border = "Interface\\Addons\\ElvUI_mMediaTag\\media\\portraits\\diamond\\diamond_rare4_border.tga",
+				shadow = "Interface\\Addons\\ElvUI_mMediaTag\\media\\portraits\\diamond\\diamond_rare4_shadow.tga",
+			},
+			e = {
+				texture = {
+					a = "Interface\\Addons\\ElvUI_mMediaTag\\media\\portraits\\diamond\\diamond_rare5_txa.tga",
+					b = "Interface\\Addons\\ElvUI_mMediaTag\\media\\portraits\\diamond\\diamond_rare5_txb.tga",
+					c = "Interface\\Addons\\ElvUI_mMediaTag\\media\\portraits\\diamond\\diamond_rare5_txc.tga",
+				},
+				border = "Interface\\Addons\\ElvUI_mMediaTag\\media\\portraits\\diamond\\diamond_rare5_border.tga",
+				shadow = "Interface\\Addons\\ElvUI_mMediaTag\\media\\portraits\\diamond\\diamond_rare5_shadow.tga",
+			},
+		},
+	},
+	thindiamond = {
+		texture = {
+			a = "Interface\\Addons\\ElvUI_mMediaTag\\media\\portraits\\thin_diamond\\thin_diamond_txa.tga",
+			b = "Interface\\Addons\\ElvUI_mMediaTag\\media\\portraits\\thin_diamond\\thin_diamond_txb.tga",
+			c = "Interface\\Addons\\ElvUI_mMediaTag\\media\\portraits\\thin_diamond\\thin_diamond_txc.tga",
+		},
+		border = "Interface\\Addons\\ElvUI_mMediaTag\\media\\portraits\\thin_diamond\\thin_diamond_border.tga",
+		shadow = "Interface\\Addons\\ElvUI_mMediaTag\\media\\portraits\\thin_diamond\\thin_diamond_shadow.tga",
+		inner = "Interface\\Addons\\ElvUI_mMediaTag\\media\\portraits\\thin_diamond\\thin_diamond_inner.tga",
+		mask = "Interface\\Addons\\ElvUI_mMediaTag\\media\\portraits\\thin_diamond\\thin_diamond_mask.tga",
 		rare = {
 			a = {
 				texture = {

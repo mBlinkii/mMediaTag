@@ -14,8 +14,7 @@ mMT = E:NewModule(addonName, "AceHook-3.0", "AceEvent-3.0", "AceTimer-3.0", "Ace
 
 -- Settings
 mMT.Version = GetAddOnMetadata(addonName, "Version")
-mMT.Name =
-	"|CFF6559F1m|r|CFF7A4DEFM|r|CFF8845ECe|r|CFFA037E9d|r|CFFA435E8i|r|CFFB32DE6a|r|CFFBC26E5T|r|CFFCB1EE3a|r|CFFDD14E0g|r |CFFFF006C&|r |CFFFF4C00T|r|CFFFF7300o|r|CFFFF9300o|r|CFFFFA800l|r|CFFFFC900s|r"
+mMT.Name = "|CFF6559F1m|r|CFF7A4DEFM|r|CFF8845ECe|r|CFFA037E9d|r|CFFA435E8i|r|CFFB32DE6a|r|CFFBC26E5T|r|CFFCB1EE3a|r|CFFDD14E0g|r |CFFFF006C&|r |CFFFF4C00T|r|CFFFF7300o|r|CFFFF9300o|r|CFFFFA800l|r|CFFFFC900s|r"
 mMT.NameShort = "|CFF3650D5m|r|CFF4148C3M|r|CFF4743B6T|r"
 mMT.DockString = "|CFF2CD204D|r|CFF1BE43Ao|r|CFF10EE5Cc|r|CFF05FA82k|r"
 mMT.DatatextString = "|CFF6559F1m|r|CFFA037E9M|r|CFFDD14E0T|r-Datatexts"
@@ -65,28 +64,6 @@ local defaultDB = {
 	debugMode = false,
 	disabledAddons = {},
 }
-
-local DB_Loader = CreateFrame("FRAME")
-DB_Loader:RegisterEvent("PLAYER_LOGOUT")
-DB_Loader:RegisterEvent("ADDON_LOADED")
-
-function DB_Loader:OnEvent(event, arg1)
-	if event == "ADDON_LOADED" and arg1 == "ElvUI_mMediaTag" then
-		mMTDB = mMTDB or {}
-		mMT.DB = mMTDB
-		for k, v in pairs(defaultDB) do
-			if mMT.DB[k] == nil then mMT.DB[k] = v end
-		end
-	elseif event == "PLAYER_LOGOUT" then
-		if mMT.DevMode then
-			mMT:SaveFramePos()
-			mMT.DB.dev.enabled = mMT.DevMode
-		end
-		mMTDB = mMT.DB
-	end
-end
-
-DB_Loader:SetScript("OnEvent", DB_Loader.OnEvent)
 
 StaticPopupDialogs["mMT_Reload_Required"] = {
 	text = L["Some settings have been changed! For mMediaTag to work properly, a reload of the interface is recommended. Should a reload be performed now?"],
@@ -203,7 +180,20 @@ local function LoadSettings()
 	end
 end
 
+local function LoadDB()
+	mMTDB = mMTDB or {}
+	mMT.DB = mMTDB
+	for k, v in pairs(defaultDB) do
+		if mMT.DB[k] == nil then
+			local value = v
+			mMT.DB[k] = value
+		end
+	end
+end
+
 function mMT:Initialize()
+	LoadDB()
+
 	EP:RegisterPlugin(addonName, LoadSettings)
 
 	-- update defaults
@@ -212,9 +202,6 @@ function mMT:Initialize()
 	mMT.ClassColor = mMT:UpdateClassColor()
 	mMT.DEVNames = mMT:GetDevNames()
 	mMT.Classes = mMT:ClassesTable()
-
-	-- load JiberishUI Icons for Portraits
-	--if E.db.mMT.portraits.general.enable then mMT.ElvUI_JiberishIcons = mMT:JiberishIcons() end
 
 	-- Register Events for Retail
 	if E.Retail or E.Cata then
@@ -253,6 +240,7 @@ function mMT:Initialize()
 
 	-- Register Events for all Game Versions
 	self:RegisterEvent("PLAYER_ENTERING_WORLD")
+	self:RegisterEvent("PLAYER_LOGOUT")
 
 	if E.db.mMT.afk.enable then self:RegisterEvent("PLAYER_FLAGS_CHANGED") end
 
@@ -274,6 +262,10 @@ end
 
 local function CallbackInitialize()
 	mMT:Initialize()
+end
+
+function mMT:PLAYER_LOGOUT(event)
+	mMT:SaveFramePos()
 end
 
 function mMT:PLAYER_ENTERING_WORLD(event)
