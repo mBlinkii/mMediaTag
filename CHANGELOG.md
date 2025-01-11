@@ -4,6 +4,7 @@
 ## [ver. 3.68] - 03.01.2025
 ### UPDATE
 - UPDATE - [System]: DB function optimized.
+- UPDATE - [System]: Retail TOC.
 ### NEW
 - NEW - [Portraits] New Textures Thin Diamond and Thin Circle
 
