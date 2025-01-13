@@ -191,7 +191,7 @@ local function GetGroupKeystone()
 				DT.tooltip:AddDoubleLine(name, key)
 			end
 		elseif unit and UnitExists(unit) then
-			name = format("%s%s|r %s |CFFFFFFFF[|r%s|CFFFFFFFF]|r ", mMT:GetClassColor(unit), UnitName(unit), leader, ilevel)
+			name = format("%s%s|r %s |CFFFFFFFF[|r%s|CFFFFFFFF]|r ", mMT:GetClassColor(unit), UnitName(unit), leader or "", ilevel or "")
 			DT.tooltip:AddDoubleLine(name, L["No Keystone"])
 		end
 	end
