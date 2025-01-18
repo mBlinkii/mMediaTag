@@ -1,6 +1,0 @@
-<Ui xmlns="http://www.blizzard.com/wow/ui/">
-	<Script file="modulloader.lua"/>
-	<Script file="importantspells.lua"/>
-	<Script file="interruptoncd.lua"/>
-	<Script file="castbarshield.lua"/>
-</Ui>
