@@ -19514,7 +19514,9 @@
         "ShowOptionsPanel",
         "LFG_ROLE_NUM_SHORTAGE_TYPES",
         "GREAT_VAULT_REWARDS_WAITING",
-        "NUM_CHAT_WINDOWS"
+        "NUM_CHAT_WINDOWS",
+        "MMTDATA",
+        "ElvUI_mMediaTag"
   ],
   "diagnostics.disable": ["deprecated", "inject-field", "undefined-field",
         "cast-local-type"]
