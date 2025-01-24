@@ -18,7 +18,7 @@
 # localization\load_localization.xml
 
 init.lua
-options_core.lua
+options\load_options.xml
 # core\load_core.xml
 # media\load_media.xml
 # modules\load_modules.xml
