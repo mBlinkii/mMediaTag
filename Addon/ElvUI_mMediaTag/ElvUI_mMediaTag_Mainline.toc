@@ -15,7 +15,7 @@
 
 # lib\load_libs.xml
 
-# localization\load_localization.xml
+localization\load_localization.xml
 
 init.lua
 options\load_options.xml

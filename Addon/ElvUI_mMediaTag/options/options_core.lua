@@ -1,19 +1,98 @@
 local mMT, DB, M, F, E, P, L, MEDIA = unpack(ElvUI_mMediaTag)
 
-
 mMT.options = {
 	name = mMT.Name,
 	handler = mMT,
 	type = "group",
-	childGroups = "tab",
-    args = {
-        logo = {
-            type = "description",
-            name = "",
-            order = 1,
-            image = function()
-                return "Interface\\Addons\\ElvUI_mMediaTag\\media\\logo.tga", 512, 64
-            end,
-        },
-    },
+	--childGroups = "tab",
+	args = {
+		logo = {
+			type = "description",
+			name = "",
+			order = 1,
+			image = function()
+				return "Interface\\Addons\\ElvUI_mMediaTag\\media\\logo.tga", 512, 64
+			end,
+		},
+		general = {
+			order = 2,
+			type = "group",
+			name = L["General"],
+			icon = "Interface\\Addons\\ElvUI_mMediaTag\\media\\options\\general.tga",
+			childGroups = "tab",
+			args = {},
+		},
+        unitframes = {
+			order = 3,
+			type = "group",
+			name = L["Unitframes"],
+			icon = "Interface\\Addons\\ElvUI_mMediaTag\\media\\options\\unitframes.tga",
+			childGroups = "tab",
+			args = {},
+		},
+        nameplates = {
+			order = 4,
+			type = "group",
+			name = L["Nameplates"],
+			icon = "Interface\\Addons\\ElvUI_mMediaTag\\media\\options\\nameplates.tga",
+			childGroups = "tab",
+			args = {},
+		},
+        datatexts = {
+			order = 5,
+			type = "group",
+			name = L["Datatexts"],
+			icon = "Interface\\Addons\\ElvUI_mMediaTag\\media\\options\\datatexts.tga",
+			childGroups = "tab",
+			args = {},
+		},
+        dock = {
+			order = 6,
+			type = "group",
+			name = L["Dock"],
+			icon = "Interface\\Addons\\ElvUI_mMediaTag\\media\\options\\dock.tga",
+			childGroups = "tab",
+			args = {},
+		},
+        tags = {
+			order = 7,
+			type = "group",
+			name = L["TAGs"],
+			icon = "Interface\\Addons\\ElvUI_mMediaTag\\media\\options\\tags.tga",
+			childGroups = "tab",
+			args = {},
+		},
+        misc = {
+			order = 8,
+			type = "group",
+			name = L["Misc"],
+			icon = "Interface\\Addons\\ElvUI_mMediaTag\\media\\options\\misc.tga",
+			childGroups = "tab",
+			args = {},
+		},
+        about = {
+			order = 9,
+			type = "group",
+			name = L["About"],
+			icon = "Interface\\Addons\\ElvUI_mMediaTag\\media\\options\\about.tga",
+			childGroups = "tab",
+			args = {},
+		},
+        license = {
+			order = 10,
+			type = "group",
+			name = L["License"],
+			icon = "Interface\\Addons\\ElvUI_mMediaTag\\media\\options\\license.tga",
+			childGroups = "tab",
+			args = {},
+		},
+        changelog = {
+			order = 11,
+			type = "group",
+			name = L["Changelog"],
+			icon = "Interface\\Addons\\ElvUI_mMediaTag\\media\\options\\changelog.tga",
+			childGroups = "tab",
+			args = {},
+		},
+	},
 }

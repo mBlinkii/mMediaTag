@@ -13,7 +13,7 @@ local modules = {}
 local functions = {}
 local media = {}
 local db = MMTDATA or {}
-local locales = {} --LibStub("AceLocale-3.0"):GetLocale("mMediaTag")
+local locales = LibStub("AceLocale-3.0"):GetLocale("mMediaTag")
 
 _G[addonName] = {
     mMT,
