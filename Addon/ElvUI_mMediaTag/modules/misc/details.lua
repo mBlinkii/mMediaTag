@@ -76,14 +76,6 @@ function mMT:DetailsEmbeddedToggle()
 			detailsEmbedded:Hide()
 			chat:Show()
 		else
-			if B.BagFrame and B.BagFrame:IsShown() then
-				tt:Point('BOTTOMRIGHT', B.BagFrame, 'TOPRIGHT', 0, 18)
-			elseif RightChatPanel:GetAlpha() == 1 and RightChatPanel:IsShown() then
-				tt:Point('BOTTOMRIGHT', RightChatPanel, 'TOPRIGHT', 0, 18)
-			else
-				tt:Point('BOTTOMRIGHT', RightChatPanel, 'BOTTOMRIGHT', 0, 18)
-			end
-
 			detailsEmbedded:Show()
 			chat:Hide()
 		end
@@ -164,7 +156,7 @@ function mMT:DetailsEmbedded()
 		-- Chat Panel Background Texture
 		if chat.tex then
 			local texture = (chatEmbedded == "RightChat") and E.db.chat.panelBackdropNameRight or E.db.chat.panelBackdropNameLeft
-			detailsEmbedded.tex = detailsEmbedded:CreateTexture(nil, 'OVERLAY')
+			detailsEmbedded.tex = detailsEmbedded:CreateTexture(nil, "OVERLAY")
 			detailsEmbedded.tex:ClearAllPoints()
 			detailsEmbedded.tex:SetPoint("TOPLEFT", chat, "TOPLEFT", 1, -1)
 			detailsEmbedded.tex:SetPoint("BOTTOMRIGHT", chat, "BOTTOMRIGHT", -1, 1)
