@@ -76,6 +76,14 @@ function mMT:DetailsEmbeddedToggle()
 			detailsEmbedded:Hide()
 			chat:Show()
 		else
+			if B.BagFrame and B.BagFrame:IsShown() then
+				tt:Point('BOTTOMRIGHT', B.BagFrame, 'TOPRIGHT', 0, 18)
+			elseif RightChatPanel:GetAlpha() == 1 and RightChatPanel:IsShown() then
+				tt:Point('BOTTOMRIGHT', RightChatPanel, 'TOPRIGHT', 0, 18)
+			else
+				tt:Point('BOTTOMRIGHT', RightChatPanel, 'BOTTOMRIGHT', 0, 18)
+			end
+
 			detailsEmbedded:Show()
 			chat:Hide()
 		end

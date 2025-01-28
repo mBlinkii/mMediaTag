@@ -170,8 +170,6 @@ local function GetGroupKeystone()
 			local leader = UnitIsGroupLeader(unit) and LeadIcon or ""
 
 			if keystoneInfo then
-				print(keystoneInfo.challengeMapID, keystoneInfo[1])
-				mMT:DebugPrintTable(keystoneInfo)
 				local mapName, _, _, icon = C_ChallengeMode.GetMapUIInfo(keystoneInfo.challengeMapID)
 				if mapName then
 					local scoreColor = C_ChallengeMode_GetDungeonScoreRarityColor(keystoneInfo.rating)
