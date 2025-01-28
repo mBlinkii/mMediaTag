@@ -6,6 +6,21 @@ local LOR = LibStub("LibOpenRaid-1.0", true)
 
 local _G = _G
 
+-- Cache WoW Globals
+local C_ChallengeMode = C_ChallengeMode
+local C_MythicPlus = C_MythicPlus
+local UnitName = UnitName
+local GetRealmName = GetRealmName
+local IsInGroup = IsInGroup
+local InCombatLockdown = InCombatLockdown
+local format = format
+local ipairs = ipairs
+local pairs = pairs
+local select = select
+local sort = sort
+local strjoin = strjoin
+local table = table
+
 local C_ChallengeMode_GetDungeonScoreRarityColor = C_ChallengeMode.GetDungeonScoreRarityColor
 local C_ChallengeMode_GetMapTable = C_ChallengeMode.GetMapTable
 local C_ChallengeMode_GetMapUIInfo = C_ChallengeMode.GetMapUIInfo
