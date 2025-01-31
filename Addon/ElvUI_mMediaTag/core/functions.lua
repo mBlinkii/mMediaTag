@@ -81,29 +81,43 @@ function GetTableLng(tbl)
 	return getN
 end
 
-local function PrintTable(tbl, indent, simple, noFunctions)
-	--if not indent then indent = "   " end
+local indentColors = {
+	[1] = "|CFF00FCB0", --#00FCB0
+	[2] = "|CFF00CAFC", --#00CAFC
+	[3] = "|CFF0054FC", --#0054FC
+	[4] = "|CFF7E00FC", --#7E00FC
+}
+
+--string.format("%X", number)
+
+local function PrintTable(tbl, indent, simple, noFunctions, depth)
+	indent = indent or " "
+    depth = depth or 1
+    local colors = "|CFF" .. format("%X", random(50, 200)) .. format("%X", random(50, 200)) .. format("%X", random(50, 200))
+    local color = "|CFF" .. format("%X", random(50, 200)) .. format("%X", random(50, 200)) .. format("%X", random(50, 200))
 	if type(tbl) == "table" then
+		print(color .. indent .. " {|r")
 		for entry, value in pairs(tbl) do
 			if (type(value) == "table") and not simple then
-				print(indent and indent .. "   " or "", "|cff60ffc3 [" .. entry .. "]|r", value)
-				PrintTable(value, indent and indent .. "   " or "   ", true, noFunctions)
+				PrintTable(value, indent .. indent .. "[" .. entry .. "]", true, noFunctions, depth + 1)
 			else
 				if type(value) == "table" then
-					print(indent and indent .. "   " or "", "|cff60ffc3 [" .. entry .. "]|r", " > ", value)
+					print(color .. indent .. "|r", "|cff60ffc3 [" .. entry .. "]|r", " > ", value)
 				elseif type(value) == "number" then
-					print(indent and indent .. "   " or "", "|cfff5b062 [" .. entry .. "]|r", " = ", value)
+					print(color .. indent .. "|r", "|cfff5b062 [" .. entry .. "]|r", " = ", value)
 				elseif type(value) == "string" then
-					print(indent and indent .. "   " or "", "|cffd56ef5 [" .. entry .. "]|r", " = ", value)
+					print(color .. indent .. "|r", "|cffd56ef5 [" .. entry .. "]|r", " = ", value)
 				elseif type(value) == "boolean" then
-					print(indent and indent .. "   " or "", "|cff96e1ff[" .. entry .. "]|r", " = ", (value and "|cffabff87true|r" or "|cffff8787false|r"))
+					print(color .. indent .. "|r", "|cff96e1ff[" .. entry .. "]|r", " = ", (value and "|cffabff87true|r" or "|cffff8787false|r"))
 				elseif (type(value) == "function") and not noFunctions then
-					print(indent and indent .. "   " or "", "|cffb5b3f5 [" .. entry .. "]|r", " = ", value)
+					print(color .. indent .. "|r", "|cffb5b3f5 [" .. entry .. "]|r", " = ", value)
 				elseif type(value) ~= "function" then
-					print(indent and indent .. "   " or "", "|cfffbd7f9 [" .. entry .. "]|r", " = ", value)
+					print(color .. indent .. "|r", "|cfffbd7f9 [" .. entry .. "]|r", " = ", value)
 				end
 			end
 		end
+		print(color .. indent .. " }|r")
+		print(" ")
 	else
 		print(tostring(tbl))
 	end
@@ -113,7 +127,7 @@ function mMT:DebugPrintTable(tbl, simple, noFunctions)
 	if type(tbl) == "table" then
 		local tblLength = GetTableLng(tbl)
 		mMT:Print(": Table Start >>>", tbl, "Entries:", tblLength, "Options:", "Simple:", simple, "Functions:", noFunctions)
-		PrintTable(tbl, nil, (tblLength > 50), noFunctions)
+		PrintTable(tbl, "-", (tblLength > 50), noFunctions)
 	else
 		mMT:Print("Not a Table:", tbl)
 	end
