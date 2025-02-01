@@ -1,3 +1,7 @@
 <Ui xmlns="http://www.blizzard.com/wow/ui/">
+	<Include file="changelog\load_changelogs.xml"/>
 	<Script file="options_core.lua"/>
+	<Script file="about.lua"/>
+	<Script file="license.lua"/>
+	<Script file="changelog.lua"/>
 </Ui>

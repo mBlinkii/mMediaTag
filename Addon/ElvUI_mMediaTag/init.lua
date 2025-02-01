@@ -1,7 +1,9 @@
 local E, _, V, P, G = unpack(ElvUI)
 local EP = E.Libs.EP
 
+-- Cache WoW Globals
 local _G = _G
+local format = format
 local GetAddOnMetadata = _G.C_AddOns and _G.C_AddOns.GetAddOnMetadata or _G.GetAddOnMetadata
 local IsAddOnLoaded = _G.C_AddOns and _G.C_AddOns.IsAddOnLoaded or IsAddOnLoaded
 
@@ -28,19 +30,23 @@ _G[addonName] = {
 
 -- Settings
 mMT.Version = GetAddOnMetadata(addonName, "Version")
-mMT.Name = GetAddOnMetadata(addonName, "Title")
+mMT.Name = "|CFF0294FFm|r|CFFBD26E5Media|r|CFFFF005DTag|r |CFF404040&|r  |CFFFF9D00Tools|r"
+mMT.NameShort = "|CFF0294FFm|r|CFFBD26E5Media|r|CFFFF005DTag|r"
 mMT.Changelog = {}
 
 media.icon = "|TInterface\\Addons\\ElvUI_mMediaTag\\media\\icon.tga:14:14|t"
+media.icon16 = "|TInterface\\Addons\\ElvUI_mMediaTag\\media\\options\\mmt_16.tga:16:16|t"
+media.icon32 = "|TInterface\\Addons\\ElvUI_mMediaTag\\media\\options\\mmt_16.tga:32:32|t"
+media.icon64 = "|TInterface\\Addons\\ElvUI_mMediaTag\\media\\options\\mmt_16.tga:64:64|t"
 media.logo = "Interface\\Addons\\ElvUI_mMediaTag\\media\\logo.tga"
 
 function mMT:InsertOptions()
-    E.Options.name = format("%s + %s %s |cff99ff33%s|r", E.Options.name, media.icon, mMT.Name, mMT.Version)
+    E.Options.name = format("%s + %s %s|cff99ff33%s|r", E.Options.name, media.icon16, mMT.NameShort, mMT.Version)
     E.Options.args.mMT = mMT.options
 end
 
 function mMT:Initialize()
-	EP:RegisterPlugin(addonName, mMT.InsertOptions)
+    EP:RegisterPlugin(addonName, mMT.InsertOptions)
 end
 
 E:RegisterModule(mMT:GetName())
