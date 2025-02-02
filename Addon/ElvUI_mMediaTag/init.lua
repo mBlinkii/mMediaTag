@@ -8,40 +8,34 @@ local GetAddOnMetadata = _G.C_AddOns and _G.C_AddOns.GetAddOnMetadata or _G.GetA
 local IsAddOnLoaded = _G.C_AddOns and _G.C_AddOns.IsAddOnLoaded or IsAddOnLoaded
 
 -- Addon Name and Namespace
-local addonName, _ = ...
+local addonName, Engine = ...
 local mMT = E:NewModule(addonName, "AceHook-3.0", "AceEvent-3.0", "AceTimer-3.0", "AceConsole-3.0")
 
-local modules = {}
-local functions = {}
-local media = {}
-local db = MMTDATA or {}
-local locales = LibStub("AceLocale-3.0"):GetLocale("mMediaTag")
+Engine[1] = mMT
+Engine[2] = LibStub("AceDB-3.0"):New("MMTDATA", mMT.defaults, true)
+Engine[3] = {}
+Engine[4] = {}
+Engine[5] = E
+Engine[6] = P.mMT
+Engine[7] = LibStub("AceLocale-3.0"):GetLocale("mMediaTag")
+Engine[8] = {}
+_G[addonName] = Engine
 
-_G[addonName] = {
-    mMT,
-    db,
-    modules,
-    functions,
-    E,
-    P.mMT,
-    locales,
-    media
-}
+Engine[8].icon = "|TInterface\\Addons\\ElvUI_mMediaTag\\media\\icon.tga:14:14|t"
+Engine[8].icon16 = "|TInterface\\Addons\\ElvUI_mMediaTag\\media\\options\\mmt_16.tga:16:16|t"
+Engine[8].icon32 = "|TInterface\\Addons\\ElvUI_mMediaTag\\media\\options\\mmt_16.tga:32:32|t"
+Engine[8].icon64 = "|TInterface\\Addons\\ElvUI_mMediaTag\\media\\options\\mmt_16.tga:64:64|t"
+Engine[8].logo = "Interface\\Addons\\ElvUI_mMediaTag\\media\\logo.tga"
 
--- Settings
 mMT.Version = GetAddOnMetadata(addonName, "Version")
 mMT.Name = "|CFF0294FFm|r|CFFBD26E5Media|r|CFFFF005DTag|r |CFF404040&|r  |CFFFF9D00Tools|r"
 mMT.NameShort = "|CFF0294FFm|r|CFFBD26E5Media|r|CFFFF005DTag|r"
+mMT.defaults = {}
 mMT.Changelog = {}
 
-media.icon = "|TInterface\\Addons\\ElvUI_mMediaTag\\media\\icon.tga:14:14|t"
-media.icon16 = "|TInterface\\Addons\\ElvUI_mMediaTag\\media\\options\\mmt_16.tga:16:16|t"
-media.icon32 = "|TInterface\\Addons\\ElvUI_mMediaTag\\media\\options\\mmt_16.tga:32:32|t"
-media.icon64 = "|TInterface\\Addons\\ElvUI_mMediaTag\\media\\options\\mmt_16.tga:64:64|t"
-media.logo = "Interface\\Addons\\ElvUI_mMediaTag\\media\\logo.tga"
-
 function mMT:InsertOptions()
-    E.Options.name = format("%s + %s %s|cff99ff33%s|r", E.Options.name, media.icon16, mMT.NameShort, mMT.Version)
+    Engine[2]:RegisterDefaults(mMT.defaults)
+    E.Options.name = format("%s + %s %s|cff99ff33%s|r", E.Options.name, Engine[8].icon16, mMT.NameShort, mMT.Version)
     E.Options.args.mMT = mMT.options
 end
 

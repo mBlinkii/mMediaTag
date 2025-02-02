@@ -19,6 +19,7 @@ localization\load_localization.xml
 
 init.lua
 core\load_core.xml
+profiles\load_profiles.xml
 media\load_media.xml
 options\load_options.xml
 

@@ -4,7 +4,6 @@ local mMT, DB, M, F, E, P, L, MEDIA = unpack(ElvUI_mMediaTag)
 local type = type
 local tostring = tostring
 local pairs = pairs
-local format = format
 
 local function GetTableLength(tbl)
     local count = 0
@@ -22,7 +21,7 @@ local function PrintTable(tbl, indent, simple, noFunctions, depth, parent)
 	if type(tbl) == "table" then
 		print(indent .. "{")
 		for entry, value in pairs(tbl) do
-			local currentPath = parent .. (parent ~= "" and "." or "") .. entry
+			local currentPath = parent .. (parent ~= "" and "." or "") .. tostring(entry)
 			if type(value) == "table" and not simple then
 				print(indent .. currentPath .. " = {")
 				PrintTable(value, indent .. "    ", depth > 2, noFunctions, depth + 1, currentPath)
@@ -55,9 +54,9 @@ end
 function F:DebugPrintTable(tbl, simple, noFunctions)
     if type(tbl) == "table" then
         local tblLength = GetTableLength(tbl)
-        mMT:Print(": Table Start >>>", tbl, "Entries:", tblLength, "Options:", "Simple:", simple, "Functions:", noFunctions)
+        F:Print(": Table Start >>>", tbl, "Entries:", tblLength, "Options:", "Simple:", simple, "Functions:", noFunctions)
         PrintTable(tbl, nil, (tblLength > 50), noFunctions)
     else
-        mMT:Print("Not a Table:", tbl)
+        F:Print("Not a Table:", tbl)
     end
 end
