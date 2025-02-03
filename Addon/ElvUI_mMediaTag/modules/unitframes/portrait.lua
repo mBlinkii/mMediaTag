@@ -331,8 +331,8 @@ local function UpdatePortrait(portraitFrame, force)
 
 	-- Class Icon Background
 	--if (E.db.mMT.portraits.general.classicons or portraitFrame.textures.flip) and not portraitFrame.iconbg then
-	local color = { r = 0, g = 0, b = 0, a = 1 }
-	if E.db.mMT.portraits.general.classicons then color = (E.db.mMT.portraits.shadow.classBG and unitColor or E.db.mMT.portraits.shadow.background) end
+	--local color = { r = 0, g = 0, b = 0, a = 1 }
+	local color = (E.db.mMT.portraits.shadow.classBG and unitColor or E.db.mMT.portraits.shadow.background)
 	UpdateTexture(portraitFrame, "iconbg", bg_textures[E.db.mMT.portraits.general.bgstyle], -5, color)
 	portraitFrame.iconbg:AddMaskTexture(portraitFrame.mask)
 	--end
