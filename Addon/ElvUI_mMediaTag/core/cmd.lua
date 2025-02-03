@@ -1,4 +1,4 @@
-local mMT, db, M, F, E, P, L, MEDIA = unpack(ElvUI_mMediaTag)
+local mMT, M, F, E, P, L, MEDIA = unpack(ElvUI_mMediaTag)
 
 -- Cache WoW Globals
 local format = format
@@ -41,7 +41,7 @@ local function SetDebugMode(on, safe)
 			local name = GetAddOnInfo(i)
 			if not addons[name] and E:IsAddOnEnabled(name) then
 				DisableAddOn(name, E.myname)
-				db.global.disabledAddons[name] = i
+				mMT.db.global.disabledAddons[name] = i
 			end
 		end
 		SetCVar("scriptErrors", 1)
@@ -50,11 +50,11 @@ local function SetDebugMode(on, safe)
 		E:SetCVar("scriptProfile", 0)
 		E:SetCVar("scriptErrors", 0)
 
-		if next(db.global.disabledAddons) then
-			for name in pairs(db.global.disabledAddons) do
+		if next(mMT.db.global.disabledAddons) then
+			for name in pairs(mMT.db.global.disabledAddons) do
 				EnableAddOn(name, E.myname)
 			end
-			wipe(db.global.disabledAddons)
+			wipe(mMT.db.global.disabledAddons)
 			ReloadUI()
 		end
 	end
@@ -81,10 +81,9 @@ local function CommandHandler(msg)
 	elseif command == "version" then
 		PrintVersion()
 	elseif command == "debug" or command == "debug safe" then
-		-- F:DebugPrintTable(ElvUI_mMediaTag)
-		F:DebugPrintTable(db)
-		db.global.debugMode = not db.global.debugMode
-		SetDebugMode(db.global.debugMode, command == "debug safe")
+		F:DebugPrintTable(mMT.db)
+		mMT.db.global.debugMode = not mMT.db.global.debugMode
+		SetDebugMode(mMT.db.global.debugMode, command == "debug safe")
 	else
 		if not InCombatLockdown() then
 			E:ToggleOptions("mMT")
