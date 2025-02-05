@@ -20,11 +20,12 @@ Engine[6] = LibStub("AceLocale-3.0"):GetLocale("mMediaTag") -- Locales
 Engine[7] = {}     -- Media
 _G[addonName] = Engine
 
-Engine[7].icon = "|TInterface\\Addons\\ElvUI_mMediaTag\\media\\icon.tga:14:14|t"
-Engine[7].icon16 = "|TInterface\\Addons\\ElvUI_mMediaTag\\media\\options\\mmt_16.tga:16:16|t"
-Engine[7].icon32 = "|TInterface\\Addons\\ElvUI_mMediaTag\\media\\options\\mmt_16.tga:32:32|t"
-Engine[7].icon64 = "|TInterface\\Addons\\ElvUI_mMediaTag\\media\\options\\mmt_16.tga:64:64|t"
-Engine[7].logo = "Interface\\Addons\\ElvUI_mMediaTag\\media\\logo.tga"
+local media = Engine[7]
+media.icon = "|TInterface\\Addons\\ElvUI_mMediaTag\\media\\icon.tga:14:14|t"
+media.icon16 = "|TInterface\\Addons\\ElvUI_mMediaTag\\media\\options\\mmt_16.tga:16:16|t"
+media.icon32 = "|TInterface\\Addons\\ElvUI_mMediaTag\\media\\options\\mmt_16.tga:32:32|t"
+media.icon64 = "|TInterface\\Addons\\ElvUI_mMediaTag\\media\\options\\mmt_16.tga:64:64|t"
+media.logo = "Interface\\Addons\\ElvUI_mMediaTag\\media\\logo.tga"
 
 mMT.Version = GetAddOnMetadata(addonName, "Version")
 mMT.Name = "|CFF0294FFm|r|CFFBD26E5Media|r|CFFFF005DTag|r |CFF404040&|r  |CFFFF9D00Tools|r"
@@ -33,7 +34,7 @@ mMT.defaults = {}
 mMT.Changelog = {}
 
 function mMT:InsertOptions()
-    E.Options.name = format("%s + %s %s|cff99ff33%s|r", E.Options.name, Engine[7].icon16, mMT.NameShort, mMT.Version)
+    E.Options.name = format("%s + %s %s|cff99ff33%s|r", E.Options.name, media.icon16, mMT.NameShort, mMT.Version)
     E.Options.args.mMT = mMT.options
 end
 

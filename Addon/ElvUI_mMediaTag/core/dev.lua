@@ -4,6 +4,7 @@ local mMT, DB, M, E, P, L, MEDIA = unpack(ElvUI_mMediaTag)
 local type = type
 local tostring = tostring
 local pairs = pairs
+local print = print
 
 local function GetTableLength(tbl)
     local count = 0
@@ -55,7 +56,7 @@ function mMT:DebugPrintTable(tbl, simple, noFunctions)
     if type(tbl) == "table" then
         local tblLength = GetTableLength(tbl)
         mMT:Print(": Table Start >>>", tbl, "Entries:", tblLength, "Options:", "Simple:", simple, "Functions:", noFunctions)
-        PrintTable(tbl, nil, (tblLength > 50), noFunctions)
+        PrintTable(tbl, nil, simple, noFunctions)
     else
         mMT:Print("Not a Table:", tbl)
     end

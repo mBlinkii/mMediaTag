@@ -11,6 +11,9 @@ local IsAddOnLoaded = _G.C_AddOns and _G.C_AddOns.IsAddOnLoaded or _G.IsAddOnLoa
 local EnableAddOn = _G.C_AddOns and _G.C_AddOns.EnableAddOn or _G.EnableAddOn
 local DisableAddOn = _G.C_AddOns and _G.C_AddOns.DisableAddOn or _G.DisableAddOn
 local GetAddOnInfo = _G.C_AddOns and _G.C_AddOns.GetAddOnInfo or _G.GetAddOnInfo
+local SetCVar = SetCVar
+local next = next
+local wipe = wipe
 
 local debugAddons = {
 	["!BugGrabber"] = true,
@@ -46,9 +49,10 @@ local function SetDebugMode(on, safe)
 		end
 		SetCVar("scriptErrors", 1)
 		ReloadUI()
-	elseif not on then
-		E:SetCVar("scriptProfile", 0)
-		E:SetCVar("scriptErrors", 0)
+	else
+		SetCVar("scriptProfile", 0)
+		SetCVar("scriptErrors", 0)
+		mMT:Print("Lua errors off.")
 
 		if next(DB.debug.disabledAddons) then
 			for name in pairs(DB.debug.disabledAddons) do
