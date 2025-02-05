@@ -1,4 +1,4 @@
-local mMT, M, F, E, P, L, MEDIA = unpack(ElvUI_mMediaTag)
+local mMT, DB, M, E, P, L, MEDIA = unpack(ElvUI_mMediaTag)
 
 -- Cache WoW Globals
 local type = type
@@ -51,12 +51,12 @@ local function PrintTable(tbl, indent, simple, noFunctions, depth, parent)
 	end
 end
 
-function F:DebugPrintTable(tbl, simple, noFunctions)
+function mMT:DebugPrintTable(tbl, simple, noFunctions)
     if type(tbl) == "table" then
         local tblLength = GetTableLength(tbl)
-        F:Print(": Table Start >>>", tbl, "Entries:", tblLength, "Options:", "Simple:", simple, "Functions:", noFunctions)
+        mMT:Print(": Table Start >>>", tbl, "Entries:", tblLength, "Options:", "Simple:", simple, "Functions:", noFunctions)
         PrintTable(tbl, nil, (tblLength > 50), noFunctions)
     else
-        F:Print("Not a Table:", tbl)
+        mMT:Print("Not a Table:", tbl)
     end
 end

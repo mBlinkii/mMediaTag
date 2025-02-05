@@ -13,7 +13,7 @@
 ## X-Curse-Project-ID: 289502
 ## X-Wago-ID: 9rN48AND
 
-# lib\load_libs.xml
+lib\load_libs.xml
 
 localization\load_localization.xml
 

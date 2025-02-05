@@ -1,7 +1,6 @@
-local mMT, M, F, E, P, L, MEDIA = unpack(ElvUI_mMediaTag)
+local mMT, DB, M, E, P, L, MEDIA = unpack(ElvUI_mMediaTag)
 
-mMT.defaults.profile = {}
-mMT.defaults.global = {}
 
-mMT.defaults.global.disabledAddons = {}
-mMT.defaults.global.debugMode = false
+mMT.defaults.debug = {}
+mMT.defaults.debug.disabledAddons = {}
+mMT.defaults.debug.debugMode = false

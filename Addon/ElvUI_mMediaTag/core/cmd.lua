@@ -1,4 +1,4 @@
-local mMT, M, F, E, P, L, MEDIA = unpack(ElvUI_mMediaTag)
+local mMT, DB, M, E, P, L, MEDIA = unpack(ElvUI_mMediaTag)
 
 -- Cache WoW Globals
 local format = format
@@ -41,7 +41,7 @@ local function SetDebugMode(on, safe)
 			local name = GetAddOnInfo(i)
 			if not addons[name] and E:IsAddOnEnabled(name) then
 				DisableAddOn(name, E.myname)
-				mMT.db.global.disabledAddons[name] = i
+				DB.debug.disabledAddons[name] = i
 			end
 		end
 		SetCVar("scriptErrors", 1)
@@ -50,11 +50,11 @@ local function SetDebugMode(on, safe)
 		E:SetCVar("scriptProfile", 0)
 		E:SetCVar("scriptErrors", 0)
 
-		if next(mMT.db.global.disabledAddons) then
-			for name in pairs(mMT.db.global.disabledAddons) do
+		if next(DB.debug.disabledAddons) then
+			for name in pairs(DB.debug.disabledAddons) do
 				EnableAddOn(name, E.myname)
 			end
-			wipe(mMT.db.global.disabledAddons)
+			wipe(DB.debug.disabledAddons)
 			ReloadUI()
 		end
 	end
@@ -62,15 +62,15 @@ end
 
 -- Command functions
 local function PrintHelp()
-	F:Print("Available commands:")
-	F:Print(MEDIA.color.purple:WrapTextInColorCode("/mmt"), MEDIA.color.green:WrapTextInColorCode("help"), "- Show this help message")
-	F:Print(MEDIA.color.purple:WrapTextInColorCode("/mmt"), MEDIA.color.green:WrapTextInColorCode("version"), "- Show the current version")
-	F:Print(MEDIA.color.purple:WrapTextInColorCode("/mmt"), MEDIA.color.green:WrapTextInColorCode("debug"), "- Toggle debug mode")
-	F:Print(MEDIA.color.purple:WrapTextInColorCode("/mmt"), MEDIA.color.green:WrapTextInColorCode("debug safe"), "- Toggle debug mode with safe addons")
+	mMT:Print("Available commands:")
+	mMT:Print(MEDIA.color.purple:WrapTextInColorCode("/mmt"), MEDIA.color.green:WrapTextInColorCode("help"), "- Show this help message")
+	mMT:Print(MEDIA.color.purple:WrapTextInColorCode("/mmt"), MEDIA.color.green:WrapTextInColorCode("version"), "- Show the current version")
+	mMT:Print(MEDIA.color.purple:WrapTextInColorCode("/mmt"), MEDIA.color.green:WrapTextInColorCode("debug"), "- Toggle debug mode")
+	mMT:Print(MEDIA.color.purple:WrapTextInColorCode("/mmt"), MEDIA.color.green:WrapTextInColorCode("debug safe"), "- Toggle debug mode with safe addons")
 end
 
 local function PrintVersion()
-	F:Print("Version:", MEDIA.color.green:WrapTextInColorCode(mMT.Version))
+	mMT:Print("Version:", MEDIA.color.green:WrapTextInColorCode(mMT.Version))
 end
 
 -- Command handler
@@ -81,9 +81,9 @@ local function CommandHandler(msg)
 	elseif command == "version" then
 		PrintVersion()
 	elseif command == "debug" or command == "debug safe" then
-		F:DebugPrintTable(mMT.db)
-		mMT.db.global.debugMode = not mMT.db.global.debugMode
-		SetDebugMode(mMT.db.global.debugMode, command == "debug safe")
+		mMT:DebugPrintTable(DB)
+		DB.debug.debugMode = not DB.debug.debugMode
+		SetDebugMode(DB.debug.debugMode, command == "debug safe")
 	else
 		if not InCombatLockdown() then
 			E:ToggleOptions("mMT")

@@ -1,4 +1,4 @@
-local mMT, M, F, E, P, L, MEDIA = unpack(ElvUI_mMediaTag)
+local mMT, DB, M, E, P, L, MEDIA = unpack(ElvUI_mMediaTag)
 
 mMT.Changelog[360] = {
 	DATE = "04.10.2024",
