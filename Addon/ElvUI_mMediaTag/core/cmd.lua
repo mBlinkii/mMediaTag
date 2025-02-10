@@ -85,7 +85,6 @@ local function CommandHandler(msg)
 	elseif command == "version" then
 		PrintVersion()
 	elseif command == "debug" or command == "debug safe" then
-		mMT:DebugPrintTable(DB)
 		DB.debug.debugMode = not DB.debug.debugMode
 		SetDebugMode(DB.debug.debugMode, command == "debug safe")
 	else

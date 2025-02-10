@@ -11,13 +11,15 @@ local IsAddOnLoaded = _G.C_AddOns and _G.C_AddOns.IsAddOnLoaded or IsAddOnLoaded
 local addonName, Engine = ...
 local mMT = E:NewModule(addonName, "AceHook-3.0", "AceEvent-3.0", "AceTimer-3.0", "AceConsole-3.0")
 
-Engine[1] = mMT     -- Addon
-Engine[2] = E:CopyTable({}, mMT.defaults)   -- db
-Engine[3] = {}      -- modules
-Engine[4] = E       -- ElvUI
-Engine[5] = P.mMT   -- ElvUI Profile DB
+P.mMT = {}
+
+Engine[1] = mMT -- Addon
+Engine[2] = {} -- db
+Engine[3] = {} -- modules
+Engine[4] = E -- ElvUI
+Engine[5] = P.mMT -- ElvUI Profile DB
 Engine[6] = LibStub("AceLocale-3.0"):GetLocale("mMediaTag") -- Locales
-Engine[7] = {}     -- Media
+Engine[7] = {} -- Media
 _G[addonName] = Engine
 
 local media = Engine[7]
@@ -34,20 +36,29 @@ mMT.defaults = {}
 mMT.Changelog = {}
 
 function mMT:InsertOptions()
-    E.Options.name = format("%s + %s %s|cff99ff33%s|r", E.Options.name, media.icon16, mMT.NameShort, mMT.Version)
-    E.Options.args.mMT = mMT.options
+	E.Options.name = format("%s + %s %s|cff99ff33%s|r", E.Options.name, media.icon16, mMT.NameShort, mMT.Version)
+	E.Options.args.mMT = mMT.options
+end
+
+function mMT:Update()
+	for _, module in pairs(Engine[3]) do
+		if module.Initialize then module:Initialize() end
+	end
 end
 
 function mMT:Initialize()
-    mMT:RegisterEvent("PLAYER_LOGOUT")
+	mMT:RegisterEvent("PLAYER_LOGOUT")
 
-    Engine[2] = E:CopyTable(Engine[2], MMTDATA)
+	EP:RegisterPlugin(addonName, mMT.InsertOptions)
 
-    EP:RegisterPlugin(addonName, mMT.InsertOptions)
+    E:CopyTable(Engine[2], mMT.defaults)
+	Engine[2] = E:CopyTable(Engine[2], MMTDATA)
+
+	mMT:Update()
 end
 
 function mMT:PLAYER_LOGOUT()
-    MMTDATA = Engine[2]
+	MMTDATA = Engine[2]
 end
 
 E:RegisterModule(mMT:GetName())

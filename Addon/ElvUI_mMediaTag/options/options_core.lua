@@ -20,9 +20,17 @@ mMT.options = {
 			name = L["General"],
 			icon = "Interface\\Addons\\ElvUI_mMediaTag\\media\\options\\general",
 			childGroups = "tab",
-			args = {},
+			args = {
+				greeting_message = {
+					order = 1,
+					type = "group",
+					name = mMT:AddSettingsIcon(L["Greeting Message"], "greeting_message"),
+					childGroups = "tab",
+					args = {},
+				},
+			},
 		},
-        unitframes = {
+		unitframes = {
 			order = 3,
 			type = "group",
 			name = L["Unitframes"],
@@ -30,7 +38,7 @@ mMT.options = {
 			childGroups = "tab",
 			args = {},
 		},
-        nameplates = {
+		nameplates = {
 			order = 4,
 			type = "group",
 			name = L["Nameplates"],
@@ -38,7 +46,7 @@ mMT.options = {
 			childGroups = "tab",
 			args = {},
 		},
-        datatexts = {
+		datatexts = {
 			order = 5,
 			type = "group",
 			name = L["Datatexts"],
@@ -46,7 +54,7 @@ mMT.options = {
 			childGroups = "tab",
 			args = {},
 		},
-        dock = {
+		dock = {
 			order = 6,
 			type = "group",
 			name = L["Dock"],
@@ -54,7 +62,7 @@ mMT.options = {
 			childGroups = "tab",
 			args = {},
 		},
-        tags = {
+		tags = {
 			order = 7,
 			type = "group",
 			name = L["TAGs"],
@@ -62,7 +70,7 @@ mMT.options = {
 			childGroups = "tab",
 			args = {},
 		},
-        misc = {
+		misc = {
 			order = 8,
 			type = "group",
 			name = L["Misc"],
@@ -70,7 +78,7 @@ mMT.options = {
 			childGroups = "tab",
 			args = {},
 		},
-        about = {
+		about = {
 			order = 9,
 			type = "group",
 			name = MEDIA.color.green:WrapTextInColorCode(L["About"]),
@@ -78,15 +86,15 @@ mMT.options = {
 			childGroups = "tab",
 			args = {},
 		},
-        license = {
+		license = {
 			order = 10,
 			type = "group",
-			name = MEDIA.color.yellow:WrapTextInColorCode(L["License"] ),
+			name = MEDIA.color.yellow:WrapTextInColorCode(L["License"]),
 			icon = "Interface\\Addons\\ElvUI_mMediaTag\\media\\options\\license",
 			childGroups = "tab",
 			args = {},
 		},
-        changelog = {
+		changelog = {
 			order = 11,
 			type = "group",
 			name = MEDIA.color.red:WrapTextInColorCode(L["Changelog"]),

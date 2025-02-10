@@ -1,0 +1,3 @@
+<Ui xmlns="http://www.blizzard.com/wow/ui/">
+	<Script file="greeting_message.lua"/>
+</Ui>

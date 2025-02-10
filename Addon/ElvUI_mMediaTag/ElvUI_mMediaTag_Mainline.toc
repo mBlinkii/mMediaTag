@@ -23,4 +23,4 @@ profiles\load_profiles.xml
 media\load_media.xml
 options\load_options.xml
 
-# modules\load_modules.xml
+modules\load_modules.xml

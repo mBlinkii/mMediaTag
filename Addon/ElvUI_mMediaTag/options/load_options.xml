@@ -4,4 +4,5 @@
 	<Script file="about.lua"/>
 	<Script file="license.lua"/>
 	<Script file="changelog.lua"/>
+	<Script file="greeting_message.lua"/>
 </Ui>
