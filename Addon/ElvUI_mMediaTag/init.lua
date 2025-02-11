@@ -46,17 +46,22 @@ function mMT:Update()
 	end
 end
 
+local function StaggeredUpdateAll()
+	E:Delay(1, mMT.Update)
+end
+
 function mMT:Initialize()
 	mMT:RegisterEvent("PLAYER_LOGOUT")
 
 	EP:RegisterPlugin(addonName, mMT.InsertOptions)
 
-    E:CopyTable(Engine[2], mMT.defaults)
+	E:CopyTable(Engine[2], mMT.defaults)
 	Engine[2] = E:CopyTable(Engine[2], MMTDATA)
 
-	mMT:Update()
-
-	mMT:Print("JOO")
+	if not mMT.ElvUI_Hooked then
+		mMT:SecureHook(E, "StaggeredUpdateAll", StaggeredUpdateAll)
+		mMT.ElvUI_Hooked = true
+	end
 end
 
 function mMT:PLAYER_LOGOUT()
