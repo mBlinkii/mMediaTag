@@ -1,5 +1,9 @@
 local mMT, DB, M, E, P, L, MEDIA = unpack(ElvUI_mMediaTag)
 
+-- Cache WoW Globals
+local format = format
+local print = print
+
 M.GreetingMessage = {}
 
 local function GreetingMessage()

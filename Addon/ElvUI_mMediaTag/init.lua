@@ -17,7 +17,7 @@ Engine[1] = mMT -- Addon
 Engine[2] = {} -- db
 Engine[3] = {} -- modules
 Engine[4] = E -- ElvUI
-Engine[5] = P.mMT -- ElvUI Profile DB
+Engine[5] = P.mMT -- ElvUI Profile defaults
 Engine[6] = LibStub("AceLocale-3.0"):GetLocale("mMediaTag") -- Locales
 Engine[7] = {} -- Media
 _G[addonName] = Engine
@@ -55,6 +55,8 @@ function mMT:Initialize()
 	Engine[2] = E:CopyTable(Engine[2], MMTDATA)
 
 	mMT:Update()
+
+	mMT:Print("JOO")
 end
 
 function mMT:PLAYER_LOGOUT()

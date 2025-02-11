@@ -1,4 +1,5 @@
 <Ui xmlns="http://www.blizzard.com/wow/ui/">
+    <Script file="addoncompartment.lua"/>
     <Script file="functions.lua"/>
     <Script file="dev.lua"/>
     <Script file="cmd.lua"/>

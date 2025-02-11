@@ -37,7 +37,7 @@ local safeAddons = {
 	["ElvUI_mMediaTag"] = true,
 }
 
-local function SetDebugMode(on, safe)
+function mMT:SetDebugMode(on, safe)
 	local addons = safe and safeAddons or debugAddons
 	if on then
 		for i = 1, GetNumAddOns() do
@@ -86,7 +86,7 @@ local function CommandHandler(msg)
 		PrintVersion()
 	elseif command == "debug" or command == "debug safe" then
 		DB.debug.debugMode = not DB.debug.debugMode
-		SetDebugMode(DB.debug.debugMode, command == "debug safe")
+		mMT:SetDebugMode(DB.debug.debugMode, command == "debug safe")
 	else
 		if not InCombatLockdown() then
 			E:ToggleOptions("mMT")
