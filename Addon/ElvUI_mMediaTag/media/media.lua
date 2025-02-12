@@ -17,3 +17,10 @@ local colors = {
 for name, color in pairs(colors) do
     MEDIA.color[name] = CreateColorFromHexString(color)
 end
+
+
+MEDIA.icon = "|TInterface\\Addons\\ElvUI_mMediaTag\\media\\icon.tga:14:14|t"
+MEDIA.icon16 = "|TInterface\\Addons\\ElvUI_mMediaTag\\media\\options\\mmt_16.tga:16:16|t"
+MEDIA.icon32 = "|TInterface\\Addons\\ElvUI_mMediaTag\\media\\options\\mmt_16.tga:32:32|t"
+MEDIA.icon64 = "|TInterface\\Addons\\ElvUI_mMediaTag\\media\\options\\mmt_16.tga:64:64|t"
+MEDIA.logo = "Interface\\Addons\\ElvUI_mMediaTag\\media\\logo.tga"
