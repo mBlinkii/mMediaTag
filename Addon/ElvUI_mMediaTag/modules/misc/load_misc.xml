@@ -1,3 +1,4 @@
 <Ui xmlns="http://www.blizzard.com/wow/ui/">
+    <Script file="elvui_icons.lua"/>
 	<Script file="greeting_message.lua"/>
 </Ui>
