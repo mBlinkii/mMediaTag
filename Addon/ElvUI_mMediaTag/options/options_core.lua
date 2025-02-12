@@ -1,4 +1,4 @@
-local mMT, DB, M, E, L, MEDIA = unpack(ElvUI_mMediaTag)
+local mMT, DB, M, E, P, L, MEDIA = unpack(ElvUI_mMediaTag)
 
 mMT.options = {
 	name = MEDIA.icon16 .. mMT.Name,

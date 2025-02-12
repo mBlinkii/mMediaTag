@@ -11,12 +11,15 @@ local IsAddOnLoaded = _G.C_AddOns and _G.C_AddOns.IsAddOnLoaded or IsAddOnLoaded
 local addonName, Engine = ...
 local mMT = E:NewModule("mMediaTag", "AceHook-3.0", "AceEvent-3.0", "AceTimer-3.0", "AceConsole-3.0")
 
+P.mMT = {}
+
 Engine[1] = mMT -- Addon
 Engine[2] = {} -- db
 Engine[3] = {} -- modules
 Engine[4] = E -- ElvUI
-Engine[5] = LibStub("AceLocale-3.0"):GetLocale("mMediaTag") -- Locales
-Engine[6] = {} -- Media
+Engine[5] = P.mMT -- ElvUI plugin defaults
+Engine[6] = LibStub("AceLocale-3.0"):GetLocale("mMediaTag") -- Locales
+Engine[7] = {} -- Media
 _G[addonName] = Engine
 
 mMT.Version = GetAddOnMetadata(addonName, "Version")
@@ -26,7 +29,7 @@ mMT.defaults = {}
 mMT.Changelog = {}
 
 function mMT:InsertOptions()
-	E.Options.name = format("%s + %s %s|cff99ff33%s|r", E.Options.name, Engine[6].icon16, mMT.NameShort, mMT.Version)
+	E.Options.name = format("%s + %s %s|cff99ff33%s|r", E.Options.name, Engine[7].icon16, mMT.NameShort, mMT.Version)
 	E.Options.args.mMT = mMT.options
 end
 
@@ -52,6 +55,8 @@ function mMT:Initialize()
 		mMT:SecureHook(E, "StaggeredUpdateAll", StaggeredUpdateAll)
 		mMT.ElvUI_Hooked = true
 	end
+
+	mMT:Update()
 end
 
 function mMT:PLAYER_LOGOUT()
