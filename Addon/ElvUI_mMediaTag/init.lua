@@ -9,15 +9,12 @@ local IsAddOnLoaded = _G.C_AddOns and _G.C_AddOns.IsAddOnLoaded or IsAddOnLoaded
 
 -- Addon Name and Namespace
 local addonName, Engine = ...
-local mMT = E:NewModule(addonName, "AceHook-3.0", "AceEvent-3.0", "AceTimer-3.0", "AceConsole-3.0")
-
-P.mMT = {}
+mMT = E:NewModule(addonName, "AceHook-3.0", "AceEvent-3.0", "AceTimer-3.0", "AceConsole-3.0")
 
 Engine[1] = mMT -- Addon
 Engine[2] = {} -- db
 Engine[3] = {} -- modules
 Engine[4] = E -- ElvUI
-Engine[5] = P.mMT -- ElvUI Profile defaults
 Engine[6] = LibStub("AceLocale-3.0"):GetLocale("mMediaTag") -- Locales
 Engine[7] = {} -- Media
 _G[addonName] = Engine

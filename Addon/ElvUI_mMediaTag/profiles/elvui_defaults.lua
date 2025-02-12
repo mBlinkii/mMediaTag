@@ -1,8 +1,8 @@
-local mMT, DB, M, E, P, L, MEDIA = unpack(ElvUI_mMediaTag)
+local E, _, V, P, G = unpack(ElvUI)
 
 -- system settings
-P.db_version = nil
+P.mMT.db_version = nil
 
-P.general = {}
-P.general.greeting_message = true
+P.mMT.general = {}
+P.mMT.general.greeting_message = true
 
