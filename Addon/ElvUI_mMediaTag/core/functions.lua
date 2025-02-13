@@ -9,7 +9,7 @@ function mMT:Print(...)
 end
 
 function mMT:AddSettingsIcon(text, icon)
-	return format("|TInterface\\Addons\\ElvUI_mMediaTag\\media\\options\\%s.tga:16:16|t %s", icon, text)
+	return format("|TInterface\\Addons\\ElvUI_mMediaTag\\media\\options\\%s.tga:16:16|t  %s", icon, text)
 end
 
 function mMT:UpdateModule(name)
@@ -17,7 +17,11 @@ function mMT:UpdateModule(name)
 	if module and module.Initialize then module:Initialize() end
 end
 
-function mMT:AddModule(name)
-	M[name] = {}
+function mMT:AddModule(name, arg)
+	if arg then
+		M[name] = mMT:NewModule(name, unpack(arg))
+	else
+		M[name] = {}
+	end
 	return M[name]
 end

@@ -28,6 +28,13 @@ mMT.options = {
 					childGroups = "tab",
 					args = {},
 				},
+				keystone_to_chat = {
+					order = 2,
+					type = "group",
+					name = mMT:AddSettingsIcon(L["Keystone to Chat"], "keystone_to_chat"),
+					childGroups = "tab",
+					args = {},
+				},
 			},
 		},
 		unitframes = {
