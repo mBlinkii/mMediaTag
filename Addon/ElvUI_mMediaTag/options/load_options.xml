@@ -6,4 +6,5 @@
 	<Script file="changelog.lua"/>
 	<Script file="greeting_message.lua"/>
 	<Script file="keystone_to_chat.lua"/>
+	<Script file="data_panel_skin.lua"/>
 </Ui>

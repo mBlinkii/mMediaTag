@@ -1,5 +1,4 @@
 local mMT, DB, M, E, P, L, MEDIA = unpack(ElvUI_mMediaTag)
-
 local module = mMT:AddModule("KeystoneToChat", { "AceEvent-3.0" })
 
 -- Cache WoW Globals

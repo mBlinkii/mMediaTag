@@ -3,6 +3,10 @@ local mMT, DB, M, E, P, L, MEDIA = unpack(ElvUI_mMediaTag)
 -- Cache WoW Globals
 local format = format
 local print = print
+local strmatch = strmatch
+
+local LibDeflate = E.Libs.Deflate
+local D = E:GetModule("Distributor")
 
 function mMT:Print(...)
 	print(MEDIA.icon16 .. " " .. mMT.Name .. ":", ...)
@@ -24,4 +28,53 @@ function mMT:AddModule(name, arg)
 		M[name] = {}
 	end
 	return M[name]
+end
+
+-- import/ export functions
+local exportPrefix = "!mMT!"
+function GetImportStringType(dataString)
+	return (strmatch(dataString, "^" .. exportPrefix) and "Deflate") or (strmatch(dataString, "^{") and "Table") or ""
+end
+
+function mMT:GetExportText(profileData, profileType)
+	local serialString = D:Serialize(profileData)
+	local exportString = D:CreateProfileExport(profileType, profileType, serialString)
+	local compressedData = LibDeflate:CompressDeflate(exportString, LibDeflate.compressLevel)
+	local printableString = LibDeflate:EncodeForPrint(compressedData)
+	local profileExport = printableString and format("%s%s", exportPrefix, printableString) or nil
+
+	return profileExport
+end
+
+function mMT:GetImportText(string)
+	local profileInfo, profileType, profileData
+	local stringType = GetImportStringType(string)
+	if stringType == "Deflate" then
+		local data = gsub(string, "^" .. exportPrefix, "")
+		local decodedData = LibDeflate:DecodeForPrint(data)
+		local decompressed = LibDeflate:DecompressDeflate(decodedData)
+		if not decompressed then
+			mMT:Print(L["Error decompressing data."])
+			return
+		end
+
+		local serializedData, success
+		serializedData, profileInfo = E:SplitString(decompressed, "^^::") -- '^^' indicates the end of the AceSerializer string
+
+		if not profileInfo then
+			mMT:Print(L["Error importing profile. String is invalid or corrupted!"])
+			return
+		end
+
+		serializedData = format("%s%s", serializedData, "^^") --Add back the AceSerializer terminator
+		profileType, _ = E:SplitString(profileInfo, "::")
+		success, profileData = D:Deserialize(serializedData)
+
+		if not success then
+			mMT:Print(L["Error deserializing:"], profileData)
+			return
+		end
+	end
+
+	return profileType, profileData
 end

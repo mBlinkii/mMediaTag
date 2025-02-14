@@ -83,7 +83,15 @@ mMT.options = {
 			name = L["Misc"],
 			icon = "Interface\\Addons\\ElvUI_mMediaTag\\media\\options\\misc",
 			childGroups = "tab",
-			args = {},
+			args = {
+				data_panel_skin = {
+					order = 1,
+					type = "group",
+					name = mMT:AddSettingsIcon(L["Data Panel Skin"], "data_panel_skin"),
+					childGroups = "tab",
+					args = {},
+				},
+			},
 		},
 		about = {
 			order = 9,

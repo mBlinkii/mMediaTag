@@ -33,14 +33,14 @@ function mMT:InsertOptions()
 	E.Options.args.mMT = mMT.options
 end
 
-function mMT:Update()
+function mMT:UpdateAll()
 	for _, module in pairs(Engine[3]) do
 		if module.Initialize then module:Initialize() end
 	end
 end
 
 local function StaggeredUpdateAll()
-	E:Delay(1, mMT.Update)
+	E:Delay(1, mMT.UpdateAll)
 end
 
 function mMT:Initialize()
@@ -56,7 +56,8 @@ function mMT:Initialize()
 		mMT.ElvUI_Hooked = true
 	end
 
-	mMT:Update()
+	mMT:UpdateAll()
+	mMT:UpdateMedia()
 end
 
 function mMT:PLAYER_LOGOUT()
