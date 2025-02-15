@@ -7,4 +7,5 @@
 	<Script file="greeting_message.lua"/>
 	<Script file="keystone_to_chat.lua"/>
 	<Script file="data_panel_skin.lua"/>
+	<Script file="dice_button.lua"/>
 </Ui>

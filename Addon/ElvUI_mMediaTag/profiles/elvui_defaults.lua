@@ -18,3 +18,22 @@ P.data_panel_skin = {
 	enable = false,
 	panels = {},
 }
+
+-- dice button
+P.dice_button = {
+	enable = false,
+	color = {
+		normal = {
+			mode = "custom",
+			color = { r = 1, g = 1, b = 1, a = 0.75 },
+		},
+		hover = {
+			mode = "class",
+			color = { r = 1, g = 1, b = 1, a = 0.75 },
+		},
+	},
+	texture = "dice05",
+	size = 16,
+	dice_range_a = 100,
+	dice_range_b = 99,
+}

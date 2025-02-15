@@ -1,5 +1,7 @@
 <Ui xmlns="http://www.blizzard.com/wow/ui/">
     <Script file="elvui_icons.lua"/>
-	<Script file="greeting_message.lua"/>
+    <Script file="greeting_message.lua"/>
     <Script file="keystone_to_chat.lua"/>
+    <Script file="unit_ids.lua"/>
+    <Script file="dice_button.lua"/>
 </Ui>

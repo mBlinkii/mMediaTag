@@ -33,6 +33,9 @@ mMT.options = {
 					type = "group",
 					name = mMT:AddSettingsIcon(L["Keystone to Chat"], "keystone_to_chat"),
 					childGroups = "tab",
+					hidden = function()
+						return not E.Retail
+					end,
 					args = {},
 				},
 			},
@@ -88,6 +91,13 @@ mMT.options = {
 					order = 1,
 					type = "group",
 					name = mMT:AddSettingsIcon(L["Data Panel Skin"], "data_panel_skin"),
+					childGroups = "tab",
+					args = {},
+				},
+				dice_button = {
+					order = 2,
+					type = "group",
+					name = mMT:AddSettingsIcon(L["Dice Button"], "dice_button"),
 					childGroups = "tab",
 					args = {},
 				},

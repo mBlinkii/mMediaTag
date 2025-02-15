@@ -53,7 +53,6 @@ local function CheckAndRemoveSettings()
 end
 
 function module:Initialize()
-	print("DataPanelSkin", E.db.mMT.data_panel_skin.enable, module:IsHooked(DT, "UpdatePanelInfo"))
 	if E.db.mMT.data_panel_skin.enable then
 		CheckAndRemoveSettings()
 

@@ -25,6 +25,7 @@ _G[addonName] = Engine
 mMT.Version = GetAddOnMetadata(addonName, "Version")
 mMT.Name = "|CFF0294FFm|r|CFFBD26E5Media|r|CFFFF005DTag|r |CFF404040&|r  |CFFFF9D00Tools|r"
 mMT.NameShort = "|CFF0294FFm|r|CFFBD26E5Media|r|CFFFF005DTag|r"
+mMT.IDs = {}
 mMT.defaults = {}
 mMT.Changelog = {}
 
