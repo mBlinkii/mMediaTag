@@ -4,12 +4,8 @@ local DT = E:GetModule("DataTexts")
 local LOR = LibStub("LibOpenRaid-1.0", true)
 
 -- Cache WoW Globals
-local C_ChallengeMode_GetDungeonScoreRarityColor = C_ChallengeMode.GetDungeonScoreRarityColor
-local C_ChallengeMode_GetMapTable = C_ChallengeMode.GetMapTable
 local GetMapUIInfo = C_ChallengeMode.GetMapUIInfo
-local C_ChallengeMode_GetSpecificDungeonOverallScoreRarityColor = C_ChallengeMode.GetSpecificDungeonOverallScoreRarityColor
 local GetOwnedKeystoneChallengeMapID = C_MythicPlus.GetOwnedKeystoneChallengeMapID
-local C_MythicPlus_GetOwnedKeystoneLevel = C_MythicPlus.GetOwnedKeystoneLevel
 local C_MythicPlus_RequestCurrentAffixes = C_MythicPlus.RequestCurrentAffixes
 local GetDungeonScoreRarityColor = C_ChallengeMode.GetDungeonScoreRarityColor
 local GetPlayerMythicPlusRatingSummary = C_PlayerInfo.GetPlayerMythicPlusRatingSummary
@@ -17,9 +13,7 @@ local GetSpecificDungeonOverallScoreRarityColor = C_ChallengeMode.GetSpecificDun
 local C_MythicPlus_RequestMapInfo = C_MythicPlus.RequestMapInfo
 local GetKeystoneLevelRarityColor = C_ChallengeMode.GetKeystoneLevelRarityColor
 local UIParentLoadAddOn = UIParentLoadAddOn
-local C_MythicPlus_GetSeasonBestForMap = C_MythicPlus.GetSeasonBestForMap
 local UnitName = UnitName
-local GetRealmName = GetRealmName
 local InCombatLockdown = InCombatLockdown
 local IsInGroup = IsInGroup
 local GetNumGroupMembers = GetNumGroupMembers
@@ -32,10 +26,7 @@ local sort = sort
 local strjoin = strjoin
 
 local displayString = ""
-local map_table = C_ChallengeMode_GetMapTable()
-local LeadIcon = E:TextureString("Interface\\AddOns\\ElvUI_mMediaTag\\media\\icons\\misc\\crown1.tga", ":14:14")
 local isMaxLevel = nil
---local myScore = 0
 
 local leaderIcon = E:TextureString(MEDIA.icons.leader.leader01, ":14:14")
 local armorIcon = E:TextureString(MEDIA.icons.datatexts.armor, ":14:14")
@@ -72,50 +63,6 @@ local function GetKeystoneString(id, keyStoneLevel)
 	return mMT:GetIconString(icon) .. " " .. color.hex .. name .. " +" .. format("|c%s%s|r", colorKey.hex, keyStoneLevel) .. "|r", id
 end
 
-local function SortScore(ScoreTable)
-	map_table = C_ChallengeMode_GetMapTable()
-	if map_table then sort(map_table, function(a, b)
-		return ScoreTable[a].score > ScoreTable[b].score
-	end) end
-end
-
-local function SortLevel(ScoreTable)
-	map_table = C_ChallengeMode_GetMapTable()
-	if map_table then sort(map_table, function(a, b)
-		return ScoreTable[a].level > ScoreTable[b].level
-	end) end
-end
-
-local function GetDungeonScores()
-	local ScoreTable = {}
-	local KeystoneChallengeMapID = C_MythicPlus_GetOwnedKeystoneChallengeMapID()
-	map_table = C_ChallengeMode_GetMapTable()
-
-	if map_table then
-		for _, mapID in ipairs(map_table) do
-			local name, _, _, icon = C_ChallengeMode_GetMapUIInfo(mapID)
-			local intimeInfo, overtimeInfo = C_MythicPlus_GetSeasonBestForMap(mapID)
-			intimeInfo = intimeInfo or { dungeonScore = 0, level = 0 }
-			overtimeInfo = overtimeInfo or { dungeonScore = 0, level = 0 }
-
-			local isTimed = intimeInfo.dungeonScore >= overtimeInfo.dungeonScore
-			local score = isTimed and intimeInfo.dungeonScore or overtimeInfo.dungeonScore
-			local level = isTimed and intimeInfo.level or overtimeInfo.level
-
-			ScoreTable[mapID] = {
-				name = name,
-				icon = icon,
-				isOwenKeystone = KeystoneChallengeMapID == mapID,
-				score = score or 0,
-				level = level,
-				isTimed = isTimed,
-				color = C_ChallengeMode_GetSpecificDungeonOverallScoreRarityColor(score),
-			}
-		end
-	end
-
-	return (ScoreTable and map_table) and ScoreTable or nil
-end
 
 local function GetDungeonSummary()
 	local scoreTable = {}
