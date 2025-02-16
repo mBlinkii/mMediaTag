@@ -37,3 +37,17 @@ P.dice_button = {
 	dice_range_a = 100,
 	dice_range_b = 99,
 }
+
+-- datatexts
+P.datatexts = {
+	text = {
+		override_color = false,
+		color = { r = 1, g = 1, b = 1, hex = "|cffffffff" },
+	},
+	score = {
+		group_keystones = true,
+		show_upgrade = true,
+		sort_method = "KEY",
+		highlight = true,
+	},
+}

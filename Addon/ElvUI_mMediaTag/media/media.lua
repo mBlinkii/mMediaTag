@@ -31,7 +31,7 @@ function mMT:UpdateMedia()
 
 	if not MEDIA.classColor.gradient then
 		MEDIA.classColor.gradient =
-		{ a = { r = classColor.r - 0.2, g = classColor.g - 0.2, b = classColor.b - 0.2, a = 1 }, b = { r = classColor.r + 0.2, g = classColor.g + 0.2, b = classColor.b + 0.2, a = 1 } }
+			{ a = { r = classColor.r - 0.2, g = classColor.g - 0.2, b = classColor.b - 0.2, a = 1 }, b = { r = classColor.r + 0.2, g = classColor.g + 0.2, b = classColor.b + 0.2, a = 1 } }
 	end
 end
 
@@ -101,6 +101,15 @@ MEDIA.icons.dice = {
 	dice04 = "Interface\\AddOns\\ElvUI_mMediaTag\\media\\icons\\dice\\dice_04.tga",
 	dice05 = "Interface\\AddOns\\ElvUI_mMediaTag\\media\\icons\\dice\\dice_05.tga",
 	dice06 = "Interface\\AddOns\\ElvUI_mMediaTag\\media\\icons\\dice\\dice_06.tga",
+}
+
+MEDIA.icons.leader = {
+	leader01 = "Interface\\AddOns\\ElvUI_mMediaTag\\media\\icons\\leader\\leader_01.tga",
+}
+
+MEDIA.icons.datatexts = {
+	armor = "Interface\\AddOns\\ElvUI_mMediaTag\\media\\icons\\datatexts\\armor.tga",
+	score = "Interface\\AddOns\\ElvUI_mMediaTag\\media\\icons\\datatexts\\score.tga",
 }
 
 MEDIA.arrows = {

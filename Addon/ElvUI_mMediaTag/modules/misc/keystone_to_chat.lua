@@ -6,7 +6,7 @@ local strlower = strlower
 local ipairs = ipairs
 local GetContainerNumSlots = C_Container.GetContainerNumSlots
 local GetContainerItemInfo = C_Container.GetContainerItemInfo
-local C_MythicPlus = C_MythicPlus
+local GetOwnedKeystoneLevel = C_MythicPlus.GetOwnedKeystoneLevel
 local InCombatLockdown = InCombatLockdown
 local SendChatMessage = SendChatMessage
 local NUM_BAG_SLOTS = NUM_BAG_SLOTS
@@ -36,7 +36,7 @@ end
 
 local function GetKey(channel, text)
 	if text and channel and CheckText(text) then
-		if C_MythicPlus.GetOwnedKeystoneLevel() and not InCombatLockdown() then
+		if GetOwnedKeystoneLevel() and not InCombatLockdown() then
 			local keystones = GetKeyLink()
 			if keystones then
 				local link

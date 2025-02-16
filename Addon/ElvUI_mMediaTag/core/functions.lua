@@ -30,6 +30,10 @@ function mMT:AddModule(name, arg)
 	return M[name]
 end
 
+function mMT:GetIconString(icon)
+	return icon and format("|T%s:16:16:0:0:64:64:4:55:4:55|t", icon) or ""
+end
+
 -- import/ export functions
 local exportPrefix = "!mMT!"
 function GetImportStringType(dataString)

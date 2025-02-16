@@ -3,4 +3,5 @@
     <Script file="functions.lua"/>
     <Script file="dev.lua"/>
     <Script file="cmd.lua"/>
+    <Script file="retail.lua"/>
 </Ui>

@@ -1,6 +1,9 @@
 local mMT, DB, M, E, P, L, MEDIA = unpack(ElvUI_mMediaTag)
 
+-- debug mode
+mMT.defaults.debug = {
+	disabledAddons = {},
+	debugMode = false,
+}
 
-mMT.defaults.debug = {}
-mMT.defaults.debug.disabledAddons = {}
-mMT.defaults.debug.debugMode = false
+mMT.keystones = {}
