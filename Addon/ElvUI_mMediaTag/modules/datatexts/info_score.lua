@@ -52,17 +52,16 @@ end
 local function GetKeystoneString(id, keyStoneLevel)
 	if not id then return end
 
-	local name, _, _, icon, _ = GetMapUIInfo(id)
-	if not name and icon then return end
+	local name = GetMapUIInfo(id)
+	if not name then return end
 
 	local color = ITEM_QUALITY_COLORS[4]
 
 	local colorKey = GetKeystoneLevelRarityColor(keyStoneLevel)
 	colorKey.hex = colorKey and colorKey:GenerateHexColor() or "FFFFFFFF"
 
-	return mMT:GetIconString(icon) .. " " .. color.hex .. name .. " +" .. format("|c%s%s|r", colorKey.hex, keyStoneLevel) .. "|r", id
+	return color.hex .. name .. " " .. format("|c%s+%s|r", colorKey.hex, keyStoneLevel) .. "|r", id
 end
-
 
 local function GetDungeonSummary()
 	local scoreTable = {}
@@ -72,7 +71,7 @@ local function GetDungeonSummary()
 	if summary and summary.runs then
 		for i, v in ipairs(summary.runs) do
 			local name, _, _, texture, _ = GetMapUIInfo(v.challengeModeID)
-			scoreTable[v.challengeModeID] = {
+			table.insert(scoreTable, {
 				mapName = name or UNKNOWN,
 				bestRunLevel = v.bestRunLevel,
 				levelColor = GetKeystoneLevelRarityColor(v.bestRunLevel),
@@ -81,11 +80,31 @@ local function GetDungeonSummary()
 				icon = mMT:GetIconString(texture),
 				finishedSuccess = v.finishedSuccess,
 				isMyKeystone = v.challengeModeID == myKeystoneMapID,
-			}
+			})
 		end
 	end
 
+	if E.db.mMT.datatexts.score.sort_method == "SCORE" then
+		table.sort(scoreTable, function(a, b)
+			return a.mapScore > b.mapScore
+		end)
+	else
+		table.sort(scoreTable, function(a, b)
+			return a.bestRunLevel > b.bestRunLevel
+		end)
+	end
+
 	return scoreTable
+end
+
+local function addTooltipLine(v, mapName)
+	local ratingColor = v.finishedSuccess and v.scoreColor:GenerateHexColor() or "FFA9A9A9"
+	local rating = format("|c%s%s|r", ratingColor, v.mapScore)
+
+	local levelColor = v.finishedSuccess and v.levelColor:GenerateHexColor() or "FFA9A9A9"
+	local level = format("|c%s+%s|r", levelColor, v.bestRunLevel)
+
+	DT.tooltip:AddDoubleLine(v.icon .. " " .. mMT:SetTextColor(mapName), mMT:SetTextColor(rating .. " (" .. level .. ")"))
 end
 
 local function DungeonScoreTooltip()
@@ -94,38 +113,17 @@ local function DungeonScoreTooltip()
 	if not next(scoreTable) then return end
 
 	DT.tooltip:AddLine(" ")
-	DT.tooltip:AddLine(L["Dungeon overview:"])
-
-	if E.db.mMT.datatexts.score.sort_method == "SCORE" then
-		sort(scoreTable, function(a, b)
-			return scoreTable[a].mapScore > scoreTable[b].mapScore
-		end)
-	else
-		sort(scoreTable, function(a, b)
-			return scoreTable[a].bestRunLevel > scoreTable[b].bestRunLevel
-		end)
-	end
+	DT.tooltip:AddLine(mMT:SetTextColor(L["Dungeon overview:"], "title"))
 
 	for _, v in pairs(scoreTable) do
 		local mapName = v.mapName
-
-		if E.db.mMT.datatexts.score.highlight and v.isOwenKeystone then
-			local highlightColor = HIGHLIGHT_FONT_COLOR:GenerateHexColor()
-			mapName = format("|c%s%s|r", highlightColor, mapName)
-		end
-
-		local ratingColor = v.finishedSuccess and v.scoreColor:GenerateHexColor() or "FFA9A9A9"
-		local rating = format("|c%s%s|r", ratingColor, v.mapScore)
-
-		local levelColor = v.finishedSuccess and v.levelColor:GenerateHexColor() or "FFA9A9A9"
-		local level = format("|c%s+%s|r", levelColor, v.bestRunLevel)
-
-		DT.tooltip:AddDoubleLine(v.icon .. " " .. mapName, rating .. " (" .. level .. ")")
+		if v.isMyKeystone then mapName = mMT:SetTextColor(mapName, "mark") end
+		addTooltipLine(v, mapName)
 	end
 
 	if E.db.mMT.datatexts.score.show_upgrade then
 		DT.tooltip:AddLine(" ")
-		DT.tooltip:AddLine(L["Possible next upgrades:"])
+		DT.tooltip:AddLine(mMT:SetTextColor(L["Possible next upgrades:"], "title"))
 
 		local upgradeTable = {}
 		for _, data in pairs(scoreTable) do
@@ -144,19 +142,8 @@ local function DungeonScoreTooltip()
 		for _, v in pairs(upgradeTable) do
 			if v.upgrade then
 				local mapName = v.mapName
-
-				if E.db.mMT.datatexts.score.highlight and v.isOwenKeystone then
-					local highlightColor = HIGHLIGHT_FONT_COLOR:GenerateHexColor()
-					mapName = format("|c%s%s|r", highlightColor, mapName)
-				end
-
-				local ratingColor = v.finishedSuccess and v.scoreColor:GenerateHexColor() or "FFA9A9A9"
-				local rating = format("|c%s%s|r", ratingColor, v.mapScore)
-
-				local levelColor = v.finishedSuccess and v.levelColor:GenerateHexColor() or "FFA9A9A9"
-				local level = format("|c%s+%s|r", levelColor, v.bestRunLevel)
-
-				DT.tooltip:AddDoubleLine(v.icon .. " " .. mapName, rating .. " (" .. level .. ")")
+				if v.isMyKeystone then mapName = mMT:SetTextColor(mapName, "mark") end
+				addTooltipLine(v, mapName)
 			end
 		end
 	end
@@ -189,14 +176,12 @@ local function GetGroupKeystone()
 	LOR.RequestKeystoneDataFromParty()
 
 	for _, unit in ipairs(GroupMembers) do
-		if UnitIsPlayer(unit) then
+		if unit and UnitIsPlayer(unit) then
 			local keystoneInfo = LOR.GetKeystoneInfo(unit)
 			local unitGear = LOR.GetUnitGear(unit)
 			local name = UnitName(unit)
 			local unitName = format("%s%s|r", UnitClassColor(unit), name)
 			local key = L["No Keystone"]
-
-			print(UnitIsGroupLeader(unit))
 
 			local unitItemLevel = ""
 			if unitGear and unitGear.ilevel then
@@ -234,17 +219,17 @@ local function OnEnter(self)
 		if isMaxLevel then
 			SaveMyKeystone()
 			local myScore = mMT:GetMyMythicPlusScore()
-			local myKeystone = mMT:GetMyKeystone(true)
+			local myKeystone = mMT:GetMyKeystone()
 
-			DT.tooltip:AddLine(L["My Info"])
-			DT.tooltip:AddDoubleLine(DUNGEON_SCORE, myScore)
-			DT.tooltip:AddDoubleLine(L["Keystone"], myKeystone)
+			DT.tooltip:AddLine(mMT:SetTextColor(L["My Info"], "title"))
+			DT.tooltip:AddDoubleLine(mMT:SetTextColor(DUNGEON_SCORE), myScore)
+			DT.tooltip:AddDoubleLine(mMT:SetTextColor(L["Keystone"]), myKeystone)
 			self.text:SetFormattedText(displayString, myScore)
 		end
 
 		if next(DB.keystones) then
 			DT.tooltip:AddLine(" ")
-			DT.tooltip:AddLine(L["Keystones on your Account"])
+			DT.tooltip:AddLine(mMT:SetTextColor(L["Keystones on your Account"], "title"))
 			for _, characters in pairs(DB.keystones) do
 				DT.tooltip:AddDoubleLine(characters.name, characters.key)
 			end
@@ -252,18 +237,17 @@ local function OnEnter(self)
 
 		if E.db.mMT.datatexts.score.group_keystones and LOR and IsInGroup() and isMaxLevel then
 			DT.tooltip:AddLine(" ")
-			DT.tooltip:AddLine(L["Keystones in your Group"])
+			DT.tooltip:AddLine(mMT:SetTextColor(L["Keystones in your Group"], "title"))
 			GetGroupKeystone()
 		end
 	end
 
-	-- local mAffixesText = mMT:WeeklyAffixes()
-	-- if mAffixesText then
-	-- 	DT.tooltip:AddLine(" ")
-	-- 	for _, line in ipairs(mAffixesText) do
-	-- 		DT.tooltip:AddLine(line)
-	-- 	end
-	-- end
+	local weeklyAffixes = mMT:GetWeeklyAffixes()
+	if weeklyAffixes then
+		DT.tooltip:AddLine(" ")
+		DT.tooltip:AddLine(mMT:SetTextColor(L["This Week Affix"], "title"))
+		DT.tooltip.AddLine(mMT:SetTextColor(weeklyAffixes))
+	end
 
 	-- if isMaxLevel then
 	DungeonScoreTooltip()
@@ -297,7 +281,6 @@ local function OnEvent(self, event, ...)
 
 		SaveMyKeystone()
 	end
-	print(mMT:GetMyKeystone(true))
 	local myScore = mMT:GetMyMythicPlusScore()
 	self.text:SetFormattedText(displayString, isMaxLevel and myScore or L["Level: "] .. E.mylevel)
 end
@@ -310,4 +293,4 @@ end
 
 local events = { "CHALLENGE_MODE_START", "CHALLENGE_MODE_COMPLETED", "PLAYER_ENTERING_WORLD", "UPDATE_INSTANCE_INFO", "CHALLENGE_MODE_RESET", "ENCOUNTER_END", "MYTHIC_PLUS_CURRENT_AFFIX_UPDATE" }
 
-DT:RegisterDatatext("M+ Score", mMT.NameShort, events, OnEvent, nil, OnClick, OnEnter, OnLeave, nil, nil, ValueColorUpdate)
+DT:RegisterDatatext("M+ Score", mMT.Name, events, OnEvent, nil, OnClick, OnEnter, OnLeave, nil, nil, ValueColorUpdate)

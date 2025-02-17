@@ -17,10 +17,23 @@ local colors = {
 	info = "FFFFA7A7",
 }
 
+local colorsTip = {
+	title = "FFFFBE19",
+	text = "FFFFFFFF",
+	tip = "FFB2B2B2",
+	mark = "FF38FF92",
+}
+
 MEDIA.classColor = E:ClassColor(E.myclass)
 
 for name, color in pairs(colors) do
 	MEDIA.color[name] = CreateColorFromHexString(color)
+	MEDIA.color[name].hex = MEDIA.color[name]:GenerateHexColor()
+end
+
+for name, color in pairs(colorsTip) do
+	MEDIA.color[name] = CreateColorFromHexString(color)
+	MEDIA.color[name].hex = MEDIA.color[name]:GenerateHexColor()
 end
 
 function mMT:UpdateMedia()

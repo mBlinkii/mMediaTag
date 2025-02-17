@@ -19520,8 +19520,10 @@
         "ElvUI_mMediaTag",
         "ElvUI_mMediaTag",
         "ElvUI_mMediaTag",
-        "ElvUI_mMediaTag"
+        "ElvUI_mMediaTag",
+        "CreateColorFromHexString"
   ],
   "diagnostics.disable": ["deprecated", "inject-field", "undefined-field",
-        "cast-local-type"]
+        "cast-local-type",
+        "param-type-mismatch"]
 }
