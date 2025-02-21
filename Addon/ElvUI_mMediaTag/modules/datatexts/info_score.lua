@@ -22,7 +22,6 @@ local UnitIsGroupLeader = UnitIsGroupLeader
 local format = format
 local ipairs = ipairs
 local pairs = pairs
-local sort = sort
 local strjoin = strjoin
 
 local displayString = ""
@@ -246,26 +245,26 @@ local function OnEnter(self)
 	if weeklyAffixes then
 		DT.tooltip:AddLine(" ")
 		DT.tooltip:AddLine(mMT:SetTextColor(L["This Week Affix"], "title"))
-		DT.tooltip.AddLine(mMT:SetTextColor(weeklyAffixes))
+		DT.tooltip:AddLine(mMT:SetTextColor(weeklyAffixes))
 	end
 
-	-- if isMaxLevel then
-	DungeonScoreTooltip()
+	if isMaxLevel then
+		DungeonScoreTooltip()
 
-	-- 	local rewards = mMT:mGetVaultInfo()
-	-- 	if rewards then
-	-- 		DT.tooltip:AddLine(" ")
-	-- 		DT.tooltip:AddLine(GREAT_VAULT_REWARDS)
-	-- 		DT.tooltip:AddDoubleLine(rewards.raid.name, table.concat(rewards.raid.rewards, WrapTextInColorCode(" - ", "FFFFFFFF")))
-	-- 		DT.tooltip:AddDoubleLine(rewards.dungeons.name, table.concat(rewards.dungeons.rewards, WrapTextInColorCode(" - ", "FFFFFFFF")))
-	-- 		DT.tooltip:AddDoubleLine(rewards.world.name, table.concat(rewards.world.rewards, WrapTextInColorCode(" - ", "FFFFFFFF")))
-	-- 	end
-	-- end
+		local vaultInfoRaid, vaultInfoDungeons, vaultInfoWorld = mMT:GetVaultInfo()
+		if vaultInfoRaid and vaultInfoDungeons and vaultInfoWorld then
+			DT.tooltip:AddLine(" ")
+			DT.tooltip:AddLine(mMT:SetTextColor(GREAT_VAULT_REWARDS, "title"))
+			DT.tooltip:AddDoubleLine(mMT:SetTextColor(RAID), mMT:SetTextColor(vaultInfoRaid))
+			DT.tooltip:AddDoubleLine(mMT:SetTextColor(DUNGEONS), mMT:SetTextColor(vaultInfoDungeons))
+			DT.tooltip:AddDoubleLine(mMT:SetTextColor(WORLD), mMT:SetTextColor(vaultInfoWorld))
+		end
+	end
 
-	-- DT.tooltip:AddLine(" ")
-	-- DT.tooltip:AddLine(format("%s  %s%s|r", mMT:mIcon(mMT.Media.Mouse["LEFT"]), E.db.mMT.datatextcolors.colortip.hex, L["Click to open LFD Frame"]))
-	-- DT.tooltip:AddLine(format("%s  %s%s|r", mMT:mIcon(mMT.Media.Mouse["LEFT"]), E.db.mMT.datatextcolors.colortip.hex, L["Middle click to open M+ Frame"]))
-	-- DT.tooltip:AddLine(format("%s  %s%s|r", mMT:mIcon(mMT.Media.Mouse["RIGHT"]), E.db.mMT.datatextcolors.colortip.hex, L["Click to open Great Vault"]))
+	DT.tooltip:AddLine(" ")
+	DT.tooltip:AddLine(MEDIA.leftClick .. " " .. mMT:SetTextColor(L["left click to open LFD Frame"], "tip"))
+	DT.tooltip:AddLine(MEDIA.middleClick .. " " .. mMT:SetTextColor(L["middle click to open M+ Frame"], "tip"))
+	DT.tooltip:AddLine(MEDIA.rightClick .. " " .. mMT:SetTextColor(L["right click to open Great Vault"], "tip"))
 
 	DT.tooltip:Show()
 end

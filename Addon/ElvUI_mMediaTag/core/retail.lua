@@ -4,10 +4,11 @@ local mMT, DB, M, E, P, L, MEDIA = unpack(ElvUI_mMediaTag)
 local GetOverallDungeonScore = C_ChallengeMode.GetOverallDungeonScore
 local GetDungeonScoreRarityColor = C_ChallengeMode.GetDungeonScoreRarityColor
 local GetMapUIInfo = C_ChallengeMode.GetMapUIInfo
-local GetSpecificDungeonOverallScoreRarityColor = C_ChallengeMode.GetSpecificDungeonOverallScoreRarityColor
 local GetOwnedKeystoneChallengeMapID = C_MythicPlus.GetOwnedKeystoneChallengeMapID
 local GetOwnedKeystoneLevel = C_MythicPlus.GetOwnedKeystoneLevel
 local GetKeystoneLevelRarityColor = C_ChallengeMode.GetKeystoneLevelRarityColor
+local GetActivities = C_WeeklyRewards.GetActivities
+local GetExampleRewardItemHyperlinks = C_WeeklyRewards.GetExampleRewardItemHyperlinks
 
 function mMT:GetMyKeystone(withIcon)
 	local keyStoneLevel = GetOwnedKeystoneLevel()
@@ -39,12 +40,47 @@ function mMT:GetWeeklyAffixes()
 	local affixes = GetCurrentAffixes()
 	if not affixes then return L["No current Mythic+ affixes found."] end
 
-	local affixString = ""
+	local affixString
 
 	for _, affixInfo in ipairs(affixes) do
 		local name, _ = GetAffixInfo(affixInfo.id)
-		affixString = affixString .. " " .. name
+		if not affixString then
+			affixString = name
+		else
+			affixString = affixString .. ", " .. name
+		end
 	end
 
 	return affixString
+end
+
+local function GetRewards(rewardType)
+    local rewards = GetActivities(rewardType)
+    local rewardsString = ""
+
+    for _, reward in pairs(rewards) do
+        if reward.progress < reward.threshold then
+            local progressText = mMT:SetTextColor(reward.progress .. "/" .. reward.threshold, "tip")
+            rewardsString = rewardsString == "" and progressText or rewardsString .. " / " .. progressText
+        else
+            local itemLink = GetExampleRewardItemHyperlinks(reward.id)
+            local itemLevel = itemLink and GetDetailedItemLevelInfo(itemLink) or ""
+            local color = GetKeystoneLevelRarityColor(reward.level)
+            if color then
+                local rewardText = WrapTextInColorCode(tostring(itemLevel), "ffa335ee") .. " (" .. color:WrapTextInColorCode("+" .. reward.level) .. ")"
+                rewardsString = rewardsString == "" and rewardText or rewardsString .. " / " .. rewardText
+            end
+        end
+    end
+
+    return rewardsString
+end
+
+
+function mMT:GetVaultInfo()
+	local vaultInfoRaid = GetRewards(Enum.WeeklyRewardChestThresholdType.Raid)
+	local vaultInfoDungeons = GetRewards(Enum.WeeklyRewardChestThresholdType.Activities)
+	local vaultInfoWorld = GetRewards(Enum.WeeklyRewardChestThresholdType.World)
+
+	return vaultInfoRaid, vaultInfoDungeons, vaultInfoWorld
 end
