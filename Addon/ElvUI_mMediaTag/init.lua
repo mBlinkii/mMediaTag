@@ -59,7 +59,6 @@ function mMT:Initialize()
 
 	mMT:UpdateAll()
 	mMT:UpdateMedia()
-	mMT:UpdateSingleFunctions()
 end
 
 function mMT:PLAYER_LOGOUT()

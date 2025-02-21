@@ -62,7 +62,15 @@ mMT.options = {
 			name = L["Datatexts"],
 			icon = "Interface\\Addons\\ElvUI_mMediaTag\\media\\options\\datatexts",
 			childGroups = "tab",
-			args = {},
+			args = {
+				general = {
+					order = 2,
+					type = "group",
+					name = mMT:AddSettingsIcon(L["General"], "general"),
+					childGroups = "tab",
+					args = {},
+				},
+			},
 		},
 		dock = {
 			order = 6,

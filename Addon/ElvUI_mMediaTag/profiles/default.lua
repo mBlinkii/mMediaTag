@@ -7,8 +7,3 @@ mMT.defaults.debug = {
 }
 
 mMT.keystones = {}
-
-mMT.affixes = {
-	currentAffixes = nil,
-	resetTime = 0,
-}

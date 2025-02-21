@@ -42,12 +42,22 @@ P.dice_button = {
 P.datatexts = {
 	text = {
 		override_color = false,
-		color = { r = 1, g = 1, b = 1, hex = "|cffffffff" },
+		color = "FFFFFFFF",
 	},
 	score = {
 		group_keystones = true,
 		show_upgrade = true,
 		sort_method = "KEY",
 		highlight = true,
+	},
+}
+
+-- media
+P.media = {
+	color = {
+		title = "FFFFBE19",
+		text =  "FFFFFFFF",
+		tip =  "FFB2B2B2",
+		mark =  "FF38FF92",
 	},
 }

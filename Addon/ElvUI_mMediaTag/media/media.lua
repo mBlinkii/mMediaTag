@@ -28,23 +28,25 @@ MEDIA.classColor = E:ClassColor(E.myclass)
 
 for name, color in pairs(colors) do
 	MEDIA.color[name] = CreateColorFromHexString(color)
-	MEDIA.color[name].hex = MEDIA.color[name]:GenerateHexColor()
+	MEDIA.color[name].hex = color
 end
 
 for name, color in pairs(colorsTip) do
 	MEDIA.color[name] = CreateColorFromHexString(color)
-	MEDIA.color[name].hex = MEDIA.color[name]:GenerateHexColor()
+	MEDIA.color[name].hex = color
 end
 
-function mMT:UpdateMedia()
-	local classColor = MEDIA.classColor
-	if not MEDIA.classColor.hex then MEDIA.classColor.hex = E:RGBToHex(classColor.r, classColor.g, classColor.b) end
+function mMT:UpdateMedia(arg)
+	if arg == "colors" or not arg then
+		local classColor = MEDIA.classColor
+		if not MEDIA.classColor.hex then MEDIA.classColor.hex = E:RGBToHex(classColor.r, classColor.g, classColor.b) end
 
-	if not MEDIA.classColor.string then MEDIA.classColor.string = strjoin("", MEDIA.classColor.hex, "%s|r") end
+		if not MEDIA.classColor.string then MEDIA.classColor.string = strjoin("", MEDIA.classColor.hex, "%s|r") end
 
-	if not MEDIA.classColor.gradient then
-		MEDIA.classColor.gradient =
-			{ a = { r = classColor.r - 0.2, g = classColor.g - 0.2, b = classColor.b - 0.2, a = 1 }, b = { r = classColor.r + 0.2, g = classColor.g + 0.2, b = classColor.b + 0.2, a = 1 } }
+		if not MEDIA.classColor.gradient then
+			MEDIA.classColor.gradient =
+				{ a = { r = classColor.r - 0.2, g = classColor.g - 0.2, b = classColor.b - 0.2, a = 1 }, b = { r = classColor.r + 0.2, g = classColor.g + 0.2, b = classColor.b + 0.2, a = 1 } }
+		end
 	end
 end
 

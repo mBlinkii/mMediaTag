@@ -39,8 +39,12 @@ function mMT:SetTextColor(text, color)
 	return MEDIA.color[color]:WrapTextInColorCode(text)
 end
 
-function mMT:UpdateSingleFunctions()
+function mMT:HexToRGB(hex)
+	if #hex == 6 then hex = hex .. "ff" end
 
+	local r, g, b, a = tonumber(hex:sub(1, 2), 16), tonumber(hex:sub(3, 4), 16), tonumber(hex:sub(5, 6), 16), tonumber(hex:sub(7, 8), 16)
+
+	return r / 255, g / 255, b / 255, a / 255
 end
 
 -- import/ export functions
