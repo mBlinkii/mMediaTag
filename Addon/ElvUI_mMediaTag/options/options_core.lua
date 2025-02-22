@@ -64,9 +64,16 @@ mMT.options = {
 			childGroups = "tab",
 			args = {
 				general = {
-					order = 2,
+					order = 1,
 					type = "group",
 					name = mMT:AddSettingsIcon(L["General"], "general"),
+					childGroups = "tab",
+					args = {},
+				},
+				info_score = {
+					order = 2,
+					type = "group",
+					name = mMT:AddSettingsIcon(L["M+ Score"], "score"),
 					childGroups = "tab",
 					args = {},
 				},

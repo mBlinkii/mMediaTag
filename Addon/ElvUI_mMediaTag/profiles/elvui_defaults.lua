@@ -48,7 +48,6 @@ P.datatexts = {
 		group_keystones = true,
 		show_upgrade = true,
 		sort_method = "KEY",
-		highlight = true,
 	},
 }
 

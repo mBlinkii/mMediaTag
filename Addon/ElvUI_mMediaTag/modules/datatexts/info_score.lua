@@ -285,7 +285,7 @@ local function OnEvent(self, event, ...)
 end
 
 local function ValueColorUpdate(self, hex)
-	if E.db.mMT.datatexts.text.override_color then hex = "|cff" .. E.db.mMT.datatexts.text.color end
+	if E.db.mMT.datatexts.text.override_color then hex = "|c" .. MEDIA.color.override.hex end
 	displayString = strjoin("", hex, "%s|r")
 	OnEvent(self)
 end

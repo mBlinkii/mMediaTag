@@ -9,4 +9,5 @@
 	<Script file="data_panel_skin.lua"/>
 	<Script file="dice_button.lua"/>
 	<Script file="datatexts.lua"/>
+	<Script file="info_score.lua"/>
 </Ui>

@@ -5,35 +5,39 @@ local pairs = pairs
 local CreateColorFromHexString = CreateColorFromHexString
 local strjoin = strjoin
 
-MEDIA.color = {}
+MEDIA.color = {
+	-- datatexts
+	title = CreateColorFromHexString("FFFFBE19"),
+	text = CreateColorFromHexString("FFFFFFFF"),
+	tip = CreateColorFromHexString("FFB2B2B2"),
+	mark = CreateColorFromHexString("FF38FF92"),
+	override = CreateColorFromHexString("FFFFFFFF"),
 
-local colors = {
-	blue = "FF0294FF",
-	purple = "FFBD26E5",
-	red = "FFFF005D",
-	yellow = "FFFF9D00",
-	green = "FF1BFF6B",
-	black = "FF404040",
-	info = "FFFFA7A7",
-}
-
-local colorsTip = {
-	title = "FFFFBE19",
-	text = "FFFFFFFF",
-	tip = "FFB2B2B2",
-	mark = "FF38FF92",
+	-- colors
+	blue = CreateColorFromHexString("FF0294FF"),
+	purple = CreateColorFromHexString("FFBD26E5"),
+	red = CreateColorFromHexString("FFFF005D"),
+	yellow = CreateColorFromHexString("FFFF9D00"),
+	green = CreateColorFromHexString("FF1BFF6B"),
+	black = CreateColorFromHexString("FF404040"),
+	info = CreateColorFromHexString("FFFFA7A7"),
 }
 
 MEDIA.classColor = E:ClassColor(E.myclass)
 
-for name, color in pairs(colors) do
-	MEDIA.color[name] = CreateColorFromHexString(color)
-	MEDIA.color[name].hex = color
-end
-
-for name, color in pairs(colorsTip) do
-	MEDIA.color[name] = CreateColorFromHexString(color)
-	MEDIA.color[name].hex = color
+do
+	local colors = {
+		blue = "FF0294FF",
+		purple = "FFBD26E5",
+		red = "FFFF005D",
+		yellow = "FFFF9D00",
+		green = "FF1BFF6B",
+		black = "FF404040",
+		info = "FFFFA7A7",
+	}
+	for name, color in pairs(colors) do
+		MEDIA.color[name].hex = color
+	end
 end
 
 function mMT:UpdateMedia(arg)
@@ -47,6 +51,19 @@ function mMT:UpdateMedia(arg)
 			MEDIA.classColor.gradient =
 				{ a = { r = classColor.r - 0.2, g = classColor.g - 0.2, b = classColor.b - 0.2, a = 1 }, b = { r = classColor.r + 0.2, g = classColor.g + 0.2, b = classColor.b + 0.2, a = 1 } }
 		end
+	end
+
+	if arg == "datatexts" or not arg then
+		MEDIA.color.title = CreateColorFromHexString(E.db.mMT.media.color.title)
+		MEDIA.color.title.hex = E.db.mMT.media.color.title
+		MEDIA.color.text = CreateColorFromHexString(E.db.mMT.media.color.text)
+		MEDIA.color.text.hex = E.db.mMT.media.color.text
+		MEDIA.color.tip = CreateColorFromHexString(E.db.mMT.media.color.tip)
+		MEDIA.color.tip.hex = E.db.mMT.media.color.tip
+		MEDIA.color.mark = CreateColorFromHexString(E.db.mMT.media.color.mark)
+		MEDIA.color.mark.hex = E.db.mMT.media.color.mark
+		MEDIA.color.override = CreateColorFromHexString(E.db.mMT.datatexts.text.color)
+		MEDIA.color.override.hex = E.db.mMT.datatexts.text.color
 	end
 end
 
