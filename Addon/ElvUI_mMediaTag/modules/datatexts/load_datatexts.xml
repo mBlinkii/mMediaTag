@@ -1,4 +1,4 @@
 <Ui xmlns="http://www.blizzard.com/wow/ui/">
     <Script file="info_score.lua"/>
-
+  <Script file="misc_teleports.lua"/>
 </Ui>

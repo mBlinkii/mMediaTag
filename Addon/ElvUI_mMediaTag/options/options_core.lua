@@ -75,6 +75,19 @@ mMT.options = {
 					type = "group",
 					name = mMT:AddSettingsIcon(L["M+ Score"], "score"),
 					childGroups = "tab",
+					hidden = function()
+						return not E.Retail
+					end,
+					args = {},
+				},
+				misc_teleports = {
+					order = 3,
+					type = "group",
+					name = mMT:AddSettingsIcon(L["Teleports"], "teleports"),
+					childGroups = "tab",
+					hidden = function()
+						return not E.Retail
+					end,
 					args = {},
 				},
 			},

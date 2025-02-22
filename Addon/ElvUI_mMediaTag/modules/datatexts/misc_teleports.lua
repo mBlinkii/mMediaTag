@@ -1,36 +1,32 @@
-local E = unpack(ElvUI)
-local L = mMT.Locales
-
+local mMT, DB, M, E, P, L, MEDIA = unpack(ElvUI_mMediaTag)
 local DT = E:GetModule("DataTexts")
 
---Lua functions
-local tinsert = tinsert
-local format = format
-local wipe = wipe
-local pairs = pairs
-local math = math
-local string = string
-local select = select
-
---WoW API / Variables
+-- Cache WoW Globals
+local C_ToyBox = C_ToyBox
 local CreateFrame = CreateFrame
 local GameTooltip = GameTooltip
-local GetSpellTexture = C_Spell and C_Spell.GetSpellTexture or GetSpellTexture
-local GetSpellInfo = C_Spell and C_Spell.GetSpellInfo or GetSpellInfo
-local IsSpellKnown = IsSpellKnown
+local GetItemCooldown = C_Item and C_Item.GetItemCooldown or GetItemCooldown
+local GetItemCount = C_Item and C_Item.GetItemCount or GetItemCount
 local GetItemIcon = C_Item and C_Item.GetItemIconByID or GetItemIcon
 local GetItemInfo = C_Item and C_Item.GetItemInfo or GetItemInfo
-local GetItemCount = C_Item and C_Item.GetItemCount or GetItemCount
-local PlayerHasToy = PlayerHasToy
-local C_ToyBox = C_ToyBox
-local GetSpellCooldown = C_Spell and C_Spell.GetSpellCooldown or GetSpellCooldown
-local GetItemCooldown = C_Item and C_Item.GetItemCooldown or GetItemCooldown
-local GetTime = GetTime
-local GetProfessions = GetProfessions
 local GetProfessionInfo = GetProfessionInfo
+local GetProfessions = GetProfessions
+local GetSpellCooldown = C_Spell and C_Spell.GetSpellCooldown or GetSpellCooldown
+local GetSpellInfo = C_Spell and C_Spell.GetSpellInfo or GetSpellInfo
+local GetSpellTexture = C_Spell and C_Spell.GetSpellTexture or GetSpellTexture
+local GetTime = GetTime
+local IsSpellKnown = IsSpellKnown
+local PlayerHasToy = PlayerHasToy
+local format = format
+local math = math
+local pairs = pairs
+local select = select
+local string = string
+local tinsert = tinsert
+local wipe = wipe
 
---Variables
-local mText = L["Teleports"]
+-- Variables
+local displayString = ""
 local menuFrame = CreateFrame("Frame", "mMediaTag_Teleports_Menu", E.UIParent, "BackdropTemplate")
 menuFrame:SetTemplate("Transparent", true)
 
@@ -318,7 +314,7 @@ local function LeaveFunc(btn)
 	GameTooltip:Hide()
 end
 
-local function mMenuAdd(tbl, text, time, macro, icon, tooltip, funcOnEnter)
+local function MenuAdd(tbl, text, time, macro, icon, tooltip, funcOnEnter)
 	tinsert(tbl, {
 		text = text,
 		SecondText = time,
@@ -332,28 +328,28 @@ local function mMenuAdd(tbl, text, time, macro, icon, tooltip, funcOnEnter)
 end
 local function getAnchorPoint(point)
 	local anchor = "ANCHOR_CURSOR"
-	if not E.db.mMT.teleports.anchorCursor and point then
+	if not E.db.mMT.datatexts.anchorCursor and point then
 		local left = point and strfind(point, "LEFT")
 		anchor = left and "ANCHOR_RIGHT" or "ANCHOR_LEFT"
 	end
 	return anchor
 end
 
-local function mOnEnterItem(btn)
+local function OnEnterItem(btn)
 	GameTooltip:SetOwner(btn, getAnchorPoint(menuFrame.pointB))
 	GameTooltip:ClearLines()
 	GameTooltip:SetItemByID(btn.tooltip)
 	GameTooltip:Show()
 end
 
-local function mOnEnterSpell(btn)
+local function OnEnterSpell(btn)
 	GameTooltip:SetOwner(btn, getAnchorPoint(menuFrame.pointB))
 	GameTooltip:ClearLines()
 	GameTooltip:SetSpellByID(btn.tooltip)
 	GameTooltip:Show()
 end
 
-local function mGetInfos(TeleportsTable, spell, toy, tip, check)
+local function GetInfos(TeleportsTable, spell, toy, tip, check)
 	for i, v in pairs(TeleportsTable.tps) do
 		local texture, name, hasSpell, hasItem = nil, nil, false, 0
 		if spell then
@@ -407,16 +403,16 @@ local function mGetInfos(TeleportsTable, spell, toy, tip, check)
 					if tip then
 						DT.tooltip:AddDoubleLine(format("|T%s:14:14:0:0:64:64:5:59:5:59|t %s", texture, text1), text2)
 					elseif spell then
-						mMenuAdd(Teleports.menu, text1, text2, "/cast " .. name, texture, i, function(btn)
-							mOnEnterSpell(btn)
+						MenuAdd(Teleports.menu, text1, text2, "/cast " .. name, texture, i, function(btn)
+							OnEnterSpell(btn)
 						end)
 					elseif toy then
-						mMenuAdd(Teleports.menu, text1, text2, "/usetoy " .. name, texture, i, function(btn)
-							mOnEnterItem(btn)
+						MenuAdd(Teleports.menu, text1, text2, "/usetoy " .. name, texture, i, function(btn)
+							OnEnterItem(btn)
 						end)
 					else
-						mMenuAdd(Teleports.menu, text1, text2, "/use " .. name, texture, i, function(btn)
-							mOnEnterItem(btn)
+						MenuAdd(Teleports.menu, text1, text2, "/use " .. name, texture, i, function(btn)
+							OnEnterItem(btn)
 						end)
 					end
 				end
@@ -435,65 +431,64 @@ local function EngineeringCheck()
 end
 
 local function CheckIfAvailable()
-	mGetInfos(Teleports.toys, false, true, true, true)
-	mGetInfos(Teleports.engineering, false, true, true, true)
-	mGetInfos(Teleports.season, true, false, true, true)
-	mGetInfos(Teleports.tww, true, false, true, true)
-	mGetInfos(Teleports.dungeonportals, true, false, true, true)
-	mGetInfos(Teleports.items, false, false, true, true)
-	mGetInfos(Teleports.spells, true, false, true, true)
+	GetInfos(Teleports.toys, false, true, true, true)
+	GetInfos(Teleports.engineering, false, true, true, true)
+	GetInfos(Teleports.season, true, false, true, true)
+	GetInfos(Teleports.tww, true, false, true, true)
+	GetInfos(Teleports.dungeonportals, true, false, true, true)
+	GetInfos(Teleports.items, false, false, true, true)
+	GetInfos(Teleports.spells, true, false, true, true)
 end
 
 local function mUpdateTPList(button)
 	CheckIfAvailable()
-	local _, _, _, _, _, title = mMT:mColorDatatext()
 
 	wipe(Teleports.menu)
 	if Teleports.toys.available and button == "LeftButton" then
-		tinsert(Teleports.menu, { text = format("%s%s|r", title, L["Toys"]), isTitle = true, notClickable = true })
+		tinsert(Teleports.menu, { text = mMT:SetTextColor(L["Toys"], "title"), isTitle = true, notClickable = true })
 
-		mGetInfos(Teleports.toys, false, true, false, false)
+		GetInfos(Teleports.toys, false, true, false, false)
 		tinsert(Teleports.menu, { text = "", isTitle = true, notClickable = true })
 	end
 
 	if EngineeringCheck() and Teleports.engineering.available and button == "RightButton" then
-		tinsert(Teleports.menu, { text = format("%s%s|r", title, L["Engineering"]), isTitle = true, notClickable = true })
+		tinsert(Teleports.menu, { text = mMT:SetTextColor(L["Engineering"], "title"), isTitle = true, notClickable = true })
 
-		mGetInfos(Teleports.engineering, false, true, false, false)
+		GetInfos(Teleports.engineering, false, true, false, false)
 		tinsert(Teleports.menu, { text = "", isTitle = true, notClickable = true })
 	end
 
 	if Teleports.season.available and button == "LeftButton" then
-		tinsert(Teleports.menu, { text = format("%s%s|r", title, L["M+ Season"]), isTitle = true, notClickable = true })
+		tinsert(Teleports.menu, { text = mMT:SetTextColor(L["M+ Season"], "title"), isTitle = true, notClickable = true })
 
-		mGetInfos(Teleports.season, true, false, false, false)
+		GetInfos(Teleports.season, true, false, false, false)
 		tinsert(Teleports.menu, { text = "", isTitle = true, notClickable = true })
 	end
 
 	if Teleports.tww.available and button == "LeftButton" then
-		tinsert(Teleports.menu, { text = format("%s%s|r", title, L["TWW Dungeons"]), isTitle = true, notClickable = true })
+		tinsert(Teleports.menu, { text = mMT:SetTextColor(L["TWW Dungeons"], "title"), isTitle = true, notClickable = true })
 
-		mGetInfos(Teleports.tww, true, false, false, false)
+		GetInfos(Teleports.tww, true, false, false, false)
 	end
 
 	if Teleports.dungeonportals.available and button == "MiddleButton" then
-		tinsert(Teleports.menu, { text = format("%s%s|r", title, L["M+ Season"]), isTitle = true, notClickable = true })
+		tinsert(Teleports.menu, { text = mMT:SetTextColor(L["M+ Season"], "title"), isTitle = true, notClickable = true })
 
-		mGetInfos(Teleports.season, true, false, false, false)
+		GetInfos(Teleports.season, true, false, false, false)
 		tinsert(Teleports.menu, { text = "", isTitle = true, notClickable = true })
 
-		tinsert(Teleports.menu, { text = format("%s%s|r", title, L["All Dungeon Teleports"]), isTitle = true, notClickable = true })
+		tinsert(Teleports.menu, { text = mMT:SetTextColor(L["All Dungeon Teleports"], "title"), isTitle = true, notClickable = true })
 
-		mGetInfos(Teleports.dungeonportals, true, false, false, false)
+		GetInfos(Teleports.dungeonportals, true, false, false, false)
 		tinsert(Teleports.menu, { text = "", isTitle = true, notClickable = true })
 	end
 
 	if (Teleports.items.available or Teleports.spells.available) and button == "RightButton" then
 		tinsert(Teleports.menu, { text = "", isTitle = true, notClickable = true })
-		tinsert(Teleports.menu, { text = format("%s%s|r", title, L["Other"]), isTitle = true, notClickable = true })
+		tinsert(Teleports.menu, { text = mMT:SetTextColor(L["Other"], "title"), isTitle = true, notClickable = true })
 
-		mGetInfos(Teleports.items, false, false, false, false)
-		mGetInfos(Teleports.spells, true, false, false, false)
+		GetInfos(Teleports.items, false, false, false, false)
+		GetInfos(Teleports.spells, true, false, false, false)
 	end
 end
 
@@ -507,68 +502,65 @@ end
 local function mTPTooltip()
 	CheckIfAvailable()
 	if Teleports.toys.available then
-		DT.tooltip:AddLine(L["Toys"])
-		mGetInfos(Teleports.toys, false, true, true, false)
+		DT.tooltip:AddLine(mMT:SetTextColor(L["Toys"], "title"))
+		GetInfos(Teleports.toys, false, true, true, false)
 	end
 
 	if EngineeringCheck() and Teleports.engineering.available then
 		DT.tooltip:AddLine(" ")
-		DT.tooltip:AddLine(L["Engineering"])
-		mGetInfos(Teleports.engineering, false, true, true, false)
+		DT.tooltip:AddLine(mMT:SetTextColor(L["Engineering"], "title"))
+		GetInfos(Teleports.engineering, false, true, true, false)
 	end
 
 	if Teleports.season.available then
 		DT.tooltip:AddLine(" ")
-		DT.tooltip:AddLine(L["M+ Season"])
-		mGetInfos(Teleports.season, true, false, true, false)
+		DT.tooltip:AddLine(mMT:SetTextColor(L["M+ Season"], "title"))
+		GetInfos(Teleports.season, true, false, true, false)
 	end
 
 	if Teleports.tww.available then
 		DT.tooltip:AddLine(" ")
-		DT.tooltip:AddLine(L["TWW Dungeons"])
-		mGetInfos(Teleports.tww, true, false, true, false)
+		DT.tooltip:AddLine(mMT:SetTextColor(L["TWW Dungeons"], "title"))
+		GetInfos(Teleports.tww, true, false, true, false)
 	end
 
 	if Teleports.items.available or Teleports.spells.available then
 		DT.tooltip:AddLine(" ")
-		DT.tooltip:AddLine(L["Other"])
-		mGetInfos(Teleports.items, false, false, true, false)
-		mGetInfos(Teleports.spells, true, false, true, false)
+		DT.tooltip:AddLine(mMT:SetTextColor(L["Other"], "title"))
+		GetInfos(Teleports.items, false, false, true, false)
+		GetInfos(Teleports.spells, true, false, true, false)
 	end
 end
 
 local function OnEnter(self)
-	local nhc, hc, myth, mythp, other, title, tip = mMT:mColorDatatext()
 	DT.tooltip:ClearLines()
 	mTPTooltip()
 	DT.tooltip:AddLine(" ")
-	DT.tooltip:AddLine(format("%s %s%s|r", mMT:mIcon(mMT.Media.Mouse["LEFT"]), tip, L["left click to open the small menu."]))
-	DT.tooltip:AddLine(format("%s %s%s|r", mMT:mIcon(mMT.Media.Mouse["MIDDLE"]), tip, L["middle click to open the Dungeon Teleports menu."]))
-	DT.tooltip:AddLine(format("%s %s%s|r", mMT:mIcon(mMT.Media.Mouse["RIGHT"]), tip, L["right click to open the other Teleports menu."]))
+	DT.tooltip:AddLine(MEDIA.leftClick .. " " .. mMT:SetTextColor(L["left click to open the small menu."], "tip"))
+	DT.tooltip:AddLine(MEDIA.middleClick .. " " .. mMT:SetTextColor(L["middle click to open the Dungeon Teleports menu."], "tip"))
+	DT.tooltip:AddLine(MEDIA.rightClick .. " " .. mMT:SetTextColor(L["right click to open the other Teleports menu."], "tip"))
 	DT.tooltip:Show()
-end
-
-local function colorText(value, withe)
-	if withe then
-		return value
-	else
-		local hexColor = E:RGBToHex(E.db.general.valuecolor.r, E.db.general.valuecolor.g, E.db.general.valuecolor.b)
-		return hexColor .. value .. "|r"
-	end
 end
 
 local function OnEvent(self, event, unit)
 	CheckIfAvailable()
 
-	if E.db.mMT.teleports.icon then
-		self.text:SetText(format("|T%s:16:16:0:0:64:64|t %s", mMT.Media.TeleportIcons[E.db.mMT.teleports.customicon], colorText(mText, E.db.mMT.teleports.whiteText)))
+	if E.db.mMT.datatexts.teleports.icon then
+		local icon = E:TextureString(MEDIA.icons.teleport[E.db.mMT.datatexts.teleports.iconTexture], ":14:14")
+		self.text:SetFormattedText(displayString, icon .. " " .. L["Teleports"])
 	else
-		self.text:SetText(colorText(mText, E.db.mMT.teleports.whiteText))
+		self.text:SetFormattedText(displayString, L["Teleports"])
 	end
+end
+
+local function ValueColorUpdate(self, hex)
+	if E.db.mMT.datatexts.text.override_color then hex = "|c" .. MEDIA.color.override.hex end
+	displayString = strjoin("", hex, "%s|r")
+	OnEvent(self)
 end
 
 local function OnLeave(self)
 	DT.tooltip:Hide()
 end
 
-DT:RegisterDatatext("mTeleports", mMT.DatatextString, nil, OnEvent, nil, OnClick, OnEnter, OnLeave, mText, nil, nil)
+DT:RegisterDatatext("mMT - Teleports", mMT.Name, nil, OnEvent, nil, OnClick, OnEnter, OnLeave, L["Teleports"], nil, ValueColorUpdate)

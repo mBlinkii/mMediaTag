@@ -292,4 +292,4 @@ end
 
 local events = { "CHALLENGE_MODE_START", "CHALLENGE_MODE_COMPLETED", "PLAYER_ENTERING_WORLD", "UPDATE_INSTANCE_INFO", "CHALLENGE_MODE_RESET", "ENCOUNTER_END", "MYTHIC_PLUS_CURRENT_AFFIX_UPDATE" }
 
-DT:RegisterDatatext("M+ Score", mMT.Name, events, OnEvent, nil, OnClick, OnEnter, OnLeave, nil, nil, ValueColorUpdate)
+DT:RegisterDatatext("mMT - M+ Score", mMT.Name, events, OnEvent, nil, OnClick, OnEnter, OnLeave, L["M+ Score"], nil, ValueColorUpdate)

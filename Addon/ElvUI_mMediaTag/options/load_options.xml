@@ -10,4 +10,5 @@
 	<Script file="dice_button.lua"/>
 	<Script file="datatexts.lua"/>
 	<Script file="info_score.lua"/>
+	<Script file="misc_teleports.lua"/>
 </Ui>

@@ -1,4 +1,5 @@
 local mMT, DB, M, E, P, L, MEDIA = unpack(ElvUI_mMediaTag)
+local DT = E:GetModule("DataTexts")
 
 mMT.options.args.datatexts.args.general.args = {
 	text_color = {
@@ -16,7 +17,8 @@ mMT.options.args.datatexts.args.general.args = {
 				end,
 				set = function(info, value)
 					E.db.mMT.datatexts.text.override_color = value
-					mMT:UpdateMedia("datatexts")
+					DT:ForceUpdate_DataText("mMT - Teleports")
+					DT:ForceUpdate_DataText("mMT - M+ Score")
 				end,
 			},
 			color = {
@@ -36,6 +38,8 @@ mMT.options.args.datatexts.args.general.args = {
 					E.db.mMT.datatexts.text.color = hex
 					MEDIA.color.override = CreateColorFromHexString(hex)
 					MEDIA.color.override.hex = hex
+					DT:ForceUpdate_DataText("mMT - Teleports")
+					DT:ForceUpdate_DataText("mMT - M+ Score")
 				end,
 			},
 		},

@@ -50,7 +50,7 @@ end
 -- text = string, SecondText = string, color = color string for first text, icon = texture, func = function, funcOnEnter = function,
 -- funcOnLeave = function, isTitle = boolean, macro = macrotext, tooltip = id or var you can use for the functions, notClickable = boolean
 function mMT:mDropDown(list, frame, menuparent, ButtonWidth, HideDelay)
-	local SAVE_HEIGHT = (E.db.general.fontSize) / 3 + 16
+	local SAVE_HEIGHT = E.db.general.fontSize / 3 + 16
 	local BUTTON_HEIGHT = 0
 	local BUTTON_WIDTH = 0
 	local font = LSM:Fetch("font", E.db.general.font)
@@ -93,17 +93,13 @@ function mMT:mDropDown(list, frame, menuparent, ButtonWidth, HideDelay)
 			end
 		end
 
-		local texture = [[Interface\QuestFrame\UI-QuestTitleHighlight]]
+		local texture = [[Interface\Addons\ElvUI_mMediaTag\media\select.tga]] or [[Interface\QuestFrame\UI-QuestTitleHighlight]]
 
 		if not list[i].isTitle then
 			frame.buttons[i].hoverTex = frame.buttons[i]:CreateTexture(nil, "OVERLAY")
 			frame.buttons[i].hoverTex:SetAllPoints()
 			frame.buttons[i].hoverTex:SetTexture(texture)
-			frame.buttons[i].hoverTex:SetGradient(
-				"HORIZONTAL",
-				{ r = mMT.ClassColor.r, g = mMT.ClassColor.g, b = mMT.ClassColor.b, a = 0.75 },
-				{ r = mMT:ColorCheck(mMT.ClassColor.r + 0.4), g = mMT:ColorCheck(mMT.ClassColor.g + 0.4), b = mMT:ColorCheck(mMT.ClassColor.b + 0.4), a = 0.75 }
-			)
+			frame.buttons[i].hoverTex:SetVertexColor(MEDIA.classColor.r, MEDIA.classColor.g, MEDIA.classColor.b, 0.5)
 			frame.buttons[i].hoverTex:SetBlendMode("BLEND")
 			frame.buttons[i].hoverTex:Hide()
 		end

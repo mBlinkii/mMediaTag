@@ -17,7 +17,7 @@ mMT.options.args.datatexts.args.info_score.args = {
 				end,
 				set = function(info, value)
 					E.db.mMT.datatexts.score.group_keystones = value
-					DT:ForceUpdate_DataText("M+ Score")
+					DT:ForceUpdate_DataText("mMT - M+ Score")
 				end,
 			},
             show_upgrade = {
@@ -29,7 +29,7 @@ mMT.options.args.datatexts.args.info_score.args = {
 				end,
 				set = function(info, value)
 					E.db.mMT.datatexts.score.show_upgrade = value
-					DT:ForceUpdate_DataText("M+ Score")
+					DT:ForceUpdate_DataText("mMT - M+ Score")
 				end,
 			},
             sort_method = {
@@ -41,7 +41,7 @@ mMT.options.args.datatexts.args.info_score.args = {
 				end,
 				set = function(info, value)
 					E.db.mMT.datatexts.score.sort_method = value
-					DT:ForceUpdate_DataText("M+ Score")
+					DT:ForceUpdate_DataText("mMT - M+ Score")
 				end,
 				values = {
 					KEY = L["Keystone level"],

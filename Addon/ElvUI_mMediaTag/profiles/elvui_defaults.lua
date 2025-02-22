@@ -49,14 +49,19 @@ P.datatexts = {
 		show_upgrade = true,
 		sort_method = "KEY",
 	},
+	teleports = {
+		anchorCursor = false,
+		icon = true,
+		iconTexture = "teleport04",
+	},
 }
 
 -- media
 P.media = {
 	color = {
 		title = "FFFFBE19",
-		text =  "FFFFFFFF",
-		tip =  "FFB2B2B2",
-		mark =  "FF38FF92",
+		text = "FFFFFFFF",
+		tip = "FFB2B2B2",
+		mark = "FF38FF92",
 	},
 }
