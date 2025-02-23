@@ -90,6 +90,13 @@ mMT.options = {
 					end,
 					args = {},
 				},
+				individual_professions = {
+					order = 4,
+					type = "group",
+					name = mMT:AddSettingsIcon(L["Individual Professions"], "professions"),
+					childGroups = "tab",
+					args = {},
+				},
 			},
 		},
 		dock = {

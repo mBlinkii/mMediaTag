@@ -11,4 +11,5 @@
 	<Script file="datatexts.lua"/>
 	<Script file="info_score.lua"/>
 	<Script file="misc_teleports.lua"/>
+	<Script file="individual_professions.lua"/>
 </Ui>

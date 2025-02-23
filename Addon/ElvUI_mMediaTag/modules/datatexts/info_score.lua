@@ -24,9 +24,9 @@ local ipairs = ipairs
 local pairs = pairs
 local strjoin = strjoin
 
-local displayString = ""
+local valueString = ""
+local textString = ""
 local isMaxLevel = nil
-
 local leaderIcon = E:TextureString(MEDIA.icons.leader.leader01, ":14:14")
 local armorIcon = E:TextureString(MEDIA.icons.datatexts.armor, ":14:14")
 local scoreIcon = E:TextureString(MEDIA.icons.datatexts.score, ":14:14")
@@ -212,7 +212,7 @@ local function OnEnter(self)
 	local inCombat = InCombatLockdown()
 	DT.tooltip:ClearLines()
 
-	if not isMaxLevel then self.text:SetFormattedText(displayString, L["Level: "] .. E.mylevel) end
+	if not isMaxLevel then self.text:SetFormattedText(textString, L["Level: "] .. format(valueString, E.mylevel)) end
 
 	if not inCombat then
 		if isMaxLevel then
@@ -223,7 +223,7 @@ local function OnEnter(self)
 			DT.tooltip:AddLine(mMT:SetTextColor(L["My Info"], "title"))
 			DT.tooltip:AddDoubleLine(mMT:SetTextColor(DUNGEON_SCORE), myScore)
 			DT.tooltip:AddDoubleLine(mMT:SetTextColor(L["Keystone"]), myKeystone)
-			self.text:SetFormattedText(displayString, myScore)
+			self.text:SetText(myScore)
 		end
 
 		if next(DB.keystones) then
@@ -281,12 +281,14 @@ local function OnEvent(self, event, ...)
 		SaveMyKeystone()
 	end
 	local myScore = mMT:GetMyMythicPlusScore()
-	self.text:SetFormattedText(displayString, isMaxLevel and myScore or L["Level: "] .. E.mylevel)
+	self.text:SetFormattedText(textString, isMaxLevel and myScore or L["Level: "] .. format(valueString, E.mylevel))
 end
 
 local function ValueColorUpdate(self, hex)
-	if E.db.mMT.datatexts.text.override_color then hex = "|c" .. MEDIA.color.override.hex end
-	displayString = strjoin("", hex, "%s|r")
+	local textHex = E.db.mMT.datatexts.text.override_text and "|c" .. MEDIA.color.override_text.hex or hex
+	local valueHex = E.db.mMT.datatexts.text.override_value and "|c" .. MEDIA.color.override_value.hex or hex
+	textString = strjoin("", textHex, "%s|r")
+	valueString = strjoin("", valueHex, "%s|r")
 	OnEvent(self)
 end
 

@@ -1,4 +1,8 @@
 <Ui xmlns="http://www.blizzard.com/wow/ui/">
-    <Script file="info_score.lua"/>
+  <Script file="info_score.lua"/>
   <Script file="misc_teleports.lua"/>
+  <Script file="info_cooking.lua"/>
+  <Script file="info_fishing.lua"/>
+  <Script file="info_primary_profession.lua"/>
+  <Script file="info_secondary_profession.lua"/>
 </Ui>

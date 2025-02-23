@@ -41,8 +41,10 @@ P.dice_button = {
 -- datatexts
 P.datatexts = {
 	text = {
-		override_color = false,
-		color = "FFFFFFFF",
+		override_text = true,
+		text = "FFFFFFFF",
+		override_value = false,
+		value = "FFFFFFFF",
 	},
 	score = {
 		group_keystones = true,
@@ -53,6 +55,10 @@ P.datatexts = {
 		anchorCursor = false,
 		icon = true,
 		iconTexture = "teleport04",
+	},
+	individual_professions = {
+		icon = true,
+		iconStyle = "default",
 	},
 }
 

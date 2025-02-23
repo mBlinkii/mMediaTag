@@ -62,8 +62,10 @@ function mMT:UpdateMedia(arg)
 		MEDIA.color.tip.hex = E.db.mMT.media.color.tip
 		MEDIA.color.mark = CreateColorFromHexString(E.db.mMT.media.color.mark)
 		MEDIA.color.mark.hex = E.db.mMT.media.color.mark
-		MEDIA.color.override = CreateColorFromHexString(E.db.mMT.datatexts.text.color)
-		MEDIA.color.override.hex = E.db.mMT.datatexts.text.color
+		MEDIA.color.override_text = CreateColorFromHexString(E.db.mMT.datatexts.text.text)
+		MEDIA.color.override_text.hex = E.db.mMT.datatexts.text.text
+		MEDIA.color.override_value = CreateColorFromHexString(E.db.mMT.datatexts.text.value)
+		MEDIA.color.override_value.hex = E.db.mMT.datatexts.text.value
 	end
 end
 

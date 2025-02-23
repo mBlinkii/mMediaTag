@@ -26,7 +26,8 @@ local tinsert = tinsert
 local wipe = wipe
 
 -- Variables
-local displayString = ""
+local valueString = ""
+local textString = ""
 local menuFrame = CreateFrame("Frame", "mMediaTag_Teleports_Menu", E.UIParent, "BackdropTemplate")
 menuFrame:SetTemplate("Transparent", true)
 
@@ -547,20 +548,22 @@ local function OnEvent(self, event, unit)
 
 	if E.db.mMT.datatexts.teleports.icon then
 		local icon = E:TextureString(MEDIA.icons.teleport[E.db.mMT.datatexts.teleports.iconTexture], ":14:14")
-		self.text:SetFormattedText(displayString, icon .. " " .. L["Teleports"])
+		self.text:SetFormattedText(textString, icon .. " " .. L["Teleports"])
 	else
-		self.text:SetFormattedText(displayString, L["Teleports"])
+		self.text:SetFormattedText(textString, L["Teleports"])
 	end
-end
-
-local function ValueColorUpdate(self, hex)
-	if E.db.mMT.datatexts.text.override_color then hex = "|c" .. MEDIA.color.override.hex end
-	displayString = strjoin("", hex, "%s|r")
-	OnEvent(self)
 end
 
 local function OnLeave(self)
 	DT.tooltip:Hide()
+end
+
+local function ValueColorUpdate(self, hex)
+	local textHex = E.db.mMT.datatexts.text.override_text and "|c" .. MEDIA.color.override_text.hex or hex
+	local valueHex = E.db.mMT.datatexts.text.override_value and "|c" .. MEDIA.color.override_value.hex or hex
+	textString = strjoin("", textHex, "%s|r")
+	valueString = strjoin("", valueHex, "%s|r")
+	OnEvent(self)
 end
 
 DT:RegisterDatatext("mMT - Teleports", mMT.Name, nil, OnEvent, nil, OnClick, OnEnter, OnLeave, L["Teleports"], nil, ValueColorUpdate)
