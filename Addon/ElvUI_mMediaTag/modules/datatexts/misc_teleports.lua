@@ -31,6 +31,13 @@ local textString = ""
 local menuFrame = CreateFrame("Frame", "mMediaTag_Teleports_Menu", E.UIParent, "BackdropTemplate")
 menuFrame:SetTemplate("Transparent", true)
 
+local menuFrame_dungeons = CreateFrame("Frame", "mMediaTag_Teleports_Menu", E.UIParent, "BackdropTemplate")
+menuFrame_dungeons:SetTemplate("Transparent", true)
+local menuFrame_season = CreateFrame("Frame", "mMediaTag_Teleports_Menu", E.UIParent, "BackdropTemplate")
+menuFrame_season:SetTemplate("Transparent", true)
+local menuFrame_misc = CreateFrame("Frame", "mMediaTag_Teleports_Menu", E.UIParent, "BackdropTemplate")
+menuFrame_misc:SetTemplate("Transparent", true)
+
 local Teleports = {
 	toys = {
 		available = false,
