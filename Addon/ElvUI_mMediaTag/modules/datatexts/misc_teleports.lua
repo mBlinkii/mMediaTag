@@ -498,12 +498,33 @@ local function mUpdateTPList(button)
 		GetInfos(Teleports.items, false, false, false, false)
 		GetInfos(Teleports.spells, true, false, false, false)
 	end
+
+	-- list = tbl see below
+	-- text = string, SecondText = string, color = color string for first text, icon = texture, func = function, funcOnEnter = function,
+	-- funcOnLeave = function, isTitle = boolean, macro = macrotext, tooltip = id or var you can use for the functions, notClickable = boolean
 end
 
 local function OnClick(self, button)
 	if not InCombatLockdown() then
 		mUpdateTPList(button)
-		mMT:mDropDown(Teleports.menu, menuFrame, self, 260, 2)
+		local test = {}
+		tinsert(test, {
+			text = "test dungeons",
+			right_text = ">>",
+			submenu = true,
+			func = function(self)
+				mMT:DropDown(Teleports.menu, menuFrame_dungeons, menuFrame, 260, 2, true)
+			end,
+		})
+		tinsert(test, {
+			text = "test misc",
+			right_text = ">>",
+			submenu = true,
+			func = function(self)
+				mMT:DropDown(Teleports.menu, menuFrame_misc, menuFrame, 260, 2, true)
+			end,
+		})
+		mMT:DropDown(test, menuFrame, self, 260, 2)
 	end
 end
 
