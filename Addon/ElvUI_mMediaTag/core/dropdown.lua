@@ -25,10 +25,10 @@ local function DropDownTimer(menuFrame)
 	end
 end
 
-	-- list = tbl see below
-	-- text = string, right_tex = string, color = color string for first text, icon = texture, func = function, funcOnEnter = function,
-	-- funcOnLeave = function, isTitle = boolean, macro = macrotext, tooltip = id or var you can use for the functions, notClickable = boolean,
-	-- submenu = boolean
+-- list = tbl see below
+-- text = string, right_tex = string, color = color string for first text, icon = texture, func = function, funcOnEnter = function,
+-- funcOnLeave = function, isTitle = boolean, macro = macrotext, tooltip = id or var you can use for the functions, notClickable = boolean,
+-- submenu = boolean
 function mMT:DropDown(list, frame, parent, ButtonWidth, HideDelay, submenu)
 	local SAVE_HEIGHT = E.db.general.fontSize / 3 + 16
 	local BUTTON_HEIGHT, BUTTON_WIDTH = 0, 0
@@ -142,8 +142,15 @@ function mMT:DropDown(list, frame, parent, ButtonWidth, HideDelay, submenu)
 		local bottom = point and strfind(point, "BOTTOM")
 		local left = point and strfind(point, "LEFT")
 
-		local anchor1 = (bottom and left and "BOTTOMLEFT") or (bottom and "BOTTOMRIGHT") or (left and "TOPLEFT") or "TOPRIGHT"
-		local anchor2 = (bottom and left and "TOPLEFT") or (bottom and "TOPRIGHT") or (left and "BOTTOMLEFT") or "BOTTOMRIGHT"
+		local anchor1, anchor2
+
+		if submenu then
+			anchor1 = (left and "LEFT") or "RIGHT"
+			anchor2 = (left and "RIGHT") or "LEFT"
+		else
+			anchor1 = (bottom and left and "BOTTOMLEFT") or (bottom and "BOTTOMRIGHT") or (left and "TOPLEFT") or "TOPRIGHT"
+			anchor2 = (bottom and left and "TOPLEFT") or (bottom and "TOPRIGHT") or (left and "BOTTOMLEFT") or "BOTTOMRIGHT"
+		end
 
 		frame:SetPoint(anchor1, parent, anchor2)
 		frame.pointA = anchor1

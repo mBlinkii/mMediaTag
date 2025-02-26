@@ -55,6 +55,13 @@ P.datatexts = {
 		anchorCursor = false,
 		icon = true,
 		iconTexture = "teleport04",
+		favorites = {
+			enable = false,
+			a = nil,
+			b = nil,
+			c = nil,
+			d = nil,
+		},
 	},
 	individual_professions = {
 		icon = true,
