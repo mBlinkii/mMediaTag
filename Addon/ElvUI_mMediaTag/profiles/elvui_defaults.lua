@@ -56,9 +56,9 @@ P.datatexts = {
 		icon = true,
 		iconTexture = "teleport04",
 		favorites = {
-			enable = false,
-			a = nil,
-			b = nil,
+			enable = true,
+			a = {id = 354462, type  = "NW"},
+			b = {id = 354464, type = "MIST"},
 			c = nil,
 			d = nil,
 		},

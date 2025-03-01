@@ -533,12 +533,14 @@ local function GetCooldownTime(id, kind)
 end
 
 local function processTeleport(t, category, typeOverride, dungeonTeleport)
-	print(t, category, typeOverride, dungeonTeleport)
 	for id, idType in pairs(t) do
-		print(id, idType)
 		if id then
 			local name, icon = nil, nil
 			local type = typeOverride or idType
+
+			-- this is needed because of favorite teleports
+			dungeonTeleport = dungeonTeleport or (type ~= "spell" and type ~= "toy" and type ~= "item") and type
+			type = (type == "item" or type == "toy") and "item" or "spell"
 
 			if type == "spell" then
 				name, icon = GetSpellInfos(id)
@@ -546,20 +548,18 @@ local function processTeleport(t, category, typeOverride, dungeonTeleport)
 				name, icon = GetItemInfos(id)
 			end
 
-			print(id, name, icon, type, idType)
-
 			if name then
 				knownTeleports[category].available = true
 				knownTeleports[category][id] = {
 					name = name,
 					icon = icon,
 					cooldown = GetCooldownTime(id, type),
-					short_name = dungeonTeleport and idType or nil,
+					short_name = dungeonTeleport and idType,
 					use = type == "spell" and ("/cast " .. name) or (type == "toy" and ("/usetoy " .. name) or ("/use " .. name)),
-					onEnter = type == "spell" and function(btn)
-						OnEnterItem(btn)
-					end or function(btn)
+					onEnter = (type == "spell") and function(btn)
 						OnEnterSpell(btn)
+					end or function(btn)
+						OnEnterItem(btn)
 					end,
 				}
 			end
@@ -582,79 +582,79 @@ local function UpdateTeleports()
 	knownTeleports.other = knownTeleports.items.available or knownTeleports.spells.available
 end
 
+local function AddMenuEntries(menu, entries)
+	for _, entry in ipairs(entries) do
+		tinsert(menu, entry)
+		if entry.submenu then
+			entry.submenu = nil -- Remove submenu from individual entries to avoid duplication.
+		end
+	end
+end
+
+local function CreateMenuEntry(id, t)
+	return {
+		text = t.short_name and (t.name .. " [" .. mMT:SetTextColor(t.short_name, "mark") .. "]") or t.name,
+		right_text = t.cooldown,
+		icon = t.icon,
+		isTitle = false,
+		tooltip = id,
+		macro = t.use,
+		funcOnEnter = t.onEnter,
+		funcOnLeave = LeaveFunc,
+	}
+end
+
 local function UpdateMenus()
 	-- add favorites
 	if E.db.mMT.datatexts.teleports.favorites.enable then
-		for _, key in ipairs({ "a", "b", "c", "d" }) do
+		for _, key in pairs({ "a", "b", "c", "d" }) do
 			local favorite = E.db.mMT.datatexts.teleports.favorites[key]
-			if favorite ~= nil then teleports.favorites[favorite] = true end
+			if favorite then teleports.favorites[favorite.id] = favorite.type end
 		end
 	end
 
 	UpdateTeleports()
 
-	-- main menu entrys
-	-- favorites menu entry
+	-- Initialize main menu
 	menus.main = {}
+
+	-- Add favorites menu entry
 	if E.db.mMT.datatexts.teleports.favorites.enable and knownTeleports.favorites.available then
-		tinsert(menus.main, { text = mMT:SetTextColor(L["Favorite"], "title"), isTitle = true, notClickable = true })
-		for id, t in ipairs(knownTeleports.favorites) do
-			if t then
-				tinsert(menus.main, {
-					text = t.short_name and (t.name .. " [" .. mMT:SetTextColor(t.short_name, "mark") .. "]") or t.name,
-					right_text = t.cooldown,
-					icon = t.icon,
-					isTitle = false,
-					tooltip = id,
-					macro = t.use,
-					funcOnEnter = t.onEnter,
-					funcOnLeave = LeaveFunc,
-				})
-			end
+		AddMenuEntries(menus.main, { { text = mMT:SetTextColor(L["Favorite"], "title"), isTitle = true, notClickable = true } })
+
+		for id, t in pairs(knownTeleports.favorites) do
+			if t and type(t) == "table" then tinsert(menus.main, CreateMenuEntry(id, t)) end
 		end
+
+		AddMenuEntries(menus.main, { { text = "", isTitle = true, notClickable = true } })
 	end
 
-	-- season portals menu entry
+	-- Add season portals menu entry
 	if knownTeleports.season.available then
-		tinsert(menus.main, { text = "", isTitle = true, notClickable = true })
-		tinsert(menus.main, { text = mMT:SetTextColor(L["M+ Season"], "title"), isTitle = true, notClickable = true })
-		for id, t in ipairs(knownTeleports.season) do
-			if t then
-				tinsert(menus.main, {
-					text = t.short_name and (t.name .. " [" .. mMT:SetTextColor(t.short_name, "mark") .. "]") or t.name,
-					right_text = t.cooldown,
-					icon = t.icon,
-					isTitle = false,
-					tooltip = id,
-					macro = t.use,
-					funcOnEnter = t.onEnter,
-					funcOnLeave = LeaveFunc,
-				})
-			end
+		AddMenuEntries(menus.main, {
+			{ text = mMT:SetTextColor(L["M+ Season"], "title"), isTitle = true, notClickable = true },
+		})
+
+		for id, t in pairs(knownTeleports.season) do
+			if t and type(t) == "table" then tinsert(menus.main, CreateMenuEntry(id, t)) end
 		end
 	end
 
-	-- other portals menu entry
-	tinsert(menus.main, { text = "", isTitle = true, notClickable = true })
+	-- Add other portals menu entry
+	if knownTeleports.tww.available or knownTeleports.dungeonportals.available or knownTeleports.toys.available or knownTeleports.engineering.available or knownTeleports.other then
+		AddMenuEntries(menus.main, {
+			{ text = "", isTitle = true, notClickable = true },
+			{ text = mMT:SetTextColor(L["Other Portals"], "title"), isTitle = true, notClickable = true },
+		})
+	end
 
-	-- tww dungeon portals
+	-- Add tww dungeon portals
 	if knownTeleports.tww.available then
 		-- build submenu
 		menus.tww = {}
 
-		for id, t in ipairs(knownTeleports.tww) do
-			if t then
-				tinsert(menus.tww, {
-					text = t.name .. " [" .. mMT:SetTextColor(t.short_name, "mark") .. "]",
-					right_text = t.cooldown,
-					icon = t.icon,
-					isTitle = false,
-					tooltip = id,
-					macro = t.use,
-					funcOnEnter = t.onEnter,
-					funcOnLeave = LeaveFunc,
-				})
-			end
+		for id, t in pairs(knownTeleports.tww) do
+			if t and type(t) == "table" then tinsert(menus.tww, CreateMenuEntry(id, t)) end
 		end
 
 		-- main menu entry for tww dungeon teleports
@@ -668,24 +668,13 @@ local function UpdateMenus()
 		})
 	end
 
-	-- dungeon portals
+	-- Add dungeon portals
 	if knownTeleports.dungeonportals.available then
 		-- build submenu
 		menus.dungeonportals = {}
 
-		for id, t in ipairs(knownTeleports.dungeonportals) do
-			if t then
-				tinsert(menus.dungeonportals, {
-					text = t.name .. " [" .. mMT:SetTextColor(t.short_name, "mark") .. "]",
-					right_text = t.cooldown,
-					icon = t.icon,
-					isTitle = false,
-					tooltip = id,
-					macro = t.use,
-					funcOnEnter = t.onEnter,
-					funcOnLeave = LeaveFunc,
-				})
-			end
+		for id, t in pairs(knownTeleports.dungeonportals) do
+			if t and type(t) == "table" then tinsert(menus.dungeonportals, CreateMenuEntry(id, t)) end
 		end
 
 		-- main menu entry for dungeon teleports
@@ -699,29 +688,18 @@ local function UpdateMenus()
 		})
 	end
 
-	-- toys
+	-- Add toys
 	if knownTeleports.toys.available then
 		-- build submenu
 		menus.toys = {}
 
-		for id, t in ipairs(knownTeleports.toys) do
-			if t then
-				tinsert(menus.toys, {
-					text = t.name,
-					right_text = t.cooldown,
-					icon = t.icon,
-					isTitle = false,
-					tooltip = id,
-					macro = t.use,
-					funcOnEnter = t.onEnter,
-					funcOnLeave = LeaveFunc,
-				})
-			end
+		for id, t in pairs(knownTeleports.toys) do
+			if t and type(t) == "table" then tinsert(menus.toys, CreateMenuEntry(id, t)) end
 		end
 
-		-- main menu entry for dungeon teleports
+		-- main menu entry for toys
 		tinsert(menus.main, {
-			text = L["Dungeon Teleports"],
+			text = L["Toys"],
 			right_text = ">>",
 			submenu = true,
 			func = function(self)
@@ -730,29 +708,18 @@ local function UpdateMenus()
 		})
 	end
 
-	-- engineering
+	-- Add engineering
 	if knownTeleports.engineering.available then
 		-- build submenu
 		menus.engineering = {}
 
-		for id, t in ipairs(knownTeleports.engineering) do
-			if t then
-				tinsert(menus.engineering, {
-					text = t.name,
-					right_text = t.cooldown,
-					icon = t.icon,
-					isTitle = false,
-					tooltip = id,
-					macro = t.use,
-					funcOnEnter = t.onEnter,
-					funcOnLeave = LeaveFunc,
-				})
-			end
+		for id, t in pairs(knownTeleports.engineering) do
+			if t and type(t) == "table" then tinsert(menus.engineering, CreateMenuEntry(id, t)) end
 		end
 
-		-- main menu entry for dungeon teleports
+		-- main menu entry for engineering teleports
 		tinsert(menus.main, {
-			text = L["Dungeon Teleports"],
+			text = L["Engineering"],
 			right_text = ">>",
 			submenu = true,
 			func = function(self)
@@ -761,53 +728,35 @@ local function UpdateMenus()
 		})
 	end
 
-	-- others
+	-- Add other entries
 	if knownTeleports.other then
 		-- build submenu
 		menus.other = {}
 
 		-- items
 		if knownTeleports.items.available then
-			tinsert(menus.other, { text = mMT:SetTextColor(L["Items"], "title"), isTitle = true, notClickable = true })
-			for id, t in ipairs(knownTeleports.items) do
-				if t then
-					tinsert(menus.other, {
-						text = t.name,
-						right_text = t.cooldown,
-						icon = t.icon,
-						isTitle = false,
-						tooltip = id,
-						macro = t.use,
-						funcOnEnter = t.onEnter,
-						funcOnLeave = LeaveFunc,
-					})
-				end
+			AddMenuEntries(menus.other, {
+				{ text = mMT:SetTextColor(L["Items"], "title"), isTitle = true, notClickable = true },
+			})
+			for id, t in pairs(knownTeleports.items) do
+				if t and type(t) == "table" then tinsert(menus.other, CreateMenuEntry(id, t)) end
 			end
 		end
 
 		-- spells
 		if knownTeleports.spells.available then
-			tinsert(menus.other, { text = "", isTitle = true, notClickable = true })
-			tinsert(menus.other, { text = mMT:SetTextColor(L["Spells"], "title"), isTitle = true, notClickable = true })
-			for id, t in ipairs(knownTeleports.spells) do
-				if t then
-					tinsert(menus.other, {
-						text = t.name,
-						right_text = t.cooldown,
-						icon = t.icon,
-						isTitle = false,
-						tooltip = id,
-						macro = t.use,
-						funcOnEnter = t.onEnter,
-						funcOnLeave = LeaveFunc,
-					})
-				end
+			AddMenuEntries(menus.other, {
+				{ text = "", isTitle = true, notClickable = true },
+				{ text = mMT:SetTextColor(L["Spells"], "title"), isTitle = true, notClickable = true },
+			})
+			for id, t in pairs(knownTeleports.spells) do
+				if t and type(t) == "table" then tinsert(menus.other, CreateMenuEntry(id, t)) end
 			end
 		end
 
-		-- main menu entry for dungeon teleports
+		-- main menu entry for other teleports
 		tinsert(menus.main, {
-			text = L["Dungeon Teleports"],
+			text = L["Other Teleports"],
 			right_text = ">>",
 			submenu = true,
 			func = function(self)
@@ -823,6 +772,11 @@ local function OnClick(self, button)
 		if not menuFrames.build then
 			menuFrames.menu = CreateFrame("Frame", "mMediaTag_Teleports_Menu", E.UIParent, "BackdropTemplate")
 			menuFrames.menu:SetTemplate("Transparent", true)
+
+			if knownTeleports.tww.available then
+				menuFrames.tww = CreateFrame("Frame", "mMediaTag_Teleports_TWW", E.UIParent, "BackdropTemplate")
+				menuFrames.tww:SetTemplate("Transparent", true)
+			end
 
 			if knownTeleports.dungeonportals.available then
 				menuFrames.dungeons = CreateFrame("Frame", "mMediaTag_Teleports_Dungeons", E.UIParent, "BackdropTemplate")
@@ -885,9 +839,37 @@ local function mTPTooltip()
 end
 
 local function OnEnter(self)
+	UpdateTeleports()
+
 	DT.tooltip:ClearLines()
-	--mTPTooltip()
-	DT.tooltip:AddLine(" ")
+
+	-- Add favorites menu entry
+	if E.db.mMT.datatexts.teleports.favorites.enable and knownTeleports.favorites.available then
+		DT.tooltip:AddLine(mMT:SetTextColor(L["Favorites"], "title"))
+		for _, t in pairs(knownTeleports.favorites) do
+			if t and type(t) == "table" then DT.tooltip:AddDoubleLine(mMT:SetTextColor(t.short_name and (t.name .. " [" .. mMT:SetTextColor(t.short_name, "mark") .. "]") or t.name), t.cooldown) end
+		end
+		DT.tooltip:AddLine(" ")
+	end
+
+	-- Add season menu entry
+	if knownTeleports.season.available then
+		DT.tooltip:AddLine(mMT:SetTextColor(L["Season Teleports"], "title"))
+		for _, t in pairs(knownTeleports.season) do
+			if t and type(t) == "table" then DT.tooltip:AddDoubleLine(mMT:SetTextColor(t.short_name and (t.name .. " [" .. mMT:SetTextColor(t.short_name, "mark") .. "]") or t.name), t.cooldown) end
+		end
+		DT.tooltip:AddLine(" ")
+	end
+
+	-- Add season menu entry
+	if knownTeleports.season.available then
+		DT.tooltip:AddLine(mMT:SetTextColor(L["TWW Dungeon Teleports"], "title"))
+		for _, t in pairs(knownTeleports.tww) do
+			if t and type(t) == "table" then DT.tooltip:AddDoubleLine(mMT:SetTextColor(t.short_name and (t.name .. " [" .. mMT:SetTextColor(t.short_name, "mark") .. "]") or t.name), t.cooldown) end
+		end
+		DT.tooltip:AddLine(" ")
+	end
+
 	DT.tooltip:AddLine(MEDIA.leftClick .. " " .. mMT:SetTextColor(L["left click to open the small menu."], "tip"))
 	DT.tooltip:AddLine(MEDIA.middleClick .. " " .. mMT:SetTextColor(L["middle click to open the Dungeon Teleports menu."], "tip"))
 	DT.tooltip:AddLine(MEDIA.rightClick .. " " .. mMT:SetTextColor(L["right click to open the other Teleports menu."], "tip"))
