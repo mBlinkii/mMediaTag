@@ -3,7 +3,6 @@ local DT = E:GetModule("DataTexts")
 
 -- Cache WoW Globals
 local C_ToyBox = C_ToyBox
-local CreateFrame = CreateFrame
 local GameTooltip = GameTooltip
 local GetItemCooldown = C_Item and C_Item.GetItemCooldown or GetItemCooldown
 local GetItemCount = C_Item and C_Item.GetItemCount or GetItemCount
@@ -317,15 +316,6 @@ local teleports = {
 
 local function LeaveFunc(btn)
 	GameTooltip:Hide()
-end
-
-local function GetAnchorPoint(point)
-	local anchor = "ANCHOR_CURSOR"
-	if not E.db.mMT.datatexts.anchorCursor and point then
-		local left = point and strfind(point, "LEFT")
-		anchor = left and "ANCHOR_RIGHT" or "ANCHOR_LEFT"
-	end
-	return anchor
 end
 
 local function OnEnterItem(btn)

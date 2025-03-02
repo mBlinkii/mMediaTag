@@ -4,6 +4,7 @@ local EP = E.Libs.EP
 -- Cache WoW Globals
 local _G = _G
 local format = format
+local CreateFrame = CreateFrame
 local GetAddOnMetadata = _G.C_AddOns and _G.C_AddOns.GetAddOnMetadata or _G.GetAddOnMetadata
 local IsAddOnLoaded = _G.C_AddOns and _G.C_AddOns.IsAddOnLoaded or IsAddOnLoaded
 
