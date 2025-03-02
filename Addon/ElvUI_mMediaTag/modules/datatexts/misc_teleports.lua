@@ -36,6 +36,7 @@ mMT.knownTeleports = {
 local teleportsIDs = {
 	favorites = {},
 	toys = {
+		[228940] = "toy", --Notorious Thread's Hearthstone
 		[110560] = "toy", --garrison-hearthstone
 		[140192] = "toy", --dalaran-hearthstone
 		[140324] = "toy", -- Mobile Telemancy Beacon
