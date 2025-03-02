@@ -172,6 +172,11 @@ function mMT:DropDown(list, frame, parent, ButtonWidth, HideDelay, submenu)
 			DropDownTimer(frame)
 		end) end
 
-		ToggleFrame(frame)
+		if frame.name ~= submenu then
+			frame.name = submenu
+			frame:Show()
+		else
+			ToggleFrame(frame)
+		end
 	end
 end

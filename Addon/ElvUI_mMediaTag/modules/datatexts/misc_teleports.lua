@@ -10,27 +10,19 @@ local GetItemCount = C_Item and C_Item.GetItemCount or GetItemCount
 local GetItemIcon = C_Item and C_Item.GetItemIconByID or GetItemIcon
 local GetItemInfo = C_Item and C_Item.GetItemInfo or GetItemInfo
 local IsToyUsable = C_ToyBox.IsToyUsable
-local GetProfessionInfo = GetProfessionInfo
-local GetProfessions = GetProfessions
 local GetSpellCooldown = C_Spell and C_Spell.GetSpellCooldown or GetSpellCooldown
 local GetSpellInfo = C_Spell and C_Spell.GetSpellInfo or GetSpellInfo
-local GetSpellTexture = C_Spell and C_Spell.GetSpellTexture or GetSpellTexture
 local GetTime = GetTime
 local IsSpellKnown = IsSpellKnown
 local PlayerHasToy = PlayerHasToy
-local format = format
 local math = math
 local pairs = pairs
-local select = select
 local string = string
 local tinsert = tinsert
-local wipe = wipe
 
 -- Variables
-local valueString = ""
 local textString = ""
 
-local menuFrames = {}
 local menus = {}
 local knownTeleports = {
 	favorites = {},
@@ -230,12 +222,21 @@ local teleports = {
 		[445416] = "CoT", -- City of Threads
 		[445417] = "ARAK", -- Ara-Kara, City of Echoes
 		[445440] = "CM", -- Cinderbrew Meadery
+		[467546] = "CM", --Cinderbrew Meadery
 		[445441] = "DC", -- Darkflame Cleft
 		[445443] = "ROOK", -- The Rookery
 		[445444] = "PSF", -- Priory of the Sacred Flame
+		[1216786] = "OF", --Operation: Floodgate
+		-- tww raid
+		[1226482] = "LOU", --Liberation of Undermine (raid)
 	},
 
 	dungeonportals = {
+		-- cata
+		[410080] = "VP", -- path-of-winds-domain
+		[424142] = "TOT", --path-of-the-tidehunter
+		[445424] = "GB", -- Grim Batol
+		-- mop
 		[131204] = "TJS", -- Temple of the Jade Serpent
 		[131205] = "SB", -- Stormstout Brewery
 		[131206] = "SPM", -- Shado-Pan Monastery
@@ -245,6 +246,7 @@ local teleports = {
 		[131229] = "SM", -- Scarlet Monastery
 		[131231] = "SH", -- Scarlet Halls
 		[131232] = "SCH", -- Scholomance
+		-- wod
 		[159895] = "BSM", -- Bloodmaul Slag Mines
 		[159896] = "ID", -- Iron Docks
 		[159897] = "AUCH", -- Auchindoun
@@ -253,6 +255,25 @@ local teleports = {
 		[159900] = "GD", -- Grimrail Depot
 		[159901] = "EB", -- The Everbloom
 		[159902] = "UBS", -- Upper Blackrock Spire
+		-- legion
+		[373262] = "KZ", -- Karazhan
+		[393764] = "HOV", -- Halls of Valor
+		[393766] = "COS", -- Court of Stars
+		[410078] = "NL", -- Neltharion's Lair
+		[424153] = "BRH", -- Black Rook Hold
+		[424163] = "DHT", -- Darkheart Thicket
+		-- bfa
+		[373274] = "MG", -- Mechagon
+		[393222] = "ULD", -- Uldaman: Legacy of Tyr
+		[410071] = "FH", -- Freehold
+		[410074] = "UNDR", -- Underrot
+		[424167] = "WM", -- Waycrest Manor
+		[445418] = "SIEGE", -- Siege of Boralus - alliance
+		[464256] = "SIEGE", -- Siege of Boralus - horde
+		[424187] = "AD", -- Atal'Dazar
+		[467555] = "TM", -- The MOTHERLODE!!
+		[467553] = "TM", -- The MOTHERLODE!!
+		-- sl
 		[354462] = "NW", -- Necrotic Wake
 		[354463] = "PF", -- Plaguefall
 		[354464] = "MIST", -- Mists of Tirna Scithe
@@ -262,12 +283,11 @@ local teleports = {
 		[354468] = "DOS", -- De Other Side
 		[354469] = "SD", -- Sanguine Depths
 		[367416] = "TVM", -- Tazavesh, the Veiled Market
+		-- sl raid
 		[373190] = "CN", -- Castle Nathria
 		[373191] = "SOD", -- Sanctum of Domination
 		[373192] = "SotFO", -- Sepulcher of the First Ones
-		[373262] = "KZ", -- Karazhan
-		[373274] = "MG", -- Mechagon
-		[393222] = "ULD", -- Uldaman: Legacy of Tyr
+		-- df
 		[393256] = "RLP", -- Ruby Life Pools
 		[393262] = "NO", -- Nokhud Offensive
 		[393267] = "BH", -- Brackenhide Hollow
@@ -275,29 +295,23 @@ local teleports = {
 		[393276] = "NELT", -- Neltharus
 		[393279] = "AV", -- Azure Vault
 		[393283] = "HOI", -- Halls of Infusion
-		[393764] = "HOV", -- Halls of Valor
-		[393766] = "COS", -- Court of Stars
-		[410071] = "FH", -- Freehold
-		[410074] = "UNDR", -- Underrot
-		[410078] = "NL", -- Neltharion's Lair
-		[410080] = "VP", -- path-of-winds-domain
-		[424142] = "TOT", --path-of-the-tidehunter
-		[424153] = "BRH", -- Black Rook Hold
-		[424163] = "DHT", -- Darkheart Thicket
-		[424167] = "WM", -- Waycrest Manor
-		[424187] = "AD", -- Atal'Dazar
 		[424197] = "DOI", -- Dawn of the Infinite
+		[432258] = "ATDH", --Amirdrassil, the Dream's Hope (raid)
+		[432254] = "VOTI", --Vault of the Incarnates (raid)
+		[432257] = "ATSC", --Aberrus, the Shadowed Crucible (raid)
+		-- tww
 		[445269] = "SV", -- The Stonevault
 		[445414] = "DAWN", -- The Dawnbreaker
 		[445416] = "CoT", -- City of Threads
 		[445417] = "ARAK", -- Ara-Kara, City of Echoes
-		[445418] = "SIEGE", -- Siege of Boralus - alliance
-		[445424] = "GB", -- Grim Batol
 		[445440] = "CM", -- Cinderbrew Meadery
+		[467546] = "CM", --Cinderbrew Meadery
 		[445441] = "DC", -- Darkflame Cleft
 		[445443] = "ROOK", -- The Rookery
 		[445444] = "PSF", -- Priory of the Sacred Flame
-		[464256] = "SIEGE", -- Siege of Boralus - horde
+		[1216786] = "OF", --Operation: Floodgate
+		-- tww raid
+		[1226482] = "LOU", --Liberation of Undermine (raid)
 	},
 }
 
@@ -305,19 +319,7 @@ local function LeaveFunc(btn)
 	GameTooltip:Hide()
 end
 
-local function MenuAdd(tbl, text, time, macro, icon, tooltip, funcOnEnter)
-	tinsert(tbl, {
-		text = text,
-		SecondText = time,
-		icon = icon,
-		isTitle = false,
-		tooltip = tooltip,
-		macro = macro,
-		funcOnEnter = funcOnEnter,
-		funcOnLeave = LeaveFunc,
-	})
-end
-local function getAnchorPoint(point)
+local function GetAnchorPoint(point)
 	local anchor = "ANCHOR_CURSOR"
 	if not E.db.mMT.datatexts.anchorCursor and point then
 		local left = point and strfind(point, "LEFT")
@@ -338,153 +340,6 @@ local function OnEnterSpell(btn)
 	GameTooltip:ClearLines()
 	GameTooltip:SetSpellByID(btn.tooltip)
 	GameTooltip:Show()
-end
-
-local function GetInfos(TeleportsTable, spell, toy, tip, check)
-	for i, v in pairs(TeleportsTable.tps) do
-		local texture, name, hasSpell, hasItem = nil, nil, false, 0
-		if spell then
-			local spellInfo = GetSpellInfo(i)
-			texture = GetSpellTexture(i)
-			name = spellInfo.name
-			hasSpell = IsSpellKnown(i)
-		else
-			texture = GetItemIcon(i)
-			name = GetItemInfo(i)
-			hasItem = GetItemCount(i)
-		end
-
-		local text1, text2 = nil, nil
-		if (texture and name and (hasItem > 0 or (E.Retail and PlayerHasToy(i) and C_ToyBox.IsToyUsable(i)))) or (texture and name and hasSpell) then
-			if check then
-				TeleportsTable.available = true
-			else
-				local start, duration = nil, nil
-
-				if spell then
-					local spellCooldownInfo = GetSpellCooldown(i)
-					start = spellCooldownInfo.startTime
-					duration = spellCooldownInfo.duration
-				else
-					start, duration = GetItemCooldown(i)
-				end
-
-				local cooldown = start + duration - GetTime()
-
-				if cooldown >= 2 then
-					local hours = math.floor(cooldown / 3600)
-					local minutes = math.floor(cooldown / 60)
-					local seconds = string.format("%02.f", math.floor(cooldown - minutes * 60))
-					if hours >= 1 then
-						minutes = math.floor(mod(cooldown, 3600) / 60)
-						text1 = "|CFFDB3030" .. name .. "|r"
-						text2 = "|CFFDB3030" .. hours .. "h " .. minutes .. "m|r"
-					else
-						text1 = "|CFFDB3030" .. name .. "|r"
-						text2 = "|CFFDB3030" .. minutes .. "m " .. seconds .. "s|r"
-					end
-				elseif cooldown <= 0 then
-					text1 = "|CFFFFFFFF" .. name .. "|r"
-					text2 = "|CFF00FF00" .. L["Ready"] .. "|r"
-				end
-
-				if text1 and text2 then
-					if type(v) == "string" then text1 = "[|CFF00AAFF" .. v .. "|r] " .. text1 end
-
-					if tip then
-						DT.tooltip:AddDoubleLine(format("|T%s:14:14:0:0:64:64:5:59:5:59|t %s", texture, text1), text2)
-					elseif spell then
-						MenuAdd(Teleports.menu, text1, text2, "/cast " .. name, texture, i, function(btn)
-							OnEnterSpell(btn)
-						end)
-					elseif toy then
-						MenuAdd(Teleports.menu, text1, text2, "/usetoy " .. name, texture, i, function(btn)
-							OnEnterItem(btn)
-						end)
-					else
-						MenuAdd(Teleports.menu, text1, text2, "/use " .. name, texture, i, function(btn)
-							OnEnterItem(btn)
-						end)
-					end
-				end
-			end
-		end
-	end
-end
-
-local function EngineeringCheck()
-	local prof1, prof2 = GetProfessions()
-	if prof1 then prof1 = select(7, GetProfessionInfo(prof1)) end
-
-	if prof2 then prof2 = select(7, GetProfessionInfo(prof2)) end
-
-	return prof1 == 202 or prof2 == 202
-end
-
-local function CheckIfAvailable()
-	GetInfos(Teleports.toys, false, true, true, true)
-	GetInfos(Teleports.engineering, false, true, true, true)
-	GetInfos(Teleports.season, true, false, true, true)
-	GetInfos(Teleports.tww, true, false, true, true)
-	GetInfos(Teleports.dungeonportals, true, false, true, true)
-	GetInfos(Teleports.items, false, false, true, true)
-	GetInfos(Teleports.spells, true, false, true, true)
-end
-
-local function mUpdateTPList(button)
-	CheckIfAvailable()
-
-	wipe(Teleports.menu)
-	if Teleports.toys.available and button == "LeftButton" then
-		tinsert(Teleports.menu, { text = mMT:SetTextColor(L["Toys"], "title"), isTitle = true, notClickable = true })
-
-		GetInfos(Teleports.toys, false, true, false, false)
-		tinsert(Teleports.menu, { text = "", isTitle = true, notClickable = true })
-	end
-
-	if EngineeringCheck() and Teleports.engineering.available and button == "RightButton" then
-		tinsert(Teleports.menu, { text = mMT:SetTextColor(L["Engineering"], "title"), isTitle = true, notClickable = true })
-
-		GetInfos(Teleports.engineering, false, true, false, false)
-		tinsert(Teleports.menu, { text = "", isTitle = true, notClickable = true })
-	end
-
-	if Teleports.season.available and button == "LeftButton" then
-		tinsert(Teleports.menu, { text = mMT:SetTextColor(L["M+ Season"], "title"), isTitle = true, notClickable = true })
-
-		GetInfos(Teleports.season, true, false, false, false)
-		tinsert(Teleports.menu, { text = "", isTitle = true, notClickable = true })
-	end
-
-	if Teleports.tww.available and button == "LeftButton" then
-		tinsert(Teleports.menu, { text = mMT:SetTextColor(L["TWW Dungeons"], "title"), isTitle = true, notClickable = true })
-
-		GetInfos(Teleports.tww, true, false, false, false)
-	end
-
-	if Teleports.dungeonportals.available and button == "MiddleButton" then
-		tinsert(Teleports.menu, { text = mMT:SetTextColor(L["M+ Season"], "title"), isTitle = true, notClickable = true })
-
-		GetInfos(Teleports.season, true, false, false, false)
-		tinsert(Teleports.menu, { text = "", isTitle = true, notClickable = true })
-
-		tinsert(Teleports.menu, { text = mMT:SetTextColor(L["All Dungeon Teleports"], "title"), isTitle = true, notClickable = true })
-
-		GetInfos(Teleports.dungeonportals, true, false, false, false)
-		tinsert(Teleports.menu, { text = "", isTitle = true, notClickable = true })
-	end
-
-	if (Teleports.items.available or Teleports.spells.available) and button == "RightButton" then
-		tinsert(Teleports.menu, { text = "", isTitle = true, notClickable = true })
-		tinsert(Teleports.menu, { text = mMT:SetTextColor(L["Other"], "title"), isTitle = true, notClickable = true })
-
-		GetInfos(Teleports.items, false, false, false, false)
-		GetInfos(Teleports.spells, true, false, false, false)
-	end
-
-	-- list = tbl see below
-	-- text = string, SecondText = string, color = color string for first text, icon = texture, func = function, funcOnEnter = function,
-	-- funcOnLeave = function, isTitle = boolean, macro = macrotext, tooltip = id or var you can use for the functions, notClickable = boolean
 end
 
 local function GetSpellInfos(spellID)
@@ -663,7 +518,7 @@ local function UpdateMenus()
 			right_text = ">>",
 			submenu = true,
 			func = function(self)
-				mMT:DropDown(menus.tww, menuFrames.tww, menuFrames.menu, 260, 2, true)
+				mMT:DropDown(menus.tww, mMT.submenu, mMT.menu, 260, 2, "tww_dungeons")
 			end,
 		})
 	end
@@ -683,7 +538,7 @@ local function UpdateMenus()
 			right_text = ">>",
 			submenu = true,
 			func = function(self)
-				mMT:DropDown(menus.dungeonportals, menuFrames.dungeons, menuFrames.menu, 260, 2, true)
+				mMT:DropDown(menus.dungeonportals, mMT.submenu, mMT.menu, 260, 2, "all_dungeons")
 			end,
 		})
 	end
@@ -703,7 +558,7 @@ local function UpdateMenus()
 			right_text = ">>",
 			submenu = true,
 			func = function(self)
-				mMT:DropDown(menus.toys, menuFrames.toys, menuFrames.menu, 260, 2, true)
+				mMT:DropDown(menus.toys, mMT.submenu, mMT.menu, 260, 2, "toys")
 			end,
 		})
 	end
@@ -723,7 +578,7 @@ local function UpdateMenus()
 			right_text = ">>",
 			submenu = true,
 			func = function(self)
-				mMT:DropDown(menus.engineering, menuFrames.engineering, menuFrames.menu, 260, 2, true)
+				mMT:DropDown(menus.engineering, mMT.submenu, mMT.menu, 260, 2, "engineering")
 			end,
 		})
 	end
@@ -760,7 +615,7 @@ local function UpdateMenus()
 			right_text = ">>",
 			submenu = true,
 			func = function(self)
-				mMT:DropDown(menus.other, menuFrames.misc, menuFrames.menu, 260, 2, true)
+				mMT:DropDown(menus.other, mMT.submenu, mMT.menu, 260, 2, "misc")
 			end,
 		})
 	end
@@ -769,72 +624,8 @@ end
 local function OnClick(self, button)
 	if not InCombatLockdown() then
 		UpdateMenus()
-		if not menuFrames.build then
-			menuFrames.menu = CreateFrame("Frame", "mMediaTag_Teleports_Menu", E.UIParent, "BackdropTemplate")
-			menuFrames.menu:SetTemplate("Transparent", true)
 
-			if knownTeleports.tww.available then
-				menuFrames.tww = CreateFrame("Frame", "mMediaTag_Teleports_TWW", E.UIParent, "BackdropTemplate")
-				menuFrames.tww:SetTemplate("Transparent", true)
-			end
-
-			if knownTeleports.dungeonportals.available then
-				menuFrames.dungeons = CreateFrame("Frame", "mMediaTag_Teleports_Dungeons", E.UIParent, "BackdropTemplate")
-				menuFrames.dungeons:SetTemplate("Transparent", true)
-			end
-
-			if knownTeleports.engineering.available then
-				menuFrames.engineering = CreateFrame("Frame", "mMediaTag_Teleports_Engineering", E.UIParent, "BackdropTemplate")
-				menuFrames.engineering:SetTemplate("Transparent", true)
-			end
-
-			if knownTeleports.toys.available then
-				menuFrames.toys = CreateFrame("Frame", "mMediaTag_Teleports_Toys", E.UIParent, "BackdropTemplate")
-				menuFrames.toys:SetTemplate("Transparent", true)
-			end
-
-			if knownTeleports.other then
-				menuFrames.misc = CreateFrame("Frame", "mMediaTag_Teleports_Misc", E.UIParent, "BackdropTemplate")
-				menuFrames.misc:SetTemplate("Transparent", true)
-			end
-
-			menuFrames.build = true
-		end
-
-		mMT:DropDown(menus.main, menuFrames.menu, self, 260, 2)
-	end
-end
-
-local function mTPTooltip()
-	CheckIfAvailable()
-	if Teleports.toys.available then
-		DT.tooltip:AddLine(mMT:SetTextColor(L["Toys"], "title"))
-		GetInfos(Teleports.toys, false, true, true, false)
-	end
-
-	if EngineeringCheck() and Teleports.engineering.available then
-		DT.tooltip:AddLine(" ")
-		DT.tooltip:AddLine(mMT:SetTextColor(L["Engineering"], "title"))
-		GetInfos(Teleports.engineering, false, true, true, false)
-	end
-
-	if Teleports.season.available then
-		DT.tooltip:AddLine(" ")
-		DT.tooltip:AddLine(mMT:SetTextColor(L["M+ Season"], "title"))
-		GetInfos(Teleports.season, true, false, true, false)
-	end
-
-	if Teleports.tww.available then
-		DT.tooltip:AddLine(" ")
-		DT.tooltip:AddLine(mMT:SetTextColor(L["TWW Dungeons"], "title"))
-		GetInfos(Teleports.tww, true, false, true, false)
-	end
-
-	if Teleports.items.available or Teleports.spells.available then
-		DT.tooltip:AddLine(" ")
-		DT.tooltip:AddLine(mMT:SetTextColor(L["Other"], "title"))
-		GetInfos(Teleports.items, false, false, true, false)
-		GetInfos(Teleports.spells, true, false, true, false)
+		mMT:DropDown(menus.main, mMT.menu, self, 260, 2)
 	end
 end
 
@@ -843,12 +634,18 @@ local function OnEnter(self)
 
 	DT.tooltip:ClearLines()
 
+	local tipAdded = false
+
 	-- Add favorites menu entry
 	if E.db.mMT.datatexts.teleports.favorites.enable and knownTeleports.favorites.available then
 		DT.tooltip:AddLine(mMT:SetTextColor(L["Favorites"], "title"))
 		for _, t in pairs(knownTeleports.favorites) do
 			if t and type(t) == "table" then DT.tooltip:AddDoubleLine(mMT:SetTextColor(t.short_name and (t.name .. " [" .. mMT:SetTextColor(t.short_name, "mark") .. "]") or t.name), t.cooldown) end
 		end
+		DT.tooltip:AddLine(" ")
+		tipAdded = true
+	else
+		DT.tooltip:AddLine(mMT:SetTextColor(L["You can select your favourites in the settings."]))
 		DT.tooltip:AddLine(" ")
 	end
 
@@ -859,6 +656,7 @@ local function OnEnter(self)
 			if t and type(t) == "table" then DT.tooltip:AddDoubleLine(mMT:SetTextColor(t.short_name and (t.name .. " [" .. mMT:SetTextColor(t.short_name, "mark") .. "]") or t.name), t.cooldown) end
 		end
 		DT.tooltip:AddLine(" ")
+		tipAdded = true
 	end
 
 	-- Add season menu entry
@@ -868,6 +666,28 @@ local function OnEnter(self)
 			if t and type(t) == "table" then DT.tooltip:AddDoubleLine(mMT:SetTextColor(t.short_name and (t.name .. " [" .. mMT:SetTextColor(t.short_name, "mark") .. "]") or t.name), t.cooldown) end
 		end
 		DT.tooltip:AddLine(" ")
+		tipAdded = true
+	end
+
+	if not tipAdded and (knownTeleports.other or knownTeleports.toys) then
+		if knownTeleports.items.available then
+			DT.tooltip:AddLine(mMT:SetTextColor(L["Items"], "title"))
+			for _, t in pairs(knownTeleports.items) do
+				if t and type(t) == "table" then DT.tooltip:AddDoubleLine(mMT:SetTextColor(t.name), t.cooldown) end
+			end
+			DT.tooltip:AddLine(" ")
+		end
+
+		if knownTeleports.toys.available then
+			DT.tooltip:AddLine(mMT:SetTextColor(L["Toys"], "title"))
+			for _, t in pairs(knownTeleports.toys) do
+				if t and type(t) == "table" then DT.tooltip:AddDoubleLine(mMT:SetTextColor(t.name), t.cooldown) end
+			end
+			DT.tooltip:AddLine(" ")
+		end
+	else
+		DT.tooltip:AddLine(mMT:SetTextColor(L["You currently have no important teleports."]))
+		DT.tooltip:AddLine(" ")
 	end
 
 	DT.tooltip:AddLine(MEDIA.leftClick .. " " .. mMT:SetTextColor(L["left click to open the small menu."], "tip"))
@@ -876,9 +696,7 @@ local function OnEnter(self)
 	DT.tooltip:Show()
 end
 
-local function OnEvent(self, event, unit)
-	--CheckIfAvailable()
-
+local function OnEvent(self)
 	if E.db.mMT.datatexts.teleports.icon then
 		local icon = E:TextureString(MEDIA.icons.teleport[E.db.mMT.datatexts.teleports.iconTexture], ":14:14")
 		self.text:SetFormattedText(textString, icon .. " " .. L["Teleports"])
@@ -893,9 +711,7 @@ end
 
 local function ValueColorUpdate(self, hex)
 	local textHex = E.db.mMT.datatexts.text.override_text and "|c" .. MEDIA.color.override_text.hex or hex
-	local valueHex = E.db.mMT.datatexts.text.override_value and "|c" .. MEDIA.color.override_value.hex or hex
 	textString = strjoin("", textHex, "%s|r")
-	valueString = strjoin("", valueHex, "%s|r")
 	OnEvent(self)
 end
 
