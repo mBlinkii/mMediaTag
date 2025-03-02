@@ -52,13 +52,12 @@ P.datatexts = {
 		sort_method = "KEY",
 	},
 	teleports = {
-		anchorCursor = false,
 		icon = true,
 		iconTexture = "teleport04",
 		favorites = {
-			enable = true,
-			a = {id = 354462, type  = "NW"},
-			b = {id = 354464, type = "MIST"},
+			enable = false,
+			a = nil,
+			b = nil,
 			c = nil,
 			d = nil,
 		},
