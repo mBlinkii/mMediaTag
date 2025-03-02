@@ -38,6 +38,7 @@ local Teleports = {
 	toys = {
 		available = false,
 		tps = {
+			[228940] = true, --Notorious Thread's Hearthstone
 			[110560] = true, --garrison-hearthstone
 			[140192] = true, --dalaran-hearthstone
 			[140324] = true, -- Mobile Telemancy Beacon
