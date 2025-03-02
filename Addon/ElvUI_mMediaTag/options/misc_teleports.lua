@@ -3,12 +3,12 @@ local DT = E:GetModule("DataTexts")
 
 local function setFavorite(slot, value)
 	if value == "none" then
-		E.db.mMT.datatexts.teleports.favorites[slot] = { id = "none", type = nil }
+		E.db.mMT.datatexts.teleports.favorites[slot] = { id = "none", kind = nil }
 	else
 		for _, category in pairs(mMT.knownTeleports) do
 			for id, t in pairs(category) do
 				if id == value then
-					E.db.mMT.datatexts.teleports.favorites[slot] = { id = id, type = t.type }
+					E.db.mMT.datatexts.teleports.favorites[slot] = { id = id, kind = t.kind }
 					break
 				end
 			end

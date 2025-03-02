@@ -377,17 +377,17 @@ local function GetCooldownTime(id, kind)
 	return text
 end
 
-local function processTeleport(t, category, typeOverride)
-	for id, idType in pairs(t) do
+local function processTeleport(t, category, kindOverride)
+	for id, idKind in pairs(t) do
 		if id then
 			local name, icon = nil, nil
-			local type = typeOverride or idType
+			local kind = kindOverride or idKind
 
 			-- this is needed because of favorite teleports
-			local dungeonTeleport = (type ~= "spell" and type ~= "toy" and type ~= "item") and true or false
-			type = (type == "item" or type == "toy") and "item" or "spell"
+			local isDungeonTeleport = (idKind ~= "spell" and idKind ~= "toy" and idKind ~= "item")
+			kind = (kind == "item" or kind == "toy") and "item" or "spell"
 
-			if type == "spell" then
+			if kind == "spell" then
 				name, icon = GetSpellInfos(id)
 			else
 				name, icon = GetItemInfos(id)
@@ -398,11 +398,11 @@ local function processTeleport(t, category, typeOverride)
 				mMT.knownTeleports[category][id] = {
 					name = name,
 					icon = icon,
-					type = idType,
-					cooldown = GetCooldownTime(id, type),
-					short_name = dungeonTeleport and idType,
-					use = type == "spell" and ("/cast " .. name) or (type == "toy" and ("/usetoy " .. name) or ("/use " .. name)),
-					onEnter = (type == "spell") and function(btn)
+					kind = idKind,
+					cooldown = GetCooldownTime(id, kind),
+					short_name = isDungeonTeleport and idKind,
+					use = kind == "spell" and ("/cast " .. name) or (kind == "toy" and ("/usetoy " .. name) or ("/use " .. name)),
+					onEnter = (kind == "spell") and function(btn)
 						OnEnterSpell(btn)
 					end or function(btn)
 						OnEnterItem(btn)
@@ -420,7 +420,7 @@ function mMT:UpdateTeleports()
 		-- add favorites
 		for _, key in pairs({ "a", "b", "c", "d" }) do
 			local favorite = E.db.mMT.datatexts.teleports.favorites[key]
-			if favorite then teleportsIDs.favorites[favorite.id] = favorite.type end
+			if favorite then teleportsIDs.favorites[favorite.id] = favorite.kind end
 		end
 		processTeleport(teleportsIDs.favorites, "favorites")
 	end
