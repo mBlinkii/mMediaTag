@@ -60,7 +60,7 @@ local function GetRewards(rewardType)
 
     for _, reward in pairs(rewards) do
         if reward.progress < reward.threshold then
-            local progressText = mMT:SetTextColor(reward.progress .. "/" .. reward.threshold, "tip")
+            local progressText = mMT:TC(reward.progress .. "/" .. reward.threshold, "tip")
             rewardsString = rewardsString == "" and progressText or rewardsString .. " / " .. progressText
         else
             local itemLink = GetExampleRewardItemHyperlinks(reward.id)

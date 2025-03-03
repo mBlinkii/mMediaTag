@@ -3,7 +3,7 @@ local DT = E:GetModule("DataTexts")
 
 local function setFavorite(slot, value)
 	if value == "none" then
-		E.db.mMT.datatexts.teleports.favorites[slot] = { id = "none", kind = nil }
+		E.db.mMT.datatexts.teleports.favorites[slot] = { id = "none", kind = "none" }
 	else
 		for _, category in pairs(mMT.knownTeleports) do
 			for id, t in pairs(category) do
@@ -43,10 +43,10 @@ mMT.options.args.datatexts.args.misc_teleports.args = {
 		inline = true,
 		name = L["Settings"],
 		args = {
-			icon = {
-				order = 1,
-				type = "toggle",
-				name = L["Show Icon"],
+			iconTexture = {
+				order = 2,
+				type = "select",
+				name = L["Sort method"],
 				get = function(info)
 					return E.db.mMT.datatexts.teleports.icon
 				end,
@@ -54,20 +54,9 @@ mMT.options.args.datatexts.args.misc_teleports.args = {
 					E.db.mMT.datatexts.teleports.icon = value
 					DT:ForceUpdate_DataText("mMT - Teleports")
 				end,
-			},
-			iconTexture = {
-				order = 2,
-				type = "select",
-				name = L["Sort method"],
-				get = function(info)
-					return E.db.mMT.datatexts.teleports.iconTexture
-				end,
-				set = function(info, value)
-					E.db.mMT.datatexts.teleports.iconTexture = value
-					DT:ForceUpdate_DataText("mMT - Teleports")
-				end,
 				values = function()
 					local icons = {}
+					icons.none = L["None"]
 					for key, icon in pairs(MEDIA.icons.teleport) do
 						icons[key] = E:TextureString(icon, ":14:14") .. " " .. key
 					end

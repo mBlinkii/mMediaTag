@@ -34,7 +34,7 @@ function mMT:GetIconString(icon)
 	return icon and format("|T%s:16:16:0:0:64:64:4:55:4:55|t", icon) or ""
 end
 
-function mMT:SetTextColor(text, color)
+function mMT:TC(text, color)
 	color = color or "text"
 	return MEDIA.color[color]:WrapTextInColorCode(text)
 end

@@ -24,7 +24,7 @@ end
 
 local function UpdateSkillString(skillLevel, maxSkillLevel, skillModifier)
 	local skillText = skillModifier ~= 0 and " |cffffffff+|r" .. skillModifier or ""
-	return mMT:SetTextColor(skillLevel .. "|cffffffff/|r" .. maxSkillLevel, "mark") .. mMT:SetTextColor(skillText, "tip")
+	return mMT:TC(skillLevel .. "|cffffffff/|r" .. maxSkillLevel, "mark") .. mMT:TC(skillText, "tip")
 end
 
 local function GetProfessionInfos(profession)
@@ -33,16 +33,20 @@ local function GetProfessionInfos(profession)
 end
 
 local function OnEnter(self)
+	local iconPath = E.db.mMT.datatexts.individual_professions.icon
+	local label = mMT:TC(L["Not learned"], "red")
 	local profession = professions[self.name].profession
+
 	if profession then
-		DT.tooltip:AddLine(mMT:SetTextColor(TRADE_SKILLS, "title"))
-		DT.tooltip:AddLine(" ")
 		local name, icon, skillLevel, maxSkillLevel, skillModifier = GetProfessionInfos(profession)
-		icon = E.db.mMT.datatexts.individual_professions.icon and format(iconString, UpdateIcon(self.name, E.db.mMT.datatexts.individual_professions.iconStyle) or icon) or nil
-		DT.tooltip:AddDoubleLine((icon and (icon .. " ") or "") .. mMT:SetTextColor(name), UpdateSkillString(skillLevel, maxSkillLevel, skillModifier))
-	else
-		DT.tooltip:AddLine(mMT:SetTextColor(L["Not learned"], "red"))
+		if iconPath ~= "none" and iconPath ~= "default" then icon = UpdateIcon(self.name, E.db.mMT.datatexts.individual_professions.icon) end
+		icon = E:TextureString(icon, ":14:14")
+		label = icon .. " " .. mMT:TC(name) .. " " .. (skillLevel ~= maxSkillLevel and UpdateSkillString(skillLevel, maxSkillLevel, skillModifier) or "")
 	end
+
+	DT.tooltip:AddLine(mMT:TC(TRADE_SKILLS, "title"))
+	DT.tooltip:AddLine(" ")
+	DT.tooltip:AddLine(label)
 	DT.tooltip:Show()
 end
 
@@ -50,16 +54,27 @@ local function OnLeave(self)
 	DT.tooltip:Hide()
 end
 
-local function OnEvent(self)
+local function OnEvent(self, event)
+	local iconPath = E.db.mMT.datatexts.individual_professions.icon
+	local label = L["No Professions"]
 	local profession = professions[self.name].profession
+	print(event, self.name)
+
 	if profession then
 		local name, icon, skillLevel, maxSkillLevel, _, spell = GetProfessionInfos(profession)
 		professions[self.name].spell = spell
-		icon = E.db.mMT.datatexts.individual_professions.icon and format(iconString, UpdateIcon(self.name, E.db.mMT.datatexts.individual_professions.iconStyle) or icon) or nil
-		self.text:SetText((icon and (icon .. " ") or "") .. format(textString, name) .. " " .. (skillLevel ~= maxSkillLevel and format(valueString, skillLevel) or ""))
-	else
-		self.text:SetFormattedText(textString, L["No Professions"])
+
+		if iconPath ~= "none" then
+			if iconPath ~= "default" then icon = UpdateIcon(self.name, E.db.mMT.datatexts.individual_professions.icon) end
+			icon = E:TextureString(icon, ":14:14")
+
+			label = icon .. " " .. format(textString, name) .. " " .. (skillLevel ~= maxSkillLevel and format(valueString, skillLevel) or "")
+		else
+			label = format(textString, name) .. " " .. (skillLevel ~= maxSkillLevel and format(valueString, skillLevel) or "")
+		end
 	end
+
+	self.text:SetFormattedText(textString, label)
 end
 
 local function OnClick(self)

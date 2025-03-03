@@ -8,10 +8,10 @@ mMT.options.args.datatexts.args.individual_professions.args = {
 		inline = true,
 		name = L["Settings"],
 		args = {
-			icon = {
-				order = 1,
-				type = "toggle",
-				name = L["Show Icon"],
+			style = {
+				order = 2,
+				type = "select",
+				name = L["Icon Style"],
 				get = function(info)
 					return E.db.mMT.datatexts.individual_professions.icon
 				end,
@@ -22,22 +22,8 @@ mMT.options.args.datatexts.args.individual_professions.args = {
 					DT:ForceUpdate_DataText("mMT - Primary Professions")
 					DT:ForceUpdate_DataText("mMT - Secondary Professions")
 				end,
-			},
-			style = {
-				order = 2,
-				type = "select",
-				name = L["Icon Style"],
-				get = function(info)
-					return E.db.mMT.datatexts.individual_professions.iconStyle
-				end,
-				set = function(info, value)
-					E.db.mMT.datatexts.individual_professions.iconStyle = value
-					DT:ForceUpdate_DataText("mMT - Cooking")
-					DT:ForceUpdate_DataText("mMT - Fishing")
-					DT:ForceUpdate_DataText("mMT - Primary Professions")
-					DT:ForceUpdate_DataText("mMT - Secondary Professions")
-				end,
 				values = {
+					none = L["None"],
 					default = L["Default"],
 					colored = L["Colored"],
 					white = L["White"],

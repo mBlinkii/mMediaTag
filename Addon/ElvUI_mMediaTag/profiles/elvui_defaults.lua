@@ -52,20 +52,21 @@ P.datatexts = {
 		sort_method = "KEY",
 	},
 	teleports = {
-		icon = true,
-		iconTexture = "teleport04",
+		icon = "teleport04",
 		favorites = {
 			enable = false,
-			a = nil,
-			b = nil,
-			c = nil,
-			d = nil,
+			a = { id = "none", kind = "none" },
+			b = { id = "none", kind = "none" },
+			c = { id = "none", kind = "none" },
+			d = { id = "none", kind = "none" },
 		},
 	},
 	individual_professions = {
-		icon = true,
-		iconStyle = "default",
+		icon = "default",
 	},
+	menu = {
+		icon = "mmt",
+	}
 }
 
 -- media

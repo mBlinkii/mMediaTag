@@ -370,12 +370,12 @@ local function GetCooldownTime(id, kind)
 		local seconds = string.format("%02.f", math.floor(cooldown - minutes * 60))
 		if hours >= 1 then
 			minutes = math.floor(mod(cooldown, 3600) / 60)
-			text = mMT:SetTextColor(hours .. "h " .. minutes .. "m", "red")
+			text = mMT:TC(hours .. "h " .. minutes .. "m", "red")
 		else
-			text = mMT:SetTextColor(minutes .. "m " .. seconds .. "s", "red")
+			text = mMT:TC(minutes .. "m " .. seconds .. "s", "red")
 		end
 	elseif cooldown <= 0 then
-		text = mMT:SetTextColor(L["Ready"], "green")
+		text = mMT:TC(L["Ready"], "green")
 	end
 
 	return text
@@ -443,7 +443,7 @@ end
 
 local function CreateMenuEntry(id, t)
 	return {
-		text = t.short_name and ("[" .. mMT:SetTextColor(t.short_name, "mark") .. "] " .. t.name) or t.name,
+		text = t.short_name and ("[" .. mMT:TC(t.short_name, "mark") .. "] " .. t.name) or t.name,
 		right_text = t.cooldown,
 		icon = t.icon,
 		isTitle = false,
@@ -462,7 +462,7 @@ local function UpdateMenus()
 
 	-- Add favorites menu entry
 	if E.db.mMT.datatexts.teleports.favorites.enable and mMT.knownTeleports.favorites.available then
-		tinsert(menus.main, { text = mMT:SetTextColor(L["Favorite"], "title"), isTitle = true, notClickable = true })
+		tinsert(menus.main, { text = mMT:TC(L["Favorite"], "title"), isTitle = true, notClickable = true })
 		for id, t in pairs(mMT.knownTeleports.favorites) do
 			if t and type(t) == "table" then tinsert(menus.main, CreateMenuEntry(id, t)) end
 		end
@@ -471,7 +471,7 @@ local function UpdateMenus()
 
 	-- Add season portals menu entry
 	if mMT.knownTeleports.season.available then
-		tinsert(menus.main, { text = mMT:SetTextColor(L["M+ Season"], "title"), isTitle = true, notClickable = true })
+		tinsert(menus.main, { text = mMT:TC(L["M+ Season"], "title"), isTitle = true, notClickable = true })
 		for id, t in pairs(mMT.knownTeleports.season) do
 			if t and type(t) == "table" then tinsert(menus.main, CreateMenuEntry(id, t)) end
 		end
@@ -480,7 +480,7 @@ local function UpdateMenus()
 	-- Add other portals menu entry
 	if mMT.knownTeleports.tww.available or mMT.knownTeleports.dungeonportals.available or mMT.knownTeleports.toys.available or mMT.knownTeleports.engineering.available or mMT.knownTeleports.other then
 		tinsert(menus.main, { text = "", isTitle = true, notClickable = true })
-		tinsert(menus.main, { text = mMT:SetTextColor(L["Other Portals"], "title"), isTitle = true, notClickable = true })
+		tinsert(menus.main, { text = mMT:TC(L["Other Portals"], "title"), isTitle = true, notClickable = true })
 	end
 
 	-- Add tww dungeon portals
@@ -570,7 +570,7 @@ local function UpdateMenus()
 
 		-- items
 		if mMT.knownTeleports.items.available then
-			tinsert(menus.other, { text = mMT:SetTextColor(L["Items"], "title"), isTitle = true, notClickable = true })
+			tinsert(menus.other, { text = mMT:TC(L["Items"], "title"), isTitle = true, notClickable = true })
 			for id, t in pairs(mMT.knownTeleports.items) do
 				if t and type(t) == "table" then tinsert(menus.other, CreateMenuEntry(id, t)) end
 			end
@@ -579,7 +579,7 @@ local function UpdateMenus()
 		-- spells
 		if mMT.knownTeleports.spells.available then
 			tinsert(menus.other, { text = "", isTitle = true, notClickable = true })
-			tinsert(menus.other, { text = mMT:SetTextColor(L["Spells"], "title"), isTitle = true, notClickable = true })
+			tinsert(menus.other, { text = mMT:TC(L["Spells"], "title"), isTitle = true, notClickable = true })
 			for id, t in pairs(mMT.knownTeleports.spells) do
 				if t and type(t) == "table" then tinsert(menus.other, CreateMenuEntry(id, t)) end
 			end
@@ -619,25 +619,25 @@ local function OnEnter(self)
 
 	-- Add favorites menu entry
 	if E.db.mMT.datatexts.teleports.favorites.enable and mMT.knownTeleports.favorites.available then
-		DT.tooltip:AddLine(mMT:SetTextColor(L["Favorites"], "title"))
+		DT.tooltip:AddLine(mMT:TC(L["Favorites"], "title"))
 		for _, t in pairs(mMT.knownTeleports.favorites) do
 			if t and type(t) == "table" then
-				DT.tooltip:AddDoubleLine(BuildTipIcon(t.icon) .. mMT:SetTextColor(t.short_name and ("[" .. mMT:SetTextColor(t.short_name, "mark") .. "] " .. t.name) or t.name), t.cooldown)
+				DT.tooltip:AddDoubleLine(BuildTipIcon(t.icon) .. mMT:TC(t.short_name and ("[" .. mMT:TC(t.short_name, "mark") .. "] " .. t.name) or t.name), t.cooldown)
 			end
 		end
 		DT.tooltip:AddLine(" ")
 		tipAdded = true
 	else
-		DT.tooltip:AddLine(mMT:SetTextColor(L["You can select your favourites in the settings."]))
+		DT.tooltip:AddLine(mMT:TC(L["You can select your favourites in the settings."]))
 		DT.tooltip:AddLine(" ")
 	end
 
 	-- Add season menu entry
 	if mMT.knownTeleports.season.available then
-		DT.tooltip:AddLine(mMT:SetTextColor(L["Season Teleports"], "title"))
+		DT.tooltip:AddLine(mMT:TC(L["Season Teleports"], "title"))
 		for _, t in pairs(mMT.knownTeleports.season) do
 			if t and type(t) == "table" then
-				DT.tooltip:AddDoubleLine(BuildTipIcon(t.icon) .. mMT:SetTextColor(t.short_name and ("[" .. mMT:SetTextColor(t.short_name, "mark") .. "] " .. t.name) or t.name), t.cooldown)
+				DT.tooltip:AddDoubleLine(BuildTipIcon(t.icon) .. mMT:TC(t.short_name and ("[" .. mMT:TC(t.short_name, "mark") .. "] " .. t.name) or t.name), t.cooldown)
 			end
 		end
 		DT.tooltip:AddLine(" ")
@@ -646,10 +646,10 @@ local function OnEnter(self)
 
 	-- Add season menu entry
 	if mMT.knownTeleports.season.available then
-		DT.tooltip:AddLine(mMT:SetTextColor(L["TWW Dungeon Teleports"], "title"))
+		DT.tooltip:AddLine(mMT:TC(L["TWW Dungeon Teleports"], "title"))
 		for _, t in pairs(mMT.knownTeleports.tww) do
 			if t and type(t) == "table" then
-				DT.tooltip:AddDoubleLine(BuildTipIcon(t.icon) .. mMT:SetTextColor(t.short_name and ("[" .. mMT:SetTextColor(t.short_name, "mark") .. "] " .. t.name) or t.name), t.cooldown)
+				DT.tooltip:AddDoubleLine(BuildTipIcon(t.icon) .. mMT:TC(t.short_name and ("[" .. mMT:TC(t.short_name, "mark") .. "] " .. t.name) or t.name), t.cooldown)
 			end
 		end
 		DT.tooltip:AddLine(" ")
@@ -658,38 +658,38 @@ local function OnEnter(self)
 
 	if not tipAdded and (mMT.knownTeleports.other or mMT.knownTeleports.toys) then
 		if mMT.knownTeleports.items.available then
-			DT.tooltip:AddLine(mMT:SetTextColor(L["Items"], "title"))
+			DT.tooltip:AddLine(mMT:TC(L["Items"], "title"))
 			for _, t in pairs(mMT.knownTeleports.items) do
-				if t and type(t) == "table" then DT.tooltip:AddDoubleLine(BuildTipIcon(t.icon) .. mMT:SetTextColor(t.name), t.cooldown) end
+				if t and type(t) == "table" then DT.tooltip:AddDoubleLine(BuildTipIcon(t.icon) .. mMT:TC(t.name), t.cooldown) end
 			end
 			DT.tooltip:AddLine(" ")
 		end
 
 		if mMT.knownTeleports.toys.available then
-			DT.tooltip:AddLine(mMT:SetTextColor(L["Toys"], "title"))
+			DT.tooltip:AddLine(mMT:TC(L["Toys"], "title"))
 			for _, t in pairs(mMT.knownTeleports.toys) do
-				if t and type(t) == "table" then DT.tooltip:AddDoubleLine(BuildTipIcon(t.icon) .. mMT:SetTextColor(t.name), t.cooldown) end
+				if t and type(t) == "table" then DT.tooltip:AddDoubleLine(BuildTipIcon(t.icon) .. mMT:TC(t.name), t.cooldown) end
 			end
 			DT.tooltip:AddLine(" ")
 		end
 	elseif not tipAdded then
-		DT.tooltip:AddLine(mMT:SetTextColor(L["You currently have no important teleports."]))
+		DT.tooltip:AddLine(mMT:TC(L["You currently have no important teleports."]))
 		DT.tooltip:AddLine(" ")
 	end
 
-	DT.tooltip:AddLine(MEDIA.leftClick .. " " .. mMT:SetTextColor(L["left click to open the small menu."], "tip"))
-	DT.tooltip:AddLine(MEDIA.middleClick .. " " .. mMT:SetTextColor(L["middle click to open the Dungeon Teleports menu."], "tip"))
-	DT.tooltip:AddLine(MEDIA.rightClick .. " " .. mMT:SetTextColor(L["right click to open the other Teleports menu."], "tip"))
+	DT.tooltip:AddLine(MEDIA.leftClick .. " " .. mMT:TC(L["left click to open the small menu."], "tip"))
+	DT.tooltip:AddLine(MEDIA.middleClick .. " " .. mMT:TC(L["middle click to open the Dungeon Teleports menu."], "tip"))
+	DT.tooltip:AddLine(MEDIA.rightClick .. " " .. mMT:TC(L["right click to open the other Teleports menu."], "tip"))
 	DT.tooltip:Show()
 end
 
 local function OnEvent(self)
-	if E.db.mMT.datatexts.teleports.icon then
-		local icon = E:TextureString(MEDIA.icons.teleport[E.db.mMT.datatexts.teleports.iconTexture], ":14:14")
-		self.text:SetFormattedText(textString, icon .. " " .. L["Teleports"])
-	else
-		self.text:SetFormattedText(textString, L["Teleports"])
-	end
+	local iconPath = E.db.mMT.datatexts.teleports.icon
+	local label = L["Teleports"]
+
+	if iconPath ~= "none" then label = E:TextureString(MEDIA.icons.teleport[iconPath], ":14:14") .. " " .. label end
+
+	self.text:SetFormattedText(textString, label)
 end
 
 local function OnLeave(self)
