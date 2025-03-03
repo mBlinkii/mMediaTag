@@ -66,7 +66,8 @@ P.datatexts = {
 	},
 	menu = {
 		icon = "mmt",
-	}
+		menu_icons = true,
+	},
 }
 
 -- media

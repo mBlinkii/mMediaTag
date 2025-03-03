@@ -19523,7 +19523,9 @@
         "ElvUI_mMediaTag",
         "CreateColorFromHexString",
         "ElvUI_mMediaTag",
-        "ElvUI_mMediaTag"
+        "ElvUI_mMediaTag",
+        "MainMenuMicroButton",
+        "MainMenuMicroButton_SetNormal"
   ],
   "diagnostics.disable": ["deprecated", "inject-field", "undefined-field",
         "cast-local-type",

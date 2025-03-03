@@ -9,59 +9,62 @@ local CloseAllWindows = CloseAllWindows
 local CloseMenus = CloseMenus
 local HideUIPanel = HideUIPanel
 local InCombatLockdown = InCombatLockdown
-local IsAddOnLoaded = _G.C_AddOns and _G.C_AddOns.IsAddOnLoaded or IsAddOnLoaded
 local ShowUIPanel = ShowUIPanel
 local ToggleFrame = ToggleFrame
 local UIParentLoadAddOn = UIParentLoadAddOn
+local IsAddOnLoaded = C_AddOns.IsAddOnLoaded
+local StoreEnabled = C_StorePublic.IsEnabled
 local PlayerSpellsUtil = _G.PlayerSpellsUtil
+local MainMenuMicroButton = MainMenuMicroButton
+local MainMenuMicroButton_SetNormal = MainMenuMicroButton_SetNormal
 
 local textString = ""
-local menuList = nil
-
+local menuList = {}
 local icons = {
 	mmt = MEDIA.icon,
 	colored = E:TextureString(MEDIA.icons.datatexts.menu_b, ":14:14"),
 	icon = E:TextureString(MEDIA.icons.datatexts.menu_a, ":14:14"),
 }
-local colors = {
-	[1] = "|CFFFFFFFF",
-	[2] = "|CFF0393FF",
-	[3] = "|CFF496AF5",
-	[4] = "|CFF5F5DF2",
-	[5] = "|CFF8249ED",
-	[6] = "|CFFAC30E7",
-	[7] = "|CFFBE25E5",
-	[8] = "|CFFDC14E1",
-	[9] = "|CFFF903DD",
-	[10] = "|CFFFF0068",
-	[11] = "|CFFFF4E00",
-	[12] = "|CFFFF6900",
-	[13] = "|CFFFF8B00",
-	[14] = "|CFFFFA800",
-	[15] = "|CFFFFA900",
-	[16] = "|CFFFFC900",
+
+local path = "Interface\\Addons\\ElvUI_mMediaTag\\media\\options\\"
+local menu_icons = {
+	character = path .. "character.tga",
+	book = path .. "book.tga",
+	clock = path .. "clock.tga",
+	chat = path .. "chat.tga",
+	social = path .. "social.tga",
+	talent = path .. "talent.tga",
+	guild = path .. "guild.tga",
+	pvp = path .. "pvp.tga",
+	collection = path .. "collection.tga",
+	achievement = path .. "achievement.tga",
+	browser = path .. "browser.tga",
+	calendar = path .. "calendar.tga",
+	encounter = path .. "encounter.tga",
+	shop = path .. "shop.tga",
+	profession = path .. "profession.tga",
+	missions = path .. "missions.tga",
+	quest = path .. "quest.tga",
+	elvui = path .. "elvui.tga",
+	mmt = path .. "mmt_16.tga",
+	menu = path .. "gamemenu.tga",
+	help = path .. "help.tga",
 }
-local function AddIcon(file)
-	return E.db.mMT.gamemenu.menuicons and format("Interface\\AddOns\\ElvUI_mMediaTag\\media\\icons\\misc\\%s.tga", file) or nil
-end
 
-local function AddColor(color)
-	if color > 16 then color = 16 end
-	return E.db.mMT.gamemenu.color and colors[color] or colors[1]
-end
-
-local function BuildMenu()
+-- Create the menu
+local function BuildMenuList()
+	local icon = E.db.mMT.datatexts.menu.menu_icons
 	menuList = {
 		{
 			text = _G.CHARACTER_BUTTON,
-			icon = AddIcon("face"),
+			icon = icon and menu_icons.character,
 			func = function()
 				_G.ToggleCharacter("PaperDollFrame")
 			end,
 		},
 		{
 			text = E.Retail and _G.SPELLBOOK or _G.SPELLBOOK_ABILITIES_BUTTON,
-			icon = AddIcon("literature"),
+			icon = icon and menu_icons.book,
 			func = function()
 				if PlayerSpellsUtil then
 					PlayerSpellsUtil.ToggleSpellBookFrame()
@@ -71,57 +74,72 @@ local function BuildMenu()
 			end,
 		},
 		{
-			text = _G.PROFESSIONS_BUTTON,
-			icon = AddIcon("profession"),
-			func = function()
-				ToggleProfessionsBook()
-			end,
-		},
-		{
-			text = _G.TALENTS_BUTTON,
-			icon = AddIcon("prize"),
-			func = function()
-				if PlayerSpellsUtil then
-					PlayerSpellsUtil.ToggleClassTalentOrSpecFrame()
-				else
-					_G.ToggleTalentFrame()
-				end
-			end,
-		},
-		{
 			text = _G.TIMEMANAGER_TITLE,
-			icon = AddIcon("watches"),
+			icon = icon and menu_icons.clock,
 			func = function()
 				ToggleFrame(_G.TimeManagerFrame)
 			end,
-		},
+		}, -- Interface\ICONS\INV_Misc_PocketWatch_01
 		{
 			text = _G.CHAT_CHANNELS,
-			icon = AddIcon("chathistory"),
+			icon = icon and menu_icons.chat,
 			func = function()
 				_G.ToggleChannelFrame()
 			end,
 		},
 		{
 			text = _G.SOCIAL_BUTTON,
-			icon = AddIcon("users"),
+			icon = icon and menu_icons.social,
 			func = function()
 				_G.ToggleFriendsFrame()
+			end,
+		}, -- Interface\FriendsFrame\Battlenet-BattlenetIcon
+		{
+			text = _G.TALENTS_BUTTON,
+			icon = icon and menu_icons.talent,
+			func = function()
+				if PlayerSpellsUtil then
+					PlayerSpellsUtil.ToggleClassTalentFrame()
+				else
+					_G.ToggleTalentFrame()
+				end
 			end,
 		},
 		{
 			text = _G.GUILD,
-			icon = AddIcon("homeshield"),
+			icon = icon and menu_icons.guild,
 			func = function()
 				_G.ToggleGuildFrame()
 			end,
 		},
 	}
 
+	if E.Cata and E.mylevel >= _G.SHOW_PVP_LEVEL then tinsert(menuList, {
+		text = _G.PLAYER_V_PLAYER,
+		icon = icon and menu_icons.pvp,
+		func = function()
+			_G.TogglePVPFrame()
+		end,
+	}) end
+
 	if E.Retail or E.Cata then
 		tinsert(menuList, {
+			text = _G.COLLECTIONS,
+			icon = icon and menu_icons.collection,
+			func = function()
+				_G.ToggleCollectionsJournal()
+			end,
+		})
+		tinsert(menuList, {
+			text = _G.ACHIEVEMENT_BUTTON,
+			icon = icon and menu_icons.achievement,
+			func = function()
+				_G.ToggleAchievementFrame()
+			end,
+		})
+		tinsert(menuList, {
 			text = _G.LFG_TITLE,
-			icon = AddIcon("eye"),
+			icon = icon and menu_icons.browser,
 			func = function()
 				if E.Retail then
 					_G.ToggleLFDParentFrame()
@@ -131,82 +149,70 @@ local function BuildMenu()
 			end,
 		})
 		tinsert(menuList, {
-			text = _G.COLLECTIONS,
-			icon = AddIcon("cube"),
+			text = L["Calendar"],
+			icon = icon and menu_icons.calendar,
 			func = function()
-				_G.ToggleCollectionsJournal()
+				_G.GameTimeFrame:Click()
 			end,
-		})
+		}) -- Interface\Calendar\MeetingIcon
 		tinsert(menuList, {
 			text = _G.ENCOUNTER_JOURNAL,
-			icon = AddIcon("magazine"),
+			icon = icon and menu_icons.encounter,
 			func = function()
 				if not IsAddOnLoaded("Blizzard_EncounterJournal") then UIParentLoadAddOn("Blizzard_EncounterJournal") end
 				ToggleFrame(_G.EncounterJournal)
 			end,
 		})
-		tinsert(menuList, {
-			text = _G.ACHIEVEMENT_BUTTON,
-			icon = AddIcon("star"),
-			func = function()
-				_G.ToggleAchievementFrame()
-			end,
-		})
-		tinsert(menuList, {
-			text = L["Calendar"],
-			icon = AddIcon("calendar"),
-			func = function()
-				_G.GameTimeFrame:Click()
-			end,
-		})
 	end
 
 	if E.Retail then
-		tinsert(menuList, {
+		if StoreEnabled and StoreEnabled() then tinsert(menuList, {
 			text = _G.BLIZZARD_STORE,
-			icon = AddIcon("store"),
+			icon = icon and menu_icons.shop,
 			func = function()
 				_G.StoreMicroButton:Click()
+			end,
+		}) end
+
+		tinsert(menuList, {
+			text = _G.PROFESSIONS_BUTTON,
+			icon = icon and menu_icons.profession,
+			func = function()
+				_G.ToggleProfessionsBook()
 			end,
 		})
 		tinsert(menuList, {
 			text = _G.GARRISON_TYPE_8_0_LANDING_PAGE_TITLE,
-			icon = AddIcon("watches"),
+			icon = icon and menu_icons.missions,
 			func = function()
 				_G.ExpansionLandingPageMinimapButton:ToggleLandingPage()
 			end,
 		})
 		tinsert(menuList, {
+			text = _G.QUESTLOG_BUTTON,
+			icon = icon and menu_icons.quest,
+			func = function()
+				_G.ToggleQuestLog()
+			end,
+		})
+	else
+		tinsert(menuList, {
 			text = _G.QUEST_LOG,
-			icon = AddIcon("question"),
+			icon = icon and menu_icons.quest,
 			func = function()
 				ToggleFrame(_G.QuestLogFrame)
 			end,
 		})
 	end
 
-	if E.Cata and E.mylevel >= _G.SHOW_PVP_LEVEL then tinsert(menuList, {
-		text = _G.PLAYER_V_PLAYER,
-		icon = AddIcon("battle"),
-		func = function()
-			_G.TogglePVPFrame()
-		end,
-	}) end
-
 	sort(menuList, function(a, b)
 		if a and b and a.text and b.text then return a.text < b.text end
-		return false
 	end)
 
-	for i = 1, #menuList do
-		menuList[i].color = AddColor(i + 1)
-	end
-
-	tinsert(menuList, { text = "", isTitle = true, notClickable = true, func = function() end })
+	tinsert(menuList, { text = "", isTitle = true, notClickable = true })
 	tinsert(menuList, {
-		text = format(mMT.ClassColor.string, "ElvUI"),
-		icon = "Interface\\Addons\\ElvUI_mMediaTag\\media\\logo\\elvui.tga",
-		bottom = true,
+		text = "ElvUI",
+		icon = icon and menu_icons.elvui,
 		func = function()
 			if not InCombatLockdown() then
 				E:ToggleOptions()
@@ -216,17 +222,17 @@ local function BuildMenu()
 	})
 	tinsert(menuList, {
 		text = mMT.Name,
-		icon = "Interface\\Addons\\ElvUI_mMediaTag\\media\\logo\\mmt_icon.tga",
-		bottom = true,
+		icon = icon and menu_icons.mmt,
 		func = function()
 			if not InCombatLockdown() then E:ToggleOptions("mMT") end
 		end,
 	})
-	tinsert(menuList, { text = "", isTitle = true, notClickable = true, func = function() end })
+
+	tinsert(menuList, { text = "", isTitle = true, notClickable = true })
+	-- want these two on the bottom
 	tinsert(menuList, {
 		text = _G.MAINMENU_BUTTON,
-		color = AddColor(4),
-		icon = AddIcon("gears"),
+		icon = icon and menu_icons.menu,
 		func = function()
 			if not _G.GameMenuFrame:IsShown() then
 				CloseMenus()
@@ -234,15 +240,19 @@ local function BuildMenu()
 				ShowUIPanel(_G.GameMenuFrame)
 			else
 				HideUIPanel(_G.GameMenuFrame)
+
+				if E.Retail then
+					MainMenuMicroButton:SetButtonState("NORMAL")
+				else
+					MainMenuMicroButton_SetNormal()
+				end
 			end
 		end,
 	})
 
 	tinsert(menuList, {
 		text = _G.HELP_BUTTON,
-		color = AddColor(4),
-		icon = AddIcon("questionmark"),
-		bottom = true,
+		icon = icon and menu_icons.help,
 		func = function()
 			_G.ToggleHelpFrame()
 		end,
@@ -250,25 +260,23 @@ local function BuildMenu()
 end
 
 local function OnClick(self, button)
-    if not mMT.menu then mMT:BuildMenus() end
-
-	if not menuList or event == "ELVUI_FORCE_UPDATE" then BuildMenu() end
+	if not mMT.menu then mMT:BuildMenus() end
+	BuildMenuList()
 
 	DT.tooltip:Hide()
 	if button == "LeftButton" then
-		mMT:mDropDown(menuList, menuFrame, self, 160, 2)
+		mMT:DropDown(menuList, mMT.menu, self, 160, 2)
 	else
 		if E.Retail then
 			_G.ToggleLFDParentFrame()
 		elseif E.Cata then
-			if not IsAddOnLoaded("Blizzard_LookingForGroupUI") then UIParentLoadAddOn("Blizzard_LookingForGroupUI") end
-			_G.ToggleLFGParentFrame()
+			_G.PVEFrame_ToggleFrame()
 		end
 	end
 end
 
 local function OnEnter(self)
-	DT.tooltip:AddLine(L["Game Menu"])
+	DT.tooltip:AddLine(mMT:TC(L["Game Menu"], "title"))
 	DT.tooltip:AddLine(" ")
 	DT.tooltip:AddDoubleLine(mMT.Name, mMT:TC("Ver.", "title") .. " " .. mMT:TC(mMT.Version, "mark"))
 	DT.tooltip:AddLine(" ")
