@@ -47,6 +47,15 @@ function mMT:HexToRGB(hex)
 	return r / 255, g / 255, b / 255, a / 255
 end
 
+-- build menu frames
+function mMT:BuildMenus()
+	mMT.menu = CreateFrame("Frame", "mMediaTag_Main_Menu_Frame", E.UIParent, "BackdropTemplate")
+	mMT.menu:SetTemplate("Transparent", true)
+
+	mMT.submenu = CreateFrame("Frame", "mMediaTag_Submenu_Frame", E.UIParent, "BackdropTemplate")
+	mMT.submenu:SetTemplate("Transparent", true)
+end
+
 -- import/ export functions
 local exportPrefix = "!mMT!"
 function GetImportStringType(dataString)

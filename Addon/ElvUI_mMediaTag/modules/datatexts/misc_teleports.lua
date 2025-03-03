@@ -599,6 +599,8 @@ end
 
 local function OnClick(self, button)
 	if not InCombatLockdown() then
+		if not mMT.menu then mMT:BuildMenus() end
+
 		UpdateMenus()
 
 		mMT:DropDown(menus.main, mMT.menu, self, 260, 2)

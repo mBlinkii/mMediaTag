@@ -58,14 +58,6 @@ function mMT:Initialize()
 		mMT.ElvUI_Hooked = true
 	end
 
-	-- build menu frames
-
-	mMT.menu = CreateFrame("Frame", "mMediaTag_Main_Menu_Frame", E.UIParent, "BackdropTemplate")
-	mMT.menu:SetTemplate("Transparent", true)
-
-	mMT.submenu = CreateFrame("Frame", "mMediaTag_Submenu_Frame", E.UIParent, "BackdropTemplate")
-	mMT.submenu:SetTemplate("Transparent", true)
-
 	mMT:UpdateAll()
 	mMT:UpdateMedia()
 end
