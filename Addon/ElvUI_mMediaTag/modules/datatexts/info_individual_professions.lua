@@ -58,7 +58,6 @@ local function OnEvent(self, event)
 	local iconPath = E.db.mMT.datatexts.individual_professions.icon
 	local label = L["No Professions"]
 	local profession = professions[self.name].profession
-	print(event, self.name)
 
 	if profession then
 		local name, icon, skillLevel, maxSkillLevel, _, spell = GetProfessionInfos(profession)
