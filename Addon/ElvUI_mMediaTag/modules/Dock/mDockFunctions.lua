@@ -124,9 +124,7 @@ end
 
 function mMT:UpdateNotificationState(DT, show)
 	-- stop if notification does not exist
-	if not DT.mMT_Dock.Notification then
-		return
-	end
+	if not DT.mMT_Dock.Notification then return end
 
 	-- show/ flash and hide notification
 	if show then
@@ -139,9 +137,7 @@ function mMT:UpdateNotificationState(DT, show)
 	else
 		DT.mMT_Dock.Notification:Hide()
 
-		if DT.mMT_Dock.Notification.flash then
-			E:StopFlash(DT.mMT_Dock.Notification)
-		end
+		if DT.mMT_Dock.Notification.flash then E:StopFlash(DT.mMT_Dock.Notification) end
 	end
 end
 
@@ -156,13 +152,9 @@ function mMT:Dock_OnEnter(DT, conf)
 	E:UIFrameFadeOut(DT.mMT_Dock.Icon, 0.25, DT.mMT_Dock.Icon:GetAlpha(), 1)
 
 	-- fade texts out
-	if DT.mMT_Dock.TextA then
-		E:UIFrameFadeOut(DT.mMT_Dock.TextA, 0.25, 1, 0)
-	end
+	if DT.mMT_Dock.TextA then E:UIFrameFadeOut(DT.mMT_Dock.TextA, 0.25, 1, 0) end
 
-	if DT.mMT_Dock.TextB then
-		E:UIFrameFadeOut(DT.mMT_Dock.TextB, 0.25, 1, 0)
-	end
+	if DT.mMT_Dock.TextB then E:UIFrameFadeOut(DT.mMT_Dock.TextB, 0.25, 1, 0) end
 end
 
 function mMT:Dock_OnLeave(DT, conf)
@@ -170,15 +162,10 @@ function mMT:Dock_OnLeave(DT, conf)
 	mMT:SetTextureColor(DT.mMT_Dock.Icon, conf.icon.color or Defaults.normal)
 	E:UIFrameFadeIn(DT.mMT_Dock.Icon, 0.25, DT.mMT_Dock.Icon:GetAlpha(), 1)
 	-- fade texts in
-	if DT.mMT_Dock.TextA then
-		E:UIFrameFadeIn(DT.mMT_Dock.TextA, 0.75, 0, 1)
-	end
+	if DT.mMT_Dock.TextA then E:UIFrameFadeIn(DT.mMT_Dock.TextA, 0.75, 0, 1) end
 
-	if DT.mMT_Dock.TextB then
-		E:UIFrameFadeIn(DT.mMT_Dock.TextB, 0.75, 0, 1)
-	end
+	if DT.mMT_Dock.TextB then E:UIFrameFadeIn(DT.mMT_Dock.TextB, 0.75, 0, 1) end
 end
-
 
 --** DOCK Config Table
 -- local Config = {
@@ -201,26 +188,21 @@ end
 -- 		macroB = "/click SpellbookMicroButton",
 -- 		funcOnEnter = nil,
 -- 		funcOnLeave = nil,
+-- 		funcOnClick = nil,
 -- 	},
 -- }
 
 function mMT:InitializeDockIcon(DT, conf, event)
-	if not conf then
-		return
-	end
+	if not conf then return end
 
 	-- first time update settings
-	if not Defaults.update then
-		mMT:UpdateDockSettings()
-	end
+	if not Defaults.update then mMT:UpdateDockSettings() end
 
 	-- delete datatext text
 	DT.text:SetText("")
 
 	-- create mDock table
-	if not DT.mMT_Dock then
-		DT.mMT_Dock = {}
-	end
+	if not DT.mMT_Dock then DT.mMT_Dock = {} end
 
 	-- set defaults
 	DT.mMT_Dock.size = ((DT.db and DT.db.growth == "VERTICAL") and DT:GetWidth() or DT:GetHeight()) + 4
@@ -244,36 +226,28 @@ function mMT:InitializeDockIcon(DT, conf, event)
 
 		-- text a
 		if conf.text.a then
-			if not DT.mMT_Dock.TextA then
-				DT.mMT_Dock.TextA = DT:CreateFontString(nil, "ARTWORK")
-			end
+			if not DT.mMT_Dock.TextA then DT.mMT_Dock.TextA = DT:CreateFontString(nil, "ARTWORK") end
 			point = (conf.text.center or Defaults.center) and "BOTTOM" or "BOTTOMRIGHT"
 			justify = conf.text.center and "CENTER" or "RIGHT"
-			SetupLabel(DT.mMT_Dock.TextA, DT.mMT_Dock.size, DT.mMT_Dock.Icon or DT.mMT_Dock.macroBtn.Icon, point, justify)
+			SetupLabel(DT.mMT_Dock.TextA, DT.mMT_Dock.size, DT.mMT_Dock.Icon or DT.mMT_Dock.SecureBtn.Icon, point, justify)
 		elseif DT.mMT_Dock.TextA then
 			DeleteLabel(DT.mMT_Dock.TextA)
 		end
 
 		-- text b
 		if conf.text.b then
-			if not DT.mMT_Dock.TextB then
-				DT.mMT_Dock.TextB = DT:CreateFontString(nil, "ARTWORK")
-			end
+			if not DT.mMT_Dock.TextB then DT.mMT_Dock.TextB = DT:CreateFontString(nil, "ARTWORK") end
 			point = conf.text.center and "TOP" or "BOTTOMLEFT"
 			justify = conf.text.center and "CENTER" or "LEFT"
-			SetupLabel(DT.mMT_Dock.TextB, DT.mMT_Dock.size, DT.mMT_Dock.Icon or DT.mMT_Dock.macroBtn.Icon, point, justify)
+			SetupLabel(DT.mMT_Dock.TextB, DT.mMT_Dock.size, DT.mMT_Dock.Icon or DT.mMT_Dock.SecureBtn.Icon, point, justify)
 		elseif DT.mMT_Dock.TextB then
 			DeleteLabel(DT.mMT_Dock.TextB)
 		end
 	else
 		-- delete texts
-		if DT.mMT_Dock.TextA then
-			DeleteLabel(DT.mMT_Dock.TextA)
-		end
+		if DT.mMT_Dock.TextA then DeleteLabel(DT.mMT_Dock.TextA) end
 
-		if DT.mMT_Dock.TextB then
-			DeleteLabel(DT.mMT_Dock.TextB)
-		end
+		if DT.mMT_Dock.TextB then DeleteLabel(DT.mMT_Dock.TextB) end
 	end
 
 	-- create notification
@@ -300,32 +274,38 @@ function mMT:InitializeDockIcon(DT, conf, event)
 	-- create secure button
 	if conf.misc and conf.misc.secure then
 		-- create macro Button
-		if not DT.mMT_Dock.macroBtn then
-			DT.mMT_Dock.macroBtn = CreateFrame("Button", "mMT_Dock_MacroBtn", DT, "SecureActionButtonTemplate")
-			DT.mMT_Dock.macroBtn:SetAttribute("type*", "macro") -- click causes macro
-			DT.mMT_Dock.macroBtn:RegisterForClicks("LeftButtonDown", "RightButtonDown")
+		if not DT.mMT_Dock.SecureBtn then
+			DT.mMT_Dock.SecureBtn = CreateFrame("Button", "mMT_Dock_SecureButton", DT, "SecureActionButtonTemplate")
+			if conf.misc.macroA then
+				DT.mMT_Dock.SecureBtn:SetAttribute("type*", "macro") -- click causes macro
+			end
+			DT.mMT_Dock.SecureBtn:RegisterForClicks("LeftButtonDown", "RightButtonDown")
 		end
 
 		-- configure button
-		DT.mMT_Dock.macroBtn:Height(DT.mMT_Dock.size)
-		DT.mMT_Dock.macroBtn:Width(DT.mMT_Dock.size)
-		DT.mMT_Dock.macroBtn:Point("CENTER")
+		DT.mMT_Dock.SecureBtn:Height(DT.mMT_Dock.size)
+		DT.mMT_Dock.SecureBtn:Width(DT.mMT_Dock.size)
+		DT.mMT_Dock.SecureBtn:Point("CENTER")
 
 		-- set macro actions
-		DT.mMT_Dock.macroBtn:SetAttribute("macrotext1", conf.misc.macroA) -- text for macro on left click
-		DT.mMT_Dock.macroBtn:SetAttribute("macrotext2", conf.misc.macroB or conf.misc.macroA) -- text for macro on right click
+		if conf.misc.macroA then
+			DT.mMT_Dock.SecureBtn:SetAttribute("macrotext1", conf.misc.macroA) -- text for macro on left click
+			DT.mMT_Dock.SecureBtn:SetAttribute("macrotext2", conf.misc.macroB or conf.misc.macroA) -- text for macro on right click
+		end
 
 		-- set enter and leave functions
-		DT.mMT_Dock.macroBtn:SetScript("OnEnter", conf.misc.funcOnEnter or nil)
-		DT.mMT_Dock.macroBtn:SetScript("OnLeave", conf.misc.funcOnLeave or nil)
+		DT.mMT_Dock.SecureBtn:SetScript("OnEnter", conf.misc.funcOnEnter or nil)
+		DT.mMT_Dock.SecureBtn:SetScript("OnLeave", conf.misc.funcOnLeave or nil)
+		DT.mMT_Dock.SecureBtn:SetScript("OnClick", conf.misc.funcOnClick or nil)
 
 		-- show button
-		DT.mMT_Dock.macroBtn:Show()
-	elseif DT.mMT_Dock.macroBtn then
+		DT.mMT_Dock.SecureBtn:Show()
+	elseif DT.mMT_Dock.SecureBtn then
 		-- delete macro button
-		DT.mMT_Dock.macroBtn:Hide()
-		DT.mMT_Dock.macroBtn:SetScript("OnEnter", nil)
-		DT.mMT_Dock.macroBtn:SetScript("OnLeave", nil)
-		DT.mMT_Dock.macroBtn = nil
+		DT.mMT_Dock.SecureBtn:Hide()
+		DT.mMT_Dock.SecureBtn:SetScript("OnEnter", nil)
+		DT.mMT_Dock.SecureBtn:SetScript("OnLeave", nil)
+		DT.mMT_Dock.SecureBtn:SetScript("OnClick", nil)
+		DT.mMT_Dock.SecureBtn = nil
 	end
 end
