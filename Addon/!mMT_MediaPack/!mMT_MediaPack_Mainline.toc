@@ -1,6 +1,6 @@
-## Interface: 110007
+## Interface: 110100
 ## Author: Blinkii
-## Version: 1.30
+## Version: 1.31
 ## Title: |CFF8308AEm|r|CFFCA07A7M|r|CFFFF06A2T -|r |CFFFF06A2M|r|CFFFF108Ce|r|CFFFF197Ad|r|CFFFF216Bi|r|CFFFF275Da|r |CFFFF3441P|r|CFFFF3F2Ca|r|CFFFF461Cc|r|CFFFF4E0Ck|r
 ## Notes: mMT Media Pack by Blinkii | Support: mMediaTag@gmx.de
 ## IconTexture: Interface\AddOns\!mMT_MediaPack\media\logo\mmt_icon

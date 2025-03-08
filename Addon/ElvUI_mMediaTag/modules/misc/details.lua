@@ -156,7 +156,7 @@ function mMT:DetailsEmbedded()
 		-- Chat Panel Background Texture
 		if chat.tex then
 			local texture = (chatEmbedded == "RightChat") and E.db.chat.panelBackdropNameRight or E.db.chat.panelBackdropNameLeft
-			detailsEmbedded.tex = detailsEmbedded:CreateTexture(nil, 'OVERLAY')
+			detailsEmbedded.tex = detailsEmbedded:CreateTexture(nil, "OVERLAY")
 			detailsEmbedded.tex:ClearAllPoints()
 			detailsEmbedded.tex:SetPoint("TOPLEFT", chat, "TOPLEFT", 1, -1)
 			detailsEmbedded.tex:SetPoint("BOTTOMRIGHT", chat, "BOTTOMRIGHT", -1, 1)

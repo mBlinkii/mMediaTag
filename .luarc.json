@@ -19514,7 +19514,10 @@
         "ShowOptionsPanel",
         "LFG_ROLE_NUM_SHORTAGE_TYPES",
         "GREAT_VAULT_REWARDS_WAITING",
-        "NUM_CHAT_WINDOWS"
+        "NUM_CHAT_WINDOWS",
+        "ADDON_LIST_PERFORMANCE_AVERAGE_CPU",
+        "ADDON_LIST_PERFORMANCE_PEAK_CPU",
+        "ADDON_PERFORMANCE_MENU_TOOLTIP"
   ],
   "diagnostics.disable": ["deprecated", "inject-field", "undefined-field",
         "cast-local-type"]

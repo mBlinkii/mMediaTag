@@ -10,7 +10,7 @@ local hide = false
 local Currency = {
 	info = {
 		color = "|CFFA928FF", --#A928FF
-		id = 2916,
+		id = 3109,
 		name = nil,
 		icon = nil,
 		link = nil,
@@ -79,4 +79,4 @@ local function OnLeave(self)
 	DT.tooltip:Hide()
 end
 
-DT:RegisterDatatext("mMT_RunedHarbingerCrest", _G.CURRENCY, { "CHAT_MSG_CURRENCY", "CURRENCY_DISPLAY_UPDATE" }, OnEvent, nil, nil, OnEnter, OnLeave, "mMT - Runed Harbinger Crest", nil)
+DT:RegisterDatatext("mMT_RunedHarbingerCrest", _G.CURRENCY, { "CHAT_MSG_CURRENCY", "CURRENCY_DISPLAY_UPDATE" }, OnEvent, nil, nil, OnEnter, OnLeave, "mMT - Runed Crest", nil)

@@ -140,7 +140,7 @@ local function DeadDesaturation(self)
 end
 
 local function SetPortraits(frame, unit, masking, mirror)
-	if E.db.mMT.portraits.general.classicons and UnitIsPlayer(unit) then
+	if E.db.mMT.portraits.general.classicons and (UnitIsPlayer(unit) or (E.Retail and UnitInPartyIsAI(unit)))  then
 		local class = select(2, UnitClass(unit))
 		if not class then return end
 
@@ -309,8 +309,6 @@ local function UpdatePortrait(portraitFrame, force)
 	portraitFrame.portrait:SetPoint("BOTTOMRIGHT", 0 - offset, 0 + offset)
 
 	-- Portrait Mask
-	--texture = portraitFrame.textures.extraMask and portraitFrame.textures.mask[setting.mirror and "b" or "a"] or portraitFrame.textures.mask
-
 	if portraitFrame.textures.extraMask then
 		if setting.mirror then
 			texture = portraitFrame.textures.mask.b
@@ -329,10 +327,7 @@ local function UpdatePortrait(portraitFrame, force)
 
 	portraitFrame.mask:SetTexture(texture, "CLAMPTOBLACKADDITIVE", "CLAMPTOBLACKADDITIVE")
 
-	-- Class Icon Background
-	--if (E.db.mMT.portraits.general.classicons or portraitFrame.textures.flip) and not portraitFrame.iconbg then
-	local color = { r = 0, g = 0, b = 0, a = 1 }
-	if E.db.mMT.portraits.general.classicons then color = (E.db.mMT.portraits.shadow.classBG and unitColor or E.db.mMT.portraits.shadow.background) end
+	local color = (E.db.mMT.portraits.shadow.classBG and unitColor)
 	UpdateTexture(portraitFrame, "iconbg", bg_textures[E.db.mMT.portraits.general.bgstyle], -5, color)
 	portraitFrame.iconbg:AddMaskTexture(portraitFrame.mask)
 	--end

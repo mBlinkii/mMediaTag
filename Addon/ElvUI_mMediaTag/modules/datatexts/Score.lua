@@ -6,6 +6,21 @@ local LOR = LibStub("LibOpenRaid-1.0", true)
 
 local _G = _G
 
+-- Cache WoW Globals
+local C_ChallengeMode = C_ChallengeMode
+local C_MythicPlus = C_MythicPlus
+local UnitName = UnitName
+local GetRealmName = GetRealmName
+local IsInGroup = IsInGroup
+local InCombatLockdown = InCombatLockdown
+local format = format
+local ipairs = ipairs
+local pairs = pairs
+local select = select
+local sort = sort
+local strjoin = strjoin
+local table = table
+
 local C_ChallengeMode_GetDungeonScoreRarityColor = C_ChallengeMode.GetDungeonScoreRarityColor
 local C_ChallengeMode_GetMapTable = C_ChallengeMode.GetMapTable
 local C_ChallengeMode_GetMapUIInfo = C_ChallengeMode.GetMapUIInfo
@@ -42,7 +57,6 @@ end
 function mMT:GetKeyColor(key)
 	local keyColor = GetKeystoneLevelRarityColor(key)
 	keyColor = keyColor and keyColor:GenerateHexColor() or "FFFFFFFF"
-
 	return format("|C%s+%s|r", keyColor, key)
 end
 
@@ -52,7 +66,7 @@ local function SaveMyKeystone()
 	local keyStoneLevel = C_MythicPlus_GetOwnedKeystoneLevel()
 	if keyStoneLevel then
 		local challengeMapID = C_MythicPlus_GetOwnedKeystoneChallengeMapID()
-		local keyname, _, _, _, _ = C_ChallengeMode_GetMapUIInfo(challengeMapID)
+		local keyname = select(1, C_ChallengeMode_GetMapUIInfo(challengeMapID))
 		mMT.DB.keys[name .. "-" .. realmName] = {
 			name = format("%s%s|r", mMT.ClassColor.hex, name .. "-" .. realmName),
 			key = format("%s%s|r %s", E.db.mMT.datatextcolors.colormyth.hex, keyname, mMT:GetKeyColor(keyStoneLevel)),
@@ -62,30 +76,29 @@ end
 
 local function GetDungeonScores()
 	local ScoreTable = {}
-
 	local KeystoneChallengeMapID = C_MythicPlus_GetOwnedKeystoneChallengeMapID()
 	map_table = C_ChallengeMode_GetMapTable()
 
 	if map_table then
-		for i = 1, #map_table do
-			local mapID = map_table[i]
+		for _, mapID in ipairs(map_table) do
 			local name, _, _, icon = C_ChallengeMode_GetMapUIInfo(mapID)
 			local intimeInfo, overtimeInfo = C_MythicPlus_GetSeasonBestForMap(mapID)
-
 			intimeInfo = intimeInfo or { dungeonScore = 0, level = 0 }
 			overtimeInfo = overtimeInfo or { dungeonScore = 0, level = 0 }
 
 			local isTimed = intimeInfo.dungeonScore >= overtimeInfo.dungeonScore
 			local score = isTimed and intimeInfo.dungeonScore or overtimeInfo.dungeonScore
 			local level = isTimed and intimeInfo.level or overtimeInfo.level
-			ScoreTable[mapID] = {}
-			ScoreTable[mapID].name = name
-			ScoreTable[mapID].icon = icon
-			ScoreTable[mapID].isOwenKeystone = KeystoneChallengeMapID == mapID
-			ScoreTable[mapID].score = score or 0
-			ScoreTable[mapID].level = level
-			ScoreTable[mapID].isTimed = isTimed
-			ScoreTable[mapID].color = C_ChallengeMode_GetSpecificDungeonOverallScoreRarityColor(score)
+
+			ScoreTable[mapID] = {
+				name = name,
+				icon = icon,
+				isOwenKeystone = KeystoneChallengeMapID == mapID,
+				score = score or 0,
+				level = level,
+				isTimed = isTimed,
+				color = C_ChallengeMode_GetSpecificDungeonOverallScoreRarityColor(score),
+			}
 		end
 	end
 
@@ -134,11 +147,9 @@ local function DungeonScoreTooltip()
 end
 
 local function OnClick(self, button)
-	if button == "LeftButton" then
+	if button == "LeftButton" or button == "MiddleButton" then
 		_G.ToggleLFDParentFrame()
-	elseif button == "MiddleButton" then
-		_G.ToggleLFDParentFrame()
-		_G.PVEFrameTab3:Click()
+		if button == "MiddleButton" then _G.PVEFrameTab3:Click() end
 	else
 		if not _G.WeeklyRewardsFrame then UIParentLoadAddOn("Blizzard_WeeklyRewards") end
 		if _G.WeeklyRewardsFrame:IsVisible() then
@@ -152,6 +163,7 @@ end
 local function OnLeave(self)
 	DT.tooltip:Hide()
 end
+
 local function GetGroupKeystone()
 	local GroupMembers = { "player" }
 
@@ -160,39 +172,40 @@ local function GetGroupKeystone()
 	end
 
 	LOR.RequestKeystoneDataFromParty()
-	LOR.GearManager.GetAllUnitsGear()
 
 	for _, unit in ipairs(GroupMembers) do
-		local info = LOR.GetKeystoneInfo(unit)
-		local UnitInfo = LOR.GetUnitGear(unit)
-		local name = UnitName(unit)
-		local ilevel = UnitInfo and format("|CFFFFCC00i |r|CFFFFFFFF%s|r", UnitInfo.ilevel) or ""
-		local leader = UnitIsGroupLeader(unit) and LeadIcon or ""
+		if UnitIsPlayer(unit) then
+			local keystoneInfo = LOR.GetKeystoneInfo(unit)
+			local playerGear = LOR.GetUnitGear(unit)
+			local name = UnitName(unit)
+			local ilevel = playerGear and format("|CFFFFCC00i |r|CFFFFFFFF%s|r", playerGear.ilevel) or ""
+			local leader = UnitIsGroupLeader(unit) and LeadIcon or ""
 
-		if info then
-			local mapName, _, _, icon = C_ChallengeMode.GetMapUIInfo(info.mythicPlusMapID)
-			if mapName then
-				local scoreColor = C_ChallengeMode_GetDungeonScoreRarityColor(info.rating)
-				scoreColor = scoreColor and scoreColor:GenerateHexColor() or "FFFFFFFF"
-				icon = E:TextureString(icon, ":14:14")
-				local key = format("%s %s%s|r %s", icon, E.db.mMT.datatextcolors.colormyth.hex, mapName, mMT:GetKeyColor(info.level))
+			if keystoneInfo then
+				local mapName, _, _, icon = C_ChallengeMode.GetMapUIInfo(keystoneInfo.challengeMapID)
+				if mapName then
+					local scoreColor = C_ChallengeMode_GetDungeonScoreRarityColor(keystoneInfo.rating)
+					scoreColor = scoreColor and scoreColor:GenerateHexColor() or "FFFFFFFF"
+					icon = E:TextureString(icon, ":14:14")
+					local key = format("%s %s%s|r %s", icon, E.db.mMT.datatextcolors.colormyth.hex, mapName, mMT:GetKeyColor(keystoneInfo.level))
 
-				name = format(
-					"%s%s|r %s |CFFFFFFFF[|r %sM+|r |C%s%s|r |CFFFFFFFF-|r %s|CFFFFFFFF]|r ",
-					mMT:GetClassColor(unit),
-					UnitName(unit),
-					leader,
-					E.db.mMT.instancedifficulty.mp.color,
-					scoreColor,
-					info.rating,
-					ilevel
-				)
+					name = format(
+						"%s%s|r %s |CFFFFFFFF[|r %sM+|r |C%s%s|r |CFFFFFFFF-|r %s|CFFFFFFFF]|r ",
+						mMT:GetClassColor(unit),
+						name,
+						leader,
+						E.db.mMT.instancedifficulty.mp.color,
+						scoreColor,
+						keystoneInfo.rating,
+						ilevel
+					)
 
-				DT.tooltip:AddDoubleLine(name, key)
+					DT.tooltip:AddDoubleLine(name, key)
+				end
+			else
+				name = format("%s%s|r %s |CFFFFFFFF[|r%s|CFFFFFFFF]|r ", mMT:GetClassColor(unit), name, leader, ilevel)
+				DT.tooltip:AddDoubleLine(name, L["No Keystone"])
 			end
-		elseif unit and UnitExists(unit) then
-			name = format("%s%s|r %s |CFFFFFFFF[|r%s|CFFFFFFFF]|r ", mMT:GetClassColor(unit), UnitName(unit), leader, ilevel)
-			DT.tooltip:AddDoubleLine(name, L["No Keystone"])
 		end
 	end
 end
@@ -204,7 +217,7 @@ local function OnEnter(self)
 
 	if not inCombat then
 		SaveMyKeystone()
-		local myScore = mMT:GetDungeonScore()
+		myScore = mMT:GetDungeonScore()
 
 		if isMaxLevel then
 			local keyText = mMT:OwenKeystone()
@@ -281,7 +294,6 @@ end
 
 local function ValueColorUpdate(self, hex)
 	displayString = strjoin("", hex, "%s|r")
-
 	OnEvent(self)
 end
 

@@ -5,12 +5,48 @@ local LSM = LibStub("LibSharedMedia-3.0")
 
 local HM_NPCs = {
 	-------- TWW Dungeons --------
-	[129208] = { 66, 33 },
-	[207940] = { 50 },
-	[210797] = { 44.5 },
-	[211087] = { 50 },
-	[213937] = { 60 },
-	[219984] = { 50 },
+	-- Ara-Kara, City of Echoes
+	[214840] = { 30 }, -- Engorged Crawler
+
+	-- Cinderbrew Meadery
+	[210265] = { 20 }, -- Worker Bee
+	[223497] = { 20 }, -- Worker Bee
+	[210271] = { 66, 33 }, -- Brew Master Aldryr
+
+	-- City of Threads
+	[219984] = { 50 }, -- Xeph'itik <Expert Perfumer>
+
+	-- Darkflame Cleft
+	[208747] = { 55 }, -- The Darkness
+	[210818] = { 50 }, -- Lowly Moleherd
+
+	-- The Dawnbreaker
+	[211087] = { 50 }, -- Speaker Shadowcrown
+	[213885] = { 75, 50, 25 }, -- Nightfall Dark Architect
+	[213937] = { 65, 60 }, -- Rasha'nan
+
+	-- Priory of the Sacred Flame
+	[206710] = { 25 }, -- Lightspawn
+	[207940] = { 50 }, -- Prioress Murrpray
+
+	-- Delves
+	[210478] = { 50 }, -- Infected Beast
+	[214625] = { 30 }, -- Kobyss Necromancer
+	[220130] = { 70, 40 }, -- Speaker Xanventh
+	[220710] = { 30 }, -- Leviathan Manipulator
+	[220738] = { 75, 50, 25 }, -- Leviathan Caller
+
+	-------- TWW Raids --------
+
+	-- Nerub-ar Palace
+	[219778] = { 35 }, -- Queen Ansurek
+	[222564] = { 80, 60, 40, 20 }, -- Rupturing Ooze
+
+	-- Liberation of Undermine
+	[229953] = { 40 }, -- Mug'Zee
+	[230316] = { 80 }, -- Mk II Electro Shocker
+	[231531] = { 75 }, -- Territorial Bombshell
+	[241526] = { 50 }, -- Chrome King Gallywix
 
 	-------- DF Dungeons --------
 	-- Azure Vault
@@ -102,13 +138,36 @@ local HM_NPCs = {
 	[165946] = { 50 }, -- Mordretha
 
 	-------- BFA Dungeons --------
+
 	-- Freehold
 	[126832] = { 75 }, -- Skycap'n Kragg
 	[126983] = { 60, 30 }, -- Harlan Sweete
 	[129699] = { 90, 70, 50, 30 }, -- Ludwig von Tortollan
 
+	-- The MOTHERLODE!!
+	[129232] = { 50 }, -- Mogul Razdunk
+	[130488] = { 45 }, -- Mech Jockey
+	[130653] = { 10 }, -- Wanton Sapper
+	[133345] = { 20 }, -- Feckless Assistant
+
+	-- Operation: Mechagon - Workshop
+	[144298] = { 30 }, -- Defense Bot Mk III
+
+	-- Siege of Boralus
+	[128650] = { 75, 50, 33 }, -- Chopper Redhook
+	[129208] = { 66, 33 }, -- Dread Captain Lockwood
+	-- [133990] = {10}, -- Scrimshaw Gutter
+	[135241] = { 30 }, -- Bilge Rat Pillager
+	[135263] = { 30 }, -- Ashvane Spotter
+	-- [138002] = {10}, -- Scrimshaw Gutter
+	[138255] = { 30 }, -- Ashvane Spotter
+	[141939] = { 30 }, -- Ashvane Spotter
+
 	-- Waycrest Manor
 	[131527] = { 30 }, -- Lord Waycrest
+	[131823] = { 50 }, -- Sister Malady
+	[131824] = { 50 }, -- Sister Solena
+	[131825] = { 50 }, -- Sister Briar
 
 	-------- WoD Dungeons --------
 	-- Grimrail Depot
@@ -125,6 +184,8 @@ local HM_NPCs = {
 	-------- Legion Dungeons --------
 	-- Blackrook Hold
 	[98542] = { 50 }, -- Amalgam of Souls
+	[98792] = { 65 }, -- Wyrmtongue Scavenger
+	[98810] = { 25 }, -- Wrathguard Bladelord
 	[98965] = { 20 }, -- Kur'talos Ravencrest
 
 	-- Court of Stars
@@ -153,6 +214,10 @@ local HM_NPCs = {
 	-- Throne of the Tides
 	[40586] = { 60, 30 }, -- Lady Naz'jar
 	[40825] = { 25 }, -- Erunak Stonespeaker
+
+	-- Grim Batol
+	[40320] = { 50 }, -- Valiona
+	[224249] = { 50 }, -- Twilight Lavabender
 
 	-------- DF Raids --------
 	-- Vault of the Incarnates

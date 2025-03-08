@@ -38,6 +38,7 @@ local Teleports = {
 	toys = {
 		available = false,
 		tps = {
+			[228940] = true, --Notorious Thread's Hearthstone
 			[110560] = true, --garrison-hearthstone
 			[140192] = true, --dalaran-hearthstone
 			[140324] = true, -- Mobile Telemancy Beacon
@@ -217,16 +218,17 @@ local Teleports = {
 	season = {
 		available = false,
 		tps = {
-			-- S1
-			[354462] = "NW", -- Necrotic Wake
-			[354464] = "MIST", -- Mists of Tirna Scithe
-			[445269] = "SV", -- The Stonevault
-			[445414] = "DAWN", -- The Dawnbreaker
-			[445416] = "CoT", -- City of Threads
-			[445417] = "ARAK", -- Ara-Kara, City of Echoes
-			[445418] = "SIEGE", -- Siege of Boralus - alliance
-			[445424] = "GB", -- Grim Batol
-			[464256] = "SIEGE", -- Siege of Boralus - horde
+			-- S2
+			[445440] = "CM", -- Cinderbrew Meadery
+			[467546] = "CM", -- Cinderbrew Meadery
+			[445441] = "DC", -- Darkflame Cleft
+			[445444] = "PSF", -- Priory of the Sacred Flame
+			[445443] = "ROOK", -- The Rookery
+			[1216786] = "OF", --Operation: Floodgate
+			[354467] = "TOP", -- Theater of Pain
+			[373274] = "MG", -- Mechagon
+			[467555] = "TM", -- The MOTHERLODE!!
+			[467553] = "TM", -- The MOTHERLODE!!
 		},
 	},
 
@@ -241,6 +243,7 @@ local Teleports = {
 			[445441] = "DC", -- Darkflame Cleft
 			[445443] = "ROOK", -- The Rookery
 			[445444] = "PSF", -- Priory of the Sacred Flame
+			[1216786] = "OF", --Operation: Floodgate
 		},
 	},
 
