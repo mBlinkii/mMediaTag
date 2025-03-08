@@ -12,7 +12,8 @@
 - UPDATE - [Teleports-Datatext]: Add Season 2 Dungeon Portals.
 - UPDATE - [Teleports-Datatext]: Add Notorious Thread's Hearthstone.
 - UPDATE - [FPS/MS-Datatext]: Add performance monitor to the Tooltip.
-- UPDATE - [FHealthmarkers]: Update for Season 2.
+- UPDATE - [Healthmarkers]: Update for Season 2.
+- UPDATE - [Crest-Datatext]: Update for Season 2.
 
 ## [ver. 3.68] - 03.01.2025
 ### UPDATE

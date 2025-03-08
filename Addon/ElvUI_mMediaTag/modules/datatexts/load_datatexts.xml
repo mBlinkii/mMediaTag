@@ -19,12 +19,11 @@
 	<Script file="prof_cooking.lua"/>
 	<Script file="prof_fishing.lua"/>
 
-	<Script file="c_tww_CarvedHarbingerCrest.lua"/>
-	<Script file="c_tww_GildedHarbingerCrest.lua"/>
+	<Script file="c_tww_Carved_Crest.lua"/>
+	<Script file="c_tww_Gilded_Crest.lua"/>
 	<Script file="c_tww_ResidualMemories.lua"/>
 	<Script file="c_tww_ResonanceCrystals.lua"/>
-	<Script file="c_tww_RunedHarbingerCrest.lua"/>
-	<Script file="c_tww_RunedHarbingerCrest.lua"/>
+	<Script file="c_tww_Runed_Crest.lua"/>
 	<Script file="c_Valorstones.lua"/>
-	<Script file="c_WeatheredHarbingerCrest.lua"/>
+	<Script file="c_Weathered_Crest.lua"/>
 </Ui>
