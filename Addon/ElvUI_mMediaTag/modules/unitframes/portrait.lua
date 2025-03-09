@@ -79,9 +79,7 @@ local function getColor(unit, isPlayer, isDead)
 
 	if isPlayer == nil then isPlayer = UnitIsPlayer(unit) end
 
-	if E.db.mMT.portraits.general.deathcolor and isDead then
-		return colors.death
-	end
+	if E.db.mMT.portraits.general.deathcolor and isDead then return colors.death end
 
 	if E.db.mMT.portraits.general.default then return defaultColor end
 
@@ -105,28 +103,35 @@ end
 
 local function adjustColor(color, shift)
 	return {
-		r = color.r - shift,
-		g = color.g - shift,
-		b = color.b - shift,
+		r = color.r * shift,
+		g = color.g * shift,
+		b = color.b * shift,
 		a = color.a,
 	}
 end
 
 local function UpdateIconBackground(tx, unit, mirror)
-	SetTextures(tx, bg_textures[E.db.mMT.portraits.general.bgstyle])
+	local portraits = E.db.mMT.portraits
+	local shadow = portraits.shadow
 
-	local color = E.db.mMT.portraits.shadow.classBG and getColor(unit) or E.db.mMT.portraits.shadow.background
-	local bgColor = { r = 1, g = 1, b = 1, a = 1 }
-	local ColorShift = E.db.mMT.portraits.shadow.bgColorShift
+	SetTextures(tx, bg_textures[portraits.general.bgstyle])
 
-	if not color.r then
-		bgColor.a = adjustColor(color.a, ColorShift)
-		bgColor.b = adjustColor(color.b, ColorShift)
-	else
-		bgColor = adjustColor(color, ColorShift)
+	local color = shadow.classBG and getColor(unit) or shadow.background
+	local ColorShift = shadow.bgColorShift
+
+	if color then
+		local bgColor
+		if type(color.a) == "table" then
+			bgColor = {
+				a = adjustColor(color.a, ColorShift),
+				b = adjustColor(color.b, ColorShift),
+			}
+		else
+			bgColor = adjustColor(color, ColorShift)
+		end
+
+		if bgColor then setColor(tx, bgColor, mirror) end
 	end
-
-	setColor(tx, bgColor, mirror)
 end
 
 local function DeadDesaturation(self)
@@ -140,7 +145,7 @@ local function DeadDesaturation(self)
 end
 
 local function SetPortraits(frame, unit, masking, mirror)
-	if E.db.mMT.portraits.general.classicons and (UnitIsPlayer(unit) or (E.Retail and UnitInPartyIsAI(unit)))  then
+	if E.db.mMT.portraits.general.classicons and (UnitIsPlayer(unit) or (E.Retail and UnitInPartyIsAI(unit))) then
 		local class = select(2, UnitClass(unit))
 		if not class then return end
 
@@ -155,7 +160,6 @@ local function SetPortraits(frame, unit, masking, mirror)
 			if not coords then return end
 
 			SetTextures(frame.portrait, classIcons.texture)
-			if frame.iconbg then UpdateIconBackground(frame.iconbg, unit, mirror) end
 
 			frame.portrait.classIcons = unit
 			frame.portrait.classCoords = coords
@@ -168,6 +172,8 @@ local function SetPortraits(frame, unit, masking, mirror)
 		end
 		SetPortraitTexture(frame.portrait, unit, true)
 	end
+
+	if frame.iconbg then UpdateIconBackground(frame.iconbg, unit, mirror) end
 
 	if E.db.mMT.portraits.general.desaturation then DeadDesaturation(frame) end
 
@@ -253,8 +259,7 @@ local function CheckRareElite(frame, unit, unitColor)
 				local borderColor = colors.border[classification] or colors.border.default
 				setColor(frame.extraBorder, borderColor)
 				frame.extraBorder:Show()
-
-				end
+			end
 		end
 		frame.extra:Show()
 	else
@@ -636,9 +641,7 @@ local function UnitEvent(self, event)
 
 	local unit = self.unit
 
-	if E.db.mMT.portraits.general.desaturation or E.db.mMT.portraits.general.deathcolor then
-		self.unit_is_dead = UnitIsDead(unit)
-	end
+	if E.db.mMT.portraits.general.desaturation or E.db.mMT.portraits.general.deathcolor then self.unit_is_dead = UnitIsDead(unit) end
 
 	if castStopped[event] or (self.isCasting and not CastIcon(self)) then
 		self.isCasting = false
@@ -883,14 +886,7 @@ function module:Initialize(force)
 
 		if _G.ElvUF_Arena1 and E.db.mMT.portraits.arena.enable then
 			for i = 1, 5 do
-				CreatePortraits(
-					"Arena" .. i,
-					_G["ElvUF_Arena" .. i].unit,
-					_G["ElvUF_Arena" .. i],
-					E.db.mMT.portraits.arena,
-					{ "ARENA_OPPONENT_UPDATE" },
-					{ "UNIT_NAME_UPDATE" }
-				)
+				CreatePortraits("Arena" .. i, _G["ElvUF_Arena" .. i].unit, _G["ElvUF_Arena" .. i], E.db.mMT.portraits.arena, { "ARENA_OPPONENT_UPDATE" }, { "UNIT_NAME_UPDATE" })
 
 				if E.Retail then tinsert(module["Arena" .. i].events, "ARENA_PREP_OPPONENT_SPECIALIZATIONS") end
 			end
