@@ -212,7 +212,9 @@ local function OnEnter(self)
 	local inCombat = InCombatLockdown()
 	DT.tooltip:ClearLines()
 
-	if not isMaxLevel then self.text:SetFormattedText(textString, L["Level: "] .. format(valueString, E.mylevel)) end
+	if not isMaxLevel then
+		self.text:SetFormattedText(textString, L["Level: "] .. format(valueString, E.mylevel))
+	end
 
 	if not inCombat then
 		if isMaxLevel then
@@ -226,7 +228,7 @@ local function OnEnter(self)
 			self.text:SetText(myScore)
 		end
 
-		if next(DB.keystones) then
+		if DB.keystones and next(DB.keystones) then
 			DT.tooltip:AddLine(" ")
 			DT.tooltip:AddLine(mMT:TC(L["Keystones on your Account"], "title"))
 			for _, characters in pairs(DB.keystones) do
