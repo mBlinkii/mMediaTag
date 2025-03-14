@@ -25,7 +25,7 @@ local function valuesFunction()
 	mMT:UpdateTeleports()
 	local icons = { none = L["None"] }
 	for _, category in pairs(mMT.knownTeleports) do
-		if category.available then
+		if type(category) == "table" and category.available then
 			for id, t in pairs(category) do
 				if type(t) == "table" then
 					icons[id] = E:TextureString(t.icon, ":14:14") .. " " .. t.name
