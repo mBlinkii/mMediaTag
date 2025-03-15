@@ -28,10 +28,7 @@ local icons = {
 
 local enteredFrame = false
 local delay = 1
-local topAddOns = {}
-for i = 1, 5 do
-	topAddOns[i] = { value = 0, name = "", cpu = 0 }
-end
+
 local path = "Interface\\Addons\\ElvUI_mMediaTag\\media\\options\\"
 local menu_icons = {
 	character = path .. "character.tga",
@@ -287,16 +284,6 @@ local statusColor = {
 	"FFFF4000",
 }
 
-local function GetMemoryString(mem)
-	if mem > 1024 then
-		mem = mem / 1024
-		return format("%.2f MB", mem)
-	else
-		return format("%.0f KB", mem)
-	end
-end
-
-local function GetCPUUsage(metric) end
 local function OnEnter(self, slow)
 	enteredFrame = true
 
@@ -308,79 +295,35 @@ local function OnEnter(self, slow)
 		DT.tooltip:AddLine(" ")
 		DT.tooltip:AddDoubleLine(mMT.Name, mMT:TC("Ver.", "title") .. " " .. mMT:TC(mMT.Version, "mark"))
 
-		-- Profiler cache
-		local isProfilerEnabled = C_AddOnProfiler.IsEnabled()
-		if isProfilerEnabled then
-			local memoryUsage = GetMemoryString(GetAddOnMemoryUsage("ElvUI_mMediaTag"))
-			local cpuUsage = format("(CPU: %.2f%%)", C_AddOnProfiler.GetAddOnMetric("ElvUI_mMediaTag", Enum.AddOnProfilerMetric.RecentAverageTime))
-			DT.tooltip:AddDoubleLine(mMT:TC(L["Memory/ CPU usage:"]), mMT:TC(memoryUsage .. " " .. cpuUsage))
-		end
+		-- mMT Systeminfo
+		mMT:MMTSystemInfo()
 		DT.tooltip:AddLine(" ")
 
-		local function getColor(value, thresholds, colors)
-			for i, threshold in ipairs(thresholds) do
-				if value < threshold then return colors[i] end
-			end
-			return colors[#colors]
+		-- Latency
+		local function GetLatencyColor(latency)
+			return statusColor[latency < 100 and 1 or (latency < 200 and 2 or 3)]
 		end
 
-		-- Latency
+		local function AddLatencyInfo(title, latency, color)
+			DT.tooltip:AddDoubleLine(mMT:TC(L[title]), string.format("|c%s %d ms|r", color, latency))
+		end
+
 		local _, _, latencyHome, latencyWorld = GetNetStats()
 		DT.tooltip:AddLine(mMT:TC(L["Latency:"], "title"))
-		DT.tooltip:AddDoubleLine(mMT:TC(L["Home"]), "|c" .. getColor(latencyHome, { 100, 200 }, statusColor) .. latencyHome .. " ms|r")
-		DT.tooltip:AddDoubleLine(mMT:TC(L["World"]), "|c" .. getColor(latencyWorld, { 100, 200 }, statusColor) .. latencyWorld .. " ms|r")
+		AddLatencyInfo("Home", latencyHome, GetLatencyColor(latencyHome))
+		AddLatencyInfo("World", latencyWorld, GetLatencyColor(latencyWorld))
 		DT.tooltip:AddLine(" ")
 
 		-- FPS
-		local fps = GetFramerate()
-		DT.tooltip:AddDoubleLine(mMT:TC(L["Framerate:"]), format("|c%s %.0f FPS|r", getColor(fps, { 30, 55 }, statusColor), fps))
+		local function AddFramerateInfo(fps)
+			local fps_color = statusColor[fps > 55 and 1 or (fps > 29 and 2 or 3)]
+			DT.tooltip:AddDoubleLine(mMT:TC(L["Framerate:"]), string.format("|c%s %.0f FPS|r", fps_color, fps))
+		end
+		AddFramerateInfo(GetFramerate())
 		DT.tooltip:AddLine(" ")
 
-		for i = 1, 5 do
-			topAddOns[i].value = 0
-		end
-
-		UpdateAddOnMemoryUsage()
-		local totalMem = 0
-		local addonCount = C_AddOns.GetNumAddOns()
-
-		-- needs mor works, cpu usage does not work
 		-- CPU/ Memory usage
-		for i = 1, addonCount do
-			local name = C_AddOns.GetAddOnInfo(i)
-			local mem = GetAddOnMemoryUsage(i)
-			local cpu = isProfilerEnabled and C_AddOnProfiler.GetAddOnMetric(name, Enum.AddOnProfilerMetric.RecentAverageTime)
-			totalMem = totalMem + mem
-			for j = 1, 5 do
-				if mem > topAddOns[j].value then
-					table.insert(topAddOns, j, { name = C_AddOns.GetAddOnInfo(i), value = mem, cpu = isProfilerEnabled and format(" (CPU: %.2f%%)", cpu) or L["not available"] })
-					table.remove(topAddOns, 6)
-					break
-				end
-			end
-		end
-
-		-- Show Memory/ CPU usage
-		if totalMem > 0 then
-			DT.tooltip:AddDoubleLine(mMT:TC(L["AddOn Memory:"]), mMT:TC(GetMemoryString(totalMem)))
-			if isProfilerEnabled then
-				DT.tooltip:AddDoubleLine(
-					mMT:TC(L["CPU overall:"]),
-					mMT:TC(
-						format("%.2f%%", C_AddOnProfiler.GetOverallMetric(Enum.AddOnProfilerMetric.SessionAverageTime) / C_AddOnProfiler.GetApplicationMetric(Enum.AddOnProfilerMetric.SessionAverageTime) * 100)
-					)
-				)
-				DT.tooltip:AddDoubleLine(
-					mMT:TC(L["CPU peak:"]),
-					mMT:TC(format("%.2f%%", C_AddOnProfiler.GetOverallMetric(Enum.AddOnProfilerMetric.PeakTime) / C_AddOnProfiler.GetApplicationMetric(Enum.AddOnProfilerMetric.PeakTime) * 100))
-				)
-			end
-			DT.tooltip:AddLine(" ")
-
-			for i, addon in ipairs(topAddOns) do
-				if addon.value > 0 then DT.tooltip:AddDoubleLine(mMT:TC(addon.name), mMT:TC(GetMemoryString(addon.value) .. " " .. addon.cpu)) end
-			end
-		end
+		mMT:SystemInfo()
 
 		DT.tooltip:AddLine(MEDIA.leftClick .. " " .. mMT:TC(L["left click to open the menu."], "tip"))
 		if E.Retail or E.Cata then DT.tooltip:AddLine(MEDIA.rightClick .. " " .. mMT:TC(L["right click to open LFD Browser"], "tip")) end

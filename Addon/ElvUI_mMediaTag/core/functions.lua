@@ -1,9 +1,13 @@
 local mMT, DB, M, E, P, L, MEDIA = unpack(ElvUI_mMediaTag)
+local DT = E:GetModule("DataTexts")
 
 -- Cache WoW Globals
 local format = format
 local print = print
 local strmatch = strmatch
+local GetApplicationMetric = C_AddOnProfiler.GetApplicationMetric
+local GetOverallMetric = C_AddOnProfiler.GetOverallMetric
+local GetAddOnMetric = C_AddOnProfiler.GetAddOnMetric
 
 local LibDeflate = E.Libs.Deflate
 local D = E:GetModule("Distributor")
@@ -54,6 +58,93 @@ function mMT:BuildMenus()
 
 	mMT.submenu = CreateFrame("Frame", "mMediaTag_Submenu_Frame", E.UIParent, "BackdropTemplate")
 	mMT.submenu:SetTemplate("Transparent", true)
+end
+
+-- memory/ cpu usage tooltip
+local topAddOns = {}
+for i = 1, 5 do
+	topAddOns[i] = { value = 0, name = "", cpu = "N/A" }
+end
+
+local function GetMemoryString(mem)
+	return mem > 1024 and format("%.2f MB", mem / 1024) or format("%.0f KB", mem)
+end
+
+local function FormatProfilerPercent(pct)
+	if pct >= 1 then
+		return format("CPU: %.0f%%", pct)
+	elseif pct >= 0.1 then
+		return format("CPU: %.1f%%", pct)
+	elseif pct >= 0.01 then
+		return format("CPU: %.2f%%", pct)
+	else
+		return "CPU: 0%"
+	end
+end
+
+local function GetAddonMetricPercent(addonName, metric)
+	local appVal = GetApplicationMetric(metric)
+	local overallVal = GetOverallMetric(metric)
+	local addonVal = GetAddOnMetric(addonName, metric)
+	local relativeTotal = appVal - overallVal + addonVal
+
+	if relativeTotal <= 0 then return "N/A" end
+	return FormatProfilerPercent((addonVal / relativeTotal) * 100)
+end
+
+function mMT:SystemInfo()
+	local isProfilerEnabled = C_AddOnProfiler.IsEnabled()
+
+	for _, addon in ipairs(topAddOns) do
+		addon.value = 0
+	end
+
+	UpdateAddOnMemoryUsage()
+	local totalMem, addonCount = 0, C_AddOns.GetNumAddOns()
+
+	for i = 1, addonCount do
+		local name, mem = C_AddOns.GetAddOnInfo(i), GetAddOnMemoryUsage(i)
+		local cpu = isProfilerEnabled and GetAddonMetricPercent(name, Enum.AddOnProfilerMetric.RecentAverageTime) or "N/A"
+
+		totalMem = totalMem + mem
+
+		for j = 1, 5 do
+			if mem > topAddOns[j].value then
+				table.insert(topAddOns, j, { name = name, value = mem, cpu = cpu })
+				table.remove(topAddOns, 6)
+				break
+			end
+		end
+	end
+
+	if totalMem > 0 then
+		DT.tooltip:AddDoubleLine(mMT:TC(L["AddOn Memory:"]), mMT:TC(GetMemoryString(totalMem)))
+
+		if isProfilerEnabled then
+			local function AddCPUStatistic(label, metric)
+				local overall = GetOverallMetric(metric)
+				local appOverall = GetApplicationMetric(metric)
+				if appOverall > 0 then DT.tooltip:AddDoubleLine(mMT:TC(L[label]), mMT:TC(format("%.2f%%", (overall / appOverall) * 100))) end
+			end
+
+			AddCPUStatistic("CPU overall:", Enum.AddOnProfilerMetric.SessionAverageTime)
+			AddCPUStatistic("CPU peak:", Enum.AddOnProfilerMetric.PeakTime)
+		end
+
+		DT.tooltip:AddLine(" ")
+		for _, addon in ipairs(topAddOns) do
+			if addon.value > 0 then DT.tooltip:AddDoubleLine(mMT:TC(addon.name), mMT:TC(addon.cpu .. " - " .. GetMemoryString(addon.value))) end
+		end
+	end
+end
+
+function mMT:MMTSystemInfo()
+	local isProfilerEnabled = C_AddOnProfiler.IsEnabled()
+	if isProfilerEnabled then
+		local memoryUsage = GetMemoryString(GetAddOnMemoryUsage("ElvUI_mMediaTag"))
+		local cpuUsage = GetAddonMetricPercent("ElvUI_mMediaTag", Enum.AddOnProfilerMetric.RecentAverageTime)
+		DT.tooltip:AddDoubleLine(mMT:TC(L["Memory/ CPU usage:"]), mMT:TC(cpuUsage .. " - " .. memoryUsage))
+	end
 end
 
 -- import/ export functions
