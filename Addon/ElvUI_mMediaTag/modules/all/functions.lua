@@ -277,7 +277,7 @@ local function InsertInTable(tbl, textA, textB, title, icon, color, spell)
 	if spell then
 		tinsert(tbl, {
 			text = textA,
-			right_text = textB,
+			SecondText = textB,
 			color = color,
 			icon = icon,
 			isTitle = title,
@@ -289,7 +289,7 @@ local function InsertInTable(tbl, textA, textB, title, icon, color, spell)
 	else
 		-- text = string, SecondText = string, color = color string for first text, icon = texture, func = function, funcOnEnter = function,
 		-- funcOnLeave = function, isTitle = bolean, macro = macrotext, tooltip = id or var you can use for the functions, notClickable = bolean
-		tinsert(tbl, { text = textA, right_text = textB, isTitle = title, notClickable = title, func = function() end })
+		tinsert(tbl, { text = textA, SecondText = textB, isTitle = title, notClickable = title, func = function() end })
 	end
 end
 
@@ -378,7 +378,7 @@ function mMT:GetProfessionsd(tooltip)
 				local name = spellInfo.name or spellInfo or ""
 				tinsert(MenuTable, {
 					text = format("|T%s:14:14:0:0:64:64:5:59:5:59|t %s", texture, name),
-					right_text = GetFireCD(),
+					SecondText = GetFireCD(),
 					color = "|CFFFF9B00",
 					isTitle = false,
 					macro = "/cast " .. name,
@@ -485,7 +485,7 @@ function mMT:GetProfessions(tooltip)
 				local name = spellInfo.name or spellInfo or ""
 				tinsert(MenuTable, {
 					text = format("|T%s:14:14:0:0:64:64:5:59:5:59|t %s", texture, name),
-					right_text = GetFireCD(),
+					SecondText = GetFireCD(),
 					color = "|CFFFF9B00",
 					isTitle = false,
 					macro = "/cast " .. name,

@@ -697,8 +697,9 @@ local function OnLeave(self)
 end
 
 local function ValueColorUpdate(self, hex)
-	--local textHex = E.db.mMT.datatexts.text.override_text and "|c" .. MEDIA.color.override_text.hex or hex
-	textString = strjoin("", hex, "%s|r")
+	print(E.db.mMT.datatexts.text.override_text, MEDIA.color.override_text.hex)
+	local textHex = E.db.mMT.datatexts.text.override_text and "|c" .. MEDIA.color.override_text.hex or hex
+	textString = strjoin("", textHex, "%s|r")
 	OnEvent(self)
 end
 
