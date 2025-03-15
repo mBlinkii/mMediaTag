@@ -47,7 +47,7 @@ local function OnEnter(self)
 			if not menuList[i].isTitle and menuList[i].text ~= TRADE_SKILLS then
 				local icon = menuList[i].icon
 				if E.db.mMT.profession.iconStyle ~= "default" then icon = mMT:GetCustomProfessionIcon(menuList[i].text, E.db.mMT.profession.iconStyle) or icon end
-				DT.tooltip:AddDoubleLine((mMT:mIcon(icon) or "") .. "  " .. menuList[i].color .. menuList[i].text .. "|r", menuList[i].Secondtext)
+				DT.tooltip:AddDoubleLine((mMT:mIcon(icon) or "") .. "  " .. menuList[i].color .. menuList[i].text .. "|r", menuList[i].right_text)
 			end
 		end
 

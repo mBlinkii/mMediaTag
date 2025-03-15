@@ -33,7 +33,7 @@ local function OnEnter(self)
 		if next(menuList) then
 			for i = 1, #menuList do
 				if not menuList[i].isTitle and not (menuList[i].text == TRADE_SKILLS) then
-					DT.tooltip:AddDoubleLine((mMT:mIcon(menuList[i].icon) or "") .. "  " .. menuList[i].color .. menuList[i].text .. "|r", menuList[i].Secondtext)
+					DT.tooltip:AddDoubleLine((mMT:mIcon(menuList[i].icon) or "") .. "  " .. menuList[i].color .. menuList[i].text .. "|r", menuList[i].right_text)
 				end
 			end
 
