@@ -91,6 +91,10 @@ local indentColors = {
 	[4] = "|CFF7E00FC", --#7E00FC
 }
 
+function mMT:GetIconString(icon)
+	return icon and format("|T%s:16:16:0:0:64:64:4:55:4:55|t", icon) or ""
+end
+
 --string.format("%X", number)
 
 local function PrintTable(tbl, indent, simple, noFunctions, depth)
