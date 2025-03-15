@@ -4,123 +4,67 @@ local L = mMT.Locales
 local DT = E:GetModule("DataTexts")
 local tinsert = tinsert
 
--- placeholder
-local MEDIA = mMT.MEDIA
 local function configTable()
-	local function setFavorite(slot, value)
-		if value == "none" then
-			E.db.mMT.datatexts.teleports.favorites[slot] = { id = "none", kind = "none" }
-		else
-			for _, category in pairs(mMT.knownTeleports) do
-				for id, t in pairs(category) do
-					if id == value then
-						E.db.mMT.datatexts.teleports.favorites[slot] = { id = id, kind = t.kind }
-						break
-					end
-				end
-			end
-		end
-		E.db.mMT.datatexts.teleports.favorites.enable = E.db.mMT.datatexts.teleports.favorites.a.id ~= "none"
-			or E.db.mMT.datatexts.teleports.favorites.b.id ~= "none"
-			or E.db.mMT.datatexts.teleports.favorites.c.id ~= "none"
-			or E.db.mMT.datatexts.teleports.favorites.d.id ~= "none"
-	end
+	local icons = {}
 
-	local function valuesFunction()
-		mMT:UpdateTeleports()
-		local icons = { none = L["None"] }
-		for _, category in pairs(mMT.knownTeleports) do
-			if type(category) == "table" and category.available then
-				for id, t in pairs(category) do
-					if type(t) == "table" then icons[id] = E:TextureString(t.icon, ":14:14") .. " " .. t.name end
-				end
-			end
-		end
-		return icons
+	for key, icon in pairs(mMT.Media.TeleportIcons) do
+		icons[key] = E:TextureString(icon, ":14:14") .. " " .. key
 	end
 
 	E.Options.args.mMT.args.datatexts.args.teleports.args = {
-		settings = {
+		header_teleports = {
 			order = 1,
 			type = "group",
 			inline = true,
-			name = L["Settings"],
+			name = L["Teleports"],
 			args = {
-				iconTexture = {
-					order = 1,
+				toggle_teleports = {
+					order = 2,
+					type = "toggle",
+					name = L["Show Icon"],
+					get = function(info)
+						return E.db.mMT.teleports.icon
+					end,
+					set = function(info, value)
+						E.db.mMT.teleports.icon = value
+                        DT:ForceUpdate_DataText("mTeleports")
+					end,
+				},
+				icon_teleports = {
+					order = 2,
 					type = "select",
 					name = L["Icon"],
 					get = function(info)
-						return E.db.mMT.datatexts.teleports.icon
+						return E.db.mMT.teleports.customicon
 					end,
 					set = function(info, value)
-						E.db.mMT.datatexts.teleports.icon = value
-						DT:ForceUpdate_DataText("mMT - Teleports")
+						E.db.mMT.teleports.customicon = value
+						DT:ForceUpdate_DataText("mTeleports")
 					end,
-					values = function()
-						local icons = {}
-						icons.none = L["None"]
-						for key, icon in pairs(MEDIA.icons.teleport) do
-							icons[key] = E:TextureString(icon, ":14:14") .. " " .. key
-						end
-						return icons
-					end,
+					values = icons,
 				},
-			},
-		},
-		favorites = {
-			order = 1,
-			type = "group",
-			inline = true,
-			name = L["Favorites"],
-			args = {
-				fav_a = {
-					order = 1,
-					type = "select",
-					name = L["Slot"] .. " A",
-					get = function(info)
-						return E.db.mMT.datatexts.teleports.favorites.a and E.db.mMT.datatexts.teleports.favorites.a.id
-					end,
-					set = function(info, value)
-						setFavorite("a", value)
-					end,
-					values = valuesFunction,
-				},
-				fav_b = {
-					order = 2,
-					type = "select",
-					name = L["Slot"] .. " B",
-					get = function(info)
-						return E.db.mMT.datatexts.teleports.favorites.b and E.db.mMT.datatexts.teleports.favorites.b.id
-					end,
-					set = function(info, value)
-						setFavorite("b", value)
-					end,
-					values = valuesFunction,
-				},
-				fav_c = {
+				toggle_anchor = {
 					order = 3,
-					type = "select",
-					name = L["Slot"] .. " C",
+					type = "toggle",
+					name = L["ToolTip anchor on cursor"],
 					get = function(info)
-						return E.db.mMT.datatexts.teleports.favorites.c and E.db.mMT.datatexts.teleports.favorites.c.id
+						return E.db.mMT.teleports.anchorCursor
 					end,
 					set = function(info, value)
-						setFavorite("c", value)
+						E.db.mMT.teleports.anchorCursor = value
 					end,
-					values = valuesFunction,
 				},
-				fav_d = {
+				text = {
 					order = 4,
-					type = "select",
-					name = L["Slot"] .. " D",
+					name = L["white Text"],
+					type = "toggle",
 					get = function(info)
-						return E.db.mMT.datatexts.teleports.favorites.d and E.db.mMT.datatexts.teleports.favorites.d.id
+						return E.db.mMT.teleports.whiteText
 					end,
 					set = function(info, value)
-						setFavorite("d", value)
+						E.db.mMT.teleports.whiteText = value
+						DT:ForceUpdate_DataText("mTeleports")
 					end,
-					values = valuesFunction,
 				},
 			},
 		},

@@ -262,7 +262,7 @@ local function OnClick(self, button)
 
 	DT.tooltip:Hide()
 	if button == "LeftButton" then
-		mMT:DropDown(menuList, menuFrame, self, 160, 2)
+		mMT:mDropDown(menuList, menuFrame, self, 160, 2)
 	else
 		if E.Retail then
 			_G.ToggleLFDParentFrame()

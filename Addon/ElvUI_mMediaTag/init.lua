@@ -36,7 +36,6 @@ mMT.Locales = LibStub("AceLocale-3.0"):GetLocale("mMediaTag")
 mMT.Changelog = {}
 mMT.ClassIcons = {}
 mMT.BossIDs = {}
-mMT.MEDIA = {}
 
 mMT.Modules.Portraits = {}
 mMT.Modules.SummonIcon = {}
@@ -277,7 +276,6 @@ function mMT:PLAYER_ENTERING_WORLD(event)
 	--mMT.ElvUI_JiberishIcons = mMT:JiberishIcons()
 	mMT.DEVNames = mMT:GetDevNames()
 	mMT.Classes = mMT:ClassesTable()
-	mMT:UpdateMedia()
 
 	-- Changelog
 	if E.db.mMT.version ~= mMT.Version then

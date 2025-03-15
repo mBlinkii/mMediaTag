@@ -2,9 +2,6 @@ local E = unpack(ElvUI)
 local DT = E:GetModule("DataTexts")
 local L = mMT.Locales
 
--- placeholder
-local MEDIA = mMT.MEDIA
-
 --Lua functions
 local format = format
 local IsAddOnLoaded = _G.C_AddOns and _G.C_AddOns.IsAddOnLoaded or IsAddOnLoaded
@@ -160,20 +157,6 @@ function mMT:ColorFade(colorA, colorB, percent)
 		print("|CFFE74C3CERROR - mMediaTag - COLORFADE|r")
 		return { r = 1, g = 1, b = 1, a = 1 }
 	end
-end
-
-function mMT:TC(text, color)
-	color = color or "text"
-	return MEDIA.color[color]:WrapTextInColorCode(text)
-end
-
--- build menu frames
-function mMT:BuildMenus()
-	mMT.menu = CreateFrame("Frame", "mMediaTag_Main_Menu_Frame", E.UIParent, "BackdropTemplate")
-	mMT.menu:SetTemplate("Transparent", true)
-
-	mMT.submenu = CreateFrame("Frame", "mMediaTag_Submenu_Frame", E.UIParent, "BackdropTemplate")
-	mMT.submenu:SetTemplate("Transparent", true)
 end
 
 function mMT:Check_ElvUI_EltreumUI()

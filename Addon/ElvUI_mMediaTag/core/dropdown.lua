@@ -1,44 +1,66 @@
 local E = unpack(ElvUI)
 
--- placeholder
-local MEDIA = mMT.MEDIA
-
--- Cache WoW Globals
-local _G = _G
-local CreateFrame = CreateFrame
-local InCombatLockdown = InCombatLockdown
-local LSM = E.Libs.LSM
-local ToggleFrame = ToggleFrame
-local format = format
-local strfind = strfind
+--Lua functions
 local tinsert = tinsert
+local format = format
+local LSM = E.Libs.LSM
 
+--WoW API / Variables
+local _G = _G
+local InCombatLockdown = InCombatLockdown
+local CreateFrame = CreateFrame
+local strfind = strfind
+local ToggleFrame = ToggleFrame
+
+--Variables
 local autoHideDelay = 2
 local PADDING = 10
+local mDropDownFrame = {}
 
-local function DropDownTimer(menuFrame)
-	if not menuFrame:IsMouseOver() then
-		menuFrame:Hide()
-		menuFrame.timer:Cancel()
-		menuFrame.timer = nil
+-- frame hide function for the timer
+function mMT:DropDownTimer()
+	mDropDownFrame:Hide()
+end
 
-		if menuFrame.isSubmenu and not menuFrame.parent.timer then menuFrame.parent.timer = C_Timer.NewTicker(autoHideDelay, function()
-			DropDownTimer(menuFrame.parent)
-		end) end
+-- on click function
+local function OnClick(btn)
+	mMT:CancelAllTimers(mDropDownFrame.mTimer) -- cancel timer
+	btn:GetParent():Hide() -- hide frame
+	if btn.func then -- custom click function
+		btn.func()
+	end
+end
+
+-- on enter function
+local function OnEnter(btn)
+	mMT:CancelAllTimers(mDropDownFrame.mTimer)
+	btn.hoverTex:Show()
+	if btn.funcOnEnter then
+		btn.funcOnEnter(btn) -- custom on enter function
+	end
+end
+
+-- on leave function
+local function OnLeave(btn)
+	mDropDownFrame.mTimer = mMT:ScheduleTimer("DropDownTimer", autoHideDelay) -- start the timer/ autohide delay
+	btn.hoverTex:Hide()
+	if btn.funcOnLeave then
+		btn.funcOnLeave(btn) -- custom on leave function
 	end
 end
 
 -- list = tbl see below
--- text = string, right_tex = string, color = color string for first text, icon = texture, func = function, funcOnEnter = function,
--- funcOnLeave = function, isTitle = boolean, macro = macrotext, tooltip = id or var you can use for the functions, notClickable = boolean,
--- submenu = boolean
-function mMT:DropDown(list, frame, parent, ButtonWidth, HideDelay, submenu)
-	local SAVE_HEIGHT = E.db.general.fontSize / 3 + 16
-	local BUTTON_HEIGHT, BUTTON_WIDTH = 0, 0
+-- text = string, SecondText = string, color = color string for first text, icon = texture, func = function, funcOnEnter = function,
+-- funcOnLeave = function, isTitle = boolean, macro = macrotext, tooltip = id or var you can use for the functions, notClickable = boolean
+function mMT:mDropDown(list, frame, menuparent, ButtonWidth, HideDelay)
+	local SAVE_HEIGHT = (E.db.mMT.general.datatextfontsize or E.db.general.fontSize) / 3 + 16
+	local BUTTON_HEIGHT = 0
+	local BUTTON_WIDTH = 0
 	local font = LSM:Fetch("font", E.db.general.font)
-	local fontSize = E.db.general.fontSize
 	local fontFlag = E.db.general.fontStyle
 	autoHideDelay = HideDelay or 2
+
+	mMT:CancelAllTimers(mDropDownFrame.mTimer)
 
 	if not frame.buttons then
 		frame.buttons = {}
@@ -48,138 +70,146 @@ function mMT:DropDown(list, frame, parent, ButtonWidth, HideDelay, submenu)
 		frame:Hide()
 	end
 
-	for i, _ in ipairs(frame.buttons) do
+	for i = 1, #frame.buttons do
 		frame.buttons[i]:Hide()
 		frame.buttons[i] = nil
 	end
 
-	for i, item in ipairs(list) do
-		local btn = frame.buttons[i] or (item.macro and CreateFrame("Button", "MacroButton", frame, "SecureActionButtonTemplate") or CreateFrame("Button", nil, frame))
-		btn.submenu = item.submenu
-
-		if item.macro then
-			btn:SetAttribute("type", "macro")
-			btn:RegisterForClicks("LeftButtonUp", "LeftButtonDown")
-			btn:SetAttribute("macrotext1", item.macro)
-		elseif not item.notClickable then
-			local function OnClick(button)
-				if button.func then button.func() end
-
-				local buttonParent = button:GetParent()
-
-				if not button.submenu then
-					buttonParent:Hide()
-				elseif buttonParent.timer then
-					buttonParent.timer:Cancel()
-					buttonParent.timer = nil
-				end
+	for i = 1, #list do
+		if not frame.buttons[i] then
+			if list[i].macro then
+				frame.buttons[i] = CreateFrame("Button", "MacroButton", frame, "SecureActionButtonTemplate")
+			else
+				frame.buttons[i] = CreateFrame("Button", nil, frame)
 			end
-
-			btn.func = item.func
-			btn:SetScript("OnClick", OnClick)
 		end
 
-		if not item.isTitle then
-			btn.hoverTex = btn.hoverTex or btn:CreateTexture(nil, "OVERLAY")
-			btn.hoverTex:SetAllPoints()
-			btn.hoverTex:SetTexture([[Interface\Addons\ElvUI_mMediaTag\media\select.tga]])
-			btn.hoverTex:SetVertexColor(MEDIA.classColor.r, MEDIA.classColor.g, MEDIA.classColor.b, 0.5)
-			btn.hoverTex:SetBlendMode("BLEND")
-			btn.hoverTex:Hide()
-
-			local function OnLeave(button)
-				button.hoverTex:Hide()
-				if button.funcOnLeave then button.funcOnLeave(button) end
+		if list[i].macro then
+			frame.buttons[i]:SetAttribute("type", "macro")
+			frame.buttons[i]:RegisterForClicks("LeftButtonUp", "LeftButtonDown")
+			frame.buttons[i]:SetAttribute("macrotext1", list[i].macro)
+		else
+			if not list[i].notClickable then
+				frame.buttons[i].func = list[i].func
+				frame.buttons[i]:SetScript("OnClick", OnClick)
 			end
-
-			local function OnEnter(button)
-				button.hoverTex:Show()
-				if btn.funcOnEnter then button.funcOnEnter(button) end
-			end
-
-			btn.tooltip = item.tooltip
-			btn:SetScript("OnEnter", OnEnter)
-			btn.funcOnEnter = item.funcOnEnter
-			btn:SetScript("OnLeave", OnLeave)
-			btn.funcOnLeave = item.funcOnLeave
 		end
 
-		btn.text = btn.text or btn:CreateFontString(nil, "BORDER")
-		btn.text:SetAllPoints()
-		btn.text:FontTemplate(font, fontSize, fontFlag)
-		btn.text:SetJustifyH("LEFT")
+		local texture = [[Interface\AddOns\!mMT_MediaPack\media\textures\k35.tga]] or [[Interface\QuestFrame\UI-QuestTitleHighlight]]
 
-		btn.right_text = btn.right_text or btn:CreateFontString(nil, "BORDER")
-		btn.right_text:SetAllPoints()
-		btn.right_text:FontTemplate(font, fontSize, fontFlag)
-		btn.right_text:SetJustifyH("RIGHT")
+		if not list[i].isTitle then
+			frame.buttons[i].hoverTex = frame.buttons[i]:CreateTexture(nil, "OVERLAY")
+			frame.buttons[i].hoverTex:SetAllPoints()
+			frame.buttons[i].hoverTex:SetTexture(texture)
+			frame.buttons[i].hoverTex:SetGradient("HORIZONTAL", { r = mMT.ClassColor.r, g = mMT.ClassColor.g, b = mMT.ClassColor.b, a = 0.75 }, { r = mMT:ColorCheck(mMT.ClassColor.r + 0.4), g = mMT:ColorCheck(mMT.ClassColor.g + 0.4), b = mMT:ColorCheck(mMT.ClassColor.b + 0.4), a = 0.75 })
+			frame.buttons[i].hoverTex:SetBlendMode("BLEND")
+			frame.buttons[i].hoverTex:Hide()
+		end
 
-		local text = item.icon and E:TextureString(item.icon, ":14:14") .. " " .. item.text or item.text or ""
-		btn.text:SetText(item.color and format("%s%s|r", item.color, text) or text)
-		if item.right_text then btn.right_text:SetText(item.right_text) end
+		if list[i].text then
+			frame.buttons[i].text = frame.buttons[i]:CreateFontString(nil, "BORDER")
+			frame.buttons[i].text:SetAllPoints()
+			frame.buttons[i].text:FontTemplate(font, E.db.mMT.general.datatextfontsize, fontFlag)
+			--FontTemplate(nil, isTitle and 20 or 18, "SHADOW")
+			frame.buttons[i].text:SetJustifyH("LEFT")
+		end
+
+		if list[i].SecondText then
+			frame.buttons[i].SecondText = frame.buttons[i]:CreateFontString(nil, "BORDER")
+			frame.buttons[i].SecondText:SetAllPoints()
+			frame.buttons[i].SecondText:FontTemplate(font, E.db.mMT.general.datatextfontsize, fontFlag)
+			frame.buttons[i].SecondText:SetJustifyH("RIGHT")
+		end
+
+		if list[i].tooltip then
+			frame.buttons[i].tooltip = list[i].tooltip
+		end
+
+		if not list[i].isTitle then
+			frame.buttons[i]:SetScript("OnEnter", OnEnter)
+			frame.buttons[i].funcOnEnter = list[i].funcOnEnter
+			frame.buttons[i]:SetScript("OnLeave", OnLeave)
+			frame.buttons[i].funcOnLeave = list[i].funcOnLeave
+		end
+
+		if list[i].text and frame.buttons[i].text then
+			if list[i].color then
+				list[i].text = format("%s%s|r", list[i].color, list[i].text)
+			end
+
+			if list[i].icon then
+				frame.buttons[i].text:SetText(format("|T%s:14:14:0:0:64:64:5:59:5:59|t %s", list[i].icon, list[i].text) or "")
+			else
+				frame.buttons[i].text:SetText(list[i].text or "")
+			end
+		end
+
+		if list[i].SecondText and frame.buttons[i].SecondText then
+			frame.buttons[i].SecondText:SetText(list[i].SecondText or "")
+		end
 
 		if i == 1 then
-			btn:Point("TOPLEFT", frame, "TOPLEFT", PADDING, -PADDING)
+			frame.buttons[i]:Point("TOPLEFT", frame, "TOPLEFT", PADDING, -PADDING)
 		else
-			btn:Point("TOPLEFT", frame.buttons[i - 1], "BOTTOMLEFT")
+			frame.buttons[i]:Point("TOPLEFT", frame.buttons[i - 1], "BOTTOMLEFT")
 		end
 
-		BUTTON_HEIGHT = max(btn.text:GetStringHeight(), BUTTON_HEIGHT, SAVE_HEIGHT)
-		BUTTON_WIDTH = max(btn.text:GetStringWidth() + (btn.right_text and btn.right_text:GetStringWidth() or 0), BUTTON_WIDTH, ButtonWidth)
+		if frame.buttons[i].text then
+			local height = frame.buttons[i].text:GetStringHeight()
+			local width = frame.buttons[i].text:GetStringWidth()
 
-		frame.buttons[i] = btn
+			if height ~= 0 then
+				BUTTON_HEIGHT = (height > BUTTON_HEIGHT) and height or BUTTON_HEIGHT
+			end
+
+			if width ~= 0 then
+				if frame.buttons[i].SecondText then
+					local secondWidth = frame.buttons[i].SecondText:GetStringWidth()
+
+					if secondWidth ~= 0 then
+						width = width + secondWidth
+					end
+				end
+				BUTTON_WIDTH = (width > BUTTON_WIDTH) and width or BUTTON_WIDTH
+			end
+		end
 	end
 
-	for _, btn in ipairs(frame.buttons) do
-		btn:Show()
-		btn:SetHeight(BUTTON_HEIGHT)
-		btn:SetWidth(BUTTON_WIDTH + 2)
+	BUTTON_HEIGHT = BUTTON_HEIGHT > SAVE_HEIGHT and BUTTON_HEIGHT or SAVE_HEIGHT
+	BUTTON_WIDTH = BUTTON_WIDTH > ButtonWidth and BUTTON_WIDTH or ButtonWidth
+
+	for i = 1, #list do
+		frame.buttons[i]:Show()
+		frame.buttons[i]:Height(BUTTON_HEIGHT)
+		frame.buttons[i]:Width(BUTTON_WIDTH + 2)
 	end
 
-	frame:SetHeight((#list * BUTTON_HEIGHT + PADDING * 2))
-	frame:SetWidth(BUTTON_WIDTH + PADDING * 2)
+	frame:Height((#list * BUTTON_HEIGHT + PADDING * 2))
+	frame:Width(BUTTON_WIDTH + PADDING * 2)
 	frame:ClearAllPoints()
 
-	if parent then
-		local point = E:GetScreenQuadrant(parent)
+	if menuparent then
+		local point = E:GetScreenQuadrant(menuparent)
 		local bottom = point and strfind(point, "BOTTOM")
 		local left = point and strfind(point, "LEFT")
 
-		local anchor1, anchor2
+		local anchor1 = (bottom and left and "BOTTOMLEFT") or (bottom and "BOTTOMRIGHT") or (left and "TOPLEFT") or "TOPRIGHT"
+		local anchor2 = (bottom and left and "TOPLEFT") or (bottom and "TOPRIGHT") or (left and "BOTTOMLEFT") or "BOTTOMRIGHT"
 
-		if submenu then
-			anchor1 = (left and "LEFT") or "RIGHT"
-			anchor2 = (left and "RIGHT") or "LEFT"
-		else
-			anchor1 = (bottom and left and "BOTTOMLEFT") or (bottom and "BOTTOMRIGHT") or (left and "TOPLEFT") or "TOPRIGHT"
-			anchor2 = (bottom and left and "TOPLEFT") or (bottom and "TOPRIGHT") or (left and "BOTTOMLEFT") or "BOTTOMRIGHT"
-		end
-
-		frame:SetPoint(anchor1, parent, anchor2)
+		frame:Point(anchor1, menuparent, anchor2)
 		frame.pointA = anchor1
 		frame.pointB = anchor2
 	else
-		frame:SetPoint("LEFT", frame:GetParent(), "RIGHT")
+		frame:Point("LEFT", frame:GetParent(), "RIGHT")
 	end
 
-	if submenu then
-		frame.isSubmenu = submenu
-		frame.parent = parent
-	end
+	mDropDownFrame = frame
 
 	if InCombatLockdown() then
 		_G.UIErrorsFrame:AddMessage(format("|CFFE74C3C%s|r", _G.ERR_NOT_IN_COMBAT))
 		mMT:Print(format("|CFFE74C3C%s|r", _G.ERR_NOT_IN_COMBAT))
 	else
-		if not frame.timer then frame.timer = C_Timer.NewTicker(autoHideDelay, function()
-			DropDownTimer(frame)
-		end) end
-
-		if frame.name ~= submenu then
-			frame.name = submenu
-			frame:Show()
-		else
-			ToggleFrame(frame)
-		end
+		mDropDownFrame.mTimer = mMT:ScheduleTimer("DropDownTimer", autoHideDelay)
+		ToggleFrame(frame)
 	end
 end
