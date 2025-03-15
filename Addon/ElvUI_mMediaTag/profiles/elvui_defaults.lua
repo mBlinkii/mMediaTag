@@ -69,6 +69,18 @@ P.datatexts = {
 		menu_icons = true,
 		show_systeminfo = true,
 	},
+	item_currency_tracker = {
+		custom = {},
+		style = "auto",
+		icon = true,
+		name = false,
+		show_max = false,
+		short_number = true,
+
+		hide_if_zero = false,
+		show_bag = false,
+		max = false,
+	}
 }
 
 -- media
