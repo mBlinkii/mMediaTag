@@ -44,9 +44,9 @@ mMT.options.args.datatexts.args.misc_teleports.args = {
 		name = L["Settings"],
 		args = {
 			iconTexture = {
-				order = 2,
+				order = 1,
 				type = "select",
-				name = L["Sort method"],
+				name = L["Icon"],
 				get = function(info)
 					return E.db.mMT.datatexts.teleports.icon
 				end,

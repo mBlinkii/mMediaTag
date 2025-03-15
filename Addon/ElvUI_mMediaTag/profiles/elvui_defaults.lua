@@ -67,6 +67,7 @@ P.datatexts = {
 	menu = {
 		icon = "mmt",
 		menu_icons = true,
+		show_systeminfo = true,
 	},
 }
 

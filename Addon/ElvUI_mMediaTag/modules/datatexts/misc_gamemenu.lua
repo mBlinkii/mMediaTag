@@ -23,7 +23,7 @@ local menuList = {}
 local icons = {
 	mmt = MEDIA.icon,
 	colored = E:TextureString(MEDIA.icons.datatexts.menu_b, ":14:14"),
-	icon = E:TextureString(MEDIA.icons.datatexts.menu_a, ":14:14"),
+	white = E:TextureString(MEDIA.icons.datatexts.menu_a, ":14:14"),
 }
 
 local enteredFrame = false
@@ -296,8 +296,10 @@ local function OnEnter(self, slow)
 		DT.tooltip:AddDoubleLine(mMT.Name, mMT:TC("Ver.", "title") .. " " .. mMT:TC(mMT.Version, "mark"))
 
 		-- mMT Systeminfo
-		mMT:MMTSystemInfo()
-		DT.tooltip:AddLine(" ")
+		if E.db.mMT.datatexts.menu.show_systeminfo then
+			mMT:MMTSystemInfo()
+			DT.tooltip:AddLine(" ")
+		end
 
 		-- Latency
 		local function GetLatencyColor(latency)
@@ -323,7 +325,10 @@ local function OnEnter(self, slow)
 		DT.tooltip:AddLine(" ")
 
 		-- CPU/ Memory usage
-		mMT:SystemInfo()
+		if E.db.mMT.datatexts.menu.show_systeminfo then
+			mMT:SystemInfo()
+			DT.tooltip:AddLine(" ")
+		end
 
 		DT.tooltip:AddLine(MEDIA.leftClick .. " " .. mMT:TC(L["left click to open the menu."], "tip"))
 		if E.Retail or E.Cata then DT.tooltip:AddLine(MEDIA.rightClick .. " " .. mMT:TC(L["right click to open LFD Browser"], "tip")) end

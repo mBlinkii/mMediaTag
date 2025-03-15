@@ -97,6 +97,13 @@ mMT.options = {
 					childGroups = "tab",
 					args = {},
 				},
+				misc_gamemenu = {
+					order = 5,
+					type = "group",
+					name = mMT:AddSettingsIcon(L["Gamemenu"], "gamemenu"),
+					childGroups = "tab",
+					args = {},
+				},
 			},
 		},
 		dock = {
