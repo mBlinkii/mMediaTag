@@ -59,7 +59,7 @@ local function OnClick(self, button)
 	wipe(menuList)
 	menuList = mMT:GetProfessions()
 	if next(menuList) then
-		mMT:mDropDown(menuList, menuFrame, self, 200, 2)
+		mMT:DropDown(menuList, menuFrame, self, 200, 2)
 	else
 		_G.UIErrorsFrame:AddMessage(format("%s: |CFFE74C3C%s|r", mMT.Name, L["No professions available!"]))
 		mMT:Print(format("%s: |CFFE74C3C%s|r", mMT.Name, L["No professions available!"]))

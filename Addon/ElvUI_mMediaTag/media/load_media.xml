@@ -1,4 +1,5 @@
 <Ui xmlns="http://www.blizzard.com/wow/ui/">
 	<Script file="icons.lua"/>
 	<Script file="classicons.lua"/>
+	<Script file="media.lua"/>
 </Ui>
