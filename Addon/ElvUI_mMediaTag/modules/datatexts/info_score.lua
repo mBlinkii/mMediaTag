@@ -78,7 +78,7 @@ local function GetDungeonSummary()
 			levelColor = MEDIA.color.gray,
 			mapScore = 0,
 			scoreColor = MEDIA.color.gray,
-			icon = mMT:GetIconString(texture),
+			icon = E:TextureString(texture, ":14:14"),
 			finishedSuccess = false,
 			isMyKeystone = (id == myKeystoneMapID),
 		}
@@ -93,7 +93,7 @@ local function GetDungeonSummary()
 				levelColor = GetKeystoneLevelRarityColor(v.bestRunLevel),
 				mapScore = v.mapScore,
 				scoreColor = GetSpecificDungeonOverallScoreRarityColor(v.mapScore) or HIGHLIGHT_FONT_COLOR,
-				icon = mMT:GetIconString(texture),
+				icon = E:TextureString(texture, ":14:14"),
 				finishedSuccess = v.finishedSuccess,
 				isMyKeystone = (v.challengeModeID == myKeystoneMapID),
 			}

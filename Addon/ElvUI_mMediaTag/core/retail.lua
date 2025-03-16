@@ -19,7 +19,7 @@ function mMT:GetMyKeystone(withIcon)
 		local colorKey = GetKeystoneLevelRarityColor(keyStoneLevel)
 		colorKey.hex = colorKey and colorKey:GenerateHexColor() or "FFFFFFFF"
 
-		return (withIcon and mMT:GetIconString(icon) .. " " or "") .. color.hex .. name .. " " .. format("|c%s+%s|r", colorKey.hex, keyStoneLevel) .. "|r", id
+		return (withIcon and E:TextureString(icon, ":14:14") .. " " or "") .. color.hex .. name .. " " .. format("|c%s+%s|r", colorKey.hex, keyStoneLevel) .. "|r", id
 	end
 end
 
