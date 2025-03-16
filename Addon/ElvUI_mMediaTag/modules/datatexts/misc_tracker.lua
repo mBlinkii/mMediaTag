@@ -1,9 +1,13 @@
 local mMT, DB, M, E, P, L, MEDIA = unpack(ElvUI_mMediaTag)
 local DT = E:GetModule("DataTexts")
 
+local module = mMT:AddModule("Tracker")
+
 --WoW API / Variables
 local _G = _G
 local floor = floor
+local GetCurrencyInfo = C_CurrencyInfo.GetCurrencyInfo
+local GetItemInfo = GetItemInfo
 
 --Variables
 local hide = false
@@ -43,6 +47,14 @@ local Currency = {
 -- 	},
 -- 	loaded = false,
 -- }
+local tracker_demo_item = {
+	[225557] = false,
+	[3090] = true,
+}
+
+local tracker_ids_db = {}
+
+local is_currency_db = {}
 
 function mMT:GetCurrenciesInfo(tbl, item)
 	if tbl and tbl.info and tbl.info.id then
@@ -92,98 +104,106 @@ function mMT:GetCurrenciesInfo(tbl, item)
 	end
 end
 
+
+
+local function GetItemInfos(id)
+	local itemName, itemLink, _, _, _, _, _, itemStackCount, _, itemTexture, _, _, _, _, _, _, _ = GetItemInfo(id)
+	if itemName and itemLink and itemTexture then
+		return {
+			name = itemName,
+			icon = E:TextureString(itemTexture, ":14:14"),
+			link = itemLink,
+			count = GetItemCount(id, true),
+			cap = itemStackCount,
+		}
+	end
+end
+
+local function GetCurrencyInfos(id)
+	local info = GetCurrencyInfo(id)
+	if info then
+		is_currency_db[id] = true
+		return {
+			name = info.name,
+			icon = E:TextureString(info.iconFileID, ":14:14"),
+			link = format("|Hcurrency:%s|h", id),
+			count = info.quantity,
+			cap = info.maxQuantity,
+		}
+	end
+end
+
+local function OnEvent(self)
+	local db = E.db.mMT.datatexts.tracker
+	local id = tonumber(self.name)
+	local info = (is_currency_db[id] and GetCurrencyInfos(id) or GetItemInfos(id))
+	if info then
+		self.tracker_info = info
+		local textJustify = self.text:GetJustifyH()
+		self.text:SetText(info.name)
+
+		local name, icon, color
+
+		if not db.hide_if_zero then
+			if db.name then name = info.name end
+
+			if db.icon then icon = info.icon end
+
+			if db.short_number and info.count >= 1000 then info.count = E:ShortValue(Currency.info.count, 2) end
+
+			if db.style == "color" then
+				color = info.color
+			elseif db.style == "white" then
+				color = "|CFFFFFFFF"
+			else
+			end
+
+			if textJustify == "RIGHT" then
+				self.text:SetFormattedText("%s %s %s|r%s", color or "", info.count, name or "", icon or "")
+			else
+				self.text:SetFormattedText("%s%s%s %s|r", icon or "", color or "", name or "", info.count)
+			end
+		end
+	end
+end
+
 local function OnEnter(self)
-	if Currency.loaded then mMT:GetCurrenciesInfo(Currency) end
+	if not self.tracker_info then OnEvent(self) end
 
 	DT.tooltip:ClearLines()
 	if not hide then
 		DT:SetupTooltip(self)
-		DT.tooltip:SetHyperlink(Currency.info.link)
+		DT.tooltip:SetHyperlink(self.tracker_info.link)
 		DT.tooltip:Show()
 	end
-end
-
-local function OnEvent(self, event, ...)
-	-- return
-	-- local TextJustify = self.text:GetJustifyH()
-	-- mMT:GetCurrenciesInfo(Currency)
-
-	-- hide = (E.db.mMT.datatextcurrency.hide and Currency.info.count == 0)
-
-	-- if Currency.loaded then
-	-- 	local name = nil
-	-- 	local icon = nil
-	-- 	local bagCount = nil
-	-- 	local color = mMT.ClassColor.hex
-
-	-- 	if not hide then
-	-- 		if E.db.mMT.datatextcurrency.name then name = Currency.info.name end
-
-	-- 		if E.db.mMT.datatextcurrency.icon then icon = Currency.info.icon end
-
-	-- 		if E.db.mMT.datatextcurrency.short and Currency.info.count >= 1000 then Currency.info.count = E:ShortValue(Currency.info.count, 2) end
-
-	-- 		if E.db.mMT.datatextcurrency.style == "color" then
-	-- 			color = Currency.info.color
-	-- 		elseif E.db.mMT.datatextcurrency.style == "white" then
-	-- 			color = "|CFFFFFFFF"
-	-- 		end
-
-	-- 		if TextJustify == "RIGHT" then
-	-- 			self.text:SetFormattedText("%s%s %s %s|r%s", color, bagCount or "", Currency.info.count, name or "", icon or "")
-	-- 		else
-	-- 			self.text:SetFormattedText("%s%s%s %s %s|r", icon or "", color, name or "", Currency.info.count, bagCount or "")
-	-- 		end
-	-- 	end
-	-- else
-	-- 	self.text:SetText("|CFFE74C3CERROR!|r")
-	-- end
 end
 
 local function OnLeave(self)
 	DT.tooltip:Hide()
 end
 
-DT:RegisterDatatext("mMT_CarvedHarbingerCrest", _G.CURRENCY, { "CHAT_MSG_CURRENCY", "CURRENCY_DISPLAY_UPDATE" }, OnEvent, nil, nil, OnEnter, OnLeave, "mMT - Carved Crest", nil)
-
-local tracker_demo_item = {}
-
-local tracker_ids_db = {}
-
-local function GetItemInfos(id)
-	local infos = {}
-	local itemName, itemLink, _, _, _, _, _, itemStackCount, _, itemTexture, _, _, _, _, _, _, _ = GetItemInfo(id)
-	if itemName and itemLink and itemTexture then
-		infos.name = itemName
-		infos.icon = E:TextureString(itemTexture, ":14:14")
-		infos.link = itemLink
-		infos.count = GetItemCount(id, true)
-		infos.cap = itemStackCount
-		infos.loaded = true
-		return infos
-	end
-end
-
-local function GetCurrencyInfos(id) end
 local function LoadIDs()
+	print("custom ids")
 	local custom_ids = tracker_demo_item --E.db.mMT.datatexts.tracker.custom
 	if next(custom_ids) then
-		for id, kind in pairs(custom_ids) do
+		for id, isCurrency in pairs(custom_ids) do
+			print(id, isCurrency)
 			if id then
-				local isCurrency = kind ~= "item"
-				local infos = isCurrency and GetCurrencyInfos() or GetItemInfos(id)
+				local infos = (isCurrency and GetCurrencyInfos(id) or GetItemInfos(id))
 				if infos then tracker_ids_db[id] = infos end
 			end
 		end
 	end
 end
 
-do
+function module:Initialize()
+	print("hmms start?")
 	LoadIDs()
 
-	if tracker_ids_db.loaded then
-		for id, info in pairs(tracker_ids_db) do
-			DT:RegisterDatatext("mMT - " .. info.name, _G.CURRENCY, { "CHAT_MSG_CURRENCY", "CURRENCY_DISPLAY_UPDATE" }, OnEvent, nil, nil, OnEnter, OnLeave, mMT.NameShort .. " - " .. info.name, nil)
-		end
+	--if tracker_ids_db.loaded then
+	for id, info in pairs(tracker_ids_db) do
+		print("add dt", id, info)
+		DT:RegisterDatatext(id, _G.CURRENCY, { "CHAT_MSG_CURRENCY", "CURRENCY_DISPLAY_UPDATE" }, OnEvent, nil, nil, OnEnter, OnLeave, mMT.NameShort .. " - " .. info.name, nil)
 	end
+	--end
 end

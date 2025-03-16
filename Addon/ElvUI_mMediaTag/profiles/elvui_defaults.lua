@@ -71,15 +71,13 @@ P.datatexts = {
 	},
 	tracker = {
 		custom = {},
-		style = "auto",
-		icon = true,
-		name = false,
-		show_max = false,
-		short_number = true,
-
 		hide_if_zero = false,
-		show_bag = false,
+		icon = true,
 		max = false,
+		name = false,
+		short_number = true,
+		show_max = false,
+		style = "auto",
 	}
 }
 
