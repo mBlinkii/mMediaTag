@@ -5,6 +5,7 @@ local LOR = LibStub("LibOpenRaid-1.0", true)
 
 -- Cache WoW Globals
 local GetMapUIInfo = C_ChallengeMode.GetMapUIInfo
+local GetMapTable = C_ChallengeMode.GetMapTable
 local GetOwnedKeystoneChallengeMapID = C_MythicPlus.GetOwnedKeystoneChallengeMapID
 local C_MythicPlus_RequestCurrentAffixes = C_MythicPlus.RequestCurrentAffixes
 local GetDungeonScoreRarityColor = C_ChallengeMode.GetDungeonScoreRarityColor
@@ -64,13 +65,29 @@ end
 
 local function GetDungeonSummary()
 	local scoreTable = {}
+	local mapTable = GetMapTable()
 	local summary = GetPlayerMythicPlusRatingSummary("player")
 	local myKeystoneMapID = GetOwnedKeystoneChallengeMapID()
 
+	-- build score table
+	for _, id in ipairs(mapTable) do
+		local name, _, _, texture = GetMapUIInfo(id)
+		scoreTable[id] = {
+			mapName = name or UNKNOWN,
+			bestRunLevel = 0,
+			levelColor = MEDIA.color.gray,
+			mapScore = 0,
+			scoreColor = MEDIA.color.gray,
+			icon = mMT:GetIconString(texture),
+			finishedSuccess = false,
+			isMyKeystone = (id == myKeystoneMapID),
+		}
+	end
+
 	if summary and summary.runs then
-		for i, v in ipairs(summary.runs) do
-			local name, _, _, texture, _ = GetMapUIInfo(v.challengeModeID)
-			table.insert(scoreTable, {
+		for _, v in ipairs(summary.runs) do
+			local name, _, _, texture = GetMapUIInfo(v.challengeModeID)
+			scoreTable[v.challengeModeID] = {
 				mapName = name or UNKNOWN,
 				bestRunLevel = v.bestRunLevel,
 				levelColor = GetKeystoneLevelRarityColor(v.bestRunLevel),
@@ -78,8 +95,8 @@ local function GetDungeonSummary()
 				scoreColor = GetSpecificDungeonOverallScoreRarityColor(v.mapScore) or HIGHLIGHT_FONT_COLOR,
 				icon = mMT:GetIconString(texture),
 				finishedSuccess = v.finishedSuccess,
-				isMyKeystone = v.challengeModeID == myKeystoneMapID,
-			})
+				isMyKeystone = (v.challengeModeID == myKeystoneMapID),
+			}
 		end
 	end
 
@@ -96,7 +113,7 @@ local function GetDungeonSummary()
 	return scoreTable
 end
 
-local function addTooltipLine(v, mapName)
+local function AddTooltipLine(v, mapName)
 	local ratingColor = v.finishedSuccess and v.scoreColor:GenerateHexColor() or "FFA9A9A9"
 	local rating = format("|c%s%s|r", ratingColor, v.mapScore)
 
@@ -117,7 +134,7 @@ local function DungeonScoreTooltip()
 	for _, v in pairs(scoreTable) do
 		local mapName = v.mapName
 		if v.isMyKeystone then mapName = mMT:TC(mapName, "mark") end
-		addTooltipLine(v, mapName)
+		AddTooltipLine(v, mapName)
 	end
 
 	if E.db.mMT.datatexts.score.show_upgrade then
@@ -142,7 +159,7 @@ local function DungeonScoreTooltip()
 			if v.upgrade then
 				local mapName = v.mapName
 				if v.isMyKeystone then mapName = mMT:TC(mapName, "mark") end
-				addTooltipLine(v, mapName)
+				AddTooltipLine(v, mapName)
 			end
 		end
 	end
@@ -212,9 +229,7 @@ local function OnEnter(self)
 	local inCombat = InCombatLockdown()
 	DT.tooltip:ClearLines()
 
-	if not isMaxLevel then
-		self.text:SetFormattedText(textString, L["Level: "] .. format(valueString, E.mylevel))
-	end
+	if not isMaxLevel then self.text:SetFormattedText(textString, L["Level: "] .. format(valueString, E.mylevel)) end
 
 	if not inCombat then
 		if isMaxLevel then

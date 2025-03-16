@@ -20,6 +20,7 @@ MEDIA.color = {
 	yellow = CreateColorFromHexString("FFFF9D00"),
 	green = CreateColorFromHexString("FF1BFF6B"),
 	black = CreateColorFromHexString("FF404040"),
+	gray = CreateColorFromHexString("FF787878"),
 	info = CreateColorFromHexString("FFFFA7A7"),
 }
 

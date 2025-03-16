@@ -69,7 +69,7 @@ P.datatexts = {
 		menu_icons = true,
 		show_systeminfo = true,
 	},
-	item_currency_tracker = {
+	tracker = {
 		custom = {},
 		style = "auto",
 		icon = true,
