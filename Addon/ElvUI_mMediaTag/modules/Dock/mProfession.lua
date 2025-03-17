@@ -33,7 +33,7 @@ local function OnEnter(self)
 		if next(menuList) then
 			for i = 1, #menuList do
 				if not menuList[i].isTitle and not (menuList[i].text == TRADE_SKILLS) then
-					DT.tooltip:AddDoubleLine((mMT:mIcon(menuList[i].icon) or "") .. "  " .. menuList[i].color .. menuList[i].text .. "|r", menuList[i].Secondtext)
+					DT.tooltip:AddDoubleLine((mMT:mIcon(menuList[i].icon) or "") .. "  " .. menuList[i].color .. menuList[i].text .. "|r", menuList[i].right_text)
 				end
 			end
 
@@ -59,7 +59,7 @@ local function OnClick(self, button)
 	wipe(menuList)
 	menuList = mMT:GetProfessions()
 	if next(menuList) then
-		mMT:mDropDown(menuList, menuFrame, self, 200, 2)
+		mMT:DropDown(menuList, menuFrame, self, 200, 2)
 	else
 		_G.UIErrorsFrame:AddMessage(format("%s: |CFFE74C3C%s|r", mMT.Name, L["No professions available!"]))
 		mMT:Print(format("%s: |CFFE74C3C%s|r", mMT.Name, L["No professions available!"]))

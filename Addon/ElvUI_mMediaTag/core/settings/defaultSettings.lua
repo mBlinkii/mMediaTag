@@ -860,3 +860,48 @@ P.mMT = {
 		},
 	},
 }
+
+-- datatexts
+P.mMT.datatexts = {
+	text = {
+		override_text = true,
+		text = "FFFFFFFF",
+		override_value = false,
+		value = "FFFFFFFF",
+	},
+	score = {
+		group_keystones = true,
+		show_upgrade = true,
+		sort_method = "KEY",
+	},
+	teleports = {
+		icon = "TP1",
+		favorites = {
+			enable = false,
+			a = { id = "none", kind = "none" },
+			b = { id = "none", kind = "none" },
+			c = { id = "none", kind = "none" },
+			d = { id = "none", kind = "none" },
+		},
+	},
+	individual_professions = {
+		icon = "default",
+	},
+	menu = {
+		icon = "mmt",
+		menu_icons = true,
+		show_systeminfo = true,
+	},
+	item_currency_tracker = {
+		custom = {},
+		style = "auto",
+		icon = true,
+		name = false,
+		show_max = false,
+		short_number = true,
+
+		hide_if_zero = false,
+		show_bag = false,
+		max = false,
+	}
+}

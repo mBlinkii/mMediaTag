@@ -1,6 +1,17 @@
 # Changelog - ElvUI_mMediaTag
 [Eng] - All changes to this project will be documented in this file. The latest changes are at the top.
 
+## [ver. 3.70] - 17.03.2025
+### FIX 
+- FIX - [Portraits]: BG color function.
+### UPDATE
+- UPDATE - [System]: Boss IDs.
+- UPDATE - [System]: Dropdown menu system.
+- UPDATE - [Teleports-Datatext]: Teleports IDs and abbrev names.
+- UPDATE - [Teleports-Datatext]: Teleports have now sub menus.
+### NEW
+- NEW - [Teleports-Datatext]: You can now set 4 Favorite Teleports.
+
 ## [ver. 3.69] - 08.03.2025
 ### FIX 
 - FIX - [Score-Datatext]: Bug with follower Dungeons.
