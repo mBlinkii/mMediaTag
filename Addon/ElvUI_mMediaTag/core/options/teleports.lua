@@ -9,19 +9,20 @@ local function setFavorite(slot, value)
 		E.db.mMT.datatexts.teleports.favorites[slot] = { id = "none", kind = "none" }
 	else
 		for _, category in pairs(mMT.knownTeleports) do
-			for id, t in pairs(category) do
-				if id == value then
-					E.db.mMT.datatexts.teleports.favorites[slot] = { id = id, kind = t.kind }
-					break
+			if type(category) == "table" then
+				for id, t in pairs(category) do
+					if id == value then
+						E.db.mMT.datatexts.teleports.favorites[slot] = { id = id, kind = t.kind }
+						break
+					end
 				end
 			end
 		end
 	end
-	E.db.mMT.datatexts.teleports.favorites.enable =
-		E.db.mMT.datatexts.teleports.favorites.a.id ~= "none" or
-		E.db.mMT.datatexts.teleports.favorites.b.id ~= "none" or
-		E.db.mMT.datatexts.teleports.favorites.c.id ~= "none" or
-		E.db.mMT.datatexts.teleports.favorites.d.id ~= "none"
+	E.db.mMT.datatexts.teleports.favorites.enable = E.db.mMT.datatexts.teleports.favorites.a.id ~= "none"
+		or E.db.mMT.datatexts.teleports.favorites.b.id ~= "none"
+		or E.db.mMT.datatexts.teleports.favorites.c.id ~= "none"
+		or E.db.mMT.datatexts.teleports.favorites.d.id ~= "none"
 end
 
 local function valuesFunction()
@@ -30,9 +31,7 @@ local function valuesFunction()
 	for _, category in pairs(mMT.knownTeleports) do
 		if type(category) == "table" and category.available then
 			for id, t in pairs(category) do
-				if type(t) == "table" then
-					icons[id] = E:TextureString(t.icon, ":14:14") .. " " .. t.name
-				end
+				if type(t) == "table" then icons[id] = E:TextureString(t.icon, ":14:14") .. " " .. t.name end
 			end
 		end
 	end
@@ -62,7 +61,7 @@ local function configTable()
 					end,
 					set = function(info, value)
 						E.db.mMT.datatexts.teleports.icon = value
-						DT:ForceUpdate_DataText("mMT - Teleports")
+						DT:ForceUpdate_DataText("mTeleports")
 					end,
 					values = function()
 						local icons = {}
