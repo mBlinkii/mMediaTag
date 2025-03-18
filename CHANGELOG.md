@@ -3,7 +3,7 @@
 
 ## [ver. 3.70] - 18.03.2025
 ### FIX 
-- FIX - [Teleports-Datatext]: BBug with unknown and set Favorite Teleports.
+- FIX - [Teleports-Datatext]: Bug with unknown and set Favorite Teleports.
 
 ## [ver. 3.70] - 17.03.2025
 ### FIX 
