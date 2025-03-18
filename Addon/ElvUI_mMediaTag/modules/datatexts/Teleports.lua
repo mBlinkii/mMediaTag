@@ -355,9 +355,11 @@ local function OnEnterSpell(btn)
 end
 
 local function GetSpellInfos(spellID)
-	if IsSpellKnown(spellID) then
-		local spellInfo = GetSpellInfo(spellID)
-		return spellInfo.name, spellInfo.iconID
+	if spellID and spellID ~= "none" then
+		if IsSpellKnown(spellID) then
+			local spellInfo = GetSpellInfo(spellID)
+			return spellInfo.name, spellInfo.iconID
+		end
 	end
 end
 
@@ -599,7 +601,6 @@ local function UpdateMenus()
 			tinsert(menus.other, { text = "", isTitle = true, notClickable = true })
 			tinsert(menus.other, { text = TC(L["Spells"], "title"), isTitle = true, notClickable = true })
 			for id, t in pairs(mMT.knownTeleports.spells) do
-				print("update", id, t.id, t.kind)
 				if t and type(t) == "table" then tinsert(menus.other, CreateMenuEntry(id, t)) end
 			end
 		end
