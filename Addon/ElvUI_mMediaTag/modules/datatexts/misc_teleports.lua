@@ -406,7 +406,7 @@ end
 
 local function processTeleport(t, category, kindOverride)
 	for id, idKind in pairs(t) do
-		if id then
+		if id and id ~= "none" then
 			local name, icon = nil, nil
 			local kind = kindOverride or idKind
 
@@ -447,7 +447,7 @@ function mMT:UpdateTeleports()
 		-- add favorites
 		for _, key in pairs({ "a", "b", "c", "d" }) do
 			local favorite = E.db.mMT.datatexts.teleports.favorites[key]
-			if favorite then teleportsIDs.favorites[favorite.id] = favorite.kind end
+			if favorite and favorite.id ~= "none" then teleportsIDs.favorites[favorite.id] = favorite.kind end
 		end
 		processTeleport(teleportsIDs.favorites, "favorites")
 	end
