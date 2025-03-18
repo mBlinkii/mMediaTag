@@ -91,6 +91,7 @@ local teleportsIDs = {
 		[221966] = "toy", --wormhole-generator-khaz-algar
 	},
 	items = {
+		[202046] = "item", -- Lucky Tortollan Charm
 		[103678] = "item", --time-lost-artifact
 		[118662] = "item", -- Bladespire Relic
 		[118663] = "item", --relic-of-karabor
