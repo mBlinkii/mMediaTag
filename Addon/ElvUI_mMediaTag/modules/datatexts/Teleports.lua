@@ -355,9 +355,11 @@ local function OnEnterSpell(btn)
 end
 
 local function GetSpellInfos(spellID)
-	if IsSpellKnown(spellID) then
-		local spellInfo = GetSpellInfo(spellID)
-		return spellInfo.name, spellInfo.iconID
+	if spellID and spellID ~= "none" then
+		if IsSpellKnown(spellID) then
+			local spellInfo = GetSpellInfo(spellID)
+			return spellInfo.name, spellInfo.iconID
+		end
 	end
 end
 
@@ -442,7 +444,7 @@ function mMT:UpdateTeleports()
 		-- add favorites
 		for _, key in pairs({ "a", "b", "c", "d" }) do
 			local favorite = E.db.mMT.datatexts.teleports.favorites[key]
-			if favorite then teleportsIDs.favorites[favorite.id] = favorite.kind end
+			if favorite and favorite.id ~= "none" then teleportsIDs.favorites[favorite.id] = favorite.kind end
 		end
 		processTeleport(teleportsIDs.favorites, "favorites")
 	end
