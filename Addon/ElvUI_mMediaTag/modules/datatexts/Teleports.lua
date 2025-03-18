@@ -208,114 +208,137 @@ local teleportsIDs = {
 		[556] = "spell", -- astral-recall
 	},
 	season = {
-		-- S1
-		[354462] = "NW", -- Necrotic Wake
-		[354464] = "MIST", -- Mists of Tirna Scithe
-		[445269] = "SV", -- The Stonevault
-		[445414] = "DAWN", -- The Dawnbreaker
-		[445416] = "CoT", -- City of Threads
-		[445417] = "ARAK", -- Ara-Kara, City of Echoes
-		[445418] = "SIEGE", -- Siege of Boralus - alliance
-		[445424] = "GB", -- Grim Batol
-		[464256] = "SIEGE", -- Siege of Boralus - horde
+		-- tww s2
+		[445440] = "BREW",
+		[467546] = "BREW",
+		[445441] = "DFC",
+		[445444] = "PSF",
+		[445443] = "ROOK",
+		[1216786] = "FLOOD",
+		[467555] = "ML",
+		[467553] = "ML",
+		[354467] = "TOP",
+		[373274] = "WORK",
+
+		-- tww s1
+		-- [445417] = "ARAK",
+		-- [445416] = "COT",
+		-- [445414] = "DAWN",
+		-- [445269] = "SV",
+		-- [354464] = "MISTS",
+		-- [354462] = "NW",
+		-- [445418] = "SIEGE",
+		-- [464256] = "SIEGE",
+		-- [445424] = "GB",
 	},
 
 	tww = {
-		[445269] = "SV", -- The Stonevault
-		[445414] = "DAWN", -- The Dawnbreaker
-		[445416] = "CoT", -- City of Threads
-		[445417] = "ARAK", -- Ara-Kara, City of Echoes
-		[445440] = "CM", -- Cinderbrew Meadery
-		[467546] = "CM", --Cinderbrew Meadery
-		[445441] = "DC", -- Darkflame Cleft
-		[445443] = "ROOK", -- The Rookery
-		[445444] = "PSF", -- Priory of the Sacred Flame
-		[1216786] = "OF", --Operation: Floodgate
+		-- tww
+		[445417] = "ARAK",
+		[445440] = "BREW",
+		[445416] = "COT",
+		[445441] = "DFC",
+		[445414] = "DAWN",
+		[1216786] = "FLOOD",
+		[445444] = "PSF",
+		[445443] = "ROOK",
+		[445269] = "SV",
+
 		-- tww raid
-		[1226482] = "LOU", --Liberation of Undermine (raid)
+		[1226482] = "LOU",
 	},
 
 	dungeonportals = {
-		-- cata
-		[410080] = "VP", -- path-of-winds-domain
-		[424142] = "TOT", --path-of-the-tidehunter
-		[445424] = "GB", -- Grim Batol
-		-- mop
-		[131204] = "TJS", -- Temple of the Jade Serpent
-		[131205] = "SB", -- Stormstout Brewery
-		[131206] = "SPM", -- Shado-Pan Monastery
-		[131222] = "MSP", -- Mogu'shan Palace
-		[131225] = "GSS", -- Gate of the Setting Sun
-		[131228] = "SON", -- Siege of Niuzao
-		[131229] = "SM", -- Scarlet Monastery
-		[131231] = "SH", -- Scarlet Halls
-		[131232] = "SCH", -- Scholomance
-		-- wod
-		[159895] = "BSM", -- Bloodmaul Slag Mines
-		[159896] = "ID", -- Iron Docks
-		[159897] = "AUCH", -- Auchindoun
-		[159898] = "SKY", -- Skyreach
-		[159899] = "SBG", -- Shadowmoon Burial Grounds
-		[159900] = "GD", -- Grimrail Depot
-		[159901] = "EB", -- The Everbloom
-		[159902] = "UBS", -- Upper Blackrock Spire
-		-- legion
-		[373262] = "KZ", -- Karazhan
-		[393764] = "HOV", -- Halls of Valor
-		[393766] = "COS", -- Court of Stars
-		[410078] = "NL", -- Neltharion's Lair
-		[424153] = "BRH", -- Black Rook Hold
-		[424163] = "DHT", -- Darkheart Thicket
-		-- bfa
-		[373274] = "MG", -- Mechagon
-		[393222] = "ULD", -- Uldaman: Legacy of Tyr
-		[410071] = "FH", -- Freehold
-		[410074] = "UNDR", -- Underrot
-		[424167] = "WM", -- Waycrest Manor
-		[445418] = "SIEGE", -- Siege of Boralus - alliance
-		[464256] = "SIEGE", -- Siege of Boralus - horde
-		[424187] = "AD", -- Atal'Dazar
-		[467555] = "TM", -- The MOTHERLODE!!
-		[467553] = "TM", -- The MOTHERLODE!!
-		-- sl
-		[354462] = "NW", -- Necrotic Wake
-		[354463] = "PF", -- Plaguefall
-		[354464] = "MIST", -- Mists of Tirna Scithe
-		[354465] = "HOA", -- Halls of Atonement
-		[354466] = "SOA", -- Spires of Ascension
-		[354467] = "TOP", -- Theater of Pain
-		[354468] = "DOS", -- De Other Side
-		[354469] = "SD", -- Sanguine Depths
-		[367416] = "TVM", -- Tazavesh, the Veiled Market
-		-- sl raid
-		[373190] = "CN", -- Castle Nathria
-		[373191] = "SOD", -- Sanctum of Domination
-		[373192] = "SotFO", -- Sepulcher of the First Ones
-		-- df
-		[393256] = "RLP", -- Ruby Life Pools
-		[393262] = "NO", -- Nokhud Offensive
-		[393267] = "BH", -- Brackenhide Hollow
-		[393273] = "AA", -- Algeth'ar Academy
-		[393276] = "NELT", -- Neltharus
-		[393279] = "AV", -- Azure Vault
-		[393283] = "HOI", -- Halls of Infusion
-		[424197] = "DOI", -- Dawn of the Infinite
-		[432258] = "ATDH", --Amirdrassil, the Dream's Hope (raid)
-		[432254] = "VOTI", --Vault of the Incarnates (raid)
-		[432257] = "ATSC", --Aberrus, the Shadowed Crucible (raid)
 		-- tww
-		[445269] = "SV", -- The Stonevault
-		[445414] = "DAWN", -- The Dawnbreaker
-		[445416] = "CoT", -- City of Threads
-		[445417] = "ARAK", -- Ara-Kara, City of Echoes
-		[445440] = "CM", -- Cinderbrew Meadery
-		[467546] = "CM", --Cinderbrew Meadery
-		[445441] = "DC", -- Darkflame Cleft
-		[445443] = "ROOK", -- The Rookery
-		[445444] = "PSF", -- Priory of the Sacred Flame
-		[1216786] = "OF", --Operation: Floodgate
+		[445417] = "ARAK",
+		[445440] = "BREW",
+		[445416] = "COT",
+		[445441] = "DFC",
+		[445414] = "DAWN",
+		[1216786] = "FLOOD",
+		[445444] = "PSF",
+		[445443] = "ROOK",
+		[445269] = "SV",
+
+		-- df
+		[393273] = "AA",
+		[393279] = "AV",
+		[393267] = "BH",
+		[393283] = "HOI",
+		[393276] = "NELTH",
+		[393262] = "NO",
+		[393256] = "RLP",
+		[393222] = "ULD",
+		[424197] = "DOTI",
+
+		-- sl
+		[354468] = "DOS",
+		[354465] = "HOA",
+		[354464] = "MISTS",
+		[354462] = "NW",
+		[354463] = "PF",
+		[354469] = "SD",
+		[354466] = "SOA",
+		[354467] = "TOP",
+		[367416] = "TAZ",
+
+		-- bfa
+		[424187] = "AD",
+		[410071] = "FH",
+		[373274] = "MECHA",
+		[467555] = "ML",
+		[467553] = "ML",
+		[445418] = "SIEGE",
+		[464256] = "SIEGE",
+		[410074] = "UNDR",
+		[424167] = "WM",
+
+		-- legion
+		[424153] = "BRH",
+		[393766] = "COS",
+		[424163] = "DT",
+		[393764] = "HOV",
+		[373262] = "KARA",
+		[410078] = "NL",
+
+		-- wod
+		[159897] = "AUCH",
+		[159895] = "BSM",
+		[159901] = "EB",
+		[159900] = "GD",
+		[159896] = "ID",
+		[159899] = "SBG",
+		[159898] = "SR",
+		[159902] = "UBRS",
+
+		-- mop
+		[131225] = "GOTSS",
+		[131222] = "MSP",
+		[131232] = "SCHOLO",
+		[131231] = "SH",
+		[131229] = "SM",
+		[131228] = "SNT",
+		[131206] = "SPM",
+		[131205] = "SSB",
+		[131204] = "TJS",
+
+		-- cata
+		[445424] = "GB",
+		[424142] = "TOTT",
+		[410080] = "VP",
+
+		-- sl raid
+		[373190] = "CN",
+		[373191] = "SOD",
+		[373192] = "STFO",
+
+		-- df raid
+		[432254] = "VOTI",
+		[432257] = "ATSC",
+		[432258] = "ATDH",
+
 		-- tww raid
-		[1226482] = "LOU", --Liberation of Undermine (raid)
+		[1226482] = "LOU",
 	},
 }
 
