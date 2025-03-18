@@ -77,7 +77,7 @@ P.datatexts = {
 		name = false,
 		short_number = true,
 		show_max = false,
-		style = "auto",
+		colored = true,
 	}
 }
 

@@ -23,6 +23,7 @@ mMT.options.args.datatexts.args.general.args = {
 					DT:ForceUpdate_DataText("mMT - Fishing")
 					DT:ForceUpdate_DataText("mMT - Primary Professions")
 					DT:ForceUpdate_DataText("mMT - Secondary Professions")
+					M.Tracker:UpdateAll()
 				end,
 			},
 			text_color = {
@@ -48,6 +49,7 @@ mMT.options.args.datatexts.args.general.args = {
 					DT:ForceUpdate_DataText("mMT - Fishing")
 					DT:ForceUpdate_DataText("mMT - Primary Professions")
 					DT:ForceUpdate_DataText("mMT - Secondary Professions")
+					M.Tracker:UpdateAll()
 				end,
 			},
 			override_value = {
@@ -65,6 +67,7 @@ mMT.options.args.datatexts.args.general.args = {
 					DT:ForceUpdate_DataText("mMT - Fishing")
 					DT:ForceUpdate_DataText("mMT - Primary Professions")
 					DT:ForceUpdate_DataText("mMT - Secondary Professions")
+					M.Tracker:UpdateAll()
 				end,
 			},
 			value_color = {
@@ -90,6 +93,7 @@ mMT.options.args.datatexts.args.general.args = {
 					DT:ForceUpdate_DataText("mMT - Fishing")
 					DT:ForceUpdate_DataText("mMT - Primary Professions")
 					DT:ForceUpdate_DataText("mMT - Secondary Professions")
+					M.Tracker:UpdateAll()
 				end,
 			},
 		},
