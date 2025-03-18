@@ -1,6 +1,10 @@
 # Changelog - ElvUI_mMediaTag
 [Eng] - All changes to this project will be documented in this file. The latest changes are at the top.
 
+## [ver. 3.70] - 18.03.2025
+### FIX 
+- FIX - [Teleports-Datatext]: BBug with unknown and set Favorite Teleports.
+
 ## [ver. 3.70] - 17.03.2025
 ### FIX 
 - FIX - [Portraits]: BG color function.
