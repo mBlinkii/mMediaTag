@@ -131,7 +131,6 @@ local function UpdateIconBackground(tx, unit, mirror)
 		end
 
 		if bgColor then
-			print(bgColor.r, bgColor.g, bgColor.b, bgColor.a)
 			setColor(tx, bgColor, mirror) end
 	end
 end
