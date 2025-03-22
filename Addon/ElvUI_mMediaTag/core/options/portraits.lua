@@ -3426,9 +3426,6 @@ local function configTable()
 							step = 0.01,
 							softMin = 0,
 							softMax = 1,
-							disabled = function()
-								return not E.db.mMT.portraits.shadow.classBG
-							end,
 							get = function(info)
 								return E.db.mMT.portraits.shadow.bgColorShift
 							end,

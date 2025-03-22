@@ -130,7 +130,9 @@ local function UpdateIconBackground(tx, unit, mirror)
 			bgColor = adjustColor(color, ColorShift)
 		end
 
-		if bgColor then setColor(tx, bgColor, mirror) end
+		if bgColor then
+			print(bgColor.r, bgColor.g, bgColor.b, bgColor.a)
+			setColor(tx, bgColor, mirror) end
 	end
 end
 
@@ -332,8 +334,8 @@ local function UpdatePortrait(portraitFrame, force)
 
 	portraitFrame.mask:SetTexture(texture, "CLAMPTOBLACKADDITIVE", "CLAMPTOBLACKADDITIVE")
 
-	local color = (E.db.mMT.portraits.shadow.classBG and unitColor)
-	UpdateTexture(portraitFrame, "iconbg", bg_textures[E.db.mMT.portraits.general.bgstyle], -5, color)
+	--local color = (E.db.mMT.portraits.shadow.classBG and unitColor or E.db.mMT.portraits.shadow.background)
+	UpdateTexture(portraitFrame, "iconbg", bg_textures[E.db.mMT.portraits.general.bgstyle], -5)
 	portraitFrame.iconbg:AddMaskTexture(portraitFrame.mask)
 	--end
 
