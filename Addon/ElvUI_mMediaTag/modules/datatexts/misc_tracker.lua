@@ -20,6 +20,31 @@ local tracker_demo_item = {
 	[3108] = { isCurrency = true, color = "FF034CF6" },
 }
 
+local tracker_default_ids = {
+	-- crest
+	[2914] = { isCurrency = true, color = "FF84FF4F" },
+	[2915] = { isCurrency = true, color = "FF034CF6" },
+	[2916] = { isCurrency = true, color = "FFA928FF" },
+	[2917] = { isCurrency = true, color = "FFFFA514" },
+	[3008] = { isCurrency = true, color = "FF4FFCFF" }, -- valor
+
+	-- tww
+	[3089] = { isCurrency = true, color = "FF4FFCFF" }, -- Residual Memories
+	[2815] = { isCurrency = true, color = "FFFFAE17" }, -- Resonance Crystals
+	[3028] = { isCurrency = true, color = "FFEC46FF" }, -- Restored Coffer Key
+	[2803] = { isCurrency = true, color = "FFEC46FF" }, -- Undercoin
+	[3056] = { isCurrency = true, color = "FFEC46FF" }, -- Kej
+
+	-- pvp
+	[2123] = { isCurrency = true, color = "FFFF4117" }, -- Bloody Tokens
+	[1791] = { isCurrency = true, color = "FFFCE03D" }, -- Honor
+	[1602] = { isCurrency = true, color = "FFFCE03D" }, -- Conquest
+
+	-- misc
+	[2032] = { isCurrency = true, color = "FFF68D03" }, -- Trader's Tender
+	[1166] = { isCurrency = true, color = "FF54BAFF" }, -- Timewarped Badge
+}
+
 local tracker_ids_db = {}
 local is_currency_db = {}
 
@@ -98,16 +123,13 @@ local function ValueColorUpdate(self, hex)
 
 	textString = strjoin("", textHex, "%s|r")
 	valueString = strjoin("", valueHex, "%s|r")
-	print(format(textString, "TEXT"), format(valueString, "VALUE"))
 	OnEvent(self)
 end
 
 local function LoadIDs()
-	print("custom ids")
 	local custom_ids = tracker_demo_item --E.db.mMT.datatexts.tracker.custom
 	if next(custom_ids) then
 		for id, t in pairs(custom_ids) do
-			print(id, t.isCurrency)
 			if id then
 				local infos = (t.isCurrency and GetCurrencyInfos(id) or GetItemInfos(id))
 				if infos then
@@ -117,19 +139,27 @@ local function LoadIDs()
 			end
 		end
 	end
+
+	for id, t in pairs(tracker_default_ids) do
+		if id then
+			local infos = (t.isCurrency and GetCurrencyInfos(id) or GetItemInfos(id))
+			if infos then
+				tracker_ids_db[id] = infos
+				tracker_ids_db[id].color = t.color
+			end
+		end
+	end
 end
 
 function module:UpdateAll()
 	if next(tracker_ids_db) then
-		print("update dt")
-		for id, info in pairs(tracker_ids_db) do
+		for id, _ in pairs(tracker_ids_db) do
 			DT:ForceUpdate_DataText(id)
 		end
 	end
 end
 
 function module:Initialize()
-	print("hmms start?")
 	LoadIDs()
 
 	if next(tracker_ids_db) then
