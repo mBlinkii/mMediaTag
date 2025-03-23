@@ -20,9 +20,6 @@ local string = string
 local tinsert = tinsert
 
 -- Variables
-local textString = ""
-
-local menus = {}
 mMT.knownTeleports = {
 	favorites = {},
 	toys = {},
@@ -33,6 +30,9 @@ mMT.knownTeleports = {
 	tww = {},
 	dungeonportals = {},
 }
+
+local textString = ""
+local menus = {}
 local teleportsIDs = {
 	favorites = {},
 	toys = {
@@ -625,7 +625,6 @@ local function OnClick(self, button)
 		if not mMT.menu then mMT:BuildMenus() end
 
 		UpdateMenus()
-
 		mMT:DropDown(menus.main, mMT.menu, self, 260, 2)
 	end
 end
@@ -694,9 +693,7 @@ local function OnEnter(self)
 		DT.tooltip:AddLine(" ")
 	end
 
-	DT.tooltip:AddLine(MEDIA.leftClick .. " " .. mMT:TC(L["left click to open the small menu."], "tip"))
-	DT.tooltip:AddLine(MEDIA.middleClick .. " " .. mMT:TC(L["middle click to open the Dungeon Teleports menu."], "tip"))
-	DT.tooltip:AddLine(MEDIA.rightClick .. " " .. mMT:TC(L["right click to open the other Teleports menu."], "tip"))
+	DT.tooltip:AddLine(MEDIA.leftClick .. " " .. mMT:TC(L["Left click to open the Teleports menu."], "tip"))
 	DT.tooltip:Show()
 end
 
