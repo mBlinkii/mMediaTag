@@ -14,12 +14,6 @@ local valueString = ""
 local textString = ""
 
 --Variables
-local tracker_demo_item = {
-	[225557] = { isCurrency = false, color = "FF034CF6" },
-	[3090] = { isCurrency = true, color = "FFF68D03" },
-	[3108] = { isCurrency = true, color = "FF034CF6" },
-}
-
 local tracker_default_ids = {
 	-- crest
 	[2914] = { isCurrency = true, color = "FF84FF4F" },
@@ -37,7 +31,7 @@ local tracker_default_ids = {
 
 	-- pvp
 	[2123] = { isCurrency = true, color = "FFFF4117" }, -- Bloody Tokens
-	[1791] = { isCurrency = true, color = "FFFCE03D" }, -- Honor
+	[1792] = { isCurrency = true, color = "FFFCE03D" }, -- Honor
 	[1602] = { isCurrency = true, color = "FFFCE03D" }, -- Conquest
 
 	-- misc
@@ -48,7 +42,7 @@ local tracker_default_ids = {
 local tracker_ids_db = {}
 local is_currency_db = {}
 
-local function GetItemInfos(id)
+function module:GetItemInfos(id)
 	local itemName, itemLink, _, _, _, _, _, itemStackCount, _, itemTexture, _, _, _, _, _, _, _ = GetItemInfo(id)
 	if itemName and itemLink and itemTexture then
 		return {
@@ -61,7 +55,7 @@ local function GetItemInfos(id)
 	end
 end
 
-local function GetCurrencyInfos(id)
+function module:GetCurrencyInfos(id)
 	local info = GetCurrencyInfo(id)
 	if info then
 		is_currency_db[id] = true
@@ -78,26 +72,30 @@ end
 local function OnEvent(self)
 	local db = E.db.mMT.datatexts.tracker
 	local id = tonumber(self.name)
-	local info = (is_currency_db[id] and GetCurrencyInfos(id) or GetItemInfos(id))
+	local info = (is_currency_db[id] and module:GetCurrencyInfos(id) or module:GetItemInfos(id))
 	if info then
 		self.tracker_info = info
 		local textJustify = self.text:GetJustifyH()
 		self.text:SetText(info.name)
 
-		local name, icon
+		local name, icon, value
 
-		if not db.hide_if_zero then
-			if db.name then name = info.name end
+		if db.name then name = info.name end
 
-			if db.icon then icon = info.icon end
+		if db.icon then icon = info.icon end
 
-			if db.short_number and info.count >= 1000 then info.count = E:ShortValue(info.count, 2) end
+		if db.short_number and info.count >= 1000 then info.count = E:ShortValue(info.count, 2) end
 
-			if textJustify == "RIGHT" then
-				self.text:SetFormattedText("%s %s%s", format(valueString, info.count), format(textString, name or ""), icon or "")
-			else
-				self.text:SetFormattedText("%s%s %s", icon or "", format(textString, name or ""), format(valueString, info.count))
-			end
+		value = info.count
+		if db.show_max and info.cap > 0 then
+			if db.short_number and info.cap >= 1000 then info.cap = E:ShortValue(info.cap, 2) end
+			value = format("%s/%s", info.count, info.cap)
+		end
+
+		if textJustify == "RIGHT" then
+			self.text:SetFormattedText("%s %s%s", format(valueString, value), format(textString, name or ""), icon or "")
+		else
+			self.text:SetFormattedText("%s%s %s", icon or "", format(textString, name or ""), format(valueString, value))
 		end
 	end
 end
@@ -118,8 +116,9 @@ end
 
 local function ValueColorUpdate(self, hex)
 	local db = E.db.mMT.datatexts.tracker
-	local textHex = E.db.mMT.datatexts.text.override_text and "|c" .. MEDIA.color.override_text.hex or db.colored and "|c" .. tracker_ids_db[tonumber(self.name)].color or hex
-	local valueHex = E.db.mMT.datatexts.text.override_value and "|c" .. MEDIA.color.override_value.hex or db.colored and "|c" .. tracker_ids_db[tonumber(self.name)].color or hex
+	local custom = tracker_ids_db[tonumber(self.name)] and tracker_ids_db[tonumber(self.name)].color
+	local textHex = E.db.mMT.datatexts.text.override_text and "|c" .. MEDIA.color.override_text.hex or db.colored and "|c" .. custom or hex
+	local valueHex = E.db.mMT.datatexts.text.override_value and "|c" .. MEDIA.color.override_value.hex or db.colored and "|c" .. custom or hex
 
 	textString = strjoin("", textHex, "%s|r")
 	valueString = strjoin("", valueHex, "%s|r")
@@ -127,11 +126,13 @@ local function ValueColorUpdate(self, hex)
 end
 
 local function LoadIDs()
-	local custom_ids = tracker_demo_item --E.db.mMT.datatexts.tracker.custom
-	if next(custom_ids) then
-		for id, t in pairs(custom_ids) do
+	tracker_ids_db = {}
+	is_currency_db = {}
+
+	if next(E.db.mMT.datatexts.tracker.custom) then
+		for id, t in pairs(E.db.mMT.datatexts.tracker.custom) do
 			if id then
-				local infos = (t.isCurrency and GetCurrencyInfos(id) or GetItemInfos(id))
+				local infos = (t.isCurrency and module:GetCurrencyInfos(id) or module:GetItemInfos(id))
 				if infos then
 					tracker_ids_db[id] = infos
 					tracker_ids_db[id].color = t.color
@@ -142,7 +143,7 @@ local function LoadIDs()
 
 	for id, t in pairs(tracker_default_ids) do
 		if id then
-			local infos = (t.isCurrency and GetCurrencyInfos(id) or GetItemInfos(id))
+			local infos = (t.isCurrency and module:GetCurrencyInfos(id) or module:GetItemInfos(id))
 			if infos then
 				tracker_ids_db[id] = infos
 				tracker_ids_db[id].color = t.color
@@ -163,10 +164,10 @@ function module:Initialize()
 	LoadIDs()
 
 	if next(tracker_ids_db) then
-		print("register dt")
 		for id, info in pairs(tracker_ids_db) do
-			print("add dt", id, info)
-			DT:RegisterDatatext(id, _G.CURRENCY, { "CHAT_MSG_CURRENCY", "CURRENCY_DISPLAY_UPDATE" }, OnEvent, nil, nil, OnEnter, OnLeave, "mMT - " .. info.name, nil, ValueColorUpdate)
+			if not DT.RegisteredDataTexts[id] then
+				DT:RegisterDatatext(id, _G.CURRENCY, { "CHAT_MSG_CURRENCY", "CURRENCY_DISPLAY_UPDATE" }, OnEvent, nil, nil, OnEnter, OnLeave, "mMT - " .. info.name, nil, ValueColorUpdate)
+			end
 		end
 	end
 end

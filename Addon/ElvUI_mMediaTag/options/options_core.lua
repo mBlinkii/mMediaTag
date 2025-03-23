@@ -104,6 +104,13 @@ mMT.options = {
 					childGroups = "tab",
 					args = {},
 				},
+				misc_tracker = {
+					order = 6,
+					type = "group",
+					name = mMT:AddSettingsIcon(L["Tracker"], "shop"),
+					childGroups = "tab",
+					args = {},
+				},
 			},
 		},
 		dock = {
