@@ -632,6 +632,24 @@ E:AddTag("mHealth:short:ndp", "UNIT_HEALTH UNIT_MAXHEALTH UNIT_CONNECTION PLAYER
 	end
 end)
 
+E:AddTag("mHealth:short:ndp:nofull", "UNIT_HEALTH UNIT_MAXHEALTH UNIT_CONNECTION PLAYER_FLAGS_CHANGED PLAYER_UPDATE_RESTING", function(unit)
+	local isAFK = UnitIsAFK(unit)
+
+	if isAFK then
+		return _TAGS.mAFK(unit)
+	else
+		if (UnitIsDead(unit)) or (UnitIsGhost(unit)) or (not UnitIsConnected(unit)) then
+			return _TAGS.mStatus(unit)
+		else
+			local currentHealth = UnitHealth(unit)
+			local maxHealth = UnitHealthMax(unit)
+			local deficit = maxHealth - currentHealth
+
+			if deficit > 0 and currentHealth > 0 then return NoDecimalPercent(currentHealth, maxHealth, "%") end
+		end
+	end
+end)
+
 E:AddTag("mHealth:noStatus:short", "UNIT_HEALTH UNIT_MAXHEALTH", function(unit)
 	local currentHealth = UnitHealth(unit)
 	local maxHealth = UnitHealthMax(unit)
@@ -1734,6 +1752,13 @@ end)
 E:AddTag("mPower:percent:hidefull", "UNIT_DISPLAYPOWER UNIT_POWER_FREQUENT UNIT_MAXPOWER PLAYER_ROLES_ASSIGNED GROUP_ROSTER_UPDATE UNIT_COMBAT", function(unit)
 	local power = _TAGS.perpp(unit)
 	if power ~= 100 then return _TAGS["mPower:percent"](unit, power) end
+end)
+
+E:AddTag("mPower:percent:custom", "UNIT_DISPLAYPOWER UNIT_POWER_FREQUENT UNIT_MAXPOWER PLAYER_ROLES_ASSIGNED GROUP_ROSTER_UPDATE UNIT_COMBAT", function(unit, _, arg1)
+	if not arg1 then return end
+	local power = _TAGS.perpp(unit)
+	print(power, arg1, tonumber(arg1))
+	if power and power < tonumber(arg1) then return _TAGS["mPower:percent"](unit, power) end
 end)
 
 E:AddTag("mPower:percent:heal", "UNIT_DISPLAYPOWER UNIT_POWER_FREQUENT UNIT_MAXPOWER PLAYER_ROLES_ASSIGNED GROUP_ROSTER_UPDATE", function(unit, power)
