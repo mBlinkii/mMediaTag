@@ -202,11 +202,6 @@ function mMT:UpdateColors()
 	instanceDifficulty[216].c = db.quest.color
 	instanceDifficulty[220].c = db.story.color
 
-	-- [205] = { c = "|CFF00FCD2", d = "AI" },
-	-- [208] = { c = "|CFFAB5C07", d = "DELVE" },
-	-- [216] = { c = "|CFFFCA400", d = "QUEST" },
-	-- [220] = { c = "|CFF9700FC", d = "STORY" },
-
 	colors.nhc = db.nhc
 	colors.hc = db.hc
 	colors.m = db.m
@@ -229,20 +224,6 @@ function mMT:UpdateColors()
 	colors.story = db.story
 end
 
-function mMT:ShortName(name)
-	local WordA, WordB, WordC, WordD, WordE, WordF, WordG = strsplit(" ", name, 6)
-
-	WordA = WordA and E:ShortenString(WordA, 1) or ""
-	WordB = WordB and E:ShortenString(WordB, 1) or ""
-	WordC = WordC and E:ShortenString(WordC, 1) or ""
-	WordD = WordD and E:ShortenString(WordD, 1) or ""
-	WordE = WordE and E:ShortenString(WordE, 1) or ""
-	WordF = WordF and E:ShortenString(WordF, 1) or ""
-	WordG = WordG and E:ShortenString(WordG, 1) or ""
-
-	return WordA .. WordB .. WordC .. WordD .. WordE .. WordF .. WordG
-end
-
 local function GetIconSettings(button)
 	local defaults = P.general.minimap.icons[button]
 	local profile = E.db.general.minimap.icons[button]
@@ -257,75 +238,83 @@ local function GetKeystoneLevelandColor()
 		return format("%s%s|r", colors.mpa.color, keyStoneLevel)
 	elseif keyStoneLevel <= 9 then
 		color = mMT:ColorFade(E.db.mMT.instancedifficulty.mpa, E.db.mMT.instancedifficulty.mpb, percentValue[keyStoneLevel])
-		if color then
-			return format("%s%s|r", color.color, keyStoneLevel)
-		end
+		if color then return format("%s%s|r", color.color, keyStoneLevel) end
 	elseif keyStoneLevel <= 14 then
 		color = mMT:ColorFade(E.db.mMT.instancedifficulty.mpb, E.db.mMT.instancedifficulty.mpc, percentValue[keyStoneLevel])
-		if color then
-			return format("%s%s|r", color.color, keyStoneLevel)
-		end
+		if color then return format("%s%s|r", color.color, keyStoneLevel) end
 	elseif keyStoneLevel <= 19 then
 		color = mMT:ColorFade(E.db.mMT.instancedifficulty.mpc, E.db.mMT.instancedifficulty.mpd, percentValue[keyStoneLevel])
-		if color then
-			return format("%s%s|r", color.color, keyStoneLevel)
-		end
+		if color then return format("%s%s|r", color.color, keyStoneLevel) end
 	elseif keyStoneLevel >= 24 then
 		color = mMT:ColorFade(E.db.mMT.instancedifficulty.mpd, E.db.mMT.instancedifficulty.mpe, percentValue[keyStoneLevel])
-		if color then
-			return format("%s%s|r", color.color, keyStoneLevel)
-		end
+		if color then return format("%s%s|r", color.color, keyStoneLevel) end
 	elseif keyStoneLevel >= 29 then
 		color = mMT:ColorFade(E.db.mMT.instancedifficulty.mpe, E.db.mMT.instancedifficulty.mpf, percentValue[keyStoneLevel])
-		if color then
-			return format("%s%s|r", color.color, keyStoneLevel)
-		end
+		if color then return format("%s%s|r", color.color, keyStoneLevel) end
 	else
 		return format("%s%s|r", colors.mpf.color, keyStoneLevel)
 	end
 end
 
-function mMT:GetDungeonInfo(datatext, short, stageBlock, hideDelve)
-	local name, _, difficultyID, _, _, _, _, instanceID, instanceGroupSize, _ = GetInstanceInfo()
-	local _, InstanceType = IsInInstance()
-	name = shortNames[instanceID] or mMT:ShortName(name)
+function mMT:GetCurrentDelveTier()
+	local widgetIDs = {
+		{ id = 6183, tierType = "numbered" },
+		{ id = 6184, tierType = "?" },
+		{ id = 6185, tierType = "??" },
+	}
 
-	if name and not (hideDelve and difficultyID == 208) then
-		local text = ""
-		local difficultyColor = instanceDifficulty[difficultyID] and instanceDifficulty[difficultyID].c or "|CFFFFFFFF"
-		local difficultyShort = instanceDifficulty[difficultyID] and instanceDifficulty[difficultyID].d or ""
-		local isGuildParty = InGuildParty()
-		if E.Retail and difficultyID == 8 and C_MythicPlus.IsMythicPlusActive() and C_ChallengeMode.GetActiveChallengeMapID() then
-			if datatext and not short then
-				text = format("%s%s|r %s%s|r %s", isGuildParty and colors.guild.color or colors.name.color or "|CFFFFFFFF", name, difficultyColor, difficultyShort, GetKeystoneLevelandColor())
-			elseif short then
-				text = format("%s%s|r %s", difficultyColor, difficultyShort, GetKeystoneLevelandColor())
-			else
-				text = format("%s%s|r\n%s%s|r %s", isGuildParty and colors.guild.color or colors.name.color or "|CFFFFFFFF", name, difficultyColor, difficultyShort, GetKeystoneLevelandColor())
-			end
-		elseif InstanceType == "pvp" or InstanceType == "arena" then
-			difficultyColor = instanceDifficulty[34] and instanceDifficulty[34].c or "|CFFFFFFFF"
-			difficultyShort = instanceDifficulty[34] and instanceDifficulty[34].d or ""
-			if datatext and not short then
-				text = format("%s%s|r %s%s|r", isGuildParty and colors.guild.color or colors.name.color or "|CFFFFFFFF", name, difficultyColor, difficultyShort)
-			elseif short then
-				text = format("%s%s|r", difficultyColor, difficultyShort)
-			else
-				text = format("%s%s|r\n%s%s|r", isGuildParty and colors.guild.color or colors.name.color or "|CFFFFFFFF", name, difficultyColor, difficultyShort)
-			end
-		else
-			if datatext and not short then
-				text = format("%s%s|r %s%s|r |CFFF7DC6F%s|r", isGuildParty and colors.guild.color or colors.name.color or "|CFFFFFFFF", name, difficultyColor, difficultyShort, instanceGroupSize)
-			elseif short then
-				text = format("%s%s|r %s%s|r", isGuildParty and colors.guild.color or colors.name.color or "|CFFFFFFFF", name, difficultyColor, difficultyShort)
-			elseif stageBlock then
-				text = format("%s|r %s%s|r", isGuildParty and colors.guild.color or colors.name.color or "|CFFFFFFFF", difficultyColor, difficultyShort)
-			else
-				text = format("%s%s|r\n%s%s|r |CFFF7DC6F%s|r", isGuildParty and colors.guild.color or colors.name.color or "|CFFFFFFFF", name, difficultyColor, difficultyShort, instanceGroupSize)
-			end
+	for _, widget in ipairs(widgetIDs) do
+		local delveInfo = C_UIWidgetManager.GetScenarioHeaderDelvesWidgetVisualizationInfo(widget.id)
+		if delveInfo and delveInfo.shownState == Enum.WidgetShownState.Shown then
+			if widget.tierType ~= "numbered" then return widget.tierType end
+
+			local tierText = delveInfo.tierText or ""
+			return tonumber(tierText:match("%d+")) or 1
 		end
-		return text
 	end
+
+	return 1
+end
+
+local function FormatText(name, difficultyColor, difficultyShort, extraText, isGuildParty)
+    local colorPrefix = isGuildParty and colors.guild.color or colors.name.color or "|CFFFFFFFF"
+    return format("%s%s|r %s%s|r %s", colorPrefix, name, difficultyColor, difficultyShort, extraText or "")
+end
+
+local function GetDifficultyInfo(difficultyID)
+    local difficulty = instanceDifficulty[difficultyID] or {}
+    return difficulty.c or "|CFFFFFFFF", difficulty.d or ""
+end
+
+function mMT:GetDungeonInfo(datatext, short, stageBlock, hideDelve)
+    local name, _, difficultyID, _, _, _, _, instanceID, instanceGroupSize = GetInstanceInfo()
+    local _, instanceType = IsInInstance()
+    name = shortNames[instanceID] or E:ShortenString(name, 6) .. "..."
+
+    if not name or (hideDelve and difficultyID == 208) then return end
+
+    local difficultyColor, difficultyShort = GetDifficultyInfo(difficultyID)
+    local isGuildParty = InGuildParty()
+    local text = ""
+
+    if E.Retail and difficultyID == 8 and C_MythicPlus.IsMythicPlusActive() and C_ChallengeMode.GetActiveChallengeMapID() then
+        local keystoneText = GetKeystoneLevelandColor()
+        text = short and format("%s%s|r %s", difficultyColor, difficultyShort, keystoneText)
+            or FormatText(name, difficultyColor, difficultyShort, keystoneText, isGuildParty)
+    elseif difficultyID == 208 then
+        local delveTier = mMT:GetCurrentDelveTier()
+        text = format("%s%s|r\n%s%s|r |CFFF7DC6F%s|r", isGuildParty and colors.guild.color or colors.name.color, name, difficultyColor, difficultyShort, delveTier)
+    elseif instanceType == "pvp" or instanceType == "arena" then
+        difficultyColor, difficultyShort = GetDifficultyInfo(34)
+        text = short and format("%s%s|r", difficultyColor, difficultyShort)
+            or FormatText(name, difficultyColor, difficultyShort, nil, isGuildParty)
+    else
+        local extraText = stageBlock and "" or format("|CFFF7DC6F%s|r", instanceGroupSize)
+        text = short and format("%s%s|r %s%s|r", isGuildParty and colors.guild.color or colors.name.color, name, difficultyColor, difficultyShort)
+            or FormatText(name, difficultyColor, difficultyShort, extraText, isGuildParty)
+    end
+
+    return text
 end
 
 function UpdateDifficulty()
@@ -333,21 +322,15 @@ function UpdateDifficulty()
 	local difficultyGuild = _G.GuildInstanceDifficulty
 	local battlefieldFrame = _G.MiniMapBattlefieldFrame
 
-	if difficulty then
-		difficulty:Hide()
-	end
-	if difficultyGuild then
-		difficultyGuild:Hide()
-	end
-	if battlefieldFrame then
-		battlefieldFrame:Hide()
-	end
+	if difficulty then difficulty:Hide() end
+	if difficultyGuild then difficultyGuild:Hide() end
+	if battlefieldFrame then battlefieldFrame:Hide() end
 
-	local name, _, _, _, _, _, _, _, _, _ = GetInstanceInfo()
+	local name, _, diffID, _, _, _, _, instanceID, _, _ = GetInstanceInfo()
 	local inInstance, _ = IsInInstance()
 
 	if mIDF then
-		if inInstance and name then
+		if inInstance or (diffID == 208 and C_DelvesUI.HasActiveDelve(instanceID)) and name then
 			mIDF.Text:SetText(mMT:GetDungeonInfo())
 			mIDF:Show()
 		else
