@@ -93,7 +93,7 @@ mMT.options.args.datatexts.args.misc_tracker.args = {
 					selected_id = tonumber(value)
 					if selected_id then
 						E.db.mMT.datatexts.tracker.custom[selected_id] = { isCurrency = true, color = "FFFFFFFF" }
-                        E:StaticPopup_Show("CONFIG_RL")
+						E:StaticPopup_Show("CONFIG_RL")
 					else
 						mMT:Print(L["!!Error - this is not an ID."])
 					end
@@ -156,7 +156,7 @@ mMT.options.args.datatexts.args.misc_tracker.args = {
 								if info then
 									local db = E.db.mMT.datatexts.tracker
 									local name, icon, value
-									local textString, valueString, hex = "", "", ""
+									local textString, valueString = "", ""
 
 									if db.name then name = info.name end
 
@@ -166,8 +166,8 @@ mMT.options.args.datatexts.args.misc_tracker.args = {
 
 									value = info.count
 
-									local textHex = E.db.mMT.datatexts.text.override_text and "|c" .. MEDIA.color.override_text.hex or db.colored and "|c" .. db.custom[selected_id].color or hex
-									local valueHex = E.db.mMT.datatexts.text.override_value and "|c" .. MEDIA.color.override_value.hex or db.colored and "|c" .. db.custom[selected_id].color or hex
+									local textHex = E.db.mMT.datatexts.text.override_text and "|c" .. MEDIA.color.override_text.hex or db.colored and "|c" .. db.custom[selected_id].color
+									local valueHex = E.db.mMT.datatexts.text.override_value and "|c" .. MEDIA.color.override_value.hex or db.colored and "|c" .. db.custom[selected_id].color
 
 									textString = strjoin("", textHex, "%s|r")
 									valueString = strjoin("", valueHex, "%s|r")
@@ -177,7 +177,7 @@ mMT.options.args.datatexts.args.misc_tracker.args = {
 										value = format("%s/%s", info.count, info.cap)
 									end
 
-									return format("%s%s %s", icon or "", format(textString, name or ""), format(valueString, value))
+									return format("%s %s %s", icon or "", format(textString, name or ""), format(valueString, value))
 								end
 							end
 							return ""
@@ -205,7 +205,6 @@ mMT.options.args.datatexts.args.misc_tracker.args = {
 						get = function(info)
 							if selected_id and E.db.mMT.datatexts.tracker.custom[selected_id] then
 								local r, g, b = mMT:HexToRGB(E.db.mMT.datatexts.tracker.custom[selected_id].color)
-								M.Tracker:UpdateAll()
 								return r, g, b
 							else
 								return 1, 1, 1
@@ -215,6 +214,8 @@ mMT.options.args.datatexts.args.misc_tracker.args = {
 							if selected_id and E.db.mMT.datatexts.tracker.custom[selected_id] then
 								local hex = E:RGBToHex(r, g, b, "ff")
 								E.db.mMT.datatexts.tracker.custom[selected_id].color = hex
+								E.Options.args.mMT.args.datatexts.args.misc_tracker.args.custom_ids.args.custom_ids_settings.args.name.name(nil, hex)
+								M.Tracker:UpdateAll()
 							end
 						end,
 					},

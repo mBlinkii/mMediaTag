@@ -10,10 +10,10 @@ local GetCurrencyInfo = C_CurrencyInfo.GetCurrencyInfo
 local GetItemInfo = GetItemInfo
 local strjoin = strjoin
 
-local valueString = ""
-local textString = ""
-
 --Variables
+local valueString, textString = "", ""
+local tracker_ids_db, is_currency_db = {}, {}
+
 local tracker_default_ids = {
 	-- crest
 	[2914] = { isCurrency = true, color = "FF84FF4F" },
@@ -39,9 +39,6 @@ local tracker_default_ids = {
 	[1166] = { isCurrency = true, color = "FF54BAFF" }, -- Timewarped Badge
 }
 
-local tracker_ids_db = {}
-local is_currency_db = {}
-
 function module:GetItemInfos(id)
 	local itemName, itemLink, _, _, _, _, _, itemStackCount, _, itemTexture, _, _, _, _, _, _, _ = GetItemInfo(id)
 	if itemName and itemLink and itemTexture then
@@ -51,6 +48,7 @@ function module:GetItemInfos(id)
 			link = itemLink,
 			count = GetItemCount(id, true),
 			cap = itemStackCount,
+			isCurrency = false,
 		}
 	end
 end
@@ -65,38 +63,35 @@ function module:GetCurrencyInfos(id)
 			link = format("|Hcurrency:%s|h", id),
 			count = info.quantity,
 			cap = info.maxQuantity,
+			isCurrency = true,
 		}
 	end
 end
 
-local function OnEvent(self)
+local function OnEvent(self, event, id)
+	if event == "ITEM_COUNT_CHANGED" and id ~= self.name then return end
+
 	local db = E.db.mMT.datatexts.tracker
 	local id = tonumber(self.name)
-	local info = (is_currency_db[id] and module:GetCurrencyInfos(id) or module:GetItemInfos(id))
-	if info then
-		self.tracker_info = info
-		local textJustify = self.text:GetJustifyH()
-		self.text:SetText(info.name)
+	local info = is_currency_db[id] and module:GetCurrencyInfos(id) or module:GetItemInfos(id)
+	if not info then return end
 
-		local name, icon, value
+	self.tracker_info = info
+	self.text:SetText(info.name)
 
-		if db.name then name = info.name end
+	local name = db.name and info.name or nil
+	local icon = db.icon and info.icon or nil
+	local value = db.short_number and info.count >= 1000 and E:ShortValue(info.count, 2) or info.count
 
-		if db.icon then icon = info.icon end
+	if db.show_max and info.cap > 0 then
+		local cap = db.short_number and info.cap >= 1000 and E:ShortValue(info.cap, 2) or info.cap
+		value = format("%s/%s", value, cap)
+	end
 
-		if db.short_number and info.count >= 1000 then info.count = E:ShortValue(info.count, 2) end
-
-		value = info.count
-		if db.show_max and info.cap > 0 then
-			if db.short_number and info.cap >= 1000 then info.cap = E:ShortValue(info.cap, 2) end
-			value = format("%s/%s", info.count, info.cap)
-		end
-
-		if textJustify == "RIGHT" then
-			self.text:SetFormattedText("%s %s%s", format(valueString, value), format(textString, name or ""), icon or "")
-		else
-			self.text:SetFormattedText("%s%s %s", icon or "", format(textString, name or ""), format(valueString, value))
-		end
+	if self.text:GetJustifyH() == "RIGHT" then
+		self.text:SetFormattedText("%s %s %s", format(valueString, value), format(textString, name or ""), icon or "")
+	else
+		self.text:SetFormattedText("%s %s %s", icon or "", format(textString, name or ""), format(valueString, value))
 	end
 end
 
@@ -126,8 +121,7 @@ local function ValueColorUpdate(self, hex)
 end
 
 local function LoadIDs()
-	tracker_ids_db = {}
-	is_currency_db = {}
+	tracker_ids_db, is_currency_db = {}, {}
 
 	if next(E.db.mMT.datatexts.tracker.custom) then
 		for id, t in pairs(E.db.mMT.datatexts.tracker.custom) do
@@ -166,7 +160,11 @@ function module:Initialize()
 	if next(tracker_ids_db) then
 		for id, info in pairs(tracker_ids_db) do
 			if not DT.RegisteredDataTexts[id] then
-				DT:RegisterDatatext(id, _G.CURRENCY, { "CHAT_MSG_CURRENCY", "CURRENCY_DISPLAY_UPDATE" }, OnEvent, nil, nil, OnEnter, OnLeave, "mMT - " .. info.name, nil, ValueColorUpdate)
+				if is_currency_db[id] then
+					DT:RegisterDatatext(id, _G.CURRENCY, { "CHAT_MSG_CURRENCY", "CURRENCY_DISPLAY_UPDATE" }, OnEvent, nil, nil, OnEnter, OnLeave, "mMT - " .. info.name, nil, ValueColorUpdate)
+				else
+					DT:RegisterDatatext(id, _G.ITEMS, { "ITEM_COUNT_CHANGED" }, OnEvent, nil, nil, OnEnter, OnLeave, "mMT - " .. info.name .. " (" .. id .. ")", nil, ValueColorUpdate)
+				end
 			end
 		end
 	end
