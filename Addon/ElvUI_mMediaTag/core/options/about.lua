@@ -21,6 +21,7 @@ local credits = {
 	"ElioteMarcondes",
 	"Heyallo", -- thank you for the troubleshooting
 	"Pastafarian",
+	"nhtwolf",
 	"Tukui Community - tukui.org",
 }
 local CREDITS_TEXT = tconcat(credits, "|n")
