@@ -1757,7 +1757,6 @@ end)
 E:AddTag("mPower:percent:custom", "UNIT_DISPLAYPOWER UNIT_POWER_FREQUENT UNIT_MAXPOWER PLAYER_ROLES_ASSIGNED GROUP_ROSTER_UPDATE UNIT_COMBAT", function(unit, _, arg1)
 	if not arg1 then return end
 	local power = _TAGS.perpp(unit)
-	print(power, arg1, tonumber(arg1))
 	if power and power < tonumber(arg1) then return _TAGS["mPower:percent"](unit, power) end
 end)
 
