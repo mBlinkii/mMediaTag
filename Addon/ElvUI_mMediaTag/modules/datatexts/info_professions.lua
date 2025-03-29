@@ -150,23 +150,20 @@ end
 
 local function UpdateMenu()
 	local player_professions = UpdatePlayerProfessions()
+	menu = {}
 
-	DT.tooltip:AddLine(mMT:TC(TRADE_SKILLS, "title"))
-	DT.tooltip:AddLine(" ")
+	local function AddProfessionLines(professions, titleKey, noProfessionsKey)
+		if not professions then
+			tinsert(menu, { text = mMT:TC(noProfessionsKey, "red"), notClickable = true })
+			return
+		end
 
-	tinsert(menu, { text = mMT:TC(TRADE_SKILLS, "title"), isTitle = true, notClickable = true })
-	tinsert(menu, { text = " ", isTitle = true, notClickable = true })
-	local function AddProfessionLines(professions, titleKey)
-		if not professions then return end
 		tinsert(menu, { text = mMT:TC(titleKey, "title"), isTitle = true, notClickable = true })
 		for _, profession in pairs(professions) do
 			local name, icon, spell, skill, skillModifier = profession.name, profession.icon, profession.spell, profession.skill, profession.skillModifier
-			local lineLeft = name
-			local lineRight = skill .. " " .. skillModifier
-
 			tinsert(menu, {
-				text = lineLeft,
-				right_text = lineRight,
+				text = name,
+				right_text = skill .. " " .. skillModifier,
 				icon = E.db.mMT.datatexts.professions.menu_icons and icon,
 				func = function()
 					CastSpell(spell, "Spell")
@@ -175,41 +172,41 @@ local function UpdateMenu()
 		end
 	end
 
-	if player_professions.main or player_professions.secondary then
-		-- Add main professions
-		if player_professions.main then
-			AddProfessionLines(player_professions.main, L["Main Professions"])
-		else
-			tinsert(menu, { text = mMT:TC(L["No Main Professions"], "red"), notClickable = true })
-		end
+	-- Add title and spacing
+	tinsert(menu, { text = mMT:TC(TRADE_SKILLS, "title"), isTitle = true, notClickable = true })
+	tinsert(menu, { text = " ", isTitle = true, notClickable = true })
 
-		-- Add secondary professions
-		if player_professions.secondary then
-			if player_professions.main then tinsert(menu, { text = " ", isTitle = true, notClickable = true }) end
-			AddProfessionLines(player_professions.secondary, L["Secondary Professions"])
-		else
-			tinsert(menu, { text = mMT:TC(L["No Secondary Professions"], "red"), notClickable = true })
-		end
-
-		if player_professions.extra then
-			tinsert(menu, { text = " ", isTitle = true, notClickable = true })
-			tinsert(menu, { text = L["Miscellaneous"], notClickable = true })
-			local name, icon, spell, skill = player_professions.extra.name, player_professions.extra.icon, player_professions.extra.spell, player_professions.extra.skill
-			local lineLeft = name
-			local lineRight = skill
-
-			tinsert(menu, {
-				text = lineLeft,
-				right_text = lineRight,
-				icon = E.db.mMT.datatexts.professions.menu_icons and icon,
-				func = function()
-					CastSpell(spell, "Spell")
-				end,
-			})
-		end
+	-- Add main professions
+	if player_professions.main then
+		AddProfessionLines(player_professions.main, L["Main Professions"], L["No Main Professions"])
 	else
-		tinsert(menu, { text = mMT:TC(L["No Professions"], "red"), notClickable = true })
+		tinsert(menu, { text = mMT:TC(L["No Main Professions"], "red"), notClickable = true })
 	end
+
+	-- Add secondary professions
+	if player_professions.secondary then
+		if player_professions.main then tinsert(menu, { text = " ", isTitle = true, notClickable = true }) end
+		AddProfessionLines(player_professions.secondary, L["Secondary Professions"], L["No Secondary Professions"])
+	else
+		tinsert(menu, { text = mMT:TC(L["No Secondary Professions"], "red"), notClickable = true })
+	end
+
+	-- Add extra professions
+	if player_professions.extra then
+		tinsert(menu, { text = " ", isTitle = true, notClickable = true })
+		tinsert(menu, { text = mMT:TC(L["Miscellaneous"], "title"), isTitle = true, notClickable = true })
+
+		local name, icon, spell, skill = player_professions.extra.name, player_professions.extra.icon, player_professions.extra.spell, player_professions.extra.skill
+		tinsert(menu, {
+			text = name,
+			right_text = skill,
+			icon = E.db.mMT.datatexts.professions.menu_icons and icon,
+			macro = "/cast " .. name,
+		})
+	end
+
+	-- Handle no professions case
+	if not player_professions.main and not player_professions.secondary and not player_professions.extra then tinsert(menu, { text = mMT:TC(L["No Professions"], "red"), notClickable = true }) end
 end
 
 local function OnLeave(self)
