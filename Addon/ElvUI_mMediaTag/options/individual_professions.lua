@@ -19,6 +19,7 @@ mMT.options.args.datatexts.args.individual_professions.args = {
 					E.db.mMT.datatexts.individual_professions.icon = value
 					DT:ForceUpdate_DataText("mMT - Cooking")
 					DT:ForceUpdate_DataText("mMT - Fishing")
+					DT:ForceUpdate_DataText("mMT - Archaeology")
 					DT:ForceUpdate_DataText("mMT - Primary Professions")
 					DT:ForceUpdate_DataText("mMT - Secondary Professions")
 				end,

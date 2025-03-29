@@ -17,6 +17,7 @@ mMT.options.args.datatexts.args.general.args = {
 				end,
 				set = function(info, value)
 					E.db.mMT.datatexts.text.override_text = value
+					DT:ForceUpdate_DataText("mMT - Archaeology")
 					DT:ForceUpdate_DataText("mMT - Cooking")
 					DT:ForceUpdate_DataText("mMT - Fishing")
 					DT:ForceUpdate_DataText("mMT - Game menu")
@@ -44,6 +45,7 @@ mMT.options.args.datatexts.args.general.args = {
 					E.db.mMT.datatexts.text.text = hex
 					MEDIA.color.override_text = CreateColorFromHexString(hex)
 					MEDIA.color.override_text.hex = hex
+					DT:ForceUpdate_DataText("mMT - Archaeology")
 					DT:ForceUpdate_DataText("mMT - Cooking")
 					DT:ForceUpdate_DataText("mMT - Fishing")
 					DT:ForceUpdate_DataText("mMT - Game menu")
@@ -63,6 +65,7 @@ mMT.options.args.datatexts.args.general.args = {
 				end,
 				set = function(info, value)
 					E.db.mMT.datatexts.text.override_value = value
+					DT:ForceUpdate_DataText("mMT - Archaeology")
 					DT:ForceUpdate_DataText("mMT - Cooking")
 					DT:ForceUpdate_DataText("mMT - Fishing")
 					DT:ForceUpdate_DataText("mMT - Game menu")
@@ -90,6 +93,7 @@ mMT.options.args.datatexts.args.general.args = {
 					E.db.mMT.datatexts.text.value = hex
 					MEDIA.color.override_value = CreateColorFromHexString(hex)
 					MEDIA.color.override_value.hex = hex
+					DT:ForceUpdate_DataText("mMT - Archaeology")
 					DT:ForceUpdate_DataText("mMT - Cooking")
 					DT:ForceUpdate_DataText("mMT - Fishing")
 					DT:ForceUpdate_DataText("mMT - Game menu")

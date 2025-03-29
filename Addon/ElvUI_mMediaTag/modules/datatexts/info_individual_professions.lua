@@ -10,14 +10,25 @@ local GetProfessionInfo = GetProfessionInfo
 local CastSpell = CastSpell
 
 local valueString, textString = "", ""
-local iconString = "|T%s:14:14:0:0:64:64:5:59:5:59|t"
 local professions = {
-	["mMT - Cooking"] = { name = L["Cooking"], icons = { "cooking_a.tga", "cooking_b.tga" }, profession = select(5, GetProfessions()) },
-	["mMT - Fishing"] = { name = L["Fishing"], icons = { "fishing_a.tga", "fishing_b.tga" }, profession = select(4, GetProfessions()) },
-	["mMT - Primary Professions"] = { name = L["Primary Profession"], icons = { "primary_a.tga", "primary_b.tga" }, profession = select(1, GetProfessions()) },
-	["mMT - Secondary Professions"] = { name = L["Secondary Profession"], icons = { "secondary_a.tga", "secondary_b.tga" }, profession = select(2, GetProfessions()) },
+	["mMT - Cooking"] = { name = L["Cooking"], icons = { "cooking_a.tga", "cooking_b.tga" } },
+	["mMT - Fishing"] = { name = L["Fishing"], icons = { "fishing_a.tga", "fishing_b.tga" } },
+	["mMT - Archaeology"] = { name = L["Archaeology"], icons = { "archaeology_a.tga", "archaeology_b.tga" } },
+	["mMT - Primary Professions"] = { name = L["Primary Profession"], icons = { "primary_a.tga", "primary_b.tga" } },
+	["mMT - Secondary Professions"] = { name = L["Secondary Profession"], icons = { "secondary_a.tga", "secondary_b.tga" } },
 }
 
+local player_professions = {}
+
+local function UpdatePlayerProfessions()
+	player_professions = {
+		["mMT - Cooking"] = select(5, GetProfessions()),
+		["mMT - Fishing"] = select(4, GetProfessions()),
+		["mMT - Archaeology"] = select(3, GetProfessions()),
+		["mMT - Secondary Professions"] = select(2, GetProfessions()),
+		["mMT - Primary Professions"] = select(1, GetProfessions()),
+	}
+end
 local function UpdateIcon(name, iconStyle)
 	return iconStyle ~= "default" and "Interface\\AddOns\\ElvUI_mMediaTag\\media\\icons\\datatexts\\" .. professions[name].icons[iconStyle == "colored" and 1 or 2]
 end
@@ -33,9 +44,11 @@ local function GetProfessionInfos(profession)
 end
 
 local function OnEnter(self)
+	if not player_professions[self.name] then UpdatePlayerProfessions() end
+
 	local iconPath = E.db.mMT.datatexts.individual_professions.icon
 	local label = mMT:TC(L["Not learned"], "red")
-	local profession = professions[self.name].profession
+	local profession = player_professions[self.name]
 
 	if profession then
 		local name, icon, skillLevel, maxSkillLevel, skillModifier = GetProfessionInfos(profession)
@@ -55,9 +68,11 @@ local function OnLeave(self)
 end
 
 local function OnEvent(self, event)
+	if not player_professions[self.name] then UpdatePlayerProfessions() end
+
 	local iconPath = E.db.mMT.datatexts.individual_professions.icon
 	local label = L["No Professions"]
-	local profession = professions[self.name].profession
+	local profession = player_professions[self.name]
 
 	if profession then
 		local name, icon, skillLevel, maxSkillLevel, _, spell = GetProfessionInfos(profession)
