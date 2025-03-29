@@ -35,6 +35,9 @@ end
 
 local function UpdateSkillString(skillLevel, maxSkillLevel, skillModifier)
 	local skillText = skillModifier ~= 0 and " |cffffffff+|r" .. skillModifier or ""
+
+	if skillLevel == maxSkillLevel then return mMT:TC(skillLevel, "mark") .. mMT:TC(skillText, "tip") end
+
 	return mMT:TC(skillLevel .. "|cffffffff/|r" .. maxSkillLevel, "mark") .. mMT:TC(skillText, "tip")
 end
 
@@ -54,7 +57,7 @@ local function OnEnter(self)
 		local name, icon, skillLevel, maxSkillLevel, skillModifier = GetProfessionInfos(profession)
 		if iconPath ~= "none" and iconPath ~= "default" then icon = UpdateIcon(self.name, E.db.mMT.datatexts.individual_professions.icon) end
 		icon = E:TextureString(icon, ":14:14")
-		label = icon .. " " .. mMT:TC(name) .. " " .. (skillLevel ~= maxSkillLevel and UpdateSkillString(skillLevel, maxSkillLevel, skillModifier) or "")
+		label = icon .. " " .. mMT:TC(name) .. " " .. (UpdateSkillString(skillLevel, maxSkillLevel, skillModifier) or "")
 	end
 
 	DT.tooltip:AddLine(mMT:TC(TRADE_SKILLS, "title"))
@@ -82,9 +85,9 @@ local function OnEvent(self, event)
 			if iconPath ~= "default" then icon = UpdateIcon(self.name, E.db.mMT.datatexts.individual_professions.icon) end
 			icon = E:TextureString(icon, ":14:14")
 
-			label = icon .. " " .. format(textString, name) .. " " .. (skillLevel ~= maxSkillLevel and format(valueString, skillLevel) or "")
+			label = icon .. " " .. name .. " " .. (skillLevel ~= maxSkillLevel and format(valueString, skillLevel) or "")
 		else
-			label = format(textString, name) .. " " .. (skillLevel ~= maxSkillLevel and format(valueString, skillLevel) or "")
+			label = name .. " " .. (skillLevel ~= maxSkillLevel and format(valueString, skillLevel) or "")
 		end
 	end
 

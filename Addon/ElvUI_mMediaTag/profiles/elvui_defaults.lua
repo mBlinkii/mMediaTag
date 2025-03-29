@@ -64,6 +64,10 @@ P.datatexts = {
 	individual_professions = {
 		icon = "default",
 	},
+	professions = {
+		icon = "prof_a",
+		menu_icons = "default",
+	},
 	menu = {
 		icon = "mmt",
 		menu_icons = true,

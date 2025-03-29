@@ -2,6 +2,7 @@
   <Script file="info_score.lua"/>
   <Script file="misc_teleports.lua"/>
   <Script file="info_individual_professions.lua"/>
+  <Script file="info_professions.lua"/>
   <Script file="misc_gamemenu.lua"/>
   <Script file="misc_tracker.lua"/>
 </Ui>
