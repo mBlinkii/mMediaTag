@@ -90,14 +90,14 @@ mMT.options = {
 					end,
 					args = {},
 				},
-				individual_professions = {
+				misc_individual_professions = {
 					order = 4,
 					type = "group",
 					name = mMT:AddSettingsIcon(L["Individual Professions"], "professions"),
 					childGroups = "tab",
 					args = {},
 				},
-				professions = {
+				misc_professions = {
 					order = 5,
 					type = "group",
 					name = mMT:AddSettingsIcon(L["Professions"], "professions"),
@@ -115,6 +115,13 @@ mMT.options = {
 					order = 7,
 					type = "group",
 					name = mMT:AddSettingsIcon(L["Tracker"], "shop"),
+					childGroups = "tab",
+					args = {},
+				},
+				info_combat_time = {
+					order = 8,
+					type = "group",
+					name = mMT:AddSettingsIcon(L["Combat/Arena Time"], "combat_time"),
 					childGroups = "tab",
 					args = {},
 				},

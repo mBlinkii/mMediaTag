@@ -81,7 +81,12 @@ P.datatexts = {
 		short_number = true,
 		show_max = false,
 		colored = true,
-	}
+	},
+	combat_time = {
+		in_combat = "combat_02",
+		out_of_combat = "combat_13",
+		hide_delay = 5,
+	},
 }
 
 -- media
