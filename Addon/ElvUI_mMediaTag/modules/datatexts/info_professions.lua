@@ -71,7 +71,7 @@ local function UpdatePlayerProfessions(tip)
 	local player_professions = { main = {}, secondary = {} }
 
 	local function ProcessProfessions(profArray, target)
-		for _, prof in ipairs(profArray) do
+		for _, prof in pairs(profArray) do
 			if prof then
 				local name, icon, spell, skill, skillModifier = GetProfessionInfos(prof)
 				target[prof] = {
@@ -112,9 +112,6 @@ local function OnEnter(self)
 
 	local player_professions = UpdatePlayerProfessions(true)
 
-	DT.tooltip:AddLine(mMT:TC(TRADE_SKILLS, "title"))
-	DT.tooltip:AddLine(" ")
-
 	local function AddProfessionLines(professions, titleKey)
 		if not professions then return end
 		DT.tooltip:AddLine(mMT:TC(titleKey, "title"))
@@ -145,6 +142,9 @@ local function OnEnter(self)
 		DT.tooltip:AddLine(mMT:TC(L["No Professions"], "red"))
 	end
 
+	DT.tooltip:AddLine(" ")
+	DT.tooltip:AddLine(MEDIA.leftClick .. " " .. mMT:TC(L["click to open the menu."], "tip"))
+
 	DT.tooltip:Show()
 end
 
@@ -172,30 +172,30 @@ local function UpdateMenu()
 		end
 	end
 
-	-- Add title and spacing
-	tinsert(menu, { text = mMT:TC(TRADE_SKILLS, "title"), isTitle = true, notClickable = true })
-	tinsert(menu, { text = " ", isTitle = true, notClickable = true })
-
 	-- Add main professions
-	if player_professions.main then
-		AddProfessionLines(player_professions.main, L["Main Professions"], L["No Main Professions"])
-	else
-		tinsert(menu, { text = mMT:TC(L["No Main Professions"], "red"), notClickable = true })
-	end
+	AddProfessionLines(player_professions.main, L["Main Professions"], L["No Main Professions"])
 
 	-- Add secondary professions
-	if player_professions.secondary then
-		if player_professions.main then tinsert(menu, { text = " ", isTitle = true, notClickable = true }) end
-		AddProfessionLines(player_professions.secondary, L["Secondary Professions"], L["No Secondary Professions"])
-	else
-		tinsert(menu, { text = mMT:TC(L["No Secondary Professions"], "red"), notClickable = true })
-	end
+
+	if player_professions.secondary and player_professions.main then tinsert(menu, { text = " ", isTitle = true, notClickable = true }) end
+	AddProfessionLines(player_professions.secondary, L["Secondary Professions"], L["No Secondary Professions"])
 
 	-- Add extra professions
-	if player_professions.extra then
-		tinsert(menu, { text = " ", isTitle = true, notClickable = true })
-		tinsert(menu, { text = mMT:TC(L["Miscellaneous"], "title"), isTitle = true, notClickable = true })
+	tinsert(menu, { text = " ", isTitle = true, notClickable = true })
+	tinsert(menu, { text = mMT:TC(L["Miscellaneous"], "title"), isTitle = true, notClickable = true })
 
+	tinsert(menu, {
+		text = TRADE_SKILLS,
+		icon = E.db.mMT.datatexts.professions.menu_icons and (dt_icons[E.db.mMT.datatexts.professions.icon] or dt_icons.prof_a),
+		func = function()
+			if not InCombatLockdown() then
+				_G.ToggleProfessionsBook()
+			else
+				_G.UIErrorsFrame:AddMessage(E.InfoColor .. _G.ERR_NOT_IN_COMBAT)
+			end
+		end,
+	})
+	if player_professions.extra then
 		local name, icon, spell, skill = player_professions.extra.name, player_professions.extra.icon, player_professions.extra.spell, player_professions.extra.skill
 		tinsert(menu, {
 			text = name,
@@ -246,4 +246,4 @@ local function ValueColorUpdate(self, hex)
 	OnEvent(self)
 end
 
-DT:RegisterDatatext("mMT - " .. TRADE_SKILLS, mMT.Name, { "TRADE_SKILL_DETAILS_UPDATE", "SKILL_LINES_CHANGED" }, OnEvent, nil, OnClick, OnEnter, OnLeave, TRADE_SKILLS, nil, ValueColorUpdate)
+DT:RegisterDatatext("mMT - Professions", mMT.Name, { "TRADE_SKILL_DETAILS_UPDATE", "SKILL_LINES_CHANGED" }, OnEvent, nil, OnClick, OnEnter, OnLeave, TRADE_SKILLS, nil, ValueColorUpdate)

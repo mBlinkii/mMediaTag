@@ -97,15 +97,22 @@ mMT.options = {
 					childGroups = "tab",
 					args = {},
 				},
-				misc_gamemenu = {
+				professions = {
 					order = 5,
+					type = "group",
+					name = mMT:AddSettingsIcon(L["Professions"], "professions"),
+					childGroups = "tab",
+					args = {},
+				},
+				misc_gamemenu = {
+					order = 6,
 					type = "group",
 					name = mMT:AddSettingsIcon(L["Gamemenu"], "gamemenu"),
 					childGroups = "tab",
 					args = {},
 				},
 				misc_tracker = {
-					order = 6,
+					order = 7,
 					type = "group",
 					name = mMT:AddSettingsIcon(L["Tracker"], "shop"),
 					childGroups = "tab",

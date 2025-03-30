@@ -45,7 +45,7 @@ local menu_icons = {
 	calendar = path .. "calendar.tga",
 	encounter = path .. "encounter.tga",
 	shop = path .. "shop.tga",
-	profession = path .. "profession.tga",
+	profession = path .. "professions.tga",
 	missions = path .. "missions.tga",
 	quest = path .. "quest.tga",
 	elvui = path .. "elvui.tga",
@@ -82,7 +82,7 @@ local function BuildMenuList()
 			func = function()
 				ToggleFrame(_G.TimeManagerFrame)
 			end,
-		}, -- Interface\ICONS\INV_Misc_PocketWatch_01
+		},
 		{
 			text = _G.CHAT_CHANNELS,
 			icon = icon and menu_icons.chat,
@@ -96,7 +96,7 @@ local function BuildMenuList()
 			func = function()
 				_G.ToggleFriendsFrame()
 			end,
-		}, -- Interface\FriendsFrame\Battlenet-BattlenetIcon
+		},
 		{
 			text = _G.TALENTS_BUTTON,
 			icon = icon and menu_icons.talent,
