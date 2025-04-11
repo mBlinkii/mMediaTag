@@ -22,8 +22,8 @@ local textString = ""
 local menuList = {}
 local icons = {
 	mmt = MEDIA.icon,
-	colored = E:TextureString(MEDIA.icons.datatexts.menu_b, ":14:14"),
-	white = E:TextureString(MEDIA.icons.datatexts.menu_a, ":14:14"),
+	colored = E:TextureString(MEDIA.icons.datatexts.misc.menu_b, ":14:14"),
+	white = E:TextureString(MEDIA.icons.datatexts.misc.menu_a, ":14:14"),
 }
 
 local enteredFrame = false

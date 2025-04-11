@@ -29,8 +29,8 @@ local valueString = ""
 local textString = ""
 local isMaxLevel = nil
 local leaderIcon = E:TextureString(MEDIA.icons.leader.leader01, ":14:14")
-local armorIcon = E:TextureString(MEDIA.icons.datatexts.armor, ":14:14")
-local scoreIcon = E:TextureString(MEDIA.icons.datatexts.score, ":14:14")
+local armorIcon = E:TextureString(MEDIA.icons.datatexts.misc.armor, ":14:14")
+local scoreIcon = E:TextureString(MEDIA.icons.datatexts.misc.score, ":14:14")
 
 local function SaveMyKeystone()
 	local myKeystone = mMT:GetMyKeystone()

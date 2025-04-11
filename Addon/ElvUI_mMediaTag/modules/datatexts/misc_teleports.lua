@@ -703,7 +703,7 @@ local function OnEvent(self)
 	local iconPath = E.db.mMT.datatexts.teleports.icon
 	local label = L["Teleports"]
 
-	if iconPath ~= "none" then label = E:TextureString(MEDIA.icons.teleport[iconPath] or "Interface\\Addons\\ElvUI_mMediaTag\\media\\icon.tga", ":14:14") .. " " .. label end
+	if iconPath ~= "none" then label = E:TextureString(MEDIA.icons.datatexts.teleport[iconPath] or "Interface\\Addons\\ElvUI_mMediaTag\\media\\icon.tga", ":14:14") .. " " .. label end
 
 	self.text:SetFormattedText(textString, label)
 end

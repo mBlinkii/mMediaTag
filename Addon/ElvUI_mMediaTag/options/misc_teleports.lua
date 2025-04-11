@@ -56,7 +56,7 @@ mMT.options.args.datatexts.args.misc_teleports.args = {
 				values = function()
 					local icons = {}
 					icons.none = L["None"]
-					for key, icon in pairs(MEDIA.icons.teleport) do
+					for key, icon in pairs(MEDIA.icons.datatexts.teleport) do
 						icons[key] = E:TextureString(icon, ":14:14") .. " " .. key
 					end
 					return icons
