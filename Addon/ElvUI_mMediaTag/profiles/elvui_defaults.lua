@@ -38,6 +38,25 @@ P.dice_button = {
 	dice_range_b = 99,
 }
 
+-- party invite info
+P.party_invite_info = {
+	enable = true,
+	delay = 60,
+	font = {
+		font = "PT Sans Narrow",
+		size = 12,
+		info = 10,
+		style = "OUTLINE",
+	},
+	colors = {
+		nhc = "FF1EFF00",
+		hc = "FF0070DD",
+		mythic = "FFA335EE",
+		mythic_plus = "FFFF8000",
+		none = "FFFFFFFF",
+	}
+}
+
 -- datatexts
 P.datatexts = {
 	text = {

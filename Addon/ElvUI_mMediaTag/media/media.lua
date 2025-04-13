@@ -22,6 +22,13 @@ MEDIA.color = {
 	black = CreateColorFromHexString("FF404040"),
 	gray = CreateColorFromHexString("FF787878"),
 	info = CreateColorFromHexString("FFFFA7A7"),
+
+	-- difficulty
+	nhc = CreateColorFromHexString("FF1EFF00"),
+	hc = CreateColorFromHexString("FF0070DD"),
+	mythic = CreateColorFromHexString("FFA335EE"),
+	mythic_plus = CreateColorFromHexString("FFFF8000"),
+	none = CreateColorFromHexString("FFFFFFFF"),
 }
 
 MEDIA.classColor = E:ClassColor(E.myclass)
@@ -52,6 +59,19 @@ function mMT:UpdateMedia(arg)
 			MEDIA.classColor.gradient =
 				{ a = { r = classColor.r - 0.2, g = classColor.g - 0.2, b = classColor.b - 0.2, a = 1 }, b = { r = classColor.r + 0.2, g = classColor.g + 0.2, b = classColor.b + 0.2, a = 1 } }
 		end
+	end
+
+	if arg == "difficulty" or not arg then
+		MEDIA.color.nhc = CreateColorFromHexString(E.db.mMT.party_invite_info.colors.nhc)
+		MEDIA.color.nhc.hex = E.db.mMT.party_invite_info.colors.nhc
+		MEDIA.color.hc = CreateColorFromHexString(E.db.mMT.party_invite_info.colors.hc)
+		MEDIA.color.hc.hex = E.db.mMT.party_invite_info.colors.hc
+		MEDIA.color.mythic = CreateColorFromHexString(E.db.mMT.party_invite_info.colors.mythic)
+		MEDIA.color.mythic.hex = E.db.mMT.party_invite_info.colors.mythic
+		MEDIA.color.mythic_plus = CreateColorFromHexString(E.db.mMT.party_invite_info.colors.mythic_plus)
+		MEDIA.color.mythic_plus.hex = E.db.mMT.party_invite_info.colors.mythic_plus
+		MEDIA.color.none = CreateColorFromHexString(E.db.mMT.party_invite_info.colors.none)
+		MEDIA.color.none.hex = E.db.mMT.party_invite_info.colors.none
 	end
 
 	if arg == "datatexts" or not arg then

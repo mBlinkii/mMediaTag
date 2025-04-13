@@ -4,4 +4,5 @@
     <Script file="keystone_to_chat.lua"/>
     <Script file="unit_ids.lua"/>
     <Script file="dice_button.lua"/>
+    <Script file="party_invite_info.lua"/>
 </Ui>
