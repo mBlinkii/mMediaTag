@@ -38,8 +38,8 @@ P.dice_button = {
 	dice_range_b = 99,
 }
 
--- party invite info
-P.party_invite_info = {
+-- lfg invite info
+P.lfg_invite_info = {
 	enable = true,
 	delay = 60,
 	font = {

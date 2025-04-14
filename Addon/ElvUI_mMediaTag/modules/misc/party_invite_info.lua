@@ -1,6 +1,6 @@
 local mMT, DB, M, E, P, L, MEDIA = unpack(ElvUI_mMediaTag)
 
-local module = mMT:AddModule("PartyInviteInfo", { "AceEvent-3.0" })
+local module = mMT:AddModule("LFGInviteInfo", { "AceEvent-3.0" })
 
 -- Cache WoW Globals
 local CreateFrame = CreateFrame
@@ -13,10 +13,10 @@ local LSM = E.Libs.LSM
 local COLORS = MEDIA.color
 
 function module:Initialize()
-	if E.db.mMT.party_invite_info.enable then
-		module.db = E.db.mMT.party_invite_info
+	if E.db.mMT.lfg_invite_info.enable then
+		module.db = E.db.mMT.lfg_invite_info
 		if not module.info_screen then
-			module.info_screen = CreateFrame("Frame", "mMediaTag_Party_Invite_Info", E.UIParent, "BackdropTemplate")
+			module.info_screen = CreateFrame("Frame", "mMediaTag_LFG_Invite_Info", E.UIParent, "BackdropTemplate")
 			module.info_screen:SetTemplate("Transparent", true)
 			module.info_screen:SetFrameStrata("HIGH")
 			module.info_screen:SetPoint("CENTER")
@@ -36,7 +36,7 @@ function module:Initialize()
 			module:RegisterEvent("GROUP_LEFT")
 			module:RegisterEvent("ZONE_CHANGED_NEW_AREA")
 
-			E:CreateMover(module.info_screen, "mMediaTag_Party_Invite_Info_Mover", "mMT Party Invite Info", nil, nil, nil, "ALL,MMEDIATAG", nil, "mMT,misc,party_invite_info", nil)
+			E:CreateMover(module.info_screen, "mMediaTag_LFG_Invite_Info_Mover", "mMT LFG Invite Info", nil, nil, nil, "ALL,MMEDIATAG", nil, "mMT,misc,lfg_invite_info", nil)
 			module.info_screen:Hide()
 		end
 	else
