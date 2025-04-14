@@ -164,6 +164,13 @@ mMT.options = {
 					childGroups = "tab",
 					args = {},
 				},
+				lfg_invite_info = {
+					order = 4,
+					type = "group",
+					name = mMT:AddSettingsIcon(L["LFG Invite Info"], "greeting_message"),
+					childGroups = "tab",
+					args = {},
+				},
 			},
 		},
 		about = {

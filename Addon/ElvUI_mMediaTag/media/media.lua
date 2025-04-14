@@ -13,6 +13,11 @@ MEDIA.color = {
 	mark = CreateColorFromHexString("FF38FF92"),
 	override = CreateColorFromHexString("FFFFFFFF"),
 
+	-- lfg invite info
+	line_a = CreateColorFromHexString("FF1EFF00"),
+	line_b = CreateColorFromHexString("FF0070DD"),
+	line_c = CreateColorFromHexString("FFA335EE"),
+
 	-- colors
 	blue = CreateColorFromHexString("FF0294FF"),
 	purple = CreateColorFromHexString("FFBD26E5"),
@@ -61,17 +66,13 @@ function mMT:UpdateMedia(arg)
 		end
 	end
 
-	if arg == "difficulty" or not arg then
-		MEDIA.color.nhc = CreateColorFromHexString(E.db.mMT.party_invite_info.colors.nhc)
-		MEDIA.color.nhc.hex = E.db.mMT.party_invite_info.colors.nhc
-		MEDIA.color.hc = CreateColorFromHexString(E.db.mMT.party_invite_info.colors.hc)
-		MEDIA.color.hc.hex = E.db.mMT.party_invite_info.colors.hc
-		MEDIA.color.mythic = CreateColorFromHexString(E.db.mMT.party_invite_info.colors.mythic)
-		MEDIA.color.mythic.hex = E.db.mMT.party_invite_info.colors.mythic
-		MEDIA.color.mythic_plus = CreateColorFromHexString(E.db.mMT.party_invite_info.colors.mythic_plus)
-		MEDIA.color.mythic_plus.hex = E.db.mMT.party_invite_info.colors.mythic_plus
-		MEDIA.color.none = CreateColorFromHexString(E.db.mMT.party_invite_info.colors.none)
-		MEDIA.color.none.hex = E.db.mMT.party_invite_info.colors.none
+	if arg == "lfg" or not arg then
+		MEDIA.color.line_a = CreateColorFromHexString(E.db.mMT.lfg_invite_info.colors.line_a)
+		MEDIA.color.line_a.hex = E.db.mMT.lfg_invite_info.colors.line_a
+		MEDIA.color.line_b = CreateColorFromHexString(E.db.mMT.lfg_invite_info.colors.line_b)
+		MEDIA.color.line_b.hex = E.db.mMT.lfg_invite_info.colors.line_b
+		MEDIA.color.line_c = CreateColorFromHexString(E.db.mMT.lfg_invite_info.colors.line_c)
+		MEDIA.color.line_c.hex = E.db.mMT.lfg_invite_info.colors.line_c
 	end
 
 	if arg == "datatexts" or not arg then
@@ -99,6 +100,8 @@ MEDIA.logo = "Interface\\Addons\\ElvUI_mMediaTag\\media\\logo.tga"
 MEDIA.leftClick = "|TInterface\\Addons\\ElvUI_mMediaTag\\media\\icons\\system\\left.tga:16:16|t"
 MEDIA.rightClick = "|TInterface\\Addons\\ElvUI_mMediaTag\\media\\icons\\system\\right.tga:16:16|t"
 MEDIA.middleClick = "|TInterface\\Addons\\ElvUI_mMediaTag\\media\\icons\\system\\middle.tga:16:16|t"
+
+MEDIA.blank = "Interface\\Addons\\ElvUI_mMediaTag\\media\\blank.tga"
 
 MEDIA.icons = {}
 
@@ -169,6 +172,18 @@ MEDIA.icons.dice = {
 
 MEDIA.icons.leader = {
 	leader01 = "Interface\\AddOns\\ElvUI_mMediaTag\\media\\icons\\leader\\leader_01.tga",
+}
+
+MEDIA.icons.lfg = {
+	lfg01 = "Interface\\AddOns\\ElvUI_mMediaTag\\media\\icons\\lfg\\lfg_01.tga",
+	lfg02 = "Interface\\AddOns\\ElvUI_mMediaTag\\media\\icons\\lfg\\lfg_02.tga",
+	lfg03 = "Interface\\AddOns\\ElvUI_mMediaTag\\media\\icons\\lfg\\lfg_03.tga",
+	lfg04 = "Interface\\AddOns\\ElvUI_mMediaTag\\media\\icons\\lfg\\lfg_04.tga",
+	lfg05 = "Interface\\AddOns\\ElvUI_mMediaTag\\media\\icons\\lfg\\lfg_05.tga",
+	lfg06 = "Interface\\AddOns\\ElvUI_mMediaTag\\media\\icons\\lfg\\lfg_06.tga",
+	lfg07 = "Interface\\AddOns\\ElvUI_mMediaTag\\media\\icons\\lfg\\lfg_07.tga",
+	lfg08 = "Interface\\AddOns\\ElvUI_mMediaTag\\media\\icons\\lfg\\lfg_08.tga",
+	lfg09 = "Interface\\AddOns\\ElvUI_mMediaTag\\media\\icons\\lfg\\lfg_09.tga",
 }
 
 MEDIA.arrows = {
@@ -249,7 +264,6 @@ MEDIA.icons.datatexts.misc = {
 	menu_a = "Interface\\AddOns\\ElvUI_mMediaTag\\media\\icons\\datatexts\\menu_a.tga",
 	menu_b = "Interface\\AddOns\\ElvUI_mMediaTag\\media\\icons\\datatexts\\menu_b.tga",
 }
-
 
 MEDIA.icons.datatexts.teleport = {
 	teleport01 = "Interface\\AddOns\\ElvUI_mMediaTag\\media\\icons\\datatexts\\teleport_01.tga",

@@ -42,18 +42,16 @@ P.dice_button = {
 P.lfg_invite_info = {
 	enable = true,
 	delay = 60,
+	icon = "none",
 	font = {
 		font = "PT Sans Narrow",
 		size = 12,
-		info = 10,
-		style = "OUTLINE",
+		fontflag = "OUTLINE",
 	},
 	colors = {
-		nhc = "FF1EFF00",
-		hc = "FF0070DD",
-		mythic = "FFA335EE",
-		mythic_plus = "FFFF8000",
-		none = "FFFFFFFF",
+		line_a = "FF1EFF00",
+		line_b = "FF0070DD",
+		line_c = "FFA335EE",
 	}
 }
 

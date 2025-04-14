@@ -16,4 +16,5 @@
 	<Script file="misc_tracker.lua"/>
 	<Script file="misc_professions.lua"/>
 	<Script file="info_combat_time.lua"/>
+	<Script file="lfg_invite_info.lua"/>
 </Ui>

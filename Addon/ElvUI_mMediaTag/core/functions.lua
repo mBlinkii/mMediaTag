@@ -20,9 +20,9 @@ function mMT:AddSettingsIcon(text, icon)
 	return format("|TInterface\\Addons\\ElvUI_mMediaTag\\media\\options\\%s.tga:16:16|t  %s", icon, text)
 end
 
-function mMT:UpdateModule(name)
+function mMT:UpdateModule(name, arg)
 	local module = M[name]
-	if module and module.Initialize then module:Initialize() end
+	if module and module.Initialize then module:Initialize(arg) end
 end
 
 function mMT:AddModule(name, arg)
