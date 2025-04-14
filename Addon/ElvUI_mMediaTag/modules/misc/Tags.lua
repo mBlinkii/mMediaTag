@@ -277,11 +277,19 @@ local classificationNames = {
 
 E:AddTag("mClass", "UNIT_CLASSIFICATION_CHANGED", function(unit)
 	local c = UnitClassification(unit)
+	local guid = UnitGUID(unit)
+	local npcID = guid and select(6, strsplit("-", guid))
+
+	c = (npcID and bossIDs[npcID]) and "worldboss" or c
 	return (c and classificationNames.full[c]) and format("%s%s|r", colors[c], classificationNames.full[c]) or ""
 end)
 
 E:AddTag("mClass:short", "UNIT_CLASSIFICATION_CHANGED", function(unit)
 	local c = UnitClassification(unit)
+	local guid = UnitGUID(unit)
+	local npcID = guid and select(6, strsplit("-", guid))
+
+	c = (npcID and bossIDs[npcID]) and "worldboss" or c
 	return (c and classificationNames.short[c]) and format("%s%s|r", colors[c], classificationNames.short[c]) or ""
 end)
 
