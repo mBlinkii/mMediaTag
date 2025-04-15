@@ -12,6 +12,7 @@ mMediaTag & Tools is a plugin for WoW with ElvUI. mMediaTag adds many media file
 <a href="https://github.com/mBlinkii/mMediaTag/issues">Report Bug .</a>
 <a href="https://github.com/mBlinkii/mMediaTag/issues">Request Feature</a>
 <a href="https://discord.gg/AE9XebMU49">Discord</a> 
+<a href="https://ko-fi.com/blinkii">Donation</a> 
 </p>
 </div> 
 
