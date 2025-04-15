@@ -5,6 +5,8 @@ local module = mMT:AddModule("LFGInviteInfo", { "AceEvent-3.0" })
 -- Cache WoW Globals
 local CreateFrame = CreateFrame
 local format = format
+local IsInInstance = IsInInstance
+local IsInGroup = IsInGroup
 local GetSearchResultInfo = C_LFGList.GetSearchResultInfo
 local GetActivityFullName = C_LFGList.GetActivityFullName
 local GetActivityInfoTable = C_LFGList.GetActivityInfoTable
@@ -29,7 +31,6 @@ function module:Initialize(demo)
 		module.db = E.db.mMT.lfg_invite_info
 		if not module.info_screen then
 			module.info_screen = CreateFrame("Button", "mMediaTag_LFG_Invite_Info", E.UIParent, "BackdropTemplate")
-			--module.info_screen:SetTemplate("Transparent", true)
 			module.info_screen:SetFrameStrata("HIGH")
 			module.info_screen:SetPoint("CENTER")
 			module.info_screen:SetWidth(400)
