@@ -5,4 +5,5 @@
     <Script file="unit_ids.lua"/>
     <Script file="dice_button.lua"/>
     <Script file="lfg_invite_info.lua"/>
+    <Script file="map_icon_highlighter.lua"/>
 </Ui>
