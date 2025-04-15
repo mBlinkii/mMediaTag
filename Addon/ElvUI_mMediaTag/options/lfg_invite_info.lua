@@ -18,7 +18,7 @@ mMT.options.args.misc.args.lfg_invite_info.args = {
         end,
     },
     demo = {
-        order = 1,
+        order = 2,
         type = "execute",
         name = L["Show Frame"],
         func = function()
@@ -26,7 +26,7 @@ mMT.options.args.misc.args.lfg_invite_info.args = {
         end,
     },
 	font = {
-		order = 2,
+		order = 3,
 		type = "group",
 		inline = true,
 		name = L["Font"],
@@ -76,7 +76,7 @@ mMT.options.args.misc.args.lfg_invite_info.args = {
             },
 			font_size = {
 				order = 5,
-				name = L["Font size"],
+				name = L["Font size, top line"],
 				type = "range",
 				min = 8,
 				max = 64,
@@ -92,10 +92,28 @@ mMT.options.args.misc.args.lfg_invite_info.args = {
 					mMT:UpdateModule("LFGInviteInfo")
 				end,
 			},
+			font_size2 = {
+				order = 6,
+				name = L["Font size, bottom line"],
+				type = "range",
+				min = 8,
+				max = 64,
+				step = 1,
+				disabled = function()
+					return not E.db.mMT.lfg_invite_info.enable
+				end,
+				get = function(info)
+					return E.db.mMT.lfg_invite_info.font.size2
+				end,
+				set = function(info, value)
+					E.db.mMT.lfg_invite_info.font.size2 = value
+					mMT:UpdateModule("LFGInviteInfo")
+				end,
+			},
 		},
 	},
     settings = {
-		order = 3,
+		order = 4,
 		type = "group",
 		inline = true,
 		name = L["Settings"],
@@ -117,6 +135,7 @@ mMT.options.args.misc.args.lfg_invite_info.args = {
 					E.db.mMT.lfg_invite_info.colors.line_a = hex
 					MEDIA.color.mark = CreateColorFromHexString(hex)
 					MEDIA.color.mark.hex = hex
+					mMT:UpdateMedia("lfg")
                     mMT:UpdateModule("LFGInviteInfo")
 				end,
 			},
@@ -137,6 +156,7 @@ mMT.options.args.misc.args.lfg_invite_info.args = {
 					E.db.mMT.lfg_invite_info.colors.line_b = hex
 					MEDIA.color.mark = CreateColorFromHexString(hex)
 					MEDIA.color.mark.hex = hex
+					mMT:UpdateMedia("lfg")
                     mMT:UpdateModule("LFGInviteInfo")
 				end,
 			},
@@ -157,6 +177,7 @@ mMT.options.args.misc.args.lfg_invite_info.args = {
 					E.db.mMT.lfg_invite_info.colors.line_c = hex
 					MEDIA.color.mark = CreateColorFromHexString(hex)
 					MEDIA.color.mark.hex = hex
+					mMT:UpdateMedia("lfg")
                     mMT:UpdateModule("LFGInviteInfo")
 				end,
 			},

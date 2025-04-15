@@ -45,12 +45,13 @@ P.lfg_invite_info = {
 	icon = "none",
 	font = {
 		font = "PT Sans Narrow",
-		size = 12,
+		size = 32,
+		size2 = 22,
 		fontflag = "OUTLINE",
 	},
 	colors = {
-		line_a = "FF1EFF00",
-		line_b = "FF0070DD",
+		line_a = "FFFFBF00",
+		line_b = "FF9AA0A5",
 		line_c = "FFA335EE",
 	}
 }
