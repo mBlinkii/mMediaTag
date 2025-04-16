@@ -128,19 +128,10 @@ function module:LFG_LIST_JOINED_GROUP(_, searchResultID, groupName)
 	if id then
 		local name = GetActivityFullName(id)
 
-		local difficulty = name:match("%((.-)%)")
+		local difficulty = name:match("%((.-)%)") or name
 		local activity = name:gsub(" %(" .. difficulty .. "%)", "")
 
 		local activityInfo = GetActivityInfoTable(id)
-
-		if difficulty or difficulty ~= " " then
-			local difficulty_color = activityInfo.isHeroicActivity and COLORS.hc
-				or activityInfo.isMythicActivity and COLORS.mythic
-				or activityInfo.isMythicPlusActivity and COLORS.mythic_plus
-				or activityInfo.isNormalActivity and COLORS.nhc
-				or COLORS.none
-			difficulty = difficulty_color:WrapTextInColorCode(difficulty)
-		end
 
 		module.info_screen.lable:SetText(format("%s", ColorText(groupName .. " - " .. name, "line_a")))
 		module.info_screen.lable2:SetText(format("%s \n%s", ColorText(activity, "line_b"), ColorText(difficulty, "line_c")))
