@@ -43,4 +43,5 @@
 	<Script file="uftextures.lua"/>
 	<Script file="unitframeicons.lua"/>
 	<Script file="minimap.lua"/>
+	<Script file="lfg_invite_info.lua"/>
 </Ui>

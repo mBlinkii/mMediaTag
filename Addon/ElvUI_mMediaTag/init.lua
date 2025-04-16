@@ -52,6 +52,7 @@ mMT.Modules.CustomUFTextures = {}
 mMT.Modules.CustomBGTextures = {}
 mMT.Modules.MinimapAspectRatio = {}
 mMT.Modules.MinimapSkin = {}
+mMT.Modules_NEW = {}
 --mMT.Modules.CustomClassColors = {}
 
 local L = mMT.Locales
@@ -171,6 +172,18 @@ local function UpdateAllModules()
 	--end
 end
 
+-- new modules
+function mMT:UpdateAll()
+	for _, module in pairs(mMT.Modules_NEW) do
+		if module.Initialize then module:Initialize() end
+	end
+	UpdateAllModules()
+end
+
+local function StaggeredUpdateAll()
+	E:Delay(1, mMT.UpdateAll)
+end
+
 -- Load Settings
 local function LoadSettings()
 	E.Options.name = format("%s + %s %s |cff99ff33%s|r", E.Options.name, mMT.IconSquare, mMT.Name, mMT.Version)
@@ -247,9 +260,13 @@ function mMT:Initialize()
 	-- Modules
 	UpdateModuleSettings()
 	UpdateModules()
+	mMT:UpdateAll()
 
 	-- hook ElvUI UpdateAll function
-	hooksecurefunc(E, "UpdateAll", UpdateAllModules)
+	if not mMT.ElvUI_Hooked then
+		mMT:SecureHook(E, "StaggeredUpdateAll", StaggeredUpdateAll)
+		mMT.ElvUI_Hooked = true
+	end
 
 	-- Initialize main things
 	tinsert(E.ConfigModeLayouts, "MMEDIATAG")

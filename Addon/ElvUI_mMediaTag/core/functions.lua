@@ -62,6 +62,28 @@ function mMT:ConvertDB()
 	}
 end
 
+function mMT:UpdateModule(name, arg)
+	local module = mMT.Modules_NEW[name]
+	if module and module.Initialize then module:Initialize(arg) end
+end
+
+function mMT:AddModule(name, arg)
+	if arg then
+		mMT.Modules_NEW[name] = mMT:NewModule(name, unpack(arg))
+	else
+		mMT.Modules_NEW[name] = {}
+	end
+	return mMT.Modules_NEW[name]
+end
+
+function mMT:HexToRGB(hex)
+	if #hex == 6 then hex = "ff" .. hex end
+
+	local a, r, g, b = tonumber(hex:sub(1, 2), 16), tonumber(hex:sub(3, 4), 16), tonumber(hex:sub(5, 6), 16), tonumber(hex:sub(7, 8), 16)
+
+	return r / 255, g / 255, b / 255, a / 255
+end
+
 function mMT:GetElvUIDataText(name)
 	local dt = DT.RegisteredDataTexts[name]
 
@@ -80,15 +102,6 @@ function GetTableLng(tbl)
 	end
 	return getN
 end
-
-local indentColors = {
-	[1] = "|CFF00FCB0", --#00FCB0
-	[2] = "|CFF00CAFC", --#00CAFC
-	[3] = "|CFF0054FC", --#0054FC
-	[4] = "|CFF7E00FC", --#7E00FC
-}
-
---string.format("%X", number)
 
 local function PrintTable(tbl, indent, simple, noFunctions, depth)
 	indent = indent or " "
