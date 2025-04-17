@@ -38,33 +38,45 @@ local function ConfigureOutline(info, cfg)
 end
 
 -- Helper function to configure text position
-local function ConfigureTextPosition(info, cfg)
-	if cfg.textPosition == 2 then
-		info.textAnchor1 = "TOP"
-		info.textAnchor2 = "BOTTOM"
-		info.textX = 0
-		info.textY = -2
-	elseif cfg.textPosition == 3 then
-		info.textAnchor1 = "RIGHT"
-		info.textAnchor2 = "LEFT"
-		info.textX = -2
-		info.textY = 0
-	elseif cfg.textPosition == 4 then
-		info.textAnchor1 = "LEFT"
-		info.textAnchor2 = "RIGHT"
-		info.textX = 2
-		info.textY = 0
-	elseif cfg.textPosition == 5 then
-		info.textAnchor1 = "CENTER"
-		info.textAnchor2 = "CENTER"
-		info.textX = 0
-		info.textY = 0
+local function GetTextPosition(position)
+	local anchor = {
+		anchor1 = "BOTTOM",
+		anchor2 = "TOP",
+		x = 0,
+		y = 2,
+	}
+
+	if position == "BOTTOM" then
+		anchor = {
+			anchor1 = "TOP",
+			anchor2 = "BOTTOM",
+			x = 0,
+			y = -2,
+		}
+	elseif position == "LEFT" then
+		anchor = {
+			anchor1 = "RIGHT",
+			anchor2 = "LEFT",
+			x = -2,
+			y = 0,
+		}
+	elseif position == "RIGHT" then
+		anchor = {
+			anchor1 = "LEFT",
+			anchor2 = "RIGHT",
+			x = 2,
+			y = 0,
+		}
 	else
-		info.textAnchor1 = "BOTTOM"
-		info.textAnchor2 = "TOP"
-		info.textX = 0
-		info.textY = 2
+		anchor = {
+			anchor1 = "BOTTOM",
+			anchor2 = "TOP",
+			x = 0,
+			y = 2,
+		}
 	end
+
+	return anchor
 end
 
 local tmp = {
@@ -85,87 +97,50 @@ local tmp = {
 
 -- Build atlas lookup table
 local atlasLookup = {}
-for atlasName, cfg in pairs(optionsLookup) do
-	local info = {
-		iconScale = cfg.iconScale * globalScale,
-		outline = cfg.enable,
-		outlineScale = cfg.scale * cfg.iconScale * globalScale,
-		outlineDesaturate = cfg.use_color,
-		outlineColor = cfg.color,
-		outlineAlpha = cfg.alpha,
-		showLabel = cfg.show_text,
-		textFont = cfg.custom_font and LSM:Fetch("font", cfg.font) or globalTextFont,
-		textSize = globalTextSize * cfg.textScale,
-		textOutline = cfg.custom_font and cfg.fontflag or globalTextOutline,
-		textColor = cfg.text_color,
-		textAlpha = cfg.text_alpha,
-	}
+local function UpdateSettings()
+	for atlasName, cfg in pairs(optionsLookup) do
+		local info = {
+			iconScale = cfg.iconScale * globalScale,
+			outline = cfg.enable,
+			outlineScale = cfg.scale * cfg.iconScale * globalScale,
+			outlineDesaturate = cfg.use_color,
+			outlineColor = cfg.color,
+			outlineAlpha = cfg.alpha,
+			showLabel = cfg.show_text,
+			textFont = cfg.custom_font and LSM:Fetch("font", cfg.font) or globalTextFont,
+			textSize = globalTextSize * cfg.textScale,
+			textOutline = cfg.custom_font and cfg.fontflag or globalTextOutline,
+			textColor = cfg.text_color,
+			textAlpha = cfg.text_alpha,
+		}
 
-	ConfigureOutline(info, cfg)
-	ConfigureTextPosition(info, cfg)
+		ConfigureOutline(info, cfg)
+		ConfigureTextPosition(info, cfg)
 
-	atlasLookup[atlasName] = info
-end
-
-function module:ApplySettings(frame, texture, atlasName)
-	local info = atlasLookup[atlasName]
-    print(frame, texture, atlasName, info)
-
-	if not info then
-		if frame.MIH_background then frame.MIH_background:Hide() end
-		if frame.MIH_label then frame.MIH_label:Hide() end
-		return
-	end
-
-	texture:SetScale(info.iconScale)
-
-	-- Configure outline
-	if info.outline then
-		if not frame.MIH_background then frame.MIH_background = frame:CreateTexture() end
-		frame.MIH_background:SetAtlas(atlasName)
-		frame.MIH_background:SetBlendMode(info.outlineBlendMode)
-		frame.MIH_background:SetScale(info.outlineScale)
-		frame.MIH_background:SetAlpha(info.outlineAlpha)
-		frame.MIH_background:SetVertexColor(unpack(info.outlineColor))
-		frame.MIH_background:SetDesaturated(info.outlineDesaturate)
-		frame.MIH_background:Show()
-	elseif frame.MIH_background then
-		frame.MIH_background:Hide()
-	end
-
-	-- Configure text
-	if info.showLabel then
-		if not frame.MIH_label then frame.MIH_label = frame:CreateFontString(nil, "OVERLAY") end
-		frame.MIH_label:SetFont(info.textFont, info.textSize, info.textOutline)
-		frame.MIH_label:SetTextColor(unpack(info.textColor))
-		frame.MIH_label:SetAlpha(info.textAlpha)
-		frame.MIH_label:SetPoint(info.textAnchor1, frame, info.textAnchor2, info.textX, info.textY)
-		frame.MIH_label:Show()
-	elseif frame.MIH_label then
-		frame.MIH_label:Hide()
+		atlasLookup[atlasName] = info
 	end
 end
 
-function module:GetLabelOffsets(frame, info)
+local function GetLabelOffsets(frame, info)
 	local iconWidth, iconHeight = frame:GetSize()
-	local labelWidth, labelHeight = frame.MIH_label:GetSize()
+	local labelWidth, labelHeight = frame.mMT_label:GetSize()
 
 	local posLookup = {
 		["LEFT"] = {
-			["posX"] = (iconWidth / 2) - (labelWidth / 2) + info.textX - 3,
+			["posX"] = (iconWidth / 2) - (labelWidth / 2) + info.x - 3,
 			["posY"] = 0,
 		},
 		["RIGHT"] = {
-			["posX"] = -(iconWidth / 2) + (labelWidth / 2) + info.textX - 3,
+			["posX"] = -(iconWidth / 2) + (labelWidth / 2) + info.x - 3,
 			["posY"] = 0,
 		},
 		["TOP"] = {
 			["posX"] = 0,
-			["posY"] = -(iconHeight / 2) - (labelHeight / 2) + info.textY - 3,
+			["posY"] = -(iconHeight / 2) - (labelHeight / 2) + info.y - 3,
 		},
 		["BOTTOM"] = {
 			["posX"] = 0,
-			["posY"] = (iconHeight / 2) + (labelHeight / 2) + info.textY - 3,
+			["posY"] = (iconHeight / 2) + (labelHeight / 2) + info.y - 3,
 		},
 		["CENTER"] = {
 			["posX"] = 0,
@@ -173,19 +148,106 @@ function module:GetLabelOffsets(frame, info)
 		},
 	}
 
-	return posLookup[info.textAnchor1].posX, posLookup[info.textAnchor1].posY
+	return posLookup[info.anchor1].posX, posLookup[info.anchor1].posY
+end
+
+function module:ApplySettings(frame, texture, atlasName)
+	local info = optionsLookup[atlasName]
+	if not info then
+		print("NOT FOUND", atlasName, info)
+		return
+	end
+
+	-- global
+	local icon_scale = 1
+	local blendMode = "ADD"
+	local font = LSM:Fetch("font", E.db.mMT.lfg_invite_info.font.font)
+	local fontSize = 8
+	local fontFlag = "OUTLINE"
+
+	-- icon
+	local enable = true
+	local alpha = 1
+	local use_color = true
+	local color = { 2, 1, 1 }
+	local text_color = { 1, 2, 1 }
+	local point = GetTextPosition("TOP")
+	local showText = true
+
+	if not info then
+		if frame.mMT_background then frame.mMT_background:Hide() end
+		if frame.mMT_label then frame.mMT_label:Hide() end
+		return
+	end
+
+	texture:SetScale(icon_scale)
+
+	-- Configure outline
+	if enable then
+		print("AtlasName", atlasName)
+		if not frame.mMT_background then frame.mMT_background = frame:CreateTexture() end
+		frame.mMT_background:SetAtlas(atlasName)
+		frame.mMT_background:SetBlendMode("BLEND")
+		frame.mMT_background:SetScale(2)
+		frame.mMT_background:SetAlpha(alpha)
+		frame.mMT_background:SetVertexColor(unpack(color))
+		frame.mMT_background:SetDesaturated(use_color)
+		frame.mMT_background:Show()
+	elseif frame.mMT_background then
+		frame.mMT_background:Hide()
+	end
+
+	-- Configure text
+	local labelText = frame.poiInfo and frame.poiInfo.name or frame.name
+
+	if showText and (frame.poiInfo or frame.name) then
+		if not frame.mMT_label then
+			local f = CreateFrame("Frame", "mMT_labelBase", WorldMapFrame)
+			local t = f:CreateFontString()
+			frame.mMT_label = t
+			f:SetParent(WorldMapFrame)
+			f:SetFrameStrata("HIGH")
+		end
+		frame.mMT_label:ClearAllPoints()
+		frame.mMT_label:SetPoint(point.anchor1, frame, point.anchor2, point.x, point.y)
+		frame.mMT_label:SetFont(font, fontSize, fontFlag)
+		frame.mMT_label:SetShadowOffset(1, -1)
+		frame.mMT_label:Show()
+		frame.mMT_label:SetText(labelText)
+		frame.mMT_label:SetVertexColor(unpack(text_color))
+		frame.mMT_label:SetAlpha(alpha)
+
+		local _, _, _, iconX, iconY = frame:GetPoint(1)
+
+		if iconX and iconY then -- can be nil
+			local scale = WorldMapFrame.ScrollContainer.baseScale * frame:GetScale()
+			local offsetX, offsetY = GetLabelOffsets(frame, point)
+			labeledIcons[frame] = {
+				["text"] = frame.mMT_label,
+				["width"] = frame.mMT_label:GetWidth(),
+				["height"] = frame.mMT_label:GetHeight(),
+				["posX"] = iconX * scale,
+				["posY"] = iconY * scale * -1,
+				["offsetX"] = offsetX,
+				["offsetY"] = offsetY,
+			}
+		end
+	elseif frame.mMT_label then
+		frame.mMT_label:Hide()
+	end
 end
 
 function module:HideHighlights(frame)
+	print("HideHighlights", frame:GetName())
 	if frame.Texture then
 		frame.Texture:SetScale(1)
 	elseif frame.Icon then
 		frame.Icon:SetScale(1)
 	end
 
-	if frame.MIH_background then frame.MIH_background:Hide() end
+	if frame.mMT_background then frame.mMT_background:Hide() end
 
-	if frame.MIH_label then frame.MIH_label:Hide() end
+	if frame.mMT_label then frame.mMT_label:Hide() end
 end
 
 function module:CheckLabels()
@@ -222,7 +284,7 @@ local function UpdateShow()
 		elseif child.Icon then
 			local atlasName = child.Icon:GetAtlas()
 			if atlasName then
-				module:GetLabelOffsetsApplySettings(child, child.Icon, atlasName)
+				module:ApplySettings(child, child.Icon, atlasName)
 			else
 				module:HideHighlights(child)
 			end
@@ -271,27 +333,33 @@ function module:Initialize(demo)
 			["SCRAP-deactivated"] = E.db.mMT.map_icon_highlighter.scrapHeap_inactive,
 		}
 
+		--UpdateSettings()
+
 		if not module.isHooked then
 			-- the delay is deliberate
 			WorldMapFrame:HookScript("OnShow", function()
-				print("OnShow")
 				E:Delay(0.1, function()
 					UpdateShow()
 				end)
 			end)
 			hooksecurefunc(WorldMapFrame.ScrollContainer, "ZoomIn", function()
+				print("ZoomIn")
 				module:CheckLabels()
 			end)
 			hooksecurefunc(WorldMapFrame.ScrollContainer, "ZoomOut", function()
+				print("ZoomOut")
 				module:CheckLabels()
 			end)
 			hooksecurefunc(WorldMapFrame, "Maximize", function()
+				print("Maximize")
 				UpdateShow()
 			end)
 			hooksecurefunc(WorldMapFrame, "Minimize", function()
+				print("Minimize")
 				UpdateShow()
 			end)
 			hooksecurefunc(WorldMapFrame, "ProcessCanvasClickHandlers", function(...)
+				print("ProcessCanvasClickHandlers", ...)
 				UpdateShow()
 			end)
 
