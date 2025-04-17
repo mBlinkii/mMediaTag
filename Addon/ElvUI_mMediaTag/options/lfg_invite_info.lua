@@ -118,9 +118,21 @@ mMT.options.args.misc.args.lfg_invite_info.args = {
 		inline = true,
 		name = L["Settings"],
 		args = {
+			background = {
+				order = 1,
+				type = "toggle",
+				name = L["Background"],
+				get = function(info)
+					return E.db.mMT.lfg_invite_info.background
+				end,
+				set = function(info, value)
+					E.db.mMT.lfg_invite_info.background = value
+					E:StaticPopup_Show("CONFIG_RL")
+				end,
+			},
             color_line_a = {
 				type = "color",
-				order = 1,
+				order = 2,
 				name = L["First line color"],
 				hasAlpha = false,
 				disabled = function()
@@ -141,7 +153,7 @@ mMT.options.args.misc.args.lfg_invite_info.args = {
 			},
             color_line_b = {
 				type = "color",
-				order = 2,
+				order = 3,
 				name = L["Second line color"],
 				hasAlpha = false,
 				disabled = function()
@@ -162,7 +174,7 @@ mMT.options.args.misc.args.lfg_invite_info.args = {
 			},
             color_line_c = {
 				type = "color",
-				order = 3,
+				order = 4,
 				name = L["Third line color"],
 				hasAlpha = false,
 				disabled = function()
@@ -182,7 +194,7 @@ mMT.options.args.misc.args.lfg_invite_info.args = {
 				end,
 			},
             delay = {
-				order = 4,
+				order = 5,
 				name = L["Fade out delay"],
 				type = "range",
 				min = 2,
@@ -201,7 +213,7 @@ mMT.options.args.misc.args.lfg_invite_info.args = {
 			},
             style = {
                 type = "select",
-                order = 5,
+                order = 6,
                 name = L["Style"],
                 disabled = function()
 					return not E.db.mMT.lfg_invite_info.enable
