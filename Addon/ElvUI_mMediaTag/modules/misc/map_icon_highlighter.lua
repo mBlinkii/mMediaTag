@@ -23,21 +23,6 @@ local labeledIcons = {}
 -- Options lookup table
 local optionsLookup = {}
 
--- Helper function to configure outline settings
-local function ConfigureOutline(info, cfg)
-	if cfg.style == 1 then
-		info.outlineBlendMode = "ADD"
-		info.outlineInFront = true
-	elseif cfg.style == 2 then
-		info.outlineBlendMode = "BLEND"
-		info.outlineInFront = false
-	elseif cfg.style == 3 then
-		info.outlineBlendMode = "ADD"
-		info.outlineInFront = false
-	end
-end
-
--- Helper function to configure text position
 local function GetTextPosition(position)
 	local anchor = {
 		anchor1 = "BOTTOM",
@@ -79,6 +64,225 @@ local function GetTextPosition(position)
 	return anchor
 end
 
+local settings = {
+	["CaveUnderground-Down"] = {
+		alpha = 1,
+		color = { icon = { 1, 0, 0 }, text = { 0, 1, 0 } },
+		color_icons = true,
+		enable = true,
+		point = GetTextPosition("TOP"),
+		showText = true,
+		use_color = true,
+	},
+	["CaveUnderground-Up"] = {
+		alpha = 1,
+		color = { icon = { 1, 1, 0 }, text = { 0, 1, 1 } },
+		color_icons = true,
+		enable = true,
+		point = GetTextPosition("TOP"),
+		showText = true,
+		use_color = true,
+	},
+	["Dungeon"] = {
+		alpha = 1,
+		color = { icon = { 1, 0, 1 }, text = { 1, 1, 0 } },
+		color_icons = true,
+		enable = true,
+		point = GetTextPosition("TOP"),
+		showText = true,
+		use_color = true,
+	},
+	["QuestNormal"] = {
+		alpha = 1,
+		color = { icon = { 0.5, 0, 1 }, text = { 1, 0.5, 0 } },
+		color_icons = true,
+		enable = true,
+		point = GetTextPosition("TOP"),
+		showText = true,
+		use_color = true,
+	},
+	["Raid"] = {
+		alpha = 1,
+		color = { icon = { 0.5, 1, 0 }, text = { 0, 0.5, 1 } },
+		color_icons = true,
+		enable = true,
+		point = GetTextPosition("TOP"),
+		showText = true,
+		use_color = true,
+	},
+	["SCRAP-activated"] = {
+		alpha = 1,
+		color = { icon = { 1, 0.5, 0 }, text = { 0.5, 1, 0 } },
+		color_icons = true,
+		enable = true,
+		point = GetTextPosition("TOP"),
+		showText = true,
+		use_color = true,
+	},
+	["SCRAP-deactivated"] = {
+		alpha = 1,
+		color = { icon = { 1, 0, 0.5 }, text = { 0, 1, 0.5 } },
+		color_icons = true,
+		enable = true,
+		point = GetTextPosition("TOP"),
+		showText = true,
+		use_color = true,
+	},
+	["TaxiNode_Alliance"] = {
+		alpha = 1,
+		color = { icon = { 0, 0.5, 1 }, text = { 0, 0, 0 } },
+		color_icons = true,
+		enable = true,
+		point = GetTextPosition("TOP"),
+		showText = true,
+		use_color = true,
+	},
+	["TaxiNode_Continent_Alliance"] = {
+		alpha = 1,
+		color = { icon = { 1, 0, 0 }, text = { 0, 1, 0 } },
+		color_icons = true,
+		enable = true,
+		point = GetTextPosition("TOP"),
+		showText = true,
+		use_color = true,
+	},
+	["TaxiNode_Continent_Horde"] = {
+		alpha = 1,
+		color = { icon = { 1, 0, 0 }, text = { 0, 1, 0 } },
+		color_icons = true,
+		enable = true,
+		point = GetTextPosition("TOP"),
+		showText = true,
+		use_color = true,
+	},
+	["TaxiNode_Continent_Neutral"] = {
+		alpha = 1,
+		color = { icon = { 1, 0, 0 }, text = { 0, 1, 0 } },
+		color_icons = true,
+		enable = true,
+		point = GetTextPosition("TOP"),
+		showText = true,
+		use_color = true,
+	},
+	["TaxiNode_Horde"] = {
+		alpha = 1,
+		color = { icon = { 1, 0, 0 }, text = { 0, 1, 0 } },
+		color_icons = true,
+		enable = true,
+		point = GetTextPosition("TOP"),
+		showText = true,
+		use_color = true,
+	},
+	["TaxiNode_Neutral"] = {
+		alpha = 1,
+		color = { icon = { 1, 0, 0 }, text = { 0, 1, 0 } },
+		color_icons = true,
+		enable = true,
+		point = GetTextPosition("TOP"),
+		showText = true,
+		use_color = true,
+	},
+	["TaxiNode_Undiscovered"] = {
+		alpha = 1,
+		color = { icon = { 1, 0, 0 }, text = { 0, 1, 0 } },
+		color_icons = true,
+		enable = true,
+		point = GetTextPosition("TOP"),
+		showText = true,
+		use_color = true,
+	},
+	["UI-QuestPoiRecurring-QuestBang"] = {
+		alpha = 1,
+		color = { icon = { 1, 0, 0 }, text = { 0, 1, 0 } },
+		color_icons = true,
+		enable = true,
+		point = GetTextPosition("TOP"),
+		showText = true,
+		use_color = true,
+	},
+	["Waypoint-MapPin-Tracked"] = {
+		alpha = 1,
+		color = { icon = { 1, 0, 0 }, text = { 0, 1, 0 } },
+		color_icons = true,
+		enable = true,
+		point = GetTextPosition("TOP"),
+		showText = true,
+		use_color = true,
+	},
+	["Waypoint-MapPin-Untracked"] = {
+		alpha = 1,
+		color = { icon = { 1, 0, 0 }, text = { 0, 1, 0 } },
+		color_icons = true,
+		enable = true,
+		point = GetTextPosition("TOP"),
+		showText = true,
+		use_color = true,
+	},
+	["WildBattlePetCapturable"] = {
+		alpha = 1,
+		color = { icon = { 1, 0, 0 }, text = { 0, 1, 0 } },
+		color_icons = true,
+		enable = true,
+		point = GetTextPosition("TOP"),
+		showText = true,
+		use_color = true,
+	},
+	["delves-bountiful"] = {
+		alpha = 1,
+		color = { icon = { 1, 0, 0 }, text = { 0, 1, 0 } },
+		color_icons = true,
+		enable = true,
+		point = GetTextPosition("TOP"),
+		showText = true,
+		use_color = true,
+	},
+	["delves-regular"] = {
+		alpha = 1,
+		color = { icon = { 1, 0, 0 }, text = { 0, 1, 0 } },
+		color_icons = true,
+		enable = true,
+		point = GetTextPosition("TOP"),
+		showText = true,
+		use_color = true,
+	},
+	["poi-hub"] = {
+		alpha = 1,
+		color = { icon = { 1, 0, 0 }, text = { 0, 1, 0 } },
+		color_icons = true,
+		enable = true,
+		point = GetTextPosition("TOP"),
+		showText = true,
+		use_color = true,
+	},
+	["quest-wrapper-available"] = {
+		alpha = 1,
+		color = { icon = { 1, 0, 0 }, text = { 0, 1, 0 } },
+		color_icons = true,
+		enable = true,
+		point = GetTextPosition("TOP"),
+		showText = true,
+		use_color = true,
+	},
+	["trading-post-minimap-icon"] = {
+		alpha = 1,
+		color = { icon = { 1, 0, 0 }, text = { 0, 1, 0 } },
+		color_icons = true,
+		enable = true,
+		point = GetTextPosition("TOP"),
+		showText = true,
+		use_color = true,
+	},
+	["worldquest-Capstone-questmarker-epic-Locked"] = {
+		alpha = 1,
+		color = { icon = { 1, 0, 0 }, text = { 0, 1, 0 } },
+		color_icons = true,
+		enable = true,
+		point = GetTextPosition("TOP"),
+		showText = true,
+		use_color = true,
+	},
+}
+
 local tmp = {
 	iconScale = 1,
 	enable = true,
@@ -94,32 +298,6 @@ local tmp = {
 	text_color = { r = 1, g = 1, b = 1 },
 	text_alpha = 1,
 }
-
--- Build atlas lookup table
-local atlasLookup = {}
-local function UpdateSettings()
-	for atlasName, cfg in pairs(optionsLookup) do
-		local info = {
-			iconScale = cfg.iconScale * globalScale,
-			outline = cfg.enable,
-			outlineScale = cfg.scale * cfg.iconScale * globalScale,
-			outlineDesaturate = cfg.use_color,
-			outlineColor = cfg.color,
-			outlineAlpha = cfg.alpha,
-			showLabel = cfg.show_text,
-			textFont = cfg.custom_font and LSM:Fetch("font", cfg.font) or globalTextFont,
-			textSize = globalTextSize * cfg.textScale,
-			textOutline = cfg.custom_font and cfg.fontflag or globalTextOutline,
-			textColor = cfg.text_color,
-			textAlpha = cfg.text_alpha,
-		}
-
-		ConfigureOutline(info, cfg)
-		ConfigureTextPosition(info, cfg)
-
-		atlasLookup[atlasName] = info
-	end
-end
 
 local function GetLabelOffsets(frame, info)
 	local iconWidth, iconHeight = frame:GetSize()
@@ -152,55 +330,51 @@ local function GetLabelOffsets(frame, info)
 end
 
 function module:ApplySettings(frame, texture, atlasName)
-	local info = optionsLookup[atlasName]
-	if not info then
-		print("NOT FOUND", atlasName, info)
-		return
-	end
+	local info = settings[atlasName]
 
 	-- global
 	local icon_scale = 1
-	local blendMode = "ADD"
 	local font = LSM:Fetch("font", E.db.mMT.lfg_invite_info.font.font)
-	local fontSize = 8
+	local fontSize = 10
 	local fontFlag = "OUTLINE"
-
-	-- icon
-	local enable = true
-	local alpha = 1
-	local use_color = true
-	local color = { 2, 1, 1 }
-	local text_color = { 1, 2, 1 }
-	local point = GetTextPosition("TOP")
-	local showText = true
 
 	if not info then
 		if frame.mMT_background then frame.mMT_background:Hide() end
 		if frame.mMT_label then frame.mMT_label:Hide() end
+		print("NOT FOUND", atlasName, info)
 		return
 	end
 
 	texture:SetScale(icon_scale)
 
-	-- Configure outline
-	if enable then
-		print("AtlasName", atlasName)
+	if info.enable then
 		if not frame.mMT_background then frame.mMT_background = frame:CreateTexture() end
+
+		local w, h = texture:GetSize()
+		local layer, sublevel = texture:GetDrawLayer()
 		frame.mMT_background:SetAtlas(atlasName)
-		frame.mMT_background:SetBlendMode("BLEND")
-		frame.mMT_background:SetScale(2)
-		frame.mMT_background:SetAlpha(alpha)
-		frame.mMT_background:SetVertexColor(unpack(color))
-		frame.mMT_background:SetDesaturated(use_color)
+		frame.mMT_background:SetDrawLayer(layer, sublevel - 1)
+		frame.mMT_background:SetSize(w, h)
+		frame.mMT_background:SetPoint("CENTER", frame, "CENTER", 0, 0)
+		frame.mMT_background:SetScale(1.2)
+		frame.mMT_background:SetBlendMode("ADD")
+		if info.color_icons then
+			frame.mMT_background:SetDesaturated(true)
+			frame.mMT_background:SetVertexColor(unpack(info.color.icon))
+		else
+			frame.mMT_background:SetDesaturated(false)
+			frame.mMT_background:SetVertexColor(1, 1, 1, 1)
+		end
+		frame.mMT_background:SetAlpha(1)
+
 		frame.mMT_background:Show()
 	elseif frame.mMT_background then
 		frame.mMT_background:Hide()
 	end
 
-	-- Configure text
 	local labelText = frame.poiInfo and frame.poiInfo.name or frame.name
 
-	if showText and (frame.poiInfo or frame.name) then
+	if info.showText and (frame.poiInfo or frame.name) then
 		if not frame.mMT_label then
 			local f = CreateFrame("Frame", "mMT_labelBase", WorldMapFrame)
 			local t = f:CreateFontString()
@@ -209,19 +383,19 @@ function module:ApplySettings(frame, texture, atlasName)
 			f:SetFrameStrata("HIGH")
 		end
 		frame.mMT_label:ClearAllPoints()
-		frame.mMT_label:SetPoint(point.anchor1, frame, point.anchor2, point.x, point.y)
+		frame.mMT_label:SetPoint(info.point.anchor1, frame, info.point.anchor2, info.point.x, info.point.y)
 		frame.mMT_label:SetFont(font, fontSize, fontFlag)
 		frame.mMT_label:SetShadowOffset(1, -1)
 		frame.mMT_label:Show()
 		frame.mMT_label:SetText(labelText)
-		frame.mMT_label:SetVertexColor(unpack(text_color))
-		frame.mMT_label:SetAlpha(alpha)
+		frame.mMT_label:SetVertexColor(unpack(info.color.text))
+		frame.mMT_label:SetAlpha(1)
 
 		local _, _, _, iconX, iconY = frame:GetPoint(1)
 
 		if iconX and iconY then -- can be nil
 			local scale = WorldMapFrame.ScrollContainer.baseScale * frame:GetScale()
-			local offsetX, offsetY = GetLabelOffsets(frame, point)
+			local offsetX, offsetY = GetLabelOffsets(frame, info.point)
 			labeledIcons[frame] = {
 				["text"] = frame.mMT_label,
 				["width"] = frame.mMT_label:GetWidth(),
@@ -238,7 +412,6 @@ function module:ApplySettings(frame, texture, atlasName)
 end
 
 function module:HideHighlights(frame)
-	print("HideHighlights", frame:GetName())
 	if frame.Texture then
 		frame.Texture:SetScale(1)
 	elseif frame.Icon then
@@ -343,23 +516,23 @@ function module:Initialize(demo)
 				end)
 			end)
 			hooksecurefunc(WorldMapFrame.ScrollContainer, "ZoomIn", function()
-				print("ZoomIn")
+				--print("ZoomIn")
 				module:CheckLabels()
 			end)
 			hooksecurefunc(WorldMapFrame.ScrollContainer, "ZoomOut", function()
-				print("ZoomOut")
+				--print("ZoomOut")
 				module:CheckLabels()
 			end)
 			hooksecurefunc(WorldMapFrame, "Maximize", function()
-				print("Maximize")
+				--print("Maximize")
 				UpdateShow()
 			end)
 			hooksecurefunc(WorldMapFrame, "Minimize", function()
-				print("Minimize")
+				--print("Minimize")
 				UpdateShow()
 			end)
 			hooksecurefunc(WorldMapFrame, "ProcessCanvasClickHandlers", function(...)
-				print("ProcessCanvasClickHandlers", ...)
+				--print("ProcessCanvasClickHandlers", ...)
 				UpdateShow()
 			end)
 
