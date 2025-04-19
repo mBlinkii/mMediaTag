@@ -621,9 +621,7 @@ local function UpdateMenus()
 end
 
 local function OnClick(self, button)
-	if InCombatLockdown() then
-		_G.UIErrorsFrame:AddMessage(E.InfoColor .. _G.ERR_NOT_IN_COMBAT)
-	else
+	if not E:AlertCombat() then
 		if not mMT.menu then mMT:BuildMenus() end
 
 		UpdateMenus()

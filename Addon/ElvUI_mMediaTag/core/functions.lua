@@ -47,6 +47,15 @@ function mMT:HexToRGB(hex)
 	return r / 255, g / 255, b / 255, a / 255
 end
 
+function mMT:round(number, decimals)
+	if number then
+		return (("%%.%df"):format(decimals)):format(number)
+	else
+		mMT:Print(L["!! ERROR - Round:"] .. " " .. number .. " - " .. decimals)
+		return 0
+	end
+end
+
 -- build menu frames
 function mMT:BuildMenus()
 	mMT.menu = CreateFrame("Frame", "mMediaTag_Main_Menu_Frame", E.UIParent, "BackdropTemplate")

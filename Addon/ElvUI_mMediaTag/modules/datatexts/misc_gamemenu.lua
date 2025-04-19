@@ -8,7 +8,6 @@ local tinsert = tinsert
 local CloseAllWindows = CloseAllWindows
 local CloseMenus = CloseMenus
 local HideUIPanel = HideUIPanel
-local InCombatLockdown = InCombatLockdown
 local ShowUIPanel = ShowUIPanel
 local ToggleFrame = ToggleFrame
 local UIParentLoadAddOn = UIParentLoadAddOn
@@ -236,7 +235,7 @@ local function BuildMenuList()
 		color = "|c" .. MEDIA.color.gm_text_color.hex,
 		icon = icon and menu_icons.elvui,
 		func = function()
-			if not InCombatLockdown() then
+			if not E:AlertCombat()  then
 				E:ToggleOptions()
 				HideUIPanel(_G["GameMenuFrame"])
 			end
@@ -246,7 +245,7 @@ local function BuildMenuList()
 		text = mMT.Name,
 		icon = icon and menu_icons.mmt,
 		func = function()
-			if not InCombatLockdown() then E:ToggleOptions("mMT") end
+			if not E:AlertCombat()  then E:ToggleOptions("mMT") end
 		end,
 	})
 

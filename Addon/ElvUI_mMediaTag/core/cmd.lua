@@ -88,7 +88,7 @@ local function CommandHandler(msg)
 		DB.debug.debugMode = not DB.debug.debugMode
 		mMT:SetDebugMode(DB.debug.debugMode, command == "debug safe")
 	else
-		if not InCombatLockdown() then
+		if not E:AlertCombat()  then
 			E:ToggleOptions("mMT")
 			HideUIPanel(_G["GameMenuFrame"])
 		end

@@ -4,7 +4,6 @@ local DT = E:GetModule("DataTexts")
 -- Cache WoW Globals
 local _G = _G
 local format = format
-local InCombatLockdown = InCombatLockdown
 local GetProfessions = GetProfessions
 local GetProfessionInfo = GetProfessionInfo
 local CastSpell = CastSpell
@@ -95,11 +94,7 @@ local function OnEvent(self, event)
 end
 
 local function OnClick(self)
-	if InCombatLockdown() then
-		_G.UIErrorsFrame:AddMessage(E.InfoColor .. _G.ERR_NOT_IN_COMBAT)
-	elseif professions[self.name].spell then
-		CastSpell(professions[self.name].spell, "Spell")
-	end
+	if not E:AlertCombat() and professions[self.name].spell then CastSpell(professions[self.name].spell, "Spell") end
 end
 
 local function ValueColorUpdate(self, hex)

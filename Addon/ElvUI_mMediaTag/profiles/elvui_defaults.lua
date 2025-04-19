@@ -108,6 +108,16 @@ P.datatexts = {
 		out_of_combat = "combat_13",
 		hide_delay = 5,
 	},
+	durability_itemLevel = {
+		mount = 460,
+		warning = true,
+		force_withe_text = true,
+		repair_threshold = 60,
+		color_repair = "FFFA3E3E",
+		color_warning = "FFFF7700",
+		warning_threshold = 80,
+		style= "a",
+	},
 }
 
 -- media

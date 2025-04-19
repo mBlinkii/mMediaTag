@@ -3,7 +3,6 @@ local DT = E:GetModule("DataTexts")
 
 -- Cache WoW Globals
 local _G = _G
-local InCombatLockdown = InCombatLockdown
 local GetProfessions = GetProfessions
 local GetProfessionInfo = GetProfessionInfo
 local GetSpellInfo = C_Spell and C_Spell.GetSpellInfo or GetSpellInfo
@@ -179,11 +178,7 @@ local function UpdateMenu()
 		text = TRADE_SKILLS,
 		icon = E.db.mMT.datatexts.professions.menu_icons and (dt_icons[E.db.mMT.datatexts.professions.icon] or dt_icons.prof_a),
 		func = function()
-			if not InCombatLockdown() then
-				_G.ToggleProfessionsBook()
-			else
-				_G.UIErrorsFrame:AddMessage(E.InfoColor .. _G.ERR_NOT_IN_COMBAT)
-			end
+			if not E:AlertCombat() then _G.ToggleProfessionsBook() end
 		end,
 	})
 	if player_professions.extra then
@@ -221,9 +216,7 @@ local function OnEvent(self)
 end
 
 local function OnClick(self)
-	if InCombatLockdown() then
-		_G.UIErrorsFrame:AddMessage(E.InfoColor .. _G.ERR_NOT_IN_COMBAT)
-	else
+	if not E:AlertCombat() then
 		if not mMT.menu then mMT:BuildMenus() end
 
 		UpdateMenu()

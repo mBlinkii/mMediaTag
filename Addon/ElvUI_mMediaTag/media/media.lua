@@ -13,6 +13,8 @@ MEDIA.color = {
 	mark = CreateColorFromHexString("FF38FF92"),
 	override = CreateColorFromHexString("FFFFFFFF"),
 	gm_text_color = CreateColorFromHexString("FFFFFFFF"),
+	di_warning = CreateColorFromHexString("FFFF7700"),
+	di_repair = CreateColorFromHexString("FFFA3E3E"),
 
 	-- lfg invite info
 	line_a = CreateColorFromHexString("FF1EFF00"),
@@ -91,6 +93,10 @@ function mMT:UpdateMedia(arg)
 		MEDIA.color.override_value.hex = E.db.mMT.datatexts.text.value
 		MEDIA.color.gm_text_color = CreateColorFromHexString(E.db.mMT.datatexts.menu.text_color)
 		MEDIA.color.gm_text_color.hex = E.db.mMT.datatexts.menu.text_color
+		MEDIA.color.di_warning = CreateColorFromHexString(E.db.mMT.datatexts.durability_itemLevel.color_warning)
+		MEDIA.color.di_warning.hex = E.db.mMT.datatexts.durability_itemLevel.color_warning
+		MEDIA.color.di_repair = CreateColorFromHexString(E.db.mMT.datatexts.durability_itemLevel.color_repair)
+		MEDIA.color.di_repair.hex = E.db.mMT.datatexts.durability_itemLevel.color_repair
 	end
 end
 
@@ -288,4 +294,14 @@ MEDIA.icons.datatexts.professions = {
 	prof_f = "Interface\\AddOns\\ElvUI_mMediaTag\\media\\icons\\datatexts\\primary_b.tga",
 	prof_g = "Interface\\AddOns\\ElvUI_mMediaTag\\media\\icons\\datatexts\\secondary_a.tga",
 	prof_h = "Interface\\AddOns\\ElvUI_mMediaTag\\media\\icons\\datatexts\\secondary_b.tga",
+}
+
+MEDIA.icons.datatexts.durability = {
+	armor_01 = "Interface\\AddOns\\ElvUI_mMediaTag\\media\\icons\\datatexts\\armor.tga",
+	armor_02 = "Interface\\AddOns\\ElvUI_mMediaTag\\media\\icons\\datatexts\\armor_b.tga",
+	armor_03 = "Interface\\AddOns\\ElvUI_mMediaTag\\media\\icons\\datatexts\\armor_c.tga",
+	armor_04 = "Interface\\AddOns\\ElvUI_mMediaTag\\media\\icons\\datatexts\\armor_d.tga",
+	shield_01 = "Interface\\AddOns\\ElvUI_mMediaTag\\media\\icons\\datatexts\\shield.tga",
+	shield_02 = "Interface\\AddOns\\ElvUI_mMediaTag\\media\\icons\\datatexts\\shield_b.tga",
+	shield_03 = "Interface\\AddOns\\ElvUI_mMediaTag\\media\\icons\\datatexts\\shield_c.tga",
 }
