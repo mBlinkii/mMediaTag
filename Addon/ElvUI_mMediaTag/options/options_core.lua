@@ -125,6 +125,13 @@ mMT.options = {
 					childGroups = "tab",
 					args = {},
 				},
+				info_durability_itemlevel = {
+					order = 9,
+					type = "group",
+					name = mMT:AddSettingsIcon(L["Durability & Item Level"], "armor"),
+					childGroups = "tab",
+					args = {},
+				},
 			},
 		},
 		dock = {

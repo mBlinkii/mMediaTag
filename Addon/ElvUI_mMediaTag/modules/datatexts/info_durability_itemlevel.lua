@@ -43,27 +43,43 @@ local styles = {
 		armor = MEDIA.icons.datatexts.durability.armor_01,
 	},
 	c = {
-		shield = MEDIA.icons.datatexts.durability.shield_01,
-		armor = MEDIA.icons.datatexts.durability.armor_02,
+		shield = MEDIA.icons.datatexts.durability.shield_03,
+		armor = MEDIA.icons.datatexts.durability.armor_01,
 	},
 	d = {
-		shield = MEDIA.icons.datatexts.durability.shield_02,
+		shield = MEDIA.icons.datatexts.durability.shield_01,
 		armor = MEDIA.icons.datatexts.durability.armor_02,
 	},
 	e = {
-		shield = MEDIA.icons.datatexts.durability.shield_01,
-		armor = MEDIA.icons.datatexts.durability.armor_03,
+		shield = MEDIA.icons.datatexts.durability.shield_02,
+		armor = MEDIA.icons.datatexts.durability.armor_02,
 	},
 	f = {
-		shield = MEDIA.icons.datatexts.durability.shield_02,
-		armor = MEDIA.icons.datatexts.durability.armor_03,
+		shield = MEDIA.icons.datatexts.durability.shield_03,
+		armor = MEDIA.icons.datatexts.durability.armor_02,
 	},
 	g = {
 		shield = MEDIA.icons.datatexts.durability.shield_01,
-		armor = MEDIA.icons.datatexts.durability.armor_04,
+		armor = MEDIA.icons.datatexts.durability.armor_03,
 	},
 	h = {
 		shield = MEDIA.icons.datatexts.durability.shield_02,
+		armor = MEDIA.icons.datatexts.durability.armor_03,
+	},
+	i = {
+		shield = MEDIA.icons.datatexts.durability.shield_03,
+		armor = MEDIA.icons.datatexts.durability.armor_03,
+	},
+	j = {
+		shield = MEDIA.icons.datatexts.durability.shield_01,
+		armor = MEDIA.icons.datatexts.durability.armor_04,
+	},
+	k = {
+		shield = MEDIA.icons.datatexts.durability.shield_02,
+		armor = MEDIA.icons.datatexts.durability.armor_04,
+	},
+	l = {
+		shield = MEDIA.icons.datatexts.durability.shield_03,
 		armor = MEDIA.icons.datatexts.durability.armor_04,
 	},
 }
