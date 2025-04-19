@@ -43,6 +43,7 @@ P.lfg_invite_info = {
 	enable = false,
 	delay = 60,
 	icon = "none",
+	style = "default",
 	background = false,
 	font = {
 		font = "PT Sans Narrow",
