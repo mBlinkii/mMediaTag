@@ -6,4 +6,5 @@
   <Script file="misc_gamemenu.lua"/>
   <Script file="misc_tracker.lua"/>
   <Script file="info_combat_time.lua"/>
+  <Script file="misc_coordinate.lua"/>
 </Ui>

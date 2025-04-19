@@ -1,6 +1,21 @@
 local mMT, DB, M, E, P, L, MEDIA = unpack(ElvUI_mMediaTag)
 local DT = E:GetModule("DataTexts")
 
+function mMT:UpdateAllDatatexts()
+	DT:ForceUpdate_DataText("mMT - Archaeology")
+	DT:ForceUpdate_DataText("mMT - Cooking")
+	DT:ForceUpdate_DataText("mMT - Fishing")
+	DT:ForceUpdate_DataText("mMT - Game menu")
+	DT:ForceUpdate_DataText("mMT - M+ Score")
+	DT:ForceUpdate_DataText("mMT - Professions")
+	DT:ForceUpdate_DataText("mMT - Primary Professions")
+	DT:ForceUpdate_DataText("mMT - Secondary Professions")
+	DT:ForceUpdate_DataText("mMT - Teleports")
+	DT:ForceUpdate_DataText("mMT - Coordinate X")
+	DT:ForceUpdate_DataText("mMT - Coordinate Y")
+	M.Tracker:UpdateAll()
+end
+
 mMT.options.args.datatexts.args.general.args = {
 	text_color = {
 		order = 1,
@@ -17,16 +32,7 @@ mMT.options.args.datatexts.args.general.args = {
 				end,
 				set = function(info, value)
 					E.db.mMT.datatexts.text.override_text = value
-					DT:ForceUpdate_DataText("mMT - Archaeology")
-					DT:ForceUpdate_DataText("mMT - Cooking")
-					DT:ForceUpdate_DataText("mMT - Fishing")
-					DT:ForceUpdate_DataText("mMT - Game menu")
-					DT:ForceUpdate_DataText("mMT - M+ Score")
-					DT:ForceUpdate_DataText("mMT - Professions")
-					DT:ForceUpdate_DataText("mMT - Primary Professions")
-					DT:ForceUpdate_DataText("mMT - Secondary Professions")
-					DT:ForceUpdate_DataText("mMT - Teleports")
-					M.Tracker:UpdateAll()
+					mMT:UpdateAllDatatexts()
 				end,
 			},
 			text_color = {
@@ -46,16 +52,7 @@ mMT.options.args.datatexts.args.general.args = {
 					E.db.mMT.datatexts.text.text = hex
 					MEDIA.color.override_text = CreateColorFromHexString(hex)
 					MEDIA.color.override_text.hex = hex
-					DT:ForceUpdate_DataText("mMT - Archaeology")
-					DT:ForceUpdate_DataText("mMT - Cooking")
-					DT:ForceUpdate_DataText("mMT - Fishing")
-					DT:ForceUpdate_DataText("mMT - Game menu")
-					DT:ForceUpdate_DataText("mMT - M+ Score")
-					DT:ForceUpdate_DataText("mMT - Professions")
-					DT:ForceUpdate_DataText("mMT - Primary Professions")
-					DT:ForceUpdate_DataText("mMT - Secondary Professions")
-					DT:ForceUpdate_DataText("mMT - Teleports")
-					M.Tracker:UpdateAll()
+					mMT:UpdateAllDatatexts()
 				end,
 			},
 			override_value = {
@@ -67,16 +64,7 @@ mMT.options.args.datatexts.args.general.args = {
 				end,
 				set = function(info, value)
 					E.db.mMT.datatexts.text.override_value = value
-					DT:ForceUpdate_DataText("mMT - Archaeology")
-					DT:ForceUpdate_DataText("mMT - Cooking")
-					DT:ForceUpdate_DataText("mMT - Fishing")
-					DT:ForceUpdate_DataText("mMT - Game menu")
-					DT:ForceUpdate_DataText("mMT - M+ Score")
-					DT:ForceUpdate_DataText("mMT - Professions")
-					DT:ForceUpdate_DataText("mMT - Primary Professions")
-					DT:ForceUpdate_DataText("mMT - Secondary Professions")
-					DT:ForceUpdate_DataText("mMT - Teleports")
-					M.Tracker:UpdateAll()
+					mMT:UpdateAllDatatexts()
 				end,
 			},
 			value_color = {
@@ -96,16 +84,7 @@ mMT.options.args.datatexts.args.general.args = {
 					E.db.mMT.datatexts.text.value = hex
 					MEDIA.color.override_value = CreateColorFromHexString(hex)
 					MEDIA.color.override_value.hex = hex
-					DT:ForceUpdate_DataText("mMT - Archaeology")
-					DT:ForceUpdate_DataText("mMT - Cooking")
-					DT:ForceUpdate_DataText("mMT - Fishing")
-					DT:ForceUpdate_DataText("mMT - Game menu")
-					DT:ForceUpdate_DataText("mMT - M+ Score")
-					DT:ForceUpdate_DataText("mMT - Professions")
-					DT:ForceUpdate_DataText("mMT - Primary Professions")
-					DT:ForceUpdate_DataText("mMT - Secondary Professions")
-					DT:ForceUpdate_DataText("mMT - Teleports")
-					M.Tracker:UpdateAll()
+					mMT:UpdateAllDatatexts()
 				end,
 			},
 		},

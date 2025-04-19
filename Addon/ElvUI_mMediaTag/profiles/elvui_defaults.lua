@@ -57,3 +57,64 @@ P.lfg_invite_info = {
 		line_c = "FFA335EE",
 	},
 }
+
+-- datatexts
+P.datatexts = {
+	text = {
+		override_text = true,
+		text = "FFFFFFFF",
+		override_value = false,
+		value = "FFFFFFFF",
+	},
+	score = {
+		group_keystones = true,
+		show_upgrade = true,
+		sort_method = "KEY",
+	},
+	teleports = {
+		icon = "teleport04",
+		favorites = {
+			enable = false,
+			a = { id = "none", kind = "none" },
+			b = { id = "none", kind = "none" },
+			c = { id = "none", kind = "none" },
+			d = { id = "none", kind = "none" },
+		},
+	},
+	individual_professions = {
+		icon = "default",
+	},
+	professions = {
+		icon = "prof_a",
+		menu_icons = "default",
+	},
+	menu = {
+		icon = "mmt",
+		menu_icons = true,
+		show_systeminfo = true,
+	},
+	tracker = {
+		custom = {},
+		hide_if_zero = false,
+		icon = true,
+		name = false,
+		short_number = true,
+		show_max = false,
+		colored = true,
+	},
+	combat_time = {
+		in_combat = "combat_02",
+		out_of_combat = "combat_13",
+		hide_delay = 5,
+	},
+}
+
+-- media
+P.media = {
+	color = {
+		title = "FFFFBE19",
+		text = "FFFFFFFF",
+		tip = "FFB2B2B2",
+		mark = "FF38FF92",
+	},
+}
