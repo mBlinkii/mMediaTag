@@ -12,6 +12,7 @@ MEDIA.color = {
 	tip = CreateColorFromHexString("FFB2B2B2"),
 	mark = CreateColorFromHexString("FF38FF92"),
 	override = CreateColorFromHexString("FFFFFFFF"),
+	gm_text_color = CreateColorFromHexString("FFFFFFFF"),
 
 	-- lfg invite info
 	line_a = CreateColorFromHexString("FF1EFF00"),
@@ -88,6 +89,8 @@ function mMT:UpdateMedia(arg)
 		MEDIA.color.override_text.hex = E.db.mMT.datatexts.text.text
 		MEDIA.color.override_value = CreateColorFromHexString(E.db.mMT.datatexts.text.value)
 		MEDIA.color.override_value.hex = E.db.mMT.datatexts.text.value
+		MEDIA.color.gm_text_color = CreateColorFromHexString(E.db.mMT.datatexts.menu.text_color)
+		MEDIA.color.gm_text_color.hex = E.db.mMT.datatexts.menu.text_color
 	end
 end
 

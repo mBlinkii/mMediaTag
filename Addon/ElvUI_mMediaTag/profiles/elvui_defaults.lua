@@ -92,6 +92,7 @@ P.datatexts = {
 		icon = "mmt",
 		menu_icons = true,
 		show_systeminfo = true,
+		text_color = "FFFFFFFF",
 	},
 	tracker = {
 		custom = {},

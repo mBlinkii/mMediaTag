@@ -49,6 +49,22 @@ mMT.options.args.datatexts.args.misc_gamemenu.args = {
 					E.db.mMT.datatexts.menu.show_systeminfo = value
 				end,
 			},
+			text_color = {
+				order = 4,
+				type = "color",
+				name = L["Menu Text color"],
+				hasAlpha = false,
+				get = function(info)
+					local r, g, b = mMT:HexToRGB(E.db.mMT.datatexts.menu.text_color)
+					return r, g, b
+				end,
+				set = function(info, r, g, b)
+					local hex = E:RGBToHex(r, g, b, "ff")
+					E.db.mMT.datatexts.menu.text_color = hex
+					MEDIA.color.gm_text_color = CreateColorFromHexString(hex)
+					MEDIA.color.gm_text_color.hex = hex
+				end,
+			},
 		},
 	},
 }
