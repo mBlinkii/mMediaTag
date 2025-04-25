@@ -118,6 +118,10 @@ P.datatexts = {
 		warning_threshold = 80,
 		style= "a",
 	},
+	dungeon = {
+		icon = "lfg04",
+		dungeon_name = true,
+	},
 }
 
 -- media
