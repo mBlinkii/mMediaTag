@@ -130,8 +130,7 @@ local function UpdateIconBackground(tx, unit, mirror)
 			bgColor = adjustColor(color, ColorShift)
 		end
 
-		if bgColor then
-			setColor(tx, bgColor, mirror) end
+		if bgColor then setColor(tx, bgColor, mirror) end
 	end
 end
 
@@ -294,7 +293,7 @@ local function UpdatePortrait(portraitFrame, force)
 	local unitColor = getColor(unit)
 
 	-- Portraits Frame
-	if not InCombatLockdown() and  (setting and setting.point) then
+	if not InCombatLockdown() and (setting and setting.point) then
 		portraitFrame:SetSize(setting.size, setting.size)
 		portraitFrame:ClearAllPoints()
 		portraitFrame:SetPoint(setting.point, parent, setting.relativePoint, setting.x, setting.y)
