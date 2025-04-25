@@ -277,11 +277,19 @@ local classificationNames = {
 
 E:AddTag("mClass", "UNIT_CLASSIFICATION_CHANGED", function(unit)
 	local c = UnitClassification(unit)
+	local guid = UnitGUID(unit)
+	local npcID = guid and select(6, strsplit("-", guid))
+
+	c = (npcID and bossIDs[npcID]) and "worldboss" or c
 	return (c and classificationNames.full[c]) and format("%s%s|r", colors[c], classificationNames.full[c]) or ""
 end)
 
 E:AddTag("mClass:short", "UNIT_CLASSIFICATION_CHANGED", function(unit)
 	local c = UnitClassification(unit)
+	local guid = UnitGUID(unit)
+	local npcID = guid and select(6, strsplit("-", guid))
+
+	c = (npcID and bossIDs[npcID]) and "worldboss" or c
 	return (c and classificationNames.short[c]) and format("%s%s|r", colors[c], classificationNames.short[c]) or ""
 end)
 
@@ -628,6 +636,24 @@ E:AddTag("mHealth:short:ndp", "UNIT_HEALTH UNIT_MAXHEALTH UNIT_CONNECTION PLAYER
 			else
 				return E:GetFormattedText("CURRENT", currentHealth, maxHealth, nil, true)
 			end
+		end
+	end
+end)
+
+E:AddTag("mHealth:short:ndp:nofull", "UNIT_HEALTH UNIT_MAXHEALTH UNIT_CONNECTION PLAYER_FLAGS_CHANGED PLAYER_UPDATE_RESTING", function(unit)
+	local isAFK = UnitIsAFK(unit)
+
+	if isAFK then
+		return _TAGS.mAFK(unit)
+	else
+		if (UnitIsDead(unit)) or (UnitIsGhost(unit)) or (not UnitIsConnected(unit)) then
+			return _TAGS.mStatus(unit)
+		else
+			local currentHealth = UnitHealth(unit)
+			local maxHealth = UnitHealthMax(unit)
+			local deficit = maxHealth - currentHealth
+
+			if deficit > 0 and currentHealth > 0 then return NoDecimalPercent(currentHealth, maxHealth, "%") end
 		end
 	end
 end)
@@ -1734,6 +1760,12 @@ end)
 E:AddTag("mPower:percent:hidefull", "UNIT_DISPLAYPOWER UNIT_POWER_FREQUENT UNIT_MAXPOWER PLAYER_ROLES_ASSIGNED GROUP_ROSTER_UPDATE UNIT_COMBAT", function(unit)
 	local power = _TAGS.perpp(unit)
 	if power ~= 100 then return _TAGS["mPower:percent"](unit, power) end
+end)
+
+E:AddTag("mPower:percent:custom", "UNIT_DISPLAYPOWER UNIT_POWER_FREQUENT UNIT_MAXPOWER PLAYER_ROLES_ASSIGNED GROUP_ROSTER_UPDATE UNIT_COMBAT", function(unit, _, arg1)
+	if not arg1 then return end
+	local power = _TAGS.perpp(unit)
+	if power and power < tonumber(arg1) then return _TAGS["mPower:percent"](unit, power) end
 end)
 
 E:AddTag("mPower:percent:heal", "UNIT_DISPLAYPOWER UNIT_POWER_FREQUENT UNIT_MAXPOWER PLAYER_ROLES_ASSIGNED GROUP_ROSTER_UPDATE", function(unit, power)

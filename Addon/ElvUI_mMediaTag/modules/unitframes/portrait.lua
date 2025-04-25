@@ -293,7 +293,7 @@ local function UpdatePortrait(portraitFrame, force)
 	local unitColor = getColor(unit)
 
 	-- Portraits Frame
-	if not InCombatLockdown() then
+	if not InCombatLockdown() and (setting and setting.point) then
 		portraitFrame:SetSize(setting.size, setting.size)
 		portraitFrame:ClearAllPoints()
 		portraitFrame:SetPoint(setting.point, parent, setting.relativePoint, setting.x, setting.y)
@@ -332,8 +332,8 @@ local function UpdatePortrait(portraitFrame, force)
 
 	portraitFrame.mask:SetTexture(texture, "CLAMPTOBLACKADDITIVE", "CLAMPTOBLACKADDITIVE")
 
-	local color = (E.db.mMT.portraits.shadow.classBG and unitColor)
-	UpdateTexture(portraitFrame, "iconbg", bg_textures[E.db.mMT.portraits.general.bgstyle], -5, color)
+	--local color = (E.db.mMT.portraits.shadow.classBG and unitColor or E.db.mMT.portraits.shadow.background)
+	UpdateTexture(portraitFrame, "iconbg", bg_textures[E.db.mMT.portraits.general.bgstyle], -5)
 	portraitFrame.iconbg:AddMaskTexture(portraitFrame.mask)
 	--end
 

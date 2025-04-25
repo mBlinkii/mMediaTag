@@ -905,3 +905,22 @@ P.mMT.datatexts = {
 		max = false,
 	}
 }
+
+-- lfg invite info
+P.mMT.lfg_invite_info = {
+	enable = false,
+	delay = 60,
+	icon = "none",
+	background = false,
+	font = {
+		font = "PT Sans Narrow",
+		size = 32,
+		size2 = 22,
+		fontflag = "OUTLINE",
+	},
+	colors = {
+		line_a = "FFFFBF00",
+		line_b = "FF9AA0A5",
+		line_c = "FFA335EE",
+	},
+}

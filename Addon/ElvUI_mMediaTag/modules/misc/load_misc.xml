@@ -13,4 +13,5 @@
 	<Script file="details.lua"/>
 	<Script file="minimap_aspect_ratio.lua"/>
 	<Script file="minimap_skin.lua"/>
+	<Script file="lfg_invite_info.lua"/>
 </Ui>
