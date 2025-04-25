@@ -1,6 +1,18 @@
 # Changelog - ElvUI_mMediaTag
 [Eng] - All changes to this project will be documented in this file. The latest changes are at the top.
 
+## [ver. 3.73] - 25.04.2025
+### FIX 
+- FIX - [Portraits]: BG color slider is also available without class bg color enabled.
+- FIX - [Portraits]: Avoid portrait errors with a new profile import.
+### UPDATE
+- UPDATE - [Teleports-Datatext]: Add Lucky Tortollan Charm.
+- UPDATE - [TAGs]: Add boss check to classification TAGs.
+- UPDATE - [Instance-Difficulty]: Update IDs.
+### NEW
+- NEW - [TAGs]: mPower:percent:custom & mHealth:short:ndp:nofull.
+- NEW - [LFG-Invite-Ifo]: Module LFG Invite Info.
+
 ## [ver. 3.72] - 18.03.2025
 ### FIX 
 - FIX - [Teleports-Datatext]: Bring back the lost teleports from season 2.
