@@ -294,7 +294,7 @@ local function UpdatePortrait(portraitFrame, force)
 	local unitColor = getColor(unit)
 
 	-- Portraits Frame
-	if not InCombatLockdown() then
+	if not InCombatLockdown() and  (setting and setting.point) then
 		portraitFrame:SetSize(setting.size, setting.size)
 		portraitFrame:ClearAllPoints()
 		portraitFrame:SetPoint(setting.point, parent, setting.relativePoint, setting.x, setting.y)
