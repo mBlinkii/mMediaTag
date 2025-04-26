@@ -32,11 +32,19 @@ MEDIA.color = {
 	info = CreateColorFromHexString("FFFFA7A7"),
 
 	-- difficulty
-	nhc = CreateColorFromHexString("FF1EFF00"),
-	hc = CreateColorFromHexString("FF0070DD"),
-	mythic = CreateColorFromHexString("FFA335EE"),
-	mythic_plus = CreateColorFromHexString("FFFF8000"),
-	none = CreateColorFromHexString("FFFFFFFF"),
+	N = CreateColorFromHexString("FF1EFF00"),
+	H = CreateColorFromHexString("FF0070DD"),
+	M = CreateColorFromHexString("FFA335EE"),
+	PVP = CreateColorFromHexString("FFE6CC80"),
+	MP = CreateColorFromHexString("FFFF8000"),
+	LFR = CreateColorFromHexString("FFBE7FE8"),
+	TW = CreateColorFromHexString("FF00CCFF"),
+	QUEST = CreateColorFromHexString("FFFFBB00"),
+	SC = CreateColorFromHexString("FF00FF8C"),
+	STORY = CreateColorFromHexString("FFE6CC80"),
+	DELVE = CreateColorFromHexString("FF91D900"),
+	FOLLOWER = CreateColorFromHexString("FF00FF8C"),
+	OTHER = CreateColorFromHexString("FF00FFEE"),
 }
 
 MEDIA.classColor = E:ClassColor(E.myclass)

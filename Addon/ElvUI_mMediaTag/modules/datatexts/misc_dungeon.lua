@@ -1,88 +1,18 @@
 local mMT, DB, M, E, P, L, MEDIA = unpack(ElvUI_mMediaTag)
 local DT = E:GetModule("DataTexts")
 
---Lua functions
-local format = format
-local wipe = table.wipe
-
 --WoW API / Variables
 local _G = _G
-local IsInInstance = IsInInstance
-local C_MythicPlus = C_MythicPlus
-local C_ChallengeMode = C_ChallengeMode
-local GetInstanceInfo = GetInstanceInfo
+local strupper = strupper
 local UIParentLoadAddOn = UIParentLoadAddOn
 
-local valueString, textString = "", ""
-local icons = MEDIA.icons.lfg
--- 	mmt = MEDIA.icon,
--- 	colored = E:TextureString(MEDIA.icons.lfg.lfg01, ":14:14"),
--- 	white = E:TextureString(MEDIA.icons.datatexts.misc.menu_a, ":14:14"),
--- }
-
-
-local function mSetup(self)
-	local isMaxLevel = E:XPIsLevelMax()
-
-	local mInstanceInfo = mMT:InstanceInfo()
-	if mInstanceInfo then
-		DT.tooltip:AddLine(" ")
-		for i = 1, #mInstanceInfo do
-			DT.tooltip:AddLine(mInstanceInfo[i])
-		end
-	end
-
-	local inInstance, _ = IsInInstance()
-	if inInstance then
-		local infoInstance = mMT:DungeonInfo()
-		if infoInstance then
-			DT.tooltip:AddLine(" ")
-			for i = 1, #infoInstance do
-				DT.tooltip:AddLine(infoInstance[i])
-			end
-		end
-	end
-
-	if E.Retail and C_MythicPlus.IsMythicPlusActive() and (C_ChallengeMode.GetActiveChallengeMapID() ~= nil) then
-		local infoMythicPlus = mMT:MythicPlusDungeon()
-		if infoMythicPlus then
-			DT.tooltip:AddLine(" ")
-			for i = 1, #infoMythicPlus do
-				DT.tooltip:AddLine(infoMythicPlus[i])
-			end
-		end
-	end
-
-	if E.Retail and E.db.mMT.dungeon.key and isMaxLevel then
-		local key = mMT:OwenKeystone()
-		if key then
-			DT.tooltip:AddLine(" ")
-			for i = 1, #key do
-				DT.tooltip:AddLine(key[i])
-			end
-		end
-	end
-
-	if E.Retail and E.db.mMT.dungeon.score and isMaxLevel then
-		DT.tooltip:AddLine(" ")
-		DT.tooltip:AddDoubleLine(DUNGEON_SCORE, mMT:GetDungeonScore())
-	end
-
-	if E.Retail and E.db.mMT.dungeon.affix then
-		local mAffixes = mMT:WeeklyAffixes()
-		if mAffixes then
-			DT.tooltip:AddLine(" ")
-			for i = 1, #mAffixes do
-				DT.tooltip:AddLine(mAffixes[i])
-			end
-		end
-	end
-end
+local textString = ""
 
 local function OnClick(self, button)
-	if button == "LeftButton" then
-		PVEFrame_ToggleFrame("GroupFinderFrame", _G.LFDParentFrame)
-	elseif E.Retail then
+	if button == "LeftButton" or button == "MiddleButton" then
+		_G.ToggleLFDParentFrame()
+		if button == "MiddleButton" then _G.PVEFrameTab3:Click() end
+	else
 		if not _G.WeeklyRewardsFrame then UIParentLoadAddOn("Blizzard_WeeklyRewards") end
 		if _G.WeeklyRewardsFrame:IsVisible() then
 			_G.WeeklyRewardsFrame:Hide()
@@ -93,10 +23,68 @@ local function OnClick(self, button)
 end
 
 local function OnEnter(self)
-	mSetup(self)
-	DT.tooltip:AddLine(" ")
-	DT.tooltip:AddLine(format("%s  %s%s|r", mMT:mIcon(mMT.Media.Mouse["LEFT"]), E.db.mMT.datatextcolors.colortip.hex, L["Click to open LFD Frame"]))
-	if E.Retail then DT.tooltip:AddLine(format("%s  %s%s|r", mMT:mIcon(mMT.Media.Mouse["RIGHT"]), E.db.mMT.datatextcolors.colortip.hex, L["Click to open Great Vault"])) end
+	local instanceInfos = mMT:GetDungeonInfo()
+
+	if instanceInfos then
+		DT.tooltip:AddLine(mMT:TC(L["Dungeon Infos:"], "title"))
+		DT.tooltip:AddDoubleLine(mMT:TC(L["Name:"]), mMT:TC(instanceInfos.name))
+
+		if instanceInfos.difficultyShort or instanceInfos.difficultyName then
+			local difficulty = (instanceInfos.difficultyShort or instanceInfos.difficultyName) .. ((instanceInfos.isChallengeMode and instanceInfos.level) or "")
+			DT.tooltip:AddDoubleLine(mMT:TC(L["Difficulty:"]), instanceInfos.difficultyColor:WrapTextInColorCode(difficulty))
+		end
+
+		if instanceInfos.isGuildParty then DT.tooltip:AddDoubleLine(mMT:TC(L["Guild Party:"]), mMT:TC(L["Yes"], "green")) end
+		DT.tooltip:AddLine(" ")
+	end
+
+	local playerDifficultyInfos = mMT:GetPlayerDifficulty()
+	if playerDifficultyInfos then
+		DT.tooltip:AddLine(mMT:TC(L["Difficulty Infos:"], "title"))
+		DT.tooltip:AddDoubleLine(mMT:TC(L["Dungeon:"]), playerDifficultyInfos.dungeon.color:WrapTextInColorCode(playerDifficultyInfos.dungeon.name))
+		DT.tooltip:AddDoubleLine(mMT:TC(L["Raid:"]), playerDifficultyInfos.raid.color:WrapTextInColorCode(playerDifficultyInfos.raid.name))
+		if E.Retail then DT.tooltip:AddDoubleLine(mMT:TC(L["Legacy Raid:"]), playerDifficultyInfos.legacy.color:WrapTextInColorCode(playerDifficultyInfos.legacy.name)) end
+		DT.tooltip:AddLine(" ")
+	end
+
+	if E.Retail and E:XPIsLevelMax() then
+		local myScore = mMT:GetMyMythicPlusScore()
+		local myKeystone = mMT:GetMyKeystone()
+
+		if myKeystone and myScore then
+			DT.tooltip:AddLine(mMT:TC(L["My Info"], "title"))
+			DT.tooltip:AddDoubleLine(mMT:TC(DUNGEON_SCORE), myScore)
+			DT.tooltip:AddDoubleLine(mMT:TC(L["Keystone"]), myKeystone)
+			DT.tooltip:AddLine(" ")
+		end
+
+		if DB.keystones and next(DB.keystones) then
+			DT.tooltip:AddLine(mMT:TC(L["Keystones on your Account"], "title"))
+			for _, characters in pairs(DB.keystones) do
+				DT.tooltip:AddDoubleLine(characters.name, characters.key)
+			end
+			DT.tooltip:AddLine(" ")
+		end
+
+		local weeklyAffixes = mMT:GetWeeklyAffixes()
+		if weeklyAffixes then
+			DT.tooltip:AddLine(mMT:TC(L["This week's Affix"], "title"))
+			DT.tooltip:AddLine(mMT:TC(weeklyAffixes))
+			DT.tooltip:AddLine(" ")
+		end
+
+		local vaultInfoRaid, vaultInfoDungeons, vaultInfoWorld = mMT:GetVaultInfo()
+		if vaultInfoRaid and vaultInfoDungeons and vaultInfoWorld then
+			DT.tooltip:AddLine(mMT:TC(GREAT_VAULT_REWARDS, "title"))
+			DT.tooltip:AddDoubleLine(mMT:TC(RAID), mMT:TC(vaultInfoRaid))
+			DT.tooltip:AddDoubleLine(mMT:TC(DUNGEONS), mMT:TC(vaultInfoDungeons))
+			DT.tooltip:AddDoubleLine(mMT:TC(WORLD), mMT:TC(vaultInfoWorld))
+			DT.tooltip:AddLine(" ")
+		end
+	end
+
+	DT.tooltip:AddLine(MEDIA.leftClick .. " " .. mMT:TC(L["left click to open LFD Frame"], "tip"))
+	DT.tooltip:AddLine(MEDIA.rightClick .. " " .. mMT:TC(L["right click to open Great Vault"], "tip"))
 	DT.tooltip:Show()
 end
 
@@ -106,8 +94,9 @@ local function OnEvent(self)
 
 	if E.db.mMT.datatexts.dungeon.dungeon_name then
 		local instanceInfos = mMT:GetDungeonInfo()
-		if instanceInfos then
-			text = instanceInfos.shortName or instanceInfos.name
+		if instanceInfos and (instanceInfos.difficultyShort or instanceInfos.difficultyName) then
+			local difficulty = (instanceInfos.difficultyShort or instanceInfos.difficultyName) .. ((instanceInfos.isChallengeMode and instanceInfos.level) or "")
+			text = instanceInfos.difficultyColor:WrapTextInColorCode(difficulty) .. " - " .. strupper(instanceInfos.shortName or instanceInfos.name)
 		end
 	end
 
@@ -120,13 +109,11 @@ end
 
 local function ValueColorUpdate(self, hex)
 	local textHex = E.db.mMT.datatexts.text.override_text and "|c" .. MEDIA.color.override_text.hex or hex
-	local valueHex = E.db.mMT.datatexts.text.override_value and "|c" .. MEDIA.color.override_value.hex or hex
 	textString = strjoin("", textHex, "%s|r")
-	valueString = strjoin("", valueHex, "%s|r")
+
 	OnEvent(self)
 end
 
-local events = { "CHALLENGE_MODE_START", "CHALLENGE_MODE_COMPLETED", "PLAYER_ENTERING_WORLD", "UPDATE_INSTANCE_INFO", "ENCOUNTER_END" }
+local events = { "CHALLENGE_MODE_START", "CHALLENGE_MODE_COMPLETED", "PLAYER_ENTERING_WORLD", "UPDATE_INSTANCE_INFO", "ENCOUNTER_END", "SCENARIO_UPDATE", "PLAYER_DIFFICULTY_CHANGED" }
 
-DT:RegisterDatatext("mMT - Dungeon", mMT.Name, events, OnEvent, nil, nil, nil, nil, L["Dungeon"], nil, ValueColorUpdate)
---DT:RegisterDatatext("mMT - Dungeon", mMT.Name, events, OnEvent, nil, OnClick, OnEnter, OnLeave, L["Dungeon"], nil, ValueColorUpdate)
+DT:RegisterDatatext("mMT - Dungeon", mMT.Name, events, OnEvent, nil, OnClick, OnEnter, OnLeave, L["Dungeon"], nil, ValueColorUpdate)
