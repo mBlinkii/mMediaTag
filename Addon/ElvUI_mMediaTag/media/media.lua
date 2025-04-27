@@ -106,6 +106,22 @@ function mMT:UpdateMedia(arg)
 		MEDIA.color.di_repair = CreateColorFromHexString(E.db.mMT.datatexts.durability_itemLevel.color_repair)
 		MEDIA.color.di_repair.hex = E.db.mMT.datatexts.durability_itemLevel.color_repair
 	end
+
+	if arg == "difficulty" or not arg then
+		MEDIA.color.N = CreateColorFromHexString(E.db.mMT.media.color.N)
+		MEDIA.color.H = CreateColorFromHexString(E.db.mMT.media.color.H)
+		MEDIA.color.M = CreateColorFromHexString(E.db.mMT.media.color.M)
+		MEDIA.color.PVP = CreateColorFromHexString(E.db.mMT.media.color.PVP)
+		MEDIA.color.MP = CreateColorFromHexString(E.db.mMT.media.color.MP)
+		MEDIA.color.LFR = CreateColorFromHexString(E.db.mMT.media.color.LFR)
+		MEDIA.color.TW = CreateColorFromHexString(E.db.mMT.media.color.TW)
+		MEDIA.color.QUEST = CreateColorFromHexString(E.db.mMT.media.color.QUEST)
+		MEDIA.color.SC = CreateColorFromHexString(E.db.mMT.media.color.SC)
+		MEDIA.color.STORY = CreateColorFromHexString(E.db.mMT.media.color.STORY)
+		MEDIA.color.DELVE = CreateColorFromHexString(E.db.mMT.media.color.DELVE)
+		MEDIA.color.FOLLOWER = CreateColorFromHexString(E.db.mMT.media.color.FOLLOWER)
+		MEDIA.color.OTHER = CreateColorFromHexString(E.db.mMT.media.color.OTHER)
+	end
 end
 
 MEDIA.icon = "|TInterface\\Addons\\ElvUI_mMediaTag\\media\\icon.tga:14:14|t"

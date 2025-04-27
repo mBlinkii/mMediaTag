@@ -95,7 +95,9 @@ local function OnEvent(self)
 	if E.db.mMT.datatexts.dungeon.dungeon_name then
 		local instanceInfos = mMT:GetDungeonInfo()
 		if instanceInfos and (instanceInfos.difficultyShort or instanceInfos.difficultyName) then
-			local difficulty = (instanceInfos.difficultyShort or instanceInfos.difficultyName) .. ((instanceInfos.isChallengeMode and instanceInfos.level) or "")
+			local challengeModeInfo = instanceInfos.isChallengeMode and instanceInfos.level
+			local delveInfo = instanceInfos.isDelve and "-" .. instanceInfos.level
+			local difficulty = (instanceInfos.difficultyShort or instanceInfos.difficultyName) .. ((challengeModeInfo or delveInfo) or "")
 			text = instanceInfos.difficultyColor:WrapTextInColorCode(difficulty) .. " - " .. strupper(instanceInfos.shortName or instanceInfos.name)
 		end
 	end

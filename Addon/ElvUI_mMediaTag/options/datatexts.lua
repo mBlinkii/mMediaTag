@@ -13,6 +13,7 @@ function mMT:UpdateAllDatatexts()
 	DT:ForceUpdate_DataText("mMT - Teleports")
 	DT:ForceUpdate_DataText("mMT - Coordinate X")
 	DT:ForceUpdate_DataText("mMT - Coordinate Y")
+	DT:ForceUpdate_DataText("mMT - Dungeon")
 	M.Tracker:UpdateAll()
 end
 
@@ -101,68 +102,13 @@ mMT.options.args.datatexts.args.general.args = {
 				fontSize = "medium",
 				name = L["These colors are used for the tooltips of the datatexts."],
 			},
-			color_title = {
+			colors = {
 				order = 2,
-				type = "color",
-				name = L["Title"],
-				hasAlpha = false,
-				get = function(info)
-					local r, g, b = mMT:HexToRGB(E.db.mMT.media.color.title)
-					return r, g, b
-				end,
-				set = function(info, r, g, b)
-					local hex = E:RGBToHex(r, g, b, "ff")
-					E.db.mMT.media.color.title = hex
-					MEDIA.color.title = CreateColorFromHexString(hex)
-					MEDIA.color.title.hex = hex
-				end,
-			},
-			color_text = {
-				order = 3,
-				type = "color",
-				name = L["Text"],
-				hasAlpha = false,
-				get = function(info)
-					local r, g, b = mMT:HexToRGB(E.db.mMT.media.color.text)
-					return r, g, b
-				end,
-				set = function(info, r, g, b)
-					local hex = E:RGBToHex(r, g, b, "ff")
-					E.db.mMT.media.color.text = hex
-					MEDIA.color.text = CreateColorFromHexString(hex)
-					MEDIA.color.text.hex = hex
-				end,
-			},
-			color_tip = {
-				order = 4,
-				type = "color",
-				name = L["Tip"],
-				hasAlpha = false,
-				get = function(info)
-					local r, g, b = mMT:HexToRGB(E.db.mMT.media.color.tip)
-					return r, g, b
-				end,
-				set = function(info, r, g, b)
-					local hex = E:RGBToHex(r, g, b, "ff")
-					E.db.mMT.media.color.tip = hex
-					MEDIA.color.tip = CreateColorFromHexString(hex)
-					MEDIA.color.tip.hex = hex
-				end,
-			},
-			color_mark = {
-				order = 5,
-				type = "color",
-				name = L["Mark"],
-				hasAlpha = false,
-				get = function(info)
-					local r, g, b = mMT:HexToRGB(E.db.mMT.media.color.mark)
-					return r, g, b
-				end,
-				set = function(info, r, g, b)
-					local hex = E:RGBToHex(r, g, b, "ff")
-					E.db.mMT.media.color.mark = hex
-					MEDIA.color.mark = CreateColorFromHexString(hex)
-					MEDIA.color.mark.hex = hex
+				type = "execute",
+				name = L["Colors"],
+                desc = L["Change Colors"],
+				func = function()
+					E.Libs.AceConfigDialog:SelectGroup("ElvUI", "mMT", "colors", "tip_menu")
 				end,
 			},
 		},

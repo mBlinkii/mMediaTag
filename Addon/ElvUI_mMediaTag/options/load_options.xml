@@ -18,4 +18,7 @@
 	<Script file="info_combat_time.lua"/>
 	<Script file="lfg_invite_info.lua"/>
 	<Script file="info_durability_itemlevel.lua"/>
+	<Script file="misc_dungeon.lua"/>
+	<Script file="colors_difficulty.lua"/>
+	<Script file="colors_tip_menu.lua"/>
 </Ui>

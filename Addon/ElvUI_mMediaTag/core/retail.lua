@@ -17,6 +17,7 @@ local GetDungeonDifficultyID = GetDungeonDifficultyID
 local GetRaidDifficultyID = GetRaidDifficultyID
 local GetLegacyRaidDifficultyID = GetLegacyRaidDifficultyID
 local GetActiveKeystoneInfo = C_ChallengeMode.GetActiveKeystoneInfo
+local GetScenarioHeaderDelvesWidgetVisualizationInfo = C_UIWidgetManager.GetScenarioHeaderDelvesWidgetVisualizationInfo
 
 local shortNames = {
 	-- tww
@@ -283,6 +284,26 @@ local function UpdateColors()
 	}
 end
 
+function mMT:GetCurrentDelveTier()
+	local widgetIDs = {
+		{ id = 6183, tierType = "numbered" },
+		{ id = 6184, tierType = "?" },
+		{ id = 6185, tierType = "??" },
+	}
+
+	for _, widget in ipairs(widgetIDs) do
+		local delveInfo = GetScenarioHeaderDelvesWidgetVisualizationInfo(widget.id)
+		if delveInfo and delveInfo.shownState == Enum.WidgetShownState.Shown then
+			if widget.tierType ~= "numbered" then return widget.tierType end
+
+			local tierText = delveInfo.tierText or ""
+			return tonumber(tierText:match("%d+")) or 1
+		end
+	end
+
+	return 1
+end
+
 function mMT:GetPlayerDifficulty()
 	local info = {}
 	local DungeonDifficultyID, RaidDifficultyID = GetDungeonDifficultyID(), GetRaidDifficultyID()
@@ -326,6 +347,12 @@ function mMT:GetDungeonInfo()
 		info.isChallengeMode = true
 		info.level = keystoneColor:WrapTextInColorCode(keystoneLevel)
 	end
+
+	if difficultyID == 208 then
+		info.isDelve = true
+		info.level = mMT:GetCurrentDelveTier()
+	end
+
 
 	return info
 end

@@ -132,6 +132,13 @@ mMT.options = {
 					childGroups = "tab",
 					args = {},
 				},
+				misc_dungeon = {
+					order = 10,
+					type = "group",
+					name = mMT:AddSettingsIcon(L["Dungeon"], "dungeon"),
+					childGroups = "tab",
+					args = {},
+				},
 			},
 		},
 		dock = {
@@ -180,8 +187,31 @@ mMT.options = {
 				},
 			},
 		},
-		about = {
+		colors = {
 			order = 9,
+			type = "group",
+			name = L["Colors"],
+			icon = "Interface\\Addons\\ElvUI_mMediaTag\\media\\options\\colors",
+			childGroups = "tab",
+			args = {
+				difficulty = {
+					order = 1,
+					type = "group",
+					name = mMT:AddSettingsIcon(L["Difficulty"], "pvp"),
+					childGroups = "tab",
+					args = {},
+				},
+				tip_menu = {
+					order = 2,
+					type = "group",
+					name = mMT:AddSettingsIcon(L["Tip/ Menu"], "misc"),
+					childGroups = "tab",
+					args = {},
+				},
+			},
+		},
+		about = {
+			order = 10,
 			type = "group",
 			name = MEDIA.color.green:WrapTextInColorCode(L["About"]),
 			icon = "Interface\\Addons\\ElvUI_mMediaTag\\media\\options\\about",
@@ -189,7 +219,7 @@ mMT.options = {
 			args = {},
 		},
 		license = {
-			order = 10,
+			order = 11,
 			type = "group",
 			name = MEDIA.color.yellow:WrapTextInColorCode(L["License"]),
 			icon = "Interface\\Addons\\ElvUI_mMediaTag\\media\\options\\license",
@@ -197,7 +227,7 @@ mMT.options = {
 			args = {},
 		},
 		changelog = {
-			order = 11,
+			order = 12,
 			type = "group",
 			name = MEDIA.color.red:WrapTextInColorCode(L["Changelog"]),
 			icon = "Interface\\Addons\\ElvUI_mMediaTag\\media\\options\\log",
