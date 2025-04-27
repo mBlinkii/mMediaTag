@@ -119,6 +119,6 @@ local function ValueColorUpdate(self, hex)
 	OnEvent(self)
 end
 
-local events = { "CHALLENGE_MODE_START", "CHALLENGE_MODE_COMPLETED", "PLAYER_ENTERING_WORLD", "UPDATE_INSTANCE_INFO", "ENCOUNTER_END", "SCENARIO_UPDATE", "PLAYER_DIFFICULTY_CHANGED" }
+local events = { "CHALLENGE_MODE_START", "UPDATE_INSTANCE_INFO", "SCENARIO_UPDATE", "PLAYER_DIFFICULTY_CHANGED" }
 
 DT:RegisterDatatext("mMT - Dungeon", mMT.Name, events, OnEvent, nil, OnClick, OnEnter, OnLeave, L["Dungeon"], nil, ValueColorUpdate)

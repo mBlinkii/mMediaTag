@@ -45,6 +45,7 @@ P.lfg_invite_info = {
 	icon = "none",
 	style = "default",
 	background = false,
+	print = true,
 	font = {
 		font = "PT Sans Narrow",
 		size = 32,
@@ -61,11 +62,12 @@ P.lfg_invite_info = {
 -- difficulty info
 P.difficulty_info = {
 	enable = true,
-	style = "default",
+	background = false,
 	font = {
 		font = "PT Sans Narrow",
 		size = 12,
 		fontflag = "OUTLINE",
+		justify = "CENTER",
 	},
 }
 

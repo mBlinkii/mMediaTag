@@ -14,14 +14,21 @@ local GetActivityInfoTable = C_LFGList.GetActivityInfoTable
 local LSM = E.Libs.LSM
 
 function module:Demo(show)
+	local demoTexts = {
+		{ grp = "QUEST", name = "The Flame Burns Eternal", acc = "Weekly", diff = "Normal" },
+		{ grp = "m0", name = "The Rookery", acc = "Mythic", diff = "Mythic" },
+		{ grp = "+12", name = "The Floodgate", acc = "Keystone", diff = "Mythic+" },
+		{ grp = "Transmog farming", name = "Custom", acc = "PVE", diff = "Custom" },
+	}
 	if show then
-		module.info_screen.lable:SetText(format("%s", mMT:TC(L["GROUP NAME"] .. " - " .. L["ACTIVITY NAME"], "line_a")))
-		module.info_screen.lable2:SetText(format("%s \n%s", mMT:TC(L["ACTIVITY NAME"], "line_b"), mMT:TC(L["DIFFICULTY"], "line_c")))
+		local info = demoTexts[random(1, #demoTexts)]
+		module.info_screen.demo = true
+		module.info_screen.lable:SetText(format("%s", mMT:TC(info.grp .. " - " .. info.name, "line_a")))
+		module.info_screen.lable2:SetText(format("%s \n%s", info.acc, "line_b"), mMT:TC(info.diff, "line_c"))
 		module.info_screen:Show()
 	else
+		module.info_screen.demo = true
 		module.info_screen:Hide()
-		module.info_screen.lable:SetText("")
-		module.info_screen.lable2:SetText("")
 	end
 end
 
@@ -68,7 +75,9 @@ function module:Initialize(demo)
 			if btn == "RightButton" then module.info_screen:Hide() end
 		end)
 
-		E:CreateMover(module.info_screen, "mMediaTag_LFG_Invite_Info_Mover", "mMT LFG Invite Info", nil, nil, nil, "ALL,MMEDIATAG", function() return E.db.mMT.lfg_invite_info.enable end, "mMT,misc,lfg_invite_info")
+		E:CreateMover(module.info_screen, "mMediaTag_LFG_Invite_Info_Mover", "mMT LFG Invite Info", nil, nil, nil, "ALL,MMEDIATAG", function()
+			return E.db.mMT.lfg_invite_info.enable
+		end, "mMT,misc,lfg_invite_info")
 		module.info_screen:Hide()
 	end
 
@@ -94,7 +103,7 @@ function module:Initialize(demo)
 		module.info_screen.icon:SetTexture(nil)
 	end
 
-	if demo then module:Demo(not module.info_screen:IsShown()) end
+	if demo then module:Demo() end
 end
 
 function module:LFG_LIST_JOINED_GROUP(_, searchResultID, groupName)
@@ -115,6 +124,16 @@ function module:LFG_LIST_JOINED_GROUP(_, searchResultID, groupName)
 
 	module.info_screen.lable:SetText(format("%s", mMT:TC((groupName or " ") .. " - " .. name, "line_a")))
 	module.info_screen.lable2:SetText(format("%s \n%s", mMT:TC(activity, "line_b"), mMT:TC(difficulty, "line_c")))
+
+	if module.db.print then
+		print(mMT:TC("*~*~*~*~*~*~*~*~*~*~*~*~*~*~*~", "blue"))
+		print(mMT:TC(mMT:AddSettingsIcon(L["LFG Invite Info"], "greeting_message"), "purple"))
+		print(L["Group:"], mMT:TC(groupName or "", "line_a"))
+		print(L["Location:"], mMT:TC(name or "", "line_a"))
+		print(L["Activity:"], mMT:TC(activity or "", "line_b"))
+		print(L["Difficulty:"], mMT:TC(difficulty or "", "line_c"))
+		print(mMT:TC("*~*~*~*~*~*~*~*~*~*~*~*~*~*~*~", "blue"))
+	end
 
 	module.info_screen:Show()
 

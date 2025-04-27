@@ -8,14 +8,48 @@ local CreateFrame = CreateFrame
 local Minimap = _G.Minimap
 local MinimapCluster = _G.MinimapCluster
 local strupper = strupper
+local random = random
 
-function module:Demo(show)
-	if show then
-		module.difficulty.lable:SetText("H\nDOT")
+
+local function UpdateInfos()
+	local mapDifficulty = MinimapCluster.InstanceDifficulty or _G.MiniMapInstanceDifficulty
+	local mapDifficultyGuild = _G.GuildInstanceDifficulty
+	local mapBattlefieldFrame = _G.MiniMapBattlefieldFrame
+
+	if mapDifficulty then mapDifficulty:Hide() end
+	if mapDifficultyGuild then mapDifficultyGuild:Hide() end
+	if mapBattlefieldFrame then mapBattlefieldFrame:Hide() end
+
+	local instanceInfos = mMT:GetDungeonInfo()
+	if instanceInfos and (instanceInfos.difficultyShort or instanceInfos.difficultyName) then
+		local challengeModeInfo = instanceInfos.isChallengeMode and instanceInfos.level
+		local delveInfo = instanceInfos.isDelve and " " .. instanceInfos.level
+		local difficulty = (instanceInfos.difficultyShort or instanceInfos.difficultyName) .. ((challengeModeInfo or delveInfo) or "")
+		local guild = instanceInfos.isGuild and MEDIA.color.GUILD
+		local text = strupper(instanceInfos.shortName or instanceInfos.name)
+		text = guild and guild:WrapTextInColorCode(text) or text
+		module.difficulty.lable:SetText(instanceInfos.difficultyColor:WrapTextInColorCode(difficulty) .. "\n" .. text)
 		module.difficulty:Show()
 	else
-		module.difficulty.lable:SetText("")
 		module.difficulty:Hide()
+	end
+end
+
+function module:Demo(show)
+	local demoTexts = {
+		"|CFF1EFF00N|r\nROOK",
+		"|CFF0070DDH|r\nDOT|r",
+		"|CFFA335EEM|r\n|CFF91D900TOP|r",
+		"|CFFFF8000M+10|r\nHOI",
+		"|CFFE6CC80PVP|r\nDORNOG",
+	}
+	if not module.difficulty.demo then
+		module.difficulty.demo = true
+		module.difficulty.lable:SetText(demoTexts[random(1, #demoTexts)])
+		module.difficulty:Show()
+	else
+		module.difficulty.demo = false
+		UpdateInfos()
 	end
 end
 
@@ -24,7 +58,7 @@ function module:Initialize(demo)
 		if module.difficulty then
 			module.difficulty:Hide()
 			if module.isEnabled then
-				module.info_screen:UnregisterAllEvents()
+				module.difficulty:UnregisterAllEvents()
 				module.isEnabled = false
 			end
 		end
@@ -44,7 +78,6 @@ function module:Initialize(demo)
 		module.difficulty.lable = module.difficulty:CreateFontString(nil, "OVERLAY")
 		module.difficulty.lable:SetPoint("CENTER", module.difficulty, "CENTER", 0, 0)
 		module.difficulty.lable:SetTextColor(1, 1, 1, 1)
-		module.difficulty.lable:SetJustifyH("CENTER")
 
 		module.difficulty:SetScript("OnShow", function(self)
 			local width = module.difficulty.lable:GetStringWidth() + 20
@@ -57,9 +90,10 @@ function module:Initialize(demo)
 	end
 
 	E:SetFont(module.difficulty.lable, LSM:Fetch("font", module.db.font.font), module.db.font.size, module.db.font.fontflag)
-
+	module.difficulty.lable:SetJustifyH(module.db.font.justify)
 
 	if not module.isEnabled then
+		--"CHALLENGE_MODE_START", "CHALLENGE_MODE_COMPLETED", "PLAYER_ENTERING_WORLD", "UPDATE_INSTANCE_INFO", "ENCOUNTER_END", "SCENARIO_UPDATE", "PLAYER_DIFFICULTY_CHANGED"
 		module:RegisterEvent("UPDATE_INSTANCE_INFO", module.OnEvent)
 		module:RegisterEvent("CHALLENGE_MODE_START", module.OnEvent)
 		module:RegisterEvent("SCENARIO_UPDATE",module.OnEvent)
@@ -67,34 +101,23 @@ function module:Initialize(demo)
 		module.isEnabled = true
 	end
 
-	module:OnEvent(module.difficulty, "force update")
+	UpdateInfos()
 
-	if demo then module:Demo(not module.difficulty:IsShown()) end
+	if demo then module:Demo() end
 end
 
-function module:OnEvent(_, event )
-	local mapDifficulty = MinimapCluster.InstanceDifficulty or _G.MiniMapInstanceDifficulty
-	local mapDifficultyGuild = _G.GuildInstanceDifficulty
-	local mapBattlefieldFrame = _G.MiniMapBattlefieldFrame
+function module:UPDATE_INSTANCE_INFO()
+	UpdateInfos()
+end
 
-	if mapDifficulty then mapDifficulty:Hide() end
-	if mapDifficultyGuild then mapDifficultyGuild:Hide() end
-	if mapBattlefieldFrame then mapBattlefieldFrame:Hide() end
+function module:CHALLENGE_MODE_START()
+	UpdateInfos()
+end
 
-	if event == "UPDATE_INSTANCE_INFO" or event == "CHALLENGE_MODE_START" or event == "SCENARIO_UPDATE" or event == "PLAYER_DIFFICULTY_CHANGED" or event == "force update" then
-		local instanceInfos = mMT:GetDungeonInfo()
-		if instanceInfos and (instanceInfos.difficultyShort or instanceInfos.difficultyName) then
-			local challengeModeInfo = instanceInfos.isChallengeMode and instanceInfos.level
-			local delveInfo = instanceInfos.isDelve and " " .. instanceInfos.level
-			local difficulty = (instanceInfos.difficultyShort or instanceInfos.difficultyName) .. ((challengeModeInfo or delveInfo) or "")
-			local guild = instanceInfos.isGuild and MEDIA.color.GUILD
-			local text = strupper(instanceInfos.shortName or instanceInfos.name)
-			text = guild and guild:WrapTextInColorCode(text) or text
-			module.difficulty.lable:SetText(instanceInfos.difficultyColor:WrapTextInColorCode(difficulty) .. "\n" .. text)
-			module.difficulty:Show()
-		else
-			module.difficulty.lable:SetText("")
-			module.difficulty:Hide()
-		end
-	end
+function module:SCENARIO_UPDATE()
+	UpdateInfos()
+end
+
+function module:PLAYER_DIFFICULTY_CHANGED()
+	UpdateInfos()
 end
