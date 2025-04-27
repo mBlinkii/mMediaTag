@@ -185,6 +185,13 @@ mMT.options = {
 					childGroups = "tab",
 					args = {},
 				},
+				difficulty_info = {
+					order = 5,
+					type = "group",
+					name = mMT:AddSettingsIcon(L["Difficulty Info"], "pvp"),
+					childGroups = "tab",
+					args = {},
+				},
 			},
 		},
 		colors = {

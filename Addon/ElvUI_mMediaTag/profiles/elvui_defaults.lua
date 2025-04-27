@@ -58,6 +58,17 @@ P.lfg_invite_info = {
 	},
 }
 
+-- difficulty info
+P.difficulty_info = {
+	enable = true,
+	style = "default",
+	font = {
+		font = "PT Sans Narrow",
+		size = 12,
+		fontflag = "OUTLINE",
+	},
+}
+
 -- datatexts
 P.datatexts = {
 	text = {
@@ -144,5 +155,6 @@ P.media = {
 		DELVE = "FF91D900",
 		FOLLOWER = "FF00FF8C",
 		OTHER = "FF00FFEE",
+		GUILD = "FF91D900",
 	},
 }

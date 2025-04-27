@@ -60,6 +60,10 @@ function mMT:Initialize()
 
 	mMT:UpdateAll()
 	mMT:UpdateMedia()
+
+	-- add to movers
+	tinsert(E.ConfigModeLayouts, "MMEDIATAG")
+	E.ConfigModeLocalizedStrings["MMEDIATAG"] = mMT.Name
 end
 
 function mMT:PLAYER_LOGOUT()

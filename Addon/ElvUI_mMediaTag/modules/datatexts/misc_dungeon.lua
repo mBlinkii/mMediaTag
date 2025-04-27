@@ -98,7 +98,10 @@ local function OnEvent(self)
 			local challengeModeInfo = instanceInfos.isChallengeMode and instanceInfos.level
 			local delveInfo = instanceInfos.isDelve and "-" .. instanceInfos.level
 			local difficulty = (instanceInfos.difficultyShort or instanceInfos.difficultyName) .. ((challengeModeInfo or delveInfo) or "")
-			text = instanceInfos.difficultyColor:WrapTextInColorCode(difficulty) .. " - " .. strupper(instanceInfos.shortName or instanceInfos.name)
+			local guild = instanceInfos.isGuild and MEDIA.color.GUILD
+			text = strupper(instanceInfos.shortName or instanceInfos.name)
+			text = guild and guild:WrapTextInColorCode(text) or text
+			text = instanceInfos.difficultyColor:WrapTextInColorCode(difficulty) .. " - " .. text
 		end
 	end
 

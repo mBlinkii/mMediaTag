@@ -45,6 +45,7 @@ MEDIA.color = {
 	DELVE = CreateColorFromHexString("FF91D900"),
 	FOLLOWER = CreateColorFromHexString("FF00FF8C"),
 	OTHER = CreateColorFromHexString("FF00FFEE"),
+	GUILD = CreateColorFromHexString("FF91D900"),
 }
 
 MEDIA.classColor = E:ClassColor(E.myclass)
@@ -121,6 +122,8 @@ function mMT:UpdateMedia(arg)
 		MEDIA.color.DELVE = CreateColorFromHexString(E.db.mMT.media.color.DELVE)
 		MEDIA.color.FOLLOWER = CreateColorFromHexString(E.db.mMT.media.color.FOLLOWER)
 		MEDIA.color.OTHER = CreateColorFromHexString(E.db.mMT.media.color.OTHER)
+		MEDIA.color.GUILD = CreateColorFromHexString(E.db.mMT.media.color.GUILD)
+		MEDIA.color.GUILD.hex = E.db.mMT.media.color.GUILD
 	end
 end
 

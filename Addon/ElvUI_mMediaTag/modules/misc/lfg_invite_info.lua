@@ -42,7 +42,8 @@ function module:Initialize(demo)
 	if not module.info_screen then
 		module.info_screen = CreateFrame("Button", "mMediaTag_LFG_Invite_Info", E.UIParent, "BackdropTemplate")
 		module.info_screen:SetFrameStrata("HIGH")
-		module.info_screen:SetPoint("CENTER")
+		module.info_screen:SetPoint("CENTER", 0, 200)
+		module.info_screen:SetSize(400, 100)
 
 		if module.db.background then module.info_screen:SetTemplate("Transparent", true) end
 
@@ -67,7 +68,7 @@ function module:Initialize(demo)
 			if btn == "RightButton" then module.info_screen:Hide() end
 		end)
 
-		E:CreateMover(module.info_screen, "mMediaTag_LFG_Invite_Info_Mover", "mMT LFG Invite Info", nil, nil, nil, "ALL,MMEDIATAG", nil, "mMT,misc,lfg_invite_info")
+		E:CreateMover(module.info_screen, "mMediaTag_LFG_Invite_Info_Mover", "mMT LFG Invite Info", nil, nil, nil, "ALL,MMEDIATAG", function() return E.db.mMT.lfg_invite_info.enable end, "mMT,misc,lfg_invite_info")
 		module.info_screen:Hide()
 	end
 
