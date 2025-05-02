@@ -137,26 +137,24 @@ P.datatexts = {
 	},
 }
 
--- media
-P.media = {
-	color = {
-		title = "FFFFBE19",
-		text = "FFFFFFFF",
-		tip = "FFB2B2B2",
-		mark = "FF38FF92",
-		N = "FF1EFF00",
-		H = "FF0070DD",
-		M = "FFA335EE",
-		PVP = "FFE6CC80",
-		MP = "FFFF8000",
-		LFR = "FFBE7FE8",
-		TW = "FF00CCFF",
-		QUEST = "FFFFBB00",
-		SC = "FF00FF8C",
-		STORY = "FFE6CC80",
-		DELVE = "FF91D900",
-		FOLLOWER = "FF00FF8C",
-		OTHER = "FF00FFEE",
-		GUILD = "FF91D900",
-	},
+-- color
+P.color = {
+	title = "FFFFBE19",
+	text = "FFFFFFFF",
+	tip = "FFB2B2B2",
+	mark = "FF38FF92",
+	N = "FF1EFF00",
+	H = "FF0070DD",
+	M = "FFA335EE",
+	PVP = "FFE6CC80",
+	MP = "FFFF8000",
+	LFR = "FFBE7FE8",
+	TW = "FF00CCFF",
+	QUEST = "FFFFBB00",
+	SC = "FF00FF8C",
+	STORY = "FFE6CC80",
+	DELVE = "FF91D900",
+	FOLLOWER = "FF00FF8C",
+	OTHER = "FF00FFEE",
+	GUILD = "FF91D900",
 }
