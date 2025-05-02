@@ -1,11 +1,11 @@
-local mMT, DB, M, E, P, L, MEDIA = unpack(ElvUI_mMediaTag)
+local mMT, DB, M, E, P, L, MEDIA, COLORS = unpack(ElvUI_mMediaTag)
 
 mMT.options.args.misc.args.dice_button.args = {
     enable = {
         order = 1,
         type = "toggle",
         name = function()
-            return E.db.mMT.dice_button.enable and MEDIA.color.green:WrapTextInColorCode(L["Enabled"]) or MEDIA.color.red:WrapTextInColorCode(L["Disabled"])
+            return E.db.mMT.dice_button.enable and COLORS.green:WrapTextInColorCode(L["Enabled"]) or COLORS.red:WrapTextInColorCode(L["Disabled"])
         end,
         get = function(info)
             return E.db.mMT.dice_button.enable

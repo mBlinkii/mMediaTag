@@ -1,4 +1,4 @@
-local mMT, DB, M, E, P, L, MEDIA = unpack(ElvUI_mMediaTag)
+local mMT, DB, M, E, P, L, MEDIA, COLORS = unpack(ElvUI_mMediaTag)
 local DT = E:GetModule("DataTexts")
 
 mMT.options.args.colors.args.tip_menu.args = {
@@ -8,14 +8,14 @@ mMT.options.args.colors.args.tip_menu.args = {
 		name = L["Title"],
 		hasAlpha = false,
 		get = function(info)
-			local r, g, b = mMT:HexToRGB(E.db.mMT.media.color.title)
+			local r, g, b = mMT:HexToRGB(E.db.mMT.colors.menu.title)
 			return r, g, b
 		end,
 		set = function(info, r, g, b)
 			local hex = E:RGBToHex(r, g, b, "ff")
-			E.db.mMT.media.color.title = hex
-			MEDIA.color.title = CreateColorFromHexString(hex)
-			MEDIA.color.title.hex = hex
+			E.db.mMT.colors.menu.title = hex
+			COLORS.menu.title = CreateColorFromHexString(hex)
+			COLORS.menu.title.hex = hex
 		end,
 	},
 	color_text = {
@@ -24,14 +24,14 @@ mMT.options.args.colors.args.tip_menu.args = {
 		name = L["Text"],
 		hasAlpha = false,
 		get = function(info)
-			local r, g, b = mMT:HexToRGB(E.db.mMT.media.color.text)
+			local r, g, b = mMT:HexToRGB(E.db.mMT.colors.menu.text)
 			return r, g, b
 		end,
 		set = function(info, r, g, b)
 			local hex = E:RGBToHex(r, g, b, "ff")
-			E.db.mMT.media.color.text = hex
-			MEDIA.color.text = CreateColorFromHexString(hex)
-			MEDIA.color.text.hex = hex
+			E.db.mMT.colors.menu.text = hex
+			COLORS.menu.text = CreateColorFromHexString(hex)
+			COLORS.menu.text.hex = hex
 		end,
 	},
 	color_tip = {
@@ -40,14 +40,14 @@ mMT.options.args.colors.args.tip_menu.args = {
 		name = L["Tip"],
 		hasAlpha = false,
 		get = function(info)
-			local r, g, b = mMT:HexToRGB(E.db.mMT.media.color.tip)
+			local r, g, b = mMT:HexToRGB(E.db.mMT.colors.menu.tip)
 			return r, g, b
 		end,
 		set = function(info, r, g, b)
 			local hex = E:RGBToHex(r, g, b, "ff")
-			E.db.mMT.media.color.tip = hex
-			MEDIA.color.tip = CreateColorFromHexString(hex)
-			MEDIA.color.tip.hex = hex
+			E.db.mMT.colors.menu.tip = hex
+			COLORS.menu.tip = CreateColorFromHexString(hex)
+			COLORS.menu.tip.hex = hex
 		end,
 	},
 	color_mark = {
@@ -56,14 +56,14 @@ mMT.options.args.colors.args.tip_menu.args = {
 		name = L["Mark"],
 		hasAlpha = false,
 		get = function(info)
-			local r, g, b = mMT:HexToRGB(E.db.mMT.media.color.mark)
+			local r, g, b = mMT:HexToRGB(E.db.mMT.colors.menu.mark)
 			return r, g, b
 		end,
 		set = function(info, r, g, b)
 			local hex = E:RGBToHex(r, g, b, "ff")
-			E.db.mMT.media.color.mark = hex
-			MEDIA.color.mark = CreateColorFromHexString(hex)
-			MEDIA.color.mark.hex = hex
+			E.db.mMT.colors.menu.mark = hex
+			COLORS.menu.mark = CreateColorFromHexString(hex)
+			COLORS.menu.mark.hex = hex
 		end,
 	},
 }

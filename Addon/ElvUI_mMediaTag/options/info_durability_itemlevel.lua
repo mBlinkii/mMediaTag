@@ -1,4 +1,4 @@
-local mMT, DB, M, E, P, L, MEDIA = unpack(ElvUI_mMediaTag)
+local mMT, DB, M, E, P, L, MEDIA, COLORS = unpack(ElvUI_mMediaTag)
 local DT = E:GetModule("DataTexts")
 local GetMountInfoByID = C_MountJournal.GetMountInfoByID
 
@@ -155,8 +155,8 @@ mMT.options.args.datatexts.args.info_durability_itemlevel.args = {
 				set = function(info, r, g, b)
 					local hex = E:RGBToHex(r, g, b, "ff")
 					E.db.mMT.datatexts.durability_itemLevel.color_repair = hex
-					MEDIA.color.di_repair = CreateColorFromHexString(hex)
-					MEDIA.color.di_repair.hex = hex
+					COLORS.di_repair = CreateColorFromHexString(hex)
+					COLORS.di_repair.hex = hex
 					DT:ForceUpdate_DataText("mMT - Durability & ItemLevel")
 				end,
 			},
@@ -202,8 +202,8 @@ mMT.options.args.datatexts.args.info_durability_itemlevel.args = {
 				set = function(info, r, g, b)
 					local hex = E:RGBToHex(r, g, b, "ff")
 					E.db.mMT.datatexts.durability_itemLevel.color_warning = hex
-					MEDIA.color.di_warning = CreateColorFromHexString(hex)
-					MEDIA.color.di_warning.hex = hex
+					COLORS.di_warning = CreateColorFromHexString(hex)
+					COLORS.di_warning.hex = hex
 					DT:ForceUpdate_DataText("mMT - Durability & ItemLevel")
 				end,
 			},

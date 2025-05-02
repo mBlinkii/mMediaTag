@@ -1,4 +1,4 @@
-local mMT, DB, M, E, P, L, MEDIA = unpack(ElvUI_mMediaTag)
+local mMT, DB, M, E, P, L, MEDIA, COLORS = unpack(ElvUI_mMediaTag)
 
 local DT = E:GetModule("DataTexts")
 local LSM = E.Libs.LSM
@@ -30,7 +30,7 @@ mMT.options.args.misc.args.data_panel_skin.args = {
 		order = 1,
 		type = "toggle",
 		name = function()
-			return E.db.mMT.data_panel_skin.enable and MEDIA.color.green:WrapTextInColorCode(L["Enabled"]) or MEDIA.color.red:WrapTextInColorCode(L["Disabled"])
+			return E.db.mMT.data_panel_skin.enable and COLORS.green:WrapTextInColorCode(L["Enabled"]) or COLORS.red:WrapTextInColorCode(L["Disabled"])
 		end,
 		get = function(info)
 			return E.db.mMT.data_panel_skin.enable
@@ -49,7 +49,7 @@ mMT.options.args.misc.args.data_panel_skin.args = {
 	info = {
 		order = 3,
 		type = "description",
-		name = MEDIA.color.info:WrapTextInColorCode(
+		name = COLORS.info:WrapTextInColorCode(
 			L["Info: The Skin can be affected by other addons if they add a skin for all windows. To fix the problem, the skin must be deactivated in the other addon. This is not a bug of mMT."]
 		),
 	},
@@ -61,7 +61,7 @@ mMT.options.args.misc.args.data_panel_skin.args = {
     info2 = {
 		order = 5,
 		type = "description",
-		name = MEDIA.color.info:WrapTextInColorCode(
+		name = COLORS.info:WrapTextInColorCode(
 			L["Info: This Settings will override the ElvUI Data Panel settings."]
 		),
 	},
@@ -142,7 +142,7 @@ mMT.options.args.misc.args.data_panel_skin.args = {
 				order = 1,
 				type = "toggle",
 				name = function()
-					return (selectedPanel and selectedPanel.enable) and MEDIA.color.green:WrapTextInColorCode(L["Enabled"]) or MEDIA.color.red:WrapTextInColorCode(L["Disabled"])
+					return (selectedPanel and selectedPanel.enable) and COLORS.green:WrapTextInColorCode(L["Enabled"]) or COLORS.red:WrapTextInColorCode(L["Disabled"])
 				end,
 				get = function(info)
 					return selectedPanel and selectedPanel.enable or false

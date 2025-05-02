@@ -1,4 +1,4 @@
-local mMT, DB, M, E, P, L, MEDIA = unpack(ElvUI_mMediaTag)
+local mMT, DB, M, E, P, L, MEDIA, COLORS = unpack(ElvUI_mMediaTag)
 local DT = E:GetModule("DataTexts")
 
 local _G = _G
@@ -175,9 +175,9 @@ local function OnEvent(self)
 		local warning_threshold = E.db.mMT.datatexts.durability_itemLevel.warning_threshold
 
 		if totalDurability <= repair_threshold then
-			durability_color = MEDIA.color.di_repair
+			durability_color = COLORS.di_repair
 		elseif totalDurability <= warning_threshold then
-			durability_color = MEDIA.color.di_warning
+			durability_color = COLORS.di_warning
 		end
 
 		if totalDurability <= repair_threshold then
@@ -225,7 +225,7 @@ local function OnClick(_, button)
 end
 
 local function ValueColorUpdate(self, hex)
-	local valueHex = E.db.mMT.datatexts.text.override_value and "|c" .. MEDIA.color.override_value.hex or E.db.mMT.datatexts.durability_itemLevel.force_withe_text and  "|CFFFFFFFF" or hex
+	local valueHex = E.db.mMT.datatexts.text.override_value and "|c" .. COLORS.override_value.hex or E.db.mMT.datatexts.durability_itemLevel.force_withe_text and  "|CFFFFFFFF" or hex
 	valueString = strjoin("", valueHex, "%s|r")
 	OnEvent(self)
 end

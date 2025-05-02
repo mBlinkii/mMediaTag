@@ -1,11 +1,11 @@
-local mMT, DB, M, E, P, L, MEDIA = unpack(ElvUI_mMediaTag)
+local mMT, DB, M, E, P, L, MEDIA, COLORS = unpack(ElvUI_mMediaTag)
 
 -- Cache WoW Globals
 local pairs = pairs
 local CreateColorFromHexString = CreateColorFromHexString
 local strjoin = strjoin
 
-MEDIA.color = {
+COLORS = {
 	-- datatexts
 	title = CreateColorFromHexString("FFFFBE19"),
 	text = CreateColorFromHexString("FFFFFFFF"),
@@ -48,7 +48,7 @@ MEDIA.color = {
 	GUILD = CreateColorFromHexString("FF91D900"),
 }
 
-MEDIA.classColor = E:ClassColor(E.myclass)
+COLORS.myclass = E:ClassColor(E.myclass)
 
 do
 	local colors = {
@@ -61,69 +61,69 @@ do
 		info = "FFFFA7A7",
 	}
 	for name, color in pairs(colors) do
-		MEDIA.color[name].hex = color
+		COLORS[name].hex = color
 	end
 end
 
 function mMT:UpdateMedia(arg)
 	if arg == "colors" or not arg then
-		local classColor = MEDIA.classColor
-		if not MEDIA.classColor.hex then MEDIA.classColor.hex = E:RGBToHex(classColor.r, classColor.g, classColor.b) end
+		local classColor = COLORS.myclass
+		if not COLORS.myclass.hex then COLORS.myclass.hex = E:RGBToHex(classColor.r, classColor.g, classColor.b) end
 
-		if not MEDIA.classColor.string then MEDIA.classColor.string = strjoin("", MEDIA.classColor.hex, "%s|r") end
+		if not COLORS.myclass.string then COLORS.myclass.string = strjoin("", COLORS.myclass.hex, "%s|r") end
 
-		if not MEDIA.classColor.gradient then
-			MEDIA.classColor.gradient =
+		if not COLORS.myclass.gradient then
+			COLORS.myclass.gradient =
 				{ a = { r = classColor.r - 0.2, g = classColor.g - 0.2, b = classColor.b - 0.2, a = 1 }, b = { r = classColor.r + 0.2, g = classColor.g + 0.2, b = classColor.b + 0.2, a = 1 } }
 		end
 	end
 
 	if arg == "lfg" or not arg then
-		MEDIA.color.line_a = CreateColorFromHexString(E.db.mMT.lfg_invite_info.colors.line_a)
-		MEDIA.color.line_a.hex = E.db.mMT.lfg_invite_info.colors.line_a
-		MEDIA.color.line_b = CreateColorFromHexString(E.db.mMT.lfg_invite_info.colors.line_b)
-		MEDIA.color.line_b.hex = E.db.mMT.lfg_invite_info.colors.line_b
-		MEDIA.color.line_c = CreateColorFromHexString(E.db.mMT.lfg_invite_info.colors.line_c)
-		MEDIA.color.line_c.hex = E.db.mMT.lfg_invite_info.colors.line_c
+		COLORS.line_a = CreateColorFromHexString(E.db.mMT.lfg_invite_info.colors.line_a)
+		COLORS.line_a.hex = E.db.mMT.lfg_invite_info.colors.line_a
+		COLORS.line_b = CreateColorFromHexString(E.db.mMT.lfg_invite_info.colors.line_b)
+		COLORS.line_b.hex = E.db.mMT.lfg_invite_info.colors.line_b
+		COLORS.line_c = CreateColorFromHexString(E.db.mMT.lfg_invite_info.colors.line_c)
+		COLORS.line_c.hex = E.db.mMT.lfg_invite_info.colors.line_c
 	end
 
 	if arg == "datatexts" or not arg then
-		MEDIA.color.title = CreateColorFromHexString(E.db.mMT.media.color.title)
-		MEDIA.color.title.hex = E.db.mMT.media.color.title
-		MEDIA.color.text = CreateColorFromHexString(E.db.mMT.media.color.text)
-		MEDIA.color.text.hex = E.db.mMT.media.color.text
-		MEDIA.color.tip = CreateColorFromHexString(E.db.mMT.media.color.tip)
-		MEDIA.color.tip.hex = E.db.mMT.media.color.tip
-		MEDIA.color.mark = CreateColorFromHexString(E.db.mMT.media.color.mark)
-		MEDIA.color.mark.hex = E.db.mMT.media.color.mark
-		MEDIA.color.override_text = CreateColorFromHexString(E.db.mMT.datatexts.text.text)
-		MEDIA.color.override_text.hex = E.db.mMT.datatexts.text.text
-		MEDIA.color.override_value = CreateColorFromHexString(E.db.mMT.datatexts.text.value)
-		MEDIA.color.override_value.hex = E.db.mMT.datatexts.text.value
-		MEDIA.color.gm_text_color = CreateColorFromHexString(E.db.mMT.datatexts.menu.text_color)
-		MEDIA.color.gm_text_color.hex = E.db.mMT.datatexts.menu.text_color
-		MEDIA.color.di_warning = CreateColorFromHexString(E.db.mMT.datatexts.durability_itemLevel.color_warning)
-		MEDIA.color.di_warning.hex = E.db.mMT.datatexts.durability_itemLevel.color_warning
-		MEDIA.color.di_repair = CreateColorFromHexString(E.db.mMT.datatexts.durability_itemLevel.color_repair)
-		MEDIA.color.di_repair.hex = E.db.mMT.datatexts.durability_itemLevel.color_repair
+		COLORS.title = CreateColorFromHexString(E.db.mMT.COLORS.title)
+		COLORS.title.hex = E.db.mMT.COLORS.title
+		COLORS.text = CreateColorFromHexString(E.db.mMT.COLORS.text)
+		COLORS.text.hex = E.db.mMT.COLORS.text
+		COLORS.tip = CreateColorFromHexString(E.db.mMT.COLORS.tip)
+		COLORS.tip.hex = E.db.mMT.COLORS.tip
+		COLORS.mark = CreateColorFromHexString(E.db.mMT.COLORS.mark)
+		COLORS.mark.hex = E.db.mMT.COLORS.mark
+		COLORS.override_text = CreateColorFromHexString(E.db.mMT.datatexts.text.text)
+		COLORS.override_text.hex = E.db.mMT.datatexts.text.text
+		COLORS.override_value = CreateColorFromHexString(E.db.mMT.datatexts.text.value)
+		COLORS.override_value.hex = E.db.mMT.datatexts.text.value
+		COLORS.gm_text_color = CreateColorFromHexString(E.db.mMT.datatexts.menu.text_color)
+		COLORS.gm_text_color.hex = E.db.mMT.datatexts.menu.text_color
+		COLORS.di_warning = CreateColorFromHexString(E.db.mMT.datatexts.durability_itemLevel.color_warning)
+		COLORS.di_warning.hex = E.db.mMT.datatexts.durability_itemLevel.color_warning
+		COLORS.di_repair = CreateColorFromHexString(E.db.mMT.datatexts.durability_itemLevel.color_repair)
+		COLORS.di_repair.hex = E.db.mMT.datatexts.durability_itemLevel.color_repair
 	end
 
 	if arg == "difficulty" or not arg then
-		MEDIA.color.N = CreateColorFromHexString(E.db.mMT.media.color.N)
-		MEDIA.color.H = CreateColorFromHexString(E.db.mMT.media.color.H)
-		MEDIA.color.M = CreateColorFromHexString(E.db.mMT.media.color.M)
-		MEDIA.color.PVP = CreateColorFromHexString(E.db.mMT.media.color.PVP)
-		MEDIA.color.MP = CreateColorFromHexString(E.db.mMT.media.color.MP)
-		MEDIA.color.LFR = CreateColorFromHexString(E.db.mMT.media.color.LFR)
-		MEDIA.color.TW = CreateColorFromHexString(E.db.mMT.media.color.TW)
-		MEDIA.color.QUEST = CreateColorFromHexString(E.db.mMT.media.color.QUEST)
-		MEDIA.color.SC = CreateColorFromHexString(E.db.mMT.media.color.SC)
-		MEDIA.color.STORY = CreateColorFromHexString(E.db.mMT.media.color.STORY)
-		MEDIA.color.DELVE = CreateColorFromHexString(E.db.mMT.media.color.DELVE)
-		MEDIA.color.FOLLOWER = CreateColorFromHexString(E.db.mMT.media.color.FOLLOWER)
-		MEDIA.color.OTHER = CreateColorFromHexString(E.db.mMT.media.color.OTHER)
-		MEDIA.color.GUILD = CreateColorFromHexString(E.db.mMT.media.color.GUILD)
-		MEDIA.color.GUILD.hex = E.db.mMT.media.color.GUILD
+		COLORS.N = CreateColorFromHexString(E.db.mMT.COLORS.N)
+		COLORS.H = CreateColorFromHexString(E.db.mMT.COLORS.H)
+		COLORS.M = CreateColorFromHexString(E.db.mMT.COLORS.M)
+		COLORS.PVP = CreateColorFromHexString(E.db.mMT.COLORS.PVP)
+		COLORS.MP = CreateColorFromHexString(E.db.mMT.COLORS.MP)
+		COLORS.LFR = CreateColorFromHexString(E.db.mMT.COLORS.LFR)
+		COLORS.TW = CreateColorFromHexString(E.db.mMT.COLORS.TW)
+		COLORS.QUEST = CreateColorFromHexString(E.db.mMT.COLORS.QUEST)
+		COLORS.SC = CreateColorFromHexString(E.db.mMT.COLORS.SC)
+		COLORS.STORY = CreateColorFromHexString(E.db.mMT.COLORS.STORY)
+		COLORS.DELVE = CreateColorFromHexString(E.db.mMT.COLORS.DELVE)
+		COLORS.FOLLOWER = CreateColorFromHexString(E.db.mMT.COLORS.FOLLOWER)
+		COLORS.OTHER = CreateColorFromHexString(E.db.mMT.COLORS.OTHER)
+		COLORS.GUILD = CreateColorFromHexString(E.db.mMT.COLORS.GUILD)
+		COLORS.GUILD.hex = E.db.mMT.COLORS.GUILD
 	end
 end
 

@@ -1,4 +1,4 @@
-local mMT, DB, M, E, P, L, MEDIA = unpack(ElvUI_mMediaTag)
+local mMT, DB, M, E, P, L, MEDIA, COLORS = unpack(ElvUI_mMediaTag)
 local DT = E:GetModule("DataTexts")
 local selected_id = nil
 
@@ -166,8 +166,8 @@ mMT.options.args.datatexts.args.misc_tracker.args = {
 
 									value = info.count
 
-									local textHex = E.db.mMT.datatexts.text.override_text and "|c" .. MEDIA.color.override_text.hex or db.colored and "|c" .. db.custom[selected_id].color
-									local valueHex = E.db.mMT.datatexts.text.override_value and "|c" .. MEDIA.color.override_value.hex or db.colored and "|c" .. db.custom[selected_id].color
+									local textHex = E.db.mMT.datatexts.text.override_text and "|c" .. COLORS.override_text.hex or db.colored and "|c" .. db.custom[selected_id].color
+									local valueHex = E.db.mMT.datatexts.text.override_value and "|c" .. COLORS.override_value.hex or db.colored and "|c" .. db.custom[selected_id].color
 
 									textString = strjoin("", textHex, "%s|r")
 									valueString = strjoin("", valueHex, "%s|r")

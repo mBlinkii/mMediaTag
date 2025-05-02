@@ -1,4 +1,4 @@
-local mMT, DB, M, E, P, L, MEDIA = unpack(ElvUI_mMediaTag)
+local mMT, DB, M, E, P, L, MEDIA, COLORS = unpack(ElvUI_mMediaTag)
 local LSM = E.Libs.LSM
 
 
@@ -7,7 +7,7 @@ mMT.options.args.misc.args.lfg_invite_info.args = {
         order = 1,
         type = "toggle",
         name = function()
-            return E.db.mMT.lfg_invite_info.enable and MEDIA.color.green:WrapTextInColorCode(L["Enabled"]) or MEDIA.color.red:WrapTextInColorCode(L["Disabled"])
+            return E.db.mMT.lfg_invite_info.enable and COLORS.green:WrapTextInColorCode(L["Enabled"]) or COLORS.red:WrapTextInColorCode(L["Disabled"])
         end,
         get = function(info)
             return E.db.mMT.lfg_invite_info.enable
@@ -157,8 +157,8 @@ mMT.options.args.misc.args.lfg_invite_info.args = {
 				set = function(info, r, g, b)
 					local hex = E:RGBToHex(r, g, b, "ff")
 					E.db.mMT.lfg_invite_info.colors.line_a = hex
-					MEDIA.color.mark = CreateColorFromHexString(hex)
-					MEDIA.color.mark.hex = hex
+					COLORS.mark = CreateColorFromHexString(hex)
+					COLORS.mark.hex = hex
 					mMT:UpdateMedia("lfg")
                     mMT:UpdateModule("LFGInviteInfo")
 				end,
@@ -178,8 +178,8 @@ mMT.options.args.misc.args.lfg_invite_info.args = {
 				set = function(info, r, g, b)
 					local hex = E:RGBToHex(r, g, b, "ff")
 					E.db.mMT.lfg_invite_info.colors.line_b = hex
-					MEDIA.color.mark = CreateColorFromHexString(hex)
-					MEDIA.color.mark.hex = hex
+					COLORS.mark = CreateColorFromHexString(hex)
+					COLORS.mark.hex = hex
 					mMT:UpdateMedia("lfg")
                     mMT:UpdateModule("LFGInviteInfo")
 				end,
@@ -199,8 +199,8 @@ mMT.options.args.misc.args.lfg_invite_info.args = {
 				set = function(info, r, g, b)
 					local hex = E:RGBToHex(r, g, b, "ff")
 					E.db.mMT.lfg_invite_info.colors.line_c = hex
-					MEDIA.color.mark = CreateColorFromHexString(hex)
-					MEDIA.color.mark.hex = hex
+					COLORS.mark = CreateColorFromHexString(hex)
+					COLORS.mark.hex = hex
 					mMT:UpdateMedia("lfg")
                     mMT:UpdateModule("LFGInviteInfo")
 				end,

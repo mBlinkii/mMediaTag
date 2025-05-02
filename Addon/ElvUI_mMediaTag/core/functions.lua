@@ -1,4 +1,4 @@
-local mMT, DB, M, E, P, L, MEDIA = unpack(ElvUI_mMediaTag)
+local mMT, DB, M, E, P, L, MEDIA, COLORS = unpack(ElvUI_mMediaTag)
 local DT = E:GetModule("DataTexts")
 
 -- Cache WoW Globals
@@ -34,9 +34,10 @@ function mMT:AddModule(name, arg)
 	return M[name]
 end
 
-function mMT:TC(text, color)
+function mMT:TC(text, color, db)
 	color = color or "text"
-	return MEDIA.color[color]:WrapTextInColorCode(text)
+	db = db or COLORS.menu
+	return COLORS[color]:WrapTextInColorCode(text)
 end
 
 function mMT:HexToRGB(hex)

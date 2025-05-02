@@ -1,4 +1,4 @@
-local mMT, DB, M, E, P, L, MEDIA = unpack(ElvUI_mMediaTag)
+local mMT, DB, M, E, P, L, MEDIA, COLORS = unpack(ElvUI_mMediaTag)
 local DT = E:GetModule("DataTexts")
 
 function mMT:UpdateAllDatatexts()
@@ -51,8 +51,8 @@ mMT.options.args.datatexts.args.general.args = {
 				set = function(info, r, g, b)
 					local hex = E:RGBToHex(r, g, b, "ff")
 					E.db.mMT.datatexts.text.text = hex
-					MEDIA.color.override_text = CreateColorFromHexString(hex)
-					MEDIA.color.override_text.hex = hex
+					COLORS.override_text = CreateColorFromHexString(hex)
+					COLORS.override_text.hex = hex
 					mMT:UpdateAllDatatexts()
 				end,
 			},
@@ -83,8 +83,8 @@ mMT.options.args.datatexts.args.general.args = {
 				set = function(info, r, g, b)
 					local hex = E:RGBToHex(r, g, b, "ff")
 					E.db.mMT.datatexts.text.value = hex
-					MEDIA.color.override_value = CreateColorFromHexString(hex)
-					MEDIA.color.override_value.hex = hex
+					COLORS.override_value = CreateColorFromHexString(hex)
+					COLORS.override_value.hex = hex
 					mMT:UpdateAllDatatexts()
 				end,
 			},

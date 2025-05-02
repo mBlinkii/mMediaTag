@@ -1,4 +1,4 @@
-local mMT, DB, M, E, P, L, MEDIA = unpack(ElvUI_mMediaTag)
+local mMT, DB, M, E, P, L, MEDIA, COLORS = unpack(ElvUI_mMediaTag)
 local DT = E:GetModule("DataTexts")
 
 local function UpdateDifficultyModules()
@@ -13,14 +13,14 @@ mMT.options.args.colors.args.difficulty.args = {
 		desc = L["Normal"],
 		hasAlpha = false,
 		get = function(info)
-			local r, g, b = mMT:HexToRGB(E.db.mMT.media.color.N)
+			local r, g, b = mMT:HexToRGB(E.db.mMT.colors.difficulty.N)
 			return r, g, b
 		end,
 		set = function(info, r, g, b)
 			local hex = E:RGBToHex(r, g, b, "ff")
-			E.db.mMT.media.color.N = hex
-			MEDIA.color.N = CreateColorFromHexString(hex)
-			MEDIA.color.N.hex = hex
+			E.db.mMT.colors.difficulty.N = hex
+			COLORS.difficulty.N = CreateColorFromHexString(hex)
+			COLORS.difficulty.N.hex = hex
 			UpdateDifficultyModules()
 		end,
 	},
@@ -31,14 +31,14 @@ mMT.options.args.colors.args.difficulty.args = {
 		desc = L["Heroic"],
 		hasAlpha = false,
 		get = function(info)
-			local r, g, b = mMT:HexToRGB(E.db.mMT.media.color.H)
+			local r, g, b = mMT:HexToRGB(E.db.mMT.colors.difficulty.H)
 			return r, g, b
 		end,
 		set = function(info, r, g, b)
 			local hex = E:RGBToHex(r, g, b, "ff")
-			E.db.mMT.media.color.H = hex
-			MEDIA.color.H = CreateColorFromHexString(hex)
-			MEDIA.color.H.hex = hex
+			E.db.mMT.colors.difficulty.H = hex
+			COLORS.difficulty.H = CreateColorFromHexString(hex)
+			COLORS.difficulty.H.hex = hex
 			UpdateDifficultyModules()
 		end,
 	},
@@ -49,14 +49,14 @@ mMT.options.args.colors.args.difficulty.args = {
 		desc = L["Mythic"],
 		hasAlpha = false,
 		get = function(info)
-			local r, g, b = mMT:HexToRGB(E.db.mMT.media.color.M)
+			local r, g, b = mMT:HexToRGB(E.db.mMT.colors.difficulty.M)
 			return r, g, b
 		end,
 		set = function(info, r, g, b)
 			local hex = E:RGBToHex(r, g, b, "ff")
-			E.db.mMT.media.color.M = hex
-			MEDIA.color.M = CreateColorFromHexString(hex)
-			MEDIA.color.M.hex = hex
+			E.db.mMT.colors.difficulty.M = hex
+			COLORS.difficulty.M = CreateColorFromHexString(hex)
+			COLORS.difficulty.M.hex = hex
 			UpdateDifficultyModules()
 		end,
 	},
@@ -67,14 +67,14 @@ mMT.options.args.colors.args.difficulty.args = {
 		desc = L["PVP"],
 		hasAlpha = false,
 		get = function(info)
-			local r, g, b = mMT:HexToRGB(E.db.mMT.media.color.PVP)
+			local r, g, b = mMT:HexToRGB(E.db.mMT.colors.difficulty.PVP)
 			return r, g, b
 		end,
 		set = function(info, r, g, b)
 			local hex = E:RGBToHex(r, g, b, "ff")
-			E.db.mMT.media.color.PVP = hex
-			MEDIA.color.PVP = CreateColorFromHexString(hex)
-			MEDIA.color.PVP.hex = hex
+			E.db.mMT.colors.difficulty.PVP = hex
+			COLORS.difficulty.PVP = CreateColorFromHexString(hex)
+			COLORS.difficulty.PVP.hex = hex
 			UpdateDifficultyModules()
 		end,
 	},
@@ -85,14 +85,14 @@ mMT.options.args.colors.args.difficulty.args = {
 		desc = L["Mythic+"],
 		hasAlpha = false,
 		get = function(info)
-			local r, g, b = mMT:HexToRGB(E.db.mMT.media.color.MP)
+			local r, g, b = mMT:HexToRGB(E.db.mMT.colors.difficulty.MP)
 			return r, g, b
 		end,
 		set = function(info, r, g, b)
 			local hex = E:RGBToHex(r, g, b, "ff")
-			E.db.mMT.media.color.MP = hex
-			MEDIA.color.MP = CreateColorFromHexString(hex)
-			MEDIA.color.MP.hex = hex
+			E.db.mMT.colors.difficulty.MP = hex
+			COLORS.difficulty.MP = CreateColorFromHexString(hex)
+			COLORS.difficulty.MP.hex = hex
 			UpdateDifficultyModules()
 		end,
 	},
@@ -103,14 +103,14 @@ mMT.options.args.colors.args.difficulty.args = {
 		desc = L["LFR"],
 		hasAlpha = false,
 		get = function(info)
-			local r, g, b = mMT:HexToRGB(E.db.mMT.media.color.LFR)
+			local r, g, b = mMT:HexToRGB(E.db.mMT.colors.difficulty.LFR)
 			return r, g, b
 		end,
 		set = function(info, r, g, b)
 			local hex = E:RGBToHex(r, g, b, "ff")
-			E.db.mMT.media.color.LFR = hex
-			MEDIA.color.LFR = CreateColorFromHexString(hex)
-			MEDIA.color.LFR.hex = hex
+			E.db.mMT.colors.difficulty.LFR = hex
+			COLORS.difficulty.LFR = CreateColorFromHexString(hex)
+			COLORS.difficulty.LFR.hex = hex
 			UpdateDifficultyModules()
 		end,
 	},
@@ -121,14 +121,14 @@ mMT.options.args.colors.args.difficulty.args = {
 		desc = L["Timewalking"],
 		hasAlpha = false,
 		get = function(info)
-			local r, g, b = mMT:HexToRGB(E.db.mMT.media.color.TW)
+			local r, g, b = mMT:HexToRGB(E.db.mMT.colors.difficulty.TW)
 			return r, g, b
 		end,
 		set = function(info, r, g, b)
 			local hex = E:RGBToHex(r, g, b, "ff")
-			E.db.mMT.media.color.TW = hex
-			MEDIA.color.TW = CreateColorFromHexString(hex)
-			MEDIA.color.TW.hex = hex
+			E.db.mMT.colors.difficulty.TW = hex
+			COLORS.difficulty.TW = CreateColorFromHexString(hex)
+			COLORS.difficulty.TW.hex = hex
 			UpdateDifficultyModules()
 		end,
 	},
@@ -139,14 +139,14 @@ mMT.options.args.colors.args.difficulty.args = {
 		desc = L["Quest"],
 		hasAlpha = false,
 		get = function(info)
-			local r, g, b = mMT:HexToRGB(E.db.mMT.media.color.QUEST)
+			local r, g, b = mMT:HexToRGB(E.db.mMT.colors.difficulty.QUEST)
 			return r, g, b
 		end,
 		set = function(info, r, g, b)
 			local hex = E:RGBToHex(r, g, b, "ff")
-			E.db.mMT.media.color.QUEST = hex
-			MEDIA.color.QUEST = CreateColorFromHexString(hex)
-			MEDIA.color.QUEST.hex = hex
+			E.db.mMT.colors.difficulty.QUEST = hex
+			COLORS.difficulty.QUEST = CreateColorFromHexString(hex)
+			COLORS.difficulty.QUEST.hex = hex
 			UpdateDifficultyModules()
 		end,
 	},
@@ -157,14 +157,14 @@ mMT.options.args.colors.args.difficulty.args = {
 		desc = L["Scenario"],
 		hasAlpha = false,
 		get = function(info)
-			local r, g, b = mMT:HexToRGB(E.db.mMT.media.color.SC)
+			local r, g, b = mMT:HexToRGB(E.db.mMT.colors.difficulty.SC)
 			return r, g, b
 		end,
 		set = function(info, r, g, b)
 			local hex = E:RGBToHex(r, g, b, "ff")
-			E.db.mMT.media.color.SC = hex
-			MEDIA.color.SC = CreateColorFromHexString(hex)
-			MEDIA.color.SC.hex = hex
+			E.db.mMT.colors.difficulty.SC = hex
+			COLORS.difficulty.SC = CreateColorFromHexString(hex)
+			COLORS.difficulty.SC.hex = hex
 			UpdateDifficultyModules()
 		end,
 	},
@@ -175,14 +175,14 @@ mMT.options.args.colors.args.difficulty.args = {
 		desc = L["Story"],
 		hasAlpha = false,
 		get = function(info)
-			local r, g, b = mMT:HexToRGB(E.db.mMT.media.color.STORY)
+			local r, g, b = mMT:HexToRGB(E.db.mMT.colors.difficulty.STORY)
 			return r, g, b
 		end,
 		set = function(info, r, g, b)
 			local hex = E:RGBToHex(r, g, b, "ff")
-			E.db.mMT.media.color.STORY = hex
-			MEDIA.color.STORY = CreateColorFromHexString(hex)
-			MEDIA.color.STORY.hex = hex
+			E.db.mMT.colors.difficulty.STORY = hex
+			COLORS.difficulty.STORY = CreateColorFromHexString(hex)
+			COLORS.difficulty.STORY.hex = hex
 			UpdateDifficultyModules()
 		end,
 	},
@@ -193,14 +193,14 @@ mMT.options.args.colors.args.difficulty.args = {
 		desc = L["Delve"],
 		hasAlpha = false,
 		get = function(info)
-			local r, g, b = mMT:HexToRGB(E.db.mMT.media.color.DELVE)
+			local r, g, b = mMT:HexToRGB(E.db.mMT.colors.difficulty.DELVE)
 			return r, g, b
 		end,
 		set = function(info, r, g, b)
 			local hex = E:RGBToHex(r, g, b, "ff")
-			E.db.mMT.media.color.DELVE = hex
-			MEDIA.color.DELVE = CreateColorFromHexString(hex)
-			MEDIA.color.DELVE.hex = hex
+			E.db.mMT.colors.difficulty.DELVE = hex
+			COLORS.difficulty.DELVE = CreateColorFromHexString(hex)
+			COLORS.difficulty.DELVE.hex = hex
 			UpdateDifficultyModules()
 		end,
 	},
@@ -211,14 +211,14 @@ mMT.options.args.colors.args.difficulty.args = {
 		desc = L["Follower"],
 		hasAlpha = false,
 		get = function(info)
-			local r, g, b = mMT:HexToRGB(E.db.mMT.media.color.FOLLOWER)
+			local r, g, b = mMT:HexToRGB(E.db.mMT.colors.difficulty.FOLLOWER)
 			return r, g, b
 		end,
 		set = function(info, r, g, b)
 			local hex = E:RGBToHex(r, g, b, "ff")
-			E.db.mMT.media.color.FOLLOWER = hex
-			MEDIA.color.FOLLOWER = CreateColorFromHexString(hex)
-			MEDIA.color.FOLLOWER.hex = hex
+			E.db.mMT.colors.difficulty.FOLLOWER = hex
+			COLORS.difficulty.FOLLOWER = CreateColorFromHexString(hex)
+			COLORS.difficulty.FOLLOWER.hex = hex
 			UpdateDifficultyModules()
 		end,
 	},
@@ -229,14 +229,14 @@ mMT.options.args.colors.args.difficulty.args = {
 		desc = L["Other"],
 		hasAlpha = false,
 		get = function(info)
-			local r, g, b = mMT:HexToRGB(E.db.mMT.media.color.OTHER)
+			local r, g, b = mMT:HexToRGB(E.db.mMT.colors.difficulty.OTHER)
 			return r, g, b
 		end,
 		set = function(info, r, g, b)
 			local hex = E:RGBToHex(r, g, b, "ff")
-			E.db.mMT.media.color.OTHER = hex
-			MEDIA.color.OTHER = CreateColorFromHexString(hex)
-			MEDIA.color.OTHER.hex = hex
+			E.db.mMT.colors.difficulty.OTHER = hex
+			COLORS.difficulty.OTHER = CreateColorFromHexString(hex)
+			COLORS.difficulty.OTHER.hex = hex
 			UpdateDifficultyModules()
 		end,
 	},

@@ -1,4 +1,4 @@
-local mMT, DB, M, E, P, L, MEDIA = unpack(ElvUI_mMediaTag)
+local mMT, DB, M, E, P, L, MEDIA, COLORS = unpack(ElvUI_mMediaTag)
 
 mMT.options.args.general.args.keystone_to_chat.args = {
 	text = {
@@ -17,7 +17,7 @@ mMT.options.args.general.args.keystone_to_chat.args = {
 		order = 3,
 		type = "toggle",
 		name = function()
-			return E.db.mMT.keystone_to_chat.enable and MEDIA.color.green:WrapTextInColorCode(L["Enabled"]) or MEDIA.color.red:WrapTextInColorCode(L["Disabled"])
+			return E.db.mMT.keystone_to_chat.enable and COLORS.green:WrapTextInColorCode(L["Enabled"]) or COLORS.red:WrapTextInColorCode(L["Disabled"])
 		end,
 		desc = L["Post your keystone to the chat when someone types !key or !keys into the chat."],
 		get = function(info)
