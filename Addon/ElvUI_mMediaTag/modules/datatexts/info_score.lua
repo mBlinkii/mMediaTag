@@ -37,7 +37,7 @@ local function SaveMyKeystone()
 	if myKeystone then
 		DB.keystones = DB.keystones or {}
 		DB.keystones[E.mynameRealm] = {
-			name = format(MEDIA.classColor.string, E.mynameRealm),
+			name = format(MEDIA.myclass.string, E.mynameRealm),
 			key = myKeystone,
 		}
 	end

@@ -80,7 +80,7 @@ function mMT:DropDown(list, frame, parent, ButtonWidth, HideDelay, submenu)
 			btn.hoverTex = btn.hoverTex or btn:CreateTexture(nil, "OVERLAY")
 			btn.hoverTex:SetAllPoints()
 			btn.hoverTex:SetTexture([[Interface\Addons\ElvUI_mMediaTag\media\select.tga]])
-			btn.hoverTex:SetVertexColor(MEDIA.classColor.r, MEDIA.classColor.g, MEDIA.classColor.b, 0.5)
+			btn.hoverTex:SetVertexColor(MEDIA.myclass.r, MEDIA.myclass.g, MEDIA.myclass.b, 0.5)
 			btn.hoverTex:SetBlendMode("BLEND")
 			btn.hoverTex:Hide()
 

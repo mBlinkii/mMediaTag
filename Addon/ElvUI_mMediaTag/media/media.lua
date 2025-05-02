@@ -5,50 +5,99 @@ local pairs = pairs
 local CreateColorFromHexString = CreateColorFromHexString
 local strjoin = strjoin
 
-MEDIA.color = {
-	-- datatexts
-	title = CreateColorFromHexString("FFFFBE19"),
-	text = CreateColorFromHexString("FFFFFFFF"),
-	tip = CreateColorFromHexString("FFB2B2B2"),
-	mark = CreateColorFromHexString("FF38FF92"),
-	override = CreateColorFromHexString("FFFFFFFF"),
-	gm_text_color = CreateColorFromHexString("FFFFFFFF"),
-	di_warning = CreateColorFromHexString("FFFF7700"),
-	di_repair = CreateColorFromHexString("FFFA3E3E"),
+local function createColor(hex)
+	return CreateColorFromHexString(hex)
+end
 
-	-- lfg invite info
-	line_a = CreateColorFromHexString("FF1EFF00"),
-	line_b = CreateColorFromHexString("FF0070DD"),
-	line_c = CreateColorFromHexString("FFA335EE"),
+local function createColorPair(c, g)
+	return { c = createColor(c), g = createColor(g) }
+end
+
+MEDIA.color = {
+	-- tip menu
+	title = createColor("FFFFBE19"),
+	text = createColor("FFFFFFFF"),
+	tip = createColor("FFB2B2B2"),
+	mark = createColor("FF38FF92"),
+
+	-- datatext
+	override = createColor("FFFFFFFF"),
+	gm_text_color = createColor("FFFFFFFF"),
+	di_warning = createColor("FFFF7700"),
+	di_repair = createColor("FFFA3E3E"),
+
+	-- LFG Invite Info
+	line_a = createColor("FF1EFF00"),
+	line_b = createColor("FF0070DD"),
+	line_c = createColor("FFA335EE"),
 
 	-- colors
-	blue = CreateColorFromHexString("FF0294FF"),
-	purple = CreateColorFromHexString("FFBD26E5"),
-	red = CreateColorFromHexString("FFFF005D"),
-	yellow = CreateColorFromHexString("FFFF9D00"),
-	green = CreateColorFromHexString("FF1BFF6B"),
-	black = CreateColorFromHexString("FF404040"),
-	gray = CreateColorFromHexString("FF787878"),
-	info = CreateColorFromHexString("FFFFA7A7"),
+	blue = createColor("FF0294FF"),
+	purple = createColor("FFBD26E5"),
+	red = createColor("FFFF005D"),
+	yellow = createColor("FFFF9D00"),
+	green = createColor("FF1BFF6B"),
+	black = createColor("FF404040"),
+	gray = createColor("FF787878"),
+	info = createColor("FFFFA7A7"),
 
 	-- difficulty
-	N = CreateColorFromHexString("FF1EFF00"),
-	H = CreateColorFromHexString("FF0070DD"),
-	M = CreateColorFromHexString("FFA335EE"),
-	PVP = CreateColorFromHexString("FFE6CC80"),
-	MP = CreateColorFromHexString("FFFF8000"),
-	LFR = CreateColorFromHexString("FFBE7FE8"),
-	TW = CreateColorFromHexString("FF00CCFF"),
-	QUEST = CreateColorFromHexString("FFFFBB00"),
-	SC = CreateColorFromHexString("FF00FF8C"),
-	STORY = CreateColorFromHexString("FFE6CC80"),
-	DELVE = CreateColorFromHexString("FF91D900"),
-	FOLLOWER = CreateColorFromHexString("FF00FF8C"),
-	OTHER = CreateColorFromHexString("FF00FFEE"),
-	GUILD = CreateColorFromHexString("FF91D900"),
+	N = createColor("FF1EFF00"),
+	H = createColor("FF0070DD"),
+	M = createColor("FFA335EE"),
+	PVP = createColor("FFE6CC80"),
+	MP = createColor("FFFF8000"),
+	LFR = createColor("FFBE7FE8"),
+	TW = createColor("FF00CCFF"),
+	QUEST = createColor("FFFFBB00"),
+	SC = createColor("FF00FF8C"),
+	STORY = createColor("FFE6CC80"),
+	DELVE = createColor("FF91D900"),
+	FOLLOWER = createColor("FF00FF8C"),
+	OTHER = createColor("FF00FFEE"),
+	GUILD = createColor("FF91D900"),
+
+	-- portraits
+	portraits = {
+		misc = {
+			death = createColorPair("FFF86767", "FFEC3535"),
+			default = createColorPair("FFE6CC80", "FFDAB033"),
+			border = createColor("FF000000"),
+			extra = createColor("FFFFFFFF"),
+			shadow = createColor("CD1E1E1E"),
+			inner = createColor("87282828"),
+		},
+		class = {
+			DEATHKNIGHT = createColorPair("FFC41E3A", "FF9C182E"),
+			DEMONHUNTER = createColorPair("FFA330C9", "FF6F2C91"),
+			DRUID = createColorPair("FFFF7C0A", "FF9F5B00"),
+			EVOKER = createColorPair("FF33937F", "FF1F6D5B"),
+			HUNTER = createColorPair("FFAAD372", "FF7A9A2D"),
+			MAGE = createColorPair("FF3FC7EB", "FF2A7F9D"),
+			MONK = createColorPair("FF00FF98", "FF009B5B"),
+			PALADIN = createColorPair("FFF48CBA", "FFC77399"),
+			PRIEST = createColorPair("FFFFFFFF", "FFCDCCCC"),
+			ROGUE = createColorPair("FFFFF468", "FFD2CA56"),
+			SHAMAN = createColorPair("FF0070DD", "FF005EB8"),
+			WARLOCK = createColorPair("FF8788EE", "FF5B5C8A"),
+			WARRIOR = createColorPair("FFC69B6D", "FF9B7A57"),
+		},
+		classification = {
+			boss = createColorPair("FFFF2E2E", "FFDA0B0B"),
+			elite = createColorPair("FFFF00E6", "FFD001BC"),
+			player = createColorPair("FF00FFEE", "FF00C3B6"),
+			rare = createColorPair("FFB300FF", "FF9100D0"),
+			rareelite = createColorPair("FFA100FF", "FF8500D2"),
+		},
+		reaction = {
+			enemy = createColorPair("FFFF4848", "FFD63A3A"),
+			friendly = createColorPair("FF00FE48", "FF00C538"),
+			neutral = createColorPair("FFFFD52E", "FFFFC02E"),
+		},
+	},
 }
 
-MEDIA.classColor = E:ClassColor(E.myclass)
+MEDIA.myclass = E:ClassColor(E.myclass)
 
 do
 	local colors = {
@@ -67,35 +116,29 @@ end
 
 function mMT:UpdateMedia(arg)
 	if arg == "colors" or not arg then
-		local classColor = MEDIA.classColor
-		if not MEDIA.classColor.hex then MEDIA.classColor.hex = E:RGBToHex(classColor.r, classColor.g, classColor.b) end
-
-		if not MEDIA.classColor.string then MEDIA.classColor.string = strjoin("", MEDIA.classColor.hex, "%s|r") end
-
-		if not MEDIA.classColor.gradient then
-			MEDIA.classColor.gradient =
-				{ a = { r = classColor.r - 0.2, g = classColor.g - 0.2, b = classColor.b - 0.2, a = 1 }, b = { r = classColor.r + 0.2, g = classColor.g + 0.2, b = classColor.b + 0.2, a = 1 } }
-		end
+		local classColor = MEDIA.myclass
+		MEDIA.myclass.hex = MEDIA.myclass.hex or E:RGBToHex(classColor.r, classColor.g, classColor.b)
+		MEDIA.myclass.string = MEDIA.myclass.string or strjoin("", MEDIA.myclass.hex, "%s|r")
+		MEDIA.myclass.gradient = MEDIA.myclass.gradient
+			or {
+				a = { r = classColor.r - 0.2, g = classColor.g - 0.2, b = classColor.b - 0.2, a = 1 },
+				b = { r = classColor.r + 0.2, g = classColor.g + 0.2, b = classColor.b + 0.2, a = 1 },
+			}
 	end
 
 	if arg == "lfg" or not arg then
-		MEDIA.color.line_a = CreateColorFromHexString(E.db.mMT.lfg_invite_info.colors.line_a)
-		MEDIA.color.line_a.hex = E.db.mMT.lfg_invite_info.colors.line_a
-		MEDIA.color.line_b = CreateColorFromHexString(E.db.mMT.lfg_invite_info.colors.line_b)
-		MEDIA.color.line_b.hex = E.db.mMT.lfg_invite_info.colors.line_b
-		MEDIA.color.line_c = CreateColorFromHexString(E.db.mMT.lfg_invite_info.colors.line_c)
-		MEDIA.color.line_c.hex = E.db.mMT.lfg_invite_info.colors.line_c
+		for _, key in ipairs({ "line_a", "line_b", "line_c" }) do
+			MEDIA.color[key] = CreateColorFromHexString(E.db.mMT.lfg_invite_info.colors[key])
+			MEDIA.color[key].hex = E.db.mMT.lfg_invite_info.colors[key]
+		end
 	end
 
 	if arg == "datatexts" or not arg then
-		MEDIA.color.title = CreateColorFromHexString(E.db.mMT.color.title)
-		MEDIA.color.title.hex = E.db.mMT.color.title
-		MEDIA.color.text = CreateColorFromHexString(E.db.mMT.color.text)
-		MEDIA.color.text.hex = E.db.mMT.color.text
-		MEDIA.color.tip = CreateColorFromHexString(E.db.mMT.color.tip)
-		MEDIA.color.tip.hex = E.db.mMT.color.tip
-		MEDIA.color.mark = CreateColorFromHexString(E.db.mMT.color.mark)
-		MEDIA.color.mark.hex = E.db.mMT.color.mark
+		for _, key in ipairs({ "title", "text", "tip", "mark" }) do
+			MEDIA.color[key] = CreateColorFromHexString(E.db.mMT.color[key])
+			MEDIA.color[key].hex = E.db.mMT.color[key]
+		end
+
 		MEDIA.color.override_text = CreateColorFromHexString(E.db.mMT.datatexts.text.text)
 		MEDIA.color.override_text.hex = E.db.mMT.datatexts.text.text
 		MEDIA.color.override_value = CreateColorFromHexString(E.db.mMT.datatexts.text.value)
@@ -109,21 +152,27 @@ function mMT:UpdateMedia(arg)
 	end
 
 	if arg == "difficulty" or not arg then
-		MEDIA.color.N = CreateColorFromHexString(E.db.mMT.color.N)
-		MEDIA.color.H = CreateColorFromHexString(E.db.mMT.color.H)
-		MEDIA.color.M = CreateColorFromHexString(E.db.mMT.color.M)
-		MEDIA.color.PVP = CreateColorFromHexString(E.db.mMT.color.PVP)
-		MEDIA.color.MP = CreateColorFromHexString(E.db.mMT.color.MP)
-		MEDIA.color.LFR = CreateColorFromHexString(E.db.mMT.color.LFR)
-		MEDIA.color.TW = CreateColorFromHexString(E.db.mMT.color.TW)
-		MEDIA.color.QUEST = CreateColorFromHexString(E.db.mMT.color.QUEST)
-		MEDIA.color.SC = CreateColorFromHexString(E.db.mMT.color.SC)
-		MEDIA.color.STORY = CreateColorFromHexString(E.db.mMT.color.STORY)
-		MEDIA.color.DELVE = CreateColorFromHexString(E.db.mMT.color.DELVE)
-		MEDIA.color.FOLLOWER = CreateColorFromHexString(E.db.mMT.color.FOLLOWER)
-		MEDIA.color.OTHER = CreateColorFromHexString(E.db.mMT.color.OTHER)
-		MEDIA.color.GUILD = CreateColorFromHexString(E.db.mMT.color.GUILD)
-		MEDIA.color.GUILD.hex = E.db.mMT.color.GUILD
+		for _, key in ipairs({ "N", "H", "M", "PVP", "MP", "LFR", "TW", "QUEST", "SC", "STORY", "DELVE", "FOLLOWER", "OTHER", "GUILD" }) do
+			MEDIA.color[key] = CreateColorFromHexString(E.db.mMT.color[key])
+			MEDIA.color[key].hex = E.db.mMT.color[key]
+		end
+	end
+
+	if arg == "portraits" or not arg then
+		local function createColorSet(path)
+			local set = {}
+			for key, val in pairs(E.db.mMT.color.portraits[path]) do
+				set[key] = type(val) == "table" and { c = CreateColorFromHexString(val.c), g = val.g } or CreateColorFromHexString(val)
+			end
+			return set
+		end
+
+		MEDIA.color.portraits = {
+			misc = createColorSet("misc"),
+			class = createColorSet("class"),
+			classification = createColorSet("classification"),
+			reaction = createColorSet("reaction"),
+		}
 	end
 end
 

@@ -270,10 +270,13 @@ P.portraits = {
 
 -- color
 P.color = {
+	-- tip/ menu
 	title = "FFFFBE19",
 	text = "FFFFFFFF",
 	tip = "FFB2B2B2",
 	mark = "FF38FF92",
+
+	-- difficulty
 	N = "FF1EFF00",
 	H = "FF0070DD",
 	M = "FFA335EE",
@@ -289,37 +292,42 @@ P.color = {
 	OTHER = "FF00FFEE",
 	GUILD = "FF91D900",
 
+	-- portraits
 	portraits = {
 		misc = {
-			death = { r = 0.5, g = 0.20, b = 0.20, a = 1 },
-			default = { r = 1, g = 0.73, b = 0.18, a = 1 },
+			death = { c = "FFF86767", g = "FFEC3535" },
+			default = { c = "FFE6CC80", g = "FFDAB033" },
+			border = "FF000000",
+			extra = "FFFFFFFF",
+			shadow = "CD1E1E1E",
+			inner = "87282828",
 		},
 		class = {
-			DEATHKNIGHT = { r = 0.77, g = 0.12, b = 0.23, a = 1 },
-			DEMONHUNTER = { r = 0.64, g = 0.19, b = 0.79, a = 1 },
-			DRUID = { r = 1.00, g = 0.49, b = 0.04, a = 1 },
-			EVOKER = { r = 0.20, g = 0.58, b = 0.50, a = 1 },
-			HUNTER = { r = 0.67, g = 0.83, b = 0.45, a = 1 },
-			MAGE = { r = 0.25, g = 0.78, b = 0.92, a = 1 },
-			MONK = { r = 0.00, g = 1.00, b = 0.60, a = 1 },
-			PALADIN = { r = 0.96, g = 0.55, b = 0.73, a = 1 },
-			PRIEST = { r = 1, g = 1, b = 1, a = 1 },
-			ROGUE = { r = 1.00, g = 0.96, b = 0.41, a = 1 },
-			SHAMAN = { r = 0.00, g = 0.44, b = 0.87, a = 1 },
-			WARLOCK = { r = 0.53, g = 0.53, b = 0.93, a = 1 },
-			WARRIOR = { r = 0.78, g = 0.61, b = 0.43, a = 1 },
+			DEATHKNIGHT = { c = "FFC41E3A", g = "FF9C182E" },
+			DEMONHUNTER = { c = "FFA330C9", g = "FF6F2C91" },
+			DRUID = { c = "FFFF7C0A", g = "FF9F5B00" },
+			EVOKER = { c = "FF33937F", 	g = "FF1F6D5B" },
+			HUNTER = { c = "FFAAD372", g = "FF7A9A2D" },
+			MAGE = { c = "FF3FC7EB", g = "FF2A7F9D" },
+			MONK = { c = "FF00FF98", g = "FF009B5B" },
+			PALADIN = { c = "FFF48CBA", g = "FFC77399" },
+			PRIEST = { c = "FFFFFFFF", g = "FFCDCCCC" },
+			ROGUE = { c = "FFFFF468", g = "FFD2CA56" },
+			SHAMAN = { c = "FF0070DD", g = "FF005EB8" },
+			WARLOCK = { c = "FF8788EE", g = "FF5B5C8A" },
+			WARRIOR = { c ="FFC69B6D", g = "FF9B7A57" },
 		},
 		classification = {
-			boss = { r = 0.78, g = 0.12, b = 0.12, a = 1 },
-			elite = { r = 1, g = 0, b = 0.90, a = 1 },
-			player = { r = 0.2, g = 1, b = 0.2, a = 1 },
-			rare = { r = 0.70, g = 0, b = 1, a = 1 },
-			rareelite = { r = 0.63, g = 0, b = 1, a = 1 },
+			boss = { c = "FFFF2E2E", g = "FFDA0B0B" },
+			elite = { c = "FFFF00E6", g = "FFD001BC" },
+			player = { c = "FF00FFEE", g = "FF00C3B6" },
+			rare = { c = "FFB300FF", g = "FF9100D0" },
+			rareelite = { c = "FFA100FF", g = "FF8500D2" },
 		},
 		reaction = {
-			enemy = { r = 0.78, g = 0.12, b = 0.12, a = 1 },
-			friendly = { r = 0.17, g = 0.75, b = 0, a = 1 },
-			neutral = { r = 1.00, g = 0.70, b = 0, a = 1 },
+			enemy = { c = "FFFF4848", g = "FFD63A3A" },
+			friendly = { c = "FF00FE48", g = "FF00C538"},
+			neutral = { c = "FFFFD52E", g = "FFFFC02E" },
 		},
 	},
 }

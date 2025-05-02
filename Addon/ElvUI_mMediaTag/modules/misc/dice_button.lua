@@ -9,7 +9,7 @@ local format = format
 
 local function GetColor(colorConfig)
 	if colorConfig.mode == "class" then
-		return { r = MEDIA.classColor.r, g = MEDIA.classColor.g, b = MEDIA.classColor.b, a = colorConfig.color.a }
+		return { r = MEDIA.myclass.r, g = MEDIA.myclass.g, b = MEDIA.myclass.b, a = colorConfig.color.a }
 	else
 		return colorConfig.color
 	end

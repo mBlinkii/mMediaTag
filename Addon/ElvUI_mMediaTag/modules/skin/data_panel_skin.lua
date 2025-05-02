@@ -8,9 +8,9 @@ local function getColor(setting)
 	if setting.style == "custom" then
 		return setting.color
 	elseif setting.style == "class" then
-		return MEDIA.classColor
+		return MEDIA.myclass
 	elseif setting.style == "darkclass" then
-		local c = MEDIA.classColor
+		local c = MEDIA.myclass
 		return { r = c.r - 0.3, g = c.g - 0.3, b = c.b - 0.3, a = 1 }
 	else
 		return { r = 1, g = 1, b = 1, a = 1 }
