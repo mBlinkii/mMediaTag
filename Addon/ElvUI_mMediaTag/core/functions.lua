@@ -25,6 +25,11 @@ function mMT:UpdateModule(name, arg)
 	if module and module.Initialize then module:Initialize(arg) end
 end
 
+function mMT:GetModule(name)
+	local module = M[name]
+	return module and module
+end
+
 function mMT:AddModule(name, arg)
 	if arg then
 		M[name] = mMT:NewModule(name, unpack(arg))

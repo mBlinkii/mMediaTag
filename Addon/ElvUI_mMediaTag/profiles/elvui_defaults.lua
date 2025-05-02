@@ -139,9 +139,11 @@ P.datatexts = {
 
 -- portraits
 P.portraits = {
+	enable = false,
 	misc = {
 		force_reaction = false,
 		force_default = false,
+		bg = "blank",
 		rare = "blizz_neutral",
 		elite = "blizz_neutral",
 		rareelite = "blizz_neutral",
