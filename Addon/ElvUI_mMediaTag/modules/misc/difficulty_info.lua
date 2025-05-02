@@ -1,4 +1,4 @@
-local mMT, DB, M, E, P, L, MEDIA, COLORS = unpack(ElvUI_mMediaTag)
+local mMT, DB, M, E, P, L, MEDIA = unpack(ElvUI_mMediaTag)
 local LSM = E.Libs.LSM
 local module = mMT:AddModule("DifficultyInfo", { "AceEvent-3.0" })
 
@@ -25,7 +25,7 @@ local function UpdateInfos()
 		local challengeModeInfo = instanceInfos.isChallengeMode and instanceInfos.level
 		local delveInfo = instanceInfos.isDelve and " " .. instanceInfos.level
 		local difficulty = (instanceInfos.difficultyShort or instanceInfos.difficultyName) .. ((challengeModeInfo or delveInfo) or "")
-		local guild = instanceInfos.isGuild and COLORS.GUILD
+		local guild = instanceInfos.isGuild and MEDIA.color.GUILD
 		local text = strupper(instanceInfos.shortName or instanceInfos.name)
 		text = guild and guild:WrapTextInColorCode(text) or text
 		module.difficulty.lable:SetText(instanceInfos.difficultyColor:WrapTextInColorCode(difficulty) .. "\n" .. text)

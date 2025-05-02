@@ -1,4 +1,4 @@
-local mMT, DB, M, E, P, L, MEDIA, COLORS = unpack(ElvUI_mMediaTag)
+local mMT, DB, M, E, P, L, MEDIA = unpack(ElvUI_mMediaTag)
 
 local module = mMT:AddModule("DiceButton")
 
@@ -9,7 +9,7 @@ local format = format
 
 local function GetColor(colorConfig)
 	if colorConfig.mode == "class" then
-		return { r = COLORS.myclass.r, g = COLORS.myclass.g, b = COLORS.myclass.b, a = colorConfig.color.a }
+		return { r = MEDIA.classColor.r, g = MEDIA.classColor.g, b = MEDIA.classColor.b, a = colorConfig.color.a }
 	else
 		return colorConfig.color
 	end

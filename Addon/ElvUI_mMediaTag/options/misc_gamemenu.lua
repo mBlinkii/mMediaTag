@@ -1,4 +1,4 @@
-local mMT, DB, M, E, P, L, MEDIA, COLORS = unpack(ElvUI_mMediaTag)
+local mMT, DB, M, E, P, L, MEDIA = unpack(ElvUI_mMediaTag)
 local DT = E:GetModule("DataTexts")
 
 mMT.options.args.datatexts.args.misc_gamemenu.args = {
@@ -61,8 +61,8 @@ mMT.options.args.datatexts.args.misc_gamemenu.args = {
 				set = function(info, r, g, b)
 					local hex = E:RGBToHex(r, g, b, "ff")
 					E.db.mMT.datatexts.menu.text_color = hex
-					COLORS.gm_text_color = CreateColorFromHexString(hex)
-					COLORS.gm_text_color.hex = hex
+					MEDIA.color.gm_text_color = CreateColorFromHexString(hex)
+					MEDIA.color.gm_text_color.hex = hex
 				end,
 			},
 		},

@@ -1,4 +1,4 @@
-local mMT, DB, M, E, P, L, MEDIA, COLORS = unpack(ElvUI_mMediaTag)
+local mMT, DB, M, E, P, L, MEDIA = unpack(ElvUI_mMediaTag)
 local DT = E:GetModule("DataTexts")
 
 --WoW API / Variables
@@ -98,7 +98,7 @@ local function OnEvent(self)
 			local challengeModeInfo = instanceInfos.isChallengeMode and instanceInfos.level
 			local delveInfo = instanceInfos.isDelve and "-" .. instanceInfos.level
 			local difficulty = (instanceInfos.difficultyShort or instanceInfos.difficultyName) .. ((challengeModeInfo or delveInfo) or "")
-			local guild = instanceInfos.isGuild and COLORS.GUILD
+			local guild = instanceInfos.isGuild and MEDIA.color.GUILD
 			text = strupper(instanceInfos.shortName or instanceInfos.name)
 			text = guild and guild:WrapTextInColorCode(text) or text
 			text = instanceInfos.difficultyColor:WrapTextInColorCode(difficulty) .. " - " .. text
@@ -113,7 +113,7 @@ local function OnLeave(self)
 end
 
 local function ValueColorUpdate(self, hex)
-	local textHex = E.db.mMT.datatexts.text.override_text and "|c" .. COLORS.override_text.hex or hex
+	local textHex = E.db.mMT.datatexts.text.override_text and "|c" .. MEDIA.color.override_text.hex or hex
 	textString = strjoin("", textHex, "%s|r")
 
 	OnEvent(self)

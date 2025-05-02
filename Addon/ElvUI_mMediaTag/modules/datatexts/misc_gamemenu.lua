@@ -1,4 +1,4 @@
-local mMT, DB, M, E, P, L, MEDIA, COLORS = unpack(ElvUI_mMediaTag)
+local mMT, DB, M, E, P, L, MEDIA = unpack(ElvUI_mMediaTag)
 local DT = E:GetModule("DataTexts")
 
 local _G = _G
@@ -59,7 +59,7 @@ local function BuildMenuList()
 	menuList = {
 		{
 			text = _G.CHARACTER_BUTTON,
-			color = "|c" .. COLORS.gm_text_color.hex,
+			color = "|c" .. MEDIA.color.gm_text_color.hex,
 			icon = icon and menu_icons.character,
 			func = function()
 				_G.ToggleCharacter("PaperDollFrame")
@@ -67,7 +67,7 @@ local function BuildMenuList()
 		},
 		{
 			text = E.Retail and _G.SPELLBOOK or _G.SPELLBOOK_ABILITIES_BUTTON,
-			color = "|c" .. COLORS.gm_text_color.hex,
+			color = "|c" .. MEDIA.color.gm_text_color.hex,
 			icon = icon and menu_icons.book,
 			func = function()
 				if PlayerSpellsUtil then
@@ -79,7 +79,7 @@ local function BuildMenuList()
 		},
 		{
 			text = _G.TIMEMANAGER_TITLE,
-			color = "|c" .. COLORS.gm_text_color.hex,
+			color = "|c" .. MEDIA.color.gm_text_color.hex,
 			icon = icon and menu_icons.clock,
 			func = function()
 				ToggleFrame(_G.TimeManagerFrame)
@@ -87,7 +87,7 @@ local function BuildMenuList()
 		},
 		{
 			text = _G.CHAT_CHANNELS,
-			color = "|c" .. COLORS.gm_text_color.hex,
+			color = "|c" .. MEDIA.color.gm_text_color.hex,
 			icon = icon and menu_icons.chat,
 			func = function()
 				_G.ToggleChannelFrame()
@@ -95,7 +95,7 @@ local function BuildMenuList()
 		},
 		{
 			text = _G.SOCIAL_BUTTON,
-			color = "|c" .. COLORS.gm_text_color.hex,
+			color = "|c" .. MEDIA.color.gm_text_color.hex,
 			icon = icon and menu_icons.social,
 			func = function()
 				_G.ToggleFriendsFrame()
@@ -103,7 +103,7 @@ local function BuildMenuList()
 		},
 		{
 			text = _G.TALENTS_BUTTON,
-			color = "|c" .. COLORS.gm_text_color.hex,
+			color = "|c" .. MEDIA.color.gm_text_color.hex,
 			icon = icon and menu_icons.talent,
 			func = function()
 				if PlayerSpellsUtil then
@@ -115,7 +115,7 @@ local function BuildMenuList()
 		},
 		{
 			text = _G.GUILD,
-			color = "|c" .. COLORS.gm_text_color.hex,
+			color = "|c" .. MEDIA.color.gm_text_color.hex,
 			icon = icon and menu_icons.guild,
 			func = function()
 				_G.ToggleGuildFrame()
@@ -125,7 +125,7 @@ local function BuildMenuList()
 
 	if E.Cata and E.mylevel >= _G.SHOW_PVP_LEVEL then tinsert(menuList, {
 		text = _G.PLAYER_V_PLAYER,
-		color = "|c" .. COLORS.gm_text_color.hex,
+		color = "|c" .. MEDIA.color.gm_text_color.hex,
 		icon = icon and menu_icons.pvp,
 		func = function()
 			_G.TogglePVPFrame()
@@ -135,7 +135,7 @@ local function BuildMenuList()
 	if E.Retail or E.Cata then
 		tinsert(menuList, {
 			text = _G.COLLECTIONS,
-			color = "|c" .. COLORS.gm_text_color.hex,
+			color = "|c" .. MEDIA.color.gm_text_color.hex,
 			icon = icon and menu_icons.collection,
 			func = function()
 				_G.ToggleCollectionsJournal()
@@ -143,7 +143,7 @@ local function BuildMenuList()
 		})
 		tinsert(menuList, {
 			text = _G.ACHIEVEMENT_BUTTON,
-			color = "|c" .. COLORS.gm_text_color.hex,
+			color = "|c" .. MEDIA.color.gm_text_color.hex,
 			icon = icon and menu_icons.achievement,
 			func = function()
 				_G.ToggleAchievementFrame()
@@ -151,7 +151,7 @@ local function BuildMenuList()
 		})
 		tinsert(menuList, {
 			text = _G.LFG_TITLE,
-			color = "|c" .. COLORS.gm_text_color.hex,
+			color = "|c" .. MEDIA.color.gm_text_color.hex,
 			icon = icon and menu_icons.browser,
 			func = function()
 				if E.Retail then
@@ -163,7 +163,7 @@ local function BuildMenuList()
 		})
 		tinsert(menuList, {
 			text = L["Calendar"],
-			color = "|c" .. COLORS.gm_text_color.hex,
+			color = "|c" .. MEDIA.color.gm_text_color.hex,
 			icon = icon and menu_icons.calendar,
 			func = function()
 				_G.GameTimeFrame:Click()
@@ -171,7 +171,7 @@ local function BuildMenuList()
 		}) -- Interface\Calendar\MeetingIcon
 		tinsert(menuList, {
 			text = _G.ENCOUNTER_JOURNAL,
-			color = "|c" .. COLORS.gm_text_color.hex,
+			color = "|c" .. MEDIA.color.gm_text_color.hex,
 			icon = icon and menu_icons.encounter,
 			func = function()
 				if not IsAddOnLoaded("Blizzard_EncounterJournal") then UIParentLoadAddOn("Blizzard_EncounterJournal") end
@@ -183,7 +183,7 @@ local function BuildMenuList()
 	if E.Retail then
 		if StoreEnabled and StoreEnabled() then tinsert(menuList, {
 			text = _G.BLIZZARD_STORE,
-			color = "|c" .. COLORS.gm_text_color.hex,
+			color = "|c" .. MEDIA.color.gm_text_color.hex,
 			icon = icon and menu_icons.shop,
 			func = function()
 				_G.StoreMicroButton:Click()
@@ -192,7 +192,7 @@ local function BuildMenuList()
 
 		tinsert(menuList, {
 			text = _G.PROFESSIONS_BUTTON,
-			color = "|c" .. COLORS.gm_text_color.hex,
+			color = "|c" .. MEDIA.color.gm_text_color.hex,
 			icon = icon and menu_icons.profession,
 			func = function()
 				_G.ToggleProfessionsBook()
@@ -200,7 +200,7 @@ local function BuildMenuList()
 		})
 		tinsert(menuList, {
 			text = _G.GARRISON_TYPE_8_0_LANDING_PAGE_TITLE,
-			color = "|c" .. COLORS.gm_text_color.hex,
+			color = "|c" .. MEDIA.color.gm_text_color.hex,
 			icon = icon and menu_icons.missions,
 			func = function()
 				_G.ExpansionLandingPageMinimapButton:ToggleLandingPage()
@@ -208,7 +208,7 @@ local function BuildMenuList()
 		})
 		tinsert(menuList, {
 			text = _G.QUESTLOG_BUTTON,
-			color = "|c" .. COLORS.gm_text_color.hex,
+			color = "|c" .. MEDIA.color.gm_text_color.hex,
 			icon = icon and menu_icons.quest,
 			func = function()
 				_G.ToggleQuestLog()
@@ -217,7 +217,7 @@ local function BuildMenuList()
 	else
 		tinsert(menuList, {
 			text = _G.QUEST_LOG,
-			color = "|c" .. COLORS.gm_text_color.hex,
+			color = "|c" .. MEDIA.color.gm_text_color.hex,
 			icon = icon and menu_icons.quest,
 			func = function()
 				ToggleFrame(_G.QuestLogFrame)
@@ -232,7 +232,7 @@ local function BuildMenuList()
 	tinsert(menuList, { text = "", isTitle = true, notClickable = true })
 	tinsert(menuList, {
 		text = "ElvUI",
-		color = "|c" .. COLORS.gm_text_color.hex,
+		color = "|c" .. MEDIA.color.gm_text_color.hex,
 		icon = icon and menu_icons.elvui,
 		func = function()
 			if not E:AlertCombat()  then
@@ -253,7 +253,7 @@ local function BuildMenuList()
 	-- want these two on the bottom
 	tinsert(menuList, {
 		text = _G.MAINMENU_BUTTON,
-		color = "|c" .. COLORS.gm_text_color.hex,
+		color = "|c" .. MEDIA.color.gm_text_color.hex,
 		icon = icon and menu_icons.menu,
 		func = function()
 			if not _G.GameMenuFrame:IsShown() then
@@ -274,7 +274,7 @@ local function BuildMenuList()
 
 	tinsert(menuList, {
 		text = _G.HELP_BUTTON,
-		color = "|c" .. COLORS.gm_text_color.hex,
+		color = "|c" .. MEDIA.color.gm_text_color.hex,
 		icon = icon and menu_icons.help,
 		func = function()
 			_G.ToggleHelpFrame()
@@ -372,7 +372,7 @@ local function OnEvent(self)
 end
 
 local function ValueColorUpdate(self, hex)
-	local textHex = E.db.mMT.datatexts.text.override_text and "|c" .. COLORS.override_text.hex or hex
+	local textHex = E.db.mMT.datatexts.text.override_text and "|c" .. MEDIA.color.override_text.hex or hex
 	textString = strjoin("", textHex, "%s|r")
 	OnEvent(self)
 end

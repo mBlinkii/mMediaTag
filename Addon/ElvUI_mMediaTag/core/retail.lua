@@ -1,4 +1,4 @@
-local mMT, DB, M, E, P, L, MEDIA, COLORS = unpack(ElvUI_mMediaTag)
+local mMT, DB, M, E, P, L, MEDIA = unpack(ElvUI_mMediaTag)
 
 -- Cache WoW Globals
 local GetOverallDungeonScore = C_ChallengeMode.GetOverallDungeonScore
@@ -234,53 +234,53 @@ local shortDifficulty = {}
 
 local function UpdateColors()
 	shortDifficulty = {
-		[1] = { color = COLORS.N, name = "N" }, --Normal	party
-		[2] = { color = COLORS.H, name = "H" }, --Heroic	party	isHeroic
-		[3] = { color = COLORS.N, name = "10N" }, --10 Player	raid	toggleDifficultyID: 5
-		[4] = { color = COLORS.N, name = "25N" }, --25 Player	raid	toggleDifficultyID: 6
-		[5] = { color = COLORS.H, name = "10H" }, --10 Player (Heroic)	raid	isHeroic, toggleDifficultyID: 3
-		[6] = { color = COLORS.H, name = "25H" }, --25 Player (Heroic)	raid	isHeroic, toggleDifficultyID: 4
-		[7] = { color = COLORS.LFR, name = "LFR" }, --Looking For Raid	raid	Legacy LFRs prior to SoO
-		[8] = { color = COLORS.MP, name = "M+" }, --Mythic Keystone	party	isHeroic, isChallengeMode
-		[9] = { color = COLORS.N, name = "40N" }, --40 Player	raid
-		[11] = { color = COLORS.H, name = "SCH" }, --Heroic Scenario	scenario	isHeroic
-		[12] = { color = COLORS.N, name = "SC" }, --Normal Scenario	scenario
-		[14] = { color = COLORS.N, name = "N" }, --Normal	raid
-		[15] = { color = COLORS.H, name = "H" }, --Heroic	raid	displayHeroic
-		[16] = { color = COLORS.M, name = "M" }, --Mythic	raid	isHeroic, displayMythic
-		[17] = { color = COLORS.LFR, name = "LFR" }, --Looking For Raid	raid
-		[18] = { color = COLORS.N, name = "E" }, --Event	raid
-		[19] = { color = COLORS.N, name = "E" }, --Event	party
-		[20] = { color = COLORS.SC, name = "E" }, --Event Scenario	scenario
-		[23] = { color = COLORS.M, name = "M" }, --Mythic	party	isHeroic, displayMythic
-		[24] = { color = COLORS.TW, name = "TW" }, --Timewalking	party
-		[25] = { color = COLORS.PVP, name = "SC-PVP" }, --World PvP Scenario	scenario
-		[29] = { color = COLORS.PVP, name = "SC-PVP" }, --PvEvP Scenario	pvp
-		[30] = { color = COLORS.SC, name = "E" }, --Event	scenario
-		[32] = { color = COLORS.PVP, name = "SC-PVP" }, --World PvP Scenario	scenario
-		[33] = { color = COLORS.TW, name = "TW" }, --Timewalking	raid
-		[34] = { color = COLORS.PVP, name = "PVP" }, --PvP	pvp
-		[38] = { color = COLORS.N, name = "SC" }, --Normal	scenario
-		[39] = { color = COLORS.H, name = "SCH" }, --Heroic	scenario	displayHeroic
-		[40] = { color = COLORS.M, name = "SCM" }, --Mythic	scenario	displayMythic
-		[45] = { color = COLORS.PVP, name = "SC-PVP" }, --PvP	scenario	displayHeroic
-		[147] = { color = COLORS.N, name = "WF" }, --Normal	scenario	Warfronts
-		[149] = { color = COLORS.H, name = "WFH" }, --Heroic	scenario	displayHeroic Warfronts
-		[150] = { color = COLORS.N, name = "N" }, --Normal	party
-		[151] = { color = COLORS.TW, name = "TW" }, --Looking For Raid	raid	Timewalking
-		[152] = { color = COLORS.SC, name = "SC" }, --Visions of N'Zoth	scenario
-		[153] = { color = COLORS.SC, name = "SC" }, --Teeming Island	scenario	displayHeroic
-		[167] = { color = COLORS.OTHER, name = "TG" }, --Torghast	scenario
-		[168] = { color = COLORS.SC, name = "SC" }, --Path of Ascension: Courage	scenario
-		[169] = { color = COLORS.SC, name = "SC" }, --Path of Ascension: Loyalty	scenario
-		[170] = { color = COLORS.SC, name = "SC" }, --Path of Ascension: Wisdom	scenario
-		[171] = { color = COLORS.SC, name = "SC" }, --Path of Ascension: Humility	scenario
-		[172] = { color = COLORS.N, name = "WB" }, --World Boss	none
-		[192] = { color = COLORS.MP, name = "CM" }, --Challenge Level 1	none
-		[205] = { color = COLORS.FOLLOWER, name = "FD" },
-		[208] = { color = COLORS.DELVE, name = "D" },
-		[216] = { color = COLORS.QUEST, name = "Q" },
-		[220] = { color = COLORS.STORY, name = "S" },
+		[1] = { color = MEDIA.color.N, name = "N" }, --Normal	party
+		[2] = { color = MEDIA.color.H, name = "H" }, --Heroic	party	isHeroic
+		[3] = { color = MEDIA.color.N, name = "10N" }, --10 Player	raid	toggleDifficultyID: 5
+		[4] = { color = MEDIA.color.N, name = "25N" }, --25 Player	raid	toggleDifficultyID: 6
+		[5] = { color = MEDIA.color.H, name = "10H" }, --10 Player (Heroic)	raid	isHeroic, toggleDifficultyID: 3
+		[6] = { color = MEDIA.color.H, name = "25H" }, --25 Player (Heroic)	raid	isHeroic, toggleDifficultyID: 4
+		[7] = { color = MEDIA.color.LFR, name = "LFR" }, --Looking For Raid	raid	Legacy LFRs prior to SoO
+		[8] = { color = MEDIA.color.MP, name = "M+" }, --Mythic Keystone	party	isHeroic, isChallengeMode
+		[9] = { color = MEDIA.color.N, name = "40N" }, --40 Player	raid
+		[11] = { color = MEDIA.color.H, name = "SCH" }, --Heroic Scenario	scenario	isHeroic
+		[12] = { color = MEDIA.color.N, name = "SC" }, --Normal Scenario	scenario
+		[14] = { color = MEDIA.color.N, name = "N" }, --Normal	raid
+		[15] = { color = MEDIA.color.H, name = "H" }, --Heroic	raid	displayHeroic
+		[16] = { color = MEDIA.color.M, name = "M" }, --Mythic	raid	isHeroic, displayMythic
+		[17] = { color = MEDIA.color.LFR, name = "LFR" }, --Looking For Raid	raid
+		[18] = { color = MEDIA.color.N, name = "E" }, --Event	raid
+		[19] = { color = MEDIA.color.N, name = "E" }, --Event	party
+		[20] = { color = MEDIA.color.SC, name = "E" }, --Event Scenario	scenario
+		[23] = { color = MEDIA.color.M, name = "M" }, --Mythic	party	isHeroic, displayMythic
+		[24] = { color = MEDIA.color.TW, name = "TW" }, --Timewalking	party
+		[25] = { color = MEDIA.color.PVP, name = "SC-PVP" }, --World PvP Scenario	scenario
+		[29] = { color = MEDIA.color.PVP, name = "SC-PVP" }, --PvEvP Scenario	pvp
+		[30] = { color = MEDIA.color.SC, name = "E" }, --Event	scenario
+		[32] = { color = MEDIA.color.PVP, name = "SC-PVP" }, --World PvP Scenario	scenario
+		[33] = { color = MEDIA.color.TW, name = "TW" }, --Timewalking	raid
+		[34] = { color = MEDIA.color.PVP, name = "PVP" }, --PvP	pvp
+		[38] = { color = MEDIA.color.N, name = "SC" }, --Normal	scenario
+		[39] = { color = MEDIA.color.H, name = "SCH" }, --Heroic	scenario	displayHeroic
+		[40] = { color = MEDIA.color.M, name = "SCM" }, --Mythic	scenario	displayMythic
+		[45] = { color = MEDIA.color.PVP, name = "SC-PVP" }, --PvP	scenario	displayHeroic
+		[147] = { color = MEDIA.color.N, name = "WF" }, --Normal	scenario	Warfronts
+		[149] = { color = MEDIA.color.H, name = "WFH" }, --Heroic	scenario	displayHeroic Warfronts
+		[150] = { color = MEDIA.color.N, name = "N" }, --Normal	party
+		[151] = { color = MEDIA.color.TW, name = "TW" }, --Looking For Raid	raid	Timewalking
+		[152] = { color = MEDIA.color.SC, name = "SC" }, --Visions of N'Zoth	scenario
+		[153] = { color = MEDIA.color.SC, name = "SC" }, --Teeming Island	scenario	displayHeroic
+		[167] = { color = MEDIA.color.OTHER, name = "TG" }, --Torghast	scenario
+		[168] = { color = MEDIA.color.SC, name = "SC" }, --Path of Ascension: Courage	scenario
+		[169] = { color = MEDIA.color.SC, name = "SC" }, --Path of Ascension: Loyalty	scenario
+		[170] = { color = MEDIA.color.SC, name = "SC" }, --Path of Ascension: Wisdom	scenario
+		[171] = { color = MEDIA.color.SC, name = "SC" }, --Path of Ascension: Humility	scenario
+		[172] = { color = MEDIA.color.N, name = "WB" }, --World Boss	none
+		[192] = { color = MEDIA.color.MP, name = "CM" }, --Challenge Level 1	none
+		[205] = { color = MEDIA.color.FOLLOWER, name = "FD" },
+		[208] = { color = MEDIA.color.DELVE, name = "D" },
+		[216] = { color = MEDIA.color.QUEST, name = "Q" },
+		[220] = { color = MEDIA.color.STORY, name = "S" },
 	}
 end
 
@@ -334,7 +334,7 @@ function mMT:GetDungeonInfo()
 	info.shortName = shortNames[instanceID] or E:ShortenString(name, 6)
 	info.difficultyName = difficultyName
 	info.difficultyShort = difficultyInfo and difficultyInfo.name
-	info.difficultyColor = difficultyInfo and difficultyInfo.color or COLORS.OTHER
+	info.difficultyColor = difficultyInfo and difficultyInfo.color or MEDIA.color.OTHER
 	info.toggleDifficultyID = toggleDifficultyID
 	info.isGuildParty = InGuildParty()
 	info.instanceType = instanceType

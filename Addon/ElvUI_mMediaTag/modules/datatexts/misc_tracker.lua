@@ -1,4 +1,4 @@
-local mMT, DB, M, E, P, L, MEDIA, COLORS = unpack(ElvUI_mMediaTag)
+local mMT, DB, M, E, P, L, MEDIA = unpack(ElvUI_mMediaTag)
 local DT = E:GetModule("DataTexts")
 
 local module = mMT:AddModule("Tracker")
@@ -112,8 +112,8 @@ end
 local function ValueColorUpdate(self, hex)
 	local db = E.db.mMT.datatexts.tracker
 	local custom = tracker_ids_db[tonumber(self.name)] and tracker_ids_db[tonumber(self.name)].color
-	local textHex = E.db.mMT.datatexts.text.override_text and "|c" .. COLORS.override_text.hex or db.colored and "|c" .. custom or hex
-	local valueHex = E.db.mMT.datatexts.text.override_value and "|c" .. COLORS.override_value.hex or db.colored and "|c" .. custom or hex
+	local textHex = E.db.mMT.datatexts.text.override_text and "|c" .. MEDIA.color.override_text.hex or db.colored and "|c" .. custom or hex
+	local valueHex = E.db.mMT.datatexts.text.override_value and "|c" .. MEDIA.color.override_value.hex or db.colored and "|c" .. custom or hex
 
 	textString = strjoin("", textHex, "%s|r")
 	valueString = strjoin("", valueHex, "%s|r")

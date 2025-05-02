@@ -1,4 +1,4 @@
-local mMT, DB, M, E, P, L, MEDIA, COLORS = unpack(ElvUI_mMediaTag)
+local mMT, DB, M, E, P, L, MEDIA = unpack(ElvUI_mMediaTag)
 
 -- Cache WoW Globals
 local format = format
@@ -67,14 +67,14 @@ end
 -- Command functions
 local function PrintHelp()
 	mMT:Print("Available commands:")
-	mMT:Print(COLORS.purple:WrapTextInColorCode("/mmt"), COLORS.green:WrapTextInColorCode("help"), "- Show this help message")
-	mMT:Print(COLORS.purple:WrapTextInColorCode("/mmt"), COLORS.green:WrapTextInColorCode("version"), "- Show the current version")
-	mMT:Print(COLORS.purple:WrapTextInColorCode("/mmt"), COLORS.green:WrapTextInColorCode("debug"), "- Toggle debug mode")
-	mMT:Print(COLORS.purple:WrapTextInColorCode("/mmt"), COLORS.green:WrapTextInColorCode("debug safe"), "- Toggle debug mode with safe addons")
+	mMT:Print(MEDIA.color.purple:WrapTextInColorCode("/mmt"), MEDIA.color.green:WrapTextInColorCode("help"), "- Show this help message")
+	mMT:Print(MEDIA.color.purple:WrapTextInColorCode("/mmt"), MEDIA.color.green:WrapTextInColorCode("version"), "- Show the current version")
+	mMT:Print(MEDIA.color.purple:WrapTextInColorCode("/mmt"), MEDIA.color.green:WrapTextInColorCode("debug"), "- Toggle debug mode")
+	mMT:Print(MEDIA.color.purple:WrapTextInColorCode("/mmt"), MEDIA.color.green:WrapTextInColorCode("debug safe"), "- Toggle debug mode with safe addons")
 end
 
 local function PrintVersion()
-	mMT:Print("Version:", COLORS.green:WrapTextInColorCode(mMT.Version))
+	mMT:Print("Version:", MEDIA.color.green:WrapTextInColorCode(mMT.Version))
 end
 
 -- Command handler

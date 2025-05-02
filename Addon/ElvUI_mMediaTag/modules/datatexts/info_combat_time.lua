@@ -1,4 +1,4 @@
-local mMT, DB, M, E, P, L, MEDIA, COLORS = unpack(ElvUI_mMediaTag)
+local mMT, DB, M, E, P, L, MEDIA = unpack(ElvUI_mMediaTag)
 local DT = E:GetModule("DataTexts")
 
 local floor, strjoin = floor, strjoin
@@ -70,8 +70,8 @@ local function OnEvent(self, event, _, timeSeconds)
 end
 
 local function ValueColorUpdate(self, hex)
-	local textHex = E.db.mMT.datatexts.text.override_text and "|c" .. COLORS.override_text.hex or hex
-	local valueHex = E.db.mMT.datatexts.text.override_value and "|c" .. COLORS.override_value.hex or hex
+	local textHex = E.db.mMT.datatexts.text.override_text and "|c" .. MEDIA.color.override_text.hex or hex
+	local valueHex = E.db.mMT.datatexts.text.override_value and "|c" .. MEDIA.color.override_value.hex or hex
 	textString = strjoin("", textHex, "%s|r")
 	valueString = strjoin("", valueHex, "%s|r")
 	OnEvent(self)

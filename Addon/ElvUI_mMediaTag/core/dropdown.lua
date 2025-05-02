@@ -1,4 +1,4 @@
-local mMT, DB, M, E, P, L, MEDIA, COLORS = unpack(ElvUI_mMediaTag)
+local mMT, DB, M, E, P, L, MEDIA = unpack(ElvUI_mMediaTag)
 
 -- Cache WoW Globals
 local _G = _G
@@ -80,7 +80,7 @@ function mMT:DropDown(list, frame, parent, ButtonWidth, HideDelay, submenu)
 			btn.hoverTex = btn.hoverTex or btn:CreateTexture(nil, "OVERLAY")
 			btn.hoverTex:SetAllPoints()
 			btn.hoverTex:SetTexture([[Interface\Addons\ElvUI_mMediaTag\media\select.tga]])
-			btn.hoverTex:SetVertexColor(COLORS.myclass.r, COLORS.myclass.g, COLORS.myclass.b, 0.5)
+			btn.hoverTex:SetVertexColor(MEDIA.classColor.r, MEDIA.classColor.g, MEDIA.classColor.b, 0.5)
 			btn.hoverTex:SetBlendMode("BLEND")
 			btn.hoverTex:Hide()
 

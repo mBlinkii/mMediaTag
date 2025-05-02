@@ -21,7 +21,6 @@ Engine[4] = E -- ElvUI
 Engine[5] = P.mMT -- ElvUI plugin defaults
 Engine[6] = LibStub("AceLocale-3.0"):GetLocale("mMediaTag") -- Locales
 Engine[7] = {} -- Media
-Engine[8] = {} -- Colors
 _G[addonName] = Engine
 
 mMT.Version = GetAddOnMetadata(addonName, "Version")

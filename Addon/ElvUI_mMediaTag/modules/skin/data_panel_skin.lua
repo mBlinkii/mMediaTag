@@ -1,4 +1,4 @@
-local mMT, DB, M, E, P, L, MEDIA, COLORS = unpack(ElvUI_mMediaTag)
+local mMT, DB, M, E, P, L, MEDIA = unpack(ElvUI_mMediaTag)
 local module = mMT:AddModule("DataPanelSkin", { "AceHook-3.0" })
 
 local DT = E:GetModule("DataTexts")
@@ -8,9 +8,9 @@ local function getColor(setting)
 	if setting.style == "custom" then
 		return setting.color
 	elseif setting.style == "class" then
-		return COLORS.myclass
+		return MEDIA.classColor
 	elseif setting.style == "darkclass" then
-		local c = COLORS.myclass
+		local c = MEDIA.classColor
 		return { r = c.r - 0.3, g = c.g - 0.3, b = c.b - 0.3, a = 1 }
 	else
 		return { r = 1, g = 1, b = 1, a = 1 }
