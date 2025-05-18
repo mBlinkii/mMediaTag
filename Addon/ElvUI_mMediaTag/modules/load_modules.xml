@@ -2,4 +2,5 @@
 	<Include file="misc\load_misc.xml"/>
 	<Include file="skin\load_skin.xml"/>
 	<Include file="datatexts\load_datatexts.xml"/>
+	<Include file="portraits\load_portraits.xml"/>
 </Ui>

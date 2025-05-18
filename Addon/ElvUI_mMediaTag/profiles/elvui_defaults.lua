@@ -139,7 +139,7 @@ P.datatexts = {
 
 -- portraits
 P.portraits = {
-	enable = false,
+	enable = true,
 	misc = {
 		force_reaction = false,
 		force_default = false,
@@ -157,18 +157,19 @@ P.portraits = {
 	custom = {
 		enable = false,
 		extra = false,
-		rare = "",
-		elite = "",
-		rareelite = "",
 		boss = "",
-		player = "",
-		texture = "",
-		mask = "",
+		elite = "",
 		extra_mask = "",
+		mask = "",
+		player = "",
+		rare = "",
+		rareelite = "",
+		shadow = "",
+		texture = "",
 	},
 
 	player = {
-		cast = false,
+		cast = true,
 		enable = true,
 		extra = false,
 		level = 20,
@@ -176,7 +177,7 @@ P.portraits = {
 		point = { point = "RIGHT", relativePoint = "LEFT", x = 0, y = 0 },
 		size = 90,
 		strata = "AUTO",
-		texture = "blizz",
+		texture = "blizz_round",
 		unitcolor = false,
 	},
 	target = {
