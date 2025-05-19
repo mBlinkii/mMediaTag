@@ -10,6 +10,7 @@ local UnitClassification = UnitClassification
 local UnitFactionGroup = UnitFactionGroup
 local UnitIsDead = UnitIsDead
 local UnitExists = UnitExists
+local InCombatLockdown = InCombatLockdown
 local select, tinsert = select, tinsert
 
 module.media = {}
@@ -210,7 +211,7 @@ local function UnregisterEvents(portrait, events)
 	end
 end
 
-function module:RegisterCastEvents(portrait)
+function module:RegisterCastEvents(element)
 	if not portrait.castEventsSet then
 		module:RegisterEvents(portrait, castEvents, true)
 
@@ -226,13 +227,13 @@ function module:UnregisterCastEvents(portrait)
 	portrait.castEventsSet = false
 end
 
-function module:UpdateCastSettings(portrait)
-	if portrait.db.cast then
-		module:RegisterCastEvents(portrait)
-		portrait.cast = true
-	elseif portrait.cast then
-		module:UnregisterCastEvents(portrait)
-		portrait.cast = false
+function module:UpdateCastSettings(element)
+	if element.db.cast then
+		module:RegisterCastEvents(element)
+		element.cast = true
+	elseif element.cast then
+		module:UnregisterCastEvents(element)
+		element.cast = false
 	end
 end
 
@@ -263,130 +264,116 @@ local function Path(self, ...)
 end
 
 local function ForceUpdate(element)
-	print("ForceUpdate", element)
-	mMT:DebugPrintTable(element)
-
-	if element then
+	print("ForceUpdate", element.__owner.unit)
 	return Path(element, "ForceUpdate", element.__owner.unit)
-	end
 end
 
-function module:CreatePortrait(element, name)
-	--module:CreatePortrait(portraits[unit], "Player")
-	if element then
-		local parent = element.__owner
-		local db = element.db
-		local size = db.size
-		local point = db.point
+function module:CreatePortrait(name, parent)
+	local portrait = CreateFrame("Button", "mMT-Portrait-" .. name, parent, "SecureUnitButtonTemplate")
 
-		local portrait = CreateFrame("Button", "mMT-Portrait-" .. name, parent, "SecureUnitButtonTemplate")
-		--portrait:SetSize(size, size)
-		--portrait:SetPoint(point.point, parent, point.relativePoint, point.x, point.y)
+	-- texture
+	portrait.texture = portrait:CreateTexture("mMT-Portrait-Texture-" .. name, "ARTWORK", nil, 4)
+	portrait.texture:SetPoint("CENTER", portrait, "CENTER", 0, 0)
 
-		portrait.ForceUpdate = ForceUpdate
+	-- shadow
+	portrait.shadow = portrait:CreateTexture("mMT-Portrait-Shadow-" .. name, "ARTWORK", nil, 0)
+	portrait.shadow:SetPoint("CENTER", portrait, "CENTER", 0, 0)
 
-		-- texture
-		portrait.texture = portrait:CreateTexture("mMT-Portrait-Texture-" .. name, "ARTWORK", nil, 4)
-		portrait.texture:SetPoint("CENTER", portrait, "CENTER", 0, 0)
+	-- mask
+	portrait.mask = portrait:CreateMaskTexture()
+	portrait.mask:SetAllPoints(portrait.texture)
 
-		-- shadow
-		portrait.shadow = portrait:CreateTexture("mMT-Portrait-Shadow-" .. name, "ARTWORK", nil, 0)
-		portrait.shadow:SetPoint("CENTER", portrait, "CENTER", 0, 0)
+	-- portrait
+	portrait.unit_portrait = portrait:CreateTexture("mMT-Portrait-Unit-Portrait-" .. name, "ARTWORK", nil, 2)
+	portrait.unit_portrait:SetAllPoints(portrait.texture)
+	portrait.unit_portrait:AddMaskTexture(portrait.mask)
 
-		-- mask
-		portrait.mask = portrait:CreateMaskTexture()
-		portrait.mask:SetAllPoints(portrait.texture)
+	-- rare/elite/boss
+	local extraOnTop = module.db.misc.extratop
+	portrait.extra = portrait:CreateTexture("mMT-Portrait-Extra-" .. name, "OVERLAY", nil, extraOnTop and 7 or 1)
+	portrait.extra:SetAllPoints(portrait.texture)
 
-		-- portrait
-		portrait.unit_portrait = portrait:CreateTexture("mMT-Portrait-Unit-Portrait-" .. name, "ARTWORK", nil, 2)
-		portrait.unit_portrait:SetAllPoints(portrait.texture)
-		portrait.unit_portrait:AddMaskTexture(portrait.mask)
-
-		-- rare/elite/boss
-		local extraOnTop = module.db.misc.extratop
-		portrait.extra = portrait:CreateTexture("mMT-Portrait-Extra-" .. name, "OVERLAY", nil, extraOnTop and 7 or 1)
-		portrait.extra:SetAllPoints(portrait.texture)
-
-		-- extra mask
-		if not extraOnTop then
-			portrait.extra_mask = portrait:CreateMaskTexture()
-			portrait.extra_mask:SetAllPoints(portrait.texture)
-			portrait.extra:AddMaskTexture(portrait.extra_mask)
-		end
-
-		-- bg
-		portrait.bg = portrait:CreateTexture("mMT-Portrait-BG-" .. name, "BACKGROUND", nil, 1)
-		portrait.bg:SetAllPoints(portrait.texture)
-		portrait.bg:AddMaskTexture(portrait.mask)
-		--portrait.bg:SetVertexColor(0, 0, 0, 1)
-
-		-- scripts to interact with mouse
-		portrait:SetAttribute("unit", portrait.unit)
-		portrait:SetAttribute("*type1", "target")
-		portrait:SetAttribute("*type2", "togglemenu")
-		portrait:SetAttribute("type3", "focus")
-		portrait:SetAttribute("toggleForVehicle", true)
-		portrait:SetAttribute("ping-receiver", true)
-		portrait:RegisterForClicks("AnyUp")
-		portrait:Show()
-
-		return portrait
+	-- extra mask
+	if not extraOnTop then
+		portrait.extra_mask = portrait:CreateMaskTexture()
+		portrait.extra_mask:SetAllPoints(portrait.texture)
+		portrait.extra:AddMaskTexture(portrait.extra_mask)
 	end
+
+	-- bg
+	portrait.bg = portrait:CreateTexture("mMT-Portrait-BG-" .. name, "BACKGROUND", nil, 1)
+	portrait.bg:SetAllPoints(portrait.texture)
+	portrait.bg:AddMaskTexture(portrait.mask)
+	--portrait.bg:SetVertexColor(0, 0, 0, 1)
+
+	-- scripts to interact with mouse
+	portrait:SetAttribute("unit", portrait.unit)
+	portrait:SetAttribute("*type1", "target")
+	portrait:SetAttribute("*type2", "togglemenu")
+	portrait:SetAttribute("type3", "focus")
+	portrait:SetAttribute("toggleForVehicle", true)
+	portrait:SetAttribute("ping-receiver", true)
+	portrait:RegisterForClicks("AnyUp")
+	portrait:Show()
+
+	return portrait
 end
 
-function module:UpdateTexturesFiles(settings)
-	local bgFiles = MEDIA.portraits.bg
-	local classIcons = MEDIA.portraits.icons
-	local extraFiles = MEDIA.portraits.extra
-	print(settings.texture)
-	local textureFiles = MEDIA.portraits.textures[settings.texture]
+function module:UpdateTexturesFiles(style, mirror)
+	local media = MEDIA.portraits
+	local db = module.db
 
-	local textures = {}
+	local bg = media.bg["default"]
+	local classIcons = db.misc.class_icon and media.icons[db.misc.class_icon] or nil
 
-	textures.bg = bgFiles["default"]
-	textures.classIcons = module.db.misc.class_icon and classIcons[module.db.misc.class_icon] or nil
+	local texture, shadow, mask, extra_mask
+	local player, rare, elite, rareelite, boss
 
-	if module.db.custom.enable then
-		local customFiles = module.db.custom
-		textures.texture = "Interface\\Addons\\" .. customFiles.texture
-		textures.shadow = "Interface\\Addons\\" .. customFiles.shadow
-		textures.mask = "Interface\\Addons\\" .. customFiles.mask
+	if db.custom.enable then
+		local custom = db.custom
+		texture = "Interface\\Addons\\" .. custom.texture
+		shadow = "Interface\\Addons\\" .. custom.shadow
+		mask = "Interface\\Addons\\" .. custom.mask
+		extra_mask = "Interface\\Addons\\" .. custom.extra_mask
 
-		textures.extra_mask = "Interface\\Addons\\" .. customFiles.extra_mask
-
-		if module.db.custom.extra then
-			textures.player = "Interface\\Addons\\" .. customFiles.player
-			textures.rare = "Interface\\Addons\\" .. customFiles.rare
-			textures.elite = "Interface\\Addons\\" .. customFiles.elite
-			textures.rareelite = "Interface\\Addons\\" .. customFiles.rareelite
-			textures.boss = "Interface\\Addons\\" .. customFiles.boss
+		if custom.extra then
+			player, rare, elite, rareelite, boss =
+				"Interface\\Addons\\" .. custom.player,
+				"Interface\\Addons\\" .. custom.rare,
+				"Interface\\Addons\\" .. custom.elite,
+				"Interface\\Addons\\" .. custom.rareelite,
+				"Interface\\Addons\\" .. custom.boss
 		else
-			textures.player = extraFiles[module.db.misc.player]
-			textures.rare = extraFiles[module.db.misc.rare]
-			textures.elite = extraFiles[module.db.misc.elite]
-			textures.rareelite = extraFiles[module.db.misc.rareelite]
-			textures.boss = extraFiles[module.db.misc.boss]
+			player, rare, elite, rareelite, boss = media.extra[db.misc.player], media.extra[db.misc.rare], media.extra[db.misc.elite], media.extra[db.misc.rareelite], media.extra[db.misc.boss]
 		end
 	else
-		textures.texture = textureFiles.texture
-		textures.shadow = textureFiles.shadow
-		textures.mask = (settings.mirror and textureFiles.mask_mirror) and textureFiles.mask_mirror or textureFiles.mask
-		textures.extra_mask = (settings.mirror and textureFiles.extra_mirror) and textureFiles.extra_mirror or textureFiles.extra
+		local textures = media.textures[style]
+		texture, shadow = textures.texture, textures.shadow
+		mask = mirror and textures.mask_mirror or textures.mask
+		extra_mask = mirror and textures.extra_mirror or textures.extra
 
-		textures.player = extraFiles[module.db.misc.player]
-		textures.rare = extraFiles[module.db.misc.rare]
-		textures.elite = extraFiles[module.db.misc.elite]
-		textures.rareelite = extraFiles[module.db.misc.rareelite]
-		textures.boss = extraFiles[module.db.misc.boss]
+		player, rare, elite, rareelite, boss = media.extra[db.misc.player], media.extra[db.misc.rare], media.extra[db.misc.elite], media.extra[db.misc.rareelite], media.extra[db.misc.boss]
 	end
 
-	return textures
+	return {
+		texture = texture,
+		shadow = shadow,
+		mask = mask,
+		extra_mask = extra_mask,
+		player = player,
+		rare = rare,
+		elite = elite,
+		rareelite = rareelite,
+		boss = boss,
+		bg = bg,
+		classIcons = classIcons,
+	}
 end
 
 function module:UpdateSize(element, size, point)
 	if not InCombatLockdown() then
-		size = size or element.db.size
-		point = point or element.db.point
+		size = size or element.size
+		point = point or element.point
 		element:SetSize(size / 2, size / 2)
 		element.texture:SetSize(size, size)
 		element:ClearAllPoints()
@@ -397,21 +384,65 @@ function module:UpdateSize(element, size, point)
 	end
 end
 
+local function UpdateCastIconStart(self, event)
+	self.isCasting = true
+	self.empowering = (event == "UNIT_SPELLCAST_EMPOWER_START") or false
+
+	local texture = GetCastIcon(self.unit)
+	if texture then self.portrait:SetTexture(texture) end
+end
+
+-- here stop
+local function UpdateCastIconStop(self, event)
+	self.isCasting = false
+	self.empowering = false
+
+	SetPortraitTexture(self.portrait, self.unit, true)
+end
+
 function module:InitPortrait(element)
 	if element then
 		module:UpdateTextures(element)
 
+		-- default events
 		if not element.eventsSet then
-			element:RegisterEvent("UNIT_MODEL_CHANGED", Path)
-			element:RegisterEvent("UNIT_PORTRAIT_UPDATE", Path)
-			element:RegisterEvent("PORTRAITS_UPDATED", Path, true)
-			element:RegisterEvent("UNIT_CONNECTION", Path)
+			element:RegisterEvent("UNIT_MODEL_CHANGED", Update)
+			element:RegisterEvent("UNIT_PORTRAIT_UPDATE", Update)
+			element:RegisterEvent("PORTRAITS_UPDATED", Update, true)
+			element:RegisterEvent("UNIT_CONNECTION", Update)
 
-			if element.type == "party" then element:RegisterEvent("PARTY_MEMBER_ENABLE", Path) end
+			if element.type == "party" then element:RegisterEvent("PARTY_MEMBER_ENABLE", Update) end
 
 			element.eventsSet = true
 		end
 
+		-- cast events
+		if element.db.cast and not element.cast_eventsSet then
+			element:RegisterEvent("UNIT_SPELLCAST_START", UpdateCastIconStart)
+			element:RegisterEvent("UNIT_SPELLCAST_CHANNEL_START", UpdateCastIconStart)
+			element:RegisterEvent("UNIT_SPELLCAST_INTERRUPTED", UpdateCastIconStop)
+			element:RegisterEvent("UNIT_SPELLCAST_STOP", UpdateCastIconStop)
+			element:RegisterEvent("UNIT_SPELLCAST_CHANNEL_STOP", UpdateCastIconStop)
+
+			if E.Retail then
+				element:RegisterEvent("UNIT_SPELLCAST_EMPOWER_START", UpdateCastIconStart)
+				element:RegisterEvent("UNIT_SPELLCAST_EMPOWER_STOP", UpdateCastIconStop)
+			end
+
+			element.cast_eventsSet = true
+		elseif element.cast_eventsSet then
+			element:UnregisterCastEvents("UNIT_SPELLCAST_START")
+			element:UnregisterCastEvents("UNIT_SPELLCAST_CHANNEL_START")
+			element:UnregisterCastEvents("UNIT_SPELLCAST_INTERRUPTED")
+			element:UnregisterCastEvents("UNIT_SPELLCAST_STOP")
+			element:UnregisterCastEvents("UNIT_SPELLCAST_CHANNEL_STOP")
+
+			if E.Retail then
+				element:UnregisterCastEvents("UNIT_SPELLCAST_EMPOWER_START")
+				element:UnregisterCastEvents("UNIT_SPELLCAST_EMPOWER_STOP")
+			end
+			element.element.cast_eventsSet = false
+		end
 
 		--UpdateZoom(element.portrait, element.size)
 	end
@@ -449,6 +480,8 @@ end
 
 function module:Initialize()
 	module.db = E.db.mMT.portraits
+	module.portraits = module.portraits or {}
+
 	if module.db.enable then
 		print("Portraits module loaded")
 		module.portraits = module.portraits or {}
