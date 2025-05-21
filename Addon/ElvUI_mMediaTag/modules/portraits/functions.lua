@@ -76,7 +76,7 @@ end
 function module:GetUnitColor(unit, isDead)
 	if not unit then return end
 
-	local colors = module.db.profile.colors
+	local colors = module.db.colors
 	local isPlayer = UnitIsPlayer(unit) or (module.Retail and UnitInPartyIsAI(unit))
 
 	if isDead then return colors.misc.death, isPlayer end
@@ -181,62 +181,6 @@ local function GetCastIcon(unit)
 	return select(3, UnitCastingInfo(unit)) or select(3, UnitChannelInfo(unit))
 end
 
-function module:UpdateCastIcon(portrait, event)
-	portrait.castStarted = castStartEvents[event] or false
-	portrait.castStopped = castStopEvents[event] or false
-
-	if portrait.castStarted or (portrait.isCasting and not portrait.castStopped) then
-		portrait.isCasting = true
-		portrait.empowering = (event == "UNIT_SPELLCAST_EMPOWER_START") or false
-		local texture = GetCastIcon(portrait.unit)
-		if texture then
-			portrait.portrait:SetTexture(texture)
-			return true
-		end
-		return false
-	elseif portrait.castStopped or (portrait.isCasting and not GetCastIcon(portrait.unit)) then
-		portrait.isCasting = false
-		return false
-	end
-
-	return false
-end
-
-local castEvents = { "UNIT_SPELLCAST_START", "UNIT_SPELLCAST_CHANNEL_START", "UNIT_SPELLCAST_INTERRUPTED", "UNIT_SPELLCAST_STOP", "UNIT_SPELLCAST_CHANNEL_STOP" }
-local empowerEvents = { "UNIT_SPELLCAST_EMPOWER_START", "UNIT_SPELLCAST_EMPOWER_STOP" }
-
-local function UnregisterEvents(portrait, events)
-	for _, event in pairs(events) do
-		portrait:UnregisterEvent(event)
-	end
-end
-
-function module:RegisterCastEvents(element)
-	if not portrait.castEventsSet then
-		module:RegisterEvents(portrait, castEvents, true)
-
-		if module.Retail then module:RegisterEvents(portrait, empowerEvents, true) end
-		portrait.castEventsSet = true
-	end
-end
-
-function module:UnregisterCastEvents(portrait)
-	UnregisterEvents(portrait, castEvents)
-
-	if module.Retail then UnregisterEvents(portrait, empowerEvents) end
-	portrait.castEventsSet = false
-end
-
-function module:UpdateCastSettings(element)
-	if element.db.cast then
-		module:RegisterCastEvents(element)
-		element.cast = true
-	elseif element.cast then
-		module:UnregisterCastEvents(element)
-		element.cast = false
-	end
-end
-
 local function Update(self, event, unit)
 	if not unit or not UnitIsUnit(self.unit, unit) then return end
 	print("Update", unit, event)
@@ -251,21 +195,14 @@ local function Update(self, event, unit)
 		if class then
 			element:SetAtlas("classicon-" .. class)
 		else
-			SetPortraitTexture(element.portrait, unit, true)
+			SetPortraitTexture(element.unit_portrait, unit, true)
 		end
 
 		element.guid = guid
 		element.state = isAvailable
+
+		if not InCombatLockdown() and self:GetAttribute("unit") ~= unit then self:SetAttribute("unit", unit) end
 	end
-end
-
-local function Path(self, ...)
-	return (self.Override or Update)(self, ...)
-end
-
-local function ForceUpdate(element)
-	print("ForceUpdate", element.__owner.unit)
-	return Path(element, "ForceUpdate", element.__owner.unit)
 end
 
 function module:CreatePortrait(name, parent)
@@ -277,7 +214,7 @@ function module:CreatePortrait(name, parent)
 
 	-- shadow
 	portrait.shadow = portrait:CreateTexture("mMT-Portrait-Shadow-" .. name, "ARTWORK", nil, 0)
-	portrait.shadow:SetPoint("CENTER", portrait, "CENTER", 0, 0)
+	portrait.shadow:SetAllPoints(portrait.texture)
 
 	-- mask
 	portrait.mask = portrait:CreateMaskTexture()
@@ -285,7 +222,7 @@ function module:CreatePortrait(name, parent)
 
 	-- portrait
 	portrait.unit_portrait = portrait:CreateTexture("mMT-Portrait-Unit-Portrait-" .. name, "ARTWORK", nil, 2)
-	portrait.unit_portrait:SetAllPoints(portrait.texture)
+	portrait.unit_portrait:SetPoint("CENTER", portrait.texture, "CENTER", 0, 0)
 	portrait.unit_portrait:AddMaskTexture(portrait.mask)
 
 	-- rare/elite/boss
@@ -323,7 +260,7 @@ function module:UpdateTexturesFiles(style, mirror)
 	local media = MEDIA.portraits
 	local db = module.db
 
-	local bg = media.bg["default"]
+	local bg = media.bg["default"].texture
 	local classIcons = db.misc.class_icon and media.icons[db.misc.class_icon] or nil
 
 	local texture, shadow, mask, extra_mask
@@ -384,20 +321,54 @@ function module:UpdateSize(element, size, point)
 	end
 end
 
-local function UpdateCastIconStart(self, event)
+local function UpdateCastIconStart(self)
+	print("UpdateCastIconStart", self.unit)
 	self.isCasting = true
-	self.empowering = (event == "UNIT_SPELLCAST_EMPOWER_START") or false
 
 	local texture = GetCastIcon(self.unit)
-	if texture then self.portrait:SetTexture(texture) end
+	if texture then self.unit_portrait:SetTexture(texture) end
 end
 
--- here stop
 local function UpdateCastIconStop(self, event)
 	self.isCasting = false
-	self.empowering = false
 
-	SetPortraitTexture(self.portrait, self.unit, true)
+	SetPortraitTexture(self.unit_portrait, self.unit)
+end
+
+local eventHandlers = {
+	-- portrait updates
+	PORTRAITS_UPDATED = Update,
+	UNIT_CONNECTION = Update,
+	UNIT_PORTRAIT_UPDATE = Update,
+	PARTY_MEMBER_ENABLE = Update,
+
+	-- cast icon updates
+	UNIT_SPELLCAST_CHANNEL_START = UpdateCastIconStart,
+	UNIT_SPELLCAST_START = UpdateCastIconStart,
+
+	UNIT_SPELLCAST_CHANNEL_STOP = UpdateCastIconStop,
+	UNIT_SPELLCAST_INTERRUPTED = UpdateCastIconStop,
+	UNIT_SPELLCAST_STOP = UpdateCastIconStop,
+
+	UNIT_SPELLCAST_EMPOWER_START = UpdateCastIconStart,
+	UNIT_SPELLCAST_EMPOWER_STOP = UpdateCastIconStop,
+
+	-- death updates
+	UNIT_HEALTH = function(self)
+		self.isDead = UnitIsDeadOrGhost(self.unit)
+	end,
+}
+
+local function OnEvent(self, event, unit)
+	if eventHandlers[event] then eventHandlers[event](self, event, unit) end
+end
+
+local function RegisterEvent(element, event, unitEvent)
+	if unitEvent then
+		element:RegisterUnitEvent(event, element.unit)
+	else
+		element:RegisterEvent(event)
+	end
 end
 
 function module:InitPortrait(element)
@@ -406,27 +377,24 @@ function module:InitPortrait(element)
 
 		-- default events
 		if not element.eventsSet then
-			element:RegisterEvent("UNIT_MODEL_CHANGED", Update)
-			element:RegisterEvent("UNIT_PORTRAIT_UPDATE", Update)
-			element:RegisterEvent("PORTRAITS_UPDATED", Update, true)
-			element:RegisterEvent("UNIT_CONNECTION", Update)
+			for _, event in pairs({ "UNIT_PORTRAIT_UPDATE", "PORTRAITS_UPDATED", "UNIT_CONNECTION" }) do
+				RegisterEvent(element, event)
+			end
 
-			if element.type == "party" then element:RegisterEvent("PARTY_MEMBER_ENABLE", Update) end
-
+			if element.type == "party" then element:RegisterEvent("PARTY_MEMBER_ENABLE") end
 			element.eventsSet = true
 		end
 
 		-- cast events
 		if element.db.cast and not element.cast_eventsSet then
-			element:RegisterEvent("UNIT_SPELLCAST_START", UpdateCastIconStart)
-			element:RegisterEvent("UNIT_SPELLCAST_CHANNEL_START", UpdateCastIconStart)
-			element:RegisterEvent("UNIT_SPELLCAST_INTERRUPTED", UpdateCastIconStop)
-			element:RegisterEvent("UNIT_SPELLCAST_STOP", UpdateCastIconStop)
-			element:RegisterEvent("UNIT_SPELLCAST_CHANNEL_STOP", UpdateCastIconStop)
+			for _, event in pairs({ "UNIT_SPELLCAST_START", "UNIT_SPELLCAST_CHANNEL_START", "UNIT_SPELLCAST_INTERRUPTED", "UNIT_SPELLCAST_STOP", "UNIT_SPELLCAST_CHANNEL_STOP" }) do
+				RegisterEvent(element, event, (element.type ~= "party"))
+			end
 
 			if E.Retail then
-				element:RegisterEvent("UNIT_SPELLCAST_EMPOWER_START", UpdateCastIconStart)
-				element:RegisterEvent("UNIT_SPELLCAST_EMPOWER_STOP", UpdateCastIconStop)
+				for _, event in pairs({ "UNIT_SPELLCAST_EMPOWER_START", "UNIT_SPELLCAST_EMPOWER_STOP" }) do
+					RegisterEvent(element, event, (element.type ~= "party"))
+				end
 			end
 
 			element.cast_eventsSet = true
@@ -443,6 +411,9 @@ function module:InitPortrait(element)
 			end
 			element.element.cast_eventsSet = false
 		end
+
+		Update(element, "ForceUpdate", element.unit)
+		element:SetScript("OnEvent", OnEvent)
 
 		--UpdateZoom(element.portrait, element.size)
 	end
@@ -480,7 +451,7 @@ end
 
 function module:Initialize()
 	module.db = E.db.mMT.portraits
-	module.portraits = module.portraits or {}
+	--module.portraits = module.portraits or {}
 
 	if module.db.enable then
 		print("Portraits module loaded")

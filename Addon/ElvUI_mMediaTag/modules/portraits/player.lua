@@ -64,18 +64,6 @@ local function Update(self, event, unit)
 	end
 end
 
-local function Path(self, ...)
-	return (self.Override or Update)(self, ...)
-end
-
-local function ForceUpdate(element)
-	print("ForceUpdate", element.__owner.unit)
-	return Path(element, "ForceUpdate", element.__owner.unit)
-end
-
-
-
-
 function module:InitializePlayerPortrait()
 	print("Initializing Player Portrait", module.db.player.enable)
 	if not module.db.player.enable then return end
@@ -92,7 +80,7 @@ function module:InitializePlayerPortrait()
 
 		if portraits[unit] then
 			portraits[unit].__owner = parent_frame
-			portraits[unit].unit = parent_frame.unit
+			portraits[unit].unit = unit --parent_frame.unit
 			portraits[unit].type = type
 			portraits[unit].db = E.db.mMT.portraits.player
 			portraits[unit].size = E.db.mMT.portraits.player.size
@@ -102,7 +90,7 @@ function module:InitializePlayerPortrait()
 			portraits[unit].lastGUID = nil
 			--portraits[unit].func = OnEvent
 
-			portraits.media = module:UpdateTexturesFiles(E.db.mMT.portraits.player.texture, E.db.mMT.portraits.player.mirror)
+			portraits[unit].media = module:UpdateTexturesFiles(E.db.mMT.portraits.player.texture, E.db.mMT.portraits.player.mirror)
 
 			module:UpdateSize(portraits[unit], portraits[unit].size, portraits[unit].point)
 			module:InitPortrait(portraits[unit], E.db.mMT.portraits.player.size, E.db.mMT.portraits.player.point)
