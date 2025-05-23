@@ -175,7 +175,7 @@ P.portraits = {
 		level = 20,
 		mirror = false,
 		point = { point = "LEFT", relativePoint = "RIGHT", x = 0, y = 0 },
-		size = 90,
+		size = 256,
 		strata = "AUTO",
 		texture = "blizz_round",
 		unitcolor = false,

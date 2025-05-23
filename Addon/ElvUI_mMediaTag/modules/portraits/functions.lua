@@ -12,11 +12,7 @@ local UnitIsDead = UnitIsDead
 local UnitExists = UnitExists
 local InCombatLockdown = InCombatLockdown
 local select, tinsert = select, tinsert
-
-module.media = {}
-local mediaPortraits = module.media.portraits
-local mediaExtra = module.media.extra
-local mediaClass = module.media.class
+local UnitGUID = UnitGUID
 
 local playerFaction = nil
 
@@ -73,33 +69,6 @@ function module:UpdatePortrait(portrait, event, unit)
 end
 
 -- color functions
-function module:GetUnitColor(unit, isDead)
-	if not unit then return end
-
-	local colors = module.db.colors
-	local isPlayer = UnitIsPlayer(unit) or (module.Retail and UnitInPartyIsAI(unit))
-
-	if isDead then return colors.misc.death, isPlayer end
-
-	if module.db.profile.misc.force_default then return colors.misc.default, isPlayer end
-
-	if isPlayer then
-		if module.db.profile.misc.force_reaction then
-			local unitFaction = select(1, UnitFactionGroup(unit))
-			playerFaction = select(1, UnitFactionGroup("player"))
-
-			local reactionType = (playerFaction == unitFaction) and "friendly" or "enemy"
-			return colors.reaction[reactionType], isPlayer
-		else
-			local _, class = UnitClass(unit)
-			return colors.class[class], isPlayer, class
-		end
-	else
-		local reaction = (unit == "pet") and UnitReaction("player", unit) or UnitReaction(unit, "player")
-		local reactionType = (reaction and ((reaction <= 3) and "enemy" or (reaction == 4) and "neutral" or "friendly")) or "enemy"
-		return colors.reaction[reactionType], isPlayer
-	end
-end
 
 function module:UpdateDesaturated(portrait, isDead)
 	if isDead then
@@ -163,19 +132,43 @@ function module:RemovePortrait(frame)
 	frame = nil
 end
 
--- cast functions
-local castStartEvents = {
-	UNIT_SPELLCAST_START = true,
-	UNIT_SPELLCAST_CHANNEL_START = true,
-	UNIT_SPELLCAST_EMPOWER_START = true,
-}
+function module:GetUnitColor(unit, class, isPlayer, isDead)
+	if not unit then return end
+	print("GetUnitColor", unit, class, isPlayer, isDead)
 
-local castStopEvents = {
-	UNIT_SPELLCAST_INTERRUPTED = true,
-	UNIT_SPELLCAST_STOP = true,
-	UNIT_SPELLCAST_CHANNEL_STOP = true,
-	UNIT_SPELLCAST_EMPOWER_STOP = true,
-}
+	local colors = MEDIA.color.portraits
+
+	if isDead then return colors.misc.death end
+
+	if module.db.misc.force_default then return colors.misc.default end
+
+	if isPlayer then
+		if module.db.misc.force_reaction then
+			local unitFaction = select(1, UnitFactionGroup(unit))
+			playerFaction = playerFaction or select(1, UnitFactionGroup("player"))
+
+			local reactionType = (playerFaction == unitFaction) and "friendly" or "enemy"
+			return colors.reaction[reactionType]
+		else
+			return colors.class[class]
+		end
+	else
+		local reaction = (unit == "pet") and UnitReaction("player", unit) or UnitReaction(unit, "player")
+		local reactionType = (reaction and ((reaction <= 3) and "enemy" or (reaction == 4) and "neutral" or "friendly")) or "enemy"
+		return colors.reaction[reactionType]
+	end
+end
+
+local function UpdateTextureColor(element, unit)
+	unit = unit or element.unit
+	local color = module:GetUnitColor(unit, element.unitClass, element.isPlayer, element.isDead)
+
+	if color then
+		local c = color.c
+		element.texture:SetVertexColor(c.r, c.g, c.b, c.a or 1)
+		if element.embellishment then element.embellishment:SetVertexColor(c.r, c.g, c.b, c.a or 1) end
+	end
+end
 
 local function GetCastIcon(unit)
 	return select(3, UnitCastingInfo(unit)) or select(3, UnitChannelInfo(unit))
@@ -189,31 +182,40 @@ local function Update(self, event, unit)
 
 	local guid = UnitGUID(unit)
 	local isAvailable = UnitIsConnected(unit) and UnitIsVisible(unit)
-	local hasStateChanged = event ~= "OnUpdate" or element.guid ~= guid or element.state ~= isAvailable
+	local hasStateChanged = event ~= "ForceUpdate" or element.guid ~= guid or element.state ~= isAvailable
 	if hasStateChanged then
-		local class = element.showClass and UnitClassBase(unit)
-		if class then
-			element:SetAtlas("classicon-" .. class)
+		local class = select(2, UnitClass(unit))
+		local isPlayer = UnitIsPlayer(unit) or (E.Retail and UnitInPartyIsAI(unit))
+
+		local classIcons = false
+
+		if classIcons then
+			--element:SetAtlas("classicon-" .. class)
 		else
 			SetPortraitTexture(element.unit_portrait, unit, true)
 		end
 
 		element.guid = guid
 		element.state = isAvailable
+		element.isPlayer = isPlayer
+		element.unit = unit
+		element.unitClass = class
+
+		UpdateTextureColor(element, unit)
 
 		if not InCombatLockdown() and self:GetAttribute("unit") ~= unit then self:SetAttribute("unit", unit) end
 	end
 end
 
-function module:CreatePortrait(name, parent)
+function module:CreatePortrait(name, parent, embellishment)
 	local portrait = CreateFrame("Button", "mMT-Portrait-" .. name, parent, "SecureUnitButtonTemplate")
 
 	-- texture
-	portrait.texture = portrait:CreateTexture("mMT-Portrait-Texture-" .. name, "ARTWORK", nil, 4)
+	portrait.texture = portrait:CreateTexture("mMT-Portrait-Texture-" .. name, "ARTWORK", nil, 5)
 	portrait.texture:SetPoint("CENTER", portrait, "CENTER", 0, 0)
 
 	-- shadow
-	portrait.shadow = portrait:CreateTexture("mMT-Portrait-Shadow-" .. name, "ARTWORK", nil, 0)
+	portrait.shadow = portrait:CreateTexture("mMT-Portrait-Shadow-" .. name, "ARTWORK", nil, 4)
 	portrait.shadow:SetAllPoints(portrait.texture)
 
 	-- mask
@@ -221,7 +223,7 @@ function module:CreatePortrait(name, parent)
 	portrait.mask:SetAllPoints(portrait.texture)
 
 	-- portrait
-	portrait.unit_portrait = portrait:CreateTexture("mMT-Portrait-Unit-Portrait-" .. name, "ARTWORK", nil, 2)
+	portrait.unit_portrait = portrait:CreateTexture("mMT-Portrait-Unit-Portrait-" .. name, "ARTWORK", nil, 3)
 	portrait.unit_portrait:SetPoint("CENTER", portrait.texture, "CENTER", 0, 0)
 	portrait.unit_portrait:AddMaskTexture(portrait.mask)
 
@@ -238,7 +240,7 @@ function module:CreatePortrait(name, parent)
 	end
 
 	-- bg
-	portrait.bg = portrait:CreateTexture("mMT-Portrait-BG-" .. name, "BACKGROUND", nil, 1)
+	portrait.bg = portrait:CreateTexture("mMT-Portrait-BG-" .. name, "BACKGROUND", nil, 2)
 	portrait.bg:SetAllPoints(portrait.texture)
 	portrait.bg:AddMaskTexture(portrait.mask)
 	--portrait.bg:SetVertexColor(0, 0, 0, 1)
@@ -263,7 +265,7 @@ function module:UpdateTexturesFiles(style, mirror)
 	local bg = media.bg["default"].texture
 	local classIcons = db.misc.class_icon and media.icons[db.misc.class_icon] or nil
 
-	local texture, shadow, mask, extra_mask
+	local texture, shadow, mask, extra_mask, embellishment
 	local player, rare, elite, rareelite, boss
 
 	if db.custom.enable then
@@ -288,6 +290,7 @@ function module:UpdateTexturesFiles(style, mirror)
 		texture, shadow = textures.texture, textures.shadow
 		mask = mirror and textures.mask_mirror or textures.mask
 		extra_mask = mirror and textures.extra_mirror or textures.extra
+		embellishment = mirror and textures.embellishment_mirror or textures.embellishment
 
 		player, rare, elite, rareelite, boss = media.extra[db.misc.player], media.extra[db.misc.rare], media.extra[db.misc.elite], media.extra[db.misc.rareelite], media.extra[db.misc.boss]
 	end
@@ -303,6 +306,7 @@ function module:UpdateTexturesFiles(style, mirror)
 		rareelite = rareelite,
 		boss = boss,
 		bg = bg,
+		embellishment = embellishment,
 		classIcons = classIcons,
 	}
 end
@@ -335,6 +339,17 @@ local function UpdateCastIconStop(self, event)
 	SetPortraitTexture(self.unit_portrait, self.unit)
 end
 
+local function VehicleUpdate(self, event, _, arg2)
+	local unit
+	if self.realUnit == "player" then
+		unit = (UnitInVehicle("player") and arg2) and UnitExists("pet") and "pet" or "player"
+	else
+		unit = (UnitInVehicle("player") and arg2) and "player" or "pet"
+	end
+
+	Update(self, event, unit)
+end
+
 local eventHandlers = {
 	-- portrait updates
 	PORTRAITS_UPDATED = Update,
@@ -353,14 +368,20 @@ local eventHandlers = {
 	UNIT_SPELLCAST_EMPOWER_START = UpdateCastIconStart,
 	UNIT_SPELLCAST_EMPOWER_STOP = UpdateCastIconStop,
 
+	-- vehicle updates
+	UNIT_ENTERED_VEHICLE = VehicleUpdate,
+	UNIT_EXITING_VEHICLE = VehicleUpdate,
+	UNIT_EXITED_VEHICLE = VehicleUpdate,
+	VEHICLE_UPDATE = VehicleUpdate,
+
 	-- death updates
 	UNIT_HEALTH = function(self)
 		self.isDead = UnitIsDeadOrGhost(self.unit)
 	end,
 }
 
-local function OnEvent(self, event, unit)
-	if eventHandlers[event] then eventHandlers[event](self, event, unit) end
+local function OnEvent(self, event, unit, arg)
+	if eventHandlers[event] then eventHandlers[event](self, event, unit, arg) end
 end
 
 local function RegisterEvent(element, event, unitEvent)
@@ -373,6 +394,12 @@ end
 
 function module:InitPortrait(element)
 	if element then
+		print(element.media.embellishment)
+		if element.media.embellishment and not element.embellishment then
+			element.embellishment = element:CreateTexture("mMT-Portrait-Embellishment-" .. element.name, "OVERLAY", nil, 6)
+			element.embellishment:SetAllPoints(element.texture)
+		end
+
 		module:UpdateTextures(element)
 
 		-- default events
@@ -383,6 +410,13 @@ function module:InitPortrait(element)
 
 			if element.type == "party" then element:RegisterEvent("PARTY_MEMBER_ENABLE") end
 			element.eventsSet = true
+		end
+
+		-- death check
+		if element.type == "party" then
+			element:RegisterEvent("UNIT_HEALTH")
+		else
+			element:RegisterUnitEvent("UNIT_HEALTH", element.unit)
 		end
 
 		-- cast events
@@ -440,6 +474,8 @@ function module:UpdateTextures(element)
 	SetTexture(element.texture, element.media.texture, "CLAMP")
 	SetTexture(element.mask, element.media.mask, "CLAMPTOBLACKADDITIVE")
 	SetTexture(element.shadow, element.media.shadow, "CLAMP")
+
+	if element.embellishment then SetTexture(element.embellishment, element.media.embellishment, "CLAMP") end
 
 	if element.extra_mask then SetTexture(element.extra_mask, element.media.extra_mask, "CLAMPTOBLACKADDITIVE") end
 	SetTexture(element.bg, element.media.bg, "CLAMP")
