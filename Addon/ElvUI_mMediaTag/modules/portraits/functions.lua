@@ -328,7 +328,6 @@ function module:UpdateSize(element, size, point)
 		element:SetPoint(point.point, element.__owner, point.relativePoint, point.x, point.y)
 
 		if element.db.extra_settings.enable then
-			print("extra settings enabled")
 			if not element.extra.changed then
 				element.extra:ClearAllPoints()
 				element.extra:SetPoint("CENTER", element.texture, "CENTER", element.db.extra_settings.offset.x, element.db.extra_settings.offset.y)
@@ -336,7 +335,6 @@ function module:UpdateSize(element, size, point)
 			end
 			element.extra:SetSize(element.db.extra_settings.size, element.db.extra_settings.size)
 		elseif element.extra.changed then
-			print("extra settings disabled")
 			element.extra:ClearAllPoints()
 			element.extra:SetAllPoints(element.texture)
 			element.extra.changed = false
