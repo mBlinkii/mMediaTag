@@ -3,7 +3,6 @@ local mMT, DB, M, E, P, L, MEDIA = unpack(ElvUI_mMediaTag)
 local module = mMT:GetModule("Portraits")
 
 function module:InitializePlayerPortrait()
-	print("Initializing Player Portrait", module.db.player.enable)
 	if module.db.player.enable then
 		local portraits = module.portraits
 		local parent_frame = _G.ElvUF_Player
@@ -13,7 +12,7 @@ function module:InitializePlayerPortrait()
 			local type = "player"
 			local name = "Player"
 
-			portraits[unit] = portraits[unit] or module:CreatePortrait(name, parent_frame)
+			portraits[unit] = portraits[unit] or module:CreatePortrait(name, parent_frame, E.db.mMT.portraits.player)
 
 			if portraits[unit] then
 				portraits[unit].__owner = parent_frame
@@ -27,6 +26,7 @@ function module:InitializePlayerPortrait()
 				portraits[unit].lastGUID = nil
 				portraits[unit].realUnit = "player"
 				portraits[unit].name = name
+				portraits[unit].forceExtra = E.db.mMT.portraits.player.extra and "player" or nil
 
 				portraits[unit].media = module:UpdateTexturesFiles(E.db.mMT.portraits.player.texture, E.db.mMT.portraits.player.mirror)
 

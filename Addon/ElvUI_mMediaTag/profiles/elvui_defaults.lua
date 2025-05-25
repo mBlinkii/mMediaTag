@@ -143,16 +143,16 @@ P.portraits = {
 	misc = {
 		force_reaction = false,
 		force_default = false,
-		bg = "blank",
-		rare = "blizz_neutral",
-		elite = "blizz_neutral",
-		rareelite = "blizz_neutral",
-		boss = "blizz_boss_neutral",
-		player = "blizz_neutral",
-		extratop = true,
+		bg = "default",
 		zoom = 0,
 		class_icon = "none",
 		desaturate = false,
+		extratop = true,
+		rare = "blizz_rare",
+		elite = "blizz_elite",
+		rareelite = "blizz_elite",
+		boss = "blizz_boss",
+		player = "blizz_boss",
 	},
 	custom = {
 		enable = false,
@@ -165,6 +165,7 @@ P.portraits = {
 		rare = "",
 		rareelite = "",
 		shadow = "",
+		extra_shadow = "",
 		texture = "",
 	},
 
@@ -179,6 +180,11 @@ P.portraits = {
 		strata = "AUTO",
 		texture = "blizz_round",
 		unitcolor = false,
+		extra_settings = {
+			enable = false,
+			size = 90,
+			offset = { x = 0, y = 0 },
+		}
 	},
 	target = {
 		cast = false,
@@ -309,7 +315,7 @@ P.color = {
 			DEATHKNIGHT = { c = "FFC41E3A", g = "FF9C182E" },
 			DEMONHUNTER = { c = "FFA330C9", g = "FF6F2C91" },
 			DRUID = { c = "FFFF7C0A", g = "FF9F5B00" },
-			EVOKER = { c = "FF33937F", 	g = "FF1F6D5B" },
+			EVOKER = { c = "FF33937F", g = "FF1F6D5B" },
 			HUNTER = { c = "FFAAD372", g = "FF7A9A2D" },
 			MAGE = { c = "FF3FC7EB", g = "FF2A7F9D" },
 			MONK = { c = "FF00FF98", g = "FF009B5B" },
@@ -318,7 +324,7 @@ P.color = {
 			ROGUE = { c = "FFFFF468", g = "FFD2CA56" },
 			SHAMAN = { c = "FF0070DD", g = "FF005EB8" },
 			WARLOCK = { c = "FF8788EE", g = "FF5B5C8A" },
-			WARRIOR = { c ="FFC69B6D", g = "FF9B7A57" },
+			WARRIOR = { c = "FFC69B6D", g = "FF9B7A57" },
 		},
 		classification = {
 			boss = { c = "FFFF2E2E", g = "FFDA0B0B" },
@@ -329,7 +335,7 @@ P.color = {
 		},
 		reaction = {
 			enemy = { c = "FFFF4848", g = "FFD63A3A" },
-			friendly = { c = "FF00FE48", g = "FF00C538"},
+			friendly = { c = "FF00FE48", g = "FF00C538" },
 			neutral = { c = "FFFFD52E", g = "FFFFC02E" },
 		},
 	},

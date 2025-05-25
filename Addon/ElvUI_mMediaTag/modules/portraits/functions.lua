@@ -18,37 +18,6 @@ local playerFaction = nil
 
 -- portrait texture update functions
 
-function module:UpdateExtraTexture(portrait, color, force)
-	if not (portrait.extra and portrait.db.extra) then
-		if portrait.extra then portrait.extra:Hide() end
-		return
-	end
-
-	local c = portrait.type == "boss" and "boss" or ((module.CachedBossIDs[portrait.lastGUID] and "boss") or UnitClassification(portrait.unit))
-	local isExtraUnit = c == "rare" or c == "elite" or c == "rareelite" or c == "boss"
-	if not isExtraUnit and (force and force ~= "none") then c = force end
-
-	if ((force and force ~= "none") or isExtraUnit) and not color then
-		if module.db.profile.misc.force_reaction then
-			local colorReaction = module.db.profile.colors.reaction
-			local reaction = UnitReaction(portrait.unit, "player")
-			local reactionType = reaction and ((reaction <= 3) and "enemy" or (reaction == 4) and "neutral" or "friendly") or "enemy"
-			color = colorReaction[reactionType]
-		else
-			local colorClassification = module.db.profile.colors.classification
-			color = colorClassification[c]
-		end
-	end
-
-	if color then
-		portrait.extra:SetTexture(portrait[c .. "File"], "CLAMP", "CLAMP", "TRILINEAR")
-		portrait.extra:SetVertexColor(color.r, color.g, color.b, color.a or 1)
-		portrait.extra:Show()
-	else
-		portrait.extra:Hide()
-	end
-end
-
 function module:UpdatePortrait(portrait, event, unit)
 	local showCastIcon = portrait.db.cast and module:UpdateCastIcon(portrait, event)
 	local forceDesaturate = module.db.profile.misc.desaturate
@@ -134,7 +103,6 @@ end
 
 function module:GetUnitColor(unit, class, isPlayer, isDead)
 	if not unit then return end
-	print("GetUnitColor", unit, class, isPlayer, isDead)
 
 	local colors = MEDIA.color.portraits
 
@@ -162,6 +130,7 @@ end
 local function UpdateTextureColor(element, unit)
 	unit = unit or element.unit
 	local color = module:GetUnitColor(unit, element.unitClass, element.isPlayer, element.isDead)
+	element.color = color
 
 	if color then
 		local c = color.c
@@ -174,6 +143,36 @@ local function GetCastIcon(unit)
 	return select(3, UnitCastingInfo(unit)) or select(3, UnitChannelInfo(unit))
 end
 
+local CachedBossIDs = {}
+
+local function UpdateExtraTexture(element, force)
+	if element.extra and not element.db.extra then
+		element.extra:Hide()
+		return
+	end
+
+	local color
+	local classification = force and force or (element.type == "boss" and "boss" or ((CachedBossIDs[element.lastGUID] and "boss") or UnitClassification(element.unit)))
+
+	if element.db.unitcolor then
+		color = element.color
+	elseif module.db.misc.force_reaction then
+		local reaction = UnitReaction(element.unit, "player")
+		local reactionType = reaction and ((reaction <= 3) and "enemy" or (reaction == 4) and "neutral" or "friendly") or "enemy"
+		color = MEDIA.color.portraits.reaction[reactionType]
+	else
+		color = MEDIA.color.portraits.classification[classification]
+	end
+
+	if color then
+		element.extra:SetTexture(element.media[classification], "CLAMP", "CLAMP", "TRILINEAR")
+		element.extra:SetVertexColor(color.c.r, color.c.g, color.c.b, color.c.a or 1)
+		element.extra:Show()
+	else
+		element.extra:Hide()
+	end
+end
+
 local function Update(self, event, unit)
 	if not unit or not UnitIsUnit(self.unit, unit) then return end
 	print("Update", unit, event)
@@ -182,7 +181,7 @@ local function Update(self, event, unit)
 
 	local guid = UnitGUID(unit)
 	local isAvailable = UnitIsConnected(unit) and UnitIsVisible(unit)
-	local hasStateChanged = event ~= "ForceUpdate" or element.guid ~= guid or element.state ~= isAvailable
+	local hasStateChanged = ((event == "ForceUpdate") or (element.guid ~= guid) or (element.state ~= isAvailable))
 	if hasStateChanged then
 		local class = select(2, UnitClass(unit))
 		local isPlayer = UnitIsPlayer(unit) or (E.Retail and UnitInPartyIsAI(unit))
@@ -202,12 +201,13 @@ local function Update(self, event, unit)
 		element.unitClass = class
 
 		UpdateTextureColor(element, unit)
+		UpdateExtraTexture(element, element.forceExtra)
 
 		if not InCombatLockdown() and self:GetAttribute("unit") ~= unit then self:SetAttribute("unit", unit) end
 	end
 end
 
-function module:CreatePortrait(name, parent, embellishment)
+function module:CreatePortrait(name, parent, settings)
 	local portrait = CreateFrame("Button", "mMT-Portrait-" .. name, parent, "SecureUnitButtonTemplate")
 
 	-- texture
@@ -224,18 +224,24 @@ function module:CreatePortrait(name, parent, embellishment)
 
 	-- portrait
 	portrait.unit_portrait = portrait:CreateTexture("mMT-Portrait-Unit-Portrait-" .. name, "ARTWORK", nil, 3)
-	portrait.unit_portrait:SetPoint("CENTER", portrait.texture, "CENTER", 0, 0)
+	portrait.unit_portrait:SetAllPoints(portrait.texture)
 	portrait.unit_portrait:AddMaskTexture(portrait.mask)
 
 	-- rare/elite/boss
 	local extraOnTop = module.db.misc.extratop
 	portrait.extra = portrait:CreateTexture("mMT-Portrait-Extra-" .. name, "OVERLAY", nil, extraOnTop and 7 or 1)
-	portrait.extra:SetAllPoints(portrait.texture)
+
+	if settings.extra_settings.enable then
+		portrait.extra:SetPoint("CENTER", portrait.texture, "CENTER", settings.extra_settings.offset.x, settings.extra_settings.offset.y)
+		portrait.extra.changed = true
+	else
+		portrait.extra:SetAllPoints(portrait.texture)
+	end
 
 	-- extra mask
 	if not extraOnTop then
 		portrait.extra_mask = portrait:CreateMaskTexture()
-		portrait.extra_mask:SetAllPoints(portrait.texture)
+		portrait.extra_mask:SetAllPoints(portrait.extra)
 		portrait.extra:AddMaskTexture(portrait.extra_mask)
 	end
 
@@ -292,7 +298,8 @@ function module:UpdateTexturesFiles(style, mirror)
 		extra_mask = mirror and textures.extra_mirror or textures.extra
 		embellishment = mirror and textures.embellishment_mirror or textures.embellishment
 
-		player, rare, elite, rareelite, boss = media.extra[db.misc.player], media.extra[db.misc.rare], media.extra[db.misc.elite], media.extra[db.misc.rareelite], media.extra[db.misc.boss]
+		player, rare, elite, rareelite, boss =
+			media.extra[db.misc.player].texture, media.extra[db.misc.rare].texture, media.extra[db.misc.elite].texture, media.extra[db.misc.rareelite].texture, media.extra[db.misc.boss].texture
 	end
 
 	return {
@@ -320,13 +327,27 @@ function module:UpdateSize(element, size, point)
 		element:ClearAllPoints()
 		element:SetPoint(point.point, element.__owner, point.relativePoint, point.x, point.y)
 
+		if element.db.extra_settings.enable then
+			print("extra settings enabled")
+			if not element.extra.changed then
+				element.extra:ClearAllPoints()
+				element.extra:SetPoint("CENTER", element.texture, "CENTER", element.db.extra_settings.offset.x, element.db.extra_settings.offset.y)
+				element.extra.changed = true
+			end
+			element.extra:SetSize(element.db.extra_settings.size, element.db.extra_settings.size)
+		elseif element.extra.changed then
+			print("extra settings disabled")
+			element.extra:ClearAllPoints()
+			element.extra:SetAllPoints(element.texture)
+			element.extra.changed = false
+		end
+
 		if element.db.strata ~= "AUTO" then element:SetFrameStrata(element.db.strata) end
 		element:SetFrameLevel(element.db.level)
 	end
 end
 
 local function UpdateCastIconStart(self)
-	print("UpdateCastIconStart", self.unit)
 	self.isCasting = true
 
 	local texture = GetCastIcon(self.unit)
@@ -394,7 +415,6 @@ end
 
 function module:InitPortrait(element)
 	if element then
-		print(element.media.embellishment)
 		if element.media.embellishment and not element.embellishment then
 			element.embellishment = element:CreateTexture("mMT-Portrait-Embellishment-" .. element.name, "OVERLAY", nil, 6)
 			element.embellishment:SetAllPoints(element.texture)
@@ -433,17 +453,17 @@ function module:InitPortrait(element)
 
 			element.cast_eventsSet = true
 		elseif element.cast_eventsSet then
-			element:UnregisterCastEvents("UNIT_SPELLCAST_START")
-			element:UnregisterCastEvents("UNIT_SPELLCAST_CHANNEL_START")
-			element:UnregisterCastEvents("UNIT_SPELLCAST_INTERRUPTED")
-			element:UnregisterCastEvents("UNIT_SPELLCAST_STOP")
-			element:UnregisterCastEvents("UNIT_SPELLCAST_CHANNEL_STOP")
+			element:UnregisterEvent("UNIT_SPELLCAST_START")
+			element:UnregisterEvent("UNIT_SPELLCAST_CHANNEL_START")
+			element:UnregisterEvent("UNIT_SPELLCAST_INTERRUPTED")
+			element:UnregisterEvent("UNIT_SPELLCAST_STOP")
+			element:UnregisterEvent("UNIT_SPELLCAST_CHANNEL_STOP")
 
 			if E.Retail then
-				element:UnregisterCastEvents("UNIT_SPELLCAST_EMPOWER_START")
-				element:UnregisterCastEvents("UNIT_SPELLCAST_EMPOWER_STOP")
+				element:UnregisterEvent("UNIT_SPELLCAST_EMPOWER_START")
+				element:UnregisterEvent("UNIT_SPELLCAST_EMPOWER_STOP")
 			end
-			element.element.cast_eventsSet = false
+			element.cast_eventsSet = false
 		end
 
 		Update(element, "ForceUpdate", element.unit)
@@ -475,13 +495,17 @@ function module:UpdateTextures(element)
 	SetTexture(element.mask, element.media.mask, "CLAMPTOBLACKADDITIVE")
 	SetTexture(element.shadow, element.media.shadow, "CLAMP")
 
-	if element.embellishment then SetTexture(element.embellishment, element.media.embellishment, "CLAMP") end
+	local mirror = element.db.mirror
+	if element.embellishment then
+		SetTexture(element.embellishment, element.media.embellishment, "CLAMP")
+		module:Mirror(element.embellishment, mirror)
+	end
 
 	if element.extra_mask then SetTexture(element.extra_mask, element.media.extra_mask, "CLAMPTOBLACKADDITIVE") end
 	SetTexture(element.bg, element.media.bg, "CLAMP")
 
-	local mirror = element.db.mirror
 	module:Mirror(element.texture, mirror)
+	module:Mirror(element.shadow, mirror)
 	module:Mirror(element.extra, mirror)
 end
 
@@ -490,7 +514,6 @@ function module:Initialize()
 	--module.portraits = module.portraits or {}
 
 	if module.db.enable then
-		print("Portraits module loaded")
 		module.portraits = module.portraits or {}
 
 		--module:InitializeArenaPortrait()
@@ -502,13 +525,11 @@ function module:Initialize()
 		--module:InitializeTargetPortrait()
 		--module:InitializeTargetTargetPortrait()
 	else
-		--module:InitializeArenaPortrait()
-		--module:InitializeBossPortrait()
-		--module:InitializeFocusPortrait()
-		--module:InitializePartyPortrait()
-		--module:InitializePetPortrait()
-		module:InitializePlayerPortrait()
-		--module:InitializeTargetPortrait()
-		--module:InitializeTargetTargetPortrait()
+		for _, element in pairs(module.portraits) do
+			element:UnregisterAllEvents()
+			element:Hide()
+			element = nil
+		end
+		module.portraits = nil
 	end
 end

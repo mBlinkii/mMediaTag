@@ -22,4 +22,5 @@
 	<Script file="colors_difficulty.lua"/>
 	<Script file="colors_tip_menu.lua"/>
 	<Script file="difficulty_info.lua"/>
+	<Script file="portraits.lua"/>
 </Ui>

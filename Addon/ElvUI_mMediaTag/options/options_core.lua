@@ -46,7 +46,15 @@ mMT.options = {
 			name = L["Unitframes"],
 			icon = "Interface\\Addons\\ElvUI_mMediaTag\\media\\options\\unitframes",
 			childGroups = "tab",
-			args = {},
+			args = {
+				portraits = {
+					order = 1,
+					type = "group",
+					name = mMT:AddSettingsIcon(L["Portraits"], "character"),
+					childGroups = "tab",
+					args = {},
+				},
+			},
 		},
 		nameplates = {
 			order = 4,
