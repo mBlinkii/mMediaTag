@@ -1,85 +1,43 @@
-local UnitGUID = UnitGUID
-local UnitExists = UnitExists
+local mMT, DB, M, E, P, L, MEDIA = unpack(ElvUI_mMediaTag)
 
-local function OnEvent(portrait, event, eventUnit)
-	local unit = portrait.isCellParentFrame and portrait.parentFrame._unit or portrait.parentFrame.unit
-	unit = (portrait.demo and not UnitExists(unit)) and "player" or portrait.unit
-	if not unit or not UnitExists(unit) or ((event == "PORTRAITS_UPDATED" or event == "UNIT_PORTRAIT_UPDATE" or event == "UNIT_HEALTH") and unit ~= eventUnit) then return end
+local module = mMT:GetModule("Portraits")
 
-	if event == "UNIT_HEALTH" then
-		portrait.isDead = BLINKIISPORTRAITS:UpdateDeathStatus(unit)
-		return
-	end
+function module:InitializeTargetPortrait()
+	if module.db.target.enable then
+		local portraits = module.portraits
+		local parent_frame = _G.ElvUF_Target
 
-	local guid = UnitGUID(unit)
-	if portrait.lastGUID ~= guid or portrait.forceUpdate then
-		local color, isPlayer, class = BLINKIISPORTRAITS:GetUnitColor(unit, portrait.isDead)
-
-		portrait.isPlayer = isPlayer
-		portrait.unitClass = class
-		portrait.lastGUID = guid
-
-		if color then portrait.texture:SetVertexColor(color.r, color.g, color.b, color.a or 1) end
-
-		BLINKIISPORTRAITS:UpdatePortrait(portrait, event, portrait.demo and unit)
-		BLINKIISPORTRAITS:UpdateExtraTexture(portrait, portrait.db.unitcolor and color, portrait.db.forceExtra)
-
-		portrait.forceUpdate = false
-	else
-		BLINKIISPORTRAITS:UpdatePortrait(portrait, event, portrait.demo and unit)
-	end
-
-	if not InCombatLockdown() and portrait:GetAttribute("unit") ~= unit then portrait:SetAttribute("unit", unit) end
-end
-
-function BLINKIISPORTRAITS:InitializeTargetPortrait()
-	if not BLINKIISPORTRAITS.db.profile.target.enable then return end
-
-	local unitframe, parentFrame = BLINKIISPORTRAITS:GetUnitFrames("target", BLINKIISPORTRAITS.db.profile.target.unitframe)
-	if unitframe then
-		local portraits = BLINKIISPORTRAITS.Portraits
-		local events = { "UNIT_PORTRAIT_UPDATE", "PORTRAITS_UPDATED", "PLAYER_TARGET_CHANGED" }
-		local parent = _G[unitframe]
-
-		if parent then
+		if parent_frame then
 			local unit = "target"
 			local type = "target"
+			local name = "Target"
 
-			portraits[unit] = portraits[unit] or BLINKIISPORTRAITS:CreatePortrait("target", _G[unitframe])
+			portraits[unit] = portraits[unit] or module:CreatePortrait(name, parent_frame, E.db.mMT.portraits.target)
 
 			if portraits[unit] then
-				if BLINKIISPORTRAITS.db.profile[type].unitframe ~= "auto" then portraits[unit]:SetParent(_G[unitframe]) end
-				local isCellParentFrame = (parentFrame == "cell") and BLINKIISPORTRAITS.Cell
-				portraits[unit].events = {}
-				portraits[unit].parentFrame = parent
-				portraits[unit].isCellParentFrame = isCellParentFrame
-				portraits[unit].unit = isCellParentFrame and parent._unit or parent.unit
+				portraits[unit].__owner = parent_frame
+				portraits[unit].unit = unit --parent_frame.unit
 				portraits[unit].type = type
-				portraits[unit].db = BLINKIISPORTRAITS.db.profile[type]
-				portraits[unit].size = BLINKIISPORTRAITS.db.profile[type].size
-				portraits[unit].point = BLINKIISPORTRAITS.db.profile[type].point
-				portraits[unit].useClassIcon = BLINKIISPORTRAITS.db.profile.misc.class_icon ~= "none"
-				portraits[unit].demo = BLINKIISPORTRAITS.SUF and not ShadowUF.db.profile.locked
-				portraits[unit].func = OnEvent
-
+				portraits[unit].db = E.db.mMT.portraits.target
+				portraits[unit].size = E.db.mMT.portraits.target.size
+				portraits[unit].point = E.db.mMT.portraits.target.point
 				portraits[unit].isPlayer = nil
 				portraits[unit].unitClass = nil
 				portraits[unit].lastGUID = nil
-				portraits[unit].forceUpdate = true
+				--portraits[unit].realUnit = "player"
+				portraits[unit].name = name
+				--portraits[unit].forceExtra = E.db.mMT.portraits.target.extra and "player" or nil
 
-				BLINKIISPORTRAITS:UpdateTexturesFiles(portraits[unit], BLINKIISPORTRAITS.db.profile[type])
-				BLINKIISPORTRAITS:UpdateSize(portraits[unit])
-				BLINKIISPORTRAITS:UpdateCastSettings(portraits[unit])
+				portraits[unit].media = module:UpdateTexturesFiles(E.db.mMT.portraits.target.texture, E.db.mMT.portraits.target.mirror)
 
-				BLINKIISPORTRAITS:InitPortrait(portraits[unit], events)
+				module:UpdateSize(portraits[unit], portraits[unit].size, portraits[unit].point)
+				module:InitPortrait(portraits[unit], E.db.mMT.portraits.target.size, E.db.mMT.portraits.target.point)
+
+				portraits[unit]:RegisterEvent("PLAYER_TARGET_CHANGED")
 			end
 		end
-	end
-end
-
-function BLINKIISPORTRAITS:KillTargetPortrait()
-	if BLINKIISPORTRAITS.Portraits.target then
-		BLINKIISPORTRAITS:RemovePortrait(BLINKIISPORTRAITS.Portraits.target)
-		BLINKIISPORTRAITS.Portraits.target = nil
+	elseif module.portrait.target then
+		module:RemovePortrait(module.portraits.target)
+		module.portraits.target = nil
 	end
 end

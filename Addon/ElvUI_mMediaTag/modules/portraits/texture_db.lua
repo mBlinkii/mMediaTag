@@ -41,6 +41,14 @@ local textureDB = {
 			name = "Blizzard Rare",
 			texture = "Interface\\AddOns\\ElvUI_mMediaTag\\media\\portraits\\extra\\blizz_rare.tga",
 		},
+		blizz_boss_neutral = {
+			name = "Blizzard Boss Neutral",
+			texture = "Interface\\AddOns\\ElvUI_mMediaTag\\media\\portraits\\extra\\blizz_boss_neutral.tga",
+		},
+		blizz_rare_neutral = {
+			name = "Blizzard Rare/ Elite Neutral",
+			texture = "Interface\\AddOns\\ElvUI_mMediaTag\\media\\portraits\\extra\\blizz_rare_neutral.tga",
+		},
 	},
 	bg = {
 		default = {

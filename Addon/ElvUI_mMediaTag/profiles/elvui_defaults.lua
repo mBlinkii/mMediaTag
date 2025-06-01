@@ -152,7 +152,7 @@ P.portraits = {
 		elite = "blizz_elite",
 		rareelite = "blizz_elite",
 		boss = "blizz_boss",
-		player = "blizz_boss",
+		player = "blizz_boss_neutral",
 	},
 	custom = {
 		enable = false,
@@ -184,7 +184,7 @@ P.portraits = {
 			enable = false,
 			size = 90,
 			offset = { x = 0, y = 0 },
-		}
+		},
 	},
 	target = {
 		cast = false,
@@ -196,8 +196,13 @@ P.portraits = {
 		point = { point = "LEFT", relativePoint = "RIGHT", x = 0, y = 0 },
 		size = 90,
 		strata = "AUTO",
-		texture = "blizz",
+		texture = "blizz_round",
 		unitcolor = false,
+		extra_settings = {
+			enable = false,
+			size = 90,
+			offset = { x = 0, y = 0 },
+		},
 	},
 	focus = {
 		cast = false,
@@ -209,8 +214,13 @@ P.portraits = {
 		point = { point = "LEFT", relativePoint = "RIGHT", x = 0, y = 0 },
 		size = 90,
 		strata = "AUTO",
-		texture = "blizz",
+		texture = "blizz_round",
 		unitcolor = false,
+		extra_settings = {
+			enable = false,
+			size = 90,
+			offset = { x = 0, y = 0 },
+		},
 	},
 	targettarget = {
 		cast = false,
@@ -222,8 +232,13 @@ P.portraits = {
 		point = { point = "LEFT", relativePoint = "RIGHT", x = 0, y = 0 },
 		size = 90,
 		strata = "AUTO",
-		texture = "blizz",
+		texture = "blizz_round",
 		unitcolor = false,
+		extra_settings = {
+			enable = false,
+			size = 90,
+			offset = { x = 0, y = 0 },
+		},
 	},
 	pet = {
 		cast = false,
@@ -235,8 +250,13 @@ P.portraits = {
 		point = { point = "RIGHT", relativePoint = "LEFT", x = 0, y = 0 },
 		size = 90,
 		strata = "AUTO",
-		texture = "blizz",
+		texture = "blizz_round",
 		unitcolor = false,
+		extra_settings = {
+			enable = false,
+			size = 90,
+			offset = { x = 0, y = 0 },
+		},
 	},
 	party = {
 		cast = false,
@@ -248,8 +268,13 @@ P.portraits = {
 		point = { point = "RIGHT", relativePoint = "LEFT", x = 0, y = 0 },
 		size = 90,
 		strata = "AUTO",
-		texture = "blizz",
+		texture = "blizz_round",
 		unitcolor = false,
+		extra_settings = {
+			enable = false,
+			size = 90,
+			offset = { x = 0, y = 0 },
+		},
 	},
 	boss = {
 		cast = false,
@@ -260,20 +285,31 @@ P.portraits = {
 		point = { point = "LEFT", relativePoint = "RIGHT", x = 0, y = 0 },
 		size = 90,
 		strata = "AUTO",
-		texture = "blizz",
+		texture = "blizz_round",
 		unitcolor = false,
+		extra_settings = {
+			enable = false,
+			size = 90,
+			offset = { x = 0, y = 0 },
+		},
 	},
 	arena = {
 		cast = false,
 		enable = true,
 		extra = false,
+		forceExtra = "none",
 		level = 20,
 		mirror = true,
 		point = { point = "LEFT", relativePoint = "RIGHT", x = 0, y = 0 },
 		size = 90,
 		strata = "AUTO",
-		texture = "blizz",
+		texture = "blizz_round",
 		unitcolor = false,
+		extra_settings = {
+			enable = false,
+			size = 90,
+			offset = { x = 0, y = 0 },
+		},
 	},
 }
 

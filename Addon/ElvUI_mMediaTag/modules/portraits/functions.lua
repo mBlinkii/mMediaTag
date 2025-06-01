@@ -29,14 +29,12 @@ function module:UpdateDesaturated(portrait, isDead)
 end
 
 -- unit status functions
-function module:UpdateDeathStatus(portrait, unit)
-	local isDead = (UnitExists(unit) and UnitIsDead(unit))
-	if isDead then
-		local deathColor = module.db.profile.colors.misc.death
-		module:UpdateDesaturated(portrait, isDead)
-		portrait.texture:SetVertexColor(deathColor.r, deathColor.g, deathColor.b, deathColor.a or 1)
-	end
-	return isDead
+function module:UpdateDeathStatus(element)
+	-- 	local deathColor = module.db.profile.colors.misc.death
+	-- 	module:UpdateDesaturated(portrait, isDead)
+	-- 	portrait.texture:SetVertexColor(deathColor.r, deathColor.g, deathColor.b, deathColor.a or 1)
+	-- end
+	-- return isDead
 end
 
 function module:GetUnitColor(unit, class, isPlayer, isDead)
@@ -74,6 +72,16 @@ local function UpdateTextureColor(element, unit)
 		local c = color.c
 		element.texture:SetVertexColor(c.r, c.g, c.b, c.a or 1)
 		if element.embellishment then element.embellishment:SetVertexColor(c.r, c.g, c.b, c.a or 1) end
+	end
+
+	if element.isDead then
+		if not element.isDesaturated then
+			element.unit_portrait:SetDesaturated(true)
+			element.isDesaturated = true
+		end
+	elseif element.isDesaturated then
+		element.unit_portrait:SetDesaturated(false)
+		element.isDesaturated = false
 	end
 end
 
@@ -131,6 +139,7 @@ local function Update(self, event, unit)
 			--element:SetAtlas("classicon-" .. class)
 		else
 			SetPortraitTexture(element.unit_portrait, unit, true)
+			module:Mirror(element.unit_portrait, (isPlayer and self.db.mirror))
 		end
 
 		element.guid = guid
@@ -138,6 +147,7 @@ local function Update(self, event, unit)
 		element.isPlayer = isPlayer
 		element.unit = unit
 		element.unitClass = class
+		element.isDead = UnitIsDeadOrGhost(unit)
 
 		UpdateTextureColor(element, unit)
 		UpdateExtraTexture(element, element.forceExtra)
@@ -340,9 +350,25 @@ local eventHandlers = {
 	UNIT_EXITED_VEHICLE = VehicleUpdate,
 	VEHICLE_UPDATE = VehicleUpdate,
 
+	-- target updates
+	PLAYER_TARGET_CHANGED = function(self)
+		Update(self, "ForceUpdate", self.unit)
+	end,
+
 	-- death updates
 	UNIT_HEALTH = function(self)
 		self.isDead = UnitIsDeadOrGhost(self.unit)
+		print("UNIT_HEALTH", self.unit, self.isDead)
+
+		if self.isDead then
+			local color = MEDIA.color.portraits.misc.death.c
+			--module:UpdateDeathStatus(self)
+			-- 	local deathColor = module.db.profile.colors.misc.death
+			-- 	module:UpdateDesaturated(portrait, isDead)
+			self.texture:SetVertexColor(color.r, color.g, color.b, color.a or 1)
+			-- end
+			-- return isDead
+		end
 	end,
 }
 
@@ -380,11 +406,11 @@ function module:InitPortrait(element)
 		end
 
 		-- death check
-		if element.type == "party" then
-			element:RegisterEvent("UNIT_HEALTH")
-		else
-			element:RegisterUnitEvent("UNIT_HEALTH", element.unit)
-		end
+		-- if element.type == "party" then
+		-- 	element:RegisterEvent("UNIT_HEALTH")
+		-- else
+		-- 	element:RegisterUnitEvent("UNIT_HEALTH", element.unit)
+		-- end
 
 		-- cast events
 		if element.db.cast and not element.cast_eventsSet then
@@ -462,7 +488,7 @@ function module:PLAYER_ENTERING_WORLD()
 	--module:InitializePartyPortrait()
 	--module:InitializePetPortrait()
 	module:InitializePlayerPortrait()
-	--module:InitializeTargetPortrait()
+	module:InitializeTargetPortrait()
 	--module:InitializeTargetTargetPortrait()
 end
 
