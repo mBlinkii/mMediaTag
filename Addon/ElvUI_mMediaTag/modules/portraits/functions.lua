@@ -150,7 +150,7 @@ local function Update(self, event, unit)
 		element.isDead = UnitIsDeadOrGhost(unit)
 
 		UpdateTextureColor(element, unit)
-		UpdateExtraTexture(element, element.forceExtra)
+		UpdateExtraTexture(element, (element.db.forceExtra ~= "none" and element.db.forceExtra or nil))
 
 		if not InCombatLockdown() and self:GetAttribute("unit") ~= unit then self:SetAttribute("unit", unit) end
 	end
