@@ -538,7 +538,7 @@ mMT.options.args.unitframes.args.portraits.args = {
 						name = L["Size"],
 						type = "range",
 						min = 16,
-						max = 512,
+						max = 1024,
 						step = 1,
 						softMin = 16,
 						softMax = 1024,
@@ -867,7 +867,7 @@ mMT.options.args.unitframes.args.portraits.args = {
 						max = 1024,
 						step = 1,
 						softMin = 16,
-						softMax = 512,
+						softMax = 1024,
 						disabled = function()
 							return not E.db.mMT.portraits.target.extra_settings.enable
 						end,
@@ -917,6 +917,332 @@ mMT.options.args.unitframes.args.portraits.args = {
 						set = function(info, value)
 							E.db.mMT.portraits.target.extra_settings.offset.y = value
 							M.Portraits:InitializeTargetPortrait()
+						end,
+					},
+				},
+			},
+		},
+	},
+	focus_group = {
+		order = 4,
+		type = "group",
+		name = L["Focus"],
+		args = {
+			enable_toggle = {
+				order = 1,
+				type = "toggle",
+				name = L["Enable"],
+				desc = L["Enable the Unit Portrait."],
+				get = function(info)
+					return E.db.mMT.portraits.focus.enable
+				end,
+				set = function(info, value)
+					E.db.mMT.portraits.focus.enable = value
+
+					M.Portraits:InitializeFocusPortrait()
+				end,
+			},
+			general_group = {
+				order = 2,
+				type = "group",
+				inline = true,
+				name = L["General"],
+				args = {
+					styles_select = {
+						order = 1,
+						type = "select",
+						name = L["Style"],
+						desc = L["Select a portrait texture style."],
+						get = function(info)
+							return E.db.mMT.portraits.focus.texture
+						end,
+						set = function(info, value)
+							E.db.mMT.portraits.focus.texture = value
+							M.Portraits:InitializeFocusPortrait()
+						end,
+						values = function()
+							local t = {}
+							for k, v in pairs(MEDIA.portraits.textures) do
+								if type(v) == "table" then t[k] = v.name end
+							end
+							return t
+						end,
+					},
+					size_range = {
+						order = 2,
+						name = L["Size"],
+						type = "range",
+						min = 16,
+						max = 512,
+						step = 1,
+						softMin = 16,
+						softMax = 512,
+						get = function(info)
+							return E.db.mMT.portraits.focus.size
+						end,
+						set = function(info, value)
+							E.db.mMT.portraits.focus.size = value
+
+							if not E.db.mMT.portraits.focus.extra_settings.enable then E.db.mMT.portraits.focus.extra_settings.size = value end
+							M.Portraits:InitializeFocusPortrait()
+						end,
+					},
+					cast_toggle = {
+						order = 3,
+						type = "toggle",
+						name = L["Cast Icon"],
+						desc = "Enable Cast Icons.",
+						get = function(info)
+							return E.db.mMT.portraits.focus.cast
+						end,
+						set = function(info, value)
+							E.db.mMT.portraits.focus.cast = value
+							M.Portraits:InitializeFocusPortrait()
+						end,
+					},
+					extra_toggle = {
+						order = 4,
+						type = "toggle",
+						name = L["Enable Extra Texture"],
+						desc = L["Shows the Extra Texture (rare/elite) for the Unit Portrait."],
+						get = function(info)
+							return E.db.mMT.portraits.focus.extra
+						end,
+						set = function(info, value)
+							E.db.mMT.portraits.focus.extra = value
+							M.Portraits:InitializeFocusPortrait()
+						end,
+					},
+					unitcolor_toggle = {
+						order = 5,
+						type = "toggle",
+						name = L["Unitcolor for Extra"],
+						desc = L["Use the unit color for the Extra (Rare/Elite) Texture."],
+						get = function(info)
+							return E.db.mMT.portraits.focus.unitcolor
+						end,
+						set = function(info, value)
+							E.db.mMT.portraits.focus.unitcolor = value
+							M.Portraits:InitializeFocusPortrait()
+						end,
+					},
+					force_extra_toggle = {
+						order = 6,
+						type = "select",
+						name = L["Force Extra Texture"],
+						desc = L["It will override the default extra texture, but will take care of rare/elite/boss units."],
+						get = function(info)
+							return E.db.mMT.portraits.focus.forceExtra
+						end,
+						set = function(info, value)
+							E.db.mMT.portraits.focus.forceExtra = value
+							M.Portraits:InitializeFocusPortrait()
+						end,
+						values = {
+							none = "None",
+							player = "Player",
+							rare = "Rare",
+							elite = "Elite",
+							rareelite = "Rare Elite",
+							boss = "Boss",
+						},
+					},
+				},
+			},
+			anchor_group = {
+				order = 3,
+				type = "group",
+				inline = true,
+				name = L["Anchor"],
+				args = {
+					anchor_select = {
+						order = 1,
+						type = "select",
+						name = L["Anchor Point"],
+						get = function(info)
+							return E.db.mMT.portraits.focus.point.relativePoint
+						end,
+						set = function(info, value)
+							E.db.mMT.portraits.focus.point.relativePoint = value
+							if value == "LEFT" then
+								E.db.mMT.portraits.focus.point.point = "RIGHT"
+								E.db.mMT.portraits.focus.mirror = false
+							elseif value == "RIGHT" then
+								E.db.mMT.portraits.focus.point.point = "LEFT"
+								E.db.mMT.portraits.focus.mirror = true
+							elseif value == "TOP" then
+								E.db.mMT.portraits.focus.point.point = "BOTTOM"
+								E.db.mMT.portraits.focus.mirror = false
+							elseif value == "BOTTOM" then
+								E.db.mMT.portraits.focus.point.point = "TOP"
+								E.db.mMT.portraits.focus.mirror = false
+							else
+								E.db.mMT.portraits.focus.point.point = value
+								E.db.mMT.portraits.focus.mirror = false
+							end
+
+							M.Portraits:InitializeFocusPortrait()
+						end,
+						values = {
+							LEFT = "LEFT",
+							RIGHT = "RIGHT",
+							CENTER = "CENTER",
+							TOP = "TOP",
+							BOTTOM = "BOTTOM",
+						},
+					},
+					offset_x_range = {
+						order = 2,
+						name = L["X offset"],
+						type = "range",
+						min = -256,
+						max = 256,
+						step = 1,
+						softMin = -1024,
+						softMax = 1024,
+						get = function(info)
+							return E.db.mMT.portraits.focus.point.x
+						end,
+						set = function(info, value)
+							E.db.mMT.portraits.focus.point.x = value
+							M.Portraits:InitializeFocusPortrait()
+						end,
+					},
+					range_ofsY = {
+						order = 3,
+						name = L["Y offset"],
+						type = "range",
+						min = -256,
+						max = 256,
+						step = 1,
+						softMin = -1024,
+						softMax = 1024,
+						get = function(info)
+							return E.db.mMT.portraits.focus.point.y
+						end,
+						set = function(info, value)
+							E.db.mMT.portraits.focus.point.y = value
+							M.Portraits:InitializeFocusPortrait()
+						end,
+					},
+				},
+			},
+			level_group = {
+				order = 3,
+				type = "group",
+				inline = true,
+				name = L["Frame Level/ Strata"],
+				args = {
+					strata_select = {
+						order = 1,
+						type = "select",
+						name = L["Frame Strata"],
+						get = function(info)
+							return E.db.mMT.portraits.focus.strata
+						end,
+						set = function(info, value)
+							E.db.mMT.portraits.focus.strata = value
+							M.Portraits:InitializeFocusPortrait()
+						end,
+						values = frameStrata,
+					},
+					level_range = {
+						order = 2,
+						name = L["Frame Level"],
+						type = "range",
+						min = 0,
+						max = 1000,
+						step = 1,
+						softMin = 0,
+						softMax = 1000,
+						get = function(info)
+							return E.db.mMT.portraits.focus.level
+						end,
+						set = function(info, value)
+							E.db.mMT.portraits.focus.level = value
+							M.Portraits:InitializeFocusPortrait()
+						end,
+					},
+				},
+			},
+			extra = {
+				order = 4,
+				type = "group",
+				inline = true,
+				name = L["Extra Settings"],
+				args = {
+					enable = {
+						order = 1,
+						type = "toggle",
+						name = L["Enable"],
+						desc = L["Enable custom Position and size settings for Extra Texture."],
+						get = function(info)
+							return E.db.mMT.portraits.focus.extra_settings.enable
+						end,
+						set = function(info, value)
+							E.db.mMT.portraits.focus.extra_settings.enable = value
+
+							M.Portraits:InitializeFocusPortrait()
+						end,
+					},
+					size_range = {
+						order = 2,
+						name = L["Size"],
+						type = "range",
+						min = 16,
+						max = 1024,
+						step = 1,
+						softMin = 16,
+						softMax = 1024,
+						disabled = function()
+							return not E.db.mMT.portraits.focus.extra_settings.enable
+						end,
+						get = function(info)
+							return E.db.mMT.portraits.focus.extra_settings.size
+						end,
+						set = function(info, value)
+							E.db.mMT.portraits.focus.extra_settings.size = value
+							M.Portraits:InitializeFocusPortrait()
+						end,
+					},
+					offset_x_range = {
+						order = 3,
+						name = L["X offset"],
+						type = "range",
+						min = -256,
+						max = 256,
+						step = 1,
+						softMin = -1024,
+						softMax = 1024,
+						disabled = function()
+							return not E.db.mMT.portraits.focus.extra_settings.enable
+						end,
+						get = function(info)
+							return E.db.mMT.portraits.focus.extra_settings.offset.x
+						end,
+						set = function(info, value)
+							E.db.mMT.portraits.focus.extra_settings.offset.x = value
+							M.Portraits:InitializeFocusPortrait()
+						end,
+					},
+					range_ofsY = {
+						order = 4,
+						name = L["Y offset"],
+						type = "range",
+						min = -256,
+						max = 256,
+						step = 1,
+						softMin = -1024,
+						softMax = 1024,
+						disabled = function()
+							return not E.db.mMT.portraits.focus.extra_settings.enable
+						end,
+						get = function(info)
+							return E.db.mMT.portraits.focus.extra_settings.offset.y
+						end,
+						set = function(info, value)
+							E.db.mMT.portraits.focus.extra_settings.offset.y = value
+							M.Portraits:InitializeFocusPortrait()
 						end,
 					},
 				},

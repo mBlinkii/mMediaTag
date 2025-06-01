@@ -33,7 +33,10 @@ function module:InitializeTargetPortrait()
 				module:UpdateSize(portraits[unit], portraits[unit].size, portraits[unit].point)
 				module:InitPortrait(portraits[unit], E.db.mMT.portraits.target.size, E.db.mMT.portraits.target.point)
 
-				portraits[unit]:RegisterEvent("PLAYER_TARGET_CHANGED")
+				if not portraits[unit].isEnabled then
+					portraits[unit]:RegisterEvent("PLAYER_TARGET_CHANGED")
+					portraits[unit].isEnabled = true
+				end
 			end
 		end
 	elseif module.portrait.target then

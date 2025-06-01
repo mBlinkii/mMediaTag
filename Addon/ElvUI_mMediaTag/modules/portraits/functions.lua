@@ -74,12 +74,12 @@ local function UpdateTextureColor(element, unit)
 		if element.embellishment then element.embellishment:SetVertexColor(c.r, c.g, c.b, c.a or 1) end
 	end
 
-	if element.isDead then
+	if element.isDead or module.db.misc.desaturate then
 		if not element.isDesaturated then
 			element.unit_portrait:SetDesaturated(true)
 			element.isDesaturated = true
 		end
-	elseif element.isDesaturated then
+	elseif element.isDesaturated and not module.db.misc.desaturate then
 		element.unit_portrait:SetDesaturated(false)
 		element.isDesaturated = false
 	end
@@ -120,7 +120,7 @@ local function UpdateExtraTexture(element, force)
 end
 
 local function Update(self, event, unit)
-	print("Update", unit, event, self.unit, UnitIsUnit(self.unit, unit))
+	--print("Update", unit, event, self.unit, UnitIsUnit(self.unit, unit))
 	if not unit or not UnitIsUnit(self.unit, unit) then return end
 
 	local element = self
@@ -129,7 +129,7 @@ local function Update(self, event, unit)
 	local isAvailable = UnitIsConnected(unit) and UnitIsVisible(unit)
 	local hasStateChanged = ((event == "ForceUpdate") or (element.guid ~= guid) or (element.state ~= isAvailable))
 	if hasStateChanged then
-		print("FULL UPDATE")
+		--print("FULL UPDATE")
 		local class = select(2, UnitClass(unit))
 		local isPlayer = UnitIsPlayer(unit) or (E.Retail and UnitInPartyIsAI(unit))
 
@@ -307,7 +307,7 @@ local function UpdateCastIconStart(self)
 	if texture then self.unit_portrait:SetTexture(texture) end
 end
 
-local function UpdateCastIconStop(self, event)
+local function UpdateCastIconStop(self)
 	self.isCasting = false
 
 	SetPortraitTexture(self.unit_portrait, self.unit)
@@ -350,8 +350,11 @@ local eventHandlers = {
 	UNIT_EXITED_VEHICLE = VehicleUpdate,
 	VEHICLE_UPDATE = VehicleUpdate,
 
-	-- target updates
+	-- target/ focus updates
 	PLAYER_TARGET_CHANGED = function(self)
+		Update(self, "ForceUpdate", self.unit)
+	end,
+	PLAYER_FOCUS_CHANGED = function(self)
 		Update(self, "ForceUpdate", self.unit)
 	end,
 
@@ -425,7 +428,7 @@ function module:InitPortrait(element)
 			end
 
 			element.cast_eventsSet = true
-		elseif element.cast_eventsSet then
+		elseif element.cast_eventsSet and not element.db.cast then
 			element:UnregisterEvent("UNIT_SPELLCAST_START")
 			element:UnregisterEvent("UNIT_SPELLCAST_CHANNEL_START")
 			element:UnregisterEvent("UNIT_SPELLCAST_INTERRUPTED")
@@ -481,10 +484,10 @@ function module:UpdateTextures(element)
 end
 
 function module:PLAYER_ENTERING_WORLD()
-	print("mMT Portraits: PLAYER_ENTERING_WORLD")
+	--print("mMT Portraits: PLAYER_ENTERING_WORLD")
 	--module:InitializeArenaPortrait()
 	--module:InitializeBossPortrait()
-	--module:InitializeFocusPortrait()
+	module:InitializeFocusPortrait()
 	--module:InitializePartyPortrait()
 	--module:InitializePetPortrait()
 	module:InitializePlayerPortrait()

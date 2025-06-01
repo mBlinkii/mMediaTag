@@ -33,10 +33,13 @@ function module:InitializePlayerPortrait()
 				module:UpdateSize(portraits[unit], portraits[unit].size, portraits[unit].point)
 				module:InitPortrait(portraits[unit], E.db.mMT.portraits.player.size, E.db.mMT.portraits.player.point)
 
-				portraits[unit]:RegisterEvent("UNIT_ENTERED_VEHICLE")
-				portraits[unit]:RegisterEvent("UNIT_EXITING_VEHICLE")
-				portraits[unit]:RegisterEvent("UNIT_EXITED_VEHICLE")
-				portraits[unit]:RegisterEvent("VEHICLE_UPDATE")
+				if not portraits[unit].isEnabled then
+					portraits[unit]:RegisterEvent("UNIT_ENTERED_VEHICLE")
+					portraits[unit]:RegisterEvent("UNIT_EXITING_VEHICLE")
+					portraits[unit]:RegisterEvent("UNIT_EXITED_VEHICLE")
+					portraits[unit]:RegisterEvent("VEHICLE_UPDATE")
+					portraits[unit].isEnabled = true
+				end
 			end
 		end
 	elseif module.portrait.player then
