@@ -139,7 +139,8 @@ local function Update(self, event, unit)
 			--element:SetAtlas("classicon-" .. class)
 		else
 			SetPortraitTexture(element.unit_portrait, unit, true)
-			module:Mirror(element.unit_portrait, (isPlayer and self.db.mirror))
+			local shouldMirror = (isPlayer and self.db.mirror) or (not isPlayer and not self.db.mirror)
+			module:Mirror(element.unit_portrait, shouldMirror)
 		end
 
 		element.guid = guid
