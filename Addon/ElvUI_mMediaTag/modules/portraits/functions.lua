@@ -1,6 +1,6 @@
 local mMT, DB, M, E, P, L, MEDIA = unpack(ElvUI_mMediaTag)
 
-local module = mMT:AddModule("Portraits")
+local module = mMT:AddModule("Portraits", { "AceEvent-3.0" })
 
 local UnitIsPlayer = UnitIsPlayer
 local UnitClass = UnitClass
@@ -11,33 +11,10 @@ local UnitFactionGroup = UnitFactionGroup
 local UnitIsDead = UnitIsDead
 local UnitExists = UnitExists
 local InCombatLockdown = InCombatLockdown
-local select, tinsert = select, tinsert
+local select = select
 local UnitGUID = UnitGUID
 
 local playerFaction = nil
-
--- portrait texture update functions
-
-function module:UpdatePortrait(portrait, event, unit)
-	local showCastIcon = portrait.db.cast and module:UpdateCastIcon(portrait, event)
-	local forceDesaturate = module.db.profile.misc.desaturate
-
-	if not showCastIcon then
-		if portrait.useClassIcon and (portrait.isPlayer or (module.Retail and UnitInPartyIsAI(unit))) then
-			portrait.unitClass = portrait.unitClass or select(2, UnitClass(portrait.unit))
-			portrait.texCoords = portrait.classIcons.texCoords[portrait.unitClass]
-			portrait.portrait:SetTexture(portrait.classIcons.texture, "CLAMP", "CLAMP", "TRILINEAR")
-		else
-			SetPortraitTexture(portrait.portrait, unit or portrait.unit, true)
-		end
-
-		module:UpdateDesaturated(portrait, (forceDesaturate or portrait.isDead))
-	end
-
-	module:Mirror(portrait.portrait, portrait.isPlayer and portrait.db.mirror, (portrait.isPlayer and portrait.useClassIcon) and portrait.texCoords)
-end
-
--- color functions
 
 function module:UpdateDesaturated(portrait, isDead)
 	if isDead then
@@ -60,45 +37,6 @@ function module:UpdateDeathStatus(portrait, unit)
 		portrait.texture:SetVertexColor(deathColor.r, deathColor.g, deathColor.b, deathColor.a or 1)
 	end
 	return isDead
-end
-
--- update settings functions
-local function UpdateZoom(texture, size)
-	local zoom = module.db.profile.misc.zoom
-	local offset = (size / 2) * zoom
-
-	texture:SetPoint("TOPLEFT", 0 - offset, 0 + offset)
-	texture:SetPoint("BOTTOMRIGHT", 0 + offset, 0 - offset)
-end
-
-function module:RegisterEvents(portrait, events, cast)
-	for _, event in pairs(events) do
-		if cast and portrait.type ~= "party" then
-			portrait:RegisterUnitEvent(event, portrait.unit)
-		else
-			portrait:RegisterEvent(event)
-		end
-		tinsert(portrait.events, event)
-	end
-
-	-- death check
-	if portrait.type == "party" then
-		portrait:RegisterEvent("UNIT_HEALTH")
-	else
-		portrait:RegisterUnitEvent("UNIT_HEALTH", portrait.unit)
-	end
-	tinsert(portrait.events, "UNIT_HEALTH")
-end
-
-function module:RemovePortrait(frame)
-	if frame and frame.events then
-		for _, event in pairs(frame.events) do
-			frame:UnregisterEvent(event)
-		end
-	end
-
-	frame:Hide()
-	frame = nil
 end
 
 function module:GetUnitColor(unit, class, isPlayer, isDead)
@@ -174,8 +112,8 @@ local function UpdateExtraTexture(element, force)
 end
 
 local function Update(self, event, unit)
+	print("Update", unit, event, self.unit, UnitIsUnit(self.unit, unit))
 	if not unit or not UnitIsUnit(self.unit, unit) then return end
-	print("Update", unit, event)
 
 	local element = self
 
@@ -183,6 +121,7 @@ local function Update(self, event, unit)
 	local isAvailable = UnitIsConnected(unit) and UnitIsVisible(unit)
 	local hasStateChanged = ((event == "ForceUpdate") or (element.guid ~= guid) or (element.state ~= isAvailable))
 	if hasStateChanged then
+		print("FULL UPDATE")
 		local class = select(2, UnitClass(unit))
 		local isPlayer = UnitIsPlayer(unit) or (E.Retail and UnitInPartyIsAI(unit))
 
@@ -224,7 +163,8 @@ function module:CreatePortrait(name, parent, settings)
 
 	-- portrait
 	portrait.unit_portrait = portrait:CreateTexture("mMT-Portrait-Unit-Portrait-" .. name, "ARTWORK", nil, 3)
-	portrait.unit_portrait:SetAllPoints(portrait.texture)
+	--portrait.unit_portrait:SetAllPoints(portrait.texture)
+	portrait.unit_portrait:SetPoint("CENTER", portrait.texture, "CENTER")
 	portrait.unit_portrait:AddMaskTexture(portrait.mask)
 
 	-- rare/elite/boss
@@ -327,6 +267,8 @@ function module:UpdateSize(element, size, point)
 		element:ClearAllPoints()
 		element:SetPoint(point.point, element.__owner, point.relativePoint, point.x, point.y)
 
+		element.unit_portrait:SetSize(size, size)
+
 		if element.db.extra_settings.enable then
 			if not element.extra.changed then
 				element.extra:ClearAllPoints()
@@ -342,6 +284,9 @@ function module:UpdateSize(element, size, point)
 
 		if element.db.strata ~= "AUTO" then element:SetFrameStrata(element.db.strata) end
 		element:SetFrameLevel(element.db.level)
+
+		local scale = module.db.misc.scale
+		element.unit_portrait:SetScale(scale)
 	end
 end
 
@@ -371,7 +316,9 @@ end
 
 local eventHandlers = {
 	-- portrait updates
-	PORTRAITS_UPDATED = Update,
+	PORTRAITS_UPDATED = function(self)
+		Update(self, "ForceUpdate", self.unit)
+	end,
 	UNIT_CONNECTION = Update,
 	UNIT_PORTRAIT_UPDATE = Update,
 	PARTY_MEMBER_ENABLE = Update,
@@ -422,9 +369,11 @@ function module:InitPortrait(element)
 
 		-- default events
 		if not element.eventsSet then
-			for _, event in pairs({ "UNIT_PORTRAIT_UPDATE", "PORTRAITS_UPDATED", "UNIT_CONNECTION" }) do
-				RegisterEvent(element, event)
+			for _, event in pairs({ "UNIT_PORTRAIT_UPDATE", "UNIT_MODEL_CHANGED", "UNIT_CONNECTION" }) do
+				RegisterEvent(element, event, (element.type ~= "party"))
 			end
+
+			element:RegisterEvent("PORTRAITS_UPDATED")
 
 			if element.type == "party" then element:RegisterEvent("PARTY_MEMBER_ENABLE") end
 			element.eventsSet = true
@@ -466,8 +415,6 @@ function module:InitPortrait(element)
 
 		Update(element, "ForceUpdate", element.unit)
 		element:SetScript("OnEvent", OnEvent)
-
-		--UpdateZoom(element.portrait, element.size)
 	end
 end
 
@@ -507,27 +454,38 @@ function module:UpdateTextures(element)
 	module:Mirror(element.extra, mirror)
 end
 
+function module:PLAYER_ENTERING_WORLD()
+	print("mMT Portraits: PLAYER_ENTERING_WORLD")
+	--module:InitializeArenaPortrait()
+	--module:InitializeBossPortrait()
+	--module:InitializeFocusPortrait()
+	--module:InitializePartyPortrait()
+	--module:InitializePetPortrait()
+	module:InitializePlayerPortrait()
+	--module:InitializeTargetPortrait()
+	--module:InitializeTargetTargetPortrait()
+end
+
 function module:Initialize()
 	module.db = E.db.mMT.portraits
-	--module.portraits = module.portraits or {}
 
 	if module.db.enable then
 		module.portraits = module.portraits or {}
+		--E:Delay(1, module.InitializePlayerPortrait)
+		if not module.isEnabled then
+			module:RegisterEvent("PLAYER_ENTERING_WORLD")
+			module.isEnabled = true
+		end
 
-		--module:InitializeArenaPortrait()
-		--module:InitializeBossPortrait()
-		--module:InitializeFocusPortrait()
-		--module:InitializePartyPortrait()
-		--module:InitializePetPortrait()
-		E:Delay(1, module.InitializePlayerPortrait)
-		--module:InitializeTargetPortrait()
-		--module:InitializeTargetTargetPortrait()
+		module:PLAYER_ENTERING_WORLD()
 	else
+		module:UnregisterAllEvents()
 		for _, element in pairs(module.portraits) do
 			element:UnregisterAllEvents()
 			element:Hide()
 			element = nil
 		end
+		module.isEnabled = false
 		module.portraits = nil
 	end
 end

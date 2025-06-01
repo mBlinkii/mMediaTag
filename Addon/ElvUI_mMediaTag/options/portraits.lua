@@ -1,5 +1,4 @@
 local mMT, DB, M, E, P, L, MEDIA = unpack(ElvUI_mMediaTag)
-local portraits = M.Portraits
 
 local frameStrata = {
 	BACKGROUND = "BACKGROUND",
@@ -39,16 +38,16 @@ mMT.options.args.unitframes.args.portraits.args = {
 				args = {
 					zoom_range = {
 						order = 1,
-						name = L["Zoom/ Offset"],
+						name = L["Portrait Scale"],
 						type = "range",
-						min = -1,
-						max = 1,
-						step = 0.001,
+						min = 0.01,
+						max = 2,
+						step = 0.01,
 						get = function(info)
-							return E.db.mMT.portraits.misc.zoom
+							return E.db.mMT.portraits.misc.scale
 						end,
 						set = function(info, value)
-							E.db.mMT.portraits.misc.zoom = value
+							E.db.mMT.portraits.misc.scale = value
 							M.Portraits:Initialize()
 						end,
 					},
@@ -515,7 +514,7 @@ mMT.options.args.unitframes.args.portraits.args = {
 				},
 			},
 			extra = {
-				order = 1,
+				order = 4,
 				type = "group",
 				inline = true,
 				name = L["Extra Settings"],
