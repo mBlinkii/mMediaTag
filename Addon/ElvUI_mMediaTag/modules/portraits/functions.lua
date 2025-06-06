@@ -16,27 +16,6 @@ local UnitGUID = UnitGUID
 
 local playerFaction = nil
 
-function module:UpdateDesaturated(portrait, isDead)
-	if isDead then
-		if not portrait.isDesaturated then
-			portrait.portrait:SetDesaturated(true)
-			portrait.isDesaturated = true
-		end
-	elseif portrait.isDesaturated then
-		portrait.portrait:SetDesaturated(false)
-		portrait.isDesaturated = false
-	end
-end
-
--- unit status functions
-function module:UpdateDeathStatus(element)
-	-- 	local deathColor = module.db.profile.colors.misc.death
-	-- 	module:UpdateDesaturated(portrait, isDead)
-	-- 	portrait.texture:SetVertexColor(deathColor.r, deathColor.g, deathColor.b, deathColor.a or 1)
-	-- end
-	-- return isDead
-end
-
 function module:GetUnitColor(unit, class, isPlayer, isDead)
 	if not unit then return end
 
@@ -120,8 +99,8 @@ local function UpdateExtraTexture(element, force)
 end
 
 local function Update(self, event, unit)
-	--print("Update", unit, event, self.unit, UnitIsUnit(self.unit, unit))
-	if not unit or not UnitIsUnit(self.unit, unit) then return end
+	--print("Update", unit, event, self.unit, self.type, self.__owner.unit, UnitIsUnit(self.unit, unit))
+	if not unit or not UnitIsUnit((self.__owner.unit or self.unit), unit) then return end
 
 	local element = self
 
@@ -148,7 +127,7 @@ local function Update(self, event, unit)
 		element.isPlayer = isPlayer
 		element.unit = unit
 		element.unitClass = class
-		element.isDead = UnitIsDeadOrGhost(unit)
+		--element.isDead = UnitIsDeadOrGhost(unit)
 
 		UpdateTextureColor(element, unit)
 		UpdateExtraTexture(element, (element.db.forceExtra ~= "none" and element.db.forceExtra or nil))
@@ -361,6 +340,7 @@ local function ForceUpdate(self)
 	Update(self, "ForceUpdate", unit)
 end
 
+local delay = 0
 local eventHandlers = {
 	-- portrait updates
 	PORTRAITS_UPDATED = ForceUpdate,
@@ -402,21 +382,20 @@ local eventHandlers = {
 	-- death updates
 	UNIT_HEALTH = function(self)
 		self.isDead = UnitIsDeadOrGhost(self.unit)
-		print("UNIT_HEALTH", self.unit, self.isDead)
+		print("UNIT_HEALTH", self.__owner.unit or self.unit, self.isDead)
 
-		if self.isDead then
-			local color = MEDIA.color.portraits.misc.death.c
-			--module:UpdateDeathStatus(self)
-			-- 	local deathColor = module.db.profile.colors.misc.death
-			-- 	module:UpdateDesaturated(portrait, isDead)
-			self.texture:SetVertexColor(color.r, color.g, color.b, color.a or 1)
-			-- end
-			-- return isDead
-		end
+		UpdateTextureColor(self, self.__owner.unit or self.unit)
 	end,
 }
 
 local function OnEvent(self, event, unit, arg)
+	self.isDead = UnitIsDeadOrGhost(self.__owner.unit)
+
+	if self.isDead then
+		--print("OnEvent", event, unit, arg, self.unit, self.type, self.__owner.unit, UnitIsDeadOrGhost(self.__owner.unit))
+		UpdateTextureColor(self, self.__owner.unit or self.unit)
+	end
+
 	if eventHandlers[event] then eventHandlers[event](self, event, unit, arg) end
 end
 
