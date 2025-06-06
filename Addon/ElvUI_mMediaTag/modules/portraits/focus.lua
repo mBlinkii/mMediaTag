@@ -39,8 +39,9 @@ function module:InitializeFocusPortrait()
 				end
 			end
 		end
-	elseif module.portrait.focus then
-		module:RemovePortrait(module.portraits.focus)
+	elseif module.portraits.focus then
+		module.portraits.focus:UnregisterAllEvents()
+		module.portraits.focus:Hide()
 		module.portraits.focus = nil
 	end
 end

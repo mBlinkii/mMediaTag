@@ -1,7 +1,7 @@
 local mMT, DB, M, E, P, L, MEDIA = unpack(ElvUI_mMediaTag)
 
 local module = mMT:AddModule("Portraits", { "AceEvent-3.0" })
-
+local UF = E:GetModule("UnitFrames")
 local UnitIsPlayer = UnitIsPlayer
 local UnitClass = UnitClass
 local UnitReaction = UnitReaction
@@ -155,6 +155,29 @@ local function Update(self, event, unit)
 
 		if not InCombatLockdown() and self:GetAttribute("unit") ~= unit then self:SetAttribute("unit", unit) end
 	end
+end
+
+local function DemoUpdate(self)
+	local element = self
+	local unit = "player"
+	local class = select(2, UnitClass(unit))
+	local isPlayer = true
+
+	local classIcons = false
+
+	if classIcons then
+		--element:SetAtlas("classicon-" .. class)
+	else
+		SetPortraitTexture(element.unit_portrait, unit, true)
+		local shouldMirror = (isPlayer and self.db.mirror) or (not isPlayer and not self.db.mirror)
+		module:Mirror(element.unit_portrait, shouldMirror)
+	end
+
+	element.isPlayer = isPlayer
+	element.unitClass = class
+
+	UpdateTextureColor(element, unit)
+	UpdateExtraTexture(element, (element.db.forceExtra ~= "none" and element.db.forceExtra or nil))
 end
 
 function module:CreatePortrait(name, parent, settings)
@@ -325,11 +348,22 @@ local function VehicleUpdate(self, event, _, arg2)
 	Update(self, event, unit)
 end
 
+local function SimpleUpdate(self, event)
+	local unit = self.__owner.unit or self.unit
+	event = event or "ForceUpdate"
+
+	Update(self, event, unit)
+end
+
+local function ForceUpdate(self)
+	local unit = self.__owner.unit or self.unit
+
+	Update(self, "ForceUpdate", unit)
+end
+
 local eventHandlers = {
 	-- portrait updates
-	PORTRAITS_UPDATED = function(self)
-		Update(self, "ForceUpdate", self.unit)
-	end,
+	PORTRAITS_UPDATED = ForceUpdate,
 	UNIT_CONNECTION = Update,
 	UNIT_PORTRAIT_UPDATE = Update,
 	PARTY_MEMBER_ENABLE = Update,
@@ -352,12 +386,18 @@ local eventHandlers = {
 	VEHICLE_UPDATE = VehicleUpdate,
 
 	-- target/ focus updates
-	PLAYER_TARGET_CHANGED = function(self)
-		Update(self, "ForceUpdate", self.unit)
-	end,
-	PLAYER_FOCUS_CHANGED = function(self)
-		Update(self, "ForceUpdate", self.unit)
-	end,
+	PLAYER_TARGET_CHANGED = ForceUpdate,
+	PLAYER_FOCUS_CHANGED = ForceUpdate,
+	UNIT_TARGET = SimpleUpdate,
+
+	-- party
+	GROUP_ROSTER_UPDATE = SimpleUpdate,
+
+	-- arena
+	ARENA_OPPONENT_UPDATE = Update,
+	UNIT_TARGETABLE_CHANGED = Update,
+	ARENA_PREP_OPPONENT_SPECIALIZATIONS = SimpleUpdate,
+	INSTANCE_ENCOUNTER_ENGAGE_UNIT = SimpleUpdate,
 
 	-- death updates
 	UNIT_HEALTH = function(self)
@@ -484,16 +524,32 @@ function module:UpdateTextures(element)
 	module:Mirror(element.extra, mirror)
 end
 
+local function ToggleForceShowGroupFrames(_, group, numGroup)
+	if group == "boss" or group == "arena" then
+		for i = 1, numGroup do
+			if module.portraits[group .. i] then DemoUpdate(module.portraits[group .. i]) end
+		end
+	end
+end
+
+local function HeaderConfig(_, header, configMode)
+	if header.groups and header.groupName == "party" then
+		for i = 1, #header.groups[1] do
+			if module.portraits["party" .. i] then DemoUpdate(module.portraits["party" .. i]) end
+		end
+	end
+end
+
 function module:PLAYER_ENTERING_WORLD()
 	--print("mMT Portraits: PLAYER_ENTERING_WORLD")
-	--module:InitializeArenaPortrait()
-	--module:InitializeBossPortrait()
+	module:InitializeArenaPortrait()
+	module:InitializeBossPortrait()
 	module:InitializeFocusPortrait()
-	--module:InitializePartyPortrait()
-	--module:InitializePetPortrait()
+	module:InitializePartyPortrait()
+	module:InitializePetPortrait()
 	module:InitializePlayerPortrait()
 	module:InitializeTargetPortrait()
-	--module:InitializeTargetTargetPortrait()
+	module:InitializeToTPortrait()
 end
 
 function module:Initialize()
@@ -504,6 +560,8 @@ function module:Initialize()
 		--E:Delay(1, module.InitializePlayerPortrait)
 		if not module.isEnabled then
 			module:RegisterEvent("PLAYER_ENTERING_WORLD")
+			hooksecurefunc(UF, "ToggleForceShowGroupFrames", ToggleForceShowGroupFrames)
+			hooksecurefunc(UF, "HeaderConfig", HeaderConfig)
 			module.isEnabled = true
 		end
 

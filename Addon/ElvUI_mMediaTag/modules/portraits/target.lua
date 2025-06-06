@@ -39,8 +39,9 @@ function module:InitializeTargetPortrait()
 				end
 			end
 		end
-	elseif module.portrait.target then
-		module:RemovePortrait(module.portraits.target)
+	elseif module.portraits.target then
+		module.portraits.target:UnregisterAllEvents()
+		module.portraits.target:Hide()
 		module.portraits.target = nil
 	end
 end

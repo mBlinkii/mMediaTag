@@ -42,8 +42,9 @@ function module:InitializePlayerPortrait()
 				end
 			end
 		end
-	elseif module.portrait.player then
-		module:RemovePortrait(module.portraits.player)
+	elseif module.portraits.player then
+		module.portraits.player:UnregisterAllEvents()
+		module.portraits.player:Hide()
 		module.portraits.player = nil
 	end
 end
