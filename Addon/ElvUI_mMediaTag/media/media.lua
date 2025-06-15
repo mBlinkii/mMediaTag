@@ -162,7 +162,7 @@ function mMT:UpdateMedia(arg)
 		local function createColorSet(path)
 			local set = {}
 			for key, val in pairs(E.db.mMT.color.portraits[path]) do
-				set[key] = type(val) == "table" and { c = CreateColorFromHexString(val.c), g = val.g } or CreateColorFromHexString(val)
+				set[key] = type(val) == "table" and { c = CreateColorFromHexString(val.c), g = CreateColorFromHexString(val.g) } or CreateColorFromHexString(val)
 			end
 			return set
 		end

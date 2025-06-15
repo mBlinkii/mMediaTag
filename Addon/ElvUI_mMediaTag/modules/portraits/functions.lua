@@ -23,6 +23,7 @@ function module:GetUnitColor(unit, class, isPlayer, isDead)
 
 	if isDead then return colors.misc.death end
 
+	print(module.db.misc.force_default)
 	if module.db.misc.force_default then return colors.misc.default end
 
 	if isPlayer then
@@ -43,22 +44,48 @@ function module:GetUnitColor(unit, class, isPlayer, isDead)
 end
 
 local function UpdateTextureColor(element, unit)
+	local db = module.db.misc
+	local e_db = element.db
+
 	unit = unit or element.unit
 	local color = module:GetUnitColor(unit, element.unitClass, element.isPlayer, element.isDead)
 	element.color = color
 
-	if color then
-		local c = color.c
-		element.texture:SetVertexColor(c.r, c.g, c.b, c.a or 1)
-		if element.embellishment then element.embellishment:SetVertexColor(c.r, c.g, c.b, c.a or 1) end
-	end
+if color then
+    local primary, secondary = color.c, color.g
 
-	if element.isDead or module.db.misc.desaturate then
+    if e_db.mirror and db.gradient_mode == "HORIZONTAL" then
+        primary, secondary = secondary, primary
+    end
+
+    if db.gradient then
+        local gradient_params = {
+            { r = primary.r, g = primary.g, b = primary.b, a = primary.a or 1 },
+            { r = secondary.r, g = secondary.g, b = secondary.b, a = secondary.a or 1 }
+        }
+
+        element.texture:SetGradient(db.gradient_mode, unpack(gradient_params))
+
+        if element.embellishment then
+            element.embellishment:SetGradient(db.gradient_mode, unpack(gradient_params))
+        end
+    else
+        local c = color.c
+        element.texture:SetVertexColor(c.r, c.g, c.b, c.a or 1)
+
+        if element.embellishment then
+            element.embellishment:SetVertexColor(c.r, c.g, c.b, c.a or 1)
+        end
+    end
+end
+
+
+	if element.isDead or db.desaturate then
 		if not element.isDesaturated then
 			element.unit_portrait:SetDesaturated(true)
 			element.isDesaturated = true
 		end
-	elseif element.isDesaturated and not module.db.misc.desaturate then
+	elseif element.isDesaturated and not db.desaturate then
 		element.unit_portrait:SetDesaturated(false)
 		element.isDesaturated = false
 	end
@@ -76,13 +103,15 @@ local function UpdateExtraTexture(element, force)
 		return
 	end
 
+	local db = module.db.misc
+	local e_db = element.db
+
 	local color
-	print("UpdateExtraTexture", element.unit, force, element.db.forceExtra)
 	local classification = force and force or (element.type == "boss" and "boss" or ((CachedBossIDs[element.lastGUID] and "boss") or UnitClassification(element.unit)))
 
 	if element.db.unitcolor then
 		color = element.color
-	elseif module.db.misc.force_reaction then
+	elseif db.force_reaction then
 		local reaction = UnitReaction(element.unit, "player")
 		local reactionType = reaction and ((reaction <= 3) and "enemy" or (reaction == 4) and "neutral" or "friendly") or "enemy"
 		color = MEDIA.color.portraits.reaction[reactionType]
@@ -90,13 +119,32 @@ local function UpdateExtraTexture(element, force)
 		color = MEDIA.color.portraits.classification[classification]
 	end
 
-	if color then
-		element.extra:SetTexture(element.media[classification], "CLAMP", "CLAMP", "TRILINEAR")
-		element.extra:SetVertexColor(color.c.r, color.c.g, color.c.b, color.c.a or 1)
-		element.extra:Show()
-	else
-		element.extra:Hide()
-	end
+if color then
+    local extra = element.extra
+    extra:SetTexture(element.media[classification], "CLAMP", "CLAMP", "TRILINEAR")
+
+    if db.gradient then
+        local primary, secondary = color.c, color.g
+
+        if e_db.mirror and db.gradient_mode == "HORIZONTAL" then
+            primary, secondary = secondary, primary
+        end
+
+        local gradient_params = {
+            { r = primary.r, g = primary.g, b = primary.b, a = primary.a or 1 },
+            { r = secondary.r, g = secondary.g, b = secondary.b, a = secondary.a or 1 }
+        }
+
+        extra:SetGradient(db.gradient_mode, unpack(gradient_params))
+    else
+        extra:SetVertexColor(color.c.r, color.c.g, color.c.b, color.c.a or 1)
+    end
+
+    extra:Show()
+else
+    element.extra:Hide()
+end
+
 end
 
 local function Update(self, event, unit)
@@ -521,7 +569,6 @@ local function HeaderConfig(_, header, configMode)
 end
 
 function module:PLAYER_ENTERING_WORLD()
-	--print("mMT Portraits: PLAYER_ENTERING_WORLD")
 	module:InitializeArenaPortrait()
 	module:InitializeBossPortrait()
 	module:InitializeFocusPortrait()
@@ -537,7 +584,6 @@ function module:Initialize()
 
 	if module.db.enable then
 		module.portraits = module.portraits or {}
-		--E:Delay(1, module.InitializePlayerPortrait)
 		if not module.isEnabled then
 			module:RegisterEvent("PLAYER_ENTERING_WORLD")
 			hooksecurefunc(UF, "ToggleForceShowGroupFrames", ToggleForceShowGroupFrames)
