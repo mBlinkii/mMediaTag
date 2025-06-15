@@ -26,7 +26,7 @@ function module:InitializeFocusPortrait()
 				portraits[unit].lastGUID = nil
 				--portraits[unit].realUnit = "player"
 				portraits[unit].name = name
-				--portraits[unit].forceExtra = E.db.mMT.portraits.focus.extra and "player" or nil
+				portraits[unit].forceExtra = (E.db.mMT.portraits.focus.forceExtra ~= "none") and E.db.mMT.portraits.focus.forceExtra or nil
 
 				portraits[unit].media = module:UpdateTexturesFiles(E.db.mMT.portraits.focus.texture, E.db.mMT.portraits.focus.mirror)
 

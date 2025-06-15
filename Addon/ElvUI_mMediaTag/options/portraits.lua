@@ -2879,4 +2879,125 @@ mMT.options.args.unitframes.args.portraits.args = {
 			},
 		},
 	},
+	extra_group = {
+		order = 11,
+		type = "group",
+		name = "Extra",
+		desc = L["Texture Style settings for Extra texture (Rare/Elite/Boss/player)."],
+		args = {
+			texture_group = {
+				order = 1,
+				type = "group",
+				inline = true,
+				name = "Texture Styles",
+				args = {
+					rare_select = {
+						order = 1,
+						type = "select",
+						name = L["Rare"],
+						desc = L["Select a extra texture style for rare units."],
+						get = function(info)
+							return E.db.mMT.portraits.misc.rare
+						end,
+						set = function(info, value)
+							E.db.mMT.portraits.misc.rare = value
+							M.Portraits:Initialize()
+						end,
+						values = function()
+							local t = {}
+							for k, v in pairs(MEDIA.portraits.extra) do
+								if type(v) == "table" then t[k] = v.name end
+							end
+							return t
+						end,
+					},
+					elite_select = {
+						order = 2,
+						type = "select",
+						name = L["Elite"],
+						desc = L["Select a extra texture style for elite units."],
+						get = function(info)
+							return E.db.mMT.portraits.misc.elite
+						end,
+						set = function(info, value)
+							E.db.mMT.portraits.misc.elite = value
+							M.Portraits:Initialize()
+						end,
+						values = function()
+							local t = {}
+							for k, v in pairs(MEDIA.portraits.extra) do
+								if type(v) == "table" then t[k] = v.name end
+							end
+							return t
+						end,
+					},
+					rareelite_select = {
+						order = 3,
+						type = "select",
+						name = L["Rare Elite"],
+						desc = L["Select a extra texture style for rare elite units."],
+						get = function(info)
+							return E.db.mMT.portraits.misc.rareelite
+						end,
+						set = function(info, value)
+							E.db.mMT.portraits.misc.rareelite = value
+							M.Portraits:Initialize()
+						end,
+						values = function()
+							local t = {}
+							for k, v in pairs(MEDIA.portraits.extra) do
+								if type(v) == "table" then t[k] = v.name end
+							end
+							return t
+						end,
+					},
+					boss_select = {
+						order = 4,
+						type = "select",
+						name = L["Boss"],
+						desc = L["Select a extra texture style for boss units."],
+						get = function(info)
+							return E.db.mMT.portraits.misc.boss
+						end,
+						set = function(info, value)
+							E.db.mMT.portraits.misc.boss = value
+							M.Portraits:Initialize()
+						end,
+						values = function()
+							local t = {}
+							for k, v in pairs(MEDIA.portraits.extra) do
+								if type(v) == "table" then t[k] = v.name end
+							end
+							return t
+						end,
+					},
+					player_select = {
+						order = 5,
+						type = "select",
+						name = L["Player"],
+						desc = L["Select a extra texture style for player."],
+						get = function(info)
+							return E.db.mMT.portraits.misc.player
+						end,
+						set = function(info, value)
+							E.db.mMT.portraits.misc.player = value
+							M.Portraits:Initialize()
+						end,
+						values = function()
+							local t = {}
+							for k, v in pairs(MEDIA.portraits.extra) do
+								if type(v) == "table" then t[k] = v.name end
+							end
+							return t
+						end,
+					},
+					description = {
+						order = 6,
+						type = "description",
+						name = L["TIP: If you use the Blizzard textures and change the classification color to white, you will see the extra texture with the original colors."],
+					},
+				},
+			},
+		},
+	},
 }

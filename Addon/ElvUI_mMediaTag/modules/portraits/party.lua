@@ -27,7 +27,7 @@ function module:InitializePartyPortrait()
 					portraits[unit].unitClass = nil
 					portraits[unit].lastGUID = nil
 					portraits[unit].name = name
-					portraits[unit].forceExtra = E.db.mMT.portraits.party.extra and "player" or nil
+					portraits[unit].forceExtra = (E.db.mMT.portraits.party.forceExtra ~= "none") and E.db.mMT.portraits.party.forceExtra or nil
 
 					portraits[unit].media = module:UpdateTexturesFiles(E.db.mMT.portraits.party.texture, E.db.mMT.portraits.party.mirror)
 

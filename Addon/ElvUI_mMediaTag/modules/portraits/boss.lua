@@ -27,7 +27,7 @@ function module:InitializeBossPortrait()
 					portraits[unit].unitClass = nil
 					portraits[unit].lastGUID = nil
 					portraits[unit].name = name
-					--portraits[unit].forceExtra = E.db.mMT.portraits.boss.extra and "player" or nil
+					portraits[unit].forceExtra = (E.db.mMT.portraits.boss.forceExtra ~= "none") and E.db.mMT.portraits.boss.forceExtra or nil
 
 					portraits[unit].media = module:UpdateTexturesFiles(E.db.mMT.portraits.boss.texture, E.db.mMT.portraits.boss.mirror)
 

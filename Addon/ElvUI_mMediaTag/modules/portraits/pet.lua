@@ -26,7 +26,7 @@ function module:InitializePetPortrait()
 				portraits[unit].lastGUID = nil
 				portraits[unit].realUnit = "pet"
 				portraits[unit].name = name
-				--portraits[unit].forceExtra = E.db.mMT.portraits.player.extra and "player" or nil
+				portraits[unit].forceExtra = (E.db.mMT.portraits.pet.forceExtra ~= "none") and E.db.mMT.portraits.pet.forceExtra or nil
 
 				portraits[unit].media = module:UpdateTexturesFiles(E.db.mMT.portraits.pet.texture, E.db.mMT.portraits.pet.mirror)
 

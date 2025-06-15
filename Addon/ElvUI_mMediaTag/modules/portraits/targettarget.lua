@@ -26,7 +26,7 @@ function module:InitializeToTPortrait()
 				portraits[unit].lastGUID = nil
 				--portraits[unit].realUnit = "player"
 				portraits[unit].name = name
-				--portraits[unit].forceExtra = E.db.mMT.portraits.target.extra and "player" or nil
+				portraits[unit].forceExtra = (E.db.mMT.portraits.targettarget.forceExtra ~= "none") and E.db.mMT.portraits.targettarget.forceExtra or nil
 
 				portraits[unit].media = module:UpdateTexturesFiles(E.db.mMT.portraits.targettarget.texture, E.db.mMT.portraits.targettarget.mirror)
 

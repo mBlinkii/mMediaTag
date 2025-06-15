@@ -77,6 +77,7 @@ local function UpdateExtraTexture(element, force)
 	end
 
 	local color
+	print("UpdateExtraTexture", element.unit, force, element.db.forceExtra)
 	local classification = force and force or (element.type == "boss" and "boss" or ((CachedBossIDs[element.lastGUID] and "boss") or UnitClassification(element.unit)))
 
 	if element.db.unitcolor then
@@ -130,7 +131,7 @@ local function Update(self, event, unit)
 		--element.isDead = UnitIsDeadOrGhost(unit)
 
 		UpdateTextureColor(element, unit)
-		UpdateExtraTexture(element, (element.db.forceExtra ~= "none" and element.db.forceExtra or nil))
+		UpdateExtraTexture(element, (element.forceExtra ~= "none" and element.forceExtra or nil))
 
 		if not InCombatLockdown() and self:GetAttribute("unit") ~= unit then self:SetAttribute("unit", unit) end
 	end
@@ -156,7 +157,7 @@ local function DemoUpdate(self)
 	element.unitClass = class
 
 	UpdateTextureColor(element, unit)
-	UpdateExtraTexture(element, (element.db.forceExtra ~= "none" and element.db.forceExtra or nil))
+	UpdateExtraTexture(element, (element.forceExtra ~= "none" and element.forceExtra or nil))
 end
 
 function module:CreatePortrait(name, parent, settings)
