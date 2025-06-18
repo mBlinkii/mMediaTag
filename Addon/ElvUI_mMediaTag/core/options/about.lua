@@ -21,6 +21,7 @@ local credits = {
 	"ElioteMarcondes",
 	"Heyallo", -- thank you for the troubleshooting
 	"Pastafarian",
+	"ZamestoTV", -- ru localization
 	"nhtwolf",
 	"Tukui Community - tukui.org",
 }

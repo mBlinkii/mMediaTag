@@ -64,7 +64,7 @@ local path = "Interface\\Addons\\ElvUI_mMediaTag\\media\\class\\"
 function mMT:AddClassIcons(style, texture, texCoords, name)
 	if not (style and texture and texCoords) then
 		mMT:Print("|CFFEA1818Error|r:", L["Could not add the texture."])
-		return
+		return false, "missingArgs"
 	end
 
 	local icon = {
@@ -75,12 +75,18 @@ function mMT:AddClassIcons(style, texture, texCoords, name)
 	if texCoords ~= "default" then
 		if type(texCoords) ~= "table" then
 			mMT:Print("|CFFEA1818Error|r:", L["The texture coordinates must be passed as a table."])
-			return
+			return false, "invalidCoords"
 		end
 		icon.texCoords = texCoords
 	end
 
-	mMT.ClassIcons.Custom[style] = icon
+	if not mMT.ClassIcons.mMT[style] then
+		mMT.ClassIcons.mMT[style] = icon
+		return true
+	else
+		mMT:Print("|CFFEA1818Error|r:", L["The style already exists."])
+		return false, "duplicate"
+	end
 end
 
 local function AddClassIcons(style, texture, name)

@@ -1,6 +1,14 @@
 # Changelog - ElvUI_mMediaTag
 [Eng] - All changes to this project will be documented in this file. The latest changes are at the top.
 
+## [ver. 3.74] - 18.06.2025
+### FIX 
+- FIX - [DT-FPS]: Fixed Bug with FPS Datatext in Classic Versions.
+### UPDATE
+- UPDATE - [System]: Add Russian Localization, thx to ZamestoTV.
+- UPDATE - [System]: Update Portraits API function.
+- UPDATE - [System]: Update Game Version.
+
 ## [ver. 3.73] - 25.04.2025
 ### FIX 
 - FIX - [Portraits]: BG color slider is also available without class bg color enabled.
