@@ -55,8 +55,31 @@ local textureDB = {
 			name = "Default",
 			texture = "Interface\\AddOns\\ElvUI_mMediaTag\\media\\portraits\\bg\\bg_01.tga",
 		},
+		a = {
+			name = "BG 1",
+			texture = "Interface\\AddOns\\ElvUI_mMediaTag\\media\\portraits\\bg\\bg_02.tga",
+		},
+		b = {
+			name = "BG 2",
+			texture = "Interface\\AddOns\\ElvUI_mMediaTag\\media\\portraits\\bg\\bg_03.tga",
+		},
+		c = {
+			name = "BG 3",
+			texture = "Interface\\AddOns\\ElvUI_mMediaTag\\media\\portraits\\bg\\bg_04.tga",
+		},
+		d = {
+			name = "BG 4",
+			texture = "Interface\\AddOns\\ElvUI_mMediaTag\\media\\portraits\\bg\\bg_05.tga",
+		},
+		e = {
+			name = "BG 5",
+			texture = "Interface\\AddOns\\ElvUI_mMediaTag\\media\\portraits\\bg\\bg_06.tga",
+		},
+		f = {
+			name = "BG 6",
+			texture = "Interface\\AddOns\\ElvUI_mMediaTag\\media\\portraits\\bg\\bg_07.tga",
+		},
 	},
-	icons = {},
 }
 
 MEDIA.portraits = textureDB

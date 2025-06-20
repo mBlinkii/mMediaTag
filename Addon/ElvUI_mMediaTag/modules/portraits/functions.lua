@@ -150,19 +150,20 @@ local function Update(self, event, unit)
 	local isAvailable = UnitIsConnected(unit) and UnitIsVisible(unit)
 	local hasStateChanged = ((event == "ForceUpdate") or (element.guid ~= guid) or (element.state ~= isAvailable))
 	if hasStateChanged then
-		--print("FULL UPDATE")
+		local texCoords
 		local class = select(2, UnitClass(unit))
 		local isPlayer = UnitIsPlayer(unit) or (E.Retail and UnitInPartyIsAI(unit))
 		local shouldMirror = (isPlayer and self.db.mirror) or (not isPlayer and not self.db.mirror)
 
 		if module.useClassIcons and isPlayer then
+			texCoords = module.texCoords[class].texCoords or module.texCoords[class]
 			element.unit_portrait:SetTexture(module.classIcons, "CLAMP", "CLAMP", "TRILINEAR")
 		else
 			SetPortraitTexture(element.unit_portrait, unit, true)
 		end
 
 		mMT:DebugPrintTable(module.useClassIcons and module.texCoords[class])
-		module:Mirror(element.unit_portrait, shouldMirror, (isPlayer and module.useClassIcons) and module.texCoords[class].texCoords)
+		module:Mirror(element.unit_portrait, shouldMirror, texCoords)
 
 		element.guid = guid
 		element.state = isAvailable
@@ -180,18 +181,20 @@ end
 
 local function DemoUpdate(self)
 	local element = self
+	local texCoords
 	local unit = "player"
 	local class = select(2, UnitClass(unit))
 	local isPlayer = true
 	local shouldMirror = (isPlayer and self.db.mirror) or (not isPlayer and not self.db.mirror)
 
 	if module.useClassIcons then
+		texCoords = module.texCoords[class].texCoords or module.texCoords[class]
 		element.unit_portrait:SetTexture(module.classIcons, "CLAMP", "CLAMP", "TRILINEAR")
 	else
 		SetPortraitTexture(element.unit_portrait, unit, true)
 	end
 
-	module:Mirror(element.unit_portrait, shouldMirror, module.useClassIcons and module.texCoords[class])
+	module:Mirror(element.unit_portrait, shouldMirror, texCoords)
 
 	element.isPlayer = isPlayer
 	element.unitClass = class
@@ -243,7 +246,6 @@ function module:CreatePortrait(name, parent, settings)
 	portrait.bg = portrait:CreateTexture("mMT-Portrait-BG-" .. name, "BACKGROUND", nil, 2)
 	portrait.bg:SetAllPoints(portrait.texture)
 	portrait.bg:AddMaskTexture(portrait.mask)
-	--portrait.bg:SetVertexColor(0, 0, 0, 1)
 
 	-- scripts to interact with mouse
 	portrait:SetAttribute("unit", portrait.unit)
@@ -262,7 +264,7 @@ function module:UpdateTexturesFiles(style, mirror)
 	local media = MEDIA.portraits
 	local db = module.db
 
-	local bg = media.bg["default"].texture
+	local bg = media.bg[db.bg.style].texture
 
 	local texture, shadow, mask, extra_mask, embellishment
 	local player, rare, elite, rareelite, boss
@@ -446,6 +448,15 @@ local function RegisterEvent(element, event, unitEvent)
 	end
 end
 
+local function adjustColor(color, shift)
+	return {
+		r = color.r * shift,
+		g = color.g * shift,
+		b = color.b * shift,
+		a = color.a,
+	}
+end
+
 function module:InitPortrait(element)
 	if element then
 		if element.media.embellishment and not element.embellishment then
@@ -454,6 +465,12 @@ function module:InitPortrait(element)
 		end
 
 		module:UpdateTextures(element)
+
+		local bgColor = module.db.bg.classBG and MEDIA.myclass or MEDIA.color.portraits.misc.bg
+		if module.db.bg.classBG then
+			bgColor = adjustColor(bgColor, module.db.bg.bgColorShift or 1)
+		end
+		element.bg:SetVertexColor(bgColor.r, bgColor.g, bgColor.b, bgColor.a)
 
 		-- default events
 		if not element.eventsSet then

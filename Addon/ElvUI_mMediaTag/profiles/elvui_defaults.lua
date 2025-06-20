@@ -140,10 +140,14 @@ P.datatexts = {
 -- portraits
 P.portraits = {
 	enable = true,
+	bg = {
+		bgColorShift = 0.5,
+		style = "default",
+		classBG = false,
+	},
 	misc = {
 		force_reaction = false,
 		force_default = false,
-		bg = "default",
 		gradient = true,
 		gradient_mode = "HORIZONTAL",
 		scale = 1,
@@ -344,10 +348,10 @@ P.color = {
 		misc = {
 			death = { c = "FFF86767", g = "FFEC3535" },
 			default = { c = "FFE6CC80", g = "FFDAB033" },
-			border = "FF000000",
-			extra = "FFFFFFFF",
-			shadow = "CD1E1E1E",
-			inner = "87282828",
+			bg = "FF000000",
+			-- extra = "FFFFFFFF",
+			-- shadow = "CD1E1E1E",
+			-- inner = "87282828",
 		},
 		class = {
 			DEATHKNIGHT = { c = "FFC41E3A", g = "FF9C182E" },

@@ -64,26 +64,6 @@ mMT.options.args.unitframes.args.portraits.args = {
 							M.Portraits:Initialize()
 						end,
 					},
-					bg = {
-						order = 3,
-						type = "select",
-						name = L["BG Style"],
-						desc = L["Choose the background style for the transparent Class icons."],
-						get = function(info)
-							return E.db.mMT.portraits.misc.bg
-						end,
-						set = function(info, value)
-							E.db.mMT.portraits.misc.bg = value
-							M.Portraits:Initialize()
-						end,
-						values = function()
-							local t = {}
-							for k, v in pairs(MEDIA.portraits.bg) do
-								if type(v) == "table" then t[k] = v.name end
-							end
-							return t
-						end,
-					},
 				},
 			},
 			icons_group = {
@@ -118,8 +98,83 @@ mMT.options.args.unitframes.args.portraits.args = {
 					},
 				},
 			},
-			custom_textures_group = {
+			bg_group = {
 				order = 3,
+				type = "group",
+				inline = true,
+				name = L["BG"],
+				args = {
+					bg = {
+						order = 1,
+						type = "select",
+						name = L["BG Style"],
+						desc = L["Choose the background style for the transparent Class icons."],
+						get = function(info)
+							return E.db.mMT.portraits.bg.style
+						end,
+						set = function(info, value)
+							E.db.mMT.portraits.bg.style = value
+							M.Portraits:Initialize()
+						end,
+						values = function()
+							local t = {}
+							for k, v in pairs(MEDIA.portraits.bg) do
+								if type(v) == "table" then t[k] = v.name end
+							end
+							return t
+						end,
+					},
+					color_background = {
+						type = "color",
+						order = 2,
+						name = L["Color"],
+						hasAlpha = false,
+						get = function(info)
+							local r, g, b = mMT:HexToRGB(E.db.mMT.color.portraits.misc.bg)
+							return r, g, b
+						end,
+						set = function(info, r, g, b)
+							local hex = E:RGBToHex(r, g, b, "ff")
+							E.db.mMT.color.portraits.misc.bg = hex
+							MEDIA.color.portraits.misc.bg = CreateColorFromHexString(hex)
+							MEDIA.color.portraits.misc.bg.hex = hex
+							M.Portraits:Initialize()
+						end,
+					},
+					toggle_classbg = {
+						order = 3,
+						type = "toggle",
+						name = L["Class colored"],
+						desc = L["Enable Class colored Background"],
+						get = function(info)
+							return E.db.mMT.portraits.bg.classBG
+						end,
+						set = function(info, value)
+							E.db.mMT.portraits.bg.classBG = value
+							M.Portraits:Initialize()
+						end,
+					},
+					range_bgColorShift = {
+						order = 4,
+						name = L["Background color shift"],
+						type = "range",
+						min = 0,
+						max = 1,
+						step = 0.01,
+						softMin = 0,
+						softMax = 1,
+						get = function(info)
+							return E.db.mMT.portraits.bg.bgColorShift
+						end,
+						set = function(info, value)
+							E.db.mMT.portraits.bg.bgColorShift = value
+							M.Portraits:Initialize()
+						end,
+					},
+				},
+			},
+			custom_textures_group = {
+				order = 4,
 				type = "group",
 				inline = true,
 				name = L["Custom Textures"],

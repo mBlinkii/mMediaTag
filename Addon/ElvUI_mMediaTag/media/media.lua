@@ -62,10 +62,7 @@ MEDIA.color = {
 		misc = {
 			death = createColorPair("FFF86767", "FFEC3535"),
 			default = createColorPair("FFE6CC80", "FFDAB033"),
-			border = createColor("FF000000"),
-			extra = createColor("FFFFFFFF"),
-			shadow = createColor("CD1E1E1E"),
-			inner = createColor("87282828"),
+			bg = createColor("FF000000"),
 		},
 		class = {
 			DEATHKNIGHT = createColorPair("FFC41E3A", "FF9C182E"),
