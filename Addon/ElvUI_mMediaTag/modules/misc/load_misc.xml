@@ -1,9 +1,10 @@
 <Ui xmlns="http://www.blizzard.com/wow/ui/">
+    <Script file="class_icons.lua"/>
+    <Script file="dice_button.lua"/>
+    <Script file="difficulty_info.lua"/>
     <Script file="elvui_icons.lua"/>
     <Script file="greeting_message.lua"/>
     <Script file="keystone_to_chat.lua"/>
-    <Script file="unit_ids.lua"/>
-    <Script file="dice_button.lua"/>
     <Script file="lfg_invite_info.lua"/>
-     <Script file="difficulty_info.lua"/>
+    <Script file="unit_ids.lua"/>
 </Ui>

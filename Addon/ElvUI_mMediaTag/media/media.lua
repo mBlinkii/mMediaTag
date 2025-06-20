@@ -381,3 +381,7 @@ MEDIA.icons.datatexts.durability = {
 	shield_02 = "Interface\\AddOns\\ElvUI_mMediaTag\\media\\icons\\datatexts\\shield_b.tga",
 	shield_03 = "Interface\\AddOns\\ElvUI_mMediaTag\\media\\icons\\datatexts\\shield_c.tga",
 }
+
+MEDIA.icons.class  = {
+
+}

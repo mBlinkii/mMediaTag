@@ -23,7 +23,6 @@ function module:GetUnitColor(unit, class, isPlayer, isDead)
 
 	if isDead then return colors.misc.death end
 
-	print(module.db.misc.force_default)
 	if module.db.misc.force_default then return colors.misc.default end
 
 	if isPlayer then
@@ -51,34 +50,29 @@ local function UpdateTextureColor(element, unit)
 	local color = module:GetUnitColor(unit, element.unitClass, element.isPlayer, element.isDead)
 	element.color = color
 
-if color then
-    local primary, secondary = color.c, color.g
+	if color then
+		local primary, secondary = color.c, color.g
 
-    if e_db.mirror and db.gradient_mode == "HORIZONTAL" then
-        primary, secondary = secondary, primary
-    end
+		if e_db.mirror and db.gradient_mode == "HORIZONTAL" then
+			primary, secondary = secondary, primary
+		end
 
-    if db.gradient then
-        local gradient_params = {
-            { r = primary.r, g = primary.g, b = primary.b, a = primary.a or 1 },
-            { r = secondary.r, g = secondary.g, b = secondary.b, a = secondary.a or 1 }
-        }
+		if db.gradient then
+			local gradient_params = {
+				{ r = primary.r, g = primary.g, b = primary.b, a = primary.a or 1 },
+				{ r = secondary.r, g = secondary.g, b = secondary.b, a = secondary.a or 1 },
+			}
 
-        element.texture:SetGradient(db.gradient_mode, unpack(gradient_params))
+			element.texture:SetGradient(db.gradient_mode, unpack(gradient_params))
 
-        if element.embellishment then
-            element.embellishment:SetGradient(db.gradient_mode, unpack(gradient_params))
-        end
-    else
-        local c = color.c
-        element.texture:SetVertexColor(c.r, c.g, c.b, c.a or 1)
+			if element.embellishment then element.embellishment:SetGradient(db.gradient_mode, unpack(gradient_params)) end
+		else
+			local c = color.c
+			element.texture:SetVertexColor(c.r, c.g, c.b, c.a or 1)
 
-        if element.embellishment then
-            element.embellishment:SetVertexColor(c.r, c.g, c.b, c.a or 1)
-        end
-    end
-end
-
+			if element.embellishment then element.embellishment:SetVertexColor(c.r, c.g, c.b, c.a or 1) end
+		end
+	end
 
 	if element.isDead or db.desaturate then
 		if not element.isDesaturated then
@@ -119,32 +113,31 @@ local function UpdateExtraTexture(element, force)
 		color = MEDIA.color.portraits.classification[classification]
 	end
 
-if color then
-    local extra = element.extra
-    extra:SetTexture(element.media[classification], "CLAMP", "CLAMP", "TRILINEAR")
+	if color then
+		local extra = element.extra
+		extra:SetTexture(element.media[classification], "CLAMP", "CLAMP", "TRILINEAR")
 
-    if db.gradient then
-        local primary, secondary = color.c, color.g
+		if db.gradient then
+			local primary, secondary = color.c, color.g
 
-        if e_db.mirror and db.gradient_mode == "HORIZONTAL" then
-            primary, secondary = secondary, primary
-        end
+			if e_db.mirror and db.gradient_mode == "HORIZONTAL" then
+				primary, secondary = secondary, primary
+			end
 
-        local gradient_params = {
-            { r = primary.r, g = primary.g, b = primary.b, a = primary.a or 1 },
-            { r = secondary.r, g = secondary.g, b = secondary.b, a = secondary.a or 1 }
-        }
+			local gradient_params = {
+				{ r = primary.r, g = primary.g, b = primary.b, a = primary.a or 1 },
+				{ r = secondary.r, g = secondary.g, b = secondary.b, a = secondary.a or 1 },
+			}
 
-        extra:SetGradient(db.gradient_mode, unpack(gradient_params))
-    else
-        extra:SetVertexColor(color.c.r, color.c.g, color.c.b, color.c.a or 1)
-    end
+			extra:SetGradient(db.gradient_mode, unpack(gradient_params))
+		else
+			extra:SetVertexColor(color.c.r, color.c.g, color.c.b, color.c.a or 1)
+		end
 
-    extra:Show()
-else
-    element.extra:Hide()
-end
-
+		extra:Show()
+	else
+		element.extra:Hide()
+	end
 end
 
 local function Update(self, event, unit)
@@ -160,16 +153,16 @@ local function Update(self, event, unit)
 		--print("FULL UPDATE")
 		local class = select(2, UnitClass(unit))
 		local isPlayer = UnitIsPlayer(unit) or (E.Retail and UnitInPartyIsAI(unit))
+		local shouldMirror = (isPlayer and self.db.mirror) or (not isPlayer and not self.db.mirror)
 
-		local classIcons = false
-
-		if classIcons then
-			--element:SetAtlas("classicon-" .. class)
+		if module.useClassIcons and isPlayer then
+			element.unit_portrait:SetTexture(module.classIcons, "CLAMP", "CLAMP", "TRILINEAR")
 		else
 			SetPortraitTexture(element.unit_portrait, unit, true)
-			local shouldMirror = (isPlayer and self.db.mirror) or (not isPlayer and not self.db.mirror)
-			module:Mirror(element.unit_portrait, shouldMirror)
 		end
+
+		mMT:DebugPrintTable(module.useClassIcons and module.texCoords[class])
+		module:Mirror(element.unit_portrait, shouldMirror, (isPlayer and module.useClassIcons) and module.texCoords[class].texCoords)
 
 		element.guid = guid
 		element.state = isAvailable
@@ -190,16 +183,15 @@ local function DemoUpdate(self)
 	local unit = "player"
 	local class = select(2, UnitClass(unit))
 	local isPlayer = true
+	local shouldMirror = (isPlayer and self.db.mirror) or (not isPlayer and not self.db.mirror)
 
-	local classIcons = false
-
-	if classIcons then
-		--element:SetAtlas("classicon-" .. class)
+	if module.useClassIcons then
+		element.unit_portrait:SetTexture(module.classIcons, "CLAMP", "CLAMP", "TRILINEAR")
 	else
 		SetPortraitTexture(element.unit_portrait, unit, true)
-		local shouldMirror = (isPlayer and self.db.mirror) or (not isPlayer and not self.db.mirror)
-		module:Mirror(element.unit_portrait, shouldMirror)
 	end
+
+	module:Mirror(element.unit_portrait, shouldMirror, module.useClassIcons and module.texCoords[class])
 
 	element.isPlayer = isPlayer
 	element.unitClass = class
@@ -271,7 +263,6 @@ function module:UpdateTexturesFiles(style, mirror)
 	local db = module.db
 
 	local bg = media.bg["default"].texture
-	local classIcons = db.misc.class_icon and media.icons[db.misc.class_icon] or nil
 
 	local texture, shadow, mask, extra_mask, embellishment
 	local player, rare, elite, rareelite, boss
@@ -316,7 +307,6 @@ function module:UpdateTexturesFiles(style, mirror)
 		boss = boss,
 		bg = bg,
 		embellishment = embellishment,
-		classIcons = classIcons,
 	}
 end
 
@@ -590,6 +580,12 @@ function module:Initialize()
 			hooksecurefunc(UF, "HeaderConfig", HeaderConfig)
 			module.isEnabled = true
 		end
+
+		local classIconStyle = module.db.misc.class_icon
+		local classIcons = (classIconStyle ~= "none") and (MEDIA.icons.class.icons.mmt[classIconStyle] or MEDIA.icons.class.icons.custom[classIconStyle]) or nil
+		module.classIcons = classIcons and classIcons.texture or nil
+		module.useClassIcons = classIcons and (module.db.misc.class_icon ~= "none") and true or false
+		module.texCoords = classIcons and (classIcons.texCoords or MEDIA.icons.class.data) or nil
 
 		module:PLAYER_ENTERING_WORLD()
 	else

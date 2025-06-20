@@ -86,8 +86,40 @@ mMT.options.args.unitframes.args.portraits.args = {
 					},
 				},
 			},
-			custom_textures_group = {
+			icons_group = {
 				order = 2,
+				type = "group",
+				inline = true,
+				name = L["Icons"],
+				args = {
+					classIcon_select = {
+						order = 1,
+						type = "select",
+						name = "Class icon",
+						desc = "Enable and select a class icon style for the portrait.",
+						get = function(info)
+							return E.db.mMT.portraits.misc.class_icon
+						end,
+						set = function(info, value)
+							E.db.mMT.portraits.misc.class_icon = value
+							M.Portraits:Initialize()
+						end,
+						values = function()
+							local t = {}
+							for k, v in pairs(MEDIA.icons.class.icons.mmt) do
+								if type(v) == "table" then t[k] = v.name end
+							end
+							for k, v in pairs(MEDIA.icons.class.icons.custom) do
+								if type(v) == "table" then t[k] = v.name end
+							end
+							t.none = "None"
+							return t
+						end,
+					},
+				},
+			},
+			custom_textures_group = {
+				order = 3,
 				type = "group",
 				inline = true,
 				name = L["Custom Textures"],
@@ -3071,8 +3103,8 @@ mMT.options.args.unitframes.args.portraits.args = {
 						name = L["Mode"],
 						desc = L["Choose the gradient orientation."],
 						disabled = function()
-									return not E.db.mMT.color.portraits.misc.gradient
-								end,
+							return not E.db.mMT.portraits.misc.gradient
+						end,
 						get = function(info)
 							return E.db.mMT.portraits.misc.gradient_mode
 						end,
@@ -3080,7 +3112,7 @@ mMT.options.args.unitframes.args.portraits.args = {
 							E.db.mMT.portraits.misc.gradient_mode = value
 							M.Portraits:Initialize()
 						end,
-						values =  {
+						values = {
 							VERTICAL = L["Vertical"],
 							HORIZONTAL = L["Horizontal"],
 						},
