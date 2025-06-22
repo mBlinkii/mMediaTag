@@ -103,6 +103,20 @@ end
 
 local CachedBossIDs = {}
 
+local function SetupExtraTexture(element, low)
+	local extraOnTop = module.db.misc.extratop and not low
+	element.extra:SetDrawLayer(extraOnTop and "OVERLAY" or "ARTWORK", extraOnTop and 7 or 1)
+
+	-- extra mask
+	if not extraOnTop and not element.extra_mask then
+		element.extra_mask = element:CreateMaskTexture()
+		element.extra_mask:SetAllPoints(element.extra)
+		element.extra:AddMaskTexture(element.extra_mask)
+	elseif element.extra_mask then
+		element.extra:RemoveMaskTexture(element.extra_mask)
+	end
+end
+
 local function UpdateExtraTexture(element, force)
 	if element.extra and not element.db.extra then
 		element.extra:Hide()
@@ -127,7 +141,8 @@ local function UpdateExtraTexture(element, force)
 
 	if color then
 		local extra = element.extra
-		extra:SetTexture(element.media[classification], "CLAMP", "CLAMP", "TRILINEAR")
+		SetupExtraTexture(element, element.media[classification].low)
+		extra:SetTexture(element.media[classification].texture, "CLAMP", "CLAMP", "TRILINEAR")
 
 		if db.gradient then
 			local primary, secondary = color.c, color.g
@@ -302,8 +317,7 @@ function module:UpdateTexturesFiles(style, mirror)
 		extra_mask = mirror and textures.extra_mirror or textures.extra
 		embellishment = mirror and textures.embellishment_mirror or textures.embellishment
 
-		player, rare, elite, rareelite, boss =
-			media.extra[db.misc.player].texture, media.extra[db.misc.rare].texture, media.extra[db.misc.elite].texture, media.extra[db.misc.rareelite].texture, media.extra[db.misc.boss].texture
+		player, rare, elite, rareelite, boss = media.extra[db.misc.player], media.extra[db.misc.rare], media.extra[db.misc.elite], media.extra[db.misc.rareelite], media.extra[db.misc.boss]
 	end
 
 	return {
@@ -345,9 +359,6 @@ function module:UpdateSize(element, size, point)
 			element.extra:SetAllPoints(element.texture)
 			element.extra.changed = false
 		end
-
-		if element.db.strata ~= "AUTO" then element:SetFrameStrata(element.db.strata) end
-		element:SetFrameLevel(element.db.level)
 
 		local scale = module.db.misc.scale
 		element.unit_portrait:SetScale(scale)
@@ -442,9 +453,7 @@ local eventHandlers = {
 local function OnEvent(self, event, unit, arg)
 	self.isDead = UnitIsDeadOrGhost(self.__owner.unit)
 
-	if self.isDead then
-		UpdateTextureColor(self, self.__owner.unit or self.unit)
-	end
+	if self.isDead then UpdateTextureColor(self, self.__owner.unit or self.unit) end
 
 	if eventHandlers[event] then eventHandlers[event](self, event, unit, arg) end
 end

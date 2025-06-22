@@ -3025,7 +3025,7 @@ mMT.options.args.unitframes.args.portraits.args = {
 				order = 1,
 				type = "group",
 				inline = true,
-				name = "Texture Styles",
+				name = L["Texture Styles"],
 				args = {
 					rare_select = {
 						order = 1,
@@ -3131,6 +3131,27 @@ mMT.options.args.unitframes.args.portraits.args = {
 						order = 6,
 						type = "description",
 						name = L["TIP: If you use the Blizzard textures and change the classification color to white, you will see the extra texture with the original colors."],
+					},
+				},
+			},
+			settings_group = {
+				order = 2,
+				type = "group",
+				inline = true,
+				name = L["Settings"],
+				args = {
+					ontop = {
+						order = 1,
+						type = "toggle",
+						name = L["On Top"],
+						desc = L["Enable this to show the Extra Texture on top of the Unit Portrait."],
+						get = function(info)
+							return E.db.mMT.portraits.misc.extratop
+						end,
+						set = function(info, value)
+							E.db.mMT.portraits.misc.extratop = value
+							M.Portraits:Initialize()
+						end,
 					},
 				},
 			},
