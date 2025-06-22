@@ -223,8 +223,8 @@ function module:CreatePortrait(name, parent, settings)
 	portrait.texture:SetPoint("CENTER", portrait, "CENTER", 0, 0)
 
 	-- shadow
-	portrait.shadow = portrait:CreateTexture("mMT-Portrait-Shadow-" .. name, "ARTWORK", nil, 4)
-	portrait.shadow:SetAllPoints(portrait.texture)
+	--portrait.shadow = portrait:CreateTexture("mMT-Portrait-Shadow-" .. name, "ARTWORK", nil, 4)
+	--portrait.shadow:SetAllPoints(portrait.texture)
 
 	-- mask
 	portrait.mask = portrait:CreateMaskTexture()
@@ -472,12 +472,22 @@ end
 
 function module:InitPortrait(element)
 	if element then
+		-- embellishment
 		if module.db.misc.embellishment and element.media.embellishment and not element.embellishment then
 			element.embellishment = element:CreateTexture("mMT-Portrait-Embellishment-" .. element.name, "OVERLAY", nil, 6)
 			element.embellishment:SetAllPoints(element.texture)
-		elseif element.embellishment then
+		elseif not module.db.misc.embellishment and element.embellishment then
 			element.embellishment:Hide()
 			element.embellishment = nil
+		end
+
+		-- shadow
+		if module.db.shadow.enable and element.media.shadow and not element.shadow then
+			element.shadow = element:CreateTexture("mMT-Portrait-Shadow-" .. element.name, "ARTWORK", nil, 4)
+			element.shadow:SetAllPoints(element.texture)
+		elseif not module.db.shadow.enable and element.shadow then
+			element.shadow:Hide()
+			element.shadow = nil
 		end
 
 		module:UpdateTextures(element)
@@ -557,7 +567,6 @@ end
 function module:UpdateTextures(element)
 	SetTexture(element.texture, element.media.texture, "CLAMP")
 	SetTexture(element.mask, element.media.mask, "CLAMPTOBLACKADDITIVE")
-	SetTexture(element.shadow, element.media.shadow, "CLAMP")
 
 	local mirror = element.db.mirror
 	if element.embellishment then
@@ -569,8 +578,13 @@ function module:UpdateTextures(element)
 	SetTexture(element.bg, element.media.bg, "CLAMP")
 
 	module:Mirror(element.texture, mirror)
-	module:Mirror(element.shadow, mirror)
 	module:Mirror(element.extra, mirror)
+
+	if element.shadow then
+		SetTexture(element.shadow, element.media.shadow, "CLAMP")
+		element.shadow:SetAlpha(module.db.shadow.alpha)
+		module:Mirror(element.shadow, mirror)
+	end
 end
 
 local function ToggleForceShowGroupFrames(_, group, numGroup)

@@ -79,8 +79,44 @@ mMT.options.args.unitframes.args.portraits.args = {
 					},
 				},
 			},
-			icons_group = {
+			shadow_group = {
 				order = 2,
+				type = "group",
+				inline = true,
+				name = L["Shadow"],
+				args = {
+					enable_shadow = {
+						order = 1,
+						type = "toggle",
+						name = L["Enable"],
+						desc = L["Enable the Shadow for the Portraits."],
+						get = function(info)
+							return E.db.mMT.portraits.shadow.enable
+						end,
+						set = function(info, value)
+							E.db.mMT.portraits.shadow.enable = value
+							M.Portraits:Initialize()
+						end,
+					},
+					alpha_range = {
+						order = 2,
+						name = L["Portrait Scale"],
+						type = "range",
+						min = 0,
+						max = 1,
+						step = 0.01,
+						get = function(info)
+							return E.db.mMT.portraits.shadow.alpha
+						end,
+						set = function(info, value)
+							E.db.mMT.portraits.shadow.alpha = value
+							M.Portraits:Initialize()
+						end,
+					},
+				},
+			},
+			icons_group = {
+				order = 3,
 				type = "group",
 				inline = true,
 				name = L["Icons"],
@@ -112,7 +148,7 @@ mMT.options.args.unitframes.args.portraits.args = {
 				},
 			},
 			bg_group = {
-				order = 3,
+				order = 4,
 				type = "group",
 				inline = true,
 				name = L["BG"],
@@ -187,7 +223,7 @@ mMT.options.args.unitframes.args.portraits.args = {
 				},
 			},
 			custom_textures_group = {
-				order = 4,
+				order = 5,
 				type = "group",
 				inline = true,
 				name = L["Custom Textures"],

@@ -145,6 +145,10 @@ P.portraits = {
 		style = "default",
 		classBG = false,
 	},
+	shadow = {
+		enable = true,
+		alpha = 0.75,
+	},
 	misc = {
 		embellishment = true,
 		force_reaction = false,
