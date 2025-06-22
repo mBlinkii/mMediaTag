@@ -153,7 +153,6 @@ local function UpdateExtraTexture(element, force)
 end
 
 local function Update(self, event, unit)
-	--print("Update", unit, event, self.unit, self.type, self.__owner.unit, UnitIsUnit(self.unit, unit))
 	if not unit or not UnitIsUnit((self.__owner.unit or self.unit), unit) then return end
 
 	local element = self
@@ -174,7 +173,6 @@ local function Update(self, event, unit)
 			SetPortraitTexture(element.unit_portrait, unit, true)
 		end
 
-		mMT:DebugPrintTable(module.useClassIcons and module.texCoords[class])
 		module:Mirror(element.unit_portrait, shouldMirror, texCoords)
 
 		element.guid = guid
@@ -182,7 +180,6 @@ local function Update(self, event, unit)
 		element.isPlayer = isPlayer
 		element.unit = unit
 		element.unitClass = class
-		--element.isDead = UnitIsDeadOrGhost(unit)
 
 		UpdateTextureColor(element, unit)
 		UpdateExtraTexture(element, (element.forceExtra ~= "none" and element.forceExtra or nil))
@@ -446,7 +443,6 @@ local function OnEvent(self, event, unit, arg)
 	self.isDead = UnitIsDeadOrGhost(self.__owner.unit)
 
 	if self.isDead then
-		--print("OnEvent", event, unit, arg, self.unit, self.type, self.__owner.unit, UnitIsDeadOrGhost(self.__owner.unit))
 		UpdateTextureColor(self, self.__owner.unit or self.unit)
 	end
 
