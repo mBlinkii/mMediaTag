@@ -65,12 +65,24 @@ local function UpdateTextureColor(element, unit)
 
 			element.texture:SetGradient(db.gradient_mode, unpack(gradient_params))
 
-			if element.embellishment then element.embellishment:SetGradient(db.gradient_mode, unpack(gradient_params)) end
+			if element.embellishment then
+				if not element.media.disable_color then
+					element.embellishment:SetGradient(db.gradient_mode, unpack(gradient_params))
+				else
+					element.embellishment:SetVertexColor(1, 1, 1, 1)
+				end
+			end
 		else
 			local c = color.c
 			element.texture:SetVertexColor(c.r, c.g, c.b, c.a or 1)
 
-			if element.embellishment then element.embellishment:SetVertexColor(c.r, c.g, c.b, c.a or 1) end
+			if element.embellishment then
+				if element.media.disable_color then
+					element.embellishment:SetVertexColor(1, 1, 1, 1)
+				else
+					element.embellishment:SetVertexColor(c.r, c.g, c.b, c.a or 1)
+				end
+			end
 		end
 	end
 
@@ -309,6 +321,7 @@ function module:UpdateTexturesFiles(style, mirror)
 		boss = boss,
 		bg = bg,
 		embellishment = embellishment,
+		disable_color = media.textures[style].disable_color,
 	}
 end
 
@@ -459,17 +472,18 @@ end
 
 function module:InitPortrait(element)
 	if element then
-		if element.media.embellishment and not element.embellishment then
+		if module.db.misc.embellishment and element.media.embellishment and not element.embellishment then
 			element.embellishment = element:CreateTexture("mMT-Portrait-Embellishment-" .. element.name, "OVERLAY", nil, 6)
 			element.embellishment:SetAllPoints(element.texture)
+		elseif element.embellishment then
+			element.embellishment:Hide()
+			element.embellishment = nil
 		end
 
 		module:UpdateTextures(element)
 
 		local bgColor = module.db.bg.classBG and MEDIA.myclass or MEDIA.color.portraits.misc.bg
-		if module.db.bg.classBG then
-			bgColor = adjustColor(bgColor, module.db.bg.bgColorShift or 1)
-		end
+		if module.db.bg.classBG then bgColor = adjustColor(bgColor, module.db.bg.bgColorShift or 1) end
 		element.bg:SetVertexColor(bgColor.r, bgColor.g, bgColor.b, bgColor.a)
 
 		-- default events

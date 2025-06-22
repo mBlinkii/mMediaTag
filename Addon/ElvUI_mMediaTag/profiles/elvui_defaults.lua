@@ -146,6 +146,7 @@ P.portraits = {
 		classBG = false,
 	},
 	misc = {
+		embellishment = true,
 		force_reaction = false,
 		force_default = false,
 		gradient = true,

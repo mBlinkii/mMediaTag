@@ -64,6 +64,19 @@ mMT.options.args.unitframes.args.portraits.args = {
 							M.Portraits:Initialize()
 						end,
 					},
+					enable_embellishment = {
+						order = 3,
+						type = "toggle",
+						name = L["Embellishment"],
+						desc = L["Will show the embellishment on the portraits, if the Style has an embellishment."],
+						get = function(info)
+							return E.db.mMT.portraits.misc.embellishment
+						end,
+						set = function(info, value)
+							E.db.mMT.portraits.misc.embellishment = value
+							M.Portraits:Initialize()
+						end,
+					},
 				},
 			},
 			icons_group = {
