@@ -73,7 +73,7 @@ local function OnEnter(self)
 		DT.tooltip:AddDoubleLine(REPAIR_COST, GetMoneyString(totalRepairCost), 0.6, 0.8, 1, 1, 1, 1)
 	end
 
-	if E.Retail or E.Cata then
+	if E.Retail or E.Mists then
 		local avg, avgEquipped, avgPvp = GetAverageItemLevel()
 		DT.tooltip:AddDoubleLine(STAT_AVERAGE_ITEM_LEVEL, format("%0.2f", avg), 1, 1, 1, 0.1, 1, 0.1)
 		DT.tooltip:AddDoubleLine(GMSURVEYRATING3, format("%0.2f", avgEquipped), 1, 1, 1, colorize(avgEquipped - avg))
@@ -149,7 +149,7 @@ local function OnEvent(self)
 	armorIcon = E.db.mMT.durabilityIlevel.icon and armorIcon or ""
 	local totalDurabilityString = format("%." .. E.db.general.decimalLength .. "f%%", totalDurability or 0)
 
-	if E.Retail or E.Cata then
+	if E.Retail or E.Mists then
 		_, avgEquipped = GetAverageItemLevel()
 		shieldIcon = E.db.mMT.durabilityIlevel.icon and shieldIcon or ""
 		avgEquippedString = format("%." .. E.db.general.decimalLength .. "f", avgEquipped or 0)

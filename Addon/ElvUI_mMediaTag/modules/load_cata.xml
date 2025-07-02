@@ -1,9 +1,0 @@
-<Ui xmlns="http://www.blizzard.com/wow/ui/">
-	<Script file="all\functions.lua"/>
-	<Include file="unitframes\load_unitframes.xml"/>
-	<Include file="nameplates\load_nameplates_cata.xml"/>
-	<Include file="misc\load_misc_cata.xml"/>
-	<Include file="dock\load_dock_cata.xml"/>
-	<Include file="datatexts\load_datatexts_cata.xml"/>
-	<Include file="castbar\castbar_cata.xml"/>
-</Ui>

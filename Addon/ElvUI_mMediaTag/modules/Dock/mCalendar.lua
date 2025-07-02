@@ -102,7 +102,7 @@ local function OnClick(self)
 		mMT:Dock_Click(self, Config)
 		if E.Retail then
 			_G.GameTimeFrame:Click()
-		elseif E.Cata then
+		elseif E.Mists then
 			_G.Calendar_LoadUI()
 			_G.ToggleCalendar()
 		end
