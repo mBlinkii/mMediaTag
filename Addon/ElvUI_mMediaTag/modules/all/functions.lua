@@ -295,7 +295,7 @@ end
 
 local function GetFireCD()
 	local start, duration
-	if not E.Cata and C_Spell then
+	if C_Spell then
 		local spellCooldownInfo = GetSpellCooldown(818)
 		if spellCooldownInfo then
 			start = spellCooldownInfo.startTime

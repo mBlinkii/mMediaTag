@@ -390,7 +390,7 @@ local function configTable()
 			type = "group",
 			name = ACHIEVEMENT_BUTTON,
 			hidden = function()
-				return not (E.Retail or E.Cata)
+				return not (E.Retail or E.Mists)
 			end,
 			args = {
 				dockachievmenticon = {
@@ -601,7 +601,7 @@ local function configTable()
 			type = "group",
 			name = COLLECTIONS,
 			hidden = function()
-				return not (E.Retail or E.Cata)
+				return not (E.Retail or E.Mists)
 			end,
 			args = {
 				dockcollectionicon = {
@@ -659,7 +659,7 @@ local function configTable()
 			type = "group",
 			name = ENCOUNTER_JOURNAL,
 			hidden = function()
-				return not (E.Retail or E.Cata)
+				return not (E.Retail or E.Mists)
 			end,
 			args = {
 				dockencountericon = {
@@ -772,7 +772,7 @@ local function configTable()
 			type = "group",
 			name = DUNGEONS_BUTTON,
 			hidden = function()
-				return not (E.Retail or E.Cata)
+				return not (E.Retail or E.Mists)
 			end,
 			args = {
 				docklfdicon = {
@@ -1153,7 +1153,7 @@ local function configTable()
 			type = "group",
 			name = L["Itemlevel"],
 			hidden = function()
-				return not (E.Retail or E.Cata)
+				return not (E.Retail or E.Mists)
 			end,
 			args = {
 				dockitemlevelicon = {
@@ -1480,7 +1480,7 @@ local function configTable()
 			type = "group",
 			name = L["Professions"],
 			hidden = function()
-				return not (E.Retail or E.Cata)
+				return not (E.Retail or E.Mists)
 			end,
 			args = {
 				dockprofessionicon = {
@@ -1889,7 +1889,7 @@ local function configTable()
 			type = "group",
 			name = MAIL_LABEL,
 			hidden = function()
-				return not (E.Retail or E.Cata)
+				return not (E.Retail or E.Mists)
 			end,
 			args = {
 				dockmail = {

@@ -513,7 +513,7 @@ function mMT:Dock_Default(settings)
 	db["mMT Dock"][8] = "mMT_Dock_CollectionsJournal"
 	db["mMT Dock"][9] = "mMT_Dock_Calendar"
 	db["mMT Dock"][10] = "mMT_Dock_Volume"
-	db["mMT Dock"][11] = E.Cata and "mMT_Dock_Profession" or "mMT_Dock_BlizzardStore"
+	db["mMT Dock"][11] = E.Mists and "mMT_Dock_Profession" or "mMT_Dock_BlizzardStore"
 	db["mMT Dock"][12] = "mMT_Dock_MainMenu"
 	db["mMT Dock"].battleground = false
 	db["mMT Dock"].enable = true
@@ -624,7 +624,7 @@ function mMT:Dock_Extra(settings)
 	E.db.datatexts.panels["mMT Extra Icons"][6] = "mMT_Dock_LFDTool"
 	E.db.datatexts.panels["mMT Extra Icons"][7] = "mMT_Dock_EncounterJournal"
 	E.db.datatexts.panels["mMT Extra Icons"][8] = "mMT_Dock_CollectionsJournal"
-	E.db.datatexts.panels["mMT Extra Icons"][9] = E.Cata and "mMT_Dock_Profession" or "mMT_Dock_BlizzardStore"
+	E.db.datatexts.panels["mMT Extra Icons"][9] = E.Mists and "mMT_Dock_Profession" or "mMT_Dock_BlizzardStore"
 	E.db.datatexts.panels["mMT Extra Icons"][10] = "mMT_Dock_MainMenu"
 	E.db.datatexts.panels["mMT Extra Icons"]["battleground"] = false
 	E.db.datatexts.panels["mMT Extra Icons"]["enable"] = true

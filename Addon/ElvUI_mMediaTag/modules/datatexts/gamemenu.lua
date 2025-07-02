@@ -16,8 +16,6 @@ local IsAddOnLoaded = _G.C_AddOns and _G.C_AddOns.IsAddOnLoaded or IsAddOnLoaded
 local ShowUIPanel = ShowUIPanel
 local ToggleFrame = ToggleFrame
 local UIParentLoadAddOn = UIParentLoadAddOn
-local MainMenuMicroButton = MainMenuMicroButton
-local MainMenuMicroButton_SetNormal = MainMenuMicroButton_SetNormal
 local PlayerSpellsUtil = _G.PlayerSpellsUtil
 
 local menuList = nil
@@ -72,11 +70,10 @@ local function BuildMenu()
 			end,
 		},
 		{
-			text = _G.PROFESSIONS_BUTTON,
+			text = E.Retail and _G.PROFESSIONS_BUTTON or TRADE_SKILLS,
 			icon = AddIcon("profession"),
-			func = function()
-				ToggleProfessionsBook()
-			end,
+			func = E.Retail and _G.ToggleProfessionsBook or nil,
+			macro = not E.Retail and "/click SpellbookMicroButton\n/click SpellBookFrameTabButton2" or nil,
 		},
 		{
 			text = _G.TALENTS_BUTTON,
@@ -119,7 +116,7 @@ local function BuildMenu()
 		},
 	}
 
-	if E.Retail or E.Cata then
+	if E.Retail or E.Mists then
 		tinsert(menuList, {
 			text = _G.LFG_TITLE,
 			icon = AddIcon("eye"),
@@ -186,7 +183,7 @@ local function BuildMenu()
 		})
 	end
 
-	if E.Cata and E.mylevel >= _G.SHOW_PVP_LEVEL then tinsert(menuList, {
+	if E.Mists and E.mylevel >= _G.SHOW_PVP_LEVEL then tinsert(menuList, {
 		text = _G.PLAYER_V_PLAYER,
 		icon = AddIcon("battle"),
 		func = function()
@@ -266,9 +263,8 @@ local function OnClick(self, button)
 	else
 		if E.Retail then
 			_G.ToggleLFDParentFrame()
-		elseif E.Cata then
-			if not IsAddOnLoaded("Blizzard_LookingForGroupUI") then UIParentLoadAddOn("Blizzard_LookingForGroupUI") end
-			_G.ToggleLFGParentFrame()
+		elseif E.Mists then
+			PVEFrame_ToggleFrame("GroupFinderFrame", _G.LFDParentFrame)
 		end
 	end
 end
@@ -283,7 +279,7 @@ local function OnEnter(self)
 
 	DT.tooltip:AddLine(" ")
 	DT.tooltip:AddLine(format("%s %s%s|r", mMT:mIcon(mMT.Media.Mouse["LEFT"]), tip, L["left click to open the menu."]))
-	if E.Retail or E.Cata then DT.tooltip:AddLine(format("%s %s%s|r", mMT:mIcon(mMT.Media.Mouse["RIGHT"]), tip, L["right click to open LFD Window"])) end
+	if E.Retail or E.Mists then DT.tooltip:AddLine(format("%s %s%s|r", mMT:mIcon(mMT.Media.Mouse["RIGHT"]), tip, L["right click to open LFD Window"])) end
 	DT.tooltip:Show()
 end
 

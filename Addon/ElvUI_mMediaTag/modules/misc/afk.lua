@@ -97,7 +97,7 @@ local function UpdateTexts()
 
 	PaperDollFrame_UpdateStats()
 
-	if E.Retail or E.Cata then
+	if E.Retail or E.Mists then
 		local DurabilityInfos = mMT:GetDurabilityInfo()
 
 		PlayerStats.values.title = PET_BATTLE_STATS_LABEL

@@ -56,7 +56,7 @@ local function configTable()
 						type = "group",
 						name = L["Instance Difficulty"],
 						hidden = function()
-							return not (E.Retail or E.Cata)
+							return not (E.Retail or E.Mists)
 						end,
 						args = {},
 					},
@@ -124,7 +124,7 @@ local function configTable()
 						type = "group",
 						name = L["Professions"],
 						hidden = function()
-							return not (E.Retail or E.Cata)
+							return not (E.Retail or E.Mists)
 						end,
 						args = {},
 					},
@@ -133,7 +133,7 @@ local function configTable()
 						type = "group",
 						name = L["Dungeon"],
 						hidden = function()
-							return not (E.Retail or E.Cata)
+							return not (E.Retail or E.Mists)
 						end,
 						args = {},
 					},
@@ -200,7 +200,7 @@ local function configTable()
 				type = "group",
 				name = L["Castbar"],
 				hidden = function()
-					return not (E.Retail or E.Cata)
+					return not (E.Retail or E.Mists)
 				end,
 				icon = "Interface\\Addons\\ElvUI_mMediaTag\\media\\system\\castbar.tga",
 				childGroups = "tab",
@@ -246,7 +246,7 @@ local function configTable()
 						type = "group",
 						name = L["Healthmarkers"],
 						hidden = function()
-							return not (E.Retail or E.Cata)
+							return not (E.Retail or E.Mists)
 						end,
 						args = {},
 					},
@@ -343,7 +343,7 @@ local function configTable()
 						type = "group",
 						name = L["Role Icons"],
 						hidden = function()
-							return not (E.Retail or E.Cata)
+							return not (E.Retail or E.Mists)
 						end,
 						args = {},
 					},

@@ -447,7 +447,7 @@ local function processTeleport(t, category, kindOverride)
 					name = name,
 					icon = icon,
 					kind = idKind,
-					cooldown = GetCooldownTime(id, kind),
+					cooldown = E.Retail and GetCooldownTime(id, kind) or nil,
 					short_name = isDungeonTeleport and idKind,
 					use = kind == "spell" and ("/cast " .. name) or (kind == "toy" and ("/usetoy " .. name) or ("/use " .. name)),
 					onEnter = (kind == "spell") and function(btn)

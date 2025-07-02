@@ -473,7 +473,7 @@ local function SetScripts(portrait, force)
 			end
 
 			-- specific events for player and pet if player is in vehicle
-			if E.Retail or E.Cata then
+			if E.Retail or E.Mists then
 				if portrait.unit == "player" then
 					portrait:RegisterEvent("VEHICLE_UPDATE")
 					tinsert(portrait.allEvents, "VEHICLE_UPDATE")

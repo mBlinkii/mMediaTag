@@ -114,7 +114,7 @@ local function EnableModules()
 	--mMT.Modules.CustomClassColors.enable = E.db.mMT.classcolors.enable and not (mMT.ElvUI_EltreumUI.gradient or mMT.ElvUI_EltreumUI.dark)
 
 	-- Retail and Cata
-	if E.Retail or E.Cata then
+	if E.Retail or E.Mists then
 		mMT.Modules.Castbar.enable = (E.db.mMT.interruptoncd.enable or (E.db.mMT.importantspells.enable and (E.db.mMT.importantspells.np or E.db.mMT.importantspells.uf)) or E.db.mMT.castbarshield.enable)
 		mMT.Modules.RoleIcons.enable = E.db.mMT.roleicons.enable
 	end
@@ -217,7 +217,7 @@ function mMT:Initialize()
 	mMT.Classes = mMT:ClassesTable()
 
 	-- Register Events for Retail
-	if E.Retail or E.Cata then
+	if E.Retail or E.Mists then
 		if E.db.mMT.instancedifficulty.enable then
 			self:SetupInstanceDifficulty()
 
@@ -240,7 +240,7 @@ function mMT:Initialize()
 
 		if E.Retail and (E.private.nameplates.enable and E.db.mMT.nameplate.executemarker.auto) or E.db.mMT.interruptoncd.enable then self:RegisterEvent("PLAYER_TALENT_UPDATE") end
 
-		if E.private.nameplates.enable and (E.db.mMT.nameplate.healthmarker.enable or E.db.mMT.nameplate.executemarker.enable) then mMT:StartNameplateTools() end
+		if E.Retail and E.private.nameplates.enable and (E.db.mMT.nameplate.healthmarker.enable or E.db.mMT.nameplate.executemarker.enable) then mMT:StartNameplateTools() end
 
 		if E.db.mMT.objectivetracker.enable and E.db.mMT.objectivetracker.settings.zoneQuests then
 			if not E.db.mMT.instancedifficulty.enable then self:RegisterEvent("ZONE_CHANGED_NEW_AREA") end
@@ -357,7 +357,7 @@ end
 function mMT:PLAYER_TALENT_UPDATE()
 	if mMT.Modules.InterruptOnCD.loaded then mMT.Modules.InterruptOnCD:Initialize() end
 
-	if E.private.nameplates.enable and E.db.mMT.nameplate.executemarker.auto then mMT:updateAutoRange() end
+	if E.Retail and E.private.nameplates.enable and E.db.mMT.nameplate.executemarker.auto then mMT:updateAutoRange() end
 end
 
 function mMT:UPDATE_INSTANCE_INFO()
