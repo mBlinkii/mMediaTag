@@ -1,6 +1,10 @@
 # Changelog - ElvUI_mMediaTag
 [Eng] - All changes to this project will be documented in this file. The latest changes are at the top.
 
+## [ver. 3.75] - 02.07.2025
+### UPDATE
+- UPDATE - [System]: For Mists
+
 ## [ver. 3.74] - 18.06.2025
 ### FIX 
 - FIX - [DT-FPS]: Fixed Bug with FPS Datatext in Classic Versions.
