@@ -113,7 +113,7 @@ local function EnableModules()
 		and not mMT.ElvUI_EltreumUI.dark
 	--mMT.Modules.CustomClassColors.enable = E.db.mMT.classcolors.enable and not (mMT.ElvUI_EltreumUI.gradient or mMT.ElvUI_EltreumUI.dark)
 
-	-- Retail and Cata
+	-- Retail and Mists
 	if E.Retail or E.Mists then
 		mMT.Modules.Castbar.enable = (E.db.mMT.interruptoncd.enable or (E.db.mMT.importantspells.enable and (E.db.mMT.importantspells.np or E.db.mMT.importantspells.uf)) or E.db.mMT.castbarshield.enable)
 		mMT.Modules.RoleIcons.enable = E.db.mMT.roleicons.enable

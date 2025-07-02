@@ -115,7 +115,7 @@ local function configTable()
 						type = "group",
 						name = L["Teleports"],
 						hidden = function()
-							return not E.Retail
+							return not (E.Retail or E.Mists)
 						end,
 						args = {},
 					},
@@ -246,7 +246,7 @@ local function configTable()
 						type = "group",
 						name = L["Healthmarkers"],
 						hidden = function()
-							return not (E.Retail or E.Mists)
+							return not E.Retail
 						end,
 						args = {},
 					},
