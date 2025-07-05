@@ -1874,26 +1874,26 @@ local function GetPartyTargetsIcons(unit, style)
 			if UnitIsUnit("party" .. i .. "target", unit) then
 				local role = targetTextures.role[UnitGroupRolesAssigned("party" .. i)] or targetTextures.DAMAGER
 				local _, unitClass = UnitClass("party" .. i)
-				if role and unitClass then ClassString = role .. targetStringColors[unitClass] .. ClassString end
+				if role and (unitClass and targetStringColors[unitClass])  then ClassString = role .. targetStringColors[unitClass] .. ClassString end
 			end
 		end
 
 		if UnitIsUnit("playertarget", unit) then
 			local role = targetTextures.role[UnitGroupRolesAssigned("player")] or targetTextures.DAMAGER
 			local _, unitClass = UnitClass("player")
-			if role and unitClass then ClassString = role .. targetStringColors[unitClass] .. ClassString end
+			if role and (unitClass and targetStringColors[unitClass]) then ClassString = role .. targetStringColors[unitClass] .. ClassString end
 		end
 	else
 		for i = 1, GetNumGroupMembers() - 1 do
 			if UnitIsUnit("party" .. i .. "target", unit) then
 				local _, unitClass = UnitClass("party" .. i)
-				if unitClass then ClassString = targetTextures[style] .. targetStringColors[unitClass] .. ClassString end
+				if (unitClass and targetStringColors[unitClass]) then ClassString = targetTextures[style] .. targetStringColors[unitClass] .. ClassString end
 			end
 		end
 
 		if UnitIsUnit("playertarget", unit) then
 			local _, unitClass = UnitClass("player")
-			if unitClass then ClassString = targetTextures[style] .. targetStringColors[unitClass] .. ClassString end
+			if (unitClass and targetStringColors[unitClass]) then ClassString = targetTextures[style] .. targetStringColors[unitClass] .. ClassString end
 		end
 	end
 
