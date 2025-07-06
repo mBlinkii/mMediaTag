@@ -378,62 +378,86 @@ local textureDB = {
 			name = "Blizzard Rare/ Elite Neutral",
 			texture = "Interface\\AddOns\\ElvUI_mMediaTag\\media\\portraits\\extra\\blizz_rare_neutral.tga",
 		},
-		celestial = {
-			name = "Celestial",
-			texture = "Interface\\AddOns\\ElvUI_mMediaTag\\media\\portraits\\extra\\celestial.tga",
-			low = true,
+		round_monster = {
+			name = "Round - Monster",
+			texture = "Interface\\AddOns\\ElvUI_mMediaTag\\media\\portraits\\extra\\round_monster.tga",
 		},
-		dragon = {
-			name = "Dragon",
-			texture = "Interface\\AddOns\\ElvUI_mMediaTag\\media\\portraits\\extra\\dragon.tga",
+		round_pulse = {
+			name = "Round - Pulse",
+			texture = "Interface\\AddOns\\ElvUI_mMediaTag\\media\\portraits\\extra\\round_pulse.tga",
 		},
-		dragon_v2 = {
-			name = "Dragon V2",
-			texture = "Interface\\AddOns\\ElvUI_mMediaTag\\media\\portraits\\extra\\dragon_v2.tga",
+		round_star = {
+			name = "Round - Star",
+			texture = "Interface\\AddOns\\ElvUI_mMediaTag\\media\\portraits\\extra\\round_star.tga",
 		},
-		halocore = {
-			name = "Halocore",
-			texture = "Interface\\AddOns\\ElvUI_mMediaTag\\media\\portraits\\extra\\halocore.tga",
-			low = true,
+		round_tech = {
+			name = "Round - Tech",
+			texture = "Interface\\AddOns\\ElvUI_mMediaTag\\media\\portraits\\extra\\round_tech.tga",
 		},
-		leaf = {
-			name = "Leaf",
-			texture = "Interface\\AddOns\\ElvUI_mMediaTag\\media\\portraits\\extra\\leaf.tga",
+		round_zickzack = {
+			name = "Round - Zickzack",
+			texture = "Interface\\AddOns\\ElvUI_mMediaTag\\media\\portraits\\extra\\round_zickzack.tga",
 		},
-		leaf_v2 = {
-			name = "Leaf V2",
-			texture = "Interface\\AddOns\\ElvUI_mMediaTag\\media\\portraits\\extra\\leaf_v2.tga",
+		round_leaf = {
+			name = "Round - Leaf",
+			texture = "Interface\\AddOns\\ElvUI_mMediaTag\\media\\portraits\\extra\\round_leaf.tga",
 		},
-		leaf_v3 = {
-			name = "Leaf V3",
-			texture = "Interface\\AddOns\\ElvUI_mMediaTag\\media\\portraits\\extra\\leaf_v3.tga",
-		},
-		leaf_v4 = {
-			name = "Leaf V4",
-			texture = "Interface\\AddOns\\ElvUI_mMediaTag\\media\\portraits\\extra\\leaf_v4.tga",
-		},
-		monument = {
-			name = "Monument",
-			texture = "Interface\\AddOns\\ElvUI_mMediaTag\\media\\portraits\\extra\\monument.tga",
-			low = true,
-		},
-		moondance = {
-			name = "Moondance",
-			texture = "Interface\\AddOns\\ElvUI_mMediaTag\\media\\portraits\\extra\\moondance.tga",
-		},
-		spikes = {
-			name = "Spikes",
-			texture = "Interface\\AddOns\\ElvUI_mMediaTag\\media\\portraits\\extra\\spikes.tga",
-		},
-		stars = {
-			name = "Stars",
-			texture = "Interface\\AddOns\\ElvUI_mMediaTag\\media\\portraits\\extra\\stars.tga",
-		},
-		zickzack = {
-			name = "Zickzack",
-			texture = "Interface\\AddOns\\ElvUI_mMediaTag\\media\\portraits\\extra\\zickzack.tga",
-			low = true,
-		},
+		-- celestial = {
+		-- 	name = "Celestial",
+		-- 	texture = "Interface\\AddOns\\ElvUI_mMediaTag\\media\\portraits\\extra\\celestial.tga",
+		-- 	low = true,
+		-- },
+		-- dragon = {
+		-- 	name = "Dragon",
+		-- 	texture = "Interface\\AddOns\\ElvUI_mMediaTag\\media\\portraits\\extra\\dragon.tga",
+		-- },
+		-- dragon_v2 = {
+		-- 	name = "Dragon V2",
+		-- 	texture = "Interface\\AddOns\\ElvUI_mMediaTag\\media\\portraits\\extra\\dragon_v2.tga",
+		-- },
+		-- halocore = {
+		-- 	name = "Halocore",
+		-- 	texture = "Interface\\AddOns\\ElvUI_mMediaTag\\media\\portraits\\extra\\halocore.tga",
+		-- 	low = true,
+		-- },
+		-- leaf = {
+		-- 	name = "Leaf",
+		-- 	texture = "Interface\\AddOns\\ElvUI_mMediaTag\\media\\portraits\\extra\\leaf.tga",
+		-- },
+		-- leaf_v2 = {
+		-- 	name = "Leaf V2",
+		-- 	texture = "Interface\\AddOns\\ElvUI_mMediaTag\\media\\portraits\\extra\\leaf_v2.tga",
+		-- },
+		-- leaf_v3 = {
+		-- 	name = "Leaf V3",
+		-- 	texture = "Interface\\AddOns\\ElvUI_mMediaTag\\media\\portraits\\extra\\leaf_v3.tga",
+		-- },
+		-- leaf_v4 = {
+		-- 	name = "Leaf V4",
+		-- 	texture = "Interface\\AddOns\\ElvUI_mMediaTag\\media\\portraits\\extra\\leaf_v4.tga",
+		-- },
+		-- monument = {
+		-- 	name = "Monument",
+		-- 	texture = "Interface\\AddOns\\ElvUI_mMediaTag\\media\\portraits\\extra\\monument.tga",
+		-- 	low = true,
+		-- },
+		-- moondance = {
+		-- 	name = "Moondance",
+		-- 	texture = "Interface\\AddOns\\ElvUI_mMediaTag\\media\\portraits\\extra\\moondance.tga",
+		-- },
+		-- spikes = {
+		-- 	name = "Spikes",
+		-- 	texture = "Interface\\AddOns\\ElvUI_mMediaTag\\media\\portraits\\extra\\spikes.tga",
+		-- },
+		-- stars = {
+		-- 	name = "Stars",
+		-- 	texture = "Interface\\AddOns\\ElvUI_mMediaTag\\media\\portraits\\extra\\stars.tga",
+		-- },
+		-- zickzack = {
+		-- 	name = "Zickzack",
+		-- 	texture = "Interface\\AddOns\\ElvUI_mMediaTag\\media\\portraits\\extra\\zickzack.tga",
+		-- 	low = true,
+		-- },
 	},
 	bg = {
 		default = {

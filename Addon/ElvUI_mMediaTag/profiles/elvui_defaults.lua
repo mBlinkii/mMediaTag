@@ -147,7 +147,7 @@ P.portraits = {
 	},
 	shadow = {
 		enable = true,
-		alpha = 0.75,
+		alpha = 0.6,
 	},
 	misc = {
 		embellishment = true,

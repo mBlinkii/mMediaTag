@@ -105,7 +105,7 @@ local CachedBossIDs = {}
 
 local function SetupExtraTexture(element, low)
 	local extraOnTop = module.db.misc.extratop and not low
-	element.extra:SetDrawLayer(extraOnTop and "OVERLAY" or "ARTWORK", extraOnTop and 7 or 1)
+	element.extra:SetDrawLayer(extraOnTop and "OVERLAY" or "ARTWORK", extraOnTop and 7 or 0)
 
 	-- extra mask
 	if not extraOnTop and not element.extra_mask then
@@ -250,7 +250,7 @@ function module:CreatePortrait(name, parent, settings)
 
 	-- rare/elite/boss
 	local extraOnTop = module.db.misc.extratop
-	portrait.extra = portrait:CreateTexture("mMT-Portrait-Extra-" .. name, "OVERLAY", nil, extraOnTop and 7 or 1)
+	portrait.extra = portrait:CreateTexture("mMT-Portrait-Extra-" .. name, "OVERLAY", nil, extraOnTop and 7 or 0)
 
 	if settings.extra_settings.enable then
 		portrait.extra:SetPoint("CENTER", portrait.texture, "CENTER", settings.extra_settings.offset.x, settings.extra_settings.offset.y)
@@ -267,7 +267,7 @@ function module:CreatePortrait(name, parent, settings)
 	end
 
 	-- bg
-	portrait.bg = portrait:CreateTexture("mMT-Portrait-BG-" .. name, "BACKGROUND", nil, 2)
+	portrait.bg = portrait:CreateTexture("mMT-Portrait-BG-" .. name, "ARTWORK", nil, 1)
 	portrait.bg:SetAllPoints(portrait.texture)
 	portrait.bg:AddMaskTexture(portrait.mask)
 

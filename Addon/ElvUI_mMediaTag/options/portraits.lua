@@ -100,7 +100,7 @@ mMT.options.args.unitframes.args.portraits.args = {
 					},
 					alpha_range = {
 						order = 2,
-						name = L["Portrait Scale"],
+						name = L["Shadow Alpha"],
 						type = "range",
 						min = 0,
 						max = 1,
