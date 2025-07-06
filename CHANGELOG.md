@@ -3,7 +3,7 @@
 
 ## [ver. 3.76] - 06.07.2025
 ### UPDATE
-- UPDATE - [TAG]: Prvent a nil Error with Class & Target icons on MOP.
+- UPDATE - [TAG]: Prevent a nil Error with Class & Target icons on MOP.
 
 ## [ver. 3.75] - 02.07.2025
 ### UPDATE
