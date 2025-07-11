@@ -112,3 +112,9 @@ AddClassIcons("mmt_transparent_outline", path .. "mmt_transparent_outline.tga", 
 AddClassIcons("mmt_transparent_outline_shadow", path .. "mmt_transparent_outline_shadow.tga", "mMT Outline B")
 AddClassIcons("mmt_transparent_outline_colorboost", path .. "mmt_transparent_outline_colorboost.tga", "mMT Outline C")
 AddClassIcons("mmt_transparent_outline_shadow_colorboost", path .. "mmt_transparent_outline_shadow_colorboost.tga", "mMT Outline D")
+
+AddClassIcons("mmt_simple", path .. "mmt_simple.tga", "mMT Simple")
+AddClassIcons("mmt_simple_border", path .. "mmt_simple_border.tga", "mMT Simple Border")
+AddClassIcons("mmt_simple_class", path .. "mmt_simple_class.tga", "mMT Simple Class")
+AddClassIcons("mmt_simple_trans", path .. "mmt_simple_trans.tga", "mMT Simple Transp.")
+AddClassIcons("mmt_simple_class_bg", path .. "mmt_simple_class_bg.tga", "mMT Simple Class BG")

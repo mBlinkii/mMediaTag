@@ -1964,6 +1964,11 @@ local classIcons = {
 	outlineplus = "mmt_transparent_outline_colorboost.tga",
 	outlineshadow = "mmt_transparent_outline_shadow.tga",
 	outlineshadowplus = "mmt_transparent_outline_shadow_colorboost.tga",
+	simple = "mmt_simple.tga",
+	simpleborder = "mmt_simple_border.tga",
+	simpleclass = "mmt_simple_class.tga",
+	simpletrasnparent = "mmt_simple_trans.tga",
+	simpleclassbg = "mmt_simple_class_bg.tga",
 }
 
 for style, file in next, classIcons do
