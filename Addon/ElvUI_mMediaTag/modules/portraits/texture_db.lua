@@ -402,6 +402,30 @@ local textureDB = {
 			name = "Round - Leaf",
 			texture = "Interface\\AddOns\\ElvUI_mMediaTag\\media\\portraits\\extra\\round_leaf.tga",
 		},
+		dragon_boss = {
+			name = "Dragon Boss",
+			texture = "Interface\\AddOns\\ElvUI_mMediaTag\\media\\portraits\\extra\\dragon_boss.tga",
+		},
+		dragon_elite = {
+			name = "Dragon Elite",
+			texture = "Interface\\AddOns\\ElvUI_mMediaTag\\media\\portraits\\extra\\dragon_elite.tga",
+		},
+		dragon_blue = {
+			name = "Dragon Blue",
+			texture = "Interface\\AddOns\\ElvUI_mMediaTag\\media\\portraits\\extra\\dragon_blue.tga",
+		},
+		dragon_green = {
+			name = "Dragon Green",
+			texture = "Interface\\AddOns\\ElvUI_mMediaTag\\media\\portraits\\extra\\dragon_green.tga",
+		},
+		dragon_purple = {
+			name = "Dragon Purple",
+			texture = "Interface\\AddOns\\ElvUI_mMediaTag\\media\\portraits\\extra\\dragon_purple.tga",
+		},
+		any = {
+			name = "Any",
+			texture = "Interface\\AddOns\\ElvUI_mMediaTag\\media\\portraits\\extra\\any.tga",
+		},
 		-- celestial = {
 		-- 	name = "Celestial",
 		-- 	texture = "Interface\\AddOns\\ElvUI_mMediaTag\\media\\portraits\\extra\\celestial.tga",
