@@ -1858,6 +1858,7 @@ local targetTextures = {
 
 local targetStringColors = {}
 local function GetPartyTargetsIcons(unit, style)
+	if not  mMT.Classes then return end
 	if not targetStringColors.build then
 		for _, class in ipairs(mMT.Classes) do
 			local color = E:ClassColor(class)
