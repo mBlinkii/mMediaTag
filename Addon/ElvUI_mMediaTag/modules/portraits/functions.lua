@@ -167,8 +167,9 @@ local function UpdateExtraTexture(element, force)
 	end
 end
 
-local function Update(self, event, unit)
-	if not unit or not UnitIsUnit((self.__owner.unit or self.unit), unit) then return end
+local function Update(self, event, eventUnit, arg2)
+	local unit = self.unit or self.__owner.unit
+	if not eventUnit or not UnitIsUnit(unit, eventUnit) then return end
 
 	local element = self
 
@@ -378,34 +379,13 @@ local function UpdateCastIconStop(self)
 	SetPortraitTexture(self.unit_portrait, self.unit)
 end
 
-local function VehicleUpdate(self, event, _, arg2)
-	local unit
-	if self.realUnit == "player" then
-		unit = (UnitInVehicle("player") and arg2) and UnitExists("pet") and "pet" or "player"
-	else
-		unit = (UnitInVehicle("player") and arg2) and "player" or "pet"
-	end
-
-	Update(self, event, unit)
+local function SimpleUpdate(portrait, event)
+	Update(portrait, event, portrait.unit)
 end
 
-local function SimpleUpdate(self, event)
-	local unit = self.__owner.unit or self.unit
-	event = event or "ForceUpdate"
-
-	Update(self, event, unit)
-end
-
-local function ForceUpdate(self)
-	local unit = self.__owner.unit or self.unit
-
-	Update(self, "ForceUpdate", unit)
-end
-
-local delay = 0
 local eventHandlers = {
 	-- portrait updates
-	PORTRAITS_UPDATED = ForceUpdate,
+	PORTRAITS_UPDATED = SimpleUpdate,
 	UNIT_CONNECTION = Update,
 	UNIT_PORTRAIT_UPDATE = Update,
 	PARTY_MEMBER_ENABLE = Update,
@@ -422,14 +402,14 @@ local eventHandlers = {
 	UNIT_SPELLCAST_EMPOWER_STOP = UpdateCastIconStop,
 
 	-- vehicle updates
-	UNIT_ENTERED_VEHICLE = VehicleUpdate,
-	UNIT_EXITING_VEHICLE = VehicleUpdate,
-	UNIT_EXITED_VEHICLE = VehicleUpdate,
-	VEHICLE_UPDATE = VehicleUpdate,
+	UNIT_ENTERED_VEHICLE = SimpleUpdate,
+	UNIT_EXITING_VEHICLE = SimpleUpdate,
+	UNIT_EXITED_VEHICLE = SimpleUpdate,
+	VEHICLE_UPDATE = SimpleUpdate,
 
 	-- target/ focus updates
-	PLAYER_TARGET_CHANGED = ForceUpdate,
-	PLAYER_FOCUS_CHANGED = ForceUpdate,
+	PLAYER_TARGET_CHANGED = SimpleUpdate,
+	PLAYER_FOCUS_CHANGED = SimpleUpdate,
 	UNIT_TARGET = SimpleUpdate,
 
 	-- party
@@ -440,6 +420,7 @@ local eventHandlers = {
 	UNIT_TARGETABLE_CHANGED = Update,
 	ARENA_PREP_OPPONENT_SPECIALIZATIONS = SimpleUpdate,
 	INSTANCE_ENCOUNTER_ENGAGE_UNIT = SimpleUpdate,
+	UPDATE_ACTIVE_BATTLEFIELD = SimpleUpdate,
 
 	-- death updates
 	UNIT_HEALTH = function(self)
@@ -450,12 +431,12 @@ local eventHandlers = {
 	end,
 }
 
-local function OnEvent(self, event, unit, arg)
-	self.isDead = UnitIsDeadOrGhost(self.__owner.unit)
+local function OnEvent(self, event, eventUnit, arg)
+	local unit = self.__owner.unit or self.unit
+	self.unit = unit
+	self.isDead = UnitIsDeadOrGhost(unit)
 
-	if self.isDead then UpdateTextureColor(self, self.__owner.unit or self.unit) end
-
-	if eventHandlers[event] then eventHandlers[event](self, event, unit, arg) end
+	if eventHandlers[event] then eventHandlers[event](self, event, eventUnit, arg) end
 end
 
 local function RegisterEvent(element, event, unitEvent)
