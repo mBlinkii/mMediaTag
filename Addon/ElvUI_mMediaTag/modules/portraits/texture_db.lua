@@ -356,6 +356,25 @@ local textureDB = {
 			flip = false,
 			mirror = false,
 		},
+		moon = {
+			name = "Moon",
+			texture = "Interface\\AddOns\\ElvUI_mMediaTag\\media\\portraits\\moon\\texture.tga",
+			shadow = "Interface\\AddOns\\ElvUI_mMediaTag\\media\\portraits\\moon\\shadow.tga",
+			mask = "Interface\\AddOns\\ElvUI_mMediaTag\\media\\portraits\\moon\\mask.tga",
+			extra_mask = "Interface\\AddOns\\ElvUI_mMediaTag\\media\\portraits\\moon\\extra_mask.tga",
+			embellishment = "Interface\\AddOns\\ElvUI_mMediaTag\\media\\portraits\\moon\\embellishment.tga",
+			flip = false,
+			mirror = false,
+		},
+		antik = {
+			name = "Antik",
+			texture = "Interface\\AddOns\\ElvUI_mMediaTag\\media\\portraits\\antik\\texture.tga",
+			shadow = "Interface\\AddOns\\ElvUI_mMediaTag\\media\\portraits\\antik\\shadow.tga",
+			mask = "Interface\\AddOns\\ElvUI_mMediaTag\\media\\portraits\\antik\\mask.tga",
+			extra_mask = "Interface\\AddOns\\ElvUI_mMediaTag\\media\\portraits\\antik\\extra_mask.tga",
+			flip = false,
+			mirror = false,
+		},
 	},
 	extra = {
 		blizz_boss = {
@@ -422,9 +441,77 @@ local textureDB = {
 			name = "Dragon Purple",
 			texture = "Interface\\AddOns\\ElvUI_mMediaTag\\media\\portraits\\extra\\dragon_purple.tga",
 		},
-		any = {
-			name = "Any",
+		dog_any = {
+			name = "Dog Any",
 			texture = "Interface\\AddOns\\ElvUI_mMediaTag\\media\\portraits\\extra\\any.tga",
+		},
+		dogs = {
+			name = "Dogs",
+			texture = "Interface\\AddOns\\ElvUI_mMediaTag\\media\\portraits\\extra\\dogs.tga",
+		},
+		dogs_color = {
+			name = "Dogs color",
+			texture = "Interface\\AddOns\\ElvUI_mMediaTag\\media\\portraits\\extra\\dogs_color.tga",
+		},
+		dog_pack = {
+			name = "Dog Pack",
+			texture = "Interface\\AddOns\\ElvUI_mMediaTag\\media\\portraits\\extra\\dog_pack.tga",
+		},
+		dog_pack_color = {
+			name = "Dog Pack color",
+			texture = "Interface\\AddOns\\ElvUI_mMediaTag\\media\\portraits\\extra\\dog_pack_color.tga",
+		},
+		snake = {
+			name = "Snake",
+			texture = "Interface\\AddOns\\ElvUI_mMediaTag\\media\\portraits\\extra\\snake.tga",
+		},
+		snake_blue = {
+			name = "Snake Blue",
+			texture = "Interface\\AddOns\\ElvUI_mMediaTag\\media\\portraits\\extra\\snake_blue.tga",
+		},
+		snake_green = {
+			name = "Snake Green",
+			texture = "Interface\\AddOns\\ElvUI_mMediaTag\\media\\portraits\\extra\\snake_green.tga",
+		},
+		snake_purple = {
+			name = "Snake Purple",
+			texture = "Interface\\AddOns\\ElvUI_mMediaTag\\media\\portraits\\extra\\snake_purple.tga",
+		},
+		snake_red = {
+			name = "Snake Red",
+			texture = "Interface\\AddOns\\ElvUI_mMediaTag\\media\\portraits\\extra\\snake_red.tga",
+		},
+		space = {
+			name = "Space",
+			texture = "Interface\\AddOns\\ElvUI_mMediaTag\\media\\portraits\\extra\\space.tga",
+		},
+		space_color = {
+			name = "Space color",
+			texture = "Interface\\AddOns\\ElvUI_mMediaTag\\media\\portraits\\extra\\space_color.tga",
+		},
+		square_leaf = {
+			name = "Square Leaf",
+			texture = "Interface\\AddOns\\ElvUI_mMediaTag\\media\\portraits\\extra\\square_leaf.tga",
+		},
+		square_Loop = {
+			name = "Square Loop",
+			texture = "Interface\\AddOns\\ElvUI_mMediaTag\\media\\portraits\\extra\\square_loop.tga",
+		},
+		square_spikes = {
+			name = "Square Spikes",
+			texture = "Interface\\AddOns\\ElvUI_mMediaTag\\media\\portraits\\extra\\square_spikes.tga",
+		},
+		square_stars = {
+			name = "Square Stars",
+			texture = "Interface\\AddOns\\ElvUI_mMediaTag\\media\\portraits\\extra\\square_stars.tga",
+		},
+		climbing_plant = {
+			name = "Climbing Plant",
+			texture = "Interface\\AddOns\\ElvUI_mMediaTag\\media\\portraits\\extra\\climbing_plant.tga",
+		},
+		climbing_plant_v2 = {
+			name = "Climbing Plant V2",
+			texture = "Interface\\AddOns\\ElvUI_mMediaTag\\media\\portraits\\extra\\climbing_plant_v2.tga",
 		},
 		-- celestial = {
 		-- 	name = "Celestial",

@@ -176,6 +176,7 @@ local function Update(self, event, eventUnit, arg2)
 	local guid = UnitGUID(unit)
 	local isAvailable = UnitIsConnected(unit) and UnitIsVisible(unit)
 	local hasStateChanged = ((event == "ForceUpdate") or (element.guid ~= guid) or (element.state ~= isAvailable))
+	print("Update", unit, guid, isAvailable, hasStateChanged)
 	if hasStateChanged then
 		local texCoords
 		local class = select(2, UnitClass(unit))
@@ -383,9 +384,13 @@ local function SimpleUpdate(portrait, event)
 	Update(portrait, event, portrait.unit)
 end
 
+local function ForceUpdate(portrait, event)
+	Update(portrait, "ForceUpdate", portrait.unit)
+end
+
 local eventHandlers = {
 	-- portrait updates
-	PORTRAITS_UPDATED = SimpleUpdate,
+	PORTRAITS_UPDATED = ForceUpdate,
 	UNIT_CONNECTION = Update,
 	UNIT_PORTRAIT_UPDATE = Update,
 	PARTY_MEMBER_ENABLE = Update,
