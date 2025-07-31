@@ -68,7 +68,7 @@ local function SetCastbarColor(castbar, color)
 	local c = color.c
 	local g = color.g
 
-    -- backup original color if not already done
+	-- backup original color if not already done
 	if not castbar._originalColor then
 		local r, g, b = castbar:GetStatusBarTexture():GetVertexColor()
 		castbar._originalColor = { r = r, g = g, b = b }
@@ -122,16 +122,19 @@ local function InterruptChecker(castbar)
 
 	local spellID = module.myInterruptSpell
 
-	if not spellID then return end -- or castbar.notIncorruptible -- end if no spell or if castbar is not interruptible
+	if not spellID or castbar.notIncorruptible then return end -- end if no spell or if castbar is not interruptible
 
 	-- cd and time calculations
 	local spellCooldownInfo = GetSpellCooldown(spellID)
 	local timeNow = GetTime()
+	local startTime, duration = spellCooldownInfo.startTime, spellCooldownInfo.duration
 	local interruptCD = (spellCooldownInfo.startTime > 0) and (spellCooldownInfo.duration - (timeNow - spellCooldownInfo.startTime)) or 0
 
 	local value = castbar:GetValue()
 	local castbarMax = castbar.max or 1
-	local interruptReadyInTime = (interruptCD + 0.2) < (castbar.channeling and value or (castbarMax - value))
+	local channeling = castbar.channeling
+	local reverse = castbar:GetReverseFill()
+	local interruptReadyInTime = (interruptCD + 0.2) < (channeling and value or (castbarMax - value))
 
 	local inactiveTime = module.inactiveTime
 
@@ -147,8 +150,8 @@ local function InterruptChecker(castbar)
 		if not castbar.InterruptMarker then CreateMarker(castbar) end -- create marker if it doesn't exist
 
 		-- marker position calculation and set
-		local markerPosition = (spellCooldownInfo.startTime + spellCooldownInfo.duration - castbar.startTime + 0.2) / castbarMax
-		if castbar.channeling or castbar:GetReverseFill() then markerPosition = 1 - markerPosition end
+		local markerPosition = (startTime + duration - castbar.startTime + 0.2) / castbarMax
+		if channeling or reverse then markerPosition = 1 - markerPosition end
 		castbar.InterruptMarker:SetPoint("center", castbar, "left", markerPosition * castbar:GetWidth(), 0)
 		castbar.InterruptMarker:Show()
 
