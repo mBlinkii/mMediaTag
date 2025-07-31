@@ -68,50 +68,46 @@ local function SetCastbarColor(castbar, color)
 	local c = color.c
 	local g = color.g
 
+    -- backup original color if not already done
 	if not castbar._originalColor then
 		local r, g, b = castbar:GetStatusBarTexture():GetVertexColor()
 		castbar._originalColor = { r = r, g = g, b = b }
 	end
 
 	if module.gradient then
-		print("Setting castbar color with gradient") -- debug output
 		castbar:GetStatusBarTexture():SetGradient("HORIZONTAL", { r = c.r, g = c.g, b = c.b, a = 1 }, { r = g.r, g = g.g, b = g.b, a = 1 })
 	else
-		print("Setting castbar color without gradient") -- debug output
 		castbar:SetStatusBarColor(c.r, c.g, c.b)
 	end
 
 	-- Set the color of the castbar background if required
 	if module.set_bg_color and castbar.bg then
-		-- Originalfarbe des Hintergrunds sichern
+		-- backup original background color if not already done
 		if module.set_bg_color and castbar.bg and not castbar._originalBgColor then
 			local r, g, b, a = castbar.bg:GetVertexColor()
 			castbar._originalBgColor = { r = r, g = g, b = b, a = a }
 		end
 
-		print("Setting castbar background color") -- debug output
 		local multiplier = module.bg_multiplier
 		castbar.bg:SetVertexColor(c.r * multiplier, c.g * multiplier, c.b * multiplier, 1)
 	end
 end
 
-local function ResetCastbarColor(castbar)
+local function ResetCastbarColor(castbar) -- Reset the castbar color to its original state
 	if castbar._originalColor then
 		local c = castbar._originalColor
 		castbar:SetStatusBarColor(c.r, c.g, c.b)
 		castbar._originalColor = nil
 	end
 
-	-- Hintergrundfarbe zurücksetzen
 	if castbar.bg and castbar._originalBgColor then
 		local c = castbar._originalBgColor
 		castbar.bg:SetVertexColor(c.r, c.g, c.b, c.a)
 		castbar._originalBgColor = nil
 	end
-	-- Optional: Hintergrundfarbe zurücksetzen, falls gewünscht
 end
 
-local function CreateMarker(castbar)
+local function CreateMarker(castbar) -- Create the interrupt marker texture on the castbar
 	local color = module.colors.marker
 	castbar.InterruptMarker = castbar:CreateTexture(nil, "overlay")
 	castbar.InterruptMarker:SetDrawLayer("overlay", 4)
@@ -212,7 +208,7 @@ function module:Initialize()
 			hooksecurefunc(NP, "Castbar_PostCastStart", update)
 			hooksecurefunc(UF, "PostCastStart", update)
 			hooksecurefunc(NP, "Castbar_PostCastStart", update)
-			--hooksecurefunc(UF, "PostCastUpdate", update)
+
 			module.isEnabled = true
 		end
 
