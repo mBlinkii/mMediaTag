@@ -226,7 +226,7 @@ local function BuildMenuList()
 	end
 
 	sort(menuList, function(a, b)
-		if a and b and a.text and b.text then return a.text < b.text end
+		if a and b and a.text and b.text then return a.text < b.text else return false end
 	end)
 
 	tinsert(menuList, { text = "", isTitle = true, notClickable = true })

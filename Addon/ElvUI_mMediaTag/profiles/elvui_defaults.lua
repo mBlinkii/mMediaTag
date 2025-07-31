@@ -324,6 +324,16 @@ P.portraits = {
 	},
 }
 
+-- Interrupt on CD
+P.interrupt_on_cd = {
+	enable = true,
+	gradient = true,
+	out_of_range = true,
+	set_bg_color = true,
+	bg_multiplier = 0.5,
+	inactive_time = 0.8,
+}
+
 -- color
 P.color = {
 	-- tip/ menu
@@ -385,5 +395,12 @@ P.color = {
 			friendly = { c = "FF00FE48", g = "FF00C538" },
 			neutral = { c = "FFFFD52E", g = "FFFFC02E" },
 		},
+	},
+
+	interrupt_on_cd = {
+		onCD = { c = "FFA200FF", g = "FFC500BB" },
+		inTime = { c = "FF00E1FF", g = "FF0080D6" },
+		outOfRange = { c = "FFFFA500", g = "FFD67A00" },
+		marker = "FFFFFFFF",
 	},
 }

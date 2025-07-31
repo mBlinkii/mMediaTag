@@ -52,12 +52,12 @@ local function PrintTable(tbl, indent, simple, noFunctions, depth, parent)
 	end
 end
 
-function mMT:DebugPrintTable(tbl, simple, noFunctions)
-    if type(tbl) == "table" then
-        local tblLength = GetTableLength(tbl)
-        mMT:Print(": Table Start >>>", tbl, "Entries:", tblLength, "Options:", "Simple:", simple, "Functions:", noFunctions)
-        PrintTable(tbl, nil, simple, noFunctions)
+function mMT:DebugPrint(arg, simple, noFunctions, ...)
+    if type(arg) == "table" then
+        local tblLength = GetTableLength(arg)
+        mMT:Print(": Table Start >>>", arg, "Entries:", tblLength, "Options:", "Simple:", simple, "Functions:", noFunctions)
+        PrintTable(arg, nil, simple, noFunctions)
     else
-        mMT:Print("Not a Table:", tbl)
+        mMT:Print("Not a Table:", arg, ...)
     end
 end

@@ -92,6 +92,13 @@ MEDIA.color = {
 			neutral = createColorPair("FFFFD52E", "FFFFC02E"),
 		},
 	},
+
+	interrupt_on_cd = {
+		onCD = createColorPair("FFA200FF", "FFC500BB"),
+		inTime = createColorPair("FF00E1FF", "FF0080D6"),
+		outOfRange = createColorPair("FFFFA500", "FFD67A00"),
+		marker = createColor("FFFFFFFF"),
+	},
 }
 
 MEDIA.myclass = E:ClassColor(E.myclass)
@@ -158,17 +165,35 @@ function mMT:UpdateMedia(arg)
 	if arg == "portraits" or not arg then
 		local function createColorSet(path)
 			local set = {}
-			for key, val in pairs(E.db.mMT.color.portraits[path]) do
+			for key, val in pairs(path) do
 				set[key] = type(val) == "table" and { c = CreateColorFromHexString(val.c), g = CreateColorFromHexString(val.g) } or CreateColorFromHexString(val)
 			end
 			return set
 		end
 
+		MEDIA.color.portraits = nil
 		MEDIA.color.portraits = {
-			misc = createColorSet("misc"),
-			class = createColorSet("class"),
-			classification = createColorSet("classification"),
-			reaction = createColorSet("reaction"),
+			misc = createColorSet(E.db.mMT.color.portraits.misc),
+			class = createColorSet(E.db.mMT.color.portraits.class),
+			classification = createColorSet(E.db.mMT.color.portraits.classification),
+			reaction = createColorSet(E.db.mMT.color.portraits.reaction),
+		}
+	end
+
+	if arg == "interrupt" or not arg then
+		local function createColorSets(path)
+			local set = {}
+
+			set = type(path) == "table" and { c = CreateColorFromHexString(path.c), g = CreateColorFromHexString(path.g) } or CreateColorFromHexString(path)
+
+			return set
+		end
+
+		MEDIA.color.interrupt_on_cd = {
+			onCD = createColorSets(E.db.mMT.color.interrupt_on_cd.onCD),
+			inTime = createColorSets(E.db.mMT.color.interrupt_on_cd.inTime),
+			outOfRange = createColorSets(E.db.mMT.color.interrupt_on_cd.outOfRange),
+			marker = createColorSets(E.db.mMT.color.interrupt_on_cd.marker),
 		}
 	end
 end
@@ -379,6 +404,4 @@ MEDIA.icons.datatexts.durability = {
 	shield_03 = "Interface\\AddOns\\ElvUI_mMediaTag\\media\\icons\\datatexts\\shield_c.tga",
 }
 
-MEDIA.icons.class  = {
-
-}
+MEDIA.icons.class = {}

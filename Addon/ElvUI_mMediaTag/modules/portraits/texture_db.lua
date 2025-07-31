@@ -513,62 +513,6 @@ local textureDB = {
 			name = "Climbing Plant V2",
 			texture = "Interface\\AddOns\\ElvUI_mMediaTag\\media\\portraits\\extra\\climbing_plant_v2.tga",
 		},
-		-- celestial = {
-		-- 	name = "Celestial",
-		-- 	texture = "Interface\\AddOns\\ElvUI_mMediaTag\\media\\portraits\\extra\\celestial.tga",
-		-- 	low = true,
-		-- },
-		-- dragon = {
-		-- 	name = "Dragon",
-		-- 	texture = "Interface\\AddOns\\ElvUI_mMediaTag\\media\\portraits\\extra\\dragon.tga",
-		-- },
-		-- dragon_v2 = {
-		-- 	name = "Dragon V2",
-		-- 	texture = "Interface\\AddOns\\ElvUI_mMediaTag\\media\\portraits\\extra\\dragon_v2.tga",
-		-- },
-		-- halocore = {
-		-- 	name = "Halocore",
-		-- 	texture = "Interface\\AddOns\\ElvUI_mMediaTag\\media\\portraits\\extra\\halocore.tga",
-		-- 	low = true,
-		-- },
-		-- leaf = {
-		-- 	name = "Leaf",
-		-- 	texture = "Interface\\AddOns\\ElvUI_mMediaTag\\media\\portraits\\extra\\leaf.tga",
-		-- },
-		-- leaf_v2 = {
-		-- 	name = "Leaf V2",
-		-- 	texture = "Interface\\AddOns\\ElvUI_mMediaTag\\media\\portraits\\extra\\leaf_v2.tga",
-		-- },
-		-- leaf_v3 = {
-		-- 	name = "Leaf V3",
-		-- 	texture = "Interface\\AddOns\\ElvUI_mMediaTag\\media\\portraits\\extra\\leaf_v3.tga",
-		-- },
-		-- leaf_v4 = {
-		-- 	name = "Leaf V4",
-		-- 	texture = "Interface\\AddOns\\ElvUI_mMediaTag\\media\\portraits\\extra\\leaf_v4.tga",
-		-- },
-		-- monument = {
-		-- 	name = "Monument",
-		-- 	texture = "Interface\\AddOns\\ElvUI_mMediaTag\\media\\portraits\\extra\\monument.tga",
-		-- 	low = true,
-		-- },
-		-- moondance = {
-		-- 	name = "Moondance",
-		-- 	texture = "Interface\\AddOns\\ElvUI_mMediaTag\\media\\portraits\\extra\\moondance.tga",
-		-- },
-		-- spikes = {
-		-- 	name = "Spikes",
-		-- 	texture = "Interface\\AddOns\\ElvUI_mMediaTag\\media\\portraits\\extra\\spikes.tga",
-		-- },
-		-- stars = {
-		-- 	name = "Stars",
-		-- 	texture = "Interface\\AddOns\\ElvUI_mMediaTag\\media\\portraits\\extra\\stars.tga",
-		-- },
-		-- zickzack = {
-		-- 	name = "Zickzack",
-		-- 	texture = "Interface\\AddOns\\ElvUI_mMediaTag\\media\\portraits\\extra\\zickzack.tga",
-		-- 	low = true,
-		-- },
 	},
 	bg = {
 		default = {

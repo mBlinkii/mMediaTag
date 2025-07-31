@@ -9,7 +9,6 @@ local UnitInPartyIsAI = UnitInPartyIsAI
 local UnitClassification = UnitClassification
 local UnitFactionGroup = UnitFactionGroup
 local UnitIsDead = UnitIsDead
-local UnitExists = UnitExists
 local InCombatLockdown = InCombatLockdown
 local select = select
 local UnitGUID = UnitGUID
@@ -176,7 +175,6 @@ local function Update(self, event, eventUnit, arg2)
 	local guid = UnitGUID(unit)
 	local isAvailable = UnitIsConnected(unit) and UnitIsVisible(unit)
 	local hasStateChanged = ((event == "ForceUpdate") or (element.guid ~= guid) or (element.state ~= isAvailable))
-	print("Update", unit, guid, isAvailable, hasStateChanged)
 	if hasStateChanged then
 		local texCoords
 		local class = select(2, UnitClass(unit))
@@ -624,7 +622,7 @@ function module:Initialize()
 		module.texCoords = classIcons and (classIcons.texCoords or MEDIA.icons.class.data) or nil
 
 		module:PLAYER_ENTERING_WORLD()
-	else
+	elseif module.isEnabled then
 		module:UnregisterAllEvents()
 		for _, element in pairs(module.portraits) do
 			element:UnregisterAllEvents()
