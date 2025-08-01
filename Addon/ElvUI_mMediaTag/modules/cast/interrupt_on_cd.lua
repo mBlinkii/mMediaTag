@@ -139,7 +139,7 @@ local function GetCastColor(castbar)
 
 	local spellID = module.myInterruptSpell
 
-	if not spellID or castbar.notIncorruptible then return end -- end if no spell or if castbar is not interruptible
+	if not spellID  then return end -- end if no spell or if castbar is not interruptible
 
 	-- cd and time calculations
 	local spellCooldownInfo = GetSpellCooldown(spellID)
@@ -199,6 +199,8 @@ end
 local function Update(castbar)
 	HideMarker(castbar)
 
+	if castbar.notIncorruptible then return end
+
 	local color, markerPosition = GetCastColor(castbar)
 
 	if color then
@@ -245,8 +247,6 @@ function module:Initialize()
 		module.gradient = E.db.mMT.interrupt_on_cd.gradient
 		module.set_bg_color = E.db.mMT.interrupt_on_cd.set_bg_color
 		module.bg_multiplier = E.db.mMT.interrupt_on_cd.bg_multiplier
-
-		module.loaded = true
 	elseif module.isEnabled then
 		module:UnregisterAllEvents()
 		module.isEnabled = false

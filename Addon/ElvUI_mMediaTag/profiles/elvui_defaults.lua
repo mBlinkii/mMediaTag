@@ -337,7 +337,15 @@ P.interrupt_on_cd = {
 -- castbar shield
 P.castbar_shield = {
 	enable = true,
-	texture = "blizz_shield"
+	texture = "shield01",
+	auto = true,
+	sizeX = 32,
+	sizeY = 32,
+	anchor = "CENTER",
+	posX = 0,
+	posY = 0,
+	nameplates = true,
+	unitframes = true,
 }
 
 -- color

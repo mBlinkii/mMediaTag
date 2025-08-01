@@ -411,3 +411,12 @@ MEDIA.icons.datatexts.durability = {
 }
 
 MEDIA.icons.class = {}
+
+MEDIA.icons.castbar = {
+	shield01 = "Interface\\AddOns\\ElvUI_mMediaTag\\media\\icons\\castbar\\shield_01.tga",
+	shield02 = "Interface\\AddOns\\ElvUI_mMediaTag\\media\\icons\\castbar\\shield_02.tga",
+	shield03 = "Interface\\AddOns\\ElvUI_mMediaTag\\media\\icons\\castbar\\shield_03.tga",
+	shield04 = "Interface\\AddOns\\ElvUI_mMediaTag\\media\\icons\\castbar\\shield_04.tga",
+	shield05 = "Interface\\AddOns\\ElvUI_mMediaTag\\media\\icons\\castbar\\shield_05.tga",
+	sign01 = "Interface\\AddOns\\ElvUI_mMediaTag\\media\\icons\\castbar\\sign_01.tga",
+}

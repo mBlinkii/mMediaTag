@@ -1,97 +1,56 @@
 local mMT, DB, M, E, P, L, MEDIA = unpack(ElvUI_mMediaTag)
 
-local module = mMT:AddModule("CastbarShield", { "AceEvent-3.0" })
-
-local GetSpellCooldown = C_Spell and C_Spell.GetSpellCooldown or GetSpellCooldown
-local GetSpellInfo = C_Spell and C_Spell.GetSpellInfo or GetSpellInfo
-local IsSpellInRange = C_Spell and C_Spell.IsSpellInRange or IsSpellInRange
+local module = mMT:AddModule("CastbarShield")
 local NP = E:GetModule("NamePlates")
 local UF = E:GetModule("UnitFrames")
 
-
-function mMT:CastbarShield(castbar)
-	if castbar.notInterruptible then
-		local sizeX = 32
-		local sizeY = 32
-
-		if E.db.mMT.castbarshield.auto then
-			sizeX = castbar:GetHeight() - 2
-			sizeY = sizeX
-		else
-			sizeX = E.db.mMT.castbarshield.sizeX
-			sizeY = E.db.mMT.castbarshield.sizeY
-		end
-
-		if not castbar.mCastbarShield then
-			castbar.mCastbarShield = castbar:CreateTexture("CastbarShield", "OVERLAY")
-			castbar.mCastbarShield:SetWidth(sizeX)
-			castbar.mCastbarShield:SetHeight(sizeY)
-			castbar.mCastbarShield:SetPoint(
-				E.db.mMT.castbarshield.anchor,
-				E.db.mMT.castbarshield.posX,
-				E.db.mMT.castbarshield.posY
-			)
-		else
-			castbar.mCastbarShield:ClearAllPoints()
-			castbar.mCastbarShield:SetWidth(sizeX)
-			castbar.mCastbarShield:SetHeight(sizeY)
-			castbar.mCastbarShield:SetPoint(
-				E.db.mMT.castbarshield.anchor,
-				E.db.mMT.castbarshield.posX,
-				E.db.mMT.castbarshield.posY
-			)
-		end
-
-		castbar.mCastbarShield:SetTexture(mMT.Media.Castbar[E.db.mMT.castbarshield.icon])
-
-		if E.db.mMT.castbarshield.custom then
-			local color = E.db.mMT.castbarshield.color
-			castbar.mCastbarShield:SetVertexColor(color.r, color.g, color.b, color.a)
-		else
-			castbar.mCastbarShield:SetVertexColor(1, 1, 1, 1)
-		end
-
-		castbar.mCastbarShield:Show()
-	elseif castbar.mCastbarShield then
-		castbar.mCastbarShield:Hide()
-	end
-end
-
 local function AddShieldIcon(castbar)
-    if not castbar or castbar.unit == "vehicle" or castbar.unit == "player" then return end
+	if not castbar.mMT_ShieldIcon then castbar.mMT_ShieldIcon = castbar:CreateTexture("mMT-ShieldIcon", "OVERLAY") end
 
-    if E.db.mMT.castbarshield.enable then
-        mMT:CastbarShield(castbar)
-    else
-        if castbar.mCastbarShield then
-            castbar.mCastbarShield:Hide()
-        end
-    end
+	local sizeX, sizeY = module.sizeX, module.sizeY
+
+	if module.auto then
+		local size = castbar:GetHeight() - 2
+		sizeX = size
+		sizeY = size
+	end
+
+	castbar.mMT_ShieldIcon:ClearAllPoints()
+	castbar.mMT_ShieldIcon:SetWidth(sizeX)
+	castbar.mMT_ShieldIcon:SetHeight(sizeY)
+	castbar.mMT_ShieldIcon:SetPoint(module.anchor, module.posX, module.posY)
+
+	castbar.mMT_ShieldIcon:SetTexture(MEDIA.icons.castbar[module.texture])
+
+    local color = MEDIA.color.castbar_shield
+	castbar.mMT_ShieldIcon:SetVertexColor(color.r, color.g, color.b, color.a)
+	castbar.mMT_ShieldIcon:Show()
 end
 
 local function Update(castbar)
-	if not castbar or castbar.unit == "vehicle" or castbar.unit == "player" then return end
-
-	InterruptChecker(castbar)
-
-	if not castbar._interruptOnCD_OnUpdateHooked then
-		castbar:HookScript("OnUpdate", Castbar_OnUpdate)
-		castbar._interruptOnCD_OnUpdateHooked = true
+	if castbar.notInterruptible then
+		AddShieldIcon(castbar)
+	elseif castbar.mMT_ShieldIcon and castbar.mMT_ShieldIcon:IsShown() then
+		castbar.mMT_ShieldIcon:Hide()
 	end
 end
 
 function module:Initialize()
 	if E.db.mMT.castbar_shield.enable then
 		if not module.isEnabled then
-
-			hooksecurefunc(NP, "Castbar_PostCastStart", Update)
-			hooksecurefunc(UF, "PostCastStart", Update)
+			if E.db.mMT.castbar_shield.nameplates then hooksecurefunc(NP, "Castbar_PostCastStart", Update) end
+			if E.db.mMT.castbar_shield.unitframes then hooksecurefunc(UF, "PostCastStart", Update) end
 
 			module.isEnabled = true
 		end
 
-		module.color = MEDIA.color.castbar_shield
 		module.texture = E.db.mMT.castbar_shield.texture
+		module.sizeX = E.db.mMT.castbar_shield.sizeX
+		module.sizeY = E.db.mMT.castbar_shield.sizeY
+		module.anchor = E.db.mMT.castbar_shield.anchor
+		module.posX = E.db.mMT.castbar_shield.posX
+		module.posY = E.db.mMT.castbar_shield.posY
+		module.auto = E.db.mMT.castbar_shield.auto
 
 		module.loaded = true
 	end
