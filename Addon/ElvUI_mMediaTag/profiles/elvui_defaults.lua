@@ -334,6 +334,12 @@ P.interrupt_on_cd = {
 	inactive_time = 0.8,
 }
 
+-- castbar shield
+P.castbar_shield = {
+	enable = true,
+	texture = "blizz_shield"
+}
+
 -- color
 P.color = {
 	-- tip/ menu
@@ -403,4 +409,6 @@ P.color = {
 		outOfRange = { c = "FFFFA500", g = "FFD67A00" },
 		marker = "FFFFFFFF",
 	},
+
+	castbar_shield = "FFFFFFFF",
 }

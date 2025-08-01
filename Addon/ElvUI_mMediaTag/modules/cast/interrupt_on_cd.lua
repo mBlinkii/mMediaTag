@@ -117,8 +117,25 @@ local function CreateMarker(castbar) -- Create the interrupt marker texture on t
 	castbar.InterruptMarker:Hide()
 end
 
-local function InterruptChecker(castbar)
-	if castbar.InterruptMarker then castbar.InterruptMarker:Hide() end -- hide marker if it exists
+local function UpdateInterruptSpell()
+	local mySpecialization = select(1, GetSpecializationInfo(GetSpecialization()))
+
+	-- Check for WARLOCK interrupt
+	if E.myclass == "WARLOCK" then
+		if IsPlayerSpell(89766) then
+			spellList[mySpecialization] = 89766 or spellList[mySpecialization]
+		elseif IsPlayerSpell(212619) then
+			spellList[mySpecialization] = 212619 or spellList[mySpecialization]
+		elseif IsPlayerSpell(119914) then
+			spellList[mySpecialization] = 119914 or spellList[mySpecialization]
+		end
+	end
+
+	module.myInterruptSpell = spellList[mySpecialization]
+end
+
+local function GetCastColor(castbar)
+	if not castbar or castbar.unit == "vehicle" or castbar.unit == "player" then return end -- ignore vehicle and player castbars
 
 	local spellID = module.myInterruptSpell
 
@@ -147,53 +164,54 @@ local function InterruptChecker(castbar)
 
 	-- Set the castbar color based on the interrupt state
 	if interruptCD > inactiveTime and interruptReadyInTime then
-		if not castbar.InterruptMarker then CreateMarker(castbar) end -- create marker if it doesn't exist
-
 		-- marker position calculation and set
 		local markerPosition = (startTime + duration - castbar.startTime + 0.2) / castbarMax
 		if channeling or reverse then markerPosition = 1 - markerPosition end
-		castbar.InterruptMarker:SetPoint("center", castbar, "left", markerPosition * castbar:GetWidth(), 0)
-		castbar.InterruptMarker:Show()
 
-		SetCastbarColor(castbar, module.colors.inTime)
+		return module.colors.inTime, markerPosition
 	elseif interruptCD > inactiveTime then
-		SetCastbarColor(castbar, module.colors.onCD)
+		return module.colors.onCD
 	elseif isOutOfRange then
-		SetCastbarColor(castbar, module.colors.outOfRange)
-	else
-		ResetCastbarColor(castbar)
+		return module.colors.outOfRange
 	end
 end
 
-local function UpdateInterruptSpell()
-	local mySpecialization = select(1, GetSpecializationInfo(GetSpecialization()))
-
-	-- Check for WARLOCK interrupt
-	if E.myclass == "WARLOCK" then
-		if IsPlayerSpell(89766) then
-			spellList[mySpecialization] = 89766 or spellList[mySpecialization]
-		elseif IsPlayerSpell(212619) then
-			spellList[mySpecialization] = 212619 or spellList[mySpecialization]
-		elseif IsPlayerSpell(119914) then
-			spellList[mySpecialization] = 119914 or spellList[mySpecialization]
-		end
+local function HideMarker(castbar)
+	if castbar.InterruptMarker and castbar.InterruptMarker:IsShown() then -- hide marker if it exists
+		castbar.InterruptMarker:Hide()
 	end
-
-	module.myInterruptSpell = spellList[mySpecialization]
 end
 
 local function Castbar_OnUpdate(castbar, elapsed)
 	castbar._interruptOnCD_Elapsed = (castbar._interruptOnCD_Elapsed or 0) + elapsed
 	if castbar._interruptOnCD_Elapsed > 0.5 then
-		InterruptChecker(castbar)
+		local isOnCD = GetCastColor(castbar)
+
+		if not isOnCD then
+			HideMarker(castbar)
+			ResetCastbarColor(castbar)
+		end
+
 		castbar._interruptOnCD_Elapsed = 0
 	end
 end
 
-local function update(castbar, ...)
-	if not castbar or castbar.unit == "vehicle" or castbar.unit == "player" then return end
+local function Update(castbar)
+	HideMarker(castbar)
 
-	InterruptChecker(castbar)
+	local color, markerPosition = GetCastColor(castbar)
+
+	if color then
+		SetCastbarColor(castbar, color)
+
+		-- marker position calculation and set
+		if markerPosition then
+			if not castbar.InterruptMarker then CreateMarker(castbar) end -- create marker if it doesn't exist
+
+			castbar.InterruptMarker:SetPoint("center", castbar, "left", markerPosition * castbar:GetWidth(), 0)
+			castbar.InterruptMarker:Show()
+		end
+	end
 
 	if not castbar._interruptOnCD_OnUpdateHooked then
 		castbar:HookScript("OnUpdate", Castbar_OnUpdate)
@@ -208,9 +226,8 @@ function module:Initialize()
 			module:RegisterEvent("ACTIVE_TALENT_GROUP_CHANGED", UpdateInterruptSpell)
 			module:RegisterEvent("PLAYER_TALENT_UPDATE", UpdateInterruptSpell)
 
-			hooksecurefunc(NP, "Castbar_PostCastStart", update)
-			hooksecurefunc(UF, "PostCastStart", update)
-			hooksecurefunc(NP, "Castbar_PostCastStart", update)
+			hooksecurefunc(NP, "Castbar_PostCastStart", Update)
+			hooksecurefunc(UF, "PostCastStart", Update)
 
 			module.isEnabled = true
 		end

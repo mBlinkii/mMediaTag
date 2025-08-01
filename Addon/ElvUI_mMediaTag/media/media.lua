@@ -99,6 +99,8 @@ MEDIA.color = {
 		outOfRange = createColorPair("FFFFA500", "FFD67A00"),
 		marker = createColor("FFFFFFFF"),
 	},
+
+	castbar_shield = "FFFFFFFF",
 }
 
 MEDIA.myclass = E:ClassColor(E.myclass)
@@ -195,6 +197,10 @@ function mMT:UpdateMedia(arg)
 			outOfRange = createColorSets(E.db.mMT.color.interrupt_on_cd.outOfRange),
 			marker = createColorSets(E.db.mMT.color.interrupt_on_cd.marker),
 		}
+	end
+
+	if arg == "castbar_shield" or not arg then
+		MEDIA.color.castbar_shield = CreateColorFromHexString(E.db.mMT.color.castbar_shield)
 	end
 end
 
