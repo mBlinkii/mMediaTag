@@ -10,7 +10,7 @@ P.general = {
 
 -- general
 P.keystone_to_chat = {
-	enable = true,
+	enable = false,
 }
 
 -- data panel skin
@@ -61,7 +61,7 @@ P.lfg_invite_info = {
 
 -- difficulty info
 P.difficulty_info = {
-	enable = true,
+	enable = false,
 	background = false,
 	font = {
 		font = "PT Sans Narrow",
@@ -139,7 +139,7 @@ P.datatexts = {
 
 -- portraits
 P.portraits = {
-	enable = true,
+	enable = false,
 	bg = {
 		bgColorShift = 0.5,
 		style = "default",
@@ -326,7 +326,7 @@ P.portraits = {
 
 -- Interrupt on CD
 P.interrupt_on_cd = {
-	enable = true,
+	enable = false,
 	gradient = true,
 	out_of_range = true,
 	set_bg_color = true,
@@ -336,7 +336,7 @@ P.interrupt_on_cd = {
 
 -- castbar shield
 P.castbar_shield = {
-	enable = true,
+	enable = false,
 	texture = "shield01",
 	auto = true,
 	sizeX = 32,
@@ -345,7 +345,7 @@ P.castbar_shield = {
 	posX = 0,
 	posY = 0,
 	nameplates = true,
-	unitframes = true,
+	unitframes = false,
 }
 
 -- color
@@ -378,9 +378,6 @@ P.color = {
 			death = { c = "FFF86767", g = "FFEC3535" },
 			default = { c = "FFE6CC80", g = "FFDAB033" },
 			bg = "FF000000",
-			-- extra = "FFFFFFFF",
-			-- shadow = "CD1E1E1E",
-			-- inner = "87282828",
 		},
 		class = {
 			DEATHKNIGHT = { c = "FFC41E3A", g = "FF9C182E" },

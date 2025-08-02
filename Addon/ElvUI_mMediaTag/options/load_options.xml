@@ -1,26 +1,15 @@
 <Ui xmlns="http://www.blizzard.com/wow/ui/">
-	<Include file="changelog\load_changelogs.xml"/>
 	<Script file="options_core.lua"/>
+
+	<Include file="changelog\load_changelogs.xml"/>
+	<Include file="cast\load_cast.xml"/>
+	<Include file="datatext\load_datatext.xml"/>
+	<Include file="misc\load_misc.xml"/>
+	<Include file="portraits\load_portraits.xml"/>
+	<Include file="skin\load_skin.xml"/>
 	<Script file="about.lua"/>
-	<Script file="license.lua"/>
 	<Script file="changelog.lua"/>
-	<Script file="greeting_message.lua"/>
-	<Script file="keystone_to_chat.lua"/>
-	<Script file="data_panel_skin.lua"/>
-	<Script file="dice_button.lua"/>
-	<Script file="datatexts.lua"/>
-	<Script file="info_score.lua"/>
-	<Script file="misc_teleports.lua"/>
-	<Script file="misc_individual_professions.lua"/>
-	<Script file="misc_gamemenu.lua"/>
-	<Script file="misc_tracker.lua"/>
-	<Script file="misc_professions.lua"/>
-	<Script file="info_combat_time.lua"/>
-	<Script file="lfg_invite_info.lua"/>
-	<Script file="info_durability_itemlevel.lua"/>
-	<Script file="misc_dungeon.lua"/>
 	<Script file="colors_difficulty.lua"/>
 	<Script file="colors_tip_menu.lua"/>
-	<Script file="difficulty_info.lua"/>
-	<Script file="portraits.lua"/>
+	<Script file="license.lua"/>
 </Ui>

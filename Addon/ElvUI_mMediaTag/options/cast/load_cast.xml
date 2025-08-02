@@ -1,0 +1,4 @@
+<Ui xmlns="http://www.blizzard.com/wow/ui/">
+	<Script file="castbar_shield.lua"/>
+	<Script file="interrupt_on_cd.lua"/>
+</Ui>

@@ -54,6 +54,20 @@ mMT.options = {
 					childGroups = "tab",
 					args = {},
 				},
+				interrupt_on_cd = {
+					order = 2,
+					type = "group",
+					name = mMT:AddSettingsIcon(L["Interrupt On CD"], "time"),
+					childGroups = "tab",
+					args = {},
+				},
+				castbar_shield = {
+					order = 3,
+					type = "group",
+					name = mMT:AddSettingsIcon(L["Castbar Shield"], "shield"),
+					childGroups = "tab",
+					args = {},
+				},
 			},
 		},
 		nameplates = {

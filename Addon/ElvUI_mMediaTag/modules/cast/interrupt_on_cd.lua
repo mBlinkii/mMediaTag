@@ -135,11 +135,9 @@ local function UpdateInterruptSpell()
 end
 
 local function GetCastColor(castbar)
-	if not castbar or castbar.unit == "vehicle" or castbar.unit == "player" then return end -- ignore vehicle and player castbars
-
 	local spellID = module.myInterruptSpell
 
-	if not spellID  then return end -- end if no spell or if castbar is not interruptible
+	if not spellID then return end -- end if no spell or if castbar is not interruptible
 
 	-- cd and time calculations
 	local spellCooldownInfo = GetSpellCooldown(spellID)
@@ -197,9 +195,12 @@ local function Castbar_OnUpdate(castbar, elapsed)
 end
 
 local function Update(castbar)
+	if not castbar then return end -- end if castbar is nils
+
 	HideMarker(castbar)
 
-	if castbar.notIncorruptible then return end
+	if (castbar.unit == "vehicle") or (castbar.unit == "player") then return end -- ignore vehicle and player castbars
+	if castbar.notIncorruptible then return end -- ignore non-interruptible castbars
 
 	local color, markerPosition = GetCastColor(castbar)
 
