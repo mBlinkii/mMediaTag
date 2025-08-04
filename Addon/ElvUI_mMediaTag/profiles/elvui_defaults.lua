@@ -348,6 +348,13 @@ P.castbar_shield = {
 	unitframes = false,
 }
 
+-- tooltip
+P.tooltip = {
+	enable = true,
+	size = 32,
+	zoom = true,
+}
+
 -- color
 P.color = {
 	-- tip/ menu
