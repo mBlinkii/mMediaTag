@@ -258,6 +258,7 @@ local teleportsIDs = {
 
 		-- tww raid
 		[1226482] = "LOU",
+		[1239155] = "MFO"
 	},
 
 	dungeonportals = {
