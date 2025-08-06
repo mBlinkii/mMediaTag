@@ -34,6 +34,7 @@ mMT.knownTeleports = {
 	tww = {},
 	dungeonportals = {},
 }
+
 local teleportsIDs = {
 	favorites = {},
 	toys = {
@@ -209,17 +210,26 @@ local teleportsIDs = {
 		[556] = "spell", -- astral-recall
 	},
 	season = {
-		-- tww s2
-		[445440] = "BREW",
-		[467546] = "BREW",
-		[445441] = "DFC",
-		[445444] = "PSF",
-		[445443] = "ROOK",
+		-- tww s3
 		[1216786] = "FLOOD",
-		[467555] = "ML",
-		[467553] = "ML",
-		[354467] = "TOP",
-		[373274] = "WORK",
+		[1237215] = "ALDANI",
+		[354465] = "HOA",
+		[367416] = "TAZ",
+		[445414] = "DAWN",
+		[445417] = "ARAK",
+		[445444] = "PRIORY",
+
+		-- tww s2
+		-- [445440] = "BREW",
+		-- [467546] = "BREW",
+		-- [445441] = "DFC",
+		-- [445444] = "PSF",
+		-- [445443] = "ROOK",
+		-- [1216786] = "FLOOD",
+		-- [467555] = "ML",
+		-- [467553] = "ML",
+		-- [354467] = "TOP",
+		-- [373274] = "WORK",
 
 		-- tww s1
 		-- [445417] = "ARAK",
@@ -235,24 +245,27 @@ local teleportsIDs = {
 
 	tww = {
 		-- tww
+		[1216786] = "FLOOD",
+		[1237215] = "ALDANI",
+		[445269] = "SV",
+		[445414] = "DAWN",
+		[445416] = "COT",
 		[445417] = "ARAK",
 		[445440] = "BREW",
-		[445416] = "COT",
 		[445441] = "DFC",
-		[445414] = "DAWN",
-		[1216786] = "FLOOD",
-		[445444] = "PSF",
 		[445443] = "ROOK",
-		[445269] = "SV",
+		[445444] = "PSF",
 
 		-- tww raid
 		[1226482] = "LOU",
+		[1239155] = "MFO"
 	},
 
 	dungeonportals = {
 		-- tww
 		[445417] = "ARAK",
 		[445440] = "BREW",
+		[467546] = "BREW",
 		[445416] = "COT",
 		[445441] = "DFC",
 		[445414] = "DAWN",

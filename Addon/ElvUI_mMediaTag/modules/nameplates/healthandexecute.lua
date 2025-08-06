@@ -5,8 +5,14 @@ local LSM = LibStub("LibSharedMedia-3.0")
 
 local HM_NPCs = {
 	-------- TWW Dungeons --------
+	----- Eco-Dome Al'dani
+	[234912] = { 50 }, -- Ravaging Scavenger
+
 	-- Ara-Kara, City of Echoes
 	[214840] = { 30 }, -- Engorged Crawler
+
+	-- The Rookery
+	[212739] = { 40 }, -- Radiating Voidstone
 
 	-- Cinderbrew Meadery
 	[210265] = { 20 }, -- Worker Bee
@@ -64,6 +70,7 @@ local HM_NPCs = {
 	[186227] = { 20 }, --Monstrous Decay
 
 	-- Dawn of the Infinite
+	[208193] = { 20 }, -- Paladin of the Silver Hand
 	[198933] = { 90 }, --Iridikron
 	[198997] = { 80, 50 }, -- Blight of Galakrond / Ahnzon
 	[199000] = { 20, 8 }, -- Deios
@@ -112,6 +119,7 @@ local HM_NPCs = {
 	[164501] = { 70, 40, 10 }, -- Mistcaller
 	[164804] = { 22 }, -- Droman Oulfarran
 	[164926] = { 50 }, -- Drust Boughbreaker
+	[164517] = { 70, 40 }, -- Tred'ova
 
 	-- Necrotic Wake
 	[163121] = { 70 }, -- Stitched Vanguard

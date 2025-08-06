@@ -30,4 +30,6 @@
     <Script file="3.73.lua"/>
     <Script file="3.74.lua"/>
     <Script file="3.75.lua"/>
+    <Script file="3.76.lua"/>
+    <Script file="3.77.lua"/>
 </Ui>

@@ -1,6 +1,16 @@
 # Changelog - ElvUI_mMediaTag
 [Eng] - All changes to this project will be documented in this file. The latest changes are at the top.
 
+## [ver. 3.77] - 06.08.2025
+### FIX 
+- FIX - [TAGs]: Prevent a Nil error.
+### UPDATE
+- UPDATE - [System]: TOC Game Version for Retail.
+- UPDATE - [Teleports-Datatext]: Add TWW S3 Teleports.
+- UPDATE - [Nameplate-Healthmarker]: Update for TWW S3.
+### NEW
+- NEW - [Class-Icons]: New Class Icons Set Simple.
+
 ## [ver. 3.76] - 06.07.2025
 ### UPDATE
 - UPDATE - [TAG]: Prevent a nil Error with Class & Target icons on MOP.
