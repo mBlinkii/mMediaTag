@@ -34,6 +34,7 @@ mMT.knownTeleports = {
 	tww = {},
 	dungeonportals = {},
 }
+
 local teleportsIDs = {
 	favorites = {},
 	toys = {
@@ -210,13 +211,13 @@ local teleportsIDs = {
 	},
 	season = {
 		-- tww s3
+		[1216786] = "FLOOD",
 		[1237215] = "ALDANI",
 		[354465] = "HOA",
-		[445417] = "ARAK",
 		[367416] = "TAZ",
 		[445414] = "DAWN",
+		[445417] = "ARAK",
 		[445444] = "PRIORY",
-		[1216786] = "FLOOD",
 
 		-- tww s2
 		-- [445440] = "BREW",
@@ -244,15 +245,16 @@ local teleportsIDs = {
 
 	tww = {
 		-- tww
+		[1216786] = "FLOOD",
+		[1237215] = "ALDANI",
+		[445269] = "SV",
+		[445414] = "DAWN",
+		[445416] = "COT",
 		[445417] = "ARAK",
 		[445440] = "BREW",
-		[445416] = "COT",
 		[445441] = "DFC",
-		[445414] = "DAWN",
-		[1216786] = "FLOOD",
-		[445444] = "PSF",
 		[445443] = "ROOK",
-		[445269] = "SV",
+		[445444] = "PSF",
 
 		-- tww raid
 		[1226482] = "LOU",
