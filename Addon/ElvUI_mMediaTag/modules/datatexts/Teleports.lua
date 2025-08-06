@@ -75,6 +75,7 @@ local teleportsIDs = {
 		[93672] = "toy", -- Dark Portal (Retail)
 		[95567] = "toy", -- Kirin Tor Beacon
 		[95568] = "toy", -- Sunreaver Beacon
+		[245970] = "toy", -- P.O.S.T. Master's Express Hearthstone
 	},
 	engineering = {
 		[87215] = "toy", --wormhole-generator-pandaria
