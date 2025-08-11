@@ -355,6 +355,15 @@ P.tooltip = {
 	zoom = true,
 }
 
+-- minimap skin
+P.minimap_skin = {
+	enable = true,
+	style = "zigzag",
+	cardinal = "none",
+	color = "class",
+	color_cardinal = "class",
+}
+
 -- color
 P.color = {
 	-- tip/ menu
@@ -423,4 +432,6 @@ P.color = {
 	},
 
 	castbar_shield = "FFFFFFFF",
+
+	minimap_skin = { color = "FFFFFFFF", cardinal = "FFFFFFFF" },
 }

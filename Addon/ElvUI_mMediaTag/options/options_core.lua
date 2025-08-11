@@ -214,6 +214,13 @@ mMT.options = {
 					childGroups = "tab",
 					args = {},
 				},
+				minimap_skin = {
+					order = 5,
+					type = "group",
+					name = mMT:AddSettingsIcon(L["Minimap Skin"], "data_panel_skin"),
+					childGroups = "tab",
+					args = {},
+				},
 			},
 		},
 		colors = {

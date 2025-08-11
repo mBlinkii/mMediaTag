@@ -1,3 +1,4 @@
 <Ui xmlns="http://www.blizzard.com/wow/ui/">
 	<Script file="data_panel_skin.lua"/>
+	<Script file="minimap.lua"/>
 </Ui>

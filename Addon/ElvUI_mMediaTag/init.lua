@@ -58,8 +58,8 @@ function mMT:Initialize()
 		mMT.ElvUI_Hooked = true
 	end
 
-	mMT:UpdateAll()
 	mMT:UpdateMedia()
+	mMT:UpdateAll()
 
 	-- add to movers
 	tinsert(E.ConfigModeLayouts, "MMEDIATAG")

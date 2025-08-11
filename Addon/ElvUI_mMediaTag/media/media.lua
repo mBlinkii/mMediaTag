@@ -100,7 +100,8 @@ MEDIA.color = {
 		marker = createColor("FFFFFFFF"),
 	},
 
-	castbar_shield = "FFFFFFFF",
+	castbar_shield = createColor("FFFFFFFF"),
+	minimap_skin = { color = createColor("FFFFFFFF"), cardinal = createColor("FFFFFFFF") },
 }
 
 MEDIA.myclass = E:ClassColor(E.myclass)
@@ -199,8 +200,11 @@ function mMT:UpdateMedia(arg)
 		}
 	end
 
-	if arg == "castbar_shield" or not arg then
-		MEDIA.color.castbar_shield = CreateColorFromHexString(E.db.mMT.color.castbar_shield)
+	if arg == "castbar_shield" or not arg then MEDIA.color.castbar_shield = CreateColorFromHexString(E.db.mMT.color.castbar_shield) end
+
+	if arg == "minimap_skin" or not arg then
+		MEDIA.color.minimap_skin.color = CreateColorFromHexString(E.db.mMT.color.minimap_skin.color)
+		MEDIA.color.minimap_skin.cardinal = CreateColorFromHexString(E.db.mMT.color.minimap_skin.cardinal)
 	end
 end
 
@@ -419,4 +423,119 @@ MEDIA.icons.castbar = {
 	shield04 = "Interface\\AddOns\\ElvUI_mMediaTag\\media\\icons\\castbar\\shield_04.tga",
 	shield05 = "Interface\\AddOns\\ElvUI_mMediaTag\\media\\icons\\castbar\\shield_05.tga",
 	sign01 = "Interface\\AddOns\\ElvUI_mMediaTag\\media\\icons\\castbar\\sign_01.tga",
+}
+
+MEDIA.minimap = {
+	skin = {
+		blizz_portrait = {
+			name = L["Blizzard Portrait"],
+			texture = "Interface\\AddOns\\ElvUI_mMediaTag\\media\\minimap\\blizz_portrait.tga",
+			mask = "Interface\\AddOns\\ElvUI_mMediaTag\\media\\minimap\\blizz_portrait_mask.tga",
+		},
+		blizz_portrait_v2 = {
+			name = L["Blizzard Portrait v2"],
+			texture = "Interface\\AddOns\\ElvUI_mMediaTag\\media\\minimap\\blizz_portrait_v2.tga",
+			mask = "Interface\\AddOns\\ElvUI_mMediaTag\\media\\minimap\\blizz_portrait_v2_mask.tga",
+		},
+		blizz_portrait_v3 = {
+			name = L["Blizzard Portrait v3"],
+			texture = "Interface\\AddOns\\ElvUI_mMediaTag\\media\\minimap\\blizz_portrait_v3.tga",
+			mask = "Interface\\AddOns\\ElvUI_mMediaTag\\media\\minimap\\blizz_portrait_v3_mask.tga",
+		},
+		blizz_portrait_v4 = {
+			name = L["Blizzard Portrait v4"],
+			texture = "Interface\\AddOns\\ElvUI_mMediaTag\\media\\minimap\\blizz_portrait_v4.tga",
+			mask = "Interface\\AddOns\\ElvUI_mMediaTag\\media\\minimap\\blizz_portrait_v4_mask.tga",
+		},
+		circle = {
+			name = L["Circle"],
+			texture = "Interface\\AddOns\\ElvUI_mMediaTag\\media\\minimap\\circle.tga",
+			mask = "Interface\\AddOns\\ElvUI_mMediaTag\\media\\minimap\\circle_mask.tga",
+		},
+		diamond = {
+			name = L["Diamond"],
+			texture = "Interface\\AddOns\\ElvUI_mMediaTag\\media\\minimap\\diamond.tga",
+			mask = "Interface\\AddOns\\ElvUI_mMediaTag\\media\\minimap\\diamond_mask.tga",
+		},
+		hexagon = {
+			name = L["Hexagon"],
+			texture = "Interface\\AddOns\\ElvUI_mMediaTag\\media\\minimap\\hexagon.tga",
+			mask = "Interface\\AddOns\\ElvUI_mMediaTag\\media\\minimap\\hexagon_mask.tga",
+		},
+		octagon = {
+			name = L["Octagon"],
+			texture = "Interface\\AddOns\\ElvUI_mMediaTag\\media\\minimap\\octagon.tga",
+			mask = "Interface\\AddOns\\ElvUI_mMediaTag\\media\\minimap\\octagon_mask.tga",
+		},
+		parallelogram = {
+			name = L["Parallelogram"],
+			texture = "Interface\\AddOns\\ElvUI_mMediaTag\\media\\minimap\\parallelogram.tga",
+			mask = "Interface\\AddOns\\ElvUI_mMediaTag\\media\\minimap\\parallelogram_mask.tga",
+		},
+		parallelogram_v2 = {
+			name = L["Parallelogram v2"],
+			texture = "Interface\\AddOns\\ElvUI_mMediaTag\\media\\minimap\\parallelogram_v2.tga",
+			mask = "Interface\\AddOns\\ElvUI_mMediaTag\\media\\minimap\\parallelogram_v2_mask.tga",
+		},
+		parallelogram_v3 = {
+			name = L["Parallelogram v3"],
+			texture = "Interface\\AddOns\\ElvUI_mMediaTag\\media\\minimap\\parallelogram_v3.tga",
+			mask = "Interface\\AddOns\\ElvUI_mMediaTag\\media\\minimap\\parallelogram_v3_mask.tga",
+		},
+		square = {
+			name = L["Square"],
+			texture = "Interface\\AddOns\\ElvUI_mMediaTag\\media\\minimap\\square.tga",
+			mask = "Interface\\AddOns\\ElvUI_mMediaTag\\media\\minimap\\square_mask.tga",
+		},
+		square_round = {
+			name = L["Square Rounded"],
+			texture = "Interface\\AddOns\\ElvUI_mMediaTag\\media\\minimap\\square_round.tga",
+			mask = "Interface\\AddOns\\ElvUI_mMediaTag\\media\\minimap\\square_round.tga",
+		},
+		window = {
+			name = L["Window"],
+			texture = "Interface\\AddOns\\ElvUI_mMediaTag\\media\\minimap\\window.tga",
+			mask = "Interface\\AddOns\\ElvUI_mMediaTag\\media\\minimap\\window_mask.tga",
+		},
+		zigzag = {
+			name = L["Zigzag"],
+			texture = "Interface\\AddOns\\ElvUI_mMediaTag\\media\\minimap\\zigzag.tga",
+			mask = "Interface\\AddOns\\ElvUI_mMediaTag\\media\\minimap\\zigzag_mask.tga",
+		},
+		zigzag_v2 = {
+			name = L["Zigzag v2"],
+			texture = "Interface\\AddOns\\ElvUI_mMediaTag\\media\\minimap\\zigzag_v2.tga",
+			mask = "Interface\\AddOns\\ElvUI_mMediaTag\\media\\minimap\\zigzag_v2_mask.tga",
+		},
+	},
+	cardinal = {
+		cardinal_v1 = {
+			name = L["Cardinal v1"],
+			texture = "Interface\\AddOns\\ElvUI_mMediaTag\\media\\minimap\\cardinal_v1.tga",
+		},
+		cardinal_v2 = {
+			name = L["Cardinal v2"],
+			texture = "Interface\\AddOns\\ElvUI_mMediaTag\\media\\minimap\\cardinal_v2.tga",
+		},
+		cardinal_v3 = {
+			name = L["Cardinal v3"],
+			texture = "Interface\\AddOns\\ElvUI_mMediaTag\\media\\minimap\\cardinal_v3.tga",
+		},
+		cardinal_v4 = {
+			name = L["Cardinal v4"],
+			texture = "Interface\\AddOns\\ElvUI_mMediaTag\\media\\minimap\\cardinal_v4.tga",
+		},
+		cardinal_v5 = {
+			name = L["Cardinal v5"],
+			texture = "Interface\\AddOns\\ElvUI_mMediaTag\\media\\minimap\\cardinal_v5.tga",
+		},
+		cardinal_v6 = {
+			name = L["Cardinal v6"],
+			texture = "Interface\\AddOns\\ElvUI_mMediaTag\\media\\minimap\\cardinal_v6.tga",
+		},
+		cardinal_v7 = {
+			name = L["Cardinal v7"],
+			texture = "Interface\\AddOns\\ElvUI_mMediaTag\\media\\minimap\\cardinal_v7.tga",
+		},
+	},
 }
