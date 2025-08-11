@@ -36,7 +36,6 @@ local menus = {}
 local teleportsIDs = {
 	favorites = {},
 	toys = {
-		[228940] = "toy", --Notorious Thread's Hearthstone
 		[110560] = "toy", --garrison-hearthstone
 		[140192] = "toy", --dalaran-hearthstone
 		[140324] = "toy", -- Mobile Telemancy Beacon
@@ -65,7 +64,9 @@ local teleportsIDs = {
 		[210455] = "toy", -- Draenic Hologem
 		[211788] = "toy", -- Tess's Peacebloom
 		[212337] = "toy", -- Stone of the Hearth (Hearthstone 10th Anniversary)
+		[228940] = "toy", --Notorious Thread's Hearthstone
 		[236687] = "toy", -- Explosive Hearthstone toy
+		[245970] = "toy", -- P.O.S.T. Master's Express Hearthstone
 		[43824] = "toy", -- The Schools of Arcane Magic - Mastery
 		[54452] = "toy", -- Ethereal Portal
 		[64488] = "toy", -- The Innkeeper's Daughter
@@ -75,19 +76,19 @@ local teleportsIDs = {
 		[95568] = "toy", -- Sunreaver Beacon
 	},
 	engineering = {
-		[87215] = "toy", --wormhole-generator-pandaria
-		[48933] = "toy", --wormhole-generator-northrend
-		[198156] = "toy", -- Wyrmhole Generator
-		[172924] = "toy", --wormhole-generator-shadowlands
-		[168808] = "toy", --wormhole-generator-zandalar
-		[168807] = "toy", --wormhole-generator-kultiras
-		[151652] = "toy", --wormhole-generator-argus
 		[112059] = "toy", --wormhole-centrifuge
+		[151652] = "toy", --wormhole-generator-argus
+		[168807] = "toy", --wormhole-generator-kultiras
+		[168808] = "toy", --wormhole-generator-zandalar
+		[172924] = "toy", --wormhole-generator-shadowlands
+		[18984] = "toy", --Dimensional Ripper - Everlook
+		[18986] = "toy", --Ultrasafe Transporter: Gadgetzan
+		[198156] = "toy", -- Wyrmhole Generator
+		[221966] = "toy", --wormhole-generator-khaz-algar
 		[30542] = "toy", --Dimensional Ripper - Area
 		[30544] = "toy", --Ultrasafe Transporter: Toshley's Station
-		[18986] = "toy", --Ultrasafe Transporter: Gadgetzan
-		[18984] = "toy", --Dimensional Ripper - Everlook
-		[221966] = "toy", --wormhole-generator-khaz-algar
+		[48933] = "toy", --wormhole-generator-northrend
+		[87215] = "toy", --wormhole-generator-pandaria
 	},
 	items = {
 		[103678] = "item", --time-lost-artifact
@@ -207,17 +208,26 @@ local teleportsIDs = {
 		[556] = "spell", -- astral-recall
 	},
 	season = {
-		-- tww s2
-		[445440] = "BREW",
-		[467546] = "BREW",
-		[445441] = "DFC",
-		[445444] = "PSF",
-		[445443] = "ROOK",
+		-- tww s3
 		[1216786] = "FLOOD",
-		[467555] = "ML",
-		[467553] = "ML",
-		[354467] = "TOP",
-		[373274] = "WORK",
+		[1237215] = "ALDANI",
+		[354465] = "HOA",
+		[367416] = "TAZ",
+		[445414] = "DAWN",
+		[445417] = "ARAK",
+		[445444] = "PRIORY",
+
+		-- tww s2
+		-- [445440] = "BREW",
+		-- [467546] = "BREW",
+		-- [445441] = "DFC",
+		-- [445444] = "PSF",
+		-- [445443] = "ROOK",
+		-- [1216786] = "FLOOD",
+		-- [467555] = "ML",
+		-- [467553] = "ML",
+		-- [354467] = "TOP",
+		-- [373274] = "WORK",
 
 		-- tww s1
 		-- [445417] = "ARAK",
@@ -233,31 +243,34 @@ local teleportsIDs = {
 
 	tww = {
 		-- tww
+		[1216786] = "FLOOD",
+		[1237215] = "ALDANI",
+		[445269] = "SV",
+		[445414] = "DAWN",
+		[445416] = "COT",
 		[445417] = "ARAK",
 		[445440] = "BREW",
-		[445416] = "COT",
 		[445441] = "DFC",
-		[445414] = "DAWN",
-		[1216786] = "FLOOD",
-		[445444] = "PSF",
 		[445443] = "ROOK",
-		[445269] = "SV",
+		[445444] = "PSF",
 
 		-- tww raid
 		[1226482] = "LOU",
+		[1239155] = "MFO",
 	},
 
 	dungeonportals = {
 		-- tww
+		[1216786] = "FLOOD",
+		[1237215] = "ALDANI",
+		[445269] = "SV",
+		[445414] = "DAWN",
+		[445416] = "COT",
 		[445417] = "ARAK",
 		[445440] = "BREW",
-		[445416] = "COT",
 		[445441] = "DFC",
-		[445414] = "DAWN",
-		[1216786] = "FLOOD",
-		[445444] = "PSF",
 		[445443] = "ROOK",
-		[445269] = "SV",
+		[445444] = "PSF",
 
 		-- df
 		[393273] = "AA",
@@ -338,6 +351,7 @@ local teleportsIDs = {
 
 		-- tww raid
 		[1226482] = "LOU",
+		[1239155] = "MFO",
 	},
 }
 
