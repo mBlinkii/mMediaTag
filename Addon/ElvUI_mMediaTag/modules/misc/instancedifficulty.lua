@@ -76,7 +76,7 @@ local instanceDifficulty = {
 local shortNames = {
 	-- tww
 	[2648] = "ROOK", --The Rookery
-	[2649] = "PSF", --Priory of the Sacred Flame
+	[2649] = "PRIORY", --Priory of the Sacred Flame
 	[2651] = "DFC", --Darkflame Cleft
 	[2652] = "SV", --The Stonevault
 	[2660] = "ARAK", --Ara-Kara, City of Echoes
@@ -84,6 +84,7 @@ local shortNames = {
 	[2662] = "DAWN", --The Dawnbreaker
 	[2669] = "COT", --City of Threads
 	[2773] = "FLOOD", --Operation: Floodgate
+	[2830] = "ALDANI", -- Eco-Dome Al'dani
 
 	--df
 	[2451]	= "ULD", --Uldaman: Legacy of Tyr

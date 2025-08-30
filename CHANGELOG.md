@@ -1,6 +1,13 @@
 # Changelog - ElvUI_mMediaTag
 [Eng] - All changes to this project will be documented in this file. The latest changes are at the top.
 
+## [ver. 3.78] - 30.08.2025
+### FIX 
+- FIX - [Datatext-Crest]: Fixed Crest IDs.
+### UPDATE
+- UPDATE - [System]: Update Boss IDs.
+- UPDATE - [System]: Update Instance IDs.
+
 ## [ver. 3.77] - 06.08.2025
 ### FIX 
 - FIX - [TAGs]: Prevent a Nil error.
