@@ -97,19 +97,14 @@ function module:UpdateCastbar(castbar, isNP)
 			if isTarget or not Spell.sound.target then
 				local spellInfo = GetSpellInfo(castbar.spellID)
 				local delay = 0.5
-				lastPlayed[castbar.spellID] = lastPlayed[castbar.spellID] or { time = 0, queued = 0, willPlay = true }
+				local spellData = lastPlayed[castbar.spellID] or { time = 0, willPlay = true }
+				lastPlayed[castbar.spellID] = spellData
 
-				local willPlay, soundHandle = nil, nil
-
-				if lastPlayed[castbar.spellID].willPlay and (lastPlayed[castbar.spellID].time + (spellInfo.castTime / 1000) + delay) < GetTime() then
-					willPlay, soundHandle = PlaySoundFile(Spell.sound.soundFile, "Master")
+				if spellData.willPlay and (spellData.time + (spellInfo.castTime / 1000) + delay) < GetTime() then
+					local willPlay = PlaySoundFile(Spell.sound.soundFile, "Master")
+					if willPlay then spellData.time = GetTime() end
+					spellData.willPlay = not willPlay
 				end
-
-				if willPlay then
-					lastPlayed[castbar.spellID].time = GetTime()
-					lastPlayed[castbar.spellID].queued = soundHandle
-				end
-				lastPlayed[castbar.spellID].willPlay = not willPlay
 			elseif lastPlayed[castbar.spellID] then
 				lastPlayed[castbar.spellID].willPlay = true
 			end
