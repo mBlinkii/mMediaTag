@@ -20,8 +20,6 @@ end
 local function NPLoader(castbar)
 	if castbar.unit == "vehicle" or castbar.unit == "player" then return end
 
-	if mMT.Modules.ImportantSpells.loaded and E.db.mMT.importantspells.np then mMT.Modules.ImportantSpells:UpdateCastbar(castbar, true) end
-
 	if mMT.Modules.InterruptOnCD.loaded then mMT.Modules.InterruptOnCD:InterruptChecker(castbar) end
 
 	if E.db.mMT.castbarshield.enable and E.db.mMT.castbarshield.np then mMT:CastbarShield(castbar) end
@@ -30,22 +28,20 @@ end
 local function UFLoader(castbar)
 	if castbar.unit == "vehicle" or castbar.unit == "player" then return end
 
-	if mMT.Modules.ImportantSpells.loaded and E.db.mMT.importantspells.uf then mMT.Modules.ImportantSpells:UpdateCastbar(castbar) end
-
 	if mMT.Modules.InterruptOnCD.loaded then mMT.Modules.InterruptOnCD:InterruptChecker(castbar, true) end
 
 	if E.db.mMT.castbarshield.enable and E.db.mMT.castbarshield.uf then mMT:CastbarShield(castbar) end
 end
 
 function module:Initialize()
-	if not module.NP and (E.db.mMT.interruptoncd.enable or (E.db.mMT.importantspells.enable and E.db.mMT.importantspells.np) or E.db.mMT.castbarshield.enable) then
+	if not module.NP and (E.db.mMT.interruptoncd.enable or E.db.mMT.castbarshield.enable) then
 		hooksecurefunc(NP, "Castbar_CheckInterrupt", NPLoader)
 		module.loaded = true
 		module.needReloadUI = true
 		module.NP = true
 	end
 
-	if not module.UF and (E.db.mMT.interruptoncd.enable or (E.db.mMT.importantspells.enable and E.db.mMT.importantspells.uf) or (E.db.mMT.castbarshield.enable and E.db.mMT.castbarshield.uf)) then
+	if not module.UF and (E.db.mMT.interruptoncd.enable or (E.db.mMT.castbarshield.enable and E.db.mMT.castbarshield.uf)) then
 		hooksecurefunc(UF, "PostCastStart", UFLoader)
 		module.loaded = true
 		module.needReloadUI = true

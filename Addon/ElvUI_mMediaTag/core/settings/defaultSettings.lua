@@ -32,14 +32,6 @@ P.mMT = {
 		multiplier = 0.3,
 		setBGColor = false,
 	},
-	importantspells = {
-		dbversion = 0,
-		enable = false,
-		gradient = false,
-		np = true,
-		uf = true,
-		spells = {},
-	},
 	custombackgrounds = {
 		health = { enable = false, texture = "mMediaTag A8" },
 		power = { enable = false, texture = "mMediaTag A8" },
