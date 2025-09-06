@@ -109,11 +109,13 @@ local HM_NPCs = {
 	[184582] = { 10 }, -- Eric "The Swift"
 
 	-------- SL Dungeons --------
+	---
 	-- De Other Side
 	[164558] = { 80, 60, 40, 20 }, -- Hakkar the Soulflayer
 
 	-- Halls of Atonement
 	[164218] = { 70, 40 }, -- Lord Chamberlain
+	[165415] = { 30 }, -- Groundskeeper
 
 	-- Mists of Tirna Scithe
 	[164501] = { 70, 40, 10 }, -- Mistcaller
