@@ -184,7 +184,7 @@ P.mMT = {
 			auto = true,
 			range = 20,
 		},
-		bordercolor = { border = false, glow = false },
+		bordercolor = { glow = false },
 	},
 	gamemenu = { icon = true, menuicons = true, color = true },
 	tags = {

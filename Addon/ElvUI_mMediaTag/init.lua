@@ -349,7 +349,7 @@ function mMT:PLAYER_ENTERING_WORLD(event)
 
 	if E.db.mMT.roll.enable then mMT:mRoll() end
 
-	if E.private.nameplates.enable and (E.db.mMT.nameplate.bordercolor.glow or E.db.mMT.nameplate.bordercolor.border) then mMT:mNamePlateBorderColor() end
+	if E.private.nameplates.enable and (E.db.mMT.nameplate.bordercolor.glow) then mMT:mNamePlateBorderColor() end
 
 	E:Delay(1, collectgarbage, "collect")
 end

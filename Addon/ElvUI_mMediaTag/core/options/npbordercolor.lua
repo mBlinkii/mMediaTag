@@ -10,19 +10,6 @@ local function configTable()
 			inline = true,
 			name = L["Border and Glow"],
 			args = {
-				toggle_bordercolor = {
-					order = 1,
-					type = "toggle",
-                    name = L["Auto color Border"],
-                    desc = L["Class colored Nameplates Border."],
-					get = function(info)
-						return E.db.mMT.nameplate.bordercolor.border
-					end,
-					set = function(info, value)
-						E.db.mMT.nameplate.bordercolor.border = value
-                        mMT:mNamePlateBorderColor()
-					end,
-				},
                 toggle_glowcolor = {
 					order = 2,
 					type = "toggle",
