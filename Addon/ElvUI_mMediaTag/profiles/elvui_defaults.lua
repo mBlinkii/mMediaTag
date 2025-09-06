@@ -364,6 +364,33 @@ P.minimap_skin = {
 	color_cardinal = "class",
 }
 
+P.dock = {
+	auto_grow = true,
+	grow_size = 32,
+
+	notification = {
+		enable = false,
+		auto = true,
+		size = 16,
+		icon = "notification01",
+		color = { r = 1, g = 0, b = 0, a = 1 },
+	},
+
+	font = {
+		font = "PT Sans Narrow",
+		custom_font_size = false,
+		fontSize = 12,
+		fontFlag = "OUTLINE",
+		custom_font_color = false,
+		color = { r = 1, g = 1, b = 1 },
+	},
+
+	color = {
+		normal = { r = 1, g = 1, b = 1, a = 1 },
+		hover = { r = 1, g = 1, b = 1, a = 1 },
+	},
+}
+
 -- color
 P.color = {
 	-- tip/ menu

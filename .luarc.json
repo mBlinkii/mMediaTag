@@ -19530,6 +19530,7 @@
         "ADDON_LIST_PERFORMANCE_PEAK_CPU",
         "ADDON_PERFORMANCE_MENU_TOOLTIP",
         "ElvUI_mMediaTag",
+        "ElvUI_mMediaTag",
         "ElvUI_mMediaTag"
   ],
   "diagnostics.disable": ["deprecated", "inject-field", "undefined-field",
