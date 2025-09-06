@@ -91,6 +91,8 @@ local function SetCastbarColor(castbar, color)
 		local multiplier = module.bg_multiplier
 		castbar.bg:SetVertexColor(c.r * multiplier, c.g * multiplier, c.b * multiplier, 1)
 	end
+
+	castbar._color_Changed = true
 end
 
 local function ResetCastbarColor(castbar) -- Reset the castbar color to its original state
@@ -105,6 +107,8 @@ local function ResetCastbarColor(castbar) -- Reset the castbar color to its orig
 		castbar.bg:SetVertexColor(c.r, c.g, c.b, c.a)
 		castbar._originalBgColor = nil
 	end
+
+	castbar._color_Changed = false
 end
 
 local function CreateMarker(castbar) -- Create the interrupt marker texture on the castbar
@@ -174,46 +178,60 @@ local function GetCastColor(castbar)
 	end
 end
 
+local function UpdateMarker(castbar, markerPosition)
+	-- marker position calculation and set
+	if markerPosition then
+		if not castbar.InterruptMarker then CreateMarker(castbar) end -- create marker if it doesn't exist
+
+		castbar.InterruptMarker:SetPoint("center", castbar, "left", markerPosition * castbar:GetWidth(), 0)
+		castbar.InterruptMarker:Show()
+	end
+end
+
 local function HideMarker(castbar)
 	if castbar.InterruptMarker and castbar.InterruptMarker:IsShown() then -- hide marker if it exists
 		castbar.InterruptMarker:Hide()
 	end
 end
 
+local UPDATE_INTERVAL = 0.5
+
 local function Castbar_OnUpdate(castbar, elapsed)
+	if castbar.notInterruptible then return end
+
 	castbar._interruptOnCD_Elapsed = (castbar._interruptOnCD_Elapsed or 0) + elapsed
-	if castbar._interruptOnCD_Elapsed > 0.5 then
-		local isOnCD = GetCastColor(castbar)
-
-		if not isOnCD then
-			HideMarker(castbar)
+	if castbar._interruptOnCD_Elapsed > UPDATE_INTERVAL then
+		local color, markerPosition = GetCastColor(castbar)
+		if color then
+			SetCastbarColor(castbar, color)
+			if markerPosition then
+				UpdateMarker(castbar, markerPosition)
+			else
+				HideMarker(castbar)
+			end
+		elseif castbar._color_Changed then
 			ResetCastbarColor(castbar)
+			HideMarker(castbar)
 		end
-
 		castbar._interruptOnCD_Elapsed = 0
 	end
 end
 
-local function Update(castbar)
+local function Update(castbar, unit)
 	if not castbar then return end -- end if castbar is nils
 
-	HideMarker(castbar)
-
-	if (castbar.unit == "vehicle") or (castbar.unit == "player") then return end -- ignore vehicle and player castbars
-	if castbar.notIncorruptible then return end -- ignore non-interruptible castbars
+	if (unit == "vehicle") or (unit == "player") then return end -- ignore vehicle and player castbars
+	if castbar.notInterruptible then return end -- ignore non-interruptible castbars
 
 	local color, markerPosition = GetCastColor(castbar)
 
+	if not markerPosition then
+		HideMarker(castbar)
+	end
+
 	if color then
 		SetCastbarColor(castbar, color)
-
-		-- marker position calculation and set
-		if markerPosition then
-			if not castbar.InterruptMarker then CreateMarker(castbar) end -- create marker if it doesn't exist
-
-			castbar.InterruptMarker:SetPoint("center", castbar, "left", markerPosition * castbar:GetWidth(), 0)
-			castbar.InterruptMarker:Show()
-		end
+		UpdateMarker(castbar, markerPosition)
 	end
 
 	if not castbar._interruptOnCD_OnUpdateHooked then
