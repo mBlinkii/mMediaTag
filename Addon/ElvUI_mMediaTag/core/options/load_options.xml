@@ -23,7 +23,6 @@
 	<Script file="general.lua"/>
 	<Script file="greeting.lua"/>
 	<Script file="healthmarker.lua"/>
-	<Script file="importantspells.lua"/>
 	<Script file="instancedifficulty.lua"/>
 	<Script file="interruptoncd.lua"/>
 	<Script file="keystonetochat.lua"/>
