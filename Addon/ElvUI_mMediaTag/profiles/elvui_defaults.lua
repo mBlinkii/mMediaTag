@@ -387,7 +387,8 @@ P.dock = {
 
 	color = {
 		normal = { r = 1, g = 1, b = 1, a = 1 },
-		hover = { r = 1, g = 1, b = 1, a = 1 },
+		hover = { r = 0, g = 1, b = 1, a = 1 },
+		clicked = { r = 1, g = 0, b = 1, a = 1 },
 	},
 }
 

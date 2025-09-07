@@ -4,4 +4,5 @@
 	<Include file="datatexts\load_datatexts.xml"/>
 	<Include file="portraits\load_portraits.xml"/>
 	<Include file="cast\load_cast.xml"/>
+	<Include file="dock\load_dock.xml"/>
 </Ui>

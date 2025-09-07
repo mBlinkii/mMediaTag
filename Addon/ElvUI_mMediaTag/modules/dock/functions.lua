@@ -27,6 +27,7 @@ local function SetupDockIcon(datatext, config)
 	dock.Icon:SetTexture(config.icon.texture)
 
 	local color = config.icon.color or module.db.normal
+	dock.color = color
 	dock.Icon:SetVertexColor(color.r, color.g, color.b, color.a or 1)
 end
 
@@ -141,6 +142,41 @@ local function SetupDockSecureButton(datatext, conf)
 	end
 end
 
+function module:Click(datatext)
+	local icon = datatext.mMT_Dock.Icon
+	local color = module.db.color.clicked
+	icon:SetVertexColor(color.r, color.g, color.b, color.a or 1)
+end
+
+function module:OnEnter(datatext)
+	local icon = datatext.mMT_Dock.Icon
+	local color = module.db.color.hover
+	local size = datatext.mMT_Dock.grow
+
+	icon:Size(size, size)
+	icon:SetVertexColor(color.r, color.g, color.b, color.a or 1)
+
+	E:UIFrameFadeOut(icon, 0.25, icon:GetAlpha(), 1)
+
+	-- fade texts out
+	if datatext.mMT_Dock.TextA then E:UIFrameFadeOut(datatext.mMT_Dock.TextA, 0.25, 1, 0) end
+	if datatext.mMT_Dock.TextB then E:UIFrameFadeOut(datatext.mMT_Dock.TextB, 0.25, 1, 0) end
+end
+
+function module:OnLeave(datatext)
+	local icon = datatext.mMT_Dock.Icon
+	local color = datatext.mMT_Dock.color
+	local size = datatext.mMT_Dock.size
+
+	icon:Size(size, size)
+	icon:SetVertexColor(color.r, color.g, color.b, color.a or 1)
+	E:UIFrameFadeIn(icon, 0.25, icon:GetAlpha(), 1)
+
+	-- fade texts in
+	if datatext.mMT_Dock.TextA then E:UIFrameFadeIn(datatext.mMT_Dock.TextA, 0.75, 0, 1) end
+	if datatext.mMT_Dock.TextB then E:UIFrameFadeIn(datatext.mMT_Dock.TextB, 0.75, 0, 1) end
+end
+
 --** DOCK Config Table
 -- local Config = {
 -- 	name = "DEVICON",
@@ -168,7 +204,7 @@ end
 
 function module:CreateDockIcon(datatext, config)
 	if not config or not datatext then return end
-	module.db = mMT.db.dock
+	module.db = E.db.mMT.dock
 
 	datatext.text:SetText("")
 
