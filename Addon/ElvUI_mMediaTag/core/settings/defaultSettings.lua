@@ -862,6 +862,7 @@ P.mMT.datatexts = {
 		value = "FFFFFFFF",
 	},
 	score = {
+		lastWeeklyReset = 0,
 		group_keystones = true,
 		show_upgrade = true,
 		sort_method = "KEY",
