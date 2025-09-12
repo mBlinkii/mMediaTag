@@ -3,6 +3,7 @@ local DT = E:GetModule("DataTexts")
 local Dock = M.Dock
 
 local _G = _G
+local icons = MEDIA.icons.dock
 
 local Config = {
 	name = "mMT_Dock_BlizzardStore",
@@ -27,7 +28,7 @@ end
 local function OnEvent(self, event, ...)
 	if event == "ELVUI_FORCE_UPDATE" then
 		--setup settings
-		Config.icon.texture = MEDIA.icons.dock["account_balance_wallet"] --[E.db.mMT.dockdatatext.blizzardstore.icon]
+		Config.icon.texture = icons["material"]["account_balance_wallet"] --[E.db.mMT.dockdatatext.blizzardstore.icon]
 		Config.icon.color = {r = 0.5, g = 1, b = 0.6, a = 1}--E.db.mMT.dockdatatext.blizzardstore.customcolor and E.db.mMT.dockdatatext.blizzardstore.iconcolor or nil
 
 		Dock:CreateDockIcon(self, Config, event)

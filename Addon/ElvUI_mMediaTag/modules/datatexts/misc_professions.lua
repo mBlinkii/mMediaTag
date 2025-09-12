@@ -9,6 +9,7 @@ local GetSpellInfo = C_Spell and C_Spell.GetSpellInfo or GetSpellInfo
 local GetSpellTexture = C_Spell and C_Spell.GetSpellTexture or GetSpellTexture
 local GetSpellCooldown = C_Spell and C_Spell.GetSpellCooldown or GetSpellCooldown
 local CastSpell = CastSpell
+local IsSpellKnown = C_SpellBook and C_SpellBook.IsSpellInSpellBook or IsSpellKnown
 
 local textString = ""
 local dt_icons = MEDIA.icons.datatexts.professions
