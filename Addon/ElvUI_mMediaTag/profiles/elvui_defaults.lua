@@ -392,8 +392,8 @@ P.dock = {
 	},
 
 	store = {
-		style = "material",
-		icon = "account_balance_wallet",
+		style = "material_filled",
+		icon = "payments",
 		custom_color = false,
 	},
 }
