@@ -26,7 +26,7 @@ local function SetupDockIcon(datatext, config)
 	dock.Icon:Size(size, size)
 	dock.Icon:SetTexture(config.icon.texture)
 
-	local color = config.icon.color or colors.normal
+	local color = config.icon.color or module.db.class.normal and MEDIA.myclass or colors.normal
 	dock.color = color
 	dock.Icon:SetVertexColor(color.r, color.g, color.b, color.a or 1)
 end
@@ -102,7 +102,7 @@ local function SetupDockNotification(datatext, config)
 
 	-- calculate size and set properties
 	local size = db.auto and ((datatext:GetHeight() + 4) / 4) or db.size
-	local color = colors.notification
+	local color = module.db.class.notification and MEDIA.myclass or colors.notification
 	dock.Notification:Size(size, size)
 	dock.Notification:SetTexture(db.icon)
 	dock.Notification.SetVertexColor(color.r, color.g, color.b, color.a or 1)
@@ -146,14 +146,14 @@ end
 
 function module:Click(datatext)
 	local icon = datatext.mMT_Dock.Icon
-	local color = colors.clicked
+	local color = module.db.class.clicked and MEDIA.myclass or colors.clicked
 	icon:SetVertexColor(color.r, color.g, color.b, color.a or 1)
 end
 
 function module:OnEnter(datatext)
 	local icon = datatext.mMT_Dock.Icon
 	local size = datatext.mMT_Dock.size
-	local color = colors.hover
+	local color = module.db.class.hover and MEDIA.myclass or colors.hover
 	local growSize = module.db.auto_grow and (size * 1.5) or (module.db.grow_size + size)
 
 	icon:Size(growSize, growSize)

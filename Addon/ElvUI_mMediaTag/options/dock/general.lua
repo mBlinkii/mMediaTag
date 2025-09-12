@@ -149,7 +149,7 @@ mMT.options.args.dock.args.general.args = {
 				order = 6,
 				name = L["Font Color"],
 				hasAlpha = false,
-                disabled = function()
+				disabled = function()
 					return not E.db.mMT.dock.font.custom_font_color
 				end,
 				get = function(info)
@@ -161,7 +161,126 @@ mMT.options.args.dock.args.general.args = {
 					E.db.mMT.color.dock.font = hex
 					MEDIA.color.dock.font = CreateColorFromHexString(hex)
 					MEDIA.color.dock.font.hex = hex
-                    DT:LoadDataTexts()
+					DT:LoadDataTexts()
+				end,
+			},
+		},
+	},
+	colors = {
+		order = 3,
+		type = "group",
+		inline = true,
+		name = L["Colors"],
+		args = {
+			normal = {
+				type = "color",
+				order = 1,
+				name = L["Normal"],
+				desc = L["Set the normal color of the icon."],
+				hasAlpha = true,
+				disabled = function()
+					return E.db.mMT.dock.class.normal
+				end,
+				get = function(info)
+					local r, g, b = mMT:HexToRGB(E.db.mMT.color.dock.normal)
+					return r, g, b
+				end,
+				set = function(info, r, g, b)
+					local hex = E:RGBToHex(r, g, b, "ff")
+					E.db.mMT.color.dock.normal = hex
+					MEDIA.color.dock.normal = CreateColorFromHexString(hex)
+					DT:LoadDataTexts()
+				end,
+			},
+			class_normal = {
+				order = 2,
+				type = "toggle",
+				name = L["Class Color"],
+				desc = L["Use class color for the icon."],
+				get = function(info)
+					return E.db.mMT.dock.class.normal
+				end,
+				set = function(info, value)
+					E.db.mMT.dock.class.normal = value
+					DT:LoadDataTexts()
+				end,
+			},
+			spacer1 = {
+				order = 3,
+				type = "description",
+				fontSize = "medium",
+				name = "\n",
+			},
+			hover = {
+				type = "color",
+				order = 4,
+				name = L["Hover"],
+				desc = L["Set the hover color of the icon."],
+				hasAlpha = true,
+				disabled = function()
+					return E.db.mMT.dock.class.hover
+				end,
+				get = function(info)
+					local r, g, b = mMT:HexToRGB(E.db.mMT.color.dock.hover)
+					return r, g, b
+				end,
+				set = function(info, r, g, b)
+					local hex = E:RGBToHex(r, g, b, "ff")
+					E.db.mMT.color.dock.hover = hex
+					MEDIA.color.dock.hover = CreateColorFromHexString(hex)
+					DT:LoadDataTexts()
+				end,
+			},
+			class_hover = {
+				order = 5,
+				type = "toggle",
+				name = L["Class Color"],
+				desc = L["Use class color for the icon."],
+				get = function(info)
+					return E.db.mMT.dock.class.hover
+				end,
+				set = function(info, value)
+					E.db.mMT.dock.class.hover = value
+					DT:LoadDataTexts()
+				end,
+			},
+			spacer2 = {
+				order = 6,
+				type = "description",
+				fontSize = "medium",
+				name = "\n",
+			},
+			clicked = {
+				type = "color",
+				order = 7,
+				name = L["Clicked"],
+				desc = L["Set the clicked color of the icon."],
+				hasAlpha = true,
+				disabled = function()
+					return E.db.mMT.dock.class.clicked
+				end,
+				get = function(info)
+					local r, g, b = mMT:HexToRGB(E.db.mMT.color.dock.clicked)
+					return r, g, b
+				end,
+				set = function(info, r, g, b)
+					local hex = E:RGBToHex(r, g, b, "ff")
+					E.db.mMT.color.dock.clicked = hex
+					MEDIA.color.dock.clicked = CreateColorFromHexString(hex)
+					DT:LoadDataTexts()
+				end,
+			},
+			class_clicked = {
+				order = 8,
+				type = "toggle",
+				name = L["Class Color"],
+				desc = L["Use class color for the icon."],
+				get = function(info)
+					return E.db.mMT.dock.class.clicked
+				end,
+				set = function(info, value)
+					E.db.mMT.dock.class.clicked = value
+					DT:LoadDataTexts()
 				end,
 			},
 		},

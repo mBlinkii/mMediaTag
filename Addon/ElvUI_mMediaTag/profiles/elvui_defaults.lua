@@ -369,6 +369,13 @@ P.dock = {
 	grow_size = 32,
 	tooltip = true,
 
+	class = {
+		normal = false,
+		hover = false,
+		clicked = false,
+		notification = false,
+	},
+
 	notification = {
 		enable = false,
 		auto = true,
