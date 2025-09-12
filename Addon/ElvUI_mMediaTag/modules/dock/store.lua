@@ -4,8 +4,9 @@ local Dock = M.Dock
 
 local _G = _G
 local icons = MEDIA.icons.dock
+local GetCurrentTokenMarketPrice = C_WowTokenPublic.GetCurrentMarketPrice
 
-local Config = {
+local config = {
 	name = "mMT_Dock_BlizzardStore",
 	localizedName = "|CFF01EEFFDock|r" .. " " .. BLIZZARD_STORE,
 	category = mMT.NameShort .. " - |CFF01EEFFDock|r",
@@ -14,37 +15,45 @@ local Config = {
 		texture = mMT.IconSquare,
 		color = { r = 1, g = 1, b = 1, a = 1 },
 	},
+	misc = {
+		secure = true,
+		macroA = "/click StoreMicroButton",
+		funcOnEnter = nil,
+		funcOnLeave = nil,
+	},
 }
 
 local function OnEnter(self)
-	Dock:OnEnter(self)
+	Dock:OnEnter(self.__owner)
 
-	--if E.db.mMT.dockdatatext.tip.enable then
-		DT.tooltip:AddLine(BLIZZARD_STORE)
-		DT.tooltip:Show()
-	--end
+	if E.db.mMT.dock.tooltip then
+		GameTooltip:SetOwner(self, "ANCHOR_TOP")
+		GameTooltip:AddLine(mMT:TC(BLIZZARD_STORE, "title"))
+
+		if E.Retail or E.Mists then
+			local price = E:FormatMoney(GetCurrentTokenMarketPrice() or 0, "BLIZZARD", false)
+			GameTooltip:AddLine(" ")
+			GameTooltip:AddDoubleLine(mMT:TC(L["WoW Token:"], "mark"), price)
+		end
+		GameTooltip:Show()
+	end
+end
+
+local function OnLeave(self)
+	Dock:OnLeave(self.__owner)
+	if E.db.mMT.dock.tooltip then GameTooltip:Hide() end
 end
 
 local function OnEvent(self, event, ...)
 	if event == "ELVUI_FORCE_UPDATE" then
 		--setup settings
-		Config.icon.texture = icons["material"]["account_balance_wallet"] --[E.db.mMT.dockdatatext.blizzardstore.icon]
-		Config.icon.color = {r = 0.5, g = 1, b = 0.6, a = 1}--E.db.mMT.dockdatatext.blizzardstore.customcolor and E.db.mMT.dockdatatext.blizzardstore.iconcolor or nil
+		config.icon.texture = icons[E.db.mMT.dock.store.style][E.db.mMT.dock.store.icon] or MEDIA.fallback
+		config.icon.color = E.db.mMT.dock.store.custom_color and MEDIA.color.dock.store or nil
+		config.misc.funcOnEnter = OnEnter
+		config.misc.funcOnLeave = OnLeave
 
-		Dock:CreateDockIcon(self, Config, event)
+		Dock:CreateDockIcon(self, config, event)
 	end
 end
 
-local function OnLeave(self)
-	--if E.db.mMT.dockdatatext.tip.enable then DT.tooltip:Hide() end
-
-    DT.tooltip:Hide()
-	Dock:OnLeave(self)
-end
-
-local function OnClick(self)
-	Dock:Click(self)
-	_G.StoreMicroButton:Click()
-end
-
-DT:RegisterDatatext(Config.name, Config.category, nil, OnEvent, nil, OnClick, OnEnter, OnLeave, Config.localizedName, nil, nil)
+DT:RegisterDatatext(config.name, config.category, nil, OnEvent, nil, nil, nil, nil, config.localizedName, nil, nil)

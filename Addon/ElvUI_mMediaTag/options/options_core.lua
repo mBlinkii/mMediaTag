@@ -169,7 +169,22 @@ mMT.options = {
 			name = L["Dock"],
 			icon = "Interface\\Addons\\ElvUI_mMediaTag\\media\\options\\dock",
 			childGroups = "tab",
-			args = {},
+			args = {
+				general = {
+					order = 1,
+					type = "group",
+					name = mMT:AddSettingsIcon(L["General"], "general"),
+					childGroups = "tab",
+					args = {},
+				},
+				store = {
+					order = 20,
+					type = "group",
+					name = mMT:AddSettingsIcon(BLIZZARD_STORE, "shop"),
+					childGroups = "tab",
+					args = {},
+				},
+			},
 		},
 		tags = {
 			order = 7,

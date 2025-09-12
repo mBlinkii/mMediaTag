@@ -102,6 +102,15 @@ MEDIA.color = {
 
 	castbar_shield = createColor("FFFFFFFF"),
 	minimap_skin = { color = createColor("FFFFFFFF"), cardinal = createColor("FFFFFFFF") },
+
+	dock = {
+		normal = createColor("FFFFFFFF"),
+		hover = createColor("FF00FFFF"),
+		clicked = createColor("FFFF00FF"),
+		notification = createColor("FF00FF88"),
+		font = createColor("FFFFFFFF"),
+		store = createColor("FFFFFFFF"),
+	},
 }
 
 MEDIA.myclass = E:ClassColor(E.myclass)
@@ -206,6 +215,15 @@ function mMT:UpdateMedia(arg)
 		MEDIA.color.minimap_skin.color = CreateColorFromHexString(E.db.mMT.color.minimap_skin.color)
 		MEDIA.color.minimap_skin.cardinal = CreateColorFromHexString(E.db.mMT.color.minimap_skin.cardinal)
 	end
+
+	if arg == "dock" or not arg then
+		MEDIA.color.dock.normal = CreateColorFromHexString(E.db.mMT.color.dock.normal)
+		MEDIA.color.dock.hover = CreateColorFromHexString(E.db.mMT.color.dock.hover)
+		MEDIA.color.dock.clicked = CreateColorFromHexString(E.db.mMT.color.dock.clicked)
+		MEDIA.color.dock.notification = CreateColorFromHexString(E.db.mMT.color.dock.notification)
+		MEDIA.color.dock.font = CreateColorFromHexString(E.db.mMT.color.dock.font)
+		MEDIA.color.dock.store = CreateColorFromHexString(E.db.mMT.color.dock.store)
+	end
 end
 
 MEDIA.icon = "|TInterface\\Addons\\ElvUI_mMediaTag\\media\\icon.tga:14:14|t"
@@ -213,6 +231,7 @@ MEDIA.icon16 = "|TInterface\\Addons\\ElvUI_mMediaTag\\media\\options\\mmt_16.tga
 MEDIA.icon32 = "|TInterface\\Addons\\ElvUI_mMediaTag\\media\\options\\mmt_16.tga:32:32|t"
 MEDIA.icon64 = "|TInterface\\Addons\\ElvUI_mMediaTag\\media\\options\\mmt_16.tga:64:64|t"
 MEDIA.logo = "Interface\\Addons\\ElvUI_mMediaTag\\media\\logo.tga"
+MEDIA.fallback = "Interface\\Addons\\ElvUI_mMediaTag\\media\\fallback.tga"
 
 MEDIA.leftClick = "|TInterface\\Addons\\ElvUI_mMediaTag\\media\\icons\\system\\left.tga:16:16|t"
 MEDIA.rightClick = "|TInterface\\Addons\\ElvUI_mMediaTag\\media\\icons\\system\\right.tga:16:16|t"
@@ -500,7 +519,6 @@ MEDIA.icons.dock = {
 		inventory_2 = "Interface\\AddOns\\ElvUI_mMediaTag\\media\\dock\\material\\inventory_2.tga",
 		key = "Interface\\AddOns\\ElvUI_mMediaTag\\media\\dock\\material\\key.tga",
 		license = "Interface\\AddOns\\ElvUI_mMediaTag\\media\\dock\\material\\license.tga",
-		list = "Interface\\AddOns\\ElvUI_mMediaTag\\media\\dock\\material\\list.txt",
 		local_police = "Interface\\AddOns\\ElvUI_mMediaTag\\media\\dock\\material\\local_police.tga",
 		loyalty = "Interface\\AddOns\\ElvUI_mMediaTag\\media\\dock\\material\\loyalty.tga",
 		mail = "Interface\\AddOns\\ElvUI_mMediaTag\\media\\dock\\material\\mail.tga",
@@ -619,7 +637,6 @@ MEDIA.icons.dock = {
 		inventory_2_filled = "Interface\\AddOns\\ElvUI_mMediaTag\\media\\dock\\material_filled\\inventory_2.tga",
 		key_filled = "Interface\\AddOns\\ElvUI_mMediaTag\\media\\dock\\material_filled\\key.tga",
 		license_filled = "Interface\\AddOns\\ElvUI_mMediaTag\\media\\dock\\material_filled\\license.tga",
-		list_filled = "Interface\\AddOns\\ElvUI_mMediaTag\\media\\dock\\material_filled\\list.txt",
 		local_police_filled = "Interface\\AddOns\\ElvUI_mMediaTag\\media\\dock\\material_filled\\local_police.tga",
 		loyalty_filled = "Interface\\AddOns\\ElvUI_mMediaTag\\media\\dock\\material_filled\\loyalty.tga",
 		mail_filled = "Interface\\AddOns\\ElvUI_mMediaTag\\media\\dock\\material_filled\\mail.tga",

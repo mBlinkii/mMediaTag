@@ -367,13 +367,13 @@ P.minimap_skin = {
 P.dock = {
 	auto_grow = true,
 	grow_size = 32,
+	tooltip = true,
 
 	notification = {
 		enable = false,
 		auto = true,
 		size = 16,
 		icon = "notification01",
-		color = { r = 1, g = 0, b = 0, a = 1 },
 	},
 
 	font = {
@@ -382,13 +382,12 @@ P.dock = {
 		fontSize = 12,
 		fontFlag = "OUTLINE",
 		custom_font_color = false,
-		color = { r = 1, g = 1, b = 1 },
 	},
 
-	color = {
-		normal = { r = 1, g = 1, b = 1, a = 1 },
-		hover = { r = 0, g = 1, b = 1, a = 1 },
-		clicked = { r = 1, g = 0, b = 1, a = 1 },
+	store = {
+		style = "material",
+		icon = "account_balance_wallet",
+		custom_color = false,
 	},
 }
 
@@ -462,4 +461,13 @@ P.color = {
 	castbar_shield = "FFFFFFFF",
 
 	minimap_skin = { color = "FFFFFFFF", cardinal = "FFFFFFFF" },
+
+	dock = {
+		normal = "FFFFFFFF",
+		hover = "FF00FFFF",
+		clicked = "FFFF00FF",
+		notification = "FF00FF88",
+		font = "FFFFFFFF",
+		store = "FFFFFFFF",
+	},
 }

@@ -2,19 +2,19 @@ local mMT, DB, M, E, P, L, MEDIA = unpack(ElvUI_mMediaTag)
 
 local module = mMT:AddModule("Dock")
 local InCombatLockdown = InCombatLockdown
+local LSM = E.Libs.LSM
+local colors = MEDIA.color.dock
 
 local function SetupDockIcon(datatext, config)
-	-- Determine icon size and growth
+	-- Determine icon size
 	local isVertical = datatext.db and datatext.db.growth == "VERTICAL"
 	local baseSize = isVertical and datatext:GetWidth() or datatext:GetHeight()
 	local size = baseSize + 4
-	local grow = module.db.auto_grow and (size * 1.5) or (module.db.grow_size + size)
 
 	-- Initialize Dock table
 	datatext.mMT_Dock = datatext.mMT_Dock or {}
 	local dock = datatext.mMT_Dock
 	dock.size = size
-	dock.grow = grow
 
 	-- Create or update icon texture
 	if not dock.Icon then
@@ -26,7 +26,7 @@ local function SetupDockIcon(datatext, config)
 	dock.Icon:Size(size, size)
 	dock.Icon:SetTexture(config.icon.texture)
 
-	local color = config.icon.color or module.db.normal
+	local color = config.icon.color or colors.normal
 	dock.color = color
 	dock.Icon:SetVertexColor(color.r, color.g, color.b, color.a or 1)
 end
@@ -35,13 +35,13 @@ local function SetupLabel(text, size, anchor, point, justify)
 	-- configure label
 	local db = module.db.font
 	text.SetShadowColor = function() end
-	text:FontTemplate(db.font, db.custom_font_size and db.fontSize or size / 3, db.fontFlag)
+	text:FontTemplate(LSM:Fetch("font", db.font), db.custom_font_size and db.fontSize or size / 3, db.fontFlag)
 	text:ClearAllPoints()
 	text:SetPoint(point, anchor, point, 0, 0)
 	text:SetJustifyH(justify)
 	text:SetWordWrap(true)
 
-	local color = db.custom_font_color and db.color or { r = 1, g = 1, b = 1 }
+	local color = db.custom_font_color and colors.font or MEDIA.myclass
 	text:SetTextColor(color.r, color.g, color.b, 1)
 end
 
@@ -55,13 +55,7 @@ local function SetupDockText(datatext, config)
 	local dock = datatext.mMT_Dock
 	local textConfig = config.text
 
-	if not textConfig or not textConfig.enable then
-		if dock.TextA then DeleteLabel(dock.TextA) end
-		if dock.TextB then DeleteLabel(dock.TextB) end
-		return
-	end
-
-	local icon = dock.Icon or (dock.SecureBtn and dock.SecureBtn.Icon)
+	local icon = dock.Icon
 	local center = textConfig.center or module.db.center
 
 	local function SetupText(labelKey, anchorPoint, justifyH)
@@ -108,52 +102,61 @@ local function SetupDockNotification(datatext, config)
 
 	-- calculate size and set properties
 	local size = db.auto and ((datatext:GetHeight() + 4) / 4) or db.size
+	local color = colors.notification
 	dock.Notification:Size(size, size)
 	dock.Notification:SetTexture(db.icon)
-	dock.Notification.SetVertexColor(db.color.r, db.color.g, db.color.b, db.color.a or 1)
+	dock.Notification.SetVertexColor(color.r, color.g, color.b, color.a or 1)
 	dock.Notification:Hide()
 end
 
 local function SetupDockSecureButton(datatext, conf)
 	local dock = datatext.mMT_Dock
-	if conf.misc and conf.misc.secure then
-		if not dock.SecureBtn then
-			dock.SecureBtn = CreateFrame("Button", "mMT_Dock_SecureButton", datatext, "SecureActionButtonTemplate")
-			if conf.misc.macroA then dock.SecureBtn:SetAttribute("type*", "macro") end
-			dock.SecureBtn:RegisterForClicks("LeftButtonDown", "RightButtonDown")
+	local secureConf = conf.misc
+
+	if not dock.SecureBtn then
+		dock.SecureBtn = CreateFrame("Button", "mMT_Dock_SecureButton", datatext, "SecureActionButtonTemplate")
+		dock.SecureBtn.__owner = datatext
+
+		if secureConf.macroA or secureConf.macroB then
+			--dock.SecureBtn:SetAttribute("type*", "macro")
+			dock.SecureBtn:SetAttribute("type1", "macro") -- Linksklick
+			--dock.SecureBtn:SetAttribute("spell1", "Feuerball")
+
+			dock.SecureBtn:SetAttribute("type2", "macro") -- Rechtsklick
+			--dock.SecureBtn:SetAttribute("macrotext2", "/s Hallo Welt")
 		end
-		dock.SecureBtn:Height(dock.size)
-		dock.SecureBtn:Width(dock.size)
-		dock.SecureBtn:Point("CENTER")
-		if conf.misc.macroA then
-			dock.SecureBtn:SetAttribute("macrotext1", conf.misc.macroA)
-			dock.SecureBtn:SetAttribute("macrotext2", conf.misc.macroB or conf.misc.macroA)
-		end
-		dock.SecureBtn:SetScript("OnEnter", conf.misc.funcOnEnter or nil)
-		dock.SecureBtn:SetScript("OnLeave", conf.misc.funcOnLeave or nil)
-		dock.SecureBtn:SetScript("OnClick", conf.misc.funcOnClick or nil)
-		dock.SecureBtn:Show()
-	elseif dock.SecureBtn then
-		dock.SecureBtn:Hide()
-		dock.SecureBtn:SetScript("OnEnter", nil)
-		dock.SecureBtn:SetScript("OnLeave", nil)
-		dock.SecureBtn:SetScript("OnClick", nil)
-		dock.SecureBtn = nil
+		--dock.SecureBtn:RegisterForClicks("AnyUp", "AnyDown")
+		dock.SecureBtn:RegisterForClicks("LeftButtonDown", "RightButtonDown")
 	end
+
+	dock.SecureBtn:Height(dock.size)
+	dock.SecureBtn:Width(dock.size)
+	dock.SecureBtn:Point("CENTER")
+
+	if secureConf.macroA or secureConf.macroB then
+		dock.SecureBtn:SetAttribute("macrotext1", secureConf.macroA)
+		dock.SecureBtn:SetAttribute("macrotext2", secureConf.macroB or secureConf.macroA)
+	end
+
+	if secureConf.funcOnEnter then dock.SecureBtn:SetScript("OnEnter", secureConf.funcOnEnter) end
+	if secureConf.funcOnLeave then dock.SecureBtn:SetScript("OnLeave", secureConf.funcOnLeave) end
+	if secureConf.funcOnClick then dock.SecureBtn:SetScript("OnClick", secureConf.funcOnClick) end
+	dock.SecureBtn:Show()
 end
 
 function module:Click(datatext)
 	local icon = datatext.mMT_Dock.Icon
-	local color = module.db.color.clicked
+	local color = colors.clicked
 	icon:SetVertexColor(color.r, color.g, color.b, color.a or 1)
 end
 
 function module:OnEnter(datatext)
 	local icon = datatext.mMT_Dock.Icon
-	local color = module.db.color.hover
-	local size = datatext.mMT_Dock.grow
+	local size = datatext.mMT_Dock.size
+	local color = colors.hover
+	local growSize = module.db.auto_grow and (size * 1.5) or (module.db.grow_size + size)
 
-	icon:Size(size, size)
+	icon:Size(growSize, growSize)
 	icon:SetVertexColor(color.r, color.g, color.b, color.a or 1)
 
 	E:UIFrameFadeOut(icon, 0.25, icon:GetAlpha(), 1)
@@ -211,12 +214,26 @@ function module:CreateDockIcon(datatext, config)
 	SetupDockIcon(datatext, config)
 
 	if config.text and config.text.enable then
+		print("SetupDockText")
 		SetupDockText(datatext, config)
-	else
+	elseif datatext.mMT_Dock then
 		if datatext.mMT_Dock.TextA then DeleteLabel(datatext.mMT_Dock.TextA) end
 		if datatext.mMT_Dock.TextB then DeleteLabel(datatext.mMT_Dock.TextB) end
 	end
 
 	if config.icon and config.icon.notification then SetupDockNotification(datatext, config) end
-	if config.misc and config.misc.secure and not InCombatLockdown() then SetupDockSecureButton(datatext, config) end
+
+	if not InCombatLockdown() then
+		if config.misc and config.misc.secure then
+			SetupDockSecureButton(datatext, config)
+		elseif datatext.mMT_Dock and datatext.mMT_Dock.SecureBtn then
+			datatext.mMT_Dock.SecureBtn:Hide()
+			datatext.mMT_Dock.SecureBtn:SetScript("OnEnter", nil)
+			datatext.mMT_Dock.SecureBtn:SetScript("OnLeave", nil)
+			datatext.mMT_Dock.SecureBtn:SetScript("OnClick", nil)
+			datatext.mMT_Dock.SecureBtn:SetParent(nil)
+			datatext.mMT_Dock.SecureBtn:ClearAllPoints()
+			datatext.mMT_Dock.SecureBtn = nil
+		end
+	end
 end

@@ -61,6 +61,11 @@ function mMT:round(number, decimals)
 	end
 end
 
+function mMT:ConnectVirtualFrameToDataText(dataTextName, virtualFrame)
+	local dt = self:GetElvUIDataText(dataTextName)
+	if dt.applySettings then dt.applySettings(virtualFrame, E.media.hexvaluecolor) end
+end
+
 -- build menu frames
 function mMT:BuildMenus()
 	mMT.menu = CreateFrame("Frame", "mMediaTag_Main_Menu_Frame", E.UIParent, "BackdropTemplate")
