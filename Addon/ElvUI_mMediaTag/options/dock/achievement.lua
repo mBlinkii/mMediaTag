@@ -36,7 +36,7 @@ mMT.options.args.dock.args.achievement.args = {
 				end,
 				set = function(info, value)
 					E.db.mMT.dock.achievement.icon = value
-					DT:LoadDataTexts()
+					DT:ForceUpdate_DataText("mMT_Dock_Achievement")
 				end,
 				values = function()
 					local icons = {}
@@ -66,7 +66,7 @@ mMT.options.args.dock.args.achievement.args = {
 				end,
 				set = function(info, value)
 					E.db.mMT.dock.achievement.custom_color = value
-					DT:LoadDataTexts()
+					DT:ForceUpdate_DataText("mMT_Dock_Achievement")
 				end,
 			},
 			color = {
@@ -85,7 +85,7 @@ mMT.options.args.dock.args.achievement.args = {
 					local hex = E:RGBToHex(r, g, b, "ff")
 					E.db.mMT.color.dock.achievement = hex
 					MEDIA.color.dock.achievement = CreateColorFromHexString(hex)
-					DT:LoadDataTexts()
+					DT:ForceUpdate_DataText("mMT_Dock_Achievement")
 				end,
 			},
 		},

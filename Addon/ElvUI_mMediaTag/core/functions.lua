@@ -61,6 +61,12 @@ function mMT:round(number, decimals)
 	end
 end
 
+function mMT:GetElvUIDataText(name)
+	local dt = DT.RegisteredDataTexts[name]
+
+	if dt and dt.category ~= "Data Broker" then return dt end
+end
+
 function mMT:ConnectVirtualFrameToDataText(dataTextName, virtualFrame)
 	local dt = self:GetElvUIDataText(dataTextName)
 	if dt.applySettings then dt.applySettings(virtualFrame, E.media.hexvaluecolor) end

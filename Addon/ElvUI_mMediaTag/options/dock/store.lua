@@ -36,7 +36,7 @@ mMT.options.args.dock.args.store.args = {
 				end,
 				set = function(info, value)
 					E.db.mMT.dock.store.icon = value
-					DT:LoadDataTexts()
+					DT:ForceUpdate_DataText("mMT_Dock_BlizzardStore")
 				end,
 				values = function()
 					local icons = {}
@@ -66,7 +66,7 @@ mMT.options.args.dock.args.store.args = {
 				end,
 				set = function(info, value)
 					E.db.mMT.dock.store.custom_color = value
-					DT:LoadDataTexts()
+					DT:ForceUpdate_DataText("mMT_Dock_BlizzardStore")
 				end,
 			},
 			color = {
@@ -85,7 +85,7 @@ mMT.options.args.dock.args.store.args = {
 					local hex = E:RGBToHex(r, g, b, "ff")
 					E.db.mMT.color.dock.store = hex
 					MEDIA.color.dock.store = CreateColorFromHexString(hex)
-					DT:LoadDataTexts()
+					DT:ForceUpdate_DataText("mMT_Dock_BlizzardStore")
 				end,
 			},
 		},

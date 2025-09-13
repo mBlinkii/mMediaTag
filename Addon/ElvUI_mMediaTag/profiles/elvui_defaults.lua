@@ -388,7 +388,7 @@ P.dock = {
 		custom_font_size = false,
 		fontSize = 12,
 		fontFlag = "OUTLINE",
-		custom_font_color = false,
+		custom_font_color = true,
 	},
 
 	store = {
@@ -401,6 +401,14 @@ P.dock = {
 		style = "material_filled",
 		icon = "bookmark_star",
 		custom_color = false,
+	},
+
+	bags = {
+		style = "material_filled",
+		icon = "money_bag",
+		custom_color = false,
+		text = "none",
+		gold = false,
 	},
 }
 
@@ -483,5 +491,6 @@ P.color = {
 		font = "FFFFFFFF",
 		store = "FFFFFFFF",
 		achievement = "FFFFFFFF",
+		bags = "FFFFFFFF",
 	},
 }

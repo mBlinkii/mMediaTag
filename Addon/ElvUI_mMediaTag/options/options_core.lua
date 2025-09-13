@@ -177,6 +177,13 @@ mMT.options = {
 					childGroups = "tab",
 					args = {},
 				},
+				bags = {
+					order = 20,
+					type = "group",
+					name = mMT:AddSettingsIcon(L["Bags"], "bag"),
+					childGroups = "tab",
+					args = {},
+				},
 				achievement = {
 					order = 20,
 					type = "group",
