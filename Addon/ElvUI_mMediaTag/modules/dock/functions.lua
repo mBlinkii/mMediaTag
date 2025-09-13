@@ -214,7 +214,6 @@ function module:CreateDockIcon(datatext, config)
 	SetupDockIcon(datatext, config)
 
 	if config.text and config.text.enable then
-		print("SetupDockText")
 		SetupDockText(datatext, config)
 	elseif datatext.mMT_Dock then
 		if datatext.mMT_Dock.TextA then DeleteLabel(datatext.mMT_Dock.TextA) end
