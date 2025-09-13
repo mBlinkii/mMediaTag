@@ -2,7 +2,6 @@ local mMT, DB, M, E, P, L, MEDIA = unpack(ElvUI_mMediaTag)
 local DT = E:GetModule("DataTexts")
 local Dock = M.Dock
 
-local _G = _G
 local icons = MEDIA.icons.dock
 local GetCurrentTokenMarketPrice = C_WowTokenPublic.GetCurrentMarketPrice
 
@@ -12,7 +11,7 @@ local config = {
 	category = mMT.NameShort .. " - |CFF01EEFFDock|r",
 	icon = {
 		notification = false,
-		texture = mMT.IconSquare,
+		texture = MEDIA.fallback,
 		color = { r = 1, g = 1, b = 1, a = 1 },
 	},
 	misc = {

@@ -66,6 +66,25 @@ function mMT:ConnectVirtualFrameToDataText(dataTextName, virtualFrame)
 	if dt.applySettings then dt.applySettings(virtualFrame, E.media.hexvaluecolor) end
 end
 
+function mMT:formatText(input)
+	local ignore = { filled = true }
+	local words = {}
+
+	for word in string.gmatch(input, "[^_]+") do
+		table.insert(words, word)
+	end
+
+	-- Remove the last word if it is to be ignored
+	if ignore[words[#words]] then table.remove(words) end
+
+	-- Format all remaining words
+	for i, w in ipairs(words) do
+		words[i] = w:sub(1, 1):upper() .. w:sub(2):lower()
+	end
+
+	return table.concat(words, " ")
+end
+
 -- build menu frames
 function mMT:BuildMenus()
 	mMT.menu = CreateFrame("Frame", "mMediaTag_Main_Menu_Frame", E.UIParent, "BackdropTemplate")

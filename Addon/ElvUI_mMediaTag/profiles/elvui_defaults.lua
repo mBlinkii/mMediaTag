@@ -396,6 +396,12 @@ P.dock = {
 		icon = "payments",
 		custom_color = false,
 	},
+
+	achievement = {
+		style = "material_filled",
+		icon = "bookmark_star",
+		custom_color = false,
+	},
 }
 
 -- color
@@ -476,5 +482,6 @@ P.color = {
 		notification = "FF00FF88",
 		font = "FFFFFFFF",
 		store = "FFFFFFFF",
+		achievement = "FFFFFFFF",
 	},
 }

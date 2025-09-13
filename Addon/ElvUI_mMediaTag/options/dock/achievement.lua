@@ -2,7 +2,7 @@ local mMT, DB, M, E, P, L, MEDIA = unpack(ElvUI_mMediaTag)
 
 local DT = E:GetModule("DataTexts")
 
-mMT.options.args.dock.args.store.args = {
+mMT.options.args.dock.args.achievement.args = {
 	settings = {
 		order = 1,
 		type = "group",
@@ -14,10 +14,10 @@ mMT.options.args.dock.args.store.args = {
 				type = "select",
 				name = L["Style"],
 				get = function(info)
-					return E.db.mMT.dock.store.style
+					return E.db.mMT.dock.achievement.style
 				end,
 				set = function(info, value)
-					E.db.mMT.dock.store.style = value
+					E.db.mMT.dock.achievement.style = value
 				end,
 				values = function()
 					local styles = {}
@@ -32,16 +32,16 @@ mMT.options.args.dock.args.store.args = {
 				type = "select",
 				name = L["Icon"],
 				get = function(info)
-					return E.db.mMT.dock.store.icon
+					return E.db.mMT.dock.achievement.icon
 				end,
 				set = function(info, value)
-					E.db.mMT.dock.store.icon = value
+					E.db.mMT.dock.achievement.icon = value
 					DT:LoadDataTexts()
 				end,
 				values = function()
 					local icons = {}
-					if MEDIA.icons.dock[E.db.mMT.dock.store.style] then
-						for key, icon in pairs(MEDIA.icons.dock[E.db.mMT.dock.store.style]) do
+					if MEDIA.icons.dock[E.db.mMT.dock.achievement.style] then
+						for key, icon in pairs(MEDIA.icons.dock[E.db.mMT.dock.achievement.style]) do
 							icons[key] = E:TextureString(icon, ":14:14") .. " " .. mMT:formatText(key)
 						end
 						return icons
@@ -62,10 +62,10 @@ mMT.options.args.dock.args.store.args = {
 				name = L["Custom Color"],
 				desc = L["Use a custom color for the icon."],
 				get = function(info)
-					return E.db.mMT.dock.store.custom_color
+					return E.db.mMT.dock.achievement.custom_color
 				end,
 				set = function(info, value)
-					E.db.mMT.dock.store.custom_color = value
+					E.db.mMT.dock.achievement.custom_color = value
 					DT:LoadDataTexts()
 				end,
 			},
@@ -75,16 +75,16 @@ mMT.options.args.dock.args.store.args = {
 				name = L["Color"],
 				hasAlpha = true,
 				disabled = function()
-					return not E.db.mMT.dock.store.custom_color
+					return not E.db.mMT.dock.achievement.custom_color
 				end,
 				get = function(info)
-					local r, g, b = mMT:HexToRGB(E.db.mMT.color.dock.store)
+					local r, g, b = mMT:HexToRGB(E.db.mMT.color.dock.achievement)
 					return r, g, b
 				end,
 				set = function(info, r, g, b)
 					local hex = E:RGBToHex(r, g, b, "ff")
-					E.db.mMT.color.dock.store = hex
-					MEDIA.color.dock.store = CreateColorFromHexString(hex)
+					E.db.mMT.color.dock.achievement = hex
+					MEDIA.color.dock.achievement = CreateColorFromHexString(hex)
 					DT:LoadDataTexts()
 				end,
 			},

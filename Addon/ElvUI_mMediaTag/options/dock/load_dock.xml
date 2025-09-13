@@ -1,4 +1,5 @@
 <Ui xmlns="http://www.blizzard.com/wow/ui/">
 	<Script file="general.lua"/>
+	<Script file="achievement.lua"/>
 	<Script file="store.lua"/>
 </Ui>
