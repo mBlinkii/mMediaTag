@@ -184,6 +184,13 @@ mMT.options = {
 					childGroups = "tab",
 					args = {},
 				},
+				journal = {
+					order = 10,
+					type = "group",
+					name = mMT:AddSettingsIcon(COLLECTIONS, "collection"),
+					childGroups = "tab",
+					args = {},
+				},
 				bags = {
 					order = 20,
 					type = "group",

@@ -1,6 +1,7 @@
 <Ui xmlns="http://www.blizzard.com/wow/ui/">
     <Script file="functions.lua"/>
     <Script file="none.lua"/>
+    <Script file="journal.lua"/>
     <Script file="character.lua"/>
     <Script file="bags.lua"/>
     <Script file="store.lua"/>

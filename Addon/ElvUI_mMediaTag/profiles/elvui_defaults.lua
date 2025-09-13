@@ -418,6 +418,12 @@ P.dock = {
 		percThreshold = 30,
 		text = false,
 	},
+
+	journal = {
+		style = "material_filled",
+		icon = "bookmark_heart",
+		custom_color = false,
+	},
 }
 
 -- color
@@ -501,5 +507,6 @@ P.color = {
 		achievement = "FFFFFFFF",
 		bags = "FFFFFFFF",
 		character = "FFFFFFFF",
+		journal = "FFFFFFFF",
 	},
 }

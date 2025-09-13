@@ -44,6 +44,18 @@ function mMT:TC(text, color)
 	return MEDIA.color[color]:WrapTextInColorCode(text)
 end
 
+function mMT:GetRGB(color1, color2)
+    local c1 = MEDIA.color[color1 or "text"]
+
+    if color2 then
+        local c2 = MEDIA.color[color2]
+        return c1.r, c1.g, c1.b, c2.r, c2.g, c2.b
+    end
+
+    return c1.r, c1.g, c1.b
+end
+
+
 function mMT:HexToRGB(hex)
 	if #hex == 6 then hex = "ff" .. hex end
 

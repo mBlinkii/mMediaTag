@@ -113,6 +113,7 @@ MEDIA.color = {
 		achievement = createColor("FFFFFFFF"),
 		bags = createColor("FFFFFFFF"),
 		character = createColor("FFFFFFFF"),
+		journal = createColor("FFFFFFFF"),
 	},
 }
 
@@ -230,6 +231,7 @@ function mMT:UpdateMedia(arg)
 		MEDIA.color.dock.achievement = CreateColorFromHexString(E.db.mMT.color.dock.achievement)
 		MEDIA.color.dock.bags = CreateColorFromHexString(E.db.mMT.color.dock.bags)
 		MEDIA.color.dock.character = CreateColorFromHexString(E.db.mMT.color.dock.character)
+		MEDIA.color.dock.journal = CreateColorFromHexString(E.db.mMT.color.dock.journal)
 	end
 end
 
