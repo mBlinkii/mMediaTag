@@ -371,7 +371,7 @@ P.dock = {
 
 	class = {
 		normal = false,
-		hover = false,
+		hover = true,
 		clicked = false,
 		notification = false,
 	},
@@ -409,6 +409,14 @@ P.dock = {
 		custom_color = false,
 		text = "none",
 		gold = false,
+	},
+
+	character = {
+		style = "material_filled",
+		icon = "face",
+		custom_color = false,
+		percThreshold = 30,
+		text = false,
 	},
 }
 
@@ -492,5 +500,6 @@ P.color = {
 		store = "FFFFFFFF",
 		achievement = "FFFFFFFF",
 		bags = "FFFFFFFF",
+		character = "FFFFFFFF",
 	},
 }

@@ -177,6 +177,13 @@ mMT.options = {
 					childGroups = "tab",
 					args = {},
 				},
+				character = {
+					order = 2,
+					type = "group",
+					name = mMT:AddSettingsIcon(CHARACTER_BUTTON, "character"),
+					childGroups = "tab",
+					args = {},
+				},
 				bags = {
 					order = 20,
 					type = "group",

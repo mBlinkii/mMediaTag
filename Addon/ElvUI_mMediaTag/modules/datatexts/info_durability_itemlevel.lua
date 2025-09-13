@@ -1,6 +1,8 @@
 local mMT, DB, M, E, P, L, MEDIA = unpack(ElvUI_mMediaTag)
 local DT = E:GetModule("DataTexts")
 
+-- code is partially based on ElvUI's Durability and Itemlevel datatext
+
 local _G = _G
 local format = format
 local pi = math.pi

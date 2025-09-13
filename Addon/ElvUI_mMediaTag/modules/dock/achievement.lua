@@ -9,7 +9,6 @@ local format = format
 local GetTotalAchievementPoints = GetTotalAchievementPoints
 local GetTrackedIDs = C_ContentTracking.GetTrackedIDs
 local GetAchievementInfo = GetAchievementInfo
-local InCombatLockdown = InCombatLockdown
 
 -- Variables
 local _G = _G
@@ -59,7 +58,7 @@ local function OnLeave(self)
 end
 
 local function OnClick(self)
-	if not InCombatLockdown() then
+	if not E:AlertCombat() then
 		Dock:Click(self)
 		_G.ToggleAchievementFrame()
 	end
