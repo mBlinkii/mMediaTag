@@ -184,6 +184,13 @@ mMT.options = {
 					childGroups = "tab",
 					args = {},
 				},
+				durability = {
+					order = 10,
+					type = "group",
+					name = mMT:AddSettingsIcon(DURABILITY, "armor"),
+					childGroups = "tab",
+					args = {},
+				},
 				journal = {
 					order = 10,
 					type = "group",

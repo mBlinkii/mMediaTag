@@ -123,7 +123,7 @@ local function BuildMenuList()
 		},
 	}
 
-	if E.Cata and E.mylevel >= _G.SHOW_PVP_LEVEL then tinsert(menuList, {
+	if E.Mists and E.mylevel >= _G.SHOW_PVP_LEVEL then tinsert(menuList, {
 		text = _G.PLAYER_V_PLAYER,
 		color = "|c" .. MEDIA.color.gm_text_color.hex,
 		icon = icon and menu_icons.pvp,
@@ -132,7 +132,7 @@ local function BuildMenuList()
 		end,
 	}) end
 
-	if E.Retail or E.Cata then
+	if E.Retail or E.Mists then
 		tinsert(menuList, {
 			text = _G.COLLECTIONS,
 			color = "|c" .. MEDIA.color.gm_text_color.hex,
@@ -292,7 +292,7 @@ local function OnClick(self, button)
 	else
 		if E.Retail then
 			_G.ToggleLFDParentFrame()
-		elseif E.Cata then
+		elseif E.Mists then
 			_G.PVEFrame_ToggleFrame()
 		end
 	end
@@ -351,7 +351,7 @@ local function OnEnter(self, slow)
 		end
 
 		DT.tooltip:AddLine(MEDIA.leftClick .. " " .. mMT:TC(L["left click to open the menu."], "tip"))
-		if E.Retail or E.Cata then DT.tooltip:AddLine(MEDIA.rightClick .. " " .. mMT:TC(L["right click to open LFD Browser"], "tip")) end
+		if E.Retail or E.Mists then DT.tooltip:AddLine(MEDIA.rightClick .. " " .. mMT:TC(L["right click to open LFD Browser"], "tip")) end
 
 		DT.tooltip:Show()
 	end

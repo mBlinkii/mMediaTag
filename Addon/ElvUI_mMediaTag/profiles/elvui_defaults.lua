@@ -424,6 +424,15 @@ P.dock = {
 		icon = "bookmark_heart",
 		custom_color = false,
 	},
+
+	durability = {
+		style = "material_filled",
+		icon = "shield",
+		custom_color = false,
+		percThreshold = 30,
+		text = "none",
+		mount = 460,
+	},
 }
 
 -- color
@@ -508,5 +517,6 @@ P.color = {
 		bags = "FFFFFFFF",
 		character = "FFFFFFFF",
 		journal = "FFFFFFFF",
+		durability = "FFFFFFFF",
 	},
 }

@@ -79,7 +79,7 @@ local function OnEvent(...)
 
 		if textStyle ~= "none" then
 			config.text.a = true
-			config.text.b = (textStyle == "booth")
+			config.text.b = (textStyle == "both")
 		end
 
 		Dock:CreateDockIcon(self, config, event)
@@ -103,15 +103,15 @@ local function OnEvent(...)
 	if textStyle ~= "none" then
 		local myGold, freeSlots, usedSlots, totalSlots
 
-		if textStyle == "money" or textStyle == "booth" then myGold = GetGold() end
+		if textStyle == "money" or textStyle == "both" then myGold = GetGold() end
 
-		if textStyle == "booth" or textStyle == "total" or textStyle == "used" or textStyle == "free" then
+		if textStyle == "both" or textStyle == "total" or textStyle == "used" or textStyle == "free" then
 			freeSlots, usedSlots, totalSlots = GetBagSlots()
 		end
 
 		if textStyle == "money" and self.mMT_Dock.TextA then
 			self.mMT_Dock.TextA:SetText(myGold)
-		elseif textStyle == "booth" and self.mMT_Dock.TextA and self.mMT_Dock.TextB then
+		elseif textStyle == "both" and self.mMT_Dock.TextA and self.mMT_Dock.TextB then
 			self.mMT_Dock.TextA:SetText(myGold)
 			self.mMT_Dock.TextB:SetText(freeSlots)
 		elseif textStyle == "total" and self.mMT_Dock.TextA then
