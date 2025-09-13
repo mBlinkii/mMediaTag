@@ -33,7 +33,7 @@ local function OnEnter(self)
 		if E.Retail or E.Mists then
 			local price = E:FormatMoney(GetCurrentTokenMarketPrice() or 0, "BLIZZARD", false)
 			GameTooltip:AddLine(" ")
-			GameTooltip:AddDoubleLine(mMT:TC(L["WoW Token:"], "mark"), price)
+			GameTooltip:AddDoubleLine(mMT:TC(L["WoW Token:"], "mark"), mMT:TC(price))
 		end
 		GameTooltip:Show()
 	end
