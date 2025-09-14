@@ -120,7 +120,7 @@ local function AddTooltipLine(v, mapName)
 	local levelColor = v.finishedSuccess and v.levelColor:GenerateHexColor() or "FFA9A9A9"
 	local level = format("|c%s+%s|r", levelColor, v.bestRunLevel)
 
-	DT.tooltip:AddDoubleLine(v.icon .. " " .. mMT:TC(mapName), mMT:TC(rating .. " (" .. level .. ")"))
+	DT.tooltip:AddDoubleLine(v.icon .. " " .. mapName, rating .. " (" .. level .. ")", mMT:GetRGB("text", "text"))
 end
 
 local function DungeonScoreTooltip()
@@ -129,7 +129,7 @@ local function DungeonScoreTooltip()
 	if not next(scoreTable) then return end
 
 	DT.tooltip:AddLine(" ")
-	DT.tooltip:AddLine(mMT:TC(L["Dungeon overview:"], "title"))
+	DT.tooltip:AddLine(L["Dungeon overview:"], mMT:GetRGB("title"))
 
 	for _, v in pairs(scoreTable) do
 		local mapName = v.mapName
@@ -139,7 +139,7 @@ local function DungeonScoreTooltip()
 
 	if E.db.mMT.datatexts.score.show_upgrade then
 		DT.tooltip:AddLine(" ")
-		DT.tooltip:AddLine(mMT:TC(L["Possible next upgrades:"], "title"))
+		DT.tooltip:AddLine(L["Possible next upgrades:"], mMT:GetRGB("title"))
 
 		local upgradeTable = {}
 		for _, data in pairs(scoreTable) do
@@ -237,15 +237,15 @@ local function OnEnter(self)
 			local myScore = mMT:GetMyMythicPlusScore()
 			local myKeystone = mMT:GetMyKeystone()
 
-			DT.tooltip:AddLine(mMT:TC(L["My Info"], "title"))
-			DT.tooltip:AddDoubleLine(mMT:TC(DUNGEON_SCORE), myScore)
-			DT.tooltip:AddDoubleLine(mMT:TC(L["Keystone"]), myKeystone)
+			DT.tooltip:AddLine(L["My Info"], mMT:GetRGB("title"))
+			DT.tooltip:AddDoubleLine(DUNGEON_SCORE, myScore, mMT:GetRGB("text", "text"))
+			DT.tooltip:AddDoubleLine(L["Keystone"], myKeystone, mMT:GetRGB("text", "text"))
 			self.text:SetText(myScore)
 		end
 
 		if DB.keystones and next(DB.keystones) then
 			DT.tooltip:AddLine(" ")
-			DT.tooltip:AddLine(mMT:TC(L["Keystones on your Account"], "title"))
+			DT.tooltip:AddLine(L["Keystones on your Account"], mMT:GetRGB("title"))
 			for _, characters in pairs(DB.keystones) do
 				DT.tooltip:AddDoubleLine(characters.name, characters.key)
 			end
@@ -253,7 +253,7 @@ local function OnEnter(self)
 
 		if E.db.mMT.datatexts.score.group_keystones and LOR and IsInGroup() and isMaxLevel then
 			DT.tooltip:AddLine(" ")
-			DT.tooltip:AddLine(mMT:TC(L["Keystones in your Group"], "title"))
+			DT.tooltip:AddLine(L["Keystones in your Group"], mMT:GetRGB("title"))
 			GetGroupKeystone()
 		end
 	end
@@ -261,8 +261,8 @@ local function OnEnter(self)
 	local weeklyAffixes = mMT:GetWeeklyAffixes()
 	if weeklyAffixes then
 		DT.tooltip:AddLine(" ")
-		DT.tooltip:AddLine(mMT:TC(L["This Week Affix"], "title"))
-		DT.tooltip:AddLine(mMT:TC(weeklyAffixes))
+		DT.tooltip:AddLine(L["This Week Affix"], mMT:GetRGB("title"))
+		DT.tooltip:AddLine(weeklyAffixes, mMT:GetRGB("text"))
 	end
 
 	if isMaxLevel then
@@ -271,17 +271,17 @@ local function OnEnter(self)
 		local vaultInfoRaid, vaultInfoDungeons, vaultInfoWorld = mMT:GetVaultInfo()
 		if vaultInfoRaid and vaultInfoDungeons and vaultInfoWorld then
 			DT.tooltip:AddLine(" ")
-			DT.tooltip:AddLine(mMT:TC(GREAT_VAULT_REWARDS, "title"))
-			DT.tooltip:AddDoubleLine(mMT:TC(RAID), mMT:TC(vaultInfoRaid))
-			DT.tooltip:AddDoubleLine(mMT:TC(DUNGEONS), mMT:TC(vaultInfoDungeons))
-			DT.tooltip:AddDoubleLine(mMT:TC(WORLD), mMT:TC(vaultInfoWorld))
+			DT.tooltip:AddLine(GREAT_VAULT_REWARDS, mMT:GetRGB("title"))
+			DT.tooltip:AddDoubleLine(RAID, vaultInfoRaid, mMT:GetRGB("text", "text"))
+			DT.tooltip:AddDoubleLine(DUNGEONS, vaultInfoDungeons, mMT:GetRGB("text", "text"))
+			DT.tooltip:AddDoubleLine(WORLD, vaultInfoWorld, mMT:GetRGB("text", "text"))
 		end
 	end
 
 	DT.tooltip:AddLine(" ")
-	DT.tooltip:AddLine(MEDIA.leftClick .. " " .. mMT:TC(L["left click to open LFD Frame"], "tip"))
-	DT.tooltip:AddLine(MEDIA.middleClick .. " " .. mMT:TC(L["middle click to open M+ Frame"], "tip"))
-	DT.tooltip:AddLine(MEDIA.rightClick .. " " .. mMT:TC(L["right click to open Great Vault"], "tip"))
+	DT.tooltip:AddLine(MEDIA.leftClick .. " " .. L["left click to open LFD Frame"], mMT:GetRGB("tip"))
+	DT.tooltip:AddLine(MEDIA.middleClick .. " " .. L["middle click to open M+ Frame"], mMT:GetRGB("tip"))
+	DT.tooltip:AddLine(MEDIA.rightClick .. " " .. L["right click to open Great Vault"], mMT:GetRGB("tip"))
 
 	DT.tooltip:Show()
 end

@@ -170,13 +170,13 @@ function mMT:SystemInfo()
 	end
 
 	if totalMem > 0 then
-		DT.tooltip:AddDoubleLine(mMT:TC(L["AddOn Memory:"]), mMT:TC(GetMemoryString(totalMem)))
+		DT.tooltip:AddDoubleLine(L["AddOn Memory:"], GetMemoryString(totalMem), mMT:GetRGB("text", "text"))
 
 		if isProfilerEnabled then
 			local function AddCPUStatistic(label, metric)
 				local overall = GetOverallMetric(metric)
 				local appOverall = GetApplicationMetric(metric)
-				if appOverall > 0 then DT.tooltip:AddDoubleLine(mMT:TC(L[label]), mMT:TC(format("%.2f%%", (overall / appOverall) * 100))) end
+				if appOverall > 0 then DT.tooltip:AddDoubleLine(L[label], format("%.2f%%", (overall / appOverall) * 100), mMT:GetRGB("text", "text")) end
 			end
 
 			AddCPUStatistic("CPU overall:", Enum.AddOnProfilerMetric.SessionAverageTime)
@@ -185,7 +185,7 @@ function mMT:SystemInfo()
 
 		DT.tooltip:AddLine(" ")
 		for _, addon in ipairs(topAddOns) do
-			if addon.value > 0 then DT.tooltip:AddDoubleLine(mMT:TC(addon.name), mMT:TC(addon.cpu .. " - " .. GetMemoryString(addon.value))) end
+			if addon.value > 0 then DT.tooltip:AddDoubleLine(addon.name, addon.cpu .. " - " .. GetMemoryString(addon.value),mMT:GetRGB("text", "text")) end
 		end
 	end
 end
@@ -195,7 +195,7 @@ function mMT:MMTSystemInfo()
 	if isProfilerEnabled then
 		local memoryUsage = GetMemoryString(GetAddOnMemoryUsage("ElvUI_mMediaTag"))
 		local cpuUsage = GetAddonMetricPercent("ElvUI_mMediaTag", Enum.AddOnProfilerMetric.RecentAverageTime)
-		DT.tooltip:AddDoubleLine(mMT:TC(L["Memory/ CPU usage:"]), mMT:TC(cpuUsage .. " - " .. memoryUsage))
+		DT.tooltip:AddDoubleLine(L["Memory/ CPU usage:"], cpuUsage .. " - " .. memoryUsage, mMT:GetRGB("text", "text"))
 	end
 end
 

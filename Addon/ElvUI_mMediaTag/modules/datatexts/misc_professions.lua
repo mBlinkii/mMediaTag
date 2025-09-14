@@ -105,7 +105,7 @@ local function OnEnter(self)
 
 	local function AddProfessionLines(professions, titleKey)
 		if not professions then return end
-		DT.tooltip:AddLine(mMT:TC(titleKey, "title"))
+		DT.tooltip:AddLine(titleKey, mMT:GetRGB("title"))
 		for _, profession in pairs(professions) do
 			local name, icon, skill, skillModifier = profession.name, profession.icon, profession.skill, profession.skillModifier
 			local lineLeft = E.db.mMT.datatexts.professions.menu_icons and (E:TextureString(icon, ":14:14") .. " " .. name) or name
@@ -119,7 +119,7 @@ local function OnEnter(self)
 		if player_professions.main then
 			AddProfessionLines(player_professions.main, L["Main Professions"])
 		else
-			DT.tooltip:AddLine(mMT:TC(L["No Main Professions"], "red"))
+			DT.tooltip:AddLine(L["No Main Professions"], mMT:GetRGB("red"))
 		end
 
 		-- Add secondary professions
@@ -127,14 +127,14 @@ local function OnEnter(self)
 			if player_professions.main then DT.tooltip:AddLine(" ") end
 			AddProfessionLines(player_professions.secondary, L["Secondary Professions"])
 		else
-			DT.tooltip:AddLine(mMT:TC(L["No Secondary Professions"], "red"))
+			DT.tooltip:AddLine(L["No Secondary Professions"], mMT:GetRGB("red"))
 		end
 	else
-		DT.tooltip:AddLine(mMT:TC(L["No Professions"], "red"))
+		DT.tooltip:AddLine(L["No Professions"], mMT:GetRGB("red"))
 	end
 
 	DT.tooltip:AddLine(" ")
-	DT.tooltip:AddLine(MEDIA.leftClick .. " " .. mMT:TC(L["click to open the menu."], "tip"))
+	DT.tooltip:AddLine(MEDIA.leftClick .. " " .. L["click to open the menu."], mMT:GetRGB("tip"))
 
 	DT.tooltip:Show()
 end

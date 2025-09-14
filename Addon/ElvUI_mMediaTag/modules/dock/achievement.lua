@@ -28,23 +28,23 @@ local function OnEnter(self)
 	Dock:OnEnter(self)
 
 	if E.db.mMT.dock.tooltip then
-		DT.tooltip:AddLine(mMT:TC(ACHIEVEMENT_BUTTON, "title"))
+		DT.tooltip:AddLine(ACHIEVEMENT_BUTTON, mMT:GetRGB("title"))
 		DT.tooltip:AddLine(" ")
 
 		local points = GetTotalAchievementPoints()
 		local guildPoints = GetTotalAchievementPoints(true)
-		DT.tooltip:AddDoubleLine(mMT:TC(L["Achievement points:"], "mark"), mMT:TC(points or 0))
-		DT.tooltip:AddDoubleLine(mMT:TC(L["Guild Achievement points:"], "mark"), mMT:TC(guildPoints or 0))
+		DT.tooltip:AddDoubleLine(L["Achievement points:"], points or 0, mMT:GetRGB("mark", "text"))
+		DT.tooltip:AddDoubleLine(L["Guild Achievement points:"], guildPoints or 0, mMT:GetRGB("mark", "text"))
 
 		local trackedAchievements = GetTrackedIDs(Enum.ContentTrackingType.Achievement)
 
 		if trackedAchievements and (#trackedAchievements ~= 0) then
 			DT.tooltip:AddLine(" ")
-			DT.tooltip:AddDoubleLine(mMT:TC(L["Tracked Achievements"], "title"), mMT:TC(#trackedAchievements))
+			DT.tooltip:AddDoubleLine(L["Tracked Achievements"], #trackedAchievements, mMT:GetRGB("title", "text"))
 			for i = 1, #trackedAchievements do
 				local achievementID = trackedAchievements[i]
 				local _, achievementName, _, completed, _, _, _, _, _, icon = GetAchievementInfo(achievementID)
-				DT.tooltip:AddDoubleLine(mMT:TC(format("|T%s:15:15:0:0|t %s", icon, achievementName)), mMT:TC(completed and L["Completed"] or L["Missing"], completed and "green" or "red"))
+				DT.tooltip:AddDoubleLine(format("|T%s:15:15:0:0|t %s", icon, achievementName), completed and L["Completed"] or L["Missing"], mMT:GetRGB("text", completed and "green" or "red"))
 			end
 		end
 

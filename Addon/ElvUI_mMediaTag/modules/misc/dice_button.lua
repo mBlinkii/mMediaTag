@@ -57,10 +57,10 @@ function module:Initialize()
 				local hoverColor = module.dice_button.color.hover
 				module.dice_button.texture:SetVertexColor(hoverColor.r, hoverColor.g, hoverColor.b, hoverColor.a)
 				_G.GameTooltip:SetOwner(module.dice_button, "ANCHOR_RIGHT")
-				_G.GameTooltip:AddLine(mMT:TC(L["Roll Button"], "title"))
+				_G.GameTooltip:AddLine(L["Roll Button"], mMT:GetRGB("title"))
 				_G.GameTooltip:AddLine(" ")
-				_G.GameTooltip:AddDoubleLine(MEDIA.leftClick .. " " .. mMT:TC(L["Left Click to roll"]), mMT:TC(module.db.dice_range_a, "mark"))
-				_G.GameTooltip:AddDoubleLine(MEDIA.rightClick .. " " .. mMT:TC(L["Right Click to roll"]), mMT:TC(module.db.dice_range_b, "mark"))
+				_G.GameTooltip:AddDoubleLine(MEDIA.leftClick .. " " .. L["Left Click to roll"], module.db.dice_range_a, mMT:GetRGB("text", "mark"))
+				_G.GameTooltip:AddDoubleLine(MEDIA.rightClick .. " " .. L["Right Click to roll"], module.db.dice_range_b, mMT:GetRGB("text", "mark"))
 				_G.GameTooltip:Show()
 			end)
 

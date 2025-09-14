@@ -27,12 +27,12 @@ local function OnEnter(self)
 
 	if E.db.mMT.dock.tooltip then
 		GameTooltip:SetOwner(self, "ANCHOR_TOP")
-		GameTooltip:AddLine(mMT:TC(BLIZZARD_STORE, "title"))
+		GameTooltip:AddLine(BLIZZARD_STORE, mMT:GetRGB("title"))
 
 		if E.Retail or E.Mists then
 			local price = E:FormatMoney(GetCurrentTokenMarketPrice() or 0, "BLIZZARD", false)
 			GameTooltip:AddLine(" ")
-			GameTooltip:AddDoubleLine(mMT:TC(L["WoW Token:"], "mark"), mMT:TC(price))
+			GameTooltip:AddDoubleLine(L["WoW Token:"], price, mMT:GetRGB("mark", "text"))
 		end
 		GameTooltip:Show()
 	end

@@ -51,19 +51,20 @@ local function OnEnter(self)
 
 	if E.db.mMT.dock.tooltip then
 		DT.tooltip:ClearLines()
-		DT.tooltip:AddLine(mMT:TC(CHARACTER_BUTTON, "title"))
+		DT.tooltip:AddLine(CHARACTER_BUTTON, mMT:GetRGB("title"))
 		DT.tooltip:AddLine(" ")
 
-		DT.tooltip:AddLine(mMT:TC(STAT_AVERAGE_ITEM_LEVEL, "title"))
-		DT.tooltip:AddDoubleLine(mMT:TC(STAT_AVERAGE_ITEM_LEVEL), mMT:TC(format("%0.2f", avg), "M"))
-		DT.tooltip:AddDoubleLine(mMT:TC(GMSURVEYRATING3), format("%0.2f", avgEquipped), 1, 1, 1, E:ColorizeItemLevel(avgEquipped - avg))
-		DT.tooltip:AddDoubleLine(mMT:TC(LFG_LIST_ITEM_LEVEL_INSTR_PVP_SHORT), format("%0.2f", avgPvp), 1, 1, 1, E:ColorizeItemLevel(avgPvp - avg))
+		DT.tooltip:AddLine(STAT_AVERAGE_ITEM_LEVEL, mMT:GetRGB("title"))
+		DT.tooltip:AddDoubleLine(STAT_AVERAGE_ITEM_LEVEL, format("%0.2f", avg), mMT:GetRGB("text", "M"))
+		local r, g, b = mMT:GetRGB()
+		DT.tooltip:AddDoubleLine(GMSURVEYRATING3, format("%0.2f", avgEquipped), r, g, b, E:ColorizeItemLevel(avgEquipped - avg))
+		DT.tooltip:AddDoubleLine(LFG_LIST_ITEM_LEVEL_INSTR_PVP_SHORT, format("%0.2f", avgPvp), r, g, b, E:ColorizeItemLevel(avgPvp - avg))
 		DT.tooltip:AddLine(" ")
 
-		DT.tooltip:AddLine(mMT:TC(DURABILITY, "title"))
+		DT.tooltip:AddLine(DURABILITY, mMT:GetRGB("title"))
 		DT.tooltip:AddDoubleLine(DURABILITY, format("%d%%", totalDurability), 1, 1, 1, E:ColorGradient(totalDurability * 0.01, 1, 0.1, 0.1, 1, 1, 0.1, 0.1, 1, 0.1))
 
-		if totalRepairCost > 0 then DT.tooltip:AddDoubleLine(mMT:TC(REPAIR_COST), mMT:TC(E:FormatMoney(totalRepairCost, "BLIZZARD", false))) end
+		if totalRepairCost > 0 then DT.tooltip:AddDoubleLine(REPAIR_COST, E:FormatMoney(totalRepairCost, "BLIZZARD", false), mMT:GetRGB("text", "text")) end
 
 		DT.tooltip:Show()
 	end

@@ -655,20 +655,20 @@ local function OnEnter(self)
 
 	-- Add favorites menu entry
 	if E.db.mMT.datatexts.teleports.favorites.enable and mMT.knownTeleports.favorites.available then
-		DT.tooltip:AddLine(mMT:TC(L["Favorites"], "title"))
+		DT.tooltip:AddLine(L["Favorites"], mMT:GetRGB("title"))
 		for _, t in pairs(mMT.knownTeleports.favorites) do
 			if t and type(t) == "table" then DT.tooltip:AddDoubleLine(BuildTipIcon(t.icon) .. mMT:TC(t.short_name and ("[" .. mMT:TC(t.short_name, "mark") .. "] " .. t.name) or t.name), t.cooldown) end
 		end
 		DT.tooltip:AddLine(" ")
 		tipAdded = true
 	else
-		DT.tooltip:AddLine(mMT:TC(L["You can select your favourites in the settings."]))
+		DT.tooltip:AddLine(L["You can select your favourites in the settings."], mMT:GetRGB())
 		DT.tooltip:AddLine(" ")
 	end
 
 	-- Add season menu entry
 	if mMT.knownTeleports.season.available then
-		DT.tooltip:AddLine(mMT:TC(L["Season Teleports"], "title"))
+		DT.tooltip:AddLine(L["Season Teleports"], mMT:GetRGB("title"))
 		for _, t in pairs(mMT.knownTeleports.season) do
 			if t and type(t) == "table" then DT.tooltip:AddDoubleLine(BuildTipIcon(t.icon) .. mMT:TC(t.short_name and ("[" .. mMT:TC(t.short_name, "mark") .. "] " .. t.name) or t.name), t.cooldown) end
 		end
@@ -678,7 +678,7 @@ local function OnEnter(self)
 
 	-- Add season menu entry
 	if mMT.knownTeleports.season.available then
-		DT.tooltip:AddLine(mMT:TC(L["TWW Dungeon Teleports"], "title"))
+		DT.tooltip:AddLine(L["TWW Dungeon Teleports"], mMT:GetRGB("title"))
 		for _, t in pairs(mMT.knownTeleports.tww) do
 			if t and type(t) == "table" then DT.tooltip:AddDoubleLine(BuildTipIcon(t.icon) .. mMT:TC(t.short_name and ("[" .. mMT:TC(t.short_name, "mark") .. "] " .. t.name) or t.name), t.cooldown) end
 		end
@@ -688,7 +688,7 @@ local function OnEnter(self)
 
 	if not tipAdded and (mMT.knownTeleports.other or mMT.knownTeleports.toys) then
 		if mMT.knownTeleports.items.available then
-			DT.tooltip:AddLine(mMT:TC(L["Items"], "title"))
+			DT.tooltip:AddLine(L["Items"], mMT:GetRGB("title"))
 			for _, t in pairs(mMT.knownTeleports.items) do
 				if t and type(t) == "table" then DT.tooltip:AddDoubleLine(BuildTipIcon(t.icon) .. mMT:TC(t.name), t.cooldown) end
 			end
@@ -696,18 +696,18 @@ local function OnEnter(self)
 		end
 
 		if mMT.knownTeleports.toys.available then
-			DT.tooltip:AddLine(mMT:TC(L["Toys"], "title"))
+			DT.tooltip:AddLine(L["Toys"], mMT:GetRGB("title"))
 			for _, t in pairs(mMT.knownTeleports.toys) do
 				if t and type(t) == "table" then DT.tooltip:AddDoubleLine(BuildTipIcon(t.icon) .. mMT:TC(t.name), t.cooldown) end
 			end
 			DT.tooltip:AddLine(" ")
 		end
 	elseif not tipAdded then
-		DT.tooltip:AddLine(mMT:TC(L["You currently have no important teleports."]))
+		DT.tooltip:AddLine(L["You currently have no important teleports."], mMT:GetRGB())
 		DT.tooltip:AddLine(" ")
 	end
 
-	DT.tooltip:AddLine(MEDIA.leftClick .. " " .. mMT:TC(L["Left click to open the Teleports menu."], "tip"))
+	DT.tooltip:AddLine(MEDIA.leftClick .. " " .. L["Left click to open the Teleports menu."], mMT:GetRGB("tip"))
 	DT.tooltip:Show()
 end
 

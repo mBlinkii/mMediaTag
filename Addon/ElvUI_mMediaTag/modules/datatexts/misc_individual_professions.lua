@@ -56,12 +56,12 @@ local function OnEnter(self)
 		local name, icon, skillLevel, maxSkillLevel, skillModifier = GetProfessionInfos(profession)
 		if iconPath ~= "none" and iconPath ~= "default" then icon = UpdateIcon(self.name, E.db.mMT.datatexts.individual_professions.icon) end
 		icon = E:TextureString(icon, ":14:14")
-		label = icon .. " " .. mMT:TC(name) .. " " .. (UpdateSkillString(skillLevel, maxSkillLevel, skillModifier) or "")
+		label = icon .. " " .. name .. " " .. (UpdateSkillString(skillLevel, maxSkillLevel, skillModifier) or "")
 	end
 
-	DT.tooltip:AddLine(mMT:TC(TRADE_SKILLS, "title"))
+	DT.tooltip:AddLine(TRADE_SKILLS, mMT:GetRGB("title"))
 	DT.tooltip:AddLine(" ")
-	DT.tooltip:AddLine(label)
+	DT.tooltip:AddLine(label, mMT:GetRGB())
 	DT.tooltip:Show()
 end
 

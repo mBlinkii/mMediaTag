@@ -311,9 +311,9 @@ local function OnEnter(self, slow)
 		DT.tooltip:ClearLines()
 
 		-- Tooltip Header
-		DT.tooltip:AddLine(mMT:TC(L["Game Menu"], "title"))
+		DT.tooltip:AddLine(L["Game Menu"], mMT:GetRGB("title"))
 		DT.tooltip:AddLine(" ")
-		DT.tooltip:AddDoubleLine(mMT.Name, mMT:TC("Ver.", "title") .. " " .. mMT:TC(mMT.Version, "mark"))
+		DT.tooltip:AddDoubleLine(mMT.Name, "|CFFFEA101Ver.|r" .. " " .. mMT.Version, mMT:GetRGB("text", "mark"))
 
 		-- mMT Systeminfo
 		if E.db.mMT.datatexts.menu.show_systeminfo then
@@ -327,11 +327,11 @@ local function OnEnter(self, slow)
 		end
 
 		local function AddLatencyInfo(title, latency, color)
-			DT.tooltip:AddDoubleLine(mMT:TC(L[title]), string.format("|c%s %d ms|r", color, latency))
+			DT.tooltip:AddDoubleLine(L[title], string.format("|c%s %d ms|r", color, latency),mMT:GetRGB())
 		end
 
 		local _, _, latencyHome, latencyWorld = GetNetStats()
-		DT.tooltip:AddLine(mMT:TC(L["Latency:"], "title"))
+		DT.tooltip:AddLine(L["Latency:"], mMT:GetRGB("title"))
 		AddLatencyInfo("Home", latencyHome, GetLatencyColor(latencyHome))
 		AddLatencyInfo("World", latencyWorld, GetLatencyColor(latencyWorld))
 		DT.tooltip:AddLine(" ")
@@ -339,7 +339,7 @@ local function OnEnter(self, slow)
 		-- FPS
 		local function AddFramerateInfo(fps)
 			local fps_color = statusColor[fps > 55 and 1 or (fps > 29 and 2 or 3)]
-			DT.tooltip:AddDoubleLine(mMT:TC(L["Framerate:"]), string.format("|c%s %.0f FPS|r", fps_color, fps))
+			DT.tooltip:AddDoubleLine(L["Framerate:"], string.format("|c%s %.0f FPS|r", fps_color, fps), mMT:GetRGB())
 		end
 		AddFramerateInfo(GetFramerate())
 		DT.tooltip:AddLine(" ")
@@ -350,8 +350,8 @@ local function OnEnter(self, slow)
 			DT.tooltip:AddLine(" ")
 		end
 
-		DT.tooltip:AddLine(MEDIA.leftClick .. " " .. mMT:TC(L["left click to open the menu."], "tip"))
-		if E.Retail or E.Mists then DT.tooltip:AddLine(MEDIA.rightClick .. " " .. mMT:TC(L["right click to open LFD Browser"], "tip")) end
+		DT.tooltip:AddLine(MEDIA.leftClick .. " " .. L["left click to open the menu."], mMT:GetRGB("tip"))
+		if E.Retail or E.Mists then DT.tooltip:AddLine(MEDIA.rightClick .. " " .. L["right click to open LFD Browser"], mMT:GetRGB("tip")) end
 
 		DT.tooltip:Show()
 	end
