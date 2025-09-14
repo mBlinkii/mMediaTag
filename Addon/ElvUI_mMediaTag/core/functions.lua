@@ -107,28 +107,28 @@ function mMT:formatText(input)
 end
 
 function mMT:GetInstanceDifficulty()
-    local isRaid = IsInRaid()
-    local id = isRaid and GetRaidDifficultyID() or (IsInGroup() and GetDungeonDifficultyID())
-    if not id then return end
+	local isRaid = IsInRaid()
+	local id = isRaid and GetRaidDifficultyID() or (IsInGroup() and GetDungeonDifficultyID())
+	if not id then return end
 
-    local difficultyName = GetDifficultyInfo(id)
-    if not difficultyName then return end
+	local difficultyName = GetDifficultyInfo(id)
+	if not difficultyName then return end
 
-    local colorMap = {
-        -- Dungeon difficulties
-        [1] = MEDIA.color.N,  -- Normal
-        [2] = MEDIA.color.H,  -- Heroic
-        [23] = MEDIA.color.M, -- Mythic
+	local colorMap = {
+		-- Dungeon difficulties
+		[1] = MEDIA.color.N, -- Normal
+		[2] = MEDIA.color.H, -- Heroic
+		[23] = MEDIA.color.M, -- Mythic
 
-        -- Raid difficulties
-        [14] = MEDIA.color.N, -- Normal
-        [15] = MEDIA.color.H, -- Heroic
-        [16] = MEDIA.color.M, -- Mythic
-    }
+		-- Raid difficulties
+		[14] = MEDIA.color.N, -- Normal
+		[15] = MEDIA.color.H, -- Heroic
+		[16] = MEDIA.color.M, -- Mythic
+	}
 
-    local color = colorMap[id] or MEDIA.color.OTHER
-    local shortName = E:ShortenString(difficultyName, 1)
-    return color:WrapTextInColorCode(shortName), isRaid
+	local color = colorMap[id] or MEDIA.color.OTHER
+	local shortName = E:ShortenString(difficultyName, 1)
+	return color:WrapTextInColorCode(shortName), isRaid
 end
 
 function mMT:GetWeeklyResetTime()
@@ -147,7 +147,6 @@ function mMT:GetWeeklyResetTime()
 	end
 	return false
 end
-
 
 -- build menu frames
 function mMT:BuildMenus()
