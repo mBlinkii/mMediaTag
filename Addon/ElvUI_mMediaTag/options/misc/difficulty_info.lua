@@ -47,7 +47,7 @@ mMT.options.args.misc.args.difficulty_info.args = {
 					mMT:UpdateModule("DifficultyInfo")
 				end,
 			},
-			fontflag = {
+			fontFlag = {
 				type = "select",
 				order = 2,
 				name = L["Font contour"],
@@ -55,10 +55,10 @@ mMT.options.args.misc.args.difficulty_info.args = {
 					return not E.db.mMT.difficulty_info.enable
 				end,
 				get = function(info)
-					return E.db.mMT.difficulty_info.font.fontflag
+					return E.db.mMT.difficulty_info.font.fontFlag
 				end,
 				set = function(info, value)
-					E.db.mMT.difficulty_info.font.fontflag = value
+					E.db.mMT.difficulty_info.font.fontFlag = value
 					mMT:UpdateModule("DifficultyInfo")
 				end,
 				values = {

@@ -81,8 +81,8 @@ function module:Initialize(demo)
 		module.info_screen:Hide()
 	end
 
-	E:SetFont(module.info_screen.lable, LSM:Fetch("font", module.db.font.font), module.db.font.size, module.db.font.fontflag)
-	E:SetFont(module.info_screen.lable2, LSM:Fetch("font", module.db.font.font), module.db.font.size2, module.db.font.fontflag)
+	E:SetFont(module.info_screen.lable, LSM:Fetch("font", module.db.font.font), module.db.font.size, module.db.font.fontFlag)
+	E:SetFont(module.info_screen.lable2, LSM:Fetch("font", module.db.font.font), module.db.font.size2, module.db.font.fontFlag)
 
 	if not module.isEnabled then
 		module:RegisterEvent("LFG_LIST_JOINED_GROUP")

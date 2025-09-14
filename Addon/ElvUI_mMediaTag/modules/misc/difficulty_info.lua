@@ -89,7 +89,7 @@ function module:Initialize(demo)
 		module.difficulty:Hide()
 	end
 
-	E:SetFont(module.difficulty.lable, LSM:Fetch("font", module.db.font.font), module.db.font.size, module.db.font.fontflag)
+	E:SetFont(module.difficulty.lable, LSM:Fetch("font", module.db.font.font), module.db.font.size, module.db.font.fontFlag)
 	module.difficulty.lable:SetJustifyH(module.db.font.justify)
 
 	if not module.isEnabled then

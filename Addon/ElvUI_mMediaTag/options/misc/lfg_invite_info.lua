@@ -48,7 +48,7 @@ mMT.options.args.misc.args.lfg_invite_info.args = {
                     mMT:UpdateModule("LFGInviteInfo")
                 end,
             },
-            fontflag = {
+            fontFlag = {
                 type = "select",
                 order = 2,
                 name = L["Font contour"],
@@ -56,10 +56,10 @@ mMT.options.args.misc.args.lfg_invite_info.args = {
 					return not E.db.mMT.lfg_invite_info.enable
 				end,
                 get = function(info)
-                    return E.db.mMT.lfg_invite_info.font.fontflag
+                    return E.db.mMT.lfg_invite_info.font.fontFlag
                 end,
                 set = function(info, value)
-                    E.db.mMT.lfg_invite_info.font.fontflag = value
+                    E.db.mMT.lfg_invite_info.font.fontFlag = value
                     mMT:UpdateModule("LFGInviteInfo")
                 end,
                 values = {

@@ -50,7 +50,7 @@ P.lfg_invite_info = {
 		font = "PT Sans Narrow",
 		size = 32,
 		size2 = 22,
-		fontflag = "OUTLINE",
+		fontFlag = "OUTLINE",
 	},
 	colors = {
 		line_a = "FFFFBF00",
@@ -66,7 +66,7 @@ P.difficulty_info = {
 	font = {
 		font = "PT Sans Narrow",
 		size = 12,
-		fontflag = "OUTLINE",
+		fontFlag = "OUTLINE",
 		justify = "CENTER",
 	},
 }
