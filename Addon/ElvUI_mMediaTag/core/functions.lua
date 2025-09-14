@@ -131,6 +131,23 @@ function mMT:GetInstanceDifficulty()
     return color:WrapTextInColorCode(shortName), isRaid
 end
 
+function mMT:GetWeeklyResetTime()
+	local now = time()
+	local region = GetCurrentRegion() -- 1=US, 2=KR, 3=EU, 4=TW
+	local resetWeekday = ({ [1] = 2, [2] = 4, [3] = 3, [4] = 4 })[region] or 3 -- Default: EU Wednesday
+	local resetHour = 8
+
+	local t = date("*t", now)
+	local daysSinceReset = (t.wday - resetWeekday + 7) % 7
+	local lastReset = time({ year = t.year, month = t.month, day = t.day - daysSinceReset, hour = resetHour })
+
+	if lastReset > DB.lastWeeklyReset then
+		DB.lastWeeklyReset = lastReset
+		return true
+	end
+	return false
+end
+
 
 -- build menu frames
 function mMT:BuildMenus()

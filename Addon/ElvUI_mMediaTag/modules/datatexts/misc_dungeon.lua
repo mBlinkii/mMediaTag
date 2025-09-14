@@ -89,11 +89,15 @@ local function OnClick(self, button)
 		_G.ToggleLFDParentFrame()
 		if button == "MiddleButton" then _G.PVEFrameTab3:Click() end
 	else
-		if not _G.WeeklyRewardsFrame then UIParentLoadAddOn("Blizzard_WeeklyRewards") end
-		if _G.WeeklyRewardsFrame:IsVisible() then
-			_G.WeeklyRewardsFrame:Hide()
+		if IsShiftKeyDown() then
+			DB.keystones = {}
 		else
-			_G.WeeklyRewardsFrame:Show()
+			if not _G.WeeklyRewardsFrame then UIParentLoadAddOn("Blizzard_WeeklyRewards") end
+			if _G.WeeklyRewardsFrame:IsVisible() then
+				_G.WeeklyRewardsFrame:Hide()
+			else
+				_G.WeeklyRewardsFrame:Show()
+			end
 		end
 	end
 end
@@ -168,10 +172,15 @@ local function OnEnter(self)
 
 	DT.tooltip:AddLine(MEDIA.leftClick .. " " .. L["left click to open LFD Frame"], mMT:GetRGB("tip"))
 	DT.tooltip:AddLine(MEDIA.rightClick .. " " .. L["right click to open Great Vault"], mMT:GetRGB("tip"))
+	DT.tooltip:AddLine(MEDIA.rightClick .. " " .. L["SHIFT + right click to clear all saved keystones."], mMT:GetRGB("tip"))
 	DT.tooltip:Show()
 end
 
-local function OnEvent(self)
+local function OnEvent(self, event)
+	if event == "PLAYER_ENTERING_WORLD" then
+		if mMT:GetWeeklyResetTime() then DB.keystones = {} end
+	end
+
 	local text = L["Dungeon"]
 	if E.db.mMT.datatexts.dungeon.icon ~= "none" then text = E:TextureString(MEDIA.icons.lfg[E.db.mMT.datatexts.dungeon.icon], ":14:14") .. " " .. text end
 
@@ -202,6 +211,6 @@ local function ValueColorUpdate(self, hex)
 	OnEvent(self)
 end
 
-local events = { "CHALLENGE_MODE_START", "UPDATE_INSTANCE_INFO", "SCENARIO_UPDATE", "PLAYER_DIFFICULTY_CHANGED", "LFG_UPDATE_RANDOM_INFO" }
+local events = { "CHALLENGE_MODE_START", "UPDATE_INSTANCE_INFO", "SCENARIO_UPDATE", "PLAYER_DIFFICULTY_CHANGED", "LFG_UPDATE_RANDOM_INFO", "PLAYER_ENTERING_WORLD" }
 
 DT:RegisterDatatext("mMT - Dungeon", mMT.Name, events, OnEvent, nil, OnClick, OnEnter, OnLeave, L["Dungeon"], nil, ValueColorUpdate)

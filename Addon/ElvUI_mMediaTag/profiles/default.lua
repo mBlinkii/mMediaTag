@@ -6,4 +6,6 @@ mMT.defaults.debug = {
 	debugMode = false,
 }
 
-mMT.keystones = {}
+mMT.defaults.lastWeeklyReset = 0
+
+mMT.defaults.keystones = {}

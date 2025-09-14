@@ -170,11 +170,15 @@ local function OnClick(self, button)
 		_G.ToggleLFDParentFrame()
 		if button == "MiddleButton" then _G.PVEFrameTab3:Click() end
 	else
-		if not _G.WeeklyRewardsFrame then UIParentLoadAddOn("Blizzard_WeeklyRewards") end
-		if _G.WeeklyRewardsFrame:IsVisible() then
-			_G.WeeklyRewardsFrame:Hide()
+		if IsShiftKeyDown() then
+			DB.keystones = {}
 		else
-			_G.WeeklyRewardsFrame:Show()
+			if not _G.WeeklyRewardsFrame then UIParentLoadAddOn("Blizzard_WeeklyRewards") end
+			if _G.WeeklyRewardsFrame:IsVisible() then
+				_G.WeeklyRewardsFrame:Hide()
+			else
+				_G.WeeklyRewardsFrame:Show()
+			end
 		end
 	end
 end
@@ -282,11 +286,16 @@ local function OnEnter(self)
 	DT.tooltip:AddLine(MEDIA.leftClick .. " " .. L["left click to open LFD Frame"], mMT:GetRGB("tip"))
 	DT.tooltip:AddLine(MEDIA.middleClick .. " " .. L["middle click to open M+ Frame"], mMT:GetRGB("tip"))
 	DT.tooltip:AddLine(MEDIA.rightClick .. " " .. L["right click to open Great Vault"], mMT:GetRGB("tip"))
+	DT.tooltip:AddLine(MEDIA.rightClick .. " " .. L["SHIFT + right click to clear all saved keystones."], mMT:GetRGB("tip"))
 
 	DT.tooltip:Show()
 end
 
 local function OnEvent(self, event, ...)
+	if event == "PLAYER_ENTERING_WORLD" then
+		if mMT:GetWeeklyResetTime() then DB.keystones = {} end
+	end
+
 	isMaxLevel = isMaxLevel or E:XPIsLevelMax()
 
 	if isMaxLevel then
