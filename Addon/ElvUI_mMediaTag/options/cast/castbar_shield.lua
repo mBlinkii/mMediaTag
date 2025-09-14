@@ -67,8 +67,24 @@ mMT.options.args.unitframes.args.castbar_shield.args = {
 					M.CastbarShield:Initialize()
 				end,
 			},
-			size_group = {
+			color = {
+				type = "color",
 				order = 4,
+				name = L["Color"],
+				hasAlpha = true,
+				get = function(info)
+					local r, g, b, a = mMT:HexToRGB(E.db.mMT.color.castbar_shield)
+					return r, g, b, a
+				end,
+				set = function(info, r, g, b, a)
+					local hex = E:RGBToHex(r, g, b, a)
+					E.db.mMT.color.castbar_shield = hex
+					MEDIA.color.castbar_shield = CreateColorFromHexString(hex)
+					M.CastbarShield:Initialize()
+				end,
+			},
+			size_group = {
+				order = 5,
 				type = "group",
 				inline = true,
 				name = L["Size Settings"],
@@ -125,7 +141,7 @@ mMT.options.args.unitframes.args.castbar_shield.args = {
 				},
 			},
 			anchor_group = {
-				order = 5,
+				order = 6,
 				type = "group",
 				inline = true,
 				name = L["Anchor"],
