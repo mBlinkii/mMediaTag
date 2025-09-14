@@ -123,7 +123,7 @@ function module:LFG_LIST_JOINED_GROUP(_, searchResultID, groupName)
 	end
 
 	module.info_screen.lable:SetText(format("%s", mMT:TC((groupName or " ") .. " - " .. name, "line_a")))
-	module.info_screen.lable2:SetText(format("%s \n%s", mMT:TC(activity, "line_b"), mMT:TC(difficulty, "line_c")))
+	module.info_screen.lable2:SetText(format("%s \n%s", mMT:TC(activity, "line_b"), mMT:TC(difficulty or "", "line_c")))
 
 	if module.db.print then
 		print(mMT:TC("*~*~*~*~*~*~*~*~*~*~*~*~*~*~*~", "blue"))

@@ -118,6 +118,7 @@ MEDIA.color = {
 		encounter = createColor("FFFFFFFF"),
 		friends = createColor("FFFFFFFF"),
 		guild = createColor("FFFFFFFF"),
+		lfd = createColor("FFFFFFFF"),
 	},
 }
 
@@ -240,6 +241,7 @@ function mMT:UpdateMedia(arg)
 		MEDIA.color.dock.encounter = CreateColorFromHexString(E.db.mMT.color.dock.encounter)
 		MEDIA.color.dock.friends = CreateColorFromHexString(E.db.mMT.color.dock.friends)
 		MEDIA.color.dock.guild = CreateColorFromHexString(E.db.mMT.color.dock.guild)
+		MEDIA.color.dock.lfd = CreateColorFromHexString(E.db.mMT.color.dock.lfd)
 	end
 end
 

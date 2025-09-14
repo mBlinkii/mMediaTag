@@ -96,11 +96,11 @@ mMT.options.args.dock.args.guild.args = {
 		inline = true,
 		name = L["Settings"],
 		args = {
-			gold = {
-				order = 2,
+			text = {
+				order = 1,
 				type = "toggle",
 				name = L["Text"],
-				desc = L["Show number of online friends on the icon."],
+				desc = L["Show number of online Guild members on the icon."],
 				get = function(info)
 					return E.db.mMT.dock.guild.text
 				end,

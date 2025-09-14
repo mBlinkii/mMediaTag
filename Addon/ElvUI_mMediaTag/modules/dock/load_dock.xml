@@ -2,7 +2,8 @@
     <Script file="functions.lua"/>
     <Script file="none.lua"/>
     <Script file="friends.lua"/>
-      <Script file="guild.lua"/>
+    <Script file="lfd.lua"/>
+    <Script file="guild.lua"/>
     <Script file="durability.lua"/>
     <Script file="encounter.lua"/>
     <Script file="collection.lua"/>

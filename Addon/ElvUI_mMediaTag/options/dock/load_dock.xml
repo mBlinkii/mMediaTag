@@ -1,7 +1,8 @@
 <Ui xmlns="http://www.blizzard.com/wow/ui/">
 	<Script file="general.lua"/>
 	<Script file="durability.lua"/>
-	  <Script file="guild.lua"/>
+	<Script file="lfd.lua"/>
+	<Script file="guild.lua"/>
 	<Script file="encounter.lua"/>
 	<Script file="friends.lua"/>
 	<Script file="collection.lua"/>

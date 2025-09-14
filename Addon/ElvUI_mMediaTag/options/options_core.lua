@@ -198,6 +198,13 @@ mMT.options = {
 					childGroups = "tab",
 					args = {},
 				},
+				lfd = {
+					order = 5,
+					type = "group",
+					name = mMT:AddSettingsIcon(DUNGEONS_BUTTON, "dungeon"),
+					childGroups = "tab",
+					args = {},
+				},
 				durability = {
 					order = 10,
 					type = "group",

@@ -1,12 +1,88 @@
 local mMT, DB, M, E, P, L, MEDIA = unpack(ElvUI_mMediaTag)
 local DT = E:GetModule("DataTexts")
 
+-- code is partially based on ElvUI's Durability and Itemlevel datatext
+
 --WoW API / Variables
 local _G = _G
 local strupper = strupper
 local UIParentLoadAddOn = UIParentLoadAddOn
+local GetNumRandomDungeons = GetNumRandomDungeons
+local GetLFGRandomDungeonInfo = GetLFGRandomDungeonInfo
+local GetNumRFDungeons = GetNumRFDungeons
+local GetLFGRoleShortageRewards = GetLFGRoleShortageRewards
+local GetRFDungeonInfo = GetRFDungeonInfo
+local TANK_ICON = E:TextureString(E.Media.Textures.Tank, ":14:14")
+local HEALER_ICON = E:TextureString(E.Media.Textures.Healer, ":14:14")
+local DPS_ICON = E:TextureString(E.Media.Textures.DPS, ":14:14")
 
 local textString = ""
+
+local function MakeIconString(tank, healer, damage)
+	local str = ""
+	if tank then str = str .. TANK_ICON end
+	if healer then str = str .. HEALER_ICON end
+	if damage then str = str .. DPS_ICON end
+
+	return str
+end
+
+local function GetCallToTheArmsInfos()
+	local tankReward = false
+	local healerReward = false
+	local dpsReward = false
+	local unavailable = true
+	local raid = false
+	local dungeon = false
+
+	--Dungeons
+	for i = 1, GetNumRandomDungeons() do
+		local id = GetLFGRandomDungeonInfo(i)
+		for x = 1, LFG_ROLE_NUM_SHORTAGE_TYPES do
+			local eligible, forTank, forHealer, forDamage, itemCount = GetLFGRoleShortageRewards(id, x)
+			if eligible and forTank and itemCount > 0 then
+				tankReward = true
+				unavailable = false
+				dungeon = true
+			end
+			if eligible and forHealer and itemCount > 0 then
+				healerReward = true
+				unavailable = false
+				dungeon = true
+			end
+			if eligible and forDamage and itemCount > 0 then
+				dpsReward = true
+				unavailable = false
+				dungeon = true
+			end
+		end
+	end
+
+	--LFR
+	for i = 1, GetNumRFDungeons() do
+		local id = GetRFDungeonInfo(i)
+		for x = 1, LFG_ROLE_NUM_SHORTAGE_TYPES do
+			local eligible, forTank, forHealer, forDamage, itemCount = GetLFGRoleShortageRewards(id, x)
+			if eligible and forTank and itemCount > 0 then
+				tankReward = true
+				unavailable = false
+				raid = true
+			end
+			if eligible and forHealer and itemCount > 0 then
+				healerReward = true
+				unavailable = false
+				raid = true
+			end
+			if eligible and forDamage and itemCount > 0 then
+				dpsReward = true
+				unavailable = false
+				raid = true
+			end
+		end
+	end
+
+	return not unavailable and MakeIconString(tankReward, healerReward, dpsReward), raid, dungeon
+end
 
 local function OnClick(self, button)
 	if button == "LeftButton" or button == "MiddleButton" then
@@ -44,6 +120,13 @@ local function OnEnter(self)
 		DT.tooltip:AddDoubleLine(L["Dungeon:"], playerDifficultyInfos.dungeon.color:WrapTextInColorCode(playerDifficultyInfos.dungeon.name), mMT:GetRGB())
 		DT.tooltip:AddDoubleLine(L["Raid:"], playerDifficultyInfos.raid.color:WrapTextInColorCode(playerDifficultyInfos.raid.name), mMT:GetRGB())
 		if E.Retail then DT.tooltip:AddDoubleLine(L["Legacy Raid:"], playerDifficultyInfos.legacy.color:WrapTextInColorCode(playerDifficultyInfos.legacy.name), mMT:GetRGB()) end
+		DT.tooltip:AddLine(" ")
+	end
+
+	local ctaInfo, raid, dungeon = GetCallToTheArmsInfos()
+	if ctaInfo then
+		DT.tooltip:AddLine(L["Call to Arms:"], mMT:GetRGB("title"))
+		DT.tooltip:AddDoubleLine((dungeon and L["Dungeon"] or "") .. ((dungeon and raid) and "/" or "") .. (raid and L["Raid"] or "") .. ":", ctaInfo, mMT:GetRGB("text", "text"))
 		DT.tooltip:AddLine(" ")
 	end
 
@@ -119,6 +202,6 @@ local function ValueColorUpdate(self, hex)
 	OnEvent(self)
 end
 
-local events = { "CHALLENGE_MODE_START", "UPDATE_INSTANCE_INFO", "SCENARIO_UPDATE", "PLAYER_DIFFICULTY_CHANGED" }
+local events = { "CHALLENGE_MODE_START", "UPDATE_INSTANCE_INFO", "SCENARIO_UPDATE", "PLAYER_DIFFICULTY_CHANGED", "LFG_UPDATE_RANDOM_INFO" }
 
 DT:RegisterDatatext("mMT - Dungeon", mMT.Name, events, OnEvent, nil, OnClick, OnEnter, OnLeave, L["Dungeon"], nil, ValueColorUpdate)

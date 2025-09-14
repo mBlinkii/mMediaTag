@@ -5,6 +5,10 @@ local DT = E:GetModule("DataTexts")
 local format = format
 local print = print
 local strmatch = strmatch
+local IsInGroup = IsInGroup
+local IsInRaid = IsInRaid
+local GetDungeonDifficultyID = GetDungeonDifficultyID
+local GetRaidDifficultyID = GetRaidDifficultyID
 local GetApplicationMetric = C_AddOnProfiler.GetApplicationMetric
 local GetOverallMetric = C_AddOnProfiler.GetOverallMetric
 local GetAddOnMetric = C_AddOnProfiler.GetAddOnMetric
@@ -45,16 +49,15 @@ function mMT:TC(text, color)
 end
 
 function mMT:GetRGB(color1, color2)
-    local c1 = MEDIA.color[color1 or "text"]
+	local c1 = MEDIA.color[color1 or "text"]
 
-    if color2 then
-        local c2 = MEDIA.color[color2]
-        return c1.r, c1.g, c1.b, c2.r, c2.g, c2.b
-    end
+	if color2 then
+		local c2 = MEDIA.color[color2]
+		return c1.r, c1.g, c1.b, c2.r, c2.g, c2.b
+	end
 
-    return c1.r, c1.g, c1.b
+	return c1.r, c1.g, c1.b
 end
-
 
 function mMT:HexToRGB(hex)
 	if #hex == 6 then hex = "ff" .. hex end
@@ -102,6 +105,32 @@ function mMT:formatText(input)
 
 	return table.concat(words, " ")
 end
+
+function mMT:GetInstanceDifficulty()
+    local isRaid = IsInRaid()
+    local id = isRaid and GetRaidDifficultyID() or (IsInGroup() and GetDungeonDifficultyID())
+    if not id then return end
+
+    local difficultyName = GetDifficultyInfo(id)
+    if not difficultyName then return end
+
+    local colorMap = {
+        -- Dungeon difficulties
+        [1] = MEDIA.color.N,  -- Normal
+        [2] = MEDIA.color.H,  -- Heroic
+        [23] = MEDIA.color.M, -- Mythic
+
+        -- Raid difficulties
+        [14] = MEDIA.color.N, -- Normal
+        [15] = MEDIA.color.H, -- Heroic
+        [16] = MEDIA.color.M, -- Mythic
+    }
+
+    local color = colorMap[id] or MEDIA.color.OTHER
+    local shortName = E:ShortenString(difficultyName, 1)
+    return color:WrapTextInColorCode(shortName), isRaid
+end
+
 
 -- build menu frames
 function mMT:BuildMenus()
@@ -185,7 +214,7 @@ function mMT:SystemInfo()
 
 		DT.tooltip:AddLine(" ")
 		for _, addon in ipairs(topAddOns) do
-			if addon.value > 0 then DT.tooltip:AddDoubleLine(addon.name, addon.cpu .. " - " .. GetMemoryString(addon.value),mMT:GetRGB("text", "text")) end
+			if addon.value > 0 then DT.tooltip:AddDoubleLine(addon.name, addon.cpu .. " - " .. GetMemoryString(addon.value), mMT:GetRGB("text", "text")) end
 		end
 	end
 end

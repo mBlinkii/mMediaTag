@@ -453,6 +453,14 @@ P.dock = {
 		custom_color = false,
 		text = true,
 	},
+
+	lfd = {
+		style = "material_filled",
+		icon = "travel_explore",
+		custom_color = false,
+		text = true,
+		call_to_the_Arms = true,
+	},
 }
 
 -- color
@@ -541,5 +549,6 @@ P.color = {
 		encounter = "FFFFFFFF",
 		friends = "FFFFFFFF",
 		guild = "FFFFFFFF",
+		lfd = "FFFFFFFF",
 	},
 }

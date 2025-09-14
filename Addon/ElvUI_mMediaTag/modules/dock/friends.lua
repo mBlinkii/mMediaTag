@@ -38,7 +38,6 @@ end
 
 local function OnClick(self, btn)
 	Dock:Click(self)
-	local showGold = E.db.mMT.dock.bags.gold
 	friendsDT = mMT:GetElvUIDataText("Friends")
 	if friendsDT then friendsDT.onClick(self, btn) end
 end
