@@ -56,7 +56,7 @@ local function SetupDockText(datatext, config)
 	local textConfig = config.text
 
 	local icon = dock.Icon
-	local center = textConfig.center or module.db.center
+	local center = textConfig.center
 
 	local function SetupText(labelKey, anchorPoint, justifyH)
 		dock[labelKey] = dock[labelKey] or datatext:CreateFontString(nil, "ARTWORK")

@@ -184,6 +184,13 @@ mMT.options = {
 					childGroups = "tab",
 					args = {},
 				},
+				friends = {
+					order = 3,
+					type = "group",
+					name = mMT:AddSettingsIcon(L["Friends"], "social"),
+					childGroups = "tab",
+					args = {},
+				},
 				durability = {
 					order = 10,
 					type = "group",

@@ -2,6 +2,7 @@
 	<Script file="general.lua"/>
 	<Script file="durability.lua"/>
 	<Script file="encounter.lua"/>
+	<Script file="friends.lua"/>
 	<Script file="collection.lua"/>
 	<Script file="character.lua"/>
 	<Script file="bags.lua"/>

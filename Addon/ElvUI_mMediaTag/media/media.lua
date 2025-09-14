@@ -116,6 +116,8 @@ MEDIA.color = {
 		collection = createColor("FFFFFFFF"),
 		durability = createColor("FFFFFFFF"),
 		encounter = createColor("FFFFFFFF"),
+		friends = createColor("FFFFFFFF"),
+		guild = createColor("FFFFFFFF"),
 	},
 }
 
@@ -236,6 +238,8 @@ function mMT:UpdateMedia(arg)
 		MEDIA.color.dock.collection = CreateColorFromHexString(E.db.mMT.color.dock.collection)
 		MEDIA.color.dock.durability = CreateColorFromHexString(E.db.mMT.color.dock.durability)
 		MEDIA.color.dock.encounter = CreateColorFromHexString(E.db.mMT.color.dock.encounter)
+		MEDIA.color.dock.friends = CreateColorFromHexString(E.db.mMT.color.dock.friends)
+		MEDIA.color.dock.guild = CreateColorFromHexString(E.db.mMT.color.dock.guild)
 	end
 end
 

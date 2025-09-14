@@ -166,16 +166,4 @@ local function OnEvent(self, event, ...)
 	end
 end
 
-DT:RegisterDatatext(
-	config.name,
-	config.category,
-	{ "PLAYER_AVG_ITEM_LEVEL_UPDATE", "UPDATE_INVENTORY_DURABILITY", "MERCHANT_SHOW" },
-	OnEvent,
-	nil,
-	OnClick,
-	OnEnter,
-	OnLeave,
-	config.localizedName,
-	nil,
-	nil
-)
+DT:RegisterDatatext( config.name, config.category, { "PLAYER_AVG_ITEM_LEVEL_UPDATE", "UPDATE_INVENTORY_DURABILITY", "MERCHANT_SHOW" }, OnEvent, nil, OnClick, OnEnter, OnLeave, config.localizedName, nil, nil )

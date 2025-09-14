@@ -439,6 +439,20 @@ P.dock = {
 		icon = "browse",
 		custom_color = false,
 	},
+
+	friends = {
+		style = "material_filled",
+		icon = "contacts_product",
+		custom_color = false,
+		text = true,
+	},
+
+	guild = {
+		style = "material_filled",
+		icon = "diversity_4",
+		custom_color = false,
+		text = true,
+	},
 }
 
 -- color
@@ -525,5 +539,7 @@ P.color = {
 		collection = "FFFFFFFF",
 		durability = "FFFFFFFF",
 		encounter = "FFFFFFFF",
+		friends = "FFFFFFFF",
+		guild = "FFFFFFFF",
 	},
 }
