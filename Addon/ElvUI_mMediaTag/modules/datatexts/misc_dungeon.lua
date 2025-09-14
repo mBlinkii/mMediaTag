@@ -177,7 +177,7 @@ local function OnEnter(self)
 end
 
 local function OnEvent(self, event)
-	if event == "PLAYER_ENTERING_WORLD" then
+	if event == "ELVUI_FORCE_UPDATE" then
 		if mMT:GetWeeklyResetTime() then DB.keystones = {} end
 	end
 
@@ -211,6 +211,6 @@ local function ValueColorUpdate(self, hex)
 	OnEvent(self)
 end
 
-local events = { "CHALLENGE_MODE_START", "UPDATE_INSTANCE_INFO", "SCENARIO_UPDATE", "PLAYER_DIFFICULTY_CHANGED", "LFG_UPDATE_RANDOM_INFO", "PLAYER_ENTERING_WORLD" }
+local events = { "CHALLENGE_MODE_START", "UPDATE_INSTANCE_INFO", "SCENARIO_UPDATE", "PLAYER_DIFFICULTY_CHANGED", "LFG_UPDATE_RANDOM_INFO" }
 
 DT:RegisterDatatext("mMT - Dungeon", mMT.Name, events, OnEvent, nil, OnClick, OnEnter, OnLeave, L["Dungeon"], nil, ValueColorUpdate)

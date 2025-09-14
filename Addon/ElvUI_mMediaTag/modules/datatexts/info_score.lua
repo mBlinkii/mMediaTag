@@ -292,7 +292,7 @@ local function OnEnter(self)
 end
 
 local function OnEvent(self, event, ...)
-	if event == "PLAYER_ENTERING_WORLD" then
+	if event == "ELVUI_FORCE_UPDATE" then
 		if mMT:GetWeeklyResetTime() then DB.keystones = {} end
 	end
 
