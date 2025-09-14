@@ -191,6 +191,13 @@ mMT.options = {
 					childGroups = "tab",
 					args = {},
 				},
+				guild = {
+					order = 4,
+					type = "group",
+					name = mMT:AddSettingsIcon(L["Guild"], "guild"),
+					childGroups = "tab",
+					args = {},
+				},
 				durability = {
 					order = 10,
 					type = "group",

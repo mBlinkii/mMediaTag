@@ -73,7 +73,7 @@ local function OnEvent(...)
 
 	if E.db.mMT.dock.friends.text then
 		local onlineFriends = GetNumOnlineFriends()
-		local _, onlineBNFriends = BNGetNumFriends()
+		local onlineBNFriends = select(2, BNGetNumFriends())
 		self.mMT_Dock.TextA:SetText(onlineFriends + onlineBNFriends)
 	end
 
