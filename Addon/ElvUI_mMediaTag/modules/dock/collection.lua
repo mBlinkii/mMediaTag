@@ -94,8 +94,8 @@ end
 local function OnEvent(self, event, ...)
 	if event == "ELVUI_FORCE_UPDATE" then
 		-- setup settings
-		config.icon.texture = icons[E.db.mMT.dock.journal.style][E.db.mMT.dock.journal.icon] or MEDIA.fallback
-		config.icon.color = E.db.mMT.dock.journal.custom_color and MEDIA.color.dock.journal or nil
+		config.icon.texture = icons[E.db.mMT.dock.collection.style][E.db.mMT.dock.collection.icon] or MEDIA.fallback
+		config.icon.color = E.db.mMT.dock.collection.custom_color and MEDIA.color.dock.collection or nil
 
 		Dock:CreateDockIcon(self, config, event)
 	end

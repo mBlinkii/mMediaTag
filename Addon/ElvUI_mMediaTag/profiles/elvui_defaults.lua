@@ -419,7 +419,7 @@ P.dock = {
 		text = false,
 	},
 
-	journal = {
+	collection = {
 		style = "material_filled",
 		icon = "bookmark_heart",
 		custom_color = false,
@@ -432,6 +432,12 @@ P.dock = {
 		percThreshold = 30,
 		text = "none",
 		mount = 460,
+	},
+
+	encounter = {
+		style = "material_filled",
+		icon = "browse",
+		custom_color = false,
 	},
 }
 
@@ -516,7 +522,8 @@ P.color = {
 		achievement = "FFFFFFFF",
 		bags = "FFFFFFFF",
 		character = "FFFFFFFF",
-		journal = "FFFFFFFF",
+		collection = "FFFFFFFF",
 		durability = "FFFFFFFF",
+		encounter = "FFFFFFFF",
 	},
 }

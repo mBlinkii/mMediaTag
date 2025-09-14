@@ -2,7 +2,8 @@
     <Script file="functions.lua"/>
     <Script file="none.lua"/>
     <Script file="durability.lua"/>
-    <Script file="journal.lua"/>
+    <Script file="encounter.lua"/>
+    <Script file="collection.lua"/>
     <Script file="character.lua"/>
     <Script file="bags.lua"/>
     <Script file="store.lua"/>

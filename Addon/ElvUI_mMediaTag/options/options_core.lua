@@ -191,7 +191,14 @@ mMT.options = {
 					childGroups = "tab",
 					args = {},
 				},
-				journal = {
+				encounter = {
+					order = 10,
+					type = "group",
+					name = mMT:AddSettingsIcon(ENCOUNTER_JOURNAL, "encounter"),
+					childGroups = "tab",
+					args = {},
+				},
+				collection = {
 					order = 10,
 					type = "group",
 					name = mMT:AddSettingsIcon(COLLECTIONS, "collection"),
