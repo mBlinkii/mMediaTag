@@ -205,6 +205,13 @@ mMT.options = {
 					childGroups = "tab",
 					args = {},
 				},
+				menu = {
+					order = 10,
+					type = "group",
+					name = mMT:AddSettingsIcon(MAINMENU_BUTTON, "menu"),
+					childGroups = "tab",
+					args = {},
+				},
 				mail = {
 					order = 10,
 					type = "group",

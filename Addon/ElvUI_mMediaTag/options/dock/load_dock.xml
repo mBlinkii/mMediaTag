@@ -4,6 +4,7 @@
 	<Script file="mail.lua"/>
 	<Script file="lfd.lua"/>
 	<Script file="guild.lua"/>
+	<Script file="menu.lua"/>
 	<Script file="encounter.lua"/>
 	<Script file="friends.lua"/>
 	<Script file="collection.lua"/>

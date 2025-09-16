@@ -29,12 +29,6 @@ local function OnLeave(self)
 	if E.db.mMT.dock.tooltip then DT.tooltip:Hide() end
 end
 
-local function OnClick(self, btn)
-	Dock:Click(self)
-	mailDT = mMT:GetElvUIDataText("Mail")
-	if mailDT then mailDT.onClick(self, btn) end
-end
-
 local function OnEvent(...)
 	local self, event = ...
 
@@ -71,4 +65,4 @@ local function OnEvent(...)
 	self.text:SetText("")
 end
 
-DT:RegisterDatatext( config.name, config.category, { "MAIL_INBOX_UPDATE", "UPDATE_PENDING_MAIL", "MAIL_CLOSED", "MAIL_SHOW" }, OnEvent, nil, OnClick, OnEnter, OnLeave, config.localizedName, nil, nil )
+DT:RegisterDatatext( config.name, config.category, { "MAIL_INBOX_UPDATE", "UPDATE_PENDING_MAIL", "MAIL_CLOSED", "MAIL_SHOW" }, OnEvent, nil, nil, OnEnter, OnLeave, config.localizedName, nil, nil )

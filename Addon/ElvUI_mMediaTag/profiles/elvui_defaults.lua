@@ -466,6 +466,11 @@ P.dock = {
 		icon = "mail",
 		custom_color = false,
 	},
+	menu = {
+		style = "material_filled",
+		icon = "settings",
+		custom_color = false,
+	},
 }
 
 -- color
@@ -556,5 +561,6 @@ P.color = {
 		guild = "FFFFFFFF",
 		lfd = "FFFFFFFF",
 		mail = "FFFFFFFF",
+		menu = "FFFFFFFF",
 	},
 }
