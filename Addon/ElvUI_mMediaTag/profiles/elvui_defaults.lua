@@ -461,6 +461,11 @@ P.dock = {
 		text = true,
 		call_to_the_Arms = true,
 	},
+	mail = {
+		style = "material_filled",
+		icon = "mail",
+		custom_color = false,
+	},
 }
 
 -- color
@@ -550,5 +555,6 @@ P.color = {
 		friends = "FFFFFFFF",
 		guild = "FFFFFFFF",
 		lfd = "FFFFFFFF",
+		mail = "FFFFFFFF",
 	},
 }

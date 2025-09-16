@@ -1,6 +1,7 @@
 <Ui xmlns="http://www.blizzard.com/wow/ui/">
     <Script file="functions.lua"/>
     <Script file="none.lua"/>
+    <Script file="mail.lua"/>
     <Script file="friends.lua"/>
     <Script file="lfd.lua"/>
     <Script file="guild.lua"/>

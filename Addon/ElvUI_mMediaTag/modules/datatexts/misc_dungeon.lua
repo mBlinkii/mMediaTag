@@ -103,6 +103,7 @@ local function OnClick(self, button)
 end
 
 local function OnEnter(self)
+	DT.tooltip:ClearLines()
 	local instanceInfos = mMT:GetDungeonInfo()
 
 	if instanceInfos then

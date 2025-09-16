@@ -87,14 +87,6 @@ local styles = {
 	},
 }
 
-local function colorize(num)
-	if num >= 0 then
-		return 0.1, 1, 0.1
-	else
-		return E:ColorGradient(-(pi / num), 1, 0.1, 0.1, 1, 1, 0.1, 0.1, 1, 0.1)
-	end
-end
-
 local function OnEnter(self)
 	DT.tooltip:ClearLines()
 	DT.tooltip:AddLine(DURABILITY, mMT:GetRGB("title"))

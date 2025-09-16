@@ -23,6 +23,7 @@ local function OnEnter(self)
 	Dock:OnEnter(self)
 
 	if E.db.mMT.dock.tooltip then
+		DT.tooltip:ClearLines()
 		DT.tooltip:AddLine(ENCOUNTER_JOURNAL, mMT:GetRGB("title"))
 		DT.tooltip:AddLine(" ")
 

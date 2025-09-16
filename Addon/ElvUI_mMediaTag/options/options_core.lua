@@ -205,6 +205,13 @@ mMT.options = {
 					childGroups = "tab",
 					args = {},
 				},
+				mail = {
+					order = 10,
+					type = "group",
+					name = mMT:AddSettingsIcon(MAIL_LABEL, "mail"),
+					childGroups = "tab",
+					args = {},
+				},
 				durability = {
 					order = 10,
 					type = "group",

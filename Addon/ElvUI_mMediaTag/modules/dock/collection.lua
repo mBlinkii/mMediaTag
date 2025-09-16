@@ -57,6 +57,7 @@ local function OnEnter(self)
 	Dock:OnEnter(self)
 
 	if E.db.mMT.dock.tooltip then
+		DT.tooltip:ClearLines()
 		local polished_pet_harm = Tracker:GetItemInfos(163036)
 		local battle_pet_bandage = Tracker:GetItemInfos(86143)
 		DT.tooltip:AddLine(COLLECTIONS, mMT:GetRGB("title"))

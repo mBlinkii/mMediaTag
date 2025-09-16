@@ -8,7 +8,6 @@ local icons = MEDIA.icons.dock
 local lfdDT = nil
 local IsInInstance = IsInInstance
 local IsInGroup = IsInGroup
-local IsInRaid = IsInRaid
 local GetNumRandomDungeons = GetNumRandomDungeons
 local GetLFGRandomDungeonInfo = GetLFGRandomDungeonInfo
 local GetNumRFDungeons = GetNumRFDungeons

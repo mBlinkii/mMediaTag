@@ -26,6 +26,7 @@ local function OnEnter(self)
 	Dock:OnEnter(self.__owner)
 
 	if E.db.mMT.dock.tooltip then
+		DT.tooltip:ClearLines()
 		GameTooltip:SetOwner(self, "ANCHOR_TOP")
 		GameTooltip:AddLine(BLIZZARD_STORE, mMT:GetRGB("title"))
 

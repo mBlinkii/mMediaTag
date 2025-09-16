@@ -46,6 +46,7 @@ local function GetProfessionInfos(profession)
 end
 
 local function OnEnter(self)
+	DT.tooltip:ClearLines()
 	if not player_professions[self.name] then UpdatePlayerProfessions() end
 
 	local iconPath = E.db.mMT.datatexts.individual_professions.icon

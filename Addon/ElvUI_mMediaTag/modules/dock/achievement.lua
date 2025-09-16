@@ -28,6 +28,7 @@ local function OnEnter(self)
 	Dock:OnEnter(self)
 
 	if E.db.mMT.dock.tooltip then
+		DT.tooltip:ClearLines()
 		DT.tooltip:AddLine(ACHIEVEMENT_BUTTON, mMT:GetRGB("title"))
 		DT.tooltip:AddLine(" ")
 

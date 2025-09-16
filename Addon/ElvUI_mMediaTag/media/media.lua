@@ -119,6 +119,7 @@ MEDIA.color = {
 		friends = createColor("FFFFFFFF"),
 		guild = createColor("FFFFFFFF"),
 		lfd = createColor("FFFFFFFF"),
+		mail = createColor("FFFFFFFF"),
 	},
 }
 
@@ -242,6 +243,7 @@ function mMT:UpdateMedia(arg)
 		MEDIA.color.dock.friends = CreateColorFromHexString(E.db.mMT.color.dock.friends)
 		MEDIA.color.dock.guild = CreateColorFromHexString(E.db.mMT.color.dock.guild)
 		MEDIA.color.dock.lfd = CreateColorFromHexString(E.db.mMT.color.dock.lfd)
+		MEDIA.color.dock.mail = CreateColorFromHexString(E.db.mMT.color.dock.mail)
 	end
 end
 
