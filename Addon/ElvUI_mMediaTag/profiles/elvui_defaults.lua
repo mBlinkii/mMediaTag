@@ -497,6 +497,14 @@ P.dock = {
 		icon = "editor_choice",
 		custom_color = false,
 	},
+
+	volume = {
+		style = "material_filled",
+		icon = "volume_down",
+		custom_color = false,
+		text = true,
+		colored = true,
+	},
 }
 
 -- color
@@ -592,5 +600,6 @@ P.color = {
 		quests = "FFFFFFFF",
 		spellbook = "FFFFFFFF",
 		spec = "FFFFFFFF",
+		volume = "FFFFFFFF",
 	},
 }

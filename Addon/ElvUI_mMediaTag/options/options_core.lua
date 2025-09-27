@@ -291,6 +291,13 @@ mMT.options = {
 					childGroups = "tab",
 					args = {},
 				},
+				volume = {
+					order = 20,
+					type = "group",
+					name = mMT:AddSettingsIcon(L["Volume"], "sound"),
+					childGroups = "tab",
+					args = {},
+				},
 			},
 		},
 		tags = {

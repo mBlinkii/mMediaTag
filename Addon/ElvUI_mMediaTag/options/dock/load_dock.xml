@@ -16,4 +16,5 @@
 	<Script file="quests.lua"/>
 	<Script file="spellbook.lua"/>
 	<Script file="spec.lua"/>
+	<Script file="volume.lua"/>
 </Ui>
