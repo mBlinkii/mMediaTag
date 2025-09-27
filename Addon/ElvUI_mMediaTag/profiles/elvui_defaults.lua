@@ -461,14 +461,22 @@ P.dock = {
 		text = true,
 		call_to_the_Arms = true,
 	},
+
 	mail = {
 		style = "material_filled",
 		icon = "mail",
 		custom_color = false,
 	},
+
 	menu = {
 		style = "material_filled",
 		icon = "settings",
+		custom_color = false,
+	},
+
+	professions = {
+		style = "material_filled",
+		icon = "handyman",
 		custom_color = false,
 	},
 }
@@ -562,5 +570,6 @@ P.color = {
 		lfd = "FFFFFFFF",
 		mail = "FFFFFFFF",
 		menu = "FFFFFFFF",
+		professions = "FFFFFFFF",
 	},
 }

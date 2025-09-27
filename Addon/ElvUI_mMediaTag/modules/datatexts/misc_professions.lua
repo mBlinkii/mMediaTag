@@ -231,4 +231,4 @@ local function ValueColorUpdate(self, hex)
 	OnEvent(self)
 end
 
-DT:RegisterDatatext("mMT - Professions", mMT.Name, { "TRADE_SKILL_DETAILS_UPDATE", "SKILL_LINES_CHANGED" }, OnEvent, nil, OnClick, OnEnter, OnLeave, TRADE_SKILLS, nil, ValueColorUpdate)
+DT:RegisterDatatext("mMT - Professions", mMT.Name, nil, OnEvent, nil, OnClick, OnEnter, OnLeave, TRADE_SKILLS, nil, ValueColorUpdate)

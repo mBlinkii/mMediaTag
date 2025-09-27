@@ -3,11 +3,11 @@ local DT = E:GetModule("DataTexts")
 local Dock = M.Dock
 
 local icons = MEDIA.icons.dock
-local menuDT = nil
+local professionsDT = nil
 
 local config = {
-	name = "mMT_Dock_Menu",
-	localizedName = "|CFF01EEFFDock|r" .. " " .. MAINMENU_BUTTON,
+	name = "mMT_Dock_Profession",
+	localizedName = "|CFF01EEFFDock|r" .. " " .. TRADE_SKILLS,
 	category = mMT.NameShort .. " - |CFF01EEFFDock|r",
 	icon = {
 		notification = false,
@@ -18,9 +18,8 @@ local config = {
 
 local function OnEnter(self)
 	Dock:OnEnter(self)
-
 	if E.db.mMT.dock.tooltip then
-		if menuDT then menuDT.onEnter() end
+		if professionsDT then professionsDT.onEnter() end
 	end
 end
 
@@ -31,8 +30,8 @@ end
 
 local function OnClick(self, btn)
 	Dock:Click(self)
-	menuDT = mMT:GetElvUIDataText("mMT - Game menu")
-	if menuDT then menuDT.onClick(self, btn) end
+	professionsDT = mMT:GetElvUIDataText("mMT - Professions")
+	if professionsDT then professionsDT.onClick(self, btn) end
 end
 
 local function OnEvent(...)
@@ -40,26 +39,26 @@ local function OnEvent(...)
 
 	if event == "ELVUI_FORCE_UPDATE" then
 		--setup settings
-		config.icon.texture = icons[E.db.mMT.dock.menu.style][E.db.mMT.dock.menu.icon] or MEDIA.fallback
-		config.icon.color = E.db.mMT.dock.menu.custom_color and MEDIA.color.dock.menu or nil
+		config.icon.texture = icons[E.db.mMT.dock.professions.style][E.db.mMT.dock.professions.icon] or MEDIA.fallback
+		config.icon.color = E.db.mMT.dock.professions.custom_color and MEDIA.color.dock.professions or nil
 
 		Dock:CreateDockIcon(self, config, event)
 
 		-- Create virtual frames and connect them to datatexts
-		if not self.menuVirtualFrame then
-			self.menuVirtualFrame = {
-				name = "mMT - Game menu",
+		if not self.professionsVirtualFrame then
+			self.professionsVirtualFrame = {
+				name = "mMT - Professions",
 				text = {
 					SetFormattedText = E.noop,
 				},
 			}
-			mMT:ConnectVirtualFrameToDataText("mMT - Game menu", self.menuVirtualFrame)
+			mMT:ConnectVirtualFrameToDataText("mMT - Professions", self.professionsVirtualFrame)
 		end
 
-		menuDT = mMT:GetElvUIDataText("mMT - Game menu")
+		professionsDT = mMT:GetElvUIDataText("mMT - Professions")
 	end
 
-	if menuDT and menuDT ~= "Data Broker" then menuDT.eventFunc(...) end
+	if professionsDT and professionsDT ~= "Data Broker" then professionsDT.eventFunc(...) end
 
 	self.text:SetText("")
 end

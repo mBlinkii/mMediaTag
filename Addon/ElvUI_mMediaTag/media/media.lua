@@ -121,6 +121,7 @@ MEDIA.color = {
 		lfd = createColor("FFFFFFFF"),
 		mail = createColor("FFFFFFFF"),
 		menu = createColor("FFFFFFFF"),
+		professions = createColor("FFFFFFFF"),
 	},
 }
 
@@ -246,6 +247,7 @@ function mMT:UpdateMedia(arg)
 		MEDIA.color.dock.lfd = CreateColorFromHexString(E.db.mMT.color.dock.lfd)
 		MEDIA.color.dock.mail = CreateColorFromHexString(E.db.mMT.color.dock.mail)
 		MEDIA.color.dock.menu = CreateColorFromHexString(E.db.mMT.color.dock.menu)
+		MEDIA.color.dock.professions = CreateColorFromHexString(E.db.mMT.color.dock.professions)
 	end
 end
 
