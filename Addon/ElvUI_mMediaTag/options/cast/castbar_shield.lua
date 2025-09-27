@@ -71,13 +71,13 @@ mMT.options.args.unitframes.args.castbar_shield.args = {
 				type = "color",
 				order = 4,
 				name = L["Color"],
-				hasAlpha = true,
+				hasAlpha = false,
 				get = function(info)
-					local r, g, b, a = mMT:HexToRGB(E.db.mMT.color.castbar_shield)
-					return r, g, b, a
+					local r, g, b = mMT:HexToRGB(E.db.mMT.color.castbar_shield)
+					return r, g, b
 				end,
-				set = function(info, r, g, b, a)
-					local hex = E:RGBToHex(r, g, b, a)
+				set = function(info, r, g, b)
+					local hex = E:RGBToHex(r, g, b, "ff")
 					E.db.mMT.color.castbar_shield = hex
 					MEDIA.color.castbar_shield = CreateColorFromHexString(hex)
 					M.CastbarShield:Initialize()
