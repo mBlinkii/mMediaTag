@@ -226,6 +226,13 @@ mMT.options = {
 					childGroups = "tab",
 					args = {},
 				},
+				quests = {
+					order = 10,
+					type = "group",
+					name = mMT:AddSettingsIcon(QUESTLOG_BUTTON, "quest"),
+					childGroups = "tab",
+					args = {},
+				},
 				durability = {
 					order = 10,
 					type = "group",

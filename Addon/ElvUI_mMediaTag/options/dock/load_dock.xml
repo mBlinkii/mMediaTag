@@ -13,4 +13,5 @@
 	<Script file="menu.lua"/>
 	<Script file="professions.lua"/>
 	<Script file="store.lua"/>
+	<Script file="quests.lua"/>
 </Ui>

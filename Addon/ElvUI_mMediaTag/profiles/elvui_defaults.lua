@@ -479,6 +479,12 @@ P.dock = {
 		icon = "handyman",
 		custom_color = false,
 	},
+
+	quests = {
+		style = "material_filled",
+		icon = "contact_support",
+		custom_color = false,
+	},
 }
 
 -- color
@@ -571,5 +577,6 @@ P.color = {
 		mail = "FFFFFFFF",
 		menu = "FFFFFFFF",
 		professions = "FFFFFFFF",
+		quests = "FFFFFFFF",
 	},
 }
