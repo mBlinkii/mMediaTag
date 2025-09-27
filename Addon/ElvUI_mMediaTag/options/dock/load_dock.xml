@@ -15,4 +15,5 @@
 	<Script file="store.lua"/>
 	<Script file="quests.lua"/>
 	<Script file="spellbook.lua"/>
+	<Script file="spec.lua"/>
 </Ui>

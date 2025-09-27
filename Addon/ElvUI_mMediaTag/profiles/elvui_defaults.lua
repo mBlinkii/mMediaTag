@@ -491,6 +491,12 @@ P.dock = {
 		icon = "auto_stories",
 		custom_color = false,
 	},
+
+	spec = {
+		style = "material_filled",
+		icon = "editor_choice",
+		custom_color = false,
+	},
 }
 
 -- color
@@ -585,5 +591,6 @@ P.color = {
 		professions = "FFFFFFFF",
 		quests = "FFFFFFFF",
 		spellbook = "FFFFFFFF",
+		spec = "FFFFFFFF",
 	},
 }

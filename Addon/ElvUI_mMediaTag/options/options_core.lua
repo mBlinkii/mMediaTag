@@ -1,5 +1,7 @@
 local mMT, DB, M, E, P, L, MEDIA = unpack(ElvUI_mMediaTag)
 
+local _G = _G
+
 mMT.options = {
 	name = MEDIA.icon16 .. mMT.Name,
 	handler = mMT,
@@ -201,7 +203,7 @@ mMT.options = {
 				lfd = {
 					order = 5,
 					type = "group",
-					name = mMT:AddSettingsIcon(DUNGEONS_BUTTON, "dungeon"),
+					name = mMT:AddSettingsIcon(_G.DUNGEONS_BUTTON, "dungeon"),
 					childGroups = "tab",
 					args = {},
 				},
@@ -212,52 +214,59 @@ mMT.options = {
 					childGroups = "tab",
 					args = {},
 				},
+				spec = {
+					order = 5,
+					type = "group",
+					name = mMT:AddSettingsIcon(_G.TALENTS_BUTTON, "talent"),
+					childGroups = "tab",
+					args = {},
+				},
 				menu = {
 					order = 10,
 					type = "group",
-					name = mMT:AddSettingsIcon(MAINMENU_BUTTON, "menu"),
+					name = mMT:AddSettingsIcon(_G.MAINMENU_BUTTON, "menu"),
 					childGroups = "tab",
 					args = {},
 				},
 				mail = {
 					order = 10,
 					type = "group",
-					name = mMT:AddSettingsIcon(MAIL_LABEL, "mail"),
+					name = mMT:AddSettingsIcon(_G.MAIL_LABEL, "mail"),
 					childGroups = "tab",
 					args = {},
 				},
 				professions = {
 					order = 10,
 					type = "group",
-					name = mMT:AddSettingsIcon(TRADE_SKILLS, "professions"),
+					name = mMT:AddSettingsIcon(_G.TRADE_SKILLS, "professions"),
 					childGroups = "tab",
 					args = {},
 				},
 				quests = {
 					order = 10,
 					type = "group",
-					name = mMT:AddSettingsIcon(QUESTLOG_BUTTON, "quest"),
+					name = mMT:AddSettingsIcon(_G.QUESTLOG_BUTTON, "quest"),
 					childGroups = "tab",
 					args = {},
 				},
 				durability = {
 					order = 10,
 					type = "group",
-					name = mMT:AddSettingsIcon(DURABILITY, "armor"),
+					name = mMT:AddSettingsIcon(_G.DURABILITY, "armor"),
 					childGroups = "tab",
 					args = {},
 				},
 				encounter = {
 					order = 10,
 					type = "group",
-					name = mMT:AddSettingsIcon(ENCOUNTER_JOURNAL, "encounter"),
+					name = mMT:AddSettingsIcon(_G.ENCOUNTER_JOURNAL, "encounter"),
 					childGroups = "tab",
 					args = {},
 				},
 				collection = {
 					order = 10,
 					type = "group",
-					name = mMT:AddSettingsIcon(COLLECTIONS, "collection"),
+					name = mMT:AddSettingsIcon(_G.COLLECTIONS, "collection"),
 					childGroups = "tab",
 					args = {},
 				},
@@ -271,14 +280,14 @@ mMT.options = {
 				achievement = {
 					order = 20,
 					type = "group",
-					name = mMT:AddSettingsIcon(ACHIEVEMENT_BUTTON, "achievement"),
+					name = mMT:AddSettingsIcon(_G.ACHIEVEMENT_BUTTON, "achievement"),
 					childGroups = "tab",
 					args = {},
 				},
 				store = {
 					order = 20,
 					type = "group",
-					name = mMT:AddSettingsIcon(BLIZZARD_STORE, "shop"),
+					name = mMT:AddSettingsIcon(_G.BLIZZARD_STORE, "shop"),
 					childGroups = "tab",
 					args = {},
 				},
