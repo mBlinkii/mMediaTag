@@ -126,6 +126,7 @@ MEDIA.color = {
 }
 
 MEDIA.myclass = E:ClassColor(E.myclass)
+MEDIA.color.myclass = MEDIA.myclass
 
 do
 	local colors = {
@@ -248,6 +249,8 @@ function mMT:UpdateMedia(arg)
 		MEDIA.color.dock.mail = CreateColorFromHexString(E.db.mMT.color.dock.mail)
 		MEDIA.color.dock.menu = CreateColorFromHexString(E.db.mMT.color.dock.menu)
 		MEDIA.color.dock.professions = CreateColorFromHexString(E.db.mMT.color.dock.professions)
+		MEDIA.color.dock.quests = CreateColorFromHexString(E.db.mMT.color.dock.quests)
+		MEDIA.color.dock.spellbook = CreateColorFromHexString(E.db.mMT.color.dock.spellbook)
 	end
 end
 

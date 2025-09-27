@@ -205,6 +205,13 @@ mMT.options = {
 					childGroups = "tab",
 					args = {},
 				},
+				spellbook = {
+					order = 5,
+					type = "group",
+					name = mMT:AddSettingsIcon((E.Retail and _G.SPELLBOOK or _G.SPELLBOOK_ABILITIES_BUTTON), "book"),
+					childGroups = "tab",
+					args = {},
+				},
 				menu = {
 					order = 10,
 					type = "group",

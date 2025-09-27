@@ -485,6 +485,12 @@ P.dock = {
 		icon = "contact_support",
 		custom_color = false,
 	},
+
+	spellbook = {
+		style = "material_filled",
+		icon = "auto_stories",
+		custom_color = false,
+	},
 }
 
 -- color
@@ -578,5 +584,6 @@ P.color = {
 		menu = "FFFFFFFF",
 		professions = "FFFFFFFF",
 		quests = "FFFFFFFF",
+		spellbook = "FFFFFFFF",
 	},
 }
