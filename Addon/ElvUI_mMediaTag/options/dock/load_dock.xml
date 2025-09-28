@@ -2,6 +2,7 @@
 	<Script file="general.lua"/>
 	<Script file="achievement.lua"/>
 	<Script file="bags.lua"/>
+	<Script file="calendar.lua"/>
 	<Script file="character.lua"/>
 	<Script file="collection.lua"/>
 	<Script file="durability.lua"/>
@@ -12,10 +13,9 @@
 	<Script file="mail.lua"/>
 	<Script file="menu.lua"/>
 	<Script file="professions.lua"/>
-	<Script file="store.lua"/>
 	<Script file="quests.lua"/>
-	<Script file="spellbook.lua"/>
 	<Script file="spec.lua"/>
+	<Script file="spellbook.lua"/>
+	<Script file="store.lua"/>
 	<Script file="volume.lua"/>
-	<Script file="calendar.lua"/>
 </Ui>

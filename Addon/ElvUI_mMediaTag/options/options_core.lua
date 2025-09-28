@@ -208,14 +208,14 @@ mMT.options = {
 					args = {},
 				},
 				spellbook = {
-					order = 5,
+					order = 6,
 					type = "group",
 					name = mMT:AddSettingsIcon((E.Retail and _G.SPELLBOOK or _G.SPELLBOOK_ABILITIES_BUTTON), "book"),
 					childGroups = "tab",
 					args = {},
 				},
 				spec = {
-					order = 5,
+					order = 7,
 					type = "group",
 					name = mMT:AddSettingsIcon(_G.TALENTS_BUTTON, "talent"),
 					childGroups = "tab",
@@ -305,6 +305,37 @@ mMT.options = {
 					childGroups = "tab",
 					args = {},
 				},
+				example = {
+					order = 30,
+					type = "group",
+					name = mMT:AddSettingsIcon(L["Example"], "dock"),
+					childGroups = "tab",
+					args = {
+						desc = {
+							order = 1,
+							type = "description",
+							name = L["These are just examples of how to create your own dock using ElvUI’s custom data text bars.\n\nTo set up a custom bar:\nOpen ElvUI and navigate to ElvUI > Datatext > Bars.\nEnter a name for your new bar, click OK, and then click Add.\nSet the width of the bar based on how many icons you want to display.\nSet the height, which also determines the icon size.\nChoose the number of data text slots you want.\n\nAssign icons to each slot. For example:\nSlot 1 = Dock Calendar\nSlot 2 = Dock Profession\nSlot 3 = Dock Spec\n…and so on.\n\nThis setup allows you to build a personalized dock that fits your UI and gameplay needs.\n\n"],
+						},
+						warning = {
+							order = 2,
+							type = "description",
+							name = L["In WoW Classic, the docks may appear differently because not all modules are available in this version. However, you can still customize the docks through the ElvUI settings."],
+						},
+						spacer = {
+							order = 3,
+							type = "description",
+							name = L["\n\n"],
+						},
+						custom_docks = {
+							order = 4,
+							type = "execute",
+							name = L["Open Settings"],
+							func = function()
+								E.Libs.AceConfigDialog:SelectGroup("ElvUI", "mMT", "misc", "custom_docks")
+							end,
+						},
+					},
+				},
 			},
 		},
 		tags = {
@@ -351,9 +382,16 @@ mMT.options = {
 					args = {},
 				},
 				minimap_skin = {
-					order = 5,
+					order = 6,
 					type = "group",
 					name = mMT:AddSettingsIcon(L["Minimap Skin"], "data_panel_skin"),
+					childGroups = "tab",
+					args = {},
+				},
+				custom_docks = {
+					order = 7,
+					type = "group",
+					name = mMT:AddSettingsIcon(L["Custom Docks"], "dock"),
 					childGroups = "tab",
 					args = {},
 				},
