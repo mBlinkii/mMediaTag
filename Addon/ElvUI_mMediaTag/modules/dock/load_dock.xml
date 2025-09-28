@@ -18,4 +18,5 @@
     <Script file="spellbook.lua"/>
     <Script file="spec.lua"/>
     <Script file="volume.lua"/>
+    <Script file="calendar.lua"/>
 </Ui>

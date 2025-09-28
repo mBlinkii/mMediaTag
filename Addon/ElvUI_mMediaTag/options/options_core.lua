@@ -298,6 +298,13 @@ mMT.options = {
 					childGroups = "tab",
 					args = {},
 				},
+				calendar = {
+					order = 20,
+					type = "group",
+					name = mMT:AddSettingsIcon(L["Calendar"], "calendar"),
+					childGroups = "tab",
+					args = {},
+				},
 			},
 		},
 		tags = {

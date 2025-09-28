@@ -505,6 +505,11 @@ P.dock = {
 		text = true,
 		colored = true,
 	},
+
+	calendar = {
+		icon = "filled",
+		custom_color = false,
+	},
 }
 
 -- color
@@ -601,5 +606,6 @@ P.color = {
 		spellbook = "FFFFFFFF",
 		spec = "FFFFFFFF",
 		volume = "FFFFFFFF",
+		calendar = "FFFFFFFF",
 	},
 }

@@ -87,7 +87,7 @@ function mMT:ConnectVirtualFrameToDataText(dataTextName, virtualFrame)
 	if dt.applySettings then dt.applySettings(virtualFrame, E.media.hexvaluecolor) end
 end
 
-function mMT:formatText(input)
+function mMT:formatText(input, ignoreSkip)
 	local ignore = { filled = true }
 	local words = {}
 
@@ -96,7 +96,7 @@ function mMT:formatText(input)
 	end
 
 	-- Remove the last word if it is to be ignored
-	if ignore[words[#words]] then table.remove(words) end
+	if not ignoreSkip and ignore[words[#words]] then table.remove(words) end
 
 	-- Format all remaining words
 	for i, w in ipairs(words) do
