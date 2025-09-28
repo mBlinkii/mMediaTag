@@ -9,3 +9,5 @@ mMT.defaults.debug = {
 mMT.defaults.lastWeeklyReset = 0
 
 mMT.defaults.keystones = {}
+
+mMT.defaults.boss_ids = {}
