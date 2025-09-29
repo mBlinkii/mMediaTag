@@ -24,8 +24,6 @@ local icons = {
 	colored = E:TextureString(MEDIA.icons.datatexts.misc.menu_b, ":14:14"),
 	white = E:TextureString(MEDIA.icons.datatexts.misc.menu_a, ":14:14"),
 }
-
-local enteredFrame = false
 local delay = 1
 
 local path = "Interface\\Addons\\ElvUI_mMediaTag\\media\\options\\"
@@ -305,7 +303,7 @@ local statusColor = {
 }
 
 local function OnEnter(self, slow)
-	enteredFrame = true
+	self.enteredFrame = true
 
 	if slow == 1 or not slow then
 		DT.tooltip:ClearLines()
@@ -357,8 +355,8 @@ local function OnEnter(self, slow)
 	end
 end
 
-local function OnLeave()
-	enteredFrame = false
+local function OnLeave(self)
+	self.enteredFrame = false
 	DT.tooltip:Hide()
 end
 
@@ -369,6 +367,8 @@ local function OnEvent(self)
 	if iconPath ~= "none" then label = icons[iconPath] .. " " .. label end
 
 	self.text:SetFormattedText(textString, label)
+
+	self.enteredFrame = false
 end
 
 local function ValueColorUpdate(self, hex)
@@ -378,7 +378,7 @@ local function ValueColorUpdate(self, hex)
 end
 
 local function OnUpdate(self, elapsed)
-	if not enteredFrame then return end
+	if not self.enteredFrame then return end
 	delay = delay - elapsed
 	if delay <= 0 then
 		OnEnter(self)

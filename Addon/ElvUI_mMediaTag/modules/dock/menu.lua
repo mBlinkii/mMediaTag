@@ -20,19 +20,27 @@ local function OnEnter(self)
 	Dock:OnEnter(self)
 
 	if E.db.mMT.dock.tooltip then
-		if menuDT then menuDT.onEnter() end
+		if menuDT then menuDT.onEnter(self) end
 	end
 end
 
 local function OnLeave(self)
 	Dock:OnLeave(self)
-	if E.db.mMT.dock.tooltip then DT.tooltip:Hide() end
+
+	if E.db.mMT.dock.tooltip then
+		if menuDT then menuDT.onLeave(self) end
+		DT.tooltip:Hide()
+	end
 end
 
 local function OnClick(self, btn)
 	Dock:Click(self)
 	menuDT = mMT:GetElvUIDataText("mMT - Game menu")
 	if menuDT then menuDT.onClick(self, btn) end
+end
+
+local function OnUpdate(...)
+	if menuDT then menuDT.onUpdate(...) end
 end
 
 local function OnEvent(...)
@@ -55,7 +63,6 @@ local function OnEvent(...)
 			}
 			mMT:ConnectVirtualFrameToDataText("mMT - Game menu", self.menuVirtualFrame)
 		end
-
 		menuDT = mMT:GetElvUIDataText("mMT - Game menu")
 	end
 
@@ -64,4 +71,4 @@ local function OnEvent(...)
 	self.text:SetText("")
 end
 
-DT:RegisterDatatext( config.name, config.category, nil, OnEvent, nil, OnClick, OnEnter, OnLeave, config.localizedName, nil, nil )
+DT:RegisterDatatext(config.name, config.category, nil, OnEvent, OnUpdate, OnClick, OnEnter, OnLeave, config.localizedName, nil, nil)

@@ -171,8 +171,10 @@ local function UpdateExtraTexture(element, force)
 	end
 end
 
-local function Update(self, event, eventUnit)
+local function Update(self, event, eventUnit, arg)
+	if self.type == "player" then print(event, " - start") end
 	if not eventUnit or not UnitIsUnit(self.unit, eventUnit) then return end
+	--print(" - passed unit check")
 
 	local unit = (self.demo and not UnitExists(self.unit)) and "player" or self.unit
 	local guid = UnitGUID(unit)
@@ -180,7 +182,9 @@ local function Update(self, event, eventUnit)
 	local hasStateChanged = ((event == "ForceUpdate") or (self.guid ~= guid) or (self.state ~= isAvailable))
 	local isDead = event == "UNIT_HEALTH" and self.isDead or UnitIsDead(unit)
 
+	--print(" - isAvailable:", isAvailable, " | isDead:", isDead, " | hasStateChanged:", hasStateChanged)
 	if hasStateChanged or isDead then
+		--print(" - state changed")
 		local texCoords
 		local class = select(2, UnitClass(unit))
 		local isPlayer = UnitIsPlayer(unit) or (E.Retail and UnitInPartyIsAI(unit))
@@ -190,6 +194,7 @@ local function Update(self, event, eventUnit)
 			texCoords = module.texCoords[class].texCoords or module.texCoords[class]
 			self.unit_portrait:SetTexture(module.classIcons, "CLAMP", "CLAMP", "TRILINEAR")
 		else
+			if self.type == "player" then print(self.unit, event, " - player portrait") end
 			SetPortraitTexture(self.unit_portrait, unit, true)
 		end
 
@@ -542,9 +547,8 @@ function module:InitPortrait(element)
 			end
 			element.cast_eventsSet = false
 		end
-
-		Update(element, "ForceUpdate", element.unit)
 		element:SetScript("OnEvent", OnEvent)
+		OnEvent(element, "ForceUpdate", element.unit)
 	end
 end
 
