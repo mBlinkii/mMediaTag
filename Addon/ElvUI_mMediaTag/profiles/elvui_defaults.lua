@@ -364,6 +364,7 @@ P.minimap_skin = {
 	color_cardinal = "class",
 }
 
+-- dock
 P.dock = {
 	auto_grow = true,
 	grow_size = 32,
@@ -512,6 +513,9 @@ P.dock = {
 	},
 }
 
+-- tags
+P.tags = {}
+
 -- color
 P.color = {
 	-- tip/ menu
@@ -607,5 +611,12 @@ P.color = {
 		spec = "FFFFFFFF",
 		volume = "FFFFFFFF",
 		calendar = "FFFFFFFF",
+	},
+
+	tags = {
+		rare = "FF9D00E6",
+		rareelite = "FFCC00FF",
+		elite = "FFFF00DD",
+		worldboss = "FFFF004C",
 	},
 }

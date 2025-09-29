@@ -8,4 +8,5 @@
     <Script file="lfg_invite_info.lua"/>
     <Script file="unit_ids.lua"/>
     <Script file="tooltip.lua"/>
+     <Script file="tags.lua"/>
 </Ui>
