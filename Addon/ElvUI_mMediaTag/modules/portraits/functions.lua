@@ -100,8 +100,6 @@ local function GetCastIcon(unit)
 	return select(3, UnitCastingInfo(unit)) or select(3, UnitChannelInfo(unit))
 end
 
-local CachedBossIDs = {}
-
 local function SetupExtraTexture(element, low)
 	local extraOnTop = module.db.misc.extratop and not low
 	element.extra:SetDrawLayer(extraOnTop and "OVERLAY" or "ARTWORK", extraOnTop and 7 or 0)
@@ -126,7 +124,14 @@ local function UpdateExtraTexture(element, force)
 	local e_db = element.db
 
 	local color
-	local classification = force and force or (element.type == "boss" and "boss" or ((CachedBossIDs[element.lastGUID] and "boss") or UnitClassification(element.unit)))
+
+	local npcID = element.lastGUID and select(6, strsplit("-", element.lastGUID))
+	if element.type == "boss" and npcID and not DB.boss_ids[npcID] then DB.boss_ids[npcID] = true end
+	local isBoss = element.type == "boss" or (npcID and DB.boss_ids[npcID])
+	local classification = isBoss and "boss" or UnitClassification(element.unit)
+	if classification == "worldboss" then classification = "boss" end
+
+	classification = force and force or classification
 
 	if element.db.unitcolor then
 		color = element.color
