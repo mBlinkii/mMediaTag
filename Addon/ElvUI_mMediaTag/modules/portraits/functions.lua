@@ -7,8 +7,16 @@ local UnitClass = UnitClass
 local UnitReaction = UnitReaction
 local UnitInPartyIsAI = UnitInPartyIsAI
 local UnitClassification = UnitClassification
+local UnitIsDeadOrGhost = UnitIsDeadOrGhost
+local UnitIsConnected = UnitIsConnected
+local UnitIsVisible = UnitIsVisible
+local SetPortraitTexture = SetPortraitTexture
+local CreateFrame = CreateFrame
+local strsplit = strsplit
+local UnitCastingInfo = UnitCastingInfo
+local UnitChannelInfo = UnitChannelInfo
+local UnitIsUnit = UnitIsUnit
 local UnitFactionGroup = UnitFactionGroup
-local UnitIsDead = UnitIsDead
 local InCombatLockdown = InCombatLockdown
 local select = select
 local UnitGUID = UnitGUID
@@ -42,59 +50,41 @@ function module:GetUnitColor(unit, class, isPlayer, isDead)
 end
 
 local function UpdateTextureColor(element, unit)
-	local db = module.db.misc
-	local e_db = element.db
+    local db, e_db = module.db.misc, element.db
+    unit = unit or element.unit
 
-	unit = unit or element.unit
-	local color = module:GetUnitColor(unit, element.unitClass, element.isPlayer, element.isDead)
-	element.color = color
+    local color = module:GetUnitColor(unit, element.unitClass, element.isPlayer, element.isDead)
+    element.color = color
+    if not color then return end
 
-	if color then
-		local primary, secondary = color.c, color.g
+    local primary, secondary = color.c, color.g
+    if e_db.mirror and db.gradient_mode == "HORIZONTAL" then
+        primary, secondary = secondary, primary
+    end
 
-		if e_db.mirror and db.gradient_mode == "HORIZONTAL" then
-			primary, secondary = secondary, primary
-		end
+    local function ApplyColor(target)
+        if not target then return end
+        if db.gradient and not element.media.disable_color then
+            target:SetGradient(db.gradient_mode,
+                { r = primary.r, g = primary.g, b = primary.b, a = primary.a or 1 },
+                { r = secondary.r, g = secondary.g, b = secondary.b, a = secondary.a or 1 }
+            )
+        else
+            local c = db.gradient and { r = 1, g = 1, b = 1, a = 1 } or primary
+            target:SetVertexColor(c.r, c.g, c.b, c.a or 1)
+        end
+    end
 
-		if db.gradient then
-			local gradient_params = {
-				{ r = primary.r, g = primary.g, b = primary.b, a = primary.a or 1 },
-				{ r = secondary.r, g = secondary.g, b = secondary.b, a = secondary.a or 1 },
-			}
+    ApplyColor(element.texture)
+    ApplyColor(element.embellishment)
 
-			element.texture:SetGradient(db.gradient_mode, unpack(gradient_params))
-
-			if element.embellishment then
-				if not element.media.disable_color then
-					element.embellishment:SetGradient(db.gradient_mode, unpack(gradient_params))
-				else
-					element.embellishment:SetVertexColor(1, 1, 1, 1)
-				end
-			end
-		else
-			local c = color.c
-			element.texture:SetVertexColor(c.r, c.g, c.b, c.a or 1)
-
-			if element.embellishment then
-				if element.media.disable_color then
-					element.embellishment:SetVertexColor(1, 1, 1, 1)
-				else
-					element.embellishment:SetVertexColor(c.r, c.g, c.b, c.a or 1)
-				end
-			end
-		end
-	end
-
-	if element.isDead or db.desaturate then
-		if not element.isDesaturated then
-			element.unit_portrait:SetDesaturated(true)
-			element.isDesaturated = true
-		end
-	elseif element.isDesaturated and not db.desaturate then
-		element.unit_portrait:SetDesaturated(false)
-		element.isDesaturated = false
-	end
+    local shouldDesaturate = element.isDead or db.desaturate
+    if shouldDesaturate ~= element.isDesaturated then
+        element.unit_portrait:SetDesaturated(shouldDesaturate)
+        element.isDesaturated = shouldDesaturate
+    end
 end
+
 
 local function GetCastIcon(unit)
 	return select(3, UnitCastingInfo(unit)) or select(3, UnitChannelInfo(unit))
@@ -115,97 +105,83 @@ local function SetupExtraTexture(element, low)
 end
 
 local function UpdateExtraTexture(element, force)
-	if element.extra and not element.db.extra then
-		element.extra:Hide()
-		return
-	end
+	local extra = element.extra
+	if extra and not element.db.extra then return extra:Hide() end
 
-	local db = module.db.misc
-	local e_db = element.db
-
-	local color
-
+	local db, e_db = module.db.misc, element.db
 	local npcID = element.lastGUID and select(6, strsplit("-", element.lastGUID))
+
 	if element.type == "boss" and npcID and not DB.boss_ids[npcID] then DB.boss_ids[npcID] = true end
-	local isBoss = element.type == "boss" or (npcID and DB.boss_ids[npcID])
-	local classification = isBoss and "boss" or UnitClassification(element.unit)
+
+	local isBoss = element.type == "boss" or (npcID and (mMT.IDs.boss[npcID] or DB.boss_ids[npcID]))
+	local classification = force or (isBoss and "boss" or UnitClassification(element.unit))
 	if classification == "worldboss" then classification = "boss" end
 
-	classification = force and force or classification
-
-	if element.db.unitcolor then
+	local color
+	if e_db.unitcolor then
 		color = element.color
 	elseif db.force_reaction then
 		local reaction = UnitReaction(element.unit, "player")
-		local reactionType = reaction and ((reaction <= 3) and "enemy" or (reaction == 4) and "neutral" or "friendly") or "enemy"
+		local reactionType = (reaction and ((reaction <= 3 and "enemy") or (reaction == 4 and "neutral") or "friendly")) or "enemy"
 		color = MEDIA.color.portraits.reaction[reactionType]
 	else
 		color = MEDIA.color.portraits.classification[classification]
 	end
 
-	if color then
-		local extra = element.extra
-		SetupExtraTexture(element, element.media[classification].low)
-		extra:SetTexture(element.media[classification].texture, "CLAMP", "CLAMP", "TRILINEAR")
+	if not color then return extra:Hide() end
 
-		if db.gradient then
-			local primary, secondary = color.c, color.g
+	SetupExtraTexture(element, element.media[classification].low)
+	extra:SetTexture(element.media[classification].texture, "CLAMP", "CLAMP", "TRILINEAR")
 
-			if e_db.mirror and db.gradient_mode == "HORIZONTAL" then
-				primary, secondary = secondary, primary
-			end
-
-			local gradient_params = {
-				{ r = primary.r, g = primary.g, b = primary.b, a = primary.a or 1 },
-				{ r = secondary.r, g = secondary.g, b = secondary.b, a = secondary.a or 1 },
-			}
-
-			extra:SetGradient(db.gradient_mode, unpack(gradient_params))
-		else
-			extra:SetVertexColor(color.c.r, color.c.g, color.c.b, color.c.a or 1)
+	if db.gradient then
+		local primary, secondary = color.c, color.g
+		if e_db.mirror and db.gradient_mode == "HORIZONTAL" then
+			primary, secondary = secondary, primary
 		end
 
-		extra:Show()
+		extra:SetGradient(db.gradient_mode, { r = primary.r, g = primary.g, b = primary.b, a = primary.a or 1 }, { r = secondary.r, g = secondary.g, b = secondary.b, a = secondary.a or 1 })
 	else
-		element.extra:Hide()
+		extra:SetVertexColor(color.c.r, color.c.g, color.c.b, color.c.a or 1)
 	end
+
+	extra:Show()
 end
 
-local function Update(self, event, eventUnit, arg2)
+local function Update(self, event, eventUnit)
 	local unit = self.unit or self.__owner.unit
 	if not eventUnit or not UnitIsUnit(unit, eventUnit) then return end
 
-	local element = self
-
 	local guid = UnitGUID(unit)
 	local isAvailable = UnitIsConnected(unit) and UnitIsVisible(unit)
-	local hasStateChanged = ((event == "ForceUpdate") or (element.guid ~= guid) or (element.state ~= isAvailable))
-	if hasStateChanged then
-		local texCoords
-		local class = select(2, UnitClass(unit))
-		local isPlayer = UnitIsPlayer(unit) or (E.Retail and UnitInPartyIsAI(unit))
-		local shouldMirror = (isPlayer and self.db.mirror) or (not isPlayer and not self.db.mirror)
+	local stateChanged = event == "ForceUpdate" or self.guid ~= guid or self.state ~= isAvailable
+	local isDead = event == "UNIT_HEALTH" and self.isDead or UnitIsDeadOrGhost(unit)
 
-		if module.useClassIcons and isPlayer then
-			texCoords = module.texCoords[class].texCoords or module.texCoords[class]
-			element.unit_portrait:SetTexture(module.classIcons, "CLAMP", "CLAMP", "TRILINEAR")
-		else
-			SetPortraitTexture(element.unit_portrait, unit, true)
-		end
+	if not (stateChanged or isDead) then return end
 
-		module:Mirror(element.unit_portrait, shouldMirror, texCoords)
+	local class = select(2, UnitClass(unit))
+	local isPlayer = UnitIsPlayer(unit) or (E.Retail and UnitInPartyIsAI(unit))
+	local shouldMirror = (isPlayer and self.db.mirror) or (not isPlayer and not self.db.mirror)
 
-		element.guid = guid
-		element.state = isAvailable
-		element.isPlayer = isPlayer
-		element.unit = unit
-		element.unitClass = class
-
-		UpdateTextureColor(element, unit)
-		UpdateExtraTexture(element, (element.forceExtra ~= "none" and element.forceExtra or nil))
-
-		if not InCombatLockdown() and self:GetAttribute("unit") ~= unit then self:SetAttribute("unit", unit) end
+	if module.useClassIcons and isPlayer then
+		local texCoords = module.texCoords[class].texCoords or module.texCoords[class]
+		self.unit_portrait:SetTexture(module.classIcons, "CLAMP", "CLAMP", "TRILINEAR")
+		module:Mirror(self.unit_portrait, shouldMirror, texCoords)
+	else
+		SetPortraitTexture(self.unit_portrait, unit, true)
+		module:Mirror(self.unit_portrait, shouldMirror)
 	end
+
+	self.guid = guid
+	self.state = isAvailable
+	self.isPlayer = isPlayer
+	self.unit = unit
+	self.unitClass = class
+	self.isDead = isDead
+
+	UpdateTextureColor(self, unit)
+	UpdateExtraTexture(self, self.forceExtra ~= "none" and self.forceExtra or nil)
+
+	if not InCombatLockdown() and self:GetAttribute("unit") ~= unit then self:SetAttribute("unit", unit) end
 end
 
 local function DemoUpdate(self)
@@ -383,12 +359,22 @@ local function UpdateCastIconStop(self)
 	SetPortraitTexture(self.unit_portrait, self.unit)
 end
 
-local function SimpleUpdate(portrait, event)
-	Update(portrait, event, portrait.unit)
+local function SimpleUpdate(self, event)
+	Update(self, event, self.unit)
 end
 
-local function ForceUpdate(portrait, event)
-	Update(portrait, "ForceUpdate", portrait.unit)
+local function ForceUpdate(self, event)
+	Update(self, "ForceUpdate", self.unit)
+end
+
+local function DeathCheck(self, event, unit)
+	if self.unit == unit then
+		local isDead = UnitIsDeadOrGhost(unit)
+		if self.isDead ~= isDead then
+			self.isDead = isDead
+			Update(self, event)
+		end
+	end
 end
 
 local eventHandlers = {
@@ -431,20 +417,14 @@ local eventHandlers = {
 	UPDATE_ACTIVE_BATTLEFIELD = SimpleUpdate,
 
 	-- death updates
-	UNIT_HEALTH = function(self)
-		self.isDead = UnitIsDeadOrGhost(self.unit)
-		print("UNIT_HEALTH", self.__owner.unit or self.unit, self.isDead)
-
-		UpdateTextureColor(self, self.__owner.unit or self.unit)
-	end,
+	UNIT_HEALTH = DeathCheck,
 }
 
 local function OnEvent(self, event, eventUnit, arg)
 	local unit = self.__owner.unit or self.unit
 	self.unit = unit
-	self.isDead = UnitIsDeadOrGhost(unit)
 
-	if eventHandlers[event] then eventHandlers[event](self, event, eventUnit, arg) end
+	if eventHandlers[event] then eventHandlers[event](self, event, eventUnit) end
 end
 
 local function RegisterEvent(element, event, unitEvent)
