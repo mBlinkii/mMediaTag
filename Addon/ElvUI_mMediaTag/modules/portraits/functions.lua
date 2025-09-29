@@ -100,6 +100,8 @@ local function GetCastIcon(unit)
 	return select(3, UnitCastingInfo(unit)) or select(3, UnitChannelInfo(unit))
 end
 
+local CachedBossIDs = {}
+
 local function SetupExtraTexture(element, low)
 	local extraOnTop = module.db.misc.extratop and not low
 	element.extra:SetDrawLayer(extraOnTop and "OVERLAY" or "ARTWORK", extraOnTop and 7 or 0)
@@ -124,14 +126,7 @@ local function UpdateExtraTexture(element, force)
 	local e_db = element.db
 
 	local color
-	local npcID = element.lastGUID and select(6, strsplit("-", element.lastGUID))
-	if element.type == "boss" and npcID and not DB.boss_ids[npcID] then DB.boss_ids[npcID] = true end
-
-	local isBoss = element.type == "boss" or (npcID and DB.boss_ids[npcID])
-	local c = isBoss and "boss" or UnitClassification(element.unit)
-	if c == "worldboss" then c = "boss" end
-
-	local classification = force and force or c
+	local classification = force and force or (element.type == "boss" and "boss" or ((CachedBossIDs[element.lastGUID] and "boss") or UnitClassification(element.unit)))
 
 	if element.db.unitcolor then
 		color = element.color
@@ -171,20 +166,16 @@ local function UpdateExtraTexture(element, force)
 	end
 end
 
-local function Update(self, event, eventUnit, arg)
-	if self.type == "player" then print(event, " - start") end
-	if not eventUnit or not UnitIsUnit(self.unit, eventUnit) then return end
-	--print(" - passed unit check")
+local function Update(self, event, eventUnit, arg2)
+	local unit = self.unit or self.__owner.unit
+	if not eventUnit or not UnitIsUnit(unit, eventUnit) then return end
 
-	local unit = (self.demo and not UnitExists(self.unit)) and "player" or self.unit
+	local element = self
+
 	local guid = UnitGUID(unit)
 	local isAvailable = UnitIsConnected(unit) and UnitIsVisible(unit)
-	local hasStateChanged = ((event == "ForceUpdate") or (self.guid ~= guid) or (self.state ~= isAvailable))
-	local isDead = event == "UNIT_HEALTH" and self.isDead or UnitIsDead(unit)
-
-	--print(" - isAvailable:", isAvailable, " | isDead:", isDead, " | hasStateChanged:", hasStateChanged)
-	if hasStateChanged or isDead then
-		--print(" - state changed")
+	local hasStateChanged = ((event == "ForceUpdate") or (element.guid ~= guid) or (element.state ~= isAvailable))
+	if hasStateChanged then
 		local texCoords
 		local class = select(2, UnitClass(unit))
 		local isPlayer = UnitIsPlayer(unit) or (E.Retail and UnitInPartyIsAI(unit))
@@ -192,23 +183,21 @@ local function Update(self, event, eventUnit, arg)
 
 		if module.useClassIcons and isPlayer then
 			texCoords = module.texCoords[class].texCoords or module.texCoords[class]
-			self.unit_portrait:SetTexture(module.classIcons, "CLAMP", "CLAMP", "TRILINEAR")
+			element.unit_portrait:SetTexture(module.classIcons, "CLAMP", "CLAMP", "TRILINEAR")
 		else
-			if self.type == "player" then print(self.unit, event, " - player portrait") end
-			SetPortraitTexture(self.unit_portrait, unit, true)
+			SetPortraitTexture(element.unit_portrait, unit, true)
 		end
 
-		module:Mirror(self.unit_portrait, shouldMirror, texCoords)
+		module:Mirror(element.unit_portrait, shouldMirror, texCoords)
 
-		self.guid = guid
-		self.state = isAvailable
-		self.isPlayer = isPlayer
-		self.unit = unit
-		self.unitClass = class
-		self.isDead = isDead
+		element.guid = guid
+		element.state = isAvailable
+		element.isPlayer = isPlayer
+		element.unit = unit
+		element.unitClass = class
 
-		UpdateTextureColor(self, unit)
-		UpdateExtraTexture(self, (self.forceExtra ~= "none" and self.forceExtra or nil))
+		UpdateTextureColor(element, unit)
+		UpdateExtraTexture(element, (element.forceExtra ~= "none" and element.forceExtra or nil))
 
 		if not InCombatLockdown() and self:GetAttribute("unit") ~= unit then self:SetAttribute("unit", unit) end
 	end
@@ -376,14 +365,6 @@ function module:UpdateSize(element, size, point)
 	end
 end
 
-local function DelayedUpdate(portrait, event)
-	if portrait._delayedUpdateTimer then portrait._delayedUpdateTimer:Cancel() end
-	portrait._delayedUpdateTimer = C_Timer.NewTimer(0.6, function()
-		Update(portrait, event, portrait.unit)
-		portrait._delayedUpdateTimer = nil
-	end)
-end
-
 local function UpdateCastIconStart(self)
 	self.isCasting = true
 
@@ -401,13 +382,16 @@ local function SimpleUpdate(portrait, event)
 	Update(portrait, event, portrait.unit)
 end
 
+local function ForceUpdate(portrait, event)
+	Update(portrait, "ForceUpdate", portrait.unit)
+end
+
 local eventHandlers = {
 	-- portrait updates
-	PORTRAITS_UPDATED = SimpleUpdate,
+	PORTRAITS_UPDATED = ForceUpdate,
 	UNIT_CONNECTION = Update,
 	UNIT_PORTRAIT_UPDATE = Update,
 	PARTY_MEMBER_ENABLE = Update,
-	ForceUpdate = Update,
 
 	-- cast icon updates
 	UNIT_SPELLCAST_CHANNEL_START = UpdateCastIconStart,
@@ -421,7 +405,7 @@ local eventHandlers = {
 	UNIT_SPELLCAST_EMPOWER_STOP = UpdateCastIconStop,
 
 	-- vehicle updates
-	UNIT_ENTERED_VEHICLE = DelayedUpdate,
+	UNIT_ENTERED_VEHICLE = SimpleUpdate,
 	UNIT_EXITING_VEHICLE = SimpleUpdate,
 	UNIT_EXITED_VEHICLE = SimpleUpdate,
 	VEHICLE_UPDATE = SimpleUpdate,
@@ -433,7 +417,6 @@ local eventHandlers = {
 
 	-- party
 	GROUP_ROSTER_UPDATE = SimpleUpdate,
-	UNIT_NAME_UPDATE = SimpleUpdate,
 
 	-- arena
 	ARENA_OPPONENT_UPDATE = Update,
@@ -547,8 +530,9 @@ function module:InitPortrait(element)
 			end
 			element.cast_eventsSet = false
 		end
+
+		Update(element, "ForceUpdate", element.unit)
 		element:SetScript("OnEvent", OnEvent)
-		OnEvent(element, "ForceUpdate", element.unit)
 	end
 end
 
