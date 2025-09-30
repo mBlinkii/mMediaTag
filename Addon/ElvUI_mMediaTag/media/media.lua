@@ -126,6 +126,13 @@ MEDIA.color = {
 		volume = createColor("FFFFFFFF"),
 		calendar = createColor("FFFFFFFF"),
 	},
+
+	tags = {
+		rare = createColor("FF9D00E6"),
+		rareelite = createColor("FFCC00FF"),
+		elite = createColor("FFFF00DD"),
+		worldboss = createColor("FFFF004C"),
+	}
 }
 
 MEDIA.myclass = E:ClassColor(E.myclass)
@@ -257,6 +264,13 @@ function mMT:UpdateMedia(arg)
 		MEDIA.color.dock.spec = CreateColorFromHexString(E.db.mMT.color.dock.spec)
 		MEDIA.color.dock.volume = CreateColorFromHexString(E.db.mMT.color.dock.volume)
 		MEDIA.color.dock.calendar = CreateColorFromHexString(E.db.mMT.color.dock.calendar)
+	end
+
+		if arg == "tags" or not arg then
+		MEDIA.color.tags.rare = CreateColorFromHexString(E.db.mMT.color.tags.classification.rare)
+		MEDIA.color.tags.rareelite = CreateColorFromHexString(E.db.mMT.color.tags.classification.rareelite)
+		MEDIA.color.tags.elite = CreateColorFromHexString(E.db.mMT.color.tags.classification.elite)
+		MEDIA.color.tags.worldboss = CreateColorFromHexString(E.db.mMT.color.tags.classification.worldboss)
 	end
 end
 
@@ -1268,6 +1282,17 @@ MEDIA.icons.calendar = {
 		["30"] = "Interface\\AddOns\\ElvUI_mMediaTag\\media\\dock\\calendar\\maui\\30.tga",
 		["31"] = "Interface\\AddOns\\ElvUI_mMediaTag\\media\\dock\\calendar\\maui\\31.tga",
 	},
+}
+
+MEDIA.icons.tags = {
+	brain = "Interface\\AddOns\\ElvUI_mMediaTag\\media\\icons\\tags\\brain.tga",
+	close = "Interface\\AddOns\\ElvUI_mMediaTag\\media\\icons\\tags\\close.tga",
+	done = "Interface\\AddOns\\ElvUI_mMediaTag\\media\\icons\\tags\\done.tga",
+	favorite = "Interface\\AddOns\\ElvUI_mMediaTag\\media\\icons\\tags\\favorite.tga",
+	guarantee = "Interface\\AddOns\\ElvUI_mMediaTag\\media\\icons\\tags\\guarantee.tga",
+	heart_with_arrow = "Interface\\AddOns\\ElvUI_mMediaTag\\media\\icons\\tags\\heart-with-arrow.tga",
+	heart_with_pulse = "Interface\\AddOns\\ElvUI_mMediaTag\\media\\icons\\tags\\heart-with-pulse.tga",
+	star = "Interface\\AddOns\\ElvUI_mMediaTag\\media\\icons\\tags\\star.tga",
 }
 
 MEDIA.minimap = {

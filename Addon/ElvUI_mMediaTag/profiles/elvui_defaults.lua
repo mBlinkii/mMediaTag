@@ -514,7 +514,14 @@ P.dock = {
 }
 
 -- tags
-P.tags = {}
+P.tags = {
+	classification = {
+		rare = "brain",
+		rareelite = "rareelite",
+		elite = "favorite",
+		worldboss = "boss",
+	},
+}
 
 -- color
 P.color = {
@@ -614,9 +621,11 @@ P.color = {
 	},
 
 	tags = {
-		rare = "FF9D00E6",
-		rareelite = "FFCC00FF",
-		elite = "FFFF00DD",
-		worldboss = "FFFF004C",
+		classification = {
+			rare = "FFB300FF",
+			rareelite = "FFA100FF",
+			elite = "FFFF00E6",
+			worldboss = "FFFF2E2E",
+		},
 	},
 }

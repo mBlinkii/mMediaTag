@@ -1,0 +1,8 @@
+brain = "Interface\\AddOns\\ElvUI_mMediaTag\\media\\icons\\tags\\brain.tga",
+close = "Interface\\AddOns\\ElvUI_mMediaTag\\media\\icons\\tags\\close.tga",
+done = "Interface\\AddOns\\ElvUI_mMediaTag\\media\\icons\\tags\\done.tga",
+favorite = "Interface\\AddOns\\ElvUI_mMediaTag\\media\\icons\\tags\\favorite.tga",
+guarantee = "Interface\\AddOns\\ElvUI_mMediaTag\\media\\icons\\tags\\guarantee.tga",
+heart-with-arrow = "Interface\\AddOns\\ElvUI_mMediaTag\\media\\icons\\tags\\heart-with-arrow.tga",
+heart-with-pulse = "Interface\\AddOns\\ElvUI_mMediaTag\\media\\icons\\tags\\heart-with-pulse.tga",
+star = "Interface\\AddOns\\ElvUI_mMediaTag\\media\\icons\\tags\\star.tga",

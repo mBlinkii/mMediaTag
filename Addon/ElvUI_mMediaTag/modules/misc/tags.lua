@@ -5,6 +5,7 @@ local UnitName = UnitName
 local IsInInstance = IsInInstance
 local db = {}
 local colors = MEDIA.color.tags
+local icons = MEDIA.icons.tags
 
 -- FUNCTIONS
 local function GetLastName(unit)
@@ -86,6 +87,10 @@ local function GetClassification(unit)
 	return (npcID and (mMT.IDs.boss[npcID] or DB.boss_ids[npcID])) and "worldboss" or c
 end
 
+local function GetColorString(color)
+	return color and ":" .. tostring(color.r * 255) .. ":" .. tostring(color.g * 255) .. ":" .. tostring(color.b * 255) .. "|t"
+end
+
 E:AddTag("mClass", "UNIT_CLASSIFICATION_CHANGED", function(unit)
 	local labels = {
 		rare = L["Rare"],
@@ -108,6 +113,12 @@ E:AddTag("mClass:short", "UNIT_CLASSIFICATION_CHANGED", function(unit)
 
 	local c = GetClassification(unit)
 	return (c and labels[c]) and format("%s%s|r", colors[c], labels[c]) or ""
+end)
+
+E:AddTag("mClass:icon", "UNIT_CLASSIFICATION_CHANGED", function(unit)
+	local c = GetClassification(unit)
+	local color = GetColorString(colors[c])
+	return (c and color) and "|T" .. icons[db.classification[c]] .. ":16:16:0:0:16:16:0:16:0:16" .. color or ""
 end)
 
 
