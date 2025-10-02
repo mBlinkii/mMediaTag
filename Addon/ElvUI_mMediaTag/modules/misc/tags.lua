@@ -7,6 +7,7 @@ local db = {}
 local colors = MEDIA.color.tags
 local icons = MEDIA.icons.tags
 
+-- NAME
 -- FUNCTIONS
 local function GetLastName(unit)
 	local inInstance = IsInInstance()
@@ -64,21 +65,18 @@ for textFormat, length in pairs({ veryshort = 5, short = 10, medium = 15, long =
 end
 
 -- CLASSIFICATION
-local classificationNames = {
-	full = {
-		rare = "Rare",
-		rareelite = "Rare Elite",
-		elite = "Elite",
-		worldboss = "Boss",
-	},
-	short = {
-		rare = "R",
-		rareelite = "R+",
-		elite = "+",
-		worldboss = "B",
-	},
+local shortClassificationsLabels = {
+	rare = L["R"],
+	rareelite = L["R+"],
+	elite = L["+"],
+	worldboss = L["B"],
 }
-
+local classificationsLabels = {
+	rare = L["Rare"],
+	rareelite = L["Rare Elite"],
+	elite = L["Elite"],
+	worldboss = L["Boss"],
+}
 -- FUNCTIONS
 local function GetClassification(unit)
 	local c = UnitClassification(unit)
@@ -91,36 +89,50 @@ local function GetColorString(color)
 	return color and ":" .. tostring(color.r * 255) .. ":" .. tostring(color.g * 255) .. ":" .. tostring(color.b * 255) .. "|t"
 end
 
-E:AddTag("mClass", "UNIT_CLASSIFICATION_CHANGED", function(unit)
-	local labels = {
-		rare = L["Rare"],
-		rareelite = L["Rare Elite"],
-		elite = L["Elite"],
-		worldboss = L["Boss"],
-	}
-
+E:AddTag("mClass", "UNIT_CLASSIFICATION_CHANGED", function(unit, _, args)
 	local c = GetClassification(unit)
-	return (c and labels[c]) and format("%s%s|r", colors[c], labels[c]) or ""
+	if not c then return end
+
+	if args then
+		local arg1, arg2, arg3 = strsplit(":", args)
+		if c == arg1 or c == arg2 or c == arg3 then return colors[c] and shortClassificationsLabels[c] and colors[c]:WrapTextInColorCode(shortClassificationsLabels[c]) end
+		return -- args set, but no match → show nothing
+	end
+
+	return colors[c] and shortClassificationsLabels[c] and colors[c]:WrapTextInColorCode(shortClassificationsLabels[c])
 end)
+E:AddTagInfo("mClass", mMT.NameShort .. " " .. L["Classification"], L["Returns the classification of the unit. You can specify up to three arguments to display only certain classifications. For example: [mClass{rare:elite}] will only show something if the unit is either rare or elite."])
 
-E:AddTag("mClass:short", "UNIT_CLASSIFICATION_CHANGED", function(unit)
-	local labels = {
-		rare = L["R"],
-		rareelite = L["R+"],
-		elite = L["+"],
-		worldboss = L["B"],
-	}
-
+E:AddTag("mClass:short", "UNIT_CLASSIFICATION_CHANGED", function(unit, _, args)
 	local c = GetClassification(unit)
-	return (c and labels[c]) and format("%s%s|r", colors[c], labels[c]) or ""
+	if not c then return end
+
+	if args then
+		local arg1, arg2, arg3 = strsplit(":", args)
+		if c == arg1 or c == arg2 or c == arg3 then return colors[c] and classificationsLabels[c] and colors[c]:WrapTextInColorCode(classificationsLabels[c]) end
+		return -- args set, but no match → show nothing
+	end
+
+	return colors[c] and classificationsLabels[c] and colors[c]:WrapTextInColorCode(classificationsLabels[c])
 end)
+E:AddTagInfo("mClass:short", mMT.NameShort .. " " .. L["Classification"], L["Short Version."])
 
-E:AddTag("mClass:icon", "UNIT_CLASSIFICATION_CHANGED", function(unit)
+
+E:AddTag("mClass:icon", "UNIT_CLASSIFICATION_CHANGED", function(unit, _, args)
 	local c = GetClassification(unit)
+	if not c then return end
+
 	local color = GetColorString(colors[c])
+
+	if args then
+		local arg1, arg2, arg3 = strsplit(":", args)
+		if c == arg1 or c == arg2 or c == arg3 then return (c and color) and "|T" .. icons[db.classification[c]] .. ":16:16:0:0:16:16:0:16:0:16" .. color or "" end
+		return -- args set, but no match → show nothing
+	end
+
 	return (c and color) and "|T" .. icons[db.classification[c]] .. ":16:16:0:0:16:16:0:16:0:16" .. color or ""
 end)
-
+E:AddTagInfo("mClass:icon", mMT.NameShort .. " " .. L["Classification"], L["Returns the classification icon of the unit. You can specify up to three arguments to display only certain classifications. For example: [mClass:icon{rare:elite}] will only show something if the unit is either rare or elite."])
 
 function module:Initialize()
 	db = E.db.mMT.tags
