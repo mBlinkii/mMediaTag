@@ -132,7 +132,12 @@ MEDIA.color = {
 		rareelite = createColor("FFCC00FF"),
 		elite = createColor("FFFF00DD"),
 		worldboss = createColor("FFFF004C"),
-	}
+		afk = createColor("FFFFFF00"),
+		dnd = createColor("FFFF0000"),
+		dc = createColor("FF808080"),
+		dead = createColor("FFFF3300"),
+		ghost = createColor("FF86F1FF"),
+	},
 }
 
 MEDIA.myclass = E:ClassColor(E.myclass)
@@ -266,11 +271,25 @@ function mMT:UpdateMedia(arg)
 		MEDIA.color.dock.calendar = CreateColorFromHexString(E.db.mMT.color.dock.calendar)
 	end
 
-		if arg == "tags" or not arg then
+	if arg == "tags" or not arg then
 		MEDIA.color.tags.rare = CreateColorFromHexString(E.db.mMT.color.tags.classification.rare)
+		MEDIA.color.tags.rare.hex = E.db.mMT.color.tags.classification.rare
 		MEDIA.color.tags.rareelite = CreateColorFromHexString(E.db.mMT.color.tags.classification.rareelite)
+		MEDIA.color.tags.rareelite.hex = E.db.mMT.color.tags.classification.rareelite
 		MEDIA.color.tags.elite = CreateColorFromHexString(E.db.mMT.color.tags.classification.elite)
+		MEDIA.color.tags.elite.hex = E.db.mMT.color.tags.classification.elite
 		MEDIA.color.tags.worldboss = CreateColorFromHexString(E.db.mMT.color.tags.classification.worldboss)
+		MEDIA.color.tags.worldboss.hex = E.db.mMT.color.tags.classification.worldboss
+		MEDIA.color.tags.afk = CreateColorFromHexString(E.db.mMT.color.tags.status.afk)
+		MEDIA.color.tags.afk.hex = E.db.mMT.color.tags.status.afk
+		MEDIA.color.tags.dnd = CreateColorFromHexString(E.db.mMT.color.tags.status.dnd)
+		MEDIA.color.tags.dnd.hex = E.db.mMT.color.tags.status.dnd
+		MEDIA.color.tags.dc = CreateColorFromHexString(E.db.mMT.color.tags.status.dc)
+		MEDIA.color.tags.dc.hex = E.db.mMT.color.tags.status.dc
+		MEDIA.color.tags.dead = CreateColorFromHexString(E.db.mMT.color.tags.status.dead)
+		MEDIA.color.tags.dead.hex = E.db.mMT.color.tags.status.dead
+		MEDIA.color.tags.ghost = CreateColorFromHexString(E.db.mMT.color.tags.status.ghost)
+		MEDIA.color.tags.ghost.hex = E.db.mMT.color.tags.status.ghost
 	end
 end
 

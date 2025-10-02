@@ -515,11 +515,19 @@ P.dock = {
 
 -- tags
 P.tags = {
+	healthThreshold = 25,
 	classification = {
 		rare = "brain",
 		rareelite = "rareelite",
 		elite = "favorite",
 		worldboss = "boss",
+	},
+	status = {
+		afk = "brain",
+		dnd = "brain",
+		dc = "brain",
+		dead = "brain",
+		ghost = "brain",
 	},
 }
 
@@ -626,6 +634,13 @@ P.color = {
 			rareelite = "FFA100FF",
 			elite = "FFFF00E6",
 			worldboss = "FFFF2E2E",
+		},
+		status = {
+			afk = "FFFFFF00",
+			dnd = "FFFF0000",
+			dc = "FF808080",
+			dead = "FFFF3300",
+			ghost = "FF86F1FF",
 		},
 	},
 }

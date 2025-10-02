@@ -26,7 +26,7 @@ local function GetStatusIconOrShortName(unit, length)
 	return name and E:ShortenString(name, length)
 end
 
--- NAME
+-- TAGS
 E:AddTag("mName:last", "UNIT_NAME_UPDATE INSTANCE_ENCOUNTER_ENGAGE_UNIT", function(unit)
 	return GetLastName(unit)
 end)
@@ -101,7 +101,11 @@ E:AddTag("mClass", "UNIT_CLASSIFICATION_CHANGED", function(unit, _, args)
 
 	return colors[c] and shortClassificationsLabels[c] and colors[c]:WrapTextInColorCode(shortClassificationsLabels[c])
 end)
-E:AddTagInfo("mClass", mMT.NameShort .. " " .. L["Classification"], L["Returns the classification of the unit. You can specify up to three arguments to display only certain classifications. For example: [mClass{rare:elite}] will only show something if the unit is either rare or elite."])
+E:AddTagInfo(
+	"mClass",
+	mMT.NameShort .. " " .. L["Classification"],
+	L["Returns the classification of the unit. You can specify up to three arguments to display only certain classifications.\nFor example: [mClass{rare:elite}] will only show something if the unit is either rare or elite."]
+)
 
 E:AddTag("mClass:short", "UNIT_CLASSIFICATION_CHANGED", function(unit, _, args)
 	local c = GetClassification(unit)
@@ -117,7 +121,6 @@ E:AddTag("mClass:short", "UNIT_CLASSIFICATION_CHANGED", function(unit, _, args)
 end)
 E:AddTagInfo("mClass:short", mMT.NameShort .. " " .. L["Classification"], L["Short Version."])
 
-
 E:AddTag("mClass:icon", "UNIT_CLASSIFICATION_CHANGED", function(unit, _, args)
 	local c = GetClassification(unit)
 	if not c then return end
@@ -132,7 +135,175 @@ E:AddTag("mClass:icon", "UNIT_CLASSIFICATION_CHANGED", function(unit, _, args)
 
 	return (c and color) and "|T" .. icons[db.classification[c]] .. ":16:16:0:0:16:16:0:16:0:16" .. color or ""
 end)
-E:AddTagInfo("mClass:icon", mMT.NameShort .. " " .. L["Classification"], L["Returns the classification icon of the unit. You can specify up to three arguments to display only certain classifications. For example: [mClass:icon{rare:elite}] will only show something if the unit is either rare or elite."])
+E:AddTagInfo(
+	"mClass:icon",
+	mMT.NameShort .. " " .. L["Classification"],
+	L["Returns the classification icon of the unit. You can specify up to three arguments to display only certain classifications.\nFor example: [mClass:icon{rare:elite}] will only show something if the unit is either rare or elite."]
+)
+
+-- STATUS
+-- FUNCTION
+
+local statusDefinitions = {
+	AFK = { check = UnitIsAFK, color = colors.afk, label = L["AFK"], iconKey = "afk" },
+	DND = { check = UnitIsDND, color = colors.dnd, label = L["DND"], iconKey = "dnd" },
+	Offline = {
+		check = function(u)
+			return not UnitIsConnected(u)
+		end,
+		color = colors.dc,
+		label = L["Offline"],
+		iconKey = "dc",
+	},
+	Dead = { check = UnitIsDead, color = colors.dead, label = L["Dead"], iconKey = "dead" },
+	Ghost = { check = UnitIsGhost, color = colors.ghost, label = L["Ghost"], iconKey = "ghost" },
+}
+
+-- TAGS
+E:AddTag("mStatus", "UNIT_HEALTH UNIT_CONNECTION PLAYER_FLAGS_CHANGED", function(unit)
+	for _, def in pairs(statusDefinitions) do
+		if def.check(unit) then return def.color:WrapTextInColorCode(def.label) end
+	end
+end)
+E:AddTagInfo("mStatus", mMT.NameShort .. " " .. L["Status"], L["Returns the status of the unit (AFK, DND, Offline, Dead, Ghost)."])
+
+E:AddTag("mStatus:icon", "UNIT_HEALTH UNIT_CONNECTION PLAYER_FLAGS_CHANGED", function(unit)
+	for _, def in pairs(statusDefinitions) do
+		if def.check(unit) then
+			local icon = icons[db.status[def.iconKey]]
+			local color = GetColorString(def.color)
+			return "|T" .. icon .. ":16:16:0:0:16:16:0:16:0:16" .. color
+		end
+	end
+end)
+E:AddTagInfo("mStatus:icon", mMT.NameShort .. " " .. L["Status"], L["Returns the status icon of the unit (AFK, DND, Offline, Dead, Ghost)."])
+
+-- COLOR
+E:AddTag("mColor", "UNIT_NAME_UPDATE UNIT_FACTION UNIT_CLASSIFICATION_CHANGED", function(unit, _, args)
+	local c = GetClassification(unit)
+	local isPlayer = UnitIsPlayer(unit)
+
+	if args and c then
+		local arg1, arg2, arg3 = strsplit(":", args)
+		if c == arg1 or c == arg2 or c == arg3 then
+			return "|c" .. colors[c].hex
+		else
+			return _TAGS.classcolor(unit)
+		end
+	end
+
+	return isPlayer and _TAGS.classcolor(unit) or colors[c] and "|c" .. colors[c].hex or _TAGS.classcolor(unit)
+end)
+E:AddTagInfo(
+	"mColor",
+	mMT.NameShort .. " " .. L["Color"],
+	L["Returns the color of the unit. Players are colored by class, NPCs by classification. You can specify up to three arguments to display only certain classifications.\nFor example: [mColor{rare:elite}] will only show something if the unit is either rare or elite."]
+)
+
+E:AddTag("mColor:target", "UNIT_TARGET", function(unit, _, args)
+	local target = unit .. "target"
+	local c = UnitClassification(target)
+	local isPlayer = UnitIsPlayer(target)
+
+	if args and c then
+		local arg1, arg2, arg3 = strsplit(":", args)
+		if c == arg1 or c == arg2 or c == arg3 then
+			return "|c" .. colors[c].hex
+		else
+			return _TAGS.classcolor(target)
+		end
+	end
+	return isPlayer and _TAGS.classcolor(target) or colors[c] and "|c" .. colors[c].hex or _TAGS.classcolor(target)
+end)
+E:AddTagInfo("mColor:target", mMT.NameShort .. " " .. L["Color"], L["Same as mColor, but only for the units target."])
+
+-- Health
+-- FUNCTION
+local function GetSmartHealth(unit, short)
+	local current = UnitHealth(unit)
+	local max = UnitHealthMax(unit)
+	local percent = current / max * 100
+
+	if current > 0 and current < max then
+		return (percent < db.healthThreshold1) and format("%.1f", percent) or (percent < db.healthThreshold2) and format("%.2f", percent) or format("%.0f", percent)
+	else
+		return E:GetFormattedText("CURRENT", current, max, nil, short)
+	end
+end
+
+local function GetAbsorbHealth(unit, short)
+	local current = UnitHealth(unit)
+	local max = UnitHealthMax(unit)
+	local absorb = UnitGetTotalAbsorbs(unit) or 0
+	local total = current + absorb
+	local percent = total / max * 100
+
+	if current > 0 and current < max then
+		return (percent < db.healthThreshold1) and format("%.1f", percent) or (percent < db.healthThreshold2) and format("%.2f", percent) or format("%.0f", percent)
+	else
+		return E:GetFormattedText("CURRENT", total, max, nil, short)
+	end
+end
+
+-- TAGS
+E:AddTag("mHealth", "UNIT_HEALTH UNIT_MAXHEALTH UNIT_CONNECTION PLAYER_FLAGS_CHANGED", function(unit)
+	for _, def in pairs(statusDefinitions) do
+		if def.check(unit) then return def.color:WrapTextInColorCode(def.label) end
+	end
+
+	return GetSmartHealth(unit, false)
+end)
+E:AddTagInfo(
+	"mHealth",
+	mMT.NameShort .. " " .. L["Health"],
+	L["Returns the current health of the unit (changes between max health and percent in combat) or it will return the status (AFK, DND, Offline, Dead, Ghost)."]
+)
+
+E:AddTag("mHealth:short", "UNIT_HEALTH UNIT_MAXHEALTH UNIT_CONNECTION PLAYER_FLAGS_CHANGED", function(unit)
+	for _, def in pairs(statusDefinitions) do
+		if def.check(unit) then return def.color:WrapTextInColorCode(def.label) end
+	end
+
+	return GetSmartHealth(unit, true)
+end)
+E:AddTagInfo("mHealth:short", mMT.NameShort .. " " .. L["Health"], L["Short Version"])
+
+E:AddTag("mHealth:absorbs", "UNIT_HEALTH UNIT_MAXHEALTH UNIT_CONNECTION PLAYER_FLAGS_CHANGED UNIT_ABSORB_AMOUNT_CHANGED", function(unit)
+	for _, def in pairs(statusDefinitions) do
+		if def.check(unit) then return def.color:WrapTextInColorCode(def.label) end
+	end
+
+	return GetAbsorbHealth(unit, false)
+end, not E.Retail)
+E:AddTagInfo(
+	"mHealth:absorbs",
+	mMT.NameShort .. " " .. L["Health"],
+	L["Returns the current health of the unit (changes between max health and percent in combat) including absorbs or it will return the status (AFK, DND, Offline, Dead, Ghost)."]
+)
+
+E:AddTag("mHealth:short:absorbs", "UNIT_HEALTH UNIT_MAXHEALTH UNIT_CONNECTION PLAYER_FLAGS_CHANGED PLAYER_UPDATE_RESTING UNIT_ABSORB_AMOUNT_CHANGED", function(unit)
+	for _, def in pairs(statusDefinitions) do
+		if def.check(unit) then return def.color:WrapTextInColorCode(def.label) end
+	end
+
+	return GetAbsorbHealth(unit, true)
+end, not E.Retail)
+E:AddTagInfo("mHealth:short:absorbs", mMT.NameShort .. " " .. L["Health"], L["Short Version"])
+
+E:AddTag("mHealth:noStatus", "UNIT_HEALTH UNIT_MAXHEALTH", function(unit)
+	return GetSmartHealth(unit, false)
+end)
+E:AddTagInfo("mHealth:noStatus", mMT.NameShort .. " " .. L["Health"], L["Returns the current health of the unit (changes between max health and percent in combat). Does not return status."])
+
+E:AddTag("mHealth:short:noStatus", "UNIT_HEALTH UNIT_MAXHEALTH", function(unit)
+	return GetSmartHealth(unit, true)
+end)
+E:AddTagInfo("mHealth:short:noStatus", mMT.NameShort .. " " .. L["Health"], L["Short Version"])
+
+E:AddTag("mHealth:ndp", "UNIT_HEALTH UNIT_MAXHEALTH", function(unit)
+	return GetSmartHealth(unit, false)
+end)
+E:AddTagInfo("mHealth:noStatus", mMT.NameShort .. " " .. L["Health"], L["Returns the current health of the unit (changes between max health and percent in combat). Does not return status."])
 
 function module:Initialize()
 	db = E.db.mMT.tags
