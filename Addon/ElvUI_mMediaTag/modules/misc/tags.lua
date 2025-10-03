@@ -612,9 +612,9 @@ local function GetPartyTargetsIcons(unit, icon)
 		if not color then return end
 
 		local colorString = GetColorString(color)
-		local iconString = "|T" .. icon .. ":16:16:0:0:16:16:0:16:0:16" .. color
+		local iconString = "|T" .. icon .. ":16:16:0:0:16:16:0:16:0:16" .. colorString
 
-		if icon then result = icon .. result end
+		if iconString then result = iconString .. result end
 	end
 
 	for i = 1, GetNumGroupMembers() - 1 do
@@ -644,40 +644,33 @@ end)
 E:AddTagInfo("mRaidTargetMarkers", mMT.NameShort .. " " .. L["Miscellaneous"], L["Returns the raid target marker icon of the unit."])
 
 -- CLASS ICONS
--- FUNCTIONS
-local classIconNames = {}
-
-local function BuildClassIconDB()
-	classIconNames = {}
-	local t = {}
+do
+	local classIconNames = {}
 	for k, v in pairs(MEDIA.icons.class.icons.mmt) do
-		if type(v) == "table" then t[k] = v.name end
+		if type(v) == "table" then classIconNames[k] = v.name end
 	end
 	for k, v in pairs(MEDIA.icons.class.icons.custom) do
-		if type(v) == "table" then t[k] = v.name end
+		if type(v) == "table" and k ~= "BLIZZARD" then classIconNames[k] = v.name end
 	end
-	classIconNames = t
-end
 
-for style, name in next, classIconNames do
-	local tag = format("%s:%s", "mClassIcon", style)
+	for style, _ in next, classIconNames do
+		local tag = format("%s:%s", "mClassIcon", style)
+		E:AddTag(tag, "UNIT_NAME_UPDATE", function(unit, _, args)
+			if not (UnitIsPlayer(unit) or (E.Retail and UnitInPartyIsAI(unit))) then return end
 
-	E:AddTag(tag, "UNIT_NAME_UPDATE", function(unit, _, args)
-		if not UnitIsPlayer(unit) then return end
+			local _, class = UnitClass(unit)
+			if not class then return end
 
-		local _, class = UnitClass(unit)
-		if not class then return end
+			local size = strsplit(":", args or "")
+			size = tonumber(size)
+			size = (size and (size >= 16 and size <= 128)) and size or 64
 
-		local size = strsplit(":", args or "")
-		size = tonumber(size)
-		size = (size and (size >= 16 and size <= 128)) and size or 64
-
-		local classIconStrings = MEDIA.icons.class.icons.custom[class] and MEDIA.icons.class.icons.custom[class].texString or MEDIA.icons.class.icons.data[class].texString
-		local textureFile = MEDIA.icons.class.icons.custom[class] and MEDIA.icons.class.icons.custom[class].texture or MEDIA.icons.class.icons.data[class].texture
-		if textureFile and classIconStrings then return format("|T%s:%s:%s:0:0:1024:1024:%s|t", textureFile, size, size, classIconStrings) end
-	end)
-
-	E:AddTagInfo(tag, mMT.NameShort .. " " .. L["Icons"], L["Returns the class icon of the unit. You can specify a size between 16 and 128 (default is 64). Example: mClassIcon:STYLE{32}"])
+			local classIconStrings = MEDIA.icons.class.icons.custom[style] and MEDIA.icons.class.icons.custom[style].texString[class]  or MEDIA.icons.class.data[class].texString
+			local textureFile = MEDIA.icons.class.icons.custom[style] and MEDIA.icons.class.icons.custom[style].texture or MEDIA.icons.class.icons.mmt[style].texture
+			if textureFile and classIconStrings then return format("|T%s:%s:%s:0:0:1024:1024:%s|t", textureFile, size, size, classIconStrings) end
+		end)
+		E:AddTagInfo(tag, mMT.NameShort .. " " .. L["Icons"], L["Returns the class icon of the unit. You can specify a size between 16 and 128 (default is 64). Example: mClassIcon:style{32}"] )
+	end
 end
 
 function module:Initialize()
@@ -695,7 +688,6 @@ function module:Initialize()
 		DPS = db.misc.dps,
 	}
 
-	BuildClassIconDB()
 	if not module.initialized then
 		module:RegisterEvent("PLAYER_ENTERING_WORLD")
 		module:RegisterEvent("UPDATE_INSTANCE_INFO")
@@ -717,8 +709,6 @@ function module:PLAYER_ENTERING_WORLD(_, text)
 		HEALER = db.misc.healer,
 		DPS = db.misc.dps,
 	}
-
-	BuildClassIconDB()
 end
 
 function module:UPDATE_INSTANCE_INFO(_, text)

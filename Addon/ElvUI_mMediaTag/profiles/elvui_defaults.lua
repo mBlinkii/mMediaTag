@@ -536,7 +536,7 @@ P.tags = {
 		dps = "brain",
 		pvp = "favorite",
 		quest = "quest",
-		targeting = "targeting",
+		targeting = "brain",
 	},
 	raidtargetmarkers = {
 			[1] = "TM01",
