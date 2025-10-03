@@ -515,7 +515,8 @@ P.dock = {
 
 -- tags
 P.tags = {
-	healthThreshold = 25,
+	healthThreshold1 = 25,
+	healthThreshold2 = 10,
 	classification = {
 		rare = "brain",
 		rareelite = "rareelite",
@@ -529,6 +530,24 @@ P.tags = {
 		dead = "brain",
 		ghost = "brain",
 	},
+	misc = {
+		tank = "brain",
+		healer = "brain",
+		dps = "brain",
+		pvp = "favorite",
+		quest = "quest",
+		targeting = "targeting",
+	},
+	raidtargetmarkers = {
+			[1] = "TM01",
+			[2] = "TM02",
+			[3] = "TM03",
+			[4] = "TM04",
+			[5] = "TM05",
+			[6] = "TM06",
+			[7] = "TM07",
+			[8] = "TM08",
+		},
 }
 
 -- color
@@ -641,6 +660,13 @@ P.color = {
 			dc = "FF808080",
 			dead = "FFFF3300",
 			ghost = "FF86F1FF",
+		},
+		misc = {
+			tank = "FF6CF5FF",
+			healer = "FFB5FF54",
+			dps = "FFFDBB6E",
+			quest = "FFFFEE00",
+			resting = "FF38FF92",
 		},
 	},
 }

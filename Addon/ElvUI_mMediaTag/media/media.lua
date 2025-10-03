@@ -137,6 +137,11 @@ MEDIA.color = {
 		dc = createColor("FF808080"),
 		dead = createColor("FFFF3300"),
 		ghost = createColor("FF86F1FF"),
+		tank = createColor("FF6CF5FF"),
+		healer = createColor("FFB5FF54"),
+		dps = createColor("FFFDBB6E"),
+		quest = createColor("FFFFEE00"),
+		resting = createColor("FF38FF92"),
 	},
 }
 
@@ -290,6 +295,16 @@ function mMT:UpdateMedia(arg)
 		MEDIA.color.tags.dead.hex = E.db.mMT.color.tags.status.dead
 		MEDIA.color.tags.ghost = CreateColorFromHexString(E.db.mMT.color.tags.status.ghost)
 		MEDIA.color.tags.ghost.hex = E.db.mMT.color.tags.status.ghost
+		MEDIA.color.tags.tank = CreateColorFromHexString(E.db.mMT.color.tags.misc.tank)
+		MEDIA.color.tags.tank.hex = E.db.mMT.color.tags.misc.tank
+		MEDIA.color.tags.healer = CreateColorFromHexString(E.db.mMT.color.tags.misc.healer)
+		MEDIA.color.tags.healer.hex = E.db.mMT.color.tags.misc.healer
+		MEDIA.color.tags.dps = CreateColorFromHexString(E.db.mMT.color.tags.misc.dps)
+		MEDIA.color.tags.dps.hex = E.db.mMT.color.tags.misc.dps
+		MEDIA.color.tags.quest = CreateColorFromHexString(E.db.mMT.color.tags.misc.quest)
+		MEDIA.color.tags.quest.hex = E.db.mMT.color.tags.misc.quest
+		MEDIA.color.tags.resting = CreateColorFromHexString(E.db.mMT.color.tags.misc.resting)
+		MEDIA.color.tags.resting.hex = E.db.mMT.color.tags.misc.resting
 	end
 end
 

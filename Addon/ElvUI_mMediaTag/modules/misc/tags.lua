@@ -6,41 +6,33 @@ local IsInInstance = IsInInstance
 local db = {}
 local colors = MEDIA.color.tags
 local icons = MEDIA.icons.tags
+local UnitFaction = {}
 
 -- NAME
 -- FUNCTIONS
-local function GetLastName(unit)
-	local inInstance = IsInInstance()
-	return inInstance and _TAGS["name:last"](unit) or UnitName(unit)
-end
-
-local function GetStatusTextOrName(unit, length)
-	if UnitIsAFK(unit) or UnitIsDND(unit) or not UnitIsConnected(unit) or UnitIsDead(unit) or UnitIsGhost(unit) then return _TAGS.mStatus(unit) end
-	local name = UnitName(unit)
-	return name and E:ShortenString(name, length)
-end
-
-local function GetStatusIconOrShortName(unit, length)
-	if UnitIsAFK(unit) or UnitIsDND(unit) or not UnitIsConnected(unit) or UnitIsDead(unit) or UnitIsGhost(unit) then return _TAGS["mStatus:icon"](unit) end
+local function GetName(unit, length)
 	local name = UnitName(unit)
 	return name and E:ShortenString(name, length)
 end
 
 -- TAGS
 E:AddTag("mName:last", "UNIT_NAME_UPDATE INSTANCE_ENCOUNTER_ENGAGE_UNIT", function(unit)
-	return GetLastName(unit)
+	local inInstance = IsInInstance()
+	return inInstance and _TAGS["name:last"](unit) or UnitName(unit)
 end)
 E:AddTagInfo("mName:last", mMT.NameShort .. " " .. L["Name"], L["Returns the name of the unit. If in an instance, it will return the last word of the name."])
 
 E:AddTag("mName:status", "UNIT_NAME_UPDATE INSTANCE_ENCOUNTER_ENGAGE_UNIT UNIT_CONNECTION PLAYER_FLAGS_CHANGED UNIT_HEALTH", function(unit)
-	if UnitIsAFK(unit) or UnitIsDND(unit) or not UnitIsConnected(unit) or UnitIsDead(unit) or UnitIsGhost(unit) then return _TAGS.mStatus(unit) end
+	local status = _TAGS.mStatus(unit)
+	if status then return status end
 	local name = UnitName(unit)
 	return name and name
 end)
 E:AddTagInfo("mName:status", mMT.NameShort .. " " .. L["Name"], L["Returns the status of the unit (AFK, DND, Offline, Dead, Ghost) or the name of the unit."])
 
 E:AddTag("mName:statusicon", "UNIT_NAME_UPDATE INSTANCE_ENCOUNTER_ENGAGE_UNIT UNIT_CONNECTION PLAYER_FLAGS_CHANGED UNIT_HEALTH", function(unit)
-	if UnitIsAFK(unit) or UnitIsDND(unit) or not UnitIsConnected(unit) or UnitIsDead(unit) or UnitIsGhost(unit) then return _TAGS.mStatus(unit) end
+	local statusIcon = _TAGS["mStatus:icon"](unit)
+	if statusIcon then return statusIcon end
 	local name = UnitName(unit)
 	return name and name
 end)
@@ -48,18 +40,23 @@ E:AddTagInfo("mName:statusicon", mMT.NameShort .. " " .. L["Name"], L["Returns t
 
 for textFormat, length in pairs({ veryshort = 5, short = 10, medium = 15, long = 20 }) do
 	E:AddTag("mName:last:" .. textFormat, "UNIT_NAME_UPDATE INSTANCE_ENCOUNTER_ENGAGE_UNIT", function(unit)
-		local name = GetLastName(unit)
+		local inInstance = IsInInstance()
+		local name = inInstance and _TAGS["name:last"](unit) or UnitName(unit)
 		return name and E:ShortenString(name, length)
 	end)
 	E:AddTagInfo("mName:last:" .. textFormat, mMT.NameShort .. " " .. L["Name"], L["Short Version."])
 
 	E:AddTag("mName:status:" .. textFormat, "UNIT_NAME_UPDATE INSTANCE_ENCOUNTER_ENGAGE_UNIT UNIT_CONNECTION PLAYER_FLAGS_CHANGED UNIT_HEALTH", function(unit)
-		return GetStatusTextOrName(unit, length)
+		local status = _TAGS.mStatus(unit)
+		if status then return status end
+		return GetName(unit, length)
 	end)
 	E:AddTagInfo("mName:status:" .. textFormat, mMT.NameShort .. " " .. L["Name"], L["Short Version."])
 
 	E:AddTag("mName:statusicon:" .. textFormat, "UNIT_NAME_UPDATE INSTANCE_ENCOUNTER_ENGAGE_UNIT UNIT_CONNECTION PLAYER_FLAGS_CHANGED UNIT_HEALTH", function(unit)
-		return GetStatusIconOrShortName(unit, length)
+		local statusIcon = _TAGS["mStatus:icon"](unit)
+		if statusIcon then return statusIcon end
+		return GetName(unit, length)
 	end)
 	E:AddTagInfo("mName:statusicon:" .. textFormat, mMT.NameShort .. " " .. L["Name"], L["Short Version."])
 end
@@ -245,6 +242,23 @@ local function GetAbsorbHealth(unit, short)
 	end
 end
 
+local function GetCurrentPercentHealth(unit, short)
+	local current = UnitHealth(unit)
+	local max = UnitHealthMax(unit)
+	local deficit = max - current
+	local percent = current / max * 100
+
+	if deficit > 0 and current > 0 then
+		return format(
+			"%s | %s",
+			E:GetFormattedText("CURRENT", current, max, nil, short),
+			(percent < db.healthThreshold1) and format("%.1f", percent) or (percent < db.healthThreshold2) and format("%.2f", percent) or format("%.0f", percent)
+		)
+	else
+		return E:GetFormattedText("CURRENT", current, max, nil, short)
+	end
+end
+
 -- TAGS
 E:AddTag("mHealth", "UNIT_HEALTH UNIT_MAXHEALTH UNIT_CONNECTION PLAYER_FLAGS_CHANGED", function(unit)
 	for _, def in pairs(statusDefinitions) do
@@ -266,7 +280,7 @@ E:AddTag("mHealth:short", "UNIT_HEALTH UNIT_MAXHEALTH UNIT_CONNECTION PLAYER_FLA
 
 	return GetSmartHealth(unit, true)
 end)
-E:AddTagInfo("mHealth:short", mMT.NameShort .. " " .. L["Health"], L["Short Version"])
+E:AddTagInfo("mHealth:short", mMT.NameShort .. " " .. L["Health"], L["Short Version."])
 
 E:AddTag("mHealth:absorbs", "UNIT_HEALTH UNIT_MAXHEALTH UNIT_CONNECTION PLAYER_FLAGS_CHANGED UNIT_ABSORB_AMOUNT_CHANGED", function(unit)
 	for _, def in pairs(statusDefinitions) do
@@ -288,7 +302,7 @@ E:AddTag("mHealth:short:absorbs", "UNIT_HEALTH UNIT_MAXHEALTH UNIT_CONNECTION PL
 
 	return GetAbsorbHealth(unit, true)
 end, not E.Retail)
-E:AddTagInfo("mHealth:short:absorbs", mMT.NameShort .. " " .. L["Health"], L["Short Version"])
+E:AddTagInfo("mHealth:short:absorbs", mMT.NameShort .. " " .. L["Health"], L["Short Version."])
 
 E:AddTag("mHealth:noStatus", "UNIT_HEALTH UNIT_MAXHEALTH", function(unit)
 	return GetSmartHealth(unit, false)
@@ -298,18 +312,415 @@ E:AddTagInfo("mHealth:noStatus", mMT.NameShort .. " " .. L["Health"], L["Returns
 E:AddTag("mHealth:short:noStatus", "UNIT_HEALTH UNIT_MAXHEALTH", function(unit)
 	return GetSmartHealth(unit, true)
 end)
-E:AddTagInfo("mHealth:short:noStatus", mMT.NameShort .. " " .. L["Health"], L["Short Version"])
+E:AddTagInfo("mHealth:short:noStatus", mMT.NameShort .. " " .. L["Health"], L["Short Version."])
 
-E:AddTag("mHealth:ndp", "UNIT_HEALTH UNIT_MAXHEALTH", function(unit)
-	return GetSmartHealth(unit, false)
+E:AddTag("mHealth:absorbs:noStatus", "UNIT_HEALTH UNIT_MAXHEALTH UNIT_ABSORB_AMOUNT_CHANGED", function(unit)
+	for _, def in pairs(statusDefinitions) do
+		if def.check(unit) then return def.color:WrapTextInColorCode(def.label) end
+	end
+
+	return GetAbsorbHealth(unit, true)
+end, not E.Retail)
+E:AddTagInfo("mHealth:absorbs:noStatus", mMT.NameShort .. " " .. L["Health"], L["Short Version"])
+
+E:AddTag("mHealth:short:absorbs:noStatus", "UNIT_HEALTH UNIT_MAXHEALTH UNIT_ABSORB_AMOUNT_CHANGED", function(unit)
+	return GetAbsorbHealth(unit, false)
+end, not E.Retail)
+E:AddTagInfo("mHealth:short:absorbs:noStatus", mMT.NameShort .. " " .. L["Health"], L["Short Version."])
+
+E:AddTag("mHealth:current-percent", "UNIT_HEALTH UNIT_MAXHEALTH UNIT_CONNECTION PLAYER_FLAGS_CHANGED PLAYER_UPDATE_RESTING UNIT_ABSORB_AMOUNT_CHANGED", function(unit)
+	for _, def in pairs(statusDefinitions) do
+		if def.check(unit) then return def.color:WrapTextInColorCode(def.label) end
+	end
+
+	return GetCurrentPercentHealth(unit, false)
 end)
-E:AddTagInfo("mHealth:noStatus", mMT.NameShort .. " " .. L["Health"], L["Returns the current health of the unit (changes between max health and percent in combat). Does not return status."])
+E:AddTagInfo("mHealth:current-percent", mMT.NameShort .. " " .. L["Health"], L["Returns the current health and percent of the unit or it will return the status (AFK, DND, Offline, Dead, Ghost)."])
+
+E:AddTag("mHealth:current-percent:short", "UNIT_HEALTH UNIT_MAXHEALTH UNIT_CONNECTION PLAYER_FLAGS_CHANGED PLAYER_UPDATE_RESTING UNIT_ABSORB_AMOUNT_CHANGED", function(unit)
+	for _, def in pairs(statusDefinitions) do
+		if def.check(unit) then return def.color:WrapTextInColorCode(def.label) end
+	end
+
+	return GetCurrentPercentHealth(unit, true)
+end)
+E:AddTagInfo("mHealth:current-percent:short", mMT.NameShort .. " " .. L["Health"], L["Short Version."])
+
+E:AddTag("mHealth:current-percent:noStatus", "UNIT_HEALTH UNIT_MAXHEALTH", function(unit)
+	return GetCurrentPercentHealth(unit, false)
+end)
+E:AddTagInfo(
+	"mHealth:current-percent:noStatus",
+	mMT.NameShort .. " " .. L["Health"],
+	L["Returns the current health and percent of the unit or it will return the status (AFK, DND, Offline, Dead, Ghost)."]
+)
+
+E:AddTag("mHealth:current-percent:short:noStatus", "UNIT_HEALTH UNIT_MAXHEALTH", function(unit)
+	return GetCurrentPercentHealth(unit, true)
+end)
+E:AddTagInfo("mHealth:current-percent:short:noStatus", mMT.NameShort .. " " .. L["Health"], L["Short Version."])
+
+-- DEATH
+-- FUNCTION
+local UnitDeathCount, instanceID, instanceType = {}, "", "none"
+
+local function TagDeathCount()
+	local instanceInfo = { GetInstanceInfo() }
+	local iID, iType = tostring(instanceInfo[8]), tostring(instanceInfo[2])
+
+	if instanceType == "none" and iType ~= "none" then
+		instanceType = iType
+	elseif instanceType ~= "none" and iType == "none" and UnitFaction then
+		UnitFaction = {}
+	end
+
+	if iID ~= instanceID then
+		instanceID = iID
+		UnitDeathCount = {}
+	end
+end
+
+local function UpdateDeathCount(unit)
+	if not UnitIsPlayer(unit) then return end
+
+	local guid = UnitGUID(unit)
+	if not guid then return end
+
+	local isDead = UnitIsDead(unit) or UnitIsGhost(unit)
+	local data = UnitDeathCount[guid]
+
+	if isDead then
+		if not data then
+			UnitDeathCount[guid] = { true, 1 }
+		elseif not data[1] then
+			data[1], data[2] = true, data[2] + 1
+		end
+	else
+		if data then data[1] = false end
+	end
+
+	return data and data[2] >= 1 and data[2] or nil
+end
+
+E:AddTag("mDeathCount", "UNIT_HEALTH", function(unit)
+	if not UnitIsPlayer(unit) then return end
+	return UpdateDeathCount(unit)
+end)
+E:AddTagInfo("mDeathCount", mMT.NameShort .. " " .. L["Miscellaneous"], L["Returns the number of times the player has died since you entered the instance. Resets when you leave the instance."])
+
+E:AddTag("mDeathCount:onlyDeath", "UNIT_HEALTH", function(unit)
+	if not UnitIsPlayer(unit) then return end
+	local count = UpdateDeathCount(unit)
+	if UnitIsDead(unit) or UnitIsGhost(unit) then return count end
+end)
+E:AddTagInfo("mDeathCount:onlyDeath", mMT.NameShort .. " " .. L["Miscellaneous"], L["Same as mDeathCount, but only shows the count while the player is dead."])
+
+-- ROlE ICON
+local roleColors = {
+	TANK = colors.tank,
+	HEALER = colors.healer,
+	DPS = colors.dps,
+}
+
+local roleIcons = {
+	TANK = icons.tank,
+	HEALER = icons.healer,
+	DPS = icons.dps,
+}
+
+local roleIconsBlizz = {
+	TANK = CreateAtlasMarkup("UI-LFG-RoleIcon-Tank", 16, 16),
+	HEALER = CreateAtlasMarkup("UI-LFG-RoleIcon-Healer", 16, 16),
+	DAMAGER = CreateAtlasMarkup("UI-LFG-RoleIcon-DPS", 16, 16),
+}
+
+local roleNames = {
+	TANK = L["Tank"],
+	HEALER = L["Healer"],
+	DPS = L["DPS"],
+}
+
+E:AddTag("mRole", "PLAYER_ROLES_ASSIGNED GROUP_ROSTER_UPDATE", function(unit)
+	local unitRole = (E.Retail or E.Mists) and UnitGroupRolesAssigned(unit)
+	return unitRole and roleColors[unitRole]:WrapTextInColorCode(roleNames[unitRole]) or ""
+end)
+E:AddTagInfo("mRole", mMT.NameShort .. " " .. L["Miscellaneous"], L["Returns the role of the unit (Tank, Healer, DPS)."])
+
+E:AddTag("mRole:icon", "PLAYER_ROLES_ASSIGNED GROUP_ROSTER_UPDATE", function(unit)
+	local unitRole = (E.Retail or E.Mists) and UnitGroupRolesAssigned(unit)
+	return unitRole and E:TextureString(roleIcons[unitRole], ":14:14") or ""
+end)
+E:AddTagInfo("mRole:icon", mMT.NameShort .. " " .. L["Miscellaneous"], L["Returns the role icon of the unit (Tank, Healer, DPS)."])
+
+E:AddTag("mRole:icon:blizz", "PLAYER_ROLES_ASSIGNED GROUP_ROSTER_UPDATE", function(unit)
+	local unitRole = (E.Retail or E.Mists) and UnitGroupRolesAssigned(unit)
+	return unitRole and roleIconsBlizz[unitRole] or ""
+end)
+E:AddTagInfo("mRole:icon:blizz", mMT.NameShort .. " " .. L["Miscellaneous"], L["Returns the role icon of the unit (Tank, Healer, DPS)."])
+
+E:AddTag("mRole:target", "PLAYER_ROLES_ASSIGNED GROUP_ROSTER_UPDATE", function(unit)
+	local unitRole = (E.Retail or E.Mists) and UnitGroupRolesAssigned(unit .. "target")
+	return unitRole and roleColors[unitRole]:WrapTextInColorCode(roleNames[unitRole]) or ""
+end)
+E:AddTagInfo("mRole:target", mMT.NameShort .. " " .. L["Miscellaneous"], L["Returns the role of the unit (Tank, Healer, DPS)."])
+
+E:AddTag("mRole:target:icon", "PLAYER_ROLES_ASSIGNED GROUP_ROSTER_UPDATE", function(unit)
+	local unitRole = (E.Retail or E.Mists) and UnitGroupRolesAssigned(unit .. "target")
+	return unitRole and E:TextureString(roleIcons[unitRole], ":14:14") or ""
+end)
+E:AddTagInfo("mRole:target:icon", mMT.NameShort .. " " .. L["Miscellaneous"], L["Returns the role icon of the unit (Tank, Healer, DPS)."])
+
+E:AddTag("mRole:target:icon:blizz", "PLAYER_ROLES_ASSIGNED GROUP_ROSTER_UPDATE", function(unit)
+	local unitRole = (E.Retail or E.Mists) and UnitGroupRolesAssigned(unit .. "target")
+	return unitRole and roleIconsBlizz[unitRole] or ""
+end)
+E:AddTagInfo("mRole:target:icon:blizz", mMT.NameShort .. " " .. L["Miscellaneous"], L["Returns the role icon of the unit (Tank, Healer, DPS)."])
+
+-- LEVEL
+E:AddTag("mLevel", "UNIT_LEVEL PLAYER_LEVEL_UP PLAYER_UPDATE_RESTING", function(unit)
+	if unit == "player" and IsResting() then
+		return colors.resting:WrapTextInColorCode("Zzz")
+	else
+		local level = UnitLevel(unit)
+		if not E.Classic and (UnitIsWildBattlePet(unit) or UnitIsBattlePetCompanion(unit)) then
+			return UnitBattlePetLevel(unit)
+		elseif level > 0 then
+			return level
+		else
+			return colors.worldboss:WrapTextInColorCode("??")
+		end
+	end
+end)
+E:AddTagInfo("mLevel", mMT.NameShort .. " " .. L["Level"], L["Returns the level of the unit. If the unit is at max level. If the player is resting, it will return a Zzz."])
+
+E:AddTag("mLevel:smart", "UNIT_LEVEL PLAYER_LEVEL_UP PLAYER_UPDATE_RESTING", function(unit)
+	if unit == "player" and IsResting() then
+		return colors.resting:WrapTextInColorCode("Zzz")
+	else
+		local level = UnitEffectiveLevel(unit)
+		if not E.Classic and (UnitIsWildBattlePet(unit) or UnitIsBattlePetCompanion(unit)) then
+			return UnitBattlePetLevel(unit)
+		elseif level == UnitEffectiveLevel("player") then
+			return nil
+		elseif level > 0 then
+			return level
+		else
+			return colors.worldboss:WrapTextInColorCode("??")
+		end
+	end
+end)
+E:AddTagInfo(
+	"mLevel:smart",
+	mMT.NameShort .. " " .. L["Level"],
+	L["Returns the level of the unit. If the unit is at max level or the same level as you, it will return nothing. If the player is resting, it will return a Zzz."]
+)
+
+-- PVP & FACTION
+-- FUNCTIONS
+local function GetFactionData(unit)
+	if not UnitIsPlayer(unit) then return end
+
+	local guid = UnitGUID(unit)
+	if not guid then return end
+
+	if not UnitFaction[guid] then
+		local factionGroup = UnitFactionGroup(unit)
+		if factionGroup then UnitFaction[guid] = {
+			CreateTextureMarkup("Interface\\FriendsFrame\\PlusManz-" .. factionGroup, 16, 16, 16, 16, 0, 1, 0, 1, 0, 0),
+			factionGroup,
+		} end
+	end
+
+	return UnitFaction[guid], guid
+end
+
+E:AddTag("mPvP:icon", "UNIT_FACTION", function(unit)
+	local factionGroup = UnitFactionGroup(unit)
+	if (UnitIsPVP(unit)) and (factionGroup == "Horde" or factionGroup == "Alliance") then return E:TextureString(icons[db.misc.pvp], ":14:14") end
+end)
+E:AddTagInfo("mPvP:icon", mMT.NameShort .. " " .. L["Miscellaneous"], L["Returns a PvP icon if the unit is flagged for PvP and belongs to either the Horde or Alliance faction."])
+
+E:AddTag("mFaction", "UNIT_FACTION", function(unit)
+	local data = GetFactionData(unit)
+	if data and (data[2] == "Horde" or data[2] == "Alliance") then return data[2] end
+end)
+E:AddTagInfo("mFaction", mMT.NameShort .. " " .. L["Miscellaneous"], L["Returns the faction of the unit (Horde or Alliance)."])
+
+E:AddTag("mFaction:icon", "UNIT_FACTION", function(unit)
+	local data = GetFactionData(unit)
+	return data and data[1]
+end)
+E:AddTagInfo("mFaction:icon", mMT.NameShort .. " " .. L["Miscellaneous"], L["Returns the faction icon of the unit (Horde or Alliance)."])
+
+E:AddTag("mFaction:opposite", "UNIT_FACTION", function(unit)
+	local data = GetFactionData(unit)
+	local factionPlayer = UnitFactionGroup("Player")
+	if data and (data[2] == "Horde" or data[2] == "Alliance") and data[2] ~= factionPlayer then return data[2] end
+end)
+E:AddTagInfo("mFaction:opposite", mMT.NameShort .. " " .. L["Miscellaneous"], L["Returns the faction of the unit (Horde or Alliance), but only if it's the opposite faction of the player."])
+
+E:AddTag("mFaction:icon:opposite", "UNIT_FACTION", function(unit)
+	local data = GetFactionData(unit)
+	local factionPlayer = UnitFactionGroup("Player")
+	if data and (data[2] == "Horde" or data[2] == "Alliance") and data[2] ~= factionPlayer then return data[1] end
+end)
+E:AddTagInfo("mFaction:icon:opposite", mMT.NameShort .. " " .. L["Miscellaneous"], L["Returns the faction icon of the unit (Horde or Alliance), but only if it's the opposite faction of the player."])
+
+-- POWER & QUEST
+E:AddTag("mPower", "UNIT_DISPLAYPOWER UNIT_POWER_FREQUENT UNIT_MAXPOWER PLAYER_ROLES_ASSIGNED GROUP_ROSTER_UPDATE UNIT_COMBAT", function(unit)
+	if UnitAffectingCombat(unit) then return _TAGS.perpp(unit) end
+end)
+E:AddTagInfo("mPower", mMT.NameShort .. " " .. L["Power"], L["Returns the current power percent of the unit, but only while in combat."])
+
+E:AddTag("mQuestIcon", "QUEST_LOG_UPDATE", function(unit)
+	if UnitIsPlayer(unit) then return end
+	local isQuest = E.TagFunctions.GetQuestData(unit, "title", "FFFFFFFF")
+	if isQuest then
+		local icon = icons[db.misc.quest]
+		local color = GetColorString(colors.quest)
+		return "|T" .. icon .. ":16:16:0:0:16:16:0:16:0:16" .. color
+	end
+end)
+E:AddTagInfo("mQuestIcon", mMT.NameShort .. " " .. L["Miscellaneous"], L["Returns a quest icon if the unit is a quest mob."])
+
+-- TARGET ICONS
+-- FUNCTIONS
+local function CountTargets(unit, prefix, count)
+	local amount = 0
+	for i = 1, count do
+		if UnitIsUnit(prefix .. i .. "target", unit) then amount = amount + 1 end
+	end
+	if UnitIsUnit("playertarget", unit) then amount = amount + 1 end
+	return amount > 0 and amount or nil
+end
+
+local function GetPartyTargets(unit)
+	return CountTargets(unit, "party", GetNumGroupMembers() - 1)
+end
+
+local function GetRaidTargets(unit)
+	return CountTargets(unit, "raid", GetNumGroupMembers())
+end
+
+-- Generiert Icon-Strings für Spieler, die ein Ziel anvisieren
+local function GetPartyTargetsIcons(unit, icon)
+	local result = ""
+
+	local function AddIcon(source)
+		local _, class = UnitClass(source)
+		local color = RAID_CLASS_COLORS[class]
+		if not color then return end
+
+		local colorString = GetColorString(color)
+		local iconString = "|T" .. icon .. ":16:16:0:0:16:16:0:16:0:16" .. color
+
+		if icon then result = icon .. result end
+	end
+
+	for i = 1, GetNumGroupMembers() - 1 do
+		if UnitIsUnit("party" .. i .. "target", unit) then AddIcon("party" .. i) end
+	end
+
+	if UnitIsUnit("playertarget", unit) then AddIcon("player") end
+
+	return result ~= "" and result or ""
+end
+
+-- TARGET ICONS & RAIDMARKERS
+E:AddTag("mTargetingPlayers", 2, function(unit)
+	if InCombatLockdown() and UnitAffectingCombat(unit) then return IsInRaid() and GetRaidTargets(unit) or IsInGroup() and GetPartyTargets(unit) end
+end)
+E:AddTagInfo("mTargetingPlayers", mMT.NameShort .. " " .. L["Miscellaneous"], L["Returns the number of players currently targeting the unit, but only while in combat."])
+
+E:AddTag("mTargetingPlayers:icons", 2, function(unit)
+	if InCombatLockdown() and UnitAffectingCombat(unit) and IsInGroup() then return GetPartyTargetsIcons(unit, icons[db.misc.targeting]) end
+end)
+E:AddTagInfo("mTargetingPlayers:icons", mMT.NameShort .. " " .. L["Miscellaneous"], L["Returns icons of players currently targeting the unit, but only while in combat."])
+
+E:AddTag("mRaidTargetMarkers", "RAID_TARGET_UPDATE", function(unit)
+	local index = GetRaidTargetIndex(unit)
+	return index and E:TextureString(icons[db.raidtargetmarkers[index]], ":14:14") or ""
+end)
+E:AddTagInfo("mRaidTargetMarkers", mMT.NameShort .. " " .. L["Miscellaneous"], L["Returns the raid target marker icon of the unit."])
+
+-- CLASS ICONS
+-- FUNCTIONS
+local classIconNames = {}
+
+local function BuildClassIconDB()
+	classIconNames = {}
+	local t = {}
+	for k, v in pairs(MEDIA.icons.class.icons.mmt) do
+		if type(v) == "table" then t[k] = v.name end
+	end
+	for k, v in pairs(MEDIA.icons.class.icons.custom) do
+		if type(v) == "table" then t[k] = v.name end
+	end
+	classIconNames = t
+end
+
+for style, name in next, classIconNames do
+	local tag = format("%s:%s", "mClassIcon", style)
+
+	E:AddTag(tag, "UNIT_NAME_UPDATE", function(unit, _, args)
+		if not UnitIsPlayer(unit) then return end
+
+		local _, class = UnitClass(unit)
+		if not class then return end
+
+		local size = strsplit(":", args or "")
+		size = tonumber(size)
+		size = (size and (size >= 16 and size <= 128)) and size or 64
+
+		local classIconStrings = MEDIA.icons.class.icons.custom[class] and MEDIA.icons.class.icons.custom[class].texString or MEDIA.icons.class.icons.data[class].texString
+		local textureFile = MEDIA.icons.class.icons.custom[class] and MEDIA.icons.class.icons.custom[class].texture or MEDIA.icons.class.icons.data[class].texture
+		if textureFile and classIconStrings then return format("|T%s:%s:%s:0:0:1024:1024:%s|t", textureFile, size, size, classIconStrings) end
+	end)
+
+	E:AddTagInfo(tag, mMT.NameShort .. " " .. L["Icons"], L["Returns the class icon of the unit. You can specify a size between 16 and 128 (default is 64). Example: mClassIcon:STYLE{32}"])
+end
 
 function module:Initialize()
 	db = E.db.mMT.tags
-	module:RegisterEvent("PLAYER_ENTERING_WORLD")
+
+	roleColors = {
+		TANK = colors.tank,
+		HEALER = colors.healer,
+		DPS = colors.dps,
+	}
+
+	roleIcons = {
+		TANK = db.misc.tank,
+		HEALER = db.misc.healer,
+		DPS = db.misc.dps,
+	}
+
+	BuildClassIconDB()
+	if not module.initialized then
+		module:RegisterEvent("PLAYER_ENTERING_WORLD")
+		module:RegisterEvent("UPDATE_INSTANCE_INFO")
+		module.initialized = true
+	end
 end
 
 function module:PLAYER_ENTERING_WORLD(_, text)
 	db = E.db.mMT.tags
+
+	roleColors = {
+		TANK = colors.tank,
+		HEALER = colors.healer,
+		DPS = colors.dps,
+	}
+
+	roleIcons = {
+		TANK = db.misc.tank,
+		HEALER = db.misc.healer,
+		DPS = db.misc.dps,
+	}
+
+	BuildClassIconDB()
+end
+
+function module:UPDATE_INSTANCE_INFO(_, text)
+	TagDeathCount()
 end
