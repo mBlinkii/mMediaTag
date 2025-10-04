@@ -67,6 +67,11 @@ function mMT:HexToRGB(hex)
 	return r / 255, g / 255, b / 255, a / 255
 end
 
+function mMT:FloatToHex(value)
+    local scaled = math.max(0, math.min(255, math.floor(value * 255 + 0.5)))
+    return string.format("%02X", scaled)
+end
+
 function mMT:round(number, decimals)
 	if number then
 		return (("%%.%df"):format(decimals)):format(number)

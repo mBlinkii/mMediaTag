@@ -1,5 +1,5 @@
 local mMT, DB, M, E, P, L, MEDIA = unpack(ElvUI_mMediaTag)
-local module = mMT:AddModule("TAGS", { "AceEvent-3.0" })
+local module = mMT:AddModule("TAGs", { "AceEvent-3.0" })
 
 local UnitName = UnitName
 local IsInInstance = IsInInstance

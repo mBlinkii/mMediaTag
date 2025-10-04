@@ -78,11 +78,11 @@ mMT.options.args.dock.args.character.args = {
 					return not E.db.mMT.dock.character.custom_color
 				end,
 				get = function(info)
-					local r, g, b = mMT:HexToRGB(E.db.mMT.color.dock.character)
-					return r, g, b
+					local r, g, b, a = mMT:HexToRGB(E.db.mMT.color.dock.character)
+					return r, g, b, a
 				end,
-				set = function(info, r, g, b)
-					local hex = E:RGBToHex(r, g, b, "ff")
+				set = function(info, r, g, b, a)
+					local hex = E:RGBToHex(r, g, b, mMT:FloatToHex(a))
 					E.db.mMT.color.dock.character = hex
 					MEDIA.color.dock.character = CreateColorFromHexString(hex)
 					DT:ForceUpdate_DataText("mMT_Dock_Character")

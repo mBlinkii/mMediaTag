@@ -182,11 +182,11 @@ mMT.options.args.dock.args.general.args = {
 					return E.db.mMT.dock.class.normal
 				end,
 				get = function(info)
-					local r, g, b = mMT:HexToRGB(E.db.mMT.color.dock.normal)
-					return r, g, b
+					local r, g, b, a = mMT:HexToRGB(E.db.mMT.color.dock.normal)
+					return r, g, b, a
 				end,
-				set = function(info, r, g, b)
-					local hex = E:RGBToHex(r, g, b, "ff")
+				set = function(info, r, g, b, a)
+					local hex = E:RGBToHex(r, g, b, mMT:FloatToHex(a))
 					E.db.mMT.color.dock.normal = hex
 					MEDIA.color.dock.normal = CreateColorFromHexString(hex)
 					DT:LoadDataTexts()
@@ -221,11 +221,11 @@ mMT.options.args.dock.args.general.args = {
 					return E.db.mMT.dock.class.hover
 				end,
 				get = function(info)
-					local r, g, b = mMT:HexToRGB(E.db.mMT.color.dock.hover)
-					return r, g, b
+					local r, g, b, a = mMT:HexToRGB(E.db.mMT.color.dock.hover)
+					return r, g, b, a
 				end,
-				set = function(info, r, g, b)
-					local hex = E:RGBToHex(r, g, b, "ff")
+				set = function(info, r, g, b, a)
+					local hex = E:RGBToHex(r, g, b, mMT:FloatToHex(a))
 					E.db.mMT.color.dock.hover = hex
 					MEDIA.color.dock.hover = CreateColorFromHexString(hex)
 					DT:LoadDataTexts()
@@ -260,11 +260,11 @@ mMT.options.args.dock.args.general.args = {
 					return E.db.mMT.dock.class.clicked
 				end,
 				get = function(info)
-					local r, g, b = mMT:HexToRGB(E.db.mMT.color.dock.clicked)
-					return r, g, b
+					local r, g, b, a = mMT:HexToRGB(E.db.mMT.color.dock.clicked)
+					return r, g, b, a
 				end,
-				set = function(info, r, g, b)
-					local hex = E:RGBToHex(r, g, b, "ff")
+				set = function(info, r, g, b, a)
+					local hex = E:RGBToHex(r, g, b, mMT:FloatToHex(a))
 					E.db.mMT.color.dock.clicked = hex
 					MEDIA.color.dock.clicked = CreateColorFromHexString(hex)
 					DT:LoadDataTexts()
