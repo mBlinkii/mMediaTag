@@ -169,7 +169,7 @@ E:AddTag("mStatus:icon", "UNIT_HEALTH UNIT_CONNECTION PLAYER_FLAGS_CHANGED", fun
 		if def.check(unit) then
 			local icon = icons[db.status[def.iconKey]]
 			local color = GetColorString(def.color)
-			return "|T" .. icon .. ":16:16:0:0:16:16:0:16:0:16" .. color
+			return (color and icon) and "|T" .. icon .. ":16:16:0:0:16:16:0:16:0:16" .. color
 		end
 	end
 end)
@@ -578,7 +578,7 @@ E:AddTag("mQuestIcon", "QUEST_LOG_UPDATE", function(unit)
 	if isQuest then
 		local icon = icons[db.misc.quest]
 		local color = GetColorString(colors.quest)
-		return "|T" .. icon .. ":16:16:0:0:16:16:0:16:0:16" .. color
+		return (color and icon) and "|T" .. icon .. ":16:16:0:0:16:16:0:16:0:16" .. color
 	end
 end)
 E:AddTagInfo("mQuestIcon", mMT.NameShort .. " " .. L["Miscellaneous"], L["Returns a quest icon if the unit is a quest mob."])
@@ -641,7 +641,7 @@ E:AddTag("mRaidTargetMarkers", "RAID_TARGET_UPDATE", function(unit)
 	local index = GetRaidTargetIndex(unit)
 		local icon = icons[db.raidtargetmarkers[index]]
 		local color = GetColorString(colors[index])
-		return "|T" .. icon .. ":16:16:0:0:16:16:0:16:0:16" .. color
+		return (color and icon) and "|T" .. icon .. ":16:16:0:0:16:16:0:16:0:16" .. color
 end)
 E:AddTagInfo("mRaidTargetMarkers", mMT.NameShort .. " " .. L["Miscellaneous"], L["Returns the raid target marker icon of the unit."])
 
