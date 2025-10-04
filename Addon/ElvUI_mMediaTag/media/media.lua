@@ -140,8 +140,17 @@ MEDIA.color = {
 		tank = createColor("FF6CF5FF"),
 		healer = createColor("FFB5FF54"),
 		dps = createColor("FFFDBB6E"),
+		pvp = createColor("FFFD786E"),
 		quest = createColor("FFFFEE00"),
 		resting = createColor("FF38FF92"),
+		[1] = createColor("FFFFD900"),
+		[2] = createColor("FFFF8800"),
+		[3] = createColor("FF7700FF"),
+		[4] = createColor("FF16BB00"),
+		[5] = createColor("FFA5A5A5"),
+		[6] = createColor("FF006EFF"),
+		[7] = createColor("FFFF1111"),
+		[8] = createColor("FFFFFFFF"),
 	},
 }
 
@@ -301,10 +310,16 @@ function mMT:UpdateMedia(arg)
 		MEDIA.color.tags.healer.hex = E.db.mMT.color.tags.misc.healer
 		MEDIA.color.tags.dps = CreateColorFromHexString(E.db.mMT.color.tags.misc.dps)
 		MEDIA.color.tags.dps.hex = E.db.mMT.color.tags.misc.dps
+		MEDIA.color.tags.pvp = CreateColorFromHexString(E.db.mMT.color.tags.misc.pvp)
+		MEDIA.color.tags.pvp.hex = E.db.mMT.color.tags.misc.pvp
 		MEDIA.color.tags.quest = CreateColorFromHexString(E.db.mMT.color.tags.misc.quest)
 		MEDIA.color.tags.quest.hex = E.db.mMT.color.tags.misc.quest
 		MEDIA.color.tags.resting = CreateColorFromHexString(E.db.mMT.color.tags.misc.resting)
 		MEDIA.color.tags.resting.hex = E.db.mMT.color.tags.misc.resting
+		for i = 1, 8 do
+			MEDIA.color.tags[i] = CreateColorFromHexString(E.db.mMT.color.tags.raidtargetmarkers[i])
+			MEDIA.color.tags[i].hex = E.db.mMT.color.tags.raidtargetmarkers[i]
+		end
 	end
 end
 

@@ -639,7 +639,9 @@ E:AddTagInfo("mTargetingPlayers:icons", mMT.NameShort .. " " .. L["Miscellaneous
 
 E:AddTag("mRaidTargetMarkers", "RAID_TARGET_UPDATE", function(unit)
 	local index = GetRaidTargetIndex(unit)
-	return index and E:TextureString(icons[db.raidtargetmarkers[index]], ":14:14") or ""
+		local icon = icons[db.raidtargetmarkers[index]]
+		local color = GetColorString(colors[index])
+		return "|T" .. icon .. ":16:16:0:0:16:16:0:16:0:16" .. color
 end)
 E:AddTagInfo("mRaidTargetMarkers", mMT.NameShort .. " " .. L["Miscellaneous"], L["Returns the raid target marker icon of the unit."])
 
