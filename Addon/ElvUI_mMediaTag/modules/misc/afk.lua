@@ -197,9 +197,9 @@ function mMT:mMT_AFKScreen()
 			_G.ElvUIAFKFrame.bottom.guild:SetTextColor(0, 0.82, 0.1)
 
 			-- Model
-			local point, relativeTo, relativePoint, _, yOfs = _G.ElvUIAFKFrame.bottom.modelHolder:GetPoint()
+			local point, relativeTo, relativePoint = _G.ElvUIAFKFrame.bottom.modelHolder:GetPoint()
 			_G.ElvUIAFKFrame.bottom.modelHolder:ClearAllPoints()
-			_G.ElvUIAFKFrame.bottom.modelHolder:Point(point, relativeTo, relativePoint, 250, yOfs + 10)
+			_G.ElvUIAFKFrame.bottom.modelHolder:Point(point, relativeTo, relativePoint, 250, 10)
 			_G.ElvUIAFKFrame.bottom.model:SetScale(0.9)
 
 			if not _G.ElvUIAFKFrame.mMT_Logo then
