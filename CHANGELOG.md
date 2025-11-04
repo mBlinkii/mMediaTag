@@ -1,6 +1,19 @@
 # Changelog - ElvUI_mMediaTag
 [Eng] - All changes to this project will be documented in this file. The latest changes are at the top.
 
+## [ver. 3.79] - 04.11.2025
+### FIX 
+- FIX - [System]: Update for changes in MerathilisUI.
+- FIX - [AFK-Screen]: Bug in AFK Screen.
+### UPDATE
+- UPDATE - [DT-Score]: Will now take care of Weekly reset.
+- UPDATE - [DT-Score]: You can now manually reset saved Keystones.
+- UPDATE - [Healthmakers]: Update IDs.
+- UPDATE - [System]: Game version.
+### NEW
+- NEW - [Important-Spells] Removed - not needed with elvui 14.x.
+- NEW - [Nameplate-Border-Color]: Removed - not needed with elvui 14.x.
+
 ## [ver. 3.78] - 30.08.2025
 ### FIX 
 - FIX - [Datatext-Crest]: Fixed Crest IDs.
