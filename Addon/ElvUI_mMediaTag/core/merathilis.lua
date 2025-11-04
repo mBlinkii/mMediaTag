@@ -12,7 +12,7 @@ function mMT:CheckMerathilisUI()
 	if mui_tbl.loaded then
 		mui_tbl.gradient = E.db.mui.gradient and E.db.mui.gradient.enable
 		mui_tbl.custom = E.db.mui.gradient and E.db.mui.gradient.customColor.enableClass
-		local c = mui_tbl.custom and E.db.mui.gradient.customColor or _G.ElvUI_MerathilisUI[2].ClassGradient
+		local c = mui_tbl.custom and E.db.mui.gradient.customColor or _G.ElvUI_MerathilisUI[4].ClassGradient
 
 		if mui_tbl.custom then
 			mui_tbl.colors = {
