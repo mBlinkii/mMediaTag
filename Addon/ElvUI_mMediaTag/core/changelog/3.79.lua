@@ -2,7 +2,8 @@ mMT.Changelog[379] = {
 	DATE = "04.11.2025",
 	--IMPORTANT = { "Attention! With the next version 4.0 of mMT there will be some major changes that will reset some settings." },
 	FIX = {
-		"[TAGs]: Prevent a Nil error."
+		"[System]: Update for changes in MerathilisUI.",
+        "[AFK-Screen]: Bug in AFK Screen."
 	},
     UPDATE = {
         "[DT-Score]: Will now take care of Weekly reset.",
