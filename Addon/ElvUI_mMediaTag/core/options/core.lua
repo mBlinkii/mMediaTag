@@ -220,12 +220,6 @@ local function configTable()
 						end,
 						args = {},
 					},
-					important = {
-						order = 3,
-						type = "group",
-						name = L["Important Spells"],
-						args = {},
-					},
 					shield = {
 						order = 4,
 						type = "group",

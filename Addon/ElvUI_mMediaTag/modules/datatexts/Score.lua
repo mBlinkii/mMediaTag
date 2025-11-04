@@ -147,9 +147,15 @@ local function DungeonScoreTooltip()
 end
 
 local function OnClick(self, button)
-	if button == "LeftButton" or button == "MiddleButton" then
+	if button == "LeftButton" then
+		if IsShiftKeyDown() then
+			mMT.DB.keys = {}
+		else
+			_G.ToggleLFDParentFrame()
+		end
+	elseif button == "MiddleButton" then
 		_G.ToggleLFDParentFrame()
-		if button == "MiddleButton" then _G.PVEFrameTab3:Click() end
+		_G.PVEFrameTab3:Click()
 	else
 		if not _G.WeeklyRewardsFrame then UIParentLoadAddOn("Blizzard_WeeklyRewards") end
 		if _G.WeeklyRewardsFrame:IsVisible() then
@@ -270,13 +276,34 @@ local function OnEnter(self)
 	DT.tooltip:AddLine(format("%s  %s%s|r", mMT:mIcon(mMT.Media.Mouse["LEFT"]), E.db.mMT.datatextcolors.colortip.hex, L["Click to open LFD Frame"]))
 	DT.tooltip:AddLine(format("%s  %s%s|r", mMT:mIcon(mMT.Media.Mouse["LEFT"]), E.db.mMT.datatextcolors.colortip.hex, L["Middle click to open M+ Frame"]))
 	DT.tooltip:AddLine(format("%s  %s%s|r", mMT:mIcon(mMT.Media.Mouse["RIGHT"]), E.db.mMT.datatextcolors.colortip.hex, L["Click to open Great Vault"]))
-
+	DT.tooltip:AddLine(format("%s  %s%s|r", mMT:mIcon(mMT.Media.Mouse["LEFT"]), E.db.mMT.datatextcolors.colortip.hex, L["SHIFT + Left click to clear all saved keystones."]))
 	DT.tooltip:Show()
 
 	self.text:SetFormattedText(displayString, isMaxLevel and myScore or L["Level: "] .. E.mylevel)
 end
 
+local function GetWeeklyResetTime()
+	local now = time()
+	local region = GetCurrentRegion() -- 1=US, 2=KR, 3=EU, 4=TW
+	local resetWeekday = ({ [1] = 2, [2] = 4, [3] = 3, [4] = 4 })[region] or 3 -- Default: EU Mittwoch
+	local resetHour = 8
+
+	local t = date("*t", now)
+	local daysSinceReset = (t.wday - resetWeekday + 7) % 7
+	local lastReset = time({ year = t.year, month = t.month, day = t.day - daysSinceReset, hour = resetHour })
+
+	if lastReset > E.db.mMT.datatexts.score.lastWeeklyReset then
+		E.db.mMT.datatexts.score.lastWeeklyReset = lastReset
+		return true
+	end
+	return false
+end
+
 local function OnEvent(self, event, ...)
+	if event == "PLAYER_ENTERING_WORLD" then
+		if GetWeeklyResetTime() then mMT.DB.keys = {} end
+	end
+
 	isMaxLevel = E:XPIsLevelMax()
 
 	if isMaxLevel then

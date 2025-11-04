@@ -32,14 +32,6 @@ P.mMT = {
 		multiplier = 0.3,
 		setBGColor = false,
 	},
-	importantspells = {
-		dbversion = 0,
-		enable = false,
-		gradient = false,
-		np = true,
-		uf = true,
-		spells = {},
-	},
 	custombackgrounds = {
 		health = { enable = false, texture = "mMediaTag A8" },
 		power = { enable = false, texture = "mMediaTag A8" },
@@ -184,7 +176,7 @@ P.mMT = {
 			auto = true,
 			range = 20,
 		},
-		bordercolor = { border = false, glow = false },
+		bordercolor = { glow = false },
 	},
 	gamemenu = { icon = true, menuicons = true, color = true },
 	tags = {
@@ -870,6 +862,7 @@ P.mMT.datatexts = {
 		value = "FFFFFFFF",
 	},
 	score = {
+		lastWeeklyReset = 0,
 		group_keystones = true,
 		show_upgrade = true,
 		sort_method = "KEY",

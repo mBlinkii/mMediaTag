@@ -44,7 +44,6 @@ mMT.Modules.ResurrectionIcon = {}
 mMT.Modules.ReadyCheckIcons = {}
 mMT.Modules.RoleIcons = {}
 mMT.Modules.Castbar = {}
-mMT.Modules.ImportantSpells = {}
 mMT.Modules.InterruptOnCD = {}
 mMT.Modules.CosmeticBars = {}
 mMT.Modules.ObjectiveTracker = {}
@@ -103,7 +102,6 @@ local function EnableModules()
 	mMT.Modules.ResurrectionIcon.enable = E.db.mMT.unitframeicons.resurrection.enable
 	mMT.Modules.SummonIcon.enable = E.db.mMT.unitframeicons.summon.enable
 	mMT.Modules.Portraits.enable = E.db.mMT.portraits.general.enable
-	mMT.Modules.ImportantSpells.enable = (E.db.mMT.importantspells.enable and (E.db.mMT.importantspells.np or E.db.mMT.importantspells.uf))
 	mMT.Modules.CosmeticBars.enable = E.db.mMT.cosmeticbars.enable and not IsAddOnLoaded("ElvUI_NutsAndBolts")
 	mMT.Modules.CustomUFTextures.enable = E.db.mMT.customtextures.health.enable
 		or E.db.mMT.customtextures.power.enable
@@ -115,7 +113,7 @@ local function EnableModules()
 
 	-- Retail and Mists
 	if E.Retail or E.Mists then
-		mMT.Modules.Castbar.enable = (E.db.mMT.interruptoncd.enable or (E.db.mMT.importantspells.enable and (E.db.mMT.importantspells.np or E.db.mMT.importantspells.uf)) or E.db.mMT.castbarshield.enable)
+		mMT.Modules.Castbar.enable = (E.db.mMT.interruptoncd.enable or E.db.mMT.castbarshield.enable)
 		mMT.Modules.RoleIcons.enable = E.db.mMT.roleicons.enable
 	end
 
@@ -308,13 +306,6 @@ function mMT:PLAYER_ENTERING_WORLD(event)
 		mMT:Print(L["The ObjectiveTracker settings have been reset to reflect the latest updates in mMT."])
 	end
 
-	-- ImportantSpells DB converter
-	if E.db.mMT.importantspells.dbversion < 1 then
-		E.db.mMT.importantspells.spells = {}
-		E.db.mMT.importantspells.dbversion = 1
-		mMT:Print(L["The ImportantSpells IDs and Settings have been reset to reflect the latest updates in mMT."])
-	end
-
 	-- DevMode
 	if mMT.DB.dev.enabled and mMT.DEVNames[UnitName("player")] then
 		mMT:Print("|CFFFFC900DEV - Tools:|r |CFF00E360Enabled|r")
@@ -349,7 +340,7 @@ function mMT:PLAYER_ENTERING_WORLD(event)
 
 	if E.db.mMT.roll.enable then mMT:mRoll() end
 
-	if E.private.nameplates.enable and (E.db.mMT.nameplate.bordercolor.glow or E.db.mMT.nameplate.bordercolor.border) then mMT:mNamePlateBorderColor() end
+	if E.private.nameplates.enable and (E.db.mMT.nameplate.bordercolor.glow) then mMT:mNamePlateBorderColor() end
 
 	E:Delay(1, collectgarbage, "collect")
 end
