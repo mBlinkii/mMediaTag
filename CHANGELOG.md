@@ -7,12 +7,12 @@
 - FIX - [AFK-Screen]: Bug in AFK Screen.
 ### UPDATE
 - UPDATE - [DT-Score]: Will now take care of Weekly reset.
-- UPDATE - [DT-Score]: You can now manually reset saved Keystones
+- UPDATE - [DT-Score]: You can now manually reset saved Keystones.
 - UPDATE - [Healthmakers]: Update IDs.
-- UPDATE - [System]: Gameversion.
+- UPDATE - [System]: Game version.
 ### NEW
-- NEW - [Important-Spells] Removed - not needed with elvui 14.x
-- NEW - [Nameplate-Border-Color]: Removed - not needed with elvui 14.x
+- NEW - [Important-Spells] Removed - not needed with elvui 14.x.
+- NEW - [Nameplate-Border-Color]: Removed - not needed with elvui 14.x.
 
 ## [ver. 3.78] - 30.08.2025
 ### FIX 
