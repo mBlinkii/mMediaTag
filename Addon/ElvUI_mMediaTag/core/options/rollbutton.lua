@@ -45,6 +45,7 @@ local function configTable()
 					end,
 					values = {
 						[10] = "10",
+						[20] = "20",
 						[25] = "25",
 						[50] = "50",
 						[75] = "75",
@@ -70,6 +71,7 @@ local function configTable()
 					end,
 					values = {
 						[10] = "10",
+						[20] = "20",
 						[25] = "25",
 						[50] = "50",
 						[75] = "75",
