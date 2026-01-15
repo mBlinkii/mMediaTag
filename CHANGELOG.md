@@ -1,6 +1,10 @@
 # Changelog - ElvUI_mMediaTag
 [Eng] - All changes to this project will be documented in this file. The latest changes are at the top.
 
+## [ver. 3.80] - 15.01.2026
+### UPDATE
+- UPDATE - [System]: TOC files for TBC & Wrath.
+
 ## [ver. 3.79] - 04.11.2025
 ### FIX 
 - FIX - [System]: Update for changes in MerathilisUI.
