@@ -53,7 +53,7 @@ local function UpdateTextureColor(element, unit)
     local db, e_db = module.db.misc, element.db
     unit = unit or element.unit
 
-    local color = module:GetUnitColor(unit, element.unitClass, element.isPlayer, element.isDead)
+    local color = module:GetUnitColor(unit, element.unitClass, element.isPlayer, false) -- element.isDead)
     element.color = color
     if not color then return end
 
@@ -78,7 +78,7 @@ local function UpdateTextureColor(element, unit)
     ApplyColor(element.texture)
     ApplyColor(element.embellishment)
 
-    local shouldDesaturate = element.isDead or db.desaturate
+    local shouldDesaturate = db.desaturate -- element.isDead or db.desaturate
     if shouldDesaturate ~= element.isDesaturated then
         element.unit_portrait:SetDesaturated(shouldDesaturate)
         element.isDesaturated = shouldDesaturate
@@ -155,9 +155,9 @@ local function Update(self, event, eventUnit)
 	guid = E:IsSecretValue(guid) and " " or guid
 	local isAvailable = UnitIsConnected(unit) and UnitIsVisible(unit)
 	local stateChanged = event == "ForceUpdate" or self.guid ~= guid or self.state ~= isAvailable
-	local isDead = event == "UNIT_HEALTH" and self.isDead or UnitIsDeadOrGhost(unit)
+	--local isDead = event == "UNIT_HEALTH" and self.isDead or UnitIsDeadOrGhost(unit)
 
-	if not (stateChanged or isDead) then return end
+	if not (stateChanged ) then return end
 
 	local class = select(2, UnitClass(unit))
 	local isPlayer = UnitIsPlayer(unit) or (E.Retail and UnitInPartyIsAI(unit))
@@ -177,7 +177,7 @@ local function Update(self, event, eventUnit)
 	self.isPlayer = isPlayer
 	self.unit = unit
 	self.unitClass = class
-	self.isDead = isDead
+	--self.isDead = isDead
 
 	UpdateTextureColor(self, unit)
 	UpdateExtraTexture(self, self.forceExtra ~= "none" and self.forceExtra or nil)
@@ -418,7 +418,7 @@ local eventHandlers = {
 	UPDATE_ACTIVE_BATTLEFIELD = SimpleUpdate,
 
 	-- death updates
-	UNIT_HEALTH = DeathCheck,
+    --UNIT_HEALTH = DeathCheck,
 }
 
 local function OnEvent(self, event, eventUnit, arg)
