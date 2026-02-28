@@ -19532,7 +19532,8 @@
         "ElvUI_mMediaTag",
         "ElvUI_mMediaTag",
         "ElvUI_mMediaTag",
-        "ElvUI_mMediaTag"
+        "ElvUI_mMediaTag",
+        "CurveConstants"
   ],
   "diagnostics.disable": ["deprecated", "inject-field", "undefined-field",
         "cast-local-type",

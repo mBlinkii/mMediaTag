@@ -3,6 +3,7 @@ local module = mMT:AddModule("TAGs", { "AceEvent-3.0" })
 
 local UnitName = UnitName
 local IsInInstance = IsInInstance
+local ScaleTo100 = CurveConstants and CurveConstants.ScaleTo100
 local db = {}
 local colors = MEDIA.color.tags
 local icons = MEDIA.icons.tags
@@ -38,28 +39,28 @@ E:AddTag("mName:statusicon", "UNIT_NAME_UPDATE INSTANCE_ENCOUNTER_ENGAGE_UNIT UN
 end)
 E:AddTagInfo("mName:statusicon", mMT.NameShort .. " " .. L["Name"], L["Returns the status icon of the unit (AFK, DND, Offline, Dead, Ghost) or the name of the unit."])
 
-for textFormat, length in pairs({ veryshort = 5, short = 10, medium = 15, long = 20 }) do
-	E:AddTag("mName:last:" .. textFormat, "UNIT_NAME_UPDATE INSTANCE_ENCOUNTER_ENGAGE_UNIT", function(unit)
-		local inInstance = IsInInstance()
-		local name = inInstance and _TAGS["name:last"](unit) or UnitName(unit)
-		return name and E:ShortenString(name, length)
-	end)
-	E:AddTagInfo("mName:last:" .. textFormat, mMT.NameShort .. " " .. L["Name"], L["Short Version."])
+-- for textFormat, length in pairs({ veryshort = 5, short = 10, medium = 15, long = 20 }) do
+-- 	E:AddTag("mName:last:" .. textFormat, "UNIT_NAME_UPDATE INSTANCE_ENCOUNTER_ENGAGE_UNIT", function(unit)
+-- 		local inInstance = IsInInstance()
+-- 		local name = inInstance and _TAGS["name:last"](unit) or UnitName(unit)
+-- 		return name and E:ShortenString(name, length)
+-- 	end)
+-- 	E:AddTagInfo("mName:last:" .. textFormat, mMT.NameShort .. " " .. L["Name"], L["Short Version."])
 
-	E:AddTag("mName:status:" .. textFormat, "UNIT_NAME_UPDATE INSTANCE_ENCOUNTER_ENGAGE_UNIT UNIT_CONNECTION PLAYER_FLAGS_CHANGED UNIT_HEALTH", function(unit)
-		local status = _TAGS.mStatus(unit)
-		if status then return status end
-		return GetName(unit, length)
-	end)
-	E:AddTagInfo("mName:status:" .. textFormat, mMT.NameShort .. " " .. L["Name"], L["Short Version."])
+-- 	E:AddTag("mName:status:" .. textFormat, "UNIT_NAME_UPDATE INSTANCE_ENCOUNTER_ENGAGE_UNIT UNIT_CONNECTION PLAYER_FLAGS_CHANGED UNIT_HEALTH", function(unit)
+-- 		local status = _TAGS.mStatus(unit)
+-- 		if status then return status end
+-- 		return GetName(unit, length)
+-- 	end)
+-- 	E:AddTagInfo("mName:status:" .. textFormat, mMT.NameShort .. " " .. L["Name"], L["Short Version."])
 
-	E:AddTag("mName:statusicon:" .. textFormat, "UNIT_NAME_UPDATE INSTANCE_ENCOUNTER_ENGAGE_UNIT UNIT_CONNECTION PLAYER_FLAGS_CHANGED UNIT_HEALTH", function(unit)
-		local statusIcon = _TAGS["mStatus:icon"](unit)
-		if statusIcon then return statusIcon end
-		return GetName(unit, length)
-	end)
-	E:AddTagInfo("mName:statusicon:" .. textFormat, mMT.NameShort .. " " .. L["Name"], L["Short Version."])
-end
+-- 	E:AddTag("mName:statusicon:" .. textFormat, "UNIT_NAME_UPDATE INSTANCE_ENCOUNTER_ENGAGE_UNIT UNIT_CONNECTION PLAYER_FLAGS_CHANGED UNIT_HEALTH", function(unit)
+-- 		local statusIcon = _TAGS["mStatus:icon"](unit)
+-- 		if statusIcon then return statusIcon end
+-- 		return GetName(unit, length)
+-- 	end)
+-- 	E:AddTagInfo("mName:statusicon:" .. textFormat, mMT.NameShort .. " " .. L["Name"], L["Short Version."])
+-- end
 
 -- CLASSIFICATION
 local shortClassificationsLabels = {
@@ -219,10 +220,10 @@ E:AddTagInfo("mColor:target", mMT.NameShort .. " " .. L["Color"], L["Same as mCo
 local function GetSmartHealth(unit, short)
 	local current = UnitHealth(unit)
 	local max = UnitHealthMax(unit)
-	local percent = current / max * 100
+	local percent = format('%d', UnitHealthPercent(unit, true, ScaleTo100))
 
 	if current > 0 and current < max then
-		return (percent < db.healthThreshold1) and format("%.1f", percent) or (percent < db.healthThreshold2) and format("%.2f", percent) or format("%.0f", percent)
+		return (percent < db.healthThreshold1) and format("%.1f", percent) or (percent < db.healthThreshold2) and percent or format("%.0f", percent)
 	else
 		return E:GetFormattedText("CURRENT", current, max, nil, short)
 	end

@@ -1,4 +1,4 @@
-## Interface: 110007
+## Interface: 120001
 ## Author: Blinkii
 ## Version: git-dev-beta-4.0
 ## Title: |CFF0294FFm|r|CFFBD26E5Media|r|CFFFF005DTag|r |CFF404040&|r  |CFFFF9D00Tools|r

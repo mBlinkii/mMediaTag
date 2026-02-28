@@ -152,6 +152,7 @@ local function Update(self, event, eventUnit)
 	if not eventUnit or not UnitIsUnit(unit, eventUnit) then return end
 
 	local guid = UnitGUID(unit)
+	guid = E:IsSecretValue(guid) and " " or guid
 	local isAvailable = UnitIsConnected(unit) and UnitIsVisible(unit)
 	local stateChanged = event == "ForceUpdate" or self.guid ~= guid or self.state ~= isAvailable
 	local isDead = event == "UNIT_HEALTH" and self.isDead or UnitIsDeadOrGhost(unit)
