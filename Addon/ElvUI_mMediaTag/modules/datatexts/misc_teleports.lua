@@ -27,6 +27,7 @@ mMT.knownTeleports = {
 	items = {},
 	spells = {},
 	season = {},
+	midnight = {},
 	tww = {},
 	dungeonportals = {},
 }
@@ -208,14 +209,24 @@ local teleportsIDs = {
 		[556] = "spell", -- astral-recall
 	},
 	season = {
+		-- midnight s1
+		[393273] = "AA",
+		[1254572] = "MT",
+		[1254559] = "MC",
+		[1254563] = "NPX",
+		[1254555] = "POS",
+		[1254551] = "SOTT",
+		[159898] = "SR",
+		[1254400] = "WS",
+
 		-- tww s3
-		[1216786] = "FLOOD",
-		[1237215] = "ALDANI",
-		[354465] = "HOA",
-		[367416] = "TAZ",
-		[445414] = "DAWN",
-		[445417] = "ARAK",
-		[445444] = "PRIORY",
+		-- [1216786] = "FLOOD",
+		-- [1237215] = "ALDANI",
+		-- [354465] = "HOA",
+		-- [367416] = "TAZ",
+		-- [445414] = "DAWN",
+		-- [445417] = "ARAK",
+		-- [445444] = "PRIORY",
 
 		-- tww s2
 		-- [445440] = "BREW",
@@ -259,7 +270,21 @@ local teleportsIDs = {
 		[1239155] = "MFO",
 	},
 
+	midnight = {
+		-- midnight
+		[1254572] = "MT",
+		[1254559] = "MC",
+		[1254563] = "NPX",
+		[1254400] = "WS",
+	},
+
 	dungeonportals = {
+		-- midnight
+		[1254572] = "MT",
+		[1254559] = "MC",
+		[1254563] = "NPX",
+		[1254400] = "WS",
+
 		-- tww
 		[1216786] = "FLOOD",
 		[1237215] = "ALDANI",
@@ -312,6 +337,7 @@ local teleportsIDs = {
 		[393764] = "HOV",
 		[373262] = "KARA",
 		[410078] = "NL",
+		[1254551] = "SOTT",
 
 		-- wod
 		[159897] = "AUCH",
@@ -338,6 +364,9 @@ local teleportsIDs = {
 		[445424] = "GB",
 		[424142] = "TOTT",
 		[410080] = "VP",
+
+		--wotlk
+		[1254555] = "POS",
 
 		-- sl raid
 		[373190] = "CN",
@@ -473,6 +502,7 @@ function mMT:UpdateTeleports()
 
 	processTeleport(teleportsIDs.dungeonportals, "dungeonportals", "spell")
 	processTeleport(teleportsIDs.season, "season", "spell")
+	processTeleport(teleportsIDs.midnight, "midnight", "spell")
 	processTeleport(teleportsIDs.tww, "tww", "spell")
 
 	mMT.knownTeleports.other = mMT.knownTeleports.items.available or mMT.knownTeleports.spells.available
@@ -520,6 +550,26 @@ local function UpdateMenus()
 		tinsert(menus.main, { text = mMT:TC(L["Other Portals"], "title"), isTitle = true, notClickable = true })
 	end
 
+	-- Add midnight dungeon portals
+	if mMT.knownTeleports.midnight.available then
+		-- build submenu
+		menus.midnight = {}
+
+		for id, t in pairs(mMT.knownTeleports.midnight) do
+			if t and type(t) == "table" then tinsert(menus.midnight, CreateMenuEntry(id, t)) end
+		end
+
+		-- main menu entry for midnight dungeon teleports
+		tinsert(menus.main, {
+			text = "Midnight",
+			right_text = ">>",
+			submenu = true,
+			func = function(self)
+				mMT:DropDown(menus.midnight, mMT.submenu, mMT.menu, 260, 2, "midnight_dungeons")
+			end,
+		})
+	end
+
 	-- Add tww dungeon portals
 	if mMT.knownTeleports.tww.available then
 		-- build submenu
@@ -531,7 +581,7 @@ local function UpdateMenus()
 
 		-- main menu entry for tww dungeon teleports
 		tinsert(menus.main, {
-			text = "TWW " .. L["Dungeon Teleports"],
+			text = "TWW",
 			right_text = ">>",
 			submenu = true,
 			func = function(self)
@@ -677,9 +727,9 @@ local function OnEnter(self)
 	end
 
 	-- Add season menu entry
-	if mMT.knownTeleports.season.available then
-		DT.tooltip:AddLine(L["TWW Dungeon Teleports"], mMT:GetRGB("title"))
-		for _, t in pairs(mMT.knownTeleports.tww) do
+	if mMT.knownTeleports.midnight.available then
+		DT.tooltip:AddLine(L["Midnight"], mMT:GetRGB("title"))
+		for _, t in pairs(mMT.knownTeleports.midnight) do
 			if t and type(t) == "table" then DT.tooltip:AddDoubleLine(BuildTipIcon(t.icon) .. mMT:TC(t.short_name and ("[" .. mMT:TC(t.short_name, "mark") .. "] " .. t.name) or t.name), t.cooldown) end
 		end
 		DT.tooltip:AddLine(" ")
