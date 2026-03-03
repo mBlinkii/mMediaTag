@@ -75,6 +75,10 @@ local teleportsIDs = {
 		[93672] = "toy", -- Dark Portal (Retail)
 		[95567] = "toy", -- Kirin Tor Beacon
 		[95568] = "toy", -- Sunreaver Beacon
+		[265100] = "toy", -- Corewarden's Hearthstone
+		[257736] = "toy", -- Lightcalled Hearthstone
+		[253629] = "toy", -- Arcantia
+
 	},
 	engineering = {
 		[112059] = "toy", --wormhole-centrifuge
