@@ -30,6 +30,8 @@ mMT.knownTeleports = {
 	midnight = {},
 	tww = {},
 	dungeonportals = {},
+	mage = {},
+	mageportals = {},
 }
 
 local textString = ""
@@ -78,7 +80,6 @@ local teleportsIDs = {
 		[265100] = "toy", -- Corewarden's Hearthstone
 		[257736] = "toy", -- Lightcalled Hearthstone
 		[253629] = "toy", -- Arcantia
-
 	},
 	engineering = {
 		[112059] = "toy", --wormhole-centrifuge
@@ -212,6 +213,10 @@ local teleportsIDs = {
 		[50977] = "spell", -- death-gate
 		[556] = "spell", -- astral-recall
 	},
+
+	mage = {},
+	mageportals = {},
+
 	season = {
 		-- midnight s1
 		[393273] = "AA",
@@ -487,7 +492,100 @@ local function processTeleport(t, category, kindOverride)
 	end
 end
 
+local function AddMageTeleports()
+	if E.myfaction == "Alliance" then
+		teleportsIDs.mage = {
+			-- alliance
+			[3561] = "spell", -- stormwind
+			[3562] = "spell", -- ironforge
+			[3565] = "spell", -- darnassus
+			[32271] = "spell", -- exodar
+			[33690] = "spell", -- shattrath
+			[49359] = "spell", -- theramore
+			[53140] = "spell", -- dalaran northrend
+			[88342] = "spell", -- tol barad
+			[132621] = "spell", -- vale of eternal blossoms
+			[176248] = "spell", -- Stormshield
+			[193759] = "spell", -- hall of the guardian
+			[224869] = "spell", -- dalaran broken isles
+			[281403] = "spell", -- boralus
+			[344587] = "spell", -- oribos
+			[395277] = "spell", -- valdrakken
+			[446540] = "spell", -- dornogol
+			[1259190] = "spell", -- silvermoon city
+		}
+
+		teleportsIDs.mageportals = {
+			-- alliance
+			[10059] = "spell", -- stormwind
+			[11416] = "spell", -- ironforge
+			[11419] = "spell", -- darnassus
+			[32266] = "spell", -- exodar
+			[49360] = "spell", -- theramore
+			[33691] = "spell", -- shattrath
+			[88345] = "spell", -- tol barad
+			[120146] = "spell", -- ancient portal dalaran
+			[132620] = "spell", -- vale of eternal blossoms
+			[176246] = "spell", -- stormshield
+			[281400] = "spell", -- boralus
+
+			-- booth
+			[53142] = "spell", -- dalaran northrend
+			[224871] = "spell", -- dalaran broken isles
+			[344597] = "spell", -- oribos
+			[395289] = "spell", -- valdrakken
+			[446534] = "spell", -- dornogal
+			[1259194] = "spell", -- silvermoon city
+		}
+	else
+		teleportsIDs.mage = {
+			-- horde
+			[10059] = "spell", -- stormwind
+			[11416] = "spell", -- ironforge
+			[11419] = "spell", -- darnassus
+			[32266] = "spell", -- exodar
+			[49360] = "spell", -- theramore
+			[33691] = "spell", -- shattrath
+			[53142] = "spell", -- dalaran northrend
+			[88345] = "spell", -- tol barad
+			[120146] = "spell", -- ancient portal dalaran
+			[132620] = "spell", -- vale of eternal blossoms
+			[176246] = "spell", -- stormshield
+			[224871] = "spell", -- dalaran broken isles
+			[281400] = "spell", -- boralus
+			[344597] = "spell", -- oribos
+			[395289] = "spell", -- valdrakken
+			[446534] = "spell", -- dornogal
+			[1259194] = "spell", -- silvermoon city
+		}
+
+		teleportsIDs.mageportals = {
+			-- horde
+			[11417] = "spell", -- orgrimmar
+			[11418] = "spell", -- undercity
+			[11420] = "spell", -- thunder bluff
+			[32267] = "spell", -- silvermoon tbc
+			[49361] = "spell", -- stonard
+			[35717] = "spell", -- shattrath
+			[88346] = "spell", -- tol barad
+			[132626] = "spell", -- vale of eternal blossoms
+			[176244] = "spell", -- warspear
+			[281402] = "spell", -- dazarlor
+
+			-- booth
+			[53142] = "spell", -- dalaran northrend
+			[224871] = "spell", -- dalaran broken isles
+			[344597] = "spell", -- oribos
+			[395289] = "spell", -- valdrakken
+			[446534] = "spell", -- dornogal
+			[1259194] = "spell", -- silvermoon city
+		}
+	end
+end
+
 function mMT:UpdateTeleports()
+	AddMageTeleports()
+
 	if E.db.mMT.datatexts.teleports.favorites.enable then
 		mMT.knownTeleports.favorites = {}
 		teleportsIDs.favorites = {}
@@ -508,6 +606,9 @@ function mMT:UpdateTeleports()
 	processTeleport(teleportsIDs.season, "season", "spell")
 	processTeleport(teleportsIDs.midnight, "midnight", "spell")
 	processTeleport(teleportsIDs.tww, "tww", "spell")
+
+	processTeleport(teleportsIDs.mage, "mage", "spell")
+	processTeleport(teleportsIDs.mageportals, "mageportals", "spell")
 
 	mMT.knownTeleports.other = mMT.knownTeleports.items.available or mMT.knownTeleports.spells.available
 end
@@ -650,6 +751,46 @@ local function UpdateMenus()
 			submenu = true,
 			func = function(self)
 				mMT:DropDown(menus.engineering, mMT.submenu, mMT.menu, 260, 2, "engineering")
+			end,
+		})
+	end
+
+	-- Add mage teleports
+	if mMT.knownTeleports.mage.available then
+		-- build submenu
+		menus.mage = {}
+
+		for id, t in pairs(mMT.knownTeleports.mage) do
+			if t and type(t) == "table" then tinsert(menus.mage, CreateMenuEntry(id, t)) end
+		end
+
+		-- main menu entry for mage teleports
+		tinsert(menus.main, {
+			text = L["Mage Teleports"],
+			right_text = ">>",
+			submenu = true,
+			func = function(self)
+				mMT:DropDown(menus.mage, mMT.submenu, mMT.menu, 260, 2, "mage")
+			end,
+		})
+	end
+
+	-- Add mage portals
+	if mMT.knownTeleports.mageportals.available then
+		-- build submenu
+		menus.mageportals = {}
+
+		for id, t in pairs(mMT.knownTeleports.mageportals) do
+			if t and type(t) == "table" then tinsert(menus.mageportals, CreateMenuEntry(id, t)) end
+		end
+
+		-- main menu entry for mage portals
+		tinsert(menus.main, {
+			text = L["Mage Portals"],
+			right_text = ">>",
+			submenu = true,
+			func = function(self)
+				mMT:DropDown(menus.mageportals, mMT.submenu, mMT.menu, 260, 2, "mageportals")
 			end,
 		})
 	end
