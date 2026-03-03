@@ -5,13 +5,13 @@ mMT.options.args.unitframes.args.castbar_shield.args = {
 		order = 1,
 		type = "toggle",
 		name = function()
-			return E.db.mMT.castbar_shield.enable and MEDIA.color.green:WrapTextInColorCode(L["Enabled"]) or MEDIA.color.red:WrapTextInColorCode(L["Disabled"])
+			return E.db.mMediaTag.castbar_shield.enable and MEDIA.color.green:WrapTextInColorCode(L["Enabled"]) or MEDIA.color.red:WrapTextInColorCode(L["Disabled"])
 		end,
 		get = function(info)
-			return E.db.mMT.castbar_shield.enable
+			return E.db.mMediaTag.castbar_shield.enable
 		end,
 		set = function(info, value)
-			E.db.mMT.castbar_shield.enable = value
+			E.db.mMediaTag.castbar_shield.enable = value
 			E:StaticPopup_Show("CONFIG_RL")
 		end,
 	},
@@ -27,10 +27,10 @@ mMT.options.args.unitframes.args.castbar_shield.args = {
 				name = L["Style"],
 				desc = L["Select a Icon texture"],
 				get = function(info)
-					return E.db.mMT.castbar_shield.texture
+					return E.db.mMediaTag.castbar_shield.texture
 				end,
 				set = function(info, value)
-					E.db.mMT.castbar_shield.texture = value
+					E.db.mMediaTag.castbar_shield.texture = value
 					M.CastbarShield:Initialize()
 				end,
 				values = function()
@@ -47,10 +47,10 @@ mMT.options.args.unitframes.args.castbar_shield.args = {
 				name = L["Nameplates"],
 				desc = L["Enable Castbar Shield for Nameplates."],
 				get = function(info)
-					return E.db.mMT.castbar_shield.nameplates
+					return E.db.mMediaTag.castbar_shield.nameplates
 				end,
 				set = function(info, value)
-					E.db.mMT.castbar_shield.nameplates = value
+					E.db.mMediaTag.castbar_shield.nameplates = value
 					M.CastbarShield:Initialize()
 				end,
 			},
@@ -60,10 +60,10 @@ mMT.options.args.unitframes.args.castbar_shield.args = {
 				name = L["Unitframes"],
 				desc = L["Enable Castbar Shield for Unitframes."],
 				get = function(info)
-					return E.db.mMT.castbar_shield.unitframes
+					return E.db.mMediaTag.castbar_shield.unitframes
 				end,
 				set = function(info, value)
-					E.db.mMT.castbar_shield.unitframes = value
+					E.db.mMediaTag.castbar_shield.unitframes = value
 					M.CastbarShield:Initialize()
 				end,
 			},
@@ -73,12 +73,12 @@ mMT.options.args.unitframes.args.castbar_shield.args = {
 				name = L["Color"],
 				hasAlpha = false,
 				get = function(info)
-					local r, g, b = mMT:HexToRGB(E.db.mMT.color.castbar_shield)
+					local r, g, b = mMT:HexToRGB(E.db.mMediaTag.color.castbar_shield)
 					return r, g, b
 				end,
 				set = function(info, r, g, b)
 					local hex = E:RGBToHex(r, g, b, "ff")
-					E.db.mMT.color.castbar_shield = hex
+					E.db.mMediaTag.color.castbar_shield = hex
 					MEDIA.color.castbar_shield = CreateColorFromHexString(hex)
 					M.CastbarShield:Initialize()
 				end,
@@ -95,10 +95,10 @@ mMT.options.args.unitframes.args.castbar_shield.args = {
 						name = L["Auto"],
 						desc = L["Enable automatic sizing of the castbar shield."],
 						get = function(info)
-							return E.db.mMT.castbar_shield.auto
+							return E.db.mMediaTag.castbar_shield.auto
 						end,
 						set = function(info, value)
-							E.db.mMT.castbar_shield.auto = value
+							E.db.mMediaTag.castbar_shield.auto = value
 							M.CastbarShield:Initialize()
 						end,
 					},
@@ -110,13 +110,13 @@ mMT.options.args.unitframes.args.castbar_shield.args = {
 						max = 256,
 						step = 0.2,
 						disabled = function()
-							return not E.db.mMT.castbar_shield.auto
+							return not E.db.mMediaTag.castbar_shield.auto
 						end,
 						get = function(info)
-							return E.db.mMT.castbar_shield.sizeX
+							return E.db.mMediaTag.castbar_shield.sizeX
 						end,
 						set = function(info, value)
-							E.db.mMT.castbar_shield.sizeX = value
+							E.db.mMediaTag.castbar_shield.sizeX = value
 							M.CastbarShield:Initialize()
 						end,
 					},
@@ -128,13 +128,13 @@ mMT.options.args.unitframes.args.castbar_shield.args = {
 						max = 256,
 						step = 0.2,
 						disabled = function()
-							return not E.db.mMT.castbar_shield.auto
+							return not E.db.mMediaTag.castbar_shield.auto
 						end,
 						get = function(info)
-							return E.db.mMT.castbar_shield.sizeY
+							return E.db.mMediaTag.castbar_shield.sizeY
 						end,
 						set = function(info, value)
-							E.db.mMT.castbar_shield.sizeY = value
+							E.db.mMediaTag.castbar_shield.sizeY = value
 							M.CastbarShield:Initialize()
 						end,
 					},
@@ -151,10 +151,10 @@ mMT.options.args.unitframes.args.castbar_shield.args = {
 						type = "select",
 						name = L["Anchor Point"],
 						get = function(info)
-							return E.db.mMT.castbar_shield.anchor
+							return E.db.mMediaTag.castbar_shield.anchor
 						end,
 						set = function(info, value)
-							E.db.mMT.castbar_shield.anchor = value
+							E.db.mMediaTag.castbar_shield.anchor = value
 							M.CastbarShield:Initialize()
 						end,
 						values = {
@@ -173,10 +173,10 @@ mMT.options.args.unitframes.args.castbar_shield.args = {
 						max = 512,
 						step = 0.1,
 						get = function(info)
-							return E.db.mMT.castbar_shield.posX
+							return E.db.mMediaTag.castbar_shield.posX
 						end,
 						set = function(info, value)
-							E.db.mMT.castbar_shield.posX = value
+							E.db.mMediaTag.castbar_shield.posX = value
 							M.CastbarShield:Initialize()
 						end,
 					},
@@ -188,10 +188,10 @@ mMT.options.args.unitframes.args.castbar_shield.args = {
 						max = 512,
 						step = 0.1,
 						get = function(info)
-							return E.db.mMT.castbar_shield.posY
+							return E.db.mMediaTag.castbar_shield.posY
 						end,
 						set = function(info, value)
-							E.db.mMT.castbar_shield.posY = value
+							E.db.mMediaTag.castbar_shield.posY = value
 							M.CastbarShield:Initialize()
 						end,
 					},

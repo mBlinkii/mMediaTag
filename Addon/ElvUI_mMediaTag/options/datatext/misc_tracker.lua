@@ -14,10 +14,10 @@ mMT.options.args.datatexts.args.misc_tracker.args = {
 				type = "toggle",
 				name = L["Show Icon"],
 				get = function(info)
-					return E.db.mMT.datatexts.tracker.icon
+					return E.db.mMediaTag.datatexts.tracker.icon
 				end,
 				set = function(info, value)
-					E.db.mMT.datatexts.tracker.icon = value
+					E.db.mMediaTag.datatexts.tracker.icon = value
 					M.Tracker:UpdateAll()
 				end,
 			},
@@ -26,10 +26,10 @@ mMT.options.args.datatexts.args.misc_tracker.args = {
 				type = "toggle",
 				name = L["Show Name"],
 				get = function(info)
-					return E.db.mMT.datatexts.tracker.name
+					return E.db.mMediaTag.datatexts.tracker.name
 				end,
 				set = function(info, value)
-					E.db.mMT.datatexts.tracker.name = value
+					E.db.mMediaTag.datatexts.tracker.name = value
 					M.Tracker:UpdateAll()
 				end,
 			},
@@ -38,10 +38,10 @@ mMT.options.args.datatexts.args.misc_tracker.args = {
 				type = "toggle",
 				name = L["Short large numbers"],
 				get = function(info)
-					return E.db.mMT.datatexts.tracker.short_number
+					return E.db.mMediaTag.datatexts.tracker.short_number
 				end,
 				set = function(info, value)
-					E.db.mMT.datatexts.tracker.short_number = value
+					E.db.mMediaTag.datatexts.tracker.short_number = value
 					M.Tracker:UpdateAll()
 				end,
 			},
@@ -50,10 +50,10 @@ mMT.options.args.datatexts.args.misc_tracker.args = {
 				type = "toggle",
 				name = L["Show max amount"],
 				get = function(info)
-					return E.db.mMT.datatexts.tracker.show_max
+					return E.db.mMediaTag.datatexts.tracker.show_max
 				end,
 				set = function(info, value)
-					E.db.mMT.datatexts.tracker.show_max = value
+					E.db.mMediaTag.datatexts.tracker.show_max = value
 					M.Tracker:UpdateAll()
 				end,
 			},
@@ -62,10 +62,10 @@ mMT.options.args.datatexts.args.misc_tracker.args = {
 				type = "toggle",
 				name = L["Color the text"],
 				get = function(info)
-					return E.db.mMT.datatexts.tracker.colored
+					return E.db.mMediaTag.datatexts.tracker.colored
 				end,
 				set = function(info, value)
-					E.db.mMT.datatexts.tracker.colored = value
+					E.db.mMediaTag.datatexts.tracker.colored = value
 					M.Tracker:UpdateAll()
 				end,
 			},
@@ -92,7 +92,7 @@ mMT.options.args.datatexts.args.misc_tracker.args = {
 				set = function(info, value)
 					selected_id = tonumber(value)
 					if selected_id then
-						E.db.mMT.datatexts.tracker.custom[selected_id] = { isCurrency = true, color = "FFFFFFFF" }
+						E.db.mMediaTag.datatexts.tracker.custom[selected_id] = { isCurrency = true, color = "FFFFFFFF" }
 						E:StaticPopup_Show("CONFIG_RL")
 					else
 						mMT:Print(L["!!Error - this is not an ID."])
@@ -111,7 +111,7 @@ mMT.options.args.datatexts.args.misc_tracker.args = {
 				end,
 				values = function()
 					local ids = {}
-					for id, _ in pairs(E.db.mMT.datatexts.tracker.custom) do
+					for id, _ in pairs(E.db.mMediaTag.datatexts.tracker.custom) do
 						ids[tostring(id)] = tostring(id)
 					end
 					return ids
@@ -122,7 +122,7 @@ mMT.options.args.datatexts.args.misc_tracker.args = {
 				order = 4,
 				name = L["Delete ID"],
 				set = function(info, value)
-					E.db.mMT.datatexts.tracker.custom[tonumber(value)] = nil
+					E.db.mMediaTag.datatexts.tracker.custom[tonumber(value)] = nil
 					selected_id = nil
 					E:StaticPopup_Show("CONFIG_RL")
 				end,
@@ -131,7 +131,7 @@ mMT.options.args.datatexts.args.misc_tracker.args = {
 				end,
 				values = function()
 					local ids = {}
-					for id, _ in pairs(E.db.mMT.datatexts.tracker.custom) do
+					for id, _ in pairs(E.db.mMediaTag.datatexts.tracker.custom) do
 						ids[tostring(id)] = tostring(id)
 					end
 					return ids
@@ -152,9 +152,9 @@ mMT.options.args.datatexts.args.misc_tracker.args = {
 						fontSize = "medium",
 						name = function()
 							if selected_id then
-								local info = E.db.mMT.datatexts.tracker.custom[selected_id].isCurrency and M.Tracker:GetCurrencyInfos(selected_id) or M.Tracker:GetItemInfos(selected_id)
+								local info = E.db.mMediaTag.datatexts.tracker.custom[selected_id].isCurrency and M.Tracker:GetCurrencyInfos(selected_id) or M.Tracker:GetItemInfos(selected_id)
 								if info then
-									local db = E.db.mMT.datatexts.tracker
+									local db = E.db.mMediaTag.datatexts.tracker
 									local name, icon, value
 									local textString, valueString = "", ""
 
@@ -166,8 +166,8 @@ mMT.options.args.datatexts.args.misc_tracker.args = {
 
 									value = info.count
 
-									local textHex = E.db.mMT.datatexts.text.override_text and "|c" .. MEDIA.color.override_text.hex or db.colored and "|c" .. db.custom[selected_id].color
-									local valueHex = E.db.mMT.datatexts.text.override_value and "|c" .. MEDIA.color.override_value.hex or db.colored and "|c" .. db.custom[selected_id].color
+									local textHex = E.db.mMediaTag.datatexts.text.override_text and "|c" .. MEDIA.color.override_text.hex or db.colored and "|c" .. db.custom[selected_id].color
+									local valueHex = E.db.mMediaTag.datatexts.text.override_value and "|c" .. MEDIA.color.override_value.hex or db.colored and "|c" .. db.custom[selected_id].color
 
 									textString = strjoin("", textHex, "%s|r")
 									valueString = strjoin("", valueHex, "%s|r")
@@ -188,11 +188,11 @@ mMT.options.args.datatexts.args.misc_tracker.args = {
 						type = "toggle",
 						name = L["Is Currency"],
 						get = function(info)
-							return selected_id and E.db.mMT.datatexts.tracker.custom[selected_id] and E.db.mMT.datatexts.tracker.custom[selected_id].isCurrency
+							return selected_id and E.db.mMediaTag.datatexts.tracker.custom[selected_id] and E.db.mMediaTag.datatexts.tracker.custom[selected_id].isCurrency
 						end,
 						set = function(info, value)
-							if selected_id and E.db.mMT.datatexts.tracker.custom[selected_id] then
-								E.db.mMT.datatexts.tracker.custom[selected_id].isCurrency = value
+							if selected_id and E.db.mMediaTag.datatexts.tracker.custom[selected_id] then
+								E.db.mMediaTag.datatexts.tracker.custom[selected_id].isCurrency = value
 								M.Tracker:UpdateAll()
 							end
 						end,
@@ -203,17 +203,17 @@ mMT.options.args.datatexts.args.misc_tracker.args = {
 						name = L["Color"],
 						hasAlpha = false,
 						get = function(info)
-							if selected_id and E.db.mMT.datatexts.tracker.custom[selected_id] then
-								local r, g, b = mMT:HexToRGB(E.db.mMT.datatexts.tracker.custom[selected_id].color)
+							if selected_id and E.db.mMediaTag.datatexts.tracker.custom[selected_id] then
+								local r, g, b = mMT:HexToRGB(E.db.mMediaTag.datatexts.tracker.custom[selected_id].color)
 								return r, g, b
 							else
 								return 1, 1, 1
 							end
 						end,
 						set = function(info, r, g, b)
-							if selected_id and E.db.mMT.datatexts.tracker.custom[selected_id] then
+							if selected_id and E.db.mMediaTag.datatexts.tracker.custom[selected_id] then
 								local hex = E:RGBToHex(r, g, b, "ff")
-								E.db.mMT.datatexts.tracker.custom[selected_id].color = hex
+								E.db.mMediaTag.datatexts.tracker.custom[selected_id].color = hex
 								E.Options.args.mMT.args.datatexts.args.misc_tracker.args.custom_ids.args.custom_ids_settings.args.name.name(nil, hex)
 								M.Tracker:UpdateAll()
 							end

@@ -186,33 +186,33 @@ function mMT:UpdateMedia(arg)
 
 	if arg == "lfg" or not arg then
 		for _, key in ipairs({ "line_a", "line_b", "line_c" }) do
-			MEDIA.color[key] = CreateColorFromHexString(E.db.mMT.lfg_invite_info.colors[key])
-			MEDIA.color[key].hex = E.db.mMT.lfg_invite_info.colors[key]
+			MEDIA.color[key] = CreateColorFromHexString(E.db.mMediaTag.lfg_invite_info.colors[key])
+			MEDIA.color[key].hex = E.db.mMediaTag.lfg_invite_info.colors[key]
 		end
 	end
 
 	if arg == "datatexts" or not arg then
 		for _, key in ipairs({ "title", "text", "tip", "mark" }) do
-			MEDIA.color[key] = CreateColorFromHexString(E.db.mMT.color[key])
-			MEDIA.color[key].hex = E.db.mMT.color[key]
+			MEDIA.color[key] = CreateColorFromHexString(E.db.mMediaTag.color[key])
+			MEDIA.color[key].hex = E.db.mMediaTag.color[key]
 		end
 
-		MEDIA.color.override_text = CreateColorFromHexString(E.db.mMT.datatexts.text.text)
-		MEDIA.color.override_text.hex = E.db.mMT.datatexts.text.text
-		MEDIA.color.override_value = CreateColorFromHexString(E.db.mMT.datatexts.text.value)
-		MEDIA.color.override_value.hex = E.db.mMT.datatexts.text.value
-		MEDIA.color.gm_text_color = CreateColorFromHexString(E.db.mMT.datatexts.menu.text_color)
-		MEDIA.color.gm_text_color.hex = E.db.mMT.datatexts.menu.text_color
-		MEDIA.color.di_warning = CreateColorFromHexString(E.db.mMT.datatexts.durability_itemLevel.color_warning)
-		MEDIA.color.di_warning.hex = E.db.mMT.datatexts.durability_itemLevel.color_warning
-		MEDIA.color.di_repair = CreateColorFromHexString(E.db.mMT.datatexts.durability_itemLevel.color_repair)
-		MEDIA.color.di_repair.hex = E.db.mMT.datatexts.durability_itemLevel.color_repair
+		MEDIA.color.override_text = CreateColorFromHexString(E.db.mMediaTag.datatexts.text.text)
+		MEDIA.color.override_text.hex = E.db.mMediaTag.datatexts.text.text
+		MEDIA.color.override_value = CreateColorFromHexString(E.db.mMediaTag.datatexts.text.value)
+		MEDIA.color.override_value.hex = E.db.mMediaTag.datatexts.text.value
+		MEDIA.color.gm_text_color = CreateColorFromHexString(E.db.mMediaTag.datatexts.menu.text_color)
+		MEDIA.color.gm_text_color.hex = E.db.mMediaTag.datatexts.menu.text_color
+		MEDIA.color.di_warning = CreateColorFromHexString(E.db.mMediaTag.datatexts.durability_itemLevel.color_warning)
+		MEDIA.color.di_warning.hex = E.db.mMediaTag.datatexts.durability_itemLevel.color_warning
+		MEDIA.color.di_repair = CreateColorFromHexString(E.db.mMediaTag.datatexts.durability_itemLevel.color_repair)
+		MEDIA.color.di_repair.hex = E.db.mMediaTag.datatexts.durability_itemLevel.color_repair
 	end
 
 	if arg == "difficulty" or not arg then
 		for _, key in ipairs({ "N", "H", "M", "PVP", "MP", "LFR", "TW", "QUEST", "SC", "STORY", "DELVE", "FOLLOWER", "OTHER", "GUILD" }) do
-			MEDIA.color[key] = CreateColorFromHexString(E.db.mMT.color[key])
-			MEDIA.color[key].hex = E.db.mMT.color[key]
+			MEDIA.color[key] = CreateColorFromHexString(E.db.mMediaTag.color[key])
+			MEDIA.color[key].hex = E.db.mMediaTag.color[key]
 		end
 	end
 
@@ -227,10 +227,10 @@ function mMT:UpdateMedia(arg)
 
 		MEDIA.color.portraits = nil
 		MEDIA.color.portraits = {
-			misc = createColorSet(E.db.mMT.color.portraits.misc),
-			class = createColorSet(E.db.mMT.color.portraits.class),
-			classification = createColorSet(E.db.mMT.color.portraits.classification),
-			reaction = createColorSet(E.db.mMT.color.portraits.reaction),
+			misc = createColorSet(E.db.mMediaTag.color.portraits.misc),
+			class = createColorSet(E.db.mMediaTag.color.portraits.class),
+			classification = createColorSet(E.db.mMediaTag.color.portraits.classification),
+			reaction = createColorSet(E.db.mMediaTag.color.portraits.reaction),
 		}
 	end
 
@@ -244,81 +244,81 @@ function mMT:UpdateMedia(arg)
 		end
 
 		MEDIA.color.interrupt_on_cd = {
-			onCD = createColorSets(E.db.mMT.color.interrupt_on_cd.onCD),
-			inTime = createColorSets(E.db.mMT.color.interrupt_on_cd.inTime),
-			outOfRange = createColorSets(E.db.mMT.color.interrupt_on_cd.outOfRange),
-			marker = createColorSets(E.db.mMT.color.interrupt_on_cd.marker),
+			onCD = createColorSets(E.db.mMediaTag.color.interrupt_on_cd.onCD),
+			inTime = createColorSets(E.db.mMediaTag.color.interrupt_on_cd.inTime),
+			outOfRange = createColorSets(E.db.mMediaTag.color.interrupt_on_cd.outOfRange),
+			marker = createColorSets(E.db.mMediaTag.color.interrupt_on_cd.marker),
 		}
 	end
 
-	if arg == "castbar_shield" or not arg then MEDIA.color.castbar_shield = CreateColorFromHexString(E.db.mMT.color.castbar_shield) end
+	if arg == "castbar_shield" or not arg then MEDIA.color.castbar_shield = CreateColorFromHexString(E.db.mMediaTag.color.castbar_shield) end
 
 	if arg == "minimap_skin" or not arg then
-		MEDIA.color.minimap_skin.color = CreateColorFromHexString(E.db.mMT.color.minimap_skin.color)
-		MEDIA.color.minimap_skin.cardinal = CreateColorFromHexString(E.db.mMT.color.minimap_skin.cardinal)
+		MEDIA.color.minimap_skin.color = CreateColorFromHexString(E.db.mMediaTag.color.minimap_skin.color)
+		MEDIA.color.minimap_skin.cardinal = CreateColorFromHexString(E.db.mMediaTag.color.minimap_skin.cardinal)
 	end
 
 	if arg == "dock" or not arg then
-		MEDIA.color.dock.normal = CreateColorFromHexString(E.db.mMT.color.dock.normal)
-		MEDIA.color.dock.hover = CreateColorFromHexString(E.db.mMT.color.dock.hover)
-		MEDIA.color.dock.clicked = CreateColorFromHexString(E.db.mMT.color.dock.clicked)
-		MEDIA.color.dock.notification = CreateColorFromHexString(E.db.mMT.color.dock.notification)
-		MEDIA.color.dock.font = CreateColorFromHexString(E.db.mMT.color.dock.font)
-		MEDIA.color.dock.font.hex = E.db.mMT.color.dock.font
-		MEDIA.color.dock.store = CreateColorFromHexString(E.db.mMT.color.dock.store)
-		MEDIA.color.dock.achievement = CreateColorFromHexString(E.db.mMT.color.dock.achievement)
-		MEDIA.color.dock.bags = CreateColorFromHexString(E.db.mMT.color.dock.bags)
-		MEDIA.color.dock.character = CreateColorFromHexString(E.db.mMT.color.dock.character)
-		MEDIA.color.dock.collection = CreateColorFromHexString(E.db.mMT.color.dock.collection)
-		MEDIA.color.dock.durability = CreateColorFromHexString(E.db.mMT.color.dock.durability)
-		MEDIA.color.dock.encounter = CreateColorFromHexString(E.db.mMT.color.dock.encounter)
-		MEDIA.color.dock.friends = CreateColorFromHexString(E.db.mMT.color.dock.friends)
-		MEDIA.color.dock.guild = CreateColorFromHexString(E.db.mMT.color.dock.guild)
-		MEDIA.color.dock.lfd = CreateColorFromHexString(E.db.mMT.color.dock.lfd)
-		MEDIA.color.dock.mail = CreateColorFromHexString(E.db.mMT.color.dock.mail)
-		MEDIA.color.dock.menu = CreateColorFromHexString(E.db.mMT.color.dock.menu)
-		MEDIA.color.dock.professions = CreateColorFromHexString(E.db.mMT.color.dock.professions)
-		MEDIA.color.dock.quests = CreateColorFromHexString(E.db.mMT.color.dock.quests)
-		MEDIA.color.dock.spellbook = CreateColorFromHexString(E.db.mMT.color.dock.spellbook)
-		MEDIA.color.dock.spec = CreateColorFromHexString(E.db.mMT.color.dock.spec)
-		MEDIA.color.dock.volume = CreateColorFromHexString(E.db.mMT.color.dock.volume)
-		MEDIA.color.dock.calendar = CreateColorFromHexString(E.db.mMT.color.dock.calendar)
+		MEDIA.color.dock.normal = CreateColorFromHexString(E.db.mMediaTag.color.dock.normal)
+		MEDIA.color.dock.hover = CreateColorFromHexString(E.db.mMediaTag.color.dock.hover)
+		MEDIA.color.dock.clicked = CreateColorFromHexString(E.db.mMediaTag.color.dock.clicked)
+		MEDIA.color.dock.notification = CreateColorFromHexString(E.db.mMediaTag.color.dock.notification)
+		MEDIA.color.dock.font = CreateColorFromHexString(E.db.mMediaTag.color.dock.font)
+		MEDIA.color.dock.font.hex = E.db.mMediaTag.color.dock.font
+		MEDIA.color.dock.store = CreateColorFromHexString(E.db.mMediaTag.color.dock.store)
+		MEDIA.color.dock.achievement = CreateColorFromHexString(E.db.mMediaTag.color.dock.achievement)
+		MEDIA.color.dock.bags = CreateColorFromHexString(E.db.mMediaTag.color.dock.bags)
+		MEDIA.color.dock.character = CreateColorFromHexString(E.db.mMediaTag.color.dock.character)
+		MEDIA.color.dock.collection = CreateColorFromHexString(E.db.mMediaTag.color.dock.collection)
+		MEDIA.color.dock.durability = CreateColorFromHexString(E.db.mMediaTag.color.dock.durability)
+		MEDIA.color.dock.encounter = CreateColorFromHexString(E.db.mMediaTag.color.dock.encounter)
+		MEDIA.color.dock.friends = CreateColorFromHexString(E.db.mMediaTag.color.dock.friends)
+		MEDIA.color.dock.guild = CreateColorFromHexString(E.db.mMediaTag.color.dock.guild)
+		MEDIA.color.dock.lfd = CreateColorFromHexString(E.db.mMediaTag.color.dock.lfd)
+		MEDIA.color.dock.mail = CreateColorFromHexString(E.db.mMediaTag.color.dock.mail)
+		MEDIA.color.dock.menu = CreateColorFromHexString(E.db.mMediaTag.color.dock.menu)
+		MEDIA.color.dock.professions = CreateColorFromHexString(E.db.mMediaTag.color.dock.professions)
+		MEDIA.color.dock.quests = CreateColorFromHexString(E.db.mMediaTag.color.dock.quests)
+		MEDIA.color.dock.spellbook = CreateColorFromHexString(E.db.mMediaTag.color.dock.spellbook)
+		MEDIA.color.dock.spec = CreateColorFromHexString(E.db.mMediaTag.color.dock.spec)
+		MEDIA.color.dock.volume = CreateColorFromHexString(E.db.mMediaTag.color.dock.volume)
+		MEDIA.color.dock.calendar = CreateColorFromHexString(E.db.mMediaTag.color.dock.calendar)
 	end
 
 	if arg == "tags" or not arg then
-		MEDIA.color.tags.rare = CreateColorFromHexString(E.db.mMT.color.tags.classification.rare)
-		MEDIA.color.tags.rare.hex = E.db.mMT.color.tags.classification.rare
-		MEDIA.color.tags.rareelite = CreateColorFromHexString(E.db.mMT.color.tags.classification.rareelite)
-		MEDIA.color.tags.rareelite.hex = E.db.mMT.color.tags.classification.rareelite
-		MEDIA.color.tags.elite = CreateColorFromHexString(E.db.mMT.color.tags.classification.elite)
-		MEDIA.color.tags.elite.hex = E.db.mMT.color.tags.classification.elite
-		MEDIA.color.tags.worldboss = CreateColorFromHexString(E.db.mMT.color.tags.classification.worldboss)
-		MEDIA.color.tags.worldboss.hex = E.db.mMT.color.tags.classification.worldboss
-		MEDIA.color.tags.afk = CreateColorFromHexString(E.db.mMT.color.tags.status.afk)
-		MEDIA.color.tags.afk.hex = E.db.mMT.color.tags.status.afk
-		MEDIA.color.tags.dnd = CreateColorFromHexString(E.db.mMT.color.tags.status.dnd)
-		MEDIA.color.tags.dnd.hex = E.db.mMT.color.tags.status.dnd
-		MEDIA.color.tags.dc = CreateColorFromHexString(E.db.mMT.color.tags.status.dc)
-		MEDIA.color.tags.dc.hex = E.db.mMT.color.tags.status.dc
-		MEDIA.color.tags.dead = CreateColorFromHexString(E.db.mMT.color.tags.status.dead)
-		MEDIA.color.tags.dead.hex = E.db.mMT.color.tags.status.dead
-		MEDIA.color.tags.ghost = CreateColorFromHexString(E.db.mMT.color.tags.status.ghost)
-		MEDIA.color.tags.ghost.hex = E.db.mMT.color.tags.status.ghost
-		MEDIA.color.tags.tank = CreateColorFromHexString(E.db.mMT.color.tags.misc.tank)
-		MEDIA.color.tags.tank.hex = E.db.mMT.color.tags.misc.tank
-		MEDIA.color.tags.healer = CreateColorFromHexString(E.db.mMT.color.tags.misc.healer)
-		MEDIA.color.tags.healer.hex = E.db.mMT.color.tags.misc.healer
-		MEDIA.color.tags.dps = CreateColorFromHexString(E.db.mMT.color.tags.misc.dps)
-		MEDIA.color.tags.dps.hex = E.db.mMT.color.tags.misc.dps
-		MEDIA.color.tags.pvp = CreateColorFromHexString(E.db.mMT.color.tags.misc.pvp)
-		MEDIA.color.tags.pvp.hex = E.db.mMT.color.tags.misc.pvp
-		MEDIA.color.tags.quest = CreateColorFromHexString(E.db.mMT.color.tags.misc.quest)
-		MEDIA.color.tags.quest.hex = E.db.mMT.color.tags.misc.quest
-		MEDIA.color.tags.resting = CreateColorFromHexString(E.db.mMT.color.tags.misc.resting)
-		MEDIA.color.tags.resting.hex = E.db.mMT.color.tags.misc.resting
+		MEDIA.color.tags.rare = CreateColorFromHexString(E.db.mMediaTag.color.tags.classification.rare)
+		MEDIA.color.tags.rare.hex = E.db.mMediaTag.color.tags.classification.rare
+		MEDIA.color.tags.rareelite = CreateColorFromHexString(E.db.mMediaTag.color.tags.classification.rareelite)
+		MEDIA.color.tags.rareelite.hex = E.db.mMediaTag.color.tags.classification.rareelite
+		MEDIA.color.tags.elite = CreateColorFromHexString(E.db.mMediaTag.color.tags.classification.elite)
+		MEDIA.color.tags.elite.hex = E.db.mMediaTag.color.tags.classification.elite
+		MEDIA.color.tags.worldboss = CreateColorFromHexString(E.db.mMediaTag.color.tags.classification.worldboss)
+		MEDIA.color.tags.worldboss.hex = E.db.mMediaTag.color.tags.classification.worldboss
+		MEDIA.color.tags.afk = CreateColorFromHexString(E.db.mMediaTag.color.tags.status.afk)
+		MEDIA.color.tags.afk.hex = E.db.mMediaTag.color.tags.status.afk
+		MEDIA.color.tags.dnd = CreateColorFromHexString(E.db.mMediaTag.color.tags.status.dnd)
+		MEDIA.color.tags.dnd.hex = E.db.mMediaTag.color.tags.status.dnd
+		MEDIA.color.tags.dc = CreateColorFromHexString(E.db.mMediaTag.color.tags.status.dc)
+		MEDIA.color.tags.dc.hex = E.db.mMediaTag.color.tags.status.dc
+		MEDIA.color.tags.dead = CreateColorFromHexString(E.db.mMediaTag.color.tags.status.dead)
+		MEDIA.color.tags.dead.hex = E.db.mMediaTag.color.tags.status.dead
+		MEDIA.color.tags.ghost = CreateColorFromHexString(E.db.mMediaTag.color.tags.status.ghost)
+		MEDIA.color.tags.ghost.hex = E.db.mMediaTag.color.tags.status.ghost
+		MEDIA.color.tags.tank = CreateColorFromHexString(E.db.mMediaTag.color.tags.misc.tank)
+		MEDIA.color.tags.tank.hex = E.db.mMediaTag.color.tags.misc.tank
+		MEDIA.color.tags.healer = CreateColorFromHexString(E.db.mMediaTag.color.tags.misc.healer)
+		MEDIA.color.tags.healer.hex = E.db.mMediaTag.color.tags.misc.healer
+		MEDIA.color.tags.dps = CreateColorFromHexString(E.db.mMediaTag.color.tags.misc.dps)
+		MEDIA.color.tags.dps.hex = E.db.mMediaTag.color.tags.misc.dps
+		MEDIA.color.tags.pvp = CreateColorFromHexString(E.db.mMediaTag.color.tags.misc.pvp)
+		MEDIA.color.tags.pvp.hex = E.db.mMediaTag.color.tags.misc.pvp
+		MEDIA.color.tags.quest = CreateColorFromHexString(E.db.mMediaTag.color.tags.misc.quest)
+		MEDIA.color.tags.quest.hex = E.db.mMediaTag.color.tags.misc.quest
+		MEDIA.color.tags.resting = CreateColorFromHexString(E.db.mMediaTag.color.tags.misc.resting)
+		MEDIA.color.tags.resting.hex = E.db.mMediaTag.color.tags.misc.resting
 		for i = 1, 8 do
-			MEDIA.color.tags[i] = CreateColorFromHexString(E.db.mMT.color.tags.raidtargetmarkers[i])
-			MEDIA.color.tags[i].hex = E.db.mMT.color.tags.raidtargetmarkers[i]
+			MEDIA.color.tags[i] = CreateColorFromHexString(E.db.mMediaTag.color.tags.raidtargetmarkers[i])
+			MEDIA.color.tags[i].hex = E.db.mMediaTag.color.tags.raidtargetmarkers[i]
 		end
 	end
 end

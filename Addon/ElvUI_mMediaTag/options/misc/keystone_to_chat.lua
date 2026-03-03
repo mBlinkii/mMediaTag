@@ -17,14 +17,14 @@ mMT.options.args.general.args.keystone_to_chat.args = {
 		order = 3,
 		type = "toggle",
 		name = function()
-			return E.db.mMT.keystone_to_chat.enable and MEDIA.color.green:WrapTextInColorCode(L["Enabled"]) or MEDIA.color.red:WrapTextInColorCode(L["Disabled"])
+			return E.db.mMediaTag.keystone_to_chat.enable and MEDIA.color.green:WrapTextInColorCode(L["Enabled"]) or MEDIA.color.red:WrapTextInColorCode(L["Disabled"])
 		end,
 		desc = L["Post your keystone to the chat when someone types !key or !keys into the chat."],
 		get = function(info)
-			return E.db.mMT.keystone_to_chat.enable
+			return E.db.mMediaTag.keystone_to_chat.enable
 		end,
 		set = function(info, value)
-			E.db.mMT.keystone_to_chat.enable = value
+			E.db.mMediaTag.keystone_to_chat.enable = value
 			mMT:UpdateModule("KeystoneToChat")
 		end,
 	},

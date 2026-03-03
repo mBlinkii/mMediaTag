@@ -13,10 +13,10 @@ mMT.options.args.datatexts.args.info_score.args = {
 				type = "toggle",
 				name = L["Show Party Keystones"],
 				get = function(info)
-					return E.db.mMT.datatexts.score.group_keystones
+					return E.db.mMediaTag.datatexts.score.group_keystones
 				end,
 				set = function(info, value)
-					E.db.mMT.datatexts.score.group_keystones = value
+					E.db.mMediaTag.datatexts.score.group_keystones = value
 					DT:ForceUpdate_DataText("mMT - M+ Score")
 				end,
 			},
@@ -25,10 +25,10 @@ mMT.options.args.datatexts.args.info_score.args = {
 				type = "toggle",
 				name = L["Show Upgrades"],
 				get = function(info)
-					return E.db.mMT.datatexts.score.show_upgrade
+					return E.db.mMediaTag.datatexts.score.show_upgrade
 				end,
 				set = function(info, value)
-					E.db.mMT.datatexts.score.show_upgrade = value
+					E.db.mMediaTag.datatexts.score.show_upgrade = value
 					DT:ForceUpdate_DataText("mMT - M+ Score")
 				end,
 			},
@@ -37,10 +37,10 @@ mMT.options.args.datatexts.args.info_score.args = {
 				type = "select",
 				name = L["Sort method"],
 				get = function(info)
-					return E.db.mMT.datatexts.score.sort_method
+					return E.db.mMediaTag.datatexts.score.sort_method
 				end,
 				set = function(info, value)
-					E.db.mMT.datatexts.score.sort_method = value
+					E.db.mMediaTag.datatexts.score.sort_method = value
 					DT:ForceUpdate_DataText("mMT - M+ Score")
 				end,
 				values = {

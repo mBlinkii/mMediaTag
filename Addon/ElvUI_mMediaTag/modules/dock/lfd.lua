@@ -94,14 +94,14 @@ end
 local function OnEnter(self)
 	Dock:OnEnter(self)
 
-	if E.db.mMT.dock.tooltip then
+	if E.db.mMediaTag.dock.tooltip then
 		if lfdDT then lfdDT.onEnter() end
 	end
 end
 
 local function OnLeave(self)
 	Dock:OnLeave(self)
-	if E.db.mMT.dock.tooltip then DT.tooltip:Hide() end
+	if E.db.mMediaTag.dock.tooltip then DT.tooltip:Hide() end
 end
 
 local function OnClick(self, btn)
@@ -115,10 +115,10 @@ local function OnEvent(...)
 
 	if event == "ELVUI_FORCE_UPDATE" then
 		--setup settings
-		config.icon.texture = icons[E.db.mMT.dock.lfd.style][E.db.mMT.dock.lfd.icon] or MEDIA.fallback
-		config.icon.color = E.db.mMT.dock.lfd.custom_color and MEDIA.color.dock.lfd or nil
-		config.text.enable = E.db.mMT.dock.lfd.text
-		config.text.a = E.db.mMT.dock.lfd.text
+		config.icon.texture = icons[E.db.mMediaTag.dock.lfd.style][E.db.mMediaTag.dock.lfd.icon] or MEDIA.fallback
+		config.icon.color = E.db.mMediaTag.dock.lfd.custom_color and MEDIA.color.dock.lfd or nil
+		config.text.enable = E.db.mMediaTag.dock.lfd.text
+		config.text.a = E.db.mMediaTag.dock.lfd.text
 
 		Dock:CreateDockIcon(self, config, event)
 
@@ -138,13 +138,13 @@ local function OnEvent(...)
 
 	if lfdDT and lfdDT ~= "Data Broker" then lfdDT.eventFunc(...) end
 
-	if E.db.mMT.dock.lfd.text then
+	if E.db.mMediaTag.dock.lfd.text then
 		local isInInstance = IsInInstance()
 		local isInGroup = IsInGroup()
 		local text = ""
 
 		-- CTA info outside the instance
-		if E.Retail and E.db.mMT.dock.lfd.call_to_the_Arms and not isInInstance then text = GetCallToTheArmsInfos() or "" end
+		if E.Retail and E.db.mMediaTag.dock.lfd.call_to_the_Arms and not isInInstance then text = GetCallToTheArmsInfos() or "" end
 
 		-- In instance: Show dungeon info
 		if isInInstance then

@@ -24,7 +24,7 @@ local config = {
 local function OnEnter(self)
 	Dock:OnEnter(self)
 
-	if E.db.mMT.dock.tooltip then
+	if E.db.mMediaTag.dock.tooltip then
 		DT.tooltip:ClearLines()
 		DT.tooltip:AddLine((E.Retail and _G.SPELLBOOK or _G.SPELLBOOK_ABILITIES_BUTTON), mMT:GetRGB("title"))
 		DT.tooltip:AddLine(" ")
@@ -51,7 +51,7 @@ end
 
 local function OnLeave(self)
 	Dock:OnLeave(self)
-	if E.db.mMT.dock.tooltip then DT.tooltip:Hide() end
+	if E.db.mMediaTag.dock.tooltip then DT.tooltip:Hide() end
 end
 
 local function OnClick(self)
@@ -68,8 +68,8 @@ end
 local function OnEvent(self, event, ...)
 	if event == "ELVUI_FORCE_UPDATE" then
 		-- setup settings
-		config.icon.texture = icons[E.db.mMT.dock.spellbook.style][E.db.mMT.dock.spellbook.icon] or MEDIA.fallback
-		config.icon.color = E.db.mMT.dock.spellbook.custom_color and MEDIA.color.dock.spellbook or nil
+		config.icon.texture = icons[E.db.mMediaTag.dock.spellbook.style][E.db.mMediaTag.dock.spellbook.icon] or MEDIA.fallback
+		config.icon.color = E.db.mMediaTag.dock.spellbook.custom_color and MEDIA.color.dock.spellbook or nil
 
 		Dock:CreateDockIcon(self, config, event)
 	end

@@ -30,13 +30,13 @@ mMT.options.args.misc.args.data_panel_skin.args = {
 		order = 1,
 		type = "toggle",
 		name = function()
-			return E.db.mMT.data_panel_skin.enable and MEDIA.color.green:WrapTextInColorCode(L["Enabled"]) or MEDIA.color.red:WrapTextInColorCode(L["Disabled"])
+			return E.db.mMediaTag.data_panel_skin.enable and MEDIA.color.green:WrapTextInColorCode(L["Enabled"]) or MEDIA.color.red:WrapTextInColorCode(L["Disabled"])
 		end,
 		get = function(info)
-			return E.db.mMT.data_panel_skin.enable
+			return E.db.mMediaTag.data_panel_skin.enable
 		end,
 		set = function(info, value)
-			E.db.mMT.data_panel_skin.enable = value
+			E.db.mMediaTag.data_panel_skin.enable = value
 			mMT:UpdateModule("DataPanelSkin")
 			--E:StaticPopup_Show("CONFIG_RL")
 		end,
@@ -90,7 +90,7 @@ mMT.options.args.misc.args.data_panel_skin.args = {
 					selectedPanelName = value
 					selectedPanel = {}
 					E:CopyTable(selectedPanel, defaults)
-					selectedPanel = E:CopyTable(selectedPanel, E.db.mMT.data_panel_skin.panels[value])
+					selectedPanel = E:CopyTable(selectedPanel, E.db.mMediaTag.data_panel_skin.panels[value])
 				end,
 			},
 			apply = {
@@ -98,7 +98,7 @@ mMT.options.args.misc.args.data_panel_skin.args = {
 				type = "execute",
 				name = L["Apply"],
 				func = function()
-					if selectedPanelName and selectedPanel then E.db.mMT.data_panel_skin.panels[selectedPanelName] = selectedPanel end
+					if selectedPanelName and selectedPanel then E.db.mMediaTag.data_panel_skin.panels[selectedPanelName] = selectedPanel end
 					mMT:UpdateModule("DataPanelSkin")
 					E:UpdateDataTexts()
 				end,
@@ -109,7 +109,7 @@ mMT.options.args.misc.args.data_panel_skin.args = {
 				name = L["Reset"],
 				desc = L["Delete the actual Settings"],
 				func = function()
-					wipe(E.db.mMT.data_panel_skin.panels[selectedPanelName])
+					wipe(E.db.mMediaTag.data_panel_skin.panels[selectedPanelName])
                     selectedPanel = nil
                     selectedPanelName = nil
 					mMT:UpdateModule("DataPanelSkin")
@@ -122,7 +122,7 @@ mMT.options.args.misc.args.data_panel_skin.args = {
 				name = L["Reset all"],
 				desc = L["Delete all Settings"],
 				func = function()
-					wipe(E.db.mMT.data_panel_skin.panels)
+					wipe(E.db.mMediaTag.data_panel_skin.panels)
 					mMT:UpdateModule("DataPanelSkin")
 					E:UpdateDataTexts()
 				end,
@@ -317,8 +317,8 @@ mMT.options.args.misc.args.data_panel_skin.args = {
 				type = "execute",
 				name = L["Export"],
 				func = function()
-					if next(E.db.mMT.data_panel_skin.panels) then
-						exportText = mMT:GetExportText(E.db.mMT.data_panel_skin.panels, "mMTCosmeticBras")
+					if next(E.db.mMediaTag.data_panel_skin.panels) then
+						exportText = mMT:GetExportText(E.db.mMediaTag.data_panel_skin.panels, "mMTCosmeticBras")
 						button = exportText and "export" or "none"
 					end
 				end,
@@ -330,7 +330,7 @@ mMT.options.args.misc.args.data_panel_skin.args = {
 				func = function()
 					local profileType, profileData = mMT:GetImportText(importText)
 					if profileType == "mMTCosmeticBras" then
-						E:CopyTable(E.db.mMT.data_panel_skin.panels, profileData)
+						E:CopyTable(E.db.mMediaTag.data_panel_skin.panels, profileData)
 						mMT:UpdateModule("DataPanelSkin")
 					end
 				end,

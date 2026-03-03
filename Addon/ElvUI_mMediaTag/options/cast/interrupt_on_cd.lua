@@ -5,13 +5,13 @@ mMT.options.args.unitframes.args.interrupt_on_cd.args = {
 		order = 1,
 		type = "toggle",
 		name = function()
-			return E.db.mMT.interrupt_on_cd.enable and MEDIA.color.green:WrapTextInColorCode(L["Enabled"]) or MEDIA.color.red:WrapTextInColorCode(L["Disabled"])
+			return E.db.mMediaTag.interrupt_on_cd.enable and MEDIA.color.green:WrapTextInColorCode(L["Enabled"]) or MEDIA.color.red:WrapTextInColorCode(L["Disabled"])
 		end,
 		get = function(info)
-			return E.db.mMT.interrupt_on_cd.enable
+			return E.db.mMediaTag.interrupt_on_cd.enable
 		end,
 		set = function(info, value)
-			E.db.mMT.interrupt_on_cd.enable = value
+			E.db.mMediaTag.interrupt_on_cd.enable = value
 			E:StaticPopup_Show("CONFIG_RL")
 		end,
 	},
@@ -27,10 +27,10 @@ mMT.options.args.unitframes.args.interrupt_on_cd.args = {
 				name = L["Gradient Mode"],
 				desc = L["Enable gradient mode for the castbar color."],
 				get = function(info)
-					return E.db.mMT.interrupt_on_cd.gradient
+					return E.db.mMediaTag.interrupt_on_cd.gradient
 				end,
 				set = function(info, value)
-					E.db.mMT.interrupt_on_cd.gradient = value
+					E.db.mMediaTag.interrupt_on_cd.gradient = value
 					M.InterruptOnCD:Initialize()
 				end,
 			},
@@ -40,10 +40,10 @@ mMT.options.args.unitframes.args.interrupt_on_cd.args = {
 				name = L["Out of Range"],
 				desc = L["Enable out of range color for the castbar."],
 				get = function(info)
-					return E.db.mMT.interrupt_on_cd.out_of_range
+					return E.db.mMediaTag.interrupt_on_cd.out_of_range
 				end,
 				set = function(info, value)
-					E.db.mMT.interrupt_on_cd.out_of_range = value
+					E.db.mMediaTag.interrupt_on_cd.out_of_range = value
 					M.InterruptOnCD:Initialize()
 				end,
 			},
@@ -53,10 +53,10 @@ mMT.options.args.unitframes.args.interrupt_on_cd.args = {
 				name = L["Change BG color"],
 				desc = L["Enable to change the background color of the castbar."],
 				get = function(info)
-					return E.db.mMT.interrupt_on_cd.set_bg_color
+					return E.db.mMediaTag.interrupt_on_cd.set_bg_color
 				end,
 				set = function(info, value)
-					E.db.mMT.interrupt_on_cd.set_bg_color = value
+					E.db.mMediaTag.interrupt_on_cd.set_bg_color = value
 					M.InterruptOnCD:Initialize()
 				end,
 			},
@@ -69,13 +69,13 @@ mMT.options.args.unitframes.args.interrupt_on_cd.args = {
 				max = 1,
 				step = 0.01,
 				disabled = function()
-					return not E.db.mMT.interrupt_on_cd.set_bg_color
+					return not E.db.mMediaTag.interrupt_on_cd.set_bg_color
 				end,
 				get = function(info)
-					return E.db.mMT.interrupt_on_cd.bg_multiplier
+					return E.db.mMediaTag.interrupt_on_cd.bg_multiplier
 				end,
 				set = function(info, value)
-					E.db.mMT.interrupt_on_cd.bg_multiplier = value
+					E.db.mMediaTag.interrupt_on_cd.bg_multiplier = value
 					M.InterruptOnCD:Initialize()
 				end,
 			},
@@ -88,10 +88,10 @@ mMT.options.args.unitframes.args.interrupt_on_cd.args = {
 				max = 1,
 				step = 0.01,
 				get = function(info)
-					return E.db.mMT.interrupt_on_cd.inactive_time
+					return E.db.mMediaTag.interrupt_on_cd.inactive_time
 				end,
 				set = function(info, value)
-					E.db.mMT.interrupt_on_cd.inactive_time = value
+					E.db.mMediaTag.interrupt_on_cd.inactive_time = value
 					M.InterruptOnCD:Initialize()
 				end,
 			},
@@ -116,12 +116,12 @@ mMT.options.args.unitframes.args.interrupt_on_cd.args = {
 						name = "A",
 						hasAlpha = false,
 						get = function(info)
-							local r, g, b = mMT:HexToRGB(E.db.mMT.color.interrupt_on_cd.onCD.c)
+							local r, g, b = mMT:HexToRGB(E.db.mMediaTag.color.interrupt_on_cd.onCD.c)
 							return r, g, b
 						end,
 						set = function(info, r, g, b)
 							local hex = E:RGBToHex(r, g, b, "ff")
-							E.db.mMT.color.interrupt_on_cd.onCD.c = hex
+							E.db.mMediaTag.color.interrupt_on_cd.onCD.c = hex
 							MEDIA.color.interrupt_on_cd.onCD.c = CreateColorFromHexString(hex)
 							MEDIA.color.interrupt_on_cd.onCD.c.hex = hex
 						end,
@@ -131,16 +131,16 @@ mMT.options.args.unitframes.args.interrupt_on_cd.args = {
 						order = 2,
 						name = "B",
 						disabled = function()
-							return not E.db.mMT.interrupt_on_cd.gradient
+							return not E.db.mMediaTag.interrupt_on_cd.gradient
 						end,
 						hasAlpha = false,
 						get = function(info)
-							local r, g, b = mMT:HexToRGB(E.db.mMT.color.interrupt_on_cd.onCD.g)
+							local r, g, b = mMT:HexToRGB(E.db.mMediaTag.color.interrupt_on_cd.onCD.g)
 							return r, g, b
 						end,
 						set = function(info, r, g, b)
 							local hex = E:RGBToHex(r, g, b, "ff")
-							E.db.mMT.color.interrupt_on_cd.onCD.g = hex
+							E.db.mMediaTag.color.interrupt_on_cd.onCD.g = hex
 							MEDIA.color.interrupt_on_cd.onCD.g = CreateColorFromHexString(hex)
 							MEDIA.color.interrupt_on_cd.onCD.g.hex = hex
 						end,
@@ -160,12 +160,12 @@ mMT.options.args.unitframes.args.interrupt_on_cd.args = {
 						name = "A",
 						hasAlpha = false,
 						get = function(info)
-							local r, g, b = mMT:HexToRGB(E.db.mMT.color.interrupt_on_cd.inTime.c)
+							local r, g, b = mMT:HexToRGB(E.db.mMediaTag.color.interrupt_on_cd.inTime.c)
 							return r, g, b
 						end,
 						set = function(info, r, g, b)
 							local hex = E:RGBToHex(r, g, b, "ff")
-							E.db.mMT.color.interrupt_on_cd.inTime.c = hex
+							E.db.mMediaTag.color.interrupt_on_cd.inTime.c = hex
 							MEDIA.color.interrupt_on_cd.inTime.c = CreateColorFromHexString(hex)
 							MEDIA.color.interrupt_on_cd.inTime.c.hex = hex
 						end,
@@ -175,16 +175,16 @@ mMT.options.args.unitframes.args.interrupt_on_cd.args = {
 						order = 2,
 						name = "B",
 						disabled = function()
-							return not E.db.mMT.interrupt_on_cd.gradient
+							return not E.db.mMediaTag.interrupt_on_cd.gradient
 						end,
 						hasAlpha = false,
 						get = function(info)
-							local r, g, b = mMT:HexToRGB(E.db.mMT.color.interrupt_on_cd.inTime.g)
+							local r, g, b = mMT:HexToRGB(E.db.mMediaTag.color.interrupt_on_cd.inTime.g)
 							return r, g, b
 						end,
 						set = function(info, r, g, b)
 							local hex = E:RGBToHex(r, g, b, "ff")
-							E.db.mMT.color.interrupt_on_cd.inTime.g = hex
+							E.db.mMediaTag.color.interrupt_on_cd.inTime.g = hex
 							MEDIA.color.interrupt_on_cd.inTime.g = CreateColorFromHexString(hex)
 							MEDIA.color.interrupt_on_cd.inTime.g.hex = hex
 						end,
@@ -198,7 +198,7 @@ mMT.options.args.unitframes.args.interrupt_on_cd.args = {
 				name = L["Out of Range"],
 				desc = L["The interrupt spell is out of range."],
 				disabled = function()
-					return not E.db.mMT.interrupt_on_cd.out_of_range
+					return not E.db.mMediaTag.interrupt_on_cd.out_of_range
 				end,
 				args = {
 					color_a = {
@@ -207,12 +207,12 @@ mMT.options.args.unitframes.args.interrupt_on_cd.args = {
 						name = "A",
 						hasAlpha = false,
 						get = function(info)
-							local r, g, b = mMT:HexToRGB(E.db.mMT.color.interrupt_on_cd.outOfRange.c)
+							local r, g, b = mMT:HexToRGB(E.db.mMediaTag.color.interrupt_on_cd.outOfRange.c)
 							return r, g, b
 						end,
 						set = function(info, r, g, b)
 							local hex = E:RGBToHex(r, g, b, "ff")
-							E.db.mMT.color.interrupt_on_cd.outOfRange.c = hex
+							E.db.mMediaTag.color.interrupt_on_cd.outOfRange.c = hex
 							MEDIA.color.interrupt_on_cd.outOfRange.c = CreateColorFromHexString(hex)
 							MEDIA.color.interrupt_on_cd.outOfRange.c.hex = hex
 						end,
@@ -222,16 +222,16 @@ mMT.options.args.unitframes.args.interrupt_on_cd.args = {
 						order = 2,
 						name = "B",
 						disabled = function()
-							return not (E.db.mMT.interrupt_on_cd.gradient or E.db.mMT.interrupt_on_cd.out_of_range)
+							return not (E.db.mMediaTag.interrupt_on_cd.gradient or E.db.mMediaTag.interrupt_on_cd.out_of_range)
 						end,
 						hasAlpha = false,
 						get = function(info)
-							local r, g, b = mMT:HexToRGB(E.db.mMT.color.interrupt_on_cd.outOfRange.g)
+							local r, g, b = mMT:HexToRGB(E.db.mMediaTag.color.interrupt_on_cd.outOfRange.g)
 							return r, g, b
 						end,
 						set = function(info, r, g, b)
 							local hex = E:RGBToHex(r, g, b, "ff")
-							E.db.mMT.color.interrupt_on_cd.outOfRange.g = hex
+							E.db.mMediaTag.color.interrupt_on_cd.outOfRange.g = hex
 							MEDIA.color.interrupt_on_cd.outOfRange.g = CreateColorFromHexString(hex)
 							MEDIA.color.interrupt_on_cd.outOfRange.g.hex = hex
 						end,
@@ -251,12 +251,12 @@ mMT.options.args.unitframes.args.interrupt_on_cd.args = {
 						name = L["Color"],
 						desc = L["The marker color for in time interrupts."],
 						get = function(info)
-							local r, g, b = mMT:HexToRGB(E.db.mMT.color.interrupt_on_cd.marker)
+							local r, g, b = mMT:HexToRGB(E.db.mMediaTag.color.interrupt_on_cd.marker)
 							return r, g, b
 						end,
 						set = function(info, r, g, b)
 							local hex = E:RGBToHex(r, g, b, "ff")
-							E.db.mMT.color.interrupt_on_cd.marker = hex
+							E.db.mMediaTag.color.interrupt_on_cd.marker = hex
 							MEDIA.color.interrupt_on_cd.marker = CreateColorFromHexString(hex)
 							MEDIA.color.interrupt_on_cd.marker.hex = hex
 						end,

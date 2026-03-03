@@ -107,7 +107,7 @@ local function OnEnter(self)
 	DT.tooltip:AddLine(" ")
 	DT.tooltip:AddLine(MEDIA.leftClick .. " " .. L["left click to open Character Frame"], mMT:GetRGB("tip"))
 
-	local mountID = tonumber(E.db.mMT.datatexts.durability_itemLevel.mount)
+	local mountID = tonumber(E.db.mMediaTag.datatexts.durability_itemLevel.mount)
 	if mountID then
 		local name, _, icon, _, isUsable = GetMountInfoByID(mountID)
 		if name and isUsable then DT.tooltip:AddDoubleLine(MEDIA.rightClick .. " " .. L["right click to use:"], format("%s %s", name, E:TextureString(icon, ":14:14")), mMT:GetRGB("tip", "M")) end
@@ -161,12 +161,12 @@ local function OnEvent(self)
 	local avgEquippedString = format("%." .. E.db.general.decimalLength .. "f", avgEquipped)
 	local totalDurabilityString = format("%." .. E.db.general.decimalLength .. "f%%", totalDurability)
 
-	local icons = E.db.mMT.datatexts.durability_itemLevel.style ~= "none" and styles[E.db.mMT.datatexts.durability_itemLevel.style]
+	local icons = E.db.mMediaTag.datatexts.durability_itemLevel.style ~= "none" and styles[E.db.mMediaTag.datatexts.durability_itemLevel.style]
 	local durability_color
 
-	if E.db.mMT.datatexts.durability_itemLevel.warning then
-		local repair_threshold = E.db.mMT.datatexts.durability_itemLevel.repair_threshold
-		local warning_threshold = E.db.mMT.datatexts.durability_itemLevel.warning_threshold
+	if E.db.mMediaTag.datatexts.durability_itemLevel.warning then
+		local repair_threshold = E.db.mMediaTag.datatexts.durability_itemLevel.repair_threshold
+		local warning_threshold = E.db.mMediaTag.datatexts.durability_itemLevel.warning_threshold
 
 		if totalDurability <= repair_threshold then
 			durability_color = MEDIA.color.di_repair
@@ -209,7 +209,7 @@ local function OnClick(_, button)
 		if button == "LeftButton" then
 			_G.ToggleCharacter("PaperDollFrame")
 		elseif button == "RightButton" then
-			local mountID = tonumber(E.db.mMT.datatexts.durability_itemLevel.mount)
+			local mountID = tonumber(E.db.mMediaTag.datatexts.durability_itemLevel.mount)
 			if mountID then
 				local isUsable = select(5, GetMountInfoByID(mountID))
 				if isUsable then SummonByID(mountID) end
@@ -219,7 +219,7 @@ local function OnClick(_, button)
 end
 
 local function ValueColorUpdate(self, hex)
-	local valueHex = E.db.mMT.datatexts.text.override_value and "|c" .. MEDIA.color.override_value.hex or E.db.mMT.datatexts.durability_itemLevel.force_withe_text and "|CFFFFFFFF" or hex
+	local valueHex = E.db.mMediaTag.datatexts.text.override_value and "|c" .. MEDIA.color.override_value.hex or E.db.mMediaTag.datatexts.durability_itemLevel.force_withe_text and "|CFFFFFFFF" or hex
 	valueString = strjoin("", valueHex, "%s|r")
 	OnEvent(self)
 end

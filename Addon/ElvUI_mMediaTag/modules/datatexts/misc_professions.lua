@@ -108,7 +108,7 @@ local function OnEnter(self)
 		DT.tooltip:AddLine(titleKey, mMT:GetRGB("title"))
 		for _, profession in pairs(professions) do
 			local name, icon, skill, skillModifier = profession.name, profession.icon, profession.skill, profession.skillModifier
-			local lineLeft = E.db.mMT.datatexts.professions.menu_icons and (E:TextureString(icon, ":14:14") .. " " .. name) or name
+			local lineLeft = E.db.mMediaTag.datatexts.professions.menu_icons and (E:TextureString(icon, ":14:14") .. " " .. name) or name
 			local lineRight = skill .. " " .. skillModifier
 			DT.tooltip:AddDoubleLine(lineLeft, lineRight, 1, 1, 1, 1, 1, 1)
 		end
@@ -155,7 +155,7 @@ local function UpdateMenu()
 			tinsert(menu, {
 				text = name,
 				right_text = skill .. " " .. skillModifier,
-				icon = E.db.mMT.datatexts.professions.menu_icons and icon,
+				icon = E.db.mMediaTag.datatexts.professions.menu_icons and icon,
 				func = function()
 					CastSpell(spell, "Spell")
 				end,
@@ -177,7 +177,7 @@ local function UpdateMenu()
 
 	tinsert(menu, {
 		text = TRADE_SKILLS,
-		icon = E.db.mMT.datatexts.professions.menu_icons and (dt_icons[E.db.mMT.datatexts.professions.icon] or dt_icons.prof_a),
+		icon = E.db.mMediaTag.datatexts.professions.menu_icons and (dt_icons[E.db.mMediaTag.datatexts.professions.icon] or dt_icons.prof_a),
 		func = function()
 			if not E:AlertCombat() then _G.ToggleProfessionsBook() end
 		end,
@@ -187,7 +187,7 @@ local function UpdateMenu()
 		tinsert(menu, {
 			text = name,
 			right_text = skill,
-			icon = E.db.mMT.datatexts.professions.menu_icons and icon,
+			icon = E.db.mMediaTag.datatexts.professions.menu_icons and icon,
 			macro = "/cast " .. name,
 		})
 	end
@@ -202,9 +202,9 @@ end
 
 local function OnEvent(self)
 	local label = TRADE_SKILLS
-	if E.db.mMT.datatexts.professions.icon ~= "none" then
-		local icon = dt_icons[E.db.mMT.datatexts.professions.icon]
-		if E.db.mMT.datatexts.individual_professions.icon == "auto" then
+	if E.db.mMediaTag.datatexts.professions.icon ~= "none" then
+		local icon = dt_icons[E.db.mMediaTag.datatexts.professions.icon]
+		if E.db.mMediaTag.datatexts.individual_professions.icon == "auto" then
 			local main_profession = select(1, GetProfessions())
 			if main_profession then icon = select(2, GetProfessionInfos(main_profession)) end
 		end
@@ -226,7 +226,7 @@ local function OnClick(self)
 end
 
 local function ValueColorUpdate(self, hex)
-	local textHex = E.db.mMT.datatexts.text.override_text and "|c" .. MEDIA.color.override_text.hex or hex
+	local textHex = E.db.mMediaTag.datatexts.text.override_text and "|c" .. MEDIA.color.override_text.hex or hex
 	textString = strjoin("", textHex, "%s|r")
 	OnEvent(self)
 end

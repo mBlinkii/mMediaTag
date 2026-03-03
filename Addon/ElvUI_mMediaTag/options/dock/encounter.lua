@@ -14,10 +14,10 @@ mMT.options.args.dock.args.encounter.args = {
 				type = "select",
 				name = L["Style"],
 				get = function(info)
-					return E.db.mMT.dock.encounter.style
+					return E.db.mMediaTag.dock.encounter.style
 				end,
 				set = function(info, value)
-					E.db.mMT.dock.encounter.style = value
+					E.db.mMediaTag.dock.encounter.style = value
 				end,
 				values = function()
 					local styles = {}
@@ -32,16 +32,16 @@ mMT.options.args.dock.args.encounter.args = {
 				type = "select",
 				name = L["Icon"],
 				get = function(info)
-					return E.db.mMT.dock.encounter.icon
+					return E.db.mMediaTag.dock.encounter.icon
 				end,
 				set = function(info, value)
-					E.db.mMT.dock.encounter.icon = value
+					E.db.mMediaTag.dock.encounter.icon = value
 					DT:ForceUpdate_DataText("mMT_Dock_EncounterJournal")
 				end,
 				values = function()
 					local icons = {}
-					if MEDIA.icons.dock[E.db.mMT.dock.encounter.style] then
-						for key, icon in pairs(MEDIA.icons.dock[E.db.mMT.dock.encounter.style]) do
+					if MEDIA.icons.dock[E.db.mMediaTag.dock.encounter.style] then
+						for key, icon in pairs(MEDIA.icons.dock[E.db.mMediaTag.dock.encounter.style]) do
 							icons[key] = E:TextureString(icon, ":14:14") .. " " .. mMT:formatText(key)
 						end
 						return icons
@@ -62,10 +62,10 @@ mMT.options.args.dock.args.encounter.args = {
 				name = L["Custom Color"],
 				desc = L["Use a custom color for the icon."],
 				get = function(info)
-					return E.db.mMT.dock.encounter.custom_color
+					return E.db.mMediaTag.dock.encounter.custom_color
 				end,
 				set = function(info, value)
-					E.db.mMT.dock.encounter.custom_color = value
+					E.db.mMediaTag.dock.encounter.custom_color = value
 					DT:ForceUpdate_DataText("mMT_Dock_EncounterJournal")
 				end,
 			},
@@ -75,15 +75,15 @@ mMT.options.args.dock.args.encounter.args = {
 				name = L["Color"],
 				hasAlpha = true,
 				disabled = function()
-					return not E.db.mMT.dock.encounter.custom_color
+					return not E.db.mMediaTag.dock.encounter.custom_color
 				end,
 				get = function(info)
-					local r, g, b, a = mMT:HexToRGB(E.db.mMT.color.dock.encounter)
+					local r, g, b, a = mMT:HexToRGB(E.db.mMediaTag.color.dock.encounter)
 					return r, g, b, a
 				end,
 				set = function(info, r, g, b, a)
 					local hex = E:RGBToHex(r, g, b, mMT:FloatToHex(a))
-					E.db.mMT.color.dock.encounter = hex
+					E.db.mMediaTag.color.dock.encounter = hex
 					MEDIA.color.dock.encounter = CreateColorFromHexString(hex)
 					DT:ForceUpdate_DataText("mMT_Dock_EncounterJournal")
 				end,

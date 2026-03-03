@@ -14,10 +14,10 @@ mMT.options.args.dock.args.quests.args = {
 				type = "select",
 				name = L["Style"],
 				get = function(info)
-					return E.db.mMT.dock.quests.style
+					return E.db.mMediaTag.dock.quests.style
 				end,
 				set = function(info, value)
-					E.db.mMT.dock.quests.style = value
+					E.db.mMediaTag.dock.quests.style = value
 				end,
 				values = function()
 					local styles = {}
@@ -32,16 +32,16 @@ mMT.options.args.dock.args.quests.args = {
 				type = "select",
 				name = L["Icon"],
 				get = function(info)
-					return E.db.mMT.dock.quests.icon
+					return E.db.mMediaTag.dock.quests.icon
 				end,
 				set = function(info, value)
-					E.db.mMT.dock.quests.icon = value
+					E.db.mMediaTag.dock.quests.icon = value
 					DT:ForceUpdate_DataText("mMT_Dock_Quest")
 				end,
 				values = function()
 					local icons = {}
-					if MEDIA.icons.dock[E.db.mMT.dock.quests.style] then
-						for key, icon in pairs(MEDIA.icons.dock[E.db.mMT.dock.quests.style]) do
+					if MEDIA.icons.dock[E.db.mMediaTag.dock.quests.style] then
+						for key, icon in pairs(MEDIA.icons.dock[E.db.mMediaTag.dock.quests.style]) do
 							icons[key] = E:TextureString(icon, ":14:14") .. " " .. mMT:formatText(key)
 						end
 						return icons
@@ -62,10 +62,10 @@ mMT.options.args.dock.args.quests.args = {
 				name = L["Custom Color"],
 				desc = L["Use a custom color for the icon."],
 				get = function(info)
-					return E.db.mMT.dock.quests.custom_color
+					return E.db.mMediaTag.dock.quests.custom_color
 				end,
 				set = function(info, value)
-					E.db.mMT.dock.quests.custom_color = value
+					E.db.mMediaTag.dock.quests.custom_color = value
 					DT:ForceUpdate_DataText("mMT_Dock_Quest")
 				end,
 			},
@@ -75,15 +75,15 @@ mMT.options.args.dock.args.quests.args = {
 				name = L["Color"],
 				hasAlpha = true,
 				disabled = function()
-					return not E.db.mMT.dock.quests.custom_color
+					return not E.db.mMediaTag.dock.quests.custom_color
 				end,
 				get = function(info)
-					local r, g, b, a = mMT:HexToRGB(E.db.mMT.color.dock.quests)
+					local r, g, b, a = mMT:HexToRGB(E.db.mMediaTag.color.dock.quests)
 					return r, g, b, a
 				end,
 				set = function(info, r, g, b, a)
 					local hex = E:RGBToHex(r, g, b, mMT:FloatToHex(a))
-					E.db.mMT.color.dock.quests = hex
+					E.db.mMediaTag.color.dock.quests = hex
 					MEDIA.color.dock.quests = CreateColorFromHexString(hex)
 					DT:ForceUpdate_DataText("mMT_Dock_Quest")
 				end,

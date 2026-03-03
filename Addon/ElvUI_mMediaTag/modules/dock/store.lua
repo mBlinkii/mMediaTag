@@ -25,7 +25,7 @@ local config = {
 local function OnEnter(self)
 	Dock:OnEnter(self.__owner)
 
-	if E.db.mMT.dock.tooltip then
+	if E.db.mMediaTag.dock.tooltip then
 		DT.tooltip:ClearLines()
 		GameTooltip:SetOwner(self, "ANCHOR_TOP")
 		GameTooltip:AddLine(BLIZZARD_STORE, mMT:GetRGB("title"))
@@ -41,14 +41,14 @@ end
 
 local function OnLeave(self)
 	Dock:OnLeave(self.__owner)
-	if E.db.mMT.dock.tooltip then GameTooltip:Hide() end
+	if E.db.mMediaTag.dock.tooltip then GameTooltip:Hide() end
 end
 
 local function OnEvent(self, event, ...)
 	if event == "ELVUI_FORCE_UPDATE" then
 		--setup settings
-		config.icon.texture = icons[E.db.mMT.dock.store.style][E.db.mMT.dock.store.icon] or MEDIA.fallback
-		config.icon.color = E.db.mMT.dock.store.custom_color and MEDIA.color.dock.store or nil
+		config.icon.texture = icons[E.db.mMediaTag.dock.store.style][E.db.mMediaTag.dock.store.icon] or MEDIA.fallback
+		config.icon.color = E.db.mMediaTag.dock.store.custom_color and MEDIA.color.dock.store or nil
 		config.misc.funcOnEnter = OnEnter
 		config.misc.funcOnLeave = OnLeave
 

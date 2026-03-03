@@ -6,13 +6,13 @@ mMT.options.args.misc.args.difficulty_info.args = {
 		order = 1,
 		type = "toggle",
 		name = function()
-			return E.db.mMT.difficulty_info.enable and MEDIA.color.green:WrapTextInColorCode(L["Enabled"]) or MEDIA.color.red:WrapTextInColorCode(L["Disabled"])
+			return E.db.mMediaTag.difficulty_info.enable and MEDIA.color.green:WrapTextInColorCode(L["Enabled"]) or MEDIA.color.red:WrapTextInColorCode(L["Disabled"])
 		end,
 		get = function(info)
-			return E.db.mMT.difficulty_info.enable
+			return E.db.mMediaTag.difficulty_info.enable
 		end,
 		set = function(info, value)
-			E.db.mMT.difficulty_info.enable = value
+			E.db.mMediaTag.difficulty_info.enable = value
 			mMT:UpdateModule("DifficultyInfo")
 		end,
 	},
@@ -37,13 +37,13 @@ mMT.options.args.misc.args.difficulty_info.args = {
 				name = L["Font"],
 				values = LSM:HashTable("font"),
 				disabled = function()
-					return not E.db.mMT.difficulty_info.enable
+					return not E.db.mMediaTag.difficulty_info.enable
 				end,
 				get = function(info)
-					return E.db.mMT.difficulty_info.font.font
+					return E.db.mMediaTag.difficulty_info.font.font
 				end,
 				set = function(info, value)
-					E.db.mMT.difficulty_info.font.font = value
+					E.db.mMediaTag.difficulty_info.font.font = value
 					mMT:UpdateModule("DifficultyInfo")
 				end,
 			},
@@ -52,13 +52,13 @@ mMT.options.args.misc.args.difficulty_info.args = {
 				order = 2,
 				name = L["Font contour"],
 				disabled = function()
-					return not E.db.mMT.difficulty_info.enable
+					return not E.db.mMediaTag.difficulty_info.enable
 				end,
 				get = function(info)
-					return E.db.mMT.difficulty_info.font.fontFlag
+					return E.db.mMediaTag.difficulty_info.font.fontFlag
 				end,
 				set = function(info, value)
-					E.db.mMT.difficulty_info.font.fontFlag = value
+					E.db.mMediaTag.difficulty_info.font.fontFlag = value
 					mMT:UpdateModule("DifficultyInfo")
 				end,
 				values = {
@@ -81,13 +81,13 @@ mMT.options.args.misc.args.difficulty_info.args = {
 				max = 64,
 				step = 1,
 				disabled = function()
-					return not E.db.mMT.difficulty_info.enable
+					return not E.db.mMediaTag.difficulty_info.enable
 				end,
 				get = function(info)
-					return E.db.mMT.difficulty_info.font.size
+					return E.db.mMediaTag.difficulty_info.font.size
 				end,
 				set = function(info, value)
-					E.db.mMT.difficulty_info.font.size = value
+					E.db.mMediaTag.difficulty_info.font.size = value
 					mMT:UpdateModule("DifficultyInfo")
 				end,
 			},
@@ -96,13 +96,13 @@ mMT.options.args.misc.args.difficulty_info.args = {
                 order = 6,
                 name = L["Alignment"],
                 disabled = function()
-					return not E.db.mMT.difficulty_info.enable
+					return not E.db.mMediaTag.difficulty_info.enable
 				end,
                 get = function(info)
-                    return E.db.mMT.difficulty_info.font.justify
+                    return E.db.mMediaTag.difficulty_info.font.justify
                 end,
                 set = function(info, value)
-                    E.db.mMT.difficulty_info.font.justify = value
+                    E.db.mMediaTag.difficulty_info.font.justify = value
                     mMT:UpdateModule("DifficultyInfo")
                 end,
                 values = {
@@ -124,10 +124,10 @@ mMT.options.args.misc.args.difficulty_info.args = {
 				type = "toggle",
 				name = L["Background"],
 				get = function(info)
-					return E.db.mMT.difficulty_info.background
+					return E.db.mMediaTag.difficulty_info.background
 				end,
 				set = function(info, value)
-					E.db.mMT.difficulty_info.background = value
+					E.db.mMediaTag.difficulty_info.background = value
 					E:StaticPopup_Show("CONFIG_RL")
 				end,
 			},

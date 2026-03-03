@@ -36,21 +36,21 @@ local function Update(castbar)
 end
 
 function module:Initialize()
-	if E.db.mMT.castbar_shield.enable then
+	if E.db.mMediaTag.castbar_shield.enable then
 		if not module.isEnabled then
-			if E.db.mMT.castbar_shield.nameplates then hooksecurefunc(NP, "Castbar_PostCastStart", Update) end
-			if E.db.mMT.castbar_shield.unitframes then hooksecurefunc(UF, "PostCastStart", Update) end
+			if E.db.mMediaTag.castbar_shield.nameplates then hooksecurefunc(NP, "Castbar_PostCastStart", Update) end
+			if E.db.mMediaTag.castbar_shield.unitframes then hooksecurefunc(UF, "PostCastStart", Update) end
 
 			module.isEnabled = true
 		end
 
-		module.texture = E.db.mMT.castbar_shield.texture
-		module.sizeX = E.db.mMT.castbar_shield.sizeX
-		module.sizeY = E.db.mMT.castbar_shield.sizeY
-		module.anchor = E.db.mMT.castbar_shield.anchor
-		module.posX = E.db.mMT.castbar_shield.posX
-		module.posY = E.db.mMT.castbar_shield.posY
-		module.auto = E.db.mMT.castbar_shield.auto
+		module.texture = E.db.mMediaTag.castbar_shield.texture
+		module.sizeX = E.db.mMediaTag.castbar_shield.sizeX
+		module.sizeY = E.db.mMediaTag.castbar_shield.sizeY
+		module.anchor = E.db.mMediaTag.castbar_shield.anchor
+		module.posX = E.db.mMediaTag.castbar_shield.posX
+		module.posY = E.db.mMediaTag.castbar_shield.posY
+		module.auto = E.db.mMediaTag.castbar_shield.auto
 
 		module.loaded = true
 	end

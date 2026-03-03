@@ -65,10 +65,10 @@ mMT.options.args.datatexts.args.info_durability_itemlevel.args = {
 				type = "select",
 				name = L["Style"],
 				get = function(info)
-					return E.db.mMT.datatexts.durability_itemLevel.style
+					return E.db.mMediaTag.datatexts.durability_itemLevel.style
 				end,
 				set = function(info, value)
-					E.db.mMT.datatexts.durability_itemLevel.style = value
+					E.db.mMediaTag.datatexts.durability_itemLevel.style = value
 					DT:ForceUpdate_DataText("mMT - Durability & ItemLevel")
 				end,
 				values = function()
@@ -86,10 +86,10 @@ mMT.options.args.datatexts.args.info_durability_itemlevel.args = {
 				type = "toggle",
 				name = L["Force withe Text"],
 				get = function(info)
-					return E.db.mMT.datatexts.durability_itemLevel.force_withe_text
+					return E.db.mMediaTag.datatexts.durability_itemLevel.force_withe_text
 				end,
 				set = function(info, value)
-					E.db.mMT.datatexts.durability_itemLevel.force_withe_text = value
+					E.db.mMediaTag.datatexts.durability_itemLevel.force_withe_text = value
 					DT:ForceUpdate_DataText("mMT - Durability & ItemLevel")
 				end,
 			},
@@ -106,10 +106,10 @@ mMT.options.args.datatexts.args.info_durability_itemlevel.args = {
 				type = "toggle",
 				name = L["Warning colors"],
 				get = function(info)
-					return E.db.mMT.datatexts.durability_itemLevel.warning
+					return E.db.mMediaTag.datatexts.durability_itemLevel.warning
 				end,
 				set = function(info, value)
-					E.db.mMT.datatexts.durability_itemLevel.warning = value
+					E.db.mMediaTag.datatexts.durability_itemLevel.warning = value
 					DT:ForceUpdate_DataText("mMT - Durability & ItemLevel")
 				end,
 			},
@@ -130,13 +130,13 @@ mMT.options.args.datatexts.args.info_durability_itemlevel.args = {
 				softMin = 0,
 				softMax = 100,
 				disabled = function()
-					return not E.db.mMT.datatexts.durability_itemLevel.warning
+					return not E.db.mMediaTag.datatexts.durability_itemLevel.warning
 				end,
 				get = function(info)
-					return E.db.mMT.datatexts.durability_itemLevel.repair_threshold
+					return E.db.mMediaTag.datatexts.durability_itemLevel.repair_threshold
 				end,
 				set = function(info, value)
-					E.db.mMT.datatexts.durability_itemLevel.repair_threshold = value
+					E.db.mMediaTag.datatexts.durability_itemLevel.repair_threshold = value
 					DT:ForceUpdate_DataText("mMT - Durability & ItemLevel")
 				end,
 			},
@@ -146,15 +146,15 @@ mMT.options.args.datatexts.args.info_durability_itemlevel.args = {
 				name = L["Color"],
 				hasAlpha = false,
 				disabled = function()
-					return not E.db.mMT.datatexts.durability_itemLevel.warning
+					return not E.db.mMediaTag.datatexts.durability_itemLevel.warning
 				end,
 				get = function(info)
-					local r, g, b = mMT:HexToRGB(E.db.mMT.datatexts.durability_itemLevel.color_repair)
+					local r, g, b = mMT:HexToRGB(E.db.mMediaTag.datatexts.durability_itemLevel.color_repair)
 					return r, g, b
 				end,
 				set = function(info, r, g, b)
 					local hex = E:RGBToHex(r, g, b, "ff")
-					E.db.mMT.datatexts.durability_itemLevel.color_repair = hex
+					E.db.mMediaTag.datatexts.durability_itemLevel.color_repair = hex
 					MEDIA.color.di_repair = CreateColorFromHexString(hex)
 					MEDIA.color.di_repair.hex = hex
 					DT:ForceUpdate_DataText("mMT - Durability & ItemLevel")
@@ -177,13 +177,13 @@ mMT.options.args.datatexts.args.info_durability_itemlevel.args = {
 				softMin = 0,
 				softMax = 100,
 				disabled = function()
-					return not E.db.mMT.datatexts.durability_itemLevel.warning
+					return not E.db.mMediaTag.datatexts.durability_itemLevel.warning
 				end,
 				get = function(info)
-					return E.db.mMT.datatexts.durability_itemLevel.warning_threshold
+					return E.db.mMediaTag.datatexts.durability_itemLevel.warning_threshold
 				end,
 				set = function(info, value)
-					E.db.mMT.datatexts.durability_itemLevel.warning_threshold = value
+					E.db.mMediaTag.datatexts.durability_itemLevel.warning_threshold = value
 					DT:ForceUpdate_DataText("mMT - Durability & ItemLevel")
 				end,
 			},
@@ -193,15 +193,15 @@ mMT.options.args.datatexts.args.info_durability_itemlevel.args = {
 				name = L["Color"],
 				hasAlpha = false,
 				disabled = function()
-					return not E.db.mMT.datatexts.durability_itemLevel.warning
+					return not E.db.mMediaTag.datatexts.durability_itemLevel.warning
 				end,
 				get = function(info)
-					local r, g, b = mMT:HexToRGB(E.db.mMT.datatexts.durability_itemLevel.color_warning)
+					local r, g, b = mMT:HexToRGB(E.db.mMediaTag.datatexts.durability_itemLevel.color_warning)
 					return r, g, b
 				end,
 				set = function(info, r, g, b)
 					local hex = E:RGBToHex(r, g, b, "ff")
-					E.db.mMT.datatexts.durability_itemLevel.color_warning = hex
+					E.db.mMediaTag.datatexts.durability_itemLevel.color_warning = hex
 					MEDIA.color.di_warning = CreateColorFromHexString(hex)
 					MEDIA.color.di_warning.hex = hex
 					DT:ForceUpdate_DataText("mMT - Durability & ItemLevel")
@@ -220,10 +220,10 @@ mMT.options.args.datatexts.args.info_durability_itemlevel.args = {
 				type = "select",
 				name = L["Repair Mount"],
 				get = function(info)
-					return E.db.mMT.datatexts.durability_itemLevel.mount
+					return E.db.mMediaTag.datatexts.durability_itemLevel.mount
 				end,
 				set = function(info, value)
-					E.db.mMT.datatexts.durability_itemLevel.mount = value
+					E.db.mMediaTag.datatexts.durability_itemLevel.mount = value
 					DT:ForceUpdate_DataText("mMT - Durability & ItemLevel")
 				end,
 				values = function()

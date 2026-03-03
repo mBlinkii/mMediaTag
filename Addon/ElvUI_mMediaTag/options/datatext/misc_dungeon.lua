@@ -13,10 +13,10 @@ mMT.options.args.datatexts.args.misc_dungeon.args = {
 				type = "select",
 				name = L["Icon"],
 				get = function(info)
-					return E.db.mMT.datatexts.dungeon.icon
+					return E.db.mMediaTag.datatexts.dungeon.icon
 				end,
 				set = function(info, value)
-					E.db.mMT.datatexts.dungeon.icon = value
+					E.db.mMediaTag.datatexts.dungeon.icon = value
 					DT:ForceUpdate_DataText("mMT - Dungeon")
 				end,
 				values = function()
@@ -35,10 +35,10 @@ mMT.options.args.datatexts.args.misc_dungeon.args = {
 				name = L["Dungeon Name"],
 				desc = L["Change Text to Dungeon Name."],
 				get = function(info)
-					return E.db.mMT.datatexts.dungeon.dungeon_name
+					return E.db.mMediaTag.datatexts.dungeon.dungeon_name
 				end,
 				set = function(info, value)
-					E.db.mMT.datatexts.dungeon.dungeon_name = value
+					E.db.mMediaTag.datatexts.dungeon.dungeon_name = value
 					DT:ForceUpdate_DataText("mMT - Dungeon")
 				end,
 			},

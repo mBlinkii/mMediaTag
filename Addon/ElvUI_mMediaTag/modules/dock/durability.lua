@@ -51,7 +51,7 @@ local config = {
 local function OnEnter(self)
 	Dock:OnEnter(self)
 
-	if E.db.mMT.dock.tooltip then
+	if E.db.mMediaTag.dock.tooltip then
 		DT.tooltip:ClearLines()
 		DT.tooltip:AddLine(DURABILITY, mMT:GetRGB("title"))
 		DT.tooltip:AddLine(" ")
@@ -71,7 +71,7 @@ local function OnEnter(self)
 		DT.tooltip:AddLine(" ")
 		DT.tooltip:AddLine(MEDIA.leftClick .. " " .. L["left click to open Character Frame"], mMT:GetRGB("tip"))
 
-		local mountID = tonumber(E.db.mMT.dock.durability.mount)
+		local mountID = tonumber(E.db.mMediaTag.dock.durability.mount)
 		if mountID then
 			local name, _, icon, _, isUsable = GetMountInfoByID(mountID)
 			if name and isUsable then DT.tooltip:AddDoubleLine(MEDIA.rightClick .. " " .. L["right click to use:"], format("%s %s", name, E:TextureString(icon, ":14:14")), mMT:GetRGB("tip", "M")) end
@@ -83,7 +83,7 @@ end
 
 local function OnLeave(self)
 	Dock:OnLeave(self)
-	if E.db.mMT.dock.tooltip then DT.tooltip:Hide() end
+	if E.db.mMediaTag.dock.tooltip then DT.tooltip:Hide() end
 end
 
 local function OnClick(self, btn)
@@ -91,7 +91,7 @@ local function OnClick(self, btn)
 		if btn == "LeftButton" then
 			_G.ToggleCharacter("PaperDollFrame")
 		elseif btn == "RightButton" then
-			local mountID = tonumber(E.db.mMT.dock.durability.mount)
+			local mountID = tonumber(E.db.mMediaTag.dock.durability.mount)
 			if mountID then
 				local isUsable = select(5, GetMountInfoByID(mountID))
 				if isUsable then SummonByID(mountID) end
@@ -101,11 +101,11 @@ local function OnClick(self, btn)
 end
 
 local function OnEvent(self, event, ...)
-	local textStyle = E.db.mMT.dock.durability.text
+	local textStyle = E.db.mMediaTag.dock.durability.text
 	if event == "ELVUI_FORCE_UPDATE" then
 		--setup settings
-		config.icon.texture = icons[E.db.mMT.dock.durability.style][E.db.mMT.dock.durability.icon] or MEDIA.fallback
-		config.icon.color = E.db.mMT.dock.durability.custom_color and MEDIA.color.dock.durability or nil
+		config.icon.texture = icons[E.db.mMediaTag.dock.durability.style][E.db.mMediaTag.dock.durability.icon] or MEDIA.fallback
+		config.icon.color = E.db.mMediaTag.dock.durability.custom_color and MEDIA.color.dock.durability or nil
 		config.text.enable = textStyle ~= "none"
 		config.text.a = textStyle == "both" or textStyle == "durability" or textStyle == "ilevel"
 		config.text.b = textStyle == "both"
@@ -159,7 +159,7 @@ local function OnEvent(self, event, ...)
 		end
 	end
 
-	if totalDurability <= E.db.mMT.dock.durability.percThreshold then
+	if totalDurability <= E.db.mMediaTag.dock.durability.percThreshold then
 		E:Flash(self.mMT_Dock.Icon, 0.5, true)
 	else
 		E:StopFlash(self.mMT_Dock.Icon, 1)

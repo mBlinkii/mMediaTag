@@ -13,10 +13,10 @@ mMT.options.args.datatexts.args.misc_gamemenu.args = {
 				type = "select",
 				name = L["Icon"],
 				get = function(info)
-					return E.db.mMT.datatexts.menu.icon
+					return E.db.mMediaTag.datatexts.menu.icon
 				end,
 				set = function(info, value)
-					E.db.mMT.datatexts.menu.icon = value
+					E.db.mMediaTag.datatexts.menu.icon = value
 					DT:ForceUpdate_DataText("mMT - Game menu")
 				end,
 				values = {
@@ -32,10 +32,10 @@ mMT.options.args.datatexts.args.misc_gamemenu.args = {
 				type = "toggle",
 				name = L["Show Menu Icons"],
 				get = function(info)
-					return E.db.mMT.datatexts.menu.menu_icons
+					return E.db.mMediaTag.datatexts.menu.menu_icons
 				end,
 				set = function(info, value)
-					E.db.mMT.datatexts.menu.menu_icons = value
+					E.db.mMediaTag.datatexts.menu.menu_icons = value
 				end,
 			},
             systeminfo = {
@@ -43,10 +43,10 @@ mMT.options.args.datatexts.args.misc_gamemenu.args = {
 				type = "toggle",
 				name = L["Show Systeminfo"],
 				get = function(info)
-					return E.db.mMT.datatexts.menu.show_systeminfo
+					return E.db.mMediaTag.datatexts.menu.show_systeminfo
 				end,
 				set = function(info, value)
-					E.db.mMT.datatexts.menu.show_systeminfo = value
+					E.db.mMediaTag.datatexts.menu.show_systeminfo = value
 				end,
 			},
 			text_color = {
@@ -55,12 +55,12 @@ mMT.options.args.datatexts.args.misc_gamemenu.args = {
 				name = L["Menu Text color"],
 				hasAlpha = false,
 				get = function(info)
-					local r, g, b = mMT:HexToRGB(E.db.mMT.datatexts.menu.text_color)
+					local r, g, b = mMT:HexToRGB(E.db.mMediaTag.datatexts.menu.text_color)
 					return r, g, b
 				end,
 				set = function(info, r, g, b)
 					local hex = E:RGBToHex(r, g, b, "ff")
-					E.db.mMT.datatexts.menu.text_color = hex
+					E.db.mMediaTag.datatexts.menu.text_color = hex
 					MEDIA.color.gm_text_color = CreateColorFromHexString(hex)
 					MEDIA.color.gm_text_color.hex = hex
 				end,

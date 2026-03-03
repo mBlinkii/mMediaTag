@@ -14,10 +14,10 @@ mMT.options.args.dock.args.guild.args = {
 				type = "select",
 				name = L["Style"],
 				get = function(info)
-					return E.db.mMT.dock.guild.style
+					return E.db.mMediaTag.dock.guild.style
 				end,
 				set = function(info, value)
-					E.db.mMT.dock.guild.style = value
+					E.db.mMediaTag.dock.guild.style = value
 				end,
 				values = function()
 					local styles = {}
@@ -32,16 +32,16 @@ mMT.options.args.dock.args.guild.args = {
 				type = "select",
 				name = L["Icon"],
 				get = function(info)
-					return E.db.mMT.dock.guild.icon
+					return E.db.mMediaTag.dock.guild.icon
 				end,
 				set = function(info, value)
-					E.db.mMT.dock.guild.icon = value
+					E.db.mMediaTag.dock.guild.icon = value
 					DT:ForceUpdate_DataText("mMT_Dock_Guild")
 				end,
 				values = function()
 					local icons = {}
-					if MEDIA.icons.dock[E.db.mMT.dock.guild.style] then
-						for key, icon in pairs(MEDIA.icons.dock[E.db.mMT.dock.guild.style]) do
+					if MEDIA.icons.dock[E.db.mMediaTag.dock.guild.style] then
+						for key, icon in pairs(MEDIA.icons.dock[E.db.mMediaTag.dock.guild.style]) do
 							icons[key] = E:TextureString(icon, ":14:14") .. " " .. mMT:formatText(key)
 						end
 						return icons
@@ -62,10 +62,10 @@ mMT.options.args.dock.args.guild.args = {
 				name = L["Custom Color"],
 				desc = L["Use a custom color for the icon."],
 				get = function(info)
-					return E.db.mMT.dock.guild.custom_color
+					return E.db.mMediaTag.dock.guild.custom_color
 				end,
 				set = function(info, value)
-					E.db.mMT.dock.guild.custom_color = value
+					E.db.mMediaTag.dock.guild.custom_color = value
 					DT:ForceUpdate_DataText("mMT_Dock_Guild")
 				end,
 			},
@@ -75,15 +75,15 @@ mMT.options.args.dock.args.guild.args = {
 				name = L["Color"],
 				hasAlpha = true,
 				disabled = function()
-					return not E.db.mMT.dock.guild.custom_color
+					return not E.db.mMediaTag.dock.guild.custom_color
 				end,
 				get = function(info)
-					local r, g, b, a = mMT:HexToRGB(E.db.mMT.color.dock.guild)
+					local r, g, b, a = mMT:HexToRGB(E.db.mMediaTag.color.dock.guild)
 					return r, g, b, a
 				end,
 				set = function(info, r, g, b, a)
 					local hex = E:RGBToHex(r, g, b, mMT:FloatToHex(a))
-					E.db.mMT.color.dock.guild = hex
+					E.db.mMediaTag.color.dock.guild = hex
 					MEDIA.color.dock.guild = CreateColorFromHexString(hex)
 					DT:ForceUpdate_DataText("mMT_Dock_Guild")
 				end,
@@ -102,10 +102,10 @@ mMT.options.args.dock.args.guild.args = {
 				name = L["Text"],
 				desc = L["Show number of online Guild members on the icon."],
 				get = function(info)
-					return E.db.mMT.dock.guild.text
+					return E.db.mMediaTag.dock.guild.text
 				end,
 				set = function(info, value)
-					E.db.mMT.dock.guild.text = value
+					E.db.mMediaTag.dock.guild.text = value
 					DT:ForceUpdate_DataText("mMT_Dock_Guild")
 				end,
 			},

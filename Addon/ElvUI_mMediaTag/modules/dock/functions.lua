@@ -207,7 +207,7 @@ end
 
 function module:CreateDockIcon(datatext, config)
 	if not config or not datatext then return end
-	module.db = E.db.mMT.dock
+	module.db = E.db.mMediaTag.dock
 
 	datatext.text:SetText("")
 

@@ -49,13 +49,13 @@ local function OnEnter(self)
 	DT.tooltip:ClearLines()
 	if not player_professions[self.name] then UpdatePlayerProfessions() end
 
-	local iconPath = E.db.mMT.datatexts.individual_professions.icon
+	local iconPath = E.db.mMediaTag.datatexts.individual_professions.icon
 	local label = mMT:TC(L["Not learned"], "red")
 	local profession = player_professions[self.name]
 
 	if profession then
 		local name, icon, skillLevel, maxSkillLevel, skillModifier = GetProfessionInfos(profession)
-		if iconPath ~= "none" and iconPath ~= "default" then icon = UpdateIcon(self.name, E.db.mMT.datatexts.individual_professions.icon) end
+		if iconPath ~= "none" and iconPath ~= "default" then icon = UpdateIcon(self.name, E.db.mMediaTag.datatexts.individual_professions.icon) end
 		icon = E:TextureString(icon, ":14:14")
 		label = icon .. " " .. name .. " " .. (UpdateSkillString(skillLevel, maxSkillLevel, skillModifier) or "")
 	end
@@ -73,7 +73,7 @@ end
 local function OnEvent(self, event)
 	if not player_professions[self.name] then UpdatePlayerProfessions() end
 
-	local iconPath = E.db.mMT.datatexts.individual_professions.icon
+	local iconPath = E.db.mMediaTag.datatexts.individual_professions.icon
 	local label = L["No Professions"]
 	local profession = player_professions[self.name]
 
@@ -82,7 +82,7 @@ local function OnEvent(self, event)
 		professions[self.name].spell = spell
 
 		if iconPath ~= "none" then
-			if iconPath ~= "default" then icon = UpdateIcon(self.name, E.db.mMT.datatexts.individual_professions.icon) end
+			if iconPath ~= "default" then icon = UpdateIcon(self.name, E.db.mMediaTag.datatexts.individual_professions.icon) end
 			icon = E:TextureString(icon, ":14:14")
 
 			label = icon .. " " .. name .. " " .. (skillLevel ~= maxSkillLevel and format(valueString, skillLevel) or "")
@@ -99,8 +99,8 @@ local function OnClick(self)
 end
 
 local function ValueColorUpdate(self, hex)
-	local textHex = E.db.mMT.datatexts.text.override_text and "|c" .. MEDIA.color.override_text.hex or hex
-	local valueHex = E.db.mMT.datatexts.text.override_value and "|c" .. MEDIA.color.override_value.hex or hex
+	local textHex = E.db.mMediaTag.datatexts.text.override_text and "|c" .. MEDIA.color.override_text.hex or hex
+	local valueHex = E.db.mMediaTag.datatexts.text.override_value and "|c" .. MEDIA.color.override_value.hex or hex
 	textString, valueString = strjoin("", textHex, "%s|r"), strjoin("", valueHex, "%s|r")
 	OnEvent(self)
 end

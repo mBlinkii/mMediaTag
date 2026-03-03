@@ -16,7 +16,7 @@ local function GetColor(colorConfig)
 end
 
 local function Update()
-	module.db = E.db.mMT.dice_button
+	module.db = E.db.mMediaTag.dice_button
 
 	local normalColor = GetColor(module.db.color.normal)
 	local hoverColor = GetColor(module.db.color.hover)
@@ -32,9 +32,9 @@ local function Update()
 end
 
 function module:Initialize()
-	if E.db.mMT.dice_button.enable then
+	if E.db.mMediaTag.dice_button.enable then
 		if not module.dice_button then
-			module.db = E.db.mMT.dice_button
+			module.db = E.db.mMediaTag.dice_button
 			module.dice_button = CreateFrame("Button", "mMediaTag_Dice_Button", E.UIParent, "BackdropTemplate")
 			module.dice_button.texture = module.dice_button:CreateTexture(nil, "ARTWORK")
 

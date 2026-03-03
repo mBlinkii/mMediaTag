@@ -12,26 +12,26 @@ function module:InitializePlayerPortrait()
 			local type = "player"
 			local name = "Player"
 
-			portraits[unit] = portraits[unit] or module:CreatePortrait(name, parent_frame, E.db.mMT.portraits.player)
+			portraits[unit] = portraits[unit] or module:CreatePortrait(name, parent_frame, E.db.mMediaTag.portraits.player)
 
 			if portraits[unit] then
 				portraits[unit].__owner = parent_frame
 				portraits[unit].unit = unit --parent_frame.unit
 				portraits[unit].type = type
-				portraits[unit].db = E.db.mMT.portraits.player
-				portraits[unit].size = E.db.mMT.portraits.player.size
-				portraits[unit].point = E.db.mMT.portraits.player.point
+				portraits[unit].db = E.db.mMediaTag.portraits.player
+				portraits[unit].size = E.db.mMediaTag.portraits.player.size
+				portraits[unit].point = E.db.mMediaTag.portraits.player.point
 				portraits[unit].isPlayer = nil
 				portraits[unit].unitClass = nil
 				portraits[unit].lastGUID = nil
 				portraits[unit].realUnit = "player"
 				portraits[unit].name = name
-				portraits[unit].forceExtra = E.db.mMT.portraits.player.extra and "player" or nil
+				portraits[unit].forceExtra = E.db.mMediaTag.portraits.player.extra and "player" or nil
 
-				portraits[unit].media = module:UpdateTexturesFiles(E.db.mMT.portraits.player.texture, E.db.mMT.portraits.player.mirror)
+				portraits[unit].media = module:UpdateTexturesFiles(E.db.mMediaTag.portraits.player.texture, E.db.mMediaTag.portraits.player.mirror)
 
 				module:UpdateSize(portraits[unit], portraits[unit].size, portraits[unit].point)
-				module:InitPortrait(portraits[unit], E.db.mMT.portraits.player.size, E.db.mMT.portraits.player.point)
+				module:InitPortrait(portraits[unit], E.db.mMediaTag.portraits.player.size, E.db.mMediaTag.portraits.player.point)
 
 				if not portraits[unit].isEnabled then
 					portraits[unit]:RegisterEvent("UNIT_ENTERED_VEHICLE")

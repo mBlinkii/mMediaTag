@@ -17,14 +17,14 @@ mMT.options.args.general.args.greeting_message.args = {
 		order = 3,
 		type = "toggle",
 		name = function()
-			return E.db.mMT.general.greeting_message and MEDIA.color.green:WrapTextInColorCode(L["Enabled"]) or MEDIA.color.red:WrapTextInColorCode(L["Disabled"])
+			return E.db.mMediaTag.general.greeting_message and MEDIA.color.green:WrapTextInColorCode(L["Enabled"]) or MEDIA.color.red:WrapTextInColorCode(L["Disabled"])
 		end,
 		desc = L["Show a greeting message in the chat when you log in."],
 		get = function(info)
-			return E.db.mMT.general.greeting_message
+			return E.db.mMediaTag.general.greeting_message
 		end,
 		set = function(info, value)
-			E.db.mMT.general.greeting_message = value
+			E.db.mMediaTag.general.greeting_message = value
 			mMT:UpdateModule("GreetingMessage")
 		end,
 	},

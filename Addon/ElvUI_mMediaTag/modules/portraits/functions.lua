@@ -590,7 +590,7 @@ function module:PLAYER_ENTERING_WORLD()
 end
 
 function module:Initialize()
-	module.db = E.db.mMT.portraits
+	module.db = E.db.mMediaTag.portraits
 
 	if module.db.enable then
 		module.portraits = module.portraits or {}

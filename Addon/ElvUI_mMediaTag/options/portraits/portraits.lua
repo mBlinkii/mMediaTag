@@ -15,13 +15,13 @@ mMT.options.args.unitframes.args.portraits.args = {
 		order = 1,
 		type = "toggle",
 		name = function()
-			return E.db.mMT.portraits.enable and MEDIA.color.green:WrapTextInColorCode(L["Enabled"]) or MEDIA.color.red:WrapTextInColorCode(L["Disabled"])
+			return E.db.mMediaTag.portraits.enable and MEDIA.color.green:WrapTextInColorCode(L["Enabled"]) or MEDIA.color.red:WrapTextInColorCode(L["Disabled"])
 		end,
 		get = function(info)
-			return E.db.mMT.portraits.enable
+			return E.db.mMediaTag.portraits.enable
 		end,
 		set = function(info, value)
-			E.db.mMT.portraits.enable = value
+			E.db.mMediaTag.portraits.enable = value
 			M.Portraits:Initialize()
 		end,
 	},
@@ -44,10 +44,10 @@ mMT.options.args.unitframes.args.portraits.args = {
 						max = 2,
 						step = 0.01,
 						get = function(info)
-							return E.db.mMT.portraits.misc.scale
+							return E.db.mMediaTag.portraits.misc.scale
 						end,
 						set = function(info, value)
-							E.db.mMT.portraits.misc.scale = value
+							E.db.mMediaTag.portraits.misc.scale = value
 							M.Portraits:Initialize()
 						end,
 					},
@@ -57,10 +57,10 @@ mMT.options.args.unitframes.args.portraits.args = {
 						name = L["Desaturate"],
 						desc = L["Will always desaturate the portraits."],
 						get = function(info)
-							return E.db.mMT.portraits.misc.desaturate
+							return E.db.mMediaTag.portraits.misc.desaturate
 						end,
 						set = function(info, value)
-							E.db.mMT.portraits.misc.desaturate = value
+							E.db.mMediaTag.portraits.misc.desaturate = value
 							M.Portraits:Initialize()
 						end,
 					},
@@ -70,10 +70,10 @@ mMT.options.args.unitframes.args.portraits.args = {
 						name = L["Embellishment"],
 						desc = L["Will show the embellishment on the portraits, if the Style has an embellishment."],
 						get = function(info)
-							return E.db.mMT.portraits.misc.embellishment
+							return E.db.mMediaTag.portraits.misc.embellishment
 						end,
 						set = function(info, value)
-							E.db.mMT.portraits.misc.embellishment = value
+							E.db.mMediaTag.portraits.misc.embellishment = value
 							M.Portraits:Initialize()
 						end,
 					},
@@ -91,10 +91,10 @@ mMT.options.args.unitframes.args.portraits.args = {
 						name = L["Enable"],
 						desc = L["Enable the Shadow for the Portraits."],
 						get = function(info)
-							return E.db.mMT.portraits.shadow.enable
+							return E.db.mMediaTag.portraits.shadow.enable
 						end,
 						set = function(info, value)
-							E.db.mMT.portraits.shadow.enable = value
+							E.db.mMediaTag.portraits.shadow.enable = value
 							M.Portraits:Initialize()
 						end,
 					},
@@ -106,10 +106,10 @@ mMT.options.args.unitframes.args.portraits.args = {
 						max = 1,
 						step = 0.01,
 						get = function(info)
-							return E.db.mMT.portraits.shadow.alpha
+							return E.db.mMediaTag.portraits.shadow.alpha
 						end,
 						set = function(info, value)
-							E.db.mMT.portraits.shadow.alpha = value
+							E.db.mMediaTag.portraits.shadow.alpha = value
 							M.Portraits:Initialize()
 						end,
 					},
@@ -127,10 +127,10 @@ mMT.options.args.unitframes.args.portraits.args = {
 						name = "Class icon",
 						desc = "Enable and select a class icon style for the portrait.",
 						get = function(info)
-							return E.db.mMT.portraits.misc.class_icon
+							return E.db.mMediaTag.portraits.misc.class_icon
 						end,
 						set = function(info, value)
-							E.db.mMT.portraits.misc.class_icon = value
+							E.db.mMediaTag.portraits.misc.class_icon = value
 							M.Portraits:Initialize()
 						end,
 						values = function()
@@ -159,10 +159,10 @@ mMT.options.args.unitframes.args.portraits.args = {
 						name = L["BG Style"],
 						desc = L["Choose the background style for the transparent Class icons."],
 						get = function(info)
-							return E.db.mMT.portraits.bg.style
+							return E.db.mMediaTag.portraits.bg.style
 						end,
 						set = function(info, value)
-							E.db.mMT.portraits.bg.style = value
+							E.db.mMediaTag.portraits.bg.style = value
 							M.Portraits:Initialize()
 						end,
 						values = function()
@@ -179,12 +179,12 @@ mMT.options.args.unitframes.args.portraits.args = {
 						name = L["Color"],
 						hasAlpha = false,
 						get = function(info)
-							local r, g, b = mMT:HexToRGB(E.db.mMT.color.portraits.misc.bg)
+							local r, g, b = mMT:HexToRGB(E.db.mMediaTag.color.portraits.misc.bg)
 							return r, g, b
 						end,
 						set = function(info, r, g, b)
 							local hex = E:RGBToHex(r, g, b, "ff")
-							E.db.mMT.color.portraits.misc.bg = hex
+							E.db.mMediaTag.color.portraits.misc.bg = hex
 							MEDIA.color.portraits.misc.bg = CreateColorFromHexString(hex)
 							MEDIA.color.portraits.misc.bg.hex = hex
 							M.Portraits:Initialize()
@@ -196,10 +196,10 @@ mMT.options.args.unitframes.args.portraits.args = {
 						name = L["Class colored"],
 						desc = L["Enable Class colored Background"],
 						get = function(info)
-							return E.db.mMT.portraits.bg.classBG
+							return E.db.mMediaTag.portraits.bg.classBG
 						end,
 						set = function(info, value)
-							E.db.mMT.portraits.bg.classBG = value
+							E.db.mMediaTag.portraits.bg.classBG = value
 							M.Portraits:Initialize()
 						end,
 					},
@@ -213,10 +213,10 @@ mMT.options.args.unitframes.args.portraits.args = {
 						softMin = 0,
 						softMax = 1,
 						get = function(info)
-							return E.db.mMT.portraits.bg.bgColorShift
+							return E.db.mMediaTag.portraits.bg.bgColorShift
 						end,
 						set = function(info, value)
-							E.db.mMT.portraits.bg.bgColorShift = value
+							E.db.mMediaTag.portraits.bg.bgColorShift = value
 							M.Portraits:Initialize()
 						end,
 					},
@@ -234,10 +234,10 @@ mMT.options.args.unitframes.args.portraits.args = {
 						name = L["Enable"],
 						desc = L["Enable Custom Textures for Portrait."],
 						get = function(info)
-							return E.db.mMT.portraits.custom.enable
+							return E.db.mMediaTag.portraits.custom.enable
 						end,
 						set = function(info, value)
-							E.db.mMT.portraits.custom.enable = value
+							E.db.mMediaTag.portraits.custom.enable = value
 							M.Portraits:Initialize()
 						end,
 					},
@@ -252,13 +252,13 @@ mMT.options.args.unitframes.args.portraits.args = {
 						type = "input",
 						width = "small",
 						disabled = function()
-							return not E.db.mMT.portraits.custom.enable
+							return not E.db.mMediaTag.portraits.custom.enable
 						end,
 						get = function(info)
-							return E.db.mMT.portraits.custom.texture
+							return E.db.mMediaTag.portraits.custom.texture
 						end,
 						set = function(info, value)
-							E.db.mMT.portraits.custom.texture = value
+							E.db.mMediaTag.portraits.custom.texture = value
 							M.Portraits:Initialize()
 						end,
 					},
@@ -268,13 +268,13 @@ mMT.options.args.unitframes.args.portraits.args = {
 						type = "input",
 						width = "small",
 						disabled = function()
-							return not E.db.mMT.portraits.custom.enable
+							return not E.db.mMediaTag.portraits.custom.enable
 						end,
 						get = function(info)
-							return E.db.mMT.portraits.custom.mask
+							return E.db.mMediaTag.portraits.custom.mask
 						end,
 						set = function(info, value)
-							E.db.mMT.portraits.custom.mask = value
+							E.db.mMediaTag.portraits.custom.mask = value
 							M.Portraits:Initialize()
 						end,
 					},
@@ -284,13 +284,13 @@ mMT.options.args.unitframes.args.portraits.args = {
 						type = "input",
 						width = "small",
 						disabled = function()
-							return not E.db.mMT.portraits.custom.enable
+							return not E.db.mMediaTag.portraits.custom.enable
 						end,
 						get = function(info)
-							return E.db.mMT.portraits.custom.extra_mask
+							return E.db.mMediaTag.portraits.custom.extra_mask
 						end,
 						set = function(info, value)
-							E.db.mMT.portraits.custom.extra_mask = value
+							E.db.mMediaTag.portraits.custom.extra_mask = value
 							M.Portraits:Initialize()
 						end,
 					},
@@ -300,13 +300,13 @@ mMT.options.args.unitframes.args.portraits.args = {
 						type = "input",
 						width = "small",
 						disabled = function()
-							return not E.db.mMT.portraits.custom.enable
+							return not E.db.mMediaTag.portraits.custom.enable
 						end,
 						get = function(info)
-							return E.db.mMT.portraits.custom.shadow
+							return E.db.mMediaTag.portraits.custom.shadow
 						end,
 						set = function(info, value)
-							E.db.mMT.portraits.custom.shadow = value
+							E.db.mMediaTag.portraits.custom.shadow = value
 							M.Portraits:Initialize()
 						end,
 					},
@@ -316,13 +316,13 @@ mMT.options.args.unitframes.args.portraits.args = {
 						type = "input",
 						width = "small",
 						disabled = function()
-							return not E.db.mMT.portraits.custom.enable
+							return not E.db.mMediaTag.portraits.custom.enable
 						end,
 						get = function(info)
-							return E.db.mMT.portraits.custom.extra_shadow
+							return E.db.mMediaTag.portraits.custom.extra_shadow
 						end,
 						set = function(info, value)
-							E.db.mMT.portraits.custom.extra_shadow = value
+							E.db.mMediaTag.portraits.custom.extra_shadow = value
 							M.Portraits:Initialize()
 						end,
 					},
@@ -337,10 +337,10 @@ mMT.options.args.unitframes.args.portraits.args = {
 						name = L["Custom Extra Texture"],
 						desc = L["Enable Custom extra Textures for Portrait."],
 						get = function(info)
-							return E.db.mMT.portraits.custom.extra
+							return E.db.mMediaTag.portraits.custom.extra
 						end,
 						set = function(info, value)
-							E.db.mMT.portraits.custom.extra = value
+							E.db.mMediaTag.portraits.custom.extra = value
 							M.Portraits:Initialize()
 						end,
 					},
@@ -350,13 +350,13 @@ mMT.options.args.unitframes.args.portraits.args = {
 						type = "input",
 						width = "small",
 						disabled = function()
-							return not (E.db.mMT.portraits.custom.enable and E.db.mMT.portraits.custom.extra)
+							return not (E.db.mMediaTag.portraits.custom.enable and E.db.mMediaTag.portraits.custom.extra)
 						end,
 						get = function(info)
-							return E.db.mMT.portraits.custom.rare
+							return E.db.mMediaTag.portraits.custom.rare
 						end,
 						set = function(info, value)
-							E.db.mMT.portraits.custom.rare = value
+							E.db.mMediaTag.portraits.custom.rare = value
 							M.Portraits:Initialize()
 						end,
 					},
@@ -366,13 +366,13 @@ mMT.options.args.unitframes.args.portraits.args = {
 						type = "input",
 						width = "small",
 						disabled = function()
-							return not (E.db.mMT.portraits.custom.enable and E.db.mMT.portraits.custom.extra)
+							return not (E.db.mMediaTag.portraits.custom.enable and E.db.mMediaTag.portraits.custom.extra)
 						end,
 						get = function(info)
-							return E.db.mMT.portraits.custom.elite
+							return E.db.mMediaTag.portraits.custom.elite
 						end,
 						set = function(info, value)
-							E.db.mMT.portraits.custom.elite = value
+							E.db.mMediaTag.portraits.custom.elite = value
 							M.Portraits:Initialize()
 						end,
 					},
@@ -382,13 +382,13 @@ mMT.options.args.unitframes.args.portraits.args = {
 						type = "input",
 						width = "small",
 						disabled = function()
-							return not (E.db.mMT.portraits.custom.enable and E.db.mMT.portraits.custom.extra)
+							return not (E.db.mMediaTag.portraits.custom.enable and E.db.mMediaTag.portraits.custom.extra)
 						end,
 						get = function(info)
-							return E.db.mMT.portraits.custom.rareelite
+							return E.db.mMediaTag.portraits.custom.rareelite
 						end,
 						set = function(info, value)
-							E.db.mMT.portraits.custom.rareelite = value
+							E.db.mMediaTag.portraits.custom.rareelite = value
 							M.Portraits:Initialize()
 						end,
 					},
@@ -398,13 +398,13 @@ mMT.options.args.unitframes.args.portraits.args = {
 						type = "input",
 						width = "small",
 						disabled = function()
-							return not (E.db.mMT.portraits.custom.enable and E.db.mMT.portraits.custom.extra)
+							return not (E.db.mMediaTag.portraits.custom.enable and E.db.mMediaTag.portraits.custom.extra)
 						end,
 						get = function(info)
-							return E.db.mMT.portraits.custom.boss
+							return E.db.mMediaTag.portraits.custom.boss
 						end,
 						set = function(info, value)
-							E.db.mMT.portraits.custom.boss = value
+							E.db.mMediaTag.portraits.custom.boss = value
 							M.Portraits:Initialize()
 						end,
 					},
@@ -414,13 +414,13 @@ mMT.options.args.unitframes.args.portraits.args = {
 						type = "input",
 						width = "small",
 						disabled = function()
-							return not (E.db.mMT.portraits.custom.enable and E.db.mMT.portraits.custom.extra)
+							return not (E.db.mMediaTag.portraits.custom.enable and E.db.mMediaTag.portraits.custom.extra)
 						end,
 						get = function(info)
-							return E.db.mMT.portraits.custom.player
+							return E.db.mMediaTag.portraits.custom.player
 						end,
 						set = function(info, value)
-							E.db.mMT.portraits.custom.player = value
+							E.db.mMediaTag.portraits.custom.player = value
 							M.Portraits:Initialize()
 						end,
 					},
@@ -439,10 +439,10 @@ mMT.options.args.unitframes.args.portraits.args = {
 				name = L["Enable"],
 				desc = L["Enable the Unit Portrait."],
 				get = function(info)
-					return E.db.mMT.portraits.player.enable
+					return E.db.mMediaTag.portraits.player.enable
 				end,
 				set = function(info, value)
-					E.db.mMT.portraits.player.enable = value
+					E.db.mMediaTag.portraits.player.enable = value
 
 					M.Portraits:InitializePlayerPortrait()
 				end,
@@ -459,10 +459,10 @@ mMT.options.args.unitframes.args.portraits.args = {
 						name = L["Style"],
 						desc = L["Select a portrait texture style."],
 						get = function(info)
-							return E.db.mMT.portraits.player.texture
+							return E.db.mMediaTag.portraits.player.texture
 						end,
 						set = function(info, value)
-							E.db.mMT.portraits.player.texture = value
+							E.db.mMediaTag.portraits.player.texture = value
 							M.Portraits:InitializePlayerPortrait()
 						end,
 						values = function()
@@ -483,12 +483,12 @@ mMT.options.args.unitframes.args.portraits.args = {
 						softMin = 16,
 						softMax = 512,
 						get = function(info)
-							return E.db.mMT.portraits.player.size
+							return E.db.mMediaTag.portraits.player.size
 						end,
 						set = function(info, value)
-							E.db.mMT.portraits.player.size = value
+							E.db.mMediaTag.portraits.player.size = value
 
-							if not E.db.mMT.portraits.player.extra_settings.enable then E.db.mMT.portraits.player.extra_settings.size = value end
+							if not E.db.mMediaTag.portraits.player.extra_settings.enable then E.db.mMediaTag.portraits.player.extra_settings.size = value end
 							M.Portraits:InitializePlayerPortrait()
 						end,
 					},
@@ -498,10 +498,10 @@ mMT.options.args.unitframes.args.portraits.args = {
 						name = L["Cast Icon"],
 						desc = "Enable Cast Icons.",
 						get = function(info)
-							return E.db.mMT.portraits.player.cast
+							return E.db.mMediaTag.portraits.player.cast
 						end,
 						set = function(info, value)
-							E.db.mMT.portraits.player.cast = value
+							E.db.mMediaTag.portraits.player.cast = value
 							M.Portraits:InitializePlayerPortrait()
 						end,
 					},
@@ -511,10 +511,10 @@ mMT.options.args.unitframes.args.portraits.args = {
 						name = L["Enable Extra Texture"],
 						desc = L["Shows the Extra Texture (rare/elite) for the Unit Portrait."],
 						get = function(info)
-							return E.db.mMT.portraits.player.extra
+							return E.db.mMediaTag.portraits.player.extra
 						end,
 						set = function(info, value)
-							E.db.mMT.portraits.player.extra = value
+							E.db.mMediaTag.portraits.player.extra = value
 							M.Portraits:InitializePlayerPortrait()
 						end,
 					},
@@ -524,10 +524,10 @@ mMT.options.args.unitframes.args.portraits.args = {
 						name = L["Unitcolor for Extra"],
 						desc = L["Use the unit color for the Extra (Rare/Elite) Texture."],
 						get = function(info)
-							return E.db.mMT.portraits.player.unitcolor
+							return E.db.mMediaTag.portraits.player.unitcolor
 						end,
 						set = function(info, value)
-							E.db.mMT.portraits.player.unitcolor = value
+							E.db.mMediaTag.portraits.player.unitcolor = value
 							M.Portraits:InitializePlayerPortrait()
 						end,
 					},
@@ -544,25 +544,25 @@ mMT.options.args.unitframes.args.portraits.args = {
 						type = "select",
 						name = L["Anchor Point"],
 						get = function(info)
-							return E.db.mMT.portraits.player.point.relativePoint
+							return E.db.mMediaTag.portraits.player.point.relativePoint
 						end,
 						set = function(info, value)
-							E.db.mMT.portraits.player.point.relativePoint = value
+							E.db.mMediaTag.portraits.player.point.relativePoint = value
 							if value == "LEFT" then
-								E.db.mMT.portraits.player.point.point = "RIGHT"
-								E.db.mMT.portraits.player.mirror = false
+								E.db.mMediaTag.portraits.player.point.point = "RIGHT"
+								E.db.mMediaTag.portraits.player.mirror = false
 							elseif value == "RIGHT" then
-								E.db.mMT.portraits.player.point.point = "LEFT"
-								E.db.mMT.portraits.player.mirror = true
+								E.db.mMediaTag.portraits.player.point.point = "LEFT"
+								E.db.mMediaTag.portraits.player.mirror = true
 							elseif value == "TOP" then
-								E.db.mMT.portraits.player.point.point = "BOTTOM"
-								E.db.mMT.portraits.player.mirror = false
+								E.db.mMediaTag.portraits.player.point.point = "BOTTOM"
+								E.db.mMediaTag.portraits.player.mirror = false
 							elseif value == "BOTTOM" then
-								E.db.mMT.portraits.player.point.point = "TOP"
-								E.db.mMT.portraits.player.mirror = false
+								E.db.mMediaTag.portraits.player.point.point = "TOP"
+								E.db.mMediaTag.portraits.player.mirror = false
 							else
-								E.db.mMT.portraits.player.point.point = value
-								E.db.mMT.portraits.player.mirror = false
+								E.db.mMediaTag.portraits.player.point.point = value
+								E.db.mMediaTag.portraits.player.mirror = false
 							end
 
 							M.Portraits:InitializePlayerPortrait()
@@ -585,10 +585,10 @@ mMT.options.args.unitframes.args.portraits.args = {
 						softMin = -1024,
 						softMax = 1024,
 						get = function(info)
-							return E.db.mMT.portraits.player.point.x
+							return E.db.mMediaTag.portraits.player.point.x
 						end,
 						set = function(info, value)
-							E.db.mMT.portraits.player.point.x = value
+							E.db.mMediaTag.portraits.player.point.x = value
 							M.Portraits:InitializePlayerPortrait()
 						end,
 					},
@@ -602,10 +602,10 @@ mMT.options.args.unitframes.args.portraits.args = {
 						softMin = -1024,
 						softMax = 1024,
 						get = function(info)
-							return E.db.mMT.portraits.player.point.y
+							return E.db.mMediaTag.portraits.player.point.y
 						end,
 						set = function(info, value)
-							E.db.mMT.portraits.player.point.y = value
+							E.db.mMediaTag.portraits.player.point.y = value
 							M.Portraits:InitializePlayerPortrait()
 						end,
 					},
@@ -622,10 +622,10 @@ mMT.options.args.unitframes.args.portraits.args = {
 						type = "select",
 						name = L["Frame Strata"],
 						get = function(info)
-							return E.db.mMT.portraits.player.strata
+							return E.db.mMediaTag.portraits.player.strata
 						end,
 						set = function(info, value)
-							E.db.mMT.portraits.player.strata = value
+							E.db.mMediaTag.portraits.player.strata = value
 							M.Portraits:InitializePlayerPortrait()
 						end,
 						values = frameStrata,
@@ -640,10 +640,10 @@ mMT.options.args.unitframes.args.portraits.args = {
 						softMin = 0,
 						softMax = 1000,
 						get = function(info)
-							return E.db.mMT.portraits.player.level
+							return E.db.mMediaTag.portraits.player.level
 						end,
 						set = function(info, value)
-							E.db.mMT.portraits.player.level = value
+							E.db.mMediaTag.portraits.player.level = value
 							M.Portraits:InitializePlayerPortrait()
 						end,
 					},
@@ -661,10 +661,10 @@ mMT.options.args.unitframes.args.portraits.args = {
 						name = L["Enable"],
 						desc = L["Enable custom Position and size settings for Extra Texture."],
 						get = function(info)
-							return E.db.mMT.portraits.player.extra_settings.enable
+							return E.db.mMediaTag.portraits.player.extra_settings.enable
 						end,
 						set = function(info, value)
-							E.db.mMT.portraits.player.extra_settings.enable = value
+							E.db.mMediaTag.portraits.player.extra_settings.enable = value
 
 							M.Portraits:InitializePlayerPortrait()
 						end,
@@ -679,13 +679,13 @@ mMT.options.args.unitframes.args.portraits.args = {
 						softMin = 16,
 						softMax = 1024,
 						disabled = function()
-							return not E.db.mMT.portraits.player.extra_settings.enable
+							return not E.db.mMediaTag.portraits.player.extra_settings.enable
 						end,
 						get = function(info)
-							return E.db.mMT.portraits.player.extra_settings.size
+							return E.db.mMediaTag.portraits.player.extra_settings.size
 						end,
 						set = function(info, value)
-							E.db.mMT.portraits.player.extra_settings.size = value
+							E.db.mMediaTag.portraits.player.extra_settings.size = value
 							M.Portraits:InitializePlayerPortrait()
 						end,
 					},
@@ -699,13 +699,13 @@ mMT.options.args.unitframes.args.portraits.args = {
 						softMin = -1024,
 						softMax = 1024,
 						disabled = function()
-							return not E.db.mMT.portraits.player.extra_settings.enable
+							return not E.db.mMediaTag.portraits.player.extra_settings.enable
 						end,
 						get = function(info)
-							return E.db.mMT.portraits.player.extra_settings.offset.x
+							return E.db.mMediaTag.portraits.player.extra_settings.offset.x
 						end,
 						set = function(info, value)
-							E.db.mMT.portraits.player.extra_settings.offset.x = value
+							E.db.mMediaTag.portraits.player.extra_settings.offset.x = value
 							M.Portraits:InitializePlayerPortrait()
 						end,
 					},
@@ -719,13 +719,13 @@ mMT.options.args.unitframes.args.portraits.args = {
 						softMin = -1024,
 						softMax = 1024,
 						disabled = function()
-							return not E.db.mMT.portraits.player.extra_settings.enable
+							return not E.db.mMediaTag.portraits.player.extra_settings.enable
 						end,
 						get = function(info)
-							return E.db.mMT.portraits.player.extra_settings.offset.y
+							return E.db.mMediaTag.portraits.player.extra_settings.offset.y
 						end,
 						set = function(info, value)
-							E.db.mMT.portraits.player.extra_settings.offset.y = value
+							E.db.mMediaTag.portraits.player.extra_settings.offset.y = value
 							M.Portraits:InitializePlayerPortrait()
 						end,
 					},
@@ -744,10 +744,10 @@ mMT.options.args.unitframes.args.portraits.args = {
 				name = L["Enable"],
 				desc = L["Enable the Unit Portrait."],
 				get = function(info)
-					return E.db.mMT.portraits.target.enable
+					return E.db.mMediaTag.portraits.target.enable
 				end,
 				set = function(info, value)
-					E.db.mMT.portraits.target.enable = value
+					E.db.mMediaTag.portraits.target.enable = value
 
 					M.Portraits:InitializeTargetPortrait()
 				end,
@@ -764,10 +764,10 @@ mMT.options.args.unitframes.args.portraits.args = {
 						name = L["Style"],
 						desc = L["Select a portrait texture style."],
 						get = function(info)
-							return E.db.mMT.portraits.target.texture
+							return E.db.mMediaTag.portraits.target.texture
 						end,
 						set = function(info, value)
-							E.db.mMT.portraits.target.texture = value
+							E.db.mMediaTag.portraits.target.texture = value
 							M.Portraits:InitializeTargetPortrait()
 						end,
 						values = function()
@@ -788,12 +788,12 @@ mMT.options.args.unitframes.args.portraits.args = {
 						softMin = 16,
 						softMax = 512,
 						get = function(info)
-							return E.db.mMT.portraits.target.size
+							return E.db.mMediaTag.portraits.target.size
 						end,
 						set = function(info, value)
-							E.db.mMT.portraits.target.size = value
+							E.db.mMediaTag.portraits.target.size = value
 
-							if not E.db.mMT.portraits.target.extra_settings.enable then E.db.mMT.portraits.target.extra_settings.size = value end
+							if not E.db.mMediaTag.portraits.target.extra_settings.enable then E.db.mMediaTag.portraits.target.extra_settings.size = value end
 							M.Portraits:InitializeTargetPortrait()
 						end,
 					},
@@ -803,10 +803,10 @@ mMT.options.args.unitframes.args.portraits.args = {
 						name = L["Cast Icon"],
 						desc = "Enable Cast Icons.",
 						get = function(info)
-							return E.db.mMT.portraits.target.cast
+							return E.db.mMediaTag.portraits.target.cast
 						end,
 						set = function(info, value)
-							E.db.mMT.portraits.target.cast = value
+							E.db.mMediaTag.portraits.target.cast = value
 							M.Portraits:InitializeTargetPortrait()
 						end,
 					},
@@ -816,10 +816,10 @@ mMT.options.args.unitframes.args.portraits.args = {
 						name = L["Enable Extra Texture"],
 						desc = L["Shows the Extra Texture (rare/elite) for the Unit Portrait."],
 						get = function(info)
-							return E.db.mMT.portraits.target.extra
+							return E.db.mMediaTag.portraits.target.extra
 						end,
 						set = function(info, value)
-							E.db.mMT.portraits.target.extra = value
+							E.db.mMediaTag.portraits.target.extra = value
 							M.Portraits:InitializeTargetPortrait()
 						end,
 					},
@@ -829,10 +829,10 @@ mMT.options.args.unitframes.args.portraits.args = {
 						name = L["Unitcolor for Extra"],
 						desc = L["Use the unit color for the Extra (Rare/Elite) Texture."],
 						get = function(info)
-							return E.db.mMT.portraits.target.unitcolor
+							return E.db.mMediaTag.portraits.target.unitcolor
 						end,
 						set = function(info, value)
-							E.db.mMT.portraits.target.unitcolor = value
+							E.db.mMediaTag.portraits.target.unitcolor = value
 							M.Portraits:InitializeTargetPortrait()
 						end,
 					},
@@ -842,10 +842,10 @@ mMT.options.args.unitframes.args.portraits.args = {
 						name = L["Force Extra Texture"],
 						desc = L["It will override the default extra texture, but will take care of rare/elite/boss units."],
 						get = function(info)
-							return E.db.mMT.portraits.target.forceExtra
+							return E.db.mMediaTag.portraits.target.forceExtra
 						end,
 						set = function(info, value)
-							E.db.mMT.portraits.target.forceExtra = value
+							E.db.mMediaTag.portraits.target.forceExtra = value
 							M.Portraits:InitializeTargetPortrait()
 						end,
 						values = {
@@ -870,25 +870,25 @@ mMT.options.args.unitframes.args.portraits.args = {
 						type = "select",
 						name = L["Anchor Point"],
 						get = function(info)
-							return E.db.mMT.portraits.target.point.relativePoint
+							return E.db.mMediaTag.portraits.target.point.relativePoint
 						end,
 						set = function(info, value)
-							E.db.mMT.portraits.target.point.relativePoint = value
+							E.db.mMediaTag.portraits.target.point.relativePoint = value
 							if value == "LEFT" then
-								E.db.mMT.portraits.target.point.point = "RIGHT"
-								E.db.mMT.portraits.target.mirror = false
+								E.db.mMediaTag.portraits.target.point.point = "RIGHT"
+								E.db.mMediaTag.portraits.target.mirror = false
 							elseif value == "RIGHT" then
-								E.db.mMT.portraits.target.point.point = "LEFT"
-								E.db.mMT.portraits.target.mirror = true
+								E.db.mMediaTag.portraits.target.point.point = "LEFT"
+								E.db.mMediaTag.portraits.target.mirror = true
 							elseif value == "TOP" then
-								E.db.mMT.portraits.target.point.point = "BOTTOM"
-								E.db.mMT.portraits.target.mirror = false
+								E.db.mMediaTag.portraits.target.point.point = "BOTTOM"
+								E.db.mMediaTag.portraits.target.mirror = false
 							elseif value == "BOTTOM" then
-								E.db.mMT.portraits.target.point.point = "TOP"
-								E.db.mMT.portraits.target.mirror = false
+								E.db.mMediaTag.portraits.target.point.point = "TOP"
+								E.db.mMediaTag.portraits.target.mirror = false
 							else
-								E.db.mMT.portraits.target.point.point = value
-								E.db.mMT.portraits.target.mirror = false
+								E.db.mMediaTag.portraits.target.point.point = value
+								E.db.mMediaTag.portraits.target.mirror = false
 							end
 
 							M.Portraits:InitializeTargetPortrait()
@@ -911,10 +911,10 @@ mMT.options.args.unitframes.args.portraits.args = {
 						softMin = -1024,
 						softMax = 1024,
 						get = function(info)
-							return E.db.mMT.portraits.target.point.x
+							return E.db.mMediaTag.portraits.target.point.x
 						end,
 						set = function(info, value)
-							E.db.mMT.portraits.target.point.x = value
+							E.db.mMediaTag.portraits.target.point.x = value
 							M.Portraits:InitializeTargetPortrait()
 						end,
 					},
@@ -928,10 +928,10 @@ mMT.options.args.unitframes.args.portraits.args = {
 						softMin = -1024,
 						softMax = 1024,
 						get = function(info)
-							return E.db.mMT.portraits.target.point.y
+							return E.db.mMediaTag.portraits.target.point.y
 						end,
 						set = function(info, value)
-							E.db.mMT.portraits.target.point.y = value
+							E.db.mMediaTag.portraits.target.point.y = value
 							M.Portraits:InitializeTargetPortrait()
 						end,
 					},
@@ -948,10 +948,10 @@ mMT.options.args.unitframes.args.portraits.args = {
 						type = "select",
 						name = L["Frame Strata"],
 						get = function(info)
-							return E.db.mMT.portraits.target.strata
+							return E.db.mMediaTag.portraits.target.strata
 						end,
 						set = function(info, value)
-							E.db.mMT.portraits.target.strata = value
+							E.db.mMediaTag.portraits.target.strata = value
 							M.Portraits:InitializeTargetPortrait()
 						end,
 						values = frameStrata,
@@ -966,10 +966,10 @@ mMT.options.args.unitframes.args.portraits.args = {
 						softMin = 0,
 						softMax = 1000,
 						get = function(info)
-							return E.db.mMT.portraits.target.level
+							return E.db.mMediaTag.portraits.target.level
 						end,
 						set = function(info, value)
-							E.db.mMT.portraits.target.level = value
+							E.db.mMediaTag.portraits.target.level = value
 							M.Portraits:InitializeTargetPortrait()
 						end,
 					},
@@ -987,10 +987,10 @@ mMT.options.args.unitframes.args.portraits.args = {
 						name = L["Enable"],
 						desc = L["Enable custom Position and size settings for Extra Texture."],
 						get = function(info)
-							return E.db.mMT.portraits.target.extra_settings.enable
+							return E.db.mMediaTag.portraits.target.extra_settings.enable
 						end,
 						set = function(info, value)
-							E.db.mMT.portraits.target.extra_settings.enable = value
+							E.db.mMediaTag.portraits.target.extra_settings.enable = value
 
 							M.Portraits:InitializeTargetPortrait()
 						end,
@@ -1005,13 +1005,13 @@ mMT.options.args.unitframes.args.portraits.args = {
 						softMin = 16,
 						softMax = 1024,
 						disabled = function()
-							return not E.db.mMT.portraits.target.extra_settings.enable
+							return not E.db.mMediaTag.portraits.target.extra_settings.enable
 						end,
 						get = function(info)
-							return E.db.mMT.portraits.target.extra_settings.size
+							return E.db.mMediaTag.portraits.target.extra_settings.size
 						end,
 						set = function(info, value)
-							E.db.mMT.portraits.target.extra_settings.size = value
+							E.db.mMediaTag.portraits.target.extra_settings.size = value
 							M.Portraits:InitializeTargetPortrait()
 						end,
 					},
@@ -1025,13 +1025,13 @@ mMT.options.args.unitframes.args.portraits.args = {
 						softMin = -1024,
 						softMax = 1024,
 						disabled = function()
-							return not E.db.mMT.portraits.target.extra_settings.enable
+							return not E.db.mMediaTag.portraits.target.extra_settings.enable
 						end,
 						get = function(info)
-							return E.db.mMT.portraits.target.extra_settings.offset.x
+							return E.db.mMediaTag.portraits.target.extra_settings.offset.x
 						end,
 						set = function(info, value)
-							E.db.mMT.portraits.target.extra_settings.offset.x = value
+							E.db.mMediaTag.portraits.target.extra_settings.offset.x = value
 							M.Portraits:InitializeTargetPortrait()
 						end,
 					},
@@ -1045,13 +1045,13 @@ mMT.options.args.unitframes.args.portraits.args = {
 						softMin = -1024,
 						softMax = 1024,
 						disabled = function()
-							return not E.db.mMT.portraits.target.extra_settings.enable
+							return not E.db.mMediaTag.portraits.target.extra_settings.enable
 						end,
 						get = function(info)
-							return E.db.mMT.portraits.target.extra_settings.offset.y
+							return E.db.mMediaTag.portraits.target.extra_settings.offset.y
 						end,
 						set = function(info, value)
-							E.db.mMT.portraits.target.extra_settings.offset.y = value
+							E.db.mMediaTag.portraits.target.extra_settings.offset.y = value
 							M.Portraits:InitializeTargetPortrait()
 						end,
 					},
@@ -1070,10 +1070,10 @@ mMT.options.args.unitframes.args.portraits.args = {
 				name = L["Enable"],
 				desc = L["Enable the Unit Portrait."],
 				get = function(info)
-					return E.db.mMT.portraits.focus.enable
+					return E.db.mMediaTag.portraits.focus.enable
 				end,
 				set = function(info, value)
-					E.db.mMT.portraits.focus.enable = value
+					E.db.mMediaTag.portraits.focus.enable = value
 
 					M.Portraits:InitializeFocusPortrait()
 				end,
@@ -1090,10 +1090,10 @@ mMT.options.args.unitframes.args.portraits.args = {
 						name = L["Style"],
 						desc = L["Select a portrait texture style."],
 						get = function(info)
-							return E.db.mMT.portraits.focus.texture
+							return E.db.mMediaTag.portraits.focus.texture
 						end,
 						set = function(info, value)
-							E.db.mMT.portraits.focus.texture = value
+							E.db.mMediaTag.portraits.focus.texture = value
 							M.Portraits:InitializeFocusPortrait()
 						end,
 						values = function()
@@ -1114,12 +1114,12 @@ mMT.options.args.unitframes.args.portraits.args = {
 						softMin = 16,
 						softMax = 512,
 						get = function(info)
-							return E.db.mMT.portraits.focus.size
+							return E.db.mMediaTag.portraits.focus.size
 						end,
 						set = function(info, value)
-							E.db.mMT.portraits.focus.size = value
+							E.db.mMediaTag.portraits.focus.size = value
 
-							if not E.db.mMT.portraits.focus.extra_settings.enable then E.db.mMT.portraits.focus.extra_settings.size = value end
+							if not E.db.mMediaTag.portraits.focus.extra_settings.enable then E.db.mMediaTag.portraits.focus.extra_settings.size = value end
 							M.Portraits:InitializeFocusPortrait()
 						end,
 					},
@@ -1129,10 +1129,10 @@ mMT.options.args.unitframes.args.portraits.args = {
 						name = L["Cast Icon"],
 						desc = "Enable Cast Icons.",
 						get = function(info)
-							return E.db.mMT.portraits.focus.cast
+							return E.db.mMediaTag.portraits.focus.cast
 						end,
 						set = function(info, value)
-							E.db.mMT.portraits.focus.cast = value
+							E.db.mMediaTag.portraits.focus.cast = value
 							M.Portraits:InitializeFocusPortrait()
 						end,
 					},
@@ -1142,10 +1142,10 @@ mMT.options.args.unitframes.args.portraits.args = {
 						name = L["Enable Extra Texture"],
 						desc = L["Shows the Extra Texture (rare/elite) for the Unit Portrait."],
 						get = function(info)
-							return E.db.mMT.portraits.focus.extra
+							return E.db.mMediaTag.portraits.focus.extra
 						end,
 						set = function(info, value)
-							E.db.mMT.portraits.focus.extra = value
+							E.db.mMediaTag.portraits.focus.extra = value
 							M.Portraits:InitializeFocusPortrait()
 						end,
 					},
@@ -1155,10 +1155,10 @@ mMT.options.args.unitframes.args.portraits.args = {
 						name = L["Unitcolor for Extra"],
 						desc = L["Use the unit color for the Extra (Rare/Elite) Texture."],
 						get = function(info)
-							return E.db.mMT.portraits.focus.unitcolor
+							return E.db.mMediaTag.portraits.focus.unitcolor
 						end,
 						set = function(info, value)
-							E.db.mMT.portraits.focus.unitcolor = value
+							E.db.mMediaTag.portraits.focus.unitcolor = value
 							M.Portraits:InitializeFocusPortrait()
 						end,
 					},
@@ -1168,10 +1168,10 @@ mMT.options.args.unitframes.args.portraits.args = {
 						name = L["Force Extra Texture"],
 						desc = L["It will override the default extra texture, but will take care of rare/elite/boss units."],
 						get = function(info)
-							return E.db.mMT.portraits.focus.forceExtra
+							return E.db.mMediaTag.portraits.focus.forceExtra
 						end,
 						set = function(info, value)
-							E.db.mMT.portraits.focus.forceExtra = value
+							E.db.mMediaTag.portraits.focus.forceExtra = value
 							M.Portraits:InitializeFocusPortrait()
 						end,
 						values = {
@@ -1196,25 +1196,25 @@ mMT.options.args.unitframes.args.portraits.args = {
 						type = "select",
 						name = L["Anchor Point"],
 						get = function(info)
-							return E.db.mMT.portraits.focus.point.relativePoint
+							return E.db.mMediaTag.portraits.focus.point.relativePoint
 						end,
 						set = function(info, value)
-							E.db.mMT.portraits.focus.point.relativePoint = value
+							E.db.mMediaTag.portraits.focus.point.relativePoint = value
 							if value == "LEFT" then
-								E.db.mMT.portraits.focus.point.point = "RIGHT"
-								E.db.mMT.portraits.focus.mirror = false
+								E.db.mMediaTag.portraits.focus.point.point = "RIGHT"
+								E.db.mMediaTag.portraits.focus.mirror = false
 							elseif value == "RIGHT" then
-								E.db.mMT.portraits.focus.point.point = "LEFT"
-								E.db.mMT.portraits.focus.mirror = true
+								E.db.mMediaTag.portraits.focus.point.point = "LEFT"
+								E.db.mMediaTag.portraits.focus.mirror = true
 							elseif value == "TOP" then
-								E.db.mMT.portraits.focus.point.point = "BOTTOM"
-								E.db.mMT.portraits.focus.mirror = false
+								E.db.mMediaTag.portraits.focus.point.point = "BOTTOM"
+								E.db.mMediaTag.portraits.focus.mirror = false
 							elseif value == "BOTTOM" then
-								E.db.mMT.portraits.focus.point.point = "TOP"
-								E.db.mMT.portraits.focus.mirror = false
+								E.db.mMediaTag.portraits.focus.point.point = "TOP"
+								E.db.mMediaTag.portraits.focus.mirror = false
 							else
-								E.db.mMT.portraits.focus.point.point = value
-								E.db.mMT.portraits.focus.mirror = false
+								E.db.mMediaTag.portraits.focus.point.point = value
+								E.db.mMediaTag.portraits.focus.mirror = false
 							end
 
 							M.Portraits:InitializeFocusPortrait()
@@ -1237,10 +1237,10 @@ mMT.options.args.unitframes.args.portraits.args = {
 						softMin = -1024,
 						softMax = 1024,
 						get = function(info)
-							return E.db.mMT.portraits.focus.point.x
+							return E.db.mMediaTag.portraits.focus.point.x
 						end,
 						set = function(info, value)
-							E.db.mMT.portraits.focus.point.x = value
+							E.db.mMediaTag.portraits.focus.point.x = value
 							M.Portraits:InitializeFocusPortrait()
 						end,
 					},
@@ -1254,10 +1254,10 @@ mMT.options.args.unitframes.args.portraits.args = {
 						softMin = -1024,
 						softMax = 1024,
 						get = function(info)
-							return E.db.mMT.portraits.focus.point.y
+							return E.db.mMediaTag.portraits.focus.point.y
 						end,
 						set = function(info, value)
-							E.db.mMT.portraits.focus.point.y = value
+							E.db.mMediaTag.portraits.focus.point.y = value
 							M.Portraits:InitializeFocusPortrait()
 						end,
 					},
@@ -1274,10 +1274,10 @@ mMT.options.args.unitframes.args.portraits.args = {
 						type = "select",
 						name = L["Frame Strata"],
 						get = function(info)
-							return E.db.mMT.portraits.focus.strata
+							return E.db.mMediaTag.portraits.focus.strata
 						end,
 						set = function(info, value)
-							E.db.mMT.portraits.focus.strata = value
+							E.db.mMediaTag.portraits.focus.strata = value
 							M.Portraits:InitializeFocusPortrait()
 						end,
 						values = frameStrata,
@@ -1292,10 +1292,10 @@ mMT.options.args.unitframes.args.portraits.args = {
 						softMin = 0,
 						softMax = 1000,
 						get = function(info)
-							return E.db.mMT.portraits.focus.level
+							return E.db.mMediaTag.portraits.focus.level
 						end,
 						set = function(info, value)
-							E.db.mMT.portraits.focus.level = value
+							E.db.mMediaTag.portraits.focus.level = value
 							M.Portraits:InitializeFocusPortrait()
 						end,
 					},
@@ -1313,10 +1313,10 @@ mMT.options.args.unitframes.args.portraits.args = {
 						name = L["Enable"],
 						desc = L["Enable custom Position and size settings for Extra Texture."],
 						get = function(info)
-							return E.db.mMT.portraits.focus.extra_settings.enable
+							return E.db.mMediaTag.portraits.focus.extra_settings.enable
 						end,
 						set = function(info, value)
-							E.db.mMT.portraits.focus.extra_settings.enable = value
+							E.db.mMediaTag.portraits.focus.extra_settings.enable = value
 
 							M.Portraits:InitializeFocusPortrait()
 						end,
@@ -1331,13 +1331,13 @@ mMT.options.args.unitframes.args.portraits.args = {
 						softMin = 16,
 						softMax = 1024,
 						disabled = function()
-							return not E.db.mMT.portraits.focus.extra_settings.enable
+							return not E.db.mMediaTag.portraits.focus.extra_settings.enable
 						end,
 						get = function(info)
-							return E.db.mMT.portraits.focus.extra_settings.size
+							return E.db.mMediaTag.portraits.focus.extra_settings.size
 						end,
 						set = function(info, value)
-							E.db.mMT.portraits.focus.extra_settings.size = value
+							E.db.mMediaTag.portraits.focus.extra_settings.size = value
 							M.Portraits:InitializeFocusPortrait()
 						end,
 					},
@@ -1351,13 +1351,13 @@ mMT.options.args.unitframes.args.portraits.args = {
 						softMin = -1024,
 						softMax = 1024,
 						disabled = function()
-							return not E.db.mMT.portraits.focus.extra_settings.enable
+							return not E.db.mMediaTag.portraits.focus.extra_settings.enable
 						end,
 						get = function(info)
-							return E.db.mMT.portraits.focus.extra_settings.offset.x
+							return E.db.mMediaTag.portraits.focus.extra_settings.offset.x
 						end,
 						set = function(info, value)
-							E.db.mMT.portraits.focus.extra_settings.offset.x = value
+							E.db.mMediaTag.portraits.focus.extra_settings.offset.x = value
 							M.Portraits:InitializeFocusPortrait()
 						end,
 					},
@@ -1371,13 +1371,13 @@ mMT.options.args.unitframes.args.portraits.args = {
 						softMin = -1024,
 						softMax = 1024,
 						disabled = function()
-							return not E.db.mMT.portraits.focus.extra_settings.enable
+							return not E.db.mMediaTag.portraits.focus.extra_settings.enable
 						end,
 						get = function(info)
-							return E.db.mMT.portraits.focus.extra_settings.offset.y
+							return E.db.mMediaTag.portraits.focus.extra_settings.offset.y
 						end,
 						set = function(info, value)
-							E.db.mMT.portraits.focus.extra_settings.offset.y = value
+							E.db.mMediaTag.portraits.focus.extra_settings.offset.y = value
 							M.Portraits:InitializeFocusPortrait()
 						end,
 					},
@@ -1396,10 +1396,10 @@ mMT.options.args.unitframes.args.portraits.args = {
 				name = L["Enable"],
 				desc = L["Enable the Unit Portrait."],
 				get = function(info)
-					return E.db.mMT.portraits.pet.enable
+					return E.db.mMediaTag.portraits.pet.enable
 				end,
 				set = function(info, value)
-					E.db.mMT.portraits.pet.enable = value
+					E.db.mMediaTag.portraits.pet.enable = value
 
 					M.Portraits:InitializePetPortrait()
 				end,
@@ -1416,10 +1416,10 @@ mMT.options.args.unitframes.args.portraits.args = {
 						name = L["Style"],
 						desc = L["Select a portrait texture style."],
 						get = function(info)
-							return E.db.mMT.portraits.pet.texture
+							return E.db.mMediaTag.portraits.pet.texture
 						end,
 						set = function(info, value)
-							E.db.mMT.portraits.pet.texture = value
+							E.db.mMediaTag.portraits.pet.texture = value
 							M.Portraits:InitializePetPortrait()
 						end,
 						values = function()
@@ -1440,12 +1440,12 @@ mMT.options.args.unitframes.args.portraits.args = {
 						softMin = 16,
 						softMax = 512,
 						get = function(info)
-							return E.db.mMT.portraits.pet.size
+							return E.db.mMediaTag.portraits.pet.size
 						end,
 						set = function(info, value)
-							E.db.mMT.portraits.pet.size = value
+							E.db.mMediaTag.portraits.pet.size = value
 
-							if not E.db.mMT.portraits.pet.extra_settings.enable then E.db.mMT.portraits.pet.extra_settings.size = value end
+							if not E.db.mMediaTag.portraits.pet.extra_settings.enable then E.db.mMediaTag.portraits.pet.extra_settings.size = value end
 							M.Portraits:InitializePetPortrait()
 						end,
 					},
@@ -1455,10 +1455,10 @@ mMT.options.args.unitframes.args.portraits.args = {
 						name = L["Cast Icon"],
 						desc = "Enable Cast Icons.",
 						get = function(info)
-							return E.db.mMT.portraits.pet.cast
+							return E.db.mMediaTag.portraits.pet.cast
 						end,
 						set = function(info, value)
-							E.db.mMT.portraits.pet.cast = value
+							E.db.mMediaTag.portraits.pet.cast = value
 							M.Portraits:InitializePetPortrait()
 						end,
 					},
@@ -1468,10 +1468,10 @@ mMT.options.args.unitframes.args.portraits.args = {
 						name = L["Enable Extra Texture"],
 						desc = L["Shows the Extra Texture (rare/elite) for the Unit Portrait."],
 						get = function(info)
-							return E.db.mMT.portraits.pet.extra
+							return E.db.mMediaTag.portraits.pet.extra
 						end,
 						set = function(info, value)
-							E.db.mMT.portraits.pet.extra = value
+							E.db.mMediaTag.portraits.pet.extra = value
 							M.Portraits:InitializePetPortrait()
 						end,
 					},
@@ -1481,10 +1481,10 @@ mMT.options.args.unitframes.args.portraits.args = {
 						name = L["Unitcolor for Extra"],
 						desc = L["Use the unit color for the Extra (Rare/Elite) Texture."],
 						get = function(info)
-							return E.db.mMT.portraits.pet.unitcolor
+							return E.db.mMediaTag.portraits.pet.unitcolor
 						end,
 						set = function(info, value)
-							E.db.mMT.portraits.pet.unitcolor = value
+							E.db.mMediaTag.portraits.pet.unitcolor = value
 							M.Portraits:InitializePetPortrait()
 						end,
 					},
@@ -1494,10 +1494,10 @@ mMT.options.args.unitframes.args.portraits.args = {
 						name = L["Force Extra Texture"],
 						desc = L["It will override the default extra texture, but will take care of rare/elite/boss units."],
 						get = function(info)
-							return E.db.mMT.portraits.pet.forceExtra
+							return E.db.mMediaTag.portraits.pet.forceExtra
 						end,
 						set = function(info, value)
-							E.db.mMT.portraits.pet.forceExtra = value
+							E.db.mMediaTag.portraits.pet.forceExtra = value
 							M.Portraits:InitializePetPortrait()
 						end,
 						values = {
@@ -1522,25 +1522,25 @@ mMT.options.args.unitframes.args.portraits.args = {
 						type = "select",
 						name = L["Anchor Point"],
 						get = function(info)
-							return E.db.mMT.portraits.pet.point.relativePoint
+							return E.db.mMediaTag.portraits.pet.point.relativePoint
 						end,
 						set = function(info, value)
-							E.db.mMT.portraits.pet.point.relativePoint = value
+							E.db.mMediaTag.portraits.pet.point.relativePoint = value
 							if value == "LEFT" then
-								E.db.mMT.portraits.pet.point.point = "RIGHT"
-								E.db.mMT.portraits.pet.mirror = false
+								E.db.mMediaTag.portraits.pet.point.point = "RIGHT"
+								E.db.mMediaTag.portraits.pet.mirror = false
 							elseif value == "RIGHT" then
-								E.db.mMT.portraits.pet.point.point = "LEFT"
-								E.db.mMT.portraits.pet.mirror = true
+								E.db.mMediaTag.portraits.pet.point.point = "LEFT"
+								E.db.mMediaTag.portraits.pet.mirror = true
 							elseif value == "TOP" then
-								E.db.mMT.portraits.pet.point.point = "BOTTOM"
-								E.db.mMT.portraits.pet.mirror = false
+								E.db.mMediaTag.portraits.pet.point.point = "BOTTOM"
+								E.db.mMediaTag.portraits.pet.mirror = false
 							elseif value == "BOTTOM" then
-								E.db.mMT.portraits.pet.point.point = "TOP"
-								E.db.mMT.portraits.pet.mirror = false
+								E.db.mMediaTag.portraits.pet.point.point = "TOP"
+								E.db.mMediaTag.portraits.pet.mirror = false
 							else
-								E.db.mMT.portraits.pet.point.point = value
-								E.db.mMT.portraits.pet.mirror = false
+								E.db.mMediaTag.portraits.pet.point.point = value
+								E.db.mMediaTag.portraits.pet.mirror = false
 							end
 
 							M.Portraits:InitializePetPortrait()
@@ -1563,10 +1563,10 @@ mMT.options.args.unitframes.args.portraits.args = {
 						softMin = -1024,
 						softMax = 1024,
 						get = function(info)
-							return E.db.mMT.portraits.pet.point.x
+							return E.db.mMediaTag.portraits.pet.point.x
 						end,
 						set = function(info, value)
-							E.db.mMT.portraits.pet.point.x = value
+							E.db.mMediaTag.portraits.pet.point.x = value
 							M.Portraits:InitializePetPortrait()
 						end,
 					},
@@ -1580,10 +1580,10 @@ mMT.options.args.unitframes.args.portraits.args = {
 						softMin = -1024,
 						softMax = 1024,
 						get = function(info)
-							return E.db.mMT.portraits.pet.point.y
+							return E.db.mMediaTag.portraits.pet.point.y
 						end,
 						set = function(info, value)
-							E.db.mMT.portraits.pet.point.y = value
+							E.db.mMediaTag.portraits.pet.point.y = value
 							M.Portraits:InitializePetPortrait()
 						end,
 					},
@@ -1600,10 +1600,10 @@ mMT.options.args.unitframes.args.portraits.args = {
 						type = "select",
 						name = L["Frame Strata"],
 						get = function(info)
-							return E.db.mMT.portraits.pet.strata
+							return E.db.mMediaTag.portraits.pet.strata
 						end,
 						set = function(info, value)
-							E.db.mMT.portraits.pet.strata = value
+							E.db.mMediaTag.portraits.pet.strata = value
 							M.Portraits:InitializePetPortrait()
 						end,
 						values = frameStrata,
@@ -1618,10 +1618,10 @@ mMT.options.args.unitframes.args.portraits.args = {
 						softMin = 0,
 						softMax = 1000,
 						get = function(info)
-							return E.db.mMT.portraits.pet.level
+							return E.db.mMediaTag.portraits.pet.level
 						end,
 						set = function(info, value)
-							E.db.mMT.portraits.pet.level = value
+							E.db.mMediaTag.portraits.pet.level = value
 							M.Portraits:InitializePetPortrait()
 						end,
 					},
@@ -1639,10 +1639,10 @@ mMT.options.args.unitframes.args.portraits.args = {
 						name = L["Enable"],
 						desc = L["Enable custom Position and size settings for Extra Texture."],
 						get = function(info)
-							return E.db.mMT.portraits.pet.extra_settings.enable
+							return E.db.mMediaTag.portraits.pet.extra_settings.enable
 						end,
 						set = function(info, value)
-							E.db.mMT.portraits.pet.extra_settings.enable = value
+							E.db.mMediaTag.portraits.pet.extra_settings.enable = value
 
 							M.Portraits:InitializePetPortrait()
 						end,
@@ -1657,13 +1657,13 @@ mMT.options.args.unitframes.args.portraits.args = {
 						softMin = 16,
 						softMax = 1024,
 						disabled = function()
-							return not E.db.mMT.portraits.pet.extra_settings.enable
+							return not E.db.mMediaTag.portraits.pet.extra_settings.enable
 						end,
 						get = function(info)
-							return E.db.mMT.portraits.pet.extra_settings.size
+							return E.db.mMediaTag.portraits.pet.extra_settings.size
 						end,
 						set = function(info, value)
-							E.db.mMT.portraits.pet.extra_settings.size = value
+							E.db.mMediaTag.portraits.pet.extra_settings.size = value
 							M.Portraits:InitializePetPortrait()
 						end,
 					},
@@ -1677,13 +1677,13 @@ mMT.options.args.unitframes.args.portraits.args = {
 						softMin = -1024,
 						softMax = 1024,
 						disabled = function()
-							return not E.db.mMT.portraits.pet.extra_settings.enable
+							return not E.db.mMediaTag.portraits.pet.extra_settings.enable
 						end,
 						get = function(info)
-							return E.db.mMT.portraits.pet.extra_settings.offset.x
+							return E.db.mMediaTag.portraits.pet.extra_settings.offset.x
 						end,
 						set = function(info, value)
-							E.db.mMT.portraits.pet.extra_settings.offset.x = value
+							E.db.mMediaTag.portraits.pet.extra_settings.offset.x = value
 							M.Portraits:InitializePetPortrait()
 						end,
 					},
@@ -1697,13 +1697,13 @@ mMT.options.args.unitframes.args.portraits.args = {
 						softMin = -1024,
 						softMax = 1024,
 						disabled = function()
-							return not E.db.mMT.portraits.pet.extra_settings.enable
+							return not E.db.mMediaTag.portraits.pet.extra_settings.enable
 						end,
 						get = function(info)
-							return E.db.mMT.portraits.pet.extra_settings.offset.y
+							return E.db.mMediaTag.portraits.pet.extra_settings.offset.y
 						end,
 						set = function(info, value)
-							E.db.mMT.portraits.pet.extra_settings.offset.y = value
+							E.db.mMediaTag.portraits.pet.extra_settings.offset.y = value
 							M.Portraits:InitializePetPortrait()
 						end,
 					},
@@ -1722,10 +1722,10 @@ mMT.options.args.unitframes.args.portraits.args = {
 				name = L["Enable"],
 				desc = L["Enable the Unit Portrait."],
 				get = function(info)
-					return E.db.mMT.portraits.targettarget.enable
+					return E.db.mMediaTag.portraits.targettarget.enable
 				end,
 				set = function(info, value)
-					E.db.mMT.portraits.targettarget.enable = value
+					E.db.mMediaTag.portraits.targettarget.enable = value
 
 					M.Portraits:InitializeToTPortrait()
 				end,
@@ -1742,10 +1742,10 @@ mMT.options.args.unitframes.args.portraits.args = {
 						name = L["Style"],
 						desc = L["Select a portrait texture style."],
 						get = function(info)
-							return E.db.mMT.portraits.targettarget.texture
+							return E.db.mMediaTag.portraits.targettarget.texture
 						end,
 						set = function(info, value)
-							E.db.mMT.portraits.targettarget.texture = value
+							E.db.mMediaTag.portraits.targettarget.texture = value
 							M.Portraits:InitializeToTPortrait()
 						end,
 						values = function()
@@ -1766,12 +1766,12 @@ mMT.options.args.unitframes.args.portraits.args = {
 						softMin = 16,
 						softMax = 512,
 						get = function(info)
-							return E.db.mMT.portraits.targettarget.size
+							return E.db.mMediaTag.portraits.targettarget.size
 						end,
 						set = function(info, value)
-							E.db.mMT.portraits.targettarget.size = value
+							E.db.mMediaTag.portraits.targettarget.size = value
 
-							if not E.db.mMT.portraits.targettarget.extra_settings.enable then E.db.mMT.portraits.targettarget.extra_settings.size = value end
+							if not E.db.mMediaTag.portraits.targettarget.extra_settings.enable then E.db.mMediaTag.portraits.targettarget.extra_settings.size = value end
 							M.Portraits:InitializeToTPortrait()
 						end,
 					},
@@ -1781,10 +1781,10 @@ mMT.options.args.unitframes.args.portraits.args = {
 						name = L["Cast Icon"],
 						desc = "Enable Cast Icons.",
 						get = function(info)
-							return E.db.mMT.portraits.targettarget.cast
+							return E.db.mMediaTag.portraits.targettarget.cast
 						end,
 						set = function(info, value)
-							E.db.mMT.portraits.targettarget.cast = value
+							E.db.mMediaTag.portraits.targettarget.cast = value
 							M.Portraits:InitializeToTPortrait()
 						end,
 					},
@@ -1794,10 +1794,10 @@ mMT.options.args.unitframes.args.portraits.args = {
 						name = L["Enable Extra Texture"],
 						desc = L["Shows the Extra Texture (rare/elite) for the Unit Portrait."],
 						get = function(info)
-							return E.db.mMT.portraits.targettarget.extra
+							return E.db.mMediaTag.portraits.targettarget.extra
 						end,
 						set = function(info, value)
-							E.db.mMT.portraits.targettarget.extra = value
+							E.db.mMediaTag.portraits.targettarget.extra = value
 							M.Portraits:InitializeToTPortrait()
 						end,
 					},
@@ -1807,10 +1807,10 @@ mMT.options.args.unitframes.args.portraits.args = {
 						name = L["Unitcolor for Extra"],
 						desc = L["Use the unit color for the Extra (Rare/Elite) Texture."],
 						get = function(info)
-							return E.db.mMT.portraits.targettarget.unitcolor
+							return E.db.mMediaTag.portraits.targettarget.unitcolor
 						end,
 						set = function(info, value)
-							E.db.mMT.portraits.targettarget.unitcolor = value
+							E.db.mMediaTag.portraits.targettarget.unitcolor = value
 							M.Portraits:InitializeToTPortrait()
 						end,
 					},
@@ -1820,10 +1820,10 @@ mMT.options.args.unitframes.args.portraits.args = {
 						name = L["Force Extra Texture"],
 						desc = L["It will override the default extra texture, but will take care of rare/elite/boss units."],
 						get = function(info)
-							return E.db.mMT.portraits.targettarget.forceExtra
+							return E.db.mMediaTag.portraits.targettarget.forceExtra
 						end,
 						set = function(info, value)
-							E.db.mMT.portraits.targettarget.forceExtra = value
+							E.db.mMediaTag.portraits.targettarget.forceExtra = value
 							M.Portraits:InitializeToTPortrait()
 						end,
 						values = {
@@ -1848,25 +1848,25 @@ mMT.options.args.unitframes.args.portraits.args = {
 						type = "select",
 						name = L["Anchor Point"],
 						get = function(info)
-							return E.db.mMT.portraits.targettarget.point.relativePoint
+							return E.db.mMediaTag.portraits.targettarget.point.relativePoint
 						end,
 						set = function(info, value)
-							E.db.mMT.portraits.targettarget.point.relativePoint = value
+							E.db.mMediaTag.portraits.targettarget.point.relativePoint = value
 							if value == "LEFT" then
-								E.db.mMT.portraits.targettarget.point.point = "RIGHT"
-								E.db.mMT.portraits.targettarget.mirror = false
+								E.db.mMediaTag.portraits.targettarget.point.point = "RIGHT"
+								E.db.mMediaTag.portraits.targettarget.mirror = false
 							elseif value == "RIGHT" then
-								E.db.mMT.portraits.targettarget.point.point = "LEFT"
-								E.db.mMT.portraits.targettarget.mirror = true
+								E.db.mMediaTag.portraits.targettarget.point.point = "LEFT"
+								E.db.mMediaTag.portraits.targettarget.mirror = true
 							elseif value == "TOP" then
-								E.db.mMT.portraits.targettarget.point.point = "BOTTOM"
-								E.db.mMT.portraits.targettarget.mirror = false
+								E.db.mMediaTag.portraits.targettarget.point.point = "BOTTOM"
+								E.db.mMediaTag.portraits.targettarget.mirror = false
 							elseif value == "BOTTOM" then
-								E.db.mMT.portraits.targettarget.point.point = "TOP"
-								E.db.mMT.portraits.targettarget.mirror = false
+								E.db.mMediaTag.portraits.targettarget.point.point = "TOP"
+								E.db.mMediaTag.portraits.targettarget.mirror = false
 							else
-								E.db.mMT.portraits.targettarget.point.point = value
-								E.db.mMT.portraits.targettarget.mirror = false
+								E.db.mMediaTag.portraits.targettarget.point.point = value
+								E.db.mMediaTag.portraits.targettarget.mirror = false
 							end
 
 							M.Portraits:InitializeToTPortrait()
@@ -1889,10 +1889,10 @@ mMT.options.args.unitframes.args.portraits.args = {
 						softMin = -1024,
 						softMax = 1024,
 						get = function(info)
-							return E.db.mMT.portraits.targettarget.point.x
+							return E.db.mMediaTag.portraits.targettarget.point.x
 						end,
 						set = function(info, value)
-							E.db.mMT.portraits.targettarget.point.x = value
+							E.db.mMediaTag.portraits.targettarget.point.x = value
 							M.Portraits:InitializeToTPortrait()
 						end,
 					},
@@ -1906,10 +1906,10 @@ mMT.options.args.unitframes.args.portraits.args = {
 						softMin = -1024,
 						softMax = 1024,
 						get = function(info)
-							return E.db.mMT.portraits.targettarget.point.y
+							return E.db.mMediaTag.portraits.targettarget.point.y
 						end,
 						set = function(info, value)
-							E.db.mMT.portraits.targettarget.point.y = value
+							E.db.mMediaTag.portraits.targettarget.point.y = value
 							M.Portraits:InitializeToTPortrait()
 						end,
 					},
@@ -1926,10 +1926,10 @@ mMT.options.args.unitframes.args.portraits.args = {
 						type = "select",
 						name = L["Frame Strata"],
 						get = function(info)
-							return E.db.mMT.portraits.targettarget.strata
+							return E.db.mMediaTag.portraits.targettarget.strata
 						end,
 						set = function(info, value)
-							E.db.mMT.portraits.targettarget.strata = value
+							E.db.mMediaTag.portraits.targettarget.strata = value
 							M.Portraits:InitializeToTPortrait()
 						end,
 						values = frameStrata,
@@ -1944,10 +1944,10 @@ mMT.options.args.unitframes.args.portraits.args = {
 						softMin = 0,
 						softMax = 1000,
 						get = function(info)
-							return E.db.mMT.portraits.targettarget.level
+							return E.db.mMediaTag.portraits.targettarget.level
 						end,
 						set = function(info, value)
-							E.db.mMT.portraits.targettarget.level = value
+							E.db.mMediaTag.portraits.targettarget.level = value
 							M.Portraits:InitializeToTPortrait()
 						end,
 					},
@@ -1965,10 +1965,10 @@ mMT.options.args.unitframes.args.portraits.args = {
 						name = L["Enable"],
 						desc = L["Enable custom Position and size settings for Extra Texture."],
 						get = function(info)
-							return E.db.mMT.portraits.targettarget.extra_settings.enable
+							return E.db.mMediaTag.portraits.targettarget.extra_settings.enable
 						end,
 						set = function(info, value)
-							E.db.mMT.portraits.targettarget.extra_settings.enable = value
+							E.db.mMediaTag.portraits.targettarget.extra_settings.enable = value
 
 							M.Portraits:InitializeToTPortrait()
 						end,
@@ -1983,13 +1983,13 @@ mMT.options.args.unitframes.args.portraits.args = {
 						softMin = 16,
 						softMax = 1024,
 						disabled = function()
-							return not E.db.mMT.portraits.targettarget.extra_settings.enable
+							return not E.db.mMediaTag.portraits.targettarget.extra_settings.enable
 						end,
 						get = function(info)
-							return E.db.mMT.portraits.targettarget.extra_settings.size
+							return E.db.mMediaTag.portraits.targettarget.extra_settings.size
 						end,
 						set = function(info, value)
-							E.db.mMT.portraits.targettarget.extra_settings.size = value
+							E.db.mMediaTag.portraits.targettarget.extra_settings.size = value
 							M.Portraits:InitializeToTPortrait()
 						end,
 					},
@@ -2003,13 +2003,13 @@ mMT.options.args.unitframes.args.portraits.args = {
 						softMin = -1024,
 						softMax = 1024,
 						disabled = function()
-							return not E.db.mMT.portraits.targettarget.extra_settings.enable
+							return not E.db.mMediaTag.portraits.targettarget.extra_settings.enable
 						end,
 						get = function(info)
-							return E.db.mMT.portraits.targettarget.extra_settings.offset.x
+							return E.db.mMediaTag.portraits.targettarget.extra_settings.offset.x
 						end,
 						set = function(info, value)
-							E.db.mMT.portraits.targettarget.extra_settings.offset.x = value
+							E.db.mMediaTag.portraits.targettarget.extra_settings.offset.x = value
 							M.Portraits:InitializeToTPortrait()
 						end,
 					},
@@ -2023,13 +2023,13 @@ mMT.options.args.unitframes.args.portraits.args = {
 						softMin = -1024,
 						softMax = 1024,
 						disabled = function()
-							return not E.db.mMT.portraits.targettarget.extra_settings.enable
+							return not E.db.mMediaTag.portraits.targettarget.extra_settings.enable
 						end,
 						get = function(info)
-							return E.db.mMT.portraits.targettarget.extra_settings.offset.y
+							return E.db.mMediaTag.portraits.targettarget.extra_settings.offset.y
 						end,
 						set = function(info, value)
-							E.db.mMT.portraits.targettarget.extra_settings.offset.y = value
+							E.db.mMediaTag.portraits.targettarget.extra_settings.offset.y = value
 							M.Portraits:InitializeToTPortrait()
 						end,
 					},
@@ -2048,10 +2048,10 @@ mMT.options.args.unitframes.args.portraits.args = {
 				name = L["Enable"],
 				desc = L["Enable the Unit Portrait."],
 				get = function(info)
-					return E.db.mMT.portraits.party.enable
+					return E.db.mMediaTag.portraits.party.enable
 				end,
 				set = function(info, value)
-					E.db.mMT.portraits.party.enable = value
+					E.db.mMediaTag.portraits.party.enable = value
 
 					M.Portraits:InitializePartyPortrait()
 				end,
@@ -2068,10 +2068,10 @@ mMT.options.args.unitframes.args.portraits.args = {
 						name = L["Style"],
 						desc = L["Select a portrait texture style."],
 						get = function(info)
-							return E.db.mMT.portraits.party.texture
+							return E.db.mMediaTag.portraits.party.texture
 						end,
 						set = function(info, value)
-							E.db.mMT.portraits.party.texture = value
+							E.db.mMediaTag.portraits.party.texture = value
 							M.Portraits:InitializePartyPortrait()
 						end,
 						values = function()
@@ -2092,12 +2092,12 @@ mMT.options.args.unitframes.args.portraits.args = {
 						softMin = 16,
 						softMax = 512,
 						get = function(info)
-							return E.db.mMT.portraits.party.size
+							return E.db.mMediaTag.portraits.party.size
 						end,
 						set = function(info, value)
-							E.db.mMT.portraits.party.size = value
+							E.db.mMediaTag.portraits.party.size = value
 
-							if not E.db.mMT.portraits.party.extra_settings.enable then E.db.mMT.portraits.party.extra_settings.size = value end
+							if not E.db.mMediaTag.portraits.party.extra_settings.enable then E.db.mMediaTag.portraits.party.extra_settings.size = value end
 							M.Portraits:InitializePartyPortrait()
 						end,
 					},
@@ -2107,10 +2107,10 @@ mMT.options.args.unitframes.args.portraits.args = {
 						name = L["Cast Icon"],
 						desc = "Enable Cast Icons.",
 						get = function(info)
-							return E.db.mMT.portraits.party.cast
+							return E.db.mMediaTag.portraits.party.cast
 						end,
 						set = function(info, value)
-							E.db.mMT.portraits.party.cast = value
+							E.db.mMediaTag.portraits.party.cast = value
 							M.Portraits:InitializePartyPortrait()
 						end,
 					},
@@ -2120,10 +2120,10 @@ mMT.options.args.unitframes.args.portraits.args = {
 						name = L["Enable Extra Texture"],
 						desc = L["Shows the Extra Texture (rare/elite) for the Unit Portrait."],
 						get = function(info)
-							return E.db.mMT.portraits.party.extra
+							return E.db.mMediaTag.portraits.party.extra
 						end,
 						set = function(info, value)
-							E.db.mMT.portraits.party.extra = value
+							E.db.mMediaTag.portraits.party.extra = value
 							M.Portraits:InitializePartyPortrait()
 						end,
 					},
@@ -2133,10 +2133,10 @@ mMT.options.args.unitframes.args.portraits.args = {
 						name = L["Unitcolor for Extra"],
 						desc = L["Use the unit color for the Extra (Rare/Elite) Texture."],
 						get = function(info)
-							return E.db.mMT.portraits.party.unitcolor
+							return E.db.mMediaTag.portraits.party.unitcolor
 						end,
 						set = function(info, value)
-							E.db.mMT.portraits.party.unitcolor = value
+							E.db.mMediaTag.portraits.party.unitcolor = value
 							M.Portraits:InitializePartyPortrait()
 						end,
 					},
@@ -2146,10 +2146,10 @@ mMT.options.args.unitframes.args.portraits.args = {
 						name = L["Force Extra Texture"],
 						desc = L["It will override the default extra texture, but will take care of rare/elite/boss units."],
 						get = function(info)
-							return E.db.mMT.portraits.party.forceExtra
+							return E.db.mMediaTag.portraits.party.forceExtra
 						end,
 						set = function(info, value)
-							E.db.mMT.portraits.party.forceExtra = value
+							E.db.mMediaTag.portraits.party.forceExtra = value
 							M.Portraits:InitializePartyPortrait()
 						end,
 						values = {
@@ -2174,25 +2174,25 @@ mMT.options.args.unitframes.args.portraits.args = {
 						type = "select",
 						name = L["Anchor Point"],
 						get = function(info)
-							return E.db.mMT.portraits.party.point.relativePoint
+							return E.db.mMediaTag.portraits.party.point.relativePoint
 						end,
 						set = function(info, value)
-							E.db.mMT.portraits.party.point.relativePoint = value
+							E.db.mMediaTag.portraits.party.point.relativePoint = value
 							if value == "LEFT" then
-								E.db.mMT.portraits.party.point.point = "RIGHT"
-								E.db.mMT.portraits.party.mirror = false
+								E.db.mMediaTag.portraits.party.point.point = "RIGHT"
+								E.db.mMediaTag.portraits.party.mirror = false
 							elseif value == "RIGHT" then
-								E.db.mMT.portraits.party.point.point = "LEFT"
-								E.db.mMT.portraits.party.mirror = true
+								E.db.mMediaTag.portraits.party.point.point = "LEFT"
+								E.db.mMediaTag.portraits.party.mirror = true
 							elseif value == "TOP" then
-								E.db.mMT.portraits.party.point.point = "BOTTOM"
-								E.db.mMT.portraits.party.mirror = false
+								E.db.mMediaTag.portraits.party.point.point = "BOTTOM"
+								E.db.mMediaTag.portraits.party.mirror = false
 							elseif value == "BOTTOM" then
-								E.db.mMT.portraits.party.point.point = "TOP"
-								E.db.mMT.portraits.party.mirror = false
+								E.db.mMediaTag.portraits.party.point.point = "TOP"
+								E.db.mMediaTag.portraits.party.mirror = false
 							else
-								E.db.mMT.portraits.party.point.point = value
-								E.db.mMT.portraits.party.mirror = false
+								E.db.mMediaTag.portraits.party.point.point = value
+								E.db.mMediaTag.portraits.party.mirror = false
 							end
 
 							M.Portraits:InitializePartyPortrait()
@@ -2215,10 +2215,10 @@ mMT.options.args.unitframes.args.portraits.args = {
 						softMin = -1024,
 						softMax = 1024,
 						get = function(info)
-							return E.db.mMT.portraits.party.point.x
+							return E.db.mMediaTag.portraits.party.point.x
 						end,
 						set = function(info, value)
-							E.db.mMT.portraits.party.point.x = value
+							E.db.mMediaTag.portraits.party.point.x = value
 							M.Portraits:InitializePartyPortrait()
 						end,
 					},
@@ -2232,10 +2232,10 @@ mMT.options.args.unitframes.args.portraits.args = {
 						softMin = -1024,
 						softMax = 1024,
 						get = function(info)
-							return E.db.mMT.portraits.party.point.y
+							return E.db.mMediaTag.portraits.party.point.y
 						end,
 						set = function(info, value)
-							E.db.mMT.portraits.party.point.y = value
+							E.db.mMediaTag.portraits.party.point.y = value
 							M.Portraits:InitializePartyPortrait()
 						end,
 					},
@@ -2252,10 +2252,10 @@ mMT.options.args.unitframes.args.portraits.args = {
 						type = "select",
 						name = L["Frame Strata"],
 						get = function(info)
-							return E.db.mMT.portraits.party.strata
+							return E.db.mMediaTag.portraits.party.strata
 						end,
 						set = function(info, value)
-							E.db.mMT.portraits.party.strata = value
+							E.db.mMediaTag.portraits.party.strata = value
 							M.Portraits:InitializePartyPortrait()
 						end,
 						values = frameStrata,
@@ -2270,10 +2270,10 @@ mMT.options.args.unitframes.args.portraits.args = {
 						softMin = 0,
 						softMax = 1000,
 						get = function(info)
-							return E.db.mMT.portraits.party.level
+							return E.db.mMediaTag.portraits.party.level
 						end,
 						set = function(info, value)
-							E.db.mMT.portraits.party.level = value
+							E.db.mMediaTag.portraits.party.level = value
 							M.Portraits:InitializePartyPortrait()
 						end,
 					},
@@ -2291,10 +2291,10 @@ mMT.options.args.unitframes.args.portraits.args = {
 						name = L["Enable"],
 						desc = L["Enable custom Position and size settings for Extra Texture."],
 						get = function(info)
-							return E.db.mMT.portraits.party.extra_settings.enable
+							return E.db.mMediaTag.portraits.party.extra_settings.enable
 						end,
 						set = function(info, value)
-							E.db.mMT.portraits.party.extra_settings.enable = value
+							E.db.mMediaTag.portraits.party.extra_settings.enable = value
 
 							M.Portraits:InitializePartyPortrait()
 						end,
@@ -2309,13 +2309,13 @@ mMT.options.args.unitframes.args.portraits.args = {
 						softMin = 16,
 						softMax = 1024,
 						disabled = function()
-							return not E.db.mMT.portraits.party.extra_settings.enable
+							return not E.db.mMediaTag.portraits.party.extra_settings.enable
 						end,
 						get = function(info)
-							return E.db.mMT.portraits.party.extra_settings.size
+							return E.db.mMediaTag.portraits.party.extra_settings.size
 						end,
 						set = function(info, value)
-							E.db.mMT.portraits.party.extra_settings.size = value
+							E.db.mMediaTag.portraits.party.extra_settings.size = value
 							M.Portraits:InitializePartyPortrait()
 						end,
 					},
@@ -2329,13 +2329,13 @@ mMT.options.args.unitframes.args.portraits.args = {
 						softMin = -1024,
 						softMax = 1024,
 						disabled = function()
-							return not E.db.mMT.portraits.party.extra_settings.enable
+							return not E.db.mMediaTag.portraits.party.extra_settings.enable
 						end,
 						get = function(info)
-							return E.db.mMT.portraits.party.extra_settings.offset.x
+							return E.db.mMediaTag.portraits.party.extra_settings.offset.x
 						end,
 						set = function(info, value)
-							E.db.mMT.portraits.party.extra_settings.offset.x = value
+							E.db.mMediaTag.portraits.party.extra_settings.offset.x = value
 							M.Portraits:InitializePartyPortrait()
 						end,
 					},
@@ -2349,13 +2349,13 @@ mMT.options.args.unitframes.args.portraits.args = {
 						softMin = -1024,
 						softMax = 1024,
 						disabled = function()
-							return not E.db.mMT.portraits.party.extra_settings.enable
+							return not E.db.mMediaTag.portraits.party.extra_settings.enable
 						end,
 						get = function(info)
-							return E.db.mMT.portraits.party.extra_settings.offset.y
+							return E.db.mMediaTag.portraits.party.extra_settings.offset.y
 						end,
 						set = function(info, value)
-							E.db.mMT.portraits.party.extra_settings.offset.y = value
+							E.db.mMediaTag.portraits.party.extra_settings.offset.y = value
 							M.Portraits:InitializePartyPortrait()
 						end,
 					},
@@ -2374,10 +2374,10 @@ mMT.options.args.unitframes.args.portraits.args = {
 				name = L["Enable"],
 				desc = L["Enable the Unit Portrait."],
 				get = function(info)
-					return E.db.mMT.portraits.boss.enable
+					return E.db.mMediaTag.portraits.boss.enable
 				end,
 				set = function(info, value)
-					E.db.mMT.portraits.boss.enable = value
+					E.db.mMediaTag.portraits.boss.enable = value
 
 					M.Portraits:InitializeBossPortrait()
 				end,
@@ -2394,10 +2394,10 @@ mMT.options.args.unitframes.args.portraits.args = {
 						name = L["Style"],
 						desc = L["Select a portrait texture style."],
 						get = function(info)
-							return E.db.mMT.portraits.boss.texture
+							return E.db.mMediaTag.portraits.boss.texture
 						end,
 						set = function(info, value)
-							E.db.mMT.portraits.boss.texture = value
+							E.db.mMediaTag.portraits.boss.texture = value
 							M.Portraits:InitializeBossPortrait()
 						end,
 						values = function()
@@ -2418,12 +2418,12 @@ mMT.options.args.unitframes.args.portraits.args = {
 						softMin = 16,
 						softMax = 512,
 						get = function(info)
-							return E.db.mMT.portraits.boss.size
+							return E.db.mMediaTag.portraits.boss.size
 						end,
 						set = function(info, value)
-							E.db.mMT.portraits.boss.size = value
+							E.db.mMediaTag.portraits.boss.size = value
 
-							if not E.db.mMT.portraits.boss.extra_settings.enable then E.db.mMT.portraits.boss.extra_settings.size = value end
+							if not E.db.mMediaTag.portraits.boss.extra_settings.enable then E.db.mMediaTag.portraits.boss.extra_settings.size = value end
 							M.Portraits:InitializeBossPortrait()
 						end,
 					},
@@ -2433,10 +2433,10 @@ mMT.options.args.unitframes.args.portraits.args = {
 						name = L["Cast Icon"],
 						desc = "Enable Cast Icons.",
 						get = function(info)
-							return E.db.mMT.portraits.boss.cast
+							return E.db.mMediaTag.portraits.boss.cast
 						end,
 						set = function(info, value)
-							E.db.mMT.portraits.boss.cast = value
+							E.db.mMediaTag.portraits.boss.cast = value
 							M.Portraits:InitializeBossPortrait()
 						end,
 					},
@@ -2446,10 +2446,10 @@ mMT.options.args.unitframes.args.portraits.args = {
 						name = L["Enable Extra Texture"],
 						desc = L["Shows the Extra Texture (rare/elite) for the Unit Portrait."],
 						get = function(info)
-							return E.db.mMT.portraits.boss.extra
+							return E.db.mMediaTag.portraits.boss.extra
 						end,
 						set = function(info, value)
-							E.db.mMT.portraits.boss.extra = value
+							E.db.mMediaTag.portraits.boss.extra = value
 							M.Portraits:InitializeBossPortrait()
 						end,
 					},
@@ -2459,10 +2459,10 @@ mMT.options.args.unitframes.args.portraits.args = {
 						name = L["Unitcolor for Extra"],
 						desc = L["Use the unit color for the Extra (Rare/Elite) Texture."],
 						get = function(info)
-							return E.db.mMT.portraits.boss.unitcolor
+							return E.db.mMediaTag.portraits.boss.unitcolor
 						end,
 						set = function(info, value)
-							E.db.mMT.portraits.boss.unitcolor = value
+							E.db.mMediaTag.portraits.boss.unitcolor = value
 							M.Portraits:InitializeBossPortrait()
 						end,
 					},
@@ -2472,10 +2472,10 @@ mMT.options.args.unitframes.args.portraits.args = {
 						name = L["Force Extra Texture"],
 						desc = L["It will override the default extra texture, but will take care of rare/elite/boss units."],
 						get = function(info)
-							return E.db.mMT.portraits.boss.forceExtra
+							return E.db.mMediaTag.portraits.boss.forceExtra
 						end,
 						set = function(info, value)
-							E.db.mMT.portraits.boss.forceExtra = value
+							E.db.mMediaTag.portraits.boss.forceExtra = value
 							M.Portraits:InitializeBossPortrait()
 						end,
 						values = {
@@ -2500,25 +2500,25 @@ mMT.options.args.unitframes.args.portraits.args = {
 						type = "select",
 						name = L["Anchor Point"],
 						get = function(info)
-							return E.db.mMT.portraits.boss.point.relativePoint
+							return E.db.mMediaTag.portraits.boss.point.relativePoint
 						end,
 						set = function(info, value)
-							E.db.mMT.portraits.boss.point.relativePoint = value
+							E.db.mMediaTag.portraits.boss.point.relativePoint = value
 							if value == "LEFT" then
-								E.db.mMT.portraits.boss.point.point = "RIGHT"
-								E.db.mMT.portraits.boss.mirror = false
+								E.db.mMediaTag.portraits.boss.point.point = "RIGHT"
+								E.db.mMediaTag.portraits.boss.mirror = false
 							elseif value == "RIGHT" then
-								E.db.mMT.portraits.boss.point.point = "LEFT"
-								E.db.mMT.portraits.boss.mirror = true
+								E.db.mMediaTag.portraits.boss.point.point = "LEFT"
+								E.db.mMediaTag.portraits.boss.mirror = true
 							elseif value == "TOP" then
-								E.db.mMT.portraits.boss.point.point = "BOTTOM"
-								E.db.mMT.portraits.boss.mirror = false
+								E.db.mMediaTag.portraits.boss.point.point = "BOTTOM"
+								E.db.mMediaTag.portraits.boss.mirror = false
 							elseif value == "BOTTOM" then
-								E.db.mMT.portraits.boss.point.point = "TOP"
-								E.db.mMT.portraits.boss.mirror = false
+								E.db.mMediaTag.portraits.boss.point.point = "TOP"
+								E.db.mMediaTag.portraits.boss.mirror = false
 							else
-								E.db.mMT.portraits.boss.point.point = value
-								E.db.mMT.portraits.boss.mirror = false
+								E.db.mMediaTag.portraits.boss.point.point = value
+								E.db.mMediaTag.portraits.boss.mirror = false
 							end
 
 							M.Portraits:InitializeBossPortrait()
@@ -2541,10 +2541,10 @@ mMT.options.args.unitframes.args.portraits.args = {
 						softMin = -1024,
 						softMax = 1024,
 						get = function(info)
-							return E.db.mMT.portraits.boss.point.x
+							return E.db.mMediaTag.portraits.boss.point.x
 						end,
 						set = function(info, value)
-							E.db.mMT.portraits.boss.point.x = value
+							E.db.mMediaTag.portraits.boss.point.x = value
 							M.Portraits:InitializeBossPortrait()
 						end,
 					},
@@ -2558,10 +2558,10 @@ mMT.options.args.unitframes.args.portraits.args = {
 						softMin = -1024,
 						softMax = 1024,
 						get = function(info)
-							return E.db.mMT.portraits.boss.point.y
+							return E.db.mMediaTag.portraits.boss.point.y
 						end,
 						set = function(info, value)
-							E.db.mMT.portraits.boss.point.y = value
+							E.db.mMediaTag.portraits.boss.point.y = value
 							M.Portraits:InitializeBossPortrait()
 						end,
 					},
@@ -2578,10 +2578,10 @@ mMT.options.args.unitframes.args.portraits.args = {
 						type = "select",
 						name = L["Frame Strata"],
 						get = function(info)
-							return E.db.mMT.portraits.boss.strata
+							return E.db.mMediaTag.portraits.boss.strata
 						end,
 						set = function(info, value)
-							E.db.mMT.portraits.boss.strata = value
+							E.db.mMediaTag.portraits.boss.strata = value
 							M.Portraits:InitializeBossPortrait()
 						end,
 						values = frameStrata,
@@ -2596,10 +2596,10 @@ mMT.options.args.unitframes.args.portraits.args = {
 						softMin = 0,
 						softMax = 1000,
 						get = function(info)
-							return E.db.mMT.portraits.boss.level
+							return E.db.mMediaTag.portraits.boss.level
 						end,
 						set = function(info, value)
-							E.db.mMT.portraits.boss.level = value
+							E.db.mMediaTag.portraits.boss.level = value
 							M.Portraits:InitializeBossPortrait()
 						end,
 					},
@@ -2617,10 +2617,10 @@ mMT.options.args.unitframes.args.portraits.args = {
 						name = L["Enable"],
 						desc = L["Enable custom Position and size settings for Extra Texture."],
 						get = function(info)
-							return E.db.mMT.portraits.boss.extra_settings.enable
+							return E.db.mMediaTag.portraits.boss.extra_settings.enable
 						end,
 						set = function(info, value)
-							E.db.mMT.portraits.boss.extra_settings.enable = value
+							E.db.mMediaTag.portraits.boss.extra_settings.enable = value
 
 							M.Portraits:InitializeBossPortrait()
 						end,
@@ -2635,13 +2635,13 @@ mMT.options.args.unitframes.args.portraits.args = {
 						softMin = 16,
 						softMax = 1024,
 						disabled = function()
-							return not E.db.mMT.portraits.boss.extra_settings.enable
+							return not E.db.mMediaTag.portraits.boss.extra_settings.enable
 						end,
 						get = function(info)
-							return E.db.mMT.portraits.boss.extra_settings.size
+							return E.db.mMediaTag.portraits.boss.extra_settings.size
 						end,
 						set = function(info, value)
-							E.db.mMT.portraits.boss.extra_settings.size = value
+							E.db.mMediaTag.portraits.boss.extra_settings.size = value
 							M.Portraits:InitializeBossPortrait()
 						end,
 					},
@@ -2655,13 +2655,13 @@ mMT.options.args.unitframes.args.portraits.args = {
 						softMin = -1024,
 						softMax = 1024,
 						disabled = function()
-							return not E.db.mMT.portraits.boss.extra_settings.enable
+							return not E.db.mMediaTag.portraits.boss.extra_settings.enable
 						end,
 						get = function(info)
-							return E.db.mMT.portraits.boss.extra_settings.offset.x
+							return E.db.mMediaTag.portraits.boss.extra_settings.offset.x
 						end,
 						set = function(info, value)
-							E.db.mMT.portraits.boss.extra_settings.offset.x = value
+							E.db.mMediaTag.portraits.boss.extra_settings.offset.x = value
 							M.Portraits:InitializeBossPortrait()
 						end,
 					},
@@ -2675,13 +2675,13 @@ mMT.options.args.unitframes.args.portraits.args = {
 						softMin = -1024,
 						softMax = 1024,
 						disabled = function()
-							return not E.db.mMT.portraits.boss.extra_settings.enable
+							return not E.db.mMediaTag.portraits.boss.extra_settings.enable
 						end,
 						get = function(info)
-							return E.db.mMT.portraits.boss.extra_settings.offset.y
+							return E.db.mMediaTag.portraits.boss.extra_settings.offset.y
 						end,
 						set = function(info, value)
-							E.db.mMT.portraits.boss.extra_settings.offset.y = value
+							E.db.mMediaTag.portraits.boss.extra_settings.offset.y = value
 							M.Portraits:InitializeBossPortrait()
 						end,
 					},
@@ -2700,10 +2700,10 @@ mMT.options.args.unitframes.args.portraits.args = {
 				name = L["Enable"],
 				desc = L["Enable the Unit Portrait."],
 				get = function(info)
-					return E.db.mMT.portraits.arena.enable
+					return E.db.mMediaTag.portraits.arena.enable
 				end,
 				set = function(info, value)
-					E.db.mMT.portraits.arena.enable = value
+					E.db.mMediaTag.portraits.arena.enable = value
 
 					M.Portraits:InitializeArenaPortrait()
 				end,
@@ -2720,10 +2720,10 @@ mMT.options.args.unitframes.args.portraits.args = {
 						name = L["Style"],
 						desc = L["Select a portrait texture style."],
 						get = function(info)
-							return E.db.mMT.portraits.arena.texture
+							return E.db.mMediaTag.portraits.arena.texture
 						end,
 						set = function(info, value)
-							E.db.mMT.portraits.arena.texture = value
+							E.db.mMediaTag.portraits.arena.texture = value
 							M.Portraits:InitializeArenaPortrait()
 						end,
 						values = function()
@@ -2744,12 +2744,12 @@ mMT.options.args.unitframes.args.portraits.args = {
 						softMin = 16,
 						softMax = 512,
 						get = function(info)
-							return E.db.mMT.portraits.arena.size
+							return E.db.mMediaTag.portraits.arena.size
 						end,
 						set = function(info, value)
-							E.db.mMT.portraits.arena.size = value
+							E.db.mMediaTag.portraits.arena.size = value
 
-							if not E.db.mMT.portraits.arena.extra_settings.enable then E.db.mMT.portraits.arena.extra_settings.size = value end
+							if not E.db.mMediaTag.portraits.arena.extra_settings.enable then E.db.mMediaTag.portraits.arena.extra_settings.size = value end
 							M.Portraits:InitializeArenaPortrait()
 						end,
 					},
@@ -2759,10 +2759,10 @@ mMT.options.args.unitframes.args.portraits.args = {
 						name = L["Cast Icon"],
 						desc = "Enable Cast Icons.",
 						get = function(info)
-							return E.db.mMT.portraits.arena.cast
+							return E.db.mMediaTag.portraits.arena.cast
 						end,
 						set = function(info, value)
-							E.db.mMT.portraits.arena.cast = value
+							E.db.mMediaTag.portraits.arena.cast = value
 							M.Portraits:InitializeArenaPortrait()
 						end,
 					},
@@ -2772,10 +2772,10 @@ mMT.options.args.unitframes.args.portraits.args = {
 						name = L["Enable Extra Texture"],
 						desc = L["Shows the Extra Texture (rare/elite) for the Unit Portrait."],
 						get = function(info)
-							return E.db.mMT.portraits.arena.extra
+							return E.db.mMediaTag.portraits.arena.extra
 						end,
 						set = function(info, value)
-							E.db.mMT.portraits.arena.extra = value
+							E.db.mMediaTag.portraits.arena.extra = value
 							M.Portraits:InitializeArenaPortrait()
 						end,
 					},
@@ -2785,10 +2785,10 @@ mMT.options.args.unitframes.args.portraits.args = {
 						name = L["Unitcolor for Extra"],
 						desc = L["Use the unit color for the Extra (Rare/Elite) Texture."],
 						get = function(info)
-							return E.db.mMT.portraits.arena.unitcolor
+							return E.db.mMediaTag.portraits.arena.unitcolor
 						end,
 						set = function(info, value)
-							E.db.mMT.portraits.arena.unitcolor = value
+							E.db.mMediaTag.portraits.arena.unitcolor = value
 							M.Portraits:InitializeArenaPortrait()
 						end,
 					},
@@ -2798,10 +2798,10 @@ mMT.options.args.unitframes.args.portraits.args = {
 						name = L["Force Extra Texture"],
 						desc = L["It will override the default extra texture, but will take care of rare/elite/boss units."],
 						get = function(info)
-							return E.db.mMT.portraits.arena.forceExtra
+							return E.db.mMediaTag.portraits.arena.forceExtra
 						end,
 						set = function(info, value)
-							E.db.mMT.portraits.arena.forceExtra = value
+							E.db.mMediaTag.portraits.arena.forceExtra = value
 							M.Portraits:InitializeArenaPortrait()
 						end,
 						values = {
@@ -2826,25 +2826,25 @@ mMT.options.args.unitframes.args.portraits.args = {
 						type = "select",
 						name = L["Anchor Point"],
 						get = function(info)
-							return E.db.mMT.portraits.arena.point.relativePoint
+							return E.db.mMediaTag.portraits.arena.point.relativePoint
 						end,
 						set = function(info, value)
-							E.db.mMT.portraits.arena.point.relativePoint = value
+							E.db.mMediaTag.portraits.arena.point.relativePoint = value
 							if value == "LEFT" then
-								E.db.mMT.portraits.arena.point.point = "RIGHT"
-								E.db.mMT.portraits.arena.mirror = false
+								E.db.mMediaTag.portraits.arena.point.point = "RIGHT"
+								E.db.mMediaTag.portraits.arena.mirror = false
 							elseif value == "RIGHT" then
-								E.db.mMT.portraits.arena.point.point = "LEFT"
-								E.db.mMT.portraits.arena.mirror = true
+								E.db.mMediaTag.portraits.arena.point.point = "LEFT"
+								E.db.mMediaTag.portraits.arena.mirror = true
 							elseif value == "TOP" then
-								E.db.mMT.portraits.arena.point.point = "BOTTOM"
-								E.db.mMT.portraits.arena.mirror = false
+								E.db.mMediaTag.portraits.arena.point.point = "BOTTOM"
+								E.db.mMediaTag.portraits.arena.mirror = false
 							elseif value == "BOTTOM" then
-								E.db.mMT.portraits.arena.point.point = "TOP"
-								E.db.mMT.portraits.arena.mirror = false
+								E.db.mMediaTag.portraits.arena.point.point = "TOP"
+								E.db.mMediaTag.portraits.arena.mirror = false
 							else
-								E.db.mMT.portraits.arena.point.point = value
-								E.db.mMT.portraits.arena.mirror = false
+								E.db.mMediaTag.portraits.arena.point.point = value
+								E.db.mMediaTag.portraits.arena.mirror = false
 							end
 
 							M.Portraits:InitializeArenaPortrait()
@@ -2867,10 +2867,10 @@ mMT.options.args.unitframes.args.portraits.args = {
 						softMin = -1024,
 						softMax = 1024,
 						get = function(info)
-							return E.db.mMT.portraits.arena.point.x
+							return E.db.mMediaTag.portraits.arena.point.x
 						end,
 						set = function(info, value)
-							E.db.mMT.portraits.arena.point.x = value
+							E.db.mMediaTag.portraits.arena.point.x = value
 							M.Portraits:InitializeArenaPortrait()
 						end,
 					},
@@ -2884,10 +2884,10 @@ mMT.options.args.unitframes.args.portraits.args = {
 						softMin = -1024,
 						softMax = 1024,
 						get = function(info)
-							return E.db.mMT.portraits.arena.point.y
+							return E.db.mMediaTag.portraits.arena.point.y
 						end,
 						set = function(info, value)
-							E.db.mMT.portraits.arena.point.y = value
+							E.db.mMediaTag.portraits.arena.point.y = value
 							M.Portraits:InitializeArenaPortrait()
 						end,
 					},
@@ -2904,10 +2904,10 @@ mMT.options.args.unitframes.args.portraits.args = {
 						type = "select",
 						name = L["Frame Strata"],
 						get = function(info)
-							return E.db.mMT.portraits.arena.strata
+							return E.db.mMediaTag.portraits.arena.strata
 						end,
 						set = function(info, value)
-							E.db.mMT.portraits.arena.strata = value
+							E.db.mMediaTag.portraits.arena.strata = value
 							M.Portraits:InitializeArenaPortrait()
 						end,
 						values = frameStrata,
@@ -2922,10 +2922,10 @@ mMT.options.args.unitframes.args.portraits.args = {
 						softMin = 0,
 						softMax = 1000,
 						get = function(info)
-							return E.db.mMT.portraits.arena.level
+							return E.db.mMediaTag.portraits.arena.level
 						end,
 						set = function(info, value)
-							E.db.mMT.portraits.arena.level = value
+							E.db.mMediaTag.portraits.arena.level = value
 							M.Portraits:InitializeArenaPortrait()
 						end,
 					},
@@ -2943,10 +2943,10 @@ mMT.options.args.unitframes.args.portraits.args = {
 						name = L["Enable"],
 						desc = L["Enable custom Position and size settings for Extra Texture."],
 						get = function(info)
-							return E.db.mMT.portraits.arena.extra_settings.enable
+							return E.db.mMediaTag.portraits.arena.extra_settings.enable
 						end,
 						set = function(info, value)
-							E.db.mMT.portraits.arena.extra_settings.enable = value
+							E.db.mMediaTag.portraits.arena.extra_settings.enable = value
 
 							M.Portraits:InitializeArenaPortrait()
 						end,
@@ -2961,13 +2961,13 @@ mMT.options.args.unitframes.args.portraits.args = {
 						softMin = 16,
 						softMax = 1024,
 						disabled = function()
-							return not E.db.mMT.portraits.arena.extra_settings.enable
+							return not E.db.mMediaTag.portraits.arena.extra_settings.enable
 						end,
 						get = function(info)
-							return E.db.mMT.portraits.arena.extra_settings.size
+							return E.db.mMediaTag.portraits.arena.extra_settings.size
 						end,
 						set = function(info, value)
-							E.db.mMT.portraits.arena.extra_settings.size = value
+							E.db.mMediaTag.portraits.arena.extra_settings.size = value
 							M.Portraits:InitializeArenaPortrait()
 						end,
 					},
@@ -2981,13 +2981,13 @@ mMT.options.args.unitframes.args.portraits.args = {
 						softMin = -1024,
 						softMax = 1024,
 						disabled = function()
-							return not E.db.mMT.portraits.arena.extra_settings.enable
+							return not E.db.mMediaTag.portraits.arena.extra_settings.enable
 						end,
 						get = function(info)
-							return E.db.mMT.portraits.arena.extra_settings.offset.x
+							return E.db.mMediaTag.portraits.arena.extra_settings.offset.x
 						end,
 						set = function(info, value)
-							E.db.mMT.portraits.arena.extra_settings.offset.x = value
+							E.db.mMediaTag.portraits.arena.extra_settings.offset.x = value
 							M.Portraits:InitializeArenaPortrait()
 						end,
 					},
@@ -3001,13 +3001,13 @@ mMT.options.args.unitframes.args.portraits.args = {
 						softMin = -1024,
 						softMax = 1024,
 						disabled = function()
-							return not E.db.mMT.portraits.arena.extra_settings.enable
+							return not E.db.mMediaTag.portraits.arena.extra_settings.enable
 						end,
 						get = function(info)
-							return E.db.mMT.portraits.arena.extra_settings.offset.y
+							return E.db.mMediaTag.portraits.arena.extra_settings.offset.y
 						end,
 						set = function(info, value)
-							E.db.mMT.portraits.arena.extra_settings.offset.y = value
+							E.db.mMediaTag.portraits.arena.extra_settings.offset.y = value
 							M.Portraits:InitializeArenaPortrait()
 						end,
 					},
@@ -3033,10 +3033,10 @@ mMT.options.args.unitframes.args.portraits.args = {
 						name = L["Rare"],
 						desc = L["Select a extra texture style for rare units."],
 						get = function(info)
-							return E.db.mMT.portraits.misc.rare
+							return E.db.mMediaTag.portraits.misc.rare
 						end,
 						set = function(info, value)
-							E.db.mMT.portraits.misc.rare = value
+							E.db.mMediaTag.portraits.misc.rare = value
 							M.Portraits:Initialize()
 						end,
 						values = function()
@@ -3053,10 +3053,10 @@ mMT.options.args.unitframes.args.portraits.args = {
 						name = L["Elite"],
 						desc = L["Select a extra texture style for elite units."],
 						get = function(info)
-							return E.db.mMT.portraits.misc.elite
+							return E.db.mMediaTag.portraits.misc.elite
 						end,
 						set = function(info, value)
-							E.db.mMT.portraits.misc.elite = value
+							E.db.mMediaTag.portraits.misc.elite = value
 							M.Portraits:Initialize()
 						end,
 						values = function()
@@ -3073,10 +3073,10 @@ mMT.options.args.unitframes.args.portraits.args = {
 						name = L["Rare Elite"],
 						desc = L["Select a extra texture style for rare elite units."],
 						get = function(info)
-							return E.db.mMT.portraits.misc.rareelite
+							return E.db.mMediaTag.portraits.misc.rareelite
 						end,
 						set = function(info, value)
-							E.db.mMT.portraits.misc.rareelite = value
+							E.db.mMediaTag.portraits.misc.rareelite = value
 							M.Portraits:Initialize()
 						end,
 						values = function()
@@ -3093,10 +3093,10 @@ mMT.options.args.unitframes.args.portraits.args = {
 						name = L["Boss"],
 						desc = L["Select a extra texture style for boss units."],
 						get = function(info)
-							return E.db.mMT.portraits.misc.boss
+							return E.db.mMediaTag.portraits.misc.boss
 						end,
 						set = function(info, value)
-							E.db.mMT.portraits.misc.boss = value
+							E.db.mMediaTag.portraits.misc.boss = value
 							M.Portraits:Initialize()
 						end,
 						values = function()
@@ -3113,10 +3113,10 @@ mMT.options.args.unitframes.args.portraits.args = {
 						name = L["Player"],
 						desc = L["Select a extra texture style for player."],
 						get = function(info)
-							return E.db.mMT.portraits.misc.player
+							return E.db.mMediaTag.portraits.misc.player
 						end,
 						set = function(info, value)
-							E.db.mMT.portraits.misc.player = value
+							E.db.mMediaTag.portraits.misc.player = value
 							M.Portraits:Initialize()
 						end,
 						values = function()
@@ -3146,10 +3146,10 @@ mMT.options.args.unitframes.args.portraits.args = {
 						name = L["On Top"],
 						desc = L["Enable this to show the Extra Texture on top of the Unit Portrait."],
 						get = function(info)
-							return E.db.mMT.portraits.misc.extratop
+							return E.db.mMediaTag.portraits.misc.extratop
 						end,
 						set = function(info, value)
-							E.db.mMT.portraits.misc.extratop = value
+							E.db.mMediaTag.portraits.misc.extratop = value
 							M.Portraits:Initialize()
 						end,
 					},
@@ -3175,7 +3175,7 @@ mMT.options.args.unitframes.args.portraits.args = {
 				type = "execute",
 				name = L["Reset class colors"],
 				func = function()
-					E.db.mMT.color.portraits.class = CopyTable(P.color.portraits.class)
+					E.db.mMediaTag.color.portraits.class = CopyTable(P.color.portraits.class)
 					mMT:UpdateMedia("portraits")
 					M.Portraits:Initialize()
 				end,
@@ -3185,7 +3185,7 @@ mMT.options.args.unitframes.args.portraits.args = {
 				type = "execute",
 				name = L["Reset all colors"],
 				func = function()
-					E.db.mMT.color.portraits = CopyTable(P.color.portraits)
+					E.db.mMediaTag.color.portraits = CopyTable(P.color.portraits)
 					mMT:UpdateMedia("portraits")
 					M.Portraits:Initialize()
 				end,
@@ -3202,10 +3202,10 @@ mMT.options.args.unitframes.args.portraits.args = {
 						name = L["Use Default color"],
 						desc = L["Forces the default color for all texture."],
 						get = function(info)
-							return E.db.mMT.portraits.misc.force_default
+							return E.db.mMediaTag.portraits.misc.force_default
 						end,
 						set = function(info, value)
-							E.db.mMT.portraits.misc.force_default = value
+							E.db.mMediaTag.portraits.misc.force_default = value
 							M.Portraits:Initialize()
 						end,
 					},
@@ -3215,10 +3215,10 @@ mMT.options.args.unitframes.args.portraits.args = {
 						name = L["Gradient"],
 						desc = L["Enable gradient colors for the portraits."],
 						get = function(info)
-							return E.db.mMT.portraits.misc.gradient
+							return E.db.mMediaTag.portraits.misc.gradient
 						end,
 						set = function(info, value)
-							E.db.mMT.portraits.misc.gradient = value
+							E.db.mMediaTag.portraits.misc.gradient = value
 							M.Portraits:Initialize()
 						end,
 					},
@@ -3228,13 +3228,13 @@ mMT.options.args.unitframes.args.portraits.args = {
 						name = L["Mode"],
 						desc = L["Choose the gradient orientation."],
 						disabled = function()
-							return not E.db.mMT.portraits.misc.gradient
+							return not E.db.mMediaTag.portraits.misc.gradient
 						end,
 						get = function(info)
-							return E.db.mMT.portraits.misc.gradient_mode
+							return E.db.mMediaTag.portraits.misc.gradient_mode
 						end,
 						set = function(info, value)
-							E.db.mMT.portraits.misc.gradient_mode = value
+							E.db.mMediaTag.portraits.misc.gradient_mode = value
 							M.Portraits:Initialize()
 						end,
 						values = {
@@ -3262,12 +3262,12 @@ mMT.options.args.unitframes.args.portraits.args = {
 								name = "A",
 								hasAlpha = false,
 								get = function(info)
-									local r, g, b = mMT:HexToRGB(E.db.mMT.color.portraits.misc.default.c)
+									local r, g, b = mMT:HexToRGB(E.db.mMediaTag.color.portraits.misc.default.c)
 									return r, g, b
 								end,
 								set = function(info, r, g, b)
 									local hex = E:RGBToHex(r, g, b, "ff")
-									E.db.mMT.color.portraits.misc.default.c = hex
+									E.db.mMediaTag.color.portraits.misc.default.c = hex
 									MEDIA.color.portraits.misc.default.c = CreateColorFromHexString(hex)
 									MEDIA.color.portraits.misc.default.c.hex = hex
 								end,
@@ -3277,16 +3277,16 @@ mMT.options.args.unitframes.args.portraits.args = {
 								order = 2,
 								name = "B",
 								disabled = function()
-									return not E.db.mMT.color.portraits.misc.gradient
+									return not E.db.mMediaTag.color.portraits.misc.gradient
 								end,
 								hasAlpha = false,
 								get = function(info)
-									local r, g, b = mMT:HexToRGB(E.db.mMT.color.portraits.misc.default.g)
+									local r, g, b = mMT:HexToRGB(E.db.mMediaTag.color.portraits.misc.default.g)
 									return r, g, b
 								end,
 								set = function(info, r, g, b)
 									local hex = E:RGBToHex(r, g, b, "ff")
-									E.db.mMT.color.portraits.misc.default.g = hex
+									E.db.mMediaTag.color.portraits.misc.default.g = hex
 									MEDIA.color.portraits.misc.default.g = CreateColorFromHexString(hex)
 									MEDIA.color.portraits.misc.default.g.hex = hex
 								end,
@@ -3305,12 +3305,12 @@ mMT.options.args.unitframes.args.portraits.args = {
 								name = "A",
 								hasAlpha = false,
 								get = function(info)
-									local r, g, b = mMT:HexToRGB(E.db.mMT.color.portraits.misc.death.c)
+									local r, g, b = mMT:HexToRGB(E.db.mMediaTag.color.portraits.misc.death.c)
 									return r, g, b
 								end,
 								set = function(info, r, g, b)
 									local hex = E:RGBToHex(r, g, b, "ff")
-									E.db.mMT.color.portraits.misc.death.c = hex
+									E.db.mMediaTag.color.portraits.misc.death.c = hex
 									MEDIA.color.portraits.misc.death.c = CreateColorFromHexString(hex)
 									MEDIA.color.portraits.misc.death.c.hex = hex
 								end,
@@ -3320,16 +3320,16 @@ mMT.options.args.unitframes.args.portraits.args = {
 								order = 2,
 								name = "B",
 								disabled = function()
-									return not E.db.mMT.color.portraits.misc.gradient
+									return not E.db.mMediaTag.color.portraits.misc.gradient
 								end,
 								hasAlpha = false,
 								get = function(info)
-									local r, g, b = mMT:HexToRGB(E.db.mMT.color.portraits.misc.death.g)
+									local r, g, b = mMT:HexToRGB(E.db.mMediaTag.color.portraits.misc.death.g)
 									return r, g, b
 								end,
 								set = function(info, r, g, b)
 									local hex = E:RGBToHex(r, g, b, "ff")
-									E.db.mMT.color.portraits.misc.death.g = hex
+									E.db.mMediaTag.color.portraits.misc.death.g = hex
 									MEDIA.color.portraits.misc.death.g = CreateColorFromHexString(hex)
 									MEDIA.color.portraits.misc.death.g.hex = hex
 								end,
@@ -3356,12 +3356,12 @@ mMT.options.args.unitframes.args.portraits.args = {
 								name = "A",
 								hasAlpha = false,
 								get = function(info)
-									local r, g, b = mMT:HexToRGB(E.db.mMT.color.portraits.class.DEATHKNIGHT.c)
+									local r, g, b = mMT:HexToRGB(E.db.mMediaTag.color.portraits.class.DEATHKNIGHT.c)
 									return r, g, b
 								end,
 								set = function(info, r, g, b)
 									local hex = E:RGBToHex(r, g, b, "ff")
-									E.db.mMT.color.portraits.class.DEATHKNIGHT.c = hex
+									E.db.mMediaTag.color.portraits.class.DEATHKNIGHT.c = hex
 									MEDIA.color.portraits.class.DEATHKNIGHT.c = CreateColorFromHexString(hex)
 									MEDIA.color.portraits.class.DEATHKNIGHT.c.hex = hex
 								end,
@@ -3371,16 +3371,16 @@ mMT.options.args.unitframes.args.portraits.args = {
 								order = 2,
 								name = "B",
 								disabled = function()
-									return not E.db.mMT.color.portraits.misc.gradient
+									return not E.db.mMediaTag.color.portraits.misc.gradient
 								end,
 								hasAlpha = false,
 								get = function(info)
-									local r, g, b = mMT:HexToRGB(E.db.mMT.color.portraits.class.DEATHKNIGHT.g)
+									local r, g, b = mMT:HexToRGB(E.db.mMediaTag.color.portraits.class.DEATHKNIGHT.g)
 									return r, g, b
 								end,
 								set = function(info, r, g, b)
 									local hex = E:RGBToHex(r, g, b, "ff")
-									E.db.mMT.color.portraits.class.DEATHKNIGHT.g = hex
+									E.db.mMediaTag.color.portraits.class.DEATHKNIGHT.g = hex
 									MEDIA.color.portraits.class.DEATHKNIGHT.g = CreateColorFromHexString(hex)
 									MEDIA.color.portraits.class.DEATHKNIGHT.g.hex = hex
 								end,
@@ -3399,12 +3399,12 @@ mMT.options.args.unitframes.args.portraits.args = {
 								name = "A",
 								hasAlpha = false,
 								get = function(info)
-									local r, g, b = mMT:HexToRGB(E.db.mMT.color.portraits.class.DEMONHUNTER.c)
+									local r, g, b = mMT:HexToRGB(E.db.mMediaTag.color.portraits.class.DEMONHUNTER.c)
 									return r, g, b
 								end,
 								set = function(info, r, g, b)
 									local hex = E:RGBToHex(r, g, b, "ff")
-									E.db.mMT.color.portraits.class.DEMONHUNTER.c = hex
+									E.db.mMediaTag.color.portraits.class.DEMONHUNTER.c = hex
 									MEDIA.color.portraits.class.DEMONHUNTER.c = CreateColorFromHexString(hex)
 									MEDIA.color.portraits.class.DEMONHUNTER.c.hex = hex
 								end,
@@ -3415,12 +3415,12 @@ mMT.options.args.unitframes.args.portraits.args = {
 								name = "B",
 								hasAlpha = false,
 								get = function(info)
-									local r, g, b = mMT:HexToRGB(E.db.mMT.color.portraits.class.DEMONHUNTER.g)
+									local r, g, b = mMT:HexToRGB(E.db.mMediaTag.color.portraits.class.DEMONHUNTER.g)
 									return r, g, b
 								end,
 								set = function(info, r, g, b)
 									local hex = E:RGBToHex(r, g, b, "ff")
-									E.db.mMT.color.portraits.class.DEMONHUNTER.g = hex
+									E.db.mMediaTag.color.portraits.class.DEMONHUNTER.g = hex
 									MEDIA.color.portraits.class.DEMONHUNTER.g = CreateColorFromHexString(hex)
 									MEDIA.color.portraits.class.DEMONHUNTER.g.hex = hex
 								end,
@@ -3439,12 +3439,12 @@ mMT.options.args.unitframes.args.portraits.args = {
 								name = "A",
 								hasAlpha = false,
 								get = function(info)
-									local r, g, b = mMT:HexToRGB(E.db.mMT.color.portraits.class.DRUID.c)
+									local r, g, b = mMT:HexToRGB(E.db.mMediaTag.color.portraits.class.DRUID.c)
 									return r, g, b
 								end,
 								set = function(info, r, g, b)
 									local hex = E:RGBToHex(r, g, b, "ff")
-									E.db.mMT.color.portraits.class.DRUID.c = hex
+									E.db.mMediaTag.color.portraits.class.DRUID.c = hex
 									MEDIA.color.portraits.class.DRUID.c = CreateColorFromHexString(hex)
 									MEDIA.color.portraits.class.DRUID.c.hex = hex
 								end,
@@ -3454,16 +3454,16 @@ mMT.options.args.unitframes.args.portraits.args = {
 								order = 2,
 								name = "B",
 								disabled = function()
-									return not E.db.mMT.color.portraits.misc.gradient
+									return not E.db.mMediaTag.color.portraits.misc.gradient
 								end,
 								hasAlpha = false,
 								get = function(info)
-									local r, g, b = mMT:HexToRGB(E.db.mMT.color.portraits.class.DRUID.g)
+									local r, g, b = mMT:HexToRGB(E.db.mMediaTag.color.portraits.class.DRUID.g)
 									return r, g, b
 								end,
 								set = function(info, r, g, b)
 									local hex = E:RGBToHex(r, g, b, "ff")
-									E.db.mMT.color.portraits.class.DRUID.g = hex
+									E.db.mMediaTag.color.portraits.class.DRUID.g = hex
 									MEDIA.color.portraits.class.DRUID.g = CreateColorFromHexString(hex)
 									MEDIA.color.portraits.class.DRUID.g.hex = hex
 								end,
@@ -3482,12 +3482,12 @@ mMT.options.args.unitframes.args.portraits.args = {
 								name = "A",
 								hasAlpha = false,
 								get = function(info)
-									local r, g, b = mMT:HexToRGB(E.db.mMT.color.portraits.class.EVOKER.c)
+									local r, g, b = mMT:HexToRGB(E.db.mMediaTag.color.portraits.class.EVOKER.c)
 									return r, g, b
 								end,
 								set = function(info, r, g, b)
 									local hex = E:RGBToHex(r, g, b, "ff")
-									E.db.mMT.color.portraits.class.EVOKER.c = hex
+									E.db.mMediaTag.color.portraits.class.EVOKER.c = hex
 									MEDIA.color.portraits.class.EVOKER.c = CreateColorFromHexString(hex)
 									MEDIA.color.portraits.class.EVOKER.c.hex = hex
 								end,
@@ -3498,12 +3498,12 @@ mMT.options.args.unitframes.args.portraits.args = {
 								name = "B",
 								hasAlpha = false,
 								get = function(info)
-									local r, g, b = mMT:HexToRGB(E.db.mMT.color.portraits.class.EVOKER.g)
+									local r, g, b = mMT:HexToRGB(E.db.mMediaTag.color.portraits.class.EVOKER.g)
 									return r, g, b
 								end,
 								set = function(info, r, g, b)
 									local hex = E:RGBToHex(r, g, b, "ff")
-									E.db.mMT.color.portraits.class.EVOKER.g = hex
+									E.db.mMediaTag.color.portraits.class.EVOKER.g = hex
 									MEDIA.color.portraits.class.EVOKER.g = CreateColorFromHexString(hex)
 									MEDIA.color.portraits.class.EVOKER.g.hex = hex
 								end,
@@ -3522,12 +3522,12 @@ mMT.options.args.unitframes.args.portraits.args = {
 								name = "A",
 								hasAlpha = false,
 								get = function(info)
-									local r, g, b = mMT:HexToRGB(E.db.mMT.color.portraits.class.HUNTER.c)
+									local r, g, b = mMT:HexToRGB(E.db.mMediaTag.color.portraits.class.HUNTER.c)
 									return r, g, b
 								end,
 								set = function(info, r, g, b)
 									local hex = E:RGBToHex(r, g, b, "ff")
-									E.db.mMT.color.portraits.class.HUNTER.c = hex
+									E.db.mMediaTag.color.portraits.class.HUNTER.c = hex
 									MEDIA.color.portraits.class.HUNTER.c = CreateColorFromHexString(hex)
 									MEDIA.color.portraits.class.HUNTER.c.hex = hex
 								end,
@@ -3537,16 +3537,16 @@ mMT.options.args.unitframes.args.portraits.args = {
 								order = 2,
 								name = "B",
 								disabled = function()
-									return not E.db.mMT.color.portraits.misc.gradient
+									return not E.db.mMediaTag.color.portraits.misc.gradient
 								end,
 								hasAlpha = false,
 								get = function(info)
-									local r, g, b = mMT:HexToRGB(E.db.mMT.color.portraits.class.HUNTER.g)
+									local r, g, b = mMT:HexToRGB(E.db.mMediaTag.color.portraits.class.HUNTER.g)
 									return r, g, b
 								end,
 								set = function(info, r, g, b)
 									local hex = E:RGBToHex(r, g, b, "ff")
-									E.db.mMT.color.portraits.class.HUNTER.g = hex
+									E.db.mMediaTag.color.portraits.class.HUNTER.g = hex
 									MEDIA.color.portraits.class.HUNTER.g = CreateColorFromHexString(hex)
 									MEDIA.color.portraits.class.HUNTER.g.hex = hex
 								end,
@@ -3565,12 +3565,12 @@ mMT.options.args.unitframes.args.portraits.args = {
 								name = "A",
 								hasAlpha = false,
 								get = function(info)
-									local r, g, b = mMT:HexToRGB(E.db.mMT.color.portraits.class.MAGE.c)
+									local r, g, b = mMT:HexToRGB(E.db.mMediaTag.color.portraits.class.MAGE.c)
 									return r, g, b
 								end,
 								set = function(info, r, g, b)
 									local hex = E:RGBToHex(r, g, b, "ff")
-									E.db.mMT.color.portraits.class.MAGE.c = hex
+									E.db.mMediaTag.color.portraits.class.MAGE.c = hex
 									MEDIA.color.portraits.class.MAGE.c = CreateColorFromHexString(hex)
 									MEDIA.color.portraits.class.MAGE.c.hex = hex
 								end,
@@ -3581,12 +3581,12 @@ mMT.options.args.unitframes.args.portraits.args = {
 								name = "B",
 								hasAlpha = false,
 								get = function(info)
-									local r, g, b = mMT:HexToRGB(E.db.mMT.color.portraits.class.MAGE.g)
+									local r, g, b = mMT:HexToRGB(E.db.mMediaTag.color.portraits.class.MAGE.g)
 									return r, g, b
 								end,
 								set = function(info, r, g, b)
 									local hex = E:RGBToHex(r, g, b, "ff")
-									E.db.mMT.color.portraits.class.MAGE.g = hex
+									E.db.mMediaTag.color.portraits.class.MAGE.g = hex
 									MEDIA.color.portraits.class.MAGE.g = CreateColorFromHexString(hex)
 									MEDIA.color.portraits.class.MAGE.g.hex = hex
 								end,
@@ -3605,12 +3605,12 @@ mMT.options.args.unitframes.args.portraits.args = {
 								name = "A",
 								hasAlpha = false,
 								get = function(info)
-									local r, g, b = mMT:HexToRGB(E.db.mMT.color.portraits.class.MONK.c)
+									local r, g, b = mMT:HexToRGB(E.db.mMediaTag.color.portraits.class.MONK.c)
 									return r, g, b
 								end,
 								set = function(info, r, g, b)
 									local hex = E:RGBToHex(r, g, b, "ff")
-									E.db.mMT.color.portraits.class.MONK.c = hex
+									E.db.mMediaTag.color.portraits.class.MONK.c = hex
 									MEDIA.color.portraits.class.MONK.c = CreateColorFromHexString(hex)
 									MEDIA.color.portraits.class.MONK.c.hex = hex
 								end,
@@ -3620,16 +3620,16 @@ mMT.options.args.unitframes.args.portraits.args = {
 								order = 2,
 								name = "B",
 								disabled = function()
-									return not E.db.mMT.color.portraits.misc.gradient
+									return not E.db.mMediaTag.color.portraits.misc.gradient
 								end,
 								hasAlpha = false,
 								get = function(info)
-									local r, g, b = mMT:HexToRGB(E.db.mMT.color.portraits.class.MONK.g)
+									local r, g, b = mMT:HexToRGB(E.db.mMediaTag.color.portraits.class.MONK.g)
 									return r, g, b
 								end,
 								set = function(info, r, g, b)
 									local hex = E:RGBToHex(r, g, b, "ff")
-									E.db.mMT.color.portraits.class.MONK.g = hex
+									E.db.mMediaTag.color.portraits.class.MONK.g = hex
 									MEDIA.color.portraits.class.MONK.g = CreateColorFromHexString(hex)
 									MEDIA.color.portraits.class.MONK.g.hex = hex
 								end,
@@ -3648,12 +3648,12 @@ mMT.options.args.unitframes.args.portraits.args = {
 								name = "A",
 								hasAlpha = false,
 								get = function(info)
-									local r, g, b = mMT:HexToRGB(E.db.mMT.color.portraits.class.PALADIN.c)
+									local r, g, b = mMT:HexToRGB(E.db.mMediaTag.color.portraits.class.PALADIN.c)
 									return r, g, b
 								end,
 								set = function(info, r, g, b)
 									local hex = E:RGBToHex(r, g, b, "ff")
-									E.db.mMT.color.portraits.class.PALADIN.c = hex
+									E.db.mMediaTag.color.portraits.class.PALADIN.c = hex
 									MEDIA.color.portraits.class.PALADIN.c = CreateColorFromHexString(hex)
 									MEDIA.color.portraits.class.PALADIN.c.hex = hex
 								end,
@@ -3664,12 +3664,12 @@ mMT.options.args.unitframes.args.portraits.args = {
 								name = "B",
 								hasAlpha = false,
 								get = function(info)
-									local r, g, b = mMT:HexToRGB(E.db.mMT.color.portraits.class.PALADIN.g)
+									local r, g, b = mMT:HexToRGB(E.db.mMediaTag.color.portraits.class.PALADIN.g)
 									return r, g, b
 								end,
 								set = function(info, r, g, b)
 									local hex = E:RGBToHex(r, g, b, "ff")
-									E.db.mMT.color.portraits.class.PALADIN.g = hex
+									E.db.mMediaTag.color.portraits.class.PALADIN.g = hex
 									MEDIA.color.portraits.class.PALADIN.g = CreateColorFromHexString(hex)
 									MEDIA.color.portraits.class.PALADIN.g.hex = hex
 								end,
@@ -3688,12 +3688,12 @@ mMT.options.args.unitframes.args.portraits.args = {
 								name = "A",
 								hasAlpha = false,
 								get = function(info)
-									local r, g, b = mMT:HexToRGB(E.db.mMT.color.portraits.class.PRIEST.c)
+									local r, g, b = mMT:HexToRGB(E.db.mMediaTag.color.portraits.class.PRIEST.c)
 									return r, g, b
 								end,
 								set = function(info, r, g, b)
 									local hex = E:RGBToHex(r, g, b, "ff")
-									E.db.mMT.color.portraits.class.PRIEST.c = hex
+									E.db.mMediaTag.color.portraits.class.PRIEST.c = hex
 									MEDIA.color.portraits.class.PRIEST.c = CreateColorFromHexString(hex)
 									MEDIA.color.portraits.class.PRIEST.c.hex = hex
 								end,
@@ -3703,16 +3703,16 @@ mMT.options.args.unitframes.args.portraits.args = {
 								order = 2,
 								name = "B",
 								disabled = function()
-									return not E.db.mMT.color.portraits.misc.gradient
+									return not E.db.mMediaTag.color.portraits.misc.gradient
 								end,
 								hasAlpha = false,
 								get = function(info)
-									local r, g, b = mMT:HexToRGB(E.db.mMT.color.portraits.class.PRIEST.g)
+									local r, g, b = mMT:HexToRGB(E.db.mMediaTag.color.portraits.class.PRIEST.g)
 									return r, g, b
 								end,
 								set = function(info, r, g, b)
 									local hex = E:RGBToHex(r, g, b, "ff")
-									E.db.mMT.color.portraits.class.PRIEST.g = hex
+									E.db.mMediaTag.color.portraits.class.PRIEST.g = hex
 									MEDIA.color.portraits.class.PRIEST.g = CreateColorFromHexString(hex)
 									MEDIA.color.portraits.class.PRIEST.g.hex = hex
 								end,
@@ -3731,12 +3731,12 @@ mMT.options.args.unitframes.args.portraits.args = {
 								name = "A",
 								hasAlpha = false,
 								get = function(info)
-									local r, g, b = mMT:HexToRGB(E.db.mMT.color.portraits.class.ROGUE.c)
+									local r, g, b = mMT:HexToRGB(E.db.mMediaTag.color.portraits.class.ROGUE.c)
 									return r, g, b
 								end,
 								set = function(info, r, g, b)
 									local hex = E:RGBToHex(r, g, b, "ff")
-									E.db.mMT.color.portraits.class.ROGUE.c = hex
+									E.db.mMediaTag.color.portraits.class.ROGUE.c = hex
 									MEDIA.color.portraits.class.ROGUE.c = CreateColorFromHexString(hex)
 									MEDIA.color.portraits.class.ROGUE.c.hex = hex
 								end,
@@ -3747,12 +3747,12 @@ mMT.options.args.unitframes.args.portraits.args = {
 								name = "B",
 								hasAlpha = false,
 								get = function(info)
-									local r, g, b = mMT:HexToRGB(E.db.mMT.color.portraits.class.ROGUE.g)
+									local r, g, b = mMT:HexToRGB(E.db.mMediaTag.color.portraits.class.ROGUE.g)
 									return r, g, b
 								end,
 								set = function(info, r, g, b)
 									local hex = E:RGBToHex(r, g, b, "ff")
-									E.db.mMT.color.portraits.class.ROGUE.g = hex
+									E.db.mMediaTag.color.portraits.class.ROGUE.g = hex
 									MEDIA.color.portraits.class.ROGUE.g = CreateColorFromHexString(hex)
 									MEDIA.color.portraits.class.ROGUE.g.hex = hex
 								end,
@@ -3771,12 +3771,12 @@ mMT.options.args.unitframes.args.portraits.args = {
 								name = "A",
 								hasAlpha = false,
 								get = function(info)
-									local r, g, b = mMT:HexToRGB(E.db.mMT.color.portraits.class.SHAMAN.c)
+									local r, g, b = mMT:HexToRGB(E.db.mMediaTag.color.portraits.class.SHAMAN.c)
 									return r, g, b
 								end,
 								set = function(info, r, g, b)
 									local hex = E:RGBToHex(r, g, b, "ff")
-									E.db.mMT.color.portraits.class.SHAMAN.c = hex
+									E.db.mMediaTag.color.portraits.class.SHAMAN.c = hex
 									MEDIA.color.portraits.class.SHAMAN.c = CreateColorFromHexString(hex)
 									MEDIA.color.portraits.class.SHAMAN.c.hex = hex
 								end,
@@ -3787,12 +3787,12 @@ mMT.options.args.unitframes.args.portraits.args = {
 								name = "B",
 								hasAlpha = false,
 								get = function(info)
-									local r, g, b = mMT:HexToRGB(E.db.mMT.color.portraits.class.SHAMAN.g)
+									local r, g, b = mMT:HexToRGB(E.db.mMediaTag.color.portraits.class.SHAMAN.g)
 									return r, g, b
 								end,
 								set = function(info, r, g, b)
 									local hex = E:RGBToHex(r, g, b, "ff")
-									E.db.mMT.color.portraits.class.SHAMAN.g = hex
+									E.db.mMediaTag.color.portraits.class.SHAMAN.g = hex
 									MEDIA.color.portraits.class.SHAMAN.g = CreateColorFromHexString(hex)
 									MEDIA.color.portraits.class.SHAMAN.g.hex = hex
 								end,
@@ -3811,12 +3811,12 @@ mMT.options.args.unitframes.args.portraits.args = {
 								name = "A",
 								hasAlpha = false,
 								get = function(info)
-									local r, g, b = mMT:HexToRGB(E.db.mMT.color.portraits.class.WARLOCK.c)
+									local r, g, b = mMT:HexToRGB(E.db.mMediaTag.color.portraits.class.WARLOCK.c)
 									return r, g, b
 								end,
 								set = function(info, r, g, b)
 									local hex = E:RGBToHex(r, g, b, "ff")
-									E.db.mMT.color.portraits.class.WARLOCK.c = hex
+									E.db.mMediaTag.color.portraits.class.WARLOCK.c = hex
 									MEDIA.color.portraits.class.WARLOCK.c = CreateColorFromHexString(hex)
 									MEDIA.color.portraits.class.WARLOCK.c.hex = hex
 								end,
@@ -3827,12 +3827,12 @@ mMT.options.args.unitframes.args.portraits.args = {
 								name = "B",
 								hasAlpha = false,
 								get = function(info)
-									local r, g, b = mMT:HexToRGB(E.db.mMT.color.portraits.class.WARLOCK.g)
+									local r, g, b = mMT:HexToRGB(E.db.mMediaTag.color.portraits.class.WARLOCK.g)
 									return r, g, b
 								end,
 								set = function(info, r, g, b)
 									local hex = E:RGBToHex(r, g, b, "ff")
-									E.db.mMT.color.portraits.class.WARLOCK.g = hex
+									E.db.mMediaTag.color.portraits.class.WARLOCK.g = hex
 									MEDIA.color.portraits.class.WARLOCK.g = CreateColorFromHexString(hex)
 									MEDIA.color.portraits.class.WARLOCK.g.hex = hex
 								end,
@@ -3851,12 +3851,12 @@ mMT.options.args.unitframes.args.portraits.args = {
 								name = "A",
 								hasAlpha = false,
 								get = function(info)
-									local r, g, b = mMT:HexToRGB(E.db.mMT.color.portraits.class.WARRIOR.c)
+									local r, g, b = mMT:HexToRGB(E.db.mMediaTag.color.portraits.class.WARRIOR.c)
 									return r, g, b
 								end,
 								set = function(info, r, g, b)
 									local hex = E:RGBToHex(r, g, b, "ff")
-									E.db.mMT.color.portraits.class.WARRIOR.c = hex
+									E.db.mMediaTag.color.portraits.class.WARRIOR.c = hex
 									MEDIA.color.portraits.class.WARRIOR.c = CreateColorFromHexString(hex)
 									MEDIA.color.portraits.class.WARRIOR.c.hex = hex
 								end,
@@ -3867,12 +3867,12 @@ mMT.options.args.unitframes.args.portraits.args = {
 								name = "B",
 								hasAlpha = false,
 								get = function(info)
-									local r, g, b = mMT:HexToRGB(E.db.mMT.color.portraits.class.WARRIOR.g)
+									local r, g, b = mMT:HexToRGB(E.db.mMediaTag.color.portraits.class.WARRIOR.g)
 									return r, g, b
 								end,
 								set = function(info, r, g, b)
 									local hex = E:RGBToHex(r, g, b, "ff")
-									E.db.mMT.color.portraits.class.WARRIOR.g = hex
+									E.db.mMediaTag.color.portraits.class.WARRIOR.g = hex
 									MEDIA.color.portraits.class.WARRIOR.g = CreateColorFromHexString(hex)
 									MEDIA.color.portraits.class.WARRIOR.g.hex = hex
 								end,
@@ -3899,12 +3899,12 @@ mMT.options.args.unitframes.args.portraits.args = {
 								name = "A",
 								hasAlpha = false,
 								get = function(info)
-									local r, g, b = mMT:HexToRGB(E.db.mMT.color.portraits.classification.rare.c)
+									local r, g, b = mMT:HexToRGB(E.db.mMediaTag.color.portraits.classification.rare.c)
 									return r, g, b
 								end,
 								set = function(info, r, g, b)
 									local hex = E:RGBToHex(r, g, b, "ff")
-									E.db.mMT.color.portraits.classification.rare.c = hex
+									E.db.mMediaTag.color.portraits.classification.rare.c = hex
 									MEDIA.color.portraits.classification.rare.c = CreateColorFromHexString(hex)
 									MEDIA.color.portraits.classification.rare.c.hex = hex
 								end,
@@ -3915,12 +3915,12 @@ mMT.options.args.unitframes.args.portraits.args = {
 								name = "B",
 								hasAlpha = false,
 								get = function(info)
-									local r, g, b = mMT:HexToRGB(E.db.mMT.color.portraits.classification.rare.g)
+									local r, g, b = mMT:HexToRGB(E.db.mMediaTag.color.portraits.classification.rare.g)
 									return r, g, b
 								end,
 								set = function(info, r, g, b)
 									local hex = E:RGBToHex(r, g, b, "ff")
-									E.db.mMT.color.portraits.classification.rare.g = hex
+									E.db.mMediaTag.color.portraits.classification.rare.g = hex
 									MEDIA.color.portraits.classification.rare.g = CreateColorFromHexString(hex)
 									MEDIA.color.portraits.classification.rare.g.hex = hex
 								end,
@@ -3939,12 +3939,12 @@ mMT.options.args.unitframes.args.portraits.args = {
 								name = "A",
 								hasAlpha = false,
 								get = function(info)
-									local r, g, b = mMT:HexToRGB(E.db.mMT.color.portraits.classification.elite.c)
+									local r, g, b = mMT:HexToRGB(E.db.mMediaTag.color.portraits.classification.elite.c)
 									return r, g, b
 								end,
 								set = function(info, r, g, b)
 									local hex = E:RGBToHex(r, g, b, "ff")
-									E.db.mMT.color.portraits.classification.elite.c = hex
+									E.db.mMediaTag.color.portraits.classification.elite.c = hex
 									MEDIA.color.portraits.classification.elite.c = CreateColorFromHexString(hex)
 									MEDIA.color.portraits.classification.elite.c.hex = hex
 								end,
@@ -3955,12 +3955,12 @@ mMT.options.args.unitframes.args.portraits.args = {
 								name = "B",
 								hasAlpha = false,
 								get = function(info)
-									local r, g, b = mMT:HexToRGB(E.db.mMT.color.portraits.classification.elite.g)
+									local r, g, b = mMT:HexToRGB(E.db.mMediaTag.color.portraits.classification.elite.g)
 									return r, g, b
 								end,
 								set = function(info, r, g, b)
 									local hex = E:RGBToHex(r, g, b, "ff")
-									E.db.mMT.color.portraits.classification.elite.g = hex
+									E.db.mMediaTag.color.portraits.classification.elite.g = hex
 									MEDIA.color.portraits.classification.elite.g = CreateColorFromHexString(hex)
 									MEDIA.color.portraits.classification.elite.g.hex = hex
 								end,
@@ -3979,12 +3979,12 @@ mMT.options.args.unitframes.args.portraits.args = {
 								name = "A",
 								hasAlpha = false,
 								get = function(info)
-									local r, g, b = mMT:HexToRGB(E.db.mMT.color.portraits.classification.rareelite.c)
+									local r, g, b = mMT:HexToRGB(E.db.mMediaTag.color.portraits.classification.rareelite.c)
 									return r, g, b
 								end,
 								set = function(info, r, g, b)
 									local hex = E:RGBToHex(r, g, b, "ff")
-									E.db.mMT.color.portraits.classification.rareelite.c = hex
+									E.db.mMediaTag.color.portraits.classification.rareelite.c = hex
 									MEDIA.color.portraits.classification.rareelite.c = CreateColorFromHexString(hex)
 									MEDIA.color.portraits.classification.rareelite.c.hex = hex
 								end,
@@ -3995,12 +3995,12 @@ mMT.options.args.unitframes.args.portraits.args = {
 								name = "B",
 								hasAlpha = false,
 								get = function(info)
-									local r, g, b = mMT:HexToRGB(E.db.mMT.color.portraits.classification.rareelite.g)
+									local r, g, b = mMT:HexToRGB(E.db.mMediaTag.color.portraits.classification.rareelite.g)
 									return r, g, b
 								end,
 								set = function(info, r, g, b)
 									local hex = E:RGBToHex(r, g, b, "ff")
-									E.db.mMT.color.portraits.classification.rareelite.g = hex
+									E.db.mMediaTag.color.portraits.classification.rareelite.g = hex
 									MEDIA.color.portraits.classification.rareelite.g = CreateColorFromHexString(hex)
 									MEDIA.color.portraits.classification.rareelite.g.hex = hex
 								end,
@@ -4019,12 +4019,12 @@ mMT.options.args.unitframes.args.portraits.args = {
 								name = "A",
 								hasAlpha = false,
 								get = function(info)
-									local r, g, b = mMT:HexToRGB(E.db.mMT.color.portraits.classification.boss.c)
+									local r, g, b = mMT:HexToRGB(E.db.mMediaTag.color.portraits.classification.boss.c)
 									return r, g, b
 								end,
 								set = function(info, r, g, b)
 									local hex = E:RGBToHex(r, g, b, "ff")
-									E.db.mMT.color.portraits.classification.boss.c = hex
+									E.db.mMediaTag.color.portraits.classification.boss.c = hex
 									MEDIA.color.portraits.classification.boss.c = CreateColorFromHexString(hex)
 									MEDIA.color.portraits.classification.boss.c.hex = hex
 								end,
@@ -4035,12 +4035,12 @@ mMT.options.args.unitframes.args.portraits.args = {
 								name = "B",
 								hasAlpha = false,
 								get = function(info)
-									local r, g, b = mMT:HexToRGB(E.db.mMT.color.portraits.classification.boss.g)
+									local r, g, b = mMT:HexToRGB(E.db.mMediaTag.color.portraits.classification.boss.g)
 									return r, g, b
 								end,
 								set = function(info, r, g, b)
 									local hex = E:RGBToHex(r, g, b, "ff")
-									E.db.mMT.color.portraits.classification.boss.g = hex
+									E.db.mMediaTag.color.portraits.classification.boss.g = hex
 									MEDIA.color.portraits.classification.boss.g = CreateColorFromHexString(hex)
 									MEDIA.color.portraits.classification.boss.g.hex = hex
 								end,
@@ -4059,12 +4059,12 @@ mMT.options.args.unitframes.args.portraits.args = {
 								name = "A",
 								hasAlpha = false,
 								get = function(info)
-									local r, g, b = mMT:HexToRGB(E.db.mMT.color.portraits.classification.player.c)
+									local r, g, b = mMT:HexToRGB(E.db.mMediaTag.color.portraits.classification.player.c)
 									return r, g, b
 								end,
 								set = function(info, r, g, b)
 									local hex = E:RGBToHex(r, g, b, "ff")
-									E.db.mMT.color.portraits.classification.player.c = hex
+									E.db.mMediaTag.color.portraits.classification.player.c = hex
 									MEDIA.color.portraits.classification.player.c = CreateColorFromHexString(hex)
 									MEDIA.color.portraits.classification.player.c.hex = hex
 								end,
@@ -4075,12 +4075,12 @@ mMT.options.args.unitframes.args.portraits.args = {
 								name = "B",
 								hasAlpha = false,
 								get = function(info)
-									local r, g, b = mMT:HexToRGB(E.db.mMT.color.portraits.classification.player.g)
+									local r, g, b = mMT:HexToRGB(E.db.mMediaTag.color.portraits.classification.player.g)
 									return r, g, b
 								end,
 								set = function(info, r, g, b)
 									local hex = E:RGBToHex(r, g, b, "ff")
-									E.db.mMT.color.portraits.classification.player.g = hex
+									E.db.mMediaTag.color.portraits.classification.player.g = hex
 									MEDIA.color.portraits.classification.player.g = CreateColorFromHexString(hex)
 									MEDIA.color.portraits.classification.player.g.hex = hex
 								end,
@@ -4107,12 +4107,12 @@ mMT.options.args.unitframes.args.portraits.args = {
 								name = "A",
 								hasAlpha = false,
 								get = function(info)
-									local r, g, b = mMT:HexToRGB(E.db.mMT.color.portraits.reaction.enemy.c)
+									local r, g, b = mMT:HexToRGB(E.db.mMediaTag.color.portraits.reaction.enemy.c)
 									return r, g, b
 								end,
 								set = function(info, r, g, b)
 									local hex = E:RGBToHex(r, g, b, "ff")
-									E.db.mMT.color.portraits.reaction.enemy.c = hex
+									E.db.mMediaTag.color.portraits.reaction.enemy.c = hex
 									MEDIA.color.portraits.reaction.enemy.c = CreateColorFromHexString(hex)
 									MEDIA.color.portraits.reaction.enemy.c.hex = hex
 								end,
@@ -4123,12 +4123,12 @@ mMT.options.args.unitframes.args.portraits.args = {
 								name = "B",
 								hasAlpha = false,
 								get = function(info)
-									local r, g, b = mMT:HexToRGB(E.db.mMT.color.portraits.reaction.enemy.g)
+									local r, g, b = mMT:HexToRGB(E.db.mMediaTag.color.portraits.reaction.enemy.g)
 									return r, g, b
 								end,
 								set = function(info, r, g, b)
 									local hex = E:RGBToHex(r, g, b, "ff")
-									E.db.mMT.color.portraits.reaction.enemy.g = hex
+									E.db.mMediaTag.color.portraits.reaction.enemy.g = hex
 									MEDIA.color.portraits.reaction.enemy.g = CreateColorFromHexString(hex)
 									MEDIA.color.portraits.reaction.enemy.g.hex = hex
 								end,
@@ -4147,12 +4147,12 @@ mMT.options.args.unitframes.args.portraits.args = {
 								name = "A",
 								hasAlpha = false,
 								get = function(info)
-									local r, g, b = mMT:HexToRGB(E.db.mMT.color.portraits.reaction.neutral.c)
+									local r, g, b = mMT:HexToRGB(E.db.mMediaTag.color.portraits.reaction.neutral.c)
 									return r, g, b
 								end,
 								set = function(info, r, g, b)
 									local hex = E:RGBToHex(r, g, b, "ff")
-									E.db.mMT.color.portraits.reaction.neutral.c = hex
+									E.db.mMediaTag.color.portraits.reaction.neutral.c = hex
 									MEDIA.color.portraits.reaction.neutral.c = CreateColorFromHexString(hex)
 									MEDIA.color.portraits.reaction.neutral.c.hex = hex
 								end,
@@ -4163,12 +4163,12 @@ mMT.options.args.unitframes.args.portraits.args = {
 								name = "B",
 								hasAlpha = false,
 								get = function(info)
-									local r, g, b = mMT:HexToRGB(E.db.mMT.color.portraits.reaction.neutral.g)
+									local r, g, b = mMT:HexToRGB(E.db.mMediaTag.color.portraits.reaction.neutral.g)
 									return r, g, b
 								end,
 								set = function(info, r, g, b)
 									local hex = E:RGBToHex(r, g, b, "ff")
-									E.db.mMT.color.portraits.reaction.neutral.g = hex
+									E.db.mMediaTag.color.portraits.reaction.neutral.g = hex
 									MEDIA.color.portraits.reaction.neutral.g = CreateColorFromHexString(hex)
 									MEDIA.color.portraits.reaction.neutral.g.hex = hex
 								end,
@@ -4187,12 +4187,12 @@ mMT.options.args.unitframes.args.portraits.args = {
 								name = "A",
 								hasAlpha = false,
 								get = function(info)
-									local r, g, b = mMT:HexToRGB(E.db.mMT.color.portraits.reaction.friendly.c)
+									local r, g, b = mMT:HexToRGB(E.db.mMediaTag.color.portraits.reaction.friendly.c)
 									return r, g, b
 								end,
 								set = function(info, r, g, b)
 									local hex = E:RGBToHex(r, g, b, "ff")
-									E.db.mMT.color.portraits.reaction.friendly.c = hex
+									E.db.mMediaTag.color.portraits.reaction.friendly.c = hex
 									MEDIA.color.portraits.reaction.friendly.c = CreateColorFromHexString(hex)
 									MEDIA.color.portraits.reaction.friendly.c.hex = hex
 								end,
@@ -4203,12 +4203,12 @@ mMT.options.args.unitframes.args.portraits.args = {
 								name = "B",
 								hasAlpha = false,
 								get = function(info)
-									local r, g, b = mMT:HexToRGB(E.db.mMT.color.portraits.reaction.friendly.g)
+									local r, g, b = mMT:HexToRGB(E.db.mMediaTag.color.portraits.reaction.friendly.g)
 									return r, g, b
 								end,
 								set = function(info, r, g, b)
 									local hex = E:RGBToHex(r, g, b, "ff")
-									E.db.mMT.color.portraits.reaction.friendly.g = hex
+									E.db.mMediaTag.color.portraits.reaction.friendly.g = hex
 									MEDIA.color.portraits.reaction.friendly.g = CreateColorFromHexString(hex)
 									MEDIA.color.portraits.reaction.friendly.g.hex = hex
 								end,

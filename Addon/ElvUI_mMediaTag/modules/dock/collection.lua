@@ -56,7 +56,7 @@ end
 local function OnEnter(self)
 	Dock:OnEnter(self)
 
-	if E.db.mMT.dock.tooltip then
+	if E.db.mMediaTag.dock.tooltip then
 		DT.tooltip:ClearLines()
 		local polished_pet_harm = Tracker:GetItemInfos(163036)
 		local battle_pet_bandage = Tracker:GetItemInfos(86143)
@@ -82,7 +82,7 @@ end
 
 local function OnLeave(self)
 	Dock:OnLeave(self)
-	if E.db.mMT.dock.tooltip then DT.tooltip:Hide() end
+	if E.db.mMediaTag.dock.tooltip then DT.tooltip:Hide() end
 end
 
 local function OnClick(self)
@@ -95,8 +95,8 @@ end
 local function OnEvent(self, event, ...)
 	if event == "ELVUI_FORCE_UPDATE" then
 		-- setup settings
-		config.icon.texture = icons[E.db.mMT.dock.collection.style][E.db.mMT.dock.collection.icon] or MEDIA.fallback
-		config.icon.color = E.db.mMT.dock.collection.custom_color and MEDIA.color.dock.collection or nil
+		config.icon.texture = icons[E.db.mMediaTag.dock.collection.style][E.db.mMediaTag.dock.collection.icon] or MEDIA.fallback
+		config.icon.color = E.db.mMediaTag.dock.collection.custom_color and MEDIA.color.dock.collection or nil
 
 		Dock:CreateDockIcon(self, config, event)
 	end

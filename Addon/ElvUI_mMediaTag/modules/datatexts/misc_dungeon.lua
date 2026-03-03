@@ -183,9 +183,9 @@ local function OnEvent(self, event)
 	end
 
 	local text = L["Dungeon"]
-	if E.db.mMT.datatexts.dungeon.icon ~= "none" then text = E:TextureString(MEDIA.icons.lfg[E.db.mMT.datatexts.dungeon.icon], ":14:14") .. " " .. text end
+	if E.db.mMediaTag.datatexts.dungeon.icon ~= "none" then text = E:TextureString(MEDIA.icons.lfg[E.db.mMediaTag.datatexts.dungeon.icon], ":14:14") .. " " .. text end
 
-	if E.db.mMT.datatexts.dungeon.dungeon_name then
+	if E.db.mMediaTag.datatexts.dungeon.dungeon_name then
 		local instanceInfos = mMT:GetDungeonInfo()
 		if instanceInfos and (instanceInfos.difficultyShort or instanceInfos.difficultyName) then
 			local challengeModeInfo = instanceInfos.isChallengeMode and instanceInfos.level
@@ -206,7 +206,7 @@ local function OnLeave(self)
 end
 
 local function ValueColorUpdate(self, hex)
-	local textHex = E.db.mMT.datatexts.text.override_text and "|c" .. MEDIA.color.override_text.hex or hex
+	local textHex = E.db.mMediaTag.datatexts.text.override_text and "|c" .. MEDIA.color.override_text.hex or hex
 	textString = strjoin("", textHex, "%s|r")
 
 	OnEvent(self)

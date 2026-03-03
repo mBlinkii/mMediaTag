@@ -14,10 +14,10 @@ mMT.options.args.dock.args.friends.args = {
 				type = "select",
 				name = L["Style"],
 				get = function(info)
-					return E.db.mMT.dock.friends.style
+					return E.db.mMediaTag.dock.friends.style
 				end,
 				set = function(info, value)
-					E.db.mMT.dock.friends.style = value
+					E.db.mMediaTag.dock.friends.style = value
 				end,
 				values = function()
 					local styles = {}
@@ -32,16 +32,16 @@ mMT.options.args.dock.args.friends.args = {
 				type = "select",
 				name = L["Icon"],
 				get = function(info)
-					return E.db.mMT.dock.friends.icon
+					return E.db.mMediaTag.dock.friends.icon
 				end,
 				set = function(info, value)
-					E.db.mMT.dock.friends.icon = value
+					E.db.mMediaTag.dock.friends.icon = value
 					DT:ForceUpdate_DataText("mMT_Dock_Friends")
 				end,
 				values = function()
 					local icons = {}
-					if MEDIA.icons.dock[E.db.mMT.dock.friends.style] then
-						for key, icon in pairs(MEDIA.icons.dock[E.db.mMT.dock.friends.style]) do
+					if MEDIA.icons.dock[E.db.mMediaTag.dock.friends.style] then
+						for key, icon in pairs(MEDIA.icons.dock[E.db.mMediaTag.dock.friends.style]) do
 							icons[key] = E:TextureString(icon, ":14:14") .. " " .. mMT:formatText(key)
 						end
 						return icons
@@ -62,10 +62,10 @@ mMT.options.args.dock.args.friends.args = {
 				name = L["Custom Color"],
 				desc = L["Use a custom color for the icon."],
 				get = function(info)
-					return E.db.mMT.dock.friends.custom_color
+					return E.db.mMediaTag.dock.friends.custom_color
 				end,
 				set = function(info, value)
-					E.db.mMT.dock.friends.custom_color = value
+					E.db.mMediaTag.dock.friends.custom_color = value
 					DT:ForceUpdate_DataText("mMT_Dock_Friends")
 				end,
 			},
@@ -75,15 +75,15 @@ mMT.options.args.dock.args.friends.args = {
 				name = L["Color"],
 				hasAlpha = true,
 				disabled = function()
-					return not E.db.mMT.dock.friends.custom_color
+					return not E.db.mMediaTag.dock.friends.custom_color
 				end,
 				get = function(info)
-					local r, g, b, a = mMT:HexToRGB(E.db.mMT.color.dock.friends)
+					local r, g, b, a = mMT:HexToRGB(E.db.mMediaTag.color.dock.friends)
 					return r, g, b, a
 				end,
 				set = function(info, r, g, b, a)
 					local hex = E:RGBToHex(r, g, b, mMT:FloatToHex(a))
-					E.db.mMT.color.dock.friends = hex
+					E.db.mMediaTag.color.dock.friends = hex
 					MEDIA.color.dock.friends = CreateColorFromHexString(hex)
 					DT:ForceUpdate_DataText("mMT_Dock_Friends")
 				end,
@@ -102,10 +102,10 @@ mMT.options.args.dock.args.friends.args = {
 				name = L["Text"],
 				desc = L["Show number of online friends on the icon."],
 				get = function(info)
-					return E.db.mMT.dock.friends.text
+					return E.db.mMediaTag.dock.friends.text
 				end,
 				set = function(info, value)
-					E.db.mMT.dock.friends.text = value
+					E.db.mMediaTag.dock.friends.text = value
 					DT:ForceUpdate_DataText("mMT_Dock_Friends")
 				end,
 			},

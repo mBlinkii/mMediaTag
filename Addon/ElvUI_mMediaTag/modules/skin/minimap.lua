@@ -8,7 +8,7 @@ local function SetMinimapSkin()
 	if not (module.db and module.db.enable) then return end
 
 	local style = module.db.style
-	local cardinal = MEDIA.minimap.cardinal[E.db.mMT.minimap_skin.cardinal]
+	local cardinal = MEDIA.minimap.cardinal[E.db.mMediaTag.minimap_skin.cardinal]
 	local skin = MEDIA.minimap.skin[style]
 
 	local color = (module.db.color == "class") and MEDIA.myclass or MEDIA.color.minimap_skin.color
@@ -19,7 +19,7 @@ local function SetMinimapSkin()
 		Minimap.mMT_Minimap_Skin = tex
 	end
 
-	if E.db.mMT.minimap_skin.cardinal ~= "none" then
+	if E.db.mMediaTag.minimap_skin.cardinal ~= "none" then
 		local color_cardinal = (module.db.color_cardinal == "class") and MEDIA.myclass or MEDIA.color.minimap_skin.cardinal
 		if not Minimap.mMT_Minimap_Skin_Cardinal then
 			local cardinal_texture = Minimap:CreateTexture("mMT_Minimap_Skin_Cardinal", "OVERLAY", nil, 3)
@@ -44,7 +44,7 @@ local function SetMinimapSkin()
 end
 
 function module:Initialize()
-	module.db = E.db.mMT.minimap_skin
+	module.db = E.db.mMediaTag.minimap_skin
 
 	if module.db and module.db.enable then
 		if not module.isEnabled then

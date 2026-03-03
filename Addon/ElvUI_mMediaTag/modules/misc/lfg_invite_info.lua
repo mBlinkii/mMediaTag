@@ -33,7 +33,7 @@ function module:Demo(show)
 end
 
 function module:Initialize(demo)
-	if not E.db.mMT.lfg_invite_info.enable then
+	if not E.db.mMediaTag.lfg_invite_info.enable then
 		if module.info_screen then
 			module.info_screen:Hide()
 			if module.isEnabled then
@@ -44,7 +44,7 @@ function module:Initialize(demo)
 		return
 	end
 
-	module.db = E.db.mMT.lfg_invite_info
+	module.db = E.db.mMediaTag.lfg_invite_info
 
 	if not module.info_screen then
 		module.info_screen = CreateFrame("Button", "mMediaTag_LFG_Invite_Info", E.UIParent, "BackdropTemplate")
@@ -76,7 +76,7 @@ function module:Initialize(demo)
 		end)
 
 		E:CreateMover(module.info_screen, "mMediaTag_LFG_Invite_Info_Mover", "mMT LFG Invite Info", nil, nil, nil, "ALL,MMEDIATAG", function()
-			return E.db.mMT.lfg_invite_info.enable
+			return E.db.mMediaTag.lfg_invite_info.enable
 		end, "mMT,misc,lfg_invite_info")
 		module.info_screen:Hide()
 	end

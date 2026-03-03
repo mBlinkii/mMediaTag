@@ -5,13 +5,13 @@ mMT.options.args.misc.args.minimap_skin.args = {
 		order = 1,
 		type = "toggle",
 		name = function()
-			return E.db.mMT.minimap_skin.enable and MEDIA.color.green:WrapTextInColorCode(L["Enabled"]) or MEDIA.color.red:WrapTextInColorCode(L["Disabled"])
+			return E.db.mMediaTag.minimap_skin.enable and MEDIA.color.green:WrapTextInColorCode(L["Enabled"]) or MEDIA.color.red:WrapTextInColorCode(L["Disabled"])
 		end,
 		get = function(info)
-			return E.db.mMT.minimap_skin.enable
+			return E.db.mMediaTag.minimap_skin.enable
 		end,
 		set = function(info, value)
-			E.db.mMT.minimap_skin.enable = value
+			E.db.mMediaTag.minimap_skin.enable = value
 			M.MinimapSkin:Initialize()
 			if value == false then E:StaticPopup_Show("CONFIG_RL") end
 		end,
@@ -27,10 +27,10 @@ mMT.options.args.misc.args.minimap_skin.args = {
 				order = 1,
 				name = L["Style"],
 				get = function(info)
-					return E.db.mMT.minimap_skin.style
+					return E.db.mMediaTag.minimap_skin.style
 				end,
 				set = function(info, value)
-					E.db.mMT.minimap_skin.style = value
+					E.db.mMediaTag.minimap_skin.style = value
 					M.MinimapSkin:Initialize()
 				end,
 				values = function()
@@ -46,10 +46,10 @@ mMT.options.args.misc.args.minimap_skin.args = {
 				order = 2,
 				name = L["Color"],
 				get = function(info)
-					return E.db.mMT.minimap_skin.color
+					return E.db.mMediaTag.minimap_skin.color
 				end,
 				set = function(info, value)
-					E.db.mMT.minimap_skin.color = value
+					E.db.mMediaTag.minimap_skin.color = value
 					M.MinimapSkin:Initialize()
 				end,
 				values = {
@@ -62,16 +62,16 @@ mMT.options.args.misc.args.minimap_skin.args = {
 				order = 3,
 				name = L["Color"],
 				disabled = function()
-					return E.db.mMT.minimap_skin.color == "class"
+					return E.db.mMediaTag.minimap_skin.color == "class"
 				end,
 				hasAlpha = false,
 				get = function(info)
-					local r, g, b = mMT:HexToRGB(E.db.mMT.color.minimap_skin.color)
+					local r, g, b = mMT:HexToRGB(E.db.mMediaTag.color.minimap_skin.color)
 					return r, g, b
 				end,
 				set = function(info, r, g, b)
 					local hex = E:RGBToHex(r, g, b, "ff")
-					E.db.mMT.color.minimap_skin.color = hex
+					E.db.mMediaTag.color.minimap_skin.color = hex
 					mMT:UpdateMedia("minimap_skin")
 					M.MinimapSkin:Initialize()
 				end,
@@ -89,10 +89,10 @@ mMT.options.args.misc.args.minimap_skin.args = {
 				order = 1,
 				name = L["Style"],
 				get = function(info)
-					return E.db.mMT.minimap_skin.cardinal
+					return E.db.mMediaTag.minimap_skin.cardinal
 				end,
 				set = function(info, value)
-					E.db.mMT.minimap_skin.cardinal = value
+					E.db.mMediaTag.minimap_skin.cardinal = value
 					M.MinimapSkin:Initialize()
 				end,
 				values = function()
@@ -109,10 +109,10 @@ mMT.options.args.misc.args.minimap_skin.args = {
 				order = 2,
 				name = L["Color"],
 				get = function(info)
-					return E.db.mMT.minimap_skin.color_cardinal
+					return E.db.mMediaTag.minimap_skin.color_cardinal
 				end,
 				set = function(info, value)
-					E.db.mMT.minimap_skin.color_cardinal = value
+					E.db.mMediaTag.minimap_skin.color_cardinal = value
 					M.MinimapSkin:Initialize()
 				end,
 				values = {
@@ -125,16 +125,16 @@ mMT.options.args.misc.args.minimap_skin.args = {
 				order = 3,
 				name = L["Color"],
 				disabled = function()
-					return E.db.mMT.minimap_skin.color_cardinal == "class"
+					return E.db.mMediaTag.minimap_skin.color_cardinal == "class"
 				end,
 				hasAlpha = false,
 				get = function(info)
-					local r, g, b = mMT:HexToRGB(E.db.mMT.color.minimap_skin.cardinal)
+					local r, g, b = mMT:HexToRGB(E.db.mMediaTag.color.minimap_skin.cardinal)
 					return r, g, b
 				end,
 				set = function(info, r, g, b)
 					local hex = E:RGBToHex(r, g, b, "ff")
-					E.db.mMT.color.minimap_skin.cardinal = hex
+					E.db.mMediaTag.color.minimap_skin.cardinal = hex
 					mMT:UpdateMedia("minimap_skin")
 					M.MinimapSkin:Initialize()
 				end,

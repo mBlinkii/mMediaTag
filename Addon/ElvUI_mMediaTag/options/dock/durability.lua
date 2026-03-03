@@ -14,10 +14,10 @@ mMT.options.args.dock.args.durability.args = {
 				type = "select",
 				name = L["Style"],
 				get = function(info)
-					return E.db.mMT.dock.durability.style
+					return E.db.mMediaTag.dock.durability.style
 				end,
 				set = function(info, value)
-					E.db.mMT.dock.durability.style = value
+					E.db.mMediaTag.dock.durability.style = value
 				end,
 				values = function()
 					local styles = {}
@@ -32,16 +32,16 @@ mMT.options.args.dock.args.durability.args = {
 				type = "select",
 				name = L["Icon"],
 				get = function(info)
-					return E.db.mMT.dock.durability.icon
+					return E.db.mMediaTag.dock.durability.icon
 				end,
 				set = function(info, value)
-					E.db.mMT.dock.durability.icon = value
+					E.db.mMediaTag.dock.durability.icon = value
 					DT:ForceUpdate_DataText("mMT_Dock_Durability")
 				end,
 				values = function()
 					local icons = {}
-					if MEDIA.icons.dock[E.db.mMT.dock.durability.style] then
-						for key, icon in pairs(MEDIA.icons.dock[E.db.mMT.dock.durability.style]) do
+					if MEDIA.icons.dock[E.db.mMediaTag.dock.durability.style] then
+						for key, icon in pairs(MEDIA.icons.dock[E.db.mMediaTag.dock.durability.style]) do
 							icons[key] = E:TextureString(icon, ":14:14") .. " " .. mMT:formatText(key)
 						end
 						return icons
@@ -62,10 +62,10 @@ mMT.options.args.dock.args.durability.args = {
 				name = L["Custom Color"],
 				desc = L["Use a custom color for the icon."],
 				get = function(info)
-					return E.db.mMT.dock.durability.custom_color
+					return E.db.mMediaTag.dock.durability.custom_color
 				end,
 				set = function(info, value)
-					E.db.mMT.dock.durability.custom_color = value
+					E.db.mMediaTag.dock.durability.custom_color = value
 					DT:ForceUpdate_DataText("mMT_Dock_Durability")
 				end,
 			},
@@ -75,15 +75,15 @@ mMT.options.args.dock.args.durability.args = {
 				name = L["Color"],
 				hasAlpha = true,
 				disabled = function()
-					return not E.db.mMT.dock.durability.custom_color
+					return not E.db.mMediaTag.dock.durability.custom_color
 				end,
 				get = function(info)
-					local r, g, b, a = mMT:HexToRGB(E.db.mMT.color.dock.durability)
+					local r, g, b, a = mMT:HexToRGB(E.db.mMediaTag.color.dock.durability)
 					return r, g, b, a
 				end,
 				set = function(info, r, g, b, a)
 					local hex = E:RGBToHex(r, g, b, mMT:FloatToHex(a))
-					E.db.mMT.color.dock.durability = hex
+					E.db.mMediaTag.color.dock.durability = hex
 					MEDIA.color.dock.durability = CreateColorFromHexString(hex)
 					DT:ForceUpdate_DataText("mMT_Dock_Durability")
 				end,
@@ -101,10 +101,10 @@ mMT.options.args.dock.args.durability.args = {
 				type = "select",
 				name = L["Style"],
 				get = function(info)
-					return E.db.mMT.dock.durability.text
+					return E.db.mMediaTag.dock.durability.text
 				end,
 				set = function(info, value)
-					E.db.mMT.dock.durability.text = value
+					E.db.mMediaTag.dock.durability.text = value
 					DT:ForceUpdate_DataText("mMT_Dock_Durability")
 				end,
 				values = {
@@ -119,10 +119,10 @@ mMT.options.args.dock.args.durability.args = {
 				type = "select",
 				name = L["Repair Mount"],
 				get = function(info)
-					return E.db.mMT.dock.durability.mount
+					return E.db.mMediaTag.dock.durability.mount
 				end,
 				set = function(info, value)
-					E.db.mMT.dock.durability.mount = value
+					E.db.mMediaTag.dock.durability.mount = value
 					DT:ForceUpdate_DataText("mMT - Durability & ItemLevel")
 				end,
 				values = function()
@@ -144,10 +144,10 @@ mMT.options.args.dock.args.durability.args = {
 				max = 100,
 				step = 1,
 				get = function(info)
-					return E.db.mMT.dock.durability.percThreshold
+					return E.db.mMediaTag.dock.durability.percThreshold
 				end,
 				set = function(info, value)
-					E.db.mMT.dock.durability.percThreshold = value
+					E.db.mMediaTag.dock.durability.percThreshold = value
 					DT:ForceUpdate_DataText("mMT_Dock_Durability")
 				end,
 			},

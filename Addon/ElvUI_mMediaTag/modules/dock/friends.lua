@@ -26,14 +26,14 @@ local config = {
 local function OnEnter(self)
 	Dock:OnEnter(self)
 
-	if E.db.mMT.dock.tooltip then
+	if E.db.mMediaTag.dock.tooltip then
 		if friendsDT then friendsDT.onEnter() end
 	end
 end
 
 local function OnLeave(self)
 	Dock:OnLeave(self)
-	if E.db.mMT.dock.tooltip then DT.tooltip:Hide() end
+	if E.db.mMediaTag.dock.tooltip then DT.tooltip:Hide() end
 end
 
 local function OnClick(self, btn)
@@ -47,10 +47,10 @@ local function OnEvent(...)
 
 	if event == "ELVUI_FORCE_UPDATE" then
 		--setup settings
-		config.icon.texture = icons[E.db.mMT.dock.friends.style][E.db.mMT.dock.friends.icon] or MEDIA.fallback
-		config.icon.color = E.db.mMT.dock.friends.custom_color and MEDIA.color.dock.friends or nil
-		config.text.enable = E.db.mMT.dock.friends.text
-		config.text.a = E.db.mMT.dock.friends.text
+		config.icon.texture = icons[E.db.mMediaTag.dock.friends.style][E.db.mMediaTag.dock.friends.icon] or MEDIA.fallback
+		config.icon.color = E.db.mMediaTag.dock.friends.custom_color and MEDIA.color.dock.friends or nil
+		config.text.enable = E.db.mMediaTag.dock.friends.text
+		config.text.a = E.db.mMediaTag.dock.friends.text
 
 		Dock:CreateDockIcon(self, config, event)
 
@@ -70,7 +70,7 @@ local function OnEvent(...)
 
 	if friendsDT and friendsDT ~= "Data Broker" then friendsDT.eventFunc(...) end
 
-	if E.db.mMT.dock.friends.text then
+	if E.db.mMediaTag.dock.friends.text then
 		local onlineFriends = GetNumOnlineFriends()
 		local onlineBNFriends = select(2, BNGetNumFriends())
 		self.mMT_Dock.TextA:SetText(onlineFriends + onlineBNFriends)

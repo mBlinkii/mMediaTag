@@ -18,7 +18,7 @@ local function getColor(setting)
 end
 
 local function UpdatePanelInfo(_, name, panel)
-	local db = panel.mmt_db or E.db.mMT.data_panel_skin.panels[name]
+	local db = panel.mmt_db or E.db.mMediaTag.data_panel_skin.panels[name]
 	if not db then return end
 
 	if not db.enable then return end
@@ -45,15 +45,15 @@ local function UpdatePanelInfo(_, name, panel)
 end
 
 local function CheckAndRemoveSettings()
-	local cleanList = E.db.mMT.data_panel_skin.panels
-	for k, v in pairs(E.db.mMT.data_panel_skin.panels) do
+	local cleanList = E.db.mMediaTag.data_panel_skin.panels
+	for k, v in pairs(E.db.mMediaTag.data_panel_skin.panels) do
 		if not DT.RegisteredPanels[k] then cleanList[k] = nil end
 	end
-	E.db.mMT.data_panel_skin.panels = cleanList
+	E.db.mMediaTag.data_panel_skin.panels = cleanList
 end
 
 function module:Initialize()
-	if E.db.mMT.data_panel_skin.enable then
+	if E.db.mMediaTag.data_panel_skin.enable then
 		CheckAndRemoveSettings()
 
 		if not module:IsHooked(DT, "UpdatePanelInfo") then module:SecureHook(DT, "UpdatePanelInfo", UpdatePanelInfo) end

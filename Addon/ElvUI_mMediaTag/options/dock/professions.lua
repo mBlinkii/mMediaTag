@@ -14,10 +14,10 @@ mMT.options.args.dock.args.professions.args = {
 				type = "select",
 				name = L["Style"],
 				get = function(info)
-					return E.db.mMT.dock.professions.style
+					return E.db.mMediaTag.dock.professions.style
 				end,
 				set = function(info, value)
-					E.db.mMT.dock.professions.style = value
+					E.db.mMediaTag.dock.professions.style = value
 				end,
 				values = function()
 					local styles = {}
@@ -32,16 +32,16 @@ mMT.options.args.dock.args.professions.args = {
 				type = "select",
 				name = L["Icon"],
 				get = function(info)
-					return E.db.mMT.dock.professions.icon
+					return E.db.mMediaTag.dock.professions.icon
 				end,
 				set = function(info, value)
-					E.db.mMT.dock.professions.icon = value
+					E.db.mMediaTag.dock.professions.icon = value
 					DT:ForceUpdate_DataText("mMT_Dock_Profession")
 				end,
 				values = function()
 					local icons = {}
-					if MEDIA.icons.dock[E.db.mMT.dock.professions.style] then
-						for key, icon in pairs(MEDIA.icons.dock[E.db.mMT.dock.professions.style]) do
+					if MEDIA.icons.dock[E.db.mMediaTag.dock.professions.style] then
+						for key, icon in pairs(MEDIA.icons.dock[E.db.mMediaTag.dock.professions.style]) do
 							icons[key] = E:TextureString(icon, ":14:14") .. " " .. mMT:formatText(key)
 						end
 						return icons
@@ -62,10 +62,10 @@ mMT.options.args.dock.args.professions.args = {
 				name = L["Custom Color"],
 				desc = L["Use a custom color for the icon."],
 				get = function(info)
-					return E.db.mMT.dock.professions.custom_color
+					return E.db.mMediaTag.dock.professions.custom_color
 				end,
 				set = function(info, value)
-					E.db.mMT.dock.professions.custom_color = value
+					E.db.mMediaTag.dock.professions.custom_color = value
 					DT:ForceUpdate_DataText("mMT_Dock_Profession")
 				end,
 			},
@@ -75,15 +75,15 @@ mMT.options.args.dock.args.professions.args = {
 				name = L["Color"],
 				hasAlpha = true,
 				disabled = function()
-					return not E.db.mMT.dock.professions.custom_color
+					return not E.db.mMediaTag.dock.professions.custom_color
 				end,
 				get = function(info)
-					local r, g, b, a = mMT:HexToRGB(E.db.mMT.color.dock.professions)
+					local r, g, b, a = mMT:HexToRGB(E.db.mMediaTag.color.dock.professions)
 					return r, g, b, a
 				end,
 				set = function(info, r, g, b, a)
 					local hex = E:RGBToHex(r, g, b, mMT:FloatToHex(a))
-					E.db.mMT.color.dock.professions = hex
+					E.db.mMediaTag.color.dock.professions = hex
 					MEDIA.color.dock.professions = CreateColorFromHexString(hex)
 					DT:ForceUpdate_DataText("mMT_Dock_Profession")
 				end,

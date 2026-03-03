@@ -33,10 +33,10 @@ mMT.options.args.tags.args = {
 						max = 100,
 						step = 1,
 						get = function(info)
-							return E.db.mMT.tags.healthThreshold1
+							return E.db.mMediaTag.tags.healthThreshold1
 						end,
 						set = function(info, value)
-							E.db.mMT.tags.healthThreshold1 = value
+							E.db.mMediaTag.tags.healthThreshold1 = value
 							M.TAGs:Initialize()
 						end,
 					},
@@ -49,10 +49,10 @@ mMT.options.args.tags.args = {
 						max = 50,
 						step = 1,
 						get = function(info)
-							return E.db.mMT.tags.healthThreshold2
+							return E.db.mMediaTag.tags.healthThreshold2
 						end,
 						set = function(info, value)
-							E.db.mMT.tags.healthThreshold2 = value
+							E.db.mMediaTag.tags.healthThreshold2 = value
 							M.TAGs:Initialize()
 						end,
 					},
@@ -77,10 +77,10 @@ mMT.options.args.tags.args = {
 						type = "select",
 						name = L["Icon"],
 						get = function(info)
-							return E.db.mMT.tags.classification.rare
+							return E.db.mMediaTag.tags.classification.rare
 						end,
 						set = function(info, value)
-							E.db.mMT.tags.classification.rare = value
+							E.db.mMediaTag.tags.classification.rare = value
 							M.TAGs:Initialize()
 						end,
 						values = BuildIconsDB,
@@ -91,12 +91,12 @@ mMT.options.args.tags.args = {
 						name = L["Color"],
 						hasAlpha = false,
 						get = function(info)
-							local r, g, b = mMT:HexToRGB(E.db.mMT.color.tags.classification.rare)
+							local r, g, b = mMT:HexToRGB(E.db.mMediaTag.color.tags.classification.rare)
 							return r, g, b
 						end,
 						set = function(info, r, g, b)
 							local hex = E:RGBToHex(r, g, b, "ff")
-							E.db.mMT.color.tags.classification.rare = hex
+							E.db.mMediaTag.color.tags.classification.rare = hex
 							MEDIA.color.tags.rare = CreateColorFromHexString(hex)
 							MEDIA.color.tags.rare.hex = hex
 							M.TAGs:Initialize()
@@ -115,10 +115,10 @@ mMT.options.args.tags.args = {
 						type = "select",
 						name = L["Icon"],
 						get = function(info)
-							return E.db.mMT.tags.classification.elite
+							return E.db.mMediaTag.tags.classification.elite
 						end,
 						set = function(info, value)
-							E.db.mMT.tags.classification.elite = value
+							E.db.mMediaTag.tags.classification.elite = value
 							M.TAGs:Initialize()
 						end,
 						values = BuildIconsDB,
@@ -129,12 +129,12 @@ mMT.options.args.tags.args = {
 						name = L["Color"],
 						hasAlpha = false,
 						get = function(info)
-							local r, g, b = mMT:HexToRGB(E.db.mMT.color.tags.classification.elite)
+							local r, g, b = mMT:HexToRGB(E.db.mMediaTag.color.tags.classification.elite)
 							return r, g, b
 						end,
 						set = function(info, r, g, b)
 							local hex = E:RGBToHex(r, g, b, "ff")
-							E.db.mMT.color.tags.classification.elite = hex
+							E.db.mMediaTag.color.tags.classification.elite = hex
 							MEDIA.color.tags.elite = CreateColorFromHexString(hex)
 							MEDIA.color.tags.elite.hex = hex
 							M.TAGs:Initialize()
@@ -153,10 +153,10 @@ mMT.options.args.tags.args = {
 						type = "select",
 						name = L["Icon"],
 						get = function(info)
-							return E.db.mMT.tags.classification.rareelite
+							return E.db.mMediaTag.tags.classification.rareelite
 						end,
 						set = function(info, value)
-							E.db.mMT.tags.classification.rareelite = value
+							E.db.mMediaTag.tags.classification.rareelite = value
 							M.TAGs:Initialize()
 						end,
 						values = BuildIconsDB,
@@ -167,12 +167,12 @@ mMT.options.args.tags.args = {
 						name = L["Color"],
 						hasAlpha = false,
 						get = function(info)
-							local r, g, b = mMT:HexToRGB(E.db.mMT.color.tags.classification.rareelite)
+							local r, g, b = mMT:HexToRGB(E.db.mMediaTag.color.tags.classification.rareelite)
 							return r, g, b
 						end,
 						set = function(info, r, g, b)
 							local hex = E:RGBToHex(r, g, b, "ff")
-							E.db.mMT.color.tags.classification.rareelite = hex
+							E.db.mMediaTag.color.tags.classification.rareelite = hex
 							MEDIA.color.tags.rareelite = CreateColorFromHexString(hex)
 							MEDIA.color.tags.rareelite.hex = hex
 							M.TAGs:Initialize()
@@ -191,10 +191,10 @@ mMT.options.args.tags.args = {
 						type = "select",
 						name = L["Icon"],
 						get = function(info)
-							return E.db.mMT.tags.classification.worldboss
+							return E.db.mMediaTag.tags.classification.worldboss
 						end,
 						set = function(info, value)
-							E.db.mMT.tags.classification.worldboss = value
+							E.db.mMediaTag.tags.classification.worldboss = value
 							M.TAGs:Initialize()
 						end,
 						values = BuildIconsDB,
@@ -205,12 +205,12 @@ mMT.options.args.tags.args = {
 						name = L["Color"],
 						hasAlpha = false,
 						get = function(info)
-							local r, g, b = mMT:HexToRGB(E.db.mMT.color.tags.classification.worldboss)
+							local r, g, b = mMT:HexToRGB(E.db.mMediaTag.color.tags.classification.worldboss)
 							return r, g, b
 						end,
 						set = function(info, r, g, b)
 							local hex = E:RGBToHex(r, g, b, "ff")
-							E.db.mMT.color.tags.classification.worldboss = hex
+							E.db.mMediaTag.color.tags.classification.worldboss = hex
 							MEDIA.color.tags.worldboss = CreateColorFromHexString(hex)
 							MEDIA.color.tags.worldboss.hex = hex
 							M.TAGs:Initialize()
@@ -237,10 +237,10 @@ mMT.options.args.tags.args = {
 						type = "select",
 						name = L["Icon"],
 						get = function(info)
-							return E.db.mMT.tags.status.afk
+							return E.db.mMediaTag.tags.status.afk
 						end,
 						set = function(info, value)
-							E.db.mMT.tags.status.afk = value
+							E.db.mMediaTag.tags.status.afk = value
 							M.TAGs:Initialize()
 						end,
 						values = BuildIconsDB,
@@ -251,12 +251,12 @@ mMT.options.args.tags.args = {
 						name = L["Color"],
 						hasAlpha = false,
 						get = function(info)
-							local r, g, b = mMT:HexToRGB(E.db.mMT.color.tags.status.afk)
+							local r, g, b = mMT:HexToRGB(E.db.mMediaTag.color.tags.status.afk)
 							return r, g, b
 						end,
 						set = function(info, r, g, b)
 							local hex = E:RGBToHex(r, g, b, "ff")
-							E.db.mMT.color.tags.status.afk = hex
+							E.db.mMediaTag.color.tags.status.afk = hex
 							MEDIA.color.tags.afk = CreateColorFromHexString(hex)
 							MEDIA.color.tags.afk.hex = hex
 							M.TAGs:Initialize()
@@ -275,10 +275,10 @@ mMT.options.args.tags.args = {
 						type = "select",
 						name = L["Icon"],
 						get = function(info)
-							return E.db.mMT.tags.status.dnd
+							return E.db.mMediaTag.tags.status.dnd
 						end,
 						set = function(info, value)
-							E.db.mMT.tags.status.dnd = value
+							E.db.mMediaTag.tags.status.dnd = value
 							M.TAGs:Initialize()
 						end,
 						values = BuildIconsDB,
@@ -289,12 +289,12 @@ mMT.options.args.tags.args = {
 						name = L["Color"],
 						hasAlpha = false,
 						get = function(info)
-							local r, g, b = mMT:HexToRGB(E.db.mMT.color.tags.status.dnd)
+							local r, g, b = mMT:HexToRGB(E.db.mMediaTag.color.tags.status.dnd)
 							return r, g, b
 						end,
 						set = function(info, r, g, b)
 							local hex = E:RGBToHex(r, g, b, "ff")
-							E.db.mMT.color.tags.status.dnd = hex
+							E.db.mMediaTag.color.tags.status.dnd = hex
 							MEDIA.color.tags.dnd = CreateColorFromHexString(hex)
 							MEDIA.color.tags.dnd.hex = hex
 							M.TAGs:Initialize()
@@ -313,10 +313,10 @@ mMT.options.args.tags.args = {
 						type = "select",
 						name = L["Icon"],
 						get = function(info)
-							return E.db.mMT.tags.status.dc
+							return E.db.mMediaTag.tags.status.dc
 						end,
 						set = function(info, value)
-							E.db.mMT.tags.status.dc = value
+							E.db.mMediaTag.tags.status.dc = value
 							M.TAGs:Initialize()
 						end,
 						values = BuildIconsDB,
@@ -327,12 +327,12 @@ mMT.options.args.tags.args = {
 						name = L["Color"],
 						hasAlpha = false,
 						get = function(info)
-							local r, g, b = mMT:HexToRGB(E.db.mMT.color.tags.status.dc)
+							local r, g, b = mMT:HexToRGB(E.db.mMediaTag.color.tags.status.dc)
 							return r, g, b
 						end,
 						set = function(info, r, g, b)
 							local hex = E:RGBToHex(r, g, b, "ff")
-							E.db.mMT.color.tags.status.dc = hex
+							E.db.mMediaTag.color.tags.status.dc = hex
 							MEDIA.color.tags.dc = CreateColorFromHexString(hex)
 							MEDIA.color.tags.dc.hex = hex
 							M.TAGs:Initialize()
@@ -351,10 +351,10 @@ mMT.options.args.tags.args = {
 						type = "select",
 						name = L["Icon"],
 						get = function(info)
-							return E.db.mMT.tags.status.dead
+							return E.db.mMediaTag.tags.status.dead
 						end,
 						set = function(info, value)
-							E.db.mMT.tags.status.dead = value
+							E.db.mMediaTag.tags.status.dead = value
 							M.TAGs:Initialize()
 						end,
 						values = BuildIconsDB,
@@ -365,12 +365,12 @@ mMT.options.args.tags.args = {
 						name = L["Color"],
 						hasAlpha = false,
 						get = function(info)
-							local r, g, b = mMT:HexToRGB(E.db.mMT.color.tags.status.dead)
+							local r, g, b = mMT:HexToRGB(E.db.mMediaTag.color.tags.status.dead)
 							return r, g, b
 						end,
 						set = function(info, r, g, b)
 							local hex = E:RGBToHex(r, g, b, "ff")
-							E.db.mMT.color.tags.status.dead = hex
+							E.db.mMediaTag.color.tags.status.dead = hex
 							MEDIA.color.tags.dead = CreateColorFromHexString(hex)
 							MEDIA.color.tags.dead.hex = hex
 							M.TAGs:Initialize()
@@ -389,10 +389,10 @@ mMT.options.args.tags.args = {
 						type = "select",
 						name = L["Icon"],
 						get = function(info)
-							return E.db.mMT.tags.status.ghost
+							return E.db.mMediaTag.tags.status.ghost
 						end,
 						set = function(info, value)
-							E.db.mMT.tags.status.ghost = value
+							E.db.mMediaTag.tags.status.ghost = value
 							M.TAGs:Initialize()
 						end,
 						values = BuildIconsDB,
@@ -403,12 +403,12 @@ mMT.options.args.tags.args = {
 						name = L["Color"],
 						hasAlpha = false,
 						get = function(info)
-							local r, g, b = mMT:HexToRGB(E.db.mMT.color.tags.status.ghost)
+							local r, g, b = mMT:HexToRGB(E.db.mMediaTag.color.tags.status.ghost)
 							return r, g, b
 						end,
 						set = function(info, r, g, b)
 							local hex = E:RGBToHex(r, g, b, "ff")
-							E.db.mMT.color.tags.status.ghost = hex
+							E.db.mMediaTag.color.tags.status.ghost = hex
 							MEDIA.color.tags.ghost = CreateColorFromHexString(hex)
 							MEDIA.color.tags.ghost.hex = hex
 							M.TAGs:Initialize()
@@ -441,10 +441,10 @@ mMT.options.args.tags.args = {
 								type = "select",
 								name = L["Icon"],
 								get = function(info)
-									return E.db.mMT.tags.misc.tank
+									return E.db.mMediaTag.tags.misc.tank
 								end,
 								set = function(info, value)
-									E.db.mMT.tags.misc.tank = value
+									E.db.mMediaTag.tags.misc.tank = value
 									M.TAGs:Initialize()
 								end,
 								values = BuildIconsDB,
@@ -455,12 +455,12 @@ mMT.options.args.tags.args = {
 								name = L["Color"],
 								hasAlpha = false,
 								get = function(info)
-									local r, g, b = mMT:HexToRGB(E.db.mMT.color.tags.misc.tank)
+									local r, g, b = mMT:HexToRGB(E.db.mMediaTag.color.tags.misc.tank)
 									return r, g, b
 								end,
 								set = function(info, r, g, b)
 									local hex = E:RGBToHex(r, g, b, "ff")
-									E.db.mMT.color.tags.misc.tank = hex
+									E.db.mMediaTag.color.tags.misc.tank = hex
 									MEDIA.color.tags.tank = CreateColorFromHexString(hex)
 									MEDIA.color.tags.tank.hex = hex
 									M.TAGs:Initialize()
@@ -479,10 +479,10 @@ mMT.options.args.tags.args = {
 								type = "select",
 								name = L["Icon"],
 								get = function(info)
-									return E.db.mMT.tags.misc.healer
+									return E.db.mMediaTag.tags.misc.healer
 								end,
 								set = function(info, value)
-									E.db.mMT.tags.misc.healer = value
+									E.db.mMediaTag.tags.misc.healer = value
 									M.TAGs:Initialize()
 								end,
 								values = BuildIconsDB,
@@ -493,12 +493,12 @@ mMT.options.args.tags.args = {
 								name = L["Color"],
 								hasAlpha = false,
 								get = function(info)
-									local r, g, b = mMT:HexToRGB(E.db.mMT.color.tags.misc.healer)
+									local r, g, b = mMT:HexToRGB(E.db.mMediaTag.color.tags.misc.healer)
 									return r, g, b
 								end,
 								set = function(info, r, g, b)
 									local hex = E:RGBToHex(r, g, b, "ff")
-									E.db.mMT.color.tags.misc.healer = hex
+									E.db.mMediaTag.color.tags.misc.healer = hex
 									MEDIA.color.tags.healer = CreateColorFromHexString(hex)
 									MEDIA.color.tags.healer.hex = hex
 									M.TAGs:Initialize()
@@ -517,10 +517,10 @@ mMT.options.args.tags.args = {
 								type = "select",
 								name = L["Icon"],
 								get = function(info)
-									return E.db.mMT.tags.misc.dps
+									return E.db.mMediaTag.tags.misc.dps
 								end,
 								set = function(info, value)
-									E.db.mMT.tags.misc.dps = value
+									E.db.mMediaTag.tags.misc.dps = value
 									M.TAGs:Initialize()
 								end,
 								values = BuildIconsDB,
@@ -531,12 +531,12 @@ mMT.options.args.tags.args = {
 								name = L["Color"],
 								hasAlpha = false,
 								get = function(info)
-									local r, g, b = mMT:HexToRGB(E.db.mMT.color.tags.misc.dps)
+									local r, g, b = mMT:HexToRGB(E.db.mMediaTag.color.tags.misc.dps)
 									return r, g, b
 								end,
 								set = function(info, r, g, b)
 									local hex = E:RGBToHex(r, g, b, "ff")
-									E.db.mMT.color.tags.misc.dps = hex
+									E.db.mMediaTag.color.tags.misc.dps = hex
 									MEDIA.color.tags.dps = CreateColorFromHexString(hex)
 									MEDIA.color.tags.dps.hex = hex
 									M.TAGs:Initialize()
@@ -563,10 +563,10 @@ mMT.options.args.tags.args = {
 								type = "select",
 								name = L["Icon"],
 								get = function(info)
-									return E.db.mMT.tags.misc.pvp
+									return E.db.mMediaTag.tags.misc.pvp
 								end,
 								set = function(info, value)
-									E.db.mMT.tags.misc.pvp = value
+									E.db.mMediaTag.tags.misc.pvp = value
 									M.TAGs:Initialize()
 								end,
 								values = BuildIconsDB,
@@ -577,12 +577,12 @@ mMT.options.args.tags.args = {
 								name = L["Color"],
 								hasAlpha = false,
 								get = function(info)
-									local r, g, b = mMT:HexToRGB(E.db.mMT.color.tags.misc.pvp)
+									local r, g, b = mMT:HexToRGB(E.db.mMediaTag.color.tags.misc.pvp)
 									return r, g, b
 								end,
 								set = function(info, r, g, b)
 									local hex = E:RGBToHex(r, g, b, "ff")
-									E.db.mMT.color.tags.misc.pvp = hex
+									E.db.mMediaTag.color.tags.misc.pvp = hex
 									MEDIA.color.tags.pvp = CreateColorFromHexString(hex)
 									MEDIA.color.tags.pvp.hex = hex
 									M.TAGs:Initialize()
@@ -601,10 +601,10 @@ mMT.options.args.tags.args = {
 								type = "select",
 								name = L["Icon"],
 								get = function(info)
-									return E.db.mMT.tags.misc.quest
+									return E.db.mMediaTag.tags.misc.quest
 								end,
 								set = function(info, value)
-									E.db.mMT.tags.misc.quest = value
+									E.db.mMediaTag.tags.misc.quest = value
 									M.TAGs:Initialize()
 								end,
 								values = BuildIconsDB,
@@ -615,12 +615,12 @@ mMT.options.args.tags.args = {
 								name = L["Color"],
 								hasAlpha = false,
 								get = function(info)
-									local r, g, b = mMT:HexToRGB(E.db.mMT.color.tags.misc.quest)
+									local r, g, b = mMT:HexToRGB(E.db.mMediaTag.color.tags.misc.quest)
 									return r, g, b
 								end,
 								set = function(info, r, g, b)
 									local hex = E:RGBToHex(r, g, b, "ff")
-									E.db.mMT.color.tags.misc.quest = hex
+									E.db.mMediaTag.color.tags.misc.quest = hex
 									MEDIA.color.tags.quest = CreateColorFromHexString(hex)
 									MEDIA.color.tags.quest.hex = hex
 									M.TAGs:Initialize()
@@ -639,10 +639,10 @@ mMT.options.args.tags.args = {
 								type = "select",
 								name = L["Icon"],
 								get = function(info)
-									return E.db.mMT.tags.misc.targeting
+									return E.db.mMediaTag.tags.misc.targeting
 								end,
 								set = function(info, value)
-									E.db.mMT.tags.misc.targeting = value
+									E.db.mMediaTag.tags.misc.targeting = value
 									M.TAGs:Initialize()
 								end,
 								values = BuildIconsDB,
@@ -670,10 +670,10 @@ mMT.options.args.tags.args = {
 						type = "select",
 						name = L["Icon"],
 						get = function(info)
-							return E.db.mMT.tags.raidtargetmarkers[1]
+							return E.db.mMediaTag.tags.raidtargetmarkers[1]
 						end,
 						set = function(info, value)
-							E.db.mMT.tags.raidtargetmarkers[1] = value
+							E.db.mMediaTag.tags.raidtargetmarkers[1] = value
 							M.TAGs:Initialize()
 						end,
 						values = BuildIconsDB,
@@ -684,12 +684,12 @@ mMT.options.args.tags.args = {
 						name = L["Color"],
 						hasAlpha = false,
 						get = function(info)
-							local r, g, b = mMT:HexToRGB(E.db.mMT.color.tags.raidtargetmarkers[1])
+							local r, g, b = mMT:HexToRGB(E.db.mMediaTag.color.tags.raidtargetmarkers[1])
 							return r, g, b
 						end,
 						set = function(info, r, g, b)
 							local hex = E:RGBToHex(r, g, b, "ff")
-							E.db.mMT.color.tags.raidtargetmarkers[1] = hex
+							E.db.mMediaTag.color.tags.raidtargetmarkers[1] = hex
 							MEDIA.color.tags.raidtargetmarkers[1]= CreateColorFromHexString(hex)
 							MEDIA.color.tags.raidtargetmarkers[1].hex = hex
 							M.TAGs:Initialize()
@@ -708,10 +708,10 @@ mMT.options.args.tags.args = {
 						type = "select",
 						name = L["Icon"],
 						get = function(info)
-							return E.db.mMT.tags.raidtargetmarkers[2]
+							return E.db.mMediaTag.tags.raidtargetmarkers[2]
 						end,
 						set = function(info, value)
-							E.db.mMT.tags.raidtargetmarkers[2] = value
+							E.db.mMediaTag.tags.raidtargetmarkers[2] = value
 							M.TAGs:Initialize()
 						end,
 						values = BuildIconsDB,
@@ -722,12 +722,12 @@ mMT.options.args.tags.args = {
 						name = L["Color"],
 						hasAlpha = false,
 						get = function(info)
-							local r, g, b = mMT:HexToRGB(E.db.mMT.color.tags.raidtargetmarkers[2])
+							local r, g, b = mMT:HexToRGB(E.db.mMediaTag.color.tags.raidtargetmarkers[2])
 							return r, g, b
 						end,
 						set = function(info, r, g, b)
 							local hex = E:RGBToHex(r, g, b, "ff")
-							E.db.mMT.color.tags.raidtargetmarkers[2] = hex
+							E.db.mMediaTag.color.tags.raidtargetmarkers[2] = hex
 							MEDIA.color.tags.raidtargetmarkers[2]= CreateColorFromHexString(hex)
 							MEDIA.color.tags.raidtargetmarkers[2].hex = hex
 							M.TAGs:Initialize()
@@ -746,10 +746,10 @@ mMT.options.args.tags.args = {
 						type = "select",
 						name = L["Icon"],
 						get = function(info)
-							return E.db.mMT.tags.raidtargetmarkers[3]
+							return E.db.mMediaTag.tags.raidtargetmarkers[3]
 						end,
 						set = function(info, value)
-							E.db.mMT.tags.raidtargetmarkers[3] = value
+							E.db.mMediaTag.tags.raidtargetmarkers[3] = value
 							M.TAGs:Initialize()
 						end,
 						values = BuildIconsDB,
@@ -760,12 +760,12 @@ mMT.options.args.tags.args = {
 						name = L["Color"],
 						hasAlpha = false,
 						get = function(info)
-							local r, g, b = mMT:HexToRGB(E.db.mMT.color.tags.raidtargetmarkers[3])
+							local r, g, b = mMT:HexToRGB(E.db.mMediaTag.color.tags.raidtargetmarkers[3])
 							return r, g, b
 						end,
 						set = function(info, r, g, b)
 							local hex = E:RGBToHex(r, g, b, "ff")
-							E.db.mMT.color.tags.raidtargetmarkers[3] = hex
+							E.db.mMediaTag.color.tags.raidtargetmarkers[3] = hex
 							MEDIA.color.tags.raidtargetmarkers[3]= CreateColorFromHexString(hex)
 							MEDIA.color.tags.raidtargetmarkers[3].hex = hex
 							M.TAGs:Initialize()
@@ -784,10 +784,10 @@ mMT.options.args.tags.args = {
 						type = "select",
 						name = L["Icon"],
 						get = function(info)
-							return E.db.mMT.tags.raidtargetmarkers[4]
+							return E.db.mMediaTag.tags.raidtargetmarkers[4]
 						end,
 						set = function(info, value)
-							E.db.mMT.tags.raidtargetmarkers[4] = value
+							E.db.mMediaTag.tags.raidtargetmarkers[4] = value
 							M.TAGs:Initialize()
 						end,
 						values = BuildIconsDB,
@@ -798,12 +798,12 @@ mMT.options.args.tags.args = {
 						name = L["Color"],
 						hasAlpha = false,
 						get = function(info)
-							local r, g, b = mMT:HexToRGB(E.db.mMT.color.tags.raidtargetmarkers[4])
+							local r, g, b = mMT:HexToRGB(E.db.mMediaTag.color.tags.raidtargetmarkers[4])
 							return r, g, b
 						end,
 						set = function(info, r, g, b)
 							local hex = E:RGBToHex(r, g, b, "ff")
-							E.db.mMT.color.tags.raidtargetmarkers[4] = hex
+							E.db.mMediaTag.color.tags.raidtargetmarkers[4] = hex
 							MEDIA.color.tags.raidtargetmarkers[4]= CreateColorFromHexString(hex)
 							MEDIA.color.tags.raidtargetmarkers[4].hex = hex
 							M.TAGs:Initialize()
@@ -822,10 +822,10 @@ mMT.options.args.tags.args = {
 						type = "select",
 						name = L["Icon"],
 						get = function(info)
-							return E.db.mMT.tags.raidtargetmarkers[5]
+							return E.db.mMediaTag.tags.raidtargetmarkers[5]
 						end,
 						set = function(info, value)
-							E.db.mMT.tags.raidtargetmarkers[5] = value
+							E.db.mMediaTag.tags.raidtargetmarkers[5] = value
 							M.TAGs:Initialize()
 						end,
 						values = BuildIconsDB,
@@ -836,12 +836,12 @@ mMT.options.args.tags.args = {
 						name = L["Color"],
 						hasAlpha = false,
 						get = function(info)
-							local r, g, b = mMT:HexToRGB(E.db.mMT.color.tags.raidtargetmarkers[5])
+							local r, g, b = mMT:HexToRGB(E.db.mMediaTag.color.tags.raidtargetmarkers[5])
 							return r, g, b
 						end,
 						set = function(info, r, g, b)
 							local hex = E:RGBToHex(r, g, b, "ff")
-							E.db.mMT.color.tags.raidtargetmarkers[5] = hex
+							E.db.mMediaTag.color.tags.raidtargetmarkers[5] = hex
 							MEDIA.color.tags.raidtargetmarkers[5]= CreateColorFromHexString(hex)
 							MEDIA.color.tags.raidtargetmarkers[5].hex = hex
 							M.TAGs:Initialize()
@@ -860,10 +860,10 @@ mMT.options.args.tags.args = {
 						type = "select",
 						name = L["Icon"],
 						get = function(info)
-							return E.db.mMT.tags.raidtargetmarkers[6]
+							return E.db.mMediaTag.tags.raidtargetmarkers[6]
 						end,
 						set = function(info, value)
-							E.db.mMT.tags.raidtargetmarkers[6] = value
+							E.db.mMediaTag.tags.raidtargetmarkers[6] = value
 							M.TAGs:Initialize()
 						end,
 						values = BuildIconsDB,
@@ -874,12 +874,12 @@ mMT.options.args.tags.args = {
 						name = L["Color"],
 						hasAlpha = false,
 						get = function(info)
-							local r, g, b = mMT:HexToRGB(E.db.mMT.color.tags.raidtargetmarkers[6])
+							local r, g, b = mMT:HexToRGB(E.db.mMediaTag.color.tags.raidtargetmarkers[6])
 							return r, g, b
 						end,
 						set = function(info, r, g, b)
 							local hex = E:RGBToHex(r, g, b, "ff")
-							E.db.mMT.color.tags.raidtargetmarkers[6] = hex
+							E.db.mMediaTag.color.tags.raidtargetmarkers[6] = hex
 							MEDIA.color.tags.raidtargetmarkers[6]= CreateColorFromHexString(hex)
 							MEDIA.color.tags.raidtargetmarkers[6].hex = hex
 							M.TAGs:Initialize()
@@ -898,10 +898,10 @@ mMT.options.args.tags.args = {
 						type = "select",
 						name = L["Icon"],
 						get = function(info)
-							return E.db.mMT.tags.raidtargetmarkers[7]
+							return E.db.mMediaTag.tags.raidtargetmarkers[7]
 						end,
 						set = function(info, value)
-							E.db.mMT.tags.raidtargetmarkers[7] = value
+							E.db.mMediaTag.tags.raidtargetmarkers[7] = value
 							M.TAGs:Initialize()
 						end,
 						values = BuildIconsDB,
@@ -912,12 +912,12 @@ mMT.options.args.tags.args = {
 						name = L["Color"],
 						hasAlpha = false,
 						get = function(info)
-							local r, g, b = mMT:HexToRGB(E.db.mMT.color.tags.raidtargetmarkers[7])
+							local r, g, b = mMT:HexToRGB(E.db.mMediaTag.color.tags.raidtargetmarkers[7])
 							return r, g, b
 						end,
 						set = function(info, r, g, b)
 							local hex = E:RGBToHex(r, g, b, "ff")
-							E.db.mMT.color.tags.raidtargetmarkers[7] = hex
+							E.db.mMediaTag.color.tags.raidtargetmarkers[7] = hex
 							MEDIA.color.tags.raidtargetmarkers[7]= CreateColorFromHexString(hex)
 							MEDIA.color.tags.raidtargetmarkers[7].hex = hex
 							M.TAGs:Initialize()
@@ -936,10 +936,10 @@ mMT.options.args.tags.args = {
 						type = "select",
 						name = L["Icon"],
 						get = function(info)
-							return E.db.mMT.tags.raidtargetmarkers[8]
+							return E.db.mMediaTag.tags.raidtargetmarkers[8]
 						end,
 						set = function(info, value)
-							E.db.mMT.tags.raidtargetmarkers[8] = value
+							E.db.mMediaTag.tags.raidtargetmarkers[8] = value
 							M.TAGs:Initialize()
 						end,
 						values = BuildIconsDB,
@@ -950,12 +950,12 @@ mMT.options.args.tags.args = {
 						name = L["Color"],
 						hasAlpha = false,
 						get = function(info)
-							local r, g, b = mMT:HexToRGB(E.db.mMT.color.tags.raidtargetmarkers[8])
+							local r, g, b = mMT:HexToRGB(E.db.mMediaTag.color.tags.raidtargetmarkers[8])
 							return r, g, b
 						end,
 						set = function(info, r, g, b)
 							local hex = E:RGBToHex(r, g, b, "ff")
-							E.db.mMT.color.tags.raidtargetmarkers[8] = hex
+							E.db.mMediaTag.color.tags.raidtargetmarkers[8] = hex
 							MEDIA.color.tags.raidtargetmarkers[8]= CreateColorFromHexString(hex)
 							MEDIA.color.tags.raidtargetmarkers[8].hex = hex
 							M.TAGs:Initialize()

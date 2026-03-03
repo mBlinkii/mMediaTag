@@ -15,10 +15,10 @@ mMT.options.args.datatexts.args.info_combat_time.args = {
 				type = "select",
 				name = L["In Combat"],
 				get = function(info)
-					return E.db.mMT.datatexts.combat_time.in_combat
+					return E.db.mMediaTag.datatexts.combat_time.in_combat
 				end,
 				set = function(info, value)
-					E.db.mMT.datatexts.combat_time.in_combat = value
+					E.db.mMediaTag.datatexts.combat_time.in_combat = value
 					DT:ForceUpdate_DataText("mMT - CombatTimer")
 				end,
 				values = function()
@@ -36,10 +36,10 @@ mMT.options.args.datatexts.args.info_combat_time.args = {
 				type = "select",
 				name = L["Out of Combat"],
 				get = function(info)
-					return E.db.mMT.datatexts.combat_time.out_of_combat
+					return E.db.mMediaTag.datatexts.combat_time.out_of_combat
 				end,
 				set = function(info, value)
-					E.db.mMT.datatexts.combat_time.out_of_combat = value
+					E.db.mMediaTag.datatexts.combat_time.out_of_combat = value
 					DT:ForceUpdate_DataText("mMT - CombatTimer")
 				end,
 				values = function()
@@ -60,10 +60,10 @@ mMT.options.args.datatexts.args.info_combat_time.args = {
 				max = 120,
 				step = 1,
 				get = function(info)
-					return E.db.mMT.datatexts.combat_time.hide_delay
+					return E.db.mMediaTag.datatexts.combat_time.hide_delay
 				end,
 				set = function(info, value)
-					E.db.mMT.datatexts.combat_time.hide_delay = value
+					E.db.mMediaTag.datatexts.combat_time.hide_delay = value
 					DT:ForceUpdate_DataText("mMT - CombatTimer")
 				end,
             },

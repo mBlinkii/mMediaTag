@@ -25,14 +25,14 @@ local config = {
 local function OnEnter(self)
 	Dock:OnEnter(self)
 
-	if E.db.mMT.dock.tooltip then
+	if E.db.mMediaTag.dock.tooltip then
 		if guildDT then guildDT.onEnter() end
 	end
 end
 
 local function OnLeave(self)
 	Dock:OnLeave(self)
-	if E.db.mMT.dock.tooltip then DT.tooltip:Hide() end
+	if E.db.mMediaTag.dock.tooltip then DT.tooltip:Hide() end
 end
 
 local function OnClick(self, btn)
@@ -46,10 +46,10 @@ local function OnEvent(...)
 
 	if event == "ELVUI_FORCE_UPDATE" then
 		--setup settings
-		config.icon.texture = icons[E.db.mMT.dock.guild.style][E.db.mMT.dock.guild.icon] or MEDIA.fallback
-		config.icon.color = E.db.mMT.dock.guild.custom_color and MEDIA.color.dock.guild or nil
-		config.text.enable = E.db.mMT.dock.guild.text
-		config.text.a = E.db.mMT.dock.guild.text
+		config.icon.texture = icons[E.db.mMediaTag.dock.guild.style][E.db.mMediaTag.dock.guild.icon] or MEDIA.fallback
+		config.icon.color = E.db.mMediaTag.dock.guild.custom_color and MEDIA.color.dock.guild or nil
+		config.text.enable = E.db.mMediaTag.dock.guild.text
+		config.text.a = E.db.mMediaTag.dock.guild.text
 
 		Dock:CreateDockIcon(self, config, event)
 
@@ -69,7 +69,7 @@ local function OnEvent(...)
 
 	if guildDT and guildDT ~= "Data Broker" then guildDT.eventFunc(...) end
 
-	if E.db.mMT.dock.guild.text then
+	if E.db.mMediaTag.dock.guild.text then
 		local onlineGuildMembers = select(2, GetNumGuildMembers())
 		self.mMT_Dock.TextA:SetText(onlineGuildMembers)
 	end

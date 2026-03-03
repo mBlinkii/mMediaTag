@@ -5,13 +5,13 @@ mMT.options.args.misc.args.dice_button.args = {
         order = 1,
         type = "toggle",
         name = function()
-            return E.db.mMT.dice_button.enable and MEDIA.color.green:WrapTextInColorCode(L["Enabled"]) or MEDIA.color.red:WrapTextInColorCode(L["Disabled"])
+            return E.db.mMediaTag.dice_button.enable and MEDIA.color.green:WrapTextInColorCode(L["Enabled"]) or MEDIA.color.red:WrapTextInColorCode(L["Disabled"])
         end,
         get = function(info)
-            return E.db.mMT.dice_button.enable
+            return E.db.mMediaTag.dice_button.enable
         end,
         set = function(info, value)
-            E.db.mMT.dice_button.enable = value
+            E.db.mMediaTag.dice_button.enable = value
             mMT:UpdateModule("DiceButton")
         end,
     },
@@ -26,13 +26,13 @@ mMT.options.args.misc.args.dice_button.args = {
 				type = "select",
 				name = L["Left Click"],
 				disabled = function()
-					return not E.db.mMT.dice_button.enable
+					return not E.db.mMediaTag.dice_button.enable
 				end,
 				get = function(info)
-					return E.db.mMT.dice_button.dice_range_a
+					return E.db.mMediaTag.dice_button.dice_range_a
 				end,
 				set = function(info, value)
-					E.db.mMT.dice_button.dice_range_a = value
+					E.db.mMediaTag.dice_button.dice_range_a = value
 					mMT:UpdateModule("DiceButton")
 				end,
 				values = {
@@ -51,13 +51,13 @@ mMT.options.args.misc.args.dice_button.args = {
 				type = "select",
 				name = L["Right Click"],
 				disabled = function()
-					return not E.db.mMT.dice_button.enable
+					return not E.db.mMediaTag.dice_button.enable
 				end,
 				get = function(info)
-					return E.db.mMT.dice_button.dice_range_b
+					return E.db.mMediaTag.dice_button.dice_range_b
 				end,
 				set = function(info, value)
-					E.db.mMT.dice_button.dice_range_b = value
+					E.db.mMediaTag.dice_button.dice_range_b = value
 					mMT:UpdateModule("DiceButton")
 				end,
 				values = {
@@ -84,13 +84,13 @@ mMT.options.args.misc.args.dice_button.args = {
 				type = "select",
 				name = L["Icon"],
 				disabled = function()
-					return not E.db.mMT.dice_button.enable
+					return not E.db.mMediaTag.dice_button.enable
 				end,
 				get = function(info)
-					return E.db.mMT.dice_button.texture
+					return E.db.mMediaTag.dice_button.texture
 				end,
 				set = function(info, value)
-					E.db.mMT.dice_button.texture = value
+					E.db.mMediaTag.dice_button.texture = value
 					mMT:UpdateModule("DiceButton")
 				end,
 				values = function()
@@ -111,13 +111,13 @@ mMT.options.args.misc.args.dice_button.args = {
 				softMin = 2,
 				softMax = 128,
 				disabled = function()
-					return not E.db.mMT.dice_button.enable
+					return not E.db.mMediaTag.dice_button.enable
 				end,
 				get = function(info)
-					return E.db.mMT.dice_button.size
+					return E.db.mMediaTag.dice_button.size
 				end,
 				set = function(info, value)
-					E.db.mMT.dice_button.size = value
+					E.db.mMediaTag.dice_button.size = value
 					mMT:UpdateModule("DiceButton")
 				end,
 			},
@@ -134,14 +134,14 @@ mMT.options.args.misc.args.dice_button.args = {
 				type = "select",
 				name = L["Color Style"],
 				get = function(info)
-					return E.db.mMT.dice_button.color.normal.mode
+					return E.db.mMediaTag.dice_button.color.normal.mode
 				end,
 				set = function(info, value)
-					E.db.mMT.dice_button.color.normal.mode = value
+					E.db.mMediaTag.dice_button.color.normal.mode = value
 					mMT:UpdateModule("DiceButton")
 				end,
 				disabled = function()
-					return not E.db.mMT.dice_button.enable
+					return not E.db.mMediaTag.dice_button.enable
 				end,
 				values = {
 					class = L["Class"],
@@ -154,14 +154,14 @@ mMT.options.args.misc.args.dice_button.args = {
 				name = L["Custom color"],
 				hasAlpha = true,
 				disabled = function()
-					return E.db.mMT.dice_button.color.normal.mode == "class"
+					return E.db.mMediaTag.dice_button.color.normal.mode == "class"
 				end,
 				get = function(info)
-					local t = E.db.mMT.dice_button.color.normal.color
+					local t = E.db.mMediaTag.dice_button.color.normal.color
 					return t.r, t.g, t.b, t.a
 				end,
 				set = function(info, r, g, b, a)
-					local t = E.db.mMT.dice_button.color.normal.color
+					local t = E.db.mMediaTag.dice_button.color.normal.color
 					t.r, t.g, t.b, t.a = r, g, b, a
 					mMT:UpdateModule("DiceButton")
 				end,
@@ -179,13 +179,13 @@ mMT.options.args.misc.args.dice_button.args = {
 				type = "select",
 				name = L["Hover Color Style"],
 				disabled = function()
-					return not E.db.mMT.dice_button.enable
+					return not E.db.mMediaTag.dice_button.enable
 				end,
 				get = function(info)
-					return E.db.mMT.dice_button.color.hover.mode
+					return E.db.mMediaTag.dice_button.color.hover.mode
 				end,
 				set = function(info, value)
-					E.db.mMT.dice_button.color.hover.mode = value
+					E.db.mMediaTag.dice_button.color.hover.mode = value
 					mMT:UpdateModule("DiceButton")
 				end,
 				values = {
@@ -199,14 +199,14 @@ mMT.options.args.misc.args.dice_button.args = {
 				name = L["Hover Custom Color"],
 				hasAlpha = true,
 				disabled = function()
-					return E.db.mMT.dice_button.color.hover.mode == "class"
+					return E.db.mMediaTag.dice_button.color.hover.mode == "class"
 				end,
 				get = function(info)
-					local t = E.db.mMT.dice_button.color.hover.color
+					local t = E.db.mMediaTag.dice_button.color.hover.color
 					return t.r, t.g, t.b, t.a
 				end,
 				set = function(info, r, g, b, a)
-					local t = E.db.mMT.dice_button.color.hover.color
+					local t = E.db.mMediaTag.dice_button.color.hover.color
 					t.r, t.g, t.b, t.a = r, g, b, a
 					mMT:UpdateModule("DiceButton")
 				end,

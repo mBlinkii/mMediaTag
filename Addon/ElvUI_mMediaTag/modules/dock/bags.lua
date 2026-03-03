@@ -49,32 +49,32 @@ end
 local function OnEnter(self)
 	Dock:OnEnter(self)
 
-	if E.db.mMT.dock.tooltip then
+	if E.db.mMediaTag.dock.tooltip then
 		if bagsDT then bagsDT.onEnter() end
 	end
 end
 
 local function OnLeave(self)
 	Dock:OnLeave(self)
-	if E.db.mMT.dock.tooltip then DT.tooltip:Hide() end
+	if E.db.mMediaTag.dock.tooltip then DT.tooltip:Hide() end
 end
 
 local function OnClick(self, btn)
 	Dock:Click(self)
-	local showGold = E.db.mMT.dock.bags.gold
+	local showGold = E.db.mMediaTag.dock.bags.gold
 	bagsDT = mMT:GetElvUIDataText(showGold and "Gold" or "Bags")
 	if bagsDT then bagsDT.onClick(self, btn) end
 end
 
 local function OnEvent(...)
 	local self, event = ...
-	local textStyle = E.db.mMT.dock.bags.text
-	local showGold = E.db.mMT.dock.bags.gold
+	local textStyle = E.db.mMediaTag.dock.bags.text
+	local showGold = E.db.mMediaTag.dock.bags.gold
 
 	if event == "ELVUI_FORCE_UPDATE" then
 		--setup settings
-		config.icon.texture = icons[E.db.mMT.dock.bags.style][E.db.mMT.dock.bags.icon] or MEDIA.fallback
-		config.icon.color = E.db.mMT.dock.bags.custom_color and MEDIA.color.dock.bags or nil
+		config.icon.texture = icons[E.db.mMediaTag.dock.bags.style][E.db.mMediaTag.dock.bags.icon] or MEDIA.fallback
+		config.icon.color = E.db.mMediaTag.dock.bags.custom_color and MEDIA.color.dock.bags or nil
 		config.text.enable = textStyle ~= "none"
 
 		if textStyle ~= "none" then

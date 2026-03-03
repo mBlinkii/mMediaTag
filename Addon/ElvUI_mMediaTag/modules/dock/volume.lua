@@ -26,7 +26,7 @@ local function OnEnter(self)
 	Dock:OnEnter(self)
 	self.mouse_entered = true
 
-	if E.db.mMT.dock.tooltip then
+	if E.db.mMediaTag.dock.tooltip then
 		if volumeDT then volumeDT.onEnter() end
 	end
 end
@@ -34,7 +34,7 @@ end
 local function OnLeave(self)
 	Dock:OnLeave(self)
 	self.mouse_entered = false
-	if E.db.mMT.dock.tooltip then DT.tooltip:Hide() end
+	if E.db.mMediaTag.dock.tooltip then DT.tooltip:Hide() end
 end
 
 local function OnClick(self, btn)
@@ -52,10 +52,10 @@ local function OnEvent(...)
 
 	if event == "ELVUI_FORCE_UPDATE" then
 		--setup settings
-		config.icon.texture = icons[E.db.mMT.dock.volume.style][E.db.mMT.dock.volume.icon] or MEDIA.fallback
-		config.icon.color = E.db.mMT.dock.volume.custom_color and MEDIA.color.dock.volume or nil
-		config.text.enable = E.db.mMT.dock.volume.text
-		config.text.a = E.db.mMT.dock.volume.text
+		config.icon.texture = icons[E.db.mMediaTag.dock.volume.style][E.db.mMediaTag.dock.volume.icon] or MEDIA.fallback
+		config.icon.color = E.db.mMediaTag.dock.volume.custom_color and MEDIA.color.dock.volume or nil
+		config.text.enable = E.db.mMediaTag.dock.volume.text
+		config.text.a = E.db.mMediaTag.dock.volume.text
 
 		Dock:CreateDockIcon(self, config, event)
 
@@ -82,10 +82,10 @@ local function OnEvent(...)
 
 	if volumeDT and volumeDT ~= "Data Broker" then volumeDT.eventFunc(...) end
 
-	if E.db.mMT.dock.volume.text then
+	if E.db.mMediaTag.dock.volume.text then
 		if panelText then
 			local pattern, suffix
-			if E.db.mMT.dock.volume.colored then
+			if E.db.mMediaTag.dock.volume.colored then
 				pattern = "|cFF%x%x%x%x%x%x.-%%|r"
 				suffix = ""
 			else
@@ -98,7 +98,7 @@ local function OnEvent(...)
 		end
 	end
 
-	if E.db.mMT.dock.tooltip and self.mouse_entered then
+	if E.db.mMediaTag.dock.tooltip and self.mouse_entered then
 		if volumeDT then volumeDT.onEnter() end
 	end
 end

@@ -22,7 +22,7 @@ local config = {
 local function OnEnter(self)
 	Dock:OnEnter(self)
 
-	if E.db.mMT.dock.tooltip then
+	if E.db.mMediaTag.dock.tooltip then
 		DT.tooltip:ClearLines()
 		DT.tooltip:AddLine(L["Calendar"], mMT:GetRGB("title"))
 		DT.tooltip:AddLine(" ")
@@ -36,7 +36,7 @@ end
 
 local function OnLeave(self)
 	Dock:OnLeave(self)
-	if E.db.mMT.dock.tooltip then DT.tooltip:Hide() end
+	if E.db.mMediaTag.dock.tooltip then DT.tooltip:Hide() end
 end
 
 local function OnClick(self)
@@ -46,8 +46,8 @@ end
 local function OnEvent(self, event, ...)
 	if event == "ELVUI_FORCE_UPDATE" then
 		-- setup settings
-		config.icon.texture = icons[E.db.mMT.dock.calendar.icon][date("%d")] or MEDIA.fallback
-		config.icon.color = E.db.mMT.dock.calendar.custom_color and MEDIA.color.dock.calendar or nil
+		config.icon.texture = icons[E.db.mMediaTag.dock.calendar.icon][date("%d")] or MEDIA.fallback
+		config.icon.color = E.db.mMediaTag.dock.calendar.custom_color and MEDIA.color.dock.calendar or nil
 
 		Dock:CreateDockIcon(self, config, event)
 	end

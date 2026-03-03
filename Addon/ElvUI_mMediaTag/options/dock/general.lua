@@ -16,10 +16,10 @@ mMT.options.args.dock.args.general.args = {
 				name = L["Tooltip"],
 				desc = L["Show a tooltip when you hover over the icon."],
 				get = function(info)
-					return E.db.mMT.dock.tooltip
+					return E.db.mMediaTag.dock.tooltip
 				end,
 				set = function(info, value)
-					E.db.mMT.dock.tooltip = value
+					E.db.mMediaTag.dock.tooltip = value
 				end,
 			},
 			auto_grow = {
@@ -28,10 +28,10 @@ mMT.options.args.dock.args.general.args = {
 				name = L["Auto grow"],
 				desc = L["Automatically adjust the growth size based on the icon size. When you hover over the icon."],
 				get = function(info)
-					return E.db.mMT.dock.auto_grow
+					return E.db.mMediaTag.dock.auto_grow
 				end,
 				set = function(info, value)
-					E.db.mMT.dock.auto_grow = value
+					E.db.mMediaTag.dock.auto_grow = value
 				end,
 			},
 			grow_size = {
@@ -43,13 +43,13 @@ mMT.options.args.dock.args.general.args = {
 				max = 256,
 				step = 1,
 				disabled = function()
-					return E.db.mMT.dock.auto_grow
+					return E.db.mMediaTag.dock.auto_grow
 				end,
 				get = function(info)
-					return E.db.mMT.dock.grow_size
+					return E.db.mMediaTag.dock.grow_size
 				end,
 				set = function(info, value)
-					E.db.mMT.dock.grow_size = value
+					E.db.mMediaTag.dock.grow_size = value
 				end,
 			},
 		},
@@ -68,10 +68,10 @@ mMT.options.args.dock.args.general.args = {
 				desc = L["Set the font for dock text."],
 				values = LSM:HashTable("font"),
 				get = function(info)
-					return E.db.mMT.dock.font.font
+					return E.db.mMediaTag.dock.font.font
 				end,
 				set = function(info, value)
-					E.db.mMT.dock.font.font = value
+					E.db.mMediaTag.dock.font.font = value
 					DT:LoadDataTexts()
 				end,
 			},
@@ -81,10 +81,10 @@ mMT.options.args.dock.args.general.args = {
 				name = L["Custom Font Size"],
 				desc = L["Use a custom font size for dock text. If disabled, the font size will be set to one third of the icon size."],
 				get = function(info)
-					return E.db.mMT.dock.font.custom_font_size
+					return E.db.mMediaTag.dock.font.custom_font_size
 				end,
 				set = function(info, value)
-					E.db.mMT.dock.font.custom_font_size = value
+					E.db.mMediaTag.dock.font.custom_font_size = value
 					DT:LoadDataTexts()
 				end,
 			},
@@ -97,13 +97,13 @@ mMT.options.args.dock.args.general.args = {
 				max = 32,
 				step = 1,
 				disabled = function()
-					return not E.db.mMT.dock.font.custom_font_size
+					return not E.db.mMediaTag.dock.font.custom_font_size
 				end,
 				get = function(info)
-					return E.db.mMT.dock.font.fontSize
+					return E.db.mMediaTag.dock.font.fontSize
 				end,
 				set = function(info, value)
-					E.db.mMT.dock.font.fontSize = value
+					E.db.mMediaTag.dock.font.fontSize = value
 					DT:LoadDataTexts()
 				end,
 			},
@@ -113,10 +113,10 @@ mMT.options.args.dock.args.general.args = {
 				name = L["Font Outline"],
 				desc = L["Set the font outline for dock text."],
 				get = function(info)
-					return E.db.mMT.dock.font.fontFlag
+					return E.db.mMediaTag.dock.font.fontFlag
 				end,
 				set = function(info, value)
-					E.db.mMT.dock.font.fontFlag = value
+					E.db.mMediaTag.dock.font.fontFlag = value
 					DT:LoadDataTexts()
 				end,
 				values = {
@@ -137,10 +137,10 @@ mMT.options.args.dock.args.general.args = {
 				name = L["Custom"],
 				desc = L["Use a custom color for dock text. If disabled, the font color will be class colored."],
 				get = function(info)
-					return E.db.mMT.dock.font.custom_font_color
+					return E.db.mMediaTag.dock.font.custom_font_color
 				end,
 				set = function(info, value)
-					E.db.mMT.dock.font.custom_font_color = value
+					E.db.mMediaTag.dock.font.custom_font_color = value
 					DT:LoadDataTexts()
 				end,
 			},
@@ -150,15 +150,15 @@ mMT.options.args.dock.args.general.args = {
 				name = L["Font Color"],
 				hasAlpha = false,
 				disabled = function()
-					return not E.db.mMT.dock.font.custom_font_color
+					return not E.db.mMediaTag.dock.font.custom_font_color
 				end,
 				get = function(info)
-					local r, g, b = mMT:HexToRGB(E.db.mMT.color.dock.font)
+					local r, g, b = mMT:HexToRGB(E.db.mMediaTag.color.dock.font)
 					return r, g, b
 				end,
 				set = function(info, r, g, b)
 					local hex = E:RGBToHex(r, g, b, "ff")
-					E.db.mMT.color.dock.font = hex
+					E.db.mMediaTag.color.dock.font = hex
 					MEDIA.color.dock.font = CreateColorFromHexString(hex)
 					MEDIA.color.dock.font.hex = hex
 					DT:LoadDataTexts()
@@ -179,15 +179,15 @@ mMT.options.args.dock.args.general.args = {
 				desc = L["Set the normal color of the icon."],
 				hasAlpha = true,
 				disabled = function()
-					return E.db.mMT.dock.class.normal
+					return E.db.mMediaTag.dock.class.normal
 				end,
 				get = function(info)
-					local r, g, b, a = mMT:HexToRGB(E.db.mMT.color.dock.normal)
+					local r, g, b, a = mMT:HexToRGB(E.db.mMediaTag.color.dock.normal)
 					return r, g, b, a
 				end,
 				set = function(info, r, g, b, a)
 					local hex = E:RGBToHex(r, g, b, mMT:FloatToHex(a))
-					E.db.mMT.color.dock.normal = hex
+					E.db.mMediaTag.color.dock.normal = hex
 					MEDIA.color.dock.normal = CreateColorFromHexString(hex)
 					DT:LoadDataTexts()
 				end,
@@ -198,10 +198,10 @@ mMT.options.args.dock.args.general.args = {
 				name = L["Class Color"],
 				desc = L["Use class color for the icon."],
 				get = function(info)
-					return E.db.mMT.dock.class.normal
+					return E.db.mMediaTag.dock.class.normal
 				end,
 				set = function(info, value)
-					E.db.mMT.dock.class.normal = value
+					E.db.mMediaTag.dock.class.normal = value
 					DT:LoadDataTexts()
 				end,
 			},
@@ -218,15 +218,15 @@ mMT.options.args.dock.args.general.args = {
 				desc = L["Set the hover color of the icon."],
 				hasAlpha = true,
 				disabled = function()
-					return E.db.mMT.dock.class.hover
+					return E.db.mMediaTag.dock.class.hover
 				end,
 				get = function(info)
-					local r, g, b, a = mMT:HexToRGB(E.db.mMT.color.dock.hover)
+					local r, g, b, a = mMT:HexToRGB(E.db.mMediaTag.color.dock.hover)
 					return r, g, b, a
 				end,
 				set = function(info, r, g, b, a)
 					local hex = E:RGBToHex(r, g, b, mMT:FloatToHex(a))
-					E.db.mMT.color.dock.hover = hex
+					E.db.mMediaTag.color.dock.hover = hex
 					MEDIA.color.dock.hover = CreateColorFromHexString(hex)
 					DT:LoadDataTexts()
 				end,
@@ -237,10 +237,10 @@ mMT.options.args.dock.args.general.args = {
 				name = L["Class Color"],
 				desc = L["Use class color for the icon."],
 				get = function(info)
-					return E.db.mMT.dock.class.hover
+					return E.db.mMediaTag.dock.class.hover
 				end,
 				set = function(info, value)
-					E.db.mMT.dock.class.hover = value
+					E.db.mMediaTag.dock.class.hover = value
 					DT:LoadDataTexts()
 				end,
 			},
@@ -257,15 +257,15 @@ mMT.options.args.dock.args.general.args = {
 				desc = L["Set the clicked color of the icon."],
 				hasAlpha = true,
 				disabled = function()
-					return E.db.mMT.dock.class.clicked
+					return E.db.mMediaTag.dock.class.clicked
 				end,
 				get = function(info)
-					local r, g, b, a = mMT:HexToRGB(E.db.mMT.color.dock.clicked)
+					local r, g, b, a = mMT:HexToRGB(E.db.mMediaTag.color.dock.clicked)
 					return r, g, b, a
 				end,
 				set = function(info, r, g, b, a)
 					local hex = E:RGBToHex(r, g, b, mMT:FloatToHex(a))
-					E.db.mMT.color.dock.clicked = hex
+					E.db.mMediaTag.color.dock.clicked = hex
 					MEDIA.color.dock.clicked = CreateColorFromHexString(hex)
 					DT:LoadDataTexts()
 				end,
@@ -276,10 +276,10 @@ mMT.options.args.dock.args.general.args = {
 				name = L["Class Color"],
 				desc = L["Use class color for the icon."],
 				get = function(info)
-					return E.db.mMT.dock.class.clicked
+					return E.db.mMediaTag.dock.class.clicked
 				end,
 				set = function(info, value)
-					E.db.mMT.dock.class.clicked = value
+					E.db.mMediaTag.dock.class.clicked = value
 					DT:LoadDataTexts()
 				end,
 			},

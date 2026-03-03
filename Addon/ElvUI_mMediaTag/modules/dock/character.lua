@@ -49,7 +49,7 @@ local config = {
 local function OnEnter(self)
 	Dock:OnEnter(self)
 
-	if E.db.mMT.dock.tooltip then
+	if E.db.mMediaTag.dock.tooltip then
 		DT.tooltip:ClearLines()
 		DT.tooltip:AddLine(CHARACTER_BUTTON, mMT:GetRGB("title"))
 		DT.tooltip:AddLine(" ")
@@ -72,7 +72,7 @@ end
 
 local function OnLeave(self)
 	Dock:OnLeave(self)
-	if E.db.mMT.dock.tooltip then DT.tooltip:Hide() end
+	if E.db.mMediaTag.dock.tooltip then DT.tooltip:Hide() end
 end
 
 local function OnClick(self)
@@ -85,10 +85,10 @@ end
 local function OnEvent(self, event, ...)
 	if event == "ELVUI_FORCE_UPDATE" then
 		--setup settings
-		config.icon.texture = icons[E.db.mMT.dock.character.style][E.db.mMT.dock.character.icon] or MEDIA.fallback
-		config.icon.color = E.db.mMT.dock.character.custom_color and MEDIA.color.dock.character or nil
-		config.text.enable = E.db.mMT.dock.character.text
-		config.text.a = E.db.mMT.dock.character.text
+		config.icon.texture = icons[E.db.mMediaTag.dock.character.style][E.db.mMediaTag.dock.character.icon] or MEDIA.fallback
+		config.icon.color = E.db.mMediaTag.dock.character.custom_color and MEDIA.color.dock.character or nil
+		config.text.enable = E.db.mMediaTag.dock.character.text
+		config.text.a = E.db.mMediaTag.dock.character.text
 
 		Dock:CreateDockIcon(self, config, event)
 	end
@@ -121,13 +121,13 @@ local function OnEvent(self, event, ...)
 		end
 	end
 
-	if E.db.mMT.dock.character.text then
+	if E.db.mMediaTag.dock.character.text then
 		local r, g, b = E:ColorGradient(totalDurability * 0.01, 1, 0.1, 0.1, 1, 1, 0.1, 0.1, 1, 0.1)
 		local hex = E:RGBToHex(r, g, b)
 		self.mMT_Dock.TextA:SetFormattedText("%s%d%%|r", hex, totalDurability)
 	end
 
-	if totalDurability <= E.db.mMT.dock.character.percThreshold then
+	if totalDurability <= E.db.mMediaTag.dock.character.percThreshold then
 		E:Flash(self.mMT_Dock.Icon, 0.5, true)
 	else
 		E:StopFlash(self.mMT_Dock.Icon, 1)

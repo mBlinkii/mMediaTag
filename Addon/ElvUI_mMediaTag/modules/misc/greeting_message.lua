@@ -12,5 +12,5 @@ local function GreetingMessage()
 end
 
 function module:Initialize()
-	if E.db.mMT.general.greeting_message then GreetingMessage() end
+	if E.db.mMediaTag.general.greeting_message then GreetingMessage() end
 end

@@ -585,12 +585,12 @@ end
 function mMT:UpdateTeleports()
 	AddMageTeleports()
 
-	if E.db.mMT.datatexts.teleports.favorites.enable then
+	if E.db.mMediaTag.datatexts.teleports.favorites.enable then
 		mMT.knownTeleports.favorites = {}
 		teleportsIDs.favorites = {}
 		-- add favorites
 		for _, key in pairs({ "a", "b", "c", "d" }) do
-			local favorite = E.db.mMT.datatexts.teleports.favorites[key]
+			local favorite = E.db.mMediaTag.datatexts.teleports.favorites[key]
 			if favorite and favorite.id ~= "none" then teleportsIDs.favorites[favorite.id] = favorite.kind end
 		end
 		processTeleport(teleportsIDs.favorites, "favorites")
@@ -632,7 +632,7 @@ local function UpdateMenus()
 	menus.main = {}
 
 	-- Add favorites menu entry
-	if E.db.mMT.datatexts.teleports.favorites.enable and mMT.knownTeleports.favorites.available then
+	if E.db.mMediaTag.datatexts.teleports.favorites.enable and mMT.knownTeleports.favorites.available then
 		tinsert(menus.main, { text = mMT:TC(L["Favorite"], "title"), isTitle = true, notClickable = true })
 		for id, t in pairs(mMT.knownTeleports.favorites) do
 			if t and type(t) == "table" then tinsert(menus.main, CreateMenuEntry(id, t)) end
@@ -848,7 +848,7 @@ local function OnEnter(self)
 	local tipAdded = false
 
 	-- Add favorites menu entry
-	if E.db.mMT.datatexts.teleports.favorites.enable and mMT.knownTeleports.favorites.available then
+	if E.db.mMediaTag.datatexts.teleports.favorites.enable and mMT.knownTeleports.favorites.available then
 		DT.tooltip:AddLine(L["Favorites"], mMT:GetRGB("title"))
 		for _, t in pairs(mMT.knownTeleports.favorites) do
 			if t and type(t) == "table" then DT.tooltip:AddDoubleLine(BuildTipIcon(t.icon) .. mMT:TC(t.short_name and ("[" .. mMT:TC(t.short_name, "mark") .. "] " .. t.name) or t.name), t.cooldown) end
@@ -906,7 +906,7 @@ local function OnEnter(self)
 end
 
 local function OnEvent(self)
-	local iconPath = E.db.mMT.datatexts.teleports.icon
+	local iconPath = E.db.mMediaTag.datatexts.teleports.icon
 	local label = L["Teleports"]
 
 	if iconPath ~= "none" then label = E:TextureString(MEDIA.icons.datatexts.teleport[iconPath] or "Interface\\Addons\\ElvUI_mMediaTag\\media\\icon.tga", ":14:14") .. " " .. label end
@@ -919,7 +919,7 @@ local function OnLeave(self)
 end
 
 local function ValueColorUpdate(self, hex)
-	local textHex = E.db.mMT.datatexts.text.override_text and "|c" .. MEDIA.color.override_text.hex or hex
+	local textHex = E.db.mMediaTag.datatexts.text.override_text and "|c" .. MEDIA.color.override_text.hex or hex
 	textString = strjoin("", textHex, "%s|r")
 	OnEvent(self)
 end

@@ -13,10 +13,10 @@ mMT.options.args.datatexts.args.misc_individual_professions.args = {
 				type = "select",
 				name = L["Icon Style"],
 				get = function(info)
-					return E.db.mMT.datatexts.individual_professions.icon
+					return E.db.mMediaTag.datatexts.individual_professions.icon
 				end,
 				set = function(info, value)
-					E.db.mMT.datatexts.individual_professions.icon = value
+					E.db.mMediaTag.datatexts.individual_professions.icon = value
 					DT:ForceUpdate_DataText("mMT - Cooking")
 					DT:ForceUpdate_DataText("mMT - Fishing")
 					DT:ForceUpdate_DataText("mMT - Archaeology")

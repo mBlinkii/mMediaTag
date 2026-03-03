@@ -40,8 +40,8 @@ local function DelayOnUpdate(self, elapsed)
 end
 
 local function OnEvent(self, event, _, timeSeconds)
-	in_combat = E.db.mMT.datatexts.combat_time.in_combat ~= "none" and E:TextureString(dt_icons[E.db.mMT.datatexts.combat_time.in_combat], ":14:14") or nil
-	out_of_combat = E.db.mMT.datatexts.combat_time.out_of_combat ~= "none" and E:TextureString(dt_icons[E.db.mMT.datatexts.combat_time.out_of_combat], ":14:14") or nil
+	in_combat = E.db.mMediaTag.datatexts.combat_time.in_combat ~= "none" and E:TextureString(dt_icons[E.db.mMediaTag.datatexts.combat_time.in_combat], ":14:14") or nil
+	out_of_combat = E.db.mMediaTag.datatexts.combat_time.out_of_combat ~= "none" and E:TextureString(dt_icons[E.db.mMediaTag.datatexts.combat_time.out_of_combat], ":14:14") or nil
 	local _, instanceType = GetInstanceInfo()
 	local inArena, started, ended = instanceType == "arena", event == "ENCOUNTER_START", event == "ENCOUNTER_END"
 
@@ -54,7 +54,7 @@ local function OnEvent(self, event, _, timeSeconds)
 		self.text:SetFormattedText(textString, out_of_combat .. " " .. UpdateText())
 		self:SetScript("OnUpdate", nil)
 		if ended then inEncounter = nil end
-		if (E.db.mMT.datatexts.combat_time.hide_delay ~= 0) and not self.hide_timer then self.hide_timer = C_Timer.NewTicker(E.db.mMT.datatexts.combat_time.hide_delay, function()
+		if (E.db.mMediaTag.datatexts.combat_time.hide_delay ~= 0) and not self.hide_timer then self.hide_timer = C_Timer.NewTicker(E.db.mMediaTag.datatexts.combat_time.hide_delay, function()
 			ClearText(self)
 		end) end
 	elseif not inArena and ((not inEncounter and event == "PLAYER_REGEN_DISABLED") or started) then
@@ -62,7 +62,7 @@ local function OnEvent(self, event, _, timeSeconds)
 		CancelTimer(self)
 		self:SetScript("OnUpdate", OnUpdate)
 		if started then inEncounter = true end
-	elseif E.db.mMT.datatexts.combat_time.hide_delay == 0 then
+	elseif E.db.mMediaTag.datatexts.combat_time.hide_delay == 0 then
 		if not self.text:GetText() or event == 'ELVUI_FORCE_UPDATE' then
 			self.text:SetFormattedText(textString, out_of_combat .. " " .. UpdateText())
 		end
@@ -70,8 +70,8 @@ local function OnEvent(self, event, _, timeSeconds)
 end
 
 local function ValueColorUpdate(self, hex)
-	local textHex = E.db.mMT.datatexts.text.override_text and "|c" .. MEDIA.color.override_text.hex or hex
-	local valueHex = E.db.mMT.datatexts.text.override_value and "|c" .. MEDIA.color.override_value.hex or hex
+	local textHex = E.db.mMediaTag.datatexts.text.override_text and "|c" .. MEDIA.color.override_text.hex or hex
+	local valueHex = E.db.mMediaTag.datatexts.text.override_value and "|c" .. MEDIA.color.override_value.hex or hex
 	textString = strjoin("", textHex, "%s|r")
 	valueString = strjoin("", valueHex, "%s|r")
 	OnEvent(self)

@@ -71,7 +71,7 @@ end
 local function OnEvent(self, event, id)
 	if event == "ITEM_COUNT_CHANGED" and id ~= self.name then return end
 
-	local db = E.db.mMT.datatexts.tracker
+	local db = E.db.mMediaTag.datatexts.tracker
 	local id = tonumber(self.name)
 	local info = is_currency_db[id] and module:GetCurrencyInfos(id) or module:GetItemInfos(id)
 	if not info then return end
@@ -110,10 +110,10 @@ local function OnLeave(self)
 end
 
 local function ValueColorUpdate(self, hex)
-	local db = E.db.mMT.datatexts.tracker
+	local db = E.db.mMediaTag.datatexts.tracker
 	local custom = tracker_ids_db[tonumber(self.name)] and tracker_ids_db[tonumber(self.name)].color
-	local textHex = E.db.mMT.datatexts.text.override_text and "|c" .. MEDIA.color.override_text.hex or db.colored and "|c" .. custom or hex
-	local valueHex = E.db.mMT.datatexts.text.override_value and "|c" .. MEDIA.color.override_value.hex or db.colored and "|c" .. custom or hex
+	local textHex = E.db.mMediaTag.datatexts.text.override_text and "|c" .. MEDIA.color.override_text.hex or db.colored and "|c" .. custom or hex
+	local valueHex = E.db.mMediaTag.datatexts.text.override_value and "|c" .. MEDIA.color.override_value.hex or db.colored and "|c" .. custom or hex
 
 	textString = strjoin("", textHex, "%s|r")
 	valueString = strjoin("", valueHex, "%s|r")
@@ -123,8 +123,8 @@ end
 local function LoadIDs()
 	tracker_ids_db, is_currency_db = {}, {}
 
-	if next(E.db.mMT.datatexts.tracker.custom) then
-		for id, t in pairs(E.db.mMT.datatexts.tracker.custom) do
+	if next(E.db.mMediaTag.datatexts.tracker.custom) then
+		for id, t in pairs(E.db.mMediaTag.datatexts.tracker.custom) do
 			if id then
 				local infos = (t.isCurrency and module:GetCurrencyInfos(id) or module:GetItemInfos(id))
 				if infos then

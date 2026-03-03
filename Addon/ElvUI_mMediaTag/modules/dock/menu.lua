@@ -19,7 +19,7 @@ local config = {
 local function OnEnter(self)
 	Dock:OnEnter(self)
 
-	if E.db.mMT.dock.tooltip then
+	if E.db.mMediaTag.dock.tooltip then
 		if menuDT then menuDT.onEnter(self) end
 	end
 end
@@ -27,7 +27,7 @@ end
 local function OnLeave(self)
 	Dock:OnLeave(self)
 
-	if E.db.mMT.dock.tooltip then
+	if E.db.mMediaTag.dock.tooltip then
 		if menuDT then menuDT.onLeave(self) end
 		DT.tooltip:Hide()
 	end
@@ -48,8 +48,8 @@ local function OnEvent(...)
 
 	if event == "ELVUI_FORCE_UPDATE" then
 		--setup settings
-		config.icon.texture = icons[E.db.mMT.dock.menu.style][E.db.mMT.dock.menu.icon] or MEDIA.fallback
-		config.icon.color = E.db.mMT.dock.menu.custom_color and MEDIA.color.dock.menu or nil
+		config.icon.texture = icons[E.db.mMediaTag.dock.menu.style][E.db.mMediaTag.dock.menu.icon] or MEDIA.fallback
+		config.icon.color = E.db.mMediaTag.dock.menu.custom_color and MEDIA.color.dock.menu or nil
 
 		Dock:CreateDockIcon(self, config, event)
 

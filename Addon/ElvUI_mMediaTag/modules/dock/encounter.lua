@@ -22,7 +22,7 @@ local config = {
 local function OnEnter(self)
 	Dock:OnEnter(self)
 
-	if E.db.mMT.dock.tooltip then
+	if E.db.mMediaTag.dock.tooltip then
 		DT.tooltip:ClearLines()
 		DT.tooltip:AddLine(ENCOUNTER_JOURNAL, mMT:GetRGB("title"))
 		DT.tooltip:AddLine(" ")
@@ -44,7 +44,7 @@ end
 
 local function OnLeave(self)
 	Dock:OnLeave(self)
-	if E.db.mMT.dock.tooltip then DT.tooltip:Hide() end
+	if E.db.mMediaTag.dock.tooltip then DT.tooltip:Hide() end
 end
 
 local function OnClick(self)
@@ -58,8 +58,8 @@ end
 local function OnEvent(self, event, ...)
 	if event == "ELVUI_FORCE_UPDATE" then
 		-- setup settings
-		config.icon.texture = icons[E.db.mMT.dock.encounter.style][E.db.mMT.dock.encounter.icon] or MEDIA.fallback
-		config.icon.color = E.db.mMT.dock.encounter.custom_color and MEDIA.color.dock.encounter or nil
+		config.icon.texture = icons[E.db.mMediaTag.dock.encounter.style][E.db.mMediaTag.dock.encounter.icon] or MEDIA.fallback
+		config.icon.color = E.db.mMediaTag.dock.encounter.custom_color and MEDIA.color.dock.encounter or nil
 
 		Dock:CreateDockIcon(self, config, event)
 	end

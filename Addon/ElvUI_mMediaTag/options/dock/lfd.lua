@@ -14,10 +14,10 @@ mMT.options.args.dock.args.lfd.args = {
 				type = "select",
 				name = L["Style"],
 				get = function(info)
-					return E.db.mMT.dock.lfd.style
+					return E.db.mMediaTag.dock.lfd.style
 				end,
 				set = function(info, value)
-					E.db.mMT.dock.lfd.style = value
+					E.db.mMediaTag.dock.lfd.style = value
 				end,
 				values = function()
 					local styles = {}
@@ -32,16 +32,16 @@ mMT.options.args.dock.args.lfd.args = {
 				type = "select",
 				name = L["Icon"],
 				get = function(info)
-					return E.db.mMT.dock.lfd.icon
+					return E.db.mMediaTag.dock.lfd.icon
 				end,
 				set = function(info, value)
-					E.db.mMT.dock.lfd.icon = value
+					E.db.mMediaTag.dock.lfd.icon = value
 					DT:ForceUpdate_DataText("mMT_Dock_LFD")
 				end,
 				values = function()
 					local icons = {}
-					if MEDIA.icons.dock[E.db.mMT.dock.lfd.style] then
-						for key, icon in pairs(MEDIA.icons.dock[E.db.mMT.dock.lfd.style]) do
+					if MEDIA.icons.dock[E.db.mMediaTag.dock.lfd.style] then
+						for key, icon in pairs(MEDIA.icons.dock[E.db.mMediaTag.dock.lfd.style]) do
 							icons[key] = E:TextureString(icon, ":14:14") .. " " .. mMT:formatText(key)
 						end
 						return icons
@@ -62,10 +62,10 @@ mMT.options.args.dock.args.lfd.args = {
 				name = L["Custom Color"],
 				desc = L["Use a custom color for the icon."],
 				get = function(info)
-					return E.db.mMT.dock.lfd.custom_color
+					return E.db.mMediaTag.dock.lfd.custom_color
 				end,
 				set = function(info, value)
-					E.db.mMT.dock.lfd.custom_color = value
+					E.db.mMediaTag.dock.lfd.custom_color = value
 					DT:ForceUpdate_DataText("mMT_Dock_LFD")
 				end,
 			},
@@ -75,15 +75,15 @@ mMT.options.args.dock.args.lfd.args = {
 				name = L["Color"],
 				hasAlpha = true,
 				disabled = function()
-					return not E.db.mMT.dock.lfd.custom_color
+					return not E.db.mMediaTag.dock.lfd.custom_color
 				end,
 				get = function(info)
-					local r, g, b, a = mMT:HexToRGB(E.db.mMT.color.dock.lfd)
+					local r, g, b, a = mMT:HexToRGB(E.db.mMediaTag.color.dock.lfd)
 					return r, g, b, a
 				end,
 				set = function(info, r, g, b, a)
 					local hex = E:RGBToHex(r, g, b, mMT:FloatToHex(a))
-					E.db.mMT.color.dock.lfd = hex
+					E.db.mMediaTag.color.dock.lfd = hex
 					MEDIA.color.dock.lfd = CreateColorFromHexString(hex)
 					DT:ForceUpdate_DataText("mMT_Dock_LFD")
 				end,
@@ -102,10 +102,10 @@ mMT.options.args.dock.args.lfd.args = {
 				name = L["Text"],
 				desc = L["Show difficulty or call to the arms on the icon."],
 				get = function(info)
-					return E.db.mMT.dock.lfd.text
+					return E.db.mMediaTag.dock.lfd.text
 				end,
 				set = function(info, value)
-					E.db.mMT.dock.lfd.text = value
+					E.db.mMediaTag.dock.lfd.text = value
 					DT:ForceUpdate_DataText("mMT_Dock_LFD")
 				end,
 			},
@@ -115,10 +115,10 @@ mMT.options.args.dock.args.lfd.args = {
 				name = L["Call to the arms"],
 				desc = L["Show icons for call to the arms."],
 				get = function(info)
-					return E.db.mMT.dock.lfd.call_to_the_Arms
+					return E.db.mMediaTag.dock.lfd.call_to_the_Arms
 				end,
 				set = function(info, value)
-					E.db.mMT.dock.lfd.call_to_the_Arms = value
+					E.db.mMediaTag.dock.lfd.call_to_the_Arms = value
 					DT:ForceUpdate_DataText("mMT_Dock_LFD")
 				end,
 			},

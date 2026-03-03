@@ -100,7 +100,7 @@ local function GetDungeonSummary()
 		end
 	end
 
-	if E.db.mMT.datatexts.score.sort_method == "SCORE" then
+	if E.db.mMediaTag.datatexts.score.sort_method == "SCORE" then
 		table.sort(scoreTable, function(a, b)
 			return a.mapScore > b.mapScore
 		end)
@@ -137,7 +137,7 @@ local function DungeonScoreTooltip()
 		AddTooltipLine(v, mapName)
 	end
 
-	if E.db.mMT.datatexts.score.show_upgrade then
+	if E.db.mMediaTag.datatexts.score.show_upgrade then
 		DT.tooltip:AddLine(" ")
 		DT.tooltip:AddLine(L["Possible next upgrades:"], mMT:GetRGB("title"))
 
@@ -255,7 +255,7 @@ local function OnEnter(self)
 			end
 		end
 
-		if E.db.mMT.datatexts.score.group_keystones and LOR and IsInGroup() and isMaxLevel then
+		if E.db.mMediaTag.datatexts.score.group_keystones and LOR and IsInGroup() and isMaxLevel then
 			DT.tooltip:AddLine(" ")
 			DT.tooltip:AddLine(L["Keystones in your Group"], mMT:GetRGB("title"))
 			GetGroupKeystone()
@@ -311,8 +311,8 @@ local function OnEvent(self, event, ...)
 end
 
 local function ValueColorUpdate(self, hex)
-	local textHex = E.db.mMT.datatexts.text.override_text and "|c" .. MEDIA.color.override_text.hex or hex
-	local valueHex = E.db.mMT.datatexts.text.override_value and "|c" .. MEDIA.color.override_value.hex or hex
+	local textHex = E.db.mMediaTag.datatexts.text.override_text and "|c" .. MEDIA.color.override_text.hex or hex
+	local valueHex = E.db.mMediaTag.datatexts.text.override_value and "|c" .. MEDIA.color.override_value.hex or hex
 	textString = strjoin("", textHex, "%s|r")
 	valueString = strjoin("", valueHex, "%s|r")
 	OnEvent(self)

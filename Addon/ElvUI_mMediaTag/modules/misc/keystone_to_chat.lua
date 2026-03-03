@@ -57,7 +57,7 @@ local function GetKey(channel, text)
 end
 
 function module:Initialize()
-	if E.Retail and E.db.mMT.keystone_to_chat.enable then
+	if E.Retail and E.db.mMediaTag.keystone_to_chat.enable then
 		module:RegisterEvent("CHAT_MSG_PARTY")
 		module:RegisterEvent("CHAT_MSG_PARTY_LEADER")
 		module:RegisterEvent("CHAT_MSG_RAID")

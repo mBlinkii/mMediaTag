@@ -15,10 +15,10 @@ mMT.options.args.dock.args.calendar.args = {
 				type = "select",
 				name = L["Icon"],
 				get = function(info)
-					return E.db.mMT.dock.calendar.icon
+					return E.db.mMediaTag.dock.calendar.icon
 				end,
 				set = function(info, value)
-					E.db.mMT.dock.calendar.icon = value
+					E.db.mMediaTag.dock.calendar.icon = value
 					DT:ForceUpdate_DataText("mMT_Dock_Calendar")
 				end,
 				values = function()
@@ -43,10 +43,10 @@ mMT.options.args.dock.args.calendar.args = {
 				name = L["Custom Color"],
 				desc = L["Use a custom color for the icon."],
 				get = function(info)
-					return E.db.mMT.dock.calendar.custom_color
+					return E.db.mMediaTag.dock.calendar.custom_color
 				end,
 				set = function(info, value)
-					E.db.mMT.dock.calendar.custom_color = value
+					E.db.mMediaTag.dock.calendar.custom_color = value
 					DT:ForceUpdate_DataText("mMT_Dock_Calendar")
 				end,
 			},
@@ -56,15 +56,15 @@ mMT.options.args.dock.args.calendar.args = {
 				name = L["Color"],
 				hasAlpha = true,
 				disabled = function()
-					return not E.db.mMT.dock.calendar.custom_color
+					return not E.db.mMediaTag.dock.calendar.custom_color
 				end,
 				get = function(info)
-					local r, g, b, a = mMT:HexToRGB(E.db.mMT.color.dock.calendar)
+					local r, g, b, a = mMT:HexToRGB(E.db.mMediaTag.color.dock.calendar)
 					return r, g, b, a
 				end,
 				set = function(info, r, g, b, a)
 					local hex = E:RGBToHex(r, g, b, mMT:FloatToHex(a))
-					E.db.mMT.color.dock.calendar = hex
+					E.db.mMediaTag.color.dock.calendar = hex
 					MEDIA.color.dock.calendar = CreateColorFromHexString(hex)
 					DT:ForceUpdate_DataText("mMT_Dock_Calendar")
 				end,

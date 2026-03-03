@@ -29,10 +29,10 @@ mMT.options.args.datatexts.args.general.args = {
 				type = "toggle",
 				name = L["Override Text Color"],
 				get = function(info)
-					return E.db.mMT.datatexts.text.override_text
+					return E.db.mMediaTag.datatexts.text.override_text
 				end,
 				set = function(info, value)
-					E.db.mMT.datatexts.text.override_text = value
+					E.db.mMediaTag.datatexts.text.override_text = value
 					mMT:UpdateAllDatatexts()
 				end,
 			},
@@ -42,15 +42,15 @@ mMT.options.args.datatexts.args.general.args = {
 				name = L["Color"],
 				hasAlpha = false,
 				disabled = function()
-					return not E.db.mMT.datatexts.text.override_text
+					return not E.db.mMediaTag.datatexts.text.override_text
 				end,
 				get = function(info)
-					local r, g, b = mMT:HexToRGB(E.db.mMT.datatexts.text.text)
+					local r, g, b = mMT:HexToRGB(E.db.mMediaTag.datatexts.text.text)
 					return r, g, b
 				end,
 				set = function(info, r, g, b)
 					local hex = E:RGBToHex(r, g, b, "ff")
-					E.db.mMT.datatexts.text.text = hex
+					E.db.mMediaTag.datatexts.text.text = hex
 					MEDIA.color.override_text = CreateColorFromHexString(hex)
 					MEDIA.color.override_text.hex = hex
 					mMT:UpdateAllDatatexts()
@@ -61,10 +61,10 @@ mMT.options.args.datatexts.args.general.args = {
 				type = "toggle",
 				name = L["Override Value Color"],
 				get = function(info)
-					return E.db.mMT.datatexts.text.override_value
+					return E.db.mMediaTag.datatexts.text.override_value
 				end,
 				set = function(info, value)
-					E.db.mMT.datatexts.text.override_value = value
+					E.db.mMediaTag.datatexts.text.override_value = value
 					mMT:UpdateAllDatatexts()
 				end,
 			},
@@ -74,15 +74,15 @@ mMT.options.args.datatexts.args.general.args = {
 				name = L["Color"],
 				hasAlpha = false,
 				disabled = function()
-					return not E.db.mMT.datatexts.text.override_value
+					return not E.db.mMediaTag.datatexts.text.override_value
 				end,
 				get = function(info)
-					local r, g, b = mMT:HexToRGB(E.db.mMT.datatexts.text.value)
+					local r, g, b = mMT:HexToRGB(E.db.mMediaTag.datatexts.text.value)
 					return r, g, b
 				end,
 				set = function(info, r, g, b)
 					local hex = E:RGBToHex(r, g, b, "ff")
-					E.db.mMT.datatexts.text.value = hex
+					E.db.mMediaTag.datatexts.text.value = hex
 					MEDIA.color.override_value = CreateColorFromHexString(hex)
 					MEDIA.color.override_value.hex = hex
 					mMT:UpdateAllDatatexts()

@@ -12,26 +12,26 @@ function module:InitializeFocusPortrait()
 			local type = "focus"
 			local name = "Focus"
 
-			portraits[unit] = portraits[unit] or module:CreatePortrait(name, parent_frame, E.db.mMT.portraits.focus)
+			portraits[unit] = portraits[unit] or module:CreatePortrait(name, parent_frame, E.db.mMediaTag.portraits.focus)
 
 			if portraits[unit] then
 				portraits[unit].__owner = parent_frame
 				portraits[unit].unit = unit --parent_frame.unit
 				portraits[unit].type = type
-				portraits[unit].db = E.db.mMT.portraits.focus
-				portraits[unit].size = E.db.mMT.portraits.focus.size
-				portraits[unit].point = E.db.mMT.portraits.focus.point
+				portraits[unit].db = E.db.mMediaTag.portraits.focus
+				portraits[unit].size = E.db.mMediaTag.portraits.focus.size
+				portraits[unit].point = E.db.mMediaTag.portraits.focus.point
 				portraits[unit].isPlayer = nil
 				portraits[unit].unitClass = nil
 				portraits[unit].lastGUID = nil
 				--portraits[unit].realUnit = "player"
 				portraits[unit].name = name
-				portraits[unit].forceExtra = (E.db.mMT.portraits.focus.forceExtra ~= "none") and E.db.mMT.portraits.focus.forceExtra or nil
+				portraits[unit].forceExtra = (E.db.mMediaTag.portraits.focus.forceExtra ~= "none") and E.db.mMediaTag.portraits.focus.forceExtra or nil
 
-				portraits[unit].media = module:UpdateTexturesFiles(E.db.mMT.portraits.focus.texture, E.db.mMT.portraits.focus.mirror)
+				portraits[unit].media = module:UpdateTexturesFiles(E.db.mMediaTag.portraits.focus.texture, E.db.mMediaTag.portraits.focus.mirror)
 
 				module:UpdateSize(portraits[unit], portraits[unit].size, portraits[unit].point)
-				module:InitPortrait(portraits[unit], E.db.mMT.portraits.focus.size, E.db.mMT.portraits.focus.point)
+				module:InitPortrait(portraits[unit], E.db.mMediaTag.portraits.focus.size, E.db.mMediaTag.portraits.focus.point)
 
 				if not portraits[unit].isEnabled then
 					portraits[unit]:RegisterEvent("PLAYER_FOCUS_CHANGED")

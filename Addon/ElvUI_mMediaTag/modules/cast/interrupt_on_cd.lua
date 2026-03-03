@@ -246,7 +246,7 @@ local function Update(castbar, unit)
 end
 
 function module:Initialize()
-	if E.db.mMT.interrupt_on_cd.enable then
+	if E.db.mMediaTag.interrupt_on_cd.enable then
 		if not module.isEnabled then
 			module:RegisterEvent("PLAYER_ENTERING_WORLD", UpdateInterruptSpell)
 			module:RegisterEvent("ACTIVE_TALENT_GROUP_CHANGED", UpdateInterruptSpell)
@@ -266,11 +266,11 @@ function module:Initialize()
 			marker = MEDIA.color.interrupt_on_cd.marker,
 		}
 
-		module.inactiveTime = E.db.mMT.interrupt_on_cd.inactive_time
-		module.out_of_range = E.db.mMT.interrupt_on_cd.out_of_range
-		module.gradient = E.db.mMT.interrupt_on_cd.gradient
-		module.set_bg_color = E.db.mMT.interrupt_on_cd.set_bg_color
-		module.bg_multiplier = E.db.mMT.interrupt_on_cd.bg_multiplier
+		module.inactiveTime = E.db.mMediaTag.interrupt_on_cd.inactive_time
+		module.out_of_range = E.db.mMediaTag.interrupt_on_cd.out_of_range
+		module.gradient = E.db.mMediaTag.interrupt_on_cd.gradient
+		module.set_bg_color = E.db.mMediaTag.interrupt_on_cd.set_bg_color
+		module.bg_multiplier = E.db.mMediaTag.interrupt_on_cd.bg_multiplier
 	elseif module.isEnabled then
 		module:UnregisterAllEvents()
 		module.isEnabled = false

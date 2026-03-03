@@ -3,23 +3,23 @@ local DT = E:GetModule("DataTexts")
 
 local function setFavorite(slot, value)
 	if value == "none" then
-		E.db.mMT.datatexts.teleports.favorites[slot] = { id = "none", kind = "none" }
+		E.db.mMediaTag.datatexts.teleports.favorites[slot] = { id = "none", kind = "none" }
 	else
 		for _, category in pairs(mMT.knownTeleports) do
 			if type(category) == "table" then
 				for id, t in pairs(category) do
 					if id == value then
-						E.db.mMT.datatexts.teleports.favorites[slot] = { id = id, kind = t.kind }
+						E.db.mMediaTag.datatexts.teleports.favorites[slot] = { id = id, kind = t.kind }
 						break
 					end
 				end
 			end
 		end
 	end
-	E.db.mMT.datatexts.teleports.favorites.enable = E.db.mMT.datatexts.teleports.favorites.a.id ~= "none"
-		or E.db.mMT.datatexts.teleports.favorites.b.id ~= "none"
-		or E.db.mMT.datatexts.teleports.favorites.c.id ~= "none"
-		or E.db.mMT.datatexts.teleports.favorites.d.id ~= "none"
+	E.db.mMediaTag.datatexts.teleports.favorites.enable = E.db.mMediaTag.datatexts.teleports.favorites.a.id ~= "none"
+		or E.db.mMediaTag.datatexts.teleports.favorites.b.id ~= "none"
+		or E.db.mMediaTag.datatexts.teleports.favorites.c.id ~= "none"
+		or E.db.mMediaTag.datatexts.teleports.favorites.d.id ~= "none"
 end
 
 local function valuesFunction()
@@ -47,10 +47,10 @@ mMT.options.args.datatexts.args.misc_teleports.args = {
 				type = "select",
 				name = L["Icon"],
 				get = function(info)
-					return E.db.mMT.datatexts.teleports.icon
+					return E.db.mMediaTag.datatexts.teleports.icon
 				end,
 				set = function(info, value)
-					E.db.mMT.datatexts.teleports.icon = value
+					E.db.mMediaTag.datatexts.teleports.icon = value
 					DT:ForceUpdate_DataText("mMT - Teleports")
 				end,
 				values = function()
@@ -75,7 +75,7 @@ mMT.options.args.datatexts.args.misc_teleports.args = {
 				type = "select",
 				name = L["Slot"] .. " A",
 				get = function(info)
-					return E.db.mMT.datatexts.teleports.favorites.a and E.db.mMT.datatexts.teleports.favorites.a.id
+					return E.db.mMediaTag.datatexts.teleports.favorites.a and E.db.mMediaTag.datatexts.teleports.favorites.a.id
 				end,
 				set = function(info, value)
 					setFavorite("a", value)
@@ -87,7 +87,7 @@ mMT.options.args.datatexts.args.misc_teleports.args = {
 				type = "select",
 				name = L["Slot"] .. " B",
 				get = function(info)
-					return E.db.mMT.datatexts.teleports.favorites.b and E.db.mMT.datatexts.teleports.favorites.b.id
+					return E.db.mMediaTag.datatexts.teleports.favorites.b and E.db.mMediaTag.datatexts.teleports.favorites.b.id
 				end,
 				set = function(info, value)
 					setFavorite("b", value)
@@ -99,7 +99,7 @@ mMT.options.args.datatexts.args.misc_teleports.args = {
 				type = "select",
 				name = L["Slot"] .. " C",
 				get = function(info)
-					return E.db.mMT.datatexts.teleports.favorites.c and E.db.mMT.datatexts.teleports.favorites.c.id
+					return E.db.mMediaTag.datatexts.teleports.favorites.c and E.db.mMediaTag.datatexts.teleports.favorites.c.id
 				end,
 				set = function(info, value)
 					setFavorite("c", value)
@@ -111,7 +111,7 @@ mMT.options.args.datatexts.args.misc_teleports.args = {
 				type = "select",
 				name = L["Slot"] .. " D",
 				get = function(info)
-					return E.db.mMT.datatexts.teleports.favorites.d and E.db.mMT.datatexts.teleports.favorites.d.id
+					return E.db.mMediaTag.datatexts.teleports.favorites.d and E.db.mMediaTag.datatexts.teleports.favorites.d.id
 				end,
 				set = function(info, value)
 					setFavorite("d", value)

@@ -53,7 +53,7 @@ local menu_icons = {
 
 -- Create the menu
 local function BuildMenuList()
-	local icon = E.db.mMT.datatexts.menu.menu_icons
+	local icon = E.db.mMediaTag.datatexts.menu.menu_icons
 	menuList = {
 		{
 			text = _G.CHARACTER_BUTTON,
@@ -314,7 +314,7 @@ local function OnEnter(self, slow)
 		DT.tooltip:AddDoubleLine(mMT.Name, "|CFFFEA101Ver.|r" .. " " .. mMT.Version, mMT:GetRGB("text", "mark"))
 
 		-- mMT Systeminfo
-		if E.db.mMT.datatexts.menu.show_systeminfo then
+		if E.db.mMediaTag.datatexts.menu.show_systeminfo then
 			mMT:MMTSystemInfo()
 			DT.tooltip:AddLine(" ")
 		end
@@ -343,7 +343,7 @@ local function OnEnter(self, slow)
 		DT.tooltip:AddLine(" ")
 
 		-- CPU/ Memory usage
-		if E.db.mMT.datatexts.menu.show_systeminfo then
+		if E.db.mMediaTag.datatexts.menu.show_systeminfo then
 			mMT:SystemInfo()
 			DT.tooltip:AddLine(" ")
 		end
@@ -361,7 +361,7 @@ local function OnLeave(self)
 end
 
 local function OnEvent(self)
-	local iconPath = E.db.mMT.datatexts.menu.icon
+	local iconPath = E.db.mMediaTag.datatexts.menu.icon
 	local label = L["Game Menu"]
 
 	if iconPath ~= "none" then label = icons[iconPath] .. " " .. label end
@@ -372,7 +372,7 @@ local function OnEvent(self)
 end
 
 local function ValueColorUpdate(self, hex)
-	local textHex = E.db.mMT.datatexts.text.override_text and "|c" .. MEDIA.color.override_text.hex or hex
+	local textHex = E.db.mMediaTag.datatexts.text.override_text and "|c" .. MEDIA.color.override_text.hex or hex
 	textString = strjoin("", textHex, "%s|r")
 	OnEvent(self)
 end

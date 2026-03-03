@@ -13,10 +13,10 @@ mMT.options.args.datatexts.args.misc_professions.args = {
 				type = "select",
 				name = L["Icon Style"],
 				get = function(info)
-					return E.db.mMT.datatexts.professions.icon
+					return E.db.mMediaTag.datatexts.professions.icon
 				end,
 				set = function(info, value)
-					E.db.mMT.datatexts.professions.icon = value
+					E.db.mMediaTag.datatexts.professions.icon = value
 					DT:ForceUpdate_DataText("mMT - Professions")
 				end,
 				values = function()
@@ -36,10 +36,10 @@ mMT.options.args.datatexts.args.misc_professions.args = {
                 type = "toggle",
                 name = L["Menu Icons"],
                 get = function(info)
-                    return E.db.mMT.datatexts.professions.menu_icons
+                    return E.db.mMediaTag.datatexts.professions.menu_icons
                 end,
                 set = function(info, value)
-                    E.db.mMT.datatexts.professions.menu_icons = value
+                    E.db.mMediaTag.datatexts.professions.menu_icons = value
                 end,
             },
 		},

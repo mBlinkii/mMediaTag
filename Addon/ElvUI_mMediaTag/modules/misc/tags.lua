@@ -677,7 +677,7 @@ do
 end
 
 function module:Initialize()
-	db = E.db.mMT.tags
+	db = E.db.mMediaTag.tags
 
 	roleColors = {
 		TANK = colors.tank,
@@ -699,7 +699,7 @@ function module:Initialize()
 end
 
 function module:PLAYER_ENTERING_WORLD(_, text)
-	db = E.db.mMT.tags
+	db = E.db.mMediaTag.tags
 
 	roleColors = {
 		TANK = colors.tank,

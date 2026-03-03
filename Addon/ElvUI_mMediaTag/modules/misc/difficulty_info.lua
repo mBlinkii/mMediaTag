@@ -54,7 +54,7 @@ function module:Demo(show)
 end
 
 function module:Initialize(demo)
-	if not E.db.mMT.difficulty_info.enable then
+	if not E.db.mMediaTag.difficulty_info.enable then
 		if module.difficulty then
 			module.difficulty:Hide()
 			if module.isEnabled then
@@ -65,7 +65,7 @@ function module:Initialize(demo)
 		return
 	end
 
-	module.db = E.db.mMT.difficulty_info
+	module.db = E.db.mMediaTag.difficulty_info
 
 	if not module.difficulty then
 		module.difficulty = CreateFrame("Button", "mMediaTag_Difficulty_Info", E.UIParent, "BackdropTemplate")
@@ -85,7 +85,7 @@ function module:Initialize(demo)
 			self:SetSize(width, height)
 		end)
 
-		E:CreateMover(module.difficulty, "mMediaTag_Difficulty_Info_Mover", "mMT Dungeon Info", nil, nil, nil, "ALL,MMEDIATAG", function() return E.db.mMT.difficulty_info.enable end, "mMT,misc,difficulty_info")
+		E:CreateMover(module.difficulty, "mMediaTag_Difficulty_Info_Mover", "mMT Dungeon Info", nil, nil, nil, "ALL,MMEDIATAG", function() return E.db.mMediaTag.difficulty_info.enable end, "mMT,misc,difficulty_info")
 		module.difficulty:Hide()
 	end
 

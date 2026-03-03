@@ -14,10 +14,10 @@ mMT.options.args.dock.args.menu.args = {
 				type = "select",
 				name = L["Style"],
 				get = function(info)
-					return E.db.mMT.dock.menu.style
+					return E.db.mMediaTag.dock.menu.style
 				end,
 				set = function(info, value)
-					E.db.mMT.dock.menu.style = value
+					E.db.mMediaTag.dock.menu.style = value
 				end,
 				values = function()
 					local styles = {}
@@ -32,16 +32,16 @@ mMT.options.args.dock.args.menu.args = {
 				type = "select",
 				name = L["Icon"],
 				get = function(info)
-					return E.db.mMT.dock.menu.icon
+					return E.db.mMediaTag.dock.menu.icon
 				end,
 				set = function(info, value)
-					E.db.mMT.dock.menu.icon = value
+					E.db.mMediaTag.dock.menu.icon = value
 					DT:ForceUpdate_DataText("mMT_Dock_Menu")
 				end,
 				values = function()
 					local icons = {}
-					if MEDIA.icons.dock[E.db.mMT.dock.menu.style] then
-						for key, icon in pairs(MEDIA.icons.dock[E.db.mMT.dock.menu.style]) do
+					if MEDIA.icons.dock[E.db.mMediaTag.dock.menu.style] then
+						for key, icon in pairs(MEDIA.icons.dock[E.db.mMediaTag.dock.menu.style]) do
 							icons[key] = E:TextureString(icon, ":14:14") .. " " .. mMT:formatText(key)
 						end
 						return icons
@@ -62,10 +62,10 @@ mMT.options.args.dock.args.menu.args = {
 				name = L["Custom Color"],
 				desc = L["Use a custom color for the icon."],
 				get = function(info)
-					return E.db.mMT.dock.menu.custom_color
+					return E.db.mMediaTag.dock.menu.custom_color
 				end,
 				set = function(info, value)
-					E.db.mMT.dock.menu.custom_color = value
+					E.db.mMediaTag.dock.menu.custom_color = value
 					DT:ForceUpdate_DataText("mMT_Dock_Menu")
 				end,
 			},
@@ -75,15 +75,15 @@ mMT.options.args.dock.args.menu.args = {
 				name = L["Color"],
 				hasAlpha = true,
 				disabled = function()
-					return not E.db.mMT.dock.menu.custom_color
+					return not E.db.mMediaTag.dock.menu.custom_color
 				end,
 				get = function(info)
-					local r, g, b, a = mMT:HexToRGB(E.db.mMT.color.dock.menu)
+					local r, g, b, a = mMT:HexToRGB(E.db.mMediaTag.color.dock.menu)
 					return r, g, b, a
 				end,
 				set = function(info, r, g, b, a)
 					local hex = E:RGBToHex(r, g, b, mMT:FloatToHex(a))
-					E.db.mMT.color.dock.menu = hex
+					E.db.mMediaTag.color.dock.menu = hex
 					MEDIA.color.dock.menu = CreateColorFromHexString(hex)
 					DT:ForceUpdate_DataText("mMT_Dock_Menu")
 				end,

@@ -85,7 +85,7 @@ local function CurrencyIcon(tooltip, data)
 end
 
 function module:Initialize()
-	if E.db.mMT.tooltip.enable then
+	if E.db.mMediaTag.tooltip.enable then
 		if E.Retail then
 			TooltipDataProcessor.AddTooltipPostCall(Enum.TooltipDataType.Item, ItemIcon)
 			TooltipDataProcessor.AddTooltipPostCall(Enum.TooltipDataType.Spell, SpellIcon)
@@ -99,6 +99,6 @@ function module:Initialize()
 			end
 		end
 
-		module.db = E.db.mMT.tooltip
+		module.db = E.db.mMediaTag.tooltip
 	end
 end

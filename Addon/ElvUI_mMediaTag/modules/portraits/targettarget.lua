@@ -12,26 +12,26 @@ function module:InitializeToTPortrait()
 			local type = "targettarget"
 			local name = "TargetTarget"
 
-			portraits[unit] = portraits[unit] or module:CreatePortrait(name, parent_frame, E.db.mMT.portraits.targettarget)
+			portraits[unit] = portraits[unit] or module:CreatePortrait(name, parent_frame, E.db.mMediaTag.portraits.targettarget)
 
 			if portraits[unit] then
 				portraits[unit].__owner = parent_frame
 				portraits[unit].unit = unit --parent_frame.unit
 				portraits[unit].type = type
-				portraits[unit].db = E.db.mMT.portraits.targettarget
-				portraits[unit].size = E.db.mMT.portraits.targettarget.size
-				portraits[unit].point = E.db.mMT.portraits.targettarget.point
+				portraits[unit].db = E.db.mMediaTag.portraits.targettarget
+				portraits[unit].size = E.db.mMediaTag.portraits.targettarget.size
+				portraits[unit].point = E.db.mMediaTag.portraits.targettarget.point
 				portraits[unit].isPlayer = nil
 				portraits[unit].unitClass = nil
 				portraits[unit].lastGUID = nil
 				--portraits[unit].realUnit = "player"
 				portraits[unit].name = name
-				portraits[unit].forceExtra = (E.db.mMT.portraits.targettarget.forceExtra ~= "none") and E.db.mMT.portraits.targettarget.forceExtra or nil
+				portraits[unit].forceExtra = (E.db.mMediaTag.portraits.targettarget.forceExtra ~= "none") and E.db.mMediaTag.portraits.targettarget.forceExtra or nil
 
-				portraits[unit].media = module:UpdateTexturesFiles(E.db.mMT.portraits.targettarget.texture, E.db.mMT.portraits.targettarget.mirror)
+				portraits[unit].media = module:UpdateTexturesFiles(E.db.mMediaTag.portraits.targettarget.texture, E.db.mMediaTag.portraits.targettarget.mirror)
 
 				module:UpdateSize(portraits[unit], portraits[unit].size, portraits[unit].point)
-				module:InitPortrait(portraits[unit], E.db.mMT.portraits.targettarget.size, E.db.mMT.portraits.targettarget.point)
+				module:InitPortrait(portraits[unit], E.db.mMediaTag.portraits.targettarget.size, E.db.mMediaTag.portraits.targettarget.point)
 
 				if not portraits[unit].isEnabled then
 					portraits[unit]:RegisterEvent("PLAYER_TARGET_CHANGED")
