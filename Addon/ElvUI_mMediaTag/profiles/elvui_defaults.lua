@@ -350,14 +350,14 @@ P.castbar_shield = {
 
 -- tooltip
 P.tooltip = {
-	enable = true,
+	enable = false,
 	size = 32,
 	zoom = true,
 }
 
 -- minimap skin
 P.minimap_skin = {
-	enable = true,
+	enable = false,
 	style = "zigzag",
 	cardinal = "none",
 	color = "class",

@@ -24,6 +24,8 @@ local config = {
 
 local function OnEnter(self)
 	Dock:OnEnter(self)
+	self.mouse_entered = true
+
 	if E.db.mMT.dock.tooltip then
 		if volumeDT then volumeDT.onEnter() end
 	end
@@ -31,6 +33,7 @@ end
 
 local function OnLeave(self)
 	Dock:OnLeave(self)
+	self.mouse_entered = false
 	if E.db.mMT.dock.tooltip then DT.tooltip:Hide() end
 end
 
@@ -93,6 +96,10 @@ local function OnEvent(...)
 			local level = string.match(panelText, pattern)
 			if level then self.mMT_Dock.TextA:SetText(level .. suffix) end
 		end
+	end
+
+	if E.db.mMT.dock.tooltip and self.mouse_entered then
+		if volumeDT then volumeDT.onEnter() end
 	end
 end
 
