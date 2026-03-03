@@ -138,7 +138,7 @@ local function UpdateInterruptSpell()
 
 	module.myInterruptSpell = spellList[mySpecialization]
 
-	if not spellList[mySpecialization] then
+	if (mySpecialization ~= 0 and not spellList[mySpecialization]) then
 		mMT:Print(L["No interrupt spell found for your specialization. Interrupt on CD will not work."], L["ID:"], mySpecialization)
 	end
 end
