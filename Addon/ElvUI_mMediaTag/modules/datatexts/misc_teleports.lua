@@ -207,7 +207,6 @@ local teleportsIDs = {
 		[126892] = "spell", -- zen-pilgrimage
 		[18960] = "spell", -- Moonglade
 		[193753] = "spell", -- dreamwalk
-		[193759] = "spell", -- teleport-hall-of-the-guardian
 		[265225] = "spell", -- Mole Machine
 		[312372] = "spell", -- Return to Camp
 		[50977] = "spell", -- death-gate
