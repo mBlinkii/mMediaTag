@@ -57,6 +57,7 @@ local spellList = {
 	--DEMONHUNTER
 	[577] = 183752,
 	[581] = 183752,
+	[1480] = 183752,
 	--EVOKER
 	[1467] = 351338,
 	[1468] = 351338,
@@ -136,6 +137,10 @@ local function UpdateInterruptSpell()
 	end
 
 	module.myInterruptSpell = spellList[mySpecialization]
+
+	if not spellList[mySpecialization] then
+		mMT:Print(L["No interrupt spell found for your specialization. Interrupt on CD will not work."], L["ID:"], mySpecialization)
+	end
 end
 
 local function GetCastColor(castbar)
