@@ -13,22 +13,22 @@ local GetActivityInfoTable = C_LFGList.GetActivityInfoTable
 
 local LSM = E.Libs.LSM
 
-function module:Demo(show)
+function module:Demo()
 	local demoTexts = {
 		{ grp = "QUEST", name = "The Flame Burns Eternal", acc = "Weekly", diff = "Normal" },
 		{ grp = "m0", name = "The Rookery", acc = "Mythic", diff = "Mythic" },
 		{ grp = "+12", name = "The Floodgate", acc = "Keystone", diff = "Mythic+" },
 		{ grp = "Transmog farming", name = "Custom", acc = "PVE", diff = "Custom" },
 	}
-	if show then
+	if module.info_screen.demo then
+		module.info_screen.demo = false
+		module.info_screen:Hide()
+	else
 		local info = demoTexts[random(1, #demoTexts)]
 		module.info_screen.demo = true
 		module.info_screen.lable:SetText(format("%s", mMT:TC(info.grp .. " - " .. info.name, "line_a")))
-		module.info_screen.lable2:SetText(format("%s \n%s", info.acc, "line_b"), mMT:TC(info.diff, "line_c"))
+		module.info_screen.lable2:SetText(format("%s \n%s", mMT:TC(info.acc, "line_b"), mMT:TC(info.diff, "line_c")))
 		module.info_screen:Show()
-	else
-		module.info_screen.demo = true
-		module.info_screen:Hide()
 	end
 end
 
