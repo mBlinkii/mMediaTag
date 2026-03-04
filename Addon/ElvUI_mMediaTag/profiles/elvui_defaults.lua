@@ -550,6 +550,10 @@ P.tags = {
 	},
 }
 
+P.nameplates = {
+	target_color = false,
+}
+
 -- color
 P.color = {
 	-- tip/ menu

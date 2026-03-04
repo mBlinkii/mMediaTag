@@ -78,7 +78,15 @@ mMT.options = {
 			name = L["Nameplates"],
 			icon = "Interface\\Addons\\ElvUI_mMediaTag\\media\\options\\nameplates",
 			childGroups = "tab",
-			args = {},
+			args = {
+				nameplate_tools = {
+					order = 1,
+					type = "group",
+					name = mMT:AddSettingsIcon(L["Nameplate Tools"], "professions"),
+					childGroups = "tab",
+					args = {},
+				},
+			},
 		},
 		datatexts = {
 			order = 5,
