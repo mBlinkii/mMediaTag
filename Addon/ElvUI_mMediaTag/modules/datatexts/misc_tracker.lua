@@ -16,11 +16,11 @@ local tracker_ids_db, is_currency_db = {}, {}
 
 local tracker_default_ids = {
 	-- crest
-	[2914] = { isCurrency = true, color = "FF84FF4F" },
-	[2915] = { isCurrency = true, color = "FF034CF6" },
-	[2916] = { isCurrency = true, color = "FFA928FF" },
-	[2917] = { isCurrency = true, color = "FFFFA514" },
-	[3008] = { isCurrency = true, color = "FF4FFCFF" }, -- valor
+	[3341] = { isCurrency = true, color = "FF84FF4F" }, -- Veteran
+	[3343] = { isCurrency = true, color = "FF034CF6" }, -- Champion
+	[3345] = { isCurrency = true, color = "FFA928FF" }, -- Hero
+	[3347] = { isCurrency = true, color = "FFFFA514" }, -- Myth
+	[3383] = { isCurrency = true, color = "FF4FFCFF" }, -- Adventurer
 
 	-- tww
 	[3089] = { isCurrency = true, color = "FF4FFCFF" }, -- Residual Memories
