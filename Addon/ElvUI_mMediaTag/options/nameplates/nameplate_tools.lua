@@ -1,4 +1,5 @@
 local mMT, DB, M, E, P, L, MEDIA = unpack(ElvUI_mMediaTag)
+local NP = E:GetModule("NamePlates")
 
 mMT.options.args.nameplates.args.nameplate_tools.args = {
 	misc = {
@@ -25,6 +26,7 @@ mMT.options.args.nameplates.args.nameplate_tools.args = {
 				set = function(info, value)
 					E.db.mMediaTag.nameplates.target_color = value
 					mMT:UpdateModule("NameplateTools")
+                    NP:ConfigureAll()
 				end,
 			},
             elvui_settings = {
