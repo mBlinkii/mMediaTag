@@ -22,12 +22,10 @@ local tracker_default_ids = {
 	[3347] = { isCurrency = true, color = "FFFFA514" }, -- Myth
 	[3383] = { isCurrency = true, color = "FF4FFCFF" }, -- Adventurer
 
-	-- tww
-	[3089] = { isCurrency = true, color = "FF4FFCFF" }, -- Residual Memories
-	[2815] = { isCurrency = true, color = "FFFFAE17" }, -- Resonance Crystals
+	-- midnight
+	[3378] = { isCurrency = true, color = "FFFFAE17" }, -- Dawnlight Manaflux
 	[3028] = { isCurrency = true, color = "FFEC46FF" }, -- Restored Coffer Key
 	[2803] = { isCurrency = true, color = "FFEC46FF" }, -- Undercoin
-	[3056] = { isCurrency = true, color = "FFEC46FF" }, -- Kej
 
 	-- pvp
 	[2123] = { isCurrency = true, color = "FFFF4117" }, -- Bloody Tokens
@@ -161,11 +159,14 @@ function module:Initialize()
 		for id, info in pairs(tracker_ids_db) do
 			if not DT.RegisteredDataTexts[id] then
 				if is_currency_db[id] then
-					DT:RegisterDatatext(id, _G.CURRENCY, { "CHAT_MSG_CURRENCY", "CURRENCY_DISPLAY_UPDATE" }, OnEvent, nil, nil, OnEnter, OnLeave, "mMT - " .. info.name, nil, ValueColorUpdate)
+					-- #FFA600
+					DT:RegisterDatatext(id, mMT.NameShort .. " - " .. "|CFFFFA600" .. _G.CURRENCY .. "|r", { "CHAT_MSG_CURRENCY", "CURRENCY_DISPLAY_UPDATE" }, OnEvent, nil, nil, OnEnter, OnLeave, "mMT - " .. info.name, nil, ValueColorUpdate)
 				else
-					DT:RegisterDatatext(id, _G.ITEMS, { "ITEM_COUNT_CHANGED" }, OnEvent, nil, nil, OnEnter, OnLeave, "mMT - " .. info.name .. " (" .. id .. ")", nil, ValueColorUpdate)
+					-- #EE1E75
+					DT:RegisterDatatext(id, mMT.NameShort .. " - " .. "|CFFEE1E75" .. _G.ITEMS .. "|r", { "ITEM_COUNT_CHANGED" }, OnEvent, nil, nil, OnEnter, OnLeave, "mMT - " .. info.name .. " (" .. id .. ")", nil, ValueColorUpdate)
 				end
 			end
 		end
 	end
+	DT:UpdateQuickDT()
 end
