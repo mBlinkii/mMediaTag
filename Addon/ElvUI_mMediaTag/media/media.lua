@@ -152,6 +152,11 @@ MEDIA.color = {
 		[7] = createColor("FFFF1111"),
 		[8] = createColor("FFFFFFFF"),
 	},
+
+	nameplates = {
+		focus_color = createColor("FF00FFB3"),
+		target_color = createColor("FFA200FF"),
+	},
 }
 
 MEDIA.myclass = E:ClassColor(E.myclass)
@@ -320,6 +325,11 @@ function mMT:UpdateMedia(arg)
 			MEDIA.color.tags[i] = CreateColorFromHexString(E.db.mMediaTag.color.tags.raidtargetmarkers[i])
 			MEDIA.color.tags[i].hex = E.db.mMediaTag.color.tags.raidtargetmarkers[i]
 		end
+	end
+
+	if arg == "nameplates" or not arg then
+		MEDIA.color.nameplates.focus_color = CreateColorFromHexString(E.db.mMediaTag.color.nameplates.focus_color)
+		MEDIA.color.nameplates.target_color = CreateColorFromHexString(E.db.mMediaTag.color.nameplates.target_color)
 	end
 end
 

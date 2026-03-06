@@ -551,7 +551,17 @@ P.tags = {
 }
 
 P.nameplates = {
-	target_color = false,
+	target_glow_color = false,
+	focus = {
+		changeColor = false,
+		changeTexture = false,
+		texture = "mMediaTag A10",
+	},
+	target = {
+		changeColor = false,
+		changeTexture = false,
+		texture = "mMediaTag A5",
+	},
 }
 
 -- color
@@ -683,5 +693,10 @@ P.color = {
 			[7] = "FFFF1111",
 			[8] = "FFFFFFFF",
 		},
+	},
+
+	nameplates = {
+		focus_color = "FF00FFB3",
+		target_color = "FFA200FF",
 	},
 }

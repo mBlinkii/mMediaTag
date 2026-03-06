@@ -7,11 +7,11 @@ local pairs = pairs
 local print = print
 
 local function GetTableLength(tbl)
-    local count = 0
-    for _ in pairs(tbl) do
-        count = count + 1
-    end
-    return count
+	local count = 0
+	for _ in pairs(tbl) do
+		count = count + 1
+	end
+	return count
 end
 
 local function PrintTable(tbl, indent, simple, noFunctions, depth, parent)
@@ -27,6 +27,8 @@ local function PrintTable(tbl, indent, simple, noFunctions, depth, parent)
 				print(indent .. currentPath .. " = {")
 				PrintTable(value, indent .. "    ", depth > 2, noFunctions, depth + 1, currentPath)
 				print(indent .. "}")
+			elseif E.IsSecretValue(value) then
+				print("|cffff8787SecretValue|r: ", value)
 			else
 				local valueType = type(value)
 				local entryColor = "FFFF92BC"
@@ -53,11 +55,11 @@ local function PrintTable(tbl, indent, simple, noFunctions, depth, parent)
 end
 
 function mMT:DebugPrint(arg, simple, noFunctions, ...)
-    if type(arg) == "table" then
-        local tblLength = GetTableLength(arg)
-        mMT:Print(": Table Start >>>", arg, "Entries:", tblLength, "Options:", "Simple:", simple, "Functions:", noFunctions)
-        PrintTable(arg, nil, simple, noFunctions)
-    else
-        mMT:Print("Not a Table:", arg, ...)
-    end
+	if type(arg) == "table" then
+		local tblLength = GetTableLength(arg)
+		mMT:Print(": Table Start >>>", arg, "Entries:", tblLength, "Options:", "Simple:", simple, "Functions:", noFunctions)
+		PrintTable(arg, nil, simple, noFunctions)
+	else
+		mMT:Print("Not a Table:", arg, ...)
+	end
 end
