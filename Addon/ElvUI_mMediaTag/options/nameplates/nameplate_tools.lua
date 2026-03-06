@@ -13,7 +13,7 @@ mMT.options.args.nameplates.args.nameplate_tools.args = {
 				order = 1,
 				type = "description",
 				fontSize = "medium",
-				name = L["Sets automatically your class color as the target and glow color on nameplates."],
+				name = L["Sets automatically your class color for glow and border color on nameplates for the target unit."],
 			},
 			enable = {
 				order = 2,
