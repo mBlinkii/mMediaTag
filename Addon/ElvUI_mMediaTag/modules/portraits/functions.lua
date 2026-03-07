@@ -55,6 +55,7 @@ local function UpdateTextureColor(element, unit)
 
     local color = module:GetUnitColor(unit, element.unitClass, element.isPlayer, false) -- element.isDead)
     element.color = color
+
     if not color then return end
 
     local primary, secondary = color.c, color.g
