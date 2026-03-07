@@ -9,5 +9,5 @@
     <Script file="unit_ids.lua"/>
     <Script file="tooltip.lua"/>
     <Script file="nameplate.lua"/>
-    <!-- <Script file="tags.lua"/> -->
+    <Script file="tags.lua"/>
 </Ui>
