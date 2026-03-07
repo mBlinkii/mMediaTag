@@ -321,10 +321,10 @@ function mMT:UpdateMedia(arg)
 		MEDIA.color.tags.quest.hex = E.db.mMediaTag.color.tags.misc.quest
 		MEDIA.color.tags.resting = CreateColorFromHexString(E.db.mMediaTag.color.tags.misc.resting)
 		MEDIA.color.tags.resting.hex = E.db.mMediaTag.color.tags.misc.resting
-		for i = 1, 8 do
-			MEDIA.color.tags[i] = CreateColorFromHexString(E.db.mMediaTag.color.tags.raidtargetmarkers[i])
-			MEDIA.color.tags[i].hex = E.db.mMediaTag.color.tags.raidtargetmarkers[i]
-		end
+		-- for i = 1, 8 do
+		-- 	MEDIA.color.tags[i] = CreateColorFromHexString(E.db.mMediaTag.color.tags.raidtargetmarkers[i])
+		-- 	MEDIA.color.tags[i].hex = E.db.mMediaTag.color.tags.raidtargetmarkers[i]
+		-- end
 	end
 
 	if arg == "nameplates" or not arg then
