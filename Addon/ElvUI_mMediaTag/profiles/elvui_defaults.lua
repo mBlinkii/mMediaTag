@@ -515,8 +515,8 @@ P.dock = {
 
 -- tags
 P.tags = {
-	healthThreshold1 = 25,
-	healthThreshold2 = 10,
+	-- healthThreshold1 = 25,
+	-- healthThreshold2 = 10,
 	classification = {
 		rare = "brain",
 		rareelite = "rareelite",
@@ -538,16 +538,16 @@ P.tags = {
 		quest = "quest",
 		targeting = "brain",
 	},
-	raidtargetmarkers = {
-		[1] = "TM01",
-		[2] = "TM02",
-		[3] = "TM03",
-		[4] = "TM04",
-		[5] = "TM05",
-		[6] = "TM06",
-		[7] = "TM07",
-		[8] = "TM08",
-	},
+	-- raidtargetmarkers = {
+	-- 	[1] = "TM01",
+	-- 	[2] = "TM02",
+	-- 	[3] = "TM03",
+	-- 	[4] = "TM04",
+	-- 	[5] = "TM05",
+	-- 	[6] = "TM06",
+	-- 	[7] = "TM07",
+	-- 	[8] = "TM08",
+	-- },
 }
 
 P.nameplates = {
@@ -683,16 +683,16 @@ P.color = {
 			quest = "FFFFEE00",
 			resting = "FF38FF92",
 		},
-		raidtargetmarkers = {
-			[1] = "FFFFD900",
-			[2] = "FFFF8800",
-			[3] = "FF7700FF",
-			[4] = "FF16BB00",
-			[5] = "FFA5A5A5",
-			[6] = "FF006EFF",
-			[7] = "FFFF1111",
-			[8] = "FFFFFFFF",
-		},
+		-- raidtargetmarkers = {
+		-- 	[1] = "FFFFD900",
+		-- 	[2] = "FFFF8800",
+		-- 	[3] = "FF7700FF",
+		-- 	[4] = "FF16BB00",
+		-- 	[5] = "FFA5A5A5",
+		-- 	[6] = "FF006EFF",
+		-- 	[7] = "FFFF1111",
+		-- 	[8] = "FFFFFFFF",
+		-- },
 	},
 
 	nameplates = {

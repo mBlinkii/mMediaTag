@@ -43,6 +43,30 @@ local classificationsIcons = {
 	worldboss = icons.cs8,
 }
 
+local roleColors = {
+	TANK = colors.tank,
+	HEALER = colors.healer,
+	DAMAGER = colors.dps,
+}
+
+local roleIcons = {
+	TANK = icons.tank,
+	HEALER = icons.healer,
+	DAMAGER = icons.dps,
+}
+
+local roleIconsBlizz = {
+	TANK = CreateAtlasMarkup("UI-LFG-RoleIcon-Tank", 16, 16),
+	HEALER = CreateAtlasMarkup("UI-LFG-RoleIcon-Healer", 16, 16),
+	DAMAGER = CreateAtlasMarkup("UI-LFG-RoleIcon-DPS", 16, 16),
+}
+
+local roleNames = {
+	TANK = L["Tank"],
+	HEALER = L["Healer"],
+	DAMAGER = L["DPS"],
+}
+
 local statusDefinitions = {
 	AFK = { check = UnitIsAFK, color = colors.afk, label = L["AFK"], iconKey = "afk" },
 	DND = { check = UnitIsDND, color = colors.dnd, label = L["DND"], iconKey = "dnd" },
@@ -60,6 +84,23 @@ local statusDefinitions = {
 
 local function GetColorString(color)
 	return color and ":" .. tostring(color.r * 255) .. ":" .. tostring(color.g * 255) .. ":" .. tostring(color.b * 255) .. "|t"
+end
+
+local function GetFactionData(unit)
+	if not UnitIsPlayer(unit) then return end
+
+	local guid = UnitGUID(unit)
+	if not guid then return end
+
+	if not UnitFaction[guid] then
+		local factionGroup = UnitFactionGroup(unit)
+		if factionGroup then UnitFaction[guid] = {
+			CreateTextureMarkup("Interface\\FriendsFrame\\PlusManz-" .. factionGroup, 16, 16, 16, 16, 0, 1, 0, 1, 0, 0),
+			factionGroup,
+		} end
+	end
+
+	return UnitFaction[guid], guid
 end
 
 E:AddTag("mMT-classification", "UNIT_CLASSIFICATION_CHANGED", function(unit, _, args)
@@ -92,7 +133,6 @@ E:AddTag("mMT-classification:short", "UNIT_CLASSIFICATION_CHANGED", function(uni
 
 	return colors[c] and shortClassificationsLabels[c] and colors[c]:WrapTextInColorCode(shortClassificationsLabels[c])
 end)
-
 E:AddTagInfo("mMT-classification:short", mMT.NameShort .. " " .. L["Classification"], L["Short Version."])
 
 E:AddTag("mMT-classification:icon", "UNIT_CLASSIFICATION_CHANGED", function(unit, _, args)
@@ -109,7 +149,6 @@ E:AddTag("mMT-classification:icon", "UNIT_CLASSIFICATION_CHANGED", function(unit
 
 	return (c and color) and "|T" .. classificationsIcons[c] .. ":16:16:0:0:16:16:0:16:0:16" .. color or ""
 end)
-
 E:AddTagInfo(
 	"mMT-classification:icon",
 	mMT.NameShort .. " " .. L["Classification"],
@@ -172,6 +211,203 @@ E:AddTag("mMT-color:target", "UNIT_TARGET", function(unit, _, args)
 end)
 E:AddTagInfo("mMT-color:target", mMT.NameShort .. " " .. L["Color"], L["Same as mMT-color, but only for the units target."])
 
+E:AddTag(format("mMT-health"), "UNIT_HEALTH UNIT_MAXHEALTH", function(unit)
+	local currentHealth = UnitHealth(unit)
+
+	if UnitAffectingCombat(unit) then
+		return _TAGS.perhp(unit)
+	else
+		return E:AbbreviateNumbers(currentHealth, E.Abbreviate["long"])
+	end
+end)
+E:AddTagInfo("mMT-health", mMT.NameShort .. " " .. L["Health"], L["Returns the current health of the unit (changes between current health and percent in combat)."])
+
+E:AddTag(format("mMT-health:short"), "UNIT_HEALTH UNIT_MAXHEALTH", function(unit)
+	local currentHealth = UnitHealth(unit)
+
+	if UnitAffectingCombat(unit) then
+		return _TAGS.perhp(unit)
+	else
+		return E:AbbreviateNumbers(currentHealth, E.Abbreviate["short"])
+	end
+end)
+E:AddTagInfo("mMT-health:short", mMT.NameShort .. " " .. L["Health"], L["Short Version."])
+
+local UnitDeathCount, instanceID, instanceType = {}, "", "none"
+
+local function TagDeathCount()
+	local instanceInfo = { GetInstanceInfo() }
+	local iID, iType = tostring(instanceInfo[8]), tostring(instanceInfo[2])
+
+	if instanceType == "none" and iType ~= "none" then
+		instanceType = iType
+	elseif instanceType ~= "none" and iType == "none" and UnitFaction then
+		UnitFaction = {}
+	end
+
+	if iID ~= instanceID then
+		instanceID = iID
+		UnitDeathCount = {}
+	end
+end
+
+local function UpdateDeathCount(unit)
+	if not UnitIsPlayer(unit) then return end
+
+	local guid = UnitGUID(unit)
+	if not guid then return end
+
+	local isDead = UnitIsDead(unit) or UnitIsGhost(unit)
+	local data = UnitDeathCount[guid]
+
+	if isDead then
+		if not data then
+			UnitDeathCount[guid] = { true, 1 }
+		elseif not data[1] then
+			data[1], data[2] = true, data[2] + 1
+		end
+	else
+		if data then data[1] = false end
+	end
+
+	return data and data[2] >= 1 and data[2] or nil
+end
+
+E:AddTag("mMT-deathcount", "UNIT_HEALTH", function(unit)
+	if not UnitIsPlayer(unit) then return end
+	return UpdateDeathCount(unit)
+end)
+E:AddTagInfo("mMT-deathcount", mMT.NameShort .. " " .. L["Miscellaneous"], L["Returns the number of times the player has died since you entered the instance. Resets when you leave the instance."])
+
+E:AddTag("mMT-deathcount:ifdeath", "UNIT_HEALTH", function(unit)
+	if not UnitIsPlayer(unit) then return end
+	local count = UpdateDeathCount(unit)
+	if UnitIsDead(unit) or UnitIsGhost(unit) then return count end
+end)
+E:AddTagInfo("mMT-deathcount:ifdeath", mMT.NameShort .. " " .. L["Miscellaneous"], L["Same as mMT-deathcount, but only shows the count while the player is dead."])
+
+E:AddTag("mMT-role", "PLAYER_ROLES_ASSIGNED GROUP_ROSTER_UPDATE", function(unit)
+	local unitRole = UnitGroupRolesAssigned(unit)
+	return unitRole and roleColors[unitRole]:WrapTextInColorCode(roleNames[unitRole]) or ""
+end)
+E:AddTagInfo("mMT-role", mMT.NameShort .. " " .. L["Miscellaneous"], L["Returns the role of the unit (Tank, Healer, DPS)."])
+
+E:AddTag("mMT-role:icon", "PLAYER_ROLES_ASSIGNED GROUP_ROSTER_UPDATE", function(unit)
+	local unitRole = UnitGroupRolesAssigned(unit)
+	return unitRole and E:TextureString(roleIcons[unitRole], ":14:14") or ""
+end)
+E:AddTagInfo("mMT-role:icon", mMT.NameShort .. " " .. L["Miscellaneous"], L["Returns the role icon of the unit (Tank, Healer, DPS)."])
+
+E:AddTag("mMT-role:icon:blizz", "PLAYER_ROLES_ASSIGNED GROUP_ROSTER_UPDATE", function(unit)
+	local unitRole = UnitGroupRolesAssigned(unit)
+	return unitRole and roleIconsBlizz[unitRole] or ""
+end)
+E:AddTagInfo("mMT-role:icon:blizz", mMT.NameShort .. " " .. L["Miscellaneous"], L["Returns the role icon of the unit (Tank, Healer, DPS)."])
+
+E:AddTag("mMT-role:target", "PLAYER_ROLES_ASSIGNED GROUP_ROSTER_UPDATE", function(unit)
+	local unitRole = UnitGroupRolesAssigned(unit .. "target")
+	return unitRole and roleColors[unitRole]:WrapTextInColorCode(roleNames[unitRole]) or ""
+end)
+E:AddTagInfo("mMT-role:target", mMT.NameShort .. " " .. L["Miscellaneous"], L["Returns the role of the unit (Tank, Healer, DPS)."])
+
+E:AddTag("mMT-role:target:icon", "PLAYER_ROLES_ASSIGNED GROUP_ROSTER_UPDATE", function(unit)
+	local unitRole = UnitGroupRolesAssigned(unit .. "target")
+	return unitRole and E:TextureString(roleIcons[unitRole], ":14:14") or ""
+end)
+E:AddTagInfo("mMT-role:target:icon", mMT.NameShort .. " " .. L["Miscellaneous"], L["Returns the role icon of the unit (Tank, Healer, DPS)."])
+
+E:AddTag("mMT-role:target:icon:blizz", "PLAYER_ROLES_ASSIGNED GROUP_ROSTER_UPDATE", function(unit)
+	local unitRole = UnitGroupRolesAssigned(unit .. "target")
+	return unitRole and roleIconsBlizz[unitRole] or ""
+end)
+E:AddTagInfo("mMT-role:target:icon:blizz", mMT.NameShort .. " " .. L["Miscellaneous"], L["Returns the role icon of the unit (Tank, Healer, DPS)."])
+
+E:AddTag("mMT-level", "UNIT_LEVEL PLAYER_LEVEL_UP PLAYER_UPDATE_RESTING", function(unit)
+	if unit == "player" and IsResting() then
+		return colors.resting:WrapTextInColorCode("Zzz")
+	else
+		local level = UnitLevel(unit)
+		if UnitIsWildBattlePet(unit) then
+			return UnitBattlePetLevel(unit)
+		elseif level > 0 then
+			return level
+		else
+			return colors.worldboss:WrapTextInColorCode("??")
+		end
+	end
+end)
+E:AddTagInfo("mMT-level", mMT.NameShort .. " " .. L["Level"], L["Returns the level of the unit. If the unit is at max level. If the player is resting, it will return a Zzz."])
+
+E:AddTag("mMT-level:smart", "UNIT_LEVEL PLAYER_LEVEL_UP PLAYER_UPDATE_RESTING", function(unit)
+	if unit == "player" and IsResting() then
+		return colors.resting:WrapTextInColorCode("Zzz")
+	else
+		local level = UnitEffectiveLevel(unit)
+		if UnitIsBattlePetCompanion(unit) then
+			return UnitBattlePetLevel(unit)
+		elseif level == UnitEffectiveLevel("player") then
+			return nil
+		elseif level > 0 then
+			return level
+		else
+			return colors.worldboss:WrapTextInColorCode("??")
+		end
+	end
+end)
+E:AddTagInfo(
+	"mMT-level:smart",
+	mMT.NameShort .. " " .. L["Level"],
+	L["Returns the level of the unit. If the unit is at max level or the same level as you, it will return nothing. If the player is resting, it will return a Zzz."]
+)
+
+E:AddTag("mMT-pvp", "UNIT_FACTION", function(unit)
+	local factionGroup = UnitFactionGroup(unit)
+	if (UnitIsPVP(unit)) and (factionGroup == "Horde" or factionGroup == "Alliance") then return E:TextureString(icons[db.misc.pvp], ":14:14") end
+end)
+E:AddTagInfo("mMT-pvp", mMT.NameShort .. " " .. L["Miscellaneous"], L["Returns a PvP icon if the unit is flagged for PvP and belongs to either the Horde or Alliance faction."])
+
+E:AddTag("mMT-faction", "UNIT_FACTION", function(unit)
+	local data = GetFactionData(unit)
+	if data and (data[2] == "Horde" or data[2] == "Alliance") then return data[2] end
+end)
+E:AddTagInfo("mMT-faction", mMT.NameShort .. " " .. L["Miscellaneous"], L["Returns the faction of the unit (Horde or Alliance)."])
+
+E:AddTag("mMT-faction:icon", "UNIT_FACTION", function(unit)
+	local data = GetFactionData(unit)
+	return data and data[1]
+end)
+E:AddTagInfo("mMT-faction:icon", mMT.NameShort .. " " .. L["Miscellaneous"], L["Returns the faction icon of the unit (Horde or Alliance)."])
+
+E:AddTag("mMT-faction:opposite", "UNIT_FACTION", function(unit)
+	local data = GetFactionData(unit)
+	local factionPlayer = UnitFactionGroup("Player")
+	if data and (data[2] == "Horde" or data[2] == "Alliance") and data[2] ~= factionPlayer then return data[2] end
+end)
+E:AddTagInfo("mMT-faction:opposite", mMT.NameShort .. " " .. L["Miscellaneous"], L["Returns the faction of the unit (Horde or Alliance), but only if it's the opposite faction of the player."])
+
+E:AddTag("mMT-faction:icon:opposite", "UNIT_FACTION", function(unit)
+	local data = GetFactionData(unit)
+	local factionPlayer = UnitFactionGroup("Player")
+	if data and (data[2] == "Horde" or data[2] == "Alliance") and data[2] ~= factionPlayer then return data[1] end
+end)
+E:AddTagInfo("mMT-faction:icon:opposite", mMT.NameShort .. " " .. L["Miscellaneous"], L["Returns the faction icon of the unit (Horde or Alliance), but only if it's the opposite faction of the player."])
+
+E:AddTag("mMT-power", "UNIT_DISPLAYPOWER UNIT_POWER_FREQUENT UNIT_MAXPOWER PLAYER_ROLES_ASSIGNED GROUP_ROSTER_UPDATE UNIT_COMBAT", function(unit)
+	if UnitAffectingCombat(unit) then return _TAGS.perpp(unit) end
+end)
+E:AddTagInfo("mMT-power", mMT.NameShort .. " " .. L["Power"], L["Returns the current power percent of the unit, but only while in combat."])
+
+E:AddTag("mMT-questicon", "QUEST_LOG_UPDATE", function(unit)
+	if UnitIsPlayer(unit) then return end
+	local isQuest = E.TagFunctions.GetQuestData(unit, "title", "FFFFFFFF")
+	if isQuest then
+		local icon = icons[db.misc.quest]
+		local color = GetColorString(colors.quest)
+		return (color and icon) and "|T" .. icon .. ":16:16:0:0:16:16:0:16:0:16" .. color
+	end
+end)
+E:AddTagInfo("mMT-questicon", mMT.NameShort .. " " .. L["Miscellaneous"], L["Returns a quest icon if the unit is a quest mob."])
+
 -- CLASS ICONS
 do
 	local classIconNames = {}
@@ -183,7 +419,7 @@ do
 	end
 
 	for style, _ in next, classIconNames do
-		local tag = format("%s:%s", "mClassIcon", style)
+		local tag = format("%s:%s", "mMT-classicons", style)
 		E:AddTag(tag, "UNIT_NAME_UPDATE", function(unit, _, args)
 			if not (UnitIsPlayer(unit) or (E.Retail and UnitInPartyIsAI(unit))) then return end
 
@@ -208,13 +444,13 @@ function module:Initialize()
 	roleColors = {
 		TANK = colors.tank,
 		HEALER = colors.healer,
-		DPS = colors.dps,
+		DAMAGER = colors.dps,
 	}
 
 	roleIcons = {
-		TANK = db.misc.tank,
-		HEALER = db.misc.healer,
-		DPS = db.misc.dps,
+		TANK = icons[db.misc.tank],
+		HEALER = icons[db.misc.healer],
+		DAMAGER = icons[db.misc.dps],
 	}
 
 	classificationsIcons = {
@@ -224,12 +460,11 @@ function module:Initialize()
 		worldboss = icons[db.classification.worldboss],
 	}
 
-    statusDefinitions.AFK.icon = icons[db.status.afk]
+	statusDefinitions.AFK.icon = icons[db.status.afk]
 	statusDefinitions.DND.icon = icons[db.status.dnd]
 	statusDefinitions.Offline.icon = icons[db.status.dc]
 	statusDefinitions.Dead.icon = icons[db.status.dead]
 	statusDefinitions.Ghost.icon = icons[db.status.ghost]
-
 
 	if not module.initialized then
 		module:RegisterEvent("PLAYER_ENTERING_WORLD")
@@ -238,22 +473,22 @@ function module:Initialize()
 	end
 end
 
-function module:PLAYER_ENTERING_WORLD(_, text)
+function module:PLAYER_ENTERING_WORLD()
 	db = E.db.mMediaTag.tags
 
 	roleColors = {
 		TANK = colors.tank,
 		HEALER = colors.healer,
-		DPS = colors.dps,
+		DAMAGER = colors.dps,
 	}
 
 	roleIcons = {
-		TANK = db.misc.tank,
-		HEALER = db.misc.healer,
-		DPS = db.misc.dps,
+		TANK = icons[db.misc.tank],
+		HEALER = icons[db.misc.healer],
+		DAMAGER = icons[db.misc.dps],
 	}
 end
 
-function module:UPDATE_INSTANCE_INFO(_, text)
-	--TagDeathCount()
+function module:UPDATE_INSTANCE_INFO()
+	TagDeathCount()
 end

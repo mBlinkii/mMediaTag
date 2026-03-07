@@ -12,56 +12,56 @@ local function BuildIconsDB()
 end
 
 mMT.options.args.tags.args = {
-	general = {
-		order = 1,
-		type = "group",
-		inline = false,
-		name = L["General"],
-		args = {
-			healthThreshold = {
-				order = 1,
-				type = "group",
-				inline = true,
-				name = L["Classification"],
-				args = {
-					healthThreshold1 = {
-						order = 1,
-						name = L["Health trashhold 1"],
-						desc = L["Set the first health trashhold."],
-						type = "range",
-						min = 25,
-						max = 100,
-						step = 1,
-						get = function(info)
-							return E.db.mMediaTag.tags.healthThreshold1
-						end,
-						set = function(info, value)
-							E.db.mMediaTag.tags.healthThreshold1 = value
-							M.TAGs:Initialize()
-						end,
-					},
-					healthThreshold2 = {
-						order = 1,
-						name = L["Health trashhold 2"],
-						desc = L["Set the second health trashhold."],
-						type = "range",
-						min = 0,
-						max = 50,
-						step = 1,
-						get = function(info)
-							return E.db.mMediaTag.tags.healthThreshold2
-						end,
-						set = function(info, value)
-							E.db.mMediaTag.tags.healthThreshold2 = value
-							M.TAGs:Initialize()
-						end,
-					},
-				},
-			},
-		},
-	},
+	-- general = {
+	-- 	order = 1,
+	-- 	type = "group",
+	-- 	inline = false,
+	-- 	name = L["General"],
+	-- 	args = {
+	-- 		healthThreshold = {
+	-- 			order = 1,
+	-- 			type = "group",
+	-- 			inline = true,
+	-- 			name = L["Classification"],
+	-- 			args = {
+	-- 				healthThreshold1 = {
+	-- 					order = 1,
+	-- 					name = L["Health trashhold 1"],
+	-- 					desc = L["Set the first health trashhold."],
+	-- 					type = "range",
+	-- 					min = 25,
+	-- 					max = 100,
+	-- 					step = 1,
+	-- 					get = function(info)
+	-- 						return E.db.mMediaTag.tags.healthThreshold1
+	-- 					end,
+	-- 					set = function(info, value)
+	-- 						E.db.mMediaTag.tags.healthThreshold1 = value
+	-- 						M.TAGs:Initialize()
+	-- 					end,
+	-- 				},
+	-- 				healthThreshold2 = {
+	-- 					order = 1,
+	-- 					name = L["Health trashhold 2"],
+	-- 					desc = L["Set the second health trashhold."],
+	-- 					type = "range",
+	-- 					min = 0,
+	-- 					max = 50,
+	-- 					step = 1,
+	-- 					get = function(info)
+	-- 						return E.db.mMediaTag.tags.healthThreshold2
+	-- 					end,
+	-- 					set = function(info, value)
+	-- 						E.db.mMediaTag.tags.healthThreshold2 = value
+	-- 						M.TAGs:Initialize()
+	-- 					end,
+	-- 				},
+	-- 			},
+	-- 		},
+	-- 	},
+	-- },
 	classification = {
-		order = 2,
+		order = 1,
 		type = "group",
 		inline = false,
 		name = L["Classification"],
@@ -221,7 +221,7 @@ mMT.options.args.tags.args = {
 		},
 	},
 	status = {
-		order = 3,
+		order = 2,
 		type = "group",
 		inline = false,
 		name = L["Status"],
@@ -419,7 +419,7 @@ mMT.options.args.tags.args = {
 		},
 	},
 	misc = {
-		order = 4,
+		order = 3,
 		type = "group",
 		inline = false,
 		name = L["Misc"],
@@ -628,341 +628,341 @@ mMT.options.args.tags.args = {
 							},
 						},
 					},
-					targeting = {
-						order = 3,
-						type = "group",
-						inline = true,
-						name = L["Targeting Players"],
-						args = {
-							icon = {
-								order = 1,
-								type = "select",
-								name = L["Icon"],
-								get = function(info)
-									return E.db.mMediaTag.tags.misc.targeting
-								end,
-								set = function(info, value)
-									E.db.mMediaTag.tags.misc.targeting = value
-									M.TAGs:Initialize()
-								end,
-								values = BuildIconsDB,
-							},
-						},
-					},
+					-- targeting = {
+					-- 	order = 3,
+					-- 	type = "group",
+					-- 	inline = true,
+					-- 	name = L["Targeting Players"],
+					-- 	args = {
+					-- 		icon = {
+					-- 			order = 1,
+					-- 			type = "select",
+					-- 			name = L["Icon"],
+					-- 			get = function(info)
+					-- 				return E.db.mMediaTag.tags.misc.targeting
+					-- 			end,
+					-- 			set = function(info, value)
+					-- 				E.db.mMediaTag.tags.misc.targeting = value
+					-- 				M.TAGs:Initialize()
+					-- 			end,
+					-- 			values = BuildIconsDB,
+					-- 		},
+					-- 	},
+					-- },
 				},
 			},
 		},
 	},
-	raidtargetmarkers = {
-		order = 5,
-		type = "group",
-		inline = false,
-		name = L["Raidtarget Markers"],
-		args = {
-			star = {
-				order = 1,
-				type = "group",
-				inline = true,
-				name = L["Star"],
-				args = {
-					icon = {
-						order = 1,
-						type = "select",
-						name = L["Icon"],
-						get = function(info)
-							return E.db.mMediaTag.tags.raidtargetmarkers[1]
-						end,
-						set = function(info, value)
-							E.db.mMediaTag.tags.raidtargetmarkers[1] = value
-							M.TAGs:Initialize()
-						end,
-						values = BuildIconsDB,
-					},
-					color = {
-						type = "color",
-						order = 2,
-						name = L["Color"],
-						hasAlpha = false,
-						get = function(info)
-							local r, g, b = mMT:HexToRGB(E.db.mMediaTag.color.tags.raidtargetmarkers[1])
-							return r, g, b
-						end,
-						set = function(info, r, g, b)
-							local hex = E:RGBToHex(r, g, b, "ff")
-							E.db.mMediaTag.color.tags.raidtargetmarkers[1] = hex
-							MEDIA.color.tags.raidtargetmarkers[1]= CreateColorFromHexString(hex)
-							MEDIA.color.tags.raidtargetmarkers[1].hex = hex
-							M.TAGs:Initialize()
-						end,
-					},
-				},
-			},
-			circle = {
-				order = 2,
-				type = "group",
-				inline = true,
-				name = L["Circle"],
-				args = {
-					icon = {
-						order = 1,
-						type = "select",
-						name = L["Icon"],
-						get = function(info)
-							return E.db.mMediaTag.tags.raidtargetmarkers[2]
-						end,
-						set = function(info, value)
-							E.db.mMediaTag.tags.raidtargetmarkers[2] = value
-							M.TAGs:Initialize()
-						end,
-						values = BuildIconsDB,
-					},
-					color = {
-						type = "color",
-						order = 2,
-						name = L["Color"],
-						hasAlpha = false,
-						get = function(info)
-							local r, g, b = mMT:HexToRGB(E.db.mMediaTag.color.tags.raidtargetmarkers[2])
-							return r, g, b
-						end,
-						set = function(info, r, g, b)
-							local hex = E:RGBToHex(r, g, b, "ff")
-							E.db.mMediaTag.color.tags.raidtargetmarkers[2] = hex
-							MEDIA.color.tags.raidtargetmarkers[2]= CreateColorFromHexString(hex)
-							MEDIA.color.tags.raidtargetmarkers[2].hex = hex
-							M.TAGs:Initialize()
-						end,
-					},
-				},
-			},
-			diamond = {
-				order = 3,
-				type = "group",
-				inline = true,
-				name = L["Diamond"],
-				args = {
-					icon = {
-						order = 1,
-						type = "select",
-						name = L["Icon"],
-						get = function(info)
-							return E.db.mMediaTag.tags.raidtargetmarkers[3]
-						end,
-						set = function(info, value)
-							E.db.mMediaTag.tags.raidtargetmarkers[3] = value
-							M.TAGs:Initialize()
-						end,
-						values = BuildIconsDB,
-					},
-					color = {
-						type = "color",
-						order = 2,
-						name = L["Color"],
-						hasAlpha = false,
-						get = function(info)
-							local r, g, b = mMT:HexToRGB(E.db.mMediaTag.color.tags.raidtargetmarkers[3])
-							return r, g, b
-						end,
-						set = function(info, r, g, b)
-							local hex = E:RGBToHex(r, g, b, "ff")
-							E.db.mMediaTag.color.tags.raidtargetmarkers[3] = hex
-							MEDIA.color.tags.raidtargetmarkers[3]= CreateColorFromHexString(hex)
-							MEDIA.color.tags.raidtargetmarkers[3].hex = hex
-							M.TAGs:Initialize()
-						end,
-					},
-				},
-			},
-			triangle = {
-				order = 4,
-				type = "group",
-				inline = true,
-				name = L["Triangle"],
-				args = {
-					icon = {
-						order = 1,
-						type = "select",
-						name = L["Icon"],
-						get = function(info)
-							return E.db.mMediaTag.tags.raidtargetmarkers[4]
-						end,
-						set = function(info, value)
-							E.db.mMediaTag.tags.raidtargetmarkers[4] = value
-							M.TAGs:Initialize()
-						end,
-						values = BuildIconsDB,
-					},
-					color = {
-						type = "color",
-						order = 2,
-						name = L["Color"],
-						hasAlpha = false,
-						get = function(info)
-							local r, g, b = mMT:HexToRGB(E.db.mMediaTag.color.tags.raidtargetmarkers[4])
-							return r, g, b
-						end,
-						set = function(info, r, g, b)
-							local hex = E:RGBToHex(r, g, b, "ff")
-							E.db.mMediaTag.color.tags.raidtargetmarkers[4] = hex
-							MEDIA.color.tags.raidtargetmarkers[4]= CreateColorFromHexString(hex)
-							MEDIA.color.tags.raidtargetmarkers[4].hex = hex
-							M.TAGs:Initialize()
-						end,
-					},
-				},
-			},
-			moon = {
-				order = 5,
-				type = "group",
-				inline = true,
-				name = L["Moon"],
-				args = {
-					icon = {
-						order = 1,
-						type = "select",
-						name = L["Icon"],
-						get = function(info)
-							return E.db.mMediaTag.tags.raidtargetmarkers[5]
-						end,
-						set = function(info, value)
-							E.db.mMediaTag.tags.raidtargetmarkers[5] = value
-							M.TAGs:Initialize()
-						end,
-						values = BuildIconsDB,
-					},
-					color = {
-						type = "color",
-						order = 2,
-						name = L["Color"],
-						hasAlpha = false,
-						get = function(info)
-							local r, g, b = mMT:HexToRGB(E.db.mMediaTag.color.tags.raidtargetmarkers[5])
-							return r, g, b
-						end,
-						set = function(info, r, g, b)
-							local hex = E:RGBToHex(r, g, b, "ff")
-							E.db.mMediaTag.color.tags.raidtargetmarkers[5] = hex
-							MEDIA.color.tags.raidtargetmarkers[5]= CreateColorFromHexString(hex)
-							MEDIA.color.tags.raidtargetmarkers[5].hex = hex
-							M.TAGs:Initialize()
-						end,
-					},
-				},
-			},
-			square = {
-				order = 6,
-				type = "group",
-				inline = true,
-				name = L["Square"],
-				args = {
-					icon = {
-						order = 1,
-						type = "select",
-						name = L["Icon"],
-						get = function(info)
-							return E.db.mMediaTag.tags.raidtargetmarkers[6]
-						end,
-						set = function(info, value)
-							E.db.mMediaTag.tags.raidtargetmarkers[6] = value
-							M.TAGs:Initialize()
-						end,
-						values = BuildIconsDB,
-					},
-					color = {
-						type = "color",
-						order = 2,
-						name = L["Color"],
-						hasAlpha = false,
-						get = function(info)
-							local r, g, b = mMT:HexToRGB(E.db.mMediaTag.color.tags.raidtargetmarkers[6])
-							return r, g, b
-						end,
-						set = function(info, r, g, b)
-							local hex = E:RGBToHex(r, g, b, "ff")
-							E.db.mMediaTag.color.tags.raidtargetmarkers[6] = hex
-							MEDIA.color.tags.raidtargetmarkers[6]= CreateColorFromHexString(hex)
-							MEDIA.color.tags.raidtargetmarkers[6].hex = hex
-							M.TAGs:Initialize()
-						end,
-					},
-				},
-			},
-			cross = {
-				order = 7,
-				type = "group",
-				inline = true,
-				name = L["Cross"],
-				args = {
-					icon = {
-						order = 1,
-						type = "select",
-						name = L["Icon"],
-						get = function(info)
-							return E.db.mMediaTag.tags.raidtargetmarkers[7]
-						end,
-						set = function(info, value)
-							E.db.mMediaTag.tags.raidtargetmarkers[7] = value
-							M.TAGs:Initialize()
-						end,
-						values = BuildIconsDB,
-					},
-					color = {
-						type = "color",
-						order = 2,
-						name = L["Color"],
-						hasAlpha = false,
-						get = function(info)
-							local r, g, b = mMT:HexToRGB(E.db.mMediaTag.color.tags.raidtargetmarkers[7])
-							return r, g, b
-						end,
-						set = function(info, r, g, b)
-							local hex = E:RGBToHex(r, g, b, "ff")
-							E.db.mMediaTag.color.tags.raidtargetmarkers[7] = hex
-							MEDIA.color.tags.raidtargetmarkers[7]= CreateColorFromHexString(hex)
-							MEDIA.color.tags.raidtargetmarkers[7].hex = hex
-							M.TAGs:Initialize()
-						end,
-					},
-				},
-			},
-			skull= {
-				order = 8,
-				type = "group",
-				inline = true,
-				name = L["Skull"],
-				args = {
-					icon = {
-						order = 1,
-						type = "select",
-						name = L["Icon"],
-						get = function(info)
-							return E.db.mMediaTag.tags.raidtargetmarkers[8]
-						end,
-						set = function(info, value)
-							E.db.mMediaTag.tags.raidtargetmarkers[8] = value
-							M.TAGs:Initialize()
-						end,
-						values = BuildIconsDB,
-					},
-					color = {
-						type = "color",
-						order = 2,
-						name = L["Color"],
-						hasAlpha = false,
-						get = function(info)
-							local r, g, b = mMT:HexToRGB(E.db.mMediaTag.color.tags.raidtargetmarkers[8])
-							return r, g, b
-						end,
-						set = function(info, r, g, b)
-							local hex = E:RGBToHex(r, g, b, "ff")
-							E.db.mMediaTag.color.tags.raidtargetmarkers[8] = hex
-							MEDIA.color.tags.raidtargetmarkers[8]= CreateColorFromHexString(hex)
-							MEDIA.color.tags.raidtargetmarkers[8].hex = hex
-							M.TAGs:Initialize()
-						end,
-					},
-				},
-			},
-		},
-	},
+	-- raidtargetmarkers = {
+	-- 	order = 5,
+	-- 	type = "group",
+	-- 	inline = false,
+	-- 	name = L["Raidtarget Markers"],
+	-- 	args = {
+	-- 		star = {
+	-- 			order = 1,
+	-- 			type = "group",
+	-- 			inline = true,
+	-- 			name = L["Star"],
+	-- 			args = {
+	-- 				icon = {
+	-- 					order = 1,
+	-- 					type = "select",
+	-- 					name = L["Icon"],
+	-- 					get = function(info)
+	-- 						return E.db.mMediaTag.tags.raidtargetmarkers[1]
+	-- 					end,
+	-- 					set = function(info, value)
+	-- 						E.db.mMediaTag.tags.raidtargetmarkers[1] = value
+	-- 						M.TAGs:Initialize()
+	-- 					end,
+	-- 					values = BuildIconsDB,
+	-- 				},
+	-- 				color = {
+	-- 					type = "color",
+	-- 					order = 2,
+	-- 					name = L["Color"],
+	-- 					hasAlpha = false,
+	-- 					get = function(info)
+	-- 						local r, g, b = mMT:HexToRGB(E.db.mMediaTag.color.tags.raidtargetmarkers[1])
+	-- 						return r, g, b
+	-- 					end,
+	-- 					set = function(info, r, g, b)
+	-- 						local hex = E:RGBToHex(r, g, b, "ff")
+	-- 						E.db.mMediaTag.color.tags.raidtargetmarkers[1] = hex
+	-- 						MEDIA.color.tags.raidtargetmarkers[1]= CreateColorFromHexString(hex)
+	-- 						MEDIA.color.tags.raidtargetmarkers[1].hex = hex
+	-- 						M.TAGs:Initialize()
+	-- 					end,
+	-- 				},
+	-- 			},
+	-- 		},
+	-- 		circle = {
+	-- 			order = 2,
+	-- 			type = "group",
+	-- 			inline = true,
+	-- 			name = L["Circle"],
+	-- 			args = {
+	-- 				icon = {
+	-- 					order = 1,
+	-- 					type = "select",
+	-- 					name = L["Icon"],
+	-- 					get = function(info)
+	-- 						return E.db.mMediaTag.tags.raidtargetmarkers[2]
+	-- 					end,
+	-- 					set = function(info, value)
+	-- 						E.db.mMediaTag.tags.raidtargetmarkers[2] = value
+	-- 						M.TAGs:Initialize()
+	-- 					end,
+	-- 					values = BuildIconsDB,
+	-- 				},
+	-- 				color = {
+	-- 					type = "color",
+	-- 					order = 2,
+	-- 					name = L["Color"],
+	-- 					hasAlpha = false,
+	-- 					get = function(info)
+	-- 						local r, g, b = mMT:HexToRGB(E.db.mMediaTag.color.tags.raidtargetmarkers[2])
+	-- 						return r, g, b
+	-- 					end,
+	-- 					set = function(info, r, g, b)
+	-- 						local hex = E:RGBToHex(r, g, b, "ff")
+	-- 						E.db.mMediaTag.color.tags.raidtargetmarkers[2] = hex
+	-- 						MEDIA.color.tags.raidtargetmarkers[2]= CreateColorFromHexString(hex)
+	-- 						MEDIA.color.tags.raidtargetmarkers[2].hex = hex
+	-- 						M.TAGs:Initialize()
+	-- 					end,
+	-- 				},
+	-- 			},
+	-- 		},
+	-- 		diamond = {
+	-- 			order = 3,
+	-- 			type = "group",
+	-- 			inline = true,
+	-- 			name = L["Diamond"],
+	-- 			args = {
+	-- 				icon = {
+	-- 					order = 1,
+	-- 					type = "select",
+	-- 					name = L["Icon"],
+	-- 					get = function(info)
+	-- 						return E.db.mMediaTag.tags.raidtargetmarkers[3]
+	-- 					end,
+	-- 					set = function(info, value)
+	-- 						E.db.mMediaTag.tags.raidtargetmarkers[3] = value
+	-- 						M.TAGs:Initialize()
+	-- 					end,
+	-- 					values = BuildIconsDB,
+	-- 				},
+	-- 				color = {
+	-- 					type = "color",
+	-- 					order = 2,
+	-- 					name = L["Color"],
+	-- 					hasAlpha = false,
+	-- 					get = function(info)
+	-- 						local r, g, b = mMT:HexToRGB(E.db.mMediaTag.color.tags.raidtargetmarkers[3])
+	-- 						return r, g, b
+	-- 					end,
+	-- 					set = function(info, r, g, b)
+	-- 						local hex = E:RGBToHex(r, g, b, "ff")
+	-- 						E.db.mMediaTag.color.tags.raidtargetmarkers[3] = hex
+	-- 						MEDIA.color.tags.raidtargetmarkers[3]= CreateColorFromHexString(hex)
+	-- 						MEDIA.color.tags.raidtargetmarkers[3].hex = hex
+	-- 						M.TAGs:Initialize()
+	-- 					end,
+	-- 				},
+	-- 			},
+	-- 		},
+	-- 		triangle = {
+	-- 			order = 4,
+	-- 			type = "group",
+	-- 			inline = true,
+	-- 			name = L["Triangle"],
+	-- 			args = {
+	-- 				icon = {
+	-- 					order = 1,
+	-- 					type = "select",
+	-- 					name = L["Icon"],
+	-- 					get = function(info)
+	-- 						return E.db.mMediaTag.tags.raidtargetmarkers[4]
+	-- 					end,
+	-- 					set = function(info, value)
+	-- 						E.db.mMediaTag.tags.raidtargetmarkers[4] = value
+	-- 						M.TAGs:Initialize()
+	-- 					end,
+	-- 					values = BuildIconsDB,
+	-- 				},
+	-- 				color = {
+	-- 					type = "color",
+	-- 					order = 2,
+	-- 					name = L["Color"],
+	-- 					hasAlpha = false,
+	-- 					get = function(info)
+	-- 						local r, g, b = mMT:HexToRGB(E.db.mMediaTag.color.tags.raidtargetmarkers[4])
+	-- 						return r, g, b
+	-- 					end,
+	-- 					set = function(info, r, g, b)
+	-- 						local hex = E:RGBToHex(r, g, b, "ff")
+	-- 						E.db.mMediaTag.color.tags.raidtargetmarkers[4] = hex
+	-- 						MEDIA.color.tags.raidtargetmarkers[4]= CreateColorFromHexString(hex)
+	-- 						MEDIA.color.tags.raidtargetmarkers[4].hex = hex
+	-- 						M.TAGs:Initialize()
+	-- 					end,
+	-- 				},
+	-- 			},
+	-- 		},
+	-- 		moon = {
+	-- 			order = 5,
+	-- 			type = "group",
+	-- 			inline = true,
+	-- 			name = L["Moon"],
+	-- 			args = {
+	-- 				icon = {
+	-- 					order = 1,
+	-- 					type = "select",
+	-- 					name = L["Icon"],
+	-- 					get = function(info)
+	-- 						return E.db.mMediaTag.tags.raidtargetmarkers[5]
+	-- 					end,
+	-- 					set = function(info, value)
+	-- 						E.db.mMediaTag.tags.raidtargetmarkers[5] = value
+	-- 						M.TAGs:Initialize()
+	-- 					end,
+	-- 					values = BuildIconsDB,
+	-- 				},
+	-- 				color = {
+	-- 					type = "color",
+	-- 					order = 2,
+	-- 					name = L["Color"],
+	-- 					hasAlpha = false,
+	-- 					get = function(info)
+	-- 						local r, g, b = mMT:HexToRGB(E.db.mMediaTag.color.tags.raidtargetmarkers[5])
+	-- 						return r, g, b
+	-- 					end,
+	-- 					set = function(info, r, g, b)
+	-- 						local hex = E:RGBToHex(r, g, b, "ff")
+	-- 						E.db.mMediaTag.color.tags.raidtargetmarkers[5] = hex
+	-- 						MEDIA.color.tags.raidtargetmarkers[5]= CreateColorFromHexString(hex)
+	-- 						MEDIA.color.tags.raidtargetmarkers[5].hex = hex
+	-- 						M.TAGs:Initialize()
+	-- 					end,
+	-- 				},
+	-- 			},
+	-- 		},
+	-- 		square = {
+	-- 			order = 6,
+	-- 			type = "group",
+	-- 			inline = true,
+	-- 			name = L["Square"],
+	-- 			args = {
+	-- 				icon = {
+	-- 					order = 1,
+	-- 					type = "select",
+	-- 					name = L["Icon"],
+	-- 					get = function(info)
+	-- 						return E.db.mMediaTag.tags.raidtargetmarkers[6]
+	-- 					end,
+	-- 					set = function(info, value)
+	-- 						E.db.mMediaTag.tags.raidtargetmarkers[6] = value
+	-- 						M.TAGs:Initialize()
+	-- 					end,
+	-- 					values = BuildIconsDB,
+	-- 				},
+	-- 				color = {
+	-- 					type = "color",
+	-- 					order = 2,
+	-- 					name = L["Color"],
+	-- 					hasAlpha = false,
+	-- 					get = function(info)
+	-- 						local r, g, b = mMT:HexToRGB(E.db.mMediaTag.color.tags.raidtargetmarkers[6])
+	-- 						return r, g, b
+	-- 					end,
+	-- 					set = function(info, r, g, b)
+	-- 						local hex = E:RGBToHex(r, g, b, "ff")
+	-- 						E.db.mMediaTag.color.tags.raidtargetmarkers[6] = hex
+	-- 						MEDIA.color.tags.raidtargetmarkers[6]= CreateColorFromHexString(hex)
+	-- 						MEDIA.color.tags.raidtargetmarkers[6].hex = hex
+	-- 						M.TAGs:Initialize()
+	-- 					end,
+	-- 				},
+	-- 			},
+	-- 		},
+	-- 		cross = {
+	-- 			order = 7,
+	-- 			type = "group",
+	-- 			inline = true,
+	-- 			name = L["Cross"],
+	-- 			args = {
+	-- 				icon = {
+	-- 					order = 1,
+	-- 					type = "select",
+	-- 					name = L["Icon"],
+	-- 					get = function(info)
+	-- 						return E.db.mMediaTag.tags.raidtargetmarkers[7]
+	-- 					end,
+	-- 					set = function(info, value)
+	-- 						E.db.mMediaTag.tags.raidtargetmarkers[7] = value
+	-- 						M.TAGs:Initialize()
+	-- 					end,
+	-- 					values = BuildIconsDB,
+	-- 				},
+	-- 				color = {
+	-- 					type = "color",
+	-- 					order = 2,
+	-- 					name = L["Color"],
+	-- 					hasAlpha = false,
+	-- 					get = function(info)
+	-- 						local r, g, b = mMT:HexToRGB(E.db.mMediaTag.color.tags.raidtargetmarkers[7])
+	-- 						return r, g, b
+	-- 					end,
+	-- 					set = function(info, r, g, b)
+	-- 						local hex = E:RGBToHex(r, g, b, "ff")
+	-- 						E.db.mMediaTag.color.tags.raidtargetmarkers[7] = hex
+	-- 						MEDIA.color.tags.raidtargetmarkers[7]= CreateColorFromHexString(hex)
+	-- 						MEDIA.color.tags.raidtargetmarkers[7].hex = hex
+	-- 						M.TAGs:Initialize()
+	-- 					end,
+	-- 				},
+	-- 			},
+	-- 		},
+	-- 		skull= {
+	-- 			order = 8,
+	-- 			type = "group",
+	-- 			inline = true,
+	-- 			name = L["Skull"],
+	-- 			args = {
+	-- 				icon = {
+	-- 					order = 1,
+	-- 					type = "select",
+	-- 					name = L["Icon"],
+	-- 					get = function(info)
+	-- 						return E.db.mMediaTag.tags.raidtargetmarkers[8]
+	-- 					end,
+	-- 					set = function(info, value)
+	-- 						E.db.mMediaTag.tags.raidtargetmarkers[8] = value
+	-- 						M.TAGs:Initialize()
+	-- 					end,
+	-- 					values = BuildIconsDB,
+	-- 				},
+	-- 				color = {
+	-- 					type = "color",
+	-- 					order = 2,
+	-- 					name = L["Color"],
+	-- 					hasAlpha = false,
+	-- 					get = function(info)
+	-- 						local r, g, b = mMT:HexToRGB(E.db.mMediaTag.color.tags.raidtargetmarkers[8])
+	-- 						return r, g, b
+	-- 					end,
+	-- 					set = function(info, r, g, b)
+	-- 						local hex = E:RGBToHex(r, g, b, "ff")
+	-- 						E.db.mMediaTag.color.tags.raidtargetmarkers[8] = hex
+	-- 						MEDIA.color.tags.raidtargetmarkers[8]= CreateColorFromHexString(hex)
+	-- 						MEDIA.color.tags.raidtargetmarkers[8].hex = hex
+	-- 						M.TAGs:Initialize()
+	-- 					end,
+	-- 				},
+	-- 			},
+	-- 		},
+	-- 	},
+	-- },
 }
