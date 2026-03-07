@@ -344,6 +344,9 @@ function module:UpdateSize(element, size, point)
 
 		local scale = module.db.misc.scale
 		element.unit_portrait:SetScale(scale)
+
+		if element.db.strata ~= "AUTO" then element:SetFrameStrata(element.db.strata) end
+		element:SetFrameLevel(element.db.level)
 	end
 end
 
