@@ -186,9 +186,9 @@ local function OnPlateAdded(_, unitToken)
 end
 
 local function OnUnitDied(_, unitToken)
-	if not unitToken then return end
+	if not unitToken or E:IsSecretValue(unitToken) then return end
 
-	if strfind(unitToken, "Creature", 1, true) or strfind(unitToken, "Player-", 1, true) or strfind(unitToken, "Vehicle", 1, true) then
+	if  strfind(unitToken, "Creature", 1, true) or strfind(unitToken, "Player-", 1, true) or strfind(unitToken, "Vehicle", 1, true) then
 		local guid = unitToken
 		for nameplateFrame in pairs(NP.Plates) do
 			if nameplateFrame.unit and UnitGUID(nameplateFrame.unit) == guid then
