@@ -82,7 +82,7 @@ local function OnEvent(...)
 
 	if volumeDT and volumeDT ~= "Data Broker" then volumeDT.eventFunc(...) end
 
-	if E.db.mMediaTag.dock.volume.text then
+	if E.db.mMediaTag.dock and E.db.mMediaTag.dock.volume and E.db.mMediaTag.dock.volume.text then
 		if panelText then
 			local pattern, suffix
 			if E.db.mMediaTag.dock.volume.colored then
@@ -98,7 +98,7 @@ local function OnEvent(...)
 		end
 	end
 
-	if E.db.mMediaTag.dock.tooltip and self.mouse_entered then
+	if E.db.mMediaTag.dock and E.db.mMediaTag.dock.tooltip and self.mouse_entered then
 		if volumeDT then volumeDT.onEnter() end
 	end
 end
