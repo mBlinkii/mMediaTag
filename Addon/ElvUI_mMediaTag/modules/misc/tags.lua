@@ -399,7 +399,7 @@ E:AddTagInfo("mMT-power", mMT.NameShort .. " " .. L["Power"], L["Returns the cur
 
 E:AddTag("mMT-questicon", "QUEST_LOG_UPDATE", function(unit)
 	if UnitIsPlayer(unit) then return end
-	local isQuest = E.TagFunctions.GetQuestData(unit, "title", "FFFFFFFF")
+	local isQuest = _TAGS["quest:title"](unit)
 	if isQuest then
 		local icon = icons[db.misc.quest]
 		local color = GetColorString(colors.quest)
