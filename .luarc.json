@@ -19537,5 +19537,6 @@
   ],
   "diagnostics.disable": ["deprecated", "inject-field", "undefined-field",
         "cast-local-type",
-        "param-type-mismatch"]
+        "param-type-mismatch",
+        "unused-function"]
 }

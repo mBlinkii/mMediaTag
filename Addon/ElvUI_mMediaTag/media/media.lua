@@ -156,6 +156,7 @@ MEDIA.color = {
 	nameplates = {
 		focus_color = createColor("FF00FFB3"),
 		target_color = createColor("FFA200FF"),
+		quest_color = createColor("FFFFA500"),
 	},
 }
 
@@ -330,6 +331,7 @@ function mMT:UpdateMedia(arg)
 	if arg == "nameplates" or not arg then
 		MEDIA.color.nameplates.focus_color = CreateColorFromHexString(E.db.mMediaTag.color.nameplates.focus_color)
 		MEDIA.color.nameplates.target_color = CreateColorFromHexString(E.db.mMediaTag.color.nameplates.target_color)
+		MEDIA.color.nameplates.quest_color = CreateColorFromHexString(E.db.mMediaTag.color.nameplates.quest_color)
 	end
 end
 

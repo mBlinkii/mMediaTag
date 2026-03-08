@@ -555,12 +555,20 @@ P.nameplates = {
 	focus = {
 		changeColor = false,
 		changeTexture = false,
+		ignoreThreat = false,
 		texture = "mMediaTag A10",
 	},
 	target = {
 		changeColor = false,
 		changeTexture = false,
+		ignoreThreat = false,
 		texture = "mMediaTag A5",
+	},
+	quest = {
+		changeColor = false,
+		changeTexture = false,
+		ignoreThreat = false,
+		texture = "mMediaTag A7",
 	},
 }
 
@@ -698,5 +706,6 @@ P.color = {
 	nameplates = {
 		focus_color = "FF00FFB3",
 		target_color = "FFA200FF",
+		quest_color = "FFFFA500",
 	},
 }

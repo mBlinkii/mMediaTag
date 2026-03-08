@@ -150,7 +150,7 @@ end
 
 local function Update(self, event, eventUnit)
 	local unit = self.unit or self.__owner.unit
-	print(E.IsSecretValue(unit), E.IsSecretValue(eventUnit)) --- IGNORE ---
+	--print(E.IsSecretValue(unit), E.IsSecretValue(eventUnit)) --- IGNORE ---
 	if not eventUnit or not UnitIsUnit(unit, eventUnit) then return end
 
 	local guid = UnitGUID(unit)

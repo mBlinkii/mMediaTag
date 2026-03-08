@@ -74,9 +74,21 @@ mMT.options.args.nameplates.args.nameplate_tools.args = {
 							if value == false then E:StaticPopup_Show("CONFIG_RL") end
 						end,
 					},
+					threat = {
+						order = 2,
+						type = "toggle",
+						name = L["Ignore Threat"],
+						get = function(info)
+							return E.db.mMediaTag.nameplates.focus.ignoreThreat
+						end,
+						set = function(info, value)
+							E.db.mMediaTag.nameplates.focus.ignoreThreat = value
+							mMT:UpdateModule("NameplateTools")
+						end,
+					},
 					color = {
 						type = "color",
-						order = 2,
+						order = 3,
 						name = L["Color"],
 						hasAlpha = false,
 						get = function(info)
@@ -165,9 +177,21 @@ mMT.options.args.nameplates.args.nameplate_tools.args = {
 							if value == false then E:StaticPopup_Show("CONFIG_RL") end
 						end,
 					},
+					threat = {
+						order = 2,
+						type = "toggle",
+						name = L["Ignore Threat"],
+						get = function(info)
+							return E.db.mMediaTag.nameplates.target.ignoreThreat
+						end,
+						set = function(info, value)
+							E.db.mMediaTag.nameplates.target.ignoreThreat = value
+							mMT:UpdateModule("NameplateTools")
+						end,
+					},
 					color = {
 						type = "color",
-						order = 2,
+						order = 3,
 						name = L["Color"],
 						hasAlpha = false,
 						get = function(info)
@@ -216,6 +240,109 @@ mMT.options.args.nameplates.args.nameplate_tools.args = {
 						end,
 						set = function(info, value)
 							E.db.mMediaTag.nameplates.target.texture = value
+							mMT:UpdateModule("NameplateTools")
+						end,
+					},
+				},
+			},
+		},
+	},
+	quest = {
+		order = 4,
+		type = "group",
+		inline = true,
+		name = L["Highlight Quest"],
+		args = {
+			text = {
+				order = 1,
+				type = "description",
+				fontSize = "medium",
+				name = L["Highlight the quest unit on nameplates."],
+			},
+			color = {
+				order = 2,
+				type = "group",
+				inline = true,
+				name = L["Color"],
+				args = {
+					enable = {
+						order = 1,
+						type = "toggle",
+						name = function()
+							return E.db.mMediaTag.nameplates.quest.changeColor and MEDIA.color.green:WrapTextInColorCode(L["Enabled"]) or MEDIA.color.red:WrapTextInColorCode(L["Disabled"])
+						end,
+						get = function(info)
+							return E.db.mMediaTag.nameplates.quest.changeColor
+						end,
+						set = function(info, value)
+							E.db.mMediaTag.nameplates.quest.changeColor = value
+							mMT:UpdateModule("NameplateTools")
+							if value == false then E:StaticPopup_Show("CONFIG_RL") end
+						end,
+					},
+					threat = {
+						order = 2,
+						type = "toggle",
+						name = L["Ignore Threat"],
+						get = function(info)
+							return E.db.mMediaTag.nameplates.quest.ignoreThreat
+						end,
+						set = function(info, value)
+							E.db.mMediaTag.nameplates.quest.ignoreThreat = value
+							mMT:UpdateModule("NameplateTools")
+						end,
+					},
+					color = {
+						type = "color",
+						order = 3,
+						name = L["Color"],
+						hasAlpha = false,
+						get = function(info)
+							local r, g, b = mMT:HexToRGB(E.db.mMediaTag.color.nameplates.quest_color)
+							return r, g, b
+						end,
+						set = function(info, r, g, b)
+							local hex = E:RGBToHex(r, g, b, "ff")
+							E.db.mMediaTag.color.nameplates.quest_color = hex
+							MEDIA.color.nameplates.quest_color = CreateColorFromHexString(hex)
+							MEDIA.color.nameplates.quest_color.hex = hex
+							mMT:UpdateModule("NameplateTools")
+						end,
+					},
+				},
+			},
+			texture = {
+				order = 3,
+				type = "group",
+				inline = true,
+				name = L["Texture"],
+				args = {
+					enable = {
+						order = 1,
+						type = "toggle",
+						name = function()
+							return E.db.mMediaTag.nameplates.quest.changeTexture and MEDIA.color.green:WrapTextInColorCode(L["Enabled"]) or MEDIA.color.red:WrapTextInColorCode(L["Disabled"])
+						end,
+						get = function(info)
+							return E.db.mMediaTag.nameplates.quest.changeTexture
+						end,
+						set = function(info, value)
+							E.db.mMediaTag.nameplates.quest.changeTexture = value
+							mMT:UpdateModule("NameplateTools")
+							if value == false then E:StaticPopup_Show("CONFIG_RL") end
+						end,
+					},
+					texture = {
+						order = 3,
+						type = "select",
+						dialogControl = "LSM30_Statusbar",
+						name = L["Texture"],
+						values = LSM:HashTable("statusbar"),
+						get = function(info)
+							return E.db.mMediaTag.nameplates.quest.texture
+						end,
+						set = function(info, value)
+							E.db.mMediaTag.nameplates.quest.texture = value
 							mMT:UpdateModule("NameplateTools")
 						end,
 					},
