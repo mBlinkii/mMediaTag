@@ -34,8 +34,8 @@ function module:GetUnitColor(unit, class, isPlayer, isDead)
 
 	if isPlayer then
 		if module.db.misc.force_reaction then
-			local unitFaction = select(1, UnitFactionGroup(unit))
-			playerFaction = playerFaction or select(1, UnitFactionGroup("player"))
+			local unitFaction = UnitFactionGroup(unit)
+			playerFaction = playerFaction or UnitFactionGroup("player")
 
 			local reactionType = (playerFaction == unitFaction) and "friendly" or "enemy"
 			return colors.reaction[reactionType]
@@ -50,42 +50,38 @@ function module:GetUnitColor(unit, class, isPlayer, isDead)
 end
 
 local function UpdateTextureColor(element, unit)
-    local db, e_db = module.db.misc, element.db
-    unit = unit or element.unit
+	local db, e_db = module.db.misc, element.db
+	unit = unit or element.unit
 
-    local color = module:GetUnitColor(unit, element.unitClass, element.isPlayer, false) -- element.isDead)
-    element.color = color
+	local color = module:GetUnitColor(unit, element.unitClass, element.isPlayer, false) -- element.isDead)
+	element.color = color
 
-    if not color then return end
+	if not color then return end
 
-    local primary, secondary = color.c, color.g
-    if e_db.mirror and db.gradient_mode == "HORIZONTAL" then
-        primary, secondary = secondary, primary
-    end
+	local primary, secondary = color.c, color.g
+	if e_db.mirror and db.gradient_mode == "HORIZONTAL" then
+		primary, secondary = secondary, primary
+	end
 
-    local function ApplyColor(target)
-        if not target then return end
-        if db.gradient and not element.media.disable_color then
-            target:SetGradient(db.gradient_mode,
-                { r = primary.r, g = primary.g, b = primary.b, a = primary.a or 1 },
-                { r = secondary.r, g = secondary.g, b = secondary.b, a = secondary.a or 1 }
-            )
-        else
-            local c = db.gradient and { r = 1, g = 1, b = 1, a = 1 } or primary
-            target:SetVertexColor(c.r, c.g, c.b, c.a or 1)
-        end
-    end
+	local function ApplyColor(target)
+		if not target then return end
+		if db.gradient and not element.media.disable_color then
+			target:SetGradient(db.gradient_mode, { r = primary.r, g = primary.g, b = primary.b, a = primary.a or 1 }, { r = secondary.r, g = secondary.g, b = secondary.b, a = secondary.a or 1 })
+		else
+			local c = db.gradient and { r = 1, g = 1, b = 1, a = 1 } or primary
+			target:SetVertexColor(c.r, c.g, c.b, c.a or 1)
+		end
+	end
 
-    ApplyColor(element.texture)
-    ApplyColor(element.embellishment)
+	ApplyColor(element.texture)
+	ApplyColor(element.embellishment)
 
-    local shouldDesaturate = db.desaturate -- element.isDead or db.desaturate
-    if shouldDesaturate ~= element.isDesaturated then
-        element.unit_portrait:SetDesaturated(shouldDesaturate)
-        element.isDesaturated = shouldDesaturate
-    end
+	local shouldDesaturate = db.desaturate -- element.isDead or db.desaturate
+	if shouldDesaturate ~= element.isDesaturated then
+		element.unit_portrait:SetDesaturated(shouldDesaturate)
+		element.isDesaturated = shouldDesaturate
+	end
 end
-
 
 local function GetCastIcon(unit)
 	return select(3, UnitCastingInfo(unit)) or select(3, UnitChannelInfo(unit))
@@ -150,16 +146,13 @@ end
 
 local function Update(self, event, eventUnit)
 	local unit = self.unit or self.__owner.unit
-	--print(E.IsSecretValue(unit), E.IsSecretValue(eventUnit)) --- IGNORE ---
 	if not eventUnit or not UnitIsUnit(unit, eventUnit) then return end
 
 	local guid = UnitGUID(unit)
 	guid = E:IsSecretValue(guid) and " " or guid
 	local isAvailable = UnitIsConnected(unit) and UnitIsVisible(unit)
-	local stateChanged = event == "ForceUpdate" or self.guid ~= guid or self.state ~= isAvailable
-	--local isDead = event == "UNIT_HEALTH" and self.isDead or UnitIsDeadOrGhost(unit)
 
-	if not (stateChanged ) then return end
+	if event ~= "ForceUpdate" and self.guid == guid and self.state == isAvailable then return end
 
 	local class = select(2, UnitClass(unit))
 	local isPlayer = UnitIsPlayer(unit) or (E.Retail and UnitInPartyIsAI(unit))
@@ -407,7 +400,7 @@ local eventHandlers = {
 	UNIT_EXITED_VEHICLE = SimpleUpdate,
 	VEHICLE_UPDATE = SimpleUpdate,
 
-	-- target/ focus updates
+	-- target / focus updates
 	PLAYER_TARGET_CHANGED = SimpleUpdate,
 	PLAYER_FOCUS_CHANGED = SimpleUpdate,
 	UNIT_TARGET = SimpleUpdate,
@@ -421,9 +414,6 @@ local eventHandlers = {
 	ARENA_PREP_OPPONENT_SPECIALIZATIONS = SimpleUpdate,
 	INSTANCE_ENCOUNTER_ENGAGE_UNIT = SimpleUpdate,
 	UPDATE_ACTIVE_BATTLEFIELD = SimpleUpdate,
-
-	-- death updates
-    --UNIT_HEALTH = DeathCheck,
 }
 
 local function OnEvent(self, event, eventUnit, arg)
@@ -540,28 +530,24 @@ function module:Mirror(texture, mirror, texCoords)
 	end
 end
 
-local function SetTexture(texture, file, wrapMode)
-	texture:SetTexture(file, wrapMode, wrapMode, "TRILINEAR")
-end
-
 function module:UpdateTextures(element)
-	SetTexture(element.texture, element.media.texture, "CLAMP")
-	SetTexture(element.mask, element.media.mask, "CLAMPTOBLACKADDITIVE")
+	element.texture:SetTexture(element.media.texture, "CLAMP", "CLAMP", "TRILINEAR")
+	element.mask:SetTexture(element.media.mask, "CLAMPTOBLACKADDITIVE", "CLAMPTOBLACKADDITIVE", "TRILINEAR")
 
 	local mirror = element.db.mirror
 	if element.embellishment then
-		SetTexture(element.embellishment, element.media.embellishment, "CLAMP")
+		element.embellishment:SetTexture(element.media.embellishment, "CLAMP", "CLAMP", "TRILINEAR")
 		module:Mirror(element.embellishment, mirror)
 	end
 
-	if element.extra_mask then SetTexture(element.extra_mask, element.media.extra_mask, "CLAMPTOBLACKADDITIVE") end
-	SetTexture(element.bg, element.media.bg, "CLAMP")
+	if element.extra_mask then element.extra_mask:SetTexture(element.media.extra_mask, "CLAMPTOBLACKADDITIVE", "CLAMPTOBLACKADDITIVE", "TRILINEAR") end
+	element.bg:SetTexture(element.media.bg, "CLAMP", "CLAMP", "TRILINEAR")
 
 	module:Mirror(element.texture, mirror)
 	module:Mirror(element.extra, mirror)
 
 	if element.shadow then
-		SetTexture(element.shadow, element.media.shadow, "CLAMP")
+		element.shadow:SetTexture(element.media.shadow, "CLAMP", "CLAMP", "TRILINEAR")
 		element.shadow:SetAlpha(module.db.shadow.alpha)
 		module:Mirror(element.shadow, mirror)
 	end
