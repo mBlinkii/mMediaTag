@@ -579,6 +579,11 @@ P.role_icons = {
 	dd = "brain",
 }
 
+P.phase_icon = {
+	enable = true,
+	icon = "ankh",
+}
+
 -- color
 P.color = {
 	-- tip/ menu
@@ -714,5 +719,13 @@ P.color = {
 		focus_color = "FF00FFB3",
 		target_color = "FFA200FF",
 		quest_color = "FFFFA500",
+	},
+
+	phase_icon = {
+		Phasing = "FF265FFD",
+		Sharding = "FF74FA4C",
+		WarMode = "FFF73E3E",
+		ChromieTime = "FFFFC21A",
+		TimerunningHwt = "FFF566D6",
 	},
 }

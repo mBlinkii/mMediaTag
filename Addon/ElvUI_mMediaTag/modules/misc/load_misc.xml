@@ -11,4 +11,5 @@
     <Script file="nameplate.lua"/>
     <Script file="tags.lua"/>
     <Script file="role_icons.lua"/>
+    <Script file="phase_icon.lua"/>
 </Ui>

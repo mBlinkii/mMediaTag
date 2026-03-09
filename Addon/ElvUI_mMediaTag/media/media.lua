@@ -158,6 +158,14 @@ MEDIA.color = {
 		target_color = createColor("FFA200FF"),
 		quest_color = createColor("FFFFA500"),
 	},
+
+	phase_icon = {
+		Phasing = createColor("FF265FFD"),
+		Sharding = createColor("FF74FA4C"),
+		WarMode = createColor("FFF73E3E"),
+		ChromieTime = createColor("FFFFC21A"),
+		TimerunningHwt = createColor("FFF566D6"),
+	},
 }
 
 MEDIA.myclass = E:ClassColor(E.myclass)
@@ -332,6 +340,14 @@ function mMT:UpdateMedia(arg)
 		MEDIA.color.nameplates.focus_color = CreateColorFromHexString(E.db.mMediaTag.color.nameplates.focus_color)
 		MEDIA.color.nameplates.target_color = CreateColorFromHexString(E.db.mMediaTag.color.nameplates.target_color)
 		MEDIA.color.nameplates.quest_color = CreateColorFromHexString(E.db.mMediaTag.color.nameplates.quest_color)
+	end
+
+	if arg == "phase_icon" or not arg then
+		MEDIA.color.phase_icon.Phasing = CreateColorFromHexString(E.db.mMediaTag.color.phase_icon.Phasing)
+		MEDIA.color.phase_icon.Sharding = CreateColorFromHexString(E.db.mMediaTag.color.phase_icon.Sharding)
+		MEDIA.color.phase_icon.WarMode = CreateColorFromHexString(E.db.mMediaTag.color.phase_icon.WarMode)
+		MEDIA.color.phase_icon.ChromieTime = CreateColorFromHexString(E.db.mMediaTag.color.phase_icon.ChromieTime)
+		MEDIA.color.phase_icon.TimerunningHwt = CreateColorFromHexString(E.db.mMediaTag.color.phase_icon.TimerunningHwt)
 	end
 end
 
@@ -1918,6 +1934,14 @@ MEDIA.icons.role = {
 	swordoutline6 = "Interface\\AddOns\\ElvUI_mMediaTag\\media\\icons\\role\\swordoutline6.tga",
 	swordoutline7 = "Interface\\AddOns\\ElvUI_mMediaTag\\media\\icons\\role\\swordoutline7.tga",
 	tank = "Interface\\AddOns\\ElvUI_mMediaTag\\media\\icons\\role\\tank.tga",
+}
+
+MEDIA.icons.phase_icons = {
+	ankh = "Interface\\AddOns\\ElvUI_mMediaTag\\media\\icons\\tags\\ankh.tga",
+	army_knife = "Interface\\AddOns\\ElvUI_mMediaTag\\media\\icons\\tags\\army-knife.tga",
+	autumn = "Interface\\AddOns\\ElvUI_mMediaTag\\media\\icons\\tags\\autumn.tga",
+	bat = "Interface\\AddOns\\ElvUI_mMediaTag\\media\\icons\\tags\\bat.tga",
+	batman_logo = "Interface\\AddOns\\ElvUI_mMediaTag\\media\\icons\\tags\\batman-logo.tga",
 }
 
 MEDIA.minimap = {
