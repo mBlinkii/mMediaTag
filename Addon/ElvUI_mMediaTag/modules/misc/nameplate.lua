@@ -17,14 +17,21 @@ local UnitIsUnit = UnitIsUnit
 local C_Timer_After = C_Timer.After
 local GetNamePlateForUnit = C_NamePlate.GetNamePlateForUnit
 
+local refreshPending = false
+local function ScheduleRefresh()
+	if refreshPending then return end
+	refreshPending = true
+	C_Timer_After(0.1, function()
+		refreshPending = false
+		module:RefreshAll()
+	end)
+end
+
 local function GetHealthBar(unitToken)
-	-- block this GUIDs
 	if not unitToken or strfind(unitToken, "Creature", 1, true) or strfind(unitToken, "Player-", 1, true) or strfind(unitToken, "Vehicle", 1, true) then return nil end
 
-	-- forbidden checks
 	local nameplateFrame = GetNamePlateForUnit(unitToken, false)
 	if not nameplateFrame then return nil end
-
 	if nameplateFrame.isForbidden and nameplateFrame:IsForbidden() then return nil end
 
 	local unitFrame = nameplateFrame.unitFrame
@@ -44,9 +51,7 @@ local function IsQuestMob(unitToken)
 	if not unitFrame then return false end
 
 	local questIcons = unitFrame.QuestIcons
-	if not questIcons then return false end
-
-	return questIcons:IsShown()
+	return questIcons and questIcons:IsShown() or false
 end
 
 local function GetUnitState(unitToken)
@@ -63,7 +68,7 @@ local function ApplyState(unitToken, state)
 	local cfg = module[state]
 	if not cfg then return end
 
-	-- backup elvui flags
+	-- Backup
 	if not healthBar.mMT_OrigFlags then
 		healthBar.mMT_OrigFlags = {
 			colorClass = healthBar.colorClass,
@@ -78,6 +83,8 @@ local function ApplyState(unitToken, state)
 		}
 	end
 
+	if healthBar.mMT_State == state then return end
+
 	healthBar:SetColorTapping(false)
 	healthBar:SetColorSelection(false)
 	healthBar.colorClassification = false
@@ -91,7 +98,10 @@ local function ApplyState(unitToken, state)
 	if cfg.changeColor then
 		local c = cfg.color
 		NP:SetStatusBarColor(healthBar, c.r, c.g, c.b)
-		healthBar.mMT_CustomColor = { c.r, c.g, c.b }
+		healthBar.mMT_CustomColor = healthBar.mMT_CustomColor or {}
+		healthBar.mMT_CustomColor[1] = c.r
+		healthBar.mMT_CustomColor[2] = c.g
+		healthBar.mMT_CustomColor[3] = c.b
 	end
 
 	if cfg.changeTexture and cfg.texture and cfg.texture ~= "" then
@@ -106,9 +116,9 @@ local function ResetState(unitToken)
 	local healthBar = GetHealthBar(unitToken)
 	if not healthBar or not healthBar.mMT_OrigFlags then return end
 
-	local orig = healthBar.mMT_OrigFlags
+	if not healthBar.mMT_State then return end
 
-	-- restore elvui flags
+	local orig = healthBar.mMT_OrigFlags
 	healthBar:SetColorTapping(orig.colorTapping)
 	healthBar:SetColorSelection(orig.colorTapping)
 	healthBar.colorClassification = orig.colorClassification
@@ -137,13 +147,12 @@ function module:UpdateUnitColor(unitToken)
 	if not bar then return end
 
 	local oldState = bar.mMT_State
+	if newState == oldState then return end
 
-	if newState ~= oldState then
-		if newState then
-			ApplyState(unitToken, newState)
-		else
-			ResetState(unitToken)
-		end
+	if newState then
+		ApplyState(unitToken, newState)
+	else
+		ResetState(unitToken)
 	end
 end
 
@@ -169,8 +178,8 @@ end
 
 local function OnPlateAdded(_, unitToken)
 	C_Timer_After(0.05, function()
-		local nameplateFrame = GetNamePlateForUnit(unitToken, false)
-		if nameplateFrame and nameplateFrame.unitFrame then HookQuestIconsPostUpdate(nameplateFrame.unitFrame) end
+		local np = GetNamePlateForUnit(unitToken, false)
+		if np and np.unitFrame then HookQuestIconsPostUpdate(np.unitFrame) end
 		module:UpdateUnitColor(unitToken)
 	end)
 end
@@ -188,8 +197,8 @@ local function OnUnitDied(_, unitToken)
 	end
 end
 
-local function Update()
-	module:RefreshAll()
+local function OnTargetOrFocusChanged()
+	ScheduleRefresh()
 end
 
 local function OnHealthSetColors(_, nameplate)
@@ -206,7 +215,6 @@ local function OnHealthSetColors(_, nameplate)
 	healthBar.colorClass = false
 	healthBar.colorClassNPC = false
 	healthBar.colorDisconnect = false
-
 	if cfg.ignoreThreat then healthBar.colorThreat = false end
 end
 
@@ -227,11 +235,13 @@ local function OnHealthColorUpdate(_, unitFrame)
 end
 
 local function OnThreatPostUpdate(threatIndicator, unit, status)
+	if not status then return end
+
 	local nameplate = threatIndicator and threatIndicator.__owner
 	if not nameplate then return end
+
 	local healthBar = nameplate.Health
 	if not healthBar or not healthBar.mMT_State then return end
-	if not status then return end
 
 	local cfg = module[healthBar.mMT_State]
 	if not cfg or not cfg.ignoreThreat then return end
@@ -248,31 +258,33 @@ function module:Initialize()
 	if not E.private.nameplates.enable then return end
 	module.db = E.db.mMediaTag.nameplates
 
+	local db = E.db.mMediaTag.nameplates
+
 	module.focus = {
-		enable = E.db.mMediaTag.nameplates.focus.changeColor or E.db.mMediaTag.nameplates.focus.changeTexture,
-		changeColor = E.db.mMediaTag.nameplates.focus.changeColor,
-		changeTexture = E.db.mMediaTag.nameplates.focus.changeTexture,
-		texture = LSM:Fetch("statusbar", E.db.mMediaTag.nameplates.focus.texture),
+		enable = db.focus.changeColor or db.focus.changeTexture,
+		changeColor = db.focus.changeColor,
+		changeTexture = db.focus.changeTexture,
+		texture = LSM:Fetch("statusbar", db.focus.texture),
 		color = MEDIA.color.nameplates.focus_color,
-		ignoreThreat = E.db.mMediaTag.nameplates.focus.ignoreThreat,
+		ignoreThreat = db.focus.ignoreThreat,
 	}
 
 	module.target = {
-		enable = E.db.mMediaTag.nameplates.target.changeColor or E.db.mMediaTag.nameplates.target.changeTexture,
-		changeColor = E.db.mMediaTag.nameplates.target.changeColor,
-		changeTexture = E.db.mMediaTag.nameplates.target.changeTexture,
-		texture = LSM:Fetch("statusbar", E.db.mMediaTag.nameplates.target.texture),
+		enable = db.target.changeColor or db.target.changeTexture,
+		changeColor = db.target.changeColor,
+		changeTexture = db.target.changeTexture,
+		texture = LSM:Fetch("statusbar", db.target.texture),
 		color = MEDIA.color.nameplates.target_color,
-		ignoreThreat = E.db.mMediaTag.nameplates.target.ignoreThreat,
+		ignoreThreat = db.target.ignoreThreat,
 	}
 
 	module.quest = {
-		enable = E.db.mMediaTag.nameplates.quest.changeColor or E.db.mMediaTag.nameplates.quest.changeTexture,
-		changeColor = E.db.mMediaTag.nameplates.quest.changeColor,
-		changeTexture = E.db.mMediaTag.nameplates.quest.changeTexture,
-		texture = LSM:Fetch("statusbar", E.db.mMediaTag.nameplates.quest.texture),
+		enable = db.quest.changeColor or db.quest.changeTexture,
+		changeColor = db.quest.changeColor,
+		changeTexture = db.quest.changeTexture,
+		texture = LSM:Fetch("statusbar", db.quest.texture),
 		color = MEDIA.color.nameplates.quest_color,
-		ignoreThreat = E.db.mMediaTag.nameplates.quest.ignoreThreat,
+		ignoreThreat = db.quest.ignoreThreat,
 	}
 
 	if module.db.target_glow_color and E.db["nameplates"]["colors"]["glowColor"] then
@@ -294,8 +306,8 @@ function module:Initialize()
 		end
 	end
 
-	if module.focus.enable then module:RegisterEvent("PLAYER_FOCUS_CHANGED", Update) end
-	if module.target.enable then module:RegisterEvent("PLAYER_TARGET_CHANGED", Update) end
+	if module.focus.enable then module:RegisterEvent("PLAYER_FOCUS_CHANGED", OnTargetOrFocusChanged) end
+	if module.target.enable then module:RegisterEvent("PLAYER_TARGET_CHANGED", OnTargetOrFocusChanged) end
 
 	if module.focus.enable or module.target.enable or module.quest.enable then
 		module:RegisterEvent("NAME_PLATE_UNIT_ADDED", OnPlateAdded)
