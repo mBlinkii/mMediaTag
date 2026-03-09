@@ -146,46 +146,47 @@ local function UpdateExtraTexture(element, force)
 end
 
 local function Update(self, event, eventUnit)
-	local unit = self.unit or self.__owner.unit
-	if not unit then return end
+    local unit = self.unit or self.__owner.unit
+    if not unit then return end
 
-	local guid = UnitGUID(unit)
-	local secretGUID = E:IsSecretValue(guid)
-	local newGUID = secretGUID or (self.guid ~= guid)
-	guid = not secretGUID and guid or nil
+    local guid = UnitGUID(unit)
+    local secretGUID = E:IsSecretValue(guid)
+    local newGUID = secretGUID or (self.guid ~= guid)
+    guid = not secretGUID and guid or nil
 
-	local isAvailable = IsUnitModelReadyForUI(unit) and UnitIsConnected(unit) and UnitIsVisible(unit)
+    if newGUID then
+        self.guid = guid
+    end
 
-	--if event ~= "ForceUpdate" and self.guid == guid and self.state == isAvailable then return end
+    local isAvailable = IsUnitModelReadyForUI(unit) and UnitIsConnected(unit) and UnitIsVisible(unit)
+    local hasStateChanged = newGUID or (self.state ~= isAvailable) or event == "ForceUpdate"
 
-	local hasStateChanged = newGUID or (self.state ~= isAvailable) or event ~= "ForceUpdate"
+    if hasStateChanged then
+        local class = select(2, UnitClass(unit))
+        local isPlayer = UnitIsPlayer(unit) or (E.Retail and UnitInPartyIsAI(unit))
+        local shouldMirror = (isPlayer and self.db.mirror) or (not isPlayer and not self.db.mirror)
 
-	if hasStateChanged then
-		local class = select(2, UnitClass(unit))
-		local isPlayer = UnitIsPlayer(unit) or (E.Retail and UnitInPartyIsAI(unit))
-		local shouldMirror = (isPlayer and self.db.mirror) or (not isPlayer and not self.db.mirror)
+        if module.useClassIcons and isPlayer then
+            local texCoords = module.texCoords[class].texCoords or module.texCoords[class]
+            self.unit_portrait:SetTexture(module.classIcons, "CLAMP", "CLAMP", "TRILINEAR")
+            module:Mirror(self.unit_portrait, shouldMirror, texCoords)
+        else
+            SetPortraitTexture(self.unit_portrait, unit, true)
+            module:Mirror(self.unit_portrait, shouldMirror)
+        end
 
-		if module.useClassIcons and isPlayer then
-			local texCoords = module.texCoords[class].texCoords or module.texCoords[class]
-			self.unit_portrait:SetTexture(module.classIcons, "CLAMP", "CLAMP", "TRILINEAR")
-			module:Mirror(self.unit_portrait, shouldMirror, texCoords)
-		else
-			SetPortraitTexture(self.unit_portrait, unit, true)
-			module:Mirror(self.unit_portrait, shouldMirror)
-		end
+        self.state = isAvailable
+        self.isPlayer = isPlayer
+        self.unit = unit
+        self.unitClass = class
 
-		self.guid = guid
-		self.state = isAvailable
-		self.isPlayer = isPlayer
-		self.unit = unit
-		self.unitClass = class
-		--self.isDead = isDead
+        UpdateTextureColor(self, unit)
+        UpdateExtraTexture(self, self.forceExtra ~= "none" and self.forceExtra or nil)
 
-		UpdateTextureColor(self, unit)
-		UpdateExtraTexture(self, self.forceExtra ~= "none" and self.forceExtra or nil)
-
-		if not InCombatLockdown() and self:GetAttribute("unit") ~= unit then self:SetAttribute("unit", unit) end
-	end
+        if not InCombatLockdown() and self:GetAttribute("unit") ~= unit then
+            self:SetAttribute("unit", unit)
+        end
+    end
 end
 
 local function DemoUpdate(self)
