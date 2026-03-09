@@ -68,18 +68,46 @@ local roleNames = {
 }
 
 local statusDefinitions = {
-	AFK = { check = UnitIsAFK, color = colors.afk, label = L["AFK"], iconKey = "afk" },
-	DND = { check = UnitIsDND, color = colors.dnd, label = L["DND"], iconKey = "dnd" },
+	AFK = {
+		check = function(unit)
+			return E:UnitIsAFK(unit)
+		end,
+		color = colors.afk,
+		label = L["AFK"],
+		iconKey = "afk",
+	},
+	DND = {
+		check = function(unit)
+			return E:UnitIsDND(unit)
+		end,
+		color = colors.dnd,
+		label = L["DND"],
+		iconKey = "dnd",
+	},
 	Offline = {
-		check = function(u)
-			return not UnitIsConnected(u)
+		check = function(unit)
+			return not UnitIsConnected(unit)
 		end,
 		color = colors.dc,
 		label = L["Offline"],
 		iconKey = "dc",
 	},
-	Dead = { check = UnitIsDead, color = colors.dead, label = L["Dead"], iconKey = "dead" },
-	Ghost = { check = UnitIsGhost, color = colors.ghost, label = L["Ghost"], iconKey = "ghost" },
+	Dead = {
+		check = function(unit)
+			return UnitIsDead(unit)
+		end,
+		color = colors.dead,
+		label = L["Dead"],
+		iconKey = "dead",
+	},
+	Ghost = {
+		check = function(unit)
+			return UnitIsGhost(unit)
+		end,
+		color = colors.ghost,
+		label = L["Ghost"],
+		iconKey = "ghost",
+	},
 }
 
 local function GetColorString(color)
@@ -390,7 +418,11 @@ E:AddTag("mMT-faction:icon:opposite", "UNIT_FACTION", function(unit)
 	local factionPlayer = UnitFactionGroup("Player")
 	if data and (data[2] == "Horde" or data[2] == "Alliance") and data[2] ~= factionPlayer then return data[1] end
 end)
-E:AddTagInfo("mMT-faction:icon:opposite", mMT.NameShort .. " " .. L["Miscellaneous"], L["Returns the faction icon of the unit (Horde or Alliance), but only if it's the opposite faction of the player."])
+E:AddTagInfo(
+	"mMT-faction:icon:opposite",
+	mMT.NameShort .. " " .. L["Miscellaneous"],
+	L["Returns the faction icon of the unit (Horde or Alliance), but only if it's the opposite faction of the player."]
+)
 
 E:AddTag("mMT-power", "UNIT_DISPLAYPOWER UNIT_POWER_FREQUENT UNIT_MAXPOWER PLAYER_ROLES_ASSIGNED GROUP_ROSTER_UPDATE UNIT_COMBAT", function(unit)
 	if UnitAffectingCombat(unit) then return _TAGS.perpp(unit) end
