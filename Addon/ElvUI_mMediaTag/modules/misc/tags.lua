@@ -127,7 +127,6 @@ local statusDefinitions = {
 	},
 }
 
--- Death-count state
 local unitDeathCount = {}
 local instanceID = ""
 local instanceType = "none"
