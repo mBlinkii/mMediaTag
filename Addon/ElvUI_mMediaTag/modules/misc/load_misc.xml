@@ -10,4 +10,5 @@
     <Script file="tooltip.lua"/>
     <Script file="nameplate.lua"/>
     <Script file="tags.lua"/>
+    <Script file="role_icons.lua"/>
 </Ui>

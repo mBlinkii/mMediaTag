@@ -70,6 +70,13 @@ mMT.options = {
 					childGroups = "tab",
 					args = {},
 				},
+				role_icons = {
+					order = 4,
+					type = "group",
+					name = mMT:AddSettingsIcon(L["Role Icons"], "pvp"),
+					childGroups = "tab",
+					args = {},
+				},
 			},
 		},
 		nameplates = {

@@ -572,6 +572,13 @@ P.nameplates = {
 	},
 }
 
+P.role_icons = {
+	enable = true,
+	tank = "brain",
+	heal = "brain",
+	dd = "brain",
+}
+
 -- color
 P.color = {
 	-- tip/ menu
