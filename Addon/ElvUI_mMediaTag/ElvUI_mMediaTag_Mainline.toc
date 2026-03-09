@@ -9,6 +9,7 @@
 ## AddonCompartmentFuncOnLeave: ElvUI_mMediaTag_OnAddonCompartmentLeave
 ## SavedVariables: MMTDATA
 ## RequiredDeps: ElvUI
+## OptionalDeps: ElvUI_JiberishIcons
 ## DefaultState: Enabled
 ## X-Curse-Project-ID: 289502
 ## X-Wago-ID: 9rN48AND

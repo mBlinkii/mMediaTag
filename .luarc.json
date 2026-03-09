@@ -19533,7 +19533,8 @@
         "ElvUI_mMediaTag",
         "ElvUI_mMediaTag",
         "ElvUI_mMediaTag",
-        "CurveConstants"
+        "CurveConstants",
+        "ElvUI_JiberishIcons"
   ],
   "diagnostics.disable": ["deprecated", "inject-field", "undefined-field",
         "cast-local-type",

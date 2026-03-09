@@ -64,6 +64,10 @@ function mMT:Initialize()
 	-- add to movers
 	tinsert(E.ConfigModeLayouts, "MMEDIATAG")
 	E.ConfigModeLocalizedStrings["MMEDIATAG"] = mMT.Name
+
+	if IsAddOnLoaded("ElvUI_JiberishIcons") then
+		mMT:AddJIIcons()
+	end
 end
 
 function mMT:PLAYER_LOGOUT()

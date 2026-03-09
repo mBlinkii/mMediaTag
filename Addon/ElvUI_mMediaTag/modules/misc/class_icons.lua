@@ -1,4 +1,5 @@
 local mMT, DB, M, E, P, L, MEDIA = unpack(ElvUI_mMediaTag)
+local IsAddOnLoaded = _G.C_AddOns and _G.C_AddOns.IsAddOnLoaded or _G.IsAddOnLoaded
 
 MEDIA.icons.class = {
 	data = {
@@ -71,7 +72,7 @@ local type = type
 local path = "Interface\\Addons\\ElvUI_mMediaTag\\media\\class\\"
 
 -- style = texture style, texture = path to the texture, table with texture coords for each class, name = optional name to show in dropdown menu
-function mMT:AddClassIcons(style, texture, texCoords, name)
+local function AddOtherClassIcons(style, texture, texCoords, name)
 	if not (style and texture and texCoords) then
 		mMT:Print("|CFFEA1818Error|r:", L["Could not add the texture."])
 		return false, "missingArgs"
@@ -106,6 +107,19 @@ local function AddClassIcons(style, texture, name)
 		name = name or style,
 		texture = texture,
 	}
+end
+
+function mMT:AddJIIcons()
+	local JI = unpack(ElvUI_JiberishIcons)
+	if JI then
+		local mergedClassStyles = JI.mergedStylePacks.class
+
+		for iconStyle, data in next, mergedClassStyles.styles do
+			local ji_path = (mergedClassStyles.styles[iconStyle] and mergedClassStyles.styles[iconStyle].path) or mergedClassStyles.path
+			local fullPath = format("%s%s", ji_path, iconStyle)
+			if JI:IsValidTexturePath(fullPath) then AddOtherClassIcons(iconStyle, fullPath, "default", data.name) end
+		end
+	end
 end
 
 AddClassIcons("mmt_hd", path .. "mmt_border.tga", "mMT HD")
