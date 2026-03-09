@@ -63,7 +63,7 @@ end
 
 local function ApplyState(unitToken, state)
 	local healthBar = GetHealthBar(unitToken)
-	if not healthBar then return end
+	if not (healthBar and healthBar:IsShown()) then return end
 
 	local cfg = module[state]
 	if not cfg then return end

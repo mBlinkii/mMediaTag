@@ -19,7 +19,7 @@ local function PostUpdate_PhaseIcon(self, hidden, phaseReason)
 
 	local c = module.PhaseColors[key]
 	self.Center:SetVertexColor(c.r, c.g, c.b)
-	self.Center:SetShown(true)-- not hidden)
+	self.Center:SetShown(not hidden)
 end
 
 function module:Initialize()
