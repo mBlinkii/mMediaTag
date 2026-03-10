@@ -70,6 +70,13 @@ mMT.options = {
 					childGroups = "tab",
 					args = {},
 				},
+				phase_icon = {
+					order = 4,
+					type = "group",
+					name = mMT:AddSettingsIcon(L["Phase Icon"], "refresh"),
+					childGroups = "tab",
+					args = {},
+				}
 			},
 		},
 		nameplates = {

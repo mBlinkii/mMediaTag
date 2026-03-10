@@ -6,4 +6,5 @@
 	<Script file="lfg_invite_info.lua"/>
 	<Script file="tags.lua"/>
 	<Script file="role_icons.lua"/>
+	<Script file="phase_icon.lua"/>
 </Ui>

@@ -29,9 +29,12 @@ function module:Initialize()
 	module.texture = MEDIA.icons.phase_icons[E.db.mMediaTag.phase_icon.icon]
 	module.PhaseColors = MEDIA.color.phase_icon
 
-	module:SecureHook(UF, "Configure_PhaseIcon", function(_, frame)
-		Configure_PhaseIcon(frame)
-	end)
+	if not module.isEnabled then
+		module:SecureHook(UF, "Configure_PhaseIcon", function(_, frame)
+			Configure_PhaseIcon(frame)
+		end)
 
-	module:SecureHook(UF, "PostUpdate_PhaseIcon", PostUpdate_PhaseIcon)
+		module:SecureHook(UF, "PostUpdate_PhaseIcon", PostUpdate_PhaseIcon)
+		module.isEnabled = true
+	end
 end
