@@ -1,10 +1,10 @@
 local mMT, DB, M, E, P, L, MEDIA = unpack(ElvUI_mMediaTag)
-
 local module = mMT:AddModule("InterruptOnCD", { "AceEvent-3.0" })
 
 local GetSpellCooldown = C_Spell and C_Spell.GetSpellCooldown or GetSpellCooldown
 local GetSpellInfo = C_Spell and C_Spell.GetSpellInfo or GetSpellInfo
 local IsSpellInRange = C_Spell and C_Spell.IsSpellInRange or IsSpellInRange
+local GetSpellCooldownDuration = C_Spell.GetSpellCooldownDuration
 local NP = E:GetModule("NamePlates")
 local UF = E:GetModule("UnitFrames")
 
@@ -17,52 +17,66 @@ local spellList = {
 	[65] = 96231,
 	[66] = 96231,
 	[70] = 96231,
-	--HUNTER
+	-- hunter
 	[253] = 147362,
 	[254] = 147362,
 	[255] = 187707,
-	--ROGUE"
+	-- rogue
 	[259] = 1766,
 	[260] = 1766,
 	[261] = 1766,
-	--PRIEST
+	-- priest
 	[256] = nil,
 	[257] = nil,
 	[258] = 15487,
-	--DEATHKNIGHT
+	-- deathknight
 	[250] = 47528,
 	[251] = 47528,
 	[252] = 47528,
-	--SHAMAN
+	-- shaman
 	[262] = 57994,
 	[263] = 57994,
 	[264] = 57994,
-	--MAGE
+	-- mage
 	[62] = 2139,
 	[63] = 2139,
 	[64] = 2139,
-	--WARLOCK
+	-- warlock
 	[265] = 119910,
 	[266] = 119914,
 	[267] = 119910,
-	--MONK
+	-- monk
 	[268] = 116705,
 	[270] = 116705,
 	[269] = 116705,
-	--DRUID
+	-- druid
 	[102] = 78675,
 	[103] = 106839,
 	[104] = 106839,
 	[105] = 106839,
-	--DEMONHUNTER
+	-- demonhunter
 	[577] = 183752,
 	[581] = 183752,
 	[1480] = 183752,
-	--EVOKER
+	-- evoker
 	[1467] = 351338,
 	[1468] = 351338,
 	[1473] = 351338,
 }
+
+-- testing
+local curve = C_CurveUtil.CreateColorCurve()
+curve:AddPoint(0, CreateColor(0, 0, 0, 0)) -- false → 0
+curve:AddPoint(1, CreateColor(1, 1, 1, 1)) -- true  → 1
+
+local function CheckSecretBool(secretBool, helper)
+	local value = C_CurveUtil.EvaluateColorValueFromBoolean(secretBool, 0, 1)
+	print("Evaluated value for", secretBool, "is", value)
+	--helper:SetAlphaFromBoolean(secretBool)
+	helper:SetAlpha(value)
+	print("Evaluated value for", secretBool, "is", value, helper:IsShown())
+	return helper:IsShown()
+end
 
 local function SetCastbarColor(castbar, color)
 	-- Set the color of the castbar
@@ -137,10 +151,6 @@ local function UpdateInterruptSpell()
 	end
 
 	module.myInterruptSpell = spellList[mySpecialization]
-
-	if (mySpecialization ~= 0 and not spellList[mySpecialization]) then
-		mMT:Print(L["No interrupt spell found for your specialization. Interrupt on CD will not work."], L["ID:"], mySpecialization)
-	end
 end
 
 local function GetCastColor(castbar)
@@ -149,16 +159,19 @@ local function GetCastColor(castbar)
 	if not spellID then return end -- end if no spell or if castbar is not interruptible
 
 	-- cd and time calculations
+	local myCD = GetSpellCooldownDuration(spellID)
 	local spellCooldownInfo = GetSpellCooldown(spellID)
 	local timeNow = GetTime()
-	local startTime, duration = spellCooldownInfo.startTime, spellCooldownInfo.duration
-	local interruptCD = (spellCooldownInfo.startTime > 0) and (spellCooldownInfo.duration - (timeNow - spellCooldownInfo.startTime)) or 0
+	--local startTime, duration = spellCooldownInfo.startTime, spellCooldownInfo.duration
+	--local interruptCD = CheckSecretBool(spellCooldownInfo.startTime > 0) and CheckSecretBool(spellCooldownInfo.duration - (timeNow - spellCooldownInfo.startTime)) or 0
 
 	local value = castbar:GetValue()
 	local castbarMax = castbar.max or 1
 	local channeling = castbar.channeling
 	local reverse = castbar:GetReverseFill()
-	local interruptReadyInTime = (interruptCD + 0.2) < (channeling and value or (castbarMax - value))
+	local interruptReadyInTime = 0 --(myCD + 0.2) < (channeling and value or (castbarMax - value))
+
+	print("MyCD", spellID, myCD, myCD:IsZero())
 
 	local inactiveTime = module.inactiveTime
 
@@ -170,16 +183,18 @@ local function GetCastColor(castbar)
 	end
 
 	-- Set the castbar color based on the interrupt state
-	if interruptCD > inactiveTime and interruptReadyInTime then
+	if myCD:IsZero() then
 		-- marker position calculation and set
-		local markerPosition = (startTime + duration - castbar.startTime + 0.2) / castbarMax
-		if channeling or reverse then markerPosition = 1 - markerPosition end
+		--local markerPosition = (startTime + duration - castbar.startTime + 0.2) / castbarMax
+		--if channeling or reverse then markerPosition = 1 - markerPosition end
 
-		return module.colors.inTime, markerPosition
-	elseif interruptCD > inactiveTime then
-		return module.colors.onCD
-	elseif isOutOfRange then
-		return module.colors.outOfRange
+		return module.colors.inTime
+	else
+		if isOutOfRange then
+			return module.colors.outOfRange
+		else
+			return module.colors.onCD
+		end
 	end
 end
 
@@ -202,7 +217,7 @@ end
 local UPDATE_INTERVAL = 0.5
 
 local function Castbar_OnUpdate(castbar, elapsed)
-	if castbar.notInterruptible then return end
+	if CheckSecretBool(castbar.notInterruptible) then return end
 
 	castbar._interruptOnCD_Elapsed = (castbar._interruptOnCD_Elapsed or 0) + elapsed
 	if castbar._interruptOnCD_Elapsed > UPDATE_INTERVAL then
@@ -225,14 +240,22 @@ end
 local function Update(castbar, unit)
 	if not castbar then return end -- end if castbar is nils
 
-	if (unit == "vehicle") or (unit == "player") then return end -- ignore vehicle and player castbars
-	if castbar.notInterruptible then return end -- ignore non-interruptible castbars
+	if not castbar.helper then
+		castbar.helper = castbar:CreateTexture("mMT-Helper")
+		castbar.helper:SetAllPoints()
+		--castbar.helper:SetSize(64, 64)
+		castbar.helper:SetColorTexture(1, 1, 0, 0.5)
+	end
+
+	--if (unit == "vehicle") or (unit == "player") then return end -- ignore vehicle and player castbars
+	-- if CheckSecretBool(castbar.notInterruptible, castbar.helper) then
+	-- 	print("Castbar is not interruptible")
+	-- 	return
+	-- end -- ignore non-interruptible castbars
 
 	local color, markerPosition = GetCastColor(castbar)
 
-	if not markerPosition then
-		HideMarker(castbar)
-	end
+	if not markerPosition then HideMarker(castbar) end
 
 	if color then
 		SetCastbarColor(castbar, color)
