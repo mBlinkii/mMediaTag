@@ -94,9 +94,8 @@ MEDIA.color = {
 	},
 
 	interrupt_on_cd = {
-		onCD = createColorPair("FFA200FF", "FFC500BB"),
-		inTime = createColorPair("FF00E1FF", "FF0080D6"),
-		outOfRange = createColorPair("FFFFA500", "FFD67A00"),
+		onCD = createColor("FFA200FF"),
+		normal = createColor("FFFFA500"),
 		marker = createColor("FFFFFFFF"),
 	},
 
@@ -249,19 +248,10 @@ function mMT:UpdateMedia(arg)
 	end
 
 	if arg == "interrupt" or not arg then
-		local function createColorSets(path)
-			local set = {}
-
-			set = type(path) == "table" and { c = CreateColorFromHexString(path.c), g = CreateColorFromHexString(path.g) } or CreateColorFromHexString(path)
-
-			return set
-		end
-
 		MEDIA.color.interrupt_on_cd = {
-			onCD = createColorSets(E.db.mMediaTag.color.interrupt_on_cd.onCD),
-			inTime = createColorSets(E.db.mMediaTag.color.interrupt_on_cd.inTime),
-			outOfRange = createColorSets(E.db.mMediaTag.color.interrupt_on_cd.outOfRange),
-			marker = createColorSets(E.db.mMediaTag.color.interrupt_on_cd.marker),
+			onCD = CreateColorFromHexString(E.db.mMediaTag.color.interrupt_on_cd.onCD),
+			normal = CreateColorFromHexString(E.db.mMediaTag.color.interrupt_on_cd.normal),
+			marker = CreateColorFromHexString(E.db.mMediaTag.color.interrupt_on_cd.marker),
 		}
 	end
 

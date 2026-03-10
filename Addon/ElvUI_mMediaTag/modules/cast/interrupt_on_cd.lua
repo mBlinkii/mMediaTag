@@ -1,9 +1,6 @@
 local mMT, DB, M, E, P, L, MEDIA = unpack(ElvUI_mMediaTag)
 local module = mMT:AddModule("InterruptOnCD", { "AceEvent-3.0" })
 
-local GetSpellCooldown = C_Spell and C_Spell.GetSpellCooldown or GetSpellCooldown
-local GetSpellInfo = C_Spell and C_Spell.GetSpellInfo or GetSpellInfo
-local IsSpellInRange = C_Spell and C_Spell.IsSpellInRange or IsSpellInRange
 local GetSpellCooldownDuration = C_Spell.GetSpellCooldownDuration
 local EvalColorBool = C_CurveUtil.EvaluateColorValueFromBoolean
 
@@ -90,20 +87,20 @@ local function ApplyCastbarColor(castbar)
 	local cdDuration = GetSpellCooldownDuration(spellID)
 	if not cdDuration then return end
 
-	local elvuiColor = E.db.nameplates.colors.castColor
-	local onCDC  = module.colors.onCD.c
+	local normal = module.colors.normal
+	local onCD  = module.colors.onCD
 
-	local iR = EvalColorBool(cdDuration:IsZero(), elvuiColor.r, onCDC.r)
-	local iG = EvalColorBool(cdDuration:IsZero(), elvuiColor.g, onCDC.g)
-	local iB = EvalColorBool(cdDuration:IsZero(), elvuiColor.b, onCDC.b)
+	local iR = EvalColorBool(cdDuration:IsZero(), normal.r, onCD.r)
+	local iG = EvalColorBool(cdDuration:IsZero(), normal.g, onCD.g)
+	local iB = EvalColorBool(cdDuration:IsZero(), normal.b, onCD.b)
 
 	castbar:SetStatusBarColor(iR, iG, iB)
 
 	-- bg color
 	if module.set_bg_color and castbar.bg then
 		local m = module.bg_multiplier
-		local bgReadyR, bgReadyG, bgReadyB = elvuiColor.r * m, elvuiColor.g * m, elvuiColor.b * m
-		local bgOnCDR, bgOnCDG, bgOnCDB = onCDC.r * m, onCDC.g * m, onCDC.b * m
+		local bgReadyR, bgReadyG, bgReadyB = normal.r * m, normal.g * m, normal.b * m
+		local bgOnCDR, bgOnCDG, bgOnCDB = onCD.r * m, onCD.g * m, onCD.b * m
 		castbar.bg:SetVertexColor(EvalColorBool(cdDuration:IsZero(), bgReadyR, bgOnCDR), EvalColorBool(cdDuration:IsZero(), bgReadyG, bgOnCDG), EvalColorBool(cdDuration:IsZero(), bgReadyB, bgOnCDB), 1)
 	end
 end
@@ -157,8 +154,6 @@ local function ResetOverlay(castbar)
 end
 
 local function PlaceMarker(castbar, unit)
-	--if castbar.mMT_InterruptMarker and castbar.mMT_InterruptMarker:IsShown() then return end
-	print("PlaceMarker called for", unit)
 	local spellID = module.myInterruptSpell
 	if not spellID then return end
 
@@ -167,7 +162,7 @@ local function PlaceMarker(castbar, unit)
 
 	local notInt = castbar.notInterruptible
 
-	-- isReady=true > 0 (no marker), isReady=false > 1 (show marker )
+	-- isReady=true > 0 (no marker), isReady=false > 1 (show marker)
 	local markerAlpha = EvalColorBool(cdDuration:IsZero(), 0, 1)
 	-- notInt=true > always 0
 	markerAlpha = EvalColorBool(notInt, 0, markerAlpha)
@@ -202,11 +197,6 @@ local function PlaceMarker(castbar, unit)
 		marker:SetPoint("LEFT", pos:GetStatusBarTexture(), "RIGHT", 0, 0)
 	end
 
-	-- castbar.mMT_test = {
-	-- 	r = EvalColorBool(cdDuration:IsZero(), module.colors.inTime.c.r, module.colors.onCD.c.r),
-	-- 	g = EvalColorBool(cdDuration:IsZero(), module.colors.inTime.c.g, module.colors.onCD.c.g),
-	-- 	b = EvalColorBool(cdDuration:IsZero(), module.colors.inTime.c.b, module.colors.onCD.c.b),
-	-- }
 	marker:Show()
 end
 
@@ -262,14 +252,10 @@ function module:Initialize()
 
 		module.colors = {
 			onCD = MEDIA.color.interrupt_on_cd.onCD,
-			inTime = MEDIA.color.interrupt_on_cd.inTime,
-			outOfRange = MEDIA.color.interrupt_on_cd.outOfRange,
+			normal = MEDIA.color.interrupt_on_cd.normal,
 			marker = MEDIA.color.interrupt_on_cd.marker,
 		}
 
-		module.inactiveTime = E.db.mMediaTag.interrupt_on_cd.inactive_time
-		module.out_of_range = E.db.mMediaTag.interrupt_on_cd.out_of_range
-		module.gradient = E.db.mMediaTag.interrupt_on_cd.gradient
 		module.set_bg_color = E.db.mMediaTag.interrupt_on_cd.set_bg_color
 		module.bg_multiplier = E.db.mMediaTag.interrupt_on_cd.bg_multiplier
 	elseif module.isEnabled then

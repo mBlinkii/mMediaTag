@@ -327,11 +327,8 @@ P.portraits = {
 -- Interrupt on CD
 P.interrupt_on_cd = {
 	enable = false,
-	gradient = true,
-	out_of_range = true,
 	set_bg_color = true,
 	bg_multiplier = 0.5,
-	inactive_time = 0.8,
 }
 
 -- castbar shield
@@ -645,9 +642,8 @@ P.color = {
 	},
 
 	interrupt_on_cd = {
-		onCD = { c = "FFA200FF", g = "FFC500BB" },
-		inTime = { c = "FF00E1FF", g = "FF0080D6" },
-		outOfRange = { c = "FFFFA500", g = "FFD67A00" },
+		onCD = "FFA200FF",
+		normal = "FFFFA500",
 		marker = "FFFFFFFF",
 	},
 
