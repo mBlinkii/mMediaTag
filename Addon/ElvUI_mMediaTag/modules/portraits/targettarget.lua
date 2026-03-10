@@ -35,7 +35,7 @@ function module:InitializeToTPortrait()
 
 				if not portraits[unit].isEnabled then
 					portraits[unit]:RegisterEvent("PLAYER_TARGET_CHANGED")
-					portraits[unit]:RegisterUnitEvent("UNIT_TARGET", unit)
+					portraits[unit]:RegisterEvent("UNIT_TARGET", "target")
 					portraits[unit].isEnabled = true
 				end
 			end

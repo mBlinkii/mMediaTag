@@ -183,18 +183,18 @@ local function OnPlateAdded(_, unitToken)
 	end)
 end
 
-local function OnUnitDied(_, unitToken)
-	if E:IsSecretValue(unitToken) or not unitToken then return end
+-- local function OnUnitDied(_, unitToken)
+-- 	if E:IsSecretValue(unitToken) or not unitToken then return end
 
-	if strfind(unitToken, "Creature", 1, true) or strfind(unitToken, "Player-", 1, true) or strfind(unitToken, "Vehicle", 1, true) then
-		local guid = unitToken
-		for nameplateFrame in pairs(NP.Plates) do
-			if nameplateFrame.unit and UnitGUID(nameplateFrame.unit) == guid then ResetState(nameplateFrame.unit) end
-		end
-	else
-		ResetState(unitToken)
-	end
-end
+-- 	if strfind(unitToken, "Creature", 1, true) or strfind(unitToken, "Player-", 1, true) or strfind(unitToken, "Vehicle", 1, true) then
+-- 		local guid = unitToken
+-- 		for nameplateFrame in pairs(NP.Plates) do
+-- 			if nameplateFrame.unit and UnitGUID(nameplateFrame.unit) == guid then ResetState(nameplateFrame.unit) end
+-- 		end
+-- 	else
+-- 		ResetState(unitToken)
+-- 	end
+-- end
 
 local function OnTargetOrFocusChanged()
 	ScheduleRefresh()
@@ -310,7 +310,7 @@ function module:Initialize()
 
 	if module.focus.enable or module.target.enable or module.quest.enable then
 		module:RegisterEvent("NAME_PLATE_UNIT_ADDED", OnPlateAdded)
-		module:RegisterEvent("UNIT_DIED", OnUnitDied)
+		--module:RegisterEvent("UNIT_DIED", OnUnitDied)
 
 		module:RefreshAll()
 	end
