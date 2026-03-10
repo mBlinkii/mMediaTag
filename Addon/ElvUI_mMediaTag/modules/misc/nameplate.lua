@@ -1,5 +1,4 @@
 local mMT, DB, M, E, P, L, MEDIA = unpack(ElvUI_mMediaTag)
-
 local module = mMT:AddModule("NameplateTools", { "AceHook-3.0", "AceEvent-3.0" })
 
 local _G = _G
@@ -185,7 +184,7 @@ local function OnPlateAdded(_, unitToken)
 end
 
 local function OnUnitDied(_, unitToken)
-	if not unitToken or E:IsSecretValue(unitToken) then return end
+	if E:IsSecretValue(unitToken) or not unitToken then return end
 
 	if strfind(unitToken, "Creature", 1, true) or strfind(unitToken, "Player-", 1, true) or strfind(unitToken, "Vehicle", 1, true) then
 		local guid = unitToken
