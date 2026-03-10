@@ -99,7 +99,7 @@ MEDIA.color = {
 		marker = createColor("FFFFFFFF"),
 	},
 
-	castbar_shield = createColor("FFFFFFFF"),
+	-- castbar_shield = createColor("FFFFFFFF"),
 	minimap_skin = { color = createColor("FFFFFFFF"), cardinal = createColor("FFFFFFFF") },
 
 	dock = {
@@ -255,7 +255,7 @@ function mMT:UpdateMedia(arg)
 		}
 	end
 
-	if arg == "castbar_shield" or not arg then MEDIA.color.castbar_shield = CreateColorFromHexString(E.db.mMediaTag.color.castbar_shield) end
+	--if arg == "castbar_shield" or not arg then MEDIA.color.castbar_shield = CreateColorFromHexString(E.db.mMediaTag.color.castbar_shield) end
 
 	if arg == "minimap_skin" or not arg then
 		MEDIA.color.minimap_skin.color = CreateColorFromHexString(E.db.mMediaTag.color.minimap_skin.color)

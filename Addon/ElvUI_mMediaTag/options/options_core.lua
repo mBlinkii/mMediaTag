@@ -63,15 +63,8 @@ mMT.options = {
 					childGroups = "tab",
 					args = {},
 				},
-				castbar_shield = {
-					order = 3,
-					type = "group",
-					name = mMT:AddSettingsIcon(L["Castbar Shield"], "shield"),
-					childGroups = "tab",
-					args = {},
-				},
 				role_icons = {
-					order = 4,
+					order = 3,
 					type = "group",
 					name = mMT:AddSettingsIcon(L["Role Icons"], "pvp"),
 					childGroups = "tab",
