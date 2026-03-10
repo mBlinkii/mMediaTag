@@ -5,8 +5,11 @@ local GetSpellCooldown = C_Spell and C_Spell.GetSpellCooldown or GetSpellCooldow
 local GetSpellInfo = C_Spell and C_Spell.GetSpellInfo or GetSpellInfo
 local IsSpellInRange = C_Spell and C_Spell.IsSpellInRange or IsSpellInRange
 local GetSpellCooldownDuration = C_Spell.GetSpellCooldownDuration
+local EvalColorBool = C_CurveUtil.EvaluateColorValueFromBoolean
+
 local NP = E:GetModule("NamePlates")
 local UF = E:GetModule("UnitFrames")
+
 
 local spellList = {
 	-- warrior
@@ -64,82 +67,9 @@ local spellList = {
 	[1473] = 351338,
 }
 
--- testing
-local curve = C_CurveUtil.CreateColorCurve()
-curve:AddPoint(0, CreateColor(0, 0, 0, 0)) -- false → 0
-curve:AddPoint(1, CreateColor(1, 1, 1, 1)) -- true  → 1
-
-local function CheckSecretBool(secretBool, helper)
-	local value = C_CurveUtil.EvaluateColorValueFromBoolean(secretBool, 0, 1)
-	print("Evaluated value for", secretBool, "is", value)
-	--helper:SetAlphaFromBoolean(secretBool)
-	helper:SetAlpha(value)
-	print("Evaluated value for", secretBool, "is", value, helper:IsShown())
-	return helper:IsShown()
-end
-
-local function SetCastbarColor(castbar, color)
-	-- Set the color of the castbar
-	local c = color.c
-	local g = color.g
-
-	-- backup original color if not already done
-	if not castbar._originalColor then
-		local r, g, b = castbar:GetStatusBarTexture():GetVertexColor()
-		castbar._originalColor = { r = r, g = g, b = b }
-	end
-
-	if module.gradient then
-		castbar:GetStatusBarTexture():SetGradient("HORIZONTAL", { r = c.r, g = c.g, b = c.b, a = 1 }, { r = g.r, g = g.g, b = g.b, a = 1 })
-	else
-		castbar:SetStatusBarColor(c.r, c.g, c.b)
-	end
-
-	-- Set the color of the castbar background if required
-	if module.set_bg_color and castbar.bg then
-		-- backup original background color if not already done
-		if module.set_bg_color and castbar.bg and not castbar._originalBgColor then
-			local r, g, b, a = castbar.bg:GetVertexColor()
-			castbar._originalBgColor = { r = r, g = g, b = b, a = a }
-		end
-
-		local multiplier = module.bg_multiplier
-		castbar.bg:SetVertexColor(c.r * multiplier, c.g * multiplier, c.b * multiplier, 1)
-	end
-
-	castbar._color_Changed = true
-end
-
-local function ResetCastbarColor(castbar) -- Reset the castbar color to its original state
-	if castbar._originalColor then
-		local c = castbar._originalColor
-		castbar:SetStatusBarColor(c.r, c.g, c.b)
-		castbar._originalColor = nil
-	end
-
-	if castbar.bg and castbar._originalBgColor then
-		local c = castbar._originalBgColor
-		castbar.bg:SetVertexColor(c.r, c.g, c.b, c.a)
-		castbar._originalBgColor = nil
-	end
-
-	castbar._color_Changed = false
-end
-
-local function CreateMarker(castbar) -- Create the interrupt marker texture on the castbar
-	local color = module.colors.marker
-	castbar.InterruptMarker = castbar:CreateTexture(nil, "overlay")
-	castbar.InterruptMarker:SetDrawLayer("overlay", 4)
-	castbar.InterruptMarker:SetBlendMode("ADD")
-	castbar.InterruptMarker:SetSize(2, castbar:GetHeight())
-	castbar.InterruptMarker:SetColorTexture(color.r, color.g, color.b) -- update on /rl
-	castbar.InterruptMarker:Hide()
-end
-
 local function UpdateInterruptSpell()
 	local mySpecialization = select(1, GetSpecializationInfo(GetSpecialization()))
 
-	-- Check for WARLOCK interrupt
 	if E.myclass == "WARLOCK" then
 		if IsPlayerSpell(89766) then
 			spellList[mySpecialization] = 89766 or spellList[mySpecialization]
@@ -153,119 +83,168 @@ local function UpdateInterruptSpell()
 	module.myInterruptSpell = spellList[mySpecialization]
 end
 
-local function GetCastColor(castbar)
+local function ApplyCastbarColor(castbar)
 	local spellID = module.myInterruptSpell
+	if not spellID then return end
 
-	if not spellID then return end -- end if no spell or if castbar is not interruptible
+	local cdDuration = GetSpellCooldownDuration(spellID)
+	if not cdDuration then return end
 
-	-- cd and time calculations
-	local myCD = GetSpellCooldownDuration(spellID)
-	local spellCooldownInfo = GetSpellCooldown(spellID)
-	local timeNow = GetTime()
-	--local startTime, duration = spellCooldownInfo.startTime, spellCooldownInfo.duration
-	--local interruptCD = CheckSecretBool(spellCooldownInfo.startTime > 0) and CheckSecretBool(spellCooldownInfo.duration - (timeNow - spellCooldownInfo.startTime)) or 0
+	local elvuiColor = E.db.nameplates.colors.castColor
+	local onCDC  = module.colors.onCD.c
 
-	local value = castbar:GetValue()
-	local castbarMax = castbar.max or 1
-	local channeling = castbar.channeling
-	local reverse = castbar:GetReverseFill()
-	local interruptReadyInTime = 0 --(myCD + 0.2) < (channeling and value or (castbarMax - value))
+	local iR = EvalColorBool(cdDuration:IsZero(), elvuiColor.r, onCDC.r)
+	local iG = EvalColorBool(cdDuration:IsZero(), elvuiColor.g, onCDC.g)
+	local iB = EvalColorBool(cdDuration:IsZero(), elvuiColor.b, onCDC.b)
 
-	print("MyCD", spellID, myCD, myCD:IsZero())
+	castbar:SetStatusBarColor(iR, iG, iB)
 
-	local inactiveTime = module.inactiveTime
+	-- bg color
+	if module.set_bg_color and castbar.bg then
+		local m = module.bg_multiplier
+		local bgReadyR, bgReadyG, bgReadyB = elvuiColor.r * m, elvuiColor.g * m, elvuiColor.b * m
+		local bgOnCDR, bgOnCDG, bgOnCDB = onCDC.r * m, onCDC.g * m, onCDC.b * m
+		castbar.bg:SetVertexColor(EvalColorBool(cdDuration:IsZero(), bgReadyR, bgOnCDR), EvalColorBool(cdDuration:IsZero(), bgReadyG, bgOnCDG), EvalColorBool(cdDuration:IsZero(), bgReadyB, bgOnCDB), 1)
+	end
+end
 
-	-- out of range check
-	local isOutOfRange
-	if module.out_of_range then
-		local spellInfo = GetSpellInfo(spellID)
-		isOutOfRange = (spellInfo and IsSpellInRange(spellInfo.name, castbar.unit) == 0) or false
+local function GetOrCreateMarker(castbar)
+	if castbar.mMT_InterruptMarker then return castbar.mMT_InterruptMarker end
+	local color = module.colors.marker
+	local marker = castbar:CreateTexture(nil, "OVERLAY")
+	marker:SetDrawLayer("OVERLAY", 4)
+	marker:SetBlendMode("ADD")
+	marker:SetSize(2, castbar:GetHeight())
+	marker:SetColorTexture(color.r, color.g, color.b)
+	marker:Hide()
+	castbar.mMT_InterruptMarker = marker
+	return marker
+end
+
+local function GetOrCreatePositioner(castbar)
+	if castbar.mMT_CDPositioner then return castbar.mMT_CDPositioner, castbar.mMT_CDClipper end
+
+	local clip = CreateFrame("Frame", nil, castbar)
+	clip:SetAllPoints(castbar)
+	clip:SetClipsChildren(true)
+	clip:SetFrameLevel(castbar:GetFrameLevel() + 1)
+	castbar.mMT_CDClipper = clip
+
+	local pos = CreateFrame("StatusBar", nil, clip)
+	pos:SetStatusBarTexture(E.media.blankTex)
+	pos:GetStatusBarTexture():SetAlpha(0)
+	pos:SetMinMaxValues(0, 1)
+	pos:SetValue(0)
+	castbar.mMT_CDPositioner = pos
+
+	return pos, clip
+end
+
+local function CancelTicker(castbar)
+	if castbar.mMT_InterruptTicker then
+		castbar.mMT_InterruptTicker:Cancel()
+		castbar.mMT_InterruptTicker = nil
+	end
+end
+
+local function ResetOverlay(castbar)
+	CancelTicker(castbar)
+	if castbar.mMT_InterruptMarker then
+		castbar.mMT_InterruptMarker:Hide()
+		castbar.mMT_InTime = false
+	end
+	if castbar.mMT_CDClipper then castbar.mMT_CDClipper:Hide() end
+end
+
+local function PlaceMarker(castbar, unit)
+	--if castbar.mMT_InterruptMarker and castbar.mMT_InterruptMarker:IsShown() then return end
+	print("PlaceMarker called for", unit)
+	local spellID = module.myInterruptSpell
+	if not spellID then return end
+
+	local cdDuration = GetSpellCooldownDuration(spellID)
+	if not cdDuration then return end
+
+	local notInt = castbar.notInterruptible
+
+	-- isReady=true > 0 (no marker), isReady=false > 1 (show marker )
+	local markerAlpha = EvalColorBool(cdDuration:IsZero(), 0, 1)
+	-- notInt=true > always 0
+	markerAlpha = EvalColorBool(notInt, 0, markerAlpha)
+
+	local castDuration = UnitCastingDuration(unit) or UnitChannelDuration(unit)
+	if not castDuration then
+		if castbar.mMT_CDClipper then castbar.mMT_CDClipper:SetAlpha(0) end
+		return
 	end
 
-	-- Set the castbar color based on the interrupt state
-	if myCD:IsZero() then
-		-- marker position calculation and set
-		--local markerPosition = (startTime + duration - castbar.startTime + 0.2) / castbarMax
-		--if channeling or reverse then markerPosition = 1 - markerPosition end
+	local pos, clip = GetOrCreatePositioner(castbar)
+	local reverseFill = castbar:GetReverseFill()
 
-		return module.colors.inTime
+	pos:ClearAllPoints()
+	pos:SetPoint("TOPLEFT", castbar, "TOPLEFT")
+	pos:SetPoint("BOTTOMRIGHT", castbar, "BOTTOMRIGHT")
+	pos:SetReverseFill(reverseFill)
+	pos:SetMinMaxValues(0, castDuration:GetTotalDuration())
+	pos:SetValue(cdDuration:GetRemainingDuration())
+	clip:SetAlpha(markerAlpha)
+	clip:Show()
+
+	local marker = GetOrCreateMarker(castbar)
+	marker:SetParent(clip)
+	local mc = module.colors.marker
+	marker:SetColorTexture(mc.r, mc.g, mc.b)
+	marker:SetSize(2, castbar:GetHeight())
+	marker:ClearAllPoints()
+	if reverseFill then
+		marker:SetPoint("RIGHT", pos:GetStatusBarTexture(), "LEFT", 0, 0)
 	else
-		if isOutOfRange then
-			return module.colors.outOfRange
-		else
-			return module.colors.onCD
-		end
+		marker:SetPoint("LEFT", pos:GetStatusBarTexture(), "RIGHT", 0, 0)
 	end
+
+	-- castbar.mMT_test = {
+	-- 	r = EvalColorBool(cdDuration:IsZero(), module.colors.inTime.c.r, module.colors.onCD.c.r),
+	-- 	g = EvalColorBool(cdDuration:IsZero(), module.colors.inTime.c.g, module.colors.onCD.c.g),
+	-- 	b = EvalColorBool(cdDuration:IsZero(), module.colors.inTime.c.b, module.colors.onCD.c.b),
+	-- }
+	marker:Show()
 end
 
-local function UpdateMarker(castbar, markerPosition)
-	-- marker position calculation and set
-	if markerPosition then
-		if not castbar.InterruptMarker then CreateMarker(castbar) end -- create marker if it doesn't exist
+local function UpdateMarker(castbar)
+	if not castbar.mMT_CDClipper then return end
+	local spellID = module.myInterruptSpell
+	if not spellID then return end
 
-		castbar.InterruptMarker:SetPoint("center", castbar, "left", markerPosition * castbar:GetWidth(), 0)
-		castbar.InterruptMarker:Show()
-	end
-end
+	local cdDuration = GetSpellCooldownDuration(spellID)
+	if not cdDuration then return end
 
-local function HideMarker(castbar)
-	if castbar.InterruptMarker and castbar.InterruptMarker:IsShown() then -- hide marker if it exists
-		castbar.InterruptMarker:Hide()
-	end
-end
-
-local UPDATE_INTERVAL = 0.5
-
-local function Castbar_OnUpdate(castbar, elapsed)
-	if CheckSecretBool(castbar.notInterruptible) then return end
-
-	castbar._interruptOnCD_Elapsed = (castbar._interruptOnCD_Elapsed or 0) + elapsed
-	if castbar._interruptOnCD_Elapsed > UPDATE_INTERVAL then
-		local color, markerPosition = GetCastColor(castbar)
-		if color then
-			SetCastbarColor(castbar, color)
-			if markerPosition then
-				UpdateMarker(castbar, markerPosition)
-			else
-				HideMarker(castbar)
-			end
-		elseif castbar._color_Changed then
-			ResetCastbarColor(castbar)
-			HideMarker(castbar)
-		end
-		castbar._interruptOnCD_Elapsed = 0
-	end
+	local notInt = castbar.notInterruptible
+	local showAlpha = EvalColorBool(cdDuration:IsZero(), 0, 1)
+	castbar.mMT_CDClipper:SetAlpha(EvalColorBool(notInt, 0, showAlpha))
+	if castbar.mMT_InterruptMarker then castbar.mMT_InterruptMarker:SetAlpha(showAlpha) end
 end
 
 local function Update(castbar, unit)
-	if not castbar then return end -- end if castbar is nils
+	if not castbar then return end
+	if not unit then return end
 
-	if not castbar.helper then
-		castbar.helper = castbar:CreateTexture("mMT-Helper")
-		castbar.helper:SetAllPoints()
-		--castbar.helper:SetSize(64, 64)
-		castbar.helper:SetColorTexture(1, 1, 0, 0.5)
-	end
+	ResetOverlay(castbar)
 
-	--if (unit == "vehicle") or (unit == "player") then return end -- ignore vehicle and player castbars
-	-- if CheckSecretBool(castbar.notInterruptible, castbar.helper) then
-	-- 	print("Castbar is not interruptible")
-	-- 	return
-	-- end -- ignore non-interruptible castbars
+	if not castbar.casting and not castbar.channeling then return end
+	if not UnitCanAttack("player", unit) then return end
+	if not module.myInterruptSpell then return end
 
-	local color, markerPosition = GetCastColor(castbar)
+	ApplyCastbarColor(castbar)
+	PlaceMarker(castbar, unit)
 
-	if not markerPosition then HideMarker(castbar) end
-
-	if color then
-		SetCastbarColor(castbar, color)
-		UpdateMarker(castbar, markerPosition)
-	end
-
-	if not castbar._interruptOnCD_OnUpdateHooked then
-		castbar:HookScript("OnUpdate", Castbar_OnUpdate)
-		castbar._interruptOnCD_OnUpdateHooked = true
-	end
+	castbar.mMT_InterruptTicker = C_Timer.NewTicker(0.1, function()
+		if not castbar:IsShown() or not (castbar.casting or castbar.channeling) then
+			ResetOverlay(castbar)
+			return
+		end
+		ApplyCastbarColor(castbar)
+		UpdateMarker(castbar)
+	end)
 end
 
 function module:Initialize()
@@ -281,7 +260,6 @@ function module:Initialize()
 			module.isEnabled = true
 		end
 
-		module.colors = nil
 		module.colors = {
 			onCD = MEDIA.color.interrupt_on_cd.onCD,
 			inTime = MEDIA.color.interrupt_on_cd.inTime,
