@@ -1927,11 +1927,16 @@ MEDIA.icons.role = {
 }
 
 MEDIA.icons.phase_icons = {
-	ankh = "Interface\\AddOns\\ElvUI_mMediaTag\\media\\icons\\tags\\ankh.tga",
-	army_knife = "Interface\\AddOns\\ElvUI_mMediaTag\\media\\icons\\tags\\army-knife.tga",
-	autumn = "Interface\\AddOns\\ElvUI_mMediaTag\\media\\icons\\tags\\autumn.tga",
-	bat = "Interface\\AddOns\\ElvUI_mMediaTag\\media\\icons\\tags\\bat.tga",
-	batman_logo = "Interface\\AddOns\\ElvUI_mMediaTag\\media\\icons\\tags\\batman-logo.tga",
+	galaxie = "Interface\\AddOns\\ElvUI_mMediaTag\\media\\icons\\phase\\galaxie.tga",
+	galaxie2 = "Interface\\AddOns\\ElvUI_mMediaTag\\media\\icons\\phase\\galaxie2.tga",
+	hurrikan = "Interface\\AddOns\\ElvUI_mMediaTag\\media\\icons\\phase\\hurrikan.tga",
+	mond = "Interface\\AddOns\\ElvUI_mMediaTag\\media\\icons\\phase\\mond.tga",
+	nebel = "Interface\\AddOns\\ElvUI_mMediaTag\\media\\icons\\phase\\nebel.tga",
+	phase03 = "Interface\\AddOns\\ElvUI_mMediaTag\\media\\icons\\phase\\phase03.tga",
+	phase10 = "Interface\\AddOns\\ElvUI_mMediaTag\\media\\icons\\phase\\phase10.tga",
+	phase12 = "Interface\\AddOns\\ElvUI_mMediaTag\\media\\icons\\phase\\phase12.tga",
+	phase17 = "Interface\\AddOns\\ElvUI_mMediaTag\\media\\icons\\phase\\phase17.tga",
+	updates = "Interface\\AddOns\\ElvUI_mMediaTag\\media\\icons\\phase\\updates.tga",
 }
 
 MEDIA.minimap = {
