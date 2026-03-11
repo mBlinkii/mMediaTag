@@ -153,16 +153,14 @@ P.portraits = {
 		embellishment = true,
 		force_reaction = false,
 		force_default = false,
-		gradient = true,
-		gradient_mode = "HORIZONTAL",
-		scale = 1,
+		scale = 0.6,
 		class_icon = "none",
 		desaturate = false,
 		extratop = true,
-		rare = "blizz_rare",
-		elite = "blizz_elite",
-		rareelite = "blizz_elite",
-		boss = "blizz_boss",
+		rare = "blizz_rare_neutral",
+		elite = "blizz_rare_neutral",
+		rareelite = "blizz_rare_neutral",
+		boss = "blizz_boss_neutral",
 		player = "blizz_boss_neutral",
 	},
 	custom = {
@@ -179,9 +177,8 @@ P.portraits = {
 		extra_shadow = "",
 		texture = "",
 	},
-
 	player = {
-		cast = true,
+		cast = false,
 		enable = true,
 		extra = false,
 		level = 20,
@@ -297,6 +294,7 @@ P.portraits = {
 		size = 90,
 		strata = "AUTO",
 		texture = "blizz_round",
+		forceExtra = "none",
 		unitcolor = false,
 		extra_settings = {
 			enable = false,
@@ -570,31 +568,31 @@ P.nameplates = {
 }
 
 P.role_icons = {
-	enable = true,
+	enable = false,
 	tank = "brain",
 	heal = "brain",
 	dd = "brain",
 }
 
 P.phase_icon = {
-	enable = true,
+	enable = false,
 	icon = "galaxie",
 }
 
 P.resurrection_icon = {
-	enable = true,
+	enable = false,
 	icon = "galaxie",
 }
 
 P.ready_check_icon = {
-	enable = true,
+	enable = false,
 	ready = "galaxie",
 	notready = "galaxie",
 	waiting = "galaxie",
 }
 
 P.summon_icon = {
-	enable = true,
+	enable = false,
 	available = "galaxie",
 	accepted = "galaxie",
 	rejected = "galaxie",

@@ -3209,39 +3209,6 @@ mMT.options.args.unitframes.args.portraits.args = {
 							M.Portraits:Initialize()
 						end,
 					},
-					gradient_toggle = {
-						order = 2,
-						type = "toggle",
-						name = L["Gradient"],
-						desc = L["Enable gradient colors for the portraits."],
-						get = function(info)
-							return E.db.mMediaTag.portraits.misc.gradient
-						end,
-						set = function(info, value)
-							E.db.mMediaTag.portraits.misc.gradient = value
-							M.Portraits:Initialize()
-						end,
-					},
-					gradient_mode_select = {
-						order = 3,
-						type = "select",
-						name = L["Mode"],
-						desc = L["Choose the gradient orientation."],
-						disabled = function()
-							return not E.db.mMediaTag.portraits.misc.gradient
-						end,
-						get = function(info)
-							return E.db.mMediaTag.portraits.misc.gradient_mode
-						end,
-						set = function(info, value)
-							E.db.mMediaTag.portraits.misc.gradient_mode = value
-							M.Portraits:Initialize()
-						end,
-						values = {
-							VERTICAL = L["Vertical"],
-							HORIZONTAL = L["Horizontal"],
-						},
-					},
 				},
 			},
 			misc_group = {
