@@ -660,9 +660,8 @@ P.color = {
 
 	interrupt_on_cd = {
 		onCD = "FFA200FF",
-		normal = "FFFFA500",
+		normal = "FF15FF47",
 		marker = "FFFFFFFF",
-		bg = "FF3D3D3D",
 	},
 
 	-- castbar_shield = "FFFFFFFF",
