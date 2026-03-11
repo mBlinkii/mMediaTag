@@ -645,6 +645,7 @@ P.color = {
 		onCD = "FFA200FF",
 		normal = "FFFFA500",
 		marker = "FFFFFFFF",
+		bg = "FF3D3D3D"
 	},
 
 	-- castbar_shield = "FFFFFFFF",
