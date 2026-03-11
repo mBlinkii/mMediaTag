@@ -181,7 +181,7 @@ mMT.options.args.tags.args = {
 				},
 			},
 			boss = {
-				order = 3,
+				order = 4,
 				type = "group",
 				inline = true,
 				name = L["Boss"],
