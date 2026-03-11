@@ -197,9 +197,9 @@ local function RebuildRoleTables()
 	roleColors.HEALER = colors.healer
 	roleColors.DAMAGER = colors.dps
 
-	roleIcons.TANK = icons[db.misc.tank]
-	roleIcons.HEALER = icons[db.misc.healer]
-	roleIcons.DAMAGER = icons[db.misc.dps]
+	roleIcons.TANK = MEDIA.icons.role[db.misc.tank]
+	roleIcons.HEALER = MEDIA.icons.role[db.misc.healer]
+	roleIcons.DAMAGER = MEDIA.icons.role[db.misc.dps]
 end
 
 local function RebuildClassificationIcons()

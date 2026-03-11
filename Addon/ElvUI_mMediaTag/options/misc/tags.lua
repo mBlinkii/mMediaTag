@@ -447,7 +447,13 @@ mMT.options.args.tags.args = {
 									E.db.mMediaTag.tags.misc.tank = value
 									M.TAGs:Initialize()
 								end,
-								values = BuildIconsDB,
+								values = function()
+									local icons = {}
+									for key, icon in pairs(MEDIA.icons.role) do
+										icons[key] = E:TextureString(icon, ":14:14") .. " " .. key
+									end
+									return icons
+								end,
 							},
 							color = {
 								type = "color",
@@ -485,7 +491,13 @@ mMT.options.args.tags.args = {
 									E.db.mMediaTag.tags.misc.healer = value
 									M.TAGs:Initialize()
 								end,
-								values = BuildIconsDB,
+								values = function()
+									local icons = {}
+									for key, icon in pairs(MEDIA.icons.role) do
+										icons[key] = E:TextureString(icon, ":14:14") .. " " .. key
+									end
+									return icons
+								end,
 							},
 							color = {
 								type = "color",
@@ -523,7 +535,13 @@ mMT.options.args.tags.args = {
 									E.db.mMediaTag.tags.misc.dps = value
 									M.TAGs:Initialize()
 								end,
-								values = BuildIconsDB,
+								values = function()
+									local icons = {}
+									for key, icon in pairs(MEDIA.icons.role) do
+										icons[key] = E:TextureString(icon, ":14:14") .. " " .. key
+									end
+									return icons
+								end,
 							},
 							color = {
 								type = "color",
