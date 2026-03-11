@@ -1,8 +1,5 @@
 local mMT, DB, M, E, P, L, MEDIA = unpack(ElvUI_mMediaTag)
 
-local CH = E:GetModule("Chat")
-local UF = E:GetModule("UnitFrames")
-
 mMT.options.args.unitframes.args.phase_icon.args = {
 	enable = {
 		order = 1,
@@ -16,7 +13,7 @@ mMT.options.args.unitframes.args.phase_icon.args = {
 		set = function(info, value)
 			E.db.mMediaTag.phase_icon.enable = value
 
-            if value then
+			if value then
 				mMT:UpdateModule("PhaseIcon")
 			else
 				E:StaticPopup_Show("CONFIG_RL")
@@ -75,7 +72,7 @@ mMT.options.args.unitframes.args.phase_icon.args = {
 					mMT:UpdateModule("PhaseIcon")
 				end,
 			},
-            sharding = {
+			sharding = {
 				type = "color",
 				order = 2,
 				name = L["Sharding"],
@@ -91,7 +88,7 @@ mMT.options.args.unitframes.args.phase_icon.args = {
 					mMT:UpdateModule("PhaseIcon")
 				end,
 			},
-             WarMode = {
+			WarMode = {
 				type = "color",
 				order = 3,
 				name = L["War Mode"],
@@ -106,9 +103,8 @@ mMT.options.args.unitframes.args.phase_icon.args = {
 					MEDIA.color.phase_icon.WarMode = CreateColorFromHexString(hex)
 					mMT:UpdateModule("PhaseIcon")
 				end,
-
 			},
-            ChromieTime = {
+			ChromieTime = {
 				type = "color",
 				order = 4,
 				name = L["Chromie Time"],
@@ -124,7 +120,7 @@ mMT.options.args.unitframes.args.phase_icon.args = {
 					mMT:UpdateModule("PhaseIcon")
 				end,
 			},
-            TimerunningHwt = {
+			TimerunningHwt = {
 				type = "color",
 				order = 5,
 				name = L["Timerunning World"],

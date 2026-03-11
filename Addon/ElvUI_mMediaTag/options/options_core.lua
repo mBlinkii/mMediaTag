@@ -76,7 +76,28 @@ mMT.options = {
 					name = mMT:AddSettingsIcon(L["Phase Icon"], "refresh"),
 					childGroups = "tab",
 					args = {},
-				}
+				},
+				ready_check_icon = {
+					order = 5,
+					type = "group",
+					name = mMT:AddSettingsIcon(L["Ready Check Icons"], "ok"),
+					childGroups = "tab",
+					args = {},
+				},
+				resurrection_icon = {
+					order = 6,
+					type = "group",
+					name = mMT:AddSettingsIcon(L["Resurrection Icon"], "heart"),
+					childGroups = "tab",
+					args = {},
+				},
+				summon_icon = {
+					order = 7,
+					type = "group",
+					name = mMT:AddSettingsIcon(L["Summon Icon"], "teleports"),
+					childGroups = "tab",
+					args = {},
+				},
 			},
 		},
 		nameplates = {

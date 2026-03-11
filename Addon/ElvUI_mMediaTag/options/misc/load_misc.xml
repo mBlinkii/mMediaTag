@@ -7,4 +7,7 @@
 	<Script file="tags.lua"/>
 	<Script file="role_icons.lua"/>
 	<Script file="phase_icon.lua"/>
+	<Script file="ready_check_icon.lua"/>
+    <Script file="resurrection_icon.lua"/>
+    <Script file="summon_icon.lua"/>
 </Ui>

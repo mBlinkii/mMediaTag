@@ -578,7 +578,26 @@ P.role_icons = {
 
 P.phase_icon = {
 	enable = true,
-	icon = "ankh",
+	icon = "galaxie",
+}
+
+P.resurrection_icon = {
+	enable = true,
+	icon = "galaxie",
+}
+
+P.ready_check_icon = {
+	enable = true,
+	ready = "galaxie",
+	notready = "galaxie",
+	waiting = "galaxie",
+}
+
+P.summon_icon = {
+	enable = true,
+	available = "galaxie",
+	accepted = "galaxie",
+	rejected = "galaxie",
 }
 
 -- color
@@ -645,7 +664,7 @@ P.color = {
 		onCD = "FFA200FF",
 		normal = "FFFFA500",
 		marker = "FFFFFFFF",
-		bg = "FF3D3D3D"
+		bg = "FF3D3D3D",
 	},
 
 	-- castbar_shield = "FFFFFFFF",
@@ -724,5 +743,11 @@ P.color = {
 		WarMode = "FFF73E3E",
 		ChromieTime = "FFFFC21A",
 		TimerunningHwt = "FFF566D6",
+	},
+
+	summon_icon = {
+		available = "FFFFFFFF",
+		accepted = "FF74FA4C",
+		rejected = "FFF73E3E",
 	},
 }

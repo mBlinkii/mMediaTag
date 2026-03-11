@@ -165,6 +165,12 @@ MEDIA.color = {
 		ChromieTime = createColor("FFFFC21A"),
 		TimerunningHwt = createColor("FFF566D6"),
 	},
+
+	summon_icon = {
+		available = createColor("FFFFFFFF"),
+		accepted = createColor("FF74FA4C"),
+		rejected = createColor("FFF73E3E"),
+	},
 }
 
 MEDIA.myclass = E:ClassColor(E.myclass)
@@ -338,6 +344,12 @@ function mMT:UpdateMedia(arg)
 		MEDIA.color.phase_icon.WarMode = CreateColorFromHexString(E.db.mMediaTag.color.phase_icon.WarMode)
 		MEDIA.color.phase_icon.ChromieTime = CreateColorFromHexString(E.db.mMediaTag.color.phase_icon.ChromieTime)
 		MEDIA.color.phase_icon.TimerunningHwt = CreateColorFromHexString(E.db.mMediaTag.color.phase_icon.TimerunningHwt)
+	end
+
+	if arg == "summon_icon" or not arg then
+		MEDIA.color.summon_icon.available = CreateColorFromHexString(E.db.mMediaTag.color.summon_icon.available)
+		MEDIA.color.summon_icon.accepted = CreateColorFromHexString(E.db.mMediaTag.color.summon_icon.accepted)
+		MEDIA.color.summon_icon.rejected = CreateColorFromHexString(E.db.mMediaTag.color.summon_icon.rejected)
 	end
 end
 
@@ -1937,6 +1949,111 @@ MEDIA.icons.phase_icons = {
 	phase12 = "Interface\\AddOns\\ElvUI_mMediaTag\\media\\icons\\phase\\phase12.tga",
 	phase17 = "Interface\\AddOns\\ElvUI_mMediaTag\\media\\icons\\phase\\phase17.tga",
 	updates = "Interface\\AddOns\\ElvUI_mMediaTag\\media\\icons\\phase\\updates.tga",
+}
+
+MEDIA.icons.resurrection_icon = {
+	resurrection_01 = "Interface\\AddOns\\ElvUI_mMediaTag\\media\\icons\\resurrection\\resurrection_01.tga",
+	resurrection_02 = "Interface\\AddOns\\ElvUI_mMediaTag\\media\\icons\\resurrection\\resurrection_02.tga",
+	resurrection_03 = "Interface\\AddOns\\ElvUI_mMediaTag\\media\\icons\\resurrection\\resurrection_03.tga",
+	resurrection_04 = "Interface\\AddOns\\ElvUI_mMediaTag\\media\\icons\\resurrection\\resurrection_04.tga",
+	resurrection_05 = "Interface\\AddOns\\ElvUI_mMediaTag\\media\\icons\\resurrection\\resurrection_05.tga",
+	resurrection_06 = "Interface\\AddOns\\ElvUI_mMediaTag\\media\\icons\\resurrection\\resurrection_06.tga",
+	resurrection_07 = "Interface\\AddOns\\ElvUI_mMediaTag\\media\\icons\\resurrection\\resurrection_07.tga",
+	resurrection_08 = "Interface\\AddOns\\ElvUI_mMediaTag\\media\\icons\\resurrection\\resurrection_08.tga",
+	resurrection_09 = "Interface\\AddOns\\ElvUI_mMediaTag\\media\\icons\\resurrection\\resurrection_09.tga",
+	resurrection_10 = "Interface\\AddOns\\ElvUI_mMediaTag\\media\\icons\\resurrection\\resurrection_10.tga",
+	resurrection_11 = "Interface\\AddOns\\ElvUI_mMediaTag\\media\\icons\\resurrection\\resurrection_11.tga",
+	resurrection_12 = "Interface\\AddOns\\ElvUI_mMediaTag\\media\\icons\\resurrection\\resurrection_12.tga",
+	resurrection_13 = "Interface\\AddOns\\ElvUI_mMediaTag\\media\\icons\\resurrection\\resurrection_13.tga",
+	resurrection_14 = "Interface\\AddOns\\ElvUI_mMediaTag\\media\\icons\\resurrection\\resurrection_14.tga",
+	resurrection_15 = "Interface\\AddOns\\ElvUI_mMediaTag\\media\\icons\\resurrection\\resurrection_15.tga",
+	resurrection_16 = "Interface\\AddOns\\ElvUI_mMediaTag\\media\\icons\\resurrection\\resurrection_16.tga",
+	resurrection_17 = "Interface\\AddOns\\ElvUI_mMediaTag\\media\\icons\\resurrection\\resurrection_17.tga",
+	resurrection_18 = "Interface\\AddOns\\ElvUI_mMediaTag\\media\\icons\\resurrection\\resurrection_18.tga",
+	resurrection_19 = "Interface\\AddOns\\ElvUI_mMediaTag\\media\\icons\\resurrection\\resurrection_19.tga",
+}
+
+MEDIA.icons.ready_check_icon = {
+	readycheck_01 = "Interface\\AddOns\\ElvUI_mMediaTag\\media\\icons\\readycheck\\readycheck_01.tga",
+	readycheck_02 = "Interface\\AddOns\\ElvUI_mMediaTag\\media\\icons\\readycheck\\readycheck_02.tga",
+	readycheck_03 = "Interface\\AddOns\\ElvUI_mMediaTag\\media\\icons\\readycheck\\readycheck_03.tga",
+	readycheck_04 = "Interface\\AddOns\\ElvUI_mMediaTag\\media\\icons\\readycheck\\readycheck_04.tga",
+	readycheck_05 = "Interface\\AddOns\\ElvUI_mMediaTag\\media\\icons\\readycheck\\readycheck_05.tga",
+	readycheck_06 = "Interface\\AddOns\\ElvUI_mMediaTag\\media\\icons\\readycheck\\readycheck_06.tga",
+	readycheck_07 = "Interface\\AddOns\\ElvUI_mMediaTag\\media\\icons\\readycheck\\readycheck_07.tga",
+	readycheck_08 = "Interface\\AddOns\\ElvUI_mMediaTag\\media\\icons\\readycheck\\readycheck_08.tga",
+	readycheck_09 = "Interface\\AddOns\\ElvUI_mMediaTag\\media\\icons\\readycheck\\readycheck_09.tga",
+	readycheck_10 = "Interface\\AddOns\\ElvUI_mMediaTag\\media\\icons\\readycheck\\readycheck_10.tga",
+	readycheck_11 = "Interface\\AddOns\\ElvUI_mMediaTag\\media\\icons\\readycheck\\readycheck_11.tga",
+	readycheck_12 = "Interface\\AddOns\\ElvUI_mMediaTag\\media\\icons\\readycheck\\readycheck_12.tga",
+	readycheck_13 = "Interface\\AddOns\\ElvUI_mMediaTag\\media\\icons\\readycheck\\readycheck_13.tga",
+	readycheck_14 = "Interface\\AddOns\\ElvUI_mMediaTag\\media\\icons\\readycheck\\readycheck_14.tga",
+	readycheck_15 = "Interface\\AddOns\\ElvUI_mMediaTag\\media\\icons\\readycheck\\readycheck_15.tga",
+	readycheck_16 = "Interface\\AddOns\\ElvUI_mMediaTag\\media\\icons\\readycheck\\readycheck_16.tga",
+	readycheck_17 = "Interface\\AddOns\\ElvUI_mMediaTag\\media\\icons\\readycheck\\readycheck_17.tga",
+	readycheck_18 = "Interface\\AddOns\\ElvUI_mMediaTag\\media\\icons\\readycheck\\readycheck_18.tga",
+	readycheck_19 = "Interface\\AddOns\\ElvUI_mMediaTag\\media\\icons\\readycheck\\readycheck_19.tga",
+	readycheck_20 = "Interface\\AddOns\\ElvUI_mMediaTag\\media\\icons\\readycheck\\readycheck_20.tga",
+	readycheck_21 = "Interface\\AddOns\\ElvUI_mMediaTag\\media\\icons\\readycheck\\readycheck_21.tga",
+	readycheck_22 = "Interface\\AddOns\\ElvUI_mMediaTag\\media\\icons\\readycheck\\readycheck_22.tga",
+	readycheck_23 = "Interface\\AddOns\\ElvUI_mMediaTag\\media\\icons\\readycheck\\readycheck_23.tga",
+	readycheck_24 = "Interface\\AddOns\\ElvUI_mMediaTag\\media\\icons\\readycheck\\readycheck_24.tga",
+	readycheck_25 = "Interface\\AddOns\\ElvUI_mMediaTag\\media\\icons\\readycheck\\readycheck_25.tga",
+	readycheck_26 = "Interface\\AddOns\\ElvUI_mMediaTag\\media\\icons\\readycheck\\readycheck_26.tga",
+	readycheck_27 = "Interface\\AddOns\\ElvUI_mMediaTag\\media\\icons\\readycheck\\readycheck_27.tga",
+	readycheck_28 = "Interface\\AddOns\\ElvUI_mMediaTag\\media\\icons\\readycheck\\readycheck_28.tga",
+	readycheck_29 = "Interface\\AddOns\\ElvUI_mMediaTag\\media\\icons\\readycheck\\readycheck_29.tga",
+	readycheck_30 = "Interface\\AddOns\\ElvUI_mMediaTag\\media\\icons\\readycheck\\readycheck_30.tga",
+	readycheck_31 = "Interface\\AddOns\\ElvUI_mMediaTag\\media\\icons\\readycheck\\readycheck_31.tga",
+	readycheck_32 = "Interface\\AddOns\\ElvUI_mMediaTag\\media\\icons\\readycheck\\readycheck_32.tga",
+	readycheck_33 = "Interface\\AddOns\\ElvUI_mMediaTag\\media\\icons\\readycheck\\readycheck_33.tga",
+	readycheck_34 = "Interface\\AddOns\\ElvUI_mMediaTag\\media\\icons\\readycheck\\readycheck_34.tga",
+	readycheck_35 = "Interface\\AddOns\\ElvUI_mMediaTag\\media\\icons\\readycheck\\readycheck_35.tga",
+	readycheck_36 = "Interface\\AddOns\\ElvUI_mMediaTag\\media\\icons\\readycheck\\readycheck_36.tga",
+	readycheck_37 = "Interface\\AddOns\\ElvUI_mMediaTag\\media\\icons\\readycheck\\readycheck_37.tga",
+}
+
+MEDIA.icons.summon_icon = {
+	summon_01 = "Interface\\AddOns\\ElvUI_mMediaTag\\media\\icons\\summon\\summon_01.tga",
+	summon_02 = "Interface\\AddOns\\ElvUI_mMediaTag\\media\\icons\\summon\\summon_02.tga",
+	summon_03 = "Interface\\AddOns\\ElvUI_mMediaTag\\media\\icons\\summon\\summon_03.tga",
+	summon_04 = "Interface\\AddOns\\ElvUI_mMediaTag\\media\\icons\\summon\\summon_04.tga",
+	summon_05 = "Interface\\AddOns\\ElvUI_mMediaTag\\media\\icons\\summon\\summon_05.tga",
+	summon_06 = "Interface\\AddOns\\ElvUI_mMediaTag\\media\\icons\\summon\\summon_06.tga",
+	summon_07 = "Interface\\AddOns\\ElvUI_mMediaTag\\media\\icons\\summon\\summon_07.tga",
+	summon_08 = "Interface\\AddOns\\ElvUI_mMediaTag\\media\\icons\\summon\\summon_08.tga",
+	summon_09 = "Interface\\AddOns\\ElvUI_mMediaTag\\media\\icons\\summon\\summon_09.tga",
+	summon_10 = "Interface\\AddOns\\ElvUI_mMediaTag\\media\\icons\\summon\\summon_10.tga",
+	summon_11 = "Interface\\AddOns\\ElvUI_mMediaTag\\media\\icons\\summon\\summon_11.tga",
+	summon_12 = "Interface\\AddOns\\ElvUI_mMediaTag\\media\\icons\\summon\\summon_12.tga",
+	summon_13 = "Interface\\AddOns\\ElvUI_mMediaTag\\media\\icons\\summon\\summon_13.tga",
+	summon_14 = "Interface\\AddOns\\ElvUI_mMediaTag\\media\\icons\\summon\\summon_14.tga",
+	summon_15 = "Interface\\AddOns\\ElvUI_mMediaTag\\media\\icons\\summon\\summon_15.tga",
+	summon_16 = "Interface\\AddOns\\ElvUI_mMediaTag\\media\\icons\\summon\\summon_16.tga",
+	summon_17 = "Interface\\AddOns\\ElvUI_mMediaTag\\media\\icons\\summon\\summon_17.tga",
+	summon_18 = "Interface\\AddOns\\ElvUI_mMediaTag\\media\\icons\\summon\\summon_18.tga",
+	summon_19 = "Interface\\AddOns\\ElvUI_mMediaTag\\media\\icons\\summon\\summon_19.tga",
+	summon_20 = "Interface\\AddOns\\ElvUI_mMediaTag\\media\\icons\\summon\\summon_20.tga",
+	summon_21 = "Interface\\AddOns\\ElvUI_mMediaTag\\media\\icons\\summon\\summon_21.tga",
+	summon_22 = "Interface\\AddOns\\ElvUI_mMediaTag\\media\\icons\\summon\\summon_22.tga",
+	summon_23 = "Interface\\AddOns\\ElvUI_mMediaTag\\media\\icons\\summon\\summon_23.tga",
+	summon_24 = "Interface\\AddOns\\ElvUI_mMediaTag\\media\\icons\\summon\\summon_24.tga",
+	summon_25 = "Interface\\AddOns\\ElvUI_mMediaTag\\media\\icons\\summon\\summon_25.tga",
+	summon_26 = "Interface\\AddOns\\ElvUI_mMediaTag\\media\\icons\\summon\\summon_26.tga",
+	summon_27 = "Interface\\AddOns\\ElvUI_mMediaTag\\media\\icons\\summon\\summon_27.tga",
+	summon_28 = "Interface\\AddOns\\ElvUI_mMediaTag\\media\\icons\\summon\\summon_28.tga",
+	summon_29 = "Interface\\AddOns\\ElvUI_mMediaTag\\media\\icons\\summon\\summon_29.tga",
+	summon_30 = "Interface\\AddOns\\ElvUI_mMediaTag\\media\\icons\\summon\\summon_30.tga",
+	summon_31 = "Interface\\AddOns\\ElvUI_mMediaTag\\media\\icons\\summon\\summon_31.tga",
+	summon_32 = "Interface\\AddOns\\ElvUI_mMediaTag\\media\\icons\\summon\\summon_32.tga",
+	summon_33 = "Interface\\AddOns\\ElvUI_mMediaTag\\media\\icons\\summon\\summon_33.tga",
+	summon_34 = "Interface\\AddOns\\ElvUI_mMediaTag\\media\\icons\\summon\\summon_34.tga",
+	summon_35 = "Interface\\AddOns\\ElvUI_mMediaTag\\media\\icons\\summon\\summon_35.tga",
+	summon_36 = "Interface\\AddOns\\ElvUI_mMediaTag\\media\\icons\\summon\\summon_36.tga",
+	summon_37 = "Interface\\AddOns\\ElvUI_mMediaTag\\media\\icons\\summon\\summon_37.tga",
+	summon_38 = "Interface\\AddOns\\ElvUI_mMediaTag\\media\\icons\\summon\\summon_38.tga",
+	summon_39 = "Interface\\AddOns\\ElvUI_mMediaTag\\media\\icons\\summon\\summon_39.tga",
+	summon_40 = "Interface\\AddOns\\ElvUI_mMediaTag\\media\\icons\\summon\\summon_40.tga",
 }
 
 MEDIA.minimap = {
