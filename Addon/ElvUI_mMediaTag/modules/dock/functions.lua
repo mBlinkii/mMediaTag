@@ -83,6 +83,7 @@ end
 local function SetupDockNotification(datatext, config)
 	local dock = datatext.mMT_Dock
 	local db = module.db.notification
+	local icon = MEDIA.icons.dock[db.style][db.icon] or MEDIA.fallback
 
 	if not config.icon.notification then
 		if dock.Notification then
@@ -102,9 +103,9 @@ local function SetupDockNotification(datatext, config)
 
 	-- calculate size and set properties
 	local size = db.auto and ((datatext:GetHeight() + 4) / 4) or db.size
-	local color = module.db.class.notification and MEDIA.myclass or colors.notification
+	local color = db.class and MEDIA.myclass or colors.notification
 	dock.Notification:Size(size, size)
-	dock.Notification:SetTexture(db.icon)
+	dock.Notification:SetTexture(icon)
 	dock.Notification.SetVertexColor(color.r, color.g, color.b, color.a or 1)
 	dock.Notification:Hide()
 end

@@ -85,7 +85,7 @@ P.datatexts = {
 		sort_method = "KEY",
 	},
 	teleports = {
-		icon = "teleport04",
+		icon = "teleport03",
 		favorites = {
 			enable = false,
 			a = { id = "none", kind = "none" },
@@ -98,7 +98,7 @@ P.datatexts = {
 		icon = "default",
 	},
 	professions = {
-		icon = "prof_a",
+		icon = "prof_e",
 		menu_icons = "default",
 	},
 	menu = {
@@ -360,9 +360,11 @@ P.dock = {
 
 	notification = {
 		enable = false,
+		class = false,
 		auto = true,
 		size = 16,
-		icon = "notification01",
+		style = "former",
+		icon = "forma_04",
 	},
 
 	font = {
@@ -374,42 +376,42 @@ P.dock = {
 	},
 
 	store = {
-		style = "material_filled",
-		icon = "payments",
+		style = "former",
+		icon = "forma_28",
 		custom_color = false,
 	},
 
 	achievement = {
-		style = "material_filled",
-		icon = "bookmark_star",
+		style = "former",
+		icon = "forma_69",
 		custom_color = false,
 	},
 
 	bags = {
-		style = "material_filled",
-		icon = "money_bag",
+		style = "former",
+		icon = "forma_05",
 		custom_color = false,
 		text = "none",
 		gold = false,
 	},
 
 	character = {
-		style = "material_filled",
-		icon = "face",
+		style = "former",
+		icon = "forma_51",
 		custom_color = false,
 		percThreshold = 30,
 		text = false,
 	},
 
 	collection = {
-		style = "material_filled",
-		icon = "bookmark_heart",
+		style = "former",
+		icon = "forma_18",
 		custom_color = false,
 	},
 
 	durability = {
-		style = "material_filled",
-		icon = "shield",
+		style = "former",
+		icon = "forma_08",
 		custom_color = false,
 		percThreshold = 30,
 		text = "none",
@@ -417,72 +419,72 @@ P.dock = {
 	},
 
 	encounter = {
-		style = "material_filled",
-		icon = "browse",
+		style = "former",
+		icon = "forma_14",
 		custom_color = false,
 	},
 
 	friends = {
-		style = "material_filled",
-		icon = "contacts_product",
+		style = "former",
+		icon = "forma_53",
 		custom_color = false,
 		text = true,
 	},
 
 	guild = {
-		style = "material_filled",
-		icon = "diversity_4",
+		style = "former",
+		icon = "forma_29",
 		custom_color = false,
 		text = true,
 	},
 
 	lfd = {
-		style = "material_filled",
-		icon = "travel_explore",
+		style = "former",
+		icon = "forma_02",
 		custom_color = false,
 		text = true,
 		call_to_the_Arms = true,
 	},
 
 	mail = {
-		style = "material_filled",
-		icon = "mail",
+		style = "former",
+		icon = "forma_04",
 		custom_color = false,
 	},
 
 	menu = {
-		style = "material_filled",
-		icon = "settings",
+		style = "former",
+		icon = "forma_44",
 		custom_color = false,
 	},
 
 	professions = {
-		style = "material_filled",
-		icon = "handyman",
+		style = "former",
+		icon = "forma_68",
 		custom_color = false,
 	},
 
 	quests = {
-		style = "material_filled",
-		icon = "contact_support",
+		style = "former",
+		icon = "forma_57",
 		custom_color = false,
 	},
 
 	spellbook = {
-		style = "material_filled",
-		icon = "auto_stories",
+		style = "former",
+		icon = "forma_13",
 		custom_color = false,
 	},
 
 	spec = {
-		style = "material_filled",
-		icon = "editor_choice",
+		style = "former",
+		icon = "forma_41",
 		custom_color = false,
 	},
 
 	volume = {
-		style = "material_filled",
-		icon = "volume_down",
+		style = "former",
+		icon = "forma_49",
 		custom_color = false,
 		text = true,
 		colored = true,
@@ -537,51 +539,51 @@ P.nameplates = {
 		changeColor = false,
 		changeTexture = false,
 		ignoreThreat = false,
-		texture = "mMediaTag A10",
+		texture = "mMediaTag A9",
 	},
 	target = {
 		changeColor = false,
 		changeTexture = false,
 		ignoreThreat = false,
-		texture = "mMediaTag A5",
+		texture = "mMediaTag A4",
 	},
 	quest = {
 		changeColor = false,
 		changeTexture = false,
 		ignoreThreat = false,
-		texture = "mMediaTag A7",
+		texture = "mMediaTag A1",
 	},
 }
 
 P.role_icons = {
 	enable = false,
-	tank = "brain",
-	heal = "brain",
-	dd = "brain",
+	tank = "shield9",
+	heal = "heal13",
+	dd = "bigsword2",
 }
 
 P.phase_icon = {
 	enable = false,
-	icon = "galaxie",
+	icon = "phase10",
 }
 
 P.resurrection_icon = {
 	enable = false,
-	icon = "galaxie",
+	icon = "resurrection_15",
 }
 
 P.ready_check_icon = {
 	enable = false,
-	ready = "galaxie",
-	notready = "galaxie",
-	waiting = "galaxie",
+	ready = "readycheck_10",
+	notready = "readycheck_13",
+	waiting = "readycheck_35",
 }
 
 P.summon_icon = {
 	enable = false,
-	available = "galaxie",
-	accepted = "galaxie",
-	rejected = "galaxie",
+	available = "summon_01",
+	accepted = "summon_01",
+	rejected = "summon_01",
 }
 
 -- color
@@ -656,8 +658,8 @@ P.color = {
 
 	dock = {
 		normal = "FFFFFFFF",
-		hover = "FF00FFFF",
-		clicked = "FFFF00FF",
+		hover = "FFB9B9B9",
+		clicked = "FF838383",
 		notification = "FF00FF88",
 		font = "FFFFFFFF",
 		store = "FFFFFFFF",
