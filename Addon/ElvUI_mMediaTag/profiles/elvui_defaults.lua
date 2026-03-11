@@ -125,10 +125,10 @@ P.datatexts = {
 		mount = 460,
 		warning = true,
 		force_withe_text = true,
-		repair_threshold = 60,
+		repair_threshold = 15,
 		color_repair = "FFFA3E3E",
 		color_warning = "FFFF7700",
-		warning_threshold = 80,
+		warning_threshold = 40,
 		style = "a",
 	},
 	dungeon = {
