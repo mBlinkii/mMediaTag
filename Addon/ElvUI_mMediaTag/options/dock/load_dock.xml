@@ -19,4 +19,5 @@
 	<Script file="store.lua"/>
 	<Script file="volume.lua"/>
 	<Script file="notification.lua"/>
+	<Script file="example.lua"/>
 </Ui>

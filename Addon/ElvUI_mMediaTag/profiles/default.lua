@@ -6,8 +6,12 @@ mMT.defaults.debug = {
 	debugMode = false,
 }
 
+mMT.defaults.DEV = true
+
 mMT.defaults.lastWeeklyReset = 0
 
 mMT.defaults.keystones = {}
+
+mMT.defaults.unknownIDS = {}
 
 mMT.defaults.boss_ids = {}

@@ -20,6 +20,8 @@ local GetActiveKeystoneInfo = C_ChallengeMode.GetActiveKeystoneInfo
 local GetScenarioHeaderDelvesWidgetVisualizationInfo = C_UIWidgetManager.GetScenarioHeaderDelvesWidgetVisualizationInfo
 
 local shortNames = {
+	-- midnight
+
 	-- tww
 	[2648] = "ROOK", --The Rookery
 	[2649] = "PSF", --Priory of the Sacred Flame
@@ -330,6 +332,8 @@ function mMT:GetDungeonInfo()
 	local difficultyName, _, _, _, _, _, toggleDifficultyID = GetDifficultyInfo(difficultyID)
 	local difficultyInfo = shortDifficulty[difficultyID]
 
+	if DB.DEV and not shortNames[instanceID] then DB.unknownIDS[instanceID] = { id = instanceID, name = name } end
+
 	info.name = name
 	info.shortName = shortNames[instanceID] or E:ShortenString(name, 6)
 	info.difficultyName = difficultyName
@@ -352,7 +356,6 @@ function mMT:GetDungeonInfo()
 		info.isDelve = true
 		info.level = mMT:GetCurrentDelveTier()
 	end
-
 
 	return info
 end
