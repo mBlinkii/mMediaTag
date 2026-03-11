@@ -329,20 +329,6 @@ P.interrupt_on_cd = {
 	bg_multiplier = 0.5,
 }
 
--- castbar shield
--- P.castbar_shield = {
--- 	enable = false,
--- 	texture = "shield01",
--- 	auto = true,
--- 	sizeX = 32,
--- 	sizeY = 32,
--- 	anchor = "CENTER",
--- 	posX = 0,
--- 	posY = 0,
--- 	nameplates = true,
--- 	unitframes = false,
--- }
-
 -- tooltip
 P.tooltip = {
 	enable = false,

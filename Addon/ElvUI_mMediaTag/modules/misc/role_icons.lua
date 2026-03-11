@@ -7,9 +7,9 @@ local UF = E:GetModule("UnitFrames")
 function module:Initialize()
 	if not E.db.mMediaTag.role_icons.enable then return end
 
-	module.TANK = MEDIA.icons.tags[E.db.mMediaTag.role_icons.tank]
-	module.HEAL = MEDIA.icons.tags[E.db.mMediaTag.role_icons.heal]
-	module.DAMAGER = MEDIA.icons.tags[E.db.mMediaTag.role_icons.dd]
+	module.TANK = MEDIA.icons.role[E.db.mMediaTag.role_icons.tank]
+	module.HEAL = MEDIA.icons.role[E.db.mMediaTag.role_icons.heal]
+	module.DAMAGER = MEDIA.icons.role[E.db.mMediaTag.role_icons.dd]
 
 	_G.INLINE_TANK_ICON = E:TextureString(module.TANK, ":15:15")
 	_G.INLINE_HEALER_ICON = E:TextureString(module.HEAL, ":15:15")
