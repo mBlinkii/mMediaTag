@@ -97,9 +97,6 @@ local function ApplyCastbarColor(castbar)
 
 	-- bg color
 	if module.set_bg_color and castbar.bg then
-		-- local m = module.bg_multiplier
-		-- local bgC = module.colors.bg --castbar:GetStatusBarColor()
-		-- castbar.bg:SetVertexColor(bgC.r * m, bgC.g * m, bgC.b * m, bgC.a)
 		local m = module.bg_multiplier
 		local bgReadyR, bgReadyG, bgReadyB = normal.r * m, normal.g * m, normal.b * m
 		local bgOnCDR, bgOnCDG, bgOnCDB = onCD.r * m, onCD.g * m, onCD.b * m
@@ -263,7 +260,6 @@ function module:Initialize()
 			onCD = MEDIA.color.interrupt_on_cd.onCD,
 			normal = MEDIA.color.interrupt_on_cd.normal,
 			marker = MEDIA.color.interrupt_on_cd.marker,
-			bg = MEDIA.color.interrupt_on_cd.bg,
 		}
 
 		module.set_bg_color = E.db.mMediaTag.interrupt_on_cd.set_bg_color

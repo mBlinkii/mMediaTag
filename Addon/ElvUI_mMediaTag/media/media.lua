@@ -97,7 +97,6 @@ MEDIA.color = {
 		onCD = createColor("FFA200FF"),
 		normal = createColor("FFFFA500"),
 		marker = createColor("FFFFFFFF"),
-		bg = createColor("FF3D3D3D"),
 	},
 
 	-- castbar_shield = createColor("FFFFFFFF"),
@@ -253,7 +252,6 @@ function mMT:UpdateMedia(arg)
 			onCD = CreateColorFromHexString(E.db.mMediaTag.color.interrupt_on_cd.onCD),
 			normal = CreateColorFromHexString(E.db.mMediaTag.color.interrupt_on_cd.normal),
 			marker = CreateColorFromHexString(E.db.mMediaTag.color.interrupt_on_cd.marker),
-			bg = CreateColorFromHexString(E.db.mMediaTag.color.interrupt_on_cd.bg),
 		}
 	end
 
