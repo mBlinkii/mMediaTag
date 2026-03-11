@@ -8,22 +8,30 @@ local preview = {
 	XIV = "Interface\\Addons\\ElvUI_mMediaTag\\media\\preview\\xiv.tga",
 	XIVCOLORED = "Interface\\Addons\\ElvUI_mMediaTag\\media\\preview\\xivcolored.tga",
 	MAUI = "Interface\\Addons\\ElvUI_mMediaTag\\media\\preview\\maui.tga",
+	DOCK = "Interface\\Addons\\ElvUI_mMediaTag\\media\\preview\\dock.tga",
+	DOCKV2 = "Interface\\Addons\\ElvUI_mMediaTag\\media\\preview\\dockv2.tga",
 }
 
 local docks = {
 	XIV = L["XIV Like"],
 	XIVCOLORED = L["XVI Like colored"],
 	MAUI = L["MAUI"],
+	DOCK = L["Dock"],
+	DOCKV2 = L["Dock V2"],
 }
 
 local function ResetDB()
 	E.db.mMediaTag.dock = {}
 	E.db.mMediaTag.dock = CopyTable(P.dock)
+
+    E.db.mMediaTag.color.dock = {}
+    E.db.mMediaTag.color.dock = CopyTable(P.color.dock)
 end
 
 local function SetupDock()
 	ResetDB()
 
+	-- XIV DOCKS
 	if dock_style == "XIV" or dock_style == "XIVCOLORED" or dock_style == "MAUI" then
 		-- global
 		if not E.global["datatexts"]["customPanels"]["mMT - CENTER"] then E.DataTexts:BuildPanelFrame("mMT - CENTER") end
@@ -216,6 +224,97 @@ local function SetupDock()
 			E.db["datatexts"]["panels"]["mMT - LEFT"][10] = "mMT_Dock_Volume"
 			E.db["datatexts"]["panels"]["mMT - LEFT"][11] = "mMT_Dock_Calendar"
 			E.db["datatexts"]["panels"]["mMT - LEFT"][12] = "mMT_Dock_Mail"
+		end
+	end
+
+	-- DOCK
+
+	if dock_style == "DOCK" or dock_style == "DOCKV2" then
+		-- globals
+		if not E.global["datatexts"]["customPanels"]["mMT - DOCK"] then E.DataTexts:BuildPanelFrame("mMT - DOCK") end
+		E.global["datatexts"]["customPanels"]["mMT - DOCK"]["backdrop"] = false
+		E.global["datatexts"]["customPanels"]["mMT - DOCK"]["height"] = 38
+		E.global["datatexts"]["customPanels"]["mMT - DOCK"]["name"] = "mMT - DOCK"
+		E.global["datatexts"]["customPanels"]["mMT - DOCK"]["numPoints"] = 12
+		E.global["datatexts"]["customPanels"]["mMT - DOCK"]["width"] = 600
+
+		if not E.global["datatexts"]["customPanels"]["mMT - DOCK COSMETICK"] then E.DataTexts:BuildPanelFrame("mMT - DOCK COSMETICK") end
+		E.global["datatexts"]["customPanels"]["mMT - DOCK COSMETICK"]["height"] = 12
+		E.global["datatexts"]["customPanels"]["mMT - DOCK COSMETICK"]["name"] = "mMT - DOCK COSMETICK"
+		E.global["datatexts"]["customPanels"]["mMT - DOCK COSMETICK"]["numPoints"] = 1
+		E.global["datatexts"]["customPanels"]["mMT - DOCK COSMETICK"]["panelTransparency"] = true
+		E.global["datatexts"]["customPanels"]["mMT - DOCK COSMETICK"]["width"] = 640
+
+		-- settings
+		E.db["datatexts"]["panels"]["mMT - DOCK COSMETICK"][1] = ""
+		E.db["datatexts"]["panels"]["mMT - DOCK COSMETICK"][2] = ""
+		E.db["datatexts"]["panels"]["mMT - DOCK COSMETICK"][3] = ""
+		E.db["datatexts"]["panels"]["mMT - DOCK COSMETICK"]["battleground"] = false
+		E.db["datatexts"]["panels"]["mMT - DOCK COSMETICK"]["enable"] = true
+		E.db["datatexts"]["panels"]["mMT - DOCK"]["battleground"] = false
+		E.db["datatexts"]["panels"]["mMT - DOCK"]["enable"] = true
+
+		if dock_style == "DOCK" then
+			E.db["datatexts"]["panels"]["mMT - DOCK"][1] = "mMT_Dock_Character"
+			E.db["datatexts"]["panels"]["mMT - DOCK"][2] = "mMT_Dock_SpellBook"
+			E.db["datatexts"]["panels"]["mMT - DOCK"][3] = "mMT_Dock_Friends"
+			E.db["datatexts"]["panels"]["mMT - DOCK"][4] = "mMT_Dock_Guild"
+			E.db["datatexts"]["panels"]["mMT - DOCK"][5] = "mMT_Dock_Achievement"
+			E.db["datatexts"]["panels"]["mMT - DOCK"][6] = "mMT_Dock_Quest"
+			E.db["datatexts"]["panels"]["mMT - DOCK"][7] = "mMT_Dock_LFD"
+			E.db["datatexts"]["panels"]["mMT - DOCK"][8] = "mMT_Dock_EncounterJournal"
+			E.db["datatexts"]["panels"]["mMT - DOCK"][9] = "mMT_Dock_CollectionsJournal"
+			E.db["datatexts"]["panels"]["mMT - DOCK"][10] = "mMT_Dock_Volume"
+			E.db["datatexts"]["panels"]["mMT - DOCK"][11] = "mMT_Dock_BlizzardStore"
+			E.db["datatexts"]["panels"]["mMT - DOCK"][12] = "mMT_Dock_Mail"
+		else
+			E.db["mMediaTag"]["dock"]["achievement"]["icon"] = "maui_34"
+			E.db["mMediaTag"]["dock"]["achievement"]["style"] = "maui"
+			E.db["mMediaTag"]["dock"]["calendar"]["icon"] = "maui"
+			E.db["mMediaTag"]["dock"]["character"]["icon"] = "maui_42"
+			E.db["mMediaTag"]["dock"]["character"]["style"] = "maui"
+			E.db["mMediaTag"]["dock"]["class"]["hover"] = false
+			E.db["mMediaTag"]["dock"]["collection"]["icon"] = "maui_20"
+			E.db["mMediaTag"]["dock"]["collection"]["style"] = "maui"
+			E.db["mMediaTag"]["dock"]["encounter"]["icon"] = "maui_41"
+			E.db["mMediaTag"]["dock"]["encounter"]["style"] = "maui"
+			E.db["mMediaTag"]["dock"]["friends"]["icon"] = "maui_23"
+			E.db["mMediaTag"]["dock"]["friends"]["style"] = "maui"
+			E.db["mMediaTag"]["dock"]["guild"]["icon"] = "maui_03"
+			E.db["mMediaTag"]["dock"]["guild"]["style"] = "maui"
+			E.db["mMediaTag"]["dock"]["lfd"]["icon"] = "maui_18"
+			E.db["mMediaTag"]["dock"]["lfd"]["style"] = "maui"
+			E.db["mMediaTag"]["dock"]["mail"]["icon"] = "maui_25"
+			E.db["mMediaTag"]["dock"]["mail"]["style"] = "maui"
+			E.db["mMediaTag"]["dock"]["quests"]["icon"] = "maui_04"
+			E.db["mMediaTag"]["dock"]["quests"]["style"] = "maui"
+			E.db["mMediaTag"]["dock"]["spellbook"]["icon"] = "maui_40"
+			E.db["mMediaTag"]["dock"]["spellbook"]["style"] = "maui"
+			E.db["mMediaTag"]["dock"]["store"]["style"] = "maui"
+			E.db["mMediaTag"]["dock"]["volume"]["icon"] = "maui_38"
+			E.db["mMediaTag"]["dock"]["volume"]["style"] = "maui"
+
+			E.db["datatexts"]["panels"]["mMT - DOCK"][1] = "mMT_Dock_Character"
+			E.db["datatexts"]["panels"]["mMT - DOCK"][2] = "mMT_Dock_SpellBook"
+			E.db["datatexts"]["panels"]["mMT - DOCK"][3] = "mMT_Dock_Friends"
+			E.db["datatexts"]["panels"]["mMT - DOCK"][4] = "mMT_Dock_Guild"
+			E.db["datatexts"]["panels"]["mMT - DOCK"][5] = "mMT_Dock_Achievement"
+			E.db["datatexts"]["panels"]["mMT - DOCK"][6] = "mMT_Dock_Quest"
+			E.db["datatexts"]["panels"]["mMT - DOCK"][7] = "mMT_Dock_LFD"
+			E.db["datatexts"]["panels"]["mMT - DOCK"][8] = "mMT_Dock_EncounterJournal"
+			E.db["datatexts"]["panels"]["mMT - DOCK"][9] = "mMT_Dock_CollectionsJournal"
+			E.db["datatexts"]["panels"]["mMT - DOCK"][10] = "mMT_Dock_Volume"
+			E.db["datatexts"]["panels"]["mMT - DOCK"][11] = "mMT_Dock_Calendar"
+			E.db["datatexts"]["panels"]["mMT - DOCK"][12] = "mMT_Dock_Mail"
+		end
+
+		-- movers
+		if dock_top then
+			E.db["movers"]["DTPanelmMT - DOCK COSMETICKMover"] = "TOP,UIParent,TOP,0,4"
+			E.db["movers"]["DTPanelmMT - DOCKMover"] = "TOP,ElvUIParent,TOP,0,8"
+		else
+			E.db["movers"]["DTPanelmMT - DOCK COSMETICKMover"] = "BOTTOM,UIParent,BOTTOM,0,4"
+			E.db["movers"]["DTPanelmMT - DOCKMover"] = "BOTTOM,ElvUIParent,BOTTOM,0,8"
 		end
 	end
 

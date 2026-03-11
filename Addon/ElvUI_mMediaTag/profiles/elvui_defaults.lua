@@ -484,7 +484,7 @@ P.dock = {
 
 	volume = {
 		style = "former",
-		icon = "forma_49",
+		icon = "forma_72",
 		custom_color = false,
 		text = true,
 		colored = true,
