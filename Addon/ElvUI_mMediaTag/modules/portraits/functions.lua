@@ -367,6 +367,18 @@ local function SimpleUpdate(self, event)
 	Update(self, event)
 end
 
+local function PartyUpdate(_, header)
+	if header.groupName == "party" then
+		for i = 1, 5 do
+			local element = module.portraits["party" .. i]
+			if element then
+				element.unit = element.__owner.unit
+				Update(element, "ForceUpdate")
+			end
+		end
+	end
+end
+
 local function ForceUpdate(self, event)
 	Update(self, "ForceUpdate")
 end
@@ -486,12 +498,10 @@ function module:InitPortrait(element)
 			element.eventsSet = true
 		end
 
-		-- death check
-		-- if element.type == "party" then
-		-- 	element:RegisterEvent("UNIT_HEALTH")
-		-- else
-		-- 	element:RegisterUnitEvent("UNIT_HEALTH", element.unit)
-		-- end
+		if element.type == "party" and not element.party_update then
+			hooksecurefunc(UF, "Update_PartyHeader", PartyUpdate)
+			element.party_update = true
+		end
 
 		-- cast events
 		if element.db.cast and not element.cast_eventsSet then
