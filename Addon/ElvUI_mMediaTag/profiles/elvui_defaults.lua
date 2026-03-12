@@ -326,7 +326,7 @@ P.portraits = {
 P.interrupt_on_cd = {
 	enable = false,
 	set_bg_color = true,
-	bg_multiplier = 0.5,
+	bg_multiplier = 0.25,
 }
 
 -- tooltip
