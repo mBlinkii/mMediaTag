@@ -32,7 +32,7 @@ mMT.defaults = {}
 mMT.Changelog = {}
 
 function mMT:InsertOptions()
-	E.Options.name = format("%s + %s %s|cff99ff33%s|r", E.Options.name, Engine[7].icon16, mMT.NameShort, mMT.Version)
+	E.Options.name = format("%s + %s %s |cff99ff33%s|r", E.Options.name, Engine[7].icon16, mMT.NameShort, mMT.Version)
 	E.Options.args.mMT = mMT.options
 end
 
