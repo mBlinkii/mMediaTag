@@ -21,6 +21,10 @@ local GetScenarioHeaderDelvesWidgetVisualizationInfo = C_UIWidgetManager.GetScen
 
 local shortNames = {
 	-- midnight
+	[2813] = "MR",
+	[2874] = "MC",
+	[2811] = "MT",
+	[2915] = "NPX",
 
 	-- tww
 	[2648] = "ROOK", --The Rookery
