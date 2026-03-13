@@ -191,7 +191,7 @@ local function PlaceMarker(castbar, unit)
 	marker:SetSize(2, castbar:GetHeight())
 	marker:ClearAllPoints()
 	if reverseFill then
-		marker:SetPoint("RIGHT", pos:GetStatusBarTexture(), "LEFT", 0, 0)
+		marker:SetPoint("LEFT", pos:GetStatusBarTexture(), "LEFT", 0, 0)
 	else
 		marker:SetPoint("LEFT", pos:GetStatusBarTexture(), "RIGHT", 0, 0)
 	end
