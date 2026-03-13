@@ -6,7 +6,7 @@ mMT.defaults.debug = {
 	debugMode = false,
 }
 
-mMT.defaults.DEV = true
+mMT.defaults.DEV = false
 
 mMT.defaults.lastWeeklyReset = 0
 
