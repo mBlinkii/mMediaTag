@@ -7,6 +7,7 @@ local format = format
 local CreateFrame = CreateFrame
 local GetAddOnMetadata = _G.C_AddOns and _G.C_AddOns.GetAddOnMetadata or _G.GetAddOnMetadata
 local IsAddOnLoaded = _G.C_AddOns and _G.C_AddOns.IsAddOnLoaded or IsAddOnLoaded
+local C_Timer_After = C_Timer.After
 
 -- Addon Name and Namespace
 local addonName, Engine = ...
@@ -65,9 +66,16 @@ function mMT:Initialize()
 	tinsert(E.ConfigModeLayouts, "MMEDIATAG")
 	E.ConfigModeLocalizedStrings["MMEDIATAG"] = mMT.Name
 
-	if IsAddOnLoaded("ElvUI_JiberishIcons") then
-		mMT:AddJIIcons()
-	end
+	if IsAddOnLoaded("ElvUI_JiberishIcons") then mMT:AddJIIcons() end
+
+	-- Changelog
+	C_Timer_After(2, function()
+		if E.db.mMediaTag.version ~= mMT.Version then
+			E:ToggleOptions()
+			E.Libs.AceConfigDialog:SelectGroup("ElvUI", "mMT", "changelog")
+			E.db.mMediaTag.version = mMT.Version
+		end
+	end)
 end
 
 function mMT:PLAYER_LOGOUT()
