@@ -345,6 +345,25 @@ E:AddTag("mMT-health:short", "UNIT_HEALTH UNIT_MAXHEALTH", function(unit)
 end)
 E:AddTagInfo("mMT-health:short", mMT.NameShort .. " " .. L["Health"], L["Short Version."])
 
+E:AddTag("mMT-health:current", "UNIT_HEALTH UNIT_MAXHEALTH", function(unit)
+	local currentHealth = UnitHealth(unit)
+
+	return E:AbbreviateNumbers(currentHealth, E.Abbreviate["short"])
+end)
+E:AddTagInfo("mMT-health:current:short", mMT.NameShort .. " " .. L["Health"], L["Returns the current health of the unit."])
+
+E:AddTag("mMT-health:current:short", "UNIT_HEALTH UNIT_MAXHEALTH", function(unit)
+	local currentHealth = UnitHealth(unit)
+
+	return E:AbbreviateNumbers(currentHealth, E.Abbreviate["short"])
+end)
+E:AddTagInfo("mMT-health:current:short", mMT.NameShort .. " " .. L["Health"], L["Short Version."])
+
+E:AddTag("mMT-health:percent", "UNIT_HEALTH UNIT_MAXHEALTH", function(unit)
+	if UnitAffectingCombat(unit) then return _TAGS.perhp(unit) end
+end)
+E:AddTagInfo("mMT-health:percent", mMT.NameShort .. " " .. L["Health"], L["Returns the current health percent of the unit (in combat)."])
+
 E:AddTag("mMT-deathcount", "UNIT_HEALTH", function(unit)
 	if not UnitIsPlayer(unit) then return end
 	return UpdateDeathCount(unit)
