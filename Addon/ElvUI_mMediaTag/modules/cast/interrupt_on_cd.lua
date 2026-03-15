@@ -180,7 +180,7 @@ end
 local function OnUpdate(castbar, elapsed)
 	if castbar.isInterruptedOrFailed then return end
 	castbar._kickThrottle = (castbar._kickThrottle or 0) + elapsed
-	if castbar._kickThrottle < 0.25 then return end -- lower number = more frequent updates
+	if castbar._kickThrottle < 0.1 then return end -- lower number = more frequent updates
 	castbar._kickThrottle = 0
 	UpdateCast(castbar, false)
 end
