@@ -95,7 +95,7 @@ MEDIA.color = {
 
 	interrupt_on_cd = {
 		onCD = createColor("FFA200FF"),
-		normal = createColor("FFFFA500"),
+		normal = createColor("FF15FF47"),
 		marker = createColor("FFFFFFFF"),
 	},
 
