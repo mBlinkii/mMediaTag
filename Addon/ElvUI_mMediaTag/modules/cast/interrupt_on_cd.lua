@@ -65,14 +65,11 @@ local INTERRUPT_BY_SPEC = {
 	[1473] = 351338,
 }
 
--- Warlock interrupt spells in priority order
-local WARLOCK_INTERRUPT_PRIORITY = { 89766, 212619, 119914 }
-
 local function UpdateInterruptSpell()
 	local specId = select(1, GetSpecializationInfo(GetSpecialization()))
 
 	if E.myclass == "WARLOCK" then
-		for _, spellId in ipairs(WARLOCK_INTERRUPT_PRIORITY) do
+		for _, spellId in ipairs({ 89766, 212619, 119914 }) do
 			if IsPlayerSpell(spellId) then
 				INTERRUPT_BY_SPEC[specId] = spellId
 				break
