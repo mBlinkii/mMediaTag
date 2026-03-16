@@ -101,10 +101,10 @@ local function SetKickSpark(castbar, castStart, cooldown)
 	if cooldown == nil then return end
 
 	if castStart then
-		local isChannel = UnitChannelInfo(unit) ~= nil
-		local fillStyle = isChannel and Enum.StatusBarFillStyle.Reverse or Enum.StatusBarFillStyle.Standard
-		local barAnchor = isChannel and "LEFT" or "RIGHT"
-		local indicatorAnchor = isChannel and "RIGHT" or "LEFT"
+		local isChannelOrReverse = castbar.channeling or castbar:GetReverseFill()
+		local fillStyle = isChannelOrReverse and Enum.StatusBarFillStyle.Reverse or Enum.StatusBarFillStyle.Standard
+		local barAnchor = isChannelOrReverse and "LEFT" or "RIGHT"
+		local indicatorAnchor = isChannelOrReverse and "RIGHT" or "LEFT"
 
 		kickBar:SetFillStyle(fillStyle)
 
@@ -137,8 +137,6 @@ local function SetCastbarColor(castbar, cooldown)
 	if not (unit and UnitCanAttack("player", unit)) then return end
 
 	local color = EvalColor(cooldown:IsZero(), colors.normal, colors.onCD)
-
-	if castbar.notInterruptible ~= nil then color = EvalColor(castbar.notInterruptible, colors.normal, color) end
 
 	castbar:SetStatusBarColor(color:GetRGBA())
 
