@@ -35,6 +35,7 @@ local type = type
 local db = {}
 local colors = MEDIA.color.tags
 local icons = MEDIA.icons.tags
+local noDecData
 
 -- Faction cache
 local unitFactionCache = {}
@@ -130,6 +131,43 @@ local statusDefinitions = {
 local unitDeathCount = {}
 local instanceID = ""
 local instanceType = "none"
+
+local function GetNoDecData()
+	if noDecData then return noDecData end
+
+	local style = E.db.general.numberPrefixStyle or "ENGLISH"
+	local asianStyles = { TCHINESE = true, CHINESE = true, KOREAN = true }
+	local isAsian = asianStyles[style] or false
+
+	local units = E.ShortPrefixStyles[style] or E.ShortPrefixStyles.ENGLISH
+	if not units then return E.Abbreviate["short"] end
+
+	-- significandDivisor values for 0 decimal places
+	local westernSigDivisors = { 1e12, 1e9, 1e6, 1e3 }
+	local asianSigDivisors = { 1e8, 1e4, 1e3 }
+
+	local signi = isAsian and asianSigDivisors or westernSigDivisors
+	local breakpoints = {}
+
+	for i = 1, #units do
+		breakpoints[i] = {
+			breakpoint = units[i][1],
+			abbreviation = units[i][2],
+			significandDivisor = signi[i],
+			fractionDivisor = 1,
+			abbreviationIsGlobal = false,
+		}
+	end
+
+	noDecData = { isAsian = isAsian }
+	if CreateAbbreviateConfig then
+		noDecData.config = CreateAbbreviateConfig(breakpoints)
+	else
+		noDecData.breakpoints = breakpoints
+	end
+
+	return noDecData
+end
 
 local function GetColorString(color)
 	return color and ":" .. tostring(color.r * 255) .. ":" .. tostring(color.g * 255) .. ":" .. tostring(color.b * 255) .. "|t"
@@ -345,6 +383,16 @@ E:AddTag("mMT-health:short", "UNIT_HEALTH UNIT_MAXHEALTH", function(unit)
 end)
 E:AddTagInfo("mMT-health:short", mMT.NameShort .. " " .. L["Health"], L["Short Version."])
 
+E:AddTag("mMT-health:short:nodecimal", "UNIT_HEALTH UNIT_MAXHEALTH", function(unit)
+	local currentHealth = UnitHealth(unit)
+	if UnitAffectingCombat(unit) then
+		return _TAGS.perhp(unit)
+	else
+		return E:AbbreviateNumbers(currentHealth, noDecData)
+	end
+end)
+E:AddTagInfo("mMT-health:short:nodecimal", mMT.NameShort .. " " .. L["Health"], "Short Version. (No Decimal)")
+
 E:AddTag("mMT-health:current", "UNIT_HEALTH UNIT_MAXHEALTH", function(unit)
 	local currentHealth = UnitHealth(unit)
 
@@ -358,6 +406,12 @@ E:AddTag("mMT-health:current:short", "UNIT_HEALTH UNIT_MAXHEALTH", function(unit
 	return E:AbbreviateNumbers(currentHealth, E.Abbreviate["short"])
 end)
 E:AddTagInfo("mMT-health:current:short", mMT.NameShort .. " " .. L["Health"], L["Short Version."])
+
+E:AddTag("mMT-health:current:short:nodecimal", "UNIT_HEALTH UNIT_MAXHEALTH", function(unit)
+	local currentHealth = UnitHealth(unit)
+	return E:AbbreviateNumbers(currentHealth, noDecData)
+end)
+E:AddTagInfo("mMT-health:current:short:nodecimal", mMT.NameShort .. " " .. L["Health"], "Short Version. (No Decimal)")
 
 E:AddTag("mMT-health:percent", "UNIT_HEALTH UNIT_MAXHEALTH", function(unit)
 	if UnitAffectingCombat(unit) then return _TAGS.perhp(unit) end
@@ -536,6 +590,7 @@ end
 function module:Initialize()
 	db = E.db.mMediaTag.tags
 
+	GetNoDecData()
 	RebuildRoleTables()
 	RebuildClassificationIcons()
 	RebuildStatusIcons()
