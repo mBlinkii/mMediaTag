@@ -10,4 +10,5 @@
 	<Script file="ready_check_icon.lua"/>
     <Script file="resurrection_icon.lua"/>
     <Script file="summon_icon.lua"/>
+	<Script file="details.lua"/>
 </Ui>

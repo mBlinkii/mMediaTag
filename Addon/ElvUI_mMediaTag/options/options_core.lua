@@ -431,8 +431,15 @@ mMT.options = {
 					childGroups = "tab",
 					args = {},
 				},
-				custom_docks = {
+				details = {
 					order = 7,
+					type = "group",
+					name = mMT:AddSettingsIcon(L["Details embedded"], "score"),
+					childGroups = "tab",
+					args = {},
+				},
+				custom_docks = {
+					order = 20,
 					type = "group",
 					name = mMT:AddSettingsIcon(L["Custom Docks"], "dock"),
 					childGroups = "tab",

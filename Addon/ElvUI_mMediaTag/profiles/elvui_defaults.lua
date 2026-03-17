@@ -585,6 +585,14 @@ P.summon_icon = {
 	rejected = "summon_01",
 }
 
+P.details = {
+	mode = "DISABLE",
+	windows = 2,
+	toggle = true,
+	combatHide = true,
+	hideDelay = 5,
+}
+
 -- color
 P.color = {
 	-- tip/ menu
