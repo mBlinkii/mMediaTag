@@ -5,13 +5,11 @@ local module = mMT:AddModule("Tracker")
 
 --WoW API / Variables
 local _G = _G
-local floor = floor
 local GetCurrencyInfo = C_CurrencyInfo.GetCurrencyInfo
 local GetItemInfo = GetItemInfo
 local strjoin = strjoin
 
 --Variables
-local valueString, textString = "", ""
 local tracker_ids_db, is_currency_db = {}, {}
 
 local tracker_default_ids = {
@@ -67,10 +65,11 @@ function module:GetCurrencyInfos(id)
 end
 
 local function OnEvent(self, event, id)
+	print(event, id, self.name)
 	if event == "ITEM_COUNT_CHANGED" and id ~= self.name then return end
 
 	local db = E.db.mMediaTag.datatexts.tracker
-	local id = tonumber(self.name)
+	id = tonumber(self.name)
 	local info = is_currency_db[id] and module:GetCurrencyInfos(id) or module:GetItemInfos(id)
 	if not info then return end
 
@@ -87,9 +86,9 @@ local function OnEvent(self, event, id)
 	end
 
 	if self.text:GetJustifyH() == "RIGHT" then
-		self.text:SetFormattedText("%s %s %s", format(valueString, value), format(textString, name or ""), icon or "")
+		self.text:SetFormattedText("%s %s %s", format(self.mMT_valueString, value), format(self.mMT_textString, name or ""), icon or "")
 	else
-		self.text:SetFormattedText("%s %s %s", icon or "", format(textString, name or ""), format(valueString, value))
+		self.text:SetFormattedText("%s %s %s", icon or "", format(self.mMT_textString, name or ""), format(self.mMT_valueString, value))
 	end
 end
 
@@ -113,8 +112,9 @@ local function ValueColorUpdate(self, hex)
 	local textHex = E.db.mMediaTag.datatexts.text.override_text and "|c" .. MEDIA.color.override_text.hex or db.colored and "|c" .. custom or hex
 	local valueHex = E.db.mMediaTag.datatexts.text.override_value and "|c" .. MEDIA.color.override_value.hex or db.colored and "|c" .. custom or hex
 
-	textString = strjoin("", textHex, "%s|r")
-	valueString = strjoin("", valueHex, "%s|r")
+	self.mMT_textString = strjoin("", textHex, "%s|r")
+	self.mMT_valueString = strjoin("", valueHex, "%s|r")
+	print(textHex, MEDIA.color.override_text.hex .. "XX|r", valueHex, MEDIA.color.override_value.hex .. "XX|r", custom)
 	OnEvent(self)
 end
 
@@ -160,10 +160,10 @@ function module:Initialize()
 			if not DT.RegisteredDataTexts[id] then
 				if is_currency_db[id] then
 					-- #FFA600
-					DT:RegisterDatatext(id, mMT.NameShort .. " - " .. "|CFFFFA600" .. _G.CURRENCY .. "|r", { "CHAT_MSG_CURRENCY", "CURRENCY_DISPLAY_UPDATE" }, OnEvent, nil, nil, OnEnter, OnLeave, "mMT - " .. info.name, nil, ValueColorUpdate)
+					DT:RegisterDatatext( id, mMT.NameShort .. " - " .. "|CFFFFA600" .. _G.CURRENCY .. "|r", { "CHAT_MSG_CURRENCY", "CURRENCY_DISPLAY_UPDATE" }, OnEvent, nil, nil, OnEnter, OnLeave, "mMT - " .. info.name, nil, ValueColorUpdate )
 				else
 					-- #EE1E75
-					DT:RegisterDatatext(id, mMT.NameShort .. " - " .. "|CFFEE1E75" .. _G.ITEMS .. "|r", { "ITEM_COUNT_CHANGED" }, OnEvent, nil, nil, OnEnter, OnLeave, "mMT - " .. info.name .. " (" .. id .. ")", nil, ValueColorUpdate)
+					DT:RegisterDatatext( id, mMT.NameShort .. " - " .. "|CFFEE1E75" .. _G.ITEMS .. "|r", { "ITEM_COUNT_CHANGED" }, OnEvent, nil, nil, OnEnter, OnLeave, "mMT - " .. info.name .. " (" .. id .. ")", nil, ValueColorUpdate )
 				end
 			end
 		end
