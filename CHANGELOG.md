@@ -1,6 +1,19 @@
 # Changelog - ElvUI_mMediaTag
 [Eng] - All changes to this project will be documented in this file. The latest changes are at the top.
 
+## [ver. 4.01] - 17.03.2026
+### UPDATE
+- UPDATE - [System]: Update Logo & Icon.
+- UPDATE - [Intrrupt-On-CD]: Rework and Optimized, it should now work correctly.
+### NEW
+- NEW - [TAGs]: New Health Tags hide out of combat and no decimal.
+- NEW - [Class-Icons]: Add mMT Class Icons to Details.
+- NEW - [Details-Embedded]: Details Embedded module is back.
+- NEW - [Auto-Quest]: Auto accept and tur in Quests.
+### INFO
+- INFO - A completely new update for Midnight, almost everything has been optimized and restructured.
+- INFO - Some modules and features are still missing, but this is a fully functional and working version for Midnight. There will be no version for Classic, where the 3.xx version should still work. I will continue to add more features over time.
+
 ## [ver. 4.00 - 13.03.2026
 ### UPDATE
 - UPDATE - [Portraits]: Many new Textures and removed Old versions.
