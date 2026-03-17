@@ -134,3 +134,10 @@ AddClassIcons("mmt_transparent_outline", path .. "mmt_transparent_outline.tga", 
 AddClassIcons("mmt_transparent_outline_shadow", path .. "mmt_transparent_outline_shadow.tga", "mMT Outline B")
 AddClassIcons("mmt_transparent_outline_colorboost", path .. "mmt_transparent_outline_colorboost.tga", "mMT Outline C")
 AddClassIcons("mmt_transparent_outline_shadow_colorboost", path .. "mmt_transparent_outline_shadow_colorboost.tga", "mMT Outline D")
+
+
+function mMT:AddClassIconsToDetails()
+	for _, data in next, MEDIA.icons.class.icons.mmt do
+		_G.Details:AddCustomIconSet(data.texture, data.name, false, "Interface\\Addons\\ElvUI_mMediaTag\\media\\icon.tga", { 0, 1, 0, 1 })
+	end
+end

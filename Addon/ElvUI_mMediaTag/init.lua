@@ -68,6 +68,8 @@ function mMT:Initialize()
 
 	if IsAddOnLoaded("ElvUI_JiberishIcons") then mMT:AddJIIcons() end
 
+	if IsAddOnLoaded("Details") then mMT:AddClassIconsToDetails() end
+
 	-- Changelog
 	C_Timer_After(2, function()
 		if E.db.mMediaTag.version ~= mMT.Version then
