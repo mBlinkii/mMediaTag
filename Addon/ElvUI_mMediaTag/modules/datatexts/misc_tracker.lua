@@ -65,7 +65,6 @@ function module:GetCurrencyInfos(id)
 end
 
 local function OnEvent(self, event, id)
-	print(event, id, self.name)
 	if event == "ITEM_COUNT_CHANGED" and id ~= self.name then return end
 
 	local db = E.db.mMediaTag.datatexts.tracker
