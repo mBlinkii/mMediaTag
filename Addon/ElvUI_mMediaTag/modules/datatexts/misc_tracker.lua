@@ -113,7 +113,6 @@ local function ValueColorUpdate(self, hex)
 
 	self.mMT_textString = strjoin("", textHex, "%s|r")
 	self.mMT_valueString = strjoin("", valueHex, "%s|r")
-	print(textHex, MEDIA.color.override_text.hex .. "XX|r", valueHex, MEDIA.color.override_value.hex .. "XX|r", custom)
 	OnEvent(self)
 end
 
