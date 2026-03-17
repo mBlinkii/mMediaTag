@@ -48,9 +48,7 @@ local function GetKey(channel, text)
 					link = keystones[187786]
 				end
 
-				if link and channel then
-					SendChatMessage(link, channel)
-				end
+				if link and channel then SendChatMessage(link, channel) end
 			end
 		end
 	end
@@ -77,25 +75,31 @@ function module:Initialize()
 end
 
 function module:CHAT_MSG_SAY(_, text)
+	if InCombatLockdown() then return end
 	GetKey("SAY", text)
 end
 
 function module:CHAT_MSG_PARTY(_, text)
+	if InCombatLockdown() then return end
 	GetKey("PARTY", text)
 end
 
 function module:CHAT_MSG_PARTY_LEADER(_, text)
+	if InCombatLockdown() then return end
 	GetKey("PARTY", text)
 end
 
 function module:CHAT_MSG_RAID(_, text)
+	if InCombatLockdown() then return end
 	GetKey("RAID", text)
 end
 
 function module:CHAT_MSG_RAID_LEADER(_, text)
+	if InCombatLockdown() then return end
 	GetKey("RAID", text)
 end
 
 function module:CHAT_MSG_GUILD(_, text)
+	if InCombatLockdown() then return end
 	GetKey("GUILD", text)
 end
