@@ -589,8 +589,6 @@ P.details = {
 	mode = "DISABLE",
 	windows = 2,
 	toggle = true,
-	combatHide = true,
-	hideDelay = 5,
 }
 
 P.auto_quest = {

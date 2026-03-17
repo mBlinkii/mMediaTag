@@ -83,22 +83,6 @@ local function CreateWindows(parent, windows, chatWidth, chatHeight)
     end
 end
 
-local function SetupCombatHide(frame, delay)
-    local function AutoHide()
-        if not InCombatLockdown() then module:DetailsEmbeddedToggle() end
-    end
-
-    frame:RegisterEvent("PLAYER_REGEN_DISABLED")
-    frame:RegisterEvent("PLAYER_REGEN_ENABLED")
-    frame:SetScript("OnEvent", function(_, event)
-        if event == "PLAYER_REGEN_DISABLED" then
-            if not frame:IsShown() then module:DetailsEmbeddedToggle() end
-        elseif event == "PLAYER_REGEN_ENABLED" then
-            if frame:IsShown() then E:Delay(delay, AutoHide) end
-        end
-    end)
-end
-
 local function EmbedDetailsInstances(embedded, windows)
     local xOfs = Details.chat_tab_embed.x_offset
     local yOfs = Details.chat_tab_embed.y_offset
@@ -198,10 +182,6 @@ local function DetailsEmbedded()
             CreateWindows(embedded, windows, chatWidth, chatHeight)
         end
 
-        if module.combatHide then
-            SetupCombatHide(embedded, module.hideDelay)
-        end
-
         embedded:SetFrameStrata("BACKGROUND")
 
         chat:Hide()
@@ -220,8 +200,6 @@ function module:Initialize()
     module.mode = E.db.mMediaTag.details.mode
     module.windows      = E.db.mMediaTag.details.windows
     module.toggle       = E.db.mMediaTag.details.toggle
-    module.combatHide   = E.db.mMediaTag.details.combatHide
-    module.hideDelay    = E.db.mMediaTag.details.hideDelay
 
     DetailsEmbedded()
 end

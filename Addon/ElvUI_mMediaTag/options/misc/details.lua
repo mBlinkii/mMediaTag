@@ -69,49 +69,4 @@ mMT.options.args.misc.args.details.args = {
 			},
 		},
 	},
-	combat_settings = {
-		order = 3,
-		type = "group",
-		inline = true,
-		name = L["Combat Hide/Show"],
-		disabled = function()
-			return E.db.mMediaTag.details.mode == "DISABLE"
-		end,
-		args = {
-			combatHide = {
-				order = 1,
-				type = "toggle",
-				name = L["Show/Hide in Combat"],
-				desc = L["Auto shows details during combat and hides them after combat."],
-				get = function()
-					return E.db.mMediaTag.details.combatHide
-				end,
-				set = function(_, value)
-					E.db.mMediaTag.details.combatHide = value
-					mMT:UpdateModule("DetailsEmbedded")
-				end,
-			},
-			hideDelay = {
-				order = 2,
-				type = "range",
-				name = L["Combat Hide/Show"] .. " " .. L["Delay"],
-				desc = L["Show/Hide in Combat"] .. L[" hidden in combat."],
-				min = 0,
-				max = 30,
-				step = 1,
-				softMin = 0,
-				softMax = 30,
-				disabled = function()
-					return not E.db.mMediaTag.details.combatHide
-				end,
-				get = function()
-					return E.db.mMediaTag.details.hideDelay
-				end,
-				set = function(_, value)
-					E.db.mMediaTag.details.hideDelay = value
-					mMT:UpdateModule("DetailsEmbedded")
-				end,
-			},
-		},
-	},
 }
