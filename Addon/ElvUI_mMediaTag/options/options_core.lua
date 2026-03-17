@@ -438,6 +438,13 @@ mMT.options = {
 					childGroups = "tab",
 					args = {},
 				},
+				auto_quest = {
+					order = 8,
+					type = "group",
+					name = mMT:AddSettingsIcon(L["Auto Quest"], "quest"),
+					childGroups = "tab",
+					args = {},
+				},
 				custom_docks = {
 					order = 20,
 					type = "group",

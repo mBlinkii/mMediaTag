@@ -19534,7 +19534,9 @@
         "ElvUI_mMediaTag",
         "ElvUI_mMediaTag",
         "CurveConstants",
-        "ElvUI_JiberishIcons"
+        "ElvUI_JiberishIcons",
+        "QuestFrameAcceptButton",
+        "QuestFrameCompleteQuestButton"
   ],
   "diagnostics.disable": ["deprecated", "inject-field", "undefined-field",
         "cast-local-type",

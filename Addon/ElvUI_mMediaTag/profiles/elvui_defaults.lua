@@ -593,6 +593,14 @@ P.details = {
 	hideDelay = 5,
 }
 
+P.auto_quest = {
+    enable        = false,
+    auto_accept   = true,
+    auto_turnin   = true,
+    skip_in_combat = true,
+    chat_message  = false,
+}
+
 -- color
 P.color = {
 	-- tip/ menu
