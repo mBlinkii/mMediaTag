@@ -371,6 +371,16 @@ local textureDB = {
 			flip = false,
 			mirror = false,
 		},
+		pixel = {
+			name = "Pixel",
+			texture = "Interface\\AddOns\\ElvUI_mMediaTag\\media\\portraits\\pixel\\texture.tga",
+			shadow = "Interface\\AddOns\\ElvUI_mMediaTag\\media\\portraits\\pixel\\shadow.tga",
+			mask = "Interface\\AddOns\\ElvUI_mMediaTag\\media\\portraits\\pixel\\mask.tga",
+			extra_mask = "Interface\\AddOns\\ElvUI_mMediaTag\\media\\portraits\\pixel\\extra_mask.tga",
+			embellishment = "Interface\\AddOns\\ElvUI_mMediaTag\\media\\portraits\\pixel\\embellishment.tga",
+			flip = false,
+			mirror = false,
+		},
 	},
 	extra = {
 		blizz_boss = {
