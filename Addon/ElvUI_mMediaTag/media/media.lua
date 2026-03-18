@@ -2117,7 +2117,7 @@ MEDIA.minimap = {
 		square_round = {
 			name = L["Square Rounded"],
 			texture = "Interface\\AddOns\\ElvUI_mMediaTag\\media\\minimap\\square_round.tga",
-			mask = "Interface\\AddOns\\ElvUI_mMediaTag\\media\\minimap\\square_round.tga",
+			mask = "Interface\\AddOns\\ElvUI_mMediaTag\\media\\minimap\\square_round_mask.tga",
 		},
 		window = {
 			name = L["Window"],
