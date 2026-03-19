@@ -17,7 +17,7 @@ function module:DetailsEmbeddedToggle()
 
 	if module.detailsEmbedded:IsShown() then
 		E:UIFrameFadeOut(module.detailsEmbedded, 0.5, 1, 0)
-        chat:Show()
+		chat:Show()
 		C_Timer_After(0.5, function()
 			module.detailsEmbedded:Hide()
 		end)
@@ -84,6 +84,7 @@ local function CreateWindows(parent, windows, chatWidth, chatHeight)
 		local frame = CreateFrame("Frame", "mMT_DetailsEmbedded_Window" .. i, parent)
 		frame:SetSize(w - 2, winHeight - 2)
 		frame:SetPoint(WINDOW_POINTS[i], parent, xOfs, yOfs)
+		print(i, WINDOW_POINTS[i], xOfs, yOfs)
 		parent["Window" .. i] = frame
 	end
 end
@@ -131,8 +132,7 @@ local function DetailsEmbedded()
 
 	module.isRightChat = isRightChat
 
-	local openCount = Details:GetOpenedWindowsAmount()
-	local windows = mathmax(openCount, module.windows)
+	local windows = module.windows
 
 	if not module.detailsEmbedded then
 		local chatWidth = chat:GetWidth()
@@ -155,7 +155,7 @@ local function DetailsEmbedded()
 		embedded:SetBackdropBorderColor(bbr, bbg, bbb, bdAlpha)
 		embedded:SetBackdropColor(bdr, bdg, bdb, bgAlpha)
 		embedded:SetSize(chatWidth, chatHeight)
-		embedded:SetAllPoints(chat)
+		embedded:SetPoint((isRightChat and "BOTTOMRIGHT" or "BOTTOMLEFT"), chat)
 
 		if chat.tex then
 			local texPath = isRightChat and E.db.chat.panelBackdropNameRight or E.db.chat.panelBackdropNameLeft
@@ -171,7 +171,6 @@ local function DetailsEmbedded()
 		if windows > 1 then CreateWindows(embedded, windows, chatWidth, chatHeight) end
 
 		embedded:SetFrameStrata("BACKGROUND")
-
 		chat:Hide()
 		embedded:Show()
 
