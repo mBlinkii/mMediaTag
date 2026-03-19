@@ -18,6 +18,7 @@ local function getColor(setting)
 end
 
 local function UpdatePanelInfo(_, name, panel)
+	if not panel then return end
 	local db = panel.mmt_db or E.db.mMediaTag.data_panel_skin.panels[name]
 	if not db then return end
 

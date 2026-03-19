@@ -10,6 +10,7 @@ local IsInGroup = IsInGroup
 local GetSearchResultInfo = C_LFGList.GetSearchResultInfo
 local GetActivityFullName = C_LFGList.GetActivityFullName
 local GetActivityInfoTable = C_LFGList.GetActivityInfoTable
+local C_Timer_After = C_Timer.After
 
 local LSM = E.Libs.LSM
 
@@ -137,7 +138,7 @@ function module:LFG_LIST_JOINED_GROUP(_, searchResultID, groupName)
 
 	module.info_screen:Show()
 
-	E:Delay(module.db.delay, function()
+	C_Timer_After(module.db.delay, function()
 		module.info_screen:Hide()
 	end)
 end
