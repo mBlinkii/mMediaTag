@@ -17,9 +17,9 @@ function module:DetailsEmbeddedToggle()
 
 	if module.detailsEmbedded:IsShown() then
 		E:UIFrameFadeOut(module.detailsEmbedded, 0.5, 1, 0)
+        chat:Show()
 		C_Timer_After(0.5, function()
 			module.detailsEmbedded:Hide()
-			chat:Show()
 		end)
 	else
 		E:UIFrameFadeIn(module.detailsEmbedded, 0.5, 0, 1)
