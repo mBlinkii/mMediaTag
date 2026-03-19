@@ -84,7 +84,6 @@ local function CreateWindows(parent, windows, chatWidth, chatHeight)
 		local frame = CreateFrame("Frame", "mMT_DetailsEmbedded_Window" .. i, parent)
 		frame:SetSize(w - 2, winHeight - 2)
 		frame:SetPoint(WINDOW_POINTS[i], parent, xOfs, yOfs)
-		print(i, WINDOW_POINTS[i], xOfs, yOfs)
 		parent["Window" .. i] = frame
 	end
 end
