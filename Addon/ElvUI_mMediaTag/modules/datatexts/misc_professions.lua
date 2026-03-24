@@ -20,7 +20,7 @@ local function GetProfessionInfos(profession)
 	local name, icon, skillLevel, maxSkillLevel, _, spellOffset, _, skillModifier = GetProfessionInfo(profession)
 	return name,
 		icon,
-		spellOffset + 1,
+		spellOffset and spellOffset + 1,
 		skillLevel ~= maxSkillLevel and mMT:TC(skillLevel .. "|cffffffff/|r" .. maxSkillLevel, "mark") or "",
 		skillModifier ~= 0 and mMT:TC("+" .. skillModifier, "tip") or ""
 end
@@ -157,7 +157,7 @@ local function UpdateMenu()
 				right_text = skill .. " " .. skillModifier,
 				icon = E.db.mMediaTag.datatexts.professions.menu_icons and icon,
 				func = function()
-					CastSpell(spell, "Spell")
+					if not E:AlertCombat() and spell then CastSpell(spell, "Spell") end
 				end,
 			})
 		end

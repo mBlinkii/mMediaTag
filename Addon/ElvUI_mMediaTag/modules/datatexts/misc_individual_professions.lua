@@ -42,7 +42,7 @@ end
 
 local function GetProfessionInfos(profession)
 	local name, icon, skillLevel, maxSkillLevel, _, spellOffset, _, skillModifier = GetProfessionInfo(profession)
-	if spellOffset then return name, icon, skillLevel, maxSkillLevel, skillModifier, spellOffset + 1 end
+	return name, icon, skillLevel, maxSkillLevel, skillModifier, spellOffset and spellOffset + 1
 end
 
 local function OnEnter(self)
