@@ -1598,6 +1598,13 @@ MEDIA.icons.tags = {
 	wind_rose = "Interface\\AddOns\\ElvUI_mMediaTag\\media\\icons\\tags\\wind-rose.tga",
 	wood = "Interface\\AddOns\\ElvUI_mMediaTag\\media\\icons\\tags\\wood.tga",
 	year_of_goat = "Interface\\AddOns\\ElvUI_mMediaTag\\media\\icons\\tags\\year-of-goat.tga",
+	any = "Interface\\AddOns\\ElvUI_mMediaTag\\media\\icons\\tags\\any.tga",
+	any2 = "Interface\\AddOns\\ElvUI_mMediaTag\\media\\icons\\tags\\any2.tga",
+	maja = "Interface\\AddOns\\ElvUI_mMediaTag\\media\\icons\\tags\\maja.tga",
+	maja2 = "Interface\\AddOns\\ElvUI_mMediaTag\\media\\icons\\tags\\maja2.tga",
+	dragon_elite = "Interface\\AddOns\\ElvUI_mMediaTag\\media\\icons\\tags\\dragon_elite.tga",
+	dragon_elite2 = "Interface\\AddOns\\ElvUI_mMediaTag\\media\\icons\\tags\\dragon_elite2.tga",
+	snake = "Interface\\AddOns\\ElvUI_mMediaTag\\media\\icons\\tags\\snake.tga",
 }
 
 MEDIA.icons.role = {
