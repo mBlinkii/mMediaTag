@@ -25,7 +25,7 @@ end
 function module:Initialize()
 	if not E.db.mMediaTag.phase_icon.enable then return end
 
-	module.blank = [[Interface\AddOns\ElvUI_mMediaTag\media\blank.tga]]
+	module.blank = MEDIA.none
 	module.texture = MEDIA.icons.phase_icons[E.db.mMediaTag.phase_icon.icon]
 	module.PhaseColors = MEDIA.color.phase_icon
 

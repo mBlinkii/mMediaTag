@@ -365,6 +365,7 @@ MEDIA.rightClick = "|TInterface\\Addons\\ElvUI_mMediaTag\\media\\icons\\system\\
 MEDIA.middleClick = "|TInterface\\Addons\\ElvUI_mMediaTag\\media\\icons\\system\\middle.tga:16:16|t"
 
 MEDIA.blank = "Interface\\Addons\\ElvUI_mMediaTag\\media\\blank.tga"
+MEDIA.none = "Interface\\Addons\\ElvUI_mMediaTag\\media\\none.tga"
 
 MEDIA.icons = {}
 
