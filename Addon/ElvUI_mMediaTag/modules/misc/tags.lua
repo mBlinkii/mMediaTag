@@ -90,7 +90,9 @@ local statusDefinitions = {
 		check = function(unit)
 			return E:UnitIsAFK(unit)
 		end,
-		color = colors.afk,
+		color = function()
+			return colors.afk
+		end,
 		label = L["AFK"],
 		iconKey = "afk",
 	},
@@ -98,7 +100,9 @@ local statusDefinitions = {
 		check = function(unit)
 			return E:UnitIsDND(unit)
 		end,
-		color = colors.dnd,
+		color = function()
+			return colors.dnd
+		end,
 		label = L["DND"],
 		iconKey = "dnd",
 	},
@@ -106,7 +110,9 @@ local statusDefinitions = {
 		check = function(unit)
 			return not UnitIsConnected(unit)
 		end,
-		color = colors.dc,
+		color = function()
+			return colors.dc
+		end,
 		label = L["Offline"],
 		iconKey = "dc",
 	},
@@ -114,7 +120,9 @@ local statusDefinitions = {
 		check = function(unit)
 			return UnitIsDead(unit)
 		end,
-		color = colors.dead,
+		color = function()
+			return colors.dead
+		end,
 		label = L["Dead"],
 		iconKey = "dead",
 	},
@@ -122,7 +130,9 @@ local statusDefinitions = {
 		check = function(unit)
 			return UnitIsGhost(unit)
 		end,
-		color = colors.ghost,
+		color = function()
+			return colors.ghost
+		end,
 		label = L["Ghost"],
 		iconKey = "ghost",
 	},
@@ -318,7 +328,7 @@ E:AddTag("mMT-status:icon", "UNIT_HEALTH UNIT_CONNECTION PLAYER_FLAGS_CHANGED", 
 	for _, def in pairs(statusDefinitions) do
 		if def.check(unit) then
 			local icon = def.icon
-			local color = GetColorString(def.color)
+			local color = GetColorString(def.color())
 			return (color and icon) and "|T" .. icon .. ":16:16:0:0:16:16:0:16:0:16" .. color
 		end
 	end
