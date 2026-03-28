@@ -25,7 +25,7 @@ local function SetTooltipIcon(tooltip, icon)
 	if not title then return end
 	local text = title:GetText()
 
-	if not text or text:find("^|T") then return end
+	if E:IsSecretValue(text) or not text or text:find("^|T") then return end
 	title:SetFormattedText("%s %s", GetIconString(icon), text)
 end
 
@@ -70,6 +70,7 @@ end
 local function MacroIcon(tooltip)
 	if tooltip then
 		local name = _G[tooltip:GetName() .. "TextLeft1"]:GetText()
+		if E:IsSecretValue(name) then return end
 		if name then
 			local icon = select(2, GetMacroInfo(name)) or GetSpellTexture(name) or GetItemIcon(name)
 			SetTooltipIcon(tooltip, icon)
