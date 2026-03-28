@@ -86,17 +86,20 @@ end
 
 function module:Initialize()
 	if E.db.mMediaTag.tooltip.enable then
-		if E.Retail then
-			TooltipDataProcessor.AddTooltipPostCall(Enum.TooltipDataType.Item, ItemIcon)
-			TooltipDataProcessor.AddTooltipPostCall(Enum.TooltipDataType.Spell, SpellIcon)
-			TooltipDataProcessor.AddTooltipPostCall(Enum.TooltipDataType.Toy, ItemIcon)
-			TooltipDataProcessor.AddTooltipPostCall(Enum.TooltipDataType.Mount, MountIcon)
-			TooltipDataProcessor.AddTooltipPostCall(Enum.TooltipDataType.Macro, MacroIcon)
-			TooltipDataProcessor.AddTooltipPostCall(Enum.TooltipDataType.Currency, CurrencyIcon)
-		else
-			for _, name in ipairs({ "GameTooltip", "ItemRefTooltip", "ShoppingTooltip1", "ShoppingTooltip2", "ShoppingTooltip3" }) do
-				hookTip(_G[name])
+		if not module.hooked then
+			if E.Retail then
+				TooltipDataProcessor.AddTooltipPostCall(Enum.TooltipDataType.Item, ItemIcon)
+				TooltipDataProcessor.AddTooltipPostCall(Enum.TooltipDataType.Spell, SpellIcon)
+				TooltipDataProcessor.AddTooltipPostCall(Enum.TooltipDataType.Toy, ItemIcon)
+				TooltipDataProcessor.AddTooltipPostCall(Enum.TooltipDataType.Mount, MountIcon)
+				TooltipDataProcessor.AddTooltipPostCall(Enum.TooltipDataType.Macro, MacroIcon)
+				TooltipDataProcessor.AddTooltipPostCall(Enum.TooltipDataType.Currency, CurrencyIcon)
+			else
+				for _, name in ipairs({ "GameTooltip", "ItemRefTooltip", "ShoppingTooltip1", "ShoppingTooltip2", "ShoppingTooltip3" }) do
+					hookTip(_G[name])
+				end
 			end
+			module.hooked = true
 		end
 
 		module.db = E.db.mMediaTag.tooltip

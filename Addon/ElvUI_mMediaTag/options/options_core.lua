@@ -445,6 +445,13 @@ mMT.options = {
 					childGroups = "tab",
 					args = {},
 				},
+				tooltip = {
+					order = 9,
+					type = "group",
+					name = mMT:AddSettingsIcon(L["Tooltip"], "help"),
+					childGroups = "tab",
+					args = {},
+				},
 				custom_docks = {
 					order = 20,
 					type = "group",
