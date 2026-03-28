@@ -517,7 +517,10 @@ E:AddTagInfo(
 
 E:AddTag("mMT-pvp", "UNIT_FACTION", function(unit)
 	local factionGroup = UnitFactionGroup(unit)
-	if UnitIsPVP(unit) and (factionGroup == "Horde" or factionGroup == "Alliance") then return E:TextureString(icons[db.misc.pvp], ":14:14") end
+	if UnitIsPVP(unit) and (factionGroup == "Horde" or factionGroup == "Alliance") then
+		local color = GetColorString(colors.pvp)
+		return "|T" .. icons[db.misc.pvp] .. ":16:16:0:0:16:16:0:16:0:16" .. color
+	end
 end)
 E:AddTagInfo("mMT-pvp", mMT.NameShort .. " " .. L["Miscellaneous"], L["Returns a PvP icon if the unit is flagged for PvP and belongs to either the Horde or Alliance faction."])
 
@@ -600,6 +603,7 @@ end
 function module:Initialize()
 	db = E.db.mMediaTag.tags
 
+	mMT:UpdateMedia("tags")
 	GetNoDecData()
 	RebuildRoleTables()
 	RebuildClassificationIcons()
