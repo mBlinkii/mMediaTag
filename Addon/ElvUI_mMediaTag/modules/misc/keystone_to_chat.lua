@@ -12,6 +12,7 @@ local SendChatMessage = SendChatMessage
 local NUM_BAG_SLOTS = NUM_BAG_SLOTS
 
 local function CheckText(text)
+	if E:IsSecretValue(text) then return false end
 	local word = strlower(text)
 	for _, value in ipairs({ "!key", "!keys" }) do
 		if word == value then return true end
