@@ -3239,25 +3239,25 @@ mMT.options.args.unitframes.args.portraits.args = {
 									MEDIA.color.portraits.misc.default.c.hex = hex
 								end,
 							},
-							color_b = {
-								type = "color",
-								order = 2,
-								name = "B",
-								disabled = function()
-									return not E.db.mMediaTag.color.portraits.misc.gradient
-								end,
-								hasAlpha = false,
-								get = function(info)
-									local r, g, b = mMT:HexToRGB(E.db.mMediaTag.color.portraits.misc.default.g)
-									return r, g, b
-								end,
-								set = function(info, r, g, b)
-									local hex = E:RGBToHex(r, g, b, "ff")
-									E.db.mMediaTag.color.portraits.misc.default.g = hex
-									MEDIA.color.portraits.misc.default.g = CreateColorFromHexString(hex)
-									MEDIA.color.portraits.misc.default.g.hex = hex
-								end,
-							},
+							-- color_b = {
+							-- 	type = "color",
+							-- 	order = 2,
+							-- 	name = "B",
+							-- 	disabled = function()
+							-- 		return not E.db.mMediaTag.color.portraits.misc.gradient
+							-- 	end,
+							-- 	hasAlpha = false,
+							-- 	get = function(info)
+							-- 		local r, g, b = mMT:HexToRGB(E.db.mMediaTag.color.portraits.misc.default.g)
+							-- 		return r, g, b
+							-- 	end,
+							-- 	set = function(info, r, g, b)
+							-- 		local hex = E:RGBToHex(r, g, b, "ff")
+							-- 		E.db.mMediaTag.color.portraits.misc.default.g = hex
+							-- 		MEDIA.color.portraits.misc.default.g = CreateColorFromHexString(hex)
+							-- 		MEDIA.color.portraits.misc.default.g.hex = hex
+							-- 	end,
+							-- },
 						},
 					},
 					death_group = {
@@ -3282,25 +3282,25 @@ mMT.options.args.unitframes.args.portraits.args = {
 									MEDIA.color.portraits.misc.death.c.hex = hex
 								end,
 							},
-							color_b = {
-								type = "color",
-								order = 2,
-								name = "B",
-								disabled = function()
-									return not E.db.mMediaTag.color.portraits.misc.gradient
-								end,
-								hasAlpha = false,
-								get = function(info)
-									local r, g, b = mMT:HexToRGB(E.db.mMediaTag.color.portraits.misc.death.g)
-									return r, g, b
-								end,
-								set = function(info, r, g, b)
-									local hex = E:RGBToHex(r, g, b, "ff")
-									E.db.mMediaTag.color.portraits.misc.death.g = hex
-									MEDIA.color.portraits.misc.death.g = CreateColorFromHexString(hex)
-									MEDIA.color.portraits.misc.death.g.hex = hex
-								end,
-							},
+							-- color_b = {
+							-- 	type = "color",
+							-- 	order = 2,
+							-- 	name = "B",
+							-- 	disabled = function()
+							-- 		return not E.db.mMediaTag.color.portraits.misc.gradient
+							-- 	end,
+							-- 	hasAlpha = false,
+							-- 	get = function(info)
+							-- 		local r, g, b = mMT:HexToRGB(E.db.mMediaTag.color.portraits.misc.death.g)
+							-- 		return r, g, b
+							-- 	end,
+							-- 	set = function(info, r, g, b)
+							-- 		local hex = E:RGBToHex(r, g, b, "ff")
+							-- 		E.db.mMediaTag.color.portraits.misc.death.g = hex
+							-- 		MEDIA.color.portraits.misc.death.g = CreateColorFromHexString(hex)
+							-- 		MEDIA.color.portraits.misc.death.g.hex = hex
+							-- 	end,
+							-- },
 						},
 					},
 				},
@@ -3333,25 +3333,25 @@ mMT.options.args.unitframes.args.portraits.args = {
 									MEDIA.color.portraits.class.DEATHKNIGHT.c.hex = hex
 								end,
 							},
-							color_b = {
-								type = "color",
-								order = 2,
-								name = "B",
-								disabled = function()
-									return not E.db.mMediaTag.color.portraits.misc.gradient
-								end,
-								hasAlpha = false,
-								get = function(info)
-									local r, g, b = mMT:HexToRGB(E.db.mMediaTag.color.portraits.class.DEATHKNIGHT.g)
-									return r, g, b
-								end,
-								set = function(info, r, g, b)
-									local hex = E:RGBToHex(r, g, b, "ff")
-									E.db.mMediaTag.color.portraits.class.DEATHKNIGHT.g = hex
-									MEDIA.color.portraits.class.DEATHKNIGHT.g = CreateColorFromHexString(hex)
-									MEDIA.color.portraits.class.DEATHKNIGHT.g.hex = hex
-								end,
-							},
+							-- color_b = {
+							-- 	type = "color",
+							-- 	order = 2,
+							-- 	name = "B",
+							-- 	disabled = function()
+							-- 		return not E.db.mMediaTag.color.portraits.misc.gradient
+							-- 	end,
+							-- 	hasAlpha = false,
+							-- 	get = function(info)
+							-- 		local r, g, b = mMT:HexToRGB(E.db.mMediaTag.color.portraits.class.DEATHKNIGHT.g)
+							-- 		return r, g, b
+							-- 	end,
+							-- 	set = function(info, r, g, b)
+							-- 		local hex = E:RGBToHex(r, g, b, "ff")
+							-- 		E.db.mMediaTag.color.portraits.class.DEATHKNIGHT.g = hex
+							-- 		MEDIA.color.portraits.class.DEATHKNIGHT.g = CreateColorFromHexString(hex)
+							-- 		MEDIA.color.portraits.class.DEATHKNIGHT.g.hex = hex
+							-- 	end,
+							-- },
 						},
 					},
 					DEMONHUNTER_color = {
@@ -3376,22 +3376,22 @@ mMT.options.args.unitframes.args.portraits.args = {
 									MEDIA.color.portraits.class.DEMONHUNTER.c.hex = hex
 								end,
 							},
-							color_b = {
-								type = "color",
-								order = 2,
-								name = "B",
-								hasAlpha = false,
-								get = function(info)
-									local r, g, b = mMT:HexToRGB(E.db.mMediaTag.color.portraits.class.DEMONHUNTER.g)
-									return r, g, b
-								end,
-								set = function(info, r, g, b)
-									local hex = E:RGBToHex(r, g, b, "ff")
-									E.db.mMediaTag.color.portraits.class.DEMONHUNTER.g = hex
-									MEDIA.color.portraits.class.DEMONHUNTER.g = CreateColorFromHexString(hex)
-									MEDIA.color.portraits.class.DEMONHUNTER.g.hex = hex
-								end,
-							},
+							-- color_b = {
+							-- 	type = "color",
+							-- 	order = 2,
+							-- 	name = "B",
+							-- 	hasAlpha = false,
+							-- 	get = function(info)
+							-- 		local r, g, b = mMT:HexToRGB(E.db.mMediaTag.color.portraits.class.DEMONHUNTER.g)
+							-- 		return r, g, b
+							-- 	end,
+							-- 	set = function(info, r, g, b)
+							-- 		local hex = E:RGBToHex(r, g, b, "ff")
+							-- 		E.db.mMediaTag.color.portraits.class.DEMONHUNTER.g = hex
+							-- 		MEDIA.color.portraits.class.DEMONHUNTER.g = CreateColorFromHexString(hex)
+							-- 		MEDIA.color.portraits.class.DEMONHUNTER.g.hex = hex
+							-- 	end,
+							-- },
 						},
 					},
 					DRUID_color = {
@@ -3416,25 +3416,25 @@ mMT.options.args.unitframes.args.portraits.args = {
 									MEDIA.color.portraits.class.DRUID.c.hex = hex
 								end,
 							},
-							color_b = {
-								type = "color",
-								order = 2,
-								name = "B",
-								disabled = function()
-									return not E.db.mMediaTag.color.portraits.misc.gradient
-								end,
-								hasAlpha = false,
-								get = function(info)
-									local r, g, b = mMT:HexToRGB(E.db.mMediaTag.color.portraits.class.DRUID.g)
-									return r, g, b
-								end,
-								set = function(info, r, g, b)
-									local hex = E:RGBToHex(r, g, b, "ff")
-									E.db.mMediaTag.color.portraits.class.DRUID.g = hex
-									MEDIA.color.portraits.class.DRUID.g = CreateColorFromHexString(hex)
-									MEDIA.color.portraits.class.DRUID.g.hex = hex
-								end,
-							},
+							-- color_b = {
+							-- 	type = "color",
+							-- 	order = 2,
+							-- 	name = "B",
+							-- 	disabled = function()
+							-- 		return not E.db.mMediaTag.color.portraits.misc.gradient
+							-- 	end,
+							-- 	hasAlpha = false,
+							-- 	get = function(info)
+							-- 		local r, g, b = mMT:HexToRGB(E.db.mMediaTag.color.portraits.class.DRUID.g)
+							-- 		return r, g, b
+							-- 	end,
+							-- 	set = function(info, r, g, b)
+							-- 		local hex = E:RGBToHex(r, g, b, "ff")
+							-- 		E.db.mMediaTag.color.portraits.class.DRUID.g = hex
+							-- 		MEDIA.color.portraits.class.DRUID.g = CreateColorFromHexString(hex)
+							-- 		MEDIA.color.portraits.class.DRUID.g.hex = hex
+							-- 	end,
+							-- },
 						},
 					},
 					EVOKER_color = {
@@ -3459,22 +3459,22 @@ mMT.options.args.unitframes.args.portraits.args = {
 									MEDIA.color.portraits.class.EVOKER.c.hex = hex
 								end,
 							},
-							color_b = {
-								type = "color",
-								order = 2,
-								name = "B",
-								hasAlpha = false,
-								get = function(info)
-									local r, g, b = mMT:HexToRGB(E.db.mMediaTag.color.portraits.class.EVOKER.g)
-									return r, g, b
-								end,
-								set = function(info, r, g, b)
-									local hex = E:RGBToHex(r, g, b, "ff")
-									E.db.mMediaTag.color.portraits.class.EVOKER.g = hex
-									MEDIA.color.portraits.class.EVOKER.g = CreateColorFromHexString(hex)
-									MEDIA.color.portraits.class.EVOKER.g.hex = hex
-								end,
-							},
+							-- color_b = {
+							-- 	type = "color",
+							-- 	order = 2,
+							-- 	name = "B",
+							-- 	hasAlpha = false,
+							-- 	get = function(info)
+							-- 		local r, g, b = mMT:HexToRGB(E.db.mMediaTag.color.portraits.class.EVOKER.g)
+							-- 		return r, g, b
+							-- 	end,
+							-- 	set = function(info, r, g, b)
+							-- 		local hex = E:RGBToHex(r, g, b, "ff")
+							-- 		E.db.mMediaTag.color.portraits.class.EVOKER.g = hex
+							-- 		MEDIA.color.portraits.class.EVOKER.g = CreateColorFromHexString(hex)
+							-- 		MEDIA.color.portraits.class.EVOKER.g.hex = hex
+							-- 	end,
+							-- },
 						},
 					},
 					HUNTER_color = {
@@ -3499,25 +3499,25 @@ mMT.options.args.unitframes.args.portraits.args = {
 									MEDIA.color.portraits.class.HUNTER.c.hex = hex
 								end,
 							},
-							color_b = {
-								type = "color",
-								order = 2,
-								name = "B",
-								disabled = function()
-									return not E.db.mMediaTag.color.portraits.misc.gradient
-								end,
-								hasAlpha = false,
-								get = function(info)
-									local r, g, b = mMT:HexToRGB(E.db.mMediaTag.color.portraits.class.HUNTER.g)
-									return r, g, b
-								end,
-								set = function(info, r, g, b)
-									local hex = E:RGBToHex(r, g, b, "ff")
-									E.db.mMediaTag.color.portraits.class.HUNTER.g = hex
-									MEDIA.color.portraits.class.HUNTER.g = CreateColorFromHexString(hex)
-									MEDIA.color.portraits.class.HUNTER.g.hex = hex
-								end,
-							},
+							-- color_b = {
+							-- 	type = "color",
+							-- 	order = 2,
+							-- 	name = "B",
+							-- 	disabled = function()
+							-- 		return not E.db.mMediaTag.color.portraits.misc.gradient
+							-- 	end,
+							-- 	hasAlpha = false,
+							-- 	get = function(info)
+							-- 		local r, g, b = mMT:HexToRGB(E.db.mMediaTag.color.portraits.class.HUNTER.g)
+							-- 		return r, g, b
+							-- 	end,
+							-- 	set = function(info, r, g, b)
+							-- 		local hex = E:RGBToHex(r, g, b, "ff")
+							-- 		E.db.mMediaTag.color.portraits.class.HUNTER.g = hex
+							-- 		MEDIA.color.portraits.class.HUNTER.g = CreateColorFromHexString(hex)
+							-- 		MEDIA.color.portraits.class.HUNTER.g.hex = hex
+							-- 	end,
+							-- },
 						},
 					},
 					MAGE_color = {
@@ -3542,22 +3542,22 @@ mMT.options.args.unitframes.args.portraits.args = {
 									MEDIA.color.portraits.class.MAGE.c.hex = hex
 								end,
 							},
-							color_b = {
-								type = "color",
-								order = 2,
-								name = "B",
-								hasAlpha = false,
-								get = function(info)
-									local r, g, b = mMT:HexToRGB(E.db.mMediaTag.color.portraits.class.MAGE.g)
-									return r, g, b
-								end,
-								set = function(info, r, g, b)
-									local hex = E:RGBToHex(r, g, b, "ff")
-									E.db.mMediaTag.color.portraits.class.MAGE.g = hex
-									MEDIA.color.portraits.class.MAGE.g = CreateColorFromHexString(hex)
-									MEDIA.color.portraits.class.MAGE.g.hex = hex
-								end,
-							},
+							-- color_b = {
+							-- 	type = "color",
+							-- 	order = 2,
+							-- 	name = "B",
+							-- 	hasAlpha = false,
+							-- 	get = function(info)
+							-- 		local r, g, b = mMT:HexToRGB(E.db.mMediaTag.color.portraits.class.MAGE.g)
+							-- 		return r, g, b
+							-- 	end,
+							-- 	set = function(info, r, g, b)
+							-- 		local hex = E:RGBToHex(r, g, b, "ff")
+							-- 		E.db.mMediaTag.color.portraits.class.MAGE.g = hex
+							-- 		MEDIA.color.portraits.class.MAGE.g = CreateColorFromHexString(hex)
+							-- 		MEDIA.color.portraits.class.MAGE.g.hex = hex
+							-- 	end,
+							-- },
 						},
 					},
 					MONK_color = {
@@ -3582,25 +3582,25 @@ mMT.options.args.unitframes.args.portraits.args = {
 									MEDIA.color.portraits.class.MONK.c.hex = hex
 								end,
 							},
-							color_b = {
-								type = "color",
-								order = 2,
-								name = "B",
-								disabled = function()
-									return not E.db.mMediaTag.color.portraits.misc.gradient
-								end,
-								hasAlpha = false,
-								get = function(info)
-									local r, g, b = mMT:HexToRGB(E.db.mMediaTag.color.portraits.class.MONK.g)
-									return r, g, b
-								end,
-								set = function(info, r, g, b)
-									local hex = E:RGBToHex(r, g, b, "ff")
-									E.db.mMediaTag.color.portraits.class.MONK.g = hex
-									MEDIA.color.portraits.class.MONK.g = CreateColorFromHexString(hex)
-									MEDIA.color.portraits.class.MONK.g.hex = hex
-								end,
-							},
+							-- color_b = {
+							-- 	type = "color",
+							-- 	order = 2,
+							-- 	name = "B",
+							-- 	disabled = function()
+							-- 		return not E.db.mMediaTag.color.portraits.misc.gradient
+							-- 	end,
+							-- 	hasAlpha = false,
+							-- 	get = function(info)
+							-- 		local r, g, b = mMT:HexToRGB(E.db.mMediaTag.color.portraits.class.MONK.g)
+							-- 		return r, g, b
+							-- 	end,
+							-- 	set = function(info, r, g, b)
+							-- 		local hex = E:RGBToHex(r, g, b, "ff")
+							-- 		E.db.mMediaTag.color.portraits.class.MONK.g = hex
+							-- 		MEDIA.color.portraits.class.MONK.g = CreateColorFromHexString(hex)
+							-- 		MEDIA.color.portraits.class.MONK.g.hex = hex
+							-- 	end,
+							-- },
 						},
 					},
 					PALADIN_color = {
@@ -3625,22 +3625,22 @@ mMT.options.args.unitframes.args.portraits.args = {
 									MEDIA.color.portraits.class.PALADIN.c.hex = hex
 								end,
 							},
-							color_b = {
-								type = "color",
-								order = 2,
-								name = "B",
-								hasAlpha = false,
-								get = function(info)
-									local r, g, b = mMT:HexToRGB(E.db.mMediaTag.color.portraits.class.PALADIN.g)
-									return r, g, b
-								end,
-								set = function(info, r, g, b)
-									local hex = E:RGBToHex(r, g, b, "ff")
-									E.db.mMediaTag.color.portraits.class.PALADIN.g = hex
-									MEDIA.color.portraits.class.PALADIN.g = CreateColorFromHexString(hex)
-									MEDIA.color.portraits.class.PALADIN.g.hex = hex
-								end,
-							},
+							-- color_b = {
+							-- 	type = "color",
+							-- 	order = 2,
+							-- 	name = "B",
+							-- 	hasAlpha = false,
+							-- 	get = function(info)
+							-- 		local r, g, b = mMT:HexToRGB(E.db.mMediaTag.color.portraits.class.PALADIN.g)
+							-- 		return r, g, b
+							-- 	end,
+							-- 	set = function(info, r, g, b)
+							-- 		local hex = E:RGBToHex(r, g, b, "ff")
+							-- 		E.db.mMediaTag.color.portraits.class.PALADIN.g = hex
+							-- 		MEDIA.color.portraits.class.PALADIN.g = CreateColorFromHexString(hex)
+							-- 		MEDIA.color.portraits.class.PALADIN.g.hex = hex
+							-- 	end,
+							-- },
 						},
 					},
 					PRIEST_color = {
@@ -3665,25 +3665,25 @@ mMT.options.args.unitframes.args.portraits.args = {
 									MEDIA.color.portraits.class.PRIEST.c.hex = hex
 								end,
 							},
-							color_b = {
-								type = "color",
-								order = 2,
-								name = "B",
-								disabled = function()
-									return not E.db.mMediaTag.color.portraits.misc.gradient
-								end,
-								hasAlpha = false,
-								get = function(info)
-									local r, g, b = mMT:HexToRGB(E.db.mMediaTag.color.portraits.class.PRIEST.g)
-									return r, g, b
-								end,
-								set = function(info, r, g, b)
-									local hex = E:RGBToHex(r, g, b, "ff")
-									E.db.mMediaTag.color.portraits.class.PRIEST.g = hex
-									MEDIA.color.portraits.class.PRIEST.g = CreateColorFromHexString(hex)
-									MEDIA.color.portraits.class.PRIEST.g.hex = hex
-								end,
-							},
+							-- color_b = {
+							-- 	type = "color",
+							-- 	order = 2,
+							-- 	name = "B",
+							-- 	disabled = function()
+							-- 		return not E.db.mMediaTag.color.portraits.misc.gradient
+							-- 	end,
+							-- 	hasAlpha = false,
+							-- 	get = function(info)
+							-- 		local r, g, b = mMT:HexToRGB(E.db.mMediaTag.color.portraits.class.PRIEST.g)
+							-- 		return r, g, b
+							-- 	end,
+							-- 	set = function(info, r, g, b)
+							-- 		local hex = E:RGBToHex(r, g, b, "ff")
+							-- 		E.db.mMediaTag.color.portraits.class.PRIEST.g = hex
+							-- 		MEDIA.color.portraits.class.PRIEST.g = CreateColorFromHexString(hex)
+							-- 		MEDIA.color.portraits.class.PRIEST.g.hex = hex
+							-- 	end,
+							-- },
 						},
 					},
 					ROGUE_color = {
@@ -3708,22 +3708,22 @@ mMT.options.args.unitframes.args.portraits.args = {
 									MEDIA.color.portraits.class.ROGUE.c.hex = hex
 								end,
 							},
-							color_b = {
-								type = "color",
-								order = 2,
-								name = "B",
-								hasAlpha = false,
-								get = function(info)
-									local r, g, b = mMT:HexToRGB(E.db.mMediaTag.color.portraits.class.ROGUE.g)
-									return r, g, b
-								end,
-								set = function(info, r, g, b)
-									local hex = E:RGBToHex(r, g, b, "ff")
-									E.db.mMediaTag.color.portraits.class.ROGUE.g = hex
-									MEDIA.color.portraits.class.ROGUE.g = CreateColorFromHexString(hex)
-									MEDIA.color.portraits.class.ROGUE.g.hex = hex
-								end,
-							},
+							-- color_b = {
+							-- 	type = "color",
+							-- 	order = 2,
+							-- 	name = "B",
+							-- 	hasAlpha = false,
+							-- 	get = function(info)
+							-- 		local r, g, b = mMT:HexToRGB(E.db.mMediaTag.color.portraits.class.ROGUE.g)
+							-- 		return r, g, b
+							-- 	end,
+							-- 	set = function(info, r, g, b)
+							-- 		local hex = E:RGBToHex(r, g, b, "ff")
+							-- 		E.db.mMediaTag.color.portraits.class.ROGUE.g = hex
+							-- 		MEDIA.color.portraits.class.ROGUE.g = CreateColorFromHexString(hex)
+							-- 		MEDIA.color.portraits.class.ROGUE.g.hex = hex
+							-- 	end,
+							-- },
 						},
 					},
 					SHAMAN_color = {
@@ -3748,22 +3748,22 @@ mMT.options.args.unitframes.args.portraits.args = {
 									MEDIA.color.portraits.class.SHAMAN.c.hex = hex
 								end,
 							},
-							color_b = {
-								type = "color",
-								order = 2,
-								name = "B",
-								hasAlpha = false,
-								get = function(info)
-									local r, g, b = mMT:HexToRGB(E.db.mMediaTag.color.portraits.class.SHAMAN.g)
-									return r, g, b
-								end,
-								set = function(info, r, g, b)
-									local hex = E:RGBToHex(r, g, b, "ff")
-									E.db.mMediaTag.color.portraits.class.SHAMAN.g = hex
-									MEDIA.color.portraits.class.SHAMAN.g = CreateColorFromHexString(hex)
-									MEDIA.color.portraits.class.SHAMAN.g.hex = hex
-								end,
-							},
+							-- color_b = {
+							-- 	type = "color",
+							-- 	order = 2,
+							-- 	name = "B",
+							-- 	hasAlpha = false,
+							-- 	get = function(info)
+							-- 		local r, g, b = mMT:HexToRGB(E.db.mMediaTag.color.portraits.class.SHAMAN.g)
+							-- 		return r, g, b
+							-- 	end,
+							-- 	set = function(info, r, g, b)
+							-- 		local hex = E:RGBToHex(r, g, b, "ff")
+							-- 		E.db.mMediaTag.color.portraits.class.SHAMAN.g = hex
+							-- 		MEDIA.color.portraits.class.SHAMAN.g = CreateColorFromHexString(hex)
+							-- 		MEDIA.color.portraits.class.SHAMAN.g.hex = hex
+							-- 	end,
+							-- },
 						},
 					},
 					WARLOCK_color = {
@@ -3788,22 +3788,22 @@ mMT.options.args.unitframes.args.portraits.args = {
 									MEDIA.color.portraits.class.WARLOCK.c.hex = hex
 								end,
 							},
-							color_b = {
-								type = "color",
-								order = 2,
-								name = "B",
-								hasAlpha = false,
-								get = function(info)
-									local r, g, b = mMT:HexToRGB(E.db.mMediaTag.color.portraits.class.WARLOCK.g)
-									return r, g, b
-								end,
-								set = function(info, r, g, b)
-									local hex = E:RGBToHex(r, g, b, "ff")
-									E.db.mMediaTag.color.portraits.class.WARLOCK.g = hex
-									MEDIA.color.portraits.class.WARLOCK.g = CreateColorFromHexString(hex)
-									MEDIA.color.portraits.class.WARLOCK.g.hex = hex
-								end,
-							},
+							-- color_b = {
+							-- 	type = "color",
+							-- 	order = 2,
+							-- 	name = "B",
+							-- 	hasAlpha = false,
+							-- 	get = function(info)
+							-- 		local r, g, b = mMT:HexToRGB(E.db.mMediaTag.color.portraits.class.WARLOCK.g)
+							-- 		return r, g, b
+							-- 	end,
+							-- 	set = function(info, r, g, b)
+							-- 		local hex = E:RGBToHex(r, g, b, "ff")
+							-- 		E.db.mMediaTag.color.portraits.class.WARLOCK.g = hex
+							-- 		MEDIA.color.portraits.class.WARLOCK.g = CreateColorFromHexString(hex)
+							-- 		MEDIA.color.portraits.class.WARLOCK.g.hex = hex
+							-- 	end,
+							-- },
 						},
 					},
 					WARRIOR_color = {
@@ -3828,22 +3828,22 @@ mMT.options.args.unitframes.args.portraits.args = {
 									MEDIA.color.portraits.class.WARRIOR.c.hex = hex
 								end,
 							},
-							color_b = {
-								type = "color",
-								order = 2,
-								name = "B",
-								hasAlpha = false,
-								get = function(info)
-									local r, g, b = mMT:HexToRGB(E.db.mMediaTag.color.portraits.class.WARRIOR.g)
-									return r, g, b
-								end,
-								set = function(info, r, g, b)
-									local hex = E:RGBToHex(r, g, b, "ff")
-									E.db.mMediaTag.color.portraits.class.WARRIOR.g = hex
-									MEDIA.color.portraits.class.WARRIOR.g = CreateColorFromHexString(hex)
-									MEDIA.color.portraits.class.WARRIOR.g.hex = hex
-								end,
-							},
+							-- color_b = {
+							-- 	type = "color",
+							-- 	order = 2,
+							-- 	name = "B",
+							-- 	hasAlpha = false,
+							-- 	get = function(info)
+							-- 		local r, g, b = mMT:HexToRGB(E.db.mMediaTag.color.portraits.class.WARRIOR.g)
+							-- 		return r, g, b
+							-- 	end,
+							-- 	set = function(info, r, g, b)
+							-- 		local hex = E:RGBToHex(r, g, b, "ff")
+							-- 		E.db.mMediaTag.color.portraits.class.WARRIOR.g = hex
+							-- 		MEDIA.color.portraits.class.WARRIOR.g = CreateColorFromHexString(hex)
+							-- 		MEDIA.color.portraits.class.WARRIOR.g.hex = hex
+							-- 	end,
+							-- },
 						},
 					},
 				},
@@ -3876,22 +3876,22 @@ mMT.options.args.unitframes.args.portraits.args = {
 									MEDIA.color.portraits.classification.rare.c.hex = hex
 								end,
 							},
-							color_b = {
-								type = "color",
-								order = 2,
-								name = "B",
-								hasAlpha = false,
-								get = function(info)
-									local r, g, b = mMT:HexToRGB(E.db.mMediaTag.color.portraits.classification.rare.g)
-									return r, g, b
-								end,
-								set = function(info, r, g, b)
-									local hex = E:RGBToHex(r, g, b, "ff")
-									E.db.mMediaTag.color.portraits.classification.rare.g = hex
-									MEDIA.color.portraits.classification.rare.g = CreateColorFromHexString(hex)
-									MEDIA.color.portraits.classification.rare.g.hex = hex
-								end,
-							},
+							-- color_b = {
+							-- 	type = "color",
+							-- 	order = 2,
+							-- 	name = "B",
+							-- 	hasAlpha = false,
+							-- 	get = function(info)
+							-- 		local r, g, b = mMT:HexToRGB(E.db.mMediaTag.color.portraits.classification.rare.g)
+							-- 		return r, g, b
+							-- 	end,
+							-- 	set = function(info, r, g, b)
+							-- 		local hex = E:RGBToHex(r, g, b, "ff")
+							-- 		E.db.mMediaTag.color.portraits.classification.rare.g = hex
+							-- 		MEDIA.color.portraits.classification.rare.g = CreateColorFromHexString(hex)
+							-- 		MEDIA.color.portraits.classification.rare.g.hex = hex
+							-- 	end,
+							-- },
 						},
 					},
 					elite_color = {
@@ -3916,22 +3916,22 @@ mMT.options.args.unitframes.args.portraits.args = {
 									MEDIA.color.portraits.classification.elite.c.hex = hex
 								end,
 							},
-							color_b = {
-								type = "color",
-								order = 2,
-								name = "B",
-								hasAlpha = false,
-								get = function(info)
-									local r, g, b = mMT:HexToRGB(E.db.mMediaTag.color.portraits.classification.elite.g)
-									return r, g, b
-								end,
-								set = function(info, r, g, b)
-									local hex = E:RGBToHex(r, g, b, "ff")
-									E.db.mMediaTag.color.portraits.classification.elite.g = hex
-									MEDIA.color.portraits.classification.elite.g = CreateColorFromHexString(hex)
-									MEDIA.color.portraits.classification.elite.g.hex = hex
-								end,
-							},
+							-- color_b = {
+							-- 	type = "color",
+							-- 	order = 2,
+							-- 	name = "B",
+							-- 	hasAlpha = false,
+							-- 	get = function(info)
+							-- 		local r, g, b = mMT:HexToRGB(E.db.mMediaTag.color.portraits.classification.elite.g)
+							-- 		return r, g, b
+							-- 	end,
+							-- 	set = function(info, r, g, b)
+							-- 		local hex = E:RGBToHex(r, g, b, "ff")
+							-- 		E.db.mMediaTag.color.portraits.classification.elite.g = hex
+							-- 		MEDIA.color.portraits.classification.elite.g = CreateColorFromHexString(hex)
+							-- 		MEDIA.color.portraits.classification.elite.g.hex = hex
+							-- 	end,
+							-- },
 						},
 					},
 					rareelite_color = {
@@ -3956,22 +3956,22 @@ mMT.options.args.unitframes.args.portraits.args = {
 									MEDIA.color.portraits.classification.rareelite.c.hex = hex
 								end,
 							},
-							color_b = {
-								type = "color",
-								order = 2,
-								name = "B",
-								hasAlpha = false,
-								get = function(info)
-									local r, g, b = mMT:HexToRGB(E.db.mMediaTag.color.portraits.classification.rareelite.g)
-									return r, g, b
-								end,
-								set = function(info, r, g, b)
-									local hex = E:RGBToHex(r, g, b, "ff")
-									E.db.mMediaTag.color.portraits.classification.rareelite.g = hex
-									MEDIA.color.portraits.classification.rareelite.g = CreateColorFromHexString(hex)
-									MEDIA.color.portraits.classification.rareelite.g.hex = hex
-								end,
-							},
+							-- color_b = {
+							-- 	type = "color",
+							-- 	order = 2,
+							-- 	name = "B",
+							-- 	hasAlpha = false,
+							-- 	get = function(info)
+							-- 		local r, g, b = mMT:HexToRGB(E.db.mMediaTag.color.portraits.classification.rareelite.g)
+							-- 		return r, g, b
+							-- 	end,
+							-- 	set = function(info, r, g, b)
+							-- 		local hex = E:RGBToHex(r, g, b, "ff")
+							-- 		E.db.mMediaTag.color.portraits.classification.rareelite.g = hex
+							-- 		MEDIA.color.portraits.classification.rareelite.g = CreateColorFromHexString(hex)
+							-- 		MEDIA.color.portraits.classification.rareelite.g.hex = hex
+							-- 	end,
+							-- },
 						},
 					},
 					boss_color = {
@@ -3996,22 +3996,22 @@ mMT.options.args.unitframes.args.portraits.args = {
 									MEDIA.color.portraits.classification.boss.c.hex = hex
 								end,
 							},
-							color_b = {
-								type = "color",
-								order = 2,
-								name = "B",
-								hasAlpha = false,
-								get = function(info)
-									local r, g, b = mMT:HexToRGB(E.db.mMediaTag.color.portraits.classification.boss.g)
-									return r, g, b
-								end,
-								set = function(info, r, g, b)
-									local hex = E:RGBToHex(r, g, b, "ff")
-									E.db.mMediaTag.color.portraits.classification.boss.g = hex
-									MEDIA.color.portraits.classification.boss.g = CreateColorFromHexString(hex)
-									MEDIA.color.portraits.classification.boss.g.hex = hex
-								end,
-							},
+							-- color_b = {
+							-- 	type = "color",
+							-- 	order = 2,
+							-- 	name = "B",
+							-- 	hasAlpha = false,
+							-- 	get = function(info)
+							-- 		local r, g, b = mMT:HexToRGB(E.db.mMediaTag.color.portraits.classification.boss.g)
+							-- 		return r, g, b
+							-- 	end,
+							-- 	set = function(info, r, g, b)
+							-- 		local hex = E:RGBToHex(r, g, b, "ff")
+							-- 		E.db.mMediaTag.color.portraits.classification.boss.g = hex
+							-- 		MEDIA.color.portraits.classification.boss.g = CreateColorFromHexString(hex)
+							-- 		MEDIA.color.portraits.classification.boss.g.hex = hex
+							-- 	end,
+							-- },
 						},
 					},
 					player_color = {
@@ -4036,22 +4036,22 @@ mMT.options.args.unitframes.args.portraits.args = {
 									MEDIA.color.portraits.classification.player.c.hex = hex
 								end,
 							},
-							color_b = {
-								type = "color",
-								order = 2,
-								name = "B",
-								hasAlpha = false,
-								get = function(info)
-									local r, g, b = mMT:HexToRGB(E.db.mMediaTag.color.portraits.classification.player.g)
-									return r, g, b
-								end,
-								set = function(info, r, g, b)
-									local hex = E:RGBToHex(r, g, b, "ff")
-									E.db.mMediaTag.color.portraits.classification.player.g = hex
-									MEDIA.color.portraits.classification.player.g = CreateColorFromHexString(hex)
-									MEDIA.color.portraits.classification.player.g.hex = hex
-								end,
-							},
+							-- color_b = {
+							-- 	type = "color",
+							-- 	order = 2,
+							-- 	name = "B",
+							-- 	hasAlpha = false,
+							-- 	get = function(info)
+							-- 		local r, g, b = mMT:HexToRGB(E.db.mMediaTag.color.portraits.classification.player.g)
+							-- 		return r, g, b
+							-- 	end,
+							-- 	set = function(info, r, g, b)
+							-- 		local hex = E:RGBToHex(r, g, b, "ff")
+							-- 		E.db.mMediaTag.color.portraits.classification.player.g = hex
+							-- 		MEDIA.color.portraits.classification.player.g = CreateColorFromHexString(hex)
+							-- 		MEDIA.color.portraits.classification.player.g.hex = hex
+							-- 	end,
+							-- },
 						},
 					},
 				},
@@ -4084,22 +4084,22 @@ mMT.options.args.unitframes.args.portraits.args = {
 									MEDIA.color.portraits.reaction.enemy.c.hex = hex
 								end,
 							},
-							color_b = {
-								type = "color",
-								order = 2,
-								name = "B",
-								hasAlpha = false,
-								get = function(info)
-									local r, g, b = mMT:HexToRGB(E.db.mMediaTag.color.portraits.reaction.enemy.g)
-									return r, g, b
-								end,
-								set = function(info, r, g, b)
-									local hex = E:RGBToHex(r, g, b, "ff")
-									E.db.mMediaTag.color.portraits.reaction.enemy.g = hex
-									MEDIA.color.portraits.reaction.enemy.g = CreateColorFromHexString(hex)
-									MEDIA.color.portraits.reaction.enemy.g.hex = hex
-								end,
-							},
+							-- color_b = {
+							-- 	type = "color",
+							-- 	order = 2,
+							-- 	name = "B",
+							-- 	hasAlpha = false,
+							-- 	get = function(info)
+							-- 		local r, g, b = mMT:HexToRGB(E.db.mMediaTag.color.portraits.reaction.enemy.g)
+							-- 		return r, g, b
+							-- 	end,
+							-- 	set = function(info, r, g, b)
+							-- 		local hex = E:RGBToHex(r, g, b, "ff")
+							-- 		E.db.mMediaTag.color.portraits.reaction.enemy.g = hex
+							-- 		MEDIA.color.portraits.reaction.enemy.g = CreateColorFromHexString(hex)
+							-- 		MEDIA.color.portraits.reaction.enemy.g.hex = hex
+							-- 	end,
+							-- },
 						},
 					},
 					neutral_color = {
@@ -4124,22 +4124,22 @@ mMT.options.args.unitframes.args.portraits.args = {
 									MEDIA.color.portraits.reaction.neutral.c.hex = hex
 								end,
 							},
-							color_b = {
-								type = "color",
-								order = 2,
-								name = "B",
-								hasAlpha = false,
-								get = function(info)
-									local r, g, b = mMT:HexToRGB(E.db.mMediaTag.color.portraits.reaction.neutral.g)
-									return r, g, b
-								end,
-								set = function(info, r, g, b)
-									local hex = E:RGBToHex(r, g, b, "ff")
-									E.db.mMediaTag.color.portraits.reaction.neutral.g = hex
-									MEDIA.color.portraits.reaction.neutral.g = CreateColorFromHexString(hex)
-									MEDIA.color.portraits.reaction.neutral.g.hex = hex
-								end,
-							},
+							-- color_b = {
+							-- 	type = "color",
+							-- 	order = 2,
+							-- 	name = "B",
+							-- 	hasAlpha = false,
+							-- 	get = function(info)
+							-- 		local r, g, b = mMT:HexToRGB(E.db.mMediaTag.color.portraits.reaction.neutral.g)
+							-- 		return r, g, b
+							-- 	end,
+							-- 	set = function(info, r, g, b)
+							-- 		local hex = E:RGBToHex(r, g, b, "ff")
+							-- 		E.db.mMediaTag.color.portraits.reaction.neutral.g = hex
+							-- 		MEDIA.color.portraits.reaction.neutral.g = CreateColorFromHexString(hex)
+							-- 		MEDIA.color.portraits.reaction.neutral.g.hex = hex
+							-- 	end,
+							-- },
 						},
 					},
 					friendly_color = {
@@ -4164,22 +4164,22 @@ mMT.options.args.unitframes.args.portraits.args = {
 									MEDIA.color.portraits.reaction.friendly.c.hex = hex
 								end,
 							},
-							color_b = {
-								type = "color",
-								order = 2,
-								name = "B",
-								hasAlpha = false,
-								get = function(info)
-									local r, g, b = mMT:HexToRGB(E.db.mMediaTag.color.portraits.reaction.friendly.g)
-									return r, g, b
-								end,
-								set = function(info, r, g, b)
-									local hex = E:RGBToHex(r, g, b, "ff")
-									E.db.mMediaTag.color.portraits.reaction.friendly.g = hex
-									MEDIA.color.portraits.reaction.friendly.g = CreateColorFromHexString(hex)
-									MEDIA.color.portraits.reaction.friendly.g.hex = hex
-								end,
-							},
+							-- color_b = {
+							-- 	type = "color",
+							-- 	order = 2,
+							-- 	name = "B",
+							-- 	hasAlpha = false,
+							-- 	get = function(info)
+							-- 		local r, g, b = mMT:HexToRGB(E.db.mMediaTag.color.portraits.reaction.friendly.g)
+							-- 		return r, g, b
+							-- 	end,
+							-- 	set = function(info, r, g, b)
+							-- 		local hex = E:RGBToHex(r, g, b, "ff")
+							-- 		E.db.mMediaTag.color.portraits.reaction.friendly.g = hex
+							-- 		MEDIA.color.portraits.reaction.friendly.g = CreateColorFromHexString(hex)
+							-- 		MEDIA.color.portraits.reaction.friendly.g.hex = hex
+							-- 	end,
+							-- },
 						},
 					},
 				},

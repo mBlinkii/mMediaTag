@@ -440,7 +440,7 @@ local function OnEvent(self, event, eventUnit, arg)
 	local unit = self.__owner.unit or self.unit
 	self.unit = unit
 
-	if eventHandlers[event] then eventHandlers[event](self, event, eventUnit) end
+	if eventHandlers[event] then eventHandlers[event](self, event) end
 end
 
 local function RegisterEvent(element, event, unitEvent)
