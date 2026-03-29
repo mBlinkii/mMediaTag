@@ -109,6 +109,7 @@ MEDIA.color = {
 		notification = createColor("FF00FF88"),
 		font = createColor("FFFFFFFF"),
 		store = createColor("FFFFFFFF"),
+		housing = createColor("FFFFFFFF"),
 		achievement = createColor("FFFFFFFF"),
 		bags = createColor("FFFFFFFF"),
 		character = createColor("FFFFFFFF"),
@@ -276,6 +277,7 @@ function mMT:UpdateMedia(arg)
 		MEDIA.color.dock.font = CreateColorFromHexString(E.db.mMediaTag.color.dock.font)
 		MEDIA.color.dock.font.hex = E.db.mMediaTag.color.dock.font
 		MEDIA.color.dock.store = CreateColorFromHexString(E.db.mMediaTag.color.dock.store)
+		MEDIA.color.dock.housing = CreateColorFromHexString(E.db.mMediaTag.color.dock.housing)
 		MEDIA.color.dock.achievement = CreateColorFromHexString(E.db.mMediaTag.color.dock.achievement)
 		MEDIA.color.dock.bags = CreateColorFromHexString(E.db.mMediaTag.color.dock.bags)
 		MEDIA.color.dock.character = CreateColorFromHexString(E.db.mMediaTag.color.dock.character)

@@ -382,6 +382,12 @@ P.dock = {
 		custom_color = false,
 	},
 
+	housing = {
+		style = "former",
+		icon = "forma_62",
+		custom_color = false,
+	},
+
 	achievement = {
 		style = "former",
 		icon = "forma_69",
@@ -676,6 +682,7 @@ P.color = {
 		notification = "FF00FF88",
 		font = "FFFFFFFF",
 		store = "FFFFFFFF",
+		housing = "FFFFFFFF",
 		achievement = "FFFFFFFF",
 		bags = "FFFFFFFF",
 		character = "FFFFFFFF",

@@ -341,6 +341,13 @@ mMT.options = {
 					childGroups = "tab",
 					args = {},
 				},
+				housing = {
+					order = 20,
+					type = "group",
+					name = mMT:AddSettingsIcon(L["Housing"], "housing"),
+					childGroups = "tab",
+					args = {},
+				},
 				notification = {
 					order = 21,
 					type = "group",

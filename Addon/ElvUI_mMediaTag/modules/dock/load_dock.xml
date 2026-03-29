@@ -19,4 +19,5 @@
     <Script file="spellbook.lua"/>
     <Script file="store.lua"/>
     <Script file="volume.lua"/>
+    <Script file="housing.lua"/>
 </Ui>
