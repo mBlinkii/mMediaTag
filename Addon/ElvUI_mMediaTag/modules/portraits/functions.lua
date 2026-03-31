@@ -167,6 +167,13 @@ local function Update(self, event)
 			local texCoords = module.texCoords[class].texCoords or module.texCoords[class]
 			self.unit_portrait:SetTexture(module.classIcons, "CLAMP", "CLAMP", "TRILINEAR")
 			module:Mirror(self.unit_portrait, shouldMirror, texCoords)
+		elseif module.useSpecIcon and isPlayer then
+			-- try to get spec from tooltip
+			local info = E.Retail and E:GetUnitSpecInfo(unit)
+			if info and info.icon then
+				self.unit_portrait:SetTexture(info.icon, "CLAMP", "CLAMP", "TRILINEAR")
+				module:Mirror(self.unit_portrait, shouldMirror)
+			end
 		else
 			SetPortraitTexture(self.unit_portrait, unit, true)
 			module:Mirror(self.unit_portrait, shouldMirror)
@@ -200,7 +207,11 @@ local function DemoUpdate(self)
 	local isPlayer = true
 	local shouldMirror = (isPlayer and self.db.mirror) or (not isPlayer and not self.db.mirror)
 
-	if module.useClassIcons then
+	if module.useSpecIcon and isPlayer then
+		-- try to get spec from tooltip
+		local info = E.Retail and E:GetUnitSpecInfo(unit)
+		if info and info.icon then self.unit_portrait:SetTexture(info.icon, "CLAMP", "CLAMP", "TRILINEAR") end
+	elseif module.useClassIcons then
 		texCoords = module.texCoords[class].texCoords or module.texCoords[class]
 		element.unit_portrait:SetTexture(module.classIcons, "CLAMP", "CLAMP", "TRILINEAR")
 	else
@@ -639,11 +650,12 @@ function module:Initialize()
 			module.isEnabled = true
 		end
 
-		local classIconStyle = module.db.misc.class_icon
+		local classIconStyle = module.db.misc.class_icon and not module.db.misc.spec_icon
 		local classIcons = (classIconStyle ~= "none") and (MEDIA.icons.class.icons.mmt[classIconStyle] or MEDIA.icons.class.icons.custom[classIconStyle]) or nil
 		module.classIcons = classIcons and classIcons.texture or nil
 		module.useClassIcons = classIcons and (module.db.misc.class_icon ~= "none") and true or false
 		module.texCoords = classIcons and (classIcons.texCoords or MEDIA.icons.class.data) or nil
+		module.useSpecIcon = module.db.misc.spec_icon
 
 		module:PLAYER_ENTERING_WORLD()
 	elseif module.isEnabled then

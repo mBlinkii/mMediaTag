@@ -156,6 +156,7 @@ P.portraits = {
 		force_default = false,
 		scale = 0.6,
 		class_icon = "none",
+		spec_icon = false,
 		desaturate = false,
 		extratop = true,
 		rare = "blizz_rare_neutral",

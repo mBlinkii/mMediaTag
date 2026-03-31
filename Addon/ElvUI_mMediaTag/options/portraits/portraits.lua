@@ -24,9 +24,7 @@ mMT.options.args.unitframes.args.portraits.args = {
 			E.db.mMediaTag.portraits.enable = value
 			M.Portraits:Initialize()
 
-			if value == false then
-				E:StaticPopup_Show("CONFIG_RL")
-			end
+			if value == false then E:StaticPopup_Show("CONFIG_RL") end
 		end,
 	},
 	general_group = {
@@ -130,6 +128,9 @@ mMT.options.args.unitframes.args.portraits.args = {
 						type = "select",
 						name = "Class icon",
 						desc = "Enable and select a class icon style for the portrait.",
+						disabled = function()
+							return E.db.mMediaTag.portraits.misc.spec_icon
+						end,
 						get = function(info)
 							return E.db.mMediaTag.portraits.misc.class_icon
 						end,
@@ -147,6 +148,18 @@ mMT.options.args.unitframes.args.portraits.args = {
 							end
 							t.none = "None"
 							return t
+						end,
+					},
+					spec_icon = {
+						order = 2,
+						type = "toggle",
+						name = L["Use Spec icons"],
+						get = function(info)
+							return E.db.mMediaTag.portraits.misc.spec_icon
+						end,
+						set = function(info, value)
+							E.db.mMediaTag.portraits.misc.spec_icon = value
+							M.Portraits:Initialize()
 						end,
 					},
 				},
