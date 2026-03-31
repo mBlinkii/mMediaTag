@@ -23,6 +23,10 @@ mMT.options.args.unitframes.args.portraits.args = {
 		set = function(info, value)
 			E.db.mMediaTag.portraits.enable = value
 			M.Portraits:Initialize()
+
+			if value == false then
+				E:StaticPopup_Show("CONFIG_RL")
+			end
 		end,
 	},
 	general_group = {
