@@ -361,13 +361,17 @@ local function UpdateCastIconStart(self)
 	self.isCasting = true
 
 	local texture = GetCastIcon(self.unit)
-	if texture then self.unit_portrait:SetTexture(texture) end
+	if texture then
+		local mirror = self.db.mirror
+		self.unit_portrait:SetTexture(texture)
+		self.unit_portrait:SetTexCoord(mirror and 1 or 0, mirror and 0 or 1, 0, 1)
+	end
 end
 
 local function UpdateCastIconStop(self)
 	self.isCasting = false
 
-	SetPortraitTexture(self.unit_portrait, self.unit)
+	Update(self, "ForceUpdate")
 end
 
 local function SimpleUpdate(self, event)
