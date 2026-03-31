@@ -45,9 +45,11 @@ function module:InitializeBossPortrait()
 	elseif module.portraits.boss1 then
 		for i = 1, 5 do
 			local unit = "boss" .. i
-			module.portraits[unit]:UnregisterAllEvents()
-			module.portraits[unit]:Hide()
-			module.portraits[unit] = nil
+			if module.portraits[unit] then
+				module.portraits[unit]:UnregisterAllEvents()
+				module.portraits[unit]:Hide()
+				module.portraits[unit] = nil
+			end
 		end
 	end
 end

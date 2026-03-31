@@ -576,14 +576,17 @@ function module:UpdateTextures(element)
 end
 
 local function ToggleForceShowGroupFrames(_, group, numGroup)
+	if not module.db.enable then return end
 	if group == "boss" or group == "arena" then
 		for i = 1, numGroup do
-			if module.portraits[group .. i] then DemoUpdate(module.portraits[group .. i]) end
+			local unit = group .. i
+			if module.portraits[unit] then DemoUpdate(module.portraits[unit]) end
 		end
 	end
 end
 
 local function HeaderConfig(_, header, configMode)
+	if not module.db.enable then return end
 	if header.groups and header.groupName == "party" then
 		for i = 1, #header.groups[1] do
 			if module.portraits["party" .. i] then DemoUpdate(module.portraits["party" .. i]) end
