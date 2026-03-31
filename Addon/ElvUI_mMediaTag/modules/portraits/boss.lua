@@ -6,7 +6,7 @@ function module:InitializeBossPortrait()
 	if module.db.boss.enable and _G.ElvUF_Boss1 then
 		local portraits = module.portraits
 
-		for i = 1, 8 do
+		for i = 1, 5 do
 			local parent_frame = _G["ElvUF_Boss" .. i]
 
 			if parent_frame then
@@ -43,7 +43,7 @@ function module:InitializeBossPortrait()
 			end
 		end
 	elseif module.portraits.boss1 then
-		for i = 1, 8 do
+		for i = 1, 5 do
 			local unit = "boss" .. i
 			module.portraits[unit]:UnregisterAllEvents()
 			module.portraits[unit]:Hide()
