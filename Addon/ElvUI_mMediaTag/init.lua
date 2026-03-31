@@ -60,15 +60,15 @@ function mMT:Initialize()
 	end
 
 	mMT:UpdateMedia()
+
+	if IsAddOnLoaded("ElvUI_JiberishIcons") then mMT:AddJIIcons() end
+	if IsAddOnLoaded("Details") then mMT:AddClassIconsToDetails() end
+
 	mMT:UpdateAll()
 
 	-- add to movers
 	tinsert(E.ConfigModeLayouts, "MMEDIATAG")
 	E.ConfigModeLocalizedStrings["MMEDIATAG"] = mMT.Name
-
-	if IsAddOnLoaded("ElvUI_JiberishIcons") then mMT:AddJIIcons() end
-
-	if IsAddOnLoaded("Details") then mMT:AddClassIconsToDetails() end
 
 	-- Changelog
 	C_Timer_After(2, function()

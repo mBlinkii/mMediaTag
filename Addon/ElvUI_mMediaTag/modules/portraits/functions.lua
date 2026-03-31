@@ -619,6 +619,7 @@ function module:Initialize()
 
 		local classIconStyle = module.db.misc.class_icon
 		local classIcons = (classIconStyle ~= "none") and (MEDIA.icons.class.icons.mmt[classIconStyle] or MEDIA.icons.class.icons.custom[classIconStyle]) or nil
+		print("Class icon style:", classIconStyle, "Class icons found:", classIcons and "Yes" or "No")
 		module.classIcons = classIcons and classIcons.texture or nil
 		module.useClassIcons = classIcons and (module.db.misc.class_icon ~= "none") and true or false
 		module.texCoords = classIcons and (classIcons.texCoords or MEDIA.icons.class.data) or nil
