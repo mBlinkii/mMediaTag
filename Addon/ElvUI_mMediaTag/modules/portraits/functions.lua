@@ -178,6 +178,13 @@ local function Update(self, event)
 		self.unitClass = class
 		self.isDead = isDead
 
+		-- death event registration
+		if isDead then
+			self:RegisterUnitEvent("UNIT_HEALTH", unit)
+		elseif self.eventsSet then
+			self:UnregisterEvent("UNIT_HEALTH")
+		end
+
 		UpdateTextureColor(self, unit)
 		UpdateExtraTexture(self, self.forceExtra ~= "none" and self.forceExtra or nil)
 
@@ -383,13 +390,21 @@ local function ForceUpdate(self, event)
 	Update(self, "ForceUpdate")
 end
 
-local function DeathCheck(self, event, unit)
-	if self.unit == unit then
-		local isDead = UnitIsDeadOrGhost(unit)
-		if self.isDead ~= isDead then
-			self.isDead = isDead
-			Update(self, event)
-		end
+local function DeathCheck(self, event)
+	--print("DeathCheck triggered for unit:", self.unit, "Event:", event)
+	--if self.unit ~= unit then return end
+
+	local isDead = UnitIsDeadOrGhost(self.unit)
+	if self.isDead == isDead then return end
+
+	self.isDead = isDead
+	Update(self, event)
+
+	-- UNIT_HEALTH only for dead units
+	if isDead then
+		self:RegisterUnitEvent("UNIT_HEALTH", self.unit)
+	else
+		self:UnregisterEvent("UNIT_HEALTH")
 	end
 end
 
@@ -433,7 +448,7 @@ local eventHandlers = {
 	UPDATE_ACTIVE_BATTLEFIELD = SimpleUpdate,
 
 	-- death updates
-	--UNIT_HEALTH = DeathCheck,
+	UNIT_HEALTH = DeathCheck,
 }
 
 local function OnEvent(self, event, eventUnit, arg)
@@ -495,6 +510,9 @@ function module:InitPortrait(element)
 			element:RegisterEvent("PORTRAITS_UPDATED")
 
 			if element.type == "party" then element:RegisterEvent("PARTY_MEMBER_ENABLE") end
+
+			if UnitIsDeadOrGhost(element.unit or "") then element:RegisterUnitEvent("UNIT_HEALTH", element.unit) end
+
 			element.eventsSet = true
 		end
 
@@ -619,7 +637,6 @@ function module:Initialize()
 
 		local classIconStyle = module.db.misc.class_icon
 		local classIcons = (classIconStyle ~= "none") and (MEDIA.icons.class.icons.mmt[classIconStyle] or MEDIA.icons.class.icons.custom[classIconStyle]) or nil
-		print("Class icon style:", classIconStyle, "Class icons found:", classIcons and "Yes" or "No")
 		module.classIcons = classIcons and classIcons.texture or nil
 		module.useClassIcons = classIcons and (module.db.misc.class_icon ~= "none") and true or false
 		module.texCoords = classIcons and (classIcons.texCoords or MEDIA.icons.class.data) or nil
