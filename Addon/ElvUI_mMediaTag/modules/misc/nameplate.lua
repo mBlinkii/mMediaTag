@@ -293,7 +293,7 @@ function module:Initialize()
 	end
 
 	if not module.hooked then
-		module:SecureHook(NP, "Health_SetColors", OnHealthSetColors)
+		module:SecureHook(NP, "Update_Health", OnHealthSetColors)
 		module:SecureHook(NP, "Health_UpdateColor", OnHealthColorUpdate)
 		module:SecureHook(NP, "ThreatIndicator_PostUpdate", OnThreatPostUpdate)
 		module.hooked = true
