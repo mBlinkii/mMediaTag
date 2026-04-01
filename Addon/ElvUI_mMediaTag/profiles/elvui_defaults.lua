@@ -543,18 +543,21 @@ P.nameplates = {
 	target_glow_color = false,
 	focus = {
 		changeColor = false,
+		changeBorder = false,
 		changeTexture = false,
 		ignoreThreat = false,
 		texture = "mMediaTag A9",
 	},
 	target = {
 		changeColor = false,
+		changeBorder = true,
 		changeTexture = false,
 		ignoreThreat = false,
 		texture = "mMediaTag A4",
 	},
 	quest = {
 		changeColor = false,
+		changeBorder = false,
 		changeTexture = false,
 		ignoreThreat = false,
 		texture = "mMediaTag A1",

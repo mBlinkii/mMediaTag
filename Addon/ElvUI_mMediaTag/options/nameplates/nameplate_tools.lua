@@ -86,9 +86,21 @@ mMT.options.args.nameplates.args.nameplate_tools.args = {
 							mMT:UpdateModule("NameplateTools")
 						end,
 					},
+					border = {
+						order = 3,
+						type = "toggle",
+						name = L["Change Border color"],
+						get = function(info)
+							return E.db.mMediaTag.nameplates.focus.changeBorder
+						end,
+						set = function(info, value)
+							E.db.mMediaTag.nameplates.focus.changeBorder = value
+							mMT:UpdateModule("NameplateTools")
+						end,
+					},
 					color = {
 						type = "color",
-						order = 3,
+						order = 4,
 						name = L["Color"],
 						hasAlpha = false,
 						get = function(info)
@@ -189,9 +201,21 @@ mMT.options.args.nameplates.args.nameplate_tools.args = {
 							mMT:UpdateModule("NameplateTools")
 						end,
 					},
+					border = {
+						order = 3,
+						type = "toggle",
+						name = L["Change Border color"],
+						get = function(info)
+							return E.db.mMediaTag.nameplates.target.changeBorder
+						end,
+						set = function(info, value)
+							E.db.mMediaTag.nameplates.target.changeBorder = value
+							mMT:UpdateModule("NameplateTools")
+						end,
+					},
 					color = {
 						type = "color",
-						order = 3,
+						order = 4,
 						name = L["Color"],
 						hasAlpha = false,
 						get = function(info)
@@ -292,9 +316,21 @@ mMT.options.args.nameplates.args.nameplate_tools.args = {
 							mMT:UpdateModule("NameplateTools")
 						end,
 					},
+					border = {
+						order = 3,
+						type = "toggle",
+						name = L["Change Border color"],
+						get = function(info)
+							return E.db.mMediaTag.nameplates.quest.changeBorder
+						end,
+						set = function(info, value)
+							E.db.mMediaTag.nameplates.quest.changeBorder = value
+							mMT:UpdateModule("NameplateTools")
+						end,
+					},
 					color = {
 						type = "color",
-						order = 3,
+						order = 4,
 						name = L["Color"],
 						hasAlpha = false,
 						get = function(info)

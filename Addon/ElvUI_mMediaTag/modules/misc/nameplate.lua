@@ -103,6 +103,11 @@ local function ApplyState(unitToken, state)
 		healthBar.mMT_CustomColor[3] = c.b
 	end
 
+	if cfg.changeBorder and healthBar.backdrop then
+		healthBar.backdrop:SetBackdropBorderColor(cfg.color.r, cfg.color.g, cfg.color.b, 1)
+		healthBar.backdrop.mMT_ColorChanged = true
+	end
+
 	if cfg.changeTexture and cfg.texture and cfg.texture ~= "" then
 		healthBar:SetStatusBarTexture(cfg.texture)
 		healthBar.mMT_CustomTexture = cfg.texture
@@ -129,6 +134,11 @@ local function ResetState(unitToken)
 	healthBar.colorThreat = orig.colorThreat
 
 	if orig.texture then healthBar:SetStatusBarTexture(orig.texture) end
+	if healthBar.backdrop and healthBar.backdrop.mMT_ColorChanged then
+		local c = E.db.general.backdropcolor
+		healthBar.backdrop:SetBackdropBorderColor(c.r, c.g, c.b, c.a)
+		healthBar.backdrop.mMT_ColorChanged = false
+	end
 
 	healthBar.mMT_OrigFlags = nil
 	healthBar.mMT_CustomColor = nil
@@ -200,7 +210,7 @@ local function OnTargetOrFocusChanged()
 	ScheduleRefresh()
 end
 
-local function OnHealthSetColors(_, nameplate)
+local function OnUpdateHealth(_, nameplate)
 	local healthBar = nameplate and nameplate.Health
 	if not healthBar or not healthBar.mMT_State then return end
 
@@ -218,7 +228,7 @@ local function OnHealthSetColors(_, nameplate)
 end
 
 local function OnHealthColorUpdate(_, unitFrame)
-	if not unitFrame or not unitFrame.unit then return end
+	--if not unitFrame or not unitFrame.unit then return end
 	local healthBar = unitFrame.Health
 	if not healthBar or not healthBar.mMT_State then return end
 
@@ -262,6 +272,7 @@ function module:Initialize()
 	module.focus = {
 		enable = db.focus.changeColor or db.focus.changeTexture,
 		changeColor = db.focus.changeColor,
+		changeBorder = db.focus.changeBorder,
 		changeTexture = db.focus.changeTexture,
 		texture = LSM:Fetch("statusbar", db.focus.texture),
 		color = MEDIA.color.nameplates.focus_color,
@@ -271,6 +282,7 @@ function module:Initialize()
 	module.target = {
 		enable = db.target.changeColor or db.target.changeTexture,
 		changeColor = db.target.changeColor,
+		changeBorder = db.target.changeBorder,
 		changeTexture = db.target.changeTexture,
 		texture = LSM:Fetch("statusbar", db.target.texture),
 		color = MEDIA.color.nameplates.target_color,
@@ -280,6 +292,7 @@ function module:Initialize()
 	module.quest = {
 		enable = db.quest.changeColor or db.quest.changeTexture,
 		changeColor = db.quest.changeColor,
+		changeBorder = db.quest.changeBorder,
 		changeTexture = db.quest.changeTexture,
 		texture = LSM:Fetch("statusbar", db.quest.texture),
 		color = MEDIA.color.nameplates.quest_color,
@@ -293,7 +306,7 @@ function module:Initialize()
 	end
 
 	if not module.hooked then
-		module:SecureHook(NP, "Update_Health", OnHealthSetColors)
+		module:SecureHook(NP, "Update_Health", OnUpdateHealth)
 		module:SecureHook(NP, "Health_UpdateColor", OnHealthColorUpdate)
 		module:SecureHook(NP, "ThreatIndicator_PostUpdate", OnThreatPostUpdate)
 		module.hooked = true
