@@ -362,9 +362,7 @@ function mMT:UpdateMedia(arg)
 		MEDIA.color.summon_icon.rejected = CreateColorFromHexString(E.db.mMediaTag.color.summon_icon.rejected)
 	end
 
-	if arg == "important_casts" or not arg then
-		MEDIA.color.important_casts = CreateColorFromHexString(E.db.mMediaTag.color.important_casts)
-	end
+	if arg == "important_casts" or not arg then MEDIA.color.important_casts = CreateColorFromHexString(E.db.mMediaTag.color.important_casts) end
 end
 
 MEDIA.icon = "|TInterface\\Addons\\ElvUI_mMediaTag\\media\\icon.tga:14:14|t"
@@ -534,6 +532,8 @@ MEDIA.icons.datatexts.combat = {
 	combat_26 = "Interface\\Addons\\ElvUI_mMediaTag\\media\\icons\\combat\\combat_16.tga",
 	combat_27 = "Interface\\Addons\\ElvUI_mMediaTag\\media\\icons\\combat\\combat_17.tga",
 	combat_28 = "Interface\\Addons\\ElvUI_mMediaTag\\media\\icons\\combat\\combat_18.tga",
+	combat_29 = "Interface\\Addons\\ElvUI_mMediaTag\\media\\icons\\combat\\combat_08.tga",
+	combat_30 = "Interface\\Addons\\ElvUI_mMediaTag\\media\\icons\\combat\\combat_19.tga",
 }
 
 MEDIA.icons.datatexts.misc = {
@@ -2072,6 +2072,38 @@ MEDIA.icons.summon_icon = {
 	summon_38 = "Interface\\AddOns\\ElvUI_mMediaTag\\media\\icons\\summon\\summon_38.tga",
 	summon_39 = "Interface\\AddOns\\ElvUI_mMediaTag\\media\\icons\\summon\\summon_39.tga",
 	summon_40 = "Interface\\AddOns\\ElvUI_mMediaTag\\media\\icons\\summon\\summon_40.tga",
+}
+
+MEDIA.icons.important_casts = {
+	quest1 = "Interface\\AddOns\\ElvUI_mMediaTag\\media\\icons\\tags\\quest1.tga",
+	combat_18 = "Interface\\AddOns\\ElvUI_mMediaTag\\media\\icons\\datatexts\\combat_18.tga",
+	combat_19 = "Interface\\AddOns\\ElvUI_mMediaTag\\media\\icons\\datatexts\\combat_19.tga",
+	combat_20 = "Interface\\AddOns\\ElvUI_mMediaTag\\media\\icons\\datatexts\\combat_20.tga",
+	combat_29 = "Interface\\Addons\\ElvUI_mMediaTag\\media\\icons\\combat\\combat_08.tga",
+	combat_30 = "Interface\\Addons\\ElvUI_mMediaTag\\media\\icons\\combat\\combat_19.tga",
+	important_casts_01 = "Interface\\AddOns\\ElvUI_mMediaTag\\media\\icons\\castbar\\sign_01.tga",
+	quest2 = "Interface\\AddOns\\ElvUI_mMediaTag\\media\\icons\\tags\\quest2.tga",
+	important_cast_01 = "Interface\\AddOns\\ElvUI_mMediaTag\\media\\icons\\castbar\\important_cast_01.tga",
+	important_cast_02 = "Interface\\AddOns\\ElvUI_mMediaTag\\media\\icons\\castbar\\important_cast_02.tga",
+	important_cast_03 = "Interface\\AddOns\\ElvUI_mMediaTag\\media\\icons\\castbar\\important_cast_03.tga",
+	important_cast_04 = "Interface\\AddOns\\ElvUI_mMediaTag\\media\\icons\\castbar\\important_cast_04.tga",
+	important_cast_05 = "Interface\\AddOns\\ElvUI_mMediaTag\\media\\icons\\castbar\\important_cast_05.tga",
+	important_cast_06 = "Interface\\AddOns\\ElvUI_mMediaTag\\media\\icons\\castbar\\important_cast_06.tga",
+	important_cast_07 = "Interface\\AddOns\\ElvUI_mMediaTag\\media\\icons\\castbar\\important_cast_07.tga",
+	important_cast_08 = "Interface\\AddOns\\ElvUI_mMediaTag\\media\\icons\\castbar\\important_cast_08.tga",
+	important_cast_09 = "Interface\\AddOns\\ElvUI_mMediaTag\\media\\icons\\castbar\\important_cast_09.tga",
+	important_cast_10 = "Interface\\AddOns\\ElvUI_mMediaTag\\media\\icons\\castbar\\important_cast_10.tga",
+	important_cast_11 = "Interface\\AddOns\\ElvUI_mMediaTag\\media\\icons\\castbar\\important_cast_11.tga",
+	important_cast_12 = "Interface\\AddOns\\ElvUI_mMediaTag\\media\\icons\\castbar\\important_cast_12.tga",
+	important_cast_13 = "Interface\\AddOns\\ElvUI_mMediaTag\\media\\icons\\castbar\\important_cast_13.tga",
+	important_cast_14 = "Interface\\AddOns\\ElvUI_mMediaTag\\media\\icons\\castbar\\important_cast_14.tga",
+	important_cast_15 = "Interface\\AddOns\\ElvUI_mMediaTag\\media\\icons\\castbar\\important_cast_15.tga",
+	important_cast_16 = "Interface\\AddOns\\ElvUI_mMediaTag\\media\\icons\\castbar\\important_cast_16.tga",
+	important_cast_17 = "Interface\\AddOns\\ElvUI_mMediaTag\\media\\icons\\castbar\\important_cast_17.tga",
+	important_cast_18 = "Interface\\AddOns\\ElvUI_mMediaTag\\media\\icons\\castbar\\important_cast_18.tga",
+	important_cast_19 = "Interface\\AddOns\\ElvUI_mMediaTag\\media\\icons\\castbar\\important_cast_19.tga",
+	important_cast_20 = "Interface\\AddOns\\ElvUI_mMediaTag\\media\\icons\\castbar\\important_cast_20.tga",
+	important_cast_21 = "Interface\\AddOns\\ElvUI_mMediaTag\\media\\icons\\castbar\\important_cast_21.tga",
 }
 
 MEDIA.minimap = {

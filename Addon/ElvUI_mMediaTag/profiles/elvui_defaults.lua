@@ -613,11 +613,11 @@ P.auto_quest = {
 }
 
 P.important_casts = {
-	enable = true,
+	enable = false,
 	thickness = 2,
 	classColor = false,
 	showIcon = true,
-	icon = "TEST",
+	icon = "important_cast_17",
 	iconSize = 16,
 	anchor = "TOP",
 	posX = 0,

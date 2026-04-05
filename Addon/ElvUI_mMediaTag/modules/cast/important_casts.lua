@@ -13,7 +13,7 @@ local backdropInfo = { edgeFile = EDGE_FILE, edgeSize = 2 }
 local function GetOrCreateBorder(castbar)
 	if castbar.mMT_ImportantCastBorder then return castbar.mMT_ImportantCastBorder end
 
-	local border = CreateFrame("Frame", "mMT_ImportantCastBorder", castbar, "BackdropTemplate")
+	local border = CreateFrame("Frame", nil, castbar, "BackdropTemplate")
 	border:SetFrameLevel(castbar:GetFrameLevel() + 5)
 	border:Hide()
 
@@ -24,16 +24,36 @@ end
 local function GetOrCreateIcon(castbar)
 	if castbar.mMT_ImportantCastIcon then return castbar.mMT_ImportantCastIcon end
 
-	local icon = castbar:CreateTexture("mMT_ImportantCastIcon", "OVERLAY")
-	icon:SetWidth(module.iconSize)
-	icon:SetHeight(module.iconSize)
-	icon:SetPoint(module.anchor, module.posX, module.posY)
-	icon:SetTexture(MEDIA.logo)
-	--icon:SetFrameLevel(castbar:GetFrameLevel() + 5)
-	icon:Hide()
+	local iconHolder = CreateFrame("Frame", nil, castbar)
+	iconHolder:SetFrameLevel(castbar:GetFrameLevel() + 6)
+	iconHolder:Hide()
 
-	castbar.mMT_ImportantCastIcon = icon
-	return icon
+	local icon = iconHolder:CreateTexture(nil, "OVERLAY")
+	icon:SetAllPoints()
+	iconHolder.texture = icon
+
+	castbar.mMT_ImportantCastIcon = iconHolder
+	return iconHolder
+end
+
+local function ApplyIconStyle(iconHolder)
+	local pointMap = {
+		TOP = { point = "BOTTOM", relativePoint = "TOP" },
+		BOTTOM = { point = "TOP", relativePoint = "BOTTOM" },
+		LEFT = { point = "RIGHT", relativePoint = "LEFT" },
+		RIGHT = { point = "LEFT", relativePoint = "RIGHT" },
+		CENTER = { point = "CENTER", relativePoint = "CENTER" },
+		TOPLEFT = { point = "BOTTOMRIGHT", relativePoint = "TOPLEFT" },
+		TOPRIGHT = { point = "BOTTOMLEFT", relativePoint = "TOPRIGHT" },
+		BOTTOMLEFT = { point = "TOPRIGHT", relativePoint = "BOTTOMLEFT" },
+		BOTTOMRIGHT = { point = "TOPLEFT", relativePoint = "BOTTOMRIGHT" },
+	}
+	local anchorData = pointMap[module.anchor] or pointMap.TOP
+
+	iconHolder:ClearAllPoints()
+	iconHolder:SetSize(module.iconSize, module.iconSize)
+	iconHolder:SetPoint(anchorData.point, iconHolder:GetParent(), anchorData.relativePoint, module.posX, module.posY)
+	iconHolder.texture:SetTexture(module.icon, "CLAMP", "CLAMP", "TRILINEAR")
 end
 
 local function ApplyBorderStyle(border, castbar)
@@ -57,6 +77,7 @@ local function ShowImportantCast(castbar)
 
 	if module.showIcon then
 		local icon = GetOrCreateIcon(castbar)
+		ApplyIconStyle(icon)
 		icon:Show()
 	end
 end
@@ -70,6 +91,11 @@ local function HideImportantCast(castbar)
 end
 
 local function CheckImportant(castbar)
+	if not (module.db and module.db.enable) then
+		HideImportantCast(castbar)
+		return
+	end
+
 	local spellID = castbar.spellID
 	if not spellID then
 		HideImportantCast(castbar)
@@ -77,31 +103,48 @@ local function CheckImportant(castbar)
 	end
 
 	-- IsSpellImportant may return a ConditionalSecret boolean; pass to SetAlphaFromBoolean if secret
-	local isImportant = true --IsSpellImportant(spellID)
-	if E:IsSecretValue(isImportant) then
-		-- Secret boolean — show the border and let alpha handle visibility
+	local isImportant = IsSpellImportant(spellID)
+
+	if module.demo then
 		local border = GetOrCreateBorder(castbar)
 		ApplyBorderStyle(border, castbar)
 		border:Show()
-		border:SetAlphaFromBoolean(isImportant, 1, 0)
+		border:SetAlpha(1)
 
 		if module.showIcon then
 			local icon = GetOrCreateIcon(castbar)
+			ApplyIconStyle(icon)
 			icon:Show()
-            icon:SetAlphaFromBoolean(isImportant, 1, 0)
+			icon.texture:SetAlpha(1)
 		end
-	elseif isImportant then
-		ShowImportantCast(castbar)
 	else
-		HideImportantCast(castbar)
+		if E:IsSecretValue(isImportant) then
+			-- Secret boolean — show the border and let alpha handle visibility
+			local border = GetOrCreateBorder(castbar)
+			ApplyBorderStyle(border, castbar)
+			border:Show()
+			border:SetAlphaFromBoolean(isImportant, 1, 0)
+
+			if module.showIcon then
+				local icon = GetOrCreateIcon(castbar)
+				ApplyIconStyle(icon)
+				icon:Show()
+				icon.texture:SetAlphaFromBoolean(isImportant, 1, 0)
+			end
+		elseif isImportant then
+			ShowImportantCast(castbar)
+		else
+			HideImportantCast(castbar)
+		end
 	end
 end
 
-function module:Initialize()
+function module:Initialize(demo)
 	if not E.db.mMediaTag.important_casts.enable then return end
 	if not IsSpellImportant then return end
 
 	module.db = E.db.mMediaTag.important_casts
+
 	if not module.isEnabled then
 		hooksecurefunc(NP, "Castbar_PostCastStart", function(castbar)
 			if not castbar then return end
@@ -149,7 +192,9 @@ function module:Initialize()
 	module.thickness = module.db.thickness or 2
 	module.showIcon = module.db.showIcon
 	module.iconSize = module.db.iconSize or 16
-	module.anchor = module.db.anchor
-    module.posX = module.db.posX or 0
-    module.posY = module.db.posY or 0
+	module.icon = MEDIA.icons.important_casts[module.db.icon]
+	module.anchor = module.db.anchor or "TOP"
+	module.posX = module.db.posX or 0
+	module.posY = module.db.posY or 0
+	module.demo = demo
 end
