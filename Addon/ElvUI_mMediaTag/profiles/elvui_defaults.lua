@@ -605,17 +605,23 @@ P.details = {
 }
 
 P.auto_quest = {
-    enable        = false,
-    auto_accept   = true,
-    auto_turnin   = true,
-    skip_in_combat = true,
-    chat_message  = false,
+	enable = false,
+	auto_accept = true,
+	auto_turnin = true,
+	skip_in_combat = true,
+	chat_message = false,
 }
 
 P.important_casts = {
 	enable = true,
-	style = "default",
-	texture = "mMediaTag A9",
+	thickness = 2,
+	classColor = false,
+	showIcon = true,
+	icon = "TEST",
+	iconSize = 16,
+	anchor = "TOP",
+	posX = 0,
+	posY = 0,
 }
 
 -- color
@@ -748,6 +754,8 @@ P.color = {
 		-- 	[8] = "FFFFFFFF",
 		-- },
 	},
+
+	important_casts = "FFFF00E6",
 
 	nameplates = {
 		focus_color = "FF00FFB3",

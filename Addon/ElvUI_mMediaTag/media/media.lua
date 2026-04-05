@@ -57,6 +57,8 @@ MEDIA.color = {
 	OTHER = createColor("FF00FFEE"),
 	GUILD = createColor("FF91D900"),
 
+	important_casts = createColor("FFFF00E6"),
+
 	-- portraits
 	portraits = {
 		misc = {
@@ -358,6 +360,10 @@ function mMT:UpdateMedia(arg)
 		MEDIA.color.summon_icon.available = CreateColorFromHexString(E.db.mMediaTag.color.summon_icon.available)
 		MEDIA.color.summon_icon.accepted = CreateColorFromHexString(E.db.mMediaTag.color.summon_icon.accepted)
 		MEDIA.color.summon_icon.rejected = CreateColorFromHexString(E.db.mMediaTag.color.summon_icon.rejected)
+	end
+
+	if arg == "important_casts" or not arg then
+		MEDIA.color.important_casts = CreateColorFromHexString(E.db.mMediaTag.color.important_casts)
 	end
 end
 
