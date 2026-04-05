@@ -107,10 +107,31 @@ mMT.options = {
 			icon = "Interface\\Addons\\ElvUI_mMediaTag\\media\\options\\nameplates",
 			childGroups = "tab",
 			args = {
-				nameplate_tools = {
+				misc = {
 					order = 1,
 					type = "group",
-					name = mMT:AddSettingsIcon(L["Nameplate Tools"], "professions"),
+					name = mMT:AddSettingsIcon(L["Misc"], "misc"),
+					childGroups = "tab",
+					args = {},
+				},
+				target_highlight = {
+					order = 2,
+					type = "group",
+					name = mMT:AddSettingsIcon(L["Target Highlight"], "nameplates"),
+					childGroups = "tab",
+					args = {},
+				},
+				focus_highlight = {
+					order = 3,
+					type = "group",
+					name = mMT:AddSettingsIcon(L["Focus Highlight"], "nameplates"),
+					childGroups = "tab",
+					args = {},
+				},
+				quest_highlight = {
+					order = 4,
+					type = "group",
+					name = mMT:AddSettingsIcon(L["Quest Highlight"], "nameplates"),
 					childGroups = "tab",
 					args = {},
 				},

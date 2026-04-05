@@ -185,7 +185,7 @@ mMT.options.args.nameplates.args.nameplate_tools.args = {
 						end,
 						set = function(info, value)
 							E.db.mMediaTag.nameplates.target.changeColor = value
-							mMT:UpdateModule("NameplateTools")
+							mMT:UpdateModule("NP-TargetHighlight")
 							if value == false then E:StaticPopup_Show("CONFIG_RL") end
 						end,
 					},
@@ -198,7 +198,7 @@ mMT.options.args.nameplates.args.nameplate_tools.args = {
 						end,
 						set = function(info, value)
 							E.db.mMediaTag.nameplates.target.ignoreThreat = value
-							mMT:UpdateModule("NameplateTools")
+							mMT:UpdateModule("NP-TargetHighlight")
 						end,
 					},
 					border = {
@@ -210,7 +210,7 @@ mMT.options.args.nameplates.args.nameplate_tools.args = {
 						end,
 						set = function(info, value)
 							E.db.mMediaTag.nameplates.target.changeBorder = value
-							mMT:UpdateModule("NameplateTools")
+							mMT:UpdateModule("NP-TargetHighlight")
 						end,
 					},
 					color = {
@@ -227,7 +227,7 @@ mMT.options.args.nameplates.args.nameplate_tools.args = {
 							E.db.mMediaTag.color.nameplates.target_color = hex
 							MEDIA.color.nameplates.target_color = CreateColorFromHexString(hex)
 							MEDIA.color.nameplates.target_color.hex = hex
-							mMT:UpdateModule("NameplateTools")
+							mMT:UpdateModule("NP-TargetHighlight")
 						end,
 					},
 				},
@@ -249,7 +249,7 @@ mMT.options.args.nameplates.args.nameplate_tools.args = {
 						end,
 						set = function(info, value)
 							E.db.mMediaTag.nameplates.target.changeTexture = value
-							mMT:UpdateModule("NameplateTools")
+							mMT:UpdateModule("NP-TargetHighlight")
 							if value == false then E:StaticPopup_Show("CONFIG_RL") end
 						end,
 					},
@@ -264,7 +264,7 @@ mMT.options.args.nameplates.args.nameplate_tools.args = {
 						end,
 						set = function(info, value)
 							E.db.mMediaTag.nameplates.target.texture = value
-							mMT:UpdateModule("NameplateTools")
+							mMT:UpdateModule("NP-TargetHighlight")
 						end,
 					},
 				},

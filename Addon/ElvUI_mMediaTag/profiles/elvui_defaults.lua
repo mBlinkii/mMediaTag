@@ -542,6 +542,7 @@ P.tags = {
 P.nameplates = {
 	target_glow_color = false,
 	focus = {
+		enable = true,
 		changeColor = false,
 		changeBorder = false,
 		changeTexture = false,
@@ -549,13 +550,15 @@ P.nameplates = {
 		texture = "mMediaTag A9",
 	},
 	target = {
+		enable = true,
 		changeColor = false,
-		changeBorder = true,
+		changeBorder = false,
 		changeTexture = false,
 		ignoreThreat = false,
 		texture = "mMediaTag A4",
 	},
 	quest = {
+		enable = true,
 		changeColor = false,
 		changeBorder = false,
 		changeTexture = false,
@@ -742,8 +745,11 @@ P.color = {
 
 	nameplates = {
 		focus_color = "FF00FFB3",
+		focus_border_color = "FF00FFB3",
 		target_color = "FFA200FF",
+		target_border_color = "FFA200FF",
 		quest_color = "FFFFA500",
+		quest_border_color = "FFFFA500",
 	},
 
 	phase_icon = {
