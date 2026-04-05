@@ -612,6 +612,12 @@ P.auto_quest = {
     chat_message  = false,
 }
 
+P.important_casts = {
+	enable = true,
+	style = "default",
+	texture = "mMediaTag A9",
+}
+
 -- color
 P.color = {
 	-- tip/ menu

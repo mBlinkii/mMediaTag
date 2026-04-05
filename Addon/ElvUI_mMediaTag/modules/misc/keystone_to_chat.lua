@@ -57,13 +57,15 @@ end
 
 function module:Initialize()
 	if E.Retail and E.db.mMediaTag.keystone_to_chat.enable then
-		module:RegisterEvent("CHAT_MSG_PARTY")
-		module:RegisterEvent("CHAT_MSG_PARTY_LEADER")
-		module:RegisterEvent("CHAT_MSG_RAID")
-		module:RegisterEvent("CHAT_MSG_RAID_LEADER")
-		module:RegisterEvent("CHAT_MSG_GUILD")
-		module:RegisterEvent("CHAT_MSG_SAY")
-		module.isEnabled = true
+		if not module.isEnabled then
+			module:RegisterEvent("CHAT_MSG_PARTY")
+			module:RegisterEvent("CHAT_MSG_PARTY_LEADER")
+			module:RegisterEvent("CHAT_MSG_RAID")
+			module:RegisterEvent("CHAT_MSG_RAID_LEADER")
+			module:RegisterEvent("CHAT_MSG_GUILD")
+			module:RegisterEvent("CHAT_MSG_SAY")
+			module.isEnabled = true
+		end
 	elseif module.isEnabled then
 		module:UnregisterEvent("CHAT_MSG_PARTY")
 		module:UnregisterEvent("CHAT_MSG_PARTY_LEADER")
