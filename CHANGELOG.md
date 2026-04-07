@@ -6,7 +6,6 @@
 - FIX - [Portraits]: Prevent nil error with Boss Portraits.
 - FIX - [Portraits]: Load Custom Class icons sooner.
 - FIX - [Portraits]: Cast icons if class icons are enabled.
-
 ### UPDATE
 - UPDATE - [Portraits]: Update Boss Portraits amount.
 - UPDATE - [Portraits]: Optimized Settings behavior.
@@ -18,9 +17,7 @@
 ### NEW
 - NEW - [Portraits]: Add Spec icons.
 - NEW - [Important-Casts]: Show Important cast, thx to Trenchy.
-### INFO
-- INFO - A completely new update for Midnight, almost everything has been optimized and restructured.
-- INFO - Some modules and features are still missing, but this is a fully functional and working version for Midnight. There will be no version for Classic, where the 3.xx version should still work. I will continue to add more features over time.
+
 
 ## [ver. 4.02] - 29.03.2026
 ### FIX
