@@ -42,9 +42,21 @@ mMT.options.args.nameplates.args.focus_highlight.args = {
 					end
 				end,
 			},
+			threat = {
+				order = 2,
+				type = "toggle",
+				name = L["Ignore threat color"],
+				get = function(info)
+					return E.db.mMediaTag.nameplates.focus.ignoreThreat
+				end,
+				set = function(info, value)
+					E.db.mMediaTag.nameplates.focus.ignoreThreat = value
+					mMT:UpdateModule("NP-FocusHighlight")
+				end,
+			},
 			color = {
 				type = "color",
-				order = 2,
+				order = 3,
 				name = L["Color"],
 				hasAlpha = false,
 				get = function(info)
