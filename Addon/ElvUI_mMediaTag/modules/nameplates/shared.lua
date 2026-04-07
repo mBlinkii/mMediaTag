@@ -75,6 +75,18 @@ function Utils:ReapplyCustomStyle(nameplate, healthBar, cfg, state)
 	if cfg.changeTexture and healthBar[state.textureKey] then healthBar:SetStatusBarTexture(healthBar[state.textureKey]) end
 end
 
+function Utils:HandlePostUpdateColor(healthBar, unit, color, state, cfg, handler)
+	local original = healthBar[state.originalKey]
+	if original and original.postUpdateColor and original.postUpdateColor ~= handler then
+		original.postUpdateColor(healthBar, unit, color)
+	end
+
+	local nameplate = healthBar[state.ownerKey]
+	if not (nameplate and cfg and healthBar[state.activeKey]) then return end
+
+	self:ReapplyCustomStyle(nameplate, healthBar, cfg, state)
+end
+
 function Utils:ApplyHighlightStyle(nameplate, cfg, state, postUpdateColor)
 	local healthBar = self:GetHealthBar(nameplate)
 	if not (healthBar and cfg and cfg.enable) then return end

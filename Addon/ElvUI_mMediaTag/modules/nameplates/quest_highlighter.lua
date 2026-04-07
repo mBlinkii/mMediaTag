@@ -36,14 +36,7 @@ local function IsQuestPlate(nameplate)
 end
 
 local function QuestPostUpdateColor(healthBar, unit, color)
-	local original = healthBar.mMT_QuestOriginal
-	if original and original.postUpdateColor then original.postUpdateColor(healthBar, unit, color) end
-
-	local nameplate = healthBar.mMT_QuestOwner
-	local cfg = module.quest
-	if not (nameplate and cfg and healthBar.mMT_IsQuestHighlighted) then return end
-
-	Utils:ReapplyCustomStyle(nameplate, healthBar, cfg, QUEST_STATE)
+	Utils:HandlePostUpdateColor(healthBar, unit, color, QUEST_STATE, module.quest, QuestPostUpdateColor)
 end
 
 local function ApplyStyle(nameplate)

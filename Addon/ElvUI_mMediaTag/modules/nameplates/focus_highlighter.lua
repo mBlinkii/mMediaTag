@@ -36,14 +36,7 @@ local function GetCurrentFocusPlate()
 end
 
 local function FocusPostUpdateColor(healthBar, unit, color)
-	local original = healthBar.mMT_FocusOriginal
-	if original and original.postUpdateColor then original.postUpdateColor(healthBar, unit, color) end
-
-	local nameplate = healthBar.mMT_FocusOwner
-	local cfg = module.focus
-	if not (nameplate and cfg and healthBar.mMT_IsFocusHighlighted) then return end
-
-	Utils:ReapplyCustomStyle(nameplate, healthBar, cfg, FOCUS_STATE)
+	Utils:HandlePostUpdateColor(healthBar, unit, color, FOCUS_STATE, module.focus, FocusPostUpdateColor)
 end
 
 local function ApplyStyle(nameplate)

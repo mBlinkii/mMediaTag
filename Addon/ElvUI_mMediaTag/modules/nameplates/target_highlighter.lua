@@ -17,14 +17,7 @@ local TARGET_STATE = {
 }
 
 local function TargetPostUpdateColor(healthBar, unit, color)
-	local original = healthBar.mMT_TargetOriginal
-	if original and original.postUpdateColor then original.postUpdateColor(healthBar, unit, color) end
-
-	local nameplate = healthBar.mMT_TargetOwner
-	local cfg = module.target
-	if not (nameplate and cfg and healthBar.mMT_IsTargetHighlighted) then return end
-
-	Utils:ReapplyCustomStyle(nameplate, healthBar, cfg, TARGET_STATE)
+	Utils:HandlePostUpdateColor(healthBar, unit, color, TARGET_STATE, module.target, TargetPostUpdateColor)
 end
 
 local function ApplyStyle(nameplate)
