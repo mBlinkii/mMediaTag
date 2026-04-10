@@ -1,7 +1,18 @@
 # Changelog - ElvUI_mMediaTag
 [Eng] - All changes to this project will be documented in this file. The latest changes are at the top.
 
-## [ver. 4.03] - 07.43.2026
+## [ver. 4.04] - 10.03.2026
+### FIX
+- FIX - [LFG-Info]: Fix sometimes not showing the LFG infos.
+- FIX - [Highlighters]: Fix stack overflow.
+### UPDATE
+- UPDATE - [Teleports]: Update names.
+- UPDATE - [System]: Update Dungeon short names.
+- UPDATE - [Dock-Character]: Can now show your played time in the tooltip.
+- UPDATE - [Dock-Housing]: Can now show your house infos.
+- UPDATE - [System]: Update localization.
+
+## [ver. 4.03] - 07.03.2026
 ### FIX
 - FIX - [Portraits]: Prevent nil error with Boss Portraits.
 - FIX - [Portraits]: Load Custom Class icons sooner.

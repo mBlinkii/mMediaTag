@@ -402,7 +402,7 @@ mMT.options = {
 						spacer = {
 							order = 3,
 							type = "description",
-							name = L["\n\n"],
+							name = "\n\n",
 						},
 						custom_docks = {
 							order = 4,

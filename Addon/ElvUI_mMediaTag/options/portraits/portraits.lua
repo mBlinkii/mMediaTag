@@ -126,8 +126,8 @@ mMT.options.args.unitframes.args.portraits.args = {
 					classIcon_select = {
 						order = 1,
 						type = "select",
-						name = "Class icon",
-						desc = "Enable and select a class icon style for the portrait.",
+						name = L["Class icon"],
+						desc = L["Enable and select a class icon style for the portrait."],
 						disabled = function()
 							return E.db.mMediaTag.portraits.misc.spec_icon
 						end,
@@ -513,7 +513,7 @@ mMT.options.args.unitframes.args.portraits.args = {
 						order = 3,
 						type = "toggle",
 						name = L["Cast Icon"],
-						desc = "Enable Cast Icons.",
+						desc = L["Enable Cast Icons."],
 						get = function(info)
 							return E.db.mMediaTag.portraits.player.cast
 						end,
@@ -818,7 +818,7 @@ mMT.options.args.unitframes.args.portraits.args = {
 						order = 3,
 						type = "toggle",
 						name = L["Cast Icon"],
-						desc = "Enable Cast Icons.",
+						desc = L["Enable Cast Icons."],
 						get = function(info)
 							return E.db.mMediaTag.portraits.target.cast
 						end,
@@ -1144,7 +1144,7 @@ mMT.options.args.unitframes.args.portraits.args = {
 						order = 3,
 						type = "toggle",
 						name = L["Cast Icon"],
-						desc = "Enable Cast Icons.",
+						desc = L["Enable Cast Icons."],
 						get = function(info)
 							return E.db.mMediaTag.portraits.focus.cast
 						end,
@@ -1470,7 +1470,7 @@ mMT.options.args.unitframes.args.portraits.args = {
 						order = 3,
 						type = "toggle",
 						name = L["Cast Icon"],
-						desc = "Enable Cast Icons.",
+						desc = L["Enable Cast Icons."],
 						get = function(info)
 							return E.db.mMediaTag.portraits.pet.cast
 						end,
@@ -1796,7 +1796,7 @@ mMT.options.args.unitframes.args.portraits.args = {
 						order = 3,
 						type = "toggle",
 						name = L["Cast Icon"],
-						desc = "Enable Cast Icons.",
+						desc = L["Enable Cast Icons."],
 						get = function(info)
 							return E.db.mMediaTag.portraits.targettarget.cast
 						end,
@@ -2122,7 +2122,7 @@ mMT.options.args.unitframes.args.portraits.args = {
 						order = 3,
 						type = "toggle",
 						name = L["Cast Icon"],
-						desc = "Enable Cast Icons.",
+						desc = L["Enable Cast Icons."],
 						get = function(info)
 							return E.db.mMediaTag.portraits.party.cast
 						end,
@@ -2448,7 +2448,7 @@ mMT.options.args.unitframes.args.portraits.args = {
 						order = 3,
 						type = "toggle",
 						name = L["Cast Icon"],
-						desc = "Enable Cast Icons.",
+						desc = L["Enable Cast Icons."],
 						get = function(info)
 							return E.db.mMediaTag.portraits.boss.cast
 						end,
@@ -2774,7 +2774,7 @@ mMT.options.args.unitframes.args.portraits.args = {
 						order = 3,
 						type = "toggle",
 						name = L["Cast Icon"],
-						desc = "Enable Cast Icons.",
+						desc = L["Enable Cast Icons."],
 						get = function(info)
 							return E.db.mMediaTag.portraits.arena.cast
 						end,

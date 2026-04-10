@@ -52,7 +52,7 @@ function mMT:SetDebugMode(on, safe)
 	else
 		SetCVar("scriptProfile", 0)
 		SetCVar("scriptErrors", 0)
-		mMT:Print("Lua errors off.")
+		mMT:Print(L["Lua errors off."])
 
 		if next(DB.debug.disabledAddons) then
 			for name in pairs(DB.debug.disabledAddons) do
@@ -66,37 +66,37 @@ end
 
 -- Command functions
 local function PrintHelp()
-	mMT:Print("Available commands:")
-	mMT:Print(MEDIA.color.purple:WrapTextInColorCode("/mmt"), MEDIA.color.green:WrapTextInColorCode("help"), "- Show this help message")
-	mMT:Print(MEDIA.color.purple:WrapTextInColorCode("/mmt"), MEDIA.color.green:WrapTextInColorCode("version"), "- Show the current version")
-	mMT:Print(MEDIA.color.purple:WrapTextInColorCode("/mmt"), MEDIA.color.green:WrapTextInColorCode("debug"), "- Toggle debug mode")
-	mMT:Print(MEDIA.color.purple:WrapTextInColorCode("/mmt"), MEDIA.color.green:WrapTextInColorCode("debug safe"), "- Toggle debug mode with safe addons")
-	mMT:Print(MEDIA.color.purple:WrapTextInColorCode("/mmt"), MEDIA.color.green:WrapTextInColorCode("guid"), "- Show your player GUID")
+	mMT:Print(L["Available commands:"])
+	mMT:Print(MEDIA.color.purple:WrapTextInColorCode("/mmt"), MEDIA.color.green:WrapTextInColorCode("help"), "-", L["Show this help message"])
+	mMT:Print(MEDIA.color.purple:WrapTextInColorCode("/mmt"), MEDIA.color.green:WrapTextInColorCode("version"), "-", L["Show the current version"])
+	mMT:Print(MEDIA.color.purple:WrapTextInColorCode("/mmt"), MEDIA.color.green:WrapTextInColorCode("debug"), "-", L["Toggle debug mode"])
+	mMT:Print(MEDIA.color.purple:WrapTextInColorCode("/mmt"), MEDIA.color.green:WrapTextInColorCode("debug safe"), "-", L["Toggle debug mode with safe addons"])
+	mMT:Print(MEDIA.color.purple:WrapTextInColorCode("/mmt"), MEDIA.color.green:WrapTextInColorCode("guid"), "-", L["Show your player GUID"])
 end
 
 local function PrintVersion()
-	mMT:Print("Version:", MEDIA.color.green:WrapTextInColorCode(mMT.Version))
+	mMT:Print(L["Version:"], MEDIA.color.green:WrapTextInColorCode(mMT.Version))
 end
 
 local function PrintGUID()
 	local guid = mMT:GetCurrentPlayerGUID()
-	mMT:Print("GUID:", MEDIA.color.green:WrapTextInColorCode(guid or "unknown"))
+	mMT:Print(L["GUID:"], MEDIA.color.green:WrapTextInColorCode(guid or L["unknown"]))
 end
 
 local function ClearUnknownIDs()
 	wipe(DB.unknownIDS)
-	mMT:Print(MEDIA.color.green:WrapTextInColorCode("unknownIDS cleared."))
+	mMT:Print(MEDIA.color.green:WrapTextInColorCode(L["unknownIDS cleared."]))
 end
 
 local function AddCurrentCharacterAsDeveloper()
 	local guid = mMT:AddDeveloperCharacter()
 	if not guid then
-		mMT:Print(MEDIA.color.red:WrapTextInColorCode("Unable to detect player GUID."))
+		mMT:Print(MEDIA.color.red:WrapTextInColorCode(L["Unable to detect player GUID."]))
 		return
 	end
 
-	mMT:Print("Added dev GUID:", MEDIA.color.green:WrapTextInColorCode(guid))
-	mMT:Print(MEDIA.color.green:WrapTextInColorCode("DEV mode active"))
+	mMT:Print(L["Added dev GUID:"], MEDIA.color.green:WrapTextInColorCode(guid))
+	mMT:Print(MEDIA.color.green:WrapTextInColorCode(L["DEV mode active"]))
 end
 
 -- Command handler

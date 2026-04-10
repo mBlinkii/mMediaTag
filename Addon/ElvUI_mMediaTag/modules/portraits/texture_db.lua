@@ -3,7 +3,7 @@ local mMT, DB, M, E, P, L, MEDIA = unpack(ElvUI_mMediaTag)
 local textureDB = {
 	textures = {
 		blizz_round = {
-			name = "Blizzard Round",
+			name = L["Blizzard Round"],
 			texture = "Interface\\AddOns\\ElvUI_mMediaTag\\media\\portraits\\blizz round\\texture.tga",
 			shadow = "Interface\\AddOns\\ElvUI_mMediaTag\\media\\portraits\\blizz round\\shadow.tga",
 			mask = "Interface\\AddOns\\ElvUI_mMediaTag\\media\\portraits\\blizz round\\mask.tga",
@@ -15,7 +15,7 @@ local textureDB = {
 			mirror = false,
 		},
 		blizz_round_up = {
-			name = "Blizzard Round UP",
+			name = L["Blizzard Round UP"],
 			texture = "Interface\\AddOns\\ElvUI_mMediaTag\\media\\portraits\\blizz round\\texture_up.tga",
 			shadow = "Interface\\AddOns\\ElvUI_mMediaTag\\media\\portraits\\blizz round\\shadow_up.tga",
 			mask = "Interface\\AddOns\\ElvUI_mMediaTag\\media\\portraits\\blizz round\\mask_up.tga",
@@ -27,7 +27,7 @@ local textureDB = {
 			mirror = false,
 		},
 		blizz_round_thick = {
-			name = "Blizzard Round Thick",
+			name = L["Blizzard Round Thick"],
 			texture = "Interface\\AddOns\\ElvUI_mMediaTag\\media\\portraits\\blizz round thick\\texture.tga",
 			shadow = "Interface\\AddOns\\ElvUI_mMediaTag\\media\\portraits\\blizz round thick\\shadow.tga",
 			mask = "Interface\\AddOns\\ElvUI_mMediaTag\\media\\portraits\\blizz round thick\\mask.tga",
@@ -39,7 +39,7 @@ local textureDB = {
 			mirror = false,
 		},
 		blizz_round_thick_up = {
-			name = "Blizzard Round UP Thick",
+			name = L["Blizzard Round UP Thick"],
 			texture = "Interface\\AddOns\\ElvUI_mMediaTag\\media\\portraits\\blizz round thick\\texture_up.tga",
 			shadow = "Interface\\AddOns\\ElvUI_mMediaTag\\media\\portraits\\blizz round thick\\shadow_up.tga",
 			mask = "Interface\\AddOns\\ElvUI_mMediaTag\\media\\portraits\\blizz round thick\\mask_up.tga",
@@ -51,7 +51,7 @@ local textureDB = {
 			mirror = false,
 		},
 		blizz_sharp = {
-			name = "Blizzard Sharp",
+			name = L["Blizzard Sharp"],
 			texture = "Interface\\AddOns\\ElvUI_mMediaTag\\media\\portraits\\blizz sharp\\texture.tga",
 			shadow = "Interface\\AddOns\\ElvUI_mMediaTag\\media\\portraits\\blizz sharp\\shadow.tga",
 			mask = "Interface\\AddOns\\ElvUI_mMediaTag\\media\\portraits\\blizz sharp\\mask.tga",
@@ -63,7 +63,7 @@ local textureDB = {
 			mirror = false,
 		},
 		blizz_sharp_up = {
-			name = "Blizzard Sharp UP",
+			name = L["Blizzard Sharp UP"],
 			texture = "Interface\\AddOns\\ElvUI_mMediaTag\\media\\portraits\\blizz sharp\\texture_up.tga",
 			shadow = "Interface\\AddOns\\ElvUI_mMediaTag\\media\\portraits\\blizz sharp\\shadow_up.tga",
 			mask = "Interface\\AddOns\\ElvUI_mMediaTag\\media\\portraits\\blizz sharp\\mask_up.tga",
@@ -75,7 +75,7 @@ local textureDB = {
 			mirror = false,
 		},
 		blizz_sharp_thick = {
-			name = "Blizzard Sharp Thick",
+			name = L["Blizzard Sharp Thick"],
 			texture = "Interface\\AddOns\\ElvUI_mMediaTag\\media\\portraits\\blizz sharp thick\\texture.tga",
 			shadow = "Interface\\AddOns\\ElvUI_mMediaTag\\media\\portraits\\blizz sharp thick\\shadow.tga",
 			mask = "Interface\\AddOns\\ElvUI_mMediaTag\\media\\portraits\\blizz sharp thick\\mask.tga",
@@ -87,7 +87,7 @@ local textureDB = {
 			mirror = false,
 		},
 		blizz_sharp_thick_up = {
-			name = "Blizzard Sharp UP Thick",
+			name = L["Blizzard Sharp UP Thick"],
 			texture = "Interface\\AddOns\\ElvUI_mMediaTag\\media\\portraits\\blizz sharp thick\\texture_up.tga",
 			shadow = "Interface\\AddOns\\ElvUI_mMediaTag\\media\\portraits\\blizz sharp thick\\shadow_up.tga",
 			mask = "Interface\\AddOns\\ElvUI_mMediaTag\\media\\portraits\\blizz sharp thick\\mask_up.tga",
@@ -99,7 +99,7 @@ local textureDB = {
 			mirror = false,
 		},
 		circle = {
-			name = "Circle",
+			name = L["Circle"],
 			texture = "Interface\\AddOns\\ElvUI_mMediaTag\\media\\portraits\\circle\\texture.tga",
 			shadow = "Interface\\AddOns\\ElvUI_mMediaTag\\media\\portraits\\circle\\shadow.tga",
 			mask = "Interface\\AddOns\\ElvUI_mMediaTag\\media\\portraits\\circle\\mask.tga",
@@ -109,7 +109,7 @@ local textureDB = {
 			mirror = false,
 		},
 		circle_thick = {
-			name = "Circle Thick",
+			name = L["Circle Thick"],
 			texture = "Interface\\AddOns\\ElvUI_mMediaTag\\media\\portraits\\circle thick\\texture.tga",
 			shadow = "Interface\\AddOns\\ElvUI_mMediaTag\\media\\portraits\\circle thick\\shadow.tga",
 			mask = "Interface\\AddOns\\ElvUI_mMediaTag\\media\\portraits\\circle thick\\mask.tga",
@@ -119,7 +119,7 @@ local textureDB = {
 			mirror = false,
 		},
 		cookie = {
-			name = "Cookie",
+			name = L["Cookie"],
 			texture = "Interface\\AddOns\\ElvUI_mMediaTag\\media\\portraits\\cookie\\texture.tga",
 			shadow = "Interface\\AddOns\\ElvUI_mMediaTag\\media\\portraits\\cookie\\shadow.tga",
 			mask = "Interface\\AddOns\\ElvUI_mMediaTag\\media\\portraits\\cookie\\mask.tga",
@@ -130,7 +130,7 @@ local textureDB = {
 			mirror = false,
 		},
 		diamond = {
-			name = "Diamond",
+			name = L["Diamond"],
 			texture = "Interface\\AddOns\\ElvUI_mMediaTag\\media\\portraits\\diamond\\texture.tga",
 			shadow = "Interface\\AddOns\\ElvUI_mMediaTag\\media\\portraits\\diamond\\shadow.tga",
 			mask = "Interface\\AddOns\\ElvUI_mMediaTag\\media\\portraits\\diamond\\mask.tga",
@@ -140,7 +140,7 @@ local textureDB = {
 			mirror = false,
 		},
 		diamond_thick = {
-			name = "Diamond Thick",
+			name = L["Diamond Thick"],
 			texture = "Interface\\AddOns\\ElvUI_mMediaTag\\media\\portraits\\diamond thick\\texture.tga",
 			shadow = "Interface\\AddOns\\ElvUI_mMediaTag\\media\\portraits\\diamond thick\\shadow.tga",
 			mask = "Interface\\AddOns\\ElvUI_mMediaTag\\media\\portraits\\diamond thick\\mask.tga",
@@ -150,7 +150,7 @@ local textureDB = {
 			mirror = false,
 		},
 		hexagon = {
-			name = "Hexagon",
+			name = L["Hexagon"],
 			texture = "Interface\\AddOns\\ElvUI_mMediaTag\\media\\portraits\\hexagon\\texture.tga",
 			shadow = "Interface\\AddOns\\ElvUI_mMediaTag\\media\\portraits\\hexagon\\shadow.tga",
 			mask = "Interface\\AddOns\\ElvUI_mMediaTag\\media\\portraits\\hexagon\\mask.tga",
@@ -159,7 +159,7 @@ local textureDB = {
 			mirror = false,
 		},
 		leaf = {
-			name = "Leaf",
+			name = L["Leaf"],
 			texture = "Interface\\AddOns\\ElvUI_mMediaTag\\media\\portraits\\leaf\\texture.tga",
 			shadow = "Interface\\AddOns\\ElvUI_mMediaTag\\media\\portraits\\leaf\\shadow.tga",
 			mask = "Interface\\AddOns\\ElvUI_mMediaTag\\media\\portraits\\leaf\\mask.tga",
@@ -170,7 +170,7 @@ local textureDB = {
 			mirror = false,
 		},
 		leaf_mirror = {
-			name = "Leaf Mirrored",
+			name = L["Leaf Mirrored"],
 			texture = "Interface\\AddOns\\ElvUI_mMediaTag\\media\\portraits\\leaf\\texture_mirror.tga",
 			shadow = "Interface\\AddOns\\ElvUI_mMediaTag\\media\\portraits\\leaf\\shadow_mirror.tga",
 			mask = "Interface\\AddOns\\ElvUI_mMediaTag\\media\\portraits\\leaf\\mask_mirror.tga",
@@ -181,7 +181,7 @@ local textureDB = {
 			mirror = false,
 		},
 		octagon = {
-			name = "Octagon",
+			name = L["Octagon"],
 			texture = "Interface\\AddOns\\ElvUI_mMediaTag\\media\\portraits\\octagon\\texture.tga",
 			shadow = "Interface\\AddOns\\ElvUI_mMediaTag\\media\\portraits\\octagon\\shadow.tga",
 			mask = "Interface\\AddOns\\ElvUI_mMediaTag\\media\\portraits\\octagon\\mask.tga",
@@ -190,7 +190,7 @@ local textureDB = {
 			mirror = false,
 		},
 		pad = {
-			name = "Pad",
+			name = L["Pad"],
 			texture = "Interface\\AddOns\\ElvUI_mMediaTag\\media\\portraits\\pad\\texture.tga",
 			shadow = "Interface\\AddOns\\ElvUI_mMediaTag\\media\\portraits\\pad\\shadow.tga",
 			mask = "Interface\\AddOns\\ElvUI_mMediaTag\\media\\portraits\\pad\\mask.tga",
@@ -199,7 +199,7 @@ local textureDB = {
 			mirror = false,
 		},
 		parallelogram = {
-			name = "Parallelogram",
+			name = L["Parallelogram"],
 			texture = "Interface\\AddOns\\ElvUI_mMediaTag\\media\\portraits\\parallelogram\\texture.tga",
 			shadow = "Interface\\AddOns\\ElvUI_mMediaTag\\media\\portraits\\parallelogram\\shadow.tga",
 			mask = "Interface\\AddOns\\ElvUI_mMediaTag\\media\\portraits\\parallelogram\\mask.tga",
@@ -210,7 +210,7 @@ local textureDB = {
 			mirror = false,
 		},
 		parallelogram_mirror = {
-			name = "Parallelogram Mirrored",
+			name = L["Parallelogram Mirrored"],
 			texture = "Interface\\AddOns\\ElvUI_mMediaTag\\media\\portraits\\parallelogram\\texture_mirror.tga",
 			shadow = "Interface\\AddOns\\ElvUI_mMediaTag\\media\\portraits\\parallelogram\\shadow_mirror.tga",
 			mask = "Interface\\AddOns\\ElvUI_mMediaTag\\media\\portraits\\parallelogram\\mask_mirror.tga",
@@ -221,7 +221,7 @@ local textureDB = {
 			mirror = false,
 		},
 		pentagon = {
-			name = "Pentagon",
+			name = L["Pentagon"],
 			texture = "Interface\\AddOns\\ElvUI_mMediaTag\\media\\portraits\\pentagon\\texture.tga",
 			shadow = "Interface\\AddOns\\ElvUI_mMediaTag\\media\\portraits\\pentagon\\shadow.tga",
 			mask = "Interface\\AddOns\\ElvUI_mMediaTag\\media\\portraits\\pentagon\\mask.tga",
@@ -232,7 +232,7 @@ local textureDB = {
 			mirror = false,
 		},
 		shield = {
-			name = "Shield",
+			name = L["Shield"],
 			texture = "Interface\\AddOns\\ElvUI_mMediaTag\\media\\portraits\\shield\\texture.tga",
 			shadow = "Interface\\AddOns\\ElvUI_mMediaTag\\media\\portraits\\shield\\shadow.tga",
 			mask = "Interface\\AddOns\\ElvUI_mMediaTag\\media\\portraits\\shield\\mask.tga",
@@ -241,7 +241,7 @@ local textureDB = {
 			mirror = false,
 		},
 		square = {
-			name = "Square",
+			name = L["Square"],
 			texture = "Interface\\AddOns\\ElvUI_mMediaTag\\media\\portraits\\square\\texture.tga",
 			shadow = "Interface\\AddOns\\ElvUI_mMediaTag\\media\\portraits\\square\\shadow.tga",
 			mask = "Interface\\AddOns\\ElvUI_mMediaTag\\media\\portraits\\square\\mask.tga",
@@ -250,7 +250,7 @@ local textureDB = {
 			mirror = false,
 		},
 		square_thick = {
-			name = "Square Thick",
+			name = L["Square Thick"],
 			texture = "Interface\\AddOns\\ElvUI_mMediaTag\\media\\portraits\\square thick\\texture.tga",
 			shadow = "Interface\\AddOns\\ElvUI_mMediaTag\\media\\portraits\\square thick\\shadow.tga",
 			mask = "Interface\\AddOns\\ElvUI_mMediaTag\\media\\portraits\\square thick\\mask.tga",
@@ -259,7 +259,7 @@ local textureDB = {
 			mirror = false,
 		},
 		square_round = {
-			name = "Square Round",
+			name = L["Square Round"],
 			texture = "Interface\\AddOns\\ElvUI_mMediaTag\\media\\portraits\\square round\\texture.tga",
 			shadow = "Interface\\AddOns\\ElvUI_mMediaTag\\media\\portraits\\square round\\shadow.tga",
 			mask = "Interface\\AddOns\\ElvUI_mMediaTag\\media\\portraits\\square round\\mask.tga",
@@ -268,7 +268,7 @@ local textureDB = {
 			mirror = false,
 		},
 		square_round_thick = {
-			name = "Square Round Thick",
+			name = L["Square Round Thick"],
 			texture = "Interface\\AddOns\\ElvUI_mMediaTag\\media\\portraits\\square round thick\\texture.tga",
 			shadow = "Interface\\AddOns\\ElvUI_mMediaTag\\media\\portraits\\square round thick\\shadow.tga",
 			mask = "Interface\\AddOns\\ElvUI_mMediaTag\\media\\portraits\\square round thick\\mask.tga",
@@ -277,7 +277,7 @@ local textureDB = {
 			mirror = false,
 		},
 		tear = {
-			name = "Tear",
+			name = L["Tear"],
 			texture = "Interface\\AddOns\\ElvUI_mMediaTag\\media\\portraits\\tear\\texture.tga",
 			shadow = "Interface\\AddOns\\ElvUI_mMediaTag\\media\\portraits\\tear\\shadow.tga",
 			mask = "Interface\\AddOns\\ElvUI_mMediaTag\\media\\portraits\\tear\\mask.tga",
@@ -288,7 +288,7 @@ local textureDB = {
 			mirror = false,
 		},
 		tear_mirror = {
-			name = "Tear Mirrored",
+			name = L["Tear Mirrored"],
 			texture = "Interface\\AddOns\\ElvUI_mMediaTag\\media\\portraits\\tear\\texture_mirror.tga",
 			shadow = "Interface\\AddOns\\ElvUI_mMediaTag\\media\\portraits\\tear\\shadow_mirror.tga",
 			mask = "Interface\\AddOns\\ElvUI_mMediaTag\\media\\portraits\\tear\\mask_mirror.tga",
@@ -299,7 +299,7 @@ local textureDB = {
 			mirror = false,
 		},
 		tear_down = {
-			name = "Tear down",
+			name = L["Tear down"],
 			texture = "Interface\\AddOns\\ElvUI_mMediaTag\\media\\portraits\\tear\\texture_down.tga",
 			shadow = "Interface\\AddOns\\ElvUI_mMediaTag\\media\\portraits\\tear\\shadow_down.tga",
 			mask = "Interface\\AddOns\\ElvUI_mMediaTag\\media\\portraits\\tear\\mask_down.tga",
@@ -310,7 +310,7 @@ local textureDB = {
 			mirror = false,
 		},
 		tear_down_mirror = {
-			name = "Tear down Mirrored",
+			name = L["Tear down Mirrored"],
 			texture = "Interface\\AddOns\\ElvUI_mMediaTag\\media\\portraits\\tear\\texture_mirror_down.tga",
 			shadow = "Interface\\AddOns\\ElvUI_mMediaTag\\media\\portraits\\tear\\shadow_mirror_down.tga",
 			mask = "Interface\\AddOns\\ElvUI_mMediaTag\\media\\portraits\\tear\\mask_mirror_down.tga",
@@ -321,7 +321,7 @@ local textureDB = {
 			mirror = false,
 		},
 		trapezoid = {
-			name = "Trapezoid",
+			name = L["Trapezoid"],
 			texture = "Interface\\AddOns\\ElvUI_mMediaTag\\media\\portraits\\trapezoid\\texture.tga",
 			shadow = "Interface\\AddOns\\ElvUI_mMediaTag\\media\\portraits\\trapezoid\\shadow.tga",
 			mask = "Interface\\AddOns\\ElvUI_mMediaTag\\media\\portraits\\trapezoid\\mask.tga",
@@ -332,7 +332,7 @@ local textureDB = {
 			mirror = false,
 		},
 		trapezoid_mirror = {
-			name = "Trapezoid Mirrored",
+			name = L["Trapezoid Mirrored"],
 			texture = "Interface\\AddOns\\ElvUI_mMediaTag\\media\\portraits\\trapezoid\\texture_mirror.tga",
 			shadow = "Interface\\AddOns\\ElvUI_mMediaTag\\media\\portraits\\trapezoid\\shadow_mirror.tga",
 			mask = "Interface\\AddOns\\ElvUI_mMediaTag\\media\\portraits\\trapezoid\\mask_mirror.tga",
@@ -343,7 +343,7 @@ local textureDB = {
 			mirror = false,
 		},
 		rectangular = {
-			name = "Rectangular",
+			name = L["Rectangular"],
 			texture = "Interface\\AddOns\\ElvUI_mMediaTag\\media\\portraits\\rectangular\\texture.tga",
 			shadow = "Interface\\AddOns\\ElvUI_mMediaTag\\media\\portraits\\rectangular\\shadow.tga",
 			mask = "Interface\\AddOns\\ElvUI_mMediaTag\\media\\portraits\\rectangular\\mask.tga",
@@ -353,7 +353,7 @@ local textureDB = {
 			mirror = false,
 		},
 		moon = {
-			name = "Moon",
+			name = L["Moon"],
 			texture = "Interface\\AddOns\\ElvUI_mMediaTag\\media\\portraits\\moon\\texture.tga",
 			shadow = "Interface\\AddOns\\ElvUI_mMediaTag\\media\\portraits\\moon\\shadow.tga",
 			mask = "Interface\\AddOns\\ElvUI_mMediaTag\\media\\portraits\\moon\\mask.tga",
@@ -363,7 +363,7 @@ local textureDB = {
 			mirror = false,
 		},
 		antik = {
-			name = "Antik",
+			name = L["Antik"],
 			texture = "Interface\\AddOns\\ElvUI_mMediaTag\\media\\portraits\\antik\\texture.tga",
 			shadow = "Interface\\AddOns\\ElvUI_mMediaTag\\media\\portraits\\antik\\shadow.tga",
 			mask = "Interface\\AddOns\\ElvUI_mMediaTag\\media\\portraits\\antik\\mask.tga",
@@ -372,7 +372,7 @@ local textureDB = {
 			mirror = false,
 		},
 		pixel = {
-			name = "Pixel",
+			name = L["Pixel"],
 			texture = "Interface\\AddOns\\ElvUI_mMediaTag\\media\\portraits\\pixel\\texture.tga",
 			shadow = "Interface\\AddOns\\ElvUI_mMediaTag\\media\\portraits\\pixel\\shadow.tga",
 			mask = "Interface\\AddOns\\ElvUI_mMediaTag\\media\\portraits\\pixel\\mask.tga",
@@ -384,172 +384,173 @@ local textureDB = {
 	},
 	extra = {
 		blizz_boss = {
-			name = "Blizzard Boss",
+			name = L["Blizzard Boss"],
 			texture = "Interface\\AddOns\\ElvUI_mMediaTag\\media\\portraits\\extra\\blizz_boss.tga",
 		},
 		blizz_elite = {
-			name = "Blizzard Elite",
+			name = L["Blizzard Elite"],
 			texture = "Interface\\AddOns\\ElvUI_mMediaTag\\media\\portraits\\extra\\blizz_elite.tga",
 		},
 		blizz_rare = {
-			name = "Blizzard Rare",
+			name = L["Blizzard Rare"],
 			texture = "Interface\\AddOns\\ElvUI_mMediaTag\\media\\portraits\\extra\\blizz_rare.tga",
 		},
 		blizz_boss_neutral = {
-			name = "Blizzard Boss Neutral",
+			name = L["Blizzard Boss Neutral"],
 			texture = "Interface\\AddOns\\ElvUI_mMediaTag\\media\\portraits\\extra\\blizz_boss_neutral.tga",
 		},
 		blizz_rare_neutral = {
-			name = "Blizzard Rare/ Elite Neutral",
+			name = L["Blizzard Rare/ Elite Neutral"],
 			texture = "Interface\\AddOns\\ElvUI_mMediaTag\\media\\portraits\\extra\\blizz_rare_neutral.tga",
 		},
 		round_monster = {
-			name = "Round - Monster",
+			name = L["Round - Monster"],
 			texture = "Interface\\AddOns\\ElvUI_mMediaTag\\media\\portraits\\extra\\round_monster.tga",
 		},
 		round_pulse = {
-			name = "Round - Pulse",
+			name = L["Round - Pulse"],
 			texture = "Interface\\AddOns\\ElvUI_mMediaTag\\media\\portraits\\extra\\round_pulse.tga",
 		},
 		round_star = {
-			name = "Round - Star",
+			name = L["Round - Star"],
 			texture = "Interface\\AddOns\\ElvUI_mMediaTag\\media\\portraits\\extra\\round_star.tga",
 		},
 		round_tech = {
-			name = "Round - Tech",
+			name = L["Round - Tech"],
 			texture = "Interface\\AddOns\\ElvUI_mMediaTag\\media\\portraits\\extra\\round_tech.tga",
 		},
 		round_zickzack = {
-			name = "Round - Zickzack",
+			name = L["Round - Zickzack"],
 			texture = "Interface\\AddOns\\ElvUI_mMediaTag\\media\\portraits\\extra\\round_zickzack.tga",
 		},
 		round_leaf = {
-			name = "Round - Leaf",
+			name = L["Round - Leaf"],
 			texture = "Interface\\AddOns\\ElvUI_mMediaTag\\media\\portraits\\extra\\round_leaf.tga",
 		},
 		dragon_boss = {
-			name = "Dragon Boss",
+			name = L["Dragon Boss"],
 			texture = "Interface\\AddOns\\ElvUI_mMediaTag\\media\\portraits\\extra\\dragon_boss.tga",
 		},
 		dragon_elite = {
-			name = "Dragon Elite",
+			name = L["Dragon Elite"],
 			texture = "Interface\\AddOns\\ElvUI_mMediaTag\\media\\portraits\\extra\\dragon_elite.tga",
 		},
 		dragon_blue = {
-			name = "Dragon Blue",
+			name = L["Dragon Blue"],
 			texture = "Interface\\AddOns\\ElvUI_mMediaTag\\media\\portraits\\extra\\dragon_blue.tga",
 		},
 		dragon_green = {
-			name = "Dragon Green",
+			name = L["Dragon Green"],
 			texture = "Interface\\AddOns\\ElvUI_mMediaTag\\media\\portraits\\extra\\dragon_green.tga",
 		},
 		dragon_purple = {
-			name = "Dragon Purple",
+			name = L["Dragon Purple"],
 			texture = "Interface\\AddOns\\ElvUI_mMediaTag\\media\\portraits\\extra\\dragon_purple.tga",
 		},
 		dog_any = {
-			name = "Dog Any",
+			name = L["Dog Any"],
 			texture = "Interface\\AddOns\\ElvUI_mMediaTag\\media\\portraits\\extra\\any.tga",
 		},
 		dogs = {
-			name = "Dogs",
+			name = L["Dogs"],
 			texture = "Interface\\AddOns\\ElvUI_mMediaTag\\media\\portraits\\extra\\dogs.tga",
 		},
 		dogs_color = {
-			name = "Dogs color",
+			name = L["Dogs color"],
 			texture = "Interface\\AddOns\\ElvUI_mMediaTag\\media\\portraits\\extra\\dogs_color.tga",
 		},
 		dog_pack = {
-			name = "Dog Pack",
+			name = L["Dog Pack"],
 			texture = "Interface\\AddOns\\ElvUI_mMediaTag\\media\\portraits\\extra\\dog_pack.tga",
 		},
 		dog_pack_color = {
-			name = "Dog Pack color",
+			name = L["Dog Pack color"],
 			texture = "Interface\\AddOns\\ElvUI_mMediaTag\\media\\portraits\\extra\\dog_pack_color.tga",
 		},
 		snake = {
-			name = "Snake",
+			name = L["Snake"],
 			texture = "Interface\\AddOns\\ElvUI_mMediaTag\\media\\portraits\\extra\\snake.tga",
 		},
 		snake_blue = {
-			name = "Snake Blue",
+			name = L["Snake Blue"],
 			texture = "Interface\\AddOns\\ElvUI_mMediaTag\\media\\portraits\\extra\\snake_blue.tga",
 		},
 		snake_green = {
-			name = "Snake Green",
+			name = L["Snake Green"],
 			texture = "Interface\\AddOns\\ElvUI_mMediaTag\\media\\portraits\\extra\\snake_green.tga",
 		},
 		snake_purple = {
-			name = "Snake Purple",
+			name = L["Snake Purple"],
 			texture = "Interface\\AddOns\\ElvUI_mMediaTag\\media\\portraits\\extra\\snake_purple.tga",
 		},
 		snake_red = {
-			name = "Snake Red",
+			name = L["Snake Red"],
 			texture = "Interface\\AddOns\\ElvUI_mMediaTag\\media\\portraits\\extra\\snake_red.tga",
 		},
 		space = {
-			name = "Space",
+			name = L["Space"],
 			texture = "Interface\\AddOns\\ElvUI_mMediaTag\\media\\portraits\\extra\\space.tga",
 		},
 		space_color = {
-			name = "Space color",
+			name = L["Space color"],
 			texture = "Interface\\AddOns\\ElvUI_mMediaTag\\media\\portraits\\extra\\space_color.tga",
 		},
 		square_leaf = {
-			name = "Square Leaf",
+			name = L["Square Leaf"],
 			texture = "Interface\\AddOns\\ElvUI_mMediaTag\\media\\portraits\\extra\\square_leaf.tga",
 		},
 		square_Loop = {
-			name = "Square Loop",
+			name = L["Square Loop"],
 			texture = "Interface\\AddOns\\ElvUI_mMediaTag\\media\\portraits\\extra\\square_loop.tga",
 		},
 		square_spikes = {
-			name = "Square Spikes",
+			name = L["Square Spikes"],
 			texture = "Interface\\AddOns\\ElvUI_mMediaTag\\media\\portraits\\extra\\square_spikes.tga",
 		},
 		square_stars = {
-			name = "Square Stars",
+			name = L["Square Stars"],
 			texture = "Interface\\AddOns\\ElvUI_mMediaTag\\media\\portraits\\extra\\square_stars.tga",
 		},
 		climbing_plant = {
-			name = "Climbing Plant",
+			name = L["Climbing Plant"],
 			texture = "Interface\\AddOns\\ElvUI_mMediaTag\\media\\portraits\\extra\\climbing_plant.tga",
 		},
 		climbing_plant_v2 = {
-			name = "Climbing Plant V2",
+			name = L["Climbing Plant V2"],
 			texture = "Interface\\AddOns\\ElvUI_mMediaTag\\media\\portraits\\extra\\climbing_plant_v2.tga",
 		},
 	},
 	bg = {
 		default = {
-			name = "Default",
+			name = L["Default"],
 			texture = "Interface\\AddOns\\ElvUI_mMediaTag\\media\\portraits\\bg\\bg_01.tga",
 		},
 		a = {
-			name = "BG 1",
+			name = L["BG 1"],
 			texture = "Interface\\AddOns\\ElvUI_mMediaTag\\media\\portraits\\bg\\bg_02.tga",
 		},
 		b = {
-			name = "BG 2",
+			name = L["BG 2"],
 			texture = "Interface\\AddOns\\ElvUI_mMediaTag\\media\\portraits\\bg\\bg_03.tga",
 		},
 		c = {
-			name = "BG 3",
+			name = L["BG 3"],
 			texture = "Interface\\AddOns\\ElvUI_mMediaTag\\media\\portraits\\bg\\bg_04.tga",
 		},
 		d = {
-			name = "BG 4",
+			name = L["BG 4"],
 			texture = "Interface\\AddOns\\ElvUI_mMediaTag\\media\\portraits\\bg\\bg_05.tga",
 		},
 		e = {
-			name = "BG 5",
+			name = L["BG 5"],
 			texture = "Interface\\AddOns\\ElvUI_mMediaTag\\media\\portraits\\bg\\bg_06.tga",
 		},
 		f = {
-			name = "BG 6",
+			name = L["BG 6"],
 			texture = "Interface\\AddOns\\ElvUI_mMediaTag\\media\\portraits\\bg\\bg_07.tga",
 		},
 	},
 }
 
 MEDIA.portraits = textureDB
+

@@ -40,10 +40,10 @@ end
 
 function module:Demo()
 	local demoTexts = {
-		{ grp = "QUEST", name = "The Flame Burns Eternal", acc = "Weekly", diff = "Normal" },
-		{ grp = "m0", name = "The Rookery", acc = "Mythic", diff = "Mythic" },
-		{ grp = "+12", name = "The Floodgate", acc = "Keystone", diff = "Mythic+" },
-		{ grp = "Transmog farming", name = "Custom", acc = "PVE", diff = "Custom" },
+		{ grp = "QUEST", name = L["The Flame Burns Eternal"], acc = L["Weekly"], diff = L["Normal"] },
+		{ grp = "m0", name = L["The Rookery"], acc = L["Mythic"], diff = L["Mythic"] },
+		{ grp = "+12", name = L["The Floodgate"], acc = L["Keystone"], diff = L["Mythic+"] },
+		{ grp = L["Transmog farming"], name = L["Custom"], acc = L["PVE"], diff = L["Custom"] },
 	}
 	if module.info_screen.demo then
 		module.info_screen.demo = false
@@ -101,7 +101,7 @@ function module:Initialize(demo)
 			if btn == "RightButton" then module.info_screen:Hide() end
 		end)
 
-		E:CreateMover(module.info_screen, "mMediaTag_LFG_Invite_Info_Mover", "mMT LFG Invite Info", nil, nil, nil, "ALL,MMEDIATAG", function()
+		E:CreateMover(module.info_screen, "mMediaTag_LFG_Invite_Info_Mover", "mMT " .. L["LFG Invite Info"], nil, nil, nil, "ALL,MMEDIATAG", function()
 			return E.db.mMediaTag.lfg_invite_info.enable
 		end, "mMT,misc,lfg_invite_info")
 		module.info_screen:Hide()

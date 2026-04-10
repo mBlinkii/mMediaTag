@@ -85,7 +85,7 @@ function module:Initialize(demo)
 			self:SetSize(width, height)
 		end)
 
-		E:CreateMover(module.difficulty, "mMediaTag_Difficulty_Info_Mover", "mMT Dungeon Info", nil, nil, nil, "ALL,MMEDIATAG", function() return E.db.mMediaTag.difficulty_info.enable end, "mMT,misc,difficulty_info")
+		E:CreateMover(module.difficulty, "mMediaTag_Difficulty_Info_Mover", "mMT " .. L["Difficulty Info"], nil, nil, nil, "ALL,MMEDIATAG", function() return E.db.mMediaTag.difficulty_info.enable end, "mMT,misc,difficulty_info")
 		module.difficulty:Hide()
 	end
 

@@ -1,834 +1,868 @@
-﻿local L = LibStub("AceLocale-3.0"):NewLocale("mMediaTag", "enUS", true, true)
+local L = LibStub("AceLocale-3.0"):NewLocale("mMediaTag", "enUS", true, true)
 if not L then return end
 
-
-L[" hidden at maximum level."] = true
-L[" hidden in combat."] = true
-L["!! Error - this is not an ID."] = true
-L["AFK Logo"] = true
-L["AFK Screen"] = true
-L["AFK"] = true
-L["Abbrev Name of Target."] = true
-L["Abort"] = true
-L["About"] = true
-L["Absorbs color."] = true
-L["Absorbs"] = true
-L["Accepted"] = true
-L["Active Output Audio Device"] = true
-L["Actual reward:"] = true
-L["Add XIV Background"] = true
-L["Adds a button to show or hide details on click. The button is only visible on mouse over."] = true
-L["Adds an Extra Icon to the Castbar."] = true
-L["After setting the position, the interface must be reloaded once with /rl."] = true
-L["All Dungeon Teleports"] = true
-L["Alliance: "] = true
-L["Always withe"] = true
-L["Alpha"] = true
-L["Anchor Point"] = true
-L["Anchor point for the extra Icon."] = true
-L["Account total"] = true
-L["Anchor"] = true
-L["Apply"] = true
-L["Arena"] = true
-L["Aspect ratio"] = true
-L["Attention! The path of the custom texture must comply with WoW standards. Example: Interface\\MYFOLDER\\MYFILE.tga. If you see a green box, the path is incorrect or you have a typo."] = true
-L["Attributes"] = true
-L["Auto Hover grow size"] = true
-L["Auto Point"] = true
-L["Auto Size"] = true
-L["Auto color Border"] = true
-L["Auto color Glow"] = true
-L["Auto media color"] = true
-L["Auto shows details during combat and hides them after combat."] = true
-L["Auto value"] = true
-L["Auto"] = true
-L["Available"] = true
-L["BG Color"] = true
-L["BOSS"] = true
-L["BOTTOM"] = true
-L["Backdrop Texture"] = true
-L["Background Color"] = true
-L["Background Skin"] = true
-L["Background Texture"] = true
-L["Background color for Icons"] = true
-L["Background color shift"] = true
-L["Background"] = true
-L["Bag - FREE"] = true
-L["Bag - FREE/TOTAL"] = true
-L["Bag - USED"] = true
-L["Bags"] = true
-L["Bar hight"] = true
-L["Blizzard Targetunit role icon."] = true
-L["Blizzard Unit role icon, only tank and healer."] = true
-L["Blizzard Unit role icon."] = true
-L["Border Color"] = true
-L["Border and Glow"] = true
-L["Border"] = true
-L["Borders"] = true
-L["Boss - Border"] = true
-L["Boss - Shadow"] = true
-L["Boss Texture Style"] = true
-L["Boss Textures"] = true
-L["Boss"] = true
-L["CENTER"] = true
-L["CIRCLE/ MOON"] = true
-L["Calendar"] = true
-L["Call To Arms"] = true
-L["Cardinal Point"] = true
-L["Cast Icon"] = true
-L["Cast is out of range"] = true
-L["Castbar Background Color"] = true
-L["Castbar Color"] = true
-L["Castbar Shield"] = true
-L["Castbar Shield"] = true
-L["Castbar Sound"] = true
-L["Castbar Texture"] = true
-L["Castbar"] = true
-L["Center Text"] = true
-L["Change Castbar Texture"] = true
-L["Change Castbar color"] = true
-L["Change Icons Colors"] = true
-L["Change Log"] = true
-L["Change Texture"] = true
-L["Change the Castbar Texture."] = true
-L["Change the Castbar color."] = true
-L["Changelog"] = true
-L["Changes the color of the castbar when the unit is out of range and interruptible."] = true
-L["Character:"] = true
-L["Chat Button"] = true
-L["Chat Menu"] = true
-L["Chest"] = true
-L["Chromie"] = true
-L["Circle"] = true
-L["Circle"] = true
-L["Class Colors"] = true
-L["Class Icons Style"] = true
-L["Class Icons"] = true
-L["Class colored Background"] = true
-L["Class colored Nameplates Border."] = true
-L["Class colored Nameplates Glow."] = true
-L["Class colored"] = true
-L["Class"] = true
-L["Clean Icons"] = true
-L["Cleaned Memory"] = true
-L["Click Color Style"] = true
-L["Click left to open the main menu."] = true
-L["Click to hide Details frames."] = true
-L["Click to open Great Vault"] = true
-L["Click to open LFD Frame"] = true
-L["Click:"] = true
-L["Collect Garbage"] = true
-L["Collected"] = true
-L["Color HC"] = true
-L["Color Hover"] = true
-L["Color Multiplier"] = true
-L["Color Mythic"] = true
-L["Color Mythic+"] = true
-L["Color NHC"] = true
-L["Color Normal"] = true
-L["Color Settings"] = true
-L["Color Style"] = true
-L["Color Tip"] = true
-L["Color Title"] = true
-L["Color other"] = true
-L["Color"] = true
-L["Colored Menulist"] = true
-L["Colored Text"] = true
-L["Colors"] = true
-L["Combat Hide/Show"] = true
-L["Combat Icon and Time"] = true
-L["Combat Time"] = true
-L["Complete"] = true
-L["Completed"] = true
-L["Contact"] = true
-L["Cooking"] = true
-L["Coords"] = true
-L["Cosmetic Headerbar"] = true
-L["Cosmetic"] = true
-L["Creat mDock"] = true
-L["Cross"] = true
-L["Currency"] = true
-L["Custom Alternative Power Texture"] = true
-L["Custom Castbar Backdrop"] = true
-L["Custom Castbar Texture"] = true
-L["Custom Class colors"] = true
-L["Custom Docks"] = true
-L["Custom Font Size"] = true
-L["Custom Font color"] = true
-L["Custom Health Backdrop"] = true
-L["Custom Health Texture"] = true
-L["Custom Icon Color"] = true
-L["Custom NPC ID"] = true
-L["Custom Notification Color"] = true
-L["Custom Portrait Textures"] = true
-L["Custom Power Backdrop"] = true
-L["Custom Power Texture"] = true
-L["Custom Texture DD"] = true
-L["Custom Texture Heal"] = true
-L["Custom Texture Tank"] = true
-L["Custom Textures"] = true
-L["Custom Unitframe Backgrounds"] = true
-L["Custom Unitframe Textures"] = true
-L["Custom click Color"] = true
-L["Custom color for Datatext Tip"] = true
-L["Custom color"] = true
-L["Custom hover Color"] = true
-L["Custom"] = true
-L["DD"] = true
-L["DEATHKNIGHT"] = true
-L["DEMONHUNTER"] = true
-L["DEV ICON"] = true
-L["DEV Tools"] = true
-L["DISABLE"] = true
-L["DND"] = true
-L["DRUID"] = true
-L["Dark Class"] = true
-L["DataTexts"] = true
-L["Datapanels"] = true
-L["Datatext Colors"] = true
-L["Datatext Options Color (Tooltip)"] = true
-L["Datatext Settings"] = true
-L["Date Style"] = true
-L["Dead desaturation"] = true
-L["Dead"] = true
-L["Death Counter color."] = true
-L["Death Counter, resets in new Instances."] = true
-L["Death"] = true
-L["Deaths"] = true
-L["Default Font"] = true
-L["Default"] = true
-L["Deficit:"] = true
-L["Delay time"] = true
-L["Delete ID"] = true
-L["Delete NPC ID"] = true
-L["Delete all Settings"] = true
-L["Delete all and reset the list."] = true
-L["Delete all"] = true
-L["Delete filter"] = true
-L["Delete the Spell, enter a ID."] = true
-L["Description"] = true
-L["Details Windows"] = true
-L["Details embedded toggle"] = true
-L["Details embeded"] = true
-L["Diamond"] = true
-L["Difficulties Colors"] = true
-L["Difficulty Text"] = true
-L["Disable All"] = true
-L["Disable"] = true
-L["Display the instance name instead of Datatext name. Uses the same format as InstanceDifficulty."] = true
-L["Displays Power/Mana for Heal only, in combat."] = true
-L["Displays Power/Mana, in combat."] = true
-L["Displays Power/Mana, with a low healer warning, hidden when full."] = true
-L["Displays Power/Mana, with a low healer warning."] = true
-L["Displays a ! if the Unit is a Quest NPC."] = true
-L["Displays an icon when the unit is flagged for PvP."] = true
-L["Displays the AFK Status."] = true
-L["Displays the Death counter only when the unit is Death and Shows a Text (Death: 7), resets in new instances."] = true
-L["Displays the Death counter only when the unit is Death, resets in new instances."] = true
-L["Displays the Faction Icon."] = true
-L["Displays the Faction."] = true
-L["Displays the Unit AFK Status."] = true
-L["Displays the Unit Class Icon only for Rare and Boss NPCs."] = true
-L["Displays the Unit Class Icon only for Rare and Rare Elite NPCs."] = true
-L["Displays the Unit Class Icon, only for Boss NPCs."] = true
-L["Displays the Unit Class Icon."] = true
-L["Displays the Unit Class."] = true
-L["Displays the Unit Status Icon."] = true
-L["Displays the Unit Status text and time."] = true
-L["Displays the Unit Status."] = true
-L["Displays the healer's Power/Mana, with a low healer warning, hidden when full."] = true
-L["Displays the healer's Power/Mana, with a low healer warning."] = true
-L["Displays the icons for the professions in the menu."] = true
-L["Displays the icons of the menu list."] = true
-L["Displays the last word of the Unit name, only in an Instance."] = true
-L["Displays the last word of the Unit name."] = true
-L["Displays the opposite Faction Icon."] = true
-L["Displays the opposite Faction."] = true
-L["Displays the unit's current health as a percentage with absorb values"] = true
-L["Dock on Top"] = true
-L["Dock"] = true
-L["Drop flipped"] = true
-L["Drop round flipped"] = true
-L["Drop round"] = true
-L["Drop"] = true
-L["Dungeon Name"] = true
-L["Dungeon Skin"] = true
-L["Dungeon"] = true
-L["Durability and Item Level"] = true
-L["Durability"] = true
-L["Durability/ Ilevel"] = true
-L["ELITE"] = true
-L["ENEMY"] = true
-L["ERROR! Please open the Mythic+ window, LFG Tool or Reload UI!"] = true
-L["EVOKER"] = true
-L["Earned:"] = true
-L["Effect"] = true
-L["Elite - Border"] = true
-L["Elite - Shadow"] = true
-L["Elite Textures"] = true
-L["Elite"] = true
-L["Elite/ Rare Elite Texture Style"] = true
-L["ElvUI Background Color"] = true
-L["ElvUI media color"] = true
-L["Embedded Settings"] = true
-L["Embedded to Chat"] = true
-L["Enable Arena Portraits"] = true
-L["Enable Borders"] = true
-L["Enable Boss Portraits"] = true
-L["Enable Cast Icons"] = true
-L["Enable Class colored Background"] = true
-L["Enable Corner"] = true
-L["Enable Custom Alternative Power Texture"] = true
-L["Enable Custom Castbar Backdrop"] = true
-L["Enable Custom Castbar Texture"] = true
-L["Enable Custom Health Backdrop"] = true
-L["Enable Custom Health Texture"] = true
-L["Enable Custom Power Backdrop"] = true
-L["Enable Custom Power Texture"] = true
-L["Enable Custom Textures"] = true
-L["Enable Filter"] = true
-L["Enable Focus Portraits"] = true
-L["Enable Gradient colors, this will use the second color."] = true
-L["Enable Important Spells module."] = true
-L["Enable Important Spells"] = true
-L["Enable Inner Shadow"] = true
-L["Enable Interrupt on CD colors for Castbar"] = true
-L["Enable Nameplate Execute Marker"] = true
-L["Enable Nameplate Health Marker"] = true
-L["Enable ObjectiveTracker Skin."] = true
-L["Enable Party Portraits"] = true
-L["Enable Pet Portraits"] = true
-L["Enable Player Portraits"] = true
-L["Enable Portraits"] = true
-L["Enable Rare/Elite Border"] = true
-L["Enable Shadow"] = true
-L["Enable Target Portraits"] = true
-L["Enable Target of Target Portraits"] = true
-L["Enable custom colors"] = true
-L["Enable not Interruptible Shield"] = true
-L["Enable on Nameplates"] = true
-L["Enable on Unitframes"] = true
-L["Enable the custom role icons"] = true
-L["Enable the custom textures"] = true
-L["Enable this Filter."] = true
-L["Enable this module on Nameplates."] = true
-L["Enable this module on Unitframes."] = true
-L["Enable"] = true
-L["Enables or disables Quest Icon"] = true
-L["Enables or disables Tooltip Icon"] = true
-L["Engineering"] = true
-L["Enhancements"] = true
-L["Enter a NPC ID"] = true
-L["Enter a Spell ID it accepts only Numbers."] = true
-L["Enter a name for your filter."] = true
+-- core/functions.lua
 L["Error decompressing data."] = true
 L["Error deserializing:"] = true
 L["Error importing profile. String is invalid or corrupted!"] = true
-L["Example"] = true
-L["Execute Marker"] = true
-L["Execute markers"] = true
-L["Execute value HP%"] = true
-L["Execute value based on your Class"] = true
-L["Explanation"] = true
-L["Export"] = true
-L["Extra Icon Anchor"] = true
-L["Extra Texture Style"] = true
-L["FRIENDLY"] = true
-L["Failed"] = true
-L["Filter Name"] = true
-L["First and Second Profession"] = true
-L["Fishing"] = true
-L["Fix:"] = true
-L["Fixes"] = true
-L["Focus"] = true
-L["Font Settings"] = true
-L["Font Size"] = true
-L["Font contour"] = true
-L["Font"] = true
-L["Force reaction color"] = true
-L["Forces reaction color for all Units."]  = true
-L["Four (double chat height)"] = true
-L["Frame Level"] = true
-L["Frame Strata"] = true
-L["Friends List"] = true
-L["Friends"] = true
-L["GOLD"] = true
+
+-- modules/datatexts/info_score.lua
+L["Dungeon overview:"] = true
+L["Keystones in your Group"] = true
+L["Level: "] = true
+L["No Keystone"] = true
+L["Possible next upgrades:"] = true
+L["This Week Affix"] = true
+
+-- modules/datatexts/misc_coordinate.lua
+L["Coordinate X"] = true
+L["Coordinate Y"] = true
+
+-- modules/datatexts/misc_dungeon.lua
+L["Call to Arms:"] = true
+L["Difficulty Infos:"] = true
+L["Dungeon Infos:"] = true
+L["Dungeon:"] = true
+L["Guild Party:"] = true
+L["Legacy Raid:"] = true
+L["Name:"] = true
+L["No"] = true
+L["Raid:"] = true
+L["This week's Affix"] = true
+L["Yes"] = true
+
+-- modules/datatexts/misc_gamemenu.lua
+L["Framerate:"] = true
 L["Game Menu"] = true
-L["General"] = true
-L["GetCurrenciesInfo no Table or no ID."] = true
-L["Ghost"] = true
-L["Gradient  Mode"] = true
-L["Gradient Orientation"] = true
-L["Gradient"] = true
-L["Grays"] = true
-L["Great Vault"] = true
-L["Guild Group"] = true
-L["Guild"] = true
-L["HUNTER"] = true
-L["Header"] = true
-L["Healer"] = true
-L["Health changes between maximum Health and Current Health - Percent in combat with absorb values."] = true
-L["Health changes between maximum Health and Current Health - Percent in combat."] = true
-L["Health changes between maximum Health and Percent in combat, with Status Icons."] = true
-L["Health changes between maximum Health and Percent in combat, without AFK Status."] = true
-L["Health changes between maximum Health and Percent in combat. Without Death Status."] = true
-L["Health changes between maximum Health and Percent in combat."] = true
-L["Health"] = true
-L["Healthmarker"] = true
-L["Healthmarkers"] = true
+L["Latency:"] = true
+L["left click to open the menu."] = true
+L["right click to open LFD Browser"] = true
+
+-- modules/datatexts/misc_individual_professions.lua
+L["Archaeology"] = true
+L["Cooking"] = true
+L["Fishing"] = true
+L["Not learned"] = true
+L["Primary Profession"] = true
+L["Secondary Profession"] = true
+
+-- modules/datatexts/misc_professions.lua
+L["click to open the menu."] = true
+L["Main Professions"] = true
+L["No Main Professions"] = true
+L["No Secondary Professions"] = true
+L["Secondary Professions"] = true
+
+-- modules/datatexts/misc_teleports.lua
+L["Dungeon Teleports"] = true
+L["Engineering"] = true
+L["Favorite"] = true
+L["Items"] = true
+L["Left click to open the Teleports menu."] = true
+L["M+ Season"] = true
+L["Mage Portals"] = true
+L["Mage Teleports"] = true
+L["Midnight"] = true
+L["Other Portals"] = true
+L["Other Teleports"] = true
+L["Season Teleports"] = true
+L["Spells"] = true
+L["You can select your favourites in the settings."] = true
+L["You currently have no important teleports."] = true
+
+-- modules/dock/achievement.lua
+L["Achievement points:"] = true
+L["Completed"] = true
+L["Guild Achievement points:"] = true
+L["Missing"] = true
+L["Tracked Achievements"] = true
+
+-- modules/dock/calendar.lua
+L["Date:"] = true
+
+-- modules/dock/character.lua
+L["Account total"] = true
+L["Time played this level"] = true
+L["Total play time"] = true
+
+-- modules/dock/collection.lua
+L["Collected"] = true
+L["Mounts"] = true
+L["Pets"] = true
+
+-- modules/dock/encounter.lua
+L["Progress:"] = true
+L["Reisetagebuch"] = true
+
+-- modules/dock/housing.lua
+L["Neighborhood"] = true
+L["No cached house information available."] = true
+L["Owner"] = true
+
+-- modules/dock/spellbook.lua
+L["click to open the Spellbook."] = true
+L["Opening the spellbook via addons can lead to taints.\nThis occurs when protected Blizzard code is unintentionally modified or affected,\nwhich may result in malfunctions or UI restrictions."] = true
+
+-- modules/dock/store.lua
+L["WoW Token:"] = true
+
+-- modules/misc/auto_quest.lua
+L["[AutoQuest] Auto-accept paused (SHIFT held)."] = true
+L["[AutoQuest] Auto-turn-in paused (SHIFT held)."] = true
+L["[AutoQuest] Quest accepted: %s"] = true
+L["[AutoQuest] Quest turned in: %s"] = true
+
+-- modules/misc/class_icons.lua
+L["Could not add the texture."] = true
+L["The style already exists."] = true
+L["The texture coordinates must be passed as a table."] = true
+
+-- modules/misc/details.lua
+L["Click to hide Details frames."] = true
+L["Details embedded toggle"] = true
+
+-- modules/misc/dice_button.lua
+L["Left Click to roll"] = true
+L["Right Click to roll"] = true
+L["Roll Button"] = true
+
+-- modules/misc/greeting_message.lua
+L["Welcome to %s %s version |CFFF7DC6F%s|r, type |CFF58D68D/mmt|r to access the in-game configuration menu or type |CFF58D68D/mmt help|r for an overview of all chat commands."] = true
+
+-- modules/misc/lfg_invite_info.lua
+L["Activity:"] = true
+L["Group:"] = true
+L["Location:"] = true
+L["PVE"] = true
+L["The Flame Burns Eternal"] = true
+L["The Floodgate"] = true
+L["The Rookery"] = true
+L["Transmog farming"] = true
+L["Weekly"] = true
+
+-- modules/misc/tags.lua
+L["Returns the classification icon of the unit. You can specify up to three arguments to display only certain classifications.\nFor example: [mMT-classification:icon{rare:elite}] will only show something if the unit is either rare or elite."] = true
+L["Returns the classification of the unit. You can specify up to three arguments to display only certain classifications.\nFor example: [mMT-classification{rare:elite}] will only show something if the unit is either rare or elite."] = true
+L["Returns the color of the unit. Players are colored by class, NPCs by classification. You can specify up to three arguments to display only certain classifications.\nFor example: [mMT-color{rare:elite}] will only show something if the unit is either rare or elite."] = true
+L["Returns the current health of the unit (changes between current health and percent in combat)."] = true
+L["Returns the current health of the unit."] = true
+L["Returns the current health percent of the unit (in combat)."] = true
+L["Same as mMT-color, but only for the units target."] = true
+L["Same as mMT-deathcount, but only shows the count while the player is dead."] = true
+
+-- modules/misc/tagsold.lua
+L["Name"] = true
+L["Returns icons of players currently targeting the unit, but only while in combat."] = true
+L["Returns the classification icon of the unit. You can specify up to three arguments to display only certain classifications.\nFor example: [mClass:icon{rare:elite}] will only show something if the unit is either rare or elite."] = true
+L["Returns the classification of the unit. You can specify up to three arguments to display only certain classifications.\nFor example: [mClass{rare:elite}] will only show something if the unit is either rare or elite."] = true
+L["Returns the color of the unit. Players are colored by class, NPCs by classification. You can specify up to three arguments to display only certain classifications.\nFor example: [mColor{rare:elite}] will only show something if the unit is either rare or elite."] = true
+L["Returns the current health and percent of the unit or it will return the status (AFK, DND, Offline, Dead, Ghost)."] = true
+L["Returns the current health of the unit (changes between max health and percent in combat) including absorbs or it will return the status (AFK, DND, Offline, Dead, Ghost)."] = true
+L["Returns the current health of the unit (changes between max health and percent in combat) or it will return the status (AFK, DND, Offline, Dead, Ghost)."] = true
+L["Returns the current health of the unit (changes between max health and percent in combat). Does not return status."] = true
+L["Returns the name of the unit. If in an instance, it will return the last word of the name."] = true
+L["Returns the number of players currently targeting the unit, but only while in combat."] = true
+L["Returns the raid target marker icon of the unit."] = true
+L["Returns the status icon of the unit (AFK, DND, Offline, Dead, Ghost) or the name of the unit."] = true
+L["Returns the status of the unit (AFK, DND, Offline, Dead, Ghost) or the name of the unit."] = true
+L["Same as mColor, but only for the units target."] = true
+L["Same as mDeathCount, but only shows the count while the player is dead."] = true
+L["Short Version"] = true
+
+-- options/about.lua
+L["Contact"] = true
 L["Help"] = true
-L["Here you can enable or disable individual texture packs to speed up the loading of the dropdown menu. Sometimes it may be necessary to do a /rl after enabling or disabling the packs."] = true
-L["Here you can set the color of the castbar when your own interrupt spell is on CD or will be ready."] = true
-L["Hide (All Objectives)"] = true
-L["Hide Dash"] = true
-L["Hide Delay"] = true
-L["Hide Text"] = true
-L["Hide Timer in Seconds"] = true
-L["Hide if Zero"] = true
-L["Highlight Color"] = true
-L["Highlight dim Value"] = true
-L["Highlight my Keystone"] = true
-L["Home Latency:"] = true
-L["Horde: "] = true
+L["Thanks to:"] = true
+
+-- options/cast/important_casts.lua
+L["Adds an Extra Icon to the Castbar."] = true
+L["Border Color"] = true
+L["Class Colors"] = true
+L["Position Settings"] = true
+L["Sets the offset according to the anchor."] = true
+
+-- options/changelog.lua
+L["Fixes"] = true
+L["Important"] = true
+L["New"] = true
+L["Released"] = true
+L["Updates"] = true
+L["Version"] = true
+
+-- options/colors_difficulty.lua
+L["Other"] = true
+
+-- options/colors_tip_menu.lua
+L["Title"] = true
+
+-- options/datatext/misc_dungeon.lua
+L["Dungeon Name"] = true
+
+-- options/datatext/misc_individual_professions.lua
+L["White"] = true
+
+-- options/datatext/misc_tracker.lua
+L["Delete ID"] = true
+L["ID list"] = true
+
+-- options/dock/durability.lua
+L["Durability"] = true
+
+-- options/dock/example.lua
+L["Delete all"] = true
+L["Dock on Top"] = true
+L["Preview"] = true
+
+-- options/dock/general.lua
+L["Custom Font Size"] = true
+L["Font Size"] = true
+
+-- options/dock/volume.lua
+L["Colored Text"] = true
+
+-- options/misc/details.lua
+L["Adds a button to show or hide details on click. The button is only visible on mouse over."] = true
+L["Details embeded"] = true
+L["Details Windows"] = true
+L["Embedded Settings"] = true
+L["Embedded to Chat"] = true
+L["Left Chat"] = true
+L["Right Chat"] = true
+L["Toggle Button"] = true
+
+-- options/misc/dice_button.lua
+L["Color Hover"] = true
+L["Color Normal"] = true
+L["Custom color"] = true
 L["Hover Color Style"] = true
 L["Hover Custom Color"] = true
-L["Hover grow size"] = true
-L["ID list"] = true
-L["IDs"] = true
-L["Icon Anchor"] = true
-L["Icon Settings"] = true
-L["Icon Size"] = true
-L["Icon and Name"] = true
-L["Icon color. Note: If you chose a colored icon, set the color to white for the best look."] = true
-L["Icon flash"] = true
-L["Icon in Combat"] = true
-L["Icon offset if not Auto point is enabled."] = true
-L["Icon out of Combat"] = true
-L["Icon seize if not Auto size is enabled."] = true
-L["Icon"] = true
-L["Icons"] = true
-L["If the minimap is too close to the edge, a bar may become visible at the top or bottom. This is due to Blizzard’s limitations."] = true
-L["If your texture or the cutout for the portrait is not symmetrical in the middle, you need a 2nd mask texture, which must be exactly mirror-inverted. Use the 2nd mask texture for this."] = true
-L["Import"] = true
-L["Import/ Export of Spell IDs"] = true
-L["Import/ Export of this Settings"] = true
-L["Important Spells"] = true
-L["Important"] = true
-L["Important:"] = true
-L["In Classic, the docks may look different, since not all modules are available in this version. You can customize the docks in the settings of ElvUI."] = true
-L["Indicator Color"] = true
-L["Individual Professions"] = true
-L["Info Screen"] = true
-L["Info! These styles are only available for the new textures."] = true
-L["Info! To achieve an optimal result with the minimap, a texture should be set for the texture and mask.\nThe mask is always required and no minimap will be visible without it.\n\n"] = true
-L["Info! To achieve an optimal result with the portraits, a texture should be set for the texture, border and mask.\nThe mask is always required and no portrait will be visible without it.\n\n"] = true
-L["Info: The Skin can be affected by other addons if they add a skin for all windows. To fix the problem, the skin must be deactivated in the other addon. This is not a bug of mMT."] = true
-L["Inner Shadow Color"] = true
-L["Inner Shadow"] = true
-L["Instance Difficulty"] = true
-L["Instance Name"] = true
-L["Interrupt in time color"] = true
-L["Interrupt on CD Settings"] = true
-L["Interrupt on CD"] = true
-L["Interrupt on cd color"] = true
-L["Interrupt out of range color"] = true
-L["Itemlevel"] = true
-L["Keystone to Chat"] = true
-L["Keystone"] = true
-L["Keystones in your Group"] = true
-L["Keystones on your Account"] = true
-L["LEFT"] = true
-L["Left Chat"] = true
-L["Left Click to roll"] = true
 L["Left Click"] = true
-L["Left Click:"] = true
-L["Level ??"] = true
-L["Level Colors"] = true
-L["Level changes to resting in resting Areas."] = true
-L["Level"] = true
-L["Level: "] = true
-L["License"] = true
-L["Load All"] = true
-L["Load Pack"] = true
-L["Load only in Instance"] = true
-L["Loadouts"] = true
-L["Location"] = true
-L["Logo Texture"] = true
-L["M+ Keystone Level"] = true
-L["M+ Score"] = true
-L["M+ Season"] = true
-L["M+ Time"] = true
-L["MAGE"] = true
-L["MONK"] = true
-L["MaUI XIV Like"] = true
-L["Main Professions"] = true
-L["Main Textures"] = true
-L["Main color."] = true
-L["Marker Settings"] = true
-L["Mask"] = true
-L["Middle click to open M+ Frame"] = true
-L["Mirrored Mask"]  = true
-L["Misc"] = true
-L["Missing"] = true
-L["Mobile"] = true
-L["Moon"] = true
-L["Moon"] = true
-L["Mount"] = true
-L["Mounts"] = true
-L["Mythic Plus Keystone"] = true
-L["Mythic+ Colors"] = true
-L["Mythic+ Score"] = true
-L["NEUTRAL"] = true
-L["NPC IDS"] = true
-L["Name"] = true
-L["Nameplates"] = true
-L["New Textures"] = true
-L["New"] = true
-L["New:"] = true
-L["No Dungeon"] = true
-L["No Keystone"] = true
-L["No cached house information available."] = true
-L["No Main Professions"] = true
-L["No Professions"] = true
-L["No Score"] = true
-L["No Secondary Professions"] = true
-L["No Texture found"] = true
-L["No decimal values for percentage."] = true
-L["No professions available!"] = true
-L["None"] = true
-L["Normal Color Style"] = true
+L["Right Click"] = true
+
+-- options/misc/difficulty_info.lua
+L["LEFT"] = true
+L["RIGHT"] = true
+
+-- options/misc/phase_icon.lua
+L["Phasing"] = true
+L["Sharding"] = true
+
+-- options/misc/ready_check_icon.lua
 L["Not Ready"] = true
-L["Not learned"] = true
-L["Notification Color Style"] = true
+L["Waiting"] = true
+
+-- options/misc/summon_icon.lua
+L["Accepted"] = true
+L["Available"] = true
+L["Rejected"] = true
+
+-- options/misc/tags.lua
+L["Cross"] = true
+L["Moon"] = true
+L["Skull"] = true
+L["Star"] = true
+L["Triangle"] = true
+
+-- options/options_core.lua
+L["About"] = true
+L["Custom Docks"] = true
+L["Example"] = true
+L["Individual Professions"] = true
+L["Keystone to Chat"] = true
+L["License"] = true
+L["Nameplates"] = true
 L["Notification"] = true
-L["Neighborhood"] = true
-L["Objective Tracker"] = true
-L["Owner"] = true
-L["Octagon"] = true
-L["Offline"] = true
-L["Offset"] = true
-L["Old"] = true
-L["One"] = true
-L["Only if Target"] = true
-L["Open Character Frame"] = true
 L["Open Settings"] = true
-L["Optimal size for the logo is 512 x 128 Pixel"] = true
-L["Optional Textures"] = true
-L["Optional textures, these textures are not mandatory, but improve the appearance of the portraits."] = true
-L["Other Colors"] = true
-L["Other Colors"] = true
-L["Other"] = true
-L["Others"] = true
-L["Output Audio Device"] = true
-L["Output/ Input"] = true
-L["Overall Score"] = true
-L["Overlay Color"] = true
-L["Overlay Texture"] = true
-L["PALADIN"] = true
-L["PRIEST"] = true
-L["Pad"] = true
-L["Panels"] = true
+L["Phase Icon"] = true
+L["Portraits"] = true
+L["Professions"] = true
+L["Ready Check Icons"] = true
+L["Unitframes"] = true
+
+-- options/portraits/portraits.lua
+L["Anchor Point"] = true
+L["Arena"] = true
+L["Background color shift"] = true
+L["Cast Icon"] = true
+L["Class colored"] = true
+L["Custom Textures"] = true
+L["Death"] = true
+L["Enable"] = true
+L["Enable Class colored Background"] = true
+L["Focus"] = true
+L["Frame Level"] = true
+L["Frame Strata"] = true
+L["Mask"] = true
 L["Party"] = true
 L["Pet"] = true
-L["Pets"] = true
-L["Phase Icon"] = true
-L["Phase"] = true
-L["Phasing"] = true
-L["Play a Sound"] = true
 L["Player"] = true
-L["Plays a Sound."] = true
-L["Plays a sound only when the unit is your target."] = true
-L["Portrait Offset/ Zoom"] = true
-L["Portrait Texture"] = true
-L["Portraits"] = true
-L["Position Settings"] = true
-L["Power"] = true
-L["Preview"] = true
-L["Professions"] = true
-L["Profit:"] = true
-L["Progress Bar"] = true
-L["Progress Bars"] = true
-L["Progress Good"] = true
-L["Progress Transit"] = true
-L["Progress bad"] = true
-L["Progress"] = true
-L["Pure round"] = true
-L["Pure"] = true
-L["Quest Count"] = true
-L["Quest Icons"] = true
-L["RARE ELITE"] = true
-L["RARE"] = true
-L["RIGHT"] = true
-L["ROGUE"] = true
-L["Rare - Border"] = true
-L["Rare - Border"] = true
-L["Rare - Shadow"] = true
-L["Rare - Shadow"] = true
-L["Rare Border Color"] = true
-L["Rare Elite"] = true
-L["Rare Texture Style"] = true
-L["Rare Textures"] = true
-L["Rare"]  = true
-L["Rare"] = true
-L["Ready Check Icons"] = true
-L["Ready Check"] = true
-L["Ready"] = true
-L["Readymarker color"] = true
-L["Rejected"] = true
-L["Release"] = true
-L["Released"] = true
-L["ReloadUI"] = true
-L["Repair Mount"] = true
-L["Replace the Unit name with Status Icon, if applicable."] = true
-L["Replace the Unit name with Status, if applicable."] = true
-L["Reset Character Data: Hold Shift + Right Click"] = true
-L["Reset DB"] = true
-L["Reset Session Data: Hold Ctrl + Right Click"] = true
-L["Reset"] = true
-L["Resurrection"] = true
-L["Right Chat"] = true
-L["Right Click"] = true
-L["Right Click:"] = true
-L["Right click to open the ElvUI settings."] = true
-L["Role Colors"] = true
-L["Role Icons"] = true
-L["Roll Button"] = true
-L["SHAMAN"] = true
-L["Same as"] = true
-L["Season has not started yet."] = true
-L["Second Mask Texture"] = true
-L["Secondary Professions"] = true
-L["Select Volume Stream"] = true
-L["Select a filter to delete."] = true
-L["Select an Icon."] = true
-L["Select the filter to edit."] = true
-L["Send Keystone to Chat with !keys command"] = true
-L["Server: "] = true
-L["Session:"] = true
-L["Set the icon size according to the height of the castbar."] = true
-L["Sets the offset according to the anchor."] = true
-L["Settings"] = true
-L["Shadow Color"] = true
+L["Reaction"] = true
 L["Shadow"] = true
-L["Shadow/ Border"] = true
-L["Sharding"] = true
-L["Shield"] = true
-L["Short Number"] = true
-L["Shortened version of abbrev Name of Target."] = true
-L["Shortened version of"] = true
-L["Show Datatext Icon"] = true
-L["Show Great Vault infos in the Tooltip and opens the Great Vault"] = true
-L["Show Groupmember Keys."] = true
+L["Target"] = true
+L["Target of Target"] = true
+
+-- options/skin/data_panel_skin.lua
+L["Alpha"] = true
+L["Change Texture"] = true
+L["Dark Class"] = true
+L["Delete all Settings"] = true
+L["Disable"] = true
+L["Export"] = true
+L["Import"] = true
+L["Import/ Export of this Settings"] = true
+L["Info: The Skin can be affected by other addons if they add a skin for all windows. To fix the problem, the skin must be deactivated in the other addon. This is not a bug of mMT."] = true
+L["Output/ Input"] = true
+L["Panels"] = true
+L["Reset"] = true
+
+-- media/media.lua
+L["Octagon"] = true
+
+-- Shared / multiple files
+L["+"] = true
+L["AFK"] = true
+L["Anchor"] = true
+L["Apply"] = true
+L["B"] = true
+L["Background"] = true
+L["Bags"] = true
+L["Border"] = true
+L["Boss"] = true
+L["Calendar"] = true
+L["CENTER"] = true
+L["Changelog"] = true
+L["Circle"] = true
+L["Class"] = true
+L["Classification"] = true
+L["Color"] = true
+L["Color Style"] = true
+L["Colors"] = true
+L["Combat/Arena Time"] = true
+L["Custom"] = true
+L["Dead"] = true
+L["Default"] = true
+L["Diamond"] = true
+L["Difficulty:"] = true
+L["DND"] = true
+L["Dock"] = true
+L["DPS"] = true
+L["Dungeon"] = true
+L["Elite"] = true
+L["Favorites"] = true
+L["Font"] = true
+L["Font contour"] = true
+L["Friends"] = true
+L["General"] = true
+L["Ghost"] = true
+L["Guild"] = true
+L["Healer"] = true
+L["Health"] = true
+L["Housing"] = true
+L["Icon"] = true
+L["Icon Size"] = true
+L["Icons"] = true
+L["Keystone"] = true
+L["Keystones on your Account"] = true
+L["left click to open Character Frame"] = true
+L["left click to open LFD Frame"] = true
+L["Level"] = true
+L["LFG Invite Info"] = true
+L["M+ Score"] = true
+L["Misc"] = true
+L["Miscellaneous"] = true
+L["My Info"] = true
+L["Mythic"] = true
+L["Mythic+"] = true
+L["No Professions"] = true
+L["None"] = true
+L["Normal"] = true
+L["Offline"] = true
+L["Power"] = true
+L["R"] = true
+L["R+"] = true
+L["Raid"] = true
+L["Rare"] = true
+L["Rare Elite"] = true
+L["Ready"] = true
+L["Repair Mount"] = true
+L["Returns a PvP icon if the unit is flagged for PvP and belongs to either the Horde or Alliance faction."] = true
+L["Returns a quest icon if the unit is a quest mob."] = true
+L["Returns the class icon of the unit. You can specify a size between 16 and 128 (default is 64). Example: mClassIcon:style{32}"] = true
+L["Returns the current power percent of the unit, but only while in combat."] = true
+L["Returns the faction icon of the unit (Horde or Alliance), but only if it's the opposite faction of the player."] = true
+L["Returns the faction icon of the unit (Horde or Alliance)."] = true
+L["Returns the faction of the unit (Horde or Alliance), but only if it's the opposite faction of the player."] = true
+L["Returns the faction of the unit (Horde or Alliance)."] = true
+L["Returns the level of the unit. If the unit is at max level or the same level as you, it will return nothing. If the player is resting, it will return a Zzz."] = true
+L["Returns the level of the unit. If the unit is at max level. If the player is resting, it will return a Zzz."] = true
+L["Returns the number of times the player has died since you entered the instance. Resets when you leave the instance."] = true
+L["Returns the role icon of the unit (Tank, Healer, DPS)."] = true
+L["Returns the role of the unit (Tank, Healer, DPS)."] = true
+L["Returns the status icon of the unit (AFK, DND, Offline, Dead, Ghost)."] = true
+L["Returns the status of the unit (AFK, DND, Offline, Dead, Ghost)."] = true
+L["right click to open Great Vault"] = true
+L["right click to use:"] = true
+L["Role Icons"] = true
+L["Settings"] = true
+L["SHIFT + right click to clear all saved keystones."] = true
+L["Short Version."] = true
 L["Show Icon"] = true
-L["Show Icons"] = true
-L["Show Max Count"] = true
-L["Show Quest Level"] = true
-L["Show Role if in Group"] = true
-L["Show Text on Icon"] = true
-L["Show Text"] = true
-L["Show Welcome text"] = true
-L["Show Year"] = true
-L["Show amount in Bag"] = true
-L["Show only Quests on Map"] = true
-L["Show weekly upgrades"] = true
-L["Show/Hide in Combat"] = true
-L["Shows Name"] = true
-L["Shows a marker on the castbar when the interrupt spell will be ready."] = true
-L["Shows the Healthmarkers only in a Instance"] = true
-L["Shows the Weekly Affixes."] = true
-L["Shows your Keystone in the tooltip."] = true
-L["Simple Square"] = true
-L["Simple"] = true
 L["Size"] = true
-L["Skin"] = true
-L["Skull"] = true
-L["Smart Level changes to resting in resting Areas."] = true
-L["Some settings have been changed! For mMediaTag to work properly, a reload of the interface is recommended. Should a reload be performed now?"] = true
-L["Sort Methods"] = true
-L["Sort"] = true
-L["Sound"] = true
-L["Spell Filters"] = true
-L["Spell Settings"] = true
-L["Spell id"] = true
-L["Spent:"] = true
 L["Square"] = true
-L["Square"] = true
-L["Star"] = true
-L["Status Colors"] = true
-L["Status Icons"] = true
 L["Status"] = true
 L["Style"] = true
-L["Summon Icons"] = true
-L["Summon"] = true
-L["TOP"] = true
-L["TWW Dungeons"] = true
-L["Tags"] = true
-L["Talent Builds"] = true
-L["Tank and Healer roles as text."] = true
 L["Tank"] = true
-L["Target counter (Party and Raid)."] = true
-L["Target counter Icon (Flat Circle)."] = true
-L["Target counter Icon (Flat Diamond)."] = true
-L["Target counter Icon (Flat Square)."] = true
-L["Target counter Icon (Flat Stop shield)."] = true
-L["Target counter Icon (Glas Circle)."] = true
-L["Target counter Icon (Roleicons)."] = true
-L["Target of Target"] = true
-L["Target"] = true
-L["Targetmarker Icons"] = true
-L["Targetunit colors with mMediaTag colors for Rare, Rareelite, Elite and Boss and Classcolors."] = true
-L["Targetunit role icon."] = true
 L["Teleports"] = true
-L["Text to Instance Name"] = true
-L["Text to display"] = true
 L["Text"] = true
-L["Texture Form"] = true
-L["Texture Packs"] = true
-L["Texture Style"] = true
 L["Texture"] = true
-L["Textures & Styles"] = true
-L["Textures"] = true
-L["Thanks to:"] = true
-L["The ImportantSpells IDs and Settings have been reset to reflect the latest updates in mMT."] = true
-L["The ObjectiveTracker settings have been reset to reflect the latest updates in mMT."] = true
-L["The position settings of Instance Difficulty are controlled by ElvUI in Maps, Minimap, Instance Difficulty."] = true
-L["The size can be set as follows"] = true
-L["These are just examples of how to create your own dock with ElvUI's custom bars.\n\n\nTo create your own bar you have to go to ElvUI under ElvUI>Datatext>Bars Steps 1. enter name press OK and click Add, set the width of the bar depends on how many icons you want to display, the height of the bar is also the size of the icons. Set the number of data text and now you only need to assign the icons to the places, for example 1 = Dock FPS, 2 = Dock Profession and so on.\n\n"] = true
-L["Thin"] = true
-L["This Week Affix"] = true
-L["This is the Border texture for the Boss texture."] = true
-L["This is the Border texture for the Elite texture."] = true
-L["This is the Border texture for the Rare texture."] = true
-L["This is the Border texture for the Rare texture."] = true
-L["This is the Border texture for the portraits."] = true
-L["This is the Boss texture for the portraits."] = true
-L["This is the Elite texture for the portraits."] = true
-L["This is the Mask texture for the portraits. This texture is used to cut out the portrait of the Unit."] = true
-L["This is the Rare texture for the portraits."] = true
-L["This is the Rare texture for the portraits."] = true
-L["This is the gradient color and will only be used if the Gradient mod is enabled."] = true
-L["This is the inner shadow texture for the portraits."] = true
-L["This is the main texture for the portraits."] = true
-L["This is the mirrored Mask texture for the portraits. This texture is used to cut out the portrait of the Unit."] = true
-L["This is the shadow texture for the Boss texture."] = true
-L["This is the shadow texture for the Rare & Elite texture."] = true
-L["This is the shadow texture for the Rare texture."] = true
-L["This is the shadow texture for the portraits."] = true
-L["This will automatically change the ElvUI Media color to your class color."] = true
-L["This works only with the mMT Textures for Portraits."] = true
-L["Three (double chat height)"] = true
-L["Time until the text disappears"] = true
-L["Time played this level"] = true
-L["Title"] = true
-L["Toggle Button"] = true
-L["Toggle Volume Stream"] = true
-L["ToolTip anchor on cursor"] = true
-L["Tooltip Icon size."] = true
-L["Tooltip Icon"] = true
-L["Tooltip Keystone"] = true
 L["Tooltip"] = true
-L["Total: "] = true
-L["Total play time"] = true
 L["Toys"] = true
-L["Tracked Achievements"] = true
-L["Triangle"] = true
-L["Trigger "] = true
-L["Trigger"] = true
-L["Trilinear Filtering"] = true
-L["Two"] = true
-L["Unit colors with mMediaTag colors for Rare and Rareelite."] = true
-L["Unit colors with mMediaTag colors for Rare, Rareelite, Elite and Boss and Classcolors."] = true
-L["Unit role icon, only tank and healer."] = true
-L["Unit role icon."] = true
-L["Unit"] = true
-L["Unitframe Icons"] = true
-L["Unitframes"] = true
-L["Update:"] = true
-L["Updates"] = true
-L["Upgrade Icon"] = true
-L["Upgrade"] = true
-L["Use Class Icons"] = true
-L["Use Default NPC IDs"] = true
-L["Use Eltruism colors"] = true
-L["Use MerathilisUI colors"] = true
-L["Use Texture Color"] = true
-L["Use only Default Color"] = true
-L["Uses Custom and default NPC IDs"] = true
-L["Uses for every Unit the Default Color."] = true
-L["Values"] = true
-L["Version"] = true
-L["Version:"] = true
-L["Volume Streams"] = true
 L["Volume"] = true
-L["WARLOCK"] = true
-L["WARRIOR"] = true
-L["Waiting"] = true
-L["Warmode"] = true
-L["Weekly Affix"] = true
-L["Weekly Affixes"] = true
-L["Weekly Score"] = true
-L["Welcome text"] = true
-L["Welcome to %s %s version |CFFF7DC6F%s|r, type |CFF58D68D/mmt|r to access the in-game configuration menu."] = true
-L["When loading the textures of JiberishUI icons."] = true
-L["White"] = true
-L["WoW Token:"] = true
-L["World Latency:"] = true
 L["X offset"] = true
-L["X-Icon Size"] = true
-L["X-Position"] = true
 L["Y offset"] = true
-L["Y-Icon Size"] = true
-L["Y-Position"] = true
-L["You are trying to load an outdated profile, unfortunately this is not possible."] = true
-L["Zone"] = true
-L["Zoom"] = true
-L["Zooms the texture so we get clean icons without borders."] = true
-L["Zzz"] = true
-L["and"] = true
-L["do not show when the interrupt spell is ready in X seconds."] = true
-L["first Profession"] = true
-L["left click to open LFD Window"] = true
-L["left click to open the menu."] = true
-L["left click to open the small menu."] = true
-L["mMT Dock"] = true
-L["mMT Extra"] = true
-L["mMT Raidtarget marker Icons"] = true
-L["mMT XIV Like Color"] = true
-L["mMT XIV Like"] = true
-L["mMediaTag needs an update to support the current version of JiberishUI icons, it is possible that the class icons are not displayed correctly on the portraits."] = true
-L["middle click to open the Dungeon Teleports menu."] = true
-L["no Status version of"] = true
-L["right click to open Great Vault Window"] = true
-L["right click to open LFD Window"] = true
-L["right click to open the other Teleports menu."] = true
-L["second Profession"] = true
-L["white Text"] = true
-L["white Value"] = true
-L["white shield Icon"] = true
-L["|cFFffffffLeft Click:|r Select Volume Stream"] = true
-L["|cFFffffffMiddle Click:|r Toggle Mute Master Stream"] = true
-L["|cFFffffffRight Click:|r Toggle Volume Stream"] = true
-L["|cFFffffffShift + Left Click:|r Open System Audio Panel"] = true
-L["|cFFffffffShift + Right Click:|r Select Output Audio Device"] = true
-L["|cffFFFFFFControl + Left Click:|r Change Loadout"] = true
-L["|cffFFFFFFLeft Click:|r Change Talent Specialization"] = true
-L["|cffFFFFFFRight Click:|r Change Loot Specialization"] = true
-L["|cffFFFFFFShift + Left Click:|r Show Talent Specialization UI"] = true
 
-L["PROFESSION_ALCHEMY"] = "Alchemy";
-L["PROFESSION_BLACKSMITHING"] = "Blacksmithing";
-L["PROFESSION_ENCHANTING"] = "Enchanting";
-L["PROFESSION_ENGINEERING"] = "Engineering";
-L["PROFESSION_HERBALISM"] = "Herbalism";
-L["PROFESSION_INSCRIPTION"] = "Inscription";
-L["PROFESSION_JEWELCRAFTING"] = "Jewelcrafting";
-L["PROFESSION_LEATHERWORKING"] = "Leatherworking";
-L["PROFESSION_MINING"] = "Mining";
-L["PROFESSION_SKINNING"] = "Skinning";
-L["PROFESSION_TAILORING"] = "Tailoring";
+-- core/addoncompartment.lua
+L["SHIFT + Click"] = true
+L["for debug mode."] = true
 
--- new
-L["Reaction"] = true
-L["Classification"] = true
-L["Deafault"] = true
-L["Boss"] = true
+-- core/cmd.lua
+L["Added dev GUID:"] = true
+L["Available commands:"] = true
+L["DEV mode active"] = true
+L["GUID:"] = true
+L["Lua errors off."] = true
+L["Show the current version"] = true
+L["Show this help message"] = true
+L["Show your player GUID"] = true
+L["Toggle debug mode"] = true
+L["Toggle debug mode with safe addons"] = true
+L["Unable to detect player GUID."] = true
+L["unknown"] = true
+L["unknownIDS cleared."] = true
+L["Version:"] = true
+
+-- core/functions.lua
+L["!! ERROR - Round:"] = true
+L["AddOn Memory:"] = true
+L["CPU overall:"] = true
+L["CPU peak:"] = true
+L["Memory/ CPU usage:"] = true
+
+-- core/retail.lua
+L["No current Mythic+ affixes found."] = true
+
+-- media/media.lua
+L["Blizzard Portrait"] = true
+L["Blizzard Portrait v2"] = true
+L["Blizzard Portrait v3"] = true
+L["Blizzard Portrait v4"] = true
+L["Cardinal v1"] = true
+L["Cardinal v2"] = true
+L["Cardinal v3"] = true
+L["Cardinal v4"] = true
+L["Cardinal v5"] = true
+L["Cardinal v6"] = true
+L["Cardinal v7"] = true
+L["Hexagon"] = true
+L["Parallelogram"] = true
+L["Parallelogram v2"] = true
+L["Parallelogram v3"] = true
+L["Square Rounded"] = true
+L["Window"] = true
+L["Zigzag"] = true
+L["Zigzag v2"] = true
+
+-- modules/datatexts/info_score.lua
+L["middle click to open M+ Frame"] = true
+
+-- modules/misc/dice_button.lua
+L["Dice Button"] = true
+
+-- options/cast/important_casts.lua
+L["Disabled"] = true
+L["Enabled"] = true
+
+-- options/cast/interrupt_on_cd.lua
+L["Background Multiplier"] = true
+L["Change BG color"] = true
+L["Enable to change the background color of the castbar."] = true
+L["Marker"] = true
+L["On CD"] = true
+L["Set the background color multiplier for the castbar."] = true
+L["The marker color for in time interrupts."] = true
+
+-- options/colors_difficulty.lua
+L["Delve"] = true
+L["Follower"] = true
+L["H"] = true
+L["Heroic"] = true
+L["LFR"] = true
+L["M"] = true
+L["M+"] = true
+L["N"] = true
+L["PVP"] = true
+L["Quest"] = true
+L["SC"] = true
+L["Scenario"] = true
+L["Story"] = true
+L["TW"] = true
+L["Timewalking"] = true
+
+-- options/colors_tip_menu.lua
+L["Mark"] = true
+L["Tip"] = true
+
+-- options/datatext/datatexts.lua
+L["Change Colors"] = true
+L["Override Text Color"] = true
+L["Override Value Color"] = true
+L["Text Color"] = true
+L["These colors are used for the tooltips of the datatexts."] = true
+L["colors"] = true
+
+-- options/datatext/info_combat_time.lua
+L["Hide delay"] = true
+L["In Combat"] = true
+L["Out of Combat"] = true
+
+-- options/datatext/info_durability_itemlevel.lua
+L["Force withe Text"] = true
+L["Repair Threshold"] = true
+L["Threshold value for the repair color, if this is active then you should repair your gear."] = true
+L["Threshold value for the repair color, if this is active, you should repair your equipment soon."] = true
+L["Warning colors"] = true
+L["Warning Threshold"] = true
+
+-- options/datatext/info_score.lua
+L["Keystone level"] = true
+L["Score"] = true
+L["Show Party Keystones"] = true
+L["Show Upgrades"] = true
+L["Sort method"] = true
+
+-- options/datatext/misc_dungeon.lua
+L["Change Text to Dungeon Name."] = true
+
+-- options/datatext/misc_gamemenu.lua
+L["Menu Text color"] = true
+L["Show Menu Icons"] = true
+L["Show Systeminfo"] = true
+L["colored"] = true
+
+-- options/datatext/misc_individual_professions.lua
+L["Colored"] = true
+L["Icon Style"] = true
+
+-- options/datatext/misc_professions.lua
+L["Menu Icons"] = true
+
+-- options/datatext/misc_teleports.lua
+L["Slot"] = true
+
+-- options/datatext/misc_tracker.lua
+L["!!Error - this is not an ID."] = true
+L["Add Currency or Item ID"] = true
+L["Color the text"] = true
+L["Custom IDs"] = true
+L["Enter a Currency or Item it accepts only Numbers."] = true
+L["Here you can add custom IDs for the tracker. You can add currencies or items. This will add DataTexts for each ID to ElvUI."] = true
+L["Is Currency"] = true
+L["Short large numbers"] = true
+L["Show Name"] = true
+L["Show max amount"] = true
+
+-- options/dock/common
+L["Custom Color"] = true
+L["Use a custom color for the icon."] = true
+
+-- options/dock/bags.lua
+L["Free Slots"] = true
+L["Gold Infos"] = true
+L["Money"] = true
+L["Money / Free Slots"] = true
+L["Show gold infos instead of bag slots in the tooltip."] = true
+L["Used / Total Slots"] = true
+L["Used Slots"] = true
+
+-- options/dock/character.lua
+L["Show durability percentage as text."] = true
+L["Threshold"] = true
+
+-- options/dock/durability.lua
+L["Durability / Item level"] = true
+L["Item level"] = true
+
+-- options/dock/example.lua
+L["Dock V2"] = true
+L["MAUI"] = true
+L["XIV Like"] = true
+L["XVI Like colored"] = true
+
+-- options/dock/friends.lua
+L["Show number of online friends on the icon."] = true
+
+-- options/dock/general.lua
+L["Auto grow"] = true
+L["Automatically adjust the growth size based on the icon size. When you hover over the icon."] = true
+L["Class Color"] = true
+L["Clicked"] = true
+L["Font Color"] = true
+L["Font Outline"] = true
+L["Growth size"] = true
+L["Hover"] = true
+L["Set the clicked color of the icon."] = true
+L["Set the font for dock text."] = true
+L["Set the font outline for dock text."] = true
+L["Set the font size for dock text."] = true
+L["Set the growth size of the dock icon. This is the distance between the icons."] = true
+L["Set the hover color of the icon."] = true
+L["Set the normal color of the icon."] = true
+L["Show a tooltip when you hover over the icon."] = true
+L["Use a custom color for dock text. If disabled, the font color will be class colored."] = true
+L["Use a custom font size for dock text. If disabled, the font size will be set to one third of the icon size."] = true
+L["Use class color for the icon."] = true
+
+-- options/dock/guild.lua
+L["Show number of online Guild members on the icon."] = true
+
+-- options/dock/lfd.lua
+L["Call to the arms"] = true
+L["Show difficulty or call to the arms on the icon."] = true
+L["Show icons for call to the arms."] = true
+
+-- options/dock/notification.lua
+L["Auto size"] = true
+L["ClassColor"] = true
+
+-- options/dock/volume.lua
+L["Color the text with the ElvUI color."] = true
+
+-- options/misc/auto_quest.lua
+L["Auto Accept"] = true
+L["Auto Quest"] = true
+L["Auto Turn-In"] = true
+L["Automatically accepts quest dialogs from NPCs."] = true
+L["Automatically turns in completed quests. If the quest has multiple reward choices, the dialog stays open for you to choose."] = true
+L["Chat Messages"] = true
+L["Disables auto accept/turn-in while you are in combat."] = true
+L["Prints a message to chat whenever a quest is auto-accepted or turned in."] = true
+L["Skip in Combat"] = true
+
+-- options/misc/difficulty_info.lua
+L["Alignment"] = true
+L["Difficulty Info"] = true
+L["Font size, top line"] = true
+L["Show Frame"] = true
+
+-- options/misc/greeting_message.lua
+L["Show a greeting message in the chat when you log in."] = true
+
+-- options/misc/keystone_to_chat.lua
+L["Post your keystone to the chat when someone types !key or !keys into the chat."] = true
+
+-- options/misc/lfg_invite_info.lua
+L["Fade out delay"] = true
+L["First line color"] = true
+L["Font size, bottom line"] = true
+L["Second line color"] = true
+L["Show in chat"] = true
+L["Third line color"] = true
+
+-- options/misc/phase_icon.lua
+L["Chromie Time"] = true
+L["Timerunning World"] = true
+L["War Mode"] = true
+
+-- options/misc/tags.lua
+L["DC/ Offline"] = true
+L["Health trashhold 1"] = true
+L["Health trashhold 2"] = true
+L["PvP"] = true
+L["Raidtarget Markers"] = true
+L["Set the first health trashhold."] = true
+L["Set the second health trashhold."] = true
+L["Targeting Players"] = true
+
+-- options/misc/tooltip.lua
+L["Icon Zoom"] = true
+
+-- options/nameplates/shared
+L["Border color"] = true
+L["Health color"] = true
+L["Ignore threat color"] = true
+
+-- options/nameplates/nameplate_tools.lua
+L["ElvUI Color Settings"] = true
+L["Open the ElvUI color settings to adjust the colors used for nameplates."] = true
+L["Sets automatically your class color for glow and border color on nameplates for the target unit."] = true
+L["Target & Glow color"] = true
+
+-- options/options_core.lua
+L["Data Panel Skin"] = true
+L["Datatexts"] = true
+L["Details embedded"] = true
+L["Difficulty"] = true
+L["Durability & Item Level"] = true
+L["Focus Highlight"] = true
+L["Gamemenu"] = true
+L["Greeting Message"] = true
+L["In WoW Classic, the docks may appear differently because not all modules are available in this version. However, you can still customize the docks through the ElvUI settings."] = true
+L["Interrupt On CD"] = true
+L["Minimap Skin"] = true
+L["Quest Highlight"] = true
+L["Resurrection Icon"] = true
+L["Summon Icon"] = true
+L["TAGs"] = true
+L["Target Highlight"] = true
+L["These are just examples of how to create your own dock using ElvUIâ€™s custom data text bars..."] = true
+L["Tip/ Menu"] = true
+L["Tracker"] = true
+
+-- options/portraits/portraits.lua
+L["BG"] = true
+L["BG Style"] = true
+L["Choose the background style for the transparent Class icons."] = true
+L["Class icon"] = true
+L["Custom Extra Texture"] = true
+L["Death Knight"] = true
+L["Demon Hunter"] = true
+L["Desaturate"] = true
+L["Druid"] = true
+L["Embellishment"] = true
+L["Enable Custom Textures for Portrait."] = true
+L["Enable Cast Icons."] = true
+L["Enable Custom extra Textures for Portrait."] = true
+L["Enable and select a class icon style for the portrait."] = true
+L["Enable Extra Texture"] = true
+L["Enable the Shadow for the Portraits."] = true
+L["Enable the Unit Portrait."] = true
+L["Enable this to show the Extra Texture on top of the Unit Portrait."] = true
+L["Enable custom Position and size settings for Extra Texture."] = true
+L["Enemy"] = true
+L["Evoker"] = true
+L["Extra"] = true
+L["Extra Mask"] = true
+L["Extra Settings"] = true
+L["Extra Shadow"] = true
+L["Force Extra Texture"] = true
+L["Forces the default color for all texture."] = true
+L["Frame Level/ Strata"] = true
+L["Friendly"] = true
+L["Hunter"] = true
+L["It will override the default extra texture, but will take care of rare/elite/boss units."] = true
+L["Mage"] = true
+L["Monk"] = true
+L["Neutral"] = true
+L["On Top"] = true
+L["Paladin"] = true
+L["Portrait Scale"] = true
+L["Priest"] = true
+L["Put your custom textures in the Addon folder and add the path here (example MyMediaFolder\\MyTexture.tga)."] = true
+L["Reset all colors"] = true
+L["Reset class colors"] = true
+L["Rogue"] = true
+L["Select a extra texture style for boss units."] = true
+L["Select a extra texture style for elite units."] = true
+L["Select a extra texture style for player."] = true
+L["Select a extra texture style for rare elite units."] = true
+L["Select a extra texture style for rare units."] = true
+L["Select a portrait texture style."] = true
+L["Shadow Alpha"] = true
+L["Shaman"] = true
+L["Shows the Extra Texture (rare/elite) for the Unit Portrait."] = true
+L["Texture Style settings for Extra texture (Rare/Elite/Boss/player)."] = true
+L["Texture Styles"] = true
+L["TIP: If you use the Blizzard textures and change the classification color to white, you will see the extra texture with the original colors."] = true
+L["Unitcolor for Extra"] = true
+L["Use Default color"] = true
+L["Use Spec icons"] = true
+L["Use the unit color for the Extra (Rare/Elite) Texture."] = true
+L["Warlock"] = true
+L["Warrior"] = true
+L["Will always desaturate the portraits."] = true
+L["Will show the embellishment on the portraits, if the Style has an embellishment."] = true
+
+-- options/skin/data_panel_skin.lua
+L["Delete the actual Settings"] = true
+L["Info: This Settings will override the ElvUI Data Panel settings."] = true
+L["Reset all"] = true
+
+-- options/skin/minimap.lua
+L["Cardinal Icon"] = true
+
+-- options/datatext/misc_gamemenu.lua
+L["white"] = true
+
+-- options/options_core.lua
+L["These are just examples of how to create your own dock using ElvUI’s custom data text bars.\n\nTo set up a custom bar:\nOpen ElvUI and navigate to ElvUI > Datatext > Bars.\nEnter a name for your new bar, click OK, and then click Add.\nSet the width of the bar based on how many icons you want to display.\nSet the height, which also determines the icon size.\nChoose the number of data text slots you want.\n\nAssign icons to each slot. For example:\nSlot 1 = Dock Calendar\nSlot 2 = Dock Profession\nSlot 3 = Dock Spec\n…and so on.\n\nThis setup allows you to build a personalized dock that fits your UI and gameplay needs.\n\n"] = true
+
+-- modules/portraits/texture_db.lua
+L["Antik"] = true
+L["BG 1"] = true
+L["BG 2"] = true
+L["BG 3"] = true
+L["BG 4"] = true
+L["BG 5"] = true
+L["BG 6"] = true
+L["Blizzard Boss"] = true
+L["Blizzard Boss Neutral"] = true
+L["Blizzard Elite"] = true
+L["Blizzard Rare"] = true
+L["Blizzard Rare/ Elite Neutral"] = true
+L["Blizzard Round"] = true
+L["Blizzard Round Thick"] = true
+L["Blizzard Round UP"] = true
+L["Blizzard Round UP Thick"] = true
+L["Blizzard Sharp"] = true
+L["Blizzard Sharp Thick"] = true
+L["Blizzard Sharp UP"] = true
+L["Blizzard Sharp UP Thick"] = true
+L["Circle Thick"] = true
+L["Climbing Plant"] = true
+L["Climbing Plant V2"] = true
+L["Cookie"] = true
+L["Diamond Thick"] = true
+L["Dog Any"] = true
+L["Dog Pack"] = true
+L["Dog Pack color"] = true
+L["Dogs"] = true
+L["Dogs color"] = true
+L["Dragon Blue"] = true
+L["Dragon Boss"] = true
+L["Dragon Elite"] = true
+L["Dragon Green"] = true
+L["Dragon Purple"] = true
+L["Leaf"] = true
+L["Leaf Mirrored"] = true
+L["Pad"] = true
+L["Parallelogram Mirrored"] = true
+L["Pentagon"] = true
+L["Pixel"] = true
+L["Rectangular"] = true
+L["Round - Leaf"] = true
+L["Round - Monster"] = true
+L["Round - Pulse"] = true
+L["Round - Star"] = true
+L["Round - Tech"] = true
+L["Round - Zickzack"] = true
+L["Shield"] = true
+L["Snake"] = true
+L["Snake Blue"] = true
+L["Snake Green"] = true
+L["Snake Purple"] = true
+L["Snake Red"] = true
+L["Space"] = true
+L["Space color"] = true
+L["Square Leaf"] = true
+L["Square Loop"] = true
+L["Square Round"] = true
+L["Square Round Thick"] = true
+L["Square Spikes"] = true
+L["Square Stars"] = true
+L["Square Thick"] = true
+L["Tear"] = true
+L["Tear down"] = true
+L["Tear down Mirrored"] = true
+L["Tear Mirrored"] = true
+L["Trapezoid"] = true
+L["Trapezoid Mirrored"] = true
