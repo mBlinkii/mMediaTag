@@ -71,10 +71,27 @@ local function PrintHelp()
 	mMT:Print(MEDIA.color.purple:WrapTextInColorCode("/mmt"), MEDIA.color.green:WrapTextInColorCode("version"), "- Show the current version")
 	mMT:Print(MEDIA.color.purple:WrapTextInColorCode("/mmt"), MEDIA.color.green:WrapTextInColorCode("debug"), "- Toggle debug mode")
 	mMT:Print(MEDIA.color.purple:WrapTextInColorCode("/mmt"), MEDIA.color.green:WrapTextInColorCode("debug safe"), "- Toggle debug mode with safe addons")
+	mMT:Print(MEDIA.color.purple:WrapTextInColorCode("/mmt"), MEDIA.color.green:WrapTextInColorCode("guid"), "- Show your player GUID")
 end
 
 local function PrintVersion()
 	mMT:Print("Version:", MEDIA.color.green:WrapTextInColorCode(mMT.Version))
+end
+
+local function PrintGUID()
+	local guid = mMT:GetCurrentPlayerGUID()
+	mMT:Print("GUID:", MEDIA.color.green:WrapTextInColorCode(guid or "unknown"))
+end
+
+local function AddCurrentCharacterAsDeveloper()
+	local guid = mMT:AddDeveloperCharacter()
+	if not guid then
+		mMT:Print(MEDIA.color.red:WrapTextInColorCode("Unable to detect player GUID."))
+		return
+	end
+
+	mMT:Print("Added dev GUID:", MEDIA.color.green:WrapTextInColorCode(guid))
+	mMT:Print(MEDIA.color.green:WrapTextInColorCode("DEV mode active"))
 end
 
 -- Command handler
@@ -84,6 +101,10 @@ local function CommandHandler(msg)
 		PrintHelp()
 	elseif command == "version" then
 		PrintVersion()
+	elseif command == "guid" then
+		PrintGUID()
+	elseif command == "adddev" then
+		AddCurrentCharacterAsDeveloper()
 	elseif command == "debug" or command == "debug safe" then
 		DB.debug.debugMode = not DB.debug.debugMode
 		mMT:SetDebugMode(DB.debug.debugMode, command == "debug safe")

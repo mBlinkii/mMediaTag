@@ -7,6 +7,7 @@ mMT.defaults.debug = {
 }
 
 mMT.defaults.DEV = false
+mMT.defaults.customDevGUIDs = {}
 
 mMT.defaults.lastWeeklyReset = 0
 

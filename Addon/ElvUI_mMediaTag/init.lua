@@ -53,6 +53,7 @@ function mMT:Initialize()
 
 	E:CopyTable(Engine[2], mMT.defaults)
 	Engine[2] = E:CopyTable(Engine[2], MMTDATA)
+	mMT:UpdateDeveloperState()
 
 	if not mMT.ElvUI_Hooked then
 		mMT:SecureHook(E, "StaggeredUpdateAll", StaggeredUpdateAll)
@@ -63,6 +64,10 @@ function mMT:Initialize()
 
 	if IsAddOnLoaded("ElvUI_JiberishIcons") then mMT:AddJIIcons() end
 	if IsAddOnLoaded("Details") then mMT:AddClassIconsToDetails() end
+
+	if Engine[2].DEV then
+		E:Print(format("%s %s", mMT.NameShort, "|cff99ff33DEV mode active|r"))
+	end
 
 	mMT:UpdateAll()
 

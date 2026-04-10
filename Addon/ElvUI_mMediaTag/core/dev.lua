@@ -5,6 +5,14 @@ local type = type
 local tostring = tostring
 local pairs = pairs
 local print = print
+local UnitGUID = UnitGUID
+
+local DEV_CHARACTERS = {
+	["Player-1406-064A6ECF"] = true,
+	["Player-604-0AE16F52"] = true,
+	["Player-604-0A714DD6"] = true,
+	["Player-604-0A47D6B2"] = true,
+}
 
 local function GetTableLength(tbl)
 	local count = 0
@@ -62,4 +70,31 @@ function mMT:DebugPrint(arg, simple, noFunctions, ...)
 	else
 		mMT:Print("Not a Table:", arg, ...)
 	end
+end
+
+function mMT:GetCurrentPlayerGUID()
+	return UnitGUID("player")
+end
+
+function mMT:IsDeveloperCharacter()
+	local guid = mMT:GetCurrentPlayerGUID()
+	return guid and ((DB and DB.customDevGUIDs and DB.customDevGUIDs[guid]) or DEV_CHARACTERS[guid]) or false
+end
+
+function mMT:UpdateDeveloperState()
+	local isDeveloper = mMT:IsDeveloperCharacter()
+
+	mMT.defaults.DEV = isDeveloper
+	DB.DEV = isDeveloper
+end
+
+function mMT:AddDeveloperCharacter()
+	local guid = mMT:GetCurrentPlayerGUID()
+	if not guid then return false end
+
+	DB.customDevGUIDs = DB.customDevGUIDs or {}
+	DB.customDevGUIDs[guid] = true
+	mMT:UpdateDeveloperState()
+
+	return guid
 end
