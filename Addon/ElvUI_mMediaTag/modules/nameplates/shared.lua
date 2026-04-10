@@ -4,6 +4,7 @@ local NP = E:GetModule("NamePlates")
 local LSM = E.Libs.LSM
 
 local pcall = pcall
+local ipairs = ipairs
 local UnitIsUnit = UnitIsUnit
 
 local GetNamePlateForUnit = C_NamePlate.GetNamePlateForUnit
@@ -11,6 +12,11 @@ local HIGHLIGHT_MODULES = {
 	{ moduleName = "NP-TargetHighlight", configName = "target", updateMethod = "UpdateTarget" },
 	{ moduleName = "NP-FocusHighlight", configName = "focus", updateMethod = "UpdateFocus" },
 	{ moduleName = "NP-QuestHighlight", configName = "quest", updateMethod = "UpdateQuest" },
+}
+local MODULE_CONFIG_KEYS = {
+	["NP-TargetHighlight"] = "target",
+	["NP-FocusHighlight"] = "focus",
+	["NP-QuestHighlight"] = "quest",
 }
 
 mMT.NameplateUtils = mMT.NameplateUtils or {}
@@ -20,14 +26,12 @@ function Utils:Initialize()
 	if self.initialized then return end
 
 	local border = E.db and E.db.general and E.db.general.bordercolor
-	if border then
-		self.defaultBorderColor = {
-			r = border.r,
-			g = border.g,
-			b = border.b,
-			a = border.a,
-		}
-	end
+	if border then self.defaultBorderColor = {
+		r = border.r,
+		g = border.g,
+		b = border.b,
+		a = border.a,
+	} end
 
 	self.defaultHealthTexture = LSM:Fetch("statusbar", NP.db.statusbar)
 
@@ -55,12 +59,10 @@ function Utils:GetDefaultHealthTexture()
 end
 
 function Utils:IsModuleActive(nameplate, moduleName, unitToken, requireColor, blockedBy)
-	if blockedBy and self:IsModuleActive(nameplate, blockedBy.moduleName, blockedBy.unitToken, blockedBy.requireColor) then
-		return false
-	end
+	if blockedBy and self:IsModuleActive(nameplate, blockedBy.moduleName, blockedBy.unitToken, blockedBy.requireColor) then return false end
 
 	local module = M[moduleName]
-	local config = module and module[moduleName == "NP-TargetHighlight" and "target" or moduleName == "NP-FocusHighlight" and "focus" or "quest"]
+	local config = module and module[MODULE_CONFIG_KEYS[moduleName]]
 	return config and config.enable and (not requireColor or config.changeColor) and nameplate and nameplate.unit and UnitIsUnit(nameplate.unit, unitToken)
 end
 
@@ -70,21 +72,15 @@ function Utils:RefreshPlate(nameplate)
 	for _, moduleInfo in ipairs(HIGHLIGHT_MODULES) do
 		local module = M[moduleInfo.moduleName]
 		local config = module and module[moduleInfo.configName]
-		if config and config.enable then
-			module[moduleInfo.updateMethod](module, nameplate)
-		end
+		if config and config.enable then module[moduleInfo.updateMethod](module, nameplate) end
 	end
 end
 
 function Utils:GetColorOverrideConfig(module, nameplate, blockedBy)
 	local cfg = module
 	if not cfg then return nil end
-	if not blockedBy or not self:IsModuleActive(nameplate, blockedBy.moduleName, blockedBy.unitToken, false, blockedBy.blockedBy) then
-		return cfg
-	end
-	if not cfg.changeColor or self:IsModuleActive(nameplate, blockedBy.moduleName, blockedBy.unitToken, true, blockedBy.blockedBy) then
-		return nil
-	end
+	if not blockedBy or not self:IsModuleActive(nameplate, blockedBy.moduleName, blockedBy.unitToken, false, blockedBy.blockedBy) then return cfg end
+	if not cfg.changeColor or self:IsModuleActive(nameplate, blockedBy.moduleName, blockedBy.unitToken, true, blockedBy.blockedBy) then return nil end
 
 	local effective = cfg.colorOnlyConfig or {}
 	cfg.colorOnlyConfig = effective
@@ -128,7 +124,7 @@ function Utils:GetModuleConfig(healthBar, activeKey, configKey, moduleName, conf
 	if not (healthBar and healthBar[activeKey]) then return nil end
 
 	local module = M[moduleName]
-	return (configKey and healthBar[configKey]) or (module and module[configName]) or nil
+	return (configKey and healthBar[configKey]) or (module and module[configName or MODULE_CONFIG_KEYS[moduleName]]) or nil
 end
 
 function Utils:ApplyCompositeStyle(nameplate, healthBar)
@@ -145,9 +141,7 @@ function Utils:ApplyCompositeStyle(nameplate, healthBar)
 		NP:SetStatusBarColor(healthBar, color.r, color.g, color.b)
 	end
 
-	if textureCfg and textureCfg.texture and textureCfg.texture ~= "" then
-		healthBar:SetStatusBarTexture(textureCfg.texture)
-	end
+	if textureCfg and textureCfg.texture and textureCfg.texture ~= "" then healthBar:SetStatusBarTexture(textureCfg.texture) end
 
 	if borderCfg and healthBar.backdrop then
 		local borderColor = borderCfg.borderColor or borderCfg.color
@@ -155,16 +149,14 @@ function Utils:ApplyCompositeStyle(nameplate, healthBar)
 	end
 end
 
-function Utils:HighlightPostUpdateColor(healthBar, unit, color)
+function Utils.HighlightPostUpdateColor(healthBar, unit, color)
 	local original = healthBar and healthBar.mMT_HighlightOriginalPostUpdate
-	if original and original ~= self.HighlightPostUpdateColor then
-		original(healthBar, unit, color)
-	end
+	if original and original ~= Utils.HighlightPostUpdateColor then original(healthBar, unit, color) end
 
-	local nameplate = self:GetOwnerNameplate(healthBar)
-	if not (nameplate and self:HasActiveHighlight(healthBar)) then return end
+	local nameplate = Utils:GetOwnerNameplate(healthBar)
+	if not (nameplate and Utils:HasActiveHighlight(healthBar)) then return end
 
-	self:ApplyCompositeStyle(nameplate, healthBar)
+	Utils:ApplyCompositeStyle(nameplate, healthBar)
 end
 
 function Utils:ApplyHighlightStyle(nameplate, cfg, state)
@@ -173,10 +165,8 @@ function Utils:ApplyHighlightStyle(nameplate, cfg, state)
 
 	healthBar.mMT_HighlightOriginalPostUpdate = healthBar.mMT_HighlightOriginalPostUpdate or healthBar.PostUpdateColor
 	healthBar[state.ownerKey] = nameplate
-	if state.configKey then
-		healthBar[state.configKey] = cfg
-	end
-	healthBar.PostUpdateColor = self.HighlightPostUpdateColor
+	if state.configKey then healthBar[state.configKey] = cfg end
+	healthBar.PostUpdateColor = Utils.HighlightPostUpdateColor
 
 	if cfg.changeColor then
 		local color = cfg.color
@@ -189,9 +179,7 @@ function Utils:ApplyHighlightStyle(nameplate, cfg, state)
 		healthBar.backdrop[state.borderKey] = true
 	elseif healthBar.backdrop and healthBar.backdrop[state.borderKey] then
 		local border = self.defaultBorderColor
-		if border then
-			healthBar.backdrop:SetBackdropBorderColor(border.r, border.g, border.b, border.a)
-		end
+		if border then healthBar.backdrop:SetBackdropBorderColor(border.r, border.g, border.b, border.a) end
 		healthBar.backdrop[state.borderKey] = nil
 	end
 
@@ -218,13 +206,11 @@ function Utils:ResetHighlightStyle(nameplate, state)
 
 	healthBar[state.ownerKey] = nil
 	healthBar[state.activeKey] = nil
-	if state.configKey then
-		healthBar[state.configKey] = nil
-	end
+	if state.configKey then healthBar[state.configKey] = nil end
 
 	local hasActiveHighlight = self:HasActiveHighlight(healthBar)
 	if hasActiveHighlight then
-		healthBar.PostUpdateColor = self.HighlightPostUpdateColor
+		healthBar.PostUpdateColor = Utils.HighlightPostUpdateColor
 	else
 		healthBar.PostUpdateColor = healthBar.mMT_HighlightOriginalPostUpdate
 	end
@@ -250,7 +236,5 @@ function Utils:ResetHighlightStyle(nameplate, state)
 		healthBar:ForceUpdate()
 	end
 
-	if hasActiveHighlight then
-		self:ApplyCompositeStyle(nameplate, healthBar)
-	end
+	if hasActiveHighlight then self:ApplyCompositeStyle(nameplate, healthBar) end
 end

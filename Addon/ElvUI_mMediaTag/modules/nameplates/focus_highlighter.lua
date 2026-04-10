@@ -2,7 +2,6 @@ local mMT, DB, M, E, P, L, MEDIA = unpack(ElvUI_mMediaTag)
 local module = mMT:AddModule("NP-FocusHighlight", { "AceEvent-3.0" })
 
 local NP = E:GetModule("NamePlates")
-
 local LSM = E.Libs.LSM
 local Utils = mMT.NameplateUtils
 
@@ -57,13 +56,9 @@ local function OnFocusChanged()
 	local currentPlate = GetCurrentFocusPlate()
 	module.currentFocusPlate = currentPlate
 
-	if previousPlate and previousPlate ~= currentPlate then
-		Utils:RefreshPlate(previousPlate)
-	end
+	if previousPlate and previousPlate ~= currentPlate then Utils:RefreshPlate(previousPlate) end
 
-	if currentPlate then
-		Utils:RefreshPlate(currentPlate)
-	end
+	if currentPlate then Utils:RefreshPlate(currentPlate) end
 end
 
 local function OnTargetChanged()
