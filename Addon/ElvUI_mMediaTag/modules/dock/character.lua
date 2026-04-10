@@ -6,12 +6,14 @@ local Dock = M.Dock
 
 local icons = MEDIA.icons.dock
 local avg, avgEquipped, avgPvp = 0, 0, 0
+local format = format
 local GetAverageItemLevel = GetAverageItemLevel
 local GetInventoryItemDurability = GetInventoryItemDurability
 local RequestTimePlayed = RequestTimePlayed
 local SecondsToTime = SecondsToTime
 local pairs = pairs
 local time = time
+local wipe = wipe
 
 local DURABILITY = DURABILITY
 local REPAIR_COST = REPAIR_COST

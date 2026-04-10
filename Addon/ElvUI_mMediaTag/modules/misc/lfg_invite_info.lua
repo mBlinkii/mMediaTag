@@ -11,6 +11,7 @@ local GetSearchResultInfo = C_LFGList.GetSearchResultInfo
 local GetActivityFullName = C_LFGList.GetActivityFullName
 local GetActivityInfoTable = C_LFGList.GetActivityInfoTable
 local C_Timer_NewTimer = C_Timer.NewTimer
+local random = random
 
 local LSM = E.Libs.LSM
 

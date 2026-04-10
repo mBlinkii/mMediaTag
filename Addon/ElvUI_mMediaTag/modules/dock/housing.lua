@@ -6,6 +6,7 @@ local icons = MEDIA.icons.dock
 
 local _G = _G
 local ipairs = ipairs
+local type = type
 local UNKNOWN = UNKNOWN
 local OWNER_COLOR = { 0.35, 0.85, 1 }
 local NEIGHBORHOOD_COLOR = { 1, 0.82, 0.35 }

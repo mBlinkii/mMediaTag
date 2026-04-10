@@ -6,10 +6,14 @@ local Dock = M.Dock
 
 local icons = MEDIA.icons.dock
 local avg, avgEquipped, avgPvp = 0, 0, 0
+local format = format
 local GetAverageItemLevel = GetAverageItemLevel
 local GetInventoryItemDurability = GetInventoryItemDurability
 local GetMountInfoByID = C_MountJournal.GetMountInfoByID
 local SummonByID = C_MountJournal.SummonByID
+local pairs = pairs
+local tonumber = tonumber
+local wipe = wipe
 
 local DURABILITY = DURABILITY
 local REPAIR_COST = REPAIR_COST
