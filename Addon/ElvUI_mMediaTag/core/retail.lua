@@ -21,10 +21,20 @@ local GetScenarioHeaderDelvesWidgetVisualizationInfo = C_UIWidgetManager.GetScen
 
 local shortNames = {
 	-- midnight
-	[2813] = "MR",
-	[2874] = "MC",
-	[2811] = "MT",
-	[2915] = "NPX",
+	[2813] = "MR", --Maisarakavernen
+	[2874] = "MC", --Mördergasse
+	[2811] = "MT", --Terrasse der Magister
+	[2915] = "NPX", --Nexuspunkt Xenas
+	[3003] = "TDW", 	--Der Düsterweg
+	[2966] = "TR", 	--Anhöhe der Qual
+	[2961] = "CRYPTS", 	--Gruften der Zwielichtklinge
+	[2952] = "SE", 	--Die Schattenenklave
+	[2825] = "DON", 	--Nalorakks Bau
+	[2923] = "VA", 	--Arena der Leerennarbe
+	[2859] = "BV", 	--Das blendende Tal
+	[2735] = "FP", 	--Gründerspitze
+	[2805] = "WS", 	--Windläuferturm
+	[2964] = "TGM", 	--Die Kluft der Erinnerung
 
 	-- tww
 	[2648] = "ROOK", --The Rookery
@@ -85,7 +95,7 @@ local shortNames = {
 	[1571] = "COS", --Court of Stars
 	[1651] = "KARA", --Return to Karazhan
 	[1677] = "COEN", --Cathedral of Eternal Night
-	[1753] = "SOT", --Seat of the Triumvirate
+	[1753] = "SEAT", --Seat of the Triumvirate
 
 	-- wod
 	[1182] = "AUCH", --Auchindoun
