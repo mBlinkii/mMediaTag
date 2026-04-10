@@ -83,6 +83,11 @@ local function PrintGUID()
 	mMT:Print("GUID:", MEDIA.color.green:WrapTextInColorCode(guid or "unknown"))
 end
 
+local function ClearUnknownIDs()
+	wipe(DB.unknownIDS)
+	mMT:Print(MEDIA.color.green:WrapTextInColorCode("unknownIDS cleared."))
+end
+
 local function AddCurrentCharacterAsDeveloper()
 	local guid = mMT:AddDeveloperCharacter()
 	if not guid then
@@ -103,6 +108,8 @@ local function CommandHandler(msg)
 		PrintVersion()
 	elseif command == "guid" then
 		PrintGUID()
+	elseif command == "clearunknownids" then
+		ClearUnknownIDs()
 	elseif command == "adddev" then
 		AddCurrentCharacterAsDeveloper()
 	elseif command == "debug" or command == "debug safe" then
