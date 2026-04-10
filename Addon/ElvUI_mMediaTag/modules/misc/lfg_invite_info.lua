@@ -10,9 +10,32 @@ local IsInGroup = IsInGroup
 local GetSearchResultInfo = C_LFGList.GetSearchResultInfo
 local GetActivityFullName = C_LFGList.GetActivityFullName
 local GetActivityInfoTable = C_LFGList.GetActivityInfoTable
-local C_Timer_After = C_Timer.After
+local C_Timer_NewTimer = C_Timer.NewTimer
 
 local LSM = E.Libs.LSM
+
+local function CancelHideTimer()
+	if module.hideTimer then
+		module.hideTimer:Cancel()
+		module.hideTimer = nil
+	end
+end
+
+local function ClearInfo()
+	module.info_screen.lable:SetText("")
+	module.info_screen.lable2:SetText("")
+end
+
+local function HideInfo(clearText)
+	CancelHideTimer()
+
+	if module.info_screen then
+		module.info_screen:Hide()
+		if clearText then
+			ClearInfo()
+		end
+	end
+end
 
 function module:Demo()
 	local demoTexts = {
@@ -23,10 +46,11 @@ function module:Demo()
 	}
 	if module.info_screen.demo then
 		module.info_screen.demo = false
-		module.info_screen:Hide()
+		HideInfo()
 	else
 		local info = demoTexts[random(1, #demoTexts)]
 		module.info_screen.demo = true
+		CancelHideTimer()
 		module.info_screen.lable:SetText(format("%s", mMT:TC(info.grp .. " - " .. info.name, "line_a")))
 		module.info_screen.lable2:SetText(format("%s \n%s", mMT:TC(info.acc, "line_b"), mMT:TC(info.diff, "line_c")))
 		module.info_screen:Show()
@@ -36,9 +60,9 @@ end
 function module:Initialize(demo)
 	if not E.db.mMediaTag.lfg_invite_info.enable then
 		if module.info_screen then
-			module.info_screen:Hide()
+			HideInfo(true)
 			if module.isEnabled then
-				module.info_screen:UnregisterAllEvents()
+				module:UnregisterAllEvents()
 				module.isEnabled = false
 			end
 		end
@@ -138,21 +162,19 @@ function module:LFG_LIST_JOINED_GROUP(_, searchResultID, groupName)
 
 	module.info_screen:Show()
 
-	C_Timer_After(module.db.delay, function()
-		module.info_screen:Hide()
+	CancelHideTimer()
+	module.hideTimer = C_Timer_NewTimer(module.db.delay, function()
+		module.hideTimer = nil
+		HideInfo()
 	end)
 end
 
 function module:GROUP_LEFT()
-	module.info_screen:Hide()
-	module.info_screen.lable:SetText("")
-	module.info_screen.lable2:SetText("")
+	HideInfo(true)
 end
 
 function module:ZONE_CHANGED_NEW_AREA()
 	if (IsInInstance() or not IsInGroup()) and module.info_screen:IsShown() then
-		module.info_screen:Hide()
-		module.info_screen.lable:SetText("")
-		module.info_screen.lable2:SetText("")
+		HideInfo(true)
 	end
 end
