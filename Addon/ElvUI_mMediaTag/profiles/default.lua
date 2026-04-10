@@ -10,6 +10,9 @@ mMT.defaults.DEV = false
 
 mMT.defaults.customDevGUIDs = {}
 
+mMT.defaults.playedCharacters = {}
+mMT.defaults.lastPlayedRequest = {}
+
 mMT.defaults.lastWeeklyReset = 0
 
 mMT.defaults.keystones = {}

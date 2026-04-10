@@ -8,12 +8,84 @@ local icons = MEDIA.icons.dock
 local avg, avgEquipped, avgPvp = 0, 0, 0
 local GetAverageItemLevel = GetAverageItemLevel
 local GetInventoryItemDurability = GetInventoryItemDurability
+local RequestTimePlayed = RequestTimePlayed
+local SecondsToTime = SecondsToTime
+local pairs = pairs
+local time = time
 
 local DURABILITY = DURABILITY
 local REPAIR_COST = REPAIR_COST
 local totalDurability = 0
 local invDurability = {}
 local totalRepairCost
+local totalTimePlayed
+local levelTimePlayed
+local lastPlayedRequest
+local PLAYED_REFRESH_INTERVAL = 1800
+
+local function GetPlayedCharacters()
+	DB.playedCharacters = DB.playedCharacters or {}
+	return DB.playedCharacters
+end
+
+local function GetPlayedRequestTimes()
+	DB.lastPlayedRequest = DB.lastPlayedRequest or {}
+	return DB.lastPlayedRequest
+end
+
+local function UpdatePlayedCache(totalTime, levelTime)
+	local guid = mMT:GetCurrentPlayerGUID()
+	if not guid then return end
+
+	local info = GetPlayedCharacters()[guid] or {}
+	info.name = E.mynameRealm
+	info.total = totalTime or 0
+	info.level = levelTime or 0
+	GetPlayedCharacters()[guid] = info
+
+	totalTimePlayed = info.total
+	levelTimePlayed = info.level
+end
+
+local function LoadCurrentPlayedCache()
+	local guid = mMT:GetCurrentPlayerGUID()
+	if not guid then return end
+
+	local info = GetPlayedCharacters()[guid]
+	if not info then
+		totalTimePlayed = nil
+		levelTimePlayed = nil
+		return
+	end
+
+	info.name = E.mynameRealm
+	totalTimePlayed = info.total
+	levelTimePlayed = info.level
+end
+
+local function RequestPlayedTime(force)
+	local guid = mMT:GetCurrentPlayerGUID()
+	if not guid then return end
+
+	lastPlayedRequest = GetPlayedRequestTimes()
+
+	local now = time()
+	local lastRequest = lastPlayedRequest[guid] or 0
+	if not force and (now - lastRequest) < PLAYED_REFRESH_INTERVAL then return end
+
+	lastPlayedRequest[guid] = now
+	RequestTimePlayed()
+end
+
+local function GetAccountPlayedTotal()
+	local total = 0
+
+	for _, info in pairs(GetPlayedCharacters()) do
+		total = total + (info.total or 0)
+	end
+
+	return total
+end
 
 local slots = {
 	[1] = _G.INVTYPE_HEAD,
@@ -48,6 +120,8 @@ local config = {
 
 local function OnEnter(self)
 	Dock:OnEnter(self)
+	RequestPlayedTime(false)
+	LoadCurrentPlayedCache()
 
 	if E.db.mMediaTag.dock.tooltip then
 		DT.tooltip:ClearLines()
@@ -65,6 +139,20 @@ local function OnEnter(self)
 		DT.tooltip:AddDoubleLine(DURABILITY, format("%d%%", totalDurability), 1, 1, 1, E:ColorGradient(totalDurability * 0.01, 1, 0.1, 0.1, 1, 1, 0.1, 0.1, 1, 0.1))
 
 		if totalRepairCost > 0 then DT.tooltip:AddDoubleLine(REPAIR_COST, E:FormatMoney(totalRepairCost, "BLIZZARD", false), mMT:GetRGB("text", "text")) end
+
+		if totalTimePlayed or levelTimePlayed then
+			DT.tooltip:AddLine(" ")
+			DT.tooltip:AddLine(TIME_PLAYED_MSG, mMT:GetRGB("title"))
+			DT.tooltip:AddDoubleLine(L["Account total"], SecondsToTime(GetAccountPlayedTotal()), mMT:GetRGB("text", "text"))
+
+			if totalTimePlayed then
+				DT.tooltip:AddDoubleLine(L["Total play time"], SecondsToTime(totalTimePlayed), mMT:GetRGB("text", "text"))
+			end
+
+			if levelTimePlayed then
+				DT.tooltip:AddDoubleLine(L["Time played this level"], SecondsToTime(levelTimePlayed), mMT:GetRGB("text", "text"))
+			end
+		end
 
 		DT.tooltip:Show()
 	end
@@ -92,6 +180,22 @@ local function OnEvent(self, event, ...)
 
 		Dock:CreateDockIcon(self, config, event)
 	end
+
+	if event == "PLAYER_ENTERING_WORLD" then
+		LoadCurrentPlayedCache()
+		RequestPlayedTime(true)
+	elseif event == "TIME_PLAYED_MSG" then
+		local totalTime, levelTime = ...
+		UpdatePlayedCache(totalTime, levelTime)
+
+		if E.db.mMediaTag.dock.tooltip and DT.tooltip and DT.tooltip:IsShown() then
+			OnEnter(self)
+		end
+
+		return
+	end
+
+	LoadCurrentPlayedCache()
 
 	if E.Retail or E.Mists then
 		avg, avgEquipped, avgPvp = GetAverageItemLevel()
@@ -134,4 +238,4 @@ local function OnEvent(self, event, ...)
 	end
 end
 
-DT:RegisterDatatext(config.name, config.category, { "PLAYER_AVG_ITEM_LEVEL_UPDATE", "UPDATE_INVENTORY_DURABILITY", "MERCHANT_SHOW" }, OnEvent, nil, OnClick, OnEnter, OnLeave, config.localizedName, nil, nil)
+DT:RegisterDatatext(config.name, config.category, { "PLAYER_ENTERING_WORLD", "TIME_PLAYED_MSG", "PLAYER_AVG_ITEM_LEVEL_UPDATE", "UPDATE_INVENTORY_DURABILITY", "MERCHANT_SHOW" }, OnEvent, nil, OnClick, OnEnter, OnLeave, config.localizedName, nil, nil)
