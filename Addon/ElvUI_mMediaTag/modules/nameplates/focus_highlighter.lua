@@ -1,7 +1,6 @@
 local mMT, DB, M, E, P, L, MEDIA = unpack(ElvUI_mMediaTag)
-local module = mMT:AddModule("NP-FocusHighlight", { "AceHook-3.0", "AceEvent-3.0" })
+local module = mMT:AddModule("NP-FocusHighlight", { "AceEvent-3.0" })
 
-local NP = E:GetModule("NamePlates")
 local LSM = E.Libs.LSM
 local Utils = mMT.NameplateUtils
 
@@ -10,21 +9,11 @@ local pairs = pairs
 local UnitExists = UnitExists
 local UnitIsUnit = UnitIsUnit
 local FOCUS_STATE = {
-	originalKey = "mMT_FocusOriginal",
-	colorKey = "mMT_FocusColor",
-	textureKey = "mMT_FocusTexture",
 	ownerKey = "mMT_FocusOwner",
 	activeKey = "mMT_IsFocusHighlighted",
 	borderKey = "mMT_FocusBorder",
+	configKey = "mMT_FocusConfig",
 }
-
-local function ReapplyTarget(nameplate)
-	local targetModule = M["NP-TargetHighlight"]
-	if not (targetModule and nameplate and nameplate.unit and UnitIsUnit(nameplate.unit, "target")) then return end
-
-	targetModule:UpdateTarget(nameplate)
-	Utils:UpdateTargetIndicator(nameplate)
-end
 
 local function GetCurrentFocusPlate()
 	local directPlate = Utils:GetPlateByUnit("focus")
@@ -35,29 +24,27 @@ local function GetCurrentFocusPlate()
 	end
 end
 
-local function FocusPostUpdateColor(healthBar, unit, color)
-	Utils:HandlePostUpdateColor(healthBar, unit, color, FOCUS_STATE, module.focus, FocusPostUpdateColor)
+local function GetEffectiveConfig(nameplate)
+	return Utils:GetColorOverrideConfig(module.focus, nameplate, {
+		moduleName = "NP-TargetHighlight",
+		unitToken = "target",
+	})
 end
 
-local function ApplyStyle(nameplate)
-	if UnitIsUnit(nameplate.unit, "target") then return end
-
-	local cfg = module.focus
-	Utils:ApplyHighlightStyle(nameplate, cfg, FOCUS_STATE, FocusPostUpdateColor)
+local function ApplyStyle(nameplate, cfg)
+	Utils:ApplyHighlightStyle(nameplate, cfg, FOCUS_STATE)
 end
 
 local function ResetStyle(nameplate)
-	Utils:ResetHighlightStyle(nameplate, FOCUS_STATE, module.defaultHealthTexture, ReapplyTarget)
-
-	local questModule = M["NP-QuestHighlight"]
-	if questModule and questModule.quest and questModule.quest.enable then questModule:UpdateQuest(nameplate) end
+	Utils:ResetHighlightStyle(nameplate, FOCUS_STATE)
 end
 
 function module:UpdateFocus(nameplate)
 	if not (nameplate and nameplate.unit and UnitExists(nameplate.unit)) then return end
 
-	if UnitIsUnit(nameplate.unit, "focus") and not UnitIsUnit(nameplate.unit, "target") then
-		ApplyStyle(nameplate)
+	local cfg = UnitIsUnit(nameplate.unit, "focus") and GetEffectiveConfig(nameplate)
+	if cfg then
+		ApplyStyle(nameplate, cfg)
 	else
 		ResetStyle(nameplate)
 	end
@@ -65,19 +52,23 @@ end
 
 local function OnFocusChanged()
 	local previousPlate = module.currentFocusPlate
-	if previousPlate then ResetStyle(previousPlate) end
-
 	local currentPlate = GetCurrentFocusPlate()
 	module.currentFocusPlate = currentPlate
 
-	if currentPlate then module:UpdateFocus(currentPlate) end
+	if previousPlate and previousPlate ~= currentPlate then
+		Utils:RefreshPlate(previousPlate)
+	end
+
+	if currentPlate then
+		Utils:RefreshPlate(currentPlate)
+	end
 end
 
 local function OnTargetChanged()
 	local focusPlate = GetCurrentFocusPlate()
 	module.currentFocusPlate = focusPlate
 
-	if focusPlate then module:UpdateFocus(focusPlate) end
+	if focusPlate then Utils:RefreshPlate(focusPlate) end
 end
 
 local function OnPlateAdded(_, unit)
@@ -89,7 +80,7 @@ local function OnPlateAdded(_, unit)
 
 	if UnitIsUnit(unit, "focus") then module.currentFocusPlate = nameplate end
 
-	module:UpdateFocus(nameplate)
+	Utils:RefreshPlate(nameplate)
 end
 
 local function OnPlateRemoved(_, unit)
@@ -98,17 +89,6 @@ local function OnPlateRemoved(_, unit)
 
 	ResetStyle(module.currentFocusPlate)
 	module.currentFocusPlate = nil
-end
-
-local function OnUpdateHealth(_, nameplate)
-	if nameplate ~= module.currentFocusPlate then return end
-
-	local healthBar = Utils:GetHealthBar(nameplate)
-	local cfg = module.focus
-	if not (healthBar and cfg and healthBar.mMT_IsFocusHighlighted) then return end
-
-	healthBar.PostUpdateColor = FocusPostUpdateColor
-	healthBar.mMT_FocusOwner = nameplate
 end
 
 function module:Initialize()
@@ -122,10 +102,8 @@ function module:Initialize()
 	end
 
 	if enabled then
-		Utils:Initialize()
-
 		module.focus = {
-			enable = db.focus.enable and (db.focus.changeColor or db.focus.changeBorder or db.focus.changeTexture),
+			enable = true,
 			changeColor = db.focus.changeColor,
 			changeBorder = db.focus.changeBorder,
 			changeTexture = db.focus.changeTexture,
@@ -134,12 +112,6 @@ function module:Initialize()
 			borderColor = MEDIA.color.nameplates.focus_border_color,
 			ignoreThreat = db.focus.ignoreThreat,
 		}
-		module.defaultHealthTexture = LSM:Fetch("statusbar", NP.db.statusbar) or E.media.normTex
-
-		if not module.initialized then
-			module:SecureHook(NP, "Update_Health", OnUpdateHealth)
-			module.initialized = true
-		end
 
 		if not module.eventsRegistered then
 			module:RegisterEvent("PLAYER_FOCUS_CHANGED", OnFocusChanged)
@@ -165,6 +137,5 @@ function module:Initialize()
 		end
 
 		module.focus = nil
-		module.defaultHealthTexture = nil
 	end
 end

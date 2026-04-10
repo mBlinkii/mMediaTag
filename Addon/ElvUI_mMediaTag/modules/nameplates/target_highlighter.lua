@@ -1,35 +1,23 @@
 local mMT, DB, M, E, P, L, MEDIA = unpack(ElvUI_mMediaTag)
-local module = mMT:AddModule("NP-TargetHighlight", { "AceHook-3.0", "AceEvent-3.0" })
+local module = mMT:AddModule("NP-TargetHighlight", { "AceEvent-3.0" })
 
-local NP = E:GetModule("NamePlates")
 local LSM = E.Libs.LSM
 local Utils = mMT.NameplateUtils
 
 local UnitExists = UnitExists
 local UnitIsUnit = UnitIsUnit
 local TARGET_STATE = {
-	originalKey = "mMT_TargetOriginal",
-	colorKey = "mMT_TargetColor",
-	textureKey = "mMT_TargetTexture",
 	ownerKey = "mMT_TargetOwner",
 	activeKey = "mMT_IsTargetHighlighted",
 	borderKey = "mMT_TargetBorder",
 }
 
-local function TargetPostUpdateColor(healthBar, unit, color)
-	Utils:HandlePostUpdateColor(healthBar, unit, color, TARGET_STATE, module.target, TargetPostUpdateColor)
-end
-
 local function ApplyStyle(nameplate)
-	local cfg = module.target
-	Utils:ApplyHighlightStyle(nameplate, cfg, TARGET_STATE, TargetPostUpdateColor)
+	Utils:ApplyHighlightStyle(nameplate, module.target, TARGET_STATE)
 end
 
 local function ResetStyle(nameplate)
-	Utils:ResetHighlightStyle(nameplate, TARGET_STATE, module.defaultHealthTexture)
-
-	local questModule = M["NP-QuestHighlight"]
-	if questModule and questModule.quest and questModule.quest.enable then questModule:UpdateQuest(nameplate) end
+	Utils:ResetHighlightStyle(nameplate, TARGET_STATE)
 end
 
 function module:UpdateTarget(nameplate)
@@ -47,14 +35,14 @@ local function OnTargetChanged()
 	local currentPlate = Utils:GetPlateByUnit("target")
 
 	if previousPlate and previousPlate ~= currentPlate then
-		ResetStyle(previousPlate)
+		Utils:RefreshPlate(previousPlate)
 		Utils:UpdateTargetIndicator(previousPlate)
 	end
 
 	module.currentTargetPlate = currentPlate
 
 	if currentPlate then
-		module:UpdateTarget(currentPlate)
+		Utils:RefreshPlate(currentPlate)
 		Utils:UpdateTargetIndicator(currentPlate)
 	end
 end
@@ -66,7 +54,7 @@ local function OnPlateAdded(_, unit)
 	module.currentTargetPlate = nameplate
 
 	if nameplate then
-		module:UpdateTarget(nameplate)
+		Utils:RefreshPlate(nameplate)
 		Utils:UpdateTargetIndicator(nameplate)
 	end
 end
@@ -78,17 +66,6 @@ local function OnPlateRemoved(_, unit)
 	ResetStyle(module.currentTargetPlate)
 	Utils:UpdateTargetIndicator(module.currentTargetPlate)
 	module.currentTargetPlate = nil
-end
-
-local function OnUpdateHealth(_, nameplate)
-	if nameplate ~= module.currentTargetPlate then return end
-
-	local healthBar = Utils:GetHealthBar(nameplate)
-	local cfg = module.target
-	if not (healthBar and cfg and healthBar.mMT_IsTargetHighlighted) then return end
-
-	healthBar.PostUpdateColor = TargetPostUpdateColor
-	healthBar.mMT_TargetOwner = nameplate
 end
 
 function module:Initialize()
@@ -103,10 +80,8 @@ function module:Initialize()
 	end
 
 	if enabled then
-		Utils:Initialize()
-
 		module.target = {
-			enable = db.target.enable and (db.target.changeColor or db.target.changeBorder or db.target.changeTexture),
+			enable = true,
 			changeColor = db.target.changeColor,
 			changeBorder = db.target.changeBorder,
 			changeTexture = db.target.changeTexture,
@@ -115,12 +90,6 @@ function module:Initialize()
 			borderColor = MEDIA.color.nameplates.target_border_color,
 			ignoreThreat = db.target.ignoreThreat,
 		}
-		module.defaultHealthTexture = LSM:Fetch("statusbar", NP.db.statusbar) or E.media.normTex
-
-		if not module.initialized then
-			module:SecureHook(NP, "Update_Health", OnUpdateHealth)
-			module.initialized = true
-		end
 
 		if not module.eventsRegistered then
 			module:RegisterEvent("PLAYER_TARGET_CHANGED", OnTargetChanged)
@@ -145,6 +114,5 @@ function module:Initialize()
 		end
 
 		module.target = nil
-		module.defaultHealthTexture = nil
 	end
 end
