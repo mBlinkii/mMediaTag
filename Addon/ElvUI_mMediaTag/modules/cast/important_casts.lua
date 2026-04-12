@@ -90,20 +90,85 @@ local function HideImportantCast(castbar)
 	if icon and icon:IsShown() then icon:Hide() end
 end
 
+local function GetCastbarNameplate(castbar)
+	return castbar and castbar.__owner
+end
+
+local function GetOrCreateHealthOverlay(nameplate)
+	local healthBar = nameplate and nameplate.Health
+	if not healthBar then return nil end
+
+	if healthBar.mMT_ImportantCastOverlay then return healthBar.mMT_ImportantCastOverlay end
+
+	local overlay = healthBar:CreateTexture(nil, "OVERLAY", nil, 7)
+	local fillTexture = healthBar:GetStatusBarTexture()
+
+	overlay:SetTexture(EDGE_FILE)
+	overlay:SetBlendMode("BLEND")
+	overlay:SetPoint("TOPLEFT", fillTexture, "TOPLEFT")
+	overlay:SetPoint("BOTTOMLEFT", fillTexture, "BOTTOMLEFT")
+	overlay:SetPoint("TOPRIGHT", fillTexture, "TOPRIGHT")
+	overlay:SetPoint("BOTTOMRIGHT", fillTexture, "BOTTOMRIGHT")
+	overlay:SetAlpha(0)
+
+	healthBar.mMT_ImportantCastOverlay = overlay
+	return overlay
+end
+
+local function ApplyOverlayState(nameplate, isImportant)
+	local healthBar = nameplate and nameplate.Health
+	local unit = nameplate and nameplate.unit
+	local overlay = GetOrCreateHealthOverlay(nameplate)
+	if not (healthBar and unit and overlay) then return end
+
+	local trackedUnit = healthBar.mMT_ImportantCastUnit
+	if trackedUnit and trackedUnit ~= unit and module.trackedUnits then
+		module.trackedUnits[trackedUnit] = nil
+	end
+
+	module.trackedUnits = module.trackedUnits or {}
+	module.trackedUnits[unit] = nameplate
+	healthBar.mMT_ImportantCastUnit = unit
+
+	overlay:SetVertexColor(module.color.r, module.color.g, module.color.b)
+
+	if module.demo then
+		overlay:SetAlpha(module.color.a or 1)
+	elseif E:IsSecretValue(isImportant) then
+		overlay:SetAlphaFromBoolean(isImportant, module.color.a or 1, 0)
+	elseif isImportant then
+		overlay:SetAlpha(module.color.a or 1)
+	end
+end
+
+local function ResetImportantCastOverlay(nameplate)
+	local healthBar = nameplate and nameplate.Health
+	if not healthBar then return end
+
+	if healthBar.mMT_ImportantCastUnit and module.trackedUnits then
+		module.trackedUnits[healthBar.mMT_ImportantCastUnit] = nil
+	end
+
+	healthBar.mMT_ImportantCastUnit = nil
+
+	local overlay = healthBar.mMT_ImportantCastOverlay
+	if overlay then overlay:SetAlpha(0) end
+end
+
 local function CheckImportant(castbar)
 	if not (module.db and module.db.enable) then
 		HideImportantCast(castbar)
-		return
+		return false, false
 	end
 
 	local spellID = castbar.spellID
 	if not spellID then
 		HideImportantCast(castbar)
-		return
+		return false, false
 	end
 
-	-- IsSpellImportant may return a ConditionalSecret boolean; pass to SetAlphaFromBoolean if secret
 	local isImportant = IsSpellImportant(spellID)
+	local isSecret = E:IsSecretValue(isImportant)
 
 	if module.demo then
 		local border = GetOrCreateBorder(castbar)
@@ -117,24 +182,47 @@ local function CheckImportant(castbar)
 			icon:Show()
 			icon.texture:SetAlpha(1)
 		end
-	else
-		if E:IsSecretValue(isImportant) then
-			-- Secret boolean — show the border and let alpha handle visibility
-			local border = GetOrCreateBorder(castbar)
-			ApplyBorderStyle(border, castbar)
-			border:Show()
-			border:SetAlphaFromBoolean(isImportant, 1, 0)
 
-			if module.showIcon then
-				local icon = GetOrCreateIcon(castbar)
-				ApplyIconStyle(icon)
-				icon:Show()
-				icon.texture:SetAlphaFromBoolean(isImportant, 1, 0)
-			end
-		elseif isImportant then
-			ShowImportantCast(castbar)
+		return true, false
+	end
+
+	if isSecret then
+		local border = GetOrCreateBorder(castbar)
+		ApplyBorderStyle(border, castbar)
+		border:Show()
+		border:SetAlphaFromBoolean(isImportant, 1, 0)
+
+		if module.showIcon then
+			local icon = GetOrCreateIcon(castbar)
+			ApplyIconStyle(icon)
+			icon:Show()
+			icon.texture:SetAlphaFromBoolean(isImportant, 1, 0)
+		end
+	elseif isImportant then
+		ShowImportantCast(castbar)
+	else
+		HideImportantCast(castbar)
+	end
+
+	return isImportant, isSecret
+end
+
+local function CheckImportantNameplate(castbar)
+	local isImportant, isSecret = CheckImportant(castbar)
+	if not isSecret and not isImportant then return end
+
+	local nameplate = GetCastbarNameplate(castbar)
+	if nameplate then ApplyOverlayState(nameplate, isImportant) end
+end
+
+function module:RefreshTrackedPlates()
+	if not module.trackedUnits then return end
+
+	for unit, nameplate in pairs(module.trackedUnits) do
+		if nameplate and nameplate.unit == unit and nameplate.Health then
+			ApplyOverlayState(nameplate, true)
 		else
-			HideImportantCast(castbar)
+			module.trackedUnits[unit] = nil
 		end
 	end
 end
@@ -148,7 +236,7 @@ function module:Initialize(demo)
 	if not module.isEnabled then
 		hooksecurefunc(NP, "Castbar_PostCastStart", function(castbar)
 			if not castbar then return end
-			CheckImportant(castbar)
+			CheckImportantNameplate(castbar)
 		end)
 
 		hooksecurefunc(NP, "Castbar_PostCastStop", function(castbar)
@@ -185,6 +273,15 @@ function module:Initialize(demo)
 			if not castbar then return end
 			HideImportantCast(castbar)
 		end)
+
+		module.eventFrame = module.eventFrame or CreateFrame("Frame")
+		module.eventFrame:RegisterEvent("NAME_PLATE_UNIT_REMOVED")
+		module.eventFrame:SetScript("OnEvent", function(_, event, unit)
+			if event ~= "NAME_PLATE_UNIT_REMOVED" or not unit then return end
+
+			local nameplate = module.trackedUnits and module.trackedUnits[unit]
+			if nameplate then ResetImportantCastOverlay(nameplate) end
+		end)
 		module.isEnabled = true
 	end
 
@@ -197,4 +294,6 @@ function module:Initialize(demo)
 	module.posX = module.db.posX or 0
 	module.posY = module.db.posY or 0
 	module.demo = demo
+
+	module:RefreshTrackedPlates()
 end
