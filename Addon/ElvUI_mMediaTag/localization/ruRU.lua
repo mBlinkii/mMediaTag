@@ -178,6 +178,8 @@ L["Thanks to:"] = "Благодарности:"
 L["Adds an Extra Icon to the Castbar."] = "Добавляет дополнительный значок на полосу произнесения."
 L["Border Color"] = "Цвет рамки"
 L["Class Colors"] = "Цвета классов"
+L["Health Override"] = "Переопределение полосы здоровья"
+L["Override Health Bar Color"] = "Переопределить цвет полосы здоровья"
 L["Position Settings"] = "Настройки позиции"
 L["Sets the offset according to the anchor."] = "Устанавливает смещение в зависимости от точки привязки."
 

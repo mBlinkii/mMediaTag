@@ -178,6 +178,8 @@ L["Thanks to:"] = true
 L["Adds an Extra Icon to the Castbar."] = true
 L["Border Color"] = true
 L["Class Colors"] = true
+L["Health Override"] = true
+L["Override Health Bar Color"] = true
 L["Position Settings"] = true
 L["Sets the offset according to the anchor."] = true
 

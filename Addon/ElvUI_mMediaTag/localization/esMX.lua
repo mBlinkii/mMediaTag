@@ -178,6 +178,8 @@ L["Thanks to:"] = "Agradecimientos a:"
 L["Adds an Extra Icon to the Castbar."] = "Agrega un ícono extra a la barra de lanzamiento."
 L["Border Color"] = "Color del borde"
 L["Class Colors"] = "Colores de clase"
+L["Health Override"] = "Sobrescritura de la barra de salud"
+L["Override Health Bar Color"] = "Sobrescribir el color de la barra de salud"
 L["Position Settings"] = "Configuración de posición"
 L["Sets the offset according to the anchor."] = "Establece el desplazamiento según el ancla."
 
@@ -539,4 +541,3 @@ L["Score"] = "Puntuación"
 L["Show Party Keystones"] = "Mostrar piedras angulares del grupo"
 L["Show Upgrades"] = "Mostrar mejoras"
 L["Sort method"] = "Método de orden"
-

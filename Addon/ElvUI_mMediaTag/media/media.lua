@@ -57,7 +57,10 @@ MEDIA.color = {
 	OTHER = createColor("FF00FFEE"),
 	GUILD = createColor("FF91D900"),
 
-	important_casts = createColor("FFFF00E6"),
+	important_casts = {
+		border = createColor("FFFF00E6"),
+		health = createColor("FFFF00E6")
+	},
 
 	-- portraits
 	portraits = {
@@ -362,7 +365,12 @@ function mMT:UpdateMedia(arg)
 		MEDIA.color.summon_icon.rejected = CreateColorFromHexString(E.db.mMediaTag.color.summon_icon.rejected)
 	end
 
-	if arg == "important_casts" or not arg then MEDIA.color.important_casts = CreateColorFromHexString(E.db.mMediaTag.color.important_casts) end
+	if arg == "important_casts" or not arg then
+		MEDIA.color.important_casts = {
+			border = CreateColorFromHexString(E.db.mMediaTag.color.important_casts.border),
+			health = CreateColorFromHexString(E.db.mMediaTag.color.important_casts.health)
+		}
+	end
 end
 
 MEDIA.icon = "|TInterface\\Addons\\ElvUI_mMediaTag\\media\\icon.tga:14:14|t"

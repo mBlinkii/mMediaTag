@@ -1,5 +1,5 @@
 local mMT, DB, M, E, P, L, MEDIA = unpack(ElvUI_mMediaTag)
-local module = mMT:AddModule("ImportantCasts")
+local module = mMT:AddModule("ImportantCasts", { "AceEvent-3.0" })
 
 local IsSpellImportant = C_Spell and C_Spell.IsSpellImportant
 local NP = E:GetModule("NamePlates")
@@ -66,7 +66,7 @@ local function ApplyBorderStyle(border, castbar)
 	backdropInfo.edgeSize = thickness
 	border:SetBackdrop(backdropInfo)
 
-	local color = module.color
+	local color = module.borderColor
 	border:SetBackdropBorderColor(color.r, color.g, color.b, color.a)
 end
 
@@ -122,22 +122,20 @@ local function ApplyOverlayState(nameplate, isImportant)
 	if not (healthBar and unit and overlay) then return end
 
 	local trackedUnit = healthBar.mMT_ImportantCastUnit
-	if trackedUnit and trackedUnit ~= unit and module.trackedUnits then
-		module.trackedUnits[trackedUnit] = nil
-	end
+	if trackedUnit and trackedUnit ~= unit and module.trackedUnits then module.trackedUnits[trackedUnit] = nil end
 
 	module.trackedUnits = module.trackedUnits or {}
 	module.trackedUnits[unit] = nameplate
 	healthBar.mMT_ImportantCastUnit = unit
 
-	overlay:SetVertexColor(module.color.r, module.color.g, module.color.b)
+	overlay:SetVertexColor(module.healthColor.r, module.healthColor.g, module.healthColor.b)
 
 	if module.demo then
-		overlay:SetAlpha(module.color.a or 1)
+		overlay:SetAlpha(1)
 	elseif E:IsSecretValue(isImportant) then
-		overlay:SetAlphaFromBoolean(isImportant, module.color.a or 1, 0)
+		overlay:SetAlphaFromBoolean(isImportant, 1, 0)
 	elseif isImportant then
-		overlay:SetAlpha(module.color.a or 1)
+		overlay:SetAlpha(1)
 	end
 end
 
@@ -145,9 +143,7 @@ local function ResetImportantCastOverlay(nameplate)
 	local healthBar = nameplate and nameplate.Health
 	if not healthBar then return end
 
-	if healthBar.mMT_ImportantCastUnit and module.trackedUnits then
-		module.trackedUnits[healthBar.mMT_ImportantCastUnit] = nil
-	end
+	if healthBar.mMT_ImportantCastUnit and module.trackedUnits then module.trackedUnits[healthBar.mMT_ImportantCastUnit] = nil end
 
 	healthBar.mMT_ImportantCastUnit = nil
 
@@ -236,7 +232,12 @@ function module:Initialize(demo)
 	if not module.isEnabled then
 		hooksecurefunc(NP, "Castbar_PostCastStart", function(castbar)
 			if not castbar then return end
-			CheckImportantNameplate(castbar)
+
+			if module.overrideHealthBarColor then
+				CheckImportantNameplate(castbar)
+			else
+				CheckImportant(castbar)
+			end
 		end)
 
 		hooksecurefunc(NP, "Castbar_PostCastStop", function(castbar)
@@ -274,18 +275,21 @@ function module:Initialize(demo)
 			HideImportantCast(castbar)
 		end)
 
-		module.eventFrame = module.eventFrame or CreateFrame("Frame")
-		module.eventFrame:RegisterEvent("NAME_PLATE_UNIT_REMOVED")
-		module.eventFrame:SetScript("OnEvent", function(_, event, unit)
-			if event ~= "NAME_PLATE_UNIT_REMOVED" or not unit then return end
+		if module.db.overrideHealthBarColor then
+			module:RegisterEvent("NAME_PLATE_UNIT_REMOVED")
+			module:SetScript("OnEvent", function(_, event, unit)
+				if event ~= "NAME_PLATE_UNIT_REMOVED" or not unit then return end
 
-			local nameplate = module.trackedUnits and module.trackedUnits[unit]
-			if nameplate then ResetImportantCastOverlay(nameplate) end
-		end)
+				local nameplate = module.trackedUnits and module.trackedUnits[unit]
+				if nameplate then ResetImportantCastOverlay(nameplate) end
+			end)
+		end
 		module.isEnabled = true
 	end
 
-	module.color = module.db.classColor and MEDIA.myclass or MEDIA.color.important_casts
+	module.borderColor = module.db.classColor and MEDIA.myclass or MEDIA.color.important_casts.border
+	module.healthColor = MEDIA.color.important_casts.health
+	module.overrideHealthBarColor = module.db.overrideHealthBarColor
 	module.thickness = module.db.thickness or 2
 	module.showIcon = module.db.showIcon
 	module.iconSize = module.db.iconSize or 16
@@ -295,5 +299,5 @@ function module:Initialize(demo)
 	module.posY = module.db.posY or 0
 	module.demo = demo
 
-	module:RefreshTrackedPlates()
+	if module.db.overrideHealthBarColor then module:RefreshTrackedPlates() end
 end

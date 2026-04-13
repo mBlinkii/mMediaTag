@@ -178,6 +178,8 @@ L["Thanks to:"] = "感謝："
 L["Adds an Extra Icon to the Castbar."] = "在施法條上新增額外圖示。"
 L["Border Color"] = "邊框顏色"
 L["Class Colors"] = "職業顏色"
+L["Health Override"] = "生命值條覆寫"
+L["Override Health Bar Color"] = "覆寫生命值條顏色"
 L["Position Settings"] = "位置設定"
 L["Sets the offset according to the anchor."] = "根據錨點設定偏移。"
 

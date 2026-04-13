@@ -178,6 +178,8 @@ L["Thanks to:"] = "Agradecimentos a:"
 L["Adds an Extra Icon to the Castbar."] = "Adiciona um ícone extra à barra de lançamento."
 L["Border Color"] = "Cor da borda"
 L["Class Colors"] = "Cores de classe"
+L["Health Override"] = "Sobrescrever barra de vida"
+L["Override Health Bar Color"] = "Sobrescrever cor da barra de vida"
 L["Position Settings"] = "Configurações de posição"
 L["Sets the offset according to the anchor."] = "Define o deslocamento de acordo com a âncora."
 

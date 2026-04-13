@@ -178,6 +178,8 @@ L["Thanks to:"] = "감사한 분들:"
 L["Adds an Extra Icon to the Castbar."] = "시전바에 추가 아이콘을 더합니다."
 L["Border Color"] = "테두리 색상"
 L["Class Colors"] = "직업 색상"
+L["Health Override"] = "생명력 바 덮어쓰기"
+L["Override Health Bar Color"] = "생명력 바 색상 덮어쓰기"
 L["Position Settings"] = "위치 설정"
 L["Sets the offset according to the anchor."] = "기준점에 따라 오프셋을 설정합니다."
 

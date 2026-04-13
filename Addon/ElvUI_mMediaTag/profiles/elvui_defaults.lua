@@ -616,6 +616,7 @@ P.important_casts = {
 	enable = false,
 	thickness = 2,
 	classColor = false,
+	overrideHealthBarColor = false,
 	showIcon = true,
 	icon = "important_cast_17",
 	iconSize = 16,
@@ -755,7 +756,10 @@ P.color = {
 		-- },
 	},
 
-	important_casts = "FFFF00E6",
+	important_casts = {
+		border = "FFFF00E6",
+		health = "FFFF00E6"
+	},
 
 	nameplates = {
 		focus_color = "FF00FFB3",

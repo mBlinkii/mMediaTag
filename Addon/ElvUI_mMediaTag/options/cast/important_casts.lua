@@ -88,14 +88,13 @@ mMT.options.args.unitframes.args.important_casts.args = {
 					return not E.db.mMediaTag.important_casts.enable or E.db.mMediaTag.important_casts.classColor
 				end,
 				get = function(info)
-					local r, g, b = mMT:HexToRGB(E.db.mMediaTag.color.important_casts)
+					local r, g, b = mMT:HexToRGB(E.db.mMediaTag.color.important_casts.border)
 					return r, g, b
 				end,
 				set = function(info, r, g, b)
 					local hex = E:RGBToHex(r, g, b, "ff")
-					E.db.mMediaTag.color.important_casts = hex
-					MEDIA.color.important_casts = CreateColorFromHexString(hex)
-					MEDIA.color.important_casts.hex = hex
+					E.db.mMediaTag.color.important_casts.border = hex
+					MEDIA.color.important_casts.border = CreateColorFromHexString(hex)
 					mMT:UpdateModule("ImportantCasts")
 				end,
 			},
@@ -163,6 +162,49 @@ mMT.options.args.unitframes.args.important_casts.args = {
 				end,
 				disabled = function()
 					return not E.db.mMediaTag.important_casts.enable or not E.db.mMediaTag.important_casts.showIcon
+				end,
+			},
+		},
+	},
+	health = {
+		order = 3,
+		type = "group",
+		inline = true,
+		name = L["Health Override"],
+		args = {
+			override = {
+				order = 1,
+				type = "toggle",
+				name = L["Override Health Bar Color"],
+				get = function(info)
+					return E.db.mMediaTag.important_casts.overrideHealthBarColor
+				end,
+				set = function(info, value)
+					E.db.mMediaTag.important_casts.overrideHealthBarColor = value
+					UpdateImportantCasts()
+					E:StaticPopup_Show("CONFIG_RL")
+				end,
+				disabled = function()
+					return not E.db.mMediaTag.important_casts.enable
+				end,
+			},
+			color = {
+				order = 2,
+				type = "color",
+				name = L["Color"],
+				hasAlpha = false,
+				disabled = function()
+					return not (E.db.mMediaTag.important_casts.enable and E.db.mMediaTag.important_casts.overrideHealthBarColor)
+				end,
+				get = function(info)
+					local r, g, b = mMT:HexToRGB(E.db.mMediaTag.color.important_casts.health)
+					return r, g, b
+				end,
+				set = function(info, r, g, b)
+					local hex = E:RGBToHex(r, g, b, "ff")
+					E.db.mMediaTag.color.important_casts.health = hex
+					MEDIA.color.important_casts.health = CreateColorFromHexString(hex)
+					mMT:UpdateModule("ImportantCasts")
 				end,
 			},
 		},

@@ -178,6 +178,8 @@ L["Thanks to:"] = "Danke an:"
 L["Adds an Extra Icon to the Castbar."] = "Fügt der Zauberleiste ein zusätzliches Symbol hinzu."
 L["Border Color"] = "Randfarbe"
 L["Class Colors"] = "Klassenfarben"
+L["Health Override"] = "Überschreibung der Gesundheitsleiste"
+L["Override Health Bar Color"] = "Gesundheitsleistenfarbe überschreiben"
 L["Position Settings"] = "Positionseinstellungen"
 L["Sets the offset according to the anchor."] = "Setzt den Versatz entsprechend dem Anker."
 
