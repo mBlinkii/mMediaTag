@@ -276,8 +276,7 @@ function module:Initialize(demo)
 		end)
 
 		if module.db.overrideHealthBarColor then
-			module:RegisterEvent("NAME_PLATE_UNIT_REMOVED")
-			module:SetScript("OnEvent", function(_, event, unit)
+			module:RegisterEvent("NAME_PLATE_UNIT_REMOVED", function(_, event, unit)
 				if event ~= "NAME_PLATE_UNIT_REMOVED" or not unit then return end
 
 				local nameplate = module.trackedUnits and module.trackedUnits[unit]
