@@ -117,16 +117,8 @@ end
 
 local function ApplyOverlayState(nameplate, isImportant)
 	local healthBar = nameplate and nameplate.Health
-	local unit = nameplate and nameplate.unit
 	local overlay = GetOrCreateHealthOverlay(nameplate)
-	if not (healthBar and unit and overlay) then return end
-
-	local trackedUnit = healthBar.mMT_ImportantCastUnit
-	if trackedUnit and trackedUnit ~= unit and module.trackedUnits then module.trackedUnits[trackedUnit] = nil end
-
-	module.trackedUnits = module.trackedUnits or {}
-	module.trackedUnits[unit] = nameplate
-	healthBar.mMT_ImportantCastUnit = unit
+	if not (healthBar and overlay) then return end
 
 	overlay:SetVertexColor(module.healthColor.r, module.healthColor.g, module.healthColor.b)
 
@@ -142,13 +134,16 @@ end
 local function ResetImportantCastOverlay(nameplate)
 	local healthBar = nameplate and nameplate.Health
 	if not healthBar then return end
-
-	if healthBar.mMT_ImportantCastUnit and module.trackedUnits then module.trackedUnits[healthBar.mMT_ImportantCastUnit] = nil end
-
-	healthBar.mMT_ImportantCastUnit = nil
+	-- print("ResetImportantCastOverlay", healthBar.mMT_ImportantCastOverlay)
 
 	local overlay = healthBar.mMT_ImportantCastOverlay
 	if overlay then overlay:SetAlpha(0) end
+end
+
+local function ResetAllImportantCastOverlays()
+	for nameplate in pairs(NP.Plates) do
+		ResetImportantCastOverlay(nameplate)
+	end
 end
 
 local function CheckImportant(castbar)
@@ -204,23 +199,12 @@ local function CheckImportant(castbar)
 end
 
 local function CheckImportantNameplate(castbar)
+	local nameplate = GetCastbarNameplate(castbar)
+
 	local isImportant, isSecret = CheckImportant(castbar)
 	if not isSecret and not isImportant then return end
 
-	local nameplate = GetCastbarNameplate(castbar)
 	if nameplate then ApplyOverlayState(nameplate, isImportant) end
-end
-
-function module:RefreshTrackedPlates()
-	if not module.trackedUnits then return end
-
-	for unit, nameplate in pairs(module.trackedUnits) do
-		if nameplate and nameplate.unit == unit and nameplate.Health then
-			ApplyOverlayState(nameplate, true)
-		else
-			module.trackedUnits[unit] = nil
-		end
-	end
 end
 
 function module:Initialize(demo)
@@ -230,6 +214,24 @@ function module:Initialize(demo)
 	module.db = E.db.mMediaTag.important_casts
 
 	if not module.isEnabled then
+		-- hooksecurefunc(NP, "NAME_PLATE_UNIT_ADDED", function(nameplate)
+		-- 	--print("NAME_PLATE_UNIT_ADDED", nameplate, nameplate:GetName())
+		-- 	if not module.overrideHealthBarColor then return end
+		-- 	ResetImportantCastOverlay(nameplate)
+		-- end)
+
+		-- hooksecurefunc(NP, "NAME_PLATE_UNIT_REMOVED", function(nameplate)
+		-- 	--print("NAME_PLATE_UNIT_REMOVED", nameplate, nameplate:GetName())
+		-- 	if not module.overrideHealthBarColor then return end
+		-- 	ResetImportantCastOverlay(nameplate)
+		-- end)
+
+		hooksecurefunc(NP, "UpdatePlate", function(_, nameplate)
+			--print("UpdatePlate",nameplate, nameplate:GetName())
+			if not module.overrideHealthBarColor then return end
+			ResetImportantCastOverlay(nameplate)
+		end)
+
 		hooksecurefunc(NP, "Castbar_PostCastStart", function(castbar)
 			if not castbar then return end
 
@@ -274,15 +276,6 @@ function module:Initialize(demo)
 			if not castbar then return end
 			HideImportantCast(castbar)
 		end)
-
-		if module.db.overrideHealthBarColor then
-			module:RegisterEvent("NAME_PLATE_UNIT_REMOVED", function(_, event, unit)
-				if event ~= "NAME_PLATE_UNIT_REMOVED" or not unit then return end
-
-				local nameplate = module.trackedUnits and module.trackedUnits[unit]
-				if nameplate then ResetImportantCastOverlay(nameplate) end
-			end)
-		end
 		module.isEnabled = true
 	end
 
@@ -298,5 +291,5 @@ function module:Initialize(demo)
 	module.posY = module.db.posY or 0
 	module.demo = demo
 
-	if module.db.overrideHealthBarColor then module:RefreshTrackedPlates() end
+	if module.overrideHealthBarColor then ResetAllImportantCastOverlays() end
 end
