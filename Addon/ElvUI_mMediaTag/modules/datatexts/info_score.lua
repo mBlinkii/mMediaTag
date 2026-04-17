@@ -25,12 +25,20 @@ local ipairs = ipairs
 local pairs = pairs
 local strjoin = strjoin
 
+local COLOR_GRAY_HEX = "FFA9A9A9"
+local COLOR_ILEVEL_HEX = "FFAB5CFE"
+
 local valueString = ""
 local textString = ""
 local isMaxLevel = nil
 local leaderIcon = E:TextureString(MEDIA.icons.leader.leader01, ":14:14")
 local armorIcon = E:TextureString(MEDIA.icons.datatexts.misc.armor, ":14:14")
 local scoreIcon = E:TextureString(MEDIA.icons.datatexts.misc.score, ":14:14")
+
+local function FormatRatingColor(rating)
+	local color = GetDungeonScoreRarityColor(rating)
+	return color and color:GenerateHexColor() or "FFFFFFFF"
+end
 
 local function SaveMyKeystone()
 	local myKeystone = mMT:GetMyKeystone()
@@ -51,16 +59,14 @@ end
 
 local function GetKeystoneString(id, keyStoneLevel)
 	if not id then return end
-
 	local name = GetMapUIInfo(id)
 	if not name then return end
 
 	local color = ITEM_QUALITY_COLORS[4]
-
 	local colorKey = GetKeystoneLevelRarityColor(keyStoneLevel)
-	colorKey.hex = colorKey and colorKey:GenerateHexColor() or "FFFFFFFF"
+	local keyHex = colorKey and colorKey:GenerateHexColor() or "FFFFFFFF"
 
-	return color.hex .. name .. " " .. format("|c%s+%s|r", colorKey.hex, keyStoneLevel) .. "|r", id
+	return color.hex .. name .. " " .. format("|c%s+%s|r", keyHex, keyStoneLevel) .. "|r", id
 end
 
 local function GetDungeonSummary()
@@ -69,7 +75,6 @@ local function GetDungeonSummary()
 	local summary = GetPlayerMythicPlusRatingSummary("player")
 	local myKeystoneMapID = GetOwnedKeystoneChallengeMapID()
 
-	-- build score table
 	for _, id in ipairs(mapTable) do
 		local name, _, _, texture = GetMapUIInfo(id)
 		scoreTable[id] = {
@@ -100,68 +105,52 @@ local function GetDungeonSummary()
 		end
 	end
 
-	if E.db.mMediaTag.datatexts.score.sort_method == "SCORE" then
-		table.sort(scoreTable, function(a, b)
-			return a.mapScore > b.mapScore
-		end)
-	else
-		table.sort(scoreTable, function(a, b)
-			return a.bestRunLevel > b.bestRunLevel
-		end)
-	end
+	local sortByScore = E.db.mMediaTag.datatexts.score.sort_method == "SCORE"
+	table.sort(scoreTable, function(a, b)
+		return sortByScore and (a.mapScore > b.mapScore) or (a.bestRunLevel > b.bestRunLevel)
+	end)
 
 	return scoreTable
 end
 
 local function AddTooltipLine(v, mapName)
-	local ratingColor = v.finishedSuccess and v.scoreColor:GenerateHexColor() or "FFA9A9A9"
-	local rating = format("|c%s%s|r", ratingColor, v.mapScore)
+	local ratingHex = v.finishedSuccess and v.scoreColor:GenerateHexColor() or COLOR_GRAY_HEX
+	local levelHex = v.finishedSuccess and v.levelColor:GenerateHexColor() or COLOR_GRAY_HEX
 
-	local levelColor = v.finishedSuccess and v.levelColor:GenerateHexColor() or "FFA9A9A9"
-	local level = format("|c%s+%s|r", levelColor, v.bestRunLevel)
+	local rating = format("|c%s%s|r", ratingHex, v.mapScore)
+	local level = format("|c%s+%s|r", levelHex, v.bestRunLevel)
 
 	DT.tooltip:AddDoubleLine(v.icon .. " " .. mapName, rating .. " (" .. level .. ")", mMT:GetRGB("text", "text"))
 end
 
-local function DungeonScoreTooltip()
-	local scoreTable = GetDungeonSummary()
-
+local function DungeonScoreTooltip(scoreTable)
 	if not next(scoreTable) then return end
 
 	DT.tooltip:AddLine(" ")
 	DT.tooltip:AddLine(L["Dungeon overview:"], mMT:GetRGB("title"))
 
 	for _, v in pairs(scoreTable) do
-		local mapName = v.mapName
-		if v.isMyKeystone then mapName = mMT:TC(mapName, "mark") end
+		local mapName = v.isMyKeystone and mMT:TC(v.mapName, "mark") or v.mapName
 		AddTooltipLine(v, mapName)
 	end
 
-	if E.db.mMediaTag.datatexts.score.show_upgrade then
-		DT.tooltip:AddLine(" ")
-		DT.tooltip:AddLine(L["Possible next upgrades:"], mMT:GetRGB("title"))
+	if not E.db.mMediaTag.datatexts.score.show_upgrade then return end
 
-		local upgradeTable = {}
-		for _, data in pairs(scoreTable) do
-			table.insert(upgradeTable, data)
-		end
+	DT.tooltip:AddLine(" ")
+	DT.tooltip:AddLine(L["Possible next upgrades:"], mMT:GetRGB("title"))
 
-		table.sort(upgradeTable, function(a, b)
-			return a.mapScore < b.mapScore
-		end)
+	local upgradeTable = {}
+	for _, data in pairs(scoreTable) do
+		upgradeTable[#upgradeTable + 1] = data
+	end
+	table.sort(upgradeTable, function(a, b)
+		return a.mapScore < b.mapScore
+	end)
 
-		if #upgradeTable >= 2 then
-			upgradeTable[1].upgrade = true
-			upgradeTable[2].upgrade = true
-		end
-
-		for _, v in pairs(upgradeTable) do
-			if v.upgrade then
-				local mapName = v.mapName
-				if v.isMyKeystone then mapName = mMT:TC(mapName, "mark") end
-				AddTooltipLine(v, mapName)
-			end
-		end
+	for i = 1, math.min(2, #upgradeTable) do
+		local v = upgradeTable[i]
+		local mapName = v.isMyKeystone and mMT:TC(v.mapName, "mark") or v.mapName
+		AddTooltipLine(v, mapName)
 	end
 end
 
@@ -187,44 +176,74 @@ local function OnLeave(self)
 	DT.tooltip:Hide()
 end
 
+local function FormatUnitInfo(unit, unitName, keystoneInfo, unitGear)
+	local iLevelStr = ""
+	if unitGear and unitGear.ilevel then iLevelStr = "   " .. armorIcon .. " " .. format("|c%s%s|r", COLOR_ILEVEL_HEX, unitGear.ilevel) end
+
+	if keystoneInfo then
+		local ratingHex = FormatRatingColor(keystoneInfo.rating)
+		local unitRating = format("|c%s%s|r", ratingHex, keystoneInfo.rating)
+		return (UnitIsGroupLeader(unit) and leaderIcon .. " " or "") .. unitName .. "   " .. scoreIcon .. " " .. unitRating .. iLevelStr
+	end
+
+	return (UnitIsGroupLeader(unit) and leaderIcon or "") .. unitName .. iLevelStr
+end
+
+local function AddFallbackGroupLine(unit)
+	local ratingInfo = GetPlayerMythicPlusRatingSummary(unit)
+	local unitRating = ratingInfo and ratingInfo.currentSeasonScore or 0
+	local ratingHex = FormatRatingColor(unitRating)
+	local unitName = format("%s%s|r", UnitClassColor(unit), UnitName(unit))
+
+	local bestRun = 0
+	if ratingInfo and ratingInfo.runs then
+		for _, run in next, ratingInfo.runs do
+			if run.finishedSuccess and run.bestRunLevel > bestRun then bestRun = run.bestRunLevel end
+		end
+	end
+
+	local bestRunStr = (bestRun > 0) and format("|c%s%s|r", ratingHex, L["Mythic+ Best Run: +"] .. bestRun) or ""
+
+	DT.tooltip:AddDoubleLine((UnitIsGroupLeader(unit) and leaderIcon or "") .. unitName .. "   " .. scoreIcon .. " " .. format("|c%s%s|r", ratingHex, unitRating), bestRunStr)
+end
+
 local function GetGroupKeystone()
 	local GroupMembers = { "player" }
 	for i = 1, GetNumGroupMembers() - 1 do
-		table.insert(GroupMembers, "party" .. i)
+		GroupMembers[#GroupMembers + 1] = "party" .. i
 	end
 
-	LOR.RequestKeystoneDataFromParty()
-	LOR.GetAllUnitsGear()
+	if LOR then
+		LOR.RequestKeystoneDataFromParty()
+		LOR.GetAllUnitsGear()
 
-	for _, unit in ipairs(GroupMembers) do
-		if unit and UnitIsPlayer(unit) then
-			local keystoneInfo = LOR.GetKeystoneInfo(unit)
-			local unitGear = LOR.GetUnitGear(unit)
-			local name = UnitName(unit)
-			local unitName = format("%s%s|r", UnitClassColor(unit), name)
-			local key = L["No Keystone"]
+		for _, unit in ipairs(GroupMembers) do
+			if unit and UnitIsPlayer(unit) then
+				local keystoneInfo = LOR.GetKeystoneInfo(unit)
+				local unitGear = LOR.GetUnitGear(unit)
 
-			local unitItemLevel = nil
-			if unitGear and unitGear.ilevel then
-				local hex = "FFAB5CFE"
-				unitItemLevel = format("|c%s%s|r", hex, unitGear.ilevel)
-			end
+				if not keystoneInfo and not (unitGear and unitGear.ilevel) then
+					AddFallbackGroupLine(unit)
+				else
+					local unitName = format("%s%s|r", UnitClassColor(unit), UnitName(unit))
+					local key = L["No Keystone"]
 
-			local info = (UnitIsGroupLeader(unit) and leaderIcon or "") .. unitName .. (unitItemLevel and unitItemLevel or "")
+					local info = FormatUnitInfo(unit, unitName, keystoneInfo, unitGear)
 
-			if keystoneInfo then
-				local membersKeystone = GetKeystoneString(keystoneInfo.challengeMapID, keystoneInfo.level)
-				if membersKeystone then
-					local ratingColor = GetDungeonScoreRarityColor(keystoneInfo.rating)
-					ratingColor.hex = ratingColor and ratingColor:GenerateHexColor() or "FFFFFFFF"
-					local unitRating = format("|c%s%s|r", ratingColor.hex, keystoneInfo.rating)
+					if keystoneInfo then
+						local membersKeystone = GetKeystoneString(keystoneInfo.challengeMapID, keystoneInfo.level)
+						if membersKeystone then key = membersKeystone end
+					end
 
-					key = membersKeystone
-					info = (UnitIsGroupLeader(unit) and leaderIcon .. " " or "") .. unitName .. "   " .. scoreIcon .. " " .. unitRating .. (unitItemLevel and ("   " .. armorIcon .. " " .. unitItemLevel) or "")
+					DT.tooltip:AddDoubleLine(info, key)
 				end
 			end
-
-			DT.tooltip:AddDoubleLine(info, key)
+		end
+	else
+		for _, unit in ipairs(GroupMembers) do
+			if unit and UnitIsPlayer(unit) then
+				AddFallbackGroupLine(unit)
+			end
 		end
 	end
 end
@@ -256,7 +275,7 @@ local function OnEnter(self)
 			end
 		end
 
-		if E.db.mMediaTag.datatexts.score.group_keystones and LOR and IsInGroup() and isMaxLevel then
+		if E.db.mMediaTag.datatexts.score.group_keystones and IsInGroup() and isMaxLevel then
 			DT.tooltip:AddLine(" ")
 			DT.tooltip:AddLine(L["Keystones in your Group"], mMT:GetRGB("title"))
 			GetGroupKeystone()
@@ -271,7 +290,8 @@ local function OnEnter(self)
 	end
 
 	if isMaxLevel then
-		DungeonScoreTooltip()
+		local scoreTable = GetDungeonSummary()
+		DungeonScoreTooltip(scoreTable)
 
 		local vaultInfoRaid, vaultInfoDungeons, vaultInfoWorld = mMT:GetVaultInfo()
 		if vaultInfoRaid and vaultInfoDungeons and vaultInfoWorld then
@@ -304,9 +324,9 @@ local function OnEvent(self, event, ...)
 			C_MythicPlus_RequestMapInfo()
 			C_MythicPlus_RequestCurrentAffixes()
 		end
-
 		SaveMyKeystone()
 	end
+
 	local myScore = mMT:GetMyMythicPlusScore()
 	self.text:SetFormattedText(textString, isMaxLevel and myScore or L["Level: "] .. format(valueString, E.mylevel))
 end
@@ -319,6 +339,14 @@ local function ValueColorUpdate(self, hex)
 	OnEvent(self)
 end
 
-local events = { "CHALLENGE_MODE_START", "CHALLENGE_MODE_COMPLETED", "PLAYER_ENTERING_WORLD", "UPDATE_INSTANCE_INFO", "CHALLENGE_MODE_RESET", "ENCOUNTER_END", "MYTHIC_PLUS_CURRENT_AFFIX_UPDATE" }
+local events = {
+	"CHALLENGE_MODE_START",
+	"CHALLENGE_MODE_COMPLETED",
+	"PLAYER_ENTERING_WORLD",
+	"UPDATE_INSTANCE_INFO",
+	"CHALLENGE_MODE_RESET",
+	"ENCOUNTER_END",
+	"MYTHIC_PLUS_CURRENT_AFFIX_UPDATE",
+}
 
 DT:RegisterDatatext("mMT - M+ Score", mMT.Name, events, OnEvent, nil, OnClick, OnEnter, OnLeave, L["M+ Score"], nil, ValueColorUpdate)
