@@ -612,6 +612,12 @@ P.auto_quest = {
 	chat_message = false,
 }
 
+P.auto_role_check = {
+	enable = false,
+	accept_lfd = true,
+	accept_premade = true,
+}
+
 P.important_casts = {
 	enable = false,
 	thickness = 2,

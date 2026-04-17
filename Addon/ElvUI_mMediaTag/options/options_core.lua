@@ -480,8 +480,15 @@ mMT.options = {
 					childGroups = "tab",
 					args = {},
 				},
-				tooltip = {
+				auto_role_check = {
 					order = 9,
+					type = "group",
+					name = mMT:AddSettingsIcon(L["Auto Role Check"], "dungeon"),
+					childGroups = "tab",
+					args = {},
+				},
+				tooltip = {
+					order = 10,
 					type = "group",
 					name = mMT:AddSettingsIcon(L["Tooltip"], "help"),
 					childGroups = "tab",

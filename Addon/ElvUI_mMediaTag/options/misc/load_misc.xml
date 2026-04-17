@@ -12,5 +12,6 @@
     <Script file="summon_icon.lua"/>
 	<Script file="details.lua"/>
 	<Script file="auto_quest.lua"/>
+	<Script file="auto_role_check.lua"/>
 	<Script file="tooltip.lua"/>
 </Ui>

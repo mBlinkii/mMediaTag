@@ -642,7 +642,11 @@ L["Color the text with the ElvUI color."] = true
 -- options/misc/auto_quest.lua
 L["Auto Accept"] = true
 L["Auto Quest"] = true
+L["Auto Role Check"] = true
+L["Auto Sign Up"] = true
 L["Auto Turn-In"] = true
+L["Automatically accepts the dungeon or raid role check popup."] = true
+L["Automatically signs up for premade groups when your role is already selected."] = true
 L["Automatically accepts quest dialogs from NPCs."] = true
 L["Automatically turns in completed quests. If the quest has multiple reward choices, the dialog stays open for you to choose."] = true
 L["Chat Messages"] = true
