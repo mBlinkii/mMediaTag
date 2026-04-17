@@ -242,6 +242,12 @@ L["Hover Custom Color"] = "自定义悬停颜色"
 L["Left Click"] = "左键点击"
 L["Right Click"] = "右键点击"
 
+-- options/misc/auto_role_check.lua
+L["Auto Role Check"] = "自动职责确认"
+L["Auto Sign Up"] = "自动报名"
+L["Automatically accepts the dungeon or raid role check popup."] = "自动接受地下城或团队的职责确认弹窗。"
+L["Automatically signs up for premade groups when your role is already selected."] = "当你的职责已选定时，自动报名预创建队伍。"
+
 -- options/misc/difficulty_info.lua
 L["LEFT"] = "左侧"
 L["RIGHT"] = "右侧"

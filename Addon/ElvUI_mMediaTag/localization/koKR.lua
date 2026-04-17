@@ -242,6 +242,12 @@ L["Hover Custom Color"] = "사용자 지정 마우스오버 색상"
 L["Left Click"] = "좌클릭"
 L["Right Click"] = "우클릭"
 
+-- options/misc/auto_role_check.lua
+L["Auto Role Check"] = "자동 역할 확인"
+L["Auto Sign Up"] = "자동 신청"
+L["Automatically accepts the dungeon or raid role check popup."] = "던전 또는 공격대 역할 확인 팝업을 자동으로 수락합니다."
+L["Automatically signs up for premade groups when your role is already selected."] = "선택한 역할이 이미 정해져 있으면 미리 구성된 그룹에 자동으로 신청합니다."
+
 -- options/misc/difficulty_info.lua
 L["LEFT"] = "왼쪽"
 L["RIGHT"] = "오른쪽"

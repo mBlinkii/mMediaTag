@@ -242,6 +242,12 @@ L["Hover Custom Color"] = "Пользовательский цвет при на
 L["Left Click"] = "Левый клик"
 L["Right Click"] = "Правый клик"
 
+-- options/misc/auto_role_check.lua
+L["Auto Role Check"] = "Автопроверка роли"
+L["Auto Sign Up"] = "Автозапись"
+L["Automatically accepts the dungeon or raid role check popup."] = "Автоматически принимает всплывающее окно проверки роли для подземелья или рейда."
+L["Automatically signs up for premade groups when your role is already selected."] = "Автоматически записывает вас в заранее собранные группы, если ваша роль уже выбрана."
+
 -- options/misc/difficulty_info.lua
 L["LEFT"] = "СЛЕВА"
 L["RIGHT"] = "СПРАВА"

@@ -242,6 +242,12 @@ L["Hover Custom Color"] = "自訂懸停顏色"
 L["Left Click"] = "左鍵點擊"
 L["Right Click"] = "右鍵點擊"
 
+-- options/misc/auto_role_check.lua
+L["Auto Role Check"] = "自動角色確認"
+L["Auto Sign Up"] = "自動報名"
+L["Automatically accepts the dungeon or raid role check popup."] = "自動接受地城或團隊的角色確認彈出視窗。"
+L["Automatically signs up for premade groups when your role is already selected."] = "當你的角色已選定時，自動報名預組隊伍。"
+
 -- options/misc/difficulty_info.lua
 L["LEFT"] = "左"
 L["RIGHT"] = "右"

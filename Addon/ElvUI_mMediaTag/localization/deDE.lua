@@ -643,17 +643,19 @@ L["Color the text with the ElvUI color."] = "Text mit der ElvUI-Farbe einfärben
 -- options/misc/auto_quest.lua
 L["Auto Accept"] = "Automatisch annehmen"
 L["Auto Quest"] = "Auto-Quest"
-L["Auto Role Check"] = "Automatischer Rollencheck"
-L["Auto Sign Up"] = "Automatisch anmelden"
 L["Auto Turn-In"] = "Automatisch abgeben"
-L["Automatically accepts the dungeon or raid role check popup."] = "Akzeptiert das Rollencheck-Popup fuer Dungeons oder Schlachtzuege automatisch."
-L["Automatically signs up for premade groups when your role is already selected."] = "Meldet dich automatisch fuer vorgefertigte Gruppen an, wenn deine Rolle bereits ausgewaehlt ist."
 L["Automatically accepts quest dialogs from NPCs."] = "Nimmt Questdialoge von NPCs automatisch an."
 L["Automatically turns in completed quests. If the quest has multiple reward choices, the dialog stays open for you to choose."] = "Gibt abgeschlossene Quests automatisch ab. Wenn die Quest mehrere Belohnungen zur Auswahl hat, bleibt der Dialog zur Auswahl geöffnet."
 L["Chat Messages"] = "Chatnachrichten"
 L["Disables auto accept/turn-in while you are in combat."] = "Deaktiviert automatisches Annehmen/Abgeben, solange du im Kampf bist."
 L["Prints a message to chat whenever a quest is auto-accepted or turned in."] = "Gibt eine Nachricht im Chat aus, wenn eine Quest automatisch angenommen oder abgegeben wird."
 L["Skip in Combat"] = "Im Kampf überspringen"
+
+-- options/misc/auto_role_check.lua
+L["Auto Role Check"] = "Automatischer Rollencheck"
+L["Auto Sign Up"] = "Automatisch anmelden"
+L["Automatically accepts the dungeon or raid role check popup."] = "Akzeptiert das Rollencheck-Popup fuer Dungeons oder Schlachtzuege automatisch."
+L["Automatically signs up for premade groups when your role is already selected."] = "Meldet dich automatisch fuer vorgefertigte Gruppen an, wenn deine Rolle bereits ausgewaehlt ist."
 
 -- options/misc/difficulty_info.lua
 L["Alignment"] = "Ausrichtung"

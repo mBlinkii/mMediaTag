@@ -242,6 +242,12 @@ L["Hover Custom Color"] = "Color personalizado al pasar"
 L["Left Click"] = "Clic izquierdo"
 L["Right Click"] = "Clic derecho"
 
+-- options/misc/auto_role_check.lua
+L["Auto Role Check"] = "Comprobación automática de rol"
+L["Auto Sign Up"] = "Inscripción automática"
+L["Automatically accepts the dungeon or raid role check popup."] = "Acepta automáticamente la ventana emergente de comprobación de rol de mazmorra o banda."
+L["Automatically signs up for premade groups when your role is already selected."] = "Se apunta automáticamente a grupos predefinidos cuando tu rol ya está seleccionado."
+
 -- options/misc/difficulty_info.lua
 L["LEFT"] = "IZQUIERDA"
 L["RIGHT"] = "DERECHA"
