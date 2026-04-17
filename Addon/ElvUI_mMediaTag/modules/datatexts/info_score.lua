@@ -194,6 +194,7 @@ local function GetGroupKeystone()
 	end
 
 	LOR.RequestKeystoneDataFromParty()
+	LOR.GetAllUnitsGear()
 
 	for _, unit in ipairs(GroupMembers) do
 		if unit and UnitIsPlayer(unit) then
@@ -203,13 +204,16 @@ local function GetGroupKeystone()
 			local unitName = format("%s%s|r", UnitClassColor(unit), name)
 			local key = L["No Keystone"]
 
-			local unitItemLevel = ""
+			print(unitName, keystoneInfo and keystoneInfo.challengeMapID, keystoneInfo and keystoneInfo.level)
+			mMT:DebugPrint(unitGear, true)
+
+			local unitItemLevel = nil
 			if unitGear and unitGear.ilevel then
 				local hex = "FFAB5CFE"
 				unitItemLevel = format("|c%s%s|r", hex, unitGear.ilevel)
 			end
 
-			local info = (UnitIsGroupLeader(unit) and leaderIcon or "") .. unitName .. unitItemLevel
+			local info = (UnitIsGroupLeader(unit) and leaderIcon or "") .. unitName .. (unitItemLevel and unitItemLevel or "")
 
 			if keystoneInfo then
 				local membersKeystone = GetKeystoneString(keystoneInfo.challengeMapID, keystoneInfo.level)
@@ -219,7 +223,7 @@ local function GetGroupKeystone()
 					local unitRating = format("|c%s%s|r", ratingColor.hex, keystoneInfo.rating)
 
 					key = membersKeystone
-					info = (UnitIsGroupLeader(unit) and leaderIcon .. " " or "") .. unitName .. "   " .. scoreIcon .. " " .. unitRating .. "   " .. armorIcon .. " " .. unitItemLevel
+					info = (UnitIsGroupLeader(unit) and leaderIcon .. " " or "") .. unitName .. "   " .. scoreIcon .. " " .. unitRating .. (unitItemLevel and ("   " .. armorIcon .. " " .. unitItemLevel) or "")
 				end
 			end
 
