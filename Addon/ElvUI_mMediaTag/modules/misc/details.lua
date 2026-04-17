@@ -4,7 +4,6 @@ local module = mMT:AddModule("DetailsEmbedded")
 
 -- Cache WoW Globals
 local _G = _G
-local mathmax = math.max
 local InCombatLockdown = InCombatLockdown
 local unpack = unpack
 local Details = _G.Details
@@ -18,6 +17,13 @@ function module:DetailsEmbeddedToggle()
 	if module.detailsEmbedded:IsShown() then
 		E:UIFrameFadeOut(module.detailsEmbedded, 0.5, 1, 0)
 		chat:Show()
+
+		-- move tooltip
+		if E.CreatedMovers.TooltipMover and module.tooltipOrigPoint and not InCombatLockdown() then
+			E.CreatedMovers.TooltipMover.mover:ClearAllPoints()
+			E.CreatedMovers.TooltipMover.mover:SetPoint(unpack(module.tooltipOrigPoint))
+		end
+
 		C_Timer_After(0.5, function()
 			module.detailsEmbedded:Hide()
 		end)
@@ -25,6 +31,12 @@ function module:DetailsEmbeddedToggle()
 		E:UIFrameFadeIn(module.detailsEmbedded, 0.5, 0, 1)
 		module.detailsEmbedded:Show()
 		chat:Hide()
+
+		-- move tooltip
+		if E.CreatedMovers.TooltipMover and not InCombatLockdown() then
+			E.CreatedMovers.TooltipMover.mover:ClearAllPoints()
+			E.CreatedMovers.TooltipMover.mover:SetPoint("BOTTOMRIGHT", module.detailsEmbedded, "TOPRIGHT", 0, 0)
+		end
 	end
 end
 
@@ -176,6 +188,12 @@ local function DetailsEmbedded()
 		module.detailsEmbedded = embedded
 	end
 
+	-- move tooltip
+	if E.CreatedMovers.TooltipMover and not InCombatLockdown() then
+		module.tooltipOrigPoint = { E.CreatedMovers.TooltipMover.mover:GetPoint() }
+		E.CreatedMovers.TooltipMover.mover:ClearAllPoints()
+		E.CreatedMovers.TooltipMover.mover:SetPoint("BOTTOMRIGHT", module.detailsEmbedded, "TOPRIGHT", 0, 0)
+	end
 	EmbedDetailsInstances(module.detailsEmbedded, windows)
 end
 
