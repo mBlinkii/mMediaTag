@@ -214,33 +214,21 @@ function module:Initialize(demo)
 	module.db = E.db.mMediaTag.important_casts
 
 	if not module.isEnabled then
-		-- hooksecurefunc(NP, "NAME_PLATE_UNIT_ADDED", function(nameplate)
-		-- 	--print("NAME_PLATE_UNIT_ADDED", nameplate, nameplate:GetName())
-		-- 	if not module.overrideHealthBarColor then return end
-		-- 	ResetImportantCastOverlay(nameplate)
-		-- end)
+		if module.db.overrideHealthBarColor then
+			hooksecurefunc(NP, "UpdatePlate", function(_, nameplate)
+				if not module.overrideHealthBarColor then return end
+				ResetImportantCastOverlay(nameplate)
+			end)
 
-		-- hooksecurefunc(NP, "NAME_PLATE_UNIT_REMOVED", function(nameplate)
-		-- 	--print("NAME_PLATE_UNIT_REMOVED", nameplate, nameplate:GetName())
-		-- 	if not module.overrideHealthBarColor then return end
-		-- 	ResetImportantCastOverlay(nameplate)
-		-- end)
-
-		hooksecurefunc(NP, "UpdatePlate", function(_, nameplate)
-			--print("UpdatePlate",nameplate, nameplate:GetName())
-			if not module.overrideHealthBarColor then return end
-			ResetImportantCastOverlay(nameplate)
-		end)
-
-		hooksecurefunc(NP, "Castbar_PostCastStart", function(castbar)
-			if not castbar then return end
-
-			if module.overrideHealthBarColor then
-				CheckImportantNameplate(castbar)
-			else
-				CheckImportant(castbar)
-			end
-		end)
+			hooksecurefunc(NP, "Castbar_PostCastStart", function(castbar)
+				if not castbar then return end
+				if module.overrideHealthBarColor then
+					CheckImportantNameplate(castbar)
+				else
+					CheckImportant(castbar)
+				end
+			end)
+		end
 
 		hooksecurefunc(NP, "Castbar_PostCastStop", function(castbar)
 			if not castbar then return end
