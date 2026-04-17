@@ -204,9 +204,6 @@ local function GetGroupKeystone()
 			local unitName = format("%s%s|r", UnitClassColor(unit), name)
 			local key = L["No Keystone"]
 
-			print(unitName, keystoneInfo and keystoneInfo.challengeMapID, keystoneInfo and keystoneInfo.level)
-			mMT:DebugPrint(unitGear, true)
-
 			local unitItemLevel = nil
 			if unitGear and unitGear.ilevel then
 				local hex = "FFAB5CFE"
