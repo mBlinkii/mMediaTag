@@ -164,6 +164,7 @@ function module:LFG_LIST_JOINED_GROUP(_, searchResultID, groupName)
 	module.info_screen:Show()
 
 	CancelHideTimer()
+	print("Setting hide timer for", module.db.delay, "seconds")
 	module.hideTimer = C_Timer_NewTimer(module.db.delay, function()
 		module.hideTimer = nil
 		HideInfo()
