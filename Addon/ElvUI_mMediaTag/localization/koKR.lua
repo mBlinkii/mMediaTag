@@ -7,6 +7,7 @@ L["Error deserializing:"] = "역직렬화 오류:"
 L["Error importing profile. String is invalid or corrupted!"] = "프로필 가져오기 오류. 문자열이 잘못되었거나 손상되었습니다!"
 
 -- modules/datatexts/info_score.lua
+L["Mythic+ Best Run: +"] = "신화+ 최고 기록: +"
 L["Dungeon overview:"] = "던전 개요:"
 L["Keystones in your Group"] = "그룹 내 쐐기돌"
 L["Level: "] = "레벨: "

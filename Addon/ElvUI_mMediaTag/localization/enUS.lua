@@ -7,6 +7,7 @@ L["Error deserializing:"] = true
 L["Error importing profile. String is invalid or corrupted!"] = true
 
 -- modules/datatexts/info_score.lua
+L["Mythic+ Best Run: +"] = true
 L["Dungeon overview:"] = true
 L["Keystones in your Group"] = true
 L["Level: "] = true

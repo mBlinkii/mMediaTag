@@ -7,6 +7,7 @@ L["Error deserializing:"] = "Errore durante la deserializzazione:"
 L["Error importing profile. String is invalid or corrupted!"] = "Errore durante l'importazione del profilo. La stringa non è valida o è danneggiata!"
 
 -- modules/datatexts/info_score.lua
+L["Mythic+ Best Run: +"] = "Miglior run Mitico+: +"
 L["Dungeon overview:"] = "Panoramica del dungeon:"
 L["Keystones in your Group"] = "Chiavi del gruppo"
 L["Level: "] = "Livello: "

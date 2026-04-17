@@ -7,6 +7,7 @@ L["Error deserializing:"] = "反序列化错误："
 L["Error importing profile. String is invalid or corrupted!"] = "导入配置文件时出错。字符串无效或已损坏！"
 
 -- modules/datatexts/info_score.lua
+L["Mythic+ Best Run: +"] = "史诗+最佳记录：+"
 L["Dungeon overview:"] = "地下城总览："
 L["Keystones in your Group"] = "你的小队中的钥石"
 L["Level: "] = "等级："
