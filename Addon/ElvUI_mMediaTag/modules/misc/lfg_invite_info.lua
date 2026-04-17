@@ -166,6 +166,7 @@ function module:LFG_LIST_JOINED_GROUP(_, searchResultID, groupName)
 	CancelHideTimer()
 	print("Setting hide timer for", module.db.delay, "seconds")
 	module.hideTimer = C_Timer_NewTimer(module.db.delay, function()
+		print("Hide timer expired, hiding info screen")
 		module.hideTimer = nil
 		HideInfo()
 	end)
