@@ -58,7 +58,7 @@ function module:Initialize(demo)
 		if module.difficulty then
 			module.difficulty:Hide()
 			if module.isEnabled then
-				module.difficulty:UnregisterAllEvents()
+				module:UnregisterAllEvents()
 				module.isEnabled = false
 			end
 		end
