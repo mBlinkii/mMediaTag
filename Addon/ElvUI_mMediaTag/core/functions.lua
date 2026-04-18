@@ -73,8 +73,8 @@ function mMT:HexToRGB(hex)
 end
 
 function mMT:FloatToHex(value)
-    local scaled = math.max(0, math.min(255, math.floor(value * 255 + 0.5)))
-    return string.format("%02X", scaled)
+	local scaled = math.max(0, math.min(255, math.floor(value * 255 + 0.5)))
+	return string.format("%02X", scaled)
 end
 
 function mMT:round(number, decimals)
@@ -94,7 +94,9 @@ end
 
 function mMT:ConnectVirtualFrameToDataText(dataTextName, virtualFrame)
 	local dt = self:GetElvUIDataText(dataTextName)
+	if not dt or type(dt.applySettings) ~= "function" then return false end
 	if dt.applySettings then dt.applySettings(virtualFrame, E.media.hexvaluecolor) end
+	return true
 end
 
 function mMT:formatText(input, ignoreSkip)
