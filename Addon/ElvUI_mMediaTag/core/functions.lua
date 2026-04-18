@@ -78,12 +78,13 @@ function mMT:FloatToHex(value)
 end
 
 function mMT:round(number, decimals)
-	if number then
-		return (("%%.%df"):format(decimals)):format(number)
-	else
-		mMT:Print(L["!! ERROR - Round:"] .. " " .. number .. " - " .. decimals)
+	if type(number) ~= "number" then
+		mMT:Print(L["!! ERROR - Round:"], tostring(number), "-", tostring(decimals))
 		return 0
 	end
+
+	decimals = type(decimals) == "number" and decimals or 0
+	return (("%%.%df"):format(decimals)):format(number)
 end
 
 function mMT:GetElvUIDataText(name)
