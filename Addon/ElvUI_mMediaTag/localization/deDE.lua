@@ -656,6 +656,8 @@ L["Auto Role Check"] = "Automatischer Rollencheck"
 L["Auto Sign Up"] = "Automatisch anmelden"
 L["Automatically accepts the dungeon or raid role check popup."] = "Akzeptiert das Rollencheck-Popup fuer Dungeons oder Schlachtzuege automatisch."
 L["Automatically signs up for premade groups when your role is already selected."] = "Meldet dich automatisch fuer vorgefertigte Gruppen an, wenn deine Rolle bereits ausgewaehlt ist."
+L["Lets you sign up for premade groups with a single click and confirms the application dialog automatically."] = "Ermoeglicht die Anmeldung fuer vorgefertigte Gruppen mit einem einzigen Klick und bestaetigt den Anmeldedialog automatisch."
+L["One-Click Sign Up"] = "Ein-Klick-Anmeldung"
 
 -- options/misc/difficulty_info.lua
 L["Alignment"] = "Ausrichtung"

@@ -12,12 +12,7 @@ mMT.options.args.misc.args.auto_role_check.args = {
 		end,
 		set = function(_, value)
 			E.db.mMediaTag.auto_role_check.enable = value
-
-			if value then
-				mMT:UpdateModule("AutoRoleCheck")
-			else
-				E:StaticPopup_Show("CONFIG_RL")
-			end
+			mMT:UpdateModule("AutoRoleCheck")
 		end,
 	},
 	settings = {
@@ -44,8 +39,8 @@ mMT.options.args.misc.args.auto_role_check.args = {
 			accept_premade = {
 				order = 2,
 				type = "toggle",
-				name = L["Auto Sign Up"],
-				desc = L["Automatically signs up for premade groups when your role is already selected."],
+				name = L["One-Click Sign Up"],
+				desc = L["Lets you sign up for premade groups with a single click and confirms the application dialog automatically."],
 				disabled = function()
 					return not E.db.mMediaTag.auto_role_check.enable
 				end,

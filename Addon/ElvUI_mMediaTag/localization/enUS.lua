@@ -656,6 +656,8 @@ L["Auto Role Check"] = true
 L["Auto Sign Up"] = true
 L["Automatically accepts the dungeon or raid role check popup."] = true
 L["Automatically signs up for premade groups when your role is already selected."] = true
+L["Lets you sign up for premade groups with a single click and confirms the application dialog automatically."] = true
+L["One-Click Sign Up"] = true
 
 -- options/misc/difficulty_info.lua
 L["Alignment"] = true

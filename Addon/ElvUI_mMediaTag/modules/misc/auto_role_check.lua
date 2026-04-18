@@ -2,47 +2,95 @@ local mMT, DB, M, E, P, L, MEDIA = unpack(ElvUI_mMediaTag)
 local module = mMT:AddModule("AutoRoleCheck", { "AceEvent-3.0" })
 
 local _G = _G
-local C_Timer_After = C_Timer.After
+local hooksecurefunc = hooksecurefunc
+local IsShiftKeyDown = IsShiftKeyDown
 
-local function ClickButton(button)
-	if button and button:IsShown() and button:IsEnabled() then button:Click() end
+local function CanUsePremadeSignup()
+	return module.db and module.db.enable and module.db.accept_premade
 end
 
-local function AcceptLFDPopup()
-	local popup = _G.LFDRoleCheckPopup
-	if not popup or not popup:IsShown() then return end
-
-	ClickButton(_G.LFDRoleCheckPopupAcceptButton)
+local function CanUseRoleCheck()
+	return module.db and module.db.enable and module.db.accept_lfd
 end
 
-local function AcceptPremadeSignup()
-	local dialog = _G.LFGListApplicationDialog
-	if not dialog or not dialog:IsShown() then return end
+local function SetupPremadeHooks()
+	if module.premadeHooksLoaded then return end
+	if type(_G.LFGListSearchEntry_OnClick) ~= "function" then return end
+	if not _G.LFGListApplicationDialog then return end
 
-	ClickButton(dialog.SignUpButton)
+	hooksecurefunc("LFGListSearchEntry_OnClick", function(self, button)
+		if not CanUsePremadeSignup() then return end
+
+		local lfgFrame = _G.LFGListFrame
+		local panel = lfgFrame and lfgFrame.SearchPanel
+		local scrollBox = panel and panel.ScrollBox
+
+		if not self or not panel or not scrollBox or not self.resultID then return end
+		if button ~= "LeftButton" then return end
+		if not _G.LFGListSearchPanelUtil_CanSelectResult(self.resultID) then return end
+		if not scrollBox:IsVisible() or not scrollBox:IsMouseOver() then return end
+		if not panel.SignUpButton or not panel.SignUpButton:IsEnabled() then return end
+
+		if panel.selectedResult ~= self.resultID then
+			_G.LFGListSearchPanel_SelectResult(panel, self.resultID)
+		end
+
+		_G.LFGListSearchPanel_SignUp(panel)
+	end)
+
+	_G.LFGListApplicationDialog:HookScript("OnShow", function(self)
+		if not CanUsePremadeSignup() then return end
+
+		local lfgFrame = _G.LFGListFrame
+		local panel = lfgFrame and lfgFrame.SearchPanel
+		local scrollBox = panel and panel.ScrollBox
+
+		if not self or not self.SignUpButton or not scrollBox then return end
+		if not self.SignUpButton:IsEnabled() then return end
+		if IsShiftKeyDown() then return end
+		if not scrollBox:IsVisible() or not scrollBox:IsMouseOver() then return end
+
+		self.SignUpButton:Click()
+	end)
+
+	module.premadeHooksLoaded = true
+end
+
+local function SetupRoleCheckHook()
+	if module.roleCheckHookLoaded then return end
+	if not _G.LFDRoleCheckPopup then return end
+
+	_G.LFDRoleCheckPopup:HookScript("OnShow", function()
+		if not CanUseRoleCheck() then return end
+		if _G.LFDRoleCheckPopupAcceptButton and _G.LFDRoleCheckPopupAcceptButton:IsEnabled() then
+			_G.LFDRoleCheckPopupAcceptButton:Click()
+		end
+	end)
+
+	module.roleCheckHookLoaded = true
+end
+
+function module:ADDON_LOADED()
+	SetupPremadeHooks()
+	SetupRoleCheckHook()
+
+	if module.premadeHooksLoaded and module.roleCheckHookLoaded then
+		module:UnregisterEvent("ADDON_LOADED")
+	end
 end
 
 function module:Initialize()
-	if not E.db.mMediaTag.auto_role_check.enable then return end
 	module.db = E.db.mMediaTag.auto_role_check
 
-	if not module.lfdHooked then
-		local lfdPopup = _G.LFDRoleCheckPopup
-		if lfdPopup then
-			lfdPopup:HookScript("OnShow", function()
-				C_Timer_After(0.05, AcceptLFDPopup)
-			end)
-			module.lfdHooked = true
-		end
+	if not module.db or not module.db.enable then
+		module:UnregisterAllEvents()
+		return
 	end
 
-	if not module.premadeHooked then
-		local premadeDialog = _G.LFGListApplicationDialog
-		if premadeDialog then
-			premadeDialog:HookScript("OnShow", function()
-				C_Timer_After(0.05, AcceptPremadeSignup)
-			end)
-			module.premadeHooked = true
-		end
+	SetupPremadeHooks()
+	SetupRoleCheckHook()
+
+	if not (module.premadeHooksLoaded and module.roleCheckHookLoaded) then
+		module:RegisterEvent("ADDON_LOADED")
 	end
 end
