@@ -5,20 +5,32 @@ local module = mMT:AddModule("LFGInviteInfo", { "AceEvent-3.0" })
 -- Cache WoW Globals
 local CreateFrame = CreateFrame
 local format = format
+local GetTime = GetTime
 local IsInInstance = IsInInstance
 local IsInGroup = IsInGroup
 local GetSearchResultInfo = C_LFGList.GetSearchResultInfo
 local GetActivityFullName = C_LFGList.GetActivityFullName
 local GetActivityInfoTable = C_LFGList.GetActivityInfoTable
+local C_Timer_After = C_Timer.After
 local C_Timer_NewTimer = C_Timer.NewTimer
+local max = math.max
 local random = random
 
 local LSM = E.Libs.LSM
+local MINIMUM_DISPLAY_TIME = 2
+local SHOW_DELAY = 0.2
 
 local function CancelHideTimer()
 	if module.hideTimer then
 		module.hideTimer:Cancel()
 		module.hideTimer = nil
+	end
+end
+
+local function CancelShowTimer()
+	if module.showTimer then
+		module.showTimer:Cancel()
+		module.showTimer = nil
 	end
 end
 
@@ -28,14 +40,60 @@ local function ClearInfo()
 end
 
 local function HideInfo(clearText)
+	CancelShowTimer()
 	CancelHideTimer()
 
 	if module.info_screen then
+		module.info_screen.demo = false
 		module.info_screen:Hide()
 		if clearText then
 			ClearInfo()
 		end
 	end
+end
+
+local function ShowInfo(keepVisible)
+	if not module.info_screen then return end
+
+	module.lastShownAt = GetTime()
+	module.info_screen:Show()
+
+	CancelHideTimer()
+	if keepVisible then return end
+
+	module.hideTimer = C_Timer_NewTimer(module.db.delay, function()
+		module.hideTimer = nil
+		HideInfo()
+	end)
+end
+
+local function QueueShowInfo()
+	if not module.info_screen then return end
+
+	CancelShowTimer()
+	module.showTimer = C_Timer_NewTimer(SHOW_DELAY, function()
+		module.showTimer = nil
+		local textA = module.info_screen.lable and module.info_screen.lable:GetText() or ""
+		local textB = module.info_screen.lable2 and module.info_screen.lable2:GetText() or ""
+		if textA == "" and textB == "" then return end
+		ShowInfo()
+	end)
+end
+
+local function HideInfoWhenStateSettles()
+	if not module.info_screen or not module.info_screen:IsShown() or module.info_screen.demo then return end
+	if not (IsInInstance() or not IsInGroup()) then return end
+
+	local shownAt = module.lastShownAt or 0
+	local delay = max(0, MINIMUM_DISPLAY_TIME - (GetTime() - shownAt))
+
+	C_Timer_After(delay, function()
+		if not module.info_screen or not module.info_screen:IsShown() or module.info_screen.demo then return end
+		if module.lastShownAt ~= shownAt then return end
+		if IsInInstance() or not IsInGroup() then
+			HideInfo(true)
+		end
+	end)
 end
 
 function module:Demo()
@@ -51,10 +109,9 @@ function module:Demo()
 	else
 		local info = demoTexts[random(1, #demoTexts)]
 		module.info_screen.demo = true
-		CancelHideTimer()
 		module.info_screen.lable:SetText(format("%s", mMT:TC(info.grp .. " - " .. info.name, "line_a")))
 		module.info_screen.lable2:SetText(format("%s \n%s", mMT:TC(info.acc, "line_b"), mMT:TC(info.diff, "line_c")))
-		module.info_screen:Show()
+		ShowInfo(true)
 	end
 end
 
@@ -74,7 +131,9 @@ function module:Initialize(demo)
 
 	if not module.info_screen then
 		module.info_screen = CreateFrame("Button", "mMediaTag_LFG_Invite_Info", E.UIParent, "BackdropTemplate")
-		module.info_screen:SetFrameStrata("HIGH")
+		module.info_screen:SetFrameStrata("TOOLTIP")
+		module.info_screen:SetToplevel(true)
+		module.info_screen:SetClampedToScreen(true)
 		module.info_screen:SetPoint("CENTER", 0, 200)
 		module.info_screen:SetSize(400, 100)
 
@@ -91,14 +150,14 @@ function module:Initialize(demo)
 		module.info_screen.lable2:SetJustifyH("CENTER")
 
 		module.info_screen:SetScript("OnShow", function(self)
-			local width = math.max(module.info_screen.lable:GetStringWidth(), module.info_screen.lable2:GetStringWidth()) + 20
+			local width = max(module.info_screen.lable:GetStringWidth(), module.info_screen.lable2:GetStringWidth()) + 20
 			local height = module.info_screen.lable:GetStringHeight() + module.info_screen.lable2:GetStringHeight() + 20
 			self:SetSize(width, height)
 		end)
 
 		module.info_screen:RegisterForClicks("AnyDown")
 		module.info_screen:SetScript("OnClick", function(_, btn)
-			if btn == "RightButton" then module.info_screen:Hide() end
+			if btn == "RightButton" then HideInfo() end
 		end)
 
 		E:CreateMover(module.info_screen, "mMediaTag_LFG_Invite_Info_Mover", "mMT " .. L["LFG Invite Info"], nil, nil, nil, "ALL,MMEDIATAG", function()
@@ -111,6 +170,7 @@ function module:Initialize(demo)
 	E:SetFont(module.info_screen.lable2, LSM:Fetch("font", module.db.font.font), module.db.font.size2, module.db.font.fontFlag)
 
 	if not module.isEnabled then
+		module:RegisterEvent("LFG_LIST_APPLICATION_STATUS_UPDATED")
 		module:RegisterEvent("LFG_LIST_JOINED_GROUP")
 		module:RegisterEvent("GROUP_LEFT")
 		module:RegisterEvent("ZONE_CHANGED_NEW_AREA")
@@ -161,23 +221,20 @@ function module:LFG_LIST_JOINED_GROUP(_, searchResultID, groupName)
 		print(mMT:TC("*~*~*~*~*~*~*~*~*~*~*~*~*~*~*~", "blue"))
 	end
 
-	module.info_screen:Show()
+	QueueShowInfo()
+end
 
-	CancelHideTimer()
-	print("Setting hide timer for", module.db.delay, "seconds")
-	module.hideTimer = C_Timer_NewTimer(module.db.delay, function()
-		print("Hide timer expired, hiding info screen")
-		module.hideTimer = nil
-		HideInfo()
-	end)
+function module:LFG_LIST_APPLICATION_STATUS_UPDATED(_, searchResultID, newStatus)
+	if newStatus ~= "inviteaccepted" then return end
+	if module.info_screen and module.info_screen:IsShown() then return end
+
+	QueueShowInfo()
 end
 
 function module:GROUP_LEFT()
-	HideInfo(true)
+	HideInfoWhenStateSettles()
 end
 
 function module:ZONE_CHANGED_NEW_AREA()
-	if (IsInInstance() or not IsInGroup()) and module.info_screen:IsShown() then
-		HideInfo(true)
-	end
+	HideInfoWhenStateSettles()
 end
