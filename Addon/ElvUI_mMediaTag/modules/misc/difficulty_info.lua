@@ -25,7 +25,7 @@ local function UpdateInfos()
 		local challengeModeInfo = instanceInfos.isChallengeMode and instanceInfos.level
 		local delveInfo = instanceInfos.isDelve and " " .. instanceInfos.level
 		local difficulty = (instanceInfos.difficultyShort or instanceInfos.difficultyName) .. ((challengeModeInfo or delveInfo) or "")
-		local guild = instanceInfos.isGuild and MEDIA.color.GUILD
+		local guild = instanceInfos.isGuildParty and MEDIA.color.GUILD
 		local text = strupper(instanceInfos.shortName or instanceInfos.name)
 		text = guild and guild:WrapTextInColorCode(text) or text
 		module.difficulty.lable:SetText(instanceInfos.difficultyColor:WrapTextInColorCode(difficulty) .. "\n" .. text)

@@ -153,7 +153,7 @@ local function OnEvent(...)
 				local levelSuffix = info.isChallengeMode and info.level or (info.isDelve and "-" .. info.level) or ""
 				local difficulty = (info.difficultyShort or info.difficultyName) .. levelSuffix
 				local name = strupper(info.shortName or info.name)
-				if info.isGuild then name = MEDIA.color.GUILD:WrapTextInColorCode(name) end
+				if info.isGuildParty then name = MEDIA.color.GUILD:WrapTextInColorCode(name) end
 				text = info.difficultyColor:WrapTextInColorCode(difficulty) .. " - " .. name
 			end
 
