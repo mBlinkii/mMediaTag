@@ -12,5 +12,9 @@ local function GreetingMessage()
 end
 
 function module:Initialize()
-	if E.db.mMediaTag.general.greeting_message then GreetingMessage() end
+	if module.greetingShown then return end
+	if not E.db.mMediaTag.general.greeting_message then return end
+
+	module.greetingShown = true
+	GreetingMessage()
 end
