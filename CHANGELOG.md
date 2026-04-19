@@ -1,6 +1,20 @@
 # Changelog - ElvUI_mMediaTag
 [Eng] - All changes to this project will be documented in this file. The latest changes are at the top.
 
+## [ver. 4.05] - 19.04.2026
+### FIX
+- FIX - [LFG-Info]: Fixed visibility logic for the popup.
+- FIX - [Highlighters]: Fix stack overflow.
+- FIX - [System]: Update guild identification logic to use isGuildParty for consistency across modules.
+### UPDATE
+- UPDATE - [System]: Refactor greeting message initialization logic.
+- UPDATE - [System]: Minor code optimizations.
+- UPDATE - [DT-Score]: Fallback for Group overview tooltip, uses now Blizzard api ift LOR is not available.
+- UPDATE - [Details-Embedded]: The tooltip is now moved up so that there is no overlap..
+### NEW
+- NEW - [Auto-Sing-Up]: Auto Sing Up & Role check accept module.
+- NEW - [Important-Casts]: Can now Highlight the healthbar of the Unit.
+
 ## [ver. 4.04] - 10.03.2026
 ### FIX
 - FIX - [LFG-Info]: Fix sometimes not showing the LFG infos.
