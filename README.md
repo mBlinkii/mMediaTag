@@ -127,7 +127,6 @@ If you want to build your own dock bar, create a custom ElvUI datatext bar and a
 
 - GitHub: [mBlinkii/mMediaTag](https://github.com/mBlinkii/mMediaTag)
 - Discord: [discord.com/invite/AE9XebMU49](https://discord.com/invite/AE9XebMU49)
-- Email: [mmediatag@gmx.de](mailto:mmediatag@gmx.de)
 
 ## License
 

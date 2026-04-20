@@ -50,7 +50,6 @@ The addon is fully integrated into the ElvUI config.
 
 - GitHub: [https://github.com/mBlinkii/mMediaTag](https://github.com/mBlinkii/mMediaTag)
 - Discord: [https://discord.com/invite/AE9XebMU49](https://discord.com/invite/AE9XebMU49)
-- Email: `mmediatag@gmx.de`
 
 ## License
 
