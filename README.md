@@ -1,97 +1,141 @@
-<br/>
-<div align="center">
-<img src="https://raw.githubusercontent.com/mBlinkii/mMediaTag/main/Logo/mmt_icon.png" alt="Logo" width="80" height="80">
-<br/>
-<img src="https://img.shields.io/github/downloads/mBlinkii/mMediaTag/total" alt="Downloads">
-<h3 align="center">ElvUI mMediaTag & Tools</h3>
-<p align="center">
-mMediaTag & Tools is a plugin for WoW with ElvUI. mMediaTag adds many media files like textures/ fonts/ icons and some tools to ElvUI.
-<br/>
-<br/>
-<a href="https://www.curseforge.com/wow/addons/elvui_mmediatag">Curse .</a>  
-<a href="https://github.com/mBlinkii/mMediaTag/issues">Report Bug .</a>
-<a href="https://github.com/mBlinkii/mMediaTag/issues">Request Feature</a>
-<a href="https://discord.gg/AE9XebMU49">Discord</a> 
-</p>
-</div> 
+# mMediaTag
 
-   ## About The Project
-   ![mMT Logo](https://raw.githubusercontent.com/mBlinkii/mMediaTag/main/Logo/mmt_logo.png)
+`mMediaTag` is a Retail/Mainline plugin for ElvUI that adds a large collection of UI enhancements, custom media, utility datatexts, portrait styles, dock icons, tags, nameplate helpers, and quality-of-life tools.
 
-   ElvUI mMediaTag & Tools is a plugin for the popular MMORPG World of Warcraft, which is used in combination with the ElvUI user interface. It extends ElvUI with a variety of media files such as textures, fonts and icons as well as some handy tools to enhance the gaming experience.
-   ### Prerequisites
-   This plugin is for ElvUI only and does not work without ElvUI.
-   - <a href="https://tukui.org/">ElvUI .</a>  
-   ### Features
-   1. ### Media:
-      - Fonts: _The addon offers six different fonts to personalize the visual experience in the game._
-      - Status Bar Textures: _With over 321 different status bar textures, players can customize the look of their user interface._ 
-      - Borders and Backgrounds: _32 border styles and 23 background designs are available to highlight frames and elements._
-      - Nameplate Target arrows: _Customize the look of your nameplates with 36 different arrow textures._ 
+Version `4.05` is the current Midnight-ready branch of the addon and focuses on a cleaner structure, better performance, and a more modular setup.
 
-   2. ### Icons:
-      - _The addon includes many different icons for combat,  mail, resting, raidtarget, raid roles, and name tags that make the interface more lively._
+## What It Adds
 
-   3. ### Tools and more:
-      - Chat menu icon: _A special button for emotes in the chat menu makes communication easier._
-      - Dice Button: _A button for quick dice rolls from 1-100, ideal for rolls in groups and raids._
-      - Keystone Chat Link: _A tool that shares your keystone in party chat when you type !key or !keys._
-      - Castbar Mods: _Customize the color of the target and nameplate castbar to highlight important spells or indicate the availability of your interrupt spells. It can also display a shield for non-interrupting spells_
-      - Health and Execution Markers: _Visual markers on nameplates that indicate enemy health breakpoints or execution readiness._
-      - Automations: _A feature that automatically colors the borders and target arrows of nameplates in your class color or changes the ElvUi media color to your class color._
-      - AFK Screen: _A reworked version of the ElvUI AFK Screen to show your character values._
-      - Instance Difficulty: _Displays various information about the current Dungeon/ Raid on the Minimap._
-      - Tooltip: _An additional icon for the tooltip, so you can quickly and easily identify the items by the icon._
+- Custom portrait styles for multiple unit frames with support for class icons, spec icons, extra overlays, shadows, custom textures, and per-unit placement.
+- Dock-style datatext icons for common panels such as character, friends, guild, dungeon finder, spellbook, talents, professions, mail, quests, bags, achievements, calendar, volume, encounter journal, and more.
+- Utility datatexts such as Mythic+ score, teleports, professions, game menu, dungeon info, combat time, durability and item level, coordinates, and tracking helpers.
+- Custom ElvUI tags for classification, health, status, role, level, faction, quest state, PvP state, power, class icons, and death counters.
+- Nameplate helpers including target glow color syncing and highlight tools.
+- Miscellaneous modules such as auto quest handling, auto role check acceptance, greeting messages, tooltip tweaks, minimap skins, data panel skins, dice button, Details embedding, and LFG invite info.
+- Built-in media libraries for icons, portrait textures, dock assets, minimap art, and additional UI visuals.
 
-   4. ### Cosmetics:
-      - Cosmetic Bars: _Different color function for the ElvUI Datatext bars to beautify your interface, own color per bar, gradient colors or bars in your class color._
-      - Objective Tracker: _A skin for Objective Tracker to customize your interface to your liking._
-      - Quest Icons: _Change the icons for your quest on your Nameplates._
-      - Backgrounds: _Change the background texture of your units frames to any texture other than the health bar._
-      - Status icons: _Customize the different status icons on the unit frames, e.g. for Ready Check, Phase, Revive._
-      - Role icons: _With this module you can change the role icons for the different roles Tank/Healer/DD._
-      - Portraits: _Add portraits in different styles to the Units window._
+## Highlights
 
-   5. ### Datatexts:
-      - Combate and currencies: _Datatexts that display information such as combat time and various in-game currencies._
-      - Coordinates and Dungeon Info: _Displays your own coordinates and useful information about dungeons, M+ ratings, and Affixes._
-      - FPS/MS and Teleports: _Datatexts showing frame rate and latency, and a menu with various teleport options._
-      - Others: _Datatexts to display your first and second profession, a combined display of your armor durability & item level, and a game menu._
+- Built directly into the ElvUI options UI under `ElvUI > mMT`
+- Modular setup so you can enable only the parts you actually use
+- Extensive portrait customization for modern ElvUI layouts
+- Dock icons that work with ElvUI datatext bars, including custom dock setups
+- Optional integration with `Details` and `ElvUI_JiberishIcons`
+- Localization files for `deDE`, `enUS`, `esES`, `esMX`, `frFR`, `itIT`, `koKR`, `ptBR`, `ruRU`, `zhCN`, and `zhTW`
 
-   6. ### Tags:
-      - Many different tags: _A large selection of tags that display additional information in the unit fraems and Nameplates._
-      - Icons and Indicators: _Tags with status icons, death, ghost icons and target indicators._
-      - Colors and classifications: _Tags that provide colors for different satuses and classifications._
+## Requirements
 
-   7. ### Dock Icons:
-      - mDock Datatexs: _Datatext Icons to create your own dock using the ElvUI Datatex bars. Various example templates are included._
-      - Dock Icons: _There are icons for different things: Achievements, Bags, Store, Calendar, Collection,Durability, Encounter Journal, FPS/ MS, Friends, Guild, Item Level, LFD Tool, Main Menu, Profession, Quest, Spellbook, Talents, Volume_
+- World of Warcraft Retail / Mainline
+- ElvUI
 
-   ## Contributing
-   If you have a suggestion that would make this better, please fork the repo and create a pull request. You can also simply open an issue with the tag "Suggestion".
-   Don't forget to give the project a star! Thanks again!
+Optional integrations:
 
-   ## License
-   License. See [License](https://github.com/mBlinkii/mMediaTag/blob/main/LICENSE.txt) for more information.
+- `Details` for embedded Details-related features and class icon support
+- `ElvUI_JiberishIcons` for additional icon integration when installed
 
-   ## Screenshots
-  <img src="https://raw.githubusercontent.com/mBlinkii/mMediaTag/main/Screenshot/pre1.png" alt="Screenshot 1">
-  <img src="https://raw.githubusercontent.com/mBlinkii/mMediaTag/main/Screenshot/pre2.png" alt="Screenshot 2">
-  <img src="https://raw.githubusercontent.com/mBlinkii/mMediaTag/main/Screenshot/pre3.png" alt="Screenshot 3">
-  <img src="https://raw.githubusercontent.com/mBlinkii/mMediaTag/main/Screenshot/pre4.png" alt="Screenshot 4">
-  <img src="https://raw.githubusercontent.com/mBlinkii/mMediaTag/main/Screenshot/pre5.png" alt="Screenshot 5">
-  <img src="https://raw.githubusercontent.com/mBlinkii/mMediaTag/main/Screenshot/pre6.png" alt="Screenshot 6">
-  <img src="https://raw.githubusercontent.com/mBlinkii/mMediaTag/main/Screenshot/pre7.png" alt="Screenshot 7">
-  <img src="https://raw.githubusercontent.com/mBlinkii/mMediaTag/main/Screenshot/pre8.png" alt="Screenshot 8">
-  <img src="https://raw.githubusercontent.com/mBlinkii/mMediaTag/main/Screenshot/pre9.png" alt="Screenshot 9">
-  <img src="https://raw.githubusercontent.com/mBlinkii/mMediaTag/main/Screenshot/pre10.png" alt="Screenshot 10">
-  <img src="https://raw.githubusercontent.com/mBlinkii/mMediaTag/main/Screenshot/pre11.png" alt="Screenshot 11">
-  <img src="https://raw.githubusercontent.com/mBlinkii/mMediaTag/main/Screenshot/pre12.png" alt="Screenshot 12">
-  <img src="https://raw.githubusercontent.com/mBlinkii/mMediaTag/main/Screenshot/pre13.png" alt="Screenshot 13">
-  <img src="https://raw.githubusercontent.com/mBlinkii/mMediaTag/main/Screenshot/pre14.png" alt="Screenshot 14">
-  <img src="https://raw.githubusercontent.com/mBlinkii/mMediaTag/main/Screenshot/pre15.png" alt="Screenshot 15">
-  <img src="https://raw.githubusercontent.com/mBlinkii/mMediaTag/main/Screenshot/pre16.png" alt="Screenshot 16">
-  <img src="https://raw.githubusercontent.com/mBlinkii/mMediaTag/main/Screenshot/pre17.png" alt="Screenshot 17">
-  <img src="https://raw.githubusercontent.com/mBlinkii/mMediaTag/main/Screenshot/pre18.png" alt="Screenshot 18">
-  <img src="https://raw.githubusercontent.com/mBlinkii/mMediaTag/main/Screenshot/pre19.png" alt="Screenshot 19">
-  <img src="https://raw.githubusercontent.com/mBlinkii/mMediaTag/main/Screenshot/pre20.png" alt="Screenshot 20">
+## Installation
+
+### CurseForge / Addon Manager
+
+Install `mMediaTag` with your preferred addon manager and make sure `ElvUI` is already installed.
+
+### Manual Installation
+
+1. Download the latest packaged release.
+2. Extract the addon folder.
+3. Place `ElvUI_mMediaTag` inside your WoW addons directory:
+
+```text
+World of Warcraft\_retail_\Interface\AddOns\
+```
+
+4. Make sure the final folder name stays exactly `ElvUI_mMediaTag`.
+5. Start the game and open `ElvUI > mMT`.
+
+## Configuration
+
+All addon settings are available in:
+
+```text
+ElvUI > mMT
+```
+
+Main sections include:
+
+- `General`
+- `Unitframes`
+- `Nameplates`
+- `Datatexts`
+- `Dock`
+- `TAGs`
+- `Misc`
+- `Colors`
+
+If you want to build your own dock bar, create a custom ElvUI datatext bar and assign the `mMT` dock datatexts to its slots.
+
+## Slash Commands
+
+- `/mmt` opens the addon options
+- `/mmt help` shows the command list
+- `/mmt version` prints the current addon version
+- `/mmt guid` prints your player GUID
+- `/mmt clearunknownids` clears the saved unknown ID cache
+- `/mmt adddev` adds the current character as a developer character
+- `/mmt debug` toggles debug mode
+- `/mmt debug safe` toggles debug mode with a reduced addon set
+
+## Feature Overview
+
+### Portraits
+
+- Large bundled portrait texture library
+- Support for player, target, targettarget, focus, pet, party, arena, and boss portraits
+- Optional embellishments, shadows, extra textures, cast icons, and class/spec icon overlays
+- Custom texture paths for users who want to extend the portrait system with their own assets
+
+### Dock System
+
+- Icon-first datatext modules with hover growth, color states, text labels, and notification markers
+- Secure button support for click actions and macros
+- Ready-made modules for many common Blizzard and ElvUI destinations
+- Flexible enough to assemble your own dock layout through ElvUI datatext bars
+
+### Tags
+
+- Classification tags for rare, elite, rare elite, and boss units
+- Status tags for AFK, DND, offline, dead, and ghost states
+- Role tags with text or icon output
+- Health, level, power, faction, PvP, quest, and death count helpers
+- Class icon tags with style-specific output
+
+### Nameplates and Utility Modules
+
+- Target glow color can automatically match your class color
+- Highlight modules for target, focus, and quest units
+- Auto quest accept and turn-in with sensible restrictions
+- Auto role check acceptance
+- Details embedding into chat panel areas
+- Custom minimap and panel skin options
+
+## Current Branch Notes
+
+- The `4.x` branch targets Retail/Mainline.
+- This branch is Midnight-focused and has been restructured heavily for the new version.
+- According to the in-addon changelog, `4.x` is not intended to be the Classic branch.
+
+## Support
+
+- GitHub: [mBlinkii/mMediaTag](https://github.com/mBlinkii/mMediaTag)
+- Discord: [discord.com/invite/AE9XebMU49](https://discord.com/invite/AE9XebMU49)
+- Email: [mmediatag@gmx.de](mailto:mmediatag@gmx.de)
+
+## License
+
+This project uses a custom license. In short:
+
+- Private modifications are allowed.
+- Redistribution of the addon is not allowed.
+- Redistribution of the textures is not allowed.
+- The addon name and folder name must not be changed.
+
+For the exact terms, see [LICENSE.md](LICENSE.md).
