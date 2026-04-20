@@ -722,23 +722,30 @@ mAddBorder("mMT Round Corners", "roundcorners.tga")
 mAddFont("Inter-Bold", "Inter-Bold.ttf")
 mAddFont("Inter-Regular", "Inter-Regular.ttf")
 mAddFont("Inter-SemiBold", "Inter-SemiBold.ttf")
+
 mAddFont("Lemon-Regular", "Lemon-Regular.ttf")
+
 mAddFont("Oregano-Regular", "Oregano-Regular.ttf")
 mAddFont("Oswald-Bold", "Oswald-Bold.ttf")
 mAddFont("Oswald-Light", "Oswald-Light.ttf")
 mAddFont("Oswald-Regular", "Oswald-Regular.ttf")
+
 mAddFont("Ubuntu-Bold", "Ubuntu-Bold.ttf")
 mAddFont("Ubuntu-Medium", "Ubuntu-Medium.ttf")
+
 mAddFont("NotoSans-Bold", "NotoSans-Bold.ttf")
 mAddFont("NotoSans-SemiBold", "NotoSans-SemiBold.ttf")
-mAddFont("Montserrat-Black", "Montserrat-Black.ttf")
+
 mAddFont("Montserrat-Bold", "Montserrat-Bold.ttf")
-mAddFont("Montserrat-ExtraBold", "Montserrat-ExtraBold.ttf")
 mAddFont("Montserrat-Medium", "Montserrat-Medium.ttf")
 mAddFont("Montserrat-Regular", "Montserrat-Regular.ttf")
 mAddFont("Montserrat-SemiBold", "Montserrat-SemiBold.ttf")
 
-mAddFont("Beep-Black", "Beep-Black.otf")
+mAddFont("BarlowCondensed-Bold", "BarlowCondensed-Bold.ttf")
+mAddFont("BarlowCondensed-Medium", "BarlowCondensed-Medium.ttf")
+mAddFont("BarlowCondensed-Regular", "BarlowCondensed-Regular.ttf")
+mAddFont("BarlowCondensed-SemiBold", "BarlowCondensed-SemiBold.ttf")
+
 mAddFont("Beep-Bold", "Beep-Bold.otf")
 mAddFont("Beep-Medium", "Beep-Medium.otf")
 mAddFont("Beep-Regular", "Beep-Regular.otf")
