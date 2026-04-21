@@ -147,11 +147,12 @@ local function Update(self, event)
 	local unit = self.unit or self.__owner.unit
 	if not unit then return end
 
+	local class = select(2, UnitClass(unit))
 	local isDead = UnitIsDeadOrGhost(unit)
 	local guid = UnitGUID(unit)
 	local secretGUID = E:IsSecretValue(guid)
 	local newGUID = secretGUID or (self.guid ~= guid)
-	guid = not secretGUID and guid or nil
+	guid = not secretGUID and guid or ""
 
 	if newGUID then self.guid = guid end
 
@@ -159,7 +160,6 @@ local function Update(self, event)
 	local hasStateChanged = newGUID or isAvailable or event == "ForceUpdate" or (self.isDead ~= isDead)
 
 	if hasStateChanged then
-		local class = select(2, UnitClass(unit))
 		local isPlayer = UnitIsPlayer(unit) or (E.Retail and UnitInPartyIsAI(unit))
 		local shouldMirror = (isPlayer and self.db.mirror) or (not isPlayer and not self.db.mirror)
 
@@ -406,7 +406,6 @@ local function ForceUpdate(self, event)
 end
 
 local function DeathCheck(self, event)
-	--print("DeathCheck triggered for unit:", self.unit, "Event:", event)
 	--if self.unit ~= unit then return end
 
 	local isDead = UnitIsDeadOrGhost(self.unit)
@@ -464,6 +463,9 @@ local eventHandlers = {
 
 	-- death updates
 	UNIT_HEALTH = DeathCheck,
+
+	-- pet
+	UNIT_PET = ForceUpdate,
 }
 
 local function OnEvent(self, event, eventUnit, arg)

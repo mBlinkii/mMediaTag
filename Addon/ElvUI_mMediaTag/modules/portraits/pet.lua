@@ -38,6 +38,7 @@ function module:InitializePetPortrait()
 					portraits[unit]:RegisterEvent("UNIT_EXITING_VEHICLE")
 					portraits[unit]:RegisterEvent("UNIT_EXITED_VEHICLE")
 					portraits[unit]:RegisterEvent("VEHICLE_UPDATE")
+					portraits[unit]:RegisterUnitEvent("UNIT_PET", "player")
 					portraits[unit].isEnabled = true
 				end
 			end
