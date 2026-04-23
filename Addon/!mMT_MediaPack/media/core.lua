@@ -725,11 +725,6 @@ mAddFont("Inter-SemiBold", "Inter-SemiBold.ttf")
 
 mAddFont("Lemon-Regular", "Lemon-Regular.ttf")
 
-mAddFont("Oregano-Regular", "Oregano-Regular.ttf")
-mAddFont("Oswald-Bold", "Oswald-Bold.ttf")
-mAddFont("Oswald-Light", "Oswald-Light.ttf")
-mAddFont("Oswald-Regular", "Oswald-Regular.ttf")
-
 mAddFont("Ubuntu-Bold", "Ubuntu-Bold.ttf")
 mAddFont("Ubuntu-Medium", "Ubuntu-Medium.ttf")
 
