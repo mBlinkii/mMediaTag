@@ -80,6 +80,7 @@ local teleportsIDs = {
 		[265100] = "toy", -- Corewarden's Hearthstone
 		[257736] = "toy", -- Lightcalled Hearthstone
 		[253629] = "toy", -- Arcantia
+		[263933] = "toy", -- Preyseeker's Hearthstone
 	},
 	engineering = {
 		[112059] = "toy", --wormhole-centrifuge
