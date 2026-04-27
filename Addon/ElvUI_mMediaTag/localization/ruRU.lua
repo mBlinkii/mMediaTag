@@ -66,6 +66,7 @@ L["Mage Teleports"] = "Телепорты мага"
 L["Midnight"] = true
 L["Other Portals"] = "Другие порталы"
 L["Other Teleports"] = "Другие телепорты"
+L["Random"] = "Случайно"
 L["Season Teleports"] = "Сезонные телепорты"
 L["Spells"] = "Заклинания"
 L["You can select your favourites in the settings."] = "Вы можете выбрать избранное в настройках."

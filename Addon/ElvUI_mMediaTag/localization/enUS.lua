@@ -66,6 +66,7 @@ L["Mage Teleports"] = true
 L["Midnight"] = true
 L["Other Portals"] = true
 L["Other Teleports"] = true
+L["Random"] = true
 L["Season Teleports"] = true
 L["Spells"] = true
 L["You can select your favourites in the settings."] = true

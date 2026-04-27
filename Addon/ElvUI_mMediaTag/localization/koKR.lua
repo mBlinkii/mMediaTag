@@ -66,6 +66,7 @@ L["Mage Teleports"] = "마법사 순간이동"
 L["Midnight"] = true
 L["Other Portals"] = "기타 차원문"
 L["Other Teleports"] = "기타 순간이동"
+L["Random"] = "무작위"
 L["Season Teleports"] = "시즌 순간이동"
 L["Spells"] = "주문"
 L["You can select your favourites in the settings."] = "설정에서 즐겨찾기를 선택할 수 있습니다."

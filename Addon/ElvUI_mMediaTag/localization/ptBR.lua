@@ -66,6 +66,7 @@ L["Mage Teleports"] = "Teletransportes de mago"
 L["Midnight"] = true
 L["Other Portals"] = "Outros portais"
 L["Other Teleports"] = "Outros teletransportes"
+L["Random"] = "Aleatório"
 L["Season Teleports"] = "Teletransportes da temporada"
 L["Spells"] = "Feitiços"
 L["You can select your favourites in the settings."] = "Você pode selecionar seus favoritos nas configurações."

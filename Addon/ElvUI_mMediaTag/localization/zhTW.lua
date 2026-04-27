@@ -66,6 +66,7 @@ L["Mage Teleports"] = "法師傳送"
 L["Midnight"] = true
 L["Other Portals"] = "其他傳送門"
 L["Other Teleports"] = "其他傳送"
+L["Random"] = "隨機"
 L["Season Teleports"] = "賽季傳送"
 L["Spells"] = "法術"
 L["You can select your favourites in the settings."] = "你可以在設定中選擇你的最愛。"
