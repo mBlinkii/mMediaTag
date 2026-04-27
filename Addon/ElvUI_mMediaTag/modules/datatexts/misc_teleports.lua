@@ -22,6 +22,7 @@ local tinsert = tinsert
 -- Variables
 mMT.knownTeleports = {
 	favorites = {},
+	hearthstones = {},
 	toys = {},
 	engineering = {},
 	items = {},
@@ -38,6 +39,31 @@ local textString = ""
 local menus = {}
 local teleportsIDs = {
 	favorites = {},
+	hearthstones = {
+		[162973] = "toy", --greatfather-winters-hearthstone
+		[163045] = "toy", --headless-horsemans-hearthstone
+		[165670] = "toy", --peddlefeets-lovely-hearthstone
+		[166746] = "toy", --fire-eaters-hearthstone
+		[166747] = "toy", --brewfest-revelers-hearthstone
+		[168907] = "toy", --holographic-digitalization-hearthstone
+		[172179] = "toy", --eternal-travelers-hearthstone
+		[180290] = "toy", --night-fae-hearthstone
+		[182773] = "toy", --necrolord-hearthstone
+		[184353] = "toy", --kyrian-hearthstone
+		[188952] = "toy", --dominated-hearthstone
+		[190196] = "toy", --enlightened-hearthstone
+		[193588] = "toy", --Timewalker's Hearthstone
+		[200630] = "toy", --ohnir-windsages-hearthstone
+		[208704] = "toy", -- Deepdweller's Earthen Hearthstone
+		[209035] = "toy", -- hearthstone-of-the-flame
+		[212337] = "toy", -- Stone of the Hearth (Hearthstone 10th Anniversary)
+		[228940] = "toy", --Notorious Thread's Hearthstone
+		[236687] = "toy", -- Explosive Hearthstone toy
+		[245970] = "toy", -- P.O.S.T. Master's Express Hearthstone
+		[265100] = "toy", -- Corewarden's Hearthstone
+		[257736] = "toy", -- Lightcalled Hearthstone
+		[263933] = "toy", -- Preyseeker's Hearthstone
+	},
 	toys = {
 		[110560] = "toy", --garrison-hearthstone
 		[140192] = "toy", --dalaran-hearthstone
@@ -569,6 +595,7 @@ function mMT:UpdateTeleports()
 	processTeleport(teleportsIDs.items, "items")
 	processTeleport(teleportsIDs.spells, "spells")
 	processTeleport(teleportsIDs.toys, "toys")
+	processTeleport(teleportsIDs.hearthstones, "hearthstones")
 
 	processTeleport(teleportsIDs.dungeonportals, "dungeonportals", "spell")
 	processTeleport(teleportsIDs.season, "season", "spell")
@@ -594,11 +621,40 @@ local function CreateMenuEntry(id, t)
 	}
 end
 
+local function GetRandomTeleportEntry(category)
+	local selectedID, selectedTeleport, count
+	count = 0
+	if not category then return end
+
+	for id, t in pairs(category) do
+		if t and type(t) == "table" then
+			count = count + 1
+			if math.random(count) == 1 then
+				selectedID = id
+				selectedTeleport = t
+			end
+		end
+	end
+
+	return selectedID, selectedTeleport
+end
+
 local function UpdateMenus()
 	mMT:UpdateTeleports()
 
 	-- Initialize main menu
 	menus.main = {}
+
+	-- Add random menu entry
+	if mMT.knownTeleports.hearthstones.available then
+		local hearthstoneID, hearthstone = GetRandomTeleportEntry(mMT.knownTeleports.hearthstones)
+
+		if hearthstone then
+			tinsert(menus.main, { text = mMT:TC(L["Random"], "title"), isTitle = true, notClickable = true })
+			tinsert(menus.main, CreateMenuEntry(hearthstoneID, hearthstone))
+			tinsert(menus.main, { text = "", isTitle = true, notClickable = true })
+		end
+	end
 
 	-- Add favorites menu entry
 	if E.db.mMediaTag.datatexts.teleports.favorites.enable and mMT.knownTeleports.favorites.available then
