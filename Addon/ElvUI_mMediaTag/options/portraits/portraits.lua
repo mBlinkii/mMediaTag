@@ -153,7 +153,7 @@ mMT.options.args.unitframes.args.portraits.args = {
 					spec_icon = {
 						order = 2,
 						type = "select",
-						name = L["Use Spec icons"],
+						name = L["Spec icons"],
 						desc = L["Enable and select a spec icon style for the portrait."],
 						get = function(info)
 							return E.db.mMediaTag.portraits.misc.spec_icon

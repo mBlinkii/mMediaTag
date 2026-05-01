@@ -146,6 +146,7 @@ L["Weekly"] = "Semanal"
 L["Returns the classification icon of the unit. You can specify up to three arguments to display only certain classifications.\nFor example: [mMT-classification:icon{rare:elite}] will only show something if the unit is either rare or elite."] = "Devuelve el ícono de clasificación de la unidad. Puedes especificar hasta tres argumentos para mostrar solo ciertas clasificaciones.\nPor ejemplo: [mMT-classification:icon{rare:elite}] solo mostrará algo si la unidad es rara o élite."
 L["Returns the classification of the unit. You can specify up to three arguments to display only certain classifications.\nFor example: [mMT-classification{rare:elite}] will only show something if the unit is either rare or elite."] = "Devuelve la clasificación de la unidad. Puedes especificar hasta tres argumentos para mostrar solo ciertas clasificaciones.\nPor ejemplo: [mMT-classification{rare:elite}] solo mostrará algo si la unidad es rara o élite."
 L["Returns the color of the unit. Players are colored by class, NPCs by classification. You can specify up to three arguments to display only certain classifications.\nFor example: [mMT-color{rare:elite}] will only show something if the unit is either rare or elite."] = "Devuelve el color de la unidad. Los jugadores se colorean por clase y los PNJ por clasificación. Puedes especificar hasta tres argumentos para mostrar solo ciertas clasificaciones.\nPor ejemplo: [mMT-color{rare:elite}] solo mostrará algo si la unidad es rara o élite."
+L["Returns the spec icon of the unit. You can specify a size between 16 and 128 (default is 64). Example: mSpecIcon:style{32}"] = "Devuelve el ícono de especialización de la unidad. Puedes especificar un tamaño entre 16 y 128 (predeterminado 64). Ejemplo: mSpecIcon:style{32}"
 L["Returns the current health of the unit (changes between current health and percent in combat)."] = "Devuelve la salud actual de la unidad (cambia entre salud actual y porcentaje en combate)."
 L["Returns the current health of the unit."] = "Devuelve la salud actual de la unidad."
 L["Returns the current health percent of the unit (in combat)."] = "Devuelve el porcentaje actual de salud de la unidad (en combate)."
@@ -242,12 +243,6 @@ L["Hover Color Style"] = "Estilo de color al pasar el mouse"
 L["Hover Custom Color"] = "Color personalizado al pasar el mouse"
 L["Left Click"] = "Clic izquierdo"
 L["Right Click"] = "Clic derecho"
-
--- options/misc/auto_role_check.lua
-L["Auto Role Check"] = "Comprobación automática de rol"
-L["Auto Sign Up"] = "Inscripción automática"
-L["Automatically accepts the dungeon or raid role check popup."] = "Acepta automáticamente la ventana emergente de comprobación de rol de mazmorra o banda."
-L["Automatically signs up for premade groups when your role is already selected."] = "Se apunta automáticamente a grupos predefinidos cuando tu rol ya está seleccionado."
 
 -- options/misc/difficulty_info.lua
 L["LEFT"] = "IZQUIERDA"
@@ -549,3 +544,339 @@ L["Score"] = "Puntuación"
 L["Show Party Keystones"] = "Mostrar piedras angulares del grupo"
 L["Show Upgrades"] = "Mostrar mejoras"
 L["Sort method"] = "Método de orden"
+
+-- options/datatext/misc_dungeon.lua
+L["Change Text to Dungeon Name."] = "Cambiar el texto al nombre de la mazmorra."
+
+-- options/datatext/misc_gamemenu.lua
+L["Menu Text color"] = "Color del texto del menú"
+L["Show Menu Icons"] = "Mostrar iconos del menú"
+L["Show Systeminfo"] = "Mostrar información del sistema"
+L["colored"] = "coloreado"
+
+-- options/datatext/misc_individual_professions.lua
+L["Colored"] = "Coloreado"
+L["Icon Style"] = "Estilo de icono"
+
+-- options/datatext/misc_professions.lua
+L["Menu Icons"] = "Iconos del menú"
+
+-- options/datatext/misc_teleports.lua
+L["Slot"] = "Ranura"
+
+-- options/datatext/misc_tracker.lua
+L["!!Error - this is not an ID."] = "!!Error - esto no es un ID."
+L["Add Currency or Item ID"] = "Añadir ID de moneda u objeto"
+L["Color the text"] = "Colorear el texto"
+L["Custom IDs"] = "ID personalizados"
+L["Enter a Currency or Item it accepts only Numbers."] = "Introduce una moneda o un objeto; solo acepta números."
+L["Here you can add custom IDs for the tracker. You can add currencies or items. This will add DataTexts for each ID to ElvUI."] = "Aquí puedes añadir ID personalizados para el rastreador. Puedes añadir monedas u objetos. Esto añadirá DataTexts a ElvUI para cada ID."
+L["Is Currency"] = "Es moneda"
+L["Short large numbers"] = "Acortar números grandes"
+L["Show Name"] = "Mostrar nombre"
+L["Show max amount"] = "Mostrar cantidad máxima"
+
+-- options/dock/common
+L["Custom Color"] = "Color personalizado"
+L["Use a custom color for the icon."] = "Usa un color personalizado para el icono."
+
+-- options/dock/bags.lua
+L["Free Slots"] = "Espacios libres"
+L["Gold Infos"] = "Información de oro"
+L["Money"] = "Dinero"
+L["Money / Free Slots"] = "Dinero / Espacios libres"
+L["Show gold infos instead of bag slots in the tooltip."] = "Muestra información de oro en lugar de espacios de bolsa en el tooltip."
+L["Used / Total Slots"] = "Usados / Espacios totales"
+L["Used Slots"] = "Espacios usados"
+
+-- options/dock/character.lua
+L["Show durability percentage as text."] = "Mostrar el porcentaje de durabilidad como texto."
+L["Threshold"] = "Umbral"
+
+-- options/dock/durability.lua
+L["Durability / Item level"] = "Durabilidad / Nivel de objeto"
+L["Item level"] = "Nivel de objeto"
+
+-- options/dock/example.lua
+L["Dock V2"] = "Dock V2"
+L["MAUI"] = "MAUI"
+L["XIV Like"] = "Estilo XIV"
+L["XVI Like colored"] = "Estilo XVI coloreado"
+
+-- options/dock/friends.lua
+L["Show number of online friends on the icon."] = "Mostrar el número de amigos conectados en el icono."
+
+-- options/dock/general.lua
+L["Auto grow"] = "Crecimiento automático"
+L["Automatically adjust the growth size based on the icon size. When you hover over the icon."] = "Ajusta automáticamente el tamaño de crecimiento según el tamaño del icono al pasar el ratón."
+L["Class Color"] = "Color de clase"
+L["Clicked"] = "Pulsado"
+L["Font Color"] = "Color de fuente"
+L["Font Outline"] = "Contorno de fuente"
+L["Growth size"] = "Tamaño de crecimiento"
+L["Hover"] = "Al pasar"
+L["Set the clicked color of the icon."] = "Establece el color del icono al hacer clic."
+L["Set the font for dock text."] = "Establece la fuente para el texto del dock."
+L["Set the font outline for dock text."] = "Establece el contorno de la fuente para el texto del dock."
+L["Set the font size for dock text."] = "Establece el tamaño de la fuente para el texto del dock."
+L["Set the growth size of the dock icon. This is the distance between the icons."] = "Establece el tamaño de crecimiento del icono del dock. Esta es la distancia entre los iconos."
+L["Set the hover color of the icon."] = "Establece el color del icono al pasar el ratón."
+L["Set the normal color of the icon."] = "Establece el color normal del icono."
+L["Show a tooltip when you hover over the icon."] = "Muestra un tooltip al pasar el ratón sobre el icono."
+L["Use a custom color for dock text. If disabled, the font color will be class colored."] = "Usa un color personalizado para el texto del dock. Si está desactivado, el color de la fuente será el color de clase."
+L["Use a custom font size for dock text. If disabled, the font size will be set to one third of the icon size."] = "Usa un tamaño de fuente personalizado para el texto del dock. Si está desactivado, el tamaño de la fuente se establecerá en un tercio del tamaño del icono."
+L["Use class color for the icon."] = "Usa el color de clase para el icono."
+
+-- options/dock/guild.lua
+L["Show number of online Guild members on the icon."] = "Mostrar el número de miembros de hermandad conectados en el icono."
+
+-- options/dock/lfd.lua
+L["Call to the arms"] = "Llamada a las armas"
+L["Show difficulty or call to the arms on the icon."] = "Mostrar la dificultad o la llamada a las armas en el icono."
+L["Show icons for call to the arms."] = "Mostrar iconos para la llamada a las armas."
+
+-- options/dock/notification.lua
+L["Auto size"] = "Tamaño automático"
+L["ClassColor"] = "Color de clase"
+
+-- options/dock/volume.lua
+L["Color the text with the ElvUI color."] = "Colorea el texto con el color de ElvUI."
+
+-- options/misc/auto_quest.lua
+L["Auto Accept"] = "Aceptar automáticamente"
+L["Auto Quest"] = "Misión automática"
+L["Auto Turn-In"] = "Entregar automáticamente"
+L["Automatically accepts quest dialogs from NPCs."] = "Acepta automáticamente los diálogos de misión de los PNJ."
+L["Automatically turns in completed quests. If the quest has multiple reward choices, the dialog stays open for you to choose."] = "Entrega automáticamente las misiones completadas. Si la misión tiene varias recompensas para elegir, la ventana permanecerá abierta para que elijas."
+L["Chat Messages"] = "Mensajes de chat"
+L["Disables auto accept/turn-in while you are in combat."] = "Desactiva la aceptación/entrega automática mientras estás en combate."
+L["Prints a message to chat whenever a quest is auto-accepted or turned in."] = "Imprime un mensaje en el chat cada vez que una misión se acepta o entrega automáticamente."
+L["Skip in Combat"] = "Omitir en combate"
+
+-- options/misc/auto_role_check.lua
+L["Auto Role Check"] = "Comprobación automática de rol"
+L["Auto Sign Up"] = "Inscripción automática"
+L["Automatically accepts the dungeon or raid role check popup."] = "Acepta automáticamente la ventana emergente de comprobación de rol de mazmorra o banda."
+L["Automatically signs up for premade groups when your role is already selected."] = "Se apunta automáticamente a grupos predefinidos cuando tu rol ya está seleccionado."
+L["Lets you sign up for premade groups with a single click and confirms the application dialog automatically."] = "Te permite inscribirte en grupos prearmados con un solo clic y confirma automáticamente el cuadro de solicitud."
+L["One-Click Sign Up"] = "Inscripción con un clic"
+
+-- options/misc/difficulty_info.lua
+L["Alignment"] = "Alineación"
+L["Difficulty Info"] = "Información de dificultad"
+L["Font size, top line"] = "Tamaño de fuente, línea superior"
+L["Show Frame"] = "Mostrar marco"
+
+-- options/misc/greeting_message.lua
+L["Show a greeting message in the chat when you log in."] = "Mostrar un mensaje de bienvenida en el chat al iniciar sesión."
+
+-- options/misc/keystone_to_chat.lua
+L["Post your keystone to the chat when someone types !key or !keys into the chat."] = "Publica tu piedra angular en el chat cuando alguien escriba !key o !keys."
+
+-- options/misc/lfg_invite_info.lua
+L["Fade out delay"] = "Retraso de desvanecimiento"
+L["First line color"] = "Color de la primera línea"
+L["Font size, bottom line"] = "Tamaño de fuente, línea inferior"
+L["Second line color"] = "Color de la segunda línea"
+L["Show in chat"] = "Mostrar en el chat"
+L["Third line color"] = "Color de la tercera línea"
+
+-- options/misc/phase_icon.lua
+L["Chromie Time"] = "Tiempo de Cromi"
+L["Timerunning World"] = "Mundo cronomágico"
+L["War Mode"] = "Modo de guerra"
+
+-- options/misc/tags.lua
+L["DC/ Offline"] = "DC/ Desconectado"
+L["Health trashhold 1"] = "Umbral de salud 1"
+L["Health trashhold 2"] = "Umbral de salud 2"
+L["PvP"] = "JcJ"
+L["Raidtarget Markers"] = "Marcadores de objetivo de banda"
+L["Set the first health trashhold."] = "Establece el primer umbral de salud."
+L["Set the second health trashhold."] = "Establece el segundo umbral de salud."
+L["Targeting Players"] = "Jugadores que apuntan"
+
+-- options/misc/tooltip.lua
+L["Icon Zoom"] = "Zoom del icono"
+
+-- options/nameplates/shared
+L["Border color"] = "Color del borde"
+L["Health color"] = "Color de salud"
+L["Ignore threat color"] = "Ignorar color de amenaza"
+
+-- options/nameplates/nameplate_tools.lua
+L["ElvUI Color Settings"] = "Ajustes de color de ElvUI"
+L["Open the ElvUI color settings to adjust the colors used for nameplates."] = "Abre los ajustes de color de ElvUI para ajustar los colores usados para las placas de nombre."
+L["Sets automatically your class color for glow and border color on nameplates for the target unit."] = "Establece automáticamente el color de tu clase para el brillo y el borde de las placas de nombre de la unidad objetivo."
+L["Target & Glow color"] = "Color de objetivo y brillo"
+
+-- options/options_core.lua
+L["Data Panel Skin"] = "Aspecto del panel de datos"
+L["Datatexts"] = "Datatexts"
+L["Details embedded"] = "Details incrustado"
+L["Difficulty"] = "Dificultad"
+L["Durability & Item Level"] = "Durabilidad y nivel de objeto"
+L["Focus Highlight"] = "Resaltado de foco"
+L["Gamemenu"] = "Menú del juego"
+L["Greeting Message"] = "Mensaje de bienvenida"
+L["In WoW Classic, the docks may appear differently because not all modules are available in this version. However, you can still customize the docks through the ElvUI settings."] = "En WoW Classic, los docks pueden verse diferentes porque no todos los módulos están disponibles en esta versión. Sin embargo, aún puedes personalizar los docks mediante los ajustes de ElvUI."
+L["Interrupt On CD"] = "Interrupción en reutilización"
+L["Minimap Skin"] = "Aspecto del minimapa"
+L["Quest Highlight"] = "Resaltado de misión"
+L["Resurrection Icon"] = "Icono de resurrección"
+L["Summon Icon"] = "Icono de invocación"
+L["TAGs"] = "TAGs"
+L["Target Highlight"] = "Resaltado de objetivo"
+L["These are just examples of how to create your own dock using ElvUIâ€™s custom data text bars..."] = "Estos son solo ejemplos de cómo crear tu propio dock usando las barras de datatext personalizadas de ElvUI..."
+L["Tip/ Menu"] = "Consejo/Menú"
+L["Tracker"] = "Rastreador"
+
+-- options/portraits/portraits.lua
+L["BG"] = "FD"
+L["BG Style"] = "Estilo de fondo"
+L["Choose the background style for the transparent Class icons."] = "Elige el estilo de fondo para los iconos de clase transparentes."
+L["Class icon"] = "Icono de clase"
+L["Custom Extra Texture"] = "Textura extra personalizada"
+L["Death Knight"] = "Caballero de la Muerte"
+L["Demon Hunter"] = "Cazador de demonios"
+L["Desaturate"] = "Desaturar"
+L["Druid"] = "Druida"
+L["Embellishment"] = "Adorno"
+L["Enable Custom Textures for Portrait."] = "Activar texturas personalizadas para el retrato."
+L["Enable Cast Icons."] = "Activar iconos de lanzamiento."
+L["Enable Custom extra Textures for Portrait."] = "Activar texturas extra personalizadas para el retrato."
+L["Enable and select a class icon style for the portrait."] = "Activa y selecciona un estilo de icono de clase para el retrato."
+L["Enable and select a spec icon style for the portrait."] = "Activa y selecciona un estilo de ícono de especialización para el retrato."
+L["Enable Extra Texture"] = "Activar textura extra"
+L["Enable the Shadow for the Portraits."] = "Activar la sombra para los retratos."
+L["Enable the Unit Portrait."] = "Activar el retrato de unidad."
+L["Enable this to show the Extra Texture on top of the Unit Portrait."] = "Activa esta opción para mostrar la textura extra sobre el retrato de unidad."
+L["Enable custom Position and size settings for Extra Texture."] = "Activar ajustes personalizados de posición y tamaño para la textura extra."
+L["Enemy"] = "Enemigo"
+L["Evoker"] = "Evocador"
+L["Extra"] = "Extra"
+L["Extra Mask"] = "Máscara extra"
+L["Extra Settings"] = "Ajustes extra"
+L["Extra Shadow"] = "Sombra extra"
+L["Force Extra Texture"] = "Forzar textura extra"
+L["Forces the default color for all texture."] = "Fuerza el color predeterminado para todas las texturas."
+L["Frame Level/ Strata"] = "Nivel/Estrato del marco"
+L["Friendly"] = "Amistoso"
+L["Hunter"] = "Cazador"
+L["It will override the default extra texture, but will take care of rare/elite/boss units."] = "Sobrescribirá la textura extra predeterminada, pero tendrá en cuenta a las unidades raras/élite/jefe."
+L["Mage"] = "Mago"
+L["Monk"] = "Monje"
+L["Neutral"] = "Neutral"
+L["On Top"] = "Encima"
+L["Paladin"] = "Paladín"
+L["Portrait Scale"] = "Escala del retrato"
+L["Priest"] = "Sacerdote"
+L["Put your custom textures in the Addon folder and add the path here (example MyMediaFolder\\MyTexture.tga)."] = "Coloca tus texturas personalizadas en la carpeta del addon y añade aquí la ruta (ejemplo MyMediaFolder\\MyTexture.tga)."
+L["Reset all colors"] = "Restablecer todos los colores"
+L["Reset class colors"] = "Restablecer colores de clase"
+L["Rogue"] = "Pícaro"
+L["Select a extra texture style for boss units."] = "Selecciona un estilo de textura extra para las unidades jefe."
+L["Select a extra texture style for elite units."] = "Selecciona un estilo de textura extra para las unidades élite."
+L["Select a extra texture style for player."] = "Selecciona un estilo de textura extra para el jugador."
+L["Select a extra texture style for rare elite units."] = "Selecciona un estilo de textura extra para las unidades raras élite."
+L["Select a extra texture style for rare units."] = "Selecciona un estilo de textura extra para las unidades raras."
+L["Select a portrait texture style."] = "Selecciona un estilo de textura para el retrato."
+L["Shadow Alpha"] = "Alfa de la sombra"
+L["Shaman"] = "Chamán"
+L["Shows the Extra Texture (rare/elite) for the Unit Portrait."] = "Muestra la textura extra (raro/élite) para el retrato de unidad."
+L["Texture Style settings for Extra texture (Rare/Elite/Boss/player)."] = "Ajustes de estilo de textura para la textura extra (Raro/Élite/Jefe/Jugador)."
+L["Texture Styles"] = "Estilos de textura"
+L["TIP: If you use the Blizzard textures and change the classification color to white, you will see the extra texture with the original colors."] = "CONSEJO: si usas las texturas de Blizzard y cambias el color de clasificación a blanco, verás la textura extra con sus colores originales."
+L["Unitcolor for Extra"] = "Color de unidad para Extra"
+L["Use Default color"] = "Usar color predeterminado"
+L["Spec icons"] = "Íconos de especialización"
+L["Use the unit color for the Extra (Rare/Elite) Texture."] = "Usa el color de la unidad para la textura Extra (Raro/Élite)."
+L["Warlock"] = "Brujo"
+L["Warrior"] = "Guerrero"
+L["Will always desaturate the portraits."] = "Siempre desaturará los retratos."
+L["Will show the embellishment on the portraits, if the Style has an embellishment."] = "Mostrará el adorno en los retratos si el estilo tiene un adorno."
+
+-- options/skin/data_panel_skin.lua
+L["Delete the actual Settings"] = "Eliminar los ajustes actuales"
+L["Info: This Settings will override the ElvUI Data Panel settings."] = "Información: estos ajustes sobrescribirán los ajustes del panel de datos de ElvUI."
+L["Reset all"] = "Restablecer todo"
+
+-- options/skin/minimap.lua
+L["Cardinal Icon"] = "Icono Cardinal"
+
+-- options/datatext/misc_gamemenu.lua
+L["white"] = "blanco"
+
+-- options/options_core.lua
+L["These are just examples of how to create your own dock using ElvUI’s custom data text bars.\n\nTo set up a custom bar:\nOpen ElvUI and navigate to ElvUI > Datatext > Bars.\nEnter a name for your new bar, click OK, and then click Add.\nSet the width of the bar based on how many icons you want to display.\nSet the height, which also determines the icon size.\nChoose the number of data text slots you want.\n\nAssign icons to each slot. For example:\nSlot 1 = Dock Calendar\nSlot 2 = Dock Profession\nSlot 3 = Dock Spec\n…and so on.\n\nThis setup allows you to build a personalized dock that fits your UI and gameplay needs.\n\n"] = "Estos son solo ejemplos de cómo crear tu propio dock usando las barras de datatext personalizadas de ElvUI.\n\nPara configurar una barra personalizada:\nAbre ElvUI y ve a ElvUI > Datatext > Bars.\nIntroduce un nombre para tu nueva barra, haz clic en OK y luego en Añadir.\nEstablece el ancho de la barra según cuántos iconos quieras mostrar.\nEstablece la altura, que también determina el tamaño de los iconos.\nElige la cantidad de espacios de datatext que deseas.\n\nAsigna iconos a cada espacio. Por ejemplo:\nEspacio 1 = Dock Calendar\nEspacio 2 = Dock Profession\nEspacio 3 = Dock Spec\n…y así sucesivamente.\n\nEsta configuración te permite crear un dock personalizado que se adapte a tu interfaz y a tu forma de jugar.\n\n"
+
+-- modules/portraits/texture_db.lua
+L["Antik"] = "Antiguo"
+L["BG 1"] = "FD 1"
+L["BG 2"] = "FD 2"
+L["BG 3"] = "FD 3"
+L["BG 4"] = "FD 4"
+L["BG 5"] = "FD 5"
+L["BG 6"] = "FD 6"
+L["Blizzard Boss"] = "Jefe Blizzard"
+L["Blizzard Boss Neutral"] = "Jefe Blizzard neutral"
+L["Blizzard Elite"] = "Élite Blizzard"
+L["Blizzard Rare"] = "Raro Blizzard"
+L["Blizzard Rare/ Elite Neutral"] = "Raro/Élite Blizzard neutral"
+L["Blizzard Round"] = "Blizzard redondo"
+L["Blizzard Round Thick"] = "Blizzard redondo grueso"
+L["Blizzard Round UP"] = "Blizzard redondo arriba"
+L["Blizzard Round UP Thick"] = "Blizzard redondo arriba grueso"
+L["Blizzard Sharp"] = "Blizzard puntiagudo"
+L["Blizzard Sharp Thick"] = "Blizzard puntiagudo grueso"
+L["Blizzard Sharp UP"] = "Blizzard puntiagudo arriba"
+L["Blizzard Sharp UP Thick"] = "Blizzard puntiagudo arriba grueso"
+L["Circle Thick"] = "Círculo grueso"
+L["Climbing Plant"] = "Planta trepadora"
+L["Climbing Plant V2"] = "Planta trepadora V2"
+L["Cookie"] = "Galleta"
+L["Diamond Thick"] = "Diamante grueso"
+L["Dog Any"] = "Cualquier perro"
+L["Dog Pack"] = "Manada de perros"
+L["Dog Pack color"] = "Color de manada de perros"
+L["Dogs"] = "Perros"
+L["Dogs color"] = "Color de perros"
+L["Dragon Blue"] = "Dragón azul"
+L["Dragon Boss"] = "Jefe dragón"
+L["Dragon Elite"] = "Dragón élite"
+L["Dragon Green"] = "Dragón verde"
+L["Dragon Purple"] = "Dragón morado"
+L["Leaf"] = "Hoja"
+L["Leaf Mirrored"] = "Hoja reflejada"
+L["Pad"] = "Pad"
+L["Parallelogram Mirrored"] = "Paralelogramo reflejado"
+L["Pentagon"] = "Pentágono"
+L["Pixel"] = "Píxel"
+L["Rectangular"] = "Rectangular"
+L["Round - Leaf"] = "Redondo - Hoja"
+L["Round - Monster"] = "Redondo - Monstruo"
+L["Round - Pulse"] = "Redondo - Pulso"
+L["Round - Star"] = "Redondo - Estrella"
+L["Round - Tech"] = "Redondo - Tecnología"
+L["Round - Zickzack"] = "Redondo - Zigzag"
+L["Shield"] = "Escudo"
+L["Snake"] = "Serpiente"
+L["Snake Blue"] = "Serpiente azul"
+L["Snake Green"] = "Serpiente verde"
+L["Snake Purple"] = "Serpiente morada"
+L["Snake Red"] = "Serpiente roja"
+L["Space"] = "Espacio"
+L["Space color"] = "Color espacial"
+L["Square Leaf"] = "Cuadrado hoja"
+L["Square Loop"] = "Cuadrado bucle"
+L["Square Round"] = "Cuadrado redondo"
+L["Square Round Thick"] = "Cuadrado redondo grueso"
+L["Square Spikes"] = "Cuadrado con púas"
+L["Square Stars"] = "Cuadrado estrellas"
+L["Square Thick"] = "Cuadrado grueso"
+L["Tear"] = "Lágrima"
+L["Tear down"] = "Lágrima hacia abajo"
+L["Tear down Mirrored"] = "Lágrima hacia abajo reflejada"
+L["Tear Mirrored"] = "Lágrima reflejada"
+L["Trapezoid"] = "Trapecio"
+L["Trapezoid Mirrored"] = "Trapecio reflejado"
