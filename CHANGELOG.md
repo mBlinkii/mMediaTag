@@ -3,6 +3,17 @@
 
 ## [ver. 4.05] - 19.04.2026
 ### FIX
+- FIX - [Media-Pack]: Removed unused font entries.
+- FIX - [Portraits]: Add Pet events, to prevent wrong Portraits.
+### UPDATE
+- UPDATE - [DT-Teleports]: New menu entry use Random Hearthstone.
+- UPDATE - [DT-Teleports]: Updated Teleports.
+### NEW
+- NEW - [Auto-Sing-Up]: Auto Sing Up & Role check accept module.
+- NEW - [Important-Casts]: Can now Highlight the healthbar of the Unit.
+
+## [ver. 4.05] - 19.04.2026
+### FIX
 - FIX - [LFG-Info]: Fixed visibility logic for the popup.
 - FIX - [Highlighters]: Fix stack overflow.
 - FIX - [System]: Update guild identification logic to use isGuildParty for consistency across modules.
