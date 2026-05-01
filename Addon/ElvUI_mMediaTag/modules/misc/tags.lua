@@ -600,6 +600,32 @@ do
 	end
 end
 
+-- SPEC ICONS
+do
+	local specIconNames = {}
+	for k, v in pairs(MEDIA.icons.spec.icons.mmt) do
+		if type(v) == "table" then specIconNames[k] = v.name end
+	end
+
+	for style, _ in next, specIconNames do
+		local tag = format("%s:%s", "mMT-specicons", style)
+		E:AddTag(tag, "UNIT_NAME_UPDATE", function(unit, _, args)
+			if not (UnitIsPlayer(unit) or (E.Retail and UnitInPartyIsAI(unit))) then return end
+
+			local info = E.Retail and E:GetUnitSpecInfo(unit)
+			if not info then return end
+
+			local size = strsplit(":", args or "")
+			size = tonumber(size)
+			size = (size and (size >= 16 and size <= 128)) and size or 64
+
+			local specIconStrings = MEDIA.icons.spec.icons.custom[style] and MEDIA.icons.spec.icons.custom[style].texString[info.id] or MEDIA.icons.spec.data[info.id].texString
+			local textureFile = MEDIA.icons.spec.icons.custom[style] and MEDIA.icons.spec.icons.custom[style].texture or MEDIA.icons.spec.icons.mmt[style].texture
+			if textureFile and specIconStrings then return format("|T%s:%s:%s:0:0:1024:1024:%s|t", textureFile, size, size, specIconStrings) end
+		end)
+		E:AddTagInfo(tag, mMT.NameShort .. " " .. L["Icons"], L["Returns the spec icon of the unit. You can specify a size between 16 and 128 (default is 64). Example: mSpecIcon:style{32}"])
+	end
+end
 function module:Initialize()
 	db = E.db.mMediaTag.tags
 

@@ -1,5 +1,6 @@
 <Ui xmlns="http://www.blizzard.com/wow/ui/">
     <Script file="class_icons.lua"/>
+    <Script file="spec_icons.lua"/>
     <Script file="dice_button.lua"/>
     <Script file="difficulty_info.lua"/>
     <Script file="elvui_icons.lua"/>
@@ -17,5 +18,4 @@
     <Script file="details.lua"/>
     <Script file="auto_quest.lua"/>
     <Script file="auto_role_check.lua"/>
-    <Script file="spec_icons.lua"/>
 </Ui>
