@@ -65,15 +65,16 @@ function mMT:Initialize()
 	if IsAddOnLoaded("ElvUI_JiberishIcons") then mMT:AddJIIcons() end
 	if IsAddOnLoaded("Details") then mMT:AddClassIconsToDetails() end
 
-	if Engine[2].DEV then
-		E:Print(format("%s %s", mMT.NameShort, "|cff99ff33DEV mode active|r"))
-	end
+	if Engine[2].DEV then E:Print(format("%s %s", mMT.NameShort, "|cff99ff33DEV mode active|r")) end
 
 	mMT:UpdateAll()
 
 	-- add to movers
 	tinsert(E.ConfigModeLayouts, "MMEDIATAG")
 	E.ConfigModeLocalizedStrings["MMEDIATAG"] = mMT.Name
+
+	-- Set default value for spec icons if the user has the old boolean value
+	if E.db.mMediaTag.portraits.misc.spec_icon == true or E.db.mMediaTag.portraits.misc.spec_icon == false then E.db.mMediaTag.portraits.misc.spec_icon = "none" end
 
 	-- Changelog
 	C_Timer_After(2, function()

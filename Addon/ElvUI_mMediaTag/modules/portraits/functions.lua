@@ -654,10 +654,14 @@ function module:Initialize()
 
 		local classIconStyle = module.db.misc.class_icon
 		local classIcons = (classIconStyle ~= "none") and (MEDIA.icons.class.icons.mmt[classIconStyle] or MEDIA.icons.class.icons.custom[classIconStyle]) or nil
+		local specIconStyle = module.db.misc.spec_icon
+		local specIcons = (specIconStyle ~= "none") and (MEDIA.icons.spec.icons.mmt[specIconStyle] or MEDIA.icons.spec.icons.custom[specIconStyle]) or nil
+
 		module.classIcons = classIcons and classIcons.texture or nil
-		module.useClassIcons = (classIcons and (module.db.misc.class_icon ~= "none") and not module.db.misc.spec_icon) and true or false
+		module.useClassIcons = (classIcons and (module.db.misc.class_icon ~= "none") and (module.db.misc.spec_icon == "none")) and true or false
 		module.texCoords = classIcons and (classIcons.texCoords or MEDIA.icons.class.data) or nil
-		module.useSpecIcon = module.db.misc.spec_icon
+		module.specIcons = specIcons and specIcons.texture or nil
+		module.useSpecIcon = (specIcons and (module.db.misc.spec_icon ~= "none")) and true or false
 
 		module:PLAYER_ENTERING_WORLD()
 	elseif module.isEnabled then
