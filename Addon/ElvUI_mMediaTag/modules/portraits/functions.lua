@@ -168,11 +168,21 @@ local function Update(self, event)
 			self.unit_portrait:SetTexture(module.classIcons, "CLAMP", "CLAMP", "TRILINEAR")
 			module:Mirror(self.unit_portrait, shouldMirror, texCoords)
 		elseif module.useSpecIcon and isPlayer then
-			-- try to get spec from tooltip
 			local info = E.Retail and E:GetUnitSpecInfo(unit)
-			if info and info.icon then
-				self.unit_portrait:SetTexture(info.icon, "CLAMP", "CLAMP", "TRILINEAR")
-				module:Mirror(self.unit_portrait, shouldMirror)
+
+			if info then
+				if module.db.misc.spec_icon == "blizzard" then
+					if info.icon then
+						self.unit_portrait:SetTexture(info.icon, "CLAMP", "CLAMP", "TRILINEAR")
+						module:Mirror(self.unit_portrait, shouldMirror)
+					end
+				else
+					local specID = info and info.id
+
+					local texCoords = module.texCoords[specID].texCoords or module.texCoords[specID]
+					self.unit_portrait:SetTexture(module.specIcons, "CLAMP", "CLAMP", "TRILINEAR")
+					module:Mirror(self.unit_portrait, shouldMirror, texCoords)
+				end
 			end
 		else
 			SetPortraitTexture(self.unit_portrait, unit, true)
@@ -204,13 +214,13 @@ local function DemoUpdate(self)
 	local texCoords
 	local unit = "player"
 	local class = select(2, UnitClass(unit))
+	local specID = select(1, GetSpecializationInfo(GetSpecialization()))
 	local isPlayer = true
 	local shouldMirror = (isPlayer and self.db.mirror) or (not isPlayer and not self.db.mirror)
 
 	if module.useSpecIcon and isPlayer then
-		-- try to get spec from tooltip
-		local info = E.Retail and E:GetUnitSpecInfo(unit)
-		if info and info.icon then self.unit_portrait:SetTexture(info.icon, "CLAMP", "CLAMP", "TRILINEAR") end
+		texCoords = module.texCoords[specID].texCoords or module.texCoords[specID]
+		element.unit_portrait:SetTexture(module.specIcons, "CLAMP", "CLAMP", "TRILINEAR")
 	elseif module.useClassIcons and isPlayer then
 		texCoords = module.texCoords[class].texCoords or module.texCoords[class]
 		element.unit_portrait:SetTexture(module.classIcons, "CLAMP", "CLAMP", "TRILINEAR")
@@ -657,11 +667,14 @@ function module:Initialize()
 		local specIconStyle = module.db.misc.spec_icon
 		local specIcons = (specIconStyle ~= "none") and (MEDIA.icons.spec.icons.mmt[specIconStyle] or MEDIA.icons.spec.icons.custom[specIconStyle]) or nil
 
+		local useClassIcons = (classIcons and (module.db.misc.class_icon ~= "none") and (module.db.misc.spec_icon == "none")) and true or false
+		local useSpecIcon = ((specIcons or specIconStyle == "blizzard")) and (module.db.misc.spec_icon ~= "none") and true or false
+
 		module.classIcons = classIcons and classIcons.texture or nil
-		module.useClassIcons = (classIcons and (module.db.misc.class_icon ~= "none") and (module.db.misc.spec_icon == "none")) and true or false
-		module.texCoords = classIcons and (classIcons.texCoords or MEDIA.icons.class.data) or nil
+		module.useClassIcons = useClassIcons and classIcons
+		module.texCoords = useSpecIcon and (specIcons and (specIcons.texCoords or MEDIA.icons.spec.data)) or classIcons and (classIcons.texCoords or MEDIA.icons.class.data) or nil
 		module.specIcons = specIcons and specIcons.texture or nil
-		module.useSpecIcon = (specIcons and (module.db.misc.spec_icon ~= "none")) and true or false
+		module.useSpecIcon = useSpecIcon and (specIcons or specIconStyle == "blizzard")
 
 		module:PLAYER_ENTERING_WORLD()
 	elseif module.isEnabled then

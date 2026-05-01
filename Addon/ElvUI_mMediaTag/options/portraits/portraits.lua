@@ -129,7 +129,7 @@ mMT.options.args.unitframes.args.portraits.args = {
 						name = L["Class icon"],
 						desc = L["Enable and select a class icon style for the portrait."],
 						disabled = function()
-							return E.db.mMediaTag.portraits.misc.spec_icon
+							return E.db.mMediaTag.portraits.misc.spec_icon ~= "none"
 						end,
 						get = function(info)
 							return E.db.mMediaTag.portraits.misc.class_icon
@@ -152,14 +152,27 @@ mMT.options.args.unitframes.args.portraits.args = {
 					},
 					spec_icon = {
 						order = 2,
-						type = "toggle",
+						type = "select",
 						name = L["Use Spec icons"],
+						desc = L["Enable and select a spec icon style for the portrait."],
 						get = function(info)
 							return E.db.mMediaTag.portraits.misc.spec_icon
 						end,
 						set = function(info, value)
 							E.db.mMediaTag.portraits.misc.spec_icon = value
 							M.Portraits:Initialize()
+						end,
+						values = function()
+							local t = {}
+							for k, v in pairs(MEDIA.icons.spec.icons.mmt) do
+								if type(v) == "table" then t[k] = v.name end
+							end
+							for k, v in pairs(MEDIA.icons.spec.icons.custom) do
+								if type(v) == "table" then t[k] = v.name end
+							end
+							t.none = "None"
+							t.blizzard = "Blizzard"
+							return t
 						end,
 					},
 				},

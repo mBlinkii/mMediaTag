@@ -84,7 +84,7 @@ MEDIA.icons.spec = {
 			texString = "256:384:256:384",
 			texCoords = { 0.25, 0.25, 0.25, 0.375, 0.375, 0.25, 0.375, 0.375 },
 		},
-        -- Priest
+		-- Priest
 		[256] = { -- Discipline
 			texString = "384:512:256:384",
 			texCoords = { 0.375, 0.25, 0.375, 0.375, 0.5, 0.25, 0.5, 0.375 },
@@ -97,7 +97,7 @@ MEDIA.icons.spec = {
 			texString = "640:768:256:384",
 			texCoords = { 0.625, 0.25, 0.625, 0.375, 0.75, 0.25, 0.75, 0.375 },
 		},
-        -- Rogue
+		-- Rogue
 		[259] = { -- Assassination
 			texString = "768:896:256:384",
 			texCoords = { 0.75, 0.25, 0.75, 0.375, 0.875, 0.25, 0.875, 0.375 },
@@ -110,7 +110,7 @@ MEDIA.icons.spec = {
 			texString = "0:128:384:512",
 			texCoords = { 0, 0.375, 0, 0.5, 0.125, 0.375, 0.125, 0.5 },
 		},
-        -- Shaman
+		-- Shaman
 		[262] = { -- Elemental
 			texString = "128:256:384:512",
 			texCoords = { 0.125, 0.375, 0.125, 0.5, 0.25, 0.375, 0.25, 0.5 },
@@ -123,7 +123,7 @@ MEDIA.icons.spec = {
 			texString = "384:512:384:512",
 			texCoords = { 0.375, 0.375, 0.375, 0.5, 0.5, 0.375, 0.5, 0.5 },
 		},
-        -- Warlock
+		-- Warlock
 		[265] = { -- Affliction
 			texString = "512:640:384:512",
 			texCoords = { 0.5, 0.375, 0.5, 0.5, 0.625, 0.375, 0.625, 0.5 },
@@ -136,7 +136,7 @@ MEDIA.icons.spec = {
 			texString = "768:896:384:512",
 			texCoords = { 0.75, 0.375, 0.75, 0.5, 0.875, 0.375, 0.875, 0.5 },
 		},
-        -- Warrior
+		-- Warrior
 		[71] = { -- Arms
 			texString = "896:1024:384:512",
 			texCoords = { 0.875, 0.375, 0.875, 0.5, 1, 0.375, 1, 0.5 },
@@ -149,7 +149,7 @@ MEDIA.icons.spec = {
 			texString = "128:256:512:640",
 			texCoords = { 0.125, 0.5, 0.125, 0.625, 0.25, 0.5, 0.25, 0.625 },
 		},
-        -- Demon Hunter
+		-- Demon Hunter
 		[577] = { -- Havoc
 			texString = "256:384:512:640",
 			texCoords = { 0.25, 0.5, 0.25, 0.625, 0.375, 0.5, 0.375, 0.625 },
@@ -162,7 +162,7 @@ MEDIA.icons.spec = {
 			texString = "512:640:512:640",
 			texCoords = { 0.5, 0.5, 0.5, 0.625, 0.625, 0.5, 0.625, 0.625 },
 		},
-        -- Evoker
+		-- Evoker
 		[1467] = { -- Devastation
 			texString = "640:768:512:640",
 			texCoords = { 0.625, 0.5, 0.625, 0.625, 0.75, 0.5, 0.75, 0.625 },
@@ -178,13 +178,7 @@ MEDIA.icons.spec = {
 	},
 	icons = {
 		mmt = {},
-		custom = {
-			["BLIZZARD"] = {
-				name = "Blizzard",
-				texture = "Interface\\WorldStateFrame\\Icons-Classes",
-				texCoords = CLASS_ICON_TCOORDS,
-			},
-		},
+		custom = {},
 	},
 }
 
@@ -230,14 +224,5 @@ local function AddSpecIcons(style, texture, name)
 end
 
 -- Add mMT Icons to the DB
-AddSpecIcons("mmt_hd_spec_icons", path .. "mmt_hd_spec_icons.tga", "mMT HD")
-AddSpecIcons("mmt_simple_spec_icons", path .. "mmt_simple_spec_icons.tga", "mMT Simple")
-
-
--- Add Icons to Details
---Details:AddCustomIconSet(path, dropdownLabel, isSpecIcons, dropdownIcon, dropdownIconTexCoords, dropdownIconSize, dropdownIconColor)
-function mMT:AddSpecIconsToDetails()
-	for _, data in next, MEDIA.icons.spec.icons.mmt do
-		_G.Details:AddCustomIconSet(data.texture, data.name, true, "Interface\\Addons\\ElvUI_mMediaTag\\media\\icon.tga", { 0, 1, 0, 1 })
-	end
-end
+AddSpecIcons("mmt_hd_spec_icons", path .. "mmt_hd_spec_icons.tga", "mMT Spec Icon HD")
+AddSpecIcons("mmt_simple_spec_icons", path .. "mmt_simple_spec_icons.tga", "mMT Spec Icon Simple")
