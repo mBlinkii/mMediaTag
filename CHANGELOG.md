@@ -1,7 +1,7 @@
 # Changelog - ElvUI_mMediaTag
 [Eng] - All changes to this project will be documented in this file. The latest changes are at the top.
 
-## [ver. 4.05] - 19.04.2026
+## [ver. 4.06] - 02.05.2026
 ### FIX
 - FIX - [Media-Pack]: Removed unused font entries.
 - FIX - [Portraits]: Add Pet events, to prevent wrong Portraits.
@@ -9,8 +9,8 @@
 - UPDATE - [DT-Teleports]: New menu entry use Random Hearthstone.
 - UPDATE - [DT-Teleports]: Updated Teleports.
 ### NEW
-- NEW - [Auto-Sing-Up]: Auto Sing Up & Role check accept module.
-- NEW - [Important-Casts]: Can now Highlight the healthbar of the Unit.
+- NEW - [Portraits]: New Spec icons HD and Simple Textures.
+- NEW - [TAGs]: Spec icon Tags are now available.
 
 ## [ver. 4.05] - 19.04.2026
 ### FIX
