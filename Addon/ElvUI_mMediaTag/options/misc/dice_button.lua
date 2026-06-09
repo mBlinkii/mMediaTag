@@ -37,6 +37,7 @@ mMT.options.args.misc.args.dice_button.args = {
 				end,
 				values = {
 					[10] = "10",
+					[20] = "20",
 					[25] = "25",
 					[50] = "50",
 					[75] = "75",
@@ -62,6 +63,7 @@ mMT.options.args.misc.args.dice_button.args = {
 				end,
 				values = {
 					[10] = "10",
+					[20] = "20",
 					[25] = "25",
 					[50] = "50",
 					[75] = "75",
