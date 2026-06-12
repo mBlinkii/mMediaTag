@@ -4,6 +4,27 @@ local module = mMT:AddModule("RoleIcons")
 local CH = E:GetModule("Chat")
 local UF = E:GetModule("UnitFrames")
 
+local function ForceRoleIconUpdate(frame)
+	if frame.GroupRoleIndicator and frame.IsElementEnabled and frame:IsElementEnabled("GroupRoleIndicator") then
+		frame.GroupRoleIndicator:ForceUpdate()
+	end
+end
+
+local function UpdateHeaderRoleIcons(header)
+	if not header then return end
+
+	for i = 1, header:GetNumChildren() do
+		local child = select(i, header:GetChildren())
+		if child then
+			ForceRoleIconUpdate(child)
+			for j = 1, child:GetNumChildren() do
+				local frame = select(j, child:GetChildren())
+				if frame then ForceRoleIconUpdate(frame) end
+			end
+		end
+	end
+end
+
 function module:Initialize()
 	if not E.db.mMediaTag.role_icons.enable then return end
 
@@ -27,6 +48,16 @@ function module:Initialize()
 		DAMAGER = module.DAMAGER,
 	}
 
-	UF:CreateAndUpdateHeaderGroup("party")
+	if E.private.unitframe.enable then
+		local units = E.db.unitframe.units
+
+		if units.party and units.party.enable then UpdateHeaderRoleIcons(UF.party) end
+
+		for i = 1, 3 do
+			local unit = "raid" .. i
+			if units[unit] and units[unit].enable then UpdateHeaderRoleIcons(UF[unit]) end
+		end
+	end
+
 	CH:CheckLFGRoles()
 end
