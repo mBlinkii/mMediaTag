@@ -93,11 +93,11 @@ function module:Initialize(demo)
 	module.difficulty.lable:SetJustifyH(module.db.font.justify)
 
 	if not module.isEnabled then
-		--"CHALLENGE_MODE_START", "CHALLENGE_MODE_COMPLETED", "PLAYER_ENTERING_WORLD", "UPDATE_INSTANCE_INFO", "ENCOUNTER_END", "SCENARIO_UPDATE", "PLAYER_DIFFICULTY_CHANGED"
-		module:RegisterEvent("UPDATE_INSTANCE_INFO", module.OnEvent)
-		module:RegisterEvent("CHALLENGE_MODE_START", module.OnEvent)
-		module:RegisterEvent("SCENARIO_UPDATE",module.OnEvent)
-		module:RegisterEvent("PLAYER_DIFFICULTY_CHANGED",module.OnEvent)
+		module:RegisterEvent("PLAYER_ENTERING_WORLD", "OnEvent")
+		module:RegisterEvent("UPDATE_INSTANCE_INFO", "OnEvent")
+		module:RegisterEvent("CHALLENGE_MODE_START", "OnEvent")
+		module:RegisterEvent("SCENARIO_UPDATE", "OnEvent")
+		module:RegisterEvent("PLAYER_DIFFICULTY_CHANGED", "OnEvent")
 		module.isEnabled = true
 	end
 
@@ -106,18 +106,7 @@ function module:Initialize(demo)
 	if demo then module:Demo() end
 end
 
-function module:UPDATE_INSTANCE_INFO()
-	UpdateInfos()
-end
-
-function module:CHALLENGE_MODE_START()
-	UpdateInfos()
-end
-
-function module:SCENARIO_UPDATE()
-	UpdateInfos()
-end
-
-function module:PLAYER_DIFFICULTY_CHANGED()
+function module:OnEvent()
+	if not module.difficulty or module.difficulty.demo then return end
 	UpdateInfos()
 end

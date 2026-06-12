@@ -1,6 +1,6 @@
 local mMT, DB, M, E, P, L, MEDIA = unpack(ElvUI_mMediaTag)
 
-local module = mMT:AddModule("DiceButton")
+local module = mMT:AddModule("DiceButton", { "AceEvent-3.0" })
 
 -- Cache WoW Globals
 local CreateFrame = CreateFrame
@@ -76,7 +76,22 @@ function module:Initialize()
 
 		Update()
 		module.dice_button:Show()
+
+		if not module.isEnabled then
+			module:RegisterEvent("PLAYER_ENTERING_WORLD", "OnEvent")
+			module.isEnabled = true
+		end
 	else
+		if module.isEnabled then
+			module:UnregisterEvent("PLAYER_ENTERING_WORLD")
+			module.isEnabled = false
+		end
+
 		if module.dice_button then module.dice_button:Hide() end
 	end
+end
+
+-- prueft bei PLAYER_ENTERING_WORLD, ob der Button existiert, und laedt/aktualisiert ihn
+function module:OnEvent()
+	module:Initialize()
 end
