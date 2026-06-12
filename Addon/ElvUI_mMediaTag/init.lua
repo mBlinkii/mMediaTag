@@ -58,6 +58,9 @@ function mMT:Initialize()
 	Engine[2] = E:CopyTable(Engine[2], MMTDATA)
 	mMT:UpdateDeveloperState()
 
+	-- Weekly-Reset zentral beim Init pruefen, unabhaengig davon ob ein Datatext geladen ist
+	if mMT:GetWeeklyResetTime() then Engine[2].keystones = {} end
+
 	if not mMT.ElvUI_Hooked then
 		mMT:SecureHook(E, "StaggeredUpdateAll", StaggeredUpdateAll)
 		mMT.ElvUI_Hooked = true
