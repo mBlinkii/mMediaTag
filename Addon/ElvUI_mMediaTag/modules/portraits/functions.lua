@@ -438,6 +438,7 @@ local eventHandlers = {
 	PORTRAITS_UPDATED = ForceUpdate,
 	UNIT_CONNECTION = Update,
 	UNIT_PORTRAIT_UPDATE = Update,
+	UNIT_MODEL_CHANGED = Update,
 	PARTY_MEMBER_ENABLE = Update,
 
 	-- cast icon updates
