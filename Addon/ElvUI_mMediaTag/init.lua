@@ -37,8 +37,11 @@ function mMT:InsertOptions()
 end
 
 function mMT:UpdateAll()
-	for _, module in pairs(Engine[3]) do
-		if module.Initialize then module:Initialize() end
+	for name, module in pairs(Engine[3]) do
+		if module.Initialize then
+			local ok, err = pcall(module.Initialize, module)
+			if not ok then geterrorhandler()(format("mMediaTag - module '%s' failed to initialize:\n%s", name, err)) end
+		end
 	end
 end
 
