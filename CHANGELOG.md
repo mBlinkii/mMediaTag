@@ -14,7 +14,6 @@
 - UPDATE - [Dice-Button]: Add dice range.
 ### NEW
 - NEW - [Death-Counter]: Death Counter module for M+ Dungeons like the Difficulty module.
-- NEW - [TAGs]: Spec icon Tags are now available.
 
 ## [ver. 4.06] - 10.05.2026
 ### FIX

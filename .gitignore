@@ -231,3 +231,6 @@ Addon/release.ps1
 Addon/release.bat
 publish.ps1
 publish.bat
+discord_changelog.ps1
+discord_changelog.bat
+DISCORD_CHANGELOG.md
