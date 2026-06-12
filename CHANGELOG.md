@@ -1,6 +1,21 @@
 # Changelog - ElvUI_mMediaTag
 [Eng] - All changes to this project will be documented in this file. The latest changes are at the top.
 
+## [ver. 4.07] - 12.06.2026
+### FIX
+- FIX - [Details-Embedded]: Fix issues with ElvUI chat datatext panels.
+- FIX - [Portraits]: Add missing event.
+- FIX - [Portraits]: Prevent nil error with extra textures.
+- FIX - [Dice-Button]: Was not always displayed.
+- FIX - [Role-Icons]: Fix role icons causes Party Frames to not have pet/target frames.
+### UPDATE
+- UPDATE - [LFG-Info]: Update styles.
+- UPDATE - [System]: Optimized weekly reset function.
+- UPDATE - [Dice-Button]: Add dice range.
+### NEW
+- NEW - [Death-Counter]: Death Counter module for M+ Dungeons like the Difficulty module.
+- NEW - [TAGs]: Spec icon Tags are now available.
+
 ## [ver. 4.06] - 10.05.2026
 ### FIX
 - FIX - [Media-Pack]: Removed unused font entries.
