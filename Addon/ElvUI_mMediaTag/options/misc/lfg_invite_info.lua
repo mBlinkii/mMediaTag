@@ -223,9 +223,45 @@ mMT.options.args.misc.args.lfg_invite_info.args = {
 					mMT:UpdateModule("LFGInviteInfo")
 				end,
 			},
-            style = {
+            theme = {
                 type = "select",
                 order = 7,
+                name = L["Theme"],
+                disabled = function()
+					return not E.db.mMediaTag.lfg_invite_info.enable
+				end,
+                get = function(info)
+                    return E.db.mMediaTag.lfg_invite_info.theme
+                end,
+                set = function(info, value)
+                    E.db.mMediaTag.lfg_invite_info.theme = value
+                    mMT:UpdateModule("LFGInviteInfo")
+                end,
+                values = {
+                    class = L["Class (accent line)"],
+                    gold = L["Gold (frame)"],
+                    minimal = L["Minimal (text only)"],
+                },
+            },
+            embed_icon = {
+                order = 7.5,
+                type = "toggle",
+                name = L["Embed icon"],
+                desc = L["Shows the icon inside the window instead of next to it. Requires the background to be enabled."],
+                disabled = function()
+                    return not E.db.mMediaTag.lfg_invite_info.enable or not E.db.mMediaTag.lfg_invite_info.background or E.db.mMediaTag.lfg_invite_info.icon == "none"
+                end,
+                get = function(info)
+                    return E.db.mMediaTag.lfg_invite_info.embed_icon
+                end,
+                set = function(info, value)
+                    E.db.mMediaTag.lfg_invite_info.embed_icon = value
+                    mMT:UpdateModule("LFGInviteInfo")
+                end,
+            },
+            style = {
+                type = "select",
+                order = 8,
                 name = L["Style"],
                 disabled = function()
 					return not E.db.mMediaTag.lfg_invite_info.enable

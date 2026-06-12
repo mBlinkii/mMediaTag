@@ -674,11 +674,17 @@ L["Show a greeting message in the chat when you log in."] = "Zeigt beim Einlogge
 L["Post your keystone to the chat when someone types !key or !keys into the chat."] = "Postet deinen Schlüsselstein in den Chat, wenn jemand !key oder !keys in den Chat schreibt."
 
 -- options/misc/lfg_invite_info.lua
+L["Class (accent line)"] = "Klasse (Akzentlinie)"
+L["Embed icon"] = "Icon einbetten"
 L["Fade out delay"] = "Ausblendverzögerung"
 L["First line color"] = "Farbe der ersten Zeile"
 L["Font size, bottom line"] = "Schriftgröße, untere Zeile"
+L["Gold (frame)"] = "Gold (Rahmen)"
+L["Minimal (text only)"] = "Minimal (nur Text)"
 L["Second line color"] = "Farbe der zweiten Zeile"
 L["Show in chat"] = "Im Chat anzeigen"
+L["Shows the icon inside the window instead of next to it. Requires the background to be enabled."] = "Zeigt das Icon innerhalb des Fensters statt daneben an. Erfordert einen aktivierten Hintergrund."
+L["Theme"] = "Design"
 L["Third line color"] = "Farbe der dritten Zeile"
 
 -- options/misc/phase_icon.lua

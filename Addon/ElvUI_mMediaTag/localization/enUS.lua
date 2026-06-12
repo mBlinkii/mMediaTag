@@ -674,11 +674,17 @@ L["Show a greeting message in the chat when you log in."] = true
 L["Post your keystone to the chat when someone types !key or !keys into the chat."] = true
 
 -- options/misc/lfg_invite_info.lua
+L["Class (accent line)"] = true
+L["Embed icon"] = true
 L["Fade out delay"] = true
 L["First line color"] = true
 L["Font size, bottom line"] = true
+L["Gold (frame)"] = true
+L["Minimal (text only)"] = true
 L["Second line color"] = true
 L["Show in chat"] = true
+L["Shows the icon inside the window instead of next to it. Requires the background to be enabled."] = true
+L["Theme"] = true
 L["Third line color"] = true
 
 -- options/misc/phase_icon.lua

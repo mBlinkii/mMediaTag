@@ -672,11 +672,17 @@ L["Show a greeting message in the chat when you log in."] = "Показыват�
 L["Post your keystone to the chat when someone types !key or !keys into the chat."] = "Отправлять ваш ключ в чат, когда кто-то пишет !key или !keys."
 
 -- options/misc/lfg_invite_info.lua
+L["Class (accent line)"] = "Класс (акцентная линия)"
+L["Embed icon"] = "Встроить иконку"
 L["Fade out delay"] = "Задержка исчезновения"
 L["First line color"] = "Цвет первой строки"
 L["Font size, bottom line"] = "Размер шрифта, нижняя строка"
+L["Gold (frame)"] = "Золото (рамка)"
+L["Minimal (text only)"] = "Минимал (только текст)"
 L["Second line color"] = "Цвет второй строки"
 L["Show in chat"] = "Показывать в чате"
+L["Shows the icon inside the window instead of next to it. Requires the background to be enabled."] = "Показывает иконку внутри окна, а не рядом с ним. Требуется включённый фон."
+L["Theme"] = "Тема"
 L["Third line color"] = "Цвет третьей строки"
 
 -- options/misc/phase_icon.lua
