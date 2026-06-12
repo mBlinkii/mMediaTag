@@ -2,7 +2,7 @@
 
 `mMediaTag` is a Retail/Mainline plugin for ElvUI that adds a large collection of UI enhancements, custom media, utility datatexts, portrait styles, dock icons, tags, nameplate helpers, and quality-of-life tools.
 
-Version `4.05` is the current Midnight-ready branch of the addon and focuses on a cleaner structure, better performance, and a more modular setup.
+Midnight-ready branch of the addon and focuses on a cleaner structure, better performance, and a more modular setup.
 
 ## What It Adds
 
