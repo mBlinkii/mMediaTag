@@ -28,12 +28,31 @@ jobs:
           cd Addon
           zip -r "../${{ steps.meta.outputs.zipname }}.zip" "ElvUI_mMediaTag" "!mMT_MediaPack"
 
+      # passenden Versions-Abschnitt aus CHANGELOG.md ziehen
+      - name: Changelog-Abschnitt extrahieren
+        id: changelog
+        run: |
+          VERSION="${{ steps.meta.outputs.version }}"
+          awk -v ver="$VERSION" '
+            $0 ~ "^## \\[ver\\. " ver "\\]" {flag=1; next}
+            /^## \[ver\./ {flag=0}
+            flag' CHANGELOG.md > RELEASE_NOTES.md
+          if [ ! -s RELEASE_NOTES.md ]; then
+            echo "WARNUNG: Kein Abschnitt fuer ${VERSION} in CHANGELOG.md gefunden."
+            echo "Siehe CHANGELOG.md im Repository." > RELEASE_NOTES.md
+          fi
+          {
+            echo "notes<<NOTES_EOF"
+            cat RELEASE_NOTES.md
+            echo "NOTES_EOF"
+          } >> "$GITHUB_OUTPUT"
+
       - name: GitHub-Release erstellen
         uses: softprops/action-gh-release@v2
         with:
           name: mMT v${{ steps.meta.outputs.version }}
           files: ${{ steps.meta.outputs.zipname }}.zip
-          generate_release_notes: true
+          body_path: RELEASE_NOTES.md
 
       # Spielversion(en) aus "## Interface: 110200, ..." ableiten (110200 -> 11.2.0)
       - name: Interface-Version aus TOC lesen
@@ -58,5 +77,5 @@ jobs:
           display_name: mMT v${{ steps.meta.outputs.version }}
           game_versions: ${{ steps.game.outputs.versions }}
           release_type: release
-          changelog: "Changelog: https://github.com/${{ github.repository }}/releases/tag/${{ github.ref_name }}"
+          changelog: ${{ steps.changelog.outputs.notes }}
           changelog_type: markdown
