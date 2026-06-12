@@ -1,0 +1,62 @@
+name: Release
+
+# Läuft bei jedem Versions-Tag, z.B.: git tag v4.07 && git push origin v4.07
+on:
+  push:
+    tags:
+      - "v*"
+
+permissions:
+  contents: write
+
+jobs:
+  release:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Version aus TOC lesen, Datum bestimmen
+        id: meta
+        run: |
+          VERSION=$(grep -oP '^## Version:\s*\K.+' "Addon/ElvUI_mMediaTag/ElvUI_mMediaTag_Mainline.toc" | tr -d '\r')
+          DATE=$(date +%d%m%Y)
+          echo "zipname=mMT-v${VERSION}-${DATE}" >> "$GITHUB_OUTPUT"
+          echo "version=${VERSION}" >> "$GITHUB_OUTPUT"
+
+      - name: Zip bauen
+        run: |
+          cd Addon
+          zip -r "../${{ steps.meta.outputs.zipname }}.zip" "ElvUI_mMediaTag" "!mMT_MediaPack"
+
+      - name: GitHub-Release erstellen
+        uses: softprops/action-gh-release@v2
+        with:
+          name: mMT v${{ steps.meta.outputs.version }}
+          files: ${{ steps.meta.outputs.zipname }}.zip
+          generate_release_notes: true
+
+      # Spielversion(en) aus "## Interface: 110200, ..." ableiten (110200 -> 11.2.0)
+      - name: Interface-Version aus TOC lesen
+        id: game
+        run: |
+          IFACES=$(grep -oP '^## Interface:\s*\K.+' "Addon/ElvUI_mMediaTag/ElvUI_mMediaTag_Mainline.toc" | tr -d '\r ' )
+          VERSIONS=""
+          IFS=',' read -ra ARR <<< "$IFACES"
+          for I in "${ARR[@]}"; do
+            V="$((10#$I / 10000)).$(((10#$I % 10000) / 100)).$((10#$I % 100))"
+            VERSIONS="${VERSIONS:+$VERSIONS,}$V"
+          done
+          echo "versions=$VERSIONS" >> "$GITHUB_OUTPUT"
+
+      - name: Auf CurseForge hochladen
+        uses: itsmeow/curseforge-upload@v3
+        with:
+          token: ${{ secrets.CF_API_TOKEN }}
+          project_id: ${{ secrets.CF_PROJECT_ID }}
+          game_endpoint: wow
+          file_path: ${{ steps.meta.outputs.zipname }}.zip
+          display_name: mMT v${{ steps.meta.outputs.version }}
+          game_versions: ${{ steps.game.outputs.versions }}
+          release_type: release
+          changelog: "Changelog: https://github.com/${{ github.repository }}/releases/tag/${{ github.ref_name }}"
+          changelog_type: markdown

@@ -222,3 +222,12 @@ pip-log.txt
 # Luacheck's Cache
 .luacheckcache
 /.vscode
+
+#############
+## Release script
+#############
+
+Addon/release.ps1
+Addon/release.bat
+publish.ps1
+publish.bat
