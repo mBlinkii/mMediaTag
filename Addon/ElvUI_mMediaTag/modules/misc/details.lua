@@ -1,6 +1,6 @@
 local mMT, DB, M, E, P, L, MEDIA = unpack(ElvUI_mMediaTag)
 
-local module = mMT:AddModule("DetailsEmbedded")
+local module = mMT:AddModule("DetailsEmbedded", { "AceEvent-3.0" })
 
 -- Cache WoW Globals
 local _G = _G
@@ -9,6 +9,13 @@ local unpack = unpack
 local Details = _G.Details
 local C_Timer_After = C_Timer.After
 
+local function SetChatFramesShown(chat, shown)
+	for _, frameName in ipairs(_G.CHAT_FRAMES) do
+		local chatFrame = _G[frameName]
+		if chatFrame and chatFrame:GetParent() == chat then chatFrame:SetShown(shown) end
+	end
+end
+
 function module:DetailsEmbeddedToggle()
 	if not module.detailsEmbedded then return end
 
@@ -16,7 +23,7 @@ function module:DetailsEmbeddedToggle()
 
 	if module.detailsEmbedded:IsShown() then
 		E:UIFrameFadeOut(module.detailsEmbedded, 0.5, 1, 0)
-		chat:Show()
+		SetChatFramesShown(chat, true)
 
 		-- move tooltip
 		if E.CreatedMovers.TooltipMover and module.tooltipOrigPoint and not InCombatLockdown() then
@@ -30,7 +37,7 @@ function module:DetailsEmbeddedToggle()
 	else
 		E:UIFrameFadeIn(module.detailsEmbedded, 0.5, 0, 1)
 		module.detailsEmbedded:Show()
-		chat:Hide()
+		SetChatFramesShown(chat, false)
 
 		-- move tooltip
 		if E.CreatedMovers.TooltipMover and not InCombatLockdown() then
@@ -149,40 +156,22 @@ local function DetailsEmbedded()
 		local chatWidth = chat:GetWidth()
 		local chatHeight = (windows > 2) and chat:GetHeight() * 2 or chat:GetHeight()
 
-		local backdrop = chat.backdrop:GetBackdrop()
-		local bbr, bbg, bbb, bba = chat.backdrop:GetBackdropBorderColor()
-		local bdr, bdg, bdb, bda = chat.backdrop:GetBackdropColor()
+		local embedded = CreateFrame("Frame", "mMT_DetailsEmbedded_Frame", UIParent)
 
-		local embedded = CreateFrame("Frame", "mMT_DetailsEmbedded_Frame", UIParent, "BackdropTemplate")
+		if module.toggle and not module.detailsToggle then
+			local backdrop = chat.backdrop:GetBackdrop()
+			local bbr, bbg, bbb, bba = chat.backdrop:GetBackdropBorderColor()
+			local bdr, bdg, bdb, bda = chat.backdrop:GetBackdropColor()
+			module.detailsToggle = CreateToggleButton(backdrop, embedded, { bbr, bbg, bbb, bba }, { bdr, bdg, bdb, bda }, chatHeight, isRightChat)
+		end
 
-		if module.toggle then module.detailsToggle = module.detailsToggle or CreateToggleButton(backdrop, embedded, { bbr, bbg, bbb, bba }, { bdr, bdg, bdb, bda }, chatHeight, isRightChat) end
-
-		local panelBd = E.db.chat.panelBackdrop
-		local hideBackdrop = panelBd == "HIDEBOTH" or panelBd == "LEFT" or panelBd == "RIGHT"
-		local bdAlpha = hideBackdrop and 0 or bba
-		local bgAlpha = hideBackdrop and 0 or bda
-
-		embedded:SetBackdrop(backdrop)
-		embedded:SetBackdropBorderColor(bbr, bbg, bbb, bdAlpha)
-		embedded:SetBackdropColor(bdr, bdg, bdb, bgAlpha)
 		embedded:SetSize(chatWidth, chatHeight)
 		embedded:SetPoint((isRightChat and "BOTTOMRIGHT" or "BOTTOMLEFT"), chat)
-
-		if chat.tex then
-			local texPath = isRightChat and E.db.chat.panelBackdropNameRight or E.db.chat.panelBackdropNameLeft
-
-			local tex = embedded:CreateTexture(nil, "OVERLAY")
-			embedded.tex = tex
-			tex:SetPoint("TOPLEFT", chat, "TOPLEFT", 1, -1)
-			tex:SetPoint("BOTTOMRIGHT", chat, "BOTTOMRIGHT", -1, 1)
-			tex:SetTexture(texPath)
-			tex:SetAlpha(E.db.general.backdropfadecolor.a or 0.5)
-		end
 
 		if windows > 1 then CreateWindows(embedded, windows, chatWidth, chatHeight) end
 
 		embedded:SetFrameStrata("BACKGROUND")
-		chat:Hide()
+		embedded:SetFrameLevel(chat:GetFrameLevel() + 2)
 		embedded:Show()
 
 		module.detailsEmbedded = embedded
@@ -194,7 +183,16 @@ local function DetailsEmbedded()
 		E.CreatedMovers.TooltipMover.mover:ClearAllPoints()
 		E.CreatedMovers.TooltipMover.mover:SetPoint("BOTTOMRIGHT", module.detailsEmbedded, "TOPRIGHT", 0, 0)
 	end
+
+	if module.detailsEmbedded:IsShown() then SetChatFramesShown(chat, false) end
+
 	EmbedDetailsInstances(module.detailsEmbedded, windows)
+end
+
+function module:PLAYER_ENTERING_WORLD()
+	C_Timer_After(1, function()
+		if module.detailsEmbedded and module.detailsEmbedded:IsShown() then SetChatFramesShown(_G[module.mode .. "Panel"], false) end
+	end)
 end
 
 function module:Initialize()
@@ -204,6 +202,11 @@ function module:Initialize()
 	module.mode = E.db.mMediaTag.details.mode
 	module.windows = E.db.mMediaTag.details.windows
 	module.toggle = E.db.mMediaTag.details.toggle
+
+	if not module.isEnabled then
+		module:RegisterEvent("PLAYER_ENTERING_WORLD")
+		module.isEnabled = true
+	end
 
 	DetailsEmbedded()
 end
