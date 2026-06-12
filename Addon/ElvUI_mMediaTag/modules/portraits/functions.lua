@@ -124,10 +124,11 @@ local function UpdateExtraTexture(element, force)
 		color = MEDIA.color.portraits.classification[classification]
 	end
 
-	if not color then return extra:Hide() end
+	local media = element.media[classification]
+	if not (color and media) then return extra:Hide() end
 
-	SetupExtraTexture(element, element.media[classification].low)
-	extra:SetTexture(element.media[classification].texture, "CLAMP", "CLAMP", "TRILINEAR")
+	SetupExtraTexture(element, media.low)
+	extra:SetTexture(media.texture, "CLAMP", "CLAMP", "TRILINEAR")
 
 	if db.gradient then
 		local primary, secondary = color.c, color.g
