@@ -250,6 +250,11 @@ L["Auto Sign Up"] = "자동 신청"
 L["Automatically accepts the dungeon or raid role check popup."] = "던전 또는 공격대 역할 확인 팝업을 자동으로 수락합니다."
 L["Automatically signs up for premade groups when your role is already selected."] = "선택한 역할이 이미 정해져 있으면 미리 구성된 그룹에 자동으로 신청합니다."
 
+-- options/misc/death_counter.lua
+L["Death Counter"] = "죽음 카운터"
+L["Font size"] = "글꼴 크기"
+L["Shows deaths and lost time in the current Mythic+ run."] = "현재 쐐기돌 던전에서의 죽음 횟수와 잃은 시간을 표시합니다."
+
 -- options/misc/difficulty_info.lua
 L["LEFT"] = "왼쪽"
 L["RIGHT"] = "오른쪽"

@@ -459,6 +459,13 @@ mMT.options = {
 					childGroups = "tab",
 					args = {},
 				},
+				death_counter = {
+					order = 5.5,
+					type = "group",
+					name = mMT:AddSettingsIcon(L["Death Counter"], "dungeon"),
+					childGroups = "tab",
+					args = {},
+				},
 				minimap_skin = {
 					order = 6,
 					type = "group",

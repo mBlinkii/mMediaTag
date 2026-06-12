@@ -250,6 +250,11 @@ L["Auto Sign Up"] = "自动报名"
 L["Automatically accepts the dungeon or raid role check popup."] = "自动接受地下城或团队的职责确认弹窗。"
 L["Automatically signs up for premade groups when your role is already selected."] = "当你的职责已选定时，自动报名预创建队伍。"
 
+-- options/misc/death_counter.lua
+L["Death Counter"] = "死亡计数器"
+L["Font size"] = "字体大小"
+L["Shows deaths and lost time in the current Mythic+ run."] = "显示当前大秘境中的死亡次数和损失的时间。"
+
 -- options/misc/difficulty_info.lua
 L["LEFT"] = "左侧"
 L["RIGHT"] = "右侧"

@@ -244,6 +244,11 @@ L["Hover Custom Color"] = true
 L["Left Click"] = true
 L["Right Click"] = true
 
+-- options/misc/death_counter.lua
+L["Death Counter"] = true
+L["Font size"] = true
+L["Shows deaths and lost time in the current Mythic+ run."] = true
+
 -- options/misc/difficulty_info.lua
 L["LEFT"] = true
 L["RIGHT"] = true

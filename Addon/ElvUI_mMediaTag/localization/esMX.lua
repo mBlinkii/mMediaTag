@@ -244,6 +244,11 @@ L["Hover Custom Color"] = "Color personalizado al pasar el mouse"
 L["Left Click"] = "Clic izquierdo"
 L["Right Click"] = "Clic derecho"
 
+-- options/misc/death_counter.lua
+L["Death Counter"] = "Contador de muertes"
+L["Font size"] = "Tamaño de fuente"
+L["Shows deaths and lost time in the current Mythic+ run."] = "Muestra las muertes y el tiempo perdido en la partida Mítica+ actual."
+
 -- options/misc/difficulty_info.lua
 L["LEFT"] = "IZQUIERDA"
 L["RIGHT"] = "DERECHA"

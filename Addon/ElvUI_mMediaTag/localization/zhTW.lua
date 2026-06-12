@@ -250,6 +250,11 @@ L["Auto Sign Up"] = "自動報名"
 L["Automatically accepts the dungeon or raid role check popup."] = "自動接受地城或團隊的角色確認彈出視窗。"
 L["Automatically signs up for premade groups when your role is already selected."] = "當你的角色已選定時，自動報名預組隊伍。"
 
+-- options/misc/death_counter.lua
+L["Death Counter"] = "死亡計數器"
+L["Font size"] = "字體大小"
+L["Shows deaths and lost time in the current Mythic+ run."] = "顯示目前傳奇鑰石地城中的死亡次數和損失的時間。"
+
 -- options/misc/difficulty_info.lua
 L["LEFT"] = "左"
 L["RIGHT"] = "右"

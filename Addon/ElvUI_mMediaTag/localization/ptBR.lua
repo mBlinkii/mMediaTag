@@ -250,6 +250,11 @@ L["Auto Sign Up"] = "Inscrição automática"
 L["Automatically accepts the dungeon or raid role check popup."] = "Aceita automaticamente a janela de verificação de função de masmorra ou raide."
 L["Automatically signs up for premade groups when your role is already selected."] = "Inscreve você automaticamente em grupos prontos quando sua função já estiver selecionada."
 
+-- options/misc/death_counter.lua
+L["Death Counter"] = "Contador de mortes"
+L["Font size"] = "Tamanho da fonte"
+L["Shows deaths and lost time in the current Mythic+ run."] = "Mostra as mortes e o tempo perdido na masmorra Mítica+ atual."
+
 -- options/misc/difficulty_info.lua
 L["LEFT"] = "ESQUERDA"
 L["RIGHT"] = "DIREITA"

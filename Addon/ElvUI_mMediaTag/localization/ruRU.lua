@@ -250,6 +250,11 @@ L["Auto Sign Up"] = "Автозапись"
 L["Automatically accepts the dungeon or raid role check popup."] = "Автоматически принимает всплывающее окно проверки роли для подземелья или рейда."
 L["Automatically signs up for premade groups when your role is already selected."] = "Автоматически записывает вас в заранее собранные группы, если ваша роль уже выбрана."
 
+-- options/misc/death_counter.lua
+L["Death Counter"] = "Счётчик смертей"
+L["Font size"] = "Размер шрифта"
+L["Shows deaths and lost time in the current Mythic+ run."] = "Показывает смерти и потерянное время в текущем эпохальном+ подземелье."
+
 -- options/misc/difficulty_info.lua
 L["LEFT"] = "СЛЕВА"
 L["RIGHT"] = "СПРАВА"

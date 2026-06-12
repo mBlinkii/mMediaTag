@@ -74,6 +74,17 @@ P.difficulty_info = {
 	},
 }
 
+-- death counter
+P.death_counter = {
+	enable = false,
+	background = false,
+	font = {
+		font = "PT Sans Narrow",
+		size = 12,
+		fontFlag = "OUTLINE",
+	},
+}
+
 -- datatexts
 P.datatexts = {
 	text = {
