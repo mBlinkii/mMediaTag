@@ -18,6 +18,13 @@ local math = math
 local pairs = pairs
 local string = string
 local tinsert = tinsert
+local ipairs = ipairs
+local gsub = gsub
+local strfind = strfind
+local strlower = strlower
+local C_LFGList = C_LFGList
+local C_ChallengeMode = C_ChallengeMode
+local IsInGroup = IsInGroup
 
 -- Variables
 mMT.knownTeleports = {
@@ -608,9 +615,69 @@ function mMT:UpdateTeleports()
 	mMT.knownTeleports.other = mMT.knownTeleports.items.available or mMT.knownTeleports.spells.available
 end
 
-local function CreateMenuEntry(id, t)
+local seasonChallengeMaps = {
+	-- midnight s1
+	[393273] = 402, -- AA - Algeth'ar Academy
+	[1254572] = 558, -- MT - Magisters' Terrace
+	[1254559] = 560, -- MC - Maisara Caverns
+	[1254563] = 559, -- NPX - Nexus Point Xenas
+	[1254555] = 556, -- POS - Pit of Saron
+	[1254551] = 239, -- SEAT - Seat of the Triumvirate
+	[159898] = 161, -- SR - Skyreach
+	[1254400] = 557, -- WS - Windrunner Spire
+}
+
+local activeAppStatus = {
+	inviteaccepted = true,
+}
+
+local function GetAppliedDungeonNames()
+	local applied = {}
+	if not IsInGroup() then return applied end
+
+	local applications = C_LFGList.GetApplications()
+	if not applications then return applied end
+
+	for _, resultID in ipairs(applications) do
+		local a, b = C_LFGList.GetApplicationInfo(resultID)
+		local appStatus = (type(a) == "table" and (a.applicationStatus or a.appStatus)) or b
+
+		if appStatus and activeAppStatus[appStatus] then
+			local searchResultData = C_LFGList.GetSearchResultInfo(resultID)
+			local activityID = searchResultData and ((searchResultData.activityIDs and searchResultData.activityIDs[1]) or searchResultData.activityID)
+			local activityInfo = activityID and C_LFGList.GetActivityInfoTable(activityID)
+			if activityInfo and activityInfo.fullName then
+				tinsert(applied, strlower(gsub(activityInfo.fullName, "%s*%(.-%)%s*$", "")))
+			end
+		end
+
+		if DB.DEV then mMT:Print("LFG application:", resultID, tostring(appStatus), applied[#applied] or "-") end
+	end
+
+	return applied
+end
+
+local function IsAppliedDungeon(appliedDungeons, id, teleportName)
+	teleportName = strlower(teleportName)
+
+	local mapID = seasonChallengeMaps[id]
+	local mapName = mapID and C_ChallengeMode.GetMapUIInfo(mapID)
+	mapName = mapName and strlower(mapName)
+
+	for _, dungeonName in ipairs(appliedDungeons) do
+		if mapName and (mapName == dungeonName or strfind(mapName, dungeonName, 1, true) or strfind(dungeonName, mapName, 1, true)) then return true end
+		if strfind(teleportName, dungeonName, 1, true) then return true end
+	end
+
+	return false
+end
+
+local function CreateMenuEntry(id, t, marked)
+	local name = marked and mMT:TC(t.name, "blue") or t.name
+	local text = t.short_name and ("[" .. mMT:TC(t.short_name, "mark") .. "] " .. name) or name
+
 	return {
-		text = t.short_name and ("[" .. mMT:TC(t.short_name, "mark") .. "] " .. t.name) or t.name,
+		text = text,
 		right_text = t.cooldown,
 		icon = t.icon,
 		isTitle = false,
@@ -667,9 +734,18 @@ local function UpdateMenus()
 
 	-- Add season portals menu entry
 	if mMT.knownTeleports.season.available then
+		local appliedDungeons = GetAppliedDungeonNames()
+
+		-- DEV-Hilfe: Challenge-Map-IDs der aktuellen Season fuer seasonChallengeMaps
+		if DB.DEV then
+			for _, mapID in ipairs(C_ChallengeMode.GetMapTable() or {}) do
+				mMT:Print("ChallengeMap:", mapID, "-", (C_ChallengeMode.GetMapUIInfo(mapID)))
+			end
+		end
+
 		tinsert(menus.main, { text = mMT:TC(L["M+ Season"], "title"), isTitle = true, notClickable = true })
 		for id, t in pairs(mMT.knownTeleports.season) do
-			if t and type(t) == "table" then tinsert(menus.main, CreateMenuEntry(id, t)) end
+			if t and type(t) == "table" then tinsert(menus.main, CreateMenuEntry(id, t, IsAppliedDungeon(appliedDungeons, id, t.name))) end
 		end
 	end
 
