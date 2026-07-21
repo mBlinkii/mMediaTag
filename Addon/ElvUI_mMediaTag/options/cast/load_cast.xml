@@ -1,4 +1,0 @@
-<Ui xmlns="http://www.blizzard.com/wow/ui/">
-	<Script file="interrupt_on_cd.lua"/>
-	<Script file="important_casts.lua"/>
-</Ui>
