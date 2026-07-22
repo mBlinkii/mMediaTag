@@ -84,56 +84,48 @@ local roleNames = {
 	DAMAGER = L["DPS"],
 }
 
-local statusDefinitions = {
-	AFK = {
-		check = function(unit)
-			return E:UnitIsAFK(unit)
-		end,
-		color = function()
-			return colors.afk
-		end,
-		label = L["AFK"],
-		iconKey = "afk",
-	},
-	DND = {
-		check = function(unit)
-			return E:UnitIsDND(unit)
-		end,
-		color = function()
-			return colors.dnd
-		end,
-		label = L["DND"],
-		iconKey = "dnd",
-	},
-	Offline = {
+-- Ordered array (fixed priority: Offline > Dead > Ghost > AFK > DND).
+-- text/iconString are prebuilt in RebuildStatusIcons - tag functions only do lookups.
+local statusList = {
+	{
 		check = function(unit)
 			return not UnitIsConnected(unit)
 		end,
-		color = function()
-			return colors.dc
-		end,
 		label = L["Offline"],
+		colorKey = "dc",
 		iconKey = "dc",
 	},
-	Dead = {
+	{
 		check = function(unit)
 			return UnitIsDead(unit)
 		end,
-		color = function()
-			return colors.dead
-		end,
 		label = L["Dead"],
+		colorKey = "dead",
 		iconKey = "dead",
 	},
-	Ghost = {
+	{
 		check = function(unit)
 			return UnitIsGhost(unit)
 		end,
-		color = function()
-			return colors.ghost
-		end,
 		label = L["Ghost"],
+		colorKey = "ghost",
 		iconKey = "ghost",
+	},
+	{
+		check = function(unit)
+			return E:UnitIsAFK(unit)
+		end,
+		label = L["AFK"],
+		colorKey = "afk",
+		iconKey = "afk",
+	},
+	{
+		check = function(unit)
+			return E:UnitIsDND(unit)
+		end,
+		label = L["DND"],
+		colorKey = "dnd",
+		iconKey = "dnd",
 	},
 }
 
@@ -249,19 +241,38 @@ local function RebuildRoleTables()
 	roleIcons.DAMAGER = MEDIA.icons.role[db.misc.dps]
 end
 
+-- Prebuilt tag strings - colors/icons only change via settings (Initialize),
+-- so the concatenation happens once here instead of on every tag update.
+local classificationIconStrings = {}
+local pvpIconString, questIconString
+
+local function BuildIconString(icon, color)
+	local colorString = GetColorString(color)
+	return (icon and colorString) and ("|T" .. icon .. ":16:16:0:0:16:16:0:16:0:16" .. colorString) or nil
+end
+
 local function RebuildClassificationIcons()
 	classificationsIcons.rare = icons[db.classification.rare]
 	classificationsIcons.rareelite = icons[db.classification.rareelite]
 	classificationsIcons.elite = icons[db.classification.elite]
 	classificationsIcons.worldboss = icons[db.classification.worldboss]
+
+	for key, icon in pairs(classificationsIcons) do
+		classificationIconStrings[key] = BuildIconString(icon, colors[key]) or ""
+	end
 end
 
 local function RebuildStatusIcons()
-	statusDefinitions.AFK.icon = icons[db.status.afk]
-	statusDefinitions.DND.icon = icons[db.status.dnd]
-	statusDefinitions.Offline.icon = icons[db.status.dc]
-	statusDefinitions.Dead.icon = icons[db.status.dead]
-	statusDefinitions.Ghost.icon = icons[db.status.ghost]
+	for _, def in next, statusList do
+		local color = colors[def.colorKey]
+		def.text = color and color:WrapTextInColorCode(def.label) or def.label
+		def.iconString = BuildIconString(icons[db.status[def.iconKey]], color)
+	end
+end
+
+local function RebuildMiscIconStrings()
+	pvpIconString = BuildIconString(icons[db.misc.pvp], colors.pvp)
+	questIconString = BuildIconString(icons[db.misc.quest], colors.quest)
 end
 
 -- Secret-safe classification (WoW 12.x) - returns "boss"/"rareelite"/"rare"/"elite" or nil,
@@ -308,15 +319,13 @@ E:AddTag("mMT-classification:icon", "UNIT_CLASSIFICATION_CHANGED INSTANCE_ENCOUN
 	local c = GetTagClassification(unit)
 	if not c then return end
 
-	local color = GetColorString(colors[c])
-
 	if args then
 		local arg1, arg2, arg3 = strsplit(":", args)
-		if c == arg1 or c == arg2 or c == arg3 then return (c and color) and "|T" .. classificationsIcons[c] .. ":16:16:0:0:16:16:0:16:0:16" .. color or "" end
+		if c == arg1 or c == arg2 or c == arg3 then return classificationIconStrings[c] or "" end
 		return -- args set, but no match → show nothing
 	end
 
-	return (c and color) and "|T" .. classificationsIcons[c] .. ":16:16:0:0:16:16:0:16:0:16" .. color or ""
+	return classificationIconStrings[c] or ""
 end)
 E:AddTagInfo(
 	"mMT-classification:icon",
@@ -325,19 +334,17 @@ E:AddTagInfo(
 )
 
 E:AddTag("mMT-status", "UNIT_HEALTH UNIT_CONNECTION PLAYER_FLAGS_CHANGED", function(unit)
-	for _, def in pairs(statusDefinitions) do
-		if def.check(unit) then return def.color:WrapTextInColorCode(def.label) end
+	for i = 1, #statusList do
+		local def = statusList[i]
+		if def.check(unit) then return def.text end
 	end
 end)
 E:AddTagInfo("mMT-status", mMT.NameShort .. " " .. L["Status"], L["Returns the status of the unit (AFK, DND, Offline, Dead, Ghost)."])
 
 E:AddTag("mMT-status:icon", "UNIT_HEALTH UNIT_CONNECTION PLAYER_FLAGS_CHANGED", function(unit)
-	for _, def in pairs(statusDefinitions) do
-		if def.check(unit) then
-			local icon = def.icon
-			local color = GetColorString(def.color())
-			return (color and icon) and "|T" .. icon .. ":16:16:0:0:16:16:0:16:0:16" .. color
-		end
+	for i = 1, #statusList do
+		local def = statusList[i]
+		if def.check(unit) then return def.iconString end
 	end
 end)
 E:AddTagInfo("mMT-status:icon", mMT.NameShort .. " " .. L["Status"], L["Returns the status icon of the unit (AFK, DND, Offline, Dead, Ghost)."])
@@ -524,10 +531,7 @@ E:AddTagInfo(
 
 E:AddTag("mMT-pvp", "UNIT_FACTION", function(unit)
 	local factionGroup = UnitFactionGroup(unit)
-	if UnitIsPVP(unit) and (factionGroup == "Horde" or factionGroup == "Alliance") then
-		local color = GetColorString(colors.pvp)
-		return "|T" .. icons[db.misc.pvp] .. ":16:16:0:0:16:16:0:16:0:16" .. color
-	end
+	if UnitIsPVP(unit) and (factionGroup == "Horde" or factionGroup == "Alliance") then return pvpIconString end
 end)
 E:AddTagInfo("mMT-pvp", mMT.NameShort .. " " .. L["Miscellaneous"], L["Returns a PvP icon if the unit is flagged for PvP and belongs to either the Horde or Alliance faction."])
 
@@ -569,11 +573,7 @@ E:AddTagInfo("mMT-power", mMT.NameShort .. " " .. L["Power"], L["Returns the cur
 E:AddTag("mMT-questicon", "QUEST_LOG_UPDATE", function(unit)
 	if UnitIsPlayer(unit) then return end
 	local isQuest = _TAGS["quest:title"](unit)
-	if isQuest then
-		local icon = icons[db.misc.quest]
-		local color = GetColorString(colors.quest)
-		return (color and icon) and "|T" .. icon .. ":16:16:0:0:16:16:0:16:0:16" .. color
-	end
+	if isQuest then return questIconString end
 end)
 E:AddTagInfo("mMT-questicon", mMT.NameShort .. " " .. L["Miscellaneous"], L["Returns a quest icon if the unit is a quest mob."])
 
@@ -641,6 +641,7 @@ function module:Initialize()
 	RebuildRoleTables()
 	RebuildClassificationIcons()
 	RebuildStatusIcons()
+	RebuildMiscIconStrings()
 
 	if not module.initialized then
 		module:RegisterEvent("PLAYER_ENTERING_WORLD")

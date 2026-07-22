@@ -24,6 +24,7 @@ local GetNodeInfo = C_Traits.GetNodeInfo
 
 local autoRange = { enable = false, range = 0 }
 local markers = setmetatable({}, { __mode = "k" }) -- [healthBar] = { clip, line }
+local execDB -- cached E.db.mMediaTag.nameplates.execute, set in Initialize (hot path: Update_Health fires per health tick per nameplate)
 
 -- spell/talent IDs verified against Plater Nameplates (Interface 12.0.7/12.1.0)
 local function IsTalentLearned(nodeID)
@@ -123,8 +124,8 @@ local function GetMarker(healthBar)
 	return marker
 end
 
-local function UpdateMarker(healthBar)
-	local db = E.db.mMediaTag.nameplates.execute
+local function UpdateMarker(healthBar, force)
+	local db = execDB
 	local marker = markers[healthBar]
 
 	if not (db and db.enable) then
@@ -142,24 +143,38 @@ local function UpdateMarker(healthBar)
 
 	marker = marker or GetMarker(healthBar)
 
+	-- Update_Health fires on every health tick, but the anchors/size only depend
+	-- on the fill texture, bar dimensions and range - skip the layout work unless
+	-- one of those actually changed (or a settings refresh forces it).
 	local fill = healthBar:GetStatusBarTexture()
-	marker.clip:ClearAllPoints()
-	marker.clip:SetPoint("TOPLEFT", healthBar, "TOPLEFT", 0, 0)
-	marker.clip:SetPoint("BOTTOMLEFT", healthBar, "BOTTOMLEFT", 0, 0)
-	marker.clip:SetPoint("RIGHT", fill, "RIGHT", 0, 0)
+	if force or marker.fill ~= fill then
+		marker.clip:ClearAllPoints()
+		marker.clip:SetPoint("TOPLEFT", healthBar, "TOPLEFT", 0, 0)
+		marker.clip:SetPoint("BOTTOMLEFT", healthBar, "BOTTOMLEFT", 0, 0)
+		marker.clip:SetPoint("RIGHT", fill, "RIGHT", 0, 0)
+		marker.fill = fill
+	end
 
-	local color = MEDIA.color.nameplates.execute_color
-	marker.line:SetSize(2, healthBar:GetHeight())
-	marker.line:ClearAllPoints()
-	marker.line:SetPoint("LEFT", healthBar, "LEFT", width * range / 100, 0)
-	if color then marker.line:SetVertexColor(color.r, color.g, color.b) end
+	local height = healthBar:GetHeight()
+	if force or marker.range ~= range or marker.width ~= width or marker.height ~= height then
+		marker.line:SetSize(2, height)
+		marker.line:ClearAllPoints()
+		marker.line:SetPoint("LEFT", healthBar, "LEFT", width * range / 100, 0)
+		marker.range, marker.width, marker.height = range, width, height
+	end
+
+	if force or not marker.colored then
+		local color = MEDIA.color.nameplates.execute_color
+		if color then marker.line:SetVertexColor(color.r, color.g, color.b) end
+		marker.colored = true
+	end
 
 	marker.clip:Show()
 end
 
-local function UpdateAllMarkers()
+local function UpdateAllMarkers(force)
 	for healthBar in pairs(markers) do
-		UpdateMarker(healthBar)
+		UpdateMarker(healthBar, force)
 	end
 end
 
@@ -181,6 +196,8 @@ function module:Initialize()
 	if not E.private.nameplates.enable then return end
 
 	local db = E.db.mMediaTag.nameplates.execute
+	execDB = db
+
 	if not (db and db.enable) then
 		if module.initialized then UpdateAllMarkers() end
 		return
@@ -200,5 +217,5 @@ function module:Initialize()
 		module.initialized = true
 	end
 
-	UpdateAllMarkers()
+	UpdateAllMarkers(true) -- force: settings (range/color/anchors) may have changed
 end

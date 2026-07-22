@@ -480,6 +480,13 @@ mMT.options = {
 					childGroups = "tab",
 					args = {},
 				},
+				objective_tracker = {
+					order = 5.7,
+					type = "group",
+					name = mMT:AddSettingsIcon(L["Objective Tracker"], "quest"),
+					childGroups = "tab",
+					args = {},
+				},
 				minimap_skin = {
 					order = 6,
 					type = "group",

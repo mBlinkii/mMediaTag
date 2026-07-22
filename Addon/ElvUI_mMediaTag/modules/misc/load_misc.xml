@@ -4,6 +4,7 @@
     <Script file="dice_button.lua"/>
     <Script file="difficulty_info.lua"/>
     <Script file="death_counter.lua"/>
+    <Script file="objective_tracker.lua"/>
     <Script file="elvui_icons.lua"/>
     <Script file="greeting_message.lua"/>
     <Script file="keystone_to_chat.lua"/>

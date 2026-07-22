@@ -74,6 +74,44 @@ P.difficulty_info = {
 	},
 }
 
+-- objective tracker skin
+P.objective_tracker = {
+	enable = false,
+	font = {
+		font = "PT Sans Narrow",
+		fontFlag = "OUTLINE",
+		size = {
+			header = 15,
+			title = 13,
+			text = 12,
+		},
+	},
+	colors = {
+		header = { class = true, color = "FFFFC700" },
+		title = { class = false, color = "FFFFC700" },
+		text = { class = false, color = "FFDEDEDE" },
+		complete = { class = false, color = "FF00FF45" },
+	},
+	headerbar = {
+		enable = true,
+		class = true,
+		color = "FF0294FF",
+		texture = "ElvUI Norm",
+		gradient = true,
+	},
+	bg = {
+		enable = false,
+		transparent = true,
+		classBorder = false,
+	},
+	progress = {
+		enable = true,
+		good = { class = false, color = "FF40FF6E" },
+		transit = { class = false, color = "FFFFA10D" },
+		bad = { class = false, color = "FFEB751A" },
+	},
+}
+
 -- death counter
 P.death_counter = {
 	enable = false,

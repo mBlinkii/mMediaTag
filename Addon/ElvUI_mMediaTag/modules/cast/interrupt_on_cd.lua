@@ -92,15 +92,13 @@ local function GetInterruptCooldown()
 	if spellId then return GetSpellCooldownDuration(spellId, true) end
 end
 
-local function SetKickSpark(castbar, castStart, cooldown)
-	local unit = castbar.unit or castbar.__owner.unit
-	if not (unit and UnitCanAttack("player", unit)) then return end
+local function SetKickSpark(castbar, castStart, cooldown, canAttack)
+	if not canAttack then return end
+	if cooldown == nil then return end
 
 	local kickBar = castbar.mMT_KickBar
 	if not kickBar then return end
 	local indicator = kickBar.mMT_Indicator
-
-	if cooldown == nil then return end
 
 	local castDuration = castbar:GetTimerDuration()
 	if not castDuration then return end
@@ -139,7 +137,7 @@ local function SetKickSpark(castbar, castStart, cooldown)
 	end
 end
 
-local function SetCastbarColor(castbar, cooldown)
+local function SetCastbarColor(castbar, cooldown, canAttack)
 	local colors = module.colors
 
 	if castbar.failed or castbar.interrupted or castbar.finished or cooldown == nil then
@@ -148,9 +146,10 @@ local function SetCastbarColor(castbar, cooldown)
 		return
 	end
 
-	local unit = castbar.unit or castbar.__owner.unit
-	if not (unit and UnitCanAttack("player", unit)) then return end
+	if not canAttack then return end
 
+	-- Note: cooldown:IsZero() is potentially a secret value (Midnight) - it must
+	-- never be compared/cached in Lua, only passed to EvalColor/SetAlphaFromBoolean.
 	local color = EvalColor(cooldown:IsZero(), colors.normal, colors.onCD)
 
 	castbar:SetStatusBarColor(color:GetRGBA())
@@ -163,9 +162,13 @@ local function SetCastbarColor(castbar, cooldown)
 end
 
 local function UpdateCast(castbar, castStart)
+	-- resolve unit + attackability once per update instead of once per sub-function
+	local unit = castbar.unit or castbar.__owner.unit
+	local canAttack = unit and UnitCanAttack("player", unit)
+
 	local cooldown = GetInterruptCooldown()
-	SetKickSpark(castbar, castStart, cooldown)
-	SetCastbarColor(castbar, cooldown)
+	SetKickSpark(castbar, castStart, cooldown, canAttack)
+	SetCastbarColor(castbar, cooldown, canAttack)
 end
 
 local function ConstructKickBar(castbar)
