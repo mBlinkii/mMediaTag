@@ -20,23 +20,42 @@ local GetActiveKeystoneInfo = C_ChallengeMode.GetActiveKeystoneInfo
 local GetScenarioHeaderDelvesWidgetVisualizationInfo = C_UIWidgetManager.GetScenarioHeaderDelvesWidgetVisualizationInfo
 
 local shortNames = {
-	-- midnight
-	[2813] = "MR", --Maisarakavernen
-	[2874] = "MC", --Mördergasse
-	[2811] = "MT", --Terrasse der Magister
-	[2915] = "NPX", --Nexuspunkt Xenas
-	[3003] = "TDW", 	--Der Düsterweg
-	[2966] = "TR", 	--Anhöhe der Qual
-	[2961] = "CRYPTS", 	--Gruften der Zwielichtklinge
-	[2952] = "SE", 	--Die Schattenenklave
-	[2825] = "DON", 	--Nalorakks Bau
-	[2923] = "VA", 	--Arena der Leerennarbe
-	[2859] = "BV", 	--Das blendende Tal
-	[2735] = "FP", 	--Gründerspitze
-	[2805] = "WS", 	--Windläuferturm
-	[2964] = "TGM", 	--Die Kluft der Erinnerung
+	-- Midnight Dungeons
+	[2805] = "WS", --Windrunner Spire
+	[2811] = "MT", --Magisters' Terrace
+	[2813] = "MR", --Murder Row
+	[2825] = "DON", --Den of Nalorakk
+	[2859] = "BV", --The Blinding Vale
+	[2874] = "MC", --Maisara Caverns
+	[2915] = "NPX", --Nexus-Point Xenas
+	[2923] = "VA", --Voidscar Arena
+	[2993] = "AOF", --Altar of Fangs (12.1)
 
-	-- tww
+	-- Midnight Raids
+	[1592] = "SF", --Sporefall
+	[2912] = "VS", --The Voidspire
+	[2913] = "MQD", --March on Quel'Danas
+	[2939] = "DR", --The Dreamrift
+	[3004] = "TVA", --The Venomous Abyss (12.1)
+
+	-- Midnight Delves
+	[2933] = "CC", --Collegiate Calamity
+	[2952] = "SE", --The Shadow Enclave
+	[2953] = "PP", --Parhelion Plaza
+	[2961] = "CRYPTS", --Twilight Crypts
+	[2962] = "ATAL", --Atal'Aman
+	[2963] = "GP", --The Grudge Pit
+	[2964] = "TGM", --The Gulf of Memory
+	[2965] = "SS", --Sunkiller Sanctum
+	[2966] = "TR", --Torment's Rise
+	[2979] = "SP", --Shadowguard Point
+	[3003] = "TDW", --The Darkway
+	[3038] = "GI", --Gnarldor Isle (12.1)
+	[3077] = "ROG", --The Ring of Glory (12.1)
+	[3079] = "VD", --Venomfall Deeps (12.1)
+	[2735] = "FP", --Gruenderspitze (TODO: verify ID/english name)
+
+	-- The War Within Dungeons
 	[2648] = "ROOK", --The Rookery
 	[2649] = "PSF", --Priory of the Sacred Flame
 	[2651] = "DFC", --Darkflame Cleft
@@ -45,9 +64,36 @@ local shortNames = {
 	[2661] = "BREW", --Cinderbrew Meadery
 	[2662] = "DAWN", --The Dawnbreaker
 	[2669] = "COT", --City of Threads
+	[2710] = "ATM", --Awakening the Machine
 	[2773] = "FLOOD", --Operation: Floodgate
+	[2830] = "EDA", --Eco-Dome Al'dani
 
-	--df
+	-- The War Within Raids
+	[2657] = "NP", --Nerub-ar Palace
+	[2769] = "LOU", --Liberation of Undermine
+	[2810] = "MFO", --Manaforge Omega
+
+	-- The War Within Delves
+	[2664] = "FF", --Fungal Folly
+	[2679] = "MYCO", --Mycomancer Cavern
+	[2680] = "EM", --Earthcrawl Mines
+	[2681] = "KVR", --Kriegval's Rest
+	[2682] = "ZL", --Zekvir's Lair
+	[2683] = "WW", --The Waterworks
+	[2684] = "DP", --The Dread Pit
+	[2685] = "SB", --Skittering Breach
+	[2686] = "NS", --Nightfall Sanctum
+	[2687] = "SINK", --The Sinkhole
+	[2688] = "SW", --The Spiral Weave
+	[2689] = "TRA", --Tak-Rethan Abyss
+	[2690] = "UNDK", --The Underkeep
+	[2803] = "ARCH", --Archival Assault
+	[2815] = "ES9", --Excavation Site 9
+	[2826] = "SLUICE", --Sidestreet Sluice
+	[2831] = "DD", --Demolition Dome
+	[2951] = "VRS", --Voidrazor Sanctuary
+
+	-- Dragonflight Dungeons
 	[2451] = "ULD", --Uldaman: Legacy of Tyr
 	[2515] = "AV", --The Azure Vault
 	[2516] = "NO", --The Nokhud Offensive
@@ -58,7 +104,12 @@ local shortNames = {
 	[2527] = "HOI", --Halls of Infusion
 	[2579] = "DOTI", --Dawn of the Infinite
 
-	-- sl
+	-- Dragonflight Raids
+	[2522] = "VOTI", --Vault of the Incarnates
+	[2549] = "AMIR", --Amirdrassil, the Dream's Hope
+	[2569] = "ABER", --Aberrus, the Shadowed Crucible
+
+	-- Shadowlands Dungeons
 	[2284] = "SD", --Sanguine Depths
 	[2285] = "SOA", --Spires of Ascension
 	[2286] = "NW", --The Necrotic Wake
@@ -69,7 +120,12 @@ local shortNames = {
 	[2293] = "TOP", --Theater of Pain
 	[2441] = "TAZ", --Tazavesh, the Veiled Market
 
-	-- bfa
+	-- Shadowlands Raids
+	[2296] = "CN", --Castle Nathria
+	[2450] = "SOD", --Sanctum of Domination
+	[2481] = "SFO", --Sepulcher of the First Ones
+
+	-- Battle for Azeroth Dungeons
 	[1594] = "ML", --The MOTHERLODE!!
 	[1754] = "FH", --Freehold
 	[1762] = "KR", --Kings' Rest
@@ -81,8 +137,19 @@ local shortNames = {
 	[1864] = "SOS", --Shrine of the Storm
 	[1877] = "TOS", --Temple of Sethraliss
 	[2097] = "MECHA", --Operation: Mechagon
+	[2212] = "HVO", --Horrific Vision of Orgrimmar
+	[2213] = "HVS", --Horrific Vision of Stormwind
+	[2827] = "HVS", --Horrific Vision of Stormwind (Revisited)
+	[2828] = "HVO", --Horrific Vision of Orgrimmar (Revisited)
 
-	-- legion
+	-- Battle for Azeroth Raids
+	[1861] = "ULDIR", --Uldir
+	[2070] = "BOD", --Battle of Dazar'alor
+	[2096] = "COS", --Crucible of Storms
+	[2164] = "TEP", --The Eternal Palace
+	[2217] = "NYA", --Ny'alotha, the Waking City
+
+	-- Legion Dungeons
 	[1456] = "EOA", --Eye of Azshara
 	[1458] = "NL", --Neltharion's Lair
 	[1466] = "DT", --Darkheart Thicket
@@ -91,31 +158,56 @@ local shortNames = {
 	[1493] = "VOTW", --Vault of the Wardens
 	[1501] = "BRH", --Black Rook Hold
 	[1516] = "ARC", --The Arcway
-	[1544] = "VH", --Violet Hold
+	[1544] = "VH", --Assault on Violet Hold
 	[1571] = "COS", --Court of Stars
 	[1651] = "KARA", --Return to Karazhan
 	[1677] = "COEN", --Cathedral of Eternal Night
 	[1753] = "SEAT", --Seat of the Triumvirate
 
-	-- wod
-	[1182] = "AUCH", --Auchindoun
+	-- Legion Raids
+	[1520] = "EN", --The Emerald Nightmare
+	[1530] = "NH", --The Nighthold
+	[1648] = "TOV", --Trial of Valor
+	[1676] = "TOS", --Tomb of Sargeras
+	[1712] = "ABT", --Antorus, the Burning Throne
+
+	-- Warlords of Draenor Dungeons
 	[1175] = "BSM", --Bloodmaul Slag Mines
 	[1176] = "SBG", --Shadowmoon Burial Grounds
+	[1182] = "AUCH", --Auchindoun
 	[1195] = "ID", --Iron Docks
 	[1208] = "GD", --Grimrail Depot
 	[1209] = "SR", --Skyreach
 	[1279] = "EB", --The Everbloom
 	[1358] = "UBRS", --Upper Blackrock Spire
 
-	-- mop
-	[959] = "SM", --Shado-pan Monastery
+	-- Warlords of Draenor Raids
+	[1205] = "BRF", --Blackrock Foundry
+	[1228] = "HM", --Highmaul
+	[1448] = "HFC", --Hellfire Citadel
+
+	-- Mists of Pandaria Dungeons
+	[959] = "SM", --Shado-Pan Monastery
 	[960] = "TJS", --Temple of the Jade Serpent
 	[961] = "SSB", --Stormstout Brewery
 	[962] = "GOTSS", --Gate of the Setting Sun
-	[994] = "MSP", --Mogu'Shan Palace
+	[994] = "MSP", --Mogu'shan Palace
+	[1001] = "SH", --Scarlet Halls
+	[1004] = "SCM", --Scarlet Monastery
+	[1007] = "SCHOLO", --Scholomance
 	[1011] = "SNT", --Siege of Niuzao Temple
+	[1112] = "PBH", --Pursuing the Black Harvest
 
-	-- cata
+	-- Mists of Pandaria Raids
+	[996] = "TOES", --Terrace of Endless Spring
+	[1008] = "MSV", --Mogu'shan Vaults
+	[1009] = "HOF", --Heart of Fear
+	[1098] = "TOT", --Throne of Thunder
+	[1136] = "SOO", --Siege of Orgrimmar
+
+	-- Cataclysm Dungeons
+	[33] = "SFK", --Shadowfang Keep
+	[36] = "DM", --The Deadmines
 	[568] = "ZA", --Zul'Aman
 	[643] = "TOTT", --Throne of the Tides
 	[644] = "HOC", --Halls of Origination
@@ -129,7 +221,15 @@ local shortNames = {
 	[939] = "WE", --Well of Eternity
 	[940] = "HT", --Hour of Twilight
 
-	--wrath
+	-- Cataclysm Raids
+	[669] = "BWD", --Blackwing Descent
+	[671] = "BOT", --The Bastion of Twilight
+	[720] = "FL", --Firelands
+	[754] = "TFW", --Throne of the Four Winds
+	[757] = "BARA", --Baradin Hold
+	[967] = "DS", --Dragon Soul
+
+	-- Wrath of the Lich King Dungeons
 	[574] = "UK", --Utgarde Keep
 	[575] = "UP", --Utgarde Pinnacle
 	[576] = "NEXUS", --The Nexus
@@ -146,6 +246,61 @@ local shortNames = {
 	[650] = "TOC", --Trial of the Champion
 	[658] = "POS", --Pit of Saron
 	[668] = "HOR", --Halls of Reflection
+
+	-- Wrath of the Lich King Raids
+	[533] = "NAXX", --Naxxramas
+	[603] = "ULDUAR", --Ulduar
+	[615] = "OS", --The Obsidian Sanctum
+	[616] = "EOE", --The Eye of Eternity
+	[624] = "VOA", --Vault of Archavon
+	[631] = "ICC", --Icecrown Citadel
+	[649] = "TOTC", --Trial of the Crusader
+	[724] = "RS", --The Ruby Sanctum
+
+	-- The Burning Crusade Dungeons
+	[269] = "BM", --The Black Morass
+	[540] = "SHH", --The Shattered Halls
+	[542] = "BF", --The Blood Furnace
+	[543] = "RAMP", --Hellfire Ramparts
+	[545] = "STV", --The Steamvault
+	[546] = "UB", --The Underbog
+	[547] = "SLP", --The Slave Pens
+	[552] = "ARCA", --The Arcatraz
+	[553] = "BOTA", --The Botanica
+	[554] = "MECH", --The Mechanar
+	[555] = "SLAB", --Shadow Labyrinth
+	[556] = "SETH", --Sethekk Halls
+	[557] = "MAT", --Mana-Tombs
+	[558] = "AC", --Auchenai Crypts
+	[560] = "OHB", --Old Hillsbrad Foothills
+	[585] = "MGT", --Magisters' Terrace
+
+	-- The Burning Crusade Raids
+	[532] = "KARA", --Karazhan
+	[534] = "HYJAL", --The Battle for Mount Hyjal
+	[544] = "MAG", --Magtheridon's Lair
+	[548] = "SSC", --Serpentshrine Cavern
+	[550] = "TK", --Tempest Keep
+	[564] = "BT", --Black Temple
+	[565] = "GRUUL", --Gruul's Lair
+	[580] = "SWP", --Sunwell Plateau
+
+	-- Classic Dungeons
+	[209] = "ZF", --Zul'Farrak
+	[229] = "BRS", --Blackrock Spire
+	[329] = "STRAT", --Stratholme
+	[429] = "DIRE", --Dire Maul
+
+	-- Classic Raids
+	[249] = "ONY", --Onyxia's Lair
+	[409] = "MOLTEN", --Molten Core
+	[469] = "BWL", --Blackwing Lair
+	[509] = "AQ20", --Ruins of Ahn'Qiraj
+	[531] = "AQ40", --Temple of Ahn'Qiraj
+
+	-- Misc
+	[369] = "TRAM", --Deeprun Tram
+	[1043] = "BGA", --Brawl'gar Arena
 
 	-- Quest Scenarios
 	[2570] = "TFR",
