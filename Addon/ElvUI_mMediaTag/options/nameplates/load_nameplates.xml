@@ -1,0 +1,7 @@
+<Ui xmlns="http://www.blizzard.com/wow/ui/">
+	<Script file="nameplate_tools.lua"/>
+	<Script file="target_highlight.lua"/>
+	<Script file="focus_highlight.lua"/>
+	<Script file="quest_highlight.lua"/>
+	<Script file="auto_friendly_nameplates.lua"/>
+</Ui>

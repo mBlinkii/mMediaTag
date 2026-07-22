@@ -1,0 +1,9 @@
+<Ui xmlns="http://www.blizzard.com/wow/ui/">
+	<Include file="misc\load_misc.xml"/>
+	<Include file="skin\load_skin.xml"/>
+	<Include file="datatexts\load_datatexts.xml"/>
+	<Include file="portraits\load_portraits.xml"/>
+	<Include file="cast\load_cast.xml"/>
+	<Include file="dock\load_dock.xml"/>
+	<Include file="nameplates\load_nameplates.xml"/>
+</Ui>

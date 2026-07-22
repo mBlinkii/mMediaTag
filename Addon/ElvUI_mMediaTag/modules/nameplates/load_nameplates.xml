@@ -1,0 +1,8 @@
+<Ui xmlns="http://www.blizzard.com/wow/ui/">
+	<Script file="shared.lua"/>
+	<Script file="core.lua"/>
+	<Script file="target_glow.lua"/>
+	<Script file="target_highlighter.lua"/>
+	<Script file="focus_highlighter.lua"/>
+	<Script file="quest_highlighter.lua"/>
+</Ui>

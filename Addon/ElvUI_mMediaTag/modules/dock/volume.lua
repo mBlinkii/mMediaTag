@@ -1,0 +1,106 @@
+local mMT, DB, M, E, P, L, MEDIA = unpack(ElvUI_mMediaTag)
+local DT = E:GetModule("DataTexts")
+local Dock = M.Dock
+
+local icons = MEDIA.icons.dock
+local volumeDT = nil
+local panelText
+
+local config = {
+	name = "mMT_Dock_Volume",
+	localizedName = "|CFF01EEFFDock|r" .. " " .. L["Volume"],
+	category = mMT.NameShort .. " - |CFF01EEFFDock|r",
+	icon = {
+		notification = false,
+		texture = MEDIA.fallback,
+		color = { r = 1, g = 1, b = 1, a = 1 },
+	},
+	text = {
+		enable = false,
+		center = true,
+		a = false, -- first label
+	},
+}
+
+local function OnEnter(self)
+	Dock:OnEnter(self)
+	self.mouse_entered = true
+
+	if E.db.mMediaTag.dock.tooltip then
+		if volumeDT then volumeDT.onEnter() end
+	end
+end
+
+local function OnLeave(self)
+	Dock:OnLeave(self)
+	self.mouse_entered = false
+	if E.db.mMediaTag.dock.tooltip then DT.tooltip:Hide() end
+end
+
+local function OnClick(self, btn)
+	Dock:Click(self)
+	volumeDT = mMT:GetElvUIDataText("Volume")
+	if volumeDT then volumeDT.onClick(self, btn) end
+end
+
+local function SetText(_, text)
+	if text and text ~= "" then panelText = text end
+end
+
+local function OnEvent(...)
+	local self, event = ...
+
+	if event == "ELVUI_FORCE_UPDATE" then
+		--setup settings
+		config.icon.texture = icons[E.db.mMediaTag.dock.volume.style][E.db.mMediaTag.dock.volume.icon] or MEDIA.fallback
+		config.icon.color = E.db.mMediaTag.dock.volume.custom_color and MEDIA.color.dock.volume or nil
+		config.text.enable = E.db.mMediaTag.dock.volume.text
+		config.text.a = E.db.mMediaTag.dock.volume.text
+
+		Dock:CreateDockIcon(self, config, event)
+
+		-- Create virtual frames and connect them to datatexts
+		if not self.volumeVirtualFrame then
+			self.volumeVirtualFrame = {
+				name = "Volume",
+				text = {
+					SetFormattedText = E.noop,
+					SetText = E.noop,
+				},
+			}
+			mMT:ConnectVirtualFrameToDataText("Volume", self.volumeVirtualFrame)
+		end
+
+		volumeDT = mMT:GetElvUIDataText("Volume")
+
+		self:EnableMouseWheel(true)
+
+		panelText = self.text:GetText()
+		self.text:SetText("")
+		self.text.SetText = SetText
+	end
+
+	if volumeDT and volumeDT ~= "Data Broker" then volumeDT.eventFunc(...) end
+
+	if E.db.mMediaTag.dock and E.db.mMediaTag.dock.volume and E.db.mMediaTag.dock.volume.text then
+		if panelText then
+			local pattern, suffix
+			if E.db.mMediaTag.dock.volume.colored then
+				pattern = "|cFF%x%x%x%x%x%x.-%%|r"
+				suffix = ""
+			else
+				pattern = "|cFF%x%x%x%x%x%x(%d+)%%|r"
+				suffix = "%"
+			end
+
+			local level = string.match(panelText, pattern)
+			if level then self.mMT_Dock.TextA:SetText(level .. suffix) end
+		end
+	end
+
+	if E.db.mMediaTag.dock and E.db.mMediaTag.dock.tooltip and self.mouse_entered then
+		if volumeDT then volumeDT.onEnter() end
+	end
+end
+
+DT:RegisterDatatext(config.name, config.category, { "CVAR_UPDATE" }, OnEvent, nil, OnClick, OnEnter, OnLeave, config.localizedName, nil, nil)

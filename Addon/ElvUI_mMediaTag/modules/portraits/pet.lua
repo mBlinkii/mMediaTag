@@ -1,0 +1,51 @@
+local mMT, DB, M, E, P, L, MEDIA = unpack(ElvUI_mMediaTag)
+
+local module = mMT:GetModule("Portraits")
+
+function module:InitializePetPortrait()
+	if module.db.pet.enable then
+		local portraits = module.portraits
+		local parent_frame = _G.ElvUF_Pet
+
+		if parent_frame then
+			local unit = "pet"
+			local type = "pet"
+			local name = "Pet"
+
+			portraits[unit] = portraits[unit] or module:CreatePortrait(name, parent_frame, E.db.mMediaTag.portraits.pet)
+
+			if portraits[unit] then
+				portraits[unit].__owner = parent_frame
+				portraits[unit].unit = unit --parent_frame.unit
+				portraits[unit].type = type
+				portraits[unit].db = E.db.mMediaTag.portraits.pet
+				portraits[unit].size = E.db.mMediaTag.portraits.pet.size
+				portraits[unit].point = E.db.mMediaTag.portraits.pet.point
+				portraits[unit].isPlayer = nil
+				portraits[unit].unitClass = nil
+				portraits[unit].lastGUID = nil
+				portraits[unit].realUnit = "pet"
+				portraits[unit].name = name
+				portraits[unit].forceExtra = (E.db.mMediaTag.portraits.pet.forceExtra ~= "none") and E.db.mMediaTag.portraits.pet.forceExtra or nil
+
+				portraits[unit].media = module:UpdateTexturesFiles(E.db.mMediaTag.portraits.pet.texture, E.db.mMediaTag.portraits.pet.mirror)
+
+				module:UpdateSize(portraits[unit], portraits[unit].size, portraits[unit].point)
+				module:InitPortrait(portraits[unit], E.db.mMediaTag.portraits.pet.size, E.db.mMediaTag.portraits.pet.point)
+
+				if not portraits[unit].isEnabled then
+					portraits[unit]:RegisterEvent("UNIT_ENTERED_VEHICLE")
+					portraits[unit]:RegisterEvent("UNIT_EXITING_VEHICLE")
+					portraits[unit]:RegisterEvent("UNIT_EXITED_VEHICLE")
+					portraits[unit]:RegisterEvent("VEHICLE_UPDATE")
+					portraits[unit]:RegisterUnitEvent("UNIT_PET", "player")
+					portraits[unit].isEnabled = true
+				end
+			end
+		end
+	elseif module.portraits.pet then
+		module.portraits.pet:UnregisterAllEvents()
+		module.portraits.pet:Hide()
+		module.portraits.pet = nil
+	end
+end

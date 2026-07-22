@@ -1,0 +1,12 @@
+<Ui xmlns="http://www.blizzard.com/wow/ui/">
+	<Script file="datatexts.lua"/>
+	<Script file="info_combat_time.lua"/>
+	<Script file="info_durability_itemlevel.lua"/>
+	<Script file="info_score.lua"/>
+    <Script file="misc_dungeon.lua"/>
+	<Script file="misc_gamemenu.lua"/>
+	<Script file="misc_individual_professions.lua"/>
+	<Script file="misc_professions.lua"/>
+	<Script file="misc_teleports.lua"/>
+	<Script file="misc_tracker.lua"/>
+</Ui>

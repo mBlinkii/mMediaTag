@@ -1,0 +1,48 @@
+local mMT, DB, M, E, P, L, MEDIA = unpack(ElvUI_mMediaTag)
+
+local module = mMT:GetModule("Portraits")
+
+function module:InitializeTargetPortrait()
+	if module.db.target.enable then
+		local portraits = module.portraits
+		local parent_frame = _G.ElvUF_Target
+
+		if parent_frame then
+			local unit = "target"
+			local type = "target"
+			local name = "Target"
+
+			portraits[unit] = portraits[unit] or module:CreatePortrait(name, parent_frame, E.db.mMediaTag.portraits.target)
+
+			if portraits[unit] then
+				portraits[unit].__owner = parent_frame
+				portraits[unit].unit = unit --parent_frame.unit
+				portraits[unit].type = type
+				portraits[unit].db = E.db.mMediaTag.portraits.target
+				portraits[unit].size = E.db.mMediaTag.portraits.target.size
+				portraits[unit].point = E.db.mMediaTag.portraits.target.point
+				portraits[unit].isPlayer = nil
+				portraits[unit].unitClass = nil
+				portraits[unit].lastGUID = nil
+				--portraits[unit].realUnit = "player"
+				portraits[unit].name = name
+				portraits[unit].forceExtra = (E.db.mMediaTag.portraits.target.forceExtra ~= "none") and E.db.mMediaTag.portraits.target.forceExtra or nil
+
+				portraits[unit].media = module:UpdateTexturesFiles(E.db.mMediaTag.portraits.target.texture, E.db.mMediaTag.portraits.target.mirror)
+
+				module:UpdateSize(portraits[unit], portraits[unit].size, portraits[unit].point)
+				module:InitPortrait(portraits[unit], E.db.mMediaTag.portraits.target.size, E.db.mMediaTag.portraits.target.point)
+
+				if not portraits[unit].isEnabled then
+					portraits[unit]:RegisterEvent("PLAYER_TARGET_CHANGED")
+					portraits[unit]:RegisterEvent("INSTANCE_ENCOUNTER_ENGAGE_UNIT") -- boss tokens became valid -> force update
+					portraits[unit].isEnabled = true
+				end
+			end
+		end
+	elseif module.portraits.target then
+		module.portraits.target:UnregisterAllEvents()
+		module.portraits.target:Hide()
+		module.portraits.target = nil
+	end
+end
