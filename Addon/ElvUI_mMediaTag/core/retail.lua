@@ -452,6 +452,7 @@ local function UpdateColors()
 		[208] = { color = MEDIA.color.DELVE, name = "D" },
 		[216] = { color = MEDIA.color.QUEST, name = "Q" },
 		[220] = { color = MEDIA.color.STORY, name = "S" },
+		[233] = { color = MEDIA.color.M, name = "M" }, --Mythic (Flexible)	raid	new flexible mythic raid size in Midnight
 	}
 end
 
