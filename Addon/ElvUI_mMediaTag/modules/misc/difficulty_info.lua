@@ -10,7 +10,6 @@ local MinimapCluster = _G.MinimapCluster
 local strupper = strupper
 local random = random
 
-
 local function UpdateInfos()
 	local mapDifficulty = MinimapCluster.InstanceDifficulty or _G.MiniMapInstanceDifficulty
 	local mapDifficultyGuild = _G.GuildInstanceDifficulty
@@ -68,18 +67,25 @@ function module:Initialize(demo)
 	module.db = E.db.mMediaTag.difficulty_info
 
 	if not module.difficulty then
-		module.difficulty = CreateFrame("Button", "mMediaTag_Difficulty_Info", E.UIParent, "BackdropTemplate")
+		module.difficulty = CreateFrame("Button", "mMediaTag_Difficulty_Info", E.UIParent)
 		module.difficulty:SetFrameStrata("HIGH")
+		module.difficulty:SetFrameLevel(10)
 		module.difficulty:SetPoint("CENTER", Minimap, "TOPLEFT", 16, -16)
 		module.difficulty:SetSize(32, 32)
-
-		if module.db.background then module.difficulty:SetTemplate("Transparent", true) end
 
 		module.difficulty.lable = module.difficulty:CreateFontString(nil, "OVERLAY")
 		module.difficulty.lable:SetPoint("CENTER", module.difficulty, "CENTER", 0, 0)
 		module.difficulty.lable:SetTextColor(1, 1, 1, 1)
 
-		E:CreateMover(module.difficulty, "mMediaTag_Difficulty_Info_Mover", "mMT " .. L["Difficulty Info"], nil, nil, nil, "ALL,MMEDIATAG", function() return E.db.mMediaTag.difficulty_info.enable end, "mMT,misc,difficulty_info")
+		module.difficulty.bg = CreateFrame("Frame", nil, module.difficulty, "BackdropTemplate")
+		module.difficulty.bg:SetFrameLevel(5)
+		module.difficulty.bg:SetPoint("TOPLEFT", module.difficulty.lable, "TOPLEFT", -6, 6)
+		module.difficulty.bg:SetPoint("BOTTOMRIGHT", module.difficulty.lable, "BOTTOMRIGHT", 6, -6)
+		module.difficulty.bg:SetTemplate("Transparent", true)
+
+		E:CreateMover(module.difficulty, "mMediaTag_Difficulty_Info_Mover", "mMT " .. L["Difficulty Info"], nil, nil, nil, "ALL,MMEDIATAG", function()
+			return E.db.mMediaTag.difficulty_info.enable
+		end, "mMT,misc,difficulty_info")
 		module.difficulty:Hide()
 	end
 
@@ -94,6 +100,8 @@ function module:Initialize(demo)
 	else
 		module.difficulty.lable:SetPoint("CENTER", module.difficulty, "CENTER", 0, 0)
 	end
+
+	module.difficulty.bg:SetShown(module.db.background)
 
 	if not module.isEnabled then
 		module:RegisterEvent("PLAYER_ENTERING_WORLD", "OnEvent")
