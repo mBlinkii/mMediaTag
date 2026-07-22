@@ -77,12 +77,6 @@ function module:Initialize(demo)
 		module.difficulty.lable:SetPoint("CENTER", module.difficulty, "CENTER", 0, 0)
 		module.difficulty.lable:SetTextColor(1, 1, 1, 1)
 
-		module.difficulty.bg = CreateFrame("Frame", nil, module.difficulty, "BackdropTemplate")
-		module.difficulty.bg:SetFrameLevel(5)
-		module.difficulty.bg:SetPoint("TOPLEFT", module.difficulty.lable, "TOPLEFT", -6, 6)
-		module.difficulty.bg:SetPoint("BOTTOMRIGHT", module.difficulty.lable, "BOTTOMRIGHT", 6, -6)
-		module.difficulty.bg:SetTemplate("Transparent", true)
-
 		E:CreateMover(module.difficulty, "mMediaTag_Difficulty_Info_Mover", "mMT " .. L["Difficulty Info"], nil, nil, nil, "ALL,MMEDIATAG", function()
 			return E.db.mMediaTag.difficulty_info.enable
 		end, "mMT,misc,difficulty_info")
@@ -101,7 +95,18 @@ function module:Initialize(demo)
 		module.difficulty.lable:SetPoint("CENTER", module.difficulty, "CENTER", 0, 0)
 	end
 
-	module.difficulty.bg:SetShown(module.db.background)
+	if module.db.background then
+		if not module.difficulty.bg then
+			module.difficulty.bg = CreateFrame("Frame", nil, module.difficulty, "BackdropTemplate")
+			module.difficulty.bg:SetFrameLevel(5)
+			module.difficulty.bg:SetPoint("TOPLEFT", module.difficulty.lable, "TOPLEFT", -6, 6)
+			module.difficulty.bg:SetPoint("BOTTOMRIGHT", module.difficulty.lable, "BOTTOMRIGHT", 6, -6)
+			module.difficulty.bg:SetTemplate("Transparent", true)
+		end
+		module.difficulty.bg:Show()
+	elseif module.difficulty.bg then
+		module.difficulty.bg:Hide()
+	end
 
 	if not module.isEnabled then
 		module:RegisterEvent("PLAYER_ENTERING_WORLD", "OnEvent")
