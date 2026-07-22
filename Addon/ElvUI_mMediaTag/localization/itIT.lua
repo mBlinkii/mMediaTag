@@ -151,7 +151,6 @@ L["Returns the current health of the unit (changes between current health and pe
 L["Returns the current health of the unit."] = "Restituisce la salute attuale dell'unità."
 L["Returns the current health percent of the unit (in combat)."] = "Restituisce la percentuale di salute attuale dell'unità (in combattimento)."
 L["Same as mMT-color, but only for the units target."] = "Uguale a mMT-color, ma solo per il bersaglio dell'unità."
-L["Same as mMT-deathcount, but only shows the count while the player is dead."] = "Uguale a mMT-deathcount, ma mostra il conteggio solo quando il giocatore è morto."
 
 -- modules/misc/tagsold.lua
 L["Name"] = "Nome"
@@ -411,7 +410,6 @@ L["Returns the faction of the unit (Horde or Alliance), but only if it's the opp
 L["Returns the faction of the unit (Horde or Alliance)."] = "Restituisce la fazione dell'unità (Orda o Alleanza)."
 L["Returns the level of the unit. If the unit is at max level or the same level as you, it will return nothing. If the player is resting, it will return a Zzz."] = "Restituisce il livello dell'unità. Se l'unità è al livello massimo o allo stesso livello tuo, non restituirà nulla. Se il giocatore sta riposando, restituirà uno Zzz."
 L["Returns the level of the unit. If the unit is at max level. If the player is resting, it will return a Zzz."] = "Restituisce il livello dell'unità. Se l'unità è al livello massimo, non restituirà nulla. Se il giocatore sta riposando, restituirà uno Zzz."
-L["Returns the number of times the player has died since you entered the instance. Resets when you leave the instance."] = "Restituisce il numero di volte in cui il giocatore è morto da quando sei entrato nell'istanza. Si azzera quando lasci l'istanza."
 L["Returns the role icon of the unit (Tank, Healer, DPS)."] = "Restituisce l'icona del ruolo dell'unità (Tank, Healer, DPS)."
 L["Returns the role of the unit (Tank, Healer, DPS)."] = "Restituisce il ruolo dell'unità (Tank, Healer, DPS)."
 L["Returns the status icon of the unit (AFK, DND, Offline, Dead, Ghost)."] = "Restituisce l'icona di stato dell'unità (AFK, DND, Offline, Morto, Fantasma)."

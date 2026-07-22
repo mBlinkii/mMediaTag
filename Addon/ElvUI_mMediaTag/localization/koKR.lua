@@ -151,7 +151,6 @@ L["Returns the current health of the unit (changes between current health and pe
 L["Returns the current health of the unit."] = "유닛의 현재 생명력을 반환합니다."
 L["Returns the current health percent of the unit (in combat)."] = "유닛의 현재 생명력 백분율을 반환합니다 (전투 중)."
 L["Same as mMT-color, but only for the units target."] = "mMT-color와 같지만, 유닛의 대상에만 적용됩니다."
-L["Same as mMT-deathcount, but only shows the count while the player is dead."] = "mMT-deathcount와 같지만, 플레이어가 죽어 있을 때만 횟수를 표시합니다."
 
 -- modules/misc/tagsold.lua
 L["Name"] = "이름"
@@ -411,7 +410,6 @@ L["Returns the faction of the unit (Horde or Alliance), but only if it's the opp
 L["Returns the faction of the unit (Horde or Alliance)."] = "유닛의 진영(호드 또는 얼라이언스)을 반환합니다."
 L["Returns the level of the unit. If the unit is at max level or the same level as you, it will return nothing. If the player is resting, it will return a Zzz."] = "유닛의 레벨을 반환합니다. 유닛이 최대 레벨이거나 플레이어와 같은 레벨이면 아무것도 반환하지 않습니다. 플레이어가 휴식 중이면 Zzz를 반환합니다."
 L["Returns the level of the unit. If the unit is at max level. If the player is resting, it will return a Zzz."] = "유닛의 레벨을 반환합니다. 유닛이 최대 레벨이면 아무것도 반환하지 않습니다. 플레이어가 휴식 중이면 Zzz를 반환합니다."
-L["Returns the number of times the player has died since you entered the instance. Resets when you leave the instance."] = "인스턴스에 들어온 이후 플레이어가 죽은 횟수를 반환합니다. 인스턴스를 나가면 초기화됩니다."
 L["Returns the role icon of the unit (Tank, Healer, DPS)."] = "유닛의 역할 아이콘(탱커, 치유사, DPS)을 반환합니다."
 L["Returns the role of the unit (Tank, Healer, DPS)."] = "유닛의 역할(탱커, 치유사, DPS)을 반환합니다."
 L["Returns the status icon of the unit (AFK, DND, Offline, Dead, Ghost)."] = "유닛의 상태 아이콘(AFK, DND, 오프라인, 죽음, 유령)을 반환합니다."

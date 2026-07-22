@@ -151,7 +151,6 @@ L["Returns the current health of the unit (changes between current health and pe
 L["Returns the current health of the unit."] = "Возвращает текущее здоровье цели."
 L["Returns the current health percent of the unit (in combat)."] = "Возвращает текущий процент здоровья цели (в бою)."
 L["Same as mMT-color, but only for the units target."] = "То же, что и mMT-color, но только для цели этой цели."
-L["Same as mMT-deathcount, but only shows the count while the player is dead."] = "То же, что и mMT-deathcount, но показывает счётчик только пока игрок мёртв."
 
 -- modules/misc/tagsold.lua
 L["Name"] = "Имя"
@@ -411,7 +410,6 @@ L["Returns the faction of the unit (Horde or Alliance), but only if it's the opp
 L["Returns the faction of the unit (Horde or Alliance)."] = "Возвращает фракцию цели (Орда или Альянс)."
 L["Returns the level of the unit. If the unit is at max level or the same level as you, it will return nothing. If the player is resting, it will return a Zzz."] = "Возвращает уровень цели. Если цель максимального уровня или того же уровня, что и вы, ничего не возвращается. Если игрок отдыхает, будет возвращено Zzz."
 L["Returns the level of the unit. If the unit is at max level. If the player is resting, it will return a Zzz."] = "Возвращает уровень цели. Если цель максимального уровня, ничего не возвращается. Если игрок отдыхает, будет возвращено Zzz."
-L["Returns the number of times the player has died since you entered the instance. Resets when you leave the instance."] = "Возвращает количество смертей игрока с момента входа в подземелье или рейд. Сбрасывается при выходе."
 L["Returns the role icon of the unit (Tank, Healer, DPS)."] = "Возвращает значок роли цели (танк, лекарь, DPS)."
 L["Returns the role of the unit (Tank, Healer, DPS)."] = "Возвращает роль цели (танк, лекарь, DPS)."
 L["Returns the status icon of the unit (AFK, DND, Offline, Dead, Ghost)."] = "Возвращает значок статуса цели (AFK, DND, не в сети, мёртв, призрак)."

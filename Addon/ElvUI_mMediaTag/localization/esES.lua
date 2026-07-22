@@ -151,7 +151,6 @@ L["Returns the current health of the unit (changes between current health and pe
 L["Returns the current health of the unit."] = "Devuelve la salud actual de la unidad."
 L["Returns the current health percent of the unit (in combat)."] = "Devuelve el porcentaje actual de salud de la unidad (en combate)."
 L["Same as mMT-color, but only for the units target."] = "Igual que mMT-color, pero solo para el objetivo de la unidad."
-L["Same as mMT-deathcount, but only shows the count while the player is dead."] = "Igual que mMT-deathcount, pero solo muestra la cuenta mientras el jugador está muerto."
 
 -- modules/misc/tagsold.lua
 L["Name"] = "Nombre"
@@ -411,7 +410,6 @@ L["Returns the faction of the unit (Horde or Alliance), but only if it's the opp
 L["Returns the faction of the unit (Horde or Alliance)."] = "Devuelve la facción de la unidad (Horda o Alianza)."
 L["Returns the level of the unit. If the unit is at max level or the same level as you, it will return nothing. If the player is resting, it will return a Zzz."] = "Devuelve el nivel de la unidad. Si la unidad está al nivel máximo o al mismo nivel que tú, no devolverá nada. Si el jugador está descansando, devolverá un Zzz."
 L["Returns the level of the unit. If the unit is at max level. If the player is resting, it will return a Zzz."] = "Devuelve el nivel de la unidad. Si la unidad está al nivel máximo, no devolverá nada. Si el jugador está descansando, devolverá un Zzz."
-L["Returns the number of times the player has died since you entered the instance. Resets when you leave the instance."] = "Devuelve el número de veces que el jugador ha muerto desde que entraste en la instancia. Se reinicia al salir de la instancia."
 L["Returns the role icon of the unit (Tank, Healer, DPS)."] = "Devuelve el icono de rol de la unidad (Tanque, Sanador, DPS)."
 L["Returns the role of the unit (Tank, Healer, DPS)."] = "Devuelve el rol de la unidad (Tanque, Sanador, DPS)."
 L["Returns the status icon of the unit (AFK, DND, Offline, Dead, Ghost)."] = "Devuelve el icono de estado de la unidad (AFK, DND, Desconectado, Muerto, Fantasma)."

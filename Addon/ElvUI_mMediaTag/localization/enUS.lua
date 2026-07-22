@@ -151,7 +151,6 @@ L["Returns the current health of the unit (changes between current health and pe
 L["Returns the current health of the unit."] = true
 L["Returns the current health percent of the unit (in combat)."] = true
 L["Same as mMT-color, but only for the units target."] = true
-L["Same as mMT-deathcount, but only shows the count while the player is dead."] = true
 
 -- modules/misc/tagsold.lua
 L["Name"] = true
@@ -405,7 +404,6 @@ L["Returns the faction of the unit (Horde or Alliance), but only if it's the opp
 L["Returns the faction of the unit (Horde or Alliance)."] = true
 L["Returns the level of the unit. If the unit is at max level or the same level as you, it will return nothing. If the player is resting, it will return a Zzz."] = true
 L["Returns the level of the unit. If the unit is at max level. If the player is resting, it will return a Zzz."] = true
-L["Returns the number of times the player has died since you entered the instance. Resets when you leave the instance."] = true
 L["Returns the role icon of the unit (Tank, Healer, DPS)."] = true
 L["Returns the role of the unit (Tank, Healer, DPS)."] = true
 L["Returns the status icon of the unit (AFK, DND, Offline, Dead, Ghost)."] = true

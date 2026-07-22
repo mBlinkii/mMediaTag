@@ -151,7 +151,6 @@ L["Returns the current health of the unit (changes between current health and pe
 L["Returns the current health of the unit."] = "Gibt die aktuelle Gesundheit der Einheit zurück."
 L["Returns the current health percent of the unit (in combat)."] = "Gibt den aktuellen Gesundheitsprozentsatz der Einheit zurück (im Kampf)."
 L["Same as mMT-color, but only for the units target."] = "Wie mMT-color, aber nur für das Ziel der Einheit."
-L["Same as mMT-deathcount, but only shows the count while the player is dead."] = "Wie mMT-deathcount, zeigt die Anzahl aber nur an, solange der Spieler tot ist."
 
 -- modules/misc/tagsold.lua
 L["Name"] = "Name"
@@ -405,7 +404,6 @@ L["Returns the faction of the unit (Horde or Alliance), but only if it's the opp
 L["Returns the faction of the unit (Horde or Alliance)."] = "Gibt die Fraktion der Einheit zurück (Horde oder Allianz)."
 L["Returns the level of the unit. If the unit is at max level or the same level as you, it will return nothing. If the player is resting, it will return a Zzz."] = "Gibt die Stufe der Einheit zurück. Wenn die Einheit Maximalstufe oder dieselbe Stufe wie du hat, wird nichts zurückgegeben. Wenn der Spieler sich ausruht, wird ein Zzz zurückgegeben."
 L["Returns the level of the unit. If the unit is at max level. If the player is resting, it will return a Zzz."] = "Gibt die Stufe der Einheit zurück. Wenn die Einheit Maximalstufe hat, wird nichts zurückgegeben. Wenn der Spieler sich ausruht, wird ein Zzz zurückgegeben."
-L["Returns the number of times the player has died since you entered the instance. Resets when you leave the instance."] = "Gibt zurück, wie oft der Spieler gestorben ist, seit du die Instanz betreten hast. Wird beim Verlassen der Instanz zurückgesetzt."
 L["Returns the role icon of the unit (Tank, Healer, DPS)."] = "Gibt das Rollensymbol der Einheit zurück (Tank, Heiler, DPS)."
 L["Returns the role of the unit (Tank, Healer, DPS)."] = "Gibt die Rolle der Einheit zurück (Tank, Heiler, DPS)."
 L["Returns the status icon of the unit (AFK, DND, Offline, Dead, Ghost)."] = "Gibt das Statussymbol der Einheit zurück (AFK, DND, Offline, Tot, Geist)."

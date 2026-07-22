@@ -151,7 +151,6 @@ L["Returns the current health of the unit (changes between current health and pe
 L["Returns the current health of the unit."] = "Renvoie la santé actuelle de l'unité."
 L["Returns the current health percent of the unit (in combat)."] = "Renvoie le pourcentage de santé actuel de l'unité (en combat)."
 L["Same as mMT-color, but only for the units target."] = "Identique à mMT-color, mais uniquement pour la cible de l'unité."
-L["Same as mMT-deathcount, but only shows the count while the player is dead."] = "Identique à mMT-deathcount, mais n'affiche le compteur que lorsque le joueur est mort."
 
 -- modules/misc/tagsold.lua
 L["Name"] = "Nom"
@@ -411,7 +410,6 @@ L["Returns the faction of the unit (Horde or Alliance), but only if it's the opp
 L["Returns the faction of the unit (Horde or Alliance)."] = "Renvoie la faction de l'unité (Horde ou Alliance)."
 L["Returns the level of the unit. If the unit is at max level or the same level as you, it will return nothing. If the player is resting, it will return a Zzz."] = "Renvoie le niveau de l'unité. Si l'unité est au niveau maximum ou au même niveau que vous, rien n'est renvoyé. Si le joueur se repose, un Zzz sera renvoyé."
 L["Returns the level of the unit. If the unit is at max level. If the player is resting, it will return a Zzz."] = "Renvoie le niveau de l'unité. Si l'unité est au niveau maximum, rien n'est renvoyé. Si le joueur se repose, un Zzz sera renvoyé."
-L["Returns the number of times the player has died since you entered the instance. Resets when you leave the instance."] = "Renvoie le nombre de fois où le joueur est mort depuis l'entrée dans l'instance. Se réinitialise à la sortie de l'instance."
 L["Returns the role icon of the unit (Tank, Healer, DPS)."] = "Renvoie l'icône de rôle de l'unité (Tank, Soigneur, DPS)."
 L["Returns the role of the unit (Tank, Healer, DPS)."] = "Renvoie le rôle de l'unité (Tank, Soigneur, DPS)."
 L["Returns the status icon of the unit (AFK, DND, Offline, Dead, Ghost)."] = "Renvoie l'icône de statut de l'unité (AFK, DND, Hors ligne, Mort, Fantôme)."

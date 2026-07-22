@@ -4,6 +4,7 @@ local module = mMT:AddModule("InterruptOnCD", { "AceEvent-3.0" })
 local GetSpellCooldownDuration = C_Spell.GetSpellCooldownDuration
 local EvalColorBool = C_CurveUtil.EvaluateColorValueFromBoolean
 local EvalColor = C_CurveUtil.EvaluateColorFromBoolean
+local UnitCanAttack = UnitCanAttack
 
 local NP = E:GetModule("NamePlates")
 local UF = E:GetModule("UnitFrames")

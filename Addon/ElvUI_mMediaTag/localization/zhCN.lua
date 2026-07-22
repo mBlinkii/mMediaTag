@@ -151,7 +151,6 @@ L["Returns the current health of the unit (changes between current health and pe
 L["Returns the current health of the unit."] = "返回单位当前生命值。"
 L["Returns the current health percent of the unit (in combat)."] = "返回单位当前生命值百分比（战斗中）。"
 L["Same as mMT-color, but only for the units target."] = "与 mMT-color 相同，但仅针对该单位的目标。"
-L["Same as mMT-deathcount, but only shows the count while the player is dead."] = "与 mMT-deathcount 相同，但只在玩家死亡时显示次数。"
 
 -- modules/misc/tagsold.lua
 L["Name"] = "名称"
@@ -411,7 +410,6 @@ L["Returns the faction of the unit (Horde or Alliance), but only if it's the opp
 L["Returns the faction of the unit (Horde or Alliance)."] = "返回单位的阵营（部落或联盟）。"
 L["Returns the level of the unit. If the unit is at max level or the same level as you, it will return nothing. If the player is resting, it will return a Zzz."] = "返回单位等级。如果单位为满级或与你同级，则不返回任何内容。如果玩家处于休息状态，则返回 Zzz。"
 L["Returns the level of the unit. If the unit is at max level. If the player is resting, it will return a Zzz."] = "返回单位等级。如果单位为满级，则不返回任何内容。如果玩家处于休息状态，则返回 Zzz。"
-L["Returns the number of times the player has died since you entered the instance. Resets when you leave the instance."] = "返回自你进入副本以来玩家死亡的次数。离开副本时会重置。"
 L["Returns the role icon of the unit (Tank, Healer, DPS)."] = "返回单位角色图标（坦克、治疗、DPS）。"
 L["Returns the role of the unit (Tank, Healer, DPS)."] = "返回单位角色（坦克、治疗、DPS）。"
 L["Returns the status icon of the unit (AFK, DND, Offline, Dead, Ghost)."] = "返回单位状态图标（AFK、DND、离线、死亡、灵魂）。"

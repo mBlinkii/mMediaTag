@@ -151,7 +151,6 @@ L["Returns the current health of the unit (changes between current health and pe
 L["Returns the current health of the unit."] = "Retorna a vida atual da unidade."
 L["Returns the current health percent of the unit (in combat)."] = "Retorna a porcentagem atual de vida da unidade (em combate)."
 L["Same as mMT-color, but only for the units target."] = "Igual a mMT-color, mas apenas para o alvo da unidade."
-L["Same as mMT-deathcount, but only shows the count while the player is dead."] = "Igual a mMT-deathcount, mas só mostra a contagem enquanto o jogador estiver morto."
 
 -- modules/misc/tagsold.lua
 L["Name"] = "Nome"
@@ -411,7 +410,6 @@ L["Returns the faction of the unit (Horde or Alliance), but only if it's the opp
 L["Returns the faction of the unit (Horde or Alliance)."] = "Retorna a facção da unidade (Horda ou Aliança)."
 L["Returns the level of the unit. If the unit is at max level or the same level as you, it will return nothing. If the player is resting, it will return a Zzz."] = "Retorna o nível da unidade. Se a unidade estiver no nível máximo ou no mesmo nível que você, nada será retornado. Se o jogador estiver descansando, retornará um Zzz."
 L["Returns the level of the unit. If the unit is at max level. If the player is resting, it will return a Zzz."] = "Retorna o nível da unidade. Se a unidade estiver no nível máximo, nada será retornado. Se o jogador estiver descansando, retornará um Zzz."
-L["Returns the number of times the player has died since you entered the instance. Resets when you leave the instance."] = "Retorna o número de vezes que o jogador morreu desde que você entrou na instância. É redefinido quando você sai da instância."
 L["Returns the role icon of the unit (Tank, Healer, DPS)."] = "Retorna o ícone de função da unidade (Tanque, Curador, DPS)."
 L["Returns the role of the unit (Tank, Healer, DPS)."] = "Retorna a função da unidade (Tanque, Curador, DPS)."
 L["Returns the status icon of the unit (AFK, DND, Offline, Dead, Ghost)."] = "Retorna o ícone de status da unidade (AFK, DND, Offline, Morto, Fantasma)."

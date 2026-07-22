@@ -129,9 +129,7 @@ local statusList = {
 	},
 }
 
-local unitDeathCount = {}
 local instanceID = ""
-local instanceType = "none"
 
 local function GetNoDecData()
 	if noDecData then return noDecData end
@@ -191,43 +189,14 @@ local function GetFactionData(unit)
 	return unitFactionCache[guid], guid
 end
 
-local TagDeathCount
+-- Wipe the faction cache on map/instance change so it cannot grow unbounded.
+local function UpdateInstanceState()
+	local _, _, _, _, _, _, _, iID = GetInstanceInfo()
+	local id = tostring(iID)
 
-local function UpdateDeathCount(unit)
-	if not UnitIsPlayer(unit) then return end
-
-	local guid = UnitGUID(unit)
-	if not guid then return end
-
-	local isDead = UnitIsDead(unit) or UnitIsGhost(unit)
-	local data = unitDeathCount[guid]
-
-	if isDead then
-		if not data then
-			unitDeathCount[guid] = { true, 1 }
-		elseif not data[1] then
-			data[1], data[2] = true, data[2] + 1
-		end
-	else
-		if data then data[1] = false end
-	end
-
-	return data and data[2] >= 1 and data[2] or nil
-end
-
-TagDeathCount = function()
-	local instanceInfo = { GetInstanceInfo() }
-	local iID, iType = tostring(instanceInfo[8]), tostring(instanceInfo[2])
-
-	if instanceType == "none" and iType ~= "none" then
-		instanceType = iType
-	elseif instanceType ~= "none" and iType == "none" and unitFactionCache then
+	if id ~= instanceID then
+		instanceID = id
 		unitFactionCache = {}
-	end
-
-	if iID ~= instanceID then
-		instanceID = iID
-		unitDeathCount = {}
 	end
 end
 
@@ -257,9 +226,10 @@ local function RebuildClassificationIcons()
 	classificationsIcons.elite = icons[db.classification.elite]
 	classificationsIcons.worldboss = icons[db.classification.worldboss]
 
-	for key, icon in pairs(classificationsIcons) do
-		classificationIconStrings[key] = BuildIconString(icon, colors[key]) or ""
-	end
+	classificationIconStrings.rare = BuildIconString(classificationsIcons.rare, colors.rare) or ""
+	classificationIconStrings.rareelite = BuildIconString(classificationsIcons.rareelite, colors.rareelite) or ""
+	classificationIconStrings.elite = BuildIconString(classificationsIcons.elite, colors.elite) or ""
+	classificationIconStrings.worldboss = BuildIconString(classificationsIcons.worldboss, colors.worldboss) or ""
 end
 
 local function RebuildStatusIcons()
@@ -441,19 +411,6 @@ E:AddTag("mMT-health:percent", "UNIT_HEALTH UNIT_MAXHEALTH", function(unit)
 	if UnitAffectingCombat(unit) then return _TAGS.perhp(unit) end
 end)
 E:AddTagInfo("mMT-health:percent", mMT.NameShort .. " " .. L["Health"], L["Returns the current health percent of the unit (in combat)."])
-
-E:AddTag("mMT-deathcount", "UNIT_HEALTH", function(unit)
-	if not UnitIsPlayer(unit) then return end
-	return UpdateDeathCount(unit)
-end)
-E:AddTagInfo("mMT-deathcount", mMT.NameShort .. " " .. L["Miscellaneous"], L["Returns the number of times the player has died since you entered the instance. Resets when you leave the instance."])
-
-E:AddTag("mMT-deathcount:ifdeath", "UNIT_HEALTH", function(unit)
-	if not UnitIsPlayer(unit) then return end
-	local count = UpdateDeathCount(unit)
-	if UnitIsDead(unit) or UnitIsGhost(unit) then return count end
-end)
-E:AddTagInfo("mMT-deathcount:ifdeath", mMT.NameShort .. " " .. L["Miscellaneous"], L["Same as mMT-deathcount, but only shows the count while the player is dead."])
 
 E:AddTag("mMT-role", "PLAYER_ROLES_ASSIGNED GROUP_ROSTER_UPDATE", function(unit)
 	local unitRole = UnitGroupRolesAssigned(unit)
@@ -656,5 +613,5 @@ function module:PLAYER_ENTERING_WORLD()
 end
 
 function module:UPDATE_INSTANCE_INFO()
-	TagDeathCount()
+	UpdateInstanceState()
 end
