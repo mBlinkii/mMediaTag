@@ -70,7 +70,7 @@ function module:Initialize(demo)
 	if not module.difficulty then
 		module.difficulty = CreateFrame("Button", "mMediaTag_Difficulty_Info", E.UIParent, "BackdropTemplate")
 		module.difficulty:SetFrameStrata("HIGH")
-		module.difficulty:SetPoint("TOPLEFT", Minimap, "TOPLEFT", 0, 0)
+		module.difficulty:SetPoint("CENTER", Minimap, "TOPLEFT", 16, -16)
 		module.difficulty:SetSize(32, 32)
 
 		if module.db.background then module.difficulty:SetTemplate("Transparent", true) end
@@ -79,18 +79,21 @@ function module:Initialize(demo)
 		module.difficulty.lable:SetPoint("CENTER", module.difficulty, "CENTER", 0, 0)
 		module.difficulty.lable:SetTextColor(1, 1, 1, 1)
 
-		module.difficulty:SetScript("OnShow", function(self)
-			local width = module.difficulty.lable:GetStringWidth() + 20
-			local height = module.difficulty.lable:GetStringHeight() + 20
-			self:SetSize(width, height)
-		end)
-
 		E:CreateMover(module.difficulty, "mMediaTag_Difficulty_Info_Mover", "mMT " .. L["Difficulty Info"], nil, nil, nil, "ALL,MMEDIATAG", function() return E.db.mMediaTag.difficulty_info.enable end, "mMT,misc,difficulty_info")
 		module.difficulty:Hide()
 	end
 
 	E:SetFont(module.difficulty.lable, LSM:Fetch("font", module.db.font.font), module.db.font.size, module.db.font.fontFlag)
 	module.difficulty.lable:SetJustifyH(module.db.font.justify)
+
+	module.difficulty.lable:ClearAllPoints()
+	if module.db.font.justify == "LEFT" then
+		module.difficulty.lable:SetPoint("LEFT", module.difficulty, "LEFT", 4, 0)
+	elseif module.db.font.justify == "RIGHT" then
+		module.difficulty.lable:SetPoint("RIGHT", module.difficulty, "RIGHT", -4, 0)
+	else
+		module.difficulty.lable:SetPoint("CENTER", module.difficulty, "CENTER", 0, 0)
+	end
 
 	if not module.isEnabled then
 		module:RegisterEvent("PLAYER_ENTERING_WORLD", "OnEvent")
