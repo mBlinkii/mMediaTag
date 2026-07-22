@@ -226,3 +226,4 @@ end
 -- Add mMT Icons to the DB
 AddSpecIcons("mmt_hd_spec_icons", path .. "mmt_hd_spec_icons.tga", "mMT Spec Icon HD")
 AddSpecIcons("mmt_simple_spec_icons", path .. "mmt_simple_spec_icons.tga", "mMT Spec Icon Simple")
+AddSpecIcons("mmt_clean_spec_icons", path .. "mmt_clean_spec_icons.tga", "mMT Spec Icon Clean")
