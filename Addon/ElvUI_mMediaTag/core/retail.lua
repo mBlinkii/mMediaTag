@@ -456,6 +456,11 @@ local function UpdateColors()
 	}
 end
 
+-- rebuilds the difficulty table, needs to be called when MEDIA.color objects are replaced (e.g. from the color options)
+function mMT:UpdateDifficultyColors()
+	UpdateColors()
+end
+
 function mMT:GetCurrentDelveTier()
 	local widgetIDs = {
 		{ id = 6183, tierType = "numbered" },
@@ -491,7 +496,7 @@ function mMT:GetPlayerDifficulty()
 end
 
 function mMT:GetDungeonInfo()
-	if not shortDifficulty.OTHER then UpdateColors() end
+	if not shortDifficulty[1] then UpdateColors() end
 
 	local isInInstance, instanceType = IsInInstance()
 	if not isInInstance then return end

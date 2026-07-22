@@ -2,7 +2,11 @@ local mMT, DB, M, E, P, L, MEDIA = unpack(ElvUI_mMediaTag)
 local DT = E:GetModule("DataTexts")
 
 local function UpdateDifficultyModules()
+	mMT:UpdateDifficultyColors()
 	DT:ForceUpdate_DataText("mMT - Dungeon")
+
+	local difficultyInfo = mMT:GetModule("DifficultyInfo")
+	if difficultyInfo and difficultyInfo.OnEvent then difficultyInfo:OnEvent() end
 end
 
 mMT.options.args.colors.args.difficulty.args = {
