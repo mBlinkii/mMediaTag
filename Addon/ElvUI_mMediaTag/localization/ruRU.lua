@@ -152,7 +152,6 @@ L["Returns the current health of the unit."] = "Возвращает текущ�
 L["Returns the current health percent of the unit (in combat)."] = "Возвращает текущий процент здоровья цели (в бою)."
 L["Same as mMT-color, but only for the units target."] = "То же, что и mMT-color, но только для цели этой цели."
 
--- modules/misc/tagsold.lua
 L["Name"] = "Имя"
 L["Returns icons of players currently targeting the unit, but only while in combat."] = "Возвращает значки игроков, которые в данный момент выбрали цель, но только в бою."
 L["Returns the classification icon of the unit. You can specify up to three arguments to display only certain classifications.\nFor example: [mClass:icon{rare:elite}] will only show something if the unit is either rare or elite."] = "Возвращает значок классификации цели. Вы можете указать до трёх аргументов, чтобы отображать только определённые классификации.\nНапример: [mClass:icon{rare:elite}] покажет что-либо только если цель редкая или элитная."

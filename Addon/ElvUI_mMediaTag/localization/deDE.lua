@@ -152,7 +152,6 @@ L["Returns the current health of the unit."] = "Gibt die aktuelle Gesundheit der
 L["Returns the current health percent of the unit (in combat)."] = "Gibt den aktuellen Gesundheitsprozentsatz der Einheit zurück (im Kampf)."
 L["Same as mMT-color, but only for the units target."] = "Wie mMT-color, aber nur für das Ziel der Einheit."
 
--- modules/misc/tagsold.lua
 L["Name"] = "Name"
 L["Returns icons of players currently targeting the unit, but only while in combat."] = "Gibt Symbole von Spielern zurück, die die Einheit aktuell anvisieren, aber nur im Kampf."
 L["Returns the classification icon of the unit. You can specify up to three arguments to display only certain classifications.\nFor example: [mClass:icon{rare:elite}] will only show something if the unit is either rare or elite."] = "Gibt das Klassifikationssymbol der Einheit zurück. Du kannst bis zu drei Argumente angeben, um nur bestimmte Klassifikationen anzuzeigen.\nBeispiel: [mClass:icon{rare:elite}] zeigt nur etwas an, wenn die Einheit selten oder elitär ist."

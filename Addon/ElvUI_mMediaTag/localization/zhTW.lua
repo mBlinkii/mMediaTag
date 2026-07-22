@@ -152,7 +152,6 @@ L["Returns the current health of the unit."] = "回傳單位目前生命值。"
 L["Returns the current health percent of the unit (in combat)."] = "回傳單位目前生命值百分比（戰鬥中）。"
 L["Same as mMT-color, but only for the units target."] = "與 mMT-color 相同，但只針對該單位的目標。"
 
--- modules/misc/tagsold.lua
 L["Name"] = "名稱"
 L["Returns icons of players currently targeting the unit, but only while in combat."] = "回傳目前以該單位為目標的玩家圖示，但只在戰鬥中顯示。"
 L["Returns the classification icon of the unit. You can specify up to three arguments to display only certain classifications.\nFor example: [mClass:icon{rare:elite}] will only show something if the unit is either rare or elite."] = "回傳單位的分類圖示。你可以指定最多三個參數，只顯示某些分類。\n例如：[mClass:icon{rare:elite}] 只有當單位是稀有或精英時才會顯示。"

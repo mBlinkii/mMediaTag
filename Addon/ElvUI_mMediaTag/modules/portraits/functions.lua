@@ -46,6 +46,26 @@ function module:GetUnitColor(unit, class, isPlayer, isDead)
 	end
 end
 
+-- Reusable tables for SetGradient - filled per call instead of creating new
+-- tables on every color update (SetGradient reads the values synchronously).
+local gradientPrimary, gradientSecondary = {}, {}
+local WHITE = { r = 1, g = 1, b = 1, a = 1 }
+
+local function FillColorTable(t, c)
+	t.r, t.g, t.b, t.a = c.r, c.g, c.b, c.a or 1
+	return t
+end
+
+local function ApplyColor(target, element, db, primary, secondary)
+	if not target then return end
+	if db.gradient and not element.media.disable_color then
+		target:SetGradient(db.gradient_mode, FillColorTable(gradientPrimary, primary), FillColorTable(gradientSecondary, secondary))
+	else
+		local c = db.gradient and WHITE or primary
+		target:SetVertexColor(c.r, c.g, c.b, c.a or 1)
+	end
+end
+
 local function UpdateTextureColor(element, unit)
 	local db, e_db = module.db.misc, element.db
 	unit = unit or element.unit
@@ -59,18 +79,8 @@ local function UpdateTextureColor(element, unit)
 		primary, secondary = secondary, primary
 	end
 
-	local function ApplyColor(target)
-		if not target then return end
-		if db.gradient and not element.media.disable_color then
-			target:SetGradient(db.gradient_mode, { r = primary.r, g = primary.g, b = primary.b, a = primary.a or 1 }, { r = secondary.r, g = secondary.g, b = secondary.b, a = secondary.a or 1 })
-		else
-			local c = db.gradient and { r = 1, g = 1, b = 1, a = 1 } or primary
-			target:SetVertexColor(c.r, c.g, c.b, c.a or 1)
-		end
-	end
-
-	ApplyColor(element.texture)
-	ApplyColor(element.embellishment)
+	ApplyColor(element.texture, element, db, primary, secondary)
+	ApplyColor(element.embellishment, element, db, primary, secondary)
 
 	local shouldDesaturate = element.isDead or db.desaturate
 	if shouldDesaturate ~= element.isDesaturated then
@@ -127,7 +137,7 @@ local function UpdateExtraTexture(element, force)
 			primary, secondary = secondary, primary
 		end
 
-		extra:SetGradient(db.gradient_mode, { r = primary.r, g = primary.g, b = primary.b, a = primary.a or 1 }, { r = secondary.r, g = secondary.g, b = secondary.b, a = secondary.a or 1 })
+		extra:SetGradient(db.gradient_mode, FillColorTable(gradientPrimary, primary), FillColorTable(gradientSecondary, secondary))
 	else
 		extra:SetVertexColor(color.c.r, color.c.g, color.c.b, color.c.a or 1)
 	end
@@ -150,7 +160,10 @@ local function Update(self, event)
 	self.lastGUID = secretGUID and " " or guid
 
 	local isAvailable = IsUnitModelReadyForUI(unit) and UnitIsConnected(unit) and UnitIsVisible(unit)
-	local hasStateChanged = newGUID or isAvailable or event == "ForceUpdate" or (self.isDead ~= isDead)
+	-- only do the full update when something actually changed: new GUID, availability
+	-- transition, death transition or an explicit force. Events that change the model
+	-- without changing the GUID (UNIT_MODEL_CHANGED etc.) are mapped to ForceUpdate.
+	local hasStateChanged = newGUID or (self.state ~= isAvailable) or event == "ForceUpdate" or (self.isDead ~= isDead)
 
 	if hasStateChanged then
 		local isPlayer = UnitIsPlayer(unit) or (E.Retail and UnitInPartyIsAI(unit))
@@ -427,10 +440,12 @@ end
 
 local eventHandlers = {
 	-- portrait updates
+	-- UNIT_PORTRAIT_UPDATE/UNIT_MODEL_CHANGED fire when the appearance changes with
+	-- the same GUID (model loaded, form/transmog change) - must bypass change detection
 	PORTRAITS_UPDATED = ForceUpdate,
 	UNIT_CONNECTION = Update,
-	UNIT_PORTRAIT_UPDATE = Update,
-	UNIT_MODEL_CHANGED = Update,
+	UNIT_PORTRAIT_UPDATE = ForceUpdate,
+	UNIT_MODEL_CHANGED = ForceUpdate,
 	PARTY_MEMBER_ENABLE = Update,
 
 	-- cast icon updates
@@ -444,11 +459,11 @@ local eventHandlers = {
 	UNIT_SPELLCAST_EMPOWER_START = UpdateCastIconStart,
 	UNIT_SPELLCAST_EMPOWER_STOP = UpdateCastIconStop,
 
-	-- vehicle updates
-	UNIT_ENTERED_VEHICLE = SimpleUpdate,
-	UNIT_EXITING_VEHICLE = SimpleUpdate,
-	UNIT_EXITED_VEHICLE = SimpleUpdate,
-	VEHICLE_UPDATE = SimpleUpdate,
+	-- vehicle updates (model swaps without a GUID change - bypass change detection)
+	UNIT_ENTERED_VEHICLE = ForceUpdate,
+	UNIT_EXITING_VEHICLE = ForceUpdate,
+	UNIT_EXITED_VEHICLE = ForceUpdate,
+	VEHICLE_UPDATE = ForceUpdate,
 
 	-- target/ focus updates
 	PLAYER_TARGET_CHANGED = SimpleUpdate,
