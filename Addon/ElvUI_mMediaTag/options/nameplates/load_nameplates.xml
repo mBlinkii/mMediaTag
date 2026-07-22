@@ -4,4 +4,5 @@
 	<Script file="focus_highlight.lua"/>
 	<Script file="quest_highlight.lua"/>
 	<Script file="auto_friendly_nameplates.lua"/>
+	<Script file="execute_marker.lua"/>
 </Ui>

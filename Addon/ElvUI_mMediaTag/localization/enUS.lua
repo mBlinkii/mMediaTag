@@ -723,6 +723,14 @@ L["Border color"] = true
 L["Health color"] = true
 L["Ignore threat color"] = true
 
+-- options/nameplates/execute_marker.lua
+L["Automatic range"] = true
+L["Determines the execute range automatically based on your class, spec and talents."] = true
+L["Execute Marker"] = true
+L["Execute range"] = true
+L["Only in combat"] = true
+L["Shows a marker on enemy nameplates at the execute threshold of your spec. Because of the Midnight API restrictions the marker is hidden via clipping once the unit drops below the threshold, health values are never read."] = true
+
 -- options/nameplates/nameplate_tools.lua
 L["ElvUI Color Settings"] = true
 L["Open the ElvUI color settings to adjust the colors used for nameplates."] = true

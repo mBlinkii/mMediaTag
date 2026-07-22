@@ -723,6 +723,14 @@ L["Border color"] = "Randfarbe"
 L["Health color"] = "Gesundheitsfarbe"
 L["Ignore threat color"] = "Bedrohungsfarbe ignorieren"
 
+-- options/nameplates/execute_marker.lua
+L["Automatic range"] = "Automatische Schwelle"
+L["Determines the execute range automatically based on your class, spec and talents."] = "Ermittelt die Hinrichtungsschwelle automatisch anhand von Klasse, Spezialisierung und Talenten."
+L["Execute Marker"] = "Hinrichtungsmarker"
+L["Execute range"] = "Hinrichtungsschwelle"
+L["Only in combat"] = "Nur im Kampf"
+L["Shows a marker on enemy nameplates at the execute threshold of your spec. Because of the Midnight API restrictions the marker is hidden via clipping once the unit drops below the threshold, health values are never read."] = "Zeigt einen Marker auf feindlichen Namensplaketten an der Hinrichtungsschwelle deiner Spezialisierung. Wegen der Midnight-API-Beschränkungen wird der Marker per Clipping ausgeblendet, sobald die Einheit unter die Schwelle fällt - Gesundheitswerte werden nie ausgelesen."
+
 -- options/nameplates/nameplate_tools.lua
 L["ElvUI Color Settings"] = "ElvUI-Farbeinstellungen"
 L["Open the ElvUI color settings to adjust the colors used for nameplates."] = "Öffne die ElvUI-Farbeinstellungen, um die für Namensplaketten verwendeten Farben anzupassen."

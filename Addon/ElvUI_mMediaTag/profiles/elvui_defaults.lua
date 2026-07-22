@@ -578,6 +578,12 @@ P.nameplates = {
 		ignoreThreat = false,
 		texture = "mMediaTag A1",
 	},
+	execute = {
+		enable = false,
+		auto = true,
+		range = 20,
+		onlyCombat = true,
+	},
 }
 
 P.role_icons = {
@@ -793,6 +799,7 @@ P.color = {
 		target_border_color = "FFA200FF",
 		quest_color = "FFFFA500",
 		quest_border_color = "FFFFA500",
+		execute_color = "FFFF3333",
 	},
 
 	phase_icon = {

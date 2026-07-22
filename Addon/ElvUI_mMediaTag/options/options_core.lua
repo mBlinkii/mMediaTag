@@ -149,6 +149,13 @@ mMT.options = {
 					childGroups = "tab",
 					args = {},
 				},
+				execute_marker = {
+					order = 6,
+					type = "group",
+					name = mMT:AddSettingsIcon(L["Execute Marker"], "nameplates"),
+					childGroups = "tab",
+					args = {},
+				},
 			},
 		},
 		datatexts = {

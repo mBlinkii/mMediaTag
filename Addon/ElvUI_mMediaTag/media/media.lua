@@ -165,6 +165,7 @@ MEDIA.color = {
 		target_border_color = createColor("FFA200FF"),
 		quest_color = createColor("FFFFA500"),
 		quest_border_color = createColor("FFFFA500"),
+		execute_color = createColor("FFFF3333"),
 	},
 
 	phase_icon = {
@@ -349,6 +350,7 @@ function mMT:UpdateMedia(arg)
 		MEDIA.color.nameplates.target_border_color = CreateColorFromHexString(E.db.mMediaTag.color.nameplates.target_border_color)
 		MEDIA.color.nameplates.quest_color = CreateColorFromHexString(E.db.mMediaTag.color.nameplates.quest_color)
 		MEDIA.color.nameplates.quest_border_color = CreateColorFromHexString(E.db.mMediaTag.color.nameplates.quest_border_color)
+		MEDIA.color.nameplates.execute_color = CreateColorFromHexString(E.db.mMediaTag.color.nameplates.execute_color)
 	end
 
 	if arg == "phase_icon" or not arg then
