@@ -37,6 +37,7 @@ function module:InitializePartyPortrait()
 					if not portraits[unit].isEnabled then
 						portraits[unit]:RegisterEvent("GROUP_ROSTER_UPDATE")
 						portraits[unit]:RegisterEvent("PARTY_MEMBER_ENABLE")
+						portraits[unit]:RegisterEvent("INSPECT_READY") -- late spec info for new members
 						--portraits[unit]:RegisterEvent("UNIT_HEALTH")
 						portraits[unit].isEnabled = true
 					end

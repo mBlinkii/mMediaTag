@@ -159,20 +159,25 @@ local function Update(self, event)
 	if newGUID then self.guid = guid end
 	self.lastGUID = secretGUID and " " or guid
 
-	local isAvailable = IsUnitModelReadyForUI(unit) and UnitIsConnected(unit) and UnitIsVisible(unit)
+	local isAvailable = self:IsVisible() and IsUnitModelReadyForUI(unit) and UnitIsConnected(unit) and UnitIsVisible(unit)
 	-- only do the full update when something actually changed: new GUID, availability
 	-- transition, death transition or an explicit force. Events that change the model
-	-- without changing the GUID (UNIT_MODEL_CHANGED etc.) are mapped to ForceUpdate.
+	-- without changing the GUID (UNIT_PORTRAIT_UPDATE etc.) are mapped to ForceUpdate.
 	local hasStateChanged = newGUID or (self.state ~= isAvailable) or event == "ForceUpdate" or (self.isDead ~= isDead)
 
 	if hasStateChanged then
 		local isPlayer = UnitIsPlayer(unit) or (E.Retail and UnitInPartyIsAI(unit))
 		local shouldMirror = (isPlayer and self.db.mirror) or (not isPlayer and not self.db.mirror)
 
-		if module.useClassIcons and isPlayer then
-			local texCoords = module.texCoords[class].texCoords or module.texCoords[class]
-			self.unit_portrait:SetTexture(module.classIcons, "CLAMP", "CLAMP", "TRILINEAR")
-			module:Mirror(self.unit_portrait, shouldMirror, texCoords)
+		local applied = false
+
+		if module.useClassIcons and isPlayer and class then
+			local coords = module.texCoords[class]
+			if coords then
+				self.unit_portrait:SetTexture(module.classIcons, "CLAMP", "CLAMP", "TRILINEAR")
+				module:Mirror(self.unit_portrait, shouldMirror, coords.texCoords or coords)
+				applied = true
+			end
 		elseif module.useSpecIcon and isPlayer then
 			local info = E.Retail and E:GetUnitSpecInfo(unit)
 
@@ -181,16 +186,23 @@ local function Update(self, event)
 					if info.icon then
 						self.unit_portrait:SetTexture(info.icon, "CLAMP", "CLAMP", "TRILINEAR")
 						module:Mirror(self.unit_portrait, shouldMirror)
+						applied = true
 					end
 				else
-					local specID = info and info.id
-
-					local texCoords = module.texCoords[specID].texCoords or module.texCoords[specID]
-					self.unit_portrait:SetTexture(module.specIcons, "CLAMP", "CLAMP", "TRILINEAR")
-					module:Mirror(self.unit_portrait, shouldMirror, texCoords)
+					local coords = info.id and module.texCoords[info.id]
+					if coords then
+						self.unit_portrait:SetTexture(module.specIcons, "CLAMP", "CLAMP", "TRILINEAR")
+						module:Mirror(self.unit_portrait, shouldMirror, coords.texCoords or coords)
+						applied = true
+					end
 				end
 			end
-		else
+		end
+
+		if not applied then
+			-- Fallback: never leave the previous units texture visible. Covers a
+			-- freshly joined group member whose spec info is not inspected yet -
+			-- INSPECT_READY re-runs the update once the data arrives.
 			SetPortraitTexture(self.unit_portrait, unit, true)
 			module:Mirror(self.unit_portrait, shouldMirror)
 		end
@@ -405,12 +417,80 @@ local function SimpleUpdate(self, event)
 	Update(self, event)
 end
 
+-- Unit-filtered events (oUF style): registered with RegisterUnitEvent for the
+-- elements CURRENT unit instead of blanket RegisterEvent. Without the filter
+-- every party portrait received these events for EVERY unit in the game
+-- (nameplates, raid, boss) and ran its handler for nothing.
+local portraitUnitEvents = { "UNIT_PORTRAIT_UPDATE", "UNIT_CONNECTION" }
+local castUnitEvents = {
+	"UNIT_SPELLCAST_START",
+	"UNIT_SPELLCAST_CHANNEL_START",
+	"UNIT_SPELLCAST_INTERRUPTED",
+	"UNIT_SPELLCAST_STOP",
+	"UNIT_SPELLCAST_CHANNEL_STOP",
+}
+local castUnitEventsRetail = { "UNIT_SPELLCAST_EMPOWER_START", "UNIT_SPELLCAST_EMPOWER_STOP" }
+
+-- (Re-)register all unit-filtered events for the elements current unit.
+-- RegisterUnitEvent replaces the previous filter, so calling this after a unit
+-- change (party reordering/role sorting, roster update) is enough to re-target
+-- every filtered event. Triggered from: Update_PartyHeader hook,
+-- GROUP_ROSTER_UPDATE (via OnEvent re-sync), OnAttributeChanged("unit") on the
+-- ElvUI button and OnShow.
+local function ApplyUnitEvents(element, force)
+	local unit = element.unit or (element.__owner and element.__owner.unit)
+	if not unit then return end
+	if not force and element.registeredUnit == unit then return end
+	element.registeredUnit = unit
+	element.unit = unit
+
+	for _, event in next, portraitUnitEvents do
+		element:RegisterUnitEvent(event, unit)
+	end
+
+	if element.db and element.db.cast then
+		for _, event in next, castUnitEvents do
+			element:RegisterUnitEvent(event, unit)
+		end
+
+		if E.Retail then
+			for _, event in next, castUnitEventsRetail do
+				element:RegisterUnitEvent(event, unit)
+			end
+		end
+	end
+
+	if element.isDead then element:RegisterUnitEvent("UNIT_HEALTH", unit) end
+end
+
+-- fires once when a hidden frame (and its portrait) becomes visible again -
+-- while hidden all event processing is skipped, so catch up here
+local function OnShow(self)
+	if not self.db then return end
+	ApplyUnitEvents(self)
+	Update(self, "ForceUpdate")
+end
+
+-- safety net for party reordering (role sorting): the secure header re-assigns
+-- the buttons unit attribute - re-target our filtered events and repaint
+local function OnUnitAttributeChanged(frame, name, value)
+	if name ~= "unit" or not value then return end
+
+	local element = frame.mMT_Portrait
+	if element and element.registeredUnit ~= value then
+		element.unit = value
+		ApplyUnitEvents(element)
+		if element:IsVisible() then Update(element, "ForceUpdate") end
+	end
+end
+
 local function PartyUpdate(_, header)
 	if header.groupName == "party" then
 		for i = 1, 5 do
 			local element = module.portraits["party" .. i]
 			if element then
 				element.unit = element.__owner.unit
+				ApplyUnitEvents(element)
 				Update(element, "ForceUpdate")
 			end
 		end
@@ -440,13 +520,16 @@ end
 
 local eventHandlers = {
 	-- portrait updates
-	-- UNIT_PORTRAIT_UPDATE/UNIT_MODEL_CHANGED fire when the appearance changes with
-	-- the same GUID (model loaded, form/transmog change) - must bypass change detection
+	-- UNIT_PORTRAIT_UPDATE fires when the appearance changes with the same GUID
+	-- (model loaded, form/transmog change) - must bypass change detection.
+	-- UNIT_MODEL_CHANGED is intentionally not registered: it is only needed for
+	-- 3D PlayerModel widgets, 2D textures are covered by UNIT_PORTRAIT_UPDATE
+	-- (same split as ElvUIs oUF portrait element).
 	PORTRAITS_UPDATED = ForceUpdate,
 	UNIT_CONNECTION = Update,
 	UNIT_PORTRAIT_UPDATE = ForceUpdate,
-	UNIT_MODEL_CHANGED = ForceUpdate,
 	PARTY_MEMBER_ENABLE = Update,
+	PARTY_MEMBER_DISABLE = Update,
 
 	-- cast icon updates
 	UNIT_SPELLCAST_CHANNEL_START = UpdateCastIconStart,
@@ -471,7 +554,14 @@ local eventHandlers = {
 	UNIT_TARGET = SimpleUpdate,
 
 	-- party
-	GROUP_ROSTER_UPDATE = SimpleUpdate,
+	-- roster changes reshuffle unit tokens without reliable per-token events - always force
+	GROUP_ROSTER_UPDATE = ForceUpdate,
+
+	-- spec info for a freshly joined member arrives async via inspect - repaint
+	-- the matching portrait once (only relevant when spec icons are enabled)
+	INSPECT_READY = function(self, _, guid)
+		if module.useSpecIcon and guid and guid == self.guid then Update(self, "ForceUpdate") end
+	end,
 
 	-- arena
 	ARENA_OPPONENT_UPDATE = Update,
@@ -490,18 +580,17 @@ local eventHandlers = {
 }
 
 local function OnEvent(self, event, eventUnit, arg)
+	-- visibility gate (oUF style): hidden frames do no event work at all,
+	-- OnShow does a single ForceUpdate to catch up
+	if not self:IsVisible() then return end
+
 	local unit = self.__owner.unit or self.unit
-	self.unit = unit
-
-	if eventHandlers[event] then eventHandlers[event](self, event) end
-end
-
-local function RegisterEvent(element, event, unitEvent)
-	if unitEvent then
-		element:RegisterUnitEvent(event, element.unit)
-	else
-		element:RegisterEvent(event)
+	if unit ~= self.unit then
+		self.unit = unit
+		ApplyUnitEvents(self) -- unit token changed - re-target filtered events
 	end
+
+	if eventHandlers[event] then eventHandlers[event](self, event, eventUnit, arg) end
 end
 
 local function adjustColor(color, shift)
@@ -539,55 +628,54 @@ function module:InitPortrait(element)
 		if module.db.bg.classBG then bgColor = adjustColor(bgColor, module.db.bg.bgColorShift or 1) end
 		element.bg:SetVertexColor(bgColor.r, bgColor.g, bgColor.b, bgColor.a)
 
-		-- default events
+		-- non-unit events (fire without unit filter)
 		if not element.eventsSet then
-			for _, event in pairs({ "UNIT_PORTRAIT_UPDATE", "UNIT_MODEL_CHANGED", "UNIT_CONNECTION" }) do
-				RegisterEvent(element, event, (element.type ~= "party"))
-			end
-
 			element:RegisterEvent("PORTRAITS_UPDATED")
 
-			if element.type == "party" then element:RegisterEvent("PARTY_MEMBER_ENABLE") end
-
-			if UnitIsDeadOrGhost(element.unit or "") then element:RegisterUnitEvent("UNIT_HEALTH", element.unit) end
+			if element.type == "party" then
+				element:RegisterEvent("PARTY_MEMBER_ENABLE")
+				element:RegisterEvent("PARTY_MEMBER_DISABLE")
+			end
 
 			element.eventsSet = true
 		end
 
-		if element.type == "party" and not element.party_update then
+		-- module-level flag: the hook updates all 5 party portraits, hooking it
+		-- once per element would run the full loop 5x per header update
+		if element.type == "party" and not module.partyHeaderHooked then
 			hooksecurefunc(UF, "Update_PartyHeader", PartyUpdate)
-			element.party_update = true
+			module.partyHeaderHooked = true
 		end
 
-		-- cast events
-		if element.db.cast and not element.cast_eventsSet then
-			for _, event in pairs({ "UNIT_SPELLCAST_START", "UNIT_SPELLCAST_CHANNEL_START", "UNIT_SPELLCAST_INTERRUPTED", "UNIT_SPELLCAST_STOP", "UNIT_SPELLCAST_CHANNEL_STOP" }) do
-				RegisterEvent(element, event, (element.type ~= "party"))
+		-- safety net for party reordering: watch the buttons secure unit attribute
+		if element.type == "party" and element.__owner and not element.unitAttributeHooked then
+			element.__owner.mMT_Portrait = element
+			element.__owner:HookScript("OnAttributeChanged", OnUnitAttributeChanged)
+			element.unitAttributeHooked = true
+		end
+
+		-- cast events disabled since last init -> drop them
+		if element.cast_eventsSet and not element.db.cast then
+			for _, event in next, castUnitEvents do
+				element:UnregisterEvent(event)
 			end
 
 			if E.Retail then
-				for _, event in pairs({ "UNIT_SPELLCAST_EMPOWER_START", "UNIT_SPELLCAST_EMPOWER_STOP" }) do
-					RegisterEvent(element, event, (element.type ~= "party"))
+				for _, event in next, castUnitEventsRetail do
+					element:UnregisterEvent(event)
 				end
 			end
-
-			element.cast_eventsSet = true
-		elseif element.cast_eventsSet and not element.db.cast then
-			element:UnregisterEvent("UNIT_SPELLCAST_START")
-			element:UnregisterEvent("UNIT_SPELLCAST_CHANNEL_START")
-			element:UnregisterEvent("UNIT_SPELLCAST_INTERRUPTED")
-			element:UnregisterEvent("UNIT_SPELLCAST_STOP")
-			element:UnregisterEvent("UNIT_SPELLCAST_CHANNEL_STOP")
-
-			if E.Retail then
-				element:UnregisterEvent("UNIT_SPELLCAST_EMPOWER_START")
-				element:UnregisterEvent("UNIT_SPELLCAST_EMPOWER_STOP")
-			end
-			element.cast_eventsSet = false
 		end
+		element.cast_eventsSet = element.db.cast and true or false
 
-		Update(element, "ForceUpdate")
+		-- unit-filtered events (force: settings or unit may have changed)
+		ApplyUnitEvents(element, true)
+
+		if UnitIsDeadOrGhost(element.unit or "") then element:RegisterUnitEvent("UNIT_HEALTH", element.unit) end
+
+		element:SetScript("OnShow", OnShow)
 		element:SetScript("OnEvent", OnEvent)
+		Update(element, "ForceUpdate")
 	end
 end
 
