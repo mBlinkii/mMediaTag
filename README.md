@@ -6,7 +6,7 @@
 
 <img src="Logo/icon%20v4.png" alt="mMediaTag Icon" width="90"/>
 
-**A Retail/Mainline plugin for ElvUI — Midnight-ready and modular.**
+**A Retail/Mainline plugin for ElvUI — Midnight ready and modular.**
 
 [![GitHub](https://img.shields.io/badge/GitHub-mBlinkii%2FmMediaTag-181717?logo=github)](https://github.com/mBlinkii/mMediaTag)
 [![CurseForge](https://img.shields.io/badge/CurseForge-mmediatag-F16436?logo=curseforge)](https://www.curseforge.com/wow/addons/mmediatag)
@@ -16,19 +16,19 @@
 
 ---
 
-`mMediaTag` adds a large collection of UI enhancements, custom media, utility datatexts, portrait styles, dock icons, tags, nameplate helpers, and quality-of-life tools on top of ElvUI.
+`mMediaTag` adds a large collection of UI enhancements, custom media, utility datatexts, portrait styles, dock icons, tags, nameplate helpers, and quality of life tools on top of ElvUI.
 
-This is the Midnight-ready branch of the addon and focuses on a cleaner structure, better performance, and a more modular setup.
+This is the Midnight ready branch of the addon and focuses on a cleaner structure, better performance, and a more modular setup.
 
 ## What It Adds
 
-- Custom portrait styles for multiple unit frames with support for class icons, spec icons, extra overlays, shadows, custom textures, and per-unit placement.
-- Dock-style datatext icons for common panels such as character, friends, guild, dungeon finder, spellbook, talents, professions, mail, quests, bags, achievements, calendar, volume, encounter journal, and more.
+- Custom portrait styles for multiple unit frames with support for class icons, spec icons, extra overlays, shadows, custom textures, and per unit placement.
+- Dock style datatext icons for common panels such as character, friends, guild, dungeon finder, spellbook, talents, professions, mail, quests, bags, achievements, calendar, volume, encounter journal, and more.
 - Utility datatexts such as Mythic+ score, teleports, professions, game menu, dungeon info, combat time, durability and item level, coordinates, and tracking helpers.
 - Custom ElvUI tags for classification, health, status, role, level, faction, quest state, PvP state, power, class icons, and death counters.
-- Nameplate helpers including target glow color syncing, an execute-range marker, and highlight tools.
+- Nameplate helpers including target glow color syncing, an execute range marker, and highlight tools.
 - Miscellaneous modules such as auto quest handling, auto role check acceptance, greeting messages, tooltip tweaks, minimap skins, data panel skins, Objective Tracker skinning, dice button, Details embedding, and LFG invite info.
-- Built-in media libraries for icons, portrait textures, dock assets, minimap art, and additional UI visuals.
+- Built in media libraries for icons, portrait textures, dock assets, minimap art, and additional UI visuals.
 
 ## Screenshots
 
@@ -45,7 +45,7 @@ This is the Midnight-ready branch of the addon and focuses on a cleaner structur
 </td>
 <td align="center" width="50%">
 <img src="Screenshot/screenshot_9.png" alt="Dungeon info tooltip"/><br/>
-<sub>Mythic+ / Dungeon-Info datatext</sub>
+<sub>Mythic+ / Dungeon Info datatext</sub>
 </td>
 </tr>
 <tr>
@@ -108,7 +108,7 @@ This is the Midnight-ready branch of the addon and focuses on a cleaner structur
 
 Optional integrations:
 
-- `Details` for embedded Details-related features and class icon support
+- `Details` for embedded Details related features and class icon support
 - `ElvUI_JiberishIcons` for additional icon integration when installed
 
 ## Installation
@@ -174,9 +174,9 @@ If you want to build your own dock bar, create a custom ElvUI datatext bar and a
 
 ### Dock System
 
-- Icon-first datatext modules with hover growth, color states, text labels, and notification markers
+- Icon first datatext modules with hover growth, color states, text labels, and notification markers
 - Secure button support for click actions and macros
-- Ready-made modules for many common Blizzard and ElvUI destinations
+- Ready made modules for many common Blizzard and ElvUI destinations
 - Flexible enough to assemble your own dock layout through ElvUI datatext bars
 
 <div align="center">
@@ -189,14 +189,14 @@ If you want to build your own dock bar, create a custom ElvUI datatext bar and a
 - Status tags for AFK, DND, offline, dead, and ghost states
 - Role tags with text or icon output
 - Health, level, power, faction, PvP, quest, and death count helpers
-- Class icon tags with style-specific output
+- Class icon tags with style specific output
 
 ### Nameplates and Utility Modules
 
 - Target glow color can automatically match your class color
 - Execute Marker showing your spec's execute range on enemy nameplates
 - Highlight modules for target, focus, and quest units
-- Auto quest accept and turn-in with sensible restrictions
+- Auto quest accept and turn in with sensible restrictions
 - Auto role check acceptance
 - Details embedding into chat panel areas
 - Objective Tracker skinning
@@ -205,8 +205,8 @@ If you want to build your own dock bar, create a custom ElvUI datatext bar and a
 ## Current Branch Notes
 
 - The `4.x` branch targets Retail/Mainline.
-- This branch is Midnight-focused and has been restructured heavily for the new version.
-- According to the in-addon changelog, `4.x` is not intended to be the Classic branch.
+- This branch is Midnight focused and has been restructured heavily for the new version.
+- According to the in addon changelog, `4.x` is not intended to be the Classic branch.
 
 ## Support
 
