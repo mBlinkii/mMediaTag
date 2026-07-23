@@ -32,6 +32,9 @@ This is the Midnight-ready branch of the addon and focuses on a cleaner structur
 
 ## Screenshots
 
+<details>
+<summary>Click to expand</summary>
+
 <div align="center">
 
 <table>
@@ -86,6 +89,8 @@ This is the Midnight-ready branch of the addon and focuses on a cleaner structur
 <img src="Screenshot/xivcolored.png" alt="Dock style XIV colored"/>
 
 </div>
+
+</details>
 
 ## Highlights
 
