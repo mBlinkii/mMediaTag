@@ -6,7 +6,7 @@
 
 <img src="Logo/icon%20v4.png" alt="mMediaTag Icon" width="90"/>
 
-**A Retail/Mainline plugin for ElvUI — Midnight-ready, modular, and built for a cleaner UI.**
+**A Retail/Mainline plugin for ElvUI — Midnight-ready and modular.**
 
 [![GitHub](https://img.shields.io/badge/GitHub-mBlinkii%2FmMediaTag-181717?logo=github)](https://github.com/mBlinkii/mMediaTag)
 [![CurseForge](https://img.shields.io/badge/CurseForge-mmediatag-F16436?logo=curseforge)](https://www.curseforge.com/wow/addons/mmediatag)
@@ -61,18 +61,18 @@ This is the Midnight-ready branch of the addon and focuses on a cleaner structur
 <sub>Skinned Objective Tracker</sub>
 </td>
 <td align="center">
-<img src="Screenshot/screenshot_10.png" alt="Nameplate highlighters"/><br/>
-<sub>Nameplate highlighters and important casts</sub>
+<img src="Screenshot/screenshot_10.png" alt="Databar skins"/><br/>
+<sub>Databar skin styles</sub>
 </td>
 </tr>
 <tr>
 <td align="center">
-<img src="Screenshot/border_2.png" alt="Nameplate castbar border"/><br/>
-<sub>Nameplate castbar border styles</sub>
-</td>
-<td align="center">
 <img src="Screenshot/screenshot_1.png" alt="Item tooltip"/><br/>
 <sub>Tooltip styling</sub>
+</td>
+<td align="center">
+<img src="Screenshot/screenshot_8.png" alt="Currency datatext"/><br/>
+<sub>Currency datatext</sub>
 </td>
 </tr>
 </table>
@@ -91,7 +91,7 @@ This is the Midnight-ready branch of the addon and focuses on a cleaner structur
 
 - Built directly into the ElvUI options UI under `ElvUI > mMT`
 - Modular setup so you can enable only the parts you actually use
-- Extensive portrait customization for modern ElvUI layouts
+- Extensive portrait customization for ElvUI layouts
 - Dock icons that work with ElvUI datatext bars, including custom dock setups
 - Optional integration with `Details` and `ElvUI_JiberishIcons`
 - Localization files for `deDE`, `enUS`, `esES`, `esMX`, `frFR`, `itIT`, `koKR`, `ptBR`, `ruRU`, `zhCN`, and `zhTW`
@@ -151,9 +151,6 @@ If you want to build your own dock bar, create a custom ElvUI datatext bar and a
 - `/mmt` opens the addon options
 - `/mmt help` shows the command list
 - `/mmt version` prints the current addon version
-- `/mmt guid` prints your player GUID
-- `/mmt clearunknownids` clears the saved unknown ID cache
-- `/mmt adddev` adds the current character as a developer character
 - `/mmt debug` toggles debug mode
 - `/mmt debug safe` toggles debug mode with a reduced addon set
 
@@ -200,12 +197,6 @@ If you want to build your own dock bar, create a custom ElvUI datatext bar and a
 - Objective Tracker skinning
 - Custom minimap and panel skin options
 
-<div align="center">
-<img src="Screenshot/border_1.png" alt="Nameplate castbar style 1" width="32%"/>
-<img src="Screenshot/border_2.png" alt="Nameplate castbar style 2" width="32%"/>
-<img src="Screenshot/border_3.png" alt="Nameplate castbar style 3" width="32%"/>
-</div>
-
 ## Current Branch Notes
 
 - The `4.x` branch targets Retail/Mainline.
@@ -224,6 +215,6 @@ This project uses a custom license. In short:
 - Private modifications are allowed.
 - Redistribution of the addon is not allowed.
 - Redistribution of the textures is not allowed.
-- The addon name and folder name must not be changed.
+- The addon's name and folder names must not be changed.
 
 For the exact terms, see [LICENSE.md](LICENSE.md).
