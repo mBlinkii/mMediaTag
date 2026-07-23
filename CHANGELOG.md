@@ -1,6 +1,26 @@
 # Changelog - ElvUI_mMediaTag
 [Eng] - All changes to this project will be documented in this file. The latest changes are at the top.
 
+## [ver. 4.08] - 23.07.2026
+### FIX
+- FIX - [Difficulty-Info]: Fix anchor position and background rendering.
+- FIX - [Difficulty-Colors]: Difficulty colors and Difficulty Info did not update immediately when changed in options.
+- FIX - [Portraits]: Prevent nil error when class/spec icon texture coordinates are missing (falls back to the default portrait).
+- FIX - [Portraits]: Force a full update on model, vehicle and portrait-update events so the previous unit's texture is never left showing.
+### UPDATE
+- UPDATE - [System]: Update Dungeon and Raid short names for Midnight.
+- UPDATE - [System]: Add flexible Mythic raid size difficulty color/tag.
+- UPDATE - [Portraits]: Optimized color gradient handling (reuse tables instead of allocating new ones every update).
+- UPDATE - [Portraits]: Party portraits now use unit-filtered event registration, instead of listening for every unit in the game.
+- UPDATE - [Portraits]: Late-arriving spec info (INSPECT_READY) now updates the portrait of newly joined party members.
+- UPDATE - [Interrupt-On-CD]: Minor optimization, resolve unit/attackability once per update.
+- UPDATE - [Tags]: Removed the legacy TAGs module (tagsold.lua), fully replaced by the current tags module.
+- UPDATE - [Tags]: Removed the mMT-deathcount tag, replaced by the Death-Counter module.
+### NEW
+- NEW - [Execute-Marker]: New Nameplates module, shows a marker on enemy nameplates at your spec's execute threshold.
+- NEW - [Objective-Tracker]: New module to skin the Objective Tracker.
+- NEW - [Spec-Icons]: Added a new "Clean" spec icon style.
+
 ## [ver. 4.07] - 12.06.2026
 ### FIX
 - FIX - [Details-Embedded]: Fix issues with ElvUI chat datatext panels.
