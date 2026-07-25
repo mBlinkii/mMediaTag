@@ -52,13 +52,18 @@ end
 function mMT:Initialize()
 	mMT:RegisterEvent("PLAYER_LOGOUT")
 
+	-- ElvUI builds E.db (AceDB) inside E:Initialize(), which now runs BEFORE plugins load.
+	-- AceDB only applies defaults once, so P.mMediaTag additions made afterwards would
+	-- never reach E.db. Re-apply them here (idempotent, only fills missing keys).
+	if not E.db.mMediaTag then E.db.mMediaTag = {} end
+	E:CopyDefaults(E.db.mMediaTag, P.mMediaTag)
+
 	EP:RegisterPlugin(addonName, mMT.InsertOptions)
 
 	E:CopyTable(Engine[2], mMT.defaults)
 	Engine[2] = E:CopyTable(Engine[2], MMTDATA)
 	mMT:UpdateDeveloperState()
 
-	-- Weekly-Reset zentral beim Init pruefen, unabhaengig davon ob ein Datatext geladen ist
 	if mMT:GetWeeklyResetTime() then Engine[2].keystones = {} end
 
 	if not mMT.ElvUI_Hooked then
@@ -95,5 +100,3 @@ end
 function mMT:PLAYER_LOGOUT()
 	MMTDATA = Engine[2]
 end
-
-E:RegisterModule(mMT:GetName())
