@@ -55,8 +55,7 @@ function mMT:Initialize()
 	-- ElvUI builds E.db (AceDB) inside E:Initialize(), which now runs BEFORE plugins load.
 	-- AceDB only applies defaults once, so P.mMediaTag additions made afterwards would
 	-- never reach E.db. Re-apply them here (idempotent, only fills missing keys).
-	if not E.db.mMediaTag then E.db.mMediaTag = {} end
-	E:CopyDefaults(E.db.mMediaTag, P.mMediaTag)
+	E.db.mMediaTag = E:CopyDefaults(E.db.mMediaTag, P.mMediaTag)
 
 	EP:RegisterPlugin(addonName, mMT.InsertOptions)
 
@@ -90,8 +89,7 @@ function mMT:Initialize()
 	-- Changelog
 	C_Timer_After(2, function()
 		if E.db.mMediaTag.version ~= mMT.Version then
-			E:ToggleOptions()
-			E.Libs.AceConfigDialog:SelectGroup("ElvUI", "mMT", "changelog")
+			E:ToggleOptions('mMT,changelog')
 			E.db.mMediaTag.version = mMT.Version
 		end
 	end)
