@@ -4,7 +4,6 @@ local DT = E:GetModule("DataTexts")
 -- Cache WoW Globals
 local format = format
 local ipairs = ipairs
-local date = date
 local gsub = gsub
 local print = print
 local strmatch = strmatch

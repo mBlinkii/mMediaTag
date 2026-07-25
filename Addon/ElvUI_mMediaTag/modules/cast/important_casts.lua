@@ -134,7 +134,6 @@ end
 local function ResetImportantCastOverlay(nameplate)
 	local healthBar = nameplate and nameplate.Health
 	if not healthBar then return end
-	-- print("ResetImportantCastOverlay", healthBar.mMT_ImportantCastOverlay)
 
 	local overlay = healthBar.mMT_ImportantCastOverlay
 	if overlay then overlay:SetAlpha(0) end

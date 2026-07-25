@@ -5,7 +5,6 @@ local DT = E:GetModule("DataTexts")
 
 local _G = _G
 local format = format
-local pi = math.pi
 
 --Variables
 local valueString = ""

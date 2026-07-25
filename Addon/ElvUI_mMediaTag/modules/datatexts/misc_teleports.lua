@@ -875,13 +875,6 @@ local function UpdateMenus()
 	if mMT.knownTeleports.season.available then
 		local appliedDungeons = GetAppliedDungeonNames()
 
-		-- DEV-Hilfe: Challenge-Map-IDs der aktuellen Season fuer seasonChallengeMaps
-		-- if DB.DEV then
-		-- 	for _, mapID in ipairs(C_ChallengeMode.GetMapTable() or {}) do
-		-- 		mMT:Print("ChallengeMap:", mapID, "-", (C_ChallengeMode.GetMapUIInfo(mapID)))
-		-- 	end
-		-- end
-
 		tinsert(menus.main, { text = mMT:TC(L["M+ Season"], "title"), isTitle = true, notClickable = true })
 		for id, t in pairs(mMT.knownTeleports.season) do
 			if t and type(t) == "table" then tinsert(menus.main, CreateMenuEntry(id, t, IsAppliedDungeon(appliedDungeons, id, t.name))) end

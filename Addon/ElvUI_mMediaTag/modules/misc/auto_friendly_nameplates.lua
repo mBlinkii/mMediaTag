@@ -5,11 +5,6 @@ local GetInstanceInfo = GetInstanceInfo
 local GetCVarBool = C_CVar.GetCVarBool
 local SetCVar = C_CVar.SetCVar
 
--- We use nameplateShowFriendlyPlayers (not nameplateShowFriends) because ElvUI
--- manages nameplateShowFriends itself in NP:EnviromentConditionals() (fires on
--- PLAYER_ENTERING_WORLD, ZONE_CHANGED_NEW_AREA, PLAYER_UPDATE_RESTING) and in its
--- combat toggle (PLAYER_REGEN_ENABLED/DISABLED) and would override our value.
--- We still register the same events so our state is reapplied after ElvUI.
 local events = {
 	"PLAYER_ENTERING_WORLD",
 	"ZONE_CHANGED_NEW_AREA",

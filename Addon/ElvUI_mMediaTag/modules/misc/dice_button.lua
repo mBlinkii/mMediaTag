@@ -5,7 +5,6 @@ local module = mMT:AddModule("DiceButton", { "AceEvent-3.0" })
 -- Cache WoW Globals
 local CreateFrame = CreateFrame
 local RandomRoll = RandomRoll
-local format = format
 
 local function GetColor(colorConfig)
 	if colorConfig.mode == "class" then
@@ -91,7 +90,6 @@ function module:Initialize()
 	end
 end
 
--- prueft bei PLAYER_ENTERING_WORLD, ob der Button existiert, und laedt/aktualisiert ihn
 function module:OnEvent()
 	module:Initialize()
 end

@@ -46,41 +46,22 @@ function module:GetUnitColor(unit, class, isPlayer, isDead)
 	end
 end
 
--- Reusable tables for SetGradient - filled per call instead of creating new
--- tables on every color update (SetGradient reads the values synchronously).
-local gradientPrimary, gradientSecondary = {}, {}
-local WHITE = { r = 1, g = 1, b = 1, a = 1 }
-
-local function FillColorTable(t, c)
-	t.r, t.g, t.b, t.a = c.r, c.g, c.b, c.a or 1
-	return t
-end
-
-local function ApplyColor(target, element, db, primary, secondary)
+local function ApplyColor(target, color)
 	if not target then return end
-	if db.gradient and not element.media.disable_color then
-		target:SetGradient(db.gradient_mode, FillColorTable(gradientPrimary, primary), FillColorTable(gradientSecondary, secondary))
-	else
-		local c = db.gradient and WHITE or primary
-		target:SetVertexColor(c.r, c.g, c.b, c.a or 1)
-	end
+
+	target:SetVertexColor(color.r, color.g, color.b, color.a or 1)
 end
 
 local function UpdateTextureColor(element, unit)
-	local db, e_db = module.db.misc, element.db
+	local db = module.db.misc
 	unit = unit or element.unit
 
 	local color = module:GetUnitColor(unit, element.unitClass, element.isPlayer, element.isDead) -- element.isDead)
 	element.color = color
 	if not color then return end
 
-	local primary, secondary = color.c, color.g
-	if e_db.mirror and db.gradient_mode == "HORIZONTAL" then
-		primary, secondary = secondary, primary
-	end
-
-	ApplyColor(element.texture, element, db, primary, secondary)
-	ApplyColor(element.embellishment, element, db, primary, secondary)
+	ApplyColor(element.texture, color.c)
+	ApplyColor(element.embellishment, color.c)
 
 	local shouldDesaturate = element.isDead or db.desaturate
 	if shouldDesaturate ~= element.isDesaturated then
@@ -131,16 +112,7 @@ local function UpdateExtraTexture(element, force)
 	SetupExtraTexture(element, media.low)
 	extra:SetTexture(media.texture, "CLAMP", "CLAMP", "TRILINEAR")
 
-	if db.gradient then
-		local primary, secondary = color.c, color.g
-		if e_db.mirror and db.gradient_mode == "HORIZONTAL" then
-			primary, secondary = secondary, primary
-		end
-
-		extra:SetGradient(db.gradient_mode, FillColorTable(gradientPrimary, primary), FillColorTable(gradientSecondary, secondary))
-	else
-		extra:SetVertexColor(color.c.r, color.c.g, color.c.b, color.c.a or 1)
-	end
+	ApplyColor(extra, color.c)
 
 	extra:Show()
 end
@@ -360,7 +332,6 @@ function module:UpdateTexturesFiles(style, mirror)
 		boss = boss,
 		bg = bg,
 		embellishment = embellishment,
-		disable_color = media.textures[style].disable_color,
 	}
 end
 

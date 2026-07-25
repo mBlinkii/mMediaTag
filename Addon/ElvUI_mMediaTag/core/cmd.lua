@@ -1,13 +1,10 @@
 local mMT, DB, M, E, P, L, MEDIA = unpack(ElvUI_mMediaTag)
 
 -- Cache WoW Globals
-local format = format
 local pairs = pairs
 local ReloadUI = ReloadUI
 local strlower = strlower
-local GetAddOnMetadata = _G.C_AddOns and _G.C_AddOns.GetAddOnMetadata or _G.GetAddOnMetadata
 local GetNumAddOns = _G.C_AddOns and _G.C_AddOns.GetNumAddOns or _G.GetNumAddOns
-local IsAddOnLoaded = _G.C_AddOns and _G.C_AddOns.IsAddOnLoaded or _G.IsAddOnLoaded
 local EnableAddOn = _G.C_AddOns and _G.C_AddOns.EnableAddOn or _G.EnableAddOn
 local DisableAddOn = _G.C_AddOns and _G.C_AddOns.DisableAddOn or _G.DisableAddOn
 local GetAddOnInfo = _G.C_AddOns and _G.C_AddOns.GetAddOnInfo or _G.GetAddOnInfo
@@ -116,7 +113,7 @@ local function CommandHandler(msg)
 		DB.debug.debugMode = not DB.debug.debugMode
 		mMT:SetDebugMode(DB.debug.debugMode, command == "debug safe")
 	else
-		if not E:AlertCombat()  then
+		if not E:AlertCombat() then
 			E:ToggleOptions("mMT")
 			HideUIPanel(_G["GameMenuFrame"])
 		end

@@ -149,8 +149,6 @@ local function SetCastbarColor(castbar, cooldown, canAttack)
 
 	if not canAttack then return end
 
-	-- Note: cooldown:IsZero() is potentially a secret value (Midnight) - it must
-	-- never be compared/cached in Lua, only passed to EvalColor/SetAlphaFromBoolean.
 	local color = EvalColor(cooldown:IsZero(), colors.normal, colors.onCD)
 
 	castbar:SetStatusBarColor(color:GetRGBA())
