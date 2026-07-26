@@ -5,6 +5,8 @@ local GetSpellCooldownDuration = C_Spell.GetSpellCooldownDuration
 local EvalColorBool = C_CurveUtil.EvaluateColorValueFromBoolean
 local EvalColor = C_CurveUtil.EvaluateColorFromBoolean
 local UnitCanAttack = UnitCanAttack
+local GetTime = GetTime
+local issecretvalue = issecretvalue
 
 local NP = E:GetModule("NamePlates")
 local UF = E:GetModule("UnitFrames")
@@ -101,9 +103,6 @@ local function SetKickSpark(castbar, castStart, cooldown, canAttack)
 	if not kickBar then return end
 	local indicator = kickBar.mMT_Indicator
 
-	local castDuration = castbar:GetTimerDuration()
-	if not castDuration then return end
-
 	if castStart then
 		local isChannelOrReverse = castbar.channeling or castbar:GetReverseFill()
 		local fillStyle = isChannelOrReverse and Enum.StatusBarFillStyle.Reverse or Enum.StatusBarFillStyle.Standard
@@ -120,13 +119,25 @@ local function SetKickSpark(castbar, castStart, cooldown, canAttack)
 		indicator:SetColorTexture(c.r, c.g, c.b)
 	end
 
-	-- Absolute Zeitachse statt relativer Restdauer:
-	-- Min/Max = Cast-Start/-Ende, Value = Zeitpunkt an dem der Kick bereit ist.
-	-- Diese Werte sind zeitinvariant - egal wie oft (Re-Fire von PostCastStart bei
-	-- Target-Wechsel, Nameplate mid-cast, OnUpdate) neu gesetzt wird, der Marker
-	-- bleibt an derselben Stelle. Pushback/Delay korrigiert sich ebenfalls selbst.
-	kickBar:SetMinMaxValues(castDuration:GetStartTime(), castDuration:GetEndTime())
-	kickBar:SetValue(cooldown:GetEndTime())
+	-- Marker-Position = verstrichene Castzeit + Kick-Restcooldown. Diese Summe ist
+	-- zeitinvariant (elapsed steigt, CD sinkt, 1:1) - egal wie oft neu gesetzt wird
+	-- (Re-Fire von PostCastStart bei Target-Wechsel, Nameplate mid-cast, OnUpdate),
+	-- der Marker bleibt an derselben Stelle. Pushback korrigiert sich ebenfalls selbst.
+	local cdRemaining = cooldown:GetRemainingDuration()
+	if castbar.startTime and castbar.max and not issecretvalue(castbar.max) and not issecretvalue(cdRemaining) then
+		-- Zahlenpfad: oUF liefert startTime/max als normale Zahlen (Sekunden),
+		-- solange die Castzeiten nicht secret sind - funktioniert auf UF und NP.
+		kickBar:SetMinMaxValues(0, castbar.max)
+		kickBar:SetValue((GetTime() - castbar.startTime) + cdRemaining)
+	else
+		-- Secret-Fallback (restricted Content): absolute Zeitachse.
+		-- Min/Max = Cast-Start/-Ende, Value = Zeitpunkt an dem der Kick bereit ist.
+		local castDuration = castbar:GetTimerDuration()
+		if castDuration then
+			kickBar:SetMinMaxValues(castDuration:GetStartTime(), castDuration:GetEndTime())
+			kickBar:SetValue(cooldown:GetEndTime())
+		end
+	end
 
 	if castStart then
 		local shieldAlpha = 0
@@ -201,6 +212,7 @@ local function OnUpdate(castbar, elapsed)
 end
 
 local function PostCastStart(castbar, unit)
+	if not module.isEnabled then return end
 	if not (castbar and unit) then return end
 	if not (castbar.casting or castbar.channeling) then return end
 	if not UnitCanAttack("player", unit) then return end
@@ -216,6 +228,18 @@ local function PostCastStart(castbar, unit)
 	end
 end
 
+-- ElvUI weist castbar.PostCastStart = UF.PostCastStart als SNAPSHOT bei der
+-- Frame-Konstruktion zu, und oUF ruft nur element:PostCastStart(unit) auf.
+-- Da ElvUI die UF-Frames inzwischen VOR dem Plugin-Load baut, greift ein
+-- hooksecurefunc(UF, "PostCastStart", ...) dort nie. Deshalb hooken wir die
+-- Castbar-Instanzen direkt.
+local function HookCastbarInstance(castbar)
+	if castbar and castbar.PostCastStart and not castbar.mMT_CastStartHooked then
+		hooksecurefunc(castbar, "PostCastStart", PostCastStart)
+		castbar.mMT_CastStartHooked = true
+	end
+end
+
 function module:Initialize()
 	if E.db.mMediaTag.interrupt_on_cd.enable then
 		if not module.isEnabled then
@@ -224,9 +248,18 @@ function module:Initialize()
 			module:RegisterEvent("PLAYER_TALENT_UPDATE", UpdateInterruptSpell)
 
 			hooksecurefunc(NP, "Castbar_PostCastStart", PostCastStart)
-			hooksecurefunc(UF, "PostCastStart", PostCastStart)
 			hooksecurefunc(NP, "Castbar_PostCastFail", PostCastFailInterrupted)
 			hooksecurefunc(NP, "Castbar_PostCastInterrupted", PostCastFailInterrupted)
+
+			-- Configure_Castbar laeuft ueber die UF-Tabelle und erwischt so auch
+			-- spaeter erstellte oder aktivierte Frames.
+			hooksecurefunc(UF, "Configure_Castbar", function(_, frame)
+				if frame then HookCastbarInstance(frame.Castbar) end
+			end)
+
+			mMT:ForEachUFFrame(function(frame)
+				HookCastbarInstance(frame.Castbar)
+			end)
 
 			module.isEnabled = true
 		end

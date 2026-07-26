@@ -107,9 +107,13 @@ end
 
 local function ValueColorUpdate(self, hex)
 	local db = E.db.mMediaTag.datatexts.tracker
-	local custom = tracker_ids_db[tonumber(self.name)] and tracker_ids_db[tonumber(self.name)].color
-	local textHex = E.db.mMediaTag.datatexts.text.override_text and "|c" .. MEDIA.color.override_text.hex or db.colored and "|c" .. custom or hex
-	local valueHex = E.db.mMediaTag.datatexts.text.override_value and "|c" .. MEDIA.color.override_value.hex or db.colored and "|c" .. custom or hex
+	-- ElvUI ruft applySettings beim Profilwechsel schon mit dem neuen E.db, waehrend
+	-- tracker_ids_db noch das alte Profil haelt (mMT:UpdateAll haengt an E:Delay).
+	-- Unbekannte ID also nicht faerben, sondern auf ElvUIs Wertefarbe zurueckfallen.
+	local info = tracker_ids_db[tonumber(self.name)]
+	local custom = info and info.color and "|c" .. info.color
+	local textHex = E.db.mMediaTag.datatexts.text.override_text and "|c" .. MEDIA.color.override_text.hex or db.colored and custom or hex
+	local valueHex = E.db.mMediaTag.datatexts.text.override_value and "|c" .. MEDIA.color.override_value.hex or db.colored and custom or hex
 
 	self.mMT_textString = strjoin("", textHex, "%s|r")
 	self.mMT_valueString = strjoin("", valueHex, "%s|r")
@@ -166,5 +170,12 @@ function module:Initialize()
 			end
 		end
 	end
+
+	-- Farben der schon zugewiesenen Slots nachziehen, weil ElvUIs applySettings-Pass
+	-- beim Profilwechsel vor LoadIDs() lief.
+	for dt, data in pairs(DT.AssignedDatatexts) do
+		if data and tracker_ids_db[tonumber(data.name)] then ValueColorUpdate(dt, E.media.hexvaluecolor) end
+	end
+
 	DT:UpdateQuickDT()
 end

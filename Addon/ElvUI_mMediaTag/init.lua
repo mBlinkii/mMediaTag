@@ -52,10 +52,12 @@ end
 function mMT:Initialize()
 	mMT:RegisterEvent("PLAYER_LOGOUT")
 
-	-- ElvUI builds E.db (AceDB) inside E:Initialize(), which now runs BEFORE plugins load.
-	-- AceDB only applies defaults once, so P.mMediaTag additions made afterwards would
-	-- never reach E.db. Re-apply them here (idempotent, only fills missing keys).
-	E.db.mMediaTag = E:CopyDefaults(E.db.mMediaTag, P.mMediaTag)
+	-- E.data.profile is materialized inside E:Initialize(), which now runs BEFORE
+	-- plugins load, so P.mMediaTag was not part of the defaults at that point and a
+	-- fresh profile has no mMediaTag key. On a profile switch AceDB nils out
+	-- self.profile and re-runs copyDefaults against the live E.DF.profile, so this is
+	-- only needed for the current session's profile.
+	E.db.mMediaTag = E:CopyDefaults(E.db.mMediaTag or {}, P.mMediaTag)
 
 	EP:RegisterPlugin(addonName, mMT.InsertOptions)
 

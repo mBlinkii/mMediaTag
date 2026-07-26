@@ -18,6 +18,12 @@ local function PostUpdate(frame, status)
 	end
 end
 
+local function UpdateFrame(frame)
+	local indicator = frame and frame.SummonIndicator
+	if not indicator then return end
+	if not indicator.PostUpdate then indicator.PostUpdate = PostUpdate end
+end
+
 function module:Initialize()
 	if not E.db.mMediaTag.summon_icon.enable then return end
 
@@ -27,9 +33,12 @@ function module:Initialize()
 
 	if not module.isEnabled then
 		module:SecureHook(UF, "Configure_SummonIcon", function(_, frame)
-			if not (frame and frame.SummonIndicator) then return end
-			if not frame.SummonIndicator.PostUpdate then frame.SummonIndicator.PostUpdate = PostUpdate end
+			UpdateFrame(frame)
 		end)
 		module.isEnabled = true
 	end
+
+	-- ElvUIs erster Configure-Pass ist beim Plugin-Load durch, der Hook allein
+	-- wuerde erst beim naechsten UF-Update greifen.
+	mMT:ForEachUFFrame(UpdateFrame)
 end

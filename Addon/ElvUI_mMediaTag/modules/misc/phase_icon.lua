@@ -22,6 +22,22 @@ local function PostUpdate_PhaseIcon(self, hidden, phaseReason)
 	self.Center:SetShown(not hidden)
 end
 
+-- ElvUI weist phase.PostUpdate = UF.PostUpdate_PhaseIcon bei der Frame-Konstruktion
+-- als SNAPSHOT zu und oUF ruft nur element:PostUpdate(). Ein Hook auf die UF-Tabelle
+-- greift daher nicht, weil die Frames vor dem Plugin gebaut werden.
+local function HookPhaseIndicator(frame)
+	local phase = frame and frame.PhaseIndicator
+	if not phase or phase.mMT_PhaseHooked or not phase.PostUpdate then return end
+
+	hooksecurefunc(phase, "PostUpdate", PostUpdate_PhaseIcon)
+	phase.mMT_PhaseHooked = true
+end
+
+local function UpdateFrame(frame)
+	Configure_PhaseIcon(frame)
+	HookPhaseIndicator(frame)
+end
+
 function module:Initialize()
 	if not E.db.mMediaTag.phase_icon.enable then return end
 
@@ -31,10 +47,11 @@ function module:Initialize()
 
 	if not module.isEnabled then
 		module:SecureHook(UF, "Configure_PhaseIcon", function(_, frame)
-			Configure_PhaseIcon(frame)
+			UpdateFrame(frame)
 		end)
 
-		module:SecureHook(UF, "PostUpdate_PhaseIcon", PostUpdate_PhaseIcon)
 		module.isEnabled = true
 	end
+
+	mMT:ForEachUFFrame(UpdateFrame)
 end

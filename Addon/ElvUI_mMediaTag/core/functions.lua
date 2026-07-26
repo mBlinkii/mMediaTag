@@ -1,5 +1,6 @@
 local mMT, DB, M, E, P, L, MEDIA = unpack(ElvUI_mMediaTag)
 local DT = E:GetModule("DataTexts")
+local UF = E:GetModule("UnitFrames")
 
 -- Cache WoW Globals
 local format = format
@@ -106,6 +107,52 @@ function mMT:ConnectVirtualFrameToDataText(dataTextName, virtualFrame)
 	if not dt or type(dt.applySettings) ~= "function" then return false end
 	if dt.applySettings then dt.applySettings(virtualFrame, E.media.hexvaluecolor) end
 	return true
+end
+
+-- ElvUI baut die UnitFrames inzwischen VOR dem Plugin-Load, der erste
+-- Configure-Pass ist beim Initialize also schon durch. Module, die Elemente
+-- umkonfigurieren oder Instanz-Callbacks hooken, brauchen deshalb einen
+-- einmaligen Sweep ueber die bereits existierenden Frames.
+local function ForEachHeaderFrame(header, callback)
+	if not header then return end
+
+	for i = 1, header:GetNumChildren() do
+		local child = select(i, header:GetChildren())
+		if child then
+			if child.unitframeType then callback(child) end
+
+			-- zweite Ebene: Gruppen-Header (raid1-3) bzw. target/pet der Party
+			for j = 1, child:GetNumChildren() do
+				local frame = select(j, child:GetChildren())
+				if frame and frame.unitframeType then callback(frame) end
+			end
+		end
+	end
+end
+
+function mMT:ForEachUFFrame(callback)
+	if not (callback and E.private.unitframe.enable) then return end
+
+	-- UF.units haelt die Frames als Value, UF.groupunits nur unit -> Gruppenname
+	-- (der Frame selbst liegt unter UF[unit]).
+	if UF.units then
+		for _, frame in pairs(UF.units) do
+			if frame then callback(frame) end
+		end
+	end
+
+	if UF.groupunits then
+		for unit in pairs(UF.groupunits) do
+			local frame = UF[unit]
+			if frame then callback(frame) end
+		end
+	end
+
+	if UF.headers then
+		for _, header in pairs(UF.headers) do
+			ForEachHeaderFrame(header, callback)
+		end
+	end
 end
 
 function mMT:formatText(input, ignoreSkip)

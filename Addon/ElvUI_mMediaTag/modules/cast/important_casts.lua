@@ -197,6 +197,35 @@ local function CheckImportant(castbar)
 	return isImportant, isSecret
 end
 
+-- ElvUI weist die Castbar-Callbacks bei der Frame-Konstruktion als SNAPSHOT zu
+-- (castbar.PostCastStart = UF.PostCastStart) und oUF ruft nur element:PostCastX().
+-- Da ElvUI die UF-Frames inzwischen VOR dem Plugin-Load baut, greift ein
+-- hooksecurefunc(UF, "PostCastX", ...) dort nie. Deshalb die Instanzen hooken.
+local UF_CASTBAR_HOOKS = {
+	PostCastStart = function(castbar)
+		if castbar then CheckImportant(castbar) end
+	end,
+	PostCastStop = function(castbar)
+		if castbar then HideImportantCast(castbar) end
+	end,
+	PostCastFail = function(castbar)
+		if castbar then HideImportantCast(castbar) end
+	end,
+	PostCastInterrupted = function(castbar)
+		if castbar then HideImportantCast(castbar) end
+	end,
+}
+
+local function HookCastbarInstance(castbar)
+	if not castbar or castbar.mMT_ImportantCastsHooked then return end
+
+	for method, handler in pairs(UF_CASTBAR_HOOKS) do
+		if castbar[method] then hooksecurefunc(castbar, method, handler) end
+	end
+
+	castbar.mMT_ImportantCastsHooked = true
+end
+
 local function CheckImportantNameplate(castbar)
 	local nameplate = GetCastbarNameplate(castbar)
 
@@ -244,25 +273,16 @@ function module:Initialize(demo)
 			HideImportantCast(castbar)
 		end)
 
-		hooksecurefunc(UF, "PostCastStart", function(castbar)
-			if not castbar then return end
-			CheckImportant(castbar)
+		-- Configure_Castbar laeuft ueber die UF-Tabelle und erwischt so auch
+		-- spaeter erstellte oder aktivierte Frames.
+		hooksecurefunc(UF, "Configure_Castbar", function(_, frame)
+			if frame then HookCastbarInstance(frame.Castbar) end
 		end)
 
-		hooksecurefunc(UF, "PostCastStop", function(castbar)
-			if not castbar then return end
-			HideImportantCast(castbar)
+		mMT:ForEachUFFrame(function(frame)
+			HookCastbarInstance(frame.Castbar)
 		end)
 
-		hooksecurefunc(UF, "PostCastFail", function(castbar)
-			if not castbar then return end
-			HideImportantCast(castbar)
-		end)
-
-		hooksecurefunc(UF, "PostCastInterrupted", function(castbar)
-			if not castbar then return end
-			HideImportantCast(castbar)
-		end)
 		module.isEnabled = true
 	end
 
