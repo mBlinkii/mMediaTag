@@ -1,26 +1,21 @@
 local mMT, DB, M, E, P, L, MEDIA = unpack(ElvUI_mMediaTag)
 
--- system settings
 P.db_version = nil
 P.version = nil
 
--- general
 P.general = {
 	greeting_message = true,
 }
 
--- general
 P.keystone_to_chat = {
 	enable = false,
 }
 
--- data panel skin
 P.data_panel_skin = {
 	enable = false,
 	panels = {},
 }
 
--- dice button
 P.dice_button = {
 	enable = false,
 	color = {
@@ -39,7 +34,6 @@ P.dice_button = {
 	dice_range_b = 99,
 }
 
--- lfg invite info
 P.lfg_invite_info = {
 	enable = false,
 	delay = 60,
@@ -62,7 +56,6 @@ P.lfg_invite_info = {
 	},
 }
 
--- difficulty info
 P.difficulty_info = {
 	enable = false,
 	background = false,
@@ -74,7 +67,6 @@ P.difficulty_info = {
 	},
 }
 
--- objective tracker skin
 P.objective_tracker = {
 	enable = false,
 	font = {
@@ -112,7 +104,6 @@ P.objective_tracker = {
 	},
 }
 
--- death counter
 P.death_counter = {
 	enable = false,
 	background = false,
@@ -123,7 +114,6 @@ P.death_counter = {
 	},
 }
 
--- datatexts
 P.datatexts = {
 	text = {
 		override_text = true,
@@ -189,7 +179,6 @@ P.datatexts = {
 	},
 }
 
--- portraits
 P.portraits = {
 	enable = false,
 	bg = {
@@ -375,21 +364,18 @@ P.portraits = {
 	},
 }
 
--- Interrupt on CD
 P.interrupt_on_cd = {
 	enable = false,
 	set_bg_color = true,
 	bg_multiplier = 0.25,
 }
 
--- tooltip
 P.tooltip = {
 	enable = false,
 	size = 32,
 	zoom = true,
 }
 
--- minimap skin
 P.minimap_skin = {
 	enable = false,
 	style = "zigzag",
@@ -398,7 +384,6 @@ P.minimap_skin = {
 	color_cardinal = "class",
 }
 
--- dock
 P.dock = {
 	auto_grow = true,
 	grow_size = 32,
@@ -555,7 +540,6 @@ P.dock = {
 	},
 }
 
--- tags
 P.tags = {
 	classification = {
 		rare = "star",
@@ -576,18 +560,7 @@ P.tags = {
 		dps = "bigsword2",
 		pvp = "pvp",
 		quest = "quest2",
-		-- targeting = "brain",
 	},
-	-- raidtargetmarkers = {
-	-- 	[1] = "TM01",
-	-- 	[2] = "TM02",
-	-- 	[3] = "TM03",
-	-- 	[4] = "TM04",
-	-- 	[5] = "TM05",
-	-- 	[6] = "TM06",
-	-- 	[7] = "TM07",
-	-- 	[8] = "TM08",
-	-- },
 }
 
 P.nameplates = {
@@ -694,7 +667,6 @@ P.important_casts = {
 	posY = 0,
 }
 
--- color
 P.color = {
 	-- tip/ menu
 	title = "FFFFBE19",
@@ -718,7 +690,6 @@ P.color = {
 	OTHER = "FF00FFEE",
 	GUILD = "FF91D900",
 
-	-- portraits
 	portraits = {
 		misc = {
 			death = { c = "FFF86767" },
@@ -759,8 +730,6 @@ P.color = {
 		normal = "FF15FF47",
 		marker = "FFFFFFFF",
 	},
-
-	-- castbar_shield = "FFFFFFFF",
 
 	minimap_skin = { color = "FFFFFFFF", cardinal = "FFFFFFFF" },
 
@@ -813,16 +782,6 @@ P.color = {
 			quest = "FFFFEE00",
 			resting = "FF38FF92",
 		},
-		-- raidtargetmarkers = {
-		-- 	[1] = "FFFFD900",
-		-- 	[2] = "FFFF8800",
-		-- 	[3] = "FF7700FF",
-		-- 	[4] = "FF16BB00",
-		-- 	[5] = "FFA5A5A5",
-		-- 	[6] = "FF006EFF",
-		-- 	[7] = "FFFF1111",
-		-- 	[8] = "FFFFFFFF",
-		-- },
 	},
 
 	important_casts = {

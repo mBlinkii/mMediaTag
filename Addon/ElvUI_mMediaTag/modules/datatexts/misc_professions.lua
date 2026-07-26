@@ -76,13 +76,10 @@ local function UpdatePlayerProfessions(tip)
 		end
 	end
 
-	-- Handle main professions
 	ProcessProfessions({ profs[1], profs[2] }, player_professions.main)
 
-	-- Handle secondary professions
 	ProcessProfessions({ profs[3], profs[4], profs[5] }, player_professions.secondary)
 
-	-- Handle extra profession for cooking with specific spell
 	if not tip and profs[5] and IsSpellKnown(818) then
 		local spellInfo = GetSpellInfo(818)
 		local name = spellInfo.name or spellInfo or ""
@@ -115,14 +112,12 @@ local function OnEnter(self)
 	end
 
 	if player_professions.main or player_professions.secondary then
-		-- Add main professions
 		if player_professions.main then
 			AddProfessionLines(player_professions.main, L["Main Professions"])
 		else
 			DT.tooltip:AddLine(L["No Main Professions"], mMT:GetRGB("red"))
 		end
 
-		-- Add secondary professions
 		if player_professions.secondary then
 			if player_professions.main then DT.tooltip:AddLine(" ") end
 			AddProfessionLines(player_professions.secondary, L["Secondary Professions"])
@@ -163,15 +158,11 @@ local function UpdateMenu()
 		end
 	end
 
-	-- Add main professions
 	AddProfessionLines(player_professions.main, L["Main Professions"], L["No Main Professions"])
-
-	-- Add secondary professions
 
 	if player_professions.secondary and player_professions.main then tinsert(menu, { text = " ", isTitle = true, notClickable = true }) end
 	AddProfessionLines(player_professions.secondary, L["Secondary Professions"], L["No Secondary Professions"])
 
-	-- Add extra professions
 	tinsert(menu, { text = " ", isTitle = true, notClickable = true })
 	tinsert(menu, { text = mMT:TC(L["Miscellaneous"], "title"), isTitle = true, notClickable = true })
 
@@ -192,7 +183,6 @@ local function UpdateMenu()
 		})
 	end
 
-	-- Handle no professions case
 	if not player_professions.main and not player_professions.secondary and not player_professions.extra then tinsert(menu, { text = mMT:TC(L["No Professions"], "red"), notClickable = true }) end
 end
 

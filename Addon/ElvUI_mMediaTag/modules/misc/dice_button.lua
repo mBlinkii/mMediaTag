@@ -42,7 +42,6 @@ function module:Initialize()
 
 			module.dice_button:RegisterForClicks("AnyDown")
 
-			-- on click
 			module.dice_button:SetScript("OnClick", function(_, btn)
 				if btn == "RightButton" then
 					RandomRoll(1, module.db.dice_range_b)
@@ -51,7 +50,6 @@ function module:Initialize()
 				end
 			end)
 
-			-- on enter
 			module.dice_button:SetScript("OnEnter", function()
 				local hoverColor = module.dice_button.color.hover
 				module.dice_button.texture:SetVertexColor(hoverColor.r, hoverColor.g, hoverColor.b, hoverColor.a)
@@ -63,7 +61,6 @@ function module:Initialize()
 				_G.GameTooltip:Show()
 			end)
 
-			-- on leave
 			module.dice_button:SetScript("OnLeave", function()
 				local normalColor = module.dice_button.color.normal
 				module.dice_button.texture:SetVertexColor(normalColor.r, normalColor.g, normalColor.b, normalColor.a)

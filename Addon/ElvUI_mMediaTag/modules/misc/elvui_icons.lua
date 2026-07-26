@@ -5,18 +5,6 @@ local MM = E:GetModule("Minimap")
 local UF = E:GetModule("UnitFrames")
 local strsub = strsub
 
--- E.Media = {
--- 	Fonts = {},
--- 	Sounds = {},
--- 	Arrows = {},
--- 	MailIcons = {},
--- 	RestIcons = {},
--- 	ChatEmojis = {},
--- 	ChatLogos = {},
--- 	Textures = {},
--- 	CombatIcons = {}
--- }
-
 do
 	-- Combat Icons
 	for name, path in pairs(MEDIA.icons.combat) do
@@ -39,10 +27,10 @@ do
 	end
 end
 
--- Die "mmt"-Keys landen erst mit dem Plugin-Load in E.Media, ElvUIs Configure-Pass
--- fuer Combat-/Resting-Icon und die Minimap-Mail ist da schon durch und hat auf
--- DEFAULT zurueckgefallen. Deshalb einmal pro Session nachziehen; Arrows brauchen
--- das nicht, die Nameplates entstehen erst zur Laufzeit.
+-- The "mmt" keys only reach E.Media with the plugin load; ElvUI's Configure pass for the
+-- combat/resting icon and the minimap mail is already done by then and fell back to
+-- DEFAULT, so redo it once per session. Arrows do not need this, the nameplates are only
+-- created at runtime.
 function module:Initialize()
 	if module.isEnabled then return end
 	module.isEnabled = true
@@ -53,7 +41,7 @@ function module:Initialize()
 		if frame.RestingIndicator then UF:Configure_RestingIndicator(frame) end
 	end)
 
-	-- UpdateSettings baut den ganzen Cluster neu, daher nur wenn ein mMT-Mailicon aktiv ist
+	-- UpdateSettings rebuilds the whole cluster, so only run it when an mMT mail icon is active
 	local mail = MM.Initialized and MM.db and MM.db.icons.mail.texture
 	if mail and strsub(mail, 1, 3) == "mmt" then MM:UpdateSettings() end
 end

@@ -78,7 +78,6 @@ local function SetupExtraTexture(element, low)
 	local extraOnTop = module.db.misc.extratop and not low
 	element.extra:SetDrawLayer(extraOnTop and "OVERLAY" or "ARTWORK", extraOnTop and 7 or 0)
 
-	-- extra mask
 	if not extraOnTop and not element.extra_mask then
 		element.extra_mask = element:CreateMaskTexture()
 		element.extra_mask:SetAllPoints(element.extra)
@@ -185,7 +184,6 @@ local function Update(self, event)
 		self.unitClass = class
 		self.isDead = isDead
 
-		-- death event registration
 		if isDead then
 			self:RegisterUnitEvent("UNIT_HEALTH", unit)
 		elseif self.eventsSet then
@@ -230,25 +228,16 @@ end
 function module:CreatePortrait(name, parent, settings)
 	local portrait = CreateFrame("Button", "mMT-Portrait-" .. name, parent, "SecureUnitButtonTemplate")
 
-	-- texture
 	portrait.texture = portrait:CreateTexture("mMT-Portrait-Texture-" .. name, "ARTWORK", nil, 5)
 	portrait.texture:SetPoint("CENTER", portrait, "CENTER", 0, 0)
 
-	-- shadow
-	--portrait.shadow = portrait:CreateTexture("mMT-Portrait-Shadow-" .. name, "ARTWORK", nil, 4)
-	--portrait.shadow:SetAllPoints(portrait.texture)
-
-	-- mask
 	portrait.mask = portrait:CreateMaskTexture()
 	portrait.mask:SetAllPoints(portrait.texture)
 
-	-- portrait
 	portrait.unit_portrait = portrait:CreateTexture("mMT-Portrait-Unit-Portrait-" .. name, "ARTWORK", nil, 3)
-	--portrait.unit_portrait:SetAllPoints(portrait.texture)
 	portrait.unit_portrait:SetPoint("CENTER", portrait.texture, "CENTER")
 	portrait.unit_portrait:AddMaskTexture(portrait.mask)
 
-	-- rare/elite/boss
 	local extraOnTop = module.db.misc.extratop
 	portrait.extra = portrait:CreateTexture("mMT-Portrait-Extra-" .. name, "OVERLAY", nil, extraOnTop and 7 or 0)
 
@@ -259,19 +248,16 @@ function module:CreatePortrait(name, parent, settings)
 		portrait.extra:SetAllPoints(portrait.texture)
 	end
 
-	-- extra mask
 	if not extraOnTop then
 		portrait.extra_mask = portrait:CreateMaskTexture()
 		portrait.extra_mask:SetAllPoints(portrait.extra)
 		portrait.extra:AddMaskTexture(portrait.extra_mask)
 	end
 
-	-- bg
 	portrait.bg = portrait:CreateTexture("mMT-Portrait-BG-" .. name, "ARTWORK", nil, 1)
 	portrait.bg:SetAllPoints(portrait.texture)
 	portrait.bg:AddMaskTexture(portrait.mask)
 
-	-- scripts to interact with mouse
 	portrait:SetAttribute("unit", portrait.unit)
 	portrait:SetAttribute("*type1", "target")
 	portrait:SetAttribute("*type2", "togglemenu")
@@ -473,8 +459,6 @@ local function ForceUpdate(self, event)
 end
 
 local function DeathCheck(self, event)
-	--if self.unit ~= unit then return end
-
 	local isDead = UnitIsDeadOrGhost(self.unit)
 	if self.isDead == isDead then return end
 
@@ -490,7 +474,6 @@ local function DeathCheck(self, event)
 end
 
 local eventHandlers = {
-	-- portrait updates
 	-- UNIT_PORTRAIT_UPDATE fires when the appearance changes with the same GUID
 	-- (model loaded, form/transmog change) - must bypass change detection.
 	-- UNIT_MODEL_CHANGED is intentionally not registered: it is only needed for
@@ -502,7 +485,6 @@ local eventHandlers = {
 	PARTY_MEMBER_ENABLE = Update,
 	PARTY_MEMBER_DISABLE = Update,
 
-	-- cast icon updates
 	UNIT_SPELLCAST_CHANNEL_START = UpdateCastIconStart,
 	UNIT_SPELLCAST_START = UpdateCastIconStart,
 
@@ -519,12 +501,10 @@ local eventHandlers = {
 	UNIT_EXITED_VEHICLE = ForceUpdate,
 	VEHICLE_UPDATE = ForceUpdate,
 
-	-- target/ focus updates
 	PLAYER_TARGET_CHANGED = SimpleUpdate,
 	PLAYER_FOCUS_CHANGED = SimpleUpdate,
 	UNIT_TARGET = SimpleUpdate,
 
-	-- party
 	-- roster changes reshuffle unit tokens without reliable per-token events - always force
 	GROUP_ROSTER_UPDATE = ForceUpdate,
 
@@ -534,7 +514,6 @@ local eventHandlers = {
 		if module.useSpecIcon and guid and guid == self.guid then Update(self, "ForceUpdate") end
 	end,
 
-	-- arena
 	ARENA_OPPONENT_UPDATE = Update,
 	UNIT_TARGETABLE_CHANGED = Update,
 	ARENA_PREP_OPPONENT_SPECIALIZATIONS = SimpleUpdate,
@@ -543,10 +522,8 @@ local eventHandlers = {
 	INSTANCE_ENCOUNTER_ENGAGE_UNIT = ForceUpdate,
 	UPDATE_ACTIVE_BATTLEFIELD = SimpleUpdate,
 
-	-- death updates
 	UNIT_HEALTH = DeathCheck,
 
-	-- pet
 	UNIT_PET = ForceUpdate,
 }
 
@@ -575,7 +552,6 @@ end
 
 function module:InitPortrait(element)
 	if element then
-		-- embellishment
 		if module.db.misc.embellishment and element.media.embellishment and not element.embellishment then
 			element.embellishment = element:CreateTexture("mMT-Portrait-Embellishment-" .. element.name, "OVERLAY", nil, 6)
 			element.embellishment:SetAllPoints(element.texture)
@@ -584,7 +560,6 @@ function module:InitPortrait(element)
 			element.embellishment = nil
 		end
 
-		-- shadow
 		if module.db.shadow.enable and element.media.shadow and not element.shadow then
 			element.shadow = element:CreateTexture("mMT-Portrait-Shadow-" .. element.name, "ARTWORK", nil, 4)
 			element.shadow:SetAllPoints(element.texture)

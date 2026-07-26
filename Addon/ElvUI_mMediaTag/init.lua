@@ -9,7 +9,6 @@ local GetAddOnMetadata = _G.C_AddOns and _G.C_AddOns.GetAddOnMetadata or _G.GetA
 local IsAddOnLoaded = _G.C_AddOns and _G.C_AddOns.IsAddOnLoaded or IsAddOnLoaded
 local C_Timer_After = C_Timer.After
 
--- Addon Name and Namespace
 local addonName, Engine = ...
 local mMT = E:NewModule("mMediaTag", "AceHook-3.0", "AceEvent-3.0", "AceTimer-3.0", "AceConsole-3.0")
 
@@ -81,14 +80,12 @@ function mMT:Initialize()
 
 	mMT:UpdateAll()
 
-	-- add to movers
 	tinsert(E.ConfigModeLayouts, "MMEDIATAG")
 	E.ConfigModeLocalizedStrings["MMEDIATAG"] = mMT.Name
 
 	-- Set default value for spec icons if the user has the old boolean value
 	if E.db.mMediaTag.portraits.misc.spec_icon == true or E.db.mMediaTag.portraits.misc.spec_icon == false then E.db.mMediaTag.portraits.misc.spec_icon = "none" end
 
-	-- Changelog
 	C_Timer_After(2, function()
 		if E.db.mMediaTag.version ~= mMT.Version then
 			E:ToggleOptions('mMT,changelog')

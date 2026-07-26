@@ -31,7 +31,6 @@ MEDIA.color = {
 	line_b = createColor("FF0070DD"),
 	line_c = createColor("FFA335EE"),
 
-	-- colors
 	blue = createColor("FF0294FF"),
 	purple = createColor("FFBD26E5"),
 	red = createColor("FFFF005D"),
@@ -62,7 +61,6 @@ MEDIA.color = {
 		health = createColor("FFFF00E6")
 	},
 
-	-- portraits
 	portraits = {
 		misc = {
 			death = createColorPair("FFF86767", "FFEC3535"),
@@ -104,7 +102,6 @@ MEDIA.color = {
 		marker = createColor("FFFFFFFF"),
 	},
 
-	-- castbar_shield = createColor("FFFFFFFF"),
 	minimap_skin = { color = createColor("FFFFFFFF"), cardinal = createColor("FFFFFFFF") },
 
 	dock = {
@@ -148,14 +145,6 @@ MEDIA.color = {
 		pvp = createColor("FFFD786E"),
 		quest = createColor("FFFFEE00"),
 		resting = createColor("FF38FF92"),
-		-- [1] = createColor("FFFFD900"),
-		-- [2] = createColor("FFFF8800"),
-		-- [3] = createColor("FF7700FF"),
-		-- [4] = createColor("FF16BB00"),
-		-- [5] = createColor("FFA5A5A5"),
-		-- [6] = createColor("FF006EFF"),
-		-- [7] = createColor("FFFF1111"),
-		-- [8] = createColor("FFFFFFFF"),
 	},
 
 	nameplates = {
@@ -271,8 +260,6 @@ function mMT:UpdateMedia(arg)
 		}
 	end
 
-	--if arg == "castbar_shield" or not arg then MEDIA.color.castbar_shield = CreateColorFromHexString(E.db.mMediaTag.color.castbar_shield) end
-
 	if arg == "minimap_skin" or not arg then
 		MEDIA.color.minimap_skin.color = CreateColorFromHexString(E.db.mMediaTag.color.minimap_skin.color)
 		MEDIA.color.minimap_skin.cardinal = CreateColorFromHexString(E.db.mMediaTag.color.minimap_skin.cardinal)
@@ -337,10 +324,6 @@ function mMT:UpdateMedia(arg)
 		MEDIA.color.tags.quest.hex = E.db.mMediaTag.color.tags.misc.quest
 		MEDIA.color.tags.resting = CreateColorFromHexString(E.db.mMediaTag.color.tags.misc.resting)
 		MEDIA.color.tags.resting.hex = E.db.mMediaTag.color.tags.misc.resting
-		-- for i = 1, 8 do
-		-- 	MEDIA.color.tags[i] = CreateColorFromHexString(E.db.mMediaTag.color.tags.raidtargetmarkers[i])
-		-- 	MEDIA.color.tags[i].hex = E.db.mMediaTag.color.tags.raidtargetmarkers[i]
-		-- end
 	end
 
 	if arg == "nameplates" or not arg then
@@ -586,15 +569,6 @@ MEDIA.icons.datatexts.durability = {
 }
 
 MEDIA.icons.class = {}
-
--- MEDIA.icons.castbar = {
--- 	shield01 = "Interface\\AddOns\\ElvUI_mMediaTag\\media\\icons\\castbar\\shield_01.tga",
--- 	shield02 = "Interface\\AddOns\\ElvUI_mMediaTag\\media\\icons\\castbar\\shield_02.tga",
--- 	shield03 = "Interface\\AddOns\\ElvUI_mMediaTag\\media\\icons\\castbar\\shield_03.tga",
--- 	shield04 = "Interface\\AddOns\\ElvUI_mMediaTag\\media\\icons\\castbar\\shield_04.tga",
--- 	shield05 = "Interface\\AddOns\\ElvUI_mMediaTag\\media\\icons\\castbar\\shield_05.tga",
--- 	sign01 = "Interface\\AddOns\\ElvUI_mMediaTag\\media\\icons\\castbar\\sign_01.tga",
--- }
 
 MEDIA.icons.dock = {
 	material = {

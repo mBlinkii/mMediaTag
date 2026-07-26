@@ -72,7 +72,6 @@ local function OnEvent(...)
 	local showGold = E.db.mMediaTag.dock.bags.gold
 
 	if event == "ELVUI_FORCE_UPDATE" then
-		--setup settings
 		config.icon.texture = icons[E.db.mMediaTag.dock.bags.style][E.db.mMediaTag.dock.bags.icon] or MEDIA.fallback
 		config.icon.color = E.db.mMediaTag.dock.bags.custom_color and MEDIA.color.dock.bags or nil
 		config.text.enable = textStyle ~= "none"
@@ -84,7 +83,6 @@ local function OnEvent(...)
 
 		Dock:CreateDockIcon(self, config, event)
 
-		-- Create virtual frames and connect them to datatexts
 		if not self.bagsVirtualFrame then
 			self.bagsVirtualFrame = {
 				name = showGold and "Gold" or "Bags",

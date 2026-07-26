@@ -787,8 +787,6 @@ local function GetAppliedDungeonNames()
 			end
 			if name then tinsert(applied, name) end
 		end
-
-		--if DB.DEV then mMT:Print("LFG application:", resultID, tostring(appStatus), applied[#applied] or "-") end
 	end
 
 	return applied

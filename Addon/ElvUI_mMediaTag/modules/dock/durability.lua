@@ -107,7 +107,6 @@ end
 local function OnEvent(self, event, ...)
 	local textStyle = E.db.mMediaTag.dock.durability.text
 	if event == "ELVUI_FORCE_UPDATE" then
-		--setup settings
 		config.icon.texture = icons[E.db.mMediaTag.dock.durability.style][E.db.mMediaTag.dock.durability.icon] or MEDIA.fallback
 		config.icon.color = E.db.mMediaTag.dock.durability.custom_color and MEDIA.color.dock.durability or nil
 		config.text.enable = textStyle ~= "none"

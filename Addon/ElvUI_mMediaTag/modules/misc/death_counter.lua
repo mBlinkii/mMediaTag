@@ -34,7 +34,7 @@ local function UpdateCounter()
 
 	local deaths, timeLost = GetDeathCount()
 
-	-- erst ab dem ersten Tod anzeigen
+		-- only show once the first death happened
 	if not deaths or deaths == 0 then
 		frame:Hide()
 		return

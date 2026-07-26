@@ -46,7 +46,6 @@ local function OnEvent(...)
 	local self, event = ...
 
 	if event == "ELVUI_FORCE_UPDATE" then
-		--setup settings
 		config.icon.texture = icons[E.db.mMediaTag.dock.friends.style][E.db.mMediaTag.dock.friends.icon] or MEDIA.fallback
 		config.icon.color = E.db.mMediaTag.dock.friends.custom_color and MEDIA.color.dock.friends or nil
 		config.text.enable = E.db.mMediaTag.dock.friends.text
@@ -54,7 +53,6 @@ local function OnEvent(...)
 
 		Dock:CreateDockIcon(self, config, event)
 
-		-- Create virtual frames and connect them to datatexts
 		if not self.friendsVirtualFrame then
 			self.friendsVirtualFrame = {
 				name = "Friends",

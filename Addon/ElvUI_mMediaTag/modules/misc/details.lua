@@ -25,7 +25,6 @@ function module:DetailsEmbeddedToggle()
 		E:UIFrameFadeOut(module.detailsEmbedded, 0.5, 1, 0)
 		SetChatFramesShown(chat, true)
 
-		-- move tooltip
 		if E.CreatedMovers.TooltipMover and module.tooltipOrigPoint and not InCombatLockdown() then
 			E.CreatedMovers.TooltipMover.mover:ClearAllPoints()
 			E.CreatedMovers.TooltipMover.mover:SetPoint(unpack(module.tooltipOrigPoint))
@@ -39,7 +38,6 @@ function module:DetailsEmbeddedToggle()
 		module.detailsEmbedded:Show()
 		SetChatFramesShown(chat, false)
 
-		-- move tooltip
 		if E.CreatedMovers.TooltipMover and not InCombatLockdown() then
 			E.CreatedMovers.TooltipMover.mover:ClearAllPoints()
 			E.CreatedMovers.TooltipMover.mover:SetPoint("BOTTOMRIGHT", module.detailsEmbedded, "TOPRIGHT", 0, 0)
@@ -177,7 +175,6 @@ local function DetailsEmbedded()
 		module.detailsEmbedded = embedded
 	end
 
-	-- move tooltip
 	if E.CreatedMovers.TooltipMover and not InCombatLockdown() then
 		module.tooltipOrigPoint = { E.CreatedMovers.TooltipMover.mover:GetPoint() }
 		E.CreatedMovers.TooltipMover.mover:ClearAllPoints()

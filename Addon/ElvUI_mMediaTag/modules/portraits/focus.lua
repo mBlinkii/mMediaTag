@@ -24,7 +24,6 @@ function module:InitializeFocusPortrait()
 				portraits[unit].isPlayer = nil
 				portraits[unit].unitClass = nil
 				portraits[unit].lastGUID = nil
-				--portraits[unit].realUnit = "player"
 				portraits[unit].name = name
 				portraits[unit].forceExtra = (E.db.mMediaTag.portraits.focus.forceExtra ~= "none") and E.db.mMediaTag.portraits.focus.forceExtra or nil
 

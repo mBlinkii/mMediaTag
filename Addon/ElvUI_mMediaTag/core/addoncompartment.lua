@@ -20,7 +20,7 @@ function ElvUI_mMediaTag_OnAddonCompartmentEnter(addonName, menuButtonFrame)
 	GameTooltip:SetOwner(UIParent, "ANCHOR_CURSOR_RIGHT")
 	GameTooltip:AddDoubleLine(mMT.Name, format("|CFFF7DC6FVer. %s|r", mMT.Version))
 	GameTooltip:AddLine(" ")
-	GameTooltip:AddLine(format("|CFFF7DC6F %s|r %s", L["SHIFT + Click"], L["for debug mode."])) --WIP
+	GameTooltip:AddLine(format("|CFFF7DC6F %s|r %s", L["SHIFT + Click"], L["for debug mode."]))
 	GameTooltip:Show()
 end
 

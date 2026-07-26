@@ -2,7 +2,7 @@ local mMT, DB, M, E, P, L, MEDIA = unpack(ElvUI_mMediaTag)
 
 local module = mMT:AddModule("Tooltip")
 
--- WoW API / Variablen
+-- WoW API / Variables
 local _G = _G
 local GetItemIcon = C_Item and C_Item.GetItemIconByID or GetItemIcon
 local GetSpellInfo = C_Spell and C_Spell.GetSpellInfo or GetSpellInfo
@@ -29,7 +29,7 @@ local function SetTooltipIcon(tooltip, icon)
 	title:SetFormattedText("%s %s", GetIconString(icon), text)
 end
 
--- Classic/BC/WotLK: Tooltip-Hooks
+-- Classic/BC/WotLK: tooltip hooks
 local function AddTooltipIcon(self, icon)
 	SetTooltipIcon(self, icon)
 end

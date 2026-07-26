@@ -33,13 +33,11 @@ local function OnEvent(...)
 	local self, event = ...
 
 	if event == "ELVUI_FORCE_UPDATE" then
-		--setup settings
 		config.icon.texture = icons[E.db.mMediaTag.dock.mail.style][E.db.mMediaTag.dock.mail.icon] or MEDIA.fallback
 		config.icon.color = E.db.mMediaTag.dock.mail.custom_color and MEDIA.color.dock.mail or nil
 
 		Dock:CreateDockIcon(self, config, event)
 
-		-- Create virtual frames and connect them to datatexts
 		if not self.mailVirtualFrame then
 			self.mailVirtualFrame = {
 				name = "Mail",
@@ -60,7 +58,6 @@ local function OnEvent(...)
 	else
 		E:StopFlash(self.mMT_Dock.Icon, 1)
     end
-
 
 	self.text:SetText("")
 end

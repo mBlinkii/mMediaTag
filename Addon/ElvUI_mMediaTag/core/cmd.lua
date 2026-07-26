@@ -61,7 +61,6 @@ function mMT:SetDebugMode(on, safe)
 	end
 end
 
--- Command functions
 local function PrintHelp()
 	mMT:Print(L["Available commands:"])
 	mMT:Print(MEDIA.color.purple:WrapTextInColorCode("/mmt"), MEDIA.color.green:WrapTextInColorCode("help"), "-", L["Show this help message"])
@@ -96,7 +95,6 @@ local function AddCurrentCharacterAsDeveloper()
 	mMT:Print(MEDIA.color.green:WrapTextInColorCode(L["DEV mode active"]))
 end
 
--- Command handler
 local function CommandHandler(msg)
 	local command = strlower(msg)
 	if command == "help" then
@@ -120,6 +118,5 @@ local function CommandHandler(msg)
 	end
 end
 
--- Register slash command
 SLASH_MMT1 = "/mmt"
 SlashCmdList["MMT"] = CommandHandler

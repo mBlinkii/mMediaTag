@@ -108,7 +108,6 @@ local function AddClassIcons(style, texture, name)
 	}
 end
 
--- Add JiberishUI Icons to the DB
 function mMT:AddJIIcons()
 	local JI = unpack(ElvUI_JiberishIcons)
 	if JI then
@@ -122,7 +121,6 @@ function mMT:AddJIIcons()
 	end
 end
 
--- Add mMT Icons to the DB
 AddClassIcons("mmt_hd", path .. "mmt_border.tga", "mMT HD")
 AddClassIcons("mmt_hd_black", path .. "mmt_classcolored_border.tga", "mMT HD Black")
 
@@ -136,8 +134,6 @@ AddClassIcons("mmt_transparent_outline_shadow", path .. "mmt_transparent_outline
 AddClassIcons("mmt_transparent_outline_colorboost", path .. "mmt_transparent_outline_colorboost.tga", "mMT Outline C")
 AddClassIcons("mmt_transparent_outline_shadow_colorboost", path .. "mmt_transparent_outline_shadow_colorboost.tga", "mMT Outline D")
 
-
--- Add Icons to Details
 function mMT:AddClassIconsToDetails()
 	for _, data in next, MEDIA.icons.class.icons.mmt do
 		_G.Details:AddCustomIconSet(data.texture, data.name, false, "Interface\\Addons\\ElvUI_mMediaTag\\media\\icon.tga", { 0, 1, 0, 1 })

@@ -77,7 +77,6 @@ end
 
 local function OnEvent(self, event, ...)
 	if event == "ELVUI_FORCE_UPDATE" then
-		-- setup settings
 		config.icon.texture = icons[E.db.mMediaTag.dock.housing.style][E.db.mMediaTag.dock.housing.icon] or MEDIA.fallback
 		config.icon.color = E.db.mMediaTag.dock.housing.custom_color and MEDIA.color.dock.housing or nil
 

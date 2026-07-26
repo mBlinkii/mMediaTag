@@ -6,17 +6,14 @@ local LSM = E.Libs.LSM
 local colors = MEDIA.color.dock
 
 local function SetupDockIcon(datatext, config)
-	-- Determine icon size
 	local isVertical = datatext.db and datatext.db.growth == "VERTICAL"
 	local baseSize = isVertical and datatext:GetWidth() or datatext:GetHeight()
 	local size = baseSize + 4
 
-	-- Initialize Dock table
 	datatext.mMT_Dock = datatext.mMT_Dock or {}
 	local dock = datatext.mMT_Dock
 	dock.size = size
 
-	-- Create or update icon texture
 	if not dock.Icon then
 		dock.Icon = datatext:CreateTexture(nil, "ARTWORK")
 		dock.Icon:ClearAllPoints()
@@ -32,7 +29,6 @@ local function SetupDockIcon(datatext, config)
 end
 
 local function SetupLabel(text, size, anchor, point, justify)
-	-- configure label
 	local db = module.db.font
 	text.SetShadowColor = function() end
 	text:FontTemplate(LSM:Fetch("font", db.font), db.custom_font_size and db.fontSize or size / 3, db.fontFlag)
@@ -46,7 +42,6 @@ local function SetupLabel(text, size, anchor, point, justify)
 end
 
 local function DeleteLabel(text)
-	-- delete label
 	text:SetText("")
 	text = nil
 end
@@ -93,7 +88,6 @@ local function SetupDockNotification(datatext, config)
 		return
 	end
 
-	-- initialize notification icon if not available
 	if not dock.Notification then
 		dock.Notification = datatext:CreateTexture(nil, "ARTWORK")
 		dock.Notification:ClearAllPoints()
@@ -101,7 +95,6 @@ local function SetupDockNotification(datatext, config)
 		dock.Notification:SetDrawLayer("OVERLAY", 0)
 	end
 
-	-- calculate size and set properties
 	local size = db.auto and ((datatext:GetHeight() + 4) / 4) or db.size
 	local color = db.class and MEDIA.myclass or colors.notification
 	dock.Notification:Size(size, size)
@@ -119,14 +112,9 @@ local function SetupDockSecureButton(datatext, conf)
 		dock.SecureBtn.__owner = datatext
 
 		if secureConf.macroA or secureConf.macroB then
-			--dock.SecureBtn:SetAttribute("type*", "macro")
-			dock.SecureBtn:SetAttribute("type1", "macro") -- Linksklick
-			--dock.SecureBtn:SetAttribute("spell1", "Feuerball")
-
-			dock.SecureBtn:SetAttribute("type2", "macro") -- Rechtsklick
-			--dock.SecureBtn:SetAttribute("macrotext2", "/s Hallo Welt")
+			dock.SecureBtn:SetAttribute("type1", "macro")
+			dock.SecureBtn:SetAttribute("type2", "macro")
 		end
-		--dock.SecureBtn:RegisterForClicks("AnyUp", "AnyDown")
 		dock.SecureBtn:RegisterForClicks("LeftButtonDown", "RightButtonDown")
 	end
 
@@ -162,7 +150,6 @@ function module:OnEnter(datatext)
 
 	E:UIFrameFadeOut(icon, 0.25, icon:GetAlpha(), 1)
 
-	-- fade texts out
 	if datatext.mMT_Dock.TextA then E:UIFrameFadeOut(datatext.mMT_Dock.TextA, 0.25, 1, 0) end
 	if datatext.mMT_Dock.TextB then E:UIFrameFadeOut(datatext.mMT_Dock.TextB, 0.25, 1, 0) end
 end
@@ -176,35 +163,9 @@ function module:OnLeave(datatext)
 	icon:SetVertexColor(color.r, color.g, color.b, color.a or 1)
 	E:UIFrameFadeIn(icon, 0.25, icon:GetAlpha(), 1)
 
-	-- fade texts in
 	if datatext.mMT_Dock.TextA then E:UIFrameFadeIn(datatext.mMT_Dock.TextA, 0.75, 0, 1) end
 	if datatext.mMT_Dock.TextB then E:UIFrameFadeIn(datatext.mMT_Dock.TextB, 0.75, 0, 1) end
 end
-
---** DOCK Config Table
--- local Config = {
--- 	name = "DEVICON",
--- 	localizedName = "Dock" .. "DEV ICON",
--- 	text = {
--- 		enable = true,
--- 		center = true,
--- 		a = true, -- first label
--- 		b = true, -- second label
--- 	},
--- 	icon = {
--- 		notification = true,
--- 		texture = mMT.IconSquare,
--- 		color = { r = 1, g = 1, b = 1, a = 1 },
--- 	},
--- 	misc = {
--- 		secure = true,
--- 		macroA = "/click EJMicroButton",
--- 		macroB = "/click SpellbookMicroButton",
--- 		funcOnEnter = nil,
--- 		funcOnLeave = nil,
--- 		funcOnClick = nil,
--- 	},
--- }
 
 function module:CreateDockIcon(datatext, config)
 	if not config or not datatext then return end

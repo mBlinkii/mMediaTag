@@ -91,7 +91,7 @@ end
 
 local function GetInterruptCooldown()
 	local spellId = module.interruptSpellId
-	-- true = GCD ignorieren, sonst gilt der Kick nach jedem Tastendruck kurz als "on CD"
+	-- true = ignore the GCD, otherwise the kick counts as "on CD" briefly after every keypress
 	if spellId then return GetSpellCooldownDuration(spellId, true) end
 end
 
@@ -119,19 +119,19 @@ local function SetKickSpark(castbar, castStart, cooldown, canAttack)
 		indicator:SetColorTexture(c.r, c.g, c.b)
 	end
 
-	-- Marker-Position = verstrichene Castzeit + Kick-Restcooldown. Diese Summe ist
-	-- zeitinvariant (elapsed steigt, CD sinkt, 1:1) - egal wie oft neu gesetzt wird
-	-- (Re-Fire von PostCastStart bei Target-Wechsel, Nameplate mid-cast, OnUpdate),
-	-- der Marker bleibt an derselben Stelle. Pushback korrigiert sich ebenfalls selbst.
+	-- Marker position = elapsed cast time + remaining kick cooldown. That sum is time
+	-- invariant (elapsed rises, cooldown falls, 1:1) - no matter how often it is reset
+	-- (PostCastStart re-fire on target switch, nameplate mid-cast, OnUpdate) the marker
+	-- stays in place. Pushback corrects itself the same way.
 	local cdRemaining = cooldown:GetRemainingDuration()
 	if castbar.startTime and castbar.max and not issecretvalue(castbar.max) and not issecretvalue(cdRemaining) then
-		-- Zahlenpfad: oUF liefert startTime/max als normale Zahlen (Sekunden),
-		-- solange die Castzeiten nicht secret sind - funktioniert auf UF und NP.
+		-- Numeric path: oUF delivers startTime/max as plain numbers (seconds) as long
+		-- as the cast times are not secret - works on UF and NP.
 		kickBar:SetMinMaxValues(0, castbar.max)
 		kickBar:SetValue((GetTime() - castbar.startTime) + cdRemaining)
 	else
-		-- Secret-Fallback (restricted Content): absolute Zeitachse.
-		-- Min/Max = Cast-Start/-Ende, Value = Zeitpunkt an dem der Kick bereit ist.
+		-- Secret fallback (restricted content): absolute time axis.
+		-- Min/Max = cast start/end, Value = the point in time the kick is ready.
 		local castDuration = castbar:GetTimerDuration()
 		if castDuration then
 			kickBar:SetMinMaxValues(castDuration:GetStartTime(), castDuration:GetEndTime())
@@ -164,7 +164,6 @@ local function SetCastbarColor(castbar, cooldown, canAttack)
 
 	castbar:SetStatusBarColor(color:GetRGBA())
 
-	-- bg color
 	if module.set_bg_color and castbar.bg then
 		local bgColor = EvalColor(cooldown:IsZero(), colors.bgReady, colors.bgOnCD)
 		castbar.bg:SetVertexColor(bgColor:GetRGBA())
@@ -228,11 +227,10 @@ local function PostCastStart(castbar, unit)
 	end
 end
 
--- ElvUI weist castbar.PostCastStart = UF.PostCastStart als SNAPSHOT bei der
--- Frame-Konstruktion zu, und oUF ruft nur element:PostCastStart(unit) auf.
--- Da ElvUI die UF-Frames inzwischen VOR dem Plugin-Load baut, greift ein
--- hooksecurefunc(UF, "PostCastStart", ...) dort nie. Deshalb hooken wir die
--- Castbar-Instanzen direkt.
+-- ElvUI assigns castbar.PostCastStart = UF.PostCastStart as a SNAPSHOT during frame
+-- construction, and oUF only calls element:PostCastStart(unit). Since ElvUI now builds
+-- the UF frames BEFORE the plugin loads, a hooksecurefunc(UF, "PostCastStart", ...)
+-- never applies there - so hook the castbar instances directly.
 local function HookCastbarInstance(castbar)
 	if castbar and castbar.PostCastStart and not castbar.mMT_CastStartHooked then
 		hooksecurefunc(castbar, "PostCastStart", PostCastStart)
@@ -251,8 +249,8 @@ function module:Initialize()
 			hooksecurefunc(NP, "Castbar_PostCastFail", PostCastFailInterrupted)
 			hooksecurefunc(NP, "Castbar_PostCastInterrupted", PostCastFailInterrupted)
 
-			-- Configure_Castbar laeuft ueber die UF-Tabelle und erwischt so auch
-			-- spaeter erstellte oder aktivierte Frames.
+			-- Configure_Castbar iterates the UF table and therefore also catches frames
+			-- created or enabled later.
 			hooksecurefunc(UF, "Configure_Castbar", function(_, frame)
 				if frame then HookCastbarInstance(frame.Castbar) end
 			end)

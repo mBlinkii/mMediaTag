@@ -31,9 +31,7 @@ end
 local function SetupDock()
 	ResetDB()
 
-	-- XIV DOCKS
 	if dock_style == "XIV" or dock_style == "XIVCOLORED" or dock_style == "MAUI" then
-		-- global
 		if not E.global["datatexts"]["customPanels"]["mMT - CENTER"] then E.DataTexts:BuildPanelFrame("mMT - CENTER") end
 		E.global["datatexts"]["customPanels"]["mMT - CENTER"]["backdrop"] = false
 		E.global["datatexts"]["customPanels"]["mMT - CENTER"]["border"] = false
@@ -92,7 +90,6 @@ local function SetupDock()
 		E.global["datatexts"]["customPanels"]["mMT - RIGHT"]["visibility"] = ""
 		E.global["datatexts"]["customPanels"]["mMT - RIGHT"]["width"] = 540
 
-		-- movers
 		if dock_top then
 			E.db["movers"]["DTPanelmMT - CENTERMover"] = "TOP,UIParent,TOP,0,4"
 			E.db["movers"]["DTPanelmMT - EXTRA LEFTMover"] = "TOP,ElvUIParent,TOP,-413,4"
@@ -107,7 +104,6 @@ local function SetupDock()
 			E.db["movers"]["DTPanelmMT - RIGHTMover"] = "BOTTOMRIGHT,UIParent,BOTTOMRIGHT,-4,4"
 		end
 
-		-- settings
 		E.db["datatexts"]["panels"]["mMT - RIGHT"][1] = "System"
 		E.db["datatexts"]["panels"]["mMT - RIGHT"][2] = "mMT - M+ Score"
 		E.db["datatexts"]["panels"]["mMT - RIGHT"][3] = "mMT - Teleports"
@@ -227,10 +223,7 @@ local function SetupDock()
 		end
 	end
 
-	-- DOCK
-
 	if dock_style == "DOCK" or dock_style == "DOCKV2" then
-		-- globals
 		if not E.global["datatexts"]["customPanels"]["mMT - DOCK"] then E.DataTexts:BuildPanelFrame("mMT - DOCK") end
 		E.global["datatexts"]["customPanels"]["mMT - DOCK"]["backdrop"] = false
 		E.global["datatexts"]["customPanels"]["mMT - DOCK"]["height"] = 38
@@ -245,7 +238,6 @@ local function SetupDock()
 		E.global["datatexts"]["customPanels"]["mMT - DOCK COSMETICK"]["panelTransparency"] = true
 		E.global["datatexts"]["customPanels"]["mMT - DOCK COSMETICK"]["width"] = 640
 
-		-- settings
 		E.db["datatexts"]["panels"]["mMT - DOCK COSMETICK"][1] = ""
 		E.db["datatexts"]["panels"]["mMT - DOCK COSMETICK"][2] = ""
 		E.db["datatexts"]["panels"]["mMT - DOCK COSMETICK"][3] = ""
@@ -308,7 +300,6 @@ local function SetupDock()
 			E.db["datatexts"]["panels"]["mMT - DOCK"][12] = "mMT_Dock_Mail"
 		end
 
-		-- movers
 		if dock_top then
 			E.db["movers"]["DTPanelmMT - DOCK COSMETICKMover"] = "TOP,UIParent,TOP,0,4"
 			E.db["movers"]["DTPanelmMT - DOCKMover"] = "TOP,ElvUIParent,TOP,0,8"
@@ -318,7 +309,6 @@ local function SetupDock()
 		end
 	end
 
-	-- update elvui
 	E:StaggeredUpdateAll(nil, true)
 end
 

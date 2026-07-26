@@ -51,7 +51,6 @@ local menu_icons = {
 	help = path .. "help.tga",
 }
 
--- Create the menu
 local function BuildMenuList()
 	local icon = E.db.mMediaTag.datatexts.menu.menu_icons
 	menuList = {
@@ -308,18 +307,15 @@ local function OnEnter(self, slow)
 	if slow == 1 or not slow then
 		DT.tooltip:ClearLines()
 
-		-- Tooltip Header
 		DT.tooltip:AddLine(L["Game Menu"], mMT:GetRGB("title"))
 		DT.tooltip:AddLine(" ")
 		DT.tooltip:AddDoubleLine(mMT.Name, "|CFFFEA101Ver.|r" .. " " .. mMT.Version, mMT:GetRGB("text", "mark"))
 
-		-- mMT Systeminfo
 		if E.db.mMediaTag.datatexts.menu.show_systeminfo then
 			mMT:MMTSystemInfo()
 			DT.tooltip:AddLine(" ")
 		end
 
-		-- Latency
 		local function GetLatencyColor(latency)
 			return statusColor[latency < 100 and 1 or (latency < 200 and 2 or 3)]
 		end
@@ -334,7 +330,6 @@ local function OnEnter(self, slow)
 		AddLatencyInfo("World", latencyWorld, GetLatencyColor(latencyWorld))
 		DT.tooltip:AddLine(" ")
 
-		-- FPS
 		local function AddFramerateInfo(fps)
 			local fps_color = statusColor[fps > 55 and 1 or (fps > 29 and 2 or 3)]
 			DT.tooltip:AddDoubleLine(L["Framerate:"], string.format("|c%s %.0f FPS|r", fps_color, fps), mMT:GetRGB())
@@ -342,7 +337,6 @@ local function OnEnter(self, slow)
 		AddFramerateInfo(GetFramerate())
 		DT.tooltip:AddLine(" ")
 
-		-- CPU/ Memory usage
 		if E.db.mMediaTag.datatexts.menu.show_systeminfo then
 			mMT:SystemInfo()
 			DT.tooltip:AddLine(" ")

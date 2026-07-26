@@ -38,13 +38,11 @@ local function OnEvent(...)
 	local self, event = ...
 
 	if event == "ELVUI_FORCE_UPDATE" then
-		--setup settings
 		config.icon.texture = icons[E.db.mMediaTag.dock.quests.style][E.db.mMediaTag.dock.quests.icon] or MEDIA.fallback
 		config.icon.color = E.db.mMediaTag.dock.quests.custom_color and MEDIA.color.dock.quests or nil
 
 		Dock:CreateDockIcon(self, config, event)
 
-		-- Create virtual frames and connect them to datatexts
 		if not self.questsVirtualFrame then
 			self.questsVirtualFrame = {
 				name = "Quests",

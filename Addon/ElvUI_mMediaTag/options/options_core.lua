@@ -6,7 +6,6 @@ mMT.options = {
 	name = MEDIA.icon16 .. mMT.Name,
 	handler = mMT,
 	type = "group",
-	--childGroups = "tab",
 	args = {
 		logo = {
 			type = "description",

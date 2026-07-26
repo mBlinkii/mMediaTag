@@ -24,7 +24,6 @@ function module:InitializeToTPortrait()
 				portraits[unit].isPlayer = nil
 				portraits[unit].unitClass = nil
 				portraits[unit].lastGUID = nil
-				--portraits[unit].realUnit = "player"
 				portraits[unit].name = name
 				portraits[unit].forceExtra = (E.db.mMediaTag.portraits.targettarget.forceExtra ~= "none") and E.db.mMediaTag.portraits.targettarget.forceExtra or nil
 

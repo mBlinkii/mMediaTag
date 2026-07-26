@@ -51,7 +51,6 @@ local function OnEvent(...)
 	local self, event = ...
 
 	if event == "ELVUI_FORCE_UPDATE" then
-		--setup settings
 		config.icon.texture = icons[E.db.mMediaTag.dock.volume.style][E.db.mMediaTag.dock.volume.icon] or MEDIA.fallback
 		config.icon.color = E.db.mMediaTag.dock.volume.custom_color and MEDIA.color.dock.volume or nil
 		config.text.enable = E.db.mMediaTag.dock.volume.text
@@ -59,7 +58,6 @@ local function OnEvent(...)
 
 		Dock:CreateDockIcon(self, config, event)
 
-		-- Create virtual frames and connect them to datatexts
 		if not self.volumeVirtualFrame then
 			self.volumeVirtualFrame = {
 				name = "Volume",

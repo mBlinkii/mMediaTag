@@ -45,7 +45,6 @@ local function OnEvent(...)
 	local self, event = ...
 
 	if event == "ELVUI_FORCE_UPDATE" then
-		--setup settings
 		config.icon.texture = icons[E.db.mMediaTag.dock.guild.style][E.db.mMediaTag.dock.guild.icon] or MEDIA.fallback
 		config.icon.color = E.db.mMediaTag.dock.guild.custom_color and MEDIA.color.dock.guild or nil
 		config.text.enable = E.db.mMediaTag.dock.guild.text
@@ -53,7 +52,6 @@ local function OnEvent(...)
 
 		Dock:CreateDockIcon(self, config, event)
 
-		-- Create virtual frames and connect them to datatexts
 		if not self.guildVirtualFrame then
 			self.guildVirtualFrame = {
 				name = "Guild",

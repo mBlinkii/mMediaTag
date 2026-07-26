@@ -86,7 +86,6 @@ local function SkinTitleText(text)
 	if height ~= text:GetHeight() then text:SetHeight(height) end
 end
 
--- progress coloring
 -- strips old color codes and colors "x/y Text", "Text: x/y" or "Text (x%)" lines by progress
 local function GetCleanText(text)
 	text = gsub(text, "|c%x%x%x%x%x%x%x%x", "")
@@ -169,7 +168,6 @@ local function SkinBlock(_, block)
 	end
 end
 
--- header bar
 local function UpdateHeaderBar(headerBar)
 	headerBar:SetShown(db.headerbar.enable)
 	if not db.headerbar.enable then return end
@@ -211,7 +209,6 @@ local function SkinHeader(header)
 	end
 end
 
--- background
 local function SetCollapsed(_, collapsed)
 	local backdrop = _G.ObjectiveTrackerFrame.backdrop
 	if backdrop then backdrop:SetShown(not collapsed and db.bg.enable) end

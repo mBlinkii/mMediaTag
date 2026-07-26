@@ -632,7 +632,7 @@ SlashCmdList.MMTMP = function(msg, editBox)
 	msg = strlower(msg)
 
 	if msg == "reset" then
-		mMTSettings = CopyTable(defaultDB) -- reset to defaults
+		mMTSettings = CopyTable(defaultDB)
 		mMT_MediaPack.db = mMTSettings
 		PrintStatus("Settings has been reset to default")
 		RLDialog()
@@ -659,7 +659,6 @@ mAddStatusbar("mMT Blank", "mMT_Blank.tga")
 mAddStatusbar("mMT Target", "mMT_Target.tga")
 mAddStatusbar("mMT Dark", "mMT_Dark.tga")
 
--- Backgrounds
 mAddBackground("mMediaTag BG1", "bg1.tga")
 mAddBackground("mMediaTag BG2", "bg2.tga")
 mAddBackground("mMediaTag BG3", "bg3.tga")

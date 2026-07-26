@@ -109,10 +109,10 @@ function mMT:ConnectVirtualFrameToDataText(dataTextName, virtualFrame)
 	return true
 end
 
--- ElvUI baut die UnitFrames inzwischen VOR dem Plugin-Load, der erste
--- Configure-Pass ist beim Initialize also schon durch. Module, die Elemente
--- umkonfigurieren oder Instanz-Callbacks hooken, brauchen deshalb einen
--- einmaligen Sweep ueber die bereits existierenden Frames.
+-- ElvUI now builds the UnitFrames BEFORE the plugin loads, so the first Configure
+-- pass is already done when Initialize runs. Modules that reconfigure elements or
+-- hook instance callbacks therefore need a one-time sweep over the frames that
+-- already exist.
 local function ForEachHeaderFrame(header, callback)
 	if not header then return end
 
@@ -121,7 +121,7 @@ local function ForEachHeaderFrame(header, callback)
 		if child then
 			if child.unitframeType then callback(child) end
 
-			-- zweite Ebene: Gruppen-Header (raid1-3) bzw. target/pet der Party
+			-- second level: group headers (raid1-3) and the party's target/pet frames
 			for j = 1, child:GetNumChildren() do
 				local frame = select(j, child:GetChildren())
 				if frame and frame.unitframeType then callback(frame) end
@@ -133,8 +133,8 @@ end
 function mMT:ForEachUFFrame(callback)
 	if not (callback and E.private.unitframe.enable) then return end
 
-	-- UF.units haelt die Frames als Value, UF.groupunits nur unit -> Gruppenname
-	-- (der Frame selbst liegt unter UF[unit]).
+	-- UF.units holds the frames as values, UF.groupunits only unit -> group name
+	-- (the frame itself lives in UF[unit]).
 	if UF.units then
 		for _, frame in pairs(UF.units) do
 			if frame then callback(frame) end
@@ -163,10 +163,8 @@ function mMT:formatText(input, ignoreSkip)
 		table.insert(words, word)
 	end
 
-	-- Remove the last word if it is to be ignored
 	if not ignoreSkip and ignore[words[#words]] then table.remove(words) end
 
-	-- Format all remaining words
 	for i, w in ipairs(words) do
 		words[i] = w:sub(1, 1):upper() .. w:sub(2):lower()
 	end
@@ -211,7 +209,6 @@ function mMT:GetWeeklyResetTime()
 	return false
 end
 
--- build menu frames
 function mMT:BuildMenus()
 	mMT.menu = CreateFrame("Frame", "mMediaTag_Main_Menu_Frame", E.UIParent, "BackdropTemplate")
 	mMT.menu:SetTemplate("Transparent", true)
@@ -220,7 +217,6 @@ function mMT:BuildMenus()
 	mMT.submenu:SetTemplate("Transparent", true)
 end
 
--- memory/ cpu usage tooltip
 local topAddOns = {}
 for i = 1, 5 do
 	topAddOns[i] = { value = 0, name = "", cpu = "N/A" }
@@ -307,13 +303,10 @@ function mMT:MMTSystemInfo()
 	end
 end
 
--- import/ export functions
 local exportPrefix = "!mMT!"
 function GetImportStringType(dataString)
 	return (strmatch(dataString, "^" .. exportPrefix) and "Deflate") or (strmatch(dataString, "^{") and "Table") or ""
 end
-
--- Secret-safe unit classification (WoW 12.x) ----------------------------------
 
 -- Returns the value unchanged, or nil if it is a secret value (WoW 12.x).
 -- Secret values must never be compared, concatenated or branched on.
@@ -346,12 +339,8 @@ end
 
 local extraTypes = { rare = true, elite = true, rareelite = true, boss = true }
 
---- Determines the classification of a unit (secret-safe, WoW 12.x).
--- @param unit        unit token
--- @param isBossFrame optional - true if the frame itself is a boss frame (boss1-bossN)
--- @param isPlayer    optional - true if the unit is a player; determined from the unit if nil
--- @param guid        optional - secret-guarded GUID (placeholder " " if secret); read from the unit if nil
--- @return "boss", "rareelite", "rare", "elite" or nil
+-- Returns "boss", "rareelite", "rare", "elite" or nil. isBossFrame, isPlayer and guid
+-- are optional and read from the unit when nil; a secret GUID arrives as the placeholder " ".
 function mMT:GetUnitClassification(unit, isBossFrame, isPlayer, guid)
 	if not unit then return nil end
 

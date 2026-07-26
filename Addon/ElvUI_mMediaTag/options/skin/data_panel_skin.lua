@@ -38,7 +38,6 @@ mMT.options.args.misc.args.data_panel_skin.args = {
 		set = function(info, value)
 			E.db.mMediaTag.data_panel_skin.enable = value
 			mMT:UpdateModule("DataPanelSkin")
-			--E:StaticPopup_Show("CONFIG_RL")
 		end,
 	},
 	spacer_1 = {

@@ -30,16 +30,13 @@ local pairs = pairs
 local next = next
 local type = type
 
--- Module state
 local db = {}
 local colors = MEDIA.color.tags
 local icons = MEDIA.icons.tags
 local noDecData
 
--- Faction cache
 local unitFactionCache = {}
 
--- Classification labels
 local shortClassificationsLabels = {
 	rare = L["R"],
 	rareelite = L["R+"],
@@ -534,7 +531,6 @@ E:AddTag("mMT-questicon", "QUEST_LOG_UPDATE", function(unit)
 end)
 E:AddTagInfo("mMT-questicon", mMT.NameShort .. " " .. L["Miscellaneous"], L["Returns a quest icon if the unit is a quest mob."])
 
--- CLASS ICONS
 do
 	local classIconNames = {}
 	for k, v in pairs(MEDIA.icons.class.icons.mmt) do
@@ -564,7 +560,6 @@ do
 	end
 end
 
--- SPEC ICONS
 do
 	local specIconNames = {}
 	for k, v in pairs(MEDIA.icons.spec.icons.mmt) do

@@ -114,7 +114,6 @@ local function OnEvent(...)
 	local self, event = ...
 
 	if event == "ELVUI_FORCE_UPDATE" then
-		--setup settings
 		config.icon.texture = icons[E.db.mMediaTag.dock.lfd.style][E.db.mMediaTag.dock.lfd.icon] or MEDIA.fallback
 		config.icon.color = E.db.mMediaTag.dock.lfd.custom_color and MEDIA.color.dock.lfd or nil
 		config.text.enable = E.db.mMediaTag.dock.lfd.text
@@ -122,7 +121,6 @@ local function OnEvent(...)
 
 		Dock:CreateDockIcon(self, config, event)
 
-		-- Create virtual frames and connect them to datatexts
 		if not self.lfdVirtualFrame then
 			self.lfdVirtualFrame = {
 				name = "mMT - Dungeon",
@@ -143,10 +141,8 @@ local function OnEvent(...)
 		local isInGroup = IsInGroup()
 		local text = ""
 
-		-- CTA info outside the instance
 		if E.Retail and E.db.mMediaTag.dock.lfd.call_to_the_Arms and not isInInstance then text = GetCallToTheArmsInfos() or "" end
 
-		-- In instance: Show dungeon info
 		if isInInstance then
 			local info = mMT:GetDungeonInfo()
 			if info and (info.difficultyShort or info.difficultyName) then
@@ -157,13 +153,11 @@ local function OnEvent(...)
 				text = info.difficultyColor:WrapTextInColorCode(difficulty) .. " - " .. name
 			end
 
-		-- In group, but not in instance
 		elseif isInGroup then
 			local difficulty, raid = mMT:GetInstanceDifficulty()
 			if difficulty then text = (raid and L["Raid"] .. " - " or "") .. difficulty end
 		end
 
-		-- Fallback if nothing has been set
 		self.mMT_Dock.TextA:SetText(text)
 	end
 

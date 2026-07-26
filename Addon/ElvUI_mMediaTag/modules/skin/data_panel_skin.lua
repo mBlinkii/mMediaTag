@@ -57,9 +57,9 @@ function module:Initialize()
 	if E.db.mMediaTag.data_panel_skin.enable then
 		CheckAndRemoveSettings()
 
-		-- Kein initialer Sweep noetig: DT:LoadDataTexts() laeuft erst bei
-		-- PLAYER_ENTERING_WORLD, also nach dem Plugin-Load. Ein eigener Aufruf hier
-		-- wuerde vor ElvUIs panel:SetTemplate() greifen (SetBackdropColor ist dann nil).
+		-- No initial sweep needed: DT:LoadDataTexts() only runs on PLAYER_ENTERING_WORLD, so
+		-- after the plugin load. Calling it here would run before ElvUI's panel:SetTemplate()
+		-- (SetBackdropColor would still be nil).
 		if not module:IsHooked(DT, "UpdatePanelInfo") then module:SecureHook(DT, "UpdatePanelInfo", UpdatePanelInfo) end
 	elseif module:IsHooked(DT, "UpdatePanelInfo") then
 		module:Unhook(DT, "UpdatePanelInfo")
