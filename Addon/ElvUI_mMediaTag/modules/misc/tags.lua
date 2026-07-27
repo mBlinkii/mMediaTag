@@ -81,8 +81,7 @@ local roleNames = {
 	DAMAGER = L["DPS"],
 }
 
--- Ordered array (fixed priority: Offline > Dead > Ghost > AFK > DND).
--- text/iconString are prebuilt in RebuildStatusIcons - tag functions only do lookups.
+-- fixed priority Offline > Dead > Ghost > AFK > DND; text/iconString are prebuilt in RebuildStatusIcons.
 local statusList = {
 	{
 		check = function(unit)
@@ -207,8 +206,7 @@ local function RebuildRoleTables()
 	roleIcons.DAMAGER = MEDIA.icons.role[db.misc.dps]
 end
 
--- Prebuilt tag strings - colors/icons only change via settings (Initialize),
--- so the concatenation happens once here instead of on every tag update.
+-- prebuilt once here: colors/icons only change via settings, not per tag update.
 local classificationIconStrings = {}
 local pvpIconString, questIconString
 
@@ -242,8 +240,7 @@ local function RebuildMiscIconStrings()
 	questIconString = BuildIconString(icons[db.misc.quest], colors.quest)
 end
 
--- Secret-safe classification (WoW 12.x) - returns "boss"/"rareelite"/"rare"/"elite" or nil,
--- normalized to the "worldboss" key used by the label/color/icon tables and tag arguments.
+-- secret-safe; normalizes to the "worldboss" key used by the label/color/icon tables.
 local function GetTagClassification(unit)
 	local c = mMT:GetUnitClassification(unit)
 	if c == "boss" then c = "worldboss" end

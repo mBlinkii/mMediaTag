@@ -109,10 +109,7 @@ function mMT:ConnectVirtualFrameToDataText(dataTextName, virtualFrame)
 	return true
 end
 
--- ElvUI now builds the UnitFrames BEFORE the plugin loads, so the first Configure
--- pass is already done when Initialize runs. Modules that reconfigure elements or
--- hook instance callbacks therefore need a one-time sweep over the frames that
--- already exist.
+-- ElvUI builds the UnitFrames before the plugin loads, so its first Configure pass is already done - hooking modules need one sweep over the existing frames.
 local function ForEachHeaderFrame(header, callback)
 	if not header then return end
 
@@ -133,8 +130,7 @@ end
 function mMT:ForEachUFFrame(callback)
 	if not (callback and E.private.unitframe.enable) then return end
 
-	-- UF.units holds the frames as values, UF.groupunits only unit -> group name
-	-- (the frame itself lives in UF[unit]).
+	-- UF.units holds frames as values, UF.groupunits only unit -> group name (the frame is in UF[unit]).
 	if UF.units then
 		for _, frame in pairs(UF.units) do
 			if frame then callback(frame) end
@@ -308,15 +304,13 @@ function GetImportStringType(dataString)
 	return (strmatch(dataString, "^" .. exportPrefix) and "Deflate") or (strmatch(dataString, "^{") and "Table") or ""
 end
 
--- Returns the value unchanged, or nil if it is a secret value (WoW 12.x).
--- Secret values must never be compared, concatenated or branched on.
+-- nil for secret values (WoW 12.x) - those must never be compared, concatenated or branched on.
 local function SafeValue(value)
 	if issecretvalue and issecretvalue(value) then return nil end
 	return value
 end
 
--- Extracts the npcID from a creature GUID; returns nil for player GUIDs,
--- missing GUIDs or the secret placeholder (" ").
+-- nil for player GUIDs, missing GUIDs or the secret placeholder (" ").
 local function GetNpcID(guid)
 	if not guid or guid == " " then return nil end
 	return select(6, strsplit("-", guid))
@@ -339,8 +333,7 @@ end
 
 local extraTypes = { rare = true, elite = true, rareelite = true, boss = true }
 
--- Returns "boss", "rareelite", "rare", "elite" or nil. isBossFrame, isPlayer and guid
--- are optional and read from the unit when nil; a secret GUID arrives as the placeholder " ".
+-- secret-safe; isBossFrame/isPlayer/guid are optional, a secret GUID arrives as " ".
 function mMT:GetUnitClassification(unit, isBossFrame, isPlayer, guid)
 	if not unit then return nil end
 

@@ -26,7 +26,6 @@ function module:Initialize()
 		module.isEnabled = true
 	end
 
-	-- ElvUI's first Configure pass is done by the time the plugin loads, the hook alone
-	-- would only take effect on the next UF update.
+	-- ElvUI's first Configure pass is already done at plugin load, the hook alone would wait for the next UF update.
 	mMT:ForEachUFFrame(UpdateFrame)
 end

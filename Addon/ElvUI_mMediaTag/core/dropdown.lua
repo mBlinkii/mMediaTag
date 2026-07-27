@@ -25,10 +25,7 @@ local function DropDownTimer(menuFrame)
 	end
 end
 
--- list = tbl see below
--- text = string, right_tex = string, color = color string for first text, icon = texture, func = function, funcOnEnter = function,
--- funcOnLeave = function, isTitle = boolean, macro = macrotext, tooltip = id or var you can use for the functions, notClickable = boolean,
--- submenu = boolean
+-- entry keys: text, right_tex, color, icon, func, funcOnEnter, funcOnLeave, isTitle, macro, tooltip, notClickable, submenu, list (nested table)
 function mMT:DropDown(list, frame, parent, ButtonWidth, HideDelay, submenu)
 	local SAVE_HEIGHT = E.db.general.fontSize / 3 + 16
 	local BUTTON_HEIGHT, BUTTON_WIDTH = 0, 0

@@ -27,10 +27,7 @@ do
 	end
 end
 
--- The "mmt" keys only reach E.Media with the plugin load; ElvUI's Configure pass for the
--- combat/resting icon and the minimap mail is already done by then and fell back to
--- DEFAULT, so redo it once per session. Arrows do not need this, the nameplates are only
--- created at runtime.
+-- the "mmt" keys only reach E.Media on plugin load, after ElvUI's Configure pass already fell back to DEFAULT - redo it once per session.
 function module:Initialize()
 	if module.isEnabled then return end
 	module.isEnabled = true

@@ -107,9 +107,7 @@ end
 
 local function ValueColorUpdate(self, hex)
 	local db = E.db.mMediaTag.datatexts.tracker
-		-- On a profile switch ElvUI calls applySettings with the new E.db while tracker_ids_db
-		-- still holds the old profile (mMT:UpdateAll is deferred via E:Delay). So do not color
-		-- an unknown ID, fall back to ElvUI's value color instead.
+	-- on a profile switch ElvUI's applySettings runs before mMT:UpdateAll (E:Delay), so an unknown ID falls back to ElvUI's value color
 	local info = tracker_ids_db[tonumber(self.name)]
 	local custom = info and info.color and "|c" .. info.color
 	local textHex = E.db.mMediaTag.datatexts.text.override_text and "|c" .. MEDIA.color.override_text.hex or db.colored and custom or hex
@@ -171,8 +169,7 @@ function module:Initialize()
 		end
 	end
 
-	-- Repaint the already assigned slots because ElvUI's applySettings pass ran before
-	-- LoadIDs() on a profile switch.
+	-- repaint assigned slots: ElvUI's applySettings pass ran before LoadIDs() on a profile switch
 	for dt, data in pairs(DT.AssignedDatatexts) do
 		if data and tracker_ids_db[tonumber(data.name)] then ValueColorUpdate(dt, E.media.hexvaluecolor) end
 	end

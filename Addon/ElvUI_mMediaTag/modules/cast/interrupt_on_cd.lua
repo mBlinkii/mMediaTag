@@ -119,19 +119,14 @@ local function SetKickSpark(castbar, castStart, cooldown, canAttack)
 		indicator:SetColorTexture(c.r, c.g, c.b)
 	end
 
-	-- Marker position = elapsed cast time + remaining kick cooldown. That sum is time
-	-- invariant (elapsed rises, cooldown falls, 1:1) - no matter how often it is reset
-	-- (PostCastStart re-fire on target switch, nameplate mid-cast, OnUpdate) the marker
-	-- stays in place. Pushback corrects itself the same way.
+	-- elapsed cast time + remaining kick cooldown is time invariant, so re-firing this (target switch, mid-cast nameplate, OnUpdate, pushback) keeps the marker in place.
 	local cdRemaining = cooldown:GetRemainingDuration()
 	if castbar.startTime and castbar.max and not issecretvalue(castbar.max) and not issecretvalue(cdRemaining) then
-		-- Numeric path: oUF delivers startTime/max as plain numbers (seconds) as long
-		-- as the cast times are not secret - works on UF and NP.
+		-- numeric path: startTime/max are plain seconds as long as the cast times are not secret.
 		kickBar:SetMinMaxValues(0, castbar.max)
 		kickBar:SetValue((GetTime() - castbar.startTime) + cdRemaining)
 	else
-		-- Secret fallback (restricted content): absolute time axis.
-		-- Min/Max = cast start/end, Value = the point in time the kick is ready.
+		-- secret fallback: absolute time axis, Min/Max = cast start/end, Value = kick ready.
 		local castDuration = castbar:GetTimerDuration()
 		if castDuration then
 			kickBar:SetMinMaxValues(castDuration:GetStartTime(), castDuration:GetEndTime())
@@ -227,10 +222,7 @@ local function PostCastStart(castbar, unit)
 	end
 end
 
--- ElvUI assigns castbar.PostCastStart = UF.PostCastStart as a SNAPSHOT during frame
--- construction, and oUF only calls element:PostCastStart(unit). Since ElvUI now builds
--- the UF frames BEFORE the plugin loads, a hooksecurefunc(UF, "PostCastStart", ...)
--- never applies there - so hook the castbar instances directly.
+-- ElvUI snapshots castbar.PostCastStart at frame construction and oUF only calls element:PostCastStart(), so hooking the UF table does nothing - hook the instances.
 local function HookCastbarInstance(castbar)
 	if castbar and castbar.PostCastStart and not castbar.mMT_CastStartHooked then
 		hooksecurefunc(castbar, "PostCastStart", PostCastStart)
@@ -249,8 +241,7 @@ function module:Initialize()
 			hooksecurefunc(NP, "Castbar_PostCastFail", PostCastFailInterrupted)
 			hooksecurefunc(NP, "Castbar_PostCastInterrupted", PostCastFailInterrupted)
 
-			-- Configure_Castbar iterates the UF table and therefore also catches frames
-			-- created or enabled later.
+			-- Configure_Castbar also catches frames created or enabled later.
 			hooksecurefunc(UF, "Configure_Castbar", function(_, frame)
 				if frame then HookCastbarInstance(frame.Castbar) end
 			end)

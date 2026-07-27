@@ -131,9 +131,7 @@ local function Update(self, event)
 	self.lastGUID = secretGUID and " " or guid
 
 	local isAvailable = self:IsVisible() and IsUnitModelReadyForUI(unit) and UnitIsConnected(unit) and UnitIsVisible(unit)
-	-- only do the full update when something actually changed: new GUID, availability
-	-- transition, death transition or an explicit force. Events that change the model
-	-- without changing the GUID (UNIT_PORTRAIT_UPDATE etc.) are mapped to ForceUpdate.
+	-- full update only on a real change (GUID, availability, death); same-GUID model changes arrive as ForceUpdate.
 	local hasStateChanged = newGUID or (self.state ~= isAvailable) or event == "ForceUpdate" or (self.isDead ~= isDead)
 
 	if hasStateChanged then
@@ -171,9 +169,7 @@ local function Update(self, event)
 		end
 
 		if not applied then
-			-- Fallback: never leave the previous units texture visible. Covers a
-			-- freshly joined group member whose spec info is not inspected yet -
-			-- INSPECT_READY re-runs the update once the data arrives.
+			-- fallback so a not-yet-inspected member never keeps the previous units texture; INSPECT_READY repeats the update.
 			SetPortraitTexture(self.unit_portrait, unit, true)
 			module:Mirror(self.unit_portrait, shouldMirror)
 		end
@@ -374,10 +370,7 @@ local function SimpleUpdate(self, event)
 	Update(self, event)
 end
 
--- Unit-filtered events (oUF style): registered with RegisterUnitEvent for the
--- elements CURRENT unit instead of blanket RegisterEvent. Without the filter
--- every party portrait received these events for EVERY unit in the game
--- (nameplates, raid, boss) and ran its handler for nothing.
+-- RegisterUnitEvent instead of RegisterEvent: unfiltered, every party portrait ran its handler for every unit in the game.
 local portraitUnitEvents = { "UNIT_PORTRAIT_UPDATE", "UNIT_CONNECTION" }
 local castUnitEvents = {
 	"UNIT_SPELLCAST_START",
@@ -388,12 +381,7 @@ local castUnitEvents = {
 }
 local castUnitEventsRetail = { "UNIT_SPELLCAST_EMPOWER_START", "UNIT_SPELLCAST_EMPOWER_STOP" }
 
--- (Re-)register all unit-filtered events for the elements current unit.
--- RegisterUnitEvent replaces the previous filter, so calling this after a unit
--- change (party reordering/role sorting, roster update) is enough to re-target
--- every filtered event. Triggered from: Update_PartyHeader hook,
--- GROUP_ROSTER_UPDATE (via OnEvent re-sync), OnAttributeChanged("unit") on the
--- ElvUI button and OnShow.
+-- re-targets every filtered event to the elements current unit; call after any unit change (party reorder, roster update, OnShow).
 local function ApplyUnitEvents(element, force)
 	local unit = element.unit or (element.__owner and element.__owner.unit)
 	if not unit then return end
@@ -420,16 +408,14 @@ local function ApplyUnitEvents(element, force)
 	if element.isDead then element:RegisterUnitEvent("UNIT_HEALTH", unit) end
 end
 
--- fires once when a hidden frame (and its portrait) becomes visible again -
--- while hidden all event processing is skipped, so catch up here
+-- hidden frames skip all event work, so catch up on show
 local function OnShow(self)
 	if not self.db then return end
 	ApplyUnitEvents(self)
 	Update(self, "ForceUpdate")
 end
 
--- safety net for party reordering (role sorting): the secure header re-assigns
--- the buttons unit attribute - re-target our filtered events and repaint
+-- party reordering re-assigns the buttons unit attribute - re-target the filtered events
 local function OnUnitAttributeChanged(frame, name, value)
 	if name ~= "unit" or not value then return end
 
@@ -474,11 +460,7 @@ local function DeathCheck(self, event)
 end
 
 local eventHandlers = {
-	-- UNIT_PORTRAIT_UPDATE fires when the appearance changes with the same GUID
-	-- (model loaded, form/transmog change) - must bypass change detection.
-	-- UNIT_MODEL_CHANGED is intentionally not registered: it is only needed for
-	-- 3D PlayerModel widgets, 2D textures are covered by UNIT_PORTRAIT_UPDATE
-	-- (same split as ElvUIs oUF portrait element).
+	-- UNIT_PORTRAIT_UPDATE keeps the GUID so it must bypass change detection; UNIT_MODEL_CHANGED is only needed for 3D widgets (same split as ElvUIs oUF element).
 	PORTRAITS_UPDATED = ForceUpdate,
 	UNIT_CONNECTION = Update,
 	UNIT_PORTRAIT_UPDATE = ForceUpdate,
@@ -508,8 +490,7 @@ local eventHandlers = {
 	-- roster changes reshuffle unit tokens without reliable per-token events - always force
 	GROUP_ROSTER_UPDATE = ForceUpdate,
 
-	-- spec info for a freshly joined member arrives async via inspect - repaint
-	-- the matching portrait once (only relevant when spec icons are enabled)
+	-- spec info arrives async via inspect - repaint once (only with spec icons enabled)
 	INSPECT_READY = function(self, _, guid)
 		if module.useSpecIcon and guid and guid == self.guid then Update(self, "ForceUpdate") end
 	end,
@@ -517,8 +498,7 @@ local eventHandlers = {
 	ARENA_OPPONENT_UPDATE = Update,
 	UNIT_TARGETABLE_CHANGED = Update,
 	ARENA_PREP_OPPONENT_SPECIALIZATIONS = SimpleUpdate,
-	-- force update: the target GUID does not change on encounter start, but the
-	-- boss1-bossN tokens become valid with this event - change detection would miss it
+	-- force: the boss1-bossN tokens become valid here without a GUID change
 	INSTANCE_ENCOUNTER_ENGAGE_UNIT = ForceUpdate,
 	UPDATE_ACTIVE_BATTLEFIELD = SimpleUpdate,
 
@@ -528,8 +508,7 @@ local eventHandlers = {
 }
 
 local function OnEvent(self, event, eventUnit, arg)
-	-- visibility gate (oUF style): hidden frames do no event work at all,
-	-- OnShow does a single ForceUpdate to catch up
+	-- hidden frames do no event work, OnShow catches up with one ForceUpdate
 	if not self:IsVisible() then return end
 
 	local unit = self.__owner.unit or self.unit
@@ -586,8 +565,7 @@ function module:InitPortrait(element)
 			element.eventsSet = true
 		end
 
-		-- module-level flag: the hook updates all 5 party portraits, hooking it
-		-- once per element would run the full loop 5x per header update
+		-- module-level flag: the hook already loops all 5 party portraits
 		if element.type == "party" and not module.partyHeaderHooked then
 			hooksecurefunc(UF, "Update_PartyHeader", PartyUpdate)
 			module.partyHeaderHooked = true

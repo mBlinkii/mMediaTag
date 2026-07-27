@@ -22,9 +22,7 @@ local function PostUpdate_PhaseIcon(self, hidden, phaseReason)
 	self.Center:SetShown(not hidden)
 end
 
-			-- ElvUI assigns phase.PostUpdate = UF.PostUpdate_PhaseIcon as a SNAPSHOT during frame
-			-- construction and oUF only calls element:PostUpdate(). A hook on the UF table does not
-			-- apply, because the frames are built before the plugin loads.
+			-- ElvUI snapshots phase.PostUpdate at frame construction and oUF only calls element:PostUpdate(), so hooking the UF table does nothing.
 local function HookPhaseIndicator(frame)
 	local phase = frame and frame.PhaseIndicator
 	if not phase or phase.mMT_PhaseHooked or not phase.PostUpdate then return end

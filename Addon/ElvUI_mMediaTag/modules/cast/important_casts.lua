@@ -197,10 +197,7 @@ local function CheckImportant(castbar)
 	return isImportant, isSecret
 end
 
--- ElvUI assigns the castbar callbacks as a SNAPSHOT during frame construction
--- (castbar.PostCastStart = UF.PostCastStart) and oUF only calls element:PostCastX().
--- Since ElvUI now builds the UF frames BEFORE the plugin loads, a
--- hooksecurefunc(UF, "PostCastX", ...) never applies there - hook the instances instead.
+-- ElvUI snapshots the castbar callbacks at frame construction and oUF only calls element:PostCastX(), so hooking the UF table does nothing - hook the instances.
 local UF_CASTBAR_HOOKS = {
 	PostCastStart = function(castbar)
 		if castbar then CheckImportant(castbar) end
@@ -273,8 +270,7 @@ function module:Initialize(demo)
 			HideImportantCast(castbar)
 		end)
 
-			-- Configure_Castbar iterates the UF table and therefore also catches frames
-			-- created or enabled later.
+			-- Configure_Castbar also catches frames created or enabled later.
 		hooksecurefunc(UF, "Configure_Castbar", function(_, frame)
 			if frame then HookCastbarInstance(frame.Castbar) end
 		end)

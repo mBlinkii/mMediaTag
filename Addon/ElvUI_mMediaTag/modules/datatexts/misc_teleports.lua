@@ -406,17 +406,8 @@ local teleportsIDs = {
 	},
 }
 
--- ===========================================================================
--- Automatic hearthstone detection (in addition to the lists above)
--- A hearthstone teleports you to your hearth bind location, so its "Use:"
--- tooltip line contains the name returned by GetBindLocation(). This also
--- finds unusually named hearthstones without having to maintain the list.
--- Detected toys are written directly into teleportsIDs. The scan runs fresh
--- every login, so nothing is persisted and stale matches (e.g. after moving
--- the hearth location) clean themselves up automatically.
--- Note: only bind-location hearthstones are detected. Toys with a fixed
--- destination (Garrison/Dalaran/Wormhole/Dark Portal ...) stay in the lists.
--- ===========================================================================
+-- hearthstones are found by matching GetBindLocation() in the toy's "Use:" line, so oddly named ones need no list entry.
+-- Rescanned every login; toys with a fixed destination (Garrison/Dalaran/Wormhole/...) stay in the lists.
 local function IsHearthstoneToy(itemID)
 	local bind = GetBindLocation and GetBindLocation()
 	if not bind or bind == "" then return false end
@@ -427,8 +418,7 @@ local function IsHearthstoneToy(itemID)
 
 	for _, line in ipairs(data.lines) do
 		local text = line.leftText
-		-- only check the "Use:" line - otherwise toys that merely mention the
-		-- bind location (fixed-destination teleports etc.) would match too
+		-- only the "Use:" line - toys that merely mention the bind location would match too
 		if text and strfind(text, ITEM_SPELL_TRIGGER_ONUSE, 1, true) == 1 and strfind(strlower(text), bind, 1, true) then return true end
 	end
 
@@ -470,8 +460,7 @@ local function DetectHearthstoneWhenLoaded(itemID)
 	end)
 end
 
--- Full scan over the collected toys (login).
--- Filters are touched only minimally and restored afterwards.
+-- full toy scan on login; the filters are restored afterwards
 local function ScanCollectedToys()
 	if not (C_ToyBox and C_ToyBox.GetNumFilteredToys and C_ToyBox.GetToyFromIndex) then return end
 
@@ -752,8 +741,7 @@ local function GetActivityDungeonName(activityID)
 	if activityInfo and activityInfo.fullName then return strlower(gsub(activityInfo.fullName, "%s*%(.-%)%s*$", "")) end
 end
 
--- resultID -> resolved dungeon name; keeps the highlight alive after the
--- leader delists the group (GetSearchResultInfo returns nil then)
+-- resultID -> dungeon name; keeps the highlight after the leader delists (GetSearchResultInfo returns nil then)
 local appliedNameCache = {}
 
 local function GetAppliedDungeonNames()

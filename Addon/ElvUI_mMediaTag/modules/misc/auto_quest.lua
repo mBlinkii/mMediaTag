@@ -62,8 +62,7 @@ local function BuildAcceptQueue()
 	local available = C_GossipInfo.GetAvailableQuests()
 	if not available or #available == 0 then return end
 
-	-- rebuild from scratch - GOSSIP_SHOW refires after every accept/turn-in
-	-- and appending would create duplicates
+	-- rebuild from scratch, GOSSIP_SHOW refires after every accept/turn-in
 	wipe(acceptQueue)
 	for _, quest in ipairs(available) do
 		table.insert(acceptQueue, { questID = quest.questID, title = quest.title or "" })
@@ -118,8 +117,7 @@ local function TryAcceptQuest()
 	end
 end
 
--- QUEST_PROGRESS: the requirements dialog shown before the reward window
--- for some quests - equivalent to clicking "Continue"
+-- QUEST_PROGRESS: requirements dialog before the reward window - same as clicking "Continue"
 local function TryContinueProgress()
 	if not module.auto_turnin then return end
 	if IsPaused(L["[AutoQuest] Auto-turn-in paused (SHIFT held)."]) then return end
@@ -144,11 +142,7 @@ local function TryCompleteTurnIn()
 	if module.chat_message then ChatMsg(format(L["[AutoQuest] Quest turned in: %s"], title)) end
 end
 
--- The classic greeting frame (QUEST_GREETING) is index-based and does NOT go
--- through C_GossipInfo - its quest lists are only reachable via the global
--- GetNumActiveQuests/GetActiveTitle/Select*Quest(index) API. Only one quest is
--- selected per event: after each turn-in/accept the greeting fires again with
--- updated indices, so the remaining quests are processed one at a time.
+-- QUEST_GREETING is index-based (no C_GossipInfo): one quest per event, it refires with updated indices after each accept/turn-in.
 function module:QUEST_GREETING()
 	if not (module.auto_accept or module.auto_turnin) then return end
 	if IsPaused(L["[AutoQuest] Auto-turn-in paused (SHIFT held)."]) then return end

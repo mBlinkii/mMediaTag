@@ -14,13 +14,8 @@ local IsSpellKnownOrOverridesKnown = IsSpellKnownOrOverridesKnown
 local GetActiveConfigID = C_ClassTalents.GetActiveConfigID
 local GetNodeInfo = C_Traits.GetNodeInfo
 
--- Midnight note:
--- UnitHealth/UnitHealthPercent return secrets for enemy units, so we can never
--- compare the units health against the execute threshold in Lua. Instead the
--- marker lives inside a clip frame whose right edge is anchored to the health
--- bars fill texture. The client resizes that texture securely, so the marker
--- is clipped away (hidden) automatically once the unit drops below the
--- threshold - without us ever reading a health value.
+-- Midnight: enemy health is secret, so instead of comparing values the marker sits in a clip frame
+-- anchored to the health bar fill texture and is clipped away by itself below the threshold.
 
 local autoRange = { enable = false, range = 0 }
 local markers = setmetatable({}, { __mode = "k" }) -- [healthBar] = { clip, line }
@@ -74,8 +69,7 @@ local function UpdateAutoRange()
 		end
 	elseif class == "MONK" then
 		if IsPlayerSpell(322113) then -- Touch of Death
-			-- the old dynamic ToD range (own max health vs unit max health) is
-			-- impossible in Midnight, unit health is secret - use the static 15%
+			-- the dynamic ToD range needs unit health, which is secret in Midnight - static 15%
 			SetRange(15)
 		end
 	elseif class == "WARLOCK" then
@@ -143,9 +137,7 @@ local function UpdateMarker(healthBar, force)
 
 	marker = marker or GetMarker(healthBar)
 
-	-- Update_Health fires on every health tick, but the anchors/size only depend
-	-- on the fill texture, bar dimensions and range - skip the layout work unless
-	-- one of those actually changed (or a settings refresh forces it).
+	-- hot path: skip the layout unless fill texture, bar size or range changed.
 	local fill = healthBar:GetStatusBarTexture()
 	if force or marker.fill ~= fill then
 		marker.clip:ClearAllPoints()

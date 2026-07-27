@@ -51,11 +51,7 @@ end
 function mMT:Initialize()
 	mMT:RegisterEvent("PLAYER_LOGOUT")
 
-	-- E.data.profile is materialized inside E:Initialize(), which now runs BEFORE
-	-- plugins load, so P.mMediaTag was not part of the defaults at that point and a
-	-- fresh profile has no mMediaTag key. On a profile switch AceDB nils out
-	-- self.profile and re-runs copyDefaults against the live E.DF.profile, so this is
-	-- only needed for the current session's profile.
+	-- E:Initialize() now runs before plugins load, so P.mMediaTag is missing from a fresh profile - only the current session's profile needs this.
 	E.db.mMediaTag = E:CopyDefaults(E.db.mMediaTag or {}, P.mMediaTag)
 
 	EP:RegisterPlugin(addonName, mMT.InsertOptions)
