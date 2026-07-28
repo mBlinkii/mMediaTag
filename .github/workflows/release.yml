@@ -15,13 +15,28 @@ jobs:
     steps:
       - uses: actions/checkout@v4
 
-      - name: Version aus TOC lesen, Datum bestimmen
+      - name: Version aus Tag lesen, Datum bestimmen
         id: meta
         run: |
-          VERSION=$(grep -oP '^## Version:\s*\K.+' "Addon/ElvUI_mMediaTag/ElvUI_mMediaTag_Mainline.toc" | tr -d '\r')
+          set -e
+          # Die Version kommt aus dem Tag, der den Lauf ausgeloest hat, damit
+          # Release, Zip, CurseForge und Wago immer die getaggte Nummer
+          # tragen - auch wenn die "## Version:" Zeile einer .toc
+          # hinterherhinkt. Gleiche Regel wie in Blinkiis-Portraits und
+          # MAUI-M-Timer.
+          VERSION="${GITHUB_REF_NAME#v}"
           DATE=$(date +%d%m%Y)
           echo "zipname=mMT-v${VERSION}-${DATE}" >> "$GITHUB_OUTPUT"
           echo "version=${VERSION}" >> "$GITHUB_OUTPUT"
+
+          # Die ausgelieferten .toc Dateien auf den Tag ziehen. Nur die von
+          # ElvUI_mMediaTag - !mMT_MediaPack liegt zwar im selben Zip, hat
+          # aber eine eigene, unabhaengige Versionsnummer und darf nicht
+          # ueberschrieben werden.
+          for TOC in Addon/ElvUI_mMediaTag/ElvUI_mMediaTag_*.toc; do
+            [ -e "$TOC" ] || continue
+            sed -i "s/^## Version:.*/## Version: ${VERSION}/" "$TOC"
+          done
 
       - name: Zip bauen
         run: |
@@ -33,17 +48,21 @@ jobs:
         id: changelog
         run: |
           VERSION="${{ steps.meta.outputs.version }}"
+          # Die Kategorie-Ueberschriften tragen inzwischen ein Icon
+          # ("### 🐛 FIX"), koennen es aber auch weglassen. Deshalb matchen
+          # die sed-Regeln auf das Schluesselwort und erlauben davor ein
+          # beliebiges Zeichen plus Leerzeichen - genauso wie der Parser im
+          # wow-addon-changelog-Skill.
           awk -v ver="$VERSION" '
             $0 ~ "^## \\[ver\\. " ver "\\]" {flag=1; next}
             /^## \[ver\./ {flag=0}
-            flag' CHANGELOG.md | sed -e 's/\r$//' \
-              -e 's/^### FIX$/## 🐛 Fixes/' \
-              -e 's/^### UPDATE$/## 🔧 Updates/' \
-              -e 's/^### NEW$/## ✨ New/' \
-              -e 's/^- FIX - /- /' \
-              -e 's/^- UPDATE - /- /' \
-              -e 's/^- NEW - /- /' \
-              -e 's/^- \[\([^]]*\)\]:/- **[\1]**/' \
+            flag' CHANGELOG.md | sed -E -e 's/\r$//' \
+              -e 's/^###[[:space:]]+([^[:space:]]+[[:space:]]+)?FIX[[:space:]]*$/## 🐛 Fixes/' \
+              -e 's/^###[[:space:]]+([^[:space:]]+[[:space:]]+)?UPDATE[[:space:]]*$/## 🔧 Updates/' \
+              -e 's/^###[[:space:]]+([^[:space:]]+[[:space:]]+)?NEW[[:space:]]*$/## ✨ New/' \
+              -e 's/^###[[:space:]]+([^[:space:]]+[[:space:]]+)?INFO[[:space:]]*$/## 📌 Info/' \
+              -e 's/^- (FIX|UPDATE|NEW|INFO) - /- /' \
+              -e 's/^- \[([^]]*)\]:/- **[\1]**/' \
               -e 's/^## /\n## /' > RELEASE_NOTES.md
           if [ ! -s RELEASE_NOTES.md ]; then
             echo "WARNUNG: Kein Abschnitt fuer ${VERSION} in CHANGELOG.md gefunden."
