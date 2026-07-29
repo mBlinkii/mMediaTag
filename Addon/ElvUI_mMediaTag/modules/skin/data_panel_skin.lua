@@ -57,8 +57,12 @@ function module:Initialize()
 	if E.db.mMediaTag.data_panel_skin.enable then
 		CheckAndRemoveSettings()
 
-		-- no initial sweep: DT:LoadDataTexts() runs on PLAYER_ENTERING_WORLD; calling it here would beat ElvUIs panel:SetTemplate() (backdrop still nil).
 		if not module:IsHooked(DT, "UpdatePanelInfo") then module:SecureHook(DT, "UpdatePanelInfo", UpdatePanelInfo) end
+
+		-- ElvUIs template pass runs staggered and undoes the skin applied during its own datatext update; backdropInfo skips panels ElvUI has not templated yet (login)
+		for name, panel in pairs(DT.RegisteredPanels) do
+			if panel.backdropInfo then UpdatePanelInfo(DT, name, panel) end
+		end
 	elseif module:IsHooked(DT, "UpdatePanelInfo") then
 		module:Unhook(DT, "UpdatePanelInfo")
 	end

@@ -4,7 +4,6 @@ local mMT, DB, M, E, P, L, MEDIA = unpack(ElvUI_mMediaTag)
 local _G = _G
 local CreateFrame = CreateFrame
 local InCombatLockdown = InCombatLockdown
-local LSM = E.Libs.LSM
 local ToggleFrame = ToggleFrame
 local format = format
 local strfind = strfind
@@ -29,7 +28,7 @@ end
 function mMT:DropDown(list, frame, parent, ButtonWidth, HideDelay, submenu)
 	local SAVE_HEIGHT = E.db.general.fontSize / 3 + 16
 	local BUTTON_HEIGHT, BUTTON_WIDTH = 0, 0
-	local font = LSM:Fetch("font", E.db.general.font)
+	local font = E.db.general.font
 	local fontSize = E.db.general.fontSize
 	local fontFlag = E.db.general.fontStyle
 	autoHideDelay = HideDelay or 2

@@ -44,7 +44,7 @@ function mMT:UpdateAll()
 	end
 end
 
-local function StaggeredUpdateAll()
+local function DelayedUpdateAll()
 	E:Delay(1, mMT.UpdateAll)
 end
 
@@ -63,7 +63,7 @@ function mMT:Initialize()
 	if mMT:GetWeeklyResetTime() then Engine[2].keystones = {} end
 
 	if not mMT.ElvUI_Hooked then
-		mMT:SecureHook(E, "StaggeredUpdateAll", StaggeredUpdateAll)
+		mMT:SecureHook(E, "UpdateAll", DelayedUpdateAll)
 		mMT.ElvUI_Hooked = true
 	end
 

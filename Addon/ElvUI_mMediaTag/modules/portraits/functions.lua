@@ -428,6 +428,8 @@ local function OnUnitAttributeChanged(frame, name, value)
 end
 
 local function PartyUpdate(_, header)
+	if not module.portraits then return end
+
 	if header.groupName == "party" then
 		for i = 1, 5 do
 			local element = module.portraits["party" .. i]

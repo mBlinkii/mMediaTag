@@ -2,7 +2,6 @@ local mMT, DB, M, E, P, L, MEDIA = unpack(ElvUI_mMediaTag)
 
 local module = mMT:AddModule("Dock")
 local InCombatLockdown = InCombatLockdown
-local LSM = E.Libs.LSM
 local colors = MEDIA.color.dock
 
 local function SetupDockIcon(datatext, config)
@@ -31,7 +30,7 @@ end
 local function SetupLabel(text, size, anchor, point, justify)
 	local db = module.db.font
 	text.SetShadowColor = function() end
-	text:FontTemplate(LSM:Fetch("font", db.font), db.custom_font_size and db.fontSize or size / 3, db.fontFlag)
+	text:FontTemplate(db.font, db.custom_font_size and db.fontSize or size / 3, db.fontFlag)
 	text:ClearAllPoints()
 	text:SetPoint(point, anchor, point, 0, 0)
 	text:SetJustifyH(justify)

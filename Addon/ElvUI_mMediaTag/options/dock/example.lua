@@ -309,7 +309,7 @@ local function SetupDock()
 		end
 	end
 
-	E:StaggeredUpdateAll(nil, true)
+	E:UpdateAll()
 end
 
 local function DeleteDock() end
