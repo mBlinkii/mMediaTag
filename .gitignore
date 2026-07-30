@@ -18,3 +18,7 @@ Desktop.ini
 *.zip
 *.psd
 *.pnd
+
+# Externe Libs - zieht der Release-Workflow frisch von CurseForge
+/Addon/!mMT_MediaPack/libs/
+/Addon/ElvUI_mMediaTag/lib/AceLocale-3.0/

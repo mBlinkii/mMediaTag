@@ -38,10 +38,32 @@ jobs:
             sed -i "s/^## Version:.*/## Version: ${VERSION}/" "$TOC"
           done
 
+      # Die Libs liegen nicht im Repo, sondern werden hier frisch von
+      # CurseForge geholt. Gleiche Regel wie in MAUI-M-Timer.
+      - name: Subversion installieren
+        run: sudo apt-get update -qq && sudo apt-get install -y -qq subversion
+
+      - name: Libs holen
+        run: |
+          set -e
+          PACK="Addon/!mMT_MediaPack/libs"
+          rm -rf "$PACK"
+          mkdir -p "$PACK"
+
+          svn export --force https://repos.curseforge.com/wow/libstub/trunk "$PACK/LibStub"
+          svn export --force https://repos.curseforge.com/wow/callbackhandler/trunk/CallbackHandler-1.0 "$PACK/CallbackHandler-1.0"
+          svn export --force https://repos.curseforge.com/wow/libsharedmedia-3-0/trunk/LibSharedMedia-3.0 "$PACK/LibSharedMedia-3.0"
+
+          # lib/ enthaelt ausserdem das getrackte load_libs.xml - nur den
+          # AceLocale-Ordner ersetzen, nicht das ganze Verzeichnis.
+          MMT="Addon/ElvUI_mMediaTag/lib"
+          rm -rf "$MMT/AceLocale-3.0"
+          svn export --force https://repos.curseforge.com/wow/ace3/trunk/AceLocale-3.0 "$MMT/AceLocale-3.0"
+
       - name: Zip bauen
         run: |
           cd Addon
-          zip -r "../${{ steps.meta.outputs.zipname }}.zip" "ElvUI_mMediaTag" "!mMT_MediaPack"
+          zip -r "../${{ steps.meta.outputs.zipname }}.zip" "ElvUI_mMediaTag" "!mMT_MediaPack" -x "*/.svn/*"
 
       # passenden Versions-Abschnitt aus CHANGELOG.md ziehen
       - name: Changelog-Abschnitt extrahieren
