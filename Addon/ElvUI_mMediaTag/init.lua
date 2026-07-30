@@ -35,17 +35,68 @@ function mMT:InsertOptions()
 	E.Options.args.mMT = mMT.options
 end
 
+local pendingModules, requeueUpdate = 0, false
+
+local function DrainModules()
+	pendingModules = 0
+
+	if requeueUpdate then
+		requeueUpdate = false
+		mMT:UpdateAll()
+	end
+end
+
+-- Runs inside E:CoroutineUpdate, which swallows errors and would drop the remaining modules - keep the pcall.
+local function InitModule(name, module)
+	if module.Initialize then
+		local ok, err = pcall(module.Initialize, module)
+		if not ok then geterrorhandler()(format("mMediaTag - module '%s' failed to initialize:\n%s", name, err)) end
+	end
+
+	pendingModules = pendingModules - 1
+
+	-- ElvUI only drops the finished coroutine a tick later, so stay blocked until then
+	if pendingModules == 0 then
+		pendingModules = -1
+		E:Delay(0.1, DrainModules)
+	end
+end
+
 function mMT:UpdateAll()
-	for name, module in pairs(Engine[3]) do
-		if module.Initialize then
-			local ok, err = pcall(module.Initialize, module)
-			if not ok then geterrorhandler()(format("mMediaTag - module '%s' failed to initialize:\n%s", name, err)) end
+	-- CoroutineUpdate silently discards a second run of the same function, so re-arm once the current one drained.
+	if pendingModules ~= 0 then
+		requeueUpdate = true
+		return
+	end
+
+	for _ in pairs(Engine[3]) do
+		pendingModules = pendingModules + 1
+	end
+
+	if E.CoroutineUpdate then
+		E:CoroutineUpdate(InitModule, Engine[3], nil, 1)
+	else
+		for name, module in pairs(Engine[3]) do
+			InitModule(name, module)
 		end
 	end
 end
 
+local waitAttempts = 0
+local function WaitForElvUI()
+	local watcher = E.CoroutineFrame
+	if watcher and watcher:IsShown() and waitAttempts < 50 then
+		waitAttempts = waitAttempts + 1
+		E:Delay(0.1, WaitForElvUI)
+	else
+		mMT:UpdateAll()
+	end
+end
+
+-- E:UpdateAll returns before its work is done and keeps queueing coroutines until 0.24s after; only then is E.CoroutineFrame meaningful.
 local function DelayedUpdateAll()
-	E:Delay(1, mMT.UpdateAll)
+	waitAttempts = 0
+	E:Delay(0.3, WaitForElvUI)
 end
 
 function mMT:Initialize()

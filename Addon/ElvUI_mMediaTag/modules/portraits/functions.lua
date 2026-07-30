@@ -17,6 +17,8 @@ local UnitFactionGroup = UnitFactionGroup
 local InCombatLockdown = InCombatLockdown
 local select = select
 local UnitGUID = UnitGUID
+local IsUnitModelReadyForUI = IsUnitModelReadyForUI
+local C_Timer_NewTimer = C_Timer.NewTimer
 
 local playerFaction = nil
 
@@ -116,7 +118,19 @@ local function UpdateExtraTexture(element, force)
 	extra:Show()
 end
 
-local function Update(self, event)
+local Update
+
+local function RetryPortrait(element)
+	if element.portraitRetry or not element:IsVisible() or (element.portraitTries or 0) >= 10 then return end
+	element.portraitTries = (element.portraitTries or 0) + 1
+
+	element.portraitRetry = C_Timer_NewTimer(0.2, function()
+		element.portraitRetry = nil
+		if element:IsVisible() then Update(element, "ForceUpdate") end
+	end)
+end
+
+function Update(self, event)
 	local unit = self.unit or self.__owner.unit
 	if not unit then return end
 
@@ -168,10 +182,22 @@ local function Update(self, event)
 			end
 		end
 
-		if not applied then
+		if applied then
+			self.portraitSet = nil
+		else
 			-- fallback so a not-yet-inspected member never keeps the previous units texture; INSPECT_READY repeats the update.
-			SetPortraitTexture(self.unit_portrait, unit, true)
-			module:Mirror(self.unit_portrait, shouldMirror)
+			-- SetPortraitTexture paints solid black while the model is not ready (quest/item transform), so keep the old texture and retry.
+			if isAvailable or newGUID or not self.portraitSet then
+				SetPortraitTexture(self.unit_portrait, unit, true)
+				module:Mirror(self.unit_portrait, shouldMirror)
+			end
+
+			self.portraitSet = isAvailable
+			if isAvailable then
+				self.portraitTries = nil
+			else
+				RetryPortrait(self)
+			end
 		end
 
 		self.state = isAvailable
@@ -357,6 +383,7 @@ local function UpdateCastIconStart(self)
 		local mirror = self.db.mirror
 		self.unit_portrait:SetTexture(texture)
 		self.unit_portrait:SetTexCoord(mirror and 1 or 0, mirror and 0 or 1, 0, 1)
+		self.portraitSet = nil
 	end
 end
 
@@ -371,7 +398,7 @@ local function SimpleUpdate(self, event)
 end
 
 -- RegisterUnitEvent instead of RegisterEvent: unfiltered, every party portrait ran its handler for every unit in the game.
-local portraitUnitEvents = { "UNIT_PORTRAIT_UPDATE", "UNIT_CONNECTION" }
+local portraitUnitEvents = { "UNIT_PORTRAIT_UPDATE", "UNIT_MODEL_CHANGED", "UNIT_CONNECTION" }
 local castUnitEvents = {
 	"UNIT_SPELLCAST_START",
 	"UNIT_SPELLCAST_CHANNEL_START",
@@ -462,10 +489,11 @@ local function DeathCheck(self, event)
 end
 
 local eventHandlers = {
-	-- UNIT_PORTRAIT_UPDATE keeps the GUID so it must bypass change detection; UNIT_MODEL_CHANGED is only needed for 3D widgets (same split as ElvUIs oUF element).
+	-- these keep the GUID so they must bypass change detection; UNIT_MODEL_CHANGED is the one that fires once a transformed model is loaded.
 	PORTRAITS_UPDATED = ForceUpdate,
 	UNIT_CONNECTION = Update,
 	UNIT_PORTRAIT_UPDATE = ForceUpdate,
+	UNIT_MODEL_CHANGED = ForceUpdate,
 	PARTY_MEMBER_ENABLE = Update,
 	PARTY_MEMBER_DISABLE = Update,
 
