@@ -7,6 +7,15 @@ on:
   push:
     branches:
       - main
+    paths-ignore:
+      - "README.md"
+      - "CHANGELOG.md"
+      - "LICENSE.md"
+      - "libs_report.md"
+      - "Screenshot/**"
+      - "Logo/**"
+      - ".vscode/**"
+      - ".github/workflows/release.yml"
   workflow_dispatch:
 
 permissions:
@@ -22,7 +31,7 @@ jobs:
   dev:
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@v6
         with:
           fetch-depth: 0
 
@@ -67,18 +76,18 @@ jobs:
           cd Addon
           zip -r "../mMT-dev.zip" "ElvUI_mMediaTag" "!mMT_MediaPack" -x "*/.svn/*"
 
-      - name: Release-Notes schreiben
+      - name: Write release notes
         run: |
           cat > DEV_NOTES.md <<'HEADER'
-          > ⚠️ **Ungetesteter Development-Build.** Automatisch bei jedem Push auf `main` gebaut, nicht im Spiel verifiziert. Fuer den stabilen Stand bitte das neueste [Release](../../releases/latest) nutzen.
+          > ⚠️ **Untested development build.** Built automatically on every push to `main` and not verified in-game. For a stable version please use the latest [Release](https://github.com/mBlinkii/mMediaTag/releases/latest).
 
           HEADER
           {
             echo "**Version:** ${{ steps.meta.outputs.version }}-dev-${{ steps.meta.outputs.sha }}"
             echo "**Commit:** ${GITHUB_SHA}"
-            echo "**Gebaut:** $(date -u '+%d.%m.%Y %H:%M UTC')"
+            echo "**Built:** $(date -u '+%d.%m.%Y %H:%M UTC')"
             echo
-            echo '## Letzter Commit'
+            echo '## Latest commit'
             echo
             echo '```'
             git log -1 --pretty=%B
@@ -88,7 +97,7 @@ jobs:
       # Tag und Prerelease werden bei jedem Lauf neu gesetzt. Das Asset traegt
       # denselben Namen, damit die Download-URL stabil bleibt.
       - name: Prerelease veroeffentlichen
-        uses: softprops/action-gh-release@v2
+        uses: softprops/action-gh-release@v3
         with:
           tag_name: dev
           target_commitish: ${{ github.sha }}
