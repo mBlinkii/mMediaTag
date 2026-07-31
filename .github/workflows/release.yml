@@ -26,6 +26,20 @@ jobs:
           # MAUI-M-Timer.
           VERSION="${GITHUB_REF_NAME#v}"
           DATE=$(date +%d%m%Y)
+
+          # Tags mit Suffix -test sind Probelaeufe: Release nur als Draft, kein
+          # CurseForge-Upload, Discord nur an den Test-Webhook. Danach laesst sich
+          # der Lauf rueckstandsfrei loeschen - ein CF-Upload nicht.
+          case "$VERSION" in
+            *-test)
+              VERSION="${VERSION%-test}"
+              echo "istest=true" >> "$GITHUB_OUTPUT"
+              ;;
+            *)
+              echo "istest=false" >> "$GITHUB_OUTPUT"
+              ;;
+          esac
+
           echo "zipname=mMT-v${VERSION}-${DATE}" >> "$GITHUB_OUTPUT"
           echo "version=${VERSION}" >> "$GITHUB_OUTPUT"
 
@@ -99,9 +113,12 @@ jobs:
       - name: GitHub-Release erstellen
         uses: softprops/action-gh-release@v2
         with:
-          name: mMT v${{ steps.meta.outputs.version }}
+          name: mMT v${{ steps.meta.outputs.version }}${{ steps.meta.outputs.istest == 'true' && ' (TEST)' || '' }}
           files: ${{ steps.meta.outputs.zipname }}.zip
           body_path: RELEASE_NOTES.md
+          draft: ${{ steps.meta.outputs.istest == 'true' }}
+          prerelease: ${{ steps.meta.outputs.istest == 'true' }}
+          make_latest: ${{ steps.meta.outputs.istest == 'true' && 'false' || 'true' }}
 
       # Spielversion(en) aus "## Interface: 110200, ..." ableiten (110200 -> 11.2.0)
       - name: Interface-Version aus TOC lesen
@@ -117,6 +134,7 @@ jobs:
           echo "versions=$VERSIONS" >> "$GITHUB_OUTPUT"
 
       - name: Auf CurseForge hochladen
+        if: steps.meta.outputs.istest != 'true'
         uses: itsmeow/curseforge-upload@v3
         with:
           token: ${{ secrets.CF_API_TOKEN }}
@@ -136,14 +154,18 @@ jobs:
         if: github.ref_type == 'tag' && github.ref_name != 'dev'
         continue-on-error: true
         env:
-          WEBHOOK: ${{ secrets.DISCORD_RELEASE_WEBHOOK }}
+          WEBHOOK: ${{ steps.meta.outputs.istest == 'true' && secrets.DISCORD_TEST_WEBHOOK || secrets.DISCORD_RELEASE_WEBHOOK }}
+          IS_TEST: ${{ steps.meta.outputs.istest }}
           VERSION: ${{ steps.meta.outputs.version }}
           RELEASE_URL: ${{ github.server_url }}/${{ github.repository }}/releases/tag/${{ github.ref_name }}
         run: |
           if [ -z "$WEBHOOK" ]; then
-            echo "::warning::DISCORD_RELEASE_WEBHOOK ist nicht gesetzt - Benachrichtigung uebersprungen."
+            echo "::warning::Kein Webhook-Secret gesetzt - Benachrichtigung uebersprungen."
             exit 0
           fi
+
+          TITLE="mMediaTag v${VERSION}"
+          [ "$IS_TEST" = "true" ] && TITLE="[TEST] ${TITLE}"
 
           head -c 3800 RELEASE_NOTES.md > DISCORD_BODY.md
 
@@ -151,7 +173,7 @@ jobs:
           # Shell-String interpolieren - sonst brechen Anfuehrungszeichen und
           # Backticks aus dem Changelog das JSON.
           jq -n \
-            --arg title "mMediaTag v${VERSION}" \
+            --arg title "$TITLE" \
             --arg url "$RELEASE_URL" \
             --rawfile desc DISCORD_BODY.md \
             --arg icon "https://raw.githubusercontent.com/mBlinkii/mMediaTag/main/Logo/icon%20v4.png" \
