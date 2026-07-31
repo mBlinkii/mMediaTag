@@ -13,7 +13,7 @@ jobs:
   release:
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@v6
 
       - name: Version aus Tag lesen, Datum bestimmen
         id: meta
@@ -111,7 +111,7 @@ jobs:
           } >> "$GITHUB_OUTPUT"
 
       - name: GitHub-Release erstellen
-        uses: softprops/action-gh-release@v2
+        uses: softprops/action-gh-release@v3
         with:
           name: mMT v${{ steps.meta.outputs.version }}${{ steps.meta.outputs.istest == 'true' && ' (TEST)' || '' }}
           files: ${{ steps.meta.outputs.zipname }}.zip
