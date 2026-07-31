@@ -658,7 +658,7 @@ L["Automatically accepts quest dialogs from NPCs."] = "自动接受 NPC 的任�
 L["Automatically turns in completed quests. If the quest has multiple reward choices, the dialog stays open for you to choose."] = "自动交付已完成的任务。如果任务有多个奖励选项，窗口会保持打开以便你选择。"
 L["Chat Messages"] = "聊天消息"
 L["Disables auto accept/turn-in while you are in combat."] = "在战斗中禁用自动接受/交付。"
-L["Prints a message to chat whenever a quest is auto-accepted or turned in."] = "每当任务被自动接受或交付时，在聊天中输出一条消息。"
+L["Prints a message to chat whenever a quest is auto-accepted or turned in, or a gossip option is selected."] = "每当任务被自动接受或交付时，在聊天中输出一条消息。"
 L["Skip in Combat"] = "战斗中跳过"
 
 -- options/misc/difficulty_info.lua

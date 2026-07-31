@@ -110,7 +110,9 @@ L["WoW Token:"] = true
 
 -- modules/misc/auto_quest.lua
 L["[AutoQuest] Auto-accept paused (SHIFT held)."] = true
+L["[AutoQuest] Auto-gossip paused (SHIFT held)."] = true
 L["[AutoQuest] Auto-turn-in paused (SHIFT held)."] = true
+L["[AutoQuest] Gossip selected: %s"] = true
 L["[AutoQuest] Quest accepted: %s"] = true
 L["[AutoQuest] Quest turned in: %s"] = true
 
@@ -646,13 +648,21 @@ L["Color the text with the ElvUI color."] = true
 
 -- options/misc/auto_quest.lua
 L["Auto Accept"] = true
+L["Auto Gossip"] = true
 L["Auto Quest"] = true
 L["Auto Turn-In"] = true
 L["Automatically accepts quest dialogs from NPCs."] = true
+L["Automatically clicks gossip options of the types selected below. If more than one option matches, the dialog stays open for you to choose."] = true
 L["Automatically turns in completed quests. If the quest has multiple reward choices, the dialog stays open for you to choose."] = true
 L["Chat Messages"] = true
+L["Cinematic Options"] = true
 L["Disables auto accept/turn-in while you are in combat."] = true
-L["Prints a message to chat whenever a quest is auto-accepted or turned in."] = true
+L["Prints a message to chat whenever a quest is auto-accepted or turned in, or a gossip option is selected."] = true
+L["Quest Options"] = true
+L["Selects gossip options that are marked with the (Quest) label."] = true
+L["Selects gossip options that start a cinematic."] = true
+L["Selects the option when an NPC offers only a single one. This also triggers on vendors, flight masters and trainers."] = true
+L["Single Option"] = true
 L["Skip in Combat"] = true
 
 -- options/misc/auto_role_check.lua

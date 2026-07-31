@@ -18,9 +18,16 @@ local GetActiveTitle = GetActiveTitle
 local SelectActiveQuest = SelectActiveQuest
 local SelectAvailableQuest = SelectAvailableQuest
 local wipe = wipe
+local band = bit.band
+
+-- Enum.GossipOptionRecFlags / Enum.GossipOptionStatus
+local FLAG_QUEST_LABEL = 1
+local FLAG_MOVIE_LABEL = 4
+local STATUS_AVAILABLE = 0
 
 local acceptQueue = {}
 local turnInQueue = {}
+local selectedGossip = {}
 local processingAccept = false
 local processingTurnIn = false
 
@@ -104,6 +111,46 @@ local function BuildTurnInQueue()
 	if not processingTurnIn then ProcessNextTurnIn() end
 end
 
+local function IsGossipSelectable(option)
+	if not option.gossipOptionID then return false end
+	if selectedGossip[option.gossipOptionID] then return false end
+	return not option.status or option.status == STATUS_AVAILABLE
+end
+
+local function MatchesGossipFilter(option)
+	local flags = option.flags or 0
+	if module.gossip_quest and band(flags, FLAG_QUEST_LABEL) ~= 0 then return true end
+	if module.gossip_movie and band(flags, FLAG_MOVIE_LABEL) ~= 0 then return true end
+	return false
+end
+
+-- gossip options that lead into a quest ("(Quest)" prepend) are plain options, not entries of GetAvailableQuests
+local function TrySelectGossipOption()
+	if not module.auto_gossip then return end
+	if IsPaused(L["[AutoQuest] Auto-gossip paused (SHIFT held)."]) then return end
+	if not C_GossipInfo then return end
+	if processingAccept or processingTurnIn or #acceptQueue > 0 or #turnInQueue > 0 then return end
+
+	local options = C_GossipInfo.GetOptions()
+	if not options or #options == 0 then return end
+
+	local match
+	for _, option in ipairs(options) do
+		if IsGossipSelectable(option) and MatchesGossipFilter(option) then
+			-- more than one candidate is ambiguous, leave the frame to the user
+			if match then return end
+			match = option
+		end
+	end
+
+	if not match and module.gossip_single and #options == 1 and IsGossipSelectable(options[1]) then match = options[1] end
+	if not match then return end
+
+	selectedGossip[match.gossipOptionID] = true
+	C_GossipInfo.SelectOption(match.gossipOptionID)
+	if module.chat_message then ChatMsg(format(L["[AutoQuest] Gossip selected: %s"], match.name or "")) end
+end
+
 local function TryAcceptQuest()
 	if not module.auto_accept then return end
 	if IsPaused(L["[AutoQuest] Auto-accept paused (SHIFT held)."]) then return end
@@ -164,6 +211,7 @@ end
 function module:GOSSIP_SHOW()
 	BuildAcceptQueue()
 	BuildTurnInQueue()
+	TrySelectGossipOption()
 end
 
 function module:QUEST_DETAIL()
@@ -189,6 +237,7 @@ end
 function module:GOSSIP_CLOSED()
 	acceptQueue = {}
 	turnInQueue = {}
+	selectedGossip = {}
 	processingAccept = false
 	processingTurnIn = false
 end
@@ -196,6 +245,7 @@ end
 function module:Initialize()
 	acceptQueue = {}
 	turnInQueue = {}
+	selectedGossip = {}
 	processingAccept = false
 	processingTurnIn = false
 
@@ -206,6 +256,10 @@ function module:Initialize()
 
 	module.auto_accept = E.db.mMediaTag.auto_quest.auto_accept
 	module.auto_turnin = E.db.mMediaTag.auto_quest.auto_turnin
+	module.auto_gossip = E.db.mMediaTag.auto_quest.auto_gossip
+	module.gossip_quest = E.db.mMediaTag.auto_quest.gossip_quest
+	module.gossip_movie = E.db.mMediaTag.auto_quest.gossip_movie
+	module.gossip_single = E.db.mMediaTag.auto_quest.gossip_single
 	module.skip_in_combat = E.db.mMediaTag.auto_quest.skip_in_combat
 	module.chat_message = E.db.mMediaTag.auto_quest.chat_message
 

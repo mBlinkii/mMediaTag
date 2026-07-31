@@ -110,7 +110,9 @@ L["WoW Token:"] = "WoW-Marke:"
 
 -- modules/misc/auto_quest.lua
 L["[AutoQuest] Auto-accept paused (SHIFT held)."] = "[AutoQuest] Automatisches Annehmen pausiert (SHIFT gedrückt)."
+L["[AutoQuest] Auto-gossip paused (SHIFT held)."] = "[AutoQuest] Automatische Gesprächsauswahl pausiert (SHIFT gedrückt)."
 L["[AutoQuest] Auto-turn-in paused (SHIFT held)."] = "[AutoQuest] Automatisches Abgeben pausiert (SHIFT gedrückt)."
+L["[AutoQuest] Gossip selected: %s"] = "[AutoQuest] Gesprächsoption gewählt: %s"
 L["[AutoQuest] Quest accepted: %s"] = "[AutoQuest] Quest angenommen: %s"
 L["[AutoQuest] Quest turned in: %s"] = "[AutoQuest] Quest abgegeben: %s"
 
@@ -646,13 +648,21 @@ L["Color the text with the ElvUI color."] = "Text mit der ElvUI-Farbe einfärben
 
 -- options/misc/auto_quest.lua
 L["Auto Accept"] = "Automatisch annehmen"
+L["Auto Gossip"] = "Automatische Gesprächsauswahl"
 L["Auto Quest"] = "Auto-Quest"
 L["Auto Turn-In"] = "Automatisch abgeben"
 L["Automatically accepts quest dialogs from NPCs."] = "Nimmt Questdialoge von NPCs automatisch an."
+L["Automatically clicks gossip options of the types selected below. If more than one option matches, the dialog stays open for you to choose."] = "Klickt Gesprächsoptionen der unten gewählten Arten automatisch an. Passen mehrere Optionen, bleibt der Dialog zur Auswahl geöffnet."
 L["Automatically turns in completed quests. If the quest has multiple reward choices, the dialog stays open for you to choose."] = "Gibt abgeschlossene Quests automatisch ab. Wenn die Quest mehrere Belohnungen zur Auswahl hat, bleibt der Dialog zur Auswahl geöffnet."
 L["Chat Messages"] = "Chatnachrichten"
+L["Cinematic Options"] = "Zwischensequenz-Optionen"
 L["Disables auto accept/turn-in while you are in combat."] = "Deaktiviert automatisches Annehmen/Abgeben, solange du im Kampf bist."
-L["Prints a message to chat whenever a quest is auto-accepted or turned in."] = "Gibt eine Nachricht im Chat aus, wenn eine Quest automatisch angenommen oder abgegeben wird."
+L["Prints a message to chat whenever a quest is auto-accepted or turned in, or a gossip option is selected."] = "Gibt eine Nachricht im Chat aus, wenn eine Quest automatisch angenommen oder abgegeben oder eine Gesprächsoption gewählt wird."
+L["Quest Options"] = "Quest-Optionen"
+L["Selects gossip options that are marked with the (Quest) label."] = "Wählt Gesprächsoptionen, die mit dem Zusatz (Quest) markiert sind."
+L["Selects gossip options that start a cinematic."] = "Wählt Gesprächsoptionen, die eine Zwischensequenz starten."
+L["Selects the option when an NPC offers only a single one. This also triggers on vendors, flight masters and trainers."] = "Wählt die Option, wenn ein NPC nur eine einzige anbietet. Greift damit auch bei Händlern, Flugmeistern und Lehrern."
+L["Single Option"] = "Einzelne Option"
 L["Skip in Combat"] = "Im Kampf überspringen"
 
 -- options/misc/auto_role_check.lua

@@ -1,0 +1,99 @@
+name: Dev Build
+
+# Rolling Development-Build. Laeuft bei jedem Push auf main und ueberschreibt
+# das Prerelease unter dem festen Tag "dev". Der Release-Workflow bleibt
+# unberuehrt - der triggert nur auf Tags "v*".
+on:
+  push:
+    branches:
+      - main
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+# Parallele Pushes duerfen sich nicht gegenseitig ueberschreiben. Der laufende
+# Job wird abgebrochen, sobald ein neuerer startet.
+concurrency:
+  group: dev-build
+  cancel-in-progress: true
+
+jobs:
+  dev:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - name: Version und Commit-Info lesen
+        id: meta
+        run: |
+          set -e
+          VERSION=$(grep -oP '^## Version:\s*\K.+' "Addon/ElvUI_mMediaTag/ElvUI_mMediaTag_Mainline.toc" | tr -d '\r ')
+          SHORT="${GITHUB_SHA::7}"
+          echo "version=${VERSION}" >> "$GITHUB_OUTPUT"
+          echo "sha=${SHORT}" >> "$GITHUB_OUTPUT"
+
+          # Die .toc der ausgelieferten Dateien markieren, damit im Spiel
+          # sichtbar ist, dass es kein Release ist. !mMT_MediaPack hat eine
+          # eigene Versionsnummer und bleibt unangetastet.
+          for TOC in Addon/ElvUI_mMediaTag/ElvUI_mMediaTag_*.toc; do
+            [ -e "$TOC" ] || continue
+            sed -i "s/^## Version:.*/## Version: ${VERSION}-dev-${SHORT}/" "$TOC"
+          done
+
+      - name: Subversion installieren
+        run: sudo apt-get update -qq && sudo apt-get install -y -qq subversion
+
+      - name: Libs holen
+        run: |
+          set -e
+          PACK="Addon/!mMT_MediaPack/libs"
+          rm -rf "$PACK"
+          mkdir -p "$PACK"
+
+          svn export --force https://repos.curseforge.com/wow/libstub/trunk "$PACK/LibStub"
+          svn export --force https://repos.curseforge.com/wow/callbackhandler/trunk/CallbackHandler-1.0 "$PACK/CallbackHandler-1.0"
+          svn export --force https://repos.curseforge.com/wow/libsharedmedia-3-0/trunk/LibSharedMedia-3.0 "$PACK/LibSharedMedia-3.0"
+
+          MMT="Addon/ElvUI_mMediaTag/lib"
+          rm -rf "$MMT/AceLocale-3.0"
+          svn export --force https://repos.curseforge.com/wow/ace3/trunk/AceLocale-3.0 "$MMT/AceLocale-3.0"
+
+      # Konstanter Dateiname - sonst aendert sich die Download-URL bei jedem Lauf.
+      - name: Zip bauen
+        run: |
+          cd Addon
+          zip -r "../mMT-dev.zip" "ElvUI_mMediaTag" "!mMT_MediaPack" -x "*/.svn/*"
+
+      - name: Release-Notes schreiben
+        run: |
+          cat > DEV_NOTES.md <<'HEADER'
+          > ⚠️ **Ungetesteter Development-Build.** Automatisch bei jedem Push auf `main` gebaut, nicht im Spiel verifiziert. Fuer den stabilen Stand bitte das neueste [Release](../../releases/latest) nutzen.
+
+          HEADER
+          {
+            echo "**Version:** ${{ steps.meta.outputs.version }}-dev-${{ steps.meta.outputs.sha }}"
+            echo "**Commit:** ${GITHUB_SHA}"
+            echo "**Gebaut:** $(date -u '+%d.%m.%Y %H:%M UTC')"
+            echo
+            echo '## Letzter Commit'
+            echo
+            echo '```'
+            git log -1 --pretty=%B
+            echo '```'
+          } >> DEV_NOTES.md
+
+      # Tag und Prerelease werden bei jedem Lauf neu gesetzt. Das Asset traegt
+      # denselben Namen, damit die Download-URL stabil bleibt.
+      - name: Prerelease veroeffentlichen
+        uses: softprops/action-gh-release@v2
+        with:
+          tag_name: dev
+          target_commitish: ${{ github.sha }}
+          name: mMT Development Build
+          body_path: DEV_NOTES.md
+          files: mMT-dev.zip
+          prerelease: true
+          make_latest: false

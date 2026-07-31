@@ -658,7 +658,7 @@ L["Automatically accepts quest dialogs from NPCs."] = "Accetta automaticamente i
 L["Automatically turns in completed quests. If the quest has multiple reward choices, the dialog stays open for you to choose."] = "Consegna automaticamente le missioni completate. Se la missione offre più ricompense, la finestra resterà aperta per permetterti di scegliere."
 L["Chat Messages"] = "Messaggi chat"
 L["Disables auto accept/turn-in while you are in combat."] = "Disabilita l'accettazione/consegna automatica mentre sei in combattimento."
-L["Prints a message to chat whenever a quest is auto-accepted or turned in."] = "Stampa un messaggio in chat ogni volta che una missione viene accettata o consegnata automaticamente."
+L["Prints a message to chat whenever a quest is auto-accepted or turned in, or a gossip option is selected."] = "Stampa un messaggio in chat ogni volta che una missione viene accettata o consegnata automaticamente."
 L["Skip in Combat"] = "Salta in combattimento"
 
 -- options/misc/difficulty_info.lua

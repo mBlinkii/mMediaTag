@@ -658,7 +658,7 @@ L["Automatically accepts quest dialogs from NPCs."] = "NPC의 퀘스트 대화�
 L["Automatically turns in completed quests. If the quest has multiple reward choices, the dialog stays open for you to choose."] = "완료된 퀘스트를 자동으로 제출합니다. 보상이 여러 개라면 선택할 수 있도록 창이 열린 상태로 유지됩니다."
 L["Chat Messages"] = "채팅 메시지"
 L["Disables auto accept/turn-in while you are in combat."] = "전투 중에는 자동 수락/완료를 비활성화합니다."
-L["Prints a message to chat whenever a quest is auto-accepted or turned in."] = "퀘스트가 자동 수락되거나 완료될 때마다 채팅에 메시지를 출력합니다."
+L["Prints a message to chat whenever a quest is auto-accepted or turned in, or a gossip option is selected."] = "퀘스트가 자동 수락되거나 완료될 때마다 채팅에 메시지를 출력합니다."
 L["Skip in Combat"] = "전투 중 건너뛰기"
 
 -- options/misc/difficulty_info.lua

@@ -638,6 +638,10 @@ P.auto_quest = {
 	enable = false,
 	auto_accept = true,
 	auto_turnin = true,
+	auto_gossip = true,
+	gossip_quest = true,
+	gossip_movie = false,
+	gossip_single = false,
 	skip_in_combat = true,
 	chat_message = false,
 }
