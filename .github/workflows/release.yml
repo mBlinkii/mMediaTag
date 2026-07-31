@@ -128,3 +128,46 @@ jobs:
           release_type: release
           changelog: ${{ steps.changelog.outputs.notes }}
           changelog_type: markdown
+
+      # Laeuft zuletzt, damit die Meldung erst rausgeht, wenn GitHub-Release und
+      # CurseForge-Upload durch sind. Der rollende dev-Tag aus dev.yml matcht den
+      # v*-Trigger nicht - die zusaetzliche if-Bedingung ist nur ein Sicherheitsnetz.
+      - name: Discord benachrichtigen
+        if: github.ref_type == 'tag' && github.ref_name != 'dev'
+        continue-on-error: true
+        env:
+          WEBHOOK: ${{ secrets.DISCORD_RELEASE_WEBHOOK }}
+          VERSION: ${{ steps.meta.outputs.version }}
+          RELEASE_URL: ${{ github.server_url }}/${{ github.repository }}/releases/tag/${{ github.ref_name }}
+        run: |
+          if [ -z "$WEBHOOK" ]; then
+            echo "::warning::DISCORD_RELEASE_WEBHOOK ist nicht gesetzt - Benachrichtigung uebersprungen."
+            exit 0
+          fi
+
+          head -c 3800 RELEASE_NOTES.md > DISCORD_BODY.md
+
+          # Changelog-Text nur ueber --rawfile/--arg einspeisen, nie in den
+          # Shell-String interpolieren - sonst brechen Anfuehrungszeichen und
+          # Backticks aus dem Changelog das JSON.
+          jq -n \
+            --arg title "mMediaTag v${VERSION}" \
+            --arg url "$RELEASE_URL" \
+            --rawfile desc DISCORD_BODY.md \
+            --arg icon "https://raw.githubusercontent.com/mBlinkii/mMediaTag/main/Logo/icon%20v4.png" \
+            '{embeds: [{title: $title, url: $url, description: $desc, color: 10181046, thumbnail: {url: $icon}}]}' \
+            > DISCORD_PAYLOAD.json
+
+          HTTP=$(curl -sS -o DISCORD_RESPONSE.txt -w '%{http_code}' \
+            -H "Content-Type: application/json" \
+            -d @DISCORD_PAYLOAD.json "$WEBHOOK") || {
+            echo "::warning::curl konnte den Discord-Webhook nicht erreichen."
+            exit 0
+          }
+
+          if [ "$HTTP" -ge 300 ]; then
+            echo "::warning::Discord antwortete mit HTTP ${HTTP}."
+            cat DISCORD_RESPONSE.txt
+          else
+            echo "Discord benachrichtigt (HTTP ${HTTP})."
+          fi
