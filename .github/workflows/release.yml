@@ -160,7 +160,7 @@ jobs:
 
           HTTP=$(curl -sS -o DISCORD_RESPONSE.txt -w '%{http_code}' \
             -H "Content-Type: application/json" \
-            -d @DISCORD_PAYLOAD.json "$WEBHOOK") || {
+            --data-binary @DISCORD_PAYLOAD.json "$WEBHOOK") || {
             echo "::warning::curl konnte den Discord-Webhook nicht erreichen."
             exit 0
           }
