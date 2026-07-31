@@ -7,6 +7,7 @@ on:
   push:
     branches:
       - main
+    # ADAPT 1: Nicht-Code-Pfade dieses Repos.
     paths-ignore:
       - "README.md"
       - "CHANGELOG.md"
@@ -39,6 +40,7 @@ jobs:
         id: meta
         run: |
           set -e
+          # ADAPT 2: Haupt-.toc, aus der die Versionsnummer kommt.
           VERSION=$(grep -oP '^## Version:\s*\K.+' "Addon/ElvUI_mMediaTag/ElvUI_mMediaTag_Mainline.toc" | tr -d '\r ')
           SHORT="${GITHUB_SHA::7}"
           echo "version=${VERSION}" >> "$GITHUB_OUTPUT"
@@ -47,6 +49,7 @@ jobs:
           # Die .toc der ausgelieferten Dateien markieren, damit im Spiel
           # sichtbar ist, dass es kein Release ist. !mMT_MediaPack hat eine
           # eigene Versionsnummer und bleibt unangetastet.
+          # ADAPT 3: Glob der .toc-Dateien, die den dev-Stempel bekommen.
           for TOC in Addon/ElvUI_mMediaTag/ElvUI_mMediaTag_*.toc; do
             [ -e "$TOC" ] || continue
             sed -i "s/^## Version:.*/## Version: ${VERSION}-dev-${SHORT}/" "$TOC"
@@ -55,6 +58,9 @@ jobs:
       - name: Subversion installieren
         run: sudo apt-get update -qq && sudo apt-get install -y -qq subversion
 
+      # ADAPT 4: Kompletter Step - 1:1 aus dem release.yml des jeweiligen Repos
+      # uebernehmen. Hat das Addon keine externen Libs, Step und den davor
+      # ersatzlos loeschen.
       - name: Libs holen
         run: |
           set -e
@@ -73,9 +79,12 @@ jobs:
       # Konstanter Dateiname - sonst aendert sich die Download-URL bei jedem Lauf.
       - name: Zip bauen
         run: |
+          # ADAPT 5: Basisordner, Addon-Ordner und Zip-Name. Liegt das Addon im
+          # Repo-Root statt unter Addon/, das "cd" streichen.
           cd Addon
           zip -r "../mMT-dev.zip" "ElvUI_mMediaTag" "!mMT_MediaPack" -x "*/.svn/*"
 
+      # ADAPT 6: Repo-Pfad im Release-Link.
       - name: Write release notes
         run: |
           cat > DEV_NOTES.md <<'HEADER'
@@ -101,6 +110,7 @@ jobs:
         with:
           tag_name: dev
           target_commitish: ${{ github.sha }}
+          # ADAPT 7: Release-Titel und Asset-Name (muss zu ADAPT 5 passen).
           name: mMT Development Build
           body_path: DEV_NOTES.md
           files: mMT-dev.zip
