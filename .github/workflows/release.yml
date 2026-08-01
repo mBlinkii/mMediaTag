@@ -167,6 +167,8 @@ jobs:
           TITLE="mMediaTag v${VERSION}"
           [ "$IS_TEST" = "true" ] && TITLE="[TEST] ${TITLE}"
 
+          LINKS="[CurseForge](https://www.curseforge.com/wow/addons/mmediatag) · [Wago](https://addons.wago.io/addons/mmediatag) · [GitHub](${RELEASE_URL})"
+
           head -c 3800 RELEASE_NOTES.md > DISCORD_BODY.md
 
           # Changelog-Text nur ueber --rawfile/--arg einspeisen, nie in den
@@ -177,7 +179,8 @@ jobs:
             --arg url "$RELEASE_URL" \
             --rawfile desc DISCORD_BODY.md \
             --arg icon "https://raw.githubusercontent.com/mBlinkii/mMediaTag/main/Logo/icon%20v4.png" \
-            '{embeds: [{title: $title, url: $url, description: $desc, color: 10181046, thumbnail: {url: $icon}}]}' \
+            --arg links "$LINKS" \
+            '{embeds: [{title: $title, url: $url, description: $desc, color: 10181046, thumbnail: {url: $icon}, fields: [{name: "📥 Download", value: $links, inline: false}]}]}' \
             > DISCORD_PAYLOAD.json
 
           HTTP=$(curl -sS -o DISCORD_RESPONSE.txt -w '%{http_code}' \
