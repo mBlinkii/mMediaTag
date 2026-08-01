@@ -13,17 +13,18 @@ jobs:
   release:
     runs-on: ubuntu-latest
     steps:
+      # fetch-depth 0, damit die pack-v* Tags fuer die Media-Pack-Version da sind.
       - uses: actions/checkout@v6
+        with:
+          fetch-depth: 0
 
       - name: Version aus Tag lesen, Datum bestimmen
         id: meta
         run: |
           set -e
-          # Die Version kommt aus dem Tag, der den Lauf ausgeloest hat, damit
-          # Release, Zip, CurseForge und Wago immer die getaggte Nummer
-          # tragen - auch wenn die "## Version:" Zeile einer .toc
-          # hinterherhinkt. Gleiche Regel wie in Blinkiis-Portraits und
-          # MAUI-M-Timer.
+          # Die Version kommt aus dem Tag, der den Lauf ausgeloest hat. Die .toc
+          # tragen im Repo nur den Platzhalter "git-build" und werden hier
+          # gestempelt. Gleiche Regel wie in Blinkiis-Portraits und MAUI-M-Timer.
           VERSION="${GITHUB_REF_NAME#v}"
           DATE=$(date +%d%m%Y)
 
@@ -43,14 +44,28 @@ jobs:
           echo "zipname=mMT-v${VERSION}-${DATE}" >> "$GITHUB_OUTPUT"
           echo "version=${VERSION}" >> "$GITHUB_OUTPUT"
 
-          # Die ausgelieferten .toc Dateien auf den Tag ziehen. Nur die von
-          # ElvUI_mMediaTag - !mMT_MediaPack liegt zwar im selben Zip, hat
-          # aber eine eigene, unabhaengige Versionsnummer und darf nicht
-          # ueberschrieben werden.
+          # ADAPT 2: Glob der .toc-Dateien, die die Versionsnummer bekommen.
           for TOC in Addon/ElvUI_mMediaTag/ElvUI_mMediaTag_*.toc; do
             [ -e "$TOC" ] || continue
             sed -i "s/^## Version:.*/## Version: ${VERSION}/" "$TOC"
           done
+
+          # !mMT_MediaPack zaehlt eigenstaendig weiter und haengt an eigenen Tags
+          # (pack-v1.42). Die matchen den v*-Trigger nicht, loesen also keinen
+          # Release aus - der naechste mMT-Release nimmt die neueste mit.
+          PACK_VERSION=$(git tag -l 'pack-v*' --sort=-v:refname | head -n1)
+          PACK_VERSION="${PACK_VERSION#pack-v}"
+
+          if [ -z "$PACK_VERSION" ]; then
+            echo "::error::Kein pack-v* Tag gefunden. Einmalig anlegen, z.B.: git tag pack-v1.41 && git push origin pack-v1.41"
+            exit 1
+          fi
+
+          for TOC in Addon/!mMT_MediaPack/!mMT_MediaPack_*.toc; do
+            [ -e "$TOC" ] || continue
+            sed -i "s/^## Version:.*/## Version: ${PACK_VERSION}/" "$TOC"
+          done
+          echo "Media Pack auf ${PACK_VERSION} gestempelt."
 
       # Die Libs liegen nicht im Repo, sondern werden hier frisch von
       # CurseForge geholt. Gleiche Regel wie in MAUI-M-Timer.

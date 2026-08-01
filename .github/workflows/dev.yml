@@ -38,27 +38,45 @@ jobs:
 
       - name: Version und Commit-Info lesen
         id: meta
+        env:
+          GH_TOKEN: ${{ github.token }}
         run: |
           set -e
-          # ADAPT 2: Haupt-.toc, aus der die Versionsnummer kommt.
-          VERSION=$(grep -oP '^## Version:\s*\K.+' "Addon/ElvUI_mMediaTag/ElvUI_mMediaTag_Mainline.toc" | tr -d '\r ')
+          # Basis ist das letzte echte Release, nicht die .toc: auf main steht dort
+          # der Platzhalter oder schon die naechste, noch unveroeffentlichte Nummer.
+          # --exclude-pre-releases blendet den rollenden dev-Tag und -test-Laeufe aus.
+          VERSION=$(gh release list --exclude-drafts --exclude-pre-releases --limit 1 --json tagName -q '.[0].tagName' 2>/dev/null || true)
+          VERSION="${VERSION#v}"
+          [ -n "$VERSION" ] || VERSION="0.00"
+
           SHORT="${GITHUB_SHA::7}"
           echo "version=${VERSION}" >> "$GITHUB_OUTPUT"
           echo "sha=${SHORT}" >> "$GITHUB_OUTPUT"
 
           # Die .toc der ausgelieferten Dateien markieren, damit im Spiel
-          # sichtbar ist, dass es kein Release ist. !mMT_MediaPack hat eine
-          # eigene Versionsnummer und bleibt unangetastet.
-          # ADAPT 3: Glob der .toc-Dateien, die den dev-Stempel bekommen.
+          # sichtbar ist, dass es kein Release ist.
+          # ADAPT 2: Glob der .toc-Dateien, die den dev-Stempel bekommen.
           for TOC in Addon/ElvUI_mMediaTag/ElvUI_mMediaTag_*.toc; do
             [ -e "$TOC" ] || continue
             sed -i "s/^## Version:.*/## Version: ${VERSION}-dev-${SHORT}/" "$TOC"
           done
 
+          # !mMT_MediaPack haengt an eigenen pack-v* Tags und bekommt bewusst
+          # keinen dev-Stempel - es aendert sich unabhaengig vom Hauptaddon.
+          # Gestempelt wird trotzdem, sonst stuende "git-build" im Addon-Fenster.
+          PACK_VERSION=$(git tag -l 'pack-v*' --sort=-v:refname | head -n1)
+          PACK_VERSION="${PACK_VERSION#pack-v}"
+          [ -n "$PACK_VERSION" ] || PACK_VERSION="0.00"
+
+          for TOC in Addon/!mMT_MediaPack/!mMT_MediaPack_*.toc; do
+            [ -e "$TOC" ] || continue
+            sed -i "s/^## Version:.*/## Version: ${PACK_VERSION}/" "$TOC"
+          done
+
       - name: Subversion installieren
         run: sudo apt-get update -qq && sudo apt-get install -y -qq subversion
 
-      # ADAPT 4: Kompletter Step - 1:1 aus dem release.yml des jeweiligen Repos
+      # ADAPT 3: Kompletter Step - 1:1 aus dem release.yml des jeweiligen Repos
       # uebernehmen. Hat das Addon keine externen Libs, Step und den davor
       # ersatzlos loeschen.
       - name: Libs holen
@@ -79,12 +97,12 @@ jobs:
       # Konstanter Dateiname - sonst aendert sich die Download-URL bei jedem Lauf.
       - name: Zip bauen
         run: |
-          # ADAPT 5: Basisordner, Addon-Ordner und Zip-Name. Liegt das Addon im
+          # ADAPT 4: Basisordner, Addon-Ordner und Zip-Name. Liegt das Addon im
           # Repo-Root statt unter Addon/, das "cd" streichen.
           cd Addon
           zip -r "../mMT-dev.zip" "ElvUI_mMediaTag" "!mMT_MediaPack" -x "*/.svn/*"
 
-      # ADAPT 6: Repo-Pfad im Release-Link.
+      # ADAPT 5: Repo-Pfad im Release-Link.
       - name: Write release notes
         run: |
           cat > DEV_NOTES.md <<'HEADER'
@@ -110,7 +128,7 @@ jobs:
         with:
           tag_name: dev
           target_commitish: ${{ github.sha }}
-          # ADAPT 7: Release-Titel und Asset-Name (muss zu ADAPT 5 passen).
+          # ADAPT 6: Release-Titel und Asset-Name (muss zu ADAPT 4 passen).
           name: mMT Development Build
           body_path: DEV_NOTES.md
           files: mMT-dev.zip

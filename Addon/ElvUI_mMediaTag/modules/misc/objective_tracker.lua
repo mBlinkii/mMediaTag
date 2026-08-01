@@ -13,6 +13,9 @@ local issecretvalue = _G.issecretvalue or function() return false end
 
 local db, fonts, colors
 
+local CHECK_ATLAS = "ui-questtracker-tracker-check"
+local CHECK_GAP = 5
+
 local trackerNames = {
 	"AchievementObjectiveTracker",
 	"AdventureObjectiveTracker",
@@ -86,7 +89,6 @@ local function SkinTitleText(text)
 	if height ~= text:GetHeight() then text:SetHeight(height) end
 end
 
--- strips old color codes and colors "x/y Text", "Text: x/y" or "Text (x%)" lines by progress
 local function GetCleanText(text)
 	text = gsub(text, "|c%x%x%x%x%x%x%x%x", "")
 	text = gsub(text, "|r", "")
@@ -98,7 +100,8 @@ local function GetProgressHex(percent)
 	return E:RGBToHex(r, g, b)
 end
 
-local function BuildProgressText(lineText, color)
+-- matches "x/y Text", "Text: x/y" and "Text (n%)", returns the ratio so callers can derive completion
+local function ParseProgress(lineText)
 	local current, required, questText = strmatch(lineText, "^(%d+)/(%d+) (.+)$")
 	if not current then
 		questText, current, required = strmatch(lineText, "^(.-): (%d+)/(%d+)$")
@@ -106,38 +109,69 @@ local function BuildProgressText(lineText, color)
 
 	if current and required then
 		current, required = tonumber(current), tonumber(required)
-		if current and required and required > 1 and current < required then
-			local hex = GetProgressHex(current / required)
-			return format("%s%d/%d|r %s%s|r", hex, current, required, color.hex, questText)
-		end
-		return nil
+		if current and required and required > 0 then return questText, current / required, current, required end
+		return
 	end
 
 	local percentText
 	questText, percentText = strmatch(lineText, "^(.+) %(([%d%.]+)%%%)$")
-	if questText and percentText then
-		local percent = tonumber(percentText)
-		if percent and percent < 100 then
-			local hex = GetProgressHex(percent * 0.01)
-			return format("%s%s|r (%s%.f%%|r)", color.hex, questText, hex, percent)
-		end
-	end
+	local percent = percentText and tonumber(percentText)
+	if percent then return questText, percent * 0.01 end
 end
 
 local function SetLineText(text, completed)
+	local lineText = text:GetText()
+	local readable = lineText and not issecretvalue(lineText)
+
+	local questText, ratio, current, required
+	if readable then questText, ratio, current, required = ParseProgress(GetCleanText(lineText)) end
+
+	completed = completed or (ratio ~= nil and ratio >= 1)
+
 	local color = completed and colors.complete or colors.text
 	SetTextProperties(text, fonts.text, color)
 
-	if completed or not db.progress.enable then return end
+	if completed or not ratio or not db.progress.enable then return completed end
 
-	local lineText = text:GetText()
-	if not lineText or issecretvalue(lineText) then return end
-
-	local newText = BuildProgressText(GetCleanText(lineText), color)
-	if newText then
-		text:SetHeight(0) -- force a clear of internals or GetHeight() might return an incorrect value
-		text:SetText(newText)
+	local hex = GetProgressHex(ratio)
+	local newText
+	if current then
+		if required <= 1 then return completed end
+		newText = format("%s%d/%d|r %s%s|r", hex, current, required, color.hex, questText)
+	else
+		newText = format("%s%s|r (%s%.f%%|r)", color.hex, questText, hex, ratio * 100)
 	end
+
+	text:SetHeight(0) -- force a clear of internals or GetHeight() might return an incorrect value
+	text:SetText(newText)
+
+	return completed
+end
+
+-- quest lines share the anim line template with the scenario criteria, but only there does Blizzard drive the icon itself
+local function SetLineIcon(line, completed)
+	local icon = line.Icon
+	if not icon or line.objectiveKey == "Waypoint" then return end -- the waypoint line anchors its Text to the Icon
+
+	local block = line.parentBlock
+	if block and block.parentModule == _G.ScenarioObjectiveTracker then return end
+
+	if completed then
+		icon:SetAtlas(CHECK_ATLAS, false)
+		icon:ClearAllPoints()
+		icon:SetPoint("RIGHT", line.Text, "LEFT", -CHECK_GAP, 0)
+		icon:Show()
+	elseif icon:GetAtlas() == CHECK_ATLAS then
+		icon:Hide()
+	end
+end
+
+-- line.finished does not exist in the Blizzard tracker, Text.colorStyle is set on every AddObjective
+local function IsCompleted(line)
+	if line.objectiveKey == "QuestComplete" or line.finished then return true end
+
+	local trackerColor = _G.OBJECTIVE_TRACKER_COLOR
+	return (trackerColor and line.Text.colorStyle == trackerColor.Complete) or false
 end
 
 local function SkinLine(line)
@@ -146,8 +180,7 @@ local function SkinLine(line)
 	if line.objectiveKey == 0 then
 		SkinTitleText(line.Text)
 	else
-		local completed = (line.objectiveKey == "QuestComplete") or line.finished
-		SetLineText(line.Text, completed)
+		SetLineIcon(line, SetLineText(line.Text, IsCompleted(line)))
 	end
 
 	-- fix for overlapping blocks/ line and header - thx Merathilis & Fang
@@ -164,6 +197,17 @@ local function SkinBlock(_, block)
 	if block.usedLines then
 		for _, line in pairs(block.usedLines) do
 			SkinLine(line)
+		end
+	end
+end
+
+-- blocks laid out before Initialize keep the Blizzard look until the next tracker update, so skin them once here
+local function SkinActiveBlocks(tracker)
+	if tracker.EnumerateActiveBlocks then tracker:EnumerateActiveBlocks(function(block) SkinBlock(nil, block) end) end
+
+	if tracker.FixedBlocks then
+		for _, block in ipairs(tracker.FixedBlocks) do
+			if block.used then SkinBlock(nil, block) end
 		end
 	end
 end
@@ -273,6 +317,8 @@ function module:Initialize()
 				hooksecurefunc(tracker, "AddBlock", SkinBlock)
 				tracker.mMT_Skinned = true
 			end
+
+			SkinActiveBlocks(tracker)
 		end
 	end
 
