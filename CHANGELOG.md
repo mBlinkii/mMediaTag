@@ -8,6 +8,7 @@
 - FIX - [Portraits]: Portraits no longer turn solid black while a unit's model is still loading, for example during quest or item transformations.
 - FIX - [Media-Pack]: A texture pack that had been disabled could not be enabled again in the same session.
 - FIX - [Media-Pack]: The background list offered an entry whose texture file was missing.
+- FIX - [DT-Skin]: The panel skin was reset whenever ElvUI refreshed its frame templates, for example after changing an ElvUI texture or border color.
 ### 🔧 UPDATE
 - UPDATE - [System]: Adapted to the current ElvUI, which loads plugins after its own initialization and runs its update loops as coroutines.
 - UPDATE - [DT-Skin]: Export strings use a new format, so strings created by earlier versions can no longer be imported.
@@ -20,6 +21,7 @@
 - NEW - [Objective-Tracker]: Completed quest objectives now show a check icon, like the dungeon objectives.
 - NEW - [Media-Pack]: New settings panel under Interface - AddOns with a preview for every texture pack, /mmtmp opens it.
 - NEW - [Media-Pack]: The Caith UI, MaUIv3 and mMT textures can now be enabled separately as the Misc pack.
+- NEW - [Media-Pack]: The texture packs can now be enabled and disabled from the mMT options, under their own Media Pack entry.
 
 ## [ver. 4.08] - 23.07.2026
 ### 🐛 FIX
