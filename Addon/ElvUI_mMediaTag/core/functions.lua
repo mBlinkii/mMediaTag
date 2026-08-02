@@ -25,9 +25,19 @@ local UnitIsUnit = UnitIsUnit
 local UnitIsPlayer = UnitIsPlayer
 local strsplit = strsplit
 local select = select
+local pcall = pcall
+local type = type
 local issecretvalue = issecretvalue
+local SerializeCBOR = C_EncodingUtil.SerializeCBOR
+local DeserializeCBOR = C_EncodingUtil.DeserializeCBOR
+local CompressString = C_EncodingUtil.CompressString
+local DecompressString = C_EncodingUtil.DecompressString
+local EncodeBase64 = C_EncodingUtil.EncodeBase64
+local DecodeBase64 = C_EncodingUtil.DecodeBase64
 
-local LibDeflate = E.Libs.Deflate
+local COMPRESS = Enum.CompressionMethod.Deflate or 0
+local OPTIMIZE = Enum.CompressionLevel.Default or 0
+
 local D = E:GetModule("Distributor")
 
 function mMT:Print(...)
@@ -299,9 +309,14 @@ function mMT:MMTSystemInfo()
 	end
 end
 
-local exportPrefix = "!mMT!"
-function GetImportStringType(dataString)
-	return (strmatch(dataString, "^" .. exportPrefix) and "Deflate") or (strmatch(dataString, "^{") and "Table") or ""
+local exportPrefix = "!mMT2!"
+local legacyPrefix = "!mMT!" -- LibDeflate/AceSerializer era, no longer decodable
+
+local function GetImportStringType(dataString)
+	return (strmatch(dataString, "^" .. exportPrefix) and "Deflate")
+		or (strmatch(dataString, "^{") and "Table")
+		or (strmatch(dataString, "^" .. legacyPrefix) and "Legacy")
+		or ""
 end
 
 -- nil for secret values (WoW 12.x) - those must never be compared, concatenated or branched on.
@@ -360,43 +375,49 @@ function mMT:GetUnitClassification(unit, isBossFrame, isPlayer, guid)
 end
 
 function mMT:GetExportText(profileData, profileType)
-	local serialString = D:Serialize(profileData)
+	local serialString = SerializeCBOR(profileData)
 	local exportString = D:CreateProfileExport(profileType, profileType, serialString)
-	local compressedData = LibDeflate:CompressDeflate(exportString, LibDeflate.compressLevel)
-	local printableString = LibDeflate:EncodeForPrint(compressedData)
-	local profileExport = printableString and format("%s%s", exportPrefix, printableString) or nil
+	local compressedData = CompressString(exportString, COMPRESS, OPTIMIZE)
+	local printableString = EncodeBase64(compressedData)
 
-	return profileExport
+	return printableString and format("%s%s", exportPrefix, printableString) or nil
 end
 
 function mMT:GetImportText(string)
-	local profileInfo, profileType, profileData
+	local profileType, profileData
 	local stringType = GetImportStringType(string)
+
+	if stringType == "Legacy" then
+		mMT:Print(L["This export was created by an older version and can no longer be imported."])
+		return
+	end
+
 	if stringType == "Deflate" then
 		local data = gsub(string, "^" .. exportPrefix, "")
-		local decodedData = LibDeflate:DecodeForPrint(data)
-		local decompressed = LibDeflate:DecompressDeflate(decodedData)
-		if not decompressed then
+
+		-- both throw on malformed user input instead of returning nil
+		local ok, decompressed = pcall(function() return DecompressString(DecodeBase64(data), COMPRESS) end)
+		if not ok or not decompressed then
 			mMT:Print(L["Error decompressing data."])
 			return
 		end
 
-		local serializedData, success
-		serializedData, profileInfo = E:SplitString(decompressed, "^^::") -- '^^' indicates the end of the AceSerializer string
-
+		-- match the last "::", CBOR is binary and may contain the delimiter itself
+		local serializedData, profileInfo = strmatch(decompressed, "^(.*)::([^:]*)$")
 		if not profileInfo then
 			mMT:Print(L["Error importing profile. String is invalid or corrupted!"])
 			return
 		end
 
-		serializedData = format("%s%s", serializedData, "^^") --Add back the AceSerializer terminator
-		profileType, _ = E:SplitString(profileInfo, "::")
-		success, profileData = D:Deserialize(serializedData)
+		local success
+		success, profileData = pcall(DeserializeCBOR, serializedData)
 
-		if not success then
+		if not success or type(profileData) ~= "table" then
 			mMT:Print(L["Error deserializing:"], profileData)
 			return
 		end
+
+		profileType = profileInfo
 	end
 
 	return profileType, profileData

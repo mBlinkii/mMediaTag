@@ -5,6 +5,7 @@ if not L then return end
 L["Error decompressing data."] = true
 L["Error deserializing:"] = true
 L["Error importing profile. String is invalid or corrupted!"] = true
+L["This export was created by an older version and can no longer be imported."] = true
 
 -- modules/datatexts/info_score.lua
 L["Mythic+ Best Run: +"] = true

@@ -5,6 +5,7 @@ if not L then return end
 L["Error decompressing data."] = "Fehler beim Dekomprimieren der Daten."
 L["Error deserializing:"] = "Fehler beim Deserialisieren:"
 L["Error importing profile. String is invalid or corrupted!"] = "Fehler beim Importieren des Profils. Die Zeichenfolge ist ungültig oder beschädigt!"
+L["This export was created by an older version and can no longer be imported."] = "Dieser Export stammt aus einer älteren Version und kann nicht mehr importiert werden."
 
 -- modules/datatexts/info_score.lua
 L["Mythic+ Best Run: +"] = "Mythic+-Bester Lauf: +"

@@ -8,6 +8,7 @@
 - FIX - [Portraits]: Portraits no longer turn solid black while a unit's model is still loading, for example during quest or item transformations.
 ### 🔧 UPDATE
 - UPDATE - [System]: Adapted to the current ElvUI, which loads plugins after its own initialization and runs its update loops as coroutines.
+- UPDATE - [DT-Skin]: Export strings use a new format, so strings created by earlier versions can no longer be imported.
 ### ✨ NEW
 - NEW - [Auto-Quest]: New Auto Gossip option, selects gossip entries by type - quest label, cinematic, or single option.
 - NEW - [Objective-Tracker]: Completed quest objectives now show a check icon, like the dungeon objectives.

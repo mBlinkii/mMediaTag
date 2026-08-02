@@ -10,6 +10,7 @@ mMT.Changelog[409] = {
 	},
 	UPDATE = {
 		"[System]: Adapted to the current ElvUI, which loads plugins after its own initialization and runs its update loops as coroutines.",
+		"[DT-Skin]: Export strings use a new format, so strings created by earlier versions can no longer be imported.",
 	},
 	NEW = {
 		"[Auto-Quest]: New Auto Gossip option, selects gossip entries by type - quest label, cinematic, or single option.",
