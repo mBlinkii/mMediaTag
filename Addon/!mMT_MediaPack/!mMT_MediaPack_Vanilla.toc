@@ -12,3 +12,4 @@
 
 embeds.xml
 media\core.lua
+media\options.lua

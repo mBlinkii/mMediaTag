@@ -1,8 +1,12 @@
+local addonName, ns = ...
+
 local LSM = LibStub("LibSharedMedia-3.0")
 
 if LSM == nil then
 	return
 end
+
+local TEXTURE_PATH = [[Interface\AddOns\!mMT_MediaPack\media\textures\]]
 
 local MediaType_BACKGROUND = LSM.MediaType.BACKGROUND
 local MediaType_BORDER = LSM.MediaType.BORDER
@@ -11,7 +15,7 @@ local MediaType_STATUSBAR = LSM.MediaType.STATUSBAR
 local MediaType_SOUND = LSM.MediaType.SOUND
 
 local function mAddStatusbar(name, file)
-	LSM:Register(MediaType_STATUSBAR, name, [[Interface\AddOns\!mMT_MediaPack\media\textures\]] .. file)
+	LSM:Register(MediaType_STATUSBAR, name, TEXTURE_PATH .. file)
 end
 
 local function mAddBackground(name, file)
@@ -56,13 +60,28 @@ local named = {
 	},
 }
 
-local packs = {}
+local packs, packList = {}, {}
+local label, preview = { misc = "Misc" }, { misc = "Wglass.tga" }
+
 for key in pairs(series) do
 	packs[key] = true
+	packList[#packList + 1] = key
+	label[key] = strupper(key)
+	preview[key] = key .. "1.tga"
 end
+sort(packList)
+
 for key in pairs(named) do
-	packs[key] = true
+	if not packs[key] then
+		packs[key] = true
+		packList[#packList + 1] = key
+	end
 end
+
+ns.packList = packList
+ns.label = label
+ns.preview = preview
+ns.TEXTURE_PATH = TEXTURE_PATH
 
 local function LoadPack(key)
 	local count = series[key]
@@ -108,6 +127,11 @@ function mMT_MediaPack:OnEvent(event, arg1)
 				LoadPack(key)
 			end
 		end
+
+		ns.db = mMT_MediaPack.db
+		if ns.SetupOptions then
+			ns.SetupOptions()
+		end
 	end
 end
 
@@ -120,6 +144,9 @@ StaticPopupDialogs["MMTMPRL"] = {
 	hideOnEscape = false,
 }
 local function RLDialog()
+	if ns.MarkDirty then
+		ns.MarkDirty()
+	end
 	StaticPopup_Show("MMTMPRL")
 end
 
@@ -170,6 +197,7 @@ end
 local function PrintHelp()
 	print("Available slash Commands:")
 	print("----------------------------------------------------------")
+	print("|CFFFCB70A/mmtmp|r = opens the settings panel")
 	print("|CFFFCB70A/mmtmp help|r = shows the list of available commands")
 	print("|CFFFCB70A/mmtmp reset|r = resets Settings to default")
 	print("|CFFFCB70A/mmtmp all|r = enabled/disabled loading all textures")
@@ -189,9 +217,14 @@ SLASH_MMTMP1 = "/mmtmp"
 SlashCmdList.MMTMP = function(msg)
 	msg = strtrim(strlower(msg or ""))
 
+	if msg == "" and ns.OpenOptions and ns.OpenOptions() then
+		return
+	end
+
 	if msg == "reset" then
 		mMTSettings = CopyTable(defaultDB)
 		mMT_MediaPack.db = mMTSettings
+		ns.db = mMT_MediaPack.db
 		PrintStatus("Settings has been reset to default")
 		RLDialog()
 	elseif defaultDB.textures[msg] then
