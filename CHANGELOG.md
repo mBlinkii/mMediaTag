@@ -2,9 +2,14 @@
 
 ## [ver. 4.09] - TBD
 ### 🐛 FIX
+- FIX - [System]: Fonts are applied again after ElvUI changed how a font has to be handed to FontTemplate.
 - FIX - [Objective-Tracker]: Completed objectives kept the normal text color instead of the completed color.
 - FIX - [Objective-Tracker]: The skin was only applied once the tracker updated on its own, so after a reload it kept the default look until something changed.
+- FIX - [Portraits]: Portraits no longer turn solid black while a unit's model is still loading, for example during quest or item transformations.
+### 🔧 UPDATE
+- UPDATE - [System]: Adapted to the current ElvUI, which loads plugins after its own initialization and runs its update loops as coroutines.
 ### ✨ NEW
+- NEW - [Auto-Quest]: New Auto Gossip option, selects gossip entries by type - quest label, cinematic, or single option.
 - NEW - [Objective-Tracker]: Completed quest objectives now show a check icon, like the dungeon objectives.
 
 ## [ver. 4.08] - 23.07.2026
