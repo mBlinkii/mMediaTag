@@ -7,7 +7,8 @@ local ceil = ceil
 local floor = floor
 
 local COLUMNS, COLUMN_WIDTH, ROW_HEIGHT = 3, 190, 26
-local LABEL_WIDTH, PREVIEW_WIDTH = 34, 96
+local LABEL_WIDTH, PREVIEW_WIDTH, PREVIEW_HEIGHT = 34, 96, 12
+local LOGO_SIZE = 48
 
 local boxes = {}
 local dirty = false
@@ -72,18 +73,23 @@ function ns.SetupOptions()
 	local panel = CreateFrame("Frame")
 	panel.name = "mMT Media Pack"
 
+	local logo = panel:CreateTexture(nil, "ARTWORK")
+	logo:SetSize(LOGO_SIZE, LOGO_SIZE)
+	logo:SetPoint("TOPLEFT", 16, -16)
+	logo:SetTexture(ns.LOGO_PATH)
+
 	local title = panel:CreateFontString(nil, "ARTWORK", "GameFontNormalLarge")
-	title:SetPoint("TOPLEFT", 16, -16)
+	title:SetPoint("TOPLEFT", logo, "TOPRIGHT", 12, -4)
 	title:SetText("mMT Media Pack")
 
 	local note = panel:CreateFontString(nil, "ARTWORK", "GameFontHighlightSmall")
-	note:SetPoint("TOPLEFT", title, "BOTTOMLEFT", 0, -8)
+	note:SetPoint("TOPLEFT", title, "BOTTOMLEFT", 0, -6)
 	note:SetPoint("RIGHT", panel, "RIGHT", -16, 0)
 	note:SetJustifyH("LEFT")
 	note:SetText("Select which texture packs are registered. Loading fewer packs keeps the texture dropdowns short.")
 
 	master = CreateCheckBox(panel, "Load all texture packs")
-	master:SetPoint("TOPLEFT", note, "BOTTOMLEFT", 0, -14)
+	master:SetPoint("TOPLEFT", logo, "BOTTOMLEFT", 0, -14)
 	master:SetScript("OnClick", OnMasterClick)
 
 	local grid = CreateFrame("Frame", nil, panel)
@@ -97,9 +103,9 @@ function ns.SetupOptions()
 		box:SetScript("OnClick", OnPackClick)
 
 		box.preview = box:CreateTexture(nil, "ARTWORK")
-		box.preview:SetSize(PREVIEW_WIDTH, 14)
+		box.preview:SetSize(PREVIEW_WIDTH, PREVIEW_HEIGHT)
 		box.preview:SetPoint("LEFT", box, "RIGHT", LABEL_WIDTH + 8, 0)
-		box.preview:SetTexture(ns.TEXTURE_PATH .. ns.preview[key])
+		box.preview:SetTexture(ns.PREVIEW_PATH .. key .. ".tga")
 
 		boxes[#boxes + 1] = box
 	end

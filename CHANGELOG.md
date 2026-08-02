@@ -6,12 +6,20 @@
 - FIX - [Objective-Tracker]: Completed objectives kept the normal text color instead of the completed color.
 - FIX - [Objective-Tracker]: The skin was only applied once the tracker updated on its own, so after a reload it kept the default look until something changed.
 - FIX - [Portraits]: Portraits no longer turn solid black while a unit's model is still loading, for example during quest or item transformations.
+- FIX - [Media-Pack]: A texture pack that had been disabled could not be enabled again in the same session.
+- FIX - [Media-Pack]: The background list offered an entry whose texture file was missing.
 ### 🔧 UPDATE
 - UPDATE - [System]: Adapted to the current ElvUI, which loads plugins after its own initialization and runs its update loops as coroutines.
 - UPDATE - [DT-Skin]: Export strings use a new format, so strings created by earlier versions can no longer be imported.
+- UPDATE - [Media-Pack]: Removed the duplicate statusbar textures B17 and N15, they were identical to B11 and N4.
+- UPDATE - [Media-Pack]: Renamed the chat backgrounds to close a numbering gap, Chat11 and Chat12 now show the images previously named Chat12 and Chat13.
+- UPDATE - [Media-Pack]: Texture packs are no longer registered twice while loading.
+- UPDATE - [Media-Pack]: Reduced the addon size by about 2 MB without any visible change to the textures.
 ### ✨ NEW
 - NEW - [Auto-Quest]: New Auto Gossip option, selects gossip entries by type - quest label, cinematic, or single option.
 - NEW - [Objective-Tracker]: Completed quest objectives now show a check icon, like the dungeon objectives.
+- NEW - [Media-Pack]: New settings panel under Interface - AddOns with a preview for every texture pack, /mmtmp opens it.
+- NEW - [Media-Pack]: The Caith UI, MaUIv3 and mMT textures can now be enabled separately as the Misc pack.
 
 ## [ver. 4.08] - 23.07.2026
 ### 🐛 FIX

@@ -61,13 +61,12 @@ local named = {
 }
 
 local packs, packList = {}, {}
-local label, preview = { misc = "Misc" }, { misc = "Wglass.tga" }
+local label = { misc = "Misc" }
 
 for key in pairs(series) do
 	packs[key] = true
 	packList[#packList + 1] = key
 	label[key] = strupper(key)
-	preview[key] = key .. "1.tga"
 end
 sort(packList)
 
@@ -80,8 +79,8 @@ end
 
 ns.packList = packList
 ns.label = label
-ns.preview = preview
-ns.TEXTURE_PATH = TEXTURE_PATH
+ns.PREVIEW_PATH = [[Interface\AddOns\!mMT_MediaPack\media\misc\preview_]]
+ns.LOGO_PATH = [[Interface\AddOns\!mMT_MediaPack\media\logo\icon]]
 
 local function LoadPack(key)
 	local count = series[key]
