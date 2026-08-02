@@ -65,7 +65,6 @@ local function LoadSeriesB()
 	mAddStatusbar("mMediaTag B14", "b14.tga")
 	mAddStatusbar("mMediaTag B15", "b15.tga")
 	mAddStatusbar("mMediaTag B16", "b16.tga")
-	mAddStatusbar("mMediaTag B17", "b17.tga")
 end
 
 local function LoadSeriesC()
@@ -293,7 +292,6 @@ local function LoadSeriesN()
 	mAddStatusbar("mMediaTag N12", "n12.tga")
 	mAddStatusbar("mMediaTag N13", "n13.tga")
 	mAddStatusbar("mMediaTag N14", "n14.tga")
-	mAddStatusbar("mMediaTag N15", "n15.tga")
 	mAddStatusbar("mMediaTag N16", "n16.tga")
 	mAddStatusbar("mMediaTag N17", "n17.tga")
 	mAddStatusbar("mMediaTag N18", "n18.tga")
@@ -423,134 +421,70 @@ local function LoadSeriesT()
 	mAddStatusbar("mMediaTag T7", "t7.tga")
 	mAddStatusbar("mMediaTag T8", "t8.tga")
 end
-local function LoadSeriesAll()
-	LoadSeriesA()
-	LoadSeriesB()
-	LoadSeriesC()
-	LoadSeriesD()
-	LoadSeriesE()
-	LoadSeriesF()
-	LoadSeriesG()
-	LoadSeriesH()
-	LoadSeriesI()
-	LoadSeriesJ()
-	LoadSeriesK()
-	LoadSeriesL()
-	LoadSeriesM()
-	LoadSeriesN()
-	LoadSeriesO()
-	LoadSeriesP()
-	LoadSeriesQ()
-	LoadSeriesR()
-	LoadSeriesS()
-	LoadSeriesT()
+
+local function LoadSeriesMisc()
+	mAddStatusbar("mMediaTag Caith UI 1", "Wglass.tga")
+	mAddStatusbar("mMediaTag Caith UI 2", "Wisps.tga")
+	mAddStatusbar("MaUIv3", "MaUIv3.tga")
+	mAddStatusbar("MaUIv3 LEFT", "MaUIv3Left.tga")
+	mAddStatusbar("MaUIv3 RIGHT", "MaUIv3Right.tga")
+	mAddStatusbar("mMT Blank", "mMT_Blank.tga")
+	mAddStatusbar("mMT Target", "mMT_Target.tga")
+	mAddStatusbar("mMT Dark", "mMT_Dark.tga")
 end
 
-local defaultDB = {
-	textures = {
-		all = true,
-		a = true,
-		b = true,
-		c = true,
-		d = true,
-		e = true,
-		f = true,
-		g = true,
-		h = true,
-		i = true,
-		j = true,
-		k = true,
-		l = true,
-		n = true,
-		m = true,
-		o = true,
-		p = true,
-		q = true,
-		r = true,
-		s = true,
-		t = true,
-	},
+local series = {
+	a = LoadSeriesA,
+	b = LoadSeriesB,
+	c = LoadSeriesC,
+	d = LoadSeriesD,
+	e = LoadSeriesE,
+	f = LoadSeriesF,
+	g = LoadSeriesG,
+	h = LoadSeriesH,
+	i = LoadSeriesI,
+	j = LoadSeriesJ,
+	k = LoadSeriesK,
+	l = LoadSeriesL,
+	m = LoadSeriesM,
+	n = LoadSeriesN,
+	o = LoadSeriesO,
+	p = LoadSeriesP,
+	q = LoadSeriesQ,
+	r = LoadSeriesR,
+	s = LoadSeriesS,
+	t = LoadSeriesT,
+	misc = LoadSeriesMisc,
 }
+
+local defaultDB = { textures = { all = true } }
+for key in pairs(series) do
+	defaultDB.textures[key] = true
+end
 
 local mMT_MediaPack = CreateFrame("FRAME")
 mMT_MediaPack:RegisterEvent("ADDON_LOADED")
-mMT_MediaPack:RegisterEvent("PLAYER_LOGOUT")
 function mMT_MediaPack:OnEvent(event, arg1)
 	if event == "ADDON_LOADED" and arg1 == "!mMT_MediaPack" then
+		self:UnregisterEvent(event)
+
 		mMTSettings = mMTSettings or {}
 		mMT_MediaPack.db = mMTSettings
+		mMT_MediaPack.db.textures = mMT_MediaPack.db.textures or {}
 
-		for k, v in pairs(defaultDB) do
-			if mMT_MediaPack.db[k] == nil then
-				mMT_MediaPack.db[k] = v
+		local textures = mMT_MediaPack.db.textures
+		-- per key, so a new series also reaches existing SavedVariables
+		for key, default in pairs(defaultDB.textures) do
+			if textures[key] == nil then
+				textures[key] = default
 			end
 		end
 
-		if mMT_MediaPack.db.textures.all then
-			LoadSeriesAll()
+		for key, load in pairs(series) do
+			if textures.all or textures[key] then
+				load()
+			end
 		end
-		if mMT_MediaPack.db.textures.a then
-			LoadSeriesA()
-		end
-		if mMT_MediaPack.db.textures.b then
-			LoadSeriesB()
-		end
-		if mMT_MediaPack.db.textures.c then
-			LoadSeriesC()
-		end
-		if mMT_MediaPack.db.textures.d then
-			LoadSeriesD()
-		end
-		if mMT_MediaPack.db.textures.e then
-			LoadSeriesE()
-		end
-		if mMT_MediaPack.db.textures.f then
-			LoadSeriesF()
-		end
-		if mMT_MediaPack.db.textures.g then
-			LoadSeriesG()
-		end
-		if mMT_MediaPack.db.textures.h then
-			LoadSeriesH()
-		end
-		if mMT_MediaPack.db.textures.i then
-			LoadSeriesI()
-		end
-		if mMT_MediaPack.db.textures.j then
-			LoadSeriesJ()
-		end
-		if mMT_MediaPack.db.textures.k then
-			LoadSeriesK()
-		end
-		if mMT_MediaPack.db.textures.l then
-			LoadSeriesL()
-		end
-		if mMT_MediaPack.db.textures.m then
-			LoadSeriesM()
-		end
-		if mMT_MediaPack.db.textures.n then
-			LoadSeriesN()
-		end
-		if mMT_MediaPack.db.textures.o then
-			LoadSeriesO()
-		end
-		if mMT_MediaPack.db.textures.p then
-			LoadSeriesP()
-		end
-		if mMT_MediaPack.db.textures.q then
-			LoadSeriesQ()
-		end
-		if mMT_MediaPack.db.textures.r then
-			LoadSeriesR()
-		end
-		if mMT_MediaPack.db.textures.s then
-			LoadSeriesS()
-		end
-		if mMT_MediaPack.db.textures.t then
-			LoadSeriesT()
-		end
-	elseif event == "PLAYER_LOGOUT" then
-		mMTSettings = mMT_MediaPack.db
 	end
 end
 
@@ -619,17 +553,18 @@ local function PrintHelp()
 	print("|CFFFCB70A/mmtmp disable all|r = disables all textures")
 	print("|CFFFCB70A/mmtmp enable all|r = enables all textures")
 	print("----------------------------------------------------------")
-	print("To selectively enable or disable a texture pack you must enter /mmtmp followed by the letter (a - r) of the pack.")
-	print("Here are two example commands")
+	print("To selectively enable or disable a texture pack you must enter /mmtmp followed by the letter (a - t) of the pack.")
+	print("Here are three example commands")
 	print("|CFFFCB70A/mmtmp a|r = enabled/disabled loading texture pack A")
 	print("|CFFFCB70A/mmtmp f|r = enabled/disabled loading texture pack F")
+	print("|CFFFCB70A/mmtmp misc|r = enabled/disabled loading Caith UI, MaUIv3 and mMT textures")
 end
 
 mMT_MediaPack:SetScript("OnEvent", mMT_MediaPack.OnEvent)
 
 SLASH_MMTMP1 = "/mmtmp"
-SlashCmdList.MMTMP = function(msg, editBox)
-	msg = strlower(msg)
+SlashCmdList.MMTMP = function(msg)
+	msg = strtrim(strlower(msg or ""))
 
 	if msg == "reset" then
 		mMTSettings = CopyTable(defaultDB)
@@ -648,16 +583,6 @@ SlashCmdList.MMTMP = function(msg, editBox)
 		print("|CFFFCB70A/mmtmp help|r to shows the list of available commands")
 	end
 end
-
-mAddStatusbar("mMediaTag Caith UI 1", "Wglass.tga")
-mAddStatusbar("mMediaTag Caith UI 2", "Wisps.tga")
-
-mAddStatusbar("MaUIv3", "MaUIv3.tga")
-mAddStatusbar("MaUIv3 LEFT", "MaUIv3Left.tga")
-mAddStatusbar("MaUIv3 RIGHT", "MaUIv3Right.tga")
-mAddStatusbar("mMT Blank", "mMT_Blank.tga")
-mAddStatusbar("mMT Target", "mMT_Target.tga")
-mAddStatusbar("mMT Dark", "mMT_Dark.tga")
 
 mAddBackground("mMediaTag BG1", "bg1.tga")
 mAddBackground("mMediaTag BG2", "bg2.tga")
@@ -680,7 +605,6 @@ mAddBackground("mMediaTag Chat6", "chat6.tga")
 mAddBackground("mMediaTag Chat7", "chat7.tga")
 mAddBackground("mMediaTag Chat8", "chat8.tga")
 mAddBackground("mMediaTag Chat9", "chat9.tga")
-mAddBackground("mMediaTag Chat10", "chat10.tga")
 mAddBackground("mMediaTag Chat11", "chat11.tga")
 mAddBackground("mMediaTag Chat12", "chat12.tga")
 mAddBackground("mMediaTag Chat13", "chat13.tga")
