@@ -17,53 +17,99 @@ local function getColor(setting)
 	end
 end
 
-local function UpdatePanelInfo(_, name, panel)
-	if not panel then return end
-	local db = panel.mmt_db or E.db.mMediaTag.data_panel_skin.panels[name]
-	if not db then return end
+-- SetTemplate calls this instead of its own SetBackdropColor, so the color survives every retemplate
+local function BackdropColor(panel)
+	local c = panel.mmt_color
+	if c then
+		panel:SetBackdropColor(c.r, c.g, c.b, c.a)
+	end
+end
 
-	if not db.enable then return end
+local function ApplyTemplate(panel)
+	E.UpdateFrameTemplate(panel)
+end
 
-	if db.texture.enable and panel.backdropInfo then
-		panel:SetBackdrop({ bgFile = LSM:Fetch("statusbar", db.texture.file), edgeSize = panel.backdropInfo.edgeSize, edgeFile = panel.backdropInfo.edgeFile })
+local function ClearSkin(panel)
+	if not panel.mmt_skinned then return end
 
-		if db.border.style == "disabled" then panel:SetBackdropBorderColor(0, 0, 0, 1) end
+	panel.mmt_skinned = nil
+	panel.mmt_color = nil
+	panel.callbackBackdropColor = nil
+	panel.glossTex = true
+
+	if panel.mmt_border then
+		panel.mmt_border = nil
+		E:ForceBorderColor(panel)
 	end
 
-	local color = { r = 1, g = 1, b = 1, a = 1 }
+	ApplyTemplate(panel)
+end
+
+local function UpdatePanelInfo(_, name, panel)
+	if not panel or not panel.template then return end
+
+	local db = E.db.mMediaTag.data_panel_skin.panels[name]
+	if not db or not db.enable then
+		ClearSkin(panel)
+		return
+	end
+
+	-- a string glossTex becomes the bgFile, and E:UpdateFrameTemplate feeds it back on every pass
+	panel.glossTex = db.texture.enable and LSM:Fetch("statusbar", db.texture.file) or true
 
 	if db.bg.style ~= "disabled" then
-		color = getColor(db.bg)
-		panel:SetBackdropColor(color.r, color.g, color.b, db.bg.color.a or 1)
+		local c, color = getColor(db.bg), panel.mmt_color or {}
+		color.r, color.g, color.b, color.a = c.r, c.g, c.b, db.bg.color.a or 1
+		panel.mmt_color = color
+		panel.callbackBackdropColor = BackdropColor
+	else
+		panel.mmt_color = nil
+		panel.callbackBackdropColor = nil
 	end
 
-	if db.border.style ~= "disabled" then
-		color = getColor(db.border)
-		panel:SetBackdropBorderColor(color.r, color.g, color.b, db.border.color.a or 1)
+	-- ElvUI already forces a transparent border when the panel's own border option is off
+	if panel.db and panel.db.border == false then
+		panel.mmt_border = nil
+	elseif db.border.style ~= "disabled" then
+		local c = getColor(db.border)
+		E:ForceBorderColor(panel, c.r, c.g, c.b, db.border.color.a or 1)
+		panel.mmt_border = true
+	else
+		E:ForceBorderColor(panel, 0, 0, 0, 1)
+		panel.mmt_border = true
 	end
 
-	if not panel.db.border then panel:SetBackdropBorderColor(0, 0, 0, 0) end
+	panel.mmt_skinned = true
+	ApplyTemplate(panel)
 end
 
 local function CheckAndRemoveSettings()
 	local cleanList = E.db.mMediaTag.data_panel_skin.panels
-	for k, v in pairs(E.db.mMediaTag.data_panel_skin.panels) do
+	for k in pairs(E.db.mMediaTag.data_panel_skin.panels) do
 		if not DT.RegisteredPanels[k] then cleanList[k] = nil end
 	end
 	E.db.mMediaTag.data_panel_skin.panels = cleanList
 end
 
 function module:Initialize()
-	if E.db.mMediaTag.data_panel_skin.enable then
+	local enabled = E.db.mMediaTag.data_panel_skin.enable
+
+	if enabled then
 		CheckAndRemoveSettings()
 
 		if not module:IsHooked(DT, "UpdatePanelInfo") then module:SecureHook(DT, "UpdatePanelInfo", UpdatePanelInfo) end
-
-		-- ElvUIs template pass runs staggered and undoes the skin applied during its own datatext update; backdropInfo skips panels ElvUI has not templated yet (login)
-		for name, panel in pairs(DT.RegisteredPanels) do
-			if panel.backdropInfo then UpdatePanelInfo(DT, name, panel) end
-		end
 	elseif module:IsHooked(DT, "UpdatePanelInfo") then
 		module:Unhook(DT, "UpdatePanelInfo")
+	end
+
+	-- panels ElvUI has not templated yet are picked up by the hook on their first update
+	for name, panel in pairs(DT.RegisteredPanels) do
+		if panel.template then
+			if enabled then
+				UpdatePanelInfo(DT, name, panel)
+			else
+				ClearSkin(panel)
+			end
+		end
 	end
 end
