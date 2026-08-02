@@ -1,5 +1,12 @@
 # Changelog - ElvUI_mMediaTag
 
+## [ver. 4.09] - TBD
+### 🐛 FIX
+- FIX - [Objective-Tracker]: Completed objectives kept the normal text color instead of the completed color.
+- FIX - [Objective-Tracker]: The skin was only applied once the tracker updated on its own, so after a reload it kept the default look until something changed.
+### ✨ NEW
+- NEW - [Objective-Tracker]: Completed quest objectives now show a check icon, like the dungeon objectives.
+
 ## [ver. 4.08] - 23.07.2026
 ### 🐛 FIX
 - FIX - [Difficulty-Info]: Fix anchor position and background rendering.
