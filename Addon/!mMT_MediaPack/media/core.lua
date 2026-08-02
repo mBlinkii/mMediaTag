@@ -82,6 +82,17 @@ ns.label = label
 ns.PREVIEW_PATH = [[Interface\AddOns\!mMT_MediaPack\media\misc\preview_]]
 ns.LOGO_PATH = [[Interface\AddOns\!mMT_MediaPack\media\logo\icon]]
 
+-- read-only view for other addons, ElvUI_mMediaTag builds its options page from it
+_G.mMT_MediaPack = {
+	packList = packList,
+	label = label,
+	previewPath = ns.PREVIEW_PATH,
+	logoPath = ns.LOGO_PATH,
+	GetTextures = function()
+		return ns.db and ns.db.textures
+	end,
+}
+
 local function LoadPack(key)
 	local count = series[key]
 	if count then
@@ -103,17 +114,17 @@ for key in pairs(packs) do
 	defaultDB.textures[key] = true
 end
 
-local mMT_MediaPack = CreateFrame("FRAME")
-mMT_MediaPack:RegisterEvent("ADDON_LOADED")
-function mMT_MediaPack:OnEvent(event, arg1)
+local eventFrame = CreateFrame("FRAME")
+eventFrame:RegisterEvent("ADDON_LOADED")
+function eventFrame:OnEvent(event, arg1)
 	if event == "ADDON_LOADED" and arg1 == "!mMT_MediaPack" then
 		self:UnregisterEvent(event)
 
 		mMTSettings = mMTSettings or {}
-		mMT_MediaPack.db = mMTSettings
-		mMT_MediaPack.db.textures = mMT_MediaPack.db.textures or {}
+		eventFrame.db = mMTSettings
+		eventFrame.db.textures = eventFrame.db.textures or {}
 
-		local textures = mMT_MediaPack.db.textures
+		local textures = eventFrame.db.textures
 		-- per key, so a new series also reaches existing SavedVariables
 		for key, default in pairs(defaultDB.textures) do
 			if textures[key] == nil then
@@ -127,7 +138,7 @@ function mMT_MediaPack:OnEvent(event, arg1)
 			end
 		end
 
-		ns.db = mMT_MediaPack.db
+		ns.db = eventFrame.db
 		if ns.SetupOptions then
 			ns.SetupOptions()
 		end
@@ -158,27 +169,27 @@ local function PrintStatusOne(setting, toggleg)
 	PrintStatus("Texture Pack is |CFF1D9EF9" .. setting .. "|r:", toggleg == true and "|CFF2ECC71Enabled|r" or "|CFFE74C3CDisabled|r")
 end
 local function SetDBAll()
-	if mMT_MediaPack.db.textures.all then
-		mMT_MediaPack.db.textures.all = false
-		PrintStatus("Texture Pack is |CFF1D9EF9all|r:", mMT_MediaPack.db.textures.all)
+	if eventFrame.db.textures.all then
+		eventFrame.db.textures.all = false
+		PrintStatus("Texture Pack is |CFF1D9EF9all|r:", eventFrame.db.textures.all)
 	end
 end
 
 local function DisableAll()
-	for k, v in pairs(mMT_MediaPack.db.textures) do
-		if mMT_MediaPack.db.textures[k] == true then
-			mMT_MediaPack.db.textures[k] = false
-			PrintStatusOne(k, mMT_MediaPack.db.textures[k])
+	for k, v in pairs(eventFrame.db.textures) do
+		if eventFrame.db.textures[k] == true then
+			eventFrame.db.textures[k] = false
+			PrintStatusOne(k, eventFrame.db.textures[k])
 		end
 	end
 	RLDialog()
 end
 
 local function EnableAll()
-	for k, v in pairs(mMT_MediaPack.db.textures) do
-		if mMT_MediaPack.db.textures[k] == false then
-			mMT_MediaPack.db.textures[k] = true
-			PrintStatusOne(k, mMT_MediaPack.db.textures[k])
+	for k, v in pairs(eventFrame.db.textures) do
+		if eventFrame.db.textures[k] == false then
+			eventFrame.db.textures[k] = true
+			PrintStatusOne(k, eventFrame.db.textures[k])
 		end
 	end
 	RLDialog()
@@ -188,8 +199,8 @@ local function SetSetting(setting)
 	if setting ~= "all" then
 		SetDBAll()
 	end
-	mMT_MediaPack.db.textures[setting] = not mMT_MediaPack.db.textures[setting]
-	PrintStatusOne(setting, mMT_MediaPack.db.textures[setting])
+	eventFrame.db.textures[setting] = not eventFrame.db.textures[setting]
+	PrintStatusOne(setting, eventFrame.db.textures[setting])
 	RLDialog()
 end
 
@@ -210,7 +221,7 @@ local function PrintHelp()
 	print("|CFFFCB70A/mmtmp misc|r = enabled/disabled loading Caith UI, MaUIv3 and mMT textures")
 end
 
-mMT_MediaPack:SetScript("OnEvent", mMT_MediaPack.OnEvent)
+eventFrame:SetScript("OnEvent", eventFrame.OnEvent)
 
 SLASH_MMTMP1 = "/mmtmp"
 SlashCmdList.MMTMP = function(msg)
@@ -222,8 +233,8 @@ SlashCmdList.MMTMP = function(msg)
 
 	if msg == "reset" then
 		mMTSettings = CopyTable(defaultDB)
-		mMT_MediaPack.db = mMTSettings
-		ns.db = mMT_MediaPack.db
+		eventFrame.db = mMTSettings
+		ns.db = eventFrame.db
 		PrintStatus("Settings has been reset to default")
 		RLDialog()
 	elseif defaultDB.textures[msg] then

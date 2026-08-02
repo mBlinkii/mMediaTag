@@ -10,6 +10,7 @@
 	<Include file="skin\load_skin.xml"/>
 	<Include file="nameplates\load_nameplates.xml"/>
 	<Script file="about.lua"/>
+	<Script file="media_pack.lua"/>
 	<Script file="changelog.lua"/>
 	<Script file="colors_difficulty.lua"/>
 	<Script file="colors_tip_menu.lua"/>

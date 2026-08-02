@@ -915,3 +915,12 @@ L["Tear down Mirrored"] = "Träne nach unten gespiegelt"
 L["Tear Mirrored"] = "Träne gespiegelt"
 L["Trapezoid"] = "Trapez"
 L["Trapezoid Mirrored"] = "Trapez gespiegelt"
+
+-- options/media_pack.lua
+L["Choose which texture packs are registered. Loading fewer packs keeps the texture dropdowns short. Changes need a UI reload."] = "Lege fest, welche Texturpakete registriert werden. Weniger Pakete halten die Textur-Dropdowns kurz. Änderungen erfordern einen UI-Neustart."
+L["Disable All"] = "Alle deaktivieren"
+L["Enable All"] = "Alle aktivieren"
+L["Load all texture packs"] = "Alle Texturpakete laden"
+L["Media Pack"] = "Media Pack"
+L["Overrides the individual packs below."] = "Überschreibt die einzelnen Pakete unten."
+L["Texture Packs"] = "Texturpakete"

@@ -553,6 +553,17 @@ mMT.options = {
 				},
 			},
 		},
+		media_pack = {
+			order = 9.5,
+			type = "group",
+			name = L["Media Pack"],
+			icon = "Interface\\Addons\\!mMT_MediaPack\\media\\logo\\icon",
+			childGroups = "tab",
+			hidden = function()
+				return not _G.mMT_MediaPack
+			end,
+			args = {},
+		},
 		about = {
 			order = 10,
 			type = "group",

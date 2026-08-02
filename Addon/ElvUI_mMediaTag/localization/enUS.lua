@@ -915,3 +915,12 @@ L["Tear down Mirrored"] = true
 L["Tear Mirrored"] = true
 L["Trapezoid"] = true
 L["Trapezoid Mirrored"] = true
+
+-- options/media_pack.lua
+L["Choose which texture packs are registered. Loading fewer packs keeps the texture dropdowns short. Changes need a UI reload."] = true
+L["Disable All"] = true
+L["Enable All"] = true
+L["Load all texture packs"] = true
+L["Media Pack"] = true
+L["Overrides the individual packs below."] = true
+L["Texture Packs"] = true
