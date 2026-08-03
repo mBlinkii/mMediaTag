@@ -168,7 +168,7 @@ end
 
 -- line.finished does not exist in the Blizzard tracker, Text.colorStyle is set on every AddObjective
 local function IsCompleted(line)
-	if line.objectiveKey == "QuestComplete" or line.finished then return true end
+	if line.objectiveKey == "QuestComplete" then return true end
 
 	local trackerColor = _G.OBJECTIVE_TRACKER_COLOR
 	return (trackerColor and line.Text.colorStyle == trackerColor.Complete) or false

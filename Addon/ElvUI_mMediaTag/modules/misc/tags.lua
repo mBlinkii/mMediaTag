@@ -386,7 +386,7 @@ E:AddTag("mMT-health:current", "UNIT_HEALTH UNIT_MAXHEALTH", function(unit)
 
 	return E:AbbreviateNumbers(currentHealth, E.Abbreviate["short"])
 end)
-E:AddTagInfo("mMT-health:current:short", mMT.NameShort .. " " .. L["Health"], L["Returns the current health of the unit."])
+E:AddTagInfo("mMT-health:current", mMT.NameShort .. " " .. L["Health"], L["Returns the current health of the unit."])
 
 E:AddTag("mMT-health:current:short", "UNIT_HEALTH UNIT_MAXHEALTH", function(unit)
 	local currentHealth = UnitHealth(unit)

@@ -9,6 +9,13 @@
 - FIX - [Media-Pack]: A texture pack that had been disabled could not be enabled again in the same session.
 - FIX - [Media-Pack]: The background list offered an entry whose texture file was missing.
 - FIX - [DT-Skin]: The panel skin was reset whenever ElvUI refreshed its frame templates, for example after changing an ElvUI texture or border color.
+- FIX - [Interrupt-On-CD]: Once the interrupt had been used, the castbar stayed in the cooldown color and the marker never disappeared again.
+- FIX - [Interrupt-On-CD]: The module could stay completely inactive after a reload because the interrupt spell of the current spec was not picked up.
+- FIX - [Interrupt-On-CD]: Interrupted and failed casts on unit frames kept the mMT color instead of ElvUI's interrupt color.
+- FIX - [Interrupt-On-CD]: Nameplates that already existed when the module loaded were never colored.
+- FIX - [Important-Casts]: Important casts were not marked on nameplates at all unless the health bar color override was enabled.
+- FIX - [Important-Casts]: Nameplates that already existed when the module loaded were never marked.
+- FIX - [Tags]: The mMT-health:current tag was listed without a description.
 ### 🔧 UPDATE
 - UPDATE - [System]: Adapted to the current ElvUI, which loads plugins after its own initialization and runs its update loops as coroutines.
 - UPDATE - [DT-Skin]: Export strings use a new format, so strings created by earlier versions can no longer be imported.

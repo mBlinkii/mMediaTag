@@ -19,6 +19,8 @@ local select = select
 local UnitGUID = UnitGUID
 local IsUnitModelReadyForUI = IsUnitModelReadyForUI
 local C_Timer_NewTimer = C_Timer.NewTimer
+local GetSpecialization = C_SpecializationInfo.GetSpecialization or GetSpecialization
+local GetSpecializationInfo = C_SpecializationInfo.GetSpecializationInfo or GetSpecializationInfo
 
 local playerFaction = nil
 

@@ -1,12 +1,20 @@
 local mMT, DB, M, E, P, L, MEDIA = unpack(ElvUI_mMediaTag)
 local module = mMT:AddModule("InterruptOnCD", { "AceEvent-3.0" })
 
+-- Cache WoW Globals
+local pairs, ipairs = pairs, ipairs
+local CreateFrame = CreateFrame
+local CreateColor = CreateColor
+local GetTime = GetTime
+local UnitCanAttack = UnitCanAttack
+local IsPlayerSpell = IsPlayerSpell
+local hooksecurefunc = hooksecurefunc
+local issecretvalue = issecretvalue
 local GetSpellCooldownDuration = C_Spell.GetSpellCooldownDuration
 local EvalColorBool = C_CurveUtil.EvaluateColorValueFromBoolean
 local EvalColor = C_CurveUtil.EvaluateColorFromBoolean
-local UnitCanAttack = UnitCanAttack
-local GetTime = GetTime
-local issecretvalue = issecretvalue
+local GetSpecialization = C_SpecializationInfo.GetSpecialization or GetSpecialization
+local GetSpecializationInfo = C_SpecializationInfo.GetSpecializationInfo or GetSpecializationInfo
 
 local NP = E:GetModule("NamePlates")
 local UF = E:GetModule("UnitFrames")
@@ -68,25 +76,24 @@ local INTERRUPT_BY_SPEC = {
 	[1473] = 351338,
 }
 
+-- Axe Toss, Call Felhunter, Axe Toss (Command Demon)
+local WARLOCK_INTERRUPTS = { 89766, 212619, 119914 }
+
 local function UpdateInterruptSpell()
-	local specId = select(1, GetSpecializationInfo(GetSpecialization()))
+	local specIndex = GetSpecialization()
+	local specId = specIndex and GetSpecializationInfo(specIndex)
+	local spellId = specId and INTERRUPT_BY_SPEC[specId]
 
 	if E.myclass == "WARLOCK" then
-		for _, spellId in ipairs({ 89766, 212619, 119914 }) do
-			if IsPlayerSpell(spellId) then
-				INTERRUPT_BY_SPEC[specId] = spellId
+		for _, id in ipairs(WARLOCK_INTERRUPTS) do
+			if IsPlayerSpell(id) then
+				spellId = id
 				break
 			end
 		end
 	end
 
-	module.interruptSpellId = INTERRUPT_BY_SPEC[specId]
-end
-
-local function PostCastFailInterrupted(castbar)
-	local c = NP.db.colors.castInterruptedColor
-	if c then castbar:SetStatusBarColor(c.r, c.g, c.b) end
-	castbar.isInterruptedOrFailed = true
+	module.interruptSpellId = spellId
 end
 
 local function GetInterruptCooldown()
@@ -95,8 +102,12 @@ local function GetInterruptCooldown()
 	if spellId then return GetSpellCooldownDuration(spellId, true) end
 end
 
-local function SetKickSpark(castbar, castStart, cooldown, canAttack)
-	if not canAttack then return end
+-- HasExpired, not IsZero: IsZero only reports "no time span stored" and stays false forever once the kick has been used.
+local function IsKickReady(cooldown)
+	return cooldown == nil or cooldown:HasExpired()
+end
+
+local function SetKickSpark(castbar, castStart, cooldown, ready)
 	if cooldown == nil then return end
 
 	local kickBar = castbar.mMT_KickBar
@@ -137,42 +148,34 @@ local function SetKickSpark(castbar, castStart, cooldown, canAttack)
 	if castStart then
 		local shieldAlpha = 0
 		if castbar.notInterruptible ~= nil then shieldAlpha = EvalColorBool(castbar.notInterruptible, 0, 1) end
-		kickBar:SetAlphaFromBoolean(cooldown:IsZero(), 0, shieldAlpha)
+		kickBar:SetAlphaFromBoolean(ready, 0, shieldAlpha)
 	else
-		kickBar:SetAlphaFromBoolean(cooldown:IsZero(), 0, kickBar:GetAlpha())
-		if castbar.interrupted then kickBar:SetAlpha(0) end
+		kickBar:SetAlphaFromBoolean(ready, 0, kickBar:GetAlpha())
 	end
 end
 
-local function SetCastbarColor(castbar, cooldown, canAttack)
+local function SetCastbarColor(castbar, ready)
 	local colors = module.colors
-
-	if castbar.failed or castbar.interrupted or castbar.finished or cooldown == nil then
-		local c = colors.normal
-		castbar:SetStatusBarColor(c.r, c.g, c.b, c.a)
-		return
-	end
-
-	if not canAttack then return end
-
-	local color = EvalColor(cooldown:IsZero(), colors.normal, colors.onCD)
+	local color = EvalColor(ready, colors.normal, colors.onCD)
 
 	castbar:SetStatusBarColor(color:GetRGBA())
 
 	if module.set_bg_color and castbar.bg then
-		local bgColor = EvalColor(cooldown:IsZero(), colors.bgReady, colors.bgOnCD)
+		local bgColor = EvalColor(ready, colors.bgReady, colors.bgOnCD)
 		castbar.bg:SetVertexColor(bgColor:GetRGBA())
 	end
 end
 
 local function UpdateCast(castbar, castStart)
-	-- resolve unit + attackability once per update instead of once per sub-function
-	local unit = castbar.unit or castbar.__owner.unit
-	local canAttack = unit and UnitCanAttack("player", unit)
+	-- the frame is pooled, so re-check the unit on every update instead of trusting PostCastStart
+	local unit = castbar.unit or (castbar.__owner and castbar.__owner.unit)
+	if not (unit and UnitCanAttack("player", unit)) then return end
 
 	local cooldown = GetInterruptCooldown()
-	SetKickSpark(castbar, castStart, cooldown, canAttack)
-	SetCastbarColor(castbar, cooldown, canAttack)
+	local ready = IsKickReady(cooldown)
+
+	SetKickSpark(castbar, castStart, cooldown, ready)
+	SetCastbarColor(castbar, ready)
 end
 
 local function ConstructKickBar(castbar)
@@ -222,12 +225,21 @@ local function PostCastStart(castbar, unit)
 	end
 end
 
--- ElvUI snapshots castbar.PostCastStart at frame construction and oUF only calls element:PostCastStart(), so hooking the UF table does nothing - hook the instances.
+-- oUF dropped castbar.failed/.interrupted/.finished, so the fail state has to be tracked here; ElvUI already applied its own color before this post-hook.
+local function PostCastFailOrInterrupted(castbar)
+	castbar.isInterruptedOrFailed = true
+	if castbar.mMT_KickBar then castbar.mMT_KickBar:SetAlpha(0) end
+end
+
+-- ElvUI snapshots the Post* callbacks onto the castbar at frame construction and oUF only calls element:PostCastStart(), so hooking the NP/UF tables does nothing - hook the instances.
 local function HookCastbarInstance(castbar)
-	if castbar and castbar.PostCastStart and not castbar.mMT_CastStartHooked then
-		hooksecurefunc(castbar, "PostCastStart", PostCastStart)
-		castbar.mMT_CastStartHooked = true
-	end
+	if not castbar or castbar.mMT_CastbarHooked then return end
+
+	if castbar.PostCastStart then hooksecurefunc(castbar, "PostCastStart", PostCastStart) end
+	if castbar.PostCastFail then hooksecurefunc(castbar, "PostCastFail", PostCastFailOrInterrupted) end
+	if castbar.PostCastInterrupted then hooksecurefunc(castbar, "PostCastInterrupted", PostCastFailOrInterrupted) end
+
+	castbar.mMT_CastbarHooked = true
 end
 
 function module:Initialize()
@@ -237,14 +249,20 @@ function module:Initialize()
 			module:RegisterEvent("ACTIVE_TALENT_GROUP_CHANGED", UpdateInterruptSpell)
 			module:RegisterEvent("PLAYER_TALENT_UPDATE", UpdateInterruptSpell)
 
-			hooksecurefunc(NP, "Castbar_PostCastStart", PostCastStart)
-			hooksecurefunc(NP, "Castbar_PostCastFail", PostCastFailInterrupted)
-			hooksecurefunc(NP, "Castbar_PostCastInterrupted", PostCastFailInterrupted)
+			-- StylePlate/Configure_Castbar also catch frames created or enabled later.
+			hooksecurefunc(NP, "StylePlate", function(_, nameplate)
+				if nameplate then HookCastbarInstance(nameplate.Castbar) end
+			end)
 
-			-- Configure_Castbar also catches frames created or enabled later.
 			hooksecurefunc(UF, "Configure_Castbar", function(_, frame)
 				if frame then HookCastbarInstance(frame.Castbar) end
 			end)
+
+			if NP.Plates then
+				for nameplate in pairs(NP.Plates) do
+					HookCastbarInstance(nameplate.Castbar)
+				end
+			end
 
 			mMT:ForEachUFFrame(function(frame)
 				HookCastbarInstance(frame.Castbar)
@@ -252,6 +270,9 @@ function module:Initialize()
 
 			module.isEnabled = true
 		end
+
+		-- PLAYER_ENTERING_WORLD has usually fired before the module initializes, so seed the spell here
+		UpdateInterruptSpell()
 
 		module.colors = {
 			onCD = MEDIA.color.interrupt_on_cd.onCD,
@@ -264,8 +285,8 @@ function module:Initialize()
 
 		if module.set_bg_color then
 			local m = module.bg_multiplier
-			module.colors.bgReady = CreateColor(module.colors.normal.r * m, module.colors.normal.g * m, module.colors.normal.b * m)
-			module.colors.bgOnCD = CreateColor(module.colors.onCD.r * m, module.colors.onCD.g * m, module.colors.onCD.b * m)
+			module.colors.bgReady = CreateColor(module.colors.normal.r * m, module.colors.normal.g * m, module.colors.normal.b * m, 1)
+			module.colors.bgOnCD = CreateColor(module.colors.onCD.r * m, module.colors.onCD.g * m, module.colors.onCD.b * m, 1)
 		end
 	elseif module.isEnabled then
 		module:UnregisterAllEvents()

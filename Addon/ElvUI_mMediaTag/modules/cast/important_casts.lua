@@ -1,7 +1,12 @@
 local mMT, DB, M, E, P, L, MEDIA = unpack(ElvUI_mMediaTag)
 local module = mMT:AddModule("ImportantCasts", { "AceEvent-3.0" })
 
+-- Cache WoW Globals
+local pairs = pairs
+local CreateFrame = CreateFrame
+local hooksecurefunc = hooksecurefunc
 local IsSpellImportant = C_Spell and C_Spell.IsSpellImportant
+
 local NP = E:GetModule("NamePlates")
 local UF = E:GetModule("UnitFrames")
 
@@ -140,6 +145,8 @@ local function ResetImportantCastOverlay(nameplate)
 end
 
 local function ResetAllImportantCastOverlays()
+	if not NP.Plates then return end
+
 	for nameplate in pairs(NP.Plates) do
 		ResetImportantCastOverlay(nameplate)
 	end
@@ -197,10 +204,26 @@ local function CheckImportant(castbar)
 	return isImportant, isSecret
 end
 
--- ElvUI snapshots the castbar callbacks at frame construction and oUF only calls element:PostCastX(), so hooking the UF table does nothing - hook the instances.
-local UF_CASTBAR_HOOKS = {
+local function CheckImportantNameplate(castbar)
+	local nameplate = GetCastbarNameplate(castbar)
+
+	local isImportant, isSecret = CheckImportant(castbar)
+	if not isSecret and not isImportant then return end
+
+	if nameplate then ApplyOverlayState(nameplate, isImportant) end
+end
+
+-- ElvUI snapshots the castbar callbacks at frame construction and oUF only calls element:PostCastX(), so hooking the NP/UF tables does nothing - hook the instances.
+local CASTBAR_HOOKS = {
 	PostCastStart = function(castbar)
-		if castbar then CheckImportant(castbar) end
+		if not castbar then return end
+
+		local owner = castbar.__owner
+		if module.overrideHealthBarColor and owner and owner.isNamePlate then
+			CheckImportantNameplate(castbar)
+		else
+			CheckImportant(castbar)
+		end
 	end,
 	PostCastStop = function(castbar)
 		if castbar then HideImportantCast(castbar) end
@@ -216,20 +239,11 @@ local UF_CASTBAR_HOOKS = {
 local function HookCastbarInstance(castbar)
 	if not castbar or castbar.mMT_ImportantCastsHooked then return end
 
-	for method, handler in pairs(UF_CASTBAR_HOOKS) do
+	for method, handler in pairs(CASTBAR_HOOKS) do
 		if castbar[method] then hooksecurefunc(castbar, method, handler) end
 	end
 
 	castbar.mMT_ImportantCastsHooked = true
-end
-
-local function CheckImportantNameplate(castbar)
-	local nameplate = GetCastbarNameplate(castbar)
-
-	local isImportant, isSecret = CheckImportant(castbar)
-	if not isSecret and not isImportant then return end
-
-	if nameplate then ApplyOverlayState(nameplate, isImportant) end
 end
 
 function module:Initialize(demo)
@@ -239,38 +253,24 @@ function module:Initialize(demo)
 	module.db = E.db.mMediaTag.important_casts
 
 	if not module.isEnabled then
-		if module.db.overrideHealthBarColor then
+		if E.private.nameplates.enable then
 			hooksecurefunc(NP, "UpdatePlate", function(_, nameplate)
 				if not module.overrideHealthBarColor then return end
 				ResetImportantCastOverlay(nameplate)
 			end)
 
-			hooksecurefunc(NP, "Castbar_PostCastStart", function(castbar)
-				if not castbar then return end
-				if module.overrideHealthBarColor then
-					CheckImportantNameplate(castbar)
-				else
-					CheckImportant(castbar)
-				end
+			-- StylePlate/Configure_Castbar also catch frames created or enabled later.
+			hooksecurefunc(NP, "StylePlate", function(_, nameplate)
+				if nameplate then HookCastbarInstance(nameplate.Castbar) end
 			end)
+
+			if NP.Plates then
+				for nameplate in pairs(NP.Plates) do
+					HookCastbarInstance(nameplate.Castbar)
+				end
+			end
 		end
 
-		hooksecurefunc(NP, "Castbar_PostCastStop", function(castbar)
-			if not castbar then return end
-			HideImportantCast(castbar)
-		end)
-
-		hooksecurefunc(NP, "Castbar_PostCastFail", function(castbar)
-			if not castbar then return end
-			HideImportantCast(castbar)
-		end)
-
-		hooksecurefunc(NP, "Castbar_PostCastInterrupted", function(castbar)
-			if not castbar then return end
-			HideImportantCast(castbar)
-		end)
-
-			-- Configure_Castbar also catches frames created or enabled later.
 		hooksecurefunc(UF, "Configure_Castbar", function(_, frame)
 			if frame then HookCastbarInstance(frame.Castbar) end
 		end)
