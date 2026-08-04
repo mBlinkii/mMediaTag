@@ -64,7 +64,7 @@ mMT.options.args.about.args = {
 				type = "execute",
 				name = icons.discord .. " " .. "Discord",
 				func = function()
-					E:StaticPopup_Show("ELVUI_EDITBOX", nil, nil, "https://discord.com/invite/AE9XebMU49")
+					E:StaticPopup_Show("ELVUI_EDITBOX", nil, nil, "https://discord.com/invite/ZScRCUyqjY")
 				end,
 			},
 			changelog = {

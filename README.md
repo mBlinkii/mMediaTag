@@ -10,7 +10,7 @@
 
 [![GitHub](https://img.shields.io/badge/GitHub-mBlinkii%2FmMediaTag-181717?logo=github)](https://github.com/mBlinkii/mMediaTag)
 [![CurseForge](https://img.shields.io/badge/CurseForge-mmediatag-F16436?logo=curseforge)](https://www.curseforge.com/wow/addons/mmediatag)
-[![Discord](https://img.shields.io/badge/Discord-Join%20us-5865F2?logo=discord&logoColor=white)](https://discord.com/invite/AE9XebMU49)
+[![Discord](https://img.shields.io/badge/Discord-Join%20us-5865F2?logo=discord&logoColor=white)](https://discord.com/invite/ZScRCUyqjY)
 
 </div>
 
@@ -211,7 +211,7 @@ If you want to build your own dock bar, create a custom ElvUI datatext bar and a
 ## Support
 
 - GitHub: [mBlinkii/mMediaTag](https://github.com/mBlinkii/mMediaTag)
-- Discord: [discord.com/invite/AE9XebMU49](https://discord.com/invite/AE9XebMU49)
+- Discord: [discord.com/invite/ZScRCUyqjY](https://discord.com/invite/ZScRCUyqjY)
 
 ## License
 
