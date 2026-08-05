@@ -2,6 +2,9 @@ local mMT, DB, M, E, P, L, MEDIA = unpack(ElvUI_mMediaTag)
 
 mMT.Changelog[409] = {
 	DATE = "TBD",
+	IMPORTANT = {
+		"[INFO]: This version requires ElvUI 15.19 or newer and will not load correctly on earlier releases.",
+	},
 	FIX = {
 		"[System]: Modules that hook into ElvUI only took effect after a reload or the next update - nameplates that already existed, the tracker skin and the interrupt spell of the current spec are picked up right away again.",
 		"[Objective-Tracker]: Completed objectives kept the normal text color instead of the completed color.",

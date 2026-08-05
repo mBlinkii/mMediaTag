@@ -20,6 +20,8 @@
 - NEW - [Objective-Tracker]: Completed quest objectives now show a check icon, like the dungeon objectives.
 - NEW - [Media-Pack]: Texture packs can now be enabled and disabled individually, in the mMT options under Media Pack or in the standalone panel that /mmtmp opens, each with a preview.
 - NEW - [Media-Pack]: The Caith UI, MaUIv3 and mMT textures can now be enabled separately as the Misc pack.
+### 📌 INFO
+- INFO - This version requires ElvUI 15.19 or newer and will not load correctly on earlier releases.
 
 ## [ver. 4.08] - 23.07.2026
 ### 🐛 FIX
