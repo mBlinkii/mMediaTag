@@ -181,7 +181,7 @@ end
 function mMT:GetInstanceDifficulty()
 	local isRaid = IsInRaid()
 	local id = isRaid and GetRaidDifficultyID() or (IsInGroup() and GetDungeonDifficultyID())
-	if not id then return end
+	if not id or id == 0 then return end -- 0 means the player never set that difficulty
 
 	local difficultyName = GetDifficultyInfo(id)
 	if not difficultyName then return end

@@ -5,6 +5,7 @@
 - FIX - [System]: Modules that hook into ElvUI only took effect after a reload or the next update - nameplates that already existed, the tracker skin and the interrupt spell of the current spec are picked up right away again.
 - FIX - [Objective-Tracker]: Completed objectives kept the normal text color instead of the completed color.
 - FIX - [Portraits]: Portraits no longer turn solid black while a unit's model is still loading, for example during quest or item transformations.
+- FIX - [DT-Dungeon]: The tooltip threw an error when no dungeon or raid difficulty had been set.
 - FIX - [DT-Skin]: The panel skin was reset whenever ElvUI refreshed its frame templates, for example after changing an ElvUI texture or border color.
 - FIX - [Interrupt-On-CD]: The castbar could keep the mMT color after the interrupt was used or after a cast was interrupted or failed, instead of returning to ElvUI's color.
 - FIX - [Important-Casts]: Important casts were not marked on nameplates at all unless the health bar color override was enabled.

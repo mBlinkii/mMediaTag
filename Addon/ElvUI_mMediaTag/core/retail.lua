@@ -485,12 +485,10 @@ function mMT:GetPlayerDifficulty()
 	local info = {}
 	local DungeonDifficultyID, RaidDifficultyID = GetDungeonDifficultyID(), GetRaidDifficultyID()
 
+	-- stays nil when the player never set that difficulty, the API reports 0 for it
 	info.dungeon = shortDifficulty[DungeonDifficultyID]
 	info.raid = shortDifficulty[RaidDifficultyID]
-	if E.Retail then
-		local LegacyRaidDifficultyID = GetLegacyRaidDifficultyID()
-		info.legacy = E.Retail and shortDifficulty[LegacyRaidDifficultyID]
-	end
+	if E.Retail then info.legacy = shortDifficulty[GetLegacyRaidDifficultyID()] end
 
 	return info
 end

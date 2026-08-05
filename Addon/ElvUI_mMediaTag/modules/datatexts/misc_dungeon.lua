@@ -5,6 +5,7 @@ local DT = E:GetModule("DataTexts")
 
 --WoW API / Variables
 local _G = _G
+local NONE = NONE
 local strupper = strupper
 local UIParentLoadAddOn = UIParentLoadAddOn
 local GetNumRandomDungeons = GetNumRandomDungeons
@@ -102,6 +103,12 @@ local function OnClick(self, button)
 	end
 end
 
+-- GetPlayerDifficulty returns nil for a difficulty the player never set, the API reports 0 for that
+local function AddDifficultyLine(label, info)
+	local text = info and info.color:WrapTextInColorCode(info.name) or MEDIA.color.OTHER:WrapTextInColorCode(NONE)
+	DT.tooltip:AddDoubleLine(label, text, mMT:GetRGB())
+end
+
 local function OnEnter(self)
 	DT.tooltip:ClearLines()
 	local instanceInfos = mMT:GetDungeonInfo()
@@ -122,9 +129,9 @@ local function OnEnter(self)
 	local playerDifficultyInfos = mMT:GetPlayerDifficulty()
 	if playerDifficultyInfos then
 		DT.tooltip:AddLine(L["Difficulty Infos:"], mMT:GetRGB("title"))
-		DT.tooltip:AddDoubleLine(L["Dungeon:"], playerDifficultyInfos.dungeon.color:WrapTextInColorCode(playerDifficultyInfos.dungeon.name), mMT:GetRGB())
-		DT.tooltip:AddDoubleLine(L["Raid:"], playerDifficultyInfos.raid.color:WrapTextInColorCode(playerDifficultyInfos.raid.name), mMT:GetRGB())
-		if E.Retail then DT.tooltip:AddDoubleLine(L["Legacy Raid:"], playerDifficultyInfos.legacy.color:WrapTextInColorCode(playerDifficultyInfos.legacy.name), mMT:GetRGB()) end
+		AddDifficultyLine(L["Dungeon:"], playerDifficultyInfos.dungeon)
+		AddDifficultyLine(L["Raid:"], playerDifficultyInfos.raid)
+		if E.Retail then AddDifficultyLine(L["Legacy Raid:"], playerDifficultyInfos.legacy) end
 		DT.tooltip:AddLine(" ")
 	end
 
