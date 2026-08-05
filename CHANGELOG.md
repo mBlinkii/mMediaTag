@@ -2,33 +2,24 @@
 
 ## [ver. 4.09] - TBD
 ### 🐛 FIX
-- FIX - [System]: Fonts are applied again after ElvUI changed how a font has to be handed to FontTemplate.
+- FIX - [System]: Modules that hook into ElvUI only took effect after a reload or the next update - nameplates that already existed, the tracker skin and the interrupt spell of the current spec are picked up right away again.
 - FIX - [Objective-Tracker]: Completed objectives kept the normal text color instead of the completed color.
-- FIX - [Objective-Tracker]: The skin was only applied once the tracker updated on its own, so after a reload it kept the default look until something changed.
 - FIX - [Portraits]: Portraits no longer turn solid black while a unit's model is still loading, for example during quest or item transformations.
-- FIX - [Media-Pack]: A texture pack that had been disabled could not be enabled again in the same session.
-- FIX - [Media-Pack]: The background list offered an entry whose texture file was missing.
 - FIX - [DT-Skin]: The panel skin was reset whenever ElvUI refreshed its frame templates, for example after changing an ElvUI texture or border color.
-- FIX - [Interrupt-On-CD]: Once the interrupt had been used, the castbar stayed in the cooldown color and the marker never disappeared again.
-- FIX - [Interrupt-On-CD]: The module could stay completely inactive after a reload because the interrupt spell of the current spec was not picked up.
-- FIX - [Interrupt-On-CD]: Interrupted and failed casts on unit frames kept the mMT color instead of ElvUI's interrupt color.
-- FIX - [Interrupt-On-CD]: Nameplates that already existed when the module loaded were never colored.
+- FIX - [Interrupt-On-CD]: The castbar could keep the mMT color after the interrupt was used or after a cast was interrupted or failed, instead of returning to ElvUI's color.
 - FIX - [Important-Casts]: Important casts were not marked on nameplates at all unless the health bar color override was enabled.
-- FIX - [Important-Casts]: Nameplates that already existed when the module loaded were never marked.
 - FIX - [Tags]: The mMT-health:current tag was listed without a description.
 ### 🔧 UPDATE
-- UPDATE - [System]: Adapted to the current ElvUI, which loads plugins after its own initialization and runs its update loops as coroutines.
+- UPDATE - [System]: Adapted to the current ElvUI, which reworked its font handling, media updates and module loading - fonts and mMT elements are applied correctly again on login.
 - UPDATE - [DT-Skin]: Export strings use a new format, so strings created by earlier versions can no longer be imported.
 - UPDATE - [Media-Pack]: Removed the duplicate statusbar textures B17 and N15, they were identical to B11 and N4.
 - UPDATE - [Media-Pack]: Renamed the chat backgrounds to close a numbering gap, Chat11 and Chat12 now show the images previously named Chat12 and Chat13.
-- UPDATE - [Media-Pack]: Texture packs are no longer registered twice while loading.
-- UPDATE - [Media-Pack]: Reduced the addon size by about 2 MB without any visible change to the textures.
+- UPDATE - [Media-Pack]: Reduced the addon size by about 2 MB without any visible change to the textures, and packs are no longer registered twice while loading.
 ### ✨ NEW
 - NEW - [Auto-Quest]: New Auto Gossip option, selects gossip entries by type - quest label, cinematic, or single option.
 - NEW - [Objective-Tracker]: Completed quest objectives now show a check icon, like the dungeon objectives.
-- NEW - [Media-Pack]: New settings panel under Interface - AddOns with a preview for every texture pack, /mmtmp opens it.
+- NEW - [Media-Pack]: Texture packs can now be enabled and disabled individually, in the mMT options under Media Pack or in the standalone panel that /mmtmp opens, each with a preview.
 - NEW - [Media-Pack]: The Caith UI, MaUIv3 and mMT textures can now be enabled separately as the Misc pack.
-- NEW - [Media-Pack]: The texture packs can now be enabled and disabled from the mMT options, under their own Media Pack entry.
 
 ## [ver. 4.08] - 23.07.2026
 ### 🐛 FIX

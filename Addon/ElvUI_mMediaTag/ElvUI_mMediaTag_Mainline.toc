@@ -25,5 +25,3 @@ media\load_media.xml
 options\load_options.xml
 
 modules\load_modules.xml
-
-register.lua

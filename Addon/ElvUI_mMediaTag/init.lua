@@ -102,9 +102,6 @@ end
 function mMT:Initialize()
 	mMT:RegisterEvent("PLAYER_LOGOUT")
 
-	-- E:Initialize() now runs before plugins load, so P.mMediaTag is missing from a fresh profile - only the current session's profile needs this.
-	E.db.mMediaTag = E:CopyDefaults(E.db.mMediaTag or {}, P.mMediaTag)
-
 	EP:RegisterPlugin(addonName, mMT.InsertOptions)
 
 	E:CopyTable(Engine[2], mMT.defaults)
@@ -144,3 +141,5 @@ end
 function mMT:PLAYER_LOGOUT()
 	MMTDATA = Engine[2]
 end
+
+E:RegisterModule(mMT:GetName())

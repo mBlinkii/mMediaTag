@@ -18,7 +18,7 @@ mMT.Changelog[408] = {
 	},
 	NEW = {
 		"[Execute Marker]: New Nameplates module - shows a marker on enemy nameplates at your specs execute threshold.",
-		"[Objective Tracker]: New module to skin the Objective Tracker.",
+		"[Objective-Tracker]: New module to skin the Objective Tracker.",
 		"[Spec Icons]: Added a new \"Clean\" spec icon style.",
 	},
 }

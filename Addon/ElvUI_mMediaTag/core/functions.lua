@@ -119,7 +119,7 @@ function mMT:ConnectVirtualFrameToDataText(dataTextName, virtualFrame)
 	return true
 end
 
--- ElvUI builds the UnitFrames before the plugin loads, so its first Configure pass is already done - hooking modules need one sweep over the existing frames.
+-- UF:Initialize runs before mMT in E:InitializeModules, so its first Configure pass is already done - hooking modules need one sweep over the existing frames.
 local function ForEachHeaderFrame(header, callback)
 	if not header then return end
 
