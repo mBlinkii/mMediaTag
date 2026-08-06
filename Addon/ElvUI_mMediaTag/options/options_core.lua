@@ -530,6 +530,22 @@ mMT.options = {
 				},
 			},
 		},
+		skins = {
+			order = 8.5,
+			type = "group",
+			name = L["Skins"],
+			icon = "Interface\\Addons\\ElvUI_mMediaTag\\media\\options\\data_panel_skin",
+			childGroups = "tab",
+			args = {
+				bugsack = {
+					order = 1,
+					type = "group",
+					name = mMT:AddSettingsIcon("BugSack", "fix"),
+					childGroups = "tab",
+					args = {},
+				},
+			},
+		},
 		colors = {
 			order = 9,
 			type = "group",

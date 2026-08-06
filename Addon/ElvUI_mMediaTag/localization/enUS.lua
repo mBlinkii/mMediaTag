@@ -839,6 +839,15 @@ L["Reset all"] = true
 -- options/skin/minimap.lua
 L["Cardinal Icon"] = true
 
+-- modules/skin/bugsack.lua
+L["Page:"] = true
+
+-- options/skin/bugsack.lua
+L["Info: BugSack is not installed."] = true
+L["Shows the ElvUI, mMT and WoW version left of the page counter."] = true
+L["Skins"] = true
+L["Version Info"] = true
+
 -- options/datatext/misc_gamemenu.lua
 L["white"] = true
 

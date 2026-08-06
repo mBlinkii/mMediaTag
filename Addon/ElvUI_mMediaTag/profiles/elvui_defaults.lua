@@ -16,6 +16,13 @@ P.data_panel_skin = {
 	panels = {},
 }
 
+P.skins = {
+	bugsack = {
+		enable = false,
+		version_label = true,
+	},
+}
+
 P.dice_button = {
 	enable = false,
 	color = {
