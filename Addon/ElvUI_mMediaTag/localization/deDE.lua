@@ -842,6 +842,10 @@ L["Cardinal Icon"] = "Cardinal-Symbol"
 -- modules/skin/bugsack.lua
 L["Page:"] = "Seite:"
 
+-- options/skin/auctionator.lua
+L["Info: Auctionator is not installed."] = "Info: Auctionator ist nicht installiert."
+L["Info: This skins the Shopping, Selling, Cancelling and Auctionator tabs. Rows inside the result lists keep their default look."] = "Info: Geskinnt werden die Tabs Einkauf, Verkauf, Abbrechen und Auctionator. Zeilen innerhalb der Ergebnislisten behalten ihr Standardaussehen."
+
 -- options/skin/bugsack.lua
 L["Info: BugSack is not installed."] = "Info: BugSack ist nicht installiert."
 L["Shows the ElvUI, mMT and WoW version left of the page counter."] = "Zeigt die ElvUI-, mMT- und WoW-Version links neben dem Seitenzähler."

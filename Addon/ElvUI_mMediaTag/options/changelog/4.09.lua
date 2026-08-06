@@ -4,6 +4,7 @@ mMT.Changelog[409] = {
 	DATE = "TBD",
 	IMPORTANT = {
 		"[INFO]: This version requires ElvUI 15.19 or newer and will not load correctly on earlier releases.",
+		"[INFO]: The BugSack skin is adapted from LuckyoneUI, thanks to Luckyone.",
 	},
 	FIX = {
 		"[System]: Modules that hook into ElvUI only took effect after a reload or the next update - nameplates that already existed, the tracker skin and the interrupt spell of the current spec are picked up right away again.",
@@ -27,5 +28,8 @@ mMT.Changelog[409] = {
 		"[Objective-Tracker]: Completed quest objectives now show a check icon, like the dungeon objectives.",
 		"[Media-Pack]: Texture packs can now be enabled and disabled individually, in the mMT options under Media Pack or in the standalone panel that /mmtmp opens, each with a preview.",
 		"[Media-Pack]: The Caith UI, MaUIv3 and mMT textures can now be enabled separately as the Misc pack.",
+		"[Skins]: New Skins section in the options, collecting skins for other addons.",
+		"[Skins]: BugSack now matches ElvUI, with an optional line showing the ElvUI, mMT and WoW versions next to the page counter.",
+		"[Skins]: Auctionator now matches ElvUI on the Shopping, Selling, Cancelling and Auctionator tabs, including result lists, the item bag and the dialogs.",
 	},
 }

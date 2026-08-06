@@ -537,8 +537,15 @@ mMT.options = {
 			icon = "Interface\\Addons\\ElvUI_mMediaTag\\media\\options\\data_panel_skin",
 			childGroups = "tab",
 			args = {
-				bugsack = {
+				auctionator = {
 					order = 1,
+					type = "group",
+					name = mMT:AddSettingsIcon("Auctionator", "shop"),
+					childGroups = "tab",
+					args = {},
+				},
+				bugsack = {
+					order = 2,
 					type = "group",
 					name = mMT:AddSettingsIcon("BugSack", "fix"),
 					childGroups = "tab",

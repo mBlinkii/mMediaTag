@@ -2,4 +2,5 @@
 	<Script file="data_panel_skin.lua"/>
 	<Script file="minimap.lua"/>
 	<Script file="bugsack.lua"/>
+	<Script file="auctionator.lua"/>
 </Ui>

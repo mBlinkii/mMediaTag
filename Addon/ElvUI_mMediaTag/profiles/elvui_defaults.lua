@@ -21,6 +21,9 @@ P.skins = {
 		enable = false,
 		version_label = true,
 	},
+	auctionator = {
+		enable = false,
+	},
 }
 
 P.dice_button = {
