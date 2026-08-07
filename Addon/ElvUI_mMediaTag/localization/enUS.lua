@@ -250,6 +250,13 @@ L["Death Counter"] = true
 L["Font size"] = true
 L["Shows deaths and lost time in the current Mythic+ run."] = true
 
+-- options/misc/prey_hunt.lua
+L["Prey Hunt"] = true
+L["Shows the current hunt stage as text on the prey icon."] = true
+L["Target List"] = true
+L["Mark Defeated Targets"] = true
+L["Colors prey targets you already defeated in the target list, based on the achievement criteria."] = true
+
 -- options/misc/difficulty_info.lua
 L["LEFT"] = true
 L["RIGHT"] = true

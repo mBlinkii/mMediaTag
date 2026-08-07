@@ -479,6 +479,13 @@ mMT.options = {
 					childGroups = "tab",
 					args = {},
 				},
+				prey_hunt = {
+					order = 5.6,
+					type = "group",
+					name = mMT:AddSettingsIcon(L["Prey Hunt"], "quest"),
+					childGroups = "tab",
+					args = {},
+				},
 				objective_tracker = {
 					order = 5.7,
 					type = "group",

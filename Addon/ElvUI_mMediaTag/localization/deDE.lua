@@ -250,6 +250,13 @@ L["Death Counter"] = "Todeszähler"
 L["Font size"] = "Schriftgröße"
 L["Shows deaths and lost time in the current Mythic+ run."] = "Zeigt Tode und verlorene Zeit im aktuellen Mythisch+-Lauf an."
 
+-- options/misc/prey_hunt.lua
+L["Prey Hunt"] = "Beutejagd"
+L["Shows the current hunt stage as text on the prey icon."] = "Zeigt die aktuelle Jagdstufe als Text auf dem Beutesymbol an."
+L["Target List"] = "Zielliste"
+L["Mark Defeated Targets"] = "Besiegte Ziele markieren"
+L["Colors prey targets you already defeated in the target list, based on the achievement criteria."] = "Färbt in der Zielliste die Beuteziele ein, die du bereits besiegt hast — anhand der Erfolgskriterien."
+
 -- options/misc/difficulty_info.lua
 L["LEFT"] = "LINKS"
 L["RIGHT"] = "RECHTS"

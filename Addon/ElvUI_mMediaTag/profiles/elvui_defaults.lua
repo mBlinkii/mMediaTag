@@ -124,6 +124,22 @@ P.death_counter = {
 	},
 }
 
+P.prey_hunt = {
+	enable = false,
+	gossip = false,
+	gossip_color = "FF808080",
+	format = "stage",
+	color = "FFFFFFFF",
+	point = "BOTTOM",
+	x = 0,
+	y = 4,
+	font = {
+		font = "PT Sans Narrow",
+		size = 12,
+		fontFlag = "OUTLINE",
+	},
+}
+
 P.datatexts = {
 	text = {
 		override_text = true,

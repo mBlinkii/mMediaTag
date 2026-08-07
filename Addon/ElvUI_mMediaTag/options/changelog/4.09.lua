@@ -31,5 +31,7 @@ mMT.Changelog[409] = {
 		"[Skins]: New Skins section in the options, collecting skins for other addons.",
 		"[Skins]: BugSack now matches ElvUI, with an optional line showing the ElvUI, mMT and WoW versions next to the page counter.",
 		"[Skins]: Auctionator now matches ElvUI on the Shopping, Selling, Cancelling and Auctionator tabs, including result lists, the item bag and the dialogs.",
+		"[Prey-Hunt]: New module showing the current hunt stage as text on the prey icon, as 1/4, 1/4 (25%) or 25%.",
+		"[Prey-Hunt]: Prey targets you have already defeated can be colored in the target list of the hunt gossip.",
 	},
 }
