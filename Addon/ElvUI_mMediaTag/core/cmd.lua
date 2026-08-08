@@ -11,6 +11,7 @@ local GetAddOnInfo = _G.C_AddOns and _G.C_AddOns.GetAddOnInfo or _G.GetAddOnInfo
 local SetCVar = SetCVar
 local next = next
 local wipe = wipe
+local tostring = tostring
 
 local debugAddons = {
 	["!BugGrabber"] = true,
@@ -68,6 +69,7 @@ local function PrintHelp()
 	mMT:Print(MEDIA.color.purple:WrapTextInColorCode("/mmt"), MEDIA.color.green:WrapTextInColorCode("debug"), "-", L["Toggle debug mode"])
 	mMT:Print(MEDIA.color.purple:WrapTextInColorCode("/mmt"), MEDIA.color.green:WrapTextInColorCode("debug safe"), "-", L["Toggle debug mode with safe addons"])
 	mMT:Print(MEDIA.color.purple:WrapTextInColorCode("/mmt"), MEDIA.color.green:WrapTextInColorCode("guid"), "-", L["Show your player GUID"])
+	if DB.DEV then mMT:Print(MEDIA.color.purple:WrapTextInColorCode("/mmt"), MEDIA.color.green:WrapTextInColorCode("profile"), "-", L["Enable function profiling (DEV only)"]) end
 end
 
 local function PrintVersion()
@@ -95,6 +97,22 @@ local function AddCurrentCharacterAsDeveloper()
 	mMT:Print(MEDIA.color.green:WrapTextInColorCode(L["DEV mode active"]))
 end
 
+local function EnableProfiling()
+	if not DB.DEV then
+		mMT:Print(MEDIA.color.red:WrapTextInColorCode(L["Profiling is only available in DEV mode."]))
+		return
+	end
+
+	local count = mMT:EnableProfiling()
+	if not count then
+		mMT:Print(MEDIA.color.red:WrapTextInColorCode(L["FunctionProfiler is not loaded."]))
+	elseif count == 0 then
+		mMT:Print(L["Profiling already active."])
+	else
+		mMT:Print(L["Profiling enabled, functions wrapped:"], MEDIA.color.green:WrapTextInColorCode(tostring(count)))
+	end
+end
+
 local function CommandHandler(msg)
 	local command = strlower(msg)
 	if command == "help" then
@@ -107,6 +125,8 @@ local function CommandHandler(msg)
 		ClearUnknownIDs()
 	elseif command == "adddev" then
 		AddCurrentCharacterAsDeveloper()
+	elseif command == "profile" then
+		EnableProfiling()
 	elseif command == "debug" or command == "debug safe" then
 		DB.debug.debugMode = not DB.debug.debugMode
 		mMT:SetDebugMode(DB.debug.debugMode, command == "debug safe")
