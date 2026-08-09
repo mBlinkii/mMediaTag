@@ -15,6 +15,7 @@ mMT.Changelog[409] = {
 		"[Interrupt-On-CD]: The castbar could keep the mMT color after the interrupt was used or after a cast was interrupted or failed, instead of returning to the ElvUI color.",
 		"[Important-Casts]: Important casts were not marked on nameplates at all unless the health bar color override was enabled.",
 		"[Tags]: The mMT-health:current tag was listed without a description.",
+		"[System]: An export string that belongs to another setting was silently ignored on import, now it is rejected with a message in the chat.",
 	},
 	UPDATE = {
 		"[System]: Adapted to the current ElvUI, which reworked its font handling, media updates and module loading - fonts and mMT elements are applied correctly again on login.",
@@ -33,5 +34,6 @@ mMT.Changelog[409] = {
 		"[Skins]: Auctionator now matches ElvUI on the Shopping, Selling, Cancelling and Auctionator tabs, including result lists, the item bag and the dialogs.",
 		"[Prey-Hunt]: New module showing the current hunt stage as text on the prey icon, as 1/4, 1/4 (25%) or 25%.",
 		"[Prey-Hunt]: Prey targets you have already defeated can be colored in the target list of the hunt gossip.",
+		"[Addon-Manager]: New module that adds a bar below the Blizzard addon list, where you can save your enabled addons as named profiles, switch between them and filter the list.",
 	},
 }
