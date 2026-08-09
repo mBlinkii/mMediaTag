@@ -9,13 +9,15 @@ local ipairs = ipairs
 local pairs = pairs
 local select = select
 local sort = sort
+local strfind = strfind
+local unpack = unpack
 local hooksecurefunc = hooksecurefunc
 local IsAddOnLoaded = _G.C_AddOns and _G.C_AddOns.IsAddOnLoaded or _G.IsAddOnLoaded
 
 local TAB_BUTTONS = { "AuctionatorTabs_Shopping", "AuctionatorTabs_Selling", "AuctionatorTabs_Cancelling", "AuctionatorTabs_Auctionator" }
 
-local LEFT_INSET, BUTTON_GAP = 10, 4
-local LIST_TOP, MINI_TAB_HEIGHT, HEADER_GAP = -58, 22, 1
+local LEFT_INSET, BUTTON_GAP, SEARCH_GAP = 10, 4, 5
+local LIST_TOP, MINI_TAB_HEIGHT, HEADER_GAP, HEADER_TOP, HEADER_TEXT_PAD = -58, 22, 1, -7, 4
 local SPLIT_PANEL_TOP = 0 -- Auctionator uses 10, which leaves the two split panels nearly touching
 local REFRESH_SIZE = 22
 local TABS_CONTAINER_INSET = 2 -- Auctionator's own x offset on the prices tab container
@@ -49,15 +51,75 @@ local function SkinDropDown(wrapper)
 end
 
 -- Auctionator sets the vertical offset from its own options, so only the horizontal one is replaced
--- a number is taken as-is, a frame shifts this one onto that frame's left edge
-local function MoveLeft(frame, offset)
+-- a number is taken as-is, a frame shifts this one onto that frame's left edge plus pad
+local function MoveLeft(frame, offset, pad)
 	for i = 1, frame:GetNumPoints() do
 		local point, relativeTo, relativePoint, x, y = frame:GetPoint(i)
 		if point == "TOPLEFT" then
-			frame:SetPoint(point, relativeTo, relativePoint, type(offset) == "number" and offset or x + offset:GetLeft() - frame:GetLeft(), y)
+			frame:SetPoint(point, relativeTo, relativePoint, type(offset) == "number" and offset or x + offset:GetLeft() - frame:GetLeft() + (pad or 0), y)
 			return
 		end
 	end
+end
+
+-- counterpart to MoveLeft: drops this frame's top edge onto the target's bottom edge
+local function MoveTop(frame, target)
+	local top, bottom = frame:GetTop(), target and target:GetBottom()
+	if not (top and bottom) then return end
+
+	for i = 1, frame:GetNumPoints() do
+		local point, relativeTo, relativePoint, x, y = frame:GetPoint(i)
+		if point == "TOPLEFT" then
+			frame:SetPoint(point, relativeTo, relativePoint, x, y + bottom - top)
+			return
+		end
+	end
+end
+
+-- counterpart to MoveTop: lines this frame's centre up with the target's centre
+local function MoveMiddle(frame, target)
+	if not (frame and target) then return end
+
+	local _, y = frame:GetCenter()
+	local _, targetY = target:GetCenter()
+	if not (y and targetY) then return end
+
+	local point, relativeTo, relativePoint, x, offset = frame:GetPoint(1)
+	if point then frame:SetPoint(point, relativeTo, relativePoint, x, offset + targetY - y) end
+end
+
+local function OnGlowEnter(self)
+	self.backdrop:SetBackdropBorderColor(unpack(E.media.rgbvaluecolor))
+end
+
+local function OnGlowLeave(self)
+	self.backdrop:SetBackdropBorderColor(unpack(E.media.bordercolor))
+end
+
+-- the tab and header templates light their own artwork on mouseover, and not all of it sits on the HIGHLIGHT layer
+local function KillHighlight(frame)
+	frame:DisableDrawLayer("HIGHLIGHT")
+
+	local highlight = frame.GetHighlightTexture and frame:GetHighlightTexture()
+	if highlight then highlight:Kill() end
+
+	for _, region in ipairs({ frame:GetRegions() }) do
+		local atlas = region.GetAtlas and region:GetAtlas()
+		local file = not atlas and region.GetTexture and region:GetTexture()
+
+		if (atlas and strfind(atlas, "ighlight")) or (type(file) == "string" and strfind(file, "ighlight")) then
+			region:Kill()
+		end
+	end
+end
+
+local function AddBorderGlow(frame)
+	if not (frame and frame.backdrop) or frame.mmt_glow then return end
+
+	frame.mmt_glow = true
+	KillHighlight(frame)
+	frame:HookScript("OnEnter", OnGlowEnter)
+	frame:HookScript("OnLeave", OnGlowLeave)
 end
 
 -- PanelTemplates re-anchors the label from the template metrics on every switch, so redo it after each one
@@ -72,6 +134,7 @@ local function SkinMiniTabs(container, tabs)
 
 	for _, tab in ipairs(tabs) do
 		S:HandleTab(tab)
+		AddBorderGlow(tab)
 	end
 
 	Restyle()
@@ -115,6 +178,17 @@ local function SkinHeaders(container, panel)
 			header:DisableDrawLayer("BACKGROUND")
 
 			if not header.backdrop then header:CreateBackdrop("Transparent") end
+
+			AddBorderGlow(header)
+
+			-- the outer columns reach past the panel, their label would follow the frame instead of the trimmed backdrop
+			local text = header.Text or (header.GetFontString and header:GetFontString())
+			if text then
+				text:SetWordWrap(false)
+				text:ClearAllPoints()
+				text:Point("LEFT", header.backdrop, "LEFT", HEADER_TEXT_PAD, 0)
+				text:Point("RIGHT", header.backdrop, "RIGHT", -HEADER_TEXT_PAD, 0)
+			end
 		end
 
 		-- GetChildren follows neither column order nor visibility, hidden columns would poison the outer edges
@@ -173,6 +247,21 @@ local function SkinResultsListing(listing, panel)
 
 	-- ApplyHiding runs after UpdateTable and changes which columns are shown, which moves the outer edges
 	hooksecurefunc(listing, "ApplyHiding", Restyle)
+end
+
+-- Auctionator starts the panel above the column headers, lift them out so the panel begins below them
+local function LiftHeaders(listing, panel)
+	local header = listing and listing.HeaderContainer
+	if not (header and panel) then return end
+
+	-- ScrollArea keeps its own +15 offset from the header, that is what lines the cells up under the columns
+	header:Point("TOPLEFT", listing, "TOPLEFT", 0, HEADER_TOP)
+
+	panel:ClearAllPoints()
+	panel:Point("TOPLEFT", header, "BOTTOMLEFT", 0, -2)
+	panel:Point("BOTTOMRIGHT", listing, "BOTTOMRIGHT", 0, 2)
+
+	return true
 end
 
 local function SkinGroupsView(view)
@@ -296,11 +385,11 @@ local function SkinSearchRow(options)
 	local size = search:GetHeight()
 	reset:Size(size, size)
 	reset:ClearAllPoints()
-	reset:Point("LEFT", search, "RIGHT", 1, 0)
+	reset:Point("LEFT", search, "RIGHT", SEARCH_GAP, 0)
 
 	-- Auctionator hangs the row off the reset button's bottom edge with a 3px drop, centre it instead
 	button:ClearAllPoints()
-	button:Point("LEFT", reset, "RIGHT", 5, 0)
+	button:Point("LEFT", reset, "RIGHT", SEARCH_GAP, 0)
 end
 
 local function SkinShopping(frame)
@@ -349,22 +438,9 @@ local function SkinShopping(frame)
 	SkinBackdrop(inset)
 	SkinResultsListing(listing, inset)
 
-	-- the column headers start 20px left of the listing and reach into the list column
-	local header = listing and listing.HeaderContainer
-	if header then
-		-- ScrollArea keeps its own +15 offset from the header, that is what lines the cells up under the columns
-		header:Point("TOPLEFT", listing, "TOPLEFT", 0, -7)
-
-		if inset then
-			inset:ClearAllPoints()
-			inset:Point("TOPLEFT", header, "BOTTOMLEFT", 0, -2)
-			inset:Point("BOTTOMRIGHT", listing, "BOTTOMRIGHT", 0, 2)
-
-			if frame.ExportCSV then
-				frame.ExportCSV:ClearAllPoints()
-				frame.ExportCSV:Point("TOPRIGHT", inset, "BOTTOMRIGHT", 0, -BUTTON_GAP)
-			end
-		end
+	if LiftHeaders(listing, inset) and frame.ExportCSV then
+		frame.ExportCSV:ClearAllPoints()
+		frame.ExportCSV:Point("TOPRIGHT", inset, "BOTTOMRIGHT", 0, -BUTTON_GAP)
 	end
 
 	SkinSearchDialog(frame.itemDialog)
@@ -389,7 +465,10 @@ local function SkinSelling(frame)
 		Apply(S.HandleEditBox, quantity)
 		Apply(S.HandleButton, sale.MaxButton, sale.PostButton, sale.SkipButton, sale.PrevButton)
 
-		if quantity and sale.MaxButton then quantity:SetHeight(sale.MaxButton:GetHeight()) end
+		if quantity and sale.MaxButton then
+			quantity:SetHeight(sale.MaxButton:GetHeight())
+			MoveMiddle(sale.MaxButton, quantity)
+		end
 
 		SkinMoneyInput(sale.Price)
 		SkinMoneyInput(sale.BidPrice)
@@ -420,9 +499,14 @@ local function SkinSelling(frame)
 	SkinResultsListing(frame.HistoricalPriceListing, frame.HistoricalPriceInset)
 	SkinResultsListing(frame.PostingHistoryListing, frame.HistoricalPriceInset)
 
+	LiftHeaders(frame.CurrentPricesListing, prices or frame.HistoricalPriceInset)
+	LiftHeaders(frame.HistoricalPriceListing, frame.HistoricalPriceInset)
+	LiftHeaders(frame.PostingHistoryListing, frame.HistoricalPriceInset)
+
 	local tabs = frame.PricesTabsContainer
 	if tabs then
 		SkinMiniTabs(tabs, { tabs.CurrentPricesTab, tabs.PriceHistoryTab, tabs.YourHistoryTab })
+		MoveTop(tabs, frame.HistoricalPriceInset)
 
 		-- split panels hide the first tab but leave it holding its slot, which pushes the visible ones right
 		local first = tabs.CurrentPricesTab
@@ -446,11 +530,12 @@ local function SkinCancelling(frame)
 	Apply(S.HandleEditBox, frame.SearchFilter)
 	SkinBackdrop(inset)
 	SkinResultsListing(frame.ResultsListing, inset)
+	LiftHeaders(frame.ResultsListing, inset)
 
 	SkinRefreshButton(frame)
 
 	-- Auctionator lines the search box and the scan buttons up with the window edge, not with the list
-	if frame.SearchFilter and inset then MoveLeft(frame.SearchFilter, inset) end
+	if frame.SearchFilter and inset then MoveLeft(frame.SearchFilter, inset, LEFT_INSET) end
 
 	local scan = frame.UndercutScanContainer
 	if scan then
