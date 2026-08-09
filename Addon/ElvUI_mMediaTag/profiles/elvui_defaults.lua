@@ -30,6 +30,9 @@ P.skins = {
 	auctionator = {
 		enable = false,
 	},
+	premade_groups_filter = {
+		enable = false,
+	},
 }
 
 P.dice_button = {

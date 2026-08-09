@@ -565,6 +565,13 @@ mMT.options = {
 					childGroups = "tab",
 					args = {},
 				},
+				premade_groups_filter = {
+					order = 3,
+					type = "group",
+					name = mMT:AddSettingsIcon("Premade Groups Filter", "dungeon"),
+					childGroups = "tab",
+					args = {},
+				},
 			},
 		},
 		colors = {

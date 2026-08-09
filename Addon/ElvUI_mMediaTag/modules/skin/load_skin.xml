@@ -3,4 +3,5 @@
     <Script file="minimap.lua"/>
     <Script file="bugsack.lua"/>
     <Script file="auctionator.lua"/>
+    <Script file="premade_groups_filter.lua"/>
 </Ui>

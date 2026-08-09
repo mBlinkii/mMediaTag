@@ -880,6 +880,10 @@ L["Page:"] = true
 L["Info: Auctionator is not installed."] = true
 L["Info: This skins the Shopping, Selling, Cancelling and Auctionator tabs. Rows inside the result lists keep their default look."] = true
 
+-- options/skin/premade_groups_filter.lua
+L["Info: Premade Groups Filter is not installed."] = true
+L["Info: This skins the filter dialog, its panels, dropdowns and popups."] = true
+
 -- options/skin/bugsack.lua
 L["Info: BugSack is not installed."] = true
 L["Shows the ElvUI, mMT and WoW version left of the page counter."] = true
