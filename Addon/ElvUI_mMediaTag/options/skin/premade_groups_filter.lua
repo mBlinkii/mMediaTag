@@ -10,6 +10,9 @@ mMT.options.args.skins.args.premade_groups_filter.args = {
 		name = function()
 			return E.db.mMediaTag.skins.premade_groups_filter.enable and MEDIA.color.green:WrapTextInColorCode(L["Enabled"]) or MEDIA.color.red:WrapTextInColorCode(L["Disabled"])
 		end,
+		disabled = function()
+			return not IsAddOnLoaded("PremadeGroupsFilter")
+		end,
 		get = function(info)
 			return E.db.mMediaTag.skins.premade_groups_filter.enable
 		end,

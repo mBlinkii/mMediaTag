@@ -10,6 +10,9 @@ mMT.options.args.skins.args.auctionator.args = {
 		name = function()
 			return E.db.mMediaTag.skins.auctionator.enable and MEDIA.color.green:WrapTextInColorCode(L["Enabled"]) or MEDIA.color.red:WrapTextInColorCode(L["Disabled"])
 		end,
+		disabled = function()
+			return not IsAddOnLoaded("Auctionator")
+		end,
 		get = function(info)
 			return E.db.mMediaTag.skins.auctionator.enable
 		end,

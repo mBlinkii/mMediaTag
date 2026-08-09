@@ -1,6 +1,7 @@
 local mMT, DB, M, E, P, L, MEDIA = unpack(ElvUI_mMediaTag)
 
 local _G = _G
+local IsAddOnLoaded = _G.C_AddOns and _G.C_AddOns.IsAddOnLoaded or _G.IsAddOnLoaded
 
 mMT.options.args.skins.args.bugsack.args = {
 	toggle_enable = {
@@ -8,6 +9,9 @@ mMT.options.args.skins.args.bugsack.args = {
 		type = "toggle",
 		name = function()
 			return E.db.mMediaTag.skins.bugsack.enable and MEDIA.color.green:WrapTextInColorCode(L["Enabled"]) or MEDIA.color.red:WrapTextInColorCode(L["Disabled"])
+		end,
+		disabled = function()
+			return not IsAddOnLoaded("BugSack")
 		end,
 		get = function(info)
 			return E.db.mMediaTag.skins.bugsack.enable
@@ -28,7 +32,7 @@ mMT.options.args.skins.args.bugsack.args = {
 		type = "description",
 		name = MEDIA.color.info:WrapTextInColorCode(L["Info: BugSack is not installed."]),
 		hidden = function()
-			return _G.BugSack ~= nil
+			return IsAddOnLoaded("BugSack")
 		end,
 	},
 	settings = {
@@ -37,7 +41,7 @@ mMT.options.args.skins.args.bugsack.args = {
 		inline = true,
 		name = L["Settings"],
 		disabled = function()
-			return not E.db.mMediaTag.skins.bugsack.enable
+			return not (E.db.mMediaTag.skins.bugsack.enable and IsAddOnLoaded("BugSack"))
 		end,
 		args = {
 			version_label = {

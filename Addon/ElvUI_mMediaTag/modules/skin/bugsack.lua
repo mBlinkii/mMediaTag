@@ -122,7 +122,7 @@ end
 function module:Initialize()
 	module.db = E.db.mMediaTag.skins.bugsack
 
-	if not (module.db and module.db.enable) or module.isRegistered then return end
+	if not (module.db and module.db.enable) or module.isRegistered or not IsAddOnLoaded("BugSack") then return end
 
 	module.isRegistered = true
 
