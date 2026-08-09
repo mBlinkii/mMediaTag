@@ -5,6 +5,7 @@ if not L then return end
 L["Error decompressing data."] = "Fehler beim Dekomprimieren der Daten."
 L["Error deserializing:"] = "Fehler beim Deserialisieren:"
 L["Error importing profile. String is invalid or corrupted!"] = "Fehler beim Importieren des Profils. Die Zeichenfolge ist ungültig oder beschädigt!"
+L["This export belongs to another setting and cannot be imported here."] = "Dieser Export gehört zu einer anderen Einstellung und kann hier nicht importiert werden."
 L["This export was created by an older version and can no longer be imported."] = "Dieser Export stammt aus einer älteren Version und kann nicht mehr importiert werden."
 
 -- modules/datatexts/info_score.lua
@@ -108,6 +109,18 @@ L["Opening the spellbook via addons can lead to taints.\nThis occurs when protec
 
 -- modules/dock/store.lua
 L["WoW Token:"] = "WoW-Marke:"
+
+-- modules/misc/addon_manager.lua
+L["Addon profile saved:"] = "Addon-Profil gespeichert:"
+L["Addon Profiles"] = "Addon-Profile"
+L["Addons with disabled dependencies:"] = "Addons mit deaktivierten Abhängigkeiten:"
+L["All Characters"] = "Alle Charaktere"
+L["Category"] = "Kategorie"
+L["Delete Profile"] = "Profil löschen"
+L["Filter"] = "Filter"
+L["Name of the addon profile:"] = "Name des Addon-Profils:"
+L["Protect ElvUI & mMT"] = "ElvUI & mMT schützen"
+L["Save Current State"] = "Aktuellen Stand speichern"
 
 -- modules/misc/auto_quest.lua
 L["[AutoQuest] Auto-accept paused (SHIFT held)."] = "[AutoQuest] Automatisches Annehmen pausiert (SHIFT gedrückt)."
@@ -225,6 +238,14 @@ L["Font Size"] = "Schriftgröße"
 
 -- options/dock/volume.lua
 L["Colored Text"] = "Gefärbter Text"
+
+-- options/misc/addon_manager.lua
+L["Add a profile dropdown and a filter to Blizzard's addon list."] = "Fügt Blizzards Addon-Liste ein Profil-Dropdown und einen Filter hinzu."
+L["Apply profiles account wide instead of only to the current character."] = "Profile accountweit anwenden statt nur auf den aktuellen Charakter."
+L["Apply to all characters"] = "Auf alle Charaktere anwenden"
+L["Never disable ElvUI, its libraries and mMediaTag when a profile is applied."] = "ElvUI, seine Bibliotheken und mMediaTag beim Anwenden eines Profils nie deaktivieren."
+L["Protect ElvUI and mMediaTag"] = "ElvUI und mMediaTag schützen"
+L["Save your enabled addons as a named set and switch between them from Blizzard's addon list."] = "Speichere deine aktivierten Addons als benanntes Set und wechsle direkt aus Blizzards Addon-Liste zwischen ihnen."
 
 -- options/misc/details.lua
 L["Adds a button to show or hide details on click. The button is only visible on mouse over."] = "Fügt einen Button hinzu, um Details per Klick ein- oder auszublenden. Der Button ist nur bei Mouseover sichtbar."
@@ -758,6 +779,7 @@ L["Sets automatically your class color for glow and border color on nameplates f
 L["Target & Glow color"] = "Ziel- & Leuchtfarbe"
 
 -- options/options_core.lua
+L["Addon Manager"] = "Addon-Manager"
 L["Data Panel Skin"] = "Datenleisten-Skin"
 L["Datatexts"] = "Datentexte"
 L["Details embedded"] = "Details eingebettet"

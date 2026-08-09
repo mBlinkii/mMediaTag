@@ -327,8 +327,8 @@ mMT.options.args.misc.args.data_panel_skin.args = {
 				type = "execute",
 				name = L["Import"],
 				func = function()
-					local profileType, profileData = mMT:GetImportText(importText)
-					if profileType == "mMTCosmeticBras" then
+					local profileData = mMT:GetImportData(importText, "mMTCosmeticBras")
+					if profileData then
 						E:CopyTable(E.db.mMediaTag.data_panel_skin.panels, profileData)
 						mMT:UpdateModule("DataPanelSkin")
 					end

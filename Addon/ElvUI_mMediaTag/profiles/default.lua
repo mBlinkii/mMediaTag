@@ -5,6 +5,11 @@ mMT.defaults.debug = {
 	debugMode = false,
 }
 
+mMT.defaults.addon_manager = {
+	profiles = {},
+	filter = "all",
+}
+
 mMT.defaults.DEV = false
 
 mMT.defaults.customDevGUIDs = {}

@@ -22,4 +22,5 @@
     <Script file="auto_quest.lua"/>
     <Script file="auto_role_check.lua"/>
     <Script file="auto_friendly_nameplates.lua"/>
+    <Script file="addon_manager.lua"/>
 </Ui>

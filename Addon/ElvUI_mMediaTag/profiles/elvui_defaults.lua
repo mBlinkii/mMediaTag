@@ -11,6 +11,12 @@ P.keystone_to_chat = {
 	enable = false,
 }
 
+P.addon_manager = {
+	enable = false,
+	protect = true,
+	account = false,
+}
+
 P.data_panel_skin = {
 	enable = false,
 	panels = {},

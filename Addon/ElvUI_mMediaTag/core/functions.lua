@@ -418,7 +418,22 @@ function mMT:GetImportText(string)
 		end
 
 		profileType = profileInfo
+	else
+		mMT:Print(L["Error importing profile. String is invalid or corrupted!"])
+		return
 	end
 
 	return profileType, profileData
+end
+
+function mMT:GetImportData(string, expectedType)
+	local profileType, profileData = mMT:GetImportText(string)
+	if not profileType then return nil end
+
+	if profileType ~= expectedType then
+		mMT:Print(L["This export belongs to another setting and cannot be imported here."])
+		return nil
+	end
+
+	return profileData
 end

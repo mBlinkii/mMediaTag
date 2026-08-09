@@ -5,6 +5,7 @@ if not L then return end
 L["Error decompressing data."] = true
 L["Error deserializing:"] = true
 L["Error importing profile. String is invalid or corrupted!"] = true
+L["This export belongs to another setting and cannot be imported here."] = true
 L["This export was created by an older version and can no longer be imported."] = true
 
 -- modules/datatexts/info_score.lua
@@ -108,6 +109,18 @@ L["Opening the spellbook via addons can lead to taints.\nThis occurs when protec
 
 -- modules/dock/store.lua
 L["WoW Token:"] = true
+
+-- modules/misc/addon_manager.lua
+L["Addon profile saved:"] = true
+L["Addon Profiles"] = true
+L["Addons with disabled dependencies:"] = true
+L["All Characters"] = true
+L["Category"] = true
+L["Delete Profile"] = true
+L["Filter"] = true
+L["Name of the addon profile:"] = true
+L["Protect ElvUI & mMT"] = true
+L["Save Current State"] = true
 
 -- modules/misc/auto_quest.lua
 L["[AutoQuest] Auto-accept paused (SHIFT held)."] = true
@@ -225,6 +238,14 @@ L["Font Size"] = true
 
 -- options/dock/volume.lua
 L["Colored Text"] = true
+
+-- options/misc/addon_manager.lua
+L["Add a profile dropdown and a filter to Blizzard's addon list."] = true
+L["Apply profiles account wide instead of only to the current character."] = true
+L["Apply to all characters"] = true
+L["Never disable ElvUI, its libraries and mMediaTag when a profile is applied."] = true
+L["Protect ElvUI and mMediaTag"] = true
+L["Save your enabled addons as a named set and switch between them from Blizzard's addon list."] = true
 
 -- options/misc/details.lua
 L["Adds a button to show or hide details on click. The button is only visible on mouse over."] = true
@@ -758,6 +779,7 @@ L["Sets automatically your class color for glow and border color on nameplates f
 L["Target & Glow color"] = true
 
 -- options/options_core.lua
+L["Addon Manager"] = true
 L["Data Panel Skin"] = true
 L["Datatexts"] = true
 L["Details embedded"] = true

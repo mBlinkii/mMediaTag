@@ -444,6 +444,13 @@ mMT.options = {
 			icon = "Interface\\Addons\\ElvUI_mMediaTag\\media\\options\\misc",
 			childGroups = "tab",
 			args = {
+				addon_manager = {
+					order = 0.5,
+					type = "group",
+					name = mMT:AddSettingsIcon(L["Addon Manager"], "log"),
+					childGroups = "tab",
+					args = {},
+				},
 				data_panel_skin = {
 					order = 1,
 					type = "group",
