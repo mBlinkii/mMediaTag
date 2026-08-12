@@ -1,18 +1,21 @@
 # Changelog - ElvUI_mMediaTag
 
-## [ver. 4.09] - TBD
+## [ver. 4.09] - 12.08.2026
 ### 🐛 FIX
-- FIX - [System]: Modules that hook into ElvUI only took effect after a reload or the next update - nameplates that already existed, the tracker skin and the interrupt spell of the current spec are picked up right away again.
 - FIX - [Objective-Tracker]: Completed objectives kept the normal text color instead of the completed color.
 - FIX - [Portraits]: Portraits no longer turn solid black while a unit's model is still loading, for example during quest or item transformations.
 - FIX - [DT-Dungeon]: The tooltip threw an error when no dungeon or raid difficulty had been set.
-- FIX - [DT-Skin]: The panel skin was reset whenever ElvUI refreshed its frame templates, for example after changing an ElvUI texture or border color.
 - FIX - [Interrupt-On-CD]: The castbar could keep the mMT color after the interrupt was used or after a cast was interrupted or failed, instead of returning to ElvUI's color.
 - FIX - [Important-Casts]: Important casts were not marked on nameplates at all unless the health bar color override was enabled.
 - FIX - [Tags]: The mMT-health:current tag was listed without a description.
 - FIX - [System]: An export string that belongs to another setting was silently ignored on import, now it is rejected with a message in the chat.
+- FIX - [System]: Opening the Great Vault, the Encounter Journal or the weekly affix tooltip threw an error on WoW 12.1.
+- FIX - [Tags]: The role, PvP, faction, class icon and spec icon tags threw an error on units whose identity is hidden in combat, which also stopped the other tags in the same text from updating.
+- FIX - [Portraits]: Class icon portraits threw an error on units whose identity is hidden in combat.
+- FIX - [DT-Score]: The group tooltip threw an error on units whose identity is hidden in combat.
 ### 🔧 UPDATE
-- UPDATE - [System]: Adapted to the current ElvUI, which reworked its font handling, media updates and module loading - fonts and mMT elements are applied correctly again on login.
+- UPDATE - [System]: Updated for WoW 12.1.
+- UPDATE - [System]: Adapted to the current ElvUI, which reworked its font handling, media updates, module loading and frame templates - fonts, nameplates, the tracker skin, the interrupt spell of the current spec and the datatext panel skin are applied correctly again without a reload.
 - UPDATE - [DT-Skin]: Export strings use a new format, so strings created by earlier versions can no longer be imported.
 - UPDATE - [Media-Pack]: Removed the duplicate statusbar textures B17 and N15, they were identical to B11 and N4.
 - UPDATE - [Media-Pack]: Renamed the chat backgrounds to close a numbering gap, Chat11 and Chat12 now show the images previously named Chat12 and Chat13.
