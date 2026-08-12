@@ -72,6 +72,13 @@ function mMT:TC(text, color)
 	return MEDIA.color[color]:WrapTextInColorCode(text)
 end
 
+-- startTime/duration are secret since 12.1, isActive is not - it is the only readable cooldown state.
+-- LuaDurationObject:HasExpired() is no alternative here, its return is secret as well.
+function mMT:CooldownStateText(isActive)
+	if isActive == nil or issecretvalue(isActive) then return "" end
+	return mMT:TC(isActive and L["Not Ready"] or L["Ready"], isActive and "red" or "green")
+end
+
 function mMT:GetRGB(color1, color2)
 	local c1 = MEDIA.color[color1 or "text"]
 

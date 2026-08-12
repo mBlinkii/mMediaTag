@@ -532,15 +532,20 @@ local function GetItemInfos(itemID)
 end
 
 local function GetCooldownTime(id, kind)
-	local start, duration, text
+	local start, duration, text, isActive
 
 	if kind == "spell" then
 		local spellCooldownInfo = GetSpellCooldown(id)
-		start = spellCooldownInfo.startTime
-		duration = spellCooldownInfo.duration
+		if spellCooldownInfo then
+			start = spellCooldownInfo.startTime
+			duration = spellCooldownInfo.duration
+			isActive = spellCooldownInfo.isActive
+		end
 	else
 		start, duration = GetItemCooldown(id)
 	end
+
+	if not start or not duration or E:IsSecretValue(start) or E:IsSecretValue(duration) then return mMT:CooldownStateText(isActive) end
 
 	local cooldown = start + duration - GetTime()
 

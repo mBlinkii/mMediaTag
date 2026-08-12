@@ -26,17 +26,20 @@ local function GetProfessionInfos(profession)
 end
 
 local function GetFireCoolDown()
-	local start, duration, text
+	local start, duration, text, isActive
 
 	if C_Spell then
 		local spellCooldownInfo = GetSpellCooldown(818)
 		if spellCooldownInfo then
 			start = spellCooldownInfo.startTime
 			duration = spellCooldownInfo.duration
+			isActive = spellCooldownInfo.isActive
 		end
 	else
 		start, duration = GetSpellCooldown(818)
 	end
+
+	if not start or not duration or E:IsSecretValue(start) or E:IsSecretValue(duration) then return mMT:CooldownStateText(isActive) end
 
 	local cooldown = start + duration - GetTime()
 
