@@ -352,7 +352,7 @@ local GetCurrentAffixes = C_MythicPlus.GetCurrentAffixes
 local GetAffixInfo = C_ChallengeMode.GetAffixInfo
 
 function mMT:GetWeeklyAffixes()
-	if not _G.ChallengesFrame then UIParentLoadAddOn("Blizzard_ChallengesUI") end
+	if not _G.ChallengesFrame then E:LoadAddon("Blizzard_ChallengesUI") end
 
 	local affixes = GetCurrentAffixes()
 	if not affixes then return L["No current Mythic+ affixes found."] end

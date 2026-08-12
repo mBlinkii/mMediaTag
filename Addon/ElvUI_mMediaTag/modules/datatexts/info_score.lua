@@ -13,7 +13,6 @@ local GetPlayerMythicPlusRatingSummary = C_PlayerInfo.GetPlayerMythicPlusRatingS
 local GetSpecificDungeonOverallScoreRarityColor = C_ChallengeMode.GetSpecificDungeonOverallScoreRarityColor
 local C_MythicPlus_RequestMapInfo = C_MythicPlus.RequestMapInfo
 local GetKeystoneLevelRarityColor = C_ChallengeMode.GetKeystoneLevelRarityColor
-local UIParentLoadAddOn = UIParentLoadAddOn
 local UnitName = UnitName
 local InCombatLockdown = InCombatLockdown
 local IsInGroup = IsInGroup
@@ -162,7 +161,7 @@ local function OnClick(self, button)
 		if IsShiftKeyDown() then
 			DB.keystones = {}
 		else
-			if not _G.WeeklyRewardsFrame then UIParentLoadAddOn("Blizzard_WeeklyRewards") end
+			if not _G.WeeklyRewardsFrame then E:LoadAddon("Blizzard_WeeklyRewards") end
 			if _G.WeeklyRewardsFrame:IsVisible() then
 				_G.WeeklyRewardsFrame:Hide()
 			else

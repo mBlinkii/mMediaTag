@@ -10,7 +10,6 @@ local CloseMenus = CloseMenus
 local HideUIPanel = HideUIPanel
 local ShowUIPanel = ShowUIPanel
 local ToggleFrame = ToggleFrame
-local UIParentLoadAddOn = UIParentLoadAddOn
 local IsAddOnLoaded = C_AddOns.IsAddOnLoaded
 local StoreEnabled = C_StorePublic.IsEnabled
 local PlayerSpellsUtil = _G.PlayerSpellsUtil
@@ -171,7 +170,7 @@ local function BuildMenuList()
 			color = "|c" .. MEDIA.color.gm_text_color.hex,
 			icon = icon and menu_icons.encounter,
 			func = function()
-				if not IsAddOnLoaded("Blizzard_EncounterJournal") then UIParentLoadAddOn("Blizzard_EncounterJournal") end
+				if not IsAddOnLoaded("Blizzard_EncounterJournal") then E:LoadAddon("Blizzard_EncounterJournal") end
 				ToggleFrame(_G.EncounterJournal)
 			end,
 		})

@@ -7,7 +7,6 @@ local DT = E:GetModule("DataTexts")
 local _G = _G
 local NONE = NONE
 local strupper = strupper
-local UIParentLoadAddOn = UIParentLoadAddOn
 local GetNumRandomDungeons = GetNumRandomDungeons
 local GetLFGRandomDungeonInfo = GetLFGRandomDungeonInfo
 local GetNumRFDungeons = GetNumRFDungeons
@@ -93,7 +92,7 @@ local function OnClick(self, button)
 		if IsShiftKeyDown() then
 			DB.keystones = {}
 		else
-			if not _G.WeeklyRewardsFrame then UIParentLoadAddOn("Blizzard_WeeklyRewards") end
+			if not _G.WeeklyRewardsFrame then E:LoadAddon("Blizzard_WeeklyRewards") end
 			if _G.WeeklyRewardsFrame:IsVisible() then
 				_G.WeeklyRewardsFrame:Hide()
 			else

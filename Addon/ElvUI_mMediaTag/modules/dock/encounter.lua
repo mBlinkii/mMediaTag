@@ -50,7 +50,7 @@ end
 local function OnClick(self)
 	if not E:AlertCombat() then
 		Dock:Click(self)
-		if not IsAddOnLoaded("Blizzard_EncounterJournal") then UIParentLoadAddOn("Blizzard_EncounterJournal") end
+		if not IsAddOnLoaded("Blizzard_EncounterJournal") then E:LoadAddon("Blizzard_EncounterJournal") end
 		ToggleFrame(_G.EncounterJournal)
 	end
 end
