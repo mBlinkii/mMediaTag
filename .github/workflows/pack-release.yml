@@ -1,0 +1,99 @@
+name: Media Pack Release
+
+# Laeuft bei jedem Pack-Tag, z.B.: git tag pack-v1.42 && git push origin pack-v1.42
+# Laedt ausschliesslich auf CurseForge hoch - es entsteht bewusst kein GitHub-Release,
+# damit das mMT-Release auf der Repo-Startseite "Latest" bleibt.
+on:
+  push:
+    tags:
+      - "pack-v*"
+
+permissions:
+  contents: read
+
+jobs:
+  pack-release:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v6
+
+      - name: Version aus Tag lesen, TOCs stempeln
+        id: meta
+        run: |
+          set -e
+          VERSION="${GITHUB_REF_NAME#pack-v}"
+          DATE=$(date +%d%m%Y)
+
+          # Suffix -test laedt als Alpha statt als Release hoch. Einen echten
+          # Trockenlauf gibt es hier nicht - ein CF-Upload ist nicht ruecknehmbar.
+          case "$VERSION" in
+            *-test)
+              VERSION="${VERSION%-test}"
+              echo "reltype=alpha" >> "$GITHUB_OUTPUT"
+              ;;
+            *)
+              echo "reltype=release" >> "$GITHUB_OUTPUT"
+              ;;
+          esac
+
+          echo "zipname=mMT_MediaPack-v${VERSION}-${DATE}" >> "$GITHUB_OUTPUT"
+          echo "version=${VERSION}" >> "$GITHUB_OUTPUT"
+
+          for TOC in Addon/!mMT_MediaPack/!mMT_MediaPack_*.toc; do
+            [ -e "$TOC" ] || continue
+            sed -i "s/^## Version:.*/## Version: ${VERSION}/" "$TOC"
+          done
+
+      - name: Subversion installieren
+        run: sudo apt-get update -qq && sudo apt-get install -y -qq subversion
+
+      # Die Libs liegen nicht im Repo. Ohne sie laedt das Pack standalone nicht.
+      - name: Libs holen
+        run: |
+          set -e
+          PACK="Addon/!mMT_MediaPack/libs"
+          rm -rf "$PACK"
+          mkdir -p "$PACK"
+
+          svn export --force https://repos.curseforge.com/wow/libstub/trunk "$PACK/LibStub"
+          svn export --force https://repos.curseforge.com/wow/callbackhandler/trunk/CallbackHandler-1.0 "$PACK/CallbackHandler-1.0"
+          svn export --force https://repos.curseforge.com/wow/libsharedmedia-3-0/trunk/LibSharedMedia-3.0 "$PACK/LibSharedMedia-3.0"
+
+      - name: Zip bauen
+        run: |
+          cd Addon
+          zip -r "../${{ steps.meta.outputs.zipname }}.zip" "!mMT_MediaPack" -x "*/.svn/*"
+
+      # Anders als mMT hat das Pack mehrere Flavor-TOCs - alle einlesen und
+      # doppelte Versionen verwerfen. CurseForge lehnt unbekannte Versions-
+      # strings ab und bricht den Lauf ab, das faellt also auf.
+      - name: Spielversionen aus allen TOCs lesen
+        id: game
+        run: |
+          set -e
+          VERSIONS=""
+          for TOC in Addon/!mMT_MediaPack/!mMT_MediaPack_*.toc; do
+            [ -e "$TOC" ] || continue
+            IFACES=$(grep -oP '^## Interface:\s*\K.+' "$TOC" | tr -d '\r ')
+            IFS=',' read -ra ARR <<< "$IFACES"
+            for I in "${ARR[@]}"; do
+              V="$((10#$I / 10000)).$(((10#$I % 10000) / 100)).$((10#$I % 100))"
+              case ",$VERSIONS," in *",$V,"*) continue ;; esac
+              VERSIONS="${VERSIONS:+$VERSIONS,}$V"
+            done
+          done
+          echo "versions=$VERSIONS" >> "$GITHUB_OUTPUT"
+          echo "Spielversionen: $VERSIONS"
+
+      - name: Auf CurseForge hochladen
+        uses: itsmeow/curseforge-upload@v3
+        with:
+          token: ${{ secrets.CF_API_TOKEN }}
+          project_id: 696338
+          game_endpoint: wow
+          file_path: ${{ steps.meta.outputs.zipname }}.zip
+          display_name: mMT Media Pack v${{ steps.meta.outputs.version }}
+          game_versions: ${{ steps.game.outputs.versions }}
+          release_type: ${{ steps.meta.outputs.reltype }}
+          changelog: "Media Pack v${{ steps.meta.outputs.version }} - details are listed in the mMediaTag changelog."
+          changelog_type: text
