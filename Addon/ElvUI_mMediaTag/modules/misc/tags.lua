@@ -169,7 +169,7 @@ local function GetColorString(color)
 end
 
 local function GetFactionData(unit)
-	if not UnitIsPlayer(unit) then return end
+	if E:IsSecretUnit(unit) or not UnitIsPlayer(unit) then return end
 
 	local guid = UnitGUID(unit)
 	if not guid then return end
@@ -407,37 +407,52 @@ end)
 E:AddTagInfo("mMT-health:percent", mMT.NameShort .. " " .. L["Health"], L["Returns the current health percent of the unit (in combat)."])
 
 E:AddTag("mMT-role", "PLAYER_ROLES_ASSIGNED GROUP_ROSTER_UPDATE", function(unit)
+	if E:IsSecretUnit(unit) then return end
+
 	local unitRole = UnitGroupRolesAssigned(unit)
 	return unitRole and roleColors[unitRole]:WrapTextInColorCode(roleNames[unitRole]) or ""
 end)
 E:AddTagInfo("mMT-role", mMT.NameShort .. " " .. L["Miscellaneous"], L["Returns the role of the unit (Tank, Healer, DPS)."])
 
 E:AddTag("mMT-role:icon", "PLAYER_ROLES_ASSIGNED GROUP_ROSTER_UPDATE", function(unit)
+	if E:IsSecretUnit(unit) then return end
+
 	local unitRole = UnitGroupRolesAssigned(unit)
 	return unitRole and E:TextureString(roleIcons[unitRole], ":14:14") or ""
 end)
 E:AddTagInfo("mMT-role:icon", mMT.NameShort .. " " .. L["Miscellaneous"], L["Returns the role icon of the unit (Tank, Healer, DPS)."])
 
 E:AddTag("mMT-role:icon:blizz", "PLAYER_ROLES_ASSIGNED GROUP_ROSTER_UPDATE", function(unit)
+	if E:IsSecretUnit(unit) then return end
+
 	local unitRole = UnitGroupRolesAssigned(unit)
 	return unitRole and roleIconsBlizz[unitRole] or ""
 end)
 E:AddTagInfo("mMT-role:icon:blizz", mMT.NameShort .. " " .. L["Miscellaneous"], L["Returns the role icon of the unit (Tank, Healer, DPS)."])
 
 E:AddTag("mMT-role:target", "PLAYER_ROLES_ASSIGNED GROUP_ROSTER_UPDATE", function(unit)
-	local unitRole = UnitGroupRolesAssigned(unit .. "target")
+	local target = unit .. "target"
+	if E:IsSecretUnit(target) then return end
+
+	local unitRole = UnitGroupRolesAssigned(target)
 	return unitRole and roleColors[unitRole]:WrapTextInColorCode(roleNames[unitRole]) or ""
 end)
 E:AddTagInfo("mMT-role:target", mMT.NameShort .. " " .. L["Miscellaneous"], L["Returns the role of the unit (Tank, Healer, DPS)."])
 
 E:AddTag("mMT-role:target:icon", "PLAYER_ROLES_ASSIGNED GROUP_ROSTER_UPDATE", function(unit)
-	local unitRole = UnitGroupRolesAssigned(unit .. "target")
+	local target = unit .. "target"
+	if E:IsSecretUnit(target) then return end
+
+	local unitRole = UnitGroupRolesAssigned(target)
 	return unitRole and E:TextureString(roleIcons[unitRole], ":14:14") or ""
 end)
 E:AddTagInfo("mMT-role:target:icon", mMT.NameShort .. " " .. L["Miscellaneous"], L["Returns the role icon of the unit (Tank, Healer, DPS)."])
 
 E:AddTag("mMT-role:target:icon:blizz", "PLAYER_ROLES_ASSIGNED GROUP_ROSTER_UPDATE", function(unit)
-	local unitRole = UnitGroupRolesAssigned(unit .. "target")
+	local target = unit .. "target"
+	if E:IsSecretUnit(target) then return end
+
+	local unitRole = UnitGroupRolesAssigned(target)
 	return unitRole and roleIconsBlizz[unitRole] or ""
 end)
 E:AddTagInfo("mMT-role:target:icon:blizz", mMT.NameShort .. " " .. L["Miscellaneous"], L["Returns the role icon of the unit (Tank, Healer, DPS)."])
@@ -481,6 +496,8 @@ E:AddTagInfo(
 )
 
 E:AddTag("mMT-pvp", "UNIT_FACTION", function(unit)
+	if E:IsSecretUnit(unit) then return end
+
 	local factionGroup = UnitFactionGroup(unit)
 	if UnitIsPVP(unit) and (factionGroup == "Horde" or factionGroup == "Alliance") then return pvpIconString end
 end)
@@ -540,6 +557,7 @@ do
 	for style, _ in next, classIconNames do
 		local tag = format("%s:%s", "mMT-classicons", style)
 		E:AddTag(tag, "UNIT_NAME_UPDATE", function(unit, _, args)
+			if E:IsSecretUnit(unit) then return end
 			if not (UnitIsPlayer(unit) or (E.Retail and UnitInPartyIsAI(unit))) then return end
 
 			local _, class = UnitClass(unit)
@@ -566,6 +584,7 @@ do
 	for style, _ in next, specIconNames do
 		local tag = format("%s:%s", "mMT-specicons", style)
 		E:AddTag(tag, "UNIT_NAME_UPDATE", function(unit, _, args)
+			if E:IsSecretUnit(unit) then return end
 			if not (UnitIsPlayer(unit) or (E.Retail and UnitInPartyIsAI(unit))) then return end
 
 			local info = E.Retail and E:GetUnitSpecInfo(unit)

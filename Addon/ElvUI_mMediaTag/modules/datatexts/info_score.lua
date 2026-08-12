@@ -51,6 +51,8 @@ local function SaveMyKeystone()
 end
 
 local function UnitClassColor(unit)
+	if E:IsSecretUnit(unit) then return "|cffffffff" end
+
 	local _, unitClass = UnitClass(unit)
 	local classColor = E.oUF.colors.class[unitClass]
 	return classColor and E:RGBToHex(classColor.r, classColor.g, classColor.b) or "|cffffffff"
@@ -176,16 +178,17 @@ local function OnLeave(self)
 end
 
 local function FormatUnitInfo(unit, unitName, keystoneInfo, unitGear)
+	local isLeader = E:NotSecretUnit(unit) and UnitIsGroupLeader(unit)
 	local iLevelStr = ""
 	if unitGear and unitGear.ilevel then iLevelStr = "   " .. armorIcon .. " " .. format("|c%s%s|r", COLOR_ILEVEL_HEX, unitGear.ilevel) end
 
 	if keystoneInfo then
 		local ratingHex = FormatRatingColor(keystoneInfo.rating)
 		local unitRating = format("|c%s%s|r", ratingHex, keystoneInfo.rating)
-		return (UnitIsGroupLeader(unit) and leaderIcon .. " " or "") .. unitName .. "   " .. scoreIcon .. " " .. unitRating .. iLevelStr
+		return (isLeader and leaderIcon .. " " or "") .. unitName .. "   " .. scoreIcon .. " " .. unitRating .. iLevelStr
 	end
 
-	return (UnitIsGroupLeader(unit) and leaderIcon or "") .. unitName .. iLevelStr
+	return (isLeader and leaderIcon or "") .. unitName .. iLevelStr
 end
 
 local function AddFallbackGroupLine(unit)
@@ -203,7 +206,7 @@ local function AddFallbackGroupLine(unit)
 
 	local bestRunStr = (bestRun > 0) and format("|c%s%s|r", ratingHex, L["Mythic+ Best Run: +"] .. bestRun) or ""
 
-	DT.tooltip:AddDoubleLine((UnitIsGroupLeader(unit) and leaderIcon or "") .. unitName .. "   " .. scoreIcon .. " " .. format("|c%s%s|r", ratingHex, unitRating), bestRunStr)
+	DT.tooltip:AddDoubleLine((E:NotSecretUnit(unit) and UnitIsGroupLeader(unit) and leaderIcon or "") .. unitName .. "   " .. scoreIcon .. " " .. format("|c%s%s|r", ratingHex, unitRating), bestRunStr)
 end
 
 local function GetGroupKeystone()

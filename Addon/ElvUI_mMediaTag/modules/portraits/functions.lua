@@ -136,7 +136,7 @@ function Update(self, event)
 	local unit = self.unit or self.__owner.unit
 	if not unit then return end
 
-	local class = select(2, UnitClass(unit))
+	local class = E:NotSecretUnit(unit) and select(2, UnitClass(unit)) or nil
 	local isDead = UnitIsDeadOrGhost(unit)
 	local guid = UnitGUID(unit)
 	local secretGUID = E:IsSecretValue(guid)
