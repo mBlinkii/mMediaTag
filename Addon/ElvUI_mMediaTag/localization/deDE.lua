@@ -883,6 +883,13 @@ L["Page:"] = "Seite:"
 L["Info: Auctionator is not installed."] = "Info: Auctionator ist nicht installiert."
 L["Info: This skins the Shopping, Selling, Cancelling and Auctionator tabs. Rows inside the result lists keep their default look."] = "Info: Geskinnt werden die Tabs Einkauf, Verkauf, Abbrechen und Auctionator. Zeilen innerhalb der Ergebnislisten behalten ihr Standardaussehen."
 
+-- options/skin/bigwigs.lua
+L["Info: BigWigs is not installed."] = "Info: BigWigs ist nicht installiert."
+L["Info: The keystone window is the /key list, the queue timer is the bar below the dungeon invite popup. Boss bars keep their own BigWigs style."] = "Info: Das Schlüsselstein-Fenster ist die /key-Liste, der Warteschlangen-Timer ist der Balken unter dem Dungeon-Einladungsfenster. Bossbalken behalten ihren BigWigs-Stil."
+L["Keystone Window"] = "Schlüsselstein-Fenster"
+L["Original"] = "Original"
+L["Queue Timer Bar"] = "Warteschlangen-Balken"
+
 -- options/skin/classcodex.lua
 L["Info: Class Codex is not installed."] = "Info: Class Codex ist nicht installiert."
 L["Info: This skins the codex panel, the compendium, the loadout dock and the talent pane widget. The copy dialog keeps its default look."] = "Info: Geskinnt werden das Codex-Fenster, das Compendium, das Loadout-Dock und das Widget im Talentfenster. Der Kopier-Dialog behält sein Standardaussehen."

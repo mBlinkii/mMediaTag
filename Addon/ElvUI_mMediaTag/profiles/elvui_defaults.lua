@@ -36,6 +36,15 @@ P.skins = {
 	classcodex = {
 		enable = false,
 	},
+	bigwigs = {
+		enable = false,
+		keystones = true,
+		queue_timer = true,
+		color = {
+			mode = "original",
+			color = { r = 1, g = 0.1, b = 0, a = 1 },
+		},
+	},
 }
 
 P.dice_button = {

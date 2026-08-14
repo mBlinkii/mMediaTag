@@ -883,6 +883,13 @@ L["Page:"] = true
 L["Info: Auctionator is not installed."] = true
 L["Info: This skins the Shopping, Selling, Cancelling and Auctionator tabs. Rows inside the result lists keep their default look."] = true
 
+-- options/skin/bigwigs.lua
+L["Info: BigWigs is not installed."] = true
+L["Info: The keystone window is the /key list, the queue timer is the bar below the dungeon invite popup. Boss bars keep their own BigWigs style."] = true
+L["Keystone Window"] = true
+L["Original"] = true
+L["Queue Timer Bar"] = true
+
 -- options/skin/classcodex.lua
 L["Info: Class Codex is not installed."] = true
 L["Info: This skins the codex panel, the compendium, the loadout dock and the talent pane widget. The copy dialog keeps its default look."] = true
