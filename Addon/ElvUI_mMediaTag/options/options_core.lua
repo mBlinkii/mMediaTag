@@ -565,8 +565,15 @@ mMT.options = {
 					childGroups = "tab",
 					args = {},
 				},
-				premade_groups_filter = {
+				classcodex = {
 					order = 3,
+					type = "group",
+					name = mMT:AddSettingsIcon("Class Codex", "book"),
+					childGroups = "tab",
+					args = {},
+				},
+				premade_groups_filter = {
+					order = 4,
 					type = "group",
 					name = mMT:AddSettingsIcon("Premade Groups Filter", "dungeon"),
 					childGroups = "tab",

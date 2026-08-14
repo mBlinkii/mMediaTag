@@ -33,6 +33,9 @@ P.skins = {
 	premade_groups_filter = {
 		enable = false,
 	},
+	classcodex = {
+		enable = false,
+	},
 }
 
 P.dice_button = {

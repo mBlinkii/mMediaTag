@@ -883,6 +883,10 @@ L["Page:"] = true
 L["Info: Auctionator is not installed."] = true
 L["Info: This skins the Shopping, Selling, Cancelling and Auctionator tabs. Rows inside the result lists keep their default look."] = true
 
+-- options/skin/classcodex.lua
+L["Info: Class Codex is not installed."] = true
+L["Info: This skins the codex panel, the compendium, the loadout dock and the talent pane widget. The copy dialog keeps its default look."] = true
+
 -- options/skin/premade_groups_filter.lua
 L["Info: Premade Groups Filter is not installed."] = true
 L["Info: This skins the filter dialog, its panels, dropdowns and popups."] = true
