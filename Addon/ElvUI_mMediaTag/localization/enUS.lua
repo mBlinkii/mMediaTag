@@ -466,7 +466,9 @@ L["for debug mode."] = true
 -- core/cmd.lua
 L["Added dev GUID:"] = true
 L["Available commands:"] = true
+L["Clear collected unknown IDs"] = true
 L["DEV mode active"] = true
+L["Developer commands:"] = true
 L["Enable function profiling (DEV only)"] = true
 L["FunctionProfiler is not loaded."] = true
 L["GUID:"] = true
@@ -474,6 +476,7 @@ L["Lua errors off."] = true
 L["Profiling already active."] = true
 L["Profiling enabled, functions wrapped:"] = true
 L["Profiling is only available in DEV mode."] = true
+L["Register this character as developer"] = true
 L["Show the current version"] = true
 L["Show this help message"] = true
 L["Show your player GUID"] = true

@@ -68,8 +68,13 @@ local function PrintHelp()
 	mMT:Print(MEDIA.color.purple:WrapTextInColorCode("/mmt"), MEDIA.color.green:WrapTextInColorCode("version"), "-", L["Show the current version"])
 	mMT:Print(MEDIA.color.purple:WrapTextInColorCode("/mmt"), MEDIA.color.green:WrapTextInColorCode("debug"), "-", L["Toggle debug mode"])
 	mMT:Print(MEDIA.color.purple:WrapTextInColorCode("/mmt"), MEDIA.color.green:WrapTextInColorCode("debug safe"), "-", L["Toggle debug mode with safe addons"])
+	if not DB.DEV then return end
+
+	mMT:Print(L["Developer commands:"])
 	mMT:Print(MEDIA.color.purple:WrapTextInColorCode("/mmt"), MEDIA.color.green:WrapTextInColorCode("guid"), "-", L["Show your player GUID"])
-	if DB.DEV then mMT:Print(MEDIA.color.purple:WrapTextInColorCode("/mmt"), MEDIA.color.green:WrapTextInColorCode("profile"), "-", L["Enable function profiling (DEV only)"]) end
+	mMT:Print(MEDIA.color.purple:WrapTextInColorCode("/mmt"), MEDIA.color.green:WrapTextInColorCode("profile"), "-", L["Enable function profiling (DEV only)"])
+	mMT:Print(MEDIA.color.purple:WrapTextInColorCode("/mmt"), MEDIA.color.green:WrapTextInColorCode("adddev"), "-", L["Register this character as developer"])
+	mMT:Print(MEDIA.color.purple:WrapTextInColorCode("/mmt"), MEDIA.color.green:WrapTextInColorCode("clearunknownids"), "-", L["Clear collected unknown IDs"])
 end
 
 local function PrintVersion()
