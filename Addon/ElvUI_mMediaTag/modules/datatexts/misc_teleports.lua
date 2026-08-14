@@ -263,15 +263,15 @@ local teleportsIDs = {
 	mageportals = {},
 
 	season = {
-		-- midnight s1
-		[393273] = "AA",
-		[1254572] = "MT",
-		[1254559] = "MC",
-		[1254563] = "NPX",
-		[1254555] = "POS",
-		[1254551] = "SEAT",
-		[159898] = "SR",
-		[1254400] = "WS",
+		-- midnight s2
+		[1286801] = "BV",
+		[1286804] = "VA",
+		[1286807] = "DON",
+		[1286809] = "MR",
+		[1286812] = "AOF",
+		[1286828] = "TOS",
+		[1286831] = "KR",
+		[393256] = "RLP",
 	},
 
 	tww = {
@@ -298,6 +298,11 @@ local teleportsIDs = {
 		[1254559] = "MC",
 		[1254563] = "NPX",
 		[1254400] = "WS",
+		[1286801] = "BV",
+		[1286804] = "VA",
+		[1286807] = "DON",
+		[1286809] = "MR",
+		[1286812] = "AOF",
 	},
 
 	dungeonportals = {
@@ -306,6 +311,11 @@ local teleportsIDs = {
 		[1254559] = "MC",
 		[1254563] = "NPX",
 		[1254400] = "WS",
+		[1286801] = "BV",
+		[1286804] = "VA",
+		[1286807] = "DON",
+		[1286809] = "MR",
+		[1286812] = "AOF",
 
 		-- tww
 		[1216786] = "FLOOD",
@@ -351,6 +361,8 @@ local teleportsIDs = {
 		[464256] = "SIEGE",
 		[410074] = "UNDR",
 		[424167] = "WM",
+		[1286828] = "TOS",
+		[1286831] = "KR",
 
 		-- legion
 		[424153] = "BRH",
@@ -725,15 +737,15 @@ function mMT:UpdateTeleports()
 end
 
 local seasonChallengeMaps = {
-	-- midnight s1
-	[393273] = 402, -- AA - Algeth'ar Academy
-	[1254572] = 558, -- MT - Magisters' Terrace
-	[1254559] = 560, -- MC - Maisara Caverns
-	[1254563] = 559, -- NPX - Nexus Point Xenas
-	[1254555] = 556, -- POS - Pit of Saron
-	[1254551] = 239, -- SEAT - Seat of the Triumvirate
-	[159898] = 161, -- SR - Skyreach
-	[1254400] = 557, -- WS - Windrunner Spire
+	-- midnight s2
+	[1286801] = 584, -- BV - The Blinding Vale
+	[1286804] = 585, -- VA - Voidscar Arena
+	[1286807] = 586, -- DON - Den of Nalorakk
+	[1286809] = 587, -- MR - Murder Row
+	[1286812] = 588, -- AOF - Altar of Fangs
+	[1286828] = 250, -- TOS - Temple of Sethraliss
+	[1286831] = 249, -- KR - Kings' Rest
+	[393256] = 399, -- RLP - Ruby Life Pools
 }
 
 local activeAppStatus = {
