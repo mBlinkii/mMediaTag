@@ -12,6 +12,7 @@ local C_Timer = C_Timer
 local IsAddOnLoaded = _G.C_AddOns and _G.C_AddOns.IsAddOnLoaded or _G.IsAddOnLoaded
 
 local COMPENDIUM_TABS = 6
+local TITLE_HEIGHT = 31 -- the title bar ends here, the content frame starts two pixels below
 local SWEEP_DELAY = 0.05
 local WATCH_INTERVAL = 1
 
@@ -102,6 +103,14 @@ local function SkinPanel()
 
 	panel:SetBackdrop(nil)
 	panel:SetTemplate("Transparent")
+
+	local divider = panel:CreateTexture(nil, "OVERLAY")
+	divider:SetTexture(E.media.blankTex)
+	divider:SetVertexColor(unpack(E.media.rgbvaluecolor))
+	divider:Point("TOPLEFT", panel, "TOPLEFT", 8, -TITLE_HEIGHT)
+	divider:Point("TOPRIGHT", panel, "TOPRIGHT", -8, -TITLE_HEIGHT)
+	divider:Height(1)
+
 	panel:HookScript("OnShow", ScheduleSweep)
 	panel:HookScript("OnSizeChanged", ScheduleSweep) -- the panel is resized on every content relayout
 
