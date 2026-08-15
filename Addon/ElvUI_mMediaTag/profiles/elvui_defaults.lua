@@ -32,6 +32,13 @@ P.skins = {
 	},
 	premade_groups_filter = {
 		enable = false,
+		checkbox = {
+			size = 16,
+			color = {
+				mode = "original",
+				color = { r = 1, g = 0.82, b = 0, a = 0.8 },
+			},
+		},
 	},
 	classcodex = {
 		enable = false,

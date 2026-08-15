@@ -8,11 +8,79 @@ local _G = _G
 local ipairs = ipairs
 local pairs = pairs
 local select = select
+local strfind = strfind
 local unpack = unpack
 local IsAddOnLoaded = _G.C_AddOns and _G.C_AddOns.IsAddOnLoaded or _G.IsAddOnLoaded
 
 local DROPDOWN_WIDTH = 145
 local MENU_ALPHA = 0.25
+local TITLE_HEIGHT = 24 -- clears the title text and the close button, still above the panel headers
+
+local checkBoxes = {}
+
+local function CheckColor()
+	local db = module.db.checkbox.color
+
+	if db.mode == "class" then
+		return MEDIA.myclass.r, MEDIA.myclass.g, MEDIA.myclass.b, db.color.a
+	elseif db.mode == "custom" then
+		return db.color.r, db.color.g, db.color.b, db.color.a
+	end
+
+	return 1, 0.82, 0, 0.8 -- ElvUI's own checked color
+end
+
+-- turn an edge anchor into the equivalent CENTER offset, a resized box would otherwise drift away from its label
+local function CenterOffsets(point, width, height, x, y)
+	if strfind(point, "LEFT") then
+		x = x + width / 2
+	elseif strfind(point, "RIGHT") then
+		x = x - width / 2
+	end
+
+	if strfind(point, "TOP") then
+		y = y - height / 2
+	elseif strfind(point, "BOTTOM") then
+		y = y + height / 2
+	end
+
+	return x, y
+end
+
+local function StyleCheckBox(box)
+	if not box.mmt_center then
+		local point, relativeTo, relativePoint, x, y = box:GetPoint(1)
+		if point then
+			local cx, cy = CenterOffsets(point, box:GetWidth(), box:GetHeight(), x, y)
+			box.mmt_center = { relativeTo, relativePoint, cx, cy }
+		end
+	end
+
+	local size = module.db.checkbox.size
+	box:SetSize(size, size)
+
+	if box.mmt_center then
+		local relativeTo, relativePoint, x, y = unpack(box.mmt_center)
+		box:ClearAllPoints()
+		box:SetPoint("CENTER", relativeTo, relativePoint, x, y)
+	end
+
+	-- HandleCheckBox insets the backdrop by 4, which would make the box smaller than the configured size
+	if box.backdrop then box.backdrop:SetInside(nil, 0, 0) end
+
+	local checked = box.GetCheckedTexture and box:GetCheckedTexture()
+	if checked then checked:SetVertexColor(CheckColor()) end
+end
+
+local function SkinCheckBox(box)
+	if box.mmt_skinned then return end
+	box.mmt_skinned = true
+
+	S:HandleCheckBox(box)
+	StyleCheckBox(box)
+
+	checkBoxes[#checkBoxes + 1] = box
+end
 
 local function Apply(handler, ...)
 	for i = 1, select("#", ...) do
@@ -82,7 +150,8 @@ local function SkinTree(frame)
 	if frame.mmt_skinned then return end
 	frame.mmt_skinned = true
 
-	Apply(S.HandleCheckBox, frame.Act)
+	if frame.Act then SkinCheckBox(frame.Act) end
+
 	Apply(S.HandleEditBox, frame.Min, frame.Max)
 
 	if frame.DropDown then
@@ -124,6 +193,14 @@ local function SkinPremadeGroupsFilter()
 
 	S:HandlePortraitFrame(dialog)
 
+	-- HandlePortraitFrame strips the title art, so the header gets its own divider
+	local divider = dialog:CreateTexture(nil, "OVERLAY")
+	divider:SetTexture(E.media.blankTex)
+	divider:SetVertexColor(unpack(E.media.rgbvaluecolor))
+	divider:Point("TOPLEFT", dialog, "TOPLEFT", 8, -TITLE_HEIGHT)
+	divider:Point("TOPRIGHT", dialog, "TOPRIGHT", -8, -TITLE_HEIGHT)
+	divider:Height(1)
+
 	Apply(S.HandleMaxMinFrame, dialog.MaximizeMinimizeFrame)
 	Apply(S.HandleButton, dialog.RefreshButton, dialog.ResetButton, dialog.SettingsButton)
 	Apply(S.HandleIcon, dialog.SettingsButton and dialog.SettingsButton.Icon)
@@ -139,9 +216,18 @@ end
 function module:Initialize()
 	module.db = E.db.mMediaTag.skins.premade_groups_filter
 
-	if not (module.db and module.db.enable) or module.isRegistered or not IsAddOnLoaded("PremadeGroupsFilter") then return end
+	if not (module.db and module.db.enable) or not IsAddOnLoaded("PremadeGroupsFilter") then return end
+
+	for _, box in ipairs(checkBoxes) do
+		StyleCheckBox(box)
+	end
+
+	if module.isRegistered then return end
 
 	module.isRegistered = true
+
+	-- the PGF toggle on the group finder exists from load on, it does not wait for the dialog
+	if _G.UsePGFButton then SkinCheckBox(_G.UsePGFButton) end
 
 	local dialog = _G.PremadeGroupsFilterDialog
 	if not dialog then return end

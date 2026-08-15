@@ -895,6 +895,7 @@ L["Info: Class Codex is not installed."] = true
 L["Info: This skins the codex panel, the compendium, the loadout dock and the talent pane widget. The copy dialog keeps its default look."] = true
 
 -- options/skin/premade_groups_filter.lua
+L["Checkboxes"] = true
 L["Info: Premade Groups Filter is not installed."] = true
 L["Info: This skins the filter dialog, its panels, dropdowns and popups."] = true
 
