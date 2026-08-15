@@ -539,7 +539,7 @@ local eventHandlers = {
 	UNIT_PET = ForceUpdate,
 }
 
-local function OnEvent(self, event, eventUnit, arg)
+local function OnEvent(self, event, eventUnit)
 	-- hidden frames do no event work, OnShow catches up with one ForceUpdate
 	if not self:IsVisible() then return end
 
@@ -549,7 +549,7 @@ local function OnEvent(self, event, eventUnit, arg)
 		ApplyUnitEvents(self) -- unit token changed - re-target filtered events
 	end
 
-	if eventHandlers[event] then eventHandlers[event](self, event, eventUnit, arg) end
+	if eventHandlers[event] then eventHandlers[event](self, event, eventUnit) end
 end
 
 local function adjustColor(color, shift)
