@@ -576,6 +576,29 @@ local function SkinAuctionator()
 	end
 end
 
+local DIALOG_FUNCTIONS = { "ShowConfirm", "ShowConfirmAlt", "ShowEditBox", "ShowMoney" }
+
+-- Auctionator builds its own dialogs, named AuctionatorDialog1..n and created on first use
+local function SkinDialogs()
+	local index = 1
+	local dialog = _G["AuctionatorDialog" .. index]
+
+	while dialog do
+		if not dialog.mmt_skinned then
+			dialog.mmt_skinned = true
+
+			dialog:StripTextures() -- the dark background texture and the NineSlice dialog art
+			dialog:SetTemplate("Transparent")
+
+			Apply(S.HandleButton, dialog.acceptButton, dialog.altButton, dialog.cancelButton)
+			Apply(S.HandleEditBox, dialog.editBox)
+		end
+
+		index = index + 1
+		dialog = _G["AuctionatorDialog" .. index]
+	end
+end
+
 local function OnAuctionHouseShow()
 	-- Auctionator builds its tab frames inside its own OnShow during the same event, so skin a frame later
 	if not module.isSkinned then E:Delay(0, SkinAuctionator) end
@@ -596,6 +619,14 @@ function module:Initialize()
 	if not (module.db and module.db.enable) or module.isRegistered or not IsAddOnLoaded("Auctionator") then return end
 
 	module.isRegistered = true
+
+	-- the dialogs announce themselves nowhere, so skin them right after the call that builds them
+	local dialogs = _G.Auctionator and _G.Auctionator.Dialogs
+	if dialogs then
+		for _, name in ipairs(DIALOG_FUNCTIONS) do
+			if dialogs[name] then hooksecurefunc(dialogs, name, SkinDialogs) end
+		end
+	end
 
 	-- IsAddOnLoaded returns two values, the parentheses keep the second out of AddCallbackForAddon's bypass slot
 	S:AddCallbackForAddon("Blizzard_AuctionHouseUI", "mMT_AuctionatorSkin", RegisterHook, (IsAddOnLoaded("Blizzard_AuctionHouseUI")))
