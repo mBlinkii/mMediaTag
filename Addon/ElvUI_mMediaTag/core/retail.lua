@@ -53,7 +53,9 @@ local shortNames = {
 	[3038] = "GI", --Gnarldor Isle (12.1)
 	[3077] = "ROG", --The Ring of Glory (12.1)
 	[3079] = "VD", --Venomfall Deeps (12.1)
-	[2735] = "FP", --Gruenderspitze (TODO: verify ID/english name)
+
+	-- Midnight Housing
+	[2735] = "FP", --Founder's Point
 
 	-- The War Within Dungeons
 	[2648] = "ROOK", --The Rookery

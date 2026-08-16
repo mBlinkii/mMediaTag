@@ -21,7 +21,9 @@ local tracker_default_ids = {
 	[3442] = { isCurrency = true, color = "FF4FFCFF" }, -- Adventurer Mistcrest
 
 	-- midnight
-	[3378] = { isCurrency = true, color = "FFFFAE17" }, -- Dawnlight Manaflux
+	[3465] = { isCurrency = true, color = "FFFFAE17" }, -- Venomblight Manaflux
+	[3509] = { isCurrency = true, color = "FF2FD8C4" }, -- Tidal Spark Dust
+	[3418] = { isCurrency = true, color = "FF6B4FE0" }, -- Nebulous Voidcore
 	[3028] = { isCurrency = true, color = "FFEC46FF" }, -- Restored Coffer Key
 	[2803] = { isCurrency = true, color = "FFEC46FF" }, -- Undercoin
 

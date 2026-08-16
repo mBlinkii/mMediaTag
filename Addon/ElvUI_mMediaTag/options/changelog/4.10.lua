@@ -7,6 +7,7 @@ mMT.Changelog[410] = {
 	},
 	UPDATE = {
 		"[DT-Teleports]: The season list now shows the Midnight Season 2 dungeons, and the missing Midnight dungeon portals were added to the Midnight and dungeon submenus.",
+		"[DT-Tracker]: The default currency list is updated for Midnight Season 2, with the Mistcrests, Venomblight Manaflux, Tidal Spark Dust and Nebulous Voidcore.",
 		"[Skins]: Auctionator's own confirmation, name and money dialogs now match ElvUI as well.",
 		"[Skins]: The Premade Groups Filter checkboxes can be resized and colored, in the ElvUI color, your class color or a custom one, and the PGF button on the group finder is skinned as well.",
 		"[Skins]: The Premade Groups Filter window now has a divider below its title, like the BugSack skin.",
