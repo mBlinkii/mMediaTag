@@ -3,6 +3,7 @@
 ## [ver. 4.10] - TBD
 ### 🐛 FIX
 - FIX - [Datatext]: The Teleports and Professions datatexts threw an error when WoW returned a protected cooldown value.
+- FIX - [Phaseicon]: The phase icon could taint when WoW returned a protected phase reason.
 ### 🔧 UPDATE
 - UPDATE - [DT-Teleports]: The season list now shows the Midnight Season 2 dungeons, and the missing Midnight dungeon portals were added to the Midnight and dungeon submenus.
 - UPDATE - [DT-Tracker]: The default currency list is updated for Midnight Season 2, with the Mistcrests, Venomblight Manaflux, Tidal Spark Dust and Nebulous Voidcore.

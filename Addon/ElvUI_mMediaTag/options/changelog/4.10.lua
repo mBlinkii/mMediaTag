@@ -7,6 +7,7 @@ mMT.Changelog[410] = {
 	},
 	FIX = {
 		"[Datatext]: The Teleports and Professions datatexts threw an error when WoW returned a protected cooldown value.",
+		"[Phaseicon]: The phase icon could taint when WoW returned a protected phase reason.",
 	},
 	UPDATE = {
 		"[DT-Teleports]: The season list now shows the Midnight Season 2 dungeons, and the missing Midnight dungeon portals were added to the Midnight and dungeon submenus.",

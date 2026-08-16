@@ -11,10 +11,12 @@ local function Configure_PhaseIcon(frame)
 end
 
 local function PostUpdate_PhaseIcon(self, hidden, phaseReason)
-	local key = phaseReason == PhaseReason.TimerunningHwt and "TimerunningHwt"
-		or phaseReason == PhaseReason.ChromieTime and "ChromieTime"
-		or phaseReason == PhaseReason.WarMode and "WarMode"
-		or phaseReason == PhaseReason.Sharding and "Sharding"
+	-- oUF guards UnitPhaseReason for itself but hands the raw value to PostUpdate, comparing a secret one taints
+	local reason = not E:IsSecretValue(phaseReason) and phaseReason or nil
+	local key = reason == PhaseReason.TimerunningHwt and "TimerunningHwt"
+		or reason == PhaseReason.ChromieTime and "ChromieTime"
+		or reason == PhaseReason.WarMode and "WarMode"
+		or reason == PhaseReason.Sharding and "Sharding"
 		or "Phasing"
 
 	local c = module.PhaseColors[key]
