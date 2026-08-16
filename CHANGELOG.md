@@ -13,6 +13,8 @@
 ### ✨ NEW
 - NEW - [Skins]: Class Codex now matches ElvUI, the codex panel, the compendium, every dropdown, the loadout dock and the widget in the talent frame.
 - NEW - [Skins]: BigWigs now matches ElvUI, the keystone window and the timer bar below the dungeon invite, whose color can be BigWigs' own, your class color or a custom one.
+### 📌 INFO
+- INFO - Datatext slots that showed a Season 1 crest are empty after this update and need to be assigned again, the Season 2 crests replaced them.
 
 ## [ver. 4.09] - 12.08.2026
 ### 🐛 FIX

@@ -2,6 +2,9 @@ local mMT, DB, M, E, P, L, MEDIA = unpack(ElvUI_mMediaTag)
 
 mMT.Changelog[410] = {
 	DATE = "TBD",
+	IMPORTANT = {
+		"[INFO]: Datatext slots that showed a Season 1 crest are empty after this update and need to be assigned again, the Season 2 crests replaced them.",
+	},
 	FIX = {
 		"[Datatext]: The Teleports and Professions datatexts threw an error when WoW returned a protected cooldown value.",
 	},
