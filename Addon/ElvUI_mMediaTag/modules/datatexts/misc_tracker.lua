@@ -14,11 +14,11 @@ local tracker_ids_db, is_currency_db = {}, {}
 
 local tracker_default_ids = {
 	-- crest
-	[3341] = { isCurrency = true, color = "FF84FF4F" }, -- Veteran
-	[3343] = { isCurrency = true, color = "FF034CF6" }, -- Champion
-	[3345] = { isCurrency = true, color = "FFA928FF" }, -- Hero
-	[3347] = { isCurrency = true, color = "FFFFA514" }, -- Myth
-	[3383] = { isCurrency = true, color = "FF4FFCFF" }, -- Adventurer
+	[3443] = { isCurrency = true, color = "FF84FF4F" }, -- Veteran Mistcrest
+	[3444] = { isCurrency = true, color = "FF034CF6" }, -- Champion Mistcrest
+	[3445] = { isCurrency = true, color = "FFA928FF" }, -- Hero Mistcrest
+	[3446] = { isCurrency = true, color = "FFFFA514" }, -- Myth Mistcrest
+	[3442] = { isCurrency = true, color = "FF4FFCFF" }, -- Adventurer Mistcrest
 
 	-- midnight
 	[3378] = { isCurrency = true, color = "FFFFAE17" }, -- Dawnlight Manaflux
