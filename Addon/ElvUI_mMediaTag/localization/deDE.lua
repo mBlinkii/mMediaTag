@@ -302,6 +302,15 @@ L["Skull"] = "Totenkopf"
 L["Star"] = "Stern"
 L["Triangle"] = "Dreieck"
 
+-- options/misc/unitframe_textures.lua
+L["Background Texture"] = "Hintergrundtextur"
+L["Castbar"] = "Zauberleiste"
+L["Absorb Shield"] = "Schildabsorption"
+L["Heal Absorb"] = "Heilungsabsorption"
+L["Incoming Heal"] = "Eingehende Heilung"
+L["Power Cost"] = "Verbrauchte Kraft"
+L["Target of Target of Target"] = "Ziel des Ziels des Ziels"
+
 -- options/options_core.lua
 L["About"] = "Über"
 L["Custom Docks"] = "Benutzerdefinierte Docks"
@@ -316,6 +325,7 @@ L["Phase Icon"] = "Phasen-Symbol"
 L["Portraits"] = "Porträts"
 L["Professions"] = "Berufe"
 L["Ready Check Icons"] = "Bereitschaftscheck-Symbole"
+L["Unitframe Textures"] = "Einheitenfenster-Texturen"
 L["Unitframes"] = "Einheitenfenster"
 
 -- options/portraits/portraits.lua

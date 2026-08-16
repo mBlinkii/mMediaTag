@@ -14,6 +14,9 @@
 ### ✨ NEW
 - NEW - [Skins]: Class Codex now matches ElvUI, the codex panel, the compendium, every dropdown, the loadout dock and the widget in the talent frame.
 - NEW - [Skins]: BigWigs now matches ElvUI, the keystone window and the timer bar below the dungeon invite, whose color can be BigWigs' own, your class color or a custom one.
+- NEW - [Unitframe-Textures]: New module that sets the statusbar and the background texture per unit frame, separately for player, target, target of target, target of target of target, focus, pet, party, arena and boss.
+- NEW - [Unitframe-Textures]: The castbar, incoming heal, absorb shield, heal absorb and power cost bars can each be given their own texture.
+- NEW - [Unitframe-Textures]: The power bar and the background have their own switch per unit, so a texture change can stay on the health bar alone.
 ### 📌 INFO
 - INFO - Datatext slots that showed a Season 1 crest are empty after this update and need to be assigned again, the Season 2 crests replaced them.
 

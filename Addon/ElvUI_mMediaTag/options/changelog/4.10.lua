@@ -20,5 +20,8 @@ mMT.Changelog[410] = {
 	NEW = {
 		"[Skins]: Class Codex now matches ElvUI, the codex panel, the compendium, every dropdown, the loadout dock and the widget in the talent frame.",
 		"[Skins]: BigWigs now matches ElvUI, the keystone window and the timer bar below the dungeon invite, whose color can be the BigWigs one, your class color or a custom one.",
+		"[Unitframe-Textures]: New module that sets the statusbar and the background texture per unit frame, separately for player, target, target of target, target of target of target, focus, pet, party, arena and boss.",
+		"[Unitframe-Textures]: The castbar, incoming heal, absorb shield, heal absorb and power cost bars can each be given their own texture.",
+		"[Unitframe-Textures]: The power bar and the background have their own switch per unit, so a texture change can stay on the health bar alone.",
 	},
 }

@@ -302,6 +302,15 @@ L["Skull"] = true
 L["Star"] = true
 L["Triangle"] = true
 
+-- options/misc/unitframe_textures.lua
+L["Background Texture"] = true
+L["Castbar"] = true
+L["Absorb Shield"] = true
+L["Heal Absorb"] = true
+L["Incoming Heal"] = true
+L["Power Cost"] = true
+L["Target of Target of Target"] = true
+
 -- options/options_core.lua
 L["About"] = true
 L["Custom Docks"] = true
@@ -316,6 +325,7 @@ L["Phase Icon"] = true
 L["Portraits"] = true
 L["Professions"] = true
 L["Ready Check Icons"] = true
+L["Unitframe Textures"] = true
 L["Unitframes"] = true
 
 -- options/portraits/portraits.lua

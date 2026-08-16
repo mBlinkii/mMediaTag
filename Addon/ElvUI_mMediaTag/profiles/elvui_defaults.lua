@@ -675,6 +675,23 @@ P.ready_check_icon = {
 	waiting = "readycheck_35",
 }
 
+P.unitframe_textures = {
+	player = { enable = false, texture = "ElvUI Norm", power_enable = true, background_enable = false, background = "ElvUI Norm" },
+	target = { enable = false, texture = "ElvUI Norm", power_enable = true, background_enable = false, background = "ElvUI Norm" },
+	targettarget = { enable = false, texture = "ElvUI Norm", power_enable = true, background_enable = false, background = "ElvUI Norm" },
+	targettargettarget = { enable = false, texture = "ElvUI Norm", power_enable = true, background_enable = false, background = "ElvUI Norm" },
+	focus = { enable = false, texture = "ElvUI Norm", power_enable = true, background_enable = false, background = "ElvUI Norm" },
+	pet = { enable = false, texture = "ElvUI Norm", power_enable = true, background_enable = false, background = "ElvUI Norm" },
+	party = { enable = false, texture = "ElvUI Norm", power_enable = true, background_enable = false, background = "ElvUI Norm" },
+	arena = { enable = false, texture = "ElvUI Norm", power_enable = true, background_enable = false, background = "ElvUI Norm" },
+	boss = { enable = false, texture = "ElvUI Norm", power_enable = true, background_enable = false, background = "ElvUI Norm" },
+	castbar = { enable = false, texture = "ElvUI Norm", background_enable = false, background = "ElvUI Norm" },
+	healprediction = { enable = false, texture = "ElvUI Norm" },
+	damageabsorb = { enable = false, texture = "ElvUI Norm" },
+	healabsorb = { enable = false, texture = "ElvUI Norm" },
+	powerprediction = { enable = false, texture = "ElvUI Norm" },
+}
+
 P.summon_icon = {
 	enable = false,
 	available = "summon_01",

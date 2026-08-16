@@ -104,6 +104,13 @@ mMT.options = {
 					childGroups = "tab",
 					args = {},
 				},
+				unitframe_textures = {
+					order = 9,
+					type = "group",
+					name = mMT:AddSettingsIcon(L["Unitframe Textures"], "colors"),
+					childGroups = "tab",
+					args = {},
+				},
 			},
 		},
 		nameplates = {
