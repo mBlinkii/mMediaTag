@@ -41,7 +41,7 @@ local function ResetStyle(nameplate)
 end
 
 function module:UpdateQuest(nameplate)
-	if not (nameplate and nameplate.unit and UnitExists(nameplate.unit)) then return end
+	if not (nameplate and nameplate.__unit and UnitExists(nameplate.__unit)) then return end
 
 	local cfg = IsQuestPlate(nameplate) and GetEffectiveConfig(nameplate)
 	if cfg then
@@ -76,7 +76,7 @@ end
 
 local function OnPlateRemoved(_, unit)
 	for nameplate in pairs(NP.Plates) do
-		if nameplate.unit == unit then
+		if nameplate.__unit == unit then
 			ResetStyle(nameplate)
 			break
 		end

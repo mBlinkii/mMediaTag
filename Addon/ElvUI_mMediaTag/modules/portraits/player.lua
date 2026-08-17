@@ -16,7 +16,7 @@ function module:InitializePlayerPortrait()
 
 			if portraits[unit] then
 				portraits[unit].__owner = parent_frame
-				portraits[unit].unit = unit --parent_frame.unit
+				portraits[unit].unit = unit --parent_frame.__unit
 				portraits[unit].type = type
 				portraits[unit].db = E.db.mMediaTag.portraits.player
 				portraits[unit].size = E.db.mMediaTag.portraits.player.size

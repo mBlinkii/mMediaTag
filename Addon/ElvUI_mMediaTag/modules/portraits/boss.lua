@@ -18,7 +18,7 @@ function module:InitializeBossPortrait()
 
 				if portraits[unit] then
 					portraits[unit].__owner = parent_frame
-					portraits[unit].unit = parent_frame.unit or unit
+					portraits[unit].unit = parent_frame.__unit or unit
 					portraits[unit].type = type
 					portraits[unit].db = E.db.mMediaTag.portraits.boss
 					portraits[unit].size = E.db.mMediaTag.portraits.boss.size

@@ -619,6 +619,17 @@ P.tags = {
 
 P.nameplates = {
 	target_glow_color = false,
+	classification = {
+		enable = false,
+		units = {
+			worldboss = { enable = false, texture = "mMediaTag A4" },
+			eliteBoss = { enable = false, texture = "mMediaTag A4" },
+			eliteMini = { enable = false, texture = "mMediaTag A4" },
+			rareelite = { enable = false, texture = "mMediaTag A4" },
+			rare = { enable = false, texture = "mMediaTag A4" },
+			caster = { enable = false, texture = "mMediaTag A4" },
+		},
+	},
 	focus = {
 		enable = true,
 		changeColor = false,

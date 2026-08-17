@@ -311,6 +311,13 @@ L["Incoming Heal"] = "Eingehende Heilung"
 L["Power Cost"] = "Verbrauchte Kraft"
 L["Target of Target of Target"] = "Ziel des Ziels des Ziels"
 
+-- options/nameplates/classification_texture.lua
+L["Caster"] = "Zauberer"
+L["Elite Boss"] = "Elite Boss"
+L["Elite Mini"] = "Elite Mini"
+L["Inside a dungeon every mana user counts as a caster, so that texture wins over the elite ones there."] = "In einer Instanz gilt jeder Manaträger als Zauberer, dort sticht diese Textur die Elite-Texturen."
+L["World Boss"] = "Weltboss"
+
 -- options/options_core.lua
 L["About"] = "Über"
 L["Custom Docks"] = "Benutzerdefinierte Docks"
@@ -325,6 +332,7 @@ L["Phase Icon"] = "Phasen-Symbol"
 L["Portraits"] = "Porträts"
 L["Professions"] = "Berufe"
 L["Ready Check Icons"] = "Bereitschaftscheck-Symbole"
+L["Classification Textures"] = "Klassifizierungs-Texturen"
 L["Unitframe Textures"] = "Einheitenfenster-Texturen"
 L["Unitframes"] = "Einheitenfenster"
 

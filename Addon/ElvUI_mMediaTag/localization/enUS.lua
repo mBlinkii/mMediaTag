@@ -311,6 +311,13 @@ L["Incoming Heal"] = true
 L["Power Cost"] = true
 L["Target of Target of Target"] = true
 
+-- options/nameplates/classification_texture.lua
+L["Caster"] = true
+L["Elite Boss"] = true
+L["Elite Mini"] = true
+L["Inside a dungeon every mana user counts as a caster, so that texture wins over the elite ones there."] = true
+L["World Boss"] = true
+
 -- options/options_core.lua
 L["About"] = true
 L["Custom Docks"] = true
@@ -325,6 +332,7 @@ L["Phase Icon"] = true
 L["Portraits"] = true
 L["Professions"] = true
 L["Ready Check Icons"] = true
+L["Classification Textures"] = true
 L["Unitframe Textures"] = true
 L["Unitframes"] = true
 

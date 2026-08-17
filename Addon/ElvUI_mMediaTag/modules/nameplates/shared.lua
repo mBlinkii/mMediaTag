@@ -58,16 +58,22 @@ function Utils:GetDefaultHealthTexture()
 	return self.defaultHealthTexture
 end
 
+-- the classification module registers a provider here, everything else falls back to ElvUI's texture
+function Utils:GetBaseHealthTexture(nameplate)
+	local provider = self.baseTextureProvider
+	return (provider and provider(nameplate)) or self.defaultHealthTexture
+end
+
 function Utils:IsModuleActive(nameplate, moduleName, unitToken, requireColor, blockedBy)
 	if blockedBy and self:IsModuleActive(nameplate, blockedBy.moduleName, blockedBy.unitToken, blockedBy.requireColor) then return false end
 
 	local module = M[moduleName]
 	local config = module and module[MODULE_CONFIG_KEYS[moduleName]]
-	return config and config.enable and (not requireColor or config.changeColor) and nameplate and nameplate.unit and UnitIsUnit(nameplate.unit, unitToken)
+	return config and config.enable and (not requireColor or config.changeColor) and nameplate and nameplate.__unit and UnitIsUnit(nameplate.__unit, unitToken)
 end
 
 function Utils:RefreshPlate(nameplate)
-	if not (nameplate and nameplate.unit) then return end
+	if not (nameplate and nameplate.__unit) then return end
 
 	for _, moduleInfo in ipairs(HIGHLIGHT_MODULES) do
 		local module = M[moduleInfo.moduleName]
@@ -216,7 +222,7 @@ function Utils:ResetHighlightStyle(nameplate, state)
 	end
 
 	NP:Update_Health(nameplate)
-	healthBar:SetStatusBarTexture(self:GetDefaultHealthTexture())
+	healthBar:SetStatusBarTexture(self:GetBaseHealthTexture(nameplate))
 
 	local border = self.defaultBorderColor
 	if healthBar.backdrop then

@@ -155,8 +155,15 @@ mMT.options = {
 					childGroups = "tab",
 					args = {},
 				},
-				execute_marker = {
+				classification_texture = {
 					order = 6,
+					type = "group",
+					name = mMT:AddSettingsIcon(L["Classification Textures"], "nameplates"),
+					childGroups = "tab",
+					args = {},
+				},
+				execute_marker = {
+					order = 7,
 					type = "group",
 					name = mMT:AddSettingsIcon(L["Execute Marker"], "nameplates"),
 					childGroups = "tab",

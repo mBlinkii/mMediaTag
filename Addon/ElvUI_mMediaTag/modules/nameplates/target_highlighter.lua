@@ -21,9 +21,9 @@ local function ResetStyle(nameplate)
 end
 
 function module:UpdateTarget(nameplate)
-	if not (nameplate and nameplate.unit and UnitExists(nameplate.unit)) then return end
+	if not (nameplate and nameplate.__unit and UnitExists(nameplate.__unit)) then return end
 
-	if UnitIsUnit(nameplate.unit, "target") then
+	if UnitIsUnit(nameplate.__unit, "target") then
 		ApplyStyle(nameplate)
 	else
 		ResetStyle(nameplate)

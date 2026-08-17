@@ -4,6 +4,10 @@
 ### 🐛 FIX
 - FIX - [Datatext]: The Teleports and Professions datatexts threw an error when WoW returned a protected cooldown value.
 - FIX - [Phaseicon]: The phase icon could taint when WoW returned a protected phase reason.
+- FIX - [System]: Adapted to the current ElvUI, which renamed the unit field on its unit frames and nameplates.
+- FIX - [Portraits]: Party, arena and boss portraits no longer updated after a roster change.
+- FIX - [NP-Highlighters]: The target, focus and quest highlight was not applied to nameplates anymore.
+- FIX - [Interrupt-On-CD]: The kick bar and the castbar color were not applied on nameplates anymore.
 ### 🔧 UPDATE
 - UPDATE - [DT-Teleports]: The season list now shows the Midnight Season 2 dungeons, and the missing Midnight dungeon portals were added to the Midnight and dungeon submenus.
 - UPDATE - [DT-Tracker]: The default currency list is updated for Midnight Season 2, with the Mistcrests, Venomblight Manaflux, Tidal Spark Dust and Nebulous Voidcore.

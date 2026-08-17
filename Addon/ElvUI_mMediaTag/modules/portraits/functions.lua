@@ -133,7 +133,7 @@ local function RetryPortrait(element)
 end
 
 function Update(self, event)
-	local unit = self.unit or self.__owner.unit
+	local unit = self.unit or self.__owner.__unit
 	if not unit then return end
 
 	local class = E:NotSecretUnit(unit) and select(2, UnitClass(unit)) or nil
@@ -412,7 +412,7 @@ local castUnitEventsRetail = { "UNIT_SPELLCAST_EMPOWER_START", "UNIT_SPELLCAST_E
 
 -- re-targets every filtered event to the elements current unit; call after any unit change (party reorder, roster update, OnShow).
 local function ApplyUnitEvents(element, force)
-	local unit = element.unit or (element.__owner and element.__owner.unit)
+	local unit = element.unit or (element.__owner and element.__owner.__unit)
 	if not unit then return end
 	if not force and element.registeredUnit == unit then return end
 	element.registeredUnit = unit
@@ -463,7 +463,7 @@ local function PartyUpdate(_, header)
 		for i = 1, 5 do
 			local element = module.portraits["party" .. i]
 			if element then
-				element.unit = element.__owner.unit
+				element.unit = element.__owner.__unit
 				ApplyUnitEvents(element)
 				Update(element, "ForceUpdate")
 			end
@@ -543,7 +543,7 @@ local function OnEvent(self, event, eventUnit)
 	-- hidden frames do no event work, OnShow catches up with one ForceUpdate
 	if not self:IsVisible() then return end
 
-	local unit = self.__owner.unit or self.unit
+	local unit = self.__owner.__unit or self.unit
 	if unit ~= self.unit then
 		self.unit = unit
 		ApplyUnitEvents(self) -- unit token changed - re-target filtered events

@@ -18,10 +18,10 @@ local FOCUS_STATE = {
 
 local function GetCurrentFocusPlate()
 	local directPlate = Utils:GetPlateByUnit("focus")
-	if directPlate and directPlate.unit and UnitIsUnit(directPlate.unit, "focus") then return directPlate end
+	if directPlate and directPlate.__unit and UnitIsUnit(directPlate.__unit, "focus") then return directPlate end
 
 	for nameplate in pairs(NP.Plates) do
-		if nameplate.unit and UnitIsUnit(nameplate.unit, "focus") then return nameplate end
+		if nameplate.__unit and UnitIsUnit(nameplate.__unit, "focus") then return nameplate end
 	end
 end
 
@@ -41,9 +41,9 @@ local function ResetStyle(nameplate)
 end
 
 function module:UpdateFocus(nameplate)
-	if not (nameplate and nameplate.unit and UnitExists(nameplate.unit)) then return end
+	if not (nameplate and nameplate.__unit and UnitExists(nameplate.__unit)) then return end
 
-	local cfg = UnitIsUnit(nameplate.unit, "focus") and GetEffectiveConfig(nameplate)
+	local cfg = UnitIsUnit(nameplate.__unit, "focus") and GetEffectiveConfig(nameplate)
 	if cfg then
 		ApplyStyle(nameplate, cfg)
 	else

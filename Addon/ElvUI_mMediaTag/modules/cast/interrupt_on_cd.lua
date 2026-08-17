@@ -168,7 +168,7 @@ end
 
 local function UpdateCast(castbar, castStart)
 	-- the frame is pooled, so re-check the unit on every update instead of trusting PostCastStart
-	local unit = castbar.unit or (castbar.__owner and castbar.__owner.unit)
+	local unit = castbar.unit or (castbar.__owner and castbar.__owner.__unit)
 	if not (unit and UnitCanAttack("player", unit)) then return end
 
 	local cooldown = GetInterruptCooldown()
