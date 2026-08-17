@@ -649,7 +649,7 @@ function module:Mirror(texture, mirror, texCoords)
 end
 
 local function SetTexture(texture, file, wrapMode)
-	texture:SetTexture(file, wrapMode, wrapMode, "TRILINEAR")
+	texture:SetTexture(file, wrapMode, wrapMode)
 end
 
 function module:UpdateTextures(element)
