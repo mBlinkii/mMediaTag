@@ -68,10 +68,10 @@ mMT.options.args.dock.args.general.args = {
 				desc = L["Set the font for dock text."],
 				values = LSM:HashTable("font"),
 				get = function(info)
-					return E.db.mMediaTag.dock.font.font
+					return E.db.mMediaTag.dock.text.font
 				end,
 				set = function(info, value)
-					E.db.mMediaTag.dock.font.font = value
+					E.db.mMediaTag.dock.text.font = value
 					DT:LoadDataTexts()
 				end,
 			},
@@ -81,10 +81,10 @@ mMT.options.args.dock.args.general.args = {
 				name = L["Custom Font Size"],
 				desc = L["Use a custom font size for dock text. If disabled, the font size will be set to one third of the icon size."],
 				get = function(info)
-					return E.db.mMediaTag.dock.font.custom_font_size
+					return E.db.mMediaTag.dock.text.custom_font_size
 				end,
 				set = function(info, value)
-					E.db.mMediaTag.dock.font.custom_font_size = value
+					E.db.mMediaTag.dock.text.custom_font_size = value
 					DT:LoadDataTexts()
 				end,
 			},
@@ -97,13 +97,13 @@ mMT.options.args.dock.args.general.args = {
 				max = 32,
 				step = 1,
 				disabled = function()
-					return not E.db.mMediaTag.dock.font.custom_font_size
+					return not E.db.mMediaTag.dock.text.custom_font_size
 				end,
 				get = function(info)
-					return E.db.mMediaTag.dock.font.fontSize
+					return E.db.mMediaTag.dock.text.fontSize
 				end,
 				set = function(info, value)
-					E.db.mMediaTag.dock.font.fontSize = value
+					E.db.mMediaTag.dock.text.fontSize = value
 					DT:LoadDataTexts()
 				end,
 			},
@@ -113,10 +113,10 @@ mMT.options.args.dock.args.general.args = {
 				name = L["Font Outline"],
 				desc = L["Set the font outline for dock text."],
 				get = function(info)
-					return E.db.mMediaTag.dock.font.fontFlag
+					return E.db.mMediaTag.dock.text.fontFlag
 				end,
 				set = function(info, value)
-					E.db.mMediaTag.dock.font.fontFlag = value
+					E.db.mMediaTag.dock.text.fontFlag = value
 					DT:LoadDataTexts()
 				end,
 				values = {
@@ -137,10 +137,10 @@ mMT.options.args.dock.args.general.args = {
 				name = L["Custom"],
 				desc = L["Use a custom color for dock text. If disabled, the font color will be class colored."],
 				get = function(info)
-					return E.db.mMediaTag.dock.font.custom_font_color
+					return E.db.mMediaTag.dock.text.custom_font_color
 				end,
 				set = function(info, value)
-					E.db.mMediaTag.dock.font.custom_font_color = value
+					E.db.mMediaTag.dock.text.custom_font_color = value
 					DT:LoadDataTexts()
 				end,
 			},
@@ -150,7 +150,7 @@ mMT.options.args.dock.args.general.args = {
 				name = L["Font Color"],
 				hasAlpha = false,
 				disabled = function()
-					return not E.db.mMediaTag.dock.font.custom_font_color
+					return not E.db.mMediaTag.dock.text.custom_font_color
 				end,
 				get = function(info)
 					local r, g, b = mMT:HexToRGB(E.db.mMediaTag.color.dock.font)

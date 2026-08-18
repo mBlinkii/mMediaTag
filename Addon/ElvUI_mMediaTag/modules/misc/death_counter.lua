@@ -19,7 +19,7 @@ local function FormatTimeLost(seconds)
 end
 
 local function SetCounterText(deaths, timeLost)
-	local size = module.db.font.size
+	local size = module.db.text.size
 	module.death_counter.label:SetText(format("%s %d %s", format(SKULL, size, size), deaths or 0, mMT:TC(FormatTimeLost(timeLost), "red")))
 end
 
@@ -98,7 +98,7 @@ function module:Initialize(demo)
 		module.death_counter:Hide()
 	end
 
-	E:SetFont(module.death_counter.label, LSM:Fetch("font", module.db.font.font), module.db.font.size, module.db.font.fontFlag)
+	E:SetFont(module.death_counter.label, LSM:Fetch("font", module.db.text.font), module.db.text.size, module.db.text.fontFlag)
 
 	if not module.isEnabled then
 		module:RegisterEvent("CHALLENGE_MODE_START", "OnEvent")

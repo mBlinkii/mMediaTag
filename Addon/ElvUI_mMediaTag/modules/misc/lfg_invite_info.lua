@@ -254,8 +254,8 @@ function module:Initialize(demo)
 		module.info_screen:Hide()
 	end
 
-	E:SetFont(module.info_screen.lable, LSM:Fetch("font", module.db.font.font), module.db.font.size, module.db.font.fontFlag)
-	E:SetFont(module.info_screen.lable2, LSM:Fetch("font", module.db.font.font), module.db.font.size2, module.db.font.fontFlag)
+	E:SetFont(module.info_screen.lable, LSM:Fetch("font", module.db.text.font), module.db.text.size, module.db.text.fontFlag)
+	E:SetFont(module.info_screen.lable2, LSM:Fetch("font", module.db.text.font), module.db.text.size2, module.db.text.fontFlag)
 
 	ApplyTheme()
 
@@ -274,14 +274,14 @@ function module:Initialize(demo)
 		icon:ClearAllPoints()
 
 		if module.db.embed_icon and module.db.background then
-			local size = module.db.font.size + module.db.font.size2
+			local size = module.db.text.size + module.db.text.size2
 			icon:SetSize(size, size)
 			icon:SetPoint("LEFT", module.info_screen, "LEFT", SPACING, 0)
 			module.info_screen.embeddedIconSize = size
 		else
-			local size = (module.db.font.size + module.db.font.size2) * 2
+			local size = (module.db.text.size + module.db.text.size2) * 2
 			icon:SetSize(size, size)
-			local spacing = -4 * (module.db.font.size / 24)
+			local spacing = -4 * (module.db.text.size / 24)
 			icon:SetPoint("RIGHT", module.info_screen, "LEFT", spacing, 0)
 			module.info_screen.embeddedIconSize = nil
 		end

@@ -28,7 +28,7 @@ local function SetupDockIcon(datatext, config)
 end
 
 local function SetupLabel(text, size, anchor, point, justify)
-	local db = module.db.font
+	local db = module.db.text
 	text.SetShadowColor = function() end
 	text:FontTemplate(db.font, db.custom_font_size and db.fontSize or size / 3, db.fontFlag)
 	text:ClearAllPoints()

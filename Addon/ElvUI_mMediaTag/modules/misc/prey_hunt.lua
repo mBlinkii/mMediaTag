@@ -63,7 +63,7 @@ local function UpdateFrame(frame)
 	Attach(frame)
 
 	local text = frame.mMTProgress
-	E:SetFont(text, LSM:Fetch("font", db.font.font), db.font.size, db.font.fontFlag)
+	E:SetFont(text, LSM:Fetch("font", db.text.font), db.text.size, db.text.fontFlag)
 	text:SetTextColor(mMT:HexToRGB(db.color))
 	text:ClearAllPoints()
 	text:SetPoint(db.point, frame.StateTexture, db.point, db.x, db.y)

@@ -41,10 +41,10 @@ mMT.options.args.misc.args.lfg_invite_info.args = {
 					return not E.db.mMediaTag.lfg_invite_info.enable
 				end,
                 get = function(info)
-                    return E.db.mMediaTag.lfg_invite_info.font.font
+                    return E.db.mMediaTag.lfg_invite_info.text.font
                 end,
                 set = function(info, value)
-                    E.db.mMediaTag.lfg_invite_info.font.font = value
+                    E.db.mMediaTag.lfg_invite_info.text.font = value
                     mMT:UpdateModule("LFGInviteInfo")
                 end,
             },
@@ -56,10 +56,10 @@ mMT.options.args.misc.args.lfg_invite_info.args = {
 					return not E.db.mMediaTag.lfg_invite_info.enable
 				end,
                 get = function(info)
-                    return E.db.mMediaTag.lfg_invite_info.font.fontFlag
+                    return E.db.mMediaTag.lfg_invite_info.text.fontFlag
                 end,
                 set = function(info, value)
-                    E.db.mMediaTag.lfg_invite_info.font.fontFlag = value
+                    E.db.mMediaTag.lfg_invite_info.text.fontFlag = value
                     mMT:UpdateModule("LFGInviteInfo")
                 end,
                 values = {
@@ -85,10 +85,10 @@ mMT.options.args.misc.args.lfg_invite_info.args = {
 					return not E.db.mMediaTag.lfg_invite_info.enable
 				end,
 				get = function(info)
-					return E.db.mMediaTag.lfg_invite_info.font.size
+					return E.db.mMediaTag.lfg_invite_info.text.size
 				end,
 				set = function(info, value)
-					E.db.mMediaTag.lfg_invite_info.font.size = value
+					E.db.mMediaTag.lfg_invite_info.text.size = value
 					mMT:UpdateModule("LFGInviteInfo")
 				end,
 			},
@@ -103,10 +103,10 @@ mMT.options.args.misc.args.lfg_invite_info.args = {
 					return not E.db.mMediaTag.lfg_invite_info.enable
 				end,
 				get = function(info)
-					return E.db.mMediaTag.lfg_invite_info.font.size2
+					return E.db.mMediaTag.lfg_invite_info.text.size2
 				end,
 				set = function(info, value)
-					E.db.mMediaTag.lfg_invite_info.font.size2 = value
+					E.db.mMediaTag.lfg_invite_info.text.size2 = value
 					mMT:UpdateModule("LFGInviteInfo")
 				end,
 			},

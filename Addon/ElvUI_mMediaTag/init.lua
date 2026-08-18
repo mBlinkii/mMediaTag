@@ -36,6 +36,8 @@ function mMT:InsertOptions()
 end
 
 function mMT:UpdateAll()
+	mMT:MigrateProfile()
+
 	for name, module in pairs(Engine[3]) do
 		if module.Initialize then
 			local ok, err = pcall(module.Initialize, module)
@@ -44,7 +46,6 @@ function mMT:UpdateAll()
 	end
 end
 
--- E:UpdateEnd is the tail of the E:UpdateAll delay chain; hooking E:UpdateAll fires before ElvUI queued its work.
 local function DelayedUpdateAll()
 	E:Delay(0.1, mMT.UpdateAll, mMT)
 end

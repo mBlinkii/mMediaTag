@@ -48,6 +48,30 @@ function mMT:AddSettingsIcon(text, icon)
 	return format("|TInterface\\Addons\\ElvUI_mMediaTag\\media\\options\\%s.tga:16:16|t  %s", icon, text)
 end
 
+local DB_VERSION = 1
+local DB_STEPS = {
+	function(db) -- 1: font subtable renamed to text, font is a plain string in every other UI
+		for _, key in ipairs({ "death_counter", "difficulty_info", "dock", "lfg_invite_info", "objective_tracker", "prey_hunt" }) do
+			local settings = db[key]
+			if settings then
+				if type(settings.font) == "table" then E:CopyTable(settings.text, settings.font) end
+				settings.font = nil
+			end
+		end
+	end,
+}
+
+function mMT:MigrateProfile()
+	local version = E.db.mMediaTag.db_version or 0
+	if version >= DB_VERSION then return end
+
+	for step = version + 1, DB_VERSION do
+		if DB_STEPS[step] then DB_STEPS[step](E.db.mMediaTag) end
+	end
+
+	E.db.mMediaTag.db_version = DB_VERSION
+end
+
 function mMT:UpdateModule(name, arg)
 	local module = M[name]
 	if module and module.Initialize then module:Initialize(arg) end

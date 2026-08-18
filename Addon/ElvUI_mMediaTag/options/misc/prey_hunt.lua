@@ -57,10 +57,10 @@ mMT.options.args.misc.args.prey_hunt.args = {
 				values = LSM:HashTable("font"),
 				disabled = IsDisabled,
 				get = function(info)
-					return E.db.mMediaTag.prey_hunt.font.font
+					return E.db.mMediaTag.prey_hunt.text.font
 				end,
 				set = function(info, value)
-					E.db.mMediaTag.prey_hunt.font.font = value
+					E.db.mMediaTag.prey_hunt.text.font = value
 					Update()
 				end,
 			},
@@ -70,10 +70,10 @@ mMT.options.args.misc.args.prey_hunt.args = {
 				name = L["Font contour"],
 				disabled = IsDisabled,
 				get = function(info)
-					return E.db.mMediaTag.prey_hunt.font.fontFlag
+					return E.db.mMediaTag.prey_hunt.text.fontFlag
 				end,
 				set = function(info, value)
-					E.db.mMediaTag.prey_hunt.font.fontFlag = value
+					E.db.mMediaTag.prey_hunt.text.fontFlag = value
 					Update()
 				end,
 				values = {
@@ -97,10 +97,10 @@ mMT.options.args.misc.args.prey_hunt.args = {
 				step = 1,
 				disabled = IsDisabled,
 				get = function(info)
-					return E.db.mMediaTag.prey_hunt.font.size
+					return E.db.mMediaTag.prey_hunt.text.size
 				end,
 				set = function(info, value)
-					E.db.mMediaTag.prey_hunt.font.size = value
+					E.db.mMediaTag.prey_hunt.text.size = value
 					Update()
 				end,
 			},

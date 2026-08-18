@@ -83,13 +83,13 @@ function module:Initialize(demo)
 		module.difficulty:Hide()
 	end
 
-	E:SetFont(module.difficulty.lable, LSM:Fetch("font", module.db.font.font), module.db.font.size, module.db.font.fontFlag)
-	module.difficulty.lable:SetJustifyH(module.db.font.justify)
+	E:SetFont(module.difficulty.lable, LSM:Fetch("font", module.db.text.font), module.db.text.size, module.db.text.fontFlag)
+	module.difficulty.lable:SetJustifyH(module.db.text.justify)
 
 	module.difficulty.lable:ClearAllPoints()
-	if module.db.font.justify == "LEFT" then
+	if module.db.text.justify == "LEFT" then
 		module.difficulty.lable:SetPoint("LEFT", module.difficulty, "LEFT", 4, 0)
-	elseif module.db.font.justify == "RIGHT" then
+	elseif module.db.text.justify == "RIGHT" then
 		module.difficulty.lable:SetPoint("RIGHT", module.difficulty, "RIGHT", -4, 0)
 	else
 		module.difficulty.lable:SetPoint("CENTER", module.difficulty, "CENTER", 0, 0)

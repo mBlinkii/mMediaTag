@@ -94,10 +94,10 @@ mMT.options.args.misc.args.objective_tracker.args = {
 				name = L["Font"],
 				values = LSM:HashTable("font"),
 				get = function()
-					return E.db.mMediaTag.objective_tracker.font.font
+					return E.db.mMediaTag.objective_tracker.text.font
 				end,
 				set = function(_, value)
-					E.db.mMediaTag.objective_tracker.font.font = value
+					E.db.mMediaTag.objective_tracker.text.font = value
 					Update()
 				end,
 			},
@@ -106,10 +106,10 @@ mMT.options.args.misc.args.objective_tracker.args = {
 				type = "select",
 				name = L["Font contour"],
 				get = function()
-					return E.db.mMediaTag.objective_tracker.font.fontFlag
+					return E.db.mMediaTag.objective_tracker.text.fontFlag
 				end,
 				set = function(_, value)
-					E.db.mMediaTag.objective_tracker.font.fontFlag = value
+					E.db.mMediaTag.objective_tracker.text.fontFlag = value
 					Update()
 				end,
 				values = {
@@ -132,10 +132,10 @@ mMT.options.args.misc.args.objective_tracker.args = {
 				max = 32,
 				step = 1,
 				get = function()
-					return E.db.mMediaTag.objective_tracker.font.size.header
+					return E.db.mMediaTag.objective_tracker.text.size.header
 				end,
 				set = function(_, value)
-					E.db.mMediaTag.objective_tracker.font.size.header = value
+					E.db.mMediaTag.objective_tracker.text.size.header = value
 					Update()
 				end,
 			},
@@ -147,10 +147,10 @@ mMT.options.args.misc.args.objective_tracker.args = {
 				max = 32,
 				step = 1,
 				get = function()
-					return E.db.mMediaTag.objective_tracker.font.size.title
+					return E.db.mMediaTag.objective_tracker.text.size.title
 				end,
 				set = function(_, value)
-					E.db.mMediaTag.objective_tracker.font.size.title = value
+					E.db.mMediaTag.objective_tracker.text.size.title = value
 					Update()
 				end,
 			},
@@ -162,10 +162,10 @@ mMT.options.args.misc.args.objective_tracker.args = {
 				max = 32,
 				step = 1,
 				get = function()
-					return E.db.mMediaTag.objective_tracker.font.size.text
+					return E.db.mMediaTag.objective_tracker.text.size.text
 				end,
 				set = function(_, value)
-					E.db.mMediaTag.objective_tracker.font.size.text = value
+					E.db.mMediaTag.objective_tracker.text.size.text = value
 					Update()
 				end,
 			},

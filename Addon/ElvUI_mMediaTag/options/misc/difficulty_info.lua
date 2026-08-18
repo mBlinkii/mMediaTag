@@ -40,10 +40,10 @@ mMT.options.args.misc.args.difficulty_info.args = {
 					return not E.db.mMediaTag.difficulty_info.enable
 				end,
 				get = function(info)
-					return E.db.mMediaTag.difficulty_info.font.font
+					return E.db.mMediaTag.difficulty_info.text.font
 				end,
 				set = function(info, value)
-					E.db.mMediaTag.difficulty_info.font.font = value
+					E.db.mMediaTag.difficulty_info.text.font = value
 					mMT:UpdateModule("DifficultyInfo")
 				end,
 			},
@@ -55,10 +55,10 @@ mMT.options.args.misc.args.difficulty_info.args = {
 					return not E.db.mMediaTag.difficulty_info.enable
 				end,
 				get = function(info)
-					return E.db.mMediaTag.difficulty_info.font.fontFlag
+					return E.db.mMediaTag.difficulty_info.text.fontFlag
 				end,
 				set = function(info, value)
-					E.db.mMediaTag.difficulty_info.font.fontFlag = value
+					E.db.mMediaTag.difficulty_info.text.fontFlag = value
 					mMT:UpdateModule("DifficultyInfo")
 				end,
 				values = {
@@ -84,10 +84,10 @@ mMT.options.args.misc.args.difficulty_info.args = {
 					return not E.db.mMediaTag.difficulty_info.enable
 				end,
 				get = function(info)
-					return E.db.mMediaTag.difficulty_info.font.size
+					return E.db.mMediaTag.difficulty_info.text.size
 				end,
 				set = function(info, value)
-					E.db.mMediaTag.difficulty_info.font.size = value
+					E.db.mMediaTag.difficulty_info.text.size = value
 					mMT:UpdateModule("DifficultyInfo")
 				end,
 			},
@@ -99,10 +99,10 @@ mMT.options.args.misc.args.difficulty_info.args = {
 					return not E.db.mMediaTag.difficulty_info.enable
 				end,
                 get = function(info)
-                    return E.db.mMediaTag.difficulty_info.font.justify
+                    return E.db.mMediaTag.difficulty_info.text.justify
                 end,
                 set = function(info, value)
-                    E.db.mMediaTag.difficulty_info.font.justify = value
+                    E.db.mMediaTag.difficulty_info.text.justify = value
                     mMT:UpdateModule("DifficultyInfo")
                 end,
                 values = {

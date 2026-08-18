@@ -53,9 +53,9 @@ local function UpdateSettings()
 	}
 
 	fonts = {
-		header = { font = LSM:Fetch("font", db.font.font), size = db.font.size.header, flag = db.font.fontFlag },
-		title = { font = LSM:Fetch("font", db.font.font), size = db.font.size.title, flag = db.font.fontFlag },
-		text = { font = LSM:Fetch("font", db.font.font), size = db.font.size.text, flag = db.font.fontFlag },
+		header = { font = LSM:Fetch("font", db.text.font), size = db.text.size.header, flag = db.text.fontFlag },
+		title = { font = LSM:Fetch("font", db.text.font), size = db.text.size.title, flag = db.text.fontFlag },
+		text = { font = LSM:Fetch("font", db.text.font), size = db.text.size.text, flag = db.text.fontFlag },
 	}
 end
 

@@ -41,10 +41,10 @@ mMT.options.args.misc.args.death_counter.args = {
 					return not E.db.mMediaTag.death_counter.enable
 				end,
 				get = function(info)
-					return E.db.mMediaTag.death_counter.font.font
+					return E.db.mMediaTag.death_counter.text.font
 				end,
 				set = function(info, value)
-					E.db.mMediaTag.death_counter.font.font = value
+					E.db.mMediaTag.death_counter.text.font = value
 					mMT:UpdateModule("DeathCounter")
 				end,
 			},
@@ -56,10 +56,10 @@ mMT.options.args.misc.args.death_counter.args = {
 					return not E.db.mMediaTag.death_counter.enable
 				end,
 				get = function(info)
-					return E.db.mMediaTag.death_counter.font.fontFlag
+					return E.db.mMediaTag.death_counter.text.fontFlag
 				end,
 				set = function(info, value)
-					E.db.mMediaTag.death_counter.font.fontFlag = value
+					E.db.mMediaTag.death_counter.text.fontFlag = value
 					mMT:UpdateModule("DeathCounter")
 				end,
 				values = {
@@ -85,10 +85,10 @@ mMT.options.args.misc.args.death_counter.args = {
 					return not E.db.mMediaTag.death_counter.enable
 				end,
 				get = function(info)
-					return E.db.mMediaTag.death_counter.font.size
+					return E.db.mMediaTag.death_counter.text.size
 				end,
 				set = function(info, value)
-					E.db.mMediaTag.death_counter.font.size = value
+					E.db.mMediaTag.death_counter.text.size = value
 					mMT:UpdateModule("DeathCounter")
 				end,
 			},
