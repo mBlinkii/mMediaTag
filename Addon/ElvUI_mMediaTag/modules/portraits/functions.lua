@@ -20,6 +20,7 @@ local UnitGUID = UnitGUID
 local IsUnitModelReadyForUI = IsUnitModelReadyForUI
 local C_Timer_NewTimer = C_Timer.NewTimer
 local issecretvalue = issecretvalue
+local C_ClassColor_GetClassColor = C_ClassColor and C_ClassColor.GetClassColor
 local GetSpecialization = C_SpecializationInfo.GetSpecialization or GetSpecialization
 local GetSpecializationInfo = C_SpecializationInfo.GetSpecializationInfo or GetSpecializationInfo
 
@@ -28,6 +29,16 @@ local playerFaction = nil
 local function SafeValue(value)
 	if issecretvalue and issecretvalue(value) then return nil end
 	return value
+end
+
+-- a secret class token cannot be a table key, the game API answers it with a secret color
+local function GetClassColor(class)
+	if E:IsSecretValue(class) then
+		local color = C_ClassColor_GetClassColor and C_ClassColor_GetClassColor(class)
+		return color and { c = color }
+	end
+
+	return class and MEDIA.color.portraits.class[class] or nil
 end
 
 function module:GetUnitColor(unit, class, isPlayer, isDead)
@@ -47,7 +58,7 @@ function module:GetUnitColor(unit, class, isPlayer, isDead)
 			local reactionType = (playerFaction == unitFaction) and "friendly" or "enemy"
 			return colors.reaction[reactionType]
 		else
-			return colors.class[class] or colors.misc.default
+			return GetClassColor(class) or colors.misc.default
 		end
 	else
 		local reaction = SafeValue((unit == "pet") and UnitReaction("player", unit) or UnitReaction(unit, "player"))
@@ -146,7 +157,8 @@ function Update(self, event)
 
 	-- a secret unit is always a player, its class token stays secret
 	local isSecret = E:IsSecretUnit(unit) or false
-	local class = SafeValue(select(2, UnitClass(unit)))
+	local class = select(2, UnitClass(unit))
+	local safeClass = SafeValue(class)
 	local isDead = not isSecret and SafeValue(UnitIsDeadOrGhost(unit)) or false
 	local guid = UnitGUID(unit)
 	local secretGUID = E:IsSecretValue(guid)
@@ -166,8 +178,8 @@ function Update(self, event)
 
 		local applied = false
 
-		if module.useClassIcons and isPlayer and class then
-			local coords = module.texCoords[class]
+		if module.useClassIcons and isPlayer and safeClass then
+			local coords = module.texCoords[safeClass]
 			if coords then
 				self.unit_portrait:SetTexture(module.classIcons, "CLAMP", "CLAMP", "TRILINEAR")
 				module:Mirror(self.unit_portrait, shouldMirror, coords.texCoords or coords)
