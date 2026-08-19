@@ -70,7 +70,12 @@ jobs:
       # Die Libs liegen nicht im Repo, sondern werden hier frisch von
       # CurseForge geholt. Gleiche Regel wie in MAUI-M-Timer.
       - name: Subversion installieren
-        run: sudo apt-get update -qq && sudo apt-get install -y -qq subversion
+        timeout-minutes: 5
+        env:
+          DEBIAN_FRONTEND: noninteractive
+        run: |
+          sudo -E apt-get update -o Acquire::Retries=3
+          sudo -E apt-get install -y --no-install-recommends -o DPkg::Lock::Timeout=60 subversion
 
       - name: Libs holen
         run: |

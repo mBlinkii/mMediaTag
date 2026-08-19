@@ -45,7 +45,12 @@ jobs:
           done
 
       - name: Subversion installieren
-        run: sudo apt-get update -qq && sudo apt-get install -y -qq subversion
+        timeout-minutes: 5
+        env:
+          DEBIAN_FRONTEND: noninteractive
+        run: |
+          sudo -E apt-get update -o Acquire::Retries=3
+          sudo -E apt-get install -y --no-install-recommends -o DPkg::Lock::Timeout=60 subversion
 
       # Die Libs liegen nicht im Repo. Ohne sie laedt das Pack standalone nicht.
       - name: Libs holen
