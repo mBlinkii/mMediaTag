@@ -19,10 +19,16 @@ local select = select
 local UnitGUID = UnitGUID
 local IsUnitModelReadyForUI = IsUnitModelReadyForUI
 local C_Timer_NewTimer = C_Timer.NewTimer
+local issecretvalue = issecretvalue
 local GetSpecialization = C_SpecializationInfo.GetSpecialization or GetSpecialization
 local GetSpecializationInfo = C_SpecializationInfo.GetSpecializationInfo or GetSpecializationInfo
 
 local playerFaction = nil
+
+local function SafeValue(value)
+	if issecretvalue and issecretvalue(value) then return nil end
+	return value
+end
 
 function module:GetUnitColor(unit, class, isPlayer, isDead)
 	if not unit then return end
@@ -35,25 +41,27 @@ function module:GetUnitColor(unit, class, isPlayer, isDead)
 
 	if isPlayer then
 		if module.db.misc.force_reaction then
-			local unitFaction = select(1, UnitFactionGroup(unit))
-			playerFaction = playerFaction or select(1, UnitFactionGroup("player"))
+			local unitFaction = SafeValue(UnitFactionGroup(unit))
+			playerFaction = playerFaction or UnitFactionGroup("player")
 
 			local reactionType = (playerFaction == unitFaction) and "friendly" or "enemy"
 			return colors.reaction[reactionType]
 		else
-			return colors.class[class]
+			return colors.class[class] or colors.misc.default
 		end
 	else
-		local reaction = (unit == "pet") and UnitReaction("player", unit) or UnitReaction(unit, "player")
+		local reaction = SafeValue((unit == "pet") and UnitReaction("player", unit) or UnitReaction(unit, "player"))
 		local reactionType = (reaction and ((reaction <= 3) and "enemy" or (reaction == 4) and "neutral" or "friendly")) or "enemy"
 		return colors.reaction[reactionType]
 	end
 end
 
+-- a color built from a secret source has secret components, its alpha must not be branched on
 local function ApplyColor(target, color)
-	if not target then return end
+	if not (target and color) then return end
 
-	target:SetVertexColor(color.r, color.g, color.b, color.a or 1)
+	local alpha = color.a
+	target:SetVertexColor(color.r, color.g, color.b, (E:IsSecretValue(alpha) or alpha == nil) and 1 or alpha)
 end
 
 local function UpdateTextureColor(element, unit)
@@ -102,7 +110,7 @@ local function UpdateExtraTexture(element, force)
 	if e_db.unitcolor then
 		color = element.color
 	elseif db.force_reaction then
-		local reaction = UnitReaction(element.unit, "player")
+		local reaction = SafeValue(UnitReaction(element.unit, "player"))
 		local reactionType = (reaction and ((reaction <= 3 and "enemy") or (reaction == 4 and "neutral") or "friendly")) or "enemy"
 		color = MEDIA.color.portraits.reaction[reactionType]
 	else
@@ -136,8 +144,10 @@ function Update(self, event)
 	local unit = self.unit or self.__owner.__unit
 	if not unit then return end
 
-	local class = E:NotSecretUnit(unit) and select(2, UnitClass(unit)) or nil
-	local isDead = UnitIsDeadOrGhost(unit)
+	-- a secret unit is always a player, its class token stays secret
+	local isSecret = E:IsSecretUnit(unit) or false
+	local class = SafeValue(select(2, UnitClass(unit)))
+	local isDead = not isSecret and SafeValue(UnitIsDeadOrGhost(unit)) or false
 	local guid = UnitGUID(unit)
 	local secretGUID = E:IsSecretValue(guid)
 	local newGUID = secretGUID or (self.guid ~= guid)
@@ -151,7 +161,7 @@ function Update(self, event)
 	local hasStateChanged = newGUID or (self.state ~= isAvailable) or event == "ForceUpdate" or (self.isDead ~= isDead)
 
 	if hasStateChanged then
-		local isPlayer = UnitIsPlayer(unit) or (E.Retail and UnitInPartyIsAI(unit))
+		local isPlayer = isSecret or SafeValue(UnitIsPlayer(unit)) or (E.Retail and SafeValue(UnitInPartyIsAI(unit))) or false
 		local shouldMirror = (isPlayer and self.db.mirror) or (not isPlayer and not self.db.mirror)
 
 		local applied = false
@@ -163,7 +173,7 @@ function Update(self, event)
 				module:Mirror(self.unit_portrait, shouldMirror, coords.texCoords or coords)
 				applied = true
 			end
-		elseif module.useSpecIcon and isPlayer then
+		elseif module.useSpecIcon and isPlayer and not isSecret then
 			local info = E.Retail and E:GetUnitSpecInfo(unit)
 
 			if info then
@@ -203,6 +213,7 @@ function Update(self, event)
 		end
 
 		self.state = isAvailable
+		self.isSecret = isSecret
 		self.isPlayer = isPlayer
 		self.unit = unit
 		self.unitClass = class
@@ -476,7 +487,7 @@ local function ForceUpdate(self, event)
 end
 
 local function DeathCheck(self, event)
-	local isDead = UnitIsDeadOrGhost(self.unit)
+	local isDead = not self.isSecret and SafeValue(UnitIsDeadOrGhost(self.unit)) or false
 	if self.isDead == isDead then return end
 
 	self.isDead = isDead
@@ -627,7 +638,7 @@ function module:InitPortrait(element)
 		-- unit-filtered events (force: settings or unit may have changed)
 		ApplyUnitEvents(element, true)
 
-		if UnitIsDeadOrGhost(element.unit or "") then element:RegisterUnitEvent("UNIT_HEALTH", element.unit) end
+		if SafeValue(UnitIsDeadOrGhost(element.unit or "")) then element:RegisterUnitEvent("UNIT_HEALTH", element.unit) end
 
 		element:SetScript("OnShow", OnShow)
 		element:SetScript("OnEvent", OnEvent)

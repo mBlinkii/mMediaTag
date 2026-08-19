@@ -9,6 +9,7 @@
 - FIX - [NP-Highlighters]: The target, focus and quest highlight was not applied to nameplates anymore.
 - FIX - [Interrupt-On-CD]: The kick bar and the castbar color were not applied on nameplates anymore.
 - FIX - [System]: mMediaTag threw an error on login when another UI profile overwrote a font setting with a plain string, the font settings now live in their own database entry and are migrated automatically.
+- FIX - [Portraits]: Portraits threw an error on enemy players whose identity is hidden in combat.
 ### 🔧 UPDATE
 - UPDATE - [DT-Teleports]: The season list now shows the Midnight Season 2 dungeons, and the missing Midnight dungeon portals were added to the Midnight and dungeon submenus.
 - UPDATE - [DT-Tracker]: The default currency list is updated for Midnight Season 2, with the Mistcrests, Venomblight Manaflux, Tidal Spark Dust and Nebulous Voidcore.

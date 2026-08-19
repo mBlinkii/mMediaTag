@@ -13,6 +13,7 @@ mMT.Changelog[410] = {
 		"[NP-Highlighters]: The target, focus and quest highlight was not applied to nameplates anymore.",
 		"[Interrupt-On-CD]: The kick bar and the castbar color were not applied on nameplates anymore.",
 		"[System]: mMediaTag threw an error on login when another UI profile overwrote a font setting with a plain string, the font settings now live in their own database entry and are migrated automatically.",
+		"[Portraits]: Portraits threw an error on enemy players whose identity is hidden in combat.",
 	},
 	UPDATE = {
 		"[DT-Teleports]: The season list now shows the Midnight Season 2 dungeons, and the missing Midnight dungeon portals were added to the Midnight and dungeon submenus.",
