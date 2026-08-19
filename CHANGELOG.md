@@ -1,6 +1,6 @@
 # Changelog - ElvUI_mMediaTag
 
-## [ver. 4.10] - TBD
+## [ver. 4.10] - 19.08.2026
 ### 🐛 FIX
 - FIX - [Datatext]: The Teleports and Professions datatexts threw an error when WoW returned a protected cooldown value.
 - FIX - [Phaseicon]: The phase icon could taint when WoW returned a protected phase reason.
@@ -8,6 +8,7 @@
 - FIX - [Portraits]: Party, arena and boss portraits no longer updated after a roster change.
 - FIX - [NP-Highlighters]: The target, focus and quest highlight was not applied to nameplates anymore.
 - FIX - [Interrupt-On-CD]: The kick bar and the castbar color were not applied on nameplates anymore.
+- FIX - [System]: mMediaTag threw an error on login when another UI profile overwrote a font setting with a plain string, the font settings now live in their own database entry and are migrated automatically.
 ### 🔧 UPDATE
 - UPDATE - [DT-Teleports]: The season list now shows the Midnight Season 2 dungeons, and the missing Midnight dungeon portals were added to the Midnight and dungeon submenus.
 - UPDATE - [DT-Tracker]: The default currency list is updated for Midnight Season 2, with the Mistcrests, Venomblight Manaflux, Tidal Spark Dust and Nebulous Voidcore.
@@ -21,6 +22,7 @@
 - NEW - [Unitframe-Textures]: New module that sets the statusbar and the background texture per unit frame, separately for player, target, target of target, target of target of target, focus, pet, party, arena and boss.
 - NEW - [Unitframe-Textures]: The castbar, incoming heal, absorb shield, heal absorb and power cost bars can each be given their own texture.
 - NEW - [Unitframe-Textures]: The power bar and the background have their own switch per unit, so a texture change can stay on the health bar alone.
+- NEW - [NP-Classification]: New module that gives nameplates their own statusbar texture per classification, for world bosses, elite bosses, elite minions, rare elites, rares and casters, each with its own switch.
 ### 📌 INFO
 - INFO - Datatext slots that showed a Season 1 crest are empty after this update and need to be assigned again, the Season 2 crests replaced them.
 
