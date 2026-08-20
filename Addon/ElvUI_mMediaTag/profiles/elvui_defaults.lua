@@ -40,9 +40,6 @@ P.skins = {
 			},
 		},
 	},
-	classcodex = {
-		enable = false,
-	},
 	bigwigs = {
 		enable = false,
 		keystones = true,

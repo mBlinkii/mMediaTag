@@ -908,10 +908,6 @@ L["Keystone Window"] = "Schlüsselstein-Fenster"
 L["Original"] = "Original"
 L["Queue Timer Bar"] = "Warteschlangen-Balken"
 
--- options/skin/classcodex.lua
-L["Info: Class Codex is not installed."] = "Info: Class Codex ist nicht installiert."
-L["Info: This skins the codex panel, the compendium, the loadout dock and the talent pane widget. The copy dialog keeps its default look."] = "Info: Geskinnt werden das Codex-Fenster, das Compendium, das Loadout-Dock und das Widget im Talentfenster. Der Kopier-Dialog behält sein Standardaussehen."
-
 -- options/skin/premade_groups_filter.lua
 L["Checkboxes"] = "Kontrollkästchen"
 L["Info: Premade Groups Filter is not installed."] = "Info: Premade Groups Filter ist nicht installiert."
