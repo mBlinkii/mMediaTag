@@ -112,7 +112,8 @@ end
 local function SkinPopupMenu(popup)
 	if not popup.mmt_skinned then
 		popup.mmt_skinned = true
-		popup:DisableDrawLayer("BACKGROUND")
+		-- the menu inherits TooltipBorderBackdropTemplate, its border lives in a NineSlice child that DisableDrawLayer does not reach
+		popup:StripTextures()
 		popup:SetTemplate("Transparent")
 	end
 

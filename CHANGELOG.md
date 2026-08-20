@@ -1,5 +1,10 @@
 # Changelog - ElvUI_mMediaTag
 
+## [ver. 4.11] - 20.08.2026
+### 🐛 FIX
+- FIX - [Skins]: The dropdown menu in the Premade Groups Filter window kept its Blizzard border instead of the ElvUI one.
+- FIX - [Portraits]: Portraits of players whose identity is hidden in combat used the default color instead of their class color.
+
 ## [ver. 4.10] - 19.08.2026
 ### 🐛 FIX
 - FIX - [Datatext]: The Teleports and Professions datatexts threw an error when WoW returned a protected cooldown value.
