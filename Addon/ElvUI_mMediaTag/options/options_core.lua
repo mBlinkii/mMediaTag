@@ -572,22 +572,29 @@ mMT.options = {
 					childGroups = "tab",
 					args = {},
 				},
-				bigwigs = {
+				aussyloot = {
 					order = 2,
+					type = "group",
+					name = mMT:AddSettingsIcon("AussyLoot", "bag"),
+					childGroups = "tab",
+					args = {},
+				},
+				bigwigs = {
+					order = 3,
 					type = "group",
 					name = mMT:AddSettingsIcon("BigWigs", "encounter"),
 					childGroups = "tab",
 					args = {},
 				},
 				bugsack = {
-					order = 3,
+					order = 4,
 					type = "group",
 					name = mMT:AddSettingsIcon("BugSack", "fix"),
 					childGroups = "tab",
 					args = {},
 				},
 				premade_groups_filter = {
-					order = 4,
+					order = 5,
 					type = "group",
 					name = mMT:AddSettingsIcon("Premade Groups Filter", "dungeon"),
 					childGroups = "tab",

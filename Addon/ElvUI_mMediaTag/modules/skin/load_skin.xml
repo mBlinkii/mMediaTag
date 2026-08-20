@@ -5,4 +5,5 @@
     <Script file="auctionator.lua"/>
     <Script file="premade_groups_filter.lua"/>
     <Script file="bigwigs.lua"/>
+    <Script file="aussyloot.lua"/>
 </Ui>

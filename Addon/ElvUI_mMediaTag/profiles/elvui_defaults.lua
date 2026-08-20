@@ -40,6 +40,13 @@ P.skins = {
 			},
 		},
 	},
+	aussyloot = {
+		enable = false,
+		color = {
+			mode = "value",
+			color = { r = 1, g = 0.82, b = 0, a = 1 },
+		},
+	},
 	bigwigs = {
 		enable = false,
 		keystones = true,

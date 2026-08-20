@@ -908,6 +908,11 @@ L["Keystone Window"] = true
 L["Original"] = true
 L["Queue Timer Bar"] = true
 
+-- options/skin/aussyloot.lua
+L["Value Color"] = true
+L["Info: AussyLoot is not installed."] = true
+L["Info: This replaces AussyLoot's own surface, border and accent colors with the ElvUI ones and its fonts with the ElvUI font. The window is rebuilt on the next reload, the item quality, crest and status colors keep their own meaning."] = true
+
 -- options/skin/premade_groups_filter.lua
 L["Checkboxes"] = true
 L["Info: Premade Groups Filter is not installed."] = true

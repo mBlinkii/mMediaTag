@@ -9,4 +9,7 @@ mMT.Changelog[411] = {
 	UPDATE = {
 		"[Skins]: The Class Codex skin was removed, the addon is only available bundled with the Icy Veins app.",
 	},
+	NEW = {
+		"[Skins]: AussyLoot now matches ElvUI, its surfaces, borders and fonts follow your ElvUI settings and the accent color can be the AussyLoot one, the ElvUI value color, your class color or a custom one.",
+	},
 }

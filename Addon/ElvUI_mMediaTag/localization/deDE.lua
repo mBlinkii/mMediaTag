@@ -908,6 +908,11 @@ L["Keystone Window"] = "Schlüsselstein-Fenster"
 L["Original"] = "Original"
 L["Queue Timer Bar"] = "Warteschlangen-Balken"
 
+-- options/skin/aussyloot.lua
+L["Value Color"] = "Wertefarbe"
+L["Info: AussyLoot is not installed."] = "Info: AussyLoot ist nicht installiert."
+L["Info: This replaces AussyLoot's own surface, border and accent colors with the ElvUI ones and its fonts with the ElvUI font. The window is rebuilt on the next reload, the item quality, crest and status colors keep their own meaning."] = "Info: Ersetzt die Flächen-, Rahmen- und Akzentfarben von AussyLoot durch die von ElvUI und die Schriften durch die ElvUI-Schrift. Das Fenster wird beim nächsten Neuladen neu aufgebaut, Gegenstandsqualität, Wappen- und Statusfarben behalten ihre eigene Bedeutung."
+
 -- options/skin/premade_groups_filter.lua
 L["Checkboxes"] = "Kontrollkästchen"
 L["Info: Premade Groups Filter is not installed."] = "Info: Premade Groups Filter ist nicht installiert."
