@@ -2,14 +2,16 @@ local mMT, DB, M, E, P, L, MEDIA = unpack(ElvUI_mMediaTag)
 local module = mMT:AddModule("UnitframeTextures", { "AceHook-3.0" })
 
 local UF = E:GetModule("UnitFrames")
+local NP = E:GetModule("NamePlates")
 local LSM = E.Libs.LSM
 
 -- Cache WoW Globals
 local ipairs = ipairs
+local next = next
 local pairs = pairs
 local wipe = wipe
 
-local config, appliedTexture, appliedBackground, appliedPower, dropped, barInfo, hooked = {}, {}, {}, {}, {}, {}, {}
+local config, appliedTexture, appliedBackground, appliedPower, appliedPlate, dropped, droppedPlate, barInfo, hooked = {}, {}, {}, {}, {}, {}, {}, {}, {}
 local active = false
 
 local function ElvUITexture(transparent)
@@ -127,6 +129,38 @@ local function UpdateFrame(frame)
 	ApplyPowerPrediction(frame.PowerPrediction)
 end
 
+local function PlateTexture(key)
+	local settings = config[key]
+	if settings and settings.nameplates then return settings.texture end
+	if droppedPlate[key] then return LSM:Fetch("statusbar", NP.db.statusbar) or E.media.normTex end
+end
+
+-- nameplates carry no PowerPrediction element, only the HealComm bars can be textured here
+local function ApplyPlatePrediction(nameplate)
+	local prediction = nameplate and nameplate.HealthPrediction
+	if not prediction then return end
+
+	local heal = PlateTexture("healprediction")
+	if heal then
+		prediction.healingPlayer:SetStatusBarTexture(heal)
+		prediction.healingOther:SetStatusBarTexture(heal)
+	end
+
+	local damageAbsorb = PlateTexture("damageabsorb")
+	if damageAbsorb then prediction.damageAbsorb:SetStatusBarTexture(damageAbsorb) end
+
+	local healAbsorb = PlateTexture("healabsorb")
+	if healAbsorb then prediction.healAbsorb:SetStatusBarTexture(healAbsorb) end
+end
+
+local function UpdatePlates()
+	if not NP.Plates then return end
+
+	for nameplate in pairs(NP.Plates) do
+		ApplyPlatePrediction(nameplate)
+	end
+end
+
 local handlers = {
 	Update_StatusBar = function(_, statusBar)
 		ApplyTexture(statusBar)
@@ -141,14 +175,21 @@ local handlers = {
 	Configure_PowerPrediction = function(_, frame)
 		ApplyPowerPrediction(frame and frame.PowerPrediction)
 	end,
+	-- ElvUI repaints every registered nameplate bar with the global texture here
+	Update_StatusBars = function()
+		UpdatePlates()
+	end,
+	StylePlate = function(_, nameplate)
+		ApplyPlatePrediction(nameplate)
+	end,
 }
 
-local function ToggleHook(method, needed)
+local function ToggleHook(object, method, needed)
 	if needed and not hooked[method] then
-		module:SecureHook(UF, method, handlers[method])
-		hooked[method] = true
+		module:SecureHook(object, method, handlers[method])
+		hooked[method] = object
 	elseif not needed and hooked[method] then
-		module:Unhook(UF, method)
+		module:Unhook(hooked[method], method)
 		hooked[method] = nil
 	end
 end
@@ -164,7 +205,7 @@ function module:Initialize()
 	for key, settings in pairs(db) do
 		if settings.enable then
 			local background = settings.background_enable and LSM:Fetch("statusbar", settings.background) or nil
-			config[key] = { texture = LSM:Fetch("statusbar", settings.texture), background = background, power = settings.power_enable }
+			config[key] = { texture = LSM:Fetch("statusbar", settings.texture), background = background, power = settings.power_enable, nameplates = settings.nameplates }
 		end
 	end
 
@@ -184,6 +225,12 @@ function module:Initialize()
 		if not (settings and settings.power) then dropped[key] = true end
 	end
 
+	wipe(droppedPlate)
+	for key in pairs(appliedPlate) do
+		local settings = config[key]
+		if not (settings and settings.nameplates and settings.texture) then droppedPlate[key] = true end
+	end
+
 	for key in pairs(dropped) do
 		if not predictionKeys[key] then repaint = true end
 	end
@@ -191,10 +238,12 @@ function module:Initialize()
 	wipe(appliedTexture)
 	wipe(appliedBackground)
 	wipe(appliedPower)
+	wipe(appliedPlate)
 	for key, settings in pairs(config) do
 		if settings.texture then appliedTexture[key] = true end
 		if settings.background then appliedBackground[key] = true end
 		if settings.power then appliedPower[key] = true end
+		if settings.nameplates and settings.texture then appliedPlate[key] = true end
 		if not predictionKeys[key] then bars = true end
 	end
 
@@ -204,17 +253,22 @@ function module:Initialize()
 	end
 
 	active = bars
+	local plates = E.private.nameplates.enable and next(appliedPlate) ~= nil
 
 	-- every hook is installed only while something needs it, an untouched module costs nothing
-	ToggleHook("Update_StatusBar", bars)
-	ToggleHook("ToggleTransparentStatusBar", bars)
-	ToggleHook("SetTexture_HealComm", healComm)
-	ToggleHook("Configure_PowerPrediction", config.powerprediction ~= nil)
+	ToggleHook(UF, "Update_StatusBar", bars)
+	ToggleHook(UF, "ToggleTransparentStatusBar", bars)
+	ToggleHook(UF, "SetTexture_HealComm", healComm)
+	ToggleHook(UF, "Configure_PowerPrediction", config.powerprediction ~= nil)
+	ToggleHook(NP, "Update_StatusBars", plates)
+	ToggleHook(NP, "StylePlate", plates)
 
 	-- a dropped bar override needs ElvUI to repaint its own texture, the hook re-applies whatever is still enabled
 	if repaint and UF.Initialized then UF:Update_StatusBars() end
 
 	-- dropped only steers the sweep below, leaving it filled would make the hooks repaint what ElvUI already set
 	mMT:ForEachUFFrame(UpdateFrame)
+	UpdatePlates()
 	wipe(dropped)
+	wipe(droppedPlate)
 end

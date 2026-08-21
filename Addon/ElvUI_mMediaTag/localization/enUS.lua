@@ -315,7 +315,9 @@ L["Target of Target of Target"] = true
 L["Caster"] = true
 L["Elite Boss"] = true
 L["Elite Mini"] = true
+L["In Instances"] = true
 L["Inside a dungeon every mana user counts as a caster, so that texture wins over the elite ones there."] = true
+L["Show the classification textures only inside dungeons, raids and other instances."] = true
 L["World Boss"] = true
 
 -- options/options_core.lua
@@ -796,7 +798,9 @@ L["Shows a marker on enemy nameplates at the execute threshold of your spec. Bec
 
 -- options/nameplates/nameplate_tools.lua
 L["ElvUI Color Settings"] = true
+L["Heal and absorb textures for nameplates are configured together with the unitframe textures."] = true
 L["Open the ElvUI color settings to adjust the colors used for nameplates."] = true
+L["Open the mMediaTag unitframe texture settings."] = true
 L["Sets automatically your class color for glow and border color on nameplates for the target unit."] = true
 L["Target & Glow color"] = true
 
@@ -849,6 +853,7 @@ L["Extra"] = true
 L["Extra Mask"] = true
 L["Extra Settings"] = true
 L["Extra Shadow"] = true
+L["Filter mode for the portrait textures. Trilinear also samples mipmaps, nearest disables smoothing. The unit portrait itself is not affected."] = true
 L["Force Extra Texture"] = true
 L["Forces the default color for all texture."] = true
 L["Frame Level/ Strata"] = true
@@ -857,6 +862,7 @@ L["Hunter"] = true
 L["It will override the default extra texture, but will take care of rare/elite/boss units."] = true
 L["Mage"] = true
 L["Monk"] = true
+L["Nearest"] = true
 L["Neutral"] = true
 L["On Top"] = true
 L["Paladin"] = true
@@ -875,9 +881,11 @@ L["Select a portrait texture style."] = true
 L["Shadow Alpha"] = true
 L["Shaman"] = true
 L["Shows the Extra Texture (rare/elite) for the Unit Portrait."] = true
+L["Texture Filter"] = true
 L["Texture Style settings for Extra texture (Rare/Elite/Boss/player)."] = true
 L["Texture Styles"] = true
 L["TIP: If you use the Blizzard textures and change the classification color to white, you will see the extra texture with the original colors."] = true
+L["Trilinear"] = true
 L["Unitcolor for Extra"] = true
 L["Use Default color"] = true
 L["Spec icons"] = true

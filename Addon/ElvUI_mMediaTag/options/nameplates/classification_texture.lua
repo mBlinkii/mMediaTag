@@ -27,8 +27,24 @@ local args = {
 			mMT:UpdateModule("NP-ClassificationTexture")
 		end,
 	},
-	description = {
+	instanceOnly = {
 		order = 2,
+		type = "toggle",
+		name = L["In Instances"],
+		desc = L["Show the classification textures only inside dungeons, raids and other instances."],
+		disabled = function()
+			return not E.db.mMediaTag.nameplates.classification.enable
+		end,
+		get = function(info)
+			return E.db.mMediaTag.nameplates.classification.instanceOnly
+		end,
+		set = function(info, value)
+			E.db.mMediaTag.nameplates.classification.instanceOnly = value
+			mMT:UpdateModule("NP-ClassificationTexture")
+		end,
+	},
+	description = {
+		order = 3,
 		type = "description",
 		fontSize = "medium",
 		name = "\n" .. L["Inside a dungeon every mana user counts as a caster, so that texture wins over the elite ones there."] .. "\n",
@@ -39,7 +55,7 @@ for index, entry in ipairs(entries) do
 	local key = entry.key
 
 	args[key] = {
-		order = index + 2,
+		order = index + 3,
 		type = "group",
 		guiInline = true,
 		name = entry.name,

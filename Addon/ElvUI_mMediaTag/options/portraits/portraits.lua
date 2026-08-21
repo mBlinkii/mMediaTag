@@ -79,6 +79,24 @@ mMT.options.args.unitframes.args.portraits.args = {
 							M.Portraits:Initialize()
 						end,
 					},
+					texture_filter = {
+						order = 4,
+						type = "select",
+						name = L["Texture Filter"],
+						desc = L["Filter mode for the portrait textures. Trilinear also samples mipmaps, nearest disables smoothing. The unit portrait itself is not affected."],
+						values = {
+							LINEAR = L["Default"],
+							TRILINEAR = L["Trilinear"],
+							NEAREST = L["Nearest"],
+						},
+						get = function(info)
+							return E.db.mMediaTag.portraits.misc.filter
+						end,
+						set = function(info, value)
+							E.db.mMediaTag.portraits.misc.filter = value
+							M.Portraits:Initialize()
+						end,
+					},
 				},
 			},
 			shadow_group = {

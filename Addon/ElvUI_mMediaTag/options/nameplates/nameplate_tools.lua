@@ -41,4 +41,27 @@ mMT.options.args.nameplates.args.misc.args = {
 			},
 		},
 	},
+	textures = {
+		order = 2,
+		type = "group",
+		inline = true,
+		name = L["Unitframe Textures"],
+		args = {
+			text = {
+				order = 1,
+				type = "description",
+				fontSize = "medium",
+				name = L["Heal and absorb textures for nameplates are configured together with the unitframe textures."],
+			},
+			settings = {
+				order = 2,
+				type = "execute",
+				name = L["Unitframe Textures"],
+				desc = L["Open the mMediaTag unitframe texture settings."],
+				func = function()
+					E.Libs.AceConfigDialog:SelectGroup("ElvUI", "mMT", "unitframes", "unitframe_textures")
+				end,
+			},
+		},
+	},
 }

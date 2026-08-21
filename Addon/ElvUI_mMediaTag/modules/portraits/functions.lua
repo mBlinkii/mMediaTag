@@ -25,6 +25,11 @@ local GetSpecialization = C_SpecializationInfo.GetSpecialization or GetSpecializ
 local GetSpecializationInfo = C_SpecializationInfo.GetSpecializationInfo or GetSpecializationInfo
 
 local playerFaction = nil
+local filterMode
+
+local function SetTexture(texture, file, wrapMode)
+	texture:SetTexture(file, wrapMode, wrapMode, filterMode)
+end
 
 local function SafeValue(value)
 	if issecretvalue and issecretvalue(value) then return nil end
@@ -132,7 +137,7 @@ local function UpdateExtraTexture(element, force)
 	if not (color and media) then return extra:Hide() end
 
 	SetupExtraTexture(element, media.low)
-	extra:SetTexture(media.texture, "CLAMP", "CLAMP", "TRILINEAR")
+	SetTexture(extra, media.texture, "CLAMP")
 
 	ApplyColor(extra, color.c)
 
@@ -671,10 +676,6 @@ function module:Mirror(texture, mirror, texCoords)
 	end
 end
 
-local function SetTexture(texture, file, wrapMode)
-	texture:SetTexture(file, wrapMode, wrapMode)
-end
-
 function module:UpdateTextures(element)
 	SetTexture(element.texture, element.media.texture, "CLAMP")
 	SetTexture(element.mask, element.media.mask, "CLAMPTOBLACKADDITIVE")
@@ -730,6 +731,10 @@ end
 
 function module:Initialize()
 	module.db = E.db.mMediaTag.portraits
+
+	-- LINEAR is the API default, nil keeps the plain three-argument call
+	local filter = module.db.misc.filter
+	filterMode = filter ~= "LINEAR" and filter or nil
 
 	if module.db.enable then
 		module.portraits = module.portraits or {}

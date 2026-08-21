@@ -16,7 +16,7 @@ local UnitIsPlayer = UnitIsPlayer
 
 local POWERTYPE_MANA = Enum.PowerType.Mana or 0
 local textures = {}
-local active = false
+local active, instanceOnly, inInstance, applies = false, false, false, false
 
 local function SafeValue(value)
 	if E:IsSecretValue(value) then return nil end
@@ -51,14 +51,14 @@ end
 
 -- handed to Utils so a highlight reset falls back to the classification instead of ElvUI's texture
 local function BaseTexture(nameplate)
-	if not active then return end
+	if not applies then return end
 
 	local key = nameplate and nameplate.mMT_Classification
 	return key and textures[key]
 end
 
 local function ApplyPlate(nameplate)
-	local healthBar = active and Utils:GetHealthBar(nameplate)
+	local healthBar = applies and Utils:GetHealthBar(nameplate)
 	if not healthBar or Utils:HasTextureOverride(healthBar) then return end
 
 	local texture = BaseTexture(nameplate)
@@ -77,11 +77,35 @@ end
 
 -- ElvUI repaints every registered bar with the global texture here
 local function OnUpdateStatusBars()
-	if not (active and NP.Plates) then return end
+	if not (applies and NP.Plates) then return end
 
 	for nameplate in pairs(NP.Plates) do
 		ApplyPlate(nameplate)
 	end
+end
+
+local function RefreshPlates()
+	if NP.Plates then
+		for nameplate in pairs(NP.Plates) do
+			if nameplate.__unit then nameplate.mMT_Classification = active and GetClassification(nameplate.__unit) or nil end
+		end
+	end
+
+	if applies then
+		OnUpdateStatusBars()
+	elseif NP.Initialized then
+		NP:Update_StatusBars()
+	end
+end
+
+-- the caster rule depends on the instance type, so a zone change invalidates the cached classifications either way
+local function UpdateState()
+	local instance = IsInInstance() or false
+	local newApplies = active and (not instanceOnly or instance) or false
+	if instance == inInstance and newApplies == applies then return end
+
+	inInstance, applies = instance, newApplies
+	RefreshPlates()
 end
 
 function module:Initialize()
@@ -98,27 +122,24 @@ function module:Initialize()
 	end
 
 	active = next(textures) ~= nil
+	instanceOnly = active and db.instanceOnly or false
+	inInstance = IsInInstance() or false
+	applies = active and (not instanceOnly or inInstance) or false
 	Utils.baseTextureProvider = active and BaseTexture or nil
 
 	if active and not module.isEnabled then
 		module:RegisterEvent("NAME_PLATE_UNIT_ADDED", OnPlateAdded)
+		module:RegisterEvent("PLAYER_ENTERING_WORLD", UpdateState)
+		module:RegisterEvent("ZONE_CHANGED_NEW_AREA", UpdateState)
 		module:SecureHook(NP, "Update_StatusBars", OnUpdateStatusBars)
 		module.isEnabled = true
 	elseif not active and module.isEnabled then
 		module:UnregisterEvent("NAME_PLATE_UNIT_ADDED")
+		module:UnregisterEvent("PLAYER_ENTERING_WORLD")
+		module:UnregisterEvent("ZONE_CHANGED_NEW_AREA")
 		module:UnhookAll()
 		module.isEnabled = false
 	end
 
-	if NP.Plates then
-		for nameplate in pairs(NP.Plates) do
-			if nameplate.__unit then nameplate.mMT_Classification = active and GetClassification(nameplate.__unit) or nil end
-		end
-	end
-
-	if active then
-		OnUpdateStatusBars()
-	elseif NP.Initialized then
-		NP:Update_StatusBars()
-	end
+	RefreshPlates()
 end

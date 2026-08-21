@@ -14,9 +14,9 @@ local entries = {
 	{ key = "arena", name = L["Arena"], power = true },
 	{ key = "boss", name = L["Boss"], power = true },
 	{ key = "castbar", name = L["Castbar"] },
-	{ key = "healprediction", name = L["Incoming Heal"], textureOnly = true },
-	{ key = "damageabsorb", name = L["Absorb Shield"], textureOnly = true },
-	{ key = "healabsorb", name = L["Heal Absorb"], textureOnly = true },
+	{ key = "healprediction", name = L["Incoming Heal"], textureOnly = true, nameplates = true },
+	{ key = "damageabsorb", name = L["Absorb Shield"], textureOnly = true, nameplates = true },
+	{ key = "healabsorb", name = L["Heal Absorb"], textureOnly = true, nameplates = true },
 	{ key = "powerprediction", name = L["Power Cost"], textureOnly = true },
 }
 
@@ -60,6 +60,8 @@ for index, entry in ipairs(entries) do
 	local extra = args[key].args
 
 	if entry.power then extra.power_enable = { order = 3, type = "toggle", name = L["Power"], disabled = disabled } end
+
+	if entry.nameplates then extra.nameplates = { order = 3, type = "toggle", name = L["Nameplates"], disabled = disabled } end
 
 	if not entry.textureOnly then
 		extra.spacer = {

@@ -257,6 +257,7 @@ P.portraits = {
 		spec_icon = "none",
 		desaturate = false,
 		extratop = true,
+		filter = "LINEAR",
 		rare = "blizz_rare_neutral",
 		elite = "blizz_rare_neutral",
 		rareelite = "blizz_rare_neutral",
@@ -625,6 +626,7 @@ P.nameplates = {
 	target_glow_color = false,
 	classification = {
 		enable = false,
+		instanceOnly = false,
 		units = {
 			worldboss = { enable = false, texture = "mMediaTag A4" },
 			eliteBoss = { enable = false, texture = "mMediaTag A4" },
@@ -701,9 +703,9 @@ P.unitframe_textures = {
 	arena = { enable = false, texture = "ElvUI Norm", power_enable = true, background_enable = false, background = "ElvUI Norm" },
 	boss = { enable = false, texture = "ElvUI Norm", power_enable = true, background_enable = false, background = "ElvUI Norm" },
 	castbar = { enable = false, texture = "ElvUI Norm", background_enable = false, background = "ElvUI Norm" },
-	healprediction = { enable = false, texture = "ElvUI Norm" },
-	damageabsorb = { enable = false, texture = "ElvUI Norm" },
-	healabsorb = { enable = false, texture = "ElvUI Norm" },
+	healprediction = { enable = false, texture = "ElvUI Norm", nameplates = false },
+	damageabsorb = { enable = false, texture = "ElvUI Norm", nameplates = false },
+	healabsorb = { enable = false, texture = "ElvUI Norm", nameplates = false },
 	powerprediction = { enable = false, texture = "ElvUI Norm" },
 }
 
