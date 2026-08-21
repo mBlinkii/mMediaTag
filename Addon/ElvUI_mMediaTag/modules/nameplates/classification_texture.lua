@@ -59,7 +59,7 @@ end
 
 local function ApplyPlate(nameplate)
 	local healthBar = active and Utils:GetHealthBar(nameplate)
-	if not healthBar or Utils:HasActiveHighlight(healthBar) then return end
+	if not healthBar or Utils:HasTextureOverride(healthBar) then return end
 
 	local texture = BaseTexture(nameplate)
 	if texture then healthBar:SetStatusBarTexture(texture) end

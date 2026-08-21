@@ -54,10 +54,6 @@ function Utils:GetPlateByUnit(unit)
 	return nameplate
 end
 
-function Utils:GetDefaultHealthTexture()
-	return self.defaultHealthTexture
-end
-
 -- the classification module registers a provider here, everything else falls back to ElvUI's texture
 function Utils:GetBaseHealthTexture(nameplate)
 	local provider = self.baseTextureProvider
@@ -133,10 +129,21 @@ function Utils:GetModuleConfig(healthBar, activeKey, configKey, moduleName, conf
 	return (configKey and healthBar[configKey]) or (module and module[configName or MODULE_CONFIG_KEYS[moduleName]]) or nil
 end
 
+function Utils:GetActiveConfigs(healthBar)
+	return self:GetModuleConfig(healthBar, "mMT_IsTargetHighlighted", nil, "NP-TargetHighlight", "target"),
+		self:GetModuleConfig(healthBar, "mMT_IsFocusHighlighted", "mMT_FocusConfig", "NP-FocusHighlight", "focus"),
+		self:GetModuleConfig(healthBar, "mMT_IsQuestHighlighted", "mMT_QuestConfig", "NP-QuestHighlight", "quest")
+end
+
+-- true only when a highlight paints its own texture; a color- or border-only highlight must leave the base texture alone
+function Utils:HasTextureOverride(healthBar)
+	local targetCfg, focusCfg, questCfg = self:GetActiveConfigs(healthBar)
+	local cfg = (targetCfg and targetCfg.changeTexture and targetCfg) or (focusCfg and focusCfg.changeTexture and focusCfg) or (questCfg and questCfg.changeTexture and questCfg)
+	return (cfg and cfg.texture and cfg.texture ~= "") and true or false
+end
+
 function Utils:ApplyCompositeStyle(nameplate, healthBar)
-	local targetCfg = self:GetModuleConfig(healthBar, "mMT_IsTargetHighlighted", nil, "NP-TargetHighlight", "target")
-	local focusCfg = self:GetModuleConfig(healthBar, "mMT_IsFocusHighlighted", "mMT_FocusConfig", "NP-FocusHighlight", "focus")
-	local questCfg = self:GetModuleConfig(healthBar, "mMT_IsQuestHighlighted", "mMT_QuestConfig", "NP-QuestHighlight", "quest")
+	local targetCfg, focusCfg, questCfg = self:GetActiveConfigs(healthBar)
 
 	local colorCfg = (targetCfg and targetCfg.changeColor and targetCfg) or (focusCfg and focusCfg.changeColor and focusCfg) or (questCfg and questCfg.changeColor and questCfg)
 	local textureCfg = (targetCfg and targetCfg.changeTexture and targetCfg) or (focusCfg and focusCfg.changeTexture and focusCfg) or (questCfg and questCfg.changeTexture and questCfg)
@@ -192,7 +199,7 @@ function Utils:ApplyHighlightStyle(nameplate, cfg, state)
 	if cfg.changeTexture and cfg.texture and cfg.texture ~= "" then
 		healthBar:SetStatusBarTexture(cfg.texture)
 	else
-		healthBar:SetStatusBarTexture(self:GetDefaultHealthTexture())
+		healthBar:SetStatusBarTexture(self:GetBaseHealthTexture(nameplate))
 	end
 
 	healthBar[state.activeKey] = true
