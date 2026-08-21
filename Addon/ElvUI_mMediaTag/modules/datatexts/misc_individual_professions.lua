@@ -29,6 +29,7 @@ local function UpdatePlayerProfessions()
 	}
 end
 local function UpdateIcon(name, iconStyle)
+	if iconStyle == "profession" then return mMT:GetProfessionIcon(player_professions[name]) end
 	return iconStyle ~= "default" and "Interface\\AddOns\\ElvUI_mMediaTag\\media\\icons\\datatexts\\" .. professions[name].icons[iconStyle == "colored" and 1 or 2]
 end
 
@@ -55,7 +56,7 @@ local function OnEnter(self)
 
 	if profession then
 		local name, icon, skillLevel, maxSkillLevel, skillModifier = GetProfessionInfos(profession)
-		if iconPath ~= "none" and iconPath ~= "default" then icon = UpdateIcon(self.name, E.db.mMediaTag.datatexts.individual_professions.icon) end
+		if iconPath ~= "none" and iconPath ~= "default" then icon = UpdateIcon(self.name, iconPath) or icon end
 		icon = E:TextureString(icon, ":14:14")
 		label = icon .. " " .. name .. " " .. (UpdateSkillString(skillLevel, maxSkillLevel, skillModifier) or "")
 	end
@@ -82,7 +83,7 @@ local function OnEvent(self, event)
 		professions[self.name].spell = spell
 
 		if iconPath ~= "none" then
-			if iconPath ~= "default" then icon = UpdateIcon(self.name, E.db.mMediaTag.datatexts.individual_professions.icon) end
+			if iconPath ~= "default" then icon = UpdateIcon(self.name, iconPath) or icon end
 			icon = E:TextureString(icon, ":14:14")
 
 			label = icon .. " " .. name .. " " .. (skillLevel ~= maxSkillLevel and format(valueString, skillLevel) or "")

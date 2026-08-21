@@ -28,6 +28,7 @@ mMT.options.args.datatexts.args.misc_individual_professions.args = {
 					default = L["Default"],
 					colored = L["Colored"],
 					white = L["White"],
+					profession = L["Profession"],
 				},
 			},
 		},

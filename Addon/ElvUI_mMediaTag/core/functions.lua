@@ -17,6 +17,8 @@ local GetRaidDifficultyID = GetRaidDifficultyID
 local GetApplicationMetric = C_AddOnProfiler.GetApplicationMetric
 local GetOverallMetric = C_AddOnProfiler.GetOverallMetric
 local GetAddOnMetric = C_AddOnProfiler.GetAddOnMetric
+local GetProfessionInfo = GetProfessionInfo
+local GetProfessionInfoBySkillLineID = C_TradeSkillUI and C_TradeSkillUI.GetProfessionInfoBySkillLineID
 local UnitGUID = UnitGUID
 local UnitClassification = UnitClassification
 local UnitLevel = UnitLevel
@@ -101,6 +103,14 @@ end
 function mMT:CooldownStateText(isActive)
 	if isActive == nil or issecretvalue(isActive) then return "" end
 	return mMT:TC(isActive and L["Not Ready"] or L["Ready"], isActive and "red" or "green")
+end
+
+function mMT:GetProfessionIcon(profession)
+	if not profession or not GetProfessionInfoBySkillLineID then return end
+
+	local skillLine = select(7, GetProfessionInfo(profession))
+	local info = skillLine and GetProfessionInfoBySkillLineID(skillLine)
+	return info and info.profession and MEDIA.icons.datatexts.profession_icons[info.profession] or nil
 end
 
 function mMT:GetRGB(color1, color2)

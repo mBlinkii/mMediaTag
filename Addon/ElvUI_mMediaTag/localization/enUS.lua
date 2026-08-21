@@ -616,6 +616,7 @@ L["colored"] = true
 -- options/datatext/misc_individual_professions.lua
 L["Colored"] = true
 L["Icon Style"] = true
+L["Profession"] = true
 
 -- options/datatext/misc_professions.lua
 L["Menu Icons"] = true
