@@ -3,7 +3,7 @@
 ## [ver. 4.11] - TBD
 ### 🐛 FIX
 - FIX - [Skins]: The dropdown menu in the Premade Groups Filter window kept its Blizzard border instead of the ElvUI one.
-- FIX - [Portraits]: Portraits of players whose identity is hidden in combat used the default color instead of their class color.
+- FIX - [Portraits]: Portraits of units whose identity is hidden in combat were colored wrong, players now use their class color and hostile NPCs in dungeons the enemy color again.
 ### 🔧 UPDATE
 - UPDATE - [Skins]: The Class Codex skin was removed, the addon is only available bundled with the Icy Veins app.
 - UPDATE - [Skins]: The BigWigs queue timer bar can be given its own texture.
