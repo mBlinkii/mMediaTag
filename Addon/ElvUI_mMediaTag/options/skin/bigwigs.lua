@@ -1,5 +1,7 @@
 local mMT, DB, M, E, P, L, MEDIA = unpack(ElvUI_mMediaTag)
 
+local LSM = E.Libs.LSM
+
 local _G = _G
 local IsAddOnLoaded = _G.C_AddOns and _G.C_AddOns.IsAddOnLoaded or _G.IsAddOnLoaded
 
@@ -57,8 +59,40 @@ mMT.options.args.skins.args.bigwigs.args = {
 			E:StaticPopup_Show("CONFIG_RL")
 		end,
 	},
-	color_mode = {
+	texture_enable = {
 		order = 5,
+		type = "toggle",
+		name = L["Custom Texture"],
+		disabled = function()
+			return IsDisabled() or not E.db.mMediaTag.skins.bigwigs.queue_timer
+		end,
+		get = function(info)
+			return E.db.mMediaTag.skins.bigwigs.texture_enable
+		end,
+		set = function(info, value)
+			E.db.mMediaTag.skins.bigwigs.texture_enable = value
+			mMT:UpdateModule("BigWigsSkin")
+		end,
+	},
+	texture = {
+		order = 6,
+		type = "select",
+		dialogControl = "LSM30_Statusbar",
+		name = L["Texture"],
+		values = LSM:HashTable("statusbar"),
+		disabled = function()
+			return IsDisabled() or not (E.db.mMediaTag.skins.bigwigs.queue_timer and E.db.mMediaTag.skins.bigwigs.texture_enable)
+		end,
+		get = function(info)
+			return E.db.mMediaTag.skins.bigwigs.texture
+		end,
+		set = function(info, value)
+			E.db.mMediaTag.skins.bigwigs.texture = value
+			mMT:UpdateModule("BigWigsSkin")
+		end,
+	},
+	color_mode = {
+		order = 7,
 		type = "select",
 		name = L["Color Style"],
 		disabled = function()
@@ -78,7 +112,7 @@ mMT.options.args.skins.args.bigwigs.args = {
 		end,
 	},
 	color = {
-		order = 6,
+		order = 8,
 		type = "color",
 		name = L["Custom color"],
 		hasAlpha = true,
@@ -96,12 +130,12 @@ mMT.options.args.skins.args.bigwigs.args = {
 		end,
 	},
 	spacer_2 = {
-		order = 7,
+		order = 9,
 		type = "description",
 		name = "\n",
 	},
 	info_missing = {
-		order = 8,
+		order = 10,
 		type = "description",
 		name = MEDIA.color.info:WrapTextInColorCode(L["Info: BigWigs is not installed."]),
 		hidden = function()
@@ -109,7 +143,7 @@ mMT.options.args.skins.args.bigwigs.args = {
 		end,
 	},
 	info_scope = {
-		order = 9,
+		order = 11,
 		type = "description",
 		name = MEDIA.color.info:WrapTextInColorCode(L["Info: The keystone window is the /key list, the queue timer is the bar below the dungeon invite popup. Boss bars keep their own BigWigs style."]),
 		hidden = function()

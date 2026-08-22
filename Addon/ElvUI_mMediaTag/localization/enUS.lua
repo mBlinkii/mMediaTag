@@ -273,6 +273,7 @@ L["Shows deaths and lost time in the current Mythic+ run."] = true
 
 -- options/misc/prey_hunt.lua
 L["Prey Hunt"] = true
+L["Shows Ready in green once every hunt stage is done, the text is hidden otherwise."] = true
 L["Shows the current hunt stage as text on the prey icon."] = true
 L["Target List"] = true
 L["Mark Defeated Targets"] = true
@@ -911,6 +912,7 @@ L["Info: Auctionator is not installed."] = true
 L["Info: This skins the Shopping, Selling, Cancelling and Auctionator tabs. Rows inside the result lists keep their default look."] = true
 
 -- options/skin/bigwigs.lua
+L["Custom Texture"] = true
 L["Info: BigWigs is not installed."] = true
 L["Info: The keystone window is the /key list, the queue timer is the bar below the dungeon invite popup. Boss bars keep their own BigWigs style."] = true
 L["Keystone Window"] = true

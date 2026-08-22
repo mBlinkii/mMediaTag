@@ -32,6 +32,13 @@ local function MaxState()
 	return (Enum and Enum.PreyHuntProgressState and Enum.PreyHuntProgressState.Final or 3) + 1
 end
 
+local function IsComplete(frame)
+	local state = frame.progressState
+	if state == nil or issecretvalue(state) then return false end
+
+	return (state + 1) >= MaxState()
+end
+
 local function ProgressText(frame)
 	local state = frame.progressState
 	if state == nil or issecretvalue(state) then return "" end
@@ -63,11 +70,24 @@ local function UpdateFrame(frame)
 	Attach(frame)
 
 	local text = frame.mMTProgress
+	local complete = IsComplete(frame)
+
+	if complete and not db.ready then
+		text:Hide()
+		return
+	end
+
 	E:SetFont(text, LSM:Fetch("font", db.text.font), db.text.size, db.text.fontFlag)
-	text:SetTextColor(mMT:HexToRGB(db.color))
+
+	if complete then
+		text:SetTextColor(MEDIA.color.green:GetRGB())
+	else
+		text:SetTextColor(mMT:HexToRGB(db.color))
+	end
+
 	text:ClearAllPoints()
 	text:SetPoint(db.point, frame.StateTexture, db.point, db.x, db.y)
-	text:SetText(ProgressText(frame))
+	text:SetText(complete and L["Ready"] or ProgressText(frame))
 	text:Show()
 end
 

@@ -1,11 +1,13 @@
 # Changelog - ElvUI_mMediaTag
 
-## [ver. 4.11] - 20.08.2026
+## [ver. 4.11] - TBD
 ### 🐛 FIX
 - FIX - [Skins]: The dropdown menu in the Premade Groups Filter window kept its Blizzard border instead of the ElvUI one.
 - FIX - [Portraits]: Portraits of players whose identity is hidden in combat used the default color instead of their class color.
 ### 🔧 UPDATE
 - UPDATE - [Skins]: The Class Codex skin was removed, the addon is only available bundled with the Icy Veins app.
+- UPDATE - [Skins]: The BigWigs queue timer bar can be given its own texture.
+- UPDATE - [Prey-Hunt]: The stage text on the prey icon is hidden once the hunt is complete, and can optionally show Ready in green instead.
 ### ✨ NEW
 - NEW - [Skins]: AussyLoot now matches ElvUI, its surfaces, borders and fonts follow your ElvUI settings and the accent color can be AussyLoot's own, ElvUI's value color, your class color or a custom one.
 

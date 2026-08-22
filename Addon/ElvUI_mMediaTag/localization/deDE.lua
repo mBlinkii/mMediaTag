@@ -273,6 +273,7 @@ L["Shows deaths and lost time in the current Mythic+ run."] = "Zeigt Tode und ve
 
 -- options/misc/prey_hunt.lua
 L["Prey Hunt"] = "Beutejagd"
+L["Shows Ready in green once every hunt stage is done, the text is hidden otherwise."] = "Zeigt Bereit in Grün an, sobald alle Jagdstufen erledigt sind — sonst wird der Text ausgeblendet."
 L["Shows the current hunt stage as text on the prey icon."] = "Zeigt die aktuelle Jagdstufe als Text auf dem Beutesymbol an."
 L["Target List"] = "Zielliste"
 L["Mark Defeated Targets"] = "Besiegte Ziele markieren"
@@ -911,6 +912,7 @@ L["Info: Auctionator is not installed."] = "Info: Auctionator ist nicht installi
 L["Info: This skins the Shopping, Selling, Cancelling and Auctionator tabs. Rows inside the result lists keep their default look."] = "Info: Geskinnt werden die Tabs Einkauf, Verkauf, Abbrechen und Auctionator. Zeilen innerhalb der Ergebnislisten behalten ihr Standardaussehen."
 
 -- options/skin/bigwigs.lua
+L["Custom Texture"] = "Benutzerdefinierte Textur"
 L["Info: BigWigs is not installed."] = "Info: BigWigs ist nicht installiert."
 L["Info: The keystone window is the /key list, the queue timer is the bar below the dungeon invite popup. Boss bars keep their own BigWigs style."] = "Info: Das Schlüsselstein-Fenster ist die /key-Liste, der Warteschlangen-Timer ist der Balken unter dem Dungeon-Einladungsfenster. Bossbalken behalten ihren BigWigs-Stil."
 L["Keystone Window"] = "Schlüsselstein-Fenster"

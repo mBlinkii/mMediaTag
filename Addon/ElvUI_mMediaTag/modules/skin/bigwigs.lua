@@ -2,6 +2,7 @@ local mMT, DB, M, E, P, L, MEDIA = unpack(ElvUI_mMediaTag)
 local module = mMT:AddModule("BigWigsSkin")
 
 local S = E:GetModule("Skins")
+local LSM = E.Libs.LSM
 
 -- Cache WoW Globals
 local _G = _G
@@ -65,13 +66,19 @@ local function ApplyBarColor(frame)
 	end
 end
 
+local function ApplyBarStyle(frame)
+	local db = module.db
+
+	frame:SetStatusBarTexture(db.texture_enable and LSM:Fetch("statusbar", db.texture) or E.media.normTex)
+	ApplyBarColor(frame)
+end
+
 local function SkinQueueTimer(frame)
 	module.queueTimer = frame
 	frame.mmt_color = { frame:GetStatusBarColor() } -- BigWigs' own red, for the original color mode
 
 	frame:StripTextures() -- kills the castbar border, spark and background in one pass
-	frame:SetStatusBarTexture(E.media.normTex) -- ElvUI primary texture, the swap drops the color BigWigs set
-	ApplyBarColor(frame)
+	ApplyBarStyle(frame) -- the texture swap drops the color BigWigs set, so the color follows it
 	frame:CreateBackdrop("Transparent")
 
 	-- BigWigs pins a fixed 190px width, both sides follow the popup instead, inset by its border
@@ -94,7 +101,7 @@ function module:Initialize()
 
 	if not (module.db and module.db.enable) or not IsAddOnLoaded("BigWigs") then return end
 
-	if module.queueTimer then ApplyBarColor(module.queueTimer) end
+	if module.queueTimer then ApplyBarStyle(module.queueTimer) end
 
 	if module.isRegistered then return end
 

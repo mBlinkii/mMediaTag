@@ -51,6 +51,8 @@ P.skins = {
 		enable = false,
 		keystones = true,
 		queue_timer = true,
+		texture_enable = false,
+		texture = "ElvUI Norm",
 		color = {
 			mode = "original",
 			color = { r = 1, g = 0.1, b = 0, a = 1 },
@@ -158,6 +160,7 @@ P.death_counter = {
 
 P.prey_hunt = {
 	enable = false,
+	ready = false,
 	gossip = false,
 	gossip_color = "FF808080",
 	format = "stage",

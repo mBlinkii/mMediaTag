@@ -43,8 +43,22 @@ mMT.options.args.misc.args.prey_hunt.args = {
 			percent = "25%",
 		},
 	},
-	font = {
+	ready = {
 		order = 3,
+		type = "toggle",
+		name = L["Ready"],
+		desc = L["Shows Ready in green once every hunt stage is done, the text is hidden otherwise."],
+		disabled = IsDisabled,
+		get = function(info)
+			return E.db.mMediaTag.prey_hunt.ready
+		end,
+		set = function(info, value)
+			E.db.mMediaTag.prey_hunt.ready = value
+			Update()
+		end,
+	},
+	font = {
+		order = 4,
 		type = "group",
 		inline = true,
 		name = L["Font"],
@@ -122,7 +136,7 @@ mMT.options.args.misc.args.prey_hunt.args = {
 		},
 	},
 	position = {
-		order = 4,
+		order = 5,
 		type = "group",
 		inline = true,
 		name = L["Settings"],
@@ -188,7 +202,7 @@ mMT.options.args.misc.args.prey_hunt.args = {
 		},
 	},
 	target_list = {
-		order = 5,
+		order = 6,
 		type = "group",
 		inline = true,
 		name = L["Target List"],
