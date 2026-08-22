@@ -19,8 +19,10 @@ local select = select
 local UnitGUID = UnitGUID
 local IsUnitModelReadyForUI = IsUnitModelReadyForUI
 local C_Timer_NewTimer = C_Timer.NewTimer
+local CreateColor = CreateColor
 local issecretvalue = issecretvalue
 local C_ClassColor_GetClassColor = C_ClassColor and C_ClassColor.GetClassColor
+local EvalColor = C_CurveUtil and C_CurveUtil.EvaluateColorFromBoolean
 local GetSpecialization = C_SpecializationInfo.GetSpecialization or GetSpecialization
 local GetSpecializationInfo = C_SpecializationInfo.GetSpecializationInfo or GetSpecializationInfo
 
@@ -46,7 +48,19 @@ local function GetClassColor(class)
 	return class and MEDIA.color.portraits.class[class] or nil
 end
 
-function module:GetUnitColor(unit, class, isPlayer, isDead)
+-- a secret unit is hostile but can still be an NPC, so let the API branch on the identity instead of guessing
+local function GetSecretColor(unit, class, colors)
+	local enemy = colors.reaction.enemy
+	local classColor = EvalColor and GetClassColor(class)
+	local c = classColor and classColor.c
+
+	-- EvaluateColorFromBoolean only takes a plain colorRGBA, and a class color carries no alpha
+	if not c or E:IsSecretValue(c.r) then return enemy end
+
+	return { c = EvalColor(UnitIsPlayer(unit), CreateColor(c.r, c.g, c.b, c.a or 1), enemy.c) }
+end
+
+function module:GetUnitColor(unit, class, isPlayer, isDead, isSecret)
 	if not unit then return end
 
 	local colors = MEDIA.color.portraits
@@ -54,6 +68,8 @@ function module:GetUnitColor(unit, class, isPlayer, isDead)
 	if isDead then return colors.misc.death end
 
 	if module.db.misc.force_default then return colors.misc.default end
+
+	if isSecret then return module.db.misc.force_reaction and colors.reaction.enemy or GetSecretColor(unit, class, colors) end
 
 	if isPlayer then
 		if module.db.misc.force_reaction then
@@ -84,7 +100,7 @@ local function UpdateTextureColor(element, unit)
 	local db = module.db.misc
 	unit = unit or element.unit
 
-	local color = module:GetUnitColor(unit, element.unitClass, element.isPlayer, element.isDead) -- element.isDead)
+	local color = module:GetUnitColor(unit, element.unitClass, element.isPlayer, element.isDead, element.isSecret)
 	element.color = color
 	if not color then return end
 
@@ -271,6 +287,7 @@ local function DemoUpdate(self)
 	module:Mirror(element.unit_portrait, shouldMirror, texCoords)
 
 	element.isPlayer = isPlayer
+	element.isSecret = false
 	element.unitClass = class
 
 	UpdateTextureColor(element, unit)
