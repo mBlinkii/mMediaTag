@@ -54,10 +54,10 @@ local function GetSecretColor(unit, class, colors)
 	local classColor = EvalColor and GetClassColor(class)
 	local c = classColor and classColor.c
 
-	-- EvaluateColorFromBoolean only takes a plain colorRGBA, and a class color carries no alpha
-	if not c or E:IsSecretValue(c.r) then return enemy end
+	if not c then return enemy end
 
-	return { c = EvalColor(UnitIsPlayer(unit), CreateColor(c.r, c.g, c.b, c.a or 1), enemy.c) }
+	-- EvaluateColorFromBoolean needs a real colorRGBA, a class color carries no alpha; secret channels are fine as arguments
+	return { c = EvalColor(UnitIsPlayer(unit), CreateColor(c.r, c.g, c.b, 1), enemy.c) }
 end
 
 function module:GetUnitColor(unit, class, isPlayer, isDead, isSecret)

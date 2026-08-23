@@ -20,6 +20,11 @@ local UnitIsWildBattlePet = UnitIsWildBattlePet
 local UnitBattlePetLevel = UnitBattlePetLevel
 local IsResting = IsResting
 local GetInstanceInfo = GetInstanceInfo
+local CreateColor = CreateColor
+local EvalColor = C_CurveUtil and C_CurveUtil.EvaluateColorFromBoolean
+local GenerateTextColorCode = C_ColorUtil and C_ColorUtil.GenerateTextColorCode
+local WrapString = C_StringUtil and C_StringUtil.WrapString
+local GetClassColor = C_ClassColor and C_ClassColor.GetClassColor
 local CreateAtlasMarkup = CreateAtlasMarkup
 local CreateTextureMarkup = CreateTextureMarkup
 local strsplit = strsplit
@@ -313,20 +318,43 @@ E:AddTag("mMT-status:icon", "UNIT_HEALTH UNIT_CONNECTION PLAYER_FLAGS_CHANGED", 
 end)
 E:AddTagInfo("mMT-status:icon", mMT.NameShort .. " " .. L["Status"], L["Returns the status icon of the unit (AFK, DND, Offline, Dead, Ghost)."])
 
-E:AddTag("mMT-color", "UNIT_NAME_UPDATE UNIT_FACTION UNIT_CLASSIFICATION_CHANGED INSTANCE_ENCOUNTER_ENGAGE_UNIT", function(unit, _, args)
+-- a secret unit can still be a player, so let the API pick between both colors; the code it returns stays secret, hence WrapString instead of a concat
+local function GetSecretColorCode(unit, npcColor)
+	-- a secret class token must not be tested for nil or used as a table key, only the API may read it
+	local _, class = UnitClass(unit)
+	local classColor
+	if E:IsSecretValue(class) then
+		classColor = GetClassColor(class)
+	elseif class then
+		classColor = E.oUF.colors.class[class]
+	end
+
+	-- EvaluateColorFromBoolean needs a real colorRGBA, class and reaction colors carry no alpha; secret channels are fine as arguments
+	local npc = CreateColor(npcColor.r, npcColor.g, npcColor.b, 1)
+	local color = classColor and EvalColor(UnitIsPlayer(unit), CreateColor(classColor.r, classColor.g, classColor.b, 1), npc) or npc
+
+	return WrapString(GenerateTextColorCode(color), "|c")
+end
+
+local function GetColorCode(unit, args, classcolor)
 	local c = GetTagClassification(unit)
-	local isPlayer = not E:IsSecretValue(UnitIsPlayer(unit)) and UnitIsPlayer(unit)
+	local classification = c and colors[c]
 
 	if args and c then
 		local arg1, arg2, arg3 = strsplit(":", args)
-		if c == arg1 or c == arg2 or c == arg3 then
-			return "|c" .. colors[c].hex
-		else
-			return _TAGS.classcolor(unit)
-		end
+		if c ~= arg1 and c ~= arg2 and c ~= arg3 then classification = nil end
 	end
 
-	return isPlayer and _TAGS.classcolor(unit) or colors[c] and "|c" .. colors[c].hex or _TAGS.classcolor(unit)
+	-- ElvUIs classcolor branches on UnitIsPlayer and would throw on a secret unit
+	if E:IsSecretUnit(unit) then return GetSecretColorCode(unit, classification or E.oUF.colors.reaction[2]) end
+
+	if classification and not UnitIsPlayer(unit) then return "|c" .. classification.hex end
+
+	return classcolor(unit)
+end
+
+E:AddTag("mMT-color", "UNIT_NAME_UPDATE UNIT_FACTION UNIT_CLASSIFICATION_CHANGED INSTANCE_ENCOUNTER_ENGAGE_UNIT", function(unit, _, args)
+	return GetColorCode(unit, args, _TAGS.classcolor)
 end)
 E:AddTagInfo(
 	"mMT-color",
@@ -335,19 +363,7 @@ E:AddTagInfo(
 )
 
 E:AddTag("mMT-color:target", "UNIT_TARGET", function(unit, _, args)
-	local target = unit .. "target"
-	local c = GetTagClassification(target)
-	local isPlayer = not E:IsSecretValue(UnitIsPlayer(target)) and UnitIsPlayer(target)
-
-	if args and c then
-		local arg1, arg2, arg3 = strsplit(":", args)
-		if c == arg1 or c == arg2 or c == arg3 then
-			return "|c" .. colors[c].hex
-		else
-			return _TAGS.classcolor(target)
-		end
-	end
-	return isPlayer and _TAGS.classcolor(target) or colors[c] and "|c" .. colors[c].hex or _TAGS.classcolor(target)
+	return GetColorCode(unit .. "target", args, _TAGS.classcolor)
 end)
 E:AddTagInfo("mMT-color:target", mMT.NameShort .. " " .. L["Color"], L["Same as mMT-color, but only for the units target."])
 
