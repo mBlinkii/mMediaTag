@@ -7,14 +7,18 @@ local module = mMT:AddModule("ObjectiveTracker")
 local _G = _G
 local pairs, ipairs, tonumber, format = pairs, ipairs, tonumber, format
 local strmatch, strfind, gsub = strmatch, strfind, gsub
+local min = min
 local hooksecurefunc = hooksecurefunc
 local CreateFrame = CreateFrame
+local QUEST_DASH = QUEST_DASH
 local issecretvalue = _G.issecretvalue or function() return false end
 
 local db, fonts, colors
 
 local CHECK_ATLAS = "ui-questtracker-tracker-check"
 local CHECK_GAP = 5
+local DASH_SHOW, DASH_HIDE_COLLAPSE = 1, 3 -- OBJECTIVE_DASH_STYLE_SHOW / OBJECTIVE_DASH_STYLE_HIDE_AND_COLLAPSE
+local JUSTIFY_FACTOR = { LEFT = 0, CENTER = 0.5, RIGHT = 1 }
 
 local trackerNames = {
 	"AchievementObjectiveTracker",
@@ -69,9 +73,11 @@ local fontFlagMap = {
 	MONOCHROMETHICKOUTLINE = "MONOCHROME,THICKOUTLINE",
 }
 
-local function SetTextProperties(text, fontSettings, color)
+local function SetTextProperties(text, fontSettings, color, justify)
 	local flag = fontSettings.flag or "NONE"
 	text:SetFont(fontSettings.font, fontSettings.size, fontFlagMap[flag] or flag)
+
+	if justify then text:SetJustifyH(justify) end
 
 	if strfind(flag, "SHADOW", 1, true) then
 		text:SetShadowColor(0, 0, 0, 1)
@@ -84,7 +90,7 @@ local function SetTextProperties(text, fontSettings, color)
 end
 
 local function SkinTitleText(text)
-	SetTextProperties(text, fonts.title, colors.title)
+	SetTextProperties(text, fonts.title, colors.title, db.text.justify)
 	local height = text:GetStringHeight()
 	if height ~= text:GetHeight() then text:SetHeight(height) end
 end
@@ -129,7 +135,7 @@ local function SetLineText(text, completed)
 	completed = completed or (ratio ~= nil and ratio >= 1)
 
 	local color = completed and colors.complete or colors.text
-	SetTextProperties(text, fonts.text, color)
+	SetTextProperties(text, fonts.text, color, db.text.justify)
 
 	if completed or not ratio or not db.progress.enable then return completed end
 
@@ -148,6 +154,18 @@ local function SetLineText(text, completed)
 	return completed
 end
 
+-- Blizzard reapplies the dash only when the requested style differs from line.dashStyle, so what is set here survives the next update
+local function SetLineDash(line)
+	local dash = line.Dash
+	if not dash then return end
+
+	local style = db.text.hideDash and DASH_HIDE_COLLAPSE or (line.dashStyle or DASH_SHOW)
+	dash:SetText(style ~= DASH_HIDE_COLLAPSE and QUEST_DASH or nil)
+	dash:SetShown(style == DASH_SHOW)
+
+	if style == DASH_SHOW then SetTextProperties(dash, fonts.text, colors.text) end
+end
+
 -- quest lines share the anim line template with the scenario criteria, but only there does Blizzard drive the icon itself
 local function SetLineIcon(line, completed)
 	local icon = line.Icon
@@ -157,9 +175,13 @@ local function SetLineIcon(line, completed)
 	if block and block.parentModule == _G.ScenarioObjectiveTracker then return end
 
 	if completed then
+		local text = line.Text
+		local width = text:GetWidth()
+		local free = width - min(text:GetStringWidth(), width)
+
 		icon:SetAtlas(CHECK_ATLAS, false)
 		icon:ClearAllPoints()
-		icon:SetPoint("RIGHT", line.Text, "LEFT", -CHECK_GAP, 0)
+		icon:SetPoint("RIGHT", text, "LEFT", free * (JUSTIFY_FACTOR[db.text.justify] or 0) - CHECK_GAP, 0)
 		icon:Show()
 	elseif icon:GetAtlas() == CHECK_ATLAS then
 		icon:Hide()
@@ -180,6 +202,7 @@ local function SkinLine(line)
 	if line.objectiveKey == 0 then
 		SkinTitleText(line.Text)
 	else
+		SetLineDash(line)
 		SetLineIcon(line, SetLineText(line.Text, IsCompleted(line)))
 	end
 

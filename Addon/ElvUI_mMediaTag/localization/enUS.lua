@@ -766,6 +766,10 @@ L["Shows the icon inside the window instead of next to it. Requires the backgrou
 L["Theme"] = true
 L["Third line color"] = true
 
+-- options/misc/objective_tracker.lua
+L["Hide Dash"] = true
+L["Removes the dash in front of each objective."] = true
+
 -- options/misc/phase_icon.lua
 L["Chromie Time"] = true
 L["Timerunning World"] = true

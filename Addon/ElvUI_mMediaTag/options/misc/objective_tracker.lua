@@ -169,6 +169,36 @@ mMT.options.args.misc.args.objective_tracker.args = {
 					Update()
 				end,
 			},
+			justify = {
+				order = 6,
+				type = "select",
+				name = L["Alignment"],
+				get = function()
+					return E.db.mMediaTag.objective_tracker.text.justify
+				end,
+				set = function(_, value)
+					E.db.mMediaTag.objective_tracker.text.justify = value
+					Update()
+				end,
+				values = {
+					LEFT = L["LEFT"],
+					CENTER = L["CENTER"],
+					RIGHT = L["RIGHT"],
+				},
+			},
+			hideDash = {
+				order = 7,
+				type = "toggle",
+				name = L["Hide Dash"],
+				desc = L["Removes the dash in front of each objective."],
+				get = function()
+					return E.db.mMediaTag.objective_tracker.text.hideDash
+				end,
+				set = function(_, value)
+					E.db.mMediaTag.objective_tracker.text.hideDash = value
+					Update()
+				end,
+			},
 		},
 	},
 	colors = {

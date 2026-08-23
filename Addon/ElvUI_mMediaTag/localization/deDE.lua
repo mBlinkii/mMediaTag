@@ -766,6 +766,10 @@ L["Shows the icon inside the window instead of next to it. Requires the backgrou
 L["Theme"] = "Design"
 L["Third line color"] = "Farbe der dritten Zeile"
 
+-- options/misc/objective_tracker.lua
+L["Hide Dash"] = "Bindestrich ausblenden"
+L["Removes the dash in front of each objective."] = "Entfernt den Bindestrich vor jedem Ziel."
+
 -- options/misc/phase_icon.lua
 L["Chromie Time"] = "Chromie-Zeit"
 L["Timerunning World"] = "Zeitläufer-Welt"
