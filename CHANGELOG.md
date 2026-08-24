@@ -11,6 +11,7 @@
 - UPDATE - [Prey-Hunt]: The stage text on the prey icon is hidden once the hunt is complete, and can optionally show Ready in green instead.
 ### ✨ NEW
 - NEW - [Skins]: AussyLoot now matches ElvUI, its surfaces, borders and fonts follow your ElvUI settings and the accent color can be AussyLoot's own, ElvUI's value color, your class color or a custom one.
+- NEW - [Portraits]: The portrait border can fill like a ring, showing either the health or the cast of the unit, set up separately for player, target, target of target, focus, pet, party, boss and arena.
 
 ## [ver. 4.10] - 19.08.2026
 ### 🐛 FIX

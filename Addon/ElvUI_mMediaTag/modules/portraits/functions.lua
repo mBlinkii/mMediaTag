@@ -13,6 +13,12 @@ local SetPortraitTexture = SetPortraitTexture
 local CreateFrame = CreateFrame
 local UnitCastingInfo = UnitCastingInfo
 local UnitChannelInfo = UnitChannelInfo
+local UnitHealth = UnitHealth
+local UnitHealthMax = UnitHealthMax
+local UnitHealthMissing = UnitHealthMissing
+local UnitCastingDuration = UnitCastingDuration
+local UnitChannelDuration = UnitChannelDuration
+local UnitEmpoweredChannelDuration = UnitEmpoweredChannelDuration
 local UnitFactionGroup = UnitFactionGroup
 local InCombatLockdown = InCombatLockdown
 local select = select
@@ -31,6 +37,112 @@ local filterMode
 
 local function SetTexture(texture, file, wrapMode)
 	texture:SetTexture(file, wrapMode, wrapMode, filterMode)
+end
+
+local RADIAL_RENDER_MODE = Enum.StatusBarRenderMode and Enum.StatusBarRenderMode.Radial
+local StatusBarInterpolation = Enum.StatusBarInterpolation
+local StatusBarTimerDirection = Enum.StatusBarTimerDirection
+
+local function CreateRing(element)
+	if element.ring or not element.ringMode then return end
+
+	local ring = CreateFrame("StatusBar", nil, element)
+	ring:SetStatusBarTexture(element.media.texture)
+	ring:SetRenderMode(RADIAL_RENDER_MODE)
+	ring:Hide()
+
+	element.ring = ring
+end
+
+-- the bar owns its fill texture, so re-read it after every SetStatusBarTexture
+local function UpdateRingTexture(element)
+	local ring = element.ring
+	if not ring then return end
+
+	local db = element.db.ring
+	local colors = MEDIA.color.portraits.misc
+	local color = ((element.ringMode == "cast") and colors.ring_cast or colors.ring_health) or colors.default
+
+	ring:SetStatusBarTexture(element.media.texture)
+	ring:SetStatusBarColor(color.c.r, color.c.g, color.c.b, db.alpha)
+	-- the health mode leaves the max health in here
+	if element.ringMode == "cast" then ring:SetMinMaxValues(0, 1) end
+
+	local fill = ring:GetStatusBarTexture()
+	fill:SetDrawLayer("ARTWORK", 6)
+	fill:SetRadialProgressBarFeather(db.feather)
+	fill:SetRadialProgressBarReverse(db.reverse)
+	-- the option is in degrees, the API takes a fraction of a full turn
+	fill:SetRadialProgressBarStartOffset(db.start / 360)
+	module:Mirror(fill, element.db.mirror)
+end
+
+local function UpdateRingSize(element, size)
+	if not element.ring then return end
+
+	element.ring:ClearAllPoints()
+	element.ring:SetPoint("CENTER", element.texture, "CENTER")
+	element.ring:SetSize(size, size)
+	-- same frame level so the fill sorts against the portrait regions by draw layer
+	element.ring:SetFrameLevel(element:GetFrameLevel())
+end
+
+-- health values of a secret unit stay secret, they are only handed on; arithmetic on them errors,
+-- so an inverted fill reads the deficit from UnitHealthMissing instead of subtracting
+local function UpdateRingHealth(element)
+	local ring = element.ring
+	if not (ring and element.unit) then return end
+
+	ring:SetMinMaxValues(0, UnitHealthMax(element.unit))
+
+	if element.db.ring.invert then
+		ring:SetValue(UnitHealthMissing(element.unit))
+	else
+		ring:SetValue(UnitHealth(element.unit))
+	end
+
+	ring:Show()
+end
+
+-- the duration object renders itself, so no OnUpdate and no reading of cast times
+local function UpdateRingCast(element)
+	local ring = element.ring
+	if not (ring and element.unit) then return end
+
+	-- UnitChannelInfo may be secret, the duration objects never are
+	local channel = UnitChannelDuration(element.unit) or UnitEmpoweredChannelDuration(element.unit)
+	local duration = channel or UnitCastingDuration(element.unit)
+	if not duration then return ring:Hide() end
+
+	local remaining = element.db.ring.invert ~= (channel ~= nil)
+
+	ring:SetTimerDuration(duration, StatusBarInterpolation.Immediate, remaining and StatusBarTimerDirection.RemainingTime or StatusBarTimerDirection.ElapsedTime)
+	ring:Show()
+end
+
+local function UpdateRing(element)
+	if element.ringMode == "health" then
+		UpdateRingHealth(element)
+	elseif element.ringMode == "cast" then
+		UpdateRingCast(element)
+	end
+end
+
+-- UNIT_HEALTH also drives the dead state, UNIT_MAXHEALTH only the ring
+local function ApplyHealthEvents(element)
+	local ringHealth = element.ringMode == "health"
+
+	if element.unit and (ringHealth or element.isDead) then
+		element:RegisterUnitEvent("UNIT_HEALTH", element.unit)
+	else
+		element:UnregisterEvent("UNIT_HEALTH")
+	end
+
+	if element.unit and ringHealth then
+		element:RegisterUnitEvent("UNIT_MAXHEALTH", element.unit)
+	else
+		element:UnregisterEvent("UNIT_MAXHEALTH")
+	end
 end
 
 local function SafeValue(value)
@@ -252,11 +364,7 @@ function Update(self, event)
 		self.unitClass = class
 		self.isDead = isDead
 
-		if isDead then
-			self:RegisterUnitEvent("UNIT_HEALTH", unit)
-		elseif self.eventsSet then
-			self:UnregisterEvent("UNIT_HEALTH")
-		end
+		ApplyHealthEvents(self)
 
 		UpdateTextureColor(self, unit)
 		UpdateExtraTexture(self, self.forceExtra ~= "none" and self.forceExtra or nil)
@@ -419,11 +527,16 @@ function module:UpdateSize(element, size, point)
 
 		if element.db.strata ~= "AUTO" then element:SetFrameStrata(element.db.strata) end
 		element:SetFrameLevel(element.db.level)
+
+		UpdateRingSize(element, size)
 	end
 end
 
 local function UpdateCastIconStart(self)
 	self.isCasting = true
+
+	if self.ringMode == "cast" then UpdateRingCast(self) end
+	if not self.db.cast then return end
 
 	local texture = GetCastIcon(self.unit)
 	if texture then
@@ -436,6 +549,9 @@ end
 
 local function UpdateCastIconStop(self)
 	self.isCasting = false
+
+	if self.ringMode == "cast" and self.ring then self.ring:Hide() end
+	if not self.db.cast then return end
 
 	Update(self, "ForceUpdate")
 end
@@ -467,7 +583,7 @@ local function ApplyUnitEvents(element, force)
 		element:RegisterUnitEvent(event, unit)
 	end
 
-	if element.db and element.db.cast then
+	if (element.db and element.db.cast) or element.ringMode == "cast" then
 		for _, event in next, castUnitEvents do
 			element:RegisterUnitEvent(event, unit)
 		end
@@ -479,7 +595,7 @@ local function ApplyUnitEvents(element, force)
 		end
 	end
 
-	if element.isDead then element:RegisterUnitEvent("UNIT_HEALTH", unit) end
+	ApplyHealthEvents(element)
 end
 
 -- hidden frames skip all event work, so catch up on show
@@ -487,6 +603,7 @@ local function OnShow(self)
 	if not self.db then return end
 	ApplyUnitEvents(self)
 	Update(self, "ForceUpdate")
+	UpdateRing(self)
 end
 
 -- party reordering re-assigns the buttons unit attribute - re-target the filtered events
@@ -527,12 +644,7 @@ local function DeathCheck(self, event)
 	self.isDead = isDead
 	Update(self, event)
 
-	-- UNIT_HEALTH only for dead units
-	if isDead then
-		self:RegisterUnitEvent("UNIT_HEALTH", self.unit)
-	else
-		self:UnregisterEvent("UNIT_HEALTH")
-	end
+	ApplyHealthEvents(self)
 end
 
 local eventHandlers = {
@@ -579,7 +691,11 @@ local eventHandlers = {
 	INSTANCE_ENCOUNTER_ENGAGE_UNIT = ForceUpdate,
 	UPDATE_ACTIVE_BATTLEFIELD = SimpleUpdate,
 
-	UNIT_HEALTH = DeathCheck,
+	UNIT_HEALTH = function(self, event)
+		if self.ringMode == "health" then UpdateRingHealth(self) end
+		DeathCheck(self, event)
+	end,
+	UNIT_MAXHEALTH = UpdateRingHealth,
 
 	UNIT_PET = ForceUpdate,
 }
@@ -608,6 +724,13 @@ end
 
 function module:InitPortrait(element)
 	if element then
+		local ringDB = type(element.db.ring) == "table" and element.db.ring or nil
+		element.ringMode = (RADIAL_RENDER_MODE and ringDB and ringDB.mode ~= "none") and ringDB.mode or nil
+		CreateRing(element)
+		UpdateRingSize(element, element.size)
+		element.texture:SetAlpha(element.ringMode and ringDB.baseAlpha or 1)
+		if element.ring and not element.ringMode then element.ring:Hide() end
+
 		if module.db.misc.embellishment and element.media.embellishment and not element.embellishment then
 			element.embellishment = element:CreateTexture("mMT-Portrait-Embellishment-" .. element.name, "OVERLAY", nil, 6)
 			element.embellishment:SetAllPoints(element.texture)
@@ -656,7 +779,7 @@ function module:InitPortrait(element)
 		end
 
 		-- cast events disabled since last init -> drop them
-		if element.cast_eventsSet and not element.db.cast then
+		if element.cast_eventsSet and not (element.db.cast or element.ringMode == "cast") then
 			for _, event in next, castUnitEvents do
 				element:UnregisterEvent(event)
 			end
@@ -667,7 +790,7 @@ function module:InitPortrait(element)
 				end
 			end
 		end
-		element.cast_eventsSet = element.db.cast and true or false
+		element.cast_eventsSet = (element.db.cast or element.ringMode == "cast") and true or false
 
 		-- unit-filtered events (force: settings or unit may have changed)
 		ApplyUnitEvents(element, true)
@@ -677,6 +800,7 @@ function module:InitPortrait(element)
 		element:SetScript("OnShow", OnShow)
 		element:SetScript("OnEvent", OnEvent)
 		Update(element, "ForceUpdate")
+		UpdateRing(element)
 	end
 end
 
@@ -702,6 +826,8 @@ function module:UpdateTextures(element)
 		SetTexture(element.embellishment, element.media.embellishment, "CLAMP")
 		module:Mirror(element.embellishment, mirror)
 	end
+
+	UpdateRingTexture(element)
 
 	if element.extra_mask then SetTexture(element.extra_mask, element.media.extra_mask, "CLAMPTOBLACKADDITIVE") end
 	SetTexture(element.bg, element.media.bg, "CLAMP")

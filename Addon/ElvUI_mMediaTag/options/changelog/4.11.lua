@@ -14,5 +14,6 @@ mMT.Changelog[411] = {
 	},
 	NEW = {
 		"[Skins]: AussyLoot now matches ElvUI, its surfaces, borders and fonts follow your ElvUI settings and the accent color can be the AussyLoot one, the ElvUI value color, your class color or a custom one.",
+		"[Portraits]: The portrait border can fill like a ring, showing either the health or the cast of the unit, set up separately for player, target, target of target, focus, pet, party, boss and arena.",
 	},
 }

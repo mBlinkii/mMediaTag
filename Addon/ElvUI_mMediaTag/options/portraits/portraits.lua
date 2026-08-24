@@ -10,6 +10,161 @@ local frameStrata = {
 	AUTO = "Auto",
 }
 
+local ringModes = {
+	none = L["Disabled"],
+	health = L["Health"],
+	cast = L["Cast"],
+}
+
+local ringUnits = {
+	{ key = "player", name = L["Player"] },
+	{ key = "target", name = L["Target"] },
+	{ key = "focus", name = L["Focus"] },
+	{ key = "pet", name = L["Pet"] },
+	{ key = "targettarget", name = L["Target of Target"] },
+	{ key = "party", name = L["Party"] },
+	{ key = "boss", name = L["Boss"] },
+	{ key = "arena", name = L["Arena"] },
+}
+
+local function ringSetting(unit, key)
+	return function(info)
+		return E.db.mMediaTag.portraits[unit].ring[key]
+	end, function(info, value)
+		E.db.mMediaTag.portraits[unit].ring[key] = value
+		M.Portraits:Initialize()
+	end
+end
+
+local ringGroups = {
+	color_group = {
+		order = 1,
+		type = "group",
+		inline = true,
+		name = L["Color"],
+		args = {
+			color_health = {
+				order = 1,
+				type = "color",
+				name = L["Health"],
+				hasAlpha = false,
+				get = function(info)
+					local r, g, b = mMT:HexToRGB(E.db.mMediaTag.color.portraits.misc.ring_health.c)
+					return r, g, b
+				end,
+				set = function(info, r, g, b)
+					E.db.mMediaTag.color.portraits.misc.ring_health.c = E:RGBToHex(r, g, b, "ff")
+					mMT:UpdateMedia("portraits")
+					M.Portraits:Initialize()
+				end,
+			},
+			color_cast = {
+				order = 2,
+				type = "color",
+				name = L["Cast"],
+				hasAlpha = false,
+				get = function(info)
+					local r, g, b = mMT:HexToRGB(E.db.mMediaTag.color.portraits.misc.ring_cast.c)
+					return r, g, b
+				end,
+				set = function(info, r, g, b)
+					E.db.mMediaTag.color.portraits.misc.ring_cast.c = E:RGBToHex(r, g, b, "ff")
+					mMT:UpdateMedia("portraits")
+					M.Portraits:Initialize()
+				end,
+			},
+		},
+	},
+}
+
+for index, unit in ipairs(ringUnits) do
+	local key = unit.key
+	local modeGet, modeSet = ringSetting(key, "mode")
+	local reverseGet, reverseSet = ringSetting(key, "reverse")
+	local invertGet, invertSet = ringSetting(key, "invert")
+	local startGet, startSet = ringSetting(key, "start")
+	local alphaGet, alphaSet = ringSetting(key, "alpha")
+	local baseGet, baseSet = ringSetting(key, "baseAlpha")
+	local featherGet, featherSet = ringSetting(key, "feather")
+
+	ringGroups[key .. "_group"] = {
+		order = index + 1,
+		type = "group",
+		name = unit.name,
+		args = {
+			mode_select = {
+				order = 1,
+				type = "select",
+				name = L["Ring"],
+				desc = L["Shows health or the cast as a radial fill on the portrait border."],
+				values = ringModes,
+				get = modeGet,
+				set = modeSet,
+			},
+			reverse_toggle = {
+				order = 2,
+				type = "toggle",
+				name = L["Clockwise"],
+				desc = L["Fills the ring clockwise, counter-clockwise when disabled."],
+				get = reverseGet,
+				set = reverseSet,
+			},
+			invert_toggle = {
+				order = 3,
+				type = "toggle",
+				name = L["Reverse Fill"],
+				desc = L["The ring drains instead of filling: health shows what is missing, a cast counts down."],
+				get = invertGet,
+				set = invertSet,
+			},
+			start_range = {
+				order = 4,
+				type = "range",
+				name = L["Start Point"],
+				desc = L["Where the fill starts, 0 is the twelve o'clock position."],
+				min = 0,
+				max = 360,
+				step = 1,
+				bigStep = 90,
+				get = startGet,
+				set = startSet,
+			},
+			alpha_range = {
+				order = 5,
+				type = "range",
+				name = L["Ring Alpha"],
+				min = 0,
+				max = 1,
+				step = 0.01,
+				get = alphaGet,
+				set = alphaSet,
+			},
+			base_alpha_range = {
+				order = 6,
+				type = "range",
+				name = L["Border Alpha"],
+				desc = L["Opacity of the portrait border below the ring."],
+				min = 0,
+				max = 1,
+				step = 0.01,
+				get = baseGet,
+				set = baseSet,
+			},
+			feather_range = {
+				order = 7,
+				type = "range",
+				name = L["Edge Softness"],
+				desc = L["Softens the edge of the radial fill."],
+				min = 0,
+				max = 0.05,
+				step = 0.001,
+				get = featherGet,
+				set = featherSet,
+			},
+		},
+	}
+end
+
 mMT.options.args.unitframes.args.portraits.args = {
 	enable = {
 		order = 1,
@@ -3844,5 +3999,12 @@ mMT.options.args.unitframes.args.portraits.args = {
 				},
 			},
 		},
+	},
+	ring_group = {
+		order = 13,
+		type = "group",
+		name = L["Ring"],
+		desc = L["Shows health or the cast as a radial fill on the portrait border."],
+		args = ringGroups,
 	},
 }
