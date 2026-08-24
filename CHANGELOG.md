@@ -5,10 +5,12 @@
 - FIX - [Skins]: The dropdown menu in the Premade Groups Filter window kept its Blizzard border instead of the ElvUI one.
 - FIX - [Portraits]: Portraits of units whose identity is hidden in combat were colored wrong, players now use their class color and hostile NPCs in dungeons the enemy color again.
 - FIX - [Tags]: The mMT-color tags fell back to the classification color on units whose identity is hidden in combat, players now use their class color again.
+- FIX - [Objective-Tracker]: The check in front of a completed dungeon objective sat directly against its text.
 ### 🔧 UPDATE
 - UPDATE - [Skins]: The Class Codex skin was removed, the addon is only available bundled with the Icy Veins app.
 - UPDATE - [Skins]: The BigWigs queue timer bar can be given its own texture.
 - UPDATE - [Prey-Hunt]: The stage text on the prey icon is hidden once the hunt is complete, and can optionally show Ready in green instead.
+- UPDATE - [Objective-Tracker]: The objective text can be aligned to the left, centered or to the right, and the dash in front of each objective can be hidden, together with the dot in front of open dungeon objectives.
 ### ✨ NEW
 - NEW - [Skins]: AussyLoot now matches ElvUI, its surfaces, borders and fonts follow your ElvUI settings and the accent color can be AussyLoot's own, ElvUI's value color, your class color or a custom one.
 - NEW - [Portraits]: The portrait border can fill like a ring, showing either the health or the cast of the unit, set up separately for player, target, target of target, focus, pet, party, boss and arena.

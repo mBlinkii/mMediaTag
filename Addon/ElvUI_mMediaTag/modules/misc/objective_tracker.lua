@@ -166,22 +166,32 @@ local function SetLineDash(line)
 	if style == DASH_SHOW then SetTextProperties(dash, fonts.text, colors.text) end
 end
 
--- quest lines share the anim line template with the scenario criteria, but only there does Blizzard drive the icon itself
+-- the template anchors the icon to the line, not to the text, so a custom font pushes it into the text
+local function AnchorLineIcon(icon, text)
+	local width = text:GetWidth()
+	local free = width - min(text:GetStringWidth(), width)
+
+	icon:ClearAllPoints()
+	icon:SetPoint("RIGHT", text, "LEFT", free * (JUSTIFY_FACTOR[db.text.justify] or 0) - CHECK_GAP, 0)
+end
+
+-- scenario criteria bring their own icon: a check when done, a nub that stands in for the dash
 local function SetLineIcon(line, completed)
 	local icon = line.Icon
 	if not icon or line.objectiveKey == "Waypoint" then return end -- the waypoint line anchors its Text to the Icon
 
 	local block = line.parentBlock
-	if block and block.parentModule == _G.ScenarioObjectiveTracker then return end
+	if block and block.parentModule == _G.ScenarioObjectiveTracker then
+		if not completed and db.text.hideDash then return icon:Hide() end
+
+		AnchorLineIcon(icon, line.Text)
+		icon:Show()
+		return
+	end
 
 	if completed then
-		local text = line.Text
-		local width = text:GetWidth()
-		local free = width - min(text:GetStringWidth(), width)
-
 		icon:SetAtlas(CHECK_ATLAS, false)
-		icon:ClearAllPoints()
-		icon:SetPoint("RIGHT", text, "LEFT", free * (JUSTIFY_FACTOR[db.text.justify] or 0) - CHECK_GAP, 0)
+		AnchorLineIcon(icon, line.Text)
 		icon:Show()
 	elseif icon:GetAtlas() == CHECK_ATLAS then
 		icon:Hide()
