@@ -8,11 +8,16 @@
 - FIX - [Objective-Tracker]: The check in front of a completed dungeon objective sat directly against its text.
 - FIX - [NP-Classification]: A classification texture stayed on a nameplate once it was reused for another unit.
 - FIX - [System]: Nameplates reset to the ElvUI statusbar texture that was loaded at login, a texture or profile change since then was ignored.
+- FIX - [NP-Classification]: A target, focus or quest highlight that only changes the color wiped the classification texture off the nameplate.
 ### 🔧 UPDATE
 - UPDATE - [Skins]: The Class Codex skin was removed, the addon is only available bundled with the Icy Veins app.
 - UPDATE - [Skins]: The BigWigs queue timer bar can be given its own texture.
 - UPDATE - [Prey-Hunt]: The stage text on the prey icon is hidden once the hunt is complete, and can optionally show Ready in green instead.
 - UPDATE - [Objective-Tracker]: The objective text can be aligned to the left, centered or to the right, and the dash in front of each objective can be hidden, together with the dot in front of open dungeon objectives.
+- UPDATE - [NP-Classification]: The classification textures can be limited to dungeons, raids and other instances.
+- UPDATE - [Unitframe-Textures]: The incoming heal, absorb shield and heal absorb textures can be applied to nameplates as well.
+- UPDATE - [Portraits]: The portrait textures can be given a filter mode, trilinear also samples mipmaps and nearest turns smoothing off.
+- UPDATE - [DT-Professions]: The individual profession datatexts can show the icon of the profession itself as their icon style.
 ### ✨ NEW
 - NEW - [Skins]: AussyLoot now matches ElvUI, its surfaces, borders and fonts follow your ElvUI settings and the accent color can be AussyLoot's own, ElvUI's value color, your class color or a custom one.
 - NEW - [Portraits]: The portrait border can fill like a ring, showing either the health or the cast of the unit, set up separately for player, target, target of target, focus, pet, party, boss and arena.

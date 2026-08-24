@@ -9,12 +9,17 @@ mMT.Changelog[411] = {
 		"[Objective-Tracker]: The check in front of a completed dungeon objective sat directly against its text.",
 		"[NP-Classification]: A classification texture stayed on a nameplate once it was reused for another unit.",
 		"[System]: Nameplates reset to the ElvUI statusbar texture that was loaded at login, a texture or profile change since then was ignored.",
+		"[NP-Classification]: A target, focus or quest highlight that only changes the color wiped the classification texture off the nameplate.",
 	},
 	UPDATE = {
 		"[Skins]: The Class Codex skin was removed, the addon is only available bundled with the Icy Veins app.",
 		"[Skins]: The BigWigs queue timer bar can be given its own texture.",
 		"[Prey-Hunt]: The stage text on the prey icon is hidden once the hunt is complete, and can optionally show Ready in green instead.",
 		"[Objective-Tracker]: The objective text can be aligned to the left, centered or to the right, and the dash in front of each objective can be hidden, together with the dot in front of open dungeon objectives.",
+		"[NP-Classification]: The classification textures can be limited to dungeons, raids and other instances.",
+		"[Unitframe-Textures]: The incoming heal, absorb shield and heal absorb textures can be applied to nameplates as well.",
+		"[Portraits]: The portrait textures can be given a filter mode, trilinear also samples mipmaps and nearest turns smoothing off.",
+		"[DT-Professions]: The individual profession datatexts can show the icon of the profession itself as their icon style.",
 	},
 	NEW = {
 		"[Skins]: AussyLoot now matches ElvUI, its surfaces, borders and fonts follow your ElvUI settings and the accent color can be the AussyLoot one, the ElvUI value color, your class color or a custom one.",
