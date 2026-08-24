@@ -114,9 +114,7 @@ local function UpdateRingCast(element)
 	local duration = channel or UnitCastingDuration(element.unit)
 	if not duration then return ring:Hide() end
 
-	local remaining = element.db.ring.invert ~= (channel ~= nil)
-
-	ring:SetTimerDuration(duration, StatusBarInterpolation.Immediate, remaining and StatusBarTimerDirection.RemainingTime or StatusBarTimerDirection.ElapsedTime)
+	ring:SetTimerDuration(duration, StatusBarInterpolation.Immediate, channel and StatusBarTimerDirection.RemainingTime or StatusBarTimerDirection.ElapsedTime)
 	ring:Show()
 end
 

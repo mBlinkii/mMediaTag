@@ -22,9 +22,8 @@ local MODULE_CONFIG_KEYS = {
 mMT.NameplateUtils = mMT.NameplateUtils or {}
 local Utils = mMT.NameplateUtils
 
+-- re-read on every call, ElvUI's texture and border color change with the profile
 function Utils:Initialize()
-	if self.initialized then return end
-
 	local border = E.db and E.db.general and E.db.general.bordercolor
 	if border then self.defaultBorderColor = {
 		r = border.r,
@@ -33,9 +32,7 @@ function Utils:Initialize()
 		a = border.a,
 	} end
 
-	self.defaultHealthTexture = LSM:Fetch("statusbar", NP.db.statusbar)
-
-	self.initialized = true
+	self.defaultHealthTexture = LSM:Fetch("statusbar", NP.db.statusbar) or E.media.normTex
 end
 
 function Utils:GetHealthBar(nameplate)

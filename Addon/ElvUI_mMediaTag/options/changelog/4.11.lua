@@ -7,6 +7,8 @@ mMT.Changelog[411] = {
 		"[Portraits]: Portraits of units whose identity is hidden in combat were colored wrong, players now use their class color and hostile NPCs in dungeons the enemy color again.",
 		"[Tags]: The mMT-color tags fell back to the classification color on units whose identity is hidden in combat, players now use their class color again.",
 		"[Objective-Tracker]: The check in front of a completed dungeon objective sat directly against its text.",
+		"[NP-Classification]: A classification texture stayed on a nameplate once it was reused for another unit.",
+		"[System]: Nameplates reset to the ElvUI statusbar texture that was loaded at login, a texture or profile change since then was ignored.",
 	},
 	UPDATE = {
 		"[Skins]: The Class Codex skin was removed, the addon is only available bundled with the Icy Veins app.",

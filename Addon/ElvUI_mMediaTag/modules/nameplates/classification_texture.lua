@@ -57,12 +57,13 @@ local function BaseTexture(nameplate)
 	return key and textures[key]
 end
 
+-- ElvUI only textures a health bar when it builds it, so a recycled plate keeps the texture of its
+-- previous unit - always repaint, the provider falls back to ElvUI's texture
 local function ApplyPlate(nameplate)
-	local healthBar = applies and Utils:GetHealthBar(nameplate)
+	local healthBar = Utils:GetHealthBar(nameplate)
 	if not healthBar or Utils:HasTextureOverride(healthBar) then return end
 
-	local texture = BaseTexture(nameplate)
-	if texture then healthBar:SetStatusBarTexture(texture) end
+	healthBar:SetStatusBarTexture(Utils:GetBaseHealthTexture(nameplate))
 end
 
 local function OnPlateAdded(_, unit)

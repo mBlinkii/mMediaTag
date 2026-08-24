@@ -99,7 +99,11 @@ for index, unit in ipairs(ringUnits) do
 				desc = L["Shows health or the cast as a radial fill on the portrait border."],
 				values = ringModes,
 				get = modeGet,
-				set = modeSet,
+				set = function(info, value)
+					-- reverse fill is a health idea, on a cast it is just the timer direction
+					if value ~= "health" then E.db.mMediaTag.portraits[key].ring.invert = false end
+					modeSet(info, value)
+				end,
 			},
 			reverse_toggle = {
 				order = 2,
@@ -113,7 +117,10 @@ for index, unit in ipairs(ringUnits) do
 				order = 3,
 				type = "toggle",
 				name = L["Reverse Fill"],
-				desc = L["The ring drains instead of filling: health shows what is missing, a cast counts down."],
+				desc = L["The ring fills with the missing health instead of draining, so it stays empty at full health."],
+				disabled = function()
+					return E.db.mMediaTag.portraits[key].ring.mode ~= "health"
+				end,
 				get = invertGet,
 				set = invertSet,
 			},
