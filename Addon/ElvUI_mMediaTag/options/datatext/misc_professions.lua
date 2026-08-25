@@ -31,17 +31,48 @@ mMT.options.args.datatexts.args.misc_professions.args = {
 					return values
 				end,
 			},
-            menu_icons = {
-                order = 2,
-                type = "toggle",
-                name = L["Menu Icons"],
-                get = function(info)
-                    return E.db.mMediaTag.datatexts.professions.menu_icons
-                end,
-                set = function(info, value)
-                    E.db.mMediaTag.datatexts.professions.menu_icons = value
-                end,
-            },
+			menu_icons = {
+				order = 2,
+				type = "toggle",
+				name = L["Menu Icons"],
+				get = function(info)
+					return E.db.mMediaTag.datatexts.professions.menu_icons
+				end,
+				set = function(info, value)
+					E.db.mMediaTag.datatexts.professions.menu_icons = value
+				end,
+			},
+			tooltip_icons = {
+				order = 3,
+				type = "toggle",
+				name = L["Tooltip Icons"],
+				get = function(info)
+					return E.db.mMediaTag.datatexts.professions.tooltip_icons
+				end,
+				set = function(info, value)
+					E.db.mMediaTag.datatexts.professions.tooltip_icons = value
+				end,
+			},
+			menu_icon_style = {
+				order = 4,
+				type = "select",
+				name = L["Profession Icon Style"],
+				disabled = function()
+					return not (E.db.mMediaTag.datatexts.professions.menu_icons or E.db.mMediaTag.datatexts.professions.tooltip_icons)
+				end,
+				get = function(info)
+					return E.db.mMediaTag.datatexts.professions.menu_icon_style
+				end,
+				set = function(info, value)
+					E.db.mMediaTag.datatexts.professions.menu_icon_style = value
+					DT:ForceUpdate_DataText("mMT - Professions")
+				end,
+				values = {
+					default = L["Default"],
+					white = L["White"],
+					colored = L["Colored"],
+				},
+			},
 		},
 	},
 }

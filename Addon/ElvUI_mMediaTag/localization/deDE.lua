@@ -619,10 +619,13 @@ L["colored"] = "gefärbt"
 -- options/datatext/misc_individual_professions.lua
 L["Colored"] = "Gefärbt"
 L["Icon Style"] = "Symbolstil"
-L["Profession"] = "Beruf"
+L["Profession (Colored)"] = "Beruf (Gefärbt)"
+L["Profession (White)"] = "Beruf (Weiß)"
 
 -- options/datatext/misc_professions.lua
 L["Menu Icons"] = "Menüsymbole"
+L["Profession Icon Style"] = "Berufssymbolstil"
+L["Tooltip Icons"] = "Tooltipsymbole"
 
 -- options/datatext/misc_teleports.lua
 L["Slot"] = "Slot"

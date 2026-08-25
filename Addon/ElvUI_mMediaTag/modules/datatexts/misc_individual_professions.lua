@@ -9,6 +9,7 @@ local GetProfessionInfo = GetProfessionInfo
 local CastSpell = CastSpell
 
 local valueString, textString = "", ""
+local ICON_SIZE = 20
 local professions = {
 	["mMT - Cooking"] = { name = L["Cooking"], icons = { "cooking_a.tga", "cooking_b.tga" } },
 	["mMT - Fishing"] = { name = L["Fishing"], icons = { "fishing_a.tga", "fishing_b.tga" } },
@@ -16,6 +17,8 @@ local professions = {
 	["mMT - Primary Professions"] = { name = L["Primary Profession"], icons = { "primary_a.tga", "primary_b.tga" } },
 	["mMT - Secondary Professions"] = { name = L["Secondary Profession"], icons = { "secondary_a.tga", "secondary_b.tga" } },
 }
+
+local profession_styles = { profession = "white", profession_colored = "colored" }
 
 local player_professions = {}
 
@@ -29,7 +32,8 @@ local function UpdatePlayerProfessions()
 	}
 end
 local function UpdateIcon(name, iconStyle)
-	if iconStyle == "profession" then return mMT:GetProfessionIcon(player_professions[name]) end
+	local professionStyle = profession_styles[iconStyle]
+	if professionStyle then return mMT:GetProfessionIcon(player_professions[name], professionStyle) end
 	return iconStyle ~= "default" and "Interface\\AddOns\\ElvUI_mMediaTag\\media\\icons\\datatexts\\" .. professions[name].icons[iconStyle == "colored" and 1 or 2]
 end
 
@@ -57,7 +61,7 @@ local function OnEnter(self)
 	if profession then
 		local name, icon, skillLevel, maxSkillLevel, skillModifier = GetProfessionInfos(profession)
 		if iconPath ~= "none" and iconPath ~= "default" then icon = UpdateIcon(self.name, iconPath) or icon end
-		icon = E:TextureString(icon, ":14:14")
+		icon = E:TextureString(icon, ":" .. ICON_SIZE .. ":" .. ICON_SIZE)
 		label = icon .. " " .. name .. " " .. (UpdateSkillString(skillLevel, maxSkillLevel, skillModifier) or "")
 	end
 
@@ -84,7 +88,7 @@ local function OnEvent(self, event)
 
 		if iconPath ~= "none" then
 			if iconPath ~= "default" then icon = UpdateIcon(self.name, iconPath) or icon end
-			icon = E:TextureString(icon, ":14:14")
+			icon = E:TextureString(icon, ":" .. ICON_SIZE .. ":" .. ICON_SIZE)
 
 			label = icon .. " " .. name .. " " .. (skillLevel ~= maxSkillLevel and format(valueString, skillLevel) or "")
 		else

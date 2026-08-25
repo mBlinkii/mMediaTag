@@ -50,6 +50,7 @@ mMT.knownTeleports = {
 }
 
 local textString = ""
+local ICON_SIZE = 20
 local menus = {}
 local teleportsIDs = {
 	favorites = {},
@@ -822,6 +823,7 @@ local function CreateMenuEntry(id, t, marked)
 		text = text,
 		right_text = t.cooldown,
 		icon = t.icon,
+		icon_size = ICON_SIZE,
 		isTitle = false,
 		tooltip = id,
 		macro = t.use,
@@ -1074,7 +1076,7 @@ local function OnClick(self, button)
 end
 
 local function BuildTipIcon(icon)
-	return E:TextureString(icon, ":14:14") .. " "
+	return E:TextureString(icon, ":" .. ICON_SIZE .. ":" .. ICON_SIZE) .. " "
 end
 local function OnEnter(self)
 	mMT:UpdateTeleports()
@@ -1150,7 +1152,9 @@ local function OnEvent(self)
 	local iconPath = E.db.mMediaTag.datatexts.teleports.icon
 	local label = L["Teleports"]
 
-	if iconPath ~= "none" then label = E:TextureString(MEDIA.icons.datatexts.teleport[iconPath] or "Interface\\Addons\\ElvUI_mMediaTag\\media\\icon.tga", ":14:14") .. " " .. label end
+	if iconPath ~= "none" then
+		label = E:TextureString(MEDIA.icons.datatexts.teleport[iconPath] or "Interface\\Addons\\ElvUI_mMediaTag\\media\\icon.tga", ":" .. ICON_SIZE .. ":" .. ICON_SIZE) .. " " .. label
+	end
 
 	self.text:SetFormattedText(textString, label)
 end

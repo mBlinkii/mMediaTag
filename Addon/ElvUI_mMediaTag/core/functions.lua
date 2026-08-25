@@ -105,12 +105,13 @@ function mMT:CooldownStateText(isActive)
 	return mMT:TC(isActive and L["Not Ready"] or L["Ready"], isActive and "red" or "green")
 end
 
-function mMT:GetProfessionIcon(profession)
+function mMT:GetProfessionIcon(profession, style)
 	if not profession or not GetProfessionInfoBySkillLineID then return end
 
+	local icons = MEDIA.icons.datatexts.profession_icons[style or "white"]
 	local skillLine = select(7, GetProfessionInfo(profession))
 	local info = skillLine and GetProfessionInfoBySkillLineID(skillLine)
-	return info and info.profession and MEDIA.icons.datatexts.profession_icons[info.profession] or nil
+	return info and info.profession and icons[info.profession] or nil
 end
 
 function mMT:GetRGB(color1, color2)

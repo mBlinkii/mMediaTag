@@ -13,6 +13,7 @@ local IsSpellKnown = C_SpellBook and C_SpellBook.IsSpellInSpellBook or IsSpellKn
 
 local textString = ""
 local dt_icons = MEDIA.icons.datatexts.professions
+local ICON_SIZE = 20
 
 local menu = {}
 
@@ -65,12 +66,13 @@ local function UpdatePlayerProfessions(tip)
 	local player_professions = { main = {}, secondary = {} }
 
 	local function ProcessProfessions(profArray, target)
+		local style = E.db.mMediaTag.datatexts.professions.menu_icon_style
 		for _, prof in pairs(profArray) do
 			if prof then
 				local name, icon, spell, skill, skillModifier = GetProfessionInfos(prof)
 				target[prof] = {
 					name = name,
-					icon = icon,
+					icon = (style ~= "default" and mMT:GetProfessionIcon(prof, style)) or icon,
 					spell = spell,
 					skill = skill,
 					skillModifier = skillModifier,
@@ -108,7 +110,7 @@ local function OnEnter(self)
 		DT.tooltip:AddLine(titleKey, mMT:GetRGB("title"))
 		for _, profession in pairs(professions) do
 			local name, icon, skill, skillModifier = profession.name, profession.icon, profession.skill, profession.skillModifier
-			local lineLeft = E.db.mMediaTag.datatexts.professions.menu_icons and (E:TextureString(icon, ":14:14") .. " " .. name) or name
+			local lineLeft = E.db.mMediaTag.datatexts.professions.tooltip_icons and (E:TextureString(icon, ":" .. ICON_SIZE .. ":" .. ICON_SIZE) .. " " .. name) or name
 			local lineRight = skill .. " " .. skillModifier
 			DT.tooltip:AddDoubleLine(lineLeft, lineRight, 1, 1, 1, 1, 1, 1)
 		end
@@ -154,6 +156,7 @@ local function UpdateMenu()
 				text = name,
 				right_text = skill .. " " .. skillModifier,
 				icon = E.db.mMediaTag.datatexts.professions.menu_icons and icon,
+				icon_size = ICON_SIZE,
 				func = function()
 					if not E:AlertCombat() and spell then CastSpell(spell, "Spell") end
 				end,
@@ -172,6 +175,7 @@ local function UpdateMenu()
 	tinsert(menu, {
 		text = TRADE_SKILLS,
 		icon = E.db.mMediaTag.datatexts.professions.menu_icons and (dt_icons[E.db.mMediaTag.datatexts.professions.icon] or dt_icons.prof_a),
+		icon_size = ICON_SIZE,
 		func = function()
 			if not E:AlertCombat() then _G.ToggleProfessionsBook() end
 		end,
@@ -182,6 +186,7 @@ local function UpdateMenu()
 			text = name,
 			right_text = skill,
 			icon = E.db.mMediaTag.datatexts.professions.menu_icons and icon,
+			icon_size = ICON_SIZE,
 			macro = "/cast " .. name,
 		})
 	end
@@ -201,7 +206,7 @@ local function OnEvent(self)
 			local main_profession = select(1, GetProfessions())
 			if main_profession then icon = select(2, GetProfessionInfos(main_profession)) end
 		end
-		icon = E:TextureString(icon, ":14:14")
+		icon = E:TextureString(icon, ":" .. ICON_SIZE .. ":" .. ICON_SIZE)
 
 		label = icon .. " " .. TRADE_SKILLS
 	end

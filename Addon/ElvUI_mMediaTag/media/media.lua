@@ -556,10 +556,11 @@ MEDIA.icons.datatexts.professions = {
 	prof_f = "Interface\\AddOns\\ElvUI_mMediaTag\\media\\icons\\datatexts\\primary_b.tga",
 	prof_g = "Interface\\AddOns\\ElvUI_mMediaTag\\media\\icons\\datatexts\\secondary_a.tga",
 	prof_h = "Interface\\AddOns\\ElvUI_mMediaTag\\media\\icons\\datatexts\\secondary_b.tga",
+	prof_i = "Interface\\AddOns\\ElvUI_mMediaTag\\media\\icons\\professions\\colored\\professions.tga",
 }
 
 -- keyed by Enum.Profession because the skill line id GetProfessionInfo returns changes with every expansion
-MEDIA.icons.datatexts.profession_icons = {}
+MEDIA.icons.datatexts.profession_icons = { white = {}, colored = {} }
 for key, file in pairs({
 	Alchemy = "alchemy",
 	Archaeology = "archaeology",
@@ -577,7 +578,10 @@ for key, file in pairs({
 	Tailoring = "tailoring",
 }) do
 	local id = Enum.Profession and Enum.Profession[key]
-	if id then MEDIA.icons.datatexts.profession_icons[id] = "Interface\\AddOns\\ElvUI_mMediaTag\\media\\icons\\professions\\" .. file .. ".tga" end
+	if id then
+		MEDIA.icons.datatexts.profession_icons.white[id] = "Interface\\AddOns\\ElvUI_mMediaTag\\media\\icons\\professions\\white\\" .. file .. ".tga"
+		MEDIA.icons.datatexts.profession_icons.colored[id] = "Interface\\AddOns\\ElvUI_mMediaTag\\media\\icons\\professions\\colored\\" .. file .. ".tga"
+	end
 end
 
 MEDIA.icons.datatexts.durability = {

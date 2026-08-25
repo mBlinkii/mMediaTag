@@ -20,6 +20,10 @@ mMT.Changelog[411] = {
 		"[Unitframe-Textures]: The incoming heal, absorb shield and heal absorb textures can be applied to nameplates as well.",
 		"[Portraits]: The portrait textures can be given a filter mode, trilinear also samples mipmaps and nearest turns smoothing off.",
 		"[DT-Professions]: The individual profession datatexts can show the icon of the profession itself as their icon style.",
+		"[DT-Professions]: The profession icons come in a colored set as well, selectable next to the white one in the individual profession datatexts.",
+		"[DT-Professions]: The Professions datatext can show the icon of each profession in its menu and its tooltip, in white or colored, with its own switch for the tooltip icons.",
+		"[DT-Professions]: The icons in the profession datatexts are larger.",
+		"[DT-Teleports]: The icons in the Teleports datatext are larger.",
 	},
 	NEW = {
 		"[Skins]: AussyLoot now matches ElvUI, its surfaces, borders and fonts follow your ElvUI settings and the accent color can be the AussyLoot one, the ElvUI value color, your class color or a custom one.",

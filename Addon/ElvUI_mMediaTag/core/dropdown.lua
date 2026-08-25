@@ -24,7 +24,7 @@ local function DropDownTimer(menuFrame)
 	end
 end
 
--- entry keys: text, right_tex, color, icon, func, funcOnEnter, funcOnLeave, isTitle, macro, tooltip, notClickable, submenu, list (nested table)
+-- entry keys: text, right_tex, color, icon, icon_size, func, funcOnEnter, funcOnLeave, isTitle, macro, tooltip, notClickable, submenu, list (nested table)
 function mMT:DropDown(list, frame, parent, ButtonWidth, HideDelay, submenu)
 	local SAVE_HEIGHT = E.db.general.fontSize / 3 + 16
 	local BUTTON_HEIGHT, BUTTON_WIDTH = 0, 0
@@ -107,7 +107,8 @@ function mMT:DropDown(list, frame, parent, ButtonWidth, HideDelay, submenu)
 		btn.right_text:FontTemplate(font, fontSize, fontFlag)
 		btn.right_text:SetJustifyH("RIGHT")
 
-		local text = item.icon and E:TextureString(item.icon, ":14:14") .. " " .. item.text or item.text or ""
+		local iconSize = item.icon_size or 14
+		local text = item.icon and E:TextureString(item.icon, ":" .. iconSize .. ":" .. iconSize) .. " " .. item.text or item.text or ""
 		btn.text:SetText(item.color and format("%s%s|r", item.color, text) or text)
 		if item.right_text then btn.right_text:SetText(item.right_text) end
 
