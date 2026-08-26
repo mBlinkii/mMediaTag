@@ -24,6 +24,7 @@ mMT.Changelog[411] = {
 		"[DT-Professions]: The Professions datatext can show the icon of each profession in its menu and its tooltip, in white or colored, with its own switch for the tooltip icons.",
 		"[DT-Professions]: The icons in the profession datatexts are larger.",
 		"[DT-Teleports]: The icons in the Teleports datatext are larger.",
+		"[DT-Tracker]: The icons in the tracker datatexts can be cropped so their default border is cut off.",
 	},
 	NEW = {
 		"[Skins]: AussyLoot now matches ElvUI, its surfaces, borders and fonts follow your ElvUI settings and the accent color can be the AussyLoot one, the ElvUI value color, your class color or a custom one.",

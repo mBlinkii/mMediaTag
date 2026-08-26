@@ -218,6 +218,7 @@ P.datatexts = {
 		custom = {},
 		hide_if_zero = false,
 		icon = true,
+		crop_icon = false,
 		name = false,
 		short_number = true,
 		show_max = false,

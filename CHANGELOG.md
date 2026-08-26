@@ -22,6 +22,7 @@
 - UPDATE - [DT-Professions]: The Professions datatext can show the icon of each profession in its menu and its tooltip, in white or colored, with its own switch for the tooltip icons.
 - UPDATE - [DT-Professions]: The icons in the profession datatexts are larger.
 - UPDATE - [DT-Teleports]: The icons in the Teleports datatext are larger.
+- UPDATE - [DT-Tracker]: The icons in the tracker datatexts can be cropped so their default border is cut off.
 ### ✨ NEW
 - NEW - [Skins]: AussyLoot now matches ElvUI, its surfaces, borders and fonts follow your ElvUI settings and the accent color can be AussyLoot's own, ElvUI's value color, your class color or a custom one.
 - NEW - [Portraits]: The portrait border can fill like a ring, showing either the health or the cast of the unit, set up separately for player, target, target of target, focus, pet, party, boss and arena.

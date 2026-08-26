@@ -21,8 +21,24 @@ mMT.options.args.datatexts.args.misc_tracker.args = {
 					M.Tracker:UpdateAll()
 				end,
 			},
-			name = {
+			crop_icon = {
 				order = 2,
+				type = "toggle",
+				name = L["Crop Icons"],
+				desc = L["Cut off the icon border."],
+				disabled = function()
+					return not E.db.mMediaTag.datatexts.tracker.icon
+				end,
+				get = function(info)
+					return E.db.mMediaTag.datatexts.tracker.crop_icon
+				end,
+				set = function(info, value)
+					E.db.mMediaTag.datatexts.tracker.crop_icon = value
+					M.Tracker:UpdateAll()
+				end,
+			},
+			name = {
+				order = 3,
 				type = "toggle",
 				name = L["Show Name"],
 				get = function(info)
@@ -34,7 +50,7 @@ mMT.options.args.datatexts.args.misc_tracker.args = {
 				end,
 			},
 			short_number = {
-				order = 3,
+				order = 4,
 				type = "toggle",
 				name = L["Short large numbers"],
 				get = function(info)
@@ -46,7 +62,7 @@ mMT.options.args.datatexts.args.misc_tracker.args = {
 				end,
 			},
 			show_max = {
-				order = 4,
+				order = 5,
 				type = "toggle",
 				name = L["Show max amount"],
 				get = function(info)
@@ -58,7 +74,7 @@ mMT.options.args.datatexts.args.misc_tracker.args = {
 				end,
 			},
 			colored = {
-				order = 5,
+				order = 6,
 				type = "toggle",
 				name = L["Color the text"],
 				get = function(info)

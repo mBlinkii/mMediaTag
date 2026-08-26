@@ -12,6 +12,13 @@ local strjoin = strjoin
 --Variables
 local tracker_ids_db, is_currency_db = {}, {}
 
+-- 5:59 of 64 matches ElvUI's 0.08 TexCoords crop
+local ICON_DATA, ICON_DATA_CROPPED = ":14:14", ":14:14:0:0:64:64:5:59:5:59"
+
+local function IconString(texture)
+	return E:TextureString(texture, E.db.mMediaTag.datatexts.tracker.crop_icon and ICON_DATA_CROPPED or ICON_DATA)
+end
+
 local tracker_default_ids = {
 	-- crest
 	[3443] = { isCurrency = true, color = "FF84FF4F" }, -- Veteran Mistcrest
@@ -42,7 +49,7 @@ function module:GetItemInfos(id)
 	if itemName and itemLink and itemTexture then
 		return {
 			name = itemName,
-			icon = E:TextureString(itemTexture, ":14:14"),
+			icon = IconString(itemTexture),
 			link = itemLink,
 			count = GetItemCount(id, true),
 			cap = itemStackCount,
@@ -57,7 +64,7 @@ function module:GetCurrencyInfos(id)
 		is_currency_db[id] = true
 		return {
 			name = info.name,
-			icon = E:TextureString(info.iconFileID, ":14:14"),
+			icon = IconString(info.iconFileID),
 			link = format("|Hcurrency:%s|h", id),
 			count = info.quantity,
 			cap = info.maxQuantity,
