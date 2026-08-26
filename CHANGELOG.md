@@ -1,8 +1,9 @@
 # Changelog - ElvUI_mMediaTag
 
-## [ver. 4.11] - TBD
+## [ver. 4.11] - 26.08.2026
 ### 🐛 FIX
 - FIX - [Skins]: The dropdown menu in the Premade Groups Filter window kept its Blizzard border instead of the ElvUI one.
+- FIX - [Important-Casts]: The health bar of a nameplate was no longer colored on an important cast, and the border and icon could stay invisible after a cast whose spell info was protected.
 - FIX - [Portraits]: Portraits of units whose identity is hidden in combat were colored wrong, players now use their class color and hostile NPCs in dungeons the enemy color again.
 - FIX - [Tags]: The mMT-color tags fell back to the classification color on units whose identity is hidden in combat, players now use their class color again.
 - FIX - [Objective-Tracker]: The check in front of a completed dungeon objective sat directly against its text.

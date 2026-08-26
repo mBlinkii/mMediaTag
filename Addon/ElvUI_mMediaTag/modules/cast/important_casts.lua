@@ -78,11 +78,14 @@ end
 local function ShowImportantCast(castbar)
 	local border = GetOrCreateBorder(castbar)
 	ApplyBorderStyle(border, castbar)
+	-- a preceding secret cast may have left the alpha at 0
+	border:SetAlpha(1)
 	border:Show()
 
 	if module.showIcon then
 		local icon = GetOrCreateIcon(castbar)
 		ApplyIconStyle(icon)
+		icon.texture:SetAlpha(1)
 		icon:Show()
 	end
 end
@@ -219,7 +222,7 @@ local CASTBAR_HOOKS = {
 		if not castbar then return end
 
 		local owner = castbar.__owner
-		if module.overrideHealthBarColor and owner and owner.isNamePlate then
+		if module.overrideHealthBarColor and owner and owner.isNameplate then
 			CheckImportantNameplate(castbar)
 		else
 			CheckImportant(castbar)

@@ -1,9 +1,10 @@
 local mMT, DB, M, E, P, L, MEDIA = unpack(ElvUI_mMediaTag)
 
 mMT.Changelog[411] = {
-	DATE = "TBD",
+	DATE = "26.08.2026",
 	FIX = {
 		"[Skins]: The dropdown menu in the Premade Groups Filter window kept its Blizzard border instead of the ElvUI one.",
+		"[Important-Casts]: The health bar of a nameplate was no longer colored on an important cast, and the border and icon could stay invisible after a cast whose spell info was protected.",
 		"[Portraits]: Portraits of units whose identity is hidden in combat were colored wrong, players now use their class color and hostile NPCs in dungeons the enemy color again.",
 		"[Tags]: The mMT-color tags fell back to the classification color on units whose identity is hidden in combat, players now use their class color again.",
 		"[Objective-Tracker]: The check in front of a completed dungeon objective sat directly against its text.",
