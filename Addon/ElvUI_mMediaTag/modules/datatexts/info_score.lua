@@ -22,6 +22,7 @@ local UnitIsGroupLeader = UnitIsGroupLeader
 local format = format
 local ipairs = ipairs
 local pairs = pairs
+local sort = table.sort
 local strjoin = strjoin
 
 local COLOR_GRAY_HEX = "FFA9A9A9"
@@ -40,14 +41,13 @@ local function FormatRatingColor(rating)
 end
 
 local function SaveMyKeystone()
+	DB.keystones = DB.keystones or {}
+
 	local myKeystone = mMT:GetMyKeystone()
-	if myKeystone then
-		DB.keystones = DB.keystones or {}
-		DB.keystones[E.mynameRealm] = {
-			name = format(MEDIA.myclass.string, E.mynameRealm),
-			key = myKeystone,
-		}
-	end
+	DB.keystones[E.mynameRealm] = myKeystone and {
+		name = format(MEDIA.myclass.string, E.mynameRealm),
+		key = myKeystone,
+	} or nil
 end
 
 local function UnitClassColor(unit)
@@ -70,15 +70,31 @@ local function GetKeystoneString(id, keyStoneLevel)
 	return color.hex .. name .. " " .. format("|c%s+%s|r", keyHex, keyStoneLevel) .. "|r", id
 end
 
+local function SortDungeons(a, b)
+	if E.db.mMediaTag.datatexts.score.sort_method == "SCORE" then
+		if a.mapScore ~= b.mapScore then return a.mapScore > b.mapScore end
+	elseif a.bestRunLevel ~= b.bestRunLevel then
+		return a.bestRunLevel > b.bestRunLevel
+	end
+
+	return a.mapName < b.mapName
+end
+
+local function SortUpgrades(a, b)
+	if a.mapScore ~= b.mapScore then return a.mapScore < b.mapScore end
+
+	return a.mapName < b.mapName
+end
+
 local function GetDungeonSummary()
-	local scoreTable = {}
+	local scoreTable, mapIndex = {}, {}
 	local mapTable = GetMapTable()
 	local summary = GetPlayerMythicPlusRatingSummary("player")
 	local myKeystoneMapID = GetOwnedKeystoneChallengeMapID()
 
 	for _, id in ipairs(mapTable) do
 		local name, _, _, texture = GetMapUIInfo(id)
-		scoreTable[id] = {
+		scoreTable[#scoreTable + 1] = {
 			mapName = name or UNKNOWN,
 			bestRunLevel = 0,
 			levelColor = MEDIA.color.gray,
@@ -88,12 +104,13 @@ local function GetDungeonSummary()
 			finishedSuccess = false,
 			isMyKeystone = (id == myKeystoneMapID),
 		}
+		mapIndex[id] = #scoreTable
 	end
 
 	if summary and summary.runs then
 		for _, v in ipairs(summary.runs) do
 			local name, _, _, texture = GetMapUIInfo(v.challengeModeID)
-			scoreTable[v.challengeModeID] = {
+			local info = {
 				mapName = name or UNKNOWN,
 				bestRunLevel = v.bestRunLevel,
 				levelColor = GetKeystoneLevelRarityColor(v.bestRunLevel),
@@ -103,13 +120,18 @@ local function GetDungeonSummary()
 				finishedSuccess = v.finishedSuccess,
 				isMyKeystone = (v.challengeModeID == myKeystoneMapID),
 			}
+
+			local index = mapIndex[v.challengeModeID]
+			if index then
+				scoreTable[index] = info
+			else
+				scoreTable[#scoreTable + 1] = info
+				mapIndex[v.challengeModeID] = #scoreTable
+			end
 		end
 	end
 
-	local sortByScore = E.db.mMediaTag.datatexts.score.sort_method == "SCORE"
-	table.sort(scoreTable, function(a, b)
-		return sortByScore and (a.mapScore > b.mapScore) or (a.bestRunLevel > b.bestRunLevel)
-	end)
+	sort(scoreTable, SortDungeons)
 
 	return scoreTable
 end
@@ -130,7 +152,7 @@ local function DungeonScoreTooltip(scoreTable)
 	DT.tooltip:AddLine(" ")
 	DT.tooltip:AddLine(L["Dungeon overview:"], mMT:GetRGB("title"))
 
-	for _, v in pairs(scoreTable) do
+	for _, v in ipairs(scoreTable) do
 		local mapName = v.isMyKeystone and mMT:TC(v.mapName, "mark") or v.mapName
 		AddTooltipLine(v, mapName)
 	end
@@ -141,12 +163,10 @@ local function DungeonScoreTooltip(scoreTable)
 	DT.tooltip:AddLine(L["Possible next upgrades:"], mMT:GetRGB("title"))
 
 	local upgradeTable = {}
-	for _, data in pairs(scoreTable) do
+	for _, data in ipairs(scoreTable) do
 		upgradeTable[#upgradeTable + 1] = data
 	end
-	table.sort(upgradeTable, function(a, b)
-		return a.mapScore < b.mapScore
-	end)
+	sort(upgradeTable, SortUpgrades)
 
 	for i = 1, math.min(2, #upgradeTable) do
 		local v = upgradeTable[i]
@@ -314,6 +334,13 @@ local function OnEnter(self)
 	DT.tooltip:Show()
 end
 
+local requestMapInfo = {
+	ELVUI_FORCE_UPDATE = true,
+	PLAYER_ENTERING_WORLD = true,
+	CHALLENGE_MODE_COMPLETED = true,
+	ITEM_CHANGED = true,
+}
+
 local function OnEvent(self, event, ...)
 	if event == "ELVUI_FORCE_UPDATE" then
 		if mMT:GetWeeklyResetTime() then DB.keystones = {} end
@@ -322,10 +349,8 @@ local function OnEvent(self, event, ...)
 	isMaxLevel = isMaxLevel or E:XPIsLevelMax()
 
 	if isMaxLevel then
-		if event == "ELVUI_FORCE_UPDATE" then
-			C_MythicPlus_RequestMapInfo()
-			C_MythicPlus_RequestCurrentAffixes()
-		end
+		if event == "ELVUI_FORCE_UPDATE" then C_MythicPlus_RequestCurrentAffixes() end
+		if requestMapInfo[event] then C_MythicPlus_RequestMapInfo() end
 		SaveMyKeystone()
 	end
 
@@ -344,11 +369,14 @@ end
 local events = {
 	"CHALLENGE_MODE_START",
 	"CHALLENGE_MODE_COMPLETED",
+	"CHALLENGE_MODE_MAPS_UPDATE",
 	"PLAYER_ENTERING_WORLD",
 	"UPDATE_INSTANCE_INFO",
 	"CHALLENGE_MODE_RESET",
 	"ENCOUNTER_END",
 	"MYTHIC_PLUS_CURRENT_AFFIX_UPDATE",
+	"BAG_UPDATE_DELAYED",
+	"ITEM_CHANGED",
 }
 
 DT:RegisterDatatext("mMT - M+ Score", mMT.Name, events, OnEvent, nil, OnClick, OnEnter, OnLeave, L["M+ Score"], nil, ValueColorUpdate)
