@@ -545,6 +545,8 @@ MEDIA.icons.datatexts.teleport = {
 	teleport06 = GetItemIcon(6948),
 	teleport07 = GetItemIcon(110560),
 	teleport08 = GetItemIcon(193588),
+	teleport09 = "Interface\\AddOns\\ElvUI_mMediaTag\\media\\icons\\datatexts\\teleport_09.tga",
+	teleport10 = "Interface\\AddOns\\ElvUI_mMediaTag\\media\\icons\\datatexts\\teleport_10.tga",
 }
 
 MEDIA.icons.datatexts.professions = {
