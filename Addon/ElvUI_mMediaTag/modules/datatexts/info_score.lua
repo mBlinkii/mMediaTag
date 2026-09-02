@@ -13,6 +13,9 @@ local GetPlayerMythicPlusRatingSummary = C_PlayerInfo.GetPlayerMythicPlusRatingS
 local GetSpecificDungeonOverallScoreRarityColor = C_ChallengeMode.GetSpecificDungeonOverallScoreRarityColor
 local C_MythicPlus_RequestMapInfo = C_MythicPlus.RequestMapInfo
 local GetKeystoneLevelRarityColor = C_ChallengeMode.GetKeystoneLevelRarityColor
+local GetActiveChallengeMapID = C_ChallengeMode.GetActiveChallengeMapID
+local GetInstanceInfo = GetInstanceInfo
+local IsInInstance = IsInInstance
 local UnitName = UnitName
 local InCombatLockdown = InCombatLockdown
 local IsInGroup = IsInGroup
@@ -20,8 +23,10 @@ local GetNumGroupMembers = GetNumGroupMembers
 local UnitIsPlayer = UnitIsPlayer
 local UnitIsGroupLeader = UnitIsGroupLeader
 local format = format
+local floor = math.floor
 local ipairs = ipairs
 local pairs = pairs
+local select = select
 local sort = table.sort
 local strjoin = strjoin
 
@@ -34,6 +39,8 @@ local isMaxLevel = nil
 local leaderIcon = E:TextureString(MEDIA.icons.leader.leader01, ":14:14")
 local armorIcon = E:TextureString(MEDIA.icons.datatexts.misc.armor, ":14:14")
 local scoreIcon = E:TextureString(MEDIA.icons.datatexts.misc.score, ":14:14")
+-- Texel and vertex color arguments are only read when the whole chain is given; the tag icons are 64x64.
+local currentIcon = format("|T%s:14:14:0:0:64:64:0:64:0:64:%d:%d:%d|t", MEDIA.icons.tags.pin, floor(MEDIA.myclass.r * 255), floor(MEDIA.myclass.g * 255), floor(MEDIA.myclass.b * 255))
 
 local function FormatRatingColor(rating)
 	local color = GetDungeonScoreRarityColor(rating)
@@ -86,11 +93,28 @@ local function SortUpgrades(a, b)
 	return a.mapName < b.mapName
 end
 
+-- GetMapUIInfo 6th return (11.2.0) is the instance mapID, the same value GetInstanceInfo reports as instanceID.
+local function GetCurrentChallengeMapID(mapTable)
+	local activeID = GetActiveChallengeMapID()
+	if activeID then return activeID end
+
+	if not IsInInstance() then return end
+
+	local instanceID = select(8, GetInstanceInfo())
+	if not instanceID then return end
+
+	for _, id in ipairs(mapTable) do
+		local _, _, _, _, _, mapID = GetMapUIInfo(id)
+		if mapID == instanceID then return id end
+	end
+end
+
 local function GetDungeonSummary()
 	local scoreTable, mapIndex = {}, {}
 	local mapTable = GetMapTable()
 	local summary = GetPlayerMythicPlusRatingSummary("player")
 	local myKeystoneMapID = GetOwnedKeystoneChallengeMapID()
+	local currentMapID = GetCurrentChallengeMapID(mapTable)
 
 	for _, id in ipairs(mapTable) do
 		local name, _, _, texture = GetMapUIInfo(id)
@@ -103,6 +127,7 @@ local function GetDungeonSummary()
 			icon = E:TextureString(texture, ":14:14"),
 			finishedSuccess = false,
 			isMyKeystone = (id == myKeystoneMapID),
+			isCurrentDungeon = (id == currentMapID),
 		}
 		mapIndex[id] = #scoreTable
 	end
@@ -119,6 +144,7 @@ local function GetDungeonSummary()
 				icon = E:TextureString(texture, ":14:14"),
 				finishedSuccess = v.finishedSuccess,
 				isMyKeystone = (v.challengeModeID == myKeystoneMapID),
+				isCurrentDungeon = (v.challengeModeID == currentMapID),
 			}
 
 			local index = mapIndex[v.challengeModeID]
@@ -142,8 +168,9 @@ local function AddTooltipLine(v, mapName)
 
 	local rating = format("|c%s%s|r", ratingHex, v.mapScore)
 	local level = format("|c%s+%s|r", levelHex, v.bestRunLevel)
+	local marker = v.isCurrentDungeon and " " .. currentIcon or ""
 
-	DT.tooltip:AddDoubleLine(v.icon .. " " .. mapName, rating .. " (" .. level .. ")", mMT:GetRGB("text", "text"))
+	DT.tooltip:AddDoubleLine(v.icon .. " " .. mapName .. marker, rating .. " (" .. level .. ")", mMT:GetRGB("text", "text"))
 end
 
 local function DungeonScoreTooltip(scoreTable)

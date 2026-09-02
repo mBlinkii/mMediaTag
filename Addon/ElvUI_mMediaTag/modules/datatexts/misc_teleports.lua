@@ -759,6 +759,16 @@ local function GetActivityDungeonName(activityID)
 	if activityInfo and activityInfo.fullName then return strlower(gsub(activityInfo.fullName, "%s*%(.-%)%s*$", "")) end
 end
 
+-- activityIDs is a secret table on M+ search results; indexing or branching on a secret throws, only issecretvalue may probe it.
+local function PlainValue(value)
+	if not E:IsSecretValue(value) then return value end
+end
+
+local function GetFirstActivityID(info)
+	local ids = PlainValue(info.activityIDs)
+	return (ids and PlainValue(ids[1])) or PlainValue(info.activityID)
+end
+
 -- resultID -> dungeon name; keeps the highlight after the leader delists (GetSearchResultInfo returns nil then)
 local appliedNameCache = {}
 
@@ -768,7 +778,7 @@ local function GetAppliedDungeonNames()
 	-- own listed group (leader) - this has no application entry
 	local entryInfo = C_LFGList.GetActiveEntryInfo and C_LFGList.GetActiveEntryInfo()
 	if entryInfo then
-		local name = GetActivityDungeonName((entryInfo.activityIDs and entryInfo.activityIDs[1]) or entryInfo.activityID)
+		local name = GetActivityDungeonName(GetFirstActivityID(entryInfo))
 		if name then tinsert(applied, name) end
 	end
 
@@ -788,7 +798,7 @@ local function GetAppliedDungeonNames()
 			local name = appliedNameCache[resultID]
 			if not name then
 				local searchResultData = C_LFGList.GetSearchResultInfo(resultID)
-				name = searchResultData and GetActivityDungeonName((searchResultData.activityIDs and searchResultData.activityIDs[1]) or searchResultData.activityID)
+				name = searchResultData and GetActivityDungeonName(GetFirstActivityID(searchResultData))
 				appliedNameCache[resultID] = name
 			end
 			if name then tinsert(applied, name) end

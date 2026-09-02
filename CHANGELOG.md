@@ -1,5 +1,13 @@
 # Changelog - ElvUI_mMediaTag
 
+## [ver. 4.12] - TBD
+### 🐛 FIX
+- FIX - [DT-Teleports]: The datatext threw an error inside a Mythic+ dungeon, where the group finder hides the data of other groups.
+- FIX - [DT-Score]: The dungeon overview in the tooltip was not sorted, neither by score nor by key level.
+### 🔧 UPDATE
+- UPDATE - [DT-Score]: The dungeon you are currently in is marked with a pin in your class color in the dungeon overview.
+- UPDATE - [DT-Teleports]: Two more icon styles for the datatext.
+
 ## [ver. 4.11] - 26.08.2026
 ### 🐛 FIX
 - FIX - [Skins]: The dropdown menu in the Premade Groups Filter window kept its Blizzard border instead of the ElvUI one.
