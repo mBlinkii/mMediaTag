@@ -26,6 +26,9 @@ local strlower = strlower
 local C_LFGList = C_LFGList
 local C_ChallengeMode = C_ChallengeMode
 local IsInGroup = IsInGroup
+local IsInInstance = IsInInstance
+local GetInstanceInfo = GetInstanceInfo
+local select = select
 local C_Timer = C_Timer
 local CreateFrame = CreateFrame
 local C_TooltipInfo = C_TooltipInfo
@@ -808,12 +811,30 @@ local function GetAppliedDungeonNames()
 	return applied
 end
 
-local function IsAppliedDungeon(appliedDungeons, id, teleportName)
+-- exact and lockdown proof, unlike the name match: it survives a reload inside the dungeon, where the applied group can no longer be resolved
+-- GetMapUIInfo 6th return (11.2.0) is the instance mapID, the same value GetInstanceInfo reports as instanceID
+local function GetCurrentChallengeMapID()
+	local activeID = C_ChallengeMode.GetActiveChallengeMapID()
+	if activeID then return activeID end
+
+	if not IsInInstance() then return end
+
+	local instanceID = select(8, GetInstanceInfo())
+	if not instanceID then return end
+
+	for _, mapID in pairs(seasonChallengeMaps) do
+		local _, _, _, _, _, id = C_ChallengeMode.GetMapUIInfo(mapID)
+		if id == instanceID then return mapID end
+	end
+end
+
+local function IsAppliedDungeon(appliedDungeons, currentMapID, id, teleportName)
+	local mapID = seasonChallengeMaps[id]
+	if mapID and mapID == currentMapID then return true end
 	if #appliedDungeons == 0 then return false end
 
 	teleportName = strlower(teleportName)
 
-	local mapID = seasonChallengeMaps[id]
 	local mapName = mapID and C_ChallengeMode.GetMapUIInfo(mapID)
 	mapName = mapName and strlower(mapName)
 
@@ -888,11 +909,11 @@ local function UpdateMenus()
 
 	-- Add season portals menu entry
 	if mMT.knownTeleports.season.available then
-		local appliedDungeons = GetAppliedDungeonNames()
+		local appliedDungeons, currentMapID = GetAppliedDungeonNames(), GetCurrentChallengeMapID()
 
 		tinsert(menus.main, { text = mMT:TC(L["M+ Season"], "title"), isTitle = true, notClickable = true })
 		for id, t in pairs(mMT.knownTeleports.season) do
-			if t and type(t) == "table" then tinsert(menus.main, CreateMenuEntry(id, t, IsAppliedDungeon(appliedDungeons, id, t.name))) end
+			if t and type(t) == "table" then tinsert(menus.main, CreateMenuEntry(id, t, IsAppliedDungeon(appliedDungeons, currentMapID, id, t.name))) end
 		end
 	end
 
@@ -1110,12 +1131,12 @@ local function OnEnter(self)
 
 	-- Add season menu entry
 	if mMT.knownTeleports.season.available then
-		local appliedDungeons = GetAppliedDungeonNames()
+		local appliedDungeons, currentMapID = GetAppliedDungeonNames(), GetCurrentChallengeMapID()
 
 		DT.tooltip:AddLine(L["Season Teleports"], mMT:GetRGB("title"))
 		for id, t in pairs(mMT.knownTeleports.season) do
 			if t and type(t) == "table" then
-				local name = IsAppliedDungeon(appliedDungeons, id, t.name) and mMT:TC(t.name, "blue") or t.name
+				local name = IsAppliedDungeon(appliedDungeons, currentMapID, id, t.name) and mMT:TC(t.name, "blue") or t.name
 				DT.tooltip:AddDoubleLine(BuildTipIcon(t.icon) .. mMT:TC(t.short_name and ("[" .. mMT:TC(t.short_name, "mark") .. "] " .. name) or name), t.cooldown)
 			end
 		end
