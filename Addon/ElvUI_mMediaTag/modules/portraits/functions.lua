@@ -5,6 +5,7 @@ local UF = E:GetModule("UnitFrames")
 local UnitIsPlayer = UnitIsPlayer
 local UnitClass = UnitClass
 local UnitReaction = UnitReaction
+local UnitCanAttack = UnitCanAttack
 local UnitInPartyIsAI = UnitInPartyIsAI
 local UnitIsDeadOrGhost = UnitIsDeadOrGhost
 local UnitIsConnected = UnitIsConnected
@@ -158,16 +159,25 @@ local function GetClassColor(class)
 	return class and MEDIA.color.portraits.class[class] or nil
 end
 
--- a secret unit is hostile but can still be an NPC, so let the API branch on the identity instead of guessing
+-- UnitReaction stays readable on most secret units; only when it does not, let the API branch on attackability
+local function GetReactionColor(unit, colors)
+	local reaction = SafeValue((unit == "pet") and UnitReaction("player", unit) or UnitReaction(unit, "player"))
+	if reaction then return colors.reaction[(reaction <= 3 and "enemy") or (reaction == 4 and "neutral") or "friendly"] end
+	if not EvalColor then return colors.reaction.enemy end
+
+	return { c = EvalColor(UnitCanAttack("player", unit), colors.reaction.enemy.c, colors.reaction.friendly.c) }
+end
+
+-- a secret unit can be a friendly NPC too, so start from its reaction and let the API branch on the identity instead of guessing
 local function GetSecretColor(unit, class, colors)
-	local enemy = colors.reaction.enemy
+	local fallback = GetReactionColor(unit, colors)
 	local classColor = EvalColor and GetClassColor(class)
 	local c = classColor and classColor.c
 
-	if not c then return enemy end
+	if not c then return fallback end
 
 	-- EvaluateColorFromBoolean needs a real colorRGBA, a class color carries no alpha; secret channels are fine as arguments
-	return { c = EvalColor(UnitIsPlayer(unit), CreateColor(c.r, c.g, c.b, 1), enemy.c) }
+	return { c = EvalColor(UnitIsPlayer(unit), CreateColor(c.r, c.g, c.b, 1), fallback.c) }
 end
 
 function module:GetUnitColor(unit, class, isPlayer, isDead, isSecret)
@@ -179,7 +189,7 @@ function module:GetUnitColor(unit, class, isPlayer, isDead, isSecret)
 
 	if module.db.misc.force_default then return colors.misc.default end
 
-	if isSecret then return module.db.misc.force_reaction and colors.reaction.enemy or GetSecretColor(unit, class, colors) end
+	if isSecret then return module.db.misc.force_reaction and GetReactionColor(unit, colors) or GetSecretColor(unit, class, colors) end
 
 	if isPlayer then
 		if module.db.misc.force_reaction then
@@ -192,9 +202,7 @@ function module:GetUnitColor(unit, class, isPlayer, isDead, isSecret)
 			return GetClassColor(class) or colors.misc.default
 		end
 	else
-		local reaction = SafeValue((unit == "pet") and UnitReaction("player", unit) or UnitReaction(unit, "player"))
-		local reactionType = (reaction and ((reaction <= 3) and "enemy" or (reaction == 4) and "neutral" or "friendly")) or "enemy"
-		return colors.reaction[reactionType]
+		return GetReactionColor(unit, colors)
 	end
 end
 
@@ -252,9 +260,7 @@ local function UpdateExtraTexture(element, force)
 	if e_db.unitcolor then
 		color = element.color
 	elseif db.force_reaction then
-		local reaction = SafeValue(UnitReaction(element.unit, "player"))
-		local reactionType = (reaction and ((reaction <= 3 and "enemy") or (reaction == 4 and "neutral") or "friendly")) or "enemy"
-		color = MEDIA.color.portraits.reaction[reactionType]
+		color = GetReactionColor(element.unit, MEDIA.color.portraits)
 	else
 		color = MEDIA.color.portraits.classification[classification]
 	end
@@ -286,7 +292,7 @@ function Update(self, event)
 	local unit = self.unit or self.__owner.__unit
 	if not unit then return end
 
-	-- a secret unit is always a player, its class token stays secret
+	-- a secret unit hides its class token, but UnitIsPlayer usually stays plain - never infer the one from the other
 	local isSecret = E:IsSecretUnit(unit) or false
 	local class = select(2, UnitClass(unit))
 	local safeClass = SafeValue(class)
@@ -304,7 +310,8 @@ function Update(self, event)
 	local hasStateChanged = newGUID or (self.state ~= isAvailable) or event == "ForceUpdate" or (self.isDead ~= isDead)
 
 	if hasStateChanged then
-		local isPlayer = isSecret or SafeValue(UnitIsPlayer(unit)) or (E.Retail and SafeValue(UnitInPartyIsAI(unit))) or false
+		-- UnitIsPlayer can be secret itself, so an unreadable unit counts as an NPC - except on arena frames, which only ever hold players
+		local isPlayer = SafeValue(UnitIsPlayer(unit)) or (E.Retail and SafeValue(UnitInPartyIsAI(unit))) or (isSecret and self.type == "arena") or false
 		local shouldMirror = (isPlayer and self.db.mirror) or (not isPlayer and not self.db.mirror)
 
 		local applied = false
