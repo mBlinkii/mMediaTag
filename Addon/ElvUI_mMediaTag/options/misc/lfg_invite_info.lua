@@ -239,9 +239,26 @@ mMT.options.args.misc.args.lfg_invite_info.args = {
                 end,
                 values = {
                     class = L["Class (accent line)"],
-                    gold = L["Gold (frame)"],
+                    custom = L["Custom (frame)"],
                     minimal = L["Minimal (text only)"],
                 },
+            },
+            color_theme = {
+                type = "color",
+                order = 7.2,
+                name = L["Theme color"],
+                hasAlpha = false,
+                disabled = function()
+                    return not E.db.mMediaTag.lfg_invite_info.enable or E.db.mMediaTag.lfg_invite_info.theme ~= "custom"
+                end,
+                get = function(info)
+                    local r, g, b = mMT:HexToRGB(E.db.mMediaTag.lfg_invite_info.colors.theme)
+                    return r, g, b
+                end,
+                set = function(info, r, g, b)
+                    E.db.mMediaTag.lfg_invite_info.colors.theme = E:RGBToHex(r, g, b, "ff")
+                    mMT:UpdateModule("LFGInviteInfo")
+                end,
             },
             embed_icon = {
                 order = 7.5,
@@ -285,4 +302,47 @@ mMT.options.args.misc.args.lfg_invite_info.args = {
             },
         },
     },
+	animation = {
+		order = 5,
+		type = "group",
+		inline = true,
+		name = L["Animation"],
+		args = {
+			enable = {
+				order = 1,
+				type = "toggle",
+				name = L["Enable"],
+				disabled = function()
+					return not E.db.mMediaTag.lfg_invite_info.enable
+				end,
+				get = function(info)
+					return E.db.mMediaTag.lfg_invite_info.animation.enable
+				end,
+				set = function(info, value)
+					E.db.mMediaTag.lfg_invite_info.animation.enable = value
+					mMT:UpdateModule("LFGInviteInfo")
+				end,
+			},
+			style = {
+				order = 2,
+				type = "select",
+				name = L["Style"],
+				disabled = function()
+					return not E.db.mMediaTag.lfg_invite_info.enable or not E.db.mMediaTag.lfg_invite_info.animation.enable
+				end,
+				get = function(info)
+					return E.db.mMediaTag.lfg_invite_info.animation.style
+				end,
+				set = function(info, value)
+					E.db.mMediaTag.lfg_invite_info.animation.style = value
+					mMT:UpdateModule("LFGInviteInfo")
+				end,
+				values = {
+					fade = L["Fade"],
+					slide = L["Slide"],
+					pop = L["Scale"],
+				},
+			},
+		},
+	},
 }

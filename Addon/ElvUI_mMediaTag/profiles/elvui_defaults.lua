@@ -87,6 +87,10 @@ P.lfg_invite_info = {
 	embed_icon = false,
 	background = false,
 	print = true,
+	animation = {
+		enable = true,
+		style = "slide",
+	},
 	text = {
 		font = "PT Sans Narrow",
 		size = 32,
@@ -97,6 +101,7 @@ P.lfg_invite_info = {
 		line_a = "FFFFBF00",
 		line_b = "FF9AA0A5",
 		line_c = "FFA335EE",
+		theme = "FFFFC71A",
 	},
 }
 
