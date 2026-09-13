@@ -19,7 +19,7 @@ function module:LayoutCooldownIcons(key, capture)
 		module:HookGlow(icon)
 		module:RefreshGlow(icon)
 		module:ApplyKeybindText(icon, vdb)
-		module:ApplyActiveState(icon, icon.GetBaseSpellID and icon:GetBaseSpellID())
+		module:ApplyActiveState(icon, module:ReadableSpellID(icon, "GetBaseSpellID"))
 	end)
 end
 
@@ -72,7 +72,7 @@ local SORTERS = { TIME = BarSort(false), TIME_REVERSE = BarSort(true) }
 
 -- Blizzard never colors the bar, its art carried the color; with an own texture the color has to come from here
 local function BarColors(frame, vdb)
-	local spellID = frame.GetBaseSpellID and frame:GetBaseSpellID()
+	local spellID = module:ReadableSpellID(frame, "GetBaseSpellID")
 	local override = spellID and module:GetSpellBarColor(spellID)
 	if override and override.enable then return override.color, override.background end
 

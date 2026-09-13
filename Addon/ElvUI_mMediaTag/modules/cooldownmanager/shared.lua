@@ -312,11 +312,19 @@ function module:ApplyGlow(frame, glow, key)
 	end
 end
 
+-- GetSpellID hands back the secret aura spell on a buff item, and secrets are neither valid table keys nor allowed as API arguments
+function module:ReadableSpellID(frame, getter)
+	if not frame or not frame[getter] then return nil end
+
+	local spellID = frame[getter](frame)
+	return (E:NotSecretValue(spellID) and spellID) or nil
+end
+
 -- Buff icons glow for as long as the tracked buff is up, cooldown icons only while the spell procs
 local function GlowSettings(frame)
 	local key = ViewerKey(frame)
 	if key == "buff_icon" or key == "buff_bar" then
-		local spellID = frame.GetBaseSpellID and frame:GetBaseSpellID()
+		local spellID = module:ReadableSpellID(frame, "GetBaseSpellID")
 		return spellID and module:GetSpellGlow(spellID), true
 	end
 
@@ -328,7 +336,7 @@ end
 local function IsOverlayed(frame)
 	if not IsSpellOverlayed then return false end
 
-	local spellID = (frame.GetSpellID and frame:GetSpellID()) or (frame.GetBaseSpellID and frame:GetBaseSpellID())
+	local spellID = module:ReadableSpellID(frame, "GetSpellID") or module:ReadableSpellID(frame, "GetBaseSpellID")
 	return (spellID and IsSpellOverlayed(spellID)) or false
 end
 
@@ -700,7 +708,7 @@ end
 function module:ApplyKeybindText(frame, vdb)
 	local text = vdb and vdb.keybind_text
 	local wanted = vdb and vdb.keybind and text
-	local spellID = wanted and frame.GetBaseSpellID and frame:GetBaseSpellID()
+	local spellID = wanted and module:ReadableSpellID(frame, "GetBaseSpellID")
 
 	if not wanted or not (spellID or frame.mmtDemoKey) then
 		if frame.mmtKeybind then frame.mmtKeybind:SetText("") end

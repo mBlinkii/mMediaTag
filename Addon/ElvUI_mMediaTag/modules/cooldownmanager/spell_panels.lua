@@ -96,7 +96,7 @@ end
 local function RefreshActiveState()
 	for _, key in ipairs({ "essential", "utility" }) do
 		ForEachActive(key, function(frame)
-			if frame.GetBaseSpellID then module:ApplyActiveState(frame, frame:GetBaseSpellID()) end
+			module:ApplyActiveState(frame, module:ReadableSpellID(frame, "GetBaseSpellID"))
 		end)
 	end
 end
@@ -439,7 +439,7 @@ function module:RegisterSpellMenu()
 
 		local function AddButton(label, handler)
 			rootDescription:CreateButton(label, function()
-				local spellID = owner.GetBaseSpellID and owner:GetBaseSpellID()
+				local spellID = module:ReadableSpellID(owner, "GetBaseSpellID")
 				if spellID then handler(module, spellID) end
 			end)
 		end
