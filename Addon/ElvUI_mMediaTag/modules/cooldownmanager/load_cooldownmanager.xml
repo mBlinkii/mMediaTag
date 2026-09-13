@@ -1,0 +1,9 @@
+<Ui xmlns="http://www.blizzard.com/wow/ui/">
+	<Script file="state.lua"/>
+	<Script file="shared.lua"/>
+	<Script file="demo.lua"/>
+	<Script file="viewers.lua"/>
+	<Script file="custom_tracker.lua"/>
+	<Script file="spell_panels.lua"/>
+	<Script file="core.lua"/>
+</Ui>

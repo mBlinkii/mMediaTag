@@ -6,4 +6,5 @@
 	<Include file="cast\load_cast.xml"/>
 	<Include file="dock\load_dock.xml"/>
 	<Include file="nameplates\load_nameplates.xml"/>
+	<Include file="cooldownmanager\load_cooldownmanager.xml"/>
 </Ui>
