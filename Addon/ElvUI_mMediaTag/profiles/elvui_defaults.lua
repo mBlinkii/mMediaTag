@@ -1075,7 +1075,6 @@ P.cooldown_manager = {
 			stacks = true,
 			mirrored = false,
 			column_gap = 4,
-			sort = "TIME",
 			texture = "ElvUI Norm",
 			class_color = true,
 			color = { r = 0.2, g = 0.6, b = 1 },

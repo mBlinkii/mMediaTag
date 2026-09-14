@@ -912,20 +912,6 @@ mMT.options.args.cooldownmanager.args.buff_bar.args = {
 					Refresh()
 				end,
 			},
-			sort = {
-				order = 6,
-				type = "select",
-				name = L["Sorting"],
-				desc = L["Addons cannot read the exact remaining time in this patch, so the runtime is measured from when a bar shows up."],
-				values = { INDEX = L["Cooldown Manager Order"], TIME = L["Longest Running First"], TIME_REVERSE = L["Newest First"] },
-				get = function()
-					return VDB("buff_bar").sort
-				end,
-				set = function(_, value)
-					VDB("buff_bar").sort = value
-					Refresh()
-				end,
-			},
 			mirrored = {
 				order = 7,
 				type = "toggle",

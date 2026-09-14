@@ -39,7 +39,7 @@ end
 
 -- A field is only copied when the target knows it, so a bar never pushes its own keys into an icon viewer
 module.COPY_SECTIONS = {
-	layout = { "keep_ratio", "width", "height", "spacing", "per_row", "growth", "icon", "icon_gap", "mirrored", "column_gap", "sort", "texture" },
+	layout = { "keep_ratio", "width", "height", "spacing", "per_row", "growth", "icon", "icon_gap", "mirrored", "column_gap", "texture" },
 	visibility = { "alpha", "visibility", "hide_delay", "fade_time" },
 	text = { "cooldown_text", "count_text", "keybind_text", "name_text", "duration_text", "stacks_text" },
 	glow = { "glow", "pandemic", "pandemic_color", "pandemic_glow" },

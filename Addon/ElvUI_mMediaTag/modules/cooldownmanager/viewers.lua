@@ -8,7 +8,6 @@ local next = next
 local wipe = wipe
 local tsort = table.sort
 local ceil = math.ceil
-local GetTime = GetTime
 
 local LSM = module.LSM
 
@@ -29,46 +28,6 @@ function module:LayoutBuffIcons(capture)
 		module:RefreshGlow(icon)
 	end)
 end
-
--- Every time on a buff bar is secret in 12.1, the aura instance ID included, so the runtime is measured here
-local barStart = {}
-local barSeen = {}
-
-local function StampBars(bars)
-	wipe(barSeen)
-
-	for _, frame in ipairs(bars) do
-		local id = frame.cooldownID
-		if id then
-			barSeen[id] = true
-			if not barStart[id] then barStart[id] = GetTime() end
-		end
-	end
-
-	-- A bar that is gone loses its stamp and starts over on the next application
-	for id in next, barStart do
-		if not barSeen[id] then barStart[id] = nil end
-	end
-end
-
-local function BarAge(frame)
-	return frame.mmtDemoAge or (frame.cooldownID and barStart[frame.cooldownID]) or nil
-end
-
-local function BarSort(reverse)
-	return function(a, b)
-		local ageA, ageB = BarAge(a), BarAge(b)
-		if ageA and ageB then
-			if ageA ~= ageB then return (reverse and ageA > ageB) or (not reverse and ageA < ageB) end
-		elseif ageA or ageB then
-			return ageA ~= nil
-		end
-
-		return (a.layoutIndex or 0) < (b.layoutIndex or 0)
-	end
-end
-
-local SORTERS = { TIME = BarSort(false), TIME_REVERSE = BarSort(true) }
 
 -- Blizzard never colors the bar, its art carried the color; with an own texture the color has to come from here
 local function BarColors(frame, vdb)
@@ -240,10 +199,8 @@ function module:LayoutBuffBars(capture)
 		for frame in viewer.itemFramePool:EnumerateActive() do
 			if frame and frame:IsShown() then bars[#bars + 1] = frame end
 		end
+		tsort(bars, module.sortFunc)
 	end
-
-	StampBars(bars)
-	tsort(bars, SORTERS[vdb.sort] or module.sortFunc)
 
 	local count = #bars
 	module.emptyViewers[key] = count == 0

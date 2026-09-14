@@ -90,9 +90,6 @@ local function FillBar(frame, index, _)
 	frame.Bar:SetValue(1 - index * 0.18)
 	frame.Bar.Name:SetText(format("%s %d", L["Buff Name"], index))
 	frame.Bar.Duration:SetText(format("%.1fs", 18 - index * 3.5))
-
-	-- Stands in for the aura instance ID so the sorting option is visible in the demo
-	frame.mmtDemoAge = 100 - index
 end
 
 function module:DemoFrames(key)
