@@ -291,15 +291,22 @@ mMT.options = {
 					childGroups = "tab",
 					args = {},
 				},
-				info_durability_itemlevel = {
+				info_time = {
 					order = 9,
+					type = "group",
+					name = mMT:AddSettingsIcon(L["Time"], "time"),
+					childGroups = "tab",
+					args = {},
+				},
+				info_durability_itemlevel = {
+					order = 10,
 					type = "group",
 					name = mMT:AddSettingsIcon(L["Durability & Item Level"], "armor"),
 					childGroups = "tab",
 					args = {},
 				},
 				misc_dungeon = {
-					order = 10,
+					order = 11,
 					type = "group",
 					name = mMT:AddSettingsIcon(L["Dungeon"], "dungeon"),
 					childGroups = "tab",

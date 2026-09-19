@@ -234,6 +234,11 @@ P.datatexts = {
 		out_of_combat = "combat_13",
 		hide_delay = 5,
 	},
+	time = {
+		icon = "none",
+		in_combat = "combat_02",
+		hold_delay = 5,
+	},
 	durability_itemLevel = {
 		mount = 460,
 		warning = true,

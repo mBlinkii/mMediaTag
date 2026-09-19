@@ -214,6 +214,13 @@ L["Other"] = true
 -- options/colors_tip_menu.lua
 L["Title"] = true
 
+-- options/datatext/info_time.lua
+L["Clock"] = true
+L["Clock Icon"] = true
+L["Combat Icon"] = true
+L["Switches to the combat time as soon as you enter combat."] = true
+L["Time format and tooltip are taken from ElvUI's Time datatext."] = true
+
 -- options/datatext/misc_dungeon.lua
 L["Dungeon Name"] = true
 
@@ -474,6 +481,7 @@ L["Tank"] = true
 L["Teleports"] = true
 L["Text"] = true
 L["Texture"] = true
+L["Time"] = true
 L["Tooltip"] = true
 L["Toys"] = true
 L["Volume"] = true

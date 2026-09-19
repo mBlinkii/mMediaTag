@@ -3,6 +3,7 @@
 	<Script file="info_combat_time.lua"/>
 	<Script file="info_durability_itemlevel.lua"/>
 	<Script file="info_score.lua"/>
+	<Script file="info_time.lua"/>
     <Script file="misc_dungeon.lua"/>
 	<Script file="misc_gamemenu.lua"/>
 	<Script file="misc_individual_professions.lua"/>

@@ -214,6 +214,13 @@ L["Other"] = "Sonstiges"
 -- options/colors_tip_menu.lua
 L["Title"] = "Titel"
 
+-- options/datatext/info_time.lua
+L["Clock"] = "Uhr"
+L["Clock Icon"] = "Uhr-Symbol"
+L["Combat Icon"] = "Kampf-Symbol"
+L["Switches to the combat time as soon as you enter combat."] = "Wechselt zur Kampfzeit, sobald du in den Kampf gehst."
+L["Time format and tooltip are taken from ElvUI's Time datatext."] = "Zeitformat und Tooltip stammen aus ElvUIs Zeit-Datatext."
+
 -- options/datatext/misc_dungeon.lua
 L["Dungeon Name"] = "Dungeon-Name"
 
@@ -474,6 +481,7 @@ L["Tank"] = "Tank"
 L["Teleports"] = "Teleports"
 L["Text"] = "Text"
 L["Texture"] = "Textur"
+L["Time"] = "Zeit"
 L["Tooltip"] = "Tooltip"
 L["Toys"] = "Spielzeuge"
 L["Volume"] = "Lautstärke"

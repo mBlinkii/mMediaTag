@@ -1,5 +1,14 @@
 # Changelog - ElvUI_mMediaTag
 
+## [ver. 4.13] - TBD
+### 🐛 FIX
+- FIX - [Skins]: The BugSack skin only half covered the redesigned window of BugSack 12.1.2, the portrait and the scroll bar kept their Blizzard look and the header text sat too far to the right.
+- FIX - [Skins]: The version line left of the page counter was missing in the BugSack window since BugSack 12.1.2.
+### ✨ NEW
+- NEW - [DT-Time]: New datatext that shows the clock and switches to a combat timer as soon as you enter combat, with its own icon for each of the two states.
+- NEW - [DT-Time]: The combat time keeps running for an adjustable delay after the fight, in an arena it starts with the gate timer and on a boss with the encounter.
+- NEW - [DT-Time]: Time format and tooltip are taken from ElvUI's Time datatext, whose settings can be opened straight from the mMT options.
+
 ## [ver. 4.12] - 14.09.2026
 ### 🐛 FIX
 - FIX - [DT-Teleports]: The datatext threw an error inside a Mythic+ dungeon, where the group finder hides the data of other groups.

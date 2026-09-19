@@ -14,6 +14,7 @@ function mMT:UpdateAllDatatexts()
 	DT:ForceUpdate_DataText("mMT - Coordinate X")
 	DT:ForceUpdate_DataText("mMT - Coordinate Y")
 	DT:ForceUpdate_DataText("mMT - Dungeon")
+	DT:ForceUpdate_DataText("mMT - Time")
 	M.Tracker:UpdateAll()
 end
 
