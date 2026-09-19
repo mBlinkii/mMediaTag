@@ -77,7 +77,7 @@ local INTERRUPT_BY_SPEC = {
 }
 
 -- Axe Toss, Call Felhunter, Axe Toss (Command Demon)
-local WARLOCK_INTERRUPTS = { 89766, 212619, 119914 }
+local WARLOCK_INTERRUPTS = { 89766, 212619, 119914, 136174 }
 
 local function UpdateInterruptSpell()
 	local specIndex = GetSpecialization()
