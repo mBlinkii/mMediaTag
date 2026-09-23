@@ -5,6 +5,7 @@ mMT.Changelog[413] = {
 	FIX = {
 		"[Skins]: The BugSack skin only half covered the redesigned window of BugSack 12.1.2, the portrait and the scroll bar kept their Blizzard look and the header text sat too far to the right.",
 		"[Skins]: The version line left of the page counter was missing in the BugSack window since BugSack 12.1.2.",
+		"[Interrupt-On-CD]: Spell Lock was not recognized as the interrupt of a warlock, so the kick bar and castbar color stayed off.",
 	},
 	NEW = {
 		"[DT-Time]: New datatext that shows the clock and switches to a combat timer as soon as you enter combat, with its own icon for each of the two states.",
