@@ -582,6 +582,12 @@ local function GetCooldownTime(id, kind)
 	return text
 end
 
+local function GetSecureAttributes(id, kind)
+	if kind == "spell" then return { type = "spell", spell = id } end
+	if PlayerHasToy(id) then return { type = "toy", toy = id } end
+	return { type = "item", item = "item:" .. id }
+end
+
 local function processTeleport(t, category, kindOverride)
 	for id, idKind in pairs(t) do
 		if id and id ~= "none" then
@@ -606,7 +612,7 @@ local function processTeleport(t, category, kindOverride)
 					kind = idKind,
 					cooldown = GetCooldownTime(id, kind),
 					short_name = isDungeonTeleport and idKind,
-					use = kind == "spell" and ("/cast " .. name) or (kind == "toy" and ("/usetoy " .. name) or ("/use " .. name)),
+					attributes = GetSecureAttributes(id, kind),
 					onEnter = (kind == "spell") and function(btn)
 						OnEnterSpell(btn)
 					end or function(btn)
@@ -857,7 +863,7 @@ local function CreateMenuEntry(id, t, marked)
 		icon_size = ICON_SIZE,
 		isTitle = false,
 		tooltip = id,
-		macro = t.use,
+		attributes = t.attributes,
 		funcOnEnter = t.onEnter,
 		funcOnLeave = LeaveFunc,
 	}

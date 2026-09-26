@@ -50,7 +50,7 @@ function mMT:AddSettingsIcon(text, icon)
 	return format("|TInterface\\Addons\\ElvUI_mMediaTag\\media\\options\\%s.tga:16:16|t  %s", icon, text)
 end
 
-local DB_VERSION = 1
+local DB_VERSION = 2
 local DB_STEPS = {
 	function(db) -- 1: font subtable renamed to text, font is a plain string in every other UI
 		for _, key in ipairs({ "death_counter", "difficulty_info", "dock", "lfg_invite_info", "objective_tracker", "prey_hunt" }) do
@@ -60,6 +60,10 @@ local DB_STEPS = {
 				settings.font = nil
 			end
 		end
+	end,
+	function(db) -- 2: portraits spec_icon was a boolean before it became a style key
+		local misc = db.portraits and db.portraits.misc
+		if misc and type(misc.spec_icon) == "boolean" then misc.spec_icon = "none" end
 	end,
 }
 

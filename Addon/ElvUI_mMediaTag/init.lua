@@ -4,6 +4,7 @@ local EP = E.Libs.EP
 -- Cache WoW Globals
 local _G = _G
 local format = format
+local strfind = strfind
 local CreateFrame = CreateFrame
 local GetAddOnMetadata = _G.C_AddOns and _G.C_AddOns.GetAddOnMetadata or _G.GetAddOnMetadata
 local IsAddOnLoaded = _G.C_AddOns and _G.C_AddOns.IsAddOnLoaded or IsAddOnLoaded
@@ -84,12 +85,10 @@ function mMT:Initialize()
 	tinsert(E.ConfigModeLayouts, "MMEDIATAG")
 	E.ConfigModeLocalizedStrings["MMEDIATAG"] = mMT.Name
 
-	-- Set default value for spec icons if the user has the old boolean value
-	if E.db.mMediaTag.portraits.misc.spec_icon == true or E.db.mMediaTag.portraits.misc.spec_icon == false then E.db.mMediaTag.portraits.misc.spec_icon = "none" end
-
-	if E.db.mMediaTag.version ~= mMT.Version then C_Timer_After(2, function()
+	local lastVersion = Engine[2].changelog_version or E.db.mMediaTag.version
+	if lastVersion ~= mMT.Version and not strfind(mMT.Version, "-dev", 1, true) then C_Timer_After(2, function()
 		E:ToggleOptions("mMT,changelog")
-		E.db.mMediaTag.version = mMT.Version
+		Engine[2].changelog_version = mMT.Version
 	end) end
 end
 

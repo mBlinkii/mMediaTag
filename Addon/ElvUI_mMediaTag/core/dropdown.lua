@@ -48,6 +48,16 @@ local function OnLeave(button)
 	if button.funcOnLeave then button.funcOnLeave(button) end
 end
 
+-- secure buttons block Hide in combat, so the menu has to be gone before lockdown starts
+local function OnCombatStart(frame)
+	if frame.timer then
+		frame.timer:Cancel()
+		frame.timer = nil
+	end
+
+	frame:Hide()
+end
+
 local function ReleaseButtons(frame)
 	for i = #frame.buttons, 1, -1 do
 		local btn = frame.buttons[i]
@@ -86,7 +96,7 @@ local function AcquireButton(frame, secure)
 	return btn
 end
 
--- entry keys: text, right_tex, color, icon, icon_size, func, funcOnEnter, funcOnLeave, isTitle, macro, tooltip, notClickable, submenu, list (nested table)
+-- entry keys: text, right_tex, color, icon, icon_size, func, funcOnEnter, funcOnLeave, isTitle, macro, attributes, tooltip, notClickable, submenu, list (nested table)
 function mMT:DropDown(list, frame, parent, ButtonWidth, HideDelay, submenu)
 	local SAVE_HEIGHT = E.db.general.fontSize / 3 + 16
 	local BUTTON_HEIGHT, BUTTON_WIDTH = 0, 0
@@ -108,16 +118,22 @@ function mMT:DropDown(list, frame, parent, ButtonWidth, HideDelay, submenu)
 		frame:SetFrameStrata("DIALOG")
 		frame:SetClampedToScreen(true)
 		tinsert(_G.UISpecialFrames, frame:GetName())
+		frame:RegisterEvent("PLAYER_REGEN_DISABLED")
+		frame:SetScript("OnEvent", OnCombatStart)
 		frame:Hide()
 	end
 
 	ReleaseButtons(frame)
 
 	for i, item in ipairs(list) do
-		local btn = AcquireButton(frame, item.macro and true or false)
+		local btn = AcquireButton(frame, (item.macro or item.attributes) and true or false)
 		btn.submenu = item.submenu
 
-		if item.macro then
+		if item.attributes then
+			for key, value in pairs(item.attributes) do
+				btn:SetAttribute(key, value)
+			end
+		elseif item.macro then
 			btn:SetAttribute("type", "macro")
 			btn:SetAttribute("macrotext1", item.macro)
 		elseif item.notClickable then
