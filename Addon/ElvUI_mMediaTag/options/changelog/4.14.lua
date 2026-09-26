@@ -1,0 +1,15 @@
+local mMT, DB, M, E, P, L, MEDIA = unpack(ElvUI_mMediaTag)
+
+mMT.Changelog[414] = {
+	DATE = "TBD",
+	FIX = {
+		"[DT-Combat-Time]: The combat timer threw an error on every frame when the icon for in or out of combat was set to None.",
+		"[Tags]: The mMT-role tags threw an error on units without an assigned role, for example on your own frame while solo.",
+		"[Tags]: The mMT-health:current tag used the short number format, it now uses the long one while mMT-health:current:short stays short.",
+		"[Datatext]: The menus of the teleports, professions and game menu datatexts created new buttons every time they were opened, so the memory usage kept growing.",
+		"[Datatext]: Opening a submenu of the teleports datatext in combat could trigger a blocked action error.",
+		"[Portraits]: The test mode of the boss, arena and party frames threw an error with the Blizzard spec icon style.",
+		"[DT-Score]: Your own keystone could throw an error when the game returned no color for its level.",
+		"[System]: Mobs far above your level were saved as bosses for good and kept the boss classification on portraits and tags, the saved list is reset once.",
+	},
+}

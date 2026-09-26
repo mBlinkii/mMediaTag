@@ -380,26 +380,47 @@ end
 
 local function DemoUpdate(self)
 	local element = self
-	local texCoords
 	local unit = "player"
 	local class = select(2, UnitClass(unit))
-	local specID = select(1, GetSpecializationInfo(GetSpecialization()))
-	local isPlayer = true
-	local shouldMirror = (isPlayer and self.db.mirror) or (not isPlayer and not self.db.mirror)
+	local shouldMirror = self.db.mirror
+	local applied = false
 
-	if module.useSpecIcon and isPlayer then
-		texCoords = module.texCoords[specID].texCoords or module.texCoords[specID]
-		element.unit_portrait:SetTexture(module.specIcons, "CLAMP", "CLAMP", "TRILINEAR")
-	elseif module.useClassIcons and isPlayer then
-		texCoords = module.texCoords[class].texCoords or module.texCoords[class]
-		element.unit_portrait:SetTexture(module.classIcons, "CLAMP", "CLAMP", "TRILINEAR")
-	else
-		SetPortraitTexture(element.unit_portrait, unit, true)
+	if module.useClassIcons then
+		local coords = module.texCoords and module.texCoords[class]
+		if coords then
+			element.unit_portrait:SetTexture(module.classIcons, "CLAMP", "CLAMP", "TRILINEAR")
+			module:Mirror(element.unit_portrait, shouldMirror, coords.texCoords or coords)
+			applied = true
+		end
+	elseif module.useSpecIcon then
+		local specIndex = GetSpecialization()
+		local specID, specIcon, _
+		if specIndex then
+			specID, _, _, specIcon = GetSpecializationInfo(specIndex)
+		end
+
+		if module.db.misc.spec_icon == "blizzard" then
+			if specIcon then
+				element.unit_portrait:SetTexture(specIcon, "CLAMP", "CLAMP", "TRILINEAR")
+				module:Mirror(element.unit_portrait, shouldMirror)
+				applied = true
+			end
+		else
+			local coords = specID and module.texCoords and module.texCoords[specID]
+			if coords then
+				element.unit_portrait:SetTexture(module.specIcons, "CLAMP", "CLAMP", "TRILINEAR")
+				module:Mirror(element.unit_portrait, shouldMirror, coords.texCoords or coords)
+				applied = true
+			end
+		end
 	end
 
-	module:Mirror(element.unit_portrait, shouldMirror, texCoords)
+	if not applied then
+		SetPortraitTexture(element.unit_portrait, unit, true)
+		module:Mirror(element.unit_portrait, shouldMirror)
+	end
 
-	element.isPlayer = isPlayer
+	element.isPlayer = true
 	element.isSecret = false
 	element.unitClass = class
 

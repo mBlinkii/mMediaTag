@@ -8,7 +8,7 @@ local GetTime = GetTime
 --Variables
 local textString, valueString = "", ""
 local timer, startTime, inEncounter = 0, 0, nil
-local in_combat, out_of_combat = nil, nil
+local in_combat, out_of_combat = "", ""
 local dt_icons = MEDIA.icons.datatexts.combat
 
 local function CancelTimer(self)
@@ -28,7 +28,7 @@ end
 
 local function OnUpdate(self)
 	timer = GetTime() - startTime
-	self.text:SetFormattedText(textString, in_combat .. " " .. UpdateText())
+	self.text:SetFormattedText(textString, in_combat .. UpdateText())
 end
 
 local function DelayOnUpdate(self, elapsed)
@@ -40,18 +40,20 @@ local function DelayOnUpdate(self, elapsed)
 end
 
 local function OnEvent(self, event, _, timeSeconds)
-	in_combat = E.db.mMediaTag.datatexts.combat_time.in_combat ~= "none" and E:TextureString(dt_icons[E.db.mMediaTag.datatexts.combat_time.in_combat], ":14:14") or nil
-	out_of_combat = E.db.mMediaTag.datatexts.combat_time.out_of_combat ~= "none" and E:TextureString(dt_icons[E.db.mMediaTag.datatexts.combat_time.out_of_combat], ":14:14") or nil
+	local inIcon = dt_icons[E.db.mMediaTag.datatexts.combat_time.in_combat]
+	local outIcon = dt_icons[E.db.mMediaTag.datatexts.combat_time.out_of_combat]
+	in_combat = inIcon and E:TextureString(inIcon, ":14:14") .. " " or ""
+	out_of_combat = outIcon and E:TextureString(outIcon, ":14:14") .. " " or ""
 	local _, instanceType = GetInstanceInfo()
 	local inArena, started, ended = instanceType == "arena", event == "ENCOUNTER_START", event == "ENCOUNTER_END"
 
 	if inArena and event == "START_TIMER" then
 		timer, startTime = 0, timeSeconds
 		CancelTimer(self)
-		self.text:SetFormattedText(textString, in_combat .. " " .. UpdateText())
+		self.text:SetFormattedText(textString, in_combat .. UpdateText())
 		self:SetScript("OnUpdate", DelayOnUpdate)
 	elseif not inArena and ((not inEncounter and event == "PLAYER_REGEN_ENABLED") or ended) then
-		self.text:SetFormattedText(textString, out_of_combat .. " " .. UpdateText())
+		self.text:SetFormattedText(textString, out_of_combat .. UpdateText())
 		self:SetScript("OnUpdate", nil)
 		if ended then inEncounter = nil end
 		if (E.db.mMediaTag.datatexts.combat_time.hide_delay ~= 0) and not self.hide_timer then self.hide_timer = C_Timer.NewTicker(E.db.mMediaTag.datatexts.combat_time.hide_delay, function()
@@ -64,7 +66,7 @@ local function OnEvent(self, event, _, timeSeconds)
 		if started then inEncounter = true end
 	elseif E.db.mMediaTag.datatexts.combat_time.hide_delay == 0 then
 		if not self.text:GetText() or event == 'ELVUI_FORCE_UPDATE' then
-			self.text:SetFormattedText(textString, out_of_combat .. " " .. UpdateText())
+			self.text:SetFormattedText(textString, out_of_combat .. UpdateText())
 		end
 	end
 end

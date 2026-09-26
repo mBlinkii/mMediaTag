@@ -336,18 +336,17 @@ function mMT:GetMyKeystone(withIcon)
 		local challengeMapID = GetOwnedKeystoneChallengeMapID()
 		local name, id, _, icon, _ = GetMapUIInfo(challengeMapID)
 		local colorKey = GetKeystoneLevelRarityColor(keyStoneLevel)
-		colorKey.hex = colorKey and colorKey:GenerateHexColor() or "FFFFFFFF"
+		local keyHex = colorKey and colorKey:GenerateHexColor() or "FFFFFFFF"
 
-		return (withIcon and E:TextureString(icon, ":14:14") .. " " or "") .. color.hex .. name .. " " .. format("|c%s+%s|r", colorKey.hex, keyStoneLevel) .. "|r", id
+		return (withIcon and E:TextureString(icon, ":14:14") .. " " or "") .. color.hex .. name .. " " .. format("|c%s+%s|r", keyHex, keyStoneLevel) .. "|r", id
 	end
 end
 
 function mMT:GetMyMythicPlusScore()
 	local score = GetOverallDungeonScore()
 	local color = GetDungeonScoreRarityColor(score) or HIGHLIGHT_FONT_COLOR
-	color.hex = color:GenerateHexColor() or "FFFFFFFF"
 
-	return format("|c%s%s|r", color.hex, score)
+	return format("|c%s%s|r", color:GenerateHexColor(), score)
 end
 
 local GetCurrentAffixes = C_MythicPlus.GetCurrentAffixes

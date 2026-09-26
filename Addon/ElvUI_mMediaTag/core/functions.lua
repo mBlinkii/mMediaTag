@@ -401,17 +401,16 @@ function mMT:GetUnitClassification(unit, isBossFrame, isPlayer, guid)
 	local classification = SafeValue(UnitClassification(unit))
 	if classification == "worldboss" then classification = "boss" end
 
-	local isBoss = isBossFrame
-		or (npcID and ((mMT.IDs.boss and mMT.IDs.boss[npcID]) or (DB.boss_ids and DB.boss_ids[npcID])))
-		or (classification == "boss")
-		or (not isPlayer and IsBossTokenUnit(unit))
-		or (not isPlayer and SafeValue(UnitLevel(unit)) == -1)
+	if npcID and ((mMT.IDs.boss and mMT.IDs.boss[npcID]) or (DB.boss_ids and DB.boss_ids[npcID])) then return "boss" end
 
-	if isBoss then
+	if isBossFrame or classification == "boss" or (not isPlayer and IsBossTokenUnit(unit)) then
 		-- learn the npcID for reliable pre-pull detection in future sessions
-		if npcID and DB.boss_ids and not DB.boss_ids[npcID] then DB.boss_ids[npcID] = true end
+		if npcID and DB.boss_ids then DB.boss_ids[npcID] = true end
 		return "boss"
 	end
+
+	-- level -1 is also any mob far above the player, so it is shown as boss but never learned
+	if not isPlayer and SafeValue(UnitLevel(unit)) == -1 then return "boss" end
 
 	return extraTypes[classification] and classification or nil
 end

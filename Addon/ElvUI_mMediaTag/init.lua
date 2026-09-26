@@ -59,6 +59,12 @@ function mMT:Initialize()
 	Engine[2] = E:CopyTable(Engine[2], MMTDATA)
 	mMT:UpdateDeveloperState()
 
+	-- older versions learned every level -1 mob as boss
+	if (Engine[2].boss_ids_version or 0) < 1 then
+		Engine[2].boss_ids = {}
+		Engine[2].boss_ids_version = 1
+	end
+
 	if mMT:GetWeeklyResetTime() then Engine[2].keystones = {} end
 
 	if not mMT.ElvUI_Hooked then

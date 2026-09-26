@@ -400,7 +400,7 @@ E:AddTagInfo("mMT-health:short:nodecimal", mMT.NameShort .. " " .. L["Health"], 
 E:AddTag("mMT-health:current", "UNIT_HEALTH UNIT_MAXHEALTH", function(unit)
 	local currentHealth = UnitHealth(unit)
 
-	return E:AbbreviateNumbers(currentHealth, E.Abbreviate["short"])
+	return E:AbbreviateNumbers(currentHealth, E.Abbreviate["long"])
 end)
 E:AddTagInfo("mMT-health:current", mMT.NameShort .. " " .. L["Health"], L["Returns the current health of the unit."])
 
@@ -426,7 +426,8 @@ E:AddTag("mMT-role", "PLAYER_ROLES_ASSIGNED GROUP_ROSTER_UPDATE", function(unit)
 	if E:IsSecretUnit(unit) then return end
 
 	local unitRole = UnitGroupRolesAssigned(unit)
-	return unitRole and roleColors[unitRole]:WrapTextInColorCode(roleNames[unitRole]) or ""
+	local color = roleColors[unitRole]
+	return color and color:WrapTextInColorCode(roleNames[unitRole]) or ""
 end)
 E:AddTagInfo("mMT-role", mMT.NameShort .. " " .. L["Miscellaneous"], L["Returns the role of the unit (Tank, Healer, DPS)."])
 
@@ -434,7 +435,8 @@ E:AddTag("mMT-role:icon", "PLAYER_ROLES_ASSIGNED GROUP_ROSTER_UPDATE", function(
 	if E:IsSecretUnit(unit) then return end
 
 	local unitRole = UnitGroupRolesAssigned(unit)
-	return unitRole and E:TextureString(roleIcons[unitRole], ":14:14") or ""
+	local icon = roleIcons[unitRole]
+	return icon and E:TextureString(icon, ":14:14") or ""
 end)
 E:AddTagInfo("mMT-role:icon", mMT.NameShort .. " " .. L["Miscellaneous"], L["Returns the role icon of the unit (Tank, Healer, DPS)."])
 
@@ -442,7 +444,7 @@ E:AddTag("mMT-role:icon:blizz", "PLAYER_ROLES_ASSIGNED GROUP_ROSTER_UPDATE", fun
 	if E:IsSecretUnit(unit) then return end
 
 	local unitRole = UnitGroupRolesAssigned(unit)
-	return unitRole and roleIconsBlizz[unitRole] or ""
+	return roleIconsBlizz[unitRole] or ""
 end)
 E:AddTagInfo("mMT-role:icon:blizz", mMT.NameShort .. " " .. L["Miscellaneous"], L["Returns the role icon of the unit (Tank, Healer, DPS)."])
 
@@ -451,7 +453,8 @@ E:AddTag("mMT-role:target", "PLAYER_ROLES_ASSIGNED GROUP_ROSTER_UPDATE", functio
 	if E:IsSecretUnit(target) then return end
 
 	local unitRole = UnitGroupRolesAssigned(target)
-	return unitRole and roleColors[unitRole]:WrapTextInColorCode(roleNames[unitRole]) or ""
+	local color = roleColors[unitRole]
+	return color and color:WrapTextInColorCode(roleNames[unitRole]) or ""
 end)
 E:AddTagInfo("mMT-role:target", mMT.NameShort .. " " .. L["Miscellaneous"], L["Returns the role of the unit (Tank, Healer, DPS)."])
 
@@ -460,7 +463,8 @@ E:AddTag("mMT-role:target:icon", "PLAYER_ROLES_ASSIGNED GROUP_ROSTER_UPDATE", fu
 	if E:IsSecretUnit(target) then return end
 
 	local unitRole = UnitGroupRolesAssigned(target)
-	return unitRole and E:TextureString(roleIcons[unitRole], ":14:14") or ""
+	local icon = roleIcons[unitRole]
+	return icon and E:TextureString(icon, ":14:14") or ""
 end)
 E:AddTagInfo("mMT-role:target:icon", mMT.NameShort .. " " .. L["Miscellaneous"], L["Returns the role icon of the unit (Tank, Healer, DPS)."])
 
@@ -469,7 +473,7 @@ E:AddTag("mMT-role:target:icon:blizz", "PLAYER_ROLES_ASSIGNED GROUP_ROSTER_UPDAT
 	if E:IsSecretUnit(target) then return end
 
 	local unitRole = UnitGroupRolesAssigned(target)
-	return unitRole and roleIconsBlizz[unitRole] or ""
+	return roleIconsBlizz[unitRole] or ""
 end)
 E:AddTagInfo("mMT-role:target:icon:blizz", mMT.NameShort .. " " .. L["Miscellaneous"], L["Returns the role icon of the unit (Tank, Healer, DPS)."])
 

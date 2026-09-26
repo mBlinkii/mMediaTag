@@ -1,6 +1,17 @@
 # Changelog - ElvUI_mMediaTag
 
-## [ver. 4.13] - TBD
+## [ver. 4.14] - TBD
+### 🐛 FIX
+- FIX - [DT-Combat-Time]: The combat timer threw an error on every frame when the icon for in or out of combat was set to None.
+- FIX - [Tags]: The mMT-role tags threw an error on units without an assigned role, for example on your own frame while solo.
+- FIX - [Tags]: The mMT-health:current tag used the short number format, it now uses the long one while mMT-health:current:short stays short.
+- FIX - [Datatext]: The menus of the teleports, professions and game menu datatexts created new buttons every time they were opened, so the memory usage kept growing.
+- FIX - [Datatext]: Opening a submenu of the teleports datatext in combat could trigger a blocked action error.
+- FIX - [Portraits]: The test mode of the boss, arena and party frames threw an error with the Blizzard spec icon style.
+- FIX - [DT-Score]: Your own keystone could throw an error when the game returned no color for its level.
+- FIX - [System]: Mobs far above your level were saved as bosses for good and kept the boss classification on portraits and tags, the saved list is reset once.
+
+## [ver. 4.13] - 23.09.2026
 ### 🐛 FIX
 - FIX - [Skins]: The BugSack skin only half covered the redesigned window of BugSack 12.1.2, the portrait and the scroll bar kept their Blizzard look and the header text sat too far to the right.
 - FIX - [Skins]: The version line left of the page counter was missing in the BugSack window since BugSack 12.1.2.

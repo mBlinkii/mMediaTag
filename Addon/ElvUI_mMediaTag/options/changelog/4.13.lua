@@ -1,7 +1,7 @@
 local mMT, DB, M, E, P, L, MEDIA = unpack(ElvUI_mMediaTag)
 
 mMT.Changelog[413] = {
-	DATE = "TBD",
+	DATE = "23.09.2026",
 	FIX = {
 		"[Skins]: The BugSack skin only half covered the redesigned window of BugSack 12.1.2, the portrait and the scroll bar kept their Blizzard look and the header text sat too far to the right.",
 		"[Skins]: The version line left of the page counter was missing in the BugSack window since BugSack 12.1.2.",

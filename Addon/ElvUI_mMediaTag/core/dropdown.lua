@@ -8,6 +8,7 @@ local ToggleFrame = ToggleFrame
 local format = format
 local strfind = strfind
 local tinsert = tinsert
+local tremove = tremove
 
 local autoHideDelay = 2
 local PADDING = 10
@@ -24,6 +25,67 @@ local function DropDownTimer(menuFrame)
 	end
 end
 
+local function OnClick(button)
+	if button.func then button.func() end
+
+	local buttonParent = button:GetParent()
+
+	if not button.submenu then
+		buttonParent:Hide()
+	elseif buttonParent.timer then
+		buttonParent.timer:Cancel()
+		buttonParent.timer = nil
+	end
+end
+
+local function OnEnter(button)
+	button.hoverTex:Show()
+	if button.funcOnEnter then button.funcOnEnter(button) end
+end
+
+local function OnLeave(button)
+	button.hoverTex:Hide()
+	if button.funcOnLeave then button.funcOnLeave(button) end
+end
+
+local function ReleaseButtons(frame)
+	for i = #frame.buttons, 1, -1 do
+		local btn = frame.buttons[i]
+		btn:Hide()
+		tinsert(btn.isSecure and frame.securePool or frame.pool, btn)
+		frame.buttons[i] = nil
+	end
+end
+
+local function AcquireButton(frame, secure)
+	local btn = tremove(secure and frame.securePool or frame.pool)
+	if btn then return btn end
+
+	if secure then
+		btn = CreateFrame("Button", nil, frame, "SecureActionButtonTemplate")
+		btn:RegisterForClicks("LeftButtonUp", "LeftButtonDown")
+		btn.isSecure = true
+	else
+		btn = CreateFrame("Button", nil, frame)
+	end
+
+	btn.hoverTex = btn:CreateTexture(nil, "OVERLAY")
+	btn.hoverTex:SetAllPoints()
+	btn.hoverTex:SetTexture([[Interface\Addons\ElvUI_mMediaTag\media\select.tga]])
+	btn.hoverTex:SetVertexColor(MEDIA.myclass.r, MEDIA.myclass.g, MEDIA.myclass.b, 0.5)
+	btn.hoverTex:SetBlendMode("BLEND")
+
+	btn.text = btn:CreateFontString(nil, "BORDER")
+	btn.text:SetAllPoints()
+	btn.text:SetJustifyH("LEFT")
+
+	btn.right_text = btn:CreateFontString(nil, "BORDER")
+	btn.right_text:SetAllPoints()
+	btn.right_text:SetJustifyH("RIGHT")
+
+	return btn
+end
+
 -- entry keys: text, right_tex, color, icon, icon_size, func, funcOnEnter, funcOnLeave, isTitle, macro, tooltip, notClickable, submenu, list (nested table)
 function mMT:DropDown(list, frame, parent, ButtonWidth, HideDelay, submenu)
 	local SAVE_HEIGHT = E.db.general.fontSize / 3 + 16
@@ -33,85 +95,54 @@ function mMT:DropDown(list, frame, parent, ButtonWidth, HideDelay, submenu)
 	local fontFlag = E.db.general.fontStyle
 	autoHideDelay = HideDelay or 2
 
+	if InCombatLockdown() then
+		_G.UIErrorsFrame:AddMessage(format("|CFFE74C3C%s|r", _G.ERR_NOT_IN_COMBAT))
+		mMT:Print(format("|CFFE74C3C%s|r", _G.ERR_NOT_IN_COMBAT))
+		return
+	end
+
 	if not frame.buttons then
 		frame.buttons = {}
+		frame.pool = {}
+		frame.securePool = {}
 		frame:SetFrameStrata("DIALOG")
 		frame:SetClampedToScreen(true)
 		tinsert(_G.UISpecialFrames, frame:GetName())
 		frame:Hide()
 	end
 
-	for i, _ in ipairs(frame.buttons) do
-		frame.buttons[i]:Hide()
-		frame.buttons[i] = nil
-	end
+	ReleaseButtons(frame)
 
 	for i, item in ipairs(list) do
-		local btn = frame.buttons[i] or (item.macro and CreateFrame("Button", "MacroButton", frame, "SecureActionButtonTemplate") or CreateFrame("Button", nil, frame))
+		local btn = AcquireButton(frame, item.macro and true or false)
 		btn.submenu = item.submenu
 
 		if item.macro then
 			btn:SetAttribute("type", "macro")
-			btn:RegisterForClicks("LeftButtonUp", "LeftButtonDown")
 			btn:SetAttribute("macrotext1", item.macro)
-		elseif not item.notClickable then
-			local function OnClick(button)
-				if button.func then button.func() end
-
-				local buttonParent = button:GetParent()
-
-				if not button.submenu then
-					buttonParent:Hide()
-				elseif buttonParent.timer then
-					buttonParent.timer:Cancel()
-					buttonParent.timer = nil
-				end
-			end
-
+		elseif item.notClickable then
+			btn:SetScript("OnClick", nil)
+		else
 			btn.func = item.func
 			btn:SetScript("OnClick", OnClick)
 		end
 
-		if not item.isTitle then
-			btn.hoverTex = btn.hoverTex or btn:CreateTexture(nil, "OVERLAY")
-			btn.hoverTex:SetAllPoints()
-			btn.hoverTex:SetTexture([[Interface\Addons\ElvUI_mMediaTag\media\select.tga]])
-			btn.hoverTex:SetVertexColor(MEDIA.myclass.r, MEDIA.myclass.g, MEDIA.myclass.b, 0.5)
-			btn.hoverTex:SetBlendMode("BLEND")
-			btn.hoverTex:Hide()
+		btn.hoverTex:Hide()
+		btn.tooltip = item.tooltip
+		btn.funcOnEnter = item.funcOnEnter
+		btn.funcOnLeave = item.funcOnLeave
+		btn:SetScript("OnEnter", not item.isTitle and OnEnter or nil)
+		btn:SetScript("OnLeave", not item.isTitle and OnLeave or nil)
 
-			local function OnLeave(button)
-				button.hoverTex:Hide()
-				if button.funcOnLeave then button.funcOnLeave(button) end
-			end
-
-			local function OnEnter(button)
-				button.hoverTex:Show()
-				if btn.funcOnEnter then button.funcOnEnter(button) end
-			end
-
-			btn.tooltip = item.tooltip
-			btn:SetScript("OnEnter", OnEnter)
-			btn.funcOnEnter = item.funcOnEnter
-			btn:SetScript("OnLeave", OnLeave)
-			btn.funcOnLeave = item.funcOnLeave
-		end
-
-		btn.text = btn.text or btn:CreateFontString(nil, "BORDER")
-		btn.text:SetAllPoints()
 		btn.text:FontTemplate(font, fontSize, fontFlag)
-		btn.text:SetJustifyH("LEFT")
-
-		btn.right_text = btn.right_text or btn:CreateFontString(nil, "BORDER")
-		btn.right_text:SetAllPoints()
 		btn.right_text:FontTemplate(font, fontSize, fontFlag)
-		btn.right_text:SetJustifyH("RIGHT")
 
 		local iconSize = item.icon_size or 14
 		local text = item.icon and E:TextureString(item.icon, ":" .. iconSize .. ":" .. iconSize) .. " " .. item.text or item.text or ""
 		btn.text:SetText(item.color and format("%s%s|r", item.color, text) or text)
-		if item.right_text then btn.right_text:SetText(item.right_text) end
+		btn.right_text:SetText(item.right_text or "")
 
+		btn:ClearAllPoints()
 		if i == 1 then
 			btn:Point("TOPLEFT", frame, "TOPLEFT", PADDING, -PADDING)
 		else
@@ -119,7 +150,7 @@ function mMT:DropDown(list, frame, parent, ButtonWidth, HideDelay, submenu)
 		end
 
 		BUTTON_HEIGHT = max(btn.text:GetStringHeight(), BUTTON_HEIGHT, SAVE_HEIGHT)
-		BUTTON_WIDTH = max(btn.text:GetStringWidth() + (btn.right_text and btn.right_text:GetStringWidth() or 0), BUTTON_WIDTH, ButtonWidth)
+		BUTTON_WIDTH = max(btn.text:GetStringWidth() + btn.right_text:GetStringWidth(), BUTTON_WIDTH, ButtonWidth)
 
 		frame.buttons[i] = btn
 	end
@@ -161,19 +192,14 @@ function mMT:DropDown(list, frame, parent, ButtonWidth, HideDelay, submenu)
 		frame.parent = parent
 	end
 
-	if InCombatLockdown() then
-		_G.UIErrorsFrame:AddMessage(format("|CFFE74C3C%s|r", _G.ERR_NOT_IN_COMBAT))
-		mMT:Print(format("|CFFE74C3C%s|r", _G.ERR_NOT_IN_COMBAT))
-	else
-		if not frame.timer then frame.timer = C_Timer.NewTicker(autoHideDelay, function()
-			DropDownTimer(frame)
-		end) end
+	if not frame.timer then frame.timer = C_Timer.NewTicker(autoHideDelay, function()
+		DropDownTimer(frame)
+	end) end
 
-		if frame.name ~= submenu then
-			frame.name = submenu
-			frame:Show()
-		else
-			ToggleFrame(frame)
-		end
+	if frame.name ~= submenu then
+		frame.name = submenu
+		frame:Show()
+	else
+		ToggleFrame(frame)
 	end
 end
