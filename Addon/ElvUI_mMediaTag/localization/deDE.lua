@@ -37,9 +37,11 @@ L["Yes"] = "Ja"
 -- modules/datatexts/misc_gamemenu.lua
 L["Framerate:"] = "Bildrate:"
 L["Game Menu"] = "Spielmenü"
+L["Home"] = "Heimat"
 L["Latency:"] = "Latenz:"
 L["left click to open the menu."] = "Linksklick, um das Menü zu öffnen."
 L["right click to open LFD Browser"] = "Rechtsklick, um den LFD-Browser zu öffnen"
+L["World"] = "Welt"
 
 -- modules/datatexts/misc_individual_professions.lua
 L["Archaeology"] = "Archäologie"
@@ -148,9 +150,6 @@ L["Roll Button"] = "Würfel-Button"
 L["Welcome to %s %s version |CFFF7DC6F%s|r, type |CFF58D68D/mmt|r to access the in-game configuration menu or type |CFF58D68D/mmt help|r for an overview of all chat commands."] = "Willkommen bei %s %s Version |CFFF7DC6F%s|r. Gib |CFF58D68D/mmt|r ein, um das Konfigurationsmenü im Spiel zu öffnen, oder |CFF58D68D/mmt help|r für eine Übersicht aller Chatbefehle."
 
 -- modules/misc/lfg_invite_info.lua
-L["Activity:"] = "Aktivität:"
-L["Group:"] = "Gruppe:"
-L["Location:"] = "Ort:"
 L["PVE"] = "PVE"
 L["The Flame Burns Eternal"] = "Die Flamme brennt ewig"
 L["The Floodgate"] = "Das Fluttor"
@@ -168,23 +167,6 @@ L["Returns the current health of the unit."] = "Gibt die aktuelle Gesundheit der
 L["Returns the current health percent of the unit (in combat)."] = "Gibt den aktuellen Gesundheitsprozentsatz der Einheit zurück (im Kampf)."
 L["Same as mMT-color, but only for the units target."] = "Wie mMT-color, aber nur für das Ziel der Einheit."
 
-L["Name"] = "Name"
-L["Returns icons of players currently targeting the unit, but only while in combat."] = "Gibt Symbole von Spielern zurück, die die Einheit aktuell anvisieren, aber nur im Kampf."
-L["Returns the classification icon of the unit. You can specify up to three arguments to display only certain classifications.\nFor example: [mClass:icon{rare:elite}] will only show something if the unit is either rare or elite."] = "Gibt das Klassifikationssymbol der Einheit zurück. Du kannst bis zu drei Argumente angeben, um nur bestimmte Klassifikationen anzuzeigen.\nBeispiel: [mClass:icon{rare:elite}] zeigt nur etwas an, wenn die Einheit selten oder elitär ist."
-L["Returns the classification of the unit. You can specify up to three arguments to display only certain classifications.\nFor example: [mClass{rare:elite}] will only show something if the unit is either rare or elite."] = "Gibt die Klassifikation der Einheit zurück. Du kannst bis zu drei Argumente angeben, um nur bestimmte Klassifikationen anzuzeigen.\nBeispiel: [mClass{rare:elite}] zeigt nur etwas an, wenn die Einheit selten oder elitär ist."
-L["Returns the color of the unit. Players are colored by class, NPCs by classification. You can specify up to three arguments to display only certain classifications.\nFor example: [mColor{rare:elite}] will only show something if the unit is either rare or elite."] = "Gibt die Farbe der Einheit zurück. Spieler werden nach Klasse eingefärbt, NPCs nach Klassifikation. Du kannst bis zu drei Argumente angeben, um nur bestimmte Klassifikationen anzuzeigen.\nBeispiel: [mColor{rare:elite}] zeigt nur etwas an, wenn die Einheit selten oder elitär ist."
-L["Returns the current health and percent of the unit or it will return the status (AFK, DND, Offline, Dead, Ghost)."] = "Gibt die aktuelle Gesundheit und den Prozentwert der Einheit zurück oder den Status (AFK, DND, Offline, Tot, Geist)."
-L["Returns the current health of the unit (changes between max health and percent in combat) including absorbs or it will return the status (AFK, DND, Offline, Dead, Ghost)."] = "Gibt die aktuelle Gesundheit der Einheit zurück (wechselt im Kampf zwischen maximaler Gesundheit und Prozentwert), einschließlich Absorptionen, oder den Status (AFK, DND, Offline, Tot, Geist)."
-L["Returns the current health of the unit (changes between max health and percent in combat) or it will return the status (AFK, DND, Offline, Dead, Ghost)."] = "Gibt die aktuelle Gesundheit der Einheit zurück (wechselt im Kampf zwischen maximaler Gesundheit und Prozentwert) oder den Status (AFK, DND, Offline, Tot, Geist)."
-L["Returns the current health of the unit (changes between max health and percent in combat). Does not return status."] = "Gibt die aktuelle Gesundheit der Einheit zurück (wechselt im Kampf zwischen maximaler Gesundheit und Prozentwert). Gibt keinen Status zurück."
-L["Returns the name of the unit. If in an instance, it will return the last word of the name."] = "Gibt den Namen der Einheit zurück. In einer Instanz wird das letzte Wort des Namens zurückgegeben."
-L["Returns the number of players currently targeting the unit, but only while in combat."] = "Gibt die Anzahl der Spieler zurück, die die Einheit aktuell anvisieren, aber nur im Kampf."
-L["Returns the raid target marker icon of the unit."] = "Gibt das Schlachtzugs-Zielmarkierungssymbol der Einheit zurück."
-L["Returns the status icon of the unit (AFK, DND, Offline, Dead, Ghost) or the name of the unit."] = "Gibt das Statussymbol der Einheit zurück (AFK, DND, Offline, Tot, Geist) oder den Namen der Einheit."
-L["Returns the status of the unit (AFK, DND, Offline, Dead, Ghost) or the name of the unit."] = "Gibt den Status der Einheit zurück (AFK, DND, Offline, Tot, Geist) oder den Namen der Einheit."
-L["Same as mColor, but only for the units target."] = "Wie mColor, aber nur für das Ziel der Einheit."
-L["Same as mDeathCount, but only shows the count while the player is dead."] = "Wie mDeathCount, zeigt die Anzahl aber nur an, solange der Spieler tot ist."
-L["Short Version"] = "Kurzversion"
 
 -- options/about.lua
 L["Contact"] = "Kontakt"
@@ -304,11 +286,7 @@ L["Available"] = "Verfügbar"
 L["Rejected"] = "Abgelehnt"
 
 -- options/misc/tags.lua
-L["Cross"] = "Kreuz"
 L["Moon"] = "Mond"
-L["Skull"] = "Totenkopf"
-L["Star"] = "Stern"
-L["Triangle"] = "Dreieck"
 
 -- options/misc/unitframe_textures.lua
 L["Background Texture"] = "Hintergrundtextur"
@@ -337,6 +315,7 @@ L["Keystone to Chat"] = "Schlüsselstein in Chat"
 L["License"] = "Lizenz"
 L["Nameplates"] = "Namensplaketten"
 L["Notification"] = "Benachrichtigung"
+L["Objective Tracker"] = "Zielverfolgung"
 L["Open Settings"] = "Einstellungen öffnen"
 L["Phase Icon"] = "Phasen-Symbol"
 L["Portraits"] = "Porträts"
@@ -739,9 +718,7 @@ L["Skip in Combat"] = "Im Kampf überspringen"
 
 -- options/misc/auto_role_check.lua
 L["Auto Role Check"] = "Automatischer Rollencheck"
-L["Auto Sign Up"] = "Automatisch anmelden"
 L["Automatically accepts the dungeon or raid role check popup."] = "Akzeptiert das Rollencheck-Popup fuer Dungeons oder Schlachtzuege automatisch."
-L["Automatically signs up for premade groups when your role is already selected."] = "Meldet dich automatisch fuer vorgefertigte Gruppen an, wenn deine Rolle bereits ausgewaehlt ist."
 L["Lets you sign up for premade groups with a single click and confirms the application dialog automatically."] = "Ermoeglicht die Anmeldung fuer vorgefertigte Gruppen mit einem einzigen Klick und bestaetigt den Anmeldedialog automatisch."
 L["One-Click Sign Up"] = "Ein-Klick-Anmeldung"
 
@@ -785,8 +762,23 @@ L["Theme color"] = "Designfarbe"
 L["Third line color"] = "Farbe der dritten Zeile"
 
 -- options/misc/objective_tracker.lua
+L["Bad"] = "Schlecht"
+L["Class Color Border"] = "Rahmen in Klassenfarbe"
+L["Colors objectives like 3/5 by progress."] = "Färbt Ziele wie 3/5 nach ihrem Fortschritt."
+L["Complete"] = "Abgeschlossen"
+L["Font size, header"] = "Schriftgröße, Kopfzeile"
+L["Font size, text"] = "Schriftgröße, Text"
+L["Font size, title"] = "Schriftgröße, Titel"
+L["Good"] = "Gut"
+L["Gradient"] = "Verlauf"
+L["Header"] = "Kopfzeile"
+L["Header Bar"] = "Kopfleiste"
 L["Hide Dash"] = "Bindestrich ausblenden"
+L["Progress"] = "Fortschritt"
 L["Removes the dash in front of each objective."] = "Entfernt den Bindestrich vor jedem Ziel."
+L["Some changes require a reload of the UI."] = "Einige Änderungen erfordern ein Neuladen der Benutzeroberfläche."
+L["Transition"] = "Übergang"
+L["Transparent"] = "Transparent"
 
 -- options/misc/phase_icon.lua
 L["Chromie Time"] = "Chromie-Zeit"
@@ -795,13 +787,7 @@ L["War Mode"] = "Kriegsmodus"
 
 -- options/misc/tags.lua
 L["DC/ Offline"] = "DC/Offline"
-L["Health trashhold 1"] = "Gesundheitsschwelle 1"
-L["Health trashhold 2"] = "Gesundheitsschwelle 2"
 L["PvP"] = "PvP"
-L["Raidtarget Markers"] = "Schlachtzugs-Zielmarkierungen"
-L["Set the first health trashhold."] = "Legt die erste Gesundheitsschwelle fest."
-L["Set the second health trashhold."] = "Legt die zweite Gesundheitsschwelle fest."
-L["Targeting Players"] = "Anvisierende Spieler"
 
 -- options/misc/tooltip.lua
 L["Icon Zoom"] = "Symbol-Zoom"
@@ -845,7 +831,6 @@ L["Resurrection Icon"] = "Wiederbelebungs-Symbol"
 L["Summon Icon"] = "Beschwörungs-Symbol"
 L["TAGs"] = "TAGs"
 L["Target Highlight"] = "Ziel-Hervorhebung"
-L["These are just examples of how to create your own dock using ElvUIâ€™s custom data text bars..."] = "Dies sind nur Beispiele dafür, wie du mit ElvUIs benutzerdefinierten Datentextleisten dein eigenes Dock erstellen kannst..."
 L["Tip/ Menu"] = "Hinweis/Menü"
 L["Tracker"] = "Tracker"
 

@@ -37,9 +37,11 @@ L["Yes"] = true
 -- modules/datatexts/misc_gamemenu.lua
 L["Framerate:"] = true
 L["Game Menu"] = true
+L["Home"] = true
 L["Latency:"] = true
 L["left click to open the menu."] = true
 L["right click to open LFD Browser"] = true
+L["World"] = true
 
 -- modules/datatexts/misc_individual_professions.lua
 L["Archaeology"] = true
@@ -148,9 +150,6 @@ L["Roll Button"] = true
 L["Welcome to %s %s version |CFFF7DC6F%s|r, type |CFF58D68D/mmt|r to access the in-game configuration menu or type |CFF58D68D/mmt help|r for an overview of all chat commands."] = true
 
 -- modules/misc/lfg_invite_info.lua
-L["Activity:"] = true
-L["Group:"] = true
-L["Location:"] = true
 L["PVE"] = true
 L["The Flame Burns Eternal"] = true
 L["The Floodgate"] = true
@@ -168,23 +167,6 @@ L["Returns the current health of the unit."] = true
 L["Returns the current health percent of the unit (in combat)."] = true
 L["Same as mMT-color, but only for the units target."] = true
 
-L["Name"] = true
-L["Returns icons of players currently targeting the unit, but only while in combat."] = true
-L["Returns the classification icon of the unit. You can specify up to three arguments to display only certain classifications.\nFor example: [mClass:icon{rare:elite}] will only show something if the unit is either rare or elite."] = true
-L["Returns the classification of the unit. You can specify up to three arguments to display only certain classifications.\nFor example: [mClass{rare:elite}] will only show something if the unit is either rare or elite."] = true
-L["Returns the color of the unit. Players are colored by class, NPCs by classification. You can specify up to three arguments to display only certain classifications.\nFor example: [mColor{rare:elite}] will only show something if the unit is either rare or elite."] = true
-L["Returns the current health and percent of the unit or it will return the status (AFK, DND, Offline, Dead, Ghost)."] = true
-L["Returns the current health of the unit (changes between max health and percent in combat) including absorbs or it will return the status (AFK, DND, Offline, Dead, Ghost)."] = true
-L["Returns the current health of the unit (changes between max health and percent in combat) or it will return the status (AFK, DND, Offline, Dead, Ghost)."] = true
-L["Returns the current health of the unit (changes between max health and percent in combat). Does not return status."] = true
-L["Returns the name of the unit. If in an instance, it will return the last word of the name."] = true
-L["Returns the number of players currently targeting the unit, but only while in combat."] = true
-L["Returns the raid target marker icon of the unit."] = true
-L["Returns the status icon of the unit (AFK, DND, Offline, Dead, Ghost) or the name of the unit."] = true
-L["Returns the status of the unit (AFK, DND, Offline, Dead, Ghost) or the name of the unit."] = true
-L["Same as mColor, but only for the units target."] = true
-L["Same as mDeathCount, but only shows the count while the player is dead."] = true
-L["Short Version"] = true
 
 -- options/about.lua
 L["Contact"] = true
@@ -304,11 +286,7 @@ L["Available"] = true
 L["Rejected"] = true
 
 -- options/misc/tags.lua
-L["Cross"] = true
 L["Moon"] = true
-L["Skull"] = true
-L["Star"] = true
-L["Triangle"] = true
 
 -- options/misc/unitframe_textures.lua
 L["Background Texture"] = true
@@ -337,6 +315,7 @@ L["Keystone to Chat"] = true
 L["License"] = true
 L["Nameplates"] = true
 L["Notification"] = true
+L["Objective Tracker"] = true
 L["Open Settings"] = true
 L["Phase Icon"] = true
 L["Portraits"] = true
@@ -739,9 +718,7 @@ L["Skip in Combat"] = true
 
 -- options/misc/auto_role_check.lua
 L["Auto Role Check"] = true
-L["Auto Sign Up"] = true
 L["Automatically accepts the dungeon or raid role check popup."] = true
-L["Automatically signs up for premade groups when your role is already selected."] = true
 L["Lets you sign up for premade groups with a single click and confirms the application dialog automatically."] = true
 L["One-Click Sign Up"] = true
 
@@ -785,8 +762,23 @@ L["Theme color"] = true
 L["Third line color"] = true
 
 -- options/misc/objective_tracker.lua
+L["Bad"] = true
+L["Class Color Border"] = true
+L["Colors objectives like 3/5 by progress."] = true
+L["Complete"] = true
+L["Font size, header"] = true
+L["Font size, text"] = true
+L["Font size, title"] = true
+L["Good"] = true
+L["Gradient"] = true
+L["Header"] = true
+L["Header Bar"] = true
 L["Hide Dash"] = true
+L["Progress"] = true
 L["Removes the dash in front of each objective."] = true
+L["Some changes require a reload of the UI."] = true
+L["Transition"] = true
+L["Transparent"] = true
 
 -- options/misc/phase_icon.lua
 L["Chromie Time"] = true
@@ -795,13 +787,7 @@ L["War Mode"] = true
 
 -- options/misc/tags.lua
 L["DC/ Offline"] = true
-L["Health trashhold 1"] = true
-L["Health trashhold 2"] = true
 L["PvP"] = true
-L["Raidtarget Markers"] = true
-L["Set the first health trashhold."] = true
-L["Set the second health trashhold."] = true
-L["Targeting Players"] = true
 
 -- options/misc/tooltip.lua
 L["Icon Zoom"] = true
@@ -845,7 +831,6 @@ L["Resurrection Icon"] = true
 L["Summon Icon"] = true
 L["TAGs"] = true
 L["Target Highlight"] = true
-L["These are just examples of how to create your own dock using ElvUIâ€™s custom data text bars..."] = true
 L["Tip/ Menu"] = true
 L["Tracker"] = true
 

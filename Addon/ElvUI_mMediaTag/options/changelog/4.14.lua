@@ -13,10 +13,13 @@ mMT.Changelog[414] = {
 		"[System]: Mobs far above your level were saved as bosses for good and kept the boss classification on portraits and tags, the saved list is reset once.",
 		"[DT-Teleports]: Teleports are used by their ID instead of their name, so items and toys that share a name no longer pick the wrong one.",
 		"[System]: The changelog opened again after switching to another profile or character, it now only opens once per new version.",
+		"[Localization]: 16 texts of the Objective Tracker options and the two latency lines of the game menu tooltip were shown in English in the German client.",
 	},
 	UPDATE = {
 		"[DT-Combat-Time]: The combat timer updates its text once per second instead of on every frame.",
 		"[DT-Game-Menu]: The memory and CPU tooltip only reads the CPU usage of the top five addons instead of every installed one.",
 		"[System]: The portrait unit options and the color handling were rebuilt from shared templates, the options behave exactly as before but are easier to maintain.",
+		"[Localization]: Spanish, Mexican Spanish, French, Italian, Brazilian Portuguese, Russian, Korean and Simplified and Traditional Chinese are complete again, around 285 missing texts per language were translated.",
+		"[Localization]: Removed about 35 texts that were no longer used anywhere.",
 	},
 }
