@@ -137,6 +137,9 @@ L["Roll Button"] = "Кнопка броска"
 -- modules/misc/greeting_message.lua
 L["Welcome to %s %s version |CFFF7DC6F%s|r, type |CFF58D68D/mmt|r to access the in-game configuration menu or type |CFF58D68D/mmt help|r for an overview of all chat commands."] = "Добро пожаловать в %s %s версии |CFFF7DC6F%s|r, введите |CFF58D68D/mmt|r для доступа к меню настроек в игре или |CFF58D68D/mmt help|r для обзора всех команд чата."
 
+-- modules/misc/group_keystones.lua
+L["Group Keystones"] = "Ключи группы"
+
 -- modules/misc/lfg_invite_info.lua
 L["PVE"] = "PvE"
 L["The Flame Burns Eternal"] = "Пламя горит вечно"
@@ -704,6 +707,10 @@ L["Show a greeting message in the chat when you log in."] = "Показыват�
 
 -- options/misc/keystone_to_chat.lua
 L["Post your keystone to the chat when someone types !key or !keys into the chat."] = "Отправлять ваш ключ в чат, когда кто-то пишет !key или !keys."
+
+-- options/misc/group_keystones.lua
+L["Shows the keystones of your group next to the group finder listing."] = "Показывает ключи вашей группы рядом с объявлением в поиске группы."
+L["The keystones of your group members need Details! or BigWigs."] = "Для ключей участников группы нужен Details! или BigWigs."
 
 -- options/misc/lfg_invite_info.lua
 L["Class (accent line)"] = "Класс (акцентная линия)"

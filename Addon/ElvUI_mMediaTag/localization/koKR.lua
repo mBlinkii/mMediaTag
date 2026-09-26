@@ -137,6 +137,9 @@ L["Roll Button"] = "주사위 버튼"
 -- modules/misc/greeting_message.lua
 L["Welcome to %s %s version |CFFF7DC6F%s|r, type |CFF58D68D/mmt|r to access the in-game configuration menu or type |CFF58D68D/mmt help|r for an overview of all chat commands."] = "%s %s 버전 |CFFF7DC6F%s|r에 오신 것을 환영합니다. 게임 내 설정 메뉴를 열려면 |CFF58D68D/mmt|r 를 입력하고, 모든 채팅 명령어를 보려면 |CFF58D68D/mmt help|r 를 입력하세요."
 
+-- modules/misc/group_keystones.lua
+L["Group Keystones"] = "파티 쐐기돌"
+
 -- modules/misc/lfg_invite_info.lua
 L["PVE"] = "PvE"
 L["The Flame Burns Eternal"] = "영원히 타오르는 불꽃"
@@ -704,6 +707,10 @@ L["Show a greeting message in the chat when you log in."] = "로그인 시 채�
 
 -- options/misc/keystone_to_chat.lua
 L["Post your keystone to the chat when someone types !key or !keys into the chat."] = "누군가 채팅에 !key 또는 !keys를 입력하면 당신의 쐐기돌을 채팅에 게시합니다."
+
+-- options/misc/group_keystones.lua
+L["Shows the keystones of your group next to the group finder listing."] = "파티 찾기 등록 옆에 파티의 쐐기돌을 표시합니다."
+L["The keystones of your group members need Details! or BigWigs."] = "파티원의 쐐기돌을 보려면 Details! 또는 BigWigs가 필요합니다."
 
 -- options/misc/lfg_invite_info.lua
 L["Class (accent line)"] = "직업 (강조선)"

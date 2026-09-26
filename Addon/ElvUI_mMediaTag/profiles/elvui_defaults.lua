@@ -105,6 +105,10 @@ P.lfg_invite_info = {
 	},
 }
 
+P.group_keystones = {
+	enable = false,
+}
+
 P.difficulty_info = {
 	enable = false,
 	background = false,

@@ -137,6 +137,9 @@ L["Roll Button"] = "Botón de tirada"
 -- modules/misc/greeting_message.lua
 L["Welcome to %s %s version |CFFF7DC6F%s|r, type |CFF58D68D/mmt|r to access the in-game configuration menu or type |CFF58D68D/mmt help|r for an overview of all chat commands."] = "Bienvenido a %s %s versión |CFFF7DC6F%s|r, escribe |CFF58D68D/mmt|r para acceder al menú de configuración dentro del juego o escribe |CFF58D68D/mmt help|r para ver un resumen de todos los comandos del chat."
 
+-- modules/misc/group_keystones.lua
+L["Group Keystones"] = "Piedras angulares del grupo"
+
 -- modules/misc/lfg_invite_info.lua
 L["PVE"] = "JcE"
 L["The Flame Burns Eternal"] = "La llama arde eternamente"
@@ -704,6 +707,10 @@ L["Show a greeting message in the chat when you log in."] = "Mostrar un mensaje 
 
 -- options/misc/keystone_to_chat.lua
 L["Post your keystone to the chat when someone types !key or !keys into the chat."] = "Publica tu piedra angular en el chat cuando alguien escriba !key o !keys."
+
+-- options/misc/group_keystones.lua
+L["Shows the keystones of your group next to the group finder listing."] = "Muestra las piedras angulares de tu grupo junto al anuncio del buscador de grupos."
+L["The keystones of your group members need Details! or BigWigs."] = "Las piedras angulares de los miembros de tu grupo requieren Details! o BigWigs."
 
 -- options/misc/lfg_invite_info.lua
 L["Class (accent line)"] = "Clase (línea de acento)"

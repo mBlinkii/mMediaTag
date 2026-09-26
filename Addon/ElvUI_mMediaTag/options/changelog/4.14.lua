@@ -27,5 +27,6 @@ mMT.Changelog[414] = {
 	},
 	NEW = {
 		"[DT-Teleports]: Optional highlight of the dungeon of your own keystone in the season list, with its own color.",
+		"[Group-Keystones]: New window next to the group finder listing that shows the keystones of your group, the keys of other players need Details! or BigWigs.",
 	},
 }

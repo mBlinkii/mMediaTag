@@ -24,6 +24,7 @@
 - UPDATE - [DT-Teleports]: The highlight of the current dungeon can be turned off and its color can be changed.
 ### ✨ NEW
 - NEW - [DT-Teleports]: Optional highlight of the dungeon of your own keystone in the season list, with its own color.
+- NEW - [Group-Keystones]: New window next to the group finder listing that shows the keystones of your group, the keys of other players need Details! or BigWigs.
 
 ## [ver. 4.13] - 23.09.2026
 ### 🐛 FIX

@@ -149,6 +149,9 @@ L["Roll Button"] = "Würfel-Button"
 -- modules/misc/greeting_message.lua
 L["Welcome to %s %s version |CFFF7DC6F%s|r, type |CFF58D68D/mmt|r to access the in-game configuration menu or type |CFF58D68D/mmt help|r for an overview of all chat commands."] = "Willkommen bei %s %s Version |CFFF7DC6F%s|r. Gib |CFF58D68D/mmt|r ein, um das Konfigurationsmenü im Spiel zu öffnen, oder |CFF58D68D/mmt help|r für eine Übersicht aller Chatbefehle."
 
+-- modules/misc/group_keystones.lua
+L["Group Keystones"] = "Schlüsselsteine der Gruppe"
+
 -- modules/misc/lfg_invite_info.lua
 L["PVE"] = "PVE"
 L["The Flame Burns Eternal"] = "Die Flamme brennt ewig"
@@ -746,6 +749,10 @@ L["Show a greeting message in the chat when you log in."] = "Zeigt beim Einlogge
 
 -- options/misc/keystone_to_chat.lua
 L["Post your keystone to the chat when someone types !key or !keys into the chat."] = "Postet deinen Schlüsselstein in den Chat, wenn jemand !key oder !keys in den Chat schreibt."
+
+-- options/misc/group_keystones.lua
+L["Shows the keystones of your group next to the group finder listing."] = "Zeigt die Schlüsselsteine deiner Gruppe neben der Gruppenanmeldung."
+L["The keystones of your group members need Details! or BigWigs."] = "Für die Schlüsselsteine deiner Gruppenmitglieder wird Details! oder BigWigs benötigt."
 
 -- options/misc/lfg_invite_info.lua
 L["Animation"] = "Animation"

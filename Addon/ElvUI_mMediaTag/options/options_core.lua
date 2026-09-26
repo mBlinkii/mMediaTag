@@ -544,6 +544,16 @@ mMT.options = {
 					childGroups = "tab",
 					args = {},
 				},
+				group_keystones = {
+					order = 4.5,
+					type = "group",
+					name = mMT:AddSettingsIcon(L["Group Keystones"], "keystone_to_chat"),
+					childGroups = "tab",
+					hidden = function()
+						return not E.Retail
+					end,
+					args = {},
+				},
 				difficulty_info = {
 					order = 5,
 					type = "group",

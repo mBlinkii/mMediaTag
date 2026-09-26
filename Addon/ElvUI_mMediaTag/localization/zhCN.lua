@@ -137,6 +137,9 @@ L["Roll Button"] = "投骰按钮"
 -- modules/misc/greeting_message.lua
 L["Welcome to %s %s version |CFFF7DC6F%s|r, type |CFF58D68D/mmt|r to access the in-game configuration menu or type |CFF58D68D/mmt help|r for an overview of all chat commands."] = "欢迎使用 %s %s 版本 |CFFF7DC6F%s|r，输入 |CFF58D68D/mmt|r 可打开游戏内配置菜单，或输入 |CFF58D68D/mmt help|r 查看所有聊天命令的概览。"
 
+-- modules/misc/group_keystones.lua
+L["Group Keystones"] = "队伍钥石"
+
 -- modules/misc/lfg_invite_info.lua
 L["PVE"] = "PVE"
 L["The Flame Burns Eternal"] = "烈焰永燃"
@@ -704,6 +707,10 @@ L["Show a greeting message in the chat when you log in."] = "登录时在聊天�
 
 -- options/misc/keystone_to_chat.lua
 L["Post your keystone to the chat when someone types !key or !keys into the chat."] = "当有人在聊天中输入 !key 或 !keys 时，将你的钥石发送到聊天。"
+
+-- options/misc/group_keystones.lua
+L["Shows the keystones of your group next to the group finder listing."] = "在队伍查找器登记旁显示你队伍的钥石。"
+L["The keystones of your group members need Details! or BigWigs."] = "队友的钥石需要 Details! 或 BigWigs。"
 
 -- options/misc/lfg_invite_info.lua
 L["Class (accent line)"] = "职业（强调线）"
