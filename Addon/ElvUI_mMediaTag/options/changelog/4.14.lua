@@ -14,4 +14,8 @@ mMT.Changelog[414] = {
 		"[DT-Teleports]: Teleports are used by their ID instead of their name, so items and toys that share a name no longer pick the wrong one.",
 		"[System]: The changelog opened again after switching to another profile or character, it now only opens once per new version.",
 	},
+	UPDATE = {
+		"[DT-Combat-Time]: The combat timer updates its text once per second instead of on every frame.",
+		"[DT-Game-Menu]: The memory and CPU tooltip only reads the CPU usage of the top five addons instead of every installed one.",
+	},
 }

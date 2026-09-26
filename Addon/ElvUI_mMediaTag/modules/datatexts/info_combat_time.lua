@@ -28,6 +28,11 @@ end
 
 local function OnUpdate(self)
 	timer = GetTime() - startTime
+
+	local second = floor(timer)
+	if second == self.mmtSecond then return end
+	self.mmtSecond = second
+
 	self.text:SetFormattedText(textString, in_combat .. UpdateText())
 end
 
@@ -35,6 +40,7 @@ local function DelayOnUpdate(self, elapsed)
 	startTime = startTime - elapsed
 	if startTime <= 0 then
 		timer, startTime = 0, GetTime()
+		self.mmtSecond = nil
 		self:SetScript("OnUpdate", OnUpdate)
 	end
 end
@@ -61,6 +67,7 @@ local function OnEvent(self, event, _, timeSeconds)
 		end) end
 	elseif not inArena and ((not inEncounter and event == "PLAYER_REGEN_DISABLED") or started) then
 		timer, startTime = 0, GetTime()
+		self.mmtSecond = nil
 		CancelTimer(self)
 		self:SetScript("OnUpdate", OnUpdate)
 		if started then inEncounter = true end

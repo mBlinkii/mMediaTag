@@ -10,6 +10,8 @@ local print = print
 local strmatch = strmatch
 local time = time
 local tonumber = tonumber
+local tinsert = tinsert
+local tremove = tremove
 local IsInGroup = IsInGroup
 local IsInRaid = IsInRaid
 local GetDungeonDifficultyID = GetDungeonDifficultyID
@@ -224,6 +226,19 @@ function mMT:formatText(input, ignoreSkip)
 	return table.concat(words, " ")
 end
 
+-- keys instead of colors, UpdateMedia replaces the color objects
+local difficultyColorKeys = {
+	-- Dungeon difficulties
+	[1] = "N", -- Normal
+	[2] = "H", -- Heroic
+	[23] = "M", -- Mythic
+
+	-- Raid difficulties
+	[14] = "N", -- Normal
+	[15] = "H", -- Heroic
+	[16] = "M", -- Mythic
+}
+
 function mMT:GetInstanceDifficulty()
 	local isRaid = IsInRaid()
 	local id = isRaid and GetRaidDifficultyID() or (IsInGroup() and GetDungeonDifficultyID())
@@ -232,19 +247,7 @@ function mMT:GetInstanceDifficulty()
 	local difficultyName = GetDifficultyInfo(id)
 	if not difficultyName then return end
 
-	local colorMap = {
-		-- Dungeon difficulties
-		[1] = MEDIA.color.N, -- Normal
-		[2] = MEDIA.color.H, -- Heroic
-		[23] = MEDIA.color.M, -- Mythic
-
-		-- Raid difficulties
-		[14] = MEDIA.color.N, -- Normal
-		[15] = MEDIA.color.H, -- Heroic
-		[16] = MEDIA.color.M, -- Mythic
-	}
-
-	local color = colorMap[id] or MEDIA.color.OTHER
+	local color = MEDIA.color[difficultyColorKeys[id] or "OTHER"]
 	local shortName = E:ShortenString(difficultyName, 1)
 	return color:WrapTextInColorCode(shortName), isRaid
 end
@@ -311,17 +314,23 @@ function mMT:SystemInfo()
 	local totalMem, addonCount = 0, C_AddOns.GetNumAddOns()
 
 	for i = 1, addonCount do
-		local name, mem = C_AddOns.GetAddOnInfo(i), GetAddOnMemoryUsage(i)
-		local cpu = isProfilerEnabled and GetAddonMetricPercent(name, Enum.AddOnProfilerMetric.RecentAverageTime) or "N/A"
-
+		local mem = GetAddOnMemoryUsage(i)
 		totalMem = totalMem + mem
 
 		for j = 1, 5 do
 			if mem > topAddOns[j].value then
-				table.insert(topAddOns, j, { name = name, value = mem, cpu = cpu })
-				table.remove(topAddOns, 6)
+				local entry = tremove(topAddOns)
+				entry.value, entry.index = mem, i
+				tinsert(topAddOns, j, entry)
 				break
 			end
+		end
+	end
+
+	for _, addon in ipairs(topAddOns) do
+		if addon.value > 0 then
+			addon.name = C_AddOns.GetAddOnInfo(addon.index)
+			addon.cpu = isProfilerEnabled and GetAddonMetricPercent(addon.name, Enum.AddOnProfilerMetric.RecentAverageTime) or "N/A"
 		end
 	end
 

@@ -12,6 +12,9 @@
 - FIX - [System]: Mobs far above your level were saved as bosses for good and kept the boss classification on portraits and tags, the saved list is reset once.
 - FIX - [DT-Teleports]: Teleports are used by their ID instead of their name, so items and toys that share a name no longer pick the wrong one.
 - FIX - [System]: The changelog opened again after switching to another profile or character, it now only opens once per new version.
+### 🔧 UPDATE
+- UPDATE - [DT-Combat-Time]: The combat timer updates its text once per second instead of on every frame.
+- UPDATE - [DT-Game-Menu]: The memory and CPU tooltip only reads the CPU usage of the top five addons instead of every installed one.
 
 ## [ver. 4.13] - 23.09.2026
 ### 🐛 FIX

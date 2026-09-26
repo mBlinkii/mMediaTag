@@ -832,11 +832,13 @@ end
 
 function module:Mirror(texture, mirror, texCoords)
 	if texCoords then
-		local coords = texCoords
-		if #coords == 8 then
-			texture:SetTexCoord(unpack((mirror and { coords[5], coords[6], coords[7], coords[8], coords[1], coords[2], coords[3], coords[4] } or coords)))
+		local c = texCoords
+		if not mirror then
+			texture:SetTexCoord(unpack(c))
+		elseif #c == 8 then
+			texture:SetTexCoord(c[5], c[6], c[7], c[8], c[1], c[2], c[3], c[4])
 		else
-			texture:SetTexCoord(unpack((mirror and { coords[2], coords[1], coords[3], coords[4] } or coords)))
+			texture:SetTexCoord(c[2], c[1], c[3], c[4])
 		end
 	else
 		texture:SetTexCoord(mirror and 1 or 0, mirror and 0 or 1, 0, 1)
