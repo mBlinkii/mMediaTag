@@ -16,15 +16,15 @@ local ringModes = {
 	cast = L["Cast"],
 }
 
-local ringUnits = {
-	{ key = "player", name = L["Player"] },
-	{ key = "target", name = L["Target"] },
-	{ key = "focus", name = L["Focus"] },
-	{ key = "pet", name = L["Pet"] },
-	{ key = "targettarget", name = L["Target of Target"] },
-	{ key = "party", name = L["Party"] },
-	{ key = "boss", name = L["Boss"] },
-	{ key = "arena", name = L["Arena"] },
+local portraitUnits = {
+	{ key = "player", name = L["Player"], init = "InitializePlayerPortrait" },
+	{ key = "target", name = L["Target"], init = "InitializeTargetPortrait" },
+	{ key = "focus", name = L["Focus"], init = "InitializeFocusPortrait" },
+	{ key = "pet", name = L["Pet"], init = "InitializePetPortrait" },
+	{ key = "targettarget", name = L["Target of Target"], init = "InitializeToTPortrait" },
+	{ key = "party", name = L["Party"], init = "InitializePartyPortrait" },
+	{ key = "boss", name = L["Boss"], init = "InitializeBossPortrait" },
+	{ key = "arena", name = L["Arena"], init = "InitializeArenaPortrait" },
 }
 
 local function ringSetting(unit, key)
@@ -77,7 +77,7 @@ local ringGroups = {
 	},
 }
 
-for index, unit in ipairs(ringUnits) do
+for index, unit in ipairs(portraitUnits) do
 	local key = unit.key
 	local modeGet, modeSet = ringSetting(key, "mode")
 	local reverseGet, reverseSet = ringSetting(key, "reverse")
@@ -170,6 +170,344 @@ for index, unit in ipairs(ringUnits) do
 			},
 		},
 	}
+end
+
+local function UnitGroup(unit, order)
+	local key = unit.key
+	local function update()
+		M.Portraits[unit.init](M.Portraits)
+	end
+
+	local group = {
+		order = order,
+		type = "group",
+		name = unit.name,
+		args = {
+			enable_toggle = {
+				order = 1,
+				type = "toggle",
+				name = L["Enable"],
+				desc = L["Enable the Unit Portrait."],
+				get = function(info)
+					return E.db.mMediaTag.portraits[key].enable
+				end,
+				set = function(info, value)
+					E.db.mMediaTag.portraits[key].enable = value
+
+					update()
+				end,
+			},
+			general_group = {
+				order = 2,
+				type = "group",
+				inline = true,
+				name = L["General"],
+				args = {
+					styles_select = {
+						order = 1,
+						type = "select",
+						name = L["Style"],
+						desc = L["Select a portrait texture style."],
+						get = function(info)
+							return E.db.mMediaTag.portraits[key].texture
+						end,
+						set = function(info, value)
+							E.db.mMediaTag.portraits[key].texture = value
+							update()
+						end,
+						values = function()
+							local t = {}
+							for k, v in pairs(MEDIA.portraits.textures) do
+								if type(v) == "table" then t[k] = v.name end
+							end
+							return t
+						end,
+					},
+					size_range = {
+						order = 2,
+						name = L["Size"],
+						type = "range",
+						min = 16,
+						max = 512,
+						step = 1,
+						softMin = 16,
+						softMax = 512,
+						get = function(info)
+							return E.db.mMediaTag.portraits[key].size
+						end,
+						set = function(info, value)
+							E.db.mMediaTag.portraits[key].size = value
+
+							if not E.db.mMediaTag.portraits[key].extra_settings.enable then E.db.mMediaTag.portraits[key].extra_settings.size = value end
+							update()
+						end,
+					},
+					cast_toggle = {
+						order = 3,
+						type = "toggle",
+						name = L["Cast Icon"],
+						desc = L["Enable Cast Icons."],
+						get = function(info)
+							return E.db.mMediaTag.portraits[key].cast
+						end,
+						set = function(info, value)
+							E.db.mMediaTag.portraits[key].cast = value
+							update()
+						end,
+					},
+					extra_toggle = {
+						order = 4,
+						type = "toggle",
+						name = L["Enable Extra Texture"],
+						desc = L["Shows the Extra Texture (rare/elite) for the Unit Portrait."],
+						get = function(info)
+							return E.db.mMediaTag.portraits[key].extra
+						end,
+						set = function(info, value)
+							E.db.mMediaTag.portraits[key].extra = value
+							update()
+						end,
+					},
+					unitcolor_toggle = {
+						order = 5,
+						type = "toggle",
+						name = L["Unitcolor for Extra"],
+						desc = L["Use the unit color for the Extra (Rare/Elite) Texture."],
+						get = function(info)
+							return E.db.mMediaTag.portraits[key].unitcolor
+						end,
+						set = function(info, value)
+							E.db.mMediaTag.portraits[key].unitcolor = value
+							update()
+						end,
+					},
+					force_extra_toggle = {
+						order = 6,
+						type = "select",
+						name = L["Force Extra Texture"],
+						desc = L["It will override the default extra texture, but will take care of rare/elite/boss units."],
+						get = function(info)
+							return E.db.mMediaTag.portraits[key].forceExtra
+						end,
+						set = function(info, value)
+							E.db.mMediaTag.portraits[key].forceExtra = value
+							update()
+						end,
+						values = {
+							none = "None",
+							player = "Player",
+							rare = "Rare",
+							elite = "Elite",
+							rareelite = "Rare Elite",
+							boss = "Boss",
+						},
+					},
+				},
+			},
+			anchor_group = {
+				order = 3,
+				type = "group",
+				inline = true,
+				name = L["Anchor"],
+				args = {
+					anchor_select = {
+						order = 1,
+						type = "select",
+						name = L["Anchor Point"],
+						get = function(info)
+							return E.db.mMediaTag.portraits[key].point.relativePoint
+						end,
+						set = function(info, value)
+							E.db.mMediaTag.portraits[key].point.relativePoint = value
+							if value == "LEFT" then
+								E.db.mMediaTag.portraits[key].point.point = "RIGHT"
+								E.db.mMediaTag.portraits[key].mirror = false
+							elseif value == "RIGHT" then
+								E.db.mMediaTag.portraits[key].point.point = "LEFT"
+								E.db.mMediaTag.portraits[key].mirror = true
+							elseif value == "TOP" then
+								E.db.mMediaTag.portraits[key].point.point = "BOTTOM"
+								E.db.mMediaTag.portraits[key].mirror = false
+							elseif value == "BOTTOM" then
+								E.db.mMediaTag.portraits[key].point.point = "TOP"
+								E.db.mMediaTag.portraits[key].mirror = false
+							else
+								E.db.mMediaTag.portraits[key].point.point = value
+								E.db.mMediaTag.portraits[key].mirror = false
+							end
+
+							update()
+						end,
+						values = {
+							LEFT = "LEFT",
+							RIGHT = "RIGHT",
+							CENTER = "CENTER",
+							TOP = "TOP",
+							BOTTOM = "BOTTOM",
+						},
+					},
+					offset_x_range = {
+						order = 2,
+						name = L["X offset"],
+						type = "range",
+						min = -256,
+						max = 256,
+						step = 1,
+						softMin = -1024,
+						softMax = 1024,
+						get = function(info)
+							return E.db.mMediaTag.portraits[key].point.x
+						end,
+						set = function(info, value)
+							E.db.mMediaTag.portraits[key].point.x = value
+							update()
+						end,
+					},
+					range_ofsY = {
+						order = 3,
+						name = L["Y offset"],
+						type = "range",
+						min = -256,
+						max = 256,
+						step = 1,
+						softMin = -1024,
+						softMax = 1024,
+						get = function(info)
+							return E.db.mMediaTag.portraits[key].point.y
+						end,
+						set = function(info, value)
+							E.db.mMediaTag.portraits[key].point.y = value
+							update()
+						end,
+					},
+				},
+			},
+			level_group = {
+				order = 3,
+				type = "group",
+				inline = true,
+				name = L["Frame Level/ Strata"],
+				args = {
+					strata_select = {
+						order = 1,
+						type = "select",
+						name = L["Frame Strata"],
+						get = function(info)
+							return E.db.mMediaTag.portraits[key].strata
+						end,
+						set = function(info, value)
+							E.db.mMediaTag.portraits[key].strata = value
+							update()
+						end,
+						values = frameStrata,
+					},
+					level_range = {
+						order = 2,
+						name = L["Frame Level"],
+						type = "range",
+						min = 0,
+						max = 1000,
+						step = 1,
+						softMin = 0,
+						softMax = 1000,
+						get = function(info)
+							return E.db.mMediaTag.portraits[key].level
+						end,
+						set = function(info, value)
+							E.db.mMediaTag.portraits[key].level = value
+							update()
+						end,
+					},
+				},
+			},
+			extra = {
+				order = 4,
+				type = "group",
+				inline = true,
+				name = L["Extra Settings"],
+				args = {
+					enable = {
+						order = 1,
+						type = "toggle",
+						name = L["Enable"],
+						desc = L["Enable custom Position and size settings for Extra Texture."],
+						get = function(info)
+							return E.db.mMediaTag.portraits[key].extra_settings.enable
+						end,
+						set = function(info, value)
+							E.db.mMediaTag.portraits[key].extra_settings.enable = value
+
+							update()
+						end,
+					},
+					size_range = {
+						order = 2,
+						name = L["Size"],
+						type = "range",
+						min = 16,
+						max = 1024,
+						step = 1,
+						softMin = 16,
+						softMax = 1024,
+						disabled = function()
+							return not E.db.mMediaTag.portraits[key].extra_settings.enable
+						end,
+						get = function(info)
+							return E.db.mMediaTag.portraits[key].extra_settings.size
+						end,
+						set = function(info, value)
+							E.db.mMediaTag.portraits[key].extra_settings.size = value
+							update()
+						end,
+					},
+					offset_x_range = {
+						order = 3,
+						name = L["X offset"],
+						type = "range",
+						min = -256,
+						max = 256,
+						step = 1,
+						softMin = -1024,
+						softMax = 1024,
+						disabled = function()
+							return not E.db.mMediaTag.portraits[key].extra_settings.enable
+						end,
+						get = function(info)
+							return E.db.mMediaTag.portraits[key].extra_settings.offset.x
+						end,
+						set = function(info, value)
+							E.db.mMediaTag.portraits[key].extra_settings.offset.x = value
+							update()
+						end,
+					},
+					range_ofsY = {
+						order = 4,
+						name = L["Y offset"],
+						type = "range",
+						min = -256,
+						max = 256,
+						step = 1,
+						softMin = -1024,
+						softMax = 1024,
+						disabled = function()
+							return not E.db.mMediaTag.portraits[key].extra_settings.enable
+						end,
+						get = function(info)
+							return E.db.mMediaTag.portraits[key].extra_settings.offset.y
+						end,
+						set = function(info, value)
+							E.db.mMediaTag.portraits[key].extra_settings.offset.y = value
+							update()
+						end,
+					},
+				},
+			},
+		},
+	}
+
+	if key == "player" then group.args.general_group.args.force_extra_toggle = nil end
+
+	return group
 end
 
 mMT.options.args.unitframes.args.portraits.args = {
@@ -632,2593 +970,6 @@ mMT.options.args.unitframes.args.portraits.args = {
 						set = function(info, value)
 							E.db.mMediaTag.portraits.custom.player = value
 							M.Portraits:Initialize()
-						end,
-					},
-				},
-			},
-		},
-	},
-	player_group = {
-		order = 3,
-		type = "group",
-		name = L["Player"],
-		args = {
-			enable_toggle = {
-				order = 1,
-				type = "toggle",
-				name = L["Enable"],
-				desc = L["Enable the Unit Portrait."],
-				get = function(info)
-					return E.db.mMediaTag.portraits.player.enable
-				end,
-				set = function(info, value)
-					E.db.mMediaTag.portraits.player.enable = value
-
-					M.Portraits:InitializePlayerPortrait()
-				end,
-			},
-			general_group = {
-				order = 2,
-				type = "group",
-				inline = true,
-				name = L["General"],
-				args = {
-					styles_select = {
-						order = 1,
-						type = "select",
-						name = L["Style"],
-						desc = L["Select a portrait texture style."],
-						get = function(info)
-							return E.db.mMediaTag.portraits.player.texture
-						end,
-						set = function(info, value)
-							E.db.mMediaTag.portraits.player.texture = value
-							M.Portraits:InitializePlayerPortrait()
-						end,
-						values = function()
-							local t = {}
-							for k, v in pairs(MEDIA.portraits.textures) do
-								if type(v) == "table" then t[k] = v.name end
-							end
-							return t
-						end,
-					},
-					size_range = {
-						order = 2,
-						name = L["Size"],
-						type = "range",
-						min = 16,
-						max = 512,
-						step = 1,
-						softMin = 16,
-						softMax = 512,
-						get = function(info)
-							return E.db.mMediaTag.portraits.player.size
-						end,
-						set = function(info, value)
-							E.db.mMediaTag.portraits.player.size = value
-
-							if not E.db.mMediaTag.portraits.player.extra_settings.enable then E.db.mMediaTag.portraits.player.extra_settings.size = value end
-							M.Portraits:InitializePlayerPortrait()
-						end,
-					},
-					cast_toggle = {
-						order = 3,
-						type = "toggle",
-						name = L["Cast Icon"],
-						desc = L["Enable Cast Icons."],
-						get = function(info)
-							return E.db.mMediaTag.portraits.player.cast
-						end,
-						set = function(info, value)
-							E.db.mMediaTag.portraits.player.cast = value
-							M.Portraits:InitializePlayerPortrait()
-						end,
-					},
-					extra_toggle = {
-						order = 4,
-						type = "toggle",
-						name = L["Enable Extra Texture"],
-						desc = L["Shows the Extra Texture (rare/elite) for the Unit Portrait."],
-						get = function(info)
-							return E.db.mMediaTag.portraits.player.extra
-						end,
-						set = function(info, value)
-							E.db.mMediaTag.portraits.player.extra = value
-							M.Portraits:InitializePlayerPortrait()
-						end,
-					},
-					unitcolor_toggle = {
-						order = 5,
-						type = "toggle",
-						name = L["Unitcolor for Extra"],
-						desc = L["Use the unit color for the Extra (Rare/Elite) Texture."],
-						get = function(info)
-							return E.db.mMediaTag.portraits.player.unitcolor
-						end,
-						set = function(info, value)
-							E.db.mMediaTag.portraits.player.unitcolor = value
-							M.Portraits:InitializePlayerPortrait()
-						end,
-					},
-				},
-			},
-			anchor_group = {
-				order = 3,
-				type = "group",
-				inline = true,
-				name = L["Anchor"],
-				args = {
-					anchor_select = {
-						order = 1,
-						type = "select",
-						name = L["Anchor Point"],
-						get = function(info)
-							return E.db.mMediaTag.portraits.player.point.relativePoint
-						end,
-						set = function(info, value)
-							E.db.mMediaTag.portraits.player.point.relativePoint = value
-							if value == "LEFT" then
-								E.db.mMediaTag.portraits.player.point.point = "RIGHT"
-								E.db.mMediaTag.portraits.player.mirror = false
-							elseif value == "RIGHT" then
-								E.db.mMediaTag.portraits.player.point.point = "LEFT"
-								E.db.mMediaTag.portraits.player.mirror = true
-							elseif value == "TOP" then
-								E.db.mMediaTag.portraits.player.point.point = "BOTTOM"
-								E.db.mMediaTag.portraits.player.mirror = false
-							elseif value == "BOTTOM" then
-								E.db.mMediaTag.portraits.player.point.point = "TOP"
-								E.db.mMediaTag.portraits.player.mirror = false
-							else
-								E.db.mMediaTag.portraits.player.point.point = value
-								E.db.mMediaTag.portraits.player.mirror = false
-							end
-
-							M.Portraits:InitializePlayerPortrait()
-						end,
-						values = {
-							LEFT = "LEFT",
-							RIGHT = "RIGHT",
-							CENTER = "CENTER",
-							TOP = "TOP",
-							BOTTOM = "BOTTOM",
-						},
-					},
-					offset_x_range = {
-						order = 2,
-						name = L["X offset"],
-						type = "range",
-						min = -256,
-						max = 256,
-						step = 1,
-						softMin = -1024,
-						softMax = 1024,
-						get = function(info)
-							return E.db.mMediaTag.portraits.player.point.x
-						end,
-						set = function(info, value)
-							E.db.mMediaTag.portraits.player.point.x = value
-							M.Portraits:InitializePlayerPortrait()
-						end,
-					},
-					range_ofsY = {
-						order = 3,
-						name = L["Y offset"],
-						type = "range",
-						min = -256,
-						max = 256,
-						step = 1,
-						softMin = -1024,
-						softMax = 1024,
-						get = function(info)
-							return E.db.mMediaTag.portraits.player.point.y
-						end,
-						set = function(info, value)
-							E.db.mMediaTag.portraits.player.point.y = value
-							M.Portraits:InitializePlayerPortrait()
-						end,
-					},
-				},
-			},
-			level_group = {
-				order = 3,
-				type = "group",
-				inline = true,
-				name = L["Frame Level/ Strata"],
-				args = {
-					strata_select = {
-						order = 1,
-						type = "select",
-						name = L["Frame Strata"],
-						get = function(info)
-							return E.db.mMediaTag.portraits.player.strata
-						end,
-						set = function(info, value)
-							E.db.mMediaTag.portraits.player.strata = value
-							M.Portraits:InitializePlayerPortrait()
-						end,
-						values = frameStrata,
-					},
-					level_range = {
-						order = 2,
-						name = L["Frame Level"],
-						type = "range",
-						min = 0,
-						max = 1000,
-						step = 1,
-						softMin = 0,
-						softMax = 1000,
-						get = function(info)
-							return E.db.mMediaTag.portraits.player.level
-						end,
-						set = function(info, value)
-							E.db.mMediaTag.portraits.player.level = value
-							M.Portraits:InitializePlayerPortrait()
-						end,
-					},
-				},
-			},
-			extra = {
-				order = 4,
-				type = "group",
-				inline = true,
-				name = L["Extra Settings"],
-				args = {
-					enable = {
-						order = 1,
-						type = "toggle",
-						name = L["Enable"],
-						desc = L["Enable custom Position and size settings for Extra Texture."],
-						get = function(info)
-							return E.db.mMediaTag.portraits.player.extra_settings.enable
-						end,
-						set = function(info, value)
-							E.db.mMediaTag.portraits.player.extra_settings.enable = value
-
-							M.Portraits:InitializePlayerPortrait()
-						end,
-					},
-					size_range = {
-						order = 2,
-						name = L["Size"],
-						type = "range",
-						min = 16,
-						max = 1024,
-						step = 1,
-						softMin = 16,
-						softMax = 1024,
-						disabled = function()
-							return not E.db.mMediaTag.portraits.player.extra_settings.enable
-						end,
-						get = function(info)
-							return E.db.mMediaTag.portraits.player.extra_settings.size
-						end,
-						set = function(info, value)
-							E.db.mMediaTag.portraits.player.extra_settings.size = value
-							M.Portraits:InitializePlayerPortrait()
-						end,
-					},
-					offset_x_range = {
-						order = 3,
-						name = L["X offset"],
-						type = "range",
-						min = -256,
-						max = 256,
-						step = 1,
-						softMin = -1024,
-						softMax = 1024,
-						disabled = function()
-							return not E.db.mMediaTag.portraits.player.extra_settings.enable
-						end,
-						get = function(info)
-							return E.db.mMediaTag.portraits.player.extra_settings.offset.x
-						end,
-						set = function(info, value)
-							E.db.mMediaTag.portraits.player.extra_settings.offset.x = value
-							M.Portraits:InitializePlayerPortrait()
-						end,
-					},
-					range_ofsY = {
-						order = 4,
-						name = L["Y offset"],
-						type = "range",
-						min = -256,
-						max = 256,
-						step = 1,
-						softMin = -1024,
-						softMax = 1024,
-						disabled = function()
-							return not E.db.mMediaTag.portraits.player.extra_settings.enable
-						end,
-						get = function(info)
-							return E.db.mMediaTag.portraits.player.extra_settings.offset.y
-						end,
-						set = function(info, value)
-							E.db.mMediaTag.portraits.player.extra_settings.offset.y = value
-							M.Portraits:InitializePlayerPortrait()
-						end,
-					},
-				},
-			},
-		},
-	},
-	target_group = {
-		order = 4,
-		type = "group",
-		name = L["Target"],
-		args = {
-			enable_toggle = {
-				order = 1,
-				type = "toggle",
-				name = L["Enable"],
-				desc = L["Enable the Unit Portrait."],
-				get = function(info)
-					return E.db.mMediaTag.portraits.target.enable
-				end,
-				set = function(info, value)
-					E.db.mMediaTag.portraits.target.enable = value
-
-					M.Portraits:InitializeTargetPortrait()
-				end,
-			},
-			general_group = {
-				order = 2,
-				type = "group",
-				inline = true,
-				name = L["General"],
-				args = {
-					styles_select = {
-						order = 1,
-						type = "select",
-						name = L["Style"],
-						desc = L["Select a portrait texture style."],
-						get = function(info)
-							return E.db.mMediaTag.portraits.target.texture
-						end,
-						set = function(info, value)
-							E.db.mMediaTag.portraits.target.texture = value
-							M.Portraits:InitializeTargetPortrait()
-						end,
-						values = function()
-							local t = {}
-							for k, v in pairs(MEDIA.portraits.textures) do
-								if type(v) == "table" then t[k] = v.name end
-							end
-							return t
-						end,
-					},
-					size_range = {
-						order = 2,
-						name = L["Size"],
-						type = "range",
-						min = 16,
-						max = 512,
-						step = 1,
-						softMin = 16,
-						softMax = 512,
-						get = function(info)
-							return E.db.mMediaTag.portraits.target.size
-						end,
-						set = function(info, value)
-							E.db.mMediaTag.portraits.target.size = value
-
-							if not E.db.mMediaTag.portraits.target.extra_settings.enable then E.db.mMediaTag.portraits.target.extra_settings.size = value end
-							M.Portraits:InitializeTargetPortrait()
-						end,
-					},
-					cast_toggle = {
-						order = 3,
-						type = "toggle",
-						name = L["Cast Icon"],
-						desc = L["Enable Cast Icons."],
-						get = function(info)
-							return E.db.mMediaTag.portraits.target.cast
-						end,
-						set = function(info, value)
-							E.db.mMediaTag.portraits.target.cast = value
-							M.Portraits:InitializeTargetPortrait()
-						end,
-					},
-					extra_toggle = {
-						order = 4,
-						type = "toggle",
-						name = L["Enable Extra Texture"],
-						desc = L["Shows the Extra Texture (rare/elite) for the Unit Portrait."],
-						get = function(info)
-							return E.db.mMediaTag.portraits.target.extra
-						end,
-						set = function(info, value)
-							E.db.mMediaTag.portraits.target.extra = value
-							M.Portraits:InitializeTargetPortrait()
-						end,
-					},
-					unitcolor_toggle = {
-						order = 5,
-						type = "toggle",
-						name = L["Unitcolor for Extra"],
-						desc = L["Use the unit color for the Extra (Rare/Elite) Texture."],
-						get = function(info)
-							return E.db.mMediaTag.portraits.target.unitcolor
-						end,
-						set = function(info, value)
-							E.db.mMediaTag.portraits.target.unitcolor = value
-							M.Portraits:InitializeTargetPortrait()
-						end,
-					},
-					force_extra_toggle = {
-						order = 6,
-						type = "select",
-						name = L["Force Extra Texture"],
-						desc = L["It will override the default extra texture, but will take care of rare/elite/boss units."],
-						get = function(info)
-							return E.db.mMediaTag.portraits.target.forceExtra
-						end,
-						set = function(info, value)
-							E.db.mMediaTag.portraits.target.forceExtra = value
-							M.Portraits:InitializeTargetPortrait()
-						end,
-						values = {
-							none = "None",
-							player = "Player",
-							rare = "Rare",
-							elite = "Elite",
-							rareelite = "Rare Elite",
-							boss = "Boss",
-						},
-					},
-				},
-			},
-			anchor_group = {
-				order = 3,
-				type = "group",
-				inline = true,
-				name = L["Anchor"],
-				args = {
-					anchor_select = {
-						order = 1,
-						type = "select",
-						name = L["Anchor Point"],
-						get = function(info)
-							return E.db.mMediaTag.portraits.target.point.relativePoint
-						end,
-						set = function(info, value)
-							E.db.mMediaTag.portraits.target.point.relativePoint = value
-							if value == "LEFT" then
-								E.db.mMediaTag.portraits.target.point.point = "RIGHT"
-								E.db.mMediaTag.portraits.target.mirror = false
-							elseif value == "RIGHT" then
-								E.db.mMediaTag.portraits.target.point.point = "LEFT"
-								E.db.mMediaTag.portraits.target.mirror = true
-							elseif value == "TOP" then
-								E.db.mMediaTag.portraits.target.point.point = "BOTTOM"
-								E.db.mMediaTag.portraits.target.mirror = false
-							elseif value == "BOTTOM" then
-								E.db.mMediaTag.portraits.target.point.point = "TOP"
-								E.db.mMediaTag.portraits.target.mirror = false
-							else
-								E.db.mMediaTag.portraits.target.point.point = value
-								E.db.mMediaTag.portraits.target.mirror = false
-							end
-
-							M.Portraits:InitializeTargetPortrait()
-						end,
-						values = {
-							LEFT = "LEFT",
-							RIGHT = "RIGHT",
-							CENTER = "CENTER",
-							TOP = "TOP",
-							BOTTOM = "BOTTOM",
-						},
-					},
-					offset_x_range = {
-						order = 2,
-						name = L["X offset"],
-						type = "range",
-						min = -256,
-						max = 256,
-						step = 1,
-						softMin = -1024,
-						softMax = 1024,
-						get = function(info)
-							return E.db.mMediaTag.portraits.target.point.x
-						end,
-						set = function(info, value)
-							E.db.mMediaTag.portraits.target.point.x = value
-							M.Portraits:InitializeTargetPortrait()
-						end,
-					},
-					range_ofsY = {
-						order = 3,
-						name = L["Y offset"],
-						type = "range",
-						min = -256,
-						max = 256,
-						step = 1,
-						softMin = -1024,
-						softMax = 1024,
-						get = function(info)
-							return E.db.mMediaTag.portraits.target.point.y
-						end,
-						set = function(info, value)
-							E.db.mMediaTag.portraits.target.point.y = value
-							M.Portraits:InitializeTargetPortrait()
-						end,
-					},
-				},
-			},
-			level_group = {
-				order = 3,
-				type = "group",
-				inline = true,
-				name = L["Frame Level/ Strata"],
-				args = {
-					strata_select = {
-						order = 1,
-						type = "select",
-						name = L["Frame Strata"],
-						get = function(info)
-							return E.db.mMediaTag.portraits.target.strata
-						end,
-						set = function(info, value)
-							E.db.mMediaTag.portraits.target.strata = value
-							M.Portraits:InitializeTargetPortrait()
-						end,
-						values = frameStrata,
-					},
-					level_range = {
-						order = 2,
-						name = L["Frame Level"],
-						type = "range",
-						min = 0,
-						max = 1000,
-						step = 1,
-						softMin = 0,
-						softMax = 1000,
-						get = function(info)
-							return E.db.mMediaTag.portraits.target.level
-						end,
-						set = function(info, value)
-							E.db.mMediaTag.portraits.target.level = value
-							M.Portraits:InitializeTargetPortrait()
-						end,
-					},
-				},
-			},
-			extra = {
-				order = 4,
-				type = "group",
-				inline = true,
-				name = L["Extra Settings"],
-				args = {
-					enable = {
-						order = 1,
-						type = "toggle",
-						name = L["Enable"],
-						desc = L["Enable custom Position and size settings for Extra Texture."],
-						get = function(info)
-							return E.db.mMediaTag.portraits.target.extra_settings.enable
-						end,
-						set = function(info, value)
-							E.db.mMediaTag.portraits.target.extra_settings.enable = value
-
-							M.Portraits:InitializeTargetPortrait()
-						end,
-					},
-					size_range = {
-						order = 2,
-						name = L["Size"],
-						type = "range",
-						min = 16,
-						max = 1024,
-						step = 1,
-						softMin = 16,
-						softMax = 1024,
-						disabled = function()
-							return not E.db.mMediaTag.portraits.target.extra_settings.enable
-						end,
-						get = function(info)
-							return E.db.mMediaTag.portraits.target.extra_settings.size
-						end,
-						set = function(info, value)
-							E.db.mMediaTag.portraits.target.extra_settings.size = value
-							M.Portraits:InitializeTargetPortrait()
-						end,
-					},
-					offset_x_range = {
-						order = 3,
-						name = L["X offset"],
-						type = "range",
-						min = -256,
-						max = 256,
-						step = 1,
-						softMin = -1024,
-						softMax = 1024,
-						disabled = function()
-							return not E.db.mMediaTag.portraits.target.extra_settings.enable
-						end,
-						get = function(info)
-							return E.db.mMediaTag.portraits.target.extra_settings.offset.x
-						end,
-						set = function(info, value)
-							E.db.mMediaTag.portraits.target.extra_settings.offset.x = value
-							M.Portraits:InitializeTargetPortrait()
-						end,
-					},
-					range_ofsY = {
-						order = 4,
-						name = L["Y offset"],
-						type = "range",
-						min = -256,
-						max = 256,
-						step = 1,
-						softMin = -1024,
-						softMax = 1024,
-						disabled = function()
-							return not E.db.mMediaTag.portraits.target.extra_settings.enable
-						end,
-						get = function(info)
-							return E.db.mMediaTag.portraits.target.extra_settings.offset.y
-						end,
-						set = function(info, value)
-							E.db.mMediaTag.portraits.target.extra_settings.offset.y = value
-							M.Portraits:InitializeTargetPortrait()
-						end,
-					},
-				},
-			},
-		},
-	},
-	focus_group = {
-		order = 5,
-		type = "group",
-		name = L["Focus"],
-		args = {
-			enable_toggle = {
-				order = 1,
-				type = "toggle",
-				name = L["Enable"],
-				desc = L["Enable the Unit Portrait."],
-				get = function(info)
-					return E.db.mMediaTag.portraits.focus.enable
-				end,
-				set = function(info, value)
-					E.db.mMediaTag.portraits.focus.enable = value
-
-					M.Portraits:InitializeFocusPortrait()
-				end,
-			},
-			general_group = {
-				order = 2,
-				type = "group",
-				inline = true,
-				name = L["General"],
-				args = {
-					styles_select = {
-						order = 1,
-						type = "select",
-						name = L["Style"],
-						desc = L["Select a portrait texture style."],
-						get = function(info)
-							return E.db.mMediaTag.portraits.focus.texture
-						end,
-						set = function(info, value)
-							E.db.mMediaTag.portraits.focus.texture = value
-							M.Portraits:InitializeFocusPortrait()
-						end,
-						values = function()
-							local t = {}
-							for k, v in pairs(MEDIA.portraits.textures) do
-								if type(v) == "table" then t[k] = v.name end
-							end
-							return t
-						end,
-					},
-					size_range = {
-						order = 2,
-						name = L["Size"],
-						type = "range",
-						min = 16,
-						max = 512,
-						step = 1,
-						softMin = 16,
-						softMax = 512,
-						get = function(info)
-							return E.db.mMediaTag.portraits.focus.size
-						end,
-						set = function(info, value)
-							E.db.mMediaTag.portraits.focus.size = value
-
-							if not E.db.mMediaTag.portraits.focus.extra_settings.enable then E.db.mMediaTag.portraits.focus.extra_settings.size = value end
-							M.Portraits:InitializeFocusPortrait()
-						end,
-					},
-					cast_toggle = {
-						order = 3,
-						type = "toggle",
-						name = L["Cast Icon"],
-						desc = L["Enable Cast Icons."],
-						get = function(info)
-							return E.db.mMediaTag.portraits.focus.cast
-						end,
-						set = function(info, value)
-							E.db.mMediaTag.portraits.focus.cast = value
-							M.Portraits:InitializeFocusPortrait()
-						end,
-					},
-					extra_toggle = {
-						order = 4,
-						type = "toggle",
-						name = L["Enable Extra Texture"],
-						desc = L["Shows the Extra Texture (rare/elite) for the Unit Portrait."],
-						get = function(info)
-							return E.db.mMediaTag.portraits.focus.extra
-						end,
-						set = function(info, value)
-							E.db.mMediaTag.portraits.focus.extra = value
-							M.Portraits:InitializeFocusPortrait()
-						end,
-					},
-					unitcolor_toggle = {
-						order = 5,
-						type = "toggle",
-						name = L["Unitcolor for Extra"],
-						desc = L["Use the unit color for the Extra (Rare/Elite) Texture."],
-						get = function(info)
-							return E.db.mMediaTag.portraits.focus.unitcolor
-						end,
-						set = function(info, value)
-							E.db.mMediaTag.portraits.focus.unitcolor = value
-							M.Portraits:InitializeFocusPortrait()
-						end,
-					},
-					force_extra_toggle = {
-						order = 6,
-						type = "select",
-						name = L["Force Extra Texture"],
-						desc = L["It will override the default extra texture, but will take care of rare/elite/boss units."],
-						get = function(info)
-							return E.db.mMediaTag.portraits.focus.forceExtra
-						end,
-						set = function(info, value)
-							E.db.mMediaTag.portraits.focus.forceExtra = value
-							M.Portraits:InitializeFocusPortrait()
-						end,
-						values = {
-							none = "None",
-							player = "Player",
-							rare = "Rare",
-							elite = "Elite",
-							rareelite = "Rare Elite",
-							boss = "Boss",
-						},
-					},
-				},
-			},
-			anchor_group = {
-				order = 3,
-				type = "group",
-				inline = true,
-				name = L["Anchor"],
-				args = {
-					anchor_select = {
-						order = 1,
-						type = "select",
-						name = L["Anchor Point"],
-						get = function(info)
-							return E.db.mMediaTag.portraits.focus.point.relativePoint
-						end,
-						set = function(info, value)
-							E.db.mMediaTag.portraits.focus.point.relativePoint = value
-							if value == "LEFT" then
-								E.db.mMediaTag.portraits.focus.point.point = "RIGHT"
-								E.db.mMediaTag.portraits.focus.mirror = false
-							elseif value == "RIGHT" then
-								E.db.mMediaTag.portraits.focus.point.point = "LEFT"
-								E.db.mMediaTag.portraits.focus.mirror = true
-							elseif value == "TOP" then
-								E.db.mMediaTag.portraits.focus.point.point = "BOTTOM"
-								E.db.mMediaTag.portraits.focus.mirror = false
-							elseif value == "BOTTOM" then
-								E.db.mMediaTag.portraits.focus.point.point = "TOP"
-								E.db.mMediaTag.portraits.focus.mirror = false
-							else
-								E.db.mMediaTag.portraits.focus.point.point = value
-								E.db.mMediaTag.portraits.focus.mirror = false
-							end
-
-							M.Portraits:InitializeFocusPortrait()
-						end,
-						values = {
-							LEFT = "LEFT",
-							RIGHT = "RIGHT",
-							CENTER = "CENTER",
-							TOP = "TOP",
-							BOTTOM = "BOTTOM",
-						},
-					},
-					offset_x_range = {
-						order = 2,
-						name = L["X offset"],
-						type = "range",
-						min = -256,
-						max = 256,
-						step = 1,
-						softMin = -1024,
-						softMax = 1024,
-						get = function(info)
-							return E.db.mMediaTag.portraits.focus.point.x
-						end,
-						set = function(info, value)
-							E.db.mMediaTag.portraits.focus.point.x = value
-							M.Portraits:InitializeFocusPortrait()
-						end,
-					},
-					range_ofsY = {
-						order = 3,
-						name = L["Y offset"],
-						type = "range",
-						min = -256,
-						max = 256,
-						step = 1,
-						softMin = -1024,
-						softMax = 1024,
-						get = function(info)
-							return E.db.mMediaTag.portraits.focus.point.y
-						end,
-						set = function(info, value)
-							E.db.mMediaTag.portraits.focus.point.y = value
-							M.Portraits:InitializeFocusPortrait()
-						end,
-					},
-				},
-			},
-			level_group = {
-				order = 3,
-				type = "group",
-				inline = true,
-				name = L["Frame Level/ Strata"],
-				args = {
-					strata_select = {
-						order = 1,
-						type = "select",
-						name = L["Frame Strata"],
-						get = function(info)
-							return E.db.mMediaTag.portraits.focus.strata
-						end,
-						set = function(info, value)
-							E.db.mMediaTag.portraits.focus.strata = value
-							M.Portraits:InitializeFocusPortrait()
-						end,
-						values = frameStrata,
-					},
-					level_range = {
-						order = 2,
-						name = L["Frame Level"],
-						type = "range",
-						min = 0,
-						max = 1000,
-						step = 1,
-						softMin = 0,
-						softMax = 1000,
-						get = function(info)
-							return E.db.mMediaTag.portraits.focus.level
-						end,
-						set = function(info, value)
-							E.db.mMediaTag.portraits.focus.level = value
-							M.Portraits:InitializeFocusPortrait()
-						end,
-					},
-				},
-			},
-			extra = {
-				order = 4,
-				type = "group",
-				inline = true,
-				name = L["Extra Settings"],
-				args = {
-					enable = {
-						order = 1,
-						type = "toggle",
-						name = L["Enable"],
-						desc = L["Enable custom Position and size settings for Extra Texture."],
-						get = function(info)
-							return E.db.mMediaTag.portraits.focus.extra_settings.enable
-						end,
-						set = function(info, value)
-							E.db.mMediaTag.portraits.focus.extra_settings.enable = value
-
-							M.Portraits:InitializeFocusPortrait()
-						end,
-					},
-					size_range = {
-						order = 2,
-						name = L["Size"],
-						type = "range",
-						min = 16,
-						max = 1024,
-						step = 1,
-						softMin = 16,
-						softMax = 1024,
-						disabled = function()
-							return not E.db.mMediaTag.portraits.focus.extra_settings.enable
-						end,
-						get = function(info)
-							return E.db.mMediaTag.portraits.focus.extra_settings.size
-						end,
-						set = function(info, value)
-							E.db.mMediaTag.portraits.focus.extra_settings.size = value
-							M.Portraits:InitializeFocusPortrait()
-						end,
-					},
-					offset_x_range = {
-						order = 3,
-						name = L["X offset"],
-						type = "range",
-						min = -256,
-						max = 256,
-						step = 1,
-						softMin = -1024,
-						softMax = 1024,
-						disabled = function()
-							return not E.db.mMediaTag.portraits.focus.extra_settings.enable
-						end,
-						get = function(info)
-							return E.db.mMediaTag.portraits.focus.extra_settings.offset.x
-						end,
-						set = function(info, value)
-							E.db.mMediaTag.portraits.focus.extra_settings.offset.x = value
-							M.Portraits:InitializeFocusPortrait()
-						end,
-					},
-					range_ofsY = {
-						order = 4,
-						name = L["Y offset"],
-						type = "range",
-						min = -256,
-						max = 256,
-						step = 1,
-						softMin = -1024,
-						softMax = 1024,
-						disabled = function()
-							return not E.db.mMediaTag.portraits.focus.extra_settings.enable
-						end,
-						get = function(info)
-							return E.db.mMediaTag.portraits.focus.extra_settings.offset.y
-						end,
-						set = function(info, value)
-							E.db.mMediaTag.portraits.focus.extra_settings.offset.y = value
-							M.Portraits:InitializeFocusPortrait()
-						end,
-					},
-				},
-			},
-		},
-	},
-	pet_group = {
-		order = 6,
-		type = "group",
-		name = L["Pet"],
-		args = {
-			enable_toggle = {
-				order = 1,
-				type = "toggle",
-				name = L["Enable"],
-				desc = L["Enable the Unit Portrait."],
-				get = function(info)
-					return E.db.mMediaTag.portraits.pet.enable
-				end,
-				set = function(info, value)
-					E.db.mMediaTag.portraits.pet.enable = value
-
-					M.Portraits:InitializePetPortrait()
-				end,
-			},
-			general_group = {
-				order = 2,
-				type = "group",
-				inline = true,
-				name = L["General"],
-				args = {
-					styles_select = {
-						order = 1,
-						type = "select",
-						name = L["Style"],
-						desc = L["Select a portrait texture style."],
-						get = function(info)
-							return E.db.mMediaTag.portraits.pet.texture
-						end,
-						set = function(info, value)
-							E.db.mMediaTag.portraits.pet.texture = value
-							M.Portraits:InitializePetPortrait()
-						end,
-						values = function()
-							local t = {}
-							for k, v in pairs(MEDIA.portraits.textures) do
-								if type(v) == "table" then t[k] = v.name end
-							end
-							return t
-						end,
-					},
-					size_range = {
-						order = 2,
-						name = L["Size"],
-						type = "range",
-						min = 16,
-						max = 512,
-						step = 1,
-						softMin = 16,
-						softMax = 512,
-						get = function(info)
-							return E.db.mMediaTag.portraits.pet.size
-						end,
-						set = function(info, value)
-							E.db.mMediaTag.portraits.pet.size = value
-
-							if not E.db.mMediaTag.portraits.pet.extra_settings.enable then E.db.mMediaTag.portraits.pet.extra_settings.size = value end
-							M.Portraits:InitializePetPortrait()
-						end,
-					},
-					cast_toggle = {
-						order = 3,
-						type = "toggle",
-						name = L["Cast Icon"],
-						desc = L["Enable Cast Icons."],
-						get = function(info)
-							return E.db.mMediaTag.portraits.pet.cast
-						end,
-						set = function(info, value)
-							E.db.mMediaTag.portraits.pet.cast = value
-							M.Portraits:InitializePetPortrait()
-						end,
-					},
-					extra_toggle = {
-						order = 4,
-						type = "toggle",
-						name = L["Enable Extra Texture"],
-						desc = L["Shows the Extra Texture (rare/elite) for the Unit Portrait."],
-						get = function(info)
-							return E.db.mMediaTag.portraits.pet.extra
-						end,
-						set = function(info, value)
-							E.db.mMediaTag.portraits.pet.extra = value
-							M.Portraits:InitializePetPortrait()
-						end,
-					},
-					unitcolor_toggle = {
-						order = 5,
-						type = "toggle",
-						name = L["Unitcolor for Extra"],
-						desc = L["Use the unit color for the Extra (Rare/Elite) Texture."],
-						get = function(info)
-							return E.db.mMediaTag.portraits.pet.unitcolor
-						end,
-						set = function(info, value)
-							E.db.mMediaTag.portraits.pet.unitcolor = value
-							M.Portraits:InitializePetPortrait()
-						end,
-					},
-					force_extra_toggle = {
-						order = 6,
-						type = "select",
-						name = L["Force Extra Texture"],
-						desc = L["It will override the default extra texture, but will take care of rare/elite/boss units."],
-						get = function(info)
-							return E.db.mMediaTag.portraits.pet.forceExtra
-						end,
-						set = function(info, value)
-							E.db.mMediaTag.portraits.pet.forceExtra = value
-							M.Portraits:InitializePetPortrait()
-						end,
-						values = {
-							none = "None",
-							player = "Player",
-							rare = "Rare",
-							elite = "Elite",
-							rareelite = "Rare Elite",
-							boss = "Boss",
-						},
-					},
-				},
-			},
-			anchor_group = {
-				order = 3,
-				type = "group",
-				inline = true,
-				name = L["Anchor"],
-				args = {
-					anchor_select = {
-						order = 1,
-						type = "select",
-						name = L["Anchor Point"],
-						get = function(info)
-							return E.db.mMediaTag.portraits.pet.point.relativePoint
-						end,
-						set = function(info, value)
-							E.db.mMediaTag.portraits.pet.point.relativePoint = value
-							if value == "LEFT" then
-								E.db.mMediaTag.portraits.pet.point.point = "RIGHT"
-								E.db.mMediaTag.portraits.pet.mirror = false
-							elseif value == "RIGHT" then
-								E.db.mMediaTag.portraits.pet.point.point = "LEFT"
-								E.db.mMediaTag.portraits.pet.mirror = true
-							elseif value == "TOP" then
-								E.db.mMediaTag.portraits.pet.point.point = "BOTTOM"
-								E.db.mMediaTag.portraits.pet.mirror = false
-							elseif value == "BOTTOM" then
-								E.db.mMediaTag.portraits.pet.point.point = "TOP"
-								E.db.mMediaTag.portraits.pet.mirror = false
-							else
-								E.db.mMediaTag.portraits.pet.point.point = value
-								E.db.mMediaTag.portraits.pet.mirror = false
-							end
-
-							M.Portraits:InitializePetPortrait()
-						end,
-						values = {
-							LEFT = "LEFT",
-							RIGHT = "RIGHT",
-							CENTER = "CENTER",
-							TOP = "TOP",
-							BOTTOM = "BOTTOM",
-						},
-					},
-					offset_x_range = {
-						order = 2,
-						name = L["X offset"],
-						type = "range",
-						min = -256,
-						max = 256,
-						step = 1,
-						softMin = -1024,
-						softMax = 1024,
-						get = function(info)
-							return E.db.mMediaTag.portraits.pet.point.x
-						end,
-						set = function(info, value)
-							E.db.mMediaTag.portraits.pet.point.x = value
-							M.Portraits:InitializePetPortrait()
-						end,
-					},
-					range_ofsY = {
-						order = 3,
-						name = L["Y offset"],
-						type = "range",
-						min = -256,
-						max = 256,
-						step = 1,
-						softMin = -1024,
-						softMax = 1024,
-						get = function(info)
-							return E.db.mMediaTag.portraits.pet.point.y
-						end,
-						set = function(info, value)
-							E.db.mMediaTag.portraits.pet.point.y = value
-							M.Portraits:InitializePetPortrait()
-						end,
-					},
-				},
-			},
-			level_group = {
-				order = 3,
-				type = "group",
-				inline = true,
-				name = L["Frame Level/ Strata"],
-				args = {
-					strata_select = {
-						order = 1,
-						type = "select",
-						name = L["Frame Strata"],
-						get = function(info)
-							return E.db.mMediaTag.portraits.pet.strata
-						end,
-						set = function(info, value)
-							E.db.mMediaTag.portraits.pet.strata = value
-							M.Portraits:InitializePetPortrait()
-						end,
-						values = frameStrata,
-					},
-					level_range = {
-						order = 2,
-						name = L["Frame Level"],
-						type = "range",
-						min = 0,
-						max = 1000,
-						step = 1,
-						softMin = 0,
-						softMax = 1000,
-						get = function(info)
-							return E.db.mMediaTag.portraits.pet.level
-						end,
-						set = function(info, value)
-							E.db.mMediaTag.portraits.pet.level = value
-							M.Portraits:InitializePetPortrait()
-						end,
-					},
-				},
-			},
-			extra = {
-				order = 4,
-				type = "group",
-				inline = true,
-				name = L["Extra Settings"],
-				args = {
-					enable = {
-						order = 1,
-						type = "toggle",
-						name = L["Enable"],
-						desc = L["Enable custom Position and size settings for Extra Texture."],
-						get = function(info)
-							return E.db.mMediaTag.portraits.pet.extra_settings.enable
-						end,
-						set = function(info, value)
-							E.db.mMediaTag.portraits.pet.extra_settings.enable = value
-
-							M.Portraits:InitializePetPortrait()
-						end,
-					},
-					size_range = {
-						order = 2,
-						name = L["Size"],
-						type = "range",
-						min = 16,
-						max = 1024,
-						step = 1,
-						softMin = 16,
-						softMax = 1024,
-						disabled = function()
-							return not E.db.mMediaTag.portraits.pet.extra_settings.enable
-						end,
-						get = function(info)
-							return E.db.mMediaTag.portraits.pet.extra_settings.size
-						end,
-						set = function(info, value)
-							E.db.mMediaTag.portraits.pet.extra_settings.size = value
-							M.Portraits:InitializePetPortrait()
-						end,
-					},
-					offset_x_range = {
-						order = 3,
-						name = L["X offset"],
-						type = "range",
-						min = -256,
-						max = 256,
-						step = 1,
-						softMin = -1024,
-						softMax = 1024,
-						disabled = function()
-							return not E.db.mMediaTag.portraits.pet.extra_settings.enable
-						end,
-						get = function(info)
-							return E.db.mMediaTag.portraits.pet.extra_settings.offset.x
-						end,
-						set = function(info, value)
-							E.db.mMediaTag.portraits.pet.extra_settings.offset.x = value
-							M.Portraits:InitializePetPortrait()
-						end,
-					},
-					range_ofsY = {
-						order = 4,
-						name = L["Y offset"],
-						type = "range",
-						min = -256,
-						max = 256,
-						step = 1,
-						softMin = -1024,
-						softMax = 1024,
-						disabled = function()
-							return not E.db.mMediaTag.portraits.pet.extra_settings.enable
-						end,
-						get = function(info)
-							return E.db.mMediaTag.portraits.pet.extra_settings.offset.y
-						end,
-						set = function(info, value)
-							E.db.mMediaTag.portraits.pet.extra_settings.offset.y = value
-							M.Portraits:InitializePetPortrait()
-						end,
-					},
-				},
-			},
-		},
-	},
-	targettarget_group = {
-		order = 7,
-		type = "group",
-		name = L["Target of Target"],
-		args = {
-			enable_toggle = {
-				order = 1,
-				type = "toggle",
-				name = L["Enable"],
-				desc = L["Enable the Unit Portrait."],
-				get = function(info)
-					return E.db.mMediaTag.portraits.targettarget.enable
-				end,
-				set = function(info, value)
-					E.db.mMediaTag.portraits.targettarget.enable = value
-
-					M.Portraits:InitializeToTPortrait()
-				end,
-			},
-			general_group = {
-				order = 2,
-				type = "group",
-				inline = true,
-				name = L["General"],
-				args = {
-					styles_select = {
-						order = 1,
-						type = "select",
-						name = L["Style"],
-						desc = L["Select a portrait texture style."],
-						get = function(info)
-							return E.db.mMediaTag.portraits.targettarget.texture
-						end,
-						set = function(info, value)
-							E.db.mMediaTag.portraits.targettarget.texture = value
-							M.Portraits:InitializeToTPortrait()
-						end,
-						values = function()
-							local t = {}
-							for k, v in pairs(MEDIA.portraits.textures) do
-								if type(v) == "table" then t[k] = v.name end
-							end
-							return t
-						end,
-					},
-					size_range = {
-						order = 2,
-						name = L["Size"],
-						type = "range",
-						min = 16,
-						max = 512,
-						step = 1,
-						softMin = 16,
-						softMax = 512,
-						get = function(info)
-							return E.db.mMediaTag.portraits.targettarget.size
-						end,
-						set = function(info, value)
-							E.db.mMediaTag.portraits.targettarget.size = value
-
-							if not E.db.mMediaTag.portraits.targettarget.extra_settings.enable then E.db.mMediaTag.portraits.targettarget.extra_settings.size = value end
-							M.Portraits:InitializeToTPortrait()
-						end,
-					},
-					cast_toggle = {
-						order = 3,
-						type = "toggle",
-						name = L["Cast Icon"],
-						desc = L["Enable Cast Icons."],
-						get = function(info)
-							return E.db.mMediaTag.portraits.targettarget.cast
-						end,
-						set = function(info, value)
-							E.db.mMediaTag.portraits.targettarget.cast = value
-							M.Portraits:InitializeToTPortrait()
-						end,
-					},
-					extra_toggle = {
-						order = 4,
-						type = "toggle",
-						name = L["Enable Extra Texture"],
-						desc = L["Shows the Extra Texture (rare/elite) for the Unit Portrait."],
-						get = function(info)
-							return E.db.mMediaTag.portraits.targettarget.extra
-						end,
-						set = function(info, value)
-							E.db.mMediaTag.portraits.targettarget.extra = value
-							M.Portraits:InitializeToTPortrait()
-						end,
-					},
-					unitcolor_toggle = {
-						order = 5,
-						type = "toggle",
-						name = L["Unitcolor for Extra"],
-						desc = L["Use the unit color for the Extra (Rare/Elite) Texture."],
-						get = function(info)
-							return E.db.mMediaTag.portraits.targettarget.unitcolor
-						end,
-						set = function(info, value)
-							E.db.mMediaTag.portraits.targettarget.unitcolor = value
-							M.Portraits:InitializeToTPortrait()
-						end,
-					},
-					force_extra_toggle = {
-						order = 6,
-						type = "select",
-						name = L["Force Extra Texture"],
-						desc = L["It will override the default extra texture, but will take care of rare/elite/boss units."],
-						get = function(info)
-							return E.db.mMediaTag.portraits.targettarget.forceExtra
-						end,
-						set = function(info, value)
-							E.db.mMediaTag.portraits.targettarget.forceExtra = value
-							M.Portraits:InitializeToTPortrait()
-						end,
-						values = {
-							none = "None",
-							player = "Player",
-							rare = "Rare",
-							elite = "Elite",
-							rareelite = "Rare Elite",
-							boss = "Boss",
-						},
-					},
-				},
-			},
-			anchor_group = {
-				order = 3,
-				type = "group",
-				inline = true,
-				name = L["Anchor"],
-				args = {
-					anchor_select = {
-						order = 1,
-						type = "select",
-						name = L["Anchor Point"],
-						get = function(info)
-							return E.db.mMediaTag.portraits.targettarget.point.relativePoint
-						end,
-						set = function(info, value)
-							E.db.mMediaTag.portraits.targettarget.point.relativePoint = value
-							if value == "LEFT" then
-								E.db.mMediaTag.portraits.targettarget.point.point = "RIGHT"
-								E.db.mMediaTag.portraits.targettarget.mirror = false
-							elseif value == "RIGHT" then
-								E.db.mMediaTag.portraits.targettarget.point.point = "LEFT"
-								E.db.mMediaTag.portraits.targettarget.mirror = true
-							elseif value == "TOP" then
-								E.db.mMediaTag.portraits.targettarget.point.point = "BOTTOM"
-								E.db.mMediaTag.portraits.targettarget.mirror = false
-							elseif value == "BOTTOM" then
-								E.db.mMediaTag.portraits.targettarget.point.point = "TOP"
-								E.db.mMediaTag.portraits.targettarget.mirror = false
-							else
-								E.db.mMediaTag.portraits.targettarget.point.point = value
-								E.db.mMediaTag.portraits.targettarget.mirror = false
-							end
-
-							M.Portraits:InitializeToTPortrait()
-						end,
-						values = {
-							LEFT = "LEFT",
-							RIGHT = "RIGHT",
-							CENTER = "CENTER",
-							TOP = "TOP",
-							BOTTOM = "BOTTOM",
-						},
-					},
-					offset_x_range = {
-						order = 2,
-						name = L["X offset"],
-						type = "range",
-						min = -256,
-						max = 256,
-						step = 1,
-						softMin = -1024,
-						softMax = 1024,
-						get = function(info)
-							return E.db.mMediaTag.portraits.targettarget.point.x
-						end,
-						set = function(info, value)
-							E.db.mMediaTag.portraits.targettarget.point.x = value
-							M.Portraits:InitializeToTPortrait()
-						end,
-					},
-					range_ofsY = {
-						order = 3,
-						name = L["Y offset"],
-						type = "range",
-						min = -256,
-						max = 256,
-						step = 1,
-						softMin = -1024,
-						softMax = 1024,
-						get = function(info)
-							return E.db.mMediaTag.portraits.targettarget.point.y
-						end,
-						set = function(info, value)
-							E.db.mMediaTag.portraits.targettarget.point.y = value
-							M.Portraits:InitializeToTPortrait()
-						end,
-					},
-				},
-			},
-			level_group = {
-				order = 3,
-				type = "group",
-				inline = true,
-				name = L["Frame Level/ Strata"],
-				args = {
-					strata_select = {
-						order = 1,
-						type = "select",
-						name = L["Frame Strata"],
-						get = function(info)
-							return E.db.mMediaTag.portraits.targettarget.strata
-						end,
-						set = function(info, value)
-							E.db.mMediaTag.portraits.targettarget.strata = value
-							M.Portraits:InitializeToTPortrait()
-						end,
-						values = frameStrata,
-					},
-					level_range = {
-						order = 2,
-						name = L["Frame Level"],
-						type = "range",
-						min = 0,
-						max = 1000,
-						step = 1,
-						softMin = 0,
-						softMax = 1000,
-						get = function(info)
-							return E.db.mMediaTag.portraits.targettarget.level
-						end,
-						set = function(info, value)
-							E.db.mMediaTag.portraits.targettarget.level = value
-							M.Portraits:InitializeToTPortrait()
-						end,
-					},
-				},
-			},
-			extra = {
-				order = 4,
-				type = "group",
-				inline = true,
-				name = L["Extra Settings"],
-				args = {
-					enable = {
-						order = 1,
-						type = "toggle",
-						name = L["Enable"],
-						desc = L["Enable custom Position and size settings for Extra Texture."],
-						get = function(info)
-							return E.db.mMediaTag.portraits.targettarget.extra_settings.enable
-						end,
-						set = function(info, value)
-							E.db.mMediaTag.portraits.targettarget.extra_settings.enable = value
-
-							M.Portraits:InitializeToTPortrait()
-						end,
-					},
-					size_range = {
-						order = 2,
-						name = L["Size"],
-						type = "range",
-						min = 16,
-						max = 1024,
-						step = 1,
-						softMin = 16,
-						softMax = 1024,
-						disabled = function()
-							return not E.db.mMediaTag.portraits.targettarget.extra_settings.enable
-						end,
-						get = function(info)
-							return E.db.mMediaTag.portraits.targettarget.extra_settings.size
-						end,
-						set = function(info, value)
-							E.db.mMediaTag.portraits.targettarget.extra_settings.size = value
-							M.Portraits:InitializeToTPortrait()
-						end,
-					},
-					offset_x_range = {
-						order = 3,
-						name = L["X offset"],
-						type = "range",
-						min = -256,
-						max = 256,
-						step = 1,
-						softMin = -1024,
-						softMax = 1024,
-						disabled = function()
-							return not E.db.mMediaTag.portraits.targettarget.extra_settings.enable
-						end,
-						get = function(info)
-							return E.db.mMediaTag.portraits.targettarget.extra_settings.offset.x
-						end,
-						set = function(info, value)
-							E.db.mMediaTag.portraits.targettarget.extra_settings.offset.x = value
-							M.Portraits:InitializeToTPortrait()
-						end,
-					},
-					range_ofsY = {
-						order = 4,
-						name = L["Y offset"],
-						type = "range",
-						min = -256,
-						max = 256,
-						step = 1,
-						softMin = -1024,
-						softMax = 1024,
-						disabled = function()
-							return not E.db.mMediaTag.portraits.targettarget.extra_settings.enable
-						end,
-						get = function(info)
-							return E.db.mMediaTag.portraits.targettarget.extra_settings.offset.y
-						end,
-						set = function(info, value)
-							E.db.mMediaTag.portraits.targettarget.extra_settings.offset.y = value
-							M.Portraits:InitializeToTPortrait()
-						end,
-					},
-				},
-			},
-		},
-	},
-	party_group = {
-		order = 8,
-		type = "group",
-		name = L["Party"],
-		args = {
-			enable_toggle = {
-				order = 1,
-				type = "toggle",
-				name = L["Enable"],
-				desc = L["Enable the Unit Portrait."],
-				get = function(info)
-					return E.db.mMediaTag.portraits.party.enable
-				end,
-				set = function(info, value)
-					E.db.mMediaTag.portraits.party.enable = value
-
-					M.Portraits:InitializePartyPortrait()
-				end,
-			},
-			general_group = {
-				order = 2,
-				type = "group",
-				inline = true,
-				name = L["General"],
-				args = {
-					styles_select = {
-						order = 1,
-						type = "select",
-						name = L["Style"],
-						desc = L["Select a portrait texture style."],
-						get = function(info)
-							return E.db.mMediaTag.portraits.party.texture
-						end,
-						set = function(info, value)
-							E.db.mMediaTag.portraits.party.texture = value
-							M.Portraits:InitializePartyPortrait()
-						end,
-						values = function()
-							local t = {}
-							for k, v in pairs(MEDIA.portraits.textures) do
-								if type(v) == "table" then t[k] = v.name end
-							end
-							return t
-						end,
-					},
-					size_range = {
-						order = 2,
-						name = L["Size"],
-						type = "range",
-						min = 16,
-						max = 512,
-						step = 1,
-						softMin = 16,
-						softMax = 512,
-						get = function(info)
-							return E.db.mMediaTag.portraits.party.size
-						end,
-						set = function(info, value)
-							E.db.mMediaTag.portraits.party.size = value
-
-							if not E.db.mMediaTag.portraits.party.extra_settings.enable then E.db.mMediaTag.portraits.party.extra_settings.size = value end
-							M.Portraits:InitializePartyPortrait()
-						end,
-					},
-					cast_toggle = {
-						order = 3,
-						type = "toggle",
-						name = L["Cast Icon"],
-						desc = L["Enable Cast Icons."],
-						get = function(info)
-							return E.db.mMediaTag.portraits.party.cast
-						end,
-						set = function(info, value)
-							E.db.mMediaTag.portraits.party.cast = value
-							M.Portraits:InitializePartyPortrait()
-						end,
-					},
-					extra_toggle = {
-						order = 4,
-						type = "toggle",
-						name = L["Enable Extra Texture"],
-						desc = L["Shows the Extra Texture (rare/elite) for the Unit Portrait."],
-						get = function(info)
-							return E.db.mMediaTag.portraits.party.extra
-						end,
-						set = function(info, value)
-							E.db.mMediaTag.portraits.party.extra = value
-							M.Portraits:InitializePartyPortrait()
-						end,
-					},
-					unitcolor_toggle = {
-						order = 5,
-						type = "toggle",
-						name = L["Unitcolor for Extra"],
-						desc = L["Use the unit color for the Extra (Rare/Elite) Texture."],
-						get = function(info)
-							return E.db.mMediaTag.portraits.party.unitcolor
-						end,
-						set = function(info, value)
-							E.db.mMediaTag.portraits.party.unitcolor = value
-							M.Portraits:InitializePartyPortrait()
-						end,
-					},
-					force_extra_toggle = {
-						order = 6,
-						type = "select",
-						name = L["Force Extra Texture"],
-						desc = L["It will override the default extra texture, but will take care of rare/elite/boss units."],
-						get = function(info)
-							return E.db.mMediaTag.portraits.party.forceExtra
-						end,
-						set = function(info, value)
-							E.db.mMediaTag.portraits.party.forceExtra = value
-							M.Portraits:InitializePartyPortrait()
-						end,
-						values = {
-							none = "None",
-							player = "Player",
-							rare = "Rare",
-							elite = "Elite",
-							rareelite = "Rare Elite",
-							boss = "Boss",
-						},
-					},
-				},
-			},
-			anchor_group = {
-				order = 3,
-				type = "group",
-				inline = true,
-				name = L["Anchor"],
-				args = {
-					anchor_select = {
-						order = 1,
-						type = "select",
-						name = L["Anchor Point"],
-						get = function(info)
-							return E.db.mMediaTag.portraits.party.point.relativePoint
-						end,
-						set = function(info, value)
-							E.db.mMediaTag.portraits.party.point.relativePoint = value
-							if value == "LEFT" then
-								E.db.mMediaTag.portraits.party.point.point = "RIGHT"
-								E.db.mMediaTag.portraits.party.mirror = false
-							elseif value == "RIGHT" then
-								E.db.mMediaTag.portraits.party.point.point = "LEFT"
-								E.db.mMediaTag.portraits.party.mirror = true
-							elseif value == "TOP" then
-								E.db.mMediaTag.portraits.party.point.point = "BOTTOM"
-								E.db.mMediaTag.portraits.party.mirror = false
-							elseif value == "BOTTOM" then
-								E.db.mMediaTag.portraits.party.point.point = "TOP"
-								E.db.mMediaTag.portraits.party.mirror = false
-							else
-								E.db.mMediaTag.portraits.party.point.point = value
-								E.db.mMediaTag.portraits.party.mirror = false
-							end
-
-							M.Portraits:InitializePartyPortrait()
-						end,
-						values = {
-							LEFT = "LEFT",
-							RIGHT = "RIGHT",
-							CENTER = "CENTER",
-							TOP = "TOP",
-							BOTTOM = "BOTTOM",
-						},
-					},
-					offset_x_range = {
-						order = 2,
-						name = L["X offset"],
-						type = "range",
-						min = -256,
-						max = 256,
-						step = 1,
-						softMin = -1024,
-						softMax = 1024,
-						get = function(info)
-							return E.db.mMediaTag.portraits.party.point.x
-						end,
-						set = function(info, value)
-							E.db.mMediaTag.portraits.party.point.x = value
-							M.Portraits:InitializePartyPortrait()
-						end,
-					},
-					range_ofsY = {
-						order = 3,
-						name = L["Y offset"],
-						type = "range",
-						min = -256,
-						max = 256,
-						step = 1,
-						softMin = -1024,
-						softMax = 1024,
-						get = function(info)
-							return E.db.mMediaTag.portraits.party.point.y
-						end,
-						set = function(info, value)
-							E.db.mMediaTag.portraits.party.point.y = value
-							M.Portraits:InitializePartyPortrait()
-						end,
-					},
-				},
-			},
-			level_group = {
-				order = 3,
-				type = "group",
-				inline = true,
-				name = L["Frame Level/ Strata"],
-				args = {
-					strata_select = {
-						order = 1,
-						type = "select",
-						name = L["Frame Strata"],
-						get = function(info)
-							return E.db.mMediaTag.portraits.party.strata
-						end,
-						set = function(info, value)
-							E.db.mMediaTag.portraits.party.strata = value
-							M.Portraits:InitializePartyPortrait()
-						end,
-						values = frameStrata,
-					},
-					level_range = {
-						order = 2,
-						name = L["Frame Level"],
-						type = "range",
-						min = 0,
-						max = 1000,
-						step = 1,
-						softMin = 0,
-						softMax = 1000,
-						get = function(info)
-							return E.db.mMediaTag.portraits.party.level
-						end,
-						set = function(info, value)
-							E.db.mMediaTag.portraits.party.level = value
-							M.Portraits:InitializePartyPortrait()
-						end,
-					},
-				},
-			},
-			extra = {
-				order = 4,
-				type = "group",
-				inline = true,
-				name = L["Extra Settings"],
-				args = {
-					enable = {
-						order = 1,
-						type = "toggle",
-						name = L["Enable"],
-						desc = L["Enable custom Position and size settings for Extra Texture."],
-						get = function(info)
-							return E.db.mMediaTag.portraits.party.extra_settings.enable
-						end,
-						set = function(info, value)
-							E.db.mMediaTag.portraits.party.extra_settings.enable = value
-
-							M.Portraits:InitializePartyPortrait()
-						end,
-					},
-					size_range = {
-						order = 2,
-						name = L["Size"],
-						type = "range",
-						min = 16,
-						max = 1024,
-						step = 1,
-						softMin = 16,
-						softMax = 1024,
-						disabled = function()
-							return not E.db.mMediaTag.portraits.party.extra_settings.enable
-						end,
-						get = function(info)
-							return E.db.mMediaTag.portraits.party.extra_settings.size
-						end,
-						set = function(info, value)
-							E.db.mMediaTag.portraits.party.extra_settings.size = value
-							M.Portraits:InitializePartyPortrait()
-						end,
-					},
-					offset_x_range = {
-						order = 3,
-						name = L["X offset"],
-						type = "range",
-						min = -256,
-						max = 256,
-						step = 1,
-						softMin = -1024,
-						softMax = 1024,
-						disabled = function()
-							return not E.db.mMediaTag.portraits.party.extra_settings.enable
-						end,
-						get = function(info)
-							return E.db.mMediaTag.portraits.party.extra_settings.offset.x
-						end,
-						set = function(info, value)
-							E.db.mMediaTag.portraits.party.extra_settings.offset.x = value
-							M.Portraits:InitializePartyPortrait()
-						end,
-					},
-					range_ofsY = {
-						order = 4,
-						name = L["Y offset"],
-						type = "range",
-						min = -256,
-						max = 256,
-						step = 1,
-						softMin = -1024,
-						softMax = 1024,
-						disabled = function()
-							return not E.db.mMediaTag.portraits.party.extra_settings.enable
-						end,
-						get = function(info)
-							return E.db.mMediaTag.portraits.party.extra_settings.offset.y
-						end,
-						set = function(info, value)
-							E.db.mMediaTag.portraits.party.extra_settings.offset.y = value
-							M.Portraits:InitializePartyPortrait()
-						end,
-					},
-				},
-			},
-		},
-	},
-	boss_group = {
-		order = 9,
-		type = "group",
-		name = L["Boss"],
-		args = {
-			enable_toggle = {
-				order = 1,
-				type = "toggle",
-				name = L["Enable"],
-				desc = L["Enable the Unit Portrait."],
-				get = function(info)
-					return E.db.mMediaTag.portraits.boss.enable
-				end,
-				set = function(info, value)
-					E.db.mMediaTag.portraits.boss.enable = value
-
-					M.Portraits:InitializeBossPortrait()
-				end,
-			},
-			general_group = {
-				order = 2,
-				type = "group",
-				inline = true,
-				name = L["General"],
-				args = {
-					styles_select = {
-						order = 1,
-						type = "select",
-						name = L["Style"],
-						desc = L["Select a portrait texture style."],
-						get = function(info)
-							return E.db.mMediaTag.portraits.boss.texture
-						end,
-						set = function(info, value)
-							E.db.mMediaTag.portraits.boss.texture = value
-							M.Portraits:InitializeBossPortrait()
-						end,
-						values = function()
-							local t = {}
-							for k, v in pairs(MEDIA.portraits.textures) do
-								if type(v) == "table" then t[k] = v.name end
-							end
-							return t
-						end,
-					},
-					size_range = {
-						order = 2,
-						name = L["Size"],
-						type = "range",
-						min = 16,
-						max = 512,
-						step = 1,
-						softMin = 16,
-						softMax = 512,
-						get = function(info)
-							return E.db.mMediaTag.portraits.boss.size
-						end,
-						set = function(info, value)
-							E.db.mMediaTag.portraits.boss.size = value
-
-							if not E.db.mMediaTag.portraits.boss.extra_settings.enable then E.db.mMediaTag.portraits.boss.extra_settings.size = value end
-							M.Portraits:InitializeBossPortrait()
-						end,
-					},
-					cast_toggle = {
-						order = 3,
-						type = "toggle",
-						name = L["Cast Icon"],
-						desc = L["Enable Cast Icons."],
-						get = function(info)
-							return E.db.mMediaTag.portraits.boss.cast
-						end,
-						set = function(info, value)
-							E.db.mMediaTag.portraits.boss.cast = value
-							M.Portraits:InitializeBossPortrait()
-						end,
-					},
-					extra_toggle = {
-						order = 4,
-						type = "toggle",
-						name = L["Enable Extra Texture"],
-						desc = L["Shows the Extra Texture (rare/elite) for the Unit Portrait."],
-						get = function(info)
-							return E.db.mMediaTag.portraits.boss.extra
-						end,
-						set = function(info, value)
-							E.db.mMediaTag.portraits.boss.extra = value
-							M.Portraits:InitializeBossPortrait()
-						end,
-					},
-					unitcolor_toggle = {
-						order = 5,
-						type = "toggle",
-						name = L["Unitcolor for Extra"],
-						desc = L["Use the unit color for the Extra (Rare/Elite) Texture."],
-						get = function(info)
-							return E.db.mMediaTag.portraits.boss.unitcolor
-						end,
-						set = function(info, value)
-							E.db.mMediaTag.portraits.boss.unitcolor = value
-							M.Portraits:InitializeBossPortrait()
-						end,
-					},
-					force_extra_toggle = {
-						order = 6,
-						type = "select",
-						name = L["Force Extra Texture"],
-						desc = L["It will override the default extra texture, but will take care of rare/elite/boss units."],
-						get = function(info)
-							return E.db.mMediaTag.portraits.boss.forceExtra
-						end,
-						set = function(info, value)
-							E.db.mMediaTag.portraits.boss.forceExtra = value
-							M.Portraits:InitializeBossPortrait()
-						end,
-						values = {
-							none = "None",
-							player = "Player",
-							rare = "Rare",
-							elite = "Elite",
-							rareelite = "Rare Elite",
-							boss = "Boss",
-						},
-					},
-				},
-			},
-			anchor_group = {
-				order = 3,
-				type = "group",
-				inline = true,
-				name = L["Anchor"],
-				args = {
-					anchor_select = {
-						order = 1,
-						type = "select",
-						name = L["Anchor Point"],
-						get = function(info)
-							return E.db.mMediaTag.portraits.boss.point.relativePoint
-						end,
-						set = function(info, value)
-							E.db.mMediaTag.portraits.boss.point.relativePoint = value
-							if value == "LEFT" then
-								E.db.mMediaTag.portraits.boss.point.point = "RIGHT"
-								E.db.mMediaTag.portraits.boss.mirror = false
-							elseif value == "RIGHT" then
-								E.db.mMediaTag.portraits.boss.point.point = "LEFT"
-								E.db.mMediaTag.portraits.boss.mirror = true
-							elseif value == "TOP" then
-								E.db.mMediaTag.portraits.boss.point.point = "BOTTOM"
-								E.db.mMediaTag.portraits.boss.mirror = false
-							elseif value == "BOTTOM" then
-								E.db.mMediaTag.portraits.boss.point.point = "TOP"
-								E.db.mMediaTag.portraits.boss.mirror = false
-							else
-								E.db.mMediaTag.portraits.boss.point.point = value
-								E.db.mMediaTag.portraits.boss.mirror = false
-							end
-
-							M.Portraits:InitializeBossPortrait()
-						end,
-						values = {
-							LEFT = "LEFT",
-							RIGHT = "RIGHT",
-							CENTER = "CENTER",
-							TOP = "TOP",
-							BOTTOM = "BOTTOM",
-						},
-					},
-					offset_x_range = {
-						order = 2,
-						name = L["X offset"],
-						type = "range",
-						min = -256,
-						max = 256,
-						step = 1,
-						softMin = -1024,
-						softMax = 1024,
-						get = function(info)
-							return E.db.mMediaTag.portraits.boss.point.x
-						end,
-						set = function(info, value)
-							E.db.mMediaTag.portraits.boss.point.x = value
-							M.Portraits:InitializeBossPortrait()
-						end,
-					},
-					range_ofsY = {
-						order = 3,
-						name = L["Y offset"],
-						type = "range",
-						min = -256,
-						max = 256,
-						step = 1,
-						softMin = -1024,
-						softMax = 1024,
-						get = function(info)
-							return E.db.mMediaTag.portraits.boss.point.y
-						end,
-						set = function(info, value)
-							E.db.mMediaTag.portraits.boss.point.y = value
-							M.Portraits:InitializeBossPortrait()
-						end,
-					},
-				},
-			},
-			level_group = {
-				order = 3,
-				type = "group",
-				inline = true,
-				name = L["Frame Level/ Strata"],
-				args = {
-					strata_select = {
-						order = 1,
-						type = "select",
-						name = L["Frame Strata"],
-						get = function(info)
-							return E.db.mMediaTag.portraits.boss.strata
-						end,
-						set = function(info, value)
-							E.db.mMediaTag.portraits.boss.strata = value
-							M.Portraits:InitializeBossPortrait()
-						end,
-						values = frameStrata,
-					},
-					level_range = {
-						order = 2,
-						name = L["Frame Level"],
-						type = "range",
-						min = 0,
-						max = 1000,
-						step = 1,
-						softMin = 0,
-						softMax = 1000,
-						get = function(info)
-							return E.db.mMediaTag.portraits.boss.level
-						end,
-						set = function(info, value)
-							E.db.mMediaTag.portraits.boss.level = value
-							M.Portraits:InitializeBossPortrait()
-						end,
-					},
-				},
-			},
-			extra = {
-				order = 4,
-				type = "group",
-				inline = true,
-				name = L["Extra Settings"],
-				args = {
-					enable = {
-						order = 1,
-						type = "toggle",
-						name = L["Enable"],
-						desc = L["Enable custom Position and size settings for Extra Texture."],
-						get = function(info)
-							return E.db.mMediaTag.portraits.boss.extra_settings.enable
-						end,
-						set = function(info, value)
-							E.db.mMediaTag.portraits.boss.extra_settings.enable = value
-
-							M.Portraits:InitializeBossPortrait()
-						end,
-					},
-					size_range = {
-						order = 2,
-						name = L["Size"],
-						type = "range",
-						min = 16,
-						max = 1024,
-						step = 1,
-						softMin = 16,
-						softMax = 1024,
-						disabled = function()
-							return not E.db.mMediaTag.portraits.boss.extra_settings.enable
-						end,
-						get = function(info)
-							return E.db.mMediaTag.portraits.boss.extra_settings.size
-						end,
-						set = function(info, value)
-							E.db.mMediaTag.portraits.boss.extra_settings.size = value
-							M.Portraits:InitializeBossPortrait()
-						end,
-					},
-					offset_x_range = {
-						order = 3,
-						name = L["X offset"],
-						type = "range",
-						min = -256,
-						max = 256,
-						step = 1,
-						softMin = -1024,
-						softMax = 1024,
-						disabled = function()
-							return not E.db.mMediaTag.portraits.boss.extra_settings.enable
-						end,
-						get = function(info)
-							return E.db.mMediaTag.portraits.boss.extra_settings.offset.x
-						end,
-						set = function(info, value)
-							E.db.mMediaTag.portraits.boss.extra_settings.offset.x = value
-							M.Portraits:InitializeBossPortrait()
-						end,
-					},
-					range_ofsY = {
-						order = 4,
-						name = L["Y offset"],
-						type = "range",
-						min = -256,
-						max = 256,
-						step = 1,
-						softMin = -1024,
-						softMax = 1024,
-						disabled = function()
-							return not E.db.mMediaTag.portraits.boss.extra_settings.enable
-						end,
-						get = function(info)
-							return E.db.mMediaTag.portraits.boss.extra_settings.offset.y
-						end,
-						set = function(info, value)
-							E.db.mMediaTag.portraits.boss.extra_settings.offset.y = value
-							M.Portraits:InitializeBossPortrait()
-						end,
-					},
-				},
-			},
-		},
-	},
-	arena_group = {
-		order = 10,
-		type = "group",
-		name = L["Arena"],
-		args = {
-			enable_toggle = {
-				order = 1,
-				type = "toggle",
-				name = L["Enable"],
-				desc = L["Enable the Unit Portrait."],
-				get = function(info)
-					return E.db.mMediaTag.portraits.arena.enable
-				end,
-				set = function(info, value)
-					E.db.mMediaTag.portraits.arena.enable = value
-
-					M.Portraits:InitializeArenaPortrait()
-				end,
-			},
-			general_group = {
-				order = 2,
-				type = "group",
-				inline = true,
-				name = L["General"],
-				args = {
-					styles_select = {
-						order = 1,
-						type = "select",
-						name = L["Style"],
-						desc = L["Select a portrait texture style."],
-						get = function(info)
-							return E.db.mMediaTag.portraits.arena.texture
-						end,
-						set = function(info, value)
-							E.db.mMediaTag.portraits.arena.texture = value
-							M.Portraits:InitializeArenaPortrait()
-						end,
-						values = function()
-							local t = {}
-							for k, v in pairs(MEDIA.portraits.textures) do
-								if type(v) == "table" then t[k] = v.name end
-							end
-							return t
-						end,
-					},
-					size_range = {
-						order = 2,
-						name = L["Size"],
-						type = "range",
-						min = 16,
-						max = 512,
-						step = 1,
-						softMin = 16,
-						softMax = 512,
-						get = function(info)
-							return E.db.mMediaTag.portraits.arena.size
-						end,
-						set = function(info, value)
-							E.db.mMediaTag.portraits.arena.size = value
-
-							if not E.db.mMediaTag.portraits.arena.extra_settings.enable then E.db.mMediaTag.portraits.arena.extra_settings.size = value end
-							M.Portraits:InitializeArenaPortrait()
-						end,
-					},
-					cast_toggle = {
-						order = 3,
-						type = "toggle",
-						name = L["Cast Icon"],
-						desc = L["Enable Cast Icons."],
-						get = function(info)
-							return E.db.mMediaTag.portraits.arena.cast
-						end,
-						set = function(info, value)
-							E.db.mMediaTag.portraits.arena.cast = value
-							M.Portraits:InitializeArenaPortrait()
-						end,
-					},
-					extra_toggle = {
-						order = 4,
-						type = "toggle",
-						name = L["Enable Extra Texture"],
-						desc = L["Shows the Extra Texture (rare/elite) for the Unit Portrait."],
-						get = function(info)
-							return E.db.mMediaTag.portraits.arena.extra
-						end,
-						set = function(info, value)
-							E.db.mMediaTag.portraits.arena.extra = value
-							M.Portraits:InitializeArenaPortrait()
-						end,
-					},
-					unitcolor_toggle = {
-						order = 5,
-						type = "toggle",
-						name = L["Unitcolor for Extra"],
-						desc = L["Use the unit color for the Extra (Rare/Elite) Texture."],
-						get = function(info)
-							return E.db.mMediaTag.portraits.arena.unitcolor
-						end,
-						set = function(info, value)
-							E.db.mMediaTag.portraits.arena.unitcolor = value
-							M.Portraits:InitializeArenaPortrait()
-						end,
-					},
-					force_extra_toggle = {
-						order = 6,
-						type = "select",
-						name = L["Force Extra Texture"],
-						desc = L["It will override the default extra texture, but will take care of rare/elite/boss units."],
-						get = function(info)
-							return E.db.mMediaTag.portraits.arena.forceExtra
-						end,
-						set = function(info, value)
-							E.db.mMediaTag.portraits.arena.forceExtra = value
-							M.Portraits:InitializeArenaPortrait()
-						end,
-						values = {
-							none = "None",
-							player = "Player",
-							rare = "Rare",
-							elite = "Elite",
-							rareelite = "Rare Elite",
-							boss = "Boss",
-						},
-					},
-				},
-			},
-			anchor_group = {
-				order = 3,
-				type = "group",
-				inline = true,
-				name = L["Anchor"],
-				args = {
-					anchor_select = {
-						order = 1,
-						type = "select",
-						name = L["Anchor Point"],
-						get = function(info)
-							return E.db.mMediaTag.portraits.arena.point.relativePoint
-						end,
-						set = function(info, value)
-							E.db.mMediaTag.portraits.arena.point.relativePoint = value
-							if value == "LEFT" then
-								E.db.mMediaTag.portraits.arena.point.point = "RIGHT"
-								E.db.mMediaTag.portraits.arena.mirror = false
-							elseif value == "RIGHT" then
-								E.db.mMediaTag.portraits.arena.point.point = "LEFT"
-								E.db.mMediaTag.portraits.arena.mirror = true
-							elseif value == "TOP" then
-								E.db.mMediaTag.portraits.arena.point.point = "BOTTOM"
-								E.db.mMediaTag.portraits.arena.mirror = false
-							elseif value == "BOTTOM" then
-								E.db.mMediaTag.portraits.arena.point.point = "TOP"
-								E.db.mMediaTag.portraits.arena.mirror = false
-							else
-								E.db.mMediaTag.portraits.arena.point.point = value
-								E.db.mMediaTag.portraits.arena.mirror = false
-							end
-
-							M.Portraits:InitializeArenaPortrait()
-						end,
-						values = {
-							LEFT = "LEFT",
-							RIGHT = "RIGHT",
-							CENTER = "CENTER",
-							TOP = "TOP",
-							BOTTOM = "BOTTOM",
-						},
-					},
-					offset_x_range = {
-						order = 2,
-						name = L["X offset"],
-						type = "range",
-						min = -256,
-						max = 256,
-						step = 1,
-						softMin = -1024,
-						softMax = 1024,
-						get = function(info)
-							return E.db.mMediaTag.portraits.arena.point.x
-						end,
-						set = function(info, value)
-							E.db.mMediaTag.portraits.arena.point.x = value
-							M.Portraits:InitializeArenaPortrait()
-						end,
-					},
-					range_ofsY = {
-						order = 3,
-						name = L["Y offset"],
-						type = "range",
-						min = -256,
-						max = 256,
-						step = 1,
-						softMin = -1024,
-						softMax = 1024,
-						get = function(info)
-							return E.db.mMediaTag.portraits.arena.point.y
-						end,
-						set = function(info, value)
-							E.db.mMediaTag.portraits.arena.point.y = value
-							M.Portraits:InitializeArenaPortrait()
-						end,
-					},
-				},
-			},
-			level_group = {
-				order = 3,
-				type = "group",
-				inline = true,
-				name = L["Frame Level/ Strata"],
-				args = {
-					strata_select = {
-						order = 1,
-						type = "select",
-						name = L["Frame Strata"],
-						get = function(info)
-							return E.db.mMediaTag.portraits.arena.strata
-						end,
-						set = function(info, value)
-							E.db.mMediaTag.portraits.arena.strata = value
-							M.Portraits:InitializeArenaPortrait()
-						end,
-						values = frameStrata,
-					},
-					level_range = {
-						order = 2,
-						name = L["Frame Level"],
-						type = "range",
-						min = 0,
-						max = 1000,
-						step = 1,
-						softMin = 0,
-						softMax = 1000,
-						get = function(info)
-							return E.db.mMediaTag.portraits.arena.level
-						end,
-						set = function(info, value)
-							E.db.mMediaTag.portraits.arena.level = value
-							M.Portraits:InitializeArenaPortrait()
-						end,
-					},
-				},
-			},
-			extra = {
-				order = 4,
-				type = "group",
-				inline = true,
-				name = L["Extra Settings"],
-				args = {
-					enable = {
-						order = 1,
-						type = "toggle",
-						name = L["Enable"],
-						desc = L["Enable custom Position and size settings for Extra Texture."],
-						get = function(info)
-							return E.db.mMediaTag.portraits.arena.extra_settings.enable
-						end,
-						set = function(info, value)
-							E.db.mMediaTag.portraits.arena.extra_settings.enable = value
-
-							M.Portraits:InitializeArenaPortrait()
-						end,
-					},
-					size_range = {
-						order = 2,
-						name = L["Size"],
-						type = "range",
-						min = 16,
-						max = 1024,
-						step = 1,
-						softMin = 16,
-						softMax = 1024,
-						disabled = function()
-							return not E.db.mMediaTag.portraits.arena.extra_settings.enable
-						end,
-						get = function(info)
-							return E.db.mMediaTag.portraits.arena.extra_settings.size
-						end,
-						set = function(info, value)
-							E.db.mMediaTag.portraits.arena.extra_settings.size = value
-							M.Portraits:InitializeArenaPortrait()
-						end,
-					},
-					offset_x_range = {
-						order = 3,
-						name = L["X offset"],
-						type = "range",
-						min = -256,
-						max = 256,
-						step = 1,
-						softMin = -1024,
-						softMax = 1024,
-						disabled = function()
-							return not E.db.mMediaTag.portraits.arena.extra_settings.enable
-						end,
-						get = function(info)
-							return E.db.mMediaTag.portraits.arena.extra_settings.offset.x
-						end,
-						set = function(info, value)
-							E.db.mMediaTag.portraits.arena.extra_settings.offset.x = value
-							M.Portraits:InitializeArenaPortrait()
-						end,
-					},
-					range_ofsY = {
-						order = 4,
-						name = L["Y offset"],
-						type = "range",
-						min = -256,
-						max = 256,
-						step = 1,
-						softMin = -1024,
-						softMax = 1024,
-						disabled = function()
-							return not E.db.mMediaTag.portraits.arena.extra_settings.enable
-						end,
-						get = function(info)
-							return E.db.mMediaTag.portraits.arena.extra_settings.offset.y
-						end,
-						set = function(info, value)
-							E.db.mMediaTag.portraits.arena.extra_settings.offset.y = value
-							M.Portraits:InitializeArenaPortrait()
 						end,
 					},
 				},
@@ -4015,3 +1766,7 @@ mMT.options.args.unitframes.args.portraits.args = {
 		args = ringGroups,
 	},
 }
+
+for index, unit in ipairs(portraitUnits) do
+	mMT.options.args.unitframes.args.portraits.args[unit.key .. "_group"] = UnitGroup(unit, index + 2)
+end

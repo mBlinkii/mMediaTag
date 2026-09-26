@@ -10,6 +10,7 @@ local print = print
 local strmatch = strmatch
 local time = time
 local tonumber = tonumber
+local floor = floor
 local tinsert = tinsert
 local tremove = tremove
 local IsInGroup = IsInGroup
@@ -86,8 +87,7 @@ function mMT:UpdateModule(name, arg)
 end
 
 function mMT:GetModule(name)
-	local module = M[name]
-	return module and module
+	return M[name]
 end
 
 function mMT:AddModule(name, arg)
@@ -150,8 +150,8 @@ function mMT:round(number, decimals)
 		return 0
 	end
 
-	decimals = type(decimals) == "number" and decimals or 0
-	return (("%%.%df"):format(decimals)):format(number)
+	local mult = 10 ^ (type(decimals) == "number" and decimals or 0)
+	return floor(number * mult + 0.5) / mult
 end
 
 function mMT:GetElvUIDataText(name)

@@ -17,5 +17,6 @@ mMT.Changelog[414] = {
 	UPDATE = {
 		"[DT-Combat-Time]: The combat timer updates its text once per second instead of on every frame.",
 		"[DT-Game-Menu]: The memory and CPU tooltip only reads the CPU usage of the top five addons instead of every installed one.",
+		"[System]: The portrait unit options and the color handling were rebuilt from shared templates, the options behave exactly as before but are easier to maintain.",
 	},
 }

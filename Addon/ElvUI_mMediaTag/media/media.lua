@@ -2,6 +2,7 @@ local mMT, DB, M, E, P, L, MEDIA = unpack(ElvUI_mMediaTag)
 
 -- Cache WoW Globals
 local pairs = pairs
+local ipairs = ipairs
 local CreateColorFromHexString = CreateColorFromHexString
 local strjoin = strjoin
 
@@ -190,7 +191,22 @@ do
 	end
 end
 
+local function SetColor(target, key, hex)
+	local color = CreateColorFromHexString(hex)
+	color.hex = hex
+	target[key] = color
+end
+
+local function SetColors(target, source, keys)
+	for _, key in ipairs(keys) do
+		SetColor(target, key, source[key])
+	end
+end
+
 function mMT:UpdateMedia(arg)
+	local db = E.db.mMediaTag
+	local colors = db.color
+
 	if arg == "colors" or not arg then
 		local classColor = MEDIA.myclass
 		MEDIA.myclass.hex = MEDIA.myclass.hex or E:RGBToHex(classColor.r, classColor.g, classColor.b)
@@ -202,37 +218,19 @@ function mMT:UpdateMedia(arg)
 			}
 	end
 
-	if arg == "lfg" or not arg then
-		for _, key in ipairs({ "line_a", "line_b", "line_c" }) do
-			MEDIA.color[key] = CreateColorFromHexString(E.db.mMediaTag.lfg_invite_info.colors[key])
-			MEDIA.color[key].hex = E.db.mMediaTag.lfg_invite_info.colors[key]
-		end
-	end
+	if arg == "lfg" or not arg then SetColors(MEDIA.color, db.lfg_invite_info.colors, { "line_a", "line_b", "line_c" }) end
 
 	if arg == "datatexts" or not arg then
-		for _, key in ipairs({ "title", "text", "tip", "mark" }) do
-			MEDIA.color[key] = CreateColorFromHexString(E.db.mMediaTag.color[key])
-			MEDIA.color[key].hex = E.db.mMediaTag.color[key]
-		end
-
-		MEDIA.color.override_text = CreateColorFromHexString(E.db.mMediaTag.datatexts.text.text)
-		MEDIA.color.override_text.hex = E.db.mMediaTag.datatexts.text.text
-		MEDIA.color.override_value = CreateColorFromHexString(E.db.mMediaTag.datatexts.text.value)
-		MEDIA.color.override_value.hex = E.db.mMediaTag.datatexts.text.value
-		MEDIA.color.gm_text_color = CreateColorFromHexString(E.db.mMediaTag.datatexts.menu.text_color)
-		MEDIA.color.gm_text_color.hex = E.db.mMediaTag.datatexts.menu.text_color
-		MEDIA.color.di_warning = CreateColorFromHexString(E.db.mMediaTag.datatexts.durability_itemLevel.color_warning)
-		MEDIA.color.di_warning.hex = E.db.mMediaTag.datatexts.durability_itemLevel.color_warning
-		MEDIA.color.di_repair = CreateColorFromHexString(E.db.mMediaTag.datatexts.durability_itemLevel.color_repair)
-		MEDIA.color.di_repair.hex = E.db.mMediaTag.datatexts.durability_itemLevel.color_repair
+		local datatexts = db.datatexts
+		SetColors(MEDIA.color, colors, { "title", "text", "tip", "mark" })
+		SetColor(MEDIA.color, "override_text", datatexts.text.text)
+		SetColor(MEDIA.color, "override_value", datatexts.text.value)
+		SetColor(MEDIA.color, "gm_text_color", datatexts.menu.text_color)
+		SetColor(MEDIA.color, "di_warning", datatexts.durability_itemLevel.color_warning)
+		SetColor(MEDIA.color, "di_repair", datatexts.durability_itemLevel.color_repair)
 	end
 
-	if arg == "difficulty" or not arg then
-		for _, key in ipairs({ "N", "H", "M", "PVP", "MP", "LFR", "TW", "QUEST", "SC", "STORY", "DELVE", "FOLLOWER", "OTHER", "GUILD" }) do
-			MEDIA.color[key] = CreateColorFromHexString(E.db.mMediaTag.color[key])
-			MEDIA.color[key].hex = E.db.mMediaTag.color[key]
-		end
-	end
+	if arg == "difficulty" or not arg then SetColors(MEDIA.color, colors, { "N", "H", "M", "PVP", "MP", "LFR", "TW", "QUEST", "SC", "STORY", "DELVE", "FOLLOWER", "OTHER", "GUILD" }) end
 
 	if arg == "portraits" or not arg then
 		local function createColorSet(path)
@@ -253,108 +251,67 @@ function mMT:UpdateMedia(arg)
 	end
 
 	if arg == "interrupt" or not arg then
-		MEDIA.color.interrupt_on_cd = {
-			onCD = CreateColorFromHexString(E.db.mMediaTag.color.interrupt_on_cd.onCD),
-			normal = CreateColorFromHexString(E.db.mMediaTag.color.interrupt_on_cd.normal),
-			marker = CreateColorFromHexString(E.db.mMediaTag.color.interrupt_on_cd.marker),
-		}
+		MEDIA.color.interrupt_on_cd = {}
+		SetColors(MEDIA.color.interrupt_on_cd, colors.interrupt_on_cd, { "onCD", "normal", "marker" })
 	end
 
-	if arg == "minimap_skin" or not arg then
-		MEDIA.color.minimap_skin.color = CreateColorFromHexString(E.db.mMediaTag.color.minimap_skin.color)
-		MEDIA.color.minimap_skin.cardinal = CreateColorFromHexString(E.db.mMediaTag.color.minimap_skin.cardinal)
-	end
+	if arg == "minimap_skin" or not arg then SetColors(MEDIA.color.minimap_skin, colors.minimap_skin, { "color", "cardinal" }) end
 
 	if arg == "dock" or not arg then
-		MEDIA.color.dock.normal = CreateColorFromHexString(E.db.mMediaTag.color.dock.normal)
-		MEDIA.color.dock.hover = CreateColorFromHexString(E.db.mMediaTag.color.dock.hover)
-		MEDIA.color.dock.clicked = CreateColorFromHexString(E.db.mMediaTag.color.dock.clicked)
-		MEDIA.color.dock.notification = CreateColorFromHexString(E.db.mMediaTag.color.dock.notification)
-		MEDIA.color.dock.font = CreateColorFromHexString(E.db.mMediaTag.color.dock.font)
-		MEDIA.color.dock.font.hex = E.db.mMediaTag.color.dock.font
-		MEDIA.color.dock.store = CreateColorFromHexString(E.db.mMediaTag.color.dock.store)
-		MEDIA.color.dock.housing = CreateColorFromHexString(E.db.mMediaTag.color.dock.housing)
-		MEDIA.color.dock.achievement = CreateColorFromHexString(E.db.mMediaTag.color.dock.achievement)
-		MEDIA.color.dock.bags = CreateColorFromHexString(E.db.mMediaTag.color.dock.bags)
-		MEDIA.color.dock.character = CreateColorFromHexString(E.db.mMediaTag.color.dock.character)
-		MEDIA.color.dock.collection = CreateColorFromHexString(E.db.mMediaTag.color.dock.collection)
-		MEDIA.color.dock.durability = CreateColorFromHexString(E.db.mMediaTag.color.dock.durability)
-		MEDIA.color.dock.encounter = CreateColorFromHexString(E.db.mMediaTag.color.dock.encounter)
-		MEDIA.color.dock.friends = CreateColorFromHexString(E.db.mMediaTag.color.dock.friends)
-		MEDIA.color.dock.guild = CreateColorFromHexString(E.db.mMediaTag.color.dock.guild)
-		MEDIA.color.dock.lfd = CreateColorFromHexString(E.db.mMediaTag.color.dock.lfd)
-		MEDIA.color.dock.mail = CreateColorFromHexString(E.db.mMediaTag.color.dock.mail)
-		MEDIA.color.dock.menu = CreateColorFromHexString(E.db.mMediaTag.color.dock.menu)
-		MEDIA.color.dock.professions = CreateColorFromHexString(E.db.mMediaTag.color.dock.professions)
-		MEDIA.color.dock.quests = CreateColorFromHexString(E.db.mMediaTag.color.dock.quests)
-		MEDIA.color.dock.spellbook = CreateColorFromHexString(E.db.mMediaTag.color.dock.spellbook)
-		MEDIA.color.dock.spec = CreateColorFromHexString(E.db.mMediaTag.color.dock.spec)
-		MEDIA.color.dock.volume = CreateColorFromHexString(E.db.mMediaTag.color.dock.volume)
-		MEDIA.color.dock.calendar = CreateColorFromHexString(E.db.mMediaTag.color.dock.calendar)
+		SetColors(MEDIA.color.dock, colors.dock, {
+			"normal",
+			"hover",
+			"clicked",
+			"notification",
+			"font",
+			"store",
+			"housing",
+			"achievement",
+			"bags",
+			"character",
+			"collection",
+			"durability",
+			"encounter",
+			"friends",
+			"guild",
+			"lfd",
+			"mail",
+			"menu",
+			"professions",
+			"quests",
+			"spellbook",
+			"spec",
+			"volume",
+			"calendar",
+		})
 	end
 
 	if arg == "tags" or not arg then
-		MEDIA.color.tags.rare = CreateColorFromHexString(E.db.mMediaTag.color.tags.classification.rare)
-		MEDIA.color.tags.rare.hex = E.db.mMediaTag.color.tags.classification.rare
-		MEDIA.color.tags.rareelite = CreateColorFromHexString(E.db.mMediaTag.color.tags.classification.rareelite)
-		MEDIA.color.tags.rareelite.hex = E.db.mMediaTag.color.tags.classification.rareelite
-		MEDIA.color.tags.elite = CreateColorFromHexString(E.db.mMediaTag.color.tags.classification.elite)
-		MEDIA.color.tags.elite.hex = E.db.mMediaTag.color.tags.classification.elite
-		MEDIA.color.tags.worldboss = CreateColorFromHexString(E.db.mMediaTag.color.tags.classification.worldboss)
-		MEDIA.color.tags.worldboss.hex = E.db.mMediaTag.color.tags.classification.worldboss
-		MEDIA.color.tags.afk = CreateColorFromHexString(E.db.mMediaTag.color.tags.status.afk)
-		MEDIA.color.tags.afk.hex = E.db.mMediaTag.color.tags.status.afk
-		MEDIA.color.tags.dnd = CreateColorFromHexString(E.db.mMediaTag.color.tags.status.dnd)
-		MEDIA.color.tags.dnd.hex = E.db.mMediaTag.color.tags.status.dnd
-		MEDIA.color.tags.dc = CreateColorFromHexString(E.db.mMediaTag.color.tags.status.dc)
-		MEDIA.color.tags.dc.hex = E.db.mMediaTag.color.tags.status.dc
-		MEDIA.color.tags.dead = CreateColorFromHexString(E.db.mMediaTag.color.tags.status.dead)
-		MEDIA.color.tags.dead.hex = E.db.mMediaTag.color.tags.status.dead
-		MEDIA.color.tags.ghost = CreateColorFromHexString(E.db.mMediaTag.color.tags.status.ghost)
-		MEDIA.color.tags.ghost.hex = E.db.mMediaTag.color.tags.status.ghost
-		MEDIA.color.tags.tank = CreateColorFromHexString(E.db.mMediaTag.color.tags.misc.tank)
-		MEDIA.color.tags.tank.hex = E.db.mMediaTag.color.tags.misc.tank
-		MEDIA.color.tags.healer = CreateColorFromHexString(E.db.mMediaTag.color.tags.misc.healer)
-		MEDIA.color.tags.healer.hex = E.db.mMediaTag.color.tags.misc.healer
-		MEDIA.color.tags.dps = CreateColorFromHexString(E.db.mMediaTag.color.tags.misc.dps)
-		MEDIA.color.tags.dps.hex = E.db.mMediaTag.color.tags.misc.dps
-		MEDIA.color.tags.pvp = CreateColorFromHexString(E.db.mMediaTag.color.tags.misc.pvp)
-		MEDIA.color.tags.pvp.hex = E.db.mMediaTag.color.tags.misc.pvp
-		MEDIA.color.tags.quest = CreateColorFromHexString(E.db.mMediaTag.color.tags.misc.quest)
-		MEDIA.color.tags.quest.hex = E.db.mMediaTag.color.tags.misc.quest
-		MEDIA.color.tags.resting = CreateColorFromHexString(E.db.mMediaTag.color.tags.misc.resting)
-		MEDIA.color.tags.resting.hex = E.db.mMediaTag.color.tags.misc.resting
+		local tags = colors.tags
+		SetColors(MEDIA.color.tags, tags.classification, { "rare", "rareelite", "elite", "worldboss" })
+		SetColors(MEDIA.color.tags, tags.status, { "afk", "dnd", "dc", "dead", "ghost" })
+		SetColors(MEDIA.color.tags, tags.misc, { "tank", "healer", "dps", "pvp", "quest", "resting" })
 	end
 
 	if arg == "nameplates" or not arg then
-		MEDIA.color.nameplates.focus_color = CreateColorFromHexString(E.db.mMediaTag.color.nameplates.focus_color)
-		MEDIA.color.nameplates.focus_border_color = CreateColorFromHexString(E.db.mMediaTag.color.nameplates.focus_border_color)
-		MEDIA.color.nameplates.target_color = CreateColorFromHexString(E.db.mMediaTag.color.nameplates.target_color)
-		MEDIA.color.nameplates.target_border_color = CreateColorFromHexString(E.db.mMediaTag.color.nameplates.target_border_color)
-		MEDIA.color.nameplates.quest_color = CreateColorFromHexString(E.db.mMediaTag.color.nameplates.quest_color)
-		MEDIA.color.nameplates.quest_border_color = CreateColorFromHexString(E.db.mMediaTag.color.nameplates.quest_border_color)
-		MEDIA.color.nameplates.execute_color = CreateColorFromHexString(E.db.mMediaTag.color.nameplates.execute_color)
+		SetColors(MEDIA.color.nameplates, colors.nameplates, {
+			"focus_color",
+			"focus_border_color",
+			"target_color",
+			"target_border_color",
+			"quest_color",
+			"quest_border_color",
+			"execute_color",
+		})
 	end
 
-	if arg == "phase_icon" or not arg then
-		MEDIA.color.phase_icon.Phasing = CreateColorFromHexString(E.db.mMediaTag.color.phase_icon.Phasing)
-		MEDIA.color.phase_icon.Sharding = CreateColorFromHexString(E.db.mMediaTag.color.phase_icon.Sharding)
-		MEDIA.color.phase_icon.WarMode = CreateColorFromHexString(E.db.mMediaTag.color.phase_icon.WarMode)
-		MEDIA.color.phase_icon.ChromieTime = CreateColorFromHexString(E.db.mMediaTag.color.phase_icon.ChromieTime)
-		MEDIA.color.phase_icon.TimerunningHwt = CreateColorFromHexString(E.db.mMediaTag.color.phase_icon.TimerunningHwt)
-	end
+	if arg == "phase_icon" or not arg then SetColors(MEDIA.color.phase_icon, colors.phase_icon, { "Phasing", "Sharding", "WarMode", "ChromieTime", "TimerunningHwt" }) end
 
-	if arg == "summon_icon" or not arg then
-		MEDIA.color.summon_icon.available = CreateColorFromHexString(E.db.mMediaTag.color.summon_icon.available)
-		MEDIA.color.summon_icon.accepted = CreateColorFromHexString(E.db.mMediaTag.color.summon_icon.accepted)
-		MEDIA.color.summon_icon.rejected = CreateColorFromHexString(E.db.mMediaTag.color.summon_icon.rejected)
-	end
+	if arg == "summon_icon" or not arg then SetColors(MEDIA.color.summon_icon, colors.summon_icon, { "available", "accepted", "rejected" }) end
 
 	if arg == "important_casts" or not arg then
-		MEDIA.color.important_casts = {
-			border = CreateColorFromHexString(E.db.mMediaTag.color.important_casts.border),
-			health = CreateColorFromHexString(E.db.mMediaTag.color.important_casts.health)
-		}
+		MEDIA.color.important_casts = {}
+		SetColors(MEDIA.color.important_casts, colors.important_casts, { "border", "health" })
 	end
 end
 

@@ -15,6 +15,7 @@
 ### 🔧 UPDATE
 - UPDATE - [DT-Combat-Time]: The combat timer updates its text once per second instead of on every frame.
 - UPDATE - [DT-Game-Menu]: The memory and CPU tooltip only reads the CPU usage of the top five addons instead of every installed one.
+- UPDATE - [System]: The portrait unit options and the color handling were rebuilt from shared templates, the options behave exactly as before but are easier to maintain.
 
 ## [ver. 4.13] - 23.09.2026
 ### 🐛 FIX
