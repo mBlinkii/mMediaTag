@@ -13,6 +13,7 @@
 - FIX - [DT-Teleports]: Teleports are used by their ID instead of their name, so items and toys that share a name no longer pick the wrong one.
 - FIX - [System]: The changelog opened again after switching to another profile or character, it now only opens once per new version.
 - FIX - [Localization]: 16 texts of the Objective Tracker options and the two latency lines of the game menu tooltip were shown in English in the German client.
+- FIX - [DT-Teleports]: The highlight of the current dungeon was missing or marked the wrong dungeon after applying to several groups, after listing a new key right after a run and when your own group listed a dungeon.
 ### 🔧 UPDATE
 - UPDATE - [DT-Combat-Time]: The combat timer updates its text once per second instead of on every frame.
 - UPDATE - [DT-Game-Menu]: The memory and CPU tooltip only reads the CPU usage of the top five addons instead of every installed one.
@@ -20,6 +21,9 @@
 - UPDATE - [Localization]: Spanish, Mexican Spanish, French, Italian, Brazilian Portuguese, Russian, Korean and Simplified and Traditional Chinese are complete again, around 285 missing texts per language were translated.
 - UPDATE - [Localization]: Removed about 35 texts that were no longer used anywhere.
 - UPDATE - [System]: Every build now runs automatic code checks (luacheck and StyLua) first, a cleanup pass removed unused code and brought all files to one formatting.
+- UPDATE - [DT-Teleports]: The highlight of the current dungeon can be turned off and its color can be changed.
+### ✨ NEW
+- NEW - [DT-Teleports]: Optional highlight of the dungeon of your own keystone in the season list, with its own color.
 
 ## [ver. 4.13] - 23.09.2026
 ### 🐛 FIX

@@ -615,6 +615,11 @@ L["Profession Icon Style"] = true
 L["Tooltip Icons"] = true
 
 -- options/datatext/misc_teleports.lua
+L["Current Dungeon"] = true
+L["Highlight"] = true
+L["Highlights the dungeon of your own keystone."] = true
+L["Highlights the dungeon you are listed for, joined or currently in."] = true
+L["My Keystone"] = true
 L["Slot"] = true
 
 -- options/datatext/misc_tracker.lua

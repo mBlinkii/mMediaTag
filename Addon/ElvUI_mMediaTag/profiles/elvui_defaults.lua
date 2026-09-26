@@ -196,6 +196,10 @@ P.datatexts = {
 	},
 	teleports = {
 		icon = "teleport03",
+		highlight = {
+			current = { enable = true, color = "FF0294FF" },
+			keystone = { enable = false, color = "FFFFA10D" },
+		},
 		favorites = {
 			enable = false,
 			a = { id = "none", kind = "none" },

@@ -64,8 +64,78 @@ mMT.options.args.datatexts.args.misc_teleports.args = {
 			},
 		},
 	},
+	highlight = {
+		order = 2,
+		type = "group",
+		inline = true,
+		name = L["Highlight"],
+		args = {
+			current = {
+				order = 1,
+				type = "toggle",
+				name = L["Current Dungeon"],
+				desc = L["Highlights the dungeon you are listed for, joined or currently in."],
+				get = function(info)
+					return E.db.mMediaTag.datatexts.teleports.highlight.current.enable
+				end,
+				set = function(info, value)
+					E.db.mMediaTag.datatexts.teleports.highlight.current.enable = value
+				end,
+			},
+			current_color = {
+				order = 2,
+				type = "color",
+				name = L["Color"],
+				hasAlpha = false,
+				disabled = function()
+					return not E.db.mMediaTag.datatexts.teleports.highlight.current.enable
+				end,
+				get = function()
+					local r, g, b = mMT:HexToRGB(E.db.mMediaTag.datatexts.teleports.highlight.current.color)
+					return r, g, b
+				end,
+				set = function(_, r, g, b)
+					E.db.mMediaTag.datatexts.teleports.highlight.current.color = E:RGBToHex(r, g, b, "ff")
+				end,
+			},
+			spacer = {
+				order = 3,
+				type = "description",
+				name = "",
+				width = "full",
+			},
+			keystone = {
+				order = 4,
+				type = "toggle",
+				name = L["My Keystone"],
+				desc = L["Highlights the dungeon of your own keystone."],
+				get = function(info)
+					return E.db.mMediaTag.datatexts.teleports.highlight.keystone.enable
+				end,
+				set = function(info, value)
+					E.db.mMediaTag.datatexts.teleports.highlight.keystone.enable = value
+				end,
+			},
+			keystone_color = {
+				order = 5,
+				type = "color",
+				name = L["Color"],
+				hasAlpha = false,
+				disabled = function()
+					return not E.db.mMediaTag.datatexts.teleports.highlight.keystone.enable
+				end,
+				get = function()
+					local r, g, b = mMT:HexToRGB(E.db.mMediaTag.datatexts.teleports.highlight.keystone.color)
+					return r, g, b
+				end,
+				set = function(_, r, g, b)
+					E.db.mMediaTag.datatexts.teleports.highlight.keystone.color = E:RGBToHex(r, g, b, "ff")
+				end,
+			},
+		},
+	},
 	favorites = {
-		order = 1,
+		order = 3,
 		type = "group",
 		inline = true,
 		name = L["Favorites"],

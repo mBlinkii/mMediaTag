@@ -615,6 +615,11 @@ L["Profession Icon Style"] = "Berufssymbolstil"
 L["Tooltip Icons"] = "Tooltipsymbole"
 
 -- options/datatext/misc_teleports.lua
+L["Current Dungeon"] = "Aktueller Dungeon"
+L["Highlight"] = "Hervorhebung"
+L["Highlights the dungeon of your own keystone."] = "Hebt den Dungeon deines eigenen Schlüsselsteins hervor."
+L["Highlights the dungeon you are listed for, joined or currently in."] = "Hebt den Dungeon hervor, für den du gelistet bist, dem du beigetreten bist oder in dem du gerade bist."
+L["My Keystone"] = "Mein Schlüsselstein"
 L["Slot"] = "Slot"
 
 -- options/datatext/misc_tracker.lua

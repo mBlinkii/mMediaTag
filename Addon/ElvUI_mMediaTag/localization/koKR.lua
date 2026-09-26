@@ -589,6 +589,11 @@ L["Profession Icon Style"] = "전문 기술 아이콘 스타일"
 L["Tooltip Icons"] = "툴팁 아이콘"
 
 -- options/datatext/misc_teleports.lua
+L["Current Dungeon"] = "현재 던전"
+L["Highlight"] = "강조"
+L["Highlights the dungeon of your own keystone."] = "내 쐐기돌의 던전을 강조합니다."
+L["Highlights the dungeon you are listed for, joined or currently in."] = "등록했거나, 참여했거나, 현재 있는 던전을 강조합니다."
+L["My Keystone"] = "내 쐐기돌"
 L["Slot"] = "슬롯"
 
 -- options/datatext/misc_tracker.lua

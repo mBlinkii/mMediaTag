@@ -589,6 +589,11 @@ L["Profession Icon Style"] = "Estilo do ícone de profissão"
 L["Tooltip Icons"] = "Ícones nos tooltips"
 
 -- options/datatext/misc_teleports.lua
+L["Current Dungeon"] = "Masmorra atual"
+L["Highlight"] = "Destaque"
+L["Highlights the dungeon of your own keystone."] = "Destaca a masmorra da sua própria pedra-chave."
+L["Highlights the dungeon you are listed for, joined or currently in."] = "Destaca a masmorra para a qual você está listado, entrou ou está agora."
+L["My Keystone"] = "Minha pedra-chave"
 L["Slot"] = "Espaço"
 
 -- options/datatext/misc_tracker.lua

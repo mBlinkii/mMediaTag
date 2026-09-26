@@ -583,6 +583,11 @@ L["Profession Icon Style"] = "Estilo de ícono de profesión"
 L["Tooltip Icons"] = "Íconos en tooltips"
 
 -- options/datatext/misc_teleports.lua
+L["Current Dungeon"] = "Calabozo actual"
+L["Highlight"] = "Resaltado"
+L["Highlights the dungeon of your own keystone."] = "Resalta el calabozo de tu propia piedra angular."
+L["Highlights the dungeon you are listed for, joined or currently in."] = "Resalta el calabozo para el que estás en la lista, al que te uniste o en el que estás ahora."
+L["My Keystone"] = "Mi piedra angular"
 L["Slot"] = "Ranura"
 
 -- options/datatext/misc_tracker.lua

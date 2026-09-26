@@ -20,11 +20,12 @@ local string = string
 local tinsert = tinsert
 local ipairs = ipairs
 local wipe = wipe
-local gsub = gsub
 local strfind = strfind
 local strlower = strlower
 local C_LFGList = C_LFGList
 local C_ChallengeMode = C_ChallengeMode
+local C_MythicPlus = C_MythicPlus
+local format = format
 local IsInGroup = IsInGroup
 local IsInInstance = IsInInstance
 local GetInstanceInfo = GetInstanceInfo
@@ -758,102 +759,107 @@ local seasonChallengeMaps = {
 	[393256] = 399, -- RLP - Ruby Life Pools
 }
 
-local activeAppStatus = {
-	inviteaccepted = true,
-}
-
--- resolve an activityID to a lowercase dungeon name (without trailing "(Mythic Keystone)" etc.)
-local function GetActivityDungeonName(activityID)
-	local activityInfo = activityID and C_LFGList.GetActivityInfoTable(activityID)
-	if activityInfo and activityInfo.fullName then return strlower(gsub(activityInfo.fullName, "%s*%(.-%)%s*$", "")) end
-end
-
 -- activityIDs is a secret table on M+ search results; indexing or branching on a secret throws, only issecretvalue may probe it.
 local function PlainValue(value)
 	if not E:IsSecretValue(value) then return value end
 end
 
-local function GetFirstActivityID(info)
+-- instance mapID of a search result or entry, the same value GetInstanceInfo reports as instanceID
+local function GetActivityMapID(info)
+	info = PlainValue(info)
+	if not info then return end
+
 	local ids = PlainValue(info.activityIDs)
-	return (ids and PlainValue(ids[1])) or PlainValue(info.activityID)
+	local activityID = (ids and PlainValue(ids[1])) or PlainValue(info.activityID)
+	local activityInfo = activityID and C_LFGList.GetActivityInfoTable(activityID)
+	return activityInfo and PlainValue(activityInfo.mapID)
 end
 
--- resultID -> dungeon name; keeps the highlight after the leader delists (GetSearchResultInfo returns nil then)
-local appliedNameCache = {}
+local function GetSearchResultMapID(resultID)
+	return GetActivityMapID(C_LFGList.GetSearchResultInfo(resultID))
+end
 
-local function GetAppliedDungeonNames()
-	local applied = {}
+-- the newest listing or accepted invite wins, so a key relisted after a run replaces the old one
+local lfgTargetMapID
+-- resultID -> mapID, read while applying because the leader usually delists before the group zones in
+local pendingApps = {}
 
-	-- own listed group (leader) - this has no application entry
-	local entryInfo = C_LFGList.GetActiveEntryInfo and C_LFGList.GetActiveEntryInfo()
-	if entryInfo then
-		local name = GetActivityDungeonName(GetFirstActivityID(entryInfo))
-		if name then tinsert(applied, name) end
-	end
+local function SeedLFGTarget()
+	lfgTargetMapID = C_LFGList.HasActiveEntryInfo() and GetActivityMapID(C_LFGList.GetActiveEntryInfo()) or nil
+	if lfgTargetMapID then return end
 
-	if not IsInGroup() then
-		if not entryInfo then wipe(appliedNameCache) end
-		return applied
-	end
-
-	local applications = C_LFGList.GetApplications()
-	if not applications then return applied end
-
-	for _, resultID in ipairs(applications) do
-		local a, b = C_LFGList.GetApplicationInfo(resultID)
-		local appStatus = (type(a) == "table" and (a.applicationStatus or a.appStatus)) or b
-
-		if appStatus and activeAppStatus[appStatus] then
-			local name = appliedNameCache[resultID]
-			if not name then
-				local searchResultData = C_LFGList.GetSearchResultInfo(resultID)
-				name = searchResultData and GetActivityDungeonName(GetFirstActivityID(searchResultData))
-				appliedNameCache[resultID] = name
-			end
-			if name then tinsert(applied, name) end
+	for _, resultID in ipairs(C_LFGList.GetApplications() or {}) do
+		local appStatus = PlainValue(select(2, C_LFGList.GetApplicationInfo(resultID)))
+		if appStatus == "inviteaccepted" then
+			lfgTargetMapID = GetSearchResultMapID(resultID)
+			if lfgTargetMapID then return end
+		elseif appStatus == "applied" or appStatus == "invited" then
+			pendingApps[resultID] = GetSearchResultMapID(resultID)
 		end
 	end
-
-	return applied
 end
 
--- exact and lockdown proof, unlike the name match: it survives a reload inside the dungeon, where the applied group can no longer be resolved
--- GetMapUIInfo 6th return (11.2.0) is the instance mapID, the same value GetInstanceInfo reports as instanceID
-local function GetCurrentChallengeMapID()
-	local activeID = C_ChallengeMode.GetActiveChallengeMapID()
-	if activeID then return activeID end
-
-	if not IsInInstance() then return end
-
-	local instanceID = select(8, GetInstanceInfo())
-	if not instanceID then return end
-
-	for _, mapID in pairs(seasonChallengeMaps) do
-		local _, _, _, _, _, id = C_ChallengeMode.GetMapUIInfo(mapID)
-		if id == instanceID then return mapID end
+local lfgFrame = CreateFrame("Frame")
+lfgFrame:RegisterEvent("PLAYER_ENTERING_WORLD")
+lfgFrame:RegisterEvent("LFG_LIST_APPLICATION_STATUS_UPDATED")
+lfgFrame:RegisterEvent("LFG_LIST_ACTIVE_ENTRY_UPDATE")
+lfgFrame:RegisterEvent("CHALLENGE_MODE_START")
+lfgFrame:RegisterEvent("GROUP_LEFT")
+lfgFrame:SetScript("OnEvent", function(_, event, arg1, arg2)
+	if event == "LFG_LIST_APPLICATION_STATUS_UPDATED" then
+		if arg2 == "applied" or arg2 == "invited" then
+			pendingApps[arg1] = GetSearchResultMapID(arg1) or pendingApps[arg1]
+		elseif arg2 == "inviteaccepted" then
+			lfgTargetMapID = pendingApps[arg1] or GetSearchResultMapID(arg1)
+			wipe(pendingApps)
+		else
+			pendingApps[arg1] = nil
+		end
+	elseif event == "LFG_LIST_ACTIVE_ENTRY_UPDATE" then
+		-- keep the target after a full group delists, drop it when a solo listing is removed
+		if C_LFGList.HasActiveEntryInfo() then
+			lfgTargetMapID = GetActivityMapID(C_LFGList.GetActiveEntryInfo())
+		elseif not IsInGroup() then
+			lfgTargetMapID = nil
+		end
+	elseif event == "CHALLENGE_MODE_START" then
+		-- the running key is matched by instance, the group may have switched keys
+		lfgTargetMapID = nil
+	elseif event == "GROUP_LEFT" then
+		lfgTargetMapID = nil
+		wipe(pendingApps)
+	elseif arg1 or arg2 then
+		SeedLFGTarget()
 	end
+end)
+
+-- instance fallback survives a reload inside the dungeon, where the group finder data is locked down
+local function GetTargetMapID()
+	if lfgTargetMapID then return lfgTargetMapID end
+	if IsInInstance() then return select(8, GetInstanceInfo()) end
 end
 
-local function IsAppliedDungeon(appliedDungeons, currentMapID, id, teleportName)
-	local mapID = seasonChallengeMaps[id]
-	if mapID and mapID == currentMapID then return true end
-	if #appliedDungeons == 0 then return false end
-
-	teleportName = strlower(teleportName)
-
-	local mapName = mapID and C_ChallengeMode.GetMapUIInfo(mapID)
-	mapName = mapName and strlower(mapName)
-
-	for _, dungeonName in ipairs(appliedDungeons) do
-		if mapName and (mapName == dungeonName or strfind(mapName, dungeonName, 1, true) or strfind(dungeonName, mapName, 1, true)) then return true end
-		if strfind(teleportName, dungeonName, 1, true) then return true end
-	end
-
-	return false
+-- GetMapUIInfo 6th return (11.2.0) is the instance mapID
+local function IsTargetDungeon(targetMapID, id)
+	local challengeMapID = targetMapID and seasonChallengeMaps[id]
+	return challengeMapID and select(6, C_ChallengeMode.GetMapUIInfo(challengeMapID)) == targetMapID or false
 end
 
-local function CreateMenuEntry(id, t, marked)
-	local name = marked and mMT:TC(t.name, "blue") or t.name
+local function GetHighlightMapIDs()
+	local highlight = E.db.mMediaTag.datatexts.teleports.highlight
+	return highlight.current.enable and GetTargetMapID(), highlight.keystone.enable and C_MythicPlus.GetOwnedKeystoneChallengeMapID()
+end
+
+-- the current dungeon wins over the own keystone
+local function GetHighlightName(targetMapID, keyMapID, id, name)
+	local highlight = E.db.mMediaTag.datatexts.teleports.highlight
+	if IsTargetDungeon(targetMapID, id) then return format("|c%s%s|r", highlight.current.color, name) end
+	if keyMapID and seasonChallengeMaps[id] == keyMapID then return format("|c%s%s|r", highlight.keystone.color, name) end
+	return name
+end
+
+local function CreateMenuEntry(id, t, name)
+	name = name or t.name
 	local text = t.short_name and ("[" .. mMT:TC(t.short_name, "mark") .. "] " .. name) or name
 
 	return {
@@ -915,11 +921,11 @@ local function UpdateMenus()
 
 	-- Add season portals menu entry
 	if mMT.knownTeleports.season.available then
-		local appliedDungeons, currentMapID = GetAppliedDungeonNames(), GetCurrentChallengeMapID()
+		local targetMapID, keyMapID = GetHighlightMapIDs()
 
 		tinsert(menus.main, { text = mMT:TC(L["M+ Season"], "title"), isTitle = true, notClickable = true })
 		for id, t in pairs(mMT.knownTeleports.season) do
-			if t and type(t) == "table" then tinsert(menus.main, CreateMenuEntry(id, t, IsAppliedDungeon(appliedDungeons, currentMapID, id, t.name))) end
+			if t and type(t) == "table" then tinsert(menus.main, CreateMenuEntry(id, t, GetHighlightName(targetMapID, keyMapID, id, t.name))) end
 		end
 	end
 
@@ -1137,12 +1143,12 @@ local function OnEnter(self)
 
 	-- Add season menu entry
 	if mMT.knownTeleports.season.available then
-		local appliedDungeons, currentMapID = GetAppliedDungeonNames(), GetCurrentChallengeMapID()
+		local targetMapID, keyMapID = GetHighlightMapIDs()
 
 		DT.tooltip:AddLine(L["Season Teleports"], mMT:GetRGB("title"))
 		for id, t in pairs(mMT.knownTeleports.season) do
 			if t and type(t) == "table" then
-				local name = IsAppliedDungeon(appliedDungeons, currentMapID, id, t.name) and mMT:TC(t.name, "blue") or t.name
+				local name = GetHighlightName(targetMapID, keyMapID, id, t.name)
 				DT.tooltip:AddDoubleLine(BuildTipIcon(t.icon) .. mMT:TC(t.short_name and ("[" .. mMT:TC(t.short_name, "mark") .. "] " .. name) or name), t.cooldown)
 			end
 		end

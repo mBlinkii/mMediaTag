@@ -589,6 +589,11 @@ L["Profession Icon Style"] = "专业图标样式"
 L["Tooltip Icons"] = "提示框图标"
 
 -- options/datatext/misc_teleports.lua
+L["Current Dungeon"] = "当前地下城"
+L["Highlight"] = "高亮"
+L["Highlights the dungeon of your own keystone."] = "高亮你自己钥石的地下城。"
+L["Highlights the dungeon you are listed for, joined or currently in."] = "高亮你已登记、已加入或当前所在的地下城。"
+L["My Keystone"] = "我的钥石"
 L["Slot"] = "栏位"
 
 -- options/datatext/misc_tracker.lua

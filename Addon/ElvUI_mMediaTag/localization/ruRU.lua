@@ -590,6 +590,11 @@ L["Profession Icon Style"] = "Стиль значка профессии"
 L["Tooltip Icons"] = "Значки в подсказках"
 
 -- options/datatext/misc_teleports.lua
+L["Current Dungeon"] = "Текущее подземелье"
+L["Highlight"] = "Подсветка"
+L["Highlights the dungeon of your own keystone."] = "Подсвечивает подземелье вашего ключа."
+L["Highlights the dungeon you are listed for, joined or currently in."] = "Подсвечивает подземелье, на которое вы записаны, к группе которого вы присоединились или в котором вы сейчас находитесь."
+L["My Keystone"] = "Мой ключ"
 L["Slot"] = "Слот"
 
 -- options/datatext/misc_tracker.lua
