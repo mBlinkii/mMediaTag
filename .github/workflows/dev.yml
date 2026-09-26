@@ -60,12 +60,20 @@ jobs:
           GH_TOKEN: ${{ github.token }}
         run: |
           set -e
-          # Basis ist das letzte echte Release, nicht die .toc: auf main steht dort
-          # der Platzhalter oder schon die naechste, noch unveroeffentlichte Nummer.
+          # Basis ist die kommende Version aus CHANGELOG.md, solange sie neuer als das
+          # letzte echte Release ist, sonst das Release selbst. Die .toc taugt nicht,
+          # dort steht nur der Platzhalter git-build.
           # --exclude-pre-releases blendet den rollenden dev-Tag und -test-Laeufe aus.
-          VERSION=$(gh release list --exclude-drafts --exclude-pre-releases --limit 1 --json tagName -q '.[0].tagName' 2>/dev/null || true)
-          VERSION="${VERSION#v}"
-          [ -n "$VERSION" ] || VERSION="0.00"
+          RELEASED=$(gh release list --exclude-drafts --exclude-pre-releases --limit 1 --json tagName -q '.[0].tagName' 2>/dev/null || true)
+          RELEASED="${RELEASED#v}"
+          [ -n "$RELEASED" ] || RELEASED="0.00"
+
+          # ADAPT 7: Ueberschrift der obersten Version im Changelog.
+          NEXT=$(sed -n -E 's/^## \[ver\. ([0-9.]+)\].*/\1/p' CHANGELOG.md | head -n1)
+          VERSION="$RELEASED"
+          if [ -n "$NEXT" ] && [ "$(printf '%s\n%s\n' "$RELEASED" "$NEXT" | sort -V | tail -n1)" = "$NEXT" ]; then
+            VERSION="$NEXT"
+          fi
 
           SHORT="${GITHUB_SHA::7}"
           echo "version=${VERSION}" >> "$GITHUB_OUTPUT"
@@ -144,6 +152,13 @@ jobs:
             echo '```'
           } >> DEV_NOTES.md
 
+      # Die Release-Action legt den Tag nur an und verschiebt einen vorhandenen
+      # nicht, sonst bliebe "dev" auf dem ersten Build stehen.
+      - name: dev-Tag verschieben
+        run: |
+          git tag -f dev "$GITHUB_SHA"
+          git push -f origin refs/tags/dev
+
       # Tag und Prerelease werden bei jedem Lauf neu gesetzt. Das Asset traegt
       # denselben Namen, damit die Download-URL stabil bleibt.
       - name: Prerelease veroeffentlichen
@@ -152,7 +167,7 @@ jobs:
           tag_name: dev
           target_commitish: ${{ github.sha }}
           # ADAPT 6: Release-Titel und Asset-Name (muss zu ADAPT 4 passen).
-          name: mMT Development Build
+          name: mMT Development Build ${{ steps.meta.outputs.version }}-dev-${{ steps.meta.outputs.sha }}
           body_path: DEV_NOTES.md
           files: mMT-dev.zip
           prerelease: true
