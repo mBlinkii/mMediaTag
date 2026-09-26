@@ -290,9 +290,7 @@ local function GetGroupKeystone()
 		end
 	else
 		for _, unit in ipairs(GroupMembers) do
-			if unit and UnitIsPlayer(unit) then
-				AddFallbackGroupLine(unit)
-			end
+			if unit and UnitIsPlayer(unit) then AddFallbackGroupLine(unit) end
 		end
 	end
 end

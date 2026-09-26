@@ -5,9 +5,7 @@ local CH = E:GetModule("Chat")
 local UF = E:GetModule("UnitFrames")
 
 local function ForceRoleIconUpdate(frame)
-	if frame.GroupRoleIndicator and frame.IsElementEnabled and frame:IsElementEnabled("GroupRoleIndicator") then
-		frame.GroupRoleIndicator:ForceUpdate()
-	end
+	if frame.GroupRoleIndicator and frame.IsElementEnabled and frame:IsElementEnabled("GroupRoleIndicator") then frame.GroupRoleIndicator:ForceUpdate() end
 end
 
 local function UpdateHeaderRoleIcons(header)

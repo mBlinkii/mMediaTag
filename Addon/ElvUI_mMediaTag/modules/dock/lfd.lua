@@ -152,7 +152,6 @@ local function OnEvent(...)
 				if info.isGuildParty then name = MEDIA.color.GUILD:WrapTextInColorCode(name) end
 				text = info.difficultyColor:WrapTextInColorCode(difficulty) .. " - " .. name
 			end
-
 		elseif isInGroup then
 			local difficulty, raid = mMT:GetInstanceDifficulty()
 			if difficulty then text = (raid and L["Raid"] .. " - " or "") .. difficulty end
@@ -164,4 +163,16 @@ local function OnEvent(...)
 	self.text:SetText("")
 end
 
-DT:RegisterDatatext( config.name, config.category, { "CHALLENGE_MODE_START", "UPDATE_INSTANCE_INFO", "SCENARIO_UPDATE", "PLAYER_DIFFICULTY_CHANGED", "LFG_UPDATE_RANDOM_INFO", "GROUP_ROSTER_UPDATE" }, OnEvent, nil, OnClick, OnEnter, OnLeave, config.localizedName, nil, nil )
+DT:RegisterDatatext(
+	config.name,
+	config.category,
+	{ "CHALLENGE_MODE_START", "UPDATE_INSTANCE_INFO", "SCENARIO_UPDATE", "PLAYER_DIFFICULTY_CHANGED", "LFG_UPDATE_RANDOM_INFO", "GROUP_ROSTER_UPDATE" },
+	OnEvent,
+	nil,
+	OnClick,
+	OnEnter,
+	OnLeave,
+	config.localizedName,
+	nil,
+	nil
+)

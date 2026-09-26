@@ -1,11 +1,10 @@
-local E, _, V, P, G = unpack(ElvUI)
+local E, _, _, P = unpack(ElvUI)
 local EP = E.Libs.EP
 
 -- Cache WoW Globals
 local _G = _G
 local format = format
 local strfind = strfind
-local CreateFrame = CreateFrame
 local GetAddOnMetadata = _G.C_AddOns and _G.C_AddOns.GetAddOnMetadata or _G.GetAddOnMetadata
 local IsAddOnLoaded = _G.C_AddOns and _G.C_AddOns.IsAddOnLoaded or IsAddOnLoaded
 local C_Timer_After = C_Timer.After

@@ -40,7 +40,10 @@ local function OnEnter(self)
 				DT.tooltip:AddLine(MEDIA.leftClick .. " " .. L["click to open the Spellbook."], mMT:GetRGB("tip"))
 				if E.Retail then
 					DT.tooltip:AddLine(" ")
-					DT.tooltip:AddLine( L["Opening the spellbook via addons can lead to taints.\nThis occurs when protected Blizzard code is unintentionally modified or affected,\nwhich may result in malfunctions or UI restrictions."], mMT:GetRGB("tip") )
+					DT.tooltip:AddLine(
+						L["Opening the spellbook via addons can lead to taints.\nThis occurs when protected Blizzard code is unintentionally modified or affected,\nwhich may result in malfunctions or UI restrictions."],
+						mMT:GetRGB("tip")
+					)
 				end
 			end
 		end

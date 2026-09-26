@@ -30,9 +30,7 @@ local function OnEvent(self)
 end
 
 local function Click()
-	if not E:AlertCombat() then
-		_G.ToggleFrame(_G.WorldMapFrame)
-	end
+	if not E:AlertCombat() then _G.ToggleFrame(_G.WorldMapFrame) end
 end
 
 local function ValueColorUpdate(self, hex)
@@ -42,5 +40,29 @@ local function ValueColorUpdate(self, hex)
 	OnEvent(self)
 end
 
-DT:RegisterDatatext( "mMT - Coordinate X", mMT.Name, { "LOADING_SCREEN_DISABLED", "ZONE_CHANGED", "ZONE_CHANGED_INDOORS", "ZONE_CHANGED_NEW_AREA" }, OnEvent, Update, Click, nil, nil, L["Coordinate X"], mapInfo, ValueColorUpdate)
-DT:RegisterDatatext( "mMT - Coordinate Y", mMT.Name, { "LOADING_SCREEN_DISABLED", "ZONE_CHANGED", "ZONE_CHANGED_INDOORS", "ZONE_CHANGED_NEW_AREA" }, OnEvent, Update, Click, nil, nil, L["Coordinate Y"], mapInfo, ValueColorUpdate)
+DT:RegisterDatatext(
+	"mMT - Coordinate X",
+	mMT.Name,
+	{ "LOADING_SCREEN_DISABLED", "ZONE_CHANGED", "ZONE_CHANGED_INDOORS", "ZONE_CHANGED_NEW_AREA" },
+	OnEvent,
+	Update,
+	Click,
+	nil,
+	nil,
+	L["Coordinate X"],
+	mapInfo,
+	ValueColorUpdate
+)
+DT:RegisterDatatext(
+	"mMT - Coordinate Y",
+	mMT.Name,
+	{ "LOADING_SCREEN_DISABLED", "ZONE_CHANGED", "ZONE_CHANGED_INDOORS", "ZONE_CHANGED_NEW_AREA" },
+	OnEvent,
+	Update,
+	Click,
+	nil,
+	nil,
+	L["Coordinate Y"],
+	mapInfo,
+	ValueColorUpdate
+)

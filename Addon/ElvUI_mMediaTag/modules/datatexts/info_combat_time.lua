@@ -62,9 +62,11 @@ local function OnEvent(self, event, _, timeSeconds)
 		self.text:SetFormattedText(textString, out_of_combat .. UpdateText())
 		self:SetScript("OnUpdate", nil)
 		if ended then inEncounter = nil end
-		if (E.db.mMediaTag.datatexts.combat_time.hide_delay ~= 0) and not self.hide_timer then self.hide_timer = C_Timer.NewTicker(E.db.mMediaTag.datatexts.combat_time.hide_delay, function()
-			ClearText(self)
-		end) end
+		if (E.db.mMediaTag.datatexts.combat_time.hide_delay ~= 0) and not self.hide_timer then
+			self.hide_timer = C_Timer.NewTicker(E.db.mMediaTag.datatexts.combat_time.hide_delay, function()
+				ClearText(self)
+			end)
+		end
 	elseif not inArena and ((not inEncounter and event == "PLAYER_REGEN_DISABLED") or started) then
 		timer, startTime = 0, GetTime()
 		self.mmtSecond = nil
@@ -72,9 +74,7 @@ local function OnEvent(self, event, _, timeSeconds)
 		self:SetScript("OnUpdate", OnUpdate)
 		if started then inEncounter = true end
 	elseif E.db.mMediaTag.datatexts.combat_time.hide_delay == 0 then
-		if not self.text:GetText() or event == 'ELVUI_FORCE_UPDATE' then
-			self.text:SetFormattedText(textString, out_of_combat .. UpdateText())
-		end
+		if not self.text:GetText() or event == "ELVUI_FORCE_UPDATE" then self.text:SetFormattedText(textString, out_of_combat .. UpdateText()) end
 	end
 end
 
@@ -86,4 +86,16 @@ local function ValueColorUpdate(self, hex)
 	OnEvent(self)
 end
 
-DT:RegisterDatatext( "mMT - CombatTimer", mMT.Name, { "START_TIMER", "ENCOUNTER_START", "ENCOUNTER_END", "PLAYER_REGEN_DISABLED", "PLAYER_REGEN_ENABLED" }, OnEvent, nil, nil, nil, nil, L["Combat/Arena Time"], nil, ValueColorUpdate )
+DT:RegisterDatatext(
+	"mMT - CombatTimer",
+	mMT.Name,
+	{ "START_TIMER", "ENCOUNTER_START", "ENCOUNTER_END", "PLAYER_REGEN_DISABLED", "PLAYER_REGEN_ENABLED" },
+	OnEvent,
+	nil,
+	nil,
+	nil,
+	nil,
+	L["Combat/Arena Time"],
+	nil,
+	ValueColorUpdate
+)

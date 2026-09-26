@@ -1,5 +1,4 @@
 local mMT, DB, M, E, P, L, MEDIA = unpack(ElvUI_mMediaTag)
-local DT = E:GetModule("DataTexts")
 
 mMT.options.args.colors.args.tip_menu.args = {
 	color_title = {

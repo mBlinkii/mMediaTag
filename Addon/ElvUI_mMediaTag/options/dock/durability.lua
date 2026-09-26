@@ -90,7 +90,7 @@ mMT.options.args.dock.args.durability.args = {
 			},
 		},
 	},
-    settings = {
+	settings = {
 		order = 3,
 		type = "group",
 		inline = true,
@@ -108,13 +108,13 @@ mMT.options.args.dock.args.durability.args = {
 					DT:ForceUpdate_DataText("mMT_Dock_Durability")
 				end,
 				values = {
-                    none = L["None"],
-                    durability = L["Durability"],
-                    both = L["Durability / Item level"],
-                    ilevel = L["Item level"],
-                },
+					none = L["None"],
+					durability = L["Durability"],
+					both = L["Durability / Item level"],
+					ilevel = L["Item level"],
+				},
 			},
-            mount = {
+			mount = {
 				order = 2,
 				type = "select",
 				name = L["Repair Mount"],
@@ -136,7 +136,7 @@ mMT.options.args.dock.args.durability.args = {
 					return mountIDs
 				end,
 			},
-            percThreshold = {
+			percThreshold = {
 				order = 3,
 				name = L["Threshold"],
 				type = "range",

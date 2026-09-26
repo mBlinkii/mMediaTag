@@ -20,9 +20,7 @@ end
 -- SetTemplate calls this instead of its own SetBackdropColor, so the color survives every retemplate
 local function BackdropColor(panel)
 	local c = panel.mmt_color
-	if c then
-		panel:SetBackdropColor(c.r, c.g, c.b, c.a)
-	end
+	if c then panel:SetBackdropColor(c.r, c.g, c.b, c.a) end
 end
 
 local function ApplyTemplate(panel)

@@ -181,7 +181,7 @@ local function UpdateMenu()
 		end,
 	})
 	if player_professions.extra then
-		local name, icon, spell, skill = player_professions.extra.name, player_professions.extra.icon, player_professions.extra.spell, player_professions.extra.skill
+		local name, icon, skill = player_professions.extra.name, player_professions.extra.icon, player_professions.extra.skill
 		tinsert(menu, {
 			text = name,
 			right_text = skill,

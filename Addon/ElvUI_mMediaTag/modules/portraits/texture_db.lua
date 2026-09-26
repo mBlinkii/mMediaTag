@@ -553,4 +553,3 @@ local textureDB = {
 }
 
 MEDIA.portraits = textureDB
-

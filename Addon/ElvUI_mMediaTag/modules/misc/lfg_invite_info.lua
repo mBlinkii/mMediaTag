@@ -32,8 +32,21 @@ local SEPARATOR = "  •  "
 local CHAT_RULE = "|T%s:2:190:0:0:8:8:0:8:0:8:%d:%d:%d|t"
 
 local THEMES = {
-	class = { accentTop = true, divider = true, color = function() return MEDIA.myclass.r, MEDIA.myclass.g, MEDIA.myclass.b end },
-	custom = { accentTop = true, accentBottom = true, divider = true, color = function() return mMT:HexToRGB(module.db.colors.theme) end },
+	class = {
+		accentTop = true,
+		divider = true,
+		color = function()
+			return MEDIA.myclass.r, MEDIA.myclass.g, MEDIA.myclass.b
+		end,
+	},
+	custom = {
+		accentTop = true,
+		accentBottom = true,
+		divider = true,
+		color = function()
+			return mMT:HexToRGB(module.db.colors.theme)
+		end,
+	},
 	minimal = {},
 }
 
@@ -52,9 +65,7 @@ end
 
 local function Details(activity, difficulty)
 	activity, difficulty = activity or "", difficulty or ""
-	if activity ~= "" and difficulty ~= "" then
-		return format("%s%s%s", mMT:TC(activity, "line_b"), mMT:TC(SEPARATOR, "gray"), mMT:TC(difficulty, "line_c"))
-	end
+	if activity ~= "" and difficulty ~= "" then return format("%s%s%s", mMT:TC(activity, "line_b"), mMT:TC(SEPARATOR, "gray"), mMT:TC(difficulty, "line_c")) end
 
 	return activity ~= "" and mMT:TC(activity, "line_b") or mMT:TC(difficulty, "line_c")
 end

@@ -1,4 +1,4 @@
-local addonName, ns = ...
+local _, ns = ...
 
 -- Cache WoW Globals
 local CreateFrame = CreateFrame
@@ -16,9 +16,7 @@ local master, reloadButton, hint
 
 local function ApplyState()
 	local textures = ns.db and ns.db.textures
-	if not textures or not master then
-		return
-	end
+	if not textures or not master then return end
 
 	master:SetChecked(textures.all)
 
@@ -58,17 +56,13 @@ local function CreateCheckBox(parent, text, labelWidth)
 	box.label = box:CreateFontString(nil, "ARTWORK", "GameFontNormal")
 	box.label:SetPoint("LEFT", box, "RIGHT", 2, 0)
 	box.label:SetJustifyH("LEFT")
-	if labelWidth then
-		box.label:SetWidth(labelWidth)
-	end
+	if labelWidth then box.label:SetWidth(labelWidth) end
 	box.label:SetText(text)
 	return box
 end
 
 function ns.SetupOptions()
-	if master or not (Settings and Settings.RegisterCanvasLayoutCategory and Settings.RegisterAddOnCategory) then
-		return
-	end
+	if master or not (Settings and Settings.RegisterCanvasLayoutCategory and Settings.RegisterAddOnCategory) then return end
 
 	local panel = CreateFrame("Frame")
 	panel.name = "mMT Media Pack"
@@ -133,9 +127,7 @@ function ns.SetupOptions()
 end
 
 function ns.OpenOptions()
-	if not (ns.categoryID and Settings and Settings.OpenToCategory) then
-		return false
-	end
+	if not (ns.categoryID and Settings and Settings.OpenToCategory) then return false end
 
 	Settings.OpenToCategory(ns.categoryID)
 	return true

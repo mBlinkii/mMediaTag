@@ -2,7 +2,6 @@ local mMT, DB, M, E, P, L, MEDIA = unpack(ElvUI_mMediaTag)
 local DT = E:GetModule("DataTexts")
 
 -- Cache WoW Globals
-local _G = _G
 local format = format
 local GetProfessions = GetProfessions
 local GetProfessionInfo = GetProfessionInfo

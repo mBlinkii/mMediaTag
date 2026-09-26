@@ -34,7 +34,7 @@ local function UpdateCounter()
 
 	local deaths, timeLost = GetDeathCount()
 
-		-- only show once the first death happened
+	-- only show once the first death happened
 	if not deaths or deaths == 0 then
 		frame:Hide()
 		return
@@ -94,7 +94,9 @@ function module:Initialize(demo)
 			self:SetSize(width, height)
 		end)
 
-		E:CreateMover(module.death_counter, "mMediaTag_Death_Counter_Mover", "mMT " .. L["Death Counter"], nil, nil, nil, "ALL,MMEDIATAG", function() return E.db.mMediaTag.death_counter.enable end, "mMT,misc,death_counter")
+		E:CreateMover(module.death_counter, "mMediaTag_Death_Counter_Mover", "mMT " .. L["Death Counter"], nil, nil, nil, "ALL,MMEDIATAG", function()
+			return E.db.mMediaTag.death_counter.enable
+		end, "mMT,misc,death_counter")
 		module.death_counter:Hide()
 	end
 

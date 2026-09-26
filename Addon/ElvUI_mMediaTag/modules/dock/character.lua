@@ -147,13 +147,9 @@ local function OnEnter(self)
 			DT.tooltip:AddLine(TIME_PLAYED_MSG, mMT:GetRGB("title"))
 			DT.tooltip:AddDoubleLine(L["Account total"], SecondsToTime(GetAccountPlayedTotal()), mMT:GetRGB("text", "text"))
 
-			if totalTimePlayed then
-				DT.tooltip:AddDoubleLine(L["Total play time"], SecondsToTime(totalTimePlayed), mMT:GetRGB("text", "text"))
-			end
+			if totalTimePlayed then DT.tooltip:AddDoubleLine(L["Total play time"], SecondsToTime(totalTimePlayed), mMT:GetRGB("text", "text")) end
 
-			if levelTimePlayed then
-				DT.tooltip:AddDoubleLine(L["Time played this level"], SecondsToTime(levelTimePlayed), mMT:GetRGB("text", "text"))
-			end
+			if levelTimePlayed then DT.tooltip:AddDoubleLine(L["Time played this level"], SecondsToTime(levelTimePlayed), mMT:GetRGB("text", "text")) end
 		end
 
 		DT.tooltip:Show()
@@ -189,9 +185,7 @@ local function OnEvent(self, event, ...)
 		local totalTime, levelTime = ...
 		UpdatePlayedCache(totalTime, levelTime)
 
-		if E.db.mMediaTag.dock.tooltip and DT.tooltip and DT.tooltip:IsShown() then
-			OnEnter(self)
-		end
+		if E.db.mMediaTag.dock.tooltip and DT.tooltip and DT.tooltip:IsShown() then OnEnter(self) end
 
 		return
 	end
@@ -210,16 +204,17 @@ local function OnEvent(self, event, ...)
 	for index in pairs(slots) do
 		local currentDura, maxDura = GetInventoryItemDurability(index)
 		if currentDura and maxDura > 0 then
-			local perc, repairCost = (currentDura / maxDura) * 100, 0
+			local perc = (currentDura / maxDura) * 100
 			invDurability[index] = perc
 
 			if perc < totalDurability then totalDurability = perc end
 
+			local repairCost
 			if E.Retail then
 				local data = E.ScanTooltip:GetInventoryInfo("player", index)
 				repairCost = data and data.repairCost
 			else
-				_, _, repairCost = E.ScanTooltip:SetInventoryItem("player", index)
+				repairCost = select(3, E.ScanTooltip:SetInventoryItem("player", index))
 			end
 
 			totalRepairCost = totalRepairCost + (repairCost or 0)
@@ -239,4 +234,16 @@ local function OnEvent(self, event, ...)
 	end
 end
 
-DT:RegisterDatatext(config.name, config.category, { "PLAYER_ENTERING_WORLD", "TIME_PLAYED_MSG", "PLAYER_AVG_ITEM_LEVEL_UPDATE", "UPDATE_INVENTORY_DURABILITY", "MERCHANT_SHOW" }, OnEvent, nil, OnClick, OnEnter, OnLeave, config.localizedName, nil, nil)
+DT:RegisterDatatext(
+	config.name,
+	config.category,
+	{ "PLAYER_ENTERING_WORLD", "TIME_PLAYED_MSG", "PLAYER_AVG_ITEM_LEVEL_UPDATE", "UPDATE_INVENTORY_DURABILITY", "MERCHANT_SHOW" },
+	OnEvent,
+	nil,
+	OnClick,
+	OnEnter,
+	OnLeave,
+	config.localizedName,
+	nil,
+	nil
+)

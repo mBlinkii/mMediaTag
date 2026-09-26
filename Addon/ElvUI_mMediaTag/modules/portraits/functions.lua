@@ -922,7 +922,7 @@ function module:Initialize()
 		local specIcons = (specIconStyle ~= "none") and (MEDIA.icons.spec.icons.mmt[specIconStyle] or MEDIA.icons.spec.icons.custom[specIconStyle]) or nil
 
 		local useClassIcons = (classIcons and (module.db.misc.class_icon ~= "none") and (module.db.misc.spec_icon == "none")) and true or false
-		local useSpecIcon = ((specIcons or specIconStyle == "blizzard")) and (module.db.misc.spec_icon ~= "none") and true or false
+		local useSpecIcon = (specIcons or specIconStyle == "blizzard") and (module.db.misc.spec_icon ~= "none") and true or false
 
 		module.classIcons = classIcons and classIcons.texture or nil
 		module.useClassIcons = useClassIcons and classIcons
@@ -936,7 +936,6 @@ function module:Initialize()
 		for _, element in pairs(module.portraits) do
 			element:UnregisterAllEvents()
 			element:Hide()
-			element = nil
 		end
 		module.isEnabled = false
 		module.portraits = nil

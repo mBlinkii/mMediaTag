@@ -62,5 +62,6 @@ local function OnEvent(...)
 	self.text:SetText("")
 end
 
-local events = E.Retail and {'PLAYER_TALENT_UPDATE', 'ACTIVE_TALENT_GROUP_CHANGED', 'PLAYER_LOOT_SPEC_UPDATED', 'TRAIT_CONFIG_DELETED', 'TRAIT_CONFIG_UPDATED'} or { 'PLAYER_SPECIALIZATION_CHANGED', 'PLAYER_TALENT_UPDATE', 'ACTIVE_TALENT_GROUP_CHANGED', 'PLAYER_LOOT_SPEC_UPDATED', 'TRAIT_CONFIG_DELETED', 'TRAIT_CONFIG_UPDATED', 'CHAT_MSG_SYSTEM' }
-DT:RegisterDatatext( config.name, config.category, events, OnEvent, nil, OnClick, OnEnter, OnLeave, config.localizedName, nil, nil )
+local events = E.Retail and { "PLAYER_TALENT_UPDATE", "ACTIVE_TALENT_GROUP_CHANGED", "PLAYER_LOOT_SPEC_UPDATED", "TRAIT_CONFIG_DELETED", "TRAIT_CONFIG_UPDATED" }
+	or { "PLAYER_SPECIALIZATION_CHANGED", "PLAYER_TALENT_UPDATE", "ACTIVE_TALENT_GROUP_CHANGED", "PLAYER_LOOT_SPEC_UPDATED", "TRAIT_CONFIG_DELETED", "TRAIT_CONFIG_UPDATED", "CHAT_MSG_SYSTEM" }
+DT:RegisterDatatext(config.name, config.category, events, OnEvent, nil, OnClick, OnEnter, OnLeave, config.localizedName, nil, nil)

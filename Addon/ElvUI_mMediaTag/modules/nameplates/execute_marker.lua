@@ -90,9 +90,7 @@ local function UpdateAutoRange()
 end
 
 local function GetRange(db)
-	if db.auto then
-		return autoRange.enable and autoRange.range or nil
-	end
+	if db.auto then return autoRange.enable and autoRange.range or nil end
 
 	return db.range
 end

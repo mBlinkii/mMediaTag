@@ -109,7 +109,7 @@ mMT.options.args.dock.args.lfd.args = {
 					DT:ForceUpdate_DataText("mMT_Dock_LFD")
 				end,
 			},
-            cta = {
+			cta = {
 				order = 2,
 				type = "toggle",
 				name = L["Call to the arms"],

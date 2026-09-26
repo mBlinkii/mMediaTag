@@ -52,19 +52,17 @@ mMT.options.args.misc.args.data_panel_skin.args = {
 			L["Info: The Skin can be affected by other addons if they add a skin for all windows. To fix the problem, the skin must be deactivated in the other addon. This is not a bug of mMT."]
 		),
 	},
-    spacer = {
+	spacer = {
 		order = 4,
 		type = "description",
 		name = "\n",
 	},
-    info2 = {
+	info2 = {
 		order = 5,
 		type = "description",
-		name = MEDIA.color.info:WrapTextInColorCode(
-			L["Info: This Settings will override the ElvUI Data Panel settings."]
-		),
+		name = MEDIA.color.info:WrapTextInColorCode(L["Info: This Settings will override the ElvUI Data Panel settings."]),
 	},
-    spacer2 = {
+	spacer2 = {
 		order = 6,
 		type = "description",
 		name = "\n",
@@ -109,8 +107,8 @@ mMT.options.args.misc.args.data_panel_skin.args = {
 				desc = L["Delete the actual Settings"],
 				func = function()
 					wipe(E.db.mMediaTag.data_panel_skin.panels[selectedPanelName])
-                    selectedPanel = nil
-                    selectedPanelName = nil
+					selectedPanel = nil
+					selectedPanelName = nil
 					mMT:UpdateModule("DataPanelSkin")
 					E:UpdateDataTexts()
 				end,

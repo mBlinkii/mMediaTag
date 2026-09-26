@@ -31,7 +31,7 @@ mMT.options.args.datatexts.args.info_combat_time.args = {
 					return values
 				end,
 			},
-            out_of_combat = {
+			out_of_combat = {
 				order = 2,
 				type = "select",
 				name = L["Out of Combat"],
@@ -52,7 +52,7 @@ mMT.options.args.datatexts.args.info_combat_time.args = {
 					return values
 				end,
 			},
-            delay = {
+			delay = {
 				order = 3,
 				name = L["Hide delay"],
 				type = "range",
@@ -66,7 +66,7 @@ mMT.options.args.datatexts.args.info_combat_time.args = {
 					E.db.mMediaTag.datatexts.combat_time.hide_delay = value
 					DT:ForceUpdate_DataText("mMT - CombatTimer")
 				end,
-            },
+			},
 		},
 	},
 }

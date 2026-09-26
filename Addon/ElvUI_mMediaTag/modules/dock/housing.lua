@@ -84,9 +84,7 @@ local function OnEvent(self, event, ...)
 		return
 	end
 
-	if event == "PLAYER_HOUSE_LIST_UPDATED" then
-		CachePlayerHouses(...)
-	end
+	if event == "PLAYER_HOUSE_LIST_UPDATED" then CachePlayerHouses(...) end
 end
 
 DT:RegisterDatatext(config.name, config.category, "PLAYER_HOUSE_LIST_UPDATED", OnEvent, nil, OnClick, OnEnter, OnLeave, config.localizedName, nil, nil)

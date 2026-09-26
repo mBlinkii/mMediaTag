@@ -591,7 +591,7 @@ end
 local function processTeleport(t, category, kindOverride)
 	for id, idKind in pairs(t) do
 		if id and id ~= "none" then
-			local name, icon = nil, nil
+			local name, icon
 			local kind = kindOverride or idKind
 
 			-- this is needed because of favorite teleports

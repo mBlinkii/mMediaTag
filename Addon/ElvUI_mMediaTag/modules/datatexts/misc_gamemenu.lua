@@ -119,14 +119,16 @@ local function BuildMenuList()
 		},
 	}
 
-	if E.Mists and E.mylevel >= _G.SHOW_PVP_LEVEL then tinsert(menuList, {
-		text = _G.PLAYER_V_PLAYER,
-		color = "|c" .. MEDIA.color.gm_text_color.hex,
-		icon = icon and menu_icons.pvp,
-		func = function()
-			_G.TogglePVPFrame()
-		end,
-	}) end
+	if E.Mists and E.mylevel >= _G.SHOW_PVP_LEVEL then
+		tinsert(menuList, {
+			text = _G.PLAYER_V_PLAYER,
+			color = "|c" .. MEDIA.color.gm_text_color.hex,
+			icon = icon and menu_icons.pvp,
+			func = function()
+				_G.TogglePVPFrame()
+			end,
+		})
+	end
 
 	if E.Retail or E.Mists then
 		tinsert(menuList, {
@@ -177,14 +179,16 @@ local function BuildMenuList()
 	end
 
 	if E.Retail then
-		if StoreEnabled and StoreEnabled() then tinsert(menuList, {
-			text = _G.BLIZZARD_STORE,
-			color = "|c" .. MEDIA.color.gm_text_color.hex,
-			icon = icon and menu_icons.shop,
-			func = function()
-				_G.StoreMicroButton:Click()
-			end,
-		}) end
+		if StoreEnabled and StoreEnabled() then
+			tinsert(menuList, {
+				text = _G.BLIZZARD_STORE,
+				color = "|c" .. MEDIA.color.gm_text_color.hex,
+				icon = icon and menu_icons.shop,
+				func = function()
+					_G.StoreMicroButton:Click()
+				end,
+			})
+		end
 
 		tinsert(menuList, {
 			text = _G.PROFESSIONS_BUTTON,
@@ -222,7 +226,11 @@ local function BuildMenuList()
 	end
 
 	sort(menuList, function(a, b)
-		if a and b and a.text and b.text then return a.text < b.text else return false end
+		if a and b and a.text and b.text then
+			return a.text < b.text
+		else
+			return false
+		end
 	end)
 
 	tinsert(menuList, { text = "", isTitle = true, notClickable = true })
@@ -231,7 +239,7 @@ local function BuildMenuList()
 		color = "|c" .. MEDIA.color.gm_text_color.hex,
 		icon = icon and menu_icons.elvui,
 		func = function()
-			if not E:AlertCombat()  then
+			if not E:AlertCombat() then
 				E:ToggleOptions()
 				HideUIPanel(_G["GameMenuFrame"])
 			end
@@ -241,7 +249,7 @@ local function BuildMenuList()
 		text = mMT.Name,
 		icon = icon and menu_icons.mmt,
 		func = function()
-			if not E:AlertCombat()  then E:ToggleOptions("mMT") end
+			if not E:AlertCombat() then E:ToggleOptions("mMT") end
 		end,
 	})
 
@@ -320,7 +328,7 @@ local function OnEnter(self, slow)
 		end
 
 		local function AddLatencyInfo(title, latency, color)
-			DT.tooltip:AddDoubleLine(L[title], string.format("|c%s %d ms|r", color, latency),mMT:GetRGB())
+			DT.tooltip:AddDoubleLine(L[title], string.format("|c%s %d ms|r", color, latency), mMT:GetRGB())
 		end
 
 		local _, _, latencyHome, latencyWorld = GetNetStats()

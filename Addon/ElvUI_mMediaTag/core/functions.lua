@@ -368,10 +368,7 @@ local exportPrefix = "!mMT2!"
 local legacyPrefix = "!mMT!" -- LibDeflate/AceSerializer era, no longer decodable
 
 local function GetImportStringType(dataString)
-	return (strmatch(dataString, "^" .. exportPrefix) and "Deflate")
-		or (strmatch(dataString, "^{") and "Table")
-		or (strmatch(dataString, "^" .. legacyPrefix) and "Legacy")
-		or ""
+	return (strmatch(dataString, "^" .. exportPrefix) and "Deflate") or (strmatch(dataString, "^{") and "Table") or (strmatch(dataString, "^" .. legacyPrefix) and "Legacy") or ""
 end
 
 -- nil for secret values (WoW 12.x) - those must never be compared, concatenated or branched on.
@@ -450,7 +447,9 @@ function mMT:GetImportText(string)
 		local data = gsub(string, "^" .. exportPrefix, "")
 
 		-- both throw on malformed user input instead of returning nil
-		local ok, decompressed = pcall(function() return DecompressString(DecodeBase64(data), COMPRESS) end)
+		local ok, decompressed = pcall(function()
+			return DecompressString(DecodeBase64(data), COMPRESS)
+		end)
 		if not ok or not decompressed then
 			mMT:Print(L["Error decompressing data."])
 			return

@@ -86,7 +86,9 @@ mMT.options.args.skins.args.aussyloot.args = {
 	info_scope = {
 		order = 7,
 		type = "description",
-		name = MEDIA.color.info:WrapTextInColorCode(L["Info: This replaces AussyLoot's own surface, border and accent colors with the ElvUI ones and its fonts with the ElvUI font. The window is rebuilt on the next reload, the item quality, crest and status colors keep their own meaning."]),
+		name = MEDIA.color.info:WrapTextInColorCode(
+			L["Info: This replaces AussyLoot's own surface, border and accent colors with the ElvUI ones and its fonts with the ElvUI font. The window is rebuilt on the next reload, the item quality, crest and status colors keep their own meaning."]
+		),
 		hidden = function()
 			return not IsAddOnLoaded("AussyLoot")
 		end,

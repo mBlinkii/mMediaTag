@@ -59,7 +59,7 @@ MEDIA.color = {
 
 	important_casts = {
 		border = createColor("FFFF00E6"),
-		health = createColor("FFFF00E6")
+		health = createColor("FFFF00E6"),
 	},
 
 	portraits = {

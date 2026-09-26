@@ -90,13 +90,13 @@ mMT.options.args.dock.args.bags.args = {
 			},
 		},
 	},
-    settings = {
+	settings = {
 		order = 3,
 		type = "group",
 		inline = true,
 		name = L["Settings"],
 		args = {
-            style = {
+			style = {
 				order = 1,
 				type = "select",
 				name = L["Style"],
@@ -108,13 +108,13 @@ mMT.options.args.dock.args.bags.args = {
 					DT:ForceUpdate_DataText("mMT_Dock_Bags")
 				end,
 				values = {
-                    none = L["None"],
-                    money = L["Money"],
-                    both = L["Money / Free Slots"],
-                    total = L["Used / Total Slots"],
-                    used = L["Used Slots"],
-                    free = L["Free Slots"],
-                },
+					none = L["None"],
+					money = L["Money"],
+					both = L["Money / Free Slots"],
+					total = L["Used / Total Slots"],
+					used = L["Used Slots"],
+					free = L["Free Slots"],
+				},
 			},
 			gold = {
 				order = 2,

@@ -116,4 +116,16 @@ local function ValueColorUpdate(self, hex)
 	OnEvent(self)
 end
 
-DT:RegisterDatatext( "mMT - Time", mMT.Name, { "START_TIMER", "ENCOUNTER_START", "ENCOUNTER_END", "PLAYER_REGEN_DISABLED", "PLAYER_REGEN_ENABLED", "LOADING_SCREEN_ENABLED", "UPDATE_INSTANCE_INFO", "BOSS_KILL" }, OnEvent, OnUpdate, OnClick, OnEnter, OnLeave, L["Time"], nil, ValueColorUpdate )
+DT:RegisterDatatext(
+	"mMT - Time",
+	mMT.Name,
+	{ "START_TIMER", "ENCOUNTER_START", "ENCOUNTER_END", "PLAYER_REGEN_DISABLED", "PLAYER_REGEN_ENABLED", "LOADING_SCREEN_ENABLED", "UPDATE_INSTANCE_INFO", "BOSS_KILL" },
+	OnEvent,
+	OnUpdate,
+	OnClick,
+	OnEnter,
+	OnLeave,
+	L["Time"],
+	nil,
+	ValueColorUpdate
+)

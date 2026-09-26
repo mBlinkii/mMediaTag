@@ -91,26 +91,26 @@ mMT.options.args.misc.args.difficulty_info.args = {
 					mMT:UpdateModule("DifficultyInfo")
 				end,
 			},
-            justify = {
-                type = "select",
-                order = 6,
-                name = L["Alignment"],
-                disabled = function()
+			justify = {
+				type = "select",
+				order = 6,
+				name = L["Alignment"],
+				disabled = function()
 					return not E.db.mMediaTag.difficulty_info.enable
 				end,
-                get = function(info)
-                    return E.db.mMediaTag.difficulty_info.text.justify
-                end,
-                set = function(info, value)
-                    E.db.mMediaTag.difficulty_info.text.justify = value
-                    mMT:UpdateModule("DifficultyInfo")
-                end,
-                values = {
-                    LEFT = L["LEFT"],
-                    CENTER = L["CENTER"],
-                    RIGHT = L["RIGHT"],
-                },
-            },
+				get = function(info)
+					return E.db.mMediaTag.difficulty_info.text.justify
+				end,
+				set = function(info, value)
+					E.db.mMediaTag.difficulty_info.text.justify = value
+					mMT:UpdateModule("DifficultyInfo")
+				end,
+				values = {
+					LEFT = L["LEFT"],
+					CENTER = L["CENTER"],
+					RIGHT = L["RIGHT"],
+				},
+			},
 		},
 	},
 	settings = {

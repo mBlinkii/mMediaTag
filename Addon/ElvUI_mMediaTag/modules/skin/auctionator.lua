@@ -107,9 +107,7 @@ local function KillHighlight(frame)
 		local atlas = region.GetAtlas and region:GetAtlas()
 		local file = not atlas and region.GetTexture and region:GetTexture()
 
-		if (atlas and strfind(atlas, "ighlight")) or (type(file) == "string" and strfind(file, "ighlight")) then
-			region:Kill()
-		end
+		if (atlas and strfind(atlas, "ighlight")) or (type(file) == "string" and strfind(file, "ighlight")) then region:Kill() end
 	end
 end
 

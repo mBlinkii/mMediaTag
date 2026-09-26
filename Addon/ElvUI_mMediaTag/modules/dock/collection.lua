@@ -6,7 +6,6 @@ local Tracker = M.Tracker
 local icons = MEDIA.icons.dock
 
 -- Lua functions
-local format = format
 local GetMountIDs = C_MountJournal.GetMountIDs
 local GetMountInfoByID = C_MountJournal.GetMountInfoByID
 local GetNumPets = C_PetJournal.GetNumPets
@@ -72,9 +71,7 @@ local function OnEnter(self)
 			DT.tooltip:AddDoubleLine(polished_pet_harm.name, polished_pet_harm.count, mMT:GetRGB("text", "mark"))
 		end
 
-		if battle_pet_bandage then
-            DT.tooltip:AddDoubleLine(battle_pet_bandage.name, battle_pet_bandage.count, mMT:GetRGB("text", "mark"))
-        end
+		if battle_pet_bandage then DT.tooltip:AddDoubleLine(battle_pet_bandage.name, battle_pet_bandage.count, mMT:GetRGB("text", "mark")) end
 
 		DT.tooltip:Show()
 	end

@@ -21,5 +21,6 @@ mMT.Changelog[414] = {
 		"[System]: The portrait unit options and the color handling were rebuilt from shared templates, the options behave exactly as before but are easier to maintain.",
 		"[Localization]: Spanish, Mexican Spanish, French, Italian, Brazilian Portuguese, Russian, Korean and Simplified and Traditional Chinese are complete again, around 285 missing texts per language were translated.",
 		"[Localization]: Removed about 35 texts that were no longer used anywhere.",
+		"[System]: Every build now runs automatic code checks (luacheck and StyLua) first, a cleanup pass removed unused code and brought all files to one formatting.",
 	},
 }

@@ -75,4 +75,16 @@ local function OnEvent(...)
 	self.text:SetText("")
 end
 
-DT:RegisterDatatext( config.name, config.category, { "CHAT_MSG_SYSTEM", "GUILD_ROSTER_UPDATE", "PLAYER_GUILD_UPDATE", "GUILD_MOTD", "MODIFIER_STATE_CHANGED" }, OnEvent, nil, OnClick, OnEnter, OnLeave, config.localizedName, nil, nil )
+DT:RegisterDatatext(
+	config.name,
+	config.category,
+	{ "CHAT_MSG_SYSTEM", "GUILD_ROSTER_UPDATE", "PLAYER_GUILD_UPDATE", "GUILD_MOTD", "MODIFIER_STATE_CHANGED" },
+	OnEvent,
+	nil,
+	OnClick,
+	OnEnter,
+	OnLeave,
+	config.localizedName,
+	nil,
+	nil
+)

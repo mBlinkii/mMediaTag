@@ -42,7 +42,6 @@ end
 
 local function DeleteLabel(text)
 	text:SetText("")
-	text = nil
 end
 
 local function SetupDockText(datatext, config)

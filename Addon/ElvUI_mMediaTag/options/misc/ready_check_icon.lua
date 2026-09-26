@@ -48,7 +48,7 @@ mMT.options.args.unitframes.args.ready_check_icon.args = {
 					return icons
 				end,
 			},
-            notready = {
+			notready = {
 				order = 2,
 				type = "select",
 				name = L["Not Ready"],
@@ -70,7 +70,7 @@ mMT.options.args.unitframes.args.ready_check_icon.args = {
 					return icons
 				end,
 			},
-            waiting = {
+			waiting = {
 				order = 3,
 				type = "select",
 				name = L["Waiting"],

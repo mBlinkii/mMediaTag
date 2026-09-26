@@ -1,8 +1,6 @@
 local mMT, DB, M, E, P, L, MEDIA = unpack(ElvUI_mMediaTag)
 
-local DT = E:GetModule("DataTexts")
-
-local dock_style, dock_top, dock_bg = "XIV", false, false
+local dock_style, dock_top = "XIV", false
 
 local preview = {
 	XIV = "Interface\\Addons\\ElvUI_mMediaTag\\media\\preview\\xiv.tga",
@@ -24,8 +22,8 @@ local function ResetDB()
 	E.db.mMediaTag.dock = {}
 	E.db.mMediaTag.dock = CopyTable(P.dock)
 
-    E.db.mMediaTag.color.dock = {}
-    E.db.mMediaTag.color.dock = CopyTable(P.color.dock)
+	E.db.mMediaTag.color.dock = {}
+	E.db.mMediaTag.color.dock = CopyTable(P.color.dock)
 end
 
 local function SetupDock()

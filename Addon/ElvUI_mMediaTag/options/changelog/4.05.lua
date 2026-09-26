@@ -9,16 +9,16 @@ mMT.Changelog[405] = {
 	FIX = {
 		"[LFG-Info]: Fixed visibility logic for the popup.",
 		"[Highlighters]: Fix stack overflow.",
-        "[System]: Update guild identification logic to use isGuildParty for consistency across modules.",
+		"[System]: Update guild identification logic to use isGuildParty for consistency across modules.",
 	},
 	UPDATE = {
 		"[System]: Refactor greeting message initialization logic.",
-        "[System]: Minor code optimizations.",
-        "[DT-Score]: Fallback for Group overview tooltip, uses now Blizzard api ift LOR is not available.",
-        "[Details-Embedded]: The tooltip is now moved up so that there is no overlap..",
+		"[System]: Minor code optimizations.",
+		"[DT-Score]: Fallback for Group overview tooltip, uses now Blizzard api ift LOR is not available.",
+		"[Details-Embedded]: The tooltip is now moved up so that there is no overlap..",
 	},
-    NEW = {
-        "[Auto-Sing-Up]: Auto Sing Up & Role check accept module.",
-        "[Important-Casts]: Can now Highlight the healthbar of the Unit.",
-    },
+	NEW = {
+		"[Auto-Sing-Up]: Auto Sing Up & Role check accept module.",
+		"[Important-Casts]: Can now Highlight the healthbar of the Unit.",
+	},
 }

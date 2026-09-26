@@ -90,7 +90,7 @@ mMT.options.args.dock.args.character.args = {
 			},
 		},
 	},
-    settings = {
+	settings = {
 		order = 3,
 		type = "group",
 		inline = true,
@@ -109,7 +109,7 @@ mMT.options.args.dock.args.character.args = {
 					DT:ForceUpdate_DataText("mMT_Dock_Character")
 				end,
 			},
-            percThreshold = {
+			percThreshold = {
 				order = 2,
 				name = L["Threshold"],
 				type = "range",

@@ -128,16 +128,17 @@ local function GetDurability()
 	for index in pairs(slots) do
 		local currentDura, maxDura = GetInventoryItemDurability(index)
 		if currentDura and maxDura > 0 then
-			local perc, repairCost = (currentDura / maxDura) * 100, 0
+			local perc = (currentDura / maxDura) * 100
 			invDurability[index] = perc
 
 			if perc < totalDurability then totalDurability = perc end
 
+			local repairCost
 			if E.Retail then
 				local data = E.ScanTooltip:GetInventoryInfo("player", index)
 				repairCost = data and data.repairCost
 			else
-				_, _, repairCost = E.ScanTooltip:SetInventoryItem("player", index)
+				repairCost = select(3, E.ScanTooltip:SetInventoryItem("player", index))
 			end
 
 			totalRepairCost = totalRepairCost + (repairCost or 0)
@@ -185,7 +186,7 @@ local function OnEvent(self)
 		self.isFlashing = false
 	end
 
-	local text = ""
+	local text
 	if icons then
 		local shieldIcon = E:TextureString(icons.shield, ":14:14")
 		local armorIcon = E:TextureString(icons.armor, ":14:14")

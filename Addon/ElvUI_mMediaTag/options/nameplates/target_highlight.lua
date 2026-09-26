@@ -1,5 +1,4 @@
 local mMT, DB, M, E, P, L, MEDIA = unpack(ElvUI_mMediaTag)
-local NP = E:GetModule("NamePlates")
 local LSM = E.Libs.LSM
 
 mMT.options.args.nameplates.args.target_highlight.args = {

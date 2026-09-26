@@ -1,5 +1,4 @@
 local mMT, DB, M, E, P, L, MEDIA = unpack(ElvUI_mMediaTag)
-local DT = E:GetModule("DataTexts")
 local selected_id = nil
 
 mMT.options.args.datatexts.args.misc_tracker.args = {
@@ -172,7 +171,7 @@ mMT.options.args.datatexts.args.misc_tracker.args = {
 								if info then
 									local db = E.db.mMediaTag.datatexts.tracker
 									local name, icon, value
-									local textString, valueString = "", ""
+									local textString, valueString
 
 									if db.name then name = info.name end
 

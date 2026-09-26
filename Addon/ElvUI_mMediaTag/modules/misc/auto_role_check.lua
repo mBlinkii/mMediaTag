@@ -31,9 +31,7 @@ local function SetupPremadeHooks()
 		if not scrollBox:IsVisible() or not scrollBox:IsMouseOver() then return end
 		if not panel.SignUpButton or not panel.SignUpButton:IsEnabled() then return end
 
-		if panel.selectedResult ~= self.resultID then
-			_G.LFGListSearchPanel_SelectResult(panel, self.resultID)
-		end
+		if panel.selectedResult ~= self.resultID then _G.LFGListSearchPanel_SelectResult(panel, self.resultID) end
 
 		_G.LFGListSearchPanel_SignUp(panel)
 	end)
@@ -62,9 +60,7 @@ local function SetupRoleCheckHook()
 
 	_G.LFDRoleCheckPopup:HookScript("OnShow", function()
 		if not CanUseRoleCheck() then return end
-		if _G.LFDRoleCheckPopupAcceptButton and _G.LFDRoleCheckPopupAcceptButton:IsEnabled() then
-			_G.LFDRoleCheckPopupAcceptButton:Click()
-		end
+		if _G.LFDRoleCheckPopupAcceptButton and _G.LFDRoleCheckPopupAcceptButton:IsEnabled() then _G.LFDRoleCheckPopupAcceptButton:Click() end
 	end)
 
 	module.roleCheckHookLoaded = true
@@ -74,9 +70,7 @@ function module:ADDON_LOADED()
 	SetupPremadeHooks()
 	SetupRoleCheckHook()
 
-	if module.premadeHooksLoaded and module.roleCheckHookLoaded then
-		module:UnregisterEvent("ADDON_LOADED")
-	end
+	if module.premadeHooksLoaded and module.roleCheckHookLoaded then module:UnregisterEvent("ADDON_LOADED") end
 end
 
 function module:Initialize()
@@ -90,7 +84,5 @@ function module:Initialize()
 	SetupPremadeHooks()
 	SetupRoleCheckHook()
 
-	if not (module.premadeHooksLoaded and module.roleCheckHookLoaded) then
-		module:RegisterEvent("ADDON_LOADED")
-	end
+	if not (module.premadeHooksLoaded and module.roleCheckHookLoaded) then module:RegisterEvent("ADDON_LOADED") end
 end

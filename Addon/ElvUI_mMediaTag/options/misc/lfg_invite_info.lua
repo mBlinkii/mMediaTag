@@ -1,30 +1,29 @@
 local mMT, DB, M, E, P, L, MEDIA = unpack(ElvUI_mMediaTag)
 local LSM = E.Libs.LSM
 
-
 mMT.options.args.misc.args.lfg_invite_info.args = {
-    enable = {
-        order = 1,
-        type = "toggle",
-        name = function()
-            return E.db.mMediaTag.lfg_invite_info.enable and MEDIA.color.green:WrapTextInColorCode(L["Enabled"]) or MEDIA.color.red:WrapTextInColorCode(L["Disabled"])
-        end,
-        get = function(info)
-            return E.db.mMediaTag.lfg_invite_info.enable
-        end,
-        set = function(info, value)
-            E.db.mMediaTag.lfg_invite_info.enable = value
-            mMT:UpdateModule("LFGInviteInfo")
-        end,
-    },
-    demo = {
-        order = 2,
-        type = "execute",
-        name = L["Show Frame"],
-        func = function()
-            mMT:UpdateModule("LFGInviteInfo", "demo")
-        end,
-    },
+	enable = {
+		order = 1,
+		type = "toggle",
+		name = function()
+			return E.db.mMediaTag.lfg_invite_info.enable and MEDIA.color.green:WrapTextInColorCode(L["Enabled"]) or MEDIA.color.red:WrapTextInColorCode(L["Disabled"])
+		end,
+		get = function(info)
+			return E.db.mMediaTag.lfg_invite_info.enable
+		end,
+		set = function(info, value)
+			E.db.mMediaTag.lfg_invite_info.enable = value
+			mMT:UpdateModule("LFGInviteInfo")
+		end,
+	},
+	demo = {
+		order = 2,
+		type = "execute",
+		name = L["Show Frame"],
+		func = function()
+			mMT:UpdateModule("LFGInviteInfo", "demo")
+		end,
+	},
 	font = {
 		order = 3,
 		type = "group",
@@ -32,48 +31,48 @@ mMT.options.args.misc.args.lfg_invite_info.args = {
 		name = L["Font"],
 		args = {
 			font = {
-                type = "select",
-                dialogControl = "LSM30_Font",
-                order = 1,
-                name = L["Font"],
-                values = LSM:HashTable("font"),
-                disabled = function()
+				type = "select",
+				dialogControl = "LSM30_Font",
+				order = 1,
+				name = L["Font"],
+				values = LSM:HashTable("font"),
+				disabled = function()
 					return not E.db.mMediaTag.lfg_invite_info.enable
 				end,
-                get = function(info)
-                    return E.db.mMediaTag.lfg_invite_info.text.font
-                end,
-                set = function(info, value)
-                    E.db.mMediaTag.lfg_invite_info.text.font = value
-                    mMT:UpdateModule("LFGInviteInfo")
-                end,
-            },
-            fontFlag = {
-                type = "select",
-                order = 2,
-                name = L["Font contour"],
-                disabled = function()
+				get = function(info)
+					return E.db.mMediaTag.lfg_invite_info.text.font
+				end,
+				set = function(info, value)
+					E.db.mMediaTag.lfg_invite_info.text.font = value
+					mMT:UpdateModule("LFGInviteInfo")
+				end,
+			},
+			fontFlag = {
+				type = "select",
+				order = 2,
+				name = L["Font contour"],
+				disabled = function()
 					return not E.db.mMediaTag.lfg_invite_info.enable
 				end,
-                get = function(info)
-                    return E.db.mMediaTag.lfg_invite_info.text.fontFlag
-                end,
-                set = function(info, value)
-                    E.db.mMediaTag.lfg_invite_info.text.fontFlag = value
-                    mMT:UpdateModule("LFGInviteInfo")
-                end,
-                values = {
-                    NONE = "None",
-                    OUTLINE = "Outline",
-                    THICKOUTLINE = "Thick",
-                    SHADOW = "|cff888888Shadow|r",
-                    SHADOWOUTLINE = "|cff888888Shadow|r Outline",
-                    SHADOWTHICKOUTLINE = "|cff888888Shadow|r Thick",
-                    MONOCHROME = "|cFFAAAAAAMono|r",
-                    MONOCHROMEOUTLINE = "|cFFAAAAAAMono|r Outline",
-                    MONOCHROMETHICKOUTLINE = "|cFFAAAAAAMono|r Thick",
-                },
-            },
+				get = function(info)
+					return E.db.mMediaTag.lfg_invite_info.text.fontFlag
+				end,
+				set = function(info, value)
+					E.db.mMediaTag.lfg_invite_info.text.fontFlag = value
+					mMT:UpdateModule("LFGInviteInfo")
+				end,
+				values = {
+					NONE = "None",
+					OUTLINE = "Outline",
+					THICKOUTLINE = "Thick",
+					SHADOW = "|cff888888Shadow|r",
+					SHADOWOUTLINE = "|cff888888Shadow|r Outline",
+					SHADOWTHICKOUTLINE = "|cff888888Shadow|r Thick",
+					MONOCHROME = "|cFFAAAAAAMono|r",
+					MONOCHROMEOUTLINE = "|cFFAAAAAAMono|r Outline",
+					MONOCHROMETHICKOUTLINE = "|cFFAAAAAAMono|r Thick",
+				},
+			},
 			font_size = {
 				order = 5,
 				name = L["Font size, top line"],
@@ -112,7 +111,7 @@ mMT.options.args.misc.args.lfg_invite_info.args = {
 			},
 		},
 	},
-    settings = {
+	settings = {
 		order = 4,
 		type = "group",
 		inline = true,
@@ -142,7 +141,7 @@ mMT.options.args.misc.args.lfg_invite_info.args = {
 					mMT:UpdateModule("LFGInviteInfo")
 				end,
 			},
-            color_line_a = {
+			color_line_a = {
 				type = "color",
 				order = 3,
 				name = L["First line color"],
@@ -160,10 +159,10 @@ mMT.options.args.misc.args.lfg_invite_info.args = {
 					MEDIA.color.mark = CreateColorFromHexString(hex)
 					MEDIA.color.mark.hex = hex
 					mMT:UpdateMedia("lfg")
-                    mMT:UpdateModule("LFGInviteInfo")
+					mMT:UpdateModule("LFGInviteInfo")
 				end,
 			},
-            color_line_b = {
+			color_line_b = {
 				type = "color",
 				order = 4,
 				name = L["Second line color"],
@@ -181,10 +180,10 @@ mMT.options.args.misc.args.lfg_invite_info.args = {
 					MEDIA.color.mark = CreateColorFromHexString(hex)
 					MEDIA.color.mark.hex = hex
 					mMT:UpdateMedia("lfg")
-                    mMT:UpdateModule("LFGInviteInfo")
+					mMT:UpdateModule("LFGInviteInfo")
 				end,
 			},
-            color_line_c = {
+			color_line_c = {
 				type = "color",
 				order = 5,
 				name = L["Third line color"],
@@ -202,10 +201,10 @@ mMT.options.args.misc.args.lfg_invite_info.args = {
 					MEDIA.color.mark = CreateColorFromHexString(hex)
 					MEDIA.color.mark.hex = hex
 					mMT:UpdateMedia("lfg")
-                    mMT:UpdateModule("LFGInviteInfo")
+					mMT:UpdateModule("LFGInviteInfo")
 				end,
 			},
-            delay = {
+			delay = {
 				order = 6,
 				name = L["Fade out delay"],
 				type = "range",
@@ -223,85 +222,85 @@ mMT.options.args.misc.args.lfg_invite_info.args = {
 					mMT:UpdateModule("LFGInviteInfo")
 				end,
 			},
-            theme = {
-                type = "select",
-                order = 7,
-                name = L["Theme"],
-                disabled = function()
+			theme = {
+				type = "select",
+				order = 7,
+				name = L["Theme"],
+				disabled = function()
 					return not E.db.mMediaTag.lfg_invite_info.enable
 				end,
-                get = function(info)
-                    return E.db.mMediaTag.lfg_invite_info.theme
-                end,
-                set = function(info, value)
-                    E.db.mMediaTag.lfg_invite_info.theme = value
-                    mMT:UpdateModule("LFGInviteInfo")
-                end,
-                values = {
-                    class = L["Class (accent line)"],
-                    custom = L["Custom (frame)"],
-                    minimal = L["Minimal (text only)"],
-                },
-            },
-            color_theme = {
-                type = "color",
-                order = 7.2,
-                name = L["Theme color"],
-                hasAlpha = false,
-                disabled = function()
-                    return not E.db.mMediaTag.lfg_invite_info.enable or E.db.mMediaTag.lfg_invite_info.theme ~= "custom"
-                end,
-                get = function(info)
-                    local r, g, b = mMT:HexToRGB(E.db.mMediaTag.lfg_invite_info.colors.theme)
-                    return r, g, b
-                end,
-                set = function(info, r, g, b)
-                    E.db.mMediaTag.lfg_invite_info.colors.theme = E:RGBToHex(r, g, b, "ff")
-                    mMT:UpdateModule("LFGInviteInfo")
-                end,
-            },
-            embed_icon = {
-                order = 7.5,
-                type = "toggle",
-                name = L["Embed icon"],
-                desc = L["Shows the icon inside the window instead of next to it. Requires the background to be enabled."],
-                disabled = function()
-                    return not E.db.mMediaTag.lfg_invite_info.enable or not E.db.mMediaTag.lfg_invite_info.background or E.db.mMediaTag.lfg_invite_info.icon == "none"
-                end,
-                get = function(info)
-                    return E.db.mMediaTag.lfg_invite_info.embed_icon
-                end,
-                set = function(info, value)
-                    E.db.mMediaTag.lfg_invite_info.embed_icon = value
-                    mMT:UpdateModule("LFGInviteInfo")
-                end,
-            },
-            style = {
-                type = "select",
-                order = 8,
-                name = L["Style"],
-                disabled = function()
+				get = function(info)
+					return E.db.mMediaTag.lfg_invite_info.theme
+				end,
+				set = function(info, value)
+					E.db.mMediaTag.lfg_invite_info.theme = value
+					mMT:UpdateModule("LFGInviteInfo")
+				end,
+				values = {
+					class = L["Class (accent line)"],
+					custom = L["Custom (frame)"],
+					minimal = L["Minimal (text only)"],
+				},
+			},
+			color_theme = {
+				type = "color",
+				order = 7.2,
+				name = L["Theme color"],
+				hasAlpha = false,
+				disabled = function()
+					return not E.db.mMediaTag.lfg_invite_info.enable or E.db.mMediaTag.lfg_invite_info.theme ~= "custom"
+				end,
+				get = function(info)
+					local r, g, b = mMT:HexToRGB(E.db.mMediaTag.lfg_invite_info.colors.theme)
+					return r, g, b
+				end,
+				set = function(info, r, g, b)
+					E.db.mMediaTag.lfg_invite_info.colors.theme = E:RGBToHex(r, g, b, "ff")
+					mMT:UpdateModule("LFGInviteInfo")
+				end,
+			},
+			embed_icon = {
+				order = 7.5,
+				type = "toggle",
+				name = L["Embed icon"],
+				desc = L["Shows the icon inside the window instead of next to it. Requires the background to be enabled."],
+				disabled = function()
+					return not E.db.mMediaTag.lfg_invite_info.enable or not E.db.mMediaTag.lfg_invite_info.background or E.db.mMediaTag.lfg_invite_info.icon == "none"
+				end,
+				get = function(info)
+					return E.db.mMediaTag.lfg_invite_info.embed_icon
+				end,
+				set = function(info, value)
+					E.db.mMediaTag.lfg_invite_info.embed_icon = value
+					mMT:UpdateModule("LFGInviteInfo")
+				end,
+			},
+			style = {
+				type = "select",
+				order = 8,
+				name = L["Style"],
+				disabled = function()
 					return not E.db.mMediaTag.lfg_invite_info.enable
 				end,
-                get = function(info)
-                    return E.db.mMediaTag.lfg_invite_info.icon
-                end,
-                set = function(info, value)
-                    E.db.mMediaTag.lfg_invite_info.icon = value
-                    mMT:UpdateModule("LFGInviteInfo")
-                end,
-                values = function()
+				get = function(info)
+					return E.db.mMediaTag.lfg_invite_info.icon
+				end,
+				set = function(info, value)
+					E.db.mMediaTag.lfg_invite_info.icon = value
+					mMT:UpdateModule("LFGInviteInfo")
+				end,
+				values = function()
 					local icons = {}
 					for key, icon in pairs(MEDIA.icons.lfg) do
 						icons[key] = E:TextureString(icon, ":14:14") .. " " .. key
 					end
 
-                    icons["none"] = L["None"]
+					icons["none"] = L["None"]
 					return icons
 				end,
-            },
-        },
-    },
+			},
+		},
+	},
 	animation = {
 		order = 5,
 		type = "group",

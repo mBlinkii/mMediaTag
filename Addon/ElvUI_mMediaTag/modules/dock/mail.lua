@@ -53,13 +53,13 @@ local function OnEvent(...)
 
 	if mailDT and mailDT ~= "Data Broker" then mailDT.eventFunc(...) end
 
-    if HasNewMail() then
+	if HasNewMail() then
 		E:Flash(self.mMT_Dock.Icon, 0.5, true)
 	else
 		E:StopFlash(self.mMT_Dock.Icon, 1)
-    end
+	end
 
 	self.text:SetText("")
 end
 
-DT:RegisterDatatext( config.name, config.category, { "MAIL_INBOX_UPDATE", "UPDATE_PENDING_MAIL", "MAIL_CLOSED", "MAIL_SHOW" }, OnEvent, nil, nil, OnEnter, OnLeave, config.localizedName, nil, nil )
+DT:RegisterDatatext(config.name, config.category, { "MAIL_INBOX_UPDATE", "UPDATE_PENDING_MAIL", "MAIL_CLOSED", "MAIL_SHOW" }, OnEvent, nil, nil, OnEnter, OnLeave, config.localizedName, nil, nil)

@@ -1,10 +1,8 @@
-local addonName, ns = ...
+local _, ns = ...
 
 local LSM = LibStub("LibSharedMedia-3.0")
 
-if LSM == nil then
-	return
-end
+if LSM == nil then return end
 
 local TEXTURE_PATH = [[Interface\AddOns\!mMT_MediaPack\media\textures\]]
 
@@ -36,8 +34,26 @@ end
 
 -- statusbar series: "<letter><n>.tga" as "mMediaTag <LETTER><n>", highest n per series
 local series = {
-	a = 15, b = 16, c = 15, d = 15, e = 13, f = 15, g = 15, h = 18, i = 10, j = 10,
-	k = 36, l = 15, m = 15, n = 39, o = 15, p = 18, q = 4, r = 29, s = 10, t = 8,
+	a = 15,
+	b = 16,
+	c = 15,
+	d = 15,
+	e = 13,
+	f = 15,
+	g = 15,
+	h = 18,
+	i = 10,
+	j = 10,
+	k = 36,
+	l = 15,
+	m = 15,
+	n = 39,
+	o = 15,
+	p = 18,
+	q = 4,
+	r = 29,
+	s = 10,
+	t = 8,
 }
 
 local skip = { n15 = true }
@@ -98,9 +114,7 @@ local function LoadPack(key)
 	if count then
 		local upper = strupper(key)
 		for i = 1, count do
-			if not skip[key .. i] then
-				mAddStatusbar("mMediaTag " .. upper .. i, key .. i .. ".tga")
-			end
+			if not skip[key .. i] then mAddStatusbar("mMediaTag " .. upper .. i, key .. i .. ".tga") end
 		end
 	end
 
@@ -127,21 +141,15 @@ function eventFrame:OnEvent(event, arg1)
 		local textures = eventFrame.db.textures
 		-- per key, so a new series also reaches existing SavedVariables
 		for key, default in pairs(defaultDB.textures) do
-			if textures[key] == nil then
-				textures[key] = default
-			end
+			if textures[key] == nil then textures[key] = default end
 		end
 
 		for key in pairs(packs) do
-			if textures.all or textures[key] then
-				LoadPack(key)
-			end
+			if textures.all or textures[key] then LoadPack(key) end
 		end
 
 		ns.db = eventFrame.db
-		if ns.SetupOptions then
-			ns.SetupOptions()
-		end
+		if ns.SetupOptions then ns.SetupOptions() end
 	end
 end
 
@@ -154,9 +162,7 @@ StaticPopupDialogs["MMTMPRL"] = {
 	hideOnEscape = false,
 }
 local function RLDialog()
-	if ns.MarkDirty then
-		ns.MarkDirty()
-	end
+	if ns.MarkDirty then ns.MarkDirty() end
 	StaticPopup_Show("MMTMPRL")
 end
 
@@ -196,9 +202,7 @@ local function EnableAll()
 end
 
 local function SetSetting(setting)
-	if setting ~= "all" then
-		SetDBAll()
-	end
+	if setting ~= "all" then SetDBAll() end
 	eventFrame.db.textures[setting] = not eventFrame.db.textures[setting]
 	PrintStatusOne(setting, eventFrame.db.textures[setting])
 	RLDialog()
@@ -227,9 +231,7 @@ SLASH_MMTMP1 = "/mmtmp"
 SlashCmdList.MMTMP = function(msg)
 	msg = strtrim(strlower(msg or ""))
 
-	if msg == "" and ns.OpenOptions and ns.OpenOptions() then
-		return
-	end
+	if msg == "" and ns.OpenOptions and ns.OpenOptions() then return end
 
 	if msg == "reset" then
 		mMTSettings = CopyTable(defaultDB)

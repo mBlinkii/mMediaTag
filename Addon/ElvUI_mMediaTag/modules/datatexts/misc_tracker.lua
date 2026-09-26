@@ -169,10 +169,34 @@ function module:Initialize()
 			if not DT.RegisteredDataTexts[id] then
 				if is_currency_db[id] then
 					-- #FFA600
-					DT:RegisterDatatext( id, mMT.NameShort .. " - " .. "|CFFFFA600" .. _G.CURRENCY .. "|r", { "CHAT_MSG_CURRENCY", "CURRENCY_DISPLAY_UPDATE" }, OnEvent, nil, nil, OnEnter, OnLeave, "mMT - " .. info.name, nil, ValueColorUpdate )
+					DT:RegisterDatatext(
+						id,
+						mMT.NameShort .. " - " .. "|CFFFFA600" .. _G.CURRENCY .. "|r",
+						{ "CHAT_MSG_CURRENCY", "CURRENCY_DISPLAY_UPDATE" },
+						OnEvent,
+						nil,
+						nil,
+						OnEnter,
+						OnLeave,
+						"mMT - " .. info.name,
+						nil,
+						ValueColorUpdate
+					)
 				else
 					-- #EE1E75
-					DT:RegisterDatatext( id, mMT.NameShort .. " - " .. "|CFFEE1E75" .. _G.ITEMS .. "|r", { "ITEM_COUNT_CHANGED" }, OnEvent, nil, nil, OnEnter, OnLeave, "mMT - " .. info.name .. " (" .. id .. ")", nil, ValueColorUpdate )
+					DT:RegisterDatatext(
+						id,
+						mMT.NameShort .. " - " .. "|CFFEE1E75" .. _G.ITEMS .. "|r",
+						{ "ITEM_COUNT_CHANGED" },
+						OnEvent,
+						nil,
+						nil,
+						OnEnter,
+						OnLeave,
+						"mMT - " .. info.name .. " (" .. id .. ")",
+						nil,
+						ValueColorUpdate
+					)
 				end
 			end
 		end

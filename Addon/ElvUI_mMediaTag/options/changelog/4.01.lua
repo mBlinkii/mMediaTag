@@ -10,10 +10,10 @@ mMT.Changelog[401] = {
 		"[System]: Update Logo & Icon.",
 		"[Interrupt-On-CD]: Rework and Optimized, it should now work correctly.",
 	},
-    NEW = {
-        "[TAGs]: New Health Tags hide out of combat and no decimal.",
-        "[Class-Icons]: Add mMT Class Icons to Details.",
-        "[Details-Embedded]: Details Embedded module is back.",
-        "[Auto-Quest]: Auto accept and tur in Quests."
-    }
+	NEW = {
+		"[TAGs]: New Health Tags hide out of combat and no decimal.",
+		"[Class-Icons]: Add mMT Class Icons to Details.",
+		"[Details-Embedded]: Details Embedded module is back.",
+		"[Auto-Quest]: Auto accept and tur in Quests.",
+	},
 }

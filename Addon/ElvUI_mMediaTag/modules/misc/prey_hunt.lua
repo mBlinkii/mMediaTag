@@ -10,7 +10,9 @@ local gsub = gsub
 local strtrim = strtrim
 local wipe = wipe
 local hooksecurefunc = hooksecurefunc
-local issecretvalue = _G.issecretvalue or function() return false end
+local issecretvalue = _G.issecretvalue or function()
+	return false
+end
 local Enum = Enum
 local GetAchievementNumCriteria = GetAchievementNumCriteria
 local GetAchievementCriteriaInfo = GetAchievementCriteriaInfo

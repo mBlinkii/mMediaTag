@@ -61,4 +61,4 @@ local function OnEvent(...)
 	self.text:SetText("")
 end
 
-DT:RegisterDatatext( config.name, config.category, nil, OnEvent, nil, OnClick, OnEnter, OnLeave, config.localizedName, nil, nil )
+DT:RegisterDatatext(config.name, config.category, nil, OnEvent, nil, OnClick, OnEnter, OnLeave, config.localizedName, nil, nil)

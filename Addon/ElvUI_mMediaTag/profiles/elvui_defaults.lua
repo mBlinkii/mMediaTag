@@ -970,7 +970,7 @@ P.color = {
 
 	important_casts = {
 		border = "FFFF00E6",
-		health = "FFFF00E6"
+		health = "FFFF00E6",
 	},
 
 	nameplates = {

@@ -20,7 +20,7 @@ mMT.options.args.datatexts.args.info_score.args = {
 					DT:ForceUpdate_DataText("mMT - M+ Score")
 				end,
 			},
-            show_upgrade = {
+			show_upgrade = {
 				order = 2,
 				type = "toggle",
 				name = L["Show Upgrades"],
@@ -32,7 +32,7 @@ mMT.options.args.datatexts.args.info_score.args = {
 					DT:ForceUpdate_DataText("mMT - M+ Score")
 				end,
 			},
-            sort_method = {
+			sort_method = {
 				order = 3,
 				type = "select",
 				name = L["Sort method"],
@@ -45,7 +45,7 @@ mMT.options.args.datatexts.args.info_score.args = {
 				end,
 				values = {
 					KEY = L["Keystone level"],
-                    SCORE = L["Score"],
+					SCORE = L["Score"],
 				},
 			},
 		},

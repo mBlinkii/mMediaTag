@@ -107,7 +107,7 @@ mMT.options.args.datatexts.args.general.args = {
 				order = 2,
 				type = "execute",
 				name = L["Colors"],
-                desc = L["Change Colors"],
+				desc = L["Change Colors"],
 				func = function()
 					E.Libs.AceConfigDialog:SelectGroup("ElvUI", "mMT", "colors", "tip_menu")
 				end,

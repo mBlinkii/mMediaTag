@@ -11,7 +11,9 @@ local min = min
 local hooksecurefunc = hooksecurefunc
 local CreateFrame = CreateFrame
 local QUEST_DASH = QUEST_DASH
-local issecretvalue = _G.issecretvalue or function() return false end
+local issecretvalue = _G.issecretvalue or function()
+	return false
+end
 
 local db, fonts, colors
 
@@ -130,7 +132,9 @@ local function SetLineText(text, completed)
 	local readable = lineText and not issecretvalue(lineText)
 
 	local questText, ratio, current, required
-	if readable then questText, ratio, current, required = ParseProgress(GetCleanText(lineText)) end
+	if readable then
+		questText, ratio, current, required = ParseProgress(GetCleanText(lineText))
+	end
 
 	completed = completed or (ratio ~= nil and ratio >= 1)
 
@@ -236,7 +240,9 @@ end
 
 -- blocks laid out before Initialize keep the Blizzard look until the next tracker update, so skin them once here
 local function SkinActiveBlocks(tracker)
-	if tracker.EnumerateActiveBlocks then tracker:EnumerateActiveBlocks(function(block) SkinBlock(nil, block) end) end
+	if tracker.EnumerateActiveBlocks then tracker:EnumerateActiveBlocks(function(block)
+		SkinBlock(nil, block)
+	end) end
 
 	if tracker.FixedBlocks then
 		for _, block in ipairs(tracker.FixedBlocks) do

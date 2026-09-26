@@ -20,14 +20,13 @@ mMT.options.args.datatexts.args.misc_gamemenu.args = {
 					DT:ForceUpdate_DataText("mMT - Game menu")
 				end,
 				values = {
-                    none = L["None"],
-                    mmt = "mMT",
-                    colored = L["colored"],
-                    white = L["white"]
-
-                },
+					none = L["None"],
+					mmt = "mMT",
+					colored = L["colored"],
+					white = L["white"],
+				},
 			},
-            menu_icons = {
+			menu_icons = {
 				order = 2,
 				type = "toggle",
 				name = L["Show Menu Icons"],
@@ -38,7 +37,7 @@ mMT.options.args.datatexts.args.misc_gamemenu.args = {
 					E.db.mMediaTag.datatexts.menu.menu_icons = value
 				end,
 			},
-            systeminfo = {
+			systeminfo = {
 				order = 3,
 				type = "toggle",
 				name = L["Show Systeminfo"],

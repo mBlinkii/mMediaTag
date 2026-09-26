@@ -113,7 +113,7 @@ mMT.options.args.datatexts.args.info_durability_itemlevel.args = {
 					DT:ForceUpdate_DataText("mMT - Durability & ItemLevel")
 				end,
 			},
-            spacer1 = {
+			spacer1 = {
 				order = 2,
 				type = "description",
 				fontSize = "medium",
@@ -160,7 +160,7 @@ mMT.options.args.datatexts.args.info_durability_itemlevel.args = {
 					DT:ForceUpdate_DataText("mMT - Durability & ItemLevel")
 				end,
 			},
-            spacer2 = {
+			spacer2 = {
 				order = 5,
 				type = "description",
 				fontSize = "medium",

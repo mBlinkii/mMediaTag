@@ -1,6 +1,6 @@
 local mMT, DB, M, E, P, L, MEDIA = unpack(ElvUI_mMediaTag)
 
-mMT.Changelog[111]  = {
+mMT.Changelog[111] = {
 	DATE = "Dev not",
 	IMPORTANT = { "there is nothing new here" },
 	NEW = { "there is nothing new here" },

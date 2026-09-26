@@ -1,6 +1,5 @@
 local mMT, DB, M, E, P, L, MEDIA = unpack(ElvUI_mMediaTag)
 local DT = E:GetModule("DataTexts")
-local Dock = M.Dock
 
 local function OnEvent(self)
 	if self.mMT_Dock then

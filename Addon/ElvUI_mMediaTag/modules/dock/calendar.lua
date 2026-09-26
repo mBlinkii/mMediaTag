@@ -27,7 +27,7 @@ local function OnEnter(self)
 		DT.tooltip:AddLine(L["Calendar"], mMT:GetRGB("title"))
 		DT.tooltip:AddLine(" ")
 
-        local dateTable = date('*t')
+		local dateTable = date("*t")
 		DT.tooltip:AddDoubleLine(L["Date:"], FormatShortDate(dateTable.day, dateTable.month, dateTable.year), mMT:GetRGB("text", "text"))
 
 		DT.tooltip:Show()

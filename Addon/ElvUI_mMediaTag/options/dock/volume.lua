@@ -90,7 +90,7 @@ mMT.options.args.dock.args.volume.args = {
 			},
 		},
 	},
-    settings = {
+	settings = {
 		order = 3,
 		type = "group",
 		inline = true,
@@ -109,7 +109,7 @@ mMT.options.args.dock.args.volume.args = {
 					DT:ForceUpdate_DataText("mMT_Dock_Volume")
 				end,
 			},
-            colored = {
+			colored = {
 				order = 2,
 				type = "toggle",
 				name = L["Colored Text"],

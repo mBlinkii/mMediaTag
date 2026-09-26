@@ -182,37 +182,7 @@ MEDIA.icons.spec = {
 	},
 }
 
-local type = type
 local path = "Interface\\Addons\\ElvUI_mMediaTag\\media\\spec\\"
-
--- style = texture style, texture = path to the texture, table with texture coords for each spec, name = optional name to show in dropdown menu
-local function AddOtherSpecIcons(style, texture, texCoords, name)
-	if not (style and texture and texCoords) then
-		mMT:Print("|CFFEA1818Error|r:", L["Could not add the texture."])
-		return false, "missingArgs"
-	end
-
-	local icon = {
-		name = name or style,
-		texture = texture,
-	}
-
-	if texCoords ~= "default" then
-		if type(texCoords) ~= "table" then
-			mMT:Print("|CFFEA1818Error|r:", L["The texture coordinates must be passed as a table."])
-			return false, "invalidCoords"
-		end
-		icon.texCoords = texCoords
-	end
-
-	if not MEDIA.icons.spec.icons.custom[style] then
-		MEDIA.icons.spec.icons.custom[style] = icon
-		return true
-	else
-		mMT:Print("|CFFEA1818Error|r:", L["The style already exists."])
-		return false, "duplicate"
-	end
-end
 
 local function AddSpecIcons(style, texture, name)
 	if not (style and texture) then return end

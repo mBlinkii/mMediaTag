@@ -54,7 +54,7 @@ mMT.options.args.datatexts.args.misc_dungeon.args = {
 				order = 1,
 				type = "execute",
 				name = L["Colors"],
-                desc = L["Change Colors"],
+				desc = L["Change Colors"],
 				func = function()
 					E.Libs.AceConfigDialog:SelectGroup("ElvUI", "mMT", "colors", "difficulty")
 				end,
