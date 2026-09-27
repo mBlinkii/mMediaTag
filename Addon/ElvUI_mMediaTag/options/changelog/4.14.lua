@@ -15,6 +15,13 @@ mMT.Changelog[414] = {
 		"[System]: The changelog opened again after switching to another profile or character, it now only opens once per new version.",
 		"[Localization]: 16 texts of the Objective Tracker options and the two latency lines of the game menu tooltip were shown in English in the German client.",
 		"[DT-Teleports]: The highlight of the current dungeon was missing or marked the wrong dungeon after applying to several groups, after listing a new key right after a run and when your own group listed a dungeon.",
+		"[Interrupt-On-CD]: Warlocks only get the kick marker and castbar color while the Felhunter or Felguard is out, Spell Lock and Axe Toss now follow the cooldown of the pet instead of a fixed spell per spec.",
+		"[Interrupt-On-CD]: With a dead or missing warlock pet the castbar now shows the on CD color instead of ready.",
+		"[Interrupt-On-CD]: Specs without their interrupt talent, for example Holy Paladins without Rebuke, no longer get castbars colored as ready.",
+		"[Interrupt-On-CD]: The kick marker stayed visible when the interrupt came off cooldown during a cast.",
+		"[Important-Casts]: Casts of enemies in dungeons and raids could throw an error because their spell ID is hidden in Midnight.",
+		"[Important-Casts]: The health bar color of a nameplate could be turned off again by a later cast in dungeons, it now stays until the unit dies or the nameplate shows a new unit.",
+		"[Important-Casts]: Changing the border or health bar color turned off the demo mode.",
 	},
 	UPDATE = {
 		"[DT-Combat-Time]: The combat timer updates its text once per second instead of on every frame.",

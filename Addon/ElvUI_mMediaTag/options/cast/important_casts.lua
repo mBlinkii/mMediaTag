@@ -95,7 +95,7 @@ mMT.options.args.unitframes.args.important_casts.args = {
 					local hex = E:RGBToHex(r, g, b, "ff")
 					E.db.mMediaTag.color.important_casts.border = hex
 					MEDIA.color.important_casts.border = CreateColorFromHexString(hex)
-					mMT:UpdateModule("ImportantCasts")
+					mMT:UpdateModule("ImportantCasts", demo)
 				end,
 			},
 		},
@@ -204,7 +204,7 @@ mMT.options.args.unitframes.args.important_casts.args = {
 					local hex = E:RGBToHex(r, g, b, "ff")
 					E.db.mMediaTag.color.important_casts.health = hex
 					MEDIA.color.important_casts.health = CreateColorFromHexString(hex)
-					mMT:UpdateModule("ImportantCasts")
+					mMT:UpdateModule("ImportantCasts", demo)
 				end,
 			},
 		},
