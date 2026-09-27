@@ -7,10 +7,16 @@ local CreateFrame = CreateFrame
 local CreateColor = CreateColor
 local GetTime = GetTime
 local UnitCanAttack = UnitCanAttack
-local IsPlayerSpell = IsPlayerSpell
+local UnitExists = UnitExists
+local UnitIsDead = UnitIsDead
 local hooksecurefunc = hooksecurefunc
 local issecretvalue = issecretvalue
+local GetSpellCooldown = C_Spell.GetSpellCooldown
 local GetSpellCooldownDuration = C_Spell.GetSpellCooldownDuration
+local IsSpellKnownOrInSpellBook = C_SpellBook.IsSpellKnownOrInSpellBook
+local FindSpellBookSlotForSpell = C_SpellBook.FindSpellBookSlotForSpell
+local GetSpellBookItemCooldownDuration = C_SpellBook.GetSpellBookItemCooldownDuration
+local PET_BANK = Enum.SpellBookSpellBank.Pet
 local EvalColorBool = C_CurveUtil.EvaluateColorValueFromBoolean
 local EvalColor = C_CurveUtil.EvaluateColorFromBoolean
 local GetSpecialization = C_SpecializationInfo.GetSpecialization or GetSpecialization
@@ -53,10 +59,7 @@ local INTERRUPT_BY_SPEC = {
 	[62] = 2139,
 	[63] = 2139,
 	[64] = 2139,
-	-- Warlock
-	[265] = 119910,
-	[266] = 119914,
-	[267] = 119910,
+	-- Warlock: resolved from the active pet, see UpdateInterruptSpell
 	-- Monk
 	[268] = 116705,
 	[269] = 116705,
@@ -76,30 +79,61 @@ local INTERRUPT_BY_SPEC = {
 	[1473] = 351338,
 }
 
--- Axe Toss, Call Felhunter, Axe Toss (Command Demon)
-local WARLOCK_INTERRUPTS = { 89766, 212619, 119914, 136174 }
+-- Spell Lock (Felhunter), Axe Toss (Felguard): cast by the pet, the cooldown lives in the pet spellbook
+local WARLOCK_PET_INTERRUPTS = { 19647, 89766 }
+-- Spell Lock (Grimoire of Sacrifice), Call Felhunter (PvP talent): own player spells
+local WARLOCK_PLAYER_INTERRUPTS = { 132409, 212619 }
 
-local function UpdateInterruptSpell()
+local function UpdateWarlockInterrupt()
+	for _, id in ipairs(WARLOCK_PET_INTERRUPTS) do
+		local slot, bank = FindSpellBookSlotForSpell(id)
+		if slot and bank == PET_BANK then
+			module.interruptSpellId = id
+			module.isPetInterrupt = true
+			-- prefer the spell id path (ignores the pet GCD), fall back to the pet spellbook slot if the id is not resolvable
+			local info = GetSpellCooldown(id)
+			if not (issecretvalue(info) or info ~= nil) then module.petSlot = slot end
+			return
+		end
+	end
+
+	for _, id in ipairs(WARLOCK_PLAYER_INTERRUPTS) do
+		if IsSpellKnownOrInSpellBook(id) then
+			module.interruptSpellId = id
+			return
+		end
+	end
+end
+
+local function UpdateInterruptSpell(event, unit)
+	if event == "UNIT_PET" and unit ~= "player" then return end
+
+	module.interruptSpellId = nil
+	module.isPetInterrupt = false
+	module.petSlot = nil
+
+	if E.myclass == "WARLOCK" then return UpdateWarlockInterrupt() end
+
 	local specIndex = GetSpecialization()
 	local specId = specIndex and GetSpecializationInfo(specIndex)
 	local spellId = specId and INTERRUPT_BY_SPEC[specId]
 
-	if E.myclass == "WARLOCK" then
-		for _, id in ipairs(WARLOCK_INTERRUPTS) do
-			if IsPlayerSpell(id) then
-				spellId = id
-				break
-			end
-		end
-	end
+	-- skip talent gated interrupts that are not picked
+	if spellId and IsSpellKnownOrInSpellBook(spellId) then module.interruptSpellId = spellId end
+end
 
-	module.interruptSpellId = spellId
+local function IsPetDown()
+	return module.isPetInterrupt and (not UnitExists("pet") or UnitIsDead("pet"))
 end
 
 local function GetInterruptCooldown()
-	local spellId = module.interruptSpellId
+	if module.petSlot then return GetSpellBookItemCooldownDuration(module.petSlot, PET_BANK) end
 	-- true = ignore the GCD, otherwise the kick counts as "on CD" briefly after every keypress
-	if spellId then return GetSpellCooldownDuration(spellId, true) end
+	return GetSpellCooldownDuration(module.interruptSpellId, true)
+end
+
+local function HideKickBar(castbar)
+	if castbar.mMT_KickBar then castbar.mMT_KickBar:SetAlpha(0) end
 end
 
 -- HasExpired, not IsZero: IsZero only reports "no time span stored" and stays false forever once the kick has been used.
@@ -108,10 +142,14 @@ local function IsKickReady(cooldown)
 end
 
 local function SetKickSpark(castbar, castStart, cooldown, ready)
-	if cooldown == nil then return end
-
 	local kickBar = castbar.mMT_KickBar
 	if not kickBar then return end
+
+	-- nil = kick ready, hide a marker left over from the last update
+	if cooldown == nil then
+		kickBar:SetAlpha(0)
+		return
+	end
 	local indicator = kickBar.mMT_Indicator
 
 	if castStart then
@@ -171,6 +209,15 @@ local function UpdateCast(castbar, castStart)
 	local unit = castbar.unit or (castbar.__owner and castbar.__owner.__unit)
 	if not (unit and UnitCanAttack("player", unit)) then return end
 
+	-- interrupt lost since the cast started (pet dismissed, talent change), leave the castbar to ElvUI
+	if not module.interruptSpellId then return HideKickBar(castbar) end
+
+	-- dead or missing pet = no kick available
+	if IsPetDown() then
+		HideKickBar(castbar)
+		return SetCastbarColor(castbar, false)
+	end
+
 	local cooldown = GetInterruptCooldown()
 	local ready = IsKickReady(cooldown)
 
@@ -213,7 +260,7 @@ local function PostCastStart(castbar, unit)
 	if not (castbar and unit) then return end
 	if not (castbar.casting or castbar.channeling) then return end
 	if not UnitCanAttack("player", unit) then return end
-	if not module.interruptSpellId then return end
+	if not module.interruptSpellId then return HideKickBar(castbar) end
 
 	castbar.isInterruptedOrFailed = false
 	ConstructKickBar(castbar)
@@ -248,6 +295,9 @@ function module:Initialize()
 			module:RegisterEvent("PLAYER_ENTERING_WORLD", UpdateInterruptSpell)
 			module:RegisterEvent("ACTIVE_TALENT_GROUP_CHANGED", UpdateInterruptSpell)
 			module:RegisterEvent("PLAYER_TALENT_UPDATE", UpdateInterruptSpell)
+			-- pet summon/dismiss and learned spells change the interrupt (warlock pets, Grimoire of Sacrifice, talents)
+			module:RegisterEvent("SPELLS_CHANGED", UpdateInterruptSpell)
+			module:RegisterEvent("UNIT_PET", UpdateInterruptSpell)
 
 			-- StylePlate/Configure_Castbar also catch frames created or enabled later.
 			hooksecurefunc(NP, "StylePlate", function(_, nameplate)
