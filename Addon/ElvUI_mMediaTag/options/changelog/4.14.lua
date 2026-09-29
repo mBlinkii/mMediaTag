@@ -33,6 +33,7 @@ mMT.Changelog[414] = {
 		"[Localization]: Removed about 35 texts that were no longer used anywhere.",
 		"[System]: Every build now runs automatic code checks (luacheck and StyLua) first, a cleanup pass removed unused code and brought all files to one formatting.",
 		"[DT-Teleports]: The highlight of the current dungeon can be turned off and its color can be changed.",
+		"[DT-Professions]: The colored profession icons were redrawn with simpler shapes and stronger contrast, so they stay sharp at small sizes in game.",
 	},
 	NEW = {
 		"[DT-Teleports]: Optional highlight of the dungeon of your own keystone in the season list, with its own color.",
