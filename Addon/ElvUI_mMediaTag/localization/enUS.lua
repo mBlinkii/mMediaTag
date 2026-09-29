@@ -543,8 +543,11 @@ L["Enabled"] = true
 L["Background Multiplier"] = true
 L["Change BG color"] = true
 L["Enable to change the background color of the castbar."] = true
+L["Glows while the current cast can be interrupted."] = true
 L["Marker"] = true
 L["On CD"] = true
+L["Only important casts"] = true
+L["Only when your interrupt is ready"] = true
 L["Set the background color multiplier for the castbar."] = true
 L["The marker color for in time interrupts."] = true
 

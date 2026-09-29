@@ -19,6 +19,8 @@ mMT.Changelog[414] = {
 		"[Interrupt-On-CD]: With a dead or missing warlock pet the castbar now shows the on CD color instead of ready.",
 		"[Interrupt-On-CD]: Specs without their interrupt talent, for example Holy Paladins without Rebuke, no longer get castbars colored as ready.",
 		"[Interrupt-On-CD]: The kick marker stayed visible when the interrupt came off cooldown during a cast.",
+		"[Interrupt-On-CD]: Changed colors only applied after a reload, they now apply to the next cast.",
+		"[Interrupt-On-CD]: Casts in dungeons could throw an error when the game hid whether they can be interrupted.",
 		"[Important-Casts]: Casts of enemies in dungeons and raids could throw an error because their spell ID is hidden in Midnight.",
 		"[Important-Casts]: The health bar color of a nameplate could be turned off again by a later cast in dungeons, it now stays until the unit dies or the nameplate shows a new unit.",
 		"[Important-Casts]: Changing the border or health bar color turned off the demo mode.",
@@ -35,5 +37,6 @@ mMT.Changelog[414] = {
 	NEW = {
 		"[DT-Teleports]: Optional highlight of the dungeon of your own keystone in the season list, with its own color.",
 		"[Group-Keystones]: New window next to the group finder listing that shows the keystones of your group, the keys of other players need Details! or BigWigs.",
+		"[Interrupt-On-CD]: Optional pixel glow around the castbar and/or health bar while a cast can be interrupted, optionally only for important casts and only when your interrupt is ready, with its own color.",
 	},
 }

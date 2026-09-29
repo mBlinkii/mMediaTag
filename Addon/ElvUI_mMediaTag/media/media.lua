@@ -101,6 +101,7 @@ MEDIA.color = {
 		onCD = createColor("FFA200FF"),
 		normal = createColor("FF15FF47"),
 		marker = createColor("FFFFFFFF"),
+		glow = createColor("FFFFD100"),
 	},
 
 	minimap_skin = { color = createColor("FFFFFFFF"), cardinal = createColor("FFFFFFFF") },
@@ -252,7 +253,7 @@ function mMT:UpdateMedia(arg)
 
 	if arg == "interrupt" or not arg then
 		MEDIA.color.interrupt_on_cd = {}
-		SetColors(MEDIA.color.interrupt_on_cd, colors.interrupt_on_cd, { "onCD", "normal", "marker" })
+		SetColors(MEDIA.color.interrupt_on_cd, colors.interrupt_on_cd, { "onCD", "normal", "marker", "glow" })
 	end
 
 	if arg == "minimap_skin" or not arg then SetColors(MEDIA.color.minimap_skin, colors.minimap_skin, { "color", "cardinal" }) end

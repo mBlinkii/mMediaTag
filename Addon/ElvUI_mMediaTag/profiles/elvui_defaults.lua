@@ -525,6 +525,10 @@ P.interrupt_on_cd = {
 	enable = false,
 	set_bg_color = true,
 	bg_multiplier = 0.25,
+	glow_castbar = false,
+	glow_health = false,
+	glow_important_only = false,
+	glow_ready_only = false,
 }
 
 P.tooltip = {
@@ -921,6 +925,7 @@ P.color = {
 		onCD = "FFA200FF",
 		normal = "FF15FF47",
 		marker = "FFFFFFFF",
+		glow = "FFFFD100",
 	},
 
 	minimap_skin = { color = "FFFFFFFF", cardinal = "FFFFFFFF" },
