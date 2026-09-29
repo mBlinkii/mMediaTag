@@ -4,10 +4,9 @@ local module = mMT:AddModule("NP-ExecuteMarker", { "AceHook-3.0", "AceEvent-3.0"
 local NP = E:GetModule("NamePlates")
 
 -- Cache WoW Globals
-local pairs = pairs
+local pairs, ipairs = pairs, ipairs
 local CreateFrame = CreateFrame
 local InCombatLockdown = InCombatLockdown
-local UnitClass = UnitClass
 local GetSpecialization = C_SpecializationInfo.GetSpecialization or GetSpecialization
 local IsPlayerSpell = IsPlayerSpell
 local IsSpellKnownOrOverridesKnown = IsSpellKnownOrOverridesKnown
@@ -19,72 +18,90 @@ local GetNodeInfo = C_Traits.GetNodeInfo
 
 local autoRange = { enable = false, range = 0 }
 local markers = setmetatable({}, { __mode = "k" }) -- [healthBar] = { clip, line }
-local execDB -- cached E.db.mMediaTag.nameplates.execute, set in Initialize (hot path: Update_Health fires per health tick per nameplate)
+local execDB -- cached E.db.mMediaTag.nameplates.execute, set in Initialize
 
--- spell/talent IDs verified against Plater Nameplates (Interface 12.0.7/12.1.0)
-local function IsTalentLearned(nodeID)
+-- Execute thresholds in percent per class. The first entry the player knows wins,
+-- a known entry in "raise" replaces its range. spells = spell ids (any of), nodes = talent node ids (any of).
+local EXECUTE_RANGES = {
+	PRIEST = {
+		{ range = 20, spells = { 32379 }, raise = { { range = 35, spells = { 392507 } } } }, -- Shadow Word: Death, Deathspeaker
+	},
+	MAGE = {
+		{ range = 35, spells = { 384581 } }, -- Arcane Bombardment
+		{ range = 30, spells = { 2948 }, raise = { { range = 35, nodes = { 449349 } } } }, -- Scorch, Sunfury Execution
+	},
+	WARRIOR = {
+		{ range = 20, spells = { 163201 }, raise = { { range = 35, spells = { 281001, 206315 } } } }, -- Execute, Massacre
+	},
+	HUNTER = {
+		{ range = 35, spells = { 273887 } }, -- Killer Instinct
+		{ range = 20, nodes = { 94987 } }, -- Black Arrow
+		{ range = 20, spells = { 53351, 320976 } }, -- Kill Shot
+	},
+	PALADIN = {
+		{ range = 20, spells = { 24275 } }, -- Hammer of Wrath
+	},
+	MONK = {
+		-- Touch of Death scales with the unit health, which is secret in Midnight, so its base threshold is used
+		{ range = 15, spells = { 322113 } },
+	},
+	WARLOCK = {
+		{ range = 20, spells = { 17877 }, raise = { { range = 30, spells = { 456939 } } } }, -- Shadowburn, Blistering Atrophy
+		{ range = 20, spells = { 198590 } }, -- Drain Soul
+	},
+	ROGUE = {
+		{ range = 35, spells = { 328085, 381798 } }, -- Blindside, Zoldyck Recipe
+	},
+	DEATHKNIGHT = {
+		{ range = 35, spells = { 343294 } }, -- Soul Reaper
+	},
+}
+
+local function IsTalentNodeActive(nodeID)
 	local configID = GetActiveConfigID()
-	local nodeInfo = configID and nodeID and GetNodeInfo(configID, nodeID)
-	return nodeInfo and nodeInfo.entryIDsWithCommittedRanks and nodeInfo.entryIDsWithCommittedRanks[1] and true or false
+	local info = configID and GetNodeInfo(configID, nodeID)
+	return info and (info.activeRank or 0) > 0
 end
 
-local function SetRange(range)
-	autoRange.enable = true
-	autoRange.range = range
+-- IsPlayerSpell covers passive talents, the override check spells that replace another one (Drain Soul)
+local function IsEntryKnown(entry)
+	if entry.spells then
+		for _, spellID in ipairs(entry.spells) do
+			if IsPlayerSpell(spellID) or IsSpellKnownOrOverridesKnown(spellID) then return true end
+		end
+	end
+
+	if entry.nodes then
+		for _, nodeID in ipairs(entry.nodes) do
+			if IsTalentNodeActive(nodeID) then return true end
+		end
+	end
+
+	return false
+end
+
+local function GetEntryRange(entry)
+	if entry.raise then
+		for _, raise in ipairs(entry.raise) do
+			if IsEntryKnown(raise) then return raise.range end
+		end
+	end
+
+	return entry.range
 end
 
 local function UpdateAutoRange()
 	autoRange.enable = false
 	autoRange.range = 0
 
-	local _, class = UnitClass("player")
-	local spec = GetSpecialization()
-	if not (class and spec) then return end
+	local entries = EXECUTE_RANGES[E.myclass]
+	if not (entries and GetSpecialization()) then return end
 
-	if class == "PRIEST" then
-		if IsPlayerSpell(32379) then -- SW:Death
-			SetRange(IsPlayerSpell(392507) and 35 or 20) -- Deathspeaker
-		end
-	elseif class == "MAGE" then
-		if IsPlayerSpell(384581) then -- Arcane Bombardment
-			SetRange(35)
-		elseif IsPlayerSpell(2948) then -- Scorch
-			SetRange(IsTalentLearned(449349) and 35 or 30) -- Sunfury Execution
-		end
-	elseif class == "WARRIOR" then
-		if IsPlayerSpell(163201) then -- Execute
-			SetRange((IsPlayerSpell(281001) or IsPlayerSpell(206315)) and 35 or 20) -- Massacre
-		end
-	elseif class == "HUNTER" then
-		if IsPlayerSpell(273887) then -- Killer Instinct
-			SetRange(35)
-		elseif IsTalentLearned(94987) then -- Black Arrow
-			SetRange(20)
-		elseif IsPlayerSpell(53351) or IsPlayerSpell(320976) then -- Kill Shot
-			SetRange(20)
-		end
-	elseif class == "PALADIN" then
-		if IsPlayerSpell(24275) then -- Hammer of Wrath
-			SetRange(20)
-		end
-	elseif class == "MONK" then
-		if IsPlayerSpell(322113) then -- Touch of Death
-			-- the dynamic ToD range needs unit health, which is secret in Midnight - static 15%
-			SetRange(15)
-		end
-	elseif class == "WARLOCK" then
-		if IsPlayerSpell(17877) then -- Shadowburn
-			SetRange(IsPlayerSpell(456939) and 30 or 20) -- Blistering Atrophy
-		elseif IsSpellKnownOrOverridesKnown(198590) then -- Drain Soul
-			SetRange(20)
-		end
-	elseif class == "ROGUE" then
-		if IsPlayerSpell(328085) or IsPlayerSpell(381798) then -- Blindside or Zoldyck Recipe
-			SetRange(35)
-		end
-	elseif class == "DEATHKNIGHT" then
-		if IsPlayerSpell(343294) then -- Soul Reaper
-			SetRange(35)
+	for _, entry in ipairs(entries) do
+		if IsEntryKnown(entry) then
+			autoRange.enable = true
+			autoRange.range = GetEntryRange(entry)
+			return
 		end
 	end
 end
@@ -99,7 +116,20 @@ local function ShouldShow(db)
 	return not db.onlyCombat or InCombatLockdown()
 end
 
-local function GetMarker(healthBar)
+-- friendly and personal plates have no use for an execute marker
+local function IsEnemyPlate(nameplate)
+	local frameType = nameplate.frameType
+	return frameType == "ENEMY_NPC" or frameType == "ENEMY_PLAYER"
+end
+
+local function HideMarker(healthBar)
+	local marker = markers[healthBar]
+	if marker then marker.clip:Hide() end
+end
+
+local UpdateMarker
+
+local function GetMarker(nameplate, healthBar)
 	local marker = markers[healthBar]
 	if marker then return marker end
 
@@ -113,27 +143,25 @@ local function GetMarker(healthBar)
 	marker = { clip = clip, line = line }
 	markers[healthBar] = marker
 
+	-- the bar can still be unsized when the plate is set up, reposition once it gets its size
+	healthBar:HookScript("OnSizeChanged", function()
+		UpdateMarker(nameplate)
+	end)
+
 	return marker
 end
 
-local function UpdateMarker(healthBar, force)
+function UpdateMarker(nameplate, force)
+	local healthBar = nameplate.Health
+	if not healthBar then return end
+
 	local db = execDB
-	local marker = markers[healthBar]
+	local range = db and db.enable and GetRange(db)
+	if not (range and range > 0 and range < 100 and IsEnemyPlate(nameplate) and ShouldShow(db)) then return HideMarker(healthBar) end
 
-	if not (db and db.enable) then
-		if marker then marker.clip:Hide() end
-		return
-	end
-
-	local range = GetRange(db)
+	local marker = GetMarker(nameplate, healthBar)
 	local width = healthBar:GetWidth()
-
-	if not range or range <= 0 or range >= 100 or width <= 0 or not ShouldShow(db) then
-		if marker then marker.clip:Hide() end
-		return
-	end
-
-	marker = marker or GetMarker(healthBar)
+	if width <= 0 then return marker.clip:Hide() end
 
 	-- hot path: skip the layout unless fill texture, bar size or range changed.
 	local fill = healthBar:GetStatusBarTexture()
@@ -162,15 +190,18 @@ local function UpdateMarker(healthBar, force)
 	marker.clip:Show()
 end
 
+-- all plates, not only those with a marker: with "only in combat" no marker exists yet when combat starts
 local function UpdateAllMarkers(force)
-	for healthBar in pairs(markers) do
-		UpdateMarker(healthBar, force)
+	if not NP.Plates then return end
+
+	for nameplate in pairs(NP.Plates) do
+		UpdateMarker(nameplate, force)
 	end
 end
 
-local function OnUpdateHealth(_, nameplate)
-	if not (nameplate and nameplate.Health) then return end
-	UpdateMarker(nameplate.Health)
+-- UpdatePlate runs for every new unit on a plate, Update_Health only when the plate type changes
+local function OnUpdatePlate(_, nameplate)
+	if nameplate then UpdateMarker(nameplate) end
 end
 
 function module:CombatUpdate()
@@ -196,11 +227,13 @@ function module:Initialize()
 	UpdateAutoRange()
 
 	if not module.initialized then
-		module:SecureHook(NP, "Update_Health", OnUpdateHealth)
+		module:SecureHook(NP, "UpdatePlate", OnUpdatePlate)
 
 		module:RegisterEvent("PLAYER_ENTERING_WORLD", "RangeUpdate")
 		module:RegisterEvent("PLAYER_SPECIALIZATION_CHANGED", "RangeUpdate")
 		module:RegisterEvent("TRAIT_CONFIG_UPDATED", "RangeUpdate")
+		-- learned spells can lag behind the talent event, and leveling unlocks execute spells
+		module:RegisterEvent("SPELLS_CHANGED", "RangeUpdate")
 		module:RegisterEvent("PLAYER_REGEN_DISABLED", "CombatUpdate")
 		module:RegisterEvent("PLAYER_REGEN_ENABLED", "CombatUpdate")
 

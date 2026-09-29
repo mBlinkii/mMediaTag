@@ -20,6 +20,10 @@
 - FIX - [Interrupt-On-CD]: The kick marker stayed visible when the interrupt came off cooldown during a cast.
 - FIX - [Interrupt-On-CD]: Changed colors only applied after a reload, they now apply to the next cast.
 - FIX - [Interrupt-On-CD]: Casts in dungeons could throw an error when the game hid whether they can be interrupted.
+- FIX - [Execute-Marker]: The marker also showed on friendly nameplates and on your personal resource bar, it now only shows on enemies.
+- FIX - [Execute-Marker]: With Only in combat enabled, the marker was missing on enemies at full health until they took damage.
+- FIX - [Execute-Marker]: The marker could stay hidden when a nameplate was set up before its size was known.
+- FIX - [Execute-Marker]: The automatic range now also updates when you learn new spells, for example Execute while leveling.
 - FIX - [Important-Casts]: Casts of enemies in dungeons and raids could throw an error because their spell ID is hidden in Midnight.
 - FIX - [Important-Casts]: The health bar color of a nameplate could be turned off again by a later cast in dungeons, it now stays until the unit dies or the nameplate shows a new unit.
 - FIX - [Important-Casts]: Changing the border or health bar color turned off the demo mode.
