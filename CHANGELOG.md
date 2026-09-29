@@ -1,6 +1,6 @@
 # Changelog - ElvUI_mMediaTag
 
-## [ver. 4.14] - TBD
+## [ver. 4.14] - 29.09.2026
 ### 🐛 FIX
 - FIX - [DT-Combat-Time]: The combat timer threw an error on every frame when the icon for in or out of combat was set to None.
 - FIX - [Tags]: The mMT-role tags threw an error on units without an assigned role, for example on your own frame while solo.
@@ -24,6 +24,11 @@
 - FIX - [Execute-Marker]: With Only in combat enabled, the marker was missing on enemies at full health until they took damage.
 - FIX - [Execute-Marker]: The marker could stay hidden when a nameplate was set up before its size was known.
 - FIX - [Execute-Marker]: The automatic range now also updates when you learn new spells, for example Execute while leveling.
+- FIX - [Cooldown-Manager]: Enlarged icons could overlap because Blizzard's viewer moved them back to its own tight spacing, the icons now keep their spacing.
+- FIX - [Cooldown-Manager]: Switching to a profile with the cooldown manager disabled and back again created its containers, movers and hooks a second time.
+- FIX - [Cooldown-Manager]: Disabling the cooldown manager through a profile switch hid Blizzard's cooldown viewer until a reload, it now stays visible and a reload is offered.
+- FIX - [Cooldown-Manager]: Keybinds on ElvUI action bars 13 to 15 were not shown on the icons.
+- FIX - [Cooldown-Manager]: Items in the custom tracker could throw an error when the game returned no cooldown for them.
 - FIX - [Important-Casts]: Casts of enemies in dungeons and raids could throw an error because their spell ID is hidden in Midnight.
 - FIX - [Important-Casts]: The health bar color of a nameplate could be turned off again by a later cast in dungeons, it now stays until the unit dies or the nameplate shows a new unit.
 - FIX - [Important-Casts]: Changing the border or health bar color turned off the demo mode.
@@ -36,10 +41,13 @@
 - UPDATE - [System]: Every build now runs automatic code checks (luacheck and StyLua) first, a cleanup pass removed unused code and brought all files to one formatting.
 - UPDATE - [DT-Teleports]: The highlight of the current dungeon can be turned off and its color can be changed.
 - UPDATE - [DT-Professions]: The colored profession icons were redrawn with simpler shapes and stronger contrast, so they stay sharp at small sizes in game.
+- UPDATE - [Cooldown-Manager]: The viewers are only rearranged when an icon appears or disappears instead of on every aura and cooldown change, which saves a lot of work in combat.
 ### ✨ NEW
 - NEW - [DT-Teleports]: Optional highlight of the dungeon of your own keystone in the season list, with its own color.
 - NEW - [Group-Keystones]: New window next to the group finder listing that shows the keystones of your group, the keys of other players need Details! or BigWigs.
 - NEW - [Interrupt-On-CD]: Optional pixel glow around the castbar and/or health bar while a cast can be interrupted, optionally only for important casts and only when your interrupt is ready, with its own color.
+- NEW - [Cooldown-Manager]: Optional fixed width and height for the essential, utility, buff icon and custom tracker blocks, the icons shrink automatically so the block never gets bigger.
+- NEW - [Cooldown-Manager]: Own entries of the custom tracker can be set to show only while ready, only while on cooldown or only while missing (buff not on you, item not in the bags, empty slot), and can glow in their own color once they are ready.
 
 ## [ver. 4.13] - 23.09.2026
 ### 🐛 FIX

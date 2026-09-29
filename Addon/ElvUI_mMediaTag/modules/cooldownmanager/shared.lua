@@ -13,6 +13,7 @@ local tsort = table.sort
 local ceil = math.ceil
 local floor = math.floor
 local min = math.min
+local max = math.max
 local UnitClass = UnitClass
 local InCombatLockdown = InCombatLockdown
 local CreateFrame = CreateFrame
@@ -89,8 +90,12 @@ function module:AnchorToMover(key, growth)
 	local mover = _G[module.VIEWERS[key].mover .. "_Mover"]
 	if not mover then return end
 
+	-- only a new size or growth moves anything, every other pass would just set the same anchors again
+	if container.mmtAnchorGrowth == growth and container.mmtAnchorW == container.mmtW and container.mmtAnchorH == container.mmtH then return end
+
 	-- Keep the edge the icons grow away from pinned, otherwise the block walks across the screen
-	if not InCombatLockdown() and mover:GetPoint() then
+	local inCombat = InCombatLockdown()
+	if not inCombat and mover:GetPoint() then
 		local anchor = (growth == "UP" and "BOTTOM") or (growth == "DOWN" and "TOP") or "CENTER"
 		local x = (mover:GetLeft() + mover:GetRight()) / 2
 		local y
@@ -115,6 +120,11 @@ function module:AnchorToMover(key, growth)
 		container:SetPoint("TOP", mover, "TOP")
 	else
 		container:SetPoint("CENTER", mover, "CENTER")
+	end
+
+	-- in combat the mover could not be pinned, so the next pass has to try again
+	if not inCombat then
+		container.mmtAnchorGrowth, container.mmtAnchorW, container.mmtAnchorH = growth, container.mmtW, container.mmtH
 	end
 end
 
@@ -677,10 +687,13 @@ local function BuildActionKeys()
 	actionKeysBuilt = true
 	wipe(actionKeys)
 
-	for bar = 1, 10 do
-		for index = 1, 12 do
-			local button = _G["ElvUI_Bar" .. bar .. "Button" .. index]
-			local action = button and button._state_action
+	-- all ElvUI bars, the numbering skips 11 and 12 (bar13 to bar15 exist)
+	local AB = E:GetModule("ActionBars", true)
+	if not (AB and AB.handledBars) then return end
+
+	for _, bar in pairs(AB.handledBars) do
+		for _, button in ipairs(bar.buttons or {}) do
+			local action = button._state_action
 			if action and button.HotKey then
 				local text = button.HotKey:GetText()
 				if text and text ~= "" and text ~= _G.RANGE_INDICATOR then actionKeys[action] = text end
@@ -724,6 +737,24 @@ function module:ApplyKeybindText(frame, vdb)
 	module:StyleText(frame.mmtKeybind, text)
 	frame.mmtKeybind:SetText(frame.mmtDemoKey or (spellID and module:GetSpellKeybind(spellID)) or "")
 	frame.mmtKeybind:Show()
+end
+
+-- Fixed block size: the icons shrink until cols x rows fit, the icon size setting stays the upper limit
+function module:FitIconSize(vdb, width, height, spacing, cols, rows)
+	local scale = 1
+
+	local maxWidth = vdb.max_width or 0
+	if maxWidth > 0 then scale = min(scale, (E:Scale(maxWidth) - (cols - 1) * spacing) / (cols * width)) end
+
+	local maxHeight = vdb.max_height or 0
+	if maxHeight > 0 then scale = min(scale, (E:Scale(maxHeight) - (rows - 1) * spacing) / (rows * height)) end
+
+	if scale >= 1 then return width, height end
+
+	-- round down to whole pixels so the block never ends up wider than asked, a spacing wider than the block would go below zero
+	local pixel = E.mult or 1
+	local minSize = 4 * pixel
+	return max(floor(width * scale / pixel) * pixel, minSize), max(floor(height * scale / pixel) * pixel, minSize)
 end
 
 -- Reading the pool is safe, releasing or acquiring from here would taint every later EnumerateActive
@@ -770,6 +801,10 @@ function module:LayoutIconViewer(key, capture, callback)
 		return
 	end
 
+	local cols = min(count, perRow)
+	local rows = ceil(count / perRow)
+	width, height = module:FitIconSize(vdb, width, height, spacing, cols, rows)
+
 	for _, icon in ipairs(icons) do
 		icon:SetScale(1)
 		icon:SetSize(width, height)
@@ -786,8 +821,6 @@ function module:LayoutIconViewer(key, capture, callback)
 		module:HookPandemic(icon)
 	end
 
-	local cols = min(count, perRow)
-	local rows = ceil(count / perRow)
 	local totalWidth = cols * width + (cols - 1) * spacing
 	module:SetContainerSize(container, totalWidth, rows * height + (rows - 1) * spacing)
 

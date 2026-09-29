@@ -341,6 +341,38 @@ local function IconLayout(key, order)
 					Refresh()
 				end,
 			},
+			max_width = {
+				order = 8,
+				type = "range",
+				name = L["Fixed Width"],
+				desc = L["The icons shrink so the whole block fits into this size, the icon size stays the upper limit. 0 = off."],
+				min = 0,
+				max = 1000,
+				step = 1,
+				get = function()
+					return VDB(key).max_width or 0
+				end,
+				set = function(_, value)
+					VDB(key).max_width = value
+					Refresh()
+				end,
+			},
+			max_height = {
+				order = 9,
+				type = "range",
+				name = L["Fixed Height"],
+				desc = L["The icons shrink so the whole block fits into this size, the icon size stays the upper limit. 0 = off."],
+				min = 0,
+				max = 1000,
+				step = 1,
+				get = function()
+					return VDB(key).max_height or 0
+				end,
+				set = function(_, value)
+					VDB(key).max_height = value
+					Refresh()
+				end,
+			},
 		},
 	}
 end
@@ -752,75 +784,93 @@ mMT.options.args.cooldownmanager.args.general.args = {
 		fontSize = "medium",
 		name = L["Moves Blizzards cooldown manager icons into mMT containers with own movers and text settings. Blizzards cooldown manager has to be enabled under Options > Gameplay Enhancements."],
 	},
-	enable = {
+	settings = {
 		order = 2,
-		type = "toggle",
-		name = function()
-			return CDM().enable and MEDIA.color.green:WrapTextInColorCode(L["Enabled"]) or MEDIA.color.red:WrapTextInColorCode(L["Disabled"])
-		end,
-		get = function()
-			return CDM().enable
-		end,
-		set = function(_, value)
-			CDM().enable = value
-			E:StaticPopup_Show("CONFIG_RL")
-		end,
+		type = "group",
+		inline = true,
+		name = L["Settings"],
+		args = {
+			enable = {
+				order = 1,
+				type = "toggle",
+				name = function()
+					return CDM().enable and MEDIA.color.green:WrapTextInColorCode(L["Enabled"]) or MEDIA.color.red:WrapTextInColorCode(L["Disabled"])
+				end,
+				get = function()
+					return CDM().enable
+				end,
+				set = function(_, value)
+					CDM().enable = value
+					E:StaticPopup_Show("CONFIG_RL")
+				end,
+			},
+			demo = {
+				order = 2,
+				type = "execute",
+				name = function()
+					local module = Module()
+					return (module and module.demoActive and MEDIA.color.green:WrapTextInColorCode(L["Demo"])) or L["Demo"]
+				end,
+				desc = L["Fills every managed viewer with placeholder icons and bars that follow your settings live. Turns itself off when the options close."],
+				disabled = Disabled,
+				func = function()
+					local module = Module()
+					if module then module:ToggleDemo() end
+				end,
+			},
+			hide_swipe = {
+				order = 3,
+				type = "toggle",
+				name = L["Hide GCD Swipe"],
+				width = "double",
+				disabled = Disabled,
+				get = function()
+					return CDM().hide_swipe
+				end,
+				set = function(_, value)
+					CDM().hide_swipe = value
+					Refresh()
+				end,
+			},
+		},
 	},
-	demo = {
+	font_group = {
 		order = 3,
-		type = "execute",
-		name = function()
-			local module = Module()
-			return (module and module.demoActive and MEDIA.color.green:WrapTextInColorCode(L["Demo"])) or L["Demo"]
-		end,
-		desc = L["Fills every managed viewer with placeholder icons and bars that follow your settings live. Turns itself off when the options close."],
-		disabled = Disabled,
-		func = function()
-			local module = Module()
-			if module then module:ToggleDemo() end
-		end,
-	},
-	font = {
-		order = 4,
-		type = "select",
-		dialogControl = "LSM30_Font",
+		type = "group",
+		inline = true,
 		name = L["Font"],
-		values = LSM:HashTable("font"),
 		disabled = Disabled,
-		get = function()
-			return CDM().font
-		end,
-		set = function(_, value)
-			CDM().font = value
-			Refresh()
-		end,
-	},
-	font_flag = {
-		order = 5,
-		type = "select",
-		name = L["Font contour"],
-		values = FONT_FLAGS,
-		disabled = Disabled,
-		get = function()
-			return CDM().font_flag
-		end,
-		set = function(_, value)
-			CDM().font_flag = value
-			Refresh()
-		end,
-	},
-	hide_swipe = {
-		order = 6,
-		type = "toggle",
-		name = L["Hide GCD Swipe"],
-		disabled = Disabled,
-		get = function()
-			return CDM().hide_swipe
-		end,
-		set = function(_, value)
-			CDM().hide_swipe = value
-			Refresh()
-		end,
+		args = {
+			font = {
+				order = 1,
+				type = "select",
+				dialogControl = "LSM30_Font",
+				name = L["Font"],
+				values = LSM:HashTable("font"),
+				disabled = Disabled,
+				get = function()
+					return CDM().font
+				end,
+				set = function(_, value)
+					CDM().font = value
+					Refresh()
+				end,
+			},
+			font_flag = {
+				order = 2,
+				type = "select",
+				name = L["Font contour"],
+				values = FONT_FLAGS,
+				disabled = Disabled,
+				get = function()
+					return CDM().font_flag
+				end,
+				set = function(_, value)
+					CDM().font_flag = value
+					Refresh()
+				end,
+			},
+		},
 	},
 }
 
@@ -1081,6 +1131,17 @@ local function SlotValues()
 	return values
 end
 
+local ENTRY_SHOW = { ALWAYS = L["Always"], READY = L["Only when ready"], COOLDOWN = L["Only on cooldown"], MISSING = L["Only when missing"] }
+local GLOW_DEFAULT_COLOR = { r = 0.95, g = 0.95, b = 0.32, a = 1 }
+
+local function SelectedEntry()
+	return entryState.selected and Entries()[entryState.selected]
+end
+
+local function NoEntrySelected()
+	return CustomDisabled() or not SelectedEntry()
+end
+
 local function MoveEntry(step)
 	local entries = Entries()
 	local from = entryState.selected
@@ -1210,6 +1271,62 @@ local function EntriesGroup(order)
 
 					tremove(entries, entryState.selected)
 					entryState.selected = entries[entryState.selected] and entryState.selected or nil
+					Refresh()
+				end,
+			},
+			show = {
+				order = 8,
+				type = "select",
+				name = L["Show"],
+				desc = L["When the selected entry is shown. Missing means for spells that the buff with this spell ID is not on you (read outside of combat, in combat the last state is kept), for items that none is in the bags and for slots that nothing is equipped."],
+				values = ENTRY_SHOW,
+				sorting = { "ALWAYS", "READY", "COOLDOWN", "MISSING" },
+				disabled = NoEntrySelected,
+				get = function()
+					local entry = SelectedEntry()
+					return entry and entry.show or "ALWAYS"
+				end,
+				set = function(_, value)
+					local entry = SelectedEntry()
+					if not entry then return end
+					entry.show = value ~= "ALWAYS" and value or nil
+					Refresh()
+				end,
+			},
+			glow_ready = {
+				order = 9,
+				type = "toggle",
+				name = L["Glow when ready"],
+				disabled = NoEntrySelected,
+				get = function()
+					local entry = SelectedEntry()
+					return entry and entry.glow_ready or false
+				end,
+				set = function(_, value)
+					local entry = SelectedEntry()
+					if not entry then return end
+					entry.glow_ready = value or nil
+					Refresh()
+				end,
+			},
+			glow_color = {
+				order = 10,
+				type = "color",
+				name = L["Glow Color"],
+				hasAlpha = true,
+				disabled = function()
+					local entry = SelectedEntry()
+					return NoEntrySelected() or not (entry and entry.glow_ready)
+				end,
+				get = function()
+					local entry = SelectedEntry()
+					local c = (entry and entry.glow_color) or GLOW_DEFAULT_COLOR
+					return c.r, c.g, c.b, c.a or 1
+				end,
+				set = function(_, r, g, b, a)
+					local entry = SelectedEntry()
+					if not entry then return end
+					entry.glow_color = { r = r, g = g, b = b, a = a }
 					Refresh()
 				end,
 			},
@@ -1461,6 +1578,38 @@ mMT.options.args.cooldownmanager.args.custom.args = {
 				end,
 				set = function(_, value)
 					VDB("custom").growth = value
+					Refresh()
+				end,
+			},
+			max_width = {
+				order = 8,
+				type = "range",
+				name = L["Fixed Width"],
+				desc = L["The icons shrink so the whole block fits into this size, the icon size stays the upper limit. 0 = off."],
+				min = 0,
+				max = 1000,
+				step = 1,
+				get = function()
+					return VDB("custom").max_width or 0
+				end,
+				set = function(_, value)
+					VDB("custom").max_width = value
+					Refresh()
+				end,
+			},
+			max_height = {
+				order = 9,
+				type = "range",
+				name = L["Fixed Height"],
+				desc = L["The icons shrink so the whole block fits into this size, the icon size stays the upper limit. 0 = off."],
+				min = 0,
+				max = 1000,
+				step = 1,
+				get = function()
+					return VDB("custom").max_height or 0
+				end,
+				set = function(_, value)
+					VDB("custom").max_height = value
 					Refresh()
 				end,
 			},

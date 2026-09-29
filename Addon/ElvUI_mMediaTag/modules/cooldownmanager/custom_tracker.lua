@@ -4,6 +4,7 @@ local module = mMT:GetModule("CooldownManager")
 -- Cache WoW Globals
 local _G = _G
 local ipairs = ipairs
+local select = select
 local wipe = wipe
 local ceil = math.ceil
 local floor = math.floor
@@ -14,6 +15,7 @@ local GameTooltip = GameTooltip
 local GetInventoryItemID = GetInventoryItemID
 local GetInventoryItemCooldown = GetInventoryItemCooldown
 local GetInventoryItemTexture = GetInventoryItemTexture
+local GetInventorySlotInfo = GetInventorySlotInfo
 local C_Timer_After = C_Timer.After
 local C_Item_GetItemCount = C_Item.GetItemCount
 local C_Item_GetItemIconByID = C_Item.GetItemIconByID
@@ -27,28 +29,30 @@ local C_Item_GetItemNameByID = C_Item.GetItemNameByID
 local C_Item_GetItemInfoInstant = C_Item.GetItemInfoInstant
 local IsSpellKnown = C_SpellBook and C_SpellBook.IsSpellKnown
 local IsSpellKnownOrOverridesKnown = C_SpellBook and C_SpellBook.IsSpellKnownOrOverridesKnown
+local GetPlayerAuraBySpellID = C_UnitAuras.GetPlayerAuraBySpellID
+local issecretvalue = issecretvalue
 
 local MAX_ICONS = 24
 local BELT_SLOT = 6
 local TRINKET_SLOTS = { 13, 14 }
 
 module.EQUIPMENT_SLOTS = {
-	{ id = 1, label = _G.HEADSLOT },
-	{ id = 2, label = _G.NECKSLOT },
-	{ id = 3, label = _G.SHOULDERSLOT },
-	{ id = 5, label = _G.CHESTSLOT },
-	{ id = 6, label = _G.WAISTSLOT },
-	{ id = 7, label = _G.LEGSSLOT },
-	{ id = 8, label = _G.FEETSLOT },
-	{ id = 9, label = _G.WRISTSLOT },
-	{ id = 10, label = _G.HANDSSLOT },
-	{ id = 11, label = _G.FINGER0SLOT .. " 1" },
-	{ id = 12, label = _G.FINGER1SLOT .. " 2" },
-	{ id = 13, label = _G.TRINKET0SLOT .. " 1" },
-	{ id = 14, label = _G.TRINKET1SLOT .. " 2" },
-	{ id = 15, label = _G.BACKSLOT },
-	{ id = 16, label = _G.MAINHANDSLOT },
-	{ id = 17, label = _G.SECONDARYHANDSLOT },
+	{ id = 1, name = "HeadSlot", label = _G.HEADSLOT },
+	{ id = 2, name = "NeckSlot", label = _G.NECKSLOT },
+	{ id = 3, name = "ShoulderSlot", label = _G.SHOULDERSLOT },
+	{ id = 5, name = "ChestSlot", label = _G.CHESTSLOT },
+	{ id = 6, name = "WaistSlot", label = _G.WAISTSLOT },
+	{ id = 7, name = "LegsSlot", label = _G.LEGSSLOT },
+	{ id = 8, name = "FeetSlot", label = _G.FEETSLOT },
+	{ id = 9, name = "WristSlot", label = _G.WRISTSLOT },
+	{ id = 10, name = "HandsSlot", label = _G.HANDSSLOT },
+	{ id = 11, name = "Finger0Slot", label = _G.FINGER0SLOT .. " 1" },
+	{ id = 12, name = "Finger1Slot", label = _G.FINGER1SLOT .. " 2" },
+	{ id = 13, name = "Trinket0Slot", label = _G.TRINKET0SLOT .. " 1" },
+	{ id = 14, name = "Trinket1Slot", label = _G.TRINKET1SLOT .. " 2" },
+	{ id = 15, name = "BackSlot", label = _G.BACKSLOT },
+	{ id = 16, name = "MainHandSlot", label = _G.MAINHANDSLOT },
+	{ id = 17, name = "SecondaryHandSlot", label = _G.SECONDARYHANDSLOT },
 }
 
 local HEALTHSTONES = { 5512, 224464 }
@@ -175,7 +179,9 @@ local function UpdateSpell(frame, spellID)
 
 	-- isActive is the only readable cooldown state, the GCD has to be excluded or everything greys out on every cast
 	local info = C_Spell_GetSpellCooldown(spellID)
-	frame.icon:SetDesaturated((info and info.isActive and not info.isOnGCD) or false)
+	local onCooldown = (info and info.isActive and not info.isOnGCD) or false
+	frame.icon:SetDesaturated(onCooldown)
+	return onCooldown
 end
 
 local function UpdateSlot(frame, slot)
@@ -191,15 +197,16 @@ local function UpdateSlot(frame, slot)
 	frame.countText:SetText("")
 
 	local start, duration, enable = GetInventoryItemCooldown("player", slot)
+	local onCooldown = (enable and enable ~= 0 and duration and duration > 0) or false
 	if enable and enable ~= 0 then
 		frame.Cooldown:SetCooldown(start, duration)
 	else
 		frame.Cooldown:Clear()
 	end
 
-	frame.icon:SetDesaturated(enable ~= 0 and duration > 0)
+	frame.icon:SetDesaturated(onCooldown)
 	frame:Show()
-	return true
+	return true, onCooldown
 end
 
 local function UpdateItem(frame, itemID)
@@ -215,16 +222,18 @@ local function UpdateItem(frame, itemID)
 	frame.icon:SetTexture(C_Item_GetItemIconByID(itemID))
 	frame.countText:SetText(count > 1 and count or "")
 
+	-- GetItemCooldown may return nothing, enable ~= 0 alone would then compare a nil duration
 	local start, duration, enable = C_Container_GetItemCooldown(itemID)
+	local onCooldown = (enable and enable ~= 0 and duration and duration > 0) or false
 	if enable and enable ~= 0 then
 		frame.Cooldown:SetCooldown(start, duration)
 	else
 		frame.Cooldown:Clear()
 	end
 
-	frame.icon:SetDesaturated(enable ~= 0 and duration > 0)
+	frame.icon:SetDesaturated(onCooldown)
 	frame:Show()
-	return true
+	return true, onCooldown
 end
 
 local function SpellUsable(spellID, knownOnly)
@@ -232,6 +241,45 @@ local function SpellUsable(spellID, knownOnly)
 
 	if IsSpellKnownOrOverridesKnown and IsSpellKnownOrOverridesKnown(spellID) then return true end
 	return (IsSpellKnown and IsSpellKnown(spellID)) or false
+end
+
+local buffMissing = {}
+
+-- Aura data is restricted in combat (secret or hidden), so the last state read outside of combat is kept there
+local function IsBuffMissing(spellID)
+	if not InCombatLockdown() then
+		local aura = GetPlayerAuraBySpellID(spellID)
+		if not issecretvalue(aura) then buffMissing[spellID] = aura == nil end
+	end
+
+	return buffMissing[spellID] or false
+end
+
+-- Reminder for something the character lacks: a buff that is not up, an item not in the bags or an empty slot
+local function UpdateMissing(frame, entry)
+	local texture
+	if entry.type == "spell" then
+		if not IsBuffMissing(entry.id) then return false end
+		texture = C_Spell_GetSpellTexture(entry.id)
+	elseif entry.type == "item" then
+		if C_Item_GetItemCount(entry.id, false, true) > 0 then return false end
+		texture = C_Item_GetItemIconByID(entry.id)
+	else
+		if GetInventoryItemID("player", entry.id) then return false end
+		for _, slot in ipairs(module.EQUIPMENT_SLOTS) do
+			if slot.id == entry.id then texture = select(2, GetInventorySlotInfo(slot.name)) end
+		end
+	end
+
+	frame.trackType = entry.type
+	frame.spellID = entry.type == "spell" and entry.id or nil
+	frame.itemID = entry.type == "item" and entry.id or nil
+	frame.slot = entry.type == "slot" and entry.id or nil
+	frame.icon:SetTexture(texture)
+	frame.icon:SetDesaturated(true)
+	frame.countText:SetText("")
+	frame.Cooldown:Clear()
+	return true
 end
 
 -- Own entries carry only a type and an ID, everything else is resolved from the game
@@ -268,12 +316,50 @@ local function IsOnUseTrinket(slot)
 	return (itemID and C_Item_GetItemSpell(itemID) ~= nil) or false
 end
 
+local readyGlow = { enable = true, type = "pixel", lines = 8, speed = 0.25, thickness = 2 }
+local DEFAULT_GLOW_COLOR = { r = 0.95, g = 0.95, b = 0.32, a = 1 }
+local glowing = {}
+local ticker
+
+-- only started when the state changes, restarting it on every update would reset the animation
+local function SetReadyGlow(frame, entry)
+	glowing[frame] = true
+	if frame.mmtReadyGlow then return end
+
+	readyGlow.color = entry.glow_color or DEFAULT_GLOW_COLOR
+	module:ApplyGlow(frame, readyGlow)
+	frame.mmtReadyGlow = true
+end
+
+local function StopReadyGlows(keep)
+	for _, frame in ipairs(icons) do
+		if frame.mmtReadyGlow and not (keep and keep[frame]) then
+			module:StopGlow(frame)
+			frame.mmtReadyGlow = nil
+		end
+	end
+end
+
+-- a cooldown running out fires nothing reliable, so entries that react to it poll while one is waiting
+local function SetPolling(waiting)
+	if waiting and not ticker then
+		ticker = C_Timer.NewTicker(0.5, function()
+			module:ScheduleCustomUpdate()
+		end)
+	elseif not waiting and ticker then
+		ticker:Cancel()
+		ticker = nil
+	end
+end
+
 local function UpdateIcons()
 	local vdb = module:ViewerDB("custom")
-	if not vdb or not vdb.enable then return end
+	if module:IsDisabled() or not vdb or not vdb.enable then return SetPolling(false) end
 
 	wipe(active)
+	wipe(glowing)
 	local index = 0
+	local waiting = false
 
 	local function Take()
 		index = index + 1
@@ -295,24 +381,30 @@ local function UpdateIcons()
 			local frame = Take()
 			if not frame then break end
 
-			if entry.type == "spell" then
+			local show = entry.show or "ALWAYS"
+			local shown, onCooldown = false, false
+			if show == "MISSING" then
+				shown = UpdateMissing(frame, entry)
+			elseif entry.type == "spell" then
 				if SpellUsable(entry.id, vdb.known_only ~= false) then
-					UpdateSpell(frame, entry.id)
-					frame:Show()
-					active[#active + 1] = frame
-				else
-					frame:Hide()
-					index = index - 1
+					shown, onCooldown = true, UpdateSpell(frame, entry.id)
 				end
 			elseif entry.type == "item" then
-				if UpdateItem(frame, entry.id) then
-					active[#active + 1] = frame
-				else
-					index = index - 1
-				end
-			elseif UpdateSlot(frame, entry.id) then
-				active[#active + 1] = frame
+				shown, onCooldown = UpdateItem(frame, entry.id)
 			else
+				shown, onCooldown = UpdateSlot(frame, entry.id)
+			end
+
+			-- per entry rules: only while ready, only while on cooldown, glow once ready
+			if shown and onCooldown and (show ~= "ALWAYS" or entry.glow_ready) then waiting = true end
+			if (show == "READY" and onCooldown) or (show == "COOLDOWN" and not onCooldown) then shown = false end
+
+			if shown then
+				frame:Show()
+				active[#active + 1] = frame
+				if entry.glow_ready and not onCooldown and show ~= "MISSING" then SetReadyGlow(frame, entry) end
+			else
+				frame:Hide()
 				index = index - 1
 			end
 		end
@@ -358,6 +450,9 @@ local function UpdateIcons()
 		if icons[i] then icons[i]:Hide() end
 	end
 
+	StopReadyGlows(glowing)
+	SetPolling(waiting)
+
 	module:LayoutCustomTracker()
 end
 
@@ -379,6 +474,11 @@ function module:LayoutCustomTracker()
 	local perRow = vdb.per_row or 6
 	local growth = vdb.growth or "CENTER"
 
+	local vertical = growth == "UP" or growth == "DOWN"
+	local cols = vertical and 1 or (count < perRow and count or perRow)
+	local rows = vertical and count or ceil(count / perRow)
+	width, height = module:FitIconSize(vdb, width, height, spacing, cols, rows)
+
 	for _, icon in ipairs(active) do
 		icon:SetSize(width, height)
 		icon.icon:SetTexCoord(E:GetTexCoords())
@@ -387,9 +487,6 @@ function module:LayoutCustomTracker()
 		module:StyleText(icon.countText, vdb.count_text)
 	end
 
-	local vertical = growth == "UP" or growth == "DOWN"
-	local cols = vertical and 1 or (count < perRow and count or perRow)
-	local rows = vertical and count or ceil(count / perRow)
 	local totalWidth = cols * width + (cols - 1) * spacing
 	local totalHeight = rows * height + (rows - 1) * spacing
 	module:SetContainerSize(container, totalWidth, totalHeight)
@@ -430,8 +527,9 @@ local function ScheduleUpdate()
 end
 
 local function OnEvent(event, arg1)
+	-- every slot counts, own entries can track any of them (also as missing)
 	if event == "PLAYER_EQUIPMENT_CHANGED" then
-		if arg1 == 13 or arg1 == 14 or arg1 == BELT_SLOT then ScheduleUpdate() end
+		ScheduleUpdate()
 	elseif event == "ACTIVE_TALENT_GROUP_CHANGED" or event == "PLAYER_TALENT_UPDATE" then
 		DetectRacials()
 		ScheduleUpdate()
@@ -458,14 +556,17 @@ local function CreateContainer()
 	module.containers.custom = frame
 end
 
+-- runs again after a disable, which dropped the events, so only the frames are created once
 function module:InitCustomTracker()
 	local vdb = module:ViewerDB("custom")
-	if not vdb or not vdb.enable or module.containers.custom then return end
+	if not vdb or not vdb.enable then return end
 
-	CreateContainer()
+	if not module.containers.custom then
+		CreateContainer()
 
-	for i = 1, MAX_ICONS do
-		icons[i] = CreateIcon(module.containers.custom, i)
+		for i = 1, MAX_ICONS do
+			icons[i] = CreateIcon(module.containers.custom, i)
+		end
 	end
 
 	DetectRacials()
@@ -480,8 +581,11 @@ function module:InitCustomTracker()
 	UpdateIcons()
 end
 
+-- option changes may carry a new glow color, so running glows are restarted
 function module:RefreshCustomTracker()
-	if module.containers.custom then UpdateIcons() end
+	if not module.containers.custom then return end
+	StopReadyGlows()
+	UpdateIcons()
 end
 
 -- AceEvent keeps one handler per event, so SPELL_UPDATE_COOLDOWN is dispatched from core.lua

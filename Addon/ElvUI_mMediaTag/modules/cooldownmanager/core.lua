@@ -33,6 +33,9 @@ function module:ScheduleRelayout()
 end
 
 local function OnEvent(event, unit, value)
+	-- combat sampling below only needs the players own auras
+	if event == "UNIT_AURA" and unit ~= "player" then return end
+
 	if event == "CVAR_UPDATE" then
 		if unit ~= "cooldownViewerEnabled" then return end
 
@@ -59,12 +62,35 @@ local function OnEvent(event, unit, value)
 		module.inCombat = inCombat
 		if inCombat then module:SetDemo(false) end
 		module:UpdateVisibility()
+		-- missing buffs are only readable outside of combat
+		module:ScheduleCustomUpdate()
 	end
 
-	if event == "UNIT_AURA" and unit ~= "player" then return end
-	if event == "SPELL_UPDATE_COOLDOWN" then module:ScheduleCustomUpdate() end
+	-- auras and cooldowns only sample combat here, the viewers are relaid by the item show/hide and layout hooks
+	if event == "UNIT_AURA" then
+		-- missing buffs of the custom tracker, frozen in combat anyway
+		if not inCombat then module:ScheduleCustomUpdate() end
+		return
+	end
+	if event == "SPELL_UPDATE_COOLDOWN" then return module:ScheduleCustomUpdate() end
+
 	if event == "UPDATE_BINDINGS" or event == "ACTIONBAR_SLOT_CHANGED" or event == "ACTIONBAR_PAGE_CHANGED" then module:ResetKeybinds() end
 	module:ScheduleRelayout()
+end
+
+local hookedItems = {}
+
+-- items show and hide on their own when they turn active or inactive, only then the order changes
+local function HookItem(item)
+	if not item or hookedItems[item] then return end
+	hookedItems[item] = true
+
+	item:HookScript("OnShow", function()
+		module:ScheduleRelayout()
+	end)
+	item:HookScript("OnHide", function()
+		module:ScheduleRelayout()
+	end)
 end
 
 -- Only read the pool, releasing or re-acquiring from addon code taints every later EnumerateActive
@@ -87,15 +113,27 @@ local function HookViewer(key)
 		hooksecurefunc(viewer.itemFramePool, "Release", function()
 			module:ScheduleRelayout()
 		end)
+
+		for item in viewer.itemFramePool:EnumerateActive() do
+			HookItem(item)
+		end
 	end
 
-	if viewer.OnAcquireItemFrame then hooksecurefunc(viewer, "OnAcquireItemFrame", function()
+	if viewer.OnAcquireItemFrame then hooksecurefunc(viewer, "OnAcquireItemFrame", function(_, item)
+		HookItem(item)
 		module:ScheduleRelayout()
 	end) end
 
 	hooksecurefunc(viewer, "RefreshLayout", function()
 		if not module:IsDisabled() then module:LayoutContainer(key, true) end
 	end)
+
+	-- the item grid re-runs its own Layout whenever it gets dirty and puts every icon back to Blizzards
+	-- spacing (padding minus 4), which makes enlarged icons overlap until the next event, so ours has to follow it
+	local itemContainer = viewer.GetItemContainerFrame and viewer:GetItemContainerFrame()
+	if itemContainer and itemContainer.Layout then hooksecurefunc(itemContainer, "Layout", function()
+		if not module:IsDisabled() then module:LayoutContainer(key, false) end
+	end) end
 
 	local selection = viewer.Selection
 	if selection then
@@ -234,14 +272,44 @@ function module:Refresh()
 	module:UpdateVisibility()
 end
 
+-- Blizzard's viewers stay parented to our containers until a reload, hiding those would unregister the viewer events
 local function Disable()
-	for key in pairs(module.VIEWERS) do
-		local container = module.containers[key]
-		if container then container:Hide() end
-	end
+	local custom = module.containers.custom
+	if custom then custom:Hide() end
 
+	module:UnregisterAllEvents()
+	module:SetDemo(false)
 	module:HideBlizzardSettings()
 	module:HideSpellPanels()
+	E:StaticPopup_Show("CONFIG_RL")
+end
+
+-- Hooks survive a disable, so they are only installed once per session
+local function SetupHooks()
+	if module.hooksInstalled then return end
+	module.hooksInstalled = true
+
+	HookElvUISkins()
+	module:RegisterSpellMenu()
+
+	-- ElvUIs CooldownUpdate hides the countdown numbers again
+	hooksecurefunc(E, "CooldownUpdate", function(_, cooldown)
+		if cooldown and cooldown.mmtText then cooldown:SetHideCountdownNumbers(false) end
+	end)
+
+	local player = _G.ElvUF_Player
+	if player then
+		hooksecurefunc(player, "SetAlpha", function()
+			if module.demoActive or module:IsDisabled() then return end
+
+			for key in pairs(module.VIEWERS) do
+				local vdb = module:ViewerDB(key)
+				if vdb and vdb.visibility == "FADER" then module:UpdateContainerShown(key) end
+			end
+		end)
+	end
+
+	HookConfigNavigation()
 end
 
 function module:Initialize()
@@ -273,22 +341,17 @@ function module:Initialize()
 	module.isEnabled = true
 
 	C_Timer_After(0, function()
+		-- a profile switch can disable and enable the module again, containers and movers exist only once
 		for key in pairs(module.VIEWERS) do
 			if key ~= "custom" and module:IsManaged(key) then
-				module:CreateContainer(key)
+				if not module.containers[key] then module:CreateContainer(key) end
 				HookViewer(key)
 				module:LayoutContainer(key, true)
 			end
 		end
 
 		module:InitCustomTracker()
-		HookElvUISkins()
-		module:RegisterSpellMenu()
-
-		-- ElvUIs CooldownUpdate hides the countdown numbers again
-		hooksecurefunc(E, "CooldownUpdate", function(_, cooldown)
-			if cooldown and cooldown.mmtText then cooldown:SetHideCountdownNumbers(false) end
-		end)
+		SetupHooks()
 
 		module:RegisterEvent("UNIT_AURA", OnEvent)
 		module:RegisterEvent("SPELL_UPDATE_COOLDOWN", OnEvent)
@@ -302,19 +365,5 @@ function module:Initialize()
 		end)
 
 		module:UpdateVisibility()
-
-		local player = _G.ElvUF_Player
-		if player then
-			hooksecurefunc(player, "SetAlpha", function()
-				if module.demoActive then return end
-
-				for key in pairs(module.VIEWERS) do
-					local vdb = module:ViewerDB(key)
-					if vdb and vdb.visibility == "FADER" then module:UpdateContainerShown(key) end
-				end
-			end)
-		end
-
-		HookConfigNavigation()
 	end)
 end

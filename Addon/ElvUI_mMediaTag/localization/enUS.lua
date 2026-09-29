@@ -1188,3 +1188,12 @@ L["Move Down"] = true
 L["Remove"] = true
 L["Known Spells Only"] = true
 L["Hides own spell entries the character has not learned."] = true
+L["Fixed Width"] = true
+L["Fixed Height"] = true
+L["The icons shrink so the whole block fits into this size, the icon size stays the upper limit. 0 = off."] = true
+L["Only when ready"] = true
+L["Only on cooldown"] = true
+L["Only when missing"] = true
+L["When the selected entry is shown. Missing means for spells that the buff with this spell ID is not on you (read outside of combat, in combat the last state is kept), for items that none is in the bags and for slots that nothing is equipped."] = true
+L["Glow when ready"] = true
+L["Glow Color"] = true

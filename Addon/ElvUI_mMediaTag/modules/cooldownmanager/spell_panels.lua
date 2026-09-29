@@ -17,6 +17,7 @@ local CATEGORY = { ESSENTIAL = 0, UTILITY = 1, TRACKED_BUFF = 2, TRACKED_BAR = 3
 local panels = {}
 local spellIDs = {}
 local widgets = { glow = {}, bar = {}, state = {} }
+local hookedFrames = { glow = {}, bar = {}, state = {} }
 
 local function AnchorPanel(panel, spellID, hookKey)
 	local info = C_Spell_GetSpellInfo(spellID)
@@ -30,8 +31,10 @@ local function AnchorPanel(panel, spellID, hookKey)
 		panel.frame:SetPoint("CENTER", E.UIParent, "CENTER", 0, 100)
 	end
 
-	if settings and not settings[hookKey] then
-		settings[hookKey] = true
+	-- the hook state is kept here, fields written onto Blizzard's settings frames would taint them
+	local hooked = hookedFrames[hookKey]
+	if settings and not hooked.settings then
+		hooked.settings = true
 		settings:HookScript("OnHide", function()
 			panel:Hide()
 		end)
@@ -39,8 +42,8 @@ local function AnchorPanel(panel, spellID, hookKey)
 
 	local alert = _G.CooldownViewerSettingsEditAlert
 	if alert then
-		if not alert[hookKey] then
-			alert[hookKey] = true
+		if not hooked.alert then
+			hooked.alert = true
 			alert:HookScript("OnShow", function()
 				panel:Hide()
 			end)
@@ -204,7 +207,7 @@ function module:ShowGlowPanel(spellID)
 	if not panels.glow then BuildGlowPanel() end
 	spellIDs.glow = spellID
 	HideOthers("glow")
-	AnchorPanel(panels.glow, spellID, "mmtGlowHooked")
+	AnchorPanel(panels.glow, spellID, "glow")
 	module:UpdateGlowPanel()
 	panels.glow:Show()
 end
@@ -269,7 +272,7 @@ function module:ShowBarColorPanel(spellID)
 	if not panels.bar then BuildBarPanel() end
 	spellIDs.bar = spellID
 	HideOthers("bar")
-	AnchorPanel(panels.bar, spellID, "mmtBarColorHooked")
+	AnchorPanel(panels.bar, spellID, "bar")
 
 	local db = BarDB()
 	if db then
@@ -402,7 +405,7 @@ function module:ShowActiveStatePanel(spellID)
 	if not panels.state then BuildStatePanel() end
 	spellIDs.state = spellID
 	HideOthers("state")
-	AnchorPanel(panels.state, spellID, "mmtActiveStateHooked")
+	AnchorPanel(panels.state, spellID, "state")
 
 	local db = StateDB()
 	if db then
