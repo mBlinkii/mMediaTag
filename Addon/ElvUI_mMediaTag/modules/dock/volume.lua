@@ -43,8 +43,13 @@ local function OnClick(self, btn)
 	if volumeDT then volumeDT.onClick(self, btn) end
 end
 
-local function SetText(_, text)
-	if text and text ~= "" then panelText = text end
+-- ElvUIs Volume datatext writes into the panel text, the dock only reads the level from it; once the slot holds another datatext it passes through again
+local function HookPanelText(panel)
+	local SetTextOriginal = getmetatable(panel.text).__index.SetText
+	panel.text.SetText = function(fs, text)
+		if panel.name ~= config.name then return SetTextOriginal(fs, text) end
+		if text and text ~= "" then panelText = text end
+	end
 end
 
 local function OnEvent(...)
@@ -74,8 +79,8 @@ local function OnEvent(...)
 		self:EnableMouseWheel(true)
 
 		panelText = self.text:GetText()
-		self.text:SetText("")
-		self.text.SetText = SetText
+		HookPanelText(self)
+		getmetatable(self.text).__index.SetText(self.text, "")
 	end
 
 	if volumeDT and volumeDT ~= "Data Broker" then volumeDT.eventFunc(...) end

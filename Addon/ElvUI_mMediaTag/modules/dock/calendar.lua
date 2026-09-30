@@ -19,7 +19,18 @@ local config = {
 	},
 }
 
+-- the icon shows the day of month, a session running past midnight needs the new one
+local function UpdateDay(self)
+	local day = date("%d")
+	if self.mMT_DockDay == day then return end
+
+	self.mMT_DockDay = day
+	config.icon.texture = icons[E.db.mMediaTag.dock.calendar.icon][day] or MEDIA.fallback
+	if self.mMT_Dock and self.mMT_Dock.Icon then self.mMT_Dock.Icon:SetTexture(config.icon.texture) end
+end
+
 local function OnEnter(self)
+	UpdateDay(self)
 	Dock:OnEnter(self)
 
 	if E.db.mMediaTag.dock.tooltip then
@@ -45,11 +56,15 @@ end
 
 local function OnEvent(self, event, ...)
 	if event == "ELVUI_FORCE_UPDATE" then
-		config.icon.texture = icons[E.db.mMediaTag.dock.calendar.icon][date("%d")] or MEDIA.fallback
+		self.mMT_DockDay = date("%d")
+		config.icon.texture = icons[E.db.mMediaTag.dock.calendar.icon][self.mMT_DockDay] or MEDIA.fallback
 		config.icon.color = E.db.mMediaTag.dock.calendar.custom_color and MEDIA.color.dock.calendar or nil
 
 		Dock:CreateDockIcon(self, config, event)
+		return
 	end
+
+	UpdateDay(self)
 end
 
-DT:RegisterDatatext(config.name, config.category, nil, OnEvent, nil, OnClick, OnEnter, OnLeave, config.localizedName, nil, nil)
+DT:RegisterDatatext(config.name, config.category, { "PLAYER_ENTERING_WORLD", "ZONE_CHANGED_NEW_AREA" }, OnEvent, nil, OnClick, OnEnter, OnLeave, config.localizedName, nil, nil)

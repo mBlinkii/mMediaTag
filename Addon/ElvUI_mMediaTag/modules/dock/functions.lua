@@ -1,6 +1,7 @@
 local mMT, DB, M, E, P, L, MEDIA = unpack(ElvUI_mMediaTag)
 
 local module = mMT:AddModule("Dock")
+local DT = E:GetModule("DataTexts")
 local InCombatLockdown = InCombatLockdown
 local colors = MEDIA.color.dock
 
@@ -21,6 +22,7 @@ local function SetupDockIcon(datatext, config)
 
 	dock.Icon:Size(size, size)
 	dock.Icon:SetTexture(config.icon.texture)
+	dock.Icon:Show()
 
 	local color = config.icon.color or module.db.class.normal and MEDIA.myclass or colors.normal
 	dock.color = color
@@ -97,7 +99,7 @@ local function SetupDockNotification(datatext, config)
 	local color = db.class and MEDIA.myclass or colors.notification
 	dock.Notification:Size(size, size)
 	dock.Notification:SetTexture(icon)
-	dock.Notification.SetVertexColor(color.r, color.g, color.b, color.a or 1)
+	dock.Notification:SetVertexColor(color.r, color.g, color.b, color.a or 1)
 	dock.Notification:Hide()
 end
 
@@ -106,7 +108,7 @@ local function SetupDockSecureButton(datatext, conf)
 	local secureConf = conf.misc
 
 	if not dock.SecureBtn then
-		dock.SecureBtn = CreateFrame("Button", "mMT_Dock_SecureButton", datatext, "SecureActionButtonTemplate")
+		dock.SecureBtn = CreateFrame("Button", nil, datatext, "SecureActionButtonTemplate")
 		dock.SecureBtn.__owner = datatext
 
 		if secureConf.macroA or secureConf.macroB then
@@ -164,6 +166,30 @@ function module:OnLeave(datatext)
 	if datatext.mMT_Dock.TextA then E:UIFrameFadeIn(datatext.mMT_Dock.TextA, 0.75, 0, 1) end
 	if datatext.mMT_Dock.TextB then E:UIFrameFadeIn(datatext.mMT_Dock.TextB, 0.75, 0, 1) end
 end
+
+-- A datatext slot can get another datatext without a reload, the dock parts would stay on top of it
+function module:ReleaseDock(datatext)
+	local dock = datatext.mMT_Dock
+	if not dock then return end
+
+	if dock.Icon then
+		E:StopFlash(dock.Icon, 1)
+		dock.Icon:Hide()
+	end
+	if dock.TextA then DeleteLabel(dock.TextA) end
+	if dock.TextB then DeleteLabel(dock.TextB) end
+	if dock.Notification then dock.Notification:Hide() end
+	if dock.SecureBtn and not InCombatLockdown() then dock.SecureBtn:Hide() end
+end
+
+hooksecurefunc(DT, "UpdatePanelInfo", function(_, _, panel)
+	if not (panel and panel.dataPanels) then return end
+
+	for _, datatext in ipairs(panel.dataPanels) do
+		local name = datatext.name
+		if datatext.mMT_Dock and not (name and name:find("^mMT_Dock_")) then module:ReleaseDock(datatext) end
+	end
+end)
 
 function module:CreateDockIcon(datatext, config)
 	if not config or not datatext then return end

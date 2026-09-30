@@ -145,7 +145,7 @@ local function OnEvent(self, event, ...)
 		end
 	end
 
-	if textStyle ~= "noon" then
+	if textStyle ~= "none" then
 		local hex = "|cFFFFFFFF"
 
 		if textStyle == "durability" or textStyle == "both" then

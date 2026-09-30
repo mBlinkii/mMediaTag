@@ -65,6 +65,26 @@ local function LoadCurrentPlayedCache()
 	levelTimePlayed = info.level
 end
 
+-- our own request should not print the played time into the chat, the chat frames get the event back with the answer
+local mutedChatFrames = {}
+
+local function MuteTimePlayedChat()
+	for i = 1, NUM_CHAT_WINDOWS do
+		local chat = _G["ChatFrame" .. i]
+		if chat and chat:IsEventRegistered("TIME_PLAYED_MSG") then
+			chat:UnregisterEvent("TIME_PLAYED_MSG")
+			mutedChatFrames[chat] = true
+		end
+	end
+end
+
+local function RestoreTimePlayedChat()
+	for chat in pairs(mutedChatFrames) do
+		chat:RegisterEvent("TIME_PLAYED_MSG")
+	end
+	wipe(mutedChatFrames)
+end
+
 local function RequestPlayedTime(force)
 	local guid = mMT:GetCurrentPlayerGUID()
 	if not guid then return end
@@ -76,7 +96,11 @@ local function RequestPlayedTime(force)
 	if not force and (now - lastRequest) < PLAYED_REFRESH_INTERVAL then return end
 
 	lastPlayedRequest[guid] = now
+	MuteTimePlayedChat()
 	RequestTimePlayed()
+
+	-- never leave the chat muted when no answer comes
+	C_Timer.After(10, RestoreTimePlayedChat)
 end
 
 local function GetAccountPlayedTotal()
@@ -179,10 +203,13 @@ local function OnEvent(self, event, ...)
 	end
 
 	if event == "PLAYER_ENTERING_WORLD" then
+		-- only on login or reload, every loading screen would request it again
+		local isInitialLogin, isReloadingUi = ...
 		LoadCurrentPlayedCache()
-		RequestPlayedTime(true)
+		RequestPlayedTime(isInitialLogin or isReloadingUi)
 	elseif event == "TIME_PLAYED_MSG" then
 		local totalTime, levelTime = ...
+		RestoreTimePlayedChat()
 		UpdatePlayedCache(totalTime, levelTime)
 
 		if E.db.mMediaTag.dock.tooltip and DT.tooltip and DT.tooltip:IsShown() then OnEnter(self) end
