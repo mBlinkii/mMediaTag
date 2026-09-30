@@ -155,42 +155,64 @@ local function ResolveViewerKey(frame)
 	return parent and (module.styled[parent] or parent.mmtViewerKey) or nil
 end
 
+-- ElvUIs skin merge (after 15.26) moved the CDM skin functions from S:CooldownManager_* into the skin storage, both layouts are supported
+local ELVUI_SKIN_FUNCS = {
+	container = { "UpdateTextContainer", "CooldownManager_UpdateTextContainer" },
+	icon = { "SkinIcon", "CooldownManager_SkinIcon" },
+	bar = { "SkinBar", "CooldownManager_SkinBar" },
+	textBar = { "UpdateTextBar", "CooldownManager_UpdateTextBar" },
+}
+
+local function HookElvUISkin(S, which, hook)
+	local storage = S.addonStorage and S.addonStorage.Blizzard_CooldownViewer
+	local data = storage and storage.data
+	local names = ELVUI_SKIN_FUNCS[which]
+
+	if data and data[names[1]] then
+		hooksecurefunc(data, names[1], hook)
+	elseif S[names[2]] then
+		hooksecurefunc(S, names[2], hook)
+	end
+end
+
 -- ElvUIs own CDM skin runs after ours and resets the text, so every entry point gets a post hook
 local function HookElvUISkins()
 	local S = E:GetModule("Skins", true)
 	if not S then return end
 
-	if S.CooldownManager_UpdateTextContainer then
-		hooksecurefunc(S, "CooldownManager_UpdateTextContainer", function(_, frame)
-			local vdb = module:ViewerDB(ResolveViewerKey(frame))
-			if vdb then module:ApplyCountText(frame, vdb.count_text) end
-		end)
-	end
+	HookElvUISkin(S, "container", function(_, frame)
+		local key = ResolveViewerKey(frame)
+		local vdb = module:ViewerDB(key)
+		if not vdb then return end
 
-	if S.CooldownManager_SkinIcon then
-		hooksecurefunc(S, "CooldownManager_SkinIcon", function(_, frame)
-			local vdb = module:ViewerDB(ResolveViewerKey(frame))
-			if vdb then module:ApplyTextOverrides(frame, vdb, module:GetDB()) end
-		end)
-	end
+		-- on bars the container is the bar icon, its count uses the stacks text
+		if key == "buff_bar" then
+			if vdb.stacks ~= false then module:ApplyCountText(frame, vdb.stacks_text) end
+		else
+			module:ApplyCountText(frame, vdb.count_text)
+		end
+	end)
 
-	if S.CooldownManager_SkinBar then
-		hooksecurefunc(S, "CooldownManager_SkinBar", function(_, frame)
-			if ResolveViewerKey(frame) ~= "buff_bar" then return end
-			local vdb = module:ViewerDB("buff_bar")
-			if vdb then module:ApplyBarStyle(frame, vdb) end
-		end)
-	end
+	HookElvUISkin(S, "icon", function(_, frame)
+		local key = ResolveViewerKey(frame)
+		if key == "buff_bar" then return end
+		local vdb = module:ViewerDB(key)
+		if vdb then module:ApplyTextOverrides(frame, vdb, module:GetDB()) end
+	end)
 
-	if S.CooldownManager_UpdateTextBar then
-		hooksecurefunc(S, "CooldownManager_UpdateTextBar", function(_, bar)
-			if ResolveViewerKey(bar:GetParent()) ~= "buff_bar" then return end
-			local vdb = module:ViewerDB("buff_bar")
-			if not vdb then return end
-			module:StyleText(bar.Name, vdb.name_text)
-			module:StyleText(bar.Duration, vdb.duration_text)
-		end)
-	end
+	HookElvUISkin(S, "bar", function(_, frame)
+		if ResolveViewerKey(frame) ~= "buff_bar" then return end
+		local vdb = module:ViewerDB("buff_bar")
+		if vdb then module:ApplyBarStyle(frame, vdb) end
+	end)
+
+	HookElvUISkin(S, "textBar", function(_, bar)
+		if ResolveViewerKey(bar:GetParent()) ~= "buff_bar" then return end
+		local vdb = module:ViewerDB("buff_bar")
+		if not vdb then return end
+		module:StyleText(bar.Name, vdb.name_text)
+		module:StyleText(bar.Duration, vdb.duration_text)
+	end)
 end
 
 local configOpen = false

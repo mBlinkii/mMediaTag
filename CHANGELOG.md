@@ -1,5 +1,9 @@
 # Changelog - ElvUI_mMediaTag
 
+## [ver. 4.15] - TBD
+### 🐛 FIX
+- FIX - [Cooldown-Manager]: The font settings of the buff bars and the count texts were overwritten by ElvUI's cooldown manager skin since its latest skin rework, which made the text too large.
+
 ## [ver. 4.14] - 29.09.2026
 ### 🐛 FIX
 - FIX - [DT-Combat-Time]: The combat timer threw an error on every frame when the icon for in or out of combat was set to None.
