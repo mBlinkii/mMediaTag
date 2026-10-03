@@ -768,6 +768,7 @@ L["Fade"] = true
 L["Fade out delay"] = true
 L["First line color"] = true
 L["Font size, bottom line"] = true
+L["Font size, keystones"] = true
 L["Minimal (text only)"] = true
 L["Scale"] = true
 L["Second line color"] = true

@@ -109,6 +109,24 @@ mMT.options.args.misc.args.lfg_invite_info.args = {
 					mMT:UpdateModule("LFGInviteInfo")
 				end,
 			},
+			font_size3 = {
+				order = 7,
+				name = L["Font size, keystones"],
+				type = "range",
+				min = 8,
+				max = 64,
+				step = 1,
+				disabled = function()
+					return not (E.db.mMediaTag.lfg_invite_info.enable and E.db.mMediaTag.lfg_invite_info.keystones)
+				end,
+				get = function(info)
+					return E.db.mMediaTag.lfg_invite_info.text.size3
+				end,
+				set = function(info, value)
+					E.db.mMediaTag.lfg_invite_info.text.size3 = value
+					mMT:UpdateModule("LFGInviteInfo")
+				end,
+			},
 		},
 	},
 	settings = {

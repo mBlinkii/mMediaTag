@@ -97,6 +97,7 @@ P.lfg_invite_info = {
 		font = "PT Sans Narrow",
 		size = 32,
 		size2 = 22,
+		size3 = 14,
 		fontFlag = "OUTLINE",
 	},
 	colors = {
