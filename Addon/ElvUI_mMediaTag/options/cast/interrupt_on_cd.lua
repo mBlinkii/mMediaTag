@@ -180,8 +180,24 @@ mMT.options.args.unitframes.args.interrupt_on_cd.args = {
 					M.InterruptOnCD:Initialize()
 				end,
 			},
-			glow_color = {
+			glow_thickness = {
 				order = 5,
+				type = "range",
+				name = L["Thickness"],
+				min = 1,
+				max = 8,
+				step = 1,
+				disabled = GlowDisabled,
+				get = function(info)
+					return E.db.mMediaTag.interrupt_on_cd.glow_thickness
+				end,
+				set = function(info, value)
+					E.db.mMediaTag.interrupt_on_cd.glow_thickness = value
+					M.InterruptOnCD:Initialize()
+				end,
+			},
+			glow_color = {
+				order = 6,
 				type = "color",
 				name = L["Color"],
 				hasAlpha = false,

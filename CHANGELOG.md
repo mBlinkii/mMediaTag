@@ -10,6 +10,7 @@
 - FIX - [Dock]: The calendar dock kept the date of the previous day after midnight.
 ### ✨ NEW
 - NEW - [Important-Casts]: Optional setting that brings enemy nameplates with a running cast in front of the other nameplates, important casts keep their highlight on top.
+- NEW - [Interrupt-On-CD]: The thickness of the pixel glow can be set.
 
 ## [ver. 4.14] - 29.09.2026
 ### 🐛 FIX

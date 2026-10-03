@@ -256,7 +256,7 @@ local function UpdateGlow(target, castbar, castStart, ready)
 	if castStart then
 		local c = module.colors.glow
 		glowColor[1], glowColor[2], glowColor[3], glowColor[4] = c.r, c.g, c.b, 1
-		LCG.PixelGlow_Start(holder.ready, glowColor, 8, 0.25, nil, 2, 0, 0, nil, GLOW_KEY)
+		LCG.PixelGlow_Start(holder.ready, glowColor, 8, 0.25, nil, module.glow.thickness, 0, 0, nil, GLOW_KEY)
 		holder.active = true
 	end
 
@@ -444,6 +444,7 @@ function module:Initialize()
 			health = db.glow_health,
 			important_only = db.glow_important_only,
 			ready_only = db.glow_ready_only,
+			thickness = db.glow_thickness or 2,
 		}
 
 		if module.set_bg_color then

@@ -7,6 +7,7 @@ local CreateFrame = CreateFrame
 local UnitIsDead = UnitIsDead
 local UnitCanAttack = UnitCanAttack
 local max = math.max
+local tremove = table.remove
 local hooksecurefunc = hooksecurefunc
 local IsSpellImportant = C_Spell and C_Spell.IsSpellImportant
 
@@ -255,8 +256,47 @@ local function RaisePlate(nameplate)
 	nameplate:SetFrameLevel(nameplate:GetFrameLevel() + RAISE_LEVELS)
 end
 
+-- a level change walks every child of the plate (aura containers are preallocated), so raises are spread over frames
+local MAX_RAISES_PER_FRAME = 3
+local pendingRaises = {}
+local queuedRaise = {}
+local raiseDriver = CreateFrame("Frame")
+raiseDriver:Hide()
+
+local function IsStillCasting(nameplate)
+	local castbar = nameplate.Castbar
+	return castbar and castbar:IsShown() and (castbar.casting or castbar.channeling)
+end
+
+raiseDriver:SetScript("OnUpdate", function(self)
+	local raised = 0
+	while raised < MAX_RAISES_PER_FRAME and #pendingRaises > 0 do
+		local nameplate = tremove(pendingRaises, 1)
+		if queuedRaise[nameplate] then
+			queuedRaise[nameplate] = nil
+			-- a cast that is already over by now is skipped instead of raised for nothing
+			if module.raiseCasting and IsStillCasting(nameplate) then
+				RaisePlate(nameplate)
+				raised = raised + 1
+			end
+		end
+	end
+
+	if #pendingRaises == 0 then self:Hide() end
+end)
+
+local function QueueRaise(nameplate)
+	if nameplate.mMT_CastRaised or queuedRaise[nameplate] then return end
+	queuedRaise[nameplate] = true
+	pendingRaises[#pendingRaises + 1] = nameplate
+	raiseDriver:Show()
+end
+
 local function LowerPlate(nameplate)
-	if not (nameplate and nameplate.mMT_CastRaised) then return end
+	if not nameplate then return end
+	queuedRaise[nameplate] = nil
+
+	if not nameplate.mMT_CastRaised then return end
 	nameplate.mMT_CastRaised = nil
 	nameplate:SetFrameLevel(max(nameplate:GetFrameLevel() - RAISE_LEVELS, 0))
 end
@@ -267,7 +307,7 @@ local function RaiseCastingPlate(castbar)
 	if not (module.raiseCasting and owner and owner.isNameplate) or owner == NP.PlayerFrame or owner == NP.TestFrame then return end
 
 	local unit = owner.unit
-	if unit and UnitCanAttack("player", unit) then RaisePlate(owner) end
+	if unit and UnitCanAttack("player", unit) then QueueRaise(owner) end
 end
 
 local function OnCastEnd(castbar)

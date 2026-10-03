@@ -12,5 +12,6 @@ mMT.Changelog[415] = {
 	},
 	NEW = {
 		"[Important-Casts]: Optional setting that brings enemy nameplates with a running cast in front of the other nameplates, important casts keep their highlight on top.",
+		"[Interrupt-On-CD]: The thickness of the pixel glow can be set.",
 	},
 }

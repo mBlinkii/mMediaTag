@@ -529,6 +529,7 @@ P.interrupt_on_cd = {
 	glow_health = false,
 	glow_important_only = false,
 	glow_ready_only = false,
+	glow_thickness = 2,
 }
 
 P.tooltip = {
