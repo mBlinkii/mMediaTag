@@ -1199,7 +1199,8 @@ L["Known Spells Only"] = true
 L["Hides own spell entries the character has not learned."] = true
 L["Fixed Width"] = true
 L["Fixed Height"] = true
-L["The icons shrink so the whole block fits into this size, the icon size stays the upper limit. 0 = off."] = true
+L["Width of the whole block, the icons of a row share it and the icon size settings are ignored. 0 = off."] = true
+L["Height of all rows, the icons are sized from it and the icon size settings are ignored. 0 = off."] = true
 L["Only when ready"] = true
 L["Only on cooldown"] = true
 L["Only when missing"] = true

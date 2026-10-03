@@ -739,22 +739,21 @@ function module:ApplyKeybindText(frame, vdb)
 	frame.mmtKeybind:Show()
 end
 
--- Fixed block size: the icons shrink until cols x rows fit, the icon size setting stays the upper limit
+-- A fixed width or height replaces the icon size settings: the width is split over the icons of the widest row, the
+-- height over the rows, so the block always fills it. With only one of them set the icons stay square.
 function module:FitIconSize(vdb, width, height, spacing, cols, rows)
-	local scale = 1
+	local fixedWidth = vdb.max_width or 0
+	local fixedHeight = vdb.max_height or 0
+	if fixedWidth <= 0 and fixedHeight <= 0 then return width, height end
 
-	local maxWidth = vdb.max_width or 0
-	if maxWidth > 0 then scale = min(scale, (E:Scale(maxWidth) - (cols - 1) * spacing) / (cols * width)) end
+	local w = fixedWidth > 0 and (E:Scale(fixedWidth) - (cols - 1) * spacing) / cols or nil
+	local h = fixedHeight > 0 and (E:Scale(fixedHeight) - (rows - 1) * spacing) / rows or nil
+	w, h = w or h, h or w
 
-	local maxHeight = vdb.max_height or 0
-	if maxHeight > 0 then scale = min(scale, (E:Scale(maxHeight) - (rows - 1) * spacing) / (rows * height)) end
-
-	if scale >= 1 then return width, height end
-
-	-- round down to whole pixels so the block never ends up wider than asked, a spacing wider than the block would go below zero
+	-- round down to whole pixels so the block never ends up bigger than asked, a spacing wider than the block would go below zero
 	local pixel = E.mult or 1
 	local minSize = 4 * pixel
-	return max(floor(width * scale / pixel) * pixel, minSize), max(floor(height * scale / pixel) * pixel, minSize)
+	return max(floor(w / pixel) * pixel, minSize), max(floor(h / pixel) * pixel, minSize)
 end
 
 -- Reading the pool is safe, releasing or acquiring from here would taint every later EnumerateActive

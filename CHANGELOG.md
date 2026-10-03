@@ -12,6 +12,7 @@
 ### 🔧 UPDATE
 - UPDATE - [Interrupt-On-CD]: The cooldown of your interrupt is read once per frame for all castbars instead of once per castbar, and the kick marker no longer jumps by a pixel.
 - UPDATE - [Execute-Marker]: The marker follows the size and fill direction of the health bar by itself instead of being measured.
+- UPDATE - [Cooldown-Manager]: A fixed width or height now sets the icon size by itself: the width is split over the icons of a row, the height over all rows, the icon size settings are greyed out while one of them is set.
 ### ✨ NEW
 - NEW - [Important-Casts]: Optional setting that brings enemy nameplates with a running cast in front of the other nameplates, important casts keep their highlight on top.
 - NEW - [Interrupt-On-CD]: The thickness of the pixel glow can be set.

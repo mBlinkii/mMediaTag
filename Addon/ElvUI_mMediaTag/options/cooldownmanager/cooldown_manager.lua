@@ -243,6 +243,11 @@ local function TextGroup(name, order, key, field, hidden, disabled, toggle)
 	return group
 end
 
+-- a fixed width or height replaces the icon size settings
+local function FixedSize(vdb)
+	return (vdb.max_width or 0) > 0 or (vdb.max_height or 0) > 0
+end
+
 local function IconLayout(key, order)
 	return {
 		order = order,
@@ -254,6 +259,9 @@ local function IconLayout(key, order)
 			keep_ratio = {
 				order = 1,
 				type = "toggle",
+				disabled = function()
+					return Disabled() or FixedSize(VDB(key))
+				end,
 				name = L["Keep Size Ratio"],
 				get = function()
 					return VDB(key).keep_ratio
@@ -266,6 +274,9 @@ local function IconLayout(key, order)
 			width = {
 				order = 2,
 				type = "range",
+				disabled = function()
+					return Disabled() or FixedSize(VDB(key))
+				end,
 				name = function()
 					return VDB(key).keep_ratio and L["Icon Size"] or L["Icon Width"]
 				end,
@@ -283,6 +294,9 @@ local function IconLayout(key, order)
 			height = {
 				order = 3,
 				type = "range",
+				disabled = function()
+					return Disabled() or FixedSize(VDB(key))
+				end,
 				name = L["Icon Height"],
 				min = 16,
 				max = 80,
@@ -345,7 +359,7 @@ local function IconLayout(key, order)
 				order = 8,
 				type = "range",
 				name = L["Fixed Width"],
-				desc = L["The icons shrink so the whole block fits into this size, the icon size stays the upper limit. 0 = off."],
+				desc = L["Width of the whole block, the icons of a row share it and the icon size settings are ignored. 0 = off."],
 				min = 0,
 				max = 1000,
 				step = 1,
@@ -361,7 +375,7 @@ local function IconLayout(key, order)
 				order = 9,
 				type = "range",
 				name = L["Fixed Height"],
-				desc = L["The icons shrink so the whole block fits into this size, the icon size stays the upper limit. 0 = off."],
+				desc = L["Height of all rows, the icons are sized from it and the icon size settings are ignored. 0 = off."],
 				min = 0,
 				max = 1000,
 				step = 1,
@@ -1495,6 +1509,9 @@ mMT.options.args.cooldownmanager.args.custom.args = {
 			keep_ratio = {
 				order = 1,
 				type = "toggle",
+				disabled = function()
+					return CustomDisabled() or FixedSize(VDB("custom"))
+				end,
 				name = L["Keep Size Ratio"],
 				get = function()
 					return VDB("custom").keep_ratio
@@ -1507,6 +1524,9 @@ mMT.options.args.cooldownmanager.args.custom.args = {
 			width = {
 				order = 2,
 				type = "range",
+				disabled = function()
+					return CustomDisabled() or FixedSize(VDB("custom"))
+				end,
 				name = function()
 					return VDB("custom").keep_ratio and L["Icon Size"] or L["Icon Width"]
 				end,
@@ -1524,6 +1544,9 @@ mMT.options.args.cooldownmanager.args.custom.args = {
 			height = {
 				order = 3,
 				type = "range",
+				disabled = function()
+					return CustomDisabled() or FixedSize(VDB("custom"))
+				end,
 				name = L["Icon Height"],
 				min = 16,
 				max = 80,
@@ -1587,7 +1610,7 @@ mMT.options.args.cooldownmanager.args.custom.args = {
 				order = 8,
 				type = "range",
 				name = L["Fixed Width"],
-				desc = L["The icons shrink so the whole block fits into this size, the icon size stays the upper limit. 0 = off."],
+				desc = L["Width of the whole block, the icons of a row share it and the icon size settings are ignored. 0 = off."],
 				min = 0,
 				max = 1000,
 				step = 1,
@@ -1603,7 +1626,7 @@ mMT.options.args.cooldownmanager.args.custom.args = {
 				order = 9,
 				type = "range",
 				name = L["Fixed Height"],
-				desc = L["The icons shrink so the whole block fits into this size, the icon size stays the upper limit. 0 = off."],
+				desc = L["Height of all rows, the icons are sized from it and the icon size settings are ignored. 0 = off."],
 				min = 0,
 				max = 1000,
 				step = 1,
