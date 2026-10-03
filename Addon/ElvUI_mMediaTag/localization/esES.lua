@@ -1019,6 +1019,11 @@ L["Execute range"] = "Rango de ejecución"
 L["Only in combat"] = "Solo en combate"
 L["Shows a marker on enemy nameplates at the execute threshold of your spec. Because of the Midnight API restrictions the marker is hidden via clipping once the unit drops below the threshold, health values are never read."] = "Muestra un marcador en las placas de nombre enemigas en el umbral de ejecución de tu especialización. Debido a las restricciones de la API de Midnight, el marcador se oculta mediante recorte cuando la unidad baja del umbral; los valores de salud nunca se leen."
 
+-- options/nameplates/raid_marker_color.lua
+L["Raid Marker Colors"] = "Colores de marcadores de banda"
+L["Raid Markers"] = "Marcadores de banda"
+L["Colors the health bar of nameplates with a raid marker in the color of that marker."] = "Colorea la barra de salud de las placas de nombre con un marcador de banda en el color de ese marcador."
+
 -- modules/skin/bugsack.lua
 L["Page:"] = "Página:"
 

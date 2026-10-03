@@ -159,6 +159,17 @@ MEDIA.color = {
 		execute_color = createColor("FFFF3333"),
 	},
 
+	raid_markers = {
+		star = createColor("FFFFD21E"),
+		circle = createColor("FFFF8A1E"),
+		diamond = createColor("FFC85AFF"),
+		triangle = createColor("FF3CDC46"),
+		moon = createColor("FFB4C8DC"),
+		square = createColor("FF2896FF"),
+		cross = createColor("FFFF3C3C"),
+		skull = createColor("FFF0F0F0"),
+	},
+
 	phase_icon = {
 		Phasing = createColor("FF265FFD"),
 		Sharding = createColor("FF74FA4C"),
@@ -305,6 +316,8 @@ function mMT:UpdateMedia(arg)
 			"execute_color",
 		})
 	end
+
+	if arg == "raid_markers" or not arg then SetColors(MEDIA.color.raid_markers, colors.raid_markers, { "star", "circle", "diamond", "triangle", "moon", "square", "cross", "skull" }) end
 
 	if arg == "phase_icon" or not arg then SetColors(MEDIA.color.phase_icon, colors.phase_icon, { "Phasing", "Sharding", "WarMode", "ChromieTime", "TimerunningHwt" }) end
 

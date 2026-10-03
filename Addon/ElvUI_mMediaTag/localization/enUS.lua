@@ -822,6 +822,11 @@ L["Execute range"] = true
 L["Only in combat"] = true
 L["Shows a marker on enemy nameplates at the execute threshold of your spec. Because of the Midnight API restrictions the marker is hidden via clipping once the unit drops below the threshold, health values are never read."] = true
 
+-- options/nameplates/raid_marker_color.lua
+L["Raid Marker Colors"] = true
+L["Raid Markers"] = true
+L["Colors the health bar of nameplates with a raid marker in the color of that marker."] = true
+
 -- options/nameplates/nameplate_tools.lua
 L["ElvUI Color Settings"] = true
 L["Heal and absorb textures for nameplates are configured together with the unitframe textures."] = true

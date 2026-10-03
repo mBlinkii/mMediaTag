@@ -1019,6 +1019,11 @@ L["Execute range"] = "마무리 일격 구간"
 L["Only in combat"] = "전투 중에만"
 L["Shows a marker on enemy nameplates at the execute threshold of your spec. Because of the Midnight API restrictions the marker is hidden via clipping once the unit drops below the threshold, health values are never read."] = "적 이름표에 현재 전문화의 마무리 일격 기준점을 표시합니다. 한밤 API 제한 때문에 유닛이 기준점 아래로 내려가면 표시가 잘라내기로 숨겨지며, 생명력 값은 절대 읽지 않습니다."
 
+-- options/nameplates/raid_marker_color.lua
+L["Raid Marker Colors"] = "공격대 징표 색상"
+L["Raid Markers"] = "공격대 징표"
+L["Colors the health bar of nameplates with a raid marker in the color of that marker."] = "공격대 징표가 있는 이름표의 생명력 바를 해당 징표의 색상으로 칠합니다."
+
 -- modules/skin/bugsack.lua
 L["Page:"] = "페이지:"
 

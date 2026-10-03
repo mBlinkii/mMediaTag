@@ -1019,6 +1019,11 @@ L["Execute range"] = "Порог добивания"
 L["Only in combat"] = "Только в бою"
 L["Shows a marker on enemy nameplates at the execute threshold of your spec. Because of the Midnight API restrictions the marker is hidden via clipping once the unit drops below the threshold, health values are never read."] = "Показывает метку на табличках имён противников на пороге добивания вашей специализации. Из-за ограничений API Midnight метка скрывается обрезкой, когда здоровье цели опускается ниже порога, значения здоровья никогда не считываются."
 
+-- options/nameplates/raid_marker_color.lua
+L["Raid Marker Colors"] = "Цвета рейдовых меток"
+L["Raid Markers"] = "Рейдовые метки"
+L["Colors the health bar of nameplates with a raid marker in the color of that marker."] = "Окрашивает полосу здоровья индикаторов с рейдовой меткой в цвет этой метки."
+
 -- modules/skin/bugsack.lua
 L["Page:"] = "Страница:"
 

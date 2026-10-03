@@ -6,4 +6,5 @@
 	<Script file="auto_friendly_nameplates.lua"/>
 	<Script file="classification_texture.lua"/>
 	<Script file="execute_marker.lua"/>
+	<Script file="raid_marker_color.lua"/>
 </Ui>

@@ -7,4 +7,5 @@
 	<Script file="quest_highlighter.lua"/>
 	<Script file="classification_texture.lua"/>
 	<Script file="execute_marker.lua"/>
+	<Script file="raid_marker_color.lua"/>
 </Ui>

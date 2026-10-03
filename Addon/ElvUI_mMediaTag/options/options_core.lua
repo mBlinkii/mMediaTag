@@ -169,6 +169,13 @@ mMT.options = {
 					childGroups = "tab",
 					args = {},
 				},
+				raid_marker_color = {
+					order = 8,
+					type = "group",
+					name = mMT:AddSettingsIcon(L["Raid Marker Colors"], "nameplates"),
+					childGroups = "tab",
+					args = {},
+				},
 			},
 		},
 		cooldownmanager = {

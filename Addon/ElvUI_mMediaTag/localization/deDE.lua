@@ -822,6 +822,11 @@ L["Execute range"] = "Hinrichtungsschwelle"
 L["Only in combat"] = "Nur im Kampf"
 L["Shows a marker on enemy nameplates at the execute threshold of your spec. Because of the Midnight API restrictions the marker is hidden via clipping once the unit drops below the threshold, health values are never read."] = "Zeigt einen Marker auf feindlichen Namensplaketten an der Hinrichtungsschwelle deiner Spezialisierung. Wegen der Midnight-API-Beschränkungen wird der Marker per Clipping ausgeblendet, sobald die Einheit unter die Schwelle fällt - Gesundheitswerte werden nie ausgelesen."
 
+-- options/nameplates/raid_marker_color.lua
+L["Raid Marker Colors"] = "Schlachtzugsmarkierungs-Farben"
+L["Raid Markers"] = "Schlachtzugsmarkierungen"
+L["Colors the health bar of nameplates with a raid marker in the color of that marker."] = "Färbt den Lebensbalken von Namensplaketten mit einer Schlachtzugsmarkierung in der Farbe dieser Markierung."
+
 -- options/nameplates/nameplate_tools.lua
 L["ElvUI Color Settings"] = "ElvUI-Farbeinstellungen"
 L["Heal and absorb textures for nameplates are configured together with the unitframe textures."] = "Heilungs- und Absorptionstexturen für Namensplaketten werden zusammen mit den Einheitenfenster-Texturen eingestellt."

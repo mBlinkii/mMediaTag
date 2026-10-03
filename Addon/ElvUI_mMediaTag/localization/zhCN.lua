@@ -1019,6 +1019,11 @@ L["Execute range"] = "斩杀范围"
 L["Only in combat"] = "仅在战斗中"
 L["Shows a marker on enemy nameplates at the execute threshold of your spec. Because of the Midnight API restrictions the marker is hidden via clipping once the unit drops below the threshold, health values are never read."] = "在敌方姓名板上标出你专精的斩杀阈值。由于至暗之夜的 API 限制，单位血量低于阈值后标记会通过裁剪隐藏，从不读取生命值。"
 
+-- options/nameplates/raid_marker_color.lua
+L["Raid Marker Colors"] = "团队标记颜色"
+L["Raid Markers"] = "团队标记"
+L["Colors the health bar of nameplates with a raid marker in the color of that marker."] = "将带有团队标记的姓名板生命条染成该标记的颜色。"
+
 -- modules/skin/bugsack.lua
 L["Page:"] = "页："
 

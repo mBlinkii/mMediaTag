@@ -727,6 +727,20 @@ P.tags = {
 
 P.nameplates = {
 	target_glow_color = false,
+	raid_marker_color = {
+		enable = false,
+		alpha = 1,
+		markers = {
+			star = false,
+			circle = false,
+			diamond = false,
+			triangle = false,
+			moon = false,
+			square = false,
+			cross = true,
+			skull = true,
+		},
+	},
 	classification = {
 		enable = false,
 		instanceOnly = false,
@@ -996,6 +1010,17 @@ P.color = {
 		quest_color = "FFFFA500",
 		quest_border_color = "FFFFA500",
 		execute_color = "FFFF3333",
+	},
+
+	raid_markers = {
+		star = "FFFFD21E",
+		circle = "FFFF8A1E",
+		diamond = "FFC85AFF",
+		triangle = "FF3CDC46",
+		moon = "FFB4C8DC",
+		square = "FF2896FF",
+		cross = "FFFF3C3C",
+		skull = "FFF0F0F0",
 	},
 
 	phase_icon = {
