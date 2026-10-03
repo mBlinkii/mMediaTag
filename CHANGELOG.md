@@ -2,23 +2,20 @@
 
 ## [ver. 4.15] - TBD
 ### 🐛 FIX
-- FIX - [Cooldown-Manager]: The font settings of the buff bars and the count texts were overwritten by ElvUI's cooldown manager skin since its latest skin rework, which made the text too large.
-- FIX - [Dock]: Changing a datatext slot from a dock to another datatext left the dock icon, texts and button on the slot until a reload.
-- FIX - [Dock]: After the volume dock the slot showed no text at all when another datatext was put there without a reload.
-- FIX - [Dock]: The None dock did not remove the click button and the texts of the dock that was on the slot before.
-- FIX - [Dock]: The character dock printed the played time into the chat on every loading screen, it now asks only on login and reload and keeps the chat clean.
-- FIX - [Dock]: The calendar dock kept the date of the previous day after midnight.
-- FIX - [Cooldown-Manager]: The icons kept Blizzard's rounded corners for players with ElvUI's cooldown manager skin turned off (ElvUI's default), the skin is now turned on together with the mMT cooldown manager.
-- FIX - [Cooldown-Manager]: The proc glow of the essential and utility icons was missing on spells that are replaced by another spell and could go out again whenever the icons were rearranged, it now follows Blizzard's own proc state.
+- FIX - [Cooldown-Manager]: Icons had rounded corners and texts were too large, ElvUI's cooldown manager skin is now turned on with the module.
+- FIX - [Cooldown-Manager]: Proc glow was missing on replaced spells and could go out when icons were rearranged.
+- FIX - [Dock]: A reassigned slot kept the dock's icon, texts and button until a reload.
+- FIX - [Dock]: The character dock no longer prints the played time into the chat on every loading screen.
+- FIX - [Dock]: The calendar dock kept the previous day after midnight.
 ### 🔧 UPDATE
-- UPDATE - [Interrupt-On-CD]: The cooldown of your interrupt is read once per frame for all castbars instead of once per castbar, and the kick marker no longer jumps by a pixel.
-- UPDATE - [Execute-Marker]: The marker follows the size and fill direction of the health bar by itself instead of being measured.
-- UPDATE - [Cooldown-Manager]: A fixed width or height now sets the icon size by itself: the width is split over the icons of a row, the height over all rows, the icon size settings are greyed out while one of them is set.
+- UPDATE - [Cooldown-Manager]: A fixed width or height now sets the icon size by itself.
+- UPDATE - [Execute-Marker]: The marker follows the health bar size and fill direction by itself.
+- UPDATE - [Interrupt-On-CD]: Less work per castbar and the kick marker no longer jumps by a pixel.
 ### ✨ NEW
-- NEW - [Important-Casts]: Optional setting that brings enemy nameplates with a running cast in front of the other nameplates, important casts keep their highlight on top.
-- NEW - [Interrupt-On-CD]: The thickness of the pixel glow can be set.
-- NEW - [Raid-Marker-Colors]: New module that colors the health bar of nameplates with a raid marker in the color of that marker, every marker can be turned on and colored on its own (skull and cross are on by default).
-- NEW - [LFG-Info]: When you join a group for a dungeon of the current Mythic+ season, the card shows the teleport of that dungeon if you know it, a click teleports you there; optionally the card also lists the group members who have a keystone for it.
+- NEW - [Important-Casts]: Optional setting to bring casting enemy nameplates to the front.
+- NEW - [Interrupt-On-CD]: Adjustable pixel glow thickness.
+- NEW - [LFG-Info]: Shows the dungeon teleport and the matching group keystones when you join a M+ group.
+- NEW - [Raid-Marker-Colors]: New module that colors nameplate health bars by raid marker.
 
 ## [ver. 4.14] - 29.09.2026
 ### 🐛 FIX
