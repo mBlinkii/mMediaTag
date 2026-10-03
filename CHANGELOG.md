@@ -18,7 +18,7 @@
 - NEW - [Important-Casts]: Optional setting that brings enemy nameplates with a running cast in front of the other nameplates, important casts keep their highlight on top.
 - NEW - [Interrupt-On-CD]: The thickness of the pixel glow can be set.
 - NEW - [Raid-Marker-Colors]: New module that colors the health bar of nameplates with a raid marker in the color of that marker, every marker can be turned on and colored on its own (skull and cross are on by default).
-- NEW - [LFG-Info]: When you join a group for a dungeon of the current Mythic+ season, the card shows the teleport of that dungeon if you know it together with the group members who have a keystone for it, a click teleports you there.
+- NEW - [LFG-Info]: When you join a group for a dungeon of the current Mythic+ season, the card shows the teleport of that dungeon if you know it, a click teleports you there; optionally the card also lists the group members who have a keystone for it.
 
 ## [ver. 4.14] - 29.09.2026
 ### 🐛 FIX

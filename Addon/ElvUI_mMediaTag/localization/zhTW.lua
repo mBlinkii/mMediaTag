@@ -736,7 +736,9 @@ L["Scale"] = "縮放"
 L["Slide"] = "滑動"
 L["Theme color"] = "主題顏色"
 L["Show teleport"] = "顯示傳送"
-L["Shows the teleport of the dungeon below the card when you join a group for a dungeon of the current Mythic+ season and know its teleport, together with the group members who have a keystone for it (other players need Details! or BigWigs). The card then stays open until you use or close it or the group enters the dungeon."] = "當你加入目前傳奇+賽季某個地城的隊伍且已學會其傳送時，在卡片下方顯示該地城的傳送，以及擁有該地城鑰石的隊員（其他玩家需要 Details! 或 BigWigs）。卡片會一直顯示，直到你使用或關閉它，或隊伍進入地城。"
+L["Shows the teleport of the dungeon below the card when you join a group for a dungeon of the current Mythic+ season and know its teleport. The card then stays open until you use or close it or the group enters the dungeon."] = "當你加入目前傳奇+賽季某個地城的隊伍且已學會其傳送時，在卡片下方顯示該地城的傳送。卡片會一直顯示，直到你使用或關閉它，或隊伍進入地城。"
+L["Show keystones"] = "顯示鑰石"
+L["Shows on the card which group members have a keystone for the dungeon and its level. Your own keystone is always known, other players need Details! or BigWigs."] = "在卡片上顯示哪些隊員擁有該地城的鑰石及其層數。你自己的鑰石總是已知，其他玩家需要 Details! 或 BigWigs。"
 
 -- options/misc/phase_icon.lua
 L["Chromie Time"] = "克羅米的時間"

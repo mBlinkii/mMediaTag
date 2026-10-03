@@ -77,8 +77,9 @@ local function ClearInfo()
 	module.info_screen.lable:SetText("")
 	module.info_screen.lable2:SetText("")
 	module.info_screen.lable3:SetText("")
+	module.info_screen.lable4:SetText("")
 	module.teleportSpell = nil
-	module.teleportMapID = nil
+	module.dungeonMapID = nil
 end
 
 -- The teleport is a secure button, so it is not a child of the card: a protected child would block hiding the card in
@@ -100,10 +101,7 @@ local function CreateTeleportButton()
 	button.cooldown:SetInside()
 
 	button.text = button:CreateFontString(nil, "OVERLAY")
-	button.text:SetPoint("BOTTOMLEFT", button, "RIGHT", SPACING, 1)
-
-	button.keys = button:CreateFontString(nil, "OVERLAY")
-	button.keys:SetPoint("TOPLEFT", button, "RIGHT", SPACING, -1)
+	button.text:SetPoint("LEFT", button, "RIGHT", SPACING, 0)
 
 	button:SetScript("OnEnter", function(self)
 		GameTooltip:SetOwner(self, "ANCHOR_RIGHT")
@@ -140,19 +138,6 @@ local function KeystoneText(instanceMapID)
 	return tconcat(keyParts, mMT:TC(SEPARATOR, "gray"))
 end
 
--- only text, so it may also run in combat when a keystone arrives late
-local function UpdateTeleportKeys()
-	local button = module.teleport
-	if not (button and button:IsShown()) then return end
-
-	button.keys:SetText(KeystoneText(module.teleportMapID))
-	local width = math.max(button.text:GetStringWidth(), button.keys:GetStringWidth())
-	if not InCombatLockdown() then
-		button:ClearAllPoints()
-		button:SetPoint("TOP", module.info_screen, "BOTTOM", -(width + SPACING) / 2, -SPACING)
-	end
-end
-
 local function HideTeleport()
 	local button = module.teleport
 	if not (button and button:IsShown()) then return end
@@ -182,8 +167,9 @@ local function ShowTeleport()
 	end
 
 	-- centered under the card with its label, on the screen frame because the card itself slides while animating
+	button:ClearAllPoints()
+	button:SetPoint("TOP", module.info_screen, "BOTTOM", -(button.text:GetStringWidth() + SPACING) / 2, -SPACING)
 	button:Show()
-	UpdateTeleportKeys()
 end
 
 local function Details(activity, difficulty)
@@ -243,21 +229,26 @@ local function UpdateLayout()
 	local iconSpace = iconSize and (iconSize + SPACING) or 0
 	local justify = iconSize and "LEFT" or "CENTER"
 	local hasGroup = (screen.lable3:GetText() or "") ~= ""
+	local hasKeys = (screen.lable4:GetText() or "") ~= ""
 
 	screen.lable3:SetShown(hasGroup)
+	screen.lable4:SetShown(hasKeys)
 
 	screen.lable:SetJustifyH(justify)
 	screen.lable2:SetJustifyH(justify)
 	screen.lable3:SetJustifyH(justify)
+	screen.lable4:SetJustifyH(justify)
 
-	local textWidth = max(screen.lable:GetStringWidth(), screen.lable2:GetStringWidth(), screen.lable3:GetStringWidth()) + 2
+	local textWidth = max(screen.lable:GetStringWidth(), screen.lable2:GetStringWidth(), screen.lable3:GetStringWidth(), screen.lable4:GetStringWidth()) + 2
 	screen.lable:SetWidth(textWidth)
 	screen.lable2:SetWidth(textWidth)
 	screen.lable3:SetWidth(textWidth)
+	screen.lable4:SetWidth(textWidth)
 
 	local dividerSpace = screen.divider:IsShown() and (SPACING * 2 + 1) or SPACING
 	local groupSpace = hasGroup and (screen.lable3:GetStringHeight() + LINE_SPACING) or 0
-	local textHeight = screen.lable:GetStringHeight() + dividerSpace + screen.lable2:GetStringHeight() + groupSpace
+	local keysSpace = hasKeys and (screen.lable4:GetStringHeight() + LINE_SPACING) or 0
+	local textHeight = screen.lable:GetStringHeight() + dividerSpace + screen.lable2:GetStringHeight() + groupSpace + keysSpace
 	local width = textWidth + PADDING * 2 + iconSpace
 	local height = max(textHeight + PADDING * 2, (iconSize or 0) + PADDING * 2)
 
@@ -274,8 +265,23 @@ local function UpdateLayout()
 	screen.lable3:ClearAllPoints()
 	screen.lable3:SetPoint("TOPLEFT", screen.lable2, "BOTTOMLEFT", 0, -LINE_SPACING)
 
+	screen.lable4:ClearAllPoints()
+	screen.lable4:SetPoint("TOPLEFT", hasGroup and screen.lable3 or screen.lable2, "BOTTOMLEFT", 0, -LINE_SPACING)
+
 	screen:SetSize(width, height)
 	card:SetSize(width, height)
+end
+
+-- only text and layout, so it may also run in combat when a keystone arrives late
+local function UpdateKeys()
+	local screen = module.info_screen
+	if not screen then return end
+
+	local text = module.db.keystones and KeystoneText(module.dungeonMapID) or ""
+	if (screen.lable4:GetText() or "") == text then return end
+
+	screen.lable4:SetText(text)
+	if screen:IsShown() then UpdateLayout() end
 end
 
 local function ApplyAnimation()
@@ -471,7 +477,15 @@ function module:Demo()
 		module.info_screen.demo = true
 		SetInfo(info.name, info.acc, info.diff, info.grp)
 		module.teleportSpell = module.db.teleport and mMT:GetAnySeasonTeleport() or nil
-		module.teleportMapID = module.teleportSpell and mMT:GetSeasonTeleportMapID(module.teleportSpell)
+		module.dungeonMapID = module.teleportSpell and mMT:GetSeasonTeleportMapID(module.teleportSpell)
+		UpdateKeys()
+
+		-- a sample line for the preview when no own keystone fits
+		local screen = module.info_screen
+		if module.db.keystones and (screen.lable4:GetText() or "") == "" then
+			local levelColor = GetKeystoneLevelRarityColor(12)
+			screen.lable4:SetText(format("%s %s", MEDIA.myclass:WrapTextInColorCode(E.myname), levelColor and levelColor:WrapTextInColorCode("+12") or "+12"))
+		end
 		ShowInfo(true)
 	end
 end
@@ -543,6 +557,7 @@ function module:Initialize(demo)
 		screen.lable = CreateText()
 		screen.lable2 = CreateText()
 		screen.lable3 = CreateText()
+		screen.lable4 = CreateText()
 
 		CreateAnimations(card)
 
@@ -564,7 +579,7 @@ function module:Initialize(demo)
 			HideInfo()
 		end)
 		-- keys of the other members arrive a moment after joining
-		mMT:AddGroupKeystoneListener(UpdateTeleportKeys)
+		mMT:AddGroupKeystoneListener(UpdateKeys)
 	end
 
 	local font = LSM:Fetch("font", module.db.text.font)
@@ -572,6 +587,7 @@ function module:Initialize(demo)
 	E:SetFont(module.info_screen.lable, font, module.db.text.size, module.db.text.fontFlag)
 	E:SetFont(module.info_screen.lable2, font, module.db.text.size2, module.db.text.fontFlag)
 	E:SetFont(module.info_screen.lable3, font, module.db.text.size2, module.db.text.fontFlag)
+	E:SetFont(module.info_screen.lable4, font, module.db.text.size2, module.db.text.fontFlag)
 
 	ApplyTheme()
 	ApplyAnimation()
@@ -607,6 +623,7 @@ function module:Initialize(demo)
 		if module.info_screen.icon then module.info_screen.icon:Hide() end
 	end
 
+	UpdateKeys()
 	if module.info_screen:IsShown() then UpdateLayout() end
 
 	if demo then module:Demo() end
@@ -632,9 +649,10 @@ function module:LFG_LIST_JOINED_GROUP(_, searchResultID, groupName)
 	local group = PlainValue(groupName) or ""
 
 	SetInfo(location, activity, difficulty, group)
-	module.teleportMapID = activityInfo and PlainValue(activityInfo.mapID)
-	module.teleportSpell = module.db.teleport and mMT:GetSeasonTeleport(module.teleportMapID) or nil
-	if module.teleportSpell then mMT:RequestGroupKeystones() end
+	module.dungeonMapID = activityInfo and PlainValue(activityInfo.mapID)
+	module.teleportSpell = module.db.teleport and mMT:GetSeasonTeleport(module.dungeonMapID) or nil
+	UpdateKeys()
+	if module.db.keystones and module.dungeonMapID then mMT:RequestGroupKeystones() end
 
 	if module.db.print then
 		local rule = ChatRule()

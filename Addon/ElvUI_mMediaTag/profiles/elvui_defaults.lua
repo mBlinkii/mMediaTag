@@ -82,6 +82,7 @@ P.lfg_invite_info = {
 	enable = false,
 	delay = 60,
 	teleport = true,
+	keystones = true,
 	icon = "none",
 	style = "default",
 	theme = "class",

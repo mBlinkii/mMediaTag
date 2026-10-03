@@ -736,7 +736,9 @@ L["Scale"] = "Escalar"
 L["Slide"] = "Deslizar"
 L["Theme color"] = "Color del tema"
 L["Show teleport"] = "Mostrar teletransporte"
-L["Shows the teleport of the dungeon below the card when you join a group for a dungeon of the current Mythic+ season and know its teleport, together with the group members who have a keystone for it (other players need Details! or BigWigs). The card then stays open until you use or close it or the group enters the dungeon."] = "Muestra el teletransporte de la mazmorra bajo la tarjeta cuando te unes a un grupo para una mazmorra de la temporada actual de Míticas+ y conoces su teletransporte, junto con los miembros del grupo que tienen una piedra angular para ella (otros jugadores necesitan Details! o BigWigs). La tarjeta queda abierta hasta que lo uses o la cierres o el grupo entre en la mazmorra."
+L["Shows the teleport of the dungeon below the card when you join a group for a dungeon of the current Mythic+ season and know its teleport. The card then stays open until you use or close it or the group enters the dungeon."] = "Muestra el teletransporte de la mazmorra bajo la tarjeta cuando te unes a un grupo para una mazmorra de la temporada actual de Míticas+ y conoces su teletransporte. La tarjeta queda abierta hasta que lo uses o la cierres o el grupo entre en la mazmorra."
+L["Show keystones"] = "Mostrar piedras angulares"
+L["Shows on the card which group members have a keystone for the dungeon and its level. Your own keystone is always known, other players need Details! or BigWigs."] = "Muestra en la tarjeta qué miembros del grupo tienen una piedra angular para la mazmorra y su nivel. Tu propia piedra angular siempre se conoce, otros jugadores necesitan Details! o BigWigs."
 
 -- options/misc/phase_icon.lua
 L["Chromie Time"] = "Tiempo de Cromi"

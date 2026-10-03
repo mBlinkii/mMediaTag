@@ -736,7 +736,9 @@ L["Scale"] = "Échelle"
 L["Slide"] = "Glissement"
 L["Theme color"] = "Couleur du thème"
 L["Show teleport"] = "Afficher la téléportation"
-L["Shows the teleport of the dungeon below the card when you join a group for a dungeon of the current Mythic+ season and know its teleport, together with the group members who have a keystone for it (other players need Details! or BigWigs). The card then stays open until you use or close it or the group enters the dungeon."] = "Affiche sous la carte la téléportation du donjon quand vous rejoignez un groupe pour un donjon de la saison Mythique+ actuelle et que vous la connaissez, avec les membres du groupe qui ont une clé pour ce donjon (les autres joueurs ont besoin de Details! ou BigWigs). La carte reste ouverte jusqu'à ce que vous l'utilisiez ou la fermiez ou que le groupe entre dans le donjon."
+L["Shows the teleport of the dungeon below the card when you join a group for a dungeon of the current Mythic+ season and know its teleport. The card then stays open until you use or close it or the group enters the dungeon."] = "Affiche sous la carte la téléportation du donjon quand vous rejoignez un groupe pour un donjon de la saison Mythique+ actuelle et que vous la connaissez. La carte reste ouverte jusqu'à ce que vous l'utilisiez ou la fermiez ou que le groupe entre dans le donjon."
+L["Show keystones"] = "Afficher les clés"
+L["Shows on the card which group members have a keystone for the dungeon and its level. Your own keystone is always known, other players need Details! or BigWigs."] = "Affiche sur la carte quels membres du groupe ont une clé pour le donjon et son niveau. Votre propre clé est toujours connue, les autres joueurs ont besoin de Details! ou BigWigs."
 
 -- options/misc/phase_icon.lua
 L["Chromie Time"] = "Temps de Chromie"

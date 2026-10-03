@@ -778,7 +778,9 @@ L["Theme"] = true
 L["Theme color"] = true
 L["Third line color"] = true
 L["Show teleport"] = true
-L["Shows the teleport of the dungeon below the card when you join a group for a dungeon of the current Mythic+ season and know its teleport, together with the group members who have a keystone for it (other players need Details! or BigWigs). The card then stays open until you use or close it or the group enters the dungeon."] = true
+L["Shows the teleport of the dungeon below the card when you join a group for a dungeon of the current Mythic+ season and know its teleport. The card then stays open until you use or close it or the group enters the dungeon."] = true
+L["Show keystones"] = true
+L["Shows on the card which group members have a keystone for the dungeon and its level. Your own keystone is always known, other players need Details! or BigWigs."] = true
 
 -- options/misc/objective_tracker.lua
 L["Bad"] = true
