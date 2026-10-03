@@ -127,9 +127,9 @@ local function HideMarker(healthBar)
 	if marker then marker.clip:Hide() end
 end
 
-local UpdateMarker
-
-local function GetMarker(nameplate, healthBar)
+-- The line is the edge of an invisible StatusBar with the range as its value, so it follows the bar size and fill
+-- direction by itself. The clip frame ends at the health fill and cuts the line away below the threshold.
+local function GetMarker(healthBar)
 	local marker = markers[healthBar]
 	if marker then return marker end
 
@@ -137,21 +137,45 @@ local function GetMarker(nameplate, healthBar)
 	clip:SetClipsChildren(true)
 	clip:SetFrameLevel(healthBar:GetFrameLevel() + 1)
 
+	local positioner = CreateFrame("StatusBar", nil, clip)
+	positioner:SetAllPoints(healthBar)
+	positioner:SetStatusBarTexture(E.media.blankTex)
+	positioner:SetMinMaxValues(0, 100)
+
 	local line = clip:CreateTexture(nil, "OVERLAY", nil, 2)
 	line:SetColorTexture(1, 1, 1)
+	line:SetWidth(2)
 
-	marker = { clip = clip, line = line }
+	marker = { clip = clip, positioner = positioner, line = line }
 	markers[healthBar] = marker
-
-	-- the bar can still be unsized when the plate is set up, reposition once it gets its size
-	healthBar:HookScript("OnSizeChanged", function()
-		UpdateMarker(nameplate)
-	end)
 
 	return marker
 end
 
-function UpdateMarker(nameplate, force)
+-- anchors only change with the fill texture or the fill direction
+local function LayoutMarker(marker, healthBar, fill, reverse)
+	local clip, positioner, line = marker.clip, marker.positioner, marker.line
+
+	positioner:SetReverseFill(reverse)
+	local positionerFill = positioner:GetStatusBarTexture()
+	positionerFill:SetAlpha(0)
+
+	local edge = reverse and "LEFT" or "RIGHT"
+	local base = reverse and "RIGHT" or "LEFT"
+
+	clip:ClearAllPoints()
+	clip:SetPoint("TOP" .. base, healthBar, "TOP" .. base, 0, 0)
+	clip:SetPoint("BOTTOM" .. base, healthBar, "BOTTOM" .. base, 0, 0)
+	clip:SetPoint(edge, fill, edge, 0, 0)
+
+	line:ClearAllPoints()
+	line:SetPoint("TOP", positionerFill, "TOP" .. edge, 0, 0)
+	line:SetPoint("BOTTOM", positionerFill, "BOTTOM" .. edge, 0, 0)
+
+	marker.fill, marker.reverse = fill, reverse
+end
+
+local function UpdateMarker(nameplate, force)
 	local healthBar = nameplate.Health
 	if not healthBar then return end
 
@@ -159,26 +183,15 @@ function UpdateMarker(nameplate, force)
 	local range = db and db.enable and GetRange(db)
 	if not (range and range > 0 and range < 100 and IsEnemyPlate(nameplate) and ShouldShow(db)) then return HideMarker(healthBar) end
 
-	local marker = GetMarker(nameplate, healthBar)
-	local width = healthBar:GetWidth()
-	if width <= 0 then return marker.clip:Hide() end
+	local marker = GetMarker(healthBar)
 
-	-- hot path: skip the layout unless fill texture, bar size or range changed.
 	local fill = healthBar:GetStatusBarTexture()
-	if force or marker.fill ~= fill then
-		marker.clip:ClearAllPoints()
-		marker.clip:SetPoint("TOPLEFT", healthBar, "TOPLEFT", 0, 0)
-		marker.clip:SetPoint("BOTTOMLEFT", healthBar, "BOTTOMLEFT", 0, 0)
-		marker.clip:SetPoint("RIGHT", fill, "RIGHT", 0, 0)
-		marker.fill = fill
-	end
+	local reverse = healthBar:GetReverseFill() and true or false
+	if force or marker.fill ~= fill or marker.reverse ~= reverse then LayoutMarker(marker, healthBar, fill, reverse) end
 
-	local height = healthBar:GetHeight()
-	if force or marker.range ~= range or marker.width ~= width or marker.height ~= height then
-		marker.line:SetSize(2, height)
-		marker.line:ClearAllPoints()
-		marker.line:SetPoint("LEFT", healthBar, "LEFT", width * range / 100, 0)
-		marker.range, marker.width, marker.height = range, width, height
+	if force or marker.range ~= range then
+		marker.positioner:SetValue(range)
+		marker.range = range
 	end
 
 	if force or not marker.colored then

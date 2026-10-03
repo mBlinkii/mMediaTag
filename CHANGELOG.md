@@ -8,6 +8,10 @@
 - FIX - [Dock]: The None dock did not remove the click button and the texts of the dock that was on the slot before.
 - FIX - [Dock]: The character dock printed the played time into the chat on every loading screen, it now asks only on login and reload and keeps the chat clean.
 - FIX - [Dock]: The calendar dock kept the date of the previous day after midnight.
+- FIX - [Cooldown-Manager]: The icons kept Blizzard's rounded corners for players with ElvUI's cooldown manager skin turned off (ElvUI's default), the skin is now turned on together with the mMT cooldown manager.
+### 🔧 UPDATE
+- UPDATE - [Interrupt-On-CD]: The cooldown of your interrupt is read once per frame for all castbars instead of once per castbar, and the kick marker no longer jumps by a pixel.
+- UPDATE - [Execute-Marker]: The marker follows the size and fill direction of the health bar by itself instead of being measured.
 ### ✨ NEW
 - NEW - [Important-Casts]: Optional setting that brings enemy nameplates with a running cast in front of the other nameplates, important casts keep their highlight on top.
 - NEW - [Interrupt-On-CD]: The thickness of the pixel glow can be set.

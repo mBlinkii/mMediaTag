@@ -84,6 +84,9 @@ local INTERRUPT_BY_SPEC = {
 	[1473] = 351338,
 }
 
+-- every casting castbar asks within the same frame, the answer is shared until the next one
+local cachedCooldown, cachedAt
+
 -- Spell Lock (Felhunter), Axe Toss (Felguard): cast by the pet, the cooldown lives in the pet spellbook
 local WARLOCK_PET_INTERRUPTS = { 19647, 89766 }
 -- Spell Lock (Grimoire of Sacrifice), Call Felhunter (PvP talent): own player spells
@@ -116,6 +119,7 @@ local function UpdateInterruptSpell(event, unit)
 	module.interruptSpellId = nil
 	module.isPetInterrupt = false
 	module.petSlot = nil
+	cachedAt = nil
 
 	if E.myclass == "WARLOCK" then return UpdateWarlockInterrupt() end
 
@@ -132,9 +136,28 @@ local function IsPetDown()
 end
 
 local function GetInterruptCooldown()
-	if module.petSlot then return GetSpellBookItemCooldownDuration(module.petSlot, PET_BANK) end
-	-- true = ignore the GCD, otherwise the kick counts as "on CD" briefly after every keypress
-	return GetSpellCooldownDuration(module.interruptSpellId, true)
+	local now = GetTime()
+	if cachedAt == now then return cachedCooldown end
+	cachedAt = now
+
+	if module.petSlot then
+		cachedCooldown = GetSpellBookItemCooldownDuration(module.petSlot, PET_BANK)
+	else
+		-- true = ignore the GCD, otherwise the kick counts as "on CD" briefly after every keypress
+		cachedCooldown = GetSpellCooldownDuration(module.interruptSpellId, true)
+	end
+
+	return cachedCooldown
+end
+
+-- a fill snapped to the pixel grid can make the marker jump by a pixel, the fill is rebuilt on every fill style change
+local function UnsnapFill(bar)
+	local fill = bar:GetStatusBarTexture()
+	fill:SetAlpha(0)
+	if fill.SetSnapToPixelGrid then
+		fill:SetSnapToPixelGrid(false)
+		fill:SetTexelSnappingBias(0)
+	end
 end
 
 -- secret values can not be compared to nil
@@ -169,6 +192,7 @@ local function SetKickSpark(castbar, castStart, cooldown, ready)
 		local indicatorAnchor = isChannelOrReverse and "RIGHT" or "LEFT"
 
 		kickBar:SetFillStyle(fillStyle)
+		UnsnapFill(kickBar)
 
 		indicator:ClearAllPoints()
 		indicator:SetPoint(indicatorAnchor, kickBar:GetStatusBarTexture(), barAnchor)
@@ -331,7 +355,7 @@ local function ConstructKickBar(castbar)
 	local kickBar = CreateFrame("StatusBar", nil, castbar)
 	kickBar:SetClipsChildren(true)
 	kickBar:SetStatusBarTexture("Interface\\Buttons\\WHITE8x8")
-	kickBar:GetStatusBarTexture():SetAlpha(0)
+	UnsnapFill(kickBar)
 	kickBar:ClearAllPoints()
 	kickBar:SetAllPoints(castbar)
 	kickBar:SetFrameLevel(castbar:GetFrameLevel() + 3)

@@ -801,6 +801,8 @@ mMT.options.args.cooldownmanager.args.general.args = {
 				end,
 				set = function(_, value)
 					CDM().enable = value
+					-- turned on together, so one reload is enough for both
+					if value then Module():EnsureElvUISkin() end
 					E:StaticPopup_Show("CONFIG_RL")
 				end,
 			},

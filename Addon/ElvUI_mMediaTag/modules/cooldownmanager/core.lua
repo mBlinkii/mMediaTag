@@ -334,6 +334,22 @@ local function SetupHooks()
 	HookConfigNavigation()
 end
 
+-- The square ElvUI look of the icons comes from ElvUIs cooldown manager skin, which is off by default. Only that skin is
+-- turned on, the main switch for all Blizzard skins stays the users choice. Returns true when a reload is needed.
+function module:EnsureElvUISkin()
+	local blizzard = E.private.skins and E.private.skins.blizzard
+	if not blizzard then return false end
+
+	if not blizzard.enable then
+		mMT:Print(L["The mMT cooldown manager needs ElvUIs Blizzard skins for the ElvUI look of its icons, they are turned off under ElvUI > Skins."])
+		return false
+	end
+
+	if blizzard.cooldownManager then return false end
+	blizzard.cooldownManager = true
+	return true
+end
+
 function module:Initialize()
 	if module:IsDisabled() then
 		if module.isEnabled then
@@ -358,6 +374,13 @@ function module:Initialize()
 			end)
 			return
 		end
+	end
+
+	if module:EnsureElvUISkin() then
+		mMT:Print(L["ElvUIs cooldown manager skin was turned on for the mMT cooldown manager, a reload is needed."])
+		C_Timer_After(1, function()
+			E:StaticPopup_Show("CONFIG_RL")
+		end)
 	end
 
 	module.isEnabled = true
