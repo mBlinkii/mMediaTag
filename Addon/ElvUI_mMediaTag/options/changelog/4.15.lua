@@ -8,6 +8,7 @@ mMT.Changelog[415] = {
 		"[Dock]: A reassigned slot kept the dock's icon, texts and button until a reload.",
 		"[Dock]: The character dock no longer prints the played time into the chat on every loading screen.",
 		"[Dock]: The calendar dock kept the previous day after midnight.",
+		"[DT-Teleports]: The current dungeon was sometimes not highlighted after joining a group.",
 	},
 	UPDATE = {
 		"[Cooldown-Manager]: A fixed width or height now sets the icon size by itself.",

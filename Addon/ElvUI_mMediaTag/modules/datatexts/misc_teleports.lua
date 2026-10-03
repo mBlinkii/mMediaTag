@@ -825,6 +825,7 @@ local lfgFrame = CreateFrame("Frame")
 lfgFrame:RegisterEvent("PLAYER_ENTERING_WORLD")
 lfgFrame:RegisterEvent("LFG_LIST_APPLICATION_STATUS_UPDATED")
 lfgFrame:RegisterEvent("LFG_LIST_ACTIVE_ENTRY_UPDATE")
+lfgFrame:RegisterEvent("LFG_LIST_JOINED_GROUP")
 lfgFrame:RegisterEvent("CHALLENGE_MODE_START")
 lfgFrame:RegisterEvent("GROUP_LEFT")
 lfgFrame:SetScript("OnEvent", function(_, event, arg1, arg2)
@@ -837,10 +838,14 @@ lfgFrame:SetScript("OnEvent", function(_, event, arg1, arg2)
 		else
 			pendingApps[arg1] = nil
 		end
+	elseif event == "LFG_LIST_JOINED_GROUP" then
+		-- the joined group itself is the most reliable source, the same one the LFG invite card reads
+		lfgTargetMapID = GetSearchResultMapID(arg1) or pendingApps[arg1] or lfgTargetMapID
+		wipe(pendingApps)
 	elseif event == "LFG_LIST_ACTIVE_ENTRY_UPDATE" then
-		-- keep the target after a full group delists, drop it when a solo listing is removed
+		-- keep the target after a full group delists or when the entry can not be read, drop it when a solo listing is removed
 		if C_LFGList.HasActiveEntryInfo() then
-			lfgTargetMapID = GetActivityMapID(C_LFGList.GetActiveEntryInfo())
+			lfgTargetMapID = GetActivityMapID(C_LFGList.GetActiveEntryInfo()) or lfgTargetMapID
 		elseif not IsInGroup() then
 			lfgTargetMapID = nil
 		end
