@@ -346,8 +346,12 @@ end
 local function IsOverlayed(frame)
 	if not IsSpellOverlayed then return false end
 
-	local spellID = module:ReadableSpellID(frame, "GetSpellID") or module:ReadableSpellID(frame, "GetBaseSpellID")
-	return (spellID and IsSpellOverlayed(spellID)) or false
+	-- a proc can sit on the override as well as on the base spell
+	local spellID = module:ReadableSpellID(frame, "GetSpellID")
+	if spellID and IsSpellOverlayed(spellID) then return true end
+
+	local baseSpellID = module:ReadableSpellID(frame, "GetBaseSpellID")
+	return (baseSpellID and baseSpellID ~= spellID and IsSpellOverlayed(baseSpellID)) or false
 end
 
 function module:RefreshGlow(frame)
@@ -360,11 +364,30 @@ function module:RefreshGlow(frame)
 	local manager = _G.ActionButtonSpellAlertManager
 	if manager and manager.HideAlert then manager:HideAlert(frame) end
 
-	if perSpell or frame.mmtDemoGlow or IsOverlayed(frame) then
+	-- the proc state Blizzard decided with the real spell id wins, our own check is only the fallback
+	local procActive = frame.mmtProcActive
+	if procActive == nil then procActive = IsOverlayed(frame) end
+
+	if perSpell or frame.mmtDemoGlow or procActive then
 		module:ApplyGlow(frame, glow)
 	else
 		module:StopGlow(frame)
 	end
+end
+
+-- What Blizzard just decided: the proc events pass the state, a refresh of the whole item lets Blizzard check the
+-- real (possibly secret) spell id itself, its alert state is read before RefreshGlow replaces the alert with ours
+local function ReadBlizzardProc(frame, desiredShow)
+	if desiredShow ~= nil then return desiredShow == true end
+
+	local manager = _G.ActionButtonSpellAlertManager
+	local alerts = manager and manager.activeAlerts
+	if type(alerts) == "table" then return alerts[frame] ~= nil end
+
+	local alert = frame.SpellActivationAlert
+	if alert then return alert:IsShown() end
+
+	return IsOverlayed(frame)
 end
 
 -- Blizzard calls RefreshOverlayGlow on every proc change, so the glow needs no polling
@@ -372,7 +395,8 @@ function module:HookGlow(frame)
 	if module.hookedGlow[frame] or not frame.RefreshOverlayGlow then return end
 	module.hookedGlow[frame] = true
 
-	hooksecurefunc(frame, "RefreshOverlayGlow", function(self)
+	hooksecurefunc(frame, "RefreshOverlayGlow", function(self, desiredShow)
+		self.mmtProcActive = ReadBlizzardProc(self, desiredShow)
 		module:RefreshGlow(self)
 	end)
 end

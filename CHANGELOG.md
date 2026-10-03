@@ -9,6 +9,7 @@
 - FIX - [Dock]: The character dock printed the played time into the chat on every loading screen, it now asks only on login and reload and keeps the chat clean.
 - FIX - [Dock]: The calendar dock kept the date of the previous day after midnight.
 - FIX - [Cooldown-Manager]: The icons kept Blizzard's rounded corners for players with ElvUI's cooldown manager skin turned off (ElvUI's default), the skin is now turned on together with the mMT cooldown manager.
+- FIX - [Cooldown-Manager]: The proc glow of the essential and utility icons was missing on spells that are replaced by another spell and could go out again whenever the icons were rearranged, it now follows Blizzard's own proc state.
 ### 🔧 UPDATE
 - UPDATE - [Interrupt-On-CD]: The cooldown of your interrupt is read once per frame for all castbars instead of once per castbar, and the kick marker no longer jumps by a pixel.
 - UPDATE - [Execute-Marker]: The marker follows the size and fill direction of the health bar by itself instead of being measured.

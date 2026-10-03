@@ -10,6 +10,7 @@ mMT.Changelog[415] = {
 		"[Dock]: The character dock printed the played time into the chat on every loading screen, it now asks only on login and reload and keeps the chat clean.",
 		"[Dock]: The calendar dock kept the date of the previous day after midnight.",
 		"[Cooldown-Manager]: The icons kept Blizzard's rounded corners for players with ElvUI's cooldown manager skin turned off (ElvUI's default), the skin is now turned on together with the mMT cooldown manager.",
+		"[Cooldown-Manager]: The proc glow of the essential and utility icons was missing on spells that are replaced by another spell and could go out again whenever the icons were rearranged, it now follows Blizzard's own proc state.",
 	},
 	UPDATE = {
 		"[Interrupt-On-CD]: The cooldown of your interrupt is read once per frame for all castbars instead of once per castbar, and the kick marker no longer jumps by a pixel.",
