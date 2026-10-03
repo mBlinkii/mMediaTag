@@ -172,6 +172,8 @@ L["Health Override"] = "Sobrescritura de la barra de salud"
 L["Override Health Bar Color"] = "Sobrescribir el color de la barra de salud"
 L["Position Settings"] = "Configuración de posición"
 L["Sets the offset according to the anchor."] = "Establece el desplazamiento según el ancla."
+L["Casting nameplates in front"] = "Placas de nombre lanzando al frente"
+L["Brings enemy nameplates with a running cast in front of the other nameplates. Works for every cast, because whether a cast is important is hidden in dungeons and raids; important casts keep their highlight on top."] = "Coloca las placas de nombre enemigas con un lanzamiento en curso delante de las demás. Funciona con cualquier lanzamiento, porque en mazmorras y bandas se oculta si un lanzamiento es importante; los importantes mantienen además su resaltado."
 
 -- options/changelog.lua
 L["Fixes"] = "Correcciones"

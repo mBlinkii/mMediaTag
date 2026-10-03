@@ -172,6 +172,8 @@ L["Health Override"] = "Remplacement de la barre de vie"
 L["Override Health Bar Color"] = "Remplacer la couleur de la barre de vie"
 L["Position Settings"] = "Paramètres de position"
 L["Sets the offset according to the anchor."] = "Définit le décalage selon l'ancre."
+L["Casting nameplates in front"] = "Barres d'info en incantation au premier plan"
+L["Brings enemy nameplates with a running cast in front of the other nameplates. Works for every cast, because whether a cast is important is hidden in dungeons and raids; important casts keep their highlight on top."] = "Place les barres d'info ennemies avec une incantation en cours devant les autres. Fonctionne pour toute incantation, car en donjon et en raid il est masqué si une incantation est importante ; les importantes gardent en plus leur mise en évidence."
 
 -- options/changelog.lua
 L["Fixes"] = "Corrections"

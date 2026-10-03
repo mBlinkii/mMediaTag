@@ -172,6 +172,8 @@ L["Health Override"] = "생명력 바 덮어쓰기"
 L["Override Health Bar Color"] = "생명력 바 색상 덮어쓰기"
 L["Position Settings"] = "위치 설정"
 L["Sets the offset according to the anchor."] = "기준점에 따라 오프셋을 설정합니다."
+L["Casting nameplates in front"] = "시전 중인 이름표를 앞으로"
+L["Brings enemy nameplates with a running cast in front of the other nameplates. Works for every cast, because whether a cast is important is hidden in dungeons and raids; important casts keep their highlight on top."] = "시전 중인 적 이름표를 다른 이름표보다 앞으로 가져옵니다. 던전과 공격대에서는 시전이 중요한지 숨겨지므로 모든 시전에 적용되며, 중요한 시전은 강조 표시가 그대로 유지됩니다."
 
 -- options/changelog.lua
 L["Fixes"] = "수정 사항"

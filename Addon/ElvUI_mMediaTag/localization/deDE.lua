@@ -184,6 +184,8 @@ L["Health Override"] = "Überschreibung der Gesundheitsleiste"
 L["Override Health Bar Color"] = "Gesundheitsleistenfarbe überschreiben"
 L["Position Settings"] = "Positionseinstellungen"
 L["Sets the offset according to the anchor."] = "Setzt den Versatz entsprechend dem Anker."
+L["Casting nameplates in front"] = "Zaubernde Namensplaketten nach vorne"
+L["Brings enemy nameplates with a running cast in front of the other nameplates. Works for every cast, because whether a cast is important is hidden in dungeons and raids; important casts keep their highlight on top."] = "Holt gegnerische Namensplaketten mit laufendem Zauber vor die anderen Namensplaketten. Gilt für jeden Zauber, weil in Dungeons und Raids verborgen ist, ob ein Zauber wichtig ist; wichtige Zauber behalten zusätzlich ihre Hervorhebung."
 
 -- options/changelog.lua
 L["Fixes"] = "Fehlerbehebungen"

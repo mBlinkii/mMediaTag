@@ -172,6 +172,8 @@ L["Health Override"] = "Переопределение полосы здоров
 L["Override Health Bar Color"] = "Переопределить цвет полосы здоровья"
 L["Position Settings"] = "Настройки позиции"
 L["Sets the offset according to the anchor."] = "Устанавливает смещение в зависимости от точки привязки."
+L["Casting nameplates in front"] = "Колдующие индикаторы на передний план"
+L["Brings enemy nameplates with a running cast in front of the other nameplates. Works for every cast, because whether a cast is important is hidden in dungeons and raids; important casts keep their highlight on top."] = "Выводит вражеские индикаторы здоровья с идущим заклинанием поверх остальных. Работает для любого заклинания, потому что в подземельях и рейдах скрыто, важно ли оно; важные заклинания дополнительно сохраняют выделение."
 
 -- options/changelog.lua
 L["Fixes"] = "Исправления"

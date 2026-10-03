@@ -8,6 +8,8 @@
 - FIX - [Dock]: The None dock did not remove the click button and the texts of the dock that was on the slot before.
 - FIX - [Dock]: The character dock printed the played time into the chat on every loading screen, it now asks only on login and reload and keeps the chat clean.
 - FIX - [Dock]: The calendar dock kept the date of the previous day after midnight.
+### ✨ NEW
+- NEW - [Important-Casts]: Optional setting that brings enemy nameplates with a running cast in front of the other nameplates, important casts keep their highlight on top.
 
 ## [ver. 4.14] - 29.09.2026
 ### 🐛 FIX

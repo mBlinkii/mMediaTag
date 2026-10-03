@@ -184,6 +184,8 @@ L["Health Override"] = true
 L["Override Health Bar Color"] = true
 L["Position Settings"] = true
 L["Sets the offset according to the anchor."] = true
+L["Casting nameplates in front"] = true
+L["Brings enemy nameplates with a running cast in front of the other nameplates. Works for every cast, because whether a cast is important is hidden in dungeons and raids; important casts keep their highlight on top."] = true
 
 -- options/changelog.lua
 L["Fixes"] = true
