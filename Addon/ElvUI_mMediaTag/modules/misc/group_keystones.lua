@@ -4,6 +4,8 @@ local module = mMT:AddModule("GroupKeystones", { "AceEvent-3.0" })
 -- Cache WoW Globals
 local _G = _G
 local unpack = unpack
+local ipairs = ipairs
+local LibStub = LibStub
 local CreateFrame = CreateFrame
 local format = format
 local Ambiguate = Ambiguate
@@ -24,6 +26,8 @@ local PADDING = 6
 
 local units = { "player", "party1", "party2", "party3", "party4" }
 local libKeystoneData = {}
+local listeners = {}
+local LOR, LKS, sourcesReady
 
 local function PlainValue(value)
 	if not E:IsSecretValue(value) then return value end
@@ -33,16 +37,61 @@ local function ValidKey(level, challengeMapID)
 	return level and challengeMapID and level > 0 and challengeMapID > 0
 end
 
+local function NotifyListeners()
+	for _, func in ipairs(listeners) do
+		func()
+	end
+end
+
+local sourceHandler = { OnKeystoneUpdate = NotifyListeners }
+
+-- Details! (LibOpenRaid) and BigWigs (LibKeystone) are hooked once and shared by every module that reads group keys
+local function InitSources()
+	if sourcesReady then return end
+	sourcesReady = true
+
+	LOR = LibStub("LibOpenRaid-1.0", true)
+	if LOR then LOR.RegisterCallback(sourceHandler, "KeystoneUpdate", "OnKeystoneUpdate") end
+
+	LKS = LibStub("LibKeystone", true)
+	if LKS then
+		LKS.Register(sourceHandler, function(level, challengeMapID, _, sender)
+			libKeystoneData[sender] = ValidKey(level, challengeMapID) and { level = level, challengeMapID = challengeMapID } or nil
+			NotifyListeners()
+		end)
+	end
+end
+
 -- Details! (LibOpenRaid) first, BigWigs (LibKeystone) as fallback
 local function GetUnitKeystone(unit)
 	if unit == "player" then return GetOwnedKeystoneLevel(), GetOwnedKeystoneChallengeMapID() end
 
-	local info = module.LOR and module.LOR.GetKeystoneInfo(unit)
+	local info = LOR and LOR.GetKeystoneInfo(unit)
 	if info and ValidKey(info.level, info.challengeMapID) then return info.level, info.challengeMapID end
 
 	local name = PlainValue(GetUnitName(unit, true))
 	info = name and libKeystoneData[Ambiguate(name, "none")]
 	if info then return info.level, info.challengeMapID end
+end
+
+-- level and challengeMapID of a group member, nil when unknown (other players need Details! or BigWigs)
+function mMT:GetUnitKeystone(unit)
+	InitSources()
+	local level, challengeMapID = GetUnitKeystone(unit)
+	if ValidKey(level, challengeMapID) then return level, challengeMapID end
+end
+
+function mMT:RequestGroupKeystones()
+	InitSources()
+	if not IsInGroup() then return end
+	if LOR then LOR.RequestKeystoneDataFromParty() end
+	if LKS then LKS.Request("PARTY") end
+end
+
+-- func runs whenever a group member's keystone arrives
+function mMT:AddGroupKeystoneListener(func)
+	InitSources()
+	listeners[#listeners + 1] = func
 end
 
 local function CreateRow(frame, index)
@@ -133,14 +182,7 @@ local function UpdateFrame()
 end
 
 local function RequestKeystones()
-	if IsInGroup() then
-		if module.LOR then module.LOR.RequestKeystoneDataFromParty() end
-		if module.LKS then module.LKS.Request("PARTY") end
-	end
-	UpdateFrame()
-end
-
-function module:OnKeystoneUpdate()
+	mMT:RequestGroupKeystones()
 	UpdateFrame()
 end
 
@@ -161,17 +203,7 @@ function module:Initialize()
 	if not module.frame then
 		CreateKeystoneFrame()
 		module.frame:SetScript("OnShow", RequestKeystones)
-
-		module.LOR = LibStub("LibOpenRaid-1.0", true)
-		if module.LOR then module.LOR.RegisterCallback(module, "KeystoneUpdate", "OnKeystoneUpdate") end
-
-		module.LKS = LibStub("LibKeystone", true)
-		if module.LKS then
-			module.LKS.Register(module, function(level, challengeMapID, _, sender)
-				libKeystoneData[sender] = ValidKey(level, challengeMapID) and { level = level, challengeMapID = challengeMapID } or nil
-				UpdateFrame()
-			end)
-		end
+		mMT:AddGroupKeystoneListener(UpdateFrame)
 	end
 
 	if not module.isEnabled then

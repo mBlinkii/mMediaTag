@@ -759,6 +759,28 @@ local seasonChallengeMaps = {
 	[393256] = 399, -- RLP - Ruby Life Pools
 }
 
+-- season teleport into this instance (GetInstanceInfo instanceID or activity mapID), nil when there is none or it is not learned
+function mMT:GetSeasonTeleport(instanceMapID)
+	if not instanceMapID then return end
+
+	for spellID, challengeMapID in pairs(seasonChallengeMaps) do
+		if select(6, C_ChallengeMode.GetMapUIInfo(challengeMapID)) == instanceMapID then return IsSpellKnown(spellID) and spellID or nil end
+	end
+end
+
+-- instance the season teleport leads into
+function mMT:GetSeasonTeleportMapID(spellID)
+	local challengeMapID = seasonChallengeMaps[spellID]
+	return challengeMapID and select(6, C_ChallengeMode.GetMapUIInfo(challengeMapID))
+end
+
+-- any learned season teleport, for previews
+function mMT:GetAnySeasonTeleport()
+	for spellID in pairs(seasonChallengeMaps) do
+		if IsSpellKnown(spellID) then return spellID end
+	end
+end
+
 -- activityIDs is a secret table on M+ search results; indexing or branching on a secret throws, only issecretvalue may probe it.
 local function PlainValue(value)
 	if not E:IsSecretValue(value) then return value end

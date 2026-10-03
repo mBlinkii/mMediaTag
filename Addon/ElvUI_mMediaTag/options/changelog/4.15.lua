@@ -20,5 +20,6 @@ mMT.Changelog[415] = {
 		"[Important-Casts]: Optional setting that brings enemy nameplates with a running cast in front of the other nameplates, important casts keep their highlight on top.",
 		"[Interrupt-On-CD]: The thickness of the pixel glow can be set.",
 		"[Raid-Marker-Colors]: New module that colors the health bar of nameplates with a raid marker in the color of that marker, every marker can be turned on and colored on its own (skull and cross are on by default).",
+		"[LFG-Info]: When you join a group for a dungeon of the current Mythic+ season, the card shows the teleport of that dungeon if you know it together with the group members who have a keystone for it, a click teleports you there.",
 	},
 }

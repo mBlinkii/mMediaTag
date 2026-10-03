@@ -777,6 +777,8 @@ L["Slide"] = "Gleiten"
 L["Theme"] = "Design"
 L["Theme color"] = "Designfarbe"
 L["Third line color"] = "Farbe der dritten Zeile"
+L["Show teleport"] = "Teleport anzeigen"
+L["Shows the teleport of the dungeon below the card when you join a group for a dungeon of the current Mythic+ season and know its teleport, together with the group members who have a keystone for it (other players need Details! or BigWigs). The card then stays open until you use or close it or the group enters the dungeon."] = "Zeigt unter der Karte den Teleport des Dungeons, wenn du einer Gruppe für einen Dungeon der aktuellen Mythisch+-Saison beitrittst und den Teleport kennst, zusammen mit den Gruppenmitgliedern, die einen Schlüsselstein dafür haben (andere Spieler brauchen Details! oder BigWigs). Die Karte bleibt dann offen, bis du ihn benutzt, sie schließt oder die Gruppe den Dungeon betritt."
 
 -- options/misc/objective_tracker.lua
 L["Bad"] = "Schlecht"

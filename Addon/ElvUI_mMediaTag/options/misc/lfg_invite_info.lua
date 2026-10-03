@@ -141,6 +141,22 @@ mMT.options.args.misc.args.lfg_invite_info.args = {
 					mMT:UpdateModule("LFGInviteInfo")
 				end,
 			},
+			teleport = {
+				order = 2.5,
+				type = "toggle",
+				name = L["Show teleport"],
+				desc = L["Shows the teleport of the dungeon below the card when you join a group for a dungeon of the current Mythic+ season and know its teleport, together with the group members who have a keystone for it (other players need Details! or BigWigs). The card then stays open until you use or close it or the group enters the dungeon."],
+				disabled = function()
+					return not E.db.mMediaTag.lfg_invite_info.enable
+				end,
+				get = function(info)
+					return E.db.mMediaTag.lfg_invite_info.teleport
+				end,
+				set = function(info, value)
+					E.db.mMediaTag.lfg_invite_info.teleport = value
+					mMT:UpdateModule("LFGInviteInfo")
+				end,
+			},
 			color_line_a = {
 				type = "color",
 				order = 3,

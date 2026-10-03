@@ -735,6 +735,8 @@ L["Fade"] = "Dissolvenza"
 L["Scale"] = "Scala"
 L["Slide"] = "Scorrimento"
 L["Theme color"] = "Colore del tema"
+L["Show teleport"] = "Mostra teletrasporto"
+L["Shows the teleport of the dungeon below the card when you join a group for a dungeon of the current Mythic+ season and know its teleport, together with the group members who have a keystone for it (other players need Details! or BigWigs). The card then stays open until you use or close it or the group enters the dungeon."] = "Mostra sotto la scheda il teletrasporto della spedizione quando entri in un gruppo per una spedizione della stagione Mitica+ attuale e conosci il suo teletrasporto, insieme ai membri del gruppo che hanno una chiave del potere per essa (gli altri giocatori servono Details! o BigWigs). La scheda resta aperta finché non lo usi o la chiudi o il gruppo entra nella spedizione."
 
 -- options/misc/phase_icon.lua
 L["Chromie Time"] = "Tempo di Chromie"

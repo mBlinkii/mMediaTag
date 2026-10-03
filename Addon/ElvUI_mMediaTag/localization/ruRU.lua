@@ -735,6 +735,8 @@ L["Fade"] = "Затухание"
 L["Scale"] = "Масштаб"
 L["Slide"] = "Скольжение"
 L["Theme color"] = "Цвет темы"
+L["Show teleport"] = "Показывать телепорт"
+L["Shows the teleport of the dungeon below the card when you join a group for a dungeon of the current Mythic+ season and know its teleport, together with the group members who have a keystone for it (other players need Details! or BigWigs). The card then stays open until you use or close it or the group enters the dungeon."] = "Показывает под карточкой телепорт подземелья, когда вы вступаете в группу в подземелье текущего сезона М+ и знаете этот телепорт, вместе с участниками группы, у которых есть ключ в это подземелье (другим игрокам нужен Details! или BigWigs). Карточка остаётся открытой, пока вы его не используете, не закроете её или группа не войдёт в подземелье."
 
 -- options/misc/phase_icon.lua
 L["Chromie Time"] = "Время Хроми"

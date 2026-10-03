@@ -735,6 +735,8 @@ L["Fade"] = "페이드"
 L["Scale"] = "크기 조절"
 L["Slide"] = "슬라이드"
 L["Theme color"] = "테마 색상"
+L["Show teleport"] = "순간이동 표시"
+L["Shows the teleport of the dungeon below the card when you join a group for a dungeon of the current Mythic+ season and know its teleport, together with the group members who have a keystone for it (other players need Details! or BigWigs). The card then stays open until you use or close it or the group enters the dungeon."] = "현재 쐐기돌 시즌 던전의 파티에 참여했고 해당 순간이동을 알고 있으면 카드 아래에 던전 순간이동과 그 던전의 쐐기돌을 가진 파티원을 표시합니다(다른 플레이어는 Details! 또는 BigWigs 필요). 사용하거나 닫거나 파티가 던전에 들어갈 때까지 카드가 열려 있습니다."
 
 -- options/misc/phase_icon.lua
 L["Chromie Time"] = "크로미의 시간"
