@@ -33,6 +33,7 @@ local safeAddons = {
 	["ElvUI_Libraries"] = true,
 	["ElvUI_Options"] = true,
 	["ElvUI_mMediaTag"] = true,
+	["JiberishIcons"] = true,
 }
 
 function mMT:SetDebugMode(on, safe)

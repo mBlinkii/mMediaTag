@@ -75,7 +75,7 @@ function mMT:Initialize()
 
 	mMT:UpdateMedia()
 
-	if IsAddOnLoaded("ElvUI_JiberishIcons") then mMT:AddJIIcons() end
+	if IsAddOnLoaded("JiberishIcons") or IsAddOnLoaded("ElvUI_JiberishIcons") then mMT:AddJIIcons() end
 	if IsAddOnLoaded("Details") then mMT:AddClassIconsToDetails() end
 
 	if Engine[2].DEV then E:Print(format("%s %s", mMT.NameShort, "|cff99ff33DEV mode active|r")) end

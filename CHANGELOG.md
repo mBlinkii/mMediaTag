@@ -8,6 +8,7 @@
 - FIX - [Dock]: The character dock no longer prints the played time into the chat on every loading screen.
 - FIX - [Dock]: The calendar dock kept the previous day after midnight.
 - FIX - [DT-Teleports]: The current dungeon was sometimes not highlighted after joining a group.
+- FIX - [Portraits]: Jiberish Fabled Icons are found again after the addon rename and its new spec icons can be selected.
 ### 🔧 UPDATE
 - UPDATE - [Cooldown-Manager]: A fixed width or height now sets the icon size by itself.
 - UPDATE - [Execute-Marker]: The marker follows the health bar size and fill direction by itself.

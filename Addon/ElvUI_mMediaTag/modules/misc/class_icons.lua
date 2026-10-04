@@ -108,15 +108,32 @@ local function AddClassIcons(style, texture, name)
 	}
 end
 
+-- JiberishIcons was ElvUI_JiberishIcons before 1.4.9, both globals point to the same engine
 function mMT:AddJIIcons()
-	local JI = unpack(ElvUI_JiberishIcons)
-	if JI then
-		local mergedClassStyles = JI.mergedStylePacks.class
+	local engine = _G.JiberishIcons or _G.ElvUI_JiberishIcons
+	local JI = engine and engine[1]
+	if not (JI and JI.mergedStylePacks) then return end
 
-		for iconStyle, data in next, mergedClassStyles.styles do
-			local ji_path = (mergedClassStyles.styles[iconStyle] and mergedClassStyles.styles[iconStyle].path) or mergedClassStyles.path
-			local fullPath = format("%s%s", ji_path, iconStyle)
+	local classPack = JI.mergedStylePacks.class
+	if classPack then
+		for iconStyle, data in next, classPack.styles do
+			local fullPath = format("%s%s", data.path or classPack.path, iconStyle)
 			if JI:IsValidTexturePath(fullPath) then AddOtherClassIcons(iconStyle, fullPath, "default", data.name) end
+		end
+	end
+
+	-- JI ships the coordinates for its own spec sheet
+	local specPack, specCoords = JI.mergedStylePacks.spec, JI.dataHelper and JI.dataHelper.specialization
+	if specPack and specCoords then
+		for iconStyle, data in next, specPack.styles do
+			local fullPath = format("%s%s", data.path or specPack.path, iconStyle)
+			if JI:IsValidTexturePath(fullPath) and not MEDIA.icons.spec.icons.custom[iconStyle] then
+				MEDIA.icons.spec.icons.custom[iconStyle] = {
+					name = data.name,
+					texture = fullPath,
+					texCoords = specCoords,
+				}
+			end
 		end
 	end
 end
