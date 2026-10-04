@@ -1,7 +1,7 @@
 local mMT, DB, M, E, P, L, MEDIA = unpack(ElvUI_mMediaTag)
 
 local _G = _G
-local floor, format, ipairs, pairs, pcall, sort, strrep, tinsert, type = floor, format, ipairs, pairs, pcall, sort, strrep, tinsert, type
+local floor, format, ipairs, pairs, pcall, sort, strrep, tconcat, tinsert, type, unpack = floor, format, ipairs, pairs, pcall, sort, strrep, table.concat, tinsert, type, unpack
 
 local DOT = "|TInterface\\CHARACTERFRAME\\TempPortraitAlphaMask:8:8:0:0:64:64:0:64:0:64:%d:%d:%d|t  %s"
 -- a disabled module shows a grey dot
@@ -308,46 +308,148 @@ mMT.options = {
 	},
 }
 
--- each page gets its own dot color, the category page lists every page as a shortcut
-for key, color in pairs(COLORS) do
-	local category = mMT.options.args[key]
-	local categoryName = category.name
-	category.name = Dot(categoryName, color)
-
-	if category.childGroups == "tree" then
-		local pageKeys = {}
-		for pageKey, page in pairs(category.args) do
-			if type(page) == "table" and page.type == "group" and not page.inline then tinsert(pageKeys, pageKey) end
-		end
-		sort(pageKeys, function(a, b)
-			return category.args[a].order < category.args[b].order
-		end)
-
-		category.args.shortcuts_header = {
-			order = 0,
-			type = "header",
-			name = categoryName,
-		}
-
-		for index, pageKey in ipairs(pageKeys) do
-			local page = category.args[pageKey]
-			local text = page.name
-			local pageColor = PAGE_COLORS[(index - 1) % #PAGE_COLORS + 1]
-			local function name()
-				return Dot(text, IsOff(page) and DISABLED or pageColor)
-			end
-
-			page.name = name
-			category.args["shortcut_" .. pageKey] = {
-				order = index,
-				type = "execute",
-				width = 1.25,
-				name = text,
-				hidden = page.hidden,
-				func = function()
-					E.Libs.AceConfigDialog:SelectGroup("ElvUI", "mMT", key, pageKey)
-				end,
-			}
+-- the colors category mirrors every color option, both places edit the same setting
+local function Chain(list)
+	if #list == 0 then return nil end
+	return function(...)
+		for _, value in ipairs(list) do
+			if value == true or (type(value) == "function" and value(...)) then return true end
 		end
 	end
+end
+
+local function Append(list, value)
+	if not value then return list end
+	local copy = { unpack(list) }
+	tinsert(copy, value)
+	return copy
+end
+
+local function SortedKeys(args)
+	local keys = {}
+	for key in pairs(args) do
+		tinsert(keys, key)
+	end
+	sort(keys, function(a, b)
+		local orderA, orderB = args[a].order or 100, args[b].order or 100
+		if orderA == orderB then return a < b end
+		return orderA < orderB
+	end)
+	return keys
+end
+
+local function CollectColors(group, path, state, sections)
+	local colors, count = nil, 0
+	for _, key in ipairs(SortedKeys(group.args)) do
+		local option = group.args[key]
+		if type(option) == "table" and option.type == "color" then
+			colors = colors or {}
+			local copy = {}
+			for field, value in pairs(option) do
+				copy[field] = value
+			end
+			count = count + 1
+			copy.order = count
+			copy.get = option.get or state.get
+			copy.set = option.set or state.set
+			copy.disabled = Chain(Append(state.disabled, option.disabled))
+			copy.hidden = Chain(Append(state.hidden, option.hidden))
+			colors[key] = copy
+		end
+	end
+
+	if colors then tinsert(sections, { name = tconcat(path, " › "), args = colors }) end
+
+	for _, key in ipairs(SortedKeys(group.args)) do
+		local child = group.args[key]
+		if type(child) == "table" and child.type == "group" then
+			local childPath = { unpack(path) }
+			if type(child.name) == "string" and child.name ~= "" then tinsert(childPath, child.name) end
+			CollectColors(child, childPath, {
+				get = child.get or state.get,
+				set = child.set or state.set,
+				disabled = Append(state.disabled, child.disabled),
+				hidden = Append(state.hidden, child.hidden),
+			}, sections)
+		end
+	end
+end
+
+local function BuildColorPages()
+	local options = mMT.options.args
+	local colors = options.colors.args
+	for key, category in pairs(options) do
+		if key ~= "colors" and COLORS[key] and type(category) == "table" and category.type == "group" then
+			local sections = {}
+			CollectColors(category, {}, { disabled = {}, hidden = { category.hidden } }, sections)
+
+			if #sections > 0 then
+				local args = {}
+				for index, section in ipairs(sections) do
+					args["section_" .. index] = {
+						order = index,
+						type = "group",
+						inline = true,
+						name = section.name,
+						args = section.args,
+					}
+				end
+				colors["mirror_" .. key] = Page(category.order + 10, category.name, nil, args)
+			end
+		end
+	end
+end
+
+-- each page gets its own dot color, the category page lists every page as a shortcut
+local function Decorate()
+	for key, color in pairs(COLORS) do
+		local category = mMT.options.args[key]
+		local categoryName = category.name
+		category.name = Dot(categoryName, color)
+
+		if category.childGroups == "tree" then
+			local pageKeys = {}
+			for pageKey, page in pairs(category.args) do
+				if type(page) == "table" and page.type == "group" and not page.inline then tinsert(pageKeys, pageKey) end
+			end
+			sort(pageKeys, function(a, b)
+				return category.args[a].order < category.args[b].order
+			end)
+
+			category.args.shortcuts_header = {
+				order = 0,
+				type = "header",
+				name = categoryName,
+			}
+
+			for index, pageKey in ipairs(pageKeys) do
+				local page = category.args[pageKey]
+				local text = page.name
+				local pageColor = PAGE_COLORS[(index - 1) % #PAGE_COLORS + 1]
+				local function name()
+					return Dot(text, IsOff(page) and DISABLED or pageColor)
+				end
+
+				page.name = name
+				category.args["shortcut_" .. pageKey] = {
+					order = index,
+					type = "execute",
+					width = 1.25,
+					name = text,
+					hidden = page.hidden,
+					func = function()
+						E.Libs.AceConfigDialog:SelectGroup("ElvUI", "mMT", key, pageKey)
+					end,
+				}
+			end
+		end
+	end
+end
+
+function mMT:FinalizeOptions()
+	if mMT.optionsFinalized then return end
+	mMT.optionsFinalized = true
+
+	BuildColorPages()
+	Decorate()
 end
