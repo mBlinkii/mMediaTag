@@ -743,6 +743,16 @@ P.nameplates = {
 			cross = true,
 			skull = true,
 		},
+		above_important_casts = {
+			star = false,
+			circle = false,
+			diamond = false,
+			triangle = false,
+			moon = false,
+			square = false,
+			cross = false,
+			skull = false,
+		},
 	},
 	classification = {
 		enable = false,

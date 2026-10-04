@@ -122,7 +122,8 @@ local function GetOrCreateHealthOverlay(healthBar, index)
 	local overlay = overlays[index]
 	if overlay then return overlay end
 
-	overlay = healthBar:CreateTexture(nil, "OVERLAY", nil, 7)
+	-- sublevel 7 stays free for raid marker colors that are set to show above this one
+	overlay = healthBar:CreateTexture(nil, "OVERLAY", nil, 6)
 	overlay:SetTexture(EDGE_FILE)
 	overlay:SetBlendMode("BLEND")
 	overlay:SetAllPoints(healthBar:GetStatusBarTexture())

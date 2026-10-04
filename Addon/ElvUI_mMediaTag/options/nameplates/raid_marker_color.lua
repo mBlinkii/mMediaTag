@@ -52,6 +52,23 @@ for index, key in ipairs(MARKERS) do
 		end,
 	}
 
+	markerArgs[key .. "_above"] = {
+		order = index * 2 + 0.25,
+		type = "toggle",
+		name = L["Above Important Casts"],
+		desc = L["Shows this marker color on top of the Important Casts health bar color."],
+		disabled = function()
+			return Disabled() or not Settings().markers[key]
+		end,
+		get = function()
+			return Settings().above_important_casts[key]
+		end,
+		set = function(_, value)
+			Settings().above_important_casts[key] = value
+			UpdateModule()
+		end,
+	}
+
 	markerArgs[key .. "_break"] = {
 		order = index * 2 + 0.5,
 		type = "description",

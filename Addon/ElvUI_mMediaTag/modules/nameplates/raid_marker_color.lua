@@ -60,6 +60,12 @@ local function UpdatePlate(nameplate)
 		local settings = module.markers[marker]
 		if settings then
 			local layer = GetLayer(nameplate, marker)
+			local above = module.aboveImportantCasts[marker]
+			if layer.mMT_Above ~= above then
+				-- important casts color the health bar on OVERLAY 6
+				layer:SetDrawLayer(above and "OVERLAY" or "ARTWORK", above and 7 or 5)
+				layer.mMT_Above = above
+			end
 			layer:SetAllPoints(fill)
 			layer:SetVertexColor(settings.r, settings.g, settings.b, module.alpha)
 			layer:SetSpriteSheetCell(index, 1, NUM_MARKERS)
@@ -98,8 +104,12 @@ function module:Initialize()
 
 	-- only enabled markers get a layer, the colors are copied so the hot path does no lookups
 	module.markers = {}
+	module.aboveImportantCasts = {}
 	for marker, key in ipairs(MARKERS) do
-		if db.markers[key] then module.markers[marker] = MEDIA.color.raid_markers[key] end
+		if db.markers[key] then
+			module.markers[marker] = MEDIA.color.raid_markers[key]
+			module.aboveImportantCasts[marker] = db.above_important_casts[key] or false
+		end
 	end
 	module.alpha = db.alpha or 1
 
