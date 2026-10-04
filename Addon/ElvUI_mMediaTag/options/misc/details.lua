@@ -1,6 +1,6 @@
 local mMT, DB, M, E, P, L, MEDIA = unpack(ElvUI_mMediaTag)
 
-mMT.options.args.misc.args.details.args = {
+mMT.options.args.interface.args.panels.args.details.args = {
 	mode = {
 		order = 1,
 		type = "select",

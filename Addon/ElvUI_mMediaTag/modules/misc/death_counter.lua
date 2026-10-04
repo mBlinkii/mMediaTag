@@ -96,7 +96,7 @@ function module:Initialize(demo)
 
 		E:CreateMover(module.death_counter, "mMediaTag_Death_Counter_Mover", "mMT " .. L["Death Counter"], nil, nil, nil, "ALL,MMEDIATAG", function()
 			return E.db.mMediaTag.death_counter.enable
-		end, "mMT,misc,death_counter")
+		end, "mMT,group,group_tools,death_counter")
 		module.death_counter:Hide()
 	end
 

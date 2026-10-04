@@ -27,27 +27,35 @@ local args = {
 			mMT:UpdateModule("NP-ClassificationTexture")
 		end,
 	},
-	instanceOnly = {
-		order = 2,
-		type = "toggle",
-		name = L["In Instances"],
-		desc = L["Show the classification textures only inside dungeons, raids and other instances."],
-		disabled = function()
-			return not E.db.mMediaTag.nameplates.classification.enable
-		end,
-		get = function(info)
-			return E.db.mMediaTag.nameplates.classification.instanceOnly
-		end,
-		set = function(info, value)
-			E.db.mMediaTag.nameplates.classification.instanceOnly = value
-			mMT:UpdateModule("NP-ClassificationTexture")
-		end,
-	},
 	description = {
-		order = 3,
+		order = 2,
 		type = "description",
 		fontSize = "medium",
-		name = "\n" .. L["Inside a dungeon every mana user counts as a caster, so that texture wins over the elite ones there."] .. "\n",
+		name = L["Inside a dungeon every mana user counts as a caster, so that texture wins over the elite ones there."],
+	},
+	settings = {
+		order = 3,
+		type = "group",
+		inline = true,
+		name = L["Settings"],
+		args = {
+			instanceOnly = {
+				order = 1,
+				type = "toggle",
+				name = L["In Instances"],
+				desc = L["Show the classification textures only inside dungeons, raids and other instances."],
+				disabled = function()
+					return not E.db.mMediaTag.nameplates.classification.enable
+				end,
+				get = function(info)
+					return E.db.mMediaTag.nameplates.classification.instanceOnly
+				end,
+				set = function(info, value)
+					E.db.mMediaTag.nameplates.classification.instanceOnly = value
+					mMT:UpdateModule("NP-ClassificationTexture")
+				end,
+			},
+		},
 	},
 }
 
@@ -90,4 +98,4 @@ for index, entry in ipairs(entries) do
 	}
 end
 
-mMT.options.args.nameplates.args.classification_texture.args = args
+mMT.options.args.nameplates.args.markers.args.classification_texture.args = args

@@ -3,7 +3,7 @@ local DT = E:GetModule("DataTexts")
 
 local dt_icons = MEDIA.icons.datatexts.combat
 
-mMT.options.args.datatexts.args.info_combat_time.args = {
+mMT.options.args.datatexts.args.info.args.info_combat_time.args = {
 	settings = {
 		order = 1,
 		type = "group",

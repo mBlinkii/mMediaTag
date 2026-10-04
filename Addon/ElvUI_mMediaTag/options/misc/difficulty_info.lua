@@ -1,7 +1,7 @@
 local mMT, DB, M, E, P, L, MEDIA = unpack(ElvUI_mMediaTag)
 local LSM = E.Libs.LSM
 
-mMT.options.args.misc.args.difficulty_info.args = {
+mMT.options.args.group.args.group_tools.args.difficulty_info.args = {
 	enable = {
 		order = 1,
 		type = "toggle",

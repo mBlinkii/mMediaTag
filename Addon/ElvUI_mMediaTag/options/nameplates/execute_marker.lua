@@ -6,15 +6,9 @@ local function UpdateModule()
 	NP:ConfigureAll()
 end
 
-mMT.options.args.nameplates.args.execute_marker.args = {
-	text = {
-		order = 1,
-		type = "description",
-		fontSize = "medium",
-		name = L["Shows a marker on enemy nameplates at the execute threshold of your spec. Because of the Midnight API restrictions the marker is hidden via clipping once the unit drops below the threshold, health values are never read."],
-	},
+mMT.options.args.nameplates.args.markers.args.execute_marker.args = {
 	enable = {
-		order = 2,
+		order = 1,
 		type = "toggle",
 		name = function()
 			return E.db.mMediaTag.nameplates.execute.enable and MEDIA.color.green:WrapTextInColorCode(L["Enabled"]) or MEDIA.color.red:WrapTextInColorCode(L["Disabled"])
@@ -26,6 +20,12 @@ mMT.options.args.nameplates.args.execute_marker.args = {
 			E.db.mMediaTag.nameplates.execute.enable = value
 			UpdateModule()
 		end,
+	},
+	text = {
+		order = 2,
+		type = "description",
+		fontSize = "medium",
+		name = L["Shows a marker on enemy nameplates at the execute threshold of your spec. Because of the Midnight API restrictions the marker is hidden via clipping once the unit drops below the threshold, health values are never read."],
 	},
 	settings = {
 		order = 3,

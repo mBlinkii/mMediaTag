@@ -7,7 +7,7 @@ P.summon_icon = {
 	rejected = "galaxie",
 }
 
-mMT.options.args.unitframes.args.summon_icon.args = {
+mMT.options.args.unitframes.args.status_icons.args.summon_icon.args = {
 	enable = {
 		order = 1,
 		type = "toggle",

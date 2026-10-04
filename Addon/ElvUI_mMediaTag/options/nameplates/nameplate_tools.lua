@@ -1,7 +1,7 @@
 local mMT, DB, M, E, P, L, MEDIA = unpack(ElvUI_mMediaTag)
 local NP = E:GetModule("NamePlates")
 
-mMT.options.args.nameplates.args.misc.args = {
+mMT.options.args.nameplates.args.tools.args.misc.args = {
 	glow = {
 		order = 1,
 		type = "group",

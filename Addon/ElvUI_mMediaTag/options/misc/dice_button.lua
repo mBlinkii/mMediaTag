@@ -1,6 +1,6 @@
 local mMT, DB, M, E, P, L, MEDIA = unpack(ElvUI_mMediaTag)
 
-mMT.options.args.misc.args.dice_button.args = {
+mMT.options.args.interface.args.comfort.args.dice_button.args = {
 	enable = {
 		order = 1,
 		type = "toggle",

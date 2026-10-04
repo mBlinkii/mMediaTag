@@ -1,7 +1,7 @@
 local mMT, DB, M, E, P, L, MEDIA = unpack(ElvUI_mMediaTag)
 local LSM = E.Libs.LSM
 
-mMT.options.args.misc.args.death_counter.args = {
+mMT.options.args.group.args.group_tools.args.death_counter.args = {
 	enable = {
 		order = 1,
 		type = "toggle",

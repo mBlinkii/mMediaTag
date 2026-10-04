@@ -1,7 +1,7 @@
 local mMT, DB, M, E, P, L, MEDIA = unpack(ElvUI_mMediaTag)
 local DT = E:GetModule("DataTexts")
 
-mMT.options.args.datatexts.args.info_score.args = {
+mMT.options.args.datatexts.args.info.args.info_score.args = {
 	settings = {
 		order = 1,
 		type = "group",

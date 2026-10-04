@@ -312,7 +312,7 @@ end
 
 local function DeleteDock() end
 
-mMT.options.args.misc.args.custom_docks.args = {
+mMT.options.args.dock.args.custom_docks.args.docks.args = {
 	execute_apply = {
 		order = 1,
 		type = "execute",

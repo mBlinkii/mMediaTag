@@ -1,6 +1,6 @@
 local mMT, DB, M, E, P, L, MEDIA = unpack(ElvUI_mMediaTag)
 
-mMT.options.args.misc.args.tooltip.args = {
+mMT.options.args.interface.args.tooltip.args = {
 	enable = {
 		order = 1,
 		type = "toggle",

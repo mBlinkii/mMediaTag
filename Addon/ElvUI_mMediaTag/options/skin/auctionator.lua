@@ -22,13 +22,8 @@ mMT.options.args.skins.args.auctionator.args = {
 			E:StaticPopup_Show("CONFIG_RL")
 		end,
 	},
-	spacer_1 = {
-		order = 2,
-		type = "description",
-		name = "\n",
-	},
 	info_missing = {
-		order = 3,
+		order = 2,
 		type = "description",
 		name = MEDIA.color.info:WrapTextInColorCode(L["Info: Auctionator is not installed."]),
 		hidden = function()
@@ -36,7 +31,7 @@ mMT.options.args.skins.args.auctionator.args = {
 		end,
 	},
 	info_scope = {
-		order = 4,
+		order = 3,
 		type = "description",
 		name = MEDIA.color.info:WrapTextInColorCode(L["Info: This skins the Shopping, Selling, Cancelling and Auctionator tabs. Rows inside the result lists keep their default look."]),
 		hidden = function()

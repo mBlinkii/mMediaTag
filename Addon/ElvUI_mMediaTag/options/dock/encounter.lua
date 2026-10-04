@@ -2,7 +2,7 @@ local mMT, DB, M, E, P, L, MEDIA = unpack(ElvUI_mMediaTag)
 
 local DT = E:GetModule("DataTexts")
 
-mMT.options.args.dock.args.encounter.args = {
+mMT.options.args.dock.args.buttons.args.encounter.args = {
 	settings = {
 		order = 1,
 		type = "group",

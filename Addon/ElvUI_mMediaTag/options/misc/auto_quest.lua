@@ -1,6 +1,6 @@
 local mMT, DB, M, E, P, L, MEDIA = unpack(ElvUI_mMediaTag)
 
-mMT.options.args.misc.args.auto_quest.args = {
+mMT.options.args.quests.args.automation.args.auto_quest.args = {
 	enable = {
 		order = 1,
 		type = "toggle",

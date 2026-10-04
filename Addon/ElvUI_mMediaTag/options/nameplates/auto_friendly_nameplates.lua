@@ -1,6 +1,6 @@
 local mMT, DB, M, E, P, L, MEDIA = unpack(ElvUI_mMediaTag)
 
-mMT.options.args.nameplates.args.auto_friendly_nameplates.args = {
+mMT.options.args.nameplates.args.tools.args.auto_friendly_nameplates.args = {
 	enable = {
 		order = 1,
 		type = "toggle",

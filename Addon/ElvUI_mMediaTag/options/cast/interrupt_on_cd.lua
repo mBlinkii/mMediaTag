@@ -5,7 +5,7 @@ local function GlowDisabled()
 	return not (db.glow_castbar or db.glow_health)
 end
 
-mMT.options.args.unitframes.args.interrupt_on_cd.args = {
+mMT.options.args.unitframes.args.castbar.args.interrupt_on_cd.args = {
 	enable = {
 		order = 1,
 		type = "toggle",

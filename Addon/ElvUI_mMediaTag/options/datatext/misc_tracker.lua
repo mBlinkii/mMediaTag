@@ -1,7 +1,7 @@
 local mMT, DB, M, E, P, L, MEDIA = unpack(ElvUI_mMediaTag)
 local selected_id = nil
 
-mMT.options.args.datatexts.args.misc_tracker.args = {
+mMT.options.args.datatexts.args.menus.args.misc_tracker.args = {
 	settings = {
 		order = 1,
 		type = "group",
@@ -229,7 +229,7 @@ mMT.options.args.datatexts.args.misc_tracker.args = {
 							if selected_id and E.db.mMediaTag.datatexts.tracker.custom[selected_id] then
 								local hex = E:RGBToHex(r, g, b, "ff")
 								E.db.mMediaTag.datatexts.tracker.custom[selected_id].color = hex
-								E.Options.args.mMT.args.datatexts.args.misc_tracker.args.custom_ids.args.custom_ids_settings.args.name.name(nil, hex)
+								E.Options.args.mMT.args.datatexts.args.menus.args.misc_tracker.args.custom_ids.args.custom_ids_settings.args.name.name(nil, hex)
 								M.Tracker:UpdateAll()
 							end
 						end,

@@ -987,6 +987,21 @@ L["Version Info"] = "Versionsinfo"
 L["white"] = "weiß"
 
 -- options/options_core.lua
+L["Automation"] = "Automatisierung"
+L["Buttons"] = "Schaltflächen"
+L["Comfort"] = "Komfort"
+L["Group and M+"] = "Gruppe und M+"
+L["Group Tools"] = "Gruppenwerkzeuge"
+L["Highlights"] = "Hervorhebungen"
+L["Info"] = "Info"
+L["Interface"] = "Oberfläche"
+L["Keystones"] = "Schlüsselsteine"
+L["Markers and Textures"] = "Marker und Texturen"
+L["Menus"] = "Menüs"
+L["Quests"] = "Quests"
+L["Status Icons"] = "Status-Symbole"
+L["Tools"] = "Werkzeuge"
+L["Viewers"] = "Leisten"
 L["These are just examples of how to create your own dock using ElvUI’s custom data text bars.\n\nTo set up a custom bar:\nOpen ElvUI and navigate to ElvUI > Datatext > Bars.\nEnter a name for your new bar, click OK, and then click Add.\nSet the width of the bar based on how many icons you want to display.\nSet the height, which also determines the icon size.\nChoose the number of data text slots you want.\n\nAssign icons to each slot. For example:\nSlot 1 = Dock Calendar\nSlot 2 = Dock Profession\nSlot 3 = Dock Spec\n…and so on.\n\nThis setup allows you to build a personalized dock that fits your UI and gameplay needs.\n\n"] = "Dies sind nur Beispiele dafür, wie du mit ElvUIs benutzerdefinierten Datentextleisten dein eigenes Dock erstellen kannst.\n\nSo richtest du eine benutzerdefinierte Leiste ein:\nÖffne ElvUI und gehe zu ElvUI > Datentext > Leisten.\nGib einen Namen für deine neue Leiste ein, klicke auf OK und dann auf Hinzufügen.\nLege die Breite der Leiste fest, je nachdem, wie viele Symbole du anzeigen möchtest.\nLege die Höhe fest, die auch die Symbolgröße bestimmt.\nWähle die Anzahl der gewünschten Datentext-Slots.\n\nWeise jedem Slot Symbole zu. Zum Beispiel:\nSlot 1 = Dock Kalender\nSlot 2 = Dock Beruf\nSlot 3 = Dock Spezialisierung\n…und so weiter.\n\nMit diesem Aufbau kannst du ein persönliches Dock erstellen, das zu deinem UI und deinen Spielbedürfnissen passt.\n\n"
 
 -- modules/portraits/texture_db.lua

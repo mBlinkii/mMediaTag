@@ -890,11 +890,11 @@ mMT.options.args.cooldownmanager.args.general.args = {
 	},
 }
 
-mMT.options.args.cooldownmanager.args.essential.args = IconViewer("essential", true)
-mMT.options.args.cooldownmanager.args.utility.args = IconViewer("utility", true)
-mMT.options.args.cooldownmanager.args.buff_icon.args = IconViewer("buff_icon", false)
+mMT.options.args.cooldownmanager.args.viewers.args.essential.args = IconViewer("essential", true)
+mMT.options.args.cooldownmanager.args.viewers.args.utility.args = IconViewer("utility", true)
+mMT.options.args.cooldownmanager.args.viewers.args.buff_icon.args = IconViewer("buff_icon", false)
 
-mMT.options.args.cooldownmanager.args.buff_bar.args = {
+mMT.options.args.cooldownmanager.args.viewers.args.buff_bar.args = {
 	general = ViewerGeneral("buff_bar", 1),
 	layout = {
 		order = 2,

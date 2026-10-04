@@ -1,6 +1,6 @@
 local mMT, DB, M, E, P, L, MEDIA = unpack(ElvUI_mMediaTag)
 
-mMT.options.args.unitframes.args.phase_icon.args = {
+mMT.options.args.unitframes.args.status_icons.args.phase_icon.args = {
 	enable = {
 		order = 1,
 		type = "toggle",

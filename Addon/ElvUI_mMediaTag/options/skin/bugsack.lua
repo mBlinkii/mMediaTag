@@ -22,13 +22,8 @@ mMT.options.args.skins.args.bugsack.args = {
 			E:StaticPopup_Show("CONFIG_RL")
 		end,
 	},
-	spacer_1 = {
-		order = 2,
-		type = "description",
-		name = "\n",
-	},
 	info = {
-		order = 3,
+		order = 2,
 		type = "description",
 		name = MEDIA.color.info:WrapTextInColorCode(L["Info: BugSack is not installed."]),
 		hidden = function()
@@ -36,7 +31,7 @@ mMT.options.args.skins.args.bugsack.args = {
 		end,
 	},
 	settings = {
-		order = 4,
+		order = 3,
 		type = "group",
 		inline = true,
 		name = L["Settings"],

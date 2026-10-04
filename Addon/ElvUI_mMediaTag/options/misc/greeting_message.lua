@@ -1,20 +1,8 @@
 local mMT, DB, M, E, P, L, MEDIA = unpack(ElvUI_mMediaTag)
 
-mMT.options.args.general.args.greeting_message.args = {
-	text = {
-		order = 1,
-		type = "description",
-		fontSize = "medium",
-		name = L["Show a greeting message in the chat when you log in."],
-	},
-	spacer = {
-		order = 2,
-		type = "description",
-		fontSize = "medium",
-		name = "\n",
-	},
+mMT.options.args.interface.args.comfort.args.greeting_message.args = {
 	enable = {
-		order = 3,
+		order = 1,
 		type = "toggle",
 		name = function()
 			return E.db.mMediaTag.general.greeting_message and MEDIA.color.green:WrapTextInColorCode(L["Enabled"]) or MEDIA.color.red:WrapTextInColorCode(L["Disabled"])
@@ -27,5 +15,11 @@ mMT.options.args.general.args.greeting_message.args = {
 			E.db.mMediaTag.general.greeting_message = value
 			mMT:UpdateModule("GreetingMessage")
 		end,
+	},
+	text = {
+		order = 2,
+		type = "description",
+		fontSize = "medium",
+		name = L["Show a greeting message in the chat when you log in."],
 	},
 }

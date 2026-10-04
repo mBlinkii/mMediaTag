@@ -35,7 +35,7 @@ local function valuesFunction()
 	return icons
 end
 
-mMT.options.args.datatexts.args.misc_teleports.args = {
+mMT.options.args.datatexts.args.menus.args.misc_teleports.args = {
 	settings = {
 		order = 1,
 		type = "group",

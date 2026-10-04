@@ -7,21 +7,9 @@ local function Module()
 	return mMT:GetModule("AddonManager")
 end
 
-mMT.options.args.misc.args.addon_manager.args = {
-	text = {
-		order = 1,
-		type = "description",
-		fontSize = "medium",
-		name = L["Save your enabled addons as a named set and switch between them from Blizzard's addon list."],
-	},
-	spacer = {
-		order = 2,
-		type = "description",
-		fontSize = "medium",
-		name = "\n",
-	},
+mMT.options.args.interface.args.comfort.args.addon_manager.args = {
 	enable = {
-		order = 3,
+		order = 1,
 		type = "toggle",
 		name = function()
 			return E.db.mMediaTag.addon_manager.enable and MEDIA.color.green:WrapTextInColorCode(L["Enabled"]) or MEDIA.color.red:WrapTextInColorCode(L["Disabled"])
@@ -35,8 +23,14 @@ mMT.options.args.misc.args.addon_manager.args = {
 			mMT:UpdateModule("AddonManager")
 		end,
 	},
+	text = {
+		order = 2,
+		type = "description",
+		fontSize = "medium",
+		name = L["Save your enabled addons as a named set and switch between them from Blizzard's addon list."],
+	},
 	settings = {
-		order = 4,
+		order = 3,
 		type = "group",
 		inline = true,
 		name = L["Settings"],
@@ -76,7 +70,7 @@ mMT.options.args.misc.args.addon_manager.args = {
 		},
 	},
 	header_importexport = {
-		order = 10,
+		order = 4,
 		type = "group",
 		inline = true,
 		name = L["Import/ Export of this Settings"],
@@ -106,8 +100,8 @@ mMT.options.args.misc.args.addon_manager.args = {
 				order = 3,
 				name = function()
 					-- disable input box button
-					E.Options.args.mMT.args.misc.args.addon_manager.args.header_importexport.args.text.disableButton = true
-					E.Options.args.mMT.args.misc.args.addon_manager.args.header_importexport.args.text.textChanged = function(text)
+					E.Options.args.mMT.args.interface.args.comfort.args.addon_manager.args.header_importexport.args.text.disableButton = true
+					E.Options.args.mMT.args.interface.args.comfort.args.addon_manager.args.header_importexport.args.text.textChanged = function(text)
 						if text ~= importText then importText = text end
 						button = "none"
 					end

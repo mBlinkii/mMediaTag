@@ -570,7 +570,7 @@ function module:Initialize(demo)
 
 		E:CreateMover(screen, "mMediaTag_LFG_Invite_Info_Mover", "mMT " .. L["LFG Invite Info"], nil, nil, nil, "ALL,MMEDIATAG", function()
 			return E.db.mMediaTag.lfg_invite_info.enable
-		end, "mMT,misc,lfg_invite_info")
+		end, "mMT,group,lfg_invite_info")
 		screen:Hide()
 	end
 

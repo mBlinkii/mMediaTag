@@ -1,6 +1,6 @@
 local mMT, DB, M, E, P, L, MEDIA = unpack(ElvUI_mMediaTag)
 
-mMT.options.args.misc.args.auto_role_check.args = {
+mMT.options.args.group.args.group_tools.args.auto_role_check.args = {
 	enable = {
 		order = 1,
 		type = "toggle",

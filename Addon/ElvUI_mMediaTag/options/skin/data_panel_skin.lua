@@ -25,7 +25,7 @@ local function GetPanelNames()
 	return tmp_List
 end
 
-mMT.options.args.misc.args.data_panel_skin.args = {
+mMT.options.args.interface.args.panels.args.data_panel_skin.args = {
 	toggle_enable = {
 		order = 1,
 		type = "toggle",
@@ -40,35 +40,20 @@ mMT.options.args.misc.args.data_panel_skin.args = {
 			mMT:UpdateModule("DataPanelSkin")
 		end,
 	},
-	spacer_1 = {
-		order = 2,
-		type = "description",
-		name = "\n",
-	},
 	info = {
-		order = 3,
+		order = 2,
 		type = "description",
 		name = MEDIA.color.info:WrapTextInColorCode(
 			L["Info: The Skin can be affected by other addons if they add a skin for all windows. To fix the problem, the skin must be deactivated in the other addon. This is not a bug of mMT."]
 		),
 	},
-	spacer = {
-		order = 4,
-		type = "description",
-		name = "\n",
-	},
 	info2 = {
-		order = 5,
+		order = 3,
 		type = "description",
 		name = MEDIA.color.info:WrapTextInColorCode(L["Info: This Settings will override the ElvUI Data Panel settings."]),
 	},
-	spacer2 = {
-		order = 6,
-		type = "description",
-		name = "\n",
-	},
 	header_panels = {
-		order = 7,
+		order = 4,
 		type = "group",
 		inline = true,
 		name = L["Panels"],
@@ -127,7 +112,7 @@ mMT.options.args.misc.args.data_panel_skin.args = {
 		},
 	},
 	header_panel_settings = {
-		order = 8,
+		order = 5,
 		type = "group",
 		inline = true,
 		name = L["Settings"],
@@ -304,7 +289,7 @@ mMT.options.args.misc.args.data_panel_skin.args = {
 		},
 	},
 	header_importexport = {
-		order = 9,
+		order = 6,
 		type = "group",
 		inline = true,
 		name = L["Import/ Export of this Settings"],
@@ -336,8 +321,8 @@ mMT.options.args.misc.args.data_panel_skin.args = {
 				order = 4,
 				name = function()
 					-- disable input box button
-					E.Options.args.mMT.args.misc.args.data_panel_skin.args.header_importexport.args.text.disableButton = true
-					E.Options.args.mMT.args.misc.args.data_panel_skin.args.header_importexport.args.text.textChanged = function(text)
+					E.Options.args.mMT.args.interface.args.panels.args.data_panel_skin.args.header_importexport.args.text.disableButton = true
+					E.Options.args.mMT.args.interface.args.panels.args.data_panel_skin.args.header_importexport.args.text.textChanged = function(text)
 						if text ~= importText then importText = text end
 						button = "none"
 					end

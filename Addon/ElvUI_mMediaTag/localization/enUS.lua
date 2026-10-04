@@ -987,6 +987,21 @@ L["Version Info"] = true
 L["white"] = true
 
 -- options/options_core.lua
+L["Automation"] = true
+L["Buttons"] = true
+L["Comfort"] = true
+L["Group and M+"] = true
+L["Group Tools"] = true
+L["Highlights"] = true
+L["Info"] = true
+L["Interface"] = true
+L["Keystones"] = true
+L["Markers and Textures"] = true
+L["Menus"] = true
+L["Quests"] = true
+L["Status Icons"] = true
+L["Tools"] = true
+L["Viewers"] = true
 L["These are just examples of how to create your own dock using ElvUI’s custom data text bars.\n\nTo set up a custom bar:\nOpen ElvUI and navigate to ElvUI > Datatext > Bars.\nEnter a name for your new bar, click OK, and then click Add.\nSet the width of the bar based on how many icons you want to display.\nSet the height, which also determines the icon size.\nChoose the number of data text slots you want.\n\nAssign icons to each slot. For example:\nSlot 1 = Dock Calendar\nSlot 2 = Dock Profession\nSlot 3 = Dock Spec\n…and so on.\n\nThis setup allows you to build a personalized dock that fits your UI and gameplay needs.\n\n"] = true
 
 -- modules/portraits/texture_db.lua

@@ -53,7 +53,7 @@ local styles = {
 	},
 }
 
-mMT.options.args.datatexts.args.info_durability_itemlevel.args = {
+mMT.options.args.datatexts.args.info.args.info_durability_itemlevel.args = {
 	settings = {
 		order = 1,
 		type = "group",

@@ -3,7 +3,7 @@ local mMT, DB, M, E, P, L, MEDIA = unpack(ElvUI_mMediaTag)
 local CH = E:GetModule("Chat")
 local UF = E:GetModule("UnitFrames")
 
-mMT.options.args.unitframes.args.role_icons.args = {
+mMT.options.args.unitframes.args.status_icons.args.role_icons.args = {
 	enable = {
 		order = 1,
 		type = "toggle",

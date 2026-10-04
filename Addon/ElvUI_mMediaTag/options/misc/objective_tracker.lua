@@ -57,7 +57,7 @@ local function ColorOption(order, name, group, key, withClass)
 	return option
 end
 
-mMT.options.args.misc.args.objective_tracker.args = {
+mMT.options.args.quests.args.objective_tracker.args = {
 	enable = {
 		order = 1,
 		type = "toggle",
@@ -359,13 +359,13 @@ mMT.options.args.misc.args.objective_tracker.args = {
 	},
 }
 
-local optionColors = mMT.options.args.misc.args.objective_tracker.args.colors.args
+local optionColors = mMT.options.args.quests.args.objective_tracker.args.colors.args
 optionColors.header = ColorOption(1, L["Header"], "colors", "header", true)
 optionColors.title = ColorOption(2, L["Title"], "colors", "title", true)
 optionColors.text = ColorOption(3, L["Text"], "colors", "text", true)
 optionColors.complete = ColorOption(4, L["Complete"], "colors", "complete", true)
 
-local progressArgs = mMT.options.args.misc.args.objective_tracker.args.progress.args
+local progressArgs = mMT.options.args.quests.args.objective_tracker.args.progress.args
 progressArgs.good = ColorOption(2, L["Good"], "progress", "good")
 progressArgs.transit = ColorOption(3, L["Transition"], "progress", "transit")
 progressArgs.bad = ColorOption(4, L["Bad"], "progress", "bad")

@@ -12,6 +12,7 @@
 - UPDATE - [Cooldown-Manager]: A fixed width or height now sets the icon size by itself.
 - UPDATE - [Execute-Marker]: The marker follows the health bar size and fill direction by itself.
 - UPDATE - [Interrupt-On-CD]: Less work per castbar and the kick marker no longer jumps by a pixel.
+- UPDATE - [Options]: Settings menu reorganized into grouped categories with subpages, colored dots instead of icons, shortcut buttons on every category page and the same layout on every page.
 ### ✨ NEW
 - NEW - [Important-Casts]: Optional setting to bring casting enemy nameplates to the front.
 - NEW - [Interrupt-On-CD]: Adjustable pixel glow thickness.

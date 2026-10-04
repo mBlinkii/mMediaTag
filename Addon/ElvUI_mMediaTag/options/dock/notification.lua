@@ -1,6 +1,6 @@
 local mMT, DB, M, E, P, L, MEDIA = unpack(ElvUI_mMediaTag)
 
-mMT.options.args.dock.args.notification.args = {
+mMT.options.args.dock.args.buttons.args.notification.args = {
 	icon = {
 		order = 2,
 		type = "group",

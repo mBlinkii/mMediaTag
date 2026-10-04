@@ -2,7 +2,7 @@ local mMT, DB, M, E, P, L, MEDIA = unpack(ElvUI_mMediaTag)
 local DT = E:GetModule("DataTexts")
 local GetMountInfoByID = C_MountJournal.GetMountInfoByID
 
-mMT.options.args.dock.args.durability.args = {
+mMT.options.args.dock.args.buttons.args.durability.args = {
 	icon = {
 		order = 1,
 		type = "group",

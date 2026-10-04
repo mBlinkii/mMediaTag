@@ -26,7 +26,7 @@ local function Set(key)
 	end
 end
 
-mMT.options.args.datatexts.args.info_time.args = {
+mMT.options.args.datatexts.args.info.args.info_time.args = {
 	settings = {
 		order = 1,
 		type = "group",

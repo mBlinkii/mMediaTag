@@ -67,7 +67,7 @@ function module:Initialize()
 				_G.GameTooltip:Hide()
 			end)
 
-			E:CreateMover(module.dice_button, "mMediaTag_Dice_Button_Mover", "mMT " .. L["Dice Button"], nil, nil, nil, "ALL,MMEDIATAG", nil, "mMT,misc,dice_button", nil)
+			E:CreateMover(module.dice_button, "mMediaTag_Dice_Button_Mover", "mMT " .. L["Dice Button"], nil, nil, nil, "ALL,MMEDIATAG", nil, "mMT,interface,comfort,dice_button", nil)
 		end
 
 		Update()

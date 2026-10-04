@@ -1,7 +1,7 @@
 local mMT, DB, M, E, P, L, MEDIA = unpack(ElvUI_mMediaTag)
 local LSM = E.Libs.LSM
 
-mMT.options.args.nameplates.args.quest_highlight.args = {
+mMT.options.args.nameplates.args.highlights.args.quest_highlight.args = {
 	enable = {
 		order = 1,
 		type = "toggle",

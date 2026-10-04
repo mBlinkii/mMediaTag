@@ -69,7 +69,7 @@ function module:CreateContainer(key)
 	frame:SetFrameStrata("MEDIUM")
 	frame:SetFrameLevel(5)
 
-	E:CreateMover(frame, info.mover .. "_Mover", "mMT " .. info.label, nil, nil, IgnoreQuadrant, "ALL,MMEDIATAG", Disabled, "mMT,cooldownmanager," .. key)
+	E:CreateMover(frame, info.mover .. "_Mover", "mMT " .. info.label, nil, nil, IgnoreQuadrant, "ALL,MMEDIATAG", Disabled, "mMT,cooldownmanager,viewers," .. key)
 
 	module.containers[key] = frame
 	return frame

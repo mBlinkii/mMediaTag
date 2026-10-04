@@ -6,7 +6,7 @@ local function UpdateImportantCasts()
 	mMT:UpdateModule("ImportantCasts", demo)
 end
 
-mMT.options.args.unitframes.args.important_casts.args = {
+mMT.options.args.unitframes.args.castbar.args.important_casts.args = {
 	enable = {
 		order = 1,
 		type = "toggle",

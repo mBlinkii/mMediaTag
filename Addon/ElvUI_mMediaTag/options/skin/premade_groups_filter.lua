@@ -26,13 +26,24 @@ mMT.options.args.skins.args.premade_groups_filter.args = {
 			E:StaticPopup_Show("CONFIG_RL")
 		end,
 	},
-	spacer_1 = {
+	info_missing = {
 		order = 2,
 		type = "description",
-		name = "\n",
+		name = MEDIA.color.info:WrapTextInColorCode(L["Info: Premade Groups Filter is not installed."]),
+		hidden = function()
+			return IsAddOnLoaded("PremadeGroupsFilter")
+		end,
+	},
+	info_scope = {
+		order = 3,
+		type = "description",
+		name = MEDIA.color.info:WrapTextInColorCode(L["Info: This skins the filter dialog, its panels, dropdowns and popups."]),
+		hidden = function()
+			return not IsAddOnLoaded("PremadeGroupsFilter")
+		end,
 	},
 	header_checkbox = {
-		order = 3,
+		order = 4,
 		type = "group",
 		inline = true,
 		name = L["Checkboxes"],
@@ -93,21 +104,5 @@ mMT.options.args.skins.args.premade_groups_filter.args = {
 				end,
 			},
 		},
-	},
-	info_missing = {
-		order = 4,
-		type = "description",
-		name = MEDIA.color.info:WrapTextInColorCode(L["Info: Premade Groups Filter is not installed."]),
-		hidden = function()
-			return IsAddOnLoaded("PremadeGroupsFilter")
-		end,
-	},
-	info_scope = {
-		order = 5,
-		type = "description",
-		name = MEDIA.color.info:WrapTextInColorCode(L["Info: This skins the filter dialog, its panels, dropdowns and popups."]),
-		hidden = function()
-			return not IsAddOnLoaded("PremadeGroupsFilter")
-		end,
 	},
 }

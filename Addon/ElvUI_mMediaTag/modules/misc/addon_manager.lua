@@ -278,7 +278,7 @@ local function GenerateProfileMenu(_, rootDescription)
 
 	rootDescription:CreateDivider()
 	rootDescription:CreateButton(L["Settings"], function()
-		E:ToggleOptions("mMT,misc,addon_manager")
+		E:ToggleOptions("mMT,interface,comfort,addon_manager")
 	end)
 end
 

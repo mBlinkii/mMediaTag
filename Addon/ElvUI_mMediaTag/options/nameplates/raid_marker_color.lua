@@ -60,15 +60,9 @@ for index, key in ipairs(MARKERS) do
 	}
 end
 
-mMT.options.args.nameplates.args.raid_marker_color.args = {
-	text = {
-		order = 1,
-		type = "description",
-		fontSize = "medium",
-		name = L["Colors the health bar of nameplates with a raid marker in the color of that marker."],
-	},
+mMT.options.args.nameplates.args.markers.args.raid_marker_color.args = {
 	enable = {
-		order = 2,
+		order = 1,
 		type = "toggle",
 		name = function()
 			return Settings().enable and MEDIA.color.green:WrapTextInColorCode(L["Enabled"]) or MEDIA.color.red:WrapTextInColorCode(L["Disabled"])
@@ -80,6 +74,12 @@ mMT.options.args.nameplates.args.raid_marker_color.args = {
 			Settings().enable = value
 			UpdateModule()
 		end,
+	},
+	text = {
+		order = 2,
+		type = "description",
+		fontSize = "medium",
+		name = L["Colors the health bar of nameplates with a raid marker in the color of that marker."],
 	},
 	settings = {
 		order = 3,

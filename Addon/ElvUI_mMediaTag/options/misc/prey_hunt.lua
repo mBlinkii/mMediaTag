@@ -9,7 +9,7 @@ local function IsDisabled()
 	return not E.db.mMediaTag.prey_hunt.enable
 end
 
-mMT.options.args.misc.args.prey_hunt.args = {
+mMT.options.args.quests.args.automation.args.prey_hunt.args = {
 	enable = {
 		order = 1,
 		type = "toggle",
@@ -25,40 +25,48 @@ mMT.options.args.misc.args.prey_hunt.args = {
 			Update()
 		end,
 	},
-	format = {
+	general = {
 		order = 2,
-		type = "select",
-		name = L["Text"],
-		disabled = IsDisabled,
-		get = function(info)
-			return E.db.mMediaTag.prey_hunt.format
-		end,
-		set = function(info, value)
-			E.db.mMediaTag.prey_hunt.format = value
-			Update()
-		end,
-		values = {
-			stage = "1/4",
-			both = "1/4 (25%)",
-			percent = "25%",
+		type = "group",
+		inline = true,
+		name = L["General"],
+		args = {
+			format = {
+				order = 1,
+				type = "select",
+				name = L["Text"],
+				disabled = IsDisabled,
+				get = function(info)
+					return E.db.mMediaTag.prey_hunt.format
+				end,
+				set = function(info, value)
+					E.db.mMediaTag.prey_hunt.format = value
+					Update()
+				end,
+				values = {
+					stage = "1/4",
+					both = "1/4 (25%)",
+					percent = "25%",
+				},
+			},
+			ready = {
+				order = 2,
+				type = "toggle",
+				name = L["Ready"],
+				desc = L["Shows Ready in green once every hunt stage is done, the text is hidden otherwise."],
+				disabled = IsDisabled,
+				get = function(info)
+					return E.db.mMediaTag.prey_hunt.ready
+				end,
+				set = function(info, value)
+					E.db.mMediaTag.prey_hunt.ready = value
+					Update()
+				end,
+			},
 		},
 	},
-	ready = {
-		order = 3,
-		type = "toggle",
-		name = L["Ready"],
-		desc = L["Shows Ready in green once every hunt stage is done, the text is hidden otherwise."],
-		disabled = IsDisabled,
-		get = function(info)
-			return E.db.mMediaTag.prey_hunt.ready
-		end,
-		set = function(info, value)
-			E.db.mMediaTag.prey_hunt.ready = value
-			Update()
-		end,
-	},
 	font = {
-		order = 4,
+		order = 3,
 		type = "group",
 		inline = true,
 		name = L["Font"],
@@ -136,7 +144,7 @@ mMT.options.args.misc.args.prey_hunt.args = {
 		},
 	},
 	position = {
-		order = 5,
+		order = 4,
 		type = "group",
 		inline = true,
 		name = L["Settings"],
@@ -202,7 +210,7 @@ mMT.options.args.misc.args.prey_hunt.args = {
 		},
 	},
 	target_list = {
-		order = 6,
+		order = 5,
 		type = "group",
 		inline = true,
 		name = L["Target List"],

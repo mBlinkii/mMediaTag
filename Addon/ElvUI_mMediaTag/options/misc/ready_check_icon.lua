@@ -1,6 +1,6 @@
 local mMT, DB, M, E, P, L, MEDIA = unpack(ElvUI_mMediaTag)
 
-mMT.options.args.unitframes.args.ready_check_icon.args = {
+mMT.options.args.unitframes.args.status_icons.args.ready_check_icon.args = {
 	enable = {
 		order = 1,
 		type = "toggle",
