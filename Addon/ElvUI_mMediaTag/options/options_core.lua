@@ -285,6 +285,7 @@ mMT.options = {
 				greeting_message = Feature(1, L["Greeting Message"]),
 				dice_button = Feature(2, L["Dice Button"]),
 				addon_manager = Feature(3, L["Addon Manager"]),
+				auto_delete = Feature(4, L["Auto Delete"]),
 			}),
 		}),
 		skins = Category(15, L["Skins"], {

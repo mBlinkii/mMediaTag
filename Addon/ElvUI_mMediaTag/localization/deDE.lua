@@ -749,6 +749,9 @@ L["Difficulty Info"] = "Schwierigkeitsinfo"
 L["Font size, top line"] = "Schriftgröße, obere Zeile"
 L["Show Frame"] = "Frame anzeigen"
 
+-- options/misc/auto_delete.lua
+L["Fills in the confirmation word automatically when you delete an item."] = "Trägt beim Löschen eines Gegenstands das Bestätigungswort automatisch ein."
+
 -- options/misc/greeting_message.lua
 L["Show a greeting message in the chat when you log in."] = "Zeigt beim Einloggen eine Begrüßungsnachricht im Chat an."
 
@@ -844,6 +847,7 @@ L["Target & Glow color"] = "Ziel- & Leuchtfarbe"
 
 -- options/options_core.lua
 L["Addon Manager"] = "Addon-Manager"
+L["Auto Delete"] = "Automatisch löschen"
 L["Data Panel Skin"] = "Datenleisten-Skin"
 L["Datatexts"] = "Datentexte"
 L["Details embedded"] = "Details eingebettet"

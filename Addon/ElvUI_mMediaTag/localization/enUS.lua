@@ -749,6 +749,9 @@ L["Difficulty Info"] = true
 L["Font size, top line"] = true
 L["Show Frame"] = true
 
+-- options/misc/auto_delete.lua
+L["Fills in the confirmation word automatically when you delete an item."] = true
+
 -- options/misc/greeting_message.lua
 L["Show a greeting message in the chat when you log in."] = true
 
@@ -844,6 +847,7 @@ L["Target & Glow color"] = true
 
 -- options/options_core.lua
 L["Addon Manager"] = true
+L["Auto Delete"] = true
 L["Data Panel Skin"] = true
 L["Datatexts"] = true
 L["Details embedded"] = true

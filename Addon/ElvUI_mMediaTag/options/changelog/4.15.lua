@@ -18,6 +18,7 @@ mMT.Changelog[415] = {
 		"[Options]: Settings menu reorganized into grouped categories with subpages, colored dots instead of icons, shortcut buttons on every category page, the same layout on every page and all module colors gathered under Colors.",
 	},
 	NEW = {
+		"[Auto-Delete]: New module that fills in the confirmation word when you delete an item, in every client language.",
 		"[Important-Casts]: Optional setting to bring casting enemy nameplates to the front.",
 		"[Interrupt-On-CD]: Adjustable pixel glow thickness.",
 		"[LFG-Info]: Shows the dungeon teleport and the matching group keystones when you join a M+ group.",

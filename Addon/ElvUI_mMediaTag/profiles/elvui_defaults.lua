@@ -870,6 +870,10 @@ P.auto_role_check = {
 	accept_premade = true,
 }
 
+P.auto_delete = {
+	enable = false,
+}
+
 P.auto_friendly_nameplates = {
 	enable = false,
 	dungeon = true,
