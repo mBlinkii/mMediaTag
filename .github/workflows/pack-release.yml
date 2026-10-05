@@ -72,10 +72,16 @@ jobs:
       # Anders als mMT hat das Pack mehrere Flavor-TOCs - alle einlesen und
       # doppelte Versionen verwerfen. CurseForge lehnt unbekannte Versions-
       # strings ab und bricht den Lauf ab, das faellt also auf.
+      # Versionen, die CurseForge (noch) nicht kennt, z.B. 1.60.1 fuer WoW Forever,
+      # werden mit Warnung verworfen. Ist die Liste nicht abrufbar, bleibt alles drin.
       - name: Spielversionen aus allen TOCs lesen
         id: game
+        env:
+          CF_API_TOKEN: ${{ secrets.CF_API_TOKEN }}
         run: |
           set -e
+          KNOWN=$(curl -fsS --retry 3 -H "X-Api-Token: $CF_API_TOKEN" https://wow.curseforge.com/api/game/versions | jq -r '.[].name' || true)
+          [ -n "$KNOWN" ] || echo "::warning::CurseForge-Versionsliste nicht abrufbar, Versionen werden ungeprueft hochgeladen"
           VERSIONS=""
           for TOC in Addon/!mMT_MediaPack/!mMT_MediaPack_*.toc; do
             [ -e "$TOC" ] || continue
@@ -84,9 +90,14 @@ jobs:
             for I in "${ARR[@]}"; do
               V="$((10#$I / 10000)).$(((10#$I % 10000) / 100)).$((10#$I % 100))"
               case ",$VERSIONS," in *",$V,"*) continue ;; esac
+              if [ -n "$KNOWN" ] && ! grep -qxF "$V" <<< "$KNOWN"; then
+                echo "::warning::$V ($TOC) ist auf CurseForge unbekannt und wird nicht gesetzt"
+                continue
+              fi
               VERSIONS="${VERSIONS:+$VERSIONS,}$V"
             done
           done
+          [ -n "$VERSIONS" ] || { echo "::error::Keine gueltige Spielversion gefunden"; exit 1; }
           echo "versions=$VERSIONS" >> "$GITHUB_OUTPUT"
           echo "Spielversionen: $VERSIONS"
 

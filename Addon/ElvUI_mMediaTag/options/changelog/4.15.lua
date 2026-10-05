@@ -21,6 +21,7 @@ mMT.Changelog[415] = {
 		"[Important-Casts]: Optional setting to bring casting enemy nameplates to the front.",
 		"[Interrupt-On-CD]: Adjustable pixel glow thickness.",
 		"[LFG-Info]: Shows the dungeon teleport and the matching group keystones when you join a M+ group.",
+		"[Media-Pack]: Support for WoW Forever.",
 		"[Raid-Marker-Colors]: New module that colors nameplate health bars by raid marker.",
 	},
 }

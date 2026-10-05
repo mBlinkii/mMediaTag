@@ -18,6 +18,7 @@
 - NEW - [Important-Casts]: Optional setting to bring casting enemy nameplates to the front.
 - NEW - [Interrupt-On-CD]: Adjustable pixel glow thickness.
 - NEW - [LFG-Info]: Shows the dungeon teleport and the matching group keystones when you join a M+ group.
+- NEW - [Media-Pack]: Support for WoW Forever.
 - NEW - [Raid-Marker-Colors]: New module that colors nameplate health bars by raid marker.
 
 ## [ver. 4.14] - 29.09.2026
