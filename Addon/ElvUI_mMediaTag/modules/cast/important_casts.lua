@@ -307,7 +307,7 @@ local function RaiseCastingPlate(castbar)
 	local owner = castbar.__owner
 	if not (module.raiseCasting and owner and owner.isNameplate) or owner == NP.PlayerFrame or owner == NP.TestFrame then return end
 
-	local unit = owner.unit
+	local unit = owner.__unit
 	if unit and UnitCanAttack("player", unit) then QueueRaise(owner) end
 end
 
