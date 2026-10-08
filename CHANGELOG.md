@@ -13,6 +13,7 @@
 - UPDATE - [Cooldown-Manager]: A fixed width or height now sets the icon size by itself.
 - UPDATE - [Execute-Marker]: The marker follows the health bar size and fill direction by itself.
 - UPDATE - [Interrupt-On-CD]: Less work per castbar and the kick marker no longer jumps by a pixel.
+- UPDATE - [Objective-Tracker]: Hovered entries are highlighted, Initiative Tasks are skinned too and the options are reorganized.
 - UPDATE - [Options]: Settings menu reorganized into grouped categories with subpages, colored dots instead of icons, shortcut buttons on every category page, the same layout on every page and all module colors gathered under Colors.
 ### ✨ NEW
 - NEW - [Auto-Delete]: New module that fills in the confirmation word when you delete an item, in every client language.
@@ -20,6 +21,7 @@
 - NEW - [Interrupt-On-CD]: Adjustable pixel glow thickness.
 - NEW - [LFG-Info]: Shows the dungeon teleport and the matching group keystones when you join a M+ group.
 - NEW - [Media-Pack]: Support for WoW Forever.
+- NEW - [Objective-Tracker]: Quest titles can be colored by difficulty, progress and timer bars are skinned and the header bar can also be shown under the main header.
 - NEW - [Raid-Marker-Colors]: New module that colors nameplate health bars by raid marker.
 
 ## [ver. 4.14] - 29.09.2026

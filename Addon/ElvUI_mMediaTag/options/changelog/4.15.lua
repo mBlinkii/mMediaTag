@@ -15,6 +15,7 @@ mMT.Changelog[415] = {
 		"[Cooldown-Manager]: A fixed width or height now sets the icon size by itself.",
 		"[Execute-Marker]: The marker follows the health bar size and fill direction by itself.",
 		"[Interrupt-On-CD]: Less work per castbar and the kick marker no longer jumps by a pixel.",
+		"[Objective-Tracker]: Hovered entries are highlighted, Initiative Tasks are skinned too and the options are reorganized.",
 		"[Options]: Settings menu reorganized into grouped categories with subpages, colored dots instead of icons, shortcut buttons on every category page, the same layout on every page and all module colors gathered under Colors.",
 	},
 	NEW = {
@@ -23,6 +24,7 @@ mMT.Changelog[415] = {
 		"[Interrupt-On-CD]: Adjustable pixel glow thickness.",
 		"[LFG-Info]: Shows the dungeon teleport and the matching group keystones when you join a M+ group.",
 		"[Media-Pack]: Support for WoW Forever.",
+		"[Objective-Tracker]: Quest titles can be colored by difficulty, progress and timer bars are skinned and the header bar can also be shown under the main header.",
 		"[Raid-Marker-Colors]: New module that colors nameplate health bars by raid marker.",
 	},
 }
