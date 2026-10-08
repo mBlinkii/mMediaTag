@@ -138,7 +138,7 @@ P.objective_tracker = {
 	},
 	colors = {
 		header = { class = true, color = "FFFFC700" },
-		title = { class = false, color = "FFFFC700" },
+		title = { class = false, color = "FFFFC700", difficulty = false },
 		text = { class = false, color = "FFDEDEDE" },
 		complete = { class = false, color = "FF00FF45" },
 	},
@@ -148,6 +148,9 @@ P.objective_tracker = {
 		color = "FF0294FF",
 		texture = "ElvUI Norm",
 		gradient = true,
+		height = 5,
+		mainHeader = false,
+		border = true,
 	},
 	bg = {
 		enable = false,
@@ -159,6 +162,12 @@ P.objective_tracker = {
 		good = { class = false, color = "FF40FF6E" },
 		transit = { class = false, color = "FFFFA10D" },
 		bad = { class = false, color = "FFEB751A" },
+	},
+	bars = {
+		enable = true,
+		texture = "ElvUI Norm",
+		progressColor = true,
+		color = { class = false, color = "FF0294FF" },
 	},
 }
 

@@ -5,11 +5,13 @@ local module = mMT:AddModule("ObjectiveTracker")
 
 -- Cache WoW Globals
 local _G = _G
-local pairs, ipairs, tonumber, format = pairs, ipairs, tonumber, format
+local pairs, ipairs, tonumber, format, type = pairs, ipairs, tonumber, format, type
 local strmatch, strfind, gsub = strmatch, strfind, gsub
 local min = min
 local hooksecurefunc = hooksecurefunc
 local CreateFrame = CreateFrame
+local GetQuestDifficultyColor = GetQuestDifficultyColor
+local C_QuestLog = C_QuestLog
 local QUEST_DASH = QUEST_DASH
 local issecretvalue = _G.issecretvalue or function()
 	return false
@@ -19,6 +21,7 @@ local db, fonts, colors
 
 local CHECK_ATLAS = "ui-questtracker-tracker-check"
 local CHECK_GAP = 5
+local HIGHLIGHT = 0.35
 local DASH_SHOW, DASH_HIDE_COLLAPSE = 1, 3 -- OBJECTIVE_DASH_STYLE_SHOW / OBJECTIVE_DASH_STYLE_HIDE_AND_COLLAPSE
 local JUSTIFY_FACTOR = { LEFT = 0, CENTER = 0.5, RIGHT = 1 }
 
@@ -27,6 +30,7 @@ local trackerNames = {
 	"AdventureObjectiveTracker",
 	"BonusObjectiveTracker",
 	"CampaignQuestObjectiveTracker",
+	"InitiativeTasksObjectiveTracker",
 	"MonthlyActivitiesObjectiveTracker",
 	"ProfessionsRecipeTracker",
 	"QuestObjectiveTracker",
@@ -38,11 +42,11 @@ local trackerNames = {
 local function GetColor(colorDB)
 	if colorDB.class then
 		local classColor = E:ClassColor(E.myclass, true)
-		return { r = classColor.r, g = classColor.g, b = classColor.b, hex = E:RGBToHex(classColor.r, classColor.g, classColor.b) }
+		return { r = classColor.r, g = classColor.g, b = classColor.b }
 	end
 
 	local r, g, b = mMT:HexToRGB(colorDB.color)
-	return { r = r, g = g, b = b, hex = E:RGBToHex(r, g, b) }
+	return { r = r, g = g, b = b }
 end
 
 local function UpdateSettings()
@@ -56,13 +60,20 @@ local function UpdateSettings()
 		good = GetColor(db.progress.good),
 		transit = GetColor(db.progress.transit),
 		bad = GetColor(db.progress.bad),
+		headerbar = GetColor(db.headerbar),
+		bar = GetColor(db.bars.color),
 	}
 
+	local font = LSM:Fetch("font", db.text.font)
 	fonts = {
-		header = { font = LSM:Fetch("font", db.text.font), size = db.text.size.header, flag = db.text.fontFlag },
-		title = { font = LSM:Fetch("font", db.text.font), size = db.text.size.title, flag = db.text.fontFlag },
-		text = { font = LSM:Fetch("font", db.text.font), size = db.text.size.text, flag = db.text.fontFlag },
+		header = { font = font, size = db.text.size.header, flag = db.text.fontFlag },
+		title = { font = font, size = db.text.size.title, flag = db.text.fontFlag },
+		text = { font = font, size = db.text.size.text, flag = db.text.fontFlag },
 	}
+end
+
+local function IsEnabled()
+	return db and db.enable
 end
 
 -- Midnight SetFont only accepts: OUTLINE, THICKOUTLINE, MONOCHROME, FILTER, FIXEDHEIGHT, NEVERCULL, SLUG
@@ -75,7 +86,7 @@ local fontFlagMap = {
 	MONOCHROMETHICKOUTLINE = "MONOCHROME,THICKOUTLINE",
 }
 
-local function SetTextProperties(text, fontSettings, color, justify)
+local function SetFont(text, fontSettings, justify)
 	local flag = fontSettings.flag or "NONE"
 	text:SetFont(fontSettings.font, fontSettings.size, fontFlagMap[flag] or flag)
 
@@ -87,12 +98,33 @@ local function SetTextProperties(text, fontSettings, color, justify)
 	else
 		text:SetShadowColor(0, 0, 0, 0)
 	end
-
-	if color then text:SetTextColor(color.r, color.g, color.b) end
 end
 
-local function SkinTitleText(text)
-	SetTextProperties(text, fonts.title, colors.title, db.text.justify)
+local function SetColor(text, color, highlighted)
+	if highlighted then
+		text:SetTextColor(color.r + (1 - color.r) * HIGHLIGHT, color.g + (1 - color.g) * HIGHLIGHT, color.b + (1 - color.b) * HIGHLIGHT)
+	else
+		text:SetTextColor(color.r, color.g, color.b)
+	end
+end
+
+local function GetTitleColor(block)
+	if db.colors.title.difficulty and block and type(block.id) == "number" then
+		local tracker = block.parentModule
+		if tracker == _G.QuestObjectiveTracker or tracker == _G.CampaignQuestObjectiveTracker then
+			local index = C_QuestLog.GetLogIndexForQuestID(block.id)
+			local info = index and C_QuestLog.GetInfo(index)
+			if info and info.difficultyLevel then return GetQuestDifficultyColor(info.difficultyLevel, info.isScaling, block.id) end
+		end
+	end
+
+	return colors.title
+end
+
+local function SkinTitleText(text, block)
+	SetFont(text, fonts.title, db.text.justify)
+	SetColor(text, GetTitleColor(block), block and block.isHighlighted)
+
 	local height = text:GetStringHeight()
 	if height ~= text:GetHeight() then text:SetHeight(height) end
 end
@@ -103,9 +135,10 @@ local function GetCleanText(text)
 	return text
 end
 
-local function GetProgressHex(percent)
+-- ColorGradient returns more than r, g, b, which would leak into RGBToHex as header and ending
+local function GetProgressColor(percent)
 	local r, g, b = E:ColorGradient(percent, colors.bad.r, colors.bad.g, colors.bad.b, colors.transit.r, colors.transit.g, colors.transit.b, colors.good.r, colors.good.g, colors.good.b)
-	return E:RGBToHex(r, g, b)
+	return r, g, b
 end
 
 -- matches "x/y Text", "Text: x/y" and "Text (n%)", returns the ratio so callers can derive completion
@@ -127,7 +160,17 @@ local function ParseProgress(lineText)
 	if percent then return questText, percent * 0.01 end
 end
 
-local function SetLineText(text, completed)
+-- line.finished does not exist in the Blizzard tracker, Text.colorStyle is set on every AddObjective
+local function IsCompleted(line)
+	if line.objectiveKey == "QuestComplete" then return true end
+
+	local trackerColor = _G.OBJECTIVE_TRACKER_COLOR
+	return (trackerColor and line.Text.colorStyle == trackerColor.Complete) or false
+end
+
+-- the plain parts take the line color from SetTextColor, so only the numbers carry a color code
+local function SetLineText(line, completed)
+	local text = line.Text
 	local lineText = text:GetText()
 	local readable = lineText and not issecretvalue(lineText)
 
@@ -137,19 +180,20 @@ local function SetLineText(text, completed)
 	end
 
 	completed = completed or (ratio ~= nil and ratio >= 1)
+	line.mMT_Completed = completed
 
-	local color = completed and colors.complete or colors.text
-	SetTextProperties(text, fonts.text, color, db.text.justify)
+	SetFont(text, fonts.text, db.text.justify)
+	SetColor(text, completed and colors.complete or colors.text, line.parentBlock and line.parentBlock.isHighlighted)
 
 	if completed or not ratio or not db.progress.enable then return completed end
 
-	local hex = GetProgressHex(ratio)
+	local hex = E:RGBToHex(GetProgressColor(ratio))
 	local newText
 	if current then
 		if required <= 1 then return completed end
-		newText = format("%s%d/%d|r %s%s|r", hex, current, required, color.hex, questText)
+		newText = format("%s%d/%d|r %s", hex, current, required, questText)
 	else
-		newText = format("%s%s|r (%s%.f%%|r)", color.hex, questText, hex, ratio * 100)
+		newText = format("%s (%s%.f%%|r)", questText, hex, ratio * 100)
 	end
 
 	text:SetHeight(0) -- force a clear of internals or GetHeight() might return an incorrect value
@@ -167,7 +211,10 @@ local function SetLineDash(line)
 	dash:SetText(style ~= DASH_HIDE_COLLAPSE and QUEST_DASH or nil)
 	dash:SetShown(style == DASH_SHOW)
 
-	if style == DASH_SHOW then SetTextProperties(dash, fonts.text, colors.text) end
+	if style == DASH_SHOW then
+		SetFont(dash, fonts.text)
+		SetColor(dash, colors.text, line.parentBlock and line.parentBlock.isHighlighted)
+	end
 end
 
 -- the template anchors the icon to the line, not to the text, so a custom font pushes it into the text
@@ -202,22 +249,14 @@ local function SetLineIcon(line, completed)
 	end
 end
 
--- line.finished does not exist in the Blizzard tracker, Text.colorStyle is set on every AddObjective
-local function IsCompleted(line)
-	if line.objectiveKey == "QuestComplete" then return true end
-
-	local trackerColor = _G.OBJECTIVE_TRACKER_COLOR
-	return (trackerColor and line.Text.colorStyle == trackerColor.Complete) or false
-end
-
 local function SkinLine(line)
 	if not (line and line.Text) then return end
 
 	if line.objectiveKey == 0 then
-		SkinTitleText(line.Text)
+		SkinTitleText(line.Text, line.parentBlock)
 	else
 		SetLineDash(line)
-		SetLineIcon(line, SetLineText(line.Text, IsCompleted(line)))
+		SetLineIcon(line, SetLineText(line, IsCompleted(line)))
 	end
 
 	-- fix for overlapping blocks/ line and header - thx Merathilis & Fang
@@ -226,20 +265,92 @@ local function SkinLine(line)
 	line:SetHeight(height)
 end
 
-local function SkinBlock(_, block)
-	if not (db and db.enable) or not block then return end
+-- UpdateHighlight resets header and line colors to the Blizzard ones on mouseover
+local function ColorBlock(block)
+	if not IsEnabled() then return end
 
-	if block.HeaderText then SkinTitleText(block.HeaderText) end
+	local highlighted = block.isHighlighted
+	if block.HeaderText then SetColor(block.HeaderText, GetTitleColor(block), highlighted) end
+	if not block.usedLines then return end
 
-	if block.usedLines then
-		for _, line in pairs(block.usedLines) do
-			SkinLine(line)
+	for _, line in pairs(block.usedLines) do
+		if line.used and line.Text then
+			if line.objectiveKey == 0 then
+				SetColor(line.Text, GetTitleColor(block), highlighted)
+			else
+				SetColor(line.Text, line.mMT_Completed and colors.complete or colors.text, highlighted)
+				if line.Dash and line.Dash:IsShown() then SetColor(line.Dash, colors.text, highlighted) end
+			end
 		end
 	end
 end
 
--- blocks laid out before Initialize keep the Blizzard look until the next tracker update, so skin them once here
-local function SkinActiveBlocks(tracker)
+local function SkinBlock(_, block)
+	if not IsEnabled() or not block then return end
+
+	if not block.mMT_Hooked and block.UpdateHighlight then
+		hooksecurefunc(block, "UpdateHighlight", ColorBlock)
+		block.mMT_Hooked = true
+	end
+
+	if block.HeaderText then SkinTitleText(block.HeaderText, block) end
+
+	if block.usedLines then
+		for _, line in pairs(block.usedLines) do
+			if line.used then SkinLine(line) end
+		end
+	end
+end
+
+local function ColorBar(bar, value)
+	if not (IsEnabled() and db.bars.enable) then return end
+
+	local r, g, b
+	if db.bars.progressColor then
+		value = value or bar:GetValue()
+		local _, maxValue = bar:GetMinMaxValues()
+		if issecretvalue(value) or issecretvalue(maxValue) or not (value and maxValue) or maxValue <= 0 then return end
+		r, g, b = GetProgressColor(value / maxValue)
+	else
+		r, g, b = colors.bar.r, colors.bar.g, colors.bar.b
+	end
+
+	bar:SetStatusBarColor(r, g, b)
+	if bar.backdrop then bar.backdrop:SetBackdropColor(r * 0.25, g * 0.25, b * 0.25) end
+end
+
+-- the backdrop comes from the ElvUI tracker skin, the bar is only retextured and recolored here
+local function SkinBar(bar, label)
+	if not bar then return end
+
+	bar:SetStatusBarTexture(LSM:Fetch("statusbar", db.bars.texture))
+
+	-- timer bars change their value every frame and bonus bars outside the tracker update, so color on change
+	if not bar.mMT_Hooked then
+		bar:HookScript("OnValueChanged", ColorBar)
+		bar.mMT_Hooked = true
+	end
+
+	ColorBar(bar)
+	if label then SetFont(label, fonts.text) end
+end
+
+local function SkinProgressBar(tracker, key)
+	if not (IsEnabled() and db.bars.enable) then return end
+
+	local progress = tracker.usedProgressBars and tracker.usedProgressBars[key]
+	if progress and progress.Bar then SkinBar(progress.Bar, progress.Bar.Label) end
+end
+
+local function SkinTimerBar(tracker, key)
+	if not (IsEnabled() and db.bars.enable) then return end
+
+	local timer = tracker.usedTimerBars and tracker.usedTimerBars[key]
+	if timer then SkinBar(timer.Bar, timer.Label) end
+end
+
+-- blocks and bars laid out before Initialize keep the Blizzard look until the next tracker update, so skin them once here
+local function SkinActiveRegions(tracker)
 	if tracker.EnumerateActiveBlocks then tracker:EnumerateActiveBlocks(function(block)
 		SkinBlock(nil, block)
 	end) end
@@ -249,59 +360,92 @@ local function SkinActiveBlocks(tracker)
 			if block.used then SkinBlock(nil, block) end
 		end
 	end
+
+	if tracker.usedProgressBars then
+		for key in pairs(tracker.usedProgressBars) do
+			SkinProgressBar(tracker, key)
+		end
+	end
+
+	if tracker.usedTimerBars then
+		for key in pairs(tracker.usedTimerBars) do
+			SkinTimerBar(tracker, key)
+		end
+	end
 end
 
-local function UpdateHeaderBar(headerBar)
-	headerBar:SetShown(db.headerbar.enable)
-	if not db.headerbar.enable then return end
+local function GetHeaders()
+	local headers = { _G.ObjectiveTrackerFrame.Header }
+	for _, name in ipairs(trackerNames) do
+		local tracker = _G[name]
+		if tracker and tracker.Header then headers[#headers + 1] = tracker.Header end
+	end
+	return headers
+end
 
-	headerBar.texture:SetTexture(LSM:Fetch("statusbar", db.headerbar.texture))
-
-	local color = db.headerbar.class and GetColor({ class = true }) or GetColor({ color = db.headerbar.color })
-
-	if db.headerbar.gradient then
-		headerBar.texture:SetGradient("HORIZONTAL", { r = color.r * 0.6, g = color.g * 0.6, b = color.b * 0.6, a = 1 }, { r = color.r, g = color.g, b = color.b, a = 1 })
-	else
-		headerBar.texture:SetVertexColor(color.r, color.g, color.b, 1)
+local function UpdateHeaderBarWidth()
+	local width = _G.ObjectiveTrackerFrame:GetWidth()
+	for _, header in ipairs(GetHeaders()) do
+		if header.mMT_HeaderBar then header.mMT_HeaderBar:SetWidth(width) end
 	end
 end
 
 local function AddHeaderBar(header)
 	local headerBar = CreateFrame("Frame", nil, header)
-	headerBar:SetTemplate("Transparent")
 	headerBar:SetFrameStrata(header:GetFrameStrata())
 	headerBar:SetFrameLevel(header:GetFrameLevel() - 1)
-	headerBar:SetSize(_G.ObjectiveTrackerFrame:GetWidth(), 5)
-	headerBar:SetPoint("BOTTOM", 0, 0)
+	headerBar:SetPoint("BOTTOMLEFT", header, "BOTTOMLEFT", 0, 0)
+
+	-- the backdrop sits outside the bar, so the bar keeps its full height
+	headerBar:CreateBackdrop("Transparent")
 
 	headerBar.texture = headerBar:CreateTexture(nil, "ARTWORK")
-	headerBar.texture:SetPoint("TOPLEFT", headerBar, "TOPLEFT", 1, -1)
-	headerBar.texture:SetPoint("BOTTOMRIGHT", headerBar, "BOTTOMRIGHT", -1, 1)
+	headerBar.texture:SetAllPoints()
 
 	header.mMT_HeaderBar = headerBar
+	return headerBar
 end
 
-local function SkinHeader(header)
+local function UpdateHeaderBar(header, isMain)
+	local headerBar = header.mMT_HeaderBar
+	if not (IsEnabled() and db.headerbar.enable and (not isMain or db.headerbar.mainHeader)) then
+		if headerBar then headerBar:Hide() end
+		return
+	end
+
+	headerBar = headerBar or AddHeaderBar(header)
+	headerBar:SetSize(_G.ObjectiveTrackerFrame:GetWidth(), db.headerbar.height)
+	headerBar.backdrop:SetShown(db.headerbar.border)
+	headerBar.texture:SetTexture(LSM:Fetch("statusbar", db.headerbar.texture))
+
+	local color = colors.headerbar
+	if db.headerbar.gradient then
+		headerBar.texture:SetGradient("HORIZONTAL", { r = color.r * 0.6, g = color.g * 0.6, b = color.b * 0.6, a = 1 }, { r = color.r, g = color.g, b = color.b, a = 1 })
+	else
+		headerBar.texture:SetGradient("HORIZONTAL", { r = color.r, g = color.g, b = color.b, a = 1 }, { r = color.r, g = color.g, b = color.b, a = 1 })
+	end
+
+	headerBar:Show()
+end
+
+local function SkinHeader(header, isMain)
 	if not (header and header.Text) then return end
 
-	SetTextProperties(header.Text, fonts.header, colors.header)
-
-	if header ~= _G.ObjectiveTrackerFrame.Header then
-		if not header.mMT_HeaderBar then AddHeaderBar(header) end
-		UpdateHeaderBar(header.mMT_HeaderBar)
-	end
+	SetFont(header.Text, fonts.header)
+	SetColor(header.Text, colors.header)
+	UpdateHeaderBar(header, isMain)
 end
 
 local function SetCollapsed(_, collapsed)
 	local backdrop = _G.ObjectiveTrackerFrame.backdrop
-	if backdrop then backdrop:SetShown(not collapsed and db.bg.enable) end
+	if backdrop then backdrop:SetShown(not collapsed and IsEnabled() and db.bg.enable) end
 end
 
 local function UpdateBackground()
 	local tracker = _G.ObjectiveTrackerFrame
 	local backdrop = tracker.backdrop
 
-	if not db.bg.enable then
+	if not (IsEnabled() and db.bg.enable) then
 		if backdrop then backdrop:Hide() end
 		return
 	end
@@ -331,38 +475,40 @@ function module:Initialize()
 	local trackerFrame = _G.ObjectiveTrackerFrame
 	if not trackerFrame then return end
 
-	if not db.enable then
-		if module.isSkinned then
-			UpdateBackground()
-			for _, name in ipairs(trackerNames) do
-				local tracker = _G[name]
-				if tracker and tracker.Header and tracker.Header.mMT_HeaderBar then tracker.Header.mMT_HeaderBar:Hide() end
-			end
-		end
-		return
-	end
+	if not db.enable and not module.isSkinned then return end
 
 	UpdateBackground()
 
 	-- main header - do not SetText on it, it will taint
-	SkinHeader(trackerFrame.Header)
+	if db.enable then
+		SkinHeader(trackerFrame.Header, true)
+	else
+		UpdateHeaderBar(trackerFrame.Header, true)
+	end
 
 	for _, name in ipairs(trackerNames) do
 		local tracker = _G[name]
 		if tracker then
-			SkinHeader(tracker.Header)
+			if db.enable then
+				SkinHeader(tracker.Header)
+			elseif tracker.Header then
+				UpdateHeaderBar(tracker.Header)
+			end
 
 			if not tracker.mMT_Skinned then
 				hooksecurefunc(tracker, "AddBlock", SkinBlock)
+				hooksecurefunc(tracker, "GetProgressBar", SkinProgressBar)
+				hooksecurefunc(tracker, "GetTimerBar", SkinTimerBar)
 				tracker.mMT_Skinned = true
 			end
 
-			SkinActiveBlocks(tracker)
+			SkinActiveRegions(tracker)
 		end
 	end
 
 	if not module.isSkinned then
 		hooksecurefunc(trackerFrame.Header, "SetCollapsed", SetCollapsed)
+		trackerFrame:HookScript("OnSizeChanged", UpdateHeaderBarWidth)
 		module.isSkinned = true
 	end
 
