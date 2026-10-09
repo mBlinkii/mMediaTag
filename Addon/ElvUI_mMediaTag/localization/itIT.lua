@@ -172,8 +172,6 @@ L["Health Override"] = "Sovrascrittura barra salute"
 L["Override Health Bar Color"] = "Sovrascrivi colore barra salute"
 L["Position Settings"] = "Impostazioni posizione"
 L["Sets the offset according to the anchor."] = "Imposta l'offset in base all'ancora."
-L["Casting nameplates in front"] = "Targhette in lancio in primo piano"
-L["Brings enemy nameplates with a running cast in front of the other nameplates. Works for every cast, because whether a cast is important is hidden in dungeons and raids; important casts keep their highlight on top."] = "Porta le targhette nemiche con un lancio in corso davanti alle altre. Vale per ogni lancio, perché in spedizioni e incursioni è nascosto se un lancio è importante; quelli importanti mantengono inoltre la loro evidenziazione."
 
 -- options/changelog.lua
 L["Fixes"] = "Correzioni"

@@ -891,7 +891,6 @@ P.auto_friendly_nameplates = {
 
 P.important_casts = {
 	enable = false,
-	raiseCasting = false,
 	thickness = 2,
 	classColor = false,
 	overrideHealthBarColor = false,

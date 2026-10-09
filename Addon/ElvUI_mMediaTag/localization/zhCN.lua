@@ -172,8 +172,6 @@ L["Health Override"] = "生命值条覆盖"
 L["Override Health Bar Color"] = "覆盖生命值条颜色"
 L["Position Settings"] = "位置设置"
 L["Sets the offset according to the anchor."] = "根据锚点设置偏移。"
-L["Casting nameplates in front"] = "施法中的姓名板置于前方"
-L["Brings enemy nameplates with a running cast in front of the other nameplates. Works for every cast, because whether a cast is important is hidden in dungeons and raids; important casts keep their highlight on top."] = "将正在施法的敌方姓名板置于其他姓名板之前。适用于所有施法，因为在地下城和团队副本中施法是否重要是隐藏的；重要施法仍保留其高亮。"
 
 -- options/changelog.lua
 L["Fixes"] = "修复"

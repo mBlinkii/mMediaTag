@@ -98,23 +98,6 @@ mMT.options.args.unitframes.args.castbar.args.important_casts.args = {
 					mMT:UpdateModule("ImportantCasts", demo)
 				end,
 			},
-			raiseCasting = {
-				order = 4,
-				type = "toggle",
-				name = L["Casting nameplates in front"],
-				desc = L["Brings enemy nameplates with a running cast in front of the other nameplates. Works for every cast, because whether a cast is important is hidden in dungeons and raids; important casts keep their highlight on top."],
-				width = "double",
-				get = function(info)
-					return E.db.mMediaTag.important_casts.raiseCasting
-				end,
-				set = function(info, value)
-					E.db.mMediaTag.important_casts.raiseCasting = value
-					UpdateImportantCasts()
-				end,
-				disabled = function()
-					return not E.db.mMediaTag.important_casts.enable
-				end,
-			},
 		},
 	},
 	icon = {

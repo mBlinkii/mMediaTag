@@ -5,9 +5,6 @@ local module = mMT:AddModule("ImportantCasts", { "AceEvent-3.0" })
 local pairs, next = pairs, next
 local CreateFrame = CreateFrame
 local UnitIsDead = UnitIsDead
-local UnitCanAttack = UnitCanAttack
-local max = math.max
-local tremove = table.remove
 local hooksecurefunc = hooksecurefunc
 local IsSpellImportant = C_Spell and C_Spell.IsSpellImportant
 
@@ -248,81 +245,14 @@ local function CheckImportantNameplate(castbar)
 	if nameplate then ApplyOverlayState(nameplate, isImportant) end
 end
 
--- frame levels are relative, raising the plate moves health, castbar and the rest above every other plate without a strata change
-local RAISE_LEVELS = 100
-
-local function RaisePlate(nameplate)
-	if nameplate.mMT_CastRaised then return end
-	nameplate.mMT_CastRaised = true
-	nameplate:SetFrameLevel(nameplate:GetFrameLevel() + RAISE_LEVELS)
-end
-
--- a level change walks every child of the plate (aura containers are preallocated), so raises are spread over frames
-local MAX_RAISES_PER_FRAME = 3
-local pendingRaises = {}
-local queuedRaise = {}
-local raiseDriver = CreateFrame("Frame")
-raiseDriver:Hide()
-
-local function IsStillCasting(nameplate)
-	local castbar = nameplate.Castbar
-	return castbar and castbar:IsShown() and (castbar.casting or castbar.channeling)
-end
-
-raiseDriver:SetScript("OnUpdate", function(self)
-	local raised = 0
-	while raised < MAX_RAISES_PER_FRAME and #pendingRaises > 0 do
-		local nameplate = tremove(pendingRaises, 1)
-		if queuedRaise[nameplate] then
-			queuedRaise[nameplate] = nil
-			-- a cast that is already over by now is skipped instead of raised for nothing
-			if module.raiseCasting and IsStillCasting(nameplate) then
-				RaisePlate(nameplate)
-				raised = raised + 1
-			end
-		end
-	end
-
-	if #pendingRaises == 0 then self:Hide() end
-end)
-
-local function QueueRaise(nameplate)
-	if nameplate.mMT_CastRaised or queuedRaise[nameplate] then return end
-	queuedRaise[nameplate] = true
-	pendingRaises[#pendingRaises + 1] = nameplate
-	raiseDriver:Show()
-end
-
-local function LowerPlate(nameplate)
-	if not nameplate then return end
-	queuedRaise[nameplate] = nil
-
-	if not nameplate.mMT_CastRaised then return end
-	nameplate.mMT_CastRaised = nil
-	nameplate:SetFrameLevel(max(nameplate:GetFrameLevel() - RAISE_LEVELS, 0))
-end
-
--- casting itself is never secret, so every enemy plate with a cast comes forward, the important ones are marked as before
-local function RaiseCastingPlate(castbar)
-	local owner = castbar.__owner
-	if not (module.raiseCasting and owner and owner.isNameplate) or owner == NP.PlayerFrame or owner == NP.TestFrame then return end
-
-	local unit = owner.__unit
-	if unit and UnitCanAttack("player", unit) then QueueRaise(owner) end
-end
-
 local function OnCastEnd(castbar)
-	if not castbar then return end
-	HideImportantCast(castbar)
-	LowerPlate(castbar.__owner)
+	if castbar then HideImportantCast(castbar) end
 end
 
 -- ElvUI snapshots the castbar callbacks at frame construction and oUF only calls element:PostCastX(), so hooking the NP/UF tables does nothing - hook the instances.
 local CASTBAR_HOOKS = {
 	PostCastStart = function(castbar)
 		if not castbar then return end
-
-		RaiseCastingPlate(castbar)
 
 		local owner = castbar.__owner
 		if module.overrideHealthBarColor and owner and owner.isNameplate then
@@ -343,11 +273,6 @@ local function HookCastbarInstance(castbar)
 		if castbar[method] then hooksecurefunc(castbar, method, handler) end
 	end
 
-	-- a recycled plate hides its castbar without a stop callback
-	castbar:HookScript("OnHide", function(self)
-		LowerPlate(self.__owner)
-	end)
-
 	castbar.mMT_ImportantCastsHooked = true
 end
 
@@ -360,8 +285,8 @@ function module:Initialize(demo)
 	if not module.isEnabled then
 		if E.private.nameplates.enable then
 			hooksecurefunc(NP, "UpdatePlate", function(_, nameplate)
-				LowerPlate(nameplate)
-				if module.overrideHealthBarColor then ResetImportantCastOverlay(nameplate) end
+				if not module.overrideHealthBarColor then return end
+				ResetImportantCastOverlay(nameplate)
 			end)
 
 			-- StylePlate/Configure_Castbar also catch frames created or enabled later.
@@ -398,13 +323,6 @@ function module:Initialize(demo)
 	module.posX = module.db.posX or 0
 	module.posY = module.db.posY or 0
 	module.demo = demo
-	module.raiseCasting = module.db.raiseCasting
-
-	if not module.raiseCasting and NP.Plates then
-		for nameplate in pairs(NP.Plates) do
-			LowerPlate(nameplate)
-		end
-	end
 
 	ResetAllImportantCastOverlays()
 	if module.overrideHealthBarColor then
