@@ -37,6 +37,8 @@ local FULL_GROUP = 5
 local PADDING = 6
 local TITLE_SPACING = 4
 local FADE_TIME = 0.3
+local FLASH_PULSE = 0.4
+local FLASH_TIME = 5
 
 local units = { "player", "party1", "party2", "party3", "party4" }
 local updateQueued
@@ -61,6 +63,20 @@ local function CreateRow(frame)
 	row.highlight = row:CreateTexture(nil, "BACKGROUND")
 	row.highlight:SetAllPoints()
 	row.highlight:SetTexture(E.media.blankTex)
+
+	-- base alpha 0, so a stopped flash leaves nothing behind
+	row.flash = row:CreateTexture(nil, "BACKGROUND", nil, 1)
+	row.flash:SetAllPoints()
+	row.flash:SetTexture(E.media.blankTex)
+	row.flash:SetAlpha(0)
+
+	row.flashAnim = row.flash:CreateAnimationGroup()
+	row.flashAnim:SetLooping("BOUNCE")
+	local pulse = row.flashAnim:CreateAnimation("Alpha")
+	pulse:SetFromAlpha(0)
+	pulse:SetToAlpha(0.6)
+	pulse:SetDuration(FLASH_PULSE)
+	pulse:SetSmoothing("IN_OUT")
 
 	row.holder = CreateFrame("Frame", nil, row, "BackdropTemplate")
 	row.holder:Point("LEFT", row, "LEFT", 0, 0)
@@ -167,6 +183,40 @@ local function UpdateCooldowns()
 	end
 end
 
+local function StopFlash()
+	if module.flashTimer then
+		module.flashTimer:Cancel()
+		module.flashTimer = nil
+	end
+	for _, row in ipairs(module.frame.rows) do
+		row.flashAnim:Stop()
+	end
+end
+
+-- like the fade, the animation does not start on a frame shown in the same tick
+local function PlayFlash()
+	for _, row in ipairs(module.frame.rows) do
+		if row.active and row:IsShown() then
+			row.flashAnim:Play()
+			module.flashTimer = C_Timer_NewTimer(FLASH_TIME, StopFlash)
+			return
+		end
+	end
+end
+
+-- flashes the dungeon of the group once, as soon as its row is known
+local function CheckFlash(count)
+	if not module.flashPending then return end
+	for i = 1, count do
+		if module.frame.rows[i].active then
+			module.flashPending = nil
+			StopFlash()
+			C_Timer_After(0, PlayFlash)
+			return
+		end
+	end
+end
+
 local function HighlightColor()
 	if module.db.highlight.class then return MEDIA.myclass.r, MEDIA.myclass.g, MEDIA.myclass.b end
 	return mMT:HexToRGB(module.db.highlight.color)
@@ -227,8 +277,10 @@ local function SetRow(row, unit, level, challengeMapID, targetMapID, leader, own
 	local icons = (leader and E:TextureString(MEDIA.icons.leader.leader01, iconSize) .. " " or "") .. (own and E:TextureString(MEDIA.icons.keystone.keystone01, iconSize) .. " " or "")
 	row.name:SetText(icons .. name)
 
+	row.active = active
 	row.highlight:SetVertexColor(r, g, b, 0.25)
 	row.highlight:SetShown(active)
+	row.flash:SetVertexColor(r, g, b)
 	if active then
 		row.holder:SetBackdropBorderColor(r, g, b)
 	else
@@ -321,6 +373,8 @@ local function Update()
 	for i = count + 1, MAX_ROWS do
 		local row = frame.rows[i]
 		row.spellID = nil
+		row.active = nil
+		row.flashAnim:Stop()
 		row:SetAttribute("type", nil)
 		row:Hide()
 	end
@@ -329,6 +383,7 @@ local function Update()
 	frame:Height(module.top + module.padding + count * (db.size + db.spacing) - db.spacing)
 	ShowFrame()
 	UpdateCooldowns()
+	CheckFlash(count)
 end
 
 -- runs a frame later, the group finder target in misc_teleports.lua is set from the same events
@@ -365,23 +420,34 @@ local function Deactivate()
 	StopTimer()
 	module.active = false
 	module.members = 0
+	module.flashPending = nil
 	QueueUpdate()
+end
+
+-- joining as the last member fills the group without a roster change from below five
+local function QueueFlash(members)
+	module.flashPending = members >= FULL_GROUP and module.db.highlight.flash or nil
 end
 
 function module:GROUP_JOINED()
 	module.members = GetNumGroupMembers()
+	QueueFlash(module.members)
 	Activate()
 end
 
 function module:GROUP_ROSTER_UPDATE()
 	local members = GetNumGroupMembers()
-	local filled = members >= FULL_GROUP and (module.members or 0) < FULL_GROUP
+	local previous = module.members or 0
+	local filled = members >= FULL_GROUP and previous < FULL_GROUP
 	module.members = members
 
 	if filled then
+		QueueFlash(members)
 		Activate()
 	else
-		mMT:RequestGroupKeystones()
+		if members < FULL_GROUP then module.flashPending = nil end
+		-- the roster event also fires for zone, online and role changes, only a new member needs a request
+		if members > previous then mMT:RequestGroupKeystones() end
 		QueueUpdate()
 	end
 end
@@ -409,6 +475,7 @@ function module:Initialize(demo)
 			module.isEnabled = false
 			StopTimer()
 			module.active = false
+			module.flashPending = nil
 			Update()
 		end
 		return
@@ -417,6 +484,7 @@ function module:Initialize(demo)
 	module.db = E.db.mMediaTag.keystone_teleports
 	if demo then
 		module.demo = not module.demo
+		module.flashPending = module.demo and module.db.highlight.flash or nil
 		-- the demo rows are all the player, so random ones get the leader crown and the own key
 		module.demoLeader = random(MAX_ROWS)
 		module.demoOwn = random(MAX_ROWS)

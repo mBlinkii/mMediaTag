@@ -123,6 +123,7 @@ P.keystone_teleports = {
 	highlight = {
 		class = true,
 		color = "FFFFC71A",
+		flash = false,
 	},
 	text = {
 		font = "PT Sans Narrow",

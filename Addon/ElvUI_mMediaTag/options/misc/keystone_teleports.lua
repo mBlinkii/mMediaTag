@@ -267,6 +267,19 @@ mMT.options.args.group.args.keystones.args.keystone_teleports.args = {
 					Update()
 				end,
 			},
+			flash = {
+				order = 3,
+				type = "toggle",
+				name = L["Flash"],
+				desc = L["Flashes the dungeon of your group for a few seconds once the group is full."],
+				get = function(info)
+					return E.db.mMediaTag.keystone_teleports.highlight.flash
+				end,
+				set = function(info, value)
+					E.db.mMediaTag.keystone_teleports.highlight.flash = value
+					Update()
+				end,
+			},
 		},
 	},
 }

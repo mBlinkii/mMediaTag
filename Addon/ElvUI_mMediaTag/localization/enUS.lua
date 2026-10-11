@@ -791,6 +791,8 @@ L["Click a dungeon to use its teleport. The dungeon of your group finder group i
 L["Hide after (minutes)"] = true
 L["Hides the list this many minutes after it was shown. 0 keeps it shown."] = true
 L["Fades the list in and out. Entering combat always hides it at once."] = true
+L["Flash"] = true
+L["Flashes the dungeon of your group for a few seconds once the group is full."] = true
 L["Width"] = true
 
 -- options/misc/lfg_invite_info.lua

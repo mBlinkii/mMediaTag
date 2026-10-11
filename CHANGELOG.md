@@ -7,7 +7,9 @@
 - FIX - [Dock]: A reassigned slot kept the dock's icon, texts and button until a reload.
 - FIX - [Dock]: The character dock no longer prints the played time into the chat on every loading screen.
 - FIX - [Dock]: The calendar dock kept the previous day after midnight.
-- FIX - [DT-Teleports]: The current dungeon was sometimes not highlighted after joining a group.
+- FIX - [DT-Teleports]: The dungeon of your group was sometimes not highlighted after signing up or while forming the group.
+- FIX - [DT-Teleports]: Learned dungeon teleports and not yet loaded items or toys were sometimes missing, and Horde mages missed their city teleports.
+- FIX - [Group-Keystones]: Keys of group members could disappear although nothing changed in the group.
 - FIX - [Portraits]: Jiberish Fabled Icons are found again after the addon rename and its new spec icons can be selected.
 - FIX - [Tags]: The skull18 icon showed the skull2 texture.
 ### 🔧 UPDATE
@@ -20,7 +22,7 @@
 ### ✨ NEW
 - NEW - [Auto-Delete]: New module that fills in the confirmation word when you delete an item, in every client language.
 - NEW - [Interrupt-On-CD]: Adjustable pixel glow thickness.
-- NEW - [Keystone-Teleports]: New module that lists the keystones of your group with a clickable teleport to each dungeon and highlights the dungeon of your group.
+- NEW - [Keystone-Teleports]: New module that lists the keystones of your group with a clickable teleport to each dungeon and highlights the dungeon of your group, optionally flashing it once the group is full.
 - NEW - [LFG-Info]: Shows the matching group keystones when you join a M+ group.
 - NEW - [Mail-Helper]: New module for the mailbox that takes only the gold from your mails, shows an inbox overview, keeps opening an overflowing inbox and lists your alts and contacts as recipients.
 - NEW - [Media-Pack]: Support for WoW Forever.

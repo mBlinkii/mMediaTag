@@ -11,7 +11,9 @@ local GetItemInfo = C_Item and C_Item.GetItemInfo or GetItemInfo
 local IsToyUsable = C_ToyBox.IsToyUsable
 local GetSpellCooldown = C_Spell and C_Spell.GetSpellCooldown or GetSpellCooldown
 local GetSpellInfo = C_Spell and C_Spell.GetSpellInfo or GetSpellInfo
-local IsSpellKnown = C_SpellBook and C_SpellBook.IsSpellInSpellBook or IsSpellKnown
+local IsSpellKnown = C_SpellBook and C_SpellBook.IsSpellKnown or IsPlayerSpell
+local IsSpellInSpellBook = C_SpellBook and C_SpellBook.IsSpellInSpellBook or IsSpellKnown
+local RequestLoadItemDataByID = C_Item and C_Item.RequestLoadItemDataByID
 local GetTime = GetTime
 local PlayerHasToy = PlayerHasToy
 local math = math
@@ -533,10 +535,15 @@ local function OnEnterSpell(btn)
 	GameTooltip:Show()
 end
 
+-- flyout spells (dungeon teleports) are not always reported as in the spellbook, IsSpellKnown covers them
+local function IsTeleportKnown(spellID)
+	return IsSpellKnown(spellID) or IsSpellInSpellBook(spellID)
+end
+
 local function GetSpellInfos(spellID)
-	if IsSpellKnown(spellID) then
+	if IsTeleportKnown(spellID) then
 		local spellInfo = GetSpellInfo(spellID)
-		return spellInfo.name, spellInfo.iconID
+		if spellInfo then return spellInfo.name, spellInfo.iconID end
 	end
 end
 
@@ -544,6 +551,8 @@ local function GetItemInfos(itemID)
 	if (GetItemCount(itemID) > 0) or (PlayerHasToy(itemID) and IsToyUsable(itemID)) then
 		local texture = GetItemIcon(itemID)
 		local name = GetItemInfo(itemID)
+		-- uncached items return no name, request them so the next update lists them
+		if not name and RequestLoadItemDataByID then RequestLoadItemDataByID(itemID) end
 		return name, texture
 	end
 end
@@ -590,6 +599,9 @@ local function GetSecureAttributes(id, kind)
 end
 
 local function processTeleport(t, category, kindOverride)
+	-- rebuilt each time, so unlearned or used up teleports drop out
+	wipe(mMT.knownTeleports[category])
+
 	for id, idKind in pairs(t) do
 		if id and id ~= "none" then
 			local name, icon
@@ -673,23 +685,23 @@ local function AddMageTeleports()
 	else
 		teleportsIDs.mage = {
 			-- horde
-			[10059] = "spell", -- stormwind
-			[11416] = "spell", -- ironforge
-			[11419] = "spell", -- darnassus
-			[32266] = "spell", -- exodar
-			[49360] = "spell", -- theramore
-			[33691] = "spell", -- shattrath
-			[53142] = "spell", -- dalaran northrend
-			[88345] = "spell", -- tol barad
-			[120146] = "spell", -- ancient portal dalaran
-			[132620] = "spell", -- vale of eternal blossoms
-			[176246] = "spell", -- stormshield
-			[224871] = "spell", -- dalaran broken isles
-			[281400] = "spell", -- boralus
-			[344597] = "spell", -- oribos
-			[395289] = "spell", -- valdrakken
-			[446534] = "spell", -- dornogal
-			[1259194] = "spell", -- silvermoon city
+			[3567] = "spell", -- orgrimmar
+			[3563] = "spell", -- undercity
+			[3566] = "spell", -- thunder bluff
+			[32272] = "spell", -- silvermoon tbc
+			[35715] = "spell", -- shattrath
+			[49358] = "spell", -- stonard
+			[53140] = "spell", -- dalaran northrend
+			[88344] = "spell", -- tol barad
+			[132627] = "spell", -- vale of eternal blossoms
+			[176242] = "spell", -- warspear
+			[193759] = "spell", -- hall of the guardian
+			[224869] = "spell", -- dalaran broken isles
+			[281404] = "spell", -- dazaralor
+			[344587] = "spell", -- oribos
+			[395277] = "spell", -- valdrakken
+			[446540] = "spell", -- dornogal
+			[1259190] = "spell", -- silvermoon city
 		}
 
 		teleportsIDs.mageportals = {
@@ -762,7 +774,7 @@ local seasonChallengeMaps = {
 -- learned season teleport into the dungeon of a keystone, nil when there is none
 function mMT:GetSeasonTeleport(challengeMapID)
 	for spellID, mapID in pairs(seasonChallengeMaps) do
-		if mapID == challengeMapID then return IsSpellKnown(spellID) and spellID or nil end
+		if mapID == challengeMapID then return IsTeleportKnown(spellID) and spellID or nil end
 	end
 end
 
@@ -790,20 +802,32 @@ end
 local lfgTargetMapID
 -- resultID -> mapID, read while applying because the leader usually delists before the group zones in
 local pendingApps = {}
+-- search result of the joined group, read again later when it was locked down (applied from inside the last dungeon)
+local joinedResultID
 
 local function SeedLFGTarget()
+	joinedResultID = nil
 	lfgTargetMapID = C_LFGList.HasActiveEntryInfo() and GetActivityMapID(C_LFGList.GetActiveEntryInfo()) or nil
 	if lfgTargetMapID then return end
 
 	for _, resultID in ipairs(C_LFGList.GetApplications() or {}) do
 		local appStatus = PlainValue(select(2, C_LFGList.GetApplicationInfo(resultID)))
 		if appStatus == "inviteaccepted" then
+			joinedResultID = resultID
 			lfgTargetMapID = GetSearchResultMapID(resultID)
 			if lfgTargetMapID then return end
 		elseif appStatus == "applied" or appStatus == "invited" then
 			pendingApps[resultID] = GetSearchResultMapID(resultID)
 		end
 	end
+end
+
+-- a target that could not be read at the event is read again once the lockdown is over
+local function ResolveLFGTarget()
+	if lfgTargetMapID then return lfgTargetMapID end
+	if C_LFGList.HasActiveEntryInfo() then lfgTargetMapID = GetActivityMapID(C_LFGList.GetActiveEntryInfo()) end
+	if not lfgTargetMapID and joinedResultID then lfgTargetMapID = GetSearchResultMapID(joinedResultID) end
+	return lfgTargetMapID
 end
 
 local lfgFrame = CreateFrame("Frame")
@@ -818,6 +842,8 @@ lfgFrame:SetScript("OnEvent", function(_, event, arg1, arg2)
 		if arg2 == "applied" or arg2 == "invited" then
 			pendingApps[arg1] = GetSearchResultMapID(arg1) or pendingApps[arg1]
 		elseif arg2 == "inviteaccepted" then
+			-- no fallback to the old target, an unreadable one is resolved later
+			joinedResultID = arg1
 			lfgTargetMapID = pendingApps[arg1] or GetSearchResultMapID(arg1)
 			wipe(pendingApps)
 		else
@@ -825,20 +851,24 @@ lfgFrame:SetScript("OnEvent", function(_, event, arg1, arg2)
 		end
 	elseif event == "LFG_LIST_JOINED_GROUP" then
 		-- the joined group itself is the most reliable source, the same one the LFG invite card reads
+		if arg1 ~= joinedResultID then lfgTargetMapID = nil end
+		joinedResultID = arg1
 		lfgTargetMapID = GetSearchResultMapID(arg1) or pendingApps[arg1] or lfgTargetMapID
 		wipe(pendingApps)
 	elseif event == "LFG_LIST_ACTIVE_ENTRY_UPDATE" then
-		-- keep the target after a full group delists or when the entry can not be read, drop it when a solo listing is removed
+		-- keep the target after a full group delists or when the entry can not be read, drop it when a solo listing is removed or a new one is created
 		if C_LFGList.HasActiveEntryInfo() then
-			lfgTargetMapID = GetActivityMapID(C_LFGList.GetActiveEntryInfo()) or lfgTargetMapID
+			lfgTargetMapID = GetActivityMapID(C_LFGList.GetActiveEntryInfo()) or (not arg1 and lfgTargetMapID) or nil
 		elseif not IsInGroup() then
 			lfgTargetMapID = nil
 		end
 	elseif event == "CHALLENGE_MODE_START" then
 		-- the running key is matched by instance, the group may have switched keys
 		lfgTargetMapID = nil
+		joinedResultID = nil
 	elseif event == "GROUP_LEFT" then
 		lfgTargetMapID = nil
+		joinedResultID = nil
 		wipe(pendingApps)
 	elseif arg1 or arg2 then
 		SeedLFGTarget()
@@ -847,7 +877,8 @@ end)
 
 -- instance fallback survives a reload inside the dungeon, where the group finder data is locked down
 local function GetTargetMapID()
-	if lfgTargetMapID then return lfgTargetMapID end
+	local mapID = ResolveLFGTarget()
+	if mapID then return mapID end
 	if IsInInstance() then return select(8, GetInstanceInfo()) end
 end
 

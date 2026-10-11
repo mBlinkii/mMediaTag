@@ -791,6 +791,8 @@ L["Click a dungeon to use its teleport. The dungeon of your group finder group i
 L["Hide after (minutes)"] = "Ausblenden nach (Minuten)"
 L["Hides the list this many minutes after it was shown. 0 keeps it shown."] = "Blendet die Liste so viele Minuten nach dem Anzeigen aus. 0 lässt sie sichtbar."
 L["Fades the list in and out. Entering combat always hides it at once."] = "Blendet die Liste weich ein und aus. Bei Kampfbeginn verschwindet sie immer sofort."
+L["Flash"] = "Aufblinken"
+L["Flashes the dungeon of your group for a few seconds once the group is full."] = "Lässt den Dungeon deiner Gruppe ein paar Sekunden aufblinken, sobald die Gruppe voll ist."
 L["Width"] = "Breite"
 
 -- options/misc/lfg_invite_info.lua

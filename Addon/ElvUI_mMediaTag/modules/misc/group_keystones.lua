@@ -26,6 +26,7 @@ local PADDING = 6
 
 local units = { "player", "party1", "party2", "party3", "party4" }
 local libKeystoneData = {}
+local lastKeys = {}
 local listeners = {}
 local LOR, LKS, sourcesReady
 
@@ -55,7 +56,9 @@ local function InitSources()
 
 	LKS = LibStub("LibKeystone", true)
 	if LKS then
-		LKS.Register(sourceHandler, function(level, challengeMapID, _, sender)
+		LKS.Register(sourceHandler, function(level, challengeMapID, _, sender, channel)
+			-- guild broadcasts would refresh every listener without changing a group key
+			if channel ~= "PARTY" then return end
 			libKeystoneData[sender] = ValidKey(level, challengeMapID) and { level = level, challengeMapID = challengeMapID } or nil
 			NotifyListeners()
 		end)
@@ -63,15 +66,32 @@ local function InitSources()
 end
 
 -- Details! (LibOpenRaid) first, BigWigs (LibKeystone) as fallback
-local function GetUnitKeystone(unit)
+local function ReadUnitKeystone(unit, name)
 	if unit == "player" then return GetOwnedKeystoneLevel(), GetOwnedKeystoneChallengeMapID() end
 
 	local info = LOR and LOR.GetKeystoneInfo(unit)
 	if info and ValidKey(info.level, info.challengeMapID) then return info.level, info.challengeMapID end
 
-	local name = PlainValue(GetUnitName(unit, true))
 	info = name and libKeystoneData[Ambiguate(name, "none")]
 	if info then return info.level, info.challengeMapID end
+end
+
+-- a reply sent while the keystone API is not ready reports no key, so the last valid key of a player is kept
+local function GetUnitKeystone(unit)
+	local name = PlainValue(GetUnitName(unit, true))
+	local level, challengeMapID = ReadUnitKeystone(unit, name)
+	local last = name and lastKeys[name]
+
+	if ValidKey(level, challengeMapID) then
+		if name then
+			last = last or {}
+			last.level, last.challengeMapID = level, challengeMapID
+			lastKeys[name] = last
+		end
+		return level, challengeMapID
+	end
+
+	if last then return last.level, last.challengeMapID end
 end
 
 -- level and challengeMapID of a group member, nil when unknown (other players need Details! or BigWigs)
