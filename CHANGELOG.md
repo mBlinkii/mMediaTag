@@ -9,12 +9,14 @@
 - FIX - [Dock]: The calendar dock kept the previous day after midnight.
 - FIX - [DT-Teleports]: The current dungeon was sometimes not highlighted after joining a group.
 - FIX - [Portraits]: Jiberish Fabled Icons are found again after the addon rename and its new spec icons can be selected.
+- FIX - [Tags]: The skull18 icon showed the skull2 texture.
 ### 🔧 UPDATE
 - UPDATE - [Cooldown-Manager]: A fixed width or height now sets the icon size by itself.
 - UPDATE - [Execute-Marker]: The marker follows the health bar size and fill direction by itself.
 - UPDATE - [Interrupt-On-CD]: Less work per castbar and the kick marker no longer jumps by a pixel.
 - UPDATE - [Objective-Tracker]: Hovered entries are highlighted, Initiative Tasks are skinned too and the options are reorganized.
 - UPDATE - [Options]: Settings menu reorganized into grouped categories with subpages, colored dots instead of icons, shortcut buttons on every category page, the same layout on every page and all module colors gathered under Colors.
+- UPDATE - [System]: Removed unused textures, the addon is smaller.
 ### ✨ NEW
 - NEW - [Auto-Delete]: New module that fills in the confirmation word when you delete an item, in every client language.
 - NEW - [Interrupt-On-CD]: Adjustable pixel glow thickness.

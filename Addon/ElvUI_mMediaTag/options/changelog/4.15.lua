@@ -10,6 +10,7 @@ mMT.Changelog[415] = {
 		"[Dock]: The calendar dock kept the previous day after midnight.",
 		"[DT-Teleports]: The current dungeon was sometimes not highlighted after joining a group.",
 		"[Portraits]: Jiberish Fabled Icons are found again after the addon rename and its new spec icons can be selected.",
+		"[Tags]: The skull18 icon showed the skull2 texture.",
 	},
 	UPDATE = {
 		"[Cooldown-Manager]: A fixed width or height now sets the icon size by itself.",
@@ -17,6 +18,7 @@ mMT.Changelog[415] = {
 		"[Interrupt-On-CD]: Less work per castbar and the kick marker no longer jumps by a pixel.",
 		"[Objective-Tracker]: Hovered entries are highlighted, Initiative Tasks are skinned too and the options are reorganized.",
 		"[Options]: Settings menu reorganized into grouped categories with subpages, colored dots instead of icons, shortcut buttons on every category page, the same layout on every page and all module colors gathered under Colors.",
+		"[System]: Removed unused textures, the addon is smaller.",
 	},
 	NEW = {
 		"[Auto-Delete]: New module that fills in the confirmation word when you delete an item, in every client language.",
