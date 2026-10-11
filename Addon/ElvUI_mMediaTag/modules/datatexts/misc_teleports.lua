@@ -759,25 +759,10 @@ local seasonChallengeMaps = {
 	[393256] = 399, -- RLP - Ruby Life Pools
 }
 
--- season teleport into this instance (GetInstanceInfo instanceID or activity mapID), nil when there is none or it is not learned
-function mMT:GetSeasonTeleport(instanceMapID)
-	if not instanceMapID then return end
-
-	for spellID, challengeMapID in pairs(seasonChallengeMaps) do
-		if select(6, C_ChallengeMode.GetMapUIInfo(challengeMapID)) == instanceMapID then return IsSpellKnown(spellID) and spellID or nil end
-	end
-end
-
--- instance the season teleport leads into
-function mMT:GetSeasonTeleportMapID(spellID)
-	local challengeMapID = seasonChallengeMaps[spellID]
-	return challengeMapID and select(6, C_ChallengeMode.GetMapUIInfo(challengeMapID))
-end
-
--- any learned season teleport, for previews
-function mMT:GetAnySeasonTeleport()
-	for spellID in pairs(seasonChallengeMaps) do
-		if IsSpellKnown(spellID) then return spellID end
+-- learned season teleport into the dungeon of a keystone, nil when there is none
+function mMT:GetSeasonTeleport(challengeMapID)
+	for spellID, mapID in pairs(seasonChallengeMaps) do
+		if mapID == challengeMapID then return IsSpellKnown(spellID) and spellID or nil end
 	end
 end
 
@@ -864,6 +849,11 @@ end)
 local function GetTargetMapID()
 	if lfgTargetMapID then return lfgTargetMapID end
 	if IsInInstance() then return select(8, GetInstanceInfo()) end
+end
+
+-- instance mapID of the group finder group or the current instance
+function mMT:GetTeleportTargetMapID()
+	return GetTargetMapID()
 end
 
 -- GetMapUIInfo 6th return (11.2.0) is the instance mapID

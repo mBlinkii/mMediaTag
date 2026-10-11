@@ -10,6 +10,29 @@ mMT.options.args.datatexts.args.info.args.info_combat_time.args = {
 		inline = true,
 		name = L["Settings"],
 		args = {
+			delay = {
+				order = 1,
+				name = L["Hide delay"],
+				type = "range",
+				min = 0,
+				max = 120,
+				step = 1,
+				get = function(info)
+					return E.db.mMediaTag.datatexts.combat_time.hide_delay
+				end,
+				set = function(info, value)
+					E.db.mMediaTag.datatexts.combat_time.hide_delay = value
+					DT:ForceUpdate_DataText("mMT - CombatTimer")
+				end,
+			},
+		},
+	},
+	icons = {
+		order = 2,
+		type = "group",
+		inline = true,
+		name = L["Icons"],
+		args = {
 			in_combat = {
 				order = 1,
 				type = "select",
@@ -50,21 +73,6 @@ mMT.options.args.datatexts.args.info.args.info_combat_time.args = {
 
 					values.none = L["None"]
 					return values
-				end,
-			},
-			delay = {
-				order = 3,
-				name = L["Hide delay"],
-				type = "range",
-				min = 0,
-				max = 120,
-				step = 1,
-				get = function(info)
-					return E.db.mMediaTag.datatexts.combat_time.hide_delay
-				end,
-				set = function(info, value)
-					E.db.mMediaTag.datatexts.combat_time.hide_delay = value
-					DT:ForceUpdate_DataText("mMT - CombatTimer")
 				end,
 			},
 		},

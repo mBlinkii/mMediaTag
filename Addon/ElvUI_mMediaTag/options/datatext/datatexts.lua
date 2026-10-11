@@ -19,11 +19,11 @@ function mMT:UpdateAllDatatexts()
 end
 
 mMT.options.args.datatexts.args.general.args = {
-	text_color = {
+	text = {
 		order = 1,
 		type = "group",
 		inline = true,
-		name = L["Text Color"],
+		name = L["Text"],
 		args = {
 			override_text_color = {
 				order = 1,
@@ -95,7 +95,7 @@ mMT.options.args.datatexts.args.general.args = {
 		order = 2,
 		type = "group",
 		inline = true,
-		name = L["colors"],
+		name = L["Colors"],
 		args = {
 			text = {
 				order = 1,

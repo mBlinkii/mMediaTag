@@ -20,11 +20,11 @@ mMT.options.args.interface.args.panels.args.details.args = {
 			RightChat = L["Right Chat"],
 		},
 	},
-	embedded_settings = {
+	settings = {
 		order = 2,
 		type = "group",
 		inline = true,
-		name = L["Embedded Settings"],
+		name = L["Settings"],
 		disabled = function()
 			return E.db.mMediaTag.details.mode == "DISABLE"
 		end,

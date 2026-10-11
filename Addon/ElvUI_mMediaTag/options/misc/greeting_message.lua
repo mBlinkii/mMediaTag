@@ -1,6 +1,6 @@
 local mMT, DB, M, E, P, L, MEDIA = unpack(ElvUI_mMediaTag)
 
-mMT.options.args.interface.args.comfort.args.greeting_message.args = {
+mMT.options.args.comfort.args.tools.args.greeting_message.args = {
 	enable = {
 		order = 1,
 		type = "toggle",

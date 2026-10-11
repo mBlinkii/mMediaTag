@@ -3,7 +3,7 @@ local mMT, DB, M, E, P, L, MEDIA = unpack(ElvUI_mMediaTag)
 local DT = E:GetModule("DataTexts")
 
 mMT.options.args.dock.args.buttons.args.store.args = {
-	settings = {
+	icon = {
 		order = 1,
 		type = "group",
 		inline = true,
@@ -50,11 +50,11 @@ mMT.options.args.dock.args.buttons.args.store.args = {
 			},
 		},
 	},
-	color = {
-		order = 1,
+	colors = {
+		order = 2,
 		type = "group",
 		inline = true,
-		name = L["Color"],
+		name = L["Colors"],
 		args = {
 			custom_color = {
 				order = 1,

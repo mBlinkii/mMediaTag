@@ -3,8 +3,53 @@ local DT = E:GetModule("DataTexts")
 local GetMountInfoByID = C_MountJournal.GetMountInfoByID
 
 mMT.options.args.dock.args.buttons.args.durability.args = {
-	icon = {
+	settings = {
 		order = 1,
+		type = "group",
+		inline = true,
+		name = L["Settings"],
+		args = {
+			mount = {
+				order = 1,
+				type = "select",
+				name = L["Repair Mount"],
+				get = function(info)
+					return E.db.mMediaTag.dock.durability.mount
+				end,
+				set = function(info, value)
+					E.db.mMediaTag.dock.durability.mount = value
+					DT:ForceUpdate_DataText("mMT - Durability & ItemLevel")
+				end,
+				values = function()
+					local mountIDs = {}
+
+					for _, mountID in ipairs({ 280, 284, 460, 1039, 2237 }) do
+						local name, _, icon, _, isUsable = GetMountInfoByID(mountID)
+						if isUsable then mountIDs[mountID] = format("|T%s:14:14:0:0:64:64:4:60:4:60|t %s", icon, name) end
+					end
+
+					return mountIDs
+				end,
+			},
+			percThreshold = {
+				order = 2,
+				name = L["Threshold"],
+				type = "range",
+				min = 0,
+				max = 100,
+				step = 1,
+				get = function(info)
+					return E.db.mMediaTag.dock.durability.percThreshold
+				end,
+				set = function(info, value)
+					E.db.mMediaTag.dock.durability.percThreshold = value
+					DT:ForceUpdate_DataText("mMT_Dock_Durability")
+				end,
+			},
+		},
+	},
+	icon = {
+		order = 2,
 		type = "group",
 		inline = true,
 		name = L["Icon"],
@@ -50,11 +95,37 @@ mMT.options.args.dock.args.buttons.args.durability.args = {
 			},
 		},
 	},
-	color = {
-		order = 1,
+	text = {
+		order = 3,
 		type = "group",
 		inline = true,
-		name = L["Color"],
+		name = L["Text"],
+		args = {
+			style = {
+				order = 1,
+				type = "select",
+				name = L["Style"],
+				get = function(info)
+					return E.db.mMediaTag.dock.durability.text
+				end,
+				set = function(info, value)
+					E.db.mMediaTag.dock.durability.text = value
+					DT:ForceUpdate_DataText("mMT_Dock_Durability")
+				end,
+				values = {
+					none = L["None"],
+					durability = L["Durability"],
+					both = L["Durability / Item level"],
+					ilevel = L["Item level"],
+				},
+			},
+		},
+	},
+	colors = {
+		order = 4,
+		type = "group",
+		inline = true,
+		name = L["Colors"],
 		args = {
 			custom_color = {
 				order = 1,
@@ -85,69 +156,6 @@ mMT.options.args.dock.args.buttons.args.durability.args = {
 					local hex = E:RGBToHex(r, g, b, mMT:FloatToHex(a))
 					E.db.mMediaTag.color.dock.durability = hex
 					MEDIA.color.dock.durability = CreateColorFromHexString(hex)
-					DT:ForceUpdate_DataText("mMT_Dock_Durability")
-				end,
-			},
-		},
-	},
-	settings = {
-		order = 3,
-		type = "group",
-		inline = true,
-		name = L["Settings"],
-		args = {
-			style = {
-				order = 1,
-				type = "select",
-				name = L["Style"],
-				get = function(info)
-					return E.db.mMediaTag.dock.durability.text
-				end,
-				set = function(info, value)
-					E.db.mMediaTag.dock.durability.text = value
-					DT:ForceUpdate_DataText("mMT_Dock_Durability")
-				end,
-				values = {
-					none = L["None"],
-					durability = L["Durability"],
-					both = L["Durability / Item level"],
-					ilevel = L["Item level"],
-				},
-			},
-			mount = {
-				order = 2,
-				type = "select",
-				name = L["Repair Mount"],
-				get = function(info)
-					return E.db.mMediaTag.dock.durability.mount
-				end,
-				set = function(info, value)
-					E.db.mMediaTag.dock.durability.mount = value
-					DT:ForceUpdate_DataText("mMT - Durability & ItemLevel")
-				end,
-				values = function()
-					local mountIDs = {}
-
-					for _, mountID in ipairs({ 280, 284, 460, 1039, 2237 }) do
-						local name, _, icon, _, isUsable = GetMountInfoByID(mountID)
-						if isUsable then mountIDs[mountID] = format("|T%s:14:14:0:0:64:64:4:60:4:60|t %s", icon, name) end
-					end
-
-					return mountIDs
-				end,
-			},
-			percThreshold = {
-				order = 3,
-				name = L["Threshold"],
-				type = "range",
-				min = 0,
-				max = 100,
-				step = 1,
-				get = function(info)
-					return E.db.mMediaTag.dock.durability.percThreshold
-				end,
-				set = function(info, value)
-					E.db.mMediaTag.dock.durability.percThreshold = value
 					DT:ForceUpdate_DataText("mMT_Dock_Durability")
 				end,
 			},

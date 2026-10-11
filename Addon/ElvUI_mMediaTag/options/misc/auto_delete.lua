@@ -1,6 +1,6 @@
 local mMT, DB, M, E, P, L, MEDIA = unpack(ElvUI_mMediaTag)
 
-mMT.options.args.interface.args.comfort.args.auto_delete.args = {
+mMT.options.args.comfort.args.automation.args.auto_delete.args = {
 	enable = {
 		order = 1,
 		type = "toggle",

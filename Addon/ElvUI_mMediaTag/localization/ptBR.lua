@@ -734,8 +734,6 @@ L["Fade"] = "Esmaecer"
 L["Scale"] = "Escala"
 L["Slide"] = "Deslizar"
 L["Theme color"] = "Cor do tema"
-L["Show teleport"] = "Mostrar teleporte"
-L["Shows the teleport of the dungeon below the card when you join a group for a dungeon of the current Mythic+ season and know its teleport. The card then stays open until you use or close it or the group enters the dungeon."] = "Mostra abaixo do cartão o teleporte da masmorra quando você entra num grupo para uma masmorra da temporada Mítica+ atual e conhece o teleporte. O cartão fica aberto até você usá-lo ou fechá-lo ou o grupo entrar na masmorra."
 L["Show keystones"] = "Mostrar pedras-chave"
 L["Shows on the card which group members have a keystone for the dungeon and its level. Your own keystone is always known, other players need Details! or BigWigs."] = "Mostra no cartão quais membros do grupo têm uma pedra-chave para a masmorra e o nível dela. Sua própria pedra-chave é sempre conhecida, outros jogadores precisam de Details! ou BigWigs."
 

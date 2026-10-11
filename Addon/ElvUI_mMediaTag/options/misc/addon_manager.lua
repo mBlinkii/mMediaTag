@@ -7,7 +7,7 @@ local function Module()
 	return mMT:GetModule("AddonManager")
 end
 
-mMT.options.args.interface.args.comfort.args.addon_manager.args = {
+mMT.options.args.comfort.args.addon_manager.args = {
 	enable = {
 		order = 1,
 		type = "toggle",
@@ -100,8 +100,8 @@ mMT.options.args.interface.args.comfort.args.addon_manager.args = {
 				order = 3,
 				name = function()
 					-- disable input box button
-					E.Options.args.mMT.args.interface.args.comfort.args.addon_manager.args.header_importexport.args.text.disableButton = true
-					E.Options.args.mMT.args.interface.args.comfort.args.addon_manager.args.header_importexport.args.text.textChanged = function(text)
+					E.Options.args.mMT.args.comfort.args.addon_manager.args.header_importexport.args.text.disableButton = true
+					E.Options.args.mMT.args.comfort.args.addon_manager.args.header_importexport.args.text.textChanged = function(text)
 						if text ~= importText then importText = text end
 						button = "none"
 					end

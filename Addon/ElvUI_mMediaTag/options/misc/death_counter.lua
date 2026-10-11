@@ -25,11 +25,31 @@ mMT.options.args.group.args.group_tools.args.death_counter.args = {
 			mMT:UpdateModule("DeathCounter", "demo")
 		end,
 	},
-	font = {
+	layout = {
 		order = 3,
 		type = "group",
 		inline = true,
-		name = L["Font"],
+		name = L["Layout"],
+		args = {
+			background = {
+				order = 1,
+				type = "toggle",
+				name = L["Background"],
+				get = function(info)
+					return E.db.mMediaTag.death_counter.background
+				end,
+				set = function(info, value)
+					E.db.mMediaTag.death_counter.background = value
+					E:StaticPopup_Show("CONFIG_RL")
+				end,
+			},
+		},
+	},
+	text = {
+		order = 4,
+		type = "group",
+		inline = true,
+		name = L["Text"],
 		args = {
 			font = {
 				type = "select",
@@ -90,26 +110,6 @@ mMT.options.args.group.args.group_tools.args.death_counter.args = {
 				set = function(info, value)
 					E.db.mMediaTag.death_counter.text.size = value
 					mMT:UpdateModule("DeathCounter")
-				end,
-			},
-		},
-	},
-	settings = {
-		order = 4,
-		type = "group",
-		inline = true,
-		name = L["Settings"],
-		args = {
-			background = {
-				order = 1,
-				type = "toggle",
-				name = L["Background"],
-				get = function(info)
-					return E.db.mMediaTag.death_counter.background
-				end,
-				set = function(info, value)
-					E.db.mMediaTag.death_counter.background = value
-					E:StaticPopup_Show("CONFIG_RL")
 				end,
 			},
 		},

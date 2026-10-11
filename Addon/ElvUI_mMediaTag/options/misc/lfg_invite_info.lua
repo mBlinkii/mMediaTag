@@ -24,11 +24,153 @@ mMT.options.args.group.args.lfg_invite_info.args = {
 			mMT:UpdateModule("LFGInviteInfo", "demo")
 		end,
 	},
-	font = {
+	settings = {
 		order = 3,
 		type = "group",
 		inline = true,
-		name = L["Font"],
+		name = L["Settings"],
+		args = {
+			print = {
+				order = 1,
+				type = "toggle",
+				name = L["Show in chat"],
+				get = function(info)
+					return E.db.mMediaTag.lfg_invite_info.print
+				end,
+				set = function(info, value)
+					E.db.mMediaTag.lfg_invite_info.print = value
+					mMT:UpdateModule("LFGInviteInfo")
+				end,
+			},
+			keystones = {
+				order = 2,
+				type = "toggle",
+				name = L["Show keystones"],
+				desc = L["Shows on the card which group members have a keystone for the dungeon and its level. Your own keystone is always known, other players need Details! or BigWigs."],
+				disabled = function()
+					return not E.db.mMediaTag.lfg_invite_info.enable
+				end,
+				get = function(info)
+					return E.db.mMediaTag.lfg_invite_info.keystones
+				end,
+				set = function(info, value)
+					E.db.mMediaTag.lfg_invite_info.keystones = value
+					mMT:UpdateModule("LFGInviteInfo")
+				end,
+			},
+			delay = {
+				order = 3,
+				name = L["Fade out delay"],
+				type = "range",
+				min = 2,
+				max = 120,
+				step = 1,
+				disabled = function()
+					return not E.db.mMediaTag.lfg_invite_info.enable
+				end,
+				get = function(info)
+					return E.db.mMediaTag.lfg_invite_info.delay
+				end,
+				set = function(info, value)
+					E.db.mMediaTag.lfg_invite_info.delay = value
+					mMT:UpdateModule("LFGInviteInfo")
+				end,
+			},
+		},
+	},
+	layout = {
+		order = 4,
+		type = "group",
+		inline = true,
+		name = L["Layout"],
+		args = {
+			background = {
+				order = 1,
+				type = "toggle",
+				name = L["Background"],
+				get = function(info)
+					return E.db.mMediaTag.lfg_invite_info.background
+				end,
+				set = function(info, value)
+					E.db.mMediaTag.lfg_invite_info.background = value
+					E:StaticPopup_Show("CONFIG_RL")
+				end,
+			},
+			theme = {
+				type = "select",
+				order = 2,
+				name = L["Theme"],
+				disabled = function()
+					return not E.db.mMediaTag.lfg_invite_info.enable
+				end,
+				get = function(info)
+					return E.db.mMediaTag.lfg_invite_info.theme
+				end,
+				set = function(info, value)
+					E.db.mMediaTag.lfg_invite_info.theme = value
+					mMT:UpdateModule("LFGInviteInfo")
+				end,
+				values = {
+					class = L["Class (accent line)"],
+					custom = L["Custom (frame)"],
+					minimal = L["Minimal (text only)"],
+				},
+			},
+		},
+	},
+	icon = {
+		order = 5,
+		type = "group",
+		inline = true,
+		name = L["Icon"],
+		args = {
+			style = {
+				type = "select",
+				order = 1,
+				name = L["Style"],
+				disabled = function()
+					return not E.db.mMediaTag.lfg_invite_info.enable
+				end,
+				get = function(info)
+					return E.db.mMediaTag.lfg_invite_info.icon
+				end,
+				set = function(info, value)
+					E.db.mMediaTag.lfg_invite_info.icon = value
+					mMT:UpdateModule("LFGInviteInfo")
+				end,
+				values = function()
+					local icons = {}
+					for key, icon in pairs(MEDIA.icons.lfg) do
+						icons[key] = E:TextureString(icon, ":14:14") .. " " .. key
+					end
+
+					icons["none"] = L["None"]
+					return icons
+				end,
+			},
+			embed_icon = {
+				order = 2,
+				type = "toggle",
+				name = L["Embed icon"],
+				desc = L["Shows the icon inside the window instead of next to it. Requires the background to be enabled."],
+				disabled = function()
+					return not E.db.mMediaTag.lfg_invite_info.enable or not E.db.mMediaTag.lfg_invite_info.background or E.db.mMediaTag.lfg_invite_info.icon == "none"
+				end,
+				get = function(info)
+					return E.db.mMediaTag.lfg_invite_info.embed_icon
+				end,
+				set = function(info, value)
+					E.db.mMediaTag.lfg_invite_info.embed_icon = value
+					mMT:UpdateModule("LFGInviteInfo")
+				end,
+			},
+		},
+	},
+	text = {
+		order = 6,
+		type = "group",
+		inline = true,
+		name = L["Text"],
 		args = {
 			font = {
 				type = "select",
@@ -74,7 +216,7 @@ mMT.options.args.group.args.lfg_invite_info.args = {
 				},
 			},
 			font_size = {
-				order = 5,
+				order = 3,
 				name = L["Font size, top line"],
 				type = "range",
 				min = 8,
@@ -92,7 +234,7 @@ mMT.options.args.group.args.lfg_invite_info.args = {
 				end,
 			},
 			font_size2 = {
-				order = 6,
+				order = 4,
 				name = L["Font size, bottom line"],
 				type = "range",
 				min = 8,
@@ -110,7 +252,7 @@ mMT.options.args.group.args.lfg_invite_info.args = {
 				end,
 			},
 			font_size3 = {
-				order = 7,
+				order = 5,
 				name = L["Font size, keystones"],
 				type = "range",
 				min = 8,
@@ -129,71 +271,15 @@ mMT.options.args.group.args.lfg_invite_info.args = {
 			},
 		},
 	},
-	settings = {
-		order = 4,
+	colors = {
+		order = 7,
 		type = "group",
 		inline = true,
-		name = L["Settings"],
+		name = L["Colors"],
 		args = {
-			background = {
-				order = 1,
-				type = "toggle",
-				name = L["Background"],
-				get = function(info)
-					return E.db.mMediaTag.lfg_invite_info.background
-				end,
-				set = function(info, value)
-					E.db.mMediaTag.lfg_invite_info.background = value
-					E:StaticPopup_Show("CONFIG_RL")
-				end,
-			},
-			print = {
-				order = 2,
-				type = "toggle",
-				name = L["Show in chat"],
-				get = function(info)
-					return E.db.mMediaTag.lfg_invite_info.print
-				end,
-				set = function(info, value)
-					E.db.mMediaTag.lfg_invite_info.print = value
-					mMT:UpdateModule("LFGInviteInfo")
-				end,
-			},
-			teleport = {
-				order = 2.5,
-				type = "toggle",
-				name = L["Show teleport"],
-				desc = L["Shows the teleport of the dungeon below the card when you join a group for a dungeon of the current Mythic+ season and know its teleport. The card then stays open until you use or close it or the group enters the dungeon."],
-				disabled = function()
-					return not E.db.mMediaTag.lfg_invite_info.enable
-				end,
-				get = function(info)
-					return E.db.mMediaTag.lfg_invite_info.teleport
-				end,
-				set = function(info, value)
-					E.db.mMediaTag.lfg_invite_info.teleport = value
-					mMT:UpdateModule("LFGInviteInfo")
-				end,
-			},
-			keystones = {
-				order = 2.6,
-				type = "toggle",
-				name = L["Show keystones"],
-				desc = L["Shows on the card which group members have a keystone for the dungeon and its level. Your own keystone is always known, other players need Details! or BigWigs."],
-				disabled = function()
-					return not E.db.mMediaTag.lfg_invite_info.enable
-				end,
-				get = function(info)
-					return E.db.mMediaTag.lfg_invite_info.keystones
-				end,
-				set = function(info, value)
-					E.db.mMediaTag.lfg_invite_info.keystones = value
-					mMT:UpdateModule("LFGInviteInfo")
-				end,
-			},
 			color_line_a = {
 				type = "color",
-				order = 3,
+				order = 1,
 				name = L["First line color"],
 				hasAlpha = false,
 				disabled = function()
@@ -214,7 +300,7 @@ mMT.options.args.group.args.lfg_invite_info.args = {
 			},
 			color_line_b = {
 				type = "color",
-				order = 4,
+				order = 2,
 				name = L["Second line color"],
 				hasAlpha = false,
 				disabled = function()
@@ -235,7 +321,7 @@ mMT.options.args.group.args.lfg_invite_info.args = {
 			},
 			color_line_c = {
 				type = "color",
-				order = 5,
+				order = 3,
 				name = L["Third line color"],
 				hasAlpha = false,
 				disabled = function()
@@ -254,47 +340,9 @@ mMT.options.args.group.args.lfg_invite_info.args = {
 					mMT:UpdateModule("LFGInviteInfo")
 				end,
 			},
-			delay = {
-				order = 6,
-				name = L["Fade out delay"],
-				type = "range",
-				min = 2,
-				max = 120,
-				step = 1,
-				disabled = function()
-					return not E.db.mMediaTag.lfg_invite_info.enable
-				end,
-				get = function(info)
-					return E.db.mMediaTag.lfg_invite_info.delay
-				end,
-				set = function(info, value)
-					E.db.mMediaTag.lfg_invite_info.delay = value
-					mMT:UpdateModule("LFGInviteInfo")
-				end,
-			},
-			theme = {
-				type = "select",
-				order = 7,
-				name = L["Theme"],
-				disabled = function()
-					return not E.db.mMediaTag.lfg_invite_info.enable
-				end,
-				get = function(info)
-					return E.db.mMediaTag.lfg_invite_info.theme
-				end,
-				set = function(info, value)
-					E.db.mMediaTag.lfg_invite_info.theme = value
-					mMT:UpdateModule("LFGInviteInfo")
-				end,
-				values = {
-					class = L["Class (accent line)"],
-					custom = L["Custom (frame)"],
-					minimal = L["Minimal (text only)"],
-				},
-			},
 			color_theme = {
 				type = "color",
-				order = 7.2,
+				order = 4,
 				name = L["Theme color"],
 				hasAlpha = false,
 				disabled = function()
@@ -309,50 +357,10 @@ mMT.options.args.group.args.lfg_invite_info.args = {
 					mMT:UpdateModule("LFGInviteInfo")
 				end,
 			},
-			embed_icon = {
-				order = 7.5,
-				type = "toggle",
-				name = L["Embed icon"],
-				desc = L["Shows the icon inside the window instead of next to it. Requires the background to be enabled."],
-				disabled = function()
-					return not E.db.mMediaTag.lfg_invite_info.enable or not E.db.mMediaTag.lfg_invite_info.background or E.db.mMediaTag.lfg_invite_info.icon == "none"
-				end,
-				get = function(info)
-					return E.db.mMediaTag.lfg_invite_info.embed_icon
-				end,
-				set = function(info, value)
-					E.db.mMediaTag.lfg_invite_info.embed_icon = value
-					mMT:UpdateModule("LFGInviteInfo")
-				end,
-			},
-			style = {
-				type = "select",
-				order = 8,
-				name = L["Style"],
-				disabled = function()
-					return not E.db.mMediaTag.lfg_invite_info.enable
-				end,
-				get = function(info)
-					return E.db.mMediaTag.lfg_invite_info.icon
-				end,
-				set = function(info, value)
-					E.db.mMediaTag.lfg_invite_info.icon = value
-					mMT:UpdateModule("LFGInviteInfo")
-				end,
-				values = function()
-					local icons = {}
-					for key, icon in pairs(MEDIA.icons.lfg) do
-						icons[key] = E:TextureString(icon, ":14:14") .. " " .. key
-					end
-
-					icons["none"] = L["None"]
-					return icons
-				end,
-			},
 		},
 	},
 	animation = {
-		order = 5,
+		order = 8,
 		type = "group",
 		inline = true,
 		name = L["Animation"],

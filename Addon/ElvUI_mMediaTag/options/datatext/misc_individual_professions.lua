@@ -2,11 +2,11 @@ local mMT, DB, M, E, P, L, MEDIA = unpack(ElvUI_mMediaTag)
 local DT = E:GetModule("DataTexts")
 
 mMT.options.args.datatexts.args.menus.args.misc_individual_professions.args = {
-	settings = {
+	icon = {
 		order = 1,
 		type = "group",
 		inline = true,
-		name = L["Settings"],
+		name = L["Icon"],
 		args = {
 			style = {
 				order = 1,

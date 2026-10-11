@@ -9,7 +9,7 @@ local function IsDisabled()
 	return not E.db.mMediaTag.prey_hunt.enable
 end
 
-mMT.options.args.quests.args.automation.args.prey_hunt.args = {
+mMT.options.args.quests.args.prey_hunt.args = {
 	enable = {
 		order = 1,
 		type = "toggle",
@@ -25,11 +25,11 @@ mMT.options.args.quests.args.automation.args.prey_hunt.args = {
 			Update()
 		end,
 	},
-	general = {
+	settings = {
 		order = 2,
 		type = "group",
 		inline = true,
-		name = L["General"],
+		name = L["Settings"],
 		args = {
 			format = {
 				order = 1,
@@ -65,11 +65,77 @@ mMT.options.args.quests.args.automation.args.prey_hunt.args = {
 			},
 		},
 	},
-	font = {
+	layout = {
 		order = 3,
 		type = "group",
 		inline = true,
-		name = L["Font"],
+		name = L["Layout"],
+		args = {
+			point = {
+				order = 1,
+				type = "select",
+				name = L["Anchor Point"],
+				disabled = IsDisabled,
+				get = function(info)
+					return E.db.mMediaTag.prey_hunt.point
+				end,
+				set = function(info, value)
+					E.db.mMediaTag.prey_hunt.point = value
+					Update()
+				end,
+				values = {
+					TOP = "TOP",
+					BOTTOM = "BOTTOM",
+					LEFT = "LEFT",
+					RIGHT = "RIGHT",
+					CENTER = L["CENTER"],
+					TOPLEFT = "TOPLEFT",
+					TOPRIGHT = "TOPRIGHT",
+					BOTTOMLEFT = "BOTTOMLEFT",
+					BOTTOMRIGHT = "BOTTOMRIGHT",
+				},
+			},
+			x = {
+				order = 2,
+				type = "range",
+				name = L["X offset"],
+				desc = L["Sets the offset according to the anchor."],
+				min = -100,
+				max = 100,
+				step = 1,
+				disabled = IsDisabled,
+				get = function(info)
+					return E.db.mMediaTag.prey_hunt.x
+				end,
+				set = function(info, value)
+					E.db.mMediaTag.prey_hunt.x = value
+					Update()
+				end,
+			},
+			y = {
+				order = 3,
+				type = "range",
+				name = L["Y offset"],
+				desc = L["Sets the offset according to the anchor."],
+				min = -100,
+				max = 100,
+				step = 1,
+				disabled = IsDisabled,
+				get = function(info)
+					return E.db.mMediaTag.prey_hunt.y
+				end,
+				set = function(info, value)
+					E.db.mMediaTag.prey_hunt.y = value
+					Update()
+				end,
+			},
+		},
+	},
+	text = {
+		order = 4,
+		type = "group",
+		inline = true,
+		name = L["Text"],
 		args = {
 			font = {
 				order = 1,
@@ -138,72 +204,6 @@ mMT.options.args.quests.args.automation.args.prey_hunt.args = {
 				end,
 				set = function(_, r, g, b)
 					E.db.mMediaTag.prey_hunt.color = E:RGBToHex(r, g, b, "ff")
-					Update()
-				end,
-			},
-		},
-	},
-	position = {
-		order = 4,
-		type = "group",
-		inline = true,
-		name = L["Settings"],
-		args = {
-			point = {
-				order = 1,
-				type = "select",
-				name = L["Anchor Point"],
-				disabled = IsDisabled,
-				get = function(info)
-					return E.db.mMediaTag.prey_hunt.point
-				end,
-				set = function(info, value)
-					E.db.mMediaTag.prey_hunt.point = value
-					Update()
-				end,
-				values = {
-					TOP = "TOP",
-					BOTTOM = "BOTTOM",
-					LEFT = "LEFT",
-					RIGHT = "RIGHT",
-					CENTER = L["CENTER"],
-					TOPLEFT = "TOPLEFT",
-					TOPRIGHT = "TOPRIGHT",
-					BOTTOMLEFT = "BOTTOMLEFT",
-					BOTTOMRIGHT = "BOTTOMRIGHT",
-				},
-			},
-			x = {
-				order = 2,
-				type = "range",
-				name = L["X offset"],
-				desc = L["Sets the offset according to the anchor."],
-				min = -100,
-				max = 100,
-				step = 1,
-				disabled = IsDisabled,
-				get = function(info)
-					return E.db.mMediaTag.prey_hunt.x
-				end,
-				set = function(info, value)
-					E.db.mMediaTag.prey_hunt.x = value
-					Update()
-				end,
-			},
-			y = {
-				order = 3,
-				type = "range",
-				name = L["Y offset"],
-				desc = L["Sets the offset according to the anchor."],
-				min = -100,
-				max = 100,
-				step = 1,
-				disabled = IsDisabled,
-				get = function(info)
-					return E.db.mMediaTag.prey_hunt.y
-				end,
-				set = function(info, value)
-					E.db.mMediaTag.prey_hunt.y = value
 					Update()
 				end,
 			},

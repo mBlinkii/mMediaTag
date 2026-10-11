@@ -197,11 +197,11 @@ local function UnitGroup(unit, order)
 					update()
 				end,
 			},
-			general_group = {
+			settings = {
 				order = 2,
 				type = "group",
 				inline = true,
-				name = L["General"],
+				name = L["Settings"],
 				args = {
 					styles_select = {
 						order = 1,
@@ -223,27 +223,8 @@ local function UnitGroup(unit, order)
 							return t
 						end,
 					},
-					size_range = {
-						order = 2,
-						name = L["Size"],
-						type = "range",
-						min = 16,
-						max = 512,
-						step = 1,
-						softMin = 16,
-						softMax = 512,
-						get = function(info)
-							return E.db.mMediaTag.portraits[key].size
-						end,
-						set = function(info, value)
-							E.db.mMediaTag.portraits[key].size = value
-
-							if not E.db.mMediaTag.portraits[key].extra_settings.enable then E.db.mMediaTag.portraits[key].extra_settings.size = value end
-							update()
-						end,
-					},
 					cast_toggle = {
-						order = 3,
+						order = 2,
 						type = "toggle",
 						name = L["Cast Icon"],
 						desc = L["Enable Cast Icons."],
@@ -256,7 +237,7 @@ local function UnitGroup(unit, order)
 						end,
 					},
 					extra_toggle = {
-						order = 4,
+						order = 3,
 						type = "toggle",
 						name = L["Enable Extra Texture"],
 						desc = L["Shows the Extra Texture (rare/elite) for the Unit Portrait."],
@@ -269,7 +250,7 @@ local function UnitGroup(unit, order)
 						end,
 					},
 					unitcolor_toggle = {
-						order = 5,
+						order = 4,
 						type = "toggle",
 						name = L["Unitcolor for Extra"],
 						desc = L["Use the unit color for the Extra (Rare/Elite) Texture."],
@@ -282,7 +263,7 @@ local function UnitGroup(unit, order)
 						end,
 					},
 					force_extra_toggle = {
-						order = 6,
+						order = 5,
 						type = "select",
 						name = L["Force Extra Texture"],
 						desc = L["It will override the default extra texture, but will take care of rare/elite/boss units."],
@@ -304,14 +285,33 @@ local function UnitGroup(unit, order)
 					},
 				},
 			},
-			anchor_group = {
+			layout = {
 				order = 3,
 				type = "group",
 				inline = true,
-				name = L["Anchor"],
+				name = L["Layout"],
 				args = {
-					anchor_select = {
+					size_range = {
 						order = 1,
+						name = L["Size"],
+						type = "range",
+						min = 16,
+						max = 512,
+						step = 1,
+						softMin = 16,
+						softMax = 512,
+						get = function(info)
+							return E.db.mMediaTag.portraits[key].size
+						end,
+						set = function(info, value)
+							E.db.mMediaTag.portraits[key].size = value
+
+							if not E.db.mMediaTag.portraits[key].extra_settings.enable then E.db.mMediaTag.portraits[key].extra_settings.size = value end
+							update()
+						end,
+					},
+					anchor_select = {
+						order = 2,
 						type = "select",
 						name = L["Anchor Point"],
 						get = function(info)
@@ -347,7 +347,7 @@ local function UnitGroup(unit, order)
 						},
 					},
 					offset_x_range = {
-						order = 2,
+						order = 3,
 						name = L["X offset"],
 						type = "range",
 						min = -256,
@@ -364,7 +364,7 @@ local function UnitGroup(unit, order)
 						end,
 					},
 					range_ofsY = {
-						order = 3,
+						order = 4,
 						name = L["Y offset"],
 						type = "range",
 						min = -256,
@@ -380,16 +380,8 @@ local function UnitGroup(unit, order)
 							update()
 						end,
 					},
-				},
-			},
-			level_group = {
-				order = 3,
-				type = "group",
-				inline = true,
-				name = L["Frame Level/ Strata"],
-				args = {
 					strata_select = {
-						order = 1,
+						order = 5,
 						type = "select",
 						name = L["Frame Strata"],
 						get = function(info)
@@ -402,7 +394,7 @@ local function UnitGroup(unit, order)
 						values = frameStrata,
 					},
 					level_range = {
-						order = 2,
+						order = 6,
 						name = L["Frame Level"],
 						type = "range",
 						min = 0,
@@ -505,7 +497,7 @@ local function UnitGroup(unit, order)
 		},
 	}
 
-	if key == "player" then group.args.general_group.args.force_extra_toggle = nil end
+	if key == "player" then group.args.settings.args.force_extra_toggle = nil end
 
 	return group
 end
@@ -536,7 +528,7 @@ mMT.options.args.unitframes.args.portraits.args = {
 				order = 1,
 				type = "group",
 				inline = true,
-				name = L["Misc"],
+				name = L["Settings"],
 				args = {
 					zoom_range = {
 						order = 1,
@@ -699,7 +691,7 @@ mMT.options.args.unitframes.args.portraits.args = {
 				order = 4,
 				type = "group",
 				inline = true,
-				name = L["BG"],
+				name = L["Background"],
 				args = {
 					bg = {
 						order = 1,

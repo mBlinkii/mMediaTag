@@ -81,7 +81,6 @@ P.dice_button = {
 P.lfg_invite_info = {
 	enable = false,
 	delay = 60,
-	teleport = true,
 	keystones = true,
 	icon = "none",
 	style = "default",
@@ -110,6 +109,26 @@ P.lfg_invite_info = {
 
 P.group_keystones = {
 	enable = false,
+}
+
+P.keystone_teleports = {
+	enable = false,
+	duration = 5,
+	animation = true,
+	background = true,
+	title = true,
+	width = 260,
+	size = 26,
+	spacing = 2,
+	highlight = {
+		class = true,
+		color = "FFFFC71A",
+	},
+	text = {
+		font = "PT Sans Narrow",
+		size = 12,
+		fontFlag = "OUTLINE",
+	},
 }
 
 P.difficulty_info = {
@@ -881,6 +900,15 @@ P.auto_role_check = {
 
 P.auto_delete = {
 	enable = false,
+}
+
+P.mail_helper = {
+	enable = false,
+	gold_button = true,
+	overview = true,
+	summary = true,
+	continue = true,
+	recipient_list = true,
 }
 
 P.auto_friendly_nameplates = {

@@ -41,9 +41,17 @@ mMT.options.args.interface.args.panels.args.minimap_skin.args = {
 					return t
 				end,
 			},
+		},
+	},
+	colors = {
+		order = 3,
+		type = "group",
+		inline = true,
+		name = L["Colors"],
+		args = {
 			color_style = {
 				type = "select",
-				order = 2,
+				order = 1,
 				name = L["Color"],
 				get = function(info)
 					return E.db.mMediaTag.minimap_skin.color
@@ -59,7 +67,7 @@ mMT.options.args.interface.args.panels.args.minimap_skin.args = {
 			},
 			color = {
 				type = "color",
-				order = 3,
+				order = 2,
 				name = L["Color"],
 				disabled = function()
 					return E.db.mMediaTag.minimap_skin.color == "class"
@@ -79,7 +87,7 @@ mMT.options.args.interface.args.panels.args.minimap_skin.args = {
 		},
 	},
 	cardinal = {
-		order = 3,
+		order = 4,
 		type = "group",
 		inline = true,
 		name = L["Cardinal Icon"],

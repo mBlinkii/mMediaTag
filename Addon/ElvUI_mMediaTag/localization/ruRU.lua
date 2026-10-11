@@ -734,8 +734,6 @@ L["Fade"] = "Затухание"
 L["Scale"] = "Масштаб"
 L["Slide"] = "Скольжение"
 L["Theme color"] = "Цвет темы"
-L["Show teleport"] = "Показывать телепорт"
-L["Shows the teleport of the dungeon below the card when you join a group for a dungeon of the current Mythic+ season and know its teleport. The card then stays open until you use or close it or the group enters the dungeon."] = "Показывает под карточкой телепорт подземелья, когда вы вступаете в группу в подземелье текущего сезона М+ и знаете этот телепорт. Карточка остаётся открытой, пока вы его не используете, не закроете её или группа не войдёт в подземелье."
 L["Show keystones"] = "Показывать ключи"
 L["Shows on the card which group members have a keystone for the dungeon and its level. Your own keystone is always known, other players need Details! or BigWigs."] = "Показывает на карточке, у кого из группы есть ключ в это подземелье и какого уровня. Ваш ключ известен всегда, другим игрокам нужен Details! или BigWigs."
 

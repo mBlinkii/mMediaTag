@@ -54,11 +54,11 @@ mMT.options.args.dock.args.general.args = {
 			},
 		},
 	},
-	font = {
+	text = {
 		order = 2,
 		type = "group",
 		inline = true,
-		name = L["Font"],
+		name = L["Text"],
 		args = {
 			font = {
 				order = 1,

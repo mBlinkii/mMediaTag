@@ -2,11 +2,11 @@ local mMT, DB, M, E, P, L, MEDIA = unpack(ElvUI_mMediaTag)
 local selected_id = nil
 
 mMT.options.args.datatexts.args.menus.args.misc_tracker.args = {
-	settings = {
+	icon = {
 		order = 1,
 		type = "group",
 		inline = true,
-		name = L["Settings"],
+		name = L["Icon"],
 		args = {
 			icon = {
 				order = 1,
@@ -36,8 +36,16 @@ mMT.options.args.datatexts.args.menus.args.misc_tracker.args = {
 					M.Tracker:UpdateAll()
 				end,
 			},
+		},
+	},
+	text = {
+		order = 2,
+		type = "group",
+		inline = true,
+		name = L["Text"],
+		args = {
 			name = {
-				order = 3,
+				order = 1,
 				type = "toggle",
 				name = L["Show Name"],
 				get = function(info)
@@ -49,7 +57,7 @@ mMT.options.args.datatexts.args.menus.args.misc_tracker.args = {
 				end,
 			},
 			short_number = {
-				order = 4,
+				order = 2,
 				type = "toggle",
 				name = L["Short large numbers"],
 				get = function(info)
@@ -61,7 +69,7 @@ mMT.options.args.datatexts.args.menus.args.misc_tracker.args = {
 				end,
 			},
 			show_max = {
-				order = 5,
+				order = 3,
 				type = "toggle",
 				name = L["Show max amount"],
 				get = function(info)
@@ -73,7 +81,7 @@ mMT.options.args.datatexts.args.menus.args.misc_tracker.args = {
 				end,
 			},
 			colored = {
-				order = 6,
+				order = 4,
 				type = "toggle",
 				name = L["Color the text"],
 				get = function(info)
@@ -87,7 +95,7 @@ mMT.options.args.datatexts.args.menus.args.misc_tracker.args = {
 		},
 	},
 	custom_ids = {
-		order = 2,
+		order = 3,
 		type = "group",
 		inline = true,
 		name = L["Custom IDs"],

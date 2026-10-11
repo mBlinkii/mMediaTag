@@ -8,6 +8,36 @@ mMT.options.args.datatexts.args.menus.args.misc_dungeon.args = {
 		inline = true,
 		name = L["Settings"],
 		args = {
+			dungeon_name = {
+				order = 1,
+				type = "toggle",
+				name = L["Dungeon Name"],
+				desc = L["Change Text to Dungeon Name."],
+				get = function(info)
+					return E.db.mMediaTag.datatexts.dungeon.dungeon_name
+				end,
+				set = function(info, value)
+					E.db.mMediaTag.datatexts.dungeon.dungeon_name = value
+					DT:ForceUpdate_DataText("mMT - Dungeon")
+				end,
+			},
+			colors = {
+				order = 2,
+				type = "execute",
+				name = L["Colors"],
+				desc = L["Change Colors"],
+				func = function()
+					E.Libs.AceConfigDialog:SelectGroup("ElvUI", "mMT", "colors", "difficulty")
+				end,
+			},
+		},
+	},
+	icon = {
+		order = 2,
+		type = "group",
+		inline = true,
+		name = L["Icon"],
+		args = {
 			icon = {
 				order = 1,
 				type = "select",
@@ -27,36 +57,6 @@ mMT.options.args.datatexts.args.menus.args.misc_dungeon.args = {
 
 					values.none = L["None"]
 					return values
-				end,
-			},
-			dungeon_name = {
-				order = 2,
-				type = "toggle",
-				name = L["Dungeon Name"],
-				desc = L["Change Text to Dungeon Name."],
-				get = function(info)
-					return E.db.mMediaTag.datatexts.dungeon.dungeon_name
-				end,
-				set = function(info, value)
-					E.db.mMediaTag.datatexts.dungeon.dungeon_name = value
-					DT:ForceUpdate_DataText("mMT - Dungeon")
-				end,
-			},
-		},
-	},
-	colors = {
-		order = 2,
-		type = "group",
-		inline = true,
-		name = L["Settings"],
-		args = {
-			colors = {
-				order = 1,
-				type = "execute",
-				name = L["Colors"],
-				desc = L["Change Colors"],
-				func = function()
-					E.Libs.AceConfigDialog:SelectGroup("ElvUI", "mMT", "colors", "difficulty")
 				end,
 			},
 		},

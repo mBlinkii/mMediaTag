@@ -24,11 +24,48 @@ mMT.options.args.group.args.group_tools.args.difficulty_info.args = {
 			mMT:UpdateModule("DifficultyInfo", "demo")
 		end,
 	},
-	font = {
+	settings = {
 		order = 3,
 		type = "group",
 		inline = true,
-		name = L["Font"],
+		name = L["Settings"],
+		args = {
+			colors = {
+				order = 1,
+				type = "execute",
+				name = L["Colors"],
+				desc = L["Change Colors"],
+				func = function()
+					E.Libs.AceConfigDialog:SelectGroup("ElvUI", "mMT", "colors", "difficulty")
+				end,
+			},
+		},
+	},
+	layout = {
+		order = 4,
+		type = "group",
+		inline = true,
+		name = L["Layout"],
+		args = {
+			background = {
+				order = 1,
+				type = "toggle",
+				name = L["Background"],
+				get = function(info)
+					return E.db.mMediaTag.difficulty_info.background
+				end,
+				set = function(info, value)
+					E.db.mMediaTag.difficulty_info.background = value
+					E:StaticPopup_Show("CONFIG_RL")
+				end,
+			},
+		},
+	},
+	text = {
+		order = 5,
+		type = "group",
+		inline = true,
+		name = L["Text"],
 		args = {
 			font = {
 				type = "select",
@@ -74,8 +111,8 @@ mMT.options.args.group.args.group_tools.args.difficulty_info.args = {
 				},
 			},
 			font_size = {
-				order = 5,
-				name = L["Font size, top line"],
+				order = 3,
+				name = L["Font size"],
 				type = "range",
 				min = 8,
 				max = 64,
@@ -93,7 +130,7 @@ mMT.options.args.group.args.group_tools.args.difficulty_info.args = {
 			},
 			justify = {
 				type = "select",
-				order = 6,
+				order = 4,
 				name = L["Alignment"],
 				disabled = function()
 					return not E.db.mMediaTag.difficulty_info.enable
@@ -110,35 +147,6 @@ mMT.options.args.group.args.group_tools.args.difficulty_info.args = {
 					CENTER = L["CENTER"],
 					RIGHT = L["RIGHT"],
 				},
-			},
-		},
-	},
-	settings = {
-		order = 4,
-		type = "group",
-		inline = true,
-		name = L["Settings"],
-		args = {
-			background = {
-				order = 1,
-				type = "toggle",
-				name = L["Background"],
-				get = function(info)
-					return E.db.mMediaTag.difficulty_info.background
-				end,
-				set = function(info, value)
-					E.db.mMediaTag.difficulty_info.background = value
-					E:StaticPopup_Show("CONFIG_RL")
-				end,
-			},
-			colors = {
-				order = 2,
-				type = "execute",
-				name = L["Colors"],
-				desc = L["Change Colors"],
-				func = function()
-					E.Libs.AceConfigDialog:SelectGroup("ElvUI", "mMT", "colors", "difficulty")
-				end,
 			},
 		},
 	},

@@ -13,10 +13,6 @@ local GetDifficultyInfo = GetDifficultyInfo
 local GetSearchResultInfo = C_LFGList.GetSearchResultInfo
 local GetActivityFullName = C_LFGList.GetActivityFullName
 local GetActivityInfoTable = C_LFGList.GetActivityInfoTable
-local GetSpellName = C_Spell.GetSpellName
-local GetSpellTexture = C_Spell.GetSpellTexture
-local GetSpellCooldownDuration = C_Spell.GetSpellCooldownDuration
-local InCombatLockdown = InCombatLockdown
 local UnitExists = UnitExists
 local UnitClass = UnitClass
 local GetUnitName = GetUnitName
@@ -25,7 +21,6 @@ local GetKeystoneLevelRarityColor = C_ChallengeMode.GetKeystoneLevelRarityColor
 local GetClassColor = C_ClassColor.GetClassColor
 local tconcat = table.concat
 local wipe = wipe
-local GameTooltip = GameTooltip
 local C_Timer_After = C_Timer.After
 local C_Timer_NewTimer = C_Timer.NewTimer
 local floor = math.floor
@@ -43,7 +38,6 @@ local SPACING = 8
 local LINE_SPACING = 3
 local SEPARATOR = "  •  "
 local CHAT_RULE = "|T%s:2:190:0:0:8:8:0:8:0:8:%d:%d:%d|t"
-local TELEPORT_SIZE = 36
 local GROUP_UNITS = { "player", "party1", "party2", "party3", "party4" }
 local keyParts = {}
 
@@ -78,39 +72,7 @@ local function ClearInfo()
 	module.info_screen.lable2:SetText("")
 	module.info_screen.lable3:SetText("")
 	module.info_screen.keys:SetText("")
-	module.teleportSpell = nil
 	module.dungeonMapID = nil
-end
-
--- The teleport is a secure button, so it is not a child of the card: a protected child would block hiding the card in
--- combat. Attributes and visibility can only change out of combat, a hide in combat waits for the combat to end.
-local function CreateTeleportButton()
-	local button = CreateFrame("Button", "mMediaTag_LFG_Invite_Teleport", E.UIParent, "SecureActionButtonTemplate")
-	button:SetSize(TELEPORT_SIZE, TELEPORT_SIZE)
-	button:SetFrameStrata("TOOLTIP")
-	button:RegisterForClicks("AnyUp", "AnyDown")
-	button:SetAttribute("type", "spell")
-	button:SetTemplate()
-	button:Hide()
-
-	button.icon = button:CreateTexture(nil, "ARTWORK")
-	button.icon:SetInside()
-	button.icon:SetTexCoord(E:GetTexCoords())
-
-	button.cooldown = CreateFrame("Cooldown", nil, button, "CooldownFrameTemplate")
-	button.cooldown:SetInside()
-
-	button.text = button:CreateFontString(nil, "OVERLAY")
-	button.text:SetPoint("LEFT", button, "RIGHT", SPACING, 0)
-
-	button:SetScript("OnEnter", function(self)
-		GameTooltip:SetOwner(self, "ANCHOR_RIGHT")
-		GameTooltip:SetSpellByID(self.spellID)
-		GameTooltip:Show()
-	end)
-	button:SetScript("OnLeave", _G.GameTooltip_Hide)
-
-	return button
 end
 
 -- group members whose keystone is for this dungeon, class colored name and the level in its rarity color
@@ -136,52 +98,6 @@ local function KeystoneText(instanceMapID)
 	end
 
 	return tconcat(keyParts, mMT:TC(SEPARATOR, "gray"))
-end
-
--- below the teleport, or right below the card without one; a plain font string, so it may change in combat
-local function PositionKeys()
-	local screen = module.info_screen
-	local teleport = module.teleport
-	local offset = (teleport and teleport:IsShown()) and (SPACING * 2 + TELEPORT_SIZE) or SPACING
-
-	screen.keys:ClearAllPoints()
-	screen.keys:SetPoint("TOP", screen, "BOTTOM", 0, -offset)
-end
-
-local function HideTeleport()
-	local button = module.teleport
-	if not (button and button:IsShown()) then return end
-
-	if InCombatLockdown() then
-		module:RegisterEvent("PLAYER_REGEN_ENABLED")
-		return
-	end
-
-	button:Hide()
-	PositionKeys()
-end
-
-local function ShowTeleport()
-	local button, spellID = module.teleport, module.teleportSpell
-	if not (button and spellID) or InCombatLockdown() then return end
-
-	button.spellID = spellID
-	button:SetAttribute("spell", spellID)
-	button.icon:SetTexture(GetSpellTexture(spellID))
-	button.text:SetText(mMT:TC(GetSpellName(spellID) or "", "line_b"))
-
-	local duration = GetSpellCooldownDuration(spellID)
-	if duration then
-		button.cooldown:SetCooldownFromDurationObject(duration)
-	else
-		button.cooldown:Clear()
-	end
-
-	-- centered under the card with its label, on the screen frame because the card itself slides while animating
-	button:ClearAllPoints()
-	button:SetPoint("TOP", module.info_screen, "BOTTOM", -(button.text:GetStringWidth() + SPACING) / 2, -SPACING)
-	button:Show()
-	PositionKeys()
 end
 
 local function Details(activity, difficulty)
@@ -281,7 +197,6 @@ local function UpdateKeys()
 	if not screen then return end
 
 	screen.keys:SetText(module.db.keystones and KeystoneText(module.dungeonMapID) or "")
-	PositionKeys()
 end
 
 local function ApplyAnimation()
@@ -324,7 +239,6 @@ local function ShowCard()
 	RestCard()
 	screen:Show()
 	UpdateLayout()
-	ShowTeleport()
 
 	if not module.db.animation.enable then return end
 
@@ -337,8 +251,6 @@ end
 local function HideCard(clearText)
 	local screen = module.info_screen
 	local card = screen.card
-
-	HideTeleport()
 
 	card.showAnim:Stop()
 	card.hideAnim:Stop()
@@ -394,8 +306,7 @@ local function QueueShowInfo()
 		local textA = module.info_screen.lable and module.info_screen.lable:GetText() or ""
 		local textB = module.info_screen.lable2 and module.info_screen.lable2:GetText() or ""
 		if textA == "" and textB == "" then return end
-		-- with a teleport offered the card stays until it is used, closed or the group zones in
-		ShowInfo(module.teleportSpell ~= nil)
+		ShowInfo()
 	end)
 end
 
@@ -476,13 +387,10 @@ function module:Demo()
 		local info = demoTexts[random(1, #demoTexts)]
 		module.info_screen.demo = true
 		SetInfo(info.name, info.acc, info.diff, info.grp)
-		module.teleportSpell = module.db.teleport and mMT:GetAnySeasonTeleport() or nil
-		module.dungeonMapID = module.teleportSpell and mMT:GetSeasonTeleportMapID(module.teleportSpell)
-		UpdateKeys()
+		module.dungeonMapID = nil
 
-		-- a sample line for the preview when no own keystone fits
 		local screen = module.info_screen
-		if module.db.keystones and (screen.keys:GetText() or "") == "" then
+		if module.db.keystones then
 			local levelColor = GetKeystoneLevelRarityColor(12)
 			screen.keys:SetText(format("%s %s", MEDIA.myclass:WrapTextInColorCode(E.myname), levelColor and levelColor:WrapTextInColorCode("+12") or "+12"))
 		end
@@ -494,7 +402,6 @@ function module:Initialize(demo)
 	if not E.db.mMediaTag.lfg_invite_info.enable then
 		if module.info_screen then
 			HideInfo(true)
-			HideTeleport()
 			if module.isEnabled then
 				module:UnregisterAllEvents()
 				module.isEnabled = false
@@ -557,9 +464,10 @@ function module:Initialize(demo)
 		screen.lable = CreateText()
 		screen.lable2 = CreateText()
 		screen.lable3 = CreateText()
-		-- on the screen frame, not the card, it sits below the card and the teleport
+		-- on the screen frame, not the card, so it stays put while the card slides
 		screen.keys = screen:CreateFontString(nil, "OVERLAY")
 		screen.keys:SetWordWrap(false)
+		screen.keys:SetPoint("TOP", screen, "BOTTOM", 0, -SPACING)
 
 		CreateAnimations(card)
 
@@ -574,18 +482,13 @@ function module:Initialize(demo)
 		screen:Hide()
 	end
 
-	-- a secure button gets its attributes only out of combat, a profile switch in combat creates it next time
-	if not module.teleport and not InCombatLockdown() then
-		module.teleport = CreateTeleportButton()
-		module.teleport:SetScript("PostClick", function()
-			HideInfo()
-		end)
-		-- keys of the other members arrive a moment after joining
+	-- keys of the other members arrive a moment after joining
+	if not module.keysListener then
+		module.keysListener = true
 		mMT:AddGroupKeystoneListener(UpdateKeys)
 	end
 
 	local font = LSM:Fetch("font", module.db.text.font)
-	if module.teleport then E:SetFont(module.teleport.text, font, module.db.text.size2, module.db.text.fontFlag) end
 	E:SetFont(module.info_screen.lable, font, module.db.text.size, module.db.text.fontFlag)
 	E:SetFont(module.info_screen.lable2, font, module.db.text.size2, module.db.text.fontFlag)
 	E:SetFont(module.info_screen.lable3, font, module.db.text.size2, module.db.text.fontFlag)
@@ -652,7 +555,6 @@ function module:LFG_LIST_JOINED_GROUP(_, searchResultID, groupName)
 
 	SetInfo(location, activity, difficulty, group)
 	module.dungeonMapID = activityInfo and PlainValue(activityInfo.mapID)
-	module.teleportSpell = module.db.teleport and mMT:GetSeasonTeleport(module.dungeonMapID) or nil
 	UpdateKeys()
 	if module.db.keystones and module.dungeonMapID then mMT:RequestGroupKeystones() end
 
@@ -673,11 +575,6 @@ function module:LFG_LIST_APPLICATION_STATUS_UPDATED(_, searchResultID, newStatus
 	if module.info_screen and module.info_screen:IsShown() then return end
 
 	QueueShowInfo()
-end
-
-function module:PLAYER_REGEN_ENABLED()
-	module:UnregisterEvent("PLAYER_REGEN_ENABLED")
-	if not (module.info_screen and module.info_screen:IsShown()) then HideTeleport() end
 end
 
 function module:GROUP_LEFT()

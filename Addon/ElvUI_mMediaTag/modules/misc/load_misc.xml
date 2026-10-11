@@ -11,6 +11,7 @@
     <Script file="keystone_to_chat.lua"/>
     <Script file="lfg_invite_info.lua"/>
     <Script file="group_keystones.lua"/>
+    <Script file="keystone_teleports.lua"/>
     <Script file="unit_ids.lua"/>
     <Script file="tooltip.lua"/>
     <Script file="tags.lua"/>
@@ -24,6 +25,7 @@
     <Script file="auto_quest.lua"/>
     <Script file="auto_role_check.lua"/>
     <Script file="auto_delete.lua"/>
+    <Script file="mail_helper.lua"/>
     <Script file="auto_friendly_nameplates.lua"/>
     <Script file="addon_manager.lua"/>
 </Ui>

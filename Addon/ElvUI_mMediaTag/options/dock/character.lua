@@ -3,8 +3,31 @@ local mMT, DB, M, E, P, L, MEDIA = unpack(ElvUI_mMediaTag)
 local DT = E:GetModule("DataTexts")
 
 mMT.options.args.dock.args.buttons.args.character.args = {
-	icon = {
+	settings = {
 		order = 1,
+		type = "group",
+		inline = true,
+		name = L["Settings"],
+		args = {
+			percThreshold = {
+				order = 1,
+				name = L["Threshold"],
+				type = "range",
+				min = 0,
+				max = 100,
+				step = 1,
+				get = function(info)
+					return E.db.mMediaTag.dock.character.percThreshold
+				end,
+				set = function(info, value)
+					E.db.mMediaTag.dock.character.percThreshold = value
+					DT:ForceUpdate_DataText("mMT_Dock_Character")
+				end,
+			},
+		},
+	},
+	icon = {
+		order = 2,
 		type = "group",
 		inline = true,
 		name = L["Icon"],
@@ -50,11 +73,32 @@ mMT.options.args.dock.args.buttons.args.character.args = {
 			},
 		},
 	},
-	color = {
-		order = 1,
+	text = {
+		order = 3,
 		type = "group",
 		inline = true,
-		name = L["Color"],
+		name = L["Text"],
+		args = {
+			text = {
+				order = 1,
+				type = "toggle",
+				name = L["Text"],
+				desc = L["Show durability percentage as text."],
+				get = function(info)
+					return E.db.mMediaTag.dock.character.text
+				end,
+				set = function(info, value)
+					E.db.mMediaTag.dock.character.text = value
+					DT:ForceUpdate_DataText("mMT_Dock_Character")
+				end,
+			},
+		},
+	},
+	colors = {
+		order = 4,
+		type = "group",
+		inline = true,
+		name = L["Colors"],
 		args = {
 			custom_color = {
 				order = 1,
@@ -85,42 +129,6 @@ mMT.options.args.dock.args.buttons.args.character.args = {
 					local hex = E:RGBToHex(r, g, b, mMT:FloatToHex(a))
 					E.db.mMediaTag.color.dock.character = hex
 					MEDIA.color.dock.character = CreateColorFromHexString(hex)
-					DT:ForceUpdate_DataText("mMT_Dock_Character")
-				end,
-			},
-		},
-	},
-	settings = {
-		order = 3,
-		type = "group",
-		inline = true,
-		name = L["Settings"],
-		args = {
-			text = {
-				order = 1,
-				type = "toggle",
-				name = L["Text"],
-				desc = L["Show durability percentage as text."],
-				get = function(info)
-					return E.db.mMediaTag.dock.character.text
-				end,
-				set = function(info, value)
-					E.db.mMediaTag.dock.character.text = value
-					DT:ForceUpdate_DataText("mMT_Dock_Character")
-				end,
-			},
-			percThreshold = {
-				order = 2,
-				name = L["Threshold"],
-				type = "range",
-				min = 0,
-				max = 100,
-				step = 1,
-				get = function(info)
-					return E.db.mMediaTag.dock.character.percThreshold
-				end,
-				set = function(info, value)
-					E.db.mMediaTag.dock.character.percThreshold = value
 					DT:ForceUpdate_DataText("mMT_Dock_Character")
 				end,
 			},

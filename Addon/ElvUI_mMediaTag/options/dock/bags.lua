@@ -3,8 +3,29 @@ local mMT, DB, M, E, P, L, MEDIA = unpack(ElvUI_mMediaTag)
 local DT = E:GetModule("DataTexts")
 
 mMT.options.args.dock.args.buttons.args.bags.args = {
-	icon = {
+	settings = {
 		order = 1,
+		type = "group",
+		inline = true,
+		name = L["Settings"],
+		args = {
+			gold = {
+				order = 1,
+				type = "toggle",
+				name = L["Gold Infos"],
+				desc = L["Show gold infos instead of bag slots in the tooltip."],
+				get = function(info)
+					return E.db.mMediaTag.dock.bags.gold
+				end,
+				set = function(info, value)
+					E.db.mMediaTag.dock.bags.gold = value
+					DT:ForceUpdate_DataText("mMT_Dock_Bags")
+				end,
+			},
+		},
+	},
+	icon = {
+		order = 2,
 		type = "group",
 		inline = true,
 		name = L["Icon"],
@@ -50,11 +71,39 @@ mMT.options.args.dock.args.buttons.args.bags.args = {
 			},
 		},
 	},
-	color = {
-		order = 1,
+	text = {
+		order = 3,
 		type = "group",
 		inline = true,
-		name = L["Color"],
+		name = L["Text"],
+		args = {
+			style = {
+				order = 1,
+				type = "select",
+				name = L["Style"],
+				get = function(info)
+					return E.db.mMediaTag.dock.bags.text
+				end,
+				set = function(info, value)
+					E.db.mMediaTag.dock.bags.text = value
+					DT:ForceUpdate_DataText("mMT_Dock_Bags")
+				end,
+				values = {
+					none = L["None"],
+					money = L["Money"],
+					both = L["Money / Free Slots"],
+					total = L["Used / Total Slots"],
+					used = L["Used Slots"],
+					free = L["Free Slots"],
+				},
+			},
+		},
+	},
+	colors = {
+		order = 4,
+		type = "group",
+		inline = true,
+		name = L["Colors"],
 		args = {
 			custom_color = {
 				order = 1,
@@ -85,47 +134,6 @@ mMT.options.args.dock.args.buttons.args.bags.args = {
 					local hex = E:RGBToHex(r, g, b, mMT:FloatToHex(a))
 					E.db.mMediaTag.color.dock.bags = hex
 					MEDIA.color.dock.bags = CreateColorFromHexString(hex)
-					DT:ForceUpdate_DataText("mMT_Dock_Bags")
-				end,
-			},
-		},
-	},
-	settings = {
-		order = 3,
-		type = "group",
-		inline = true,
-		name = L["Settings"],
-		args = {
-			style = {
-				order = 1,
-				type = "select",
-				name = L["Style"],
-				get = function(info)
-					return E.db.mMediaTag.dock.bags.text
-				end,
-				set = function(info, value)
-					E.db.mMediaTag.dock.bags.text = value
-					DT:ForceUpdate_DataText("mMT_Dock_Bags")
-				end,
-				values = {
-					none = L["None"],
-					money = L["Money"],
-					both = L["Money / Free Slots"],
-					total = L["Used / Total Slots"],
-					used = L["Used Slots"],
-					free = L["Free Slots"],
-				},
-			},
-			gold = {
-				order = 2,
-				type = "toggle",
-				name = L["Gold Infos"],
-				desc = L["Show gold infos instead of bag slots in the tooltip."],
-				get = function(info)
-					return E.db.mMediaTag.dock.bags.gold
-				end,
-				set = function(info, value)
-					E.db.mMediaTag.dock.bags.gold = value
 					DT:ForceUpdate_DataText("mMT_Dock_Bags")
 				end,
 			},

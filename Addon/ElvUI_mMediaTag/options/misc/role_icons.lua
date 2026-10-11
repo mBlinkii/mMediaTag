@@ -24,16 +24,16 @@ mMT.options.args.unitframes.args.status_icons.args.role_icons.args = {
 			end
 		end,
 	},
-	tank = {
+	icons = {
 		order = 2,
 		type = "group",
 		inline = true,
-		name = L["Tank"],
+		name = L["Icons"],
 		args = {
-			icon = {
-				order = 4,
+			tank = {
+				order = 1,
 				type = "select",
-				name = L["Icon"],
+				name = L["Tank"],
 				disabled = function()
 					return not E.db.mMediaTag.role_icons.enable
 				end,
@@ -52,18 +52,10 @@ mMT.options.args.unitframes.args.status_icons.args.role_icons.args = {
 					return icons
 				end,
 			},
-		},
-	},
-	heal = {
-		order = 3,
-		type = "group",
-		inline = true,
-		name = L["Healer"],
-		args = {
-			icon = {
-				order = 4,
+			heal = {
+				order = 2,
 				type = "select",
-				name = L["Icon"],
+				name = L["Healer"],
 				disabled = function()
 					return not E.db.mMediaTag.role_icons.enable
 				end,
@@ -82,18 +74,10 @@ mMT.options.args.unitframes.args.status_icons.args.role_icons.args = {
 					return icons
 				end,
 			},
-		},
-	},
-	dd = {
-		order = 4,
-		type = "group",
-		inline = true,
-		name = L["DPS"],
-		args = {
-			icon = {
-				order = 4,
+			dd = {
+				order = 3,
 				type = "select",
-				name = L["Icon"],
+				name = L["DPS"],
 				disabled = function()
 					return not E.db.mMediaTag.role_icons.enable
 				end,

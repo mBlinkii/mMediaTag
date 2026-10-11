@@ -164,10 +164,74 @@ mMT.options.args.unitframes.args.castbar.args.important_casts.args = {
 					return not E.db.mMediaTag.important_casts.enable or not E.db.mMediaTag.important_casts.showIcon
 				end,
 			},
+			anchor = {
+				order = 4,
+				type = "select",
+				name = L["Anchor"],
+				get = function(info)
+					return E.db.mMediaTag.important_casts.anchor
+				end,
+				set = function(info, value)
+					E.db.mMediaTag.important_casts.anchor = value
+					UpdateImportantCasts()
+				end,
+				values = {
+					TOP = "TOP",
+					BOTTOM = "BOTTOM",
+					LEFT = "LEFT",
+					RIGHT = "RIGHT",
+					CENTER = L["CENTER"],
+					TOPLEFT = "TOPLEFT",
+					TOPRIGHT = "TOPRIGHT",
+					BOTTOMLEFT = "BOTTOMLEFT",
+					BOTTOMRIGHT = "BOTTOMRIGHT",
+				},
+				disabled = function()
+					return not E.db.mMediaTag.important_casts.enable or not E.db.mMediaTag.important_casts.showIcon
+				end,
+			},
+			posX = {
+				order = 5,
+				type = "range",
+				name = L["X offset"],
+				desc = L["Sets the offset according to the anchor."],
+				min = -100,
+				max = 100,
+				step = 1,
+				get = function(info)
+					return E.db.mMediaTag.important_casts.posX
+				end,
+				set = function(info, value)
+					E.db.mMediaTag.important_casts.posX = value
+					UpdateImportantCasts()
+				end,
+				disabled = function()
+					return not E.db.mMediaTag.important_casts.enable or not E.db.mMediaTag.important_casts.showIcon
+				end,
+			},
+			posY = {
+				order = 6,
+				type = "range",
+				name = L["Y offset"],
+				desc = L["Sets the offset according to the anchor."],
+				min = -100,
+				max = 100,
+				step = 1,
+				get = function(info)
+					return E.db.mMediaTag.important_casts.posY
+				end,
+				set = function(info, value)
+					E.db.mMediaTag.important_casts.posY = value
+					UpdateImportantCasts()
+				end,
+				disabled = function()
+					return not E.db.mMediaTag.important_casts.enable or not E.db.mMediaTag.important_casts.showIcon
+				end,
+			},
 		},
 	},
 	health = {
-		order = 3,
+		order = 5,
 		type = "group",
 		inline = true,
 		name = L["Health Override"],
@@ -205,78 +269,6 @@ mMT.options.args.unitframes.args.castbar.args.important_casts.args = {
 					E.db.mMediaTag.color.important_casts.health = hex
 					MEDIA.color.important_casts.health = CreateColorFromHexString(hex)
 					mMT:UpdateModule("ImportantCasts", demo)
-				end,
-			},
-		},
-	},
-	position = {
-		order = 5,
-		type = "group",
-		inline = true,
-		name = L["Position Settings"],
-		args = {
-			anchor = {
-				order = 1,
-				type = "select",
-				name = L["Anchor"],
-				get = function(info)
-					return E.db.mMediaTag.important_casts.anchor
-				end,
-				set = function(info, value)
-					E.db.mMediaTag.important_casts.anchor = value
-					UpdateImportantCasts()
-				end,
-				values = {
-					TOP = "TOP",
-					BOTTOM = "BOTTOM",
-					LEFT = "LEFT",
-					RIGHT = "RIGHT",
-					CENTER = L["CENTER"],
-					TOPLEFT = "TOPLEFT",
-					TOPRIGHT = "TOPRIGHT",
-					BOTTOMLEFT = "BOTTOMLEFT",
-					BOTTOMRIGHT = "BOTTOMRIGHT",
-				},
-				disabled = function()
-					return not E.db.mMediaTag.important_casts.enable or not E.db.mMediaTag.important_casts.showIcon
-				end,
-			},
-			posX = {
-				order = 2,
-				type = "range",
-				name = L["X offset"],
-				desc = L["Sets the offset according to the anchor."],
-				min = -100,
-				max = 100,
-				step = 1,
-				get = function(info)
-					return E.db.mMediaTag.important_casts.posX
-				end,
-				set = function(info, value)
-					E.db.mMediaTag.important_casts.posX = value
-					UpdateImportantCasts()
-				end,
-				disabled = function()
-					return not E.db.mMediaTag.important_casts.enable or not E.db.mMediaTag.important_casts.showIcon
-				end,
-			},
-			posY = {
-				order = 3,
-				type = "range",
-				name = L["Y offset"],
-				desc = L["Sets the offset according to the anchor."],
-				min = -100,
-				max = 100,
-				step = 1,
-				get = function(info)
-					return E.db.mMediaTag.important_casts.posY
-				end,
-				set = function(info, value)
-					E.db.mMediaTag.important_casts.posY = value
-					UpdateImportantCasts()
-				end,
-				disabled = function()
-					return not E.db.mMediaTag.important_casts.enable or not E.db.mMediaTag.important_casts.showIcon
 				end,
 			},
 		},

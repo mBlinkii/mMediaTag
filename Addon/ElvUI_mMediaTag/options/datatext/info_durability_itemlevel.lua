@@ -81,8 +81,38 @@ mMT.options.args.datatexts.args.info.args.info_durability_itemlevel.args = {
 					return values
 				end,
 			},
-			withe_text = {
+			mount = {
 				order = 2,
+				type = "select",
+				name = L["Repair Mount"],
+				get = function(info)
+					return E.db.mMediaTag.datatexts.durability_itemLevel.mount
+				end,
+				set = function(info, value)
+					E.db.mMediaTag.datatexts.durability_itemLevel.mount = value
+					DT:ForceUpdate_DataText("mMT - Durability & ItemLevel")
+				end,
+				values = function()
+					local mountIDs = {}
+
+					for _, mountID in ipairs({ 280, 284, 460, 1039, 2237 }) do
+						local name, _, icon, _, isUsable = GetMountInfoByID(mountID)
+						if isUsable then mountIDs[mountID] = format("|T%s:14:14:0:0:64:64:4:60:4:60|t %s", icon, name) end
+					end
+
+					return mountIDs
+				end,
+			},
+		},
+	},
+	text = {
+		order = 2,
+		type = "group",
+		inline = true,
+		name = L["Text"],
+		args = {
+			withe_text = {
+				order = 1,
 				type = "toggle",
 				name = L["Force withe Text"],
 				get = function(info)
@@ -95,11 +125,11 @@ mMT.options.args.datatexts.args.info.args.info_durability_itemlevel.args = {
 			},
 		},
 	},
-	color = {
-		order = 2,
+	colors = {
+		order = 3,
 		type = "group",
 		inline = true,
-		name = L["Color"],
+		name = L["Colors"],
 		args = {
 			warnings = {
 				order = 1,
@@ -205,36 +235,6 @@ mMT.options.args.datatexts.args.info.args.info_durability_itemlevel.args = {
 					MEDIA.color.di_warning = CreateColorFromHexString(hex)
 					MEDIA.color.di_warning.hex = hex
 					DT:ForceUpdate_DataText("mMT - Durability & ItemLevel")
-				end,
-			},
-		},
-	},
-	mount = {
-		order = 3,
-		type = "group",
-		inline = true,
-		name = L["Repair Mount"],
-		args = {
-			mount = {
-				order = 1,
-				type = "select",
-				name = L["Repair Mount"],
-				get = function(info)
-					return E.db.mMediaTag.datatexts.durability_itemLevel.mount
-				end,
-				set = function(info, value)
-					E.db.mMediaTag.datatexts.durability_itemLevel.mount = value
-					DT:ForceUpdate_DataText("mMT - Durability & ItemLevel")
-				end,
-				values = function()
-					local mountIDs = {}
-
-					for _, mountID in ipairs({ 280, 284, 460, 1039, 2237 }) do
-						local name, _, icon, _, isUsable = GetMountInfoByID(mountID)
-						if isUsable then mountIDs[mountID] = format("|T%s:14:14:0:0:64:64:4:60:4:60|t %s", icon, name) end
-					end
-
-					return mountIDs
 				end,
 			},
 		},

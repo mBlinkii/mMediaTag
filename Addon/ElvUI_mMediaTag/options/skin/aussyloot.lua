@@ -44,11 +44,11 @@ mMT.options.args.skins.args.aussyloot.args = {
 			return not IsAddOnLoaded("AussyLoot")
 		end,
 	},
-	settings = {
+	colors = {
 		order = 4,
 		type = "group",
 		inline = true,
-		name = L["Settings"],
+		name = L["Colors"],
 		args = {
 			color_mode = {
 				order = 1,

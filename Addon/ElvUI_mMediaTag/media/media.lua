@@ -414,6 +414,10 @@ MEDIA.icons.leader = {
 	leader01 = "Interface\\AddOns\\ElvUI_mMediaTag\\media\\icons\\leader\\leader_01.tga",
 }
 
+MEDIA.icons.keystone = {
+	keystone01 = "Interface\\AddOns\\ElvUI_mMediaTag\\media\\icons\\keystone\\keystone_01.tga",
+}
+
 MEDIA.icons.lfg = {
 	lfg01 = "Interface\\AddOns\\ElvUI_mMediaTag\\media\\icons\\lfg\\lfg_01.tga",
 	lfg02 = "Interface\\AddOns\\ElvUI_mMediaTag\\media\\icons\\lfg\\lfg_02.tga",

@@ -152,6 +152,10 @@ L["Welcome to %s %s version |CFFF7DC6F%s|r, type |CFF58D68D/mmt|r to access the 
 -- modules/misc/group_keystones.lua
 L["Group Keystones"] = "Schlüsselsteine der Gruppe"
 
+-- modules/misc/keystone_teleports.lua
+L["Keystone Teleports"] = "Schlüsselstein-Teleports"
+L["Teleport not learned"] = "Teleport nicht erlernt"
+
 -- modules/misc/lfg_invite_info.lua
 L["PVE"] = "PVE"
 L["The Flame Burns Eternal"] = "Die Flamme brennt ewig"
@@ -750,6 +754,27 @@ L["Show Frame"] = "Frame anzeigen"
 -- options/misc/auto_delete.lua
 L["Fills in the confirmation word automatically when you delete an item."] = "Trägt beim Löschen eines Gegenstands das Bestätigungswort automatisch ein."
 
+-- modules/misc/mail_helper.lua
+L["%d expiring"] = "%d laufen bald ab"
+L["%s Mails"] = "%s Briefe"
+L["Alts"] = "Twinks"
+L["Mailbox:"] = "Briefkasten:"
+L["Recently Mailed"] = "Zuletzt angeschrieben"
+L["Take Gold"] = "Gold nehmen"
+L["Waiting for more mail"] = "Warte auf weitere Post"
+
+-- options/misc/mail_helper.lua
+L["Adds a button next to the recipient field that lists your alts, friends, guild members and recently mailed characters."] = "Fügt neben dem Empfängerfeld einen Button hinzu, der deine Twinks, Freunde, Gildenmitglieder und zuletzt angeschriebene Charaktere auflistet."
+L["Adds a button to the inbox that only takes the gold from all mails and leaves the items."] = "Fügt dem Posteingang einen Button hinzu, der nur das Gold aus allen Briefen nimmt und die Gegenstände liegen lässt."
+L["Chat Summary"] = "Chat-Zusammenfassung"
+L["Continue Opening"] = "Weiter öffnen"
+L["Gold Button"] = "Gold-Button"
+L["Inbox Overview"] = "Posteingang-Übersicht"
+L["Keeps opening mail when the inbox holds more mails than it can show and waits for the inbox to refresh."] = "Öffnet weiter Post, wenn der Posteingang mehr Briefe enthält als er anzeigen kann, und wartet dafür auf das Neuladen des Posteingangs."
+L["Prints the collected gold and items to the chat when opening the mail is done."] = "Gibt das eingesammelte Gold und die Gegenstände im Chat aus, wenn das Öffnen der Post fertig ist."
+L["Recipient List"] = "Empfängerliste"
+L["Shows the number of mails, the waiting gold and the mails that expire soon above the inbox."] = "Zeigt über dem Posteingang die Anzahl der Briefe, das wartende Gold und die bald ablaufenden Briefe an."
+
 -- options/misc/greeting_message.lua
 L["Show a greeting message in the chat when you log in."] = "Zeigt beim Einloggen eine Begrüßungsnachricht im Chat an."
 
@@ -759,6 +784,14 @@ L["Post your keystone to the chat when someone types !key or !keys into the chat
 -- options/misc/group_keystones.lua
 L["Shows the keystones of your group next to the group finder listing."] = "Zeigt die Schlüsselsteine deiner Gruppe neben der Gruppenanmeldung."
 L["The keystones of your group members need Details! or BigWigs."] = "Für die Schlüsselsteine deiner Gruppenmitglieder wird Details! oder BigWigs benötigt."
+
+-- options/misc/keystone_teleports.lua
+L["Shows the keystones of your group with the teleport to their dungeon and highlights the dungeon of your group."] = "Zeigt die Schlüsselsteine deiner Gruppe mit dem Teleport zu ihrem Dungeon und hebt den Dungeon deiner Gruppe hervor."
+L["Click a dungeon to use its teleport. The dungeon of your group finder group is highlighted. The list shows up when you join a group or the group is full, outside of instances, and hides in combat."] = "Klicke auf einen Dungeon, um seinen Teleport zu benutzen. Der Dungeon deiner Gruppensuche-Gruppe wird hervorgehoben. Die Liste erscheint beim Gruppenbeitritt oder wenn die Gruppe voll ist, außerhalb von Instanzen, und wird im Kampf ausgeblendet."
+L["Hide after (minutes)"] = "Ausblenden nach (Minuten)"
+L["Hides the list this many minutes after it was shown. 0 keeps it shown."] = "Blendet die Liste so viele Minuten nach dem Anzeigen aus. 0 lässt sie sichtbar."
+L["Fades the list in and out. Entering combat always hides it at once."] = "Blendet die Liste weich ein und aus. Bei Kampfbeginn verschwindet sie immer sofort."
+L["Width"] = "Breite"
 
 -- options/misc/lfg_invite_info.lua
 L["Animation"] = "Animation"
@@ -779,8 +812,6 @@ L["Slide"] = "Gleiten"
 L["Theme"] = "Design"
 L["Theme color"] = "Designfarbe"
 L["Third line color"] = "Farbe der dritten Zeile"
-L["Show teleport"] = "Teleport anzeigen"
-L["Shows the teleport of the dungeon below the card when you join a group for a dungeon of the current Mythic+ season and know its teleport. The card then stays open until you use or close it or the group enters the dungeon."] = "Zeigt unter der Karte den Teleport des Dungeons, wenn du einer Gruppe für einen Dungeon der aktuellen Mythisch+-Saison beitrittst und den Teleport kennst. Die Karte bleibt dann offen, bis du ihn benutzt, sie schließt oder die Gruppe den Dungeon betritt."
 L["Show keystones"] = "Schlüsselsteine anzeigen"
 L["Shows on the card which group members have a keystone for the dungeon and its level. Your own keystone is always known, other players need Details! or BigWigs."] = "Zeigt auf der Karte, welche Gruppenmitglieder einen Schlüsselstein für den Dungeon haben und welche Stufe. Dein eigener Schlüsselstein ist immer bekannt, andere Spieler brauchen Details! oder BigWigs."
 
@@ -851,6 +882,7 @@ L["Target & Glow color"] = "Ziel- & Leuchtfarbe"
 -- options/options_core.lua
 L["Addon Manager"] = "Addon-Manager"
 L["Auto Delete"] = "Automatisch löschen"
+L["Mail Helper"] = "Post-Helfer"
 L["Data Panel Skin"] = "Datenleisten-Skin"
 L["Datatexts"] = "Datentexte"
 L["Details embedded"] = "Details eingebettet"
@@ -996,6 +1028,22 @@ L["Version Info"] = "Versionsinfo"
 L["white"] = "weiß"
 
 -- options/options_core.lua
+L["Accepts and turns in quests automatically and selects gossip options for you."] = "Nimmt Quests automatisch an, gibt sie ab und wählt Gesprächsoptionen für dich aus."
+L["Adds a button that rolls a random number in the ranges you set."] = "Fügt einen Button hinzu, der in den eingestellten Bereichen würfelt."
+L["Adds styled portraits with class or spec icons to the ElvUI unitframes."] = "Fügt den ElvUI-Einheitenfenstern gestaltete Porträts mit Klassen- oder Spezialisierungssymbolen hinzu."
+L["Colors castbars by the state of your interrupt and marks when it is ready again during the cast."] = "Färbt Zauberleisten nach dem Zustand deiner Unterbrechung und markiert, wann sie während des Zaubers wieder bereit ist."
+L["Gives the ElvUI data panels their own background, border and texture."] = "Gibt den ElvUI-Datenleisten eigenen Hintergrund, Rahmen und Textur."
+L["Highlights the nameplate of your focus with its own texture, border and health color."] = "Hebt die Namensplakette deines Fokus mit eigener Textur, eigenem Rahmen und eigener Lebensfarbe hervor."
+L["Highlights the nameplate of your target with its own texture, border and health color."] = "Hebt die Namensplakette deines Ziels mit eigener Textur, eigenem Rahmen und eigener Lebensfarbe hervor."
+L["Highlights the nameplates of quest units with their own texture, border and health color."] = "Hebt die Namensplaketten von Questeinheiten mit eigener Textur, eigenem Rahmen und eigener Lebensfarbe hervor."
+L["Marks casts that Blizzard flags as important with an extra icon on the castbar."] = "Markiert Zauber, die Blizzard als wichtig kennzeichnet, mit einem zusätzlichen Symbol an der Zauberleiste."
+L["Reset all settings of %s to their defaults?"] = "Alle Einstellungen von %s auf die Standardwerte zurücksetzen?"
+L["Shows a popup with the location, difficulty and name of the group finder group you joined."] = "Zeigt ein Popup mit Ort, Schwierigkeit und Namen der Gruppensuche-Gruppe, der du beigetreten bist."
+L["Shows textures for elites, rares, bosses and casters on the nameplates."] = "Zeigt Texturen für Elite, Rare, Bosse und Zauberwirker an den Namensplaketten."
+L["Shows the difficulty of the current instance in its own frame."] = "Zeigt die Schwierigkeit der aktuellen Instanz in einem eigenen Fenster."
+L["Skins %s in the ElvUI style."] = "Skint %s im ElvUI-Stil."
+L["Skins the objective tracker and adds quest colors, progress bars and highlights."] = "Skint die Zielverfolgung und ergänzt Questfarben, Fortschrittsleisten und Hervorhebungen."
+L["Takes the gold from your mails, shows an inbox overview and lists your alts and contacts when sending mail."] = "Nimmt das Gold aus deinen Briefen, zeigt eine Posteingang-Übersicht und listet beim Verschicken deine Twinks und Kontakte auf."
 L["Automation"] = "Automatisierung"
 L["Buttons"] = "Schaltflächen"
 L["Comfort"] = "Komfort"

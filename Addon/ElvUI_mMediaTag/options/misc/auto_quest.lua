@@ -1,6 +1,6 @@
 local mMT, DB, M, E, P, L, MEDIA = unpack(ElvUI_mMediaTag)
 
-mMT.options.args.quests.args.automation.args.auto_quest.args = {
+mMT.options.args.comfort.args.automation.args.auto_quest.args = {
 	enable = {
 		order = 1,
 		type = "toggle",
@@ -16,12 +16,11 @@ mMT.options.args.quests.args.automation.args.auto_quest.args = {
 			if not value then E:StaticPopup_Show("CONFIG_RL") end
 		end,
 	},
-
-	header_settings = {
+	settings = {
 		order = 2,
 		type = "group",
 		inline = true,
-		name = L["Auto Quest"],
+		name = L["Settings"],
 		args = {
 			auto_accept = {
 				order = 1,
@@ -56,7 +55,7 @@ mMT.options.args.quests.args.automation.args.auto_quest.args = {
 				end,
 			},
 			skip_in_combat = {
-				order = 7,
+				order = 3,
 				type = "toggle",
 				name = L["Skip in Combat"],
 				desc = L["Disables auto accept/turn-in while you are in combat."],
@@ -71,7 +70,7 @@ mMT.options.args.quests.args.automation.args.auto_quest.args = {
 				end,
 			},
 			auto_gossip = {
-				order = 3,
+				order = 4,
 				type = "toggle",
 				name = L["Auto Gossip"],
 				desc = L["Automatically clicks gossip options of the types selected below. If more than one option matches, the dialog stays open for you to choose."],
@@ -87,7 +86,7 @@ mMT.options.args.quests.args.automation.args.auto_quest.args = {
 				end,
 			},
 			gossip_quest = {
-				order = 4,
+				order = 5,
 				type = "toggle",
 				name = L["Quest Options"],
 				desc = L["Selects gossip options that are marked with the (Quest) label."],
@@ -103,7 +102,7 @@ mMT.options.args.quests.args.automation.args.auto_quest.args = {
 				end,
 			},
 			gossip_movie = {
-				order = 5,
+				order = 6,
 				type = "toggle",
 				name = L["Cinematic Options"],
 				desc = L["Selects gossip options that start a cinematic."],
@@ -119,7 +118,7 @@ mMT.options.args.quests.args.automation.args.auto_quest.args = {
 				end,
 			},
 			gossip_single = {
-				order = 6,
+				order = 7,
 				type = "toggle",
 				name = L["Single Option"],
 				desc = L["Selects the option when an NPC offers only a single one. This also triggers on vendors, flight masters and trainers."],

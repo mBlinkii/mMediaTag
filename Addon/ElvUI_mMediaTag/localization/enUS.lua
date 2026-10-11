@@ -152,6 +152,10 @@ L["Welcome to %s %s version |CFFF7DC6F%s|r, type |CFF58D68D/mmt|r to access the 
 -- modules/misc/group_keystones.lua
 L["Group Keystones"] = true
 
+-- modules/misc/keystone_teleports.lua
+L["Keystone Teleports"] = true
+L["Teleport not learned"] = true
+
 -- modules/misc/lfg_invite_info.lua
 L["PVE"] = true
 L["The Flame Burns Eternal"] = true
@@ -750,6 +754,27 @@ L["Show Frame"] = true
 -- options/misc/auto_delete.lua
 L["Fills in the confirmation word automatically when you delete an item."] = true
 
+-- modules/misc/mail_helper.lua
+L["%d expiring"] = true
+L["%s Mails"] = true
+L["Alts"] = true
+L["Mailbox:"] = true
+L["Recently Mailed"] = true
+L["Take Gold"] = true
+L["Waiting for more mail"] = true
+
+-- options/misc/mail_helper.lua
+L["Adds a button next to the recipient field that lists your alts, friends, guild members and recently mailed characters."] = true
+L["Adds a button to the inbox that only takes the gold from all mails and leaves the items."] = true
+L["Chat Summary"] = true
+L["Continue Opening"] = true
+L["Gold Button"] = true
+L["Inbox Overview"] = true
+L["Keeps opening mail when the inbox holds more mails than it can show and waits for the inbox to refresh."] = true
+L["Prints the collected gold and items to the chat when opening the mail is done."] = true
+L["Recipient List"] = true
+L["Shows the number of mails, the waiting gold and the mails that expire soon above the inbox."] = true
+
 -- options/misc/greeting_message.lua
 L["Show a greeting message in the chat when you log in."] = true
 
@@ -759,6 +784,14 @@ L["Post your keystone to the chat when someone types !key or !keys into the chat
 -- options/misc/group_keystones.lua
 L["Shows the keystones of your group next to the group finder listing."] = true
 L["The keystones of your group members need Details! or BigWigs."] = true
+
+-- options/misc/keystone_teleports.lua
+L["Shows the keystones of your group with the teleport to their dungeon and highlights the dungeon of your group."] = true
+L["Click a dungeon to use its teleport. The dungeon of your group finder group is highlighted. The list shows up when you join a group or the group is full, outside of instances, and hides in combat."] = true
+L["Hide after (minutes)"] = true
+L["Hides the list this many minutes after it was shown. 0 keeps it shown."] = true
+L["Fades the list in and out. Entering combat always hides it at once."] = true
+L["Width"] = true
 
 -- options/misc/lfg_invite_info.lua
 L["Animation"] = true
@@ -779,8 +812,6 @@ L["Slide"] = true
 L["Theme"] = true
 L["Theme color"] = true
 L["Third line color"] = true
-L["Show teleport"] = true
-L["Shows the teleport of the dungeon below the card when you join a group for a dungeon of the current Mythic+ season and know its teleport. The card then stays open until you use or close it or the group enters the dungeon."] = true
 L["Show keystones"] = true
 L["Shows on the card which group members have a keystone for the dungeon and its level. Your own keystone is always known, other players need Details! or BigWigs."] = true
 
@@ -851,6 +882,7 @@ L["Target & Glow color"] = true
 -- options/options_core.lua
 L["Addon Manager"] = true
 L["Auto Delete"] = true
+L["Mail Helper"] = true
 L["Data Panel Skin"] = true
 L["Datatexts"] = true
 L["Details embedded"] = true
@@ -996,6 +1028,22 @@ L["Version Info"] = true
 L["white"] = true
 
 -- options/options_core.lua
+L["Accepts and turns in quests automatically and selects gossip options for you."] = true
+L["Adds a button that rolls a random number in the ranges you set."] = true
+L["Adds styled portraits with class or spec icons to the ElvUI unitframes."] = true
+L["Colors castbars by the state of your interrupt and marks when it is ready again during the cast."] = true
+L["Gives the ElvUI data panels their own background, border and texture."] = true
+L["Highlights the nameplate of your focus with its own texture, border and health color."] = true
+L["Highlights the nameplate of your target with its own texture, border and health color."] = true
+L["Highlights the nameplates of quest units with their own texture, border and health color."] = true
+L["Marks casts that Blizzard flags as important with an extra icon on the castbar."] = true
+L["Reset all settings of %s to their defaults?"] = true
+L["Shows a popup with the location, difficulty and name of the group finder group you joined."] = true
+L["Shows textures for elites, rares, bosses and casters on the nameplates."] = true
+L["Shows the difficulty of the current instance in its own frame."] = true
+L["Skins %s in the ElvUI style."] = true
+L["Skins the objective tracker and adds quest colors, progress bars and highlights."] = true
+L["Takes the gold from your mails, shows an inbox overview and lists your alts and contacts when sending mail."] = true
 L["Automation"] = true
 L["Buttons"] = true
 L["Comfort"] = true

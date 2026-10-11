@@ -1,6 +1,42 @@
 local mMT, DB, M, E, P, L, MEDIA = unpack(ElvUI_mMediaTag)
 
 mMT.options.args.dock.args.buttons.args.notification.args = {
+	layout = {
+		order = 1,
+		type = "group",
+		inline = true,
+		name = L["Layout"],
+		args = {
+			auto_size = {
+				order = 1,
+				type = "toggle",
+				name = L["Auto size"],
+				get = function(info)
+					return E.db.mMediaTag.dock.notification.auto
+				end,
+				set = function(info, value)
+					E.db.mMediaTag.dock.notification.auto = value
+				end,
+			},
+			size = {
+				order = 2,
+				name = L["Size"],
+				type = "range",
+				disabled = function()
+					return E.db.mMediaTag.dock.notification.auto
+				end,
+				min = 2,
+				max = 256,
+				step = 1,
+				get = function(info)
+					return E.db.mMediaTag.dock.notification.size
+				end,
+				set = function(info, value)
+					E.db.mMediaTag.dock.notification.size = value
+				end,
+			},
+		},
+	},
 	icon = {
 		order = 2,
 		type = "group",
@@ -47,11 +83,11 @@ mMT.options.args.dock.args.buttons.args.notification.args = {
 			},
 		},
 	},
-	color = {
+	colors = {
 		order = 3,
 		type = "group",
 		inline = true,
-		name = L["Color"],
+		name = L["Colors"],
 		args = {
 			class = {
 				order = 1,
@@ -81,42 +117,6 @@ mMT.options.args.dock.args.buttons.args.notification.args = {
 					local hex = E:RGBToHex(r, g, b, mMT:FloatToHex(a))
 					E.db.mMediaTag.color.dock.notification = hex
 					MEDIA.color.dock.notification = CreateColorFromHexString(hex)
-				end,
-			},
-		},
-	},
-	settings = {
-		order = 3,
-		type = "group",
-		inline = true,
-		name = L["Settings"],
-		args = {
-			auto_size = {
-				order = 1,
-				type = "toggle",
-				name = L["Auto size"],
-				get = function(info)
-					return E.db.mMediaTag.dock.notification.auto
-				end,
-				set = function(info, value)
-					E.db.mMediaTag.dock.notification.auto = value
-				end,
-			},
-			size = {
-				order = 2,
-				name = L["Size"],
-				type = "range",
-				disabled = function()
-					return E.db.mMediaTag.dock.notification.auto
-				end,
-				min = 2,
-				max = 256,
-				step = 1,
-				get = function(info)
-					return E.db.mMediaTag.dock.notification.size
-				end,
-				set = function(info, value)
-					E.db.mMediaTag.dock.notification.size = value
 				end,
 			},
 		},

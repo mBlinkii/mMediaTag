@@ -8,6 +8,36 @@ mMT.options.args.datatexts.args.menus.args.misc_gamemenu.args = {
 		inline = true,
 		name = L["Settings"],
 		args = {
+			menu_icons = {
+				order = 1,
+				type = "toggle",
+				name = L["Show Menu Icons"],
+				get = function(info)
+					return E.db.mMediaTag.datatexts.menu.menu_icons
+				end,
+				set = function(info, value)
+					E.db.mMediaTag.datatexts.menu.menu_icons = value
+				end,
+			},
+			systeminfo = {
+				order = 2,
+				type = "toggle",
+				name = L["Show Systeminfo"],
+				get = function(info)
+					return E.db.mMediaTag.datatexts.menu.show_systeminfo
+				end,
+				set = function(info, value)
+					E.db.mMediaTag.datatexts.menu.show_systeminfo = value
+				end,
+			},
+		},
+	},
+	icon = {
+		order = 2,
+		type = "group",
+		inline = true,
+		name = L["Icon"],
+		args = {
 			iconTexture = {
 				order = 1,
 				type = "select",
@@ -26,30 +56,16 @@ mMT.options.args.datatexts.args.menus.args.misc_gamemenu.args = {
 					white = L["white"],
 				},
 			},
-			menu_icons = {
-				order = 2,
-				type = "toggle",
-				name = L["Show Menu Icons"],
-				get = function(info)
-					return E.db.mMediaTag.datatexts.menu.menu_icons
-				end,
-				set = function(info, value)
-					E.db.mMediaTag.datatexts.menu.menu_icons = value
-				end,
-			},
-			systeminfo = {
-				order = 3,
-				type = "toggle",
-				name = L["Show Systeminfo"],
-				get = function(info)
-					return E.db.mMediaTag.datatexts.menu.show_systeminfo
-				end,
-				set = function(info, value)
-					E.db.mMediaTag.datatexts.menu.show_systeminfo = value
-				end,
-			},
+		},
+	},
+	colors = {
+		order = 3,
+		type = "group",
+		inline = true,
+		name = L["Colors"],
+		args = {
 			text_color = {
-				order = 4,
+				order = 1,
 				type = "color",
 				name = L["Menu Text color"],
 				hasAlpha = false,

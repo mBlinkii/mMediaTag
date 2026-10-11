@@ -36,11 +36,11 @@ local function valuesFunction()
 end
 
 mMT.options.args.datatexts.args.menus.args.misc_teleports.args = {
-	settings = {
+	icon = {
 		order = 1,
 		type = "group",
 		inline = true,
-		name = L["Settings"],
+		name = L["Icon"],
 		args = {
 			iconTexture = {
 				order = 1,

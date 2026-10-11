@@ -50,11 +50,45 @@ mMT.options.args.dock.args.buttons.args.volume.args = {
 			},
 		},
 	},
-	color = {
-		order = 1,
+	text = {
+		order = 2,
 		type = "group",
 		inline = true,
-		name = L["Color"],
+		name = L["Text"],
+		args = {
+			text = {
+				order = 1,
+				type = "toggle",
+				name = L["Text"],
+				desc = L["Show number of online Guild members on the icon."],
+				get = function(info)
+					return E.db.mMediaTag.dock.volume.text
+				end,
+				set = function(info, value)
+					E.db.mMediaTag.dock.volume.text = value
+					DT:ForceUpdate_DataText("mMT_Dock_Volume")
+				end,
+			},
+			colored = {
+				order = 2,
+				type = "toggle",
+				name = L["Colored Text"],
+				desc = L["Color the text with the ElvUI color."],
+				get = function(info)
+					return E.db.mMediaTag.dock.volume.colored
+				end,
+				set = function(info, value)
+					E.db.mMediaTag.dock.volume.colored = value
+					DT:ForceUpdate_DataText("mMT_Dock_Volume")
+				end,
+			},
+		},
+	},
+	colors = {
+		order = 3,
+		type = "group",
+		inline = true,
+		name = L["Colors"],
 		args = {
 			custom_color = {
 				order = 1,
@@ -85,40 +119,6 @@ mMT.options.args.dock.args.buttons.args.volume.args = {
 					local hex = E:RGBToHex(r, g, b, mMT:FloatToHex(a))
 					E.db.mMediaTag.color.dock.volume = hex
 					MEDIA.color.dock.volume = CreateColorFromHexString(hex)
-					DT:ForceUpdate_DataText("mMT_Dock_Volume")
-				end,
-			},
-		},
-	},
-	settings = {
-		order = 3,
-		type = "group",
-		inline = true,
-		name = L["Settings"],
-		args = {
-			text = {
-				order = 1,
-				type = "toggle",
-				name = L["Text"],
-				desc = L["Show number of online Guild members on the icon."],
-				get = function(info)
-					return E.db.mMediaTag.dock.volume.text
-				end,
-				set = function(info, value)
-					E.db.mMediaTag.dock.volume.text = value
-					DT:ForceUpdate_DataText("mMT_Dock_Volume")
-				end,
-			},
-			colored = {
-				order = 2,
-				type = "toggle",
-				name = L["Colored Text"],
-				desc = L["Color the text with the ElvUI color."],
-				get = function(info)
-					return E.db.mMediaTag.dock.volume.colored
-				end,
-				set = function(info, value)
-					E.db.mMediaTag.dock.volume.colored = value
 					DT:ForceUpdate_DataText("mMT_Dock_Volume")
 				end,
 			},

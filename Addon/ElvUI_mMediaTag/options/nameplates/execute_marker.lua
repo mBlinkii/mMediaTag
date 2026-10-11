@@ -79,8 +79,19 @@ mMT.options.args.nameplates.args.markers.args.execute_marker.args = {
 					UpdateModule()
 				end,
 			},
+		},
+	},
+	colors = {
+		order = 4,
+		type = "group",
+		inline = true,
+		name = L["Colors"],
+		disabled = function()
+			return not E.db.mMediaTag.nameplates.execute.enable
+		end,
+		args = {
 			color = {
-				order = 4,
+				order = 1,
 				type = "color",
 				name = L["Color"],
 				hasAlpha = false,

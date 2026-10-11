@@ -4,14 +4,14 @@ local DT = E:GetModule("DataTexts")
 local date = date
 
 mMT.options.args.dock.args.buttons.args.calendar.args = {
-	settings = {
+	icon = {
 		order = 1,
 		type = "group",
 		inline = true,
 		name = L["Icon"],
 		args = {
 			icon = {
-				order = 2,
+				order = 1,
 				type = "select",
 				name = L["Icon"],
 				get = function(info)
@@ -31,11 +31,11 @@ mMT.options.args.dock.args.buttons.args.calendar.args = {
 			},
 		},
 	},
-	color = {
-		order = 1,
+	colors = {
+		order = 2,
 		type = "group",
 		inline = true,
-		name = L["Color"],
+		name = L["Colors"],
 		args = {
 			custom_color = {
 				order = 1,

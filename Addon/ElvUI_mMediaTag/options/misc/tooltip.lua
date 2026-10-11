@@ -16,12 +16,11 @@ mMT.options.args.interface.args.tooltip.args = {
 			if not value then E:StaticPopup_Show("CONFIG_RL") end
 		end,
 	},
-
-	header_settings = {
+	icon = {
 		order = 2,
 		type = "group",
 		inline = true,
-		name = L["Auto Quest"],
+		name = L["Icon"],
 		args = {
 			size = {
 				order = 1,

@@ -1,6 +1,6 @@
 local mMT, DB, M, E, P, L, MEDIA = unpack(ElvUI_mMediaTag)
 
-mMT.options.args.interface.args.comfort.args.dice_button.args = {
+mMT.options.args.comfort.args.tools.args.dice_button.args = {
 	enable = {
 		order = 1,
 		type = "toggle",
@@ -15,11 +15,11 @@ mMT.options.args.interface.args.comfort.args.dice_button.args = {
 			mMT:UpdateModule("DiceButton")
 		end,
 	},
-	header_dice = {
+	settings = {
 		order = 2,
 		type = "group",
 		inline = true,
-		name = L["Dice Button"],
+		name = L["Settings"],
 		args = {
 			left_click = {
 				order = 1,
@@ -75,14 +75,14 @@ mMT.options.args.interface.args.comfort.args.dice_button.args = {
 			},
 		},
 	},
-	header_icon = {
+	icon = {
 		order = 3,
 		type = "group",
 		inline = true,
 		name = L["Icon"],
 		args = {
 			icon = {
-				order = 4,
+				order = 1,
 				type = "select",
 				name = L["Icon"],
 				disabled = function()
@@ -104,7 +104,7 @@ mMT.options.args.interface.args.comfort.args.dice_button.args = {
 				end,
 			},
 			size = {
-				order = 5,
+				order = 2,
 				name = L["Icon Size"],
 				type = "range",
 				min = 2,
@@ -125,14 +125,14 @@ mMT.options.args.interface.args.comfort.args.dice_button.args = {
 			},
 		},
 	},
-	header_color_normal = {
+	colors = {
 		order = 4,
 		type = "group",
 		inline = true,
-		name = L["Color Normal"],
+		name = L["Colors"],
 		args = {
 			mode = {
-				order = 7,
+				order = 1,
 				type = "select",
 				name = L["Color Style"],
 				get = function(info)
@@ -152,7 +152,7 @@ mMT.options.args.interface.args.comfort.args.dice_button.args = {
 			},
 			color = {
 				type = "color",
-				order = 8,
+				order = 2,
 				name = L["Custom color"],
 				hasAlpha = true,
 				disabled = function()
@@ -168,16 +168,8 @@ mMT.options.args.interface.args.comfort.args.dice_button.args = {
 					mMT:UpdateModule("DiceButton")
 				end,
 			},
-		},
-	},
-	header_color_hover = {
-		order = 5,
-		type = "group",
-		inline = true,
-		name = L["Color Hover"],
-		args = {
-			mode = {
-				order = 10,
+			hover_mode = {
+				order = 3,
 				type = "select",
 				name = L["Hover Color Style"],
 				disabled = function()
@@ -195,9 +187,9 @@ mMT.options.args.interface.args.comfort.args.dice_button.args = {
 					custom = L["Custom"],
 				},
 			},
-			color = {
+			hover_color = {
 				type = "color",
-				order = 11,
+				order = 4,
 				name = L["Hover Custom Color"],
 				hasAlpha = true,
 				disabled = function()

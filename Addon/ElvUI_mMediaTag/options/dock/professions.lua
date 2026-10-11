@@ -50,11 +50,11 @@ mMT.options.args.dock.args.buttons.args.professions.args = {
 			},
 		},
 	},
-	color = {
-		order = 1,
+	colors = {
+		order = 2,
 		type = "group",
 		inline = true,
-		name = L["Color"],
+		name = L["Colors"],
 		args = {
 			custom_color = {
 				order = 1,

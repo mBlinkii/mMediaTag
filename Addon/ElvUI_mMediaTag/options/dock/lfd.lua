@@ -3,8 +3,29 @@ local mMT, DB, M, E, P, L, MEDIA = unpack(ElvUI_mMediaTag)
 local DT = E:GetModule("DataTexts")
 
 mMT.options.args.dock.args.buttons.args.lfd.args = {
-	icon = {
+	settings = {
 		order = 1,
+		type = "group",
+		inline = true,
+		name = L["Settings"],
+		args = {
+			cta = {
+				order = 1,
+				type = "toggle",
+				name = L["Call to the arms"],
+				desc = L["Show icons for call to the arms."],
+				get = function(info)
+					return E.db.mMediaTag.dock.lfd.call_to_the_Arms
+				end,
+				set = function(info, value)
+					E.db.mMediaTag.dock.lfd.call_to_the_Arms = value
+					DT:ForceUpdate_DataText("mMT_Dock_LFD")
+				end,
+			},
+		},
+	},
+	icon = {
+		order = 2,
 		type = "group",
 		inline = true,
 		name = L["Icon"],
@@ -50,11 +71,32 @@ mMT.options.args.dock.args.buttons.args.lfd.args = {
 			},
 		},
 	},
-	color = {
-		order = 1,
+	text = {
+		order = 3,
 		type = "group",
 		inline = true,
-		name = L["Color"],
+		name = L["Text"],
+		args = {
+			text = {
+				order = 1,
+				type = "toggle",
+				name = L["Text"],
+				desc = L["Show difficulty or call to the arms on the icon."],
+				get = function(info)
+					return E.db.mMediaTag.dock.lfd.text
+				end,
+				set = function(info, value)
+					E.db.mMediaTag.dock.lfd.text = value
+					DT:ForceUpdate_DataText("mMT_Dock_LFD")
+				end,
+			},
+		},
+	},
+	colors = {
+		order = 4,
+		type = "group",
+		inline = true,
+		name = L["Colors"],
 		args = {
 			custom_color = {
 				order = 1,
@@ -85,40 +127,6 @@ mMT.options.args.dock.args.buttons.args.lfd.args = {
 					local hex = E:RGBToHex(r, g, b, mMT:FloatToHex(a))
 					E.db.mMediaTag.color.dock.lfd = hex
 					MEDIA.color.dock.lfd = CreateColorFromHexString(hex)
-					DT:ForceUpdate_DataText("mMT_Dock_LFD")
-				end,
-			},
-		},
-	},
-	settings = {
-		order = 3,
-		type = "group",
-		inline = true,
-		name = L["Settings"],
-		args = {
-			text = {
-				order = 1,
-				type = "toggle",
-				name = L["Text"],
-				desc = L["Show difficulty or call to the arms on the icon."],
-				get = function(info)
-					return E.db.mMediaTag.dock.lfd.text
-				end,
-				set = function(info, value)
-					E.db.mMediaTag.dock.lfd.text = value
-					DT:ForceUpdate_DataText("mMT_Dock_LFD")
-				end,
-			},
-			cta = {
-				order = 2,
-				type = "toggle",
-				name = L["Call to the arms"],
-				desc = L["Show icons for call to the arms."],
-				get = function(info)
-					return E.db.mMediaTag.dock.lfd.call_to_the_Arms
-				end,
-				set = function(info, value)
-					E.db.mMediaTag.dock.lfd.call_to_the_Arms = value
 					DT:ForceUpdate_DataText("mMT_Dock_LFD")
 				end,
 			},
