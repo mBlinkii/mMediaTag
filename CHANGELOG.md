@@ -1,6 +1,6 @@
 # Changelog - ElvUI_mMediaTag
 
-## [ver. 4.15] - TBD
+## [ver. 4.15] - 13.10.2026
 ### 🐛 FIX
 - FIX - [Cooldown-Manager]: Icons had rounded corners and texts were too large, ElvUI's cooldown manager skin is now turned on with the module.
 - FIX - [Cooldown-Manager]: Proc glow was missing on replaced spells and could go out when icons were rearranged.
@@ -11,6 +11,7 @@
 - FIX - [DT-Teleports]: The dungeon of your group was sometimes not highlighted after signing up or while forming the group.
 - FIX - [DT-Teleports]: Learned dungeon teleports and not yet loaded items or toys were sometimes missing, and Horde mages missed their city teleports.
 - FIX - [Group-Keystones]: Keys of group members could disappear although nothing changed in the group.
+- FIX - [Keystone-Teleports]: The dungeon of your group is listed with its teleport even when none of the known keys is for it.
 - FIX - [Localization]: Spanish (Spain) clients showed the English texts.
 - FIX - [Portraits]: Jiberish Fabled Icons are found again after the addon rename and its new spec icons can be selected.
 - FIX - [Portraits]: Portraits could break after switching the ElvUI profile.
@@ -25,9 +26,10 @@
 - UPDATE - [Objective-Tracker]: Hovered entries are highlighted, Initiative Tasks are skinned too and the options are reorganized.
 - UPDATE - [Options]: Settings menu reorganized into grouped categories with subpages and new icons, a new Comfort category for automations and helpers, shortcut buttons on every category page, a reset button and a short description on every module page, module settings grouped the same way everywhere (Settings, Layout, Icon, Text, Colors), new modules marked as New and all module colors gathered under Colors.
 - UPDATE - [System]: Removed unused textures, the addon is smaller.
+- UPDATE - [System]: Less work in combat, the mMT-power tag, the Important Casts health bar color, the Cooldown Manager pandemic marker and the friends and guild docks no longer update on every hit, aura tick or key press.
 ### ✨ NEW
 - NEW - [Auto-Delete]: New module that fills in the confirmation word when you delete an item, in every client language.
-- NEW - [Buff-Reminder]: New module that shows missing raid buffs, flasks, food, augment runes, weapon oils and class buffs in dungeons and raids, uses them on click and lets you pick your food, flask and oil with a right click.
+- NEW - [Buff-Reminder]: New module that shows missing raid buffs, flasks, food, augment runes, weapon oils and class buffs in dungeons and raids, uses them on click, lets you pick your food, flask and oil with a right click and on entering shows everything that would run out during the run.
 - NEW - [Keystone-Teleports]: New module that lists the keystones of your group with a clickable teleport to each dungeon and highlights the dungeon of your group, optionally flashing it once the group is full.
 - NEW - [LFG-Info]: Shows the matching group keystones when you join a M+ group.
 - NEW - [Mail-Helper]: New module for the mailbox that takes only the gold from your mails, shows an inbox overview, keeps opening an overflowing inbox and lists your alts and contacts as recipients.

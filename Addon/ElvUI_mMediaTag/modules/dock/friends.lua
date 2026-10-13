@@ -68,7 +68,8 @@ local function OnEvent(...)
 
 	if friendsDT and friendsDT ~= "Data Broker" then friendsDT.eventFunc(...) end
 
-	if E.db.mMediaTag.dock.friends.text then
+	-- a modifier key only refreshes the tooltip, the online count stays the same
+	if E.db.mMediaTag.dock.friends.text and event ~= "MODIFIER_STATE_CHANGED" then
 		local onlineFriends = GetNumOnlineFriends()
 		local onlineBNFriends = select(2, BNGetNumFriends())
 		self.mMT_Dock.TextA:SetText(onlineFriends + onlineBNFriends)

@@ -17,6 +17,7 @@ local IsInRaid = IsInRaid
 local min = math.min
 local random = math.random
 local select = select
+local tinsert = tinsert
 local UnitClass = UnitClass
 local UnitExists = UnitExists
 local UnitIsGroupLeader = UnitIsGroupLeader
@@ -32,7 +33,8 @@ local RegisterStateDriver = RegisterStateDriver
 
 local LSM = E.Libs.LSM
 
-local MAX_ROWS = 5
+-- five members plus the group dungeon when none of the known keys is for it
+local MAX_ROWS = 6
 local FULL_GROUP = 5
 local PADDING = 6
 local TITLE_SPACING = 4
@@ -254,12 +256,13 @@ end
 local function SetRow(row, unit, level, challengeMapID, targetMapID, leader, own)
 	local dungeon, _, _, texture, _, instanceMapID = GetMapUIInfo(challengeMapID)
 	local spellID = mMT:GetSeasonTeleport(challengeMapID)
-	local name = GetUnitName(unit, false)
+	-- the group dungeon row has no unit and no level
+	local name = unit and GetUnitName(unit, false)
 	if E:IsSecretValue(name) or not name then name = "" end
-	local _, class = UnitClass(unit)
+	local class = unit and select(2, UnitClass(unit))
 	local classColor = class and GetClassColor(class)
-	local levelColor = GetKeystoneLevelRarityColor(level)
-	local levelText = "+" .. level
+	local levelColor = level and GetKeystoneLevelRarityColor(level)
+	local levelText = level and ("+" .. level)
 	local active = targetMapID and instanceMapID == targetMapID
 
 	row.spellID = spellID
@@ -271,7 +274,8 @@ local function SetRow(row, unit, level, challengeMapID, targetMapID, leader, own
 	row.icon:SetDesaturated(not spellID)
 	local r, g, b = HighlightColor()
 	dungeon = dungeon or ""
-	row.key:SetText(format("%s %s", levelColor and levelColor:WrapTextInColorCode(levelText) or levelText, active and E:RGBToHex(r, g, b) .. dungeon .. "|r" or dungeon))
+	dungeon = active and E:RGBToHex(r, g, b) .. dungeon .. "|r" or dungeon
+	row.key:SetText(levelText and format("%s %s", levelColor and levelColor:WrapTextInColorCode(levelText) or levelText, dungeon) or dungeon)
 	name = classColor and classColor:WrapTextInColorCode(name) or name
 	local iconSize = format(":%d:%d", module.db.text.size, module.db.text.size)
 	local icons = (leader and E:TextureString(MEDIA.icons.leader.leader01, iconSize) .. " " or "") .. (own and E:TextureString(MEDIA.icons.keystone.keystone01, iconSize) .. " " or "")
@@ -290,6 +294,23 @@ local function SetRow(row, unit, level, challengeMapID, targetMapID, leader, own
 	row:Show()
 end
 
+local function IsDungeon(challengeMapID, instanceMapID)
+	return select(6, GetMapUIInfo(challengeMapID)) == instanceMapID
+end
+
+-- challengeMapID of the group dungeon when none of the known keys is for it, e.g. a leader without Details! or BigWigs
+local function GetMissingTargetMap(targetMapID)
+	if not targetMapID then return end
+
+	for _, entry in ipairs(entries) do
+		if IsDungeon(entry.challengeMapID, targetMapID) then return end
+	end
+
+	for _, challengeMapID in ipairs(GetMapTable() or {}) do
+		if IsDungeon(challengeMapID, targetMapID) then return challengeMapID end
+	end
+end
+
 local function AddEntry(unit, level, challengeMapID, leader, own)
 	entries[#entries + 1] = { unit = unit, level = level, challengeMapID = challengeMapID, leader = leader, own = own }
 end
@@ -303,7 +324,7 @@ local function CollectEntries()
 	if module.demo then
 		-- own name on the dungeons of the season, the first one as the dungeon of the group
 		local maps = GetMapTable() or {}
-		for i = 1, min(#maps, MAX_ROWS) do
+		for i = 1, min(#maps, FULL_GROUP) do
 			AddEntry("player", 8 + i * 2, maps[i], i == module.demoLeader, i == module.demoOwn)
 		end
 		return #entries, maps[1] and select(6, GetMapUIInfo(maps[1]))
@@ -317,7 +338,12 @@ local function CollectEntries()
 			if level then AddEntry(unit, level, challengeMapID, E:NotSecretUnit(unit) and UnitIsGroupLeader(unit), unit == "player") end
 		end
 	end
-	return #entries, mMT:GetTeleportTargetMapID()
+
+	local targetMapID = mMT:GetTeleportTargetMapID()
+	local missingMapID = GetMissingTargetMap(targetMapID)
+	if missingMapID then tinsert(entries, 1, { challengeMapID = missingMapID }) end
+
+	return #entries, targetMapID
 end
 
 local function ShowFrame()
@@ -486,8 +512,8 @@ function module:Initialize(demo)
 		module.demo = not module.demo
 		module.flashPending = module.demo and module.db.highlight.flash or nil
 		-- the demo rows are all the player, so random ones get the leader crown and the own key
-		module.demoLeader = random(MAX_ROWS)
-		module.demoOwn = random(MAX_ROWS)
+		module.demoLeader = random(FULL_GROUP)
+		module.demoOwn = random(FULL_GROUP)
 	end
 
 	if not module.frame then

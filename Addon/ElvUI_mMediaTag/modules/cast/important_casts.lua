@@ -2,7 +2,7 @@ local mMT, DB, M, E, P, L, MEDIA = unpack(ElvUI_mMediaTag)
 local module = mMT:AddModule("ImportantCasts", { "AceEvent-3.0" })
 
 -- Cache WoW Globals
-local pairs, next = pairs, next
+local pairs = pairs
 local CreateFrame = CreateFrame
 local UnitCanAttack = UnitCanAttack
 local UnitIsDead = UnitIsDead
@@ -111,7 +111,8 @@ local function GetCastbarNameplate(castbar)
 end
 
 -- nameplates with a colored health bar, checked for death on UNIT_HEALTH
-local coloredPlates = {}
+-- unit token > colored plate, so UNIT_HEALTH finds its plate without a loop
+local coloredUnits = {}
 local MAX_SECRET_OVERLAYS = 20
 
 -- index 1 is the plain overlay, every secret cast gets its own one, a secret result can not be merged with earlier ones and must not turn them off
@@ -156,12 +157,18 @@ local function ApplyOverlayState(nameplate, isImportant)
 	end
 
 	overlay:SetVertexColor(module.healthColor.r, module.healthColor.g, module.healthColor.b)
-	coloredPlates[nameplate] = true
+	local unit = nameplate.__unit
+	if unit then
+		coloredUnits[unit] = nameplate
+		nameplate.mMT_ColoredUnit = unit
+	end
 end
 
 local function ResetImportantCastOverlay(nameplate)
 	if not nameplate then return end
-	coloredPlates[nameplate] = nil
+	local unit = nameplate.mMT_ColoredUnit
+	if unit and coloredUnits[unit] == nameplate then coloredUnits[unit] = nil end
+	nameplate.mMT_ColoredUnit = nil
 
 	local healthBar = nameplate.Health
 	local overlays = healthBar and healthBar.mMT_ImportantCastOverlays
@@ -173,12 +180,10 @@ local function ResetImportantCastOverlay(nameplate)
 	healthBar.mMT_ImportantCastSecretUsed = 0
 end
 
+-- a recycled plate can carry another unit by now, so the token is checked again
 local function OnUnitHealth(_, unit)
-	if not next(coloredPlates) then return end
-
-	for nameplate in pairs(coloredPlates) do
-		if nameplate.__unit == unit and UnitIsDead(unit) then ResetImportantCastOverlay(nameplate) end
-	end
+	local nameplate = coloredUnits[unit]
+	if nameplate and nameplate.__unit == unit and UnitIsDead(unit) then ResetImportantCastOverlay(nameplate) end
 end
 
 local function ResetAllImportantCastOverlays()

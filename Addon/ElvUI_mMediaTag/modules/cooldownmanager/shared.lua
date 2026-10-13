@@ -435,12 +435,23 @@ local function PandemicStyle(vdb)
 	return style
 end
 
+-- Blizzard calls this on every aura tick, so the settings are only read again after a refresh or a state change
 function module:SetPandemic(item, active)
+	local version = module.pandemicVersion
+	local icon = item.PandemicIcon
+	if icon and item.mmtPandemicSeen == version and item.mmtPandemic == active then
+		if item.mmtPandemicStyle ~= "blizzard" then
+			icon:Hide()
+			return
+		end
+		if icon.mmtPandemicVersion == version then return end
+	end
+
 	local vdb = module:ViewerDB(ViewerKey(item))
 	local style = vdb and PandemicStyle(vdb)
 	if not style then return end
+	item.mmtPandemicSeen = version
 
-	local icon = item.PandemicIcon
 	if icon then
 		if style ~= "blizzard" then
 			-- Blizzard re-shows its marker on every tick, so hiding has to be re-asserted

@@ -553,7 +553,8 @@ E:AddTagInfo(
 	L["Returns the faction icon of the unit (Horde or Alliance), but only if it's the opposite faction of the player."]
 )
 
-E:AddTag("mMT-power", "UNIT_DISPLAYPOWER UNIT_POWER_FREQUENT UNIT_MAXPOWER PLAYER_ROLES_ASSIGNED GROUP_ROSTER_UPDATE UNIT_COMBAT", function(unit)
+-- UNIT_FLAGS covers entering and leaving combat, UNIT_COMBAT fired on every hit
+E:AddTag("mMT-power", "UNIT_DISPLAYPOWER UNIT_POWER_FREQUENT UNIT_MAXPOWER UNIT_FLAGS", function(unit)
 	if UnitAffectingCombat(unit) then return _TAGS.perpp(unit) end
 end)
 E:AddTagInfo("mMT-power", mMT.NameShort .. " " .. L["Power"], L["Returns the current power percent of the unit, but only while in combat."])

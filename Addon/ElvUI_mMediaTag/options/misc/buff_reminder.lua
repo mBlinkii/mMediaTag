@@ -27,6 +27,7 @@ local raidGet, raidSet = Accessors("raid_buffs")
 local instanceGet, instanceSet = Accessors("instances")
 local textGet, textSet = Accessors("text")
 local glowGet, glowSet = Accessors("glow")
+local entryGet, entrySet = Accessors("entry")
 
 mMT.options.args.group.args.group_tools.args.buff_reminder.args = {
 	enable = {
@@ -107,6 +108,36 @@ mMT.options.args.group.args.group_tools.args.buff_reminder.args = {
 				desc = L["Fades the reminder in and out. Entering combat always hides it at once."],
 				get = get,
 				set = set,
+			},
+		},
+	},
+	entry = {
+		order = 4.2,
+		type = "group",
+		inline = true,
+		name = L["Minimum Duration"],
+		disabled = Disabled,
+		args = {
+			enable = {
+				order = 1,
+				type = "toggle",
+				name = L["Enable"],
+				desc = L["When you enter a dungeon or raid, everything with less time left shows up and glows until the first pull, so flasks and co last the whole run."],
+				get = entryGet,
+				set = entrySet,
+			},
+			duration = {
+				order = 2,
+				type = "range",
+				name = L["Minimum duration (minutes)"],
+				min = 5,
+				max = 60,
+				step = 1,
+				disabled = function()
+					return Disabled() or not E.db.mMediaTag.buff_reminder.entry.enable
+				end,
+				get = entryGet,
+				set = entrySet,
 			},
 		},
 	},

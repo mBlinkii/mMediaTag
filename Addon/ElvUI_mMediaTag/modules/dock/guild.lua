@@ -67,7 +67,8 @@ local function OnEvent(...)
 
 	if guildDT and guildDT ~= "Data Broker" then guildDT.eventFunc(...) end
 
-	if E.db.mMediaTag.dock.guild.text then
+	-- a modifier key only refreshes the tooltip, the online count stays the same
+	if E.db.mMediaTag.dock.guild.text and event ~= "MODIFIER_STATE_CHANGED" then
 		local onlineGuildMembers = select(2, GetNumGuildMembers())
 		self.mMT_Dock.TextA:SetText(onlineGuildMembers)
 	end

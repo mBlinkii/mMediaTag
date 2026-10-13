@@ -236,7 +236,8 @@ end
 -- Important Casts can limit its glow to a ready kick
 local function NotifyKickReady(castbar, ready)
 	local importantCasts = M.ImportantCasts
-	if importantCasts and importantCasts.UpdateKickReady then importantCasts:UpdateKickReady(castbar, ready) end
+	local db = importantCasts and importantCasts.db
+	if db and db.enable and db.glow_ready_only then importantCasts:UpdateKickReady(castbar, ready) end
 end
 
 -- nil = no interrupt to track, otherwise the possibly secret ready state

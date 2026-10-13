@@ -13,8 +13,10 @@ local type = type
 local unpack = unpack
 local wipe = wipe
 local ceil = math.ceil
+local max = math.max
 local CreateFrame = CreateFrame
 local GameTooltip = GameTooltip
+local GetInstanceInfo = GetInstanceInfo
 local GetInventoryItemID = GetInventoryItemID
 local GetInventoryItemTexture = GetInventoryItemTexture
 local GetNumGroupMembers = GetNumGroupMembers
@@ -138,6 +140,18 @@ local PET_SPECS = {
 	[267] = 688, -- Destruction, Summon Imp
 }
 local GRIMOIRE_OF_SACRIFICE = 196099
+
+-- class spells that imbue the main hand, the button casts them instead of using an oil
+local WEAPON_SPELLS = {
+	PALADIN = { 433568 }, -- Rite of Sanctification
+}
+
+local function WeaponSpell(slot)
+	if slot ~= SLOT_MAINHAND then return end
+	for _, spellID in ipairs(WEAPON_SPELLS[E.myclass] or {}) do
+		if IsSpellKnown(spellID) then return spellID end
+	end
+end
 
 local missing = {}
 local groupClasses = {}
@@ -408,10 +422,11 @@ local function HideFrame()
 	end
 end
 
+-- after entering a dungeon or raid everything below the minimum duration glows until the first pull
 local function SetGlow(button, expiring)
 	if not LCG then return end
 	local glow = module.db.glow
-	if expiring and glow.enable then
+	if expiring and (glow.enable or (module.entryActive and module.db.entry.enable)) then
 		local r, g, b = mMT:HexToRGB(glow.color)
 		glowColor[1], glowColor[2], glowColor[3] = r, g, b
 		LCG.PixelGlow_Start(button, glowColor, glow.lines, 0.25, nil, glow.thickness, 0, 0, nil, GLOW_KEY, GLOW_LEVEL)
@@ -435,10 +450,17 @@ local function Add(title, texture, info, text, action, expiring, qualityItem)
 	missing[#missing + 1] = { title = title, texture = texture, info = info, text = text, action = action, expiring = expiring, qualityItem = qualityItem }
 end
 
+-- minutes, the minimum duration replaces the threshold while the entry check runs
+local function Threshold()
+	local db = module.db
+	if module.entryActive and db.entry.enable then return max(db.threshold, db.entry.duration) end
+	return db.threshold
+end
+
 -- remaining minutes below the threshold count as missing
 local function Expiring(expirationTime)
 	if not expirationTime or expirationTime == 0 then return false end
-	return expirationTime - GetTime() < module.db.threshold * 60
+	return expirationTime - GetTime() < Threshold() * 60
 end
 
 local function MinutesLeft(expirationTime)
@@ -620,10 +642,12 @@ local function CheckWeaponSlot(slot)
 	if classID ~= CLASS_WEAPON then return end
 
 	local enchant = GetTemporaryEnchantmentInfo(slot)
-	local expiring = enchant and enchant.hasExpirationTime and enchant.remainingTimeMs < module.db.threshold * 60000
+	local expiring = enchant and enchant.hasExpirationTime and enchant.remainingTimeMs < Threshold() * 60000
 	if not enchant or expiring then
 		local text = enchant and enchant.hasExpirationTime and ceil(enchant.remainingTimeMs / 60000) .. "m" or nil
-		Add(slot == SLOT_MAINHAND and L["Main Hand Enchant"] or L["Off Hand Enchant"], GetInventoryItemTexture("player", slot), nil, text, ItemAction(PickItem("oil"), "oil", slot), expiring)
+		local spellID = WeaponSpell(slot)
+		local action = spellID and SpellAction(spellID) or ItemAction(PickItem("oil"), "oil", slot)
+		Add(slot == SLOT_MAINHAND and L["Main Hand Enchant"] or L["Off Hand Enchant"], GetInventoryItemTexture("player", slot), nil, text, action, expiring)
 	end
 end
 
@@ -859,8 +883,8 @@ end
 
 -- everything that triggers a check, none of it runs in combat
 local CHECK_EVENTS = {
-	PLAYER_ENTERING_WORLD = RescanBags,
-	ZONE_CHANGED_NEW_AREA = QueueUpdate,
+	PLAYER_ENTERING_WORLD = "PLAYER_ENTERING_WORLD",
+	ZONE_CHANGED_NEW_AREA = "ZONE_CHANGED_NEW_AREA",
 	GET_ITEM_INFO_RECEIVED = "GET_ITEM_INFO_RECEIVED",
 	PLAYER_ALIVE = QueueUpdate,
 	PLAYER_UNGHOST = QueueUpdate,
@@ -891,9 +915,38 @@ local function StopChecks()
 	StopTicker()
 end
 
+local ENTRY_TYPES = { party = true, raid = true }
+
+-- a new dungeon or raid starts the entry check, leaving it or another instance of the same id does not
+local function UpdateEntry()
+	local _, instanceType, _, _, _, _, _, instanceID = GetInstanceInfo()
+	if not (ENTRY_TYPES[instanceType] and E:NotSecretValue(instanceID)) then
+		module.entryInstance = nil
+		module.entryActive = nil
+		return
+	end
+
+	if instanceID ~= module.entryInstance then
+		module.entryInstance = instanceID
+		module.entryActive = true
+	end
+end
+
+function module:PLAYER_ENTERING_WORLD()
+	UpdateEntry()
+	RescanBags()
+end
+
+function module:ZONE_CHANGED_NEW_AREA()
+	UpdateEntry()
+	QueueUpdate()
+end
+
+-- the first pull ends the entry check
 function module:PLAYER_REGEN_DISABLED()
 	HideFlyout()
 	StopChecks()
+	module.entryActive = nil
 end
 
 -- bags and buffs may have changed during the fight
@@ -920,6 +973,8 @@ function module:Initialize(demo)
 
 	if not module.frame then CreateReminderFrame() end
 	bagsDirty = true
+	-- the loading screen is usually over before the module starts, a reload inside an instance counts as entering it
+	if not InCombatLockdown() then UpdateEntry() end
 
 	if not module.isEnabled then
 		module:RegisterEvent("PLAYER_REGEN_ENABLED")

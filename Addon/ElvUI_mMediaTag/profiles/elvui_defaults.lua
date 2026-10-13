@@ -141,6 +141,10 @@ P.buff_reminder = {
 		scenario = true,
 	},
 	threshold = 5,
+	entry = {
+		enable = true,
+		duration = 25,
+	},
 	animation = true,
 	glow = {
 		enable = false,
