@@ -21,14 +21,9 @@ local EvalColorBool = C_CurveUtil.EvaluateColorValueFromBoolean
 local EvalColor = C_CurveUtil.EvaluateColorFromBoolean
 local GetSpecialization = C_SpecializationInfo.GetSpecialization or GetSpecialization
 local GetSpecializationInfo = C_SpecializationInfo.GetSpecializationInfo or GetSpecializationInfo
-local IsSpellImportant = C_Spell.IsSpellImportant
 
 local NP = E:GetModule("NamePlates")
 local UF = E:GetModule("UnitFrames")
-local LCG = LibStub("LibCustomGlow-1.0", true)
-
-local GLOW_KEY = "mMT_InterruptGlow"
-local glowColor = {}
 
 -- Interrupt spell IDs per spec (nil = spec has no interrupt)
 local INTERRUPT_BY_SPEC = {
@@ -238,97 +233,27 @@ local function SetCastbarColor(castbar, ready)
 	end
 end
 
--- nested frames multiply their alpha, which ANDs the secret conditions: interruptible > important > kick ready
-local function GetGlowHolder(target)
-	local holder = target.mMT_InterruptGlow
-	if holder then return holder end
-
-	local interruptible = CreateFrame("Frame", nil, target)
-	interruptible:SetAllPoints(target)
-	interruptible:SetFrameLevel(target:GetFrameLevel() + 5)
-
-	local important = CreateFrame("Frame", nil, interruptible)
-	important:SetAllPoints(target)
-
-	local ready = CreateFrame("Frame", nil, important)
-	ready:SetAllPoints(target)
-
-	holder = { interruptible = interruptible, important = important, ready = ready }
-	target.mMT_InterruptGlow = holder
-	return holder
+-- Important Casts can limit its glow to a ready kick
+local function NotifyKickReady(castbar, ready)
+	local importantCasts = M.ImportantCasts
+	if importantCasts and importantCasts.UpdateKickReady then importantCasts:UpdateKickReady(castbar, ready) end
 end
 
-local function StopGlow(target)
-	local holder = target and target.mMT_InterruptGlow
-	if not (holder and holder.active) then return end
-
-	LCG.PixelGlow_Stop(holder.ready, GLOW_KEY)
-	holder.active = false
-end
-
-local function StopGlows(castbar)
-	if not LCG then return end
-	StopGlow(castbar)
-	StopGlow(castbar.__owner and castbar.__owner.Health)
-end
-
-local function UpdateGlow(target, castbar, castStart, ready)
-	if not target then return end
-	local glow = module.glow
-	local holder = GetGlowHolder(target)
-
-	if castStart then
-		local c = module.colors.glow
-		glowColor[1], glowColor[2], glowColor[3], glowColor[4] = c.r, c.g, c.b, 1
-		LCG.PixelGlow_Start(holder.ready, glowColor, 8, 0.25, nil, module.glow.thickness, 0, 0, nil, GLOW_KEY)
-		holder.active = true
-	end
-
-	-- the interruptible state can change mid cast, so it is refreshed on every update
-	local notInterruptible = castbar.notInterruptible
-	if HasValue(notInterruptible) then
-		holder.interruptible:SetAlphaFromBoolean(notInterruptible, 0, 1)
-	else
-		holder.interruptible:SetAlpha(1)
-	end
-
-	if glow.important_only then
-		holder.important:SetAlphaFromBoolean(castbar.mMT_IsImportant, 1, 0)
-	else
-		holder.important:SetAlpha(1)
-	end
-
-	if glow.ready_only then
-		holder.ready:SetAlphaFromBoolean(ready, 1, 0)
-	else
-		holder.ready:SetAlpha(1)
-	end
-end
-
-local function UpdateGlows(castbar, castStart, ready)
-	local glow = module.glow
-	if not (LCG and (glow.castbar or glow.health)) then return end
-
-	if castStart and glow.important_only then
-		-- the spell id is secret on restricted units, IsSpellImportant accepts it as is
-		local spellID = castbar.spellID
-		local isImportant = false
-		if HasValue(spellID) then isImportant = IsSpellImportant(spellID) end
-		castbar.mMT_IsImportant = isImportant
-	end
-
-	if glow.castbar then UpdateGlow(castbar, castbar, castStart, ready) end
-	if glow.health then UpdateGlow(castbar.__owner and castbar.__owner.Health, castbar, castStart, ready) end
+-- nil = no interrupt to track, otherwise the possibly secret ready state
+function module:GetKickReady()
+	if not (module.isEnabled and module.interruptSpellId) then return nil end
+	if IsPetDown() then return false end
+	return IsKickReady(GetInterruptCooldown())
 end
 
 local function UpdateCast(castbar, castStart)
 	-- the frame is pooled, so re-check the unit on every update instead of trusting PostCastStart
 	local unit = castbar.unit or (castbar.__owner and castbar.__owner.__unit)
-	if not (unit and UnitCanAttack("player", unit)) then return StopGlows(castbar) end
+	if not (unit and UnitCanAttack("player", unit)) then return end
 
 	-- interrupt lost since the cast started (pet dismissed, talent change), leave the castbar to ElvUI
 	if not module.interruptSpellId then
-		StopGlows(castbar)
+		NotifyKickReady(castbar, nil)
 		return HideKickBar(castbar)
 	end
 
@@ -336,7 +261,7 @@ local function UpdateCast(castbar, castStart)
 	if IsPetDown() then
 		HideKickBar(castbar)
 		SetCastbarColor(castbar, false)
-		return UpdateGlows(castbar, castStart, false)
+		return NotifyKickReady(castbar, false)
 	end
 
 	local cooldown = GetInterruptCooldown()
@@ -344,7 +269,7 @@ local function UpdateCast(castbar, castStart)
 
 	SetKickSpark(castbar, castStart, cooldown, ready)
 	SetCastbarColor(castbar, ready)
-	UpdateGlows(castbar, castStart, ready)
+	NotifyKickReady(castbar, ready)
 end
 
 local function ConstructKickBar(castbar)
@@ -383,7 +308,7 @@ local function PostCastStart(castbar, unit)
 	if not (castbar.casting or castbar.channeling) then return end
 	if not UnitCanAttack("player", unit) then return end
 	if not module.interruptSpellId then
-		StopGlows(castbar)
+		NotifyKickReady(castbar, nil)
 		return HideKickBar(castbar)
 	end
 
@@ -401,7 +326,6 @@ end
 local function PostCastFailOrInterrupted(castbar)
 	castbar.isInterruptedOrFailed = true
 	if castbar.mMT_KickBar then castbar.mMT_KickBar:SetAlpha(0) end
-	StopGlows(castbar)
 end
 
 -- ElvUI snapshots the Post* callbacks onto the castbar at frame construction and oUF only calls element:PostCastStart(), so hooking the NP/UF tables does nothing - hook the instances.
@@ -411,9 +335,6 @@ local function HookCastbarInstance(castbar)
 	if castbar.PostCastStart then hooksecurefunc(castbar, "PostCastStart", PostCastStart) end
 	if castbar.PostCastFail then hooksecurefunc(castbar, "PostCastFail", PostCastFailOrInterrupted) end
 	if castbar.PostCastInterrupted then hooksecurefunc(castbar, "PostCastInterrupted", PostCastFailOrInterrupted) end
-	if castbar.PostCastStop then hooksecurefunc(castbar, "PostCastStop", StopGlows) end
-	-- a recycled nameplate hides the castbar without a stop callback, the health bar glow would keep running
-	castbar:HookScript("OnHide", StopGlows)
 
 	castbar.mMT_CastbarHooked = true
 end
@@ -457,19 +378,11 @@ function module:Initialize()
 			onCD = MEDIA.color.interrupt_on_cd.onCD,
 			normal = MEDIA.color.interrupt_on_cd.normal,
 			marker = MEDIA.color.interrupt_on_cd.marker,
-			glow = MEDIA.color.interrupt_on_cd.glow,
 		}
 
 		local db = E.db.mMediaTag.interrupt_on_cd
 		module.set_bg_color = db.set_bg_color
 		module.bg_multiplier = db.bg_multiplier
-		module.glow = {
-			castbar = db.glow_castbar,
-			health = db.glow_health,
-			important_only = db.glow_important_only,
-			ready_only = db.glow_ready_only,
-			thickness = db.glow_thickness or 2,
-		}
 
 		if module.set_bg_color then
 			local m = module.bg_multiplier

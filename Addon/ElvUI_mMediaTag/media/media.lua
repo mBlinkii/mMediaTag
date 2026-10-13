@@ -60,6 +60,7 @@ MEDIA.color = {
 	important_casts = {
 		border = createColor("FFFF00E6"),
 		health = createColor("FFFF00E6"),
+		glow = createColor("FFFFD100"),
 	},
 
 	portraits = {
@@ -101,7 +102,6 @@ MEDIA.color = {
 		onCD = createColor("FFA200FF"),
 		normal = createColor("FF15FF47"),
 		marker = createColor("FFFFFFFF"),
-		glow = createColor("FFFFD100"),
 	},
 
 	minimap_skin = { color = createColor("FFFFFFFF"), cardinal = createColor("FFFFFFFF") },
@@ -264,7 +264,7 @@ function mMT:UpdateMedia(arg)
 
 	if arg == "interrupt" or not arg then
 		MEDIA.color.interrupt_on_cd = {}
-		SetColors(MEDIA.color.interrupt_on_cd, colors.interrupt_on_cd, { "onCD", "normal", "marker", "glow" })
+		SetColors(MEDIA.color.interrupt_on_cd, colors.interrupt_on_cd, { "onCD", "normal", "marker" })
 	end
 
 	if arg == "minimap_skin" or not arg then SetColors(MEDIA.color.minimap_skin, colors.minimap_skin, { "color", "cardinal" }) end
@@ -325,7 +325,7 @@ function mMT:UpdateMedia(arg)
 
 	if arg == "important_casts" or not arg then
 		MEDIA.color.important_casts = {}
-		SetColors(MEDIA.color.important_casts, colors.important_casts, { "border", "health" })
+		SetColors(MEDIA.color.important_casts, colors.important_casts, { "border", "health", "glow" })
 	end
 end
 

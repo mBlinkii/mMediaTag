@@ -152,6 +152,17 @@ L["Welcome to %s %s version |CFFF7DC6F%s|r, type |CFF58D68D/mmt|r to access the 
 -- modules/misc/group_keystones.lua
 L["Group Keystones"] = true
 
+-- modules/misc/buff_reminder.lua
+L["Augment Rune"] = true
+L["Buff Reminder"] = true
+L["Click: %s"] = true
+L["Right click: choose the item"] = true
+L["Flask"] = true
+L["Food"] = true
+L["Main Hand Enchant"] = true
+L["Missing on %d group members"] = true
+L["Off Hand Enchant"] = true
+
 -- modules/misc/keystone_teleports.lua
 L["Keystone Teleports"] = true
 L["Teleport not learned"] = true
@@ -181,6 +192,10 @@ L["Help"] = true
 L["Thanks to:"] = true
 
 -- options/cast/important_casts.lua
+L["Important Casts"] = true
+L["Glows while an important enemy cast is running."] = true
+L["Only interruptible casts"] = true
+L["Needs Interrupt On CD."] = true
 L["Adds an Extra Icon to the Castbar."] = true
 L["Border Color"] = true
 L["Class Colors"] = true
@@ -547,10 +562,8 @@ L["Enabled"] = true
 L["Background Multiplier"] = true
 L["Change BG color"] = true
 L["Enable to change the background color of the castbar."] = true
-L["Glows while the current cast can be interrupted."] = true
 L["Marker"] = true
 L["On CD"] = true
-L["Only important casts"] = true
 L["Only when your interrupt is ready"] = true
 L["Set the background color multiplier for the castbar."] = true
 L["The marker color for in time interrupts."] = true
@@ -784,6 +797,32 @@ L["Post your keystone to the chat when someone types !key or !keys into the chat
 -- options/misc/group_keystones.lua
 L["Shows the keystones of your group next to the group finder listing."] = true
 L["The keystones of your group members need Details! or BigWigs."] = true
+
+-- options/misc/buff_reminder.lua
+L["Shows icons for missing raid buffs, consumables, weapon enchants and class buffs. It only shows out of combat, while auras can be read. Click an icon to use the consumable or cast your own buff. Right click food, flasks and weapon enchants to choose the item, your choice is remembered. Only food, flasks and oils of the current expansion are used."] = true
+L["Also reminds you when group members in range are missing your raid buff."] = true
+L["Buffs and enchants with less time left count as missing. 0 only reminds when they are gone."] = true
+L["Fades the reminder in and out. Entering combat always hides it at once."] = true
+L["Lets the icons of buffs and enchants glow that are about to expire."] = true
+L["Check group members"] = true
+L["Checks"] = true
+L["Class Buffs"] = true
+L["Delves and Scenarios"] = true
+L["Direction"] = true
+L["Horizontal"] = true
+L["Only own raid buff"] = true
+L["Only reminds you of the raid buff your class can cast."] = true
+L["Only when you carry a flask."] = true
+L["Only when you carry an augment rune."] = true
+L["Open World"] = true
+L["Raid Buffs"] = true
+L["Remind before expiring (minutes)"] = true
+L["Reminds you of raid buffs that you or a class in your group can cast."] = true
+L["Rogue poisons, paladin auras, shaman shields and your pet."] = true
+L["Shows the minutes left or the number of group members missing the buff."] = true
+L["Vertical"] = true
+L["Weapon Enchant"] = true
+L["Weapon oils, sharpening stones and class imbues on your weapons."] = true
 
 -- options/misc/keystone_teleports.lua
 L["Shows the keystones of your group with the teleport to their dungeon and highlights the dungeon of your group."] = true

@@ -7,21 +7,26 @@
 - FIX - [Dock]: A reassigned slot kept the dock's icon, texts and button until a reload.
 - FIX - [Dock]: The character dock no longer prints the played time into the chat on every loading screen.
 - FIX - [Dock]: The calendar dock kept the previous day after midnight.
+- FIX - [DT-Professions]: The individual profession datatexts threw an error after unlearning a profession.
 - FIX - [DT-Teleports]: The dungeon of your group was sometimes not highlighted after signing up or while forming the group.
 - FIX - [DT-Teleports]: Learned dungeon teleports and not yet loaded items or toys were sometimes missing, and Horde mages missed their city teleports.
 - FIX - [Group-Keystones]: Keys of group members could disappear although nothing changed in the group.
+- FIX - [Localization]: Spanish (Spain) clients showed the English texts.
 - FIX - [Portraits]: Jiberish Fabled Icons are found again after the addon rename and its new spec icons can be selected.
+- FIX - [Portraits]: Portraits could break after switching the ElvUI profile.
 - FIX - [Tags]: The skull18 icon showed the skull2 texture.
 ### 🔧 UPDATE
 - UPDATE - [Cooldown-Manager]: A fixed width or height now sets the icon size by itself.
 - UPDATE - [Execute-Marker]: The marker follows the health bar size and fill direction by itself.
+- UPDATE - [Important-Casts]: The castbar and health bar glow moved here from Interrupt On CD, it now glows on important enemy casts and can be limited to interruptible casts or to a ready interrupt, with adjustable thickness.
 - UPDATE - [Interrupt-On-CD]: Less work per castbar and the kick marker no longer jumps by a pixel.
+- UPDATE - [Localization]: All languages are complete again, the new texts of this version are translated.
 - UPDATE - [Objective-Tracker]: Hovered entries are highlighted, Initiative Tasks are skinned too and the options are reorganized.
 - UPDATE - [Options]: Settings menu reorganized into grouped categories with subpages and new icons, a new Comfort category for automations and helpers, shortcut buttons on every category page, a reset button and a short description on every module page, module settings grouped the same way everywhere (Settings, Layout, Icon, Text, Colors), new modules marked as New and all module colors gathered under Colors.
 - UPDATE - [System]: Removed unused textures, the addon is smaller.
 ### ✨ NEW
 - NEW - [Auto-Delete]: New module that fills in the confirmation word when you delete an item, in every client language.
-- NEW - [Interrupt-On-CD]: Adjustable pixel glow thickness.
+- NEW - [Buff-Reminder]: New module that shows missing raid buffs, flasks, food, augment runes, weapon oils and class buffs in dungeons and raids, uses them on click and lets you pick your food, flask and oil with a right click.
 - NEW - [Keystone-Teleports]: New module that lists the keystones of your group with a clickable teleport to each dungeon and highlights the dungeon of your group, optionally flashing it once the group is full.
 - NEW - [LFG-Info]: Shows the matching group keystones when you join a M+ group.
 - NEW - [Mail-Helper]: New module for the mailbox that takes only the gold from your mails, shows an inbox overview, keeps opening an overflowing inbox and lists your alts and contacts as recipients.

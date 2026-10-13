@@ -53,7 +53,7 @@ function mMT:AddSettingsIcon(text, icon)
 	return format("|TInterface\\Addons\\ElvUI_mMediaTag\\media\\options\\%s.tga:16:16|t  %s", icon, text)
 end
 
-local DB_VERSION = 2
+local DB_VERSION = 3
 local DB_STEPS = {
 	function(db) -- 1: font subtable renamed to text, font is a plain string in every other UI
 		for _, key in ipairs({ "death_counter", "difficulty_info", "dock", "lfg_invite_info", "objective_tracker", "prey_hunt" }) do
@@ -67,6 +67,22 @@ local DB_STEPS = {
 	function(db) -- 2: portraits spec_icon was a boolean before it became a style key
 		local misc = db.portraits and db.portraits.misc
 		if misc and type(misc.spec_icon) == "boolean" then misc.spec_icon = "none" end
+	end,
+	function(db) -- 3: the cast glow moved from interrupt_on_cd to important_casts, it always required an interruptible cast
+		local old, new = db.interrupt_on_cd, db.important_casts
+		if old and new then
+			for _, key in ipairs({ "glow_castbar", "glow_health", "glow_ready_only", "glow_thickness" }) do
+				if old[key] ~= nil then new[key] = old[key] end
+				old[key] = nil
+			end
+			old.glow_important_only = nil
+		end
+
+		local colors = db.color
+		if colors and colors.interrupt_on_cd and colors.important_casts then
+			if colors.interrupt_on_cd.glow then colors.important_casts.glow = colors.interrupt_on_cd.glow end
+			colors.interrupt_on_cd.glow = nil
+		end
 	end,
 }
 

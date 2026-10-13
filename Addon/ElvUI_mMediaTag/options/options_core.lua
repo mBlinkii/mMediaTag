@@ -171,7 +171,7 @@ mMT.options = {
 					nil,
 					{ db = "interrupt_on_cd", desc = L["Colors castbars by the state of your interrupt and marks when it is ready again during the cast."] }
 				),
-				important_casts = Feature(2, "Important Casts", nil, { db = "important_casts", desc = L["Marks casts that Blizzard flags as important with an extra icon on the castbar."] }),
+				important_casts = Feature(2, L["Important Casts"], nil, { db = "important_casts", desc = L["Marks casts that Blizzard flags as important with an extra icon on the castbar."] }),
 			}),
 			status_icons = Page(3, L["Status Icons"], "inline", {
 				role_icons = Feature(1, L["Role Icons"], nil, { db = "role_icons" }),
@@ -310,6 +310,7 @@ mMT.options = {
 			group_tools = Page(3, L["Group Tools"], "tab", {
 				difficulty_info = Feature(1, L["Difficulty Info"], nil, { db = "difficulty_info", desc = L["Shows the difficulty of the current instance in its own frame."] }),
 				death_counter = Feature(2, L["Death Counter"], nil, { db = "death_counter", desc = L["Shows deaths and lost time in the current Mythic+ run."] }),
+				buff_reminder = Feature(3, L["Buff Reminder"], NotRetail, { db = "buff_reminder", new = 415 }),
 			}),
 		}),
 		quests = Category(12, L["Quests"], {

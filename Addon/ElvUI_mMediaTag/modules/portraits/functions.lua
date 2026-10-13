@@ -900,8 +900,23 @@ function module:PLAYER_ENTERING_WORLD()
 	module:InitializeToTPortrait()
 end
 
+-- on a profile switch ElvUI updates the unit frames before mMT:UpdateAll, the old profile has lost its defaults by then
+local function RebindProfile()
+	module.db = E.db.mMediaTag.portraits
+	if not module.portraits then return end
+
+	for _, element in pairs(module.portraits) do
+		element.db = module.db[element.type] or element.db
+	end
+end
+
 function module:Initialize()
 	module.db = E.db.mMediaTag.portraits
+
+	if not module.profileHooked then
+		hooksecurefunc(E, "UpdateStart", RebindProfile)
+		module.profileHooked = true
+	end
 
 	-- LINEAR is the API default, nil keeps the plain three-argument call
 	local filter = module.db.misc.filter

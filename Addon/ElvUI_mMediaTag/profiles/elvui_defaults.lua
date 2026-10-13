@@ -132,6 +132,44 @@ P.keystone_teleports = {
 	},
 }
 
+P.buff_reminder = {
+	enable = false,
+	world = false,
+	instances = {
+		party = true,
+		raid = true,
+		scenario = true,
+	},
+	threshold = 5,
+	animation = true,
+	glow = {
+		enable = false,
+		color = "FFFFC71A",
+		lines = 8,
+		thickness = 2,
+	},
+	raid_buffs = {
+		enable = true,
+		own = false,
+		group = true,
+	},
+	flask = true,
+	food = true,
+	rune = true,
+	weapon = true,
+	class_buffs = true,
+	direction = "HORIZONTAL",
+	size = 36,
+	spacing = 4,
+	text = {
+		enable = true,
+		font = "PT Sans Narrow",
+		size = 12,
+		fontFlag = "OUTLINE",
+		color = "FFFFFFFF",
+	},
+}
+
 P.difficulty_info = {
 	enable = false,
 	background = false,
@@ -557,11 +595,6 @@ P.interrupt_on_cd = {
 	enable = false,
 	set_bg_color = true,
 	bg_multiplier = 0.25,
-	glow_castbar = false,
-	glow_health = false,
-	glow_important_only = false,
-	glow_ready_only = false,
-	glow_thickness = 2,
 }
 
 P.tooltip = {
@@ -929,6 +962,11 @@ P.important_casts = {
 	anchor = "TOP",
 	posX = 0,
 	posY = 0,
+	glow_castbar = false,
+	glow_health = false,
+	glow_interruptible_only = true,
+	glow_ready_only = false,
+	glow_thickness = 2,
 }
 
 P.color = {
@@ -995,7 +1033,6 @@ P.color = {
 		onCD = "FFA200FF",
 		normal = "FF15FF47",
 		marker = "FFFFFFFF",
-		glow = "FFFFD100",
 	},
 
 	minimap_skin = { color = "FFFFFFFF", cardinal = "FFFFFFFF" },
@@ -1054,6 +1091,7 @@ P.color = {
 	important_casts = {
 		border = "FFFF00E6",
 		health = "FFFF00E6",
+		glow = "FFFFD100",
 	},
 
 	nameplates = {

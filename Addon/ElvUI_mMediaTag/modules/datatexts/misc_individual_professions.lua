@@ -75,7 +75,8 @@ local function OnLeave(self)
 end
 
 local function OnEvent(self, event)
-	if not player_professions[self.name] then UpdatePlayerProfessions() end
+	-- always refresh, cached indices go stale after learning or unlearning a profession
+	UpdatePlayerProfessions()
 
 	local iconPath = E.db.mMediaTag.datatexts.individual_professions.icon
 	local label = L["No Professions"]

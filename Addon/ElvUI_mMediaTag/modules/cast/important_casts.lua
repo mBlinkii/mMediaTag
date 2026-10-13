@@ -4,12 +4,18 @@ local module = mMT:AddModule("ImportantCasts", { "AceEvent-3.0" })
 -- Cache WoW Globals
 local pairs, next = pairs, next
 local CreateFrame = CreateFrame
+local UnitCanAttack = UnitCanAttack
 local UnitIsDead = UnitIsDead
 local hooksecurefunc = hooksecurefunc
+local issecretvalue = issecretvalue
 local IsSpellImportant = C_Spell and C_Spell.IsSpellImportant
 
 local NP = E:GetModule("NamePlates")
 local UF = E:GetModule("UnitFrames")
+local LCG = LibStub("LibCustomGlow-1.0", true)
+
+local GLOW_KEY = "mMT_ImportantGlow"
+local glowColor = { 1, 1, 1, 1 }
 
 local EDGE_FILE = [[Interface\BUTTONS\WHITE8X8]]
 local backdropInfo = { edgeFile = EDGE_FILE, edgeSize = 2 }
@@ -240,13 +246,134 @@ local function CheckImportantNameplate(castbar)
 	local nameplate = GetCastbarNameplate(castbar)
 
 	local isImportant, isSecret = CheckImportant(castbar)
-	if not isSecret and not isImportant then return end
+	if not isSecret and not isImportant then return isImportant, isSecret end
 
 	if nameplate then ApplyOverlayState(nameplate, isImportant) end
+	return isImportant, isSecret
+end
+
+-- secret values can not be compared to nil
+local function HasValue(value)
+	return issecretvalue(value) or value ~= nil
+end
+
+local function GlowTargets(castbar)
+	local glow = module.db.glow_castbar and castbar or nil
+	local health = module.db.glow_health and castbar.__owner and castbar.__owner.Health or nil
+	return glow, health
+end
+
+-- nested frames multiply their alpha, which ANDs the secret conditions: important > interruptible > kick ready
+local function GetGlowHolder(target)
+	local holder = target.mMT_ImportantGlow
+	if holder then return holder end
+
+	local important = CreateFrame("Frame", nil, target)
+	important:SetAllPoints(target)
+	important:SetFrameLevel(target:GetFrameLevel() + 5)
+
+	local interruptible = CreateFrame("Frame", nil, important)
+	interruptible:SetAllPoints(target)
+
+	local ready = CreateFrame("Frame", nil, interruptible)
+	ready:SetAllPoints(target)
+
+	holder = { important = important, interruptible = interruptible, ready = ready }
+	target.mMT_ImportantGlow = holder
+	return holder
+end
+
+local function StopGlow(target)
+	local holder = target and target.mMT_ImportantGlow
+	if not (holder and holder.active) then return end
+
+	LCG.PixelGlow_Stop(holder.ready, GLOW_KEY)
+	holder.active = false
+end
+
+local function StopGlows(castbar)
+	if not LCG then return end
+	StopGlow(castbar)
+	StopGlow(castbar.__owner and castbar.__owner.Health)
+end
+
+local function SetInterruptible(holder, castbar)
+	local notInterruptible = castbar.notInterruptible
+	if module.db.glow_interruptible_only and HasValue(notInterruptible) then
+		holder.interruptible:SetAlphaFromBoolean(notInterruptible, 0, 1)
+	else
+		holder.interruptible:SetAlpha(1)
+	end
+end
+
+-- without Interrupt On CD or an interrupt there is nothing to wait for
+local function SetReady(holder, ready)
+	if module.db.glow_ready_only and HasValue(ready) then
+		holder.ready:SetAlphaFromBoolean(ready, 1, 0)
+	else
+		holder.ready:SetAlpha(1)
+	end
+end
+
+local function StartGlow(target, castbar, isImportant, isSecret)
+	if not target then return end
+	local holder = GetGlowHolder(target)
+
+	local color = MEDIA.color.important_casts.glow
+	glowColor[1], glowColor[2], glowColor[3] = color.r, color.g, color.b
+	LCG.PixelGlow_Start(holder.ready, glowColor, 8, 0.25, nil, module.db.glow_thickness, 0, 0, nil, GLOW_KEY)
+	holder.active = true
+
+	if isSecret then
+		holder.important:SetAlphaFromBoolean(isImportant, 1, 0)
+	else
+		holder.important:SetAlpha(1)
+	end
+
+	SetInterruptible(holder, castbar)
+	local interruptOnCD = M.InterruptOnCD
+	SetReady(holder, interruptOnCD and interruptOnCD.GetKickReady and interruptOnCD:GetKickReady())
+end
+
+-- only enemy casts glow, like the interrupt it is meant for
+local function UpdateGlows(castbar, isImportant, isSecret)
+	if not LCG then return end
+	StopGlows(castbar)
+
+	local glow, health = GlowTargets(castbar)
+	if not (glow or health) then return end
+	if not (module.demo or isSecret or isImportant) then return end
+
+	local unit = castbar.unit or (castbar.__owner and castbar.__owner.__unit)
+	if not (module.demo or (unit and UnitCanAttack("player", unit))) then return end
+
+	StartGlow(glow, castbar, module.demo or isImportant, isSecret)
+	StartGlow(health, castbar, module.demo or isImportant, isSecret)
+end
+
+-- called by Interrupt On CD on cast start and while the cast runs
+function module:UpdateKickReady(castbar, ready)
+	if not (LCG and module.db and module.db.enable and module.db.glow_ready_only) then return end
+
+	for _, target in pairs({ GlowTargets(castbar) }) do
+		local holder = target.mMT_ImportantGlow
+		if holder and holder.active then SetReady(holder, ready) end
+	end
+end
+
+local function OnInterruptibleChanged(castbar)
+	if not (LCG and module.db and module.db.enable) then return end
+
+	for _, target in pairs({ GlowTargets(castbar) }) do
+		local holder = target.mMT_ImportantGlow
+		if holder and holder.active then SetInterruptible(holder, castbar) end
+	end
 end
 
 local function OnCastEnd(castbar)
-	if castbar then HideImportantCast(castbar) end
+	if not castbar then return end
+	HideImportantCast(castbar)
+	StopGlows(castbar)
 end
 
 -- ElvUI snapshots the castbar callbacks at frame construction and oUF only calls element:PostCastX(), so hooking the NP/UF tables does nothing - hook the instances.
@@ -255,15 +382,19 @@ local CASTBAR_HOOKS = {
 		if not castbar then return end
 
 		local owner = castbar.__owner
+		local isImportant, isSecret
 		if module.overrideHealthBarColor and owner and owner.isNameplate then
-			CheckImportantNameplate(castbar)
+			isImportant, isSecret = CheckImportantNameplate(castbar)
 		else
-			CheckImportant(castbar)
+			isImportant, isSecret = CheckImportant(castbar)
 		end
+
+		if module.db and module.db.enable then UpdateGlows(castbar, isImportant, isSecret) end
 	end,
 	PostCastStop = OnCastEnd,
 	PostCastFail = OnCastEnd,
 	PostCastInterrupted = OnCastEnd,
+	PostCastInterruptible = OnInterruptibleChanged,
 }
 
 local function HookCastbarInstance(castbar)
@@ -272,6 +403,8 @@ local function HookCastbarInstance(castbar)
 	for method, handler in pairs(CASTBAR_HOOKS) do
 		if castbar[method] then hooksecurefunc(castbar, method, handler) end
 	end
+	-- a recycled nameplate hides the castbar without a stop callback, the health bar glow would keep running
+	castbar:HookScript("OnHide", StopGlows)
 
 	castbar.mMT_ImportantCastsHooked = true
 end

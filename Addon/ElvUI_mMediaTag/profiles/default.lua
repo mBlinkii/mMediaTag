@@ -21,6 +21,8 @@ mMT.defaults.lastWeeklyReset = 0
 
 mMT.defaults.keystones = {}
 
+mMT.defaults.buff_reminder = {}
+
 mMT.defaults.unknownIDS = {}
 
 mMT.defaults.boss_ids = {}

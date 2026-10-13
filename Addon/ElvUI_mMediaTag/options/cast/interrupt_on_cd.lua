@@ -1,10 +1,5 @@
 local mMT, DB, M, E, P, L, MEDIA = unpack(ElvUI_mMediaTag)
 
-local function GlowDisabled()
-	local db = E.db.mMediaTag.interrupt_on_cd
-	return not (db.glow_castbar or db.glow_health)
-end
-
 mMT.options.args.unitframes.args.castbar.args.interrupt_on_cd.args = {
 	enable = {
 		order = 1,
@@ -117,100 +112,6 @@ mMT.options.args.unitframes.args.castbar.args.interrupt_on_cd.args = {
 					E.db.mMediaTag.color.interrupt_on_cd.marker = hex
 					MEDIA.color.interrupt_on_cd.marker = CreateColorFromHexString(hex)
 					MEDIA.color.interrupt_on_cd.marker.hex = hex
-					M.InterruptOnCD:Initialize()
-				end,
-			},
-		},
-	},
-	glow = {
-		order = 4,
-		type = "group",
-		inline = true,
-		name = L["Glow Options"],
-		args = {
-			glow_castbar = {
-				order = 1,
-				type = "toggle",
-				name = L["Castbar"],
-				desc = L["Glows while the current cast can be interrupted."],
-				get = function(info)
-					return E.db.mMediaTag.interrupt_on_cd.glow_castbar
-				end,
-				set = function(info, value)
-					E.db.mMediaTag.interrupt_on_cd.glow_castbar = value
-					M.InterruptOnCD:Initialize()
-				end,
-			},
-			glow_health = {
-				order = 2,
-				type = "toggle",
-				name = L["Health"],
-				desc = L["Glows while the current cast can be interrupted."],
-				get = function(info)
-					return E.db.mMediaTag.interrupt_on_cd.glow_health
-				end,
-				set = function(info, value)
-					E.db.mMediaTag.interrupt_on_cd.glow_health = value
-					M.InterruptOnCD:Initialize()
-				end,
-			},
-			glow_important_only = {
-				order = 3,
-				type = "toggle",
-				name = L["Only important casts"],
-				disabled = GlowDisabled,
-				get = function(info)
-					return E.db.mMediaTag.interrupt_on_cd.glow_important_only
-				end,
-				set = function(info, value)
-					E.db.mMediaTag.interrupt_on_cd.glow_important_only = value
-					M.InterruptOnCD:Initialize()
-				end,
-			},
-			glow_ready_only = {
-				order = 4,
-				type = "toggle",
-				name = L["Only when your interrupt is ready"],
-				disabled = GlowDisabled,
-				get = function(info)
-					return E.db.mMediaTag.interrupt_on_cd.glow_ready_only
-				end,
-				set = function(info, value)
-					E.db.mMediaTag.interrupt_on_cd.glow_ready_only = value
-					M.InterruptOnCD:Initialize()
-				end,
-			},
-			glow_thickness = {
-				order = 5,
-				type = "range",
-				name = L["Thickness"],
-				min = 1,
-				max = 8,
-				step = 1,
-				disabled = GlowDisabled,
-				get = function(info)
-					return E.db.mMediaTag.interrupt_on_cd.glow_thickness
-				end,
-				set = function(info, value)
-					E.db.mMediaTag.interrupt_on_cd.glow_thickness = value
-					M.InterruptOnCD:Initialize()
-				end,
-			},
-			glow_color = {
-				order = 6,
-				type = "color",
-				name = L["Color"],
-				hasAlpha = false,
-				disabled = GlowDisabled,
-				get = function(info)
-					local r, g, b = mMT:HexToRGB(E.db.mMediaTag.color.interrupt_on_cd.glow)
-					return r, g, b
-				end,
-				set = function(info, r, g, b)
-					local hex = E:RGBToHex(r, g, b, "ff")
-					E.db.mMediaTag.color.interrupt_on_cd.glow = hex
-					MEDIA.color.interrupt_on_cd.glow = CreateColorFromHexString(hex)
-					MEDIA.color.interrupt_on_cd.glow.hex = hex
 					M.InterruptOnCD:Initialize()
 				end,
 			},

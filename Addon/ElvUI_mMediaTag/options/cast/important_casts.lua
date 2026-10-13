@@ -6,6 +6,11 @@ local function UpdateImportantCasts()
 	mMT:UpdateModule("ImportantCasts", demo)
 end
 
+local function GlowDisabled()
+	local db = E.db.mMediaTag.important_casts
+	return not (db.enable and (db.glow_castbar or db.glow_health))
+end
+
 mMT.options.args.unitframes.args.castbar.args.important_casts.args = {
 	enable = {
 		order = 1,
@@ -226,6 +231,101 @@ mMT.options.args.unitframes.args.castbar.args.important_casts.args = {
 				end,
 				disabled = function()
 					return not E.db.mMediaTag.important_casts.enable or not E.db.mMediaTag.important_casts.showIcon
+				end,
+			},
+		},
+	},
+	glow = {
+		order = 4.5,
+		type = "group",
+		inline = true,
+		name = L["Glow Options"],
+		disabled = function()
+			return not E.db.mMediaTag.important_casts.enable
+		end,
+		args = {
+			glow_castbar = {
+				order = 1,
+				type = "toggle",
+				name = L["Castbar"],
+				desc = L["Glows while an important enemy cast is running."],
+				get = function(info)
+					return E.db.mMediaTag.important_casts.glow_castbar
+				end,
+				set = function(info, value)
+					E.db.mMediaTag.important_casts.glow_castbar = value
+					UpdateImportantCasts()
+				end,
+			},
+			glow_health = {
+				order = 2,
+				type = "toggle",
+				name = L["Health"],
+				desc = L["Glows while an important enemy cast is running."],
+				get = function(info)
+					return E.db.mMediaTag.important_casts.glow_health
+				end,
+				set = function(info, value)
+					E.db.mMediaTag.important_casts.glow_health = value
+					UpdateImportantCasts()
+				end,
+			},
+			glow_interruptible_only = {
+				order = 3,
+				type = "toggle",
+				name = L["Only interruptible casts"],
+				disabled = GlowDisabled,
+				get = function(info)
+					return E.db.mMediaTag.important_casts.glow_interruptible_only
+				end,
+				set = function(info, value)
+					E.db.mMediaTag.important_casts.glow_interruptible_only = value
+					UpdateImportantCasts()
+				end,
+			},
+			glow_ready_only = {
+				order = 4,
+				type = "toggle",
+				name = L["Only when your interrupt is ready"],
+				desc = L["Needs Interrupt On CD."],
+				disabled = GlowDisabled,
+				get = function(info)
+					return E.db.mMediaTag.important_casts.glow_ready_only
+				end,
+				set = function(info, value)
+					E.db.mMediaTag.important_casts.glow_ready_only = value
+					UpdateImportantCasts()
+				end,
+			},
+			glow_thickness = {
+				order = 5,
+				type = "range",
+				name = L["Thickness"],
+				min = 1,
+				max = 8,
+				step = 1,
+				disabled = GlowDisabled,
+				get = function(info)
+					return E.db.mMediaTag.important_casts.glow_thickness
+				end,
+				set = function(info, value)
+					E.db.mMediaTag.important_casts.glow_thickness = value
+					UpdateImportantCasts()
+				end,
+			},
+			glow_color = {
+				order = 6,
+				type = "color",
+				name = L["Color"],
+				hasAlpha = false,
+				disabled = GlowDisabled,
+				get = function(info)
+					local r, g, b = mMT:HexToRGB(E.db.mMediaTag.color.important_casts.glow)
+					return r, g, b
+				end,
+				set = function(info, r, g, b)
+					E.db.mMediaTag.color.important_casts.glow = E:RGBToHex(r, g, b, "ff")
+					UpdateImportantCasts()
 				end,
 			},
 		},

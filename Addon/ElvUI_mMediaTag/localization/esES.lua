@@ -1,4 +1,4 @@
-local L = LibStub("AceLocale-3.0"):NewLocale("mMediaTag", "esMX")
+local L = LibStub("AceLocale-3.0"):NewLocale("mMediaTag", "esES")
 if not L then return end
 
 -- core/functions.lua
@@ -140,6 +140,21 @@ L["Welcome to %s %s version |CFFF7DC6F%s|r, type |CFF58D68D/mmt|r to access the 
 -- modules/misc/group_keystones.lua
 L["Group Keystones"] = "Piedras angulares del grupo"
 
+-- modules/misc/buff_reminder.lua
+L["Augment Rune"] = "Runa de aumento"
+L["Buff Reminder"] = "Recordatorio de beneficios"
+L["Click: %s"] = "Clic: %s"
+L["Right click: choose the item"] = "Clic derecho: elegir el objeto"
+L["Flask"] = "Frasco"
+L["Food"] = "Comida"
+L["Main Hand Enchant"] = "Encantamiento de mano principal"
+L["Missing on %d group members"] = "Falta en %d miembros del grupo"
+L["Off Hand Enchant"] = "Encantamiento de mano secundaria"
+
+-- modules/misc/keystone_teleports.lua
+L["Keystone Teleports"] = "Teletransportes de piedra angular"
+L["Teleport not learned"] = "Teletransporte no aprendido"
+
 -- modules/misc/lfg_invite_info.lua
 L["PVE"] = "JcE"
 L["The Flame Burns Eternal"] = "La llama arde eternamente"
@@ -165,6 +180,10 @@ L["Help"] = "Ayuda"
 L["Thanks to:"] = "Gracias a:"
 
 -- options/cast/important_casts.lua
+L["Important Casts"] = "Lanzamientos importantes"
+L["Glows while an important enemy cast is running."] = "Brilla mientras se lanza un hechizo enemigo importante."
+L["Only interruptible casts"] = "Solo lanzamientos interrumpibles"
+L["Needs Interrupt On CD."] = "Requiere Interrupción en reutilización."
 L["Adds an Extra Icon to the Castbar."] = "Añade un icono extra a la barra de lanzamiento."
 L["Border Color"] = "Color del borde"
 L["Class Colors"] = "Colores de clase"
@@ -285,6 +304,8 @@ L["Objective Tracker"] = "Rastreador de objetivos"
 L["Classification Textures"] = "Texturas de clasificación"
 L["Unitframe Textures"] = "Texturas de marcos de unidad"
 L["Addon Manager"] = "Gestor de addons"
+L["Auto Delete"] = "Destrucción automática"
+L["Mail Helper"] = "Ayudante de correo"
 
 -- options/portraits/portraits.lua
 L["Anchor Point"] = "Punto de anclaje"
@@ -519,10 +540,8 @@ L["Enabled"] = "Activado"
 L["Background Multiplier"] = "Multiplicador de fondo"
 L["Change BG color"] = "Cambiar color del fondo"
 L["Enable to change the background color of the castbar."] = "Activa esta opción para cambiar el color del fondo de la barra de lanzamiento."
-L["Glows while the current cast can be interrupted."] = "Brilla mientras el lanzamiento actual se pueda interrumpir."
 L["Marker"] = "Marcador"
 L["On CD"] = "En reutilización"
-L["Only important casts"] = "Solo lanzamientos importantes"
 L["Only when your interrupt is ready"] = "Solo cuando tu interrupción esté lista"
 L["Set the background color multiplier for the castbar."] = "Establece el multiplicador del color de fondo para la barra de lanzamiento."
 L["The marker color for in time interrupts."] = "El color del marcador para interrupciones a tiempo."
@@ -705,6 +724,30 @@ L["Difficulty Info"] = "Información de dificultad"
 L["Font size, top line"] = "Tamaño de fuente, línea superior"
 L["Show Frame"] = "Mostrar marco"
 
+-- options/misc/auto_delete.lua
+L["Fills in the confirmation word automatically when you delete an item."] = "Rellena automáticamente la palabra de confirmación al destruir un objeto."
+
+-- modules/misc/mail_helper.lua
+L["%d expiring"] = "%d caducan pronto"
+L["%s Mails"] = "%s correos"
+L["Alts"] = "Alters"
+L["Mailbox:"] = "Buzón:"
+L["Recently Mailed"] = "Enviados recientemente"
+L["Take Gold"] = "Coger oro"
+L["Waiting for more mail"] = "Esperando más correo"
+
+-- options/misc/mail_helper.lua
+L["Adds a button next to the recipient field that lists your alts, friends, guild members and recently mailed characters."] = "Añade un botón junto al campo del destinatario que muestra tus alters, amigos, miembros de la hermandad y personajes a los que escribiste hace poco."
+L["Adds a button to the inbox that only takes the gold from all mails and leaves the items."] = "Añade un botón al buzón que solo coge el oro de todos los correos y deja los objetos."
+L["Chat Summary"] = "Resumen en el chat"
+L["Continue Opening"] = "Seguir abriendo"
+L["Gold Button"] = "Botón de oro"
+L["Inbox Overview"] = "Resumen del buzón"
+L["Keeps opening mail when the inbox holds more mails than it can show and waits for the inbox to refresh."] = "Sigue abriendo correo cuando el buzón contiene más correos de los que puede mostrar y espera a que el buzón se actualice."
+L["Prints the collected gold and items to the chat when opening the mail is done."] = "Muestra en el chat el oro y los objetos recogidos cuando termina de abrir el correo."
+L["Recipient List"] = "Lista de destinatarios"
+L["Shows the number of mails, the waiting gold and the mails that expire soon above the inbox."] = "Muestra encima del buzón el número de correos, el oro pendiente y los correos que caducan pronto."
+
 -- options/misc/greeting_message.lua
 L["Show a greeting message in the chat when you log in."] = "Mostrar un mensaje de bienvenida en el chat al iniciar sesión."
 
@@ -714,6 +757,42 @@ L["Post your keystone to the chat when someone types !key or !keys into the chat
 -- options/misc/group_keystones.lua
 L["Shows the keystones of your group next to the group finder listing."] = "Muestra las piedras angulares de tu grupo junto al anuncio del buscador de grupos."
 L["The keystones of your group members need Details! or BigWigs."] = "Las piedras angulares de los miembros de tu grupo requieren Details! o BigWigs."
+
+-- options/misc/buff_reminder.lua
+L["Shows icons for missing raid buffs, consumables, weapon enchants and class buffs. It only shows out of combat, while auras can be read. Click an icon to use the consumable or cast your own buff. Right click food, flasks and weapon enchants to choose the item, your choice is remembered. Only food, flasks and oils of the current expansion are used."] = "Muestra iconos de beneficios de banda, consumibles, encantamientos de arma y beneficios de clase que faltan. Solo aparece fuera de combate, mientras las auras se pueden leer. Haz clic en un icono para usar el consumible o lanzar tu propio beneficio. Haz clic derecho en comida, frascos y encantamientos de arma para elegir el objeto, tu elección se recuerda. Solo se usan comida, frascos y aceites de la expansión actual."
+L["Also reminds you when group members in range are missing your raid buff."] = "También te avisa cuando a miembros del grupo en alcance les falta tu beneficio de banda."
+L["Buffs and enchants with less time left count as missing. 0 only reminds when they are gone."] = "Los beneficios y encantamientos con menos tiempo restante cuentan como ausentes. 0 solo avisa cuando han desaparecido."
+L["Fades the reminder in and out. Entering combat always hides it at once."] = "Hace aparecer y desaparecer el recordatorio de forma gradual. Al entrar en combate siempre se oculta al instante."
+L["Lets the icons of buffs and enchants glow that are about to expire."] = "Hace brillar los iconos de beneficios y encantamientos que están a punto de expirar."
+L["Check group members"] = "Comprobar miembros del grupo"
+L["Checks"] = "Comprobaciones"
+L["Class Buffs"] = "Beneficios de clase"
+L["Delves and Scenarios"] = "Abismos y escenarios"
+L["Direction"] = "Dirección"
+L["Horizontal"] = "Horizontal"
+L["Only own raid buff"] = "Solo tu beneficio de banda"
+L["Only reminds you of the raid buff your class can cast."] = "Solo te avisa del beneficio de banda que tu clase puede lanzar."
+L["Only when you carry a flask."] = "Solo si llevas un frasco."
+L["Only when you carry an augment rune."] = "Solo si llevas una runa de aumento."
+L["Open World"] = "Mundo abierto"
+L["Raid Buffs"] = "Beneficios de banda"
+L["Remind before expiring (minutes)"] = "Avisar antes de expirar (minutos)"
+L["Reminds you of raid buffs that you or a class in your group can cast."] = "Te avisa de los beneficios de banda que tú o una clase de tu grupo podéis lanzar."
+L["Rogue poisons, paladin auras, shaman shields and your pet."] = "Venenos de pícaro, auras de paladín, escudos de chamán y tu mascota."
+L["Shows the minutes left or the number of group members missing the buff."] = "Muestra los minutos restantes o el número de miembros del grupo sin el beneficio."
+L["Vertical"] = "Vertical"
+L["Weapon Enchant"] = "Encantamiento de arma"
+L["Weapon oils, sharpening stones and class imbues on your weapons."] = "Aceites de arma, piedras de afilar y mejoras de clase en tus armas."
+
+-- options/misc/keystone_teleports.lua
+L["Shows the keystones of your group with the teleport to their dungeon and highlights the dungeon of your group."] = "Muestra las piedras angulares de tu grupo con el teletransporte a su mazmorra y resalta la mazmorra de tu grupo."
+L["Click a dungeon to use its teleport. The dungeon of your group finder group is highlighted. The list shows up when you join a group or the group is full, outside of instances, and hides in combat."] = "Haz clic en una mazmorra para usar su teletransporte. La mazmorra de tu grupo del buscador de grupos se resalta. La lista aparece al unirte a un grupo o cuando el grupo está completo, fuera de instancias, y se oculta en combate."
+L["Hide after (minutes)"] = "Ocultar tras (minutos)"
+L["Hides the list this many minutes after it was shown. 0 keeps it shown."] = "Oculta la lista estos minutos después de mostrarse. 0 la mantiene visible."
+L["Fades the list in and out. Entering combat always hides it at once."] = "Hace aparecer y desaparecer la lista de forma gradual. Al entrar en combate siempre se oculta al instante."
+L["Flash"] = "Destello"
+L["Flashes the dungeon of your group for a few seconds once the group is full."] = "Hace destellar la mazmorra de tu grupo unos segundos cuando el grupo está completo."
+L["Width"] = "Ancho"
 
 -- options/misc/lfg_invite_info.lua
 L["Class (accent line)"] = "Clase (línea de acento)"
@@ -736,6 +815,9 @@ L["Slide"] = "Deslizar"
 L["Theme color"] = "Color del tema"
 L["Show keystones"] = "Mostrar piedras angulares"
 L["Shows on the card which group members have a keystone for the dungeon and its level. Your own keystone is always known, other players need Details! or BigWigs."] = "Muestra en la tarjeta qué miembros del grupo tienen una piedra angular para la mazmorra y su nivel. Tu propia piedra angular siempre se conoce, otros jugadores necesitan Details! o BigWigs."
+
+-- options/misc/objective_tracker.lua
+L["Also shows the bar below the main header of the tracker."] = "También muestra la barra bajo el encabezado principal del rastreador."
 
 -- options/misc/phase_icon.lua
 L["Chromie Time"] = "Tiempo de Cromi"
@@ -859,6 +941,37 @@ L["Cardinal Icon"] = "Icono Cardinal"
 L["white"] = "blanco"
 
 -- options/options_core.lua
+L["Accepts and turns in quests automatically and selects gossip options for you."] = "Acepta y entrega misiones automáticamente y elige opciones de diálogo por ti."
+L["Adds a button that rolls a random number in the ranges you set."] = "Añade un botón que tira un número aleatorio en los rangos que elijas."
+L["Adds styled portraits with class or spec icons to the ElvUI unitframes."] = "Añade retratos con estilo e iconos de clase o especialización a los marcos de unidad de ElvUI."
+L["Colors castbars by the state of your interrupt and marks when it is ready again during the cast."] = "Colorea las barras de lanzamiento según el estado de tu interrupción y marca cuándo vuelve a estar lista durante el lanzamiento."
+L["Gives the ElvUI data panels their own background, border and texture."] = "Da a los paneles de datos de ElvUI su propio fondo, borde y textura."
+L["Highlights the nameplate of your focus with its own texture, border and health color."] = "Resalta la placa de nombre de tu foco con su propia textura, borde y color de salud."
+L["Highlights the nameplate of your target with its own texture, border and health color."] = "Resalta la placa de nombre de tu objetivo con su propia textura, borde y color de salud."
+L["Highlights the nameplates of quest units with their own texture, border and health color."] = "Resalta las placas de nombre de unidades de misión con su propia textura, borde y color de salud."
+L["Marks casts that Blizzard flags as important with an extra icon on the castbar."] = "Marca los lanzamientos que Blizzard considera importantes con un icono extra en la barra de lanzamiento."
+L["Reset all settings of %s to their defaults?"] = "¿Restablecer todos los ajustes de %s a sus valores predeterminados?"
+L["Shows a popup with the location, difficulty and name of the group finder group you joined."] = "Muestra una ventana con la ubicación, la dificultad y el nombre del grupo del buscador al que te uniste."
+L["Shows textures for elites, rares, bosses and casters on the nameplates."] = "Muestra texturas para élites, raros, jefes y lanzadores en las placas de nombre."
+L["Shows the difficulty of the current instance in its own frame."] = "Muestra la dificultad de la instancia actual en su propio marco."
+L["Skins %s in the ElvUI style."] = "Aplica a %s el estilo de ElvUI."
+L["Skins the objective tracker and adds quest colors, progress bars and highlights."] = "Aplica estilo al rastreador de objetivos y añade colores de misión, barras de progreso y resaltados."
+L["Takes the gold from your mails, shows an inbox overview and lists your alts and contacts when sending mail."] = "Coge el oro de tus correos, muestra un resumen del buzón y lista tus alters y contactos al enviar correo."
+L["Automation"] = "Automatización"
+L["Buttons"] = "Botones"
+L["Comfort"] = "Comodidad"
+L["Group and M+"] = "Grupo y M+"
+L["Group Tools"] = "Herramientas de grupo"
+L["Highlights"] = "Resaltados"
+L["Info"] = "Información"
+L["Interface"] = "Interfaz"
+L["Keystones"] = "Piedras angulares"
+L["Markers and Textures"] = "Marcadores y texturas"
+L["Menus"] = "Menús"
+L["Quests"] = "Misiones"
+L["Status Icons"] = "Iconos de estado"
+L["Tools"] = "Herramientas"
+L["Viewers"] = "Visores"
 L["These are just examples of how to create your own dock using ElvUI’s custom data text bars.\n\nTo set up a custom bar:\nOpen ElvUI and navigate to ElvUI > Datatext > Bars.\nEnter a name for your new bar, click OK, and then click Add.\nSet the width of the bar based on how many icons you want to display.\nSet the height, which also determines the icon size.\nChoose the number of data text slots you want.\n\nAssign icons to each slot. For example:\nSlot 1 = Dock Calendar\nSlot 2 = Dock Profession\nSlot 3 = Dock Spec\n…and so on.\n\nThis setup allows you to build a personalized dock that fits your UI and gameplay needs.\n\n"] = "Estos son solo ejemplos de cómo crear tu propio dock usando las barras de datatext personalizadas de ElvUI.\n\nPara configurar una barra personalizada:\nAbre ElvUI y ve a ElvUI > Datatext > Bars.\nIntroduce un nombre para tu nueva barra, haz clic en OK y luego en Añadir.\nEstablece el ancho de la barra según cuántos iconos quieras mostrar.\nEstablece la altura, que también determina el tamaño de los iconos.\nElige la cantidad de espacios de datatext que deseas.\n\nAsigna iconos a cada espacio. Por ejemplo:\nEspacio 1 = Dock Calendar\nEspacio 2 = Dock Profession\nEspacio 3 = Dock Spec\n…y así sucesivamente.\n\nEsta configuración te permite crear un dock personalizado que se adapte a tu interfaz y a tu forma de jugar.\n\n"
 
 -- modules/portraits/texture_db.lua
@@ -997,14 +1110,21 @@ L["Show friendly nameplates in raids."] = "Mostrar placas de nombre amistosas en
 L["Bad"] = "Malo"
 L["Class Color Border"] = "Borde con color de clase"
 L["Colors objectives like 3/5 by progress."] = "Colorea objetivos como 3/5 según su progreso."
+L["Colors quest titles by their difficulty, like the quest log."] = "Colorea los títulos de las misiones según su dificultad, como el registro de misiones."
+L["Colors the bars by their value with the progress colors."] = "Colorea las barras según su valor con los colores de progreso."
 L["Complete"] = "Completado"
+L["Difficulty Color"] = "Color de dificultad"
 L["Good"] = "Bueno"
 L["Gradient"] = "Degradado"
 L["Header"] = "Cabecera"
 L["Header Bar"] = "Barra de cabecera"
 L["Hide Dash"] = "Ocultar guion"
+L["Main Header"] = "Encabezado principal"
 L["Progress"] = "Progreso"
+L["Progress Bars"] = "Barras de progreso"
+L["Progress Color"] = "Color de progreso"
 L["Removes the dash in front of each objective."] = "Elimina el guion delante de cada objetivo."
+L["Skins the progress and timer bars of the tracker."] = "Aplica estilo a las barras de progreso y de tiempo del rastreador."
 L["Some changes require a reload of the UI."] = "Algunos cambios requieren recargar la interfaz."
 L["Transition"] = "Transición"
 L["Transparent"] = "Transparente"
@@ -1018,6 +1138,8 @@ L["Only in combat"] = "Solo en combate"
 L["Shows a marker on enemy nameplates at the execute threshold of your spec. Because of the Midnight API restrictions the marker is hidden via clipping once the unit drops below the threshold, health values are never read."] = "Muestra un marcador en las placas de nombre enemigas en el umbral de ejecución de tu especialización. Debido a las restricciones de la API de Midnight, el marcador se oculta mediante recorte cuando la unidad baja del umbral; los valores de salud nunca se leen."
 
 -- options/nameplates/raid_marker_color.lua
+L["Above Important Casts"] = "Encima de Lanzamientos importantes"
+L["Shows this marker color on top of the Important Casts health bar color."] = "Muestra este color de marcador por encima del color de la barra de salud de Lanzamientos importantes."
 L["Raid Marker Colors"] = "Colores de marcadores de banda"
 L["Raid Markers"] = "Marcadores de banda"
 L["Colors the health bar of nameplates with a raid marker in the color of that marker."] = "Colorea la barra de salud de las placas de nombre con un marcador de banda en el color de ese marcador."
