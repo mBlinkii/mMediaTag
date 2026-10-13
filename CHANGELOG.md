@@ -14,6 +14,7 @@
 - FIX - [Localization]: Spanish (Spain) clients showed the English texts.
 - FIX - [Portraits]: Jiberish Fabled Icons are found again after the addon rename and its new spec icons can be selected.
 - FIX - [Portraits]: Portraits could break after switching the ElvUI profile.
+- FIX - [Skins]: The BugSack skin now covers the new options tab of BugSack 12.1.7.
 - FIX - [Tags]: The skull18 icon showed the skull2 texture.
 ### 🔧 UPDATE
 - UPDATE - [Cooldown-Manager]: A fixed width or height now sets the icon size by itself.

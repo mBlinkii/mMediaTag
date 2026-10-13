@@ -15,6 +15,7 @@ mMT.Changelog[415] = {
 		"[Localization]: Spanish (Spain) clients showed the English texts.",
 		"[Portraits]: Jiberish Fabled Icons are found again after the addon rename and its new spec icons can be selected.",
 		"[Portraits]: Portraits could break after switching the ElvUI profile.",
+		"[Skins]: The BugSack skin now covers the new options tab of BugSack 12.1.7.",
 		"[Tags]: The skull18 icon showed the skull2 texture.",
 	},
 	UPDATE = {

@@ -9,6 +9,7 @@ local S = E:GetModule("Skins")
 local _G = _G
 local format = format
 local ipairs = ipairs
+local pairs = pairs
 local select = select
 local unpack = unpack
 local hooksecurefunc = hooksecurefunc
@@ -83,13 +84,30 @@ local function SkinScrollBar(scrollBar)
 	end
 end
 
+-- the options page is an unnamed frame, its checkboxes sit directly on it and each dropdown in its own row
+local function SkinOptions(frame)
+	for _, page in ipairs({ frame:GetChildren() }) do
+		if page:GetObjectType() == "Frame" then
+			for _, widget in ipairs({ page:GetChildren() }) do
+				if widget:IsObjectType("CheckButton") then
+					S:HandleCheckBox(widget)
+				else
+					for _, dropdown in ipairs({ widget:GetChildren() }) do
+						if dropdown:IsObjectType("DropdownButton") then S:HandleDropDownBox(dropdown, dropdown:GetWidth()) end
+					end
+				end
+			end
+		end
+	end
+end
+
 local function SkinBugSackFrame()
 	local BugSack, frame = _G.BugSack, _G.BugSackFrame
 	if module.isSkinned or not (BugSack and frame) then return end
 
 	module.isSkinned = true
 
-	-- BugSack 12.1.2 builds the retail window from PortraitFrameTemplate, older flavors keep the paperdoll frame
+	-- BugSack 12.1 builds the retail window from PortraitFrameTemplate, older flavors keep the paperdoll frame
 	local titleBar = frame.TitleContainer
 
 	S:HandleFrame(frame)
@@ -126,9 +144,9 @@ local function SkinBugSackFrame()
 	local scroll = _G.BugSackScrollText and _G.BugSackScrollText:GetParent()
 	SkinScrollBar(scroll and (scroll.ScrollBar or _G.BugSackScrollScrollBar))
 
-	-- the send button is optional, so it stays last in the list to avoid a hole ipairs would stop on
+	-- the send and wipe buttons are optional, pairs keeps a missing one from ending the loop early
 	local prevButton, nextButton = _G.BugSackPrevButton, _G.BugSackNextButton
-	for _, button in ipairs({ prevButton, nextButton, _G.BugSackSendButton }) do
+	for _, button in pairs({ prevButton, nextButton, _G.BugSackSendButton, _G.BugSackWipeButton }) do
 		S:HandleButton(button)
 		button:Height(BUTTON_HEIGHT)
 	end
@@ -145,7 +163,7 @@ local function SkinBugSackFrame()
 
 	-- anchored by LEFT instead of the template's TOPLEFT, so the row stays put whatever height HandleTab leaves behind
 	local anchor
-	for _, tab in ipairs({ _G.BugSackTabLast, _G.BugSackTabSession, _G.BugSackTabAll }) do
+	for _, tab in ipairs({ _G.BugSackTabAll, _G.BugSackTabSession, _G.BugSackTabLast, _G.BugSackTabOptions }) do
 		S:HandleTab(tab)
 		tab:ClearAllPoints()
 
@@ -157,6 +175,8 @@ local function SkinBugSackFrame()
 
 		anchor = tab
 	end
+
+	SkinOptions(frame)
 
 	-- the paperdoll frame names none of its close buttons, the OnClick handler is the only marker
 	if not frame.CloseButton then
@@ -172,6 +192,9 @@ local function RegisterHook()
 	if not _G.BugSack then return end
 
 	hooksecurefunc(_G.BugSack, "OpenSack", SkinBugSackFrame)
+
+	-- the options entry opens the window through OpenConfig, which skips OpenSack
+	if _G.BugSack.OpenConfig then hooksecurefunc(_G.BugSack, "OpenConfig", SkinBugSackFrame) end
 
 	if _G.BugSackFrame then SkinBugSackFrame() end
 end
