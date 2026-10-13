@@ -9,6 +9,7 @@ local pairs = pairs
 local select = select
 local strfind = strfind
 local strlower = strlower
+local type = type
 local unpack = unpack
 local wipe = wipe
 local ceil = math.ceil
@@ -144,6 +145,8 @@ local bags = { flask = {}, rune = {}, food = {}, oil = {} }
 local itemSpells = {}
 local buffFood = {}
 local updateQueued
+-- the bags are only scanned again after they changed
+local bagsDirty = true
 local flyout
 local Update
 
@@ -419,8 +422,9 @@ local function SetGlow(button, expiring)
 	end
 end
 
+-- without an item the right click still opens the flyout to choose one
 local function ItemAction(entry, kind, slot)
-	return entry and { type = "item", item = entry.itemID, kind = kind, slot = slot }
+	return { type = entry and "item" or nil, item = entry and entry.itemID, kind = kind, slot = slot }
 end
 
 local function SpellAction(spellID)
@@ -490,31 +494,34 @@ local function CheckRaidBuffs()
 	end
 end
 
-local function AddItem(list, itemID, icon, spellID, count)
+local function AddItem(list, itemID, icon, spellID, count, buff)
 	for _, entry in ipairs(list) do
 		if entry.itemID == itemID then
 			entry.count = entry.count + count
 			return
 		end
 	end
-	list[#list + 1] = { itemID = itemID, icon = icon, spellID = spellID, count = count }
+	list[#list + 1] = { itemID = itemID, icon = icon, spellID = spellID, count = count, buff = buff }
 end
 
 -- buff food mentions the well fed buff in its tooltip, plain food and drinks do not
+-- only a match is kept, a miss is checked again since tooltip data and the buff name can arrive later
 local function IsBuffFood(itemID)
-	if buffFood[itemID] ~= nil then return buffFood[itemID] end
-	local wellFed = module.wellFedName or GetSpellName(WELL_FED)
-	local data = wellFed and GetItemTooltip(itemID)
+	if buffFood[itemID] then return true end
+	local data = GetItemTooltip(itemID)
 	if not (data and data.lines) then return false end
 
-	wellFed = strlower(wellFed)
+	-- the current buff can be a variant like hearty well fed, so both names are tried
+	local names = { GetSpellName(WELL_FED), module.wellFedName }
 	for _, line in ipairs(data.lines) do
-		if line.leftText and E:NotSecretValue(line.leftText) and strfind(strlower(line.leftText), wellFed, 1, true) then
-			buffFood[itemID] = true
-			return true
+		local text = line.leftText and E:NotSecretValue(line.leftText) and strlower(line.leftText)
+		for _, name in pairs(names) do
+			if text and strfind(text, strlower(name), 1, true) then
+				buffFood[itemID] = true
+				return true
+			end
 		end
 	end
-	buffFood[itemID] = false
 	return false
 end
 
@@ -545,11 +552,10 @@ local function ScanBags()
 					or classID == CLASS_CONSUMABLE and (subClassID == SUBCLASS_FLASK and "flask" or subClassID == SUBCLASS_FOOD and "food" or subClassID == SUBCLASS_ENHANCEMENT and "oil")
 				-- food, flasks and oils only from the current expansion
 				if kind and kind ~= "rune" and not IsCurrentExpansion(itemID) then kind = nil end
-				if kind == "food" and not IsBuffFood(itemID) then kind = nil end
 				if kind then
 					local _, spellID = GetItemSpell(itemID)
 					if spellID then
-						AddItem(bags[kind], itemID, item.iconFileID, spellID, item.stackCount or 1)
+						AddItem(bags[kind], itemID, item.iconFileID, spellID, item.stackCount or 1, kind ~= "food" or IsBuffFood(itemID))
 						itemSpells[spellID] = { kind = kind, itemID = itemID }
 					end
 				end
@@ -559,12 +565,13 @@ local function ScanBags()
 end
 
 -- the chosen or last used item of that kind first, else the biggest stack, which also keeps feasts back
+-- food the tooltip check does not know as buff food is only used once it was chosen in the flyout
 function PickItem(kind)
 	local list, preferred = bags[kind], Saved()[kind]
 	local best
 	for _, entry in ipairs(list) do
 		if entry.itemID == preferred then return entry end
-		if not best or entry.count > best.count then best = entry end
+		if entry.buff and (not best or entry.count > best.count) then best = entry end
 	end
 	return best
 end
@@ -595,7 +602,11 @@ end
 
 local function CheckFood()
 	local aura = FindFood()
-	if aura and E:NotSecretValue(aura.name) then module.wellFedName = aura.name end
+	-- a new buff name can turn more food into buff food
+	if aura and E:NotSecretValue(aura.name) and aura.name ~= module.wellFedName then
+		module.wellFedName = aura.name
+		bagsDirty = true
+	end
 	if not aura or Expiring(aura.expirationTime) then
 		local entry = PickItem("food")
 		Add(L["Food"], entry and entry.icon or FOOD_ICON, nil, aura and MinutesLeft(aura.expirationTime), ItemAction(entry, "food"), aura ~= nil, entry and entry.itemID)
@@ -674,7 +685,10 @@ local function Collect()
 	if module.demo then return CollectDemo() end
 
 	local db = module.db
-	ScanBags()
+	if bagsDirty then
+		bagsDirty = false
+		ScanBags()
+	end
 	if db.raid_buffs.enable then CheckRaidBuffs() end
 	if db.flask then CheckItemBuff("flask", L["Flask"], FLASK_ICON) end
 	if db.rune then CheckItemBuff("rune", L["Augment Rune"], RuneIcon()) end
@@ -715,7 +729,7 @@ end
 local function SetAction(button, action)
 	local isItem = action and action.type == "item"
 	button:SetAttribute("type", action and action.type or nil)
-	button:SetAttribute("unit", action and not isItem and "player" or nil)
+	button:SetAttribute("unit", action and action.type == "spell" and "player" or nil)
 	button:SetAttribute("item", isItem and "item:" .. action.item or nil)
 	button:SetAttribute("target-slot", isItem and action.slot or nil)
 	button:SetAttribute("spell", action and action.spell or nil)
@@ -726,7 +740,7 @@ local function SetAction(button, action)
 	if isItem then
 		button.use = GetItemNameByID(action.item)
 	else
-		button.use = action and GetSpellName(action.spell)
+		button.use = action and action.spell and GetSpellName(action.spell)
 	end
 end
 
@@ -785,24 +799,30 @@ function Update()
 	end
 end
 
-local function QueueUpdate()
+local function QueueUpdate(delay)
 	if updateQueued then return end
 	updateQueued = true
-	C_Timer_After(0.2, Update)
+	C_Timer_After(type(delay) == "number" and delay or 0.2, Update)
 end
 
+local function RescanBags()
+	bagsDirty = true
+	QueueUpdate()
+end
+
+-- auras of group members change all the time in a raid, they are checked at most once per second
 function module:UNIT_AURA(_, unit)
-	if unit == "player" or (module.db.raid_buffs.group and (unit:find("^party") or unit:find("^raid"))) then QueueUpdate() end
+	if unit == "player" then
+		QueueUpdate()
+	elseif module.db.raid_buffs.group and (unit:find("^party") or unit:find("^raid")) then
+		QueueUpdate(1)
+	end
 end
 
 function module:GET_ITEM_INFO_RECEIVED()
 	if not module.itemsPending then return end
 	module.itemsPending = nil
-	QueueUpdate()
-end
-
-function module:PLAYER_REGEN_DISABLED()
-	HideFlyout()
+	RescanBags()
 end
 
 function module:UNIT_PET(_, unit)
@@ -837,6 +857,51 @@ local function StopTicker()
 	end
 end
 
+-- everything that triggers a check, none of it runs in combat
+local CHECK_EVENTS = {
+	PLAYER_ENTERING_WORLD = RescanBags,
+	ZONE_CHANGED_NEW_AREA = QueueUpdate,
+	GET_ITEM_INFO_RECEIVED = "GET_ITEM_INFO_RECEIVED",
+	PLAYER_ALIVE = QueueUpdate,
+	PLAYER_UNGHOST = QueueUpdate,
+	GROUP_ROSTER_UPDATE = QueueUpdate,
+	UNIT_AURA = "UNIT_AURA",
+	UNIT_PET = "UNIT_PET",
+	UNIT_INVENTORY_CHANGED = "UNIT_INVENTORY_CHANGED",
+	UNIT_SPELLCAST_SUCCEEDED = "UNIT_SPELLCAST_SUCCEEDED",
+	WEAPON_ENCHANT_CHANGED = QueueUpdate,
+	BAG_UPDATE_DELAYED = RescanBags,
+	SPELLS_CHANGED = QueueUpdate,
+	PLAYER_SPECIALIZATION_CHANGED = QueueUpdate,
+}
+
+local function StartChecks()
+	if module.ticker then return end
+	for event, handler in pairs(CHECK_EVENTS) do
+		module:RegisterEvent(event, handler)
+	end
+	-- expiring buffs and weapon enchants cross the threshold without an event
+	module.ticker = C_Timer_NewTicker(TICK, QueueUpdate)
+end
+
+local function StopChecks()
+	for event in pairs(CHECK_EVENTS) do
+		module:UnregisterEvent(event)
+	end
+	StopTicker()
+end
+
+function module:PLAYER_REGEN_DISABLED()
+	HideFlyout()
+	StopChecks()
+end
+
+-- bags and buffs may have changed during the fight
+function module:PLAYER_REGEN_ENABLED()
+	StartChecks()
+	RescanBags()
+end
+
 function module:Initialize(demo)
 	if not (E.Retail and E.db.mMediaTag.buff_reminder.enable) then
 		module.demo = nil
@@ -854,26 +919,12 @@ function module:Initialize(demo)
 	if demo then module.demo = not module.demo end
 
 	if not module.frame then CreateReminderFrame() end
+	bagsDirty = true
 
 	if not module.isEnabled then
-		module:RegisterEvent("PLAYER_ENTERING_WORLD", QueueUpdate)
-		module:RegisterEvent("ZONE_CHANGED_NEW_AREA", QueueUpdate)
-		module:RegisterEvent("PLAYER_REGEN_ENABLED", QueueUpdate)
+		module:RegisterEvent("PLAYER_REGEN_ENABLED")
 		module:RegisterEvent("PLAYER_REGEN_DISABLED")
-		module:RegisterEvent("GET_ITEM_INFO_RECEIVED")
-		module:RegisterEvent("PLAYER_ALIVE", QueueUpdate)
-		module:RegisterEvent("PLAYER_UNGHOST", QueueUpdate)
-		module:RegisterEvent("GROUP_ROSTER_UPDATE", QueueUpdate)
-		module:RegisterEvent("UNIT_AURA")
-		module:RegisterEvent("UNIT_PET")
-		module:RegisterEvent("UNIT_INVENTORY_CHANGED")
-		module:RegisterEvent("UNIT_SPELLCAST_SUCCEEDED")
-		module:RegisterEvent("WEAPON_ENCHANT_CHANGED", QueueUpdate)
-		module:RegisterEvent("BAG_UPDATE_DELAYED", QueueUpdate)
-		module:RegisterEvent("SPELLS_CHANGED", QueueUpdate)
-		module:RegisterEvent("PLAYER_SPECIALIZATION_CHANGED", QueueUpdate)
-		-- expiring buffs and weapon enchants cross the threshold without an event
-		module.ticker = C_Timer_NewTicker(TICK, QueueUpdate)
+		if not InCombatLockdown() then StartChecks() end
 		module.isEnabled = true
 	end
 
