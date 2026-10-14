@@ -1,10 +1,12 @@
 # Changelog - ElvUI_mMediaTag
 
 ## [ver. 4.17] - TBD
-### 🐛 FIX
-- FIX - [DT-Durability]: The repair mount of the datatext and the durability dock was missing in the tooltip and settings wherever you cannot mount.
 ### 🔧 UPDATE
 - UPDATE - [Dock]: The mail dock opens a menu with your mailbox toys and auction house mounts on click, a random ready toy on top, and shows the toy cooldowns in the tooltip.
+- UPDATE - [Dock]: Right click on the character dock switches equipment sets, on the collections dock summons a random favorite mount or pet or opens a collection tab, and on the housing dock teleports you to your plot.
+- UPDATE - [Dock]: CTRL + left click on the volume dock sets the master volume.
+- UPDATE - [DT-Dungeon]: Left click on the dungeon and M+ score datatexts and the dungeon dock opens a menu for the Dungeon Finder, Raid Finder, Premade Groups, Mythic+, PvP and the Great Vault.
+- UPDATE - [DT-Durability]: Right click on the datatext and the durability dock opens a menu with all your repair mounts and a random one on top, the mount no longer has to be chosen in the settings.
 
 ## [ver. 4.16] - 14.10.2026
 ### 🐛 FIX

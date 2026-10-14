@@ -85,9 +85,11 @@ local function GetCallToTheArmsInfos()
 end
 
 local function OnClick(self, button)
-	if button == "LeftButton" or button == "MiddleButton" then
+	if button == "LeftButton" then
+		mMT:OpenGroupFinderMenu(self)
+	elseif button == "MiddleButton" then
 		_G.ToggleLFDParentFrame()
-		if button == "MiddleButton" then _G.PVEFrameTab3:Click() end
+		_G.PVEFrameTab3:Click()
 	else
 		if IsShiftKeyDown() then
 			DB.keystones = {}
@@ -177,7 +179,7 @@ local function OnEnter(self)
 		end
 	end
 
-	DT.tooltip:AddLine(MEDIA.leftClick .. " " .. L["left click to open LFD Frame"], mMT:GetRGB("tip"))
+	DT.tooltip:AddLine(MEDIA.leftClick .. " " .. L["left click to open the menu."], mMT:GetRGB("tip"))
 	DT.tooltip:AddLine(MEDIA.rightClick .. " " .. L["right click to open Great Vault"], mMT:GetRGB("tip"))
 	DT.tooltip:AddLine(MEDIA.rightClick .. " " .. L["SHIFT + right click to clear all saved keystones."], mMT:GetRGB("tip"))
 	DT.tooltip:Show()

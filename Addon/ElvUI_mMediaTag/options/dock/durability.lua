@@ -1,6 +1,5 @@
 local mMT, DB, M, E, P, L, MEDIA = unpack(ElvUI_mMediaTag)
 local DT = E:GetModule("DataTexts")
-local GetMountInfoByID = C_MountJournal.GetMountInfoByID
 
 mMT.options.args.dock.args.buttons.args.durability.args = {
 	settings = {
@@ -9,30 +8,8 @@ mMT.options.args.dock.args.buttons.args.durability.args = {
 		inline = true,
 		name = L["Settings"],
 		args = {
-			mount = {
-				order = 1,
-				type = "select",
-				name = L["Repair Mount"],
-				get = function(info)
-					return E.db.mMediaTag.dock.durability.mount
-				end,
-				set = function(info, value)
-					E.db.mMediaTag.dock.durability.mount = value
-					DT:ForceUpdate_DataText("mMT - Durability & ItemLevel")
-				end,
-				values = function()
-					local mountIDs = {}
-
-					for _, mountID in ipairs({ 280, 284, 460, 1039, 2237 }) do
-						local name, _, icon, _, _, _, _, _, _, hideOnChar, isCollected = GetMountInfoByID(mountID)
-						if isCollected and not hideOnChar then mountIDs[mountID] = format("|T%s:14:14:0:0:64:64:4:60:4:60|t %s", icon, name) end
-					end
-
-					return mountIDs
-				end,
-			},
 			percThreshold = {
-				order = 2,
+				order = 1,
 				name = L["Threshold"],
 				type = "range",
 				min = 0,

@@ -5,8 +5,10 @@ local Dock = M.Dock
 local icons = MEDIA.icons.dock
 
 local _G = _G
+local format = format
 local ipairs = ipairs
 local type = type
+local tinsert = tinsert
 local UNKNOWN = UNKNOWN
 local OWNER_COLOR = { 0.35, 0.85, 1 }
 local NEIGHBORHOOD_COLOR = { 1, 0.82, 0.35 }
@@ -58,6 +60,8 @@ local function OnEnter(self)
 		DT.tooltip:AddLine(L["Housing"], mMT:GetRGB("title"))
 		AddKnownHouseList()
 
+		DT.tooltip:AddLine(" ")
+		DT.tooltip:AddLine(MEDIA.rightClick .. " " .. L["right click to open the menu."], mMT:GetRGB("tip"))
 		DT.tooltip:Show()
 	end
 end
@@ -67,11 +71,54 @@ local function OnLeave(self)
 	if E.db.mMediaTag.dock.tooltip then DT.tooltip:Hide() end
 end
 
-local function OnClick(self)
+local function ToggleDashboard()
+	if not _G.KeybindFrames_InQuickKeybindMode() then _G.HousingFramesUtil.ToggleHousingDashboard() end
+end
+
+-- the teleports run through Blizzard's secure housing actions
+local function OpenMenu(self)
+	local cooldownInfo = C_Housing.GetVisitCooldownInfo()
+	local cooldown = cooldownInfo and mMT:CooldownStateText(cooldownInfo.isActive)
+	local menu = { mMT:MenuTitle(L["Housing"]) }
+
+	-- the list arrives with PLAYER_HOUSE_LIST_UPDATED, the next open shows the houses
+	if not playerHouses then C_Housing.GetPlayerOwnedHouses() end
+
+	if playerHouses then
+		for _, houseInfo in ipairs(playerHouses) do
+			if houseInfo.neighborhoodGUID and houseInfo.houseGUID and houseInfo.plotID then tinsert(menu, {
+				text = format("%s: %s", _G.HOUSING_DASHBOARD_TELEPORT_TO_PLOT, houseInfo.houseName or UNKNOWN),
+				right_text = cooldown,
+				attributes = {
+					type = "teleporthome",
+					["house-neighborhood-guid"] = houseInfo.neighborhoodGUID,
+					["house-guid"] = houseInfo.houseGUID,
+					["house-plot-id"] = houseInfo.plotID,
+				},
+			}) end
+		end
+	end
+
+	if C_HousingNeighborhood.CanReturnAfterVisitingHouse() then tinsert(menu, {
+		text = _G.HOUSING_DASHBOARD_RETURN,
+		attributes = { type = "returnhome" },
+	}) end
+
+	tinsert(menu, mMT:MenuSpacer())
+	tinsert(menu, { text = _G.HOUSING_DASHBOARD_CATALOG_FRAMETITLE, func = ToggleDashboard })
+
+	mMT:ShowMenu(menu, self)
+end
+
+local function OnClick(self, btn)
 	if not E:AlertCombat() then
 		if _G.Kiosk.IsEnabled() then return end
 
-		if not _G.KeybindFrames_InQuickKeybindMode() then _G.HousingFramesUtil.ToggleHousingDashboard() end
+		if btn == "RightButton" then
+			OpenMenu(self)
+		else
+			ToggleDashboard()
+		end
 	end
 end
 

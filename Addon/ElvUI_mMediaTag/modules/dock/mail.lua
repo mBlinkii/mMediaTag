@@ -9,8 +9,6 @@ local PlayerHasToy = PlayerHasToy
 local IsToyUsable = C_ToyBox.IsToyUsable
 local GetToyInfo = C_ToyBox.GetToyInfo
 local GetItemCooldown = C_Container.GetItemCooldown
-local GetMountInfoByID = C_MountJournal.GetMountInfoByID
-local SummonByID = C_MountJournal.SummonByID
 local tinsert = tinsert
 
 -- MOLL-E, Katy's Stampwhistle, Ohuna Perch, Radiant Lynx Whistle, Interdimensional Parcel Signal
@@ -38,15 +36,6 @@ local function GetOwnedToys()
 	return owned
 end
 
-local function GetOwnedMounts()
-	local owned = {}
-	for _, mountID in ipairs(auctionMounts) do
-		local _, _, _, _, _, _, _, _, _, hideOnChar, isCollected = GetMountInfoByID(mountID)
-		if isCollected and not hideOnChar then tinsert(owned, mountID) end
-	end
-	return owned
-end
-
 local function GetRemainingCooldown(toyID)
 	local start, duration = GetItemCooldown(toyID)
 	if not start or not duration or E:IsSecretValue(start) or E:IsSecretValue(duration) then return end
@@ -69,30 +58,6 @@ end
 
 local function OnLeaveToy()
 	GameTooltip:Hide()
-end
-
-local function OnEnterMount(btn)
-	GameTooltip:SetOwner(btn, "ANCHOR_CURSOR")
-	GameTooltip:ClearLines()
-	GameTooltip:SetMountBySpellID(btn.tooltip)
-	GameTooltip:Show()
-end
-
-local function CreateMountEntry(mountID)
-	local name, spellID, icon = GetMountInfoByID(mountID)
-	if not name then return end
-
-	return {
-		text = name,
-		icon = icon,
-		icon_size = 14,
-		tooltip = spellID,
-		func = function()
-			SummonByID(mountID)
-		end,
-		funcOnEnter = OnEnterMount,
-		funcOnLeave = OnLeaveToy,
-	}
 end
 
 local function CreateMenuEntry(toyID)
@@ -130,7 +95,7 @@ local function OnEnter(self)
 		if mailDT then mailDT.onEnter() end
 
 		local owned = GetOwnedToys()
-		if owned[1] or GetOwnedMounts()[1] then
+		if owned[1] or mMT:GetCollectedMounts(auctionMounts)[1] then
 			if DT.tooltip:NumLines() == 0 then DT.tooltip:AddLine(MAIL_LABEL, 1, 1, 1) end
 			DT.tooltip:AddLine(" ")
 
@@ -157,7 +122,7 @@ end
 local function OnClick(self)
 	if E:AlertCombat() then return end
 
-	local owned, mounts = GetOwnedToys(), GetOwnedMounts()
+	local owned, mounts = GetOwnedToys(), mMT:GetCollectedMounts(auctionMounts)
 	if not (owned[1] or mounts[1]) then return end
 
 	local menu = {}
@@ -180,7 +145,7 @@ local function OnClick(self)
 		if menu[1] then tinsert(menu, { text = "", isTitle = true, notClickable = true }) end
 		tinsert(menu, { text = mMT:TC(L["Mounts"], "title"), isTitle = true, notClickable = true })
 		for _, mountID in ipairs(mounts) do
-			local entry = CreateMountEntry(mountID)
+			local entry = mMT:CreateMountMenuEntry(mountID)
 			if entry then tinsert(menu, entry) end
 		end
 	end

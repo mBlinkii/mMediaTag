@@ -288,6 +288,126 @@ function mMT:BuildMenus()
 	mMT.submenu:SetTemplate("Transparent", true)
 end
 
+-- Traveler's Tundra Mammoth (Alliance, Horde), Grand Expedition Yak, Mighty Caravan Brutosaur, Grizzly Hills Packmaster, Sporebearer Fungal Strider
+mMT.RepairMounts = { 280, 284, 460, 1039, 2237, 3137 }
+
+local GetMountInfoByID = C_MountJournal.GetMountInfoByID
+local SummonByID = C_MountJournal.SummonByID
+
+function mMT:MenuSpacer()
+	return { text = "", isTitle = true, notClickable = true }
+end
+
+function mMT:MenuTitle(text)
+	return { text = mMT:TC(text, "title"), isTitle = true, notClickable = true }
+end
+
+function mMT:ShowMenu(menu, parent)
+	if not mMT.menu then mMT:BuildMenus() end
+	mMT:DropDown(menu, mMT.menu, parent, 260, 2)
+end
+
+-- other faction mounts stay collected, but cannot be used on this character
+function mMT:GetCollectedMounts(mountIDs)
+	local collected = {}
+	for _, mountID in ipairs(mountIDs) do
+		local _, _, _, _, _, _, _, _, _, hideOnChar, isCollected = GetMountInfoByID(mountID)
+		if isCollected and not hideOnChar then tinsert(collected, mountID) end
+	end
+	return collected
+end
+
+local function OnEnterMountEntry(btn)
+	GameTooltip:SetOwner(btn, "ANCHOR_CURSOR")
+	GameTooltip:ClearLines()
+	GameTooltip:SetMountBySpellID(btn.tooltip)
+	GameTooltip:Show()
+end
+
+local function OnLeaveMenuEntry()
+	GameTooltip:Hide()
+end
+
+function mMT:CreateMountMenuEntry(mountID)
+	local name, spellID, icon = GetMountInfoByID(mountID)
+	if not name then return end
+
+	return {
+		text = name,
+		icon = icon,
+		icon_size = 14,
+		tooltip = spellID,
+		func = function()
+			SummonByID(mountID)
+		end,
+		funcOnEnter = OnEnterMountEntry,
+		funcOnLeave = OnLeaveMenuEntry,
+	}
+end
+
+-- a random usable mount on top, then every collected one
+function mMT:OpenMountMenu(parent, mountIDs)
+	if E:AlertCombat() then return end
+
+	local mounts = mMT:GetCollectedMounts(mountIDs)
+	if not mounts[1] then return end
+
+	local usable = {}
+	for _, mountID in ipairs(mounts) do
+		if select(5, GetMountInfoByID(mountID)) then tinsert(usable, mountID) end
+	end
+
+	local menu = {}
+	local pool = usable[1] and usable or mounts
+	local randomEntry = mMT:CreateMountMenuEntry(pool[random(#pool)])
+	if randomEntry then
+		tinsert(menu, mMT:MenuTitle(L["Random"]))
+		tinsert(menu, randomEntry)
+		tinsert(menu, mMT:MenuSpacer())
+	end
+
+	tinsert(menu, mMT:MenuTitle(L["Mounts"]))
+	for _, mountID in ipairs(mounts) do
+		local entry = mMT:CreateMountMenuEntry(mountID)
+		if entry then tinsert(menu, entry) end
+	end
+
+	mMT:ShowMenu(menu, parent)
+end
+
+local function ToggleGreatVault()
+	if not _G.WeeklyRewardsFrame then E:LoadAddon("Blizzard_WeeklyRewards") end
+	if _G.WeeklyRewardsFrame:IsVisible() then
+		_G.WeeklyRewardsFrame:Hide()
+	else
+		_G.WeeklyRewardsFrame:Show()
+	end
+end
+
+local function GroupFinderEntry(text, panel, selection)
+	return {
+		text = text,
+		func = function()
+			_G.PVEFrame_ToggleFrame(panel, selection and _G[selection])
+		end,
+	}
+end
+
+function mMT:OpenGroupFinderMenu(parent)
+	if E:AlertCombat() then return end
+
+	mMT:ShowMenu({
+		mMT:MenuTitle(_G.GROUP_FINDER),
+		GroupFinderEntry(_G.LOOKING_FOR_DUNGEON, "GroupFinderFrame", "LFDParentFrame"),
+		GroupFinderEntry(_G.RAID_FINDER, "GroupFinderFrame", "RaidFinderFrame"),
+		GroupFinderEntry(_G.LFGLIST_NAME, "GroupFinderFrame", "LFGListPVEStub"),
+		GroupFinderEntry(_G.CHALLENGES, "ChallengesFrame"),
+		GroupFinderEntry(_G.PVP, "PVPUIFrame"),
+		mMT:MenuSpacer(),
+		{ text = _G.DELVES_GREAT_VAULT_LABEL, func = ToggleGreatVault },
+	}, parent)
+end
+
 local topAddOns = {}
 for i = 1, 5 do
 	topAddOns[i] = { value = 0, name = "", cpu = "N/A" }

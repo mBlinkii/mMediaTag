@@ -322,7 +322,6 @@ P.datatexts = {
 		hold_delay = 5,
 	},
 	durability_itemLevel = {
-		mount = 460,
 		warning = true,
 		force_withe_text = true,
 		repair_threshold = 15,
@@ -690,7 +689,6 @@ P.dock = {
 		custom_color = false,
 		percThreshold = 30,
 		text = "none",
-		mount = 460,
 	},
 
 	encounter = {

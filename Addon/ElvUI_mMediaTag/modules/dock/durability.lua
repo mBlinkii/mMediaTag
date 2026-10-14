@@ -9,10 +9,7 @@ local avg, avgEquipped, avgPvp = 0, 0, 0
 local format = format
 local GetAverageItemLevel = GetAverageItemLevel
 local GetInventoryItemDurability = GetInventoryItemDurability
-local GetMountInfoByID = C_MountJournal.GetMountInfoByID
-local SummonByID = C_MountJournal.SummonByID
 local pairs = pairs
-local tonumber = tonumber
 local wipe = wipe
 
 local DURABILITY = DURABILITY
@@ -75,11 +72,7 @@ local function OnEnter(self)
 		DT.tooltip:AddLine(" ")
 		DT.tooltip:AddLine(MEDIA.leftClick .. " " .. L["left click to open Character Frame"], mMT:GetRGB("tip"))
 
-		local mountID = tonumber(E.db.mMediaTag.dock.durability.mount)
-		if mountID then
-			local name, _, icon, _, _, _, _, _, _, hideOnChar, isCollected = GetMountInfoByID(mountID)
-			if name and isCollected and not hideOnChar then DT.tooltip:AddDoubleLine(MEDIA.rightClick .. " " .. L["right click to use:"], format("%s %s", name, E:TextureString(icon, ":14:14")), mMT:GetRGB("tip", "M")) end
-		end
+		if mMT:GetCollectedMounts(mMT.RepairMounts)[1] then DT.tooltip:AddLine(MEDIA.rightClick .. " " .. L["right click to open the menu."], mMT:GetRGB("tip")) end
 
 		DT.tooltip:Show()
 	end
@@ -91,16 +84,10 @@ local function OnLeave(self)
 end
 
 local function OnClick(self, btn)
-	if not E:AlertCombat() then
-		if btn == "LeftButton" then
-			_G.ToggleCharacter("PaperDollFrame")
-		elseif btn == "RightButton" then
-			local mountID = tonumber(E.db.mMediaTag.dock.durability.mount)
-			if mountID then
-				local isUsable = select(5, GetMountInfoByID(mountID))
-				if isUsable then SummonByID(mountID) end
-			end
-		end
+	if btn == "RightButton" then
+		mMT:OpenMountMenu(self, mMT.RepairMounts)
+	elseif not E:AlertCombat() then
+		_G.ToggleCharacter("PaperDollFrame")
 	end
 end
 

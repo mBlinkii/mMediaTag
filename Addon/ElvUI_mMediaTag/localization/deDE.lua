@@ -40,6 +40,8 @@ L["Game Menu"] = "Spielmenü"
 L["Home"] = "Heimat"
 L["Latency:"] = "Latenz:"
 L["left click to open the menu."] = "Linksklick, um das Menü zu öffnen."
+L["right click to open the menu."] = "Rechtsklick, um das Menü zu öffnen."
+L["CTRL + left click to choose the master volume."] = "STRG + Linksklick, um die Gesamtlautstärke zu wählen."
 L["right click to open LFD Browser"] = "Rechtsklick, um den LFD-Browser zu öffnen"
 L["World"] = "Welt"
 

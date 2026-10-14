@@ -14,6 +14,11 @@ local SecondsToTime = SecondsToTime
 local pairs = pairs
 local time = time
 local wipe = wipe
+local tinsert = tinsert
+local GetEquipmentSetIDs = C_EquipmentSet.GetEquipmentSetIDs
+local GetEquipmentSetInfo = C_EquipmentSet.GetEquipmentSetInfo
+local UseEquipmentSet = C_EquipmentSet.UseEquipmentSet
+local EQUIPPED_ICON = "|TInterface\\RaidFrame\\ReadyCheck-Ready:14:14|t"
 
 local DURABILITY = DURABILITY
 local REPAIR_COST = REPAIR_COST
@@ -176,6 +181,11 @@ local function OnEnter(self)
 			if levelTimePlayed then DT.tooltip:AddDoubleLine(L["Time played this level"], SecondsToTime(levelTimePlayed), mMT:GetRGB("text", "text")) end
 		end
 
+		if GetEquipmentSetIDs()[1] then
+			DT.tooltip:AddLine(" ")
+			DT.tooltip:AddLine(MEDIA.rightClick .. " " .. L["right click to open the menu."], mMT:GetRGB("tip"))
+		end
+
 		DT.tooltip:Show()
 	end
 end
@@ -185,10 +195,35 @@ local function OnLeave(self)
 	if E.db.mMediaTag.dock.tooltip then DT.tooltip:Hide() end
 end
 
-local function OnClick(self)
+local function OpenEquipmentSetMenu(self)
+	local setIDs = GetEquipmentSetIDs()
+	if not setIDs[1] then return end
+
+	local menu = { mMT:MenuTitle(_G.EQUIPMENT_MANAGER) }
+	for _, setID in ipairs(setIDs) do
+		local name, icon, _, isEquipped = GetEquipmentSetInfo(setID)
+		if name then tinsert(menu, {
+			text = name,
+			right_text = isEquipped and EQUIPPED_ICON or nil,
+			icon = icon,
+			icon_size = 14,
+			func = function()
+				UseEquipmentSet(setID)
+			end,
+		}) end
+	end
+
+	mMT:ShowMenu(menu, self)
+end
+
+local function OnClick(self, btn)
 	if not E:AlertCombat() then
 		Dock:Click(self)
-		_G.ToggleCharacter("PaperDollFrame")
+		if btn == "RightButton" then
+			OpenEquipmentSetMenu(self)
+		else
+			_G.ToggleCharacter("PaperDollFrame")
+		end
 	end
 end
 

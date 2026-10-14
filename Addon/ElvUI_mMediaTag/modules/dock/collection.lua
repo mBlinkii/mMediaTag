@@ -12,6 +12,11 @@ local GetNumPets = C_PetJournal.GetNumPets
 local GetPetInfoByIndex = C_PetJournal.GetPetInfoByIndex
 local GetPetInfoByPetID = C_PetJournal.GetPetInfoByPetID
 local GetNumLearnedDisplayedToys = C_ToyBox.GetNumLearnedDisplayedToys
+local SummonByID = C_MountJournal.SummonByID
+local SummonRandomPet = C_PetJournal.SummonRandomPet
+local GetSummonedPetGUID = C_PetJournal.GetSummonedPetGUID
+local SummonPetByGUID = C_PetJournal.SummonPetByGUID
+local tinsert = tinsert
 
 -- Variables
 local _G = _G
@@ -73,6 +78,8 @@ local function OnEnter(self)
 
 		if battle_pet_bandage then DT.tooltip:AddDoubleLine(battle_pet_bandage.name, battle_pet_bandage.count, mMT:GetRGB("text", "mark")) end
 
+		DT.tooltip:AddLine(" ")
+		DT.tooltip:AddLine(MEDIA.rightClick .. " " .. L["right click to open the menu."], mMT:GetRGB("tip"))
 		DT.tooltip:Show()
 	end
 end
@@ -82,10 +89,60 @@ local function OnLeave(self)
 	if E.db.mMediaTag.dock.tooltip then DT.tooltip:Hide() end
 end
 
-local function OnClick(self)
+local function JournalEntry(text, tabIndex)
+	return {
+		text = text,
+		func = function()
+			_G.ToggleCollectionsJournal(tabIndex)
+		end,
+	}
+end
+
+local function OpenMenu(self)
+	local menu = {
+		mMT:MenuTitle(L["Random"]),
+		{
+			text = _G.MOUNTS,
+			func = function()
+				SummonByID(0)
+			end,
+		},
+		{
+			text = _G.PETS,
+			func = function()
+				SummonRandomPet(true)
+			end,
+		},
+	}
+
+	local petGUID = GetSummonedPetGUID()
+	if petGUID then tinsert(menu, {
+		text = _G.PET_DISMISS,
+		func = function()
+			SummonPetByGUID(petGUID)
+		end,
+	}) end
+
+	tinsert(menu, mMT:MenuSpacer())
+	tinsert(menu, mMT:MenuTitle(COLLECTIONS))
+	tinsert(menu, JournalEntry(_G.MOUNTS, _G.COLLECTIONS_JOURNAL_TAB_INDEX_MOUNTS))
+	tinsert(menu, JournalEntry(_G.PETS, _G.COLLECTIONS_JOURNAL_TAB_INDEX_PETS))
+	tinsert(menu, JournalEntry(_G.TOY_BOX, _G.COLLECTIONS_JOURNAL_TAB_INDEX_TOYS))
+	tinsert(menu, JournalEntry(_G.HEIRLOOMS, _G.COLLECTIONS_JOURNAL_TAB_INDEX_HEIRLOOMS))
+	tinsert(menu, JournalEntry(_G.WARDROBE, _G.COLLECTIONS_JOURNAL_TAB_INDEX_APPEARANCES))
+	tinsert(menu, JournalEntry(_G.WARBAND_SCENES, _G.COLLECTIONS_JOURNAL_TAB_INDEX_WARBAND_SCENES))
+
+	mMT:ShowMenu(menu, self)
+end
+
+local function OnClick(self, btn)
 	if not E:AlertCombat() then
 		Dock:Click(self)
-		_G.ToggleCollectionsJournal()
+		if btn == "RightButton" then
+			OpenMenu(self)
+		else
+			_G.ToggleCollectionsJournal()
+		end
 	end
 end
 

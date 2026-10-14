@@ -5,6 +5,11 @@ local Dock = M.Dock
 local icons = MEDIA.icons.dock
 local volumeDT = nil
 local panelText
+local GetCVarNumberOrDefault = GetCVarNumberOrDefault
+local SetCVar = SetCVar
+local IsControlKeyDown = IsControlKeyDown
+local tinsert = tinsert
+local SELECTED_ICON = "|TInterface\\RaidFrame\\ReadyCheck-Ready:14:14|t"
 
 local config = {
 	name = "mMT_Dock_Volume",
@@ -22,13 +27,20 @@ local config = {
 	},
 }
 
+local function ShowTooltip()
+	if not volumeDT then return end
+
+	volumeDT.onEnter()
+	DT.tooltip:AddLine(" ")
+	DT.tooltip:AddLine(MEDIA.leftClick .. " " .. L["CTRL + left click to choose the master volume."], mMT:GetRGB("tip"))
+	DT.tooltip:Show()
+end
+
 local function OnEnter(self)
 	Dock:OnEnter(self)
 	self.mouse_entered = true
 
-	if E.db.mMediaTag.dock.tooltip then
-		if volumeDT then volumeDT.onEnter() end
-	end
+	if E.db.mMediaTag.dock.tooltip then ShowTooltip() end
 end
 
 local function OnLeave(self)
@@ -37,8 +49,31 @@ local function OnLeave(self)
 	if E.db.mMediaTag.dock.tooltip then DT.tooltip:Hide() end
 end
 
+local function OpenMasterVolumeMenu(self)
+	local current = mMT:round(GetCVarNumberOrDefault("Sound_MasterVolume") * 100)
+	local menu = { mMT:MenuTitle(_G.MASTER_VOLUME) }
+
+	for _, level in ipairs({ 0, 25, 50, 75, 100 }) do
+		tinsert(menu, {
+			text = level .. "%",
+			right_text = current == level and SELECTED_ICON or nil,
+			func = function()
+				SetCVar("Sound_MasterVolume", level / 100)
+			end,
+		})
+	end
+
+	mMT:ShowMenu(menu, self)
+end
+
 local function OnClick(self, btn)
 	Dock:Click(self)
+
+	if btn == "LeftButton" and IsControlKeyDown() then
+		if not E:AlertCombat() then OpenMasterVolumeMenu(self) end
+		return
+	end
+
 	volumeDT = mMT:GetElvUIDataText("Volume")
 	if volumeDT then volumeDT.onClick(self, btn) end
 end
@@ -101,9 +136,7 @@ local function OnEvent(...)
 		end
 	end
 
-	if E.db.mMediaTag.dock and E.db.mMediaTag.dock.tooltip and self.mouse_entered then
-		if volumeDT then volumeDT.onEnter() end
-	end
+	if E.db.mMediaTag.dock and E.db.mMediaTag.dock.tooltip and self.mouse_entered then ShowTooltip() end
 end
 
 DT:RegisterDatatext(config.name, config.category, { "CVAR_UPDATE" }, OnEvent, nil, OnClick, OnEnter, OnLeave, config.localizedName, nil, nil)
