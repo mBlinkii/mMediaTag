@@ -41,6 +41,7 @@ L["Home"] = true
 L["Latency:"] = true
 L["left click to open the menu."] = true
 L["right click to open the menu."] = true
+L["right click to switch the equipment set."] = true
 L["CTRL + left click to choose the master volume."] = true
 L["right click to open LFD Browser"] = true
 L["World"] = true

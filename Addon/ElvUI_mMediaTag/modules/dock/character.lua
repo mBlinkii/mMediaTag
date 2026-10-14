@@ -181,9 +181,17 @@ local function OnEnter(self)
 			if levelTimePlayed then DT.tooltip:AddDoubleLine(L["Time played this level"], SecondsToTime(levelTimePlayed), mMT:GetRGB("text", "text")) end
 		end
 
-		if GetEquipmentSetIDs()[1] then
+		local setIDs = GetEquipmentSetIDs()
+		if setIDs[1] then
 			DT.tooltip:AddLine(" ")
-			DT.tooltip:AddLine(MEDIA.rightClick .. " " .. L["right click to open the menu."], mMT:GetRGB("tip"))
+			DT.tooltip:AddLine(_G.EQUIPMENT_MANAGER, mMT:GetRGB("title"))
+			for _, setID in ipairs(setIDs) do
+				local name, icon, _, isEquipped = GetEquipmentSetInfo(setID)
+				if name then DT.tooltip:AddDoubleLine(E:TextureString(icon, ":14:14") .. " " .. mMT:TC(name), isEquipped and EQUIPPED_ICON or "") end
+			end
+
+			DT.tooltip:AddLine(" ")
+			DT.tooltip:AddLine(MEDIA.rightClick .. " " .. L["right click to switch the equipment set."], mMT:GetRGB("tip"))
 		end
 
 		DT.tooltip:Show()
