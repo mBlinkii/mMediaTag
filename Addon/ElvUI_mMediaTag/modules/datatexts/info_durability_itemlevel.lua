@@ -108,8 +108,8 @@ local function OnEnter(self)
 
 	local mountID = tonumber(E.db.mMediaTag.datatexts.durability_itemLevel.mount)
 	if mountID then
-		local name, _, icon, _, isUsable = GetMountInfoByID(mountID)
-		if name and isUsable then DT.tooltip:AddDoubleLine(MEDIA.rightClick .. " " .. L["right click to use:"], format("%s %s", name, E:TextureString(icon, ":14:14")), mMT:GetRGB("tip", "M")) end
+		local name, _, icon, _, _, _, _, _, _, hideOnChar, isCollected = GetMountInfoByID(mountID)
+		if name and isCollected and not hideOnChar then DT.tooltip:AddDoubleLine(MEDIA.rightClick .. " " .. L["right click to use:"], format("%s %s", name, E:TextureString(icon, ":14:14")), mMT:GetRGB("tip", "M")) end
 	end
 
 	DT.tooltip:Show()

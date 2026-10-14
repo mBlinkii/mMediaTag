@@ -96,8 +96,8 @@ mMT.options.args.datatexts.args.info.args.info_durability_itemlevel.args = {
 					local mountIDs = {}
 
 					for _, mountID in ipairs({ 280, 284, 460, 1039, 2237 }) do
-						local name, _, icon, _, isUsable = GetMountInfoByID(mountID)
-						if isUsable then mountIDs[mountID] = format("|T%s:14:14:0:0:64:64:4:60:4:60|t %s", icon, name) end
+						local name, _, icon, _, _, _, _, _, _, hideOnChar, isCollected = GetMountInfoByID(mountID)
+						if isCollected and not hideOnChar then mountIDs[mountID] = format("|T%s:14:14:0:0:64:64:4:60:4:60|t %s", icon, name) end
 					end
 
 					return mountIDs

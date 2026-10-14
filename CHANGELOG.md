@@ -1,5 +1,11 @@
 # Changelog - ElvUI_mMediaTag
 
+## [ver. 4.17] - TBD
+### 🐛 FIX
+- FIX - [DT-Durability]: The repair mount of the datatext and the durability dock was missing in the tooltip and settings wherever you cannot mount.
+### 🔧 UPDATE
+- UPDATE - [Dock]: The mail dock opens a menu with your mailbox toys on click, a random ready one on top, and shows their cooldowns in the tooltip.
+
 ## [ver. 4.16] - 14.10.2026
 ### 🐛 FIX
 - FIX - [Cooldown-Manager]: The custom tracker showed no icon for equipment slots and missed spells that replace another one.
