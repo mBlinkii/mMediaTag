@@ -98,6 +98,8 @@ local CLASS_CONSUMABLE = 0
 local SUBCLASS_FLASK = 3
 local SUBCLASS_FOOD = 5
 local SUBCLASS_ENHANCEMENT = 6
+-- midnight weapon oils are listed as other consumables
+local SUBCLASS_OTHER = 8
 local CLASS_WEAPON = 2
 local SLOT_MAINHAND = 16
 local SLOT_OFFHAND = 17
@@ -571,7 +573,7 @@ local function ScanBags()
 			if itemID then
 				local _, _, _, _, _, classID, subClassID = GetItemInfoInstant(itemID)
 				local kind = RUNE_ITEMS[itemID] and "rune"
-					or classID == CLASS_CONSUMABLE and (subClassID == SUBCLASS_FLASK and "flask" or subClassID == SUBCLASS_FOOD and "food" or subClassID == SUBCLASS_ENHANCEMENT and "oil")
+					or classID == CLASS_CONSUMABLE and (subClassID == SUBCLASS_FLASK and "flask" or subClassID == SUBCLASS_FOOD and "food" or (subClassID == SUBCLASS_ENHANCEMENT or subClassID == SUBCLASS_OTHER) and "oil")
 				-- food, flasks and oils only from the current expansion
 				if kind and kind ~= "rune" and not IsCurrentExpansion(itemID) then kind = nil end
 				if kind then
@@ -683,15 +685,21 @@ local function CheckClassBuffs()
 	end
 end
 
+-- "world" outside of instances, else the instance type
+local function Zone()
+	local inInstance, instanceType = IsInInstance()
+	return inInstance and instanceType or "world"
+end
+
 local function ShouldCheck()
 	if module.demo then return true end
 	if UnitIsDeadOrGhost("player") then return false end
 	-- auras turn secret during restricted content, the reminder only works when they are readable
 	if ShouldAurasBeSecret and ShouldAurasBeSecret() then return false end
 
-	local inInstance, instanceType = IsInInstance()
-	if not inInstance then return module.db.world end
-	return module.db.instances[instanceType]
+	local zone = Zone()
+	if zone == "world" then return module.db.world end
+	return module.db.instances[zone]
 end
 
 local function CollectDemo()
@@ -713,15 +721,17 @@ local function Collect()
 		bagsDirty = false
 		ScanBags()
 	end
-	if db.raid_buffs.enable then CheckRaidBuffs() end
-	if db.flask then CheckItemBuff("flask", L["Flask"], FLASK_ICON) end
-	if db.rune then CheckItemBuff("rune", L["Augment Rune"], RuneIcon()) end
-	if db.food then CheckFood() end
-	if db.weapon then
+	-- each check can be limited to some zones
+	local zone, zones = Zone(), db.zones
+	if db.raid_buffs.enable and zones.raid_buffs[zone] then CheckRaidBuffs() end
+	if db.flask and zones.flask[zone] then CheckItemBuff("flask", L["Flask"], FLASK_ICON) end
+	if db.rune and zones.rune[zone] then CheckItemBuff("rune", L["Augment Rune"], RuneIcon()) end
+	if db.food and zones.food[zone] then CheckFood() end
+	if db.weapon and zones.weapon[zone] then
 		CheckWeaponSlot(SLOT_MAINHAND)
 		CheckWeaponSlot(SLOT_OFFHAND)
 	end
-	if db.class_buffs then CheckClassBuffs() end
+	if db.class_buffs and zones.class_buffs[zone] then CheckClassBuffs() end
 end
 
 local function ApplyLayout(count)

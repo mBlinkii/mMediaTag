@@ -829,6 +829,8 @@ L["Shows the minutes left or the number of group members missing the buff."] = t
 L["Vertical"] = true
 L["Weapon Enchant"] = true
 L["Weapon oils, sharpening stones and class imbues on your weapons."] = true
+L["Zones"] = true
+L["Choose where each check reminds you. The visibility above still decides where the reminder shows at all."] = true
 
 -- options/misc/keystone_teleports.lua
 L["Shows the keystones of your group with the teleport to their dungeon and highlights the dungeon of your group."] = true

@@ -29,6 +29,40 @@ local textGet, textSet = Accessors("text")
 local glowGet, glowSet = Accessors("glow")
 local entryGet, entrySet = Accessors("entry")
 
+local ZONES = {
+	world = L["Open World"],
+	party = L["Dungeons"],
+	raid = L["Raids"],
+	scenario = L["Delves and Scenarios"],
+}
+
+-- a dropdown with the zones a check runs in, greyed out while the check is off
+local function ZoneSelect(order, name, key, enabled)
+	return {
+		order = order,
+		type = "multiselect",
+		dialogControl = "Dropdown",
+		name = name,
+		values = ZONES,
+		disabled = function()
+			return Disabled() or not enabled()
+		end,
+		get = function(_, zone)
+			return E.db.mMediaTag.buff_reminder.zones[key][zone]
+		end,
+		set = function(_, zone, value)
+			E.db.mMediaTag.buff_reminder.zones[key][zone] = value
+			Update()
+		end,
+	}
+end
+
+local function CheckEnabled(key)
+	return function()
+		return E.db.mMediaTag.buff_reminder[key]
+	end
+end
+
 mMT.options.args.group.args.group_tools.args.buff_reminder.args = {
 	enable = {
 		order = 1,
@@ -282,6 +316,28 @@ mMT.options.args.group.args.group_tools.args.buff_reminder.args = {
 				get = get,
 				set = set,
 			},
+		},
+	},
+	zones = {
+		order = 5.5,
+		type = "group",
+		inline = true,
+		name = L["Zones"],
+		disabled = Disabled,
+		args = {
+			desc = {
+				order = 0,
+				type = "description",
+				name = L["Choose where each check reminds you. The visibility above still decides where the reminder shows at all."],
+			},
+			raid_buffs = ZoneSelect(1, L["Raid Buffs"], "raid_buffs", function()
+				return E.db.mMediaTag.buff_reminder.raid_buffs.enable
+			end),
+			flask = ZoneSelect(2, L["Flask"], "flask", CheckEnabled("flask")),
+			food = ZoneSelect(3, L["Food"], "food", CheckEnabled("food")),
+			rune = ZoneSelect(4, L["Augment Rune"], "rune", CheckEnabled("rune")),
+			weapon = ZoneSelect(5, L["Weapon Enchant"], "weapon", CheckEnabled("weapon")),
+			class_buffs = ZoneSelect(6, L["Class Buffs"], "class_buffs", CheckEnabled("class_buffs")),
 		},
 	},
 	layout = {

@@ -829,6 +829,8 @@ L["Shows the minutes left or the number of group members missing the buff."] = "
 L["Vertical"] = "Vertikal"
 L["Weapon Enchant"] = "Waffenverzauberung"
 L["Weapon oils, sharpening stones and class imbues on your weapons."] = "Waffenöle, Wetzsteine und Klassen-Waffenbuffs auf deinen Waffen."
+L["Zones"] = "Zonen"
+L["Choose where each check reminds you. The visibility above still decides where the reminder shows at all."] = "Wähle, wo jede Prüfung dich erinnert. Die Sichtbarkeit oben entscheidet weiterhin, wo die Erinnerung überhaupt erscheint."
 
 -- options/misc/keystone_teleports.lua
 L["Shows the keystones of your group with the teleport to their dungeon and highlights the dungeon of your group."] = "Zeigt die Schlüsselsteine deiner Gruppe mit dem Teleport zu ihrem Dungeon und hebt den Dungeon deiner Gruppe hervor."

@@ -1,7 +1,10 @@
 # Changelog - ElvUI_mMediaTag
 
 ## [ver. 4.17] - TBD
+### 🐛 FIX
+- FIX - [Buff-Reminder]: Midnight weapon oils were not found in the bags, so the weapon enchant icon could not use them.
 ### 🔧 UPDATE
+- UPDATE - [Buff-Reminder]: Each check can be limited to the open world, dungeons, raids or delves and scenarios.
 - UPDATE - [Dock]: The mail dock opens a menu with your mailbox toys and auction house mounts on click, a random ready toy on top, and shows the toy cooldowns in the tooltip.
 - UPDATE - [Dock]: Right click on the character dock switches equipment sets and its tooltip lists them, on the collections dock summons a random favorite mount or pet or opens a collection tab, and on the housing dock teleports you to your plot.
 - UPDATE - [Dock]: CTRL + left click on the volume dock sets the master volume.
