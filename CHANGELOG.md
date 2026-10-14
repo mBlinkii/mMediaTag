@@ -1,5 +1,13 @@
 # Changelog - ElvUI_mMediaTag
 
+## [ver. 4.16] - 14.10.2026
+### 🐛 FIX
+- FIX - [Cooldown-Manager]: The custom tracker showed no icon for equipment slots and missed spells that replace another one.
+- FIX - [System]: Fixed errors and missing icons with WoW 12.1.5, among them in the profession, tracker, score and dungeon datatexts.
+### 🔧 UPDATE
+- UPDATE - [System]: Updated for WoW 12.1.5.
+- UPDATE - [System]: Switched to the current Blizzard API, mMT no longer relies on Blizzard's deprecated fallbacks.
+
 ## [ver. 4.15] - 13.10.2026
 ### 🐛 FIX
 - FIX - [Cooldown-Manager]: Icons had rounded corners and texts were too large, ElvUI's cooldown manager skin is now turned on with the module.

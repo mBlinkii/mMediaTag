@@ -9,6 +9,7 @@ local GetOwnedKeystoneLevel = C_MythicPlus.GetOwnedKeystoneLevel
 local GetKeystoneLevelRarityColor = C_ChallengeMode.GetKeystoneLevelRarityColor
 local GetActivities = C_WeeklyRewards.GetActivities
 local GetExampleRewardItemHyperlinks = C_WeeklyRewards.GetExampleRewardItemHyperlinks
+local GetDetailedItemLevelInfo = C_Item and C_Item.GetDetailedItemLevelInfo or GetDetailedItemLevelInfo
 local IsInInstance = IsInInstance
 local GetInstanceInfo = GetInstanceInfo
 local GetDifficultyInfo = GetDifficultyInfo

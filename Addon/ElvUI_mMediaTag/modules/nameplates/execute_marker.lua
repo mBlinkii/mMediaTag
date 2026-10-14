@@ -8,8 +8,8 @@ local pairs, ipairs = pairs, ipairs
 local CreateFrame = CreateFrame
 local InCombatLockdown = InCombatLockdown
 local GetSpecialization = C_SpecializationInfo.GetSpecialization or GetSpecialization
-local IsPlayerSpell = IsPlayerSpell
-local IsSpellKnownOrOverridesKnown = IsSpellKnownOrOverridesKnown
+local IsSpellKnown = C_SpellBook.IsSpellKnown
+local IsSpellInSpellBook = C_SpellBook.IsSpellInSpellBook
 local GetActiveConfigID = C_ClassTalents.GetActiveConfigID
 local GetNodeInfo = C_Traits.GetNodeInfo
 
@@ -63,11 +63,11 @@ local function IsTalentNodeActive(nodeID)
 	return info and (info.activeRank or 0) > 0
 end
 
--- IsPlayerSpell covers passive talents, the override check spells that replace another one (Drain Soul)
+-- IsSpellKnown covers passive talents, the override check spells that replace another one (Drain Soul)
 local function IsEntryKnown(entry)
 	if entry.spells then
 		for _, spellID in ipairs(entry.spells) do
-			if IsPlayerSpell(spellID) or IsSpellKnownOrOverridesKnown(spellID) then return true end
+			if IsSpellKnown(spellID) or IsSpellInSpellBook(spellID, Enum.SpellBookSpellBank.Player, true) then return true end
 		end
 	end
 

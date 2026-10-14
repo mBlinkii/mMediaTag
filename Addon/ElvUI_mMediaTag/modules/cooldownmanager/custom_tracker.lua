@@ -15,7 +15,7 @@ local GameTooltip = GameTooltip
 local GetInventoryItemID = GetInventoryItemID
 local GetInventoryItemCooldown = GetInventoryItemCooldown
 local GetInventoryItemTexture = GetInventoryItemTexture
-local GetInventorySlotInfo = GetInventorySlotInfo
+local GetInventorySlotInfo = C_PaperDollInfo.GetInventorySlotInfo
 local C_Timer_After = C_Timer.After
 local C_Item_GetItemCount = C_Item.GetItemCount
 local C_Item_GetItemIconByID = C_Item.GetItemIconByID
@@ -28,7 +28,7 @@ local C_Spell_GetSpellName = C_Spell.GetSpellName
 local C_Item_GetItemNameByID = C_Item.GetItemNameByID
 local C_Item_GetItemInfoInstant = C_Item.GetItemInfoInstant
 local IsSpellKnown = C_SpellBook and C_SpellBook.IsSpellKnown
-local IsSpellKnownOrOverridesKnown = C_SpellBook and C_SpellBook.IsSpellKnownOrOverridesKnown
+local IsSpellInSpellBook = C_SpellBook and C_SpellBook.IsSpellInSpellBook
 local GetPlayerAuraBySpellID = C_UnitAuras.GetPlayerAuraBySpellID
 local issecretvalue = issecretvalue
 
@@ -239,7 +239,7 @@ end
 local function SpellUsable(spellID, knownOnly)
 	if not knownOnly then return C_Spell_GetSpellName(spellID) ~= nil end
 
-	if IsSpellKnownOrOverridesKnown and IsSpellKnownOrOverridesKnown(spellID) then return true end
+	if IsSpellInSpellBook and IsSpellInSpellBook(spellID, Enum.SpellBookSpellBank.Player, true) then return true end
 	return (IsSpellKnown and IsSpellKnown(spellID)) or false
 end
 

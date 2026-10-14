@@ -69,7 +69,7 @@ end
 local mutedChatFrames = {}
 
 local function MuteTimePlayedChat()
-	for i = 1, NUM_CHAT_WINDOWS do
+	for i = 1, Constants.ChatFrameConstants.MaxChatWindows do
 		local chat = _G["ChatFrame" .. i]
 		if chat and chat:IsEventRegistered("TIME_PLAYED_MSG") then
 			chat:UnregisterEvent("TIME_PLAYED_MSG")

@@ -5,6 +5,7 @@ local pairs = pairs
 local ipairs = ipairs
 local CreateColorFromHexString = CreateColorFromHexString
 local strjoin = strjoin
+local GetItemIcon = C_Item and C_Item.GetItemIconByID or GetItemIcon
 
 local function createColor(hex)
 	return CreateColorFromHexString(hex)

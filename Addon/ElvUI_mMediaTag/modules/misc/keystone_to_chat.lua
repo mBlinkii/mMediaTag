@@ -8,7 +8,7 @@ local GetContainerNumSlots = C_Container.GetContainerNumSlots
 local GetContainerItemInfo = C_Container.GetContainerItemInfo
 local GetOwnedKeystoneLevel = C_MythicPlus.GetOwnedKeystoneLevel
 local InCombatLockdown = InCombatLockdown
-local SendChatMessage = SendChatMessage
+local SendChatMessage = C_ChatInfo.SendChatMessage
 local NUM_BAG_SLOTS = NUM_BAG_SLOTS
 
 local function CheckText(text)

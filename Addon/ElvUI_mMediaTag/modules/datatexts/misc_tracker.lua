@@ -6,7 +6,8 @@ local module = mMT:AddModule("Tracker")
 --WoW API / Variables
 local _G = _G
 local GetCurrencyInfo = C_CurrencyInfo.GetCurrencyInfo
-local GetItemInfo = GetItemInfo
+local GetItemInfo = C_Item and C_Item.GetItemInfo or GetItemInfo
+local GetItemCount = C_Item and C_Item.GetItemCount or GetItemCount
 local strjoin = strjoin
 
 --Variables
