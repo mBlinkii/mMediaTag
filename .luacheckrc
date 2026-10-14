@@ -52,6 +52,7 @@ local extra = {
 	"C_SpellBook",
 	"C_StringUtil",
 	"C_TooltipInfo",
+	"Constants",
 	"CreateAbbreviateConfig",
 	"CreateAtlasMarkup",
 	"CreateTextureMarkup",
