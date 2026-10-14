@@ -203,22 +203,13 @@ local function DungeonScoreTooltip(scoreTable)
 end
 
 local function OnClick(self, button)
-	if button == "LeftButton" then
-		mMT:OpenGroupFinderMenu(self)
-	elseif button == "MiddleButton" then
+	if button == "LeftButton" or button == "MiddleButton" then
 		_G.ToggleLFDParentFrame()
-		_G.PVEFrameTab3:Click()
+		if button == "MiddleButton" then _G.PVEFrameTab3:Click() end
+	elseif IsShiftKeyDown() then
+		DB.keystones = {}
 	else
-		if IsShiftKeyDown() then
-			DB.keystones = {}
-		else
-			if not _G.WeeklyRewardsFrame then E:LoadAddon("Blizzard_WeeklyRewards") end
-			if _G.WeeklyRewardsFrame:IsVisible() then
-				_G.WeeklyRewardsFrame:Hide()
-			else
-				_G.WeeklyRewardsFrame:Show()
-			end
-		end
+		mMT:OpenGroupFinderMenu(self)
 	end
 end
 
@@ -353,9 +344,9 @@ local function OnEnter(self)
 	end
 
 	DT.tooltip:AddLine(" ")
-	DT.tooltip:AddLine(MEDIA.leftClick .. " " .. L["left click to open the menu."], mMT:GetRGB("tip"))
+	DT.tooltip:AddLine(MEDIA.leftClick .. " " .. L["left click to open LFD Frame"], mMT:GetRGB("tip"))
 	DT.tooltip:AddLine(MEDIA.middleClick .. " " .. L["middle click to open M+ Frame"], mMT:GetRGB("tip"))
-	DT.tooltip:AddLine(MEDIA.rightClick .. " " .. L["right click to open Great Vault"], mMT:GetRGB("tip"))
+	DT.tooltip:AddLine(MEDIA.rightClick .. " " .. L["right click to open the menu."], mMT:GetRGB("tip"))
 	DT.tooltip:AddLine(MEDIA.rightClick .. " " .. L["SHIFT + right click to clear all saved keystones."], mMT:GetRGB("tip"))
 
 	DT.tooltip:Show()
