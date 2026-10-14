@@ -4,7 +4,7 @@
 ### 🐛 FIX
 - FIX - [DT-Durability]: The repair mount of the datatext and the durability dock was missing in the tooltip and settings wherever you cannot mount.
 ### 🔧 UPDATE
-- UPDATE - [Dock]: The mail dock opens a menu with your mailbox toys on click, a random ready one on top, and shows their cooldowns in the tooltip.
+- UPDATE - [Dock]: The mail dock opens a menu with your mailbox toys and auction house mounts on click, a random ready toy on top, and shows the toy cooldowns in the tooltip.
 
 ## [ver. 4.16] - 14.10.2026
 ### 🐛 FIX

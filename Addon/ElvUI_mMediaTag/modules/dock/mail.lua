@@ -9,10 +9,15 @@ local PlayerHasToy = PlayerHasToy
 local IsToyUsable = C_ToyBox.IsToyUsable
 local GetToyInfo = C_ToyBox.GetToyInfo
 local GetItemCooldown = C_Container.GetItemCooldown
+local GetMountInfoByID = C_MountJournal.GetMountInfoByID
+local SummonByID = C_MountJournal.SummonByID
 local tinsert = tinsert
 
 -- MOLL-E, Katy's Stampwhistle, Ohuna Perch, Radiant Lynx Whistle, Interdimensional Parcel Signal
 local mailboxToys = { 40768, 156833, 194885, 239693, 264695 }
+
+-- Mighty Caravan Brutosaur, Trader's Gilded Brutosaur, Sporebearer Fungal Strider
+local auctionMounts = { 1039, 2265, 3137 }
 
 local config = {
 	name = "mMT_Dock_Mail",
@@ -29,6 +34,15 @@ local function GetOwnedToys()
 	local owned = {}
 	for _, toyID in ipairs(mailboxToys) do
 		if PlayerHasToy(toyID) and IsToyUsable(toyID) then tinsert(owned, toyID) end
+	end
+	return owned
+end
+
+local function GetOwnedMounts()
+	local owned = {}
+	for _, mountID in ipairs(auctionMounts) do
+		local _, _, _, _, _, _, _, _, _, hideOnChar, isCollected = GetMountInfoByID(mountID)
+		if isCollected and not hideOnChar then tinsert(owned, mountID) end
 	end
 	return owned
 end
@@ -55,6 +69,30 @@ end
 
 local function OnLeaveToy()
 	GameTooltip:Hide()
+end
+
+local function OnEnterMount(btn)
+	GameTooltip:SetOwner(btn, "ANCHOR_CURSOR")
+	GameTooltip:ClearLines()
+	GameTooltip:SetMountBySpellID(btn.tooltip)
+	GameTooltip:Show()
+end
+
+local function CreateMountEntry(mountID)
+	local name, spellID, icon = GetMountInfoByID(mountID)
+	if not name then return end
+
+	return {
+		text = name,
+		icon = icon,
+		icon_size = 14,
+		tooltip = spellID,
+		func = function()
+			SummonByID(mountID)
+		end,
+		funcOnEnter = OnEnterMount,
+		funcOnLeave = OnLeaveToy,
+	}
 end
 
 local function CreateMenuEntry(toyID)
@@ -92,15 +130,19 @@ local function OnEnter(self)
 		if mailDT then mailDT.onEnter() end
 
 		local owned = GetOwnedToys()
-		if owned[1] then
+		if owned[1] or GetOwnedMounts()[1] then
 			if DT.tooltip:NumLines() == 0 then DT.tooltip:AddLine(MAIL_LABEL, 1, 1, 1) end
 			DT.tooltip:AddLine(" ")
-			DT.tooltip:AddLine(L["Toys"], mMT:GetRGB("title"))
-			for _, toyID in ipairs(owned) do
-				local _, name, icon = GetToyInfo(toyID)
-				if name then DT.tooltip:AddDoubleLine(E:TextureString(icon, ":14:14") .. " " .. mMT:TC(name), GetCooldownText(toyID)) end
+
+			if owned[1] then
+				DT.tooltip:AddLine(L["Toys"], mMT:GetRGB("title"))
+				for _, toyID in ipairs(owned) do
+					local _, name, icon = GetToyInfo(toyID)
+					if name then DT.tooltip:AddDoubleLine(E:TextureString(icon, ":14:14") .. " " .. mMT:TC(name), GetCooldownText(toyID)) end
+				end
+				DT.tooltip:AddLine(" ")
 			end
-			DT.tooltip:AddLine(" ")
+
 			DT.tooltip:AddLine(MEDIA.leftClick .. " " .. L["left click to open the menu."], mMT:GetRGB("tip"))
 			DT.tooltip:Show()
 		end
@@ -115,21 +157,32 @@ end
 local function OnClick(self)
 	if E:AlertCombat() then return end
 
-	local owned = GetOwnedToys()
-	if not owned[1] then return end
+	local owned, mounts = GetOwnedToys(), GetOwnedMounts()
+	if not (owned[1] or mounts[1]) then return end
 
 	local menu = {}
-	local randomEntry = CreateMenuEntry(GetRandomToy(owned))
-	if randomEntry then
-		tinsert(menu, { text = mMT:TC(L["Random"], "title"), isTitle = true, notClickable = true })
-		tinsert(menu, randomEntry)
-		tinsert(menu, { text = "", isTitle = true, notClickable = true })
+	if owned[1] then
+		local randomEntry = CreateMenuEntry(GetRandomToy(owned))
+		if randomEntry then
+			tinsert(menu, { text = mMT:TC(L["Random"], "title"), isTitle = true, notClickable = true })
+			tinsert(menu, randomEntry)
+			tinsert(menu, { text = "", isTitle = true, notClickable = true })
+		end
+
+		tinsert(menu, { text = mMT:TC(L["Toys"], "title"), isTitle = true, notClickable = true })
+		for _, toyID in ipairs(owned) do
+			local entry = CreateMenuEntry(toyID)
+			if entry then tinsert(menu, entry) end
+		end
 	end
 
-	tinsert(menu, { text = mMT:TC(L["Toys"], "title"), isTitle = true, notClickable = true })
-	for _, toyID in ipairs(owned) do
-		local entry = CreateMenuEntry(toyID)
-		if entry then tinsert(menu, entry) end
+	if mounts[1] then
+		if menu[1] then tinsert(menu, { text = "", isTitle = true, notClickable = true }) end
+		tinsert(menu, { text = mMT:TC(L["Mounts"], "title"), isTitle = true, notClickable = true })
+		for _, mountID in ipairs(mounts) do
+			local entry = CreateMountEntry(mountID)
+			if entry then tinsert(menu, entry) end
+		end
 	end
 
 	if not mMT.menu then mMT:BuildMenus() end
