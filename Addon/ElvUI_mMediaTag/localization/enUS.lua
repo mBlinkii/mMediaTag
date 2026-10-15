@@ -169,6 +169,8 @@ L["Off Hand Enchant"] = true
 -- modules/misc/keystone_teleports.lua
 L["Keystone Teleports"] = true
 L["Teleport not learned"] = true
+L["The group leader has left the group."] = true
+L["The dungeon difficulty is not set to Mythic."] = true
 
 -- modules/misc/lfg_invite_info.lua
 L["PVE"] = true

@@ -157,6 +157,8 @@ L["Off Hand Enchant"] = "Encantamiento de mano secundaria"
 -- modules/misc/keystone_teleports.lua
 L["Keystone Teleports"] = "Teletransportes de piedra angular"
 L["Teleport not learned"] = "Teletransporte no aprendido"
+L["The group leader has left the group."] = "El líder del grupo ha abandonado el grupo."
+L["The dungeon difficulty is not set to Mythic."] = "La dificultad de mazmorra no está en Mítica."
 
 -- modules/misc/lfg_invite_info.lua
 L["PVE"] = "JcE"

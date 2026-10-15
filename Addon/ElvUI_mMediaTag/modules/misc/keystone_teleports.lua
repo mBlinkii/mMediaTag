@@ -18,12 +18,15 @@ local min = math.min
 local random = math.random
 local select = select
 local tinsert = tinsert
+local concat = table.concat
 local UnitClass = UnitClass
 local UnitExists = UnitExists
+local UnitGUID = UnitGUID
 local UnitIsGroupLeader = UnitIsGroupLeader
 local GetMapUIInfo = C_ChallengeMode.GetMapUIInfo
 local GetKeystoneLevelRarityColor = C_ChallengeMode.GetKeystoneLevelRarityColor
 local GetClassColor = C_ClassColor.GetClassColor
+local GetDungeonDifficultyID = GetDungeonDifficultyID
 local GetSpellTexture = C_Spell.GetSpellTexture
 local GetSpellCooldownDuration = C_Spell.GetSpellCooldownDuration
 local GetMapTable = C_ChallengeMode.GetMapTable
@@ -41,6 +44,7 @@ local TITLE_SPACING = 4
 local FADE_TIME = 0.3
 local FLASH_PULSE = 0.4
 local FLASH_TIME = 5
+local MYTHIC_DIFFICULTY = 23
 
 local units = { "player", "party1", "party2", "party3", "party4" }
 local updateQueued
@@ -145,6 +149,8 @@ local function CreateTeleportFrame()
 	frame:Hide()
 
 	frame.title = frame:CreateFontString(nil, "OVERLAY")
+	frame.warning = frame:CreateFontString(nil, "OVERLAY")
+	frame.warning:SetJustifyH("LEFT")
 
 	frame.rows = {}
 	for i = 1, MAX_ROWS do
@@ -240,6 +246,19 @@ local function ApplyLayout()
 	frame.title:SetShown(db.title)
 	module.top = padding + (db.title and (frame.title:GetStringHeight() + TITLE_SPACING) or 0)
 	module.padding = padding
+
+	-- the demo shows the warnings as well, so their look can be checked
+	local warnings = {}
+	if module.leaderLeft or module.demo then warnings[#warnings + 1] = L["The group leader has left the group."] end
+	if GetDungeonDifficultyID() ~= MYTHIC_DIFFICULTY or module.demo then warnings[#warnings + 1] = L["The dungeon difficulty is not set to Mythic."] end
+	local warning = #warnings > 0
+	E:SetFont(frame.warning, font, db.text.size, db.text.fontFlag)
+	frame.warning:SetText(MEDIA.color.red:WrapTextInColorCode(concat(warnings, "\n")))
+	frame.warning:ClearAllPoints()
+	frame.warning:Point("TOPLEFT", frame, "TOPLEFT", padding, -module.top)
+	frame.warning:Width(db.width - padding * 2)
+	frame.warning:SetShown(warning)
+	if warning then module.top = module.top + frame.warning:GetStringHeight() + TITLE_SPACING end
 
 	for i, row in ipairs(frame.rows) do
 		row:ClearAllPoints()
@@ -442,8 +461,37 @@ local function Activate()
 	QueueUpdate()
 end
 
+local function ResetLeader()
+	module.leaderGUID = nil
+	module.leaderLeft = nil
+end
+
+-- remembers the leader, a leader missing from the group afterwards has left it
+local function CheckLeader()
+	if not IsInGroup() or IsInRaid() or IsInInstance() then return end
+
+	local leader, present
+	for _, unit in ipairs(units) do
+		if UnitExists(unit) then
+			local guid = E:NotSecretUnit(unit) and UnitGUID(unit)
+			-- an unreadable member could be the leader, so nothing is decided
+			if not guid or E:IsSecretValue(guid) then return end
+			if guid == module.leaderGUID then present = true end
+			if UnitIsGroupLeader(unit) then leader = guid end
+		end
+	end
+
+	local left = module.leaderGUID and not present
+	module.leaderGUID = leader
+	if left and not module.leaderLeft then
+		module.leaderLeft = true
+		Activate()
+	end
+end
+
 local function Deactivate()
 	StopTimer()
+	ResetLeader()
 	module.active = false
 	module.members = 0
 	module.flashPending = nil
@@ -458,6 +506,8 @@ end
 function module:GROUP_JOINED()
 	module.members = GetNumGroupMembers()
 	QueueFlash(module.members)
+	ResetLeader()
+	CheckLeader()
 	Activate()
 end
 
@@ -466,6 +516,7 @@ function module:GROUP_ROSTER_UPDATE()
 	local previous = module.members or 0
 	local filled = members >= FULL_GROUP and previous < FULL_GROUP
 	module.members = members
+	CheckLeader()
 
 	if filled then
 		QueueFlash(members)
@@ -482,6 +533,8 @@ end
 function module:PLAYER_ENTERING_WORLD(_, isInitialLogin, isReloadingUi)
 	if (isInitialLogin or isReloadingUi) and IsInGroup() then
 		module.members = GetNumGroupMembers()
+		ResetLeader()
+		CheckLeader()
 		Activate()
 	else
 		QueueUpdate()
@@ -532,6 +585,7 @@ function module:Initialize(demo)
 		module:RegisterEvent("GROUP_LEFT", Deactivate)
 		module:RegisterEvent("PLAYER_ENTERING_WORLD")
 		module:RegisterEvent("ZONE_CHANGED_NEW_AREA", QueueUpdate)
+		module:RegisterEvent("PLAYER_DIFFICULTY_CHANGED", QueueUpdate)
 		module:RegisterEvent("LFG_LIST_JOINED_GROUP", Activate)
 		module:RegisterEvent("LFG_LIST_ACTIVE_ENTRY_UPDATE", QueueUpdate)
 		module:RegisterEvent("LFG_LIST_APPLICATION_STATUS_UPDATED", QueueUpdate)

@@ -169,6 +169,8 @@ L["Off Hand Enchant"] = "Waffenverzauberung Nebenhand"
 -- modules/misc/keystone_teleports.lua
 L["Keystone Teleports"] = "Schlüsselstein-Teleports"
 L["Teleport not learned"] = "Teleport nicht erlernt"
+L["The group leader has left the group."] = "Der Gruppenleiter hat die Gruppe verlassen."
+L["The dungeon difficulty is not set to Mythic."] = "Die Dungeonschwierigkeit ist nicht auf Mythisch gestellt."
 
 -- modules/misc/lfg_invite_info.lua
 L["PVE"] = "PVE"

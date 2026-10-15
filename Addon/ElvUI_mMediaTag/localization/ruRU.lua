@@ -157,6 +157,8 @@ L["Off Hand Enchant"] = "Чары левой руки"
 -- modules/misc/keystone_teleports.lua
 L["Keystone Teleports"] = "Телепорты по ключам"
 L["Teleport not learned"] = "Телепорт не изучен"
+L["The group leader has left the group."] = "Лидер группы покинул группу."
+L["The dungeon difficulty is not set to Mythic."] = "Сложность подземелья не установлена на эпохальную."
 
 -- modules/misc/lfg_invite_info.lua
 L["PVE"] = "PvE"

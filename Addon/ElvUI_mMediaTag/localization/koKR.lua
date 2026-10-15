@@ -157,6 +157,8 @@ L["Off Hand Enchant"] = "보조장비 마법부여"
 -- modules/misc/keystone_teleports.lua
 L["Keystone Teleports"] = "쐐기돌 순간이동"
 L["Teleport not learned"] = "배우지 않은 순간이동"
+L["The group leader has left the group."] = "파티장이 파티를 떠났습니다."
+L["The dungeon difficulty is not set to Mythic."] = "던전 난이도가 신화로 설정되어 있지 않습니다."
 
 -- modules/misc/lfg_invite_info.lua
 L["PVE"] = "PvE"

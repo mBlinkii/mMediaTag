@@ -157,6 +157,8 @@ L["Off Hand Enchant"] = "副手附魔"
 -- modules/misc/keystone_teleports.lua
 L["Keystone Teleports"] = "钥石传送"
 L["Teleport not learned"] = "未学会传送"
+L["The group leader has left the group."] = "队长已离开队伍。"
+L["The dungeon difficulty is not set to Mythic."] = "地下城难度未设置为史诗。"
 
 -- modules/misc/lfg_invite_info.lua
 L["PVE"] = "PVE"
