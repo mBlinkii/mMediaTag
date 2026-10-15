@@ -1,6 +1,6 @@
 # Changelog - ElvUI_mMediaTag
 
-## [ver. 4.17] - TBD
+## [ver. 4.17] - 15.10.2026
 ### 🐛 FIX
 - FIX - [Buff-Reminder]: Midnight weapon oils were not found in the bags, so the weapon enchant icon could not use them.
 - FIX - [Cooldown-Manager]: The pandemic highlight cost CPU time on every frame for each aura, it now only reacts when an aura enters or leaves the pandemic window.

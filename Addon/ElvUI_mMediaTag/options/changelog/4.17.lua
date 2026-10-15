@@ -1,7 +1,7 @@
 local mMT, DB, M, E, P, L, MEDIA = unpack(ElvUI_mMediaTag)
 
 mMT.Changelog[417] = {
-	DATE = "TBD",
+	DATE = "15.10.2026",
 	FIX = {
 		"[Buff-Reminder]: Midnight weapon oils were not found in the bags, so the weapon enchant icon could not use them.",
 		"[Cooldown-Manager]: The pandemic highlight cost CPU time on every frame for each aura, it now only reacts when an aura enters or leaves the pandemic window.",
