@@ -573,7 +573,8 @@ local function ScanBags()
 			if itemID then
 				local _, _, _, _, _, classID, subClassID = GetItemInfoInstant(itemID)
 				local kind = RUNE_ITEMS[itemID] and "rune"
-					or classID == CLASS_CONSUMABLE and (subClassID == SUBCLASS_FLASK and "flask" or subClassID == SUBCLASS_FOOD and "food" or (subClassID == SUBCLASS_ENHANCEMENT or subClassID == SUBCLASS_OTHER) and "oil")
+					or classID == CLASS_CONSUMABLE
+						and (subClassID == SUBCLASS_FLASK and "flask" or subClassID == SUBCLASS_FOOD and "food" or (subClassID == SUBCLASS_ENHANCEMENT or subClassID == SUBCLASS_OTHER) and "oil")
 				-- food, flasks and oils only from the current expansion
 				if kind and kind ~= "rune" and not IsCurrentExpansion(itemID) then kind = nil end
 				if kind then

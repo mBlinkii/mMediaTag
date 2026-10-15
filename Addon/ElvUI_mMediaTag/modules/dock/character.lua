@@ -210,15 +210,17 @@ local function OpenEquipmentSetMenu(self)
 	local menu = { mMT:MenuTitle(_G.EQUIPMENT_MANAGER) }
 	for _, setID in ipairs(setIDs) do
 		local name, icon, _, isEquipped = GetEquipmentSetInfo(setID)
-		if name then tinsert(menu, {
-			text = name,
-			right_text = isEquipped and EQUIPPED_ICON or nil,
-			icon = icon,
-			icon_size = 14,
-			func = function()
-				UseEquipmentSet(setID)
-			end,
-		}) end
+		if name then
+			tinsert(menu, {
+				text = name,
+				right_text = isEquipped and EQUIPPED_ICON or nil,
+				icon = icon,
+				icon_size = 14,
+				func = function()
+					UseEquipmentSet(setID)
+				end,
+			})
+		end
 	end
 
 	mMT:ShowMenu(menu, self)

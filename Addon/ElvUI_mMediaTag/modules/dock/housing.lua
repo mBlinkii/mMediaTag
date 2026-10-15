@@ -86,16 +86,18 @@ local function OpenMenu(self)
 
 	if playerHouses then
 		for _, houseInfo in ipairs(playerHouses) do
-			if houseInfo.neighborhoodGUID and houseInfo.houseGUID and houseInfo.plotID then tinsert(menu, {
-				text = format("%s: %s", _G.HOUSING_DASHBOARD_TELEPORT_TO_PLOT, houseInfo.houseName or UNKNOWN),
-				right_text = cooldown,
-				attributes = {
-					type = "teleporthome",
-					["house-neighborhood-guid"] = houseInfo.neighborhoodGUID,
-					["house-guid"] = houseInfo.houseGUID,
-					["house-plot-id"] = houseInfo.plotID,
-				},
-			}) end
+			if houseInfo.neighborhoodGUID and houseInfo.houseGUID and houseInfo.plotID then
+				tinsert(menu, {
+					text = format("%s: %s", _G.HOUSING_DASHBOARD_TELEPORT_TO_PLOT, houseInfo.houseName or UNKNOWN),
+					right_text = cooldown,
+					attributes = {
+						type = "teleporthome",
+						["house-neighborhood-guid"] = houseInfo.neighborhoodGUID,
+						["house-guid"] = houseInfo.houseGUID,
+						["house-plot-id"] = houseInfo.plotID,
+					},
+				})
+			end
 		end
 	end
 
