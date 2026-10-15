@@ -435,38 +435,32 @@ local function PandemicStyle(vdb)
 	return style
 end
 
--- Blizzard calls this on every aura tick, so the settings are only read again after a refresh or a state change
-function module:SetPandemic(item, active)
-	local version = module.pandemicVersion
-	local icon = item.PandemicIcon
-	if icon and item.mmtPandemicSeen == version and item.mmtPandemic == active then
-		if item.mmtPandemicStyle ~= "blizzard" then
-			icon:Hide()
-			return
-		end
-		if icon.mmtPandemicVersion == version then return end
-	end
+-- Only runs when the marker is acquired or released, and once per active item after a refresh
+function module:SetPandemic(item, active, icon, key)
+	key = key or ViewerKey(item)
+	local vdb = key and not module:IsDisabled() and module:IsManaged(key) and module:ViewerDB(key)
+	local style = vdb and PandemicStyle(vdb) or "blizzard"
+	icon = icon or item.PandemicIcon
 
-	local vdb = module:ViewerDB(ViewerKey(item))
-	local style = vdb and PandemicStyle(vdb)
-	if not style then return end
-	item.mmtPandemicSeen = version
+	module.pandemicActive[item] = active and key or nil
 
-	if icon then
-		if style ~= "blizzard" then
-			-- Blizzard re-shows its marker on every tick, so hiding has to be re-asserted
-			icon:Hide()
-		elseif icon.mmtPandemicVersion ~= module.pandemicVersion then
-			icon.mmtPandemicVersion = module.pandemicVersion
+	if icon and active then
+		-- Blizzard shows the marker on every tick but never touches its alpha
+		if style == "blizzard" then
 			icon:SetAlpha(1)
 
-			local color = vdb.pandemic_color
-			if color then PaintTextures(icon, color.r, color.g, color.b) end
+			-- pooled markers keep their tint, so a removed color has to be painted back
+			local color = vdb and vdb.pandemic_color
+			if color then
+				PaintTextures(icon, color.r, color.g, color.b)
+			elseif icon.mmtPandemicTinted then
+				PaintTextures(icon, 1, 1, 1)
+			end
+			icon.mmtPandemicTinted = color and true or nil
+		else
+			icon:SetAlpha(0)
 		end
 	end
-
-	if item.mmtPandemic == active and item.mmtPandemicStyle == style then return end
-	item.mmtPandemic, item.mmtPandemicStyle = active, style
 
 	if active and style == "glow" then
 		module:ApplyGlow(item, vdb.pandemic_glow, PANDEMIC_KEY)
@@ -475,16 +469,19 @@ function module:SetPandemic(item, active)
 	end
 end
 
-function module:HookPandemic(frame)
-	if module.hookedPandemic[frame] or not frame.ShowPandemicStateFrame then return end
-	module.hookedPandemic[frame] = true
+-- Blizzard checks the pandemic window every frame, the viewer only acquires and releases the marker on a change
+function module:HookPandemic(viewer, key)
+	if module.hookedPandemic[viewer] or not viewer.AnchorPandemicStateFrame or not viewer.HidePandemicStateFrame then return end
+	module.hookedPandemic[viewer] = true
 
-	hooksecurefunc(frame, "ShowPandemicStateFrame", function(self)
-		module:SetPandemic(self, true)
+	hooksecurefunc(viewer, "AnchorPandemicStateFrame", function(_, icon, item)
+		icon.mmtPandemicItem = item
+		module:SetPandemic(item, true, icon, key)
 	end)
 
-	hooksecurefunc(frame, "HidePandemicStateFrame", function(self)
-		module:SetPandemic(self, false)
+	hooksecurefunc(viewer, "HidePandemicStateFrame", function(_, icon)
+		local item = icon and icon.mmtPandemicItem
+		if item then module:SetPandemic(item, false, icon, key) end
 	end)
 end
 
@@ -852,7 +849,6 @@ function module:LayoutIconViewer(key, capture, callback)
 		if callback then callback(icon, vdb, db) end
 
 		module:ApplyDebuffBorder(icon, vdb)
-		module:HookPandemic(icon)
 	end
 
 	local totalWidth = cols * width + (cols - 1) * spacing

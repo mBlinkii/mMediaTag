@@ -4,6 +4,7 @@ local module = mMT:GetModule("CooldownManager")
 -- Cache WoW Globals
 local _G = _G
 local hooksecurefunc = hooksecurefunc
+local next = next
 local pairs = pairs
 local select = select
 local type = type
@@ -116,8 +117,11 @@ local function HookViewer(key)
 
 		for item in viewer.itemFramePool:EnumerateActive() do
 			HookItem(item)
+			if item.PandemicIcon then module:SetPandemic(item, true, item.PandemicIcon, key) end
 		end
 	end
+
+	module:HookPandemic(viewer, key)
 
 	if viewer.OnAcquireItemFrame then hooksecurefunc(viewer, "OnAcquireItemFrame", function(_, item)
 		HookItem(item)
@@ -284,10 +288,14 @@ function module:Refresh()
 
 	module:RefreshDemo()
 	wipe(module.styled)
-	module.pandemicVersion = module.pandemicVersion + 1
 
 	for key in pairs(module.VIEWERS) do
 		if module:IsManaged(key) then module:LayoutContainer(key, true) end
+	end
+
+	-- no tick re-reads the settings anymore, so markers that are up right now take the new style here
+	for item, key in next, module.pandemicActive do
+		module:SetPandemic(item, true, nil, key)
 	end
 
 	module:RefreshCustomTracker()

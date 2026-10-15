@@ -166,7 +166,6 @@ local function StyleBar(frame, vdb, capture, width, height, side)
 	end
 
 	-- A pooled bar can carry a different aura on every reuse, so the glow is resolved on every pass
-	module:HookPandemic(frame)
 	module:RefreshGlow(frame)
 end
 
