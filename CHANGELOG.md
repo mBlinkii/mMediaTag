@@ -3,6 +3,7 @@
 ## [ver. 4.17] - TBD
 ### 🐛 FIX
 - FIX - [Buff-Reminder]: Midnight weapon oils were not found in the bags, so the weapon enchant icon could not use them.
+- FIX - [Cooldown-Manager]: The pandemic highlight cost CPU time on every frame for each aura, it now only reacts when an aura enters or leaves the pandemic window.
 ### 🔧 UPDATE
 - UPDATE - [Buff-Reminder]: Each check can be limited to the open world, dungeons, raids or delves and scenarios.
 - UPDATE - [Dock]: The mail dock opens a menu with your mailbox toys and auction house mounts on click, a random ready toy on top, and shows the toy cooldowns in the tooltip.
