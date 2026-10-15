@@ -13,5 +13,6 @@ mMT.Changelog[417] = {
 		"[Dock]: CTRL + left click on the volume dock sets the master volume.",
 		"[DT-Dungeon]: Right click on the dungeon and M+ score datatexts and the dungeon dock opens a menu for the Dungeon Finder, Raid Finder, Premade Groups, Mythic+, PvP and the Great Vault.",
 		"[DT-Durability]: Right click on the datatext and the durability dock opens a menu with all your repair mounts and a random one on top, the mount no longer has to be chosen in the settings.",
+		"[Keystone-Teleports]: Warns when the group leader has left the group or the dungeon difficulty is not set to Mythic.",
 	},
 }
