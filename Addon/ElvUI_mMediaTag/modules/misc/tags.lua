@@ -559,12 +559,13 @@ E:AddTag("mMT-power", "UNIT_DISPLAYPOWER UNIT_POWER_FREQUENT UNIT_MAXPOWER UNIT_
 end)
 E:AddTagInfo("mMT-power", mMT.NameShort .. " " .. L["Power"], L["Returns the current power percent of the unit, but only while in combat."])
 
+-- blocked like ElvUI's own quest:title, which does not exist on vanilla
 E:AddTag("mMT-questicon", "QUEST_LOG_UPDATE", function(unit)
 	if UnitIsPlayer(unit) then return end
 	local isQuest = _TAGS["quest:title"](unit)
 	if isQuest then return questIconString end
-end)
-E:AddTagInfo("mMT-questicon", mMT.NameShort .. " " .. L["Miscellaneous"], L["Returns a quest icon if the unit is a quest mob."])
+end, E.Classic)
+if not E.Classic then E:AddTagInfo("mMT-questicon", mMT.NameShort .. " " .. L["Miscellaneous"], L["Returns a quest icon if the unit is a quest mob."]) end
 
 do
 	local classIconNames = {}

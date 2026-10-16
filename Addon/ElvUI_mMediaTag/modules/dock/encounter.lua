@@ -1,11 +1,12 @@
 local mMT, DB, M, E, P, L, MEDIA = unpack(ElvUI_mMediaTag)
+if not mMT.Supports.encounterjournal then return end
 local DT = E:GetModule("DataTexts")
 local Dock = M.Dock
 
 local icons = MEDIA.icons.dock
 
 local _G = _G
-local GetPerksActivitiesInfo = C_PerksActivities.GetPerksActivitiesInfo
+local GetPerksActivitiesInfo = C_PerksActivities and C_PerksActivities.GetPerksActivitiesInfo
 local IsAddOnLoaded = _G.C_AddOns and _G.C_AddOns.IsAddOnLoaded or IsAddOnLoaded
 
 local config = {
@@ -27,7 +28,7 @@ local function OnEnter(self)
 		DT.tooltip:AddLine(ENCOUNTER_JOURNAL, mMT:GetRGB("title"))
 		DT.tooltip:AddLine(" ")
 
-		local activities = GetPerksActivitiesInfo()
+		local activities = GetPerksActivitiesInfo and GetPerksActivitiesInfo()
 		if activities then
 			DT.tooltip:AddDoubleLine(L["Reisetagebuch"], activities.displayMonthName, mMT:GetRGB("text", "text"))
 			local completed, total = 0, #activities.activities

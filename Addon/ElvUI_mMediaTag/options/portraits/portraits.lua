@@ -27,6 +27,11 @@ local portraitUnits = {
 	{ key = "arena", name = L["Arena"], init = "InitializeArenaPortrait" },
 }
 
+-- vanilla has no focus frame
+for i = #portraitUnits, 1, -1 do
+	if portraitUnits[i].key == "focus" and not mMT.Supports.focus then table.remove(portraitUnits, i) end
+end
+
 local function ringSetting(unit, key)
 	return function(info)
 		return E.db.mMediaTag.portraits[unit].ring[key]

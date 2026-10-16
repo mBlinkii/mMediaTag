@@ -152,11 +152,7 @@ local function BuildMenuList()
 			color = "|c" .. MEDIA.color.gm_text_color.hex,
 			icon = icon and menu_icons.browser,
 			func = function()
-				if E.Retail then
-					_G.ToggleLFDParentFrame()
-				else
-					_G.PVEFrame_ToggleFrame()
-				end
+				mMT:ToggleGroupFinder()
 			end,
 		})
 		tinsert(menuList, {
@@ -294,11 +290,7 @@ local function OnClick(self, button)
 	if button == "LeftButton" then
 		mMT:DropDown(menuList, mMT.menu, self, 160, 2)
 	else
-		if E.Retail then
-			_G.ToggleLFDParentFrame()
-		elseif E.Mists then
-			_G.PVEFrame_ToggleFrame()
-		end
+		mMT:ToggleGroupFinder()
 	end
 end
 

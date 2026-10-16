@@ -2,7 +2,6 @@ local mMT, DB, M, E, P, L, MEDIA = unpack(ElvUI_mMediaTag)
 local DT = E:GetModule("DataTexts")
 
 -- Cache WoW Globals
-local _G = _G
 local GetProfessions = GetProfessions
 local GetProfessionInfo = GetProfessionInfo
 local GetSpellInfo = C_Spell and C_Spell.GetSpellInfo or GetSpellInfo
@@ -177,7 +176,7 @@ local function UpdateMenu()
 		icon = E.db.mMediaTag.datatexts.professions.menu_icons and (dt_icons[E.db.mMediaTag.datatexts.professions.icon] or dt_icons.prof_a),
 		icon_size = ICON_SIZE,
 		func = function()
-			if not E:AlertCombat() then _G.ToggleProfessionsBook() end
+			if not E:AlertCombat() then mMT:ToggleProfessionBook() end
 		end,
 	})
 	if player_professions.extra then

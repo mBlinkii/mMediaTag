@@ -4,7 +4,7 @@ local DT = E:GetModule("DataTexts")
 -- Cache WoW Globals
 local C_ToyBox = C_ToyBox
 local GameTooltip = GameTooltip
-local GetItemCooldown = C_Item and C_Item.GetItemCooldown or GetItemCooldown
+local GetItemCooldown = (C_Item and C_Item.GetItemCooldown) or (C_Container and C_Container.GetItemCooldown) or GetItemCooldown
 local GetItemCount = C_Item and C_Item.GetItemCount or GetItemCount
 local GetItemIcon = C_Item and C_Item.GetItemIconByID or GetItemIcon
 local GetItemInfo = C_Item and C_Item.GetItemInfo or GetItemInfo

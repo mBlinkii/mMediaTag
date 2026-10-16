@@ -1,0 +1,8 @@
+<Ui xmlns="http://www.blizzard.com/wow/ui/">
+	<Include file="misc\load_misc_mainline.xml"/>
+	<Include file="skin\load_skin_mainline.xml"/>
+	<Include file="datatexts\load_datatexts_mainline.xml"/>
+	<Include file="cast\load_cast_mainline.xml"/>
+	<Include file="dock\load_dock_mainline.xml"/>
+	<Include file="cooldownmanager\load_cooldownmanager.xml"/>
+</Ui>

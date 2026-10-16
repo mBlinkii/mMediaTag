@@ -1,4 +1,5 @@
 local mMT, DB, M, E, P, L, MEDIA = unpack(ElvUI_mMediaTag)
+if not mMT.Supports.collections then return end
 local DT = E:GetModule("DataTexts")
 local Dock = M.Dock
 local Tracker = M.Tracker

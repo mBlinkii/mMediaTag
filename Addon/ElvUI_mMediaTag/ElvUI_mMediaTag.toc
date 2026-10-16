@@ -1,4 +1,4 @@
-## Interface: 120105
+## Interface: 11509, 16001, 20506, 50504, 120105
 ## Author: Blinkii
 ## Version: git-build
 ## Title: |CFF0294FFm|r|CFFBD26E5Media|r|CFFFF005DTag|r |CFF404040&|r  |CFFFF9D00Tools|r
@@ -20,8 +20,10 @@ localization\load_localization.xml
 
 init.lua
 core\load_core.xml
+core\load_core_mainline.xml [AllowLoadGameType standard]
 profiles\load_profiles.xml
 media\load_media.xml
 options\load_options.xml
 
 modules\load_modules.xml
+modules\load_modules_mainline.xml [AllowLoadGameType standard]

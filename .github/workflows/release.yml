@@ -63,7 +63,7 @@ jobs:
           echo "version=${VERSION}" >> "$GITHUB_OUTPUT"
 
           # ADAPT 2: Glob der .toc-Dateien, die die Versionsnummer bekommen.
-          for TOC in Addon/ElvUI_mMediaTag/ElvUI_mMediaTag_*.toc; do
+          for TOC in Addon/ElvUI_mMediaTag/ElvUI_mMediaTag*.toc; do
             [ -e "$TOC" ] || continue
             sed -i "s/^## Version:.*/## Version: ${VERSION}/" "$TOC"
           done
@@ -162,7 +162,7 @@ jobs:
       - name: Interface-Version aus TOC lesen
         id: game
         run: |
-          IFACES=$(grep -oP '^## Interface:\s*\K.+' "Addon/ElvUI_mMediaTag/ElvUI_mMediaTag_Mainline.toc" | tr -d '\r ' )
+          IFACES=$(grep -oP '^## Interface:\s*\K.+' "Addon/ElvUI_mMediaTag/ElvUI_mMediaTag.toc" | tr -d '\r ' )
           VERSIONS=""
           IFS=',' read -ra ARR <<< "$IFACES"
           for I in "${ARR[@]}"; do

@@ -4,7 +4,6 @@ local Dock = M.Dock
 
 local icons = MEDIA.icons.calendar
 
-local _G = _G
 local date = date
 local FormatShortDate = FormatShortDate
 
@@ -51,7 +50,7 @@ local function OnLeave(self)
 end
 
 local function OnClick(self)
-	if not E:AlertCombat() then _G.GameTimeFrame:Click() end
+	if not E:AlertCombat() then mMT:ToggleCalendar() end
 end
 
 local function OnEvent(self, event, ...)

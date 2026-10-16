@@ -10,7 +10,7 @@ local InCombatLockdown = InCombatLockdown
 local GetSpecialization = C_SpecializationInfo.GetSpecialization or GetSpecialization
 local IsSpellKnown = C_SpellBook.IsSpellKnown
 local IsSpellInSpellBook = C_SpellBook.IsSpellInSpellBook
-local GetActiveConfigID = C_ClassTalents.GetActiveConfigID
+local GetActiveConfigID = C_ClassTalents and C_ClassTalents.GetActiveConfigID
 local GetNodeInfo = C_Traits.GetNodeInfo
 
 -- Midnight: enemy health is secret, so instead of comparing values the marker sits in a clip frame
@@ -58,7 +58,7 @@ local EXECUTE_RANGES = {
 }
 
 local function IsTalentNodeActive(nodeID)
-	local configID = GetActiveConfigID()
+	local configID = GetActiveConfigID and GetActiveConfigID()
 	local info = configID and GetNodeInfo(configID, nodeID)
 	return info and (info.activeRank or 0) > 0
 end

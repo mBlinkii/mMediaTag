@@ -1,4 +1,5 @@
 local mMT, DB, M, E, P, L, MEDIA = unpack(ElvUI_mMediaTag)
+if not mMT.Supports.focus then return end
 local module = mMT:AddModule("NP-FocusHighlight", { "AceEvent-3.0" })
 
 local NP = E:GetModule("NamePlates")

@@ -1,4 +1,5 @@
 local mMT, DB, M, E, P, L, MEDIA = unpack(ElvUI_mMediaTag)
+if not mMT.Supports.achievements then return end
 local DT = E:GetModule("DataTexts")
 local Dock = M.Dock
 
@@ -7,7 +8,7 @@ local icons = MEDIA.icons.dock
 -- Lua functions
 local format = format
 local GetTotalAchievementPoints = GetTotalAchievementPoints
-local GetTrackedIDs = C_ContentTracking.GetTrackedIDs
+local GetTrackedIDs = C_ContentTracking and C_ContentTracking.GetTrackedIDs
 local GetAchievementInfo = GetAchievementInfo
 
 -- Variables
@@ -37,7 +38,7 @@ local function OnEnter(self)
 		DT.tooltip:AddDoubleLine(L["Achievement points:"], points or 0, mMT:GetRGB("mark", "text"))
 		DT.tooltip:AddDoubleLine(L["Guild Achievement points:"], guildPoints or 0, mMT:GetRGB("mark", "text"))
 
-		local trackedAchievements = GetTrackedIDs(Enum.ContentTrackingType.Achievement)
+		local trackedAchievements = GetTrackedIDs and GetTrackedIDs(Enum.ContentTrackingType.Achievement)
 
 		if trackedAchievements and (#trackedAchievements ~= 0) then
 			DT.tooltip:AddLine(" ")

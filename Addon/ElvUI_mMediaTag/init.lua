@@ -30,6 +30,25 @@ mMT.IDs = {}
 mMT.defaults = {}
 mMT.Changelog = {}
 
+-- game features per WoW version, decided by ElvUI's flags only; must match the [AllowLoadGameType] lines in the toc
+mMT.Supports = {
+	mythicplus = E.Retail,
+	housing = E.Retail,
+	cooldownmanager = E.Retail,
+	objectivetracker = E.Retail,
+	importantcasts = E.Retail,
+	preyhunt = E.Retail,
+	buffreminder = E.Retail,
+	lfglist = E.Retail,
+	teleports = E.Retail,
+	premadegroupsfilter = E.Retail,
+	achievements = not (E.TBC or E.Classic),
+	collections = not (E.TBC or E.Classic),
+	encounterjournal = not (E.TBC or E.Classic or E.Forever),
+	questunits = not (E.TBC or E.Classic),
+	focus = not E.Classic,
+}
+
 function mMT:InsertOptions()
 	E.Options.name = format("%s + %s %s |cff99ff33%s|r", E.Options.name, Engine[7].icon16, mMT.NameShort, mMT.Version)
 	mMT:FinalizeOptions()

@@ -127,13 +127,34 @@ function mMT:CooldownStateText(isActive)
 	return mMT:TC(isActive and L["Not Ready"] or L["Ready"], isActive and "red" or "green")
 end
 
+-- classic has no GetProfessionInfoBySkillLineID, the base skill lines are the same in every version
+local PROFESSION_BY_SKILL_LINE = {
+	[164] = "Blacksmithing",
+	[165] = "Leatherworking",
+	[171] = "Alchemy",
+	[182] = "Herbalism",
+	[185] = "Cooking",
+	[186] = "Mining",
+	[197] = "Tailoring",
+	[202] = "Engineering",
+	[333] = "Enchanting",
+	[356] = "Fishing",
+	[393] = "Skinning",
+	[755] = "Jewelcrafting",
+	[773] = "Inscription",
+	[794] = "Archaeology",
+}
+
 function mMT:GetProfessionIcon(profession, style)
-	if not profession or not GetProfessionInfoBySkillLineID then return end
+	if not profession then return end
 
 	local icons = MEDIA.icons.datatexts.profession_icons[style or "white"]
 	local skillLine = select(7, GetProfessionInfo(profession))
-	local info = skillLine and GetProfessionInfoBySkillLineID(skillLine)
-	return info and info.profession and icons[info.profession] or nil
+	if not skillLine then return end
+
+	local info = GetProfessionInfoBySkillLineID and GetProfessionInfoBySkillLineID(skillLine)
+	local id = (info and info.profession) or (Enum.Profession and Enum.Profession[PROFESSION_BY_SKILL_LINE[skillLine]])
+	return id and icons[id] or nil
 end
 
 function mMT:GetRGB(color1, color2)
@@ -393,8 +414,43 @@ local function GroupFinderEntry(text, panel, selection)
 	}
 end
 
+function mMT:ToggleGroupFinder()
+	if E.Retail then
+		_G.ToggleLFDParentFrame()
+	elseif E.Forever then
+		_G.ToggleGroupFinderFrame()
+	elseif E.Mists then
+		_G.PVEFrame_ToggleFrame()
+	else
+		_G.ToggleLFGParentFrame()
+	end
+end
+
+-- cata and mists show professions on a spellbook tab, vanilla and tbc list them on the general tab
+function mMT:ToggleProfessionBook()
+	if E.Retail or E.Forever then
+		_G.ToggleProfessionsBook()
+	elseif E.Mists or E.Cata then
+		_G.ToggleSpellBook(_G.BOOKTYPE_PROFESSION)
+	else
+		_G.ToggleSpellBook(_G.BOOKTYPE_SPELL)
+	end
+end
+
+-- vanilla and tbc load the calendar on demand, their minimap clock has no calendar button
+function mMT:ToggleCalendar()
+	if E.TBC or E.Classic then
+		if not _G.Calendar_Toggle then E:LoadAddon("Blizzard_Calendar") end
+		if _G.Calendar_Toggle then _G.Calendar_Toggle() end
+	else
+		_G.GameTimeFrame:Click()
+	end
+end
+
+-- the panels in this menu only exist on retail
 function mMT:OpenGroupFinderMenu(parent)
 	if E:AlertCombat() then return end
+	if not E.Retail then return mMT:ToggleGroupFinder() end
 
 	mMT:ShowMenu({
 		mMT:MenuTitle(_G.GROUP_FINDER),

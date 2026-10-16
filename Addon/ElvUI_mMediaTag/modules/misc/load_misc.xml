@@ -3,16 +3,8 @@
     <Script file="spec_icons.lua"/>
     <Script file="dice_button.lua"/>
     <Script file="difficulty_info.lua"/>
-    <Script file="death_counter.lua"/>
-    <Script file="objective_tracker.lua"/>
-    <Script file="prey_hunt.lua"/>
     <Script file="elvui_icons.lua"/>
     <Script file="greeting_message.lua"/>
-    <Script file="keystone_to_chat.lua"/>
-    <Script file="lfg_invite_info.lua"/>
-    <Script file="group_keystones.lua"/>
-    <Script file="keystone_teleports.lua"/>
-    <Script file="buff_reminder.lua"/>
     <Script file="unit_ids.lua"/>
     <Script file="tooltip.lua"/>
     <Script file="tags.lua"/>

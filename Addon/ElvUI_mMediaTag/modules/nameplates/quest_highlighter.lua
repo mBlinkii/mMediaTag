@@ -1,4 +1,6 @@
 local mMT, DB, M, E, P, L, MEDIA = unpack(ElvUI_mMediaTag)
+-- quest units are only known through ElvUI's quest icons, vanilla and tbc tooltips carry no quest lines
+if not mMT.Supports.questunits then return end
 local module = mMT:AddModule("NP-QuestHighlight", { "AceHook-3.0", "AceEvent-3.0" })
 
 local NP = E:GetModule("NamePlates")

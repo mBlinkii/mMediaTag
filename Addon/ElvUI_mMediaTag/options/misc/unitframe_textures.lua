@@ -20,6 +20,11 @@ local entries = {
 	{ key = "powerprediction", name = L["Power Cost"], textureOnly = true },
 }
 
+-- vanilla has no focus frame
+for i = #entries, 1, -1 do
+	if entries[i].key == "focus" and not mMT.Supports.focus then table.remove(entries, i) end
+end
+
 local args = {}
 
 for index, entry in ipairs(entries) do

@@ -45,8 +45,14 @@ local function Icon(text, icon, off)
 	return format(off and ICON_OFF or ICON, icon, text)
 end
 
-local function NotRetail()
-	return not E.Retail
+local function Unsupported(...)
+	local features = { ... }
+	return function()
+		for _, feature in ipairs(features) do
+			if mMT.Supports[feature] then return false end
+		end
+		return true
+	end
 end
 
 local function Category(order, name, args, childGroups, hidden)
@@ -87,8 +93,8 @@ local function Feature(order, name, hidden, meta)
 	return group
 end
 
-local function Skin(order, name)
-	return Feature(order, name, nil, { db = "skins." .. strlower(gsub(name, " ", "_")), desc = format(L["Skins %s in the ElvUI style."], name) })
+local function Skin(order, name, hidden)
+	return Feature(order, name, hidden, { db = "skins." .. strlower(gsub(name, " ", "_")), desc = format(L["Skins %s in the ElvUI style."], name) })
 end
 
 -- layout "inline" shows every feature as a section, "tab" and "select" give one feature at a time
@@ -123,26 +129,42 @@ local function FindToggle(group)
 	if settings and settings.enable and settings.enable.type == "toggle" then return settings.enable, settings, { "settings", "enable" } end
 end
 
-local function EnableToggle(group)
-	return (FindToggle(group))
+local function IsHidden(option, ...)
+	local hidden = option.hidden
+	return hidden == true or (type(hidden) == "function" and hidden(...)) or false
 end
 
-local function IsEnabled(toggle)
-	local ok, value = pcall(toggle.get)
-	return ok and value
+-- nil without a toggle; the getter may be inherited from a group and reads the option key from info
+local function ToggleState(group, get, info)
+	local toggle, _, tail = FindToggle(group)
+	if not toggle then return nil end
+
+	get = group.get or get
+	if tail[2] then get = group.args[tail[1]].get or get end
+
+	local toggleInfo = { unpack(info) }
+	for _, key in ipairs(tail) do
+		tinsert(toggleInfo, key)
+	end
+
+	local ok, value = pcall(toggle.get or get, toggleInfo)
+	return (ok and value) and true or false
 end
 
 -- a page counts as off when it has module toggles and all of them are off
-local function IsOff(group)
-	local toggle = EnableToggle(group)
-	if toggle then return not IsEnabled(toggle) end
+local function IsOff(group, get, info)
+	local state = ToggleState(group, get, info)
+	if state ~= nil then return not state end
 
+	get = group.get or get
 	local hasToggle = false
-	for _, child in pairs(group.args) do
-		local childToggle = type(child) == "table" and child.type == "group" and EnableToggle(child)
-		if childToggle and not (child.hidden and child.hidden()) then
-			if IsEnabled(childToggle) then return false end
-			hasToggle = true
+	for key, child in pairs(group.args) do
+		if type(child) == "table" and child.type == "group" and not IsHidden(child) then
+			local childInfo = { unpack(info) }
+			tinsert(childInfo, key)
+			local childState = ToggleState(child, get, childInfo)
+			if childState then return false end
+			if childState ~= nil then hasToggle = true end
 		end
 	end
 
@@ -171,7 +193,12 @@ mMT.options = {
 					nil,
 					{ db = "interrupt_on_cd", desc = L["Colors castbars by the state of your interrupt and marks when it is ready again during the cast."] }
 				),
-				important_casts = Feature(2, L["Important Casts"], nil, { db = "important_casts", desc = L["Marks casts that Blizzard flags as important with an extra icon on the castbar."] }),
+				important_casts = Feature(
+					2,
+					L["Important Casts"],
+					Unsupported("importantcasts"),
+					{ db = "important_casts", desc = L["Marks casts that Blizzard flags as important with an extra icon on the castbar."] }
+				),
 			}),
 			status_icons = Page(3, L["Status Icons"], "inline", {
 				role_icons = Feature(1, L["Role Icons"], nil, { db = "role_icons" }),
@@ -185,8 +212,18 @@ mMT.options = {
 		nameplates = Category(4, L["Nameplates"], {
 			highlights = Page(1, L["Highlights"], "tab", {
 				target_highlight = Feature(1, L["Target Highlight"], nil, { db = "nameplates.target", desc = L["Highlights the nameplate of your target with its own texture, border and health color."] }),
-				focus_highlight = Feature(2, L["Focus Highlight"], nil, { db = "nameplates.focus", desc = L["Highlights the nameplate of your focus with its own texture, border and health color."] }),
-				quest_highlight = Feature(3, L["Quest Highlight"], nil, { db = "nameplates.quest", desc = L["Highlights the nameplates of quest units with their own texture, border and health color."] }),
+				focus_highlight = Feature(
+					2,
+					L["Focus Highlight"],
+					Unsupported("focus"),
+					{ db = "nameplates.focus", desc = L["Highlights the nameplate of your focus with its own texture, border and health color."] }
+				),
+				quest_highlight = Feature(
+					3,
+					L["Quest Highlight"],
+					Unsupported("questunits"),
+					{ db = "nameplates.quest", desc = L["Highlights the nameplates of quest units with their own texture, border and health color."] }
+				),
 			}),
 			markers = Page(2, L["Markers and Textures"], "tab", {
 				execute_marker = Feature(1, L["Execute Marker"], nil, { db = "nameplates.execute" }),
@@ -222,18 +259,18 @@ mMT.options = {
 				buff_bar = Feature(4, L["Buff Bars"]),
 			}),
 			custom = Feature(3, L["Custom Tracker"]),
-		}),
+		}, nil, Unsupported("cooldownmanager")),
 		separator_1 = Separator(6),
 		datatexts = Category(7, L["Datatexts"], {
 			general = Feature(1, L["General"]),
 			info = Page(2, L["Info"], "tab", {
-				info_score = Feature(1, L["M+ Score"], NotRetail),
+				info_score = Feature(1, L["M+ Score"], Unsupported("mythicplus")),
 				info_time = Feature(2, L["Time"]),
 				info_combat_time = Feature(3, L["Combat/Arena Time"]),
 				info_durability_itemlevel = Feature(4, L["Durability & Item Level"]),
 			}),
 			menus = Page(3, L["Menus"], "tab", {
-				misc_teleports = Feature(1, L["Teleports"], NotRetail),
+				misc_teleports = Feature(1, L["Teleports"], Unsupported("teleports")),
 				misc_professions = Feature(2, L["Professions"]),
 				misc_individual_professions = Feature(3, L["Individual Professions"]),
 				misc_gamemenu = Feature(4, L["Gamemenu"]),
@@ -255,14 +292,14 @@ mMT.options = {
 				professions = Feature(9, _G.TRADE_SKILLS),
 				quests = Feature(10, _G.QUESTLOG_BUTTON),
 				durability = Feature(11, _G.DURABILITY),
-				encounter = Feature(12, _G.ENCOUNTER_JOURNAL),
-				collection = Feature(13, _G.COLLECTIONS),
+				encounter = Feature(12, _G.ENCOUNTER_JOURNAL, Unsupported("encounterjournal")),
+				collection = Feature(13, _G.COLLECTIONS, Unsupported("collections")),
 				bags = Feature(14, L["Bags"]),
-				achievement = Feature(15, _G.ACHIEVEMENT_BUTTON),
+				achievement = Feature(15, _G.ACHIEVEMENT_BUTTON, Unsupported("achievements")),
 				store = Feature(16, _G.BLIZZARD_STORE),
 				volume = Feature(17, L["Volume"]),
 				calendar = Feature(18, L["Calendar"]),
-				housing = Feature(19, L["Housing"]),
+				housing = Feature(19, L["Housing"], Unsupported("housing")),
 				notification = Feature(20, L["Notification"]),
 			}),
 			custom_docks = Page(3, L["Custom Docks"], nil, {
@@ -296,26 +333,41 @@ mMT.options = {
 		tags = Category(9, L["TAGs"], nil, "tab"),
 		separator_2 = Separator(10),
 		group = Category(11, L["Group and M+"], {
-			lfg_invite_info = Feature(1, L["LFG Invite Info"], nil, { db = "lfg_invite_info", desc = L["Shows a popup with the location, difficulty and name of the group finder group you joined."] }),
+			lfg_invite_info = Feature(
+				1,
+				L["LFG Invite Info"],
+				Unsupported("lfglist"),
+				{ db = "lfg_invite_info", desc = L["Shows a popup with the location, difficulty and name of the group finder group you joined."] }
+			),
 			keystones = Page(2, L["Keystones"], "inline", {
-				group_keystones = Feature(1, L["Group Keystones"], NotRetail, { db = "group_keystones", desc = L["Shows the keystones of your group next to the group finder listing."] }),
+				group_keystones = Feature(1, L["Group Keystones"], Unsupported("mythicplus"), { db = "group_keystones", desc = L["Shows the keystones of your group next to the group finder listing."] }),
 				keystone_teleports = Feature(
 					2,
 					L["Keystone Teleports"],
-					NotRetail,
+					Unsupported("mythicplus"),
 					{ db = "keystone_teleports", desc = L["Shows the keystones of your group with the teleport to their dungeon and highlights the dungeon of your group."], new = 415 }
 				),
-				keystone_to_chat = Feature(3, L["Keystone to Chat"], NotRetail, { db = "keystone_to_chat", desc = L["Post your keystone to the chat when someone types !key or !keys into the chat."] }),
-			}, NotRetail),
+				keystone_to_chat = Feature(
+					3,
+					L["Keystone to Chat"],
+					Unsupported("mythicplus"),
+					{ db = "keystone_to_chat", desc = L["Post your keystone to the chat when someone types !key or !keys into the chat."] }
+				),
+			}),
 			group_tools = Page(3, L["Group Tools"], "tab", {
 				difficulty_info = Feature(1, L["Difficulty Info"], nil, { db = "difficulty_info", desc = L["Shows the difficulty of the current instance in its own frame."] }),
-				death_counter = Feature(2, L["Death Counter"], nil, { db = "death_counter", desc = L["Shows deaths and lost time in the current Mythic+ run."] }),
-				buff_reminder = Feature(3, L["Buff Reminder"], NotRetail, { db = "buff_reminder", new = 415 }),
+				death_counter = Feature(2, L["Death Counter"], Unsupported("mythicplus"), { db = "death_counter", desc = L["Shows deaths and lost time in the current Mythic+ run."] }),
+				buff_reminder = Feature(3, L["Buff Reminder"], Unsupported("buffreminder"), { db = "buff_reminder", new = 415 }),
 			}),
 		}),
 		quests = Category(12, L["Quests"], {
-			objective_tracker = Feature(1, L["Objective Tracker"], nil, { db = "objective_tracker", desc = L["Skins the objective tracker and adds quest colors, progress bars and highlights."] }),
-			prey_hunt = Feature(2, L["Prey Hunt"], nil, { db = "prey_hunt", desc = L["Shows the current hunt stage as text on the prey icon."] }),
+			objective_tracker = Feature(
+				1,
+				L["Objective Tracker"],
+				Unsupported("objectivetracker"),
+				{ db = "objective_tracker", desc = L["Skins the objective tracker and adds quest colors, progress bars and highlights."] }
+			),
+			prey_hunt = Feature(2, L["Prey Hunt"], Unsupported("preyhunt"), { db = "prey_hunt", desc = L["Shows the current hunt stage as text on the prey icon."] }),
 		}),
 		separator_3 = Separator(13),
 		interface = Category(14, L["Interface"], {
@@ -349,7 +401,7 @@ mMT.options = {
 			aussyloot = Skin(2, "AussyLoot"),
 			bigwigs = Skin(3, "BigWigs"),
 			bugsack = Skin(4, "BugSack"),
-			premade_groups_filter = Skin(5, "Premade Groups Filter"),
+			premade_groups_filter = Skin(5, "Premade Groups Filter", Unsupported("premadegroupsfilter")),
 		}),
 		colors = Category(17, L["Colors"], {
 			difficulty = Feature(1, L["Difficulty"]),
@@ -380,6 +432,40 @@ local function Append(list, value)
 	local copy = { unpack(list) }
 	tinsert(copy, value)
 	return copy
+end
+
+local function AllHidden(options)
+	return function(...)
+		for _, option in pairs(options) do
+			if not IsHidden(option, ...) then return false end
+		end
+		return true
+	end
+end
+
+-- groups whose child groups are all hidden for this game version would leave an empty page or tree entry
+local function HideEmpty(group)
+	local hasGroups, hasOptions = false, false
+	for _, child in pairs(group.args) do
+		if type(child) == "table" then
+			if child.type == "group" then
+				HideEmpty(child)
+				hasGroups = true
+			elseif child.type ~= "header" and child.type ~= "description" then
+				hasOptions = true
+			end
+		end
+	end
+	if hasOptions or not hasGroups then return end
+
+	local own, args = { hidden = group.hidden }, group.args
+	group.hidden = function(...)
+		if IsHidden(own, ...) then return true end
+		for _, child in pairs(args) do
+			if type(child) == "table" and child.type == "group" and not IsHidden(child, ...) then return false end
+		end
+		return true
+	end
 end
 
 local function SortedKeys(args)
@@ -415,7 +501,7 @@ local function CollectColors(group, path, state, sections)
 		end
 	end
 
-	if colors then tinsert(sections, { name = tconcat(path, " › "), args = colors }) end
+	if colors then tinsert(sections, { name = tconcat(path, " › "), args = colors, hidden = AllHidden(colors) }) end
 
 	for _, key in ipairs(SortedKeys(group.args)) do
 		local child = group.args[key]
@@ -448,6 +534,7 @@ local function BuildColorPages()
 						type = "group",
 						inline = true,
 						name = section.name,
+						hidden = section.hidden,
 						args = section.args,
 					}
 				end
@@ -485,7 +572,7 @@ local function Decorate()
 				-- the colors category mirrors other categories and borrows their icons
 				local icon = (PAGE_ICONS[key] and PAGE_ICONS[key][pageKey]) or ICONS[gsub(pageKey, "^mirror_", "")] or categoryIcon
 				local function name()
-					return Icon(text, icon, IsOff(page))
+					return Icon(text, icon, IsOff(page, category.get, { "mMT", key, pageKey }))
 				end
 
 				page.name = name
@@ -669,6 +756,9 @@ function mMT:FinalizeOptions()
 	mMT.optionsFinalized = true
 
 	BuildColorPages()
+	for _, category in pairs(mMT.options.args) do
+		if type(category) == "table" and category.type == "group" then HideEmpty(category) end
+	end
 
 	local modules = CollectModules()
 	ApplyPageLayout(modules)

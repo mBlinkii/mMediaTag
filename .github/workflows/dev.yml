@@ -82,7 +82,7 @@ jobs:
           # Die .toc der ausgelieferten Dateien markieren, damit im Spiel
           # sichtbar ist, dass es kein Release ist.
           # ADAPT 2: Glob der .toc-Dateien, die den dev-Stempel bekommen.
-          for TOC in Addon/ElvUI_mMediaTag/ElvUI_mMediaTag_*.toc; do
+          for TOC in Addon/ElvUI_mMediaTag/ElvUI_mMediaTag*.toc; do
             [ -e "$TOC" ] || continue
             sed -i "s/^## Version:.*/## Version: ${VERSION}-dev-${SHORT}/" "$TOC"
           done

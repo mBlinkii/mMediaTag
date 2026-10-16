@@ -86,8 +86,8 @@ end
 
 local function OnClick(self, button)
 	if button == "LeftButton" or button == "MiddleButton" then
-		_G.ToggleLFDParentFrame()
-		if button == "MiddleButton" then _G.PVEFrameTab3:Click() end
+		mMT:ToggleGroupFinder()
+		if button == "MiddleButton" and E.Retail then _G.PVEFrameTab3:Click() end
 	elseif IsShiftKeyDown() then
 		DB.keystones = {}
 	else
