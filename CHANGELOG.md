@@ -1,5 +1,16 @@
 # Changelog - ElvUI_mMediaTag
 
+## [ver. 4.18] - TBD
+### 🐛 FIX
+- FIX - [Options]: Pages in the settings tree were greyed out although their module or a part of it was turned on.
+- FIX - [Unitframe-Icons]: The summon icon was turned on by default and its icon selection was empty.
+### 🔧 UPDATE
+- UPDATE - [NP-Highlighters]: The target, focus and quest highlights are now turned off by default like every other module.
+### ✨ NEW
+- NEW - [System]: mMT now runs in WoW Classic Era, TBC Anniversary, Mists of Pandaria Classic and WoW Forever, features a game version does not have are left out and hidden in the settings.
+### 📌 INFO
+- INFO - If you used the nameplate highlights or the summon icon without ever changing their settings, turn them on again.
+
 ## [ver. 4.17] - 15.10.2026
 ### 🐛 FIX
 - FIX - [Buff-Reminder]: Midnight weapon oils were not found in the bags, so the weapon enchant icon could not use them.
