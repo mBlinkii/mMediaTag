@@ -839,7 +839,7 @@ P.nameplates = {
 		},
 	},
 	focus = {
-		enable = true,
+		enable = false,
 		changeColor = false,
 		changeBorder = false,
 		changeTexture = false,
@@ -847,7 +847,7 @@ P.nameplates = {
 		texture = "mMediaTag A9",
 	},
 	target = {
-		enable = true,
+		enable = false,
 		changeColor = false,
 		changeBorder = false,
 		changeTexture = false,
@@ -855,7 +855,7 @@ P.nameplates = {
 		texture = "mMediaTag A4",
 	},
 	quest = {
-		enable = true,
+		enable = false,
 		changeColor = false,
 		changeBorder = false,
 		changeTexture = false,

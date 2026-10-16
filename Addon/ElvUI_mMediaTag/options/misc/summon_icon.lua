@@ -1,12 +1,5 @@
 local mMT, DB, M, E, P, L, MEDIA = unpack(ElvUI_mMediaTag)
 
-P.summon_icon = {
-	enable = true,
-	available = "galaxie",
-	accepted = "galaxie",
-	rejected = "galaxie",
-}
-
 mMT.options.args.unitframes.args.status_icons.args.summon_icon.args = {
 	enable = {
 		order = 1,
