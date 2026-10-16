@@ -158,18 +158,32 @@ jobs:
           prerelease: ${{ steps.meta.outputs.istest == 'true' }}
           make_latest: ${{ steps.meta.outputs.istest == 'true' && 'false' || 'true' }}
 
-      # Spielversion(en) aus "## Interface: 110200, ..." ableiten (110200 -> 11.2.0)
+      # Spielversion(en) aus "## Interface: 110200, ..." ableiten (110200 -> 11.2.0).
+      # CurseForge lehnt unbekannte Versionsstrings ab und bricht den Upload ab.
+      # Versionen, die CurseForge (noch) nicht kennt, z.B. 1.60.1 fuer WoW Forever,
+      # werden wie in pack-release.yml mit Warnung verworfen.
       - name: Interface-Version aus TOC lesen
         id: game
+        env:
+          CF_API_TOKEN: ${{ secrets.CF_API_TOKEN }}
         run: |
+          set -e
+          KNOWN=$(curl -fsS --retry 3 -H "X-Api-Token: $CF_API_TOKEN" https://wow.curseforge.com/api/game/versions | jq -r '.[].name' || true)
+          [ -n "$KNOWN" ] || echo "::warning::CurseForge-Versionsliste nicht abrufbar, Versionen werden ungeprueft hochgeladen"
           IFACES=$(grep -oP '^## Interface:\s*\K.+' "Addon/ElvUI_mMediaTag/ElvUI_mMediaTag.toc" | tr -d '\r ' )
           VERSIONS=""
           IFS=',' read -ra ARR <<< "$IFACES"
           for I in "${ARR[@]}"; do
             V="$((10#$I / 10000)).$(((10#$I % 10000) / 100)).$((10#$I % 100))"
+            if [ -n "$KNOWN" ] && ! grep -qxF "$V" <<< "$KNOWN"; then
+              echo "::warning::$V ist auf CurseForge unbekannt und wird nicht gesetzt"
+              continue
+            fi
             VERSIONS="${VERSIONS:+$VERSIONS,}$V"
           done
+          [ -n "$VERSIONS" ] || { echo "::error::Keine gueltige Spielversion gefunden"; exit 1; }
           echo "versions=$VERSIONS" >> "$GITHUB_OUTPUT"
+          echo "Spielversionen: $VERSIONS"
 
       - name: Auf CurseForge hochladen
         if: steps.meta.outputs.istest != 'true'
