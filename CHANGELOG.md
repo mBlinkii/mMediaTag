@@ -2,9 +2,11 @@
 
 ## [ver. 4.18] - TBD
 ### 🐛 FIX
+- FIX - [Keystone-Teleports]: The flash could stay on the wrong dungeon when the rows were rearranged.
 - FIX - [Options]: Pages in the settings tree were greyed out although their module or a part of it was turned on.
 - FIX - [Unitframe-Icons]: The summon icon was turned on by default and its icon selection was empty.
 ### 🔧 UPDATE
+- UPDATE - [Keystone-Teleports]: The flash of the group dungeon now also adds a glowing border.
 - UPDATE - [NP-Highlighters]: The target, focus and quest highlights are now turned off by default like every other module.
 ### ✨ NEW
 - NEW - [NP-CombatFade]: New module that fades, shrinks or hides enemy nameplates of units that are not in combat while you are fighting, optionally only in instances.
