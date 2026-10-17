@@ -247,7 +247,13 @@ mMT.options = {
 					nil,
 					{ db = "auto_friendly_nameplates", desc = L["Automatically shows friendly nameplates in dungeons and raids and hides them in the open world."] }
 				),
-				misc = Feature(2, L["Misc"]),
+				combat_fade = Feature(
+					2,
+					L["Combat Fade"],
+					nil,
+					{ db = "nameplates.combat_fade", desc = L["Fades or hides enemy nameplates of units that are not in combat while you are fighting."], new = 418 }
+				),
+				misc = Feature(3, L["Misc"]),
 			}),
 		}),
 		cooldownmanager = Category(5, L["Cooldown Manager"], {

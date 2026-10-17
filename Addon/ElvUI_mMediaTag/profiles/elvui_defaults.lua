@@ -802,6 +802,12 @@ P.tags = {
 
 P.nameplates = {
 	target_glow_color = false,
+	combat_fade = {
+		enable = false,
+		alpha = 0.3,
+		scale = 1,
+		instanceOnly = false,
+	},
 	raid_marker_color = {
 		enable = false,
 		alpha = 1,

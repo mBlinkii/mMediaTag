@@ -922,6 +922,12 @@ L["Raid Marker Colors"] = "Schlachtzugsmarkierungs-Farben"
 L["Raid Markers"] = "Schlachtzugsmarkierungen"
 L["Colors the health bar of nameplates with a raid marker in the color of that marker."] = "Färbt den Lebensbalken von Namensplaketten mit einer Schlachtzugsmarkierung in der Farbe dieser Markierung."
 
+-- options/nameplates/combat_fade.lua
+L["0% hides the nameplates completely."] = "0% blendet die Namensplaketten komplett aus."
+L["Combat Fade"] = "Kampf-Ausblendung"
+L["Fades or hides enemy nameplates of units that are not in combat while you are fighting."] = "Blendet feindliche Namensplaketten von Einheiten, die nicht im Kampf sind, aus oder ab, solange du kämpfst."
+L["Only in instances"] = "Nur in Instanzen"
+
 -- options/nameplates/nameplate_tools.lua
 L["ElvUI Color Settings"] = "ElvUI-Farbeinstellungen"
 L["Heal and absorb textures for nameplates are configured together with the unitframe textures."] = "Heilungs- und Absorptionstexturen für Namensplaketten werden zusammen mit den Einheitenfenster-Texturen eingestellt."

@@ -8,4 +8,5 @@
 	<Script file="classification_texture.lua"/>
 	<Script file="execute_marker.lua"/>
 	<Script file="raid_marker_color.lua"/>
+	<Script file="combat_fade.lua"/>
 </Ui>

@@ -7,6 +7,7 @@
 ### 🔧 UPDATE
 - UPDATE - [NP-Highlighters]: The target, focus and quest highlights are now turned off by default like every other module.
 ### ✨ NEW
+- NEW - [NP-CombatFade]: New module that fades, shrinks or hides enemy nameplates of units that are not in combat while you are fighting, optionally only in instances.
 - NEW - [System]: mMT now runs in WoW Classic Era, TBC Anniversary, Mists of Pandaria Classic and WoW Forever, features a game version does not have are left out and hidden in the settings.
 ### 📌 INFO
 - INFO - If you used the nameplate highlights or the summon icon without ever changing their settings, turn them on again.

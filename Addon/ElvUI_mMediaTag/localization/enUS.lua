@@ -922,6 +922,12 @@ L["Raid Marker Colors"] = true
 L["Raid Markers"] = true
 L["Colors the health bar of nameplates with a raid marker in the color of that marker."] = true
 
+-- options/nameplates/combat_fade.lua
+L["0% hides the nameplates completely."] = true
+L["Combat Fade"] = true
+L["Fades or hides enemy nameplates of units that are not in combat while you are fighting."] = true
+L["Only in instances"] = true
+
 -- options/nameplates/nameplate_tools.lua
 L["ElvUI Color Settings"] = true
 L["Heal and absorb textures for nameplates are configured together with the unitframe textures."] = true
