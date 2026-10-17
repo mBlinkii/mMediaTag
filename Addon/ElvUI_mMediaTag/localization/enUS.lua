@@ -769,6 +769,21 @@ L["Difficulty Info"] = true
 L["Font size, top line"] = true
 L["Show Frame"] = true
 
+-- options/misc/merchant_known.lua
+L["Appearance Color"] = true
+L["Colors items at vendors that you already know and marks appearances you have not collected."] = true
+L["Colors the border of the item icon."] = true
+L["Known Items Color"] = true
+L["Marks gear at vendors whose appearance you have not collected yet."] = true
+L["Merchant Known Items"] = true
+L["Tint Icon and Background"] = true
+L["Tints the icon and the name background of the item."] = true
+L["Uncollected Appearances"] = true
+
+-- options/misc/merchant_grid.lua
+L["Merchant Grid"] = true
+L["Shows 20 vendor items per page in four columns instead of ten in two."] = true
+
 -- options/misc/auto_delete.lua
 L["Fills in the confirmation word automatically when you delete an item."] = true
 

@@ -400,6 +400,18 @@ mMT.options = {
 			tools = Page(4, L["Tools"], "inline", {
 				greeting_message = Feature(1, L["Greeting Message"], nil, { db = "general.greeting_message", desc = L["Show a greeting message in the chat when you log in."] }),
 				dice_button = Feature(2, L["Dice Button"], nil, { db = "dice_button", desc = L["Adds a button that rolls a random number in the ranges you set."] }),
+				merchant_known = Feature(
+					3,
+					L["Merchant Known Items"],
+					nil,
+					{ db = "merchant_known", desc = L["Colors items at vendors that you already know and marks appearances you have not collected."], new = 418 }
+				),
+				merchant_grid = Feature(
+					4,
+					L["Merchant Grid"],
+					nil,
+					{ db = "merchant_grid", desc = L["Shows 20 vendor items per page in four columns instead of ten in two."], new = 418 }
+				),
 			}),
 		}),
 		skins = Category(16, L["Skins"], {

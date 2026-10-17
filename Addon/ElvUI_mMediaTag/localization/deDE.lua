@@ -769,6 +769,21 @@ L["Difficulty Info"] = "Schwierigkeitsinfo"
 L["Font size, top line"] = "Schriftgröße, obere Zeile"
 L["Show Frame"] = "Frame anzeigen"
 
+-- options/misc/merchant_known.lua
+L["Appearance Color"] = "Farbe für Vorlagen"
+L["Colors items at vendors that you already know and marks appearances you have not collected."] = "Färbt Gegenstände bei Händlern, die du bereits kennst, und markiert Vorlagen, die du noch nicht gesammelt hast."
+L["Colors the border of the item icon."] = "Färbt den Rahmen des Gegenstandssymbols."
+L["Known Items Color"] = "Farbe für bekannte Gegenstände"
+L["Marks gear at vendors whose appearance you have not collected yet."] = "Markiert Ausrüstung bei Händlern, deren Vorlage du noch nicht gesammelt hast."
+L["Merchant Known Items"] = "Bekannte Händlergegenstände"
+L["Tint Icon and Background"] = "Symbol und Hintergrund einfärben"
+L["Tints the icon and the name background of the item."] = "Färbt das Symbol und den Namenshintergrund des Gegenstands."
+L["Uncollected Appearances"] = "Ungesammelte Vorlagen"
+
+-- options/misc/merchant_grid.lua
+L["Merchant Grid"] = "Händler-Raster"
+L["Shows 20 vendor items per page in four columns instead of ten in two."] = "Zeigt 20 Händlergegenstände pro Seite in vier Spalten statt zehn in zwei."
+
 -- options/misc/auto_delete.lua
 L["Fills in the confirmation word automatically when you delete an item."] = "Trägt beim Löschen eines Gegenstands das Bestätigungswort automatisch ein."
 

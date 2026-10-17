@@ -6,6 +6,8 @@ mMT.Changelog[418] = {
 		"If you used the nameplate highlights or the summon icon without ever changing their settings, turn them on again.",
 	},
 	NEW = {
+		"[Merchant-Known]: New module that colors vendor items you already know, like learned recipes, and marks gear with an appearance you have not collected.",
+		"[Merchant-Grid]: New module that shows 20 vendor items per page in four columns instead of ten in two.",
 		"[NP-CombatFade]: New module that fades, shrinks or hides enemy nameplates of units that are not in combat while you are fighting, optionally only in instances.",
 		"[System]: mMT now runs in WoW Classic Era, TBC Anniversary, Mists of Pandaria Classic and WoW Forever, features a game version does not have are left out and hidden in the settings.",
 	},

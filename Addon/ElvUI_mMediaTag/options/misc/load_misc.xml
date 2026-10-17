@@ -24,4 +24,6 @@
 	<Script file="mail_helper.lua"/>
 	<Script file="tooltip.lua"/>
 	<Script file="addon_manager.lua"/>
+	<Script file="merchant_known.lua"/>
+	<Script file="merchant_grid.lua"/>
 </Ui>

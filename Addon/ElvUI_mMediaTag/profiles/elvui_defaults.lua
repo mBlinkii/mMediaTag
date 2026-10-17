@@ -952,6 +952,19 @@ P.auto_delete = {
 	enable = false,
 }
 
+P.merchant_grid = {
+	enable = false,
+}
+
+P.merchant_known = {
+	enable = false,
+	color = "FFFF2020",
+	appearance = true,
+	appearanceColor = "FF33D1FF",
+	border = true,
+	tint = true,
+}
+
 P.mail_helper = {
 	enable = false,
 	gold_button = true,
