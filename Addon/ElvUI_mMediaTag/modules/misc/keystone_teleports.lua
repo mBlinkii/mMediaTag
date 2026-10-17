@@ -35,6 +35,8 @@ local C_Timer_NewTimer = C_Timer.NewTimer
 local RegisterStateDriver = RegisterStateDriver
 
 local LSM = E.Libs.LSM
+local LCG = LibStub("LibCustomGlow-1.0", true)
+local GLOW_KEY = "mMT_KeystoneTeleports"
 
 -- five members plus the group dungeon when none of the known keys is for it
 local MAX_ROWS = 6
@@ -191,24 +193,45 @@ local function UpdateCooldowns()
 	end
 end
 
+local function HighlightColor()
+	if module.db.highlight.class then return MEDIA.myclass.r, MEDIA.myclass.g, MEDIA.myclass.b end
+	return mMT:HexToRGB(module.db.highlight.color)
+end
+
+local function SetRowFlash(row, on)
+	if on then
+		if not row.flashAnim:IsPlaying() then row.flashAnim:Play() end
+		local r, g, b = HighlightColor()
+		LCG.PixelGlow_Start(row.holder, { r, g, b, 1 }, 8, 0.25, nil, 2, 0, 0, nil, GLOW_KEY)
+	else
+		row.flashAnim:Stop()
+		LCG.PixelGlow_Stop(row.holder, GLOW_KEY)
+	end
+end
+
 local function StopFlash()
+	module.flashing = nil
 	if module.flashTimer then
 		module.flashTimer:Cancel()
 		module.flashTimer = nil
 	end
 	for _, row in ipairs(module.frame.rows) do
-		row.flashAnim:Stop()
+		SetRowFlash(row, false)
 	end
 end
 
 -- like the fade, the animation does not start on a frame shown in the same tick
 local function PlayFlash()
+	local started
 	for _, row in ipairs(module.frame.rows) do
 		if row.active and row:IsShown() then
-			row.flashAnim:Play()
-			module.flashTimer = C_Timer_NewTimer(FLASH_TIME, StopFlash)
-			return
+			started = true
+			SetRowFlash(row, true)
 		end
+	end
+	if started then
+		module.flashing = true
+		module.flashTimer = C_Timer_NewTimer(FLASH_TIME, StopFlash)
 	end
 end
 
@@ -223,11 +246,6 @@ local function CheckFlash(count)
 			return
 		end
 	end
-end
-
-local function HighlightColor()
-	if module.db.highlight.class then return MEDIA.myclass.r, MEDIA.myclass.g, MEDIA.myclass.b end
-	return mMT:HexToRGB(module.db.highlight.color)
 end
 
 -- size, anchors and backdrop of the secure rows, so only out of combat
@@ -304,6 +322,8 @@ local function SetRow(row, unit, level, challengeMapID, targetMapID, leader, own
 	row.highlight:SetVertexColor(r, g, b, 0.25)
 	row.highlight:SetShown(active)
 	row.flash:SetVertexColor(r, g, b)
+	-- rows are reused for other dungeons, a running flash follows the active state
+	if module.flashing or row.flashAnim:IsPlaying() then SetRowFlash(row, active and module.flashing) end
 	if active then
 		row.holder:SetBackdropBorderColor(r, g, b)
 	else
@@ -419,7 +439,7 @@ local function Update()
 		local row = frame.rows[i]
 		row.spellID = nil
 		row.active = nil
-		row.flashAnim:Stop()
+		SetRowFlash(row, false)
 		row:SetAttribute("type", nil)
 		row:Hide()
 	end
