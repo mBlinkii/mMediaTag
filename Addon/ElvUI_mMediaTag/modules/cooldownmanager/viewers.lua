@@ -178,7 +178,8 @@ function module:LayoutBuffBars(capture)
 	if not container or not vdb or module:IsDisabled() then return end
 	if not demo and not (viewer and viewer.itemFramePool) then return end
 
-	local width = vdb.width or 200
+	local matchedWidth = module:MatchedSize(key, vdb)
+	local width = matchedWidth > 0 and matchedWidth or vdb.width or 200
 	local height = vdb.height or 20
 	local spacing = vdb.spacing or 2
 	local growUp = vdb.growth == "UP"

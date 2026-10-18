@@ -5,6 +5,7 @@ local module = mMT:GetModule("CooldownManager")
 local _G = _G
 local hooksecurefunc = hooksecurefunc
 local next = next
+local ipairs = ipairs
 local pairs = pairs
 local select = select
 local type = type
@@ -75,7 +76,7 @@ local function OnEvent(event, unit, value)
 	end
 	if event == "SPELL_UPDATE_COOLDOWN" then return module:ScheduleCustomUpdate() end
 
-	if event == "UPDATE_BINDINGS" or event == "ACTIONBAR_SLOT_CHANGED" or event == "ACTIONBAR_PAGE_CHANGED" then module:ResetKeybinds() end
+	if event == "UPDATE_BINDINGS" or event == "ACTIONBAR_SLOT_CHANGED" or event == "ACTIONBAR_PAGE_CHANGED" or event == "SPELLS_CHANGED" then module:ResetKeybinds() end
 	module:ScheduleRelayout()
 end
 
@@ -358,7 +359,29 @@ function module:EnsureElvUISkin()
 	return true
 end
 
+-- The font used to be one setting for every text, texts still on the default take over what was chosen there
+local TEXT_FIELDS = { "cooldown_text", "count_text", "keybind_text", "name_text", "duration_text", "stacks_text" }
+
+local function MigrateFont()
+	local db = module:GetDB()
+	if not db or (db.font == nil and db.font_flag == nil) then return end
+
+	for _, vdb in pairs(db.viewers) do
+		for _, field in ipairs(TEXT_FIELDS) do
+			local text = vdb[field]
+			if text then
+				if db.font and text.font == "PT Sans Narrow" then text.font = db.font end
+				if db.font_flag and text.font_flag == "OUTLINE" then text.font_flag = db.font_flag end
+			end
+		end
+	end
+
+	db.font, db.font_flag = nil, nil
+end
+
 function module:Initialize()
+	MigrateFont()
+
 	if module:IsDisabled() then
 		if module.isEnabled then
 			module.isEnabled = false

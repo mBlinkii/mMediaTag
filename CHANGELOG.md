@@ -6,6 +6,10 @@
 - FIX - [Options]: Pages in the settings tree were greyed out although their module or a part of it was turned on.
 - FIX - [Unitframe-Icons]: The summon icon was turned on by default and its icon selection was empty.
 ### 🔧 UPDATE
+- UPDATE - [Cooldown-Manager]: Every module can now be attached to another module or to a frame like the unitframes and their power, class power and cast bars, and can match its width or height to it.
+- UPDATE - [Cooldown-Manager]: The icons of the custom tracker can be clicked to use the spell, item or equipment slot, and spells show their charges.
+- UPDATE - [Cooldown-Manager]: The font and font outline are now set for each text instead of once for all.
+- UPDATE - [Cooldown-Manager]: The settings are sorted into tabs and the modules are switched on and off in General.
 - UPDATE - [Keystone-Teleports]: The flash of the group dungeon now also adds a glowing border.
 - UPDATE - [NP-Highlighters]: The target, focus and quest highlights are now turned off by default like every other module.
 ### ✨ NEW

@@ -12,6 +12,10 @@ mMT.Changelog[418] = {
 		"[System]: mMT now runs in WoW Classic Era, TBC Anniversary, Mists of Pandaria Classic and WoW Forever, features a game version does not have are left out and hidden in the settings.",
 	},
 	UPDATE = {
+		"[Cooldown-Manager]: Every module can now be attached to another module or to a frame like the unitframes and their power, class power and cast bars, and can match its width or height to it.",
+		"[Cooldown-Manager]: The icons of the custom tracker can be clicked to use the spell, item or equipment slot, and spells show their charges.",
+		"[Cooldown-Manager]: The font and font outline are now set for each text instead of once for all.",
+		"[Cooldown-Manager]: The settings are sorted into tabs and the modules are switched on and off in General.",
 		"[Keystone-Teleports]: The flash of the group dungeon now also adds a glowing border.",
 		"[NP-Highlighters]: The target, focus and quest highlights are now turned off by default like every other module.",
 	},

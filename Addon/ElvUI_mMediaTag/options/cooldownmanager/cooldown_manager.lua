@@ -2,6 +2,7 @@ local mMT, DB, M, E, P, L, MEDIA = unpack(ElvUI_mMediaTag)
 local LSM = E.Libs.LSM
 local pairs = pairs
 local ipairs = ipairs
+local next = next
 local tonumber = tonumber
 local tremove = table.remove
 local format = format
@@ -68,21 +69,6 @@ local function ViewerGeneral(key, order)
 		inline = true,
 		disabled = Disabled,
 		args = {
-			manage = {
-				order = 1,
-				type = "toggle",
-				name = function()
-					return VDB(key).manage and MEDIA.color.green:WrapTextInColorCode(L["Managed"]) or MEDIA.color.red:WrapTextInColorCode(L["Not Managed"])
-				end,
-				desc = L["Move this viewer into an mMT container. Turn it off to leave it to Blizzard and ElvUI."],
-				get = function()
-					return VDB(key).manage
-				end,
-				set = function(_, value)
-					VDB(key).manage = value
-					E:StaticPopup_Show("CONFIG_RL")
-				end,
-			},
 			alpha = {
 				order = 2,
 				type = "range",
@@ -120,6 +106,33 @@ local function TextGroup(name, order, key, field, hidden, disabled, toggle)
 		hidden = hidden,
 		disabled = disabled or Disabled,
 		args = {
+			font = {
+				order = 1,
+				type = "select",
+				dialogControl = "LSM30_Font",
+				name = L["Font"],
+				values = LSM:HashTable("font"),
+				get = function()
+					return text().font
+				end,
+				set = function(_, value)
+					text().font = value
+					Refresh()
+				end,
+			},
+			font_flag = {
+				order = 3,
+				type = "select",
+				name = L["Font contour"],
+				values = FONT_FLAGS,
+				get = function()
+					return text().font_flag
+				end,
+				set = function(_, value)
+					text().font_flag = value
+					Refresh()
+				end,
+			},
 			size = {
 				order = 2,
 				type = "range",
@@ -391,6 +404,109 @@ local function IconLayout(key, order)
 	}
 end
 
+local ANCHOR_PRESETS = {
+	["ANCHOR:essential"] = L["Essential Cooldowns"],
+	["ANCHOR:utility"] = L["Utility Cooldowns"],
+	["ANCHOR:buff_icon"] = L["Buff Icons"],
+	["ANCHOR:buff_bar"] = L["Buff Bars"],
+	["ANCHOR:custom"] = L["Custom Tracker"],
+	ElvUIParent = L["ElvUI Parent"],
+	ElvUF_Player = L["Player Frame"],
+	ElvUF_Target = L["Target Frame"],
+	ElvUF_Player_PowerBar = L["Player Power Bar"],
+	ElvUF_Player_ClassBar = L["Class Power Bar"],
+	ElvUF_Player_AdditionalPowerBar = L["Additional Power Bar"],
+	ElvUF_Player_CastBar = L["Player Cast Bar"],
+	ElvUF_Target_CastBar = L["Target Cast Bar"],
+}
+local ANCHOR_PRESET_ORDER = { "ANCHOR:essential", "ANCHOR:utility", "ANCHOR:buff_icon", "ANCHOR:buff_bar", "ANCHOR:custom", "ElvUIParent", "ElvUF_Player", "ElvUF_Target", "ElvUF_Player_PowerBar", "ElvUF_Player_ClassBar", "ElvUF_Player_AdditionalPowerBar", "ElvUF_Player_CastBar", "ElvUF_Target_CastBar" }
+
+local function AnchorGroup(key, order, disabled)
+	local function Field(name, fieldOrder, option)
+		option.order = fieldOrder
+		option.get = function()
+			return VDB(key).anchor[name]
+		end
+		option.set = function(_, value)
+			VDB(key).anchor[name] = value
+			Refresh()
+		end
+		return option
+	end
+
+	local function NoTarget()
+		return VDB(key).anchor.frame == ""
+	end
+
+	return {
+		order = order,
+		type = "group",
+		name = L["Anchor"],
+		inline = true,
+		disabled = disabled or Disabled,
+		args = {
+			frame = Field("frame", 1, {
+				type = "input",
+				width = "double",
+				name = L["Anchor Frame"],
+				desc = L["Frame name to attach this viewer to, or ANCHOR:essential, ANCHOR:utility, ANCHOR:buff_icon, ANCHOR:buff_bar to attach it to another viewer. Empty uses the mover."],
+			}),
+			preset = {
+				order = 1.5,
+				type = "select",
+				name = L["Quick Select"],
+				values = function()
+					local values = {}
+					for name, label in pairs(ANCHOR_PRESETS) do
+						if name ~= "ANCHOR:" .. key then values[name] = label end
+					end
+					return values
+				end,
+				sorting = function()
+					local order = {}
+					for _, name in ipairs(ANCHOR_PRESET_ORDER) do
+						if name ~= "ANCHOR:" .. key then order[#order + 1] = name end
+					end
+					return order
+				end,
+				get = function()
+					return ANCHOR_PRESETS[VDB(key).anchor.frame] and VDB(key).anchor.frame or nil
+				end,
+				set = function(_, value)
+					VDB(key).anchor.frame = value
+					Refresh()
+				end,
+			},
+			point = Field("point", 2, { type = "select", name = L["Anchor Point"], values = POSITIONS, disabled = NoTarget }),
+			relative = Field("relative", 3, { type = "select", name = L["Frame Point"], values = POSITIONS, disabled = NoTarget }),
+			x = Field("x", 4, { type = "range", name = L["X-Offset"], min = -500, max = 500, step = 1, disabled = NoTarget }),
+			y = Field("y", 5, { type = "range", name = L["Y-Offset"], min = -500, max = 500, step = 1, disabled = NoTarget }),
+			match = Field("match", 6, {
+				type = "toggle",
+				name = L["Match Size"],
+				desc = L["Above or below the target the width follows the target, beside it the height follows. Replaces the fixed size."],
+				disabled = NoTarget,
+			}),
+			match_offset = Field("match_offset", 7, {
+				type = "range",
+				name = L["Size Offset"],
+				desc = L["Pixels added on every side of the matched size, negative values make it smaller."],
+				min = -10,
+				max = 10,
+				step = 1,
+				disabled = function()
+					return NoTarget() or not VDB(key).anchor.match
+				end,
+			}),
+		},
+	}
+end
+
+-- attached to another frame the container appears and vanishes with it, delay and fade time are 0
+local function Attached(key)
+	return VDB(key).anchor.frame ~= ""
+end
+
 local function Visibility(key, order, keybind, auraOptions)
 	local args = {
 		visibility = {
@@ -415,8 +531,11 @@ local function Visibility(key, order, keybind, auraOptions)
 			min = 0,
 			max = 30,
 			step = 0.5,
+			disabled = function()
+				return Attached(key)
+			end,
 			get = function()
-				return VDB(key).hide_delay
+				return not Attached(key) and VDB(key).hide_delay or 0
 			end,
 			set = function(_, value)
 				VDB(key).hide_delay = value
@@ -431,8 +550,11 @@ local function Visibility(key, order, keybind, auraOptions)
 			min = 0,
 			max = 2,
 			step = 0.05,
+			disabled = function()
+				return Attached(key)
+			end,
 			get = function()
-				return VDB(key).fade_time
+				return not Attached(key) and VDB(key).fade_time or 0
 			end,
 			set = function(_, value)
 				VDB(key).fade_time = value
@@ -768,6 +890,7 @@ local function IconViewer(key, withKeybind)
 	local args = {
 		general = ViewerGeneral(key, 1),
 		layout = IconLayout(key, 2),
+		anchor = AnchorGroup(key, 2.5),
 		visibility = Visibility(key, 3, withKeybind, not withKeybind),
 		cooldown_text = TextGroup(L["Cooldown Text"], 4, key, "cooldown_text"),
 		count_text = TextGroup(L["Count Text"], 5, key, "count_text"),
@@ -791,35 +914,71 @@ local function IconViewer(key, withKeybind)
 	return args
 end
 
+-- The viewers are managed or not, the custom tracker is enabled or not
+local function ModuleToggle(key, order)
+	local field = key == "custom" and "enable" or "manage"
+
+	return {
+		order = order,
+		type = "toggle",
+		name = function()
+			local label = Module().VIEWERS[key].label
+			return VDB(key)[field] and MEDIA.color.green:WrapTextInColorCode(label) or MEDIA.color.red:WrapTextInColorCode(label)
+		end,
+		desc = key == "custom" and L["Shows your own spells, items and equipment slots as icons."] or L["Move this viewer into an mMT container. Turn it off to leave it to Blizzard and ElvUI."],
+		get = function()
+			return VDB(key)[field]
+		end,
+		set = function(_, value)
+			VDB(key)[field] = value
+			E:StaticPopup_Show("CONFIG_RL")
+		end,
+	}
+end
+
 mMT.options.args.cooldownmanager.args.general.args = {
-	description = {
+	enable = {
 		order = 1,
+		type = "toggle",
+		name = function()
+			return CDM().enable and MEDIA.color.green:WrapTextInColorCode(L["Enabled"]) or MEDIA.color.red:WrapTextInColorCode(L["Disabled"])
+		end,
+		get = function()
+			return CDM().enable
+		end,
+		set = function(_, value)
+			CDM().enable = value
+			-- turned on together, so one reload is enough for both
+			if value then Module():EnsureElvUISkin() end
+			E:StaticPopup_Show("CONFIG_RL")
+		end,
+	},
+	description = {
+		order = 2,
 		type = "description",
 		fontSize = "medium",
 		name = L["Moves Blizzards cooldown manager icons into mMT containers with own movers and text settings. Blizzards cooldown manager has to be enabled under Options > Gameplay Enhancements."],
 	},
+	modules = {
+		order = 3,
+		type = "group",
+		inline = true,
+		name = L["Modules"],
+		disabled = Disabled,
+		args = {
+			essential = ModuleToggle("essential", 1),
+			utility = ModuleToggle("utility", 2),
+			buff_icon = ModuleToggle("buff_icon", 3),
+			buff_bar = ModuleToggle("buff_bar", 4),
+			custom = ModuleToggle("custom", 5),
+		},
+	},
 	settings = {
-		order = 2,
+		order = 4,
 		type = "group",
 		inline = true,
 		name = L["Settings"],
 		args = {
-			enable = {
-				order = 1,
-				type = "toggle",
-				name = function()
-					return CDM().enable and MEDIA.color.green:WrapTextInColorCode(L["Enabled"]) or MEDIA.color.red:WrapTextInColorCode(L["Disabled"])
-				end,
-				get = function()
-					return CDM().enable
-				end,
-				set = function(_, value)
-					CDM().enable = value
-					-- turned on together, so one reload is enough for both
-					if value then Module():EnsureElvUISkin() end
-					E:StaticPopup_Show("CONFIG_RL")
-				end,
-			},
 			demo = {
 				order = 2,
 				type = "execute",
@@ -845,44 +1004,6 @@ mMT.options.args.cooldownmanager.args.general.args = {
 				end,
 				set = function(_, value)
 					CDM().hide_swipe = value
-					Refresh()
-				end,
-			},
-		},
-	},
-	font_group = {
-		order = 3,
-		type = "group",
-		inline = true,
-		name = L["Text"],
-		disabled = Disabled,
-		args = {
-			font = {
-				order = 1,
-				type = "select",
-				dialogControl = "LSM30_Font",
-				name = L["Font"],
-				values = LSM:HashTable("font"),
-				disabled = Disabled,
-				get = function()
-					return CDM().font
-				end,
-				set = function(_, value)
-					CDM().font = value
-					Refresh()
-				end,
-			},
-			font_flag = {
-				order = 2,
-				type = "select",
-				name = L["Font contour"],
-				values = FONT_FLAGS,
-				disabled = Disabled,
-				get = function()
-					return CDM().font_flag
-				end,
-				set = function(_, value)
-					CDM().font_flag = value
 					Refresh()
 				end,
 			},
@@ -1023,6 +1144,7 @@ mMT.options.args.cooldownmanager.args.viewers.args.buff_bar.args = {
 			},
 		},
 	},
+	anchor = AnchorGroup("buff_bar", 2.5),
 	visibility = Visibility("buff_bar", 3, false, true),
 	pandemic = PandemicGroup("buff_bar", 3.5),
 	pandemic_glow = GlowGroup("buff_bar", 3.6, "pandemic_glow", L["Pandemic Glow"], function()
@@ -1154,6 +1276,12 @@ local function SelectedEntry()
 	return entryState.selected and Entries()[entryState.selected]
 end
 
+-- a missing reminder is never ready and an entry shown only on cooldown is hidden once it is
+local function NoReadyGlow()
+	local entry = SelectedEntry()
+	return not entry or entry.show == "MISSING" or entry.show == "COOLDOWN"
+end
+
 local function NoEntrySelected()
 	return CustomDisabled() or not SelectedEntry()
 end
@@ -1169,14 +1297,19 @@ local function MoveEntry(step)
 	Refresh()
 end
 
-local function EntriesGroup(order)
-	return {
+local ENTRY_ADD_FIELDS = { type = true, id = true, slot = true, add = true }
+
+-- "add" holds the fields for a new entry, "edit" everything for the entries that exist
+local function EntriesGroup(order, part)
+	local group = {
 		order = order,
 		type = "group",
-		name = L["Own Entries"],
+		name = part == "add" and L["Add"] or L["Entries"],
 		inline = true,
 		disabled = CustomDisabled,
 		args = {
+			break_move = { order = 3, type = "description", name = "", width = "full" },
+			break_rest = { order = 6, type = "description", name = "", width = "full" },
 			type = {
 				order = 1,
 				type = "select",
@@ -1241,7 +1374,7 @@ local function EntriesGroup(order)
 				end,
 			},
 			selected = {
-				order = 4,
+				order = 1,
 				type = "select",
 				name = L["Entries"],
 				values = EntryValues,
@@ -1253,7 +1386,7 @@ local function EntriesGroup(order)
 				end,
 			},
 			up = {
-				order = 5,
+				order = 4,
 				type = "execute",
 				name = L["Move Up"],
 				disabled = function()
@@ -1264,7 +1397,7 @@ local function EntriesGroup(order)
 				end,
 			},
 			down = {
-				order = 6,
+				order = 5,
 				type = "execute",
 				name = L["Move Down"],
 				disabled = function()
@@ -1275,9 +1408,9 @@ local function EntriesGroup(order)
 				end,
 			},
 			remove = {
-				order = 7,
+				order = 2,
 				type = "execute",
-				name = L["Remove"],
+				name = MEDIA.color.red:WrapTextInColorCode(L["Remove"]),
 				disabled = function()
 					return CustomDisabled() or not entryState.selected
 				end,
@@ -1291,7 +1424,7 @@ local function EntriesGroup(order)
 				end,
 			},
 			show = {
-				order = 8,
+				order = 7,
 				type = "select",
 				name = L["Show"],
 				desc = L["When the selected entry is shown. Missing means for spells that the buff with this spell ID is not on you (read outside of combat, in combat the last state is kept), for items that none is in the bags and for slots that nothing is equipped."],
@@ -1310,10 +1443,12 @@ local function EntriesGroup(order)
 				end,
 			},
 			glow_ready = {
-				order = 9,
+				order = 8,
 				type = "toggle",
 				name = L["Glow when ready"],
-				disabled = NoEntrySelected,
+				disabled = function()
+					return NoEntrySelected() or NoReadyGlow()
+				end,
 				get = function()
 					local entry = SelectedEntry()
 					return entry and entry.glow_ready or false
@@ -1326,13 +1461,13 @@ local function EntriesGroup(order)
 				end,
 			},
 			glow_color = {
-				order = 10,
+				order = 9,
 				type = "color",
 				name = L["Glow Color"],
 				hasAlpha = true,
 				disabled = function()
 					local entry = SelectedEntry()
-					return NoEntrySelected() or not (entry and entry.glow_ready)
+					return NoEntrySelected() or NoReadyGlow() or not (entry and entry.glow_ready)
 				end,
 				get = function()
 					local entry = SelectedEntry()
@@ -1348,6 +1483,12 @@ local function EntriesGroup(order)
 			},
 		},
 	}
+
+	for name in pairs(group.args) do
+		if (part == "add") ~= (ENTRY_ADD_FIELDS[name] or false) then group.args[name] = nil end
+	end
+
+	return group
 end
 
 mMT.options.args.cooldownmanager.args.custom.args = {
@@ -1358,20 +1499,6 @@ mMT.options.args.cooldownmanager.args.custom.args = {
 		inline = true,
 		disabled = Disabled,
 		args = {
-			enable = {
-				order = 1,
-				type = "toggle",
-				name = function()
-					return VDB("custom").enable and MEDIA.color.green:WrapTextInColorCode(L["Enabled"]) or MEDIA.color.red:WrapTextInColorCode(L["Disabled"])
-				end,
-				get = function()
-					return VDB("custom").enable
-				end,
-				set = function(_, value)
-					VDB("custom").enable = value
-					E:StaticPopup_Show("CONFIG_RL")
-				end,
-			},
 			racials = {
 				order = 2,
 				type = "toggle",
@@ -1451,21 +1578,6 @@ mMT.options.args.cooldownmanager.args.custom.args = {
 					Refresh()
 				end,
 			},
-			trinkets = {
-				order = 8,
-				type = "select",
-				name = L["Trinkets"],
-				values = { both = L["Both"], slot1 = L["Trinket 1"], slot2 = L["Trinket 2"], none = L["None"] },
-				sorting = { "both", "slot1", "slot2", "none" },
-				disabled = CustomDisabled,
-				get = function()
-					return VDB("custom").trinkets
-				end,
-				set = function(_, value)
-					VDB("custom").trinkets = value
-					Refresh()
-				end,
-			},
 			known_only = {
 				order = 10,
 				type = "toggle",
@@ -1480,8 +1592,32 @@ mMT.options.args.cooldownmanager.args.custom.args = {
 					Refresh()
 				end,
 			},
+		},
+	},
+	trinkets_group = {
+		order = 1.2,
+		type = "group",
+		name = L["Trinkets"],
+		inline = true,
+		disabled = CustomDisabled,
+		args = {
+			trinkets = {
+				order = 1,
+				type = "select",
+				name = L["Show"],
+				values = { both = L["Both"], slot1 = L["Trinket 1"], slot2 = L["Trinket 2"], none = L["None"] },
+				sorting = { "both", "slot1", "slot2", "none" },
+				disabled = CustomDisabled,
+				get = function()
+					return VDB("custom").trinkets
+				end,
+				set = function(_, value)
+					VDB("custom").trinkets = value
+					Refresh()
+				end,
+			},
 			on_use_only = {
-				order = 9,
+				order = 2,
 				type = "toggle",
 				name = L["On-Use Only"],
 				desc = L["Hides passive and proc trinkets without an activatable cooldown."],
@@ -1498,7 +1634,8 @@ mMT.options.args.cooldownmanager.args.custom.args = {
 			},
 		},
 	},
-	entries = EntriesGroup(1.5),
+	entries_add = EntriesGroup(1.5, "add"),
+	entries_edit = EntriesGroup(1.6, "edit"),
 	layout = {
 		order = 2,
 		type = "group",
@@ -1640,6 +1777,7 @@ mMT.options.args.cooldownmanager.args.custom.args = {
 			},
 		},
 	},
+	anchor = AnchorGroup("custom", 2.5, CustomDisabled),
 	visibility = {
 		order = 3,
 		type = "group",
@@ -1686,8 +1824,11 @@ mMT.options.args.cooldownmanager.args.custom.args = {
 				min = 0,
 				max = 30,
 				step = 0.5,
+				disabled = function()
+					return Attached("custom")
+				end,
 				get = function()
-					return VDB("custom").hide_delay
+					return not Attached("custom") and VDB("custom").hide_delay or 0
 				end,
 				set = function(_, value)
 					VDB("custom").hide_delay = value
@@ -1702,8 +1843,11 @@ mMT.options.args.cooldownmanager.args.custom.args = {
 				min = 0,
 				max = 2,
 				step = 0.05,
+				disabled = function()
+					return Attached("custom")
+				end,
 				get = function()
-					return VDB("custom").fade_time
+					return not Attached("custom") and VDB("custom").fade_time or 0
 				end,
 				set = function(_, value)
 					VDB("custom").fade_time = value
@@ -1721,9 +1865,74 @@ mMT.options.args.cooldownmanager.args.custom.args = {
 					VDB("custom").tooltips = value
 				end,
 			},
+			clickable = {
+				order = 4,
+				type = "toggle",
+				name = L["Clickable"],
+				desc = L["Click an icon to use the spell, item or equipment slot. Only changes outside of combat."],
+				get = function()
+					return VDB("custom").clickable
+				end,
+				set = function(_, value)
+					VDB("custom").clickable = value
+					Refresh()
+				end,
+			},
 		},
 	},
 	cooldown_text = TextGroup(L["Cooldown Text"], 4, "custom", "cooldown_text", nil, CustomDisabled),
 	count_text = TextGroup(L["Count Text"], 5, "custom", "count_text", nil, CustomDisabled),
 	copy = CopyGroup("custom", 20),
 }
+
+-- The settings of a page become tabs, only its first group stays on top
+local function Regroup(page, tabs, top)
+	local args = page.args
+	local grouped = { general = args.general }
+	for _, name in ipairs(top or {}) do
+		grouped[name] = args[name]
+	end
+
+	for index, tab in ipairs(tabs) do
+		local children = {}
+		for _, name in ipairs(tab.keys) do
+			if args[name] then children[name] = args[name] end
+		end
+
+		if next(children) then grouped[tab.id] = { order = index + 1, type = "group", name = tab.name, args = children } end
+	end
+
+	page.args = grouped
+	page.childGroups = "tab"
+end
+
+local TAB_LAYOUT = { id = "layout_tab", name = L["Layout"], keys = { "layout", "anchor" } }
+local TAB_VISIBILITY = { id = "visibility_tab", name = L["Visibility"], keys = { "visibility" } }
+local TAB_COPY = { id = "copy_tab", name = L["Copy"], keys = { "copy" } }
+local ICON_TABS = {
+	TAB_LAYOUT,
+	TAB_VISIBILITY,
+	{ id = "texts_tab", name = L["Texts"], keys = { "cooldown_text", "count_text", "keybind_text" } },
+	{ id = "effects_tab", name = L["Effects"], keys = { "glow", "pandemic", "pandemic_glow" } },
+	TAB_COPY,
+}
+
+local viewerPages = mMT.options.args.cooldownmanager.args.viewers.args
+Regroup(viewerPages.essential, ICON_TABS)
+Regroup(viewerPages.utility, ICON_TABS)
+Regroup(viewerPages.buff_icon, ICON_TABS)
+Regroup(viewerPages.buff_bar, {
+	TAB_LAYOUT,
+	TAB_VISIBILITY,
+	{ id = "colors_tab", name = L["Colors"], keys = { "colors" } },
+	{ id = "texts_tab", name = L["Texts"], keys = { "name_text", "duration_text", "stacks_text" } },
+	{ id = "effects_tab", name = L["Effects"], keys = { "pandemic", "pandemic_glow" } },
+	TAB_COPY,
+})
+Regroup(mMT.options.args.cooldownmanager.args.custom, {
+	{ id = "entries_tab", name = L["Entries"], keys = { "entries_add", "entries_edit" } },
+	TAB_LAYOUT,
+	TAB_VISIBILITY,
+	{ id = "texts_tab", name = L["Texts"], keys = { "cooldown_text", "count_text" } },
+	TAB_COPY,
+}, { "trinkets_group" })

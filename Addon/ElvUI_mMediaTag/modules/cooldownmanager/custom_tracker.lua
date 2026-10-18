@@ -25,6 +25,7 @@ local C_Spell_GetSpellTexture = C_Spell.GetSpellTexture
 local C_Spell_GetSpellCooldown = C_Spell.GetSpellCooldown
 local C_Spell_GetSpellCooldownDuration = C_Spell.GetSpellCooldownDuration
 local C_Spell_GetSpellName = C_Spell.GetSpellName
+local C_Spell_GetSpellDisplayCount = C_Spell.GetSpellDisplayCount
 local C_Item_GetItemNameByID = C_Item.GetItemNameByID
 local C_Item_GetItemInfoInstant = C_Item.GetItemInfoInstant
 local IsSpellKnown = C_SpellBook and C_SpellBook.IsSpellKnown
@@ -105,12 +106,43 @@ local RACIAL_SPELLS = {
 local icons = {}
 local active = {}
 local racials = {}
+local frameFor = {}
+local columnSizes, columnStarts, rowSizes, rowStarts = {}, {}, {}, {}
+
+-- The icons are secure buttons: in combat they can not be shown, hidden, moved or given another action, so they only fade
+local function SetShown(frame, shown)
+	if InCombatLockdown() then
+		frame:SetAlpha(shown and 1 or 0)
+		return
+	end
+
+	frame:SetAlpha(1)
+	frame:SetShown(shown)
+end
+
+local function ApplyClick(frame, kind, id)
+	if InCombatLockdown() then return end
+
+	local vdb = module:ViewerDB("custom")
+	if not vdb or vdb.clickable == false then
+		frame:SetAttribute("type", nil)
+	elseif kind == "spell" then
+		frame:SetAttribute("type", "spell")
+		frame:SetAttribute("spell", id)
+		frame:SetAttribute("macrotext", nil)
+	else
+		frame:SetAttribute("type", "macro")
+		frame:SetAttribute("spell", nil)
+		frame:SetAttribute("macrotext", kind == "item" and ("/use item:" .. id) or ("/use " .. id))
+	end
+end
 
 local function CreateIcon(parent, index)
-	local frame = CreateFrame("Button", "mMediaTag_CDM_CustomIcon" .. index, parent, "BackdropTemplate")
+	local frame = CreateFrame("Button", "mMediaTag_CDM_CustomIcon" .. index, parent, "SecureActionButtonTemplate, BackdropTemplate")
 	frame:SetTemplate("Default")
 	frame:SetFrameStrata("LOW")
 	frame:SetFrameLevel(6)
+	frame:RegisterForClicks("AnyDown", "AnyUp")
 
 	frame.icon = frame:CreateTexture(nil, "ARTWORK")
 	frame.icon:SetInside(frame)
@@ -134,6 +166,8 @@ local function CreateIcon(parent, index)
 	frame:SetScript("OnEnter", function(self)
 		local vdb = module:ViewerDB("custom")
 		if not self.trackType or not vdb or vdb.tooltips == false then return end
+		-- faded out icons stay under the mouse
+		if self:GetEffectiveAlpha() <= 0 then return end
 
 		GameTooltip:SetOwner(self, "ANCHOR_RIGHT")
 		if self.trackType == "spell" and self.spellID then
@@ -168,7 +202,8 @@ local function UpdateSpell(frame, spellID)
 	frame.spellID = spellID
 	frame.itemID, frame.slot = nil, nil
 	frame.icon:SetTexture(C_Spell_GetSpellTexture(spellID))
-	frame.countText:SetText("")
+	-- charges or use count as a string, secret in combat so it only goes to SetText, never into a condition
+	frame.countText:SetText(C_Spell_GetSpellDisplayCount(spellID))
 
 	local duration = C_Spell_GetSpellCooldownDuration(spellID)
 	if duration then
@@ -186,7 +221,7 @@ end
 
 local function UpdateSlot(frame, slot)
 	if not GetInventoryItemID("player", slot) then
-		frame:Hide()
+		SetShown(frame, false)
 		return false
 	end
 
@@ -205,14 +240,14 @@ local function UpdateSlot(frame, slot)
 	end
 
 	frame.icon:SetDesaturated(onCooldown)
-	frame:Show()
+	SetShown(frame, true)
 	return true, onCooldown
 end
 
 local function UpdateItem(frame, itemID)
 	local count = C_Item_GetItemCount(itemID, false, true)
 	if count == 0 then
-		frame:Hide()
+		SetShown(frame, false)
 		return false
 	end
 
@@ -232,7 +267,7 @@ local function UpdateItem(frame, itemID)
 	end
 
 	frame.icon:SetDesaturated(onCooldown)
-	frame:Show()
+	SetShown(frame, true)
 	return true, onCooldown
 end
 
@@ -352,71 +387,102 @@ local function SetPolling(waiting)
 	end
 end
 
+local takeIndex, takeInCombat = 0, false
+local seen, touched = {}, {}
+
+local function Take(kind, id, missing)
+	local base = (missing and "missing:" or "") .. kind .. ":" .. id
+	seen[base] = (seen[base] or 0) + 1
+	local key = base .. "#" .. seen[base]
+
+	local frame = frameFor[key]
+	if not frame and not takeInCombat then
+		takeIndex = takeIndex + 1
+		frame = takeIndex <= MAX_ICONS and icons[takeIndex] or nil
+		if frame then
+			frameFor[key] = frame
+			ApplyClick(frame, kind, id)
+		end
+	end
+
+	if frame then touched[frame] = true end
+	return frame, key
+end
+
+local function Release(key)
+	if takeInCombat then return end
+	frameFor[key] = nil
+	takeIndex = takeIndex - 1
+end
+
+local function AddItems(list)
+	for _, itemID in ipairs(list) do
+		if C_Item_GetItemCount(itemID) > 0 then
+			local frame = Take("item", itemID)
+			if frame and UpdateItem(frame, itemID) then active[#active + 1] = frame end
+		end
+	end
+end
+
 local function UpdateIcons()
 	local vdb = module:ViewerDB("custom")
 	if module:IsDisabled() or not vdb or not vdb.enable then return SetPolling(false) end
 
 	wipe(active)
 	wipe(glowing)
-	local index = 0
+	wipe(seen)
+	wipe(touched)
+	takeInCombat = InCombatLockdown()
+	takeIndex = 0
+	-- the actions of the buttons are fixed in combat, every entry keeps the button it had
+	if not takeInCombat then wipe(frameFor) end
+
 	local waiting = false
-
-	local function Take()
-		index = index + 1
-		return index <= MAX_ICONS and icons[index] or nil
-	end
-
-	local function AddItems(list)
-		for _, itemID in ipairs(list) do
-			if C_Item_GetItemCount(itemID) > 0 then
-				local frame = Take()
-				if not frame then return end
-				if UpdateItem(frame, itemID) then active[#active + 1] = frame end
-			end
-		end
-	end
 
 	for _, entry in ipairs(vdb.entries or {}) do
 		if entry.enable ~= false and entry.id then
-			local frame = Take()
-			if not frame then break end
-
 			local show = entry.show or "ALWAYS"
-			local shown, onCooldown = false, false
-			if show == "MISSING" then
-				shown = UpdateMissing(frame, entry)
-			elseif entry.type == "spell" then
-				if SpellUsable(entry.id, vdb.known_only ~= false) then
-					shown, onCooldown = true, UpdateSpell(frame, entry.id)
+			local frame, key = Take(entry.type, entry.id, show == "MISSING")
+
+			if frame then
+				local shown, onCooldown = false, false
+				if show == "MISSING" then
+					shown = UpdateMissing(frame, entry)
+				elseif entry.type == "spell" then
+					if SpellUsable(entry.id, vdb.known_only ~= false) then
+						shown, onCooldown = true, UpdateSpell(frame, entry.id)
+					end
+				elseif entry.type == "item" then
+					shown, onCooldown = UpdateItem(frame, entry.id)
+				else
+					shown, onCooldown = UpdateSlot(frame, entry.id)
 				end
-			elseif entry.type == "item" then
-				shown, onCooldown = UpdateItem(frame, entry.id)
-			else
-				shown, onCooldown = UpdateSlot(frame, entry.id)
-			end
 
-			-- per entry rules: only while ready, only while on cooldown, glow once ready
-			if shown and onCooldown and (show ~= "ALWAYS" or entry.glow_ready) then waiting = true end
-			if (show == "READY" and onCooldown) or (show == "COOLDOWN" and not onCooldown) then shown = false end
+				-- per entry rules: only while ready, only while on cooldown, glow once ready
+				if shown and onCooldown and (show ~= "ALWAYS" or entry.glow_ready) then waiting = true end
+				if (show == "READY" and onCooldown) or (show == "COOLDOWN" and not onCooldown) then shown = false end
 
-			if shown then
-				frame:Show()
-				active[#active + 1] = frame
-				if entry.glow_ready and not onCooldown and show ~= "MISSING" then SetReadyGlow(frame, entry) end
-			else
-				frame:Hide()
-				index = index - 1
+				if shown then
+					SetShown(frame, true)
+					active[#active + 1] = frame
+					if entry.glow_ready and not onCooldown and show ~= "MISSING" then SetReadyGlow(frame, entry) end
+				else
+					SetShown(frame, false)
+					touched[frame] = nil
+					Release(key)
+				end
 			end
 		end
 	end
 
 	if vdb.racials then
 		for _, spellID in ipairs(racials) do
-			local frame = Take()
-			if not frame then break end
-			UpdateSpell(frame, spellID)
-			frame:Show()
-			active[#active + 1] = frame
+			local frame = Take("spell", spellID)
+			if frame then
+				UpdateSpell(frame, spellID)
+				SetShown(frame, true)
+				active[#active + 1] = frame
+			end
 		end
 	end
 
@@ -429,7 +495,7 @@ local function UpdateIcons()
 	if vdb.belt_tinker then
 		local _, _, enable = GetInventoryItemCooldown("player", BELT_SLOT)
 		if enable == 1 then
-			local frame = Take()
+			local frame = Take("slot", BELT_SLOT)
 			if frame and UpdateSlot(frame, BELT_SLOT) then active[#active + 1] = frame end
 		end
 	end
@@ -439,15 +505,15 @@ local function UpdateIcons()
 		local slots = (mode == "both" and TRINKET_SLOTS) or (mode == "slot1" and { 13 }) or { 14 }
 		for _, slot in ipairs(slots) do
 			if not vdb.on_use_only or IsOnUseTrinket(slot) then
-				local frame = Take()
-				if not frame then break end
-				if UpdateSlot(frame, slot) then active[#active + 1] = frame end
+				local frame = Take("slot", slot)
+				if frame and UpdateSlot(frame, slot) then active[#active + 1] = frame end
 			end
 		end
 	end
 
-	for i = index + 1, MAX_ICONS do
-		if icons[i] then icons[i]:Hide() end
+	-- buttons nothing asked for this time, in combat they only fade
+	for _, frame in ipairs(icons) do
+		if not touched[frame] then SetShown(frame, false) end
 	end
 
 	StopReadyGlows(glowing)
@@ -467,6 +533,9 @@ function module:LayoutCustomTracker()
 
 	if count == 0 then return end
 
+	-- the buttons can not be sized or moved in combat, the update after combat lays them out
+	if InCombatLockdown() then return end
+
 	local db = module:GetDB()
 	local width = E:Scale(vdb.width or 36)
 	local height = (vdb.keep_ratio and width) or E:Scale(vdb.height or 36)
@@ -477,31 +546,41 @@ function module:LayoutCustomTracker()
 	local vertical = growth == "UP" or growth == "DOWN"
 	local cols = vertical and 1 or (count < perRow and count or perRow)
 	local rows = vertical and count or ceil(count / perRow)
-	width, height = module:FitIconSize(vdb, width, height, spacing, cols, rows)
+	width, height = module:FitIconSize(vdb, width, height, spacing, cols, rows, "custom")
 
 	for _, icon in ipairs(active) do
-		icon:SetSize(width, height)
 		icon.icon:SetTexCoord(E:GetTexCoords())
 		module:ApplyCooldownText(icon.Cooldown, vdb.cooldown_text)
 		module:ApplySwipeOverride(icon.Cooldown, db)
 		module:StyleText(icon.countText, vdb.count_text)
 	end
 
-	local totalWidth = cols * width + (cols - 1) * spacing
-	local totalHeight = rows * height + (rows - 1) * spacing
+	local blockWidth, blockHeight = module:MatchedBlock("custom", vdb)
+	local contentWidth = module:SpreadSlots(cols, width, spacing, blockWidth, columnSizes, columnStarts)
+	local contentHeight = module:SpreadSlots(rows, height, spacing, blockHeight, rowSizes, rowStarts)
+	local totalWidth = blockWidth or contentWidth
+	local totalHeight = blockHeight or contentHeight
 	module:SetContainerSize(container, totalWidth, totalHeight)
+
+	-- the icons sit in the middle of a block that takes the size of its target
+	local shift = (totalWidth - contentWidth) / 2
 
 	local anchor = (growth == "LEFT" and "RIGHT") or (growth == "UP" and "BOTTOMLEFT") or "TOPLEFT"
 	local xDir = growth == "LEFT" and -1 or 1
 	local yDir = growth == "UP" and 1 or -1
 
 	for i, icon in ipairs(active) do
-		local row = vertical and (i - 1) or floor((i - 1) / perRow)
-		local col = vertical and 0 or ((i - 1) % perRow)
+		local row = (vertical and (i - 1) or floor((i - 1) / perRow)) + 1
+		local col = (vertical and 0 or ((i - 1) % perRow)) + 1
 
+		icon:SetSize(columnSizes[col], rowSizes[row])
 		icon:ClearAllPoints()
-		icon:SetPoint(anchor, container, anchor, xDir * col * (width + spacing), yDir * row * (height + spacing))
+		icon:SetPoint(anchor, container, anchor, xDir * (shift + columnStarts[col]), yDir * rowStarts[row])
 	end
+
+	local target = module:AnchorTarget("custom")
+	if target and module:AnchorToTarget(container, target, vdb.anchor) then return end
+	container.mmtAnchorTarget = nil
 
 	local mover = _G[module.VIEWERS.custom.mover .. "_Mover"]
 	if not mover then return end

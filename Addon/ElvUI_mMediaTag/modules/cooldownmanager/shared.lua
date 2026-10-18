@@ -8,6 +8,7 @@ local ipairs = ipairs
 local pairs = pairs
 local next = next
 local type = type
+local pcall = pcall
 local wipe = wipe
 local tsort = table.sort
 local ceil = math.ceil
@@ -83,11 +84,46 @@ function module:SetContainerSize(container, w, h)
 	container.mmtW, container.mmtH = w, h
 end
 
-function module:AnchorToMover(key, growth)
-	local container = module.containers[key]
+local anchorIDs = {}
+
+-- Empty frame name keeps the mover, ANCHOR:<key> hangs the container under another container
+function module:AnchorTarget(id)
+	local vdb = module:ViewerDB(id)
+	local name = vdb and vdb.anchor and vdb.anchor.frame
+	if not name or name == "" then return end
+
+	local other = anchorIDs[name]
+	if other == nil then
+		other = name:match("^ANCHOR:(.+)$") or false
+		anchorIDs[name] = other
+	end
+	if other then return other ~= id and module.containers[other] or nil end
+
+	local frame = _G[name]
+	if type(frame) == "table" and frame.GetObjectType and frame ~= module.containers[id] then return frame end
+end
+
+function module:AnchorToTarget(container, target, adb)
+	if container.mmtAnchorTarget == target and container.mmtAnchorPoint == adb.point and container.mmtAnchorRelative == adb.relative and container.mmtAnchorX == adb.x and container.mmtAnchorY == adb.y then return true end
+
+	container:ClearAllPoints()
+	container.mmtAnchorGrowth = nil
+	-- a dependency loop makes SetPoint throw, the caller then falls back to the mover
+	if not pcall(container.SetPoint, container, adb.point, target, adb.relative, adb.x, adb.y) then return false end
+
+	container.mmtAnchorTarget, container.mmtAnchorPoint, container.mmtAnchorRelative, container.mmtAnchorX, container.mmtAnchorY = target, adb.point, adb.relative, adb.x, adb.y
+	return true
+end
+
+function module:AnchorToMover(id, growth)
+	local container = module.containers[id]
 	if not container then return end
 
-	local mover = _G[module.VIEWERS[key].mover .. "_Mover"]
+	local target = module:AnchorTarget(id)
+	if target and module:AnchorToTarget(container, target, module:ViewerDB(id).anchor) then return end
+	container.mmtAnchorTarget = nil
+
+	local mover = _G[module.VIEWERS[id].mover .. "_Mover"]
 	if not mover then return end
 
 	-- only a new size or growth moves anything, every other pass would just set the same anchors again
@@ -139,7 +175,8 @@ function module:ShouldShow(key)
 
 	local visibility = vdb.visibility or "ALWAYS"
 	if visibility == "HIDDEN" then return false end
-	if visibility == "FADER" then return true end
+	-- a faded out tracker would still take clicks and tooltips, the viewers must stay shown
+	if visibility == "FADER" then return key ~= "custom" or module:ContainerAlpha(key) > 0 end
 	if visibility == "INCOMBAT" and not module.inCombat then return false end
 	if visibility == "INPARTY" and not _G.IsInGroup() then return false end
 	return true
@@ -193,7 +230,9 @@ function module:UpdateContainerShown(key)
 	if not container then return end
 
 	local vdb = module:ViewerDB(key)
-	local fade = (vdb and vdb.fade_time) or 0
+	-- attached to another frame it has to appear and vanish with it
+	local attached = module:AnchorTarget(key) ~= nil
+	local fade = (not attached and vdb and vdb.fade_time) or 0
 	local alpha = module:ContainerAlpha(key)
 
 	if module:ShouldShow(key) then
@@ -217,7 +256,7 @@ function module:UpdateContainerShown(key)
 
 	if not container:IsShown() or container.mmtFadingOut or container.mmtHideTimer then return end
 
-	local delay = (vdb and vdb.hide_delay) or 0
+	local delay = (not attached and vdb and vdb.hide_delay) or 0
 	if delay > 0 then
 		container.mmtHideTimer = C_Timer.NewTimer(delay, function()
 			FadeOut(container, fade)
@@ -287,6 +326,7 @@ function module:ApplyGlow(frame, glow, key)
 		active = {}
 		module.glowActive[frame] = active
 	end
+
 	active[key] = true
 
 	local color = glow.color
@@ -492,8 +532,7 @@ function module:StyleText(fs, text)
 	fs:ClearAllPoints()
 	fs:SetPoint(text.position, text.x, text.y)
 
-	local db = module:GetDB()
-	E:SetFont(fs, LSM:Fetch("font", db.font), text.size, db.font_flag)
+	E:SetFont(fs, LSM:Fetch("font", text.font or "PT Sans Narrow"), text.size, text.font_flag or "OUTLINE")
 
 	if text.class_color then
 		local color = E:ClassColor(E.myclass)
@@ -734,20 +773,33 @@ local function BuildActionKeys()
 	end
 end
 
+-- the result per spell is kept, FindSpellActionButtons hands out a new table on every call and the layout asks for every icon
+local keybindBySpell = {}
+
 function module:ResetKeybinds()
 	actionKeysBuilt = false
+	wipe(keybindBySpell)
 end
 
 function module:GetSpellKeybind(spellID)
+	local cached = keybindBySpell[spellID]
+	if cached ~= nil then return cached or nil end
+
+	local key = false
 	local slots = C_ActionBar_FindSpellActionButtons(spellID)
-	if not slots then return nil end
+	if slots then
+		if not actionKeysBuilt then BuildActionKeys() end
 
-	if not actionKeysBuilt then BuildActionKeys() end
-
-	for _, slot in ipairs(slots) do
-		local key = actionKeys[slot]
-		if key then return key end
+		for _, slot in ipairs(slots) do
+			if actionKeys[slot] then
+				key = actionKeys[slot]
+				break
+			end
+		end
 	end
+
+	keybindBySpell[spellID] = key
+	return key or nil
 end
 
 function module:ApplyKeybindText(frame, vdb)
@@ -771,11 +823,50 @@ function module:ApplyKeybindText(frame, vdb)
 	frame.mmtKeybind:Show()
 end
 
+local watchedTargets = {}
+
+-- Stacked above or below the target takes its width, placed beside it takes its height
+function module:MatchedSize(id, ldb)
+	local fixedWidth, fixedHeight = ldb.max_width or 0, ldb.max_height or 0
+	local adb = ldb.anchor
+	if not id or not adb or not adb.match then return fixedWidth, fixedHeight end
+
+	local target = module:AnchorTarget(id)
+	if not target then return fixedWidth, fixedHeight end
+
+	if not watchedTargets[target] then
+		watchedTargets[target] = true
+		target:HookScript("OnSizeChanged", function()
+			module:ScheduleRelayout()
+		end)
+	end
+
+	local point, relative = adb.point, adb.relative
+	-- the target can sit under another scale than the container
+	local container = module.containers[id]
+	local scale = (target:GetEffectiveScale() or 1) / ((container and container:GetEffectiveScale()) or 1)
+	-- what counts as the edge of a bar differs, so the user sets the pixels per side
+	local grow = 2 * (adb.match_offset or 0) * (E.mult or 1)
+	local width, height = (target:GetWidth() or 0) * scale + grow, (target:GetHeight() or 0) * scale + grow
+	if (point:find("TOP") and relative:find("BOTTOM")) or (point:find("BOTTOM") and relative:find("TOP")) then
+		if width > 1 then return width, fixedHeight, true, false end
+	elseif (point:find("LEFT") and relative:find("RIGHT")) or (point:find("RIGHT") and relative:find("LEFT")) then
+		if height > 1 then return fixedWidth, height, false, true end
+	end
+
+	return fixedWidth, fixedHeight
+end
+
+-- A matched container takes exactly the size of its target however many icons it holds, so a chain of them stays aligned
+function module:MatchedBlock(id, ldb)
+	local fixedWidth, fixedHeight, widthMatched, heightMatched = module:MatchedSize(id, ldb)
+	return widthMatched and E:Scale(fixedWidth) or nil, heightMatched and E:Scale(fixedHeight) or nil
+end
+
 -- A fixed width or height replaces the icon size settings: the width is split over the icons of the widest row, the
 -- height over the rows, so the block always fills it. With only one of them set the icons stay square.
-function module:FitIconSize(vdb, width, height, spacing, cols, rows)
-	local fixedWidth = vdb.max_width or 0
-	local fixedHeight = vdb.max_height or 0
+function module:FitIconSize(vdb, width, height, spacing, cols, rows, id)
+	local fixedWidth, fixedHeight = module:MatchedSize(id, vdb)
 	if fixedWidth <= 0 and fixedHeight <= 0 then return width, height end
 
 	local w = fixedWidth > 0 and (E:Scale(fixedWidth) - (cols - 1) * spacing) / cols or nil
@@ -786,6 +877,26 @@ function module:FitIconSize(vdb, width, height, spacing, cols, rows)
 	local pixel = E.mult or 1
 	local minSize = 4 * pixel
 	return max(floor(w / pixel) * pixel, minSize), max(floor(h / pixel) * pixel, minSize)
+end
+
+-- Fills starts and sizes of count slots in a row. A matched block hands the pixels the slot size was rounded down by to single
+-- slots, evenly spread, so the gaps stay the same and the block is filled to its edge. Returns the size of the content.
+local columnSizes, columnStarts, rowSizes, rowStarts = {}, {}, {}, {}
+
+function module:SpreadSlots(count, size, spacing, block, sizes, starts)
+	local pixel = E.mult or 1
+	local extra = block and floor((block - (count * size + (count - 1) * spacing)) / pixel + 0.001) or 0
+	local position = 0
+
+	for slot = 1, count do
+		local slotSize = size
+		if extra > 0 and floor(slot * extra / count) > floor((slot - 1) * extra / count) then slotSize = size + pixel end
+
+		sizes[slot], starts[slot] = slotSize, position
+		position = position + slotSize + spacing
+	end
+
+	return position - spacing
 end
 
 -- Reading the pool is safe, releasing or acquiring from here would taint every later EnumerateActive
@@ -826,19 +937,20 @@ function module:LayoutIconViewer(key, capture, callback)
 	module.emptyViewers[key] = count == 0
 	module:UpdateContainerShown(key)
 
+	local blockWidth, blockHeight = module:MatchedBlock(key, vdb)
+
 	if count == 0 then
-		module:SetContainerSize(container, perRow * width + (perRow - 1) * spacing, height)
+		module:SetContainerSize(container, blockWidth or (perRow * width + (perRow - 1) * spacing), blockHeight or height)
 		module:AnchorToMover(key, vdb.growth)
 		return
 	end
 
 	local cols = min(count, perRow)
 	local rows = ceil(count / perRow)
-	width, height = module:FitIconSize(vdb, width, height, spacing, cols, rows)
+	width, height = module:FitIconSize(vdb, width, height, spacing, cols, rows, key)
 
 	for _, icon in ipairs(icons) do
 		icon:SetScale(1)
-		icon:SetSize(width, height)
 
 		if capture or not module.styled[icon] then
 			module:ApplyTextOverrides(icon, vdb, db)
@@ -851,21 +963,24 @@ function module:LayoutIconViewer(key, capture, callback)
 		module:ApplyDebuffBorder(icon, vdb)
 	end
 
-	local totalWidth = cols * width + (cols - 1) * spacing
-	module:SetContainerSize(container, totalWidth, rows * height + (rows - 1) * spacing)
+	local contentWidth = module:SpreadSlots(cols, width, spacing, blockWidth, columnSizes, columnStarts)
+	local contentHeight = module:SpreadSlots(rows, height, spacing, blockHeight, rowSizes, rowStarts)
+	local totalWidth = blockWidth or contentWidth
+	module:SetContainerSize(container, totalWidth, blockHeight or contentHeight)
 
 	for index, icon in ipairs(icons) do
-		local row = floor((index - 1) / perRow)
-		local col = (index - 1) % perRow
-		local rowStart = row * perRow + 1
+		local row = floor((index - 1) / perRow) + 1
+		local col = (index - 1) % perRow + 1
+		local rowStart = (row - 1) * perRow + 1
 		local rowCount = min(rowStart + perRow - 1, count) - rowStart + 1
-		local offset = (totalWidth - (rowCount * width + (rowCount - 1) * spacing)) / 2
+		local offset = (totalWidth - (columnStarts[rowCount] + columnSizes[rowCount])) / 2
 
+		icon:SetSize(columnSizes[col], rowSizes[row])
 		icon:ClearAllPoints()
 		if growUp then
-			icon:SetPoint("BOTTOMLEFT", container, "BOTTOMLEFT", offset + col * (width + spacing), row * (height + spacing))
+			icon:SetPoint("BOTTOMLEFT", container, "BOTTOMLEFT", offset + columnStarts[col], rowStarts[row])
 		else
-			icon:SetPoint("TOPLEFT", container, "TOPLEFT", offset + col * (width + spacing), -row * (height + spacing))
+			icon:SetPoint("TOPLEFT", container, "TOPLEFT", offset + columnStarts[col], -rowStarts[row])
 		end
 	end
 
