@@ -958,9 +958,11 @@ P.merchant_grid = {
 
 P.merchant_known = {
 	enable = false,
+	known = true,
 	color = "FFFF2020",
 	appearance = true,
 	appearanceColor = "FF33D1FF",
+	icon = false,
 	border = true,
 	tint = true,
 }

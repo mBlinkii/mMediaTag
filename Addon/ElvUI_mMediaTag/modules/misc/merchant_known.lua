@@ -19,7 +19,7 @@ local function GetState(index)
 
 		local text = line.leftText
 		if text and not (issecretvalue and issecretvalue(text)) then
-			if text == _G.ITEM_SPELL_KNOWN then return "color" end
+			if module.db.known and text == _G.ITEM_SPELL_KNOWN then return "color" end
 			if module.db.appearance and text == _G.TRANSMOGRIFY_TOOLTIP_APPEARANCE_UNKNOWN then state = "appearanceColor" end
 		end
 	end
@@ -27,12 +27,27 @@ local function GetState(index)
 	return state
 end
 
+local function SetIcon(itemButton, show)
+	local icon = itemButton.mMTAppearanceIcon
+	if not icon then
+		if not show then return end
+		icon = itemButton:CreateTexture(nil, "OVERLAY")
+		icon:SetSize(16, 16)
+		icon:SetPoint("BOTTOMRIGHT", itemButton, "BOTTOMRIGHT", 2, -2)
+		icon:SetTexture("Interface\\MINIMAP\\TRACKING\\Transmogrifier")
+		itemButton.mMTAppearanceIcon = icon
+	end
+
+	icon:SetShown(show)
+end
+
 local function UpdateItem(index)
 	local merchantButton = _G["MerchantItem" .. index]
 	local itemButton = _G["MerchantItem" .. index .. "ItemButton"]
-	if not (merchantButton and itemButton and itemButton.hasItem) then return end
+	if not (merchantButton and itemButton) then return end
 
-	local state = GetState(itemButton:GetID())
+	local state = itemButton.hasItem and module.isEnabled and GetState(itemButton:GetID())
+	SetIcon(itemButton, state == "appearanceColor" and module.db.icon)
 	if not state then return end
 
 	local r, g, b = mMT:HexToRGB(module.db[state])
@@ -48,7 +63,7 @@ local function UpdateItem(index)
 end
 
 local function UpdateMerchant()
-	if not (module.isEnabled and _G.MerchantFrame and _G.MerchantFrame.selectedTab == 1) then return end
+	if not (_G.MerchantFrame and _G.MerchantFrame.selectedTab == 1) then return end
 
 	for i = 1, _G.MERCHANT_ITEMS_PER_PAGE do
 		UpdateItem(i)

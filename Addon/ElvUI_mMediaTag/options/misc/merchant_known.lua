@@ -40,17 +40,21 @@ mMT.options.args.comfort.args.tools.args.merchant_known.args = {
 			UpdateModule()
 		end,
 	},
-	settings = {
+	known = {
 		order = 2,
 		type = "group",
 		inline = true,
-		name = L["Settings"],
+		name = L["Known Items"],
 		disabled = function()
 			return not Settings().enable
 		end,
 		args = {
+			known = Toggle(1, "known", L["Enable"], L["Colors items at vendors that you already know."]),
 			color = {
-				order = 1,
+				order = 2,
+				disabled = function()
+					return not Settings().known
+				end,
 				type = "color",
 				name = L["Known Items Color"],
 				hasAlpha = false,
@@ -63,9 +67,20 @@ mMT.options.args.comfort.args.tools.args.merchant_known.args = {
 					UpdateModule()
 				end,
 			},
-			appearance = Toggle(2, "appearance", L["Uncollected Appearances"], L["Marks gear at vendors whose appearance you have not collected yet."]),
+		},
+	},
+	transmog = {
+		order = 3,
+		type = "group",
+		inline = true,
+		name = L["Uncollected Appearances"],
+		disabled = function()
+			return not Settings().enable
+		end,
+		args = {
+			appearance = Toggle(1, "appearance", L["Enable"], L["Marks gear at vendors whose appearance you have not collected yet."]),
 			appearanceColor = {
-				order = 3,
+				order = 2,
 				type = "color",
 				name = L["Appearance Color"],
 				hasAlpha = false,
@@ -81,8 +96,35 @@ mMT.options.args.comfort.args.tools.args.merchant_known.args = {
 					UpdateModule()
 				end,
 			},
-			border = Toggle(4, "border", L["Border"], L["Colors the border of the item icon."]),
-			tint = Toggle(5, "tint", L["Tint Icon and Background"], L["Tints the icon and the name background of the item."]),
+			icon = {
+				order = 3,
+				type = "toggle",
+				name = L["Appearance Icon"],
+				desc = L["Shows a transmog icon on gear whose appearance you have not collected yet."],
+				disabled = function()
+					return not Settings().appearance
+				end,
+				get = function()
+					return Settings().icon
+				end,
+				set = function(_, value)
+					Settings().icon = value
+					UpdateModule()
+				end,
+			},
+		},
+	},
+	display = {
+		order = 4,
+		type = "group",
+		inline = true,
+		name = L["Display"],
+		disabled = function()
+			return not Settings().enable
+		end,
+		args = {
+			border = Toggle(1, "border", L["Border"], L["Colors the border of the item icon."]),
+			tint = Toggle(2, "tint", L["Tint Icon and Background"], L["Tints the icon and the name background of the item."]),
 		},
 	},
 }

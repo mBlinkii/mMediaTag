@@ -771,6 +771,11 @@ L["Show Frame"] = true
 
 -- options/misc/merchant_known.lua
 L["Appearance Color"] = true
+L["Appearance Icon"] = true
+L["Colors items at vendors that you already know."] = true
+L["Display"] = true
+L["Known Items"] = true
+L["Shows a transmog icon on gear whose appearance you have not collected yet."] = true
 L["Colors items at vendors that you already know and marks appearances you have not collected."] = true
 L["Colors the border of the item icon."] = true
 L["Known Items Color"] = true
