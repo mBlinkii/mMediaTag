@@ -463,11 +463,11 @@ local function AnchorGroup(key, order, disabled)
 					return values
 				end,
 				sorting = function()
-					local order = {}
+					local sorted = {}
 					for _, name in ipairs(ANCHOR_PRESET_ORDER) do
-						if name ~= "ANCHOR:" .. key then order[#order + 1] = name end
+						if name ~= "ANCHOR:" .. key then sorted[#sorted + 1] = name end
 					end
-					return order
+					return sorted
 				end,
 				get = function()
 					return ANCHOR_PRESETS[VDB(key).anchor.frame] and VDB(key).anchor.frame or nil
