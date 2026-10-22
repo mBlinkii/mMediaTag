@@ -81,6 +81,24 @@ local DIFFICULTY_LABELS = {
 	{ "isNormalActivity", "NHC", 1 },
 }
 
+-- the lists change on every refresh, so the working tables are reused to keep the garbage low
+local activityCache = {}
+local partyNeeds = {}
+local context = {}
+local infos, ids, seen, kept, keys, ranks, positions = {}, {}, {}, {}, {}, {}, {}
+local noApplications = {}
+local sortKey, sortDescending
+
+local function GetActivity(activityID)
+	local activity = activityCache[activityID]
+	if not activity then
+		activity = GetActivityInfoTable(activityID)
+		activityCache[activityID] = activity
+	end
+
+	return activity
+end
+
 local dungeons = {}
 local metrics = METRICS
 local dungeonCells = {}
@@ -158,7 +176,8 @@ end
 
 -- roles of your whole party, or your own spec when solo
 local function PartyNeeds()
-	local needs = { TANK_REMAINING = 0, HEALER_REMAINING = 0, DAMAGER_REMAINING = 0 }
+	local needs = partyNeeds
+	needs.TANK_REMAINING, needs.HEALER_REMAINING, needs.DAMAGER_REMAINING = 0, 0, 0
 	if IsInGroup() then
 		for _, unit in ipairs(GROUP_UNITS) do
 			if UnitExists(unit) then
@@ -236,7 +255,7 @@ local function Matches(filter, id, info, ctx)
 	local excluded = ctx.dungeon and filter.off
 	if difficulty > 0 or (excluded and next(excluded)) then
 		local activityID = info.activityIDs[1]
-		local activity = activityID and GetActivityInfoTable(activityID)
+		local activity = activityID and GetActivity(activityID)
 		if not activity then return false end
 
 		if difficulty == 4 and not activity.isMythicPlusActivity then return false end
@@ -259,21 +278,10 @@ end
 -- the number of listings per dungeon, counted before our filter
 local function CountDungeons(results)
 	wipe(module.counts)
-	local cache = {}
 	for _, id in ipairs(results) do
-		local info = GetSearchResultInfo(id)
-		if not info or E:IsSecretValue(info.name) then return end
-
-		local activityID = info.activityIDs[1]
-		if activityID then
-			if cache[activityID] == nil then
-				local activity = GetActivityInfoTable(activityID)
-				cache[activityID] = activity and activity.mapID or false
-			end
-
-			local mapID = cache[activityID]
-			if mapID then module.counts[mapID] = (module.counts[mapID] or 0) + 1 end
-		end
+		local activityID = infos[id].activityIDs[1]
+		local activity = activityID and GetActivity(activityID)
+		if activity and activity.mapID then module.counts[activity.mapID] = (module.counts[activity.mapID] or 0) + 1 end
 	end
 end
 
@@ -281,84 +289,99 @@ local function IsGroupFull(info)
 	if E:IsSecretValue(info.name) then return false end
 
 	local activityID = info.activityIDs[1]
-	local activity = activityID and GetActivityInfoTable(activityID)
+	local activity = activityID and GetActivity(activityID)
 
 	return activity and activity.maxNumPlayers > 0 and info.numMembers >= activity.maxNumPlayers
 end
 
 local RANKS = { applied = 0, invited = 0, declined = 1, full = 1 }
 
+local function CompareEntries(a, b)
+	if ranks[a] ~= ranks[b] then return ranks[a] < ranks[b] end
+	if sortKey and keys[a] ~= keys[b] then
+		if sortDescending then return keys[a] > keys[b] end
+
+		return keys[a] < keys[b]
+	end
+
+	return positions[a] < positions[b]
+end
+
 local function Apply(panel)
 	if not module.isEnabled then return end
 
 	local results = panel.results
-	if not results then return end
+	if not results or results == kept then return end
 
+	local filter = module.db.categories[panel.categoryID] or noApplications
 	local dungeon = panel.categoryID == DUNGEON_CATEGORY
-	if dungeon then
-		CountDungeons(results)
-		module:UpdateDungeonCells()
-	end
-
-	local filter = module.db.categories[panel.categoryID] or {}
 	local active = IsActive(filter, dungeon)
-	local ctx = {
-		dungeon = dungeon,
-		myRole = ENUM_NEEDS[_G.GetSpecializationRoleEnum(C_SpecializationInfo.GetSpecialization())],
-		needs = filter.fit and PartyNeeds(),
-	}
+
+	wipe(infos)
+	wipe(ids)
+	wipe(seen)
+	wipe(keys)
+	wipe(ranks)
+	wipe(positions)
 
 	-- your applications go on top, even when their group dropped out of the results
-	local ids, seen = {}, {}
 	for _, id in ipairs(results) do
 		ids[#ids + 1] = id
 		seen[id] = true
 	end
 
-	for _, id in ipairs(panel.applications or {}) do
+	local total = #ids
+	for _, id in ipairs(panel.applications or noApplications) do
 		if not seen[id] and C_LFGList.HasSearchResultInfo(id) then ids[#ids + 1] = id end
 	end
 
-	local kept, keys, ranks, order = {}, {}, {}, {}
-	local ranked
-	for index, id in ipairs(ids) do
+	-- results are secret inside an instance, leave the list alone then
+	for _, id in ipairs(ids) do
 		local info = GetSearchResultInfo(id)
-		-- results are secret inside an instance, leave the list alone then
 		if not info or E:IsSecretValue(info.name) then
 			UpdateCount()
 			return
 		end
 
+		infos[id] = info
+	end
+
+	if dungeon then
+		CountDungeons(results)
+		module:UpdateDungeonCells()
+	end
+
+	context.dungeon = dungeon
+	context.myRole = ENUM_NEEDS[_G.GetSpecializationRoleEnum(C_SpecializationInfo.GetSpecialization())]
+	context.needs = filter.fit and PartyNeeds() or nil
+
+	wipe(kept)
+	local scoreSort = filter.sort == "score" or filter.sort == "score_low"
+	local ranked
+	for index, id in ipairs(ids) do
+		local info = infos[id]
 		local status = Status(id, info)
 		if status == "applied" and IsGroupFull(info) then status = "full" end
 
 		local rank = RANKS[status] or 2
 		if rank < 2 then ranked = true end
 
-		if rank == 0 or not active or Matches(filter, id, info, ctx) then
+		if rank == 0 or not active or Matches(filter, id, info, context) then
 			kept[#kept + 1] = id
 			ranks[id] = rank
-			order[id] = index
-			keys[id] = (filter.sort == "score" or filter.sort == "score_low") and (info.leaderOverallDungeonScore or 0) or info.age or 0
+			positions[id] = index
+			keys[id] = scoreSort and (info.leaderOverallDungeonScore or 0) or info.age or 0
 		end
 	end
 
-	if not (active or ranked or filter.sort or #ids ~= #results) then
+	if not (active or ranked or filter.sort or #ids ~= total) then
 		UpdateCount()
 		return
 	end
 
-	local descending = filter.sort == "score" or filter.sort == "old"
-	sort(kept, function(a, b)
-		if ranks[a] ~= ranks[b] then return ranks[a] < ranks[b] end
-		if filter.sort and keys[a] ~= keys[b] then
-			if descending then return keys[a] > keys[b] end
-
-			return keys[a] < keys[b]
-		end
-
-		return order[a] < order[b]
-	end)
+	sortKey = filter.sort
+	sortDescending = filter.sort == "score" or filter.sort == "old"
+	sort(kept, CompareEntries)
 
 	if active then
 		UpdateCount(#kept, #ids)
@@ -367,7 +390,7 @@ local function Apply(panel)
 	end
 
 	panel.results = kept
-	panel.applications = {}
+	panel.applications = noApplications
 	panel.totalResults = #kept
 	_G.LFGListSearchPanel_UpdateResults(panel)
 end
@@ -400,7 +423,7 @@ local function UpdateDifficulty(button, info)
 	if not (info and module.db.short_difficulty) then return end
 
 	local activityID = info.activityIDs[1]
-	local activity = activityID and GetActivityInfoTable(activityID)
+	local activity = activityID and GetActivity(activityID)
 	local text = button.ActivityName:GetText()
 	if not activity or not text or E:IsSecretValue(text) then return end
 
