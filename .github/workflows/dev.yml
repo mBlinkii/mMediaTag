@@ -172,3 +172,53 @@ jobs:
           files: mMT-dev.zip
           prerelease: true
           make_latest: false
+
+      # Spielversion(en) wie in release.yml aus der TOC lesen. CurseForge lehnt
+      # unbekannte Versionsstrings ab, die werden mit Warnung verworfen.
+      - name: Interface-Version aus TOC lesen
+        id: game
+        env:
+          CF_API_TOKEN: ${{ secrets.CF_API_TOKEN }}
+        run: |
+          set -e
+          KNOWN=$(curl -fsS --retry 3 -H "X-Api-Token: $CF_API_TOKEN" https://wow.curseforge.com/api/game/versions | jq -r '.[].name' || true)
+          [ -n "$KNOWN" ] || echo "::warning::CurseForge-Versionsliste nicht abrufbar, Versionen werden ungeprueft hochgeladen"
+          IFACES=$(grep -oP '^## Interface:\s*\K.+' "Addon/ElvUI_mMediaTag/ElvUI_mMediaTag.toc" | tr -d '\r ' )
+          VERSIONS=""
+          IFS=',' read -ra ARR <<< "$IFACES"
+          for I in "${ARR[@]}"; do
+            V="$((10#$I / 10000)).$(((10#$I % 10000) / 100)).$((10#$I % 100))"
+            if [ -n "$KNOWN" ] && ! grep -qxF "$V" <<< "$KNOWN"; then
+              echo "::warning::$V ist auf CurseForge unbekannt und wird nicht gesetzt"
+              continue
+            fi
+            VERSIONS="${VERSIONS:+$VERSIONS,}$V"
+          done
+          [ -n "$VERSIONS" ] || { echo "::error::Keine gueltige Spielversion gefunden"; exit 1; }
+          echo "versions=$VERSIONS" >> "$GITHUB_OUTPUT"
+          echo "Spielversionen: $VERSIONS"
+
+          {
+            echo "notes<<NOTES_EOF"
+            cat DEV_NOTES.md
+            echo "NOTES_EOF"
+          } >> "$GITHUB_OUTPUT"
+
+          # Eigener Dateiname pro Build, CurseForge soll die Uploads auseinanderhalten.
+          cp mMT-dev.zip "mMT-${{ steps.meta.outputs.version }}-dev-${{ steps.meta.outputs.sha }}.zip"
+
+      # Jeder Dev-Build geht als Alpha zu CurseForge. Ein Fehlschlag dort soll das
+      # GitHub-Prerelease nicht rot faerben, es steht dann schon.
+      - name: Als Alpha auf CurseForge hochladen
+        continue-on-error: true
+        uses: itsmeow/curseforge-upload@v3
+        with:
+          token: ${{ secrets.CF_API_TOKEN }}
+          project_id: ${{ secrets.CF_PROJECT_ID }}
+          game_endpoint: wow
+          file_path: mMT-${{ steps.meta.outputs.version }}-dev-${{ steps.meta.outputs.sha }}.zip
+          display_name: mMT v${{ steps.meta.outputs.version }}-dev-${{ steps.meta.outputs.sha }}
+          game_versions: ${{ steps.game.outputs.versions }}
+          release_type: alpha
+          changelog: ${{ steps.game.outputs.notes }}
+          changelog_type: markdown
