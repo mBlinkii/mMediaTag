@@ -23,4 +23,5 @@
     <Script file="addon_manager.lua"/>
     <Script file="merchant_known.lua"/>
     <Script file="merchant_grid.lua"/>
+    <Script file="merchant_buy_max.lua"/>
 </Ui>

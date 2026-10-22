@@ -969,6 +969,10 @@ P.merchant_grid = {
 	enable = false,
 }
 
+P.merchant_buy_max = {
+	enable = false,
+}
+
 P.merchant_known = {
 	enable = false,
 	known = true,

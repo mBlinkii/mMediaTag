@@ -17,6 +17,7 @@
 - NEW - [Premade-Filter]: Groups can be sorted by leader score or age, your applications are listed on top and colored for applied, declined and full, and the leader score and a short difficulty can be shown in the list.
 - NEW - [Merchant-Known]: New module that colors vendor items you already know, like learned recipes, and marks gear with an appearance you have not collected.
 - NEW - [Merchant-Grid]: New module that shows 20 vendor items per page in four columns instead of ten in two.
+- NEW - [Merchant-Buy-Max]: New module that adds a Max button to the quantity window of stackable vendor items and buys as many as you can afford.
 - NEW - [NP-CombatFade]: New module that fades, shrinks or hides enemy nameplates of units that are not in combat while you are fighting, optionally only in instances.
 - NEW - [System]: mMT now runs in WoW Classic Era, TBC Anniversary, Mists of Pandaria Classic and WoW Forever, features a game version does not have are left out and hidden in the settings.
 ### 📌 INFO

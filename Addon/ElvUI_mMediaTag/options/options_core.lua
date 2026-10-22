@@ -413,6 +413,7 @@ mMT.options = {
 					{ db = "merchant_known", desc = L["Colors items at vendors that you already know and marks appearances you have not collected."], new = 418 }
 				),
 				merchant_grid = Feature(4, L["Merchant Grid"], nil, { db = "merchant_grid", desc = L["Shows 20 vendor items per page in four columns instead of ten in two."], new = 418 }),
+				merchant_buy_max = Feature(5, L["Merchant Buy Max"], nil, { db = "merchant_buy_max", desc = L["Adds a Max button to the quantity window of stackable vendor items that buys as many as you can afford."], new = 418 }),
 			}),
 		}),
 		skins = Category(16, L["Skins"], {

@@ -789,6 +789,11 @@ L["Uncollected Appearances"] = true
 L["Merchant Grid"] = true
 L["Shows 20 vendor items per page in four columns instead of ten in two."] = true
 
+-- options/misc/merchant_buy_max.lua
+L["Adds a Max button to the quantity window of stackable vendor items that buys as many as you can afford."] = true
+L["Max"] = true
+L["Merchant Buy Max"] = true
+
 -- options/misc/auto_delete.lua
 L["Fills in the confirmation word automatically when you delete an item."] = true
 

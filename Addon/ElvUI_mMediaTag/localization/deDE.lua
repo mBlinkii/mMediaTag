@@ -789,6 +789,11 @@ L["Uncollected Appearances"] = "Ungesammelte Vorlagen"
 L["Merchant Grid"] = "Händler-Raster"
 L["Shows 20 vendor items per page in four columns instead of ten in two."] = "Zeigt 20 Händlergegenstände pro Seite in vier Spalten statt zehn in zwei."
 
+-- options/misc/merchant_buy_max.lua
+L["Adds a Max button to the quantity window of stackable vendor items that buys as many as you can afford."] = "Fügt dem Mengenfenster stapelbarer Händlerwaren einen Max-Knopf hinzu, der so viele kauft, wie du dir leisten kannst."
+L["Max"] = "Max"
+L["Merchant Buy Max"] = "Händler Max-Kauf"
+
 -- options/misc/auto_delete.lua
 L["Fills in the confirmation word automatically when you delete an item."] = "Trägt beim Löschen eines Gegenstands das Bestätigungswort automatisch ein."
 
