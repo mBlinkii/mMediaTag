@@ -391,6 +391,16 @@ function mMT:GetPlayerDifficulty()
 	return info
 end
 
+function mMT:GetShortDifficulty(difficultyID)
+	if not shortDifficulty[1] then UpdateColors() end
+
+	return shortDifficulty[difficultyID]
+end
+
+function mMT:GetDungeonShortName(instanceID, name)
+	return shortNames[instanceID] or E:ShortenString(name, 6)
+end
+
 function mMT:GetDungeonInfo()
 	if not shortDifficulty[1] then UpdateColors() end
 

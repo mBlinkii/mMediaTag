@@ -104,7 +104,15 @@ function module:AnchorTarget(id)
 end
 
 function module:AnchorToTarget(container, target, adb)
-	if container.mmtAnchorTarget == target and container.mmtAnchorPoint == adb.point and container.mmtAnchorRelative == adb.relative and container.mmtAnchorX == adb.x and container.mmtAnchorY == adb.y then return true end
+	if
+		container.mmtAnchorTarget == target
+		and container.mmtAnchorPoint == adb.point
+		and container.mmtAnchorRelative == adb.relative
+		and container.mmtAnchorX == adb.x
+		and container.mmtAnchorY == adb.y
+	then
+		return true
+	end
 
 	container:ClearAllPoints()
 	container.mmtAnchorGrowth = nil

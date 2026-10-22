@@ -33,7 +33,7 @@ local PAGE_ICONS = {
 	cooldownmanager = { general = "settings", viewers = "collection", custom = "clock" },
 	datatexts = { general = "settings", info = "info", menus = "menu" },
 	dock = { general = "settings", buttons = "buttons", custom_docks = "add" },
-	group = { lfg_invite_info = "search", keystones = "keystone", group_tools = "fix" },
+	group = { lfg_invite_info = "search", premade_filter = "filter", keystones = "keystone", group_tools = "fix" },
 	quests = { objective_tracker = "objectives", prey_hunt = "prey" },
 	interface = { panels = "panels", tooltip = "tooltip" },
 	comfort = { automation = "automation", mail_helper = "mail", addon_manager = "addons", tools = "fix" },
@@ -345,6 +345,12 @@ mMT.options = {
 				Unsupported("lfglist"),
 				{ db = "lfg_invite_info", desc = L["Shows a popup with the location, difficulty and name of the group finder group you joined."] }
 			),
+			premade_filter = Feature(
+				4,
+				L["Premade Filter"],
+				Unsupported("lfglist"),
+				{ db = "premade_filter", desc = L["Adds a filter panel to the group finder search to filter and sort groups by roles, party fit, dungeons and more."], new = 418 }
+			),
 			keystones = Page(2, L["Keystones"], "inline", {
 				group_keystones = Feature(1, L["Group Keystones"], Unsupported("mythicplus"), { db = "group_keystones", desc = L["Shows the keystones of your group next to the group finder listing."] }),
 				keystone_teleports = Feature(
@@ -406,12 +412,7 @@ mMT.options = {
 					nil,
 					{ db = "merchant_known", desc = L["Colors items at vendors that you already know and marks appearances you have not collected."], new = 418 }
 				),
-				merchant_grid = Feature(
-					4,
-					L["Merchant Grid"],
-					nil,
-					{ db = "merchant_grid", desc = L["Shows 20 vendor items per page in four columns instead of ten in two."], new = 418 }
-				),
+				merchant_grid = Feature(4, L["Merchant Grid"], nil, { db = "merchant_grid", desc = L["Shows 20 vendor items per page in four columns instead of ten in two."], new = 418 }),
 			}),
 		}),
 		skins = Category(16, L["Skins"], {

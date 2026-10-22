@@ -107,6 +107,19 @@ P.lfg_invite_info = {
 	},
 }
 
+P.premade_filter = {
+	enable = false,
+	leader_score = false,
+	short_difficulty = false,
+	columns = 4,
+	colors = {
+		applied = "FFF2BF33",
+		declined = "FFE63333",
+		full = "FFFF8000",
+	},
+	categories = {},
+}
+
 P.group_keystones = {
 	enable = false,
 }

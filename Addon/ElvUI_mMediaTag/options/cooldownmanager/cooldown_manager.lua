@@ -419,7 +419,21 @@ local ANCHOR_PRESETS = {
 	ElvUF_Player_CastBar = L["Player Cast Bar"],
 	ElvUF_Target_CastBar = L["Target Cast Bar"],
 }
-local ANCHOR_PRESET_ORDER = { "ANCHOR:essential", "ANCHOR:utility", "ANCHOR:buff_icon", "ANCHOR:buff_bar", "ANCHOR:custom", "ElvUIParent", "ElvUF_Player", "ElvUF_Target", "ElvUF_Player_PowerBar", "ElvUF_Player_ClassBar", "ElvUF_Player_AdditionalPowerBar", "ElvUF_Player_CastBar", "ElvUF_Target_CastBar" }
+local ANCHOR_PRESET_ORDER = {
+	"ANCHOR:essential",
+	"ANCHOR:utility",
+	"ANCHOR:buff_icon",
+	"ANCHOR:buff_bar",
+	"ANCHOR:custom",
+	"ElvUIParent",
+	"ElvUF_Player",
+	"ElvUF_Target",
+	"ElvUF_Player_PowerBar",
+	"ElvUF_Player_ClassBar",
+	"ElvUF_Player_AdditionalPowerBar",
+	"ElvUF_Player_CastBar",
+	"ElvUF_Target_CastBar",
+}
 
 local function AnchorGroup(key, order, disabled)
 	local function Field(name, fieldOrder, option)

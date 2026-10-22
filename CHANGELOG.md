@@ -13,6 +13,8 @@
 - UPDATE - [Keystone-Teleports]: The flash of the group dungeon now also adds a glowing border.
 - UPDATE - [NP-Highlighters]: The target, focus and quest highlights are now turned off by default like every other module.
 ### ✨ NEW
+- NEW - [Premade-Filter]: New module that adds a filter panel to the group finder search, with filters for free roles, matching groups, Bloodlust and the Blizzard group filters, region buttons and the dungeons of the season with your best runs and a bar for the number of groups.
+- NEW - [Premade-Filter]: Groups can be sorted by leader score or age, your applications are listed on top and colored for applied, declined and full, and the leader score and a short difficulty can be shown in the list.
 - NEW - [Merchant-Known]: New module that colors vendor items you already know, like learned recipes, and marks gear with an appearance you have not collected.
 - NEW - [Merchant-Grid]: New module that shows 20 vendor items per page in four columns instead of ten in two.
 - NEW - [NP-CombatFade]: New module that fades, shrinks or hides enemy nameplates of units that are not in combat while you are fighting, optionally only in instances.
