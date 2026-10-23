@@ -5,7 +5,6 @@ local S = E:GetModule("Skins")
 local _G = _G
 local format, ipairs, pairs, sort, strlower, tconcat, tinsert, tremove, wipe = format, ipairs, pairs, sort, strlower, table.concat, tinsert, tremove, wipe
 local hooksecurefunc = hooksecurefunc
-local GetMoney = GetMoney
 
 local TAKE_DELAY = 0.15
 local MAX_TAKES = 200
@@ -17,6 +16,7 @@ local MAX_INBOX_SIZE = 100
 
 local session
 local snapshot, current = {}, {}
+local snapshotMoney = 0
 local pendingRecipient
 local classTokens
 
@@ -37,24 +37,33 @@ end
 
 local function TakeSnapshot(target)
 	wipe(target)
+	local money = 0
 
 	for index = 1, _G.GetInboxNumItems() do
-		local _, _, _, _, _, cod, _, itemCount, _, _, _, _, isGM = _G.GetInboxHeaderInfo(index)
-		if itemCount and itemCount > 0 and not IsBlocked(cod, isGM) then
-			for attachment = 1, _G.ATTACHMENTS_MAX_RECEIVE do
-				local name, _, _, count = _G.GetInboxItem(index, attachment)
-				if name then
-					local link = _G.GetInboxItemLink(index, attachment) or name
-					target[link] = (target[link] or 0) + (count or 1)
+		local _, _, _, _, mailMoney, cod, _, itemCount, _, _, _, _, isGM = _G.GetInboxHeaderInfo(index)
+		if not IsBlocked(cod, isGM) then
+			money = money + (mailMoney or 0)
+
+			if itemCount and itemCount > 0 then
+				for attachment = 1, _G.ATTACHMENTS_MAX_RECEIVE do
+					local name, _, _, count = _G.GetInboxItem(index, attachment)
+					if name then
+						local link = _G.GetInboxItemLink(index, attachment) or name
+						target[link] = (target[link] or 0) + (count or 1)
+					end
 				end
 			end
 		end
 	end
+
+	return money
 end
 
--- takes are async, so diff the inbox on every update instead of trusting the take calls
+-- takes are async and GetMoney lags behind, so diff the inbox on every update instead of trusting the take calls
 local function TrackTakenItems()
-	TakeSnapshot(current)
+	local money = TakeSnapshot(current)
+	if snapshotMoney > money then session.money = session.money + snapshotMoney - money end
+	snapshotMoney = money
 
 	for link, count in pairs(snapshot) do
 		local diff = count - (current[link] or 0)
@@ -110,8 +119,7 @@ end
 local function PrintSummary(finished)
 	local parts = {}
 
-	local money = GetMoney() - finished.money
-	if money > 0 then parts[#parts + 1] = E:FormatMoney(money, "BLIZZARD", false) end
+	if finished.money > 0 then parts[#parts + 1] = E:FormatMoney(finished.money, "BLIZZARD", false) end
 
 	for link, count in pairs(finished.items) do
 		parts[#parts + 1] = count > 1 and format("%sx%d", link, count) or link
@@ -135,8 +143,8 @@ local function FinishSession()
 end
 
 local function StartSession(mode)
-	session = { mode = mode, money = GetMoney(), items = {}, takes = 0 }
-	TakeSnapshot(snapshot)
+	session = { mode = mode, money = 0, items = {}, takes = 0 }
+	snapshotMoney = TakeSnapshot(snapshot)
 	UpdateGoldButton()
 end
 
