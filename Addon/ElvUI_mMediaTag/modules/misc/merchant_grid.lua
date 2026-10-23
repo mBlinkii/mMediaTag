@@ -37,6 +37,21 @@ local function SetBuyBackAnchor(item)
 	buyback:SetPoint(point, item, relativePoint, x, y)
 end
 
+-- Blizzard anchors both page buttons to the left frame edge and ElvUI only moves the next one, so center both around the page text
+local function SetPageButtons(enable)
+	local prevButton, nextButton = _G.MerchantPrevPageButton, _G.MerchantNextPageButton
+	prevButton:ClearAllPoints()
+	nextButton:ClearAllPoints()
+
+	if enable then
+		prevButton:SetPoint("RIGHT", _G.MerchantPageText, "LEFT", -100, 4)
+		nextButton:SetPoint("LEFT", _G.MerchantPageText, "RIGHT", 100, 4)
+	else
+		prevButton:SetPoint(unpack(module.prevPage))
+		nextButton:SetPoint(unpack(module.nextPage))
+	end
+end
+
 local function ApplyMerchant()
 	if not module.isEnabled then return end
 
@@ -77,6 +92,8 @@ function module:Initialize()
 		module.width = _G.MerchantFrame:GetWidth()
 		module.borderWidth = _G.MerchantFrameBottomLeftBorder and _G.MerchantFrameBottomLeftBorder:GetWidth() or module.width
 		module.buyback = { _G.MerchantBuyBackItem:GetPoint() }
+		module.prevPage = { _G.MerchantPrevPageButton:GetPoint() }
+		module.nextPage = { _G.MerchantNextPageButton:GetPoint() }
 	end
 
 	if enable and not module.hooked then
@@ -88,6 +105,7 @@ function module:Initialize()
 
 	module.isEnabled = enable
 	_G.MERCHANT_ITEMS_PER_PAGE = enable and COLUMNS * ROWS or DEFAULT_PER_PAGE
+	SetPageButtons(enable)
 
 	if not enable then
 		-- back to the two columns of the default layout
