@@ -937,7 +937,6 @@ P.summon_icon = {
 	rejected = "summon_01",
 }
 
-P.details = {
 P.dispel_icon = {
 	enable = false,
 	units = {},
@@ -970,6 +969,7 @@ for unit, size in pairs({ player = 20, target = 20, focus = 20, targettarget = 2
 	}
 end
 
+P.details = {
 	mode = "DISABLE",
 	windows = 2,
 	toggle = true,
