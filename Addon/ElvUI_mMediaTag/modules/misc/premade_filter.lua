@@ -32,6 +32,7 @@ local DUNGEON_CATEGORY = 2
 local WIDTH, INNER, BUTTON, COLUMNS = 560, 536, 131, 4
 local ICON = 36
 local CELL_HEIGHT, CELL_GAP = 46, 6
+local TEXT_GAP, COUNT_GAP = 4, 2
 local PADDING = 12
 local HEADER = 44
 local GAP = 4
@@ -59,7 +60,7 @@ local TOGGLES = {
 	{ key = "healer", label = _G.HEALER, tip = L["Only shows groups with a free healer slot."] },
 }
 
-local METRICS = { row = 32, section = 26, check = 24, tail = 30, cell = 46, gap = 6, textGap = 4, countGap = 2 }
+local METRICS = { row = 32, section = 26, check = 24, tail = 30 }
 
 local BLIZZARD_TOGGLES = {
 	{ key = "needsMyClass", label = L["Class Available"], tip = format(_G.LFG_LIST_CLASS_AVAILABLE, (UnitClass("player"))) },
@@ -87,6 +88,7 @@ local partyNeeds = {}
 local context = {}
 local infos, ids, seen, kept, keys, ranks, positions = {}, {}, {}, {}, {}, {}, {}
 local noApplications = {}
+local groupCounts = {}
 local sortKey, sortDescending
 
 local function GetActivity(activityID)
@@ -100,19 +102,16 @@ local function GetActivity(activityID)
 end
 
 local dungeons = {}
-local metrics = METRICS
 local dungeonCells = {}
 local languageButtons = {}
 
-local function GetFilter(categoryID)
+local function CurrentFilter()
+	local categoryID = _G.LFGListFrame.SearchPanel.categoryID
+	if not categoryID then return {} end
+
 	local categories = module.db.categories
 	categories[categoryID] = categories[categoryID] or {}
 	return categories[categoryID]
-end
-
-local function CurrentFilter()
-	local categoryID = _G.LFGListFrame.SearchPanel.categoryID
-	return categoryID and GetFilter(categoryID) or {}
 end
 
 local function IsDungeonCategory()
@@ -123,12 +122,13 @@ local function HasBlizzardFilter()
 	return _G.GameRulesUtil and _G.GameRulesUtil.IsPlayerAtEffectiveMaxLevel() and IsDungeonCategory()
 end
 
-local function PlaystyleNone(enabled)
+local function PlaystyleCount(enabled)
+	local count = 0
 	for _, key in ipairs(PLAYSTYLES) do
-		if enabled[key] then return false end
+		if enabled[key] then count = count + 1 end
 	end
 
-	return true
+	return count
 end
 
 local function SaveSearch()
@@ -151,27 +151,28 @@ local function ActiveCount()
 	if filter.noLeaver then count = count + 1 end
 	if filter.notDeclined then count = count + 1 end
 	if (filter.difficulty or 0) > 0 then count = count + 1 end
-	if IsDungeonCategory() and next(filter.off or {}) then count = count + 1 end
+	if next(filter.off or {}) then count = count + 1 end
 
 	if HasBlizzardFilter() then
 		local enabled = C_LFGList.GetAdvancedFilter()
 		if enabled.needsMyClass then count = count + 1 end
 		if enabled.hasTank then count = count + 1 end
 		if enabled.hasHealer then count = count + 1 end
-		if not PlaystyleNone(enabled) and not (enabled.generalPlaystyle1 and enabled.generalPlaystyle2 and enabled.generalPlaystyle3 and enabled.generalPlaystyle4) then count = count + 1 end
+		local styles = PlaystyleCount(enabled)
+		if styles > 0 and styles < #PLAYSTYLES then count = count + 1 end
 	end
 
 	return count
 end
 
-local function IsActive(filter, dungeon)
+local function IsActive(filter)
 	for _, toggle in ipairs(TOGGLES) do
 		if filter[toggle.key] then return true end
 	end
 
 	if filter.blocked or filter.notDeclined or filter.noLeaver or (filter.difficulty or 0) > 0 then return true end
 
-	return dungeon and next(filter.off or {}) ~= nil
+	return next(filter.off or {}) ~= nil
 end
 
 -- roles of your whole party, or your own spec when solo
@@ -207,14 +208,10 @@ local function Status(id, info)
 	if appStatus ~= "none" or pendingStatus then return "applied" end
 end
 
--- dungeons count from the members present like the Blizzard filter does, other groups use the remaining counts
-local function Remaining(counts, key, dungeon)
-	if dungeon then
-		local role, slots = unpack(SLOTS[key])
-		return max(0, slots - (counts[role] or 0))
-	end
-
-	return counts[key] or 0
+-- count from the members present like the Blizzard filter does
+local function Remaining(counts, key)
+	local role, slots = unpack(SLOTS[key])
+	return max(0, slots - (counts[role] or 0))
 end
 
 local function HasLust(counts)
@@ -229,14 +226,14 @@ local function Matches(filter, id, info, ctx)
 	if filter.myRole or filter.tank or filter.healer or filter.fit or filter.lust then
 		if not counts then return false end
 
-		if filter.myRole and ctx.myRole and Remaining(counts, ctx.myRole, ctx.dungeon) == 0 then return false end
-		if filter.tank and Remaining(counts, "TANK_REMAINING", ctx.dungeon) == 0 then return false end
-		if filter.healer and Remaining(counts, "HEALER_REMAINING", ctx.dungeon) == 0 then return false end
+		if filter.myRole and ctx.myRole and Remaining(counts, ctx.myRole) == 0 then return false end
+		if filter.tank and Remaining(counts, "TANK_REMAINING") == 0 then return false end
+		if filter.healer and Remaining(counts, "HEALER_REMAINING") == 0 then return false end
 		if filter.lust and not HasLust(counts) then return false end
 
 		if filter.fit then
 			for key, amount in pairs(ctx.needs) do
-				if amount > Remaining(counts, key, ctx.dungeon) then return false end
+				if amount > Remaining(counts, key) then return false end
 			end
 		end
 	end
@@ -252,7 +249,7 @@ local function Matches(filter, id, info, ctx)
 	if filter.blocked and info.leaderName and C_FriendList.IsIgnored(info.leaderName) then return false end
 
 	local difficulty = filter.difficulty or 0
-	local excluded = ctx.dungeon and filter.off
+	local excluded = filter.off
 	if difficulty > 0 or (excluded and next(excluded)) then
 		local activityID = info.activityIDs[1]
 		local activity = activityID and GetActivity(activityID)
@@ -272,16 +269,16 @@ local function UpdateCount(shown, total)
 	if not module.panel then return end
 
 	module.panel.count:SetText(shown and format("%d / %d", shown, total) or "")
-	module.panel.footer:SetText(format(L["%d filters active"], ActiveCount()))
+	module.panel.footer:SetText(module.db.paused and L["Filter rules disabled"] or format(L["%d filters active"], ActiveCount()))
 end
 
 -- the number of listings per dungeon, counted before our filter
 local function CountDungeons(results)
-	wipe(module.counts)
+	wipe(groupCounts)
 	for _, id in ipairs(results) do
 		local activityID = infos[id].activityIDs[1]
 		local activity = activityID and GetActivity(activityID)
-		if activity and activity.mapID then module.counts[activity.mapID] = (module.counts[activity.mapID] or 0) + 1 end
+		if activity and activity.mapID then groupCounts[activity.mapID] = (groupCounts[activity.mapID] or 0) + 1 end
 	end
 end
 
@@ -296,6 +293,32 @@ end
 
 local RANKS = { applied = 0, invited = 0, declined = 1, full = 1 }
 
+-- the mmt theme gives every panel section its own color of the addon name
+local MMT_SECTIONS = { header = "blue", region = "purple", dungeon = "red", bar = "yellow", footer = "yellow" }
+
+-- the dungeon bars get their own color in every theme
+local THEMES = {
+	class = function(section)
+		if section == "bar" then return 0.8, 0.8, 0.8 end
+		return MEDIA.myclass.r, MEDIA.myclass.g, MEDIA.myclass.b
+	end,
+	neutral = function(section)
+		if section == "bar" then return 0.45, 0.45, 0.45 end
+		return 0.8, 0.8, 0.8
+	end,
+	mmt = function(section)
+		return MEDIA.color[MMT_SECTIONS[section] or "blue"]:GetRGB()
+	end,
+	custom = function(section)
+		local r, g, b = mMT:HexToRGB(module.db.colors[section == "bar" and "bar" or "theme"])
+		return r, g, b
+	end,
+}
+
+local function Accent(section)
+	return (THEMES[module.db.theme] or THEMES.class)(section)
+end
+
 local function CompareEntries(a, b)
 	if ranks[a] ~= ranks[b] then return ranks[a] < ranks[b] end
 	if sortKey and keys[a] ~= keys[b] then
@@ -308,14 +331,14 @@ local function CompareEntries(a, b)
 end
 
 local function Apply(panel)
-	if not module.isEnabled then return end
+	if not (module.isEnabled and panel.categoryID == DUNGEON_CATEGORY) then return end
 
 	local results = panel.results
 	if not results or results == kept then return end
 
-	local filter = module.db.categories[panel.categoryID] or noApplications
-	local dungeon = panel.categoryID == DUNGEON_CATEGORY
-	local active = IsActive(filter, dungeon)
+	-- paused keeps the dungeon counts and your applications on top, but drops every rule
+	local filter = not module.db.paused and module.db.categories[panel.categoryID] or noApplications
+	local active = IsActive(filter)
 
 	wipe(infos)
 	wipe(ids)
@@ -346,12 +369,9 @@ local function Apply(panel)
 		infos[id] = info
 	end
 
-	if dungeon then
-		CountDungeons(results)
-		module:UpdateDungeonCells()
-	end
+	CountDungeons(results)
+	module:UpdateDungeonCells()
 
-	context.dungeon = dungeon
 	context.myRole = ENUM_NEEDS[_G.GetSpecializationRoleEnum(C_SpecializationInfo.GetSpecialization())]
 	context.needs = filter.fit and PartyNeeds() or nil
 
@@ -383,11 +403,7 @@ local function Apply(panel)
 	sortDescending = filter.sort == "score" or filter.sort == "old"
 	sort(kept, CompareEntries)
 
-	if active then
-		UpdateCount(#kept, #ids)
-	else
-		UpdateCount()
-	end
+	UpdateCount(active and #kept, #ids)
 
 	panel.results = kept
 	panel.applications = noApplications
@@ -441,11 +457,12 @@ local function UpdateDifficulty(button, info)
 end
 
 local function ColorEntry(button)
-	if not module.isEnabled and not button.mMTStatus and not button.mMTScore then return end
+	local enabled = module.isEnabled and IsDungeonCategory()
+	if not enabled and not button.mMTStatus and not button.mMTScore then return end
 
 	local tint = button.mMTStatus
 	local id = button.resultID
-	local info = module.isEnabled and id and C_LFGList.HasSearchResultInfo(id) and GetSearchResultInfo(id)
+	local info = enabled and id and C_LFGList.HasSearchResultInfo(id) and GetSearchResultInfo(id)
 	local status = info and Status(id, info)
 	-- a pending application to a full group, or one Blizzard marks as no longer matching
 	if status == "applied" and (button.isNowFilteredOut or IsGroupFull(info)) then status = "full" end
@@ -492,13 +509,21 @@ local function CreateLabel(parent, text, template)
 	return label
 end
 
-local function CreateSection(parent, text)
-	local label = CreateLabel(parent, mMT:TC(text, "line_a"), "GameFontNormal")
+local function ThemeLabel(parent, label, text, section)
+	label.raw, label.section = text, section
+	parent.themeLabels[#parent.themeLabels + 1] = label
+end
+
+local function CreateSection(parent, text, section)
+	local label = CreateLabel(parent, text, "GameFontNormal")
+	ThemeLabel(parent, label, text, section)
+
 	local line = parent:CreateTexture(nil, "ARTWORK")
 	line:SetTexture(E.media.blankTex)
 	line:SetHeight(1)
-	line:SetVertexColor(MEDIA.myclass.r, MEDIA.myclass.g, MEDIA.myclass.b, 0.6)
+	line.alpha, line.section = 0.6, section
 	label.line = line
+	parent.themeLines[#parent.themeLines + 1] = line
 
 	return label
 end
@@ -522,7 +547,7 @@ local function SetButtonState(button, on)
 		button:SetBackdropBorderColor(unpack(E.media.bordercolor))
 		button.text:SetTextColor(1, 1, 1)
 	elseif on then
-		button:SetBackdropBorderColor(MEDIA.myclass.r, MEDIA.myclass.g, MEDIA.myclass.b)
+		button:SetBackdropBorderColor(Accent(button.section))
 		button.text:SetTextColor(1, 1, 1)
 	else
 		button:SetBackdropBorderColor(unpack(E.media.bordercolor))
@@ -530,9 +555,10 @@ local function SetButtonState(button, on)
 	end
 end
 
-local function CreateButton(parent, text, width, onClick, toggle)
+local function CreateButton(parent, text, width, onClick, toggle, section)
 	local button = CreateFrame("Button", nil, parent, "BackdropTemplate")
 	button.toggle = toggle
+	button.section = section
 	button:SetTemplate("Default")
 	button:Size(width, 22)
 
@@ -542,7 +568,7 @@ local function CreateButton(parent, text, width, onClick, toggle)
 
 	button:SetScript("OnClick", onClick)
 	button:SetScript("OnEnter", function(self)
-		self:SetBackdropBorderColor(MEDIA.myclass.r, MEDIA.myclass.g, MEDIA.myclass.b)
+		self:SetBackdropBorderColor(Accent(self.section))
 	end)
 	button:SetScript("OnLeave", function(self)
 		SetButtonState(self, self.active)
@@ -564,20 +590,28 @@ local function BuildDungeons()
 	end)
 end
 
-local function StoreDungeons(states)
-	local off = {}
-	for _, dungeon in ipairs(dungeons) do
-		if not states[dungeon.instanceID] then off[dungeon.instanceID] = true end
+-- isEnabled(enabled, isLowest, instanceID) returns the new state of each dungeon
+local function SelectDungeons(isEnabled)
+	local filter = CurrentFilter()
+	local current = filter.off or {}
+	local lowest
+	for index, cell in ipairs(dungeonCells) do
+		if dungeons[index] then lowest = math.min(lowest or cell.bestLevel, cell.bestLevel) end
 	end
 
-	CurrentFilter().off = next(off) and off or nil
+	local off = {}
+	for index, dungeon in ipairs(dungeons) do
+		local id = dungeon.instanceID
+		if not isEnabled(not current[id], dungeonCells[index].bestLevel == lowest, id) then off[id] = true end
+	end
+
+	filter.off = next(off) and off or nil
 	module:UpdateDungeonCells()
 	Refresh()
 end
 
 local function CreateDungeonCell(panel, index)
 	local cell = CreateFrame("Button", nil, panel, "BackdropTemplate")
-	cell:Size((INNER - CELL_GAP * (COLUMNS - 1)) / COLUMNS, CELL_HEIGHT)
 	cell:SetTemplate("Default")
 
 	cell.icon = cell:CreateTexture(nil, "ARTWORK")
@@ -592,7 +626,7 @@ local function CreateDungeonCell(panel, index)
 	cell.name:SetWordWrap(false)
 
 	cell.level = cell:CreateFontString(nil, "OVERLAY", "GameFontHighlightSmall")
-	cell.level:SetPoint("TOPLEFT", cell.name, "BOTTOMLEFT", 0, -4)
+	cell.level:SetPoint("TOPLEFT", cell.name, "BOTTOMLEFT", 0, -TEXT_GAP)
 	cell.level:SetFont(cell.level:GetFont(), 12, "OUTLINE")
 
 	cell.score = cell:CreateFontString(nil, "OVERLAY", "GameFontHighlightSmall")
@@ -602,6 +636,8 @@ local function CreateDungeonCell(panel, index)
 	cell.track:SetTexture(E.media.blankTex)
 	cell.track:SetVertexColor(1, 1, 1, 0.1)
 	cell.track:SetHeight(6)
+	cell.track:SetPoint("TOPLEFT", cell.level, "BOTTOMLEFT", 0, -COUNT_GAP - 3)
+	cell.track:SetPoint("RIGHT", cell, "RIGHT", -8, 0)
 
 	cell.bar = cell:CreateTexture(nil, "OVERLAY")
 	cell.bar:SetTexture(E.media.blankTex)
@@ -609,14 +645,10 @@ local function CreateDungeonCell(panel, index)
 	cell.bar:SetPoint("TOPLEFT", cell.track, "TOPLEFT")
 
 	cell:SetScript("OnClick", function(self)
-		local off = CurrentFilter().off or {}
-		local states = {}
-		for _, dungeon in ipairs(dungeons) do
-			states[dungeon.instanceID] = not off[dungeon.instanceID]
-		end
-
-		states[self.instanceID] = not states[self.instanceID]
-		StoreDungeons(states)
+		SelectDungeons(function(enabled, _, id)
+			if id == self.instanceID then return not enabled end
+			return enabled
+		end)
 	end)
 
 	cell:SetScript("OnEnter", function(self)
@@ -634,7 +666,7 @@ end
 
 function module:UpdateDungeonCells()
 	local panel = module.panel
-	if not (panel and panel.dungeonLabel:IsShown()) then return end
+	if not panel then return end
 
 	local off = CurrentFilter().off or {}
 	local summary = GetPlayerMythicPlusRatingSummary("player")
@@ -648,17 +680,18 @@ function module:UpdateDungeonCells()
 	panel.rating:SetText(format("%s %s", L["Score"], overallColor:WrapTextInColorCode(overall)))
 
 	local width = (INNER - CELL_GAP * (COLUMNS - 1)) / COLUMNS
+	local r, g, b = Accent("dungeon")
+	local barR, barG, barB = Accent("bar")
 	local maxGroups = 1
 	for _, dungeon in ipairs(dungeons) do
-		maxGroups = max(maxGroups, module.counts[dungeon.instanceID] or 0)
+		maxGroups = max(maxGroups, groupCounts[dungeon.instanceID] or 0)
 	end
 
 	for index, dungeon in ipairs(dungeons) do
 		local cell = dungeonCells[index] or CreateDungeonCell(panel, index)
 		local enabled = not off[dungeon.instanceID]
 		local run = runs[dungeon.challengeMapID]
-		local groups = module.counts[dungeon.instanceID] or 0
-		local r, g, b = MEDIA.myclass.r, MEDIA.myclass.g, MEDIA.myclass.b
+		local groups = groupCounts[dungeon.instanceID] or 0
 
 		cell.instanceID = dungeon.instanceID
 		cell.dungeonName = dungeon.name
@@ -667,7 +700,7 @@ function module:UpdateDungeonCells()
 		cell.icon:SetTexture(dungeon.texture)
 		cell.icon:SetDesaturated(not enabled)
 		cell.name:SetText(dungeon.name)
-		cell.bar:SetVertexColor(r, g, b, 0.9)
+		cell.bar:SetVertexColor(barR, barG, barB, 0.9)
 		cell.bar:SetWidth(max(1, (width - ICON - 21) * groups / maxGroups))
 		cell.bar:SetShown(groups > 0)
 		cell:SetAlpha(enabled and 1 or 0.5)
@@ -689,11 +722,6 @@ function module:UpdateDungeonCells()
 		end
 
 		cell:SetSize(width, CELL_HEIGHT)
-		cell.level:ClearAllPoints()
-		cell.level:SetPoint("TOPLEFT", cell.name, "BOTTOMLEFT", 0, -metrics.textGap)
-		cell.track:ClearAllPoints()
-		cell.track:SetPoint("TOPLEFT", cell.level, "BOTTOMLEFT", 0, -metrics.countGap - 3)
-		cell.track:SetPoint("RIGHT", cell, "RIGHT", -8, 0)
 		cell:ClearAllPoints()
 		cell:SetPoint("TOPLEFT", panel.dungeonLabel, "BOTTOMLEFT", ((index - 1) % COLUMNS) * (width + CELL_GAP), -8 - math.floor((index - 1) / COLUMNS) * (CELL_HEIGHT + CELL_GAP))
 		cell:Show()
@@ -702,21 +730,6 @@ function module:UpdateDungeonCells()
 	for index = #dungeons + 1, #dungeonCells do
 		dungeonCells[index]:Hide()
 	end
-end
-
-local function SelectDungeons(isEnabled)
-	local off = CurrentFilter().off or {}
-	local lowest
-	for index, cell in ipairs(dungeonCells) do
-		if dungeons[index] then lowest = math.min(lowest or cell.bestLevel, cell.bestLevel) end
-	end
-
-	local states = {}
-	for index, dungeon in ipairs(dungeons) do
-		states[dungeon.instanceID] = isEnabled(not off[dungeon.instanceID], dungeonCells[index].bestLevel == lowest)
-	end
-
-	StoreDungeons(states)
 end
 
 local function LanguageState(lang)
@@ -747,14 +760,20 @@ local function BuildLanguages(panel)
 
 	languageButtons.any = CreateButton(panel, _G.ALL, width, function()
 		local enabled = C_LFGList.GetLanguageSearchFilter()
+		local all = true
 		for _, lang in ipairs(available) do
-			enabled[lang] = true
+			all = all and LanguageState(lang) and true or false
+		end
+
+		-- the client default language stays on, blizzard forces it anyway
+		for _, lang in ipairs(available) do
+			enabled[lang] = not all or C_LFGList.GetDefaultLanguageSearchFilter()[lang] and true or false
 		end
 
 		C_LFGList.SaveLanguageSearchFilter(enabled)
 		UpdateLanguages()
 		SaveSearch()
-	end, true)
+	end, true, "region")
 
 	for _, lang in ipairs(available) do
 		local button = CreateButton(panel, lang:sub(1, 2):upper(), width, function()
@@ -765,7 +784,7 @@ local function BuildLanguages(panel)
 			C_LFGList.SaveLanguageSearchFilter(enabled)
 			UpdateLanguages()
 			SaveSearch()
-		end, true)
+		end, true, "region")
 		languageButtons[lang] = button
 	end
 
@@ -811,9 +830,7 @@ local function Layout()
 	INNER = WIDTH - 24
 	BUTTON = (INNER - 12) / 4
 	local panel = module.panel
-	local dungeon = IsDungeonCategory()
 	local y = -HEADER
-	CELL_HEIGHT, CELL_GAP = metrics.cell, metrics.gap
 
 	local function Place(frame, x, offset)
 		frame:ClearAllPoints()
@@ -826,7 +843,7 @@ local function Layout()
 		section.line:ClearAllPoints()
 		section.line:SetPoint("TOPLEFT", section, "BOTTOMLEFT", 0, -3)
 		section.line:SetWidth(INNER)
-		y = y - metrics.section
+		y = y - METRICS.section
 	end
 
 	local checks = {}
@@ -842,14 +859,14 @@ local function Layout()
 
 	for index, check in ipairs(checks) do
 		Place(check, PADDING + ((index - 1) % 3) * (INNER / 3))
-		if index % 3 == 0 or index == #checks then y = y - metrics.check end
+		if index % 3 == 0 or index == #checks then y = y - METRICS.check end
 	end
 	y = y - 8
 
 	panel.difficulty:SetWidth(INNER / 2 - 2)
 	panel.sort:SetWidth(INNER / 2 - 2)
 	Place(panel.difficulty, nil, 0)
-	Place(panel.sort, PADDING + INNER / 2 + 2, metrics.row)
+	Place(panel.sort, PADDING + INNER / 2 + 2, METRICS.row)
 
 	BuildLanguages(panel)
 	local showLanguages = panel.languagesBuilt and _G.LFGListCanChangeLanguages and _G.LFGListCanChangeLanguages()
@@ -859,20 +876,14 @@ local function Layout()
 	end
 
 	if showLanguages then
-		local order = { languageButtons.any }
-		for _, lang in ipairs(panel.languageOrder) do
-			order[#order + 1] = languageButtons[lang]
-		end
-
 		-- bottom aligned, directly above the footer
-		local buttonWidth = (INNER - GAP * #panel.languageOrder) / (#panel.languageOrder + 1)
-		for _, button in ipairs(order) do
+		local order = panel.languageOrder
+		local buttonWidth = (INNER - GAP * #order) / (#order + 1)
+		for index = 0, #order do
+			local button = languageButtons[order[index] or "any"]
 			button:SetWidth(buttonWidth)
-		end
-
-		for index, button in ipairs(order) do
 			button:ClearAllPoints()
-			button:SetPoint("BOTTOMLEFT", panel, "BOTTOMLEFT", PADDING + (index - 1) * (buttonWidth + GAP), PADDING + 36)
+			button:SetPoint("BOTTOMLEFT", panel, "BOTTOMLEFT", PADDING + index * (buttonWidth + GAP), PADDING + 36)
 		end
 
 		panel.regionLabel:ClearAllPoints()
@@ -887,31 +898,19 @@ local function Layout()
 		panel.regionLabel.line:Hide()
 	end
 
-	panel.dungeonLabel:SetShown(dungeon)
-	panel.dungeonLabel.line:SetShown(dungeon)
-	panel.rating:SetShown(dungeon)
-	for _, button in ipairs(panel.dungeonButtons) do
-		button:SetShown(dungeon)
+	BuildDungeons()
+	PlaceSection(panel.dungeonLabel)
+	module:UpdateDungeonCells()
+	y = y - math.ceil(#dungeons / COLUMNS) * (CELL_HEIGHT + CELL_GAP) - 12
+	for index, button in ipairs(panel.dungeonButtons) do
+		button:SetWidth(BUTTON)
+		Place(button, PADDING + (index - 1) * (BUTTON + GAP))
 	end
-	if dungeon then
-		BuildDungeons()
-		PlaceSection(panel.dungeonLabel)
-		module:UpdateDungeonCells()
-		y = y - math.ceil(#dungeons / COLUMNS) * (CELL_HEIGHT + CELL_GAP) - 12
-		for index, button in ipairs(panel.dungeonButtons) do
-			button:SetWidth(BUTTON)
-			Place(button, PADDING + (index - 1) * (BUTTON + GAP))
-		end
-		y = y - 30
-	else
-		for _, cell in ipairs(dungeonCells) do
-			cell:Hide()
-		end
-	end
+	y = y - 30
 
-	if showLanguages then y = y - metrics.section - metrics.row end
+	if showLanguages then y = y - METRICS.section - METRICS.row end
 
-	local height = -y + metrics.tail + PADDING
+	local height = -y + METRICS.tail + PADDING
 	panel.reset:SetWidth(BUTTON)
 
 	panel.footer:ClearAllPoints()
@@ -925,9 +924,26 @@ end
 
 local function LoadCategory()
 	local panel = module.panel
-	if not (panel and _G.LFGListFrame.SearchPanel.categoryID) then return end
+	if not panel then return end
+
+	-- the filter panel only belongs to the dungeon category
+	local shown = module.isEnabled and IsDungeonCategory()
+	panel:SetShown(shown)
+	if not shown then return end
 
 	HookRaiderIO()
+
+	local mmt = module.db.theme == "mmt"
+	for _, line in ipairs(panel.themeLines) do
+		local r, g, b = Accent(line.section)
+		line:SetVertexColor(r, g, b, line.alpha)
+	end
+
+	for _, label in ipairs(panel.themeLabels) do
+		label:SetText(mMT:TC(label.raw, mmt and MMT_SECTIONS[label.section] or "line_a"))
+	end
+
+	panel.rules:SetChecked(not module.db.paused)
 
 	local filter = CurrentFilter()
 	for _, button in ipairs(panel.toggles) do
@@ -956,15 +972,26 @@ local function CreatePanel()
 	panel:SetTemplate("Transparent")
 	panel:SetPoint("TOPLEFT", _G.PVEFrame, "TOPRIGHT", 4, 0)
 
-	local title = CreateLabel(panel, mMT:TC(L["Premade Filter"], "line_a"), "GameFontNormalLarge")
+	panel.themeLabels = {}
+	local title = CreateLabel(panel, L["Premade Filter"], "GameFontNormalLarge")
+	ThemeLabel(panel, title, L["Premade Filter"], "header")
 	title:SetPoint("TOPLEFT", PADDING, -14)
+
+	panel.rules = CreateCheck(panel, "", function(self)
+		module.db.paused = not self:GetChecked()
+		UpdateCount()
+		Refresh()
+	end)
+	panel.rules:SetPoint("LEFT", title, "RIGHT", 8, 0)
+	Tooltip(panel.rules, L["Turn the filter rules on or off"])
 
 	local line = panel:CreateTexture(nil, "ARTWORK")
 	line:SetTexture(E.media.blankTex)
 	line:SetHeight(2)
 	line:SetPoint("TOPLEFT", PADDING, -38)
 	line:SetPoint("TOPRIGHT", -PADDING, -38)
-	line:SetVertexColor(MEDIA.myclass.r, MEDIA.myclass.g, MEDIA.myclass.b, 1)
+	line.alpha, line.section = 1, "header"
+	panel.themeLines = { line }
 
 	panel.rating = panel:CreateFontString(nil, "OVERLAY", "GameFontHighlight")
 	panel.rating:SetPoint("TOP", panel, "TOP", 0, -17)
@@ -974,7 +1001,7 @@ local function CreatePanel()
 
 	local settings = CreateButton(panel, "", 22, function()
 		if not E:AlertCombat() then E:ToggleOptions("mMT,group,premade_filter") end
-	end)
+	end, nil, "header")
 	settings:SetPoint("TOPRIGHT", -PADDING, -12)
 	settings.icon = settings:CreateTexture(nil, "ARTWORK")
 	settings.icon:Size(14)
@@ -987,7 +1014,6 @@ local function CreatePanel()
 		local button = CreateCheck(panel, toggle.label, function(self)
 			local filter = CurrentFilter()
 			filter[toggle.key] = self:GetChecked() and true or nil
-			panel.filterMenu:GenerateMenu()
 			Refresh()
 		end)
 		button.key = toggle.key
@@ -1051,8 +1077,8 @@ local function CreatePanel()
 		return L["Sort"]
 	end)
 
-	panel.regionLabel = CreateSection(panel, L["Region"])
-	panel.dungeonLabel = CreateSection(panel, L["Season Dungeons"])
+	panel.regionLabel = CreateSection(panel, L["Region"], "region")
+	panel.dungeonLabel = CreateSection(panel, L["Season Dungeons"], "dungeon")
 
 	panel.dungeonButtons = {
 		CreateButton(panel, _G.ALL, BUTTON, function()
@@ -1076,6 +1102,9 @@ local function CreatePanel()
 			end)
 		end),
 	}
+	for _, button in ipairs(panel.dungeonButtons) do
+		button.section = "dungeon"
+	end
 
 	panel.footer = CreateLabel(panel, "", "GameFontHighlightSmall")
 
@@ -1083,11 +1112,9 @@ local function CreatePanel()
 	panel.filterMenu:Height(22)
 	panel.filterMenu:SetDefaultText("+ " .. L["Filter"])
 	panel.filterMenu:SetupMenu(function(_, root)
+		-- checkboxes refresh themselves, regenerating the open menu drops the elvui submenu skin
 		local function Check(parent, text, get, set)
-			parent:CreateCheckbox(text, get, function()
-				set()
-				panel.filterMenu:GenerateMenu()
-			end)
+			parent:CreateCheckbox(text, get, set)
 		end
 
 		if HasBlizzardFilter() then
@@ -1095,10 +1122,10 @@ local function CreatePanel()
 			for index, key in ipairs(PLAYSTYLES) do
 				Check(playstyle, _G["GROUP_FINDER_GENERAL_PLAYSTYLE" .. index], function()
 					local enabled = C_LFGList.GetAdvancedFilter()
-					return PlaystyleNone(enabled) or enabled[key]
+					return PlaystyleCount(enabled) == 0 or enabled[key]
 				end, function()
 					local enabled = C_LFGList.GetAdvancedFilter()
-					local none = PlaystyleNone(enabled)
+					local none = PlaystyleCount(enabled) == 0
 					for _, other in ipairs(PLAYSTYLES) do
 						if none then enabled[other] = true end
 					end
@@ -1143,9 +1170,7 @@ local function CreatePanel()
 		module.db.categories[searchPanel.categoryID] = nil
 		LoadCategory()
 		Refresh()
-	end)
-
-	panel:SetShown(module.isEnabled)
+	end, nil, "footer")
 end
 
 local function SetupHooks()
@@ -1154,7 +1179,6 @@ local function SetupHooks()
 	local lfgFrame = _G.LFGListFrame
 	if not (lfgFrame and lfgFrame.SearchPanel and _G.PVEFrame and type(_G.LFGListSearchPanel_UpdateResultList) == "function") then return end
 
-	module.counts = module.counts or {}
 	CreatePanel()
 	hooksecurefunc("LFGListSearchPanel_UpdateResultList", Apply)
 	hooksecurefunc("LFGListSearchPanel_SetCategory", LoadCategory)
@@ -1184,7 +1208,6 @@ function module:Initialize()
 	if module.isEnabled and not SetupHooks() then module:RegisterEvent("ADDON_LOADED") end
 	if not module.hooked then return end
 
-	module.panel:SetShown(module.isEnabled)
 	LoadCategory()
 	Refresh()
 end
