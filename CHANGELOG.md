@@ -19,6 +19,8 @@
 - NEW - [Merchant-Grid]: New module that shows 20 vendor items per page in four columns instead of ten in two.
 - NEW - [Merchant-Buy-Max]: New module that adds a Max button to the quantity window of stackable vendor items and buys as many as you can afford.
 - NEW - [NP-CombatFade]: New module that fades, shrinks or hides enemy nameplates of units that are not in combat while you are fighting, optionally only in instances.
+- NEW - [Dispel-Icon]: New module that shows the dispel types of debuffs on friendly unitframes as icons, only the ones you can dispel or all of them, with its own count, size and position for every unitframe.
+- NEW - [Dispel-Icon]: An optional frame highlight colors the border of the health bar or the whole unitframe and can add a glow or a running pixel glow in its own color.
 - NEW - [System]: mMT now runs in WoW Classic Era, TBC Anniversary, Mists of Pandaria Classic and WoW Forever, features a game version does not have are left out and hidden in the settings.
 ### 📌 INFO
 - INFO - If you used the nameplate highlights or the summon icon without ever changing their settings, turn them on again.

@@ -938,6 +938,38 @@ P.summon_icon = {
 }
 
 P.details = {
+P.dispel_icon = {
+	enable = false,
+	units = {},
+}
+
+-- raid sized frames get the small icon size of Blizzards raid frames, only the healer relevant frames start enabled
+for unit, size in pairs({ player = 20, target = 20, focus = 20, targettarget = 20, pet = 20, party = 20, raid1 = 14, raid2 = 14, raid3 = 14, raidpet = 14, tank = 14, assist = 14 }) do
+	local enable = unit == "player" or unit == "party" or unit == "raid1" or unit == "raid2" or unit == "raid3"
+	P.dispel_icon.units[unit] = {
+		enable = enable,
+		source = "DISPELLABLE",
+		count = 3,
+		size = size,
+		spacing = 2,
+		growth = "RIGHT",
+		point = "CENTER",
+		x = 0,
+		y = 0,
+		highlight = {
+			enable = false,
+			target = "HEALTH",
+			border = true,
+			glow = "NONE",
+			glowDebuffColor = false,
+			glowColor = { r = 0.95, g = 0.95, b = 0.32 },
+			pixelSize = 2,
+			pixelLines = 6,
+			pixelSpeed = 4,
+		},
+	}
+end
+
 	mode = "DISABLE",
 	windows = 2,
 	toggle = true,

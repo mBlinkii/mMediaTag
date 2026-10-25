@@ -28,7 +28,7 @@ local ICONS = {
 }
 
 local PAGE_ICONS = {
-	unitframes = { portraits = "character", castbar = "castbar", status_icons = "status", unitframe_textures = "textures" },
+	unitframes = { portraits = "character", castbar = "castbar", status_icons = "status", dispel_icon = "important", unitframe_textures = "textures" },
 	nameplates = { highlights = "missions", markers = "marker", tools = "fix" },
 	cooldownmanager = { general = "settings", viewers = "collection", custom = "clock" },
 	datatexts = { general = "settings", info = "info", menus = "menu" },
@@ -207,7 +207,13 @@ mMT.options = {
 				resurrection_icon = Feature(4, L["Resurrection Icon"], nil, { db = "resurrection_icon" }),
 				summon_icon = Feature(5, L["Summon Icon"], nil, { db = "summon_icon" }),
 			}),
-			unitframe_textures = Feature(4, L["Unitframe Textures"]),
+			dispel_icon = Feature(
+				4,
+				L["Dispel Icon"],
+				nil,
+				{ db = "dispel_icon", desc = L["Shows the dispel types of debuffs on friendly unitframes as icons, with an optional frame highlight."], new = 418 }
+			),
+			unitframe_textures = Feature(5, L["Unitframe Textures"]),
 		}),
 		nameplates = Category(4, L["Nameplates"], {
 			highlights = Page(1, L["Highlights"], "tab", {
