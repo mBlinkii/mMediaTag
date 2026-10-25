@@ -1,6 +1,6 @@
 # Changelog - ElvUI_mMediaTag
 
-## [ver. 4.18] - TBD
+## [ver. 4.18] - 25.10.2026
 ### 🐛 FIX
 - FIX - [Keystone-Teleports]: The flash could stay on the wrong dungeon when the rows were rearranged.
 - FIX - [Options]: Pages in the settings tree were greyed out although their module or a part of it was turned on.
@@ -13,14 +13,10 @@
 - UPDATE - [Keystone-Teleports]: The flash of the group dungeon now also adds a glowing border.
 - UPDATE - [NP-Highlighters]: The target, focus and quest highlights are now turned off by default like every other module.
 ### ✨ NEW
-- NEW - [Premade-Filter]: New module that adds a filter panel to the dungeon search of the group finder, with filters for free roles, matching groups, Bloodlust and the Blizzard group filters, region buttons and the dungeons of the season with your best runs and a bar for the number of groups.
-- NEW - [Premade-Filter]: Groups can be sorted by leader score or age, your applications are listed on top and colored for applied, declined and full, the leader score and a short difficulty can be shown in the list, a switch turns the filter rules off and the panel comes in class, neutral, mMT or custom colors.
-- NEW - [Merchant-Known]: New module that colors vendor items you already know, like learned recipes, and marks gear with an appearance you have not collected.
-- NEW - [Merchant-Grid]: New module that shows 20 vendor items per page in four columns instead of ten in two.
-- NEW - [Merchant-Buy-Max]: New module that adds a Max button to the quantity window of stackable vendor items and buys as many as you can afford.
+- NEW - [Premade-Filter]: New module that adds a filter and sorting panel to the dungeon search of the group finder, with role, Bloodlust, region and dungeon filters, your applications on top and the leader score in the list.
+- NEW - [Merchant]: New modules for the vendor window that color items you already know and mark uncollected appearances, show 20 items per page in four columns and add a Max button to the quantity window.
 - NEW - [NP-CombatFade]: New module that fades, shrinks or hides enemy nameplates of units that are not in combat while you are fighting, optionally only in instances.
-- NEW - [Dispel-Icon]: New module that shows the dispel types of debuffs on friendly unitframes as icons, only the ones you can dispel or all of them, with its own count, size and position for every unitframe.
-- NEW - [Dispel-Icon]: An optional frame highlight colors the border of the health bar or the whole unitframe and can add a glow or a running pixel glow in its own color.
+- NEW - [Dispel-Icon]: New module that shows the dispel types of debuffs on friendly unitframes as icons and can optionally highlight the unitframe.
 - NEW - [System]: mMT now runs in WoW Classic Era, TBC Anniversary, Mists of Pandaria Classic and WoW Forever, features a game version does not have are left out and hidden in the settings.
 ### 📌 INFO
 - INFO - If you used the nameplate highlights or the summon icon without ever changing their settings, turn them on again.
