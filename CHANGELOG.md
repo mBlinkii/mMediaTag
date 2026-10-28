@@ -1,5 +1,11 @@
 # Changelog - ElvUI_mMediaTag
 
+## [ver. 4.19] - TBD
+### 🔧 UPDATE
+- UPDATE - [Dispel-Icon]: The icons can be turned off to only use the frame highlight.
+### ✨ NEW
+- NEW - [Enrage-Icon]: New module that shows enrage effects on the target, focus, boss and arena unitframes and on enemy nameplates as icons and can optionally highlight the frame.
+
 ## [ver. 4.18] - 25.10.2026
 ### 🐛 FIX
 - FIX - [Keystone-Teleports]: The flash could stay on the wrong dungeon when the rows were rearranged.

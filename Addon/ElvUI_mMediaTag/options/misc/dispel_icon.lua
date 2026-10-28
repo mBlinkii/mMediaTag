@@ -96,8 +96,8 @@ local function StateName(enabled)
 	return enabled and MEDIA.color.green:WrapTextInColorCode(L["Enabled"]) or MEDIA.color.red:WrapTextInColorCode(L["Disabled"])
 end
 
-local function Range(order, name, min, max, desc)
-	return { order = order, type = "range", name = name, desc = desc, min = min, max = max, step = 1 }
+local function Range(order, name, min, max, desc, disabled)
+	return { order = order, type = "range", name = name, desc = desc, min = min, max = max, step = 1, disabled = disabled }
 end
 
 -- a disabled group disables everything inside, so a toggle that unlocks a group sits next to it
@@ -132,6 +132,10 @@ local function UnitGroup(unit, order)
 	-- the settings only matter for frame types that are switched on
 	local function UnitDisabled()
 		return not UnitActive(key)
+	end
+
+	local function IconsDisabled()
+		return UnitDisabled() or not Settings().showIcons
 	end
 
 	local function HighlightDisabled()
@@ -229,16 +233,17 @@ local function UnitGroup(unit, order)
 			},
 			icons = Inline(3, L["Icons"], {
 				source = { order = 1, type = "select", name = L["Show"], values = SOURCES },
-				count = Range(2, L["Count"], 1, 8),
-				size = Range(3, L["Size"], 8, 64),
-				spacing = Range(4, L["Spacing"], 0, 20),
-				growth = { order = 5, type = "select", name = L["Growth Direction"], values = GROWTHS },
+				showIcons = { order = 2, type = "toggle", name = L["Show Icons"], desc = L["Turn the icons off to only use the frame highlight."] },
+				count = Range(3, L["Count"], 1, 8, nil, IconsDisabled),
+				size = Range(4, L["Size"], 8, 64, nil, IconsDisabled),
+				spacing = Range(5, L["Spacing"], 0, 20, nil, IconsDisabled),
+				growth = { order = 6, type = "select", name = L["Growth Direction"], values = GROWTHS, disabled = IconsDisabled },
 			}, UnitDisabled),
 			position = Inline(4, L["Position"], {
 				point = { order = 1, type = "select", name = L["Anchor Point"], values = POINTS },
 				x = Range(2, L["X offset"], -100, 100, L["Sets the offset according to the anchor."]),
 				y = Range(3, L["Y offset"], -100, 100, L["Sets the offset according to the anchor."]),
-			}, UnitDisabled),
+			}, IconsDisabled),
 			highlight = highlight,
 		},
 	}

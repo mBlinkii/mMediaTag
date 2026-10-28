@@ -14,6 +14,7 @@
     <Script file="resurrection_icon.lua"/>
     <Script file="summon_icon.lua"/>
     <Script file="dispel_icon.lua"/>
+    <Script file="enrage_icon.lua"/>
     <Script file="unitframe_textures.lua"/>
     <Script file="details.lua"/>
     <Script file="auto_quest.lua"/>

@@ -116,6 +116,7 @@ end
 -- plain icons for classic and the demo, your types first, the others only when the row shows every type
 local function FillRow(frame, list, holder, db, present, withOthers)
 	HideAll(list)
+	if not db.showIcons then return end
 
 	local flow, index = Flow(db), 0
 	for _, dispelType in ipairs(ordered) do
@@ -186,11 +187,13 @@ local function CreateHighlightParts(owner)
 end
 
 -- the lines sit one spacing apart and move by exactly one spacing per loop, so the loop is seamless
-local function AnchorPixel(parts, target, highlight)
+local function AnchorPixel(parts, target, highlight, width, height)
 	parts.clip:ClearAllPoints()
 	parts.clip:SetAllPoints(target)
 
-	local width, height = target:GetSize()
+	if not width then
+		width, height = target:GetSize()
+	end
 	local size = highlight.pixelSize * E.mult
 	local spacing = 2 * (width + height) / highlight.pixelLines
 	-- every line covers half of its spacing
@@ -212,7 +215,7 @@ local function AnchorPixel(parts, target, highlight)
 	end
 end
 
-local function AnchorHighlightParts(parts, frame, highlight)
+local function AnchorHighlightParts(parts, frame, highlight, width, height)
 	local target = HighlightTarget(frame, highlight)
 
 	for index, edge in ipairs(BORDER_EDGES) do
@@ -233,12 +236,12 @@ local function AnchorHighlightParts(parts, frame, highlight)
 	parts.glow:SetOutside(target, offset, offset, nil, true)
 	parts.glow:SetupTextureCoordinates()
 
-	AnchorPixel(parts, target, highlight)
+	AnchorPixel(parts, target, highlight, width, height)
 end
 
 -- plain parts for classic and the demo, colored directly, the glow uses its own color unless it should follow the debuff type
-local function ShowPlainHighlight(parts, highlight, dispelType)
-	local color = highlight and dispelType and DebuffColors[dispelType]
+local function ShowPlainHighlight(parts, highlight, color, buttonAnimated)
+	color = highlight and color
 	local glowColor = color and (highlight.glowDebuffColor and color or highlight.glowColor)
 	local pixel = color and highlight.glow == "PIXEL"
 
@@ -256,12 +259,18 @@ local function ShowPlainHighlight(parts, highlight, dispelType)
 		segment:SetShown(shown)
 	end
 
-	if not pixel then
+	-- an aura button that owns the animation forbids querying it
+	if buttonAnimated then
+		return
+	elseif not pixel then
 		parts.pixel:Stop()
 	elseif not parts.pixel:IsPlaying() then
 		parts.pixel:Play()
 	end
 end
+
+-- shared with the enrage icon module
+mMT.FrameHighlight = { Create = CreateHighlightParts, Anchor = AnchorHighlightParts, Show = ShowPlainHighlight }
 
 -- icons and highlight for classic and the demo on plain frames
 local function GetPlainEntry(frame, key)
@@ -393,20 +402,22 @@ local function SetupIcons(container, db, filter)
 	container.growthDirection = flow.growth
 	container.useWidth = flow.x ~= 0
 	container.numAuras = db.count
+	-- no buttons keeps only the frame highlight
+	local count = db.showIcons and db.count or 0
 
 	local layout = E:Auras_UpdateLayout(container)
 	E:Auras_SetFlowLayout(container)
 	E:Auras_SetLineSize(container)
 
 	if container.known[ICON_KEY] then
-		E:Auras_UpdateGroup(container, ICON_KEY, container.mMT_Icons, layout, db.count, SortMethod.Default, SortDirection.Normal)
+		E:Auras_UpdateGroup(container, ICON_KEY, container.mMT_Icons, layout, count, SortMethod.Default, SortDirection.Normal)
 	else
 		container:AddAuraGroup(ICON_KEY, filter, {
 			initializeFrame = function(button)
 				InitializeButton(container, button)
 			end,
 			candidateFilters = container.mMT_Icons.candidateFilters,
-			maxFrameCount = db.count,
+			maxFrameCount = count,
 			sortMethod = SortMethod.Default,
 			sortDirection = SortDirection.Normal,
 			layout = layout,
@@ -542,8 +553,9 @@ local function PostUpdate_AuraHighlight(_, frame, unit)
 	if unit and UnitCanAssist("player", unit) then AuraUtil.ForEachAura(unit, "HARMFUL", nil, CollectAura, true) end
 
 	local all = db.source == "ALL"
+	local dispelType = FirstFound(all)
 	FillRow(frame, entry.icons, entry.holder, db, found, all)
-	ShowPlainHighlight(entry.highlight, HighlightDB(db), FirstFound(all))
+	ShowPlainHighlight(entry.highlight, HighlightDB(db), dispelType and DebuffColors[dispelType])
 end
 
 local function UpdateClassic(frame, db)
@@ -578,7 +590,7 @@ local function UpdateDemo(frame)
 		HideAll(entry.icons)
 	end
 
-	ShowPlainHighlight(entry.highlight, HighlightDB(db), "Magic")
+	ShowPlainHighlight(entry.highlight, HighlightDB(db), DebuffColors.Magic)
 end
 
 local function UpdateFrame(frame)

@@ -28,7 +28,7 @@ local ICONS = {
 }
 
 local PAGE_ICONS = {
-	unitframes = { portraits = "character", castbar = "castbar", status_icons = "status", dispel_icon = "important", unitframe_textures = "textures" },
+	unitframes = { portraits = "character", castbar = "castbar", status_icons = "status", dispel_icon = "important", enrage_icon = "boss", unitframe_textures = "textures" },
 	nameplates = { highlights = "missions", markers = "marker", tools = "fix" },
 	cooldownmanager = { general = "settings", viewers = "collection", custom = "clock" },
 	datatexts = { general = "settings", info = "info", menus = "menu" },
@@ -213,7 +213,13 @@ mMT.options = {
 				nil,
 				{ db = "dispel_icon", desc = L["Shows the dispel types of debuffs on friendly unitframes as icons, with an optional frame highlight."], new = 418 }
 			),
-			unitframe_textures = Feature(5, L["Unitframe Textures"]),
+			enrage_icon = Feature(
+				5,
+				L["Enrage Icon"],
+				nil,
+				{ db = "enrage_icon", desc = L["Shows enrage effects on enemy unitframes and nameplates as icons, with an optional frame highlight."], new = 419 }
+			),
+			unitframe_textures = Feature(6, L["Unitframe Textures"]),
 		}),
 		nameplates = Category(4, L["Nameplates"], {
 			highlights = Page(1, L["Highlights"], "tab", {

@@ -952,6 +952,7 @@ for unit, size in pairs({ player = 20, target = 20, focus = 20, targettarget = 2
 	P.dispel_icon.units[unit] = {
 		enable = enable,
 		source = "DISPELLABLE",
+		showIcons = true,
 		count = 3,
 		size = size,
 		spacing = 2,
@@ -965,6 +966,38 @@ for unit, size in pairs({ player = 20, target = 20, focus = 20, targettarget = 2
 			border = true,
 			glow = "NONE",
 			glowDebuffColor = false,
+			glowColor = { r = 0.95, g = 0.95, b = 0.32 },
+			pixelSize = 2,
+			pixelLines = 6,
+			pixelSpeed = 4,
+		},
+	}
+end
+
+P.enrage_icon = {
+	enable = false,
+	units = {},
+}
+
+for unit, size in pairs({ target = 20, focus = 20, boss = 18, arena = 18, nameplate = 16 }) do
+	local nameplate = unit == "nameplate"
+	P.enrage_icon.units[unit] = {
+		enable = true,
+		source = "ALL",
+		showIcons = true,
+		count = 2,
+		size = size,
+		spacing = 2,
+		growth = "RIGHT",
+		point = nameplate and "LEFT" or "CENTER",
+		x = nameplate and -(size + 2) or 0,
+		y = 0,
+		highlight = {
+			enable = false,
+			target = "HEALTH",
+			border = true,
+			glow = "NONE",
+			glowDebuffColor = true,
 			glowColor = { r = 0.95, g = 0.95, b = 0.32 },
 			pixelSize = 2,
 			pixelLines = 6,
