@@ -1309,6 +1309,7 @@ L["Only settings this display knows are taken over, everything else stays untouc
 L["Sections"] = "Sezioni"
 L["Copy"] = "Copia"
 L["Took over %d settings from %s."] = "Trasferite %d impostazioni da %s."
+L["Includes every cooldown manager setting and the positions of its movers. The import replaces the current setup."] = "Include tutte le impostazioni del gestore dei tempi di recupero e le posizioni dei suoi ancoraggi. L’importazione sostituisce la configurazione attuale."
 L["Own Entries"] = "Voci personali"
 L["Spell"] = "Incantesimo"
 L["Item"] = "Oggetto"

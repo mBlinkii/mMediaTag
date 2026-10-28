@@ -1309,6 +1309,7 @@ L["Only settings this display knows are taken over, everything else stays untouc
 L["Sections"] = "分组"
 L["Copy"] = "复制"
 L["Took over %d settings from %s."] = "已复制 %d 项设置，来源：%s。"
+L["Includes every cooldown manager setting and the positions of its movers. The import replaces the current setup."] = "包含冷却管理器的所有设置及其移动器位置。导入会替换当前设置。"
 L["Own Entries"] = "自定义条目"
 L["Spell"] = "法术"
 L["Item"] = "物品"

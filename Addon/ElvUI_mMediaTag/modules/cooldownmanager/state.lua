@@ -75,6 +75,82 @@ function module:CopyViewerSettings(source, target, sections)
 	return copied
 end
 
+module.EXPORT_TYPE = "mMTCooldownManager"
+
+-- Settings plus the saved positions of the own movers, the enable switch stays with the receiver
+function module:GetExportData()
+	local db = module:GetDB()
+	if not db then return nil end
+
+	local settings = E:CopyTable({}, db)
+	settings.enable = nil
+
+	local movers = {}
+	for _, info in next, module.VIEWERS do
+		local name = info.mover .. "_Mover"
+		local point = E.db.movers and E.db.movers[name]
+		if type(point) == "string" then movers[name] = point end
+	end
+
+	return { settings = settings, movers = movers }
+end
+
+-- Only keys the defaults know are taken over, tables with empty defaults (per-spell stores, entries) come over whole
+local function MergeKnown(target, source, schema)
+	for key, value in next, source do
+		local default = schema[key]
+		if default ~= nil and type(value) == type(default) then
+			if type(value) == "table" and next(default) then
+				if type(target[key]) ~= "table" then target[key] = {} end
+				MergeKnown(target[key], value, default)
+			elseif type(value) == "table" then
+				target[key] = E:CopyTable({}, value)
+			else
+				target[key] = value
+			end
+		end
+	end
+end
+
+-- Keeps the tables the defaults know, so references to the viewer settings stay valid
+local function ClearKnown(target, schema)
+	for key, value in next, target do
+		if type(value) == "table" and type(schema[key]) == "table" and next(schema[key]) then
+			ClearKnown(value, schema[key])
+		else
+			target[key] = nil
+		end
+	end
+end
+
+function module:ImportData(data)
+	local db = module:GetDB()
+	if not db or type(data) ~= "table" or type(data.settings) ~= "table" then return false end
+
+	-- everything the import leaves out falls back to the defaults instead of keeping the old setup
+	local enable = db.enable
+	ClearKnown(db, P.cooldown_manager)
+	E:CopyTable(db, P.cooldown_manager)
+	MergeKnown(db, data.settings, P.cooldown_manager)
+	db.enable = enable
+
+	local movers = type(data.movers) == "table" and data.movers or {}
+	if not E.db.movers then E.db.movers = {} end
+	for key, info in next, module.VIEWERS do
+		local name = info.mover .. "_Mover"
+		E.db.movers[name] = type(movers[name]) == "string" and movers[name] or nil
+		E:SetMoverPoints(name)
+
+		-- drop the cached anchors so the next update pins the container to the moved mover
+		local container = module.containers[key]
+		if container then
+			container.mmtAnchorGrowth, container.mmtAnchorTarget = nil, nil
+		end
+	end
+
+	return true
+end
+
 function module:ViewerDB(key)
 	local db = module:GetDB()
 	return db and db.viewers and db.viewers[key]

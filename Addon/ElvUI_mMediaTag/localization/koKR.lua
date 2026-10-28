@@ -1309,6 +1309,7 @@ L["Only settings this display knows are taken over, everything else stays untouc
 L["Sections"] = "구역"
 L["Copy"] = "복사"
 L["Took over %d settings from %s."] = "설정 %d개를 %s에서 가져왔습니다."
+L["Includes every cooldown manager setting and the positions of its movers. The import replaces the current setup."] = "재사용 대기시간 관리자의 모든 설정과 이동 도구 위치가 포함됩니다. 가져오기는 현재 설정을 대체합니다."
 L["Own Entries"] = "사용자 항목"
 L["Spell"] = "주문"
 L["Item"] = "아이템"

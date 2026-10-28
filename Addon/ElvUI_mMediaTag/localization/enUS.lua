@@ -1396,6 +1396,7 @@ L["Only settings this display knows are taken over, everything else stays untouc
 L["Sections"] = true
 L["Copy"] = true
 L["Took over %d settings from %s."] = true
+L["Includes every cooldown manager setting and the positions of its movers. The import replaces the current setup."] = true
 L["Own Entries"] = true
 L["Spell"] = true
 L["Item"] = true

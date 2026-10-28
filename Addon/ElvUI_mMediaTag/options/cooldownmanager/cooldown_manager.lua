@@ -950,6 +950,69 @@ local function ModuleToggle(key, order)
 	}
 end
 
+local exportText, importText = nil, ""
+
+local function ImportExportGroup(order)
+	return {
+		order = order,
+		type = "group",
+		inline = true,
+		name = L["Import/ Export of this Settings"],
+		args = {
+			description = {
+				order = 0,
+				type = "description",
+				name = L["Includes every cooldown manager setting and the positions of its movers. The import replaces the current setup."],
+			},
+			export = {
+				order = 1,
+				type = "execute",
+				name = L["Export"],
+				func = function()
+					local data = Module():GetExportData()
+					exportText = data and mMT:GetExportText(data, Module().EXPORT_TYPE)
+				end,
+			},
+			import = {
+				order = 2,
+				type = "execute",
+				name = L["Import"],
+				func = function()
+					if InCombatLockdown() then
+						mMT:Print(ERR_NOT_IN_COMBAT)
+						return
+					end
+
+					local module = Module()
+					local data = mMT:GetImportData(importText, module.EXPORT_TYPE)
+					if data and module:ImportData(data) then
+						importText, exportText = "", nil
+						Refresh()
+						-- managed viewers and the tracker only switch with a reload
+						E:StaticPopup_Show("CONFIG_RL")
+					end
+				end,
+			},
+			text = {
+				order = 3,
+				type = "input",
+				name = L["Output/ Input"],
+				width = "full",
+				multiline = 10,
+				disableButton = true,
+				textChanged = function(text)
+					importText = text or ""
+					exportText = nil
+				end,
+				get = function()
+					return exportText or ""
+				end,
+				set = function() end,
+			},
+		},
+	}
+end
+
 mMT.options.args.cooldownmanager.args.general.args = {
 	enable = {
 		order = 1,
@@ -1023,6 +1086,7 @@ mMT.options.args.cooldownmanager.args.general.args = {
 			},
 		},
 	},
+	importexport = ImportExportGroup(5),
 }
 
 mMT.options.args.cooldownmanager.args.viewers.args.essential.args = IconViewer("essential", true)
