@@ -27,7 +27,6 @@ local UnitGUID = UnitGUID
 local IsUnitModelReadyForUI = IsUnitModelReadyForUI
 local C_Timer_NewTimer = C_Timer.NewTimer
 local CreateColor = CreateColor
-local issecretvalue = issecretvalue
 local C_ClassColor_GetClassColor = C_ClassColor and C_ClassColor.GetClassColor
 local EvalColor = C_CurveUtil and C_CurveUtil.EvaluateColorFromBoolean
 local GetSpecialization = C_SpecializationInfo.GetSpecialization or GetSpecialization
@@ -144,10 +143,7 @@ local function ApplyHealthEvents(element)
 	end
 end
 
-local function SafeValue(value)
-	if issecretvalue and issecretvalue(value) then return nil end
-	return value
-end
+local SafeValue = mMT.SafeValue
 
 -- a secret class token cannot be a table key, the game API answers it with a secret color
 local function GetClassColor(class)
@@ -582,10 +578,6 @@ local function UpdateCastIconStop(self)
 	Update(self, "ForceUpdate")
 end
 
-local function SimpleUpdate(self, event)
-	Update(self, event)
-end
-
 -- RegisterUnitEvent instead of RegisterEvent: unfiltered, every party portrait ran its handler for every unit in the game.
 local portraitUnitEvents = { "UNIT_PORTRAIT_UPDATE", "UNIT_MODEL_CHANGED", "UNIT_CONNECTION" }
 local castUnitEvents = {
@@ -698,9 +690,9 @@ local eventHandlers = {
 	UNIT_EXITED_VEHICLE = ForceUpdate,
 	VEHICLE_UPDATE = ForceUpdate,
 
-	PLAYER_TARGET_CHANGED = SimpleUpdate,
-	PLAYER_FOCUS_CHANGED = SimpleUpdate,
-	UNIT_TARGET = SimpleUpdate,
+	PLAYER_TARGET_CHANGED = Update,
+	PLAYER_FOCUS_CHANGED = Update,
+	UNIT_TARGET = Update,
 
 	-- roster changes reshuffle unit tokens without reliable per-token events - always force
 	GROUP_ROSTER_UPDATE = ForceUpdate,
@@ -712,10 +704,10 @@ local eventHandlers = {
 
 	ARENA_OPPONENT_UPDATE = Update,
 	UNIT_TARGETABLE_CHANGED = Update,
-	ARENA_PREP_OPPONENT_SPECIALIZATIONS = SimpleUpdate,
+	ARENA_PREP_OPPONENT_SPECIALIZATIONS = Update,
 	-- force: the boss1-bossN tokens become valid here without a GUID change
 	INSTANCE_ENCOUNTER_ENGAGE_UNIT = ForceUpdate,
-	UPDATE_ACTIVE_BATTLEFIELD = SimpleUpdate,
+	UPDATE_ACTIVE_BATTLEFIELD = Update,
 
 	UNIT_HEALTH = function(self, event)
 		if self.ringMode == "health" then UpdateRingHealth(self) end

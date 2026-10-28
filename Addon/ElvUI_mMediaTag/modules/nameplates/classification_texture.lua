@@ -18,10 +18,7 @@ local POWERTYPE_MANA = Enum.PowerType.Mana or 0
 local textures = {}
 local active, instanceOnly, inInstance, applies = false, false, false, false
 
-local function SafeValue(value)
-	if E:IsSecretValue(value) then return nil end
-	return value
-end
+local SafeValue = mMT.SafeValue
 
 -- mirrors E:GetClassificationType, which compares its raw API results and would taint on a unit with a hidden identity
 local function GetClassification(unit)

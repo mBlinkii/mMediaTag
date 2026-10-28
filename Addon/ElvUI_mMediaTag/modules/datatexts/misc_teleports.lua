@@ -779,19 +779,17 @@ function mMT:GetSeasonTeleport(challengeMapID)
 end
 
 -- activityIDs is a secret table on M+ search results; indexing or branching on a secret throws, only issecretvalue may probe it.
-local function PlainValue(value)
-	if not E:IsSecretValue(value) then return value end
-end
+local SafeValue = mMT.SafeValue
 
 -- instance mapID of a search result or entry, the same value GetInstanceInfo reports as instanceID
 local function GetActivityMapID(info)
-	info = PlainValue(info)
+	info = SafeValue(info)
 	if not info then return end
 
-	local ids = PlainValue(info.activityIDs)
-	local activityID = (ids and PlainValue(ids[1])) or PlainValue(info.activityID)
+	local ids = SafeValue(info.activityIDs)
+	local activityID = (ids and SafeValue(ids[1])) or SafeValue(info.activityID)
 	local activityInfo = activityID and C_LFGList.GetActivityInfoTable(activityID)
-	return activityInfo and PlainValue(activityInfo.mapID)
+	return activityInfo and SafeValue(activityInfo.mapID)
 end
 
 local function GetSearchResultMapID(resultID)
@@ -811,7 +809,7 @@ local function SeedLFGTarget()
 	if lfgTargetMapID then return end
 
 	for _, resultID in ipairs(C_LFGList.GetApplications() or {}) do
-		local appStatus = PlainValue(select(2, C_LFGList.GetApplicationInfo(resultID)))
+		local appStatus = SafeValue(select(2, C_LFGList.GetApplicationInfo(resultID)))
 		if appStatus == "inviteaccepted" then
 			joinedResultID = resultID
 			lfgTargetMapID = GetSearchResultMapID(resultID)
@@ -1250,14 +1248,10 @@ local function OnEvent(self)
 	self.text:SetFormattedText(textString, label)
 end
 
-local function OnLeave(self)
-	DT.tooltip:Hide()
-end
-
 local function ValueColorUpdate(self, hex)
-	local textHex = E.db.mMediaTag.datatexts.text.override_text and "|c" .. MEDIA.color.override_text.hex or hex
+	local textHex = mMT:GetDTColorHex(hex)
 	textString = strjoin("", textHex, "%s|r")
 	OnEvent(self)
 end
 
-DT:RegisterDatatext("mMT - Teleports", mMT.Name, nil, OnEvent, nil, OnClick, OnEnter, OnLeave, L["Teleports"], nil, ValueColorUpdate)
+DT:RegisterDatatext("mMT - Teleports", mMT.Name, nil, OnEvent, nil, OnClick, OnEnter, nil, L["Teleports"], nil, ValueColorUpdate)

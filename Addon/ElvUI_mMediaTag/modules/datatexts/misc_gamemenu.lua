@@ -365,7 +365,7 @@ local function OnEvent(self)
 end
 
 local function ValueColorUpdate(self, hex)
-	local textHex = E.db.mMediaTag.datatexts.text.override_text and "|c" .. MEDIA.color.override_text.hex or hex
+	local textHex = mMT:GetDTColorHex(hex)
 	textString = strjoin("", textHex, "%s|r")
 	OnEvent(self)
 end

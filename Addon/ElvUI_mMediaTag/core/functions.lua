@@ -197,10 +197,16 @@ function mMT:GetElvUIDataText(name)
 	if dt and dt.category ~= "Data Broker" then return dt end
 end
 
+-- text and value hex of a datatext, the mMT override colors win over ElvUI's value color
+function mMT:GetDTColorHex(hex)
+	local db = E.db.mMediaTag.datatexts.text
+	return db.override_text and "|c" .. MEDIA.color.override_text.hex or hex, db.override_value and "|c" .. MEDIA.color.override_value.hex or hex
+end
+
 function mMT:ConnectVirtualFrameToDataText(dataTextName, virtualFrame)
 	local dt = self:GetElvUIDataText(dataTextName)
 	if not dt or type(dt.applySettings) ~= "function" then return false end
-	if dt.applySettings then dt.applySettings(virtualFrame, E.media.hexvaluecolor) end
+	dt.applySettings(virtualFrame, E.media.hexvaluecolor)
 	return true
 end
 
@@ -244,6 +250,24 @@ function mMT:ForEachUFFrame(callback)
 			ForEachHeaderFrame(header, callback)
 		end
 	end
+end
+
+-- each options frame is hooked once per func, AceGUI can hand out a new frame on every open
+local configCloseHooks = {}
+function mMT:HookConfigClose(func)
+	local ACD = E.Libs.AceConfigDialog
+	local config = ACD and ACD.OpenFrames and ACD.OpenFrames.ElvUI
+	if not (config and config.frame) then return end
+
+	local hooked = configCloseHooks[func]
+	if not hooked then
+		hooked = {}
+		configCloseHooks[func] = hooked
+	end
+
+	if hooked[config.frame] then return end
+	hooked[config.frame] = true
+	config.frame:HookScript("OnHide", func)
 end
 
 function mMT:formatText(input, ignoreSkip)
@@ -560,14 +584,15 @@ local exportPrefix = "!mMT2!"
 local legacyPrefix = "!mMT!" -- LibDeflate/AceSerializer era, no longer decodable
 
 local function GetImportStringType(dataString)
-	return (strmatch(dataString, "^" .. exportPrefix) and "Deflate") or (strmatch(dataString, "^{") and "Table") or (strmatch(dataString, "^" .. legacyPrefix) and "Legacy") or ""
+	return (strmatch(dataString, "^" .. exportPrefix) and "Deflate") or (strmatch(dataString, "^" .. legacyPrefix) and "Legacy") or ""
 end
 
 -- nil for secret values (WoW 12.x) - those must never be compared, concatenated or branched on.
-local function SafeValue(value)
-	if issecretvalue and issecretvalue(value) then return nil end
+function mMT.SafeValue(value)
+	if issecretvalue(value) then return nil end
 	return value
 end
+local SafeValue = mMT.SafeValue
 
 -- nil for player GUIDs, missing GUIDs or the secret placeholder (" ").
 local function GetNpcID(guid)

@@ -4,7 +4,7 @@ local module = mMT:AddModule("MerchantKnown")
 local _G = _G
 local hooksecurefunc = hooksecurefunc
 local ipairs = ipairs
-local issecretvalue = _G.issecretvalue
+local issecretvalue = issecretvalue
 
 -- returns the db key of the color to use for the item
 local function GetState(index)
@@ -18,7 +18,7 @@ local function GetState(index)
 		if _G.TooltipUtil and _G.TooltipUtil.SurfaceArgs then _G.TooltipUtil.SurfaceArgs(line) end
 
 		local text = line.leftText
-		if text and not (issecretvalue and issecretvalue(text)) then
+		if text and not issecretvalue(text) then
 			if module.db.known and text == _G.ITEM_SPELL_KNOWN then return "color" end
 			if module.db.appearance and text == _G.TRANSMOGRIFY_TOOLTIP_APPEARANCE_UNKNOWN then state = "appearanceColor" end
 		end

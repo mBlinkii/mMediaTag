@@ -271,6 +271,7 @@ end
 
 -- shared with the enrage icon module
 mMT.FrameHighlight = { Create = CreateHighlightParts, Anchor = AnchorHighlightParts, Show = ShowPlainHighlight }
+mMT.AuraIconRow = { DB = HighlightDB, Flow = Flow, SetupHolder = SetupHolder, HideAll = HideAll }
 
 -- icons and highlight for classic and the demo on plain frames
 local function GetPlainEntry(frame, key)
@@ -606,20 +607,13 @@ local function UpdateFrame(frame)
 	UpdateDemo(frame)
 end
 
-local function HookConfigClose()
-	local ACD = E.Libs.AceConfigDialog
-	local config = ACD and ACD.OpenFrames and ACD.OpenFrames.ElvUI
-	if not (config and config.frame) or module.configHooked == config.frame then return end
-
-	module.configHooked = config.frame
-	config.frame:HookScript("OnHide", function()
-		if module.demoActive then module:ToggleDemo() end
-	end)
+local function OnConfigClose()
+	if module.demoActive then module:ToggleDemo() end
 end
 
 function module:ToggleDemo()
 	module.demoActive = not module.demoActive and E.db.mMediaTag.dispel_icon.enable
-	if module.demoActive then HookConfigClose() end
+	if module.demoActive then mMT:HookConfigClose(OnConfigClose) end
 
 	mMT:ForEachUFFrame(function(frame)
 		if IsUnitframe(frame) then UpdateDemo(frame) end

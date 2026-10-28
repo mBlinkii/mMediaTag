@@ -108,9 +108,7 @@ local function Details(activity, difficulty)
 end
 
 -- activityIDs and groupName are secret on results read inside an instance; indexing or branching on a secret throws, only issecretvalue may probe it
-local function PlainValue(value)
-	if not E:IsSecretValue(value) then return value end
-end
+local SafeValue = mMT.SafeValue
 
 local function SetInfo(location, activity, difficulty, group)
 	local screen = module.info_screen
@@ -535,9 +533,9 @@ function module:Initialize(demo)
 end
 
 function module:LFG_LIST_JOINED_GROUP(_, searchResultID, groupName)
-	local searchResultData = PlainValue(GetSearchResultInfo(searchResultID))
-	local ids = searchResultData and PlainValue(searchResultData.activityIDs)
-	local id = ids and PlainValue(ids[1])
+	local searchResultData = SafeValue(GetSearchResultInfo(searchResultID))
+	local ids = searchResultData and SafeValue(searchResultData.activityIDs)
+	local id = ids and SafeValue(ids[1])
 
 	if not id then return end
 
@@ -546,15 +544,15 @@ function module:LFG_LIST_JOINED_GROUP(_, searchResultID, groupName)
 	local difficulty, activity = "", ""
 
 	if activityInfo then
-		difficulty = GetDifficultyInfo(PlainValue(activityInfo.difficultyID)) or fullName:match("%((.-)%)") or ""
+		difficulty = GetDifficultyInfo(SafeValue(activityInfo.difficultyID)) or fullName:match("%((.-)%)") or ""
 		activity = activityInfo.shortName or activityInfo.fullName or ""
 	end
 
 	local location = gsub(fullName, "%s*%(.-%)%s*$", "")
-	local group = PlainValue(groupName) or ""
+	local group = SafeValue(groupName) or ""
 
 	SetInfo(location, activity, difficulty, group)
-	module.dungeonMapID = activityInfo and PlainValue(activityInfo.mapID)
+	module.dungeonMapID = activityInfo and SafeValue(activityInfo.mapID)
 	UpdateKeys()
 	if module.db.keystones and module.dungeonMapID then mMT:RequestGroupKeystones() end
 

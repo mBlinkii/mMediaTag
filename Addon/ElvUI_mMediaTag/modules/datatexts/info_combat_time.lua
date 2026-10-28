@@ -79,8 +79,7 @@ local function OnEvent(self, event, _, timeSeconds)
 end
 
 local function ValueColorUpdate(self, hex)
-	local textHex = E.db.mMediaTag.datatexts.text.override_text and "|c" .. MEDIA.color.override_text.hex or hex
-	local valueHex = E.db.mMediaTag.datatexts.text.override_value and "|c" .. MEDIA.color.override_value.hex or hex
+	local textHex, valueHex = mMT:GetDTColorHex(hex)
 	textString = strjoin("", textHex, "%s|r")
 	valueString = strjoin("", valueHex, "%s|r")
 	OnEvent(self)

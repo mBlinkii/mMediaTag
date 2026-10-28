@@ -200,12 +200,8 @@ local function OnEvent(self, event)
 	self.text:SetFormattedText(textString, text)
 end
 
-local function OnLeave(self)
-	DT.tooltip:Hide()
-end
-
 local function ValueColorUpdate(self, hex)
-	local textHex = E.db.mMediaTag.datatexts.text.override_text and "|c" .. MEDIA.color.override_text.hex or hex
+	local textHex = mMT:GetDTColorHex(hex)
 	textString = strjoin("", textHex, "%s|r")
 
 	OnEvent(self)
@@ -213,4 +209,4 @@ end
 
 local events = { "CHALLENGE_MODE_START", "UPDATE_INSTANCE_INFO", "SCENARIO_UPDATE", "PLAYER_DIFFICULTY_CHANGED", "LFG_UPDATE_RANDOM_INFO" }
 
-DT:RegisterDatatext("mMT - Dungeon", mMT.Name, events, OnEvent, nil, OnClick, OnEnter, OnLeave, L["Dungeon"], nil, ValueColorUpdate)
+DT:RegisterDatatext("mMT - Dungeon", mMT.Name, events, OnEvent, nil, OnClick, OnEnter, nil, L["Dungeon"], nil, ValueColorUpdate)

@@ -254,7 +254,6 @@ function mMT:UpdateMedia(arg)
 			return set
 		end
 
-		MEDIA.color.portraits = nil
 		MEDIA.color.portraits = {
 			misc = createColorSet(E.db.mMediaTag.color.portraits.misc),
 			class = createColorSet(E.db.mMediaTag.color.portraits.class),

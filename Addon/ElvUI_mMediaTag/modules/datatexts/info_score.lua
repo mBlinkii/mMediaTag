@@ -213,10 +213,6 @@ local function OnClick(self, button)
 	end
 end
 
-local function OnLeave(self)
-	DT.tooltip:Hide()
-end
-
 local function FormatUnitInfo(unit, unitName, keystoneInfo, unitGear)
 	local isLeader = E:NotSecretUnit(unit) and UnitIsGroupLeader(unit)
 	local iLevelStr = ""
@@ -377,8 +373,7 @@ local function OnEvent(self, event, ...)
 end
 
 local function ValueColorUpdate(self, hex)
-	local textHex = E.db.mMediaTag.datatexts.text.override_text and "|c" .. MEDIA.color.override_text.hex or hex
-	local valueHex = E.db.mMediaTag.datatexts.text.override_value and "|c" .. MEDIA.color.override_value.hex or hex
+	local textHex, valueHex = mMT:GetDTColorHex(hex)
 	textString = strjoin("", textHex, "%s|r")
 	valueString = strjoin("", valueHex, "%s|r")
 	OnEvent(self)
@@ -397,4 +392,4 @@ local events = {
 	"ITEM_CHANGED",
 }
 
-DT:RegisterDatatext("mMT - M+ Score", mMT.Name, events, OnEvent, nil, OnClick, OnEnter, OnLeave, L["M+ Score"], nil, ValueColorUpdate)
+DT:RegisterDatatext("mMT - M+ Score", mMT.Name, events, OnEvent, nil, OnClick, OnEnter, nil, L["M+ Score"], nil, ValueColorUpdate)

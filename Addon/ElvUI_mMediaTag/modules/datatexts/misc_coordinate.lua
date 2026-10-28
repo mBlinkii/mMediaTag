@@ -34,7 +34,7 @@ local function Click()
 end
 
 local function ValueColorUpdate(self, hex)
-	local valueHex = E.db.mMediaTag.datatexts.text.override_value and "|c" .. MEDIA.color.override_value.hex or hex
+	local _, valueHex = mMT:GetDTColorHex(hex)
 
 	valueString = strjoin("", valueHex, "%.2f|r")
 	OnEvent(self)

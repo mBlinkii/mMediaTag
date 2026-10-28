@@ -34,6 +34,8 @@ local tonumber = tonumber
 local pairs = pairs
 local next = next
 local type = type
+local ipairs = ipairs
+local unpack = unpack
 
 local db = {}
 local colors = MEDIA.color.tags
@@ -252,15 +254,16 @@ local function GetTagClassification(unit)
 	return c
 end
 
+-- up to three args limit the tag to these classifications
+local function ArgsAllow(c, args)
+	if not args then return true end
+	local arg1, arg2, arg3 = strsplit(":", args)
+	return c == arg1 or c == arg2 or c == arg3
+end
+
 E:AddTag("mMT-classification", "UNIT_CLASSIFICATION_CHANGED INSTANCE_ENCOUNTER_ENGAGE_UNIT", function(unit, _, args)
 	local c = GetTagClassification(unit)
-	if not c then return end
-
-	if args then
-		local arg1, arg2, arg3 = strsplit(":", args)
-		if c == arg1 or c == arg2 or c == arg3 then return colors[c] and classificationsLabels[c] and colors[c]:WrapTextInColorCode(classificationsLabels[c]) end
-		return -- args set, but no match → show nothing
-	end
+	if not (c and ArgsAllow(c, args)) then return end
 
 	return colors[c] and classificationsLabels[c] and colors[c]:WrapTextInColorCode(classificationsLabels[c])
 end)
@@ -272,13 +275,7 @@ E:AddTagInfo(
 
 E:AddTag("mMT-classification:short", "UNIT_CLASSIFICATION_CHANGED INSTANCE_ENCOUNTER_ENGAGE_UNIT", function(unit, _, args)
 	local c = GetTagClassification(unit)
-	if not c then return end
-
-	if args then
-		local arg1, arg2, arg3 = strsplit(":", args)
-		if c == arg1 or c == arg2 or c == arg3 then return colors[c] and shortClassificationsLabels[c] and colors[c]:WrapTextInColorCode(shortClassificationsLabels[c]) end
-		return -- args set, but no match → show nothing
-	end
+	if not (c and ArgsAllow(c, args)) then return end
 
 	return colors[c] and shortClassificationsLabels[c] and colors[c]:WrapTextInColorCode(shortClassificationsLabels[c])
 end)
@@ -286,13 +283,7 @@ E:AddTagInfo("mMT-classification:short", mMT.NameShort .. " " .. L["Classificati
 
 E:AddTag("mMT-classification:icon", "UNIT_CLASSIFICATION_CHANGED INSTANCE_ENCOUNTER_ENGAGE_UNIT", function(unit, _, args)
 	local c = GetTagClassification(unit)
-	if not c then return end
-
-	if args then
-		local arg1, arg2, arg3 = strsplit(":", args)
-		if c == arg1 or c == arg2 or c == arg3 then return classificationIconStrings[c] or "" end
-		return -- args set, but no match → show nothing
-	end
+	if not (c and ArgsAllow(c, args)) then return end
 
 	return classificationIconStrings[c] or ""
 end)
@@ -340,10 +331,7 @@ local function GetColorCode(unit, args, classcolor)
 	local c = GetTagClassification(unit)
 	local classification = c and colors[c]
 
-	if args and c then
-		local arg1, arg2, arg3 = strsplit(":", args)
-		if c ~= arg1 and c ~= arg2 and c ~= arg3 then classification = nil end
-	end
+	if c and not ArgsAllow(c, args) then classification = nil end
 
 	-- ElvUIs classcolor branches on UnitIsPlayer and would throw on a secret unit
 	if E:IsSecretUnit(unit) then return GetSecretColorCode(unit, classification or E.oUF.colors.reaction[2]) end
@@ -367,55 +355,26 @@ E:AddTag("mMT-color:target", "UNIT_TARGET", function(unit, _, args)
 end)
 E:AddTagInfo("mMT-color:target", mMT.NameShort .. " " .. L["Color"], L["Same as mMT-color, but only for the units target."])
 
-E:AddTag("mMT-health", "UNIT_HEALTH UNIT_MAXHEALTH", function(unit)
-	local currentHealth = UnitHealth(unit)
-	if UnitAffectingCombat(unit) then
-		return _TAGS.perhp(unit)
-	else
-		return E:AbbreviateNumbers(currentHealth, E.Abbreviate["long"])
-	end
-end)
-E:AddTagInfo("mMT-health", mMT.NameShort .. " " .. L["Health"], L["Returns the current health of the unit (changes between current health and percent in combat)."])
+-- the nodecimal data is rebuilt in Initialize, so it is looked up per call
+local function HealthText(unit, style)
+	return E:AbbreviateNumbers(UnitHealth(unit), style == "nodecimal" and noDecData or E.Abbreviate[style])
+end
 
-E:AddTag("mMT-health:short", "UNIT_HEALTH UNIT_MAXHEALTH", function(unit)
-	local currentHealth = UnitHealth(unit)
-	if UnitAffectingCombat(unit) then
-		return _TAGS.perhp(unit)
-	else
-		return E:AbbreviateNumbers(currentHealth, E.Abbreviate["short"])
-	end
-end)
-E:AddTagInfo("mMT-health:short", mMT.NameShort .. " " .. L["Health"], L["Short Version."])
-
-E:AddTag("mMT-health:short:nodecimal", "UNIT_HEALTH UNIT_MAXHEALTH", function(unit)
-	local currentHealth = UnitHealth(unit)
-	if UnitAffectingCombat(unit) then
-		return _TAGS.perhp(unit)
-	else
-		return E:AbbreviateNumbers(currentHealth, noDecData)
-	end
-end)
-E:AddTagInfo("mMT-health:short:nodecimal", mMT.NameShort .. " " .. L["Health"], "Short Version. (No Decimal)")
-
-E:AddTag("mMT-health:current", "UNIT_HEALTH UNIT_MAXHEALTH", function(unit)
-	local currentHealth = UnitHealth(unit)
-
-	return E:AbbreviateNumbers(currentHealth, E.Abbreviate["long"])
-end)
-E:AddTagInfo("mMT-health:current", mMT.NameShort .. " " .. L["Health"], L["Returns the current health of the unit."])
-
-E:AddTag("mMT-health:current:short", "UNIT_HEALTH UNIT_MAXHEALTH", function(unit)
-	local currentHealth = UnitHealth(unit)
-
-	return E:AbbreviateNumbers(currentHealth, E.Abbreviate["short"])
-end)
-E:AddTagInfo("mMT-health:current:short", mMT.NameShort .. " " .. L["Health"], L["Short Version."])
-
-E:AddTag("mMT-health:current:short:nodecimal", "UNIT_HEALTH UNIT_MAXHEALTH", function(unit)
-	local currentHealth = UnitHealth(unit)
-	return E:AbbreviateNumbers(currentHealth, noDecData)
-end)
-E:AddTagInfo("mMT-health:current:short:nodecimal", mMT.NameShort .. " " .. L["Health"], "Short Version. (No Decimal)")
+for _, info in ipairs({
+	{ "mMT-health", "long", true, L["Returns the current health of the unit (changes between current health and percent in combat)."] },
+	{ "mMT-health:short", "short", true, L["Short Version."] },
+	{ "mMT-health:short:nodecimal", "nodecimal", true, "Short Version. (No Decimal)" },
+	{ "mMT-health:current", "long", false, L["Returns the current health of the unit."] },
+	{ "mMT-health:current:short", "short", false, L["Short Version."] },
+	{ "mMT-health:current:short:nodecimal", "nodecimal", false, "Short Version. (No Decimal)" },
+}) do
+	local tag, style, percentInCombat, desc = unpack(info)
+	E:AddTag(tag, "UNIT_HEALTH UNIT_MAXHEALTH", function(unit)
+		if percentInCombat and UnitAffectingCombat(unit) then return _TAGS.perhp(unit) end
+		return HealthText(unit, style)
+	end)
+	E:AddTagInfo(tag, mMT.NameShort .. " " .. L["Health"], desc)
+end
 
 E:AddTag("mMT-health:percent", "UNIT_HEALTH UNIT_MAXHEALTH", function(unit)
 	if UnitAffectingCombat(unit) then return _TAGS.perhp(unit) end
@@ -627,6 +586,7 @@ function module:Initialize()
 	db = E.db.mMediaTag.tags
 
 	mMT:UpdateMedia("tags")
+	noDecData = nil
 	GetNoDecData()
 	RebuildRoleTables()
 	RebuildClassificationIcons()

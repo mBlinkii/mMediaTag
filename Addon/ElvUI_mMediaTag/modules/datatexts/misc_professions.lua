@@ -193,10 +193,6 @@ local function UpdateMenu()
 	if not player_professions.main and not player_professions.secondary and not player_professions.extra then tinsert(menu, { text = mMT:TC(L["No Professions"], "red"), notClickable = true }) end
 end
 
-local function OnLeave(self)
-	DT.tooltip:Hide()
-end
-
 local function OnEvent(self)
 	local label = TRADE_SKILLS
 	if E.db.mMediaTag.datatexts.professions.icon ~= "none" then
@@ -223,9 +219,9 @@ local function OnClick(self)
 end
 
 local function ValueColorUpdate(self, hex)
-	local textHex = E.db.mMediaTag.datatexts.text.override_text and "|c" .. MEDIA.color.override_text.hex or hex
+	local textHex = mMT:GetDTColorHex(hex)
 	textString = strjoin("", textHex, "%s|r")
 	OnEvent(self)
 end
 
-DT:RegisterDatatext("mMT - Professions", mMT.Name, nil, OnEvent, nil, OnClick, OnEnter, OnLeave, TRADE_SKILLS, nil, ValueColorUpdate)
+DT:RegisterDatatext("mMT - Professions", mMT.Name, nil, OnEvent, nil, OnClick, OnEnter, nil, TRADE_SKILLS, nil, ValueColorUpdate)

@@ -109,10 +109,6 @@ local function OnEnter(self)
 	DT.tooltip:Show()
 end
 
-local function OnLeave(self)
-	DT.tooltip:Hide()
-end
-
 local function GetDurability()
 	totalDurability = 100
 	totalRepairCost = 0
@@ -212,4 +208,4 @@ local function ValueColorUpdate(self, hex)
 	OnEvent(self)
 end
 
-DT:RegisterDatatext("mMT - Durability & ItemLevel", mMT.Name, "UPDATE_INVENTORY_DURABILITY", OnEvent, nil, OnClick, OnEnter, OnLeave, "Durability & ItemLevel", nil, ValueColorUpdate)
+DT:RegisterDatatext("mMT - Durability & ItemLevel", mMT.Name, "UPDATE_INVENTORY_DURABILITY", OnEvent, nil, OnClick, OnEnter, nil, "Durability & ItemLevel", nil, ValueColorUpdate)

@@ -27,14 +27,10 @@ local EVENT_UNITS = { PLAYER_TARGET_CHANGED = "target", PLAYER_FOCUS_CHANGED = "
 local ALL_UNITS = { INSTANCE_ENCOUNTER_ENGAGE_UNIT = true, ARENA_OPPONENT_UPDATE = true }
 -- ElvUI keeps one aura container per plate name as well, created before any plate exists
 local PLATETOKENS = 40
-local FLOW = {
-	RIGHT = { anchor = "TOPLEFT", x = 1, y = 0, growth = "RIGHT_DOWN" },
-	LEFT = { anchor = "TOPRIGHT", x = -1, y = 0, growth = "LEFT_DOWN" },
-	UP = { anchor = "BOTTOMLEFT", x = 0, y = 1, growth = "UP_RIGHT" },
-	DOWN = { anchor = "TOPLEFT", x = 0, y = -1, growth = "DOWN_RIGHT" },
-}
 
 local Highlight = mMT.FrameHighlight
+local Row = mMT.AuraIconRow
+local HighlightDB, Flow, SetupHolder, HideAll = Row.DB, Row.Flow, Row.SetupHolder, Row.HideAll
 local DebuffColors = E.Libs.Dispel:GetDebuffTypeColor()
 local frames, plates = {}, {}
 
@@ -57,32 +53,9 @@ local function UnitDB(frame)
 	return db and db.enable and elvui and db or nil
 end
 
-local function HighlightDB(db)
-	return db and db.highlight.enable and db.highlight or nil
-end
-
 -- target and focus can be friendly, enrages only matter on units you can attack
 local function Allowed(db, unit)
 	return (db and unit and UnitCanAttack("player", unit)) or false
-end
-
-local function Flow(db)
-	return FLOW[db.growth] or FLOW.RIGHT
-end
-
-local function SetupHolder(holder, frame, db)
-	local horizontal = Flow(db).x ~= 0
-	local length = db.count * db.size + (db.count - 1) * db.spacing
-
-	holder:ClearAllPoints()
-	holder:SetPoint(db.point, frame.Health, db.point, db.x, db.y)
-	holder:SetSize(horizontal and length or db.size, horizontal and db.size or length)
-end
-
-local function HideAll(list)
-	for _, region in next, list do
-		region:Hide()
-	end
 end
 
 -- spell icon in a pixel border of the enrage color, the swipe shows the remaining time
@@ -481,20 +454,13 @@ function module:OnEvent(event, unit)
 	end
 end
 
-local function HookConfigClose()
-	local ACD = E.Libs.AceConfigDialog
-	local config = ACD and ACD.OpenFrames and ACD.OpenFrames.ElvUI
-	if not (config and config.frame) or module.configHooked == config.frame then return end
-
-	module.configHooked = config.frame
-	config.frame:HookScript("OnHide", function()
-		if module.demoActive then module:ToggleDemo() end
-	end)
+local function OnConfigClose()
+	if module.demoActive then module:ToggleDemo() end
 end
 
 function module:ToggleDemo()
 	module.demoActive = not module.demoActive and E.db.mMediaTag.enrage_icon.enable
-	if module.demoActive then HookConfigClose() end
+	if module.demoActive then mMT:HookConfigClose(OnConfigClose) end
 
 	for frame in next, frames do
 		UpdateDemo(frame)

@@ -111,10 +111,6 @@ local function OnEnter(self)
 	DT.tooltip:Show()
 end
 
-local function OnLeave(self)
-	DT.tooltip:Hide()
-end
-
 local function ValueColorUpdate(self, hex)
 	local db = E.db.mMediaTag.datatexts.tracker
 	-- on a profile switch ElvUI's applySettings runs before mMT:UpdateAll (E:Delay), so an unknown ID falls back to ElvUI's value color
@@ -178,7 +174,7 @@ function module:Initialize()
 						nil,
 						nil,
 						OnEnter,
-						OnLeave,
+						nil,
 						"mMT - " .. info.name,
 						nil,
 						ValueColorUpdate
@@ -193,7 +189,7 @@ function module:Initialize()
 						nil,
 						nil,
 						OnEnter,
-						OnLeave,
+						nil,
 						"mMT - " .. info.name .. " (" .. id .. ")",
 						nil,
 						ValueColorUpdate

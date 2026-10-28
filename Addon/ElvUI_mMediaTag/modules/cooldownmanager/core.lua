@@ -221,25 +221,17 @@ local function HookElvUISkins()
 end
 
 local configOpen = false
-local hookedConfigFrames = {}
 
-local function HookConfigClose()
-	local ACD = E.Libs.AceConfigDialog
-	local frame = ACD and ACD.OpenFrames and ACD.OpenFrames.ElvUI
-	if not frame or not frame.frame or hookedConfigFrames[frame.frame] then return end
-
-	hookedConfigFrames[frame.frame] = true
-	frame.frame:HookScript("OnHide", function()
-		configOpen = false
-		module:HideBlizzardSettings()
-		module:SetDemo(false)
-		module:HideSpellPanels()
-	end)
+local function OnConfigClose()
+	configOpen = false
+	module:HideBlizzardSettings()
+	module:SetDemo(false)
+	module:HideSpellPanels()
 end
 
 local function HandleGroupChange(appName, isCDM)
 	if appName ~= "ElvUI" then return end
-	HookConfigClose()
+	mMT:HookConfigClose(OnConfigClose)
 
 	if isCDM and not configOpen then
 		configOpen = true

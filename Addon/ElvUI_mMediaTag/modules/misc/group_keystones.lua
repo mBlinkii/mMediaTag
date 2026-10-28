@@ -30,9 +30,7 @@ local lastKeys = {}
 local listeners = {}
 local LOR, LKS, sourcesReady
 
-local function PlainValue(value)
-	if not E:IsSecretValue(value) then return value end
-end
+local SafeValue = mMT.SafeValue
 
 local function ValidKey(level, challengeMapID)
 	return level and challengeMapID and level > 0 and challengeMapID > 0
@@ -78,7 +76,7 @@ end
 
 -- a reply sent while the keystone API is not ready reports no key, so the last valid key of a player is kept
 local function GetUnitKeystone(unit)
-	local name = PlainValue(GetUnitName(unit, true))
+	local name = SafeValue(GetUnitName(unit, true))
 	local level, challengeMapID = ReadUnitKeystone(unit, name)
 	local last = name and lastKeys[name]
 
@@ -162,7 +160,7 @@ end
 local function SetRow(row, unit)
 	local level, challengeMapID = GetUnitKeystone(unit)
 	local _, class = UnitClass(unit)
-	local name = PlainValue(GetUnitName(unit, false)) or ""
+	local name = SafeValue(GetUnitName(unit, false)) or ""
 	local classColor = class and GetClassColor(class)
 	row.name:SetText(classColor and classColor:WrapTextInColorCode(name) or name)
 

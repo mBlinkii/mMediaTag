@@ -13,9 +13,7 @@ local CreateFrame = CreateFrame
 local GetQuestDifficultyColor = GetQuestDifficultyColor
 local C_QuestLog = C_QuestLog
 local QUEST_DASH = QUEST_DASH
-local issecretvalue = _G.issecretvalue or function()
-	return false
-end
+local issecretvalue = issecretvalue
 
 local db, fonts, colors
 

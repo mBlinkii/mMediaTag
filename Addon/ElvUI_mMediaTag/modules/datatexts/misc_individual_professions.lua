@@ -70,10 +70,6 @@ local function OnEnter(self)
 	DT.tooltip:Show()
 end
 
-local function OnLeave(self)
-	DT.tooltip:Hide()
-end
-
 local function OnEvent(self, event)
 	-- always refresh, cached indices go stale after learning or unlearning a profession
 	UpdatePlayerProfessions()
@@ -104,12 +100,11 @@ local function OnClick(self)
 end
 
 local function ValueColorUpdate(self, hex)
-	local textHex = E.db.mMediaTag.datatexts.text.override_text and "|c" .. MEDIA.color.override_text.hex or hex
-	local valueHex = E.db.mMediaTag.datatexts.text.override_value and "|c" .. MEDIA.color.override_value.hex or hex
+	local textHex, valueHex = mMT:GetDTColorHex(hex)
 	textString, valueString = strjoin("", textHex, "%s|r"), strjoin("", valueHex, "%s|r")
 	OnEvent(self)
 end
 
 for name, data in pairs(professions) do
-	DT:RegisterDatatext(name, mMT.Name, { "TRADE_SKILL_DETAILS_UPDATE", "SKILL_LINES_CHANGED" }, OnEvent, nil, OnClick, OnEnter, OnLeave, data.name, nil, ValueColorUpdate)
+	DT:RegisterDatatext(name, mMT.Name, { "TRADE_SKILL_DETAILS_UPDATE", "SKILL_LINES_CHANGED" }, OnEvent, nil, OnClick, OnEnter, nil, data.name, nil, ValueColorUpdate)
 end
