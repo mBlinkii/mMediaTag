@@ -1,7 +1,10 @@
 # Changelog - ElvUI_mMediaTag
 
 ## [ver. 4.19] - TBD
+### 🐛 FIX
+- FIX - [Options]: The game froze when a right click on an mMT mover opened its settings page after the mMT settings had been open before.
 ### 🔧 UPDATE
+- UPDATE - [Buff-Reminder]: The reminder can hide after a set time and shows again when you enter a dungeon or raid.
 - UPDATE - [Dispel-Icon]: The icons can be turned off to only use the frame highlight.
 ### ✨ NEW
 - NEW - [Enrage-Icon]: New module that shows enrage effects on the target, focus, boss and arena unitframes and on enemy nameplates as icons and can optionally highlight the frame.
