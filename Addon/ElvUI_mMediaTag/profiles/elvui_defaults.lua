@@ -163,6 +163,7 @@ P.buff_reminder = {
 		duration = 25,
 	},
 	animation = true,
+	hide_after = 0,
 	glow = {
 		enable = false,
 		color = "FFFFC71A",

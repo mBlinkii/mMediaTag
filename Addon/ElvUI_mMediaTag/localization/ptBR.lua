@@ -768,6 +768,8 @@ L["Shows icons for missing raid buffs, consumables, weapon enchants and class bu
 L["Also reminds you when group members in range are missing your raid buff."] = "Também avisa quando membros do grupo ao alcance estão sem o seu bônus de raide."
 L["Buffs and enchants with less time left count as missing. 0 only reminds when they are gone."] = "Bônus e encantamentos com menos tempo restante contam como ausentes. 0 só avisa quando acabarem."
 L["Fades the reminder in and out. Entering combat always hides it at once."] = "Faz o lembrete aparecer e sumir gradualmente. Entrar em combate sempre o oculta imediatamente."
+L["Hide after (seconds)"] = "Ocultar após (segundos)"
+L["Hides the reminder this many seconds after it was shown. It shows again when you enter a dungeon or raid. 0 keeps it shown."] = "Oculta o lembrete esta quantidade de segundos depois de exibido. Ele reaparece ao entrar em uma masmorra ou raide. 0 o mantém visível."
 L["Lets the icons of buffs and enchants glow that are about to expire."] = "Faz brilhar os ícones de bônus e encantamentos prestes a expirar."
 L["Check group members"] = "Verificar membros do grupo"
 L["Checks"] = "Verificações"

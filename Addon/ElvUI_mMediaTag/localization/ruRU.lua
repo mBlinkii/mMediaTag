@@ -768,6 +768,8 @@ L["Shows icons for missing raid buffs, consumables, weapon enchants and class bu
 L["Also reminds you when group members in range are missing your raid buff."] = "Также напоминает, если у участников группы в радиусе нет вашего рейдового баффа."
 L["Buffs and enchants with less time left count as missing. 0 only reminds when they are gone."] = "Баффы и чары с меньшим остатком времени считаются отсутствующими. 0 напоминает только после их окончания."
 L["Fades the reminder in and out. Entering combat always hides it at once."] = "Плавно показывает и скрывает напоминание. При входе в бой оно всегда скрывается сразу."
+L["Hide after (seconds)"] = "Скрыть через (секунды)"
+L["Hides the reminder this many seconds after it was shown. It shows again when you enter a dungeon or raid. 0 keeps it shown."] = "Скрывает напоминание через указанное число секунд после показа. Оно снова появляется при входе в подземелье или рейд. 0 оставляет его видимым."
 L["Lets the icons of buffs and enchants glow that are about to expire."] = "Подсвечивает значки баффов и чар, которые скоро закончатся."
 L["Check group members"] = "Проверять участников группы"
 L["Checks"] = "Проверки"

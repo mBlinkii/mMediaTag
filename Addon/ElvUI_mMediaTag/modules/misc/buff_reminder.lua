@@ -54,6 +54,7 @@ local GetSpecializationInfo = C_SpecializationInfo.GetSpecializationInfo or GetS
 local ShouldAurasBeSecret = C_Secrets and C_Secrets.ShouldAurasBeSecret
 local C_Timer_After = C_Timer.After
 local C_Timer_NewTicker = C_Timer.NewTicker
+local C_Timer_NewTimer = C_Timer.NewTimer
 
 local LSM = E.Libs.LSM
 local LCG = LibStub("LibCustomGlow-1.0", true)
@@ -779,6 +780,20 @@ local function SetAction(button, action)
 	end
 end
 
+local function StopHideTimer()
+	if module.hideTimer then
+		module.hideTimer:Cancel()
+		module.hideTimer = nil
+	end
+end
+
+-- the reminder stays hidden after the hide time until the next dungeon or raid
+local function Expire()
+	module.hideTimer = nil
+	module.expired = true
+	Update()
+end
+
 function Update()
 	updateQueued = nil
 	local frame = module.frame
@@ -787,7 +802,7 @@ function Update()
 	-- the state driver hides the buttons in combat, leaving combat updates them again
 	if InCombatLockdown() then return end
 
-	if not (module.isEnabled and ShouldCheck()) then
+	if not (module.isEnabled and ShouldCheck()) or (module.expired and not module.demo) then
 		HideFlyout()
 		HideFrame()
 		return
@@ -796,6 +811,7 @@ function Update()
 	Collect()
 	local count = #missing
 	if count == 0 then
+		StopHideTimer()
 		HideFlyout()
 		HideFrame()
 		return
@@ -823,6 +839,8 @@ function Update()
 	end
 
 	ShowFrame()
+
+	if not (module.hideTimer or module.demo) and module.db.hide_after > 0 then module.hideTimer = C_Timer_NewTimer(module.db.hide_after, Expire) end
 
 	if flyout and flyout:IsShown() then
 		local owner = flyout.owner
@@ -940,6 +958,9 @@ local function UpdateEntry()
 	if instanceID ~= module.entryInstance then
 		module.entryInstance = instanceID
 		module.entryActive = true
+		-- a new dungeon or raid shows the reminder again for the hide time
+		StopHideTimer()
+		module.expired = nil
 	end
 end
 
@@ -973,6 +994,7 @@ function module:Initialize(demo)
 			module:UnregisterAllEvents()
 			module.isEnabled = false
 			StopTicker()
+			StopHideTimer()
 			HideFlyout()
 			Update()
 		end
@@ -984,6 +1006,9 @@ function module:Initialize(demo)
 
 	if not module.frame then CreateReminderFrame() end
 	bagsDirty = true
+	-- a changed setting starts the hide time again
+	StopHideTimer()
+	module.expired = nil
 	-- the loading screen is usually over before the module starts, a reload inside an instance counts as entering it
 	if not InCombatLockdown() then UpdateEntry() end
 

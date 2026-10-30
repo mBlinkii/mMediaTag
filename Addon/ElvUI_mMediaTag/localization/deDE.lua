@@ -833,6 +833,8 @@ L["Shows icons for missing raid buffs, consumables, weapon enchants and class bu
 L["Also reminds you when group members in range are missing your raid buff."] = "Erinnert dich auch, wenn Gruppenmitgliedern in Reichweite dein Raidbuff fehlt."
 L["Buffs and enchants with less time left count as missing. 0 only reminds when they are gone."] = "Buffs und Verzauberungen mit weniger Restzeit gelten als fehlend. 0 erinnert erst, wenn sie weg sind."
 L["Fades the reminder in and out. Entering combat always hides it at once."] = "Blendet die Erinnerung weich ein und aus. Bei Kampfbeginn verschwindet sie immer sofort."
+L["Hide after (seconds)"] = "Ausblenden nach (Sekunden)"
+L["Hides the reminder this many seconds after it was shown. It shows again when you enter a dungeon or raid. 0 keeps it shown."] = "Blendet die Erinnerung so viele Sekunden nach dem Anzeigen aus. Beim Betreten eines Dungeons oder Raids erscheint sie wieder. 0 lässt sie sichtbar."
 L["Lets the icons of buffs and enchants glow that are about to expire."] = "Lässt die Symbole von Buffs und Verzauberungen leuchten, die bald ablaufen."
 L["Minimum Duration"] = "Mindestdauer"
 L["Minimum duration (minutes)"] = "Mindestdauer (Minuten)"

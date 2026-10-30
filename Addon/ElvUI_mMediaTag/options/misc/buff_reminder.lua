@@ -143,6 +143,18 @@ mMT.options.args.group.args.group_tools.args.buff_reminder.args = {
 				get = get,
 				set = set,
 			},
+			hide_after = {
+				order = 7,
+				type = "range",
+				name = L["Hide after (seconds)"],
+				desc = L["Hides the reminder this many seconds after it was shown. It shows again when you enter a dungeon or raid. 0 keeps it shown."],
+				min = 0,
+				max = 300,
+				step = 1,
+				bigStep = 5,
+				get = get,
+				set = set,
+			},
 		},
 	},
 	entry = {

@@ -768,6 +768,8 @@ L["Shows icons for missing raid buffs, consumables, weapon enchants and class bu
 L["Also reminds you when group members in range are missing your raid buff."] = "当范围内的队友缺少你的团队增益时也会提醒你。"
 L["Buffs and enchants with less time left count as missing. 0 only reminds when they are gone."] = "剩余时间少于该值的增益和附魔视为缺失。0表示仅在消失时提醒。"
 L["Fades the reminder in and out. Entering combat always hides it at once."] = "提醒淡入淡出。进入战斗时总是立即隐藏。"
+L["Hide after (seconds)"] = "隐藏延迟（秒）"
+L["Hides the reminder this many seconds after it was shown. It shows again when you enter a dungeon or raid. 0 keeps it shown."] = "提醒显示后经过该秒数隐藏。进入地下城或团队副本时会再次显示。0表示保持显示。"
 L["Lets the icons of buffs and enchants glow that are about to expire."] = "让即将过期的增益和附魔图标发光。"
 L["Check group members"] = "检查队友"
 L["Checks"] = "检查项"

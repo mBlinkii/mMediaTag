@@ -833,6 +833,8 @@ L["Shows icons for missing raid buffs, consumables, weapon enchants and class bu
 L["Also reminds you when group members in range are missing your raid buff."] = true
 L["Buffs and enchants with less time left count as missing. 0 only reminds when they are gone."] = true
 L["Fades the reminder in and out. Entering combat always hides it at once."] = true
+L["Hide after (seconds)"] = true
+L["Hides the reminder this many seconds after it was shown. It shows again when you enter a dungeon or raid. 0 keeps it shown."] = true
 L["Lets the icons of buffs and enchants glow that are about to expire."] = true
 L["Minimum Duration"] = true
 L["Minimum duration (minutes)"] = true
