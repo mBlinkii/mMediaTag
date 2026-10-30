@@ -4,9 +4,10 @@ local _G = _G
 local format, gmatch, gsub, ipairs, max, pairs, pcall, sort, strlower, strrep, tconcat, tinsert, tremove, type, unpack, wipe =
 	format, string.gmatch, gsub, ipairs, max, pairs, pcall, sort, strlower, strrep, table.concat, tinsert, tremove, type, unpack, wipe
 
-local ICON = "|TInterface\\Addons\\ElvUI_mMediaTag\\media\\options\\%s.tga:16:16|t  %s"
--- a disabled module shows a darkened icon and grey text
-local ICON_OFF = "|TInterface\\Addons\\ElvUI_mMediaTag\\media\\options\\%s.tga:16:16:0:0:16:16:0:16:0:16:110:110:110|t  |cff808080%s|r"
+local ICON_PATH = "Interface\\Addons\\ElvUI_mMediaTag\\media\\options\\%s.tga"
+local ICON = "|T" .. ICON_PATH .. ":16:16|t  %s"
+-- a disabled module shows grey text
+local TEXT_OFF = "|cff808080%s|r"
 
 local ICONS = {
 	unitframes = "unitframes",
@@ -41,8 +42,8 @@ local PAGE_ICONS = {
 	colors = { difficulty = "difficulty", tip_menu = "chat" },
 }
 
-local function Icon(text, icon, off)
-	return format(off and ICON_OFF or ICON, icon, text)
+local function Icon(text, icon)
+	return format(ICON, icon, text)
 end
 
 local function Unsupported(...)
@@ -582,11 +583,12 @@ local function BuildColorPages()
 end
 
 -- every category and page gets its own icon, the category page lists every page as a shortcut
+-- tree entries take the icon field, a texture escape in their name freezes the client when the options jump to a page
 local function Decorate()
 	for key, categoryIcon in pairs(ICONS) do
 		local category = mMT.options.args[key]
 		local categoryName = category.name
-		category.name = Icon(categoryName, categoryIcon)
+		category.icon = format(ICON_PATH, categoryIcon)
 
 		if category.childGroups == "tree" then
 			local pageKeys = {}
@@ -609,10 +611,11 @@ local function Decorate()
 				-- the colors category mirrors other categories and borrows their icons
 				local icon = (PAGE_ICONS[key] and PAGE_ICONS[key][pageKey]) or ICONS[gsub(pageKey, "^mirror_", "")] or categoryIcon
 				local function name()
-					return Icon(text, icon, IsOff(page, category.get, { "mMT", key, pageKey }))
+					return IsOff(page, category.get, { "mMT", key, pageKey }) and format(TEXT_OFF, text) or text
 				end
 
 				page.name = name
+				page.icon = format(ICON_PATH, icon)
 				category.args["shortcut_" .. pageKey] = {
 					order = index,
 					type = "execute",
