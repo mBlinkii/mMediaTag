@@ -6,7 +6,7 @@ mMT.Changelog[419] = {
 		"[Enrage-Icon]: New module that shows enrage effects on the target, focus, boss and arena unitframes and on enemy nameplates as icons and can optionally highlight the frame.",
 	},
 	UPDATE = {
-		"[Buff-Reminder]: The reminder can hide after a set time and shows again when you enter a dungeon or raid.",
+		"[Buff-Reminder]: The reminder can hide after a set time and shows again when you enter a dungeon, raid, delve or scenario or join a group.",
 		"[Dispel-Icon]: The icons can be turned off to only use the frame highlight.",
 	},
 	FIX = {

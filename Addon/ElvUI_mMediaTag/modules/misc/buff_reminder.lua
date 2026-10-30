@@ -787,11 +787,16 @@ local function StopHideTimer()
 	end
 end
 
--- the reminder stays hidden after the hide time until the next dungeon or raid
+-- the reminder stays hidden after the hide time until the next instance or group
 local function Expire()
 	module.hideTimer = nil
 	module.expired = true
 	Update()
+end
+
+local function ShowAgain()
+	StopHideTimer()
+	module.expired = nil
 end
 
 function Update()
@@ -945,11 +950,14 @@ local function StopChecks()
 end
 
 local ENTRY_TYPES = { party = true, raid = true }
+-- delves count as scenarios
+local SHOW_TYPES = { party = true, raid = true, scenario = true }
 
 -- a new dungeon or raid starts the entry check, leaving it or another instance of the same id does not
+-- a new dungeon, raid, delve or scenario shows the reminder again for the hide time
 local function UpdateEntry()
 	local _, instanceType, _, _, _, _, _, instanceID = GetInstanceInfo()
-	if not (ENTRY_TYPES[instanceType] and E:NotSecretValue(instanceID)) then
+	if not (SHOW_TYPES[instanceType] and E:NotSecretValue(instanceID)) then
 		module.entryInstance = nil
 		module.entryActive = nil
 		return
@@ -957,10 +965,8 @@ local function UpdateEntry()
 
 	if instanceID ~= module.entryInstance then
 		module.entryInstance = instanceID
-		module.entryActive = true
-		-- a new dungeon or raid shows the reminder again for the hide time
-		StopHideTimer()
-		module.expired = nil
+		module.entryActive = ENTRY_TYPES[instanceType]
+		ShowAgain()
 	end
 end
 
@@ -971,6 +977,12 @@ end
 
 function module:ZONE_CHANGED_NEW_AREA()
 	UpdateEntry()
+	QueueUpdate()
+end
+
+-- joining a group shows the reminder again for the hide time
+function module:GROUP_JOINED()
+	ShowAgain()
 	QueueUpdate()
 end
 
@@ -1007,14 +1019,14 @@ function module:Initialize(demo)
 	if not module.frame then CreateReminderFrame() end
 	bagsDirty = true
 	-- a changed setting starts the hide time again
-	StopHideTimer()
-	module.expired = nil
+	ShowAgain()
 	-- the loading screen is usually over before the module starts, a reload inside an instance counts as entering it
 	if not InCombatLockdown() then UpdateEntry() end
 
 	if not module.isEnabled then
 		module:RegisterEvent("PLAYER_REGEN_ENABLED")
 		module:RegisterEvent("PLAYER_REGEN_DISABLED")
+		module:RegisterEvent("GROUP_JOINED")
 		if not InCombatLockdown() then StartChecks() end
 		module.isEnabled = true
 	end
