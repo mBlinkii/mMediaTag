@@ -999,6 +999,11 @@ function module:PLAYER_REGEN_ENABLED()
 	RescanBags()
 end
 
+-- on a profile switch events fire before mMT:UpdateAll, the old profile has lost its defaults by then
+local function RebindProfile()
+	module.db = E.db.mMediaTag.buff_reminder
+end
+
 function module:Initialize(demo)
 	if not (E.Retail and E.db.mMediaTag.buff_reminder.enable) then
 		module.demo = nil
@@ -1014,6 +1019,10 @@ function module:Initialize(demo)
 	end
 
 	module.db = E.db.mMediaTag.buff_reminder
+	if not module.profileHooked then
+		hooksecurefunc(E, "UpdateStart", RebindProfile)
+		module.profileHooked = true
+	end
 	if demo then module.demo = not module.demo end
 
 	if not module.frame then CreateReminderFrame() end

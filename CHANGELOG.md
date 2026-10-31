@@ -2,6 +2,7 @@
 
 ## [ver. 4.19] - TBD
 ### 🐛 FIX
+- FIX - [Buff-Reminder]: An error could show up after switching the profile.
 - FIX - [Options]: The game froze when a right click on an mMT mover opened its settings page after the mMT settings had been open before.
 ### 🔧 UPDATE
 - UPDATE - [Buff-Reminder]: The reminder can hide after a set time and shows again when you enter a dungeon, raid, delve or scenario or join a group.
