@@ -73,8 +73,13 @@ local function SkinWindow()
 	frame:SetTemplate("Transparent")
 end
 
+local function RebindProfile()
+	module.db = E.db.mMediaTag.skins.aussyloot
+end
+
 function module:Initialize()
 	module.db = E.db.mMediaTag.skins.aussyloot
+	mMT:OnProfileSwitch(RebindProfile)
 
 	if not (module.db and module.db.enable) or not IsAddOnLoaded("AussyLoot") then return end
 

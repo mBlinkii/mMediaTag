@@ -905,10 +905,7 @@ end
 function module:Initialize()
 	module.db = E.db.mMediaTag.portraits
 
-	if not module.profileHooked then
-		hooksecurefunc(E, "UpdateStart", RebindProfile)
-		module.profileHooked = true
-	end
+	mMT:OnProfileSwitch(RebindProfile)
 
 	-- LINEAR is the API default, nil keeps the plain three-argument call
 	local filter = module.db.misc.filter

@@ -96,8 +96,13 @@ local function OnFrameCreated(_, frame, name)
 	if name == "QueueTimer" and module.db.queue_timer then SkinQueueTimer(frame) end
 end
 
+local function RebindProfile()
+	module.db = E.db.mMediaTag.skins.bigwigs
+end
+
 function module:Initialize()
 	module.db = E.db.mMediaTag.skins.bigwigs
+	mMT:OnProfileSwitch(RebindProfile)
 
 	if not (module.db and module.db.enable) or not IsAddOnLoaded("BigWigs") then return end
 

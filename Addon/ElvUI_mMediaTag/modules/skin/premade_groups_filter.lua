@@ -214,8 +214,13 @@ local function SkinPremadeGroupsFilter()
 	SkinStaticPopup(_G.PremadeGroupsFilterStaticPopup)
 end
 
+local function RebindProfile()
+	module.db = E.db.mMediaTag.skins.premade_groups_filter
+end
+
 function module:Initialize()
 	module.db = E.db.mMediaTag.skins.premade_groups_filter
+	mMT:OnProfileSwitch(RebindProfile)
 
 	if not (module.db and module.db.enable) or not IsAddOnLoaded("PremadeGroupsFilter") then return end
 

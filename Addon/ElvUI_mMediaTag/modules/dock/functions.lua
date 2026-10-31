@@ -191,6 +191,10 @@ hooksecurefunc(DT, "UpdatePanelInfo", function(_, _, panel)
 	end
 end)
 
+mMT:OnProfileSwitch(function()
+	module.db = E.db.mMediaTag.dock
+end)
+
 function module:CreateDockIcon(datatext, config)
 	if not config or not datatext then return end
 	module.db = E.db.mMediaTag.dock

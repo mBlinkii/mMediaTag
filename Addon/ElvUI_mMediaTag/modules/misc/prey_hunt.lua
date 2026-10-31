@@ -153,8 +153,13 @@ function module:GOSSIP_SHOW()
 	UpdateTargets()
 end
 
+local function RebindProfile()
+	module.db = E.db.mMediaTag.prey_hunt
+end
+
 function module:Initialize()
 	module.db = E.db.mMediaTag.prey_hunt
+	mMT:OnProfileSwitch(RebindProfile)
 
 	if _G.UIWidgetTemplatePreyHuntProgressMixin then
 		if module.db.enable then

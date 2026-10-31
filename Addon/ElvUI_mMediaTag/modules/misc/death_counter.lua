@@ -61,6 +61,10 @@ function module:OnEvent()
 	UpdateCounter()
 end
 
+local function RebindProfile()
+	module.db = E.db.mMediaTag.death_counter
+end
+
 function module:Initialize(demo)
 	if not E.db.mMediaTag.death_counter.enable then
 		if module.death_counter then
@@ -75,6 +79,7 @@ function module:Initialize(demo)
 	end
 
 	module.db = E.db.mMediaTag.death_counter
+	mMT:OnProfileSwitch(RebindProfile)
 
 	if not module.death_counter then
 		module.death_counter = CreateFrame("Button", "mMediaTag_Death_Counter", E.UIParent, "BackdropTemplate")

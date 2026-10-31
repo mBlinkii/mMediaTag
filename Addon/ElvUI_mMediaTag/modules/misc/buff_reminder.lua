@@ -1019,10 +1019,7 @@ function module:Initialize(demo)
 	end
 
 	module.db = E.db.mMediaTag.buff_reminder
-	if not module.profileHooked then
-		hooksecurefunc(E, "UpdateStart", RebindProfile)
-		module.profileHooked = true
-	end
+	mMT:OnProfileSwitch(RebindProfile)
 	if demo then module.demo = not module.demo end
 
 	if not module.frame then CreateReminderFrame() end

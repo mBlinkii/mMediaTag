@@ -1201,8 +1201,13 @@ function module:ADDON_LOADED()
 	end
 end
 
+local function RebindProfile()
+	module.db = E.db.mMediaTag.premade_filter
+end
+
 function module:Initialize()
 	module.db = E.db.mMediaTag.premade_filter
+	mMT:OnProfileSwitch(RebindProfile)
 	module.isEnabled = module.db.enable
 
 	if module.isEnabled and not SetupHooks() then module:RegisterEvent("ADDON_LOADED") end

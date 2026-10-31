@@ -467,8 +467,13 @@ local function UpdateBackground()
 	SetCollapsed(nil, tracker.isCollapsed)
 end
 
+local function RebindProfile()
+	db = E.db.mMediaTag.objective_tracker
+end
+
 function module:Initialize()
 	UpdateSettings()
+	mMT:OnProfileSwitch(RebindProfile)
 
 	local trackerFrame = _G.ObjectiveTrackerFrame
 	if not trackerFrame then return end

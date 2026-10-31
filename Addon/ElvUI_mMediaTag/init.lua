@@ -70,6 +70,19 @@ local function DelayedUpdateAll()
 	E:Delay(0.1, mMT.UpdateAll, mMT)
 end
 
+-- on a profile switch events and hooks fire before the delayed mMT:UpdateAll, the old profile has lost its defaults by then
+local profileCallbacks = {}
+
+function mMT:OnProfileSwitch(func)
+	profileCallbacks[func] = true
+end
+
+local function ProfileSwitched()
+	for func in pairs(profileCallbacks) do
+		func()
+	end
+end
+
 function mMT:Initialize()
 	mMT:RegisterEvent("PLAYER_LOGOUT")
 
@@ -88,6 +101,7 @@ function mMT:Initialize()
 	if mMT:GetWeeklyResetTime() then Engine[2].keystones = {} end
 
 	if not mMT.ElvUI_Hooked then
+		mMT:SecureHook(E, "UpdateStart", ProfileSwitched)
 		mMT:SecureHook(E, "UpdateEnd", DelayedUpdateAll)
 		mMT.ElvUI_Hooked = true
 	end

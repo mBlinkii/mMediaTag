@@ -396,6 +396,10 @@ function module:Demo()
 	end
 end
 
+local function RebindProfile()
+	module.db = E.db.mMediaTag.lfg_invite_info
+end
+
 function module:Initialize(demo)
 	if not E.db.mMediaTag.lfg_invite_info.enable then
 		if module.info_screen then
@@ -409,6 +413,7 @@ function module:Initialize(demo)
 	end
 
 	module.db = E.db.mMediaTag.lfg_invite_info
+	mMT:OnProfileSwitch(RebindProfile)
 
 	-- the gold theme became a free color, keep profiles that still name it
 	if module.db.theme == "gold" then module.db.theme = "custom" end

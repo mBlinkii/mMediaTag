@@ -566,6 +566,10 @@ function module:PLAYER_REGEN_ENABLED()
 	Update()
 end
 
+local function RebindProfile()
+	module.db = E.db.mMediaTag.keystone_teleports
+end
+
 function module:Initialize(demo)
 	if not (E.Retail and E.db.mMediaTag.keystone_teleports.enable) then
 		module.demo = nil
@@ -581,6 +585,7 @@ function module:Initialize(demo)
 	end
 
 	module.db = E.db.mMediaTag.keystone_teleports
+	mMT:OnProfileSwitch(RebindProfile)
 	if demo then
 		module.demo = not module.demo
 		module.flashPending = module.demo and module.db.highlight.flash or nil
