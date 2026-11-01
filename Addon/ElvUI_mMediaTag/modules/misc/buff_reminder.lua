@@ -32,6 +32,7 @@ local UnitIsDead = UnitIsDead
 local UnitIsDeadOrGhost = UnitIsDeadOrGhost
 local UnitIsUnit = UnitIsUnit
 local UnitIsVisible = UnitIsVisible
+local UnitLevel = UnitLevel
 local GetAuraDataBySpellName = C_UnitAuras.GetAuraDataBySpellName
 local GetAuraDataByIndex = C_UnitAuras.GetAuraDataByIndex
 local GetPlayerAuraBySpellID = C_UnitAuras.GetPlayerAuraBySpellID
@@ -49,6 +50,7 @@ local RequestLoadItemDataByID = C_Item.RequestLoadItemDataByID
 local GetSpellName = C_Spell.GetSpellName
 local GetSpellTexture = C_Spell.GetSpellTexture
 local IsSpellKnown = C_SpellBook and C_SpellBook.IsSpellKnown or IsPlayerSpell
+local GetSpellLevelLearned = C_Spell.GetSpellLevelLearned
 local GetSpecialization = C_SpecializationInfo.GetSpecialization or GetSpecialization
 local GetSpecializationInfo = C_SpecializationInfo.GetSpecializationInfo or GetSpecializationInfo
 local ShouldAurasBeSecret = C_Secrets and C_Secrets.ShouldAurasBeSecret
@@ -655,12 +657,19 @@ local function CheckWeaponSlot(slot)
 	end
 end
 
+-- retail reports some class buffs as known below the level they are learned at
+local function ClassBuffKnown(spellID)
+	if not IsSpellKnown(spellID) then return false end
+	local level = GetSpellLevelLearned and GetSpellLevelLearned(spellID)
+	return not level or level <= UnitLevel("player")
+end
+
 local function CheckClassBuffs()
 	local saved = Saved().class
 	for index, group in ipairs(CLASS_BUFFS[E.myclass] or {}) do
 		local known, active, expiring
 		for _, spellID in ipairs(group) do
-			if IsSpellKnown(spellID) then
+			if ClassBuffKnown(spellID) then
 				known = known or spellID
 				local aura = GetPlayerAuraBySpellID(spellID)
 				if aura then
@@ -673,7 +682,7 @@ local function CheckClassBuffs()
 			end
 		end
 		if known and not active then
-			local spellID = saved[index] and IsSpellKnown(saved[index]) and saved[index] or known
+			local spellID = saved[index] and ClassBuffKnown(saved[index]) and saved[index] or known
 			Add(GetSpellName(spellID), GetSpellTexture(spellID), nil, expiring and MinutesLeft(expiring.expirationTime), SpellAction(spellID), expiring ~= nil)
 		end
 	end

@@ -4,6 +4,7 @@
 ### 🐛 FIX
 - FIX - [System]: Errors could show up right after switching the profile, for example in the Buff-Reminder, Objective-Tracker, Keystone-Teleports and Prey-Hunt.
 - FIX - [Options]: The game froze when a right click on an mMT mover opened its settings page after the mMT settings had been open before.
+- FIX - [Buff-Reminder]: Low level rogues were reminded of poisons they had not learned yet.
 ### 🔧 UPDATE
 - UPDATE - [Buff-Reminder]: The reminder can hide after a set time and shows again when you enter a dungeon, raid, delve or scenario or join a group.
 - UPDATE - [Dispel-Icon]: The icons can be turned off to only use the frame highlight.
