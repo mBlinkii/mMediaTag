@@ -646,12 +646,14 @@ local function CheckWeaponSlot(slot)
 	if not itemID then return end
 	local _, _, _, _, _, classID = GetItemInfoInstant(itemID)
 	if classID ~= CLASS_WEAPON then return end
+	-- like flasks and runes, only remind when there is something to apply
+	local spellID = WeaponSpell(slot)
+	if not spellID and #bags.oil == 0 then return end
 
 	local enchant = GetTemporaryEnchantmentInfo(slot)
 	local expiring = enchant and enchant.hasExpirationTime and enchant.remainingTimeMs < Threshold() * 60000
 	if not enchant or expiring then
 		local text = enchant and enchant.hasExpirationTime and ceil(enchant.remainingTimeMs / 60000) .. "m" or nil
-		local spellID = WeaponSpell(slot)
 		local action = spellID and SpellAction(spellID) or ItemAction(PickItem("oil"), "oil", slot)
 		Add(slot == SLOT_MAINHAND and L["Main Hand Enchant"] or L["Off Hand Enchant"], GetInventoryItemTexture("player", slot), nil, text, action, expiring)
 	end
