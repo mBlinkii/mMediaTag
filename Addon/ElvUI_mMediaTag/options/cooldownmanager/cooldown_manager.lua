@@ -261,6 +261,30 @@ local function FixedSize(vdb)
 	return (vdb.max_width or 0) > 0 or (vdb.max_height or 0) > 0
 end
 
+-- the max icon size only limits a fixed or matched block
+local function MaxIconSize(key, order, disabled)
+	return {
+		order = order,
+		type = "range",
+		name = L["Max Icon Size"],
+		desc = L["Largest size an icon of a fixed or matched block may get, fewer icons then stay smaller and sit in the middle. 0 = off."],
+		disabled = function()
+			local vdb = VDB(key)
+			return disabled() or not (FixedSize(vdb) or (vdb.anchor and vdb.anchor.match))
+		end,
+		min = 0,
+		max = 200,
+		step = 1,
+		get = function()
+			return VDB(key).max_icon_size or 0
+		end,
+		set = function(_, value)
+			VDB(key).max_icon_size = value
+			Refresh()
+		end,
+	}
+end
+
 local function IconLayout(key, order)
 	return {
 		order = order,
@@ -400,6 +424,7 @@ local function IconLayout(key, order)
 					Refresh()
 				end,
 			},
+			max_icon_size = MaxIconSize(key, 10, Disabled),
 		},
 	}
 end
@@ -1853,6 +1878,7 @@ mMT.options.args.cooldownmanager.args.custom.args = {
 					Refresh()
 				end,
 			},
+			max_icon_size = MaxIconSize("custom", 10, CustomDisabled),
 		},
 	},
 	anchor = AnchorGroup("custom", 2.5, CustomDisabled),

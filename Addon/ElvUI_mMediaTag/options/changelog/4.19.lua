@@ -9,6 +9,7 @@ mMT.Changelog[419] = {
 		"[Buff-Reminder]: The reminder can hide after a set time and shows again when you enter a dungeon, raid, delve or scenario or join a group.",
 		"[Dispel-Icon]: The icons can be turned off to only use the frame highlight.",
 		"[Cooldown-Manager]: The settings including the mover positions can be exported and imported.",
+		"[Cooldown-Manager]: A max icon size keeps the icons of a fixed or matched size from getting too big when only a few are shown.",
 	},
 	FIX = {
 		"[System]: Errors could show up right after switching the profile, for example in the Buff-Reminder, Objective-Tracker, Keystone-Teleports and Prey-Hunt.",

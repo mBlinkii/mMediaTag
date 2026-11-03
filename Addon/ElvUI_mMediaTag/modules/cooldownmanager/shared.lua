@@ -873,6 +873,7 @@ end
 
 -- A fixed width or height replaces the icon size settings: the width is split over the icons of the widest row, the
 -- height over the rows, so the block always fills it. With only one of them set the icons stay square.
+-- A max icon size shrinks bigger icons in their ratio, the third return tells the block is no longer filled.
 function module:FitIconSize(vdb, width, height, spacing, cols, rows, id)
 	local fixedWidth, fixedHeight = module:MatchedSize(id, vdb)
 	if fixedWidth <= 0 and fixedHeight <= 0 then return width, height end
@@ -881,10 +882,17 @@ function module:FitIconSize(vdb, width, height, spacing, cols, rows, id)
 	local h = fixedHeight > 0 and (E:Scale(fixedHeight) - (rows - 1) * spacing) / rows or nil
 	w, h = w or h, h or w
 
+	local maxSize = (vdb.max_icon_size or 0) > 0 and E:Scale(vdb.max_icon_size)
+	local capped = maxSize and max(w, h) > maxSize
+	if capped then
+		local factor = maxSize / max(w, h)
+		w, h = w * factor, h * factor
+	end
+
 	-- round down to whole pixels so the block never ends up bigger than asked, a spacing wider than the block would go below zero
 	local pixel = E.mult or 1
 	local minSize = 4 * pixel
-	return max(floor(w / pixel) * pixel, minSize), max(floor(h / pixel) * pixel, minSize)
+	return max(floor(w / pixel) * pixel, minSize), max(floor(h / pixel) * pixel, minSize), capped
 end
 
 -- Fills starts and sizes of count slots in a row. A matched block hands the pixels the slot size was rounded down by to single
@@ -955,7 +963,8 @@ function module:LayoutIconViewer(key, capture, callback)
 
 	local cols = min(count, perRow)
 	local rows = ceil(count / perRow)
-	width, height = module:FitIconSize(vdb, width, height, spacing, cols, rows, key)
+	local capped
+	width, height, capped = module:FitIconSize(vdb, width, height, spacing, cols, rows, key)
 
 	for _, icon in ipairs(icons) do
 		icon:SetScale(1)
@@ -971,10 +980,12 @@ function module:LayoutIconViewer(key, capture, callback)
 		module:ApplyDebuffBorder(icon, vdb)
 	end
 
-	local contentWidth = module:SpreadSlots(cols, width, spacing, blockWidth, columnSizes, columnStarts)
-	local contentHeight = module:SpreadSlots(rows, height, spacing, blockHeight, rowSizes, rowStarts)
-	local totalWidth = blockWidth or contentWidth
-	module:SetContainerSize(container, totalWidth, blockHeight or contentHeight)
+	-- capped icons do not fill the block, they keep their size and sit in its middle
+	local contentWidth = module:SpreadSlots(cols, width, spacing, not capped and blockWidth, columnSizes, columnStarts)
+	local contentHeight = module:SpreadSlots(rows, height, spacing, not capped and blockHeight, rowSizes, rowStarts)
+	local totalWidth, totalHeight = blockWidth or contentWidth, blockHeight or contentHeight
+	module:SetContainerSize(container, totalWidth, totalHeight)
+	local rowOffset = (totalHeight - contentHeight) / 2
 
 	for index, icon in ipairs(icons) do
 		local row = floor((index - 1) / perRow) + 1
@@ -986,9 +997,9 @@ function module:LayoutIconViewer(key, capture, callback)
 		icon:SetSize(columnSizes[col], rowSizes[row])
 		icon:ClearAllPoints()
 		if growUp then
-			icon:SetPoint("BOTTOMLEFT", container, "BOTTOMLEFT", offset + columnStarts[col], rowStarts[row])
+			icon:SetPoint("BOTTOMLEFT", container, "BOTTOMLEFT", offset + columnStarts[col], rowOffset + rowStarts[row])
 		else
-			icon:SetPoint("TOPLEFT", container, "TOPLEFT", offset + columnStarts[col], -rowStarts[row])
+			icon:SetPoint("TOPLEFT", container, "TOPLEFT", offset + columnStarts[col], -(rowOffset + rowStarts[row]))
 		end
 	end
 

@@ -1416,6 +1416,8 @@ L["Fixed Width"] = true
 L["Fixed Height"] = true
 L["Width of the whole block, the icons of a row share it and the icon size settings are ignored. 0 = off."] = true
 L["Height of all rows, the icons are sized from it and the icon size settings are ignored. 0 = off."] = true
+L["Max Icon Size"] = true
+L["Largest size an icon of a fixed or matched block may get, fewer icons then stay smaller and sit in the middle. 0 = off."] = true
 L["Only when ready"] = true
 L["Only on cooldown"] = true
 L["Only when missing"] = true

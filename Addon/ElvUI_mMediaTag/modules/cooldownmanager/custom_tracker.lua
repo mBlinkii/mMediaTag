@@ -546,7 +546,8 @@ function module:LayoutCustomTracker()
 	local vertical = growth == "UP" or growth == "DOWN"
 	local cols = vertical and 1 or (count < perRow and count or perRow)
 	local rows = vertical and count or ceil(count / perRow)
-	width, height = module:FitIconSize(vdb, width, height, spacing, cols, rows, "custom")
+	local capped
+	width, height, capped = module:FitIconSize(vdb, width, height, spacing, cols, rows, "custom")
 
 	for _, icon in ipairs(active) do
 		icon.icon:SetTexCoord(E:GetTexCoords())
@@ -556,16 +557,16 @@ function module:LayoutCustomTracker()
 	end
 
 	local blockWidth, blockHeight = module:MatchedBlock("custom", vdb)
-	local contentWidth = module:SpreadSlots(cols, width, spacing, blockWidth, columnSizes, columnStarts)
-	local contentHeight = module:SpreadSlots(rows, height, spacing, blockHeight, rowSizes, rowStarts)
+	local contentWidth = module:SpreadSlots(cols, width, spacing, not capped and blockWidth, columnSizes, columnStarts)
+	local contentHeight = module:SpreadSlots(rows, height, spacing, not capped and blockHeight, rowSizes, rowStarts)
 	local totalWidth = blockWidth or contentWidth
 	local totalHeight = blockHeight or contentHeight
 	module:SetContainerSize(container, totalWidth, totalHeight)
 
 	-- the icons sit in the middle of a block that takes the size of its target
 	local shift = (totalWidth - contentWidth) / 2
-
 	local anchor = (growth == "LEFT" and "RIGHT") or (growth == "UP" and "BOTTOMLEFT") or "TOPLEFT"
+	local rowShift = anchor == "RIGHT" and 0 or (totalHeight - contentHeight) / 2
 	local xDir = growth == "LEFT" and -1 or 1
 	local yDir = growth == "UP" and 1 or -1
 
@@ -575,7 +576,7 @@ function module:LayoutCustomTracker()
 
 		icon:SetSize(columnSizes[col], rowSizes[row])
 		icon:ClearAllPoints()
-		icon:SetPoint(anchor, container, anchor, xDir * (shift + columnStarts[col]), yDir * rowStarts[row])
+		icon:SetPoint(anchor, container, anchor, xDir * (shift + columnStarts[col]), yDir * (rowShift + rowStarts[row]))
 	end
 
 	local target = module:AnchorTarget("custom")
