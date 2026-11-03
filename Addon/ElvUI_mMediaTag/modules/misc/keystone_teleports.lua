@@ -557,6 +557,8 @@ function module:PLAYER_ENTERING_WORLD(_, isInitialLogin, isReloadingUi)
 		CheckLeader()
 		Activate()
 	else
+		-- leaving a finished dungeon, the used keys of the members are replaced by now
+		if IsInGroup() and not IsInInstance() then mMT:RequestGroupKeystones() end
 		QueueUpdate()
 	end
 end

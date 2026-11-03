@@ -14,6 +14,7 @@ local GetUnitName = GetUnitName
 local IsInGroup = IsInGroup
 local UnitClass = UnitClass
 local UnitExists = UnitExists
+local wipe = wipe
 local GetMapUIInfo = C_ChallengeMode.GetMapUIInfo
 local GetKeystoneLevelRarityColor = C_ChallengeMode.GetKeystoneLevelRarityColor
 local GetOwnedKeystoneChallengeMapID = C_MythicPlus.GetOwnedKeystoneChallengeMapID
@@ -44,10 +45,21 @@ end
 
 local sourceHandler = { OnKeystoneUpdate = NotifyListeners }
 
+-- a finished dungeon replaces the used key and a new group has other members, so the kept keys are dropped
+local function ResetKeys()
+	wipe(lastKeys)
+	wipe(libKeystoneData)
+end
+
 -- Details! (LibOpenRaid) and BigWigs (LibKeystone) are hooked once and shared by every module that reads group keys
 local function InitSources()
 	if sourcesReady then return end
 	sourcesReady = true
+
+	local resetFrame = CreateFrame("Frame")
+	resetFrame:RegisterEvent("CHALLENGE_MODE_COMPLETED")
+	resetFrame:RegisterEvent("GROUP_LEFT")
+	resetFrame:SetScript("OnEvent", ResetKeys)
 
 	LOR = LibStub("LibOpenRaid-1.0", true)
 	if LOR then LOR.RegisterCallback(sourceHandler, "KeystoneUpdate", "OnKeystoneUpdate") end

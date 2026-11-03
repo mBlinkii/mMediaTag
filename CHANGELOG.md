@@ -6,9 +6,15 @@
 - FIX - [Options]: The game froze when a right click on an mMT mover opened its settings page after the mMT settings had been open before.
 - FIX - [Buff-Reminder]: Low level rogues were reminded of poisons they had not learned yet.
 - FIX - [Buff-Reminder]: The weapon enchant was shown as missing although you had no weapon oil or weapon spell to apply.
+- FIX - [Buff-Reminder]: Raid buffs, pet and weapon spells were reminded before you had learned them.
+- FIX - [Keystone-Teleports]: The keys of the group members stayed in the list after a finished dungeon or after leaving the group.
+- FIX - [DT-Game-Menu]: Entries like the spellbook and collections were missing in WoW Forever.
+- FIX - [DT-Durability]: The item level was shown in Classic versions that have none.
+- FIX - [DT-Tracker]: Items that were not cached yet could stay empty.
 ### 🔧 UPDATE
 - UPDATE - [Buff-Reminder]: The reminder can hide after a set time and shows again when you enter a dungeon, raid, delve or scenario or join a group.
 - UPDATE - [Dispel-Icon]: The icons can be turned off to only use the frame highlight.
+- UPDATE - [Cooldown-Manager]: The settings including the mover positions can be exported and imported.
 ### ✨ NEW
 - NEW - [Enrage-Icon]: New module that shows enrage effects on the target, focus, boss and arena unitframes and on enemy nameplates as icons and can optionally highlight the frame.
 
