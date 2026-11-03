@@ -11,6 +11,7 @@ local valueString = ""
 local GetAverageItemLevel = GetAverageItemLevel
 
 local avg, avgEquipped, avgPvp = 0, 0, 0
+local hasItemLevel = E.Modern or E.Mists
 local GetInventoryItemDurability = GetInventoryItemDurability
 
 local DURABILITY = DURABILITY
@@ -89,12 +90,14 @@ local function OnEnter(self)
 	DT.tooltip:AddLine(DURABILITY, mMT:GetRGB("title"))
 	DT.tooltip:AddLine(" ")
 
-	DT.tooltip:AddLine(STAT_AVERAGE_ITEM_LEVEL, mMT:GetRGB("title"))
-	DT.tooltip:AddDoubleLine(STAT_AVERAGE_ITEM_LEVEL, format("%0.2f", avg), mMT:GetRGB("text", "M"))
-	local r, g, b = mMT:GetRGB()
-	DT.tooltip:AddDoubleLine(GMSURVEYRATING3, format("%0.2f", avgEquipped), r, g, b, E:ColorizeItemLevel(avgEquipped - avg))
-	DT.tooltip:AddDoubleLine(LFG_LIST_ITEM_LEVEL_INSTR_PVP_SHORT, format("%0.2f", avgPvp), r, g, b, E:ColorizeItemLevel(avgPvp - avg))
-	DT.tooltip:AddLine(" ")
+	if hasItemLevel then
+		DT.tooltip:AddLine(STAT_AVERAGE_ITEM_LEVEL, mMT:GetRGB("title"))
+		DT.tooltip:AddDoubleLine(STAT_AVERAGE_ITEM_LEVEL, format("%0.2f", avg), mMT:GetRGB("text", "M"))
+		local r, g, b = mMT:GetRGB()
+		DT.tooltip:AddDoubleLine(GMSURVEYRATING3, format("%0.2f", avgEquipped), r, g, b, E:ColorizeItemLevel(avgEquipped - avg))
+		DT.tooltip:AddDoubleLine(LFG_LIST_ITEM_LEVEL_INSTR_PVP_SHORT, format("%0.2f", avgPvp), r, g, b, E:ColorizeItemLevel(avgPvp - avg))
+		DT.tooltip:AddLine(" ")
+	end
 
 	DT.tooltip:AddLine(DURABILITY, mMT:GetRGB("title"))
 	DT.tooltip:AddDoubleLine(DURABILITY, format("%d%%", totalDurability), 1, 1, 1, E:ColorGradient(totalDurability * 0.01, 1, 0.1, 0.1, 1, 1, 0.1, 0.1, 1, 0.1))
@@ -124,7 +127,7 @@ local function GetDurability()
 			if perc < totalDurability then totalDurability = perc end
 
 			local repairCost
-			if E.Retail then
+			if E.Modern then
 				local data = E.ScanTooltip:GetInventoryInfo("player", index)
 				repairCost = data and data.repairCost
 			else
@@ -137,7 +140,7 @@ local function GetDurability()
 end
 
 local function OnEvent(self)
-	if E.Retail or E.Mists then
+	if hasItemLevel then
 		avg, avgEquipped, avgPvp = GetAverageItemLevel()
 	end
 
@@ -148,7 +151,7 @@ local function OnEvent(self)
 		return totalDurability, avgEquipped
 	end
 
-	local avgEquippedString = format("%." .. E.db.general.decimalLength .. "f", avgEquipped)
+	local avgEquippedString = hasItemLevel and format("%." .. E.db.general.decimalLength .. "f", avgEquipped)
 	local totalDurabilityString = format("%." .. E.db.general.decimalLength .. "f%%", totalDurability)
 
 	local icons = E.db.mMediaTag.datatexts.durability_itemLevel.style ~= "none" and styles[E.db.mMediaTag.datatexts.durability_itemLevel.style]
@@ -178,17 +181,16 @@ local function OnEvent(self)
 
 	local text
 	if icons then
-		local shieldIcon = E:TextureString(icons.shield, ":14:14")
-		local armorIcon = E:TextureString(icons.armor, ":14:14")
+		local itemLevelText = avgEquippedString and " " .. E:TextureString(icons.armor, ":14:14") .. " " .. avgEquippedString or ""
 
 		if durability_color then
 			local color_data = format(":14:14:0:0:64:64:5:59:5:59:%d:%d:%d", mMT:round(durability_color.r * 255), mMT:round(durability_color.g * 255), mMT:round(durability_color.b * 255))
-			text = format("%s |C%s%s|r %s %s", E:TextureString(icons.shield, color_data), durability_color.hex, totalDurabilityString, armorIcon, avgEquippedString)
+			text = format("%s |C%s%s|r%s", E:TextureString(icons.shield, color_data), durability_color.hex, totalDurabilityString, itemLevelText)
 		else
-			text = format("%s %s %s %s", shieldIcon, totalDurabilityString, armorIcon, avgEquippedString)
+			text = format("%s %s%s", E:TextureString(icons.shield, ":14:14"), totalDurabilityString, itemLevelText)
 		end
 	else
-		text = format("%s | %s", totalDurabilityString, avgEquippedString)
+		text = avgEquippedString and format("%s | %s", totalDurabilityString, avgEquippedString) or totalDurabilityString
 	end
 
 	self.text:SetFormattedText(valueString, text)

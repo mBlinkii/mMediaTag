@@ -12,10 +12,12 @@ local ICON_SIZE = 20
 local professions = {
 	["mMT - Cooking"] = { name = L["Cooking"], icons = { "cooking_a.tga", "cooking_b.tga" } },
 	["mMT - Fishing"] = { name = L["Fishing"], icons = { "fishing_a.tga", "fishing_b.tga" } },
-	["mMT - Archaeology"] = { name = L["Archaeology"], icons = { "archaeology_a.tga", "archaeology_b.tga" } },
 	["mMT - Primary Professions"] = { name = L["Primary Profession"], icons = { "primary_a.tga", "primary_b.tga" } },
 	["mMT - Secondary Professions"] = { name = L["Secondary Profession"], icons = { "secondary_a.tga", "secondary_b.tga" } },
 }
+
+-- archaeology came with Cataclysm
+if E.Retail or E.Mists then professions["mMT - Archaeology"] = { name = L["Archaeology"], icons = { "archaeology_a.tga", "archaeology_b.tga" } } end
 
 local profession_styles = { profession = "white", profession_colored = "colored" }
 

@@ -62,7 +62,7 @@ local function BuildMenuList()
 			end,
 		},
 		{
-			text = E.Retail and _G.SPELLBOOK or _G.SPELLBOOK_ABILITIES_BUTTON,
+			text = E.Modern and _G.SPELLBOOK or _G.SPELLBOOK_ABILITIES_BUTTON,
 			color = "|c" .. MEDIA.color.gm_text_color.hex,
 			icon = icon and menu_icons.book,
 			func = function()
@@ -130,21 +130,13 @@ local function BuildMenuList()
 		})
 	end
 
-	if E.Retail or E.Mists then
+	if E.Modern or E.Mists then
 		tinsert(menuList, {
 			text = _G.COLLECTIONS,
 			color = "|c" .. MEDIA.color.gm_text_color.hex,
 			icon = icon and menu_icons.collection,
 			func = function()
 				_G.ToggleCollectionsJournal()
-			end,
-		})
-		tinsert(menuList, {
-			text = _G.ACHIEVEMENT_BUTTON,
-			color = "|c" .. MEDIA.color.gm_text_color.hex,
-			icon = icon and menu_icons.achievement,
-			func = function()
-				_G.ToggleAchievementFrame()
 			end,
 		})
 		tinsert(menuList, {
@@ -163,6 +155,17 @@ local function BuildMenuList()
 				_G.GameTimeFrame:Click()
 			end,
 		}) -- Interface\Calendar\MeetingIcon
+	end
+
+	if E.Retail or E.Mists then
+		tinsert(menuList, {
+			text = _G.ACHIEVEMENT_BUTTON,
+			color = "|c" .. MEDIA.color.gm_text_color.hex,
+			icon = icon and menu_icons.achievement,
+			func = function()
+				_G.ToggleAchievementFrame()
+			end,
+		})
 		tinsert(menuList, {
 			text = _G.ENCOUNTER_JOURNAL,
 			color = "|c" .. MEDIA.color.gm_text_color.hex,
@@ -187,19 +190,22 @@ local function BuildMenuList()
 		end
 
 		tinsert(menuList, {
-			text = _G.PROFESSIONS_BUTTON,
-			color = "|c" .. MEDIA.color.gm_text_color.hex,
-			icon = icon and menu_icons.profession,
-			func = function()
-				_G.ToggleProfessionsBook()
-			end,
-		})
-		tinsert(menuList, {
 			text = _G.GARRISON_TYPE_8_0_LANDING_PAGE_TITLE,
 			color = "|c" .. MEDIA.color.gm_text_color.hex,
 			icon = icon and menu_icons.missions,
 			func = function()
 				_G.ExpansionLandingPageMinimapButton:ToggleLandingPage()
+			end,
+		})
+	end
+
+	if E.Modern then
+		tinsert(menuList, {
+			text = _G.PROFESSIONS_BUTTON,
+			color = "|c" .. MEDIA.color.gm_text_color.hex,
+			icon = icon and menu_icons.profession,
+			func = function()
+				_G.ToggleProfessionsBook()
 			end,
 		})
 		tinsert(menuList, {
@@ -263,7 +269,7 @@ local function BuildMenuList()
 			else
 				HideUIPanel(_G.GameMenuFrame)
 
-				if E.Retail then
+				if E.Modern then
 					MainMenuMicroButton:SetButtonState("NORMAL")
 				else
 					MainMenuMicroButton_SetNormal()
@@ -342,7 +348,7 @@ local function OnEnter(self, slow)
 		end
 
 		DT.tooltip:AddLine(MEDIA.leftClick .. " " .. L["left click to open the menu."], mMT:GetRGB("tip"))
-		if E.Retail or E.Mists then DT.tooltip:AddLine(MEDIA.rightClick .. " " .. L["right click to open LFD Browser"], mMT:GetRGB("tip")) end
+		if E.Modern or E.Mists then DT.tooltip:AddLine(MEDIA.rightClick .. " " .. L["right click to open LFD Browser"], mMT:GetRGB("tip")) end
 
 		DT.tooltip:Show()
 	end
