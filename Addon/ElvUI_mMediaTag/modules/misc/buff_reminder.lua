@@ -51,6 +51,8 @@ local GetSpellName = C_Spell.GetSpellName
 local GetSpellTexture = C_Spell.GetSpellTexture
 local IsSpellKnown = C_SpellBook and C_SpellBook.IsSpellKnown or IsPlayerSpell
 local GetSpellLevelLearned = C_Spell.GetSpellLevelLearned
+local FindSpellBookSlotForSpell = C_SpellBook and C_SpellBook.FindSpellBookSlotForSpell
+local GetSpellBookItemType = C_SpellBook and C_SpellBook.GetSpellBookItemType
 local GetSpecialization = C_SpecializationInfo.GetSpecialization or GetSpecialization
 local GetSpecializationInfo = C_SpecializationInfo.GetSpecializationInfo or GetSpecializationInfo
 local ShouldAurasBeSecret = C_Secrets and C_Secrets.ShouldAurasBeSecret
@@ -94,6 +96,7 @@ local glowColor = { 1, 1, 1, 1 }
 local FLYOUT_PADDING = 3
 local FLYOUT_SPACING = 2
 local CURRENT_EXPANSION = LE_EXPANSION_LEVEL_CURRENT
+local FUTURE_SPELL = Enum.SpellBookItemType and Enum.SpellBookItemType.FutureSpell
 local FOOD_ICON = 136000
 local FLASK_ICON = "Interface\\Icons\\INV_Potion_93"
 local WELL_FED = 19705
@@ -151,10 +154,24 @@ local WEAPON_SPELLS = {
 	PALADIN = { 433568 }, -- Rite of Sanctification
 }
 
+local function LevelLearned(spellID)
+	local level = GetSpellLevelLearned and GetSpellLevelLearned(spellID)
+	return level and E:NotSecretValue(level) and level or 0
+end
+
+-- retail reports some spells as known below the level they are learned at, the spellbook still lists them as future spells
+local function SpellLearned(spellID)
+	if not IsSpellKnown(spellID) then return false end
+	if LevelLearned(spellID) > UnitLevel("player") then return false end
+	if not FindSpellBookSlotForSpell then return true end
+	local slot, bank = FindSpellBookSlotForSpell(spellID, true, true, true, false)
+	return not (slot and GetSpellBookItemType(slot, bank) == FUTURE_SPELL)
+end
+
 local function WeaponSpell(slot)
 	if slot ~= SLOT_MAINHAND then return end
 	for _, spellID in ipairs(WEAPON_SPELLS[E.myclass] or {}) do
-		if IsSpellKnown(spellID) then return spellID end
+		if SpellLearned(spellID) then return spellID end
 	end
 end
 
@@ -483,13 +500,14 @@ local function GroupUnits()
 	return units
 end
 
+-- the highest level per class, a buff only counts once someone of that class has learned it
 local function CollectGroupClasses(units)
 	wipe(groupClasses)
-	groupClasses[E.myclass] = true
 	for _, unit in ipairs(units) do
-		if UnitExists(unit) and UnitIsConnected(unit) then
+		if UnitExists(unit) and UnitIsConnected(unit) and not UnitIsUnit(unit, "player") then
 			local _, class = UnitClass(unit)
-			if class and E:NotSecretValue(class) then groupClasses[class] = true end
+			local level = UnitLevel(unit)
+			if class and E:NotSecretValue(class) and E:NotSecretValue(level) then groupClasses[class] = max(groupClasses[class] or 0, level) end
 		end
 	end
 end
@@ -500,8 +518,9 @@ local function CheckRaidBuffs()
 
 	for _, buff in ipairs(RAID_BUFFS) do
 		local name = GetSpellName(buff.spell)
-		local own = buff.class == E.myclass and IsSpellKnown(buff.spell)
-		if name and groupClasses[buff.class] and (own or not module.db.raid_buffs.own) then
+		local own = buff.class == E.myclass and SpellLearned(buff.spell)
+		local other = (groupClasses[buff.class] or 0) >= max(LevelLearned(buff.spell), 1)
+		if name and (own or (other and not module.db.raid_buffs.own)) then
 			local aura = GetAuraDataBySpellName("player", name, "HELPFUL")
 			local count = 0
 			-- your own buff is also checked on the group members you can see
@@ -659,19 +678,12 @@ local function CheckWeaponSlot(slot)
 	end
 end
 
--- retail reports some class buffs as known below the level they are learned at
-local function ClassBuffKnown(spellID)
-	if not IsSpellKnown(spellID) then return false end
-	local level = GetSpellLevelLearned and GetSpellLevelLearned(spellID)
-	return not level or level <= UnitLevel("player")
-end
-
 local function CheckClassBuffs()
 	local saved = Saved().class
 	for index, group in ipairs(CLASS_BUFFS[E.myclass] or {}) do
 		local known, active, expiring
 		for _, spellID in ipairs(group) do
-			if ClassBuffKnown(spellID) then
+			if SpellLearned(spellID) then
 				known = known or spellID
 				local aura = GetPlayerAuraBySpellID(spellID)
 				if aura then
@@ -684,7 +696,7 @@ local function CheckClassBuffs()
 			end
 		end
 		if known and not active then
-			local spellID = saved[index] and ClassBuffKnown(saved[index]) and saved[index] or known
+			local spellID = saved[index] and SpellLearned(saved[index]) and saved[index] or known
 			Add(GetSpellName(spellID), GetSpellTexture(spellID), nil, expiring and MinutesLeft(expiring.expirationTime), SpellAction(spellID), expiring ~= nil)
 		end
 	end
@@ -692,9 +704,9 @@ local function CheckClassBuffs()
 	local specIndex = GetSpecialization()
 	local specID = specIndex and GetSpecializationInfo(specIndex)
 	local petSpell = specID and PET_SPECS[specID]
-	if petSpell and not (UnitExists("pet") and not UnitIsDead("pet")) and not GetPlayerAuraBySpellID(GRIMOIRE_OF_SACRIFICE) then
+	if petSpell and SpellLearned(petSpell) and not (UnitExists("pet") and not UnitIsDead("pet")) and not GetPlayerAuraBySpellID(GRIMOIRE_OF_SACRIFICE) then
 		-- warlocks pick their own demon, the imp only gives the icon
-		Add(L["Pet"], GetSpellTexture(petSpell), nil, nil, E.myclass ~= "WARLOCK" and IsSpellKnown(petSpell) and SpellAction(petSpell))
+		Add(L["Pet"], GetSpellTexture(petSpell), nil, nil, E.myclass ~= "WARLOCK" and SpellAction(petSpell))
 	end
 end
 
