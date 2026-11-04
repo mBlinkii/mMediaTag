@@ -145,38 +145,49 @@ end
 
 local SafeValue = mMT.SafeValue
 
+-- colors built per call land in a table the caller owns, a new one each time only feeds the garbage collector
 -- a secret class token cannot be a table key, the game API answers it with a secret color
-local function GetClassColor(class)
+local function GetClassColor(class, out)
 	if E:IsSecretValue(class) then
 		local color = C_ClassColor_GetClassColor and C_ClassColor_GetClassColor(class)
-		return color and { c = color }
+		if not color then return end
+
+		out.c = color
+		return out
 	end
 
 	return class and MEDIA.color.portraits.class[class] or nil
 end
 
 -- UnitReaction stays readable on most secret units; only when it does not, let the API branch on attackability
-local function GetReactionColor(unit, colors)
+local function GetReactionColor(unit, colors, out)
 	local reaction = SafeValue((unit == "pet") and UnitReaction("player", unit) or UnitReaction(unit, "player"))
 	if reaction then return colors.reaction[(reaction <= 3 and "enemy") or (reaction == 4 and "neutral") or "friendly"] end
 	if not EvalColor then return colors.reaction.enemy end
 
-	return { c = EvalColor(UnitCanAttack("player", unit), colors.reaction.enemy.c, colors.reaction.friendly.c) }
+	out.c = EvalColor(UnitCanAttack("player", unit), colors.reaction.enemy.c, colors.reaction.friendly.c)
+	return out
 end
 
 -- a secret unit can be a friendly NPC too, so start from its reaction and let the API branch on the identity instead of guessing
-local function GetSecretColor(unit, class, colors)
-	local fallback = GetReactionColor(unit, colors)
-	local classColor = EvalColor and GetClassColor(class)
+local function GetSecretColor(unit, class, colors, out)
+	local fallback = GetReactionColor(unit, colors, out)
+	local fallbackColor = fallback.c
+	local classColor = EvalColor and GetClassColor(class, out)
 	local c = classColor and classColor.c
 
 	if not c then return fallback end
 
 	-- EvaluateColorFromBoolean needs a real colorRGBA, a class color carries no alpha; secret channels are fine as arguments
-	return { c = EvalColor(UnitIsPlayer(unit), CreateColor(c.r, c.g, c.b, 1), fallback.c) }
+	local rgba = out.rgba or CreateColor(0, 0, 0, 1)
+	out.rgba = rgba
+	rgba:SetRGBA(c.r, c.g, c.b, 1)
+
+	out.c = EvalColor(UnitIsPlayer(unit), rgba, fallbackColor)
+	return out
 end
 
-function module:GetUnitColor(unit, class, isPlayer, isDead, isSecret)
+function module:GetUnitColor(unit, class, isPlayer, isDead, isSecret, out)
 	if not unit then return end
 
 	local colors = MEDIA.color.portraits
@@ -185,7 +196,8 @@ function module:GetUnitColor(unit, class, isPlayer, isDead, isSecret)
 
 	if module.db.misc.force_default then return colors.misc.default end
 
-	if isSecret then return module.db.misc.force_reaction and GetReactionColor(unit, colors) or GetSecretColor(unit, class, colors) end
+	out = out or {}
+	if isSecret then return module.db.misc.force_reaction and GetReactionColor(unit, colors, out) or GetSecretColor(unit, class, colors, out) end
 
 	if isPlayer then
 		if module.db.misc.force_reaction then
@@ -195,10 +207,10 @@ function module:GetUnitColor(unit, class, isPlayer, isDead, isSecret)
 			local reactionType = (playerFaction == unitFaction) and "friendly" or "enemy"
 			return colors.reaction[reactionType]
 		else
-			return GetClassColor(class) or colors.misc.default
+			return GetClassColor(class, out) or colors.misc.default
 		end
 	else
-		return GetReactionColor(unit, colors)
+		return GetReactionColor(unit, colors, out)
 	end
 end
 
@@ -214,7 +226,8 @@ local function UpdateTextureColor(element, unit)
 	local db = module.db.misc
 	unit = unit or element.unit
 
-	local color = module:GetUnitColor(unit, element.unitClass, element.isPlayer, element.isDead, element.isSecret)
+	element.colorCache = element.colorCache or {}
+	local color = module:GetUnitColor(unit, element.unitClass, element.isPlayer, element.isDead, element.isSecret, element.colorCache)
 	element.color = color
 	if not color then return end
 
@@ -256,7 +269,8 @@ local function UpdateExtraTexture(element, force)
 	if e_db.unitcolor then
 		color = element.color
 	elseif db.force_reaction then
-		color = GetReactionColor(element.unit, MEDIA.color.portraits)
+		element.extraColorCache = element.extraColorCache or {}
+		color = GetReactionColor(element.unit, MEDIA.color.portraits, element.extraColorCache)
 	else
 		color = MEDIA.color.portraits.classification[classification]
 	end
