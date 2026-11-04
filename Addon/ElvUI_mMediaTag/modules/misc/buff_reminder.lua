@@ -180,6 +180,7 @@ local groupClasses = {}
 local bags = { flask = {}, rune = {}, food = {}, oil = {} }
 local itemSpells = {}
 local buffFood = {}
+local professionFlask = {}
 local updateQueued
 -- the bags are only scanned again after they changed
 local bagsDirty = true
@@ -571,6 +572,29 @@ local function IsBuffFood(itemID)
 	return false
 end
 
+local PROFESSION_STATS = { "ITEM_MOD_DEFTNESS_SHORT", "ITEM_MOD_FINESSE_SHORT", "ITEM_MOD_PERCEPTION_SHORT", "ITEM_MOD_INGENUITY_SHORT", "ITEM_MOD_MULTICRAFT_SHORT", "ITEM_MOD_RESOURCEFULNESS_SHORT" }
+
+-- gathering and crafting phials share the flask subclass, only their tooltip names a profession stat
+local function IsProfessionFlask(itemID)
+	if professionFlask[itemID] then return true end
+	local data = GetItemTooltip(itemID)
+	if not (data and data.lines) then return false end
+
+	for _, line in ipairs(data.lines) do
+		local text = line.leftText and E:NotSecretValue(line.leftText) and strlower(line.leftText)
+		if text then
+			for _, key in ipairs(PROFESSION_STATS) do
+				local stat = _G[key]
+				if stat and strfind(text, strlower(stat), 1, true) then
+					professionFlask[itemID] = true
+					return true
+				end
+			end
+		end
+	end
+	return false
+end
+
 -- the expansion of an item is only known once its data is loaded
 local function IsCurrentExpansion(itemID)
 	local expansionID = select(15, GetItemInfo(itemID))
@@ -599,6 +623,7 @@ local function ScanBags()
 						and (subClassID == SUBCLASS_FLASK and "flask" or subClassID == SUBCLASS_FOOD and "food" or (subClassID == SUBCLASS_ENHANCEMENT or subClassID == SUBCLASS_OTHER) and "oil")
 				-- food, flasks and oils only from the current expansion
 				if kind and kind ~= "rune" and not IsCurrentExpansion(itemID) then kind = nil end
+				if kind == "flask" and IsProfessionFlask(itemID) then kind = nil end
 				if kind then
 					local _, spellID = GetItemSpell(itemID)
 					if spellID then
