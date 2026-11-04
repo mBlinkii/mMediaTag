@@ -7,6 +7,8 @@
 - FIX - [Buff-Reminder]: Low level rogues were reminded of poisons they had not learned yet.
 - FIX - [Buff-Reminder]: The weapon enchant was shown as missing although you had no weapon oil or weapon spell to apply.
 - FIX - [Buff-Reminder]: Raid buffs, pet and weapon spells were reminded before you had learned them.
+- FIX - [Buff-Reminder]: Gathering and crafting phials counted as a flask.
+- FIX - [Portraits]: Coloring portraits of hidden units in instances could cause small stutters.
 - FIX - [Keystone-Teleports]: The keys of the group members stayed in the list after a finished dungeon or after leaving the group.
 - FIX - [DT-Game-Menu]: Entries like the spellbook and collections were missing in WoW Forever.
 - FIX - [DT-Durability]: The item level was shown in Classic versions that have none.
