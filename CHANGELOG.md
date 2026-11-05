@@ -18,7 +18,7 @@
 ### 🔧 UPDATE
 - UPDATE - [Buff-Reminder]: The reminder can hide after a set time and shows again when you enter a dungeon, raid, delve or scenario or join a group.
 - UPDATE - [Dispel-Icon]: The icons can be turned off to only use the frame highlight.
-- UPDATE - [Addon-Manager]: Now also available in WoW Forever.
+- UPDATE - [System]: The Addon-Manager, Objective-Tracker and Cooldown-Manager are now also available in WoW Forever.
 - UPDATE - [Cooldown-Manager]: The settings including the mover positions can be exported and imported.
 - UPDATE - [Cooldown-Manager]: A max icon size keeps the icons of a fixed or matched size from getting too big when only a few are shown.
 ### ✨ NEW

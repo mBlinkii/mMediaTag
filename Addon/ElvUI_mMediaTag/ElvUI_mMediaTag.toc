@@ -27,3 +27,5 @@ options\load_options.xml
 
 modules\load_modules.xml
 modules\load_modules_mainline.xml [AllowLoadGameType standard]
+modules\misc\objective_tracker.lua [AllowLoadGameType standard, camelot]
+modules\cooldownmanager\load_cooldownmanager.xml [AllowLoadGameType standard, camelot]
