@@ -1,6 +1,6 @@
 # Changelog - ElvUI_mMediaTag
 
-## [ver. 4.19] - TBD
+## [ver. 4.19] - 05.11.2026
 ### 🐛 FIX
 - FIX - [System]: Errors could show up right after switching the profile, for example in the Buff-Reminder, Objective-Tracker, Keystone-Teleports and Prey-Hunt.
 - FIX - [Options]: The game froze when a right click on an mMT mover opened its settings page after the mMT settings had been open before.
