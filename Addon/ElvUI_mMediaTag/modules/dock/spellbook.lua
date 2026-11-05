@@ -12,7 +12,7 @@ local specializationIndex = nil
 
 local config = {
 	name = "mMT_Dock_SpellBook",
-	localizedName = "|CFF01EEFFDock|r" .. " " .. (E.Retail and _G.SPELLBOOK or _G.SPELLBOOK_ABILITIES_BUTTON),
+	localizedName = "|CFF01EEFFDock|r" .. " " .. (E.Modern and _G.SPELLBOOK or _G.SPELLBOOK_ABILITIES_BUTTON),
 	category = mMT.NameShort .. " - |CFF01EEFFDock|r",
 	icon = {
 		notification = false,
@@ -26,7 +26,7 @@ local function OnEnter(self)
 
 	if E.db.mMediaTag.dock.tooltip then
 		DT.tooltip:ClearLines()
-		DT.tooltip:AddLine((E.Retail and _G.SPELLBOOK or _G.SPELLBOOK_ABILITIES_BUTTON), mMT:GetRGB("title"))
+		DT.tooltip:AddLine((E.Modern and _G.SPELLBOOK or _G.SPELLBOOK_ABILITIES_BUTTON), mMT:GetRGB("title"))
 		DT.tooltip:AddLine(" ")
 
 		if E.Retail then

@@ -8,6 +8,7 @@ mMT.Changelog[419] = {
 	UPDATE = {
 		"[Buff-Reminder]: The reminder can hide after a set time and shows again when you enter a dungeon, raid, delve or scenario or join a group.",
 		"[Dispel-Icon]: The icons can be turned off to only use the frame highlight.",
+		"[Addon-Manager]: Now also available in WoW Forever.",
 		"[Cooldown-Manager]: The settings including the mover positions can be exported and imported.",
 		"[Cooldown-Manager]: A max icon size keeps the icons of a fixed or matched size from getting too big when only a few are shown.",
 	},
@@ -20,7 +21,9 @@ mMT.Changelog[419] = {
 		"[Buff-Reminder]: Gathering and crafting phials counted as a flask.",
 		"[Portraits]: Coloring portraits of hidden units in instances could cause small stutters.",
 		"[Keystone-Teleports]: The keys of the group members stayed in the list after a finished dungeon or after leaving the group.",
-		"[DT-Game-Menu]: Entries like the spellbook and collections were missing in WoW Forever.",
+		"[Tooltip-Icon]: The module failed to load in WoW Forever.",
+		"[Dock]: The durability and character icons showed no repair costs and no item level in WoW Forever.",
+		"[DT-Game-Menu]: Entries like the spellbook, collections and the shop were missing in WoW Forever.",
 		"[DT-Durability]: The item level was shown in Classic versions that have none.",
 		"[DT-Tracker]: Items that were not cached yet could stay empty.",
 	},

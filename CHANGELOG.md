@@ -10,12 +10,15 @@
 - FIX - [Buff-Reminder]: Gathering and crafting phials counted as a flask.
 - FIX - [Portraits]: Coloring portraits of hidden units in instances could cause small stutters.
 - FIX - [Keystone-Teleports]: The keys of the group members stayed in the list after a finished dungeon or after leaving the group.
-- FIX - [DT-Game-Menu]: Entries like the spellbook and collections were missing in WoW Forever.
+- FIX - [Tooltip-Icon]: The module failed to load in WoW Forever.
+- FIX - [Dock]: The durability and character icons showed no repair costs and no item level in WoW Forever.
+- FIX - [DT-Game-Menu]: Entries like the spellbook, collections and the shop were missing in WoW Forever.
 - FIX - [DT-Durability]: The item level was shown in Classic versions that have none.
 - FIX - [DT-Tracker]: Items that were not cached yet could stay empty.
 ### 🔧 UPDATE
 - UPDATE - [Buff-Reminder]: The reminder can hide after a set time and shows again when you enter a dungeon, raid, delve or scenario or join a group.
 - UPDATE - [Dispel-Icon]: The icons can be turned off to only use the frame highlight.
+- UPDATE - [Addon-Manager]: Now also available in WoW Forever.
 - UPDATE - [Cooldown-Manager]: The settings including the mover positions can be exported and imported.
 - UPDATE - [Cooldown-Manager]: A max icon size keeps the icons of a fixed or matched size from getting too big when only a few are shown.
 ### ✨ NEW

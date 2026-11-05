@@ -498,7 +498,7 @@ function module:Initialize()
 		module:RegisterEvent("PLAYER_TARGET_CHANGED", "OnEvent")
 		module:RegisterEvent("UNIT_FACTION", "OnEvent")
 		if mMT.Supports.focus then module:RegisterEvent("PLAYER_FOCUS_CHANGED", "OnEvent") end
-		if E.Retail or E.Mists then
+		if E.Modern or E.Mists then
 			module:RegisterEvent("INSTANCE_ENCOUNTER_ENGAGE_UNIT", "OnEvent")
 			module:RegisterEvent("ARENA_OPPONENT_UPDATE", "OnEvent")
 		end

@@ -35,7 +35,7 @@ local function AddTooltipIcon(self, icon)
 end
 
 local function hookTip(tip)
-	if not tip or E.Retail then return end
+	if not tip or E.Modern then return end
 
 	tip:HookScript("OnTooltipSetItem", function(self)
 		local _, link = self:GetItem()
@@ -88,7 +88,7 @@ end
 function module:Initialize()
 	if E.db.mMediaTag.tooltip.enable then
 		if not module.hooked then
-			if E.Retail then
+			if E.Modern then
 				TooltipDataProcessor.AddTooltipPostCall(Enum.TooltipDataType.Item, ItemIcon)
 				TooltipDataProcessor.AddTooltipPostCall(Enum.TooltipDataType.Spell, SpellIcon)
 				TooltipDataProcessor.AddTooltipPostCall(Enum.TooltipDataType.Toy, ItemIcon)

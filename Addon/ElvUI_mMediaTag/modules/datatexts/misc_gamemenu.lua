@@ -177,18 +177,18 @@ local function BuildMenuList()
 		})
 	end
 
-	if E.Retail then
-		if StoreEnabled and StoreEnabled() then
-			tinsert(menuList, {
-				text = _G.BLIZZARD_STORE,
-				color = "|c" .. MEDIA.color.gm_text_color.hex,
-				icon = icon and menu_icons.shop,
-				func = function()
-					_G.StoreMicroButton:Click()
-				end,
-			})
-		end
+	if E.Modern and StoreEnabled and StoreEnabled() then
+		tinsert(menuList, {
+			text = _G.BLIZZARD_STORE,
+			color = "|c" .. MEDIA.color.gm_text_color.hex,
+			icon = icon and menu_icons.shop,
+			func = function()
+				_G.StoreMicroButton:Click()
+			end,
+		})
+	end
 
+	if E.Retail then
 		tinsert(menuList, {
 			text = _G.GARRISON_TYPE_8_0_LANDING_PAGE_TITLE,
 			color = "|c" .. MEDIA.color.gm_text_color.hex,

@@ -321,7 +321,7 @@ function Update(self, event)
 
 	if hasStateChanged then
 		-- UnitIsPlayer can be secret itself, so an unreadable unit counts as an NPC - except on arena frames, which only ever hold players
-		local isPlayer = SafeValue(UnitIsPlayer(unit)) or (E.Retail and SafeValue(UnitInPartyIsAI(unit))) or (isSecret and self.type == "arena") or false
+		local isPlayer = SafeValue(UnitIsPlayer(unit)) or (E.Modern and SafeValue(UnitInPartyIsAI(unit))) or (isSecret and self.type == "arena") or false
 		local shouldMirror = (isPlayer and self.db.mirror) or (not isPlayer and not self.db.mirror)
 
 		local applied = false

@@ -539,7 +539,7 @@ do
 		local tag = format("%s:%s", "mMT-classicons", style)
 		E:AddTag(tag, "UNIT_NAME_UPDATE", function(unit, _, args)
 			if E:IsSecretUnit(unit) then return end
-			if not (UnitIsPlayer(unit) or (E.Retail and UnitInPartyIsAI(unit))) then return end
+			if not (UnitIsPlayer(unit) or (E.Modern and UnitInPartyIsAI(unit))) then return end
 
 			local _, class = UnitClass(unit)
 			if not class then return end
@@ -566,7 +566,7 @@ do
 		local tag = format("%s:%s", "mMT-specicons", style)
 		E:AddTag(tag, "UNIT_NAME_UPDATE", function(unit, _, args)
 			if E:IsSecretUnit(unit) then return end
-			if not (UnitIsPlayer(unit) or (E.Retail and UnitInPartyIsAI(unit))) then return end
+			if not (UnitIsPlayer(unit) or (E.Modern and UnitInPartyIsAI(unit))) then return end
 
 			local info = E.Retail and E:GetUnitSpecInfo(unit)
 			if not info then return end

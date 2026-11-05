@@ -103,7 +103,7 @@ local function OnEvent(self, event, ...)
 		Dock:CreateDockIcon(self, config, event)
 	end
 
-	if E.Retail or E.Mists then
+	if E.Modern or E.Mists then
 		avg, avgEquipped, avgPvp = GetAverageItemLevel()
 	end
 
@@ -121,7 +121,7 @@ local function OnEvent(self, event, ...)
 			if perc < totalDurability then totalDurability = perc end
 
 			local repairCost
-			if E.Retail then
+			if E.Modern then
 				local data = E.ScanTooltip:GetInventoryInfo("player", index)
 				repairCost = data and data.repairCost
 			else

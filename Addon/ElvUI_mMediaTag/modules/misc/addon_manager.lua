@@ -396,7 +396,7 @@ function module:ADDON_LOADED(_, addon)
 end
 
 function module:Initialize()
-	if not E.Retail then return end
+	if not E.Modern then return end
 
 	module.isEnabled = E.db.mMediaTag.addon_manager.enable
 
