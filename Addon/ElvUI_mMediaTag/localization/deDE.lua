@@ -1496,6 +1496,8 @@ L["Warband"] = "Kriegsmeute"
 L["Yesterday"] = "Gestern"
 
 -- options/datatext/info_gold.lua
+L["Condensed (spaced)"] = "Kompakt (mit Abstand)"
+L["Short (whole numbers spaced)"] = "Kurz (ganze Zahlen mit Abstand)"
 L["Text color"] = "Textfarbe"
 L["Value"] = "Wert"
 L["Data"] = "Daten"

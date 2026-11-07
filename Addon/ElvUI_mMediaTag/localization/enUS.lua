@@ -1496,6 +1496,8 @@ L["Warband"] = true
 L["Yesterday"] = true
 
 -- options/datatext/info_gold.lua
+L["Condensed (spaced)"] = true
+L["Short (whole numbers spaced)"] = true
 L["Text color"] = true
 L["Value"] = true
 L["Data"] = true
