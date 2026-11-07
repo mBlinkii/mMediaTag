@@ -287,6 +287,7 @@ mMT.options = {
 				info_time = Feature(2, L["Time"]),
 				info_combat_time = Feature(3, L["Combat/Arena Time"]),
 				info_durability_itemlevel = Feature(4, L["Durability & Item Level"]),
+				info_gold = Feature(5, L["Gold"], nil, { db = "datatexts.gold", desc = L["Tracks income, expenses and the gold of all characters, with a daily goal and a gold goal."], new = 420 }),
 			}),
 			menus = Page(3, L["Menus"], "tab", {
 				misc_teleports = Feature(1, L["Teleports"], Unsupported("teleports")),

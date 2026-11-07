@@ -23,6 +23,11 @@ mMT.defaults.keystones = {}
 
 mMT.defaults.buff_reminder = {}
 
+mMT.defaults.gold = {
+	characters = {},
+	goals = { daily = 0, target = 0 },
+}
+
 mMT.defaults.unknownIDS = {}
 
 mMT.defaults.boss_ids = {}
