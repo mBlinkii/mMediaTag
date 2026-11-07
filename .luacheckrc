@@ -73,7 +73,9 @@ local extra = {
 	"UnitEmpoweredChannelDuration",
 	"UnitHasPowerType",
 	"UnitHealthMissing",
+	"UnitHealthPercent",
 	"UnitInPartyIsAI",
+	"UnitPowerPercent",
 	"WrapTextInColorCode",
 }
 

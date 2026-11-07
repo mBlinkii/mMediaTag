@@ -24,6 +24,10 @@ local CreateColor = CreateColor
 local EvalColor = C_CurveUtil and C_CurveUtil.EvaluateColorFromBoolean
 local GenerateTextColorCode = C_ColorUtil and C_ColorUtil.GenerateTextColorCode
 local WrapString = C_StringUtil and C_StringUtil.WrapString
+local TruncateWhenZero = C_StringUtil and C_StringUtil.TruncateWhenZero
+local UnitHealthPercent = UnitHealthPercent
+local UnitPowerPercent = UnitPowerPercent
+local ScaleTo100 = CurveConstants and CurveConstants.ScaleTo100
 local GetClassColor = C_ClassColor and C_ClassColor.GetClassColor
 local CreateAtlasMarkup = CreateAtlasMarkup
 local CreateTextureMarkup = CreateTextureMarkup
@@ -355,9 +359,29 @@ E:AddTag("mMT-color:target", "UNIT_TARGET", function(unit, _, args)
 end)
 E:AddTagInfo("mMT-color:target", mMT.NameShort .. " " .. L["Color"], L["Same as mMT-color, but only for the units target."])
 
+-- secret values can not be compared, the raw value sits in the link part so a zero empties the whole string
+local function HideZero(value, text)
+	if E.Modern then return WrapString(TruncateWhenZero(value), "|Htag:", "|h" .. text .. "|h") end
+	if value ~= 0 then return text end
+end
+
+-- TruncateWhenZero rounds down like the %d of perhp and perpp, so the text stays the same
+local function HealthPercent(unit)
+	if E.Modern then return TruncateWhenZero(UnitHealthPercent(unit, true, ScaleTo100)) end
+	local percent = _TAGS.perhp(unit)
+	if percent ~= 0 then return percent end
+end
+
+local function PowerPercent(unit)
+	if E.Modern then return TruncateWhenZero(UnitPowerPercent(unit, nil, true, ScaleTo100)) end
+	local percent = _TAGS.perpp(unit)
+	if percent ~= 0 then return percent end
+end
+
 -- the nodecimal data is rebuilt in Initialize, so it is looked up per call
 local function HealthText(unit, style)
-	return E:AbbreviateNumbers(UnitHealth(unit), style == "nodecimal" and noDecData or E.Abbreviate[style])
+	local health = UnitHealth(unit)
+	return HideZero(health, E:AbbreviateNumbers(health, style == "nodecimal" and noDecData or E.Abbreviate[style]))
 end
 
 for _, info in ipairs({
@@ -370,14 +394,14 @@ for _, info in ipairs({
 }) do
 	local tag, style, percentInCombat, desc = unpack(info)
 	E:AddTag(tag, "UNIT_HEALTH UNIT_MAXHEALTH", function(unit)
-		if percentInCombat and UnitAffectingCombat(unit) then return _TAGS.perhp(unit) end
+		if percentInCombat and UnitAffectingCombat(unit) then return HealthPercent(unit) end
 		return HealthText(unit, style)
 	end)
 	E:AddTagInfo(tag, mMT.NameShort .. " " .. L["Health"], desc)
 end
 
 E:AddTag("mMT-health:percent", "UNIT_HEALTH UNIT_MAXHEALTH", function(unit)
-	if UnitAffectingCombat(unit) then return _TAGS.perhp(unit) end
+	if UnitAffectingCombat(unit) then return HealthPercent(unit) end
 end)
 E:AddTagInfo("mMT-health:percent", mMT.NameShort .. " " .. L["Health"], L["Returns the current health percent of the unit (in combat)."])
 
@@ -514,7 +538,7 @@ E:AddTagInfo(
 
 -- UNIT_FLAGS covers entering and leaving combat, UNIT_COMBAT fired on every hit
 E:AddTag("mMT-power", "UNIT_DISPLAYPOWER UNIT_POWER_FREQUENT UNIT_MAXPOWER UNIT_FLAGS", function(unit)
-	if UnitAffectingCombat(unit) then return _TAGS.perpp(unit) end
+	if UnitAffectingCombat(unit) then return PowerPercent(unit) end
 end)
 E:AddTagInfo("mMT-power", mMT.NameShort .. " " .. L["Power"], L["Returns the current power percent of the unit, but only while in combat."])
 
