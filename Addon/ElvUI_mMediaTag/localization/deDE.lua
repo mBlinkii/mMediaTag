@@ -1466,6 +1466,15 @@ L["Only shows groups your whole party fits into."] = "Zeigt nur Gruppen, in die 
 L["Adds a filter panel to the group finder search to filter and sort groups by roles, party fit, dungeons and more."] = "Fügt der Gruppenfinder-Suche ein Filterpanel hinzu, um Gruppen nach Rollen, Gruppenpassung, Dungeons und mehr zu filtern und zu sortieren."
 
 -- modules/datatexts/info_gold.lua
+L["All days (%d)"] = "Alle Tage (%d)"
+L["Best day"] = "Bester Tag"
+L["Day history"] = "Tagesverlauf"
+L["Delete day"] = "Tag löschen"
+L["Delete the gold data of %s?"] = "Golddaten vom %s löschen?"
+L["Gold per hour"] = "Gold pro Stunde"
+L["No days recorded yet."] = "Noch keine Tage erfasst."
+L["Online time"] = "Onlinezeit"
+L["Sources"] = "Quellen"
 L["Account"] = "Konto"
 L["Auction House"] = "Auktionshaus"
 L["Bank"] = "Bank"

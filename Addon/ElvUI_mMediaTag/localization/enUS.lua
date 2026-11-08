@@ -1466,6 +1466,15 @@ L["Only shows groups your whole party fits into."] = true
 L["Adds a filter panel to the group finder search to filter and sort groups by roles, party fit, dungeons and more."] = true
 
 -- modules/datatexts/info_gold.lua
+L["All days (%d)"] = true
+L["Best day"] = true
+L["Day history"] = true
+L["Delete day"] = true
+L["Delete the gold data of %s?"] = true
+L["Gold per hour"] = true
+L["No days recorded yet."] = true
+L["Online time"] = true
+L["Sources"] = true
 L["Account"] = true
 L["Auction House"] = true
 L["Bank"] = true
