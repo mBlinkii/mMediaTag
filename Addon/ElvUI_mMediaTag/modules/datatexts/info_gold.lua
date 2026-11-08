@@ -485,8 +485,8 @@ local MONTHS = {
 	_G.FULLDATE_MONTH_NOVEMBER,
 	_G.FULLDATE_MONTH_DECEMBER,
 }
-local ICON_EXPANDED = "|TInterface\\Buttons\\UI-MinusButton-Up:14:14|t "
-local ICON_COLLAPSED = "|TInterface\\Buttons\\UI-PlusButton-Up:14:14|t "
+local ICON_EXPANDED = E:TextureString(E.Media.Textures.MinusButton, ":14:14") .. " "
+local ICON_COLLAPSED = E:TextureString(E.Media.Textures.PlusButton, ":14:14") .. " "
 
 -- only the current month starts expanded
 local function IsExpanded(frame, month)
