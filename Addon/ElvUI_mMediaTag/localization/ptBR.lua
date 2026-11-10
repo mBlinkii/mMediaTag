@@ -1083,9 +1083,6 @@ L["Save your enabled addons as a named set and switch between them from Blizzard
 L["Prey Hunt"] = "Caça à presa"
 L["Shows Ready in green once every hunt stage is done, the text is hidden otherwise."] = "Mostra Pronto em verde quando todas as etapas da caça forem concluídas, caso contrário o texto fica oculto."
 L["Shows the current hunt stage as text on the prey icon."] = "Mostra a etapa atual da caça como texto no ícone da presa."
-L["Target List"] = "Lista de alvos"
-L["Mark Defeated Targets"] = "Marcar alvos derrotados"
-L["Colors prey targets you already defeated in the target list, based on the achievement criteria."] = "Colore na lista de alvos as presas que você já derrotou, com base nos critérios da conquista."
 
 -- options/misc/unitframe_textures.lua
 L["Background Texture"] = "Textura de fundo"

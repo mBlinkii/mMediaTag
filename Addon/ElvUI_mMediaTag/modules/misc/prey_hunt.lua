@@ -1,21 +1,14 @@
 local mMT, DB, M, E, P, L, MEDIA = unpack(ElvUI_mMediaTag)
 local LSM = E.Libs.LSM
-local module = mMT:AddModule("PreyHunt", { "AceEvent-3.0" })
+local module = mMT:AddModule("PreyHunt")
 
 -- Cache WoW Globals
 local _G = _G
 local next = next
 local format = format
-local gsub = gsub
-local strtrim = strtrim
-local wipe = wipe
 local hooksecurefunc = hooksecurefunc
 local issecretvalue = issecretvalue
 local Enum = Enum
-local GetAchievementNumCriteria = GetAchievementNumCriteria
-local GetAchievementCriteriaInfo = GetAchievementCriteriaInfo
-
-local GOTTA_HUNT_THEM_ALL = 62383 -- one criteria per prey target, account-wide
 
 local containers = {
 	"UIWidgetPowerBarContainerFrame",
@@ -26,7 +19,6 @@ local containers = {
 
 local frames = {}
 local hooked = {}
-local targets = {}
 
 local function MaxState()
 	return (Enum and Enum.PreyHuntProgressState and Enum.PreyHuntProgressState.Final or 3) + 1
@@ -120,39 +112,6 @@ local function ForEachWidget(func)
 	end
 end
 
-local function UpdateTargets()
-	wipe(targets)
-
-	local count = GetAchievementNumCriteria and GetAchievementNumCriteria(GOTTA_HUNT_THEM_ALL) or 0
-	for index = 1, count do
-		local name, _, completed = GetAchievementCriteriaInfo(GOTTA_HUNT_THEM_ALL, index)
-		if name and not issecretvalue(name) then targets[name] = not issecretvalue(completed) and completed or false end
-	end
-end
-
-local function MarkButton(button)
-	local text = button.GetText and button:GetText()
-	if not text or issecretvalue(text) then return end
-
-	local name = strtrim(gsub(gsub(text, "|c%x%x%x%x%x%x%x%x", ""), "|r", ""))
-	if not targets[name] then return end
-
-	-- ElvUI's gossip skin forces every SetTextColor back to white, so the color has to travel inside the string.
-	button:SetText(format("|c%s%s|r", module.db.gossip_color, name))
-end
-
-local function OnGossipUpdate(scrollBox)
-	if not module.db or not module.db.gossip then return end
-
-	scrollBox:ForEachFrame(MarkButton)
-end
-
-function module:GOSSIP_SHOW()
-	if not module.db or not module.db.gossip then return end
-
-	UpdateTargets()
-end
-
 local function RebindProfile()
 	module.db = E.db.mMediaTag.prey_hunt
 end
@@ -174,25 +133,5 @@ function module:Initialize()
 				frame.mMTProgress:Hide()
 			end
 		end
-	end
-
-	local scrollBox = _G.GossipFrame and _G.GossipFrame.GreetingPanel and _G.GossipFrame.GreetingPanel.ScrollBox
-	if not scrollBox then return end
-
-	if module.db.gossip then
-		if not module.isGossipHooked then
-			hooksecurefunc(scrollBox, "Update", OnGossipUpdate)
-			module.isGossipHooked = true
-		end
-
-		if not module.isEnabled then
-			module:RegisterEvent("GOSSIP_SHOW")
-			module.isEnabled = true
-		end
-
-		UpdateTargets()
-	elseif module.isEnabled then
-		module:UnregisterAllEvents()
-		module.isEnabled = false
 	end
 end

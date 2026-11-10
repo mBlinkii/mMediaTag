@@ -1083,9 +1083,6 @@ L["Save your enabled addons as a named set and switch between them from Blizzard
 L["Prey Hunt"] = "Охота на добычу"
 L["Shows Ready in green once every hunt stage is done, the text is hidden otherwise."] = "Показывает «Готово» зелёным, когда все этапы охоты пройдены, иначе текст скрыт."
 L["Shows the current hunt stage as text on the prey icon."] = "Показывает текущий этап охоты текстом на значке добычи."
-L["Target List"] = "Список целей"
-L["Mark Defeated Targets"] = "Отмечать побеждённые цели"
-L["Colors prey targets you already defeated in the target list, based on the achievement criteria."] = "Выделяет цветом в списке целей добычу, которую вы уже победили, по критериям достижения."
 
 -- options/misc/unitframe_textures.lua
 L["Background Texture"] = "Текстура фона"

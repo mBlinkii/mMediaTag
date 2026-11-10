@@ -1083,9 +1083,6 @@ L["Save your enabled addons as a named set and switch between them from Blizzard
 L["Prey Hunt"] = "獵物狩獵"
 L["Shows Ready in green once every hunt stage is done, the text is hidden otherwise."] = "所有狩獵階段完成後以綠色顯示「就緒」，否則隱藏文字。"
 L["Shows the current hunt stage as text on the prey icon."] = "在獵物圖示上以文字顯示目前狩獵階段。"
-L["Target List"] = "目標清單"
-L["Mark Defeated Targets"] = "標記已擊敗的目標"
-L["Colors prey targets you already defeated in the target list, based on the achievement criteria."] = "依據成就條件，在目標清單中為已擊敗的獵物上色。"
 
 -- options/misc/unitframe_textures.lua
 L["Background Texture"] = "背景材質"

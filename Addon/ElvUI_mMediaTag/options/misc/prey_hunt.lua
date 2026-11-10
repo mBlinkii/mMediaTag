@@ -209,42 +209,4 @@ mMT.options.args.quests.args.prey_hunt.args = {
 			},
 		},
 	},
-	target_list = {
-		order = 5,
-		type = "group",
-		inline = true,
-		name = L["Target List"],
-		args = {
-			gossip = {
-				order = 1,
-				type = "toggle",
-				name = L["Mark Defeated Targets"],
-				desc = L["Colors prey targets you already defeated in the target list, based on the achievement criteria."],
-				get = function(info)
-					return E.db.mMediaTag.prey_hunt.gossip
-				end,
-				set = function(info, value)
-					E.db.mMediaTag.prey_hunt.gossip = value
-					Update()
-				end,
-			},
-			gossip_color = {
-				order = 2,
-				type = "color",
-				name = L["Color"],
-				hasAlpha = false,
-				disabled = function()
-					return not E.db.mMediaTag.prey_hunt.gossip
-				end,
-				get = function()
-					local r, g, b = mMT:HexToRGB(E.db.mMediaTag.prey_hunt.gossip_color)
-					return r, g, b
-				end,
-				set = function(_, r, g, b)
-					E.db.mMediaTag.prey_hunt.gossip_color = E:RGBToHex(r, g, b, "ff")
-					Update()
-				end,
-			},
-		},
-	},
 }

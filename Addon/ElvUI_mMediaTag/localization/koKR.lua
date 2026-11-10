@@ -1083,9 +1083,6 @@ L["Save your enabled addons as a named set and switch between them from Blizzard
 L["Prey Hunt"] = "사냥감 추적"
 L["Shows Ready in green once every hunt stage is done, the text is hidden otherwise."] = "모든 사냥 단계를 마치면 녹색으로 준비를 표시하고, 그렇지 않으면 텍스트를 숨깁니다."
 L["Shows the current hunt stage as text on the prey icon."] = "사냥감 아이콘에 현재 사냥 단계를 텍스트로 표시합니다."
-L["Target List"] = "대상 목록"
-L["Mark Defeated Targets"] = "처치한 대상 표시"
-L["Colors prey targets you already defeated in the target list, based on the achievement criteria."] = "업적 조건을 바탕으로 이미 처치한 사냥감을 대상 목록에서 색으로 표시합니다."
 
 -- options/misc/unitframe_textures.lua
 L["Background Texture"] = "배경 텍스처"

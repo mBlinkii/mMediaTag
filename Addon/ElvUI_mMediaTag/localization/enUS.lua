@@ -291,9 +291,6 @@ L["Shows deaths and lost time in the current Mythic+ run."] = true
 L["Prey Hunt"] = true
 L["Shows Ready in green once every hunt stage is done, the text is hidden otherwise."] = true
 L["Shows the current hunt stage as text on the prey icon."] = true
-L["Target List"] = true
-L["Mark Defeated Targets"] = true
-L["Colors prey targets you already defeated in the target list, based on the achievement criteria."] = true
 
 -- options/misc/difficulty_info.lua
 L["LEFT"] = true
