@@ -52,9 +52,23 @@ local eventFrame = CreateFrame("Frame")
 local activeSources = {}
 local baseline, character, lastPlayTime
 
+-- day keys are cached per offset until midnight
+local dayKeys, dayExpires = {}, 0
+
 local function DayKey(offset)
-	local now = date("*t")
-	return date("%Y-%m-%d", time({ year = now.year, month = now.month, day = now.day + (offset or 0), hour = 12 }))
+	offset = offset or 0
+	local stamp = time()
+	if stamp < dayExpires and dayKeys[offset] then return dayKeys[offset] end
+
+	local now = date("*t", stamp)
+	if stamp >= dayExpires then
+		wipe(dayKeys)
+		dayExpires = time({ year = now.year, month = now.month, day = now.day + 1, hour = 0 })
+	end
+
+	local key = date("%Y-%m-%d", time({ year = now.year, month = now.month, day = now.day + offset, hour = 12 }))
+	dayKeys[offset] = key
+	return key
 end
 
 local function WeekStart()
