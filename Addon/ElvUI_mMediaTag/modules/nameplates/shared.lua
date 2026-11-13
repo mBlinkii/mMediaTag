@@ -6,6 +6,8 @@ local LSM = E.Libs.LSM
 local pcall = pcall
 local ipairs = ipairs
 local UnitIsUnit = UnitIsUnit
+local UnitIsTapDenied = UnitIsTapDenied
+local UnitPlayerControlled = UnitPlayerControlled
 
 local GetNamePlateForUnit = C_NamePlate.GetNamePlateForUnit
 local HIGHLIGHT_MODULES = {
@@ -91,6 +93,7 @@ function Utils:GetColorOverrideConfig(module, nameplate, blockedBy)
 	effective.color = cfg.color
 	effective.borderColor = cfg.borderColor
 	effective.ignoreThreat = cfg.ignoreThreat
+	effective.keepTapped = cfg.keepTapped
 	return effective
 end
 
@@ -105,8 +108,14 @@ function Utils:IsGoodThreat(nameplate)
 	return goodColor
 end
 
+-- same check as ElvUI's tapped health color
+function Utils:IsTapDenied(nameplate, cfg)
+	local unit = cfg and cfg.keepTapped and nameplate and nameplate.__unit
+	return unit and not UnitPlayerControlled(unit) and UnitIsTapDenied(unit) or false
+end
+
 function Utils:ShouldApplyCustomColor(nameplate, cfg)
-	if not (cfg and cfg.changeColor) then return false end
+	if not (cfg and cfg.changeColor) or self:IsTapDenied(nameplate, cfg) then return false end
 	if cfg.ignoreThreat then return true end
 	return self:IsGoodThreat(nameplate)
 end
@@ -178,7 +187,7 @@ function Utils:ApplyHighlightStyle(nameplate, cfg, state)
 	if state.configKey then healthBar[state.configKey] = cfg end
 	healthBar.PostUpdateColor = Utils.HighlightPostUpdateColor
 
-	if cfg.changeColor then
+	if cfg.changeColor and not self:IsTapDenied(nameplate, cfg) then
 		local color = cfg.color
 		NP:SetStatusBarColor(healthBar, color.r, color.g, color.b)
 	end

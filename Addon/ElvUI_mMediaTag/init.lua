@@ -47,6 +47,7 @@ mMT.Supports = {
 	encounterjournal = not (E.TBC or E.Classic or E.Forever),
 	questunits = not (E.TBC or E.Classic),
 	focus = not E.Classic,
+	tapdenied = not E.Retail,
 }
 
 function mMT:InsertOptions()

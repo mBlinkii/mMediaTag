@@ -53,9 +53,23 @@ mMT.options.args.nameplates.args.highlights.args.target_highlight.args = {
 					mMT:UpdateModule("NP-TargetHighlight")
 				end,
 			},
+			tapped = {
+				order = 3,
+				type = "toggle",
+				name = L["Keep tapped color"],
+				desc = L["Shows the tapped color instead of the highlight color when another player has tagged the unit."],
+				hidden = not mMT.Supports.tapdenied,
+				get = function(info)
+					return E.db.mMediaTag.nameplates.target.keepTapped
+				end,
+				set = function(info, value)
+					E.db.mMediaTag.nameplates.target.keepTapped = value
+					mMT:UpdateModule("NP-TargetHighlight")
+				end,
+			},
 			color = {
 				type = "color",
-				order = 3,
+				order = 4,
 				name = L["Color"],
 				hasAlpha = false,
 				get = function(info)

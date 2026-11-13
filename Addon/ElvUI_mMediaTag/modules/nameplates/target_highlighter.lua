@@ -89,6 +89,7 @@ function module:Initialize()
 			color = MEDIA.color.nameplates.target_color,
 			borderColor = MEDIA.color.nameplates.target_border_color,
 			ignoreThreat = db.target.ignoreThreat,
+			keepTapped = mMT.Supports.tapdenied and db.target.keepTapped,
 		}
 
 		if not module.eventsRegistered then

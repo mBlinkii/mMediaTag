@@ -930,6 +930,8 @@ L["Icon Zoom"] = "Symbol-Zoom"
 L["Border color"] = "Randfarbe"
 L["Health color"] = "Gesundheitsfarbe"
 L["Ignore threat color"] = "Bedrohungsfarbe ignorieren"
+L["Keep tapped color"] = "Getappt-Farbe beibehalten"
+L["Shows the tapped color instead of the highlight color when another player has tagged the unit."] = "Zeigt die Getappt-Farbe statt der Hervorhebungsfarbe, wenn ein anderer Spieler die Einheit bereits markiert hat."
 
 -- options/nameplates/execute_marker.lua
 L["Automatic range"] = "Automatische Schwelle"

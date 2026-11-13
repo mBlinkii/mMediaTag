@@ -105,6 +105,7 @@ function module:Initialize()
 			color = MEDIA.color.nameplates.quest_color,
 			borderColor = MEDIA.color.nameplates.quest_border_color,
 			ignoreThreat = db.quest.ignoreThreat,
+			keepTapped = mMT.Supports.tapdenied and db.quest.keepTapped,
 		}
 
 		if not module.initialized then

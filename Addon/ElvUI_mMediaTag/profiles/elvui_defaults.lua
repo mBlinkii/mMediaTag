@@ -882,6 +882,7 @@ P.nameplates = {
 		changeBorder = false,
 		changeTexture = false,
 		ignoreThreat = false,
+		keepTapped = true,
 		texture = "mMediaTag A9",
 	},
 	target = {
@@ -890,6 +891,7 @@ P.nameplates = {
 		changeBorder = false,
 		changeTexture = false,
 		ignoreThreat = false,
+		keepTapped = true,
 		texture = "mMediaTag A4",
 	},
 	quest = {
@@ -898,6 +900,7 @@ P.nameplates = {
 		changeBorder = false,
 		changeTexture = false,
 		ignoreThreat = false,
+		keepTapped = true,
 		texture = "mMediaTag A1",
 	},
 	execute = {

@@ -930,6 +930,8 @@ L["Icon Zoom"] = true
 L["Border color"] = true
 L["Health color"] = true
 L["Ignore threat color"] = true
+L["Keep tapped color"] = true
+L["Shows the tapped color instead of the highlight color when another player has tagged the unit."] = true
 
 -- options/nameplates/execute_marker.lua
 L["Automatic range"] = true
