@@ -1202,6 +1202,25 @@ mMT.options.args.cooldownmanager.args.viewers.args.buff_bar.args = {
 					Refresh()
 				end,
 			},
+			icon_size = {
+				order = 6,
+				type = "range",
+				name = L["Icon Size"],
+				desc = L["Size of the bar icon. 0 = bar height."],
+				min = 0,
+				max = 80,
+				step = 1,
+				disabled = function()
+					return Disabled() or not VDB("buff_bar").icon
+				end,
+				get = function()
+					return VDB("buff_bar").icon_size or 0
+				end,
+				set = function(_, value)
+					VDB("buff_bar").icon_size = value
+					Refresh()
+				end,
+			},
 			mirrored = {
 				order = 7,
 				type = "toggle",

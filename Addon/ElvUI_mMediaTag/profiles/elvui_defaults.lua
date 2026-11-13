@@ -1350,6 +1350,7 @@ P.cooldown_manager = {
 			anchor = { frame = "", point = "TOP", relative = "BOTTOM", x = 0, y = 0, match = false, match_offset = 0 },
 			icon = true,
 			icon_gap = 2,
+			icon_size = 0,
 			name = true,
 			timer = true,
 			stacks = true,

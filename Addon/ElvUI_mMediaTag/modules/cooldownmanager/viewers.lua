@@ -8,6 +8,7 @@ local next = next
 local wipe = wipe
 local tsort = table.sort
 local ceil = math.ceil
+local max = math.max
 
 local LSM = module.LSM
 
@@ -48,6 +49,8 @@ function module:ApplyBarStyle(frame, vdb)
 	if not bar then return end
 
 	local height = vdb.height or 20
+	local iconSize = (vdb.icon_size or 0) > 0 and vdb.icon_size or height
+	local gap = vdb.icon_gap or 2
 	local showIcon = vdb.icon ~= false
 	local side = frame.mmtIconSide or "LEFT"
 	local icon = frame.Icon
@@ -56,7 +59,7 @@ function module:ApplyBarStyle(frame, vdb)
 		if showIcon then
 			icon:Show()
 			icon:ClearAllPoints()
-			icon:SetSize(height, height)
+			icon:SetSize(iconSize, iconSize)
 			icon:SetPoint(side, frame, side, 0, 0)
 			if icon.Icon then icon.Icon:SetAllPoints(icon) end
 		else
@@ -67,12 +70,13 @@ function module:ApplyBarStyle(frame, vdb)
 	bar:ClearAllPoints()
 	bar:SetReverseFill(side == "RIGHT")
 
+	-- Anchored to the frame, not the icon, so the bar keeps its height when the icon size differs
 	if showIcon and icon then
 		if side == "RIGHT" then
 			bar:SetPoint("TOPLEFT", frame, "TOPLEFT", 0, 0)
-			bar:SetPoint("BOTTOMRIGHT", icon, "BOTTOMLEFT", -(vdb.icon_gap or 2), 0)
+			bar:SetPoint("BOTTOMRIGHT", frame, "BOTTOMRIGHT", -(iconSize + gap), 0)
 		else
-			bar:SetPoint("TOPLEFT", icon, "TOPRIGHT", vdb.icon_gap or 2, 0)
+			bar:SetPoint("TOPLEFT", frame, "TOPLEFT", iconSize + gap, 0)
 			bar:SetPoint("BOTTOMRIGHT", frame, "BOTTOMRIGHT", 0, 0)
 		end
 	else
@@ -184,6 +188,11 @@ function module:LayoutBuffBars(capture)
 	local spacing = vdb.spacing or 2
 	local growUp = vdb.growth == "UP"
 
+	-- A larger icon widens the row so the icons of neighbouring bars do not overlap
+	local iconSize = vdb.icon ~= false and (vdb.icon_size or 0) or 0
+	local rowHeight = max(height, iconSize)
+	local pad = (rowHeight - height) / 2
+
 	local bars = module.frameCache[key]
 	if not bars then
 		bars = {}
@@ -219,12 +228,12 @@ function module:LayoutBuffBars(capture)
 		local gap = vdb.column_gap or 4
 		local columnWidth = (width - gap) / 2
 		local rows = ceil(count / 2)
-		module:SetContainerSize(container, width, rows * height + (rows - 1) * spacing)
+		module:SetContainerSize(container, width, rows * rowHeight + (rows - 1) * spacing)
 
 		for row = 0, rows - 1 do
 			local left = bars[row * 2 + 1]
 			local right = bars[row * 2 + 2]
-			local offset = direction * row * (height + spacing)
+			local offset = direction * (row * (rowHeight + spacing) + pad)
 
 			StyleBar(left, vdb, capture, right and columnWidth or width, height, right and "RIGHT" or "LEFT")
 			left:ClearAllPoints()
@@ -237,12 +246,12 @@ function module:LayoutBuffBars(capture)
 			end
 		end
 	else
-		module:SetContainerSize(container, width, count * height + (count - 1) * spacing)
+		module:SetContainerSize(container, width, count * rowHeight + (count - 1) * spacing)
 
 		for index, frame in ipairs(bars) do
 			StyleBar(frame, vdb, capture, width, height, "LEFT")
 			frame:ClearAllPoints()
-			frame:SetPoint(anchor, container, anchor, 0, direction * (index - 1) * (height + spacing))
+			frame:SetPoint(anchor, container, anchor, 0, direction * ((index - 1) * (rowHeight + spacing) + pad))
 		end
 	end
 

@@ -1332,6 +1332,7 @@ L["Hide GCD Swipe"] = true
 L["Bar Width"] = true
 L["Bar Height"] = true
 L["Icon Gap"] = true
+L["Size of the bar icon. 0 = bar height."] = true
 L["Mirrored Columns"] = true
 L["Column Gap"] = true
 L["Anchor Frame"] = true
