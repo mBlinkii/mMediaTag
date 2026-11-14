@@ -1,5 +1,9 @@
 # Changelog - ElvUI_mMediaTag
 
+## [ver. 4.21] - TBD
+### 🔧 UPDATE
+- UPDATE - [Mail-Helper]: The recipient list shows your alts on all realms and factions in Retail, adds online Battle.net friends and colors recently mailed characters by class.
+
 ## [ver. 4.20] - 13.11.2026
 ### 🔧 UPDATE
 - UPDATE - [Tags]: The mMT-health and mMT-power tags show nothing instead of a 0 when the health, health percent or power percent is zero.
