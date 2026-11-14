@@ -252,6 +252,7 @@ local function GetMailDB()
 	DB.mail_helper = DB.mail_helper or {}
 	DB.mail_helper.alts = DB.mail_helper.alts or {}
 	DB.mail_helper.recent = DB.mail_helper.recent or {}
+	DB.mail_helper.classes = DB.mail_helper.classes or {}
 	return DB.mail_helper
 end
 
@@ -307,7 +308,9 @@ local function AddRecent(name)
 	end
 
 	tinsert(recent, 1, name)
-	recent[MAX_RECENT + 1] = nil
+
+	local dropped = tremove(recent, MAX_RECENT + 1)
+	if dropped then GetMailDB().classes[strlower(dropped)] = nil end
 end
 
 local function SetRecipient(name)
@@ -319,11 +322,15 @@ local function SortByName(a, b)
 	return a.name < b.name
 end
 
+-- classes of the listed characters, colors the recently mailed names
+local knownClasses = {}
+
 local function AddGroup(root, title, entries)
 	local group = root:CreateButton(title)
 	group:SetScrollMode(MENU_HEIGHT)
 
 	for _, entry in ipairs(entries) do
+		if entry.class then knownClasses[strlower(entry.name)] = entry.class end
 		group:CreateButton(ColorName(entry.name, entry.class, entry.online), SetRecipient, entry.name)
 	end
 
@@ -332,20 +339,41 @@ end
 
 local function BuildRecipientMenu(_, root)
 	local realms = ConnectedRealms()
+	wipe(knownClasses)
 
 	local entries = {}
 	for name, info in pairs(GetMailDB().alts) do
-		if info.faction == E.myfaction and IsReachable(name, realms) then tinsert(entries, { name = name, class = info.class }) end
+		-- retail delivers mail to the own characters across realms and factions
+		local reachable = E.Retail and name ~= FullName(E.myname) or info.faction == E.myfaction and IsReachable(name, realms)
+		if reachable then tinsert(entries, { name = name, class = info.class }) end
 	end
 	sort(entries, SortByName)
 	AddGroup(root, L["Alts"], entries)
 
 	entries = {}
+	local listed = {}
 	for i = 1, _G.C_FriendList.GetNumFriends() do
 		local info = _G.C_FriendList.GetFriendInfoByIndex(i)
 		local name = info and FullName(info.name)
-		if name and IsReachable(name, realms) then tinsert(entries, { name = name, class = GetClassToken(info.className), online = info.connected }) end
+		if name and IsReachable(name, realms) then
+			listed[name] = true
+			tinsert(entries, { name = name, class = GetClassToken(info.className), online = info.connected })
+		end
 	end
+	-- battle.net friends only expose the characters that are online
+	for i = 1, _G.BNGetNumFriends() do
+		for account = 1, _G.C_BattleNet.GetFriendNumGameAccounts(i) do
+			local info = _G.C_BattleNet.GetFriendGameAccountInfo(i, account)
+			if info and info.clientProgram == _G.BNET_CLIENT_WOW and info.wowProjectID == _G.WOW_PROJECT_ID and info.factionName == E.myfaction and info.characterName and info.realmName then
+				local name = info.characterName .. "-" .. (info.realmName:gsub("[%s%-]", ""))
+				if not listed[name] and IsReachable(name, realms) then
+					listed[name] = true
+					tinsert(entries, { name = name, class = GetClassToken(info.className), online = true })
+				end
+			end
+		end
+	end
+	sort(entries, SortByName)
 	AddGroup(root, _G.FRIENDS, entries)
 
 	entries = {}
@@ -360,8 +388,12 @@ local function BuildRecipientMenu(_, root)
 	AddGroup(root, _G.GUILD, entries)
 
 	entries = {}
+	local classes = GetMailDB().classes
 	for _, name in ipairs(GetMailDB().recent) do
-		if IsReachable(name, realms) then tinsert(entries, { name = name }) end
+		-- keep the class, the character is not always listed
+		local key = strlower(name)
+		classes[key] = knownClasses[key] or classes[key]
+		if IsReachable(name, realms) then tinsert(entries, { name = name, class = classes[key] }) end
 	end
 	AddGroup(root, L["Recently Mailed"], entries)
 end
