@@ -3,6 +3,8 @@
 ## [ver. 4.21] - TBD
 ### 🔧 UPDATE
 - UPDATE - [Mail-Helper]: The recipient list shows your alts on all realms and factions in Retail, adds online Battle.net friends and colors recently mailed characters by class.
+### ✨ NEW
+- NEW - [Portraits]: New Forever HD boss and elite extra textures, each also in a neutral version.
 
 ## [ver. 4.20] - 13.11.2026
 ### 🔧 UPDATE
