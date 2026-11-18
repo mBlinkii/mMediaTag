@@ -206,7 +206,6 @@ L["Border Color"] = true
 L["Class Colors"] = true
 L["Health Override"] = true
 L["Override Health Bar Color"] = true
-L["Position Settings"] = true
 L["Sets the offset according to the anchor."] = true
 
 -- options/changelog.lua
@@ -267,15 +266,12 @@ L["Save your enabled addons as a named set and switch between them from Blizzard
 L["Adds a button to show or hide details on click. The button is only visible on mouse over."] = true
 L["Details embeded"] = true
 L["Details Windows"] = true
-L["Embedded Settings"] = true
 L["Embedded to Chat"] = true
 L["Left Chat"] = true
 L["Right Chat"] = true
 L["Toggle Button"] = true
 
 -- options/misc/dice_button.lua
-L["Color Hover"] = true
-L["Color Normal"] = true
 L["Custom color"] = true
 L["Hover Color Style"] = true
 L["Hover Custom Color"] = true
@@ -340,7 +336,6 @@ L["License"] = true
 L["Nameplates"] = true
 L["Notification"] = true
 L["Objective Tracker"] = true
-L["Open Settings"] = true
 L["Phase Icon"] = true
 L["Portraits"] = true
 L["Professions"] = true
@@ -454,7 +449,6 @@ L["Raid"] = true
 L["Rare"] = true
 L["Rare Elite"] = true
 L["Ready"] = true
-L["Repair Mount"] = true
 L["Returns a PvP icon if the unit is flagged for PvP and belongs to either the Horde or Alliance faction."] = true
 L["Returns a quest icon if the unit is a quest mob."] = true
 L["Returns the class icon of the unit. You can specify a size between 16 and 128 (default is 64). Example: mClassIcon:style{32}"] = true
@@ -469,8 +463,6 @@ L["Returns the role icon of the unit (Tank, Healer, DPS)."] = true
 L["Returns the role of the unit (Tank, Healer, DPS)."] = true
 L["Returns the status icon of the unit (AFK, DND, Offline, Dead, Ghost)."] = true
 L["Returns the status of the unit (AFK, DND, Offline, Dead, Ghost)."] = true
-L["right click to open Great Vault"] = true
-L["right click to use:"] = true
 L["Role Icons"] = true
 L["Settings"] = true
 L["SHIFT + right click to clear all saved keystones."] = true
@@ -595,7 +587,6 @@ L["Tip"] = true
 L["Change Colors"] = true
 L["Override Text Color"] = true
 L["Override Value Color"] = true
-L["Text Color"] = true
 L["These colors are used for the tooltips of the datatexts."] = true
 L["colors"] = true
 
@@ -1018,7 +1009,6 @@ L["Tip/ Menu"] = true
 L["Tracker"] = true
 
 -- options/portraits/portraits.lua
-L["BG"] = true
 L["BG Style"] = true
 L["Border Alpha"] = true
 L["Cast"] = true
@@ -1052,7 +1042,6 @@ L["Fills the ring clockwise, counter-clockwise when disabled."] = true
 L["Filter mode for the portrait textures. Trilinear also samples mipmaps, nearest disables smoothing. The unit portrait itself is not affected."] = true
 L["Force Extra Texture"] = true
 L["Forces the default color for all texture."] = true
-L["Frame Level/ Strata"] = true
 L["Friendly"] = true
 L["Hunter"] = true
 L["It will override the default extra texture, but will take care of rare/elite/boss units."] = true
@@ -1374,8 +1363,6 @@ L["Trinket 2"] = true
 L["On-Use Only"] = true
 L["Hides passive and proc trinkets without an activatable cooldown."] = true
 L["Growth Direction"] = true
-L["Managed"] = true
-L["Not Managed"] = true
 L["Move this viewer into an mMT container. Turn it off to leave it to Blizzard and ElvUI."] = true
 L["Opacity"] = true
 L["Show"] = true
@@ -1403,7 +1390,6 @@ L["Sections"] = true
 L["Copy"] = true
 L["Took over %d settings from %s."] = true
 L["Includes every cooldown manager setting and the positions of its movers. The import replaces the current setup."] = true
-L["Own Entries"] = true
 L["Spell"] = true
 L["Item"] = true
 L["Equipment Slot"] = true
@@ -1465,7 +1451,6 @@ L["Only shows groups with a free tank slot."] = true
 L["Only shows groups with a free healer slot."] = true
 L["Invert"] = true
 L["Lowest"] = true
-L["Group"] = true
 L["Only shows groups your whole party fits into."] = true
 L["Adds a filter panel to the group finder search to filter and sort groups by roles, party fit, dungeons and more."] = true
 
