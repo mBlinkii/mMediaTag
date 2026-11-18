@@ -419,6 +419,22 @@ local textureDB = {
 			name = L["Forever HD Elite Neutral"],
 			texture = "Interface\\AddOns\\ElvUI_mMediaTag\\media\\portraits\\extra\\forever_hd_elite_neutral.tga",
 		},
+		forever_blizz_boss = {
+			name = L["Forever Blizzard Boss"],
+			texture = "Interface\\AddOns\\ElvUI_mMediaTag\\media\\portraits\\extra\\forever_blizz_boss.tga",
+		},
+		forever_blizz_boss_neutral = {
+			name = L["Forever Blizzard Boss Neutral"],
+			texture = "Interface\\AddOns\\ElvUI_mMediaTag\\media\\portraits\\extra\\forever_blizz_boss_neutral.tga",
+		},
+		forever_blizz_elite = {
+			name = L["Forever Blizzard Elite"],
+			texture = "Interface\\AddOns\\ElvUI_mMediaTag\\media\\portraits\\extra\\forever_blizz_elite.tga",
+		},
+		forever_blizz_elite_neutral = {
+			name = L["Forever Blizzard Elite Neutral"],
+			texture = "Interface\\AddOns\\ElvUI_mMediaTag\\media\\portraits\\extra\\forever_blizz_elite_neutral.tga",
+		},
 		round_monster = {
 			name = L["Round - Monster"],
 			texture = "Interface\\AddOns\\ElvUI_mMediaTag\\media\\portraits\\extra\\round_monster.tga",
