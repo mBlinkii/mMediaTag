@@ -212,9 +212,18 @@ local function StopFade(container)
 	end
 end
 
+-- The custom holder parents secure buttons, in combat it can only fade, the combat change pass hides it afterwards
+local function Locked(container)
+	return InCombatLockdown() and container:IsProtected()
+end
+
 local function FinishHide(container)
 	container.mmtFadingOut = nil
-	container:Hide()
+	if Locked(container) then
+		container:SetAlpha(0)
+	else
+		container:Hide()
+	end
 end
 
 -- ElvUIs fader finishes instantly on a hidden frame, so the container stays shown until the fade is done
@@ -223,7 +232,7 @@ local function FadeOut(container, fade)
 	if not container:IsShown() then return end
 
 	if not fade or fade <= 0 then
-		container:Hide()
+		FinishHide(container)
 		return
 	end
 
@@ -248,6 +257,7 @@ function module:UpdateContainerShown(key)
 		StopFade(container)
 
 		if not container:IsShown() then
+			if Locked(container) then return end
 			container:Show()
 			container:SetAlpha(0)
 			interrupted = true
