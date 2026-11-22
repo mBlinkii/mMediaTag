@@ -1,6 +1,8 @@
 # Changelog - ElvUI_mMediaTag
 
 ## [ver. 4.21] - TBD
+### 🐛 FIX
+- FIX - [Portraits]: Party followers like delve companions got the reaction color and an elite extra texture in combat, for example on the target of target, instead of their class color.
 ### 🔧 UPDATE
 - UPDATE - [Mail-Helper]: The recipient list shows your alts on all realms and factions in Retail, adds online Battle.net friends and colors recently mailed characters by class.
 ### ✨ NEW

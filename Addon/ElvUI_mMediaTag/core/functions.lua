@@ -622,6 +622,8 @@ function mMT:GetUnitClassification(unit, isBossFrame, isPlayer, guid)
 	if not unit then return nil end
 
 	if isPlayer == nil then isPlayer = SafeValue(UnitIsPlayer(unit)) and true or false end
+	-- party followers are elite NPCs, but are shown like players
+	if isPlayer and not isBossFrame then return nil end
 	if guid == nil then guid = SafeValue(UnitGUID(unit)) or " " end
 
 	local npcID = GetNpcID(guid)

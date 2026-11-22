@@ -197,7 +197,8 @@ function module:GetUnitColor(unit, class, isPlayer, isDead, isSecret, out)
 	if module.db.misc.force_default then return colors.misc.default end
 
 	out = out or {}
-	if isSecret then return module.db.misc.force_reaction and GetReactionColor(unit, colors, out) or GetSecretColor(unit, class, colors, out) end
+	-- a readable isPlayer also covers party followers, which UnitIsPlayer inside GetSecretColor would miss
+	if isSecret and (not isPlayer or module.db.misc.force_reaction) then return module.db.misc.force_reaction and GetReactionColor(unit, colors, out) or GetSecretColor(unit, class, colors, out) end
 
 	if isPlayer then
 		if module.db.misc.force_reaction then

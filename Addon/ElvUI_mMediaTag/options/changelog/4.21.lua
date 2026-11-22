@@ -8,4 +8,7 @@ mMT.Changelog[421] = {
 	NEW = {
 		"[Portraits]: New Forever HD and Forever Blizzard boss and elite extra textures, each also in a neutral version.",
 	},
+	FIX = {
+		"[Portraits]: Party followers like delve companions got the reaction color and an elite extra texture in combat, for example on the target of target, instead of their class color.",
+	},
 }
