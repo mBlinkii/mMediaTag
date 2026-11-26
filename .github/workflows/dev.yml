@@ -1,7 +1,8 @@
 name: Dev Build
 
-# Rolling Development-Build. Laeuft bei jedem Push auf main und ueberschreibt
-# das Prerelease unter dem festen Tag "dev". Der Release-Workflow bleibt
+# Rolling Development-Build. Laeuft bei Pushes auf main, deren letzter Commit
+# [dev] in der Message traegt, oder manuell, und ueberschreibt das Prerelease
+# unter dem festen Tag "dev". Lint laeuft bei jedem Push. Der Release-Workflow bleibt
 # unberuehrt - der triggert nur auf Tags "v*".
 on:
   push:
@@ -21,12 +22,6 @@ on:
 
 permissions:
   contents: write
-
-# Parallele Pushes duerfen sich nicht gegenseitig ueberschreiben. Der laufende
-# Job wird abgebrochen, sobald ein neuerer startet.
-concurrency:
-  group: dev-build
-  cancel-in-progress: true
 
 jobs:
   lint:
@@ -48,6 +43,11 @@ jobs:
 
   dev:
     needs: lint
+    if: github.event_name == 'workflow_dispatch' || contains(github.event.head_commit.message, '[dev]')
+    # Auf Job-Ebene, damit ein Push ohne [dev] keinen laufenden Build abbricht.
+    concurrency:
+      group: dev-build
+      cancel-in-progress: true
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v6
@@ -137,7 +137,7 @@ jobs:
       - name: Write release notes
         run: |
           cat > DEV_NOTES.md <<'HEADER'
-          > ⚠️ **Untested development build.** Built automatically on every push to `main` and not verified in-game. For a stable version please use the latest [Release](https://github.com/mBlinkii/mMediaTag/releases/latest).
+          > ⚠️ **Untested development build.** Built automatically from `main` and not verified in-game. For a stable version please use the latest [Release](https://github.com/mBlinkii/mMediaTag/releases/latest).
 
           HEADER
           {
