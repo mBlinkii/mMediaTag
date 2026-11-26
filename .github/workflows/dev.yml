@@ -1,8 +1,9 @@
 name: Dev Build
 
-# Rolling Development-Build. Laeuft bei Pushes auf main, deren letzter Commit
-# [dev] in der Message traegt, oder manuell, und ueberschreibt das Prerelease
-# unter dem festen Tag "dev". Lint laeuft bei jedem Push. Der Release-Workflow bleibt
+# Rolling Development-Build. Laeuft bei jedem Push auf main und ueberschreibt
+# das Prerelease unter dem festen Tag "dev". Zu CurseForge geht der Build nur,
+# wenn der letzte Commit [dev] in der Message traegt oder der Lauf manuell
+# gestartet wurde. Der Release-Workflow bleibt
 # unberuehrt - der triggert nur auf Tags "v*".
 on:
   push:
@@ -43,11 +44,13 @@ jobs:
 
   dev:
     needs: lint
-    if: github.event_name == 'workflow_dispatch' || contains(github.event.head_commit.message, '[dev]')
-    # Auf Job-Ebene, damit ein Push ohne [dev] keinen laufenden Build abbricht.
+    # Kein Abbruch laufender Builds, sonst ginge ein [dev]-Upload durch einen
+    # schnell folgenden Push verloren. Wartende Laeufe ersetzt der neueste.
     concurrency:
       group: dev-build
-      cancel-in-progress: true
+      cancel-in-progress: false
+    env:
+      CF_UPLOAD: ${{ github.event_name == 'workflow_dispatch' || contains(github.event.head_commit.message, '[dev]') }}
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v6
@@ -176,6 +179,7 @@ jobs:
       # Spielversion(en) wie in release.yml aus der TOC lesen. CurseForge lehnt
       # unbekannte Versionsstrings ab, die werden mit Warnung verworfen.
       - name: Interface-Version aus TOC lesen
+        if: env.CF_UPLOAD == 'true'
         id: game
         env:
           CF_API_TOKEN: ${{ secrets.CF_API_TOKEN }}
@@ -207,9 +211,10 @@ jobs:
           # Eigener Dateiname pro Build, CurseForge soll die Uploads auseinanderhalten.
           cp mMT-dev.zip "mMT-${{ steps.meta.outputs.version }}-dev-${{ steps.meta.outputs.sha }}.zip"
 
-      # Jeder Dev-Build geht als Alpha zu CurseForge. Ein Fehlschlag dort soll das
-      # GitHub-Prerelease nicht rot faerben, es steht dann schon.
+      # Ein Fehlschlag auf CurseForge soll das GitHub-Prerelease nicht rot
+      # faerben, es steht dann schon.
       - name: Als Alpha auf CurseForge hochladen
+        if: env.CF_UPLOAD == 'true'
         continue-on-error: true
         uses: itsmeow/curseforge-upload@v3
         with:
